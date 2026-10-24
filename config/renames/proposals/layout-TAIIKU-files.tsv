@@ -1,0 +1,20 @@
+# kind	scope	old	new	note
+file	TAIIKU	80132000	folk_dance_scene	T-27060; src/ovl/TAIIKU/80132000.c:9-18 begins the folk-dance scene and selects runner participants
+file	TAIIKU	80132B40	runner_scene_resources	T-27060; src/ovl/TAIIKU/801452D0.c:129-133 calls this after runner-scene sector reads; it binds runner resource addresses
+file	TAIIKU	80132B90	runner_talk_resources	T-27060; src/ovl/TAIIKU/80141280.c:73-77 calls it immediately before runner talk-table setup
+file	TAIIKU	80132BD0	runner_scene_handlers	T-27060; src/ovl/TAIIKU/80132BD0.c:6-12 handles runner setup with four runner-loop counters
+file	TAIIKU	80133BF0	folk_dance_talk_resources	T-27060; src/ovl/TAIIKU/80132000.c:119-126 calls it before setting folk-dance talk tables
+file	TAIIKU	80133C30	candidate_scene_layer_resources	T-27060; src/ovl/TAIIKU/80138950.c:256-260 uses outputs in func_8004E44C, srn_init and srn_vram_set
+file	TAIIKU	80133C80	runner_race_dispatch	T-27060 src/ovl/TAIIKU/80133C80.c:84,94,169; competition mode-stage dispatch, racer setup and update/input handlers; wiki/spec/o-taiiku.md records the observed runner behavior without claiming a fully decoded win rule.
+file	TAIIKU	80138950	candidate_girl_scene	T-27060 src/ovl/TAIIKU/80138950.c:59,256-260; girl-candidate scene callbacks, selectable actors and transition logic with scene-layer resources; wiki/spec/o-taiiku.md provides the inspected selection rules.
+file	TAIIKU	80140810	scene_actor_resource_tables	T-27060; src/ovl/TAIIKU/80140810.c:9-12 establishes actor/resource tables for its scene handlers
+file	TAIIKU	80141280	festival_entry_and_competition_select	T-27060; src/ovl/TAIIKU/80141280.c:16-225 handles festival entry, competition selection and folk-dance queue cleanup
+file	TAIIKU	80141B70	shared_mio_and_festival_entry_talk_resources	T-27060; src/ovl/TAIIKU/80140810.c:103-106 and src/ovl/TAIIKU/80141280.c:74-77 call it before installing Mio and festival-entry talk tables
+file	TAIIKU	80141BB0	candidate_scene_picture_resources	T-27060; src/ovl/TAIIKU/80138950.c:139-143 calls it during candidate-scene setup
+file	TAIIKU	80141C00	candidate_scene_state_handlers	T-27060; src/ovl/TAIIKU/80141C00.c:4-16 dispatches state handlers for the Nozomi scene
+file	TAIIKU	80142140	nozomi_talk_resources	T-27060; src/ovl/TAIIKU/80141C00.c:76-82 calls it before setting Nozomi talk tables
+file	TAIIKU	80142180	mio_scene_picture_resources	T-27060; src/ovl/TAIIKU/80140810.c:189-195 loads Mio still, animation and palette resources
+file	TAIIKU	80142240	schoolyard_scene_dispatch	T-27060; src/ovl/TAIIKU/80142240.c:5-10 dispatches the schoolyard-scene stage table
+file	TAIIKU	80145210	nozomi_scene_picture_resources	T-27060; src/ovl/TAIIKU/80141C00.c:120-125 calls it before loading Nozomi scene pictures
+file	TAIIKU	801452D0	runner_actor_display	T-27060 src/ovl/TAIIKU/801452D0.c:77,86,150; runner-scene mode-stage callback dispatch, display-record setup, animation/movement and slot updates; wiki/spec/o-taiiku.md records the body-backed actor contracts.
+file	TAIIKU	801488F0	scene_display_setup	T-27060; src/ovl/TAIIKU/801488F0.c:5-9 sets ambient light, camera parameters and scene display state

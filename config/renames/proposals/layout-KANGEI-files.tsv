@@ -1,0 +1,9 @@
+# kind	scope	old	new	note
+file	KANGEI	80132000	scene_entry	src/ovl/KANGEI/80132000.c:4: mode 0x60 scene dispatcher and return-to-title branch
+file	KANGEI	80132090	scene_callbacks	src/ovl/KANGEI/80132090.c:49: mode 0x60 callback handlers for the scene state table
+file	KANGEI	80132E40	day_dispatch_and_script_tables	T-27060 src/ovl/KANGEI/80132E40.c:4-45; binds common/per-girl script pointer rows, then func_80132FF8 dispatches the day-coded mode_stage and performs scene presentation.
+file	KANGEI	80133C10	scene_load_and_display	T-27060 src/ovl/KANGEI/80133C10.c:9-43; step-table presentation flow, current-girl restoration, two resource loads and shared display initialization; func_80133EF8 runs talk.
+file	KANGEI	80134120	girl_meeting_routes	T-27060 src/ovl/KANGEI/80134120.c:24-48; scene callback tables and met/unmet-girl/year route choice, followed by girl-specific background/dialogue setup.
+file	KANGEI	801355F0	paired_actor_scene_flow	T-27060 src/ovl/KANGEI/801355F0.c:9-36; binds two parallel actor resource records, runs an80-entry step callback table and updates their scene presentation.
+file	KANGEI	80135F10	scene_pictures_and_effects	T-27060 src/ovl/KANGEI/80135F10.c:18-48; picture/animation resource binders, callback dispatchers, talk and effect flow; no unconfirmed narrative or folder identity is claimed.
+file	KANGEI	80137B90	girl_script_and_choice_flow	T-27060 src/ovl/KANGEI/80137B90.c:20,244-289,432; per-girl script pointer rows, choice-dependent dialogue groups/rewards, birthday reply resources and saved scene flow.

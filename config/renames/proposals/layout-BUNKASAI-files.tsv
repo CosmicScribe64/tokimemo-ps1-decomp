@@ -1,0 +1,21 @@
+# kind	scope	old	new	note
+file	BUNKASAI	80132000	script_sets	src/ovl/BUNKASAI/80132000.c:4: 22 script set setters (three table pointers each)
+file	BUNKASAI	80132480	yuina_visit	src/ovl/BUNKASAI/80132480.c:4: Yuina visit block, stages 46-58
+file	BUNKASAI	801354B0	mio_member	src/ovl/BUNKASAI/801354B0.c:4: Mio member block, stages 42-45
+file	BUNKASAI	801362A0	saki_visit	src/ovl/BUNKASAI/801362A0.c:4: Saki visit block, stages 85-96
+file	BUNKASAI	80138A70	yuko_visit	src/ovl/BUNKASAI/80138A70.c:4: Yuko visit block, stages 133-144
+file	BUNKASAI	8013B190	yuina_member	src/ovl/BUNKASAI/8013B190.c:4: Yuina member block, stages 59-64
+file	BUNKASAI	8013C430	ayako_visit	src/ovl/BUNKASAI/8013C430.c:4: Ayako visit block, stages 65-79
+file	BUNKASAI	8013FD90	yumi_visit	src/ovl/BUNKASAI/8013FD90.c:4: Yumi visit block, stages 154-162
+file	BUNKASAI	80142700	festival_entry	src/ovl/BUNKASAI/80142700.c:4: entry point and phase machine, result, event log, banner titles
+file	BUNKASAI	80143770	mira_visit	src/ovl/BUNKASAI/80143770.c:7: Mira visit block, stages 121-132
+file	BUNKASAI	80146030	ayako_member	src/ovl/BUNKASAI/80146030.c:7: Ayako member block, stages 80-84
+file	BUNKASAI	80146FA0	birthday_scene	src/ovl/BUNKASAI/80146FA0.c:4: birthday table setup, phase 9 scene, choice name
+file	BUNKASAI	80148040	shiori_visit	src/ovl/BUNKASAI/80148040.c:4: Shiori visit block, stages 15-27
+file	BUNKASAI	8014ABC0	yukari_visit	src/ovl/BUNKASAI/8014ABC0.c:4: Yukari visit block, stages 97-108
+file	BUNKASAI	8014DD90	nozomi_visit	src/ovl/BUNKASAI/8014DD90.c:4: Nozomi visit block, stages 109-120
+file	BUNKASAI	80150930	mode_stage_dispatch	T-27060 src/ovl/BUNKASAI/80150930.c:4; routes game_state.mode_stage through the culture-festival handler table; preserves the original dispatcher object.
+file	BUNKASAI	801511E0	shiori_member	src/ovl/BUNKASAI/801511E0.c:4: Shiori member block, stages 1-13
+file	BUNKASAI	80154018	mio_visit	src/ovl/BUNKASAI/80154018.c:4: Mio visit block, stages 28-41
+file	BUNKASAI	80158EB0	megumi_visit	src/ovl/BUNKASAI/80158EB0.c:4: Megumi visit block, stages 145-153
+file	BUNKASAI	8015AF90	fortune_telling	src/ovl/BUNKASAI/8015AF90.c:63: shared computer fortune stage and its result lookup

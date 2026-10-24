@@ -1,0 +1,20 @@
+# kind	scope	old	new	note
+file	DATE	80132000	place_scenes	src/ovl/DATE/80132000.c:244: stage 0 and 1 handlers of all 21 places: place setups, arrival, choice scoring, special-scene chooser, date end
+file	DATE	80141EE0	entry	src/ovl/DATE/80141EE0.c:670: 11 per-girl script section fillers, mode 0x50 entry and the stage 0 and stage 1 dispatchers
+file	DATE	80145AA0	player_birthday	src/ovl/DATE/80145AA0.c:4: stage 3: the girl greets the player on his birthday
+file	DATE	801461B0	rides	src/ovl/DATE/801461B0.c:20: amusement park rides: roller coaster, ghost house, Ferris wheel, scream machine (virtual ship is separate)
+file	DATE	80149310	girl_birthday	src/ovl/DATE/80149310.c:62: stage 2: gift choice on the girl's birthday
+file	DATE	8014A1B0	virtual_ship	src/ovl/DATE/8014A1B0.c:24: virtual ship ride (3D, GTE)
+file	DATE	8014B1F0	scene_common	src/ovl/DATE/8014B1F0.c:6: scene section pointer init, mode 0x5E entry, shared scene steps and the scene end
+file	DATE	8014CC40	scene_yuko	src/ovl/DATE/8014CC40.c:73: mode 0x5E scenes of Yuko (girl 8) with the shared gradient quad drawer
+file	DATE	8014F0F0	scene_shiori	src/ovl/DATE/8014F0F0.c:7: mode 0x5E scenes of Shiori (girl 0)
+file	DATE	80150010	scene_yuina	src/ovl/DATE/80150010.c:7: mode 0x5E scenes of Yuina (girl 2)
+file	DATE	80151460	scene_ayako	src/ovl/DATE/80151460.c:8: mode 0x5E scenes of Ayako (girl 3) with the gradient triangle drawer
+file	DATE	80152FC0	scene_mira	src/ovl/DATE/80152FC0.c:4: mode 0x5E scenes of Mira (girl 7)
+file	DATE	80154260	scene_mio	src/ovl/DATE/80154260.c:7: mode 0x5E scenes of Mio (girl 1)
+file	DATE	801552B0	scene_yukari	src/ovl/DATE/801552B0.c:7: mode 0x5E scenes of Yukari (girl 5)
+file	DATE	80156600	scene_nozomi	src/ovl/DATE/80156600.c:7: mode 0x5E scenes of Nozomi (girl 6)
+file	DATE	80157880	scene_megumi	src/ovl/DATE/80157880.c:7: mode 0x5E scenes of Megumi (girl 9)
+file	DATE	801586A0	scene_saki	src/ovl/DATE/801586A0.c:7: mode 0x5E scenes of Saki (girl 4)
+file	DATE	801594B0	scene_yumi	src/ovl/DATE/801594B0.c:7: mode 0x5E scenes of Yumi (girl 10)
+file	DATE	8015A190	miharu_yumi_scenes	src/ovl/DATE/8015A190.c:7: Miharu introductory scene and shared date-girl continuation handlers, including the continuation used for Yumi

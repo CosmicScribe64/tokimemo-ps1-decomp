@@ -1,0 +1,12 @@
+# kind	scope	old	new	note
+file	BUNKA_SD	80132000	literature_speech_contest	T-27060 src/ovl/BUNKA_SD/80132000.c:4,31,65; literature show loading, speaker/script selection and input flow; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	80133540	drama_first_year_show	T-27060 src/ovl/BUNKA_SD/80133540.c:4,29,45; show resource loading, skip/input and timed scripts; drama club year1995; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	80134260	show_display_and_fades	T-27060 src/ovl/BUNKA_SD/80134260.c:4; shared display reset, fade and exit helpers; called from literature, science and drama show step handlers, not one private scene.
+file	BUNKA_SD	80134540	computer_show	T-27060 src/ovl/BUNKA_SD/80134540.c:4; computer-club show callbacks and presentation helpers; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	80135160	science_club_second_year_show	T-27060 src/ovl/BUNKA_SD/80135160.c:4; science-club show resources and callbacks; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	801359B0	science_club_final_year_show	T-27060 src/ovl/BUNKA_SD/801359B0.c:7,16,47; resource/input/show flow; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	80136270	science_club_first_year_show	T-27060 src/ovl/BUNKA_SD/80136270.c:4; show callbacks and image resources; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	801369D0	drama_final_year_show	T-27060 src/ovl/BUNKA_SD/801369D0.c:4; drama show callbacks, event-list interpreter and images; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	80137890	club_year_show_dispatch	T-27060 src/ovl/BUNKA_SD/80137890.c:4-91; reads club selector and calendar year at14-51, dispatches show callbacks at63-89 and restores the caller overlay mode/stage/step.
+file	BUNKA_SD	80137B40	drama_second_year_show	T-27060 src/ovl/BUNKA_SD/80137B40.c:4,29,45; drama show resources, input and timed scripts; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file	BUNKA_SD	801388D0	brass_band_show	T-27060 src/ovl/BUNKA_SD/801388D0.c:4; brass-band show callbacks and image/script presentation; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.

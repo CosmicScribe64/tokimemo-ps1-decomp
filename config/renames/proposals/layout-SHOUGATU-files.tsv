@@ -1,0 +1,28 @@
+# kind	scope	old	new	note
+file	SHOUGATU	80132000	seasonal_mode_stage_dispatch	T-27060; src/ovl/SHOUGATU/80132000.c:52-86 dispatches seven mode stages and per-frame presentation
+file	SHOUGATU	80132550	new_year_scene_setup	T-27060; src/ovl/SHOUGATU/80132550.c:40-69 loads New Year resources and sets the scene title
+file	SHOUGATU	80132D00	new_year_outcome	T-27060; src/ovl/SHOUGATU/80132D00.c:19-53 handles the New Year scene outcome branch
+file	SHOUGATU	801330C0	new_year_dialogue	T-27060; src/ovl/SHOUGATU/801330C0.c:31-70 selects and prepares New Year talk tables
+file	SHOUGATU	80133D10	shrine_visit_dialogue	T-27060; src/ovl/SHOUGATU/80133D10.c:14-34 initializes the shrine-visit title and dialogue state
+file	SHOUGATU	80134120	shrine_actor_sequences	T-27060; src/ovl/SHOUGATU/80134120.c:23-45 dispatches shrine-scene actor sequences
+file	SHOUGATU	80134890	omikuji_draw_scene	T-27060; src/ovl/SHOUGATU/80134890.c:176-196 begins the omikuji prompt, actor movement and result presentation
+file	SHOUGATU	80135B90	scene_resource_tables	T-27060; src/ovl/SHOUGATU/80135B90.c:6-24 declares scene data islands
+file	SHOUGATU	80136F90	meeting_girl_scene_dispatch	T-27060; src/ovl/SHOUGATU/80136F90.c:34-92 dispatches meeting scenes by the queued girl selector
+file	SHOUGATU	80137BB0	yuko_scene_handlers	T-27060; src/ovl/SHOUGATU/80137BB0.c:6-19 selects Yuko scene step tables; main loader routes the meeting mode here
+file	SHOUGATU	80137FF0	yuina_scene_handlers	T-27060; src/ovl/SHOUGATU/80137FF0.c:5-23 dispatches Yuina scene step tables; main loader routes the meeting mode here
+file	SHOUGATU	80138B40	ayako_scene_handlers	T-27060; src/ovl/SHOUGATU/80138B40.c:4-18 dispatches Ayako scene step tables
+file	SHOUGATU	801390C0	mira_scene_resources	T-27060; src/ovl/SHOUGATU/801390C0.c:7-23 binds Mira scene resources
+file	SHOUGATU	801397D0	scene_step_handlers	T-27060; src/ovl/SHOUGATU/801397D0.c:25-42 dispatches five scene-step callbacks
+file	SHOUGATU	8013A190	yukari_scene_handlers	T-27060; src/ovl/SHOUGATU/8013A190.c:11-16 dispatches Yukari scene setup callbacks
+file	SHOUGATU	8013A500	nozomi_scene_handlers	T-27060; src/ovl/SHOUGATU/8013A500.c:4-12 dispatches Nozomi scene setup callbacks
+file	SHOUGATU	8013A950	saki_scene_handlers	T-27060; src/ovl/SHOUGATU/8013A950.c:4-15 dispatches Saki scene setup callbacks
+file	SHOUGATU	8013AF10	yumi_scene_handlers	T-27060; src/ovl/SHOUGATU/8013AF10.c:4-5 dispatches Yumi scene setup
+file	SHOUGATU	8013B210	girl_dialogue_dispatch	T-27060; src/ovl/SHOUGATU/8013B210.c:46-75 dispatches setup and outcome stages and runs the bound girl dialogue; the mode's seasonal-party identity remains a hypothesis
+file	SHOUGATU	8013B5B0	girl_dialogue_setup	T-27060; src/ovl/SHOUGATU/8013B5B0.c:4-10,40-79 dispatches setup steps, initializes talk and scene state, and tests met-girl flags
+file	SHOUGATU	8013BA00	girl_dialogue_outcomes	T-27060; src/ovl/SHOUGATU/8013BA00.c:4-10,13-50,68-83 dispatches outcome steps, selects the current girl, applies relationship changes and advances the day event
+file	SHOUGATU	8013C070	seasonal_scene_dispatch	T-27060; src/ovl/SHOUGATU/8013C070.c:46-326 dispatches the seasonal scene stages
+file	SHOUGATU	8013D660	christmas_mansion_entry	T-27060; src/ovl/SHOUGATU/8013D660.c:101-149 handles Dec 24 birthday detours before entering the Ijuin mansion scene
+file	SHOUGATU	8013DD90	christmas_party_dialogue	T-27060; src/ovl/SHOUGATU/8013DD90.c:51-56 increments Rei story stage and sets the party-room location
+file	SHOUGATU	8013E330	christmas_girl_selection_and_reward	T-27060; src/ovl/SHOUGATU/8013E330.c:64-106 resets current girl to Shiori, awards tokimeki by looks threshold, then updates affection and event log
+file	SHOUGATU	8013F190	scene_render_tables	T-27060; src/ovl/SHOUGATU/8013F190.c:7-33 declares render and actor data islands
+file	SHOUGATU	80141780	scene_particle_helpers	T-27060; src/ovl/SHOUGATU/80141780.c:56-74 calls the particle/work-array helper family

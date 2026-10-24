@@ -1,0 +1,5 @@
+# kind	scope	old	new	note
+# T-27060 file-only proposal; preserve current folder and each original object.
+file	TEL	80132000	call_and_invitation_flow	T-27060 src/ovl/TEL/80132000.c:1733: call stage/step dispatch, ringing and reply routing, next-date slot construction and invitation resolution; body 1749: cal_base_show(); 1750: menu_bar_show(0);
+file	TEL	801397D0	appointment_call_scenes	T-27060 src/ovl/TEL/801397D0.c:56: appointment-dependent phone scenes, same-girl appointment cancellation, ringing/text/voice and exit routing; body 60: sel = ((AppointmentBits *)&game_state.unk_54C[0].w)->girl; 61: for (i = 0; i != 8; i++) {
+file	TEL	8013CCD0	profile_and_place_availability	T-27060 src/ovl/TEL/8013CCD0.c:86: girl appraisal sprites, girl profile details and month/place availability table construction; body 101: if (arg0 == 0xB) {; 102: n = 0xC;

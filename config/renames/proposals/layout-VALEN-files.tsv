@@ -1,0 +1,6 @@
+# kind	scope	old	new	note
+file	VALEN	80132000	valentine_resource_tables	T-27060; src/ovl/VALEN/80132000.c:3-47 initializes valentine resources and dispatches scene stages
+file	VALEN	801323D0	valentine_scene_handlers	T-27060; src/ovl/VALEN/801323D0.c:9-15 dispatches valentine scene callbacks by mode step
+file	VALEN	80132760	valentine_girl_selection	T-27060; src/ovl/VALEN/80132760.c:28-62 ranks eligible girls and records selected candidates
+file	VALEN	801339D0	valentine_home_scene	T-27060; src/ovl/VALEN/801339D0.c:22-38 sets the front-of-home location and handles its transition
+file	VALEN	80133C70	valentine_girl_scene_resources	T-27060; src/ovl/VALEN/80133C70.c:3-38 initializes girl-specific scene resource addresses

@@ -1,0 +1,3 @@
+# kind	scope	old	new	note
+file	EN_NICHI	80132000	festival_stall_year_dispatch	T-27060; src/ovl/EN_NICHI/80132000.c:63-73 branches the festival-stall flow by game year
+file	EN_NICHI	80136B10	festival_stall_scene_dispatch	T-27060; src/ovl/EN_NICHI/80136B10.c:30-37 dispatches three festival-stall scene stages through its scene table

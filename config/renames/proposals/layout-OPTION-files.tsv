@@ -1,0 +1,5 @@
+# kind	scope	old	new	note
+# T-27060 file-only proposal; preserve current folder and each original object.
+file	OPTION	80132000	settings_sound_test_and_extras	T-27060 src/ovl/OPTION/80132000.c:557: options stage dispatcher, page input and draw, sound-test track playback and extra-mode launch; body 558: game_state.mode_stage_timer += 1; 560: switch (game_state.mode_stage) {
+file	OPTION	801389A0	voice_test_browser	T-27060 src/ovl/OPTION/801389A0.c:432: voice test menu, character/clip selection, list display and audio completion replay; body 443: if (game_state.pad_pressed & 0x08000000) {; 444: D_8013D3F0 = 1 - D_8013D3F0;
+file	OPTION	8013A550	debug_game_data_editors	T-27060 src/ovl/OPTION/8013A550.c:65: debug pages edit game settings, date, girl records and flags through menu controls; body 75: label_or_month = game_state.weekday; 76: menu_check(0, cursor_x, cursor_y);

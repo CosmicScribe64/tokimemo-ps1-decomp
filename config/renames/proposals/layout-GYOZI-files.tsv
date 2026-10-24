@@ -1,0 +1,34 @@
+# kind	scope	old	new	note
+file	GYOZI	80134000	annual_mode_stage_dispatch	T-27060; src/ovl/GYOZI/80134000.c:49-85 dispatches seven annual-event stages and frame presentation
+file	GYOZI	80134520	annual_new_year_scene_dispatch	T-27060; src/ovl/GYOZI/80134520.c:36-52 initializes and enters the New Year scene, including its title label
+file	GYOZI	80134C10	annual_text_choice_handlers	T-27060; src/ovl/GYOZI/80134C10.c:25-56 displays and advances text-choice state
+file	GYOZI	80134FD0	annual_dialogue_choices	T-27060; src/ovl/GYOZI/80134FD0.c:25-73 reads the selected dialogue and prepares choice responses
+file	GYOZI	80135900	annual_shrine_visit	T-27060; src/ovl/GYOZI/80135900.c:18-22 writes the shrine-visit title label
+file	GYOZI	80135CA0	annual_shrine_result	T-27060; src/ovl/GYOZI/80135CA0.c:63-92 sets result-dialogue and display state
+file	GYOZI	80136220	annual_actor_display	T-27060; src/ovl/GYOZI/80136220.c:28-30 draws the framed result actor panels
+file	GYOZI	801372B0	annual_scene_helpers	T-27060; src/ovl/GYOZI/801372B0.c:93-120 dispatches and updates scene helper routines
+file	GYOZI	80138510	annual_scene_dispatch	T-27060; src/ovl/GYOZI/80138510.c:46-71 dispatches five scene-stage handlers
+file	GYOZI	801388E0	annual_scene_setup	T-27060; src/ovl/GYOZI/801388E0.c:18-43 initializes sound, sector data and scene state
+file	GYOZI	80138B50	annual_girl_selection	T-27060; src/ovl/GYOZI/80138B50.c:57-78 filters and ranks girl candidates
+file	GYOZI	80139920	annual_result_handlers	T-27060; src/ovl/GYOZI/80139920.c:56-125 handles result flow and event log update
+file	GYOZI	8013A140	annual_scene_mode_stage_dispatch	T-27060; src/ovl/GYOZI/8013A140.c:41-92 dispatches scene callback groups by D_800F6479
+file	GYOZI	8013A920	annual_scene_mode_step_dispatch	T-27060; src/ovl/GYOZI/8013A920.c:9-23 dispatches callbacks by D_800F647A
+file	GYOZI	8013AE80	annual_choice_scene_handlers	T-27060; src/ovl/GYOZI/8013AE80.c:9-27 dispatches six choice-scene steps
+file	GYOZI	8013B920	annual_ayako_scenes	T-27060; src/ovl/GYOZI/8013B920.c:78 sets character index 3 for Ayako; the callbacks display the art/music-room sequences
+file	GYOZI	8013BD50	annual_scene_callbacks	T-27060; src/ovl/GYOZI/8013BD50.c:4-14 contains callbacks and a scene-state helper
+file	GYOZI	8013C3B0	annual_timing_sequence	T-27060; src/ovl/GYOZI/8013C3B0.c:98-119 processes the timed S/T sequence choices
+file	GYOZI	8013CDD0	annual_yukari_scenes	T-27060; src/ovl/GYOZI/8013CDD0.c:64 sets character index 5 for Yukari before dispatching its scene callbacks
+file	GYOZI	8013D120	annual_nozomi_scenes	T-27060; src/ovl/GYOZI/8013D120.c:65 sets character index 6 for Nozomi before installing scene resources and talk callbacks
+file	GYOZI	8013D470	annual_sound_callbacks	T-27060; src/ovl/GYOZI/8013D470.c:9-28 provides sound and wait callbacks
+file	GYOZI	8013DB50	annual_scene_resource_setup	T-27060; src/ovl/GYOZI/8013DB50.c:38-58 initializes display/audio scene resources
+file	GYOZI	8013DE30	annual_hallway_scene_resources	T-27060; src/ovl/GYOZI/8013E1D0.c:35-60 initializes the hallway scene and calls the resource binder
+file	GYOZI	8013E1D0	annual_hallway_mode_step_dispatch	T-27060; src/ovl/GYOZI/8013E1D0.c:9-16 dispatches its callback table using D_800F647A
+file	GYOZI	8013E5B0	annual_character_state_helpers	T-27060; src/ovl/GYOZI/8013E5B0.c:36-66 updates displayed character state and flags
+file	GYOZI	8013EB10	annual_scene_group_mode_stage_dispatch	T-27060; src/ovl/GYOZI/8013EB10.c:286-314 dispatches scene groups using D_800F6479
+file	GYOZI	801400D0	annual_mode_step_callbacks	T-27060; src/ovl/GYOZI/801400D0.c:4-16 dispatches callbacks using D_800F647A and advances the callback state
+file	GYOZI	80140740	annual_portrait_and_talk_setup	T-27060; src/ovl/GYOZI/80140740.c:50-59 initializes portrait and dialogue display
+file	GYOZI	80140C90	annual_candidate_results	T-27060; src/ovl/GYOZI/80140C90.c:17-39 evaluates candidate status and follows result state
+file	GYOZI	801418B0	annual_result_resources	T-27060; src/ovl/GYOZI/801418B0.c:36-68 selects result and follow-up state
+file	GYOZI	80142D00	annual_actor_animation_resources	T-27060; src/ovl/GYOZI/80142D00.c:4-10 binds animation resources used by the actor setup callbacks
+file	GYOZI	80143110	annual_character_action_dispatch	T-27060; src/ovl/GYOZI/80143110.c:34-59 dispatches callbacks by the current character selector
+file	GYOZI	80143AD0	annual_scene_audio_helpers	T-27060; src/ovl/GYOZI/80143AD0.c:43-109 updates scene audio and callback state

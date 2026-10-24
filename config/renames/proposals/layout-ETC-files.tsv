@@ -1,0 +1,14 @@
+# kind	scope	old	new	note
+file	ETC	80132000	confession_and_epilogue_handlers	T-27060; src/ovl/ETC/80132000.c:48-60,143-153,167-173,230-253 covers confession scene flow and epilogue initialization/display
+file	ETC	80132880	album_effects_and_animations	T-27060; src/ovl/ETC/80132880.c:4-18 begins color split and VRAM blur helpers; same object contains album animation routines
+file	ETC	8013B1F0	album_portrait_selection	T-27060; src/ovl/ETC/8013B1F0.c:4-18 selects portrait resources for album event records
+file	ETC	8013BEF0	album_playback	T-27060; src/ovl/ETC/8013BEF0.c:24-31 begins the album playback stage handlers
+file	ETC	8013F980	album_model_setup	T-27060; src/ovl/ETC/8013F980.c:11-20 initializes 3D model and object state
+file	ETC	8013FF80	album_mode_entry	T-27060; src/ovl/ETC/8013FF80.c:9-24 dispatches album mode entry and stage state
+file	ETC	80140F50	album_save_flow	T-27060; src/ovl/ETC/80140F50.c:4-24 provides album mode save and card-prompt flow
+file	ETC	80142B80	staff_roll_asset_load	T-27060; src/ovl/ETC/80142B80.c:4-16 loads staff-roll assets
+file	ETC	80143240	staff_roll_and_clear_save	T-27060; src/ovl/ETC/80143240.c:3-12 defines data used by staff-roll and clear-save stages in this unsplit object
+file	ETC	80146400	final_exam	T-27060; src/ovl/ETC/80146400.c:5-12 begins exam scoring and ranking logic
+file	ETC	801492C0	career_choice	T-27060; src/ovl/ETC/801492C0.c:4-32 handles job or university choice mode
+file	ETC	8014ABD0	career_guidance	T-27060; src/ovl/ETC/8014ABD0.c:4-18 handles career-guidance talk mode
+file	ETC	8014C2D0	calendar_skip_and_resume	T-27060; src/ovl/ETC/8014C2D0.c:4-18 advances six calendar days then resumes day events in both handlers

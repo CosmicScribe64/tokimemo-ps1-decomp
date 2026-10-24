@@ -1,0 +1,19 @@
+# kind	scope	old	new	note
+file	EVENT	800F6000	girl_scene_entry	src/ovl/EVENT/800F6000.c:4: girl scene frame handler, script section table init and the shared talk, sound and exit steps
+file	EVENT	800F7220	yuko_scenes	src/ovl/EVENT/800F7220.c:4: girl 8 (Yuko) scenes 1-6; girl selector case 8
+file	EVENT	800F9680	shiori_scenes	src/ovl/EVENT/800F9680.c:5: girl 0 (Shiori) scenes 1-6 and 8; also holds the shared script loader and the gradient quad helper
+file	EVENT	800FBBF0	yuina_scenes	src/ovl/EVENT/800FBBF0.c:4: girl 2 (Yuina) scenes 1-5
+file	EVENT	800FD2F0	rei_scenes	src/ovl/EVENT/800FD2F0.c:7: girl 12 (Rei) scenes 1-3
+file	EVENT	800FDC20	ayako_scenes	src/ovl/EVENT/800FDC20.c:5: girl 3 (Ayako) scenes 1-5; also the gradient triangle helper
+file	EVENT	800FFBE0	mira_scenes	src/ovl/EVENT/800FFBE0.c:4: girl 7 (Mira) scenes 1-6 and 8
+file	EVENT	801011A0	mio_scenes	src/ovl/EVENT/801011A0.c:4: girl 1 (Mio) scenes 1-5
+file	EVENT	801024B0	yukari_scenes	src/ovl/EVENT/801024B0.c:5: girl 5 (Yukari) scenes 1-6
+file	EVENT	80103B60	nozomi_scenes	src/ovl/EVENT/80103B60.c:4: girl 6 (Nozomi) scenes 1-5; also the sprite group shift helper
+file	EVENT	801050D0	megumi_scenes	src/ovl/EVENT/801050D0.c:4: girl 9 (Megumi) scenes 1-6
+file	EVENT	80106C20	saki_scenes	src/ovl/EVENT/80106C20.c:4: girl 4 (Saki) scenes 1-5
+file	EVENT	80107FC0	yumi_scenes	src/ovl/EVENT/80107FC0.c:5: girl 10 (Yumi) scenes 1-7
+file	EVENT	8010A210	miharu_scenes	src/ovl/EVENT/8010A210.c:4: girl 11 (Miharu) scenes 1-5; also the shared bar overlay helper
+file	EVENT	8010B360	yoshio_scenes	src/ovl/EVENT/8010B360.c:4: girl 13 (Yoshio) scene 1
+file	EVENT	8010BB90	place_scene_entry	src/ovl/EVENT/8010BB90.c:4: date script section fillers per girl, place frame handler, arrival and place runners, place init
+file	EVENT	8010FE10	place_scenes	src/ovl/EVENT/8010FE10.c:5: 21 place arrival steps, the shared date steps (special event choice, outcome factors, talk and close steps), effects
+file	EVENT	8011C650	ride_movies	src/ovl/EVENT/8011C650.c:6: amusement park ride movies (roller coaster, ghost house, Ferris wheel, scream ride, virtual ship)

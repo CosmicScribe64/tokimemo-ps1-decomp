@@ -1,0 +1,5 @@
+# kind	scope	old	new	note
+file	NAME_ENT	80132000	name_entry	T-27060 src/ovl/NAME_ENT/80132000.c:103,112,1962,2451; mode0x14 name/preset/grid/birthday input, profile storage and new-game initial scores/clubs.
+file	NAME_ENT	80139740	file_select	T-27060 src/ovl/NAME_ENT/80139740.c:85,1045,1753,3195; mode0x13 album/system-file selection, read/write/copy/new/clear flow, retained profiles and summary presentation.
+file	NAME_ENT	80142A80	opening	T-27060 src/ovl/NAME_ENT/80142A80.c:53,277,695; attract picture-sequence callbacks, voice/palette presentation and opening movie flow.
+file	NAME_ENT	80144AD0	prologue	T-27060 src/ovl/NAME_ENT/80144AD0.c:71,83,105,2742; owns opening-mode dispatcher plus the prologue line player, speaker/voice tables and mode-stage handlers; object stays intact.

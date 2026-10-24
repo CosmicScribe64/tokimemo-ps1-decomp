@@ -1,0 +1,7 @@
+# kind	scope	old	new	note
+file	DATE2	80132000	date_entry	T-27060 src/ovl/DATE2/80132000.c:4; amusement-park date resource/entry helpers and func_80132214 mode handler; main overlay loader routes game mode0x58 here, whereas0x50 belongs to DATE.
+file	DATE2	801326F0	date_scene_steps	src/ovl/DATE2/801326F0.c:9: date scene callback and step handlers
+file	DATE2	80132DE0	date_scene_state	src/ovl/DATE2/80132DE0.c:35: date state machine, movie and scene callbacks
+file	DATE2	80136D50	player_birthday_dialogue	T-27060 src/ovl/DATE2/80136D50.c:4,66; player-birthday visit script binding, group1 selection and talk; 80132DE0.c:1448-1476 selects the mode-stage4 route.
+file	DATE2	80137360	scene_choices_and_saved_return	T-27060 src/ovl/DATE2/80137360.c:4; local script/choice flow and saved-step return, with a player-birthday test in func_80137948; no unproved girl-birthday identity is assigned.
+file	DATE2	80137D50	karaoke_scene_and_return	T-27060 src/ovl/DATE2/80137D50.c:4; karaoke mode entry func_80137F64, room/title setup func_8013820C, song/audio/text/rating flow and DATE return func_801381A4.

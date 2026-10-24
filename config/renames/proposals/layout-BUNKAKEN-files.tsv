@@ -1,0 +1,19 @@
+# kind	scope	old	new	note
+file	BUNKAKEN	80132000	script_setters_shiori_yukari_blocks	src/ovl/BUNKAKEN/80132000.c:4: 28 script table setters, Shiori-companion block (stages 18-31), Yukari block (72-84)
+file	BUNKAKEN	80137640	saki_block	src/ovl/BUNKAKEN/80137640.c:4: Saki block (stages 58-71)
+file	BUNKAKEN	80139E50	solo_block	src/ovl/BUNKAKEN/80139E50.c:4: solo exhibits (stages 5-10, 12-17) and the solo script helper
+file	BUNKAKEN	8013B510	invitation	src/ovl/BUNKAKEN/8013B510.c:8: stage 0: invitation and invite pick
+file	BUNKAKEN	8013BFE0	mio_club_block	src/ovl/BUNKAKEN/8013BFE0.c:7: Mio at her club (stages 44-47)
+file	BUNKAKEN	8013CF30	yumi_block	src/ovl/BUNKAKEN/8013CF30.c:7: Yumi block (stages 131-139)
+file	BUNKAKEN	8013EB30	yuko_block	src/ovl/BUNKAKEN/8013EB30.c:7: Yuko block (stages 111-121)
+file	BUNKAKEN	80140F60	yuina_club_block	src/ovl/BUNKAKEN/80140F60.c:4: Yuina at her club (stages 48-52)
+file	BUNKAKEN	801428D0	ayako_club_block	src/ovl/BUNKAKEN/801428D0.c:4: Ayako at her club (stages 53-57)
+file	BUNKAKEN	80143DD0	companion_menu	src/ovl/BUNKAKEN/80143DD0.c:12: stages 1-3: ask a companion, Yoshio, club menu
+file	BUNKAKEN	80144F70	festival_frame_control	T-27060 src/ovl/BUNKAKEN/80144F70.c:4; per-frame festival initialization/presentation and calls the mode-stage table dispatcher; includes calendar and scene flow control.
+file	BUNKAKEN	80145E40	mode_stage_and_club_routes	T-27060 src/ovl/BUNKAKEN/80145E40.c:9-35; indexes the142-handler table by mode_stage and selects routes from current club, known girls and companion state.
+file	BUNKAKEN	80146560	nozomi_block	src/ovl/BUNKAKEN/80146560.c:4: Nozomi block (stages 85-97)
+file	BUNKAKEN	80148ED0	birthday	src/ovl/BUNKAKEN/80148ED0.c:9: birthday phases 9 and 10 and their tables
+file	BUNKAKEN	8014A6A0	shiori_club_block	src/ovl/BUNKAKEN/8014A6A0.c:4: Shiori at her club (stages 32-43)
+file	BUNKAKEN	8014E440	mira_block	src/ovl/BUNKAKEN/8014E440.c:4: Mira block (stages 98-110)
+file	BUNKAKEN	80150D30	megumi_block	src/ovl/BUNKAKEN/80150D30.c:4: Megumi block (stages 122-130)
+file	BUNKAKEN	80152680	computer_fortune	src/ovl/BUNKAKEN/80152680.c:61: stage 11: fortune telling by blood type and its grid

@@ -1,0 +1,9 @@
+# kind	scope	old	new	note
+file	OLH	80132000	help_questions_and_answers_page	T-27060; src/ovl/OLH/80132000.c:39-48 draws the Q&A corner page and its start-button instruction
+file	OLH	80132420	help_system_settings_page	T-27060; src/ovl/OLH/80132420.c:30-46 draws the system-settings page
+file	OLH	80132FA0	help_memory_card_page	T-27060; src/ovl/OLH/80132FA0.c:30-47 draws the memory-card page
+file	OLH	80133B80	help_biorhythm_page	T-27060; src/ovl/OLH/80133B80.c:30-46 draws the biorhythm page
+file	OLH	80134500	help_icons_page	T-27060; src/ovl/OLH/80134500.c:30-46 draws the icon page
+file	OLH	80134F40	help_minigame_page	T-27060; src/ovl/OLH/80134F40.c:30-51 draws the minigame page
+file	OLH	80135AC0	help_trivia_page	T-27060; src/ovl/OLH/80135AC0.c:30-46 draws the mini-knowledge page
+file	OLH	801364E0	help_file_select_page	T-27060; src/ovl/OLH/801364E0.c:30-46 draws the file-select page

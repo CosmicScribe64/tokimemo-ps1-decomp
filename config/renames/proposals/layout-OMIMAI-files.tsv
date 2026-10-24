@@ -1,0 +1,5 @@
+# kind	scope	old	new	note
+file	OMIMAI	80132000	sick_visit_frame_dispatch	T-27060; src/ovl/OMIMAI/80132000.c:3-21 dispatches sick-visit stages and updates the shared display
+file	OMIMAI	801320A0	sick_visit_girl_resource_addresses	T-27060; src/ovl/OMIMAI/801320A0.c:3-47 initializes girl-specific resource address tables
+file	OMIMAI	80132AD0	sick_visit_scene_resource_addresses	T-27060; src/ovl/OMIMAI/80132AD0.c:3-34 initializes secondary scene resource address tables in the sick-visit overlay
+file	OMIMAI	801331B0	sick_visit_scene_dialogue	T-27060; src/ovl/OMIMAI/801331B0.c:149-151,361-418 feeds talk tables and owns shared visit callbacks

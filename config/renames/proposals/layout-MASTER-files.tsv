@@ -1,0 +1,10 @@
+# kind	scope	old	new	note
+file	MASTER	80132000	club_master_resource_setup	T-27060; src/ovl/MASTER/80132000.c:3-27 binds resource addresses for the club-mastery flow
+file	MASTER	80132140	club_master_mode_stage_dispatch	T-27060 src/ovl/MASTER/80132140.c:6-14; indexes the four-function callback table by game_state.mode_stage and owns its entry/load/talk route helpers; wiki/spec/o-master-ending.md describes the inspected flow.
+file	MASTER	80133680	club_tournament_scene	T-27060; src/ovl/MASTER/80133680.c:174-182 and 755-770 use tournament-specific actor/resource setup
+file	MASTER	80138490	shiori_birthday_scene	T-27060; src/ovl/MASTER/80138490.c:9-20 starts Shiori's birthday-day scene flow and sets its birthday event bit
+file	MASTER	80138EC0	tournament_actor_resources	T-27060; src/ovl/MASTER/80138EC0.c:3-7 binds actor frames/sequences consumed in src/ovl/MASTER/80133680.c:1821,1833-1836
+file	MASTER	80138F10	tournament_scene_resources	T-27060; src/ovl/MASTER/80133680.c:174-182 binds the scene frame/sequence/tpage resources and palette
+file	MASTER	80138F70	mastery_scene_actor_resources	T-27060; src/ovl/MASTER/80139000.c:1015-1019 binds actor frame/sequence addresses for its scene
+file	MASTER	80138FC0	mastery_talk_tables	T-27060; src/ovl/MASTER/80139000.c:173-177 binds the three talk tables for scene dialogue
+file	MASTER	80139000	club_master_scene_and_tables	T-27060; src/ovl/MASTER/80139000.c:4-13 defines the scene resource table; spec documents the club-master scene flow

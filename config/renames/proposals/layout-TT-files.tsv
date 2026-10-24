@@ -1,0 +1,34 @@
+# kind	scope	old	new	note
+# T-27060 file-only proposal; preserve current folder and each original object.
+# CANDIDATE ONLY for primary integration review. ADR-0001:249 reserves TT's English folder for contributor agreement; GLOSSARY.md:269 reserves its module term. These technical file-only rows preserve TT and assign no module prefix or confirmed gameplay identity; primary decides application within the user's authorization.
+file	TT	80132000	animation_and_angle	T-27060 src/ovl/TT/80132000.c:4: frame-list control bytes advance sprite animation; second function computes relative angle; body 9: if (arg0[8] & 0x80) {; 10: arg0[8] &= 0xFF7F;
+file	TT	80132130	ranking_view	T-27060 src/ovl/TT/80132130.c:315: ranking display scene (state 7) and its grid background; body 324: control = D_80158A6C; 325: buttons = (TtButtons06 *)(scene + 0x10);
+file	TT	80132F10	ground_target_pool	T-27060 src/ovl/TT/80132F10.c:76: ground target pool: spawn from script, update, draw; body 82: m = -1; 83: g = (u8 *)D_80158A70;
+file	TT	80133970	enemy_shots_and_sound	T-27060 src/ovl/TT/80133970.c:7: sound bank loads and latched requests plus enemy shot pool, aim/fan/beam patterns and drawing; body 11: audio_command(0x7F); 12: func_800451E0(0x80162000);
+file	TT	80135360	swing_ring_boss	T-27060 src/ovl/TT/80135360.c:227: boss collision, ring layout, swinging ring movement, attack and death sequence; body 234: c = D_80158A8C; 235: switch (*(u16 *)(c + 8)) {
+file	TT	801367C0	exit_flow	T-27060 src/ovl/TT/801367C0.c:4 advances private exit substep and timer, sets scene exit flag q[0x55] after timer reaches 31
+file	TT	80136830	play_flow_and_scroll_scripts	T-27060 src/ovl/TT/80136830.c:39 selects scroll/enemy scripts and boss callback by level selector; :75 chooses replay stream; :142 advances scroll accumulator and initializes/updates entity pools; :327 calls selected boss; :13 updates speed gauge; entry dispatch src/ovl/TT/8013E850.c:48
+file	TT	801374C0	rope_arm_boss	T-27060 src/ovl/TT/801374C0.c:408: boss rope contact, side/core damage, rope extension/breakage, ring expansion and attacks; body 417: c = D_80158A8C; 418: s = D_80158AAC;
+file	TT	8013A040	game_over_flow	T-27060 src/ovl/TT/8013A040.c:27: core state 5; body 36: o = 0x14; 37: g = D_80158A60;
+file	TT	8013A3E0	multipart_form_boss	T-27060 src/ovl/TT/8013A3E0.c:318: independent part collision/pose handlers, alternate movement forms, attacks and part-death animation; body 323: switch (*(u16 *)(p + 6)) {; 328: if (*(s32 *)(p + 0x3E4) >= 0x2000) {
+file	TT	8013BD10	cycling_pickups	T-27060 src/ovl/TT/8013BD10.c:276: pickup pool with motion, cloud spawn, shot-driven kind changes and popup labels; avoids unconfirmed bell identity; body 280: c = D_80158A6C; 281: e = D_80158A74;
+file	TT	8013C6D0	settings_and_background	T-27060 src/ovl/TT/8013C6D0.c:4: settings/button configuration state plus background renderers; body 8: p[0] = 1; 9: p[1] = 0;
+file	TT	8013E290	engine_initialization	T-27060 src/ovl/TT/8013E290.c:4: VSync event setup, work-state clearing, saved configuration load and video initialization; body 8: p = (s32 *)D_80158A68; 10: ev = OpenEvent(0xF2000003, 2, 0x1000, func_8013EC1C);
+file	TT	8013E850	frame_loop_and_pause	T-27060 src/ovl/TT/8013E850.c:5: overlay entry and frame loop, pause, pad-sequence checks and frame begin/end; body 11: a = D_80158A60; 12: b = D_80158A64;
+file	TT	8013F040	beam_and_ring_boss	T-27060 src/ovl/TT/8013F040.c:645: boss form changes, aimed fan and drone-ring phase, beam phase and thrown-body attack; body 656: mode = ((TtSceneView *) D_80158A8C)->unk_08; 657: other = D_80158A74;
+file	TT	801410A0	rope_joint_motion	T-27060 src/ovl/TT/801410A0.c:7: angle and distance constraint propagation for a chain of rope joints; body 17: n = s[0x1A]; 18: dx = *(s16 *)(s + 0) - *(s16 *)(s + 4);
+file	TT	80141450	sprite_packets	T-27060 src/ovl/TT/80141450.c:6: textured quad flip/scale/rotation and sprite packet submission; body 23: p = (POLY_FT4 *)arg0; 25: w = p->x1; h = p->y1;
+file	TT	80142110	pad_input_and_replay	T-27060 src/ovl/TT/80142110.c:4: pad poll, pressed/held state and prerecorded input stream playback; body 13: g = D_80158A60; 14: s = D_80158A64;
+file	TT	80142350	level_asset_loading	T-27060 src/ovl/TT/80142350.c:5: load state chooses stage-specific CD blocks and advances state; body 12: base = D_80158A60; 13: s = D_80158A64;
+file	TT	80142570	boss_parts_and_hits	T-27060 src/ovl/TT/80142570.c:4: field enemy destruction, boss sprite/part/hitbox clearing, hit tests and part animation/drawing; body 8: func_80133AD0(0x60C); 9: p = D_80158A98;
+file	TT	80142D40	player_and_asset_uploads	T-27060 src/ovl/TT/80142D40.c:339: VRAM/CD load helpers plus player spawn/control/movement, hit, pickup effects and draw; body 350: p = D_80158A74; 351: pad = D_80158A60 + 0x20;
+file	TT	80144D70	level_clear_and_collisions	T-27060 src/ovl/TT/80144D70.c:6: stage-clear transition and asset requests plus smart-bomb and overlap/collision pass; body 16: scene = D_80158A60; 17: g = (TtCore30 *)D_80158A64;
+file	TT	80145E60	ranking_name_entry	T-27060 src/ovl/TT/80145E60.c:4: ranking insertion, name-entry display and button input state; body 10: a = D_80158A60; 11: b = D_80158A6C;
+file	TT	80146BE0	bomb_pool	T-27060 src/ovl/TT/80146BE0.c:4: bomb pool; body 8: i = 0; 9: p = D_80158A84;
+file	TT	80147380	falling_sprite_pool	T-27060 src/ovl/TT/80147380.c:4 scans free slots by stride 0x68; :59 spawns falling sprites and also initializes a pickup for kind 0x30; :85 integrates motion and disables offscreen records; :110 updates six records; :132 draws those records and scale effects
+file	TT	801478D0	sprite_animation_and_followers	T-27060 src/ovl/TT/801478D0.c:4: part-sprite animation/drawing plus following-ship trail updates; body 13: temp_v0 = arg0->unk_08; 14: if (temp_v0 & 0x80) {
+file	TT	80148210	text_and_time_display	T-27060 src/ovl/TT/80148210.c:4: text pool, sprite-font records, time/name/countdown formatting and random drop helper; body 8: i = 0; 9: p = D_80158AA8;
+file	TT	801487D0	debug_font	T-27060 src/ovl/TT/801487D0.c:5: glyph packet drawing and string, decimal, hex and binary printing; body 12: buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8); 13: if (ch != 0x20) {
+file	TT	80148DB0	title_and_projectile_pools	T-27060 src/ovl/TT/80148DB0.c:4: title logo/menu/ship state plus bomb-target and player-shot pool operations; body 8: i = 0; 9: p = D_80158A88;
+file	TT	8014AF00	air_enemies_and_sprite_drawing	T-27060 src/ovl/TT/8014AF00.c:637: air enemy waves/script, movement/explosions and generic tile/textured/transformed sprite drawing; body 640: g = (TtCmdStream *)D_80158A70; 642: if (*(s16 *)g->cmd == -1) {
+file	TT	8014D260	fixed_angle_arctangent	T-27060 src/ovl/TT/8014D260.c:5: lookup-table arctangent with octant and sign restoration; body 11: neg_x = 0; 12: neg_y = 0;

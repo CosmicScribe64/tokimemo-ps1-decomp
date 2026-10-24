@@ -1,0 +1,9 @@
+# kind	scope	old	new	note
+file	ENDING	80132000	graduation_script_resources	T-27060; src/ovl/ENDING/80132000.c:6-35 initializes the graduation dialogue script address tables
+file	ENDING	80133030	graduation_candidate_selection	T-27060 src/ovl/ENDING/80133030.c:6,23; mode-step callbacks and graduation candidate ranking in func_801330E4; rank/points, special girl branches and strict-score comparisons. See wiki/spec/o-master-ending.md for rule details.
+file	ENDING	80133540	graduation_scene_handlers	T-27060; src/ovl/ENDING/80133540.c:5-18 dispatches mode-step callbacks and updates the ending presentation
+file	ENDING	80133C10	graduation_scene_flow	T-27060; src/ovl/ENDING/80133C10.c:5-47 initializes grouped script and scene resource addresses
+file	ENDING	80134D20	graduation_scene_tables	T-27060; src/ovl/ENDING/80134D20.c:4-10 declares scene data islands
+file	ENDING	80137340	ending_audio_visual_update	T-27060; src/ovl/ENDING/80137340.c:5-22 dispatches ending scene callbacks and updates audio-level display
+file	ENDING	801396E0	career_and_epilogue_summary	T-27060 src/ovl/ENDING/801396E0.c:65,113,125,301; binds fifteen-character summary script resources, dispatches summary callbacks, composes career/future summaries from player flags, club levels and parameters, then routes Yoshio versus other candidates.
+file	ENDING	8013B6A0	graduation_epilogue_handlers	T-27060; src/ovl/ENDING/8013B6A0.c:5-21 dispatches epilogue scene steps
