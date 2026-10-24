@@ -790,6 +790,244 @@ class BranchTest(Repo):
         self.assertIn("declare it in include/main_api.h", out.getvalue())
 
 
+class TopicOwnerTests(Repo):
+    def topics(self, umbrella=True):
+        self.write("main/schedule.h", '#ifndef MAIN_SCHEDULE_H\n#define MAIN_SCHEDULE_H\n'
+                   '#include "common.h"\n/* Preserve this table comment and conditional. */\n#if 1\n'
+                   'extern s8 D_800B6740;\n#endif\nvoid func_8006CB6C(void);\n#endif\n')
+        self.write("main/day_event.h", '#ifndef MAIN_DAY_EVENT_H\n#define MAIN_DAY_EVENT_H\n'
+                   '#include "common.h"\ns32 func_8006D6E0();\nvoid func_8007259C(u8 arg0);\n#endif\n')
+        self.write("main/school_day.h", '#ifndef MAIN_SCHOOL_DAY_H\n#define MAIN_SCHOOL_DAY_H\n'
+                   '#include "common.h"\nextern s8 D_800B68E0[8][9];\n'
+                   'u8 func_80073AD8(void);\nvoid func_800744A0();\n#endif\n')
+        if umbrella:
+            self.write("main_api.h", API.replace('#include "common.h"', '#include "common.h"\n'
+                       '#include "main/schedule.h"\n#include "main/day_event.h"\n#include "main/school_day.h"'))
+        else:
+            (self.inc / "main_api.h").unlink(missing_ok=True)
+            (self.inc / "game.h").unlink(missing_ok=True)
+
+    def model(self):
+        return sp.Model(str(self.inc), str(self.root / "src"))
+
+    def owner_bytes(self):
+        return {h: (self.inc / h).read_bytes() for h in sp.canonical_headers(str(self.inc))}
+
+    def test_explicit_registration_and_provenance_without_umbrellas(self):
+        self.topics(False)
+        self.write("main/unregistered.h", "void func_8006CC00(void);\n")
+        self.src("main/use.c", '#include "main/day_event.h"\ns32 use(void) { return func_8006D6E0(3); }\n')
+        model = self.model()
+        self.assertTrue(model.api_present)
+        self.assertEqual(model.api_owner["func_8006D6E0"], "main/day_event.h")
+        self.assertNotIn("func_8006CC00", model.api)
+        self.assertEqual(model.api_declarations["func_8006D6E0"][0][0], "main/day_event.h")
+        self.assertTrue(any("func_8006CC00" in p and "registered topic" in p
+                            for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+
+    def test_registered_owner_wins_over_consumer_inference(self):
+        from unittest.mock import patch
+        self.topics(False)
+        model = self.model()
+        with patch.object(sp.srcscan, "header_units", return_value={"main/day_event.h": "AAA"}):
+            self.assertIsNone(model.owner("main/day_event.h"))
+            self.assertTrue(model.is_main("func_8006D6E0", "main/day_event.h"))
+
+    def test_disjoint_canonical_duplicates_fail_before_writing(self):
+        for second in ("s32 func_8006D6E0();", "void func_8006D6E0(u8 x);"):
+            with self.subTest(second=second):
+                self.topics(False)
+                p = self.inc / "main/schedule.h"
+                p.write_text(p.read_text().replace("#include \"common.h\"", '#include "common.h"\n' + second))
+                before = self.owner_bytes()
+                problems = sp.check_api(str(self.inc), str(self.root / "src"))
+                self.assertTrue(any("duplicate canonical owner for func_8006D6E0" in p for p in problems), problems)
+                self.assertGreater(sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None), 0)
+                self.assertEqual(before, self.owner_bytes())
+
+    def test_api_and_topic_are_not_two_owners(self):
+        self.topics()
+        self.write("main_api.h", API + "\ns32 func_8006D6E0();\n")
+        self.assertTrue(any("duplicate canonical owner" in p for p in sp.check_api(str(self.inc))))
+
+    def test_write_and_fix_preserve_bytes_views_and_implicit_definitions(self):
+        for umbrella in (True, False):
+            with self.subTest(umbrella=umbrella):
+                # Restore the legacy fixture before the second registration.
+                self.write("main_api.h", API)
+                self.write("game.h", '#include "main_api.h"\n')
+                self.topics(umbrella)
+                self.src("main/pilot.c", '#include "main/day_event.h"\n'
+                         's32 caller(void) { return func_8006F524(1); }\n'
+                         's32 func_8006F524(s32 x) { return x; }\n'
+                         's32 func_8006D6E0(void) { return 1; }\n')
+                self.src("ovl/AAA/use.c", '#include "main/day_event.h"\n#include "main/school_day.h"\n'
+                         's32 use(void) { func_800744A0(1, 2, 3); return func_8006D6E0(4); }\n')
+                before, views = self.owner_bytes(), sp.snapshot(self.model())
+                for fix in (False, True):
+                    self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=fix,
+                                                  log=lambda _: None), 0)
+                    self.assertEqual(before, self.owner_bytes())
+                    self.assertEqual(sp.view_changes(views, sp.snapshot(self.model())), [])
+                    self.assertNotIn("func_8006F524", self.model().api)
+                self.assertEqual((self.inc / "main_api.h").exists(), umbrella)
+
+    def test_fix_keeps_topic_destination_and_guards_a_used_override(self):
+        self.topics(False)
+        self.ovl("AAA", "void func_8007259C(s32 arg0);\n", head='#include "common.h"\n')
+        self.src("ovl/AAA/a.c", '#include "ovl/AAA.h"\nvoid use(void) { func_8007259C(300); }\n')
+        views = sp.snapshot(self.model())
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        owner = (self.inc / "main/day_event.h").read_text()
+        overlay = (self.inc / "ovl/AAA.h").read_text()
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_func_8007259C", owner)
+        self.assertIn('#include "main/day_event.h"', overlay)
+        self.assertNotIn('main/schedule.h', overlay)
+        self.assertIn("#define MAIN_API_OVERRIDE_func_8007259C", overlay)
+        self.assertEqual(sp.view_changes(views, sp.snapshot(self.model())), [])
+        self.assertFalse((self.inc / "main_api.h").exists())
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+
+    def test_fix_keeps_existing_benign_override_visible(self):
+        self.topics(False)
+        owner = self.inc / "main/day_event.h"
+        owner.write_text(owner.read_text().replace("s32 func_8006D6E0();",
+                         "#ifndef MAIN_API_OVERRIDE_func_8006D6E0\ns32 func_8006D6E0();\n#endif"))
+        self.ovl("AAA", "s32 func_8006D6E0(s32 x);\n",
+                 head='#define MAIN_API_OVERRIDE_func_8006D6E0 /* matched wide prototype */\n'
+                      '#include "common.h"\n#include "main/day_event.h"\n')
+        self.src("ovl/AAA/a.c", '#include "ovl/AAA.h"\ns32 use(void) { return func_8006D6E0(3); }\n')
+        before = (self.inc / "ovl/AAA.h").read_bytes()
+        views = sp.snapshot(self.model())
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        self.assertEqual((self.inc / "ovl/AAA.h").read_bytes(), before)
+        self.assertEqual(sp.view_changes(views, sp.snapshot(self.model())), [])
+
+    def test_fix_can_guard_multiline_prototype_without_reflow(self):
+        self.topics(False)
+        owner = self.inc / "main/day_event.h"
+        declaration = "void func_8007259C(\n    u8 arg0); /* preserve trailing comment */"
+        owner.write_text(owner.read_text().replace("void func_8007259C(u8 arg0);", declaration))
+        self.ovl("AAA", "void func_8007259C(s32 arg0);\n", head='#include "common.h"\n')
+        self.src("ovl/AAA/a.c", '#include "ovl/AAA.h"\nvoid use(void) { func_8007259C(300); }\n')
+        views = sp.snapshot(self.model())
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_func_8007259C\n" + declaration + "\n#endif", owner.read_text())
+        self.assertEqual(sp.view_changes(views, sp.snapshot(self.model())), [])
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+
+    def test_fix_rolls_back_every_file_if_a_late_guard_cannot_be_added(self):
+        self.topics(False)
+        owner = self.inc / "main/day_event.h"
+        owner.write_text(owner.read_text().replace("void func_8007259C(u8 arg0);",
+                         "void func_8007259C(u8 arg0); void func_800725A0(void);"))
+        self.ovl("AAA", "void func_8007259C(s32 arg0);\n", head='#include "common.h"\n')
+        self.src("ovl/AAA/a.c", '#include "ovl/AAA.h"\nvoid use(void) { func_8007259C(300); }\n')
+        before = {p: p.read_bytes() for p in self.root.rglob("*.h")}
+        before.update({p: p.read_bytes() for p in self.root.rglob("*.c")})
+        messages = []
+        self.assertGreater(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=messages.append), 0)
+        self.assertTrue(any("cannot add override guard" in p for p in messages), messages)
+        self.assertTrue(any("restored original" in p for p in messages), messages)
+        self.assertEqual(before, {p: p.read_bytes() for p in before})
+        self.assertFalse((self.inc / "main_api.h").exists())
+
+    def test_missing_owner_errors_without_recreating_umbrella(self):
+        self.topics(False)
+        self.write("main/unregistered.h", "void func_8006CC00(void);\n")
+        before, messages = self.owner_bytes(), []
+        self.assertGreater(sp.run_write(str(self.inc), str(self.root / "src"), log=messages.append), 0)
+        self.assertTrue(any("no canonical declaration owner" in p for p in messages), messages)
+        self.assertEqual(before, self.owner_bytes())
+        self.assertFalse((self.inc / "main_api.h").exists())
+        self.assertIn("explicit declaration", sp.add_global(str(self.inc), None, "D_800B67A0", "u8"))
+
+    def test_overlay_private_record_exception_does_not_require_a_new_owner(self):
+        self.topics(False)
+        self.ovl("AAA", "typedef struct Local { s32 x; } Local;\nextern Local D_80120000[];\n",
+                 head='#include "common.h"\n')
+        before = (self.inc / "ovl/AAA.h").read_bytes()
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        self.assertEqual((self.inc / "ovl/AAA.h").read_bytes(), before)
+        self.assertFalse((self.inc / "main_api.h").exists())
+
+    def test_registered_declaration_owns_a_name_even_before_symbol_map_refresh(self):
+        self.topics(False)
+        self.write("main/schedule.h", '#include "common.h"\nvoid newly_named_rule(void);\n')
+        self.write("other.h", '#include "common.h"\nvoid newly_named_rule(void);\n')
+        self.assertTrue(any("duplicate newly_named_rule" in p for p in sp.check_api(str(self.inc))))
+
+    def test_new_candidate_falls_back_to_existing_api_not_topic(self):
+        self.topics()
+        self.write("main/unregistered.h", "void func_8006CC00(void);\n")
+        topics = {h: b for h, b in self.owner_bytes().items() if h != "main_api.h"}
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None), 0)
+        self.assertEqual(self.model().api_owner["func_8006CC00"], "main_api.h")
+        for h, before in topics.items():
+            self.assertEqual((self.inc / h).read_bytes(), before)
+
+    def test_sdk_declarations_are_not_accidental_topic_owners(self):
+        self.topics(False)
+        self.write("libgpu.h", '#include "common.h"\nvoid func_8009F004();\n')
+        self.assertNotIn("func_8009F004", self.model().api)
+        self.write("main/schedule.h", '#include "common.h"\nvoid func_8009F004();\n')
+        self.assertTrue(any("SDK symbol func_8009F004" in p for p in sp.check_api(str(self.inc))))
+        self.assertGreater(sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None), 0)
+
+    def test_definition_mismatch_and_disjoint_source_duplicate_still_fail(self):
+        self.topics(False)
+        self.src("main/a.c", '#include "main/day_event.h"\nvoid func_8007259C(s32 x) {}\n')
+        self.src("main/b.c", '#include "common.h"\ns32 func_8006D6E0();\n')
+        problems = sp.check_api(str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("main exe defines" in p and "func_8007259C" in p for p in problems), problems)
+        self.assertTrue(any("duplicate func_8006D6E0" in p for p in problems), problems)
+
+    def test_per_symbol_missing_include_and_main_branch_view_without_umbrella(self):
+        self.topics(False)
+        self.src("main/a.c", '#include "main/schedule.h"\ns32 use(void) { return func_8006D6E0(); }\n')
+        problems = sp.check_api(str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("without include/main/day_event.h" in p for p in problems), problems)
+        self.assertEqual(sp.unit_types(self.model(), "main")["func_8006D6E0"], "s32F()")
+
+    def test_override_guard_must_be_at_the_actual_owner(self):
+        self.topics(False)
+        self.write("main/schedule.h", '#include "common.h"\n#ifndef MAIN_API_OVERRIDE_func_8007259C\n#endif\n')
+        self.src("main/a.c", '#define MAIN_API_OVERRIDE_func_8007259C /* matched wide */\n'
+                 '#include "main/day_event.h"\nvoid func_8007259C(s32 x);\nvoid use(void) { func_8007259C(300); }\n')
+        self.assertTrue(any("not guarded in include/main/day_event.h" in p
+                            for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+
+
+class StrictCompareTests(Repo):
+    def test_cli_strict_gate_requires_zero_in_every_class(self):
+        import io
+        from contextlib import redirect_stdout
+        self.src("main/use.c", '#include "game.h"\nvoid use(void) { func_80042808(); }\n')
+        actual = sp.snapshot(sp.Model(str(self.inc), str(self.root / "src")))
+        fixture = self.root / "views.json"
+        args = ["--inc", str(self.inc), "--src", str(self.root / "src"), "--compare", str(fixture)]
+        cases = [("identical", actual, 0, 0)]
+        for label, signature in (("benign", "voidF()"), ("risky", "s32F(void)")):
+            old = json.loads(json.dumps(actual))
+            old["src/main/use.c"]["func_80042808"] = signature
+            cases.append((label, old, 0 if label == "benign" else 1, 1))
+        old = json.loads(json.dumps(actual))
+        del old["src/main/use.c"]["func_80042808"]  # implicit -> void is a build-confirmation view change
+        cases.append(("check", old, 0, 1))
+        for label, old, normal, strict in cases:
+            with self.subTest(label=label), redirect_stdout(io.StringIO()):
+                fixture.write_text(json.dumps(old))
+                self.assertEqual(sp.main(args), normal)
+                self.assertEqual(sp.main(args + ["--strict-compare"]), strict)
+
+    def test_strict_compare_requires_a_snapshot_argument(self):
+        import io
+        from contextlib import redirect_stderr
+        with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as error:
+            sp.main(["--strict-compare"])
+        self.assertEqual(error.exception.code, 2)
+
+
 class MergeStructureTests(unittest.TestCase):
     def test_fix_rejects_broken_headers_without_writing(self):
         import io

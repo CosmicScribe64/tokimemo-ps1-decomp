@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""One home for the declarations of main-exe symbols: include/main_api.h (T-3340).
+"""Canonical declarations of main-exe symbols (T-3340, T-27054).
+
+Legacy trees use include/main_api.h. Explicitly registered pilot topic headers
+may own declarations beside it or without it; arbitrary main/*.h and SDK
+headers are never discovered as canonical owners. Topic --write/--fix preserves
+existing canonical views and does not export definition-only functions, because
+matched callers may rely on absent prototypes. New declared candidates default
+to main_api.h only while that file exists; otherwise declare an owner explicitly.
 
 Every merge of overlay work used to hit header clashes: an overlay declares a main-exe function or
 global with one type, include/game.h or another overlay with another, and each batch agent wrote
@@ -63,12 +70,21 @@ import srcscan
 
 MAIN_LO, MAIN_HI = 0x80041000, 0x8012B538   # main exe image: text, data and bss (wiki/executable.md)
 API = "main_api.h"
+# Explicit pilot registration. An arbitrary main/*.h or SDK header is not a
+# canonical owner merely because it is present. The legacy API remains the
+# default destination for new declarations while that file exists.
+CANONICAL_HEADERS = (API, "main/schedule.h", "main/day_event.h", "main/school_day.h")
 OVERRIDE = "MAIN_API_OVERRIDE_"
 SDK_HEADERS = ("libgpu.h", "libapi.h")       # the PsyQ SDK's own declarations, never moved
 BUILTIN = {"void", "u8", "s8", "u16", "s16", "u32", "s32", "char", "int", "short", "long", "float",
            "double", "unsigned", "signed", "const", "volatile", "struct", "union", "enum", "F"}
 ADDR_RE = re.compile(r"^(?:func|D)_([0-9A-Fa-f]{8})$")
 DEFINE_RE = re.compile(r"^\s*#\s*define\s+" + OVERRIDE + r"(\w+)\s*(?:/\*(.*?)\*/)?\s*$", re.M)
+
+
+def canonical_headers(inc):
+    """Present explicitly registered owners, in deterministic preference order."""
+    return tuple(h for h in CANONICAL_HEADERS if os.path.isfile(os.path.join(inc, h)))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -143,8 +159,18 @@ class Model:
                 for f in sorted(files):
                     if f.endswith(".c"):
                         self.sources[os.path.join(root, f)] = self._read_source(os.path.join(root, f))
-        self.api_present = API in self.headers
-        self.api = {n: (t, r) for n, t, r in self.own.get(API, [])}
+        self.canonical = canonical_headers(inc)
+        self.api_present = bool(self.canonical)
+        self.topic_mode = any(h != API for h in self.canonical)
+        self.api, self.api_owner = {}, {}
+        self.api_declarations = defaultdict(list)
+        for h in self.canonical:
+            for n, t, r in self.own[h]:
+                self.api_declarations[n].append((h, t, r))
+                # Retain provenance for every occurrence; check_api diagnoses
+                # duplicates rather than allowing dictionary overwrite to hide one.
+                if n not in self.api:
+                    self.api[n], self.api_owner[n] = (t, r), h
         self.overrides = self._overrides()
         self.users = {}      # header -> .c files that include it
         self._others = None
@@ -180,6 +206,8 @@ class Model:
     def owner(self, header):
         """The overlay whose own header this is: ovl/<NAME>.h, or a header only that overlay's C files
         include (readable header names, tools/rename.py, T-27002); None for shared headers."""
+        if header in self.canonical:
+            return None
         m = re.match(r"^ovl/(\w+)\.h$", header)
         if m and (not self.bases or m.group(1) in self.bases):
             return m.group(1)
@@ -194,7 +222,7 @@ class Model:
         if self._others is None:
             self._others = defaultdict(set)
             for h, ds in self.own.items():
-                if h in SDK_HEADERS or h == API:
+                if h in SDK_HEADERS or h in self.canonical:
                     continue
                 for n, _t, _r in ds:
                     self._others[n].add(h)
@@ -245,7 +273,7 @@ class Model:
     def api_types(self):
         """typedef names a declaration in main_api.h may use (everything main_api.h includes)."""
         names = set()
-        todo, done = [API, "common.h", "libgpu.h"], set()
+        todo, done = list(self.canonical) + ["common.h", "libgpu.h"], set()
         while todo:
             h = todo.pop()
             if h in done or h not in self.headers:
@@ -416,7 +444,7 @@ def candidates(model):
     """{symbol: [(header, type, raw)]} for every main-exe symbol declared outside main_api.h."""
     out = defaultdict(list)
     for h, ds in model.own.items():
-        if h == API or h in SDK_HEADERS:
+        if h in model.canonical or h in SDK_HEADERS:
             continue
         for n, t, r in ds:
             if model.is_main(n, h):
@@ -440,6 +468,12 @@ def rank_view(model, name, header, typ, group):
 
 def choose(model, name, group, defs):
     """(type, raw, why) of the canonical declaration of `name`."""
+    if model.topic_mode and name in model.api:
+        # A structural migration is not an ABI inference pass. Existing topic
+        # and legacy owners keep their exact views; check_api still reports
+        # disagreements with definitions for an explicit, separately proved fix.
+        t, r = model.api[name]
+        return t, r, model.api_owner[name]
     if name in defs:
         t, r = defs[name]
         if name in model.api and benign(model.api[name][0], t) and not t.endswith("F()"):
@@ -506,8 +540,27 @@ def plan(model):
     cands = candidates(model)
     out = {}
     model.skipped = {}
-    for name in sorted(set(cands) | set(model.api) | {n for n in defs if model.in_main_range(n)}):
+    model.owner_errors = []
+    # Legacy --write exports definitions. Topic mode deliberately does not:
+    # several matched callers still rely on absent prototypes (34 in the pilot).
+    names = set(cands) | set(model.api)
+    if not model.topic_mode:
+        names |= {n for n in defs if model.in_main_range(n)}
+    for name in sorted(names):
         group = cands.get(name, [])
+        if model.topic_mode and name in model.api:
+            t, r = model.api[name]
+            out[name] = (t, r, model.api_owner[name])
+            continue
+        if model.topic_mode and group and all(model.needs_local_type(r, h) for h, _t, r in group):
+            model.skipped[name] = "uses overlay-local types; retained in its declaring header"
+            continue
+        if model.topic_mode and name not in model.api and API not in model.canonical:
+            reason = ("%s has no canonical declaration owner; declare it explicitly in a registered "
+                      "topic header before --write/--fix (main_api.h is absent)" % name)
+            model.skipped[name] = reason
+            model.owner_errors.append(reason)
+            continue
         if name in defs and not group and name not in model.api:
             private_types = model.definition_local_types[name] & tokens(defs[name][1]) - model.api_types()
             if private_types:
@@ -516,7 +569,7 @@ def plan(model):
                 continue
         if name not in cands and name not in defs:
             t, r = model.api[name]
-            out[name] = (t, r, "main_api.h")
+            out[name] = (t, r, model.api_owner.get(name, API))
             continue
         if group and all(model.needs_local_type(r, h) for h, _t, r in group):
             model.skipped[name] = skip_reason(model, name, group)
@@ -574,7 +627,7 @@ def report(model, out=sys.stdout):
 # ---------------------------------------------------------------------------------------------
 # check
 
-def check_api(inc, src=None):
+def _check_legacy_api(inc, src=None):
     """Problems (strings with the fix) for the main_api.h rules. Empty when main_api.h is absent."""
     model = Model(inc, src)
     if not model.api_present:
@@ -673,6 +726,98 @@ def check_api(inc, src=None):
     return problems
 
 
+def canonical_problems(model):
+    """Canonical duplicates must fail even in disjoint include closures."""
+    problems = []
+    sdk = {n: h for h in SDK_HEADERS for n, _t, _r in model.own.get(h, [])}
+    for name, entries in sorted(model.api_declarations.items()):
+        if len(entries) > 1:
+            listing = "; ".join("include/%s '%s'" % (h, short(t)) for h, t, _r in entries)
+            problems.append("duplicate canonical owner for %s: %s; keep exactly one canonical declaration" %
+                            (name, listing))
+        if name in sdk:
+            problems.append("SDK symbol %s is declared in canonical include/%s and include/%s; "
+                            "keep its declaration in the SDK header" %
+                            (name, model.api_owner[name], sdk[name]))
+    return problems
+
+
+def check_api(inc, src=None):
+    """Check registered owners; retain the original single-API checks for legacy trees."""
+    model = Model(inc, src)
+    if not model.topic_mode:
+        return _check_legacy_api(inc, src)
+    problems = canonical_problems(model)
+    api = model.api
+    known = read_known(model.root)
+    problems.extend(msg for key, msg in alias_conflicts(model) if key not in known)
+    for h, ds in sorted(model.own.items()):
+        if h in model.canonical or h in SDK_HEADERS:
+            continue
+        ov = model.overrides.get(h, {})
+        for name, typ, raw in ds:
+            if name not in api and (not model.is_main(name, h) or model.needs_local_type(raw, h)):
+                continue
+            home = model.api_owner.get(name)
+            if home is None:
+                dest = "include/" + API if API in model.canonical else "a registered topic header"
+                problems.append("main symbol %s is declared in include/%s: declare it in %s instead" %
+                                (name, h, dest))
+            elif api[name][0] == typ:
+                problems.append("duplicate %s: include/%s declares '%s' like include/%s; delete it here" %
+                                (name, h, short(typ), home))
+            elif name not in ov:
+                problems.append("conflict %s: include/%s has '%s', include/%s has '%s'. Use the canonical type, "
+                                "or add `#define %s%s /* reason */` before the first include and declare "
+                                "the matched view" % (name, h, short(typ), home, short(api[name][0]), OVERRIDE, name))
+    for f, found in sorted(model.overrides.items()):
+        where = f if f in model.headers else os.path.relpath(f, model.root)
+        for name, reason in sorted(found.items()):
+            home = model.api_owner.get(name)
+            if not reason:
+                problems.append("override %s in %s has no reason: write the matched-view reason" % (name, where))
+            if home is None:
+                problems.append("override %s in %s names a symbol no canonical owner declares" % (name, where))
+                continue
+            if f in model.headers:
+                mine = [t for n, t, _r in model.own[f] if n == name]
+                if mine and mine[0] == api[name][0]:
+                    problems.append("override %s in %s is redundant: its declaration equals include/%s" %
+                                    (name, where, home))
+                elif not mine and not reason.lower().startswith("implicit"):
+                    problems.append("override %s in %s has no declaration there: declare the matched view, "
+                                    "or start the reason with 'implicit'" % (name, where))
+            if name not in api_guards(model, home):
+                problems.append("override %s in %s is not guarded in include/%s: run sync_protos.py --write" %
+                                (name, where, home))
+    for path, info in sorted(model.sources.items()):
+        where = os.path.relpath(path, model.root)
+        ov = model.overrides.get(path, {})
+        for name, typ, _r in ch.declarations_text(info["text"]):
+            if name in api and name not in ov:
+                home = model.api_owner[name]
+                label = "duplicate" if typ == api[name][0] else "conflict"
+                problems.append("%s %s: %s declares '%s', canonical include/%s declares '%s'; "
+                                "delete the declaration or document an explicit %s%s override" %
+                                (label, name, where, short(typ), home, short(api[name][0]), OVERRIDE, name))
+        reached = closure_of_file(model, path)
+        visible = {n for n, _t, _h, _r in unit_walk(model, path)}
+        hidden = set(ov)
+        for h in reached:
+            hidden.update(model.overrides.get(h, {}))
+        for name in sorted(info["tokens"] & set(api)):
+            home = model.api_owner[name]
+            if home not in reached and name not in visible and name not in hidden:
+                problems.append("%s uses canonical symbol %s without include/%s: include its owner header" %
+                                (where, name, home))
+    for name, (typ, _r) in sorted((definitions(model) if model.sources else {}).items()):
+        if name in api and api[name][0] != typ and not benign(api[name][0], typ):
+            home = model.api_owner[name]
+            problems.append("%s: include/%s has '%s' but the main exe defines it as '%s': update %s" %
+                            (name, home, short(api[name][0]), short(typ), home))
+    return problems
+
+
 def closure(model, header):
     """Headers reached from `header` by #include (itself included)."""
     key = ("h", header)
@@ -699,12 +844,13 @@ def closure_of_file(model, path):
     return model._closure[key]
 
 
-def api_guards(model):
+def api_guards(model, header=None):
     """Symbols main_api.h wraps in `#ifndef MAIN_API_OVERRIDE_<sym>`."""
     if not model.api_present:
         return set()
-    text = _read(model.headers[API])
-    return set(re.findall(r"^\s*#\s*ifndef\s+" + OVERRIDE + r"(\w+)", text, flags=re.M))
+    owners = (header,) if header else model.canonical
+    return set().union(*(set(re.findall(r"^\s*#\s*ifndef\s+" + OVERRIDE + r"(\w+)",
+                                       _read(model.headers[h]), flags=re.M)) for h in owners))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -957,11 +1103,12 @@ def existing_lines(model):
     out = {}
     if not model.api_present:
         return out
-    idx = line_index(model, API)
-    for n, _t, raw in model.own[API]:
-        i, _c = idx.find(raw)
-        if i is not None:
-            out[n] = idx.lines[i].rstrip()
+    for h in model.canonical:
+        idx = line_index(model, h)
+        for n, _t, raw in model.own[h]:
+            i, _c = idx.find(raw)
+            if i is not None:
+                out[n] = idx.lines[i].rstrip()
     return out
 
 
@@ -994,7 +1141,7 @@ def all_overrides(model):
     return out
 
 
-def write_api(model, plan_, path=None, keep_guards=False):
+def _write_legacy_api(model, plan_, path=None, keep_guards=False):
     """Rewrite main_api.h from `plan_`. keep_guards: also keep every guard the file already has (--add-global
     reads no .c file, so it cannot see the overrides defined there, T-10400)."""
     entries = build_entries(model, plan_)
@@ -1010,16 +1157,114 @@ def write_api(model, plan_, path=None, keep_guards=False):
     return old != text, len(entries), len(guards)
 
 
+def declaration_lines(text, raw):
+    """Complete physical lines of one declaration, including multiline prototypes.
+
+    Mask comments without moving offsets. A line shared with another statement
+    cannot be guarded independently without reformatting, so leave it to an
+    explicit source edit instead of hiding unrelated declarations.
+    """
+    clean = re.sub(r"/\*.*?\*/|//[^\n]*", lambda m: re.sub(r"[^\n]", " ", m[0]), text, flags=re.S)
+    pattern = r"\b(?:extern\s+)?" + re.escape(raw).replace(r"\ ", r"\s+") + r"\s*;"
+    hits = list(re.finditer(pattern, clean))
+    if len(hits) != 1:
+        return None
+    hit = hits[0]
+    start = clean.rfind("\n", 0, hit.start()) + 1
+    end = clean.find("\n", hit.end())
+    end = len(clean) if end < 0 else end
+    if clean[start:hit.start()].strip() or clean[hit.end():end].strip():
+        return None
+    return clean.count("\n", 0, start), clean.count("\n", 0, end) + 1
+
+
+def write_api(model, plan_, path=None, keep_guards=False):
+    """Write canonical owners; topic mode preserves their existing text and views.
+
+    New candidates still default to the legacy API when present. Without it an
+    explicit declaration in a registered topic is required; never recreate an
+    umbrella or infer a topic from a function name/address range.
+    """
+    if not model.topic_mode:
+        return _write_legacy_api(model, plan_, path, keep_guards)
+    problems = canonical_problems(model)
+    if problems:
+        raise ValueError("; ".join(problems))
+    if path is not None:
+        raise ValueError("topic owners do not support an alternate main_api output path")
+    entries = build_entries(model, plan_)
+    owned = defaultdict(dict)
+    for name, entry in entries.items():
+        home = model.api_owner.get(name, API if API in model.canonical else None)
+        if home is None:
+            raise ValueError("%s needs an explicit canonical topic owner; main_api.h is absent" % name)
+        owned[home][name] = entry
+    changes, guarded_count = {}, 0
+    for home in model.canonical:
+        old = _read(model.headers[home])
+        lines = old.splitlines(keepends=True)
+        old_names = {n for n, _t, _r in model.own[home]}
+        missing = old_names - set(owned[home])
+        if missing:
+            raise ValueError("topic write cannot drop canonical declarations from %s: %s" %
+                             (home, ", ".join(sorted(missing))))
+        # Existing declarations are immutable in this migration profile. A
+        # different view requires an explicit declaration edit and build proof.
+        for name in old_names:
+            if plan_[name][:2] != model.api[name]:
+                raise ValueError("topic write cannot change canonical view of %s in %s" % (name, home))
+        guarded = api_guards(model, home)
+        needed = all_overrides(model) & set(owned[home])
+        guarded_count += len(guarded | needed)
+        insert = {}
+        for name in sorted(needed - guarded):
+            span = declaration_lines(old, model.api[name][1])
+            if span is None:
+                raise ValueError("cannot add override guard for %s in %s; guard its complete declaration explicitly" %
+                                 (name, home))
+            if any(span[0] < end and begin < span[1] for begin, end in insert):
+                raise ValueError("multiple override declarations share lines in %s; separate them first" % home)
+            insert[span] = name
+        for (begin, end), name in sorted(insert.items(), reverse=True):
+            declaration = lines[begin:end]
+            lines[begin:end] = (["#ifndef " + OVERRIDE + name + "\n"] + declaration +
+                                [("" if declaration[-1].endswith("\n") else "\n") + "#endif\n"])
+        new_names = sorted(set(owned[home]) - old_names, key=lambda n: sort_key(model, n))
+        if new_names:
+            additions = []
+            for name in new_names:
+                line = owned[home][name][1] + "\n"
+                additions += (["#ifndef " + OVERRIDE + name + "\n", line, "#endif\n"]
+                              if name in needed else [line])
+            # An explicitly guarded API's final #endif closes the header guard.
+            # Preserve every existing byte, including foreign conditional blocks.
+            at = len(lines)
+            if re.match(r"\s*#\s*ifndef\s+\w+", old):
+                at = next((i for i in range(len(lines) - 1, -1, -1)
+                           if re.match(r"\s*#\s*endif\b", lines[i])), len(lines))
+            if at and not lines[at - 1].endswith("\n"):
+                additions.insert(0, "\n")
+            lines[at:at] = additions
+        new = "".join(lines)
+        if new != old:
+            changes[model.headers[home]] = new
+    # Finish all validations before writing any owner.
+    for target, text in changes.items():
+        _write(target, text)
+    return bool(changes), len(entries), guarded_count
+
+
 # ---------------------------------------------------------------------------------------------
 # --fix: edit the headers
 
 def reason_for(model, header, name, typ, canon):
     """One-line reason written next to an automatic override."""
+    home = model.api_owner.get(name, API)
     if overlaps(model, name, header):
         return "%s overlay data at this address, %s (main_api.h: %s)" % (model.owner(header), short(typ), short(canon))
     if is_func(typ):
-        return "matched with %s (main_api.h: %s)" % (short(typ), short(canon))
-    return "matched as %s (main_api.h: %s)" % (short(typ), short(canon))
+        return "matched with %s (%s: %s)" % (short(typ), home, short(canon))
+    return "matched as %s (%s: %s)" % (short(typ), home, short(canon))
 
 
 def _declarators(stmt):
@@ -1060,12 +1305,19 @@ def rewrite_line(line, drop):
 def fix_header(model, plan_, h, dry=False, log=print):
     """Rewrite one header: drop declarations main_api.h carries, mark the used differing ones as
     overrides, include main_api.h. Returns the number of declarations changed."""
+    if model.topic_mode and h in model.canonical:
+        return 0
     path = model.headers[h]
     text = _read(path)
     is_home = h in ("game.h", "main_only.h")
     drop, overrides = set(), {}
     for name, typ, raw in model.own[h]:
         if not model.is_main(name, h) or model.needs_local_type(raw, h) or name not in plan_:
+            continue
+        if model.topic_mode and name in model.overrides.get(h, {}):
+            # The define hides the canonical declaration. Even a "benign" local
+            # prototype must stay: deleting it would leave no visible declaration.
+            # Pruning a deliberate matched view is a separate build-backed pass.
             continue
         canon = plan_[name][0]
         if typ == canon:
@@ -1102,7 +1354,17 @@ def fix_header(model, plan_, h, dry=False, log=print):
             at = next((i + 1 for i, l in enumerate(out) if re.match(r"\s*#\s*define\s+\w+_H\b", l)), 0)
             out[at:at] = ["", "/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */"] + defs
     # the include
-    if (model.owner(h) or h == "game.h") and API not in closure(model, h):
+    if model.topic_mode and (model.owner(h) or h in ("game.h", "main_only.h") or drop or overrides):
+        reached = closure(model, h)
+        needed = {model.api_owner[n] for n in drop | set(overrides) if n in model.api_owner}
+        for name in model.api:
+            if used_in(model, name, h):
+                needed.add(model.api_owner[name])
+        needed -= reached
+        if needed:
+            at = max([i for i, l in enumerate(out) if re.match(r'\s*#\s*include\b', l)] or [-1]) + 1
+            out[at:at] = ['#include "%s"' % home for home in sorted(needed)]
+    elif (model.owner(h) or h == "game.h") and API not in closure(model, h):
         at = max([i for i, l in enumerate(out) if re.match(r'\s*#\s*include\s+"(common|libgpu)\.h"', l)] or [-1]) + 1
         if h == "game.h" or "game.h" not in closure(model, h):
             out.insert(at, '#include "%s"' % API)
@@ -1265,11 +1527,13 @@ def asm_result_users(root):
 def unit_types(model, unit):
     """{symbol: effective type} a C file of `unit` sees from its root header."""
     root = srcscan.unit_header(unit, model.root)
-    if root not in model.headers:
+    if root not in model.headers and not (model.topic_mode and unit == "main"):
         return {}
     seen = defaultdict(list)
-    for name, typ, _f, _raw in ch.walk(model.headers[root], model.inc, rel=root):
-        seen[name].append(typ)
+    roots = (root,) if root in model.headers else model.canonical
+    for header in roots:
+        for name, typ, _f, _raw in ch.walk(model.headers[header], model.inc, rel=header):
+            seen[name].append(typ)
     return {n: effective(ts) for n, ts in seen.items()}
 
 
@@ -1481,7 +1745,9 @@ def add_global(inc, src, name, typ, log=print):
         return "%s is not a main-exe global (address 0x%X-0x%X, D_XXXXXXXX or a name of config/symbol_addrs*.txt)" % (
             name, MAIN_LO, MAIN_HI - 1)
     if name in model.api:
-        return "%s is already declared in main_api.h as %s" % (name, model.api[name][0])
+        return "%s is already declared in %s as %s" % (name, model.api_owner[name], model.api[name][0])
+    if model.topic_mode and API not in model.canonical:
+        return "%s needs an explicit declaration in a registered topic owner; main_api.h is absent" % name
     m = re.match(r"^(.*?)\s*((?:\[[^\]]*\])*)\s*$", typ.strip())
     if not m or not re.fullmatch(r"[A-Za-z_]\w*(?:\s+[A-Za-z_]\w*)*(?:\s*\*)*", m.group(1).strip()):
         return "cannot read '%s' as a type of %s" % (typ, name)
@@ -1494,7 +1760,10 @@ def add_global(inc, src, name, typ, log=print):
     # need the sources; --write does that, --add-global changes one line.
     plan_ = {n: (t, r, "kept") for n, (t, r) in model.api.items()}
     plan_[name] = (got[0][1], raw, "--add-global")
-    write_api(model, plan_, keep_guards=True)
+    try:
+        write_api(model, plan_, keep_guards=True)
+    except ValueError as err:
+        return str(err)
     log("%s: added extern %s;" % (os.path.join(inc, API), raw))
     return None
 
@@ -1510,7 +1779,7 @@ def report_skipped(model, log=print):
         log("WARNING " + text)
 
 
-def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=(), only=None):
+def _run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=(), only=None):
     """--write, or --fix when `fix`: update main_api.h (and clean the other headers). Returns the risky
     view changes of a --fix run (a count, 0 otherwise). `before` is a snapshot() taken before the caller
     edited the headers; without it the state on entry is the baseline. `ignore`: .c files whose view changes
@@ -1525,14 +1794,27 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
     model = model or Model(inc, src)
     before = before if before is not None else (snapshot(model) if fix else None)
     plan_ = plan(model)
-    changed, n, g = write_api(model, plan_)
-    log("%s: %d symbols" % (os.path.join(inc, API), n))
+    if model.owner_errors:
+        for problem in model.owner_errors:
+            log("sync_protos.py: " + problem)
+        return len(model.owner_errors)
+    try:
+        changed, n, g = write_api(model, plan_)
+    except ValueError as err:
+        log("sync_protos.py: " + str(err))
+        return 1
+    if model.topic_mode:
+        for home in model.canonical:
+            count = sum(model.api_owner.get(name, API) == home for name in plan_)
+            log("%s: %d symbols" % (os.path.join(inc, home), count))
+    else:
+        log("%s: %d symbols" % (os.path.join(inc, API), n))
     report_skipped(model, log)
     if fix:
         model = Model(inc, src)
         plan_ = plan(model)
         for h in sorted(model.headers):
-            if h != API and h not in SDK_HEADERS and (not only or h in only):
+            if h not in model.canonical and h not in SDK_HEADERS and (not only or h in only):
                 fix_header(model, plan_, h, log=log)
         model = Model(inc, src)
         write_api(model, plan(model))
@@ -1540,7 +1822,8 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
         add_implicit_overrides(model, view_changes(before, snapshot(model)), log=log)
         model = Model(inc, src)
     _c, n, g = write_api(model, plan(model))
-    log("%s: %d symbols, %d guarded" % (os.path.join(inc, API), n, g))
+    log("%s: %d symbols, %d guarded" %
+        ("canonical owners" if model.topic_mode else os.path.join(inc, API), n, g))
     if fix:
         after = snapshot(Model(inc, src))
         old = {k: v for k, v in before.items() if k not in ignore}
@@ -1548,6 +1831,37 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
         _b, _c, risky = compare(old, new, out=_LogOut(log))
         return risky
     return 0
+
+
+def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=(), only=None):
+    """Topic rewrites are transactional, including guards discovered during --fix.
+
+    Legacy mode retains its existing workflow. In topic mode a failed rewrite
+    or proof restores exact bytes, so a late unsupported declaration format
+    cannot leave an overlay changed while its canonical owner is unguarded.
+    """
+    model = model or Model(inc, src)
+    if not model.topic_mode:
+        return _run_write(inc, src, fix, model, log, before, ignore, only)
+    original = {}
+    for path in set(model.headers.values()) | set(model.sources):
+        with open(path, "rb") as fh:
+            original[path] = fh.read()
+    try:
+        result = _run_write(inc, src, fix, model, log, before, ignore, only)
+    except (ValueError, OSError) as err:
+        log("sync_protos.py: " + str(err))
+        result = 1
+    if result:
+        for path, data in original.items():
+            with open(path, "rb") as fh:
+                changed = fh.read() != data
+            if changed:
+                with open(path, "wb") as fh:
+                    fh.write(data)
+                ch.drop_cache(path)
+        log("topic rewrite failed; restored original header/source bytes")
+    return result
 
 
 class _LogOut:
@@ -1580,10 +1894,14 @@ def main(argv=None):
                     "relative to include/, e.g. game.h,ovl/TEL.h); default is every header")
     g.add_argument("--snapshot", metavar="FILE", help="save the view of every symbol per .c file")
     g.add_argument("--compare", metavar="FILE", help="compare the current views with a snapshot")
+    ap.add_argument("--strict-compare", action="store_true",
+                    help="with --compare: fail on any changed view, including benign and check classifications")
     g.add_argument("--check-branch", action="store_true",
                    help="before finishing: header rules plus alias and void-result disagreements (T-5030)")
     g.add_argument("--update-known", action="store_true", help="rewrite %s from the current findings" % KNOWN)
     a = ap.parse_args(argv)
+    if a.strict_compare and not a.compare:
+        ap.error("--strict-compare requires --compare")
     structural = ch.structure_problems(a.inc)
     if structural:
         for problem in structural:
@@ -1624,8 +1942,8 @@ def main(argv=None):
     if a.compare:
         with open(a.compare) as fh:
             old = json.load(fh)
-        _b, _c, risky = compare(old, snapshot(model))
-        return 1 if risky else 0
+        benign_count, check_count, risky = compare(old, snapshot(model))
+        return 1 if (risky or (a.strict_compare and (benign_count or check_count))) else 0
     if a.write or a.fix:
         risky = run_write(a.inc, a.src, fix=a.fix, model=model,
                           only=set(a.only.split(",")) if a.only else None)

@@ -48,6 +48,57 @@ class CheckHeadersTest(unittest.TestCase):
         self.write("ovl/A.h", '#include "game.h"\nextern s16 D_2;\n')
         self.assertEqual(self.problems(), [])
 
+    def topic(self, name, body):
+        path = self.inc / "main" / name
+        path.parent.mkdir(exist_ok=True)
+        guard = "MAIN_" + name.replace(".", "_").upper()
+        path.write_text("#ifndef %s\n#define %s\n%s#endif\n" % (guard, guard, body))
+
+    def test_topic_only_tree_enforces_disjoint_canonical_duplicates(self):
+        # Neither header includes the other: a closure-only check would miss this.
+        self.topic("schedule.h", "void func_80071000(void);\n")
+        self.topic("day_event.h", "void func_80071000(void);\n")
+        out = self.problems()
+        self.assertTrue(any("duplicate" in p and "func_80071000" in p for p in out), out)
+
+    def test_topic_only_tree_rejects_disjoint_overlay_copy(self):
+        self.topic("schedule.h", "void func_80071000(void);\n")
+        self.write("ovl/A.h", "void func_80071000(void);\n")
+        out = self.problems()
+        self.assertTrue(any("duplicate" in p and "func_80071000" in p for p in out), out)
+
+    def test_unregistered_main_header_is_not_a_canonical_owner(self):
+        self.topic("schedule.h", "void func_80071000(void);\n")
+        self.topic("surprise.h", "void func_80072000(void);\n")
+        out = self.problems()
+        self.assertTrue(any("func_80072000" in p and "main/surprise.h" in p for p in out), out)
+
+    def test_forwarding_umbrella_and_topic_declaration_are_clean(self):
+        self.topic("schedule.h", "void func_80071000(void);\n")
+        self.write("main_api.h", '#ifndef MAIN_API_H\n#define MAIN_API_H\n'
+                   '#include "main/schedule.h"\n#endif\n')
+        self.write("ovl/A.h", '#include "main_api.h"\n')
+        self.assertEqual(self.problems(), [])
+
+    def test_topic_tree_does_not_adopt_sdk_declarations(self):
+        self.topic("schedule.h", "void func_80071000(void);\n")
+        self.write("libgpu.h", "void func_8009F004();\n")
+        self.assertEqual(self.problems(), [])
+
+    def test_topic_override_preserves_narrow_signed_view(self):
+        self.topic("schedule.h", "#ifndef MAIN_API_OVERRIDE_D_800B6740\n"
+                   "extern unsigned char D_800B6740;\n#endif\n")
+        self.write("ovl/A.h", "#define MAIN_API_OVERRIDE_D_800B6740 /* signed-byte view */\n"
+                   '#include "main/schedule.h"\nextern signed char D_800B6740;\n')
+        (self.inc / "use.c").write_text('#include "ovl/A.h"\n'
+                                      'int use(void) { return D_800B6740; }\n')
+        self.assertEqual(check_headers.check(str(self.inc), str(self.inc)), [])
+
+    def test_api_false_retains_structural_only_mode_with_topics(self):
+        self.topic("schedule.h", "void func_80071000(void);\n")
+        self.write("ovl/A.h", "void func_80071000(void);\n")
+        self.assertEqual(check_headers.check(str(self.inc), api=False), [])
+
     def test_conflict_between_game_and_overlay(self):
         self.write("game.h", "extern s32 D_800CA160;\n")
         self.write("ovl/A.h", '#include "game.h"\nextern u32 D_800CA160;\n')

@@ -12,10 +12,11 @@ in one translation unit. Inside one closure there must be exactly one type per s
 With a source directory, the declarations and function definitions at the top level of each
 .c file are also compared with the headers it includes (conflicts only).
 
-Main-exe symbols have one home, include/main_api.h (T-3340): when that file exists, the checks of
-tools/sync_protos.py run too (a main-exe symbol declared in another header, an overlay view that
-differs from main_api.h without an explicit MAIN_API_OVERRIDE_<symbol>, ...). Each message names
-the fix.
+Main-exe symbols have one canonical declaration, in main_api.h or an explicitly registered topic
+header (T-27054). tools/sync_protos.py checks ownership whenever any canonical header is present,
+including topic-only trees without main_api.h. A main-exe symbol declared elsewhere, or an overlay
+view that differs without an explicit MAIN_API_OVERRIDE_<symbol>, fails with a diagnostic naming
+the fix. Unregistered main/ and SDK headers do not become canonical owners by their path alone.
 
 Headers are read with a small preprocessor (#include, #define, #ifdef/#ifndef/#else/#endif in
 file order), so a MAIN_API_OVERRIDE_<symbol> define in an overlay header hides the declaration
@@ -376,9 +377,10 @@ def check(inc, src=None, api=True):
                     for t2, hf in seen.get(name, []):
                         if not compatible(typ, t2):
                             problems.add("conflict %s: '%s' in %s vs '%s' in %s" % (name, typ, path, t2, hf))
-    if api and "main_api.h" in headers:
+    if api:
         import sync_protos
-        problems.update(sync_protos.check_api(inc, src))
+        if sync_protos.canonical_headers(inc):
+            problems.update(sync_protos.check_api(inc, src))
     return sorted(problems)
 
 
