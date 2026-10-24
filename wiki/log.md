@@ -1744,3 +1744,6 @@ Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value br
 
 ## [2026-10-24] ingest | Phase 2 analysis of overlay TT (T-27024)
 Analysed the TT overlay (TwinBee Time Attack, 303 functions) for the port: entry `tt_main`, nine core states, 22 work blocks at 0x80110000, rules for the clock and scroll speed, player, shots, bombs, bells, clouds, waves, ground targets, bosses, ranking and the two secret codes. Wrote `config/renames/proposals/o-tt.tsv` (949 rows, 21 hypotheses) and [[spec/o-tt]], linked from [[spec/index]]. Ticket [[tickets/T-27024-p2-o-tt]] is In Review. The emulator confirmed the title, stage 1, its boss, the ranking screen and the state sequence 1, 2, 5, 7; direct stage mode plays recorded input. No src/, include/ or symbol file changed.
+
+## [2026-10-24] ticket | T-27024 review round 1 fixes
+Fixed the blocking review findings of [[tickets/T-27024-p2-o-tt]]: bell kind 1 rule and the shot level 10 downgrade quirk in [[spec/o-tt]] (6.4), HYPOTHESIS marks on all bell names, the header file row, TtCore and warp field rows, shared record byte rows; also return fire by stage (6.9), `sys.use_pad2` bit 5, the boot sector list (7.2). `config/renames/proposals/o-tt.tsv` now has 994 rows (38 hypotheses). Ticket stays In Review for the next review pass. No src/, include/ or symbol file changes.

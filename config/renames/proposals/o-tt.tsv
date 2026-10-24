@@ -112,7 +112,7 @@ func	TT	func_8013BF9C	tt_bell_spawn_in_cloud	HYPOTHESIS: "bell" is the series na
 func	TT	func_8013C048	tt_bell_integrate	HYPOTHESIS: "bell" is the series name of this pickup (the code only shows a pickup that changes kind when shot); applies gravity, velocity and position, frees the bell below y 0x100
 func	TT	func_8013C0A8	tt_bells_update	HYPOTHESIS: "bell" is the series name of this pickup (the code only shows a pickup that changes kind when shot); per frame: popup scale-up (0x90), hold (0x91, 0x92), integration, animation
 func	TT	func_8013C1FC	tt_bells_draw	HYPOTHESIS: "bell" is the series name of this pickup (the code only shows a pickup that changes kind when shot); draws bells as 16x16 sprites; popups as 64x16 scaled sprites
-func	TT	func_8013C41C	tt_bell_hit_by_shot	a shot hits a bell: bumps the global bell counter, picks the next bell kind from the sequence table, bounces the bell away from the shot; after two counter wraps the bell breaks and the next hit removes it
+func	TT	func_8013C41C	tt_bell_hit_by_shot	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); a shot hits a bell: bumps the global bell counter (run+0xD), picks the kind from tt_bell_kind_sequence, then blanks it to kind 0 when it would be useless: kind 1 only when the shot level is exactly 9 (level 10 keeps kind 1, so collecting it lowers the shot level to 9), kind 2 at speed >= 10, kind 3 with options on, kind 6 at speed 0; bounces the bell away from the shot; after two counter wraps the bell breaks and the next hit removes it
 func	TT	func_8013C6D0	tt_button_cursor_init	creates the sprite record of the option cursor at row core+... (run.cursor)
 func	TT	func_8013C740	tt_button_cursor_update	moves the cursor sprite to run.cursor*16+0x60
 func	TT	func_8013C764	tt_button_code_set	maps a pad press mask (0x20 circle, 0x40 cross, 0x10 triangle, 0x80 square, 4 L1, 8 R1, 2 R2, 1 L2) to code 5,6,4,7,2,3,1,0 and stores it as the shot (row 0) or bomb (row 1) button
@@ -180,7 +180,7 @@ func	TT	func_80142DA8	tt_vram_upload_tiles	uploads a 32x128 texture block
 func	TT	func_80142DEC	tt_cd_read_blocking	reads a file range from an LBA into RAM with the main CD calls and waits
 func	TT	func_8014304C	tt_cd_read_start	starts a read (main function) after saving the previous read counter
 func	TT	func_801430C4	tt_cd_read_counter_before	returns D_80156784, the CD read counter sampled at the request before the last; callers proceed once the current counter is 5 or more past it
-func	TT	func_801430D4	tt_assets_load	boot load: palettes, tile pages and sprite sheets into VRAM and RAM
+func	TT	func_801430D4	tt_assets_load	boot load: palettes, tile pages and sprite sheets into VRAM and RAM; also the boot-resident blocks and a stage-shaped set (spec section 7.2)
 func	TT	func_80143570	tt_player_clear	deactivates the player
 func	TT	func_80143580	tt_player_power_preset	sets the starting power in autoplay: shot kind (+0x55: 8, 9 or 10), speed (+0x54: 4 or 5), options (+0x53, with their shot level) by stage
 func	TT	func_801436BC	tt_player_init	resets the player record and arms
@@ -192,7 +192,7 @@ func	TT	func_80143FE8	tt_player_move	integrates position and clamps x to +-0x78,
 func	TT	func_80144094	tt_player_hit	starts the death: invulnerable, bounce downward, copies the sprite to the arm record
 func	TT	func_801441BC	tt_player_update	player state machine: spawn 0x20, ready 0x30, play 0x40, dying 0x60, dead 0x61, clear exit 0xA0; tilt frame and arm punch timing
 func	TT	func_80144854	tt_player_draw	draws the player and arm sprites in the order set by the tilt
-func	TT	func_80144A04	tt_bell_collect	HYPOTHESIS: "bell" is the series name of this pickup (the code only shows a pickup that changes kind when shot); applies the bell kind: 0 nothing, 1 shot level 9, 2 speed up, 3 options, 6 speed down; shows a popup
+func	TT	func_80144A04	tt_bell_collect	HYPOTHESIS: "bell" is the series name of this pickup (the code only shows a pickup that changes kind when shot); applies the bell kind: 0 nothing, 1 shot level set to 9 (also from 10), 2 speed up, 3 options, 6 speed down; shows a popup
 func	TT	func_80144CA8	tt_lives_icons_update	hides the life icons beyond the lives left
 func	TT	func_80144CF0	tt_cheat_grant_all	cheat: time to the cap, options on, shot level 9, options placed
 func	TT	func_80144D70	tt_state_stage_clear	core state 4: stage clear screen; loads the next stage data, waits 0x191 frames, then state 2 or the end
@@ -323,8 +323,8 @@ data	TT	D_80158AA8	tt_texts	pointer to the 128 text records of 0x14 bytes at 0x8
 data	TT	D_80158AAC	tt_boss_rope_buf	pointer to the 0x3BF0 byte workspace at 0x8011C110: two rope arms of 0xEFC bytes for the stage 1 boss
 data	TT	D_80158AB0	tt_xforms	pointer to the sprite transform records of 0x10 bytes at 0x8011FD00 (type TtSprXform); slot 0 is the scratch record, slot 1-2 title logo
 data	TT	D_80158AB4	tt_frames	pointer to the two draw buffers of 0x80B8 bytes at 0x801E2000 (type TtDrawBuffer)
-data	TT	D_80158A5C	tt_sprite_set4_clut	palette base word (TtSprSet.clut, +0x10 of sprite set 4 at 0x80158A4C); rewritten with tt_sprite_set3_clut by tt_boss2_ring_update
-data	TT	D_801579D4	tt_sprite_set3_clut	palette base word (TtSprSet.clut, +0x10 of sprite set 3 at 0x801579C4); tt_boss2_ring_update rewrites it to 0x3C10, 0x3C50 or 0x3C90 by the boss HP phase
+data	TT	D_80158A5C	tt_sprite_set_4_clut	palette base word (TtSprSet.clut, +0x10 of sprite set 4 at 0x80158A4C); rewritten with tt_sprite_set_3_clut by tt_boss2_ring_update
+data	TT	D_801579D4	tt_sprite_set_3_clut	palette base word (TtSprSet.clut, +0x10 of sprite set 3 at 0x801579C4); tt_boss2_ring_update rewrites it to 0x3C10, 0x3C50 or 0x3C90 by the boss HP phase
 data	TT	D_801564B0	tt_state_table	9 state handlers indexed by core.state: load, title, stage, option, stage clear, game over, name entry, ranking, exit
 data	TT	D_80155DD0	tt_pause_code_masks	10 pad masks of the pause cheat code: up, up, down, down, left, right, left, right, cross, circle
 data	TT	D_80156C90	tt_title_code_masks	6 pad masks of the title code: up, up, L1, R1, R1, R1
@@ -436,7 +436,7 @@ data	TT	D_80155C78	tt_boss3_hitboxes	stage 3 hit boxes of 6 bytes: part pose box
 data	TT	D_80155C7E	tt_boss3_hitbox_slot_228	stage 3 boss hit box installed at boss+0x228
 data	TT	D_80155C84	tt_boss3_hitbox_slot_22C	stage 3 boss hit box table installed at boss+0x22C
 data	TT	D_80155D02	tt_boss3_tip_hitboxes	stage 3 tip hit boxes used by the part collision for tips 2 and 3
-data	TT	D_8014ED50	tt_sprite_set9_clut	palette base word (TtSprSet.clut, +0x10 of sprite set 9 at 0x8014ED40, the stage 3 boss set); set to 0x3E50 by tt_boss3_init and to 0x3ED0 at the boss death
+data	TT	D_8014ED50	tt_sprite_set_9_clut	palette base word (TtSprSet.clut, +0x10 of sprite set 9 at 0x8014ED40, the stage 3 boss set); set to 0x3E50 by tt_boss3_init and to 0x3ED0 at the boss death
 data	TT	D_80155D2C	tt_boss4_hitbox_slot_218	stage 4 boss hit box installed at boss+0x218
 data	TT	D_80155D32	tt_boss4_hitbox_part_a	stage 4 hit box installed at boss+0x228
 data	TT	D_80155D38	tt_boss4_hitbox_part_b	stage 4 hit box installed at boss+0x22C
@@ -528,9 +528,20 @@ field	TtRecord54	unk_2C	vel_y	16.16 velocity
 field	TtRecord54	unk_42	u	sprite u
 field	TtRecord54	unk_43	v	sprite v
 field	TtRecord54	unk_44	hit_timer	frames left of the hit sprite
+field	TtRecord54	unk_06	phase	reset together with step, step2 and the ticks when the state changes
+field	TtRecord54	unk_08	step	see phase
+field	TtRecord54	unk_0A	step2	see phase
+field	TtRecord54	unk_0E	tick1	byte counter reset with the state
+field	TtRecord54	unk_0F	tick2	byte counter reset with the state
 field	TtState58	unk_00	active	0 = free slot
 field	TtState58	unk_01	hidden	1 = not drawn and not updated
 field	TtState58	unk_04	state	0x20 launch, 0x40 flying, 0x80 target remove
+field	TtState58	unk_06	phase	reset together with step, step2 and the ticks when the state changes
+field	TtState58	unk_08	step	see phase
+field	TtState58	unk_0A	step2	see phase
+field	TtState58	unk_0D	tick0	byte counter reset with the state
+field	TtState58	unk_0E	tick1	byte counter reset with the state
+field	TtState58	unk_0F	tick2	byte counter reset with the state
 field	TtSlot68	active	active	0 = free slot
 field	TtSlot68	kind	kind	0x30 cloud with a bell, 0x31 empty cloud
 field	TtCore30	unk_00	state	core state 0..8, index into tt_state_table
@@ -548,6 +559,19 @@ field	TtCore30	unk_1F	fade_b	colour scale of the fade
 field	TtCore30	unk_22	autoplay	1 = replay recorded input (attract demo or exhibit)
 field	TtCore30	unk_26	timer	state timer in frames
 field	TtCore30	unk_2E	fade_level	0x80 down to 0 while fading in
+field	TtCore30	+0x0C	combo_frames	u16 frames the reset combo (SELECT+START+L1+R1, pad mask 0x90C) has been held; 0x1F makes tt_reset_combo_poll return 1
+field	TtCore30	+0x0E	combo_enabled	1 once the load state ran (state 0 sets it); tt_main clears it at every restart; the combo poll does nothing while 0
+field	TtCore30	+0x0F	combo_armed	set when the combo is newly completed (all four held now, not on the previous frame); the counter only runs while set, so a combo already held at start is ignored
+field	TtCore30	+0x10	paused	1 while the pause screen is up: the state handler and the run frame counter stop, the vsync clock does not
+field	TtCore30	+0x12	timer_running	1 lets tt_vsync_tick add to run.time; set in sub-state 0 of the stage state; cleared when a boss is defeated and when the last life is lost (just before the game over state)
+field	TtCore30	+0x13	tint_r	red byte of the flat background tile (background modes 0 and 1; mode 1 scales it by fade_r); set by tt_ranking_panel_init for the ranking screen, 0 at the title
+field	TtCore30	+0x14	tint_g	green byte of the flat background tile, see tint_r
+field	TtCore30	+0x15	tint_b	blue byte of the flat background tile, see tint_r
+field	TtCore30	+0x18	tile_map	pointer to the tile map descriptor read by the tile map backgrounds (tt_stage_tile_map or tt_title_tile_map)
+field	TtCore30	+0x20	code_timer	frames left to enter the next step of a button code (pause or title code); set to 0x10 on a correct step, reaching 0 resets code_step
+field	TtCore30	+0x21	code_step	index of the next expected mask in tt_pause_code_masks (10 steps) or tt_title_code_masks (6 steps)
+field	TtCore30	+0x24	hard_mode	HYPOTHESIS: "hard mode" is a game-meaning guess; the code shows only that 1 (set by the title code, cleared when the title starts and before the attract demo) enables return fire after player shot hits
+field	TtCore30	+0x25	hit_counter	counts player shot hits on air enemies, ground targets and bosses; with hard_mode set, every 2nd or 4th hit fires back (spec 6.9); reset with the title code
 field	TtCmdStream	pad0	progress_frac	fraction half of the 16.16 progress
 field	TtCmdStream	time	progress	integer half of the progress, the clock of the scripts
 field	TtCmdStream	cmd	air_script_cursor	next 6-byte air script command
@@ -611,7 +635,7 @@ field	TtRun	+0x08	time	u16 elapsed frames (1/60 s), cap 0x8CA0
 field	TtRun	+0x0A	cursor	menu cursor row
 field	TtRun	+0x0B	stage	stage index 0..3 (cleared stages); also the result for the festival
 field	TtRun	+0x0C	lives	extra lives left
-field	TtRun	+0x0D	bell_counter	global bell hit counter 1..0x14
+field	TtRun	+0x0D	bell_counter	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); global bell hit counter 1..0x14
 field	TtRun	+0x0F	finished	1 once the run has ended
 field	TtRun	+0x10	timer	u16 general timer of the current screen
 field	TtRun	+0x12	angle	u16 title logo angle
@@ -653,10 +677,10 @@ field	TtPlayer	+0x62	ready_timer	u16 invulnerability timer in state 0x30 (0x5A f
 field	TtBell	+0x00	active	0 = free
 field	TtBell	+0x04	state	0x20 under the cloud, 0x40 loose, 0x60 hit twice, 0x70 vanish, 0x90-0x92 popup
 field	TtBell	+0x38	anim_sets	first word of the animation block
-field	TtBell	+0x58	bell_kind	0 plain, 1 shot, 2 speed up, 3 option, 6 speed down
-field	TtBell	+0x59	cycle_count	number of full kind cycles seen
-field	TtBell	+0x5A	popup_timer	u16 frames the popup stays
-field	TtBell	+0x62	popup_scale	u16 popup scale up to 0x1000
+field	TtBell	+0x58	bell_kind	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); 0 plain, 1 shot, 2 speed up, 3 option, 6 speed down
+field	TtBell	+0x59	cycle_count	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); number of full kind cycles seen
+field	TtBell	+0x5A	popup_timer	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); u16 frames the popup stays
+field	TtBell	+0x62	popup_scale	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); u16 popup scale up to 0x1000
 field	TtBombTarget	+0x00	active	0 = free
 field	TtBombTarget	+0x04	state	0x20 init, 0x40 shown, 0x80 free
 field	TtBombTarget	+0x1C	spawn_y	s32 stage progress offset of the marker
@@ -709,6 +733,14 @@ field	TtActor78	unk_14	x	screen x
 field	TtActor78	unk_16	y	screen y
 field	TtActor78	unk_20	pos_x	16.16 position
 field	TtActor78	unk_24	pos_y	16.16 position
+field	TtActor78	unk_02	kind	air enemy kind (same word as TtFieldEnemy.kind)
+field	TtActor78	unk_04	state	state word (same as TtFieldEnemy.state)
+field	TtActor78	unk_06	phase	reset together with step, step2 and the ticks when the state changes
+field	TtActor78	unk_08	step	see phase
+field	TtActor78	unk_0A	step2	see phase
+field	TtActor78	unk_0D	tick0	byte counter reset with the state
+field	TtActor78	unk_0E	tick1	byte counter reset with the state
+field	TtActor78	unk_0F	tick2	byte counter reset with the state
 field	TtFieldEnemy	+0x00	active	0 = free slot
 field	TtFieldEnemy	+0x02	kind	air enemy kind 0x40..0x48; ground target kind 0x60..0x63; item drops 0x6D, 0x6E, 0x6F
 field	TtFieldEnemy	+0x04	state	0x40 live, 0x70 destroyed, 0x71 explosion, 0x78-0x7A item drop, 0x80 remove
@@ -741,6 +773,18 @@ field	TtEnemyShot	+0x52	draw_mode	u16 draw mode word set by tt_enemy_shot_setup
 field	TtEnemyShot	+0x54	clut	u16 palette word set by tt_enemy_shot_setup
 field	TtEnemyShot	+0x56	list_u	u written by the list animator
 field	TtEnemyShot	+0x57	list_v	v written by the list animator
+field	TtCore36	unk_32	warp_phase	wave phase of the warped tile map (background modes 0x10 and 0x11); +1 per frame, used as sine argument (x 32 plus 0x200 per mesh row or column)
+field	TtCore36	unk_34	warp_divisor	divisor of the wave in the warp mesh and of the mesh spacing: 0x1000 = flat, mode 0x10 lowers it by 0x20 to 0x100 (stronger warp), mode 0x11 raises it by 0x40 to 0x1000 and then returns to background mode 2
+field	TtGridCore	offset	scroll_offset	u16 scroll offset of the ranking screen grid (0..0x47, +1 per frame); shares the word at +0x2E with TtCore.fade_level
+field	TtSlot14	unk_00	sets	pointer to the sprite set table (tt_sprite_set_table)
+field	TtSlot14	unk_04	flip	bit 0 flips y, bit 1 flips x
+field	TtSlot14	unk_05	set	sprite set index
+field	TtSlot14	unk_08	flags	0x80 restart, 0x20 re-arm, 0x40 pause, bit 0 done
+field	TtSlot14	unk_10	xform_enable	1 = apply the transform record
+field	TtAnimState	unk_05	set	sprite set index
+field	TtAnimState	unk_06	frame	frame index inside the set
+field	TtAnimState	unk_08	flags	0x80 restart, 0x20 re-arm, 0x40 pause, bit 0 done
+field	TtAnimState	unk_09	hold	frames left on the current frame
 const	TtState	0	TT_STATE_LOAD	core state 0: stage data load, then state 2 or 1
 const	TtState	1	TT_STATE_TITLE	core state 1: title and main menu
 const	TtState	2	TT_STATE_STAGE	core state 2: a stage with its boss
@@ -778,7 +822,7 @@ const	TtScriptCmd	0xC4	TT_CMD_WAVE_C4	air wave: 5 enemies kind 0x45
 const	TtScriptCmd	0xC5	TT_CMD_WAVE_C5	air wave: 5 enemies kind 0x46
 const	TtScriptCmd	0xC6	TT_CMD_WAVE_C6	air wave: 5 enemies kind 0x47
 const	TtScriptCmd	0xC7	TT_CMD_WAVE_C7	air wave: 6 enemies kind 0x48
-const	TtScriptCmd	0x30	TT_CMD_CLOUD_WITH_BELL	cloud that hides a bell (script kind and cloud kind)
+const	TtScriptCmd	0x30	TT_CMD_CLOUD_WITH_BELL	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); cloud that hides a bell (script kind and cloud kind)
 const	TtScriptCmd	0x31	TT_CMD_CLOUD_EMPTY	cloud without a bell
 const	TtAirEnemyKind	0x40	TT_AIR_COLUMN_DROP	wave C0 enemy
 const	TtAirEnemyKind	0x41	TT_AIR_FLANKER	wave C1 flanking enemy
@@ -805,11 +849,11 @@ const	TtEnemyShotKind	0xAA	TT_SHOT_BOSS_LARGE	boss shot (box 5x5, palette 0x3CD5
 const	TtEnemyShotKind	0xAB	TT_SHOT_ANIMATED	sprite-animated shot of the stage 3 boss (box 7x7), sprite set 9 frames 0xF..0x13
 const	TtEnemyShotKind	0xAC	TT_SHOT_HOMING	homing shot (box 5x5); can be shot down
 const	TtEnemyShotKind	0xAD	TT_SHOT_BEAM	beam of the stage 4 boss that follows the boss x; box built per frame from its length
-const	TtBellKind	0	TT_BELL_PLAIN	no effect when collected
-const	TtBellKind	1	TT_BELL_SHOT_UP	raises the shot level to 9
-const	TtBellKind	2	TT_BELL_SPEED_UP	speed level +1
-const	TtBellKind	3	TT_BELL_OPTIONS	adds the three options
-const	TtBellKind	6	TT_BELL_SPEED_DOWN	speed level -1
+const	TtBellKind	0	TT_BELL_PLAIN	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); no effect when collected
+const	TtBellKind	1	TT_BELL_SHOT_UP	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); sets the shot level to 9; a level 10 shot (item 0x6F or the stage 4 preset) is lowered to 9 by it, because tt_bell_hit_by_shot only blanks this kind at level 9
+const	TtBellKind	2	TT_BELL_SPEED_UP	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); speed level +1
+const	TtBellKind	3	TT_BELL_OPTIONS	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); adds the three options
+const	TtBellKind	6	TT_BELL_SPEED_DOWN	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); speed level -1
 const	TtShotLevel	8	TT_SHOT_LEVEL_1	single forward shot, damage 2 on bosses
 const	TtShotLevel	9	TT_SHOT_LEVEL_2	single stronger shot, damage 4 on bosses
 const	TtShotLevel	10	TT_SHOT_LEVEL_3	three-way burst of damage 2 shots
@@ -840,7 +884,7 @@ const	TtLayer	2	TT_LAYER_PLAYER	player and options
 const	TtLayer	3	TT_LAYER_PLAYER_SHOT	player shots and bombs
 const	TtLayer	4	TT_LAYER_AIR_ENEMY	air enemies
 const	TtLayer	5	TT_LAYER_CLOUD	clouds
-const	TtLayer	6	TT_LAYER_BELL	bells
+const	TtLayer	6	TT_LAYER_BELL	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); bells
 const	TtLayer	11	TT_LAYER_BOMB_TARGET	bomb target markers
 const	TtLayer	12	TT_LAYER_GROUND_TARGET	ground targets
 const	TtLayer	13	TT_LAYER_BACKGROUND	background tiles
@@ -877,8 +921,8 @@ const	TtSe	0x606	TT_SE_POPUP	pickup popup appears
 const	TtSe	0x607	TT_SE_CODE_OR_HIT	title code accepted; player hit
 const	TtSe	0x608	TT_SE_SHOT_FIRE	player shot fired
 const	TtSe	0x609	TT_SE_BOMB_THROW	bomb thrown
-const	TtSe	0x60A	TT_SE_BELL_BLANK	plain bell collected
-const	TtSe	0x60B	TT_SE_BELL_HIT	bell hit by a shot
+const	TtSe	0x60A	TT_SE_BELL_BLANK	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); plain bell collected
+const	TtSe	0x60B	TT_SE_BELL_HIT	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); bell hit by a shot
 const	TtSe	0x60C	TT_SE_ENEMY_EXPLODE	air enemy destroyed
 const	TtSe	0x60D	TT_SE_GROUND_EXPLODE	ground target destroyed
 const	TtSe	0x60E	TT_SE_PLAYER_SPAWN	player appears
@@ -914,7 +958,7 @@ file	TT	src/ovl/TT/80136830.c	src/ovl/twinbee_time_attack/state_stage.c	core sta
 file	TT	src/ovl/TT/801374C0.c	src/ovl/twinbee_time_attack/boss_stage1.c	stage 1 boss
 file	TT	src/ovl/TT/8013A040.c	src/ovl/twinbee_time_attack/state_game_over.c	core state 5
 file	TT	src/ovl/TT/8013A3E0.c	src/ovl/twinbee_time_attack/boss_stage3.c	stage 3 boss
-file	TT	src/ovl/TT/8013BD10.c	src/ovl/twinbee_time_attack/bell.c	bell pool
+file	TT	src/ovl/TT/8013BD10.c	src/ovl/twinbee_time_attack/bell.c	HYPOTHESIS: "bell" is a game-meaning guess for this pickup (see TtBell and spec 6.4); bell pool
 file	TT	src/ovl/TT/8013C6D0.c	src/ovl/twinbee_time_attack/option_menu_background.c	core state 3 (option menu, button config) and the background renderers
 file	TT	src/ovl/TT/8013E290.c	src/ovl/twinbee_time_attack/engine_init.c	vsync event, state clear, config load, video init
 file	TT	src/ovl/TT/8013E850.c	src/ovl/twinbee_time_attack/main_loop.c	overlay entry, frame loop, pause and cheat code, frame begin and end
@@ -935,6 +979,7 @@ file	TT	src/ovl/TT/801487D0.c	src/ovl/twinbee_time_attack/debug_font.c	6x8 debug
 file	TT	src/ovl/TT/80148DB0.c	src/ovl/twinbee_time_attack/state_title.c	core state 1 and the bomb target pool
 file	TT	src/ovl/TT/8014AF00.c	src/ovl/twinbee_time_attack/air_enemy.c	air enemy pool, waves, generic sprite drawing
 file	TT	src/ovl/TT/8014D260.c	src/ovl/twinbee_time_attack/ratan2.c	PsyQ ratan2
+file	TT	include/ovl/TT.h	include/ovl/twinbee_time_attack.h	overlay header: types, externs and prototypes of all 31 files; new name follows the folder
 data	TT	D_801559DC	tt_sprite_set_0	sprite set 0: the ship and the options (record +0x3D = 0)
 data	TT	D_80152C2C	tt_sprite_set_1	sprite set 1: the ship death animation
 data	TT	D_80156C7C	tt_sprite_set_2	sprite set 2: arms and explosion effects of air enemies and ground targets
