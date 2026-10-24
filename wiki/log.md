@@ -1741,3 +1741,6 @@ Case `copy_store_then_ne0_left_if` (indirect store first) showed that IDO 4.1 ke
 ## [2026-10-24] ticket | T-26000 Done
 [[tickets/T-26000-ugen-block-copy-41-rule]] passed the standards and spec reviews (approved, four non-blocking follow-ups noted in the ticket) and moves to Done.
 Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value branch, `func_8006B0C8`'s 4-byte copy, stored compares, `Uxjp`, `Uijp`.
+
+## [2026-10-24] ingest | T-27027 phase 2: overlay RPG_BAT naming table and port spec
+Read the RPG_BAT overlay (61 files, 328 functions) with its three launchers and the main club and girl name tables; wrote [[spec/o-rpgbat]] (launch codes, 16 stages, five script channels, start values, damage and AI formulas, girl behaviors, end conditions, hidden code entry) and `config/renames/proposals/o-rpgbat.tsv` (706 rows: 328 func, 160 data, 104 const, 62 file, 27 field, 9 type, 16 comment; 9 marked HYPOTHESIS), prefix `rpg_battle_`. No change to `src/`, `include/` or symbol files; no emulator run (no save at a trigger point, no memory poke). Ticket [[tickets/T-27027-p2-o-rpgbat]] (In Review).
