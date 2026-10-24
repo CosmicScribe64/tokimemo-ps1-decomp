@@ -1758,3 +1758,7 @@ New page [[notes/wins-2026-10]]: all 93 functions of waves 8-11, the wave 9 clos
 ## [2026-10-23] ticket | T-25606 Done: main func_800476C0 matched
 
 The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) in round 1; merged directly after an orchestrator review so the match does not wait for the synthesis stage ([[tickets/T-25600-finish-gate]]).
+
+## [2026-10-23] ticket | T-25608 Done: main func_8006B0C8 matched; every game function is C
+
+The last function matched with a narrowed block-copy state rule in tools/ugen_pass.py; an IDO 4.1 check (user-approved download) confirmed the three swap copies' state and showed a better general rule, now [[tickets/T-26000-ugen-block-copy-41-rule]]. With this merge all 6,952 game functions are matched ([[tickets/T-25600-finish-gate]]).

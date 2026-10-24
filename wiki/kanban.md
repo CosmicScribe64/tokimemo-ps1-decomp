@@ -43,6 +43,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24020-astra-hard-functions|T-24020 Investigate three largest hard functions]]
 - [ ] [[tickets/T-24078-etc-two-poly-renderer|T-24078 Recover ETC two-slot polygon renderer]]
 - [ ] [[tickets/T-20008-large-name-introduction|T-20008 Recover large NAME_ENT introduction handler]]
+- [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
 
 ## Ready
 
@@ -71,7 +72,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-25604-gate-NAME_ENT-func_80143580|T-25604 Finish gate - NAME_ENT func_80143580]]
 - [ ] [[tickets/T-25605-gate-SHOUGATU-func_8013EA98|T-25605 Finish gate - SHOUGATU func_8013EA98]]
 - [ ] [[tickets/T-25607-gate-main-func_80067870|T-25607 Finish gate - main func_80067870]]
-- [ ] [[tickets/T-25608-gate-main-func_8006B0C8|T-25608 Finish gate - main func_8006B0C8]]
 - [ ] [[tickets/T-25609-gate-main-func_8007132C|T-25609 Finish gate - main func_8007132C]]
 
 ## In Progress
@@ -178,6 +178,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-25608-gate-main-func_8006B0C8|T-25608 Finish gate - main func_8006B0C8]]
 - [ ] [[tickets/T-25606-gate-main-func_800476C0|T-25606 Finish gate - main func_800476C0]]
 - [ ] [[tickets/T-25501-stubborn-shougatu-8013ea98|T-25501 Stubborn function SHOUGATU func_8013EA98 (src/ovl/SHOUGATU/8013E330.c)]]
 - [ ] [[tickets/T-25319-w10-NAME_ENT-80142A80|T-25319 Wave 10 second pass on src/ovl/NAME_ENT/80142A80.c]]

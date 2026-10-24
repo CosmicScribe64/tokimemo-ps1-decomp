@@ -18,6 +18,13 @@ Once such a branch follows an indirect store, every later copy of the procedure 
 `F`. The branch counts only when no other `Ufjp`/`Utjp` lies between the store and
 it (T-25608): a store inside an earlier loop on a variable bound, followed by the
 next loop's `n >= 1` guard, leaves the copies after it in `B`.
+Known limits of this rule (T-25608, IDO 4.1 check in wiki/ido-52-evaluation.md): on
+30 synthetic cases (tools/ido_eval_cases/ugen_copy_state/) IDO 4.1's ugen, which
+reproduces the original's copy states, disagrees with this rule in 8 shapes, none of
+them in matched code. What fits all 30 is simpler: an indirect store sets `F`, a
+conditional branch that compares two registers sets `B`, nothing else changes the
+state. Adopting that rule needs two FAKE-steered matches re-steered first (main
+`strCallback`, `func_8005938C`); see the follow-up ticket T-26000.
 Details and census: wiki/matching-notes.md, wiki/toolchain.md.
 
 In stock IDO 5.3 `ugen`, `f_jump` (`Ufjp`/`Utjp`) happens to leave `0` (`< 0x7ff8`)
