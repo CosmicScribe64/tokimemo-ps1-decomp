@@ -975,6 +975,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27014-p2-m-dates-a|T-27014 Phase 2 naming and spec for m-dates-a (src/main/80079B10.c, which is the sound driver)]]
 - [ ] [[tickets/T-27011-p2-m-scheduler|T-27011 Phase 2 naming proposals and port spec for the main scheduler (m-scheduler)]]
 - [ ] [[tickets/T-27016-p2-m-hud|T-27016 Phase 2 naming and spec for m-hud (HUD, calendar page, parameter panel, magazine, save panel)]]
+- [ ] [[tickets/T-27019-p2-m-flow|T-27019 Phase 2 naming and spec for m-flow (boot, main loop, mode machine, overlay loader, title, pad, memory card)]]
 
 
 %% kanban:settings
