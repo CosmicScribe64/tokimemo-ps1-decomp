@@ -32,7 +32,8 @@ module docstring (`tools/docker.sh python3 tools/rename.py --help` lists the sub
    comments outside the row's scope), and `PROBLEM:` lines. Exit 1 on any problem; fix the table.
 3. `tools/docker.sh python3 tools/rename.py apply TABLE` makes the edits after the proofs (inverse
    round trip, gcc error set, `sync_protos.py` views) and appends the rows to the ledger
-   (`--ledger NAME` picks `config/renames/NAME.txt`; default: the first row's unit).
+   (`--ledger NAME` picks `config/renames/NAME.txt`; default: the first row's unit). It then runs
+   `check`; when that fails, the edits and the ledger rows are already written and apply says so.
 4. Clean build: `rm -rf asm build; configure.py; ninja` under `nice -n 19` with 2 jobs (or
    `apply --build`). 27 of 27 sha1 OK and `ninja progress` unchanged are the proof that counts.
 5. Commit the table's edits and the ledger together. Then file renames (below) in a commit of
@@ -53,8 +54,9 @@ module docstring (`tools/docker.sh python3 tools/rename.py --help` lists the sub
 - Facts need no marker: a name that says what the code visibly does. A claim of game meaning that
   the code does not prove starts its note with `HYPOTHESIS:`. Functions and globals then go into a
   `*_hypotheses.txt` symbol file; members, types and constants get `/* HYPOTHESIS: ... */` at the
-  definition. Unknown members stay `unk_XX`; the tool refuses `unk_`/`pad` and placeholder names as
-  new names.
+  definition (the mark goes on the renamed member's own line). Unknown members stay `unk_XX`; the
+  tool refuses `unk_`/`pad` and the m2c placeholder shapes as new names (`sp1C`, upper-case hex;
+  `var_v0`, `temp_s1_2`, `phi_a0`, a register name; `arg0`), while `speed` or `var_count` pass.
 - The plan refuses a name that:
   - is a C keyword, a reserved name (`_X`, `__x`), a libc name, or holds an address;
   - already names another symbol, or differs from another name only in case;
@@ -131,9 +133,11 @@ as they are (an enum variable would change the code); a member of a type of the 
 - `rename.py check` (ninja `build/renames.ok`, default target): no earlier name of a ledger chain is
   back in `src/`, `include/` or `config/`, the ledger has no branching chain or cycle, the symbol
   files are consistent. A failure names the ledger line and says to run replay.
-- `rename.py replay [LEDGER...]`: every earlier name of every chain that is still present becomes
-  the last name (members by the gcc oracle, only when an old member name occurs). A renamed tree is
-  a no-op. Run it after `git merge` of a branch that predates renames, and in the integration merge
+- `rename.py replay [LEDGER...]`: every earlier name of every chain that is still present in the
+  chain's scope (the search `check` makes) becomes the last name (members by the gcc oracle, only
+  when an old member name occurs). Symbols run first, then types, locals and parameters (a local
+  row finds its function under any name of the function's chain), members, and file, folder and
+  header rows last. A renamed tree is a no-op. Run it after `git merge` of a branch that predates renames, and in the integration merge
   script after conflict resolution and before the build.
 - `rename.py lookup NAME [--unit U]` prints the chain and the current name of an old name (tickets
   and logs keep old names); `rename.py export` writes `kind scope key old current` lines for the

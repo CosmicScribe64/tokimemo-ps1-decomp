@@ -356,6 +356,13 @@ class SymbolRenameTest(Fixture):
         self.refused("func AAA func_80132100 aaa_start\n", "already names 0x80132000")
         self.refused("func AAA func_80132000 aaa_other\n", "is named aaa_start already")
 
+    def test_placeholder_shapes(self):
+        for name in ("sp1C", "sp50", "var_v0", "temp_v0_2", "phi_s0", "var_at", "temp_f12", "arg0"):
+            self.refused("local main:func_80041000 index %s\n" % name, "placeholder")
+        for name in ("speed", "space", "spec", "spade", "var_count", "temp_value", "phi_angle"):
+            rc, out = self.run_plan("local main:func_80041000 index %s\n" % name)
+            self.assertEqual(rc, 0, out)
+
     def test_alias_needs_flag(self):
         self.write("config/symbol_addrs_main.txt", "boot_view = 0x80041000; // type:func\n")
         self.refused("func main func_80041000 boot_view\n", "already names 0x80041000")
@@ -387,6 +394,24 @@ class OracleTest(Fixture):
         self.refused("field GameState unk_00 unk_02\n", "placeholder")
         self.write("include/game.h", self.read("include/game.h").replace("s16 unk_02;", "s16 mode;"))
         self.refused("field GameState unk_00 mode\n", "already has a member mode")
+
+    def test_field_hypothesis_marks_the_renamed_member(self):
+        # GameState, earlier in the header, has a member with the new name already
+        self.write("include/game.h", self.read("include/game.h").replace("s16 unk_02;", "s16 flags;"))
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c").replace(".unk_02 =", ".flags ="))
+        self.write("src/ovl/AAA/80132000.c", self.read("src/ovl/AAA/80132000.c").replace(".unk_02", ".flags"))
+        self.ok("field Rec38 unk_00 flags HYPOTHESIS: bit flags\n", verify=True)
+        game = self.read("include/game.h")
+        self.assertIn("/* 0x02 */ s16 flags;\n", game)
+        self.assertIn("/* 0x00 */ s16 flags; /* HYPOTHESIS: bit flags */\n} Rec38;", game)
+
+    def test_two_members_of_one_type_in_one_table(self):
+        out = self.ok("field GameState unk_00 mode\nfield GameState unk_02 step HYPOTHESIS: the step\n", verify=True)
+        self.assertNotIn("PROBLEM", out)
+        game = self.read("include/game.h")
+        self.assertIn("/* 0x00 */ s16 mode;\n", game)
+        self.assertIn("/* 0x02 */ s16 step; /* HYPOTHESIS: the step */\n", game)
+        self.assertIn("D_800E6280.step = arg0;", self.read("src/main/80041100.c"))
 
     def test_full_proofs_on_symbols(self):
         out = self.ok("func main func_80041000 game_boot T-1\ndata AAA D_80132100 aaa_counter T-1\n", verify=True)
@@ -423,6 +448,21 @@ class TypeLocalTest(Fixture):
     def test_local_scope_follows_function_rename(self):
         self.ok("func main func_80041000 game_boot\nlocal main:func_80041000 index mode_value\n")
         self.assertIn("s32 mode_value;", self.read("src/main/80041000.c"))
+
+    def test_type_private_to_one_overlay(self):
+        # AAA and EVT each define their own FnTbl; renaming AAA's leaves EVT's (and its views) alone
+        for unit, member, addr in (("AAA", "s32 a;", "80132200"), ("EVT", "s16 b;", "800F6200")):
+            h = "include/ovl/%s.h" % unit
+            self.write(h, self.read(h).replace("#endif", "typedef struct FnTbl {\n    %s\n} FnTbl;\n"
+                                               "extern FnTbl D_%s;\n#endif" % (member, addr), 1))
+        self.write("src/ovl/EVT/800F6000.c", self.read("src/ovl/EVT/800F6000.c").replace(
+            "D_800F6100 = 2;", "D_800F6100 = D_800F6200.b;"))
+        self.write("src/ovl/AAA/80132100.c", self.read("src/ovl/AAA/80132100.c").replace(
+            "func_80132000();", "func_80132000();\n    D_80132100 = D_80132200.a;"))
+        out = self.ok("type AAA FnTbl AaaTable\n", verify=True)
+        self.assertNotIn("PROBLEM", out)
+        self.assertIn("} AaaTable;\nextern AaaTable D_80132200;", self.read("include/ovl/AAA.h"))
+        self.assertIn("} FnTbl;\nextern FnTbl D_800F6200;", self.read("include/ovl/EVT.h"))
 
 
 class FileRenameTest(Fixture):
@@ -515,6 +555,41 @@ class LedgerTest(Fixture):
         self.write("src/ovl/AAA/80132100.c", self.read("src/ovl/AAA/80132100.c") + "void b(void) { aaa_first(); }\n")
         self.assertEqual(R.replay(self.root, out=io.StringIO(), use_gcc=False), 0)
         self.assertIn("void b(void) { aaa_last(); }", self.read("src/ovl/AAA/80132100.c"))
+
+    def test_replay_long_chain_with_local_and_field_rows(self):
+        # a 3-name chain, then a local row (scoped by the middle name) and a field row; the tree has the old names
+        self.write("config/renames/main.txt",
+                   "func main func_80041000 boot_a 0x80041000\n"
+                   "func main boot_a boot_b 0x80041000\n"
+                   "local main:boot_a index mode_value -\n"
+                   "field GameState unk_02 step -\n")
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=HAVE_GCC), 0, out.getvalue())
+        main = self.read("src/main/80041000.c")
+        self.assertIn("void boot_b(void) {", main)
+        self.assertIn("s32 mode_value;", main)
+        self.assertIn("/* 0x02 */ s16 step;", self.read("include/game.h"))
+        if HAVE_GCC:
+            self.assertIn("D_800E6280.step = arg0;", self.read("src/main/80041100.c"))
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 0, out.getvalue())
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=HAVE_GCC), 0, out.getvalue())
+        self.assertIn("0 files changed", out.getvalue())
+
+    def test_replay_local_row_before_its_function_rename(self):
+        self.write("config/renames/a.txt", "local main:func_80041000 index mode_value -\n")
+        self.write("config/renames/b.txt", "func main func_80041000 boot_a 0x80041000\n"
+                                           "func main boot_a boot_b 0x80041000\n")
+        out = io.StringIO()
+        self.assertEqual(R.replay(self.root, out=out, use_gcc=False), 0, out.getvalue())
+        main = self.read("src/main/80041000.c")
+        self.assertIn("void boot_b(void) {", main)
+        self.assertIn("s32 mode_value;", main)
+
+    def test_ledger_note_keeps_hash(self):
+        rows = R.parse_rows("# head\nfunc main a b 0x80041000 T-1 see issue #3\n", "l", ledger=True)
+        self.assertEqual(rows[0].note, "T-1 see issue #3")
 
     def test_replay_symbol_line_dedupe(self):
         self.ok("func main func_80041180 text_merge\n")

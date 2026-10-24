@@ -5,7 +5,7 @@ status: In Review
 assignee: opus (w19-rename)
 created: 2026-10-24
 updated: 2026-10-24
-links: [[tickets/T-27000-phase-2]], [[rename-tool]], [[tooling]], [[build-system]], drafts/T-25900/audit.md, drafts/T-27002/
+links: ROADMAP.md (phase 2), [[rename-tool]], [[tooling]], [[build-system]], drafts/T-25900/audit.md, drafts/T-27002/
 ---
 
 ## Goal
@@ -66,3 +66,21 @@ What landed (branch `w19-rename`):
   found that `tools/object_layout.py` derived the unit from the folder name (fixed). Trial 3 renamed
   the GameState base (12,247 tokens) and one member (1,759 uses by the gcc oracle). Details:
   [[rename-tool]] ("Trial"). The tool branch itself: clean build 27/27; tool suite in the commit log.
+- 2026-10-24 review round 1 (not approved, four blocking findings), fixed:
+  replay crashed on a chain of 3 or more names followed by a local or field row (replay now builds
+  chains from the ledger only); type and field rows now carry their file scope, so proofs 2 and 3
+  map an old type name only where that type is visible (an overlay-private `FnTbl10` no longer
+  fails proof 3 for GYOZI, SHOUGATU and TAIIKU); the HYPOTHESIS mark of a field goes on the renamed
+  member's own line; two members of one type in one table no longer trip the offset assert; the
+  kanban card, the index line and the broken phase 2 link are fixed. Also from the non-blocking
+  list: m2c placeholder shapes only (`speed`, `var_count` pass), replay picks rows by the scoped
+  search `check` makes and runs symbols before locals, a local row found through a later function
+  rename works, apply says so when check fails after the edits, a ledger note keeps its `#`.
+  Checked on a scratch clone of the real tree: the reviewer's VALEN type, replay and Entry8
+  member cases pass.
+- Follow-ups still open from the review (tickets to open): the merge3.sh replay (G1); a
+  `wiki.py catalog` column with current names (audit 3.8.7); marking or moving the matching-era
+  tools that hardcode names (3.8.8); symtab in `sync_protos.py` and `dupes.py`; folding
+  `obin_renames.txt` into the ledger (after the pilot); the CODING_STANDARDS section 4 amendment
+  (user approval); `check` for old member names at use sites (today IDO reports them); main renames
+  inside EVENT's range against EVENT-own names.

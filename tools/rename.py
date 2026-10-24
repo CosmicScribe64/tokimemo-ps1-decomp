@@ -83,7 +83,8 @@ OK and unchanged progress (`--build` runs it under nice -n 19 with 2 jobs).
 Ledger: config/renames/<NAME>.txt, one file per work unit (default: the first row's unit), rows
 `kind scope old new key note` (key: the address for func, data and file, else `-`). Rows of one key
 form a chain (a later row may rename a name again); replay maps every earlier name of a chain to its
-last name, in any order of the ledger files. The lint refuses branching chains and cycles.
+last name, in any order of the ledger files. The lint refuses branching chains and cycles. In a
+ledger only a line that starts with # is a comment (a note may hold a #).
 Tests: tools/test_rename.py (synthetic trees, no game data).
 """
 import argparse
@@ -113,8 +114,10 @@ LIBC = set("""abs atoi atol bcmp bcopy bsearch bzero calloc exit free getc getch
 isdigit islower isspace isupper labs longjmp main malloc memchr memcmp memcpy memmove memset printf putchar
 puts qsort rand realloc rindex setjmp sprintf srand strcat strchr strcmp strcpy strcspn strlen strncat
 strncmp strncpy strpbrk strrchr strspn strstr strtok strtol strtoul tolower toupper""".split())
+# m2c's own shapes: sp + upper-case hex offset, var_/temp_/phi_ + register (+ _n), argN
 PLACEHOLDER_NAME_RE = re.compile(
-    r"^(?:(?:func|D|jtbl|L)_?[0-9A-Fa-f]{8}|unk_?[0-9A-Fa-f]*|pad\d*|(?:var|temp|phi)_\w+|sp[0-9A-Fa-f]+|arg\d+)$")
+    r"^(?:(?:func|D|jtbl|L)_?[0-9A-Fa-f]{8}|unk_?[0-9A-Fa-f]*|pad\d*|sp[0-9A-F]+|arg\d+"
+    r"|(?:var|temp|phi)_(?:[vatskf]\d+|at|ra|fp|gp|sp|lo|hi|zero)(?:_\d+)?)$")
 SNAKE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 PASCAL_RE = re.compile(r"^[A-Z][A-Za-z0-9]*$")
 UPPER_RE = re.compile(r"^[A-Z][A-Z0-9_]*$")
@@ -170,11 +173,16 @@ def strip_comment(line):
     return re.split(r"(?:^|\s)#", line, 1)[0]
 
 
+def strip_line_comment(line):
+    """Ledger lines: only a line that starts with # is a comment (a note may hold ' #')."""
+    return "" if line.lstrip().startswith("#") else line
+
+
 def parse_rows(text, where, ledger=False):
     """Rows of a table (kind scope old new note) or a ledger (kind scope old new key note)."""
     rows = []
     for n, line in enumerate(text.splitlines(), 1):
-        parts = strip_comment(line).split()
+        parts = (strip_line_comment(line) if ledger else strip_comment(line)).split()
         if not parts:
             continue
         need = 5 if ledger else 4
@@ -626,6 +634,10 @@ class Context:
         return symtab.SymbolTable(self.root, texts=texts)
 
     def chains(self):
+        """Ledger chains, with this run's rows added (plan, apply). Replay (merge) uses the ledger only: its
+        rows are the ledger's own renames written as old -> last name, which would branch the chains."""
+        if self.merge:
+            return chains(self.ledger)
         return chains(self.ledger + [r for r in self.done if r.kind != "const"])
 
     def problem(self, row, msg):
@@ -1104,11 +1116,11 @@ def plan_fields(ctx, rows, use_gcc=True):
     scratch = Scratch(tree) if use_gcc else None
     try:
         base = scratch.errors(users) if scratch else []
-        for row, path, _types, pos in batch:
-            if pos is not None:
-                text = tree.read(path)
-                assert text[pos:pos + len(row.old)] == row.old
-                tree.write(path, text[:pos] + row.new + text[pos + len(row.old):])
+        # the declarations, last first in each file (the offsets were taken before any edit)
+        for row, path, _types, pos in sorted((x for x in batch if x[3] is not None), key=lambda x: (x[1], -x[3])):
+            text = tree.read(path)
+            assert text[pos:pos + len(row.old)] == row.old
+            tree.write(path, text[:pos] + row.new + text[pos + len(row.old):])
         by_name = {}
         for row, _p, types, _h in batch:
             for t in types:
@@ -1154,7 +1166,12 @@ def plan_fields(ctx, rows, use_gcc=True):
         for row, path, types, _h in batch:
             n_c = rewrite_field_comments(ctx, row, path, types, users)
             if row.hypothesis and _h is not None:
-                mark_hypothesis(tree, path, row.new, row.note, member=True)
+                at = member_offset(tree, row.scope, row.new)
+                if at is None:
+                    ctx.note(row, "HYPOTHESIS mark not placed: %s has no single member %s" % (row.scope, row.new))
+                else:
+                    mark_hypothesis(tree, path, row.new, row.note, at=at)
+            row.files = set(closure_files(tree, users_of(tree, path))) | {path}
             left = 0
             for u in users:
                 text = tree.read(u)
@@ -1222,8 +1239,19 @@ def rewrite_field_comments(ctx, row, path, types, users):
     return n
 
 
-def mark_hypothesis(tree, path, name, note, member=False, at=None):
-    """Append `/* HYPOTHESIS: ... */` to the line that declares `name` (member) or at position `at`."""
+def member_offset(tree, spec, name):
+    """Offset of the member `name` in the body of type `spec` (now), or None unless exactly one."""
+    defs = find_type(tree, spec)
+    if len(defs) != 1:
+        return None
+    path, _tag, _td, b, e, _end = defs[0]
+    body = blank_comments(tree.read(path))[b:e]
+    hits = [b + s for k, s, x in tokens(body) if k == "id" and body[s:x] == name]
+    return hits[0] if len(hits) == 1 else None
+
+
+def mark_hypothesis(tree, path, name, note, at=None):
+    """Append `/* HYPOTHESIS: ... */` to the line at position `at`, or to the first line that names `name`."""
     text = tree.read(path)
     clean = blank_comments(text)
     if at is None:
@@ -1265,6 +1293,7 @@ def plan_type(ctx, row):
     users = users_of(tree, path) if path else tree.unit_sources(row.scope)
     files = closure_files(tree, users) + ([path] if path else [])
     files = sorted(set(files))
+    row.files = set(files)      # the type's scope: name_map maps the old name only there (proofs 2 and 3)
     if not ctx.merge:
         clash = [f for f in files if row.new in ident_tokens(tree.read(f) or "", members=True)]
         if clash:
@@ -1296,7 +1325,7 @@ def plan_type(ctx, row):
             out.append(line)
         tree.write(p, "".join(out))
     if row.hypothesis and path:
-        defs2 = find_type(tree, row.new)
+        defs2 = [d for d in find_type(tree, row.new) if d[0] == path]
         if defs2:
             mark_hypothesis(tree, defs2[0][0], row.new, row.note, at=defs2[0][4] - 1)
     row.key = "-"
@@ -2156,6 +2185,8 @@ def plan_cmd(root, table_path, ledger=None, allow_alias=False, apply=False, veri
         out.write("applied; ledger %s\n" % path)
         bad = check(root, out=out)
         if bad:
+            out.write("apply: the edits and the ledger rows above are written although check failed; fix the "
+                      "problems, or undo the edits (git checkout) and remove the new ledger lines\n")
             return 1
         if build:
             return run_build(root, out)
@@ -2220,48 +2251,8 @@ def check(root, out=sys.stdout):
         for key, (names, rs) in sorted(ch.items(), key=lambda kv: str(kv[0])):
             final, olds = names[-1], names[:-1]
             where = rs[-1].where
-            kind = key[0]
             for o in olds:
-                hits = []
-                if kind == "sym":
-                    unit, addr = key[1], int(key[2], 16)
-                    scope = set(scope_files(tree, unit, addr))
-                    hits = sorted(idx.get(o, set()) & scope)
-                    if o in table.names_at(unit, addr):
-                        hits.append("the symbol files")
-                    hits += config_key_hits(tree, o, set(scope_units_for(tree, unit, addr)), unit)
-                elif kind == "type":
-                    unit = key[1]
-                    scope = set(files) if unit == "main" else set(tree.unit_sources(unit) + tree.private_headers(unit))
-                    hits = sorted(idx.get(o, set()) & scope)
-                elif kind == "field":
-                    tname = current_type_name_rows(ch, key[1])
-                    for d in find_type(tree, tname):
-                        body = blank_comments(tree.read(d[0]))[d[3]:d[4]]
-                        if o in ident_tokens(body):
-                            hits.append("%s (definition of %s)" % (d[0], tname))
-                elif kind == "file":
-                    unit = key[1]
-                    if any(n.rsplit("/", 1)[-1] == o for v, n in tree.c_names(unit) if "0x%08X" % v == key[2]):
-                        hits.append(tree.yaml_path(unit))
-                elif kind == "dir":
-                    unit = key[1]
-                    if any(n.split("/", 1)[0] == o for _v, n in tree.c_names(unit)):
-                        hits.append(tree.yaml_path(unit))
-                elif kind == "header":
-                    if tree.exists("include/" + o):
-                        hits.append("include/" + o)
-                    hits += sorted(f for f in files if re.search(r'^[ \t]*#[ \t]*include[ \t]*"%s"' % re.escape(o),
-                                                                 tree.read(f) or "", re.M))
-                elif kind == "local":
-                    unit, func = key[1].split(":", 1)
-                    func = current_func_rows(ch, unit, func)
-                    for p in tree.unit_sources(unit):
-                        text = tree.read(p)
-                        if func in text:
-                            for a, b, _k in function_spans(text, func):
-                                if o in ident_tokens(text[a:b]):
-                                    hits.append("%s (%s)" % (p, func))
+                hits = old_name_hits(tree, ch, key, o, files, idx, table)
                 for h in hits[:3]:
                     problems.append("%s: %s was renamed to %s (%s); run tools/rename.py replay" % (h, o, final, where))
     for p in problems:
@@ -2269,6 +2260,61 @@ def check(root, out=sys.stdout):
     if not problems:
         out.write("renames OK (%d ledger rows)\n" % len(rows))
     return len(problems)
+
+
+def old_name_hits(tree, ch, key, o, files, idx, table):
+    """Where the old name `o` of ledger chain `key` still is, inside the chain's scope ([] when nowhere).
+    `files`: every code file; `idx`: name_index of them. Used by check, and by replay to pick its rows."""
+    hits = []
+    kind = key[0]
+    if kind == "sym":
+        unit, addr = key[1], int(key[2], 16)
+        scope = set(scope_files(tree, unit, addr))
+        hits = sorted(idx.get(o, set()) & scope)
+        if o in table.names_at(unit, addr):
+            hits.append("the symbol files")
+        hits += config_key_hits(tree, o, set(scope_units_for(tree, unit, addr)), unit)
+    elif kind == "type":
+        unit = key[1]
+        scope = set(files) if unit == "main" else set(tree.unit_sources(unit) + tree.private_headers(unit))
+        hits = sorted(idx.get(o, set()) & scope)
+    elif kind == "field":
+        tname = current_type_name_rows(ch, key[1])
+        for d in find_type(tree, tname):
+            body = blank_comments(tree.read(d[0]))[d[3]:d[4]]
+            if o in ident_tokens(body):
+                hits.append("%s (definition of %s)" % (d[0], tname))
+    elif kind == "file":
+        unit = key[1]
+        if any(n.rsplit("/", 1)[-1] == o for v, n in tree.c_names(unit) if "0x%08X" % v == key[2]):
+            hits.append(tree.yaml_path(unit))
+    elif kind == "dir":
+        unit = key[1]
+        if any(n.split("/", 1)[0] == o for _v, n in tree.c_names(unit)):
+            hits.append(tree.yaml_path(unit))
+    elif kind == "header":
+        if tree.exists("include/" + o):
+            hits.append("include/" + o)
+        hits += sorted(f for f in files if re.search(r'^[ \t]*#[ \t]*include[ \t]*"%s"' % re.escape(o),
+                                                     tree.read(f) or "", re.M))
+    elif kind == "local":
+        unit, func = key[1].split(":", 1)
+        for fn in func_chain_names(ch, unit, func):     # replay looks before the function is renamed
+            for p in tree.unit_sources(unit):
+                text = tree.read(p)
+                if fn in text:
+                    for a, b, _k in function_spans(text, fn):
+                        if o in ident_tokens(text[a:b]):
+                            hits.append("%s (%s)" % (p, fn))
+    return hits
+
+
+def func_chain_names(ch, unit, name):
+    """Every name of the function chain that holds `name`, the current name first ([name] without one)."""
+    for key, (names, _r) in ch.items():
+        if key[0] == "sym" and key[1] in (unit, "main") and name in names:
+            return names[::-1]
+    return [name]
 
 
 def config_key_hits(tree, name, units, owner):
@@ -2287,13 +2333,6 @@ def config_key_hits(tree, name, units, owner):
             out.append("config/migrate_globals.txt")
             break
     return out
-
-
-def current_func_rows(ch, unit, name):
-    for key, (names, _r) in ch.items():
-        if key[0] == "sym" and key[1] in (unit, "main") and name in names[:-1]:
-            return names[-1]
-    return name
 
 
 def strip_hash_comments(text):
@@ -2321,8 +2360,9 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     ch = chains(rows)
     ctx = Context(root, ledger_rows=rows, merge=True)
     tree = ctx.tree
-    idx = name_index(tree, all_code_files(tree))
-    cfg = " ".join(tree.read(p) or "" for p in config_text_files(tree))
+    files = all_code_files(tree)
+    idx = name_index(tree, files)
+    table = ctx.table()
     sel_where = {r.where for r in sel}
     todo = []
     for key, (names, rs) in ch.items():
@@ -2332,18 +2372,19 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         for o in names[:-1]:
             r0 = next(r for r in rs if r.old == o)
             row = Row(r0.kind, r0.scope, o, final, r0.note, r0.where, r0.key)
-            if key[0] == "sym":
-                present = o in idx or o in cfg or o in ctx.table().names_at(r0.scope, int(r0.key, 16))
-            elif key[0] in ("type", "local"):
-                present = o in idx
-            elif key[0] == "field":
-                present = True
+            # symbols, types, locals: the old name still in the chain's scope (as check sees it); fields are
+            # picked below, file, folder and header rows always run (they no-op on a renamed tree)
+            if key[0] in ("sym", "type", "local"):
+                present = bool(old_name_hits(tree, ch, key, o, files, idx, table))
             else:
                 present = True
             if present:
                 todo.append(row)
     fields = [r for r in todo if r.kind == "field"]
-    others = [r for r in todo if r.kind != "field"]
+    # symbols before the locals and params of their functions (a local row found through a later function
+    # rename needs the function renamed first), types before fields, file and folder moves last
+    order = {"func": 0, "data": 0, "type": 1, "local": 2, "param": 2}
+    others = sorted((r for r in todo if r.kind != "field"), key=lambda r: order.get(r.kind, 3))
     run_rows(ctx, others, use_gcc=use_gcc)
     if fields:
         need = []
@@ -2363,7 +2404,8 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     if ctx.problems:
         return 1
     ctx.tree.flush()
-    out.write("replay: %d of %d chains applied, %d files changed\n" % (len(ctx.done), len(ch), len(ctx.tree.changed())))
+    out.write("replay: %d rows run (old name still in scope; %d chains), %d files changed\n" % (
+        len(ctx.done), len(ch), len(ctx.tree.changed())))
     return 0
 
 
