@@ -326,3 +326,27 @@ Other disc reads: gate background 0x4029, intro script 5 @ 0x49BA, birthday scri
 4. Whether the mouse-only softlock at stage 164 step 4 is intended (the code only advances for the pad).
 5. The meaning of the dialogue group numbers: they index script sections of the girl files; the stage C is the only place that maps rank, year and club to them.
 6. Name proposals for main-bss variables used by three overlays (section 3.1) must be reconciled with BUNKAKEN and BUNKA_SD.
+
+## 12. Function index
+
+The old addresses of the framework and rule functions (the stage functions follow the scheme `culture_<girl>_<visit|member>_<exhibit>` of section 5.3; every old address and its new name is a row of the table):
+
+| Old | New name | Role |
+|---|---|---|
+| `func_80142700` | `culture_festival_entry` | mode 0x70 entry, phase machine (section 4) |
+| `func_80142B98` | `culture_phase_next_on_step` | leave phases 4 and 6 once the step moved |
+| `func_80142BC8` | `culture_scene_end` | end a scene: stage 0, step 0, phase 8 (134 callers) |
+| `func_80142BE8` | `culture_result_apply` | festival result (8.1) |
+| `func_801431D4` | `culture_exhibit_title_show` | banner title by club and year |
+| `func_8014338C` | `culture_backstage_title_show` | backstage banner (39 callers) |
+| `func_801433C0` | `culture_event_log_add` | event log entry (8.2) |
+| `func_80150930` | `culture_stage_dispatch` | stage table call |
+| `func_80150B7C` | `culture_stage_intro` | stage 0 (5.1) |
+| `func_801509A4` | `culture_visitor_pick` | stage 14 (5.2) |
+| `func_80150F20`, `func_80151064` | `culture_stage_game_resume`, `culture_stage_game_launch` | stages 163 and 164 (7.4) |
+| `func_8015AF90`, `func_8015B828` | `culture_fortune_scene`, `culture_fortune_lookup` | shared fortune stage and its table lookup (7.3) |
+| `func_80146FA0`, `func_80147214`, `func_80147F8C` | `culture_birthday_tables_init`, `culture_birthday_scene`, `culture_birthday_choice_name_set` | birthday scene (7.5) |
+| `func_80132000` .. `func_80132444` (22) | `culture_script_set_*` | script pointer setters (9.1) |
+| 15 block entries | `culture_<girl>_<visit|member>_entry` | (club, year) -> stage tables of 5.3 |
+| 19 start functions | `culture_<girl>_<visit|member>_script_[a-c_]start` | name codes, script set, line 0, tables, next step |
+| `func_8013FA20`, `func_8013FA28` | `culture_ayako_visit_unused_stage`, `culture_ayako_visit_followup` | stages 78 and 79 (7.1) |
