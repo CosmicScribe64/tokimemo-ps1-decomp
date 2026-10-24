@@ -60,7 +60,9 @@ def trace(insns, start, end):
         elif o in (OP["fjp"], OP["tjp"]):
             s = "f" if o == OP["fjp"] else "t"
             s += jump_note(insns, start, k)
-            if base._is_signed_blt_pos_imm_jump(insns, start, k):
+            # The detector left tools/ugen_pass.py in T-26000; mark `<` only with a pass that has it.
+            blt = getattr(base, "_is_signed_blt_pos_imm_jump", None)
+            if blt is not None and blt(insns, start, k):
                 s += "<"
             out.append(s)
     return "".join(out)

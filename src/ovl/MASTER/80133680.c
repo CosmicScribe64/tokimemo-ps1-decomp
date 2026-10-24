@@ -468,14 +468,12 @@ void func_801344E0(void) {
             ((DisplayFixActor44 *)D_80120650)->unk_07 = 0;
             ((DisplayFixActor44 *)D_80120650)->unk_05 = 0x80;
             ((DisplayFixActor44 *)D_80120650)->unk_04 = 0;
-            /* FAKE: T-25107: never-true arm that ugen drops. Its indirect store
-             * and signed loop test put both record copies below in the block-copy
-             * state of the original (one scratch register before the end
+            /* FAKE: T-25107 (cut down in T-26000): never-true arm that ugen drops.
+             * Its indirect store puts both record copies below in block-copy
+             * state F, as in the original (one scratch register before the end
              * pointer; see tools/ugen_pass.py). */
             if ((u32)D_8013C578 < 0) {
-                do {
-                    *(u8 *)0 = 0;
-                } while ((s32)D_8013C578 < 1);
+                *(u8 *)0 = 0;
             }
             ((DisplayFixActor44 *)D_80120650)[1] = ((DisplayFixActor44 *)D_80120650)[0];
             ((DisplayFixActor44 *)D_80120650)[1].unk_02 = 0x40;
@@ -1206,14 +1204,12 @@ void func_801363F4(void) {
             ((DisplayFixActor44 *)D_80120650)->unk_07 = 0;
             ((DisplayFixActor44 *)D_80120650)->unk_05 = 0x80;
             ((DisplayFixActor44 *)D_80120650)->unk_04 = 0;
-            /* FAKE: T-25107: never-true arm that ugen drops. Its indirect store
-             * and signed loop test put both record copies below in the block-copy
-             * state of the original (one scratch register before the end
+            /* FAKE: T-25107 (cut down in T-26000): never-true arm that ugen drops.
+             * Its indirect store puts both record copies below in block-copy
+             * state F, as in the original (one scratch register before the end
              * pointer; see tools/ugen_pass.py). */
             if ((u32)D_8013C578 < 0) {
-                do {
-                    *(u8 *)0 = 0;
-                } while ((s32)D_8013C578 < 1);
+                *(u8 *)0 = 0;
             }
             ((DisplayFixActor44 *)D_80120650)[1] = ((DisplayFixActor44 *)D_80120650)[0];
             ((DisplayFixActor44 *)D_80120650)[1].unk_02 = 0x40;

@@ -1742,3 +1742,13 @@ Every game function is C and every binary rebuilds byte for byte ([[status]]). C
 ## [2026-10-24] query | T-25900 phase 2 naming audit
 
 drafts/T-25900/audit.md: naming state per unit (6,649 of 6,952 functions and 16,629 data labels still placeholders, 437 address-named files), how renames flow today and their gaps (the merge-time rename table matches no files since the per-object split), the design of tools/rename.py, naming conventions and the phase 2 work order.
+## [2026-10-24] build | T-26000 IDO 4.1 block-copy rule adopted
+tools/ugen_pass.py now follows IDO 4.1's block-copy state rule (30 cases as unit tests); main strCallback and func_8005938C re-steered by respelling a test, two obsolete empty-test FAKEs removed, clean build 27/27 ([[tickets/T-26000-ugen-block-copy-41-rule]]).
+4.1 also sets F at a branch on a value; not modelled because of main func_8006B0C8 ([[ido-52-evaluation]] "T-26000", [[toolchain]], [[matching-notes]]).
+
+## [2026-10-23] build | T-26000 review fixes: compare rule corrected, FAKE arms cut down
+Case `copy_store_then_ne0_left_if` (indirect store first) showed that IDO 4.1 keeps the state at a compare with the constant on the left; tools/ugen_pass.py now sets B only for a compare of two non-constants (0 of 566 procedures change state). 4.1 ignores a store in an arm ugen drops (`copy_dropped_arm_store`); the never-true FAKE arms rely on the pass counting it, and are cut down to the store alone in main strCallback, func_8005938C and MASTER func_801344E0, func_801363F4 ([[tickets/T-26000-ugen-block-copy-41-rule]], [[toolchain]], [[ido-52-evaluation]], [[matching-notes]], [[playbook]]). drafts/T-25608/ido41/utrace.py works again with the new pass.
+
+## [2026-10-24] ticket | T-26000 Done
+[[tickets/T-26000-ugen-block-copy-41-rule]] passed the standards and spec reviews (approved, four non-blocking follow-ups noted in the ticket) and moves to Done.
+Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value branch, `func_8006B0C8`'s 4-byte copy, stored compares, `Uxjp`, `Uijp`.

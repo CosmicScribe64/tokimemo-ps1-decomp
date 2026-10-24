@@ -235,18 +235,17 @@ void func_8005938C(void) {
     VECTOR scale;
     MATRIX m, sm, ls, lw;
 
-    /* FAKE: T-25147: never-true arm that ugen drops (as1 deletes the dead byte load). Its
-     * indirect store and signed loop test put the three MATRIX copies below in the block-copy
-     * state of the original (one scratch register before each copy's data register; see
-     * tools/ugen_pass.py). Without it every later temporary is one ring slot high (62 rows). */
+    /* FAKE: T-26000: never-true arm that ugen drops (as1 deletes the dead byte load). Its
+     * indirect store puts the two MATRIX copies at the top of the loop in block-copy state F
+     * (tools/ugen_pass.py), as in the original (one scratch register before each copy's data
+     * register; 62 rows without it). IDO 4.1's ugen gives this body F without the arm, because
+     * it also sets F at a branch on a value (`r->flags & 0x80`); the pass does not model that. */
     if ((u32)D_800B0896 < 0) {
-        do {
-            *(u8 *)0 = 0;
-        } while ((s32)D_800B0896 < 1);
+        *(u8 *)0 = 0;
     }
     for (i = *(s32 *)&D_800E6280.unk_1095[7]; i < 0xA0; i += 2) {
         r = (ModelRec88 *)(D_8011ECD0 + i * 0x44);
-        if ((r->active != 0) && (r->flags & 0x80)) {
+        if (r->active && (r->flags & 0x80)) {
             p = &rot;
             p->vz = r->rot.vz;
             p->vx = r->rot.vx;
