@@ -214,7 +214,7 @@ Details:
 
 Triggered by the queue reader: at a day-end record (0xFB) every met girl 0-10 with `syoushin >= 0x3D` whose `rumor_done` flag is clear gets the flag set; if at least one did, `main_state_set(0x44)` (core section 3.5). The screen carries no data about the girls and changes no state:
 
-- Stage 0: `rumor_stage_init` step 0 `rumor_scene_init` (text reset, home title, the player's name label, panels, only the icon of the last command enabled, a monologue that a strange rumor goes around among the girls, room background read), step 1 `rumor_bg_wait`.
+- Stage 0: `rumor_stage_init` step 0 `rumor_scene_init` (text reset, home title, the player's name label, panels, the icon bar shown and locked to the day record's command by `command_icons_lock_to_record`, then icon 0 off and the `last_command` icon on, a monologue that a strange rumor goes around among the girls, room background read; the handler then keeps drawing the bar with `icon_bar_update(1)`), step 1 `rumor_bg_wait`.
 - Stage 1: `uwasa0` step 0 `rumor_wait_voice` (typewriter plus voice, `xa_wait`), step 1 `uwasa_exit0` = `main_state_set(0x31)`, the day screen.
 
 The effect of the rumor, if any, is not in this file.
