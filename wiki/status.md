@@ -39,7 +39,7 @@ Continuation checkpoint (local commits, 2026-10-24):
   [[tickets/T-27067-core-scheduler-essential-completion]]; next headers T-27061, essential main sites T-27062.
 
 - Asset/tooling work is separately authorized in [[asset-export]]: text chat `01a16f34-8c5e-7523-a4ff-82fed7cb1639`
-  owns comprehensive text/script extraction (44unsupported SERIFU files remain open); media/input chat
+  owns comprehensive text/script extraction (reviewed checkpoint parses90scripts/30036textrecords with no structural/decodingfailures; semantic/runtimecoverage remains open); media/input chat
   `01a16f34-9559-7a53-80cf-6152fc4b9ca6` owns standard image/audio exports, input inventory and Japanese-text
   image catalog T-28004. No direct Godot work, translation or replacement art. Real outputs stay ignored
   under `.asset-cache/`; never in build/ or committed fixtures.
@@ -47,7 +47,7 @@ Continuation checkpoint (local commits, 2026-10-24):
   [[tickets/T-27057-cache-header-closure-lookup]] and [[tickets/T-27058-gameplay-topic-header-pilot]] are Done.
   scheduler.c/school_day.c and three real topic headers are integrated; all437views0/0/0,
   clean27/27 and6952functions, independent reviews resolved. Main all-file naming T-27059 is Done (5902c2c38):34logical basenames, clean27/27and437exact views;
-  overlay all-file naming T-27060 is finishing review. Wider header migration remains open.
+  overlay all-file naming T-27060 is Done: all437gameCfiles now have logical names, clean27/27. Wider header migration remains open.
 - [[tickets/T-27040-school-day-readable-batch]] Done: nine school-day helpers and seven essential
   parameter/local roles applied through rename.py. Clean Docker build and independent hashes 27/27;
   6,952/6,952 functions, 2,276,920/2,276,920 bytes. Independent Luna Standards and Sol 6.1 Spec reviews

@@ -18,6 +18,22 @@ Usage (inside Docker, from the repo root):
   rename.py export                                  old-to-current mapping, tab separated (tools/wiki.py)
   rename.py const --header H (--enum NAME | --defines) --values FILE --site SITE... [--apply]
                                                     add an enum or #defines and use them at the named sites
+  rename.py const --header H --reuse ENUM --values FILE --site SITE... [--apply]
+                                                    reuse existing enum members at exact expression/index sites
+
+Existing-enum sites (T-27068): `expr:UNIT:function[@N]:EXPRESSION` selects a right-hand integer in a
+comparison whose left side is the exact expression; `index:UNIT:function[@N]:BASE` selects a literal
+subscript of that exact array base. Supply the source's parentheses/casts; token and typed AST matches
+must agree. The function's full token stream must survive preprocessing unchanged; macro-expanded or
+conditionally removed function content is refused because literal provenance cannot be proved.
+Each site must be unique, or @N explicitly selects its 1-based occurrence among the requested
+values. Comparison and index are separate sites. Values must name explicit, nonnegative int enum
+members in --header; the entire enum must have explicit nonnegative int-range initializers.
+Duplicate numeric values, shadowing and mismatches are rejected. Original U/L
+suffix types are retained with casts. No enum declaration or field type changes. Reuse always proves
+inverse/gcc/prototype preservation before apply and restores sources/ledger on failed post-write check.
+Versioned const ledger metadata supports check/replay and follows header/tag/member/function renames.
+An expression changed by a field/local rename requires renewed site evidence; it fails closed.
 
 Table rows (whitespace separated; a line that starts with `#` is a comment; the rest of a row is its
 note, a `#` inside it included):
@@ -97,9 +113,11 @@ table and in a ledger only a line that starts with # is a comment (a note keeps 
 Tests: tools/test_rename.py (synthetic trees, no game data).
 """
 import argparse
+import base64
 import copy
 import functools
 import glob
+import json
 import os
 import re
 import shutil
@@ -2003,8 +2021,360 @@ def const_hits(ast, sites, ops):
     return hits
 
 
-def const_plan(root, header, enum, defines, values, sites, note="", ledger=None, log=print):
+REUSE_PREFIX = "reuse-v1:"
+REUSE_SITE_RE = re.compile(r"^(expr|index):(\w+):(\w+)(?:@([1-9]\d*))?:(.+)$", re.S)
+REUSE_TYPES = ("int", "unsigned int", "long int", "unsigned long int")
+
+
+def reuse_site(spec):
+    """Exact left comparison expression or array base, in one UNIT:function; @N selects an occurrence."""
+    m = REUSE_SITE_RE.fullmatch(spec)
+    if not m:
+        raise RenameError("reuse site: expected expr:UNIT:function[@N]:EXPRESSION or index:UNIT:function[@N]:BASE")
+    return m.group(1), m.group(2), m.group(3), int(m.group(4)) if m.group(4) else None, m.group(5)
+
+
+def c_site_tokens(text):
+    """C tokens with offsets; comments/string contents cannot masquerade as a selected expression."""
+    clean = blank_comments(text)
+    rx = r"[A-Za-z_]\w*|(?:0[xX][0-9a-fA-F]+|\d+)[uUlL]*|>>|<<|==|!=|<=|>=|->|&&|\|\||[^\s]"
+    return [(m.group(), m.start(), m.end()) for m in re.finditer(rx, clean)]
+
+
+def small_integer(text):
+    """Value/type for nonnegative C89 integer literals representable by the existing int enum member."""
+    m = re.fullmatch(r"(0[xX][0-9a-fA-F]+|0[0-7]*|[1-9]\d*)([uUlL]*)", text)
+    if not m or m.group(2).lower() not in ("", "u", "l", "ul", "lu"):
+        return None
+    digits, suffix = m.group(1), m.group(2).lower()
+    base = 16 if digits.lower().startswith("0x") else 8 if digits.startswith("0") else 10
+    value = int(digits, base)
+    if value > 0x7FFFFFFF:
+        return None
+    return value, ("unsigned " if "u" in suffix else "") + ("long int" if "l" in suffix else "int")
+
+
+def ast_shape(node):
+    """Coordinate-independent shape; casts, operators, members and variable names remain significant."""
+    return (type(node).__name__, tuple((a, getattr(node, a)) for a in node.attr_names),
+            tuple((k, ast_shape(c)) for k, c in node.children()))
+
+
+def reused_value(node, names):
+    from pycparser import c_ast
+    if isinstance(node, c_ast.Constant):
+        return small_integer(node.value)
+    typ = "int"
+    if isinstance(node, c_ast.Cast):
+        t = node.to_type.type
+        if not isinstance(t, c_ast.TypeDecl) or not isinstance(t.type, c_ast.IdentifierType):
+            return None
+        typ = " ".join(t.type.names)
+        if typ not in REUSE_TYPES:
+            return None
+        node = node.expr
+    if isinstance(node, c_ast.ID) and node.name in names:
+        return names[node.name], typ
+    return None
+
+
+def reuse_raw_hits(text, expression, kind, names):
+    """Locate exact token sequences; AST agreement below rejects text that only looks like the selected site."""
+    ts, pattern = c_site_tokens(text), [t[0] for t in c_site_tokens(expression)]
+    out = []
+    spellings = []
+    for name, value in names.items():
+        for typ in REUSE_TYPES:
+            spelling = name if typ == "int" else "((%s)%s)" % (typ, name)
+            spellings.append(([t[0] for t in c_site_tokens(spelling)], value, typ, spelling))
+    for i in range(len(ts) - len(pattern)):
+        if [t[0] for t in ts[i:i + len(pattern)]] != pattern:
+            continue
+        j = i + len(pattern)
+        if (kind == "expr" and ts[j][0] not in CMP_OPS) or (kind == "index" and ts[j][0] != "["):
+            continue
+        j += 1
+        if j >= len(ts):
+            continue
+        options = list(spellings)
+        number = small_integer(ts[j][0])
+        if number and number[0] in names.values():
+            value, typ = number
+            name = next(n for n, v in names.items() if v == value)
+            options.append(([ts[j][0]], value, typ, name if typ == "int" else "((%s)%s)" % (typ, name)))
+        for words, value, typ, replacement in options:
+            stop = j + len(words)
+            if [t[0] for t in ts[j:stop]] != words:
+                continue
+            if kind == "index" and (stop >= len(ts) or ts[stop][0] != "]"):
+                continue
+            out.append((ts[j][1], ts[stop - 1][2], value, typ, replacement))
+            break
+    return out
+
+
+def const_reuse_plan(ctx, header, enum, values, sites, verify=True):
+    """Reuse existing int enum members at exact function sites, with no writes on failure.
+
+    Only nonnegative values <= INT_MAX and directly literal enum initializers are supported. A site
+    selects comparison right operands or array subscripts, not arbitrary same-valued literals.
+    A repeated semantic site requires @N; edits preserve integer suffix types by explicit casts.
+    """
+    from pycparser import c_ast, c_parser
+    tree = ctx.tree
+    snap, n_report = tree.snapshot(), len(ctx.report)
+    hpath = header if header.startswith("include/") else "include/" + header
+    edits, changed = {}, 0
+    try:
+        if not tree.exists(hpath) or not PASCAL_RE.fullmatch(enum):
+            raise RenameError("reuse requires an existing header and PascalCase enum tag")
+        if not have_gcc():
+            raise RenameError("reuse proofs require gcc (run inside Docker)")
+        names = {}
+        for name, value, _note in values:
+            parsed = small_integer(value)
+            if not UPPER_RE.fullmatch(name) or not parsed or parsed[1] != "int":
+                raise RenameError("reuse values must name existing nonnegative int enumerators")
+            if name in names or parsed[0] in names.values():
+                raise RenameError("reuse values have duplicate names or ambiguous same-value names")
+            names[name] = parsed[0]
+        if not names or not sites:
+            raise RenameError("reuse requires values and exact sites")
+        users = set(users_of(tree, hpath))
+        owner = tree.header_owner(hpath)
+        scratch = Scratch(tree)
+        try:
+            scratch.sync()
+            for spec in sites:
+                kind, unit, function, occurrence, expression = reuse_site(spec)
+                if unit not in tree.unit_names or (owner != "main" and unit != owner):
+                    raise RenameError("reuse site unit does not own/see the enum header: %s" % spec)
+                paths = [p for p in tree.unit_sources(unit) if function_spans(tree.read(p) or "", function)]
+                if len(paths) != 1 or paths[0] not in users:
+                    raise RenameError("reuse site must resolve to one function including %s: %s" % (hpath, spec))
+                path = paths[0]
+                spans = function_spans(tree.read(path), function)
+                if len(spans) != 1:
+                    raise RenameError("reuse function is ambiguous: %s" % function)
+                closure = closure_files(tree, [path])
+                for p in closure:
+                    raw = blank_comments(tree.read(p) or "")
+                    for name in names:
+                        if re.search(r"^\s*#\s*define\s+%s\b" % re.escape(name), raw, re.M):
+                            raise RenameError("reuse enumerator is shadowed by a macro: %s" % name)
+                pp = subprocess.run(["gcc", "-E", "-std=gnu89", "-DM2CTX", "-Iinclude", path],
+                                    cwd=scratch.dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if pp.returncode:
+                    raise RenameError("reuse preprocessing failed: %s" % path)
+                probe = "rename_constant_site_probe"
+                if probe in ident_tokens(pp.stdout.decode(ENC)):
+                    raise RenameError("reuse probe identifier collision")
+                source = pp.stdout.decode(ENC) + "\nvoid %s(void) { %s; }\n" % (probe, expression)
+                try:
+                    ast = c_parser.CParser().parse(source, path)
+                except Exception as exc:
+                    raise RenameError("reuse pycparser: %s" % str(exc)[:160])
+                enums, shadows = [], []
+
+                class Declarations(c_ast.NodeVisitor):
+                    def visit_Enum(self, node):
+                        if node.values:
+                            enums.append(node)
+                        self.generic_visit(node)
+
+                    def visit_Decl(self, node):
+                        if node.name in names:
+                            shadows.append(node.name)
+                        self.generic_visit(node)
+
+                    def visit_Typedef(self, node):
+                        if node.name in names:
+                            shadows.append(node.name)
+                        self.generic_visit(node)
+                Declarations().visit(ast)
+                owned = [e for e in enums if e.name == enum and os.path.normpath(e.coord.file) == hpath]
+                if len(owned) != 1 or shadows:
+                    raise RenameError("reuse enum ownership/type is missing or shadowed: %s" % enum)
+                for member in owned[0].values.enumerators:
+                    enum_value = reused_value(member.value, {})
+                    if enum_value is None or enum_value[1] != "int":
+                        raise RenameError("reuse enum range/type is unsupported: %s.%s" % (enum, member.name))
+                for name, value in names.items():
+                    members = [e for body in enums for e in body.values.enumerators if e.name == name]
+                    own_members = owned[0].values.enumerators
+                    if len(members) != 1 or members[0] not in own_members or reused_value(members[0].value, {}) != (value, "int"):
+                        raise RenameError("reuse enum member value/type/owner mismatch: %s" % name)
+                functions = [f for f in ast.ext if isinstance(f, c_ast.FuncDef)]
+                target = [f for f in functions if f.decl.name == function]
+                probes = [f for f in functions if f.decl.name == probe]
+                statements = probes[0].body.block_items or []
+                if len(target) != 1 or len(statements) != 1:
+                    raise RenameError("reuse expression/function is ambiguous")
+                expected = statements[0]
+                shape = ast_shape(expected)
+                ast_hits = []
+
+                class Sites(c_ast.NodeVisitor):
+                    def visit_BinaryOp(self, node):
+                        if kind == "expr" and node.op in CMP_OPS and ast_shape(node.left) == shape:
+                            value = reused_value(node.right, names)
+                            if value and value[0] in names.values():
+                                ast_hits.append(value)
+                        self.generic_visit(node)
+
+                    def visit_ArrayRef(self, node):
+                        if kind == "index" and ast_shape(node.name) == shape:
+                            value = reused_value(node.subscript, names)
+                            if value and value[0] in names.values():
+                                ast_hits.append(value)
+                        self.generic_visit(node)
+                Sites().visit(target[0].body)
+                start, stop, _kind = spans[0]
+                coord = target[0].decl.coord
+                source_line = tree.read(path).count("\n", 0, start) + 1
+                if (os.path.normpath(coord.file) != path
+                        or physical_lines(tree.read(path), coord.line) != [source_line]):
+                    raise RenameError("reuse function source provenance is ambiguous: %s" % spec)
+                # Equal value/type sequences alone do not bind an AST literal to its source. A macro
+                # may produce the active expression while an identical raw expression is under #if 0
+                # (or discarded as a macro argument). Require a one-to-one function token stream.
+                pp_text = pp.stdout.decode(ENC)
+                pp_spans = function_spans(pp_text, function)
+                if len(pp_spans) != 1:
+                    raise RenameError("reuse source provenance is ambiguous after preprocessing: %s" % spec)
+                pp_start, pp_stop, _pp_kind = pp_spans[0]
+                pp_function = re.sub(r"^[ \t]*#[^\n]*", "", pp_text[pp_start:pp_stop], flags=re.M)
+                raw_tokens = [t[0] for t in c_site_tokens(tree.read(path)[start:stop])]
+                pp_tokens = [t[0] for t in c_site_tokens(pp_function)]
+                if raw_tokens != pp_tokens:
+                    raise RenameError("reuse source provenance is ambiguous after preprocessing: %s" % spec)
+                raw_hits = reuse_raw_hits(tree.read(path)[start:stop], expression, kind, names)
+                if ast_hits != [(r[2], r[3]) for r in raw_hits]:
+                    raise RenameError("reuse exact source/AST sites disagree (macro or expression boundary): %s" % spec)
+                if occurrence is None and len(raw_hits) != 1:
+                    raise RenameError("reuse site has %d matches; require a unique site or explicit @N: %s" % (len(raw_hits), spec))
+                if occurrence is not None and not (1 <= occurrence <= len(raw_hits)):
+                    raise RenameError("reuse occurrence is missing: %s" % spec)
+                selected = raw_hits if occurrence is None else [raw_hits[occurrence - 1]]
+                for a, b, _value, _type, replacement in selected:
+                    a, b = a + start, b + start
+                    item = (a, b, replacement)
+                    edits.setdefault(path, set()).add(item)
+                ctx.report.append("reuse %s: selected %d exact site" % (spec, len(selected)))
+        finally:
+            scratch.close()
+        for path, items in edits.items():
+            before = tree.read(path)
+            after, inverses, delta, last = before, [], 0, -1
+            for a, b, replacement in sorted(items):
+                if a < last:
+                    raise RenameError("reuse sites overlap")
+                inverses.append((a + delta, a + delta + len(replacement), before[a:b]))
+                delta += len(replacement) - (b - a)
+                last = b
+                changed += before[a:b] != replacement
+            for a, b, replacement in sorted(items, reverse=True):
+                after = after[:a] + replacement + after[b:]
+            inverse = after
+            for a, b, original in reversed(inverses):
+                inverse = inverse[:a] + original + inverse[b:]
+            if inverse != before:
+                raise RenameError("reuse inverse proof failed: %s" % path)
+            tree.write(path, after)
+        if verify:
+            gcc_proof(ctx)
+            views_proof(ctx)
+        if ctx.problems:
+            raise RenameError("reuse proof failed")
+        proofs = "inverse/gcc/views" if verify else "inverse"
+        ctx.report.append("reuse %s: %d literals named in %d files; %s proofs passed" % (enum, changed, len(edits), proofs))
+    except RenameError as exc:
+        tree.restore(snap)
+        del ctx.report[n_report:]
+        ctx.problems.append(str(exc))
+    return changed
+
+
+def reuse_ledger_row(tree, header, enum, values, sites, note):
+    """Existing const kind, versioned replay metadata; legacy const ledger rows stay unchanged."""
+    hpath = header if header.startswith("include/") else "include/" + header
+    request = {"header": hpath, "enum": enum, "values": values, "sites": sites}
+    payload = base64.urlsafe_b64encode(json.dumps(request, separators=(",", ":")).encode("ascii")).decode("ascii")
+    return Row("const", tree.header_owner(hpath), enum, hpath, REUSE_PREFIX + payload + " " + note, key="-")
+
+
+def reuse_request(row, ch=None):
+    if row.kind != "const" or not row.note.startswith(REUSE_PREFIX):
+        return None
+    try:
+        request = json.loads(base64.urlsafe_b64decode(row.note.split()[0][len(REUSE_PREFIX):]).decode("ascii"))
+        if (set(request) != {"header", "enum", "values", "sites"} or not isinstance(request["header"], str)
+                or not isinstance(request["enum"], str) or not isinstance(request["values"], list)
+                or not isinstance(request["sites"], list)
+                or any(not isinstance(v, list) or len(v) != 3 or not all(isinstance(x, str) for x in v)
+                       for v in request["values"]) or not all(isinstance(s, str) for s in request["sites"])):
+            raise ValueError("invalid request shape")
+    except (ValueError, UnicodeError, TypeError) as exc:
+        raise RenameError("invalid constant reuse ledger metadata: %s" % row.where) from exc
+    # Source files are found by function, so file moves need no stored path changes. Carry explicit
+    # header/tag/member/function renames through the same ledger chains; never guess renamed fields.
+    for key, (names, _rows) in (ch or {}).items():
+        if key[0] == "header" and request["header"][len("include/"):] in names:
+            request["header"] = "include/" + names[-1]
+        if key[0] == "type" and key[1] == row.scope and request["enum"] in names:
+            request["enum"] = names[-1]
+        if key[0] == "enumerator" and key[1] == row.scope:
+            for value in request["values"]:
+                if value[0] in names:
+                    value[0] = names[-1]
+    resolved = []
+    for site in request["sites"]:
+        kind, unit, function, occurrence, expression = reuse_site(site)
+        for key, (names, rs) in (ch or {}).items():
+            if key[0] == "sym" and key[1] == unit and rs[0].kind == "func" and function in names:
+                function = names[-1]
+            if key[0] == "sym" and key[1] in (unit, "main") and rs[0].kind == "data":
+                for old in names[:-1]:
+                    expression = rewrite_text(expression, old, names[-1], comments=False, suffixes=False)[0]
+        resolved.append("%s:%s:%s%s:%s" % (kind, unit, function, "@%d" % occurrence if occurrence else "", expression))
+    request["sites"] = resolved
+    return request
+
+
+def apply_reuse(ctx, row, ledger, out):
+    """Commit the proved edit and request together; restore both if post-write validation fails."""
+    before = {p: ctx.tree.orig[p] for p in ctx.tree.changed()}
+    ledger_file = ledger_path(ctx.root, ledger)
+    previous = None
+    if os.path.exists(ledger_file):
+        with open(ledger_file, encoding=ENC) as stream:
+            previous = stream.read()
+    try:
+        ctx.tree.flush()
+        append_ledger(ctx.root, ledger, [row])
+        if check(ctx.root, out=out):
+            raise RenameError("reuse post-write check failed")
+    except (OSError, RenameError):
+        undo = Tree(ctx.root)
+        for path, text in before.items():
+            undo.write(path, text)
+        undo.flush()
+        if previous is None:
+            if os.path.exists(ledger_file):
+                os.remove(ledger_file)
+        else:
+            with open(ledger_file, "w", encoding=ENC, newline="") as stream:
+                stream.write(previous)
+        raise
+    out.write("applied; ledger %s\n" % os.path.relpath(ledger_file, ctx.root))
+
+
+def const_plan(root, header, enum, defines, values, sites, note="", ledger=None, log=print, reuse=False):
     """(tree, report lines, problems) for one const run (nothing written)."""
+    if reuse:
+        ctx = Context(root)
+        const_reuse_plan(ctx, header, enum, values, sites)
+        return ctx.tree, ctx.report, ctx.problems
     from pycparser import c_parser
     tree = Tree(root)
     problems, report = [], []
@@ -2535,6 +2905,14 @@ def check(root, out=sys.stdout):
                 hits = old_name_hits(tree, ch, key, o, files, idx, table)
                 for h in hits[:3]:
                     problems.append("%s: %s was renamed to %s (%s); run tools/rename.py replay" % (h, o, final, where))
+    for row in rows:
+        request = reuse_request(row, ch)
+        if request:
+            ctx = Context(root)
+            changed = const_reuse_plan(ctx, request["header"], request["enum"], request["values"], request["sites"], verify=False)
+            problems += ["%s: %s" % (row.where, p) for p in ctx.problems]
+            if changed and not ctx.problems:
+                problems.append("%s: reviewed constant literal sites are stale; run tools/rename.py replay" % row.where)
     for p in problems:
         out.write(p + "\n")
     if not problems:
@@ -2727,6 +3105,10 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
             need += settle_field_chain(ctx, scope, final, rs)
         if need:
             plan_fields(ctx, need, use_gcc=use_gcc)
+    for row in sel:
+        request = reuse_request(row, ch)
+        if request:
+            const_reuse_plan(ctx, request["header"], request["enum"], request["values"], request["sites"])
     for line in ctx.report:
         out.write(line + "\n")
     for n in ctx.notes[:40]:
@@ -2832,6 +3214,7 @@ def main(argv=None):
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--enum")
     g.add_argument("--defines", action="store_true")
+    g.add_argument("--reuse", metavar="ENUM", help="reuse existing enum members at exact expr/index sites")
     p.add_argument("--values", required=True)
     p.add_argument("--site", action="append", required=True)
     p.add_argument("--note", default="")
@@ -2854,6 +3237,19 @@ def main(argv=None):
         if a.cmd == "const":
             with open(a.values, encoding=ENC) as f:
                 values = parse_values(f.read(), a.values)
+            if a.reuse:
+                ctx = Context(a.root)
+                const_reuse_plan(ctx, a.header, a.reuse, values, a.site)
+                for line in ctx.report:
+                    print(line)
+                for problem in ctx.problems:
+                    print("PROBLEM: %s" % problem)
+                if ctx.problems:
+                    return 1
+                if a.apply:
+                    row = reuse_ledger_row(ctx.tree, a.header, a.reuse, values, a.site, a.note)
+                    apply_reuse(ctx, row, a.ledger or row.scope, sys.stdout)
+                return 0
             tree, report, problems = const_plan(a.root, a.header, a.enum, a.defines, values, a.site, a.note)
             for line in report:
                 print(line)

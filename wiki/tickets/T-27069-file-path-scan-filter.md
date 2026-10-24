@@ -1,7 +1,7 @@
 ---
 id: T-27069
 title: Skip irrelevant files in file-rename path scans
-status: In Review
+status: Done
 assignee: rename-tooling
 created: 2026-10-24
 updated: 2026-10-24
@@ -16,7 +16,7 @@ Avoid tokenizing every source/header twice per object move when the required lit
 
 - [x] Filter only files that cannot contain either approved path regex match; selected strings/comments still follow existing lexer rules.
 - [x] Meaningful skip/selection regressions and existing file-rename tests pass; independent Standards/Spec review resolved.
-- [ ] Root integrates separately and reruns full403liveplan/apply and matching proof.
+- [x] Root integrates separately and reruns full403liveplan/apply and matching proof.
 
 ## Work notes
 
@@ -27,3 +27,5 @@ The new regression fails if an irrelevant source is ever tokenized, asserts both
 2026-10-24 final scratch freeze: all 95 rename tests pass, including the five file-rename tests. The T-27069 baseline byte-for-byte equals the final T-27068 result. Patch SHA-256 `e709444ea63f5fe98a411c2c2ba82c4a198774612334f13d1a5af8503a999493`; manifest and synthetic proof are in the ignored T-27069 packet. Root will review Standards and obtain independent Sol Spec review before integration. No live tools or Git index writes occurred.
 
 2026-10-24 isolated root integration: unchanged approved performance hunks apply cleanly to the original live baseline without the separate T27068feature (which still has a blocking provenance finding). Root Standards and independent Sol Spec reviews pass. Integratedfullsuite79tests pass in4.346s, including exactskip/string/comment/boundary regression; sourceC files unchanged. Oldunoptimized403read-onlyplan was stopped afterover20minutes; fulloptimizedplan is being rerun. Separate livebaseline/result manifest retained. Ticket stays InReview until actual403integration proof completes.
+
+2026-10-24 full-treeproofcomplete: optimized403plan/applypass, all437views0/0/0, clean27/27andindependentrehash27/27with6952functions. Originalfilefiltersemantics preserved bybothreviewsand79tests. Done.

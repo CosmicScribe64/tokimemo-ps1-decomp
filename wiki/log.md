@@ -1640,3 +1640,11 @@ Committed5902c2c38 for all34logical main C filenames. Required deslop prose chec
 ## [2026-10-24] build | Integrate independently reviewed file-path filter
 
 [[tickets/T-27069-file-path-scan-filter]] isolated approvedperformancehunks from the separateconstantfeature; unchanged79-test suitepasses in4.346s. Bothpathregexes requireliteraloldpath, so skippingfileswithoutthatliteral preservesallactualmatches; comments/asmstrings/boundaries covered. [[tickets/T-27068-existing-constant-sites]] remains open after independentSpec review caught disabled-preprocessor/raw-vs-AST provenance mismatch; it is not integrated. Fulloptimized403filenameplan is rerunning; no proof waived.
+
+## [2026-10-24] build | Complete logical filenames for all game C objects
+
+[[tickets/T-27060-all-overlay-c-file-names]] and [[tickets/T-27069-file-path-scan-filter]] Done:403overlaymoves,34mainlogicalnames,437total withzeroaddress/numericbasenames. Fulloptimizedplan/apply/ledgercheckpassed, all437path-mappedviews0/0/0; clean27/27and6952functions/2276920bytes, independent27/27rehash. IndependentLunaStandards/SolSpec applicationreviewsfound noissues. Fileonlysourcecommit isnext. Assetfrozen52-filemergedcheckpointpasses139tests; firstreadonlytestrunnerblockedtestcachewrites, correctedbywritableephemeralcopywhileinputsremainreadonly. Noassetcodechangeforthatsetupissue.
+
+## [2026-10-24] build | Commit verified filename and asset milestones; integrate exact constant reuse
+
+All437logicalCnames committed169145eff. Exactreviewed45Pythonassettool/testfiles committed98f3d22f5 from52-filefrozenmedia/textsource snapshots; combined139testspass, activeworkingfilespreserved. [[tickets/T-27068-existing-constant-sites]] exactfinalpatch integratedwith98testsandresolvedindependentreviews; actualbaseballliteralchangesremainnext. Source-onlymilestonesinclude nogameassets; broaderphase2andsemanticassetcoverage remainopen. Preservedstalezero-byteindexlockunderignoredT27060stateonlyaftercheckingnoactivehost/DockerGit; filenamecommitthensucceeded.

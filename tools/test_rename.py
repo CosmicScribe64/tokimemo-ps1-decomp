@@ -1154,6 +1154,209 @@ class ConstTest(Fixture):
         self.assertEqual(R.parse_site("*.weekday"), ("member", "*", "weekday"))
 
 
+class ExistingConstantSitesTest(Fixture):
+    """T-27068: reuse is opt-in, exact and fails closed on unsupported sites or declarations."""
+    def setUp(self):
+        super().setUp()
+        h = self.read("include/common.h")
+        self.write("include/common.h", h.replace("#endif", "enum Club { CLUB_BASEBALL = 6, CLUB_NONE = 11 };\n#endif"))
+        h = self.read("include/game.h")
+        h = h.replace("typedef struct GameState {", "typedef union Flags { unsigned short h; s32 w; } Flags;\n"
+                      "typedef struct ClubRecord { s32 level; } ClubRecord;\ntypedef struct GameState {")
+        h = h.replace("/* 0x00 */ s16 unk_00;", "Flags player_flags; ClubRecord clubs[12];\n    /* 0x00 */ s16 unk_00;", 1)
+        self.write("include/game.h", h)
+        self.path = "src/main/80041000.c"
+        self.source = self.read(self.path) + "\ns32 club_rule(void) {\n    GameState *gs = &D_800E6280;\n" \
+            "    s32 unrelated = 6;\n    s32 girl = 7;\n" \
+            "    if ((gs->player_flags.h >> 12) == 6 && (D_800E6280.clubs[6].level & 15) >= 8) return 1;\n" \
+            "    return unrelated + girl;\n}\n"
+        self.write(self.path, self.source)
+        self.values = R.parse_values("CLUB_BASEBALL 6\n", "values")
+        self.sites = ["expr:main:club_rule:(gs->player_flags.h >> 12)",
+                      "index:main:club_rule:D_800E6280.clubs"]
+
+    def plan_reuse(self, values=None, sites=None, header="include/common.h", enum="Club"):
+        ctx = R.Context(self.root)
+        R.const_reuse_plan(ctx, header, enum, self.values if values is None else values,
+                           self.sites if sites is None else sites)
+        return ctx
+
+    def test_exact_comparison_and_index_leave_unselected_values(self):
+        before_header = self.read("include/common.h")
+        ctx = self.plan_reuse()
+        self.assertEqual(ctx.problems, [])
+        text = ctx.tree.read(self.path)
+        self.assertIn("(gs->player_flags.h >> 12) == CLUB_BASEBALL", text)
+        self.assertIn("clubs[CLUB_BASEBALL].level & 15) >= 8", text)
+        self.assertIn("unrelated = 6", text)
+        self.assertIn("girl = 7", text)
+        self.assertEqual(ctx.tree.read("include/common.h"), before_header)
+        self.assertEqual(ctx.tree.changed(), [self.path])
+
+    def test_comparison_and_index_require_separate_sites(self):
+        ctx = self.plan_reuse(sites=self.sites[:1])
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("clubs[6]", ctx.tree.read(self.path))
+
+    def test_unsigned_literal_keeps_its_type(self):
+        self.write(self.path, self.source.replace(
+            "== 6 &&", "== 6U &&").replace("clubs[6]", "clubs[6UL]"))
+        ctx = self.plan_reuse()
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("== ((unsigned int)CLUB_BASEBALL)", ctx.tree.read(self.path))
+        self.assertIn("clubs[((unsigned long int)CLUB_BASEBALL)]", ctx.tree.read(self.path))
+        ctx.tree.flush()
+        self.assertEqual(self.plan_reuse().problems, [])
+
+    def test_ambiguous_same_value_names_are_refused(self):
+        values = R.parse_values("CLUB_BASEBALL 6\nCLUB_ALIAS 6\n", "values")
+        ctx = self.plan_reuse(values=values)
+        self.assertTrue(any("same-value" in p for p in ctx.problems), ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+
+    def test_wrong_existing_value_and_wrong_enum_are_refused(self):
+        for values, enum in ((R.parse_values("CLUB_BASEBALL 5", "values"), "Club"), (self.values, "OtherClub")):
+            ctx = self.plan_reuse(values=values, enum=enum)
+            self.assertTrue(ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+
+    def test_wrong_header_owner_is_refused(self):
+        ctx = self.plan_reuse(header="include/ovl/AAA.h")
+        self.assertTrue(any("own/see" in p for p in ctx.problems), ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+
+    def test_enum_initializer_type_mismatch_is_refused(self):
+        self.write("include/common.h", self.read("include/common.h").replace("CLUB_BASEBALL = 6", "CLUB_BASEBALL = 6U"))
+        ctx = self.plan_reuse()
+        self.assertTrue(any("range/type" in p for p in ctx.problems), ctx.problems)
+
+    def test_other_enum_member_cannot_force_an_unsupported_range(self):
+        header = self.read("include/common.h")
+        for initializer in ("0x80000000U", "-1", "CLUB_BASEBALL + 1"):
+            self.write("include/common.h", header.replace("CLUB_NONE = 11", "CLUB_NONE = " + initializer))
+            ctx = self.plan_reuse()
+            self.assertTrue(any("range/type" in p for p in ctx.problems), ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+        self.write("include/common.h", header)
+
+    def test_local_or_macro_shadow_is_refused(self):
+        for shadow in ("s32 CLUB_BASEBALL = 9;", "\n#define CLUB_BASEBALL 9\n"):
+            self.write(self.path, self.source.replace("s32 unrelated = 6;", shadow + "\ns32 unrelated = 6;"))
+            ctx = self.plan_reuse()
+            self.assertTrue(any("shadow" in p for p in ctx.problems), ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+
+    def test_repeated_expression_requires_explicit_occurrence(self):
+        self.write(self.path, self.source.replace("    return unrelated", "    if ((gs->player_flags.h >> 12) == 6) girl++;\n    return unrelated"))
+        ctx = self.plan_reuse(sites=self.sites[:1])
+        self.assertTrue(any("2 matches" in p for p in ctx.problems), ctx.problems)
+        ctx = self.plan_reuse(sites=[self.sites[0].replace("club_rule:", "club_rule@1:")])
+        self.assertEqual(ctx.problems, [])
+        text = ctx.tree.read(self.path)
+        self.assertEqual(text.count("== CLUB_BASEBALL"), 1)
+        self.assertEqual(text.count("== 6"), 1)
+
+    def test_expression_boundary_and_missing_function_are_refused(self):
+        self.write(self.path, self.source.replace("== 6 &&", "== 6 + 1 &&"))
+        ctx = self.plan_reuse(sites=self.sites[:1])
+        self.assertTrue(any("disagree" in p for p in ctx.problems), ctx.problems)
+        ctx = self.plan_reuse(sites=[self.sites[0].replace("club_rule:", "other_rule:")])
+        self.assertTrue(ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+
+    def test_failed_proof_restores_pending_tree(self):
+        def fail(ctx):
+            ctx.problems.append("synthetic gcc proof failure")
+        with unittest.mock.patch.object(R, "gcc_proof", fail):
+            ctx = self.plan_reuse()
+        self.assertTrue(ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual(self.read(self.path), self.source)
+
+    def test_disabled_exact_expression_cannot_stand_in_for_active_macro(self):
+        original = "    if ((gs->player_flags.h >> 12) == 6 && (D_800E6280.clubs[6].level & 15) >= 8) return 1;"
+        replacement = "#define LIVE_CLUB (gs->player_flags.h >> 12)\n#if 0\n" \
+            "    if ((gs->player_flags.h >> 12) == 6) return 9;\n#endif\n" \
+            "    if (LIVE_CLUB == 6 && (D_800E6280.clubs[6].level & 15) >= 8) return 1;"
+        source = self.source.replace(original, replacement)
+        self.assertNotEqual(source, self.source)
+        self.write(self.path, source)
+        ctx = self.plan_reuse(sites=self.sites[:1])
+        self.assertTrue(any("provenance" in p for p in ctx.problems), ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual(self.read(self.path), source)
+
+    def test_discarded_macro_argument_cannot_supply_same_line_provenance(self):
+        definitions = "#define DROP(x)\n#define LIVE_CLUB (gs->player_flags.h >> 12)\n"
+        original = "    if ((gs->player_flags.h >> 12) == 6 && (D_800E6280.clubs[6].level & 15) >= 8) return 1;"
+        replacement = "    DROP((gs->player_flags.h >> 12) == 6); if (LIVE_CLUB == 6) return 1;"
+        source = definitions + self.source.replace(original, replacement)
+        self.write(self.path, source)
+        ctx = self.plan_reuse(sites=self.sites[:1])
+        self.assertTrue(any("provenance" in p for p in ctx.problems), ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual(self.read(self.path), source)
+
+    def test_inactive_function_cannot_match_identical_active_header_function(self):
+        start = self.source.index("s32 club_rule(void)")
+        function = self.source[start:]
+        self.write("include/game.h", self.read("include/game.h") + "\n" + function)
+        source = self.source[:start] + "#if 0\n" + function + "#endif\n"
+        self.write(self.path, source)
+        ctx = self.plan_reuse(sites=self.sites[:1])
+        self.assertTrue(any("provenance" in p for p in ctx.problems), ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual(self.read(self.path), source)
+
+    def test_apply_ledger_check_and_repeated_replay(self):
+        ctx = self.plan_reuse()
+        self.assertEqual(ctx.problems, [])
+        row = R.reuse_ledger_row(ctx.tree, "include/common.h", "Club", self.values, self.sites, "T-27068 proven IDs")
+        R.apply_reuse(ctx, row, "reuse", io.StringIO())
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        applied = self.read(self.path)
+        self.write(self.path, self.source)
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+        self.assertEqual(self.read(self.path), applied)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_failed_post_write_check_rolls_back_source_and_ledger(self):
+        ctx = self.plan_reuse()
+        row = R.reuse_ledger_row(ctx.tree, "include/common.h", "Club", self.values, self.sites, "T-27068")
+        with unittest.mock.patch.object(R, "check", return_value=1):
+            with self.assertRaises(R.RenameError):
+                R.apply_reuse(ctx, row, "reuse", io.StringIO())
+        self.assertEqual(self.read(self.path), self.source)
+        self.assertIsNone(self.read("config/renames/reuse.txt"))
+
+    def test_reuse_metadata_follows_function_enum_and_header_ledgers(self):
+        enum = "enum Club { CLUB_BASEBALL = 6, CLUB_NONE = 11 };"
+        self.write("include/clubs.h", "#ifndef CLUBS_H\n#define CLUBS_H\n%s\n#endif\n" % enum)
+        self.write("include/common.h", self.read("include/common.h").replace(enum, '#include "clubs.h"'))
+        self.write("config/symbol_addrs.txt", self.read("config/symbol_addrs.txt") +
+                   "\nclub_rule = 0x80041080; // type:func\n")
+        ctx = self.plan_reuse(header="include/clubs.h")
+        self.assertEqual(ctx.problems, [])
+        row = R.reuse_ledger_row(ctx.tree, "include/clubs.h", "Club", self.values, self.sites, "T-27068")
+        R.apply_reuse(ctx, row, "reuse", io.StringIO())
+        self.ok("func main club_rule readable_club_rule\n", verify=True)
+        self.ok("type main Club ActivityClub\n", verify=True)
+        self.ok("enumerator main CLUB_BASEBALL CLUB_SPORT_BASEBALL\n", verify=True)
+        self.ok("file include clubs.h shared.h\n", verify=True)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+
+    def test_const_cli_reuse_and_legacy_const_are_separate(self):
+        self.write("values.txt", "CLUB_BASEBALL 6\n")
+        argv = ["--root", self.root, "const", "--header", "include/common.h", "--reuse", "Club",
+                "--values", os.path.join(self.root, "values.txt"), "--site", self.sites[0], "--apply"]
+        with unittest.mock.patch("sys.stdout", io.StringIO()):
+            self.assertEqual(R.main(argv), 0)
+        self.assertIn("== CLUB_BASEBALL", self.read(self.path))
+
+
 class SymtabTest(Fixture):
     def test_scope_and_placement(self):
         t = symtab.SymbolTable(self.root)

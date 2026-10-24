@@ -64,7 +64,6 @@ kanban-plugin: board
 ## In Progress
 
 
-- [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
 
 - [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
 
@@ -80,7 +79,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-27061-next-main-topic-extraction|T-27061 Prepare next bounded main topic-header extraction packet]]
 
-- [ ] [[tickets/T-27060-all-overlay-c-file-names|T-27060 Name every overlay C file]]
 
 
 
@@ -155,7 +153,8 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-27069-file-path-scan-filter|T-27069 Skip irrelevant files in file-rename path scans]]
+- [ ] [[tickets/T-27068-existing-constant-sites|T-27068 Reuse proven constants at precise literal sites]]
+
 
 
 
@@ -228,6 +227,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27069-file-path-scan-filter|T-27069 Skip irrelevant files in file-rename path scans]]
+
+- [ ] [[tickets/T-27060-all-overlay-c-file-names|T-27060 Name every overlay C file]]
 
 - [ ] [[tickets/T-27059-all-main-c-file-names|T-27059 Name every main executable C file]]
 
