@@ -990,6 +990,12 @@ class ConstTest(Fixture):
         _t, _r, problems = R.const_plan(self.root, "include/ovl/AAA.h", "Xa", False, values, ["GameState.unk_00"])
         self.assertTrue(any("ambiguous" in p for p in problems), problems)
 
+    def test_any_type_site(self):
+        values = R.parse_values("X_A 0\n", "v")
+        _t, _r, problems = R.const_plan(self.root, "include/ovl/AAA.h", "Xa", False, values, ["*.unk_00"])
+        self.assertEqual(problems, [])
+        self.assertEqual(R.parse_site("*.weekday"), ("member", "*", "weekday"))
+
 
 class SymtabTest(Fixture):
     def test_scope_and_placement(self):

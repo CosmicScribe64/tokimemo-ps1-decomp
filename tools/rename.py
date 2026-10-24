@@ -1863,9 +1863,9 @@ def parse_site(spec):
     m = re.match(r"^(\w+):(\w+)\(arg(\d+)\)$", spec)
     if m:
         return ("arg", m.group(1), m.group(2), int(m.group(3)))
-    m = re.match(r"^(\w+)\.(\w+)$", spec)
+    m = re.match(r"^(\w+|\*)\.(\w+)$", spec)
     if m:
-        return ("member", m.group(1), m.group(2))
+        return ("member", m.group(1), m.group(2))     # `*.name`: every member of that name, whatever its type
     if IDENT_RE.match(spec):
         return ("var", spec)
     raise RenameError("site %r: expected Type.field, a variable name or UNIT:function(argN)" % spec)
@@ -1967,7 +1967,7 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
         by_value.setdefault(int(v, 0), name)
     sites = [parse_site(s) for s in sites]
     for s in sites:
-        if s[0] == "member":
+        if s[0] == "member" and s[1] != "*":
             owners = [d for d in find_type(tree, s[1])]
             if len(owners) != 1:
                 problems.append("site %s.%s: %s has %d definitions" % (s[1], s[2], s[1], len(owners)))
@@ -2040,7 +2040,7 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     k = htext.rfind("#endif")
     tree.write(hpath, (htext[:k] + block + "\n" + htext[k:]) if k >= 0 else (htext.rstrip("\n") + "\n\n" + block))
     for s in sites:
-        if s[0] == "member" and enum:
+        if s[0] == "member" and s[1] != "*" and enum:
             d = find_type(tree, s[1])[0]
             if file_unit(tree, d[0]) != file_unit(tree, hpath):
                 report.append("%s.%s: no /* %s */ comment, the type is shared and the enum is %s's" % (
