@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] lint | Quadrant wrap-up replay verification
-
-Docker replay independently reproduced conservative674/671words,361aligned/381printed and forward-join674/670words,360/380 for [[tickets/T-25034-main-quadrant-extent]]. Docker catalog797tickets; lint zero broken links and zero status mismatches, with one existing large-page warning for [[data/t0018-cases]]. git diff --check passes. src/, include/ and tools/ unchanged. Source-only checkpoint remains unfinished research; all worker experiments stopped at user request.
-
-## [2026-10-22] ingest | Preserve MAIN wrap-up checkpoints
-
-Integrated d8e482c4a after source/replay review. Root Docker replay confirms conservative674/671words with361aligned/381printed and forward-join674/670 with360/380. Source drafts only, production unchanged, no match credited. Wiki catalog/lint pass with zero broken links/status mismatches and two size warnings. MAIN chat reports newer direct user wrap-up/push instructions; root withdrew its resume request based on older context and preserves that stopped lane. Updated [[plan-remaining]]. SHOUGATU remains active with reported118/118-word zero-carrier experiment and four aligned differences; not yet a match.
-
-## [2026-10-22] decision | User resumes sustained matching after MAIN wrap-up
-
-New direct root instruction: keep workers going until problems are figured out and matches made. This supersedes the earlier MAIN-chat wrap-up. Resumed T-25034 Astra from preserved d8e482c4a candidates and reinforced T-25033 continuation from the118-word zero-carrier experiment. No time/probe limits; checkpoints and failed controls do not terminate assignments. Concrete external blockers and literal proof standards remain. Root integrates, coordinators avoid duplicate experiments.
-
-## [2026-10-22] decision | Additional Astra matching lanes
-
-User explicitly requests more agents across unmatched functions and independent solutions. Dispatched three file-disjoint Astra/high workers: T-25035 GYOZI func_80140E0C, T-25036 MAIN func_8006D7EC, T-25037 BUNKA_SD func_80139290. Each uses isolated checkout, Docker, existing negative ledger, and sustained implementation until literal match or concrete external blocker. GYOZI/counter workers will independently assess the new SHOUGATU late-folded producer, not duplicate its source editing. BUNKA worker pursues remaining source-to-scheduler ordering. Existing T-25033/T-25034 continue; GEKO/OPTION reserved. Root serializes proof and integration. No new coverage claimed.
-
-## [2026-10-22] query | Share concrete late-folded producer across independent lanes
-
-T-25033 supplied exact private donor single-identity-or/unit.c and unsigned-less-than-zero producer, preserving target entry zero carrier without an input load. Recorded provisional mechanism and FAKE/verification limits in [[matching-notes]], relayed to T-25035/T-25036. These workers test transfer independently in separate files; no match or coverage claim. T-25034 continues color-result placement, T-25037 scheduler ordering.
-
-## [2026-10-22] decision | T-25033 continuous sole-worker attempt
-
-Latest human direction removes historical time/probe stopping limits for [[tickets/T-25033-shougatu-canonical-call]]. Sole implementation ownership transferred to the requested Astra worker; coordinator idles. Preserve the five-line guarded candidate while testing evidence-informed zero-carrier mechanisms through literal resolution or a concrete external blocker. Updated drafts/T-25033/README.md; no source changes.
-
 ## [2026-10-22] build | T-25033 zero representation controls
 
 Private full-TU controls in build/t25033/astra retain the five-line baseline for direct float-to-integer zero and null-pointer zero. A live float local adds conversion code; mixed-width conditional writes and register-volatile locals force unwanted stack traffic. Union punning encounters the existing frame-pass unsupported-stack-form guard. None is retained. Next hypothesis is a width-limited extraction with a disjoint mask, recognized after uopt so the target zero carrier can remain live. See [[tickets/T-25033-shougatu-canonical-call]].
