@@ -12,9 +12,10 @@ address or size (survey in `drafts/T-25900/audit.md`):
 - 65% of struct members are `unk_XX`, and 70% of type names describe a size or an address;
 - all 437 C files carry address names, and the overlay headers carry disc names.
 
-Phase 2 makes the code readable for someone who has never seen the binary. The user settled four questions on
-2026-10-24. This record states them, the conventions that follow from them, and their costs. A rename never
-changes an output byte, and every rename batch ends with the 27/27 sha1 build that proves it.
+Phase 2 makes the code readable for someone who has never seen the binary, so that the Godot port can be
+written from it. The user settled six questions and the scope on 2026-10-24. This record states them, the
+conventions that follow from them, and their costs. A rename never changes an output byte, and every rename
+batch ends with the 27/27 sha1 build that proves it.
 
 ## Decisions
 
@@ -24,7 +25,8 @@ changes an output byte, and every rename batch ends with the 27/27 sha1 build th
    globals go into a HYPOTHESES symbol file; fields, types and constants get a `/* HYPOTHESIS: ... */`
    comment. Only fields that are unused, or whose use shows nothing, stay `unk_XX` or `pad`.
 2. **O.BIN names.** The developer names from the O.BIN symbol table (`hizuke_init`, `k_disp_start`, `sndi`, ...)
-   stay as they are. Each one gets a one-line English comment saying what it does. New names are English.
+   stay as they are. Each game-side one gets a one-line English comment saying what it does. New names are
+   English.
 3. **Files, folders and headers.** `src/ovl/TAIIKU/80133C80.c` becomes `src/ovl/sports_festival/runner_race.c`,
    and every other file and folder gets an English name the same way. The disc names (`TAIIKU.EXN`) stay in
    the build config and in a map (`src/ovl/README.md` and the wiki). Headers are split by topic and named for
@@ -34,6 +36,32 @@ changes an output byte, and every rename batch ends with the 27/27 sha1 build th
 4. **Game terms.** English everywhere. Terms with no good English equivalent stay as the game has them: the
    heroines by given name (`shiori`), the tokimeki meter, and a few event and culture words (`hatsumode`,
    `omikuji`). `GLOSSARY.md` at the repository root maps every term to its identifier stem.
+5. **Renames.** Once `tools/rename.py` (T-27002) has merged, it is the only way to rename a function, global,
+   field, type, file or header, and any constant, local or parameter as well. No hand edit and no
+   search-and-replace. Until it has merged, no rename lands. CODING_STANDARDS section 4 states this as the
+   binding rule. (User decision, 2026-10-24, audit question 5.)
+6. **Old names in the wiki.** Tickets, logs and old notes keep the names they were written with, as history.
+   Current pages (status, playbook, specs and the phase 2 pages) use the new names. `tools/rename.py lookup`
+   and an old-name column in the function catalog (`wiki/notes/functions.md`) map an old name to its new one.
+   (User decision, 2026-10-24, audit question 2.)
+
+## Scope
+
+The user set the scope on 2026-10-24: phase 2 is port-first, "not 100%, just enough for the Godot port". The
+matching decompilation stays exact: all 27 sha1 files match and `ninja progress` stays at 6,952 functions after
+every change. Naming goes as deep as the port needs:
+
+| layer | what it covers | depth |
+|---|---|---|
+| Game logic | GameState and its records, enums, calendar and schedule, parameters, girls with affection and tokimeki, day events and scenes, dates, confession and endings, save data, each overlay's state machine and data tables, and the files and headers of these modules | Named and explained in full. Every function, global, field and type gets an English name backed by evidence, and a field stays `unk_XX` only when its use shows nothing. Where a rule is not plain from the code (a formula, a threshold, a transition), a comment at the definition or the unit's port spec in `wiki/spec/` states it. |
+| PS1 hardware layer | GPU, sprites and VRAM; the sound driver; CD and XA; MDEC | Module level and entry points: the module's files and header are named, and so is each function that game logic calls. Internal functions, globals and fields may keep placeholders. |
+| Locals and literals | local variables, parameters, hex literals | Named only where essential: where the local or the literal carries game logic (a girl index, a place id, a threshold, a flag bit). Hardware-layer code may keep m2c names and raw hex. |
+| SDK | PsyQ library functions and data | Optional. |
+
+Accepted exception: about 150 SDK-range functions that no symbol file names are called about 1,200 times from
+game C. They stay number-named unless a unit names one, and the user accepted that on 2026-10-24 with "SDK
+names optional". The SDK-named placeholders that overlays still use (`strcpy` as `func_800AE0F0`, `rand`,
+`rsin` and about 25 more) are not part of the exception. They are alias debt that T-27003 clears.
 
 ## Conventions
 
@@ -58,16 +86,43 @@ reviews check.
   overlay's prefix from the map below (`sports_`, type `Sports...`, constant `SPORTS_`). An overlay that holds
   several unrelated scenes has one prefix per scene, all listed in the map. Two overlays may reuse a name,
   but the prefixes make that rare.
-- A prefix is a glossary stem or a short form of one that the map lists (`sports_` for `sports_festival`,
-  `trip_` for `school_trip`). Review checks the prefix against the map and the other words of a name against
-  the glossary.
+- What counts as a prefix: a glossary stem, a listed abbreviation, or a row of the Module words table in
+  `GLOSSARY.md`. That table holds the plain English words for modules (`boot`, `sprite`, `help`) and the short
+  forms of stems (`sports` for `sports_festival`, `trip` for `school_trip`), each with its module. Every prefix
+  in the two maps below meets this rule. A unit that needs a new prefix adds it to its map and, if it is not a
+  stem or an abbreviation, to the Module words table, in the same commit as the first name that uses it.
+- What counts as a word: a game-term word, one for a thing in the game's world or rules (a girl, place, club,
+  parameter, event, scene), comes from the glossary, and its trap row says which sense it has. An ordinary
+  technical word (`list`, `clear`, `advance`, `glyph`, `buffer`) is plain English and needs no row. An
+  abbreviation comes from the abbreviation table. Review checks game-term words and prefixes, not ordinary
+  words.
+- One owner: each prefix belongs to one row of one map, and only that row's unit creates names with it. A
+  function that sits in one module's file but has the topic of another module (`appointment_find_today`, a
+  function of the HUD file `800674B0` with the days-off module's topic) takes its own module's prefix when it
+  is renamed.
 - **Main executable.** Each module uses the subsystem prefix from the table below, with no unit prefix in
   front; O.BIN names keep their own stems (`hizuke_`, `k_disp_`, `normal_date_`). `date_` belongs to the DATE
   overlay; main's dating code uses O.BIN's `normal_date_`. The one main name with a `date_` stem,
-  `date_sasoi_judge` (0x80070850), is an O.BIN name and stays, as every O.BIN name does. Game-side sound code
-  uses `sound_`, never `snd_`, `Ss` or `Spu`, which are SDK names.
+  `date_sasoi_judge` (0x80070850), is an O.BIN name and stays, as every O.BIN name does. The sound driver
+  is hardware layer. Game code that plays music or effects puts the stems `bgm` or `se` after its own
+  module's prefix (`title_bgm_start`). `sound_` is not a main prefix (the OPTION overlay owns `sound_test_`),
+  and `snd_`, `Ss` and `Spu` are SDK names.
 - The two tables below are the starting maps. A unit that needs another prefix, or a different folder name,
   changes the row in the same commit as the first name that uses it; review checks it.
+
+### O.BIN names and names already in the tree
+
+- O.BIN names are the entries of `config/symbol_addrs_obin.txt` and nothing else. They stay as they are.
+- A game-side O.BIN name gets its one-line English comment at its C definition; every game function has one.
+  The unit that owns the file writes it. The O.BIN names in the SDK region (77 functions and all 22 data
+  labels, which are SDK bss such as `_snd_openflag` and `RingBase`) have no C definition. Their comment is
+  optional, like all SDK names, and goes on the name's line in `config/symbol_addrs_obin.txt`.
+- Every other name that exists before phase 2 follows the conventions: the English-patch names (T-11090, in
+  `config/symbol_addrs.txt` and `config/symbols_<DISC>.txt`, such as `dialogue_render` and `main_state_set`)
+  and the names that matching tickets gave. Each unit re-checks the non-O.BIN names in its range against the
+  glossary, the maps and the abbreviation table. A name that fails (an unlisted prefix, a bare trap word such
+  as `event`, an abbreviation outside the table) is renamed through `tools/rename.py` in the unit's first
+  table, with its evidence. A name that passes stays. `wiki/phase2.md` lists the failing names known today.
 
 ### Evidence and hypotheses
 
@@ -83,8 +138,10 @@ reviews check.
   (`wiki/overlays.md`). A main name for an address in that range, in a file that every yaml loads, would label
   EVENT's own data too, as `cd_read_status` did (audit gap G3). Such names go to the main-only files
   `config/symbol_addrs_main.txt` and, for hypotheses, `config/symbol_addrs_main_hypotheses.txt`. Only the
-  main yaml loads them. `tools/check_symbols.py` checks every symbol file that a yaml loads, the hypothesis files
-  included, and rejects a main name in EVENT's range in any file that EVENT loads (T-27002, T-27003).
+  main yaml loads them. The header of `symbol_addrs_main.txt` still says it holds facts that are not names.
+  The first name that lands there changes it. `tools/check_symbols.py` checks every symbol file
+  that a yaml loads, the hypothesis files included, and rejects a main name in EVENT's range in any file that
+  EVENT loads (T-27002, T-27003).
 - A name leaves its HYPOTHESES file, or loses its comment, when the code or an emulator run proves it; the
   evidence goes into the ticket.
 
@@ -104,12 +161,13 @@ reviews check.
   change the code. The field gets a comment naming the enum: `/* 0x0F5F */ u8 girl; /* enum Girl */`.
 - A literal is replaced only where it is tied to a named site: compared with, assigned to, a `case` of, or
   passed as an argument that has the enum's meaning. Bit patterns and offsets are written in hex, counts in
-  decimal.
+  decimal. Game logic gets this treatment (the scope table); hardware-layer code may keep raw hex.
 
 ### Locals and parameters
 
-- Role names (`girl`, `sprite`, `sector`); `i`, `j`, `k` for loop counters. No m2c names remain (`var_s0`,
-  `temp_v0`, `sp10`, `arg0`, `phi_*`).
+- A local or parameter that carries game logic gets a role name (`girl`, `sprite`, `sector`); `i`, `j`, `k`
+  are loop counters. A name that is given is never an m2c name (`var_s0`, `temp_v0`, `sp10`, `arg0`, `phi_*`).
+  Locals that carry nothing the port needs, and hardware-layer code, may keep m2c names.
 - A temporary that exists only to make the match keeps its `FAKE` comment and gets a name that says so
   (`fake_order`). Header prototypes use the same parameter names as the definition.
 
@@ -127,6 +185,10 @@ reviews check.
 - Because `src_path` is `src/ovl`, splat writes the object's asm under the new path inside the disc-named
   root (`asm/ovl/TAIIKU/data/sports_festival/runner_race.data.s`), and the `INCLUDE_ASM` and `INCLUDE_RODATA`
   path strings in the C file change with it. `tools/rename.py` makes these edits for `file` and `dir` rows.
+- A file or folder is named only from content that the code or the emulator proves. A name that claims
+  game meaning beyond that (`runner_race.c` for code whose use is unknown) is a hypothesis: the file's first
+  comment carries `HYPOTHESIS: <what is unproven>`, and a folder keeps the `confirm` status of the map below
+  until a unit proves it.
 - A file rename is a commit of its own with nothing else in it, so git keeps the history. It comes last in
   each unit, once the contents are understood.
 
@@ -148,8 +210,9 @@ reviews check.
 ### Disc-name map
 
 The living copy moves to `src/ovl/README.md` with the first folder rename, and the main table moves to
-`src/main/README.md` with the first main file rename. After that, rows change there. "Confirm" means the unit checks the
-contents (code and emulator) before it adopts the folder name and prefix; until then the name is a hypothesis.
+`src/main/README.md` with the first main file rename. After that, rows change there. "Confirm" means the unit
+checks the contents (code and emulator) before it adopts the folder name and prefix; until then the name is a
+hypothesis.
 No loader has been found for EVENT and GYOZI, and their load addresses are inference (`wiki/overlays.md`,
 T-0200). For them, "confirm unused" means the unit looks for a loader again before it keeps `_unused` in the
 folder name.
@@ -164,7 +227,7 @@ folder name.
 | ENDING.EXN | graduation ending and the girls' futures | `ending` | `ending_` | |
 | EN_NICHI.EXN | festival stall games: goldfish scooping, shooting gallery | `festival_stalls` | `stalls_` | |
 | ETC.EXN | exams and rank list, career guidance, job or college choice, album, end-of-game save | `misc_scenes` | `exam_`, `career_`, `album_`, `system_file_` | confirm 0xC2-0xC4 |
-| EVENT.EXN | an older set of date-place scenes; no code found loads it | `date_spots_unused` | `spots_` | confirm unused |
+| EVENT.EXN | an older set of date-place scenes; no code found loads it | `date_spots_unused` | `spot_` | confirm unused |
 | GEKO.EXN | meetings outside dates: walking home, invitations, birthdays | `girl_encounters` | `encounter_` | confirm |
 | GYOZI.EXN | near copy of SHOUGATU; no code found loads it | `annual_events_unused` | `annual_` | confirm unused |
 | KANGEI.EXN | club rooms, a lodge, a test of courage; probably the summer camp | `summer_camp` | `camp_` | confirm |
@@ -185,10 +248,12 @@ folder name.
 
 ### Main subsystem prefixes
 
+Each prefix is in one row (rule "One owner" above).
+
 | module (today's files) | prefixes |
 |---|---|
 | boot and startup (`80041000`, `800420D0`) | `boot_` |
-| main loop and game mode (`80042540`) | `game_mode_`; O.BIN `game_main`, `main_state_set` |
+| main loop and game mode (`80042540`) | `game_mode_`; O.BIN `game_main` |
 | pad and system helpers (`80042A00`) | `pad_`, `sys_` |
 | 2D drawing, palettes, VRAM loads (`80043510`) | `draw_`, `vram_` |
 | CD reads (`800451D0`, `80046500`) | `cd_` |
@@ -196,7 +261,7 @@ folder name.
 | primitives, color bars, sepia (`80049FF0`, `8004AD60`) | `prim_`, `color_` |
 | screen layers, model transfer (`8004C3F0`) | `layer_`, `model_`; O.BIN `srn_`, `mod_` |
 | kanji text (`8004E500`) | `text_`; O.BIN `k_disp_`, `set_kanji_` |
-| menus, speaker labels, girl queries (`8004F6B0`, `8004F870`) | `menu_`, `speaker_`, `girl_` |
+| menus, speaker labels, girl records and queries (`8004F6B0`, `8004F870`) | `menu_`, `speaker_`, `girl_` |
 | memory card, timers (`80053650`) | `memory_card_`, `timer_` |
 | STR movies (`80056300`, `800563F0`) | `movie_` |
 | MDEC backgrounds (`80057390`) | `bg_`; O.BIN `dec_bg_` |
@@ -208,17 +273,15 @@ folder name.
 | school-day loop (`800737A0`) | `school_day_` |
 | days off: appointments, calls, clubs (`80075320`) | `holiday_`, `appointment_` |
 | overlay loader (`800789E0`) | `ovl_` |
-| dates, girl selection, faces, SD sprites, dialogue (`80079B10`, `8007C030`) | `girl_`, `face_`, `sd_`, `talk_`; O.BIN `normal_date_` |
+| dates, girl selection, faces, SD sprites, dialogue (`80079B10`, `8007C030`) | `face_`, `sd_`, `talk_`, `select_girl_`; O.BIN `normal_date_` |
 | vsync timer, scroll, fades, finger cursor (`80085E30`) | `vsync_`, `fade_`, `cursor_` |
-| game-side sound calls (several files) | `sound_` |
 | files `80059A20`, `80059B40` | chosen by the unit that names them |
 
 ## Out of scope
 
 - Moving `INCLUDE_RODATA` data into C definitions, removing `FAKE` code and `*_OVERRIDE_*` views, and splitting
   functions: phase 2 work, but not naming. They follow their own tickets.
-- Names in the PsyQ SDK region (479 asm-only placeholders): optional, last.
-- Old names in the wiki: not decided yet (see Pending).
+- Names in the PsyQ SDK region (479 asm-only placeholders): optional (see Scope).
 - Game text in names or comments beyond proper names and short terms (CODING_STANDARDS section 10). Translating
   the game is phase 5.
 - Disc and build artifacts keep their disc names: the yaml fields listed under Files and folders, the asm root
@@ -228,8 +291,9 @@ folder name.
 ## Consequences
 
 - Renames go through one table-driven tool (`tools/rename.py`, T-27002) that edits symbol files, sources and
-  configs, keeps a ledger and replays it on branches and contributor PRs. No rename of any kind lands before
-  the tool has merged; until then placeholders stay. CODING_STANDARDS section 4 says the same.
+  configs, keeps a ledger and replays it on branches and contributor PRs. Once it has merged it is the only
+  way to rename (decision 5); until then no rename lands and placeholders stay. CODING_STANDARDS section 4
+  says the same.
 - Every main rename touches overlay files, so main units and overlay units coordinate through the ledger; an
   overlay unit asks for a main rename instead of making it.
 - The right yamls must load the hypothesis files; main names must reach the overlays' asm (the O.BIN alias
@@ -240,14 +304,3 @@ folder name.
 - decomp.dev per-file history restarts for renamed files; totals stay.
 - Agents will want to name a field after one use. Review rejects a name without evidence and keeps the
   hypothesis marks honest.
-
-## Pending
-
-The four decisions above are accepted. These points from the audit's questions to the user are not decided
-yet:
-
-- Old names in the wiki (audit question 2). The plan follows the audit's proposal: tickets, logs and matching
-  notes keep the old names, `tools/rename.py lookup` gives the current one, and the unit that owns a topic
-  refreshes its living wiki pages.
-- The rewrite of CODING_STANDARDS section 4 (audit question 5), which makes `tools/rename.py` the one way to
-  rename. Phase 2 units apply it only after the user approves it.

@@ -6,7 +6,7 @@ assignee:
 created: 2026-10-24
 updated: 2026-10-24
 blocked-by: [T-27002]
-links: [[[phase2]], [[obin]], [[tickets/T-0600-apply-obin-renames]], [[tickets/T-27000-phase-2-readable-codebase]]]
+links: [[[phase2]], [[obin]], [[tickets/T-0600-apply-obin-renames]], [[tickets/T-27000-phase-2]]]
 ---
 
 ## Goal
@@ -20,8 +20,10 @@ first unit to run through `tools/rename.py` (T-27002) and proves the tool on rea
 
 - [ ] The overlay yamls load `config/symbol_addrs_obin.txt` (and the SDK names), so overlay asm and m2c output
       use the O.BIN names; the deliberate two-name address 0x80084C98 stays explained.
-- [ ] The 105 names applied in the 186 overlay files through `rename.py`; no placeholder of a named main
-      symbol left in `src/` or `include/` (`rename.py check`).
+- [ ] The 105 O.BIN names applied in the 186 overlay files through `rename.py`, and the SDK-named
+      placeholders that overlays still use (`strcpy` as `func_800AE0F0`, `rand`, `rsin` and about 25 more,
+      about 1,700 uses in `src/`) renamed the same way; no placeholder of a named main symbol left in `src/`
+      or `include/` (`rename.py check`). These aliases are not part of the optional SDK names.
 - [ ] The 56 dual declarations merged; each of the 45 with a type difference resolved by the build
       (`tools/sync_protos.py --fix` overrides where needed); `config/proto_known.txt` alias rows cleared.
 - [ ] `cd_read_status` moved out of the shared symbol file (EVENT range, G3); `check_symbols.py` rejects a
@@ -31,7 +33,7 @@ first unit to run through `tools/rename.py` (T-27002) and proves the tool on rea
 
 ## Notes
 
-Out of scope: the English comments on O.BIN names (each main module unit writes them for the names it owns)
-and new names. Audit section 2.3 and risk 1 describe the alias views.
+Out of scope: the English comments on O.BIN names (each main module unit writes them for the names it owns at
+the C definition; the SDK-side ones have none and are optional) and new names. Audit section 2.3 and risk 1 describe the alias views.
 
 ## Comments

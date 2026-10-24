@@ -20,9 +20,14 @@ Sources:
 A row whose meaning comes only from a name or a guess says so; code built on such a row marks the name as a
 HYPOTHESIS.
 
-The overlay and module prefixes are listed in the maps of the ADR. Each prefix there is a stem below or a
-short form of one (`sports_` for `sports_festival`, `trip_` for `school_trip`). Abbreviations are allowed only
-from the table at the end.
+The overlay and module prefixes are listed in the maps of the ADR. A prefix is a stem in a table below, an
+abbreviation from the Abbreviations table, or a row of the Module words table. That table holds the plain
+English words for modules (`boot`, `sprite`, `help`) and the short forms of stems (`sports` for
+`sports_festival`, `trip` for `school_trip`). Every prefix in the ADR maps meets this rule.
+
+A game-term word, one for a thing in the game's world or rules, comes from the tables here. An ordinary
+technical word (`list`, `clear`, `advance`, `glyph`, `buffer`) is plain English and needs no row. Abbreviations
+are allowed only from the Abbreviations table at the end.
 
 ## Traps
 
@@ -32,9 +37,9 @@ Words with more than one sense. Use the stem in the right column, never the bare
 |---|---|---|
 | date | a romantic outing; a calendar date; the DATE overlay | `date` (outing only); `calendar_date` or `day`; folder `date` |
 | event | a day-event record in the queue; a scripted scene with a girl; the EVENT overlay; a memory-card event; a yearly school event (gyouji) | `day_event`; `scene`; folder `date_spots_unused`; `memory_card_event`; `annual_event`, folder `annual_events_unused` |
-| mode | the game mode byte that selects the running screen; the menu mode setting chosen in the options | `game_mode` (O.BIN `main_state`), also the prefix of the main loop module; `mode_stage` and `mode_step` for its two step bytes; `menu_mode` |
+| mode | the game mode byte that selects the running screen; the menu mode setting chosen in the options | `game_mode` (`main_state` in the patch notes), also the prefix of the main loop module; `mode_stage` and `mode_step` for its two step bytes; `menu_mode` |
 | stage | the step of a game mode; a level of the TACO shooter; the culture-festival stage | `mode_stage`; `shooter_level`; `stage_show` |
-| state | the game mode (O.BIN `main_state`); a girl's rank (zyotai) | `game_mode`; `girl_state` |
+| state | the game mode (`main_state` in the patch notes); a girl's rank (zyotai) | `game_mode`; `girl_state` |
 | week_day | O.BIN's name for the school-day command screen, not the day of the week | `school_day`; `weekday` for Monday-Sunday |
 | holiday | a day without school; the calendar's holiday table (GameState 0x044) | `holiday`; `holiday_table` |
 | master | mastering a club (the MASTER overlay); any other use of the word | `master` only for clubs |
@@ -211,7 +216,7 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 
 | term | meaning | stem | K/T | source |
 |---|---|---|---|---|
-| main state | the game mode byte (GameState 0x1108) that selects the screen or overlay | `game_mode` | T | O.BIN (`main_state_set`), code |
+| main state | the game mode byte (GameState 0x1108) that selects the screen or overlay; the patch name `main_state_set` becomes `game_mode_set` | `game_mode` | T | patch (`main_state_set`), code |
 | stage, step | the two bytes after the game mode that a mode's code steps through | `mode_stage`, `mode_step` | T | code |
 | overlay | an `.EXN` file loaded into the shared code slot | `ovl` | T | O.BIN, patch (`ovl_load_*`) |
 | scene | a scripted sequence that an overlay plays | `scene` | T | code |
@@ -256,6 +261,47 @@ Developer abbreviations not resolved yet (`srn`, `mod`, `dtd`, `don`, `tarao`, `
 | karuta, Kintaro | culture-festival stage shows | `karuta`, `kintaro` | K | disc (`BUNKASD/`) |
 | UFO catcher | a crane game | `ufo_catcher` | T | disc (`UFOCATCH.BIN`) |
 
+## Module words
+
+Prefix words that are neither a stem nor an abbreviation: plain English words for a module's subject, and short
+forms of stems. The ADR maps use them as prefixes. An overlay's word is a word of its folder's English name
+or of a stem for one of its scenes.
+
+| word | meaning | module | form |
+|---|---|---|---|
+| `tour` | the tour of six culture clubs | BUNKAKEN | short form of `culture_festival_tour` |
+| `culture` | the culture festival | BUNKASAI | short form of `culture_festival` |
+| `stage_show` | the culture festival's stage shows | BUNKA_SD | plain words |
+| `amusement` | the amusement park date | DATE2 | short form of `amusement_park` |
+| `stalls` | the festival stall games | EN_NICHI | short form of `festival_stalls` |
+| `exam` | the final exams and the rank list | ETC | short form of `final_exam` |
+| `career` | career guidance and choice | ETC | short form of `career_guidance`, `career_choice` |
+| `annual` | the yearly school events | GYOZI | short form of `annual_event` |
+| `camp` | the summer camp | KANGEI | short form of `summer_camp` |
+| `help` | the help pages | OLH | plain word |
+| `options` | the options screen | OPTION | plain word |
+| `practice` | the club practice match | RENSYU | short form of `practice_match` |
+| `trip` | the school trip | SHUGAKU | short form of `school_trip` |
+| `sports` | the sports festival | TAIIKU | short form of `sports_festival` |
+| `boot` | startup | main, `80041000`, `800420D0` | plain word |
+| `draw` | 2D drawing | main, `80043510` | plain word |
+| `sprite` | sprites | main, `80047550`, `800490C0` | plain word |
+| `color` | color bars and palettes | main, `80049FF0`, `8004AD60` | plain word |
+| `layer` | screen layers | main, `8004C3F0` | plain word |
+| `model` | 3D model transfer | main, `8004C3F0` | plain word |
+| `menu` | menus | main, `8004F6B0`, `8004F870` | plain word |
+| `timer` | timers | main, `80053650` | plain word |
+| `view` | the 3D view setup | main, `80058D20` | plain word |
+| `mouse` | the mouse-like cursor control | main, `80059710` | plain word |
+| `settings` | the system settings menu | main, `8005A0B0` | plain word |
+| `title` | the title menu | main, `80061710` | plain word |
+| `calendar` | the calendar panel | main, `80062CD0`, `800674B0` | short form of `calendar_date` |
+| `message` | the message window | main, `80062CD0`, `800674B0` | short form of `message_window` |
+| `face` | event faces | main, `8007C030` | short form of `event_face` |
+| `select_girl` | the girl selection screen | main, `8007C030` | O.BIN's stem (`select_girl_init`) |
+| `fade` | screen fades | main, `80085E30` | plain word |
+| `cursor` | the finger cursor | main, `80085E30` | short form of `finger_cursor` |
+
 ## Abbreviations
 
 The only abbreviations a new name may use. A unit that needs another one adds its row in the same commit as
@@ -266,10 +312,14 @@ the first name that uses it.
 | `2d`, `3d` | two- and three-dimensional; never at the start of a name (`shooter_3d`) | common use |
 | `bg` | a background picture decoded by the MDEC | O.BIN (`dec_bg_*`) |
 | `bgm`, `se` | music track, sound effect | sound |
+| `buf` | buffer | patch (`ovl_load_buf`) |
 | `cd` | the CD-ROM drive and its reads | SDK (`libcd`) |
 | `clut` | color lookup table | SDK |
+| `dst` | destination; a parameter name of copy-like functions | SDK (`strcpy`) |
 | `gpu` | the graphics processor | SDK (`libgpu`) |
 | `hud` | the panels of the day screen | code |
+| `init` | initialize | O.BIN (`hizuke_init`) |
+| `lba` | logical block address: a sector number on the disc | patch (`ovl_load_lba`) |
 | `misc` | miscellaneous (the ETC overlay's folder `misc_scenes`) | disc (`ETC.EXN`) |
 | `ot` | ordering table | SDK |
 | `ovl` | overlay | O.BIN, patch |
@@ -277,6 +327,7 @@ the first name that uses it.
 | `prim` | GPU primitive | SDK |
 | `rpg` | role-playing game (the RPG battle) | strings |
 | `sd` | super-deformed sprite | disc, O.BIN |
+| `src` | source; a parameter name of copy-like functions | SDK (`strcpy`) |
 | `sys` | system helpers of the main executable, beside the pad code (`sys_` prefix) | ADR (main prefixes) |
 | `tpage` | texture page | SDK |
 | `vram` | video memory | SDK |

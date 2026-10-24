@@ -5,13 +5,30 @@ updated: 2026-10-24
 
 # Phase 2: human-readable codebase
 
-Goal: a reader of `src/` and `include/` sees no functions, files or headers named by number. Umbrella ticket:
-[[tickets/T-27000-phase-2-readable-codebase]]. The rules are fixed elsewhere:
+Goal: make the matched code readable, port-first: "not 100%, just enough for the Godot port" (user scope,
+2026-10-24). The game logic is named and explained in full, the PS1 hardware layer only at module level and
+entry points. The matching decompilation stays exact: 27/27 sha1 after every change. Umbrella ticket:
+[[tickets/T-27000-phase-2]]. The rules are fixed elsewhere:
 
 - Decisions, conventions, the disc-name map and the prefix maps: `docs/adr/0001-phase-2-naming.md`.
 - Checkable rules for review: `CODING_STANDARDS.md` sections 4, 5 and 8.
 - Terms and identifier stems: `GLOSSARY.md`.
 - Survey with counts, the rename tool design and the risks: `drafts/T-25900/audit.md` (T-25900).
+
+## Scope
+
+Set by the user on 2026-10-24; the full table and the accepted exception are in the ADR (section Scope).
+
+- Game logic: named and explained in full. It covers GameState and its records, enums, calendar and schedule,
+  parameters, girls with affection and tokimeki, day events and scenes, dates, confession and endings, save
+  data, each overlay's state machine and data tables, and the files and headers of these modules. Explained
+  means a name backed by evidence, a comment at the definition for a rule that is not plain, and the unit's
+  port spec in `wiki/spec/` for state machines and tables.
+- PS1 hardware layer (GPU, sprites, VRAM; sound driver; CD and XA; MDEC): module level and entry points.
+- Locals, parameters and hex literals: only where essential, that is where they carry game logic.
+- SDK names: optional.
+- Done is measured per layer. No placeholder remains in game logic except unused or unknown fields and jump
+  tables, and the residue in the hardware layer and the SDK is listed, not driven to zero.
 
 ## Starting point (2026-10-23)
 
@@ -27,14 +44,14 @@ function names carry 48% of all function-name uses, so the shared core comes fir
 | 0 | Tooling: `tools/rename.py`, `tools/symtab.py`, tests, the tool fixes of audit 3.8, merge replay | T-27002 | about 1.5k lines of Python | Opus design and review, Sonnet code |
 | 1 | Pilot: O.BIN names into the overlays (overlay yamls load `symbol_addrs_obin.txt`; 105 names in 186 overlay files; 56 dual declarations merged; `cd_read_status` moved out of EVENT's range) | [[tickets/T-27003-pilot-obin-names-overlays]] | one build | Opus |
 | 2 | Shared core: GameState fields, the core types of `game.h` and `main_api.h` (the 0x44 display pools first), the first enums (girl, place, club, parameter, weekday, game mode, day-event type), the 100 most used main functions; takes over the GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] | [[tickets/T-27004-shared-core-names]] | 2-3 batches | Opus, with the emulator |
-| 3 | Main modules, two at a time (table below): functions, file-private globals, O.BIN comments, then the module header and the file names | one ticket each | 9 units | Sonnet, Opus review |
-| 4 | Overlays, two at a time (table below), one header owner each | one ticket each | 25 passes | Sonnet, Opus review |
-| 5 | Locals and parameters per unit (11,174 m2c-style uses) | per unit | | Sonnet |
-| 6 | Constants per unit with the step 2 enums (53,215 hex literals; long tail) | per unit | | Sonnet |
-| 7 | SDK placeholders (479 asm-only functions) | optional | | Sonnet |
-| 8 | Final sweep: `count_names.py` residue; `include/main_api.h` and `include/game.h` deleted once every C file includes its topic headers, with CODING_STANDARDS section 8a and `tools/check_headers.py` moved to the topic headers; living wiki pages (`source-files`, `game-state`, `data-types`) refreshed | | 1 | Opus |
+| 3 | Main modules, two at a time (table below): game-logic functions and globals in full, hardware-layer entry points, re-check of the non-O.BIN names in the range, O.BIN comments, then the module header and the file names | one ticket each | 9 units | Sonnet, Opus review |
+| 4 | Overlays, two at a time (table below), one header owner each; state machine and data tables named and explained, port spec in `wiki/spec/` | one ticket each | 24 passes | Sonnet, Opus review |
+| 5 | Locals and parameters of game-logic functions per unit, where they carry game logic (11,174 m2c-style uses in all) | per unit | | Sonnet |
+| 6 | Constants per unit with the step 2 enums, for ids, flags and thresholds of game logic (53,215 hex literals in all; long tail) | per unit | | Sonnet |
+| 7 | SDK placeholders (479 asm-only functions; about 150 of them called from game C) | optional (user scope) | | Sonnet |
+| 8 | Final sweep: `count_names.py` residue per layer (game logic must be clear, the rest is listed); `include/main_api.h` and `include/game.h` deleted once every C file includes its topic headers, with CODING_STANDARDS section 8a and `tools/check_headers.py` moved to the topic headers; living wiki pages (`source-files`, `game-state`, `data-types`) refreshed | | 1 | Opus |
 
-Steps 1 and 2 wait for step 0; no rename of any kind lands before the tool has merged. Inside every unit the order is: functions and globals, types and fields, the
+Steps 1 and 2 wait for step 0. No rename of any kind lands before the tool has merged, and once it has, `tools/rename.py` is the only way to rename anything (user decision, 2026-10-24). Inside every unit the order is: functions and globals, types and fields, the
 one-line English comments on O.BIN names, then the header split and the file renames, each in a commit of
 its own. File names come last because they need the contents understood.
 
@@ -80,8 +97,8 @@ look for a loader again before their folder names keep `_unused` ([[tickets/T-02
 ## Unit loop
 
 1. Claim the ticket (from `wiki/tickets/_template.md`), set it In Progress.
-2. The namer reads the code, `GLOSSARY.md` and the maps, and writes a rename table in the `tools/rename.py`
-   format. Every row's note gives the evidence (callers, data read, mode set, the string label passed, or an
+2. The namer reads the code, `GLOSSARY.md` and the maps, re-checks the non-O.BIN names in the range (list
+   below), and writes a rename table in the `tools/rename.py` format. Every row's note gives the evidence (callers, data read, mode set, the string label passed, or an
    emulator run). A meaning the evidence does not prove goes in as a hypothesis.
 3. `rename.py plan` until it reports no collision.
 4. Opus reviews the table (below) before anything is applied.
@@ -109,11 +126,32 @@ of the main module makes the rename.
 
 ## Old names in the wiki
 
-Tickets, logs and matching notes keep the placeholder names. `tools/rename.py lookup` gives the current name,
-and the function catalog ([[notes/functions]]) gets a current-name column. The unit that owns a topic
-refreshes its living pages. This follows the audit's proposal; the user has not ruled on it (audit question
-2). The rewrite of CODING_STANDARDS section 4 also waits for the user's approval (audit question 5). Both are
-listed as pending in the ADR.
+User decision, 2026-10-24. Tickets, logs and old notes keep the names they were written with, as history.
+Current pages (status, playbook, specs, the phase 2 pages) use the new names, and the unit that owns a topic
+refreshes them. `tools/rename.py lookup` and an old-name column in the function catalog ([[notes/functions]])
+map an old name to its new one.
+
+## Names to re-check
+
+Names that exist before phase 2, are not O.BIN names, and break the conventions. The unit that owns the range
+renames them through `tools/rename.py` with its first table; the list is not complete, because each unit also
+checks its range.
+
+| name (address) | unit | conflict |
+|---|---|---|
+| `main_state_set` (0x80042878) | M1 | English-patch name, not O.BIN; `game_mode_set` by the rules |
+| `file_checksum_ok` (0x8004636C) | M1 | module prefix is `cd_` |
+| `glyph_expand_1bpp` (0x8004F4F0), `font_glyphs` (0x800B6D50), `font_range_table` (0x800B402C) | M3 | module prefix is `text_` |
+| `system_settings_init` (0x8005DC4C) | M5 | prefix is `settings_` |
+| `appointment_find_today` (0x8006AEC4), `club_list_menu` (0x8006B648) | M6 | topics of the days-off and system-menu modules; HUD file takes `hud_` |
+| `special_event_select` (0x8006FB4C) | M7 | bare `event`; stems are `schedule_` and `day_event_` |
+| `telephone_class_init` (0x800782F0) | M8 | `phone` is the TEL overlay's stem; days-off code uses `holiday_` |
+| `dialogue_render` (0x80081190), `dialogue_speak_part` (0x8007EF48), types `DialogueWork`, `DialogueTables`, `DialogueVoice8` | M9 | stem is `talk` |
+| `date_event_trigger` (0x801326B0), `date_event_choose` (0x8013272C) | DATE | bare `event` |
+| `shougatu_stage_dispatch` (0x8013D180) | SHOUGATU | prefixes are `new_year_` and `christmas_`; `stage` is a trap word |
+
+`ovl_load_buf`, `ovl_load_lba`, `girl_name_buf`, the parameter names `src` and `dst`, and the word `init` pass
+since the glossary lists `buf`, `lba`, `src`, `dst` and `init`.
 
 ## Open points
 
