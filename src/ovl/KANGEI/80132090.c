@@ -233,47 +233,47 @@ void func_801327DC(void) {
     if (D_800E6280.unk_0F4.h) {} /* FAKE: second plain use, see above. T-25139 */
     switch (D_800E6280.unk_0F4.h >> 12) {
     case 0:
-        func_800AE0F0(D_800CA19C, "文芸部");
+        strcpy(D_800CA19C, "文芸部");
         bg_read_sub2(0x40BC);
         break;
     case 1:
-        func_800AE0F0(D_800CA19C, "演劇部");
+        strcpy(D_800CA19C, "演劇部");
         bg_read_sub2(0x40B2);
         break;
     case 2:
-        func_800AE0F0(D_800CA19C, "科学部");
+        strcpy(D_800CA19C, "科学部");
         bg_read_sub2(0x40C6);
         break;
     case 3:
-        func_800AE0F0(D_800CA19C, "電脳部");
+        strcpy(D_800CA19C, "電脳部");
         bg_read_sub2(0x40D0);
         break;
     case 4:
-        func_800AE0F0(D_800CA19C, "美術部");
+        strcpy(D_800CA19C, "美術部");
         bg_read_sub2(0x40D9);
         break;
     case 5:
-        func_800AE0F0(D_800CA19C, "吹奏楽部");
+        strcpy(D_800CA19C, "吹奏楽部");
         bg_read_sub2(0x40E2);
         break;
     case 6:
-        func_800AE0F0(D_800CA19C, "野球部");
+        strcpy(D_800CA19C, "野球部");
         bg_read_sub2(0x4097);
         break;
     case 7:
-        func_800AE0F0(D_800CA19C, "サッカー部");
+        strcpy(D_800CA19C, "サッカー部");
         bg_read_sub2(0x4097);
         break;
     case 8:
-        func_800AE0F0(D_800CA19C, "テニス部");
+        strcpy(D_800CA19C, "テニス部");
         bg_read_sub2(0x4097);
         break;
     case 9:
-        func_800AE0F0(D_800CA19C, "水泳部");
+        strcpy(D_800CA19C, "水泳部");
         bg_read_sub2(0x40A0);
         break;
     default:
-        func_800AE0F0(D_800CA19C, "バスケ部");
+        strcpy(D_800CA19C, "バスケ部");
         bg_read_sub2(0x40A9);
         break;
     }

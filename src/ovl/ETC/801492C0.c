@@ -47,7 +47,7 @@ s32 func_80149394(void) {
     func_80065F34(0);
     func_800578F4(0);
     D_80150E94 = 0;
-    D_80150EA0 = func_800AE0D0() % 12;
+    D_80150EA0 = rand() % 12;
     D_80150E98 = 0;
     D_80150E9C = 0;
     func_8004284C();
@@ -358,7 +358,7 @@ void func_80149F48(void) {
         }
         break;
     default:
-        func_800AE0B0("DEFAUT:");
+        printf("DEFAUT:");
         /* fallthrough */
     case 2:
         var_v0 = D_800E6280.unk_66C[4].unk_00 >> 4;
@@ -514,7 +514,7 @@ void func_8014A360(void) {
             break;
         }
     }
-    func_800AE0B0("shinro %x \n", D_800E6280.unk_0F6.b[1]);
+    printf("shinro %x \n", D_800E6280.unk_0F6.b[1]);
 }
 
 void func_8014A534(void) {
@@ -729,6 +729,6 @@ void func_8014AB5C(void) {
 
 void func_8014AB88(void) {
     func_80048E78();
-    func_800AE0B0("shinro %x \n", D_800E6280.unk_0F6.b[1]);
+    printf("shinro %x \n", D_800E6280.unk_0F6.b[1]);
     func_80072B5C(1);
 }

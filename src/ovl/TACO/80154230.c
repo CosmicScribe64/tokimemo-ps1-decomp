@@ -106,15 +106,15 @@ s32 arg3;
     i = 0;
     arg0 += 8;
     if (v < 0x10) {
-        interval = func_800AE0D0() % 150 + 100;
+        interval = rand() % 150 + 100;
     } else if (v >= 0x10 && v < 0x20) {
-        interval = func_800AE0D0() % 100 + 50;
+        interval = rand() % 100 + 50;
     } else if (v >= 0x20 && v < 0x30) {
-        interval = func_800AE0D0() % 50 + 30;
+        interval = rand() % 50 + 30;
     } else if (v >= 0x30 && v < 0x40) {
-        interval = func_800AE0D0() % 30 + 20;
+        interval = rand() % 30 + 20;
     } else if (v >= 0x40 && v < 0x64) {
-        interval = func_800AE0D0() % 10 + 5;
+        interval = rand() % 10 + 5;
     }
 loop_1:
     if (func_8015431C((u32)arg0) != 0) {
@@ -130,7 +130,7 @@ loop_1:
                 }
                 i++;
             } else {
-                interval = func_800AE0D0() % 70;
+                interval = rand() % 70;
                 if (interval == 0) {
                     word = arg0[2];
                     arg0[1] = (arg0[1] & 0xFFFF) + ((arg3 << 0x16) + (((arg2 >> 4) & 0x3F) << 0x10));

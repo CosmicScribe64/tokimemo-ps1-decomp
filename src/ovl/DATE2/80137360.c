@@ -158,7 +158,7 @@ void func_80137A2C(void) {
     DateTxt tbl;
 
     tbl = D_8013A878;
-    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_800E6280.unk_03E * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
+    strcpy(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_800E6280.unk_03E * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
 }
 
 void func_80137AF0(void) {

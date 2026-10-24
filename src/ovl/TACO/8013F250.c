@@ -48,7 +48,7 @@ void func_8013F468(void) {
 
     matrix = D_80129C40;
     func_800A1100(&matrix);
-    func_800A1070(&matrix);
+    SetRotMatrix(&matrix);
     v.vz = -0x7000;
     /* FAKE: one source line preserves pointer/counter initialization order. T-24502 */
     y = 0; for (o = 0; o != 2; o++) {
@@ -234,7 +234,7 @@ void func_8013FBF0(void) {
         g = 0;
         b = 0;
     }
-    value = (0x1000 - func_800A0070(D_800E6280.unk_10F8 * 240)) / 128 + 0x40;
+    value = (0x1000 - rsin(D_800E6280.unk_10F8 * 240)) / 128 + 0x40;
     r *= value;
     g *= value;
     b *= value;
@@ -383,7 +383,7 @@ s32 func_80140364(s32 arg0, s32 arg1) {
         rec->unk0 = actor->unk74;
         rec->unk2 = actor->unk76 - (i & 1) * 0x60 + 0x40;
         rec->unk4 = actor->unk78;
-        rec->unk8 = func_800A0070(actor->unk68) / 256;
+        rec->unk8 = rsin(actor->unk68) / 256;
         if ((i & 1) != 0) {
             rec->unkA = -func_800A0140(actor->unk68) / 256;
         } else {
@@ -546,7 +546,7 @@ void func_80140ADC(Tc14 *arg0, s32 arg1) {
 
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     rec = &arg0[arg1];
     v.vz = rec->unk4;
     rot = 0;

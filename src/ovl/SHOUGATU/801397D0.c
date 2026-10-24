@@ -133,21 +133,21 @@ void func_80139CCC(void) {
 void func_80139D80(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "図書室");
+    strcpy(D_800CA19C, "図書室");
     func_8004284C();
 }
 
 void func_80139DC4(void) {
     D_80144E08 = 3;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "図書室");
+    strcpy(D_800CA19C, "図書室");
     func_8004284C();
 }
 
 void func_80139E0C(void) {
     D_80144E08 = 6;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "図書室");
+    strcpy(D_800CA19C, "図書室");
     func_8004284C();
 }
 
@@ -155,7 +155,7 @@ void func_80139E54(void) {
     ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
     D_80144E08 = 0xA;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "図書室");
+    strcpy(D_800CA19C, "図書室");
     func_8004284C();
 }
 
@@ -163,7 +163,7 @@ void func_80139EC8(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0xD;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "演劇部");
+    strcpy(D_800CA19C, "演劇部");
     func_801397D0();
     if (((u8)D_800E6280.unk_03F >= 6U) && ((u8)D_800E6280.unk_03F < 0xAU)) {
         load_palette((s32)D_801453C0, 0x11, 1, 2, 0);

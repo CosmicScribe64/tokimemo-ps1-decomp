@@ -59,8 +59,8 @@ s32 arg1;
             spA8[j] = sp78.v[i] + j * 0x500 - arg0 - 0xA0;
         }
         for (j = 0; j < arg1; j++) {
-            t = func_800AE0C0(spA8[j]);
-            if (t < func_800AE0C0(spA8[0])) {
+            t = abs(spA8[j]);
+            if (t < abs(spA8[0])) {
                 spA8[0] = spA8[j];
             }
         }

@@ -172,7 +172,7 @@ void func_80156EE8(void) {
 }
 
 void func_80156F10(void) {
-    func_800AE0F0(D_800CA1DC, "無人島");
+    strcpy(D_800CA1DC, "無人島");
     bg_read_sub2(0x45B6);
     func_8004284C();
 }

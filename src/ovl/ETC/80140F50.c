@@ -122,7 +122,7 @@ void func_80141154(void) {
 }
 
 void func_801413FC(void) {
-    func_800AE0B0("データセーブ");
+    printf("データセーブ");
     if (D_800E6280.unk_1124 != 0) {
         func_8004482C();
         main_state_set(0x12);
@@ -176,7 +176,7 @@ void func_801415A4(void) {
         set_kanji_string(8, 0x5A, 0, D_8015010C, 0);
         set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
         k_sub_disp_start(7);
-        func_800AE0B0("データセーブメッセージ");
+        printf("データセーブメッセージ");
         D_800E6280.unk_110D += 1;
         break;
     case 1:
@@ -211,20 +211,20 @@ void func_8014175C(void) {
         if (func_80053F04() != 0) {
             if (D_800E6280.unk_1115 == 1) {
                 func_80053D10();
-                func_800AE0B0("EXIST_CARD!");
+                printf("EXIST_CARD!");
                 D_800E6280.unk_110D += 1;
             } else if (D_800E6280.unk_1115 == 0xF1) {
                 func_80053D10();
-                func_800AE0B0("UNFORMAT CARD!");
+                printf("UNFORMAT CARD!");
                 func_80042940(0xA0);
             } else if (D_800E6280.unk_1115 == 0xFF) {
                 func_80053D10();
-                func_800AE0B0("NO_CARD !");
+                printf("NO_CARD !");
                 func_80042940(0xFF);
             }
         } else if ((u32) D_800E6280.unk_1120 >= 0x201U) {
             func_80053D10();
-            func_800AE0B0("NO COMUNICATION!");
+            printf("NO COMUNICATION!");
             func_80042940(0xFF);
         }
         break;
@@ -263,7 +263,7 @@ void func_80141980(void) {
     case 1:
         if (func_80054284() == 3) {
             func_80053D10();
-            func_800AE0B0("LOAD SYSTEM OK");
+            printf("LOAD SYSTEM OK");
             D_800E6280.unk_110D += 1;
         } else if ((u32)D_800E6280.unk_1120 >= 0x201U || D_800E6280.unk_1115 == 0xF0) {
             func_80053D10();
@@ -286,12 +286,12 @@ void func_80141ABC(void) {
     u8 value;
     s32 i;
 
-    func_800AE080(D_800E7D10.unk_058, 0x800);
+    bzero(D_800E7D10.unk_058, 0x800);
     /* FAKE: retain this count-initializer/for source-line group for the
      * original preheader schedule. Original line layout unknown. T-24067 */
     count = 0; for (i = 0; i < 256; i++) {
         value = D_800E6280.unk_75E[i].unk_02;
-        func_800AE0B0("%d %d %d %d %d \n", D_800E6280.unk_75E[i].unk_04,
+        printf("%d %d %d %d %d \n", D_800E6280.unk_75E[i].unk_04,
             D_800E6280.unk_75E[i].unk_05, D_800E6280.unk_75E[i].unk_06, value, value);
         if (!D_800E6280.unk_03E || !D_800E6280.unk_03F || !D_800E6280.unk_040 ||
             (D_800E6280.unk_F5F & 0xF) != D_800E6280.unk_75E[i].unk_00) {
@@ -302,7 +302,7 @@ void func_80141ABC(void) {
     }
     D_800E7D10.unk_027[1] = count;
     D_800E7D10.unk_027[0] = 1;
-    func_800AE0B0("ALBUM_MODE IN SAVE %d \n", D_800E7D10.unk_027[0]);
+    printf("ALBUM_MODE IN SAVE %d \n", D_800E7D10.unk_027[0]);
 }
 
 /* Retain the earlier caller's K&R implicit-int view. */
@@ -326,7 +326,7 @@ s32 func_80141BE8(void) {
         }
         break;
     case 2:
-        func_800AE0B0("[C_GIRL]%d \n", D_800E6280.unk_F5F);
+        printf("[C_GIRL]%d \n", D_800E6280.unk_F5F);
         if (D_800E6280.unk_53C[D_800E6280.unk_F5F & 0xF] & 1) {
             /* FAKE: cast stops uopt from folding the +26 word offset into lw. */
             girl = D_800E6280.unk_F5F & 0xF;

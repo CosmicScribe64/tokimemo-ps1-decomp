@@ -201,7 +201,7 @@ void func_801424A8(s32 arg0, s32 arg1) {
     }
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     rec = &D_8015E770[arg0];
     v.vz = rec->unk4;
     for (o = 0; o < 2; o++) {

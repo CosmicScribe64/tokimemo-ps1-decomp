@@ -4,7 +4,7 @@
 void func_801484E0(void) {
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　レッドカード乱舞　　　　　");
+        strcpy(D_8015E74C, "　　　　　レッドカード乱舞　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);
@@ -228,7 +228,7 @@ void func_80148B08(void) {
     case 4:
         motion->dx = 0x105 - motion->rect.unk_10;
         motion->dy = 0x56 - motion->rect.unk_14;
-        func_8013E97C(0x32, ((s32) (motion->dx * D_8015EDB8) / 1000) + motion->rect.unk_10, (motion->rect.unk_14 + ((s32) (motion->dy * D_8015EDB8) / 1000)) - (func_800A0070((s32) (D_8015EDB8 << 0xB) / 1000) >> 7));
+        func_8013E97C(0x32, ((s32) (motion->dx * D_8015EDB8) / 1000) + motion->rect.unk_10, (motion->rect.unk_14 + ((s32) (motion->dy * D_8015EDB8) / 1000)) - (rsin((s32) (D_8015EDB8 << 0xB) / 1000) >> 7));
         D_8015EDB8 += 0x14;
         func_8013E810(0x32, 0xC, 1, 1);
         if (D_8015EDB8 >= 0x3E9) {

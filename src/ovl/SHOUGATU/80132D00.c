@@ -16,7 +16,7 @@ void func_80132D88(void) {
 }
 
 void func_80132DB0(void) {
-    func_800AE0F0(D_800CA1DC, "正月");
+    strcpy(D_800CA1DC, "正月");
     func_8004284C();
 }
 

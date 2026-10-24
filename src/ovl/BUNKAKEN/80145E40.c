@@ -180,7 +180,7 @@ void func_801463E4(void) {
             func_80132514();
             D_800E6280.unk_F5F = 8;
             func_800847B8(8U);
-            func_800AE0F0(D_800CA188, "　");
+            strcpy(D_800CA188, "　");
             D_800CA148 = 0;
             D_800CA14C = 0;
             D_800CA160 = (s32) D_80155E90;

@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_800AE120 /* T-24094: int-returning view for func_801509A4 */
+#define MAIN_API_OVERRIDE_srand /* T-24094: int-returning view for func_801509A4 */
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-s32 func_800AE120();
+s32 srand();
 
 typedef struct {
     void (*f[165])();
@@ -25,7 +25,7 @@ void func_801509A4(void) {
     BunkasaiGirlList sp30;
 
     sp30 = D_80160AA4;
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
     count = 0;
     for (i = 0; i < 11; i++) {
         if (D_800E6280.unk_1BC[i].unk_0C.f.b1 == 1) {
@@ -33,7 +33,7 @@ void func_801509A4(void) {
             count++;
         }
     }
-    temp_v1 = sp30.v[func_800AE0D0() % count];
+    temp_v1 = sp30.v[rand() % count];
     D_80122EBC = temp_v1;
     switch (temp_v1) {
     case 0:
@@ -230,7 +230,7 @@ void func_80151064(void) {
             func_801323DC();
             D_800E6280.unk_F5F = 8;
             func_800847B8(8U);
-            func_800AE0F0(D_800CA188, "　");
+            strcpy(D_800CA188, "　");
             D_800CA148 = 0;
             D_800CA14C = 0;
             D_800CA160 = (s32) D_801604F0;

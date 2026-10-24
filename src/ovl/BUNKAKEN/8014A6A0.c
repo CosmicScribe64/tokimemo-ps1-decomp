@@ -1434,14 +1434,14 @@ void func_8014D0FC(void) {
         func_800866A0(0x5828);
         break;
     case 4:
-        func_800AE0A0((void *)0x80197000, 0x80180000, 0x16800);
+        memcpy((void *)0x80197000, 0x80180000, 0x16800);
         func_8004284C();
         break;
     case 5:
         func_800866A0(0x54A4);
         break;
     case 6:
-        func_800AE0A0((void *)0x801AE000, 0x80180000, 0x16800);
+        memcpy((void *)0x801AE000, 0x80180000, 0x16800);
         addr_init_bustup();
         g->unk_F5F = 0;
         func_80083474();
@@ -1528,7 +1528,7 @@ void func_8014D0FC(void) {
         normal_date_girl_out();
         break;
     case 18:
-        func_800AE0A0((void *)0x80180000, 0x80197000, 0x16800);
+        memcpy((void *)0x80180000, 0x80197000, 0x16800);
         func_8004284C();
         break;
     case 19:
@@ -1565,7 +1565,7 @@ void func_8014D0FC(void) {
         normal_date_girl_out();
         break;
     case 27:
-        func_800AE0A0((void *)0x80180000, 0x801AE000, 0x16800);
+        memcpy((void *)0x80180000, 0x801AE000, 0x16800);
         func_8004284C();
         break;
     case 28:

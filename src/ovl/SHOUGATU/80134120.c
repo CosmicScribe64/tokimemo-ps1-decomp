@@ -81,9 +81,9 @@ void func_80134400(void) {
     tbl = D_80143D88;
     D_80143D20 = D_80122CDC;
     D_80143B00 += D_80122CDC;
-    func_800AE0F0(D_800CA250, tbl.s[D_80122CDC]);
+    strcpy(D_800CA250, tbl.s[D_80122CDC]);
     if (D_80143B20 == 0 && D_800E6280.unk_75D == 3 && D_80122CDC == 2) {
-        func_800AE0F0(D_800CA250, tbl.s[1]);
+        strcpy(D_800CA250, tbl.s[1]);
     }
     if (D_80122CDC == 0) {
         D_800E6280.unk_100.unk_02 += 0xA;

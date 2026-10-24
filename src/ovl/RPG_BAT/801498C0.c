@@ -7,7 +7,7 @@ s32 func_8013F0F4();
 void func_801498C0(void) {
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　　気分最高　　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　　気分最高　　　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_8014EEF4();
         func_80144480();
@@ -171,11 +171,11 @@ s32 func_80149C5C(void) {
         }
     }
     if (D_8015EBAC == 0) {
-        func_8013E97C(0x29, x, (func_800A0070(D_8015EDB0.unk_04 * 0x1800 / 1000) >> 8) + y);
-        func_8013E97C(0x28, x, (func_800A0070(D_8015EDB0.unk_04 * 0x1800 / 1000) >> 8) + y);
+        func_8013E97C(0x29, x, (rsin(D_8015EDB0.unk_04 * 0x1800 / 1000) >> 8) + y);
+        func_8013E97C(0x28, x, (rsin(D_8015EDB0.unk_04 * 0x1800 / 1000) >> 8) + y);
     } else {
-        func_8013E97C(0x29, x, (func_800A0070(D_8015EDB0.unk_04 * 0x2000 / 1000) >> 8) + y);
-        func_8013E97C(0x28, x, (func_800A0070(D_8015EDB0.unk_04 * 0x2000 / 1000) >> 8) + y);
+        func_8013E97C(0x29, x, (rsin(D_8015EDB0.unk_04 * 0x2000 / 1000) >> 8) + y);
+        func_8013E97C(0x28, x, (rsin(D_8015EDB0.unk_04 * 0x2000 / 1000) >> 8) + y);
     }
     if (D_8015EBAC == 0) {
         D_8015EDB0.unk_04 += 0xC;

@@ -386,18 +386,18 @@ void func_801345D4(void) {
         D_8015EDDC = save->set.w.sel;
         D_8015EDE0 = save->set.h.hi;
         D_8015EDE4 = save->set.b.lo;
-        func_800AE090(D_8015EE04, save->set.s.name0, 3);
-        func_800AE090(D_8015EE08, save->set.s.name1, 3);
-        func_800AE090(D_8015EE0C, save->set.s.name2, 3);
+        strncpy(D_8015EE04, save->set.s.name0, 3);
+        strncpy(D_8015EE08, save->set.s.name1, 3);
+        strncpy(D_8015EE0C, save->set.s.name2, 3);
         return;
     }
     save->set.f.flag = 1;
     D_8015EDF8 = 0x2EA694;
     D_8015EDFC = 0x1F6454;
     D_8015EE00 = 0x102214;
-    func_800AE0F0(D_8015EE04, "K.K");
-    func_800AE0F0(D_8015EE08, "K.T");
-    func_800AE0F0(D_8015EE0C, "N.S");
+    strcpy(D_8015EE04, "K.K");
+    strcpy(D_8015EE08, "K.T");
+    strcpy(D_8015EE0C, "N.S");
 }
 
 void func_8013474C(void) {
@@ -438,13 +438,13 @@ void func_801347F4(s32 *arg0) {
 }
 
 void func_80134884(void) {
-    func_800AE080((u8 *) D_8015E270, 0x140);
-    func_800AE080((u8 *) D_8015E3B0, 0x140);
-    func_800AE080((u8 *) D_8015E4F0, 0x140);
-    func_800AE080((u8 *) D_8015E630, 0x140);
-    func_800AE080((u8 *) D_8015E770, 0x140);
-    func_800AE080((u8 *) D_8015E8B0, 0x140);
-    func_800AE080((u8 *) D_8015E9F0, 0x140);
-    func_800AE080((u8 *) D_8015EB30, 0x140);
-    func_800AE080((u8 *) D_8015EC70, 0x140);
+    bzero((u8 *) D_8015E270, 0x140);
+    bzero((u8 *) D_8015E3B0, 0x140);
+    bzero((u8 *) D_8015E4F0, 0x140);
+    bzero((u8 *) D_8015E630, 0x140);
+    bzero((u8 *) D_8015E770, 0x140);
+    bzero((u8 *) D_8015E8B0, 0x140);
+    bzero((u8 *) D_8015E9F0, 0x140);
+    bzero((u8 *) D_8015EB30, 0x140);
+    bzero((u8 *) D_8015EC70, 0x140);
 }

@@ -72,7 +72,7 @@ void func_8014927C(void) {
     for (i = 0; i < 0xC; i++) {
         func_801497EC(D_8015FCA8[i], i, D_8015FCD8, D_8015FCB4, D_8015FCC0);
     }
-    if (D_800E6280.unk_1104.u % 240 == 0 && func_800AE0D0() % 3 == 0) {
+    if (D_800E6280.unk_1104.u % 240 == 0 && rand() % 3 == 0) {
         func_801335A0(0, 0x500);
     }
     if (D_800E6280.unk_1104.u < 0x12C) {
@@ -92,7 +92,7 @@ void func_801493D4(void) {
     func_80149D1C();
     func_80151C30();
     if (D_800E6280.unk_1104.u % 240 == 0) {
-        if (func_800AE0D0() % 3 == 0) {
+        if (rand() % 3 == 0) {
             func_801335A0(0, 0x500);
         }
     }
@@ -186,7 +186,7 @@ s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
     in.x = obj->unk18;
     in.y = obj->unk1C;
     in.z = obj->unk20;
-    func_800A0ECC(&mtx, &in, &out);
+    ApplyMatrixSV(&mtx, &in, &out);
     D_8015EDB4[idx].unk74 = D_80127480[0].unk18 + out.x + offX;
     D_8015EDB4[idx].unk76 = D_80127480[0].unk1C + out.y + offY;
     ((TcActor *)((s32)D_8015EDB4 + idx * sizeof(TcActor)))->unk78 = D_80127480[0].unk20 + out.z;

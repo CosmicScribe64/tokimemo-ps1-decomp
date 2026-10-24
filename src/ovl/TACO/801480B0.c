@@ -149,7 +149,7 @@ void func_8014866C(void) {
     D_8012278D = 0x30;
     D_8012278E = 0x30;
     func_8009AD70(2, &D_80122780);
-    func_8009B310(0, 0, 0);
+    GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
 
@@ -189,7 +189,7 @@ void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4) {
     vec.vx = D_80127480[arg0].unk18;
     vec.vy = D_80127480[arg0].unk1C;
     vec.vz = D_80127480[arg0].unk20;
-    func_800A0ECC(&m, &vec, &rot);
+    ApplyMatrixSV(&m, &vec, &rot);
     D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
     D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
     D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;

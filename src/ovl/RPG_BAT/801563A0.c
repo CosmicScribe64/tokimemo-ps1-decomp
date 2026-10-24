@@ -4,8 +4,8 @@
 void func_801563A0(void) {
     switch (*D_8015ED8C) {
     case 0:
-        func_800AE0F0(D_8015E904, "朝日奈「ねえ、ねえっ。");
-        func_800AE0F0(D_8015E92C, "聞いて、聞いてっ！");
+        strcpy(D_8015E904, "朝日奈「ねえ、ねえっ。");
+        strcpy(D_8015E92C, "聞いて、聞いてっ！");
         func_8014B738((s32) D_8015E9CC, 2, 0xA0);
         *D_8015ED8C += 1;
         return;
@@ -40,9 +40,9 @@ void func_801564F0(void) {
     switch (*D_8015ED8C) {
     case 0:
         if (D_8015EDC4 & 0x100000) {
-            func_800AE0F0(D_8015E904, "不良達「なんだ、なんだ？");
+            strcpy(D_8015E904, "不良達「なんだ、なんだ？");
         } else {
-            func_800AE0F0(D_8015E904, "番長「なんだ、なんだ？");
+            strcpy(D_8015E904, "番長「なんだ、なんだ？");
         }
         func_8014B738((s32) D_8015E9CC, 1, 0x82);
         *D_8015ED8C += 1;

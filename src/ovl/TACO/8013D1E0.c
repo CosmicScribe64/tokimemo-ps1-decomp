@@ -58,8 +58,8 @@ void func_8013D3F4(void) {
     s16 offset_y;
     u32 i;
 
-    offset_x = func_800AE0D0() & 0x7F;
-    offset_y = func_800AE0D0() & 0x3F;
+    offset_x = rand() & 0x7F;
+    offset_y = rand() & 0x3F;
 
     for (i = 0; i < 16; i++) {
         particle = &D_8015E9F0[i];
@@ -96,7 +96,7 @@ s32 func_8013D528(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     v.vz = arg2;
     rot = 0;
     for (o = 0; o < 2; o++) {
@@ -162,7 +162,7 @@ s32 func_8013D838(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
     size = 0x100;
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     if (arg3 < 0 || arg3 == 6) {
         size = 0x200;
     }

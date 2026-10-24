@@ -105,7 +105,7 @@ void func_80133AA0(void) {
         k_reset(0);
         func_8006612C((s32) "甲子園");
         func_80065F34(0);
-        func_800AE120(g->unk_10F4);
+        srand(g->unk_10F4);
         for (i = 0; i < 11; i++) {
             D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
         }
@@ -230,7 +230,7 @@ void func_80133F80(void) {
         normal_date_speak();
         break;
     case 2:
-        if ((func_800AE0D0() % 100) == 0) {
+        if ((rand() % 100) == 0) {
             func_80042940(0xA);
         } else {
             func_8004284C();
@@ -262,7 +262,7 @@ void func_80133F80(void) {
             D_8013C57C[i] = 1;
         }
         i = 0;
-        swap_count = func_800AE0D0() & 0xF;
+        swap_count = rand() & 0xF;
         if ((u8) (*(u8 *)&D_8013C578) >= 3U) {
             swap = D_8013C57C[0];
             other = D_8013C57C[4];
@@ -272,8 +272,8 @@ void func_80133F80(void) {
         if (swap_count > 0) {
             do {
 
-                first = func_800AE0D0() & 3;
-                value = func_800AE0D0() & 3;
+                first = rand() & 3;
+                value = rand() & 3;
                 swap = D_8013C57C[first];
                 i++;
                 other = D_8013C57C[value];
@@ -481,16 +481,16 @@ void func_801344E0(void) {
             ((DisplayFixActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C4;
             ((DisplayFixActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4B4;
             ((DisplayFixActor44 *)D_80120650)[1].unk_14 = (s16) D_8013C4CC;
-            value = func_800AE0D0() % 320;
+            value = rand() % 320;
             ((DisplayFixActor44 *)D_80120650)[1].unk_24.h[1] = value - 0xA0;
             ((DisplayFixActor44 *)D_80120650)[1].unk_28.h[1] = 0x3C;
             for (i = 2; i < 20; i++) {
                 ((DisplayFixActor44 *)D_80120650)[i] = ((DisplayFixActor44 *)D_80120650)[1];
-                ((DisplayFixActor44 *)D_80120650)[i].unk_18 = func_800AE0D0() % 10;
+                ((DisplayFixActor44 *)D_80120650)[i].unk_18 = rand() % 10;
             }
             for (i = 0; i < 10; i++) {
-                D_8013C5B4[i] = (func_800AE0D0() % 5) + 1;
-                value = func_800AE0D0() % 320;
+                D_8013C5B4[i] = (rand() % 5) + 1;
+                value = rand() % 320;
                 D_8013C58C[i].x = value - 0xA0;
                 D_8013C58C[i].y = 0x3C;
             }
@@ -1044,7 +1044,7 @@ void func_80135FB8(void) {
             D_8013C57C[i] = 1;
         }
         i = 0;
-        swap_count = func_800AE0D0() & 0xF;
+        swap_count = rand() & 0xF;
         if ((u8) (*(u8 *)&D_8013C578) >= 3U) {
             swap = D_8013C57C[0];
             other = D_8013C57C[4];
@@ -1054,8 +1054,8 @@ void func_80135FB8(void) {
         a = D_8013C57C;
         if (swap_count > 0) {
             do {
-                first = func_800AE0D0() & 3;
-                value = func_800AE0D0() & 3;
+                first = rand() & 3;
+                value = rand() & 3;
                 swap = a[first];
                 i++;
                 other = a[value];
@@ -1217,16 +1217,16 @@ void func_801363F4(void) {
             ((DisplayFixActor44 *)D_80120650)[1].unk_10 = (u8 *)D_8013C4C4;
             ((DisplayFixActor44 *)D_80120650)[1].unk_34 = (u8 *)D_8013C4B4;
             ((DisplayFixActor44 *)D_80120650)[1].unk_14 = (s16) D_8013C4CC;
-            value = func_800AE0D0() % 320;
+            value = rand() % 320;
             ((DisplayFixActor44 *)D_80120650)[1].unk_24.h[1] = value - 0xA0;
             ((DisplayFixActor44 *)D_80120650)[1].unk_28.h[1] = 0x3C;
             for (i = 2; i < 20; i++) {
                 ((DisplayFixActor44 *)D_80120650)[i] = ((DisplayFixActor44 *)D_80120650)[1];
-                ((DisplayFixActor44 *)D_80120650)[i].unk_18 = func_800AE0D0() % 10;
+                ((DisplayFixActor44 *)D_80120650)[i].unk_18 = rand() % 10;
             }
             for (i = 0; i < 10; i++) {
-                D_8013C5B4[i] = (func_800AE0D0() % 5) + 1;
-                value = func_800AE0D0() % 320;
+                D_8013C5B4[i] = (rand() % 5) + 1;
+                value = rand() % 320;
                 D_8013C58C[i].x = value - 0xA0;
                 D_8013C58C[i].y = 0x3C;
             }
@@ -1790,10 +1790,10 @@ void func_80137BF4(void) {
             temp_s0->unk_28.w = temp_s0->unk_28.w - ((((DisplayFixActor44 *)D_80120650)->unk_16 == 3) * 0x20000) - 0x20000;
         }
         if (temp_s0->unk_28.h[1] < -0x9F) {
-            temp_hi = func_800AE0D0() % 320;
+            temp_hi = rand() % 320;
             temp_s0->unk_24.h[1] = (s16) (temp_hi - 0xA0);
             temp_s0->unk_28.h[1] = 0x3C;
-            temp_s0->unk_18 = (s16) (func_800AE0D0() % 10);
+            temp_s0->unk_18 = (s16) (rand() % 10);
         }
         var_s2 += 1;
     } while (var_s2 < 0x74);
@@ -1809,8 +1809,8 @@ void func_80137BF4(void) {
             func_80049FF0((s32) temp_a0, (s32) temp_a1, (s16) temp_a0, (s32) (s16) ((temp_v0_2 * 0x14) + temp_a1), 0xFFFFFF, 0xFFFFFF, 0xB);
             if (temp_s0_2->y < -0xAA) {
                 temp_s0_2->y = 0x3C;
-                temp_s0_2->x = (func_800AE0D0() % 320) - 0xA0;
-                *temp_s1 = (func_800AE0D0() % 5) + 1;
+                temp_s0_2->x = (rand() % 320) - 0xA0;
+                *temp_s1 = (rand() % 5) + 1;
             }
             var_s2 += 1;
         } while (var_s2 < 0xA);

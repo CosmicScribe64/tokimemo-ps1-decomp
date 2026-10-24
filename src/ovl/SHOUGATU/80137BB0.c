@@ -97,7 +97,7 @@ void func_80137E54(void) {
     *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 8;
     func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
     if ((u8) D_80144E14 < 3U) {
-        func_800AE0F0(D_800CA188, "女生徒");
+        strcpy(D_800CA188, "女生徒");
     }
     func_80136F90();
     D_80144DFC = D_80144D90;
@@ -109,7 +109,7 @@ void func_80137E54(void) {
 void func_80137F70(void) {
     D_80144E08 = D_80144E14 * 3;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     func_8004284C();
 }
 

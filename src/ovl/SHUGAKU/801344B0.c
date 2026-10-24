@@ -54,7 +54,7 @@ void func_80134658(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
     check_para_limit();
-    func_800AE0F0(D_800CA19C, "ホテル・廊下");
+    strcpy(D_800CA19C, "ホテル・廊下");
     func_8004284C();
 }
 

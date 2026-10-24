@@ -80,21 +80,21 @@ void func_8013AB5C(void) {
 void func_8013AC7C(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "教室");
+    strcpy(D_800CA19C, "教室");
     func_8004284C();
 }
 
 void func_8013ACC0(void) {
     D_80144E08 = 0xC;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "グランド");
+    strcpy(D_800CA19C, "グランド");
     func_8004284C();
 }
 
 void func_8013AD08(void) {
     D_80144E08 = 0xF;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "グランド");
+    strcpy(D_800CA19C, "グランド");
     func_8004284C();
 }
 

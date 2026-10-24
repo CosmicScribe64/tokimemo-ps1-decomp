@@ -75,7 +75,7 @@ void func_8013D2C8(void) {
     D_80146274 = D_80145F54;
     D_80146278 = D_80146090;
     D_8014627C = D_801461CC;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_800E6280.unk_1BC[1].unk_02 += 1;
     D_800E6280.unk_1BC[1].unk_06 += 2;
     check_para_limit();

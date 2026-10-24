@@ -210,7 +210,7 @@ void func_8014D298(void) {
     DisplayFixActor44 *sprites;
     DisplayFixActor44 scene;
 
-    func_800AE0F0(D_800CA1DC, "ナイトパレード");
+    strcpy(D_800CA1DC, "ナイトパレード");
     D_800E6280.unk_71E |= 7;
     D_8015E208 = D_8015DE58;
     D_8015E20C = D_8015DF94;

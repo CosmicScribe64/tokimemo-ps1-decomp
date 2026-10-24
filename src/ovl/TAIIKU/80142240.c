@@ -604,7 +604,7 @@ void func_8014357C(void) {
     }
     D_8014A128 = var_v0 >> 3;
     D_8014A12C = var_v0;
-    func_800AE120(gs->unk_10F4);
+    srand(gs->unk_10F4);
 }
 
 /* FAKE: the dead `i = 0;` at the end keeps `i` live after the loop, so IDO tests the loop with
@@ -1136,11 +1136,11 @@ void func_80144C70(void) {
         if (i + 0x36 != *(s16 *)(q + 0x19DC)) {
             r = (u8 *)D_8014A13C + i * 0x24;
             if (*(s32 *)(r + 0x28) == 0 && (r[0x24] == 2 || r[0x24] == 6) && *(s32 *)(r + 0x40) == 1 &&
-                tbl.v[i] < (func_800AE0D0() & 0xFF) && r[0x26] == 1) {
+                tbl.v[i] < (rand() & 0xFF) && r[0x26] == 1) {
                 *(s32 *)(r + 0x40) = 0;
                 *(s16 *)(r + 0x3E) = 0;
                 *(s32 *)(r + 0x30) = 0;
-                *(s16 *)(q + 0x19DC) = func_800AE0D0() % 3 + i * 9 + 0x18;
+                *(s16 *)(q + 0x19DC) = rand() % 3 + i * 9 + 0x18;
             }
         }
     }

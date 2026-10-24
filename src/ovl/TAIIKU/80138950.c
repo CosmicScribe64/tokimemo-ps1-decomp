@@ -510,7 +510,7 @@ void func_80139AB0(void) {
     D_801499A0.unk_06 = 0x30;
     D_801499B0[0].unk0 = 0;
     D_801499B0[0].val = 0;
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
     D_80149958 = 0;
     (&D_80149958)[1] = 0;
     (&D_80149958)[2] = 0;
@@ -1423,11 +1423,11 @@ void func_8013C0E4(void) {
         D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
     }
     if (D_80120676 < ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] &&
-        func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
+        abs(D_8012067A - D_801206BE) < 12 &&
         ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] - 0x20 < D_80120676) {
         ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.w += 0x11800;
     } else if (((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] < D_80120676 &&
-               func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
+               abs(D_8012067A - D_801206BE) < 12 &&
                D_80120676 < ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.h[1] + 0x20) {
         ((DisplayFixActor44 *)D_8011ECD0)[97].unk_24.w -= 0x11800;
     }
@@ -1502,7 +1502,7 @@ void func_8013C4E4(s32 arg0) {
     s32 sp38;
     s32 sp34;
 
-    if (func_800AE0C0((D_80149968.unk_1C[0] >> 3) - D_801206BA) < 0x50) {
+    if (abs((D_80149968.unk_1C[0] >> 3) - D_801206BA) < 0x50) {
         if (D_80149968.unk_10 < 0) {
             D_80149968.unk_10 = 0;
         }
@@ -1746,8 +1746,8 @@ s32 func_8013CEF8(void) {
     s32 dx;
     s32 temp_v0;
 
-    dx = func_800AE0C0(((s16) D_80149968.unk_1C[0] >> 3) - D_80120676);
-    temp_v0 = func_800AE0C0(((s16) D_80149968.unk_1C[1] >> 3) - D_8012067A);
+    dx = abs(((s16) D_80149968.unk_1C[0] >> 3) - D_80120676);
+    temp_v0 = abs(((s16) D_80149968.unk_1C[1] >> 3) - D_8012067A);
     if (D_80149944 != 1) {
         return 0;
     }
@@ -1877,26 +1877,26 @@ void func_8013D2B4(void) {
     if ((temp_v0 & 1) || (temp_v0 & 2)) {
         var_v1 = D_800E6280.unk_10C.unk_02 >> 1;
     }
-    sp90 = func_800AE0C0(D_80149968.unk_10 * 8);
+    sp90 = abs(D_80149968.unk_10 * 8);
     if ((D_80149990.unk_08 > 0) && (D_801499A0.unk_0C > 0)) {
         if (var_v1 >= 0xA0) {
-            sp90 = func_800AE0C0(D_80149968.unk_10 * 0x10);
+            sp90 = abs(D_80149968.unk_10 * 0x10);
         } else if (var_v1 >= 0x64) {
-            sp90 += func_800AE0C0(D_80149968.unk_0C * 2) * 3;
+            sp90 += abs(D_80149968.unk_0C * 2) * 3;
         } else if (var_v1 >= 0x4B) {
-            sp90 += func_800AE0C0(D_80149968.unk_0C * 4);
+            sp90 += abs(D_80149968.unk_0C * 4);
         } else if (var_v1 >= 0x32) {
-            sp90 += func_800AE0C0(D_80149968.unk_0C * 2);
+            sp90 += abs(D_80149968.unk_0C * 2);
         }
     } else if (D_80149940 == 2) {
         if (var_v1 >= 0x190) {
-            sp90 = func_800AE0C0(D_80149968.unk_10 * 0x10);
+            sp90 = abs(D_80149968.unk_10 * 0x10);
         } else if (var_v1 >= 0x12C) {
-            sp90 += func_800AE0C0(D_80149968.unk_0C * 2) * 3;
+            sp90 += abs(D_80149968.unk_0C * 2) * 3;
         } else if (var_v1 >= 0xC8) {
-            sp90 += func_800AE0C0(D_80149968.unk_0C * 4);
+            sp90 += abs(D_80149968.unk_0C * 4);
         } else if (var_v1 >= 0x64) {
-            sp90 += func_800AE0C0(D_80149968.unk_0C * 2);
+            sp90 += abs(D_80149968.unk_0C * 2);
         }
     }
     if (D_80149990.unk_00 == 0) {
@@ -1922,18 +1922,18 @@ void func_8013D2B4(void) {
     rot.vx = 0;
     rot.vz = 0;
     rot.vy = (&D_80149958)[1];
-    func_800A09D0(&rot, &m1);
+    RotMatrix(&rot, &m1);
     m2 = *(MATRIX *)D_80125C60;
     rot.vy = 0;
     rot.vz = 0;
     rot.vx = D_80149958;
-    func_800A09D0(&rot, &m2);
-    func_800A0C64(&m1, &m2);
+    RotMatrix(&rot, &m2);
+    MulMatrix(&m1, &m2);
     scale.vx = 0x1200;
     scale.vy = 0x1200;
     scale.vz = 0x1200;
-    func_800A0F4C(&m2, &scale);
-    func_800A0C64(&m1, &m2);
+    ScaleMatrix(&m2, &scale);
+    MulMatrix(&m1, &m2);
     m1.t[0] = D_80149968.unk_1C[0];
     m1.t[1] = D_80149968.unk_1C[1];
     m1.t[2] = 0x1B58;
@@ -2255,7 +2255,7 @@ void func_8013E1FC(void) {
             }
         }
     }
-    /* Rotated strips. Rot_2D is Rot_2D called without a prototype (implicit int), as in
+    /* Rotated strips. Rot_2D is called without a prototype (implicit int), as in
      * func_8013E894 below: with the void Rot_2D the registers of the loops differ (T-25102). */
     for (angle = 0; angle < 64; angle++) {
         input_x = -320;
@@ -2335,7 +2335,7 @@ void func_8013E894(void) {
 
     angle = 0;
     do {
-        /* Rot_2D is Rot_2D called without a prototype (implicit int, as in func_8013C4E4's
+        /* Rot_2D is called without a prototype (implicit int, as in func_8013C4E4's
          * caller above): the int result makes uopt treat $v0 as written by the call, which keeps
          * the x pointer of the loops below out of $v0 (T-25102). */
         input_x = -320;
@@ -2429,7 +2429,7 @@ void func_8013EC60(void) {
         for (i = 0; i < 4; i++) {
             input_x = x[i];
             input_y = y[i];
-            /* Rot_2D is Rot_2D called without a prototype (implicit int), as in func_8013E894. */
+            /* Rot_2D is called without a prototype (implicit int), as in func_8013E894. */
             Rot_2D(((TaiikuCamera0C *)D_80122DD0)->angle, &input_x, &input_y, &x[i], &y[i]);
         }
         camera_x = ((TaiikuCamera0C *)D_80122DD0)->x;
@@ -2805,7 +2805,7 @@ void func_8013FC5C(void) {
             D_801499D4[j] = i + 1;
         }
         if ((func_8013FB14(i + 1) == 1 || func_8013FB14(i + 1) == 2 || func_8013FB14(i + 1) == 4 ||
-             func_8013FB14(i + 1) == 5) && !(func_800AE0D0() & 0xFFF)) {
+             func_8013FB14(i + 1) == 5) && !(rand() & 0xFFF)) {
             D_801499CC[i] = 1;
         }
         if (D_801499CC[i] == 1) {
@@ -2851,18 +2851,18 @@ void func_8013FEF0(void) {
     rot.vx = 0;
     rot.vz = 0;
     rot.vy = D_8014995A;
-    func_800A09D0(&rot, &m1);
+    RotMatrix(&rot, &m1);
     m2 = *(MATRIX *)D_80125C60;
     rot.vy = 0;
     rot.vz = 0;
     rot.vx = D_80149958;
-    func_800A09D0(&rot, &m2);
-    func_800A0C64(&m1, &m2);
+    RotMatrix(&rot, &m2);
+    MulMatrix(&m1, &m2);
     scale.vx = D_80149954;
     scale.vy = D_80149954;
     scale.vz = D_80149954;
-    func_800A0F4C(&m2, &scale);
-    func_800A0C64(&m1, &m2);
+    ScaleMatrix(&m2, &scale);
+    MulMatrix(&m1, &m2);
     m1.t[0] = D_80149968.unk_1C[0];
     m1.t[1] = D_80149968.unk_1C[1];
     m1.t[2] = 0x1B58;
@@ -2998,7 +2998,7 @@ void func_801404DC(void) {
     D_8012278D = 0;
     D_8012278E = 0xF0;
     func_8009AD70(2, &D_80122780);
-    func_8009B310(0x800, 0x800, 0x800);
+    GsSetAmbient(0x800, 0x800, 0x800);
     D_80122790 = -0xF00;
     D_80122794 = 0x01400000;
     D_80122798 = 1;

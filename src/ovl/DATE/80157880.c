@@ -84,7 +84,7 @@ void func_80157BD4(void) {
     D_8015E208 = D_8015DF30;
     D_8015E20C = D_8015E06C;
     D_8015E210 = D_8015E1A8;
-    func_800AE0F0(D_800CA19C, "遊園地");
+    strcpy(D_800CA19C, "遊園地");
     D_800E6280.unk_1BC[9].unk_02 += 1;
     D_800E6280.unk_1BC[9].unk_06 += 1;
     D_800E6280.unk_1BC[9].unk_0A -= 0x14;

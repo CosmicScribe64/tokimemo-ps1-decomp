@@ -146,7 +146,7 @@ void func_8013960C(void) {
 void func_80139734(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     func_8004284C();
 }
 

@@ -137,7 +137,7 @@ void func_80132670(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "玄関");
+    strcpy(D_800CA19C, "玄関");
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     func_8008585C();
@@ -170,7 +170,7 @@ void func_80132788(void) {
 void func_801327BC(void) {
     func_800847B8(D_800E6280.unk_75D);
     D_800E6280.unk_F5F = 0xE;
-    func_800AE0F0(D_800CA188, "母親");
+    strcpy(D_800CA188, "母親");
     D_800CA148 = (u32)D_800E6280.unk_75D > 0;
     D_800CA14C = 0;
     func_801320A0();

@@ -278,7 +278,7 @@ void func_80149D04(void) {
     DateTxt tbl;
 
     tbl = date_gift_names;
-    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8015D090 * 0x63 + D_80122CDC * 0x21]);
+    strcpy(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8015D090 * 0x63 + D_80122CDC * 0x21]);
 }
 
 void func_80149DC4(void) {

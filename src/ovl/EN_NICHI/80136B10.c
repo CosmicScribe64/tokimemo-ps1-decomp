@@ -54,7 +54,7 @@ void func_80136B74(void) {
         func_8006BD6C(0);
         hizuke_disp_switch(0);
         message_disp_switch(0);
-        func_800AE120(D_800E6280.unk_10F4);
+        srand(D_800E6280.unk_10F4);
         func_80044750(0xCF);
         func_8004284C();
         return;
@@ -986,12 +986,12 @@ void func_80138CCC(void) {
         n++;
     }
     for (i = 32; i < 48; i++) {
-        tbl.value[i] = girls.value[list[func_800AE0D0() % n]];
+        tbl.value[i] = girls.value[list[rand() % n]];
     }
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_24.h[1]++;
         if (((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_24.h[1] >= 0xC1) {
-            r1 = func_800AE0D0() & 0x3F;
+            r1 = rand() & 0x3F;
             ((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_24.h[1] = ((DisplayFixActor44 *)D_8011ECD0)[105 + (i + 1) % 4].unk_24.h[1] - 0x60;
             ((DisplayFixActor44 *)D_8011ECD0)[105 + i].unk_18 = tbl.value[r1];
             if ((r1 & 1) && r1 < 0x20) {
@@ -1005,7 +1005,7 @@ void func_80138CCC(void) {
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_24.w += 0xFFFF2000;
         if (((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_24.h[1] < -0xC0) {
-            r2 = func_800AE0D0() & 0x3F;
+            r2 = rand() & 0x3F;
             ((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_24.h[1] = ((DisplayFixActor44 *)D_8011ECD0)[109 + (i + 3) % 4].unk_24.h[1] + 0x60;
             ((DisplayFixActor44 *)D_8011ECD0)[109 + i].unk_18 = tbl.value[r2];
             if ((r2 & 1) && r2 < 0x20) {
@@ -1019,7 +1019,7 @@ void func_80138CCC(void) {
     for (i = 0; i < 4; i++) {
         ((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_24.w += 0xC000;
         if (((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_24.h[1] >= 0xC1) {
-            r3 = func_800AE0D0() & 0x3F;
+            r3 = rand() & 0x3F;
             ((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_24.h[1] = ((DisplayFixActor44 *)D_8011ECD0)[113 + (i + 1) % 4].unk_24.h[1] - 0x60;
             ((DisplayFixActor44 *)D_8011ECD0)[113 + i].unk_18 = tbl.value[r3];
             if ((r3 & 1) && r3 < 0x20) {

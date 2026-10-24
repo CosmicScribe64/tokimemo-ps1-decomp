@@ -15,13 +15,13 @@ void func_8013AAEC(void) {
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        func_800AE0F0(D_800CA23C, "京都");
+        strcpy(D_800CA23C, "京都");
         break;
     case 1:
-        func_800AE0F0(D_800CA23C, "沖縄");
+        strcpy(D_800CA23C, "沖縄");
         break;
     case 2:
-        func_800AE0F0(D_800CA23C, "北海道");
+        strcpy(D_800CA23C, "北海道");
         break;
     }
     D_800CA2DC += D_800CA2F4 * (1 - D_800CA2EC);

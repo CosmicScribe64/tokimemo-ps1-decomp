@@ -1,9 +1,9 @@
-#define MAIN_API_OVERRIDE_func_800AE0A0 /* original called it undeclared (implicit int); T-24706 */
+#define MAIN_API_OVERRIDE_memcpy /* original called it undeclared (implicit int); T-24706 */
 #include "common.h"
 #include "psx_types.h"
 #include "ovl/ETC.h"
 
-extern s32 func_800AE0A0();
+extern s32 memcpy();
 
 typedef struct {
     /* 0x00 */ u32 tag;
@@ -304,27 +304,27 @@ s32 func_8013C8EC(void) {
         case 0:
             if (D_800E6280.unk_F5F == 0) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 20) || (D_801500C0 == 0));
             } else if (D_800E6280.unk_F5F == 2) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 8));
             } else if (D_800E6280.unk_F5F == 3) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 9));
             } else if (D_800E6280.unk_F5F == 4) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 13));
             } else if (D_800E6280.unk_F5F == 9) {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078) || (D_801500C0 == 0));
             } else {
                 do {
-                    D_801500C0 = func_800AE0D0() % D_8014E0A4[D_800E6280.unk_F5F];
+                    D_801500C0 = rand() % D_8014E0A4[D_800E6280.unk_F5F];
                 } while ((D_801500C0 == D_80150078));
             }
             D_80150078 = D_801500C0;
@@ -373,7 +373,7 @@ s32 func_8013CCE4(void) {
             D_800E6280.unk_110D += 1;
         } else if (D_80150068 > 0) {
             if (cd_read_sync_status() & 1) {
-                func_800AE0A0((void *)0x801E2000, 0x801A0600, 0x18000);
+                memcpy((void *)0x801E2000, 0x801A0600, 0x18000);
                 if (D_80150068 == 1) {
                     D_80150068 = 2;
                 }

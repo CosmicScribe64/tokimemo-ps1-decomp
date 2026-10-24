@@ -7,7 +7,7 @@ s32 func_8013E7C0();
 void func_80151C10(void) {
     switch (D_8015EE00.unk_04) {
     case 0x0:
-        func_800AE0F0(D_8015E904, "　　　　　ポコポコ乱れ撃ち　　　　　");
+        strcpy(D_8015E904, "　　　　　ポコポコ乱れ撃ち　　　　　");
         func_8014B738((s32) D_8015E9CC, 1, 0x5A);
         func_8013E54C(0xFF);
         D_8015EC74 = func_8013E9A8(4) + 3;

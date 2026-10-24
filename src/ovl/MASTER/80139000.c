@@ -80,7 +80,7 @@ void func_801391E4(void) {
         parameter_disp_switch(0);
         icon_disp_switch(0);
         func_8008585C();
-        func_800AE120(D_800E6280.unk_10F4);
+        srand(D_800E6280.unk_10F4);
         func_8004284C();
         break;
     case 1:
@@ -200,7 +200,7 @@ void func_801391E4(void) {
         normal_date_speak();
         break;
     case 7:
-        D_800CA148 = (D_8013C794 = func_800AE0D0() % 6) + 6;
+        D_800CA148 = (D_8013C794 = rand() % 6) + 6;
         func_8004284C();
         break;
     case 9:
@@ -475,7 +475,7 @@ void func_80139CC8(void) {
             D_8013C788[i] = 1;
         }
         i = 0;
-        swap_count = func_800AE0D0() & 0xF;
+        swap_count = rand() & 0xF;
         if ((u8)(*(u8 *)&D_8013C784) >= 3U) {
             swap = D_8013C788[0];
             other = D_8013C788[4];
@@ -484,8 +484,8 @@ void func_80139CC8(void) {
         }
         if (swap_count > 0) {
             do {
-                first = func_800AE0D0() & 3;
-                value = func_800AE0D0() & 3;
+                first = rand() & 3;
+                value = rand() & 3;
                 swap = D_8013C788[first];
                 i++;
                 other = D_8013C788[value];
@@ -511,7 +511,7 @@ void func_80139CC8(void) {
         ((DisplayFixActor44 *)D_80120650)->unk_1C = 0x1000;
         ((DisplayFixActor44 *)D_80120650)->unk_06 = 1;
         ((DisplayFixActor44 *)D_80120650)->unk_07 = 0x80;
-        ((DisplayFixActor44 *)D_80120650)->unk_43 = (func_800AE0D0() % 5) + 0x10;
+        ((DisplayFixActor44 *)D_80120650)->unk_43 = (rand() % 5) + 0x10;
         ((DisplayFixActor44 *)D_80120650)->unk_24.h[1] = -0x60;
         ((DisplayFixActor44 *)D_80120650)->unk_28.h[1] = 0x20;
         ((DisplayFixActor44 *)D_80120650)->unk_0C = (u8 *) D_8013C764;

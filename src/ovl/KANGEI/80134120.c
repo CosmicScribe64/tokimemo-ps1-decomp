@@ -295,47 +295,47 @@ void func_80134BC4(void) {
     selection = (u16) D_800E6280.unk_0F4.h >> 0xC;
     switch (selection) {
     case 0:
-        func_800AE0F0(D_800CA19C, "図書室");
+        strcpy(D_800CA19C, "図書室");
         bg_read_sub2(0x40BC);
         break;
     case 1:
-        func_800AE0F0(D_800CA19C, "演劇部");
+        strcpy(D_800CA19C, "演劇部");
         bg_read_sub2(0x40B2);
         break;
     case 2:
-        func_800AE0F0(D_800CA19C, "実験室");
+        strcpy(D_800CA19C, "実験室");
         bg_read_sub2(0x40C6);
         break;
     case 3:
-        func_800AE0F0(D_800CA19C, "電脳部室");
+        strcpy(D_800CA19C, "電脳部室");
         bg_read_sub2(0x40D0);
         break;
     case 4:
-        func_800AE0F0(D_800CA19C, "美術室");
+        strcpy(D_800CA19C, "美術室");
         bg_read_sub2(0x40D9);
         break;
     case 5:
-        func_800AE0F0(D_800CA19C, "音楽室");
+        strcpy(D_800CA19C, "音楽室");
         bg_read_sub2(0x40E2);
         break;
     case 6:
-        func_800AE0F0(D_800CA19C, "グランド");
+        strcpy(D_800CA19C, "グランド");
         bg_read_sub2(0x4296);
         break;
     case 7:
-        func_800AE0F0(D_800CA19C, "グランド");
+        strcpy(D_800CA19C, "グランド");
         bg_read_sub2(0x4296);
         break;
     case 8:
-        func_800AE0F0(D_800CA19C, "グランド");
+        strcpy(D_800CA19C, "グランド");
         bg_read_sub2(0x4296);
         break;
     case 9:
-        func_800AE0F0(D_800CA19C, "プール");
+        strcpy(D_800CA19C, "プール");
         bg_read_sub2(0x40A0);
         break;
     default:
-        func_800AE0F0(D_800CA19C, "体育館");
+        strcpy(D_800CA19C, "体育館");
         bg_read_sub2(0x40A9);
         break;
     }
@@ -479,10 +479,10 @@ void func_80135250(void) {
 void func_801352A4(void) {
     if ((u8)D_800E6280.unk_F5F < 4U) {
         bg_read_sub2(0x42A9);
-        func_800AE0F0(D_800CA19C, "ロビー");
+        strcpy(D_800CA19C, "ロビー");
     } else {
         bg_read_sub2(0x4296);
-        func_800AE0F0(D_800CA19C, "グランド");
+        strcpy(D_800CA19C, "グランド");
     }
     func_8004284C();
 }
@@ -492,7 +492,7 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.rodata", D_8013980C);
 void func_80135314(void) {
     bg_read_sub2(0x42C6);
     func_80085B3C(0xE, 0xB);
-    func_800AE0F0(D_800CA1DC, &D_8013980C);
+    strcpy(D_800CA1DC, &D_8013980C);
     func_8004284C();
 }
 

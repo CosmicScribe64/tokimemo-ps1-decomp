@@ -76,8 +76,8 @@ s32 func_80135838(void) {
         func_80042808();
         return 0;
     }
-    func_800AE120(D_800E6280.unk_10F8);
-    if (((func_800AE0D0() % 256) >= 5) || (D_800E6280.unk_75D >= 0xB)) {
+    srand(D_800E6280.unk_10F8);
+    if (((rand() % 256) >= 5) || (D_800E6280.unk_75D >= 0xB)) {
         func_80042808();
         return 0;
     }
@@ -139,7 +139,7 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/801355F0.rodata", D_801398B0);
 
 void func_80135B18(void) {
     bg_read_sub2(0x42A9);
-    func_800AE0F0(D_800CA19C, &D_801398B0);
+    strcpy(D_800CA19C, &D_801398B0);
     func_8004284C();
 }
 

@@ -371,7 +371,7 @@ void func_801359FC(void) {
     if (D_800E6280.unk_F5F == 3 && D_80143DD8 == 3) {
         D_80143DD8 = 4;
     }
-    func_800AE0F0(D_800CA248, labels.s[D_80143DD8]);
+    strcpy(D_800CA248, labels.s[D_80143DD8]);
     if (D_80143DD8 == 0) {
         D_800E6280.unk_11C.unk_02 -= 5;
     }

@@ -208,7 +208,7 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     *(u16 *)tbl = D_8015F580;
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     rec = &arg0[arg1];
     v.vz = rec->unk4;
     for (o = 0; o < 2; o++) {
@@ -272,7 +272,7 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
     *(u16 *)tbl = D_8015F584;
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     rec = &arg0[arg1];
     dist = (D_80122754 - rec->unk4) / 127;
     if (dist >= 0x100) {
@@ -355,7 +355,7 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
     }
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     sgn = 1 - arg1;
     j = 0;
     /* The loop test is written on the address expression: it gives the original's sltu against &v.vz (bne with a counter

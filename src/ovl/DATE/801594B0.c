@@ -106,7 +106,7 @@ void func_8015996C(void) {
     D_8015E208 = D_8015DF68;
     D_8015E20C = D_8015E0A4;
     D_8015E210 = D_8015E1E0;
-    func_800AE0F0(D_800CA1DC, "池");
+    strcpy(D_800CA1DC, "池");
     D_800E6280.unk_1BC[10].unk_02 += 3;
     D_800E6280.unk_1BC[10].unk_06 += 2;
     D_800E6280.unk_1BC[10].unk_0A -= 0x14;

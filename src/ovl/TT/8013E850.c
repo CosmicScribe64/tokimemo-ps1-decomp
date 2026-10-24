@@ -99,14 +99,14 @@ tail:
         ((u8 *)&D_800E7D4C)[1] |= (a[0x49] != 0) ? 2 : 0;
     }
     D_800E7D4E = t[0xB];
-    func_800AEFE0();
-    func_800AF1A0(*(s32 *)e);
-    func_800AE0B0("open event %x ", *(s32 *)e);
-    func_800AF000();
+    EnterCriticalSection();
+    CloseEvent(*(s32 *)e);
+    printf("open event %x ", *(s32 *)e);
+    ExitCriticalSection();
     func_8009C210(3);
     func_8009C5E0(0);
     func_8009C674(0);
-    func_800AE0B0("return to main!!\n");
+    printf("return to main!!\n");
 }
 
 void func_8013EC1C(void) {

@@ -148,7 +148,7 @@ void func_80133D14(s16 x, s16 y, s32 speed, u16 kind) {
         object->unk_24 = y << 16;
         angle = func_80133BE0((u8 *)object, source);
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         switch (kind) {
         case 0xA0:
             func_80133C1C(object, 0xA0, 0x12);
@@ -175,7 +175,7 @@ void func_80133E30(s16 x, s16 y, s32 speed, s32 angle, u16 kind) {
         object->unk_20 = x << 16;
         object->unk_24 = y << 16;
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         switch (kind) {
         case 0xA0:
             func_80133C1C(object, 0xA0, 0x12);
@@ -231,7 +231,7 @@ void func_80133FB0(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
             break;
         }
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         switch (kind) {
         case 0xA0:
             func_80133C1C(object, 0xA0, 0x12);
@@ -279,7 +279,7 @@ void func_80134178(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
             break;
         }
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         switch (kind) {
         case 0xA8:
             func_80133C1C(object, 0xA8, 0x15);
@@ -320,7 +320,7 @@ void func_801342CC(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
             angle = angle + half + (i / 2) * spread;
         }
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         if (kind == 0xA0) {
             func_80133C1C(object, 0xA0, 0x12);
         }
@@ -362,7 +362,7 @@ void func_80134470(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
             }
         }
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         switch (kind) {
         case 0xA0:
             func_80133C1C(object, 0xA0, 0x12);
@@ -428,7 +428,7 @@ void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
         object->unk_20 = x << 16;
         object->unk_24 = y << 16;
         object->unk_28 = func_800A0140(angle) * speed;
-        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_2C = rsin(angle) * speed;
         object->unk_38 = D_80151A50;
         object->unk_3C = 0;
         object->unk_3D = 9;
@@ -521,7 +521,7 @@ void func_801349B0(TtActor68 *p) {
     v &= 0xFFF;
     angle = v - 0x800;
     p->unk_28 = func_800A0140(angle) * 0x18;
-    p->unk_2C = func_800A0070(angle) * 0x18;
+    p->unk_2C = rsin(angle) * 0x18;
     p->unk_60 = v;
 }
 

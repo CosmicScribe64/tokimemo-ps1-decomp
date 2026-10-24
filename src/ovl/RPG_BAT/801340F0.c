@@ -19,8 +19,8 @@ void func_8013415C(void) {
 
     switch (D_8015EE04) {
     case 0:
-        func_800AE0F0(D_8015E904, "好雄「いくぞっ！");
-        func_800AE0F0(D_8015E92C, "スペシャル好雄パーンチ！");
+        strcpy(D_8015E904, "好雄「いくぞっ！");
+        strcpy(D_8015E92C, "スペシャル好雄パーンチ！");
         func_8014B738((s32) D_8015E9CC, 2, 0x3C);
         func_8013E7C0(0x1D, 5, 5, 1);
         func_8013F1C4(0x1F0000A1, 0x1D0000A4, 0);
@@ -97,8 +97,8 @@ void func_80134570(void) {
 
     switch (D_8015EE04) {
     case 0:
-        func_800AE0F0(D_8015E904, "好雄「食らえ！");
-        func_800AE0F0(D_8015E92C, "グレート好雄キーック！");
+        strcpy(D_8015E904, "好雄「食らえ！");
+        strcpy(D_8015E92C, "グレート好雄キーック！");
         func_8014B738((s32) D_8015E9CC, 2, 0x3C);
         func_8013E7C0(0x1D, 5, 5, 1);
         func_8013F1C4(0x1F0000A5, 0x1E0000A8, 0);
@@ -174,7 +174,7 @@ void func_80134570(void) {
 void func_80134984(void) {
     switch (D_8015EE04) {
     case 0:
-        func_800AE0F0(D_8015E904, "　　　　　　好雄の秘薬　　　　　　");
+        strcpy(D_8015E904, "　　　　　　好雄の秘薬　　　　　　");
         func_8014B738((s32) D_8015E9CC, 1, 0x3C);
         func_8014F230();
         return;

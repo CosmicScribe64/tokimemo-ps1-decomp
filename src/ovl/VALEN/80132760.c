@@ -234,29 +234,29 @@ void func_80133088(void) {
     }
     switch (D_80134548) {
     case 0:
-        func_800AE0F0(D_800CA1DC, "廊下");
+        strcpy(D_800CA1DC, "廊下");
         id = 0x4045;
         break;
     case 1:
-        func_800AE0F0(D_800CA1DC, "教室");
+        strcpy(D_800CA1DC, "教室");
         id = 0x4055;
         break;
     case 2:
-        func_800AE0F0(D_800CA1DC, "校舎裏");
+        strcpy(D_800CA1DC, "校舎裏");
         id = 0x407A;
         break;
     default:
-        func_800AE0F0(D_800CA1DC, "屋上");
+        strcpy(D_800CA1DC, "屋上");
         id = 0x4084;
         break;
     }
     if (state->unk_F5F != 0) {
         if (D_80134520 + 1 == D_8013453C) {
-            func_800AE0F0(D_800CA1DC, "校門前");
+            strcpy(D_800CA1DC, "校門前");
             id = 0x4032;
         }
         if ((D_80134520 + 2 == D_8013453C) && (D_80134524[D_80134520 + 1] == 0)) {
-            func_800AE0F0(D_800CA1DC, "校門前");
+            strcpy(D_800CA1DC, "校門前");
             id = 0x4032;
         }
     }
@@ -264,11 +264,11 @@ void func_80133088(void) {
      * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
     if ((D_80134520 + 1 == D_8013453C) && (state->unk_F5F == 0) &&
         ((state->unk_1BC[0].unk_02 >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
-        func_800AE0F0(D_800CA1DC, "自宅前");
+        strcpy(D_800CA1DC, "自宅前");
         id = 0x414C;
     }
     if ((state->unk_F5F == 9) && (D_80134544 == 1)) {
-        func_800AE0F0(D_800CA1DC, "教室");
+        strcpy(D_800CA1DC, "教室");
         id = 0x4055;
     }
     if (state->unk_F5F == 0) {
@@ -347,8 +347,8 @@ void func_80133568(void) {
 }
 
 void func_801335C0(void) {
-    func_800AE0F0(D_800CA1DC, "校舎裏");
-    func_800AE0F0(D_800CA19C, "　");
+    strcpy(D_800CA1DC, "校舎裏");
+    strcpy(D_800CA19C, "　");
     bg_read_sub2(0x407A);
     func_8004284C();
 }
@@ -401,11 +401,11 @@ void func_8013387C(void) {
     s16 k;
     s16 t;
 
-    func_800AE120(D_800E6280.unk_10F8);
-    n = func_800AE0D0() % 256 + 10;
+    srand(D_800E6280.unk_10F8);
+    n = rand() % 256 + 10;
     for (i = 0; i < n; i++) {
-        j = func_800AE0D0() % D_8013453C;
-        k = func_800AE0D0() % D_8013453C;
+        j = rand() % D_8013453C;
+        k = rand() % D_8013453C;
         t = D_80134524[j];
         D_80134524[j] = D_80134524[k];
         D_80134524[k] = t;

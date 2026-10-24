@@ -50,7 +50,7 @@ void func_80132578(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     func_8008585C();

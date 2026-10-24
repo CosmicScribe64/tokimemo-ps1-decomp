@@ -543,9 +543,9 @@ void func_80132FF0(void) {
     if (D_800E6280.unk_1104.u == 1) {
         switch (D_80122EAC) {
         case 0:
-            sp34 = func_800AE0E0(D_800E6280.unk_0D4);
-            sp34 += func_800AE0E0(D_800E6280.unk_0DC);
-            func_800AE0F0(sp38, D_800E6280.unk_0D4);
+            sp34 = strlen(D_800E6280.unk_0D4);
+            sp34 += strlen(D_800E6280.unk_0DC);
+            strcpy(sp38, D_800E6280.unk_0D4);
             strcat(sp38, "　");
             strcat(sp38, D_800E6280.unk_0DC);
             set_kanji_string((s16) (0x60 - (sp34 * 7)), 0x40, 0, (s32) sp38, 0);
@@ -589,7 +589,7 @@ void func_80133204(void) {
         k_reset(1);
         switch (D_80122EAC) {
         case 0:
-            set_kanji_string((s16) (-0x68 - (func_800AE0E0(D_800E6280.unk_0D4) * 4)), 0x30, 0, (s32) D_800E6280.unk_0D4, 0);
+            set_kanji_string((s16) (-0x68 - (strlen(D_800E6280.unk_0D4) * 4)), 0x30, 0, (s32) D_800E6280.unk_0D4, 0);
             break;
         case 1:
             set_kanji_string(-0x80, 0x30, 0, (s32) "弁論者", 0);

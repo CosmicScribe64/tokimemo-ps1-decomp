@@ -111,7 +111,7 @@ void func_80137CFC(void) {
     tpage_buf_clear();
     func_8004E58C();
     func_8008585C();
-    func_800AE0F0(D_800CA19C, "修学旅行");
+    strcpy(D_800CA19C, "修学旅行");
     k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -134,7 +134,7 @@ void func_80137CFC(void) {
     hizuke_init();
     func_80084E4C();
     func_800847B8(0);
-    func_800AE0F0(D_800CA188, D_800E6280.unk_0D4);
+    strcpy(D_800CA188, D_800E6280.unk_0D4);
     func_80136380();
     D_800CA2D0 = D_8013C44C;
     D_800CA2D4 = D_8013C480;
@@ -191,7 +191,7 @@ void func_80138044(void) {
     tpage_buf_clear();
     func_8004E58C();
     func_8008585C();
-    func_800AE0F0(D_800CA19C, "修学旅行");
+    strcpy(D_800CA19C, "修学旅行");
     k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -236,16 +236,16 @@ void func_801381BC(void) {
     D_800CA2CC = D_80122CDC;
     switch (D_80122CDC) {
     case 0:
-        func_800AE0F0(D_800CA23C, "京都・奈良");
-        func_800AE0F0(D_800CA1DC, "京都・奈良");
+        strcpy(D_800CA23C, "京都・奈良");
+        strcpy(D_800CA1DC, "京都・奈良");
         break;
     case 1:
-        func_800AE0F0(D_800CA23C, "沖縄");
-        func_800AE0F0(D_800CA1DC, "沖縄");
+        strcpy(D_800CA23C, "沖縄");
+        strcpy(D_800CA1DC, "沖縄");
         break;
     case 2:
-        func_800AE0F0(D_800CA23C, "北海道");
-        func_800AE0F0(D_800CA1DC, "北海道");
+        strcpy(D_800CA23C, "北海道");
+        strcpy(D_800CA1DC, "北海道");
         break;
     }
     func_8004284C();
@@ -256,13 +256,13 @@ void func_80138290(void) {
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        func_800AE0F0(D_800CA23C, "京都");
+        strcpy(D_800CA23C, "京都");
         break;
     case 1:
-        func_800AE0F0(D_800CA23C, "沖縄");
+        strcpy(D_800CA23C, "沖縄");
         break;
     case 2:
-        func_800AE0F0(D_800CA23C, "北海道");
+        strcpy(D_800CA23C, "北海道");
         break;
     }
     func_8004284C();

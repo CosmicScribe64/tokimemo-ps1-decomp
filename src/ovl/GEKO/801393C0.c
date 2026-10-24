@@ -87,14 +87,14 @@ void func_80139640(void) {
     func_80084E4C();
     D_800B593C = 0;
     func_800847B8(D_800E6280.unk_F5F);
-    func_800AE0F0(D_800CA188, "先生");
+    strcpy(D_800CA188, "先生");
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145EC0;
     D_80146278 = D_80145FFC;
     D_8014627C = D_80146138;
-    func_800AE0F0(D_800CA19C, "廊下");
-    func_800AE0F0(D_800CA1DC, "職員室");
+    strcpy(D_800CA19C, "廊下");
+    strcpy(D_800CA1DC, "職員室");
     D_800E6280.unk_1BC[8].unk_06 += 1;
     check_para_limit();
     D_800CA368 = 0x36;

@@ -11,8 +11,8 @@ void func_8013C5D0(void) {
     default:
         break;
     case 7:
-        func_800AE0F0(D_8015E74C, "片桐「はっ、");
-        func_800AE0F0(D_8015E774, "いいかげんにしなさいっ！");
+        strcpy(D_8015E74C, "片桐「はっ、");
+        strcpy(D_8015E774, "いいかげんにしなさいっ！");
         func_8014B738((s32) &D_8015E814, 2, 0xA);
         func_8013F1C4(0x42, 0x0A000043, 0);
         D_8015EE48 = 3;

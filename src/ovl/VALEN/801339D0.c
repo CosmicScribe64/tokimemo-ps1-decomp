@@ -15,11 +15,11 @@ void func_801339D0(void) {
 }
 
 void func_80133A4C(void) {
-    if (func_800AEEB0(D_800CA1DC, "自宅前") == 0) {
+    if (strcmp(D_800CA1DC, "自宅前") == 0) {
         func_8004284C();
         return;
     }
-    func_800AE0F0(D_800CA1DC, "自宅前");
+    strcpy(D_800CA1DC, "自宅前");
     place_init2();
 }
 

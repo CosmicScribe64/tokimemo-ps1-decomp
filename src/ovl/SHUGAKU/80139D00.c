@@ -151,7 +151,7 @@ void func_8013A2D8(void) {
 void func_8013A314(void) {
     if (D_80122CDC == 0) {
         bg_read_sub2(0x4225);
-        func_800AE0F0(D_800CA19C, "ホテル・ロビー");
+        strcpy(D_800CA19C, "ホテル・ロビー");
     } else {
         func_8004284C();
         func_8004284C();
@@ -181,15 +181,15 @@ void func_8013A42C(void) {
     switch (temp) {
     case 0:
         bg_read_sub2(0x4267);
-        func_800AE0F0(D_800CA19C, "土産屋");
+        strcpy(D_800CA19C, "土産屋");
         break;
     case 1:
         bg_read_sub2(0x4255);
-        func_800AE0F0(D_800CA19C, "浜辺");
+        strcpy(D_800CA19C, "浜辺");
         break;
     default:
         bg_read_sub2(0x427B);
-        func_800AE0F0(D_800CA19C, "クラーク像前");
+        strcpy(D_800CA19C, "クラーク像前");
         break;
     }
     if (D_800CA2EC == 0) {
@@ -204,15 +204,15 @@ void func_8013A4F8(void) {
     switch (temp) {
     case 0:
         bg_read_sub2(0x4267);
-        func_800AE0F0(D_800CA19C, "土産屋");
+        strcpy(D_800CA19C, "土産屋");
         break;
     case 1:
         bg_read_sub2(0x4255);
-        func_800AE0F0(D_800CA19C, "浜辺");
+        strcpy(D_800CA19C, "浜辺");
         break;
     default:
         bg_read_sub2(0x427B);
-        func_800AE0F0(D_800CA19C, "クラーク像前");
+        strcpy(D_800CA19C, "クラーク像前");
         break;
     }
     func_8004284C();

@@ -192,7 +192,7 @@ void func_801410A4(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -203,8 +203,8 @@ void func_801410A4(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800AE0F0(D_800CA16C, D_800E6280.unk_0D4);
-    func_800AE0F0(D_800CA188, "謎の女");
+    strcpy(D_800CA16C, D_800E6280.unk_0D4);
+    strcpy(D_800CA188, "謎の女");
     func_8008585C();
     func_80137990();
     D_80146274 = D_80145FE8;
@@ -236,7 +236,7 @@ void func_801411DC(void) {
     message_window_init();
     func_80084E4C();
     D_800B593C = 0;
-    func_800AE0F0(D_800CA16C, D_800E6280.unk_0D4);
+    strcpy(D_800CA16C, D_800E6280.unk_0D4);
     func_8008585C();
     D_80146274 = D_80145FEC;
     D_80146278 = D_80146128;
@@ -282,17 +282,17 @@ void func_80141374(void) {
     parameter_show_init();
     parameter_show_init();
     D_800B593C = 0x80;
-    func_800AE0F0(D_800CA16C, D_800E6280.unk_0D4);
-    func_800AE0F0(D_800CA188, "館林");
-    func_800AE0F0(girl_name_buf, "館林さん");
+    strcpy(D_800CA16C, D_800E6280.unk_0D4);
+    strcpy(D_800CA188, "館林");
+    strcpy(girl_name_buf, "館林さん");
     func_8008585C();
     D_80122D38 = 1;
     func_80137990();
     D_80146274 = D_80145FF4;
     D_80146278 = D_80146130;
     D_8014627C = D_8014626C;
-    func_800AE0F0(D_800CA19C, "きらめき中央公園");
-    func_800AE0F0(D_800CA1DC, "並木道");
+    strcpy(D_800CA19C, "きらめき中央公園");
+    strcpy(D_800CA1DC, "並木道");
     func_8004284C();
 }
 

@@ -8,7 +8,7 @@ void func_80049A40();
 s32 func_8014F790(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "紐緒「想定強度に問題があったみたいね");
+        strcpy(D_8015E9E0, "紐緒「想定強度に問題があったみたいね");
         func_8013E7C0(0x1D, 0x19, 1, 1);
         func_8014B738(D_8015EB70, 1, 0xC8);
         D_8015ED8C[0] += 1;
@@ -235,7 +235,7 @@ void func_8014FDBC(void) {
         func_8014F350(0x3C);
         return;
     case 15:
-        func_800AE0F0(D_8015E9E0, "宇宙人は去っていった。");
+        strcpy(D_8015E9E0, "宇宙人は去っていった。");
         func_8014B738(D_8015EB70, 1, 0x3C);
         func_8013E7C0(0x30, 9, 1, 1);
         func_8004500C(1, 0x202);
@@ -311,8 +311,8 @@ void func_80150120(void) {
     shade = color.word;
     switch (((RpgTransition0C *)&D_8015EE08)->unk_00) {
     case 0:
-        func_800AE0F0(D_8015E828, "宇宙人「仝Щ△※〒ヰヱΞ＆");
-        func_800AE0F0(D_8015E850, "ΠΣΨБДЗЦЧ＠Ъ◇Ш");
+        strcpy(D_8015E828, "宇宙人「仝Щ△※〒ヰヱΞ＆");
+        strcpy(D_8015E850, "ΠΣΨБДЗЦЧ＠Ъ◇Ш");
         func_8014B738(D_8015E8F0, 2, 0x5A);
         func_8013F15C(0x513, 1, 0);
         func_8014F258();

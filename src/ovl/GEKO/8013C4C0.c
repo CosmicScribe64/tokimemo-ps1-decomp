@@ -94,7 +94,7 @@ void func_8013C73C(void) {
     D_80146274 = D_80145F20;
     D_80146278 = D_8014605C;
     D_8014627C = D_80146198;
-    func_800AE0F0(D_800CA19C, "校舎裏");
+    strcpy(D_800CA19C, "校舎裏");
     D_800E6280.unk_1BC[3].unk_06 += 2;
     check_para_limit();
     D_800CA368 = 0x15;

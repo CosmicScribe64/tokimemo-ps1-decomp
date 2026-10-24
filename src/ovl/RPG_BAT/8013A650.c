@@ -6,7 +6,7 @@ void func_8013A650(void) {
 
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　サイバーファング　　　　　");
+        strcpy(D_8015E74C, "　　　　　サイバーファング　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_8014EEF4();
         func_80144480();

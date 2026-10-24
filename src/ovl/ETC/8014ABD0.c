@@ -122,7 +122,7 @@ s32 func_8014AF28(void) {
     D_8015186C = 0;
     /* The nine contiguous parameter records start at GameState +0xFC. */
     for (index = 1; index != 8; index++) {
-        func_800AE0B0("param %d %d \n", index, ((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].unk_02);
+        printf("param %d %d \n", index, ((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].unk_02);
         if (((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].unk_02 >= 0x65) {
             count++;
         }
@@ -164,7 +164,7 @@ s32 func_8014B0D0(void) {
     var_s2 = 0x3C;
     var_s7 = 0;
     for (var_s0 = 1, var_s1 = &sp70[1]; var_s0 != 11; var_s0++, var_s1++) {
-        func_800AE0B0("%d %d \n", var_s0, *var_s1);
+        printf("%d %d \n", var_s0, *var_s1);
         temp_v0 = *var_s1;
         if ((var_s2 < temp_v0) && D_800E6280.unk_1BC[var_s0].unk_0C.f.b1) {
             var_s7 = var_s0;
@@ -549,7 +549,7 @@ s32 func_8014BDE0(void) {
     } else if (n != 0) {
         n -= 1;
     }
-    func_800AE0B0("thl %d \n", n);
+    printf("thl %d \n", n);
     return 3 - n;
 }
 

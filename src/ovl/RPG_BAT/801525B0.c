@@ -98,16 +98,16 @@ void func_801529B4(void) {
         func_8004500C(1, 0x200);
         switch (D_8015EB98) {
         case 0x10000:
-            func_800AE0F0(D_8015E9E0, "ハブ・ロードが襲ってきた！");
+            strcpy(D_8015E9E0, "ハブ・ロードが襲ってきた！");
             break;
         case 0x20000:
-            func_800AE0F0(D_8015E9E0, "鹿・グレートが襲ってきた！");
+            strcpy(D_8015E9E0, "鹿・グレートが襲ってきた！");
             break;
         case 0x40000:
-            func_800AE0F0(D_8015E9E0, "キラーヒグマが襲ってきた！");
+            strcpy(D_8015E9E0, "キラーヒグマが襲ってきた！");
             break;
         case 0x100000:
-            func_800AE0F0(D_8015E9E0, "不良達が襲ってきた！");
+            strcpy(D_8015E9E0, "不良達が襲ってきた！");
             break;
         }
         if (D_8015EB98 != 0x08000000) {
@@ -345,7 +345,7 @@ void func_80152F30(void) {
         }
         break;
     case 10:
-        func_800AE0F0(D_8015E9E0, "宇宙人が襲ってきた！");
+        strcpy(D_8015E9E0, "宇宙人が襲ってきた！");
         func_8014B738((s32)D_8015EB70, 1, 0x5A);
         func_8013E7C0(0x38, 0xFF, 1, 0);
         func_8013E97C(0x3B, 0, 0);
@@ -388,8 +388,8 @@ s32 func_801535E4(void) {
     }
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E9E0, "紐緒「私が準備するまで、");
-        func_800AE0F0(D_8015EA08, "持ちこたえなさい。");
+        strcpy(D_8015E9E0, "紐緒「私が準備するまで、");
+        strcpy(D_8015EA08, "持ちこたえなさい。");
         func_8013E7C0(0x1D, 0x19, 1, 1);
         func_8014B738(D_8015EB70, 2, 0x96);
         D_8015ED8C[0] += 1;
@@ -522,8 +522,8 @@ void func_80153B08(void) {
     var_s0 = 0;
     do {
         temp_s1 = var_s0 + 4;
-        temp_s3 = (s32) (func_800A0070(((s32) ((var_s0 % (s32) D_8015EC44) << 0xC) / (s32) D_8015EC44) + ((s32) (D_8015EC38 << 0xC) / (s32) D_8015EC40)) * D_8015EC3C) >> 0xD;
-        func_80153F3C(temp_s3, (s32) (func_800A0070(((s32) ((temp_s1 % (s32) D_8015EC44) << 0xC) / (s32) D_8015EC44) + ((s32) (D_8015EC38 << 0xC) / (s32) D_8015EC40)) * D_8015EC3C) >> 0xD, var_s0, temp_s1, 0, 5);
+        temp_s3 = (s32) (rsin(((s32) ((var_s0 % (s32) D_8015EC44) << 0xC) / (s32) D_8015EC44) + ((s32) (D_8015EC38 << 0xC) / (s32) D_8015EC40)) * D_8015EC3C) >> 0xD;
+        func_80153F3C(temp_s3, (s32) (rsin(((s32) ((temp_s1 % (s32) D_8015EC44) << 0xC) / (s32) D_8015EC44) + ((s32) (D_8015EC38 << 0xC) / (s32) D_8015EC40)) * D_8015EC3C) >> 0xD, var_s0, temp_s1, 0, 5);
         var_s0 += 5;
     } while (var_s0 != 0xAA);
 }
@@ -536,8 +536,8 @@ void func_80153D20(void) {
     var_s0 = 0;
     do {
         temp_s1 = var_s0 + 4;
-        temp_s3 = (s32) (func_800A0070(((s32) ((var_s0 % (s32) D_8015ED34) << 0xC) / (s32) D_8015ED34) + ((s32) (D_8015ED28 << 0xC) / (s32) D_8015ED30)) * D_8015ED2C) >> 0xD;
-        func_80153F3C(temp_s3, (s32) (func_800A0070(((s32) ((temp_s1 % (s32) D_8015ED34) << 0xC) / (s32) D_8015ED34) + ((s32) (D_8015ED28 << 0xC) / (s32) D_8015ED30)) * D_8015ED2C) >> 0xD, var_s0, temp_s1, 2, 5);
+        temp_s3 = (s32) (rsin(((s32) ((var_s0 % (s32) D_8015ED34) << 0xC) / (s32) D_8015ED34) + ((s32) (D_8015ED28 << 0xC) / (s32) D_8015ED30)) * D_8015ED2C) >> 0xD;
+        func_80153F3C(temp_s3, (s32) (rsin(((s32) ((temp_s1 % (s32) D_8015ED34) << 0xC) / (s32) D_8015ED34) + ((s32) (D_8015ED28 << 0xC) / (s32) D_8015ED30)) * D_8015ED2C) >> 0xD, var_s0, temp_s1, 2, 5);
         var_s0 += 5;
     } while (var_s0 != 0xAA);
 }

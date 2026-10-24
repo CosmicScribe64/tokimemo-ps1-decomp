@@ -4,7 +4,7 @@
 void func_801368B0(void) {
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　メガトン辞書　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　メガトン辞書　　　　　　");
         func_8014B738(&D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);

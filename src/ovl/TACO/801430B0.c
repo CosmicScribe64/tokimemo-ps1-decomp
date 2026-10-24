@@ -213,7 +213,7 @@ void func_8014394C(void) {
     D_8012278D = 0xFF;
     D_8012278E = 0xFF;
     func_8009AD70(2, &D_80122780);
-    func_8009B310(0x800, 0x800, 0x800);
+    GsSetAmbient(0x800, 0x800, 0x800);
     func_8009B340(0);
 }
 

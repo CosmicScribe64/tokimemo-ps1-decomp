@@ -1,9 +1,9 @@
-#define MAIN_API_OVERRIDE_func_800AE0A0 /* original called it undeclared (implicit int), as 8013BEF0.c (T-24706); keeps $v0 off the case 5 table address, T-25314 */
+#define MAIN_API_OVERRIDE_memcpy /* original called it undeclared (implicit int), as 8013BEF0.c (T-24706); keeps $v0 off the case 5 table address, T-25314 */
 #define MAIN_API_OVERRIDE_func_8004A1A0 /* original called it undeclared (implicit int): its $v0 result keeps 0x01000000 off $v0 after the first call, T-25314 */
 #include "common.h"
 #include "ovl/ETC.h"
 
-extern s32 func_800AE0A0();
+extern s32 memcpy();
 extern s32 func_8004A1A0();
 
 void func_8013FF80(void) {
@@ -108,7 +108,7 @@ s32 func_8013FFAC(void) {
         /* FAKE: element views give the chain its hidden VREG, which shares 0x80 in $v0; plain chains put it in $a3 (T-25314) */
         (&D_801220E0)[0] = (&D_801220E1)[0] = (&D_801220E2)[0] = 0x80;
         D_800E6280.unk_03A = 0;
-        func_800AE0A0((void *)0x801E2000, 0x80180600, 0x18000);
+        memcpy((void *)0x801E2000, 0x80180600, 0x18000);
         /* FAKE: flat view of D_8014DB90 as in func_8013CF2C; the * 2 index spends the
          * ugen slot the original spends. T-25128 */
         func_80046290(((s32 *)D_8014DB90)[D_800E6280.unk_F5F * 2], ((s32 *)D_8014DB90)[D_800E6280.unk_F5F * 2 + 1], D_800E6280.unk_F5F);

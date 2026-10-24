@@ -34,9 +34,9 @@ s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
         vin.vy = D_8015EDB4->unk76 - pos.y;
         vin.vz = D_8015EDB4->unk78 - pos.z;
         if (flags & 0x40) {
-            vin.vx = vin.vx - (func_800AE0D0() & 0xFF) + 0x7F;
-            vin.vy = vin.vy - (func_800AE0D0() & 0xFF) + 0x7F;
-            vin.vz = vin.vz - (func_800AE0D0() & 0xFF) + 0x7F;
+            vin.vx = vin.vx - (rand() & 0xFF) + 0x7F;
+            vin.vy = vin.vy - (rand() & 0xFF) + 0x7F;
+            vin.vz = vin.vz - (rand() & 0xFF) + 0x7F;
         }
         func_800AA460(&vin, &vout);
         div = 0x1000 / h + 1;
@@ -108,7 +108,7 @@ s32 func_8013DEE4(s32 arg0) {
     m = D_80129C40;
     v.vz -= 0x200;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     switch (kind) {
     case 3:
     case 5:
@@ -240,8 +240,8 @@ s32 kind;
     D_8015EC70[i].unk0 = pos.x;
     D_8015EC70[i].unk2 = pos.y;
     D_8015EC70[i].unk4 = pos.z;
-    D_8015EC70[i].unk8 = 0x3F - (func_800AE0D0() & 0x7F);
-    D_8015EC70[i].unkA = 0x3F - (func_800AE0D0() & 0x7F);
+    D_8015EC70[i].unk8 = 0x3F - (rand() & 0x7F);
+    D_8015EC70[i].unkA = 0x3F - (rand() & 0x7F);
     D_8015EC70[i].unkC = 0x50;
     D_8015EC70[i].unk11 = kind;
     return i;
@@ -343,7 +343,7 @@ void func_8013E778(s32 arg0) {
     kind = D_8015EC70[arg0].unk11;
     sel = (D_8015EC70[arg0].unk12 >> 2) & 7;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     w.vz = v.vz;
     for (rot = 0, o = 0; o < 2; o++) {
         w.vy = v.vy + rot - 0x40;
@@ -419,7 +419,7 @@ void func_8013EAA4(s32 arg0) {
     kind = particle->unk11 & 7;
     phase = particle->unk12 >> 1;
     func_800A1100(&matrix);
-    func_800A1070(&matrix);
+    SetRotMatrix(&matrix);
     v.vz = pos.z;
     for (o = 0; o < 2; o++) {
         v.vy = pos.y + o * 0x80 - 0x40;
@@ -467,7 +467,7 @@ void func_8013EAA4(s32 arg0) {
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
             AddPrim((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
-            height = (func_800A0070(particle->unk12 * 0x10) << 7) / 4096;
+            height = (rsin(particle->unk12 * 0x10) << 7) / 4096;
             /* FAKE: half is a constant local that only steers uopt (real source unknown). It is propagated
              * into its uses (its slot stays), so the third grid's o * 0x100 becomes a later item than
              * j * size * 2, which takes the first spill home (sp+0x64), and the vertical temporary gets

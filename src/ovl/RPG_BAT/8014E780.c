@@ -55,7 +55,7 @@ s32 D_8015EE88 = 2;
 s32 D_8015EE8C = 0;
 
 void func_8014E780(void) {
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
     func_80048EB8(0);
     func_8006BC28(0);
     func_8004E58C();

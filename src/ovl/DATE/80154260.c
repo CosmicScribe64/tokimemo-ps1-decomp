@@ -249,7 +249,7 @@ void func_80154D38(void) {
 }
 
 void func_80154E14(void) {
-    func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
+    strcpy(D_800CA1DC, "絶叫マシーンビビール");
     func_8004284C();
 }
 

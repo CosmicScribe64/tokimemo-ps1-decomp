@@ -50,9 +50,9 @@ void func_8013DF14(void) {
     if (state->unk_1BC[12].unk_0C.f.f9 >= 4) {
         D_800E6280.unk_1BC[12].unk_0C.f.f9 = 3;
     }
-    func_800AE0F0(D_800CA188, "伊集院");
-    func_800AE0F0(girl_name_buf, "伊集院");
-    func_800AE0F0(D_800CA1DC, "パーティー会場");
+    strcpy(D_800CA188, "伊集院");
+    strcpy(girl_name_buf, "伊集院");
+    strcpy(D_800CA1DC, "パーティー会場");
     D_80145F2C = 9;
     func_8004284C();
     func_8013DD90();

@@ -297,7 +297,7 @@ s32 func_801385CC(void) {
     x[2] = -0x80; y[2] = 0x4C;
     x[3] = -0x20; y[3] = 0x4C;
     if (D_8013B5CC) {} /* FAKE: empty test adds a block; without it uopt promotes the h chain (frame 0xB8) and keeps D_8013B5CC out of v0 in the first label test. T-11880 */
-    D_8013B5E4[1] = (func_800AE0E0(lab.v[1]) / 2) * 0x10;
+    D_8013B5E4[1] = (strlen(lab.v[1]) / 2) * 0x10;
     h[0] = h[1] = h[2] = h[3] = 0x10; /* FAKE: chain store, one li for all four and h[3] stored last. T-11880 */
     D_8013B5E4[0] = 0;
     D_8013B5E4[2] = 0;
@@ -305,21 +305,21 @@ s32 func_801385CC(void) {
     k_reset(1);
     if ((D_800E7D10.unk_024[0] & 1) || (D_8013B5CC != 0)) {
         if (D_8013B5CC >= 2U) {
-            func_800AE0F0(lab.v[0], "恋は…（歌付き）");
+            strcpy(lab.v[0], "恋は…（歌付き）");
         }
-        D_8013B5E4[0] = (func_800AE0E0(lab.v[0]) / 2) * 0x10;
+        D_8013B5E4[0] = (strlen(lab.v[0]) / 2) * 0x10;
         k_disp_start(set_kanji_string(x[0], y[0], 0, (s32)lab.v[0], 0));
     }
     k_disp_start(set_kanji_string(x[1], y[1], 0, (s32)lab.v[1], 0));
     if ((D_800E7D10.unk_024[0] & 4) || (D_8013B5CC != 0)) {
-        D_8013B5E4[2] = (func_800AE0E0(lab.v[2]) / 2) * 0x10;
+        D_8013B5E4[2] = (strlen(lab.v[2]) / 2) * 0x10;
         k_disp_start(set_kanji_string(x[2], y[2], 0, (s32)lab.v[2], 0));
     }
     if ((D_800E7D10.unk_024[0] & 8) || (D_8013B5CC != 0)) {
         if (D_8013B5CC >= 2U) {
-            func_800AE0F0(lab.v[3], "女々しい…（歌付き）");
+            strcpy(lab.v[3], "女々しい…（歌付き）");
         }
-        D_8013B5E4[3] = (func_800AE0E0(lab.v[3]) / 2) * 0x10;
+        D_8013B5E4[3] = (strlen(lab.v[3]) / 2) * 0x10;
         k_disp_start(set_kanji_string(x[3], y[3], 0, (s32)lab.v[3], 0));
     }
     p = D_8013B5E4;
@@ -458,7 +458,7 @@ void func_80138E0C(void) {
     } while (index < 30);
     if (D_8013B5C8 == 200) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5D4)[0], 0);
-        k_disp_start(set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5D4)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D4)[1], 0));
+        k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5D4)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D4)[1], 0));
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
@@ -483,8 +483,8 @@ void func_80138F8C(void) {
     } while (index < 51);
     if (D_8013B5C8 == 1500) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5D8)[0], 0);
-        set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5D8)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[1], 0);
-        k_disp_start(set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5D8)[0]) * 7 + func_800AE0E0(((u8 **)D_8013B5D8)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[2], 0));
+        set_kanji_string((s16)(strlen(((u8 **)D_8013B5D8)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[1], 0);
+        k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5D8)[0]) * 7 + strlen(((u8 **)D_8013B5D8)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[2], 0));
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
@@ -509,8 +509,8 @@ void func_801391A0(void) {
     } while (index < 39);
     if (D_8013B5C8 == 1200) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5DC)[0], 0);
-        set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5DC)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[1], 0);
-        k_disp_start(set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5DC)[0]) * 7 + func_800AE0E0(((u8 **)D_8013B5DC)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[2], 0));
+        set_kanji_string((s16)(strlen(((u8 **)D_8013B5DC)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[1], 0);
+        k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5DC)[0]) * 7 + strlen(((u8 **)D_8013B5DC)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[2], 0));
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
@@ -535,8 +535,8 @@ void func_801393B4(void) {
     } while (index < 81);
     if (D_8013B5C8 == 30) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5E0)[0], 0);
-        set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5E0)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[1], 0);
-        k_disp_start(set_kanji_string((s16)(func_800AE0E0(((u8 **)D_8013B5E0)[0]) * 7 + func_800AE0E0(((u8 **)D_8013B5E0)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[2], 0));
+        set_kanji_string((s16)(strlen(((u8 **)D_8013B5E0)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[1], 0);
+        k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5E0)[0]) * 7 + strlen(((u8 **)D_8013B5E0)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[2], 0));
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
@@ -558,78 +558,78 @@ void func_801395C8(arg0)
     switch (D_8013B5C4) {
     case 2:
         for (i = 0; i < 30; i++) {
-            func_800AE0F0(buf[i], ((u8 **)D_8013B5D4)[i]);
+            strcpy(buf[i], ((u8 **)D_8013B5D4)[i]);
         }
         break;
     case 0:
         for (i = 0; i < 51; i++) {
-            func_800AE0F0(buf[i], ((u8 **)D_8013B5D8)[i]);
+            strcpy(buf[i], ((u8 **)D_8013B5D8)[i]);
         }
         break;
     case 3:
         for (i = 0; i < 39; i++) {
-            func_800AE0F0(buf[i], ((u8 **)D_8013B5DC)[i]);
+            strcpy(buf[i], ((u8 **)D_8013B5DC)[i]);
         }
         break;
     default:
         for (i = 0; i < 81; i++) {
-            func_800AE0F0(buf[i], ((u8 **)D_8013B5E0)[i]);
+            strcpy(buf[i], ((u8 **)D_8013B5E0)[i]);
         }
         break;
     }
     if (arg0 % 6 == 0) {
         p = &buf[arg0];
         set_kanji_string(-0x74, 0x36, 2, p[0], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, p[1], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, p[2], 0);
+        set_kanji_string((s16)(strlen(p[0]) * 7 - 0x74), 0x36, 0, p[1], 0);
+        set_kanji_string((s16)(strlen(p[0]) * 7 + strlen(p[1]) * 7 - 0x74), 0x36, 0, p[2], 0);
         set_kanji_string(-0x54, 0x4A, 0, p[3], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, p[4], 0);
-        p = (void *)set_kanji_string((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x54), 0x4A, 0, p[5], 0);
+        set_kanji_string((s16)(strlen(p[3]) * 7 - 0x54), 0x4A, 0, p[4], 0);
+        p = (void *)set_kanji_string((s16)(strlen(p[3]) * 7 + strlen(p[4]) * 7 - 0x54), 0x4A, 0, p[5], 0);
         k_disp_start((s32)p);
     } else if (arg0 % 6 == 1) {
         p = &buf[arg0];
         set_kanji_string(-0x74, 0x36, 2, p[-1], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, p[0], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x74), 0x36, 0, p[1], 0);
+        set_kanji_string((s16)(strlen(p[-1]) * 7 - 0x74), 0x36, 2, p[0], 0);
+        set_kanji_string((s16)(strlen(p[-1]) * 7 + strlen(p[0]) * 7 - 0x74), 0x36, 0, p[1], 0);
         set_kanji_string(-0x54, 0x4A, 0, p[2], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, p[3], 0);
-        p = (void *)set_kanji_string((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x54), 0x4A, 0, p[4], 0);
+        set_kanji_string((s16)(strlen(p[2]) * 7 - 0x54), 0x4A, 0, p[3], 0);
+        p = (void *)set_kanji_string((s16)(strlen(p[2]) * 7 + strlen(p[3]) * 7 - 0x54), 0x4A, 0, p[4], 0);
         k_disp_start((s32)p);
     } else if (arg0 % 6 == 2) {
         p = &buf[arg0];
         set_kanji_string(-0x74, 0x36, 2, p[-2], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[-2]) * 7 - 0x74), 0x36, 2, p[-1], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x74), 0x36, 2, p[0], 0);
+        set_kanji_string((s16)(strlen(p[-2]) * 7 - 0x74), 0x36, 2, p[-1], 0);
+        set_kanji_string((s16)(strlen(p[-2]) * 7 + strlen(p[-1]) * 7 - 0x74), 0x36, 2, p[0], 0);
         set_kanji_string(-0x54, 0x4A, 0, p[1], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, p[2], 0);
-        p = (void *)set_kanji_string((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x54), 0x4A, 0, p[3], 0);
+        set_kanji_string((s16)(strlen(p[1]) * 7 - 0x54), 0x4A, 0, p[2], 0);
+        p = (void *)set_kanji_string((s16)(strlen(p[1]) * 7 + strlen(p[2]) * 7 - 0x54), 0x4A, 0, p[3], 0);
         k_disp_start((s32)p);
     } else if (arg0 % 6 == 3) {
         p = &buf[arg0];
         set_kanji_string(-0x74, 0x36, 0, p[3], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, p[4], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[3]) * 7 + func_800AE0E0(p[4]) * 7 - 0x74), 0x36, 0, p[5], 0);
+        set_kanji_string((s16)(strlen(p[3]) * 7 - 0x74), 0x36, 0, p[4], 0);
+        set_kanji_string((s16)(strlen(p[3]) * 7 + strlen(p[4]) * 7 - 0x74), 0x36, 0, p[5], 0);
         set_kanji_string(-0x54, 0x4A, 2, p[0], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, p[1], 0);
-        p = (void *)set_kanji_string((s16)(func_800AE0E0(p[0]) * 7 + func_800AE0E0(p[1]) * 7 - 0x54), 0x4A, 0, p[2], 0);
+        set_kanji_string((s16)(strlen(p[0]) * 7 - 0x54), 0x4A, 0, p[1], 0);
+        p = (void *)set_kanji_string((s16)(strlen(p[0]) * 7 + strlen(p[1]) * 7 - 0x54), 0x4A, 0, p[2], 0);
         k_disp_start((s32)p);
     } else if (arg0 % 6 == 4) {
         p = &buf[arg0];
         set_kanji_string(-0x74, 0x36, 0, p[2], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, p[3], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[2]) * 7 + func_800AE0E0(p[3]) * 7 - 0x74), 0x36, 0, p[4], 0);
+        set_kanji_string((s16)(strlen(p[2]) * 7 - 0x74), 0x36, 0, p[3], 0);
+        set_kanji_string((s16)(strlen(p[2]) * 7 + strlen(p[3]) * 7 - 0x74), 0x36, 0, p[4], 0);
         set_kanji_string(-0x54, 0x4A, 2, p[-1], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, p[0], 0);
-        p = (void *)set_kanji_string((s16)(func_800AE0E0(p[-1]) * 7 + func_800AE0E0(p[0]) * 7 - 0x54), 0x4A, 0, p[1], 0);
+        set_kanji_string((s16)(strlen(p[-1]) * 7 - 0x54), 0x4A, 2, p[0], 0);
+        p = (void *)set_kanji_string((s16)(strlen(p[-1]) * 7 + strlen(p[0]) * 7 - 0x54), 0x4A, 0, p[1], 0);
         k_disp_start((s32)p);
     } else {
         p = &buf[arg0];
         set_kanji_string(-0x74, 0x36, 0, p[1], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[1]) * 7 - 0x74), 0x36, 0, p[2], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[1]) * 7 + func_800AE0E0(p[2]) * 7 - 0x74), 0x36, 0, p[3], 0);
+        set_kanji_string((s16)(strlen(p[1]) * 7 - 0x74), 0x36, 0, p[2], 0);
+        set_kanji_string((s16)(strlen(p[1]) * 7 + strlen(p[2]) * 7 - 0x74), 0x36, 0, p[3], 0);
         set_kanji_string(-0x54, 0x4A, 2, p[-2], 0);
-        set_kanji_string((s16)(func_800AE0E0(p[-2]) * 7 - 0x54), 0x4A, 2, p[-1], 0);
-        p = (void *)set_kanji_string((s16)(func_800AE0E0(p[-2]) * 7 + func_800AE0E0(p[-1]) * 7 - 0x54), 0x4A, 2, p[0], 0);
+        set_kanji_string((s16)(strlen(p[-2]) * 7 - 0x54), 0x4A, 2, p[-1], 0);
+        p = (void *)set_kanji_string((s16)(strlen(p[-2]) * 7 + strlen(p[-1]) * 7 - 0x54), 0x4A, 2, p[0], 0);
         k_disp_start((s32)p);
     }
 }

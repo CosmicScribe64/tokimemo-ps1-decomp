@@ -2891,7 +2891,6 @@ void func_8009AD50(s32 arg0);
 void func_8009AD60(s32 arg0);
 s32 func_8009AD70();
 void GsSetAmbient();
-void func_8009B310(s32 arg0, s32 arg1, s32 arg2);
 void func_8009B340();
 void func_8009B3C0(s32 arg0);
 #ifndef MAIN_API_OVERRIDE_func_8009B430
@@ -2921,13 +2920,12 @@ void func_8009F0A4();
 void func_8009F0B8(u8 *p);
 void func_8009F0F4();
 void InitGeom(void);
-s32 func_800A0070(s32);
 s32 rsin();
 s32 func_800A0140(s32 a);
-void func_800A09D0();
-void func_800A0C64();
-void func_800A0F4C();
-void func_800A1070(MATRIX *m); /* returns nothing: an implicit int view adds a $v0 range (T-19009) */
+void RotMatrix();
+void MulMatrix();
+void ScaleMatrix();
+void SetRotMatrix(MATRIX *m); /* returns nothing: an implicit int view adds a $v0 range (T-19009) */
 s32 SquareRoot0(s32 a);
 void func_800AB984();
 void func_800ABA38();
@@ -2940,38 +2938,29 @@ s32 StartCARD(void);
 void _bu_init(void);
 s32 _card_auto(s32 arg0);
 s32 _card_status(s32 chan);
+#ifndef MAIN_API_OVERRIDE_bzero
 void *bzero(void *p, s32 n); /* BIOS A(0x28); main func_80055AFC stores the result in a local (T-25310) */
-#ifndef MAIN_API_OVERRIDE_func_800AE080
-void func_800AE080(u8 *arg0, s32 arg1);
-#endif
-#ifndef MAIN_API_OVERRIDE_func_800AE090
-void func_800AE090(void *dst, void *src, s32 n);
 #endif
 #ifndef MAIN_API_OVERRIDE_strncpy
-void strncpy(void *dst, void *src, s32 n); /* Same SDK address and legacy view as func_800AE090. */
+void strncpy(void *dst, void *src, s32 n);
 #endif
-#ifndef MAIN_API_OVERRIDE_func_800AE0A0
-void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
-#endif
+#ifndef MAIN_API_OVERRIDE_memcpy
 void memcpy();
-#ifndef MAIN_API_OVERRIDE_func_800AE0B0
-void func_800AE0B0(void *arg0, ...); /* printf-like (SDK libc) */
 #endif
+#ifndef MAIN_API_OVERRIDE_printf
 s32 printf(u8 *fmt, ...);
-s32 func_800AE0C0(s32);
-s32 func_800AE0D0(void);
+#endif
+s32 abs(s32);
 s32 rand();
 /* GYOZI calls this entry with an implicit-int ABI; semantics unknown. T-13202. */
 s32 func_800BCE40();
-s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
-#ifndef MAIN_API_OVERRIDE_func_800AE0F0
-void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
-#endif
+#ifndef MAIN_API_OVERRIDE_strcpy
 void strcpy(u8 *dst, u8 *src);
+#endif
 void strcat(u8 *dst, u8 *src);
-#ifndef MAIN_API_OVERRIDE_func_800AE120
-void func_800AE120(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_srand
+void srand(s32 arg0);
 #endif
 s32 sprintf();
 s32 strcmp(u8 *a, u8 *b);

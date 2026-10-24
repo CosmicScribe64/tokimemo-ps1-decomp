@@ -10,7 +10,7 @@ s32 func_8013E7C0();
 s32 func_8013F4F0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E828, "紐緒「真・世界征服ロボ！！");
+        strcpy(D_8015E828, "紐緒「真・世界征服ロボ！！");
         func_8014B738(D_8015E8F0, 1, 0xF0);
         D_8015ED8C[0] += 1;
         return;
@@ -33,7 +33,7 @@ s32 func_8013F5C8(void) {
     if (D_8015ED8C[0] != 3) {
         switch (D_8015ED8C[0]) {
         case 0:
-            func_800AE0F0(D_8015E828, "　　　　　服従ドリルパンチ　　　　　");
+            strcpy(D_8015E828, "　　　　　服従ドリルパンチ　　　　　");
             func_8014B738(D_8015E8F0, 1, 0xC8);
             D_8015ED8C[0] += 1;
             break;
@@ -54,7 +54,7 @@ s32 func_8013F694(void) {
     if (D_8015ED8C[0] != 3) {
         switch (D_8015ED8C[0]) {
         case 0:
-            func_800AE0F0(D_8015E828, "　　　　独裁ミサイルシャワー　　　　");
+            strcpy(D_8015E828, "　　　　独裁ミサイルシャワー　　　　");
             func_8014B738(D_8015E8F0, 1, 0x118);
             D_8015ED8C[0] += 1;
             break;
@@ -75,7 +75,7 @@ s32 func_8013F760(void) {
     if (D_8015ED8C[0] != 3) {
         switch (D_8015ED8C[0]) {
         case 0:
-            func_800AE0F0(D_8015E828, "　　　　世界征服メガビーム　　　　　");
+            strcpy(D_8015E828, "　　　　世界征服メガビーム　　　　　");
             func_8014B738(D_8015E8F0, 1, 0xAA);
             D_8015ED8C[0] += 1;
             break;
@@ -99,7 +99,7 @@ void func_8013F82C(void) {
 
     switch (D_8015EDD8) {
     case 0:
-        func_800AE0F0(D_8015E828, "ロボ「ガギグ・・・ッ");
+        strcpy(D_8015E828, "ロボ「ガギグ・・・ッ");
         func_8014B738(D_8015E8F0, 1, 0x5A);
         func_8013E54C(4);
         D_8015ED98 = 0x1000;
@@ -577,7 +577,7 @@ void func_80140CC8(void) {
 
     switch (D_8015EDD8) {
     case 0:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
         strcat(D_8015E828, "「よせっ！　紐緒さん！");
         func_8014B738((s32) D_8015E8F0, 1, 0x5A);
         func_8014EF3C();

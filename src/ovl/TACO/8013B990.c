@@ -70,8 +70,8 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
                 for (j = 16; j != 63; j++) {
                     if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
                         radius = (j + D_8015EDB4)->unk84[0] * 16;
-                        xdist = func_800AE0C0(x - (j + D_8015EDB4)->unk74);
-                        ydist = func_800AE0C0(y - (j + D_8015EDB4)->unk76);
+                        xdist = abs(x - (j + D_8015EDB4)->unk74);
+                        ydist = abs(y - (j + D_8015EDB4)->unk76);
                         if (xdist < radius + 0x18 && ydist < radius + 0x18) {
                             if ((j + D_8015EDB4)->unk78 < z) {
                                 if (D_8015F500 == 0 && arg2 == 0) {
@@ -102,9 +102,9 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
             for (j = 16; j != 63; j++) {
                 if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
                     radius = (j + D_8015EDB4)->unk84[0] * 16;
-                    if (func_800AE0C0(z - (j + D_8015EDB4)->unk78) < radius + 0x100) {
-                        xdist = func_800AE0C0(x - (j + D_8015EDB4)->unk74);
-                        ydist = func_800AE0C0(y - (j + D_8015EDB4)->unk76);
+                    if (abs(z - (j + D_8015EDB4)->unk78) < radius + 0x100) {
+                        xdist = abs(x - (j + D_8015EDB4)->unk74);
+                        ydist = abs(y - (j + D_8015EDB4)->unk76);
                         if (xdist < radius + width && ydist < radius + width) {
                             if (D_8015F500 == 0 && arg2 == 0) {
                                 D_8015F500 = 1;
@@ -142,9 +142,9 @@ s32 func_8013C1F4(void) {
     if (!(D_8015EDB4->unk2 & 0x80)) {
         for (i = 0; i < 16; i++) {
             if (D_8015EB30[i].unk13 & 0x80) {
-                a = func_800AE0C0(D_8015EB30[i].unk0 - D_8015EDB4->unk74);
-                b = func_800AE0C0(D_8015EB30[i].unk2 - D_8015EDB4->unk76);
-                if (func_800AE0C0(D_8015EB30[i].unk4 - D_8015EDB4->unk78) < 0x100 && b < 0x80 && a < 0x80) {
+                a = abs(D_8015EB30[i].unk0 - D_8015EDB4->unk74);
+                b = abs(D_8015EB30[i].unk2 - D_8015EDB4->unk76);
+                if (abs(D_8015EB30[i].unk4 - D_8015EDB4->unk78) < 0x100 && b < 0x80 && a < 0x80) {
                     D_8015EB30[i].unk13 = 0;
                     func_801335A0(1, 0x506);
                     D_8015EDB4->unk2 |= 4;
@@ -163,9 +163,9 @@ s32 func_8013C1F4(void) {
     if (!(D_8015EDB4[8].unk2 & 0x80)) {
         for (i = 0; i < 16; i++) {
             if (D_8015EB30[i].unk13 & 0x80) {
-                a = func_800AE0C0(D_8015EB30[i].unk0 - D_8015EDB4[8].unk74);
-                b = func_800AE0C0(D_8015EB30[i].unk2 - D_8015EDB4[8].unk76);
-                if (func_800AE0C0(D_8015EB30[i].unk4 - D_8015EDB4[8].unk78) < 0x100 && b < 0x80 && a < 0x80) {
+                a = abs(D_8015EB30[i].unk0 - D_8015EDB4[8].unk74);
+                b = abs(D_8015EB30[i].unk2 - D_8015EDB4[8].unk76);
+                if (abs(D_8015EB30[i].unk4 - D_8015EDB4[8].unk78) < 0x100 && b < 0x80 && a < 0x80) {
                     D_8015EB30[i].unk13 = 0;
                     value2 = D_8015EDB4[8].unk84[1];
                     if (value2 >= 5) {
@@ -198,9 +198,9 @@ s32 func_8013C440(void) {
     }
     for (i = 16; i < 63; i++) {
         if (((i + D_8015EDB4)->unk0[1] & 0xC0) && ((i + D_8015EDB4)->unk84[1] != 0)) {
-            a = func_800AE0C0((i + D_8015EDB4)->unk74 - D_8015EDB4->unk74);
-            b = func_800AE0C0((i + D_8015EDB4)->unk76 - D_8015EDB4->unk76);
-            c = func_800AE0C0((i + D_8015EDB4)->unk78 - D_8015EDB4->unk78);
+            a = abs((i + D_8015EDB4)->unk74 - D_8015EDB4->unk74);
+            b = abs((i + D_8015EDB4)->unk76 - D_8015EDB4->unk76);
+            c = abs((i + D_8015EDB4)->unk78 - D_8015EDB4->unk78);
             limit = (s32)(i + D_8015EDB4)->unk84[0] << 4;
             if (c < 0x100 && b < limit && a < limit) {
                 func_801335A0(1, 0x506);
@@ -222,9 +222,9 @@ skip1:
     }
     for (i = 0; i < 16; i++) {
         if (((i + D_8015EDB4)->unk0[1] & 0xC0) && ((i + D_8015EDB4)->unk84[1] != 0)) {
-            a = func_800AE0C0((i + D_8015EDB4)->unk74 - D_8015EDB4[8].unk74);
-            b = func_800AE0C0((i + D_8015EDB4)->unk76 - D_8015EDB4[8].unk76);
-            c = func_800AE0C0((i + D_8015EDB4)->unk78 - D_8015EDB4[8].unk78);
+            a = abs((i + D_8015EDB4)->unk74 - D_8015EDB4[8].unk74);
+            b = abs((i + D_8015EDB4)->unk76 - D_8015EDB4[8].unk76);
+            c = abs((i + D_8015EDB4)->unk78 - D_8015EDB4[8].unk78);
             limit = (s32)(i + D_8015EDB4)->unk84[0] << 4;
             if (c < 0x100 && b < limit && a < limit) {
                 value2 = D_8015EDB4[8].unk84[1];
@@ -264,9 +264,9 @@ s32 func_8013C6D4(void) {
     got5 = -7;
     for (p = D_8015EC70; p < D_8015EC70 + 16; p++) {
         if (p->unk13 & 0x80) {
-            dx = func_800AE0C0(p->unk0 - D_8015EDB4->unk74);
-            dy = func_800AE0C0(p->unk2 - D_8015EDB4->unk76);
-            if (func_800AE0C0(p->unk4 - D_8015EDB4->unk78) < 0x200 && dy < 0x200 && dx < 0x200) {
+            dx = abs(p->unk0 - D_8015EDB4->unk74);
+            dy = abs(p->unk2 - D_8015EDB4->unk76);
+            if (abs(p->unk4 - D_8015EDB4->unk78) < 0x200 && dy < 0x200 && dx < 0x200) {
                 D_8015EDF0 += 1000;
                 kind = p->unk11;
                 p->unk13 = 0;
@@ -302,7 +302,7 @@ s32 func_8013C6D4(void) {
                     D_8015EDD0 = 0x20;
                     got_bonus = 1;
                     D_8015EDD4 = 1;
-                    switch (func_800AE0D0() & 7) {
+                    switch (rand() & 7) {
                     case 0:
                         D_8015EDD4 = 100;
                         break;
@@ -342,9 +342,9 @@ s32 func_8013C6D4(void) {
         if (D_8015EC70[i].unk13 & 0x80) {
             v = D_8015EC70[i].unk11;
             if (v != 3 && v != 4) {
-                dx = func_800AE0C0(D_8015EC70[i].unk0 - D_8015EDB4[8].unk74);
-                dy = func_800AE0C0(D_8015EC70[i].unk2 - D_8015EDB4[8].unk76);
-                v = func_800AE0C0(D_8015EC70[i].unk4 - D_8015EDB4[8].unk78);
+                dx = abs(D_8015EC70[i].unk0 - D_8015EDB4[8].unk74);
+                dy = abs(D_8015EC70[i].unk2 - D_8015EDB4[8].unk76);
+                v = abs(D_8015EC70[i].unk4 - D_8015EDB4[8].unk78);
                 if (v < 0x200 && dy < 0x200 && dx < 0x200) {
                     v = D_8015EC70[i].unk11;
                     D_8015EC70[i].unk13 = 0;
@@ -442,9 +442,9 @@ s32 func_8013CC40(void) {
             func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);
             func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);
             if (i == 8) {
-                (D_8015EDB4 + i)->unk84[1] = func_800AE0D0() & 0x3F;
-                (D_8015EDB4 + i)->unk74 = func_800AE0D0() % 100;
-                (D_8015EDB4 + i)->unk76 = func_800AE0D0() % 100;
+                (D_8015EDB4 + i)->unk84[1] = rand() & 0x3F;
+                (D_8015EDB4 + i)->unk74 = rand() % 100;
+                (D_8015EDB4 + i)->unk76 = rand() % 100;
             }
         }
     }
@@ -492,8 +492,8 @@ s32 func_8013CFD8(void) {
     y = D_8015E770[0].unk2;
     for (i = 16; i < 64; i++) {
         if (((i + D_8015EDB4)->unk0[1] & 0x80) && ((i + D_8015EDB4)->unk84[3] & 1) && ((i + D_8015EDB4)->unk84[1] != 0) && ((i + D_8015EDB4)->unk84[0] != 0)) {
-            t = func_800AE0C0(x - (i + D_8015EDB4)->unk74);
-            u = func_800AE0C0(y - (i + D_8015EDB4)->unk76);
+            t = abs(x - (i + D_8015EDB4)->unk74);
+            u = abs(y - (i + D_8015EDB4)->unk76);
             a = 0x1000 - t;
             if (a < 0) {
                 a = 0;

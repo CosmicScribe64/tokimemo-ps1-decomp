@@ -878,7 +878,7 @@ void func_801527A8(void) {
         } else {
             switch (D_800E6280.unk_110D) {
             case 0:
-                sp36 = func_800AE0E0(D_800E6280.unk_0D4);
+                sp36 = strlen(D_800E6280.unk_0D4);
                 k_reset(1);
                 set_kanji_string((s16) (-0x68 - (sp36 * 4)), 0x32, 0, (s32) D_800E6280.unk_0D4, 0);
                 set_kanji_string(-0x56, 0x32, 0, (s32) "『それじゃ、やってみせるかな。", 0);

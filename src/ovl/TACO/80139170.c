@@ -43,19 +43,19 @@ void func_8013920C(void) {
         D_8015EE00 = D_8015EDFC;
         D_8015EDF8 = D_8015EDF0;
         D_8015EDFC = previous;
-        func_800AE090(D_8015EE0C, D_8015EE08, 4);
-        func_800AE090(D_8015EE08, D_8015EE04, 4);
-        func_800AE090(D_8015EE04, "   ", 4);
+        strncpy(D_8015EE0C, D_8015EE08, 4);
+        strncpy(D_8015EE08, D_8015EE04, 4);
+        strncpy(D_8015EE04, "   ", 4);
     } else if (D_8015EDFC < D_8015EDF0) {
         D_8015F4D8 = 1;
         D_8015EE00 = D_8015EDFC;
         D_8015EDFC = D_8015EDF0;
-        func_800AE090(D_8015EE0C, D_8015EE08, 4);
-        func_800AE090(D_8015EE08, "   ", 4);
+        strncpy(D_8015EE0C, D_8015EE08, 4);
+        strncpy(D_8015EE08, "   ", 4);
     } else {
         D_8015F4D8 = 2;
         D_8015EE00 = D_8015EDF0;
-        func_800AE090(D_8015EE0C, "   ", 4);
+        strncpy(D_8015EE0C, "   ", 4);
     }
     func_8004284C();
 }
@@ -269,19 +269,19 @@ void func_80139BCC(void) {
     if ((D_800E6280.unk_F88 & 0x20) && !(D_800E6280.unk_F88 & 0x40)) {
         if (D_8015F4E0 == 0x27) {
             /* the original passes the byte itself as the destination (a lost &); T-19021 */
-            func_800AE090((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
+            strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
             func_8004284C();
         } else if (D_8015F4DC != 3) {
-            func_800AE090(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], &D_8015F4B0[D_8015F4E0], 1);
+            strncpy(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], &D_8015F4B0[D_8015F4E0], 1);
             D_8015F4DC += 1;
         }
     }
     if ((D_800E6280.unk_F88 & 0x800) && !(D_800E6280.unk_F88 & 0x40)) {
-        func_800AE090((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
+        strncpy((void *)D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC], "", 1);
         func_8004284C();
     }
     if ((D_800E6280.unk_F88 & 0x40) && D_8015F4DC != 0) {
-        func_800AE090(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC - 1], " ", 1);
+        strncpy(&D_8015EE04[D_8015F4D8 * 4 + D_8015F4DC - 1], " ", 1);
         D_8015F4DC -= 1;
     }
 }
@@ -302,7 +302,7 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
     s32 i;
 
     angle = (-D_8015F4E4 << 10) / 512;
-    x = (func_800A0070(angle) * radius) >> 12;
+    x = (rsin(angle) * radius) >> 12;
     z = (func_800A0140(angle) * radius) >> 12;
     if (z < -0x100) {
         scale = 0;
@@ -318,7 +318,7 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
         } else {
             angle = (d * 2 + 0x800) / 3;
         }
-        x = (func_800A0070(angle) * radius) >> 12;
+        x = (rsin(angle) * radius) >> 12;
         z = (func_800A0140(angle) * radius) >> 12;
         if (z < -0x100) {
             scale = 0;
@@ -333,7 +333,7 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
             scale = (d * 2 + 0x800) / 3;
         }
         angle = 0x1000 - scale;
-        x2 = (func_800A0070(angle) * radius) >> 12;
+        x2 = (rsin(angle) * radius) >> 12;
         z = (func_800A0140(angle) * radius) >> 12;
         if (z < -0x100) {
             scale = 0;
@@ -348,7 +348,7 @@ void func_80139FB8(s32 arg0, s32 arg1, s32 radius, s32 arg3) {
     } else {
         angle = (d * 2 + 0x800) / 3;
     }
-    x = (func_800A0070(angle) * radius) >> 12;
+    x = (rsin(angle) * radius) >> 12;
     z = (func_800A0140(angle) * radius) >> 12;
     if (z < -0x100) {
         scale = 0;
@@ -436,9 +436,9 @@ void func_8013A790(s32 arg0, s32 arg1) {
         next = count + 1;
         if (D_8015F4EC[i].b == 0) {
             /* FAKE: | 0 keeps the divisor/count value in one spill web. T-24502 */
-            if (func_800AE0D0() % (next | 0) == 0) {
+            if (rand() % (next | 0) == 0) {
                 count = next;
-                D_8015F4EC[i].a = func_800AE0D0() % 4096;
+                D_8015F4EC[i].a = rand() % 4096;
                 if (arg0 == 0) D_8015F4EC[i].b = 240000;
                 else D_8015F4EC[i].b = 1000;
             }
@@ -489,7 +489,7 @@ void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     p[4] = r;
     p[5] = g;
     p[6] = b;
-    x = (arg1 * func_800A0070(arg0) >> 12) + D_800E6280.unk_014[D_8011ECA0];
+    x = (arg1 * rsin(arg0) >> 12) + D_800E6280.unk_014[D_8011ECA0];
     if (arg3 == 0) {
         y = (arg1 * func_800A0140(arg0) >> 12) + D_800E6280.unk_018[D_8011ECA0] - 0x28;
     } else {
@@ -507,14 +507,14 @@ void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 void func_8013AFDC(void) {
     s32 i;
 
-    func_800AE120(D_800E6280.unk_10F4);
+    srand(D_800E6280.unk_10F4);
     D_8015F4EC = (TacoRnd *)D_800E6280.unk_163C;
     D_8015F4F0 = 0;
     D_8015F4F4 = 0;
     for (i = 0; i < 0x64; i++) {
         if (i < 0x50) {
-            if (func_800AE0D0() % 5 < 4) {
-                D_8015F4EC[i].a = func_800AE0D0() % 4096;
+            if (rand() % 5 < 4) {
+                D_8015F4EC[i].a = rand() % 4096;
                 D_8015F4EC[i].b = i * 1000 * i / 30;
             } else {
                 D_8015F4EC[i].b = 0;

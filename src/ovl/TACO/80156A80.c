@@ -171,11 +171,11 @@ void func_80156F50(void) {
     TcPos p2;
     s32 r;
 
-    func_800AE120(D_801604C0);
-    r = func_800AE0D0();
-    pos.x = (D_8015EDB4[0].unk74 + (func_800AE0D0() % 1500) + (r % 500)) - 0x3E8;
-    r = func_800AE0D0();
-    pos.y = (func_800AE0D0() % 1000 + (r % 500)) - 0x5DC;
+    srand(D_801604C0);
+    r = rand();
+    pos.x = (D_8015EDB4[0].unk74 + (rand() % 1500) + (r % 500)) - 0x3E8;
+    r = rand();
+    pos.y = (rand() % 1000 + (r % 500)) - 0x5DC;
     pos.z = -0x8000;
     func_8015ACCC(0xB, 0x10, D_801604D4, pos, D_801604E4, 6, 0);
 }
@@ -189,7 +189,7 @@ void func_801570A4(s32 arg0) {
         pos.z = (arg0 + D_8015EDB4)->unk78;
         func_8013DB80(pos, 0x80, 0);
     }
-    (arg0 + D_8015EDB4)->unk76 += func_800A0070((arg0 + D_8015EDB4)->unk7A << 6) * 0x14 >> 12;
+    (arg0 + D_8015EDB4)->unk76 += rsin((arg0 + D_8015EDB4)->unk7A << 6) * 0x14 >> 12;
     (arg0 + D_8015EDB4)->unk78 += 0x96;
     if ((arg0 + D_8015EDB4)->unk78 > 0x1000) {
         func_8015C208(arg0);
@@ -201,7 +201,7 @@ void func_801571E8(void) {
     TcPos a;
     TcPos b;
 
-    func_800AE120(D_801604C0 + 0x1E240);
+    srand(D_801604C0 + 0x1E240);
     /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
     a.x = 0x3E8; a.y = 0x12C; a.z = -0x8000;
     b.y = 0x800;
@@ -216,7 +216,7 @@ void func_801572D8(void) {
     TcPos a;
     TcPos b;
 
-    func_800AE120(D_801604C0 + 0x1E240);
+    srand(D_801604C0 + 0x1E240);
     /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
     a.x = -0x3E8; a.y = 0x12C; a.z = -0x8000;
     b.y = 0x800;
@@ -231,7 +231,7 @@ void func_801573C8(void) {
     TcPos a;
     TcPos b;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
     a.x = 0x1F4; a.y = 0x12C; a.z = -0x8000;
     b.y = 0x800;
@@ -301,14 +301,14 @@ void func_80157AE0(void) {
     s32 t;
     s32 r;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     b.y = 0x800;
     b.x = 0;
     b.z = 0;
     b.unk6 = 0;
-    r = func_800AE0D0();
-    pos.x = (func_800AE0D0() % 5000 + D_8015EDB4->unk74 + r % 3000) - 0xFA0;
-    pos.y = (func_800AE0D0() % 2) * 0x1F40 - 0xBB8;
+    r = rand();
+    pos.x = (rand() % 5000 + D_8015EDB4->unk74 + r % 3000) - 0xFA0;
+    pos.y = (rand() % 2) * 0x1F40 - 0xBB8;
     pos.z = -0x2742;
     t = func_8015ACCC(9, 0x13, D_801604D4, pos, b, 0x40, 0);
     pos.z = -0x2710;
@@ -373,7 +373,7 @@ void func_8015800C(void) {
     TcPos p1;
     TcPos b;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     b.y = 0x800;
     b.x = 0;
     b.z = 0;
@@ -464,7 +464,7 @@ void func_801585D0(s32 arg0) {
             rad = 0x1F4;
             break;
         }
-        D_8015EDB4[arg0].unk74 = (func_800A0070(ang) * rad) >> 12;
+        D_8015EDB4[arg0].unk74 = (rsin(ang) * rad) >> 12;
         D_8015EDB4[arg0].unk76 = ((func_800A0140(ang) * -rad) >> 12) - 0x2BC;
         if (((arg0 + D_8015EDB4)->unk7A % 20) == 0) {
             pos.x = (arg0 + D_8015EDB4)->unk74;
@@ -501,7 +501,7 @@ void func_80158AB0(void) {
     TcPos pos;
     s32 r;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     pos.y = 0x400;
     pos.x = 0;
     pos.z = 0;
@@ -534,7 +534,7 @@ void func_80158CDC(s16 arg0, s16 arg1, s16 arg2) {
     TcPos pos;
     s32 r;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     pos.x = arg0;
     pos.y = arg1;
     pos.z = arg2;
@@ -548,11 +548,11 @@ void func_80158DBC(s16 arg0, s16 arg1, s16 arg2) {
     TcPos pos;
     s32 r;
 
-    func_800AE120(D_801604C0);
+    srand(D_801604C0);
     pos.x = arg0;
     pos.y = arg1;
     pos.z = arg2;
-    if (!(func_800AE0D0() & 1)) {
+    if (!(rand() & 1)) {
         func_8015ACCC(0x10, 0x16, D_801604D4, pos, D_801604E4, 8, 0x60);
         return;
     }

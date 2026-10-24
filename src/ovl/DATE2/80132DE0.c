@@ -42,7 +42,7 @@ void func_80132DE0(void) {
 }
 
 void func_80132E5C(void) {
-    func_800AE0A0((void *)(0x80180000 + D_800E6280.unk_1104.w * 0x1400), 0x801C0000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
+    memcpy((void *)(0x80180000 + D_800E6280.unk_1104.w * 0x1400), 0x801C0000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
     D_800E6280.unk_1104.w += 1;
     if (D_800E6280.unk_1104.w == 0x12) {
         func_8004284C();
@@ -54,7 +54,7 @@ void func_80132EC8(void) {
     s32 temp_v0_2;
 
     temp_v0 = D_800E6280.unk_1104.w * 0x1400;
-    func_800AE0A0(temp_v0 + 0x80180000, temp_v0 + 0x801A0000, 0x1400);
+    memcpy(temp_v0 + 0x80180000, temp_v0 + 0x801A0000, 0x1400);
     temp_v0_2 = D_800E6280.unk_1104.w + 1;
     D_800E6280.unk_1104.w = temp_v0_2;
     if (temp_v0_2 == 0x12) {
@@ -80,7 +80,7 @@ void func_80132F48(void) {
 }
 
 void func_80132FB0(void) {
-    func_800AE0A0((void *)(0x801C0000 + D_800E6280.unk_1104.w * 0x1400), 0x80180000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
+    memcpy((void *)(0x801C0000 + D_800E6280.unk_1104.w * 0x1400), 0x80180000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
     D_800E6280.unk_1104.w += 1;
     if (D_800E6280.unk_1104.w == 0x12) {
         func_80083474();
@@ -88,7 +88,7 @@ void func_80132FB0(void) {
 }
 
 void func_8013301C(void) {
-    func_800AE0A0((void *)(0x801A0000 + D_800E6280.unk_1104.w * 0x1400), 0x80180000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
+    memcpy((void *)(0x801A0000 + D_800E6280.unk_1104.w * 0x1400), 0x80180000 + D_800E6280.unk_1104.w * 0x1400, 0x1400);
     D_800E6280.unk_1104.w += 1;
     if (D_800E6280.unk_1104.w == 0x12) {
         func_80083474();
@@ -204,20 +204,20 @@ void func_80133494(void) {
     switch (temp) {
     case 0:
         bg_read_sub2(0x4350);
-        func_800AE0F0(D_800CA1DC, "観覧車");
+        strcpy(D_800CA1DC, "観覧車");
         break;
     case 1:
         if ((u8) D_800E6280.unk_03E >= 0x61U) {
             bg_read_sub2(0x4359);
-            func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
+            strcpy(D_800CA1DC, "絶叫マシーンビビール");
         } else {
             bg_read_sub2(0x433E);
-            func_800AE0F0(D_800CA1DC, "ジェットコースター");
+            strcpy(D_800CA1DC, "ジェットコースター");
         }
         break;
     case 2:
         bg_read_sub2(0x4347);
-        func_800AE0F0(D_800CA1DC, "ゴーストハウス");
+        strcpy(D_800CA1DC, "ゴーストハウス");
         break;
     }
     func_8004284C();
@@ -408,7 +408,7 @@ s32 func_80133AF0(void) {
     switch (g->unk_1104.u) {
     case 0:
         D_80122D2C = 1;
-        func_800AE120(D_800E6280.unk_10F8);
+        srand(D_800E6280.unk_10F8);
         func_80044750(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -606,7 +606,7 @@ s32 func_80133AF0(void) {
         break;
     case 17:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
             g->unk_1104.u -= 2;
@@ -637,11 +637,11 @@ s32 func_80133AF0(void) {
     v += D_8013A5D0;
     if (v < 0) {
         v = 0;
-        D_8013A5D0 = (func_800AE0D0() % 4) + 2;
+        D_8013A5D0 = (rand() % 4) + 2;
     }
     if (v >= 0x40) {
         v = 0x3F;
-        D_8013A5D0 = -2 - (func_800AE0D0() % 4);
+        D_8013A5D0 = -2 - (rand() % 4);
     }
     x = p[4].unk_0F;
     p[7].unk_0E = v;
@@ -776,7 +776,7 @@ s32 func_801348F0(void) {
     case 1:
         if (cd_read_sync_status() & 1) {
             if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-                func_800AE0B0("DEC_BS header Error \n");
+                printf("DEC_BS header Error \n");
                 movie->unk_04 = 0;
                 movie->unk_06 = 0;
                 g->unk_1104.u -= 1;
@@ -864,7 +864,7 @@ s32 func_801348F0(void) {
         return 0;
     case 12:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
             g->unk_1104.u -= 2;
@@ -1239,7 +1239,7 @@ s32 func_801350A4(void) {
         return;
     case 35:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
             g->unk_1104.u -= 2;
@@ -1295,7 +1295,7 @@ s32 func_80135E50(void) {
     switch (D_800E6280.unk_1104.u) {
     case 0:
         D_80122D2C = 1;
-        func_800AE120((*(s32 *)&D_800E6280.unk_10F8));
+        srand((*(s32 *)&D_800E6280.unk_10F8));
         D_8013A5CC = 0;
         hizuke_disp_switch(0);
         func_801365DC(0x43BA);
@@ -1306,12 +1306,12 @@ s32 func_80135E50(void) {
         D_8013A5DC[1] = 0;
         D_8013A5DC[2] = -0x3C;
         D_800E6280.unk_1104.u += 1;
-        D_8013A5E4[0] = (func_800AE0D0() % 3) - 1;
-        D_8013A5E4[1] = (func_800AE0D0() % 3) - 1;
-        D_8013A5E4[2] = (func_800AE0D0() % 3) - 1;
-        D_8013A5EC[0] = (func_800AE0D0() % 3) - 1;
-        D_8013A5EC[1] = (func_800AE0D0() % 3) - 1;
-        D_8013A5EC[2] = (func_800AE0D0() % 3) - 1;
+        D_8013A5E4[0] = (rand() % 3) - 1;
+        D_8013A5E4[1] = (rand() % 3) - 1;
+        D_8013A5E4[2] = (rand() % 3) - 1;
+        D_8013A5EC[0] = (rand() % 3) - 1;
+        D_8013A5EC[1] = (rand() % 3) - 1;
+        D_8013A5EC[2] = (rand() % 3) - 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -1321,7 +1321,7 @@ s32 func_80135E50(void) {
         break;
     case 2:
         if (((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             ((RECT *)D_800B5920)[0].w = 0;
             ((RECT *)D_800B5920)[0].h = 0;
             D_800E6280.unk_1104.u -= 2;
@@ -1345,19 +1345,19 @@ s32 func_80135E50(void) {
     case 4:
         var_s3 = 0;
         do {
-            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (func_800AE0D0() % 30)) {
-                (D_8013A5E4)[var_s3] = (func_800AE0D0() % 3) - 1;
+            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (rand() % 30)) {
+                (D_8013A5E4)[var_s3] = (rand() % 3) - 1;
             }
 
-            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (func_800AE0D0() % 30)) {
-                (D_8013A5EC)[var_s3] = (func_800AE0D0() % 3) - 1;
+            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (rand() % 30)) {
+                (D_8013A5EC)[var_s3] = (rand() % 3) - 1;
             }
 
             if ((D_8013A5E4[var_s3] == 0) && (D_8013A5EC[var_s3] == 0)) {
-                if ((remainder = func_800AE0D0() % 2)) {
-                    D_8013A5E4[var_s3] = ((func_800AE0D0() % 2) * 2) - 1;
+                if ((remainder = rand() % 2)) {
+                    D_8013A5E4[var_s3] = ((rand() % 2) * 2) - 1;
                 } else {
-                    D_8013A5EC[var_s3] = ((func_800AE0D0() % 2) * 2) - 1;
+                    D_8013A5EC[var_s3] = ((rand() % 2) * 2) - 1;
                 }
             }
             temp_v0 = &(D_8013A5D4)[var_s3];
@@ -1422,12 +1422,12 @@ void func_801365DC(s32 arg0) {
     D_800B3D60 = 0;
     v = dec_bg_cd_read(arg0, 1);
     if (v == D_800B5939) {
-        func_800AE0B0("same\n");
+        printf("same\n");
         D_800E6280.unk_1104.w += 3;
         return;
     }
     if (v == 1 - D_800B5939) {
-        func_800AE0B0("another\n");
+        printf("another\n");
         D_800E6280.unk_1104.w += 2;
     }
 }
@@ -1524,10 +1524,10 @@ void func_80136A90(void) {
     D_8013A430 = 9;
     D_8013A438 = 9;
     func_801338F8();
-    if (((u8) get_g_zyotai_s(0) & 0x7F) == 4 && (func_800AE0D0() % 2)) {
+    if (((u8) get_g_zyotai_s(0) & 0x7F) == 4 && (rand() % 2)) {
         D_8013A430 += 1;
     }
-    if (((u8) get_g_zyotai_s(D_800E6280.unk_75D) & 0x7F) == 4 && (func_800AE0D0() % 2) && (D_800E6280.unk_75D != 6)) {
+    if (((u8) get_g_zyotai_s(D_800E6280.unk_75D) & 0x7F) == 4 && (rand() % 2) && (D_800E6280.unk_75D != 6)) {
         D_8013A438 += 1;
     }
     func_8004284C();

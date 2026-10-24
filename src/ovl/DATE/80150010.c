@@ -277,9 +277,9 @@ void func_80150C78(void) {
     }
     for (i = 0; i < 16; i++) {
         func_80049FF0((s16)(func_800A0140((i << 8) + offset) / 20),
-                      (s16)(func_800A0070((i << 8) + offset) / 20 - 30),
+                      (s16)(rsin((i << 8) + offset) / 20 - 30),
                       (s16)(func_800A0140((i << 8) + offset) / 60),
-                      (s16)(func_800A0070((i << 8) + offset) / 60 - 30), col0, col1, 10);
+                      (s16)(rsin((i << 8) + offset) / 60 - 30), col0, col1, 10);
     }
 }
 

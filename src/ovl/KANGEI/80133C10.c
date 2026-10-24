@@ -120,5 +120,5 @@ void func_80134084(void) {
     func_8009C7F8(&rect, 8, 0, 0);
     bg_read_sub2(0x428D);
     func_8004284C();
-    func_800AE0F0(D_800CA19C, "合宿所");
+    strcpy(D_800CA19C, "合宿所");
 }

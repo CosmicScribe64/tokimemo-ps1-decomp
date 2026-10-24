@@ -143,8 +143,8 @@ void func_80132C60(void) {
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "遊園地");
-    func_800AE0F0(D_800CA1DC, "園内");
+    strcpy(D_800CA19C, "遊園地");
+    strcpy(D_800CA1DC, "園内");
     k_reset(1);
     func_8008585C();
     D_800E6280.unk_03A = 0x80;

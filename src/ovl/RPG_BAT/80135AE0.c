@@ -52,7 +52,7 @@ void func_80135B4C(void) {
         func_8014F350(0x14);
         break;
     case 8:
-        func_800AE0F0(D_8015E904, "美樹原「きゃっ！");
+        strcpy(D_8015E904, "美樹原「きゃっ！");
         func_8013F1C4(0x1F000087, 0x18000089, 0);
         func_8014B738((s32) D_8015E9CC, 1, 60);
         func_8014F230();
@@ -127,7 +127,7 @@ void func_80135E80(void) {
         func_8014F350(0x14);
         break;
     case 3:
-        func_800AE0F0(D_8015E904, "美樹原「はっ！");
+        strcpy(D_8015E904, "美樹原「はっ！");
         func_8013F1C4(0x1F00008A, 0x1900008C, 0);
         func_8014B738((s32) D_8015E9CC, 1, 70);
         func_8014F230();

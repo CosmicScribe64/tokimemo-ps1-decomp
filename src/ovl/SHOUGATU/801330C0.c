@@ -21,7 +21,7 @@ s32 func_8013315C(void) {
     func_801323D4();
     if (D_800E6280.unk_1104.w++ == 0) {
         if (((u8 **)D_80143AF8)[D_80143B00][D_80143B04 - 1] == 7) {
-            if (func_800AEEB0(((s32 **)D_80143AF4)[D_80143B00][D_80143B04 - 1], "ガチャ") == 0) {
+            if (strcmp(((s32 **)D_80143AF4)[D_80143B00][D_80143B04 - 1], "ガチャ") == 0) {
                 func_80044750(0x60C);
             }
         }
@@ -129,7 +129,7 @@ s32 func_801333F0(void) {
 }
 
 void func_80133610(void) {
-    func_800AE0F0(D_800CA1DC, "正月");
+    strcpy(D_800CA1DC, "正月");
     D_80143BC0 = 0;
     D_80143B20 = 0;
     D_80143B18 = 1;
@@ -143,7 +143,7 @@ void func_80133610(void) {
 void func_80133698(void) {
     if (D_80143B14 == 0) {
         bg_read_sub2(0x4167);
-        func_800AE0F0(D_800CA19C, "正月");
+        strcpy(D_800CA19C, "正月");
         k_reset(0);
         func_8006612C(D_800CA19C);
     } else {
@@ -283,7 +283,7 @@ void func_80133B44(void) {
      * temporary slots needed by the original register sequence. T-24523 */
     if (D_800E6280.unk_F5F != 0) {
         if (D_800E6280.unk_110D == 0) {
-            set_kanji_string((s16)(-0x68 - (s16)(func_800AE0E0(D_800CA16C) * 4)), 0x30, 0, (s32)D_800CA16C, 0);
+            set_kanji_string((s16)(-0x68 - (s16)(strlen(D_800CA16C) * 4)), 0x30, 0, (s32)D_800CA16C, 0);
             set_kanji_string(-0x56, 0x30, 0, (s32)"『 ", 0);
             dialogue_render(-0x48, 0x30, 0, (s32)"それじゃ、神社に行くか。", 0, "", "", 0);
             D_80143B00 = 0;

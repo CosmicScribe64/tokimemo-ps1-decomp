@@ -70,7 +70,7 @@ u16 func_801462B0(void) {
     switch (g->unk_1104.u) {
     case 0:
         D_80122D2C = 1;
-        func_800AE120(D_800E6280.unk_10F8);
+        srand(D_800E6280.unk_10F8);
         func_80044750(0x206);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -274,7 +274,7 @@ u16 func_801462B0(void) {
         break;
     case 17:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
             g->unk_1104.u -= 2;
@@ -317,11 +317,11 @@ u16 func_801462B0(void) {
     v += D_8015CFA0;
     if (v < 0) {
         v = 0;
-        D_8015CFA0 = (func_800AE0D0() % 4) + 2;
+        D_8015CFA0 = (rand() % 4) + 2;
     }
     if (v >= 0x40) {
         v = 0x3F;
-        D_8015CFA0 = -2 - (func_800AE0D0() % 4);
+        D_8015CFA0 = -2 - (rand() % 4);
     }
     x = p[4].unk_0F;
     p[7].unk_0E = v;
@@ -523,7 +523,7 @@ s32 func_8014718C(void) {
         return 0;
     case 12:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
             g->unk_1104.u -= 2;
@@ -1005,7 +1005,7 @@ s32 func_80147958(void) {
         return;
     case 45:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
             g->unk_1104.u -= 2;
@@ -1076,7 +1076,7 @@ s32 func_801489D0(void) {
     case 0:
         D_80122D2C = 1;
         D_8015CFC4 = 0x64;
-        func_800AE120((*(s32 *)&D_800E6280.unk_10F8));
+        srand((*(s32 *)&D_800E6280.unk_10F8));
         D_8015CF9C = 0;
         hizuke_disp_switch(0);
         func_801491E4(0x43BA);
@@ -1087,12 +1087,12 @@ s32 func_801489D0(void) {
         D_8015CFAC[1] = 0;
         D_8015CFAC[2] = -0x3C;
         D_800E6280.unk_1104.u += 1;
-        D_8015CFB4[0] = (func_800AE0D0() % 3) - 1;
-        D_8015CFB4[1] = (func_800AE0D0() % 3) - 1;
-        D_8015CFB4[2] = (func_800AE0D0() % 3) - 1;
-        D_8015CFBC[0] = (func_800AE0D0() % 3) - 1;
-        D_8015CFBC[1] = (func_800AE0D0() % 3) - 1;
-        D_8015CFBC[2] = (func_800AE0D0() % 3) - 1;
+        D_8015CFB4[0] = (rand() % 3) - 1;
+        D_8015CFB4[1] = (rand() % 3) - 1;
+        D_8015CFB4[2] = (rand() % 3) - 1;
+        D_8015CFBC[0] = (rand() % 3) - 1;
+        D_8015CFBC[1] = (rand() % 3) - 1;
+        D_8015CFBC[2] = (rand() % 3) - 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -1102,7 +1102,7 @@ s32 func_801489D0(void) {
         break;
     case 2:
         if (((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000)) {
-            func_800AE0B0("DEC_BS header Error \n");
+            printf("DEC_BS header Error \n");
             ((RECT *)D_800B5920)[0].w = 0;
             ((RECT *)D_800B5920)[0].h = 0;
             D_800E6280.unk_1104.u -= 2;
@@ -1126,19 +1126,19 @@ s32 func_801489D0(void) {
     case 4:
         var_s3 = 0;
         do {
-            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (func_800AE0D0() % 30)) {
-                (D_8015CFB4)[var_s3] = (func_800AE0D0() % 3) - 1;
+            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (rand() % 30)) {
+                (D_8015CFB4)[var_s3] = (rand() % 3) - 1;
             }
 
-            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (func_800AE0D0() % 30)) {
-                (D_8015CFBC)[var_s3] = (func_800AE0D0() % 3) - 1;
+            if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 30U) == (rand() % 30)) {
+                (D_8015CFBC)[var_s3] = (rand() % 3) - 1;
             }
 
             if ((D_8015CFB4[var_s3] == 0) && (D_8015CFBC[var_s3] == 0)) {
-                if ((remainder = func_800AE0D0() % 2)) {
-                    D_8015CFB4[var_s3] = ((func_800AE0D0() % 2) * 2) - 1;
+                if ((remainder = rand() % 2)) {
+                    D_8015CFB4[var_s3] = ((rand() % 2) * 2) - 1;
                 } else {
-                    D_8015CFBC[var_s3] = ((func_800AE0D0() % 2) * 2) - 1;
+                    D_8015CFBC[var_s3] = ((rand() % 2) * 2) - 1;
                 }
             }
             temp_v0 = &(D_8015CFA4)[var_s3];
@@ -1165,11 +1165,11 @@ s32 func_801489D0(void) {
         func_8004A814((s32) D_8015CFA4[1], (s32) D_8015CFAC[1], 0xA, 2, 2, 0x804040, 3, 1);
         func_8004A814((s32) D_8015CFA4[2], (s32) D_8015CFAC[2], 0xA, 2, 2, 0x800000, 3, 1);
         if (((u32) (*(s32 *)&D_800E6280.unk_10F8) % 50U) == 0) {
-            if (!(func_800AE0D0() & 3)) {
+            if (!(rand() & 3)) {
                 func_80044750(0x504);
-            } else if ((func_800AE0D0() % 4) == 1) {
+            } else if ((rand() % 4) == 1) {
                 func_80044750(0x505);
-            } else if ((func_800AE0D0() % 4) == 2) {
+            } else if ((rand() % 4) == 2) {
                 func_80044750(0x506);
             } else {
                 func_80044750(0x507);
@@ -1216,12 +1216,12 @@ void func_801491E4(s32 arg0) {
     D_800B3D60 = 0;
     temp_v0 = dec_bg_cd_read(arg0, 1);
     if (temp_v0 == D_800B5939) {
-        func_800AE0B0("same\n");
+        printf("same\n");
         D_800E6280.unk_1104.w += 3;
         return;
     }
     if (temp_v0 == (1 - D_800B5939)) {
-        func_800AE0B0("another\n");
+        printf("another\n");
         D_800E6280.unk_1104.w += 2;
     }
 }

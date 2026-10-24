@@ -165,7 +165,7 @@ void func_8013388C(void) {
 
     pad = (D_800E6280.unk_03E == 0);
     sp2B = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
-    func_800AE120(D_800E6280.unk_10F8);
+    srand(D_800E6280.unk_10F8);
     switch (D_800E6280.unk_F5F) {
     case 0:
         if (F68_SEL_388C < 2U) {
@@ -187,7 +187,7 @@ void func_8013388C(void) {
             D_80134CCC = 3;
             D_800CA148 = 0x1A;
         }
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 = D_800CA148 + 1;
             if (D_800CA148 == 5) {
                 D_80134CCC = 2;
@@ -202,7 +202,7 @@ void func_8013388C(void) {
             D_80134CCC = 0;
             D_800CA148 = (F0F4_SHR_388C * 2) + 2 + F0F4_BOOST_388C;
         }
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 += 1;
         }
         break;
@@ -214,7 +214,7 @@ void func_8013388C(void) {
             D_80134CCC = 4;
             D_800CA148 = (F0F4_SHR_388C * 2) - 2 + F0F4_BOOST_388C;
         }
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 += 1;
         }
         break;
@@ -226,7 +226,7 @@ void func_8013388C(void) {
             D_80134CCC = 0;
             D_800CA148 = (F0F4_SHR_388C * 2) - 6 + F0F4_BOOST_388C;
         }
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 += 1;
         }
         break;
@@ -234,10 +234,10 @@ void func_8013388C(void) {
         if (F68_SEL_388C < 4U) {
             D_80134CCC = 0;
             D_800CA148 = 0;
-            if (func_800AE0D0() % 2) {
+            if (rand() % 2) {
                 D_800CA148 += 1;
             }
-        } else if ((func_800AE0D0() % 2) || ((F0F4_SHR_388C == 6) && ((D_800E6280.unk_03E == 0x62) || ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F >= 9U)))) || (((((D_800E6280.unk_03E == 0) * 0) + F0F4_SHR_388C) == 7) && (D_800E6280.unk_03E == 0x62))) {
+        } else if ((rand() % 2) || ((F0F4_SHR_388C == 6) && ((D_800E6280.unk_03E == 0x62) || ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F >= 9U)))) || (((((D_800E6280.unk_03E == 0) * 0) + F0F4_SHR_388C) == 7) && (D_800E6280.unk_03E == 0x62))) {
             if (sp2B < 2U) {
                 D_80134CCC = 6;
                 D_800CA148 = 4;
@@ -258,7 +258,7 @@ void func_8013388C(void) {
             D_80134CCC = 0;
             D_800CA148 = 2;
         }
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 += 1;
         }
         break;
@@ -266,14 +266,14 @@ void func_8013388C(void) {
         if (F68_SEL_388C < 4U) {
             D_80134CCC = 0;
             D_800CA148 = 0;
-            if (func_800AE0D0() % 2) {
+            if (rand() % 2) {
                 D_800CA148 += 1;
                 D_80134CCC = 2;
             }
         } else {
             D_80134CCC = 0;
             D_800CA148 = 4;
-            if (func_800AE0D0() % 2) {
+            if (rand() % 2) {
                 D_800CA148 += 1;
             }
         }
@@ -288,21 +288,21 @@ void func_8013388C(void) {
     case 8:
         D_80134CCC = 7;
         D_800CA148 = 0;
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 += 1;
         }
         break;
     case 9:
-        D_80134CCC = (u8) (func_800AE0D0() % 2);
+        D_80134CCC = (u8) (rand() % 2);
         D_800CA148 = 0;
-        if (func_800AE0D0() % 2) {
+        if (rand() % 2) {
             D_800CA148 += 1;
         }
         break;
     case 10:
         if (F68_SEL_388C < 4U) {
             D_800CA148 = 0;
-            if (func_800AE0D0() % 2) {
+            if (rand() % 2) {
                 D_800CA148 += 1;
             }
             if (D_800CA148 == 1) {
@@ -313,14 +313,14 @@ void func_8013388C(void) {
         } else {
             D_80134CCC = 0;
             D_800CA148 = 2;
-            if (func_800AE0D0() % 2) {
+            if (rand() % 2) {
                 D_800CA148 += 1;
             }
         }
         break;
     default:
-        D_800CA148 = (s16) (func_800AE0D0() % 8);
-        D_80134CCC = (func_800AE0D0() % 2) + 8;
+        D_800CA148 = (s16) (rand() % 8);
+        D_80134CCC = (rand() % 2) + 8;
         if (F68_SEL_388C == 3) {
             D_80134CCC = 9;
         }
@@ -423,11 +423,11 @@ void func_801340E4(void) {
 void func_80134384(void) {
     switch (D_800E6280.unk_F68.w & 0xF) {
     case 0:
-        func_800AE0F0(D_800CA19C, "図書室");
+        strcpy(D_800CA19C, "図書室");
         bg_read_sub2(0x40BC);
         break;
     case 1:
-        func_800AE0F0(D_800CA19C, "教室");
+        strcpy(D_800CA19C, "教室");
         if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
             bg_read_sub2(0x404D);
         } else {
@@ -435,57 +435,57 @@ void func_80134384(void) {
         }
         break;
     case 2:
-        func_800AE0F0(D_800CA19C, "中庭");
+        strcpy(D_800CA19C, "中庭");
         bg_read_sub2(0x4071);
         break;
     case 3:
-        func_800AE0F0(D_800CA19C, "自宅前");
+        strcpy(D_800CA19C, "自宅前");
         bg_read_sub2(0x414C);
         break;
     case 4:
         switch (D_800E6280.unk_0F4.h >> 12) {
         case 0:
-            func_800AE0F0(D_800CA19C, "図書室");
+            strcpy(D_800CA19C, "図書室");
             bg_read_sub2(0x40BC);
             break;
         case 1:
-            func_800AE0F0(D_800CA19C, "演劇部");
+            strcpy(D_800CA19C, "演劇部");
             bg_read_sub2(0x40B2);
             break;
         case 2:
-            func_800AE0F0(D_800CA19C, "実験室");
+            strcpy(D_800CA19C, "実験室");
             bg_read_sub2(0x40C6);
             break;
         case 3:
-            func_800AE0F0(D_800CA19C, "電脳部室");
+            strcpy(D_800CA19C, "電脳部室");
             bg_read_sub2(0x40D0);
             break;
         case 4:
-            func_800AE0F0(D_800CA19C, "美術室");
+            strcpy(D_800CA19C, "美術室");
             bg_read_sub2(0x40D9);
             break;
         case 5:
-            func_800AE0F0(D_800CA19C, "音楽室");
+            strcpy(D_800CA19C, "音楽室");
             bg_read_sub2(0x40E2);
             break;
         case 6:
         case 7:
         case 8:
-            func_800AE0F0(D_800CA19C, "グランド");
+            strcpy(D_800CA19C, "グランド");
             bg_read_sub2(0x4097);
             break;
         case 9:
-            func_800AE0F0(D_800CA19C, "プール");
+            strcpy(D_800CA19C, "プール");
             bg_read_sub2(0x40A0);
             break;
         default:
-            func_800AE0F0(D_800CA19C, "体育館");
+            strcpy(D_800CA19C, "体育館");
             bg_read_sub2(0x40A9);
             break;
         }
         break;
     default:
-        func_800AE0F0(D_800CA19C, "廊下");
+        strcpy(D_800CA19C, "廊下");
         bg_read_sub2(0x4045);
         break;
     }

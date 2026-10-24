@@ -8,7 +8,7 @@ extern s32 D_8015EDAC;
 s32 func_801504E0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E74C, "紐緒「馬鹿な事言ってるんじゃないわ");
+        strcpy(D_8015E74C, "紐緒「馬鹿な事言ってるんじゃないわ");
         func_8014B738(&D_8015E814, 1, 0x96);
         D_8015ED8C[0] += 1;
         return;
@@ -31,7 +31,7 @@ void func_801505B8(void) {
 
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　　脱力漫才　　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　　脱力漫才　　　　　　　");
         func_8014B738(&D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);
@@ -104,7 +104,7 @@ void func_801505B8(void) {
         func_8014ED44(0x3C);
         break;
     case 0xC9:
-        func_800AE0F0(D_8015E74C, "ロボ「ガガッ・・理解不能 ");
+        strcpy(D_8015E74C, "ロボ「ガガッ・・理解不能 ");
         func_8014B738(&D_8015E814, 1, 0x5A);
         func_8014EBA8();
         break;
@@ -333,9 +333,9 @@ void func_80150F84(void) {
     if (c == b) {
         c = (c + 1) % 41;
     }
-    func_800AE0F0(D_8015E74C, tbl.s[a]);
-    func_800AE0F0(D_8015E774, tbl.s[b]);
-    func_800AE0F0(D_8015E79C, tbl.s[c]);
+    strcpy(D_8015E74C, tbl.s[a]);
+    strcpy(D_8015E774, tbl.s[b]);
+    strcpy(D_8015E79C, tbl.s[c]);
 }
 
 void func_80151108(void) {

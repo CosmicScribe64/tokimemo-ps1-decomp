@@ -68,13 +68,13 @@ void func_8013CB58(void) {
 void func_8013CB90(void) {
     D_800B5A60 = 1;
     D_800E6280.unk_F5F = 0xE;
-    func_800AE0F0(D_800CA188, "男子１");
+    strcpy(D_800CA188, "男子１");
     D_80120666 = 4;
     func_8004284C();
 }
 
 void func_8013CBE4(void) {
-    func_800AE0F0(D_800CA188, "男子２");
+    strcpy(D_800CA188, "男子２");
     D_80120666 = 5;
     func_8004284C();
 }
@@ -139,7 +139,7 @@ void func_8013CD18(void) {
     D_80146274 = D_80145F38;
     D_80146278 = D_80146074;
     D_8014627C = D_801461B0;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_800E6280.unk_1BC[7].unk_06 += 1;
     check_para_limit();
     D_800CA368 = 0x2E;
@@ -180,7 +180,7 @@ void func_8013CF40(void) {
     D_80146274 = D_80145F50;
     D_80146278 = D_8014608C;
     D_8014627C = D_801461C8;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_800CA368 = 0x35;
     func_8004284C();
 }

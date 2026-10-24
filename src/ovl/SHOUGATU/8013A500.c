@@ -69,14 +69,14 @@ void func_8013A688(void) {
 void func_8013A7B0(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "近所の公園");
+    strcpy(D_800CA19C, "近所の公園");
     func_8004284C();
 }
 
 void func_8013A7F4(void) {
     D_80144E08 = 6;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "プール");
+    strcpy(D_800CA19C, "プール");
     func_8004284C();
 }
 

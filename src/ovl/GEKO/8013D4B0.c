@@ -115,7 +115,7 @@ void func_8013D7D4(void) {
     D_80146274 = D_80145F68;
     D_80146278 = D_801460A4;
     D_8014627C = D_801461E0;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     if (D_80122CD0 == 1) {
         D_800E6280.unk_1BC[5].unk_06 += 1;
         D_800E6280.unk_1BC[5].unk_0A -= 1;
@@ -159,7 +159,7 @@ void func_8013D9C4(void) {
     D_80146274 = D_80145F6C;
     D_80146278 = D_801460A8;
     D_8014627C = D_801461E4;
-    func_800AE0F0(D_800CA19C, "廊下");
+    strcpy(D_800CA19C, "廊下");
     D_800E6280.unk_1BC[5].unk_02 += 1;
     check_para_limit();
     D_800CA368 = 0x22;

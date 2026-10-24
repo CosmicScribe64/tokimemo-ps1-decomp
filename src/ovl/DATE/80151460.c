@@ -88,7 +88,7 @@ void func_80151734(void) {
 void func_801517C8(void) {
     s16 i;
     for (i = 0; i < 12; i++) {
-        D_8015EE24[i] = func_800AE0D0() % 4;
+        D_8015EE24[i] = rand() % 4;
     }
     D_8015E208 = D_8015DEB4;
     D_8015E20C = D_8015DFF0;
@@ -310,7 +310,7 @@ s32 func_80152268(void) {
 
     if (D_800E6280.unk_10F8 % 51 == 0) {
         for (i = 0; i < 12; ) {
-            D_8015EE24[i] = func_800AE0D0() % 4;
+            D_8015EE24[i] = rand() % 4;
             ++i;
         }
     }

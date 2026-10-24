@@ -156,7 +156,7 @@ s32 func_8013E9A8(s32 arg0) {
     if (arg0 == 0) {
         arg0 = 1;
     }
-    return func_800AE0D0() % arg0;
+    return rand() % arg0;
 }
 
 s32 func_8013EA00(s32 arg0, s32 arg1) {

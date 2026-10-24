@@ -10,7 +10,7 @@ s32 func_8013E97C();
 s32 func_801468B0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E828, "？？？「拙僧にまかせなされ。");
+        strcpy(D_8015E828, "？？？「拙僧にまかせなされ。");
         func_8014B738(D_8015E8F0, 1, 0xC8);
         D_8015ED8C[0] += 1;
         return;
@@ -32,8 +32,8 @@ s32 func_801468B0(void) {
 s32 func_8014698C(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E828, "虚無僧「迷える大鹿よ、");
-        func_800AE0F0(D_8015E850, "怒りを静め給え。");
+        strcpy(D_8015E828, "虚無僧「迷える大鹿よ、");
+        strcpy(D_8015E850, "怒りを静め給え。");
         func_8014B738(D_8015E8F0, 2, 0xA0);
         D_8015ED8C[0] += 1;
         return;
@@ -62,9 +62,9 @@ s32 func_8014698C(void) {
 s32 func_80146AB4(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E828, "虚無僧「はしたないところを");
-        func_800AE0F0(D_8015E850, "お見せしてしまった。");
-        func_800AE0F0(D_8015E878, "では、拙僧はこれにて。");
+        strcpy(D_8015E828, "虚無僧「はしたないところを");
+        strcpy(D_8015E850, "お見せしてしまった。");
+        strcpy(D_8015E878, "では、拙僧はこれにて。");
         func_8014B738(D_8015E8F0, 3, 0xC8);
         D_8015ED8C[0] += 1;
         return;
@@ -101,7 +101,7 @@ void func_80146C30(void) {
 
     switch (D_8015EDD8) {
     case 0:
-        func_800AE0F0(D_8015E828, "　　　　　　スタンピート　　　　　　");
+        strcpy(D_8015E828, "　　　　　　スタンピート　　　　　　");
         func_8013E97C(0x38, 0, 0);
         func_8013E97C(0x39, 0, 0);
         ((DisplayActor44 *)D_8011ECD0)[155].unk_01 = 4;
@@ -162,8 +162,8 @@ void func_80146C30(void) {
         func_8014F080(0xA);
         break;
     case 9:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E828, "「だめだ！　体が動かない！");
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcat(D_8015E828, "「だめだ！　体が動かない！");
         func_8014B738((s32) D_8015E8F0, 1, 0x78);
         func_8014EF3C();
         break;
@@ -174,8 +174,8 @@ void func_80146C30(void) {
         func_801468B0();
         break;
     case 12:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E828, "「？！");
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcat(D_8015E828, "「？！");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         func_8014EF3C();
         break;
@@ -211,7 +211,7 @@ void func_80146C30(void) {
         break;
     case 15:
         D_8015EE18 ^= 0x10000000;
-        func_800AE0F0(D_8015E828, "正義の虚無僧推参！");
+        strcpy(D_8015E828, "正義の虚無僧推参！");
         func_8014B738((s32) D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
         break;
@@ -222,7 +222,7 @@ void func_80146C30(void) {
         func_8014698C();
         break;
     case 18:
-        func_800AE0F0(D_8015E828, "　　　　　現世忘却の呪文　　　　　");
+        strcpy(D_8015E828, "　　　　　現世忘却の呪文　　　　　");
         func_8014B738((s32) D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
         break;
@@ -245,18 +245,18 @@ void func_80146C30(void) {
         func_8013E7C0(0x29, func_8013E9A8(2) + 3, 1, 1);
         func_8013E7C0(0x2A, func_8013E9A8(2) + 3, 1, 1);
         func_8013E7C0(0x2B, func_8013E9A8(2) + 3, 1, 1);
-        func_8013E97C(0x29, 0x10, (func_800A0070(D_8015ECEC) >> 8) + 0x20);
-        func_8013E97C(0x2A, 0x10, (func_800A0070(D_8015ECF0) >> 8) - 0x10);
-        func_8013E97C(0x2B, 0x10, (func_800A0070(D_8015ECF4) >> 8) - 0x40);
+        func_8013E97C(0x29, 0x10, (rsin(D_8015ECEC) >> 8) + 0x20);
+        func_8013E97C(0x2A, 0x10, (rsin(D_8015ECF0) >> 8) - 0x10);
+        func_8013E97C(0x2B, 0x10, (rsin(D_8015ECF4) >> 8) - 0x40);
         func_8013F1C4(0x0C00003A, 0x06000062, 9);
         func_8013F15C(0x509, 1, 3);
         func_8014EF3C();
         break;
     case 23:
         D_8015EDE0 += 1;
-        func_8013E97C(0x29, 0x10 - ((s32) D_8015EDE0 / 2), (func_800A0070(D_8015ECEC) >> 8) + 0x20);
-        func_8013E97C(0x2A, 0x10 - ((s32) D_8015EDE0 / 2), (func_800A0070(D_8015ECF0) >> 8) - 0x10);
-        func_8013E97C(0x2B, 0x10 - ((s32) D_8015EDE0 / 2), (func_800A0070(D_8015ECF4) >> 8) - 0x40);
+        func_8013E97C(0x29, 0x10 - ((s32) D_8015EDE0 / 2), (rsin(D_8015ECEC) >> 8) + 0x20);
+        func_8013E97C(0x2A, 0x10 - ((s32) D_8015EDE0 / 2), (rsin(D_8015ECF0) >> 8) - 0x10);
+        func_8013E97C(0x2B, 0x10 - ((s32) D_8015EDE0 / 2), (rsin(D_8015ECF4) >> 8) - 0x40);
         /* FAKE: D_8015ECEC..D_8015ECF4 are three separate words in the header (8014A660.c clears them one by one);
          * the original walks them as an array, and a 3-trip index loop stays rolled. T-17104 */
         for (i = 0; i < 3; i++) {
@@ -282,7 +282,7 @@ void func_80146C30(void) {
         }
         break;
     case 25:
-        func_800AE0F0(D_8015E828, "鹿・グレートは去っていった。");
+        strcpy(D_8015E828, "鹿・グレートは去っていった。");
         k_disp_switch(D_8015EDE8, 0);
         func_8014B738((s32) D_8015E8F0, 1, 0x78);
         func_8014EF3C();
@@ -313,10 +313,10 @@ void func_80146C30(void) {
         func_8014F080(0x1E);
         break;
     case 30:
-        func_800AE0F0(D_8015E9E0, "戦闘に勝った！！");
-        func_800AE0F0(D_8015EA08, "ありがとう、正義の虚無僧");
-        func_800AE0F0(D_8015EA30, "経験値　：８４１ＥＸＰ");
-        func_800AE0F0(D_8015EA58, "お金　　：２０４５ゴールド");
+        strcpy(D_8015E9E0, "戦闘に勝った！！");
+        strcpy(D_8015EA08, "ありがとう、正義の虚無僧");
+        strcpy(D_8015EA30, "経験値　：８４１ＥＸＰ");
+        strcpy(D_8015EA58, "お金　　：２０４５ゴールド");
         func_80152384();
         func_8014EF3C();
         break;

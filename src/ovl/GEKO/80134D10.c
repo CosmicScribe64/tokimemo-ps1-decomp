@@ -1,5 +1,5 @@
 #define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
-#define MAIN_API_OVERRIDE_func_800AE0F0 /* matched with strcpy returning its destination: with the void prototype case 0 of the switch in func_80135DC0 takes v0 for the D_80144F14 value, not v1 (main_api.h: void). T-11900 */
+#define MAIN_API_OVERRIDE_strcpy /* matched with strcpy returning its destination: with the void prototype case 0 of the switch in func_80135DC0 takes v0 for the D_80144F14 value, not v1 (main_api.h: void). T-11900 */
 #include "common.h"
 #include "ovl/GEKO.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
@@ -365,7 +365,7 @@ INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_80146268);
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/80134D10.data", D_8014626C);
 
 void func_80083440(s32 arg0);
-void *func_800AE0F0(void *dst, void *src);
+void *strcpy(void *dst, void *src);
 
 typedef struct {
     u8 s[0xCC3];
@@ -801,8 +801,8 @@ s32 func_80135DC0(void) {
     hizuke_init();
     message_window_init();
     tpage_buf_clear();
-    func_800AE0F0(D_800CA19C, "廊下");
-    func_800AE0F0(D_800CA1DC, "近所の公園");
+    strcpy(D_800CA19C, "廊下");
+    strcpy(D_800CA1DC, "近所の公園");
     k_reset(1);
     func_8008585C();
     func_80084E4C();
@@ -829,7 +829,7 @@ s32 func_80135DC0(void) {
     func_80134D10();
     switch (gs->unk_F5F) {
     case 0:
-        func_800AE0F0(D_800CA1DC, "自宅前");
+        strcpy(D_800CA1DC, "自宅前");
         D_80145048 = D_80144F14;
         D_8014504C = D_80144F48;
         D_80145050 = D_80144F7C;
@@ -968,54 +968,54 @@ void func_801367EC(void) {
     func_8004500C(1, 0x200);
     if (D_80145088 == 0) {
         if (D_80145090 == 0) {
-            func_800AE0F0(D_800CA19C, "廊下");
+            strcpy(D_800CA19C, "廊下");
             bg_read_sub2(0x4045);
             func_80085B3C(0xA, 0x25);
         } else {
             club = D_800E6280.unk_0F4.h >> 12;
             switch (club) {
             case 0:
-                func_800AE0F0(D_800CA19C, "図書室");
+                strcpy(D_800CA19C, "図書室");
                 bg_read_sub2(0x40BC);
                 break;
             case 1:
-                func_800AE0F0(D_800CA19C, "演劇部");
+                strcpy(D_800CA19C, "演劇部");
                 bg_read_sub2(0x40B2);
                 break;
             case 2:
-                func_800AE0F0(D_800CA19C, "実験室");
+                strcpy(D_800CA19C, "実験室");
                 bg_read_sub2(0x40C6);
                 break;
             case 3:
-                func_800AE0F0(D_800CA19C, "電脳部室");
+                strcpy(D_800CA19C, "電脳部室");
                 bg_read_sub2(0x40D0);
                 break;
             case 4:
-                func_800AE0F0(D_800CA19C, "美術室");
+                strcpy(D_800CA19C, "美術室");
                 bg_read_sub2(0x40D9);
                 break;
             case 5:
-                func_800AE0F0(D_800CA19C, "音楽室");
+                strcpy(D_800CA19C, "音楽室");
                 bg_read_sub2(0x40E2);
                 break;
             case 6:
-                func_800AE0F0(D_800CA19C, "グランド");
+                strcpy(D_800CA19C, "グランド");
                 bg_read_sub2(0x4296);
                 break;
             case 7:
-                func_800AE0F0(D_800CA19C, "グランド");
+                strcpy(D_800CA19C, "グランド");
                 bg_read_sub2(0x4296);
                 break;
             case 8:
-                func_800AE0F0(D_800CA19C, "グランド");
+                strcpy(D_800CA19C, "グランド");
                 bg_read_sub2(0x4296);
                 break;
             case 9:
-                func_800AE0F0(D_800CA19C, "プール");
+                strcpy(D_800CA19C, "プール");
                 bg_read_sub2(0x40A0);
                 break;
             default:
-                func_800AE0F0(D_800CA19C, "体育館");
+                strcpy(D_800CA19C, "体育館");
                 bg_read_sub2(0x40A9);
                 break;
             }
@@ -1023,20 +1023,20 @@ void func_801367EC(void) {
         }
     } else if ((D_80145074 != 0) || (D_800E6280.unk_71E & 0x20)) {
         if (D_800E6280.unk_F5F == 0) {
-            func_800AE0F0(D_800CA19C, "自宅前");
+            strcpy(D_800CA19C, "自宅前");
             bg_read_sub2(0x4156);
             func_80085B3C(0xA, 0x28);
         } else {
-            func_800AE0F0(D_800CA19C, "近所の公園");
+            strcpy(D_800CA19C, "近所の公園");
             bg_read_sub2(0x42E2);
             func_80085B3C(0xA, 0x27);
         }
     } else if (D_800E6280.unk_F5F == 0) {
-        func_800AE0F0(D_800CA19C, "自宅前");
+        strcpy(D_800CA19C, "自宅前");
         bg_read_sub2(0x414C);
         func_80085B3C(0xA, 0x2F);
     } else {
-        func_800AE0F0(D_800CA19C, "近所の公園");
+        strcpy(D_800CA19C, "近所の公園");
         bg_read_sub2(0x42D8);
         func_80085B3C(0xA, 0x26);
     }
@@ -1333,7 +1333,7 @@ void func_80137894(void) {
     DateTxt tbl;
 
     tbl = D_801451FC;
-    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8014506C * 0x63 + D_80122CDC * 0x21]);
+    strcpy(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8014506C * 0x63 + D_80122CDC * 0x21]);
 }
 
 void func_80137954(void) {

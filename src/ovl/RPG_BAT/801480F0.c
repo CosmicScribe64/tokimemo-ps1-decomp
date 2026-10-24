@@ -5,7 +5,7 @@
 s32 func_801480F0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
-        func_800AE0F0(D_8015E904, "紐緒「これでもくらいなさい！");
+        strcpy(D_8015E904, "紐緒「これでもくらいなさい！");
         func_8014B738(D_8015E9CC, 1, 0xAA);
         D_8015ED8C[0] += 1;
         return;

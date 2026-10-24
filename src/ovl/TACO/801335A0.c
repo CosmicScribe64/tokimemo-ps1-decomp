@@ -15,7 +15,7 @@ s32 b;
             if (*p != 0) {
                 return 0;
             }
-            *p = func_800AE0D0() % (u32)(D_8015E22C[v] * 2 + 1);
+            *p = rand() % (u32)(D_8015E22C[v] * 2 + 1);
         }
         v = b & 0xFF;
     } else {
@@ -56,9 +56,9 @@ void func_80133738(void) {
             if (func_80045288() == 1) {
                 if (func_800460EC() & 2) {
                     if (D_8015EDB4[8].unk78 < D_8015EDB4->unk78) {
-                        idx = (func_800AE0D0() & 1) + 2;
+                        idx = (rand() & 1) + 2;
                     } else if (D_800E6280.unk_10F4 & 1) {
-                        idx = func_800AE0D0() % 6;
+                        idx = rand() % 6;
                     }
                     p = &D_8015E238[idx * 2];
                     func_80046290(p[0], p[1], 8);

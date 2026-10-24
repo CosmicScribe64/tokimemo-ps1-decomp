@@ -84,7 +84,7 @@ void func_80144094(void) {
     vt = D_8015F5FC;
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     v.vy = D_8015F5F0.b;
     for (ang = 0, i = 0; i < 9; i++) {
         if (i == 8) {
@@ -160,7 +160,7 @@ void func_80144430(void) {
 
     m = D_80129C40;
     func_800A1100(&m);
-    func_800A1070(&m);
+    SetRotMatrix(&m);
     v.vz = -0x7FFF;
     rot = 0;
     for (o = 0; o < 2; o++) {

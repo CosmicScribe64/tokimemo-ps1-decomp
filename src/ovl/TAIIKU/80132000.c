@@ -37,7 +37,7 @@ void func_80132000(void) {
         parameter_disp_switch(0);
         icon_disp_switch(0);
         message_window_init();
-        func_800AE120(D_800E6280.unk_10F4);
+        srand(D_800E6280.unk_10F4);
         D_80122E90 = 0;
         func_8004284C();
         break;
@@ -58,27 +58,27 @@ void func_80132000(void) {
                     dec_bg_cd_read(0x4133, 1);
                 }
                 D_800E6280.unk_03A = 0x80;
-                a = sp74[func_800AE0D0() % count];
-                b = sp74[func_800AE0D0() % count];
+                a = sp74[rand() % count];
+                b = sp74[rand() % count];
                 if (D_80122E90 != 0) {
                     a = sp74[1];
                     b = sp74[2];
                 } else {
                     while (a == 0) {
-                        a = sp74[func_800AE0D0() % count];
+                        a = sp74[rand() % count];
                     }
                     while ((a == b) || (b == 0)) {
-                        b = sp74[func_800AE0D0() % count];
+                        b = sp74[rand() % count];
                     }
                     D_80122E90 += 1;
                 }
                 D_80148EC0[0] = 0;
                 D_80148EC0[1] = a;
                 D_80148EC0[2] = b;
-                n = func_800AE0D0() & 0x1F;
+                n = rand() & 0x1F;
                 for (j = 0; j < n; j++) {
-                    k = func_800AE0D0() % 3;
-                    l = func_800AE0D0() % 3;
+                    k = rand() % 3;
+                    l = rand() % 3;
                     t = D_80148EC0[k];
                     m = D_80148EC0[l];
                     D_80148EC0[k] = m;

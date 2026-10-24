@@ -72,14 +72,14 @@ void func_8013A2F8(void) {
 void func_8013A3FC(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "グランド");
+    strcpy(D_800CA19C, "グランド");
     func_8004284C();
 }
 
 void func_8013A440(void) {
     D_80144E08 = 5;
     D_80144E0C = 0;
-    func_800AE0F0(D_800CA19C, "グランド");
+    strcpy(D_800CA19C, "グランド");
     func_8004284C();
 }
 

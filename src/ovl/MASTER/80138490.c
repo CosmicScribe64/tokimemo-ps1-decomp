@@ -321,7 +321,7 @@ void func_80138E58(void) {
     PtrTbl3 tbl;
 
     tbl = D_8013C700;
-    func_800AE0F0(D_800CA25C, tbl.p[D_80122CDC]);
+    strcpy(D_800CA25C, tbl.p[D_80122CDC]);
 }
 
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80138490.rodata", D_8013BFB0);

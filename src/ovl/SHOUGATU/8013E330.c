@@ -1,4 +1,4 @@
-#define MAIN_API_OVERRIDE_func_800AE0B0 /* FAKE: integer result keeps the retry flag in v1. T-25038 */
+#define MAIN_API_OVERRIDE_printf /* FAKE: integer result keeps the retry flag in v1. T-25038 */
 #define MAIN_API_OVERRIDE_func_800847B8 /* FAKE: integer return view keeps E50C's loop counter in v1. T-25033 */
 #define MAIN_API_OVERRIDE_get_g_zyotai_s /* matched with s32() (main_api.h: s32(s32)) */
 #include "common.h"
@@ -7,7 +7,7 @@
 s32 get_g_zyotai_s();
 
 s32 func_800847B8();
-s32 func_800AE0B0(void *arg0, ...);
+s32 printf(void *arg0, ...);
 
 /* Existing exception: EVENT owns a table at this overlapping address; moving
  * this scalar to main_api.h needs its override first. T-11590, T-25038 */
@@ -114,7 +114,7 @@ void func_8013E6E4(void) {
     do {
         /* FAKE: multiplication by one preserves the original sum operand order. T-25038 */
         D_800E6280.unk_F5F = (D_800E6280.unk_10F8 * 1 + i) % 10U + 1;
-        func_800AE0B0("num%d girl%d\n", count, D_800E6280.unk_F5F);
+        printf("num%d girl%d\n", count, D_800E6280.unk_F5F);
         i++;
         if (!D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 && D_800E6280.unk_F5F >= 9) {
             continue;

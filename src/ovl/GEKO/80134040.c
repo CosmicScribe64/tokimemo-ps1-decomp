@@ -146,7 +146,7 @@ s32 func_80134538(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     func_8004E58C();
-    func_800AE0F0(D_800CA19C, "玄関");
+    strcpy(D_800CA19C, "玄関");
     k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;
@@ -187,7 +187,7 @@ void func_801346A0(void) {
     sp2B = D_80122D40;
     func_8008585C();
     D_80122D40 = sp2B;
-    func_800AE0F0(D_800CA19C, "玄関");
+    strcpy(D_800CA19C, "玄関");
     k_reset(1);
     D_800E6280.unk_10A2 = 0;
     D_800E6280.unk_10E8 = 1;

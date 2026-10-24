@@ -9,7 +9,7 @@ s32 func_8013F15C();
 void func_80156CC0(void) {
     switch (D_8015EDD8) {
     case 0:
-        func_800AE0F0(D_8015E828, "宇宙人「Ж○ξ♂×♀？〆£∞Й！");
+        strcpy(D_8015E828, "宇宙人「Ж○ξ♂×♀？〆£∞Й！");
         func_8014B738(D_8015E8F0, 1, 0x5A);
         func_8013F15C(0x512, 1, 0);
         func_8014EF3C();
@@ -38,7 +38,7 @@ void func_80156D78(void) {
     }
     switch (D_8015EDD8) {
     case 0x0:
-        func_800AE0F0(D_8015E828, "宇宙人「ЮΩ▽☆§◎");
+        strcpy(D_8015E828, "宇宙人「ЮΩ▽☆§◎");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         D_8015ED98 |= 0x1000;
         func_8013F15C(0x514, 1, 0);
@@ -132,7 +132,7 @@ void func_80157158(void) {
     }
     switch (D_8015EDD8) {
     case 0x0:
-        func_800AE0F0(D_8015E828, "宇宙人「ЛΦΘζ□Э℃¢Λ");
+        strcpy(D_8015E828, "宇宙人「ЛΦΘζ□Э℃¢Λ");
         func_8014B738((s32) D_8015E8F0, 1, 0x3C);
         D_8015ED98 |= 0x1000;
         func_8013F15C(0x513, 1, 0);
@@ -252,8 +252,8 @@ void func_80157640(void) {
         func_8014F080(0x1E);
         break;
     case 3:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E828, "達は逃げ出した。");
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcat(D_8015E828, "達は逃げ出した。");
         func_8014B738(D_8015E8F0, 1, 0x5A);
         func_8014EF3C();
         break;

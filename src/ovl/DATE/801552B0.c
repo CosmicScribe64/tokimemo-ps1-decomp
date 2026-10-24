@@ -119,7 +119,7 @@ void func_801556D8(void) {
         m[98 + i].unk_16 = 5;
         m[98 + i].unk_26 = sp68.v[i] - 0xA0;
         m[98 + i].unk_2A = sp58.v[i] - 0x78;
-        D_8015F9A8[i] = func_800AE0D0() % 120;
+        D_8015F9A8[i] = rand() % 120;
     }
     m[98].unk_16 = 4;
     func_8004284C();
@@ -286,7 +286,7 @@ void func_801560E0(void) {
         if (*st == 0) {
             D_8015F9A8[i]++;
         }
-        if (*st == 0 && D_8015F9A8[i] >= 0x79 && (u32)(0xB4 - D_8015F9A8[i]) < (u32)(func_800AE0D0() % 60)) {
+        if (*st == 0 && D_8015F9A8[i] >= 0x79 && (u32)(0xB4 - D_8015F9A8[i]) < (u32)(rand() % 60)) {
             m[98 + i].unk_03 |= 0x80;
             m[98 + i].unk_02 = 5;
             *st = 1;

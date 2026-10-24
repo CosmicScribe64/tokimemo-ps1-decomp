@@ -99,7 +99,7 @@ void func_80134184(void) {
     D_800E6280.unk_F5F = 0xE;
     D_80120666 = 4;
     D_801206EE = 2;
-    func_800AE0F0(&D_800CA188, &D_8013AD70);
+    strcpy(&D_800CA188, &D_8013AD70);
     func_8004284C();
 }
 

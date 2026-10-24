@@ -47,9 +47,9 @@ void func_8013A604(void) {
     menu_set(0, 0x10, a, b, c, d);
     (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0x80;
     func_8004ADAC(4);
-    func_800AE0F0(D_800E6280.unk_0D4, "おぷ");
-    func_800AE0F0(D_800E6280.unk_0DC, "ション");
-    func_800AE0F0(D_800E6280.unk_0E4, "起動");
+    strcpy(D_800E6280.unk_0D4, "おぷ");
+    strcpy(D_800E6280.unk_0DC, "ション");
+    strcpy(D_800E6280.unk_0E4, "起動");
     func_8004E58C();
     set_kanji_string(-0x80, -0x18, 0xF, (s32)"設定メニュー１", 0);
     set_kanji_string(-0x80, 0, 0xF, (s32)"月日関連", 0);
@@ -715,7 +715,7 @@ void func_8013C52C(void) {
     for (i = 0; i < 16; i++) {
         func_8004B338(D_8013E844[i], -0x20, i * 0xC - 0x60);
     }
-    func_800AE080(D_80122DD0, 0x100);
+    bzero(D_80122DD0, 0x100);
     if (D_800E6280.unk_F88 & 0x90) {
         switch (D_800E6280.unk_1093) {
         case 0:

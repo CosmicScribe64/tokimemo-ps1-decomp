@@ -61,7 +61,7 @@ void func_80139920(void) {
     for (i = 0; i != 8; i++) {
         if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && sel == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->unk_25) {
             D_800E6280.unk_54C[i].b[3] &= 0xFFDF;
-            func_800AE0B0("canceled %d \n", i);
+            printf("canceled %d \n", i);
         }
     }
     func_8006B0C8();
@@ -217,10 +217,10 @@ s32 func_80139E90(void) {
         func_80139E3C();
         k_sub_reset();
         gnsx(D_800E6280.unk_0D4);
-        func_800AE0F0(name, "しまった！！今日は、 ");
+        strcpy(name, "しまった！！今日は、 ");
         get_g_name(num, (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C);
-        func_800AE100(name, num);
-        func_800AE100(name, "と デートの約束があったんだ。）");
+        strcat(name, num);
+        strcat(name, "と デートの約束があったんだ。）");
         sndisp(name, 0, 0x1F);
         k_sub_disp_start(0);
         D_800E6280.unk_110D += 1;
@@ -750,7 +750,7 @@ s32 func_8013ADC0(void) {
         func_8004500C(0, 0x201);
         k_sub_reset();
         gnsx(&D_800E6280.unk_0D4[0]);
-        func_800AE0F0(text, "どうやら好雄の話では、俺が ");
+        strcpy(text, "どうやら好雄の話では、俺が ");
         get_g_name(name, func_8013BDDC());
         strcat(text, name);
         strcat(text, "を、 傷つけたといううわさが、 流れてたそうだ。）");
@@ -1030,7 +1030,7 @@ s32 func_8013B54C(void) {
     case 0xF1:
         k_sub_reset();
         gnsx(D_800E6280.unk_0D4);
-        func_800AE0F0(text, "そうかっ！ ");
+        strcpy(text, "そうかっ！ ");
         get_g_name(name, ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->unk_25);
         strcat(text, name);
         strcat(text, "は、 怒って来なかったのか。）");

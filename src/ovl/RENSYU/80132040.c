@@ -51,7 +51,7 @@ void func_801320E0(void) {
         func_80065F34(0);
         dec_bg_reset();
         set_dec_bri(0);
-        func_800AE120(D_800E6280.unk_10F4);
+        srand(D_800E6280.unk_10F4);
         func_8004284C();
         break;
     case 1:
@@ -553,7 +553,7 @@ void func_8013325C(void) {
             D_801342C8[i] = 1;
         }
         i = 0;
-        swap_count = func_800AE0D0() & 0xF;
+        swap_count = rand() & 0xF;
         if ((u8)(*(u8 *)&D_801342C4) >= 3U) {
             swap = D_801342C8[0];
             other = D_801342C8[4];
@@ -562,8 +562,8 @@ void func_8013325C(void) {
         }
         if (swap_count > 0) {
             do {
-                first = func_800AE0D0() & 3;
-                value = func_800AE0D0() & 3;
+                first = rand() & 3;
+                value = rand() & 3;
                 swap = D_801342C8[first];
                 i++;
                 other = D_801342C8[value];

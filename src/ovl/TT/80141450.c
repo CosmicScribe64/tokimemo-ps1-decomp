@@ -103,7 +103,7 @@ void func_80141450(u8 *arg0, TtSprXform *q) {
     }
     if (arg0[0x2C] != 0) {
         s = func_800A0140(q->angle);
-        c = func_800A0070(q->angle);
+        c = rsin(q->angle);
         nx0 = q->rx + (((p->x0 - q->rx) * s - (p->y0 - q->ry) * c) >> 12);
         nx1 = q->rx + (((p->x1 - q->rx) * s - (p->y1 - q->ry) * c) >> 12);
         nx2 = q->rx + (((p->x2 - q->rx) * s - (p->y2 - q->ry) * c) >> 12);

@@ -55,7 +55,7 @@ void func_80134A20(void) {
 }
 
 void func_80134A8C(void) {
-    func_800AE0F0(D_800CA19C, "ホテル・廊下");
+    strcpy(D_800CA19C, "ホテル・廊下");
     func_801365F4();
     D_8013BFFC = D_8013C5C4;
     D_8013C000 = D_8013C700;

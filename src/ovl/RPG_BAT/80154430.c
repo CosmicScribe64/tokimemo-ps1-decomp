@@ -10,7 +10,7 @@ void func_80154430(void) {
 
     switch (D_8015EDAC) {
     case 0:
-        func_800AE0F0(D_8015E74C, "　　　　　　　色素分解　　　　　　　");
+        strcpy(D_8015E74C, "　　　　　　　色素分解　　　　　　　");
         func_8014B738((s32) &D_8015E814, 1, 0x5A);
         func_80144480();
         func_8013EEAC(D_8015EBAC);
@@ -176,7 +176,7 @@ s32 func_80154760(void) {
         func_8014EBD0();
         break;
     case 1:
-        v = func_800A0070(D_8015EDB8 * 0x800 / 1000) * 8 >> 12;
+        v = rsin(D_8015EDB8 * 0x800 / 1000) * 8 >> 12;
         if (v >= 8) {
             v = 7;
         }
@@ -194,7 +194,7 @@ s32 func_80154760(void) {
         }
         break;
     case 2:
-        v = func_800A0070(D_8015EDB8 * 0x800 / 1000) * 16 >> 12;
+        v = rsin(D_8015EDB8 * 0x800 / 1000) * 16 >> 12;
         if (v >= 16) {
             v = 15;
         }
@@ -212,7 +212,7 @@ s32 func_80154760(void) {
         }
         break;
     case 3:
-        v = func_800A0070(D_8015EDB8 * 0x800 / 1000) * 32 >> 12;
+        v = rsin(D_8015EDB8 * 0x800 / 1000) * 32 >> 12;
         if (v >= 32) {
             v = 31;
         }

@@ -768,7 +768,7 @@ void func_8013E2C0(void) {
         func_80145530();
         break;
     case 14:
-        func_800AE0A0((void *)0x80180000, 0x80197000, 0x16800);
+        memcpy((void *)0x80180000, 0x80197000, 0x16800);
         addr_init_bustup();
         g->unk_F5F = 0xD;
         func_800847B8(0xDU);

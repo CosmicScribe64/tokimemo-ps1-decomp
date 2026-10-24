@@ -483,5 +483,5 @@ void func_80147F8C(void) {
 
     tbl = D_801606DC;
     name = tbl.s[D_800E6280.unk_03E - 95][D_80122CDC];
-    func_800AE0F0(D_800CA25C, name);
+    strcpy(D_800CA25C, name);
 }

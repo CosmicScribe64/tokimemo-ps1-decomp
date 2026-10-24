@@ -1,8 +1,8 @@
-#define MAIN_API_OVERRIDE_func_800AE090 /* matched as int: the call's $v0 result range (main_api.h: void), T-19009 */
+#define MAIN_API_OVERRIDE_strncpy /* matched as int: the call's $v0 result range (main_api.h: void), T-19009 */
 #include "common.h"
 #include "ovl/TACO.h"
 
-s32 func_800AE090();
+s32 strncpy();
 
 void func_80142820(void) {
     switch (D_800E6280.unk_110A) {
@@ -43,9 +43,9 @@ void func_801428DC(void) {
     D_800E7D10.w0 = D_8015EDF8;
     D_800E7D10.w1 = D_8015EDFC;
     D_800E7D10.w2 = D_8015EE00;
-    func_800AE090(D_800E7D10.name0, D_8015EE04, 3);
-    func_800AE090(D_800E7D10.name1, D_8015EE08, 3);
-    func_800AE090(D_800E7D10.name2, D_8015EE0C, 3);
+    strncpy(D_800E7D10.name0, D_8015EE04, 3);
+    strncpy(D_800E7D10.name1, D_8015EE08, 3);
+    strncpy(D_800E7D10.name2, D_8015EE0C, 3);
     /* the % 2 folds away, but keeps the extra copy of the value that the original has */
     D_800E7D10.bits.mode = D_8015EDD8 % 2;
     D_800E7D10.bits.sel = D_8015EDDC % 3;

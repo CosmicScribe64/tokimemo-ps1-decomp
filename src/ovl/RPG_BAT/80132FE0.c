@@ -7,8 +7,8 @@ s32 func_8013F15C();
 void func_80132FE0(void) {
     switch (*D_8015ED8C) {
     case 0:
-        func_800AE0F0(D_8015E828, "マタギ「こったらとこ来たらだめだべ！");
-        func_800AE0F0(D_8015E850, "早くけえれ！");
+        strcpy(D_8015E828, "マタギ「こったらとこ来たらだめだべ！");
+        strcpy(D_8015E850, "早くけえれ！");
         func_8014B738((s32) D_8015E8F0, 2, 0xAA);
         *D_8015ED8C += 1;
         return;
@@ -44,7 +44,7 @@ void func_80133108(void) {
 
     switch (D_8015EDD8) {
     case 0:
-        func_800AE0F0(D_8015E828, "　　　　サーモンブーメラン　　　　");
+        strcpy(D_8015E828, "　　　　サーモンブーメラン　　　　");
         func_8013E97C(0x38, 0, 0);
         func_8013E7C0(0x38, 1, 5, 1);
         func_8013F15C(0x50A, 1, 0);
@@ -103,9 +103,9 @@ void func_80133108(void) {
         }
         break;
     case 6:
-        func_800AE0F0(D_8015E828, D_800E6280.unk_0D4);
-        func_800AE100(D_8015E828, "「だめだ！　喰われてしまう！");
-        func_800AE0F0(D_8015E850, "くそったれめー！");
+        strcpy(D_8015E828, D_800E6280.unk_0D4);
+        strcat(D_8015E828, "「だめだ！　喰われてしまう！");
+        strcpy(D_8015E850, "くそったれめー！");
         func_8014B738((s32) D_8015E8F0, 2, 0x78);
         func_8014EF3C();
         break;
@@ -137,9 +137,9 @@ void func_80133108(void) {
         }
         if (D_8015EDE0 >= 0x78) {
             D_8015EE18 ^= 0x10000000;
-            func_800AE0F0(D_8015E828, "正義のマタギ見参！");
-            func_800AE0F0(D_8015E850, "名銃「次郎丸」ショット");
-            func_800AE0F0(D_8015E878, "「次郎丸」エネルギー充填");
+            strcpy(D_8015E828, "正義のマタギ見参！");
+            strcpy(D_8015E850, "名銃「次郎丸」ショット");
+            strcpy(D_8015E878, "「次郎丸」エネルギー充填");
             func_8014B738((s32) D_8015E8F0, 3, 0x78);
             func_8014EF3C();
         }
@@ -162,7 +162,7 @@ void func_80133108(void) {
         ang = (D_8015EDE0 << 0xA) / 60;
         for (i = 0; i < 8; i++) {
             func_8013E7C0(i - 0x20, ((D_8015EDE0 * 6) / 60) + 1, 1, 1);
-            tmp = func_800A0070(ang + i * 0x200);
+            tmp = rsin(ang + i * 0x200);
             cs = func_800A0140(ang + i * 0x200);
             r = 0x3C - D_8015EDE0;
             func_8013E97C(i - 0x20, ((tmp * r) >> 0xD) - 0x10, (cs * r) >> 0xD);
@@ -183,7 +183,7 @@ void func_80133108(void) {
         ang = (D_8015EDE0 << 0xA) / 45;
         for (i = 0; i < 8; i++) {
             func_8013E7C0(i - 0x20, ((D_8015EDE0 * 6) / 45) + 1, 1, 1);
-            tmp = func_800A0070(ang + i * 0x200);
+            tmp = rsin(ang + i * 0x200);
             cs = func_800A0140(ang + i * 0x200);
             r = 0x2D - D_8015EDE0;
             func_8013E97C(i - 0x20, ((tmp * r * 0x3C / 0x2D) >> 0xD) - 0x10, (cs * r * 0x3C / 0x2D) >> 0xD);
@@ -204,7 +204,7 @@ void func_80133108(void) {
         ang = (D_8015EDE0 << 0xA) / 30;
         for (i = 0; i < 8; i++) {
             func_8013E7C0(i - 0x20, ((D_8015EDE0 * 6) / 30) + 1, 1, 1);
-            tmp = func_800A0070(ang + i * 0x200);
+            tmp = rsin(ang + i * 0x200);
             cs = func_800A0140(ang + i * 0x200);
             r = 0x1E - D_8015EDE0;
             func_8013E97C(i - 0x20, ((tmp * r * 2) >> 0xD) - 0x10, (cs * r * 2) >> 0xD);
@@ -288,10 +288,10 @@ void func_80133108(void) {
         func_8014F080(0x1E);
         break;
     case 24:
-        func_800AE0F0(D_8015E9E0, "戦闘に勝った！！");
-        func_800AE0F0(D_8015EA08, "ありがとう、マタギのおじさん");
-        func_800AE0F0(D_8015EA30, "経験値　：１０２４ＥＸＰ");
-        func_800AE0F0(D_8015EA58, "お金　　：５３ゴールド");
+        strcpy(D_8015E9E0, "戦闘に勝った！！");
+        strcpy(D_8015EA08, "ありがとう、マタギのおじさん");
+        strcpy(D_8015EA30, "経験値　：１０２４ＥＸＰ");
+        strcpy(D_8015EA58, "お金　　：５３ゴールド");
         func_80152384();
         func_8014EF3C();
         break;

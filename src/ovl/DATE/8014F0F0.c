@@ -293,7 +293,7 @@ void func_8014FE24(void) {
 }
 
 void func_8014FE5C(void) {
-    func_800AE0F0(D_800CA1DC, "観覧車");
+    strcpy(D_800CA1DC, "観覧車");
     func_8004284C();
 }
 

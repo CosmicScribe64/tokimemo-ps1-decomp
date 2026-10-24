@@ -45,8 +45,8 @@ s32 func_80146400(void)
         x -= 1;
     }
     /* The assignment inside the argument makes IDO load the format string's lui first (T-22029). */
-    func_800AE0B0("補正 %d ", *(p = &D_801506F8[x]));
-    r = func_800AE0D0() & 7;
+    printf("補正 %d ", *(p = &D_801506F8[x]));
+    r = rand() & 7;
     a = *p;
     d = r + a;
     d -= 8;
@@ -344,26 +344,26 @@ s32 func_80146D4C(void) {
     if (((GsByteNibbles *)&g->unk_0F4.b[1])->low & 2) {
         ret /= 2;
     }
-    func_800AE0B0("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
+    printf("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
     if (ret < 0) {
         ret = 1;
     }
     ret = func_80146400() + ret;
     sub = func_801464D4(0xF);
-    ret = (func_800AE0D0() % 10) * sub + ret;
+    ret = (rand() % 10) * sub + ret;
     w = (EtcWork40 *)&D_801230D0;
     if (ret < 0x80) {
         w->unk_28[g->unk_041] = ret * 100 / 128;
     } else {
-        w->unk_28[g->unk_041] = 100 - (func_800AE0D0() & 3);
+        w->unk_28[g->unk_041] = 100 - (rand() & 3);
     }
-    func_800AE0B0("今日の成績 %d\t", w->unk_28[g->unk_041]);
+    printf("今日の成績 %d\t", w->unk_28[g->unk_041]);
     score = w->unk_28[g->unk_041] + w->unk_28[5];
     w->unk_28[5] = score;
     /* FAKE: T-25045, the late-folded zero and two identities spend one ugen
      * temporary before as1 removes them, preserving the final index registers. */
     zero = g->unk_041 * 0;
-    func_800AE0B0("合計点 %d\n", (score + zero) | zero);
+    printf("合計点 %d\n", (score + zero) | zero);
     ret = w->unk_28[g->unk_041];
     if (ret < 0x28) {
         ret = 0;
@@ -707,7 +707,7 @@ s32 func_8014790C(void) {
                     strncpy((char *) buf, (char *) D_800E6280.unk_0D4, 8);
                     strncat((char *) buf, (char *) D_800E6280.unk_0DC, 8);
                     set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
-                    func_800AE0B0("%s\n", D_800E6280.unk_0C4);
+                    printf("%s\n", D_800E6280.unk_0C4);
                 } else if (v == 0xA) {
                     set_kanji_string(x + 0x18, y, 3, D_800B3538[13], 0);
                 } else if (v == 0xB) {
@@ -844,25 +844,25 @@ void func_801480D0(void) {
     s32 values[14];
     s32 pad;
 
-    func_800AE120(D_800E6280.unk_10F8);
+    srand(D_800E6280.unk_10F8);
     for (i = 0; i < 13; i++) {
-        first_random = func_800AE0D0();
-        noise = (first_random % (s32)D_80150738[i]) * (((func_800AE0D0() & 1) * 2) - 1);
-        first_random = func_800AE0D0();
-        a = (first_random % (s32)D_80150738[i]) * ((func_800AE0D0() & 1) * 2 - 1);
+        first_random = rand();
+        noise = (first_random % (s32)D_80150738[i]) * (((rand() & 1) * 2) - 1);
+        first_random = rand();
+        a = (first_random % (s32)D_80150738[i]) * ((rand() & 1) * 2 - 1);
         D_80150668[i] = ((D_80150728[i] + a) * 5) + noise;
         j = func_801464D4(i);
         if (j != 1) {
             if (j == 9) {
-                D_80150668[i] += func_800AE0D0() % 250;
+                D_80150668[i] += rand() % 250;
             }
         } else {
-            D_80150668[i] += func_800AE0D0() % 50;
+            D_80150668[i] += rand() % 50;
         }
         if (D_80150668[i] >= 501) {
             D_80150668[i] = 500;
         }
-        func_800AE0B0("[%d:%d]\n", i, D_80150668[i]);
+        printf("[%d:%d]\n", i, D_80150668[i]);
     }
     D_80150668[13] = (s16) ((EtcWork40 *)&D_801230D0)->unk_28[5];
     do {
@@ -891,17 +891,17 @@ void func_801480D0(void) {
         values[selected] = 0;
         D_80150684[j] = selected;
     }
-    func_800AE0B0("順位計算\n ");
+    printf("順位計算\n ");
     for (i = 0; i < 14; i++) {
-        func_800AE0B0("[%d:%d] \n", i, D_80150684[i]);
+        printf("[%d:%d] \n", i, D_80150684[i]);
     }
-    func_800AE0B0("順位作成\n ");
-    offset = func_800AE0D0() & 3;
+    printf("順位作成\n ");
+    offset = rand() & 3;
     for (i = 0; i < 14; i++) {
         angle = (D_80150668[i] << 12) / 1000;
         sine = func_800A0140(angle);
         D_801506BC[i] = (sine * 200) / 4096 + offset + 200;
-        func_800AE0B0("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
+        printf("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
     }
     do {
         changed = 0;
@@ -918,9 +918,9 @@ void func_801480D0(void) {
             }
         }
     } while (changed != 0);
-    func_800AE0B0("順位ソート\n ");
+    printf("順位ソート\n ");
     for (i = 0; i < 14; i++) {
-        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+        printf("[%d:%d] \n", i, D_801506BC[i]);
     }
     minimum = 1000;
     for (i = 0; i < 14; i++) {
@@ -929,7 +929,7 @@ void func_801480D0(void) {
         }
     }
     if (minimum >= 9) {
-        a = func_800AE0D0() % (minimum - 8) + minimum - 8;
+        a = rand() % (minimum - 8) + minimum - 8;
         for (i = 0; i < 14; i++) {
             D_801506BC[i] -= a;
         }
@@ -953,9 +953,9 @@ void func_801480D0(void) {
             D_801506BC[i] -= offset;
         }
     }
-    func_800AE0B0("順位確定\n ");
+    printf("順位確定\n ");
     for (i = 0; i < 14; i++) {
-        func_800AE0B0("[%d:%d] \n", i, D_801506BC[i]);
+        printf("[%d:%d] \n", i, D_801506BC[i]);
     }
     if (D_80150684[0] == 13 && D_80150684[1] == 0) {
         if (D_801506BC[0] < D_801506BC[13]) {

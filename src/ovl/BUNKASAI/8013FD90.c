@@ -957,7 +957,7 @@ void func_801417DC(void) {
             func_80042940(0x32);
         } else {
             func_801431D4();
-            func_800AE0A0((void *)0x80197000, 0x80180000, 0x16800);
+            memcpy((void *)0x80197000, 0x80180000, 0x16800);
             func_80062CD0(0x6935);
             func_8004284C();
         }
@@ -967,7 +967,7 @@ void func_801417DC(void) {
         break;
     case 0x6:
         if (cd_read_sync_status() & 1) {
-            func_800AE0A0((void *)0x801AE000, 0x80180000, 0x16800);
+            memcpy((void *)0x801AE000, 0x80180000, 0x16800);
             addr_init_bustup();
             g->unk_F5F = 0xA;
             func_80083474();
@@ -1009,7 +1009,7 @@ void func_801417DC(void) {
         normal_date_girl_out();
         break;
     case 0xD:
-        func_800AE0A0((void *)0x80180000, 0x80197000, 0x16800);
+        memcpy((void *)0x80180000, 0x80197000, 0x16800);
         addr_init_bustup();
         g->unk_F5F = 0xD;
         func_800847B8(g->unk_F5F);
@@ -1025,7 +1025,7 @@ void func_801417DC(void) {
         normal_date_girl_out();
         break;
     case 0x11:
-        func_800AE0A0((void *)0x80180000, 0x801AE000, 0x16800);
+        memcpy((void *)0x80180000, 0x801AE000, 0x16800);
         addr_init_bustup();
         g->unk_F5F = 0xA;
         func_800847B8(g->unk_F5F);
@@ -1041,7 +1041,7 @@ void func_801417DC(void) {
         normal_date_girl_out();
         break;
     case 0x15:
-        func_800AE0A0((void *)0x80180000, 0x80197000, 0x16800);
+        memcpy((void *)0x80180000, 0x80197000, 0x16800);
         addr_init_bustup();
         g->unk_F5F = 0xD;
         func_800847B8(g->unk_F5F);
@@ -1119,7 +1119,7 @@ void func_801417DC(void) {
         normal_date_girl_out();
         break;
     case 0x25:
-        func_800AE0A0((void *)0x80180000, 0x801AE000, 0x16800);
+        memcpy((void *)0x80180000, 0x801AE000, 0x16800);
         addr_init_bustup();
         g->unk_F5F = 0xA;
         func_800847B8(g->unk_F5F);
