@@ -979,6 +979,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27015-p2-m-dates-b|T-27015 Phase 2 naming and port spec for the main scene library (8007C030.c)]]
 - [ ] [[tickets/T-27013-p2-m-holiday|T-27013 Phase 2 naming and port spec for the holiday screen, appointments and telephone]]
 - [ ] [[tickets/T-27018-p2-m-menutext|T-27018 Phase 2 naming proposals and port spec for main text, menus and girl queries (m-menutext)]]
+- [ ] [[tickets/T-27017-p2-m-sysmenu|T-27017 Phase 2 naming and spec for m-sysmenu (src/main/8005A0B0.c, the player's room screens)]]
 
 
 %% kanban:settings
