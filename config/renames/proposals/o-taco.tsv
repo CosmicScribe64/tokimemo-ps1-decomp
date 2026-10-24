@@ -119,7 +119,7 @@ func	TACO	func_8013B2A0	shooter_game_end_step_init	step 0: snapshot screen, rese
 func	TACO	func_8013B398	shooter_game_end_step_wait	step 1: any button advances
 func	TACO	func_8013B3C4	shooter_game_end_step_leave	step 2: when the stream is ready go to stage 8
 func	TACO	func_8013B404	shooter_snapshot_screen	HYPOTHESIS: func_8009C93C is a VRAM to VRAM copy; copies the current screen rect to VRAM x 0x200
-func	TACO	func_8013B460	shooter_draw_screen_wipe	two textured quads slide the snapshot, argument 100 is fully covered
+func	TACO	func_8013B460	shooter_draw_screen_wipe	two textured quads show the snapshot; argument 100 shows it full size, smaller values shrink and slide it
 func	TACO	func_8013B990	shooter_run_collisions	runs enemy-bullet and enemy-body hits, then shot hits for the four shot tables; adds the per-frame score tick
 func	TACO	func_8013BAC4	shooter_hit_enemies_with_shots	beam and bullet hits on enemy slots 16-62; damage, score, sparks, SE
 func	TACO	func_8013C1F4	shooter_hit_ships_with_bullets	enemy bullets hit the player (4 HP) or wingman (4 HP) within 0x80 xy and 0x100 z
@@ -401,9 +401,9 @@ func	TACO	func_8015C718	shooter_behavior_dying	behavior 0xFF: explosion bursts a
 func	TACO	func_8015CC54	shooter_count_free_coordinates	counts free entries of the coordinate pool; no caller in the overlay
 func	TACO	func_8015CCC8	shooter_count_enemies_of_kind	live enemies with HP of kind arg0 (0xFF any); clears HP of inactive slots
 func	TACO	func_8015CE64	shooter_count_active_enemies	counts slots 16-62 with flag 0x80
-func	TACO	func_8015CF30	RotMatrixZ	libgte copy in the overlay: rotation about Z (touches matrix rows 0 and 1)
-func	TACO	func_8015D0D0	RotMatrixX	libgte copy: rotation about X (rows 1 and 2)
-func	TACO	func_8015D270	RotMatrixY	libgte copy: rotation about Y (rows 0 and 2)
+func	TACO	func_8015CF30	shooter_rot_matrix_z	copy of PsyQ libgte RotMatrixZ linked into the overlay (touches matrix rows 0 and 1); prefixed to avoid a clash with main names
+func	TACO	func_8015D0D0	shooter_rot_matrix_x	copy of PsyQ libgte RotMatrixX (rows 1 and 2)
+func	TACO	func_8015D270	shooter_rot_matrix_y	copy of PsyQ libgte RotMatrixY (rows 0 and 2)
 data	TACO	D_8015E220	shooter_se_cooldown	byte array of 10 SE cooldowns (this address is element 0), ticked by shooter_tick_se_cooldowns
 data	TACO	D_8015E221	shooter_se_cooldown_1	element 1 of shooter_se_cooldown (declared separately in the header)
 data	TACO	D_8015E222	shooter_se_cooldown_2	elements 2-9 of shooter_se_cooldown (declared as an array in the header)
