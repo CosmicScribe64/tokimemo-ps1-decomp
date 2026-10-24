@@ -7,62 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25016 phase 2 results and resolution plan by common issue
-
-## [2026-10-22] ticket | T-25016 gate-lever experiments: flattening and volatile both negative with named causes
-
-## [2026-10-22] ticket | T-25016 trace note: global filler active in func_80139290 (37 moves)
-
-## [2026-10-22] ticket | T-25016 phase 2 closeout: bulk pool fully classified (79 scored, 43 named blockers), queue regenerated, in-tree pool contamination corrected
-
-## [2026-10-22] ticket | T-25016 queue verification: top bulk candidates funcdiff-verified (best 210 resolved lines); packet scores flatter by ~10x; Tier 1 re-labelled a reconstruction backlog
-
-## [2026-10-22] ticket | T-25013, T-25014, T-25015 marked Done (merged in PR #66); T-25016 to In Review with its PR; status page next-step rewritten for the post-lever state
-
-## [2026-10-22] decision | Replan completion after contributor research
-
-Fetched and fast-forwarded clean main to 7c87f223e, read T-25013 through T-25016 research and closeout evidence, and independently ran Docker progress: 6833/6952 functions, 2104676/2276920 bytes. Corrected stale remaining count to119. Updated [[plan-remaining]] with artifact recovery, whole-TU measurement, two Sol medium lanes, bounded Astra escalation and strict integration gates; created Ready [[tickets/T-25017-completion-plan]]. Remote queue/candidates/traces must be recovered before repeating the completed salvage programme. No matching workers dispatched by this planning action, no production changes.
-
-## [2026-10-22] ticket | Start bounded completion execution
-
-Moved [[tickets/T-25017-completion-plan]] to In Progress with board synchronized. One Sol 6.1 medium worker owns KANGEI func_8013852C under T-25018 in isolation; no other live subagents. Issue65 remains open and its contributor expects to return Friday; select KANGEI first to avoid GEKO/OPTION overlap. No open PRs. Remote artifact access is unresolved; requested location from user while independent near-match work proceeds. No contributor messages posted.
-
-## [2026-10-22] ingest | Recover Octa scratch archive
-
-User supplied /Users/lila/Downloads/t25016-scratch-2026-10-22.tar.gz (SHA256 fd41defd56adcbd8ff2ed3dfa7969f31ad3e329d772ed9ccff5e2aab6c048d68). Extracted privately to /private/tmp/t25016-recovered-20261022 after listing members. Includes corpus/QUEUE.md, census/ledger/precedent records and compiler traces/objects; raw outputs remain uncommitted. Queue confirms already-matched entries and packet-score caveats, so membership and score require whole-TU verification. Sol T-25019 will resolve candidate provenance and TACO func_80138B2C baseline; KANGEI worker reproduced its exhausted two-row scheduler tie without repeating sweeps. See [[tickets/T-25017-completion-plan]].
-
-## [2026-10-22] ticket | T-25018 bounded KANGEI near closure
-
-Created [[tickets/T-25018-kangei-near-closure]] In Progress in an isolated worktree. Read [[playbook]], [[as1-scheduler-rule]], T-24901 source notes and [[tickets/T-25016-candidate-reconstruction]] before attempting new source work. Reproducing the full-unit baseline; no repeated sweeps authorized.
-
-## [2026-10-22] query | T-25018 pins KANGEI local scheduler blocker
-
-Reproduced two full-unit NON_MATCHING C rows and the stock as1 DAG for KANGEI func_8013852C. The existing arithmetic/$at chains give equal aftercycles 4, same source line, but besttime 16 versus 15. No new dependency-backed source lever was established; zero duplicate source variants run. Pinned the source note in src/ovl/KANGEI/80137B90.c and filed the exact revisit condition in [[matching-notes]] and [[tickets/T-25018-kangei-near-closure]]. Moved the ticket and board to In Review; no promotion.
-
-## [2026-10-22] build | T-25018 retained fallback verification
-
-Default funcdiff verified 180 linked bytes equal the target (assembly fallback only). After the note-only source edit, the configured KANGEI.ok Ninja target passed SHA1. Header, GameState migration, and branch prototype guards passed; no new prototype disagreement. [[tickets/T-25018-kangei-near-closure]] remains In Review.
-
-## [2026-10-22] ticket | Recovered TACO candidate investigation
-
-Created [[tickets/T-25019-recovered-taco-38b2c]] in isolated worktree /private/tmp/t25019-taco at 7bc6d8d99; recovered archive remains private evidence. Read prior T-16564/T-19015/T-20600 negatives before any experiments.
-
-## [2026-10-22] query | Recovered queue provenance and TACO baseline
-
-[[tickets/T-25019-recovered-taco-38b2c]]: 410 recovered files; 151 C body artifacts, 122 m2c bodies. TACO func_80138B2C current guarded whole-TU Docker baseline is 30 positional rows/60 printed diff lines; mechanically adapted older archive gives 103 unequal-span printed diff lines, REAL DIFFERENCE. Restored source and registered existing colour tail without speculative variants. [[matching-notes]] records result and concrete next reconstruction target main func_8005215C. Ticket and board moved to In Review for independent standards review.
-
-## [2026-10-22] decision | Evidence-based multi-chat completion plan
-
-Updated [[plan-remaining]] under [[tickets/T-25017-completion-plan]] after fresh per-file Docker census and completed worker pilots. Remaining119 functions/172244 bytes; origin/main remains811c35028, no open PRs, issue65 still reserves GEKO/OPTION. BUNKA pilot de816368f reduces7 to4 instruction positions; MAIN pilot4cf12bdd1 reproduces frame/homes and exposes a concrete global reload defect. Neither is a match. Plan assigns three file-disjoint Sol6.1medium lanes (MAIN, BUNKA scheduler, TEL qualification), bounded Astra escalation and serialized verification; no new chats launched during preflight. Corrected index's stale127 count. Raw archive stays private.
-
-## [2026-10-22] ticket | T-25020 BUNKA_SD trace mapping
-
-Created [[tickets/T-25020-bunka-sd-trace-closure]] In Progress to verify the recovered volatile trace before drawing conclusions from block 60. Reuse the isolated T-25018 worktree; own only src/ovl/BUNKA_SD/801388D0.c for new source work.
-
-## [2026-10-22] build | T-25020 improves BUNKA_SD guarded draft
-
-Mapped the recovered trace: 779 normalized DAG records and all 74 mover events equal a fresh full-unit trace. Block 60 supplies eight of 37 moved instructions from the later modulo switch, unrelated to the earlier year-load residue. Two directed empty-field-test experiments established a case-0x3B-only improvement from seven changed positions to four; retained in src/ovl/BUNKA_SD/801388D0.c under NON_MATCHING with FAKE/T-25020 notes. All-arm tests regress global-mover slots. See [[tickets/T-25020-bunka-sd-trace-closure]] and [[matching-notes]]. No promotion.
-
 ## [2026-10-22] build | T-25020 verified four-row guard handed to review
 
 Updated full-unit NON_MATCHING C verifies four changed positions (eight +/- lines), only case-0x49/0x66 load/lui swaps. Default linked-byte MATCH verifies the assembly fallback only (1516 bytes); affected BUNKA_SD SHA1 and header/global/prototype guards pass. Lint has zero broken links/status mismatches and one pre-existing large page. [[tickets/T-25020-bunka-sd-trace-closure]] and board moved to In Review, with bb 41/43/45 and head bb 42/44 mapped for the next bounded consultation. No C match counted.
@@ -1758,3 +1702,40 @@ The user's four phase 2 decisions (names from code and emulator evidence, claims
 ## [2026-10-24] decision | Phase 2 conventions: review fixes
 
 Fixes for the first review of [[tickets/T-27001-phase-2-conventions]] in `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md`, `GLOSSARY.md` and [[phase2]]. Glossary: abbreviation table, `card` and `pad` traps, rows for the map's game-term prefixes; main prefixes `game_mode_` and `memory_card_`. Renames: none before the rename tool merges (ADR and section 4 now agree). Hypotheses: main names in EVENT's range go to the main-only files. File renames change the `.rodata`/`.data` subsegments and inner asm paths too. The ledger keeps the evidence notes. Section 10 states the no-game-text rule. Pending user decisions (audit questions 2 and 5) listed in the ADR. The GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] moved to [[tickets/T-27004-shared-core-names]]; [[tickets/T-27000-phase-2-readable-codebase]] gets the umbrella-header criterion and its first box unticked until T-27001 is Done. No status changes.
+
+## [2026-10-24] query | T-25900 phase 2 naming audit
+
+drafts/T-25900/audit.md: naming state per unit (6,649 of 6,952 functions and 16,629 data labels still placeholders, 437 address-named files), how renames flow today and their gaps (the merge-time rename table matches no files since the per-object split), the design of tools/rename.py, naming conventions and the phase 2 work order.
+
+## [2026-10-24] build | T-26000 IDO 4.1 block-copy rule adopted
+tools/ugen_pass.py now follows IDO 4.1's block-copy state rule (30 cases as unit tests); main strCallback and func_8005938C re-steered by respelling a test, two obsolete empty-test FAKEs removed, clean build 27/27 ([[tickets/T-26000-ugen-block-copy-41-rule]]).
+4.1 also sets F at a branch on a value; not modelled because of main func_8006B0C8 ([[ido-52-evaluation]] "T-26000", [[toolchain]], [[matching-notes]]).
+
+## [2026-10-23] build | T-26000 review fixes: compare rule corrected, FAKE arms cut down
+Case `copy_store_then_ne0_left_if` (indirect store first) showed that IDO 4.1 keeps the state at a compare with the constant on the left; tools/ugen_pass.py now sets B only for a compare of two non-constants (0 of 566 procedures change state). 4.1 ignores a store in an arm ugen drops (`copy_dropped_arm_store`); the never-true FAKE arms rely on the pass counting it, and are cut down to the store alone in main strCallback, func_8005938C and MASTER func_801344E0, func_801363F4 ([[tickets/T-26000-ugen-block-copy-41-rule]], [[toolchain]], [[ido-52-evaluation]], [[matching-notes]], [[playbook]]). drafts/T-25608/ido41/utrace.py works again with the new pass.
+
+## [2026-10-24] ticket | T-26000 Done
+[[tickets/T-26000-ugen-block-copy-41-rule]] passed the standards and spec reviews (approved, four non-blocking follow-ups noted in the ticket) and moves to Done.
+Merged as w17-ugen41; follow-up still to file: the 4.1 census of F at a value branch, `func_8006B0C8`'s 4-byte copy, stored compares, `Uxjp`, `Uijp`.
+
+## [2026-10-24] ticket | T-26002 FAKE sweep under the 4.1 block-copy rule (In Progress)
+[[tickets/T-26002-fake-sweep-41-rule]] created on branch w20-fake-sweep (base w2-good) to remove the FAKEs that only steered the old block-copy detector.
+
+## [2026-10-24] build | T-26002: no FAKE removable, comments of the kept ones corrected
+Census of the full build (566 procedures with a `Umov`, throwaway logging shim, scripts in `drafts/T-26002/`): the copy state depends on a FAKE in exactly four procedures, MASTER `func_801344E0`, `func_801363F4`, main `strCallback`, `func_8005938C`. Of the 58 candidate hits, 50 are other mechanisms (35 in functions without a block copy); the 8 related ones were removed and rebuilt one by one and all stay: the four never-true arms, the repeated copy line of GYOZI `func_8014494C` and SHOUGATU `func_8014265C` (the original has two identical loops, both B), and the frame pads of GEKO `func_801406CC` and EVENT `func_80109404`. Comments of the arms and the repeated lines rewritten (comment-only edits to `src/main/800563F0.c`, `src/main/80058D20.c`, `src/ovl/MASTER/80133680.c`, `src/ovl/GYOZI/80143AD0.c`, `src/ovl/SHOUGATU/80141780.c`). Notes in [[matching-notes]] "T-26002".
+
+## [2026-10-24] ticket | T-26002 Done
+[[tickets/T-26002-fake-sweep-41-rule]] passed the standards and spec review (approved, no blocking findings; comment-only change in src/, no FAKE removed). Kanban card added under Done, and the comments of `strCallback` and `func_8005938C` now cite the full path of `copy_dropped_arm_store.c`. Merging as w20-fake-sweep.
+
+## [2026-10-24] ticket | T-26003 opened (Backlog)
+
+[[tickets/T-26003-ugen-value-branch-dropped-arm]]: the two IDO 4.1 behaviours the T-26000 rule does not model yet (value-branch F, dropped-arm stores), which keep four never-true FAKE arms alive per the T-26002 sweep.
+
+## [2026-10-24] ingest | T-27028 phase 2 naming proposals and port spec for overlay TACO
+Read all 38 files of `src/ovl/TACO` (406 functions), the call graph per stage handler and the data tables, and wrote `config/renames/proposals/o-taco.tsv` (911 rows: 406 func, 179 data, 70 field, 24 type, 40 file, 176 const, 16 comment; 14 marked HYPOTHESIS) and [[spec/o-taco]] (stage machine of 19 stages, ship and wingman rules, weapons, bombs, collisions and scoring, three stage scripts, three bosses, result tally, name entry, settings in the work area at `D_800E7D10+0x40`, entry from MASTER and OPTION). Prefix `shooter_` after the glossary seed. Findings: x is mirrored (pad left raises x); the wingman cannot die (its HP is never read); `func_8015CF30/D0D0/D270` are libgte RotMatrixZ/X/Y copies (proposed as `shooter_rot_matrix_z/x/y`); enemy type 11 never spawns; boss damage percent starts above 0 by construction. Ticket [[tickets/T-27028-p2-o-taco]] In Review ([[tickets/T-27000-phase-2]]). No source, header or symbol file touched; emulator not used (see the ticket).
+
+## [2026-10-24] ticket | T-27028 review round 1 fixes for the TACO table and spec
+Fixed the two blocking findings. [[tickets/T-27028-p2-o-taco]]: `func_801335A0` ORs the low byte into 0x600 when its first argument is even, so scene scripts that write 0x5xx play 0x6xx; the table notes and [[spec/o-taco]] now cite the played ids everywhere (boss 1 defeat 0x608, boss 2 defeat 0x604, title 0x604 to 0x607, opening cues, boss 1 to 3 cues and cadences: boss 2 every 240 frames at 1 in 3, boss 3 every 180), with the cooldown rule corrected (only for first argument exactly 1). New constants 0x604 to 0x608 and 0x511, 0x512, 0x514, 0x516. The pad enum is now `PadBits`; six core.tsv values (SELECT, START, L2, R2, L1, R1) conflict with the pad word main builds and are listed in spec section 14 for the core owner. Also `TcActor.unk7A` notes (boss part HP bars), the `Tc14` alias, settings types overlapping core, seven comment rows dropped as duplicates of core (913 rows now). Tables and wiki only.
+
+## [2026-10-24] ticket | T-27028 Done
+[[tickets/T-27028-p2-o-taco]] passed the standards and spec review in round 2 (approved, no blocking findings; round-1 sound ids and pad enum verified against the C) and moves to Done. The table `config/renames/proposals/o-taco.tsv` (913 rows) and [[spec/o-taco]] are merged as p2a-o-taco; the six conflicting `core.tsv` pad values are for the core owner (spec section 14).
