@@ -1,0 +1,72 @@
+# kind	scope	old	new	note
+func	main	func_800737A0	week_end_exit	last stage (0xFF) of mode 0x32 MODE_WEEK_END: day_event_next(0) (queue index + 1, back to mode 0x31), then the day HUD calls; emu: break hits once per Saturday night (4/8, 4/15) from func_80072BC0+0x50 with mode 0x32 stage 0xFF
+func	main	func_80073A40	week_day_bg_read	starts the CD read of the school-day background: room_bg_sectors_weekday[season] when sick + rest + no remedial week, else get_weekly_bg_sector(); returns dec_bg_cd_read's result (0/1 cache hit, -1 read started); emu: command 0 day shows a library scene
+func	main	func_80073AD8	week_day_init_screen	step 0 of stage 0: clear daily flags, build the day HUD (calendar, icon bar locked to the record's command, parameter panel, message window), start the background read and wait for it (a failed decode is retried); with vacation != 0 it clears the sprite tables and jumps to stage 10; emu: about 22 frames on 1995-04-05
+func	main	func_80073CB0	week_day_pick_sd_set	chooses the SD set id of the day into D_801230D0 from the command, the girl field of the record and the summer flag; club command: club tables; emu: command 0 -> 3, 1 -> 7, 2 -> 11, 3 -> 13, 5 -> 24, 6 -> 20, 7 -> 16 in April
+func	main	func_800741B8	week_day_init_sd_load	step 1 of stage 0: reads the SD pack (41 sectors to 0x801E0000; club_sd_set_sectors for the club command; the 9-sector sick-bed pack when sick + rest + no remedial week), verifies the file checksum (retries from substep 0) and calls main_step_next; emu: 32 frames on 4/5
+func	main	func_8007437C	week_day_init_sd_actors	step 2 of stage 0: points the SD tables at the loaded pack (addr_init_weekly/club/else_sd), queues its palette, builds SD actor A (actor 96, sequence = poor flag, plays once) and, on a plain school day with a companion girl, SD actor B (actor 97, sequence + 2); then main_stage_next
+func	main	func_80074D28	vacation_day_bg_read	vacation counterpart of week_day_bg_read: background from holiday_activity_bg_sector (func_80075FA0), or room_bg_sectors_holiday[season] when sick + rest; never the room in club tournament or camp weeks (queue[0] type 0x25 or 0x42)
+func	main	func_80074DE0	vacation_day_init_screen	step 0 of vacation_day_init: the HUD build of week_day_init_screen without the daily flag clear, cursor actor or sick overlay (sprite quad 0 hidden), background read by vacation_day_bg_read, no decode retry; emu: stage 0x0A step 0 on 1995-07-24
+func	main	func_80074F24	vacation_day_init_sd_load	step 1: SD set id from the holiday module (holiday_activity_pick_sd_set, func_80076FDC), then a 41-sector read from holiday_sd_set_sectors (m-holiday draft name of D_800B69E0) (club_sd_set_sectors for the club command; the sick-bed pack when sick + rest); waits for the read only, no checksum test
+func	main	func_8007505C	vacation_day_init_sd_actors	step 2: SD actor A as in week_day_init_sd_actors with addr_init_holiday_sd (ids 6 and 7 have no poor variant); SD actor B only for the club command when the companion lookup (func_8006F524) is not 0xF; ends with main_stage_set(1), or main_stage_next inside the KANGEI camp week (queue[0] type 0x42); emu: step 2 at frame 33 of the day, result 33 frames later
+comment	main	week_day	Handler of mode 0x40 (school-day command screen): dispatch on stage (0 init, 1 run the day's command, 2 leave, 10 vacation init), then draw the day HUD	O.BIN name kept; stage switch and HUD tail read from the code; emu: stage 1 and 0x0A seen
+comment	main	week_day_init	Stage 0 of the school day: runs the three setup steps (screen, SD pack load, SD actors) once per frame each	O.BIN name kept; step switch 0/1/2
+comment	main	week_day_main	Stage 1: waits for the SD animation and applies the command (week_day_main0 at step 0)	O.BIN name kept
+comment	main	week_day_exit	Stage 2: leaves the school day (week_day_exit0 at step 0)	O.BIN name kept
+comment	main	get_weekly_bg_sector	Disc sector of the background of today's command: per-command table, or the club table for the club command	O.BIN name kept; reads the current queue record
+comment	main	week_day_main0	Once the SD animation has stopped: play the result sound, apply the command to the parameters, count club practice; 14 frames later go to the exit stage (forced after 601 frames)	O.BIN name kept; emu: parameter_up_down runs 32 frames after stage 1 starts, exit 14 frames later
+comment	main	week_day_exit0	Advance to the next queue record, clear SD actors A and B, return to the day screen (mode 0x31)	O.BIN name kept; emu: runs once per school day
+comment	main	parameter_up_down	Apply one day's command to the nine parameters: row of command_deltas (club row for the club command), gains scaled by holiday x4 and by 1/2 for a poor day, illness or injury, costs unscaled; stress mirrors this	O.BIN name kept; emu: memory dumps before and after a day match the formula for command 0
+comment	main	vacation_day_init	Setup of a vacation-style day (home or club camp background, holiday SD pack) in three steps; called by week_day stage 10 and by the KANGEI camp stages	O.BIN name kept; emu: stage 0x0A of mode 0x40 during the summer break
+data	main	D_800B6760	week_day_bg_sectors	s32[8] disc sector of the school-day background per command 0-7 (entry 4 unused: the club command uses club_bg_sectors); emu: command 0 shows a library scene
+data	main	D_800B6780	club_bg_sectors	s32[11] background sector per club id 0-10 (club command); read by get_weekly_bg_sector and by holiday_activity_bg_sector; shared with the holiday module
+data	main	D_800B5950	room_bg_sectors_weekday	s32[4] by season_index: background of the player's room (night view); used by the weekday command screen (8005A0B0.c), TEL and by the sick-rest school day; shared; emu: the command screen shows this room
+data	main	D_800B5960	room_bg_sectors_holiday	s32[4] by season_index: the player's room by day (files C_02_01 + season letter); background of the sick-rest vacation day and of the holiday screens; shared with the holiday module; emu: sick + rest on 1995-07-24 shows the sleeping player in his room, bright window
+data	main	D_800B67AC	week_day_sd_set_sectors	s32[25] first sector of the SD pack file of each school-day SD set id, 41 sectors each, consecutive from 42418; index = SD set id = position of the file in the MAIN_SD directory
+data	main	D_800B6810	club_sd_set_sectors	s32[32] first sector of the SD pack file of each club SD set id (CLUB_SD directory, 41 sectors each from 27834); shared with the holiday module (its twin D_800B69E0 is holiday_sd_set_sectors in the m-holiday draft)
+data	main	D_800B68C0	week_day_sd_set_summer	u8[16] SD id for months 6-9, index 2*command + variant (commands 0-3; athletics also has index 8 for variant 2), 9 + variant (command 5), 11 + variant (6), 13 (rest); variant 0 = girl field 0, 1 = other or none, 2 = athletics with girl 5
+data	main	D_800B68D0	week_day_sd_set_other	u8[16] same layout for the other months; the ids are the odd files with W in the name; emu: the SD figure wears the jacket on 4/5 and ids 3, 7, 11, 24 were selected
+data	main	D_800B6890	club_sd_set_summer	u8[11][2] club SD id per club id 0-10 and variant (0 = girl field 0, 1 = other or none), months 6-9, plus two padding bytes; shared with holiday_activity_pick_sd_set
+data	main	D_800B68A8	club_sd_set_other	u8[11][2] same for the other months (indoor clubs have their own W files, sports clubs and drama keep one id); shared with holiday_activity_pick_sd_set
+data	main	D_801230D0	scene_work	0x40-byte shared scratch area (bzero at game_state_init); word 0 is the SD pack id of the day scenes here and in the holiday module, a counter or index in OPTION, TEL, NAME_ENT and ETC; emu: 3 on 1995-04-05
+data	main	D_80125CA4	sd_palette	address of the loaded SD pack, which starts with its palette; set to 0x801E0000 by addr_init_*_sd, passed to load_palette (row 0x10)
+data	main	D_80125CA8	sd_image_table	pointer into the loaded SD pack: sprite frame table (pack base + offset triple[1]); stored as the actor's frame table
+data	main	D_80125CAC	sd_sequence_table	pointer into the loaded SD pack: animation sequence table (pack base + offset triple[2]); stored as the actor's sequence table
+data	main	D_80125CB0	sd_texture_blocks	pointer into the loaded SD pack: texture block address table (pack base + offset triple[0]); stored as the actor's tpage table
+data	main	D_80120652	actor96_anim_flags	alias label of actor_pool[96].anim_flags (+2): bit 0 = animation running; the 'animation finished' test of the scene modules (33 files)
+data	main	D_80120658	actor96_anim_timer	alias label of actor_pool[96].anim_timer (+8): ticks in the current frame while the animation runs; week_day_main0 reuses it as the frame counter after the animation stops
+data	main	D_80120666	actor96_sequence_index	alias label of actor_pool[96].sequence_index (+0x16): which animation sequence plays; here the poor flag (0 normal, 1 poor) selects the result sound
+data	main	D_8011F3FF	mascot_draw_flags	HYPOTHESIS: alias label of actor_pool[27].draw_flags (+3), the mascot actor (m-hud ACTOR_MASCOT draft): bit 7 visible; the day handlers call mascot_update only while it is set
+const	WeekdayCommand	0	COMMAND_LIBERAL_ARTS	same name as the m-scheduler draft; row 0 of command_deltas raises liberal arts; emu: library scene on 4/5
+const	WeekdayCommand	1	COMMAND_SCIENCE	raises science; emu: classroom scene with a flask
+const	WeekdayCommand	2	COMMAND_ART	raises art; emu: the player sketches outdoors in a park
+const	WeekdayCommand	3	COMMAND_ATHLETICS	raises athletics and guts, costs condition; emu: the player jogs in a street
+const	WeekdayCommand	4	COMMAND_CLUB	no delta row of its own: club_activity_deltas[club]; background and SD pack by club; emu: club 0 shows a club room with bookshelves and two club members
+const	WeekdayCommand	5	COMMAND_TRIVIA	raises trivia and looks, lowers stress; emu: the player chats with classmates (SD pack with several people)
+const	WeekdayCommand	6	COMMAND_LOOKS	raises looks; emu: the player stands at a washstand
+const	WeekdayCommand	7	COMMAND_REST	condition up, stress down; emu: the player sleeps outdoors with a snore mark; result never poor
+const	WeekDayStage	0	WEEK_DAY_STAGE_INIT	week_day case 0: week_day_init (three steps: screen, SD pack load, SD actors)
+const	WeekDayStage	1	WEEK_DAY_STAGE_MAIN	week_day case 1: week_day_main; the day's command is applied here
+const	WeekDayStage	2	WEEK_DAY_STAGE_EXIT	week_day case 2: week_day_exit
+const	WeekDayStage	10	WEEK_DAY_STAGE_VACATION	week_day case 10: vacation_day_init; entered from step 0 when vacation != 0; emu: 0x0A on 1995-07-24
+const	WeekDayInitStep	0	WEEK_DAY_INIT_SCREEN	week_day_init_screen / vacation_day_init_screen
+const	WeekDayInitStep	1	WEEK_DAY_INIT_SD_LOAD	week_day_init_sd_load / vacation_day_init_sd_load
+const	WeekDayInitStep	2	WEEK_DAY_INIT_SD_ACTORS	week_day_init_sd_actors / vacation_day_init_sd_actors
+const	WeekDayTiming	0xD	WEEK_DAY_RESULT_HOLD	week_day_main0 compares the actor timer with this before incrementing: the result stays 14 frames after the animation stops; emu: parameter change at frame 87, exit at 101
+const	WeekDayTiming	0x259	WEEK_DAY_STAGE_TIMEOUT	step_timer limit (601 frames) after which week_day_main0 resets the CD ring and leaves the stage even if the animation never stops
+const	CommandResult	0	COMMAND_RESULT_NORMAL	scene byte of a school-day or holiday record; the animation sequence 0 plays, sound 0x501, full gains; always 0 for rest
+const	CommandResult	1	COMMAND_RESULT_POOR	poor day: sequence 1 (the player slumps), sound 0x502, gains halved, one more point of stress; emu: 1995-04-07
+const	Companion	0xF	COMPANION_NONE	extra byte of a school-day record: no girl accompanies the command (actor B is not built); 0 = girl 0, any other value = another heroine; emu: all records of the first weeks
+const	SdVariant	0	SD_VARIANT_GIRL_0	week_day_pick_sd_set: record extra is 0; the pack shows girl 0 beside the player; emu: command 0, extra 0
+const	SdVariant	1	SD_VARIANT_COMMAND_GIRL	extra is another girl or 0xF; the pack holds the figure of the heroine tied to the command (girl 1 for command 0, 2 for 1, 3 for 2, 8 for 5, 7 for 6, 6 for athletics); emu: pokes
+const	SdVariant	2	SD_VARIANT_GIRL_5	athletics only (extra is 5): the pack with girl 5; emu: command 3, extra 5
+const	SdPack	0x29	SD_PACK_SECTORS	sectors of one SD pack file (83,968 bytes)
+const	SdPack	9	SD_SICK_BED_PACK_SECTORS	sectors of the sick-bed pack (ETC_SD directory)
+const	SdPack	0x7D8A	SD_SICK_BED_PACK_LBA	disc sector (32138) of the sick-bed pack
+const	SdPack	0x801E0000	SD_PACK_ADDRESS	RAM address every SD pack is read to; its palette starts there
+const	WeekDaySdId	15	WEEK_DAY_SD_REST_SUMMER	SD id of the rest scene in months 6-9; week_day_init_sd_actors forces the record's poor flag to 0 for ids 15 and 16
+const	WeekDaySdId	16	WEEK_DAY_SD_REST_OTHER	SD set id of the rest scene in the other months (October to May)
+const	ParamScale	0x1000	PARAM_DELTA_UNIT	one table unit in 16.16: a delta of 16 is one parameter point; emu: command 0 gives liberal arts +15/16 on a normal day
+const	ParamScale	4	PARAM_HOLIDAY_FACTOR	parameter_up_down second argument nonzero (holiday module): gains x4, costs unchanged
+const	ParamScale	2	PARAM_GAIN_DIVISOR	gains are divided by 2 for each of: poor day, sick (health 3), injured or neurotic (health 1-2, not for commands 5-7)
+file	main	src/main/800737A0.c	src/main/school_day.c	the object holds the school-day command loop (week_day), the week-end exit, parameter_up_down and the vacation day setup; address range 0x800737A0-0x800752xx stays in the first comment; no header of its own today, its prototypes and table externs would move to include/school_day.h
