@@ -45,6 +45,24 @@ it opens mode 0x40, and the screen does this, with no player input:
 5. 14 frames later the scene ends: the queue index moves on and the game returns to the day screen (mode 0x31),
    whose queue reader opens the next record (normally the end-of-day record, then the next day).
 
+In pseudo-code (names of this spec; `holiday setup` is the vacation variant described below):
+
+```
+play_school_day(rec):                      # rec = day_events[day_event_index], type 0x00
+    cmd, poor, companion = rec.girl, rec.scene, rec.extra
+    setup = holiday_setup if vacation != 0 else school_setup
+    sick_rest = health == SICK and cmd_chosen == REST and not remedial_week       # last_command, not rec
+    bg   = room[season] if sick_rest else setup.bg(cmd, club)       # club only for cmd == CLUB; the vacation bg test skips remedial_week
+    pack = SICK_BED if sick_rest else setup.sd_pack(cmd, club, summer, variant(companion, cmd))
+    show HUD, bg; spawn SD actor A (sequence = poor); spawn SD actor B if companion is a girl, cmd != REST, plain school day
+    wait until A's animation has stopped
+    play sound (poor ? 0x502 : 0x501)
+    apply_command(cmd, holiday = False, poor)                                      # parameter_up_down
+    if cmd == CLUB: clubs[club].exp += 1
+    refresh the parameter panel; hold 14 frames
+    day_event_index += 1; return to the day screen
+```
+
 Vacation days (summer, winter and spring breaks, `vacation` != 0) use the same mode and the same record, but a
 different setup (stage 10): home or camp backgrounds, holiday SD packs. The week-end health check (mode 0x32) is a
 different mode; only its last stage, `week_end_exit`, lives in this file.
@@ -109,7 +127,8 @@ Runs every frame of the step; the part before the switch runs each time.
      15th icon too when a command stands), parameter panel (`parameter_show_init`), the finger cursor actor
      (`cursor_actor_init(0)`), `parameter_disp_switch(1)`, message window; load the sick-overlay graphics
      (`func_8005AD1C`); if the player is in the remedial week (player_flags bit 16) sprite quad 0 is hidden, else
-     `func_8005AD70` sets quad 0 up when `health` == sick (HYPOTHESIS: a status mark for the sick state);
+     `func_8005AD70` sets quad 0 up when `health` == sick (the sick overlay: the command screen loads the same graphics in
+     its sick branch);
      reset the text system, hide the window title, start the typewriter at entry 0 (no text is queued, the
      window stays empty); then `week_day_bg_read`. Its result: 0 or 1 = the background is already resident in that
      buffer (show it, substep 2); -1 = a read was started (substep 1).
@@ -187,7 +206,11 @@ equals the value stored at the end of the file); on success `main_step_next`, el
    cleared (so rest never plays the poor sequence). These helpers (module 8007C030) set four pointers
    from a table of three 16-bit offsets per id and the pack base 0x801E0000: `sd_palette` (the base),
    `sd_texture_blocks`, `sd_image_table` (frame table), `sd_sequence_table`. The pack file is
-   palette, texture blocks, frame table, sequences; offsets per id are data of `addr_init_*_sd`.
+   palette, texture blocks, frame table, sequences; offsets per id are data of `addr_init_*_sd`. Pointers inside a pack
+   are absolute RAM addresses for the load address 0x801E0000. Example, school-day pack 0 (84 KB): palette at +0
+   (0x200 bytes), image records from +0x200, four sequences at +0x3FC to +0x473, the texture-block pointer table at +0x474
+   (its first entries point at +0x4E0 and +0x44E0; blocks are 0x4000 bytes, 128 x 128 pixels at 8 bits; the rest of the
+   file up to 0x14800 is more texture data), the image pointer table at +0x47C, the sequence pointer table at +0x4B8 with four entries: sequence 0 and 1 for figure A (normal, poor), 2 and 3 for figure B.
 3. `load_palette(sd_palette, row 0x10, ...)`: queue the palette upload to CLUT row 0x10.
 4. SD actor A = actor 96: draw priority 1, `anim_flags` 5 (running, stop on the last frame), sprite attribute
    0x01000000 (8-bit pixels), `draw_flags` 0x84 (visible, position not shifted by the image origin), frame table,
@@ -287,7 +310,7 @@ six of its own stages (3, 7, 13, 18, 23 and 27 of its day dispatcher). The three
   first record of the queue has type 0x25 or 0x42 (tournament or camp week) or the player is not (sick and resting) it is
   the holiday background table (`holiday_activity_bg_sector`, `func_80075FA0`; per command: 0-2 the home-room file `C_02_03`, 3 `C_29_02`, 5 `C_29_10`, 6 and 7 the
   school files `C_01_43` and `C_01_44`; the club command `club_bg_sectors[club]`); when the player is sick and the last
-  command is rest (and it is no camp or tournament week) `room_bg_sectors_holiday[season]`. Unlike the school-day
+  command is rest (and it is no camp or tournament week) `room_bg_sectors_holiday[season]` (emulator, sick and resting on 1995-07-24: the player sleeps in his room by day). Unlike the school-day
   version this test does not look at the remedial-week flag, while steps 1 and 2 of the vacation setup do. Emulator:
   command 0 on 1995-07-24 shows the player at a desk in a room with bookshelves, white shirt.
 - Step 1 `vacation_day_init_sd_load`: the SD set id comes from the holiday module (`holiday_activity_pick_sd_set`,
@@ -311,7 +334,7 @@ State the unit reads or writes (core names; offsets in `game_state`):
 | `vacation` | 0x03D u8 | 0 term, 1 summer, 2 winter, 3 spring; nonzero sends the school day to stage 10 |
 | `month`, `day` | 0x03F, 0x040 u8 | summer flag (months 6-9), season index, day-kind lookup |
 | `month_calendar[0].day_kind[day]` | 0x044 + day, u8 | not 1, 2 or 3 (plain school day) for SD actor B |
-| `player_flags` | 0x0F4 u32 (`PlayerFlagBits`) | health = bits 8-11, club = bits 12-15, bit 16 remedial week |
+| `player_flags` | 0x0F4 u32 (`PlayerFlagBits`) | health = bits 8-11, club = bits 12-15, bit 16 remedial week (set by the exam result scene; while it is set the command screen enables only commands 0-2, so the week's school days carry a study command) |
 | `param_*` | 0x0FC-0x11C, 9 x `ParamValue` (u16 frac, u16 value) | changed only through `parameter_change` |
 | `clubs[club].exp` | 0x66C + 4 * club, u16 | +1 per club-command day |
 | `day_events[]`, `day_event_index` | 0x69C 32 x 4 bytes, 0x71C u8 | the record of the day; the index moves on at the exit |
@@ -347,8 +370,10 @@ once on each Saturday night with mode 0x32, stage 0xFF.
 - The poor flag and the companion are decided at queue build time from the state of the week's start (and for the poor
   flag the day offset); the port should compute them there, not when the day plays.
 - The sick-rest special (health sick, not in the remedial week, command rest) replaces the background by the player's
-  room of the current season and the SD pack by the sick-bed pack; the other commands of a sick player play normally
-  with halved gains.
+  room of the current season and the SD pack by the sick-bed pack. It is the normal case for a sick player: on the
+  command screen (mode 0x34, outside this unit) a sick player can only enable the rest icon, and the remedial week
+  (three study icons only) takes precedence over sickness, which is why the special excludes the remedial week. Other
+  commands of a sick player (possible in the remedial week) play normally with halved gains.
 - Backgrounds and SD packs are assets selected by tables of sectors (a CD address): the port should key them by file,
   the files are listed above. `W` files are the jacket uniform; the summer switch is months 6-9, not the season index.
 - The hardware layer is replaced: the dec_bg read/decode/show, actors 96/97, palette row 0x10 and sprite attribute bits
@@ -358,15 +383,16 @@ once on each Saturday night with mode 0x32, stage 0xFF.
 
 1. The club command's SD variants (which girl is baked into each club pack) and command 3 variant 0 were not looked at;
    club 0 was played once (club room scene, deltas and practice point confirmed) and the variant rule is from the C.
-2. The vacation-day companion (live lookup for the club command only) and the vacation sick-rest scene were not played;
-   `room_bg_sectors_holiday` is read from the C only.
+2. The vacation-day companion (live lookup for the club command only) and the vacation club scene were not played.
 3. Core's `DayEvent` field names (`girl`, `scene`, `extra`) fit event records; for type 0x00 and 0x10 they hold command,
    poor flag and companion. Suggest a union view `SchoolDayEvent { type, command, poor, companion }` or comments; no
    rows are proposed here because the field rows belong to core.
 4. Actor 97 is `ACTOR_CALENDAR_MARK_FIRST` in the m-hud draft and SD character B here; suggest alias constants `ACTOR_SD_A` 96,
    `ACTOR_SD_B` 97 (both units use them).
 5. Sound ids 0x501 / 0x502 (good / poor here; 0x502 is also the card error sound) need names from the sound unit.
-6. The sick overlay (`func_8005AD1C` / `func_8005AD70`, sprite quad 0 when sick) is not identified (HYPOTHESIS: a status mark).
-7. `room_bg_sectors_*`: the weekday command screen shows the room at night; the holiday room (`C_02_01*`) is assumed to be the
-   day view but not looked at.
+6. The sick overlay (`func_8005AD1C` / `func_8005AD70`, sprite quad 0 when sick): what it looks like was not identified in the
+   scenes seen (it sits where the sleeping figure is drawn); it needs a name from the graphics side.
+7. `room_bg_sectors_*`: the weekday table shows the player's room at night (command screen, sick-rest school day), the
+   holiday table the same room by day (sick-rest vacation day, emulator, 1995-07-24); other holiday uses are the holiday
+   unit's.
 8. `D_800B6928` has 11 club rows; a command 4 with club id 11 would read padding bytes (cannot happen: the icon is disabled).
