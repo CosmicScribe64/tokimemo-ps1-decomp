@@ -294,7 +294,9 @@ void func_8014262C(void) {
 void func_8014265C(void) {
     func_8013D5D8();
     if (D_800E6280.unk_1104.w++ == 0) {
-        /* FAKE: duplicate copy advances ugen's block-copy state to State B. T-24092 */
+        /* FAKE: the original has two identical block-copy loops here (both in State B, the state at
+         * entry), and one copy line gives one loop; the repeated line is the only form found that
+         * emits the second, the real source is unknown. T-24092, T-26002 */
         ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
         ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
         ((DisplayActor44 *)D_80120650)[2].unk_16 = 4;
