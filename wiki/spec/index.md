@@ -11,3 +11,4 @@ One line per unit: what the spec covers. Specs are written for the Godot port ([
 One line per unit. Specs are facts for the Godot port, in our own words; names are proposals in `config/renames/proposals/`.
 
 - [[spec/h-graphics]] - main graphics layer: frame render, actor pool, texture-block cache, VRAM queues, primitives, screen layers, palette tools, debug HUD ([[tickets/T-27020-p2-h-graphics]])
+- [[spec/m-weekday]] - main school-day command loop (mode 0x40): stages and steps, background and SD-pack choice per command, the parameter_up_down formula, vacation days, week-end exit ([[tickets/T-27012-p2-m-weekday]])
