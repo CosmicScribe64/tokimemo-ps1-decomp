@@ -9,6 +9,14 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Phase 2 handoff (2026-10-24, keep current)
 
+Continuation in progress: Luna agents own [[tickets/T-27031-p2-o-taiiku]] and
+[[tickets/T-27033-p2-o-shougatu]]; Sol 6.1 owns [[tickets/T-27032-p2-o-geko]].
+The other four missing analysis units have Ready tickets T-27034 through T-27037. The orchestrator
+serializes shared wiki edits and independent review. User model preference is Luna by default,
+Sol 6.1 for harder work. Proposal audit: 24 existing TSV files (21 units plus supplemental tables),
+10,085 rows, no malformed TSV rows, 135 keys with conflicting proposed names and four same-kind,
+same-scope name collisions. These are inputs to T-27009 reconciliation, not applied renames.
+
 Scope: port-first readable code for the Godot port while the matching decomp stays exact (27/27 after every change); decisions in docs/adr/0001-phase-2-naming.md, plan in [[phase2]], umbrella [[tickets/T-27000-phase-2]].
 
 - Done: step 0 (conventions T-27001, GLOSSARY.md, `tools/rename.py` T-27002, [[rename-tool]]); emulator ([[emulator]]); analysis tables and port specs merged for the units listed in wiki/spec/index.md (`config/renames/proposals/<unit>.tsv`, `wiki/spec/<unit>.md`).

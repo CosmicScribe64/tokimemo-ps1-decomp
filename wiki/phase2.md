@@ -114,6 +114,10 @@ of the main module makes the rename.
 
 ## Review rule
 
+Continuation model assignment (user, 2026-10-24): use Luna for bounded analysis and Sol 6.1 for
+harder analysis and independent review. This supersedes the historical Sonnet/Opus assignments below;
+the evidence requirements and review gates remain in force.
+
 - Sonnet agents name; an Opus agent reviews every table before it is applied, and the code review checks the
   commits before Done.
 - Every name needs evidence. The reviewer rejects a name whose note gives none, a game-meaning claim without

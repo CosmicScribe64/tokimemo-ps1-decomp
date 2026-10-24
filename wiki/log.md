@@ -1400,3 +1400,15 @@ Merging `p2-core-apply` into the integration tree failed in `tools/rename.py rep
 
 ## [2026-10-24] decision | Phase 2 handoff after the core apply
 T-27003 and T-27004 are merged (27/27). [[status]] handoff now lists them as applied, the leftover enum-tag rename, and that the reconcile pass T-27009 must map the older proposal tables with `rename.py lookup`. Phase 2 stays paused for weekly usage (95%).
+
+## [2026-10-24] ticket | Resume phase 2 with Luna and Sol 6.1
+
+Created [[tickets/T-27031-p2-o-taiiku]] through [[tickets/T-27037-p2-o-small]] for the seven missing analysis units. First batch claims sports festival, girl encounters and New Year/Christmas; remaining units are Ready. User model preference supersedes the historical Sonnet/Opus assignments. Shared wiki edits and commits are serialized by the orchestrator.
+
+## [2026-10-24] query | Phase 2 continuation baseline
+
+[[phase2]] now records the user's Luna/Sol 6.1 assignment, superseding historical model roles. [[status]] records the first three active units and proposal audit: 24 TSVs, 10,085 rows, no malformed rows, 135 conflicting keys and four same-kind/scope target collisions. Docker checks: headers OK; wiki lint zero broken links and zero status mismatches (one pre-existing oversized page). Initial progress failed on stale generated pre-rename asm names; configure and ninja refresh are underway. No source changes or new match claims.
+
+## [2026-10-24] ticket | Record reconciliation preflight
+
+Created [[tickets/T-27009-p2-reconcile]] as Ready with measured proposal conflicts, applied-core precedence and the required separation of executable batches from comments, enum suggestions, deferred rows and file renames. Source census: TAIIKU 213, GEKO 391, SHOUGATU 400 and GYOZI 417 C definitions. First Luna drafts are partial; agents are correcting unsupported names and documenting coverage, without Done claims.

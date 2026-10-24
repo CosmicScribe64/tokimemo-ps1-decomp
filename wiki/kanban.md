@@ -46,6 +46,16 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-27009-p2-reconcile|T-27009 Reconcile phase 2 proposal names and executable batches]]
+
+- [ ] [[tickets/T-27037-p2-o-small|T-27037 Phase 2 analysis - Remaining small overlays]]
+
+- [ ] [[tickets/T-27036-p2-o-bunkasd-shugaku|T-27036 Phase 2 analysis - Stage shows and school trip]]
+
+- [ ] [[tickets/T-27035-p2-o-master-ending|T-27035 Phase 2 analysis - Club mastery and endings]]
+
+- [ ] [[tickets/T-27034-p2-o-tel-option|T-27034 Phase 2 analysis - Telephone and options]]
+
 - [ ] [[tickets/T-25058-main-screen-offset|T-25058 Match MAIN screen-offset easing]]
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
 - [ ] [[tickets/T-24024-main-dispatcher|T-24024 Recover MAIN schedule dispatcher]]
@@ -53,6 +63,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-27033-p2-o-shougatu|T-27033 Phase 2 analysis - New Year and Christmas]]
+
+- [ ] [[tickets/T-27032-p2-o-geko|T-27032 Phase 2 analysis - Girl encounters]]
+
+- [ ] [[tickets/T-27031-p2-o-taiiku|T-27031 Phase 2 analysis - Sports festival]]
 
 - [ ] [[tickets/T-20500-emulator-assisted-naming|T-20500 Emulator-assisted naming and constants pass]]
 - [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
