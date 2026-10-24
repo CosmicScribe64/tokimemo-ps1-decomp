@@ -1762,3 +1762,7 @@ The finish gate's block-by-block lens matched main func_800476C0 (3,132 bytes) i
 ## [2026-10-23] ticket | T-25604 Done: NAME_ENT func_80143580 matched
 
 The fresh start's history digest found a 122-row body; its guided-search lens closed it (4,308 bytes), with the case 9 record chain confirmed against the Rev 1 copy of the function ([[tickets/T-25600-finish-gate]]). Merged directly after an orchestrator review.
+
+## [2026-10-24] query | T-25900 phase 2 naming audit
+
+drafts/T-25900/audit.md: naming state per unit (6,649 of 6,952 functions and 16,629 data labels still placeholders, 437 address-named files), how renames flow today and their gaps (the merge-time rename table matches no files since the per-object split), the design of tools/rename.py, naming conventions and the phase 2 work order.
