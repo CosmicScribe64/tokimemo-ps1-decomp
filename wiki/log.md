@@ -1596,3 +1596,7 @@ Findings: `week_day` (mode 0x40) is a fixed pipeline per school day (screen setu
 
 ## [2026-10-24] ticket | T-27012 Done after review
 [[tickets/T-27012-p2-m-weekday]] passed the review at a5a3aad64 (approved; three non-blocking findings recorded in the ticket: the eight `WeekdayCommand` rows duplicate m-scheduler's and go at consolidation, spec open question 4 is stale against m-hud's actor names, and four addresses are named differently in p2a-m-dates-b). Tables and wiki only, nothing under `src/`, `include/` or `config/symbol*`. Merged as p2a-m-weekday.
+
+## [2026-10-24] decision | Phase 2 handoff section and usage pause
+
+[[status]] now opens with a phase 2 handoff: what is merged, what is in flight, how each run resumes, and the usage pause (new phase 2 work stops at 95% weekly plan usage; in-flight units finish or leave WIP snapshots).

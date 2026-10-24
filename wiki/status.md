@@ -7,6 +7,16 @@ updated: 2026-10-22
 
 The one page for "where are we". Update it when a wave, a local or cloud session, or a contributor PR changes the numbers (`tools/docker.sh python3 tools/progress.py`). Older status and handoff pages are in `archive/` ([[completion-run-2026-10-17]], [[stopping-point-2026-10-15]]).
 
+## Phase 2 handoff (2026-10-24, keep current)
+
+Scope: port-first readable code for the Godot port while the matching decomp stays exact (27/27 after every change); decisions in docs/adr/0001-phase-2-naming.md, plan in [[phase2]], umbrella [[tickets/T-27000-phase-2]].
+
+- Done: step 0 (conventions T-27001, GLOSSARY.md, `tools/rename.py` T-27002, [[rename-tool]]); emulator ([[emulator]]); analysis tables and port specs merged for the units listed in wiki/spec/index.md (`config/renames/proposals/<unit>.tsv`, `wiki/spec/<unit>.md`).
+- In flight when this was written: the remaining analysis units (tickets T-27011..T-27037; a unit is done when its proposals table is on main), then a reconcile pass (T-27009) that aligns every table with core.tsv; the O.BIN-name pilot apply (T-27003, branch `p2-pilot`), then the core apply (T-27004).
+- Not started: applying each unit's reconciled table with `rename.py plan/apply/check` (one unit per branch, 27/27, review), then file and header renames per unit (last), per [[phase2]].
+- Usage pause: the orchestrator stops starting phase 2 work at 95% weekly plan usage. A file `.claude/orchestrator/state/usage_pause` (local, not in git) makes `bin/mkwt-tool.sh` refuse new `p2*` worktrees; remove it to resume. Stopped units leave a "WIP snapshot" commit on their `p2*` branch.
+- To resume (orchestrator scripts are local under `.claude/orchestrator/`): analysis = `state/p2-analysis.js` (template `state/p2-analysis-template.js`, units `state/p2-units.json`; drop units whose `config/renames/proposals/<id>.tsv` is already on main, re-embed with `bin/wf_embed.py`, launch); apply = re-run the pilot or core step on its branch. Merge only through `bin/merge3.sh`, which runs `rename.py replay` before the 27/27 build.
+
 ## Phase 1 complete (2026-10-24)
 
 Every game function is C: **6,952/6,952 functions, 2,276,920/2,276,920 bytes (100.0%)**, 27/27 sha1, merged at dbc017d86. The last ones: SHOUGATU func_8013EA98 and TAIIKU func_80137784 (stubborn-function attack, [[tickets/T-25500-stubborn-functions]]), main func_800476C0, func_80067870, NAME_ENT func_80143580 and main func_8006B0C8 (finish gate and its fresh-start runs, [[tickets/T-25600-finish-gate]]). func_8006B0C8 needed a narrowed block-copy rule in `tools/ugen_pass.py`; an IDO 4.1 check found the rule 4.1 itself follows, which [[tickets/T-26000-ugen-block-copy-41-rule]] is adopting. Lessons from the last ~100 matches: [[notes/wins-2026-10]] and [[playbook]].
