@@ -655,9 +655,17 @@ def scope_units_for(tree, owner, addr):
 
 
 def scope_files(tree, owner, addr):
-    """C files and headers whose tokens name (owner, addr)."""
+    """C files and headers whose tokens name (owner, addr) (memoized per index and unit set)."""
     units = scope_units_for(tree, owner, addr)
     idx = tree.index()
+    memo = idx.setdefault("scope_memo", {})
+    key = (owner, tuple(units))
+    if key not in memo:
+        memo[key] = _scope_files(tree, owner, units, idx)
+    return memo[key]
+
+
+def _scope_files(tree, owner, units, idx):
     files = [p for p, u in idx["sources"].items() if u in units]
     if owner != "main":
         files += tree.private_headers(owner)
@@ -691,7 +699,10 @@ def plan_symbol(ctx, row):
     if row.scope not in tree.unit_names:
         return ctx.problem(row, "unknown unit %s" % row.scope)
     table = ctx.table()
-    res = table.resolve(row.scope, row.old)
+    if ctx.merge and row.key.startswith("0x"):
+        res = (row.scope, int(row.key, 16))       # replay: the ledger knows the address
+    else:
+        res = table.resolve(row.scope, row.old)
     if res is None:
         return ctx.problem(row, "%s is neither a placeholder nor a name of %s's symbol files" % (row.old, row.scope))
     owner, addr = res
@@ -711,7 +722,7 @@ def plan_symbol(ctx, row):
             and not any(l.alias for l in lines if l.name == n)]
     if symtab.placeholder_addr(row.old) is not None and real and not ctx.merge:
         return ctx.problem(row, "0x%08X is named %s already; use that as the old name" % (addr, real[0]))
-    if symtab.placeholder_addr(row.old) is None and row.old not in names:
+    if symtab.placeholder_addr(row.old) is None and row.old not in names and not ctx.merge:
         return ctx.problem(row, "%s does not name 0x%08X in the symbol files" % (row.old, addr))
     row.key = "0x%08X" % addr
     files = scope_files(tree, owner, addr)
@@ -1107,7 +1118,7 @@ def plan_fields(ctx, rows, use_gcc=True):
         for _round in range(40):
             if not scratch:
                 break
-            patched = 0
+            spots = {}          # (file, offset) -> row, from this round's texts (patched after the round)
             for f, ln, col, msg, notes, _extra in scratch.errors(users):
                 m = NO_MEMBER_RE.match(msg)
                 if not m:
@@ -1116,14 +1127,22 @@ def plan_fields(ctx, rows, use_gcc=True):
                 if row is None:
                     continue
                 for (pf, pl, pc) in [(f, ln, col)] + notes:
-                    if patch_member(tree, pf, pl, pc, row.old, row.new):
-                        patched += 1
-                        located[id(row)] += 1
-                        ctx.field_files.add(pf)
+                    at = locate_member(tree.read(pf), pl, pc, row.old)
+                    if at is not None:
+                        spots[(pf, at)] = row
                         break
                 else:
                     ctx.problem(row, "%s:%d:%d: gcc reports a use of %s that is not the token %s (token pasting?); "
                                      "fix it by hand" % (f, ln, col, row.old, row.old))
+            patched = 0
+            for pf in sorted({f for f, _a in spots}):
+                text = tree.read(pf)
+                for (_f, at), row in sorted(((k, r) for k, r in spots.items() if k[0] == pf), key=lambda kv: -kv[0][1]):
+                    text = text[:at] + row.new + text[at + len(row.old):]
+                    patched += 1
+                    located[id(row)] += 1
+                tree.write(pf, text)
+                ctx.field_files.add(pf)
             if not patched:
                 break
         if scratch:
@@ -1159,23 +1178,20 @@ def norm_diag(d, names):
     return (f, ln, msg)
 
 
-def patch_member(tree, path, line, col, old, new):
-    """Replace the member name after the `.`/`->` gcc points at (1-based line, byte column)."""
-    text = tree.read(path)
+def locate_member(text, line, col, old):
+    """Offset of the member name after the `.`/`->` gcc points at (1-based line, byte column), or of
+    the name itself; None when the token there is not `old`."""
     if text is None:
-        return False
+        return None
     starts = [0] + [m.end() for m in re.finditer(r"\n", text)]
     if line - 1 >= len(starts):
-        return False
+        return None
     i = starts[line - 1] + col - 1
-    m = re.compile(r"(?:\.|->)\s*(\w+)").match(text, i)
-    if not m or m.group(1) != old:
-        m = re.compile(r"(\w+)").match(text, i)
-        if not m or m.group(1) != old:
-            return False
-    s = m.start(1)
-    tree.write(path, text[:s] + new + text[s + len(old):])
-    return True
+    for rx in (r"(?:\.|->)\s*(\w+)", r"(\w+)"):
+        m = re.compile(rx).match(text, i)
+        if m and m.group(1) == old:
+            return m.start(1)
+    return None
 
 
 def rewrite_field_comments(ctx, row, path, types, users):
@@ -2332,9 +2348,12 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     run_rows(ctx, others, use_gcc=use_gcc)
     if fields:
         need = []
+        members = set()
+        for u in list(tree.index()["sources"]) + tree.index()["headers"]:
+            members |= ident_tokens(tree.read(u) or "", members=True)
         for r in fields:
             r.scope = current_type_name(ctx, r.scope)
-            if any(r.old in ident_tokens(tree.read(u) or "", members=True) for u in tree.index()["sources"]):
+            if r.old in members:
                 need.append(r)
         if need:
             plan_fields(ctx, need, use_gcc=use_gcc)

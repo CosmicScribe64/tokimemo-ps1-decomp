@@ -375,6 +375,13 @@ class OracleTest(Fixture):
         self.assertIn("D_800E6280.mode is read first", main)
         self.assertIn("r.unk_00 = count + value;", self.read("src/main/80041100.c"))
 
+    def test_two_uses_on_one_line(self):
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c").replace(
+            "D_800E6280.unk_02 = arg0;", "D_800E6280.unk_02 = arg0 + D_800E6280.unk_02 + D_800E6280.unk_02;"))
+        out = self.ok("field GameState unk_02 step\n", verify=True)
+        self.assertIn("D_800E6280.step = arg0 + D_800E6280.step + D_800E6280.step;", self.read("src/main/80041100.c"))
+        self.assertNotIn("PROBLEM", out)
+
     def test_field_member_clash(self):
         self.refused("field GameState unk_00 unk_02x\n", "placeholder")
         self.refused("field GameState unk_00 unk_02\n", "placeholder")
@@ -504,6 +511,10 @@ class LedgerTest(Fixture):
         self.assertIn("void aaa_last(void) {", self.read("src/ovl/AAA/80132000.c"))
         self.assertIn("aaa_last = 0x80132000;", self.read("config/symbols_AAA.txt"))
         self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        # a branch still uses the middle name of the chain
+        self.write("src/ovl/AAA/80132100.c", self.read("src/ovl/AAA/80132100.c") + "void b(void) { aaa_first(); }\n")
+        self.assertEqual(R.replay(self.root, out=io.StringIO(), use_gcc=False), 0)
+        self.assertIn("void b(void) { aaa_last(); }", self.read("src/ovl/AAA/80132100.c"))
 
     def test_replay_symbol_line_dedupe(self):
         self.ok("func main func_80041180 text_merge\n")
