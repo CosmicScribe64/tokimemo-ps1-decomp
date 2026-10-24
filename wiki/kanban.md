@@ -27,7 +27,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-21018-event-80118010-near-miss|T-21018 Match EVENT:func_80118010 from the T-15200 near miss]]
 - [ ] [[tickets/T-21510-wiki-lint|T-21510 Wiki lint for tickets, kanban, index and log]]
 - [ ] [[tickets/T-21500-incremental-configure|T-21500 Stop configure from re-splitting asm on every checkout or merge]]
-- [ ] [[tickets/T-20500-emulator-assisted-naming|T-20500 Emulator-assisted naming and constants pass]]
 - [ ] [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000 Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 detector]]
 - [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 - [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
@@ -54,6 +53,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-20500-emulator-assisted-naming|T-20500 Emulator-assisted naming and constants pass]]
 - [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
 - [ ] [[tickets/T-25062-name-ent-byte-pack|T-25062 Match NAME_ENT byte pack and zero loop]]
 - [ ] [[tickets/T-25060-tel-date-menu|T-25060 Match final TEL date menu builder]]
