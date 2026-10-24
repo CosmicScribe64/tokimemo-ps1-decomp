@@ -17,6 +17,17 @@ entry points. The matching decompilation stays exact: 27/27 sha1 after every cha
 
 ## Scope
 
+### Readiness to start the Godot port
+
+User clarification (2026-10-24): the immediate outcome is code readable enough to start the Godot port.
+Do not wait for every unit's naming backlog to be exhausted before starting a gameplay slice. Prioritize
+the shared game-state interface, day progression, command effects and the scene rules the first slice
+needs. Keep each spec explicit about verified rules and unresolved work. T-27040 starts this with the
+school-day loop and parameter-delta formula; [[spec/m-weekday]] describes their behavior.
+
+Emulator runs, existing save files and debugger traces are authorized to resolve uncertain meanings.
+Record reproducible commands as evidence and keep save files, screenshots and other game data ignored.
+
 Set by the user on 2026-10-24; the full table and the accepted exception are in the ADR (section Scope).
 
 - Game logic: named and explained in full. It covers GameState and its records, enums, calendar and schedule,

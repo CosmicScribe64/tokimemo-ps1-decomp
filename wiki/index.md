@@ -17,6 +17,14 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
 
+## Port references
+
+- [[spec/index]] - unit port specs; applied batches and partial continuation drafts are distinguished
+- [[spec/o-taiiku]] - Sports festival: partial body-backed transitions, input/movement and girl-stat rewards (In Progress)
+- [[spec/o-geko]] - GEKO encounters: five mode entries, walk-home/birthday rules, invitation selection and appointments (In Progress)
+- [[spec/o-shougatu]] - New Year/Christmas and GYOZI: partial candidate, shrine, fortune and birthday rules (In Progress)
+- [[spec/o-tel-option]] - Telephone/options: partial invitation eligibility, relationship effects and sound-test flow (In Progress)
+
 ## Matching
 
 - [[playbook]] - short recipe list by symptom

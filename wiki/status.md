@@ -1,6 +1,6 @@
 ---
 type: status
-updated: 2026-10-22
+updated: 2026-10-24
 ---
 
 # Status
@@ -9,20 +9,34 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Phase 2 handoff (2026-10-24, keep current)
 
-Continuation in progress: Luna agents own [[tickets/T-27031-p2-o-taiiku]] and
-[[tickets/T-27033-p2-o-shougatu]]; Sol 6.1 owns [[tickets/T-27032-p2-o-geko]].
-The other four missing analysis units have Ready tickets T-27034 through T-27037. The orchestrator
-serializes shared wiki edits and independent review. User model preference is Luna by default,
-Sol 6.1 for harder work. Proposal audit: 24 existing TSV files (21 units plus supplemental tables),
-10,085 rows, no malformed TSV rows, 135 keys with conflicting proposed names and four same-kind,
-same-scope name collisions. These are inputs to T-27009 reconciliation, not applied renames.
+Continuation checkpoint (local commits, 2026-10-24):
+
+- [[tickets/T-27040-school-day-readable-batch]] Done: nine school-day helpers and seven essential
+  parameter/local roles applied through rename.py. Clean Docker build and independent hashes 27/27;
+  6,952/6,952 functions, 2,276,920/2,276,920 bytes. Independent Luna Standards and Sol 6.1 Spec reviews
+  passed after one documentation correction. Start with [[spec/m-weekday]] and `src/main/800737A0.c`
+  for the daily-command gameplay reference. Ledger: `config/renames/school-day.txt`.
+- Draft analyses: [[tickets/T-27031-p2-o-taiiku]], [[tickets/T-27032-p2-o-geko]],
+  [[tickets/T-27033-p2-o-shougatu]] and [[tickets/T-27034-p2-o-tel-option]]. These remain In Progress;
+  their tables/specs are proposals with explicit coverage limits, not applied names or completed units.
+  T-27035 through T-27037 remain Ready. Shared wiki edits and commits are serialized by the orchestrator.
+- User model preference: Luna by default, Sol 6.1 for harder work and review. Immediate outcome is
+  readable code sufficient to start Godot, beginning with a gameplay slice; exhaustive helper naming
+  is not a prerequisite. Emulator, save-file and debugger evidence is authorized.
+- Proposal baseline audit before these new drafts: 24 TSV files (21 units plus supplemental tables),
+  10,085 rows, no malformed rows, 135 conflicting naming keys and four same-kind/same-scope target
+  collisions. [[tickets/T-27009-p2-reconcile]] is Ready and records batching requirements; partial
+  tables must not be passed directly to apply. Existing core names and the applied ledgers win.
 
 Scope: port-first readable code for the Godot port while the matching decomp stays exact (27/27 after every change); decisions in docs/adr/0001-phase-2-naming.md, plan in [[phase2]], umbrella [[tickets/T-27000-phase-2]].
 
 - Done: step 0 (conventions T-27001, GLOSSARY.md, `tools/rename.py` T-27002, [[rename-tool]]); emulator ([[emulator]]); analysis tables and port specs merged for the units listed in wiki/spec/index.md (`config/renames/proposals/<unit>.tsv`, `wiki/spec/<unit>.md`).
 - Applied and merged (27/27): the O.BIN/SDK-name pilot T-27003 (128 ledger rows, `config/renames/obin.txt`, `sdk.txt`) and the shared-core apply T-27004 (724 ledger rows: GameState fields, core types, top functions; game mode machine is `game_mode_*`/`mode_stage_*`/`mode_step_*`, `portrait_*`, `memory_card_*`, `audio_*`, `talk_*`). Left from T-27004: the `MainMode` enum tag and its `MODE_` constants (rename.py has no enum row kind yet; tool work, then one batch).
-- Analysis run ended 2026-10-24 ~08:40 UTC at the usage pause: 21 of 28 units merged; not started: o-taiiku, o-geko, o-shougatu, o-tel-option, o-master-ending, o-bunkasd-shugaku, o-small (units in `.claude/orchestrator/state/p2-units.json`). Next after them: the reconcile pass T-27009. The merged proposal tables and specs still use the first core names; the reconciler maps them to the applied names with `rename.py lookup`.
-- Not started: applying each unit's reconciled table with `rename.py plan/apply/check` (one unit per branch, 27/27, review), then file and header renames per unit (last), per [[phase2]].
+- Earlier analysis-run snapshot (~08:40 UTC usage pause): 21 of 28 units merged. The continuation above
+  starts four of the seven missing units. Existing proposals/specs may still use the first core names;
+  T-27009 maps them to applied names through `rename.py lookup` and resolves ownership conflicts.
+- Unit application has begun with T-27040's bounded weekday batch. The remaining reconciled tables,
+  file/header renames and final header split remain open per [[phase2]].
 - Usage pause: the orchestrator stops starting phase 2 work at 95% weekly plan usage. A file `.claude/orchestrator/state/usage_pause` (local, not in git) makes `bin/mkwt-tool.sh` refuse new `p2*` worktrees; remove it to resume. Stopped units leave a "WIP snapshot" commit on their `p2*` branch.
 - To resume (orchestrator scripts are local under `.claude/orchestrator/`): analysis = `state/p2-analysis.js` (template `state/p2-analysis-template.js`, units `state/p2-units.json`; drop units whose `config/renames/proposals/<id>.tsv` is already on main, re-embed with `bin/wf_embed.py`, launch); apply = re-run the pilot or core step on its branch. Merge only through `bin/merge3.sh`, which runs `rename.py replay` before the 27/27 build.
 

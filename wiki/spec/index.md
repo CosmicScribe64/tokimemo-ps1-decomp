@@ -5,27 +5,15 @@ updated: 2026-10-24
 
 # Port specs (phase 2)
 
-One line per unit: what the spec covers. Specs are written for the Godot port ([[tickets/T-27000-phase-2]]); renames proposed with each spec live in `config/renames/proposals/`.
+Specs describe the matched code for the Godot port, in our own words. Proposed names live in
+`config/renames/proposals/`; a spec and proposal table do not imply that its renames have been applied.
+Parent: [[tickets/T-27000-phase-2]].
 
 - [[spec/o-taco]] - overlay TACO, the shooter mini game: stage machine (19 stages), ship, wingman, weapons, bombs, collisions and scoring, enemy scripts, three bosses, results, settings and exit
-One line per unit. Specs are facts for the Godot port, in our own words; names are proposals in `config/renames/proposals/`.
-
 - [[spec/h-graphics]] - main graphics layer: frame render, actor pool, texture-block cache, VRAM queues, primitives, screen layers, palette tools, debug HUD ([[tickets/T-27020-p2-h-graphics]])
-One line per unit. A spec states what a system does, its state with the proposed names, its rules and its links to the rest of the game, in the words of this project; no game text. Parent: [[tickets/T-27000-phase-2]].
-
 - [[spec/core]] - shared core: GameState map, mode/stage/step machine, calendar and day-event queue, player and girl state, shared record types, first enums, the 100 most used main functions (T-27010).
-# Phase 2 port specs
-
-One line per unit. Each spec states what the system does, its state and data (with the proposed names), the rules as the code implements them, how it connects to the rest of the game, and open questions. Rename proposals are in `config/renames/proposals/<unit>.tsv`.
-
 - [[spec/h-cdio]] - main hardware layer: CD command ring and reads, checksum, XA clip request, STR movies, MDEC backgrounds, 3D setup, mouse, boot mode (ticket [[tickets/T-27021-p2-h-cdio]])
-One line per unit. Specs state facts read from the matched code for the Godot port; names follow `config/renames/proposals/`.
-
 - [[spec/o-rpgbat]] - overlay RPG_BAT: the RPG battle scene (stages, channels, damage and AI rules, girl actions, data tables).
-# Port specs (phase 2 output)
-
-One line per unit. Each spec states what the unit does, its state and data with the proposed names, the rules as the code implements them, how it connects to the rest of the game, and open questions. The rename proposals are in `config/renames/proposals/<unit>.tsv`.
-
 - [[spec/o-tt]] - overlay TT, the TwinBee Time Attack mini game: stage, boss and ranking rules, state machine, data tables
 - [[spec/m-dates-a]] - main sound driver (`src/main/80079B10.c`, the file the unit label calls date sequences): command words and classes, bank slots, BGM, sound effects, voice-clip (XA) timing, level meter ([[tickets/T-27014-p2-m-dates-a]])
 - [[spec/m-scheduler]] - main scheduler: the weekly cycle (schedule steps, week queue builder, encounter and meeting selection, special events, queue reader and type-to-mode table), day notice, month start, calendar day advance and the weekly health check ([[tickets/T-27011-p2-m-scheduler]])
@@ -42,3 +30,12 @@ One line per unit. Each spec states what the unit does, its state and data with 
 - [[spec/o-etc]] - overlay ETC: final exams (score formula, ranking), career guidance and the entrance exam (result byte), the ending tail (staff roll, last photo, clear save with the per-girl clear counter), the photo album and its save, dead stubs ([[tickets/T-27029-p2-o-etc]])
 - [[spec/o-nameent]] - overlay NAME_ENT, the game-start scenes: file screens (memory-card check, system file, 14 album slots, create, New, Copy, Clear, load), name and birthday entry with the new-game rules (club, blood compatibility, cheat names), the 43-line voiced prologue and the attract opening ([[tickets/T-27030-p2-o-nameent]])
 - [[spec/o-bunkasai]] - overlay BUNKASAI, the club-member culture festival (mode 0x70): phase and stage machine (165 stages, 15 blocks), exhibits by club and year, visitor choice, festival result formula, fortune telling, TT game exhibit, birthday scene, data tables ([[tickets/T-27025-p2-o-bunkasai]])
+
+## Continuation drafts (In Progress)
+
+These pages are checkpoints with explicit open work. Their proposals have not been applied.
+
+- [[spec/o-taiiku]] - Sports festival: partial body-backed transitions, input/movement and girl-stat rewards (T-27031)
+- [[spec/o-geko]] - GEKO encounters: five mode entries, walk-home/birthday rules, invitation selection and appointments (T-27032)
+- [[spec/o-shougatu]] - New Year/Christmas and GYOZI: partial candidate, shrine, fortune and birthday rules (T-27033)
+- [[spec/o-tel-option]] - Telephone/options: partial invitation eligibility, relationship effects and sound-test flow (T-27034)

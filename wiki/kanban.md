@@ -54,7 +54,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-27035-p2-o-master-ending|T-27035 Phase 2 analysis - Club mastery and endings]]
 
-- [ ] [[tickets/T-27034-p2-o-tel-option|T-27034 Phase 2 analysis - Telephone and options]]
 
 - [ ] [[tickets/T-25058-main-screen-offset|T-25058 Match MAIN screen-offset easing]]
 - [ ] [[tickets/T-24042-tel-helper-closure|T-24042 Close TEL dialogue helper register allocation]]
@@ -63,6 +62,9 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-27034-p2-o-tel-option|T-27034 Phase 2 analysis - Telephone and options]]
+
 
 - [ ] [[tickets/T-27033-p2-o-shougatu|T-27033 Phase 2 analysis - New Year and Christmas]]
 
@@ -101,6 +103,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## In Review
+
 
 - [ ] [[tickets/T-25057-name-ent-pass-investigation|T-25057 Reconstruct NAME_ENT record selector allocation]]
 - [ ] [[tickets/T-25051-taco-quad-store|T-25051 Match TACO wipe quad store schedule]]
@@ -169,6 +172,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27040-school-day-readable-batch|T-27040 Apply a readable school-day gameplay batch]]
 
 - [ ] [[tickets/T-27004-shared-core-names|T-27004 Shared core: GameState fields, core types, first enums, top 100 functions]]
 - [ ] [[tickets/T-27003-pilot-obin-names-overlays|T-27003 Pilot: O.BIN names into the overlays (alias debt)]]

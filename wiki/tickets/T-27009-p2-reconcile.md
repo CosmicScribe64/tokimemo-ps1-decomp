@@ -30,3 +30,5 @@ Historical core proposals use names such as `snd_command` and `bustup_read_step`
 ## Comments
 
 2026-10-24: Ready for the reconciliation pass after missing analyses; baseline audit recorded during continuation.
+
+2026-10-24 continuation: config/renames/school-day.txt is now an applied, reviewed ledger; its school_day_ names override the old m-weekday proposal aliases. Four new analysis drafts remain In Progress. GEKO has 975 active rows; TAIIKU38, SHOUGATU/GYOZI15 and TEL/OPTION15. Their structural validity is not application approval.

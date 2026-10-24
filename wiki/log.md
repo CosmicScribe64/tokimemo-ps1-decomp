@@ -1412,3 +1412,59 @@ Created [[tickets/T-27031-p2-o-taiiku]] through [[tickets/T-27037-p2-o-small]] f
 ## [2026-10-24] ticket | Record reconciliation preflight
 
 Created [[tickets/T-27009-p2-reconcile]] as Ready with measured proposal conflicts, applied-core precedence and the required separation of executable batches from comments, enum suggestions, deferred rows and file renames. Source census: TAIIKU 213, GEKO 391, SHOUGATU 400 and GYOZI 417 C definitions. First Luna drafts are partial; agents are correcting unsupported names and documenting coverage, without Done claims.
+
+## [2026-10-24] lint | Consolidate the port-spec index
+
+[[spec/index]] now has one introduction and preserves all 21 existing unit links; removed repeated headings and boilerplate introduced by historical parallel merges. No spec content or source names changed.
+
+## [2026-10-24] decision | Prioritize a playable port reference
+
+User clarified that phase 2 should make code decently readable enough to start the Godot port; emulator, save files and debugger use are authorized. Created [[tickets/T-27040-school-day-readable-batch]] for nine school-day helpers plus seven formula parameter/local roles, requiring independent review and clean match proof before acceptance. Claimed [[tickets/T-27034-p2-o-tel-option]] for Luna while the first overlay drafts await review. Refreshed build succeeds; independent current binary hashes are 27/27. The progress scan still sees stale historical asm files and needs a clean regeneration.
+
+## [2026-10-24] decision | Separate port-start readiness from the naming backlog
+
+[[phase2]] now records the clarified immediate outcome: prioritize readable state, day progression, command effects and the first gameplay slice's scene rules rather than treating every remaining helper name as a prerequisite to starting Godot. Emulator/save-file/debugger evidence is authorized and must remain reproducible and excluded from committed game data. T-27040's sixteen-row school-day batch is under independent Sol 6.1 review and rename-tool preflight.
+
+## [2026-10-24] build | Apply the reviewed school-day readability batch
+
+Independent Sol 6.1 table review approved all 16 rows of [[tickets/T-27040-school-day-readable-batch]]. rename.py plan/apply passed, ledger config/renames/school-day.txt appended by the tool, and rename check reports 740 ledger rows. Nine helper functions and seven parameter/local roles are readable; arithmetic is unchanged. [[spec/m-weekday]] uses applied names. Clean Docker build and census are running; final verification and two-axis code review remain open.
+
+## [2026-10-24] lint | Review the applied weekday batch
+
+Independent Luna standards review found no hard violations or new smells in c3c830094...6036b5a86. Independent Sol 6.1 spec review found one P3 stale-argument-name passage in [[spec/m-weekday]]; corrected it to command, holiday_factor and result_divisor, including flag-to-factor normalization and stress usage. Removed copied Japanese title terms from the uncommitted seasonal draft, retaining English behavior descriptions. Clean build continues.
+
+## [2026-10-24] ticket | School-day batch to In Review with full proof
+
+[[tickets/T-27040-school-day-readable-batch]] to In Review. Clean Docker build exited 0 with all 27 hashes, independently rehashed 27/27; census 6,952/6,952 functions and 2,276,920/2,276,920 bytes. Luna standards review passed; Sol 6.1 spec finding fixed at a7a3dd221 and verified resolved. Five errors in uncommitted seasonal and telephone/options rule claims were sent back to their author for source-checked correction; those tickets remain In Progress.
+
+## [2026-10-24] ticket | Finish the reviewed school-day readability batch
+
+[[tickets/T-27040-school-day-readable-batch]] In Review -> Done after independent Standards and Spec reviews, the verified P3 documentation correction, clean 27/27 SHA1 and unchanged 6,952-function census. Applied code remains at the reviewed sixteen-row batch; pending overlay analyses and reconciliation are not credited as applied names.
+
+## [2026-10-24] ingest | Preserve o-taiiku analysis checkpoint
+
+[[spec/o-taiiku]] and config/renames/proposals/o-taiiku.tsv saved for T-27031: sports festival: partial body-backed transitions, input/movement and girl-stat rewards. Linked from [[spec/index]] and [[index]]. Ticket remains In Progress, with coverage and confirmation limits explicit. No overlay source names applied.
+
+## [2026-10-24] ingest | Preserve o-geko analysis checkpoint
+
+[[spec/o-geko]] and config/renames/proposals/o-geko.tsv saved for T-27032: geko encounters: five mode entries, walk-home/birthday rules, invitation selection and appointments. Linked from [[spec/index]] and [[index]]. Ticket remains In Progress, with coverage and confirmation limits explicit. No overlay source names applied.
+
+## [2026-10-24] ingest | Preserve o-shougatu analysis checkpoint
+
+[[spec/o-shougatu]] and config/renames/proposals/o-shougatu.tsv saved for T-27033: new year/christmas and gyozi: partial candidate, shrine, fortune and birthday rules. Linked from [[spec/index]] and [[index]]. Ticket remains In Progress, with coverage and confirmation limits explicit. No overlay source names applied.
+
+## [2026-10-24] ingest | Preserve o-tel-option analysis checkpoint
+
+[[spec/o-tel-option]] and config/renames/proposals/o-tel-option.tsv saved for T-27034: telephone/options: partial invitation eligibility, relationship effects and sound-test flow. Linked from [[spec/index]] and [[index]]. Ticket remains In Progress, with coverage and confirmation limits explicit. No overlay source names applied.
+
+## [2026-10-24] query | Continuation handoff and review corrections
+
+[[status]] now distinguishes completed [[tickets/T-27040-school-day-readable-batch]] from four unfinished analysis units and three Ready units. Luna authored bounded drafts; Sol 6.1 authored GEKO and independently audited seasonal/telephone rule claims. Six factual findings were source-corrected; the last contradictory stress sentence was replaced as requested. GEKO independent semantic review remains pending. Full phase 2 is not complete; next work is the port slice needs and [[tickets/T-27009-p2-reconcile]], respecting applied ledgers.
+
+## [2026-10-24] lint | Final continuation catalogs and wiki checks
+
+Regenerated [[tickets/catalog]]: 978 tickets, 598 sections, 3,106 functions. Fixed the new sports spec's broken GLOSSARY wikilink to plain GLOSSARY.md. All new proposal rows have five TSV columns; seasonal copied title terms were removed. The pre-existing data/t0018-cases size warning remains outside this task. No source changes followed the successful clean build and reviews.
+
+## [2026-10-24] lint | Finish the local continuation checkpoint
+
+Final wiki lint: zero broken links and zero ticket/kanban mismatches; only the pre-existing large-page warning. git diff --check is clean. Saved separate analysis commits f1da18ddd (sports), 8752deefc (GEKO), 028fa0a84 (seasonal) and f780ba05c (telephone/options), all explicitly In Progress. Applied weekday code is 6036b5a86 with documentation correction a7a3dd221; no source changes after clean proof. [[tickets/T-27040-school-day-readable-batch]] is Done; the broader [[phase2]] remains open. All subagents have handed off their outputs.
