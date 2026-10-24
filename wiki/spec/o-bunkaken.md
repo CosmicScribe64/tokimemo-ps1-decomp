@@ -42,7 +42,7 @@ Shared festival words (main bss, inside the 0x100-byte `overlay_scratch` at 0x80
 | 0x80122EAC (+0xDC) | `festival_show_variant` | variant 0-4 handed to BUNKA_SD |
 | 0x80122EB0, EB4 (+0xE0, +0xE4) | `festival_return_stage`, `festival_return_step` | where to resume after a sub-mode |
 | 0x80122EB8 (+0xE8) | `festival_club` | club id 0-5 being visited (first word of core's `CultureFestivalDispatch`, old `BunkaDispatch8`) |
-| 0x80122EBC (+0xEC) | `festival_companion` | girl present: 0-10 heroine id, `FV_COMPANION_SHIORI_VISITOR` 0xB, `FV_COMPANION_NONE` 0xFF (second word of the dispatch pair) |
+| 0x80122EBC (+0xEC) | `festival_companion` | girl present: 0-10 heroine id, `FV_COMPANION_SHIORI_NO_CULTURE_CLUB` 0xB, `FV_COMPANION_NONE` 0xFF (second word of the dispatch pair) |
 | 0x80122EC0 (+0xF0) | `festival_phase` | entry phase 0-10 (section 4) |
 
 Other state used: `GameState.girls[i]` (`tokimeki`, `affection`, `syoushin`, `flags`: bit `met`, bit `acquainted` (core `CharFlags` bit 2), 4-bit `club`, `birthday`), `year` (0x5F, 0x60, 0x61 = 1995, 1996, 1997), `month`, `day`, `daily_event_bits`, `current_girl`, `player_flags` (club), the three-way and two-way `dialogue_choice`, the dialogue words (`dialogue_group`, `dialogue_line`, the three table pointers), `event_log`, `girl_menu_enabled`, the TT interface words: flag byte `D_800E7D4F` (bits `tt_unlocked`, `tt_direct`, field `tt_direct_stage`) and result byte `D_800E7D4E` (`tt_stages_cleared`).
@@ -106,7 +106,7 @@ phases 0-6 (arrive at the gate, intro line)
 | 3 | `stage_club_menu` | choose one of six clubs (5.4) |
 | 4 | `stage_route_visit` | route by companion and club (5.5) |
 | 5-17 | `stage_solo_*` | exhibits visited alone: 5 route, 6-10, 12-17 exhibits, 11 fortune sub-stage |
-| 18-31 | `stage_shiori_visitor_*` | companion id 0xB: Shiori whose club id is 6 or more; 18 route, 19-31 exhibits |
+| 18-31 | `stage_shiori_companion_*` | companion id 0xB: Shiori whose club id is 6 or more; 18 route, 19-31 exhibits |
 | 32-43 | `stage_shiori_club_*` | Shiori with a culture club, at her own club; 32 route, 33-43 |
 | 44-47, 48-52, 53-57 | `stage_mio_club_*`, `stage_yuina_club_*`, `stage_ayako_club_*` | the other three club girls at their own clubs |
 | 58-71, 72-84, 85-97, 98-110 | `stage_saki_*`, `yukari`, `nozomi`, `mira` | companion girls 4-7 |
@@ -132,7 +132,7 @@ Which stage a (block, club, year) pair gets is decided by the block's route func
 | Block | Route | Literature | Drama | Science | Computer 95 / 96 / 97 | Art 95 / 96 / 97 | Brass |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | solo | 5 | 6 (95, 96), 7 (97) | 8 | 9 | 10 / 12 / 13 | 14 / 15 / 16 | 17 |
-| Shiori visitor | 18 | 19, 20, 21 | 22 | 23 | 24 / 25 / 26 | 27 / 28 / 29 | 30 (95, 96), 31 (97) |
+| Shiori companion | 18 | 19, 20, 21 | 22 | 23 | 24 / 25 / 26 | 27 / 28 / 29 | 30 (95, 96), 31 (97) |
 | Shiori club (companion 0) | 32 | 33 (95, 96), 34 (97) | 35 | 36 | 37 / 38 / 39 | 40 / 41 / 42 | 43 |
 | Mio club (1) | 44 | 45 (95, 96), 46 (97) | 47 | - | - | - | - |
 | Yuina club (2) | 48 | - | - | 49 | 50 / 51 / 52 | - | - |
@@ -152,7 +152,7 @@ Which stage a (block, club, year) pair gets is decided by the block's route func
 - Candidates: girl 0 (Shiori) and girls 1-10 with `met` set. A girl qualifies when her weighted tokimeki (`get_h_tokimeki`) is at least `FV_INVITE_TOKIMEKI_MIN` (50) and her weighted affection (`get_h_yuukou`) is at least `FV_INVITE_AFFECTION_MIN` (80). Girl 0 additionally has to pass the affection test just to take part in the comparison.
 - Score: raw affection + raw tokimeki (`girls[i].affection + girls[i].tokimeki`); the highest wins, ties go to the lower id (strictly greater replaces).
 - In 1996 (`year == 0x60`) girls whose club is 4 (art) or 1 (drama), girl 0 included, score 0 and so cannot win, and girl 0 is not invited by the final rule either (HYPOTHESIS for the reason: those clubs are busy with their own show; the code only encodes the exclusion).
-- The winner is checked once more against the 50 and 80 thresholds; if girl 0 wins and her club id is 6 or more the companion becomes 0xB (`FV_COMPANION_SHIORI_VISITOR`). The id is stored in `festival_companion`. No qualifying girl: stage 1 (`main_stage_set(1)`).
+- The winner is checked once more against the 50 and 80 thresholds; if girl 0 wins and her club id is 6 or more the companion becomes 0xB (`FV_COMPANION_SHIORI_NO_CULTURE_CLUB`). The id is stored in `festival_companion`. No qualifying girl: stage 1 (`main_stage_set(1)`).
 
 Steps (for a winner; step 0 is the pick):
 
@@ -202,7 +202,7 @@ All exhibit handlers (stages 5-139 without the routers) are one of three step pa
 
 **Solo template** (stages 6-17, 11 stages): step 0 starts the CD read of the exhibit background (`dec_bg_cd_read`); 1 `normal_date_bg_fadeout`; 2 when read: `festival_visit_window_title_set`, decode and show the background, read BUN_PC; 3 fade in; 4 when read: pick the first group, `festival_visit_solo_script_begin`; then speak steps and group changes; optional launch of a stage show or TT; the last two steps set group 0x52 (`FV_COMMON_GROUP_WRAPUP`), speak, `festival_visit_finish_visit`. Typical length 10-23 steps.
 
-**Companion template** (blocks of Shiori visitor, Saki, Yukari, Nozomi, Mira, Yuko, Megumi, Yumi, 13 stages each at most): the same sequence with `normal_date_bggirl_fadeout/in` (the background and the girl fade together, the girl's portrait was loaded in stage 0 or 1 and stays), the girl's own script file (disc BUNKA/XX_S6W.BIN, 9-19 sectors) read in step 2, and `festival_visit_<girl>_script_begin` in place of the solo helper. The reaction groups are selected by `girl_state_rank(girl)`: ranks 0 and 1 share a group, rank 2 and 3 differ in some stages. The last step sets group 0 (the girl's closing lines), speaks, finishes.
+**Companion template** (blocks of Shiori companion, Saki, Yukari, Nozomi, Mira, Yuko, Megumi, Yumi, 13 stages each at most): the same sequence with `normal_date_bggirl_fadeout/in` (the background and the girl fade together, the girl's portrait was loaded in stage 0 or 1 and stays), the girl's own script file (disc BUNKA/XX_S6W.BIN, 9-19 sectors) read in step 2, and `festival_visit_<girl>_script_begin` in place of the solo helper. The reaction groups are selected by `girl_state_rank(girl)`: ranks 0 and 1 share a group, rank 2 and 3 differ in some stages. The last step sets group 0 (the girl's closing lines), speaks, finishes.
 
 **Club-girl template** (Shiori club, Mio, Yuina, Ayako blocks, stages 33-57): the girl is already at her exhibit. Step 2 also starts reading her portrait for the club (Shiori has four costume files: normal, drama, science, art; Yuina a science one), her club script file (BUNKA/XX_S6O.BIN, 7-23 sectors) is read in step 4. The girl is **absent** when `girl_state_rank(girl) == 4` or she is the refused girl: then `normal_date_girl_in/out` and the `bggirl` fades are replaced by the background-only ones, her introduction group and her goodbye are skipped, and the scene uses the alternative first group (0xD in 1995, 0x16 later). When she is present: first meeting (her `acquainted` flag clear, set now) plays group 4; later visits play a rank-selected group (7/9/0xB in 1995, 0x10/0x12/0x14 later in the Mio block). Route functions of these blocks send the visit to the solo block (`festival_companion` = 0xFF) when the girl's mood rank is 4 and she has not met the player at a club before (`acquainted` clear).
 
@@ -218,7 +218,7 @@ All exhibit handlers (stages 5-139 without the routers) are one of three step pa
 
 ### 6.1 Group choice by mood
 
-`girl_state_rank` is read again at almost every step that speaks: group = base(rank): ranks 0 and 1 share a base, rank 2 and rank 3 have their own, rank 4 has an "absent or refuses" base or none. The year (`year - 0x5F`) adds or selects groups in the club-girl and some companion stages. Parameter gates exist in five places: `param_liberal_arts` at least 120 (0x78) picks the first of two adjacent lines in the Shiori-visitor literature poem exhibit (stage 19) and below 120 adds 1 in the Nozomi poem exhibit (86); `param_art` at least 120 picks the first line in the Shiori-visitor oil painting exhibit (29) and year-97 brass concert (31), and below 120 adds 1 in Saki's year-97 brass concert (71) and in Nozomi's brass concert (97). Group numbers per step are in the stage handlers.
+`girl_state_rank` is read again at almost every step that speaks: group = base(rank): ranks 0 and 1 share a base, rank 2 and rank 3 have their own, rank 4 has an "absent or refuses" base or none. The year (`year - 0x5F`) adds or selects groups in the club-girl and some companion stages. Parameter gates exist in five places: `param_liberal_arts` at least 120 (0x78) picks the first of two adjacent lines in the Shiori-companion literature poem exhibit (stage 19) and below 120 adds 1 in the Nozomi poem exhibit (86); `param_art` at least 120 picks the first line in the Shiori-companion oil painting exhibit (29) and year-97 brass concert (31), and below 120 adds 1 in Saki's year-97 brass concert (71) and in Nozomi's brass concert (97). Group numbers per step are in the stage handlers.
 
 ### 6.2 Points at the end of a visit (`festival_visit_apply_points`)
 
@@ -398,19 +398,19 @@ One row per exhibit handler: the rows come from the matched C (backgrounds, scri
 | 15 | `solo_art_sketch` | art sketch | D_01_72 | BUN_PC | YO02 | - | 23 |
 | 16 | `solo_art_oil` | art oil | D_01_71 | BUN_PC | - | - | 14 |
 | 17 | `solo_brass` | brass | D_30_01 | BUN_PC | - | show v0 | 16 |
-| 19 | `shiori_visitor_lit_poems` | lit poems | D_01_67 | FU_S6W | - | gate liberal_arts>=120 | 18 |
-| 20 | `shiori_visitor_lit_anthology` | lit anthology | D_01_67 | FU_S6W | - | - | 17 |
-| 21 | `shiori_visitor_lit_speech` | lit speech | D_30_01 | FU_S6W | HU02 | show v1 | 17 |
-| 22 | `shiori_visitor_drama` | drama | D_30_01 | FU_S6W | HU02 | show | 19 |
-| 23 | `shiori_visitor_science` | science | D_01_69 | FU_S6W | HU02 | show v1 | 17 |
-| 24 | `shiori_visitor_comp_fortune` | comp fortune | D_01_70 | FU_S6W | - | fortune | 18 |
-| 25 | `shiori_visitor_comp_game` | comp game | D_01_70 | FU_S6W | HU02 | TT play; TT<2 | 23 |
-| 26 | `shiori_visitor_comp_experiment` | comp experiment | D_01_70 | FU_S6W | HU02 | show v1 | 17 |
-| 27 | `shiori_visitor_art_portrait` | art portrait | D_01_71 | FU_S6W | - | - | 16 |
-| 28 | `shiori_visitor_art_sketch` | art sketch | D_01_72 | FU_S6W | - | - | 12 |
-| 29 | `shiori_visitor_art_oil` | art oil | D_01_71 | FU_S6W | - | gate art>=120 | 18 |
-| 30 | `shiori_visitor_brass` | brass | D_30_01 | FU_S6W | HU02 | show v0 | 17 |
-| 31 | `shiori_visitor_brass_y97` | brass y97 | D_30_01 | FU_S6W | HU02 | show v0; gate art>=120 | 21 |
+| 19 | `shiori_companion_lit_poems` | lit poems | D_01_67 | FU_S6W | - | gate liberal_arts>=120 | 18 |
+| 20 | `shiori_companion_lit_anthology` | lit anthology | D_01_67 | FU_S6W | - | - | 17 |
+| 21 | `shiori_companion_lit_speech` | lit speech | D_30_01 | FU_S6W | HU02 | show v1 | 17 |
+| 22 | `shiori_companion_drama` | drama | D_30_01 | FU_S6W | HU02 | show | 19 |
+| 23 | `shiori_companion_science` | science | D_01_69 | FU_S6W | HU02 | show v1 | 17 |
+| 24 | `shiori_companion_comp_fortune` | comp fortune | D_01_70 | FU_S6W | - | fortune | 18 |
+| 25 | `shiori_companion_comp_game` | comp game | D_01_70 | FU_S6W | HU02 | TT play; TT<2 | 23 |
+| 26 | `shiori_companion_comp_experiment` | comp experiment | D_01_70 | FU_S6W | HU02 | show v1 | 17 |
+| 27 | `shiori_companion_art_portrait` | art portrait | D_01_71 | FU_S6W | - | - | 16 |
+| 28 | `shiori_companion_art_sketch` | art sketch | D_01_72 | FU_S6W | - | - | 12 |
+| 29 | `shiori_companion_art_oil` | art oil | D_01_71 | FU_S6W | - | gate art>=120 | 18 |
+| 30 | `shiori_companion_brass` | brass | D_30_01 | FU_S6W | HU02 | show v0 | 17 |
+| 31 | `shiori_companion_brass_y97` | brass y97 | D_30_01 | FU_S6W | HU02 | show v0; gate art>=120 | 21 |
 | 33 | `shiori_club_lit_collection` | lit collection | D_01_67 | FU_S6O | HU02 | - | 21 |
 | 34 | `shiori_club_lit_speech` | lit speech | D_01_68/D_30_01 | FU_S6O | HU02 | show v2 | 23 |
 | 35 | `shiori_club_drama` | drama | D_01_68/D_30_01 | FU_S6O | HU03 | show | 23 |
