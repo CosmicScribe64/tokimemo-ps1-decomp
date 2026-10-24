@@ -241,9 +241,7 @@ void func_8005938C(void) {
      * register; 62 rows without it). IDO 4.1's ugen gives this body F without the arm, because
      * it also sets F at a branch on a value (`r->flags & 0x80`); the pass does not model that. */
     if ((u32)D_800B0896 < 0) {
-        do {
-            *(u8 *)0 = 0;
-        } while ((s32)D_800B0896 < 1);
+        *(u8 *)0 = 0;
     }
     for (i = *(s32 *)&D_800E6280.unk_1095[7]; i < 0xA0; i += 2) {
         r = (ModelRec88 *)(D_8011ECD0 + i * 0x44);

@@ -79,9 +79,7 @@ void strCallback(void) {
      * IDO 4.1's ugen gives this body F without the arm, because it also sets F at a branch on a
      * value (`D_800B5900 & 1`); the pass does not model that. */
     if ((u32)D_800B0896 < 0) {
-        do {
-            *(u8 *)0 = 0;
-        } while ((s32)D_800B0896 < 1);
+        *(u8 *)0 = 0;
     }
     if ((D_800B5900 & 1) && D_80125C5C != 0) {
         func_80088210();
