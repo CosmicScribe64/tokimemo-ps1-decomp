@@ -7,15 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-21] build | T-25016 engine pass over all 24 censused functions: no zeros, near set identified
-
-The 10-minute loop Lila set ran the shape engine across the whole
-census list. Best raw-score reductions: func_8013907C 163 to 15,
-func_80134724 113 to 28, func_800455C4 261 to 171. func_801511C0
-remains the nearest at 4 rows. The loop removed itself on queue
-exhaustion as instructed. Hand reconstruction on the near set is
-the remaining phase. Ticket [[tickets/T-25016-candidate-reconstruction]].
-
 ## [2026-10-21] build | T-25016 hand phase: funcdiff ground truth for the near set
 
 Hand phase on [[tickets/T-25016-candidate-reconstruction]]. Two
@@ -1754,6 +1745,7 @@ copies (injection test), which both rules predict. 4.1's own rule (F after an in
 register-register compare branch) fits all 30 cases. As a ucode pass it changes three procedures in the corpus:
 `func_8006B0C8` matches, and main `strCallback` and `func_8005938C` fail because of their FAKE steering loops.
 Section added to [[ido-52-evaluation]]; harness in `drafts/T-25608/ido41/`.
+
 ## [2026-10-23] ticket | T-25608 Done: main func_8006B0C8 matched; every game function is C
 
 The last function matched with a narrowed block-copy state rule in tools/ugen_pass.py; an IDO 4.1 check (user-approved download) confirmed the three swap copies' state and showed a better general rule, now [[tickets/T-26000-ugen-block-copy-41-rule]]. With this merge all 6,952 game functions are matched ([[tickets/T-25600-finish-gate]]).
