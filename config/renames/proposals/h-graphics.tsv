@@ -8,60 +8,60 @@ file	main	src/main/80085E30.c	src/main/scene_display.c	scene graphics init, vbla
 func	main	func_80043510	render_frame	only caller is the main loop func_80042134, argument always 1; emu: runs once per frame (119 of 119 frames); builds 2D/3D draw lists, flushes VRAM queues, waits GPU/vblank, draws OT
 func	main	func_8004443C	frame_time_bars_draw	draws 4 bars from D_800B3D10 hcount stamps (height = stamp*16/264); no caller in C
 func	main	func_80044700	palette_row_copy	MoveImage of a 16-colour row at y 0x1E0+row to x 0x100; no caller in C
-func	main	func_80044750	sound_request	forwards id to func_80079B10 (sound command queue), returns 1; 1182 uses
+func	main	func_80044750	sound_request	HYPOTHESIS: sends id & 0xFFFF to func_80079B10, taken to be the sound command queue from the ids callers pass (0x1200, seq | 0x200 and similar); returns 1; 1177 call sites in src/
 func	main	func_80044774	bgm_stop	HYPOTHESIS: with arg 0 sends sound id 0x1200 and clears the playing flag D_800B3D40 once the pack at 0x8001C000 is loaded (header word 0x40); every caller passes 0; a non-zero arg replays the stored sequence via bgm_play
 func	main	func_8004480C	bgm_is_playing	HYPOTHESIS: returns D_800B3D40, set to 1 by bgm_play and cleared by bgm_stop; callers test == 0 before starting music
 func	main	func_8004481C	bgm_current_set	HYPOTHESIS: returns D_800B3D44 (bank set 0/1 of the last bgm_play, 0xFF = none)
-func	main	func_8004482C	sound_bank_state_reset	clears the loader flags and cached file ids D_800B3D28..D_800B3D54
+func	main	func_8004482C	sound_bank_state_reset	HYPOTHESIS: clears the loader flags and cached file ids D_800B3D28..D_800B3D54 (state of the sound-bank loader, see sound_bank_load_start)
 func	main	func_80044890	sound_bank_load_start	HYPOTHESIS: starts CD loads for one of two sound bank sets (a); b,c = shared bank files, d,e,f = per-scene bank files; skips files already cached in D_800B3D30..3C
 func	main	func_80044C98	sound_bank_load_poll	HYPOTHESIS: returns -1 until the CD completion counter has advanced 5 past the mark, then runs transfer_start once, then returns 1 when the transfers are done or after 0xC0 polls (TACO polls it)
 func	main	func_80044D54	sound_bank_transfer_start	HYPOTHESIS: sends sound ids 0x11-0x16 (bank transfer commands) chosen by which files were loaded
-func	main	func_80044E8C	sound_bank_wait_ready	HYPOTHESIS: poll like load_poll that also sends setup ids 0x21/0x22/0x2F or 0x23/0x24/0x2E on completion; 176 uses, every scene start
+func	main	func_80044E8C	sound_bank_wait_ready	HYPOTHESIS: poll like load_poll that also sends setup ids 0x21/0x22/0x2F or 0x23/0x24/0x2E on completion; 174 call sites in src/, every scene start
 func	main	func_80044F94	sound_bank_transfer_done	HYPOTHESIS: true when func_80079E00 reports both transfer bits of the set clear
 func	main	func_8004500C	bgm_play	HYPOTHESIS: checks the pack at 0x8001C000/0x8002E800, sends setup ids then (seq|0x200), stores set/seq and playing=1; main calls (0,0)
 func	main	func_800450F4	bgm_play_short	HYPOTHESIS: like bgm_play without the 0x21/0x24 setup id; TACO only
 func	main	func_80047550	screen_shake_start	sets counter D_801255DC=4; func_80047560 then runs a damped sine
 func	main	func_80047560	screen_shake_update	each frame: sin(triangular sum*4)/4/(counter+0x100) added to draw origin; counter +=4, ends above 0x80; resets origin to 160,120 when 0
-func	main	func_800476C0	actor_pool_draw	walks actors 0..unk_1098: draws parts as GsSprite via GsSortSprite, advances animation timers, applies velocity; emu: runs once per frame
+func	main	func_800476C0	actor_pool_draw	walks actors 0..unk_1098 inclusive (0x9F in boot and ETC, 0xA0 in NAME_ENT and OPTION; 0xA0 reads record 160, one past the 160-record pool, where the first screen-layer records at D_80121750 lie: a port clamps at 159): draws parts as GsSprite via GsSortSprite, advances animation timers, applies velocity; emu: runs once per frame
 func	main	func_80048CF8	tpage_buf_print	printf dump of the 64 resident-block words when unk_F80 bit 1 is set (debug)
-func	main	func_80048DAC	actor_draw_enable	sets unk_1112 (checked by render_frame before actor_pool_draw); 89 uses, scene setup
+func	main	func_80048DAC	actor_draw_enable	sets unk_1112 (checked by render_frame before actor_pool_draw); 87 call sites in src/, scene setup
 func	main	func_80048DD0	actors_deactivate	prints a debug line and zeroes the draw-flags byte (+3) of the first count actors, or all 160 when count is 0
 func	main	func_80048E78	actor_reset_scene_range	actor_reset for records 0x60..0x9F (the scene-owned half of the pool)
-func	main	func_80048EB8	actor_reset_range	actor_reset for records 1..n-1 (n=0 or >0xA0: all), keeping actor 0 x, y and frame
+func	main	func_80048EB8	actor_reset_range	actor_reset for records 1..n-1 (n=0 or n>=0xA0: 1..159); record 0 is never touched, so the save and restore of actor 0 x, y and frame around the loop in the C has no effect
 func	main	func_80048F64	actor_reset	writes default values (scale 0x1000, brightness 0x80, speed 1, default image/sequence/texture tables) into one actor record
 func	main	func_8004901C	screen_brightness_get	returns GameState unk_03A (0x80 normal), used as the grey modulation of screen layers, tile sprites and flagged actors
 func	main	func_8004902C	screen_brightness_reset	sets unk_03A=0x80 and rate unk_03B=0
 func	main	func_80049044	screen_brightness_step	adds the signed rate unk_03B to unk_03A, clamped 0..255; emu: called once per render_frame
 func	main	func_800490B4	screen_brightness_set_rate	stores the signed per-frame brightness change in unk_03B
-func	main	func_80049A40	prim_box_gouraud	POLY_G4 box at x,y size w,h; arg5 RGB, arg6 bit 7 = semi-transparent, low bits pick the vertex shading (7 variants)
+func	main	func_80049A40	prim_box_gouraud	POLY_G4 box at x,y size w,h; arg5 RGB, arg6 bit 7 = semi-transparent, low 7 bits pick the vertex colours (v0 top-left, v1 top-right, v2 bottom-left, v3 bottom-right): 0 and any value above 6 = channel multipliers 10, 8, 6, 4 for v0..v3, stored in a byte (a channel above 25 overflows at v0); 1 flat; 2 v3 at 80%, others full; 3 all four vertices x8 (the C reads green for the blue channel); 4 v0,v1 black and v2,v3 colour (vertical, black on top); 5 v0,v2 colour and v1,v3 black (horizontal, colour on the left); 6 v0,v2 black and v1,v3 colour (horizontal, black on the left)
 func	main	func_80049FF0	prim_line_gradient	LINE_G2 from (x0,y0) to (x1,y1) with two RGB colours; flags bit 7 semi-transparent, low bits OT slot
 func	main	func_8004A14C	prim_fill_rect	func_80049A40 with flat colour (mode 1) for a RECT; first argument unused; used by frame_time_bars_draw
-func	main	func_8004A1A0	bg_slot_setup	builds a GsBG slot (w x h blocks of 128x120 px) from block source addresses and locks them in the texture-block cache; 25 uses ETC, NAME_ENT, main
+func	main	func_8004A1A0	bg_slot_setup	builds a GsBG slot (w x h blocks of 128x120 px) from block source addresses and locks them in the texture-block cache; 21 call sites in src/ ETC, NAME_ENT, main
 func	main	func_8004A414	fx_disc_tiles	HYPOTHESIS: fills a disc with textured quads of w x h pixels (arguments masked with 0x7F, minimum 8), each sampling a 16x16 texture cell at (0xC0,0x50) of VRAM page (0x3C0,0x100), with rand() & 8 jitter in the clut; only SHOUGATU steps 0x13-0x1B
 func	main	func_8004A814	fx_glow_disc	disc of semi-transparent TILE squares whose colour falls off with Manhattan distance (soft glow); DATE and DATE2 draw three
-func	main	func_8004AC18	screen_flash_gray	two additive (blend 1) full-screen boxes of grey level*0x010101, clamp 0xFFFFFF; brightens the screen; 22 uses
+func	main	func_8004AC18	screen_flash_gray	two additive (blend 1) full-screen boxes of grey level*0x010101, clamp 0xFFFFFF; brightens the screen; 18 call sites in src/
 func	main	func_8004ACC8	screen_flash_color_wide	same flash with an RGB colour over a 512-wide screen; TACO and main
 func	main	func_8004AD60	debug_hud_level_step	arg 0 sets level 0, else level-1 wrapping to 8 (clamp 8); called from the main loop func_80042134 when the debug flag is on and the pad combo is held
 func	main	func_8004ADAC	debug_hud_level_set	sets D_800B3D80, clamped to 8
 func	main	func_8004ADD4	debug_hud_level_get	returns D_800B3D80
 func	main	func_8004ADE4	debug_font_load	LoadImage of a 64x32 font block to VRAM (0x2C0,0x1E0) when the debug flag D_800B3220 is set
-func	main	func_8004AE28	debug_print_int	debug_print_int_color with colour 0xF; 63 uses, mostly OPTION
+func	main	func_8004AE28	debug_print_int	debug_print_int_color with colour 0xF; 61 call sites in src/, mostly OPTION
 func	main	func_8004AE54	debug_print_int_color	draws a decimal number (and sign) as 8x8 SPRTs right to left from x, only when level >= 4 and D_800B3220
 func	main	func_8004B19C	debug_print_hex	draws a hexadecimal number as 8x8 SPRTs, 6 px pitch, same gating
 func	main	func_8004B338	debug_print_string	debug_print_string_color with colour 0xF
 func	main	func_8004B358	debug_print_string_color	draws a 0-terminated string of 5-bit glyph codes (bit 5 = narrow 6x12 glyph)
 func	main	func_8004B590	palette_to_gray	128 words (256 colours): luminance (30,59,11)/100 per colour, minimum 1 for non-black
 func	main	func_8004E44C	mod_init	fills tile-set record idx (ModRec14) from a file header: bank table, tile words, pixel format, cols, rows, tile size
-func	main	func_80085E30	scene_gfx_init	resets 2D mode (draw2d3d(1,0)), actor drawing on, the sprite table (64 entries hidden, priority bytes 0) and both BG slots, actors 96-159, back clear flag = arg0, clear colour 0, brightness 0x80, the text list (52 entries) and text palette rows, screen layer off, texture-block cache (all slots if arg1, else keeping the system blocks); 51 uses in overlays
+func	main	func_80085E30	scene_gfx_init	resets 2D mode (draw2d3d(1,0)), actor drawing on, the sprite table (64 entries hidden, priority bytes 0) and both BG slots, actors 96-159, back clear flag = arg0, clear colour 0, brightness 0x80, the text list (52 entries) and text palette rows, screen layer off, texture-block cache (all slots if arg1, else keeping the system blocks); 46 call sites in src/
 func	main	func_8008647C	pick_top_girl	HYPOTHESIS: record flag b1 (Rec38) means the player knows the girl. Logic read from C: baseline is girl 0 (flag untested; the first flagged girl of the list is never examined); each later flagged girl replaces the best on a higher tokimeki+yuukou score if her state code is not above the best's, or on an equal score if her state code is not above the best's and her record unk_02+unk_06 sum is larger
-func	main	func_80086640	actor_pair_swap_sequences	swaps the sequence index (+0x16) of actors 96 and 98 and zeroes their frame and timer; no caller in C
-func	main	func_8008667C	girl_state_code	get_g_zyotai_s(girl) & 0x7F; 1078 uses
-func	main	func_800866A0	overlay_load_verify_step	HYPOTHESIS: step 0 starts a CD sync, then checks four entry words and file_checksum_ok(0x2D) and either restarts or calls func_8004284C
-func	main	func_800867CC	sound_bank_wait_latch	once D_80122EA0==0 and sound_bank_wait_ready returns 1 sets D_80122EA0=1
+func	main	func_80086640	actor_pair_swap_sequences	swaps the sequence index (+0x16) of actors 96 and 98, zeroes the frame index (+0x18) of both and the animation timer (+0x08) of actor 96 only; no caller in C
+func	main	func_8008667C	girl_state_code	get_g_zyotai_s(girl) & 0x7F; 1104 call sites in src/
+func	main	func_800866A0	asset_package_verify_step	HYPOTHESIS: name only. Substep 0 calls func_80062CD0 (CD read of file id 0x2D to the staging area 0x80180000); later substeps wait for the read, compare eight words read through the pointers D_800CA120 (five words, 0x801820AC + k * 0x4000 for k = 0..4), D_800CA124 (0x80180000) and D_800CA128 (0x8018005C, 0x80180070), then run file_checksum_ok(0x2D, 0x80180000); a mismatch restarts at substep 0, success calls func_8004284C. func_80083474 in 8007C030.c repeats the checks. Callers pass one argument (for example 0x5B25 or 0x5012) that the C does not forward; HYPOTHESIS: it reaches func_80062CD0 through a0. The core table calls this function bustup_read_step (a portrait reading); the merge picks one name
+func	main	func_800867CC	sound_bank_wait_latch	HYPOTHESIS: once D_80122EA0 == 0 and sound_bank_wait_ready returns 1, sets D_80122EA0 = 1 (done latch of the bank wait)
 comment	main	draw2d3d	Enable or disable the 2D pass (unk_1114) and the 3D pass (unk_1113) of render_frame.	O.BIN name kept; stores the two bytes
 comment	main	back_clear_switch	Turn the per-frame background clear (GsSortClear with colour unk_036..038) on or off.	O.BIN name kept; sets unk_039
 comment	main	load_palette	Queue a palette upload (data pointer, row id, stp mode, block); returns 0 when the 32-entry queue is full.	O.BIN name kept; writes unk_1328[unk_1428++]
-comment	main	load_csr_ab	Queue a raw VRAM rectangle upload (source pointer, a mode byte, then x, y, w, h arguments); returns 0 when the 32-entry queue is full.	O.BIN name kept; csr_* is the developers term for these VRAM upload requests
+comment	main	load_csr_ab	Queue a raw VRAM rectangle upload (source pointer, a mode byte, then x, y, w, h arguments); returns 0 when the 32-entry queue is full.	HYPOTHESIS: csr_* is the developers' term for VRAM upload requests (from what these functions and csr_load_vram do); the glossary seed lists csr_* under cursor, unresolved; O.BIN name kept
 comment	main	load_csr_tp	Queue a texture-page block upload (tpage id, depth shift, offsets, size); returns 0 when the queue is full.	O.BIN name kept; used by the texture-block cache
 comment	main	csr_load_vram	Flush the VRAM upload queue with LoadImage calls and empty it.	O.BIN name kept; called from render_frame
 comment	main	palette_load_vram	Flush the palette queue into the VRAM palette rows (y 0x1E0..) and empty it.	O.BIN name kept; comment in source already describes the 3 stp modes
@@ -73,8 +73,8 @@ comment	main	tpage_buf_clear	Same reset, then install the permanent system block
 comment	main	_sys_default_tpage_set	Mark the always-resident texture slots (locked value 0x77 and the default source addresses).	O.BIN name kept
 comment	main	load_tpage_buf_lock	Put a source block into a chosen cache slot permanently and queue its upload.	O.BIN name kept
 comment	main	search_load_tpage_buf_lock	Find the first free cache slot (5..63), lock a source block there, queue its upload, return the slot or -1.	O.BIN name kept
-comment	main	search_tpage_multi	Find or load the cache slot of a given source block (shared 16 x 16 tile cache); returns the slot, 0x3F when full.	O.BIN name kept
-comment	main	search_tpage	Find or load the cache slot of an actor texture block for a 16-px cell part; arg 0x7FFF starts a new frame.	O.BIN name kept
+comment	main	search_tpage_multi	Find or load the cache slot of a given source block (shared 16 x 16 tile cache); returns the slot, 0x3F when full.	O.BIN name kept; a claimed slot lasts one frame, like search_tpage
+comment	main	search_tpage	Find or load the cache slot of an actor texture block for a 16-px cell part; arg 0x7FFF starts a new frame (every slot whose resident word is -1 becomes free, all others held). A slot claimed here lasts that frame only.	O.BIN name kept
 comment	main	search_tpage8	Same as search_tpage for 8-px cell parts (block index = texture id >> 8).	O.BIN name kept
 comment	main	SetWorkBase	Set the primitive bump allocator of draw buffer n: base address, size 0x10C00, offset 0.	O.BIN name kept
 comment	main	GetWorkBase	Allocate size bytes (rounded to 4) from the primitive area of a draw buffer; each allocation advances the offset by size but the address uses offset*4.	O.BIN name kept; emu: watch on the offset counter shows 0, 0xC, 0x18 for two 12-byte requests
@@ -85,7 +85,7 @@ comment	main	dtd_on_tpage	Add a draw-mode primitive with dithering on and the gi
 comment	main	dtd_on	Add a draw-mode primitive with dithering on and no page change.	O.BIN name kept
 comment	main	_sprite_set_light_effect1	Draw a pulsing light triangle (colour plus sine of the frame counter, black edge).	O.BIN name kept
 comment	main	make_color_bar	Build a 256-colour palette of eight 32-step ramps, one per red/green/blue bit combination; flag sets the stp bit.	O.BIN name kept
-comment	main	make_color_bar16	Build a gradient palette of count colours from a start to an end RGB colour; entry 0 is black.	O.BIN name kept
+comment	main	make_color_bar16	Build a palette of count colours (count / 2 pairs, 5 bits per channel): colour j = ((count - j) * end + j * start) / count, so entry 1 is close to the end colour and the last entry close to the start colour; entry 0 is then forced to black; flag sets the stp bit on every entry except entry 0.	O.BIN name kept
 comment	main	col2sepia	Turn a 256-colour palette to grey, then add (dr,dg,db) to every non-black colour with clamp 31 (sepia tone).	O.BIN name kept
 comment	main	srn_tpage_show	Draw a 768-px-wide strip from three VRAM pages as five textured quads, scrolled left by the low byte of x; colour from screen brightness.	HYPOTHESIS: srn means screen; O.BIN name kept
 comment	main	srn_vram_set	Upload the tiles of screen layer n (D_80121750 record) to VRAM through mod_trans_vram, limited to a width and height; returns -1 for an empty layer.	O.BIN name kept
@@ -132,7 +132,7 @@ data	main	D_800E36F0	vblank_timer_start	copy of unk_10F4 at Vblnk_Timer_Init
 data	main	D_800E36F4	vblank_timer_elapsed	unk_10F4 minus start, returned by Vblnk_Timer
 data	main	D_800C9730	default_texture_blocks	default texture-block address table written into new actors (+0x34) and slots 60..63 of the cache
 data	main	D_800C9A14	default_sequence_table	default animation-sequence table written into new actors (+0x10)
-data	main	D_80122EA0	sound_bank_wait_done	latch set by sound_bank_wait_latch
+data	main	D_80122EA0	sound_bank_wait_done	HYPOTHESIS: latch set by sound_bank_wait_latch once the bank wait has finished
 type	main	Rec24	GsSprite	layout equals the libgs GsSPRITE (0x24 bytes); consumers func_80098680 (0x4F8 bytes, uses scale and rotation; taken as GsSortSprite) and func_80098B80 (0x178 bytes; taken as GsSortFastSprite); the comment at src/main/8004C3F0.c:441 calls func_80098B80 GsSortSprite and must be corrected when names are applied
 type	main	GsRec01C	PrimWorkArea	SetWorkBase/GetWorkBase record: size, offset, base address; two per GameState (one per draw buffer)
 type	main	GsRec1328	PaletteUpload	palette_load_vram queue entry (8 bytes), 32 entries
@@ -146,8 +146,8 @@ type	main	DisplayImagePart0E	ActorImagePart	one textured rectangle of an image (
 type	main	SpriteSlot24	GsBg	layout equals libgs GsBG (0x24 bytes), sorted by func_80098D00 (GsSortBg)
 type	main	SpriteMap10	GsMap	layout equals libgs GsMAP
 type	main	SpriteCell8	GsCell	layout equals libgs GsCELL
-field	GameState	unk_014	draw_origin_x	s16[2] per draw buffer: added to every hand-built primitive x; 0xA0 (screen centre) plus shake, set in screen_shake_update; h-cdio proposes screen_center_x for this field, this unit has the verified values and the draw-offset use
-field	GameState	unk_018	draw_origin_y	s16[2] per draw buffer: added to every hand-built primitive y; 0x168 (240 + 120) for buffer 0 (VRAM y 240 half), 0x78 for buffer 1, plus shake; verified in screen_shake_update; h-cdio proposes screen_center_y without having seen the value
+field	GameState	unk_014	draw_origin_x	s16[2] per draw buffer: added to every hand-built primitive x; 0xA0 (screen centre) plus shake, set in screen_shake_update; h-cdio uses the same name, core proposes screen_center_x (see the spec, Cross-unit names)
+field	GameState	unk_018	draw_origin_y	s16[2] per draw buffer: added to every hand-built primitive y; 0x168 (240 + 120) for buffer 0 (VRAM y 240 half), 0x78 for buffer 1, plus shake; verified in screen_shake_update; h-cdio uses the same name, core proposes screen_center_y
 field	GameState	unk_01C	prim_work	PrimWorkArea[2]
 field	GameState	unk_036	back_clear_r	passed to GsSortClear with unk_037, unk_038 when unk_039 is set
 field	GameState	unk_037	back_clear_g	same
@@ -165,8 +165,8 @@ field	GameState	unk_10F8	frame_count	incremented once per game_main loop pass; d
 field	GameState	unk_1112	actor_draw_enabled	set by actor_draw_enable
 field	GameState	unk_1113	draw_3d_enabled	second argument of draw2d3d
 field	GameState	unk_1114	draw_2d_enabled	first argument of draw2d3d
-field	GameState	unk_1128	tpage_frame_map	s32[64]: 0x7FFF free this frame, 0x7FFE resident and untouched, else the source address requested this frame
-field	GameState	unk_1228	tpage_resident	s32[64]: source address of the 128x128 block in slot i; -1 free, 0 reserved (display pages), 0x77 locked
+field	GameState	unk_1128	tpage_frame_map	s32[64]: per-frame slot state, rebuilt by search_tpage(0x7FFF): 0x7FFF free, 0x7FFE held (resident word not -1), otherwise the source address claimed this frame; claims are never copied to tpage_resident
+field	GameState	unk_1228	tpage_resident	s32[64]: persistent slot state: -1 free (actors only claim such a slot for one frame), 0 reserved (display pages), 0x77 default system block, a source address (lock functions; found by search_tpage step 1), or a small mark (1, 8, 0x80000100 + n) that overlays store to keep the cache off the slot; any value but -1 holds the slot until stored over or cleared
 field	GameState	unk_1328	palette_queue	PaletteUpload[32]
 field	GameState	unk_1428	palette_queue_count	entries pending in palette_queue
 field	GameState	unk_1429	vram_upload_count	entries pending in unk_142C
@@ -192,7 +192,7 @@ field	Rec24	unk_20	rotation	angle, 4096 per turn
 field	DisplayActor44	unk_01	draw_priority	0 = OT slot 0, n = slot n-1, passed to func_80098680
 field	DisplayActor44	unk_02	anim_flags	see const group ActorAnimFlags
 field	DisplayActor44	unk_03	draw_flags	see const group ActorDrawFlags
-field	DisplayActor44	unk_04	texture_flags	bit 3: parts use the 8-bit block index (search_tpage8)
+field	DisplayActor44	unk_04	texture_flags	bit 3: parts are 8-pixel cells (block index texture id >> 8, search_tpage8); clear: 16-pixel cells (id >> 6, search_tpage); pixel depth is chosen separately by sprite_attribute
 field	DisplayActor44	unk_05	palette_mode	bit 7 plus low bits 1,2,4,8: how many high bits of the part palette byte pick the clut column
 field	DisplayActor44	unk_06	anim_speed	bit 7 set: ticks added per frame; else advance every n frames; also the blink period
 field	DisplayActor44	unk_07	brightness	grey modulation 0x80 normal, used when no tint is set
@@ -209,7 +209,7 @@ field	DisplayActor44	unk_28	y	16.16 position
 field	DisplayActor44	unk_2C	velocity_x	16.16 per frame added when draw_flags bit 4
 field	DisplayActor44	unk_30	velocity_y	same for y
 field	DisplayActor44	unk_34	texture_blocks	table of source addresses of 128x128 texture blocks (indexed by texture id >> 6 or >> 8)
-field	DisplayActor44	unk_38	sprite_attribute	copied to GsSprite attribute; bits 24-25 pick the block depth
+field	DisplayActor44	unk_38	sprite_attribute	copied to GsSprite attribute; bits 24-25 pick the pixel depth of the block upload: 0 = 4-bit (shift 2), 1 = 8-bit (shift 1); other values are not handled by actor_pool_draw
 field	DisplayActor44	unk_40	tint_r	tint colour, used when any of the three is nonzero
 field	DisplayActor44	unk_41	tint_g	same
 field	DisplayActor44	unk_42	tint_b	same
@@ -256,7 +256,7 @@ const	ActorDrawFlags	0x80	ACTOR_DRAW_ACTIVE	drawn by actor_pool_draw
 const	ActorDrawFlags	0x40	ACTOR_DRAW_BLINK	skipped when frame_count % (anim_speed+1) == 0
 const	ActorDrawFlags	0x20	ACTOR_DRAW_SCREEN_BRIGHTNESS	modulation colour comes from screen_brightness
 const	ActorDrawFlags	0x10	ACTOR_DRAW_MOVE	add velocity to x,y every frame
-const	ActorDrawFlags	0x08	ACTOR_DRAW_FIRST_PARTS	HYPOTHESIS: draw only the first 4 parts (3..0) and trim 1 px from the size when the sprite is rotated or flipped
+const	ActorDrawFlags	0x08	ACTOR_DRAW_FIRST_PARTS	draws only parts 3..0 and trims 1 px from the size when the sprite is rotated or flipped (from the code); what the bit means in the game is open (spec, Open questions)
 const	ActorDrawFlags	0x04	ACTOR_DRAW_NO_ORIGIN	position is not shifted by the image origin
 const	ActorDrawFlags	0x01	ACTOR_DRAW_MIRROR_X	mirror the image horizontally
 const	ScreenBrightness	0x80	SCREEN_BRIGHTNESS_NORMAL	unmodulated value of unk_03A
