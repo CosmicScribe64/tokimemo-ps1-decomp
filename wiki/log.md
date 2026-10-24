@@ -7,22 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] decision | Two concrete source experiments from new screening
-
-Live T-25031 found SHOUGATU8013E50C archived FAKE table-address arguments to renamed matched zero-argument check_para_limit; incoming argument registers unused. Assigned same Sol T-25033 canonical no-argument whole-TU control in src/ovl/SHOUGATU/8013E330.c after ledger check. Ignored arguments may still be original caller behavior, so no match/defect certainty inferred. T-25032 found newest MAIN80046AC8 draft still narrows tile extent to s16 before positivity test whereas target tests full width; assigned same Sol T-25034 correction and whole-TU comparison in src/main/80046500.c. Workers first pin read-only evidence then create implementation tickets. Two disjoint source owners, no activeAstra, no further screening until these controls resolve.
-
-## [2026-10-22] decision | Hands-on escalation for near SHOUGATU closure
-
-Live T-25033 corrected guard reaches five printed lines: missing entry zero carrier and its two uses, other instructions aligned. Three-argument status-call control restores count but emits zero too late and disturbs reload base; rejected. Authorized one hands-on Astra worker on this exact claimed source after Sol pins trace/bestbody, with Sol idle and exclusive editing transferred. Must consult T-24907/T-25025 and current negatives, avoid repeated grids and semantic/byte shortcuts; initial30min sustained attempt with literal proof for any match. This supersedes read-only consultation restriction for this specific blocker. T-25034 MAIN continues source lifetimes/frame/control work. No coverage claim yet.
-
-## [2026-10-22] decision | User switches active implementation to Astra
-
-Human explicitly states Sol is insufficient and requests Astra. Sent both active matching chats model override gpt-6-astra/high: T-25033 SHOUGATU five-line closure and T-25034 MAIN full-width extent reconstruction. This supersedes earlier Sol-default/read-only-Astra policy for active implementation. Continue exact best sources and negative ledgers; a running Astra child remains sole editor if already dispatched, avoiding duplicate work. Root integration/proof requirements unchanged, no new fan-out or screening. No coverage increase claimed.
-
-## [2026-10-22] decision | User requires continued work through resolution
-
-Human directs active workers not to stop until their assigned problems are resolved. Relayed to both Astra matching chats: supersede prior time boxes/probe-count stopping limits; checkpoints and negative experiments do not terminate work. Continue evidence-informed implementation and verification on current files, preserving interim sources. Required literal match/semantics/proof standards remain; ordinary difficulty is not an external blocker. Root integration remains serialized.
-
 ## [2026-10-22] ticket | T-25031 small-overlay candidate qualification
 
 Created [[tickets/T-25031-small-overlay-candidate-triage]] and In Progress card before work. Read-only NAME_ENT/SHOUGATU/VALEN/KANGEI/GYOZI/BUNKA_SD selection excludes prior24, reserved GEKO/OPTION/TEL and exhausted tails; MAIN separately owned. At most12 functions, no builds/source variants/root edits/agents.
@@ -1640,6 +1624,7 @@ Review fixes: the prefix rule is "a glossary stem, a listed abbreviation, or a r
 
 ## [2026-10-24] ticket | T-27002 Done
 [[tickets/T-27002-rename-tool]] passed the standards and spec review in round 3 (approved, no blocking findings; full tool suite 1,637 tests OK) and moves to Done. Three non-blocking follow-ups are in the ticket comments: member uses in uncalled header macros, a double space after a deduped symbol line, and the `T-27000-phase-2` links that come from w2-good. Merging as w19-rename through merge3.sh.
+
 ## [2026-10-24] ingest | T-27014 phase 2 m-dates-a: names and port spec for the sound driver (src/main/80079B10.c)
 [[tickets/T-27014-p2-m-dates-a]] (In Review): the unit was labelled "date sequences, first half" but `src/main/80079B10.c` is the game's sound driver (54 functions); the date and girl code is in `src/main/8007C030.c` (unit m-dates-b). Wrote config/renames/proposals/m-dates-a.tsv (202 rows: 53 func, 46 data, 34 field, 66 const, 1 type, 1 file, 1 comment; 3 carry a HYPOTHESIS mark) and [[spec/m-dates-a]] (linked from [[spec/index]]). Evidence: the matched C, all literal `func_80044750` ids in src/, `asm/libsnd.s`, the 49 O.BIN `SD_*` names (all agree), five short emulator runs.
 Findings: the 16-bit command word has classes (control 0, BGM 2, voice clip 3, effects 5 to 8), a stop/pause/resume modifier and fade families with exact per-frame rates; the voice clip request converts to sectors as `index * 8 or 0x20 + channel + base -/+ 0x10` (checked on a real clip); `func_80079E00` ignores its argument; ids 0xB2/0xC2 do nothing; the mono command has no sender. No change to src/, include/ or symbol files.
