@@ -502,7 +502,7 @@ void func_8007959C(void) {
     ovl_load_buf = 0x80132000;
     switch (D_800E6280.stage) {
     case 0:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         D_800B3220 = 0;
         func_80041168(0xFF);
         func_80048EB8(0);

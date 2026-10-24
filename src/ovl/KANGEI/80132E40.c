@@ -174,9 +174,9 @@ void func_80132FF8(void) {
     } else if (*(u8 *)&D_80139AC0 == 1) {
         func_800578F4(0);
         if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((D_800E6280.pad_held & 0xF000F000) || (D_80122D30 == 1))) {
-            ((DisplayActor44 *)D_8011ECD0)->draw_flags |= 0x80;
+            ((Actor *)D_8011ECD0)->draw_flags |= 0x80;
         }
-        if (((DisplayActor44 *)D_8011ECD0)->draw_flags & 0x80) {
+        if (((Actor *)D_8011ECD0)->draw_flags & 0x80) {
             func_8006BA40();
         }
         func_80066C08(1);
@@ -184,12 +184,12 @@ void func_80132FF8(void) {
         func_800578F4(0);
         func_80066C08(1);
         if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((D_800E6280.pad_held & 0xF000F000) || (D_80122D30 == 1))) {
-            ((DisplayActor44 *)D_8011ECD0)->draw_flags |= 0x80;
+            ((Actor *)D_8011ECD0)->draw_flags |= 0x80;
         }
         if (D_80122D04 != 0) {
-            ((DisplayActor44 *)D_8011ECD0)->draw_flags &= 0x7F;
+            ((Actor *)D_8011ECD0)->draw_flags &= 0x7F;
         }
-        if (((DisplayActor44 *)D_8011ECD0)->draw_flags & 0x80) {
+        if (((Actor *)D_8011ECD0)->draw_flags & 0x80) {
             func_8006BA40();
         }
     }

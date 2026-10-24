@@ -6,9 +6,9 @@ void func_80083440();
 
 void func_80146030(void) {
     s32 selector;
-    BunkaDispatch8 *work;
+    CultureFestivalDispatch *work;
 
-    work = (BunkaDispatch8 *)&D_80122EB8;
+    work = (CultureFestivalDispatch *)&D_80122EB8;
     selector = work->unk_00;
     work->unk_04 = 3;
     D_800E6280.girls[3].flags.f.b2 = 1;

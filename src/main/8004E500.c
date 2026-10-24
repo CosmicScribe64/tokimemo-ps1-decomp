@@ -5,7 +5,7 @@
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/8004E500.data", text_list);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3F58);
-KWork text_list_count = { 0, 0, 0, 0, 0, 0, 0 };
+TextState text_list_count = { 0, 0, 0, 0, 0, 0, 0 };
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3F6C);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3FAC);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3FCC);
@@ -46,22 +46,22 @@ void func_8004E58C(void) {
     r.h = 8;
     func_8009C7F8(&r, 0x80, 0x80, 0x80);
     for (i = 0; i < 0x34; i++) {
-        ((Entry8 *)text_list)[i].x = 0;
-        ((Entry8 *)text_list)[i].y = 0;
-        ((Entry8 *)text_list)[i].attr = 0;
-        ((Entry8 *)text_list)[i].glyph_count = 0;
-        ((Entry8 *)text_list)[i].extra = 0;
-        ((Entry8 *)text_list)[i].active = 0;
+        ((TextEntry *)text_list)[i].x = 0;
+        ((TextEntry *)text_list)[i].y = 0;
+        ((TextEntry *)text_list)[i].attr = 0;
+        ((TextEntry *)text_list)[i].glyph_count = 0;
+        ((TextEntry *)text_list)[i].extra = 0;
+        ((TextEntry *)text_list)[i].active = 0;
     }
     text_list_count.total = 0;
     text_list_count.count = 0;
     text_list_count.pos = 0;
     text_list_count.mark = 0;
-    /* FAKE: T-17020. The two compares read the byte through a KWork pointer view. With a direct
+    /* FAKE: T-17020. The two compares read the byte through a TextState pointer view. With a direct
      * read the build loads it after the four zero stores and puts the li in t6 (tools/cvt_pass.py
      * keeps the widening CVT because the first read comes after a call). The pointer view gives the
      * original's order: lbu before the stores, li in v0. */
-    if (((KWork *)&text_list_count)->unk_6A != 0xE && ((KWork *)&text_list_count)->unk_6A != 0x10) {
+    if (((TextState *)&text_list_count)->unk_6A != 0xE && ((TextState *)&text_list_count)->unk_6A != 0x10) {
         text_list_count.unk_6A = 0xE;
     }
 }
@@ -82,16 +82,16 @@ s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
         return -1;
     }
     if (str == 0) {
-        ((Entry8 *)text_list)[text_list_count.count].active = 0;
+        ((TextEntry *)text_list)[text_list_count.count].active = 0;
     } else if (str[0] == 0 || str[1] == 0) {
-        ((Entry8 *)text_list)[text_list_count.count].active = 0;
+        ((TextEntry *)text_list)[text_list_count.count].active = 0;
     } else {
-        ((Entry8 *)text_list)[text_list_count.count].y = y;
-        ((Entry8 *)text_list)[text_list_count.count].attr = col;
-        ((Entry8 *)text_list)[text_list_count.count].x = x;
-        ((Entry8 *)text_list)[text_list_count.count].glyph_count = load_string(str, y, col);
-        ((Entry8 *)text_list)[text_list_count.count].extra = arg4;
-        ((Entry8 *)text_list)[text_list_count.count].active = 1;
+        ((TextEntry *)text_list)[text_list_count.count].y = y;
+        ((TextEntry *)text_list)[text_list_count.count].attr = col;
+        ((TextEntry *)text_list)[text_list_count.count].x = x;
+        ((TextEntry *)text_list)[text_list_count.count].glyph_count = load_string(str, y, col);
+        ((TextEntry *)text_list)[text_list_count.count].extra = arg4;
+        ((TextEntry *)text_list)[text_list_count.count].active = 1;
     }
     return ++text_list_count.count;
 }
@@ -124,8 +124,8 @@ s16 *get_ksys(void) {
     return (u8 *)&text_list_count;
 }
 
-void set_k_work(s32 arg0, Entry8 arg1) {
-    Entry8 *p = (Entry8 *)text_list + arg0;
+void set_k_work(s32 arg0, TextEntry arg1) {
+    TextEntry *p = (TextEntry *)text_list + arg0;
 
     p->x = arg1.x;
     p->y = arg1.y;
@@ -235,19 +235,19 @@ void disp_string(void) {
     s32 flag;
 
     j = 0;
-    ot = ((Entry8 *)text_list)[0].extra;
+    ot = ((TextEntry *)text_list)[0].extra;
     if (ot == 0) {
         ot = 1;
     }
     flag = 1;
     for (i = 0, k = 0; i < text_list_count.total && i < text_list_count.pos; i++, k++) {
-        if (k >= ((Entry8 *)text_list)[j].glyph_count) {
+        if (k >= ((TextEntry *)text_list)[j].glyph_count) {
             k = 0;
             j++;
         }
-        if (((Entry8 *)text_list)[j].active == 1) {
-            if (ot != ((Entry8 *)text_list)[j].extra) {
-                ot = ((Entry8 *)text_list)[j].extra;
+        if (((TextEntry *)text_list)[j].active == 1) {
+            if (ot != ((TextEntry *)text_list)[j].extra) {
+                ot = ((TextEntry *)text_list)[j].extra;
                 flag = 1;
                 if (ot == 0) {
                     ot = 1;
@@ -260,11 +260,11 @@ void disp_string(void) {
             p->r0 = D_800E6280.screen_brightness;
             p->g0 = D_800E6280.screen_brightness;
             p->b0 = D_800E6280.screen_brightness;
-            p->x0 = ((Entry8 *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A;
-            p->y0 = ((Entry8 *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0];
+            p->x0 = ((TextEntry *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A;
+            p->y0 = ((TextEntry *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
-            p->clut = func_8009ED74((((Entry8 *)text_list)[j].attr & 8) * 4 + 0x100, (((Entry8 *)text_list)[j].attr & 7) + 0x1F8);
+            p->clut = func_8009ED74((((TextEntry *)text_list)[j].attr & 8) * 4 + 0x100, (((TextEntry *)text_list)[j].attr & 7) + 0x1F8);
             AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
 
             p = (SPRT_8 *)GetWorkBase(0x10, D_8011ECA0);
@@ -274,10 +274,10 @@ void disp_string(void) {
             p->r0 = 0;
             p->g0 = 0;
             p->b0 = 0;
-            p->x0 = ((Entry8 *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A + 1;
+            p->x0 = ((TextEntry *)text_list)[j].x + D_800E6280.screen_center_x[D_8011ECA0] + k * text_list_count.unk_6A + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
-            p->y0 = ((Entry8 *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
-            p->clut = func_8009ED74((((Entry8 *)text_list)[j].attr & 8) * 4 + 0x110, (((Entry8 *)text_list)[j].attr & 7) + 0x1F8);
+            p->y0 = ((TextEntry *)text_list)[j].y + D_800E6280.screen_center_y[D_8011ECA0] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
+            p->clut = func_8009ED74((((TextEntry *)text_list)[j].attr & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attr & 7) + 0x1F8);
             AddPrim(&D_800E8CA0[(D_8011ECA0 << 10) + ot * 4], p);
 
             if (i == 0x7F) {

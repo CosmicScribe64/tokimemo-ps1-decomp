@@ -62,9 +62,9 @@ s32 func_8013B10C(void) {
     idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
-        /* FAKE: DisplayActor44 view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
-        ((DisplayActor44 *)D_80120650)[3].brightness = D_800B593C;
-        ((DisplayActor44 *)D_80120650)[3].draw_flags |= 0x80;
+        /* FAKE: Actor view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
+        ((Actor *)D_80120650)[3].brightness = D_800B593C;
+        ((Actor *)D_80120650)[3].draw_flags |= 0x80;
         if ((u8)D_800E6280.voice_mode != 0) {
             if (!D_8014662C) {
                 D_8012071E = 3;

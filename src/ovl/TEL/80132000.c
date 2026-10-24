@@ -425,34 +425,34 @@ void func_80132FC4(void) {
             }
             if (var_a2 == 1) {
                 D_800E6280.substep = 0x10;
-                ((CharFlags *)D_800E6280.quarter_flags)->met = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->met = 1;
 
             } else if (var_a2 == 7) {
                 D_800E6280.substep = 0x20;
-                ((CharFlags *)D_800E6280.quarter_flags)->b2 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b2 = 1;
 
             } else if (var_a2 == 3) {
                 D_800E6280.substep = 0x30;
-                ((CharFlags *)D_800E6280.quarter_flags)->b3 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b3 = 1;
 
             } else if (var_a2 == 0xD) {
                 D_800E6280.substep = 0x40;
-                ((CharFlags *)D_800E6280.quarter_flags)->b4 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b4 = 1;
 
             } else if (var_a2 == 5) {
                 D_800E6280.substep = 0x50;
-                ((CharFlags *)D_800E6280.quarter_flags)->b5 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b5 = 1;
 
             } else if (var_a2 == 0xA) {
                 D_800E6280.substep = 0x60;
-                ((CharFlags *)D_800E6280.quarter_flags)->b6 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b6 = 1;
 
             } else if (var_a2 == 6) {
                 D_800E6280.substep = 0x70;
-                ((CharFlags *)D_800E6280.quarter_flags)->b7 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b7 = 1;
 
             } else if (var_a2 == 0xB) {
-                ((CharFlags *)D_800E6280.quarter_flags)->b8 = 1;
+                ((GirlFlagBits *)D_800E6280.quarter_flags)->b8 = 1;
                 D_800E6280.substep = 0x80;
 
             } else {
@@ -717,7 +717,7 @@ void func_80133D54(void) {
     /* FAKE: buffer extent preserves the original frame and sp+0x5C address. T-10040. */
     u8 sp5C[44];
     u8 sp3C[32];
-    DisplayFixActor44 *var_s0;
+    ActorFixed *var_s0;
     s32 var_s1;
 
     switch (D_800E6280.substep) {
@@ -885,7 +885,7 @@ void func_80133D54(void) {
         func_80042940(4);
         break;
     }
-    var_s0 = &((DisplayFixActor44 *)D_8011ECD0)[0x61];
+    var_s0 = &((ActorFixed *)D_8011ECD0)[0x61];
     var_s1 = 0x61;
     do {
         if (var_s0->frame == 0x60) {
@@ -2302,7 +2302,7 @@ void func_80136724(void) {
 }
 
 void func_801380D8(void) {
-    Rec38 *girl;
+    GirlRecord *girl;
     u8 state;
     u32 temp_hi;
 

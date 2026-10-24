@@ -88,13 +88,13 @@ void func_80134B94(void) {
     table.f[index](0x80);
     index = D_800E6280.step;
     if (D_80085368 == table.f[index]) {
-        ((DisplayActor44 *)D_8011ECD0)[98].draw_flags |= 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[98].brightness = ((DisplayActor44 *)D_8011ECD0)[96].brightness;
+        ((Actor *)D_8011ECD0)[98].draw_flags |= 0x80;
+        ((Actor *)D_8011ECD0)[98].brightness = ((Actor *)D_8011ECD0)[96].brightness;
     }
     if (func_800853FC == table.f[index]) {
-        ((DisplayActor44 *)D_8011ECD0)[98].brightness = ((DisplayActor44 *)D_8011ECD0)[96].brightness;
-        if (((DisplayActor44 *)D_8011ECD0)[96].brightness < 9) {
-            ((DisplayActor44 *)D_8011ECD0)[98].draw_flags &= 0xFF7F;
+        ((Actor *)D_8011ECD0)[98].brightness = ((Actor *)D_8011ECD0)[96].brightness;
+        if (((Actor *)D_8011ECD0)[96].brightness < 9) {
+            ((Actor *)D_8011ECD0)[98].draw_flags &= 0xFF7F;
         }
     }
 }
@@ -172,10 +172,10 @@ void func_80134F18(void) {
     D_80120654 = 8;
     D_801206AC = 3;
     /* D_80120650 and D_801206D8 are records 96 and 98 of one table: the loads stay behind the stores. T-9310, T-20900 */
-    ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
-    ((DisplayActor44 *)D_80120650)[2].flags = 0x40;
-    ((DisplayActor44 *)D_80120650)[2].unk_18 = 0x28;
-    ((DisplayActor44 *)D_80120650)[2].unk_01 -= 1;
+    ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
+    ((Actor *)D_80120650)[2].flags = 0x40;
+    ((Actor *)D_80120650)[2].unk_18 = 0x28;
+    ((Actor *)D_80120650)[2].unk_01 -= 1;
     D_800CA2E4 = 3;
     D_800CA2E8 = 0;
     D_800E6280.tpage_buf[5] = -1;

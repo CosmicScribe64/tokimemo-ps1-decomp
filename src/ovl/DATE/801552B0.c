@@ -92,7 +92,7 @@ void func_801555C4(void) {
 }
 
 void func_801556D8(void) {
-    DisplayActor44 *m = (DisplayActor44 *)D_8011ECD0;
+    Actor *m = (Actor *)D_8011ECD0;
     s16 i;
     DateShorts8 sp68;
     DateShorts8 sp58;
@@ -237,11 +237,11 @@ s32 func_80155E40(void) {
     tbl.f[g->step](0x80);
     if (func_800853FC == tbl.f[g->step]) {
         for (i = 0; i < 8; i++) {
-            ((DisplayActor44 *)D_8011ECD0)[98 + i].brightness = ((DisplayActor44 *)D_8011ECD0)[96].brightness;
+            ((Actor *)D_8011ECD0)[98 + i].brightness = ((Actor *)D_8011ECD0)[96].brightness;
         }
-        if (((DisplayActor44 *)D_8011ECD0)[96].brightness < 9) {
+        if (((Actor *)D_8011ECD0)[96].brightness < 9) {
             for (i = 0; i < 8; i++) {
-                ((DisplayActor44 *)D_8011ECD0)[98 + i].draw_flags &= 0x7F;
+                ((Actor *)D_8011ECD0)[98 + i].draw_flags &= 0x7F;
             }
         }
     }
@@ -270,7 +270,7 @@ void func_801560B8(void) {
 }
 
 void func_801560E0(void) {
-    DisplayFixActor44 *m = (DisplayFixActor44 *)D_8011ECD0;
+    ActorFixed *m = (ActorFixed *)D_8011ECD0;
     u8 *st;
     DateShorts8 sp98;
     DateShorts8 sp88;

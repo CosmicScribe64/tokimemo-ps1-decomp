@@ -66,7 +66,7 @@ void func_8013CC90(void) {
         if (!(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF)) {
             if (D_8015EB98 & 0xF0000) {
                 if ((D_800E6280.pad_held & 4) && (D_800E6280.pad_held & 8)) {
-                    if (((DisplayActor44 *)D_8011ECD0)[144].sequence_slot != 2) {
+                    if (((Actor *)D_8011ECD0)[144].sequence_slot != 2) {
                         func_8013E7C0(0x30, 2, 1, 1);
                     }
                 } else {

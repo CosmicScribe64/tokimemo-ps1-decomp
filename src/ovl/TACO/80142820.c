@@ -33,7 +33,7 @@ void func_80142820(void) {
     }
 }
 
-/* Settings block at D_800E7D10 +0x40 (Work800E7D10 in main_api.h since T-20900; the loader func_801345D4 in
+/* Settings block at D_800E7D10 +0x40 (SystemData in main_api.h since T-20900; the loader func_801345D4 in
  * 80133870.c has its own view of it, T-16562): byte 0 holds the "saved" flag, the mode and the selector, byte 1 two
  * more selectors. Every access relocates against the one symbol D_800E7D10: as1 then hoists the flag byte load over
  * the word stores, as the original does (separate symbols D_800E7D50/D_800E7D5C keep it after them). T-19009 */

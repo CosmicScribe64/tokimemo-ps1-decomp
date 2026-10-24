@@ -2,11 +2,11 @@
 #include "ovl/BUNKAKEN.h"
 
 void func_80140F60(void) {
-    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 2;
-    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
+    ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 2;
+    switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 2:
         if ((func_8008667C(2) == 4) && !(D_800E6280.girls[2].flags.f.b2)) {
-            ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+            ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
             func_80042908(5);
             return;
         }
@@ -25,7 +25,7 @@ void func_80140F60(void) {
             break;
         }
         if ((func_8008667C(2) == 4) && !(D_800E6280.girls[2].flags.f.b2)) {
-            ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+            ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
             func_80042908(5);
             return;
         }
@@ -516,8 +516,8 @@ void func_80141B80(void) {
         }
         break;
     case 13:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         g->saved_mode = g->mode;
         g->saved_stage = g->stage;
         g->saved_step = g->step + 1;

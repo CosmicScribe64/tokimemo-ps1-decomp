@@ -698,7 +698,7 @@ void func_80144720(void) {
     D_800CA364 = 0;
     D_800E6280.current_girl = D_800E6280.date_girl;
     func_800847B8(D_800E6280.date_girl);
-    ((DisplayActor44 *)D_8011ECD0)[31].brightness = 0;
+    ((Actor *)D_8011ECD0)[31].brightness = 0;
     (*(s32 *)(D_8011ECD0 + 0x874)) |= 0x81000000;
     (*(s32 *)(D_8011ECD0 + 0x830)) |= 0x81000000;
     D_801217D0[0].flags |= 0x81000000;

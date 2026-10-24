@@ -1145,7 +1145,7 @@ extern SVECTOR D_8015013C;
  * before unk_69C. The complete view avoids a negative subarray index. */
 typedef struct EtcStateFlagsView {
     /* 0x000 */ u8 pad_000[0x694];
-    /* 0x694 */ GsRec69C records[34];
+    /* 0x694 */ DayEvent records[34];
 } EtcStateFlagsView; /* size 0x71C */
 #endif /* ETC_STATE_FLAGS_VIEW_DEFINED */
 

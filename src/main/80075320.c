@@ -77,7 +77,7 @@ void func_80075320(void) {
         func_80076EC0();
         break;
     }
-    if (((DisplayActor44 *)D_8011ECD0)[27].draw_flags & 0x80) {
+    if (((Actor *)D_8011ECD0)[27].draw_flags & 0x80) {
         func_80067870();
     }
     message_window_show();
@@ -298,8 +298,8 @@ s32 func_80075C84(void) {
     u32 k;
     s32 random;
 
-    if ((((DisplayActor44 *)D_8011ECD0)->x < -0x40) && (((DisplayActor44 *)D_8011ECD0)->x >= -0x4F)
-        && (((DisplayActor44 *)D_8011ECD0)->y < 0x18) && (((DisplayActor44 *)D_8011ECD0)->y >= -0xF)) {
+    if ((((Actor *)D_8011ECD0)->x < -0x40) && (((Actor *)D_8011ECD0)->x >= -0x4F)
+        && (((Actor *)D_8011ECD0)->y < 0x18) && (((Actor *)D_8011ECD0)->y >= -0xF)) {
         /* FAKE T-25050: the raw input use keeps the word and mask in
          * separate promoted registers. */
         if (D_800E6280.pad_pressed) {}
@@ -411,14 +411,14 @@ s32 func_80076000(void) {
                 func_80044750(0x500);
                 if (D_800E6280.weekday == 6) {
                     if (((u16) D_800E6280.player_flags.h >> 0xC) == 0xB) {
-                        ((MenuIconBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
+                        ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                         D_800E6280.day_events[D_800E6280.day_event_index].girl = *(s8 *)&D_800E6280.menu_cursor_0;
                         D_800E6280.day_events[D_800E6280.day_event_index].scene = func_8006BDA8(1);
                         func_80042908(7);
                     } else {
                         D_800E6280.day_events[D_800E6280.day_event_index].girl = *(s8 *)&D_800E6280.menu_cursor_0;
                         D_800E6280.day_events[D_800E6280.day_event_index].scene = func_8006BDA8(1);
-                        ((MenuIconBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
+                        ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                         girl = func_80053564((s32) ((u16) D_800E6280.player_flags.h >> 0xC));
                         /* Shift back extracts flag bit 2 and preserves ugen temporary numbering. T-24501 */
                         if ((girl != -1) && (((s32)(D_800E6280.girls[girl].flags.u << 29) >> 31) != 0)) {
@@ -434,7 +434,7 @@ s32 func_80076000(void) {
                     }
                     D_800E6280.day_events[D_800E6280.day_event_index].girl = *(s8 *)&D_800E6280.menu_cursor_0;
                     D_800E6280.day_events[D_800E6280.day_event_index].scene = func_8006BDA8(1);
-                    ((MenuIconBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
+                    ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                     func_80042908(5);
                 }
             }
@@ -447,7 +447,7 @@ s32 func_80076000(void) {
         case 6:
         case 7:
             if (get_icon_can_use((s32) *(s8 *)&D_800E6280.menu_cursor_0) != 0) {
-                ((MenuIconBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
+                ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                 func_80044750(0x500);
                 D_800E6280.day_events[D_800E6280.day_event_index].girl = *(s8 *)&D_800E6280.menu_cursor_0;
                 D_800E6280.day_events[D_800E6280.day_event_index].scene = func_8006BDA8(1);
@@ -456,14 +456,14 @@ s32 func_80076000(void) {
             break;
         case 9:
             if ((get_icon_can_use((s32) *(s8 *)&D_800E6280.menu_cursor_0) != 0) && (appointment_find_today((s32) D_800E6280.year, (s32) D_800E6280.month, (s32) D_800E6280.day) > 0)) {
-                ((MenuIconBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
+                ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                 func_80044750(0x500);
                 func_80042908(0xFE);
             }
             break;
         case 8:
             if (get_icon_can_use((s32) *(s8 *)&D_800E6280.menu_cursor_0) != 0) {
-                ((MenuIconBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
+                ((LastCommandBits *)&D_800E6280.last_command)->icon = *(s8 *)&D_800E6280.menu_cursor_0;
                 func_80044750(0x50D);
                 func_80042908(0x10);
             }
@@ -509,11 +509,11 @@ s32 func_800764AC(u32 *arg0) {
             cnt[i] = 0;
         }
         for (i = 0; i < 8; i++) {
-            if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
+            if (!((AppointmentBits *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
             if (1) {
-                cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->place]++;
+                cnt[((AppointmentBits *)&D_800E6280.unk_54C[i])->place]++;
             }
         }
         cnt[16] = 0;
@@ -533,13 +533,13 @@ s32 func_800764AC(u32 *arg0) {
             return 1;
         }
         for (i = 0; i < 8; i++) {
-            if (!((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
+            if (!((AppointmentBits *)&D_800E6280.unk_54C[i])->active) {
                 break;
             }
-            if (cnt[idx = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->place] != 0) {
+            if (cnt[idx = ((AppointmentBits *)&D_800E6280.unk_54C[i])->place] != 0) {
                 arg0[m] = idx;
                 m++;
-                cnt[((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->place] = 0;
+                cnt[((AppointmentBits *)&D_800E6280.unk_54C[i])->place] = 0;
                 if (m >= 3) {
                     break;
                 }
@@ -573,11 +573,11 @@ void func_80076630(void) {
         D_800E6280.appt_place_2 = 0xFF;
         D_800E6280.appt_place_3 = 0xFF;
         D_800E6280.day_events[D_800E6280.day_event_index].type = 0x80;
-        D_800E6280.day_events[D_800E6280.day_event_index].girl = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->girl;
-        D_800E6280.day_events[D_800E6280.day_event_index].scene = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->place;
+        D_800E6280.day_events[D_800E6280.day_event_index].girl = ((AppointmentBits *)&D_800E6280.unk_54C[0])->girl;
+        D_800E6280.day_events[D_800E6280.day_event_index].scene = ((AppointmentBits *)&D_800E6280.unk_54C[0])->place;
         D_800E6280.current_girl = D_800E6280.unk_54C_0.unk_25;
         D_800E6280.date_girl = D_800E6280.unk_54C_0.unk_25;
-        D_800E6280.appointment_flag = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->flag;
+        D_800E6280.appointment_flag = ((AppointmentBits *)&D_800E6280.unk_54C[0])->flag;
     }
     func_80042940(2);
 }
@@ -736,7 +736,7 @@ void appointment_launch(void) {
     D_800E6280.day_events[D_800E6280.day_event_index].scene = D_800E6280.unk_54C_0.unk_00;
     D_800E6280.current_girl = D_800E6280.unk_54C_0.unk_25;
     D_800E6280.date_girl = D_800E6280.unk_54C_0.unk_25;
-    D_800E6280.appointment_flag = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->flag;
+    D_800E6280.appointment_flag = ((AppointmentBits *)&D_800E6280.unk_54C[0])->flag;
     main_state_set(0x50);
 }
 
@@ -903,11 +903,11 @@ void func_8007739C(void) {
                 icon_can_use_set(i, 1);
             }
         }
-        ((GsByteNibbles *)&gs->last_command.b[0])->high = gs->day_events[gs->day_event_index].girl;
+        ((NibbleView *)&gs->last_command.b[0])->high = gs->day_events[gs->day_event_index].girl;
         gs->progress_state[0x15 + (gs->last_command.b[0] >> 4) % 9]++;
         if ((gs->last_command.b[0] >> 4) == 4) {
-            if (((ScheduleFlags *)&gs->player_flags)->club < 11) {
-                gs->clubs[((ScheduleFlags *)&gs->player_flags)->club].exp += 6;
+            if (((PlayerFlagBits *)&gs->player_flags)->club < 11) {
+                gs->clubs[((PlayerFlagBits *)&gs->player_flags)->club].exp += 6;
             }
         }
         r = func_80077330();
@@ -951,7 +951,7 @@ void func_8007739C(void) {
 void func_80077694(void) {
     /* FAKE: T-20940, unused local declared first, as the sibling func_8007437C declares its record pointer; IDO gives
      * every local a slot, so temp spills at sp+0x30 as in the original (sp+0x34 without it). */
-    GsRec69C *rec;
+    DayEvent *rec;
     s32 temp;
 
     func_80048F64(0x60);
@@ -962,23 +962,23 @@ void func_80077694(void) {
     } else if (D_800E6280.day_events[D_800E6280.day_event_index].girl == 4) {
         addr_init_club_sd(D_801230D0);
         if (func_8006F524(4) != 0xF) {
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 1;
-            ((DisplayActor44 *)D_8011ECD0)[97].flags = 5;
-            ((DisplayActor44 *)D_8011ECD0)[97].quad_flags = 0x01000000;
-            ((DisplayActor44 *)D_8011ECD0)[97].draw_flags = 0x84;
-            ((DisplayActor44 *)D_8011ECD0)[97].frame_table = (u8 *)D_80125CA8;
-            ((DisplayActor44 *)D_8011ECD0)[97].sequence_table = (u8 *)D_80125CAC;
-            ((DisplayActor44 *)D_8011ECD0)[97].tpage_table = (u8 *)D_80125CB0;
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
+            ((Actor *)D_8011ECD0)[97].unk_01 = 1;
+            ((Actor *)D_8011ECD0)[97].flags = 5;
+            ((Actor *)D_8011ECD0)[97].quad_flags = 0x01000000;
+            ((Actor *)D_8011ECD0)[97].draw_flags = 0x84;
+            ((Actor *)D_8011ECD0)[97].frame_table = (u8 *)D_80125CA8;
+            ((Actor *)D_8011ECD0)[97].sequence_table = (u8 *)D_80125CAC;
+            ((Actor *)D_8011ECD0)[97].tpage_table = (u8 *)D_80125CB0;
+            ((Actor *)D_8011ECD0)[97].unk_05 = 2;
             /* FAKE: u8 view of the s8 flag unk_F6E (both reads in this function; the original loads it with lbu).
              * Same view as in func_8007437C (800737A0.c, T-17016). Matches; real source unknown. T-20940 */
             if (*(u8 *)&D_800E6280.sd_anim_fast != 0) {
-                ((DisplayActor44 *)D_8011ECD0)[97].blink_period = 0x82;
+                ((Actor *)D_8011ECD0)[97].blink_period = 0x82;
             }
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_43 = 0x10;
-            ((DisplayActor44 *)D_8011ECD0)[97].sequence_slot = (s16)(temp + 2);
-            ((DisplayActor44 *)D_8011ECD0)[97].x = -0x18;
-            ((DisplayActor44 *)D_8011ECD0)[97].y = -0x40;
+            ((Actor *)D_8011ECD0)[97].unk_43 = 0x10;
+            ((Actor *)D_8011ECD0)[97].sequence_slot = (s16)(temp + 2);
+            ((Actor *)D_8011ECD0)[97].x = -0x18;
+            ((Actor *)D_8011ECD0)[97].y = -0x40;
         }
     } else {
         if ((D_801230D0 == 6) || (D_801230D0 == 7)) {
@@ -988,21 +988,21 @@ void func_80077694(void) {
         addr_init_holiday_sd(D_801230D0);
     }
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 1;
-    ((DisplayActor44 *)D_8011ECD0)[96].flags = 5;
-    ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0x84;
-    ((DisplayActor44 *)D_8011ECD0)[96].frame_table = (u8 *)D_80125CA8;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = (u8 *)D_80125CAC;
-    ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = (u8 *)D_80125CB0;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
+    ((Actor *)D_8011ECD0)[96].unk_01 = 1;
+    ((Actor *)D_8011ECD0)[96].flags = 5;
+    ((Actor *)D_8011ECD0)[96].quad_flags = 0x01000000;
+    ((Actor *)D_8011ECD0)[96].draw_flags = 0x84;
+    ((Actor *)D_8011ECD0)[96].frame_table = (u8 *)D_80125CA8;
+    ((Actor *)D_8011ECD0)[96].sequence_table = (u8 *)D_80125CAC;
+    ((Actor *)D_8011ECD0)[96].tpage_table = (u8 *)D_80125CB0;
+    ((Actor *)D_8011ECD0)[96].unk_05 = 2;
     if (*(u8 *)&D_800E6280.sd_anim_fast != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[96].blink_period = 0x82;
+        ((Actor *)D_8011ECD0)[96].blink_period = 0x82;
     }
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0x10;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = temp;
-    ((DisplayActor44 *)D_8011ECD0)[96].x = -0x50;
-    ((DisplayActor44 *)D_8011ECD0)[96].y = -0x40;
+    ((Actor *)D_8011ECD0)[96].unk_43 = 0x10;
+    ((Actor *)D_8011ECD0)[96].sequence_slot = temp;
+    ((Actor *)D_8011ECD0)[96].x = -0x50;
+    ((Actor *)D_8011ECD0)[96].y = -0x40;
     func_8004284C();
 }
 
@@ -1015,7 +1015,7 @@ void func_80077900(void) {
     u32 club;
 
     if (gs->step_timer.w == 0x20) {
-        switch (((DisplayActor44 *)D_8011ECD0)[96].sequence_slot & 1) {
+        switch (((Actor *)D_8011ECD0)[96].sequence_slot & 1) {
         case 0:
             func_80044750(0x501);
             break;
@@ -1044,7 +1044,7 @@ void func_80077900(void) {
             if (club == 10) {
                 if (girl == 0) {
                     if (gs->girls[girl].flags.f.b2 && gs->girls[girl].flags.f.met
-                        && !((ScheduleClubFlags *)&gs->clubs[club])->b29
+                        && !((ClubFlagBits *)&gs->clubs[club])->b29
                         && !gs->girls[girl].flags.f.b18) {
                         gs->girls[girl].flags.f.b18 = 1;
                         main_state_set(0x60, club);
@@ -1052,14 +1052,14 @@ void func_80077900(void) {
                     }
                 }
                 if (gs->girls[girl].flags.f.b2 && gs->girls[girl].flags.f.met
-                    && !((ScheduleClubFlags *)&gs->clubs[club])->b29
+                    && !((ClubFlagBits *)&gs->clubs[club])->b29
                     && !gs->girls[girl].flags.f.b18) {
                     gs->girls[girl].flags.f.b18 = 1;
                     main_state_set(0x60, club);
                     return;
                 }
             } else if (gs->girls[girl].flags.f.met && gs->girls[girl].flags.f.b2
-                       && !((ScheduleClubFlags *)&gs->clubs[club])->b29
+                       && !((ClubFlagBits *)&gs->clubs[club])->b29
                        && !gs->girls[girl].flags.f.b18) {
                 gs->girls[girl].flags.f.b18 = 1;
                 main_state_set(0x60, club);
@@ -1319,21 +1319,21 @@ void telephone_class_init(void) {
     menu_set(0, 14, x, y, w, h);
     D_800E6280.menu_cursor_0 = 0;
     func_80048F64(0x60);
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 0;
-    ((DisplayActor44 *)D_8011ECD0)[96].flags = 0x40;
-    ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0x40000000;
-    ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0x84;
-    ((DisplayActor44 *)D_8011ECD0)[96].frame_table = sprite_frame_table;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = D_800C9A14;
-    ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = D_800C9730;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_14 = D_800C9A54;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 0;
-    ((DisplayActor44 *)D_8011ECD0)[96].blink_period = 2;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x3F;
-    ((DisplayActor44 *)D_8011ECD0)[96].x = -0x10;
-    ((DisplayActor44 *)D_8011ECD0)[96].y = -0x13;
+    ((Actor *)D_8011ECD0)[96].unk_01 = 0;
+    ((Actor *)D_8011ECD0)[96].flags = 0x40;
+    ((Actor *)D_8011ECD0)[96].quad_flags = 0x40000000;
+    ((Actor *)D_8011ECD0)[96].draw_flags = 0x84;
+    ((Actor *)D_8011ECD0)[96].frame_table = sprite_frame_table;
+    ((Actor *)D_8011ECD0)[96].sequence_table = D_800C9A14;
+    ((Actor *)D_8011ECD0)[96].tpage_table = D_800C9730;
+    ((Actor *)D_8011ECD0)[96].unk_14 = D_800C9A54;
+    ((Actor *)D_8011ECD0)[96].unk_04 = 8;
+    ((Actor *)D_8011ECD0)[96].unk_05 = 1;
+    ((Actor *)D_8011ECD0)[96].sequence_slot = 0;
+    ((Actor *)D_8011ECD0)[96].blink_period = 2;
+    ((Actor *)D_8011ECD0)[96].unk_18 = 0x3F;
+    ((Actor *)D_8011ECD0)[96].x = -0x10;
+    ((Actor *)D_8011ECD0)[96].y = -0x13;
 }
 
 void holiday_club_init(void) {
@@ -1350,7 +1350,7 @@ void func_8007866C(void) {
     u8 buf[72];
     GameState *gs;
 
-    menu_check(1, (s32) ((DisplayActor44 *)D_8011ECD0)->x, (s32) ((DisplayActor44 *)D_8011ECD0)->y);
+    menu_check(1, (s32) ((Actor *)D_8011ECD0)->x, (s32) ((Actor *)D_8011ECD0)->y);
     menu_bar_show(1);
     func_8004FC10(1);
     if (D_800E6280.pad_pressed & 0x40) {
@@ -1369,9 +1369,9 @@ void func_8007866C(void) {
             strcat(buf, "部を退部した。");
             sndi(buf, 0, 0xFF);
             gs = &D_800E6280;
-            /* FAKE: T-17006, a bit-field store through the borrowed CharFlags view (one ugen temporary more than
+            /* FAKE: T-17006, a bit-field store through the borrowed GirlFlagBits view (one ugen temporary more than
              * `|= 1`, so the original's t6..t0 numbering); the record's real bit-field layout is unknown. */
-            ((CharFlags *)&gs->clubs[D_800E6280.player_flags.h >> 12].unk_03)->b0 = 1;
+            ((GirlFlagBits *)&gs->clubs[D_800E6280.player_flags.h >> 12].unk_03)->b0 = 1;
             gs->player_flags.b[1] = (gs->player_flags.b[1] & 0xFF0F) | 0xB0;
             k_disp_start(1);
             break;

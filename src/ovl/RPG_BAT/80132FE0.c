@@ -146,11 +146,11 @@ void func_80133108(void) {
         break;
     case 9:
         for (i = 0; i < 32; i++) {
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].frame_table = (u8 *) D_8015EEAC;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].sequence_table = (u8 *) D_8015EEC4;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].tpage_table = (u8 *) D_8015EE94;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].quad_flags = 0x41000000;
-            ((DisplayActor44 *)D_8011ECD0)[i + 64].unk_43 = 0x18;
+            ((Actor *)D_8011ECD0)[i + 64].frame_table = (u8 *) D_8015EEAC;
+            ((Actor *)D_8011ECD0)[i + 64].sequence_table = (u8 *) D_8015EEC4;
+            ((Actor *)D_8011ECD0)[i + 64].tpage_table = (u8 *) D_8015EE94;
+            ((Actor *)D_8011ECD0)[i + 64].quad_flags = 0x41000000;
+            ((Actor *)D_8011ECD0)[i + 64].unk_43 = 0x18;
         }
         func_8014EF3C();
         break;

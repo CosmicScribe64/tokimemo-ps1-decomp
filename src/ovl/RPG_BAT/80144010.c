@@ -11,7 +11,7 @@ void func_80144010(void) {
     sum = 0;
     D_8015EBA0 = 0xFF;
     for (i = 0; i < 12; i++) {
-        if (((ScheduleClubFlags *)&D_800E6280.clubs[i])->unk_25 == 3) {
+        if (((ClubFlagBits *)&D_800E6280.clubs[i])->unk_25 == 3) {
             D_8015EBA0 = i;
         }
         sum += D_800E6280.clubs[i].exp;

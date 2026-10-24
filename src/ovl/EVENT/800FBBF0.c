@@ -225,7 +225,7 @@ void func_800FC56C(void) {
     func_80012D64(D_80121238, 0x11, 1, 2, 0);
     func_8004C46C(D_8012123C, D_80121240, D_80121244, D_80121248, D_8012124C, D_80121250);
     func_8004C6B0(D_8012122C, D_80121230, D_80121228, D_80121234);
-    ((DisplayActor44 *)D_800EAFA0)[2] = ((DisplayActor44 *)D_800EAFA0)[0];
+    ((Actor *)D_800EAFA0)[2] = ((Actor *)D_800EAFA0)[0];
     func_80011DFC();
 }
 
@@ -416,12 +416,12 @@ void func_800FCEF4(void) {
 }
 
 void func_800FCF40(void) {
-    ((DisplayActor44 *)D_800EAFA0)[2].brightness = 0x80;
-    ((DisplayActor44 *)D_800EAFA0)[2].draw_flags |= 0x80;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_08 = 0;
-    ((DisplayActor44 *)D_800EAFA0)[2].sequence_slot = 4;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_18 = 0;
-    ((DisplayActor44 *)D_800EAFA0)[2].flags = 1;
+    ((Actor *)D_800EAFA0)[2].brightness = 0x80;
+    ((Actor *)D_800EAFA0)[2].draw_flags |= 0x80;
+    ((Actor *)D_800EAFA0)[2].unk_08 = 0;
+    ((Actor *)D_800EAFA0)[2].sequence_slot = 4;
+    ((Actor *)D_800EAFA0)[2].unk_18 = 0;
+    ((Actor *)D_800EAFA0)[2].flags = 1;
     func_80011DFC();
 }
 
@@ -447,18 +447,18 @@ void func_800FD00C(void) {
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
     if (D_800EECE0 != 0) {
-        ((DisplayActor44 *)D_800EAFA0)[2].draw_flags |= 0x80;
+        ((Actor *)D_800EAFA0)[2].draw_flags |= 0x80;
         if (D_800B1AE4 % 40 < 0x14) {
-            ((Rec24 *)D_800EC190)[10].flags &= 0x7FFFFFFF;
+            ((SpriteQuad *)D_800EC190)[10].flags &= 0x7FFFFFFF;
         } else {
-            ((Rec24 *)D_800EC190)[10].flags |= 0x80000000;
+            ((SpriteQuad *)D_800EC190)[10].flags |= 0x80000000;
         }
-        ((Rec24 *)D_800EC190)[10].tint_r = ((Rec24 *)D_800EC190)[10].tint_g =
-            ((Rec24 *)D_800EC190)[10].tint_b = ((DisplayActor44 *)D_800EAFA0)[2].brightness = D_800F19AB;
+        ((SpriteQuad *)D_800EC190)[10].tint_r = ((SpriteQuad *)D_800EC190)[10].tint_g =
+            ((SpriteQuad *)D_800EC190)[10].tint_b = ((Actor *)D_800EAFA0)[2].brightness = D_800F19AB;
         return;
     }
-    ((DisplayActor44 *)D_800EAFA0)[2].draw_flags &= 0xFF7F;
-    ((Rec24 *)D_800EC190)[10].flags |= 0x80000000;
+    ((Actor *)D_800EAFA0)[2].draw_flags &= 0xFF7F;
+    ((SpriteQuad *)D_800EC190)[10].flags |= 0x80000000;
 }
 
 void func_800FD160(void) {

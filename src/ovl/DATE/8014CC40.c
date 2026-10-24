@@ -207,8 +207,8 @@ void func_8014D0A0(void) {
 }
 
 void func_8014D298(void) {
-    DisplayFixActor44 *sprites;
-    DisplayFixActor44 scene;
+    ActorFixed *sprites;
+    ActorFixed scene;
 
     strcpy(D_800CA1DC, "ナイトパレード");
     D_800E6280.daily_event_bits |= 7;
@@ -228,10 +228,10 @@ void func_8014D298(void) {
     func_80084E90(D_8015E260, D_8015E264, D_8015E268, D_8015E26C, D_8015E270, D_8015E274);
     func_800850D4(D_8015E250, D_8015E254, D_8015E24C, (s32) D_8015E258);
     D_800CA360 = 1;
-    sprites = (DisplayFixActor44 *)D_80120650;
+    sprites = (ActorFixed *)D_80120650;
     scene = sprites[0];
     sprites[3] = scene;
-    *(DisplayFixActor44 *)D_801206D8 = scene;
+    *(ActorFixed *)D_801206D8 = scene;
     D_8012071E = 0x40;
     D_801206DA = 0x40;
     D_801206F0 = 8;
@@ -294,7 +294,7 @@ void func_8014D818(void) {
     load_palette(D_8015E2E0, 0x11, 1, 2, 0);
     func_80084E90(D_8015E2E4, D_8015E2E8, D_8015E2EC, D_8015E2F0, D_8015E2F4, D_8015E2F8);
     func_800850D4(D_8015E2D4, D_8015E2D8, D_8015E2D0, D_8015E2DC);
-    ((DisplayActor44 *)D_80120650)->unk_04 = ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;
+    ((Actor *)D_80120650)->unk_04 = ((Actor *)D_80120650)[1].unk_04 = 8;
     D_800E6280.girls[8].affection += 2;
     D_800E6280.girls[8].syoushin -= 0x14;
     check_para_limit();
@@ -462,20 +462,20 @@ void func_8014DF1C(void) {
 
 void func_8014DF54(void) {
     func_80085368();
-    ((DisplayActor44 *)D_80120650)[2].draw_flags |= 0x80;
-    ((DisplayActor44 *)D_80120650)[3].draw_flags |= 0x80;
-    ((DisplayActor44 *)D_80120650)[2].brightness = ((DisplayActor44 *)D_80120650)->brightness;
-    ((DisplayActor44 *)D_80120650)[3].brightness = ((DisplayActor44 *)D_80120650)->brightness;
+    ((Actor *)D_80120650)[2].draw_flags |= 0x80;
+    ((Actor *)D_80120650)[3].draw_flags |= 0x80;
+    ((Actor *)D_80120650)[2].brightness = ((Actor *)D_80120650)->brightness;
+    ((Actor *)D_80120650)[3].brightness = ((Actor *)D_80120650)->brightness;
 }
 
 void func_8014DFB0(void) {
     func_800853FC();
-    if (((DisplayActor44 *)D_80120650)->brightness == 0) {
-        ((DisplayActor44 *)D_80120650)[2].draw_flags &= 0xFF7F;
-        ((DisplayActor44 *)D_80120650)[3].draw_flags &= 0xFF7F;
+    if (((Actor *)D_80120650)->brightness == 0) {
+        ((Actor *)D_80120650)[2].draw_flags &= 0xFF7F;
+        ((Actor *)D_80120650)[3].draw_flags &= 0xFF7F;
     }
-    ((DisplayActor44 *)D_80120650)[2].brightness = ((DisplayActor44 *)D_80120650)->brightness;
-    ((DisplayActor44 *)D_80120650)[3].brightness = ((DisplayActor44 *)D_80120650)->brightness;
+    ((Actor *)D_80120650)[2].brightness = ((Actor *)D_80120650)->brightness;
+    ((Actor *)D_80120650)[3].brightness = ((Actor *)D_80120650)->brightness;
 }
 
 s32 func_8014E010(void) {

@@ -840,7 +840,7 @@ extern GekoBytes21 D_80147C6C;
 /* Four-byte calendar entry passed by value to func_8006B5BC by func_80143F48 (the layout of TelDateEntry in TEL.h,
  * T-10630). */
 typedef union GekoDateEntry {
-    /* 0x00 */ GsWord word;
+    /* 0x00 */ WordView word;
     /* 0x00 */ struct {
         u32 place : 5;  /* bits 0..4 */
         u32 year : 7;   /* bits 5..11 */
@@ -854,7 +854,7 @@ typedef union GekoDateEntry {
     } bits;
 } GekoDateEntry; /* size 0x04 */
 
-/* Per-record halfwords of the Rec24 records 4..13 (D_801217D0); the code indexes them with i - 4, so the
+/* Per-record halfwords of the SpriteQuad records 4..13 (D_801217D0); the code indexes them with i - 4, so the
  * relocations name D_801463D8 and D_801463F8 (func_8013E22C, func_80139E1C, func_8013E950). */
 extern s16 D_801463E0[12];
 extern s16 D_80146400[16];

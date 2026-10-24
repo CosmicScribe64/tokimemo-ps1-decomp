@@ -5,7 +5,7 @@
 s32 func_80085E30();
 
 /* Display record n of the runner sprites (D_8011ECD0 is an array of 0x44-byte records). */
-#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+#define DISP(n) (((Actor *)D_8011ECD0)[n])
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3B0);
@@ -834,13 +834,13 @@ void func_80147210(void) {
 void func_80147318(void) {
     s32 i;
     s32 off;
-    DisplayActor44 *rec;
+    Actor *rec;
 
     for (i = 0; i < 3; i++) {
         switch (D_8014A454[i + 1].unk_0C) {
         case 0:
             if (D_8014A400[i].unk_04 >= 6) {
-                rec = &((DisplayActor44 *)D_8011ECD0)[i];
+                rec = &((Actor *)D_8011ECD0)[i];
                 off = i * 0x13 + 0x13;
                 if (D_8014A400[i].unk_00 >= 7) {
                     D_8014A400[i].unk_00 = 2;
@@ -860,12 +860,12 @@ void func_80147318(void) {
             break;
         case 1:
             if (D_8014A454[i + 1].unk_0D < 0x32) {
-                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_18 = i * 2 + 0x53;
+                ((Actor *)D_8011ECD0)[97 + i].unk_18 = i * 2 + 0x53;
             }
             break;
         case 2:
             if (D_8014A454[i + 1].unk_0D < 0x32) {
-                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_18 = i * 2 + 0x54;
+                ((Actor *)D_8011ECD0)[97 + i].unk_18 = i * 2 + 0x54;
             }
             break;
         default:
@@ -1025,9 +1025,9 @@ void func_80147B14(s32 index) {
     t4C = D_8014A634;
     t3C = D_8014A648;
     t2C = D_8014A658;
-    px.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].x.w;
+    px.w = ((ActorFixed *)D_8011ECD0)[index + 96].x.w;
     px.w += *(s32 *)&D_8014A454[index].unk_00;
-    py.w = ((DisplayFixActor44 *)D_8011ECD0)[index + 96].y.w;
+    py.w = ((ActorFixed *)D_8011ECD0)[index + 96].y.w;
     py.w += *(s32 *)&D_8014A454[index].unk_04;
     i = 0;
     do {
@@ -1238,12 +1238,12 @@ s32 func_801485C4(void) {
         index++;
         p++;
     } while (index < 4);
-    if (chosen * 48 - 64 < ((DisplayFixActor44 *)D_8011ECD0)[104].x.h[1]) {
-        ((DisplayFixActor44 *)D_8011ECD0)[104].x.w += 0xFFFE8000;
+    if (chosen * 48 - 64 < ((ActorFixed *)D_8011ECD0)[104].x.h[1]) {
+        ((ActorFixed *)D_8011ECD0)[104].x.w += 0xFFFE8000;
         return 0;
     }
-    ((DisplayFixActor44 *)D_8011ECD0)[104].flags = 64;
-    ((DisplayFixActor44 *)D_8011ECD0)[104].frame = 61;
+    ((ActorFixed *)D_8011ECD0)[104].flags = 64;
+    ((ActorFixed *)D_8011ECD0)[104].frame = 61;
     Vblnk_Timer_Init();
     return 1;
 }
@@ -1253,8 +1253,8 @@ s32 func_80148678(void) {
     s32 n;
 
     if (Vblnk_Timer() >= 0x2E) {
-        ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = 0x3C;
-        ((DisplayActor44 *)D_8011ECD0)[104].y = -8;
+        ((Actor *)D_8011ECD0)[104].unk_18 = 0x3C;
+        ((Actor *)D_8011ECD0)[104].y = -8;
         for (i = 0; i < 4; i++) {
             if (D_8014A3D8[i] == 1) {
                 n = i;
@@ -1262,7 +1262,7 @@ s32 func_80148678(void) {
         }
         for (i = 0; i < 4; i++) {
             if (n < i) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 96].x += 0x30;
+                ((Actor *)D_8011ECD0)[i + 96].x += 0x30;
                 *(s16 *)&D_8011ECD0[0x19A6 + 0x110 + i * 0x44] += 0x30;
             }
         }
@@ -1275,7 +1275,7 @@ void func_801487B4(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        ((DisplayActor44 *)D_8011ECD0)[i + 100].unk_18 -= 4 - i;
+        ((Actor *)D_8011ECD0)[i + 100].unk_18 -= 4 - i;
     }
     Vblnk_Timer_Init();
 }
@@ -1291,9 +1291,9 @@ void func_80148820(void) {
     }
     if (Vblnk_Timer() >= 0x33) {
         for (i = 0; i < 4; i++) {
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_18 += i + 1;
+            ((Actor *)D_8011ECD0)[i + 96].unk_18 += i + 1;
         }
-        ((DisplayActor44 *)D_8011ECD0)[104].unk_18 = ((DisplayActor44 *)D_8011ECD0)[104].unk_18 + n + 2;
+        ((Actor *)D_8011ECD0)[104].unk_18 = ((Actor *)D_8011ECD0)[104].unk_18 + n + 2;
         func_8004284C();
     }
 }

@@ -670,7 +670,7 @@ void func_801381B8(void);
 void func_80138524(void);
 void func_8013FA80(void);
 
-/* Bit 2 of the first byte of a Rec38 flag word, set as a bit-field store: `|= 4` gives one temporary too many (T-6010, T-9000) */
+/* Bit 2 of the first byte of a GirlRecord flag word, set as a bit-field store: `|= 4` gives one temporary too many (T-6010, T-9000) */
 typedef struct {
     u8 pad:2;
     u8 f:1;
@@ -729,7 +729,7 @@ void func_80132A34(void);
 
 #ifndef OVL_SHOUGATU_BYTE_FLAGS_T10010
 #define OVL_SHOUGATU_BYTE_FLAGS_T10010
-/* Byte flag view for Rec38 +0x0E, including bit 3. T-10010. */
+/* Byte flag view for GirlRecord +0x0E, including bit 3. T-10010. */
 typedef struct ShouByteFlags {
     /* 0x00, bit 0 */ u8 b0 : 1;
     /* 0x00, bit 1 */ u8 b1 : 1;

@@ -165,7 +165,7 @@ typedef struct Arrs4x8 {
 
 void func_801325A0(Arrs4x8 *p);
 
-/* Packed Rec38 settings fields, T-14400. */
+/* Packed GirlRecord settings fields, T-14400. */
 typedef struct OptionCharBits {
     /* 0x00 */ u32 b0 : 1;
     /* 0x00 */ u32 b1 : 1;
@@ -185,7 +185,7 @@ typedef struct OptionCharBits {
 
 
 
-/* Packed date word at GameState +0xF8 and Rec38 +0x10: GsDateBits (main_api.h) plus the two bits at 9-10,
+/* Packed date word at GameState +0xF8 and GirlRecord +0x10: BirthdayBits (main_api.h) plus the two bits at 9-10,
  * read as `& 0xF`, `<< 0x17 >> 0x1B`, `<< 0x15 >> 0x1E` (func_8013A7EC, T-17800). */
 typedef struct OptionDateBits {
     /* 0x00 */ u32 f0 : 4;

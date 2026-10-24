@@ -84,7 +84,7 @@ void func_8013E1A0(void) {
 
 void func_8013E22C(void) {
     s16 i;
-    Rec24 *p;
+    SpriteQuad *p;
 
     D_800E6280.tpage_buf[5] = 1;
     LoadSquare(0x140, 0, 0x40, 0x80, D_801463B0);
@@ -174,13 +174,13 @@ void func_8013E650(void) {
 
 void func_8013E69C(void) {
     s16 i;
-    Rec24 *records;
+    SpriteQuad *records;
     s32 before;
     s32 after;
 
     before = D_800E6280.step;
     func_800853FC();
-    records = (Rec24 *)D_801217D0;
+    records = (SpriteQuad *)D_801217D0;
     for (i = 4; i < 19; i++) {
         if (D_800B593C < 112) {
             records[i].tint_r = records[i].tint_g = records[i].tint_b = D_800B593C;
@@ -196,16 +196,16 @@ void func_8013E69C(void) {
 
 void func_8013E760(void) {
     s16 i;
-    Rec24 *records;
+    SpriteQuad *records;
 
     if (D_800E6280.step_timer.w == 0) {
-        records = (Rec24 *)D_801217D0;
+        records = (SpriteQuad *)D_801217D0;
         for (i = 4; i < 19; i++) {
             records[i].flags &= 0x7FFFFFFF;
         }
     }
     func_80085368();
-    records = (Rec24 *)D_801217D0;
+    records = (SpriteQuad *)D_801217D0;
     for (i = 4; i < 19; i++) {
         if (D_800B593C < 113) {
             records[i].tint_r = records[i].tint_g = records[i].tint_b = D_800B593C;
@@ -264,7 +264,7 @@ void func_8013E950(void) {
                     }
                     D_801217D0[i].x -= 0xC;
                     D_801217D0[i].y += 0x10;
-                    /* FAKE: signed byte/halfword views on Rec24 unk_0E/unk_0A share constant registers $s3 (8) and $s5 (0x18) with unk_08, matching func_80139E1C. T-24085 */
+                    /* FAKE: signed byte/halfword views on SpriteQuad unk_0E/unk_0A share constant registers $s3 (8) and $s5 (0x18) with unk_08, matching func_80139E1C. T-24085 */
                     *(s8 *)&D_801217D0[i].unk_0E = 8;
                     D_801217D0[i].w = 0x18;
                     *(s16 *)&D_801217D0[i].h = 8;

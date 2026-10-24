@@ -352,7 +352,7 @@ s32 func_801388C0(void) {
     D_8013B5D0 = D_800B3CFC[0];
     if (D_800E6280.pad_pressed & 0x600060) {
         for (i = 0; i < 4; i++) {
-            if (((GsRecF90 (*)[2])D_800E6280.menu_items)[i][0].hover != 0 && D_8013B5E4[i] != 0) {
+            if (((MenuItem (*)[2])D_800E6280.menu_items)[i][0].hover != 0 && D_8013B5E4[i] != 0) {
                 D_80122CDC = i;
                 D_8013B5C4 = i;
                 D_80122D30 = 0;

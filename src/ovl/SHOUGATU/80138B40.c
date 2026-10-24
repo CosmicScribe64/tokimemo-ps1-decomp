@@ -111,7 +111,7 @@ void func_80138F98(void) {
 
 void func_80138FC0(void) {
     s32 isA; /* high nibble of GameState.player_flags is 4 */
-    s32 isB; /* high nibble of the Rec38 flag byte +2 of record 3 is 4 */
+    s32 isB; /* high nibble of the GirlRecord flag byte +2 of record 3 is 4 */
 
     D_800E6280.girls[D_800E6280.current_girl].flags.f.b2 = 1;
     if ((D_800E6280.player_flags.h >> 0xC) == 4) {

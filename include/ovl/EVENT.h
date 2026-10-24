@@ -1228,7 +1228,7 @@ s32 func_800FA25C(void);
 extern s16 D_80120CF0[16];
 extern s16 D_80120D10[16];
 
-/* T-24081: signed-field view of Rec24 at +0x0A/+0x0E so constant 8 ($s3) and 0x18 ($s5) are shared with s16 unk_08
+/* T-24081: signed-field view of SpriteQuad at +0x0A/+0x0E so constant 8 ($s3) and 0x18 ($s5) are shared with s16 unk_08
  * without taking the address of a cast u8[] element (which folds into base + offset instead of ixa). */
 typedef struct EventRec24 {
     /* 0x00 */ s32 unk_00;
@@ -1396,8 +1396,8 @@ void func_80105BC4(void);
 
 #ifndef OVL_EVENT_RECORDS_T9740
 #define OVL_EVENT_RECORDS_T9740
-/* D_800E9620 records 30/31 are read as DisplayActor44 (game.h, T-9740, T-20900).
- * D_800EC190 uses the shared Rec24 game-record layout. */
+/* D_800E9620 records 30/31 are read as Actor (game.h, T-9740, T-20900).
+ * D_800EC190 uses the shared SpriteQuad game-record layout. */
 s32 func_8010B8A4(void);
 #endif
 
@@ -1507,11 +1507,11 @@ typedef struct EventStateView {
     /* 0x036 */ u8 unk_036;
     /* 0x037 */ u8 unk_037;
     /* 0x038 */ u8 pad_038[0xAC];
-    /* 0x0E4 */ Rec38Flags unk_0E4;
+    /* 0x0E4 */ GirlFlags unk_0E4;
     /* 0x0E8 */ u8 pad_0E8[0x16];
     /* 0x0FE */ s16 unk_0FE;
     /* 0x100 */ u8 pad_100[0xA4];
-    /* 0x1A4 */ Rec34 unk_1A4[12];
+    /* 0x1A4 */ LegacyGirlRecord unk_1A4[12];
     /* 0x414 */ u8 pad_414[0x1B6];
     /* 0x5CA */ u8 unk_5CA[0x4B];
     /* 0x615 */ u8 pad_615[0xB3];
@@ -1519,7 +1519,7 @@ typedef struct EventStateView {
     /* 0x6C9 */ s8 unk_6C9;
     /* 0x6CA */ s8 unk_6CA;
     /* T-15200: selector-indexed bytes at D_800B0F35 and flag D_800B0F45.
-     * Twelve slots follow the existing Rec34 table extent; semantics unknown. */
+     * Twelve slots follow the existing LegacyGirlRecord table extent; semantics unknown. */
     /* 0x6CB */ u8 pad_6CB[0xA];
     /* 0x6D5 */ u8 unk_6D5[12];
     /* 0x6E1 */ u8 pad_6E1[4];
@@ -1541,14 +1541,14 @@ typedef struct EventFrameCounter {
     /* 0x00 */ u32 u;
 } EventFrameCounter; /* size 0x04 */
 
-/* Bit 1 of Rec34.unk_0C is tested with a word shift/sign test (T-14300). */
+/* Bit 1 of LegacyGirlRecord.unk_0C is tested with a word shift/sign test (T-14300). */
 typedef struct EventRecordFlags {
     /* 0x00 */ u32 lo : 1;
     /* 0x00 */ u32 bit1 : 1;
     /* 0x00 */ u32 hi : 30;
 } EventRecordFlags; /* size 0x04 */
 
-/* T-24103: Rec34 view with Rec38Flags at +0x0C, GsWord at +0x10 and the 0x20-byte
+/* T-24103: LegacyGirlRecord view with GirlFlags at +0x0C, WordView at +0x10 and the 0x20-byte
  * place-visit counter array at +0x14 (func_8011767C, func_80119110). */
 typedef struct EventGirlRec34 {
     /* 0x00 */ s16 unk_00;
@@ -1557,8 +1557,8 @@ typedef struct EventGirlRec34 {
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ Rec38Flags unk_0C;
-    /* 0x10 */ GsWord unk_10;
+    /* 0x0C */ GirlFlags unk_0C;
+    /* 0x10 */ WordView unk_10;
     /* 0x14 */ u8 unk_14[0x20];
 } EventGirlRec34; /* size 0x34 */
 
@@ -1584,7 +1584,7 @@ typedef struct EventStateGirlView {
     /* 0x1294 */ u8 unk_1294;
 } EventStateGirlView; /* minimum size 0x1298 */
 
-/* T-24103: 16.16 fixed-point word view of Rec34 +0x00/+0x04/+0x08 (func_80118B4C). */
+/* T-24103: 16.16 fixed-point word view of LegacyGirlRecord +0x00/+0x04/+0x08 (func_80118B4C). */
 typedef struct EventGirlRec34Fix {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
@@ -1633,7 +1633,7 @@ extern s32 D_8012585C;
 extern s16 D_80125860;
 extern u8 D_80125864;
 /* func_8011BE00 preserves twenty horizontal coordinate words. */
-extern GsWord D_80125868[20];
+extern WordView D_80125868[20];
 #endif
 
 #ifndef OVL_EVENT_RESULT_ROW_T10870_H

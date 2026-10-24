@@ -33,11 +33,11 @@ void func_8014F88C(void) {
     s32 var_a0;
 
     D_8015EE00.unk_00 += 1;
-    ((DisplayActor44 *)D_8011ECD0)[125].unk_01 = 3;
-    ((DisplayActor44 *)D_8011ECD0)[126].unk_01 = 3;
-    if ((D_8015EE00.unk_04 >= 2) && (D_8015EE00.unk_04 < 0x15) && (((DisplayActor44 *)D_8011ECD0)[125].unk_08 == 1)) {
+    ((Actor *)D_8011ECD0)[125].unk_01 = 3;
+    ((Actor *)D_8011ECD0)[126].unk_01 = 3;
+    if ((D_8015EE00.unk_04 >= 2) && (D_8015EE00.unk_04 < 0x15) && (((Actor *)D_8011ECD0)[125].unk_08 == 1)) {
         /* u16 view of the s16 unk_18: the original loads it with lhu and range-checks with sltiu */
-        switch (*(u16 *)&((DisplayActor44 *)D_8011ECD0)[125].unk_18) {
+        switch (*(u16 *)&((Actor *)D_8011ECD0)[125].unk_18) {
         case 0:
         case 2:
             if (func_8013E9A8(3) == 0) {

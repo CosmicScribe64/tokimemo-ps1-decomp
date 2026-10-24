@@ -2,9 +2,9 @@
 #include "ovl/BUNKASAI.h"
 
 void func_801511E0(void) {
-    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0;
+    ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0;
     D_800E6280.girls[0].flags.f.b2 = 1;
-    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
+    switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         if (D_800E6280.year == 0x61) {
             func_80042908(3);
@@ -905,9 +905,9 @@ void func_801527A8(void) {
         }
         break;
     case 17:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;

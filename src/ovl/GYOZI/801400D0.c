@@ -94,16 +94,16 @@ extern u8 D_800D9264[];
  * original reloads the flag after its store and keeps the index load below it (T-24301). */
 s32 func_80140464(void) {
     D_800F53A0.unk_410[0x2FE] |= 0x20;
-    if (((GsWord *)&D_800F53A0.girl[0].unk_14)->date.month == 12 &&
-        ((GsWord *)&D_800F53A0.girl[0].unk_14)->date.day == 24 && D_800F53A0.unk_410[0x2FE]) {
+    if (((WordView *)&D_800F53A0.girl[0].unk_14)->date.month == 12 &&
+        ((WordView *)&D_800F53A0.girl[0].unk_14)->date.day == 24 && D_800F53A0.unk_410[0x2FE]) {
         D_800F53A0.unk_410[0x2FE] |= 1;
         D_800F53A0.unk_410[0x27D + D_800F53A0.unk_410[0x2FC] * 4] = 0;
         func_8004DE48(0x57);
         return 0;
     }
     D_800F53A0.unk_410[0x2FE] |= 0x40;
-    if (((GsWord *)&D_800F5490)->date.month == 12 &&
-        ((GsWord *)&D_800F5490)->date.day == 24 && D_800F53A0.unk_410[0x2FE]) {
+    if (((WordView *)&D_800F5490)->date.month == 12 &&
+        ((WordView *)&D_800F5490)->date.day == 24 && D_800F53A0.unk_410[0x2FE]) {
         D_800F53A0.unk_410[0x2FE] |= 4;
         func_8004DE48(0x56);
         return 0;

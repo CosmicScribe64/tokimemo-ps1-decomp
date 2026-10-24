@@ -23,7 +23,7 @@ u8 D_800B3D54[12] = { 0 };
 
 void func_80043510(s32 arg0) {
     u32 *obj;
-    Rec24 *rec;
+    SpriteQuad *rec;
     /* FAKE: T-25003, two spare words keep the original frame (0xA8) and the work areas at sp+0x50/0x70;
      * the TACO twin func_801446D8 has the same kind of spare words. */
     u32 sp70[12];

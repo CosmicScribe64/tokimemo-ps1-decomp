@@ -112,21 +112,21 @@ s32 func_80156064(void) {
     case 0:
         for (i = 4; i < 16; i++) {
             (&D_8015EBAC)[i + 50] = 0;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
         }
         func_8014EBD0();
         break;
     case 1:
-        ((DisplayActor44 *)D_8011ECD0)[147].y -= 2;
+        ((Actor *)D_8011ECD0)[147].y -= 2;
         v = (D_8015EDB0.unk_04 << 6) + 0x1000;
-        ((DisplayActor44 *)D_8011ECD0)[147].scale_x = v;
-        ((DisplayActor44 *)D_8011ECD0)[147].scale_y = v;
+        ((Actor *)D_8011ECD0)[147].scale_x = v;
+        ((Actor *)D_8011ECD0)[147].scale_y = v;
         D_8015EDB0.unk_04 += 1;
         for (i = 4; i < 16; i++) {
             if ((&D_8015EBAC)[i + 50] == 0 && func_8013E9A8(0x2D) == 0) {
                 (&D_8015EBAC)[i + 50] = 1;
-                x = ((DisplayActor44 *)D_8011ECD0)[147].x + func_8013E9A8(0x80) - 0x40;
-                y = ((DisplayActor44 *)D_8011ECD0)[147].y - func_8013E9A8(0x28);
+                x = ((Actor *)D_8011ECD0)[147].x + func_8013E9A8(0x80) - 0x40;
+                y = ((Actor *)D_8011ECD0)[147].y - func_8013E9A8(0x28);
                 func_8013E97C(i, x + 0xA0, y + 0x78);
                 func_8013E810(i, func_8013E9A8(2) + 8, 1, 1);
             }
@@ -158,19 +158,19 @@ s32 func_80156064(void) {
                     }
                 }
             }
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].y += 1;
+            ((Actor *)D_8011ECD0)[i + 96].y += 1;
             v = (D_8015EDB0.unk_04 << 6) + 0x1000;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].scale_x = v;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].scale_y = v;
+            ((Actor *)D_8011ECD0)[i + 96].scale_x = v;
+            ((Actor *)D_8011ECD0)[i + 96].scale_y = v;
         }
-        if (((DisplayActor44 *)D_8011ECD0)[147].y < -0xC0) {
+        if (((Actor *)D_8011ECD0)[147].y < -0xC0) {
             func_8013E810(0x33, 0xFF, 1, 0);
             for (i = 4; i < 16; i++) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 96].scale_x = 0x1000;
-                ((DisplayActor44 *)D_8011ECD0)[i + 96].scale_y = 0x1000;
+                ((Actor *)D_8011ECD0)[i + 96].scale_x = 0x1000;
+                ((Actor *)D_8011ECD0)[i + 96].scale_y = 0x1000;
             }
-            ((DisplayActor44 *)D_8011ECD0)[147].scale_x = 0x1000;
-            ((DisplayActor44 *)D_8011ECD0)[147].scale_y = 0x1000;
+            ((Actor *)D_8011ECD0)[147].scale_x = 0x1000;
+            ((Actor *)D_8011ECD0)[147].scale_y = 0x1000;
             func_8014EBA8();
         }
         break;

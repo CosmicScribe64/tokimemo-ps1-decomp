@@ -2,7 +2,7 @@
 #include "ovl/BUNKASAI.h"
 
 void func_8014ABC0(void) {
-    BunkaDispatch8 *dispatch = (BunkaDispatch8 *)&D_80122EB8;
+    CultureFestivalDispatch *dispatch = (CultureFestivalDispatch *)&D_80122EB8;
     dispatch->unk_04 = 5;
     switch (dispatch->unk_00) {
     case 0:
@@ -1064,8 +1064,8 @@ void func_8014C528(void) {
         normal_date_bggirl_fadeout();
         break;
     case 19:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 1;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -1146,8 +1146,8 @@ void func_8014C528(void) {
         }
         break;
     case 30:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -1272,7 +1272,7 @@ void func_8014C528(void) {
         normal_date_speak();
         break;
     case 46:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         func_80142BC8();
         break;
     default:

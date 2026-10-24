@@ -158,12 +158,12 @@ void func_8006D138(void) {
     case 6:
     case 7:
         if (gs->year == 0x5F) {
-            if (((CharFlags *)&flags)->met) {
+            if (((GirlFlagBits *)&flags)->met) {
                 gs->progress_state[1] = 1;
             }
             gs->progress_state[0xE] = 1;
         }
-        if ((gs->year == 0x60) && (((CharFlags *)gs->quarter_flags)->b5)) {
+        if ((gs->year == 0x60) && (((GirlFlagBits *)gs->quarter_flags)->b5)) {
             gs->progress_state[5] = 1;
         }
         if (gs->year == 0x61) {
@@ -171,22 +171,22 @@ void func_8006D138(void) {
         break;
     case 9:
     case 10:
-        if ((gs->year == 0x5F) && (((CharFlags *)&flags)->b2)) {
+        if ((gs->year == 0x5F) && (((GirlFlagBits *)&flags)->b2)) {
             gs->progress_state[7] = 1;
         }
-        if ((gs->year == 0x60) && (((CharFlags *)gs->quarter_flags)->b6)) {
+        if ((gs->year == 0x60) && (((GirlFlagBits *)gs->quarter_flags)->b6)) {
             gs->progress_state[0xA] = 1;
         }
         if (gs->year == 0x61) {
         }
         break;
     case 1:
-        if ((gs->year == 0x60) && (((CharFlags *)&flags)->b3)) {
+        if ((gs->year == 0x60) && (((GirlFlagBits *)&flags)->b3)) {
             gs->progress_state[3] = 1;
         }
         if (gs->year == 0x61) {
             /* FAKE: T-25040, this zero offset folds after uopt, retaining the base-relative byte load. */
-            if (((CharFlags *)(gs->quarter_flags + ((u32)gs->month < 0)))->b7) {
+            if (((GirlFlagBits *)(gs->quarter_flags + ((u32)gs->month < 0)))->b7) {
                 gs->progress_state[6] = 1;
             }
         }
@@ -195,10 +195,10 @@ void func_8006D138(void) {
         }
         break;
     case 12:
-        if ((gs->year == 0x5F) && (((CharFlags *)&flags)->b3)) {
+        if ((gs->year == 0x5F) && (((GirlFlagBits *)&flags)->b3)) {
             gs->progress_state[3] = 1;
         }
-        if ((gs->year == 0x60) && (((CharFlags *)gs->quarter_flags)->b7)) {
+        if ((gs->year == 0x60) && (((GirlFlagBits *)gs->quarter_flags)->b7)) {
             gs->progress_state[6] = 1;
         }
         if (gs->year == 0x61) {
@@ -206,7 +206,7 @@ void func_8006D138(void) {
         break;
     case 3:
     case 4:
-        if ((gs->year == 0x60) && (((CharFlags *)&flags)->b4)) {
+        if ((gs->year == 0x60) && (((GirlFlagBits *)&flags)->b4)) {
             gs->progress_state[0xD] = 1;
         }
         if (gs->year == 0x61) {
@@ -221,7 +221,7 @@ void func_8006D138(void) {
     }
     switch (gs->month) {
     case 5:
-        if ((gs->year == 0x60) && !(((CharFlags *)gs->quarter_flags)->b4)) {
+        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b4)) {
             gs->progress_state[0xD] = 0x80;
         }
         if ((gs->year == 0x61) && !(gs->quarter_flags[1] & 1)) {
@@ -230,10 +230,10 @@ void func_8006D138(void) {
         }
         return;
     case 8:
-        if ((gs->year == 0x5F) && !(((CharFlags *)gs->quarter_flags)->met)) {
+        if ((gs->year == 0x5F) && !(((GirlFlagBits *)gs->quarter_flags)->met)) {
             gs->progress_state[1] = 0x80;
         }
-        if ((gs->year == 0x60) && !(((CharFlags *)gs->quarter_flags)->b5)) {
+        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b5)) {
             gs->progress_state[5] = 0x80;
         }
         if (gs->year == 0x61) {
@@ -242,10 +242,10 @@ void func_8006D138(void) {
         break;
     case 11:
         gs->quarter_flags[1] &= 0xFF7F;
-        if ((gs->year == 0x5F) && !(((CharFlags *)gs->quarter_flags)->b2)) {
+        if ((gs->year == 0x5F) && !(((GirlFlagBits *)gs->quarter_flags)->b2)) {
             gs->progress_state[7] = 0x80;
         }
-        if ((gs->year == 0x60) && !(((CharFlags *)gs->quarter_flags)->b6)) {
+        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b6)) {
             gs->progress_state[0xA] = 0x80;
         }
         if (gs->year == 0x61) {
@@ -253,10 +253,10 @@ void func_8006D138(void) {
         }
         break;
     case 2:
-        if ((gs->year == 0x60) && !(((CharFlags *)gs->quarter_flags)->b3)) {
+        if ((gs->year == 0x60) && !(((GirlFlagBits *)gs->quarter_flags)->b3)) {
             gs->progress_state[3] = 0x80;
         }
-        if ((gs->year == 0x61) && (!((CharFlags *)gs->quarter_flags)->b7)) {
+        if ((gs->year == 0x61) && (!((GirlFlagBits *)gs->quarter_flags)->b7)) {
             gs->progress_state[6] = 0x80;
         }
         break;
@@ -335,11 +335,11 @@ s32 func_8006D6E0(void) {
 }
 
 /* T-23003: the 3-bit counter in bits 5..7 of the byte at GameState +0xF6 (read with lbu, decremented as a bit-field). */
-typedef struct F6Bits {
+typedef struct RecoveryCounterBits {
     u32 pad0 : 5;
     u32 f : 3;
     u32 pad1 : 24;
-} F6Bits;
+} RecoveryCounterBits;
 
 /* FAKE: T-23003, u8 view of func_8006BDA8 (defined s32 in 800674B0.c, not in main_api.h): the second result is then copied into $a0 with or in the beqz delay slot, as in the original, instead of narrowed with andi */
 u8 func_8006BDA8();
@@ -387,8 +387,8 @@ void func_8006D7EC(void) {
     monthOff = 0;
     month = D_800E6280.month;
     monthDays = gs->month_calendar[0].day_kind[0];
-    if (((F6Bits *)&gs->player_flags_hi)->f != 0) {
-        ((F6Bits *)&gs->player_flags_hi)->f -= 1;
+    if (((RecoveryCounterBits *)&gs->player_flags_hi)->f != 0) {
+        ((RecoveryCounterBits *)&gs->player_flags_hi)->f -= 1;
     }
     func_8006CF38();
     wd = (D_800E6280.weekday + 1) % 7U;
@@ -469,7 +469,7 @@ void func_8006D7EC(void) {
             return;
         }
         if ((gs->player_flags.h >> 12) == 0xB) {
-            ((ScheduleClubFlags *)&gs->clubs[11])->unk_25 += 1;
+            ((ClubFlagBits *)&gs->clubs[11])->unk_25 += 1;
         }
     }
     while (wd < 7) {
@@ -583,8 +583,8 @@ void func_8006D7EC(void) {
                         idx++;
                     }
                     if (D_800E6280.vacation == 1 && wd == 2 && (monthOff + D_800E6280.month) == 8 && (rand() % 100) < 0x14 && cnt != 0
-                        && (!((ScheduleGirlFlags *)&gs->player_flags)->b18 || (D_800E6280.year == 0x61 && !((ScheduleGirlFlags *)&gs->player_flags)->b18 && day == 0x1C))) {
-                        ((ScheduleGirlFlags *)&D_800E6280.player_flags)->b18 = 1;
+                        && (!((GirlFlagBitsSched *)&gs->player_flags)->b18 || (D_800E6280.year == 0x61 && !((GirlFlagBitsSched *)&gs->player_flags)->b18 && day == 0x1C))) {
+                        ((GirlFlagBitsSched *)&D_800E6280.player_flags)->b18 = 1;
                         gs->day_events[idx].type = 0x49;
                         idx++;
                     }
@@ -868,7 +868,7 @@ s32 func_8006F218(u8 *arg0, u8 *arg1) {
         return 0;
     }
     if (!(g->girls[1].flags.f.met) && (club == ((u8) g->girls[1].flags.b[2] >> 4)) && ((u16) g->clubs[club].exp >= 0x15U)) {
-        ((ScheduleGirlFlags *)&g->girls[1].flags)->b18 = 1;
+        ((GirlFlagBitsSched *)&g->girls[1].flags)->b18 = 1;
         *arg0 = 1;
         if (club == 0) {
             *arg1 = (g->frame_count & 1) + 2;
@@ -878,7 +878,7 @@ s32 func_8006F218(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(g->girls[2].flags.f.met) && (club == ((u8) g->girls[2].flags.b[2] >> 4)) && ((u16) g->clubs[club].exp >= 0x15U)) {
-        ((ScheduleGirlFlags *)&g->girls[2].flags)->b18 = 1;
+        ((GirlFlagBitsSched *)&g->girls[2].flags)->b18 = 1;
         *arg0 = 2;
         if (club == 2) {
             *arg1 = 4;
@@ -888,7 +888,7 @@ s32 func_8006F218(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(g->girls[3].flags.f.met) && (club == ((u8) g->girls[3].flags.b[2] >> 4)) && ((u16) g->clubs[club].exp >= 0x15U)) {
-        ((ScheduleGirlFlags *)&g->girls[3].flags)->b18 = 1;
+        ((GirlFlagBitsSched *)&g->girls[3].flags)->b18 = 1;
         *arg0 = 3;
         if (club == 4) {
             *arg1 = 1;
@@ -898,7 +898,7 @@ s32 func_8006F218(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(g->girls[4].flags.f.met) && (club == ((u8) g->girls[4].flags.b[2] >> 4)) && ((u16) g->clubs[club].exp >= 0x15U)) {
-        ((ScheduleGirlFlags *)&g->girls[4].flags)->b18 = 1;
+        ((GirlFlagBitsSched *)&g->girls[4].flags)->b18 = 1;
         *arg0 = 4;
         if (club == 6) {
             *arg1 = 1;
@@ -908,13 +908,13 @@ s32 func_8006F218(u8 *arg0, u8 *arg1) {
         return 1;
     }
     if (!(g->girls[5].flags.f.met) && (club == 8) && (((u8) g->girls[0].flags.b[2] >> 4) != 8) && ((u16) g->clubs[club].exp >= 0x15U)) {
-        ((ScheduleGirlFlags *)&g->girls[5].flags)->b18 = 1;
+        ((GirlFlagBitsSched *)&g->girls[5].flags)->b18 = 1;
         *arg0 = 5;
         *arg1 = 1;
         return 1;
     }
     if (!(g->girls[6].flags.f.met) && (club == 9) && (((u8) g->girls[0].flags.b[2] >> 4) != 9)) {
-        ((ScheduleGirlFlags *)&g->girls[6].flags)->b18 = 1;
+        ((GirlFlagBitsSched *)&g->girls[6].flags)->b18 = 1;
         *arg0 = 6;
         *arg1 = 1;
         return 1;
@@ -1158,7 +1158,7 @@ s32 special_event_select(char *arg0, char *arg1) {
             switch (girl) {
             case 0:
                 if ((rand() % 100) < 3) {
-                    if (((GsWord *)&g->frame_count)->w & 1) {
+                    if (((WordView *)&g->frame_count)->w & 1) {
                         if ((func_80066ACC() == 1) && (g->event_flags[0] == 0) && ((u32) (get_g_zyotai_s(girl) & 0x7F) < 2U)) {
                             g->event_flags[0] = (u8) (g->event_flags[0] + 1);
                             *arg0 = 0;
@@ -1954,8 +1954,8 @@ void func_800722C4(void) {
     case 6:
     case 9:
     case 12:
-        ((CharFlags *)state->quarter_flags)->b14 = ((CharFlags *)D_800E6280.quarter_flags)->b13;
-        ((CharFlags *)state->quarter_flags)->b13 = 0;
+        ((GirlFlagBits *)state->quarter_flags)->b14 = ((GirlFlagBits *)D_800E6280.quarter_flags)->b13;
+        ((GirlFlagBits *)state->quarter_flags)->b13 = 0;
         break;
     }
 }
@@ -2008,7 +2008,7 @@ void func_80072338(void) {
         D_800E6280.year++;
         (*(u8 *)&D_800E6280.month) = 1;
     }
-    ((GsHalf *)&D_800E6280.day_count)->h++;
+    ((HalfView *)&D_800E6280.day_count)->h++;
     if ((*(u8 *)&D_800E6280.month) % 3 == 0) {
         func_8006D038();
     }

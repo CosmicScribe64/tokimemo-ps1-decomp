@@ -73,7 +73,7 @@ void func_801528DC(void) {
     }
     i = 0;
     do {
-        ((DisplayActor44 *)D_8011ECD0)[i + 64].brightness = *p;
+        ((Actor *)D_8011ECD0)[i + 64].brightness = *p;
         D_800E6280.screen_brightness = *p;
         if (D_8015EB98 == 0x20000 && *p >= 0x61) {
             D_80120E93 = 0x60;
@@ -297,7 +297,7 @@ void func_80152F30(void) {
             func_8013E7C0(0x1D, 0x18, 1, 1);
             func_8013E97C(0x38, 0, 0);
             func_8013E7C0(0x38, 9, 1, 1);
-            ((DisplayActor44 *)D_8011ECD0)[152].unk_01 = 2;
+            ((Actor *)D_8011ECD0)[152].unk_01 = 2;
             func_8004284C();
         }
         break;
@@ -498,7 +498,7 @@ void func_80153A60(void) {
     i = 0;
     p = &D_8015EC74;
     do {
-        ((DisplayActor44 *)D_8011ECD0)[i + 64].brightness = *p;
+        ((Actor *)D_8011ECD0)[i + 64].brightness = *p;
         *(s8 *)&D_800E6280.unk_3A = *p;
         if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
             D_80120E93 = 0x60;

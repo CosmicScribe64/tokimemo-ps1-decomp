@@ -122,8 +122,8 @@ s32 func_8014AF28(void) {
     D_8015186C = 0;
     /* The nine contiguous parameter records start at GameState +0xFC. */
     for (index = 1; index != 8; index++) {
-        printf("param %d %d \n", index, ((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].value);
-        if (((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].value >= 0x65) {
+        printf("param %d %d \n", index, ((ParamValue *)((u8 *)&D_800E6280 + 0xFC))[index].value);
+        if (((ParamValue *)((u8 *)&D_800E6280 + 0xFC))[index].value >= 0x65) {
             count++;
         }
     }

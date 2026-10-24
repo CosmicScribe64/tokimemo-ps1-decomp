@@ -449,8 +449,8 @@ void func_80138D40(void) {
     parameter_show_init();
     parameter_show_init();
     D_800B593C = 0x80;
-    ((DisplayActor44 *)D_80120650)->draw_flags &= 0x7F;
-    ((DisplayActor44 *)D_80120650)[1].draw_flags &= 0x7F;
+    ((Actor *)D_80120650)->draw_flags &= 0x7F;
+    ((Actor *)D_80120650)[1].draw_flags &= 0x7F;
     k_reset(1);
     D_800E6280.current_girl = 0;
     D_80139ADC = 0;

@@ -223,7 +223,7 @@ void func_80139F3C(void) {
     s16 i;
     s32 shade;
     /* FAKE: keep the existing scalar brightness view for a1 promotion;
-     * Rec24 field/pointer views use v0 and do not match. T-10010. */
+     * SpriteQuad field/pointer views use v0 and do not match. T-10010. */
     if (D_80121874 == 128) {
         func_80044750(0xD1);
         D_80122CD4 = 0;
@@ -313,7 +313,7 @@ void func_8013A2E8(void) {
     best = 0;
     bestGirl = 0xFF;
     for (i = 0; i < 7; i++) {
-        /* FAKE (T-23002): the seven GsRec0FC records at +0x100 are separate members; indexed until their aggregate is known */
+        /* FAKE (T-23002): the seven ParamValue records at +0x100 are separate members; indexed until their aggregate is known */
         if (best < (&D_800E6280.param_liberal_arts)[i].value) {
             best = (&D_800E6280.param_liberal_arts)[i].value;
             bestGirl = i;
@@ -334,25 +334,25 @@ void func_8013A2E8(void) {
         strcpy(D_800CA280, "二流企業");
     } else if (D_800E6280.player_flags_hi.b[1] & 0x20) {
         strcpy(D_800CA280, "三流企業");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[0])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[0])->unk_25 >= 3) {
         strcpy(D_800CA280, "小説家は");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[1])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[1])->unk_25 >= 3) {
         strcpy(D_800CA280, "俳優は");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[2])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[2])->unk_25 >= 3) {
         strcpy(D_800CA280, "製薬会社は");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[3])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[3])->unk_25 >= 3) {
         strcpy(D_800CA280, "有名ゲーム会社は ");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[4])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[4])->unk_25 >= 3) {
         strcpy(D_800CA280, "画家は");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[5])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[5])->unk_25 >= 3) {
         strcpy(D_800CA280, "音楽家は");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[6])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[6])->unk_25 >= 3) {
         strcpy(D_800CA280, "プロ野球選手は");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[7])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[7])->unk_25 >= 3) {
         strcpy(D_800CA280, "Ｊリーガーは");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[8])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[8])->unk_25 >= 3) {
         strcpy(D_800CA280, "プロテニスプレイヤーは ");
-    } else if (((ScheduleClubFlags *)&D_800E6280.clubs[9])->unk_25 >= 3) {
+    } else if (((ClubFlagBits *)&D_800E6280.clubs[9])->unk_25 >= 3) {
         strcpy(D_800CA280, "水泳の実業団は");
     } else {
         strcpy(D_800CA280, "プロバスケプレイヤーは ");
@@ -387,7 +387,7 @@ void func_8013A2E8(void) {
     func_8013B640();
     idx = 0xFF;
     for (i = 0; i < 11; i++) {
-        if (((ScheduleClubFlags *)&D_800E6280.clubs[i])->unk_25 >= 3 && (D_800E6280.player_flags_hi.b[1] & 0x40) && !(D_800E6280.player_flags_hi.b[1] & 0x80)) {
+        if (((ClubFlagBits *)&D_800E6280.clubs[i])->unk_25 >= 3 && (D_800E6280.player_flags_hi.b[1] & 0x40) && !(D_800E6280.player_flags_hi.b[1] & 0x80)) {
             msg = (*D_8013CAF0)[10 + i];
             kind = i;
             idx = i;
@@ -670,7 +670,7 @@ s32 func_8013B510(void) {
     s16 y;
     u32 max;
     u32 count;
-    Entry8 *entry;
+    TextEntry *entry;
 
     if (D_800E6280.frame_count & 3) {
         return 0;
@@ -678,7 +678,7 @@ s32 func_8013B510(void) {
     max = get_now_k() & 0xFF;
     count = 0;
     do {
-        entry = (Entry8 *)get_k_work(count);
+        entry = (TextEntry *)get_k_work(count);
         entry->y--;
         y = entry->y;
         count++;

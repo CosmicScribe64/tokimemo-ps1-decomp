@@ -129,14 +129,14 @@ void func_801055D0(void) {
 
 void func_8010564C(void) {
     s16 i;
-    Rec24 *p;
+    SpriteQuad *p;
 
     D_800B1C1C = 1;
     func_800137AC(0x140, 0, 0x40, 0x80, D_80120C20);
     func_801050D0();
     func_80012D64(D_80120C04, 0x12, 1, 3, 0);
     for (i = 4; i < 0xE; i++) {
-        p = (Rec24 *)(D_800EC190 + i * 0x24);
+        p = (SpriteQuad *)(D_800EC190 + i * 0x24);
         p->flags = 0xC1000000;
         p->x = func_800789A0() % 84 - 0x9F;
         p->y = func_800789A0() % 130 - 0x5F;
@@ -215,13 +215,13 @@ void func_80105AC8(void) {
 
 void func_80105B00(void) {
     s16 i;
-    Rec24 *records;
+    SpriteQuad *records;
     s32 before;
     s32 after;
 
     before = D_800B1AF6;
     func_8004C984();
-    records = (Rec24 *)D_800EC190;
+    records = (SpriteQuad *)D_800EC190;
     for (i = 4; i < 19; i++) {
         if (D_800F19AB < 112) {
             records[i].tint_r = records[i].tint_g = records[i].tint_b = D_800F19AB;
@@ -237,16 +237,16 @@ void func_80105B00(void) {
 
 void func_80105BC4(void) {
     s16 i;
-    Rec24 *records;
+    SpriteQuad *records;
 
     if (D_800B1AF0 == 0) {
-        records = (Rec24 *)D_800EC190;
+        records = (SpriteQuad *)D_800EC190;
         for (i = 4; i < 19; i++) {
             records[i].flags &= 0x7FFFFFFF;
         }
     }
     func_8004C90C();
-    records = (Rec24 *)D_800EC190;
+    records = (SpriteQuad *)D_800EC190;
     for (i = 4; i < 19; i++) {
         if (D_800F19AB < 113) {
             records[i].tint_r = records[i].tint_g = records[i].tint_b = D_800F19AB;
@@ -296,24 +296,24 @@ void func_80105DF8(void) {
     s16 i;
 
     for (i = 4; i < 0xE; i++) {
-        ((Rec24 *)D_800EC190)[i].y += 0xA;
+        ((SpriteQuad *)D_800EC190)[i].y += 0xA;
         if (((func_800789A0() & 3) == 0 &&
-             ((((Rec24 *)D_800EC190)[i].y >= -0x52 && ((Rec24 *)D_800EC190)[i].y < -0x39 && ((Rec24 *)D_800EC190)[i].x < -0x57) ||
-              (((Rec24 *)D_800EC190)[i].y >= -0x39 && ((Rec24 *)D_800EC190)[i].y < -0x1A && ((Rec24 *)D_800EC190)[i].x < -0x77) ||
-              (((Rec24 *)D_800EC190)[i].y >= -0xB && ((Rec24 *)D_800EC190)[i].y < 3 && ((Rec24 *)D_800EC190)[i].x >= -0x8D && ((Rec24 *)D_800EC190)[i].x < -0x6F) ||
-              (((Rec24 *)D_800EC190)[i].y >= 5 && ((Rec24 *)D_800EC190)[i].x >= -0x7F && ((Rec24 *)D_800EC190)[i].x < -0x5C)) &&
+             ((((SpriteQuad *)D_800EC190)[i].y >= -0x52 && ((SpriteQuad *)D_800EC190)[i].y < -0x39 && ((SpriteQuad *)D_800EC190)[i].x < -0x57) ||
+              (((SpriteQuad *)D_800EC190)[i].y >= -0x39 && ((SpriteQuad *)D_800EC190)[i].y < -0x1A && ((SpriteQuad *)D_800EC190)[i].x < -0x77) ||
+              (((SpriteQuad *)D_800EC190)[i].y >= -0xB && ((SpriteQuad *)D_800EC190)[i].y < 3 && ((SpriteQuad *)D_800EC190)[i].x >= -0x8D && ((SpriteQuad *)D_800EC190)[i].x < -0x6F) ||
+              (((SpriteQuad *)D_800EC190)[i].y >= 5 && ((SpriteQuad *)D_800EC190)[i].x >= -0x7F && ((SpriteQuad *)D_800EC190)[i].x < -0x5C)) &&
              D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) ||
             D_80120CF0[i - 4] != 0 || D_80120D10[i - 4] != 0) {
-            ((Rec24 *)D_800EC190)[i].y -= 0xA;
+            ((SpriteQuad *)D_800EC190)[i].y -= 0xA;
             if (D_80120CF0[i - 4] == 0) {
                 if (D_80120D10[i - 4] == 0) {
-                    if (((Rec24 *)D_800EC190)[i].y < -0x44) {
-                        ((Rec24 *)D_800EC190)[i].unk_0F += 8;
+                    if (((SpriteQuad *)D_800EC190)[i].y < -0x44) {
+                        ((SpriteQuad *)D_800EC190)[i].unk_0F += 8;
                     }
-                    ((Rec24 *)D_800EC190)[i].x -= 0xC;
-                    ((Rec24 *)D_800EC190)[i].y += 0x10;
+                    ((SpriteQuad *)D_800EC190)[i].x -= 0xC;
+                    ((SpriteQuad *)D_800EC190)[i].y += 0x10;
                     ((EventRec24 *)D_800EC190)[i].unk_0E = 8;
-                    ((Rec24 *)D_800EC190)[i].w = 0x18;
+                    ((SpriteQuad *)D_800EC190)[i].w = 0x18;
                     ((EventRec24 *)D_800EC190)[i].unk_0A = 8;
                     D_80120D10[i - 4] += 1;
                 } else {
@@ -321,15 +321,15 @@ void func_80105DF8(void) {
                     D_80120CF0[i - 4] += 1;
                 }
             } else if (D_80120CF0[i - 4] == 4) {
-                ((Rec24 *)D_800EC190)[i].unk_0E = 0;
-                ((Rec24 *)D_800EC190)[i].unk_0F = 0;
-                ((Rec24 *)D_800EC190)[i].w = 8;
+                ((SpriteQuad *)D_800EC190)[i].unk_0E = 0;
+                ((SpriteQuad *)D_800EC190)[i].unk_0F = 0;
+                ((SpriteQuad *)D_800EC190)[i].w = 8;
                 ((EventRec24 *)D_800EC190)[i].unk_0A = 0x18;
                 /* FAKE: same-line stores place mfhi after the zero stores as in the original. T-24085 */
-                ((Rec24 *)D_800EC190)[i].x = func_800789A0() % 84 - 0x9F; ((Rec24 *)D_800EC190)[i].y = -0x78; D_80120D10[i - 4] = 0; D_80120CF0[i - 4] = 0;
+                ((SpriteQuad *)D_800EC190)[i].x = func_800789A0() % 84 - 0x9F; ((SpriteQuad *)D_800EC190)[i].y = -0x78; D_80120D10[i - 4] = 0; D_80120CF0[i - 4] = 0;
             } else if (D_80120CF0[i - 4] == 5) {
                 if (D_80120D10[i - 4] == 0) {
-                    ((Rec24 *)D_800EC190)[i].unk_0E -= 0x18;
+                    ((SpriteQuad *)D_800EC190)[i].unk_0E -= 0x18;
                     D_80120D10[i - 4] += 1;
                 } else {
                     D_80120D10[i - 4] = 0;
@@ -337,16 +337,16 @@ void func_80105DF8(void) {
                 }
             } else {
                 if (D_80120D10[i - 4] == 0) {
-                    ((Rec24 *)D_800EC190)[i].unk_0E += 0x18;
+                    ((SpriteQuad *)D_800EC190)[i].unk_0E += 0x18;
                     D_80120D10[i - 4] += 1;
                 } else {
                     D_80120D10[i - 4] = 0;
                     D_80120CF0[i - 4] += 1;
                 }
             }
-        } else if (((Rec24 *)D_800EC190)[i].y >= 0x19 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) {
+        } else if (((SpriteQuad *)D_800EC190)[i].y >= 0x19 && D_80120CF0[i - 4] == 0 && D_80120D10[i - 4] == 0) {
             /* FAKE: same-line store places mfhi after unk_06 = -0x78 as in the original. T-24085 */
-            ((Rec24 *)D_800EC190)[i].x = func_800789A0() % 84 - 0x9F; ((Rec24 *)D_800EC190)[i].y = -0x78;
+            ((SpriteQuad *)D_800EC190)[i].x = func_800789A0() % 84 - 0x9F; ((SpriteQuad *)D_800EC190)[i].y = -0x78;
         }
     }
 }

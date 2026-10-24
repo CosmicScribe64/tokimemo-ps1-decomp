@@ -28,7 +28,7 @@ void strSetDefDecEnv(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
     u32 width;
     u32 height;
-    StrDecEnv30 *env;
+    StrDecEnv *env;
 
     env = arg0;
     env->vlcbuf[0] = (u8 *) D_80125C58 + 0x12D44;
@@ -112,7 +112,7 @@ void strCallback(void) {
     D_80125C58->dec.slice.y = D_80125C58->dec.rect[D_80125C58->dec.rectid].y;
 }
 
-s32 strNextVlc(StrDecEnv30 *arg0) {
+s32 strNextVlc(StrDecEnv *arg0) {
     s32 vlc;
     s32 timeout;
 
@@ -135,7 +135,7 @@ s32 strNextVlc(StrDecEnv30 *arg0) {
     return 0;
 }
 
-s32 strNext(StrDecEnv30 *env) {
+s32 strNext(StrDecEnv *env) {
     u32 *addr;
     StHEADER *sector;
     s32 cnt;
@@ -180,7 +180,7 @@ s32 strNext(StrDecEnv30 *env) {
 
 /* Implicit-int return type with no return statement: it changes how as1 fills the loop's
  * back-branch delay slot (T-9140, found by the permuter in T-1330). */
-u32 strSync(StrDecEnv30 *arg0, s32 arg1) {
+u32 strSync(StrDecEnv *arg0, s32 arg1) {
     volatile s32 timeout = 0x800000;
 
     while (arg0->isdone == 0) {

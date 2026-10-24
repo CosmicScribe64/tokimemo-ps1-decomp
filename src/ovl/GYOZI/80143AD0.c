@@ -213,7 +213,7 @@ void func_801444CC(void) {
         D_80148D80[i - 4] = ((Fix32 *)D_80148CB8)[i - 4].w;
         D_8012CA40[i].y = -0x78;
         D_8012CA40[i].w = 8;
-        /* Rec24.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
+        /* SpriteQuad.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
         *(s16 *)&D_8012CA40[i].h = 8;
         D_8012CA40[i].unk_0C = 0xA;
         D_8012CA40[i].unk_0E = 0;
@@ -421,7 +421,7 @@ void func_80145084(void) {
         D_80148D80[i - 4] = ((Fix32 *)D_80148CB8)[i - 4].w;
         D_8012CA40[i].y = -0x78;
         D_8012CA40[i].w = 8;
-        /* Rec24.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
+        /* SpriteQuad.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
         *(s16 *)&D_8012CA40[i].h = 8;
         D_8012CA40[i].unk_0C = 0xA;
         D_8012CA40[i].unk_0E = 0;

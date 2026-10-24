@@ -955,11 +955,11 @@ void func_8010F340(void) {
     D_800B1746 = D_800B0F30;
     /* FAKE: signed byte view of the argument keeps the one lbu in $a0 (no move to the call register); T-22011 */
     func_8004BC20(*(s8 *)&D_800B0F30);
-    ((DisplayActor44 *)D_800E9620)[31].brightness = 0;
-    ((DisplayActor44 *)D_800E9620)[31].quad_flags |= 0x81000000;
-    ((DisplayActor44 *)D_800E9620)[30].quad_flags |= 0x81000000;
-    ((Rec24 *)D_800EC190)[0].flags |= 0x81000000;
-    ((Rec24 *)D_800EC190)[1].flags |= 0x81000000;
+    ((Actor *)D_800E9620)[31].brightness = 0;
+    ((Actor *)D_800E9620)[31].quad_flags |= 0x81000000;
+    ((Actor *)D_800E9620)[30].quad_flags |= 0x81000000;
+    ((SpriteQuad *)D_800EC190)[0].flags |= 0x81000000;
+    ((SpriteQuad *)D_800EC190)[1].flags |= 0x81000000;
     func_8004C360();
     func_80011DFC();
 }

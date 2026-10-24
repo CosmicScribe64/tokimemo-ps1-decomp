@@ -140,7 +140,7 @@ s32 func_8013A7EC(void) {
             ((OptionDateBits *)&game->player_birthday)->f9 = func_8013A550(((OptionDateBits *)&game->player_birthday)->f9, 3, 0);
             break;
         case 12:
-            ((ScheduleFlags *)&game->player_flags)->club = func_8013A550(((ScheduleFlags *)&game->player_flags)->club, 11, 0);
+            ((PlayerFlagBits *)&game->player_flags)->club = func_8013A550(((PlayerFlagBits *)&game->player_flags)->club, 11, 0);
             break;
         case 13:
             game->girls[0].birthday.date.month = func_8013A550(game->girls[0].birthday.date.month, 12, 1);
@@ -274,13 +274,13 @@ void func_8013AF10(void) {
         var_s0 += 0xC;
         var_s1++;
     } while (var_s0 != 0x60);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->health, 0x20, -0x60);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->club, 0x20, -0x54);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->b16, 0x20, -0x48);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->b17, 0x20, -0x3C);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->b18, 0x20, -0x30);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->b19, 0x20, -0x24);
-    func_8004AE28(((ScheduleFlags *)&g->player_flags)->b20, 0x20, -0x18);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->health, 0x20, -0x60);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->club, 0x20, -0x54);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b16, 0x20, -0x48);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b17, 0x20, -0x3C);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b18, 0x20, -0x30);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b19, 0x20, -0x24);
+    func_8004AE28(((PlayerFlagBits *)&g->player_flags)->b20, 0x20, -0x18);
     func_8004AE28((s32) g->param_condition.value, 0x20, -0xC);
     func_8004AE28((s32) g->param_liberal_arts.value, 0x20, 0);
     func_8004AE28((s32) g->param_science.value, 0x20, 0xC);
@@ -293,25 +293,25 @@ void func_8013AF10(void) {
     if (g->pad_held & 0x90) {
         switch (g->menu_cursor_0) {
         case 0:
-            ((ScheduleFlags *)&g->player_flags)->health = func_8013A550(((ScheduleFlags *)&g->player_flags)->health, 3, 0);
+            ((PlayerFlagBits *)&g->player_flags)->health = func_8013A550(((PlayerFlagBits *)&g->player_flags)->health, 3, 0);
             break;
         case 1:
-            ((ScheduleFlags *)&g->player_flags)->club = func_8013A550(((ScheduleFlags *)&g->player_flags)->club, 11, 0);
+            ((PlayerFlagBits *)&g->player_flags)->club = func_8013A550(((PlayerFlagBits *)&g->player_flags)->club, 11, 0);
             break;
         case 2:
-            ((ScheduleFlags *)&g->player_flags)->b16 = func_8013A550(((ScheduleFlags *)&g->player_flags)->b16, 1, 0);
+            ((PlayerFlagBits *)&g->player_flags)->b16 = func_8013A550(((PlayerFlagBits *)&g->player_flags)->b16, 1, 0);
             break;
         case 3:
-            ((ScheduleFlags *)&g->player_flags)->b17 = func_8013A550(((ScheduleFlags *)&g->player_flags)->b17, 1, 0);
+            ((PlayerFlagBits *)&g->player_flags)->b17 = func_8013A550(((PlayerFlagBits *)&g->player_flags)->b17, 1, 0);
             break;
         case 4:
-            ((ScheduleFlags *)&g->player_flags)->b18 = func_8013A550(((ScheduleFlags *)&g->player_flags)->b18, 1, 0);
+            ((PlayerFlagBits *)&g->player_flags)->b18 = func_8013A550(((PlayerFlagBits *)&g->player_flags)->b18, 1, 0);
             break;
         case 5:
-            ((ScheduleFlags *)&g->player_flags)->b19 = func_8013A550(((ScheduleFlags *)&g->player_flags)->b19, 1, 0);
+            ((PlayerFlagBits *)&g->player_flags)->b19 = func_8013A550(((PlayerFlagBits *)&g->player_flags)->b19, 1, 0);
             break;
         case 6:
-            ((ScheduleFlags *)&g->player_flags)->b20 = func_8013A550(((ScheduleFlags *)&g->player_flags)->b20, 1, 0);
+            ((PlayerFlagBits *)&g->player_flags)->b20 = func_8013A550(((PlayerFlagBits *)&g->player_flags)->b20, 1, 0);
             break;
         case 7:
             g->param_condition.value = func_8013A550((s32) g->param_condition.value, 0x3E7, 0);
@@ -583,9 +583,9 @@ void func_8013BFF8(void) {
     } while (var_s0 != 0x60);
     func_8004AE28((s32) g->day_events[0].girl, 0x20, -0x60);
     func_8004AE28((s32) g->day_events[0].scene, 0x20, -0x54);
-    func_8004AE28(((ScheduleEntryFlags *)&g->unk_54C[0])->flag, 0x20, -0x30);
-    func_8004AE28(((ScheduleEntryFlags *)&g->unk_54C[0])->girl, 0x20, -0x24);
-    func_8004AE28(((ScheduleEntryFlags *)&g->unk_54C[0])->place, 0x20, -0x18);
+    func_8004AE28(((AppointmentBits *)&g->unk_54C[0])->flag, 0x20, -0x30);
+    func_8004AE28(((AppointmentBits *)&g->unk_54C[0])->girl, 0x20, -0x24);
+    func_8004AE28(((AppointmentBits *)&g->unk_54C[0])->place, 0x20, -0x18);
     func_8004AE28((s32) g->appt_place_0, 0x20, 0);
     func_8004AE28((s32) g->appt_place_1, 0x20, 0xC);
     func_8004AE28((s32) g->appt_place_2, 0x20, 0x18);
@@ -603,13 +603,13 @@ void func_8013BFF8(void) {
             g->day_events[0].scene = func_8013A550((s32) g->day_events[0].scene, 0x24, 0);
             break;
         case 4:
-            ((ScheduleEntryFlags *)&g->unk_54C[0])->flag = func_8013A550(((ScheduleEntryFlags *)&g->unk_54C[0])->flag, 1, 0);
+            ((AppointmentBits *)&g->unk_54C[0])->flag = func_8013A550(((AppointmentBits *)&g->unk_54C[0])->flag, 1, 0);
             break;
         case 5:
-            ((ScheduleEntryFlags *)&g->unk_54C[0])->girl = func_8013A550(((ScheduleEntryFlags *)&g->unk_54C[0])->girl, 0xA, 0);
+            ((AppointmentBits *)&g->unk_54C[0])->girl = func_8013A550(((AppointmentBits *)&g->unk_54C[0])->girl, 0xA, 0);
             break;
         case 6:
-            ((ScheduleEntryFlags *)&g->unk_54C[0])->place = func_8013A550(((ScheduleEntryFlags *)&g->unk_54C[0])->place, 0x15, 0);
+            ((AppointmentBits *)&g->unk_54C[0])->place = func_8013A550(((AppointmentBits *)&g->unk_54C[0])->place, 0x15, 0);
             break;
         case 8:
             g->appt_place_0 = func_8013A550((s32) g->appt_place_0, 0x15, 0);

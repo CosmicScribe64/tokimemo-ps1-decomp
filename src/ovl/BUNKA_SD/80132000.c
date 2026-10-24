@@ -263,7 +263,7 @@ void func_801327E4(void) {
 void func_80132940(void) {
     u16 frame;
     s32 i;
-    DisplayActor44 *record;
+    Actor *record;
 
     i = 0;
     do {
@@ -271,36 +271,36 @@ void func_80132940(void) {
         i += 1;
     } while (i < 0x10);
     func_80048F64(0x60);
-    ((DisplayActor44 *)D_80120650)[0].unk_01 = 5;
-    ((DisplayActor44 *)D_80120650)[0].quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_80120650)[0].draw_flags = 0x84;
-    ((DisplayActor44 *)D_80120650)[0].flags = 0x40;
-    ((DisplayActor44 *)D_80120650)[0].frame_table = D_8013B7FC;
-    ((DisplayActor44 *)D_80120650)[0].sequence_table = D_8013B800;
-    ((DisplayActor44 *)D_80120650)[0].tpage_table = D_8013B7F8;
-    ((DisplayActor44 *)D_80120650)[0].unk_18 = 0xC4;
-    ((DisplayActor44 *)D_80120650)[0].brightness = 0;
-    ((DisplayActor44 *)D_80120650)[0].x = -0xA0;
-    ((DisplayActor44 *)D_80120650)[0].y = -0x78;
-    ((DisplayActor44 *)D_80120650)[0].unk_05 = 0x80;
-    ((DisplayActor44 *)D_80120650)[0].unk_43 = 0;
-    ((DisplayActor44 *)D_80120650)[0].unk_04 = 0;
+    ((Actor *)D_80120650)[0].unk_01 = 5;
+    ((Actor *)D_80120650)[0].quad_flags = 0x01000000;
+    ((Actor *)D_80120650)[0].draw_flags = 0x84;
+    ((Actor *)D_80120650)[0].flags = 0x40;
+    ((Actor *)D_80120650)[0].frame_table = D_8013B7FC;
+    ((Actor *)D_80120650)[0].sequence_table = D_8013B800;
+    ((Actor *)D_80120650)[0].tpage_table = D_8013B7F8;
+    ((Actor *)D_80120650)[0].unk_18 = 0xC4;
+    ((Actor *)D_80120650)[0].brightness = 0;
+    ((Actor *)D_80120650)[0].x = -0xA0;
+    ((Actor *)D_80120650)[0].y = -0x78;
+    ((Actor *)D_80120650)[0].unk_05 = 0x80;
+    ((Actor *)D_80120650)[0].unk_43 = 0;
+    ((Actor *)D_80120650)[0].unk_04 = 0;
     func_80048F64(0x61);
-    ((DisplayActor44 *)D_80120650)[1].unk_01 = 4;
-    ((DisplayActor44 *)D_80120650)[1].quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_80120650)[1].draw_flags = 0x84;
-    ((DisplayActor44 *)D_80120650)[1].flags = 0x40;
-    ((DisplayActor44 *)D_80120650)[1].frame_table = D_8013B7FC;
-    ((DisplayActor44 *)D_80120650)[1].sequence_table = D_8013B800;
-    ((DisplayActor44 *)D_80120650)[1].tpage_table = D_8013B7F8;
-    ((DisplayActor44 *)D_80120650)[1].unk_18 = 0;
-    ((DisplayActor44 *)D_80120650)[1].brightness = 0;
-    ((DisplayActor44 *)D_80120650)[1].x = -0xA0;
-    ((DisplayActor44 *)D_80120650)[1].y = -0x78;
-    ((DisplayActor44 *)D_80120650)[1].unk_05 = 0x80;
-    ((DisplayActor44 *)D_80120650)[1].unk_43 = 0;
-    ((DisplayActor44 *)D_80120650)[1].unk_04 = 0;
-    record = (DisplayActor44 *)D_8011ED58;
+    ((Actor *)D_80120650)[1].unk_01 = 4;
+    ((Actor *)D_80120650)[1].quad_flags = 0x01000000;
+    ((Actor *)D_80120650)[1].draw_flags = 0x84;
+    ((Actor *)D_80120650)[1].flags = 0x40;
+    ((Actor *)D_80120650)[1].frame_table = D_8013B7FC;
+    ((Actor *)D_80120650)[1].sequence_table = D_8013B800;
+    ((Actor *)D_80120650)[1].tpage_table = D_8013B7F8;
+    ((Actor *)D_80120650)[1].unk_18 = 0;
+    ((Actor *)D_80120650)[1].brightness = 0;
+    ((Actor *)D_80120650)[1].x = -0xA0;
+    ((Actor *)D_80120650)[1].y = -0x78;
+    ((Actor *)D_80120650)[1].unk_05 = 0x80;
+    ((Actor *)D_80120650)[1].unk_43 = 0;
+    ((Actor *)D_80120650)[1].unk_04 = 0;
+    record = (Actor *)D_8011ED58;
     i = 2;
     do {
         func_80048F64(i + 0x60);
@@ -323,37 +323,37 @@ void func_80132940(void) {
         record[95].unk_04 = 0;
     } while (i != 4);
     func_80048F64(0x64);
-    ((DisplayActor44 *)D_80120650)[4].unk_01 = 4;
-    ((DisplayActor44 *)D_80120650)[4].quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_80120650)[4].draw_flags = 0x84;
-    ((DisplayActor44 *)D_80120650)[4].flags = 0x40;
-    ((DisplayActor44 *)D_80120650)[4].frame_table = D_8013B7FC;
-    ((DisplayActor44 *)D_80120650)[4].sequence_table = D_8013B800;
-    ((DisplayActor44 *)D_80120650)[4].tpage_table = D_8013B7F8;
+    ((Actor *)D_80120650)[4].unk_01 = 4;
+    ((Actor *)D_80120650)[4].quad_flags = 0x01000000;
+    ((Actor *)D_80120650)[4].draw_flags = 0x84;
+    ((Actor *)D_80120650)[4].flags = 0x40;
+    ((Actor *)D_80120650)[4].frame_table = D_8013B7FC;
+    ((Actor *)D_80120650)[4].sequence_table = D_8013B800;
+    ((Actor *)D_80120650)[4].tpage_table = D_8013B7F8;
     switch (D_80122EAC) {
     case 0:
-        ((DisplayActor44 *)D_80120650)[4].unk_18 = 0xBF;
+        ((Actor *)D_80120650)[4].unk_18 = 0xBF;
         break;
     case 1:
-        ((DisplayActor44 *)D_80120650)[4].unk_18 = 0xC2;
+        ((Actor *)D_80120650)[4].unk_18 = 0xC2;
         break;
     case 2:
-        ((DisplayActor44 *)D_80120650)[4].unk_18 = 0xC0;
+        ((Actor *)D_80120650)[4].unk_18 = 0xC0;
         break;
     case 3:
-        ((DisplayActor44 *)D_80120650)[4].unk_18 = 0xC1;
+        ((Actor *)D_80120650)[4].unk_18 = 0xC1;
         break;
     case 4:
     default:
-        ((DisplayActor44 *)D_80120650)[4].unk_18 = 0xC3;
+        ((Actor *)D_80120650)[4].unk_18 = 0xC3;
         break;
     }
-    ((DisplayActor44 *)D_80120650)[4].brightness = 0;
-    ((DisplayActor44 *)D_80120650)[4].x = -0xA0;
-    ((DisplayActor44 *)D_80120650)[4].y = -0x78;
-    ((DisplayActor44 *)D_80120650)[4].unk_05 = 0x80;
-    ((DisplayActor44 *)D_80120650)[4].unk_43 = 0;
-    ((DisplayActor44 *)D_80120650)[4].unk_04 = 0;
+    ((Actor *)D_80120650)[4].brightness = 0;
+    ((Actor *)D_80120650)[4].x = -0xA0;
+    ((Actor *)D_80120650)[4].y = -0x78;
+    ((Actor *)D_80120650)[4].unk_05 = 0x80;
+    ((Actor *)D_80120650)[4].unk_43 = 0;
+    ((Actor *)D_80120650)[4].unk_04 = 0;
     load_tpage_buf_lock(5, ((s32 *)D_8013B7F8)[0], 1);
     load_tpage_buf_lock(6, ((s32 *)D_8013B7F8)[1], 1);
     load_tpage_buf_lock(7, ((s32 *)D_8013B7F8)[2], 1);

@@ -398,8 +398,8 @@ void func_8013A8CC(void) {
         func_8004284C();
         break;
     case 6:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         g->saved_mode = g->mode;
         g->saved_stage = g->stage;
         g->saved_step = g->step + 1;
@@ -462,7 +462,7 @@ void func_8013A8CC(void) {
         normal_date_speak();
         break;
     case 17:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         func_80145530();
         break;
     default:

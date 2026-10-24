@@ -1,6 +1,6 @@
 #define MAIN_API_OVERRIDE_func_80049FF0 /* Line draw calls narrow four coordinates at the call site. T-11060. */
 #define MAIN_API_OVERRIDE_D_8011F414    /* Stored as s16 in func_80067870. T-11100. */
-#define MAIN_API_OVERRIDE_D_8011ECD0    /* Indexed as DisplayActor44[] in func_8006A2CC. T-11100. */
+#define MAIN_API_OVERRIDE_D_8011ECD0    /* Indexed as Actor[] in func_8006A2CC. T-11100. */
 #define MAIN_API_OVERRIDE_strncat       /* func_800696DC calls strncat with 2 args for club name. T-11100. */
 #include "common.h"
 #include "game.h"
@@ -8,7 +8,7 @@
 extern s16 D_8011F414;
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 u8 *strncat();
-extern DisplayActor44 D_8011ECD0[];
+extern Actor D_8011ECD0[];
 
 
 void func_800674B0(void) {
@@ -308,7 +308,7 @@ void func_80067E34(void) {
  * after each call). T-25103 */
 #define DAY_KIND(side) D_800B5C10[D_800E6280.month_calendar[side].marker[i + 1]]
 
-/* Calendar marks in records 0x61.. of D_8011ECD0 (at most 0x3F): the date word at +0xF8, the flagged Rec38 dates,
+/* Calendar marks in records 0x61.. of D_8011ECD0 (at most 0x3F): the date word at +0xF8, the flagged GirlRecord dates,
  * the active +0x54C entries, two 0x6F marks in periods 6..10, the day-schedule frames of both months (a multi-day
  * event repeats its frame on the following empty days) and the +0x75E records of this month.
  * FAKE: the first month test of each pair reads unk_03F through `gs` and the second through D_800E6280. They are
@@ -350,8 +350,8 @@ void func_80067F04(void) {
     }
     left = 0;
     n = 0;
-    month = ((GsWord *)&D_800E6280.player_birthday)->date.month;
-    day = ((GsWord *)&D_800E6280.player_birthday)->date.day;
+    month = ((WordView *)&D_800E6280.player_birthday)->date.month;
+    day = ((WordView *)&D_800E6280.player_birthday)->date.day;
     if (month == gs->month) {
         CAL_MARK(0x6E, 0, day - 1);
     }
@@ -373,7 +373,7 @@ void func_80067F04(void) {
     for (i = 0; i < 8; i++) {
         month = D_800E6280.unk_54C[i].h[0] >> 12;
         day = D_800E6280.unk_54C[i].h[1] & 0x1F;
-        if (((GsEntry54C *)&D_800E6280.unk_54C[i])->active) {
+        if (((AppointmentEntry *)&D_800E6280.unk_54C[i])->active) {
             if (month == gs->month) {
                 CAL_MARK(0x62, 0, day - 1);
             }
@@ -571,24 +571,24 @@ void func_80068EC0(void) {
     func_80068BE4();
     dtd_on_tpage(0, 0, 1, 2, 0);
     cal_base_show();
-    t = ((DisplayActor44 *)D_8011ECD0)[0x61].unk_08++;
+    t = ((Actor *)D_8011ECD0)[0x61].unk_08++;
     for (i = 0x61; i < 0xA0; i++) {
         switch ((t >> 6) & 3) {
         case 0:
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = (t & 0x3F) << 6;
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = (t & 0x3F) << 6;
+            ((Actor *)D_8011ECD0)[i].scale_x = (t & 0x3F) << 6;
+            ((Actor *)D_8011ECD0)[i].scale_y = (t & 0x3F) << 6;
             break;
         case 1:
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = 0x1000;
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = 0x1000;
+            ((Actor *)D_8011ECD0)[i].scale_x = 0x1000;
+            ((Actor *)D_8011ECD0)[i].scale_y = 0x1000;
             break;
         case 2:
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = (0x3F - (t & 0x3F)) << 6;
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = (0x3F - (t & 0x3F)) << 6;
+            ((Actor *)D_8011ECD0)[i].scale_x = (0x3F - (t & 0x3F)) << 6;
+            ((Actor *)D_8011ECD0)[i].scale_y = (0x3F - (t & 0x3F)) << 6;
             break;
         case 3:
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_x = 0;
-            ((DisplayActor44 *)D_8011ECD0)[i].scale_y = 0;
+            ((Actor *)D_8011ECD0)[i].scale_x = 0;
+            ((Actor *)D_8011ECD0)[i].scale_y = 0;
             break;
         }
     }
@@ -751,7 +751,7 @@ void func_800696DC(s32 arg0, s32 arg1) {
         strcpy(spC8, D_800B3288[D_800E7D36]);
         strncat(spC8, "番アルバム", 2);
         set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
-        /* FAKE: the byte D_800E7D36 read through the Work800E7D10 view; uopt does not CSE it with the D_800E7D36 loads
+        /* FAKE: the byte D_800E7D36 read through the SystemData view; uopt does not CSE it with the D_800E7D36 loads
          * in the else arm, the original reloads it there. Real source unknown. T-17002 */
         if (D_800E7D10.selected_slot == 0) {
             set_kanji_string((s16) spEC, -0x40, 0xFU, "システム", 0);
@@ -798,7 +798,7 @@ void func_800696DC(s32 arg0, s32 arg1) {
         var_s0 = 0;
         KEEP_UNK_1117();
         for (i = 0; i < 13; i++) {
-            if (((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].flags[i] != 0) {
                 var_s0 += 1;
             }
         }
@@ -811,34 +811,34 @@ void func_800696DC(s32 arg0, s32 arg1) {
             strncat(spC8, "番アルバム", 2);
             set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
             KEEP_UNK_1117();
-            strcpy(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].year / 10U]);
+            strcpy(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].year / 10U]);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[(u8) ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].year % 10U], 2);
+            strncat(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].year % 10U], 2);
             strncat(spC8, "年", 2);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].month], 4);
+            strncat(spC8, D_800B3288[((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].month], 4);
             strncat(spC8, "月", 2);
             KEEP_UNK_1117();
-            if (((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].day >= 0xAU) {
-                strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].day / 10U], 2);
+            if (((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].day >= 0xAU) {
+                strncat(spC8, D_800B3288[((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].day / 10U], 2);
             }
-            strncat(spC8, D_800B3288[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].day % 10U], 2);
+            strncat(spC8, D_800B3288[((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].day % 10U], 2);
             strncat(spC8, "日", 2);
             set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
             strcpy(spA8, "名前…");
             KEEP_UNK_1117();
-            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].family_name, 6);
+            strncat(spA8, ((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].family_name, 6);
             KEEP_UNK_1117();
-            strncat(spA8, ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].given_name, 6);
+            strncat(spA8, ((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].given_name, 6);
             strcpy(sp88, "あだ名…");
             KEEP_UNK_1117();
-            strncat(sp88, ((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].nickname, 0xD);
+            strncat(sp88, ((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].nickname, 0xD);
             set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
             set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
             strcpy(sp68, "所属部‥");
             KEEP_UNK_1117();
             /* two arguments as in the original: no count is loaded into $a2 before this call */
-            strncat(sp68, club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.album_slot].club >> 12]);
+            strncat(sp68, club_name_table[((AlbumSlotRecord *)D_80123120)[D_800E6280.album_slot].club >> 12]);
             set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
             strcpy(sp48, "クリア人数‥");
             if (var_s0 >= 0x64) {
@@ -866,77 +866,77 @@ s32 arg1;
      * ranges in that order), so the byte takes $v0 and the month $v1; uopt then removes the load. */
     x = D_800E6280.quarter_flags[1];
     if (D_800E6280.month != 2 && D_800E6280.month != 5 && D_800E6280.month != 8 && D_800E6280.month != 11) {
-        ((FlagsF64 *)D_800E6280.quarter_flags)->b14 = 1;
+        ((QuarterFlagBits *)D_800E6280.quarter_flags)->b14 = 1;
     } else {
-        ((FlagsF64 *)D_800E6280.quarter_flags)->b13 = 1;
+        ((QuarterFlagBits *)D_800E6280.quarter_flags)->b13 = 1;
     }
     if (D_800E6280.year == 0x5F && D_800E6280.month == 4) {
-        ((FlagsF64 *)D_800E6280.quarter_flags)->b13 = 1;
-        ((FlagsF64 *)D_800E6280.quarter_flags)->b14 = 1;
+        ((QuarterFlagBits *)D_800E6280.quarter_flags)->b13 = 1;
+        ((QuarterFlagBits *)D_800E6280.quarter_flags)->b14 = 1;
     }
     switch (D_800E6280.month) {
     case 2:
     case 3:
     case 4:
         if (D_800E6280.year == 0x5F) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b0 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b0 = 1;
         }
         if (D_800E6280.year == 0x60) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b4 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b4 = 1;
         }
         if (D_800E6280.year == 0x61) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b8 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b8 = 1;
         }
         break;
     case 5:
     case 6:
     case 7:
         if (D_800E6280.year == 0x5F) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b1 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b1 = 1;
         }
         if (D_800E6280.year == 0x60) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b5 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b5 = 1;
         }
         if (D_800E6280.year == 0x61) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b9 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b9 = 1;
         }
-        ((FlagsF64 *)D_800E6280.quarter_flags)->b15 = 1;
+        ((QuarterFlagBits *)D_800E6280.quarter_flags)->b15 = 1;
         break;
     case 8:
     case 9:
     case 10:
         if (D_800E6280.year == 0x5F) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b2 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b2 = 1;
         }
         if (D_800E6280.year == 0x60) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b6 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b6 = 1;
         }
         if (D_800E6280.year == 0x61) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b10 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b10 = 1;
         }
         break;
     case 11:
     case 12:
     case 13:
         if (D_800E6280.year == 0x5F) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b3 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b3 = 1;
         }
         if (D_800E6280.year == 0x60) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b7 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b7 = 1;
         }
         if (D_800E6280.year == 0x61) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b11 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b11 = 1;
         }
         break;
     case 1:
         if (D_800E6280.year == 0x60) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b3 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b3 = 1;
         }
         if (D_800E6280.year == 0x61) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b7 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b7 = 1;
         }
         if (D_800E6280.year == 0x62) {
-            ((FlagsF64 *)D_800E6280.quarter_flags)->b11 = 1;
+            ((QuarterFlagBits *)D_800E6280.quarter_flags)->b11 = 1;
         }
         break;
     }
@@ -1216,7 +1216,7 @@ s32 func_8006B014(s32 arg0) {
 
     n = 0;
     for (i = 0; i < 8; i++) {
-        if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && arg0 == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->girl) {
+        if (((AppointmentBits *)&D_800E6280.unk_54C[i])->active && arg0 == ((AppointmentBits *)&D_800E6280.unk_54C[i])->girl) {
             n++;
         }
     }
@@ -1226,13 +1226,13 @@ s32 func_8006B014(s32 arg0) {
 /* Packs the active schedule entries to the front, clears the rest, and sorts the first n by month * 100 + day
  * (selection sort). While unk_03F is 12, month-1 entries count as month 13 during the sort, so they go last.
  * Every access goes through the GameState pointer g (T-25608: the original's loop preheaders). */
-#define SCHED_DATE(i) ((ScheduleEntryDate *)&g->unk_54C[i])
+#define SCHED_DATE(i) ((AppointmentDate *)&g->unk_54C[i])
 void func_8006B0C8(void) {
     s32 i;
     s32 j;
     s32 n;
     s32 k;
-    GsWord tmp;
+    WordView tmp;
     s32 keys[8];
     s32 min;
     s32 pad[9]; /* FAKE: T-25608, unused; the original frame (0xB0, a0 spill at 0x40) has nine more words below g. */
@@ -1240,7 +1240,7 @@ void func_8006B0C8(void) {
 
     g = &D_800E6280;
     for (n = 0, j = 0; j < 8; j++) {
-        if (((ScheduleEntryFlags *)&g->unk_54C[j])->active) {
+        if (((AppointmentBits *)&g->unk_54C[j])->active) {
             g->unk_54C[n++] = g->unk_54C[j];
         }
     }
@@ -1282,16 +1282,16 @@ void func_8006B0C8(void) {
 }
 #undef SCHED_DATE
 
-void func_8006B5BC(GsWord arg0) {
+void func_8006B5BC(WordView arg0) {
     s32 i;
 
     i = 0;
-    if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active) {
+    if (((AppointmentBits *)&D_800E6280.unk_54C[i])->active) {
         if (i) { /* FAKE: the empty test keeps i from folding to 0, the original has `sll t9,zero,2; addu v0,t9,base`; real source unknown. T-9340 */
         }
         do {
             i++;
-        } while (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && i != 8);
+        } while (((AppointmentBits *)&D_800E6280.unk_54C[i])->active && i != 8);
     }
     D_800E6280.unk_54C[i] = arg0;
     func_8006B0C8();

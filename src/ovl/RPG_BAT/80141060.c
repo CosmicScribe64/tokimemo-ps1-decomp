@@ -1,7 +1,7 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-#define ACT(i) (((DisplayActor44 *) D_8011ECD0)[i])
+#define ACT(i) (((Actor *) D_8011ECD0)[i])
 
 void func_80141060(void) {
     s32 sel; /* a named copy of the switch value: its home word is the extra frame word (T-17119) */
@@ -180,15 +180,15 @@ void func_80141060(void) {
         func_8013E8B8(i, 0x27, 0);
     }
     /* The record loops below index D_8011ECD0 as bytes (fields 0x0C, 0x10, 0x34, 0x43, 0x01 of record 96 + i), like
-     * the other RPG_BAT record loops: the typed DisplayActor44 index folds 0x1980 into the start pointer and builds
+     * the other RPG_BAT record loops: the typed Actor index folds 0x1980 into the start pointer and builds
      * a different loop preheader (T-17119, wiki/register-cheatsheet.md). */
     if (D_8015EB9C != 0xE) {
         for (i = 29; i < 31; i++) {
             *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEB8;
             *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EED0;
             *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EEA0;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1C;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 5;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x1C;
+            ((Actor *)D_8011ECD0)[i + 96].unk_01 = 5;
         }
     }
     if (D_8015EBA4 == 1) {
@@ -196,7 +196,7 @@ void func_80141060(void) {
             *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEB4;
             *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EECC;
             *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE9C;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
         }
     }
     if (D_8015EB98 & 0xF0000) {
@@ -204,7 +204,7 @@ void func_80141060(void) {
             *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEAC;
             *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC4;
             *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE94;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x18;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x18;
         }
     }
     if (D_8015EB98 & 0x80000000) {
@@ -212,21 +212,21 @@ void func_80141060(void) {
             *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEA8;
             *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC0;
             *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE90;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x12;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x12;
         }
     }
     for (i = 48; i < 50; i++) {
         *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEB0;
         *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC8;
         *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE98;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1E;
+        ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x1E;
     }
     if (D_8015EBA4 == 1) {
         for (i = 50; i < 56; i++) {
             *(s32 *) &D_8011ECD0[0x198C + i * 0x44] = D_8015EEB4;
             *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EECC;
             *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE9C;
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x1D;
         }
     }
     for (i = 56; i < 64; i++) {
@@ -234,9 +234,9 @@ void func_80141060(void) {
         *(s32 *) &D_8011ECD0[0x1990 + i * 0x44] = D_8015EEC0;
         *(s32 *) &D_8011ECD0[0x19B4 + i * 0x44] = D_8015EE90;
         if (D_8015EB98 == 0x20000) {
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x13;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x13;
         } else {
-            ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x12;
+            ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x12;
         }
     }
 }

@@ -183,7 +183,7 @@ void func_80138758(void) {
     rect.w = 0x10;
     rect.h = 0x10;
     func_8009C7F8(&rect, 0, 0, 0);
-    ((GsByteNibbles *)&D_800E6280.player_flags.b[1])->high = ((GsByteNibbles *)&D_800E6280.girls[2].flags.b[2])->high;
+    ((NibbleView *)&D_800E6280.player_flags.b[1])->high = ((NibbleView *)&D_800E6280.girls[2].flags.b[2])->high;
     D_800E6280.girls[D_800E6280.current_girl].flags.f.b2 = 1;
     ((ShouByteFlags *)&D_800E6280.girls[D_800E6280.current_girl].flags.b[2])->b3 = 1;
     D_80144E08 = 6;

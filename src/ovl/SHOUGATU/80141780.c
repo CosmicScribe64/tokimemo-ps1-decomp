@@ -62,12 +62,12 @@ void func_801419D0(void) {
     idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if (D_800E6280.step < 0x10U) {
-        ((DisplayActor44 *)D_8011ECD0)[96].brightness = (u8)D_800B593C;
-        if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
-            n = ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot + 1;
-            ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = n;
+        ((Actor *)D_8011ECD0)[96].brightness = (u8)D_800B593C;
+        if (((Actor *)D_8011ECD0)[96].unk_18 == 0 && ((Actor *)D_8011ECD0)[96].unk_08 == 0) {
+            n = ((Actor *)D_8011ECD0)[96].sequence_slot + 1;
+            ((Actor *)D_8011ECD0)[96].sequence_slot = n;
             if (n >= 3) {
-                ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 0;
+                ((Actor *)D_8011ECD0)[96].sequence_slot = 0;
             }
         }
     }
@@ -218,7 +218,7 @@ void func_801421D4(void) {
         D_801466D0[i - 4] = ((Fix32 *)D_80146608)[i - 4].w;
         D_801217D0[i].y = -0x78;
         D_801217D0[i].w = 8;
-        /* Rec24.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
+        /* SpriteQuad.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
         *(s16 *)&D_801217D0[i].h = 8;
         D_801217D0[i].unk_0C = 0xA;
         D_801217D0[i].unk_0E = 0;
@@ -240,7 +240,7 @@ void func_801421D4(void) {
     load_palette(D_801464C0, 0x11, 1, 2, 0);
     func_80084E90(D_801464C8, D_801464CC, D_801464D0, D_801464D4, D_801464D8, D_801464DC);
     func_800850D4(D_801464B4, D_801464B8, D_801464B0, D_801464BC);
-    ((DisplayActor44 *)D_80120650)->unk_04 = ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;
+    ((Actor *)D_80120650)->unk_04 = ((Actor *)D_80120650)[1].unk_04 = 8;
     D_801467FC = 0;
     D_80146800 = 0;
     D_800E6280.girls[0].tokimeki += 1;
@@ -297,15 +297,15 @@ void func_8014265C(void) {
         /* FAKE: the original has two identical block-copy loops here (both in State B, the state at
          * entry), and one copy line gives one loop; the repeated line is the only form found that
          * emits the second, the real source is unknown. T-24092, T-26002 */
-        ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
-        ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
-        ((DisplayActor44 *)D_80120650)[2].sequence_slot = 4;
+        ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
+        ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
+        ((Actor *)D_80120650)[2].sequence_slot = 4;
     }
     if ((u16)D_800CA150 == 7 && D_800CA154 == 1 && check_end_k() == 0) {
-        ((DisplayActor44 *)D_80120650)[2].flags = 1;
+        ((Actor *)D_80120650)[2].flags = 1;
     } else {
-        ((DisplayActor44 *)D_80120650)[2].flags = 0;
-        ((DisplayActor44 *)D_80120650)[2].unk_18 = 0;
+        ((Actor *)D_80120650)[2].flags = 0;
+        ((Actor *)D_80120650)[2].unk_18 = 0;
     }
 }
 
@@ -407,7 +407,7 @@ void func_80142DA0(void) {
     load_palette(D_801464F4, 0x11, 1, 2, 0);
     func_80084E90(D_801464F8, D_801464FC, D_80146500, D_80146504, D_80146508, D_8014650C);
     func_800850D4(D_801464E8, D_801464EC, D_801464E4, D_801464F0);
-    ((DisplayActor44 *)D_80120650)->unk_04 = ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;
+    ((Actor *)D_80120650)->unk_04 = ((Actor *)D_80120650)[1].unk_04 = 8;
     func_8013C2E4();
     D_80145F34 = D_80145BFC;
     D_80145F38 = D_80145D38;
@@ -422,7 +422,7 @@ void func_80142DA0(void) {
         D_801466D0[i - 4] = ((Fix32 *)D_80146608)[i - 4].w;
         D_801217D0[i].y = -0x78;
         D_801217D0[i].w = 8;
-        /* Rec24.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
+        /* SpriteQuad.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
         *(s16 *)&D_801217D0[i].h = 8;
         D_801217D0[i].unk_0C = 0xA;
         D_801217D0[i].unk_0E = 0;
@@ -460,20 +460,20 @@ s32 func_801430A0(void) {
     idx = D_800E6280.step;
     tbl.f[idx](0x3C);
     if (D_800E6280.step < 0x11U) {
-        ((DisplayActor44 *)D_8011ECD0)[96].brightness = D_800B593C;
-        if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
-            ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot += 1;
-            if (((DisplayActor44 *)D_8011ECD0)[96].sequence_slot >= 3) ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 0;
+        ((Actor *)D_8011ECD0)[96].brightness = D_800B593C;
+        if (((Actor *)D_8011ECD0)[96].unk_18 == 0 && ((Actor *)D_8011ECD0)[96].unk_08 == 0) {
+            ((Actor *)D_8011ECD0)[96].sequence_slot += 1;
+            if (((Actor *)D_8011ECD0)[96].sequence_slot >= 3) ((Actor *)D_8011ECD0)[96].sequence_slot = 0;
         }
     }
     if (D_80122D04 != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[98].draw_flags |= 0x80;
-        D_801206DF = ((DisplayActor44 *)D_8011ECD0)[96].brightness;
+        ((Actor *)D_8011ECD0)[98].draw_flags |= 0x80;
+        D_801206DF = ((Actor *)D_8011ECD0)[96].brightness;
         if ((u32)D_800E6280.frame_count % 300U == 0) {
             func_80143228();
             D_801206DA = 3;
         }
-    } else { ((DisplayActor44 *)D_8011ECD0)[98].draw_flags &= 0xFF7F; }
+    } else { ((Actor *)D_8011ECD0)[98].draw_flags &= 0xFF7F; }
 }
 
 void func_80143200(void) {
@@ -522,13 +522,13 @@ void func_801433A4(void) {
     func_80084E90((s32) D_80146524, (s32) D_80146528, (s32) D_8014652C, (s32) D_80146530, (s32) D_80146534,
                   (s32) D_80146538);
     func_800850D4((s32) D_80146514, (s32) D_80146518, (s32) D_80146510, D_8014651C);
-    ((DisplayActor44 *) D_8011ECD0)[97].unk_04 = 8;
-    ((DisplayActor44 *) D_8011ECD0)[96].unk_04 = 8;
-    ((DisplayActor44 *) D_8011ECD0)[98] = ((DisplayActor44 *) D_8011ECD0)[96];
-    ((DisplayActor44 *) D_8011ECD0)[98].sequence_slot = 4;
-    ((DisplayActor44 *) D_8011ECD0)[98].unk_18 = 0;
-    ((DisplayActor44 *) D_8011ECD0)[98].unk_08 = 0;
-    ((DisplayActor44 *) D_8011ECD0)[98].flags = 0;
+    ((Actor *) D_8011ECD0)[97].unk_04 = 8;
+    ((Actor *) D_8011ECD0)[96].unk_04 = 8;
+    ((Actor *) D_8011ECD0)[98] = ((Actor *) D_8011ECD0)[96];
+    ((Actor *) D_8011ECD0)[98].sequence_slot = 4;
+    ((Actor *) D_8011ECD0)[98].unk_18 = 0;
+    ((Actor *) D_8011ECD0)[98].unk_08 = 0;
+    ((Actor *) D_8011ECD0)[98].flags = 0;
     func_8004284C();
 }
 

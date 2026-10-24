@@ -374,7 +374,7 @@ void func_8013A6D0(void) {
 
 void func_8013A820(void) {
     s16 i;
-    Rec24 *p;
+    SpriteQuad *p;
     u16 clut;
 
     func_80139910();
@@ -504,10 +504,10 @@ void func_8013AD6C(void) {
     load_palette(D_801463C4, 0x11, 1, 2, 0);
     func_80084E90(D_801463C8, D_801463CC, D_801463D0, D_801463D4, D_801463D8, D_801463DC);
     func_800850D4(D_801463B8, D_801463BC, D_801463B4, D_801463C0);
-    ((DisplayActor44 *)D_80120650)[1].unk_04 = 8;
-    ((DisplayActor44 *)D_80120650)->unk_04 = 8;
-    ((DisplayActor44 *)D_80120650)[2] = ((DisplayActor44 *)D_80120650)[0];
-    ((DisplayActor44 *)D_80120650)[2].sequence_slot = 4;
+    ((Actor *)D_80120650)[1].unk_04 = 8;
+    ((Actor *)D_80120650)->unk_04 = 8;
+    ((Actor *)D_80120650)[2] = ((Actor *)D_80120650)[0];
+    ((Actor *)D_80120650)[2].sequence_slot = 4;
     func_8004284C();
 }
 

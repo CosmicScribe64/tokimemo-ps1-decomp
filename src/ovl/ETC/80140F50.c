@@ -297,7 +297,7 @@ void func_80141ABC(void) {
             (D_800E6280.current_girl & 0xF) != D_800E6280.event_log[i].girl) {
             continue;
         }
-        ((GsRec75E *)D_800E7D10.unk_058)[count] = D_800E6280.event_log[i];
+        ((EventLogEntry *)D_800E7D10.unk_058)[count] = D_800E6280.event_log[i];
         count++;
     }
     D_800E7D10.unk_027[1] = count;

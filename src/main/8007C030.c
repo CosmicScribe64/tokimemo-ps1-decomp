@@ -561,7 +561,7 @@ s32 func_8007D8AC(void) {
     }
     switch (D_80122D3C) {
     case 1:
-        limit = (s16)(((GsWord *)&D_800E6280.step_timer)->u * 5);
+        limit = (s16)(((WordView *)&D_800E6280.step_timer)->u * 5);
         if (limit > 0x50) limit = 0x50;
         for (outer=0; outer<limit; outer++) {
             func_80049FF0(-0xA0, outer-0x78, 0xA0, outer-0x78, 0, 0, 6);
@@ -1003,20 +1003,20 @@ void bg_read_sub2(s32 arg0) {
  * unsigned comparison keeps the target branch operand order. T-9720. */
 void check_k_scroll(void) {
     s32 sp38;
-    Entry8 *sp48;
+    TextEntry *sp48;
     s16 temp_v1;
     s32 temp_a0;
     s32 temp_v0;
     s32 var_a0;
     s32 var_s0;
     u32 temp_s2;
-    Entry8 *temp_v0_2;
-    Entry8 *temp_v0_3;
+    TextEntry *temp_v0_2;
+    TextEntry *temp_v0_3;
 
     get_ksys();
     temp_v0 = get_now_k();
     temp_s2 = temp_v0 & 0xFF;
-    sp48 = (Entry8 *) get_k_work(temp_v0);
+    sp48 = (TextEntry *) get_k_work(temp_v0);
     temp_a0 = (var_a0 = temp_s2 + 1);
     sp38 = temp_a0;
     get_k_work(temp_a0);
@@ -1026,7 +1026,7 @@ void check_k_scroll(void) {
             var_s0 = 1;
             if (temp_s2 >= 2U) {
                 do {
-                    temp_v0_2 = (Entry8 *) get_k_work(var_s0);
+                    temp_v0_2 = (TextEntry *) get_k_work(var_s0);
                     temp_v1 = temp_v0_2->y;
                     if ((u32) temp_v1 == 0x30U) {
                         temp_v0_2->active = 0;
@@ -1043,7 +1043,7 @@ void check_k_scroll(void) {
             var_a0 = sp38;
         }
     }
-    temp_v0_3 = (Entry8 *) get_k_work(var_a0);
+    temp_v0_3 = (TextEntry *) get_k_work(var_a0);
     if (temp_v0_3->y >= 0x60) {
         D_800CA2BC = 1;
         temp_v0_3->active = 0;
@@ -1063,7 +1063,7 @@ s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
 u8 arg1;
 u8 arg2;
-DialogueVoice8 ***arg3;
+DialogueVoiceRef ***arg3;
 u16 arg4;
 u16 arg5;
 u8 arg6;
@@ -1078,7 +1078,7 @@ u8 arg6;
     u8 sp7C[0x200];
     u8 sp74[8];
     u8 sp68[12];
-    DialogueBytes16 sp58;
+    DialogueSelectors sp58;
     /* FAKE: reuse the former padding word for the call argument's live range;
      * the observed frame remains 0x290 bytes. T-24021. */
     s32 render_x;
@@ -2877,7 +2877,7 @@ s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     for (i = 0x3A; i < 0x40; i++) {
         D_801217D0[i].unk_0C = i - 0x35;
         D_801217D0[i].flags = 0xC1000000;
-        /* FAKE: u16 view of the width (GsSPRITE w is unsigned; Rec24 keeps s16 for ETC
+        /* FAKE: u16 view of the width (GsSPRITE w is unsigned; SpriteQuad keeps s16 for ETC
          * func_80142A4C): the 0x80 constant is then shared with unk_0A and unk_0F. T-11590 */
         *(u16 *)&D_801217D0[i].w = 0x80;
         D_801217D0[i].h = 0x80;
@@ -2908,7 +2908,7 @@ s32 func_800850D4(arg0, arg1, arg2, arg3)
     s16 arg3;
 {
     s16 i;
-    DisplayActor44 *p;
+    Actor *p;
 
     if (arg0 == 0) {
         func_80048F64(0x60);
@@ -2917,7 +2917,7 @@ s32 func_800850D4(arg0, arg1, arg2, arg3)
     }
     for (i = 0; i < 2; i++) {
         func_80048F64(i + 0x60);
-        p = &((DisplayActor44 *)D_8011ECD0)[i + 96];
+        p = &((Actor *)D_8011ECD0)[i + 96];
         p->unk_01 = 0xA;
         p->flags = 0;
         p->quad_flags = 0x41000000;
@@ -2936,12 +2936,12 @@ s32 func_800850D4(arg0, arg1, arg2, arg3)
         p->unk_04 = 0;
         p->unk_14 = arg3;
     }
-    ((DisplayActor44 *)D_8011ECD0)[96].flags = 4;
+    ((Actor *)D_8011ECD0)[96].flags = 4;
     if (arg3 >= 2) {
         D_800CA360 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 2;
+        ((Actor *)D_8011ECD0)[96].sequence_slot = 2;
     } else {
-        ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0;
+        ((Actor *)D_8011ECD0)[96].draw_flags = 0;
     }
 }
 

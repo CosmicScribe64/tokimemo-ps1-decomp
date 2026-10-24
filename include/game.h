@@ -13,40 +13,40 @@
 /* T-24501: saved records copied as whole objects by func_800552DC/func_80054FC0.
  * HYPOTHESIS: these are settings records; field meanings remain unknown. The 20-byte
  * record owns the protection flag in its last byte. The 24-byte record preserves
- * Work800E7D10 bits, names and words without changing their canonical declarations. */
-typedef struct SaveSettings20 {
+ * SystemData bits, names and words without changing their canonical declarations. */
+typedef struct SaveConfigBlock {
     /* 0x000 */ u16 unk_00;
     /* 0x002 */ u16 unk_02;
     /* 0x004 */ u16 unk_04;
     /* 0x006 */ u8 unk_06[10];
-    /* 0x010 */ GsWord flags;
-} SaveSettings20; /* size 0x14 */
+    /* 0x010 */ WordView flags; /* HYPOTHESIS: 0x14-byte settings record copied by the save routines; protection flag in the last byte */
+} SaveConfigBlock; /* size 0x14 */
 
-typedef struct SaveSettings24 {
-    /* 0x000 */ WorkSetBits bits;
+typedef struct SaveTacoSettings {
+    /* 0x000 */ TacoSettingsBits bits;
     /* 0x002 */ u8 name0[3];
     /* 0x005 */ u8 name1[3];
     /* 0x008 */ u8 name2[3];
     /* 0x00B */ u8 unk_0B;
     /* 0x00C */ s32 w0;
     /* 0x010 */ s32 w1;
-    /* 0x014 */ s32 w2;
-} SaveSettings24; /* size 0x18 */
+    /* 0x014 */ s32 w2; /* HYPOTHESIS: 0x18-byte copy of SystemData +0x40.. (settings bits, three names, three words) */
+} SaveTacoSettings; /* size 0x18 */
 
-typedef union SaveMetricWord {
-    /* 0x000 */ NameMetric4 metric;
-    /* 0x000 */ GsWord word;
-} SaveMetricWord; /* size 0x4 */
+typedef union SaveAlbumParam {
+    /* 0x000 */ AlbumParam metric;
+    /* 0x000 */ WordView word;
+} SaveAlbumParam; /* size 0x4 */
 
-typedef struct SaveImageView {
+typedef struct SystemSaveImage {
     /* 0x000 */ s32 checksum;
     /* 0x004 */ u8 slot_status[16];
     /* 0x014 */ u8 flags[16];
     /* 0x024 */ u8 unk_24[2];
     /* 0x026 */ u8 selected_slot;
     /* 0x027 */ u8 unk_27;
-    /* 0x028 */ SaveSettings20 config0;
-    /* 0x03C */ SaveSettings24 config1;
+    /* 0x028 */ SaveConfigBlock config0;
+    /* 0x03C */ SaveTacoSettings config1;
     /* 0x054 */ u8 unk_54[2];
     /* 0x056 */ u8 records[0x800];
     /* 0x856 */ u8 year[16];
@@ -57,32 +57,32 @@ typedef struct SaveImageView {
     /* 0x986 */ u8 nickname[16][16];
     /* 0xA86 */ u8 club[16];
     /* 0xA96 */ u8 pad_A96[2];
-    /* 0xA98 */ SaveMetricWord metrics[9][16];
+    /* 0xA98 */ SaveAlbumParam metrics[9][16];
     /* 0xCD8 */ u8 unk_CD8[0x100];
     /* 0xDD8 */ u8 unk_DD8[0x100];
     /* 0xED8 */ u8 unk_ED8[0x28];
-} SaveImageView; /* size 0xF00 */
+} SystemSaveImage; /* size 0xF00 */
 
-typedef struct SaveWorkView {
+typedef struct SystemDataSaveView {
     /* 0x000 */ u8 prefix[0x2C];
-    /* 0x02C */ SaveSettings20 config0;
-    /* 0x040 */ SaveSettings24 config1;
-} SaveWorkView; /* size 0x58 */
+    /* 0x02C */ SaveConfigBlock config0;
+    /* 0x040 */ SaveTacoSettings config1;
+} SystemDataSaveView; /* size 0x58 */
 
 /* GameState +0xC4..+0x140 (text buffers, +0xF8 and the nine +0xFC records) as the game save
  * copies it: one word-aligned 0x7C-byte record (func_8005557C). T-25105 */
-typedef struct GsBlockC4 {
+typedef struct ProfileBlock {
     /* 0x000 */ s32 w[0x1F];
-} GsBlockC4; /* size 0x7C */
+} ProfileBlock; /* size 0x7C */
 
 /* GameState +0x56C..+0x66C as the game save copies it: one byte-aligned 0x100-byte record. T-25105 */
-typedef struct GsBlock56C {
+typedef struct EventFlagBlock {
     /* 0x000 */ u8 b[0x100];
-} GsBlock56C; /* size 0x100 */
+} EventFlagBlock; /* size 0x100 */
 
 /* One bank of the memory-card image holding a game save (func_8005557C writes it from GameState;
  * the comments name the source field). T-25105 */
-typedef struct SaveGameView {
+typedef struct GameSaveImage {
     /* 0x000 */ s32 checksum;
     /* 0x004 */ u8 unk_004;             /* unk_03D */
     /* 0x005 */ u8 unk_005;             /* unk_03E */
@@ -91,56 +91,56 @@ typedef struct SaveGameView {
     /* 0x008 */ u8 unk_008;             /* unk_041 */
     /* 0x009 */ u8 pad_009;
     /* 0x00A */ u16 unk_00A;            /* unk_042 */
-    /* 0x00C */ GsRec044 unk_00C[2];    /* unk_044 */
-    /* 0x08C */ GsBlockC4 unk_08C;      /* unk_0C4 */
-    /* 0x108 */ Rec38 unk_108[16];      /* unk_1BC */
+    /* 0x00C */ MonthCalendar unk_00C[2];    /* unk_044 */
+    /* 0x08C */ ProfileBlock unk_08C;      /* unk_0C4 */
+    /* 0x108 */ GirlRecord unk_108[16];      /* unk_1BC */
     /* 0x488 */ u8 unk_488[16];         /* unk_53C */
-    /* 0x498 */ GsWord unk_498[8];      /* unk_54C */
-    /* 0x4B8 */ GsWord unk_4B8[12];     /* unk_66C */
-    /* 0x4E8 */ GsBlock56C unk_4E8;     /* unk_56C */
+    /* 0x498 */ WordView unk_498[8];      /* unk_54C */
+    /* 0x4B8 */ WordView unk_4B8[12];     /* unk_66C */
+    /* 0x4E8 */ EventFlagBlock unk_4E8;     /* unk_56C */
     /* 0x5E8 */ u8 unk_5E8[4];          /* unk_728 */
     /* 0x5EC */ u8 unk_5EC[16];         /* unk_72C */
     /* 0x5FC */ u8 unk_5FC[16];         /* unk_73C */
     /* 0x60C */ u8 unk_60C[16];         /* unk_74C */
-    /* 0x61C */ GsRec75E unk_61C[256];  /* unk_75E */
+    /* 0x61C */ EventLogEntry unk_61C[256];  /* unk_75E */
     /* 0xE1C */ u8 unk_E1C;             /* unk_F6C */
     /* 0xE1D */ u8 unk_E1D;             /* unk_F6D */
     /* 0xE1E */ u8 unk_E1E;             /* unk_1092 */
     /* 0xE1F */ u8 unk_E1F;             /* unk_F6E */
     /* 0xE20 */ u8 unk_E20;             /* unk_03C */
     /* 0xE21 */ u8 pad_E21[3];
-    /* 0xE24 */ GsWord unk_E24;         /* unk_F68 */
+    /* 0xE24 */ WordView unk_E24;         /* unk_F68 */
     /* 0xE28 */ u8 unk_E28;             /* unk_F6F */
     /* 0xE29 */ u8 unk_E29;             /* unk_F70 */
     /* 0xE2A */ u8 unk_E2A;             /* unk_F73 */
     /* 0xE2B */ u8 unk_E2B;             /* unk_F75 */
-    /* 0xE2C */ GsWord unk_E2C;         /* unk_F64 */
+    /* 0xE2C */ WordView unk_E2C;         /* unk_F64 */
     /* 0xE30 */ u8 unk_E30[0xD0];
-} SaveGameView; /* size 0xF00 */
+} GameSaveImage; /* size 0xF00 */
 
 /* 8-byte record of the array at text_list (stride 8; see k_disp_switch). */
-typedef struct Entry8 {
+typedef struct TextEntry {
     /* 0x00 */ s16 x;
     /* 0x02 */ s16 y;
     /* 0x04 */ u8 attr;
     /* 0x05 */ u8 glyph_count;
     /* 0x06 */ u8 extra;
     /* 0x07 */ s8 active;
-} Entry8; /* size 0x08 */
+} TextEntry; /* size 0x08 */
 
 /* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
  * counter; layout read from the frame (counter at +0x20 in func_80054704). */
-typedef struct FileReq {
+typedef struct CardFileRequest {
     /* 0x00 */ u8 name[32];
     /* 0x20 */ s32 retry;
-} FileReq; /* size 0x24 */
+} CardFileRequest; /* size 0x24 */
 
 /* Packed icon choice at GameState +0xF68, bits 4..7. */
-typedef struct MenuIconBits {
+typedef struct LastCommandBits {
     /* 0x00 */ u16 low : 4;
     u16 icon : 4;
     u16 rest : 8;
-} MenuIconBits; /* size 0x02 */
+} LastCommandBits; /* size 0x02 */
 
 #endif /* GAME_H */
 
@@ -151,9 +151,9 @@ typedef struct MenuIconBits {
  * linked against). Field widths are the union of every unit's accesses: the original asm has lbu/sb only at
  * the byte fields (no lb through the pool symbols), lh/sh at the halfwords and lw/sw at +0x0C, +0x10, +0x34
  * and +0x38 (the other word accesses are whole-record copies). +0x24 .. +0x33 are also read as 16.16
- * fixed-point words: DisplayFixActor44 is that view of the same record. The per-unit views this replaces are
+ * fixed-point words: ActorFixed is that view of the same record. The per-unit views this replaces are
  * listed in wiki/data-types.md ("Shared-type unification"); TAIIKU's TaiikuActor44 stays (signed bytes). */
-typedef struct DisplayActor44 {
+typedef struct Actor {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
     /* 0x02 */ u8 flags;
@@ -190,7 +190,7 @@ typedef struct DisplayActor44 {
     /* 0x41 */ u8 unk_41;
     /* 0x42 */ u8 unk_42;
     /* 0x43 */ u8 unk_43;
-} DisplayActor44; /* size 0x44 */
+} Actor; /* size 0x44 */
 
 /* 16.16 fixed-point word: word arithmetic through w, the signed integer part (the coordinate the halfword
  * view of a display record reads at +2) through h[1]. One type for the former MASTER, KANGEI, DATE, TAIIKU and
@@ -200,11 +200,11 @@ typedef union Fix32 {
     /* 0x00 */ s16 h[2];
 } Fix32; /* size 0x04 */
 
-/* DisplayActor44 with +0x24 and +0x28 as 16.16 fixed-point words and +0x2C, +0x30 as words (their
+/* Actor with +0x24 and +0x28 as 16.16 fixed-point words and +0x2C, +0x30 as words (their
  * steps): the view of the units that move a record in fixed point (MASTER, KANGEI, DATE, EVENT, NAME_ENT,
- * TAIIKU, TEL). C89 has no anonymous unions, so the halfword users (most of the tree) keep DisplayActor44.
+ * TAIIKU, TEL). C89 has no anonymous unions, so the halfword users (most of the tree) keep Actor.
  * T-20900. */
-typedef struct DisplayFixActor44 {
+typedef struct ActorFixed {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
     /* 0x02 */ u8 flags;
@@ -236,10 +236,10 @@ typedef struct DisplayFixActor44 {
     /* 0x41 */ u8 unk_41;
     /* 0x42 */ u8 unk_42;
     /* 0x43 */ u8 unk_43;
-} DisplayFixActor44; /* size 0x44 */
+} ActorFixed; /* size 0x44 */
 
 /* T-10890: image metadata consumed by func_80062DBC; eight observed parts. */
-typedef struct DisplayImagePart0E {
+typedef struct SpritePart {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ s16 unk_04;
@@ -247,18 +247,18 @@ typedef struct DisplayImagePart0E {
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
     /* 0x0C */ s16 unk_0C;
-} DisplayImagePart0E; /* size 0x0E */
+} SpritePart; /* size 0x0E */
 
-typedef struct DisplayImage78 {
+typedef struct SpriteFrame {
     /* 0x00 */ s16 count;
     /* 0x02 */ s16 origin_x;
     /* 0x04 */ s16 origin_y;
     /* 0x06 */ s16 unk_06;
-    /* 0x08 */ DisplayImagePart0E part[8];
-} DisplayImage78; /* size 0x78 */
+    /* 0x08 */ SpritePart part[8];
+} SpriteFrame; /* size 0x78 */
 
 /* T-10890: two packed PSX 5:5:5 colours, interpolated as one word. */
-typedef struct DisplayColorPair4 {
+typedef struct ColorPair555 {
     /* 0x00 */ u32 r0 : 5;
     u32 g0 : 5;
     u32 b0 : 5;
@@ -267,24 +267,24 @@ typedef struct DisplayColorPair4 {
     u32 g1 : 5;
     u32 b1 : 5;
     u32 pad_1 : 1;
-} DisplayColorPair4; /* size 0x04 */
+} ColorPair555; /* size 0x04 */
 #endif
 
 #ifndef BUNKA_DISPATCH8_T10630_H
 #define BUNKA_DISPATCH8_T10630_H
 /* The two adjacent words at D_80122EB8, read and written together (one object): BUNKASAI's and BUNKAKEN's
- * BunkaDispatch8 (T-10630) and BUNKASAI's BunkSelectWords (T-9510) and BunkModePair (T-9740), one type since
+ * CultureFestivalDispatch (T-10630) and BUNKASAI's BunkSelectWords (T-9510) and BunkModePair (T-9740), one type since
  * T-20900. */
-typedef struct BunkaDispatch8 {
+typedef struct CultureFestivalDispatch {
     /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} BunkaDispatch8; /* size 0x08 */
+    /* 0x04 */ s32 unk_04; /* HYPOTHESIS: the word pair D_80122EB8 shared by BUNKASAI and BUNKAKEN */
+} CultureFestivalDispatch; /* size 0x08 */
 #endif
 
 #ifndef GAME_SPRITE_SLOT24_T9740
 #define GAME_SPRITE_SLOT24_T9740
 /* T-9740: 0x24-byte records at D_801220D0, cleared by func_8004164C. */
-typedef struct SpriteSlot24 {
+typedef struct BgLayer {
     /* 0x00 */ u32 unk_00;
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ s16 unk_06;
@@ -302,16 +302,16 @@ typedef struct SpriteSlot24 {
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ u32 unk_20;
-} SpriteSlot24; /* size 0x24 */
+} BgLayer; /* size 0x24 */
 #endif
 
 #ifndef GAME_GS_BYTE_NIBBLES_T9910
 #define GAME_GS_BYTE_NIBBLES_T9910
 /* T-9910: byte view for the packed nibbles at GameState offset 0x0F5. */
-typedef struct GsByteNibbles {
+typedef struct NibbleView {
     /* 0x00, bits 0-3 */ u8 low : 4;
     /* 0x00, bits 4-7 */ u8 high : 4;
-} GsByteNibbles; /* size 0x01 */
+} NibbleView; /* size 0x01 */
 #endif
 
 #ifndef TOKIMEMO_SCHEDULE_FLAGS_H
@@ -321,7 +321,7 @@ typedef struct GsByteNibbles {
  * Bits 21..23 are a three-bit counter read and decremented through +0xF6.
  * T-20900: also DATE's DateFlag17 and DateFlags0F4 and OPTION's OptionPlayerBits (unk_08, unk_12: its f8,
  * f12; bits 16..20 tested one by one). */
-typedef struct ScheduleFlags {
+typedef struct PlayerFlagBits {
     /* 0x00 */ u32 unk_00 : 8;
     /* 0x00 */ u32 health : 4;
     /* 0x00 */ u32 club : 4;
@@ -332,13 +332,13 @@ typedef struct ScheduleFlags {
     /* 0x00 */ u32 b20 : 1;
     /* 0x00 */ u32 recovery_days : 3;
     /* 0x00 */ u32 unk_24 : 8;
-} ScheduleFlags; /* size 0x04 */
+} PlayerFlagBits; /* size 0x04 */
 
 /* T-10880: word view of GameState.unk_66C[11]. The counter occupies
  * bits 25..26; increment reads the word and writes byte +3 bits 1..2.
  * T-20900: also TEL's TelClubFlags (b24), KANGEI's KgSlot and ETC's EtcSlot (grade: unk_25, flag: b30) and
  * MASTER's MasterClubBits (count: unk_25, b30). RENSYU's RensyuClubCount is a u16 view and stays. */
-typedef struct ScheduleClubFlags {
+typedef struct ClubFlagBits {
     /* 0x00 */ u32 unk_00 : 24;
     /* 0x00 */ u32 b24 : 1;
     /* 0x00 */ u32 unk_25 : 2;
@@ -346,34 +346,34 @@ typedef struct ScheduleClubFlags {
     /* 0x00 */ u32 b29 : 1;            /* T-20940: func_80077900 tests it (sll 2; bltz) */
     /* 0x00 */ u32 b30 : 1;
     /* 0x00 */ u32 unk_31 : 1;
-} ScheduleClubFlags; /* size 0x04 */
+} ClubFlagBits; /* size 0x04 */
 
 /* T-10880: date and activity views of the eight GameState.unk_54C entries.
  * func_8006B0C8 sorts by month * 100 + day; January becomes month 13
  * temporarily when the current month is December. */
-typedef struct ScheduleEntryDate {
+typedef struct AppointmentDate {
     /* 0x00 */ u16 unk_00 : 12;
     /* 0x00 */ u16 month : 4;
     /* 0x02 */ u16 day : 5;
     /* 0x02 */ u16 unk_15 : 11;
-} ScheduleEntryDate; /* size 0x04 */
+} AppointmentDate; /* size 0x04 */
 
 /* T-20900: also main's TelEntryFlags, EntryFlags54C and EntryFlags29 (idx: unk_00, nib: unk_25, b29: active),
  * TEL's TelEntryFlags and OPTION's OptionScheduleBits (f0: unk_00, f25: unk_25). */
-typedef struct ScheduleEntryFlags {
+typedef struct AppointmentBits {
     /* 0x00 */ u32 place : 5;
     /* 0x00 */ u32 unk_05 : 19;
     /* 0x00 */ u32 flag : 1;
     /* 0x00 */ u32 girl : 4;
     /* 0x00 */ u32 active : 1;
     /* 0x00 */ u32 unk_30 : 2;
-} ScheduleEntryFlags; /* size 0x04 */
+} AppointmentBits; /* size 0x04 */
 #endif
 
 #ifndef TOKIMEMO_ALBUM_LAYOUT_H
 #define TOKIMEMO_ALBUM_LAYOUT_H
-/* T-10880: NAME_ENT's album record; the album work area itself is Work800E7D10 (main_api.h, T-20900). */
-typedef struct NameRecordF00 {
+/* T-10880: NAME_ENT's album record; the album work area itself is SystemData (main_api.h, T-20900). */
+typedef struct AlbumSlotRecord {
     /* 0x000 */ u8 unk_000[0x205];
     /* 0x205 */ u8 year;
     /* 0x206 */ u8 month;
@@ -384,17 +384,17 @@ typedef struct NameRecordF00 {
     /* 0x2AC */ u8 nickname[16];
     /* 0x2BC */ u16 club;
     /* 0x2BE */ u8 unk_2BE[6];
-    /* 0x2C4 */ NameMetric4 metrics[9];
+    /* 0x2C4 */ AlbumParam metrics[9];
     /* 0x2E8 */ u8 unk_2E8[0x3A0];
     /* 0x688 */ u8 flags[14];
     /* 0x696 */ u8 unk_696[0x86A];
-} NameRecordF00; /* size 0xF00 */
+} AlbumSlotRecord; /* size 0xF00 */
 #endif
 
 #ifndef TOKIMEMO_SCHEDULE_GIRL_FLAGS_H
 #define TOKIMEMO_SCHEDULE_GIRL_FLAGS_H
-/* Additional views of Rec38.unk_0C, used by the scheduling routines. T-10880. */
-typedef struct ScheduleGirlFlags {
+/* Additional views of GirlRecord.unk_0C, used by the scheduling routines. T-10880. */
+typedef struct GirlFlagBitsSched {
     /* 0x00 */ u32 unk_00 : 16;
     /* 0x00 */ u32 b16 : 1;
     /* 0x00 */ u32 b17 : 1;
@@ -402,24 +402,24 @@ typedef struct ScheduleGirlFlags {
     /* 0x00 */ u32 unk_19 : 1;
     /* 0x00 */ u32 unk_20 : 4;
     /* 0x00 */ u32 unk_24 : 8;
-} ScheduleGirlFlags; /* size 0x04 */
+} GirlFlagBitsSched; /* size 0x04 */
 #endif
 
 #ifndef GAME_T10880_CALL_PAIRS
 #define GAME_T10880_CALL_PAIRS
 /* D_800B3B9C is indexed in 0x10-byte rows containing two call pairs.
  * NAME_ENT func_8014068C passes these words to func_80046290. */
-typedef struct CallPair8 {
+typedef struct AudioRequestPair {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
-} CallPair8; /* size 0x08; table view: CallPair8[][2] */
+} AudioRequestPair; /* size 0x08; table view: AudioRequestPair[][2] */
 #endif
 
 #ifndef GAME_T17015_SRN_REC
 #define GAME_T17015_SRN_REC
 /* D_80121750: 0x28-byte records of the srn_* screen routines. srn_init fills one,
  * srn_vram_set and srn_set read it. T-17015. */
-typedef struct SrnRec28 {
+typedef struct SrnLayer {
     /* 0x00 */ u8 unk_00[2];
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ u8 unk_04[2];
@@ -441,16 +441,16 @@ typedef struct SrnRec28 {
     /* 0x1C */ s32 unk_1C;
     /* 0x20 */ u32 unk_20;
     /* 0x24 */ u8 *unk_24;
-} SrnRec28; /* size 0x28 */
+} SrnLayer; /* size 0x28 */
 /* Record i of D_80121750. srn_set indexes the global array directly: with a record pointer as1
  * cannot move the record loads above the stack stores (T-25006). */
-#define SRN_REC(i) (((SrnRec28 *)D_80121750)[i])
+#define SRN_REC(i) (((SrnLayer *)D_80121750)[i])
 #endif
 
 #ifndef GAME_T25006_MOD_REC
 #define GAME_T25006_MOD_REC
 /* D_801217A0: 0x14-byte tile-set records of the mod_* routines (mod_set_gpu reads one). T-25006. */
-typedef struct ModRec14 {
+typedef struct ModTileSet {
     /* 0x00 */ u32 *unk_00;
     /* 0x04 */ u32 *unk_04;
     /* 0x08 */ u8 unk_08;
@@ -459,5 +459,5 @@ typedef struct ModRec14 {
     /* 0x0C */ u8 unk_0C;
     /* 0x0D */ u8 unk_0D;
     /* 0x0E */ u8 unk_0E[6];
-} ModRec14; /* size 0x14 */
+} ModTileSet; /* size 0x14 */
 #endif

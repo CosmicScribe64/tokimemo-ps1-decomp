@@ -17,11 +17,11 @@ void func_801362EC(void) {
         if (D_800E6280.pad_held & 0x20) {
             func_801363BC();
             for (i = 0; i < 3; i++) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 96].blink_period = 0x82;
+                ((Actor *)D_8011ECD0)[i + 96].blink_period = 0x82;
             }
         } else {
             for (i = 0; i < 3; i++) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 96].blink_period = 1;
+                ((Actor *)D_8011ECD0)[i + 96].blink_period = 1;
             }
         }
     }

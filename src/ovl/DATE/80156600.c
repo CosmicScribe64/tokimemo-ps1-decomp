@@ -271,18 +271,18 @@ void func_801572BC(void) {
 }
 
 /* FAKE: element-zero views of the GameState bytes preserve load/store ordering (the record copy is one
- * DisplayActor44 since T-20900). T-9550 */
+ * Actor since T-20900). T-9550 */
 void func_801572E4(void) {
     s16 i;
 
-    ((DisplayActor44 *)D_8011ECD0)[98] = ((DisplayActor44 *)D_8011ECD0)[96];
+    ((Actor *)D_8011ECD0)[98] = ((Actor *)D_8011ECD0)[96];
     D_801206EE = 4;
     D_801206DA = 9;
     for (i = 0; i < 6; i++) {
         D_801217D0[i + 4].flags |= 0x80000000;
     }
-    ((DisplayActor44 *)D_8011ECD0)[96].draw_flags &= 0xFF7F;
-    ((DisplayActor44 *)D_8011ECD0)[97].draw_flags &= 0xFF7F;
+    ((Actor *)D_8011ECD0)[96].draw_flags &= 0xFF7F;
+    ((Actor *)D_8011ECD0)[97].draw_flags &= 0xFF7F;
     D_80122CF8 = 0;
     (&D_800E6280.clear_color_r)[0] = (&D_800E6280.clear_color_g)[0] = (&D_800E6280.clear_color_b)[0] = 0x7F;
     func_8004284C();
@@ -307,8 +307,8 @@ void func_8015745C(void) {
     D_800E6280.clear_color_b = 0; for (i = 0; i < 6; i++) {
         D_801217D0[i + 4].flags &= 0x7FFFFFFF;
     }
-    ((DisplayActor44 *)D_80120650)->draw_flags |= 0x80;
-    ((DisplayActor44 *)D_80120650)[1].draw_flags |= 0x80;
+    ((Actor *)D_80120650)->draw_flags |= 0x80;
+    ((Actor *)D_80120650)[1].draw_flags |= 0x80;
     D_80122CF8 = 1;
     func_8004284C();
 }

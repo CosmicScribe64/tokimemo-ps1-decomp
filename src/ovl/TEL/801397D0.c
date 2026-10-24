@@ -57,9 +57,9 @@ void func_80139920(void) {
     s32 i;
     u32 sel;
 
-    sel = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0].w)->girl;
+    sel = ((AppointmentBits *)&D_800E6280.unk_54C[0].w)->girl;
     for (i = 0; i != 8; i++) {
-        if (((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->active && sel == ((ScheduleEntryFlags *)&D_800E6280.unk_54C[i])->girl) {
+        if (((AppointmentBits *)&D_800E6280.unk_54C[i])->active && sel == ((AppointmentBits *)&D_800E6280.unk_54C[i])->girl) {
             D_800E6280.unk_54C[i].b[3] &= 0xFFDF;
             printf("canceled %d \n", i);
         }
@@ -195,7 +195,7 @@ void func_80139AA4(void) {
 /* FAKE: the implicit return keeps the selector in v0, and the repeated table
  * expression preserves the original address-temporary order after CSE. T-9720. */
 s32 func_80139E3C(void) {
-    Rec38 *girl;
+    GirlRecord *girl;
     s16 delta;
     u32 index;
 
@@ -252,7 +252,7 @@ void func_80139FEC(void) {
     s32 unused;
     u32 girl;
 
-    girl = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0].w)->girl;
+    girl = ((AppointmentBits *)&D_800E6280.unk_54C[0].w)->girl;
     status = get_g_zyotai_s(girl);
     switch (D_800E6280.substep) {
     case 0x0:
@@ -756,7 +756,7 @@ s32 func_8013ADC0(void) {
         strcat(text, "を、 傷つけたといううわさが、 流れてたそうだ。）");
         sndisp(text, 0, 0x1F);
         k_sub_disp_start(0);
-        ((Entry8 *)get_k_work(3))->attr = 1;
+        ((TextEntry *)get_k_work(3))->attr = 1;
         D_800E6280.substep += 1;
         break;
     case 0x12:
@@ -890,7 +890,7 @@ s32 func_8013B54C(void) {
         sndisp(D_801450CC, 0, 0xF);
         k_sub_disp_start(0);
         D_800E6280.substep += 1;
-        if ((((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->girl) == 0xA) {
+        if ((((AppointmentBits *)&D_800E6280.unk_54C[0])->girl) == 0xA) {
             D_800E6280.substep = 0x1E;
         }
         break;
@@ -931,7 +931,7 @@ s32 func_8013B54C(void) {
         break;
     case 0xD:
         k_sub_reset();
-        girl = ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->girl;
+        girl = ((AppointmentBits *)&D_800E6280.unk_54C[0])->girl;
         gnsx(D_800B3628);
         sndisp(D_801452C8[girl], 0, 0xD);
         func_80052060((s32) D_801452F0, (s32) D_80145340, (s32) girl, 0xD);
@@ -1031,7 +1031,7 @@ s32 func_8013B54C(void) {
         k_sub_reset();
         gnsx(D_800E6280.player_family_name);
         strcpy(text, "そうかっ！ ");
-        get_g_name(name, ((ScheduleEntryFlags *)&D_800E6280.unk_54C[0])->girl);
+        get_g_name(name, ((AppointmentBits *)&D_800E6280.unk_54C[0])->girl);
         strcat(text, name);
         strcat(text, "は、 怒って来なかったのか。）");
         sndisp(text, 0, 0x1F);
@@ -1403,7 +1403,7 @@ s32 func_8013C9D4(void) {
         k_sub_reset();
         gnsx("部長");
         temp_t8 = (u16) D_800E6280.player_flags.h >> 0xC;
-        ((ScheduleClubFlags *)&D_800E6280.clubs[temp_t8])->b24 = 1;
+        ((ClubFlagBits *)&D_800E6280.clubs[temp_t8])->b24 = 1;
         D_800E6280.player_flags.b[1] = (D_800E6280.player_flags.b[1] & 0xFF0F) | 0xB0;
         sndisp("君は、今日クラブを 休んでしまったようなので、 退部してもらう。", 0, 0xD);
         func_80052060(0x0D000020, 0x0400002F, -1, 0xE);

@@ -134,13 +134,13 @@ s32 func_801355AC(void) {
     s32 i;
 
     func_80066334();
-    ((DisplayActor44 *)D_80120650)[0].brightness = *(u8 *)&D_800E6280.mode_scratch;
-    ((DisplayActor44 *)D_80120650)[2].brightness = *(u8 *)&D_800E6280.mode_scratch;
+    ((Actor *)D_80120650)[0].brightness = *(u8 *)&D_800E6280.mode_scratch;
+    ((Actor *)D_80120650)[2].brightness = *(u8 *)&D_800E6280.mode_scratch;
     *(u8 *)&D_800E6280.mode_scratch -= 2;
     if (*(u8 *)&D_800E6280.mode_scratch == 0) {
         *(u8 *)&D_800E6280.mode_scratch *= 0;
         for (i = 0; i < 0x40; i++) {
-            ((DisplayActor44 *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
+            ((Actor *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
         }
         func_8004284C();
     }

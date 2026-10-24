@@ -163,10 +163,10 @@ s32 srn_vram_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 rows;
     s32 row;
     s32 col;
-    SrnRec28 *rec;
+    SrnLayer *rec;
 
     func_8009C674(0);
-    rec = (SrnRec28 *)(D_80121750 + arg0 * 0x28);
+    rec = (SrnLayer *)(D_80121750 + arg0 * 0x28);
     w0 = rec->unk_0E;
     h0 = rec->unk_0F;
     tw = rec->unk_10;
@@ -235,7 +235,7 @@ void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
     s32 row;
     u32 uv;
     u32 bank;
-    ModRec14 *p;
+    ModTileSet *p;
     u8 buf[256];
     u8 ratio;
     u8 rows;
@@ -245,7 +245,7 @@ void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
     s32 ypos;
     s32 size;
 
-    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    p = (ModTileSet *)(D_801217A0 + idx * 0x14);
     if (p->unk_0E[0] == 8) {
         size = 8;
     } else {
@@ -376,10 +376,10 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 mode;
     s32 xpos;
     s32 ypos;
-    ModRec14 *p;
+    ModTileSet *p;
 
     bright = func_8004901C();
-    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    p = (ModTileSet *)(D_801217A0 + idx * 0x14);
     /* FAKE: T-25201, a dead store to idx after p is set; with idx changed, uopt does not copy-propagate
      * p's expression, so p is spilled at its own home (sp+0x6C) instead of a temporary one word lower */
     idx = 0;
@@ -444,12 +444,12 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
  * call. Each tile field is masked and shifted in one statement:
  * the split form (mask, then shift) gives uv and clut more uses, and clut then outranks the x position
  * and col for the saved registers. The y position is written row * w + y with a signed row. */
-void func_80098B80(Rec24 *sp, void *ot, u16 pri);
+void func_80098B80(SpriteQuad *sp, void *ot, u16 pri);
 void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 padA[4]; /* FAKE: T-25104, padA, padB and padC put row, sp and mode at the original stack homes */
     s32 row;
-    Rec24 sp;
-    ModRec14 *p;
+    SpriteQuad sp;
+    ModTileSet *p;
     u32 col;
     u32 *data;
     u32 word;
@@ -464,7 +464,7 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 padC[1];
 
     bright = func_8004901C();
-    p = (ModRec14 *)(D_801217A0 + idx * 0x14);
+    p = (ModTileSet *)(D_801217A0 + idx * 0x14);
     /* FAKE: T-25104, one line per case so that as1 stores mode before the attribute in cases 3 to 5 */
     switch (p->unk_08) {
     case 0: sp.flags = 0x01000000; mode = 1; break;
@@ -533,7 +533,7 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
  * pointer, the row and column positions are written as expressions (uopt strength-reduces them into the
  * two induction variables), and cols, rows are computed before wid, hgt, left so cols wins $fp. */
 s32 srn_set(s32 arg0) {
-    SrnRec28 *rec; /* FAKE: T-25006, unused; its stack slot keeps the frame at 0xC0 and the spill homes */
+    SrnLayer *rec; /* FAKE: T-25006, unused; its stack slot keeps the frame at 0xC0 and the spill homes */
     s32 w0;
     s32 h0;
     s32 tw;

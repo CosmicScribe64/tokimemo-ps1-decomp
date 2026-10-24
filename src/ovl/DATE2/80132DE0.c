@@ -396,7 +396,7 @@ s32 func_80133AF0(void) {
     RECT rect;
     s32 sp50;
     u32 sp4C;
-    Rec24 *p;
+    SpriteQuad *p;
     DateMovieWork *movie;
     u8 value;
     u32 color;

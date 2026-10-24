@@ -229,7 +229,7 @@ void func_800F7AA8(void) {
 void func_800F7C94(void) {
     /* FAKE: one unused word above tmp gives the original's local offset (0x30); tmp is one display record (T-20900). T-9310 */
     s32 pad;
-    DisplayActor44 tmp;
+    Actor tmp;
 
     D_80120678 = D_80120530;
     D_8012067C = D_80120548;
@@ -246,9 +246,9 @@ void func_800F7C94(void) {
     func_80012D64(D_801206F8, 0x13, 1, 2, 0);
     func_8004C46C(D_801206FC, D_80120700, D_80120704, D_80120708, D_8012070C, D_80120710);
     func_8004C6B0(D_801206EC, D_801206F0, D_801206E8, D_801206F4);
-    tmp = ((DisplayActor44 *)D_800EAFA0)[0];
-    ((DisplayActor44 *)D_800EAFA0)[3] = tmp;
-    ((DisplayActor44 *)D_800EAFA0)[2] = tmp;
+    tmp = ((Actor *)D_800EAFA0)[0];
+    ((Actor *)D_800EAFA0)[3] = tmp;
+    ((Actor *)D_800EAFA0)[2] = tmp;
     D_800EB06E = 0x40;
     D_800EB02A = 0x40;
     D_800EB040 = 8;
@@ -303,7 +303,7 @@ void func_800F8188(void) {
     func_80012D64(D_8012077C, 0x11, 1, 2, 0);
     func_8004C46C(D_80120780, D_80120784, D_80120788, D_8012078C, D_80120790, D_80120794);
     func_8004C6B0(D_80120770, D_80120774, D_8012076C, D_80120778);
-    ((DisplayActor44 *)D_800EAFA0)->unk_04 = ((DisplayActor44 *)D_800EAFA0)[1].unk_04 = 8;
+    ((Actor *)D_800EAFA0)->unk_04 = ((Actor *)D_800EAFA0)[1].unk_04 = 8;
     D_800B0A04[8].unk_02 += 1;
     D_800B0A04[8].unk_06 += 1;
     D_800B0A04[8].unk_0A -= 0x14;
@@ -443,20 +443,20 @@ void func_800F8784(void) {
 
 void func_800F87BC(void) {
     func_8004C90C();
-    ((DisplayActor44 *)D_800EAFA0)[2].draw_flags |= 0x80;
-    ((DisplayActor44 *)D_800EAFA0)[3].draw_flags |= 0x80;
-    ((DisplayActor44 *)D_800EAFA0)[2].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
-    ((DisplayActor44 *)D_800EAFA0)[3].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
+    ((Actor *)D_800EAFA0)[2].draw_flags |= 0x80;
+    ((Actor *)D_800EAFA0)[3].draw_flags |= 0x80;
+    ((Actor *)D_800EAFA0)[2].brightness = ((Actor *)D_800EAFA0)->brightness;
+    ((Actor *)D_800EAFA0)[3].brightness = ((Actor *)D_800EAFA0)->brightness;
 }
 
 void func_800F8818(void) {
     func_8004C984();
-    if (((DisplayActor44 *)D_800EAFA0)->brightness == 0) {
-        ((DisplayActor44 *)D_800EAFA0)[2].draw_flags &= 0xFF7F;
-        ((DisplayActor44 *)D_800EAFA0)[3].draw_flags &= 0xFF7F;
+    if (((Actor *)D_800EAFA0)->brightness == 0) {
+        ((Actor *)D_800EAFA0)[2].draw_flags &= 0xFF7F;
+        ((Actor *)D_800EAFA0)[3].draw_flags &= 0xFF7F;
     }
-    ((DisplayActor44 *)D_800EAFA0)[2].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
-    ((DisplayActor44 *)D_800EAFA0)[3].brightness = ((DisplayActor44 *)D_800EAFA0)->brightness;
+    ((Actor *)D_800EAFA0)[2].brightness = ((Actor *)D_800EAFA0)->brightness;
+    ((Actor *)D_800EAFA0)[3].brightness = ((Actor *)D_800EAFA0)->brightness;
 }
 
 s32 func_800F8878(void) {

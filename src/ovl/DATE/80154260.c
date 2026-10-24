@@ -309,8 +309,8 @@ void func_80155004(void) {
             } else {
                 D_800B593C = 0x80;
             }
-            ((DisplayActor44 *)D_8011ECD0)[96].brightness = D_800B593C;
-            ((DisplayActor44 *)D_8011ECD0)[97].brightness = D_800B593C;
+            ((Actor *)D_8011ECD0)[96].brightness = D_800B593C;
+            ((Actor *)D_8011ECD0)[97].brightness = D_800B593C;
             /* One chain assignment for the three bytes: separate stores give other registers (T-20600). */
             for (i = 0x3A; i < 0x40; i++) {
                 D_801217D0[i].tint_r = D_801217D0[i].tint_g = D_801217D0[i].tint_b = D_800B593C;

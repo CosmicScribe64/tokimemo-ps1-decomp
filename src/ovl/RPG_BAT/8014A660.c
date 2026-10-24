@@ -173,7 +173,7 @@ void func_8014AB84(s32 arg0, s32 arg1, s32 arg2) {
 /* FAKE: the slot table at D_8015EBAC (flag words at +0xC8, x/y pairs at +0xDC)
  * is not recovered and other files use its words as scalars, so it is read
  * through the first symbol, written inline at every use. The display records
- * use the typed DisplayActor44 view; an `ent` pointer local and byte-offset
+ * use the typed Actor view; an `ent` pointer local and byte-offset
  * record casts made the base address a ugen temporary (every later t-register
  * one too low). T-17108. */
 void func_8014AC74(void) {
@@ -186,15 +186,15 @@ void func_8014AC74(void) {
         if ((&D_8015EBAC)[i + 0x32] == 1) {
             t = i * 3;
             t5 = t + 5;
-            if (!(((DisplayActor44 *)D_8011ECD0)[t + 100].flags & 1)) {
+            if (!(((Actor *)D_8011ECD0)[t + 100].flags & 1)) {
                 func_8013E810(t + 4, 7, 1, 1);
             }
-            v = ((DisplayActor44 *)D_8011ECD0)[t + 102].unk_18;
+            v = ((Actor *)D_8011ECD0)[t + 102].unk_18;
             if (v >= 0x10) {
                 v = 0x1E - v;
             }
             func_8013E97C(t5, (&D_8015EBAC)[i * 2 + 55], (&D_8015EBAC)[i * 2 + 56] - v * 8);
-            if (!(((DisplayActor44 *)D_8011ECD0)[t + 102].flags & 1)) {
+            if (!(((Actor *)D_8011ECD0)[t + 102].flags & 1)) {
                 func_8013E810(t + 4, 0xFF, 1, 0);
                 func_8013E810(t5, 0xFF, 1, 0);
                 func_8013E810(t + 6, 0xFF, 1, 0);

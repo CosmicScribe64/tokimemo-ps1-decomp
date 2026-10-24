@@ -176,8 +176,8 @@ void func_80135B54(void) {
 void func_80135C18(void) {
     normal_date_girl_in();
     if ((D_800E6280.current_girl == 0xA) || (D_800E6280.current_girl == 3)) {
-        ((DisplayActor44 *)D_8011ECD0)[96].draw_flags |= 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[96].brightness = ((DisplayActor44 *)D_8011ECD0)[31].brightness;
+        ((Actor *)D_8011ECD0)[96].draw_flags |= 0x80;
+        ((Actor *)D_8011ECD0)[96].brightness = ((Actor *)D_8011ECD0)[31].brightness;
     }
 }
 

@@ -105,7 +105,7 @@ void func_801339D0(void);
 void func_8013387C(void); /* defined in 80132760.c, called by func_80132834 (T-24138) */
 
 /* T-24138: parameter record at GameState +0x11C is 16 halfwords here
- * (main_api.h's GsRec0FC covers the shared 4-byte prefix); func_80133088
+ * (main_api.h's ParamValue covers the shared 4-byte prefix); func_80133088
  * adjusts six halfword parameters. Accessed through ValenStateView. */
 typedef struct ValenParaRec {
     /* 0x00 */ s16 unk_00;

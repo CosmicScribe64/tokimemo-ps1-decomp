@@ -637,7 +637,7 @@ void func_80135F4C(void) {
     EdShorts14 sp60;
 
     /* FAKE: unsigned views of the width halfwords avoid a second size
-     * constant range; the shared Rec24 view declares these as s16. T-24047. */
+     * constant range; the shared SpriteQuad view declares these as s16. T-24047. */
     sp7C = D_8013CA60;
     sp60 = D_8013CA7C;
     D_8013C358 = 0;
@@ -676,29 +676,29 @@ void func_80135F4C(void) {
         D_801217D0[i + 16].x = (i << 7) - 0xA0;
         D_801217D0[i + 16].y = -0xBC;
         /* FAKE: address roundtrip preserves the original store dependency
-         * against the Rec24 updates. Direct member access moves it. T-24047. */
+         * against the SpriteQuad updates. Direct member access moves it. T-24047. */
         *(u8 *)(u32)&D_800E6280.quad_layer[i + 16] = 0xD;
     }
     load_palette(D_8013C5F0.unk_10[0], 0x12, 1, 3, 0);
     for (i = 0; i < 14; i++) {
         func_80048F64(i + 96);
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_01 = 0xC;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].flags = 1;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].quad_flags = 0x51000000;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].draw_flags = 0x84;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].frame_table = (void *)D_8013C5F0.unk_04;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].sequence_table = (void *)D_8013C5F0.unk_08;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].tpage_table = (void *)D_8013C5F0.unk_00;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_14 = D_8013C5F0.unk_0C;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].sequence_slot = rand() % 5;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_18 = rand() % 7;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].blink_period = 1;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_43 = 0x12;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].x = sp7C.v[i] - 0xA0;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].y = sp60.v[i] - 0xBC;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].brightness = 0x40;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_05 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[i + 96].unk_04 = 8;
+        ((Actor *)D_8011ECD0)[i + 96].unk_01 = 0xC;
+        ((Actor *)D_8011ECD0)[i + 96].flags = 1;
+        ((Actor *)D_8011ECD0)[i + 96].quad_flags = 0x51000000;
+        ((Actor *)D_8011ECD0)[i + 96].draw_flags = 0x84;
+        ((Actor *)D_8011ECD0)[i + 96].frame_table = (void *)D_8013C5F0.unk_04;
+        ((Actor *)D_8011ECD0)[i + 96].sequence_table = (void *)D_8013C5F0.unk_08;
+        ((Actor *)D_8011ECD0)[i + 96].tpage_table = (void *)D_8013C5F0.unk_00;
+        ((Actor *)D_8011ECD0)[i + 96].unk_14 = D_8013C5F0.unk_0C;
+        ((Actor *)D_8011ECD0)[i + 96].sequence_slot = rand() % 5;
+        ((Actor *)D_8011ECD0)[i + 96].unk_18 = rand() % 7;
+        ((Actor *)D_8011ECD0)[i + 96].blink_period = 1;
+        ((Actor *)D_8011ECD0)[i + 96].unk_43 = 0x12;
+        ((Actor *)D_8011ECD0)[i + 96].x = sp7C.v[i] - 0xA0;
+        ((Actor *)D_8011ECD0)[i + 96].y = sp60.v[i] - 0xBC;
+        ((Actor *)D_8011ECD0)[i + 96].brightness = 0x40;
+        ((Actor *)D_8011ECD0)[i + 96].unk_05 = 0;
+        ((Actor *)D_8011ECD0)[i + 96].unk_04 = 8;
         D_8013CA1C[i] = rand() % 60;
     }
     func_80134DE0();
@@ -867,8 +867,8 @@ void func_80136C5C(s16 arg0) {
         p = (u8 *)D_801217D0 + i * 0x24;
         *(s16 *)(p + 0x96) = *(s16 *)(p + 0x96) + arg0;
     }
-    ((DisplayActor44 *)D_8011ECD0)[31].y += arg0;
-    ((DisplayActor44 *)D_8011ECD0)[30].y += arg0;
+    ((Actor *)D_8011ECD0)[31].y += arg0;
+    ((Actor *)D_8011ECD0)[30].y += arg0;
 }
 
 void func_80136CD0(s16 arg0) {

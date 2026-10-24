@@ -2,13 +2,13 @@
 #include "ovl/BUNKAKEN.h"
 
 void func_8014A6A0(void) {
-    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0;
-    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
+    ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0;
+    switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         switch (D_800E6280.year) {
         case 0x5F:
             if ((func_8008667C(0) == 4) && !(D_800E6280.girls[0].flags.f.b2)) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -16,7 +16,7 @@ void func_8014A6A0(void) {
             return;
         case 0x60:
             if ((func_8008667C(0) == 4) && !(D_800E6280.girls[0].flags.f.b2)) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -35,7 +35,7 @@ void func_8014A6A0(void) {
         return;
     case 2:
         if ((func_8008667C(0) == 4) && !(D_800E6280.girls[0].flags.f.b2)) {
-            ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+            ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
             func_80042908(5);
             return;
         }
@@ -54,7 +54,7 @@ void func_8014A6A0(void) {
             break;
         }
         if ((func_8008667C(0) == 4) && !(D_800E6280.girls[0].flags.f.b2)) {
-            ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+            ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
             func_80042908(5);
             return;
         }
@@ -63,7 +63,7 @@ void func_8014A6A0(void) {
         switch (D_800E6280.year) {
         case 0x5F:
             if ((func_8008667C(0) == 4) && !(D_800E6280.girls[0].flags.f.b2)) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -74,7 +74,7 @@ void func_8014A6A0(void) {
             return;
         case 0x61:
             if ((func_8008667C(0) == 4) && !(D_800E6280.girls[0].flags.f.b2)) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -1076,8 +1076,8 @@ void func_8014C374(void) {
         }
         break;
     case 13:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         g->saved_mode = g->mode;
         g->saved_stage = g->stage;
         g->saved_step = g->step + 1;

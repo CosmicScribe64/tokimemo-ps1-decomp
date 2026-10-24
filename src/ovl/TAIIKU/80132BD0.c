@@ -1,7 +1,7 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-#define DISP(n) (((DisplayActor44 *)D_8011ECD0)[n])
+#define DISP(n) (((Actor *)D_8011ECD0)[n])
 
 void func_80132BD0(void) {
     s32 i;
@@ -141,22 +141,22 @@ void func_80133258(void) {
     }
     for (i = 0; i < 10; i++) {
         /* FAKE: the (u8) narrowing takes one ugen temporary and emits no code; the original's temporaries (t6 first in the loop) need it, real source unknown. T-19031 */
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].quad_flags = ((u8)(i & 1) << 0x1E) | 0x01000000;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_05 = 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].blink_period = 2;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].frame_table = (u8 *)D_80149FCC;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].sequence_table = (u8 *)D_8014A004;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].tpage_table = (u8 *)D_8014A070;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_14 = D_8014A03C;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].scale_x = 0x1000;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].scale_y = 0x1000;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].brightness = 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].flags = 1;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].draw_flags = 0xA4;
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].unk_01 = sp88.v[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].x = sp74.h[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].y = sp60.h[i];
-        ((DisplayActor44 *)D_8011ECD0)[i + 1].sequence_slot = sp4C.h[i];
+        ((Actor *)D_8011ECD0)[i + 1].quad_flags = ((u8)(i & 1) << 0x1E) | 0x01000000;
+        ((Actor *)D_8011ECD0)[i + 1].unk_05 = 0x80;
+        ((Actor *)D_8011ECD0)[i + 1].blink_period = 2;
+        ((Actor *)D_8011ECD0)[i + 1].frame_table = (u8 *)D_80149FCC;
+        ((Actor *)D_8011ECD0)[i + 1].sequence_table = (u8 *)D_8014A004;
+        ((Actor *)D_8011ECD0)[i + 1].tpage_table = (u8 *)D_8014A070;
+        ((Actor *)D_8011ECD0)[i + 1].unk_14 = D_8014A03C;
+        ((Actor *)D_8011ECD0)[i + 1].scale_x = 0x1000;
+        ((Actor *)D_8011ECD0)[i + 1].scale_y = 0x1000;
+        ((Actor *)D_8011ECD0)[i + 1].brightness = 0x80;
+        ((Actor *)D_8011ECD0)[i + 1].flags = 1;
+        ((Actor *)D_8011ECD0)[i + 1].draw_flags = 0xA4;
+        ((Actor *)D_8011ECD0)[i + 1].unk_01 = sp88.v[i];
+        ((Actor *)D_8011ECD0)[i + 1].x = sp74.h[i];
+        ((Actor *)D_8011ECD0)[i + 1].y = sp60.h[i];
+        ((Actor *)D_8011ECD0)[i + 1].sequence_slot = sp4C.h[i];
     }
 }
 

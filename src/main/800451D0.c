@@ -137,13 +137,13 @@ u8 *arg2;
 
 /* FAKE: view of the queue header bytes D_80125128..D_8012512B through one symbol; the load and
  * store order of the original needs one symbol, the real aggregate is not declared yet (T-24501). */
-typedef struct CdRingView {
+typedef struct CdRingState {
     /* 0x00 */ u8 head;
     /* 0x01 */ u8 tail;
     /* 0x02 */ u8 status;
     /* 0x03 */ s8 phase;
     /* 0x04 */ u8 pad[4];
-} CdRingView; /* size 0x08 */
+} CdRingState; /* size 0x08 */
 extern u16 D_800B3D64;
 extern u32 *D_801255BC;
 void func_80046478(void);
@@ -157,85 +157,85 @@ void func_800455C4(void) {
     s32 sp38[1];
     u8 sp30[8];
 
-    if (((CdRingView *)&D_80125128)->tail != ((CdRingView *)&D_80125128)->head) {
+    if (((CdRingState *)&D_80125128)->tail != ((CdRingState *)&D_80125128)->head) {
         func_800463E8();
-        if (((CdRingView *)&D_80125128)->phase == -1) {
-            switch (D_80125130[((CdRingView *)&D_80125128)->head].cmd) {
+        if (((CdRingState *)&D_80125128)->phase == -1) {
+            switch (D_80125130[((CdRingState *)&D_80125128)->head].cmd) {
             case 0:
                 if (func_80087954(1, &sp30) != 0) {
                     D_801255B4 = 0;
                     if (func_800879D0(9, 0, &D_801255D0) == 1) {
-                        ((CdRingView *)&D_80125128)->phase = 1;
+                        ((CdRingState *)&D_80125128)->phase = 1;
                     }
                 }
                 break;
             case 3:
                 func_8008B750(0x7F, 0x7F);
-                ((CdRingView *)&D_80125128)->status = 0;
+                ((CdRingState *)&D_80125128)->status = 0;
                 D_801255B4 = 0;
                 if (func_800879D0(3, 0, 0) == 1) {
-                    ((CdRingView *)&D_80125128)->phase = -1;
-                    ((CdRingView *)&D_80125128)->head += 1;
+                    ((CdRingState *)&D_80125128)->phase = -1;
+                    ((CdRingState *)&D_80125128)->head += 1;
                 }
                 break;
             case 13:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    if (func_800879D0(0xD, D_80125130[((CdRingView *)&D_80125128)->head].data, &D_801255D0) == 1) {
-                        ((CdRingView *)&D_80125128)->phase = -1;
-                        ((CdRingView *)&D_80125128)->head += 1;
+                    if (func_800879D0(0xD, D_80125130[((CdRingState *)&D_80125128)->head].data, &D_801255D0) == 1) {
+                        ((CdRingState *)&D_80125128)->phase = -1;
+                        ((CdRingState *)&D_80125128)->head += 1;
                     }
                 }
                 break;
             case 9:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
                     if (func_800879D0(9, 0, &D_801255D0) == 1) {
-                        ((CdRingView *)&D_80125128)->phase = 1;
+                        ((CdRingState *)&D_80125128)->phase = 1;
                     }
                 }
                 break;
             case 14:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    if (func_800879D0(0xE, D_80125130[((CdRingView *)&D_80125128)->head].data, &D_801255D0) == 1) {
-                        ((CdRingView *)&D_80125128)->phase = -1;
-                        ((CdRingView *)&D_80125128)->head += 1;
+                    if (func_800879D0(0xE, D_80125130[((CdRingState *)&D_80125128)->head].data, &D_801255D0) == 1) {
+                        ((CdRingState *)&D_80125128)->phase = -1;
+                        ((CdRingState *)&D_80125128)->head += 1;
                     }
                 }
                 break;
             case 2:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    func_80087EE8(D_80125130[((CdRingView *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(D_80125130[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_800879D0(2, sp38, &D_801255D0) == 1) {
-                        ((CdRingView *)&D_80125128)->phase = -1;
-                        ((CdRingView *)&D_80125128)->head += 1;
+                        ((CdRingState *)&D_80125128)->phase = -1;
+                        ((CdRingState *)&D_80125128)->head += 1;
                     }
                 }
                 break;
             case 21:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    func_80087EE8(D_80125130[((CdRingView *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(D_80125130[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_80087B1C(0x15, sp38) == 1) {
-                        ((CdRingView *)&D_80125128)->phase = 1;
+                        ((CdRingState *)&D_80125128)->phase = 1;
                     }
                 }
                 break;
             case 27:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
                     func_800879A8(0);
                     func_80087E08(0);
                     func_80088070();
-                    func_80087EE8(D_80125130[((CdRingView *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(D_80125130[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_80087C64(2, sp38, 0) == 0) {
                         do {
 
@@ -247,27 +247,27 @@ void func_800455C4(void) {
                         } while (func_800880C0(0xC8) == 0);
                     }
                     D_801255B4 = 0;
-                    ((CdRingView *)&D_80125128)->phase = 1;
+                    ((CdRingState *)&D_80125128)->phase = 1;
                 }
                 break;
             case 10:
-                ((CdRingView *)&D_80125128)->status = 0;
+                ((CdRingState *)&D_80125128)->status = 0;
                 D_801255B4 = 0;
                 if (func_800879D0(0xA, 0, 0) == 0) {
                     do {
 
                     } while (func_800879D0(0xA, 0, 0) == 0);
                 }
-                ((CdRingView *)&D_80125128)->phase = -1;
-                ((CdRingView *)&D_80125128)->head += 1;
+                ((CdRingState *)&D_80125128)->phase = -1;
+                ((CdRingState *)&D_80125128)->head += 1;
                 break;
             case 6:
                 if (func_80087954(1, &sp30) != 0) {
-                    ((CdRingView *)&D_80125128)->status = 0;
+                    ((CdRingState *)&D_80125128)->status = 0;
                     D_801255B4 = 0;
-                    sp44 = (*(u32 *)D_80125130[((CdRingView *)&D_80125128)->head].data & 0xFFFFFF) + 0x80000000;
-                    sp48 = *(u32 *)D_80125130[((CdRingView *)&D_80125128)->head].data >> 24;
-                    D_801255BC = (u32 *)((*(u32 *)D_80125130[((CdRingView *)&D_80125128)->head].data & 0xFFFFFF) + (sp48 << 11) + 0x7FFFFFFC);
+                    sp44 = (*(u32 *)D_80125130[((CdRingState *)&D_80125128)->head].data & 0xFFFFFF) + 0x80000000;
+                    sp48 = *(u32 *)D_80125130[((CdRingState *)&D_80125128)->head].data >> 24;
+                    D_801255BC = (u32 *)((*(u32 *)D_80125130[((CdRingState *)&D_80125128)->head].data & 0xFFFFFF) + (sp48 << 11) + 0x7FFFFFFC);
                     func_800879A8(0);
                     func_80087E08(0);
                     D_801255B8 = 0x84;
@@ -276,7 +276,7 @@ void func_800455C4(void) {
 
                         } while (func_80087C64(0xE, &D_801255B8, 0) == 0);
                     }
-                    func_80087EE8(D_80125130[((CdRingView *)&D_80125128)->head].arg, sp38);
+                    func_80087EE8(D_80125130[((CdRingState *)&D_80125128)->head].arg, sp38);
                     if (func_80087C64(2, sp38, 0) == 0) {
                         do {
 
@@ -288,31 +288,31 @@ void func_800455C4(void) {
 
                         } while (func_80087E6C((s32) sp48, sp44, 0x80) == 0);
                     }
-                    ((CdRingView *)&D_80125128)->phase = 1;
+                    ((CdRingState *)&D_80125128)->phase = 1;
                 }
                 break;
             }
-        } else if (((CdRingView *)&D_80125128)->phase == 1) {
-            switch (D_80125130[((CdRingView *)&D_80125128)->head].cmd) {
+        } else if (((CdRingState *)&D_80125128)->phase == 1) {
+            switch (D_80125130[((CdRingState *)&D_80125128)->head].cmd) {
             case 0:
                 if ((func_80087954(1, D_801255D0.bytes) != 0) && (func_800879D0(1, 0, &D_801255D0) == 1) && !(D_801255D0.bytes[0] & 0x40)) {
                     D_801255B4 = 2;
-                    ((CdRingView *)&D_80125128)->head += 1;
-                    ((CdRingView *)&D_80125128)->phase = -1;
+                    ((CdRingState *)&D_80125128)->head += 1;
+                    ((CdRingState *)&D_80125128)->phase = -1;
                 }
                 break;
             case 9:
                 if ((func_80087954(1, D_801255D0.bytes) != 0) && (func_800879D0(1, 0, &D_801255D0) == 1) && !(D_801255D0.bytes[0] & 0x40)) {
                     D_801255B4 = 2;
-                    ((CdRingView *)&D_80125128)->head += 1;
-                    ((CdRingView *)&D_80125128)->phase = -1;
+                    ((CdRingState *)&D_80125128)->head += 1;
+                    ((CdRingState *)&D_80125128)->phase = -1;
                 }
                 break;
             case 21:
                 if ((func_800879D0(1, 0, &D_801255D0) == 1) && !(D_801255D0.bytes[0] & 0x40)) {
                     D_801255B4 = 2;
-                    ((CdRingView *)&D_80125128)->head += 1;
-                    ((CdRingView *)&D_80125128)->phase = -1;
+                    ((CdRingState *)&D_80125128)->head += 1;
+                    ((CdRingState *)&D_80125128)->phase = -1;
                 }
                 break;
             case 6:
@@ -322,7 +322,7 @@ void func_800455C4(void) {
                         if (D_800B3D68 == 0) {
                             if (D_800B3D60 != 0) {
                                 if ((*D_801255BC & 0xFFFF0000) != 0x10120000) {
-                                    ((CdRingView *)&D_80125128)->status = 0;
+                                    ((CdRingState *)&D_80125128)->status = 0;
                                     if ((++D_800B3D64 & 3) == 3) {
                                         if (func_800879D0(0xA, 0, 0) == 0) {
                                             do {
@@ -336,36 +336,36 @@ void func_800455C4(void) {
                                             func_800AD950(0);
                                         }
                                     }
-                                    ((CdRingView *)&D_80125128)->phase = -1;
+                                    ((CdRingState *)&D_80125128)->phase = -1;
                                 } else {
-                                    ((CdRingView *)&D_80125128)->phase = -1;
-                                    ((CdRingView *)&D_80125128)->head += 1;
+                                    ((CdRingState *)&D_80125128)->phase = -1;
+                                    ((CdRingState *)&D_80125128)->head += 1;
                                     D_801255B4 = 2;
-                                    ((CdRingView *)&D_80125128)->status |= 1;
+                                    ((CdRingState *)&D_80125128)->status |= 1;
                                     /* FAKE: D_801255B5 through the D_801255B4 symbol: one object in the
                                      * original (aggregate unknown); as1 then keeps the status load
                                      * before the D_801255B4 store. T-25123 */
                                     ((u8 *)&D_801255B4)[1] += 1;
                                 }
                             } else {
-                                ((CdRingView *)&D_80125128)->phase = -1;
-                                ((CdRingView *)&D_80125128)->head += 1;
+                                ((CdRingState *)&D_80125128)->phase = -1;
+                                ((CdRingState *)&D_80125128)->head += 1;
                                 D_801255B4 = 2;
-                                ((CdRingView *)&D_80125128)->status |= 1;
+                                ((CdRingState *)&D_80125128)->status |= 1;
                                 /* FAKE: as above, D_801255B5 through D_801255B4. T-25123 */
                                 ((u8 *)&D_801255B4)[1] += 1;
                             }
                         } else if (D_800B3D68 < 0) {
-                            ((CdRingView *)&D_80125128)->phase = -1;
+                            ((CdRingState *)&D_80125128)->phase = -1;
                             D_801255B4 = 0;
-                            ((CdRingView *)&D_80125128)->status = 0;
+                            ((CdRingState *)&D_80125128)->status = 0;
                         }
                     }
                 }
                 break;
             case 27:
                 if (func_80087954(1, D_801255D0.bytes) == 5) {
-                    ((CdRingView *)&D_80125128)->phase = -1;
+                    ((CdRingState *)&D_80125128)->phase = -1;
                     func_80046478();
                 } else {
                     if (func_800879D0(1, 0, &D_801255D0) == 0) {
@@ -374,12 +374,12 @@ void func_800455C4(void) {
                         } while (func_800879D0(1, 0, &D_801255D0) == 0);
                     }
                     if (D_801255D0.bytes[0] & 0x20) {
-                        ((CdRingView *)&D_80125128)->status = 0;
-                        ((CdRingView *)&D_80125128)->phase = -1;
-                        if (D_80125130[((CdRingView *)&D_80125128)->head].data[15] != 0xFF) {
+                        ((CdRingState *)&D_80125128)->status = 0;
+                        ((CdRingState *)&D_80125128)->phase = -1;
+                        if (D_80125130[((CdRingState *)&D_80125128)->head].data[15] != 0xFF) {
                             D_801255B4 = 4;
                         }
-                        ((CdRingView *)&D_80125128)->head += 1;
+                        ((CdRingState *)&D_80125128)->head += 1;
                     }
                 }
                 break;
@@ -387,11 +387,11 @@ void func_800455C4(void) {
         }
     } else if (func_80087954(1, 0) == 5) {
         if (func_80046094() == 0x1B) {
-            ((CdRingView *)&D_80125128)->phase = -1;
-            if (((CdRingView *)&D_80125128)->head != 0) {
-                ((CdRingView *)&D_80125128)->head -= 1;
+            ((CdRingState *)&D_80125128)->phase = -1;
+            if (((CdRingState *)&D_80125128)->head != 0) {
+                ((CdRingState *)&D_80125128)->head -= 1;
             } else {
-                ((CdRingView *)&D_80125128)->head = 0x2F;
+                ((CdRingState *)&D_80125128)->head = 0x2F;
             }
             func_80046478();
         } else {
@@ -400,8 +400,8 @@ void func_800455C4(void) {
     } else if (D_801255B4 == 4) {
         D_801255B0 = func_800460FC();
     }
-    if ((u8) ((CdRingView *)&D_80125128)->head >= 0x30U) {
-        ((CdRingView *)&D_80125128)->head = 0;
+    if ((u8) ((CdRingState *)&D_80125128)->head >= 0x30U) {
+        ((CdRingState *)&D_80125128)->head = 0;
     }
 }
 
@@ -424,7 +424,7 @@ u8 func_800460EC(void) {
 s32 func_800460FC(void) {
     u8 pad[8]; /* FAKE: unused pad places local/saved/status at 0x44/0x3C/0x34 in the 0x58 frame. T-24111 */
     s32 retries;
-    WordBytes4 *state;
+    WordBytes *state;
     u8 local[4];
     u8 *index = &D_80125128;
     s32 saved;

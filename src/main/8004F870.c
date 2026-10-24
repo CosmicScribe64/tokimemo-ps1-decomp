@@ -9,11 +9,11 @@ u32 D_800E3680[16] = {0};
 INCLUDE_RODATA("asm/data/main/8004F870.data", D_800B40F0);
 
 /* Accessed menu-selection view at GameState +0x1090. */
-typedef struct MenuSelection5 {
+typedef struct MenuSelection {
     /* 0x00 */ u8 count[2];
     /* 0x02 */ u8 pad_02;
     /* 0x03 */ s8 current[2];
-} MenuSelection5; /* size 0x05 */
+} MenuSelection; /* size 0x05 */
 
 s32 menu_set(menu, count, x, y, w, h)
     s32 menu;
@@ -32,9 +32,9 @@ s32 menu_set(menu, count, x, y, w, h)
 
     g = &D_800E6280;
     for (i = 0; i < 16; i++) {
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].disabled = 0;
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].h = 0;
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].w = 0;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].disabled = 0;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].h = 0;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].w = 0;
     }
     px = x;
     py = y;
@@ -43,22 +43,22 @@ s32 menu_set(menu, count, x, y, w, h)
     if (count >= 17) {
         return -1;
     }
-    ((MenuSelection5 *)&g->menu_count_0)->count[menu] = count;
+    ((MenuSelection *)&g->menu_count_0)->count[menu] = count;
     g->menu_hit[menu] = -1;
     if (menu >= 2) {
         return -1;
     }
     for (i = 0; i < count; i++) {
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].x = *px++;
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].y = *py++;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].x = *px++;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].y = *py++;
         if ((*pw * *ph) == 0) {
-            ((GsRecF90 (*)[2])g->menu_items)[i][menu].disabled = 1;
+            ((MenuItem (*)[2])g->menu_items)[i][menu].disabled = 1;
         } else {
-            ((GsRecF90 (*)[2])g->menu_items)[i][menu].disabled = 0;
+            ((MenuItem (*)[2])g->menu_items)[i][menu].disabled = 0;
         }
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].w = *pw++;
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].h = *ph++;
-        ((GsRecF90 (*)[2])g->menu_items)[i][menu].hover = 0;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].w = *pw++;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].h = *ph++;
+        ((MenuItem (*)[2])g->menu_items)[i][menu].hover = 0;
     }
 }
 
@@ -106,18 +106,18 @@ s32 menu_check_1(arg0, arg1, arg2)
     g = &D_800E6280;
     cnt = 0;
     sel = -1;
-    for (i = 0; i < ((MenuSelection5 *)&g->menu_count_0)->count[arg0]; i++) {
-        ((GsRecF90 (*)[2])g->menu_items)[i][arg0].hover = 0;
-        if ((s32)((arg1 - ((GsRecF90 (*)[2])g->menu_items)[i][arg0].x) * ((arg1 - ((GsRecF90 (*)[2])g->menu_items)[i][arg0].x) - ((GsRecF90 (*)[2])g->menu_items)[i][arg0].w)) < 0) {
-            if ((s32)((arg2 - ((GsRecF90 (*)[2])g->menu_items)[i][arg0].y) * ((arg2 - ((GsRecF90 (*)[2])g->menu_items)[i][arg0].y) - ((GsRecF90 (*)[2])g->menu_items)[i][arg0].h)) < 0) {
-                ((GsRecF90 (*)[2])g->menu_items)[i][arg0].hover = 1;
+    for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[arg0]; i++) {
+        ((MenuItem (*)[2])g->menu_items)[i][arg0].hover = 0;
+        if ((s32)((arg1 - ((MenuItem (*)[2])g->menu_items)[i][arg0].x) * ((arg1 - ((MenuItem (*)[2])g->menu_items)[i][arg0].x) - ((MenuItem (*)[2])g->menu_items)[i][arg0].w)) < 0) {
+            if ((s32)((arg2 - ((MenuItem (*)[2])g->menu_items)[i][arg0].y) * ((arg2 - ((MenuItem (*)[2])g->menu_items)[i][arg0].y) - ((MenuItem (*)[2])g->menu_items)[i][arg0].h)) < 0) {
+                ((MenuItem (*)[2])g->menu_items)[i][arg0].hover = 1;
                 cnt += 1;
                 sel = i;
             }
         }
     }
     if (cnt == 0) {
-        ((MenuSelection5 *)&g->menu_count_0)->current[arg0] = -1;
+        ((MenuSelection *)&g->menu_count_0)->current[arg0] = -1;
     }
     if (!(g->pad_held & 4) && sel != -1) {
         g->menu_hit[arg0] = sel;
@@ -138,16 +138,16 @@ s32 menu_check_2(arg0, arg1, arg2)
     sel = -1;
     g->menu_hit[arg0] = -1;
     i = 0;
-    if (((MenuSelection5 *)&g->menu_count_0)->count[arg0] != 0) {
+    if (((MenuSelection *)&g->menu_count_0)->count[arg0] != 0) {
         do {
-            if (i != ((MenuSelection5 *)&g->menu_count_0)->current[arg0]) {
-                ((GsRecF90 (*)[2])g->menu_items)[i][arg0].hover = 0;
+            if (i != ((MenuSelection *)&g->menu_count_0)->current[arg0]) {
+                ((MenuItem (*)[2])g->menu_items)[i][arg0].hover = 0;
             } else {
-                ((GsRecF90 (*)[2])g->menu_items)[i][arg0].hover = 10;
+                ((MenuItem (*)[2])g->menu_items)[i][arg0].hover = 10;
                 sel = i;
             }
             i += 1;
-        } while (i < ((MenuSelection5 *)&g->menu_count_0)->count[arg0]);
+        } while (i < ((MenuSelection *)&g->menu_count_0)->count[arg0]);
     }
     if (!(g->pad_held & 4) && sel != -1) {
         g->menu_hit[arg0] = sel;
@@ -165,15 +165,15 @@ void func_8004FC10(s32 menu) {
     n = 16;
     if (g->pad_pressed & 0x100) {
         g->menu_mode++;
-        ((MenuSelection5 *)&g->menu_count_0)->current[menu] = -1;
+        ((MenuSelection *)&g->menu_count_0)->current[menu] = -1;
         return;
     }
     switch (g->menu_mode & 3) {
     case 0:
         func_8006BA40();
-        for (i = 0; i < ((MenuSelection5 *)&g->menu_count_0)->count[menu]; i++) {
-            if (((GsRecF90 (*)[2])g->menu_items)[i][menu].hover != 0) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] = i;
+        for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
+            if (((MenuItem (*)[2])g->menu_items)[i][menu].hover != 0) {
+                ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
                 break;
             }
         }
@@ -187,89 +187,89 @@ void func_8004FC10(s32 menu) {
             case 0x1000:
             case 0x8000:
                 dir = -1;
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] -= 1;
+                ((MenuSelection *)&g->menu_count_0)->current[menu] -= 1;
                 break;
             case 0x2000:
             case 0x4000:
                 dir = 1;
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] += 1;
+                ((MenuSelection *)&g->menu_count_0)->current[menu] += 1;
                 break;
             }
         }
-        if (((MenuSelection5 *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection5 *)&g->menu_count_0)->count[menu]) {
-            ((MenuSelection5 *)&g->menu_count_0)->current[menu] = 0;
+        if (((MenuSelection *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection *)&g->menu_count_0)->count[menu]) {
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = 0;
         }
-        if (((MenuSelection5 *)&g->menu_count_0)->current[menu] < 0) {
-            ((MenuSelection5 *)&g->menu_count_0)->current[menu] = ((MenuSelection5 *)&g->menu_count_0)->count[menu] - 1;
+        if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1;
         }
-        while (((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].disabled == 1) {
+        while (((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].disabled == 1) {
             if (n-- == 0) {
                 break;
             }
             if (dir == 1) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] += 1;
+                ((MenuSelection *)&g->menu_count_0)->current[menu] += 1;
             }
             if (dir == -1) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] -= 1;
+                ((MenuSelection *)&g->menu_count_0)->current[menu] -= 1;
             }
-            if (((MenuSelection5 *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection5 *)&g->menu_count_0)->count[menu]) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] = 0;
+            if (((MenuSelection *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection *)&g->menu_count_0)->count[menu]) {
+                ((MenuSelection *)&g->menu_count_0)->current[menu] = 0;
             }
-            if (((MenuSelection5 *)&g->menu_count_0)->current[menu] < 0) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] = ((MenuSelection5 *)&g->menu_count_0)->count[menu] - 1;
+            if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
+                ((MenuSelection *)&g->menu_count_0)->current[menu] = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1;
             }
         }
-        D_8011ECF6 = ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x + ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].w - 4;
-        D_8011ECFA = ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y + 8;
+        D_8011ECF6 = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
+        D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         break;
     case 2:
         if (g->pad_held & 4) {
             if (g->pad_pressed & 4) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] = g->menu_hit[menu];
+                ((MenuSelection *)&g->menu_count_0)->current[menu] = g->menu_hit[menu];
             } else {
                 switch (g->pad_pressed & 0xF000) {
                 case 0x2000:
                 case 0x4000:
                     dir = 1;
-                    ((MenuSelection5 *)&g->menu_count_0)->current[menu] += 1;
+                    ((MenuSelection *)&g->menu_count_0)->current[menu] += 1;
                     break;
                 case 0x1000:
                 case 0x8000:
                     dir = -1;
-                    ((MenuSelection5 *)&g->menu_count_0)->current[menu] -= 1;
+                    ((MenuSelection *)&g->menu_count_0)->current[menu] -= 1;
                     break;
                 }
-                if (((MenuSelection5 *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection5 *)&g->menu_count_0)->count[menu]) {
-                    ((MenuSelection5 *)&g->menu_count_0)->current[menu] = 0;
+                if (((MenuSelection *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection *)&g->menu_count_0)->count[menu]) {
+                    ((MenuSelection *)&g->menu_count_0)->current[menu] = 0;
                 }
-                if (((MenuSelection5 *)&g->menu_count_0)->current[menu] < 0) {
-                    ((MenuSelection5 *)&g->menu_count_0)->current[menu] = ((MenuSelection5 *)&g->menu_count_0)->count[menu] - 1;
+                if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
+                    ((MenuSelection *)&g->menu_count_0)->current[menu] = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1;
                 }
-                while (((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].disabled == 1) {
+                while (((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].disabled == 1) {
                     if (n-- == 0) {
                         break;
                     }
                     if (dir == 1) {
-                        ((MenuSelection5 *)&g->menu_count_0)->current[menu] += 1;
+                        ((MenuSelection *)&g->menu_count_0)->current[menu] += 1;
                     }
                     if (dir == -1) {
-                        ((MenuSelection5 *)&g->menu_count_0)->current[menu] -= 1;
+                        ((MenuSelection *)&g->menu_count_0)->current[menu] -= 1;
                     }
-                    if (((MenuSelection5 *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection5 *)&g->menu_count_0)->count[menu]) {
-                        ((MenuSelection5 *)&g->menu_count_0)->current[menu] = 0;
+                    if (((MenuSelection *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection *)&g->menu_count_0)->count[menu]) {
+                        ((MenuSelection *)&g->menu_count_0)->current[menu] = 0;
                     }
-                    if (((MenuSelection5 *)&g->menu_count_0)->current[menu] < 0) {
-                        ((MenuSelection5 *)&g->menu_count_0)->current[menu] = ((MenuSelection5 *)&g->menu_count_0)->count[menu] - 1;
+                    if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
+                        ((MenuSelection *)&g->menu_count_0)->current[menu] = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1;
                     }
                 }
             }
-            D_8011ECF6 = ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x + ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].w - 4;
-            D_8011ECFA = ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y + 8;
+            D_8011ECF6 = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
+            D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         } else {
             func_8006BA40();
-            for (i = 0; i < ((MenuSelection5 *)&g->menu_count_0)->count[menu]; i++) {
-                if (((GsRecF90 (*)[2])g->menu_items)[i][menu].hover != 0) {
-                    ((MenuSelection5 *)&g->menu_count_0)->current[menu] = i;
+            for (i = 0; i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
+                if (((MenuItem (*)[2])g->menu_items)[i][menu].hover != 0) {
+                    ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
                 }
             }
         }
@@ -291,16 +291,16 @@ void func_8004FC10(s32 menu) {
             break;
         }
         if (i != -1) {
-            ((MenuSelection5 *)&g->menu_count_0)->current[menu] = i;
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
         }
-        if (((MenuSelection5 *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection5 *)&g->menu_count_0)->count[menu]) {
-            ((MenuSelection5 *)&g->menu_count_0)->current[menu] = func_80050324(menu, 1);
+        if (((MenuSelection *)&g->menu_count_0)->current[menu] >= (s32)((MenuSelection *)&g->menu_count_0)->count[menu]) {
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = func_80050324(menu, 1);
         }
-        if (((MenuSelection5 *)&g->menu_count_0)->current[menu] < 0) {
-            ((MenuSelection5 *)&g->menu_count_0)->current[menu] = func_80050324(menu, 0);
+        if (((MenuSelection *)&g->menu_count_0)->current[menu] < 0) {
+            ((MenuSelection *)&g->menu_count_0)->current[menu] = func_80050324(menu, 0);
         }
-        D_8011ECF6 = ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x + ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].w - 4;
-        D_8011ECFA = ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y + 8;
+        D_8011ECF6 = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x + ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].w - 4;
+        D_8011ECFA = ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y + 8;
         break;
     }
     if (D_8011ECF6 > 140) {
@@ -324,16 +324,16 @@ s32 func_80050324(s32 menu, s32 reverse) {
     /* The menu entries are interleaved: one record for each of two menus. */
     g = &D_800E6280;
     if (reverse != 0) {
-        for (i = ((MenuSelection5 *)&g->menu_count_0)->count[menu] - 1; i >= 0; i--) {
-            if (((GsRecF90 (*)[2])g->menu_items)[i][menu].w && ((GsRecF90 (*)[2])g->menu_items)[i][menu].h) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] = i;
+        for (i = ((MenuSelection *)&g->menu_count_0)->count[menu] - 1; i >= 0; i--) {
+            if (((MenuItem (*)[2])g->menu_items)[i][menu].w && ((MenuItem (*)[2])g->menu_items)[i][menu].h) {
+                ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
                 return i;
             }
         }
     } else {
-        for (i = 0; (u32)i < ((MenuSelection5 *)&g->menu_count_0)->count[menu]; i++) {
-            if (((GsRecF90 (*)[2])g->menu_items)[i][menu].w && ((GsRecF90 (*)[2])g->menu_items)[i][menu].h) {
-                ((MenuSelection5 *)&g->menu_count_0)->current[menu] = i;
+        for (i = 0; (u32)i < ((MenuSelection *)&g->menu_count_0)->count[menu]; i++) {
+            if (((MenuItem (*)[2])g->menu_items)[i][menu].w && ((MenuItem (*)[2])g->menu_items)[i][menu].h) {
+                ((MenuSelection *)&g->menu_count_0)->current[menu] = i;
                 return i;
             }
         }
@@ -352,18 +352,18 @@ s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
     g = &D_800E6280;
     n = 16;
     best_d = 320;
-    if (((MenuSelection5 *)&g->menu_count_0)->count[menu] < 16) {
-        n = ((MenuSelection5 *)&g->menu_count_0)->count[menu];
+    if (((MenuSelection *)&g->menu_count_0)->count[menu] < 16) {
+        n = ((MenuSelection *)&g->menu_count_0)->count[menu];
     }
     switch (mode) {
     case 0:
         for (i = 0; i < n; i++) {
-            diff[i] = ((GsRecF90 (*)[2])g->menu_items)[i][menu].x - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x;
+            diff[i] = ((MenuItem (*)[2])g->menu_items)[i][menu].x - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x;
         }
         break;
     case 1:
         for (i = 0; i < n; i++) {
-            diff[i] = ((GsRecF90 (*)[2])g->menu_items)[i][menu].y - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y;
+            diff[i] = ((MenuItem (*)[2])g->menu_items)[i][menu].y - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y;
         }
         break;
     }
@@ -387,21 +387,21 @@ s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
     }
     best = -1;
     for (i = 0; i < n; i++) {
-        if (((GsRecF90 (*)[2])g->menu_items)[i][menu].disabled == 0 && diff[i] != 0) {
-            if (mode == 0 && ((GsRecF90 (*)[2])g->menu_items)[i][menu].y == ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y) {
+        if (((MenuItem (*)[2])g->menu_items)[i][menu].disabled == 0 && diff[i] != 0) {
+            if (mode == 0 && ((MenuItem (*)[2])g->menu_items)[i][menu].y == ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y) {
                 if (best_d > 0) {
                     best_d = -320;
                 }
-                if (best_d < -abs(((GsRecF90 (*)[2])g->menu_items)[i][menu].x - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x)) {
-                    best_d = -abs(((GsRecF90 (*)[2])g->menu_items)[i][menu].x - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x);
+                if (best_d < -abs(((MenuItem (*)[2])g->menu_items)[i][menu].x - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x)) {
+                    best_d = -abs(((MenuItem (*)[2])g->menu_items)[i][menu].x - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x);
                     best = i;
                 }
-            } else if (mode == 1 && ((GsRecF90 (*)[2])g->menu_items)[i][menu].x == ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x) {
+            } else if (mode == 1 && ((MenuItem (*)[2])g->menu_items)[i][menu].x == ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x) {
                 if (best_d > 0) {
                     best_d = -320;
                 }
-                if (best_d < -abs(((GsRecF90 (*)[2])g->menu_items)[i][menu].y - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y)) {
-                    best_d = -abs(((GsRecF90 (*)[2])g->menu_items)[i][menu].y - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y);
+                if (best_d < -abs(((MenuItem (*)[2])g->menu_items)[i][menu].y - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y)) {
+                    best_d = -abs(((MenuItem (*)[2])g->menu_items)[i][menu].y - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y);
                     best = i;
                 }
             } else if (best_d > 0) {
@@ -411,12 +411,12 @@ s32 get_near_menu(s32 mode, s32 dir, s32 menu) {
                 } else if (best_d == diff[i]) {
                     switch (mode) {
                     case 0:
-                        if (abs(((GsRecF90 (*)[2])g->menu_items)[best][menu].y - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y) > abs(((GsRecF90 (*)[2])g->menu_items)[i][menu].y - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].y)) {
+                        if (abs(((MenuItem (*)[2])g->menu_items)[best][menu].y - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y) > abs(((MenuItem (*)[2])g->menu_items)[i][menu].y - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].y)) {
                             best = i;
                         }
                         break;
                     case 1:
-                        if (abs(((GsRecF90 (*)[2])g->menu_items)[best][menu].x - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x) > abs(((GsRecF90 (*)[2])g->menu_items)[i][menu].x - ((GsRecF90 (*)[2])g->menu_items)[((MenuSelection5 *)&g->menu_count_0)->current[menu]][menu].x)) {
+                        if (abs(((MenuItem (*)[2])g->menu_items)[best][menu].x - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x) > abs(((MenuItem (*)[2])g->menu_items)[i][menu].x - ((MenuItem (*)[2])g->menu_items)[((MenuSelection *)&g->menu_count_0)->current[menu]][menu].x)) {
                             best = i;
                         }
                         break;
@@ -452,9 +452,9 @@ void menu_bar_show(menu)
     page = (D_800E3680[menu] >> 24) & 15;
     mode = (D_800E3680[menu] >> 28) & 7;
     flag = (D_800E3680[menu] >> 31) << 7;
-    item = ((MenuSelection5 *)&D_800E6280.menu_count_0)->current[menu];
-    if (item >= 0 && (u32)item < ((MenuSelection5 *)&D_800E6280.menu_count_0)->count[menu]) {
-        func_80049A40(((GsRecF90 (*)[2])D_800E6280.menu_items)[item][menu].x, ((GsRecF90 (*)[2])D_800E6280.menu_items)[item][menu].y, ((GsRecF90 (*)[2])D_800E6280.menu_items)[item][menu].w, ((GsRecF90 (*)[2])D_800E6280.menu_items)[item][menu].h, page, D_800E3680[menu] & 0xFFFFFF, flag | mode);
+    item = ((MenuSelection *)&D_800E6280.menu_count_0)->current[menu];
+    if (item >= 0 && (u32)item < ((MenuSelection *)&D_800E6280.menu_count_0)->count[menu]) {
+        func_80049A40(((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].x, ((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].y, ((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].w, ((MenuItem (*)[2])D_800E6280.menu_items)[item][menu].h, page, D_800E3680[menu] & 0xFFFFFF, flag | mode);
         dtd_on_tpage(0, 0, page, 0, 1);
     }
 }
@@ -852,7 +852,7 @@ void menu_girl_taku_set(s32 menu, s32 *arg1)
 {
     s32 i;
     s32 g;
-    Rec38 *p;
+    GirlRecord *p;
     s16 x[12];
     s16 y[12];
     s16 w[12];

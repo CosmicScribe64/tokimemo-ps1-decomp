@@ -2,13 +2,13 @@
 #include "ovl/BUNKAKEN.h"
 
 void func_801428D0(void) {
-    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 3;
-    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
+    ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 3;
+    switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 4:
         switch (D_800E6280.year) {
         case 0x5F:
             if (func_8008667C(3) == 4 && !D_800E6280.girls[3].flags.f.b2) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -16,7 +16,7 @@ void func_801428D0(void) {
             return;
         case 0x60:
             if (func_8008667C(3) == 4 && !D_800E6280.girls[3].flags.f.b2) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -24,7 +24,7 @@ void func_801428D0(void) {
             return;
         case 0x61:
             if (func_8008667C(3) == 4 && !D_800E6280.girls[3].flags.f.b2) {
-                ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 0xFF;
+                ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
                 func_80042908(5);
                 return;
             }
@@ -408,7 +408,7 @@ void func_80142FD4(void) {
     }
 }
 
-/* T-12230: existing CharFlags bitfields reproduce the target register choices. */
+/* T-12230: existing GirlFlagBits bitfields reproduce the target register choices. */
 void func_80143494(void) {
     s32 temp_v0;
     s32 temp_v0_2;

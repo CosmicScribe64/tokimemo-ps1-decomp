@@ -732,7 +732,7 @@ void func_8013F35C(void);
 
 #ifndef OVL_TAIIKU_RUNNERS_T11640
 #define OVL_TAIIKU_RUNNERS_T11640
-/* T-11640: TAIIKU's view of the D_8011ECD0 display records (DisplayActor44 layout). The bytes at
+/* T-11640: TAIIKU's view of the D_8011ECD0 display records (Actor layout). The bytes at
  * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
  * apart from the unsigned switch constants of its later loops, which a u8 field merges. T-20900: with the
  * shared u8 record func_80138DF8, func_80139610 and func_801400D8 do not match, so this view stays; its other

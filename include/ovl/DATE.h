@@ -1362,9 +1362,9 @@ typedef struct DateMovieHeader8 {
 #ifndef OVL_DATE_PARTICLE_T10870_H
 #define OVL_DATE_PARTICLE_T10870_H
 /* Fixed-point horizontal positions, with signed high-halfword updates. */
-extern GsWord D_8015BD40[20];
+extern WordView D_8015BD40[20];
 /* func_8013F638 initializes ten falling-particle velocities. */
-extern GsWord D_8015BCB4[10];
+extern WordView D_8015BCB4[10];
 extern s32 D_8015BD34;
 extern s16 D_8015BD38;
 extern u8 D_8015BD3C;

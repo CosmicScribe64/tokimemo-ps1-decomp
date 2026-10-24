@@ -122,7 +122,7 @@ s32 func_80141CDC(void) {
             func_80084E90(D_8014A3A4, D_8014A3A8, D_8014A3AC, D_8014A3B0, D_8014A3B4, D_8014A3B8);
             func_800850D4(D_8014A394, D_8014A398, D_8014A390, (s32) D_8014A39C);
             for (i = 0; i < 2; i++) {
-                ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 |= 8;
+                ((Actor *)D_8011ECD0)[96 + i].unk_04 |= 8;
             }
             dec_bg_cd_read(0x4728, 1);
             func_8004284C();

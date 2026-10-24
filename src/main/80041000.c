@@ -3,9 +3,9 @@
 #include "libapi.h"
 
 /* The original clears GameState +0x56C through +0x66B as one byte block. */
-typedef struct StateClearBytes100 {
+typedef struct GameStateClearBlock {
     /* 0x00 */ u8 bytes[0x100];
-} StateClearBytes100; /* size 0x100 */
+} GameStateClearBlock; /* size 0x100 */
 
 void func_80041000(void) {
     func_80097D90(0x140, 0xF0, 0, 0, 0);
@@ -23,20 +23,20 @@ void func_80041000(void) {
 }
 
 /* Stack copies of the PsyQ DRAWENV (0x60 bytes here) and DISPENV (0x14 bytes); libgpu.h has only RECT. */
-typedef struct DrawEnv60 {
+typedef struct DrawEnvCopy {
     /* 0x00 */ RECT clip;
     /* 0x08 */ u8 rest[0x58];
-} DrawEnv60; /* size 0x60 */
+} DrawEnvCopy; /* size 0x60 */
 
-typedef struct DispEnv14 {
+typedef struct DispEnvCopy {
     /* 0x00 */ RECT disp;
     /* 0x08 */ RECT screen;
     /* 0x10 */ u8 rest[4];
-} DispEnv14; /* size 0x14 */
+} DispEnvCopy; /* size 0x14 */
 
 void func_800410AC(void) {
-    DrawEnv60 draw;
-    DispEnv14 disp;
+    DrawEnvCopy draw;
+    DispEnvCopy disp;
 
     func_8009CCBC(&draw);
     draw.clip.x = 0;
@@ -159,8 +159,8 @@ void func_800412E0(s32 arg0) {
     strncpy(D_800E6280.player_given_name, "ム作成", 8);
     strncpy(D_800E6280.player_nickname, "後未セーブ", 0x10);
     /* Birthday fields share the existing word view. T-14200. */
-    ((GsDateBits *)&D_800E6280.player_birthday)->month = 1;
-    ((GsDateBits *)&D_800E6280.player_birthday)->day = 1;
+    ((BirthdayBits *)&D_800E6280.player_birthday)->month = 1;
+    ((BirthdayBits *)&D_800E6280.player_birthday)->day = 1;
     func_8006BC28(0);
     func_8006BD6C(0);
     func_8006C848(1);
@@ -181,7 +181,7 @@ void func_80041584(void) {
 /* One 36-byte sprite entry of the table at D_801217D0 (main_api.h declares only its first word).
  * Indexing the table as an array of this struct keeps IDO from unrolling the loop below, as in the
  * original (T-5020, wiki/matching-notes.md "Loop unrolling"). */
-typedef struct SprEnt {
+typedef struct SpriteQuadView {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ s16 unk_06;
@@ -200,30 +200,30 @@ typedef struct SprEnt {
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ s32 unk_20;
-} SprEnt; /* size 0x24 */
+} SpriteQuadView; /* size 0x24 */
 
 void func_800415B4(s32 start, s32 end) {
     s32 i;
 
     for (i = start; i < end; i++) {
-        ((SprEnt *)&D_801217D0)[i].unk_00 = 0x80000000;
-        ((SprEnt *)&D_801217D0)[i].unk_04 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_06 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_08 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_0A = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_0C = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_0E = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_0F = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_10 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_12 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_14 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_15 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_16 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_18 = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_1A = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_1C = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_1E = 0;
-        ((SprEnt *)&D_801217D0)[i].unk_20 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_00 = 0x80000000;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_04 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_06 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_08 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_0A = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_0C = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_0E = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_0F = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_10 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_12 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_14 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_15 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_16 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_18 = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_1A = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_1C = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_1E = 0;
+        ((SpriteQuadView *)&D_801217D0)[i].unk_20 = 0;
         D_800E6280.quad_layer[i] = 0;
     }
 }
@@ -234,22 +234,22 @@ void func_8004164C(s32 arg0, s32 arg1) {
 
     g = &D_800E6280;
     for (i = arg0; i < arg1; i++) {
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_00 = 0x80000000;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_04 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_06 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_08 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_0A = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_0C = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_0E = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_10 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_11 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_12 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_14 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_18 = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_1A = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_1C = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_1E = 0;
-        ((SpriteSlot24 *)&D_801220D0)[i].unk_20 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_00 = 0x80000000;
+        ((BgLayer *)&D_801220D0)[i].unk_04 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_06 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_08 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_0A = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_0C = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_0E = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_10 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_11 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_12 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_14 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_18 = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_1A = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_1C = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_1E = 0;
+        ((BgLayer *)&D_801220D0)[i].unk_20 = 0;
         g->bg_layer_order[i] = 0x80;
     }
 }
@@ -299,26 +299,26 @@ void func_800418B0(void) {
 }
 
 /* Three flag bits at GameState +0xF6, cleared at init (lbu/andi/sb per bit). */
-typedef struct GsF6Bits {
+typedef struct PlayerFlagsHiBits {
     /* 0x00, bit 0 */ u8 b0 : 1;
     /* 0x00, bit 1 */ u8 b1 : 1;
     /* 0x00, bit 2 */ u8 b2 : 1;
     /* 0x00, bits 3-7 */ u8 unk_03 : 5;
-} GsF6Bits; /* size 0x01 */
+} PlayerFlagsHiBits; /* size 0x01 */
 
 void func_800419FC(void) {
     s32 i;
 
     bzero(D_800E6280.player_full_name, 0x7C);
     D_800E6280.player_flags.b[0] = 0;
-    ((GsByteNibbles *)&D_800E6280.player_flags.b[1])->low = 0;
-    ((GsByteNibbles *)&D_800E6280.player_flags.b[1])->high = 0xB;
-    ((GsF6Bits *)&D_800E6280.player_flags_hi)->b0 = 0;
-    ((GsF6Bits *)&D_800E6280.player_flags_hi)->b1 = 0;
-    ((GsF6Bits *)&D_800E6280.player_flags_hi)->b2 = 0;
-    ((GsDateBits *)&D_800E6280.player_birthday)->blood_type = 1;
-    ((GsDateBits *)&D_800E6280.player_birthday)->month = 1;
-    ((GsDateBits *)&D_800E6280.player_birthday)->day = 1;
+    ((NibbleView *)&D_800E6280.player_flags.b[1])->low = 0;
+    ((NibbleView *)&D_800E6280.player_flags.b[1])->high = 0xB;
+    ((PlayerFlagsHiBits *)&D_800E6280.player_flags_hi)->b0 = 0;
+    ((PlayerFlagsHiBits *)&D_800E6280.player_flags_hi)->b1 = 0;
+    ((PlayerFlagsHiBits *)&D_800E6280.player_flags_hi)->b2 = 0;
+    ((BirthdayBits *)&D_800E6280.player_birthday)->blood_type = 1;
+    ((BirthdayBits *)&D_800E6280.player_birthday)->month = 1;
+    ((BirthdayBits *)&D_800E6280.player_birthday)->day = 1;
     /* Body on the line of the for, array start folded into the index: a braced body puts the
        wrong store in the delay slot, and for (i = 0x15; ...) starts the pointer at +0x16. T-17021 */
     for (i = 0; i < 9; i++) D_800E6280.progress_state[0x15 + i] = 0;
@@ -415,13 +415,13 @@ void func_80041F48(void) {
     bzero(D_800E6280.clubs, 0x30);
     for (i = 0; i < 32; i++) {
         D_800E6280.day_event_index = 0;
-        ((GsWord *)&D_800E6280.day_events[i])->w = 0;
+        ((WordView *)&D_800E6280.day_events[i])->w = 0;
     }
     for (i = 0; i < 256; i++) {
-        ((StateClearBytes100 *)D_800E6280.event_flags)->bytes[i] = 0;
+        ((GameStateClearBlock *)D_800E6280.event_flags)->bytes[i] = 0;
     }
     for (i = 0; i < 4; i++) {
-        ((GsWord *)&D_800E6280.appt_place_0)->b[i] = 0;
+        ((WordView *)&D_800E6280.appt_place_0)->b[i] = 0;
     }
     D_800E6280.date_girl = 0;
     for (i = 0; i < 4; i++) {

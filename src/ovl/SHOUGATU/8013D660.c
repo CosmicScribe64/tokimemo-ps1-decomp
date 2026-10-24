@@ -108,8 +108,8 @@ s32 func_8013DAAC(void) {
         main_state_set(0x57);
         return 0;
     }
-    if (((GsWord *)&D_800E6280.player_birthday)->date.month == 12 &&
-        ((GsWord *)&D_800E6280.player_birthday)->date.day == 24 &&
+    if (((WordView *)&D_800E6280.player_birthday)->date.month == 12 &&
+        ((WordView *)&D_800E6280.player_birthday)->date.day == 24 &&
         !(*(u8 *)&D_800E6280.daily_event_bits & 0x40)) {
         *(u8 *)&D_800E6280.daily_event_bits |= 0x40;
         main_state_set(0x56);

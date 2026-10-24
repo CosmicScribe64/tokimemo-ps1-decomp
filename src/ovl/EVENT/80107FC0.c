@@ -308,13 +308,13 @@ void func_80108D00(void) {
     }
     D_80123988 = 0;
     for (i = 0; i < 0xA; i++) {
-        ((DisplayActor44 *)D_800E9620)[i + 99].draw_flags |= 0x80;
+        ((Actor *)D_800E9620)[i + 99].draw_flags |= 0x80;
     }
     D_8012398C = 1;
     func_80011DFC();
 }
 
-/* FAKE: byte-offset view of the D_800E9620 display records (DisplayActor44, records 99..108); with the
+/* FAKE: byte-offset view of the D_800E9620 display records (Actor, records 99..108); with the
  * record fields the loop allocates one more register. T-20900 */
 void func_80108DD4(void) {
     s16 i;
@@ -474,22 +474,22 @@ void func_80109404(void) {
         D_800B0860[i + 0x1091] = 0xC;
     }
     func_8004C6B0(D_80123960, D_80123964, D_8012395C, D_80123968);
-    ((DisplayActor44 *)D_800EAFA0)[1].unk_04 = 8;
-    ((DisplayActor44 *)D_800EAFA0)->unk_04 = 8;
-    ((DisplayActor44 *)D_800EAFA0)[1].unk_01 = 0xC;
-    ((DisplayActor44 *)D_800EAFA0)->unk_01 = 0xC;
-    ((DisplayActor44 *)D_800EAFA0)[2] = ((DisplayActor44 *)D_800EAFA0)[0];
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_01 = 0xB;
-    ((DisplayActor44 *)D_800EAFA0)[2].flags = 0x40;
-    ((DisplayActor44 *)D_800EAFA0)[2].unk_18 = 0x14;
-    ((DisplayActor44 *)D_800EAFA0)[2].x = -6;
-    ((DisplayActor44 *)D_800EAFA0)[2].y = -0x30;
-    ((DisplayActor44 *)D_800EAFA0)[2].brightness = 0x80;
+    ((Actor *)D_800EAFA0)[1].unk_04 = 8;
+    ((Actor *)D_800EAFA0)->unk_04 = 8;
+    ((Actor *)D_800EAFA0)[1].unk_01 = 0xC;
+    ((Actor *)D_800EAFA0)->unk_01 = 0xC;
+    ((Actor *)D_800EAFA0)[2] = ((Actor *)D_800EAFA0)[0];
+    ((Actor *)D_800EAFA0)[2].unk_01 = 0xB;
+    ((Actor *)D_800EAFA0)[2].flags = 0x40;
+    ((Actor *)D_800EAFA0)[2].unk_18 = 0x14;
+    ((Actor *)D_800EAFA0)[2].x = -6;
+    ((Actor *)D_800EAFA0)[2].y = -0x30;
+    ((Actor *)D_800EAFA0)[2].brightness = 0x80;
     for (i = 0; i < 0xA; i++) {
-        ((DisplayActor44 *)D_800E9620)[i + 99] = ((DisplayActor44 *)D_800EAFA0)[2];
-        ((DisplayActor44 *)D_800E9620)[i + 99].unk_18 = t0.v[i];
-        ((DisplayActor44 *)D_800E9620)[i + 99].x = t1.v[i] - 0xA0;
-        ((DisplayActor44 *)D_800E9620)[i + 99].y = t2.v[i] - 0x78;
+        ((Actor *)D_800E9620)[i + 99] = ((Actor *)D_800EAFA0)[2];
+        ((Actor *)D_800E9620)[i + 99].unk_18 = t0.v[i];
+        ((Actor *)D_800E9620)[i + 99].x = t1.v[i] - 0xA0;
+        ((Actor *)D_800E9620)[i + 99].y = t2.v[i] - 0x78;
     }
     func_80011DFC();
 }

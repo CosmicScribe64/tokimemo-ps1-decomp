@@ -144,7 +144,7 @@ void func_8013F82C(void) {
                     func_8013F15C(0x50D, 2, 1);
                 }
             }
-            if (!(((DisplayActor44 *)D_8011ECD0)[i + 101].flags & 1)) {
+            if (!(((Actor *)D_8011ECD0)[i + 101].flags & 1)) {
                 func_8013E810(i + 5, 0xFF, 1, 0);
                 (&D_8015EBAC)[i + 50] = 0;
             }
@@ -384,15 +384,15 @@ s32 func_80140204(void) {
         break;
     case 5:
         if (D_8015EDE4 % 2 == 0) {
-            ((DisplayActor44 *)D_8011ECD0)[101].x -= 1;
-            ((DisplayActor44 *)D_8011ECD0)[103].x -= 2;
-            ((DisplayActor44 *)D_8011ECD0)[102].y += 1;
-            ((DisplayActor44 *)D_8011ECD0)[104].y += 2;
+            ((Actor *)D_8011ECD0)[101].x -= 1;
+            ((Actor *)D_8011ECD0)[103].x -= 2;
+            ((Actor *)D_8011ECD0)[102].y += 1;
+            ((Actor *)D_8011ECD0)[104].y += 2;
         }
         if (D_8015EDE4 % 2 == 0) {
             for (i = 0; i < 5; i++) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 100].x += 1;
-                ((DisplayActor44 *)D_8011ECD0)[i + 100].y -= 1;
+                ((Actor *)D_8011ECD0)[i + 100].x += 1;
+                ((Actor *)D_8011ECD0)[i + 100].y -= 1;
             }
         }
         D_8015EDE4 += 1;
@@ -403,32 +403,32 @@ s32 func_80140204(void) {
     case 6:
         if (D_8015EDE4 >= 0x1B) {
             func_8013F15C(0x507, 0, 1);
-            ((DisplayActor44 *)D_8011ECD0)[100].x += 3;
-            ((DisplayActor44 *)D_8011ECD0)[100].y -= 3;
+            ((Actor *)D_8011ECD0)[100].x += 3;
+            ((Actor *)D_8011ECD0)[100].y -= 3;
         } else if (!(D_8015EDE4 & 1)) {
             func_801401D0(0);
         }
         if (D_8015EDE4 >= 0xE) {
             func_8013F15C(0x507, 0, 2);
-            ((DisplayActor44 *)D_8011ECD0)[101].x += 3;
-            ((DisplayActor44 *)D_8011ECD0)[101].y -= 3;
+            ((Actor *)D_8011ECD0)[101].x += 3;
+            ((Actor *)D_8011ECD0)[101].y -= 3;
         } else if (!(D_8015EDE4 & 1)) {
             func_801401D0(1);
         }
         if (D_8015EDE4 >= 0xE) {
-            ((DisplayActor44 *)D_8011ECD0)[102].x += 3;
-            ((DisplayActor44 *)D_8011ECD0)[102].y -= 3;
+            ((Actor *)D_8011ECD0)[102].x += 3;
+            ((Actor *)D_8011ECD0)[102].y -= 3;
         } else if (!(D_8015EDE4 & 1)) {
             func_801401D0(2);
         }
         if (D_8015EDE4 > 0) {
             func_8013F15C(0x507, 0, 3);
-            ((DisplayActor44 *)D_8011ECD0)[103].x += 3;
-            ((DisplayActor44 *)D_8011ECD0)[103].y -= 3;
+            ((Actor *)D_8011ECD0)[103].x += 3;
+            ((Actor *)D_8011ECD0)[103].y -= 3;
         }
         if (D_8015EDE4 > 0) {
-            ((DisplayActor44 *)D_8011ECD0)[104].x += 3;
-            ((DisplayActor44 *)D_8011ECD0)[104].y -= 3;
+            ((Actor *)D_8011ECD0)[104].x += 3;
+            ((Actor *)D_8011ECD0)[104].y -= 3;
         }
         D_8015EDE4 += 1;
         if (D_8015EDE4 >= 0x51) {
@@ -461,22 +461,22 @@ s32 func_80140204(void) {
                 }
             }
             if (p[50] == 1) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 100].y += 5;
-                if (func_8013E9A8(4) - 0x22 < ((DisplayActor44 *)D_8011ECD0)[i + 100].y) {
+                ((Actor *)D_8011ECD0)[i + 100].y += 5;
+                if (func_8013E9A8(4) - 0x22 < ((Actor *)D_8011ECD0)[i + 100].y) {
                     func_8013E810(i + 4, 0xE, 5, 1);
                     p[50] = 3;
                     func_8013F15C(0x509, 1, 0);
                 }
             }
             if (p[50] == 2) {
-                ((DisplayActor44 *)D_8011ECD0)[i + 100].y += 5;
-                if (func_8013E9A8(4) + 8 < ((DisplayActor44 *)D_8011ECD0)[i + 100].y) {
+                ((Actor *)D_8011ECD0)[i + 100].y += 5;
+                if (func_8013E9A8(4) + 8 < ((Actor *)D_8011ECD0)[i + 100].y) {
                     func_8013E810(i + 4, 0xE, 5, 1);
                     p[50] = 3;
                     func_8013F15C(0x509, 1, 0);
                 }
             }
-            if (p[50] == 3 && !(((DisplayActor44 *)D_8011ECD0)[i + 100].flags & 1)) {
+            if (p[50] == 3 && !(((Actor *)D_8011ECD0)[i + 100].flags & 1)) {
                 func_8013E810(i + 4, 0xFF, 1, 0);
                 p[50] = 0;
             }

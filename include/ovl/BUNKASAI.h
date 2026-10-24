@@ -59,7 +59,7 @@ extern BunkasaiGirlColumns D_80160584; /* second year */
 extern BunkasaiGirlColumns D_801605D4; /* third year */
 
 /* T-18700: eleven words (all 0x80) copied to the stack by func_801509A4, which fills it with the
- * indices of the girls whose Rec38 flag bit 1 is set and picks one at random. */
+ * indices of the girls whose GirlRecord flag bit 1 is set and picks one at random. */
 typedef struct BunkasaiGirlList {
     /* 0x00 */ s32 v[11];
 } BunkasaiGirlList; /* size 0x2C */

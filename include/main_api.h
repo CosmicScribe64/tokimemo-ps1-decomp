@@ -24,24 +24,24 @@
 #include "libgte.h"
 
 /* T-12010: D_801255D0 is saved as a word and read as four bytes. */
-typedef union WordBytes4 {
+typedef union WordBytes {
     u32 word;
     u8 bytes[4];
-} WordBytes4;
-extern WordBytes4 D_801255D0;
+} WordBytes;
+extern WordBytes D_801255D0;
 /* T-12040: halfword tested by the RPG battle command dispatcher. */
 extern s16 D_80121428;
 
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
-typedef struct DialogueVoice8 {
+typedef struct DialogueVoiceRef {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
-} DialogueVoice8; /* size 0x08 */
+} DialogueVoiceRef; /* size 0x08 */
 
 /* T-10730: sixteen byte selectors copied to the dialogue handler's stack. */
-typedef struct DialogueBytes16 {
+typedef struct DialogueSelectors {
     /* 0x00 */ u8 value[16];
-} DialogueBytes16; /* size 0x10 */
+} DialogueSelectors; /* size 0x10 */
 
 /* T-10730: minimum dialogue work range at D_80122CD0. Reset clears words
  * 5..30; retain existing scalar/array declarations as views in older users. */
@@ -86,7 +86,7 @@ typedef struct DialogueTables {
     /* 0x04 */ s16 *line;
     /* 0x08 */ u8 ***text;
     /* 0x0C */ u8 **command;
-    /* 0x10 */ DialogueVoice8 ***voice;
+    /* 0x10 */ DialogueVoiceRef ***voice;
 } DialogueTables; /* size 0x14 on PS1 */
 
 /* ---- aggregate types (T-5000) ----
@@ -94,24 +94,24 @@ typedef struct DialogueTables {
  * the original asm (indexed accesses with one stride, pointer walks, ordered store/load pairs);
  * evidence and limits: wiki/data-types.md. Field names stay unk_XX until the meaning is known. */
 
-/* Flag word of Rec34; EVENT tests bits 12-14 one at a time (sll; bltz/bgez in the original). */
-typedef struct Rec34Flags {
+/* Flag word of LegacyGirlRecord; EVENT tests bits 12-14 one at a time (sll; bltz/bgez in the original). */
+typedef struct LegacyGirlFlags {
     u32 pad : 12;
     u32 b12 : 1;
     u32 b13 : 1;
     u32 b14 : 1;
     u32 rest : 17;
-} Rec34Flags; /* size 0x04 */
+} LegacyGirlFlags; /* size 0x04 */
 
 /* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
-typedef struct Rec34 {
+typedef struct LegacyGirlRecord {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ Rec34Flags unk_0C;
+    /* 0x0C */ LegacyGirlFlags unk_0C;
     /* 0x10 */ u8 pad10[7];
     /* 0x17 */ u8 unk_17;
     /* 0x18 */ u8 pad18[0xA];
@@ -121,82 +121,82 @@ typedef struct Rec34 {
     /* 0x28 */ u8 pad28[5];
     /* 0x2D */ u8 unk_2D;
     /* 0x2E */ u8 pad2E[6];
-} Rec34; /* size 0x34 */
+} LegacyGirlRecord; /* size 0x34 */
 
 /* One word read as a whole and through its halves and bytes: the original tests bit-fields of these
  * words with lw and shifts, and IDO-style narrowed loads (lbu, then a shift) of single bytes. */
-/* T-14200: month/day packed in the birthday word and Rec38 +0x10. */
-typedef struct GsDateBits {
+/* T-14200: month/day packed in the birthday word and GirlRecord +0x10. */
+typedef struct BirthdayBits {
     /* 0x00 */ u32 month : 4;
     u32 day : 5;
     u32 blood_type : 2; /* T-17021: set to 1 at init (func_800419FC); OptionDateBits.f9 */
     u32 rest : 21;
-} GsDateBits; /* size 0x04 */
+} BirthdayBits; /* size 0x04 */
 
-typedef union GsWord {
-    /* 0x00 */ GsDateBits date;
+typedef union WordView {
+    /* 0x00 */ BirthdayBits date;
     /* 0x00 */ s32 w;
     /* 0x00 */ u32 u;
     /* 0x00 */ u16 h[2];
     /* 0x00 */ u8 b[4];
-} GsWord; /* size 0x04 */
+} WordView; /* size 0x04 */
 
-typedef struct GsEntry54C {
+typedef struct AppointmentEntry {
     /* 0x00 */ u32 unk_00 : 5;
     /* 0x00 */ u32 unk_05 : 19;
     /* 0x00 */ u32 b24 : 1;
     /* 0x00 */ u32 unk_25 : 4;
     /* 0x00 */ u32 active : 1;
     /* 0x00 */ u32 unk_30 : 2;
-} GsEntry54C; /* size 0x04 */
+} AppointmentEntry; /* size 0x04 */
 
-typedef union GsSlot54C {
-    /* 0x00 */ GsWord a[8];
-    /* 0x00 */ GsEntry54C e0;
-} GsSlot54C; /* size 0x20 */
+typedef union AppointmentSlots {
+    /* 0x00 */ WordView a[8];
+    /* 0x00 */ AppointmentEntry e0;
+} AppointmentSlots; /* size 0x20 */
 #define unk_54C u54C.a
 #define unk_54C_0 u54C.e0
 
 /* A halfword read as a whole (lhu) and through its bytes (lbu). */
-typedef union GsHalf {
+typedef union HalfView {
     /* 0x00 */ u16 h;
     /* 0x00 */ u8 b[2];
     /* 0x00 */ volatile u16 vh; /* FAKE: T-11910 volatile view: GEKO func_80133C50 reads the club here so uopt keeps the read in place */
-} GsHalf; /* size 0x02 */
+} HalfView; /* size 0x02 */
 
 #ifndef T9540_FLAGS_WORK24
 #define T9540_FLAGS_WORK24
 /* T-10880: one entry of the album metrics (main album display, NAME_ENT card routines). */
-typedef struct NameMetric4 {
+typedef struct AlbumParam {
     /* 0x00 */ u8 unk_00[2];
     /* 0x02 */ s16 unk_02;
-} NameMetric4; /* size 0x04 */
+} AlbumParam; /* size 0x04 */
 
 /* T-19009: the settings bits at D_800E7D10 +0x40 (TACO): the saved flag, the mode and a selector in byte 0, two
  * more selectors in byte 1. */
-typedef struct WorkSetBits {
+typedef struct TacoSettingsBits {
     u8 flag : 1;
     u8 unk_1 : 1;
     u8 mode : 1;
     u8 sel : 2;
     u8 unk_5 : 3;
     u8 lo : 4;
-    u8 hi : 4;
-} WorkSetBits; /* size 0x02 */
+    u8 hi : 4; /* HYPOTHESIS: settings bits at SystemData +0x40 (saved flag, mode, selectors); read by TACO */
+} TacoSettingsBits; /* size 0x02 */
 
 /* The 0xEE0-byte work area at 0x800E7D10 (main clears it with bzero(&D_800E7D10, 0xEE0); +0 is the word main
  * steps by 0x377 and NAME_ENT seeds srand with). One struct for main's FlagsWork24 (T-9540, T-12030), the album
  * view NameMetricWork of main and NAME_ENT (T-10880) and TACO's settings TcSetAll (T-19009), T-20900. TACO's
  * loader still reads +0x40 through its own word/byte union (TcSave), ETC the 8-byte records from +0x58 through
  * EtcConfig8. */
-typedef struct Work800E7D10 {
+typedef struct SystemData {
     /* 0x000 */ s32 seed;
     /* 0x004 */ u8 slot_status[16];
     /* 0x014 */ u8 flags[16];
     /* 0x024 */ u8 unk_024[2];
     /* 0x026 */ u8 selected_slot;
     /* 0x027 */ u8 unk_027[0x19];
-    /* 0x040 */ WorkSetBits bits;
+    /* 0x040 */ TacoSettingsBits bits;
     /* 0x042 */ u8 name0[3];
     /* 0x045 */ u8 name1[3];
     /* 0x048 */ u8 name2[3];
@@ -211,18 +211,18 @@ typedef struct Work800E7D10 {
     /* 0x888 */ u8 family_name[16][8];
     /* 0x908 */ u8 given_name[16][8];
     /* 0x988 */ u8 nickname[16][16];
-    /* 0xA88 */ NameMetric4 metrics[9][16];
+    /* 0xA88 */ AlbumParam metrics[9][16];
     /* 0xCC8 */ u8 unk_CC8[16][16]; /* per slot: the 16 bytes of GameState +0x518 (T-25105) */
     /* 0xDC8 */ u8 unk_DC8[0x100];
     /* 0xEC8 */ u8 club[16];
     /* 0xED8 */ u8 unk_ED8[8];
-} Work800E7D10; /* size 0xEE0 */
+} SystemData; /* size 0xEE0 */
 #endif
 
-/* Flag word at +0x0C of a Rec38 record (GameState +0x1C8 + 0x38 * i). The original tests single bits
+/* Flag word at +0x0C of a GirlRecord record (GameState +0x1C8 + 0x38 * i). The original tests single bits
  * with sll; bltz/bgez (bits 1, 2, 3, 6, 12-14 seen) and reads bits 9-11 as one value (sll 20; srl 29);
  * a bit-field store loads the byte into another register than its lui. T-9020 (was a view per file). */
-typedef struct CharFlags {
+typedef struct GirlFlagBits {
     /* 0x00 */ u32 b0 : 1;
     /* 0x00 */ u32 met : 1;
     /* 0x00 */ u32 b2 : 1;
@@ -243,13 +243,13 @@ typedef struct CharFlags {
     /* 0x00 */ u32 b19 : 1;
     u32 club : 4;
     u32 rest : 8;
-} CharFlags; /* size 0x04 */
+} GirlFlagBits; /* size 0x04 */
 
 /* Flag word at GameState +0xF64 (D_800E6280.quarter_flags) as single bits. func_8006A044 sets them with
  * bit-field stores, which load the byte into another register than its lui (T-25103): bits 0-11 by
  * year (0x5F, 0x60, 0x61) and month group (2-4, 5-7, 8-10, 11-1), bit 13 in months 2, 5, 8 and 11,
  * bit 14 in the other months, bit 15 in months 5-7. */
-typedef struct FlagsF64 {
+typedef struct QuarterFlagBits {
     /* 0x00 */ u32 b0 : 1;
     /* 0x00 */ u32 b1 : 1;
     /* 0x00 */ u32 b2 : 1;
@@ -267,38 +267,38 @@ typedef struct FlagsF64 {
     /* 0x00 */ u32 b14 : 1;
     /* 0x00 */ u32 b15 : 1;
     /* 0x00 */ u32 rest : 16;
-} FlagsF64; /* size 0x04 */
+} QuarterFlagBits; /* size 0x04 */
 
-/* The Rec38 flag word: whole, by halves and bytes, or by bits. */
-typedef union Rec38Flags {
+/* The GirlRecord flag word: whole, by halves and bytes, or by bits. */
+typedef union GirlFlags {
     /* 0x00 */ s32 w;
     /* 0x00 */ u32 u;
     /* 0x00 */ u16 h[2];
     /* 0x00 */ u8 b[4];
-    /* 0x00 */ CharFlags f;
-} Rec38Flags; /* size 0x04 */
+    /* 0x00 */ GirlFlagBits f;
+} GirlFlags; /* size 0x04 */
 
 /* 0x38-byte record of the table at GameState +0x1BC (16 records: a loop walks it with stride 0x38 up
  * to +0x53C; DATE, KANGEI and SHOUGATU index it; most code reads one record per girl, indexed by
  * GameState.current_girl). The first 0xC bytes are walked as four 0xC-byte steps elsewhere. +0x0C and
  * +0x10 are bit-field words read through the word and through single bytes (+0x10: bits 0-3 and
  * 4-8 are compared with the month and day at GameState +0x3F/+0x40). */
-typedef struct Rec38 {
+typedef struct GirlRecord {
     /* 0x00 */ s16 tokimeki_frac;
     /* 0x02 */ s16 tokimeki;
     /* 0x04 */ s16 affection_frac;
     /* 0x06 */ s16 affection;
     /* 0x08 */ s16 syoushin_frac;
     /* 0x0A */ s16 syoushin; /* HYPOTHESIS: resentment counter; developer term kept (syoushin_up): +5 per weekly queue build while weighted affection < 10; check_para_limit allows 0..0xFF but girl_counters_clamp (run at the top of every queue-reader pass) clamps it to 0..0x80, so 0x80 is the working cap; >= 0x3C blocks encounters and phone calls; >= 0x4C forces an encounter (flag b16, re-armed once syoushin is below 0x32); >= 0x3D at day end queues a rumor report (flag b17, same re-arm) */
-    /* 0x0C */ Rec38Flags flags;
-    /* 0x10 */ GsWord birthday;
+    /* 0x0C */ GirlFlags flags;
+    /* 0x10 */ WordView birthday;
     /* 0x14 */ u8 event_counters[0x24]; /* HYPOTHESIS: 0x24 per-girl progress bytes indexed by event number (DATE, GEKO, TEL read them; [0] of girl 11 is decremented once per weekly queue build by day_events_build_week) */
-} Rec38; /* size 0x38 */
+} GirlRecord; /* size 0x38 */
 
 /* 0x24-byte record of the table at D_801217D0 (at least 12 records: ENDING walks 12; indexed with
  * stride 0x24, and code that reads entry i - 1 makes splat name D_801217AC). Record 0 is set field by
  * field in func_8005AD70; records 0-5 have a flag in bit 31 of unk_00. */
-typedef struct Rec24 {
+typedef struct SpriteQuad {
     /* 0x00 */ s32 flags;
     /* 0x04 */ s16 x;
     /* 0x06 */ s16 y;
@@ -318,12 +318,12 @@ typedef struct Rec24 {
     /* 0x1C */ s16 unk_1C;
     /* 0x1E */ s16 unk_1E;
     /* 0x20 */ s32 unk_20;
-} Rec24; /* size 0x24 */
+} SpriteQuad; /* size 0x24 */
 
 /* Work area at D_80125D10 (0x50 bytes; main 80079B10 and 8007C030 only). The original keeps its
  * stores and loads in source order, as for one object (wiki/data-types.md); unk_44 and unk_48 are
  * message buffers passed to func_80045414. */
-typedef struct Work80125D10 {
+typedef struct AudioState {
     /* 0x00 */ u32 unk_00;
     /* 0x04 */ s32 unk_04;
     /* 0x08 */ s32 unk_08;
@@ -353,7 +353,7 @@ typedef struct Work80125D10 {
     /* 0x42 */ u16 unk_42;
     /* 0x44 */ u8 unk_44[4];
     /* 0x48 */ u8 unk_48[8];
-} Work80125D10; /* size 0x50 */
+} AudioState; /* size 0x50 */
 
 /* ---- GameState (T-5100) ----
  * The main bss block 0x800E6280..0x800E7D10 is one object of the original: loops over arrays deep
@@ -365,43 +365,43 @@ typedef struct Work80125D10 {
  * and ninja rejects them). Records are named by their offset in GameState. */
 
 /* Two records at +0x1C, one per D_8011ECA0 (SetWorkBase stores a work address and two words). */
-typedef struct GsRec01C {
+typedef struct PrimArena {
     /* 0x00 */ s32 size;
     /* 0x04 */ s32 used;
     /* 0x08 */ s32 base;
-} GsRec01C; /* size 0x0C */
+} PrimArena; /* size 0x0C */
 
 /* Two 0x40-byte records at +0x44 (bzero'd together, indexed by 0/1 with stride 0x40): two arrays
  * of 0x20 bytes indexed by a day number (+0x00[0] = 30 and +0x20[0] = 5 at init). */
-typedef struct GsRec044 {
+typedef struct MonthCalendar {
     /* 0x00 */ u8 day_kind[0x20];
     /* 0x20 */ u8 marker[0x20];
-} GsRec044; /* size 0x40 */
+} MonthCalendar; /* size 0x40 */
 
 /* Nine records at +0xFC (separate members); the s16 at +2 holds the nine values parameter_show_init reads, KANGEI
  * copies whole records. */
-typedef struct GsRec0FC {
+typedef struct ParamValue {
     /* 0x00 */ s16 frac;
     /* 0x02 */ s16 value;
-} GsRec0FC; /* size 0x04 */
+} ParamValue; /* size 0x04 */
 
 /* Twelve records at +0x66C (bzero 0x30 at init). */
-typedef struct GsRec66C {
+typedef struct ClubRecord {
     /* 0x00 */ u16 exp; /* HYPOTHESIS: club practice points (KANGEI +2, thresholds 0x64/0xC8/0x164, ETC >> 4, 0x19B) */
     /* 0x02 */ u8 level; /* HYPOTHESIS: low nibble read through a u16 view is a team level; RENSYU adds 5, MASTER compares 8/10 */
     /* 0x03 */ u8 unk_03;
-} GsRec66C; /* size 0x04 */
+} ClubRecord; /* size 0x04 */
 
 /* 32 records at +0x69C (cleared as words, then byte +0 set to 0xFF; indexed by GameState.day_event_index). */
-typedef struct GsRec69C {
+typedef struct DayEvent {
     /* 0x00 */ u8 type;
     /* 0x01 */ u8 girl;
     /* 0x02 */ u8 scene;
     /* 0x03 */ u8 extra;
-} GsRec69C; /* size 0x04 */
+} DayEvent; /* size 0x04 */
 
 /* 256 byte records at +0x75E (saved 8 bytes at a time; indexed from 1: code reads record i - 1). */
-typedef struct GsRec75E {
+typedef struct EventLogEntry {
     /* 0x00 */ u8 girl;
     /* 0x01 */ u8 flag;
     /* 0x02 */ u8 scene;
@@ -410,29 +410,29 @@ typedef struct GsRec75E {
     /* 0x05 */ u8 month;
     /* 0x06 */ u8 day;
     /* 0x07 */ u8 weekday;
-} GsRec75E; /* size 0x08 */
+} EventLogEntry; /* size 0x08 */
 
 /* 32 records at +0xF90 (indexed with stride 8 and in pairs with stride 16). */
-typedef struct GsRecF90 {
+typedef struct MenuItem {
     /* 0x00 */ s16 x;
     /* 0x02 */ s16 y;
     /* 0x04 */ u8 w;
     /* 0x05 */ u8 h;
     /* 0x06 */ u8 hover;
     /* 0x07 */ u8 disabled;
-} GsRecF90; /* size 0x08 */
+} MenuItem; /* size 0x08 */
 
 /* 32 records at +0x1328 (palette_load_vram). */
-typedef struct GsRec1328 {
+typedef struct PaletteLoad {
     /* 0x00 */ u32 *source;
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 unk_05;
     /* 0x06 */ u8 unk_06;
     /* 0x07 */ u8 unk_07;
-} GsRec1328; /* size 0x08 */
+} PaletteLoad; /* size 0x08 */
 
 /* 33 records at +0x142C (csr_load_vram). */
-typedef struct GsRec142C {
+typedef struct CsrLoad {
     /* 0x00 */ s32 source;
     /* 0x04 */ u8 slot;
     /* 0x05 */ u8 unk_05;
@@ -442,7 +442,7 @@ typedef struct GsRec142C {
     /* 0x0A */ u16 unk_0A;
     /* 0x0C */ u16 unk_0C;
     /* 0x0E */ u16 unk_0E;
-} GsRec142C; /* size 0x10 */
+} CsrLoad; /* size 0x10 */
 
 typedef struct GameState {
     /* 0x000 */ u16 video_width;
@@ -451,7 +451,7 @@ typedef struct GameState {
     /* 0x006 */ u8 unk_006[0xE];
     /* 0x014 */ s16 screen_center_x[2];        /* indexed by D_8011ECA0 */
     /* 0x018 */ s16 screen_center_y[2];        /* indexed by D_8011ECA0 */
-    /* 0x01C */ GsRec01C prim_arena[2];  /* indexed by D_8011ECA0 (SetWorkBase) */
+    /* 0x01C */ PrimArena prim_arena[2];  /* indexed by D_8011ECA0 (SetWorkBase) */
     /* 0x034 */ u8 sound_active;
     /* 0x035 */ u8 card_busy;
     /* 0x036 */ u8 clear_color_r;
@@ -463,35 +463,35 @@ typedef struct GameState {
     /* 0x03C */ u8 voice_mode;
     /* 0x03D */ u8 vacation;
     /* 0x03E */ u8 year;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
-    /* 0x03F */ u8 month;            /* 4 at init; compared with Rec38.birthday bits 0-3 */
-    /* 0x040 */ u8 day;            /* 4 at init; compared with Rec38.birthday bits 4-8 */
+    /* 0x03F */ u8 month;            /* 4 at init; compared with GirlRecord.birthday bits 0-3 */
+    /* 0x040 */ u8 day;            /* 4 at init; compared with GirlRecord.birthday bits 4-8 */
     /* 0x041 */ u8 weekday;
     /* 0x042 */ u16 day_count;
-    /* 0x044 */ GsRec044 month_calendar[2];
+    /* 0x044 */ MonthCalendar month_calendar[2];
     /* 0x0C4 */ u8 player_full_name[0x10];      /* +0xC4..+0xF4: text buffers (NAME_ENT) */
     /* 0x0D4 */ u8 player_family_name[8];
     /* 0x0DC */ u8 player_given_name[8];
     /* 0x0E4 */ u8 player_nickname[0x10];
-    /* 0x0F4 */ GsHalf player_flags;
-    /* 0x0F6 */ GsHalf player_flags_hi;
+    /* 0x0F4 */ HalfView player_flags;
+    /* 0x0F6 */ HalfView player_flags_hi;
     /* 0x0F8 */ s32 player_birthday;
-    /* 0x0FC */ GsRec0FC param_condition;        /* +0xFC..+0x120: nine records, members (an array sums in another order, ETC func_8014A32C) */
-    /* 0x100 */ GsRec0FC param_liberal_arts;
-    /* 0x104 */ GsRec0FC param_science;
-    /* 0x108 */ GsRec0FC param_art;
-    /* 0x10C */ GsRec0FC param_athletics;
-    /* 0x110 */ GsRec0FC param_trivia;
-    /* 0x114 */ GsRec0FC param_looks;
-    /* 0x118 */ GsRec0FC param_guts;
-    /* 0x11C */ GsRec0FC param_stress;
+    /* 0x0FC */ ParamValue param_condition;        /* +0xFC..+0x120: nine records, members (an array sums in another order, ETC func_8014A32C) */
+    /* 0x100 */ ParamValue param_liberal_arts;
+    /* 0x104 */ ParamValue param_science;
+    /* 0x108 */ ParamValue param_art;
+    /* 0x10C */ ParamValue param_athletics;
+    /* 0x110 */ ParamValue param_trivia;
+    /* 0x114 */ ParamValue param_looks;
+    /* 0x118 */ ParamValue param_guts;
+    /* 0x11C */ ParamValue param_stress;
     /* 0x120 */ u8 progress_state[0x9C]; /* HYPOTHESIS: 0x9C bytes = 21 one-shot flag bytes (+0..0x14, set by HUD code), 9 command counters (+0x15, ++ per chosen command), and the 0x7C-byte profile snapshot at +0x20 that parameter_show_init compares with the live values to colour changes */
-    /* 0x1BC */ Rec38 girls[16];
+    /* 0x1BC */ GirlRecord girls[16];
     /* 0x53C */ u8 girl_cleared[0x10]; /* HYPOTHESIS: per-girl flag; the mascot menu lists girl i when this or the saved SystemData.flags[i] is set; ETC graduation counts them */
-    /* 0x54C */ GsSlot54C u54C;
+    /* 0x54C */ AppointmentSlots u54C;
     /* 0x56C */ u8 event_flags[0xFC];
     /* 0x668 */ u8 unk_668[4];
-    /* 0x66C */ GsRec66C clubs[12];
-    /* 0x69C */ GsRec69C day_events[32];
+    /* 0x66C */ ClubRecord clubs[12];
+    /* 0x69C */ DayEvent day_events[32];
     /* 0x71C */ u8 day_event_index;
     /* 0x71D */ u8 events_today; /* HYPOTHESIS: ++ each time a girl encounter record (types 0x44/0x46/0x47) is run; cleared by func_8007259C each day */
     /* 0x71E */ u8 daily_event_bits;
@@ -510,15 +510,15 @@ typedef struct GameState {
     /* 0x74C */ u8 girl_event_bits[0x10]; /* HYPOTHESIS: one byte per girl; GEKO tests/sets bits 1, 2, 4 for scenes 0xE, 0xF, 7 */
     /* 0x75C */ u8 appointment_flag;
     /* 0x75D */ u8 date_girl;
-    /* 0x75E */ GsRec75E event_log[256];
+    /* 0x75E */ EventLogEntry event_log[256];
     /* 0xF5E */ u8 event_log_count;
-    /* 0xF5F */ u8 current_girl;            /* index of the current girl's Rec38 record */
+    /* 0xF5F */ u8 current_girl;            /* index of the current girl's GirlRecord record */
     /* 0xF60 */ u8 text_lines_total; /* HYPOTHESIS: count of dialogue text entries (check_set_k) used by the line-scroll step func_8005215C */
     /* 0xF61 */ u8 text_first_line; /* HYPOTHESIS: index of the first visible dialogue line in the text list */
     /* 0xF62 */ u8 text_scroll_state; /* HYPOTHESIS: bit 7 = scrolling active, low bits = phase of the two-line scroll */
     /* 0xF63 */ s8 unk_F63;
-    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: FlagsF64 bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits */
-    /* 0xF68 */ GsWord last_command;
+    /* 0xF64 */ u8 quarter_flags[4]; /* HYPOTHESIS: QuarterFlagBits bit view: set by func_8006A044 by year and month group; at months 3/6/9/12 bit 14 takes bit 13 (func_800722C4); TEL also sets bits */
+    /* 0xF68 */ WordView last_command;
     /* 0xF6C */ u8 icon_mode;
     /* 0xF6D */ u8 icon_count;
     /* 0xF6E */ u8 sd_anim_fast;
@@ -540,7 +540,7 @@ typedef struct GameState {
     /* 0xF84 */ s32 pad_prev;
     /* 0xF88 */ s32 pad_pressed;
     /* 0xF8C */ s32 pad_released;
-    /* 0xF90 */ GsRecF90 menu_items[32];
+    /* 0xF90 */ MenuItem menu_items[32];
     /* 0x1090 */ u8 menu_count_0;
     /* 0x1091 */ u8 menu_count_1;
     /* 0x1092 */ u8 menu_mode;
@@ -550,7 +550,7 @@ typedef struct GameState {
     /* 0x10A2 */ s8 tile_layer_enabled;
     /* 0x10A3 */ u8 unk_10A3;
     /* 0x10A4 */ u8 unk_10A4;
-    /* 0x10A5 */ u8 quad_layer[0x43];    /* one byte per entry of the Rec24 table at D_801217D0 */
+    /* 0x10A5 */ u8 quad_layer[0x43];    /* one byte per entry of the SpriteQuad table at D_801217D0 */
     /* 0x10E8 */ s32 quads_enabled;
     /* 0x10EC */ u8 bg_layer_order[4];
     /* 0x10F0 */ s32 frame_hcount_limit; /* HYPOTHESIS: 0x106 scanline count; the frame waits for vsync only while the elapsed count is below it */
@@ -558,7 +558,7 @@ typedef struct GameState {
     /* 0x10F8 */ u32 frame_count;
     /* 0x10FC */ s32 mode_timer;
     /* 0x1100 */ s32 stage_timer;
-    /* 0x1104 */ GsWord step_timer;      /* the move/place selector (normal_date_move_place); BUNKA_SD reads it as u32 */
+    /* 0x1104 */ WordView step_timer;      /* the move/place selector (normal_date_move_place); BUNKA_SD reads it as u32 */
     /* 0x1108 */ u8 mode;
     /* 0x1109 */ u8 stage;
     /* 0x110A */ u8 step;
@@ -587,18 +587,18 @@ typedef struct GameState {
     /* 0x1125 */ u8 unk_1125[3];
     /* 0x1128 */ s32 tpage_req[64];     /* search_tpage: set from +0x1228 */
     /* 0x1228 */ s32 tpage_buf[64];
-    /* 0x1328 */ GsRec1328 palette_queue[32];
+    /* 0x1328 */ PaletteLoad palette_queue[32];
     /* 0x1428 */ u8 palette_queue_count;
     /* 0x1429 */ u8 csr_queue_count;
     /* 0x142A */ u8 unk_142A[2];
-    /* 0x142C */ GsRec142C csr_queue[33];
+    /* 0x142C */ CsrLoad csr_queue[33];
     /* 0x163C */ s32 scratch_words[128];    /* OPTION fills it as words; +0x163C..+0x167C saved by memcpy */ /* HYPOTHESIS: 128-word scratch used by TACO and the VRAM loaders; its first 0x50 bytes also hold the saved free-icon layout (main 8005A0B0) */
     /* 0x183C */ u8 scratch_buffer[0x200]; /* HYPOTHESIS: 0x200-byte overlay scratch; NAME_ENT stages a 128-word palette in it before load_palette (a copy of scratch_words or the col2sepia output), TACO keeps 25 (x, y) word pairs of a drawing effect in it */
-    /* 0x1A3C */ s32 overlay_tpage_table;         /* +0x1A3C..+0x1A84: addresses set by NAME_ENT */ /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.tpage_table of its actors */
+    /* 0x1A3C */ s32 overlay_tpage_table;         /* +0x1A3C..+0x1A84: addresses set by NAME_ENT */ /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into Actor.tpage_table of its actors */
     /* 0x1A40 */ u8 unk_1A40[0xC];
-    /* 0x1A4C */ s32 overlay_frame_table; /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.frame_table of its actors */
+    /* 0x1A4C */ s32 overlay_frame_table; /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into Actor.frame_table of its actors */
     /* 0x1A50 */ u8 unk_1A50[0xC];
-    /* 0x1A5C */ s32 overlay_sequence_table; /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into DisplayActor44.sequence_table of its actors */
+    /* 0x1A5C */ s32 overlay_sequence_table; /* HYPOTHESIS: pointer an overlay stores (TEL, NAME_ENT) and copies into Actor.sequence_table of its actors */
     /* 0x1A60 */ u8 unk_1A60[0xC];
     /* 0x1A6C */ s32 overlay_palette_a; /* HYPOTHESIS: pointer to a palette block that TEL, NAME_ENT and TACO pass to load_palette; TACO also copies 128 words from it into scratch_words */
     /* 0x1A70 */ u8 unk_1A70[0xC];
@@ -651,7 +651,7 @@ extern s16 D_800B0956;
 extern s16 D_800B095E;
 extern s16 D_800B0966;
 extern s16 D_800B096E;
-extern Rec34 D_800B0A04[]; /* 12 records */
+extern LegacyGirlRecord D_800B0A04[]; /* 12 records */
 extern u8 D_800B0A14;
 extern u8 D_800B0AFF;
 extern u8 D_800B086A;
@@ -750,7 +750,7 @@ extern u8 text_list[];
 extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
 extern u8 D_800B3F58[];
 /* Text display state, defined in src/main/8004E500.c (T-9150). */
-typedef struct KWork {
+typedef struct TextState {
     /* 0x0 */ s16 count;   /* number of entries in text_list */
     /* 0x2 */ s16 total;
     /* 0x4 */ s16 mark;
@@ -759,8 +759,8 @@ typedef struct KWork {
     /* 0x8 */ s16 pos;
     /* 0xA */ u8 unk_6A;
     /* 0xB */ u8 pad_0B;
-} KWork; /* size 0xC */
-extern KWork text_list_count;
+} TextState; /* size 0xC */
+extern TextState text_list_count;
 /* Shift-JIS range table of load_string at font_range_table: first code of each range and the glyph number
  * of its first character (T-17020); 46 entries up to D_800B40E4. */
 typedef struct FontRange {
@@ -1004,7 +1004,7 @@ extern s16 D_800CA348[12];
 extern u8 D_800CA360;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
-extern DialogueBytes16 D_800CA36C;
+extern DialogueSelectors D_800CA36C;
 extern u8 *D_800D9234;
 extern u8 *D_800D9238;
 extern s32 D_800D923C;
@@ -1040,7 +1040,7 @@ extern GameState D_800E6280;
 extern u8 D_800E71DF; /* selected girl, GameState.current_girl: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820, T-24099, T-25501) */
 extern s32 D_800E7384; /* frame counter, GameState.step_timer.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
 #ifndef MAIN_API_OVERRIDE_D_800E7D10
-extern Work800E7D10 D_800E7D10;
+extern SystemData D_800E7D10;
 #endif
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];
@@ -1070,12 +1070,12 @@ extern s32 D_800E7D4C;
 /* T-17000: bit-field view of the flag byte D_800E7D4F. `lui rA; lbu rB,%lo(D_800E7D4F)(rA); ori; sb` with
  * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI and BUNKAKEN read the same
  * view (their BunkaReturnFlags, BunkasaiModeFlags and BunkakenModeFlags, folded in by T-20900). */
-typedef struct Flags7D4F {
+typedef struct ExtraModeFlags {
     u8 b0 : 1;
     u8 b1 : 1;
     u8 unk_2_4 : 3;
-    u8 unk_5_7 : 3;
-} Flags7D4F; /* size 0x01 */
+    u8 unk_5_7 : 3; /* HYPOTHESIS: byte D_800E7D4F (TT unlock bit, festival return mode bits) in SystemData */
+} ExtraModeFlags; /* size 0x01 */
 extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
@@ -1676,7 +1676,7 @@ extern s16 D_80121726;
 extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
-extern Rec24 D_801217D0[]; /* at least 12 records */
+extern SpriteQuad D_801217D0[]; /* at least 12 records */
 extern s16 D_801217D6;
 extern u8 D_801217E4;
 extern u8 D_801217E5;
@@ -1734,34 +1734,34 @@ extern u8 D_80122104;
 extern u8 D_80122105;
 extern u8 D_80122106;
 /* T-25010 (moved from include/ovl/OPTION.h): the cell maps, cells and cell indexes of the two BG slots,
- * SpriteSlot24 (game.h, GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main
+ * BgLayer (game.h, GsBG layout) at D_801220D0 + n * 0x24, whose +0x14 points at map n. Main
  * func_8004A1A0 sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
-typedef struct SpriteCell8 {
+typedef struct BgCell {
     /* 0x00 */ u8 u;
     /* 0x01 */ u8 v;
     /* 0x02 */ u16 cba;
     /* 0x04 */ u16 flag;
     /* 0x06 */ u16 tpage;
-} SpriteCell8; /* size 0x08, PsyQ libgs GsCELL layout */
+} BgCell; /* size 0x08, PsyQ libgs GsCELL layout */
 
-typedef struct SpriteMap10 {
+typedef struct BgMap {
     /* 0x00 */ u8 cellw;
     /* 0x01 */ u8 cellh;
     /* 0x02 */ u16 ncellw;
     /* 0x04 */ u16 ncellh;
     /* 0x06 */ u8 pad_06[2];
-    /* 0x08 */ SpriteCell8 *base;
+    /* 0x08 */ BgCell *base;
     /* 0x0C */ u16 *index;
-} SpriteMap10; /* size 0x10, PsyQ libgs GsMAP layout */
+} BgMap; /* size 0x10, PsyQ libgs GsMAP layout */
 
 /* The cell index of one slot (map->index), one u16 per map position. */
-typedef struct SpriteIndex80 {
+typedef struct BgMapIndex {
     /* 0x00 */ u16 v[64];
-} SpriteIndex80; /* size 0x80 */
+} BgMapIndex; /* size 0x80 */
 
-extern SpriteMap10 D_80122120[2];
-extern SpriteCell8 D_80122140[2][64];
-extern SpriteIndex80 D_80122540[2];
+extern BgMap D_80122120[2];
+extern BgCell D_80122140[2][64];
+extern BgMapIndex D_80122540[2];
 extern s16 D_80122790;
 extern s32 D_80122794;
 extern s8 D_80122798;
@@ -1890,12 +1890,12 @@ extern s8 D_8012512B;
 /* 0x18-byte entry of the 48-entry ring at D_80125130 (read index D_80125128, write index
  * D_80125129; filled by func_80045318). data[15] is cleared on every write and set to 0xFF when
  * the caller passes 1 instead of a data pointer. */
-typedef struct Ring18 {
+typedef struct CdCommand {
     /* 0x00 */ u8 cmd;
     /* 0x04 */ s32 arg;
     /* 0x08 */ u8 data[16];
-} Ring18; /* size 0x18 */
-extern Ring18 D_80125130[];
+} CdCommand; /* size 0x18 */
+extern CdCommand D_80125130[];
 extern s32 D_801255B0;
 extern u8 D_801255B4;
 extern u8 D_801255B5;
@@ -1936,7 +1936,7 @@ typedef struct StHEADER {
 } StHEADER; /* size 0x1C */
 
 /* PsyQ movie sample DECENV (strSetDefDecEnv, strCallback, strNext, strSync), T-9930, T-17014. */
-typedef struct StrDecEnv30 {
+typedef struct StrDecEnv {
     /* 0x00 */ u8 *vlcbuf[2];
     /* 0x08 */ s32 vlcid;
     /* 0x0C */ u8 *imgbuf;
@@ -1944,13 +1944,13 @@ typedef struct StrDecEnv30 {
     /* 0x20 */ s32 rectid;
     /* 0x24 */ RECT slice;
     /* 0x2C */ s32 isdone;
-} StrDecEnv30; /* size 0x30 */
+} StrDecEnv; /* size 0x30 */
 
 /* Movie (STR) player state at 0x80180000 behind D_80125C58 (strInit, strNext, strCallback,
  * func_80056BA8); the ring buffer behind +0x44 is reached by byte offset. T-17014 */
 typedef struct StrCtx {
     /* 0x00 */ u8 pos[4];
-    /* 0x04 */ StrDecEnv30 dec;
+    /* 0x04 */ StrDecEnv dec;
     /* 0x34 */ s32 endflag;
     /* 0x38 */ s32 unk_38;
     /* 0x3C */ s32 width;
@@ -1971,7 +1971,7 @@ extern s32 D_80125CAC;
 extern s32 D_80125CB0;
 extern u16 D_80125CC0;
 extern u16 D_80125CC2;
-extern Work80125D10 D_80125D10;
+extern AudioState D_80125D10;
 extern s32 D_80125D14;
 extern s32 D_80125D18;
 extern s32 D_80125D1C;
@@ -3004,7 +3004,7 @@ void func_8004AFB8();
 #endif
 void func_800651F8();
 void func_80065234();
-void func_8006B5BC(GsWord arg0);
+void func_8006B5BC(WordView arg0);
 /* SD_GetCDLevel request/output prefix, verified from halfword accesses. T-10870. */
 typedef struct CdLevelWork {
     /* 0x00 */ u16 unk_00; /* left output */

@@ -180,7 +180,7 @@ void func_80102C0C(void) {
     func_80012D64(D_80122690, 0x11, 1, 2, 0);
     func_8004C46C(D_80122694, D_80122698, D_8012269C, D_801226A0, D_801226A4, D_801226A8);
     func_8004C6B0(D_80122684, D_80122688, D_80122680, (s32) D_8012268C);
-    ((DisplayActor44 *)D_800EAFA0)->unk_04 = ((DisplayActor44 *)D_800EAFA0)[1].unk_04 = 8;
+    ((Actor *)D_800EAFA0)->unk_04 = ((Actor *)D_800EAFA0)[1].unk_04 = 8;
     func_80011DFC();
 }
 
@@ -210,7 +210,7 @@ void func_80102D40(void) {
 }
 
 void func_80102E54(void) {
-    DisplayActor44 *m = (DisplayActor44 *)D_800E9620;
+    Actor *m = (Actor *)D_800E9620;
     s16 i;
 
     D_80120678 = D_80120450;
@@ -229,7 +229,7 @@ void func_80102E54(void) {
         D_8012274C[i] = 0;
     }
     for (i = 0; i < 8; i++) {
-        m[98 + i] = ((DisplayActor44 *)D_800EAFA0)[0];
+        m[98 + i] = ((Actor *)D_800EAFA0)[0];
         m[98 + i].sequence_slot = 5;
         m[98 + i].x = D_80122754[i] - 0xA0;
         m[98 + i].y = D_80122764[i] - 0x78;
@@ -356,11 +356,11 @@ s32 func_801035BC(void) {
     tbl.f[D_800B1AF6](0x80);
     if (tbl.f[D_800B1AF6] == func_8004C984) {
         for (i = 0; i < 8; i++) {
-            ((DisplayActor44 *)D_800E9620)[i + 98].brightness = ((DisplayActor44 *)D_800E9620)[96].brightness;
+            ((Actor *)D_800E9620)[i + 98].brightness = ((Actor *)D_800E9620)[96].brightness;
         }
-        if (((DisplayActor44 *)D_800E9620)[96].brightness < 9) {
+        if (((Actor *)D_800E9620)[96].brightness < 9) {
             for (i = 0; i < 8; i++) {
-                ((DisplayActor44 *)D_800E9620)[i + 98].draw_flags &= 0x7F;
+                ((Actor *)D_800E9620)[i + 98].draw_flags &= 0x7F;
             }
         }
     }
@@ -381,7 +381,7 @@ void func_8010374C(void) {
 }
 
 void func_80103774(void) {
-    DisplayFixActor44 *m = (DisplayFixActor44 *)D_800E9620;
+    ActorFixed *m = (ActorFixed *)D_800E9620;
     u8 *st;
     EvPairs8 sp68;
     s16 i;
@@ -389,7 +389,7 @@ void func_80103774(void) {
     sp68 = D_80122990;
     for (i = 0; i < 8; i++) {
         st = i + D_8012274C;
-        m[98 + i].unk_07 = ((DisplayActor44 *)D_800EAFA0)[0].brightness;
+        m[98 + i].unk_07 = ((Actor *)D_800EAFA0)[0].brightness;
         if (*st == 0) {
             D_80122774[i]++;
         }

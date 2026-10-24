@@ -465,7 +465,7 @@ void func_80133374(void) {
     if (D_8013C2E0 != 0xFF) {
         D_800E6280.girls[D_8013C2E0].affection += 2;
     }
-    ((ScheduleClubFlags *)&D_800E6280.clubs[(u32)D_800E6280.player_flags.h >> 0xC])->b30 = 1;
+    ((ClubFlagBits *)&D_800E6280.clubs[(u32)D_800E6280.player_flags.h >> 0xC])->b30 = 1;
     func_8008585C();
     dec_bg_reset();
     set_dec_bri(0);

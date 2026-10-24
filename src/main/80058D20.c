@@ -204,7 +204,7 @@ void func_80059308(void) {
 }
 
 /* Model record of D_8011ECD0 walked two display slots (0x88 bytes) at a time. T-17017 */
-typedef struct ModelRec88 {
+typedef struct ModelRecord {
     /* 0x00 */ u8 active;
     /* 0x01 */ u8 flags;
     /* 0x02 */ u8 pad_02[2];
@@ -219,7 +219,7 @@ typedef struct ModelRec88 {
     /* 0x74 */ SVECTOR pos;
     /* 0x7C */ SVECTOR vel;
     /* 0x84 */ u8 pad_84[4];
-} ModelRec88; /* size 0x88 */
+} ModelRecord; /* size 0x88 */
 
 /* 20-byte ordering-table header (GsOT-like) of the D_800E8C70 pair, indexed by D_8011ECA0. T-17017 */
 typedef struct OtRec20 { s32 w[5]; } OtRec20;
@@ -230,7 +230,7 @@ typedef struct OtRec20 { s32 w[5]; } OtRec20;
 void func_8005938C(void) {
     SVECTOR *p;
     s32 i;
-    ModelRec88 *r;
+    ModelRecord *r;
     SVECTOR rot;
     VECTOR scale;
     MATRIX m, sm, ls, lw;
@@ -246,7 +246,7 @@ void func_8005938C(void) {
         *(u8 *)0 = 0;
     }
     for (i = *(s32 *)&D_800E6280.menu_hit[7]; i < 0xA0; i += 2) {
-        r = (ModelRec88 *)(D_8011ECD0 + i * 0x44);
+        r = (ModelRecord *)(D_8011ECD0 + i * 0x44);
         if (r->active && (r->flags & 0x80)) {
             p = &rot;
             p->vz = r->rot.vz;

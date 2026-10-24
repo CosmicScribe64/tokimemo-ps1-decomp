@@ -109,8 +109,8 @@ s32 func_8013243C(void) {
 
     best_i = 0xFF;
     best_s = 4;
-    if (D_800E6280.month != ((GsWord *)&D_800E6280.player_birthday)->date.month ||
-        D_800E6280.day != ((GsWord *)&D_800E6280.player_birthday)->date.day) {
+    if (D_800E6280.month != ((WordView *)&D_800E6280.player_birthday)->date.month ||
+        D_800E6280.day != ((WordView *)&D_800E6280.player_birthday)->date.day) {
         func_8004284C();
         return 0;
     }

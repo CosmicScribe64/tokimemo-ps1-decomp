@@ -210,7 +210,7 @@ void func_801380D8(void);
 #define OVL_TEL_T10630_H
 /* Four-byte calendar entry passed by value to func_8006B5BC. T-10630. */
 typedef union TelDateEntry {
-    /* 0x00 */ GsWord word;
+    /* 0x00 */ WordView word;
     /* 0x00 */ struct {
         u32 place : 5;  /* bits 0..4 */
         u32 year : 7;   /* bits 5..11 */
@@ -368,7 +368,7 @@ void func_80139FEC(void);
 
 #ifndef OVL_TEL_RECORD_FLAGS_H
 #define OVL_TEL_RECORD_FLAGS_H
-/* T-10860: bits cleared in a Rec38 +0x0C flag word by func_8013BE38. */
+/* T-10860: bits cleared in a GirlRecord +0x0C flag word by func_8013BE38. */
 typedef struct TelRecordFlags {
     /* 0x00, bits 0..11 */ u32 low : 12;
     /* 0x00, bit 12 */ u32 b12 : 1;

@@ -147,26 +147,26 @@ void func_80143758(void) {
 
     for (i = 0; i < 7; i++) {
         j = i + 0x60;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_01 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].flags = 0x40;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].quad_flags = 0;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].draw_flags = 0xA4;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].frame_table = (u8 *)0x801F86EC;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].sequence_table = (u8 *)0x801F897C;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].tpage_table = (u8 *)0x801F86A4;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_04 = 8;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_18 = D_801503C8[D_80150144 * 2];
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_43 = 0xF;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_05 = 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].x = D_801503C8[D_80150144 * 2 + 1] - 0xA0;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].y = i * 0x28 + 0x8C;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].dx = 0;
-        ((DisplayFixActor44 *)D_8011ECD0)[i + 0x60].dy = -1;
-        ((DisplayActor44 *)D_8011ECD0)[i + 0x60].brightness = 0x80;
-        if (((DisplayActor44 *)D_8011ECD0)[i + 0x60].unk_18 >= 0xF1) {
-            ((DisplayActor44 *)D_8011ECD0)[j].draw_flags = 0x34;
+        ((Actor *)D_8011ECD0)[i + 0x60].unk_01 = 0;
+        ((Actor *)D_8011ECD0)[i + 0x60].flags = 0x40;
+        ((Actor *)D_8011ECD0)[i + 0x60].quad_flags = 0;
+        ((Actor *)D_8011ECD0)[i + 0x60].draw_flags = 0xA4;
+        ((Actor *)D_8011ECD0)[i + 0x60].frame_table = (u8 *)0x801F86EC;
+        ((Actor *)D_8011ECD0)[i + 0x60].sequence_table = (u8 *)0x801F897C;
+        ((Actor *)D_8011ECD0)[i + 0x60].tpage_table = (u8 *)0x801F86A4;
+        ((Actor *)D_8011ECD0)[i + 0x60].unk_04 = 8;
+        ((Actor *)D_8011ECD0)[i + 0x60].unk_18 = D_801503C8[D_80150144 * 2];
+        ((Actor *)D_8011ECD0)[i + 0x60].unk_43 = 0xF;
+        ((Actor *)D_8011ECD0)[i + 0x60].unk_05 = 0x80;
+        ((Actor *)D_8011ECD0)[i + 0x60].x = D_801503C8[D_80150144 * 2 + 1] - 0xA0;
+        ((Actor *)D_8011ECD0)[i + 0x60].y = i * 0x28 + 0x8C;
+        ((Actor *)D_8011ECD0)[i + 0x60].dx = 0;
+        ((ActorFixed *)D_8011ECD0)[i + 0x60].dy = -1;
+        ((Actor *)D_8011ECD0)[i + 0x60].brightness = 0x80;
+        if (((Actor *)D_8011ECD0)[i + 0x60].unk_18 >= 0xF1) {
+            ((Actor *)D_8011ECD0)[j].draw_flags = 0x34;
         } else {
-            ((DisplayActor44 *)D_8011ECD0)[j].draw_flags = 0xB4;
+            ((Actor *)D_8011ECD0)[j].draw_flags = 0xB4;
         }
         D_80150144 += 1;
     }
@@ -195,7 +195,7 @@ void func_8014387C(s32 arg0, s32 arg1, s32 arg2) {
     *(s16 *)(p + 0x19B2) = -1;
     p[0x1987] = 0x80;
     if (arg1 == 0xA3) {
-        ((DisplayActor44 *)D_8011ECD0)[j].unk_43 = 0xE;
+        ((Actor *)D_8011ECD0)[j].unk_43 = 0xE;
     }
     p = D_8011ECD0 + j * 0x44;
     if (*(s16 *)(p + 0x18) >= 0xF1) {
@@ -215,13 +215,13 @@ s32 func_80143968(void) {
         func_8004B19C(D_80150144, 0x28, 0x28);
         for (i = 0; i < 7; i++) {
             j = i + 0x60;
-            ((DisplayActor44 *)D_8011ECD0)[i + 0x60].y -= 1;
-            if (((DisplayActor44 *)D_8011ECD0)[i + 0x60].y < -0x8C) {
+            ((Actor *)D_8011ECD0)[i + 0x60].y -= 1;
+            if (((Actor *)D_8011ECD0)[i + 0x60].y < -0x8C) {
                 func_8014387C(i, D_801503C8[D_80150144 * 2], D_801503C8[D_80150144 * 2 + 1]);
                 D_80150144 += 1;
             }
-            ((DisplayActor44 *)D_8011ECD0)[j].scale_x = 0x1000;
-            ((DisplayActor44 *)D_8011ECD0)[j].scale_y = 0x1000;
+            ((Actor *)D_8011ECD0)[j].scale_x = 0x1000;
+            ((Actor *)D_8011ECD0)[j].scale_y = 0x1000;
         }
     }
 }
@@ -369,7 +369,7 @@ void func_8014407C(s32 arg0) {
     s32 x;
     s32 remainder;
     s32 i;
-    Rec24 *record;
+    SpriteQuad *record;
 
     record = &D_801217D0[2];
     for (i = 2, x = -0xB0; i != 5; i++) {
@@ -427,7 +427,7 @@ void func_801441DC(s32 arg0, s32 arg1) {
  * after each call group) and D_80150148 promoted only in the remainder-1 arm, as in the original
  * (T-25146). */
 void func_80144224(void) {
-    GsWord *fc;
+    WordView *fc;
     /* FAKE: the `*(u32 *)&quot` read below keeps quot in its slot 0x30(sp) (the test reloads it
      * instead of using the divide result), and the `*(s32 *)&v` stores keep v in 0x28(sp) without
      * a spill slot of its own; the matched sibling func_80143A88 needs the same two tricks for
@@ -621,7 +621,7 @@ s32 func_80144A38(void) {
 void func_80144AC0(void) {
     s32 i;
     s32 d;
-    Work800E7D10 *work;
+    SystemData *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];

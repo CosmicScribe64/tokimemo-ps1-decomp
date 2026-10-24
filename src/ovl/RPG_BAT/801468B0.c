@@ -104,16 +104,16 @@ void func_80146C30(void) {
         strcpy(D_8015E828, "　　　　　　スタンピート　　　　　　");
         func_8013E97C(0x38, 0, 0);
         func_8013E97C(0x39, 0, 0);
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_01 = 4;
-        ((DisplayActor44 *)D_8011ECD0)[152].unk_01 = 4;
-        ((DisplayActor44 *)D_8011ECD0)[153].unk_01 = 4;
+        ((Actor *)D_8011ECD0)[155].unk_01 = 4;
+        ((Actor *)D_8011ECD0)[152].unk_01 = 4;
+        ((Actor *)D_8011ECD0)[153].unk_01 = 4;
         func_8013E7C0(0x38, 3, 5, 1);
         func_8013E7C0(0x39, 1, 5, 1);
         func_8013F15C(0x508, 1, 2);
         func_8014EF3C();
         break;
     case 1:
-        if (!(((DisplayActor44 *)D_8011ECD0)[152].flags & 1)) {
+        if (!(((Actor *)D_8011ECD0)[152].flags & 1)) {
             func_8013E7C0(0x38, 0xFF, 1, 0);
         }
         func_8014F080(0x32);
@@ -237,7 +237,7 @@ void func_80146C30(void) {
         func_8014F0F8(0x28);
         break;
     case 22:
-        ((DisplayActor44 *)D_8011ECD0)[155].unk_01 = 6;
+        ((Actor *)D_8011ECD0)[155].unk_01 = 6;
         func_8013E7C0(0x28, 2, 1, 1);
         D_8015ECEC = func_8013E9A8(0x400);
         D_8015ECF0 = func_8013E9A8(0x400) + 0x400;
@@ -274,7 +274,7 @@ void func_80146C30(void) {
         }
         break;
     case 24:
-        ((DisplayActor44 *)D_8011ECD0)[155].draw_flags = 0x81;
+        ((Actor *)D_8011ECD0)[155].draw_flags = 0x81;
         D_8015EDE0 += 6;
         func_8013E97C(0x3B, -D_8015EDE0, 0);
         if (D_8015EDE0 >= 0x89) {

@@ -200,7 +200,7 @@ typedef struct {
     u32 g1 : 5;
     u32 b1 : 5;
     u32 x1 : 1;
-} Pix2In;
+} PixelPairIn;
 
 typedef struct {
     u16 r0 : 5;
@@ -211,14 +211,14 @@ typedef struct {
     u16 g1 : 5;
     u16 b1 : 5;
     u16 x1 : 1;
-} Pix2Out;
+} PixelPairOut;
 
 void func_8004B590(arg0, arg1)
-Pix2In *arg0;
-Pix2Out *arg1;
+PixelPairIn *arg0;
+PixelPairOut *arg1;
 {
-    Pix2In *src;
-    Pix2Out *dst;
+    PixelPairIn *src;
+    PixelPairOut *dst;
     s32 i;
     s32 lum;
     s32 t;
@@ -250,7 +250,7 @@ void make_color_bar(void *arg0, s32 flag) {
      * strength-reduces them and the row pointer itself; separate i/j counters or a walked
      * pointer give the wrong register order. */
     s32 k;
-    Pix2Out *p;
+    PixelPairOut *p;
 
     p = arg0;
     for (k = 0; k < 16; k++) {
@@ -323,7 +323,7 @@ void make_color_bar(void *arg0, s32 flag) {
 void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
     /* T-24501: declaration order preserves the interpolation spill homes. */
     s32 i;
-    Pix2Out *p;
+    PixelPairOut *p;
     s32 sr;
     s32 er;
     s32 sg;
@@ -369,13 +369,13 @@ void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
 }
 
 void col2sepia(arg0, arg1, dr, dg, db)
-Pix2In *arg0;
-Pix2In *arg1;
+PixelPairIn *arg0;
+PixelPairIn *arg1;
 s32 dr;
 s32 dg;
 s32 db;
 {
-    Pix2In *p;
+    PixelPairIn *p;
     s32 i;
     u32 v;
     u32 s;

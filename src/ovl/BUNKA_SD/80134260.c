@@ -49,14 +49,14 @@ void func_80134418(void) {
     s32 i;
 
     for (i = 0; i < 0x40; i++) {
-        ((DisplayActor44 *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
+        ((Actor *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
     }
     *(u8 *)&D_800E6280.mode_scratch += 2;
     if (*(u8 *)&D_800E6280.mode_scratch > 0x80) {
         /* FAKE: single-expression * 0 + 0x80 folds the cap constant and its narrowing in one uopt pass while keeping unk_110B in the single promoted $v1 range. T-24082 */
         *(u8 *)&D_800E6280.mode_scratch = *(u8 *)&D_800E6280.mode_scratch * 0 + 0x80;
         for (i = 0; i < 0x40; i++) {
-            ((DisplayActor44 *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
+            ((Actor *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
         }
         func_8004284C();
     }
@@ -67,7 +67,7 @@ void func_801344A8(void) {
     s32 i;
 
     for (i = 0; i < 0x40; i++) {
-        ((DisplayActor44 *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
+        ((Actor *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
     }
     if (*(u8 *)&D_800E6280.mode_scratch == 0) {
         *(u8 *)&D_800E6280.mode_scratch = 2;
@@ -76,7 +76,7 @@ void func_801344A8(void) {
     if (*(u8 *)&D_800E6280.mode_scratch == 0) {
         *(u8 *)&D_800E6280.mode_scratch *= 0;
         for (i = 0; i < 0x40; i++) {
-            ((DisplayActor44 *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
+            ((Actor *)D_80120650)[i].brightness = *(u8 *)&D_800E6280.mode_scratch;
         }
         func_8004284C();
     }

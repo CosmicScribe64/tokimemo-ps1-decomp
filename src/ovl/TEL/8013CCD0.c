@@ -3,16 +3,16 @@
 #include "game.h"
 
 /* Display record n of the D_8011ECD0 pool. */
-#define REC(n) (((DisplayActor44 *)D_8011ECD0)[n])
+#define REC(n) (((Actor *)D_8011ECD0)[n])
 
 /* Frame and position of display record n, one source line (as1 schedules the three stores by line). */
 #define SET_REC(n, frame, px, py) (REC(n).unk_18 = (frame), REC(n).x = (px), REC(n).y = (py))
 
 /* The packed flag word at GameState +0xF64 of state gs, as single bits. */
-#define FLAGS_F64(gs) ((FlagsF64 *)(gs)->quarter_flags)
+#define FLAGS_F64(gs) ((QuarterFlagBits *)(gs)->quarter_flags)
 
 void func_8013CCD0(void) {
-    DisplayActor44 *rec;
+    Actor *rec;
     s32 i;
     s32 idx;
     s32 x;
@@ -94,7 +94,7 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     s32 v;
     u8 *notes;
     TelSignDays days;
-    Rec38 *p;
+    GirlRecord *p;
     /* FAKE: volatile copy of the record base; the original reloads the spilled base at every later use. T-24045 */
     GameState *volatile q;
 

@@ -275,19 +275,19 @@ s32 func_80146BC4(void) {
 void func_80146C68(s32 arg0) {
     func_80048F64(0x60);
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
-    ((DisplayActor44 *)D_80120650)->unk_01 = 1;
-    ((DisplayActor44 *)D_80120650)->flags = 4;
-    ((DisplayActor44 *)D_80120650)->quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_80120650)->draw_flags = 0x84;
+    ((Actor *)D_80120650)->unk_01 = 1;
+    ((Actor *)D_80120650)->flags = 4;
+    ((Actor *)D_80120650)->quad_flags = 0x01000000;
+    ((Actor *)D_80120650)->draw_flags = 0x84;
     *(u8 **)&D_80120650[0xC] = D_80125CA8;
     *(u8 **)&D_80120650[0x10] = D_80125CAC;
     *(u8 **)&D_80120650[0x34] = D_80125CB0;
-    ((DisplayActor44 *)D_80120650)->unk_05 = 2;
-    ((DisplayActor44 *)D_80120650)->blink_period = 1;
-    ((DisplayActor44 *)D_80120650)->unk_43 = 0x10;
-    ((DisplayActor44 *)D_80120650)->sequence_slot = arg0;
-    ((DisplayActor44 *)D_80120650)->x = -0x50;
-    ((DisplayActor44 *)D_80120650)->y = -0x40;
+    ((Actor *)D_80120650)->unk_05 = 2;
+    ((Actor *)D_80120650)->blink_period = 1;
+    ((Actor *)D_80120650)->unk_43 = 0x10;
+    ((Actor *)D_80120650)->sequence_slot = arg0;
+    ((Actor *)D_80120650)->x = -0x50;
+    ((Actor *)D_80120650)->y = -0x40;
 }
 
 s32 func_80146D4C(void) {
@@ -341,7 +341,7 @@ s32 func_80146D4C(void) {
     }
     ret = main + sub + bio - 8;
     /* FAKE: T-25007, the nibble view loads the flag byte into its own temporary as the original does */
-    if (((GsByteNibbles *)&g->player_flags.b[1])->low & 2) {
+    if (((NibbleView *)&g->player_flags.b[1])->low & 2) {
         ret /= 2;
     }
     printf("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
@@ -666,19 +666,19 @@ s32 func_8014790C(void) {
             parameter_disp_switch(0);
             hizuke_disp_switch(0);
             func_80048F64(0x60);
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 4;
-            ((DisplayActor44 *)D_8011ECD0)[96].flags = 0x40;
-            ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0;
-            ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0xA4;
-            ((DisplayActor44 *)D_8011ECD0)[96].frame_table = (u8 *) 0x801E64A0;
-            ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = (u8 *) 0x801E6520;
-            ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = (u8 *) 0x801E6494;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 1;
-            ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
-            ((DisplayActor44 *)D_8011ECD0)[96].x = 0;
-            ((DisplayActor44 *)D_8011ECD0)[96].y = -0x28;
-            ((DisplayActor44 *)D_8011ECD0)[96].brightness = 0x80;
+            ((Actor *)D_8011ECD0)[96].unk_01 = 4;
+            ((Actor *)D_8011ECD0)[96].flags = 0x40;
+            ((Actor *)D_8011ECD0)[96].quad_flags = 0;
+            ((Actor *)D_8011ECD0)[96].draw_flags = 0xA4;
+            ((Actor *)D_8011ECD0)[96].frame_table = (u8 *) 0x801E64A0;
+            ((Actor *)D_8011ECD0)[96].sequence_table = (u8 *) 0x801E6520;
+            ((Actor *)D_8011ECD0)[96].tpage_table = (u8 *) 0x801E6494;
+            ((Actor *)D_8011ECD0)[96].unk_18 = 0;
+            ((Actor *)D_8011ECD0)[96].unk_05 = 1;
+            ((Actor *)D_8011ECD0)[96].unk_04 = 8;
+            ((Actor *)D_8011ECD0)[96].x = 0;
+            ((Actor *)D_8011ECD0)[96].y = -0x28;
+            ((Actor *)D_8011ECD0)[96].brightness = 0x80;
             func_80148E98();
             func_80148EE8();
             func_801480D0();
@@ -690,19 +690,19 @@ s32 func_8014790C(void) {
                 x = D_80150630[i];
                 y = D_8015064C[i];
                 v = D_80150684[i];
-                ((DisplayActor44 *)r)[0x61].unk_01 = 3;
-                ((DisplayActor44 *)r)[0x61].flags = 0x40;
-                ((DisplayActor44 *)r)[0x61].quad_flags = 0;
-                ((DisplayActor44 *)r)[0x61].draw_flags = 0x24;
-                ((DisplayActor44 *)r)[0x61].frame_table = (u8 *)0x801E64A0;
-                ((DisplayActor44 *)r)[0x61].sequence_table = (u8 *)0x801E6520;
-                ((DisplayActor44 *)r)[0x61].tpage_table = (u8 *)0x801E6494;
-                ((DisplayActor44 *)r)[0x61].unk_18 = 0x1F;
-                ((DisplayActor44 *)r)[0x61].unk_05 = 1;
-                ((DisplayActor44 *)r)[0x61].unk_04 = 8;
-                ((DisplayActor44 *)r)[0x61].brightness = 0x80;
-                ((DisplayActor44 *)r)[0x61].x = x;
-                ((DisplayActor44 *)r)[0x61].y = y;
+                ((Actor *)r)[0x61].unk_01 = 3;
+                ((Actor *)r)[0x61].flags = 0x40;
+                ((Actor *)r)[0x61].quad_flags = 0;
+                ((Actor *)r)[0x61].draw_flags = 0x24;
+                ((Actor *)r)[0x61].frame_table = (u8 *)0x801E64A0;
+                ((Actor *)r)[0x61].sequence_table = (u8 *)0x801E6520;
+                ((Actor *)r)[0x61].tpage_table = (u8 *)0x801E6494;
+                ((Actor *)r)[0x61].unk_18 = 0x1F;
+                ((Actor *)r)[0x61].unk_05 = 1;
+                ((Actor *)r)[0x61].unk_04 = 8;
+                ((Actor *)r)[0x61].brightness = 0x80;
+                ((Actor *)r)[0x61].x = x;
+                ((Actor *)r)[0x61].y = y;
                 if (v == 0xD) {
                     strncpy((char *) buf, (char *) D_800E6280.player_family_name, 8);
                     strncat((char *) buf, (char *) D_800E6280.player_given_name, 8);
@@ -717,12 +717,12 @@ s32 func_8014790C(void) {
                         /* FAKE: T-25054, this late-folded zero prevents uopt
                          * from distributing 0x61 into the field displacement.
                          * The same identity is used in the final else arm. */
-                        ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
+                        ((Actor *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                     }
                 } else if (D_800E6280.girls[v].flags.f.met) {
                     set_kanji_string(x + 0x18, y, 3, D_800B3538[v], 0);
                 } else {
-                    ((DisplayActor44 *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
+                    ((Actor *) D_8011ECD0)[(i + 0x61) | ((u32)i < 0)].draw_flags = 0xA4;
                 }
                 r += 0x44;
                 i += 1;

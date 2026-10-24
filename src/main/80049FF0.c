@@ -37,14 +37,14 @@ void func_8004A14C(s32 arg0, RECT rect, s32 arg3) {
 }
 
 void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
-    SpriteSlot24 *bg;
+    BgLayer *bg;
     u8 cellh;
     s32 row;
     s32 col;
 
     cellh = 0x78;
-    /* main_api.h declares D_801220D0 as the first word of slot 0; the slots are SpriteSlot24 records. */
-    bg = &((SpriteSlot24 *)&D_801220D0)[slot];
+    /* main_api.h declares D_801220D0 as the first word of slot 0; the slots are BgLayer records. */
+    bg = &((BgLayer *)&D_801220D0)[slot];
     bg->unk_00 = 0x1000000;
     bg->unk_04 = x;
     bg->unk_06 = y;

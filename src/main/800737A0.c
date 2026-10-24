@@ -346,7 +346,7 @@ u8 func_800741B8(void) {
 }
 
 u8 func_8007437C(void) {
-    GsRec69C *rec;
+    DayEvent *rec;
     s32 temp;
     u8 *tbl;
 
@@ -367,44 +367,44 @@ u8 func_8007437C(void) {
         }
     }
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 1;
-    ((DisplayActor44 *)D_8011ECD0)[96].flags = 5;
-    ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0x84;
-    ((DisplayActor44 *)D_8011ECD0)[96].frame_table = (u8 *)D_80125CA8;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = (u8 *)D_80125CAC;
-    ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = (u8 *)D_80125CB0;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
+    ((Actor *)D_8011ECD0)[96].unk_01 = 1;
+    ((Actor *)D_8011ECD0)[96].flags = 5;
+    ((Actor *)D_8011ECD0)[96].quad_flags = 0x01000000;
+    ((Actor *)D_8011ECD0)[96].draw_flags = 0x84;
+    ((Actor *)D_8011ECD0)[96].frame_table = (u8 *)D_80125CA8;
+    ((Actor *)D_8011ECD0)[96].sequence_table = (u8 *)D_80125CAC;
+    ((Actor *)D_8011ECD0)[96].tpage_table = (u8 *)D_80125CB0;
+    ((Actor *)D_8011ECD0)[96].unk_05 = 2;
     /* FAKE: u8 view of the s8 flag unk_F6E (both reads below). The original reloads the flag for the second
      * record; with the field read as s8 the first load is kept in a register and every temporary shifts.
      * Matches; real source unknown. T-17016 */
     if (*(u8 *)&D_800E6280.sd_anim_fast != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[96].blink_period = 0x82;
+        ((Actor *)D_8011ECD0)[96].blink_period = 0x82;
     }
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0x10;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = temp;
-    ((DisplayActor44 *)D_8011ECD0)[96].x = -0x50;
-    ((DisplayActor44 *)D_8011ECD0)[96].y = -0x40;
+    ((Actor *)D_8011ECD0)[96].unk_43 = 0x10;
+    ((Actor *)D_8011ECD0)[96].sequence_slot = temp;
+    ((Actor *)D_8011ECD0)[96].x = -0x50;
+    ((Actor *)D_8011ECD0)[96].y = -0x40;
     /* A pointer to the day table keeps its base apart from the record base (the original addresses it with
      * its own lui); D_800E6280.month_calendar[0].unk_00[i] reuses the record base register. T-17016 */
     tbl = D_800E6280.month_calendar[0].day_kind;
     if (D_800E6280.day_events[D_800E6280.day_event_index].girl != 7) {
         if ((tbl[D_800E6280.day] != 1) && (tbl[D_800E6280.day] != 2) && (tbl[D_800E6280.day] != 3) && (D_800E6280.day_events[D_800E6280.day_event_index].extra != 0xF)) {
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 1;
-            ((DisplayActor44 *)D_8011ECD0)[97].flags = 5;
-            ((DisplayActor44 *)D_8011ECD0)[97].quad_flags = 0x01000000;
-            ((DisplayActor44 *)D_8011ECD0)[97].draw_flags = 0x84;
-            ((DisplayActor44 *)D_8011ECD0)[97].frame_table = (u8 *)D_80125CA8;
-            ((DisplayActor44 *)D_8011ECD0)[97].sequence_table = (u8 *)D_80125CAC;
-            ((DisplayActor44 *)D_8011ECD0)[97].tpage_table = (u8 *)D_80125CB0;
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
+            ((Actor *)D_8011ECD0)[97].unk_01 = 1;
+            ((Actor *)D_8011ECD0)[97].flags = 5;
+            ((Actor *)D_8011ECD0)[97].quad_flags = 0x01000000;
+            ((Actor *)D_8011ECD0)[97].draw_flags = 0x84;
+            ((Actor *)D_8011ECD0)[97].frame_table = (u8 *)D_80125CA8;
+            ((Actor *)D_8011ECD0)[97].sequence_table = (u8 *)D_80125CAC;
+            ((Actor *)D_8011ECD0)[97].tpage_table = (u8 *)D_80125CB0;
+            ((Actor *)D_8011ECD0)[97].unk_05 = 2;
             if (*(u8 *)&D_800E6280.sd_anim_fast != 0) {
-                ((DisplayActor44 *)D_8011ECD0)[97].blink_period = 0x82;
+                ((Actor *)D_8011ECD0)[97].blink_period = 0x82;
             }
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_43 = 0x10;
-            ((DisplayActor44 *)D_8011ECD0)[97].sequence_slot = (s16)(temp + 2);
-            ((DisplayActor44 *)D_8011ECD0)[97].x = -0x18;
-            ((DisplayActor44 *)D_8011ECD0)[97].y = -0x40;
+            ((Actor *)D_8011ECD0)[97].unk_43 = 0x10;
+            ((Actor *)D_8011ECD0)[97].sequence_slot = (s16)(temp + 2);
+            ((Actor *)D_8011ECD0)[97].x = -0x18;
+            ((Actor *)D_8011ECD0)[97].y = -0x40;
         }
     }
     func_80042808();
@@ -604,7 +604,7 @@ u8 func_80074F24(void) {
 }
 
 u8 func_8007505C(void) {
-    GsRec69C *rec;
+    DayEvent *rec;
     s32 temp;
 
     func_80048F64(0x60);
@@ -616,21 +616,21 @@ u8 func_8007505C(void) {
     } else if (rec->girl == 4) {
         addr_init_club_sd(D_801230D0);
         if (func_8006F524(4) != 0xF) {
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 1;
-            ((DisplayActor44 *)D_8011ECD0)[97].flags = 5;
-            ((DisplayActor44 *)D_8011ECD0)[97].quad_flags = 0x01000000;
-            ((DisplayActor44 *)D_8011ECD0)[97].draw_flags = 0x84;
-            ((DisplayActor44 *)D_8011ECD0)[97].frame_table = (u8 *)D_80125CA8;
-            ((DisplayActor44 *)D_8011ECD0)[97].sequence_table = (u8 *)D_80125CAC;
-            ((DisplayActor44 *)D_8011ECD0)[97].tpage_table = (u8 *)D_80125CB0;
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_05 = 2;
+            ((Actor *)D_8011ECD0)[97].unk_01 = 1;
+            ((Actor *)D_8011ECD0)[97].flags = 5;
+            ((Actor *)D_8011ECD0)[97].quad_flags = 0x01000000;
+            ((Actor *)D_8011ECD0)[97].draw_flags = 0x84;
+            ((Actor *)D_8011ECD0)[97].frame_table = (u8 *)D_80125CA8;
+            ((Actor *)D_8011ECD0)[97].sequence_table = (u8 *)D_80125CAC;
+            ((Actor *)D_8011ECD0)[97].tpage_table = (u8 *)D_80125CB0;
+            ((Actor *)D_8011ECD0)[97].unk_05 = 2;
             if ((u8)D_800E6280.sd_anim_fast != 0) {
-                ((DisplayActor44 *)D_8011ECD0)[97].blink_period = 0x82;
+                ((Actor *)D_8011ECD0)[97].blink_period = 0x82;
             }
-            ((DisplayActor44 *)D_8011ECD0)[97].unk_43 = 0x10;
-            ((DisplayActor44 *)D_8011ECD0)[97].sequence_slot = (s16)(temp + 2);
-            ((DisplayActor44 *)D_8011ECD0)[97].x = -0x18;
-            ((DisplayActor44 *)D_8011ECD0)[97].y = -0x40;
+            ((Actor *)D_8011ECD0)[97].unk_43 = 0x10;
+            ((Actor *)D_8011ECD0)[97].sequence_slot = (s16)(temp + 2);
+            ((Actor *)D_8011ECD0)[97].x = -0x18;
+            ((Actor *)D_8011ECD0)[97].y = -0x40;
         }
     } else {
         addr_init_holiday_sd(D_801230D0);
@@ -640,21 +640,21 @@ u8 func_8007505C(void) {
         }
     }
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 1;
-    ((DisplayActor44 *)D_8011ECD0)[96].flags = 5;
-    ((DisplayActor44 *)D_8011ECD0)[96].quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_8011ECD0)[96].draw_flags = 0x84;
-    ((DisplayActor44 *)D_8011ECD0)[96].frame_table = (u8 *)D_80125CA8;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_table = (u8 *)D_80125CAC;
-    ((DisplayActor44 *)D_8011ECD0)[96].tpage_table = (u8 *)D_80125CB0;
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 2;
+    ((Actor *)D_8011ECD0)[96].unk_01 = 1;
+    ((Actor *)D_8011ECD0)[96].flags = 5;
+    ((Actor *)D_8011ECD0)[96].quad_flags = 0x01000000;
+    ((Actor *)D_8011ECD0)[96].draw_flags = 0x84;
+    ((Actor *)D_8011ECD0)[96].frame_table = (u8 *)D_80125CA8;
+    ((Actor *)D_8011ECD0)[96].sequence_table = (u8 *)D_80125CAC;
+    ((Actor *)D_8011ECD0)[96].tpage_table = (u8 *)D_80125CB0;
+    ((Actor *)D_8011ECD0)[96].unk_05 = 2;
     if ((u8)D_800E6280.sd_anim_fast != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[96].blink_period = 0x82;
+        ((Actor *)D_8011ECD0)[96].blink_period = 0x82;
     }
-    ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0x10;
-    ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = temp;
-    ((DisplayActor44 *)D_8011ECD0)[96].x = -0x50;
-    ((DisplayActor44 *)D_8011ECD0)[96].y = -0x40;
+    ((Actor *)D_8011ECD0)[96].unk_43 = 0x10;
+    ((Actor *)D_8011ECD0)[96].sequence_slot = temp;
+    ((Actor *)D_8011ECD0)[96].x = -0x50;
+    ((Actor *)D_8011ECD0)[96].y = -0x40;
     if (D_800E6280.day_events[0].type == 0x42) {
         func_80042808();
     } else {

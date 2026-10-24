@@ -114,13 +114,13 @@ void func_8015A6D4(void) {
  * the RpgMotion20 pointer m for the negation and the rect word. Only this mix gives the original's promoted
  * registers (dx in $a0, the dead copy of dy in $a1, the copy of unk_26 in $a0 before the div); real source unknown. */
 void func_8015A744(void) {
-    DisplayActor44 *a;
+    Actor *a;
     RpgMotion20 *m;
     s32 i;
     s32 r;
 
     m = (RpgMotion20 *)&D_8015EC50;
-    a = (DisplayActor44 *)D_8011ECD0;
+    a = (Actor *)D_8011ECD0;
     for (i = 0; i < 8; i++) {
         if (a[i + 136].x < -0xB4 || a[i + 136].y >= 0x8D) {
             if (func_8013E9A8(5) == 0) {
@@ -143,7 +143,7 @@ void func_8015A744(void) {
     }
 }
 
-/* FAKE: T-22013, x is reused as the offset of the first store. Reassigning x makes uopt keep the original's copy of the halfword (stored to D_8015EC68 from $a0) and compute i + 0x28 in the first block; real source unknown. p walks D_8011ECD0 as raw bytes: p + 0x2446/0x244A are DisplayActor44 unk_26/unk_2A of record i + 136, and after p += 0x44 the stores at p + 0x23F6/0x23F8 are unk_1A/unk_1C of the same record. */
+/* FAKE: T-22013, x is reused as the offset of the first store. Reassigning x makes uopt keep the original's copy of the halfword (stored to D_8015EC68 from $a0) and compute i + 0x28 in the first block; real source unknown. p walks D_8011ECD0 as raw bytes: p + 0x2446/0x244A are Actor unk_26/unk_2A of record i + 136, and after p += 0x44 the stores at p + 0x23F6/0x23F8 are unk_1A/unk_1C of the same record. */
 void func_8015A8B4(void) {
     u8 *p;
     s32 i;

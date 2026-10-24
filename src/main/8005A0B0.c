@@ -968,7 +968,7 @@ void func_8005C4CC(s32 arg0) {
 void func_8005C5BC(void) {
     s32 i;
     s32 d;
-    Work800E7D10 *work;
+    SystemData *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];
@@ -1193,7 +1193,7 @@ s32 func_8005CC40(void) {
 void func_8005CF6C(void) {
     s32 i;
     s32 d;
-    Work800E7D10 *work;
+    SystemData *work;
     s16 x[16];
     s16 y[16];
     s16 w[16];
@@ -2542,7 +2542,7 @@ s32 join_club_select(void) {
                 func_80042940(2);
             }
         } else if (D_800E6280.menu_cursor_1 != -1) {
-            ((GsByteNibbles *)&D_800E6280.player_flags.b[1])->high = D_800E6280.menu_cursor_1;
+            ((NibbleView *)&D_800E6280.player_flags.b[1])->high = D_800E6280.menu_cursor_1;
             func_8004284C();
         }
     }

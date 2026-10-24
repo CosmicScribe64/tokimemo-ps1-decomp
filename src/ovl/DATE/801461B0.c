@@ -58,7 +58,7 @@ u16 func_801462B0(void) {
     RECT rect;
     s32 sp50;
     u32 sp4C;
-    Rec24 *p;
+    SpriteQuad *p;
     DateMovieWork *movie;
     u8 value;
     u32 color;
@@ -1228,7 +1228,7 @@ void func_801491E4(s32 arg0) {
 
 /* FAKE: s32 fall-through keeps the record base in v0 (T-9780). */
 s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    Rec24 *record;
+    SpriteQuad *record;
     s16 i;
 
     func_80084E90(arg0, arg1, arg2, arg3, arg4, arg5);

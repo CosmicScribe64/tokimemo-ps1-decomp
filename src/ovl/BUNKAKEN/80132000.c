@@ -966,8 +966,8 @@ void func_801339F4(void) {
         normal_date_girl_out();
         break;
     case 7:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -1073,7 +1073,7 @@ void func_801339F4(void) {
         normal_date_speak();
         break;
     case 22:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         func_80145530();
         break;
     default:
@@ -2485,8 +2485,8 @@ void func_801362EC(void) {
         normal_date_bggirl_fadeout();
         break;
     case 9:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 1;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -2563,8 +2563,8 @@ void func_801362EC(void) {
         normal_date_girl_out();
         break;
     case 20:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -2648,7 +2648,7 @@ void func_801362EC(void) {
         normal_date_speak();
         break;
     case 33:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         func_80145530();
         break;
     default:

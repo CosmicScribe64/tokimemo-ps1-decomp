@@ -66,7 +66,7 @@ void func_80138C9C(void) {
     CL.special = 0; /* FAKE (T-25120): an entry store by name would let tools/cvt_pass.py drop the
                      * widening of the `== 1` loads and then put the register constant first */
     count = 0;
-    if (((CharFlags *)D_800F53A0.girl[9].unk_10)->met == 0 &&
+    if (((GirlFlagBits *)D_800F53A0.girl[9].unk_10)->met == 0 &&
         D_800F53A0.girl[9].unk_06 >= 20) {
         D_80147240 = 1;
     }
@@ -74,13 +74,13 @@ void func_80138C9C(void) {
     if (i) {} /* FAKE: empty test splits the live range of i (autotweak) T-24707 */
     for (i = 0; i < 11; i++) {
         if (i) {} /* FAKE: empty test splits the live range of i (autotweak) T-24707 */
-        if ((((CharFlags *)D_800F53A0.girl[i].unk_10)->met != 0 || (i == 9 && r * 1 == D_80147240)) &&
+        if ((((GirlFlagBits *)D_800F53A0.girl[i].unk_10)->met != 0 || (i == 9 && r * 1 == D_80147240)) &&
             (func_8005F220(i) >= 0x32U || (r * 1 == D_80147240 && i == 9)) &&
             (D_80147240 == 0 || i != 0 || func_8005EBE0(0) >= 0x46U)) {
             sp4C[count] = i;
             count += 1;
             CL.count += 1;
-            ((CharFlags *)D_800F53A0.girl[i].unk_10)->b8 = 1;
+            ((GirlFlagBits *)D_800F53A0.girl[i].unk_10)->b8 = 1;
         }
     }
     for (i = 0; i < CL.count; i++) {

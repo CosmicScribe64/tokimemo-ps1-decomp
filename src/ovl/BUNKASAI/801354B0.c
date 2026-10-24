@@ -2,7 +2,7 @@
 #include "ovl/BUNKASAI.h"
 
 void func_801354B0(void) {
-    BunkaDispatch8 *work = (BunkaDispatch8 *)&D_80122EB8;
+    CultureFestivalDispatch *work = (CultureFestivalDispatch *)&D_80122EB8;
     s32 selector = work->unk_00;
     work->unk_04 = 1;
     D_800E6280.girls[1].flags.f.b2 = 1;

@@ -375,10 +375,10 @@ void func_801022C0(void) {
         } else {
             D_800F19AB = 0x80;
         }
-        ((DisplayActor44 *)D_800E9620)[96].brightness = D_800F19AB;
-        ((DisplayActor44 *)D_800E9620)[97].brightness = D_800F19AB;
+        ((Actor *)D_800E9620)[96].brightness = D_800F19AB;
+        ((Actor *)D_800E9620)[97].brightness = D_800F19AB;
         for (i = 0; i < 6; i++) {
-            ((Rec24 *)D_800EC190)[i + 2].tint_r = ((Rec24 *)D_800EC190)[i + 2].tint_g = ((Rec24 *)D_800EC190)[i + 2].tint_b = D_800F19AB;
+            ((SpriteQuad *)D_800EC190)[i + 2].tint_r = ((SpriteQuad *)D_800EC190)[i + 2].tint_g = ((SpriteQuad *)D_800EC190)[i + 2].tint_b = D_800F19AB;
         }
     }
 }

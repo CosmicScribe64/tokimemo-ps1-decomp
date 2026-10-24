@@ -2,8 +2,8 @@
 #include "ovl/BUNKASAI.h"
 
 void func_80154018(void) {
-    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 1;
-    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
+    ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 1;
+    switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         if (D_800E6280.year == 0x61) {
             func_80042908(0x1E);
@@ -145,7 +145,7 @@ void func_801541D8(void) {
     case 10:
         if (func_8008667C(1) == 4) {
             func_80042940(0x14);
-        } else if (((CharFlags *)&D_800E6280.girls[1].flags)->b2) {
+        } else if (((GirlFlagBits *)&D_800E6280.girls[1].flags)->b2) {
             D_800CA148 = 0xB;
             func_8004284C();
         } else {
@@ -300,9 +300,9 @@ void func_801541D8(void) {
     case 24:
         if (func_8008667C(1) != 4) {
             if (D_800E6280.year == 0x5F) {
-                ((CharFlags *)&D_800E6280.girls[1].flags)->b12 = 1;
+                ((GirlFlagBits *)&D_800E6280.girls[1].flags)->b12 = 1;
             } else {
-                ((CharFlags *)&D_800E6280.girls[1].flags)->b13 = 1;
+                ((GirlFlagBits *)&D_800E6280.girls[1].flags)->b13 = 1;
             }
         }
         func_80142BC8();
@@ -429,7 +429,7 @@ void func_801548C8(void) {
         }
         if (!(D_800E6280.girls[1].syoushin & 3)) {
             D_800CA148 += 8;
-        } else if (!(((CharFlags *)&D_800E6280.girls[1].flags)->b2)) {
+        } else if (!(((GirlFlagBits *)&D_800E6280.girls[1].flags)->b2)) {
             D_800CA148 += 4;
         }
         func_8004284C();
@@ -670,7 +670,7 @@ void func_80154D64(void) {
                 D_800CA148 = 0x49;
                 break;
             }
-            if (!(((CharFlags *)&state->girls[1].flags)->b2)) {
+            if (!(((GirlFlagBits *)&state->girls[1].flags)->b2)) {
                 D_800CA148 += 3;
             }
 
@@ -1949,8 +1949,8 @@ void func_8015706C(void) {
         }
         break;
     case 16:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -2075,7 +2075,7 @@ void func_8015706C(void) {
         if (!(D_800E6280.girls[1].syoushin & 3)) {
             normal_date_girl_out();
         } else {
-            if (!(((CharFlags *)&D_800E6280.girls[1].flags)->b2)) {
+            if (!(((GirlFlagBits *)&D_800E6280.girls[1].flags)->b2)) {
                 D_800CA148 += 1;
             }
             if (((u8) D_800E6280.girls[1].flags.b[2] >> 4) == 1) {
@@ -2114,7 +2114,7 @@ void func_8015706C(void) {
         normal_date_speak();
         break;
     case 34:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         func_80142BC8();
         break;
     default:

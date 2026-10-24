@@ -58,7 +58,7 @@ s32 func_80149468(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        if (((ScheduleClubFlags *)&D_800E6280.clubs[i])->unk_25 >= 3 && ((ScheduleClubFlags *)&D_800E6280.clubs[i])->b30) {
+        if (((ClubFlagBits *)&D_800E6280.clubs[i])->unk_25 >= 3 && ((ClubFlagBits *)&D_800E6280.clubs[i])->b30) {
             return i;
         }
     }
@@ -309,19 +309,19 @@ s32 func_80149DD8(void) {
 
 void func_80149E68(void) {
     func_80048F64(0x60);
-    ((DisplayActor44 *)D_80120650)->unk_01 = 1;
-    ((DisplayActor44 *)D_80120650)->flags = 4;
-    ((DisplayActor44 *)D_80120650)->quad_flags = 0x01000000;
-    ((DisplayActor44 *)D_80120650)->draw_flags = 0x84;
+    ((Actor *)D_80120650)->unk_01 = 1;
+    ((Actor *)D_80120650)->flags = 4;
+    ((Actor *)D_80120650)->quad_flags = 0x01000000;
+    ((Actor *)D_80120650)->draw_flags = 0x84;
     *(u8 **)&D_80120650[0xC] = D_80125CA8;
     *(u8 **)&D_80120650[0x10] = D_80125CAC;
     *(u8 **)&D_80120650[0x34] = D_80125CB0;
-    ((DisplayActor44 *)D_80120650)->unk_05 = 2;
-    ((DisplayActor44 *)D_80120650)->blink_period = 1;
-    ((DisplayActor44 *)D_80120650)->unk_43 = 0x10;
-    ((DisplayActor44 *)D_80120650)->sequence_slot = 0;
-    ((DisplayActor44 *)D_80120650)->x = -0x50;
-    ((DisplayActor44 *)D_80120650)->y = -0x40;
+    ((Actor *)D_80120650)->unk_05 = 2;
+    ((Actor *)D_80120650)->blink_period = 1;
+    ((Actor *)D_80120650)->unk_43 = 0x10;
+    ((Actor *)D_80120650)->sequence_slot = 0;
+    ((Actor *)D_80120650)->x = -0x50;
+    ((Actor *)D_80120650)->y = -0x40;
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
 }
 
@@ -385,10 +385,10 @@ void func_80149F48(void) {
     if (var_a1 == 0) {
         D_80150E9C += 1;
     }
-    ((DisplayActor44 *)D_80120650)->flags = 5;
-    ((DisplayActor44 *)D_80120650)->unk_08 = 0;
-    ((DisplayActor44 *)D_80120650)->sequence_slot = var_a1;
-    ((DisplayActor44 *)D_80120650)->unk_18 = 0;
+    ((Actor *)D_80120650)->flags = 5;
+    ((Actor *)D_80120650)->unk_08 = 0;
+    ((Actor *)D_80120650)->sequence_slot = var_a1;
+    ((Actor *)D_80120650)->unk_18 = 0;
     D_800E6280.substep += 1;
 }
 

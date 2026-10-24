@@ -455,7 +455,7 @@ u8 func_80054590(void) {
 }
 
 s32 func_80054694(s32 arg0) {
-    FileReq req;
+    CardFileRequest req;
     s32 fd;
 
     func_80056070(req.name, arg0);
@@ -689,7 +689,7 @@ s32 func_80054C74(s32 arg0) {
 }
 
 void func_80054E6C(void) {
-    Work800E7D10 *w = &D_800E7D10;
+    SystemData *w = &D_800E7D10;
     GameState *g = &D_800E6280;
     s32 pad[14]; /* FAKE: T-25105, 56 unused bytes of the original 0x80 frame; the real locals are unknown */
     s32 i;
@@ -713,12 +713,12 @@ void func_80054E6C(void) {
 }
 
 s32 func_80054FC0(s32 arg0) {
-    SaveImageView *bank;
+    SystemSaveImage *bank;
     u8 *p;
     s32 sum;
     u32 offset;
 
-    bank = (SaveImageView *)D_80123320;
+    bank = (SystemSaveImage *)D_80123320;
     D_800E7D10.slot_status[D_800E7D10.selected_slot] = 1;
     memcpy(bank->slot_status, D_800E7D10.slot_status, 16);
     memcpy(bank->flags, D_800E7D10.flags, 16);
@@ -727,8 +727,8 @@ s32 func_80054FC0(s32 arg0) {
     if (D_800E7D10.selected_slot != 0) {
         bank->selected_slot = D_800E7D10.selected_slot % 15U;
     }
-    bank->config0 = ((SaveWorkView *)&D_800E7D10)->config0;
-    bank->config1 = ((SaveWorkView *)&D_800E7D10)->config1;
+    bank->config0 = ((SystemDataSaveView *)&D_800E7D10)->config0;
+    bank->config1 = ((SystemDataSaveView *)&D_800E7D10)->config1;
     bank->unk_54[0] = D_800E7D10.unk_027[0];
     bank->unk_54[1] = D_800E7D10.unk_027[1];
     memcpy(bank->records, D_800E7D10.unk_058, 0x800);
@@ -764,7 +764,7 @@ s32 func_80054FC0(s32 arg0) {
 }
 
 s32 func_800552DC(s32 arg0) {
-    SaveImageView *bank;
+    SystemSaveImage *bank;
 
     if (func_80055A38(0) == -1) {
         return -1;
@@ -772,16 +772,16 @@ s32 func_800552DC(s32 arg0) {
     /* FAKE: T-24501, integer address arithmetic keeps the bank offset grouped
      * before adding the image base; pointer arithmetic reassociates +0x200 and
      * changes temporary numbering throughout both aggregate copies. */
-    bank = (SaveImageView *)((D_800E6280.album_slot * 0xF00 + 0x200) + (u32)D_80123120);
+    bank = (SystemSaveImage *)((D_800E6280.album_slot * 0xF00 + 0x200) + (u32)D_80123120);
     memcpy(D_800E7D10.flags, bank->flags, 16);
     D_800E7D10.unk_024[0] |= bank->unk_24[0];
     D_800E7D10.unk_024[1] = bank->unk_24[1];
     D_800E7D10.selected_slot = bank->selected_slot;
-    if ((((SaveWorkView *)&D_800E7D10)->config0.flags.b[3] & 1) == 0) {
-        ((SaveWorkView *)&D_800E7D10)->config0 = bank->config0;
+    if ((((SystemDataSaveView *)&D_800E7D10)->config0.flags.b[3] & 1) == 0) {
+        ((SystemDataSaveView *)&D_800E7D10)->config0 = bank->config0;
     }
     if (D_800E7D10.bits.flag == 0) {
-        ((SaveWorkView *)&D_800E7D10)->config1 = bank->config1;
+        ((SystemDataSaveView *)&D_800E7D10)->config1 = bank->config1;
     }
     D_800E7D10.unk_027[0] = bank->unk_54[0];
     D_800E7D10.unk_027[1] = bank->unk_54[1];
@@ -803,10 +803,10 @@ s32 func_800552DC(s32 arg0) {
     D_80125C55 = D_800E7D10.unk_DC8[0xF6];
 }
 
-/* Writes a game save into bank arg0 of the card image (SaveGameView), then stores the bank's byte sum.
+/* Writes a game save into bank arg0 of the card image (GameSaveImage), then stores the bank's byte sum.
    FAKE: T-25105, the straight-line stores reach the bank through the byte offset
    `&D_80123120[arg0 * 0xF00 + 0x200]` and the loops as an element of the bank array
-   `((SaveGameView *)&D_80123120[0x200])[arg0]`. uopt keeps the two spellings as two values: the
+   `((GameSaveImage *)&D_80123120[0x200])[arg0]`. uopt keeps the two spellings as two values: the
    original's two base registers (a2 for the stores, a3 recomputed before the first loop, both
    spilled around get_k_speed). One spelling for both gives one base register. The real source
    form is unknown. */
@@ -817,63 +817,63 @@ s32 func_8005557C(s32 arg0) {
     u32 i; /* one counter for every loop: only the last loop (the byte sum) is unrolled */
 
     g = &D_800E6280;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->vacation;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->year;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->month;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->day;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->weekday;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->day_count;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->month_calendar[0];
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->month_calendar[1];
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(GsBlockC4 *)g->player_full_name;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004 = g->vacation;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 = g->year;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 = g->month;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007 = g->day;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008 = g->weekday;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A = g->day_count;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[0] = g->month_calendar[0];
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00C[1] = g->month_calendar[1];
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C = *(ProfileBlock *)g->player_full_name;
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i] = g->girls[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_108[i] = g->girls[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i] = g->girl_cleared[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_488[i] = g->girl_cleared[i];
     }
     for (i = 0; i < 8; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i] = g->unk_54C[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_498[i] = g->unk_54C[i];
     }
     for (i = 0; i < 12; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((GsWord *)g->clubs)[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_4B8[i] = ((WordView *)g->clubs)[i];
     }
     g->unk_668[3] = get_k_speed();
     g->unk_668[2] = D_800B6708;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(GsBlock56C *)g->event_flags;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8 = *(EventFlagBlock *)g->event_flags;
     for (i = 0; i < 4; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->date_place_history[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5E8[i] = g->date_place_history[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->girl_last_date_spot[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5EC[i] = g->girl_last_date_spot[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->girl_last_date_spot_timer[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5FC[i] = g->girl_last_date_spot_timer[i];
     }
     for (i = 0; i < 16; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i] = g->girl_event_bits[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_60C[i] = g->girl_event_bits[i];
     }
     for (i = 0; i < 256; i++) {
-        ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i] = g->event_log[i];
+        ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_61C[i] = g->event_log[i];
     }
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->icon_mode;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->icon_count;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->menu_mode;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->sd_anim_fast;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->voice_mode;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->last_command;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->cursor_speed;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->click_mode;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->double_click_interval;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->confirm_button;
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(GsWord *)g->quarter_flags;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C = g->icon_mode;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D = g->icon_count;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E = g->menu_mode;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F = g->sd_anim_fast;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20 = g->voice_mode;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24 = g->last_command;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28 = g->cursor_speed;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29 = g->click_mode;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A = g->double_click_interval;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B = g->confirm_button;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C = *(WordView *)g->quarter_flags;
     /* byte sum of the bank's data; the checksum store is a FAKE address form as in func_80054FC0 (T-25105) */
     p = &D_80123120[arg0 * 0xF00 + 0x204];
     sum = 0;
     for (i = 4; i < 0xF00; i++) {
         sum += *p++;
     }
-    ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
+    ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->checksum = sum;
 }
 
 /* FAKE: T-10850, T-17007: the dead initial assignments set the induction-register numbering, and
@@ -926,68 +926,68 @@ s32 func_80055AFC(s32 arg0) {
         return -1;
     }
     arg0 = g->album_slot & 1;
-    if (((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 == 0) {
+    if (((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005 == 0) {
         return -1;
     }
-    if (((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 == 0) {
+    if (((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006 == 0) {
         return -1;
     }
-    g->vacation = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004;
-    g->year = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005;
-    g->month = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006;
-    g->day = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007;
-    g->weekday = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008;
-    g->day_count = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A;
+    g->vacation = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_004;
+    g->year = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_005;
+    g->month = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_006;
+    g->day = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_007;
+    g->weekday = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_008;
+    g->day_count = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_00A;
     for (i = 0; i < 2; i++) {
-        g->month_calendar[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_00C[i];
+        g->month_calendar[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_00C[i];
     }
-    *(GsBlockC4 *)g->player_full_name = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C;
+    *(ProfileBlock *)g->player_full_name = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_08C;
     for (i = 0; i < 16; i++) {
-        g->girls[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_108[i];
+        g->girls[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_108[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_cleared[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_488[i];
+        g->girl_cleared[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_488[i];
     }
     for (i = 0; i < 8; i++) {
-        g->unk_54C[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_498[i];
+        g->unk_54C[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_498[i];
     }
     for (i = 0; i < 12; i++) {
-        ((GsWord *)g->clubs)[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_4B8[i];
+        ((WordView *)g->clubs)[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_4B8[i];
     }
-    *(GsBlock56C *)g->event_flags = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8;
+    *(EventFlagBlock *)g->event_flags = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_4E8;
     k_speed_set(g->unk_668[3]);
     D_800B6708 = g->unk_668[2];
     for (i = 0; i < 4; i++) {
-        g->date_place_history[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5E8[i];
+        g->date_place_history[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5E8[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_last_date_spot[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5EC[i];
+        g->girl_last_date_spot[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5EC[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_last_date_spot_timer[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_5FC[i];
+        g->girl_last_date_spot_timer[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_5FC[i];
     }
     for (i = 0; i < 16; i++) {
-        g->girl_event_bits[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_60C[i];
+        g->girl_event_bits[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_60C[i];
     }
     /* FAKE: T-25310, the result is stored and never read; the original reads bzero's v0 after the call,
        which keeps v0 out of the unrolled loop's start values (end pointer in v0, the counter range in t4,
        the bank bases in t5 and ra). Its real use is unknown. */
     p = bzero(g->event_log, 0x800);
     for (i = 0; i < 256; i++) {
-        g->event_log[i] = ((SaveGameView *)&D_80123120[0x200])[arg0].unk_61C[i];
+        g->event_log[i] = ((GameSaveImage *)&D_80123120[0x200])[arg0].unk_61C[i];
     }
     g->event_log_count = func_8006C988(&g->current_girl, &g->date_girl, 1);
-    g->icon_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C;
-    g->icon_count = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D;
-    g->menu_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E;
-    g->sd_anim_fast = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F;
-    g->voice_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20;
-    g->last_command = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24;
-    g->cursor_speed = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28;
-    g->click_mode = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29;
-    g->double_click_interval = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A;
-    g->confirm_button = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B;
-    *(GsWord *)g->quarter_flags = ((SaveGameView *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C;
+    g->icon_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1C;
+    g->icon_count = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1D;
+    g->menu_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1E;
+    g->sd_anim_fast = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E1F;
+    g->voice_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E20;
+    g->last_command = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E24;
+    g->cursor_speed = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E28;
+    g->click_mode = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E29;
+    g->double_click_interval = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2A;
+    g->confirm_button = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2B;
+    *(WordView *)g->quarter_flags = ((GameSaveImage *)&D_80123120[arg0 * 0xF00 + 0x200])->unk_E2C;
     return 1;
 }
 

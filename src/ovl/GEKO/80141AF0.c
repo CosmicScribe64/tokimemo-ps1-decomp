@@ -221,8 +221,8 @@ void func_801420E4(void) {
     tpage_buf_clear();
     func_8004E58C();
     func_8006612C((s32) "");
-    ((DisplayActor44 *)D_8011ECD0)[3].draw_flags = 0;
-    ((DisplayActor44 *)D_8011ECD0)[4].draw_flags = 0;
+    ((Actor *)D_8011ECD0)[3].draw_flags = 0;
+    ((Actor *)D_8011ECD0)[4].draw_flags = 0;
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();

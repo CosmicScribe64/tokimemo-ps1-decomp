@@ -250,7 +250,7 @@ void func_80138FC0(void) {
 
 s32 func_80139198(void) {
     s32 i;
-    DisplayActor44 *p;
+    Actor *p;
 
     func_8004ADAC(4);
     draw2d3d(1, 0);
@@ -275,7 +275,7 @@ s32 func_80139198(void) {
     D_800E6280.menu_cursor_1 = 0;
     D_800E6280.menu_mode = 0;
     func_8006BC28(0);
-    ((DisplayActor44 *)D_8011ECD0)[0].draw_flags |= 1;
+    ((Actor *)D_8011ECD0)[0].draw_flags |= 1;
     D_8013D3B0 = 0;
     D_8013D3B4 = 0;
     D_801220E2 = 0;
@@ -286,7 +286,7 @@ s32 func_80139198(void) {
     menu_set(0, 7, (D_800E6280.screen_brightness = 0, D_8013D364), D_8013D372, D_8013D380, D_8013D38E);
     menu_bar_color(0, 0x5F7F3F, 9, 8);
     menu_bar_color(1, 0x7F7F7F, 2, 1);
-    for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
+    for (i = 0, p = (Actor *)D_8011ECD0; i < 13; i++, p++) {
         func_80048F64(i + 0x60);
         p[96].unk_01 = 2;
         p[96].flags = 0x40;
@@ -313,7 +313,7 @@ s32 func_80139198(void) {
 /* FAKE: s32 without an explicit return keeps $v0 live at epilogue so as1 retains move $v0, $zero in the third loop preheader. T-24126 */
 s32 func_801394F4(void) {
     s32 i;
-    DisplayActor44 *p;
+    Actor *p;
     s16 temp_v0;
     s32 dx;
     s32 dy;
@@ -321,11 +321,11 @@ s32 func_801394F4(void) {
     u8 flags;
 
     count = 0;
-    for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
-        dx = abs((((DisplayActor44 *)D_8011ECD0)->x - p[96].x) & 0x3FF);
-        func_8004AE54(abs((((DisplayActor44 *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
-        dx = abs((((DisplayActor44 *)D_8011ECD0)->x - p[96].x) & 0x3FF);
-        if (((abs((((DisplayActor44 *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx) < 0x20) && (D_800E6280.pad_pressed & 0x20)) {
+    for (i = 0, p = (Actor *)D_8011ECD0; i < 13; i++, p++) {
+        dx = abs((((Actor *)D_8011ECD0)->x - p[96].x) & 0x3FF);
+        func_8004AE54(abs((((Actor *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
+        dx = abs((((Actor *)D_8011ECD0)->x - p[96].x) & 0x3FF);
+        if (((abs((((Actor *)D_8011ECD0)->y - p[96].y) & 0x1FF) + dx) < 0x20) && (D_800E6280.pad_pressed & 0x20)) {
             flags = p[96].draw_flags;
             if (flags & 0x10) {
                 p[96].draw_flags = flags & 0xFFEF;
@@ -348,19 +348,19 @@ s32 func_801394F4(void) {
         if (!(p[96].draw_flags & 0x10)) {
             temp_v0 = p[96].unk_08;
             p[96].unk_08 = temp_v0 + 1;
-            ((DisplayFixActor44 *)p)[96].y.w += rsin(temp_v0 << 6) * 4;
+            ((ActorFixed *)p)[96].y.w += rsin(temp_v0 << 6) * 4;
             count += 1;
         }
     }
     func_8004AE54(count, 0, -0x64, 6);
     if (count == 13) {
-        for (i = 0, p = (DisplayActor44 *)D_8011ECD0; i < 13; i++, p++) {
+        for (i = 0, p = (Actor *)D_8011ECD0; i < 13; i++, p++) {
             p[96].x = i * 0x20 - 0x96;
             p[96].y = -0x64;
         }
     } else if (count >= 5) {
         /* FAKE: i = 0; p = ...; do { on one line with &D_8011ECD0[i + 13] folds D_8011F044 into $s2 before 40 ($s3). T-24126 */
-        i = 0; p = (DisplayActor44 *)D_8011ECD0; do {
+        i = 0; p = (Actor *)D_8011ECD0; do {
             if (!(p[96].draw_flags & 0x10)) {
                 dx = p[96].x - (rsin(p[96].unk_08) / 32);
                 dy = p[96].y - (func_800A0140(p[96].unk_08) / 40);
@@ -380,7 +380,7 @@ s32 func_801394F4(void) {
                 }
             }
             p++;
-        } while (p != &((DisplayActor44 *)D_8011ECD0)[i + 13]);
+        } while (p != &((Actor *)D_8011ECD0)[i + 13]);
     }
 }
 

@@ -155,7 +155,7 @@ void func_80157158(void) {
         break;
     case 0x4:
         func_8013E97C(0x28, 0, 0);
-        ((DisplayActor44 *)D_8011ECD0)[136].quad_flags = 0x51000000;
+        ((Actor *)D_8011ECD0)[136].quad_flags = 0x51000000;
         func_8013E7C0(0x28, 3, 5, 1);
         func_8014EF3C();
         break;
@@ -175,11 +175,11 @@ void func_80157158(void) {
         D_8015EDD8 = 0x50;
         break;
     case 0x50:
-        if (!(((DisplayActor44 *)D_8011ECD0)[137].flags & 1)) {
+        if (!(((Actor *)D_8011ECD0)[137].flags & 1)) {
             func_8013F15C(0x508, 1, 0);
             D_8015EC74 -= 1;
             if (D_8015EC74 == 0) {
-                ((DisplayActor44 *)D_8011ECD0)[136].quad_flags = 0x41000000;
+                ((Actor *)D_8011ECD0)[136].quad_flags = 0x41000000;
                 func_8013E810(0x28, 0xFF, 1, 0);
                 func_8013E810(0x29, 0xFF, 1, 0);
                 func_8014EF3C();
@@ -261,14 +261,14 @@ void func_80157640(void) {
         func_8014F178(0);
         break;
     case 5:
-        ((DisplayActor44 *)D_8011ECD0)[125].draw_flags = 0x81;
+        ((Actor *)D_8011ECD0)[125].draw_flags = 0x81;
         func_8013E7C0(0x30, 2, 1, 1);
         func_8013F15C(0x503, 1, 0);
         func_8014EF3C();
         break;
     case 6:
-        ((DisplayActor44 *)D_8011ECD0)[125].x += 4;
-        ((DisplayActor44 *)D_8011ECD0)[144].x += 4;
+        ((Actor *)D_8011ECD0)[125].x += 4;
+        ((Actor *)D_8011ECD0)[144].x += 4;
         D_8015EDE0 += 1;
         if (D_8015EDE0 >= 0x21) {
             func_8014EF3C();

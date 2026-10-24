@@ -16,7 +16,7 @@ s32 GetWorkBase(s32 arg0, s32 arg1) {
     return ret;
 }
 
-void sprite_set_gpu_poly_ft4(Rec24 *arg0, s32 arg1, s32 arg2) {
+void sprite_set_gpu_poly_ft4(SpriteQuad *arg0, s32 arg1, s32 arg2) {
     u8 *p;
 
     if (!(arg0->flags & 0x80000000)) {

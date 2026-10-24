@@ -57,13 +57,13 @@ void SetMouse(s32 arg0, u32 arg1, u32 arg2) {
     D_800E36D0[arg0] = D_800E36EA * arg2;
 }
 
-typedef struct MouseOut {
+typedef struct MouseSample {
     /* 0x0 */ s32 unk_0;
     /* 0x4 */ s32 unk_4;
     /* 0x8 */ s32 unk_8;
-} MouseOut; /* size 0xC */
+} MouseSample; /* size 0xC */
 
-void func_80059860(s32 arg0, MouseOut *arg1) {
+void func_80059860(s32 arg0, MouseSample *arg1) {
     s8 *p;
 
     func_80059938(arg0);

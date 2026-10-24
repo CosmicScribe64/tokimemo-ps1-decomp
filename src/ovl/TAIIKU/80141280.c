@@ -257,7 +257,7 @@ s32 func_801419F8(void) {
             } else {
                 return 0;
             }
-            ((DisplayActor44 *)D_8011ECD0)->draw_flags &= 0xFF7F;
+            ((Actor *)D_8011ECD0)->draw_flags &= 0xFF7F;
             k_reset(1);
             func_8004284C();
         }

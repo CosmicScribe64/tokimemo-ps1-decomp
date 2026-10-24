@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "main_api.h"
-#include "game.h" /* T-17600: DisplayActor44 for the display records D_80129F40 */
+#include "game.h" /* T-17600: Actor for the display records D_80129F40 */
 
 /* GYOZI data. */
 extern u8 D_801474B8;
@@ -224,7 +224,7 @@ typedef struct GyoziWork {
     /* 0x03F */ u8 unk_03F[0xBB];
     /* 0x0FA */ s16 unk_0FA;
     /* 0x0FC */ u8 unk_0FC[4];
-    /* 0x100 */ GsRec0FC unk_100;
+    /* 0x100 */ ParamValue unk_100;
     /* 0x104 */ u8 unk_104[0xA4];
     /* 0x1A8 */ GyoziGirl girl[11];
     /* 0x410 */ u8 unk_410[0x260];
@@ -239,7 +239,7 @@ typedef struct GyoziWork {
     /* 0xF30 */ u8 unk_F30[0x28];
     /* 0xF58 */ s32 unk_F58;
     /* 0xF5C */ u8 unk_F5C[4];
-    /* 0xF60 */ GsRecF90 unk_F60[8];
+    /* 0xF60 */ MenuItem unk_F60[8];
     /* 0xFA0 */ u8 unk_FA0[0x118];
     /* 0x10B8 */ s32 unk_10B8; /* D_800F6458; a member where a later girl[] bit-field load stays below its store (T-17600) */
     /* 0x10BC */ u8 unk_10BC[0xC];
@@ -527,7 +527,7 @@ s32 func_80144B70(void);
 
 /* Three consecutive records at D_8012B8C0 (T-4070): accessing the flag bytes through one base symbol
  * keeps IDO from hoisting loads above earlier stores, as in the original. */
-extern DisplayActor44 D_8012B8C0[3];
+extern Actor D_8012B8C0[3];
 
 extern s32 D_80148BC0;
 extern s32 D_80148BC4;
@@ -997,8 +997,8 @@ void func_80142C14(void);
 void func_80145520(void);
 extern s32 D_8012E694;
 /* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
- * main's Rec24 table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
-extern Rec24 D_8012CA40[];
+ * main's SpriteQuad table D_801217D0, 0xB270 above it as the display records D_80129F40 are above D_8011ECD0. */
+extern SpriteQuad D_8012CA40[];
 /* T-17600: one entry per falling dumpling (func_80144018, func_801444CC, func_80144B70, func_80145084). The
  * dumpling count D_80148EAC stops at 50 and the arrays end where the next begins; the record index i of
  * D_8012CA40 starts at 4, and the [i - 4] accesses fold into %lo, so splat names D_80148BE0, D_80148D70 and

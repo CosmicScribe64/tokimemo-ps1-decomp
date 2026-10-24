@@ -21,11 +21,11 @@ s32 func_8013E330(void) {
     table = D_8014605C;
     idx = D_800E6280.step;
     table.f[idx](0x80);
-    ((DisplayActor44 *)D_8011ECD0)[96].brightness = D_800B593C;
-    if (((DisplayActor44 *)D_8011ECD0)[96].unk_18 == 0 && ((DisplayActor44 *)D_8011ECD0)[96].unk_08 == 0) {
-        ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot += 1;
-        if (((DisplayActor44 *)D_8011ECD0)[96].sequence_slot >= 3) {
-            ((DisplayActor44 *)D_8011ECD0)[96].sequence_slot = 0;
+    ((Actor *)D_8011ECD0)[96].brightness = D_800B593C;
+    if (((Actor *)D_8011ECD0)[96].unk_18 == 0 && ((Actor *)D_8011ECD0)[96].unk_08 == 0) {
+        ((Actor *)D_8011ECD0)[96].sequence_slot += 1;
+        if (((Actor *)D_8011ECD0)[96].sequence_slot >= 3) {
+            ((Actor *)D_8011ECD0)[96].sequence_slot = 0;
         }
     }
 }

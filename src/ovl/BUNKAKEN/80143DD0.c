@@ -501,8 +501,8 @@ void func_80144C5C(void) {
         func_80144E9C();
         return;
     case 2:
-        ((BunkaDispatch8 *)&D_80122EB8)->unk_00 = D_80122CDC;
-        if (((BunkaDispatch8 *)&D_80122EB8)->unk_04 == 0xFF) {
+        ((CultureFestivalDispatch *)&D_80122EB8)->unk_00 = D_80122CDC;
+        if (((CultureFestivalDispatch *)&D_80122EB8)->unk_04 == 0xFF) {
             D_800CA148 = D_80122CDC + 0xC;
             func_8004284C();
             return;

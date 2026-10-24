@@ -108,7 +108,7 @@ void func_80150460(void) {
     load_palette((s32) D_8015EA6C, 0x11, 1, 2, 0);
     func_80084E90((s32) D_8015EA70, (s32) D_8015EA74, (s32) D_8015EA78, (s32) D_8015EA7C, (s32) D_8015EA80, (s32) D_8015EA84);
     func_800850D4((s32) D_8015EA60, (s32) D_8015EA64, (s32) D_8015EA5C, (s32) D_8015EA68);
-    ((DisplayActor44 *)D_8011ECD0)[98] = ((DisplayActor44 *)D_8011ECD0)[96];
+    ((Actor *)D_8011ECD0)[98] = ((Actor *)D_8011ECD0)[96];
     D_800CA360 = 1;
     func_8004284C();
 }
@@ -327,12 +327,12 @@ void func_8015109C(void) {
 }
 
 void func_801510E8(void) {
-    ((DisplayActor44 *)D_8011ECD0)[98].brightness = 0x80;
-    ((DisplayActor44 *)D_8011ECD0)[98].draw_flags |= 0x80;
-    ((DisplayActor44 *)D_8011ECD0)[98].unk_08 = 0;
-    ((DisplayActor44 *)D_8011ECD0)[98].sequence_slot = 4;
-    ((DisplayActor44 *)D_8011ECD0)[98].unk_18 = 0;
-    ((DisplayActor44 *)D_8011ECD0)[98].flags = 1;
+    ((Actor *)D_8011ECD0)[98].brightness = 0x80;
+    ((Actor *)D_8011ECD0)[98].draw_flags |= 0x80;
+    ((Actor *)D_8011ECD0)[98].unk_08 = 0;
+    ((Actor *)D_8011ECD0)[98].sequence_slot = 4;
+    ((Actor *)D_8011ECD0)[98].unk_18 = 0;
+    ((Actor *)D_8011ECD0)[98].flags = 1;
     func_8004284C();
 }
 
@@ -349,7 +349,7 @@ void func_8015118C(void) {
     func_8004284C();
 }
 
-/* D_80121FD4 is record 57 of the Rec24 table and D_801206D8 record 98 of the D_8011ECD0 display
+/* D_80121FD4 is record 57 of the SpriteQuad table and D_801206D8 record 98 of the D_8011ECD0 display
  * records; the chain assignment keeps the loaded byte in one register for all four stores. */
 void func_801511B4(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -359,17 +359,17 @@ void func_801511B4(void) {
     idx = D_800E6280.step;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
-        ((DisplayActor44 *)D_8011ECD0)[98].draw_flags |= 0x80;
+        ((Actor *)D_8011ECD0)[98].draw_flags |= 0x80;
         if (D_800E6280.frame_count % 40 < 20) {
             D_801217D0[57].flags &= 0x7FFFFFFF;
         } else {
             D_801217D0[57].flags |= 0x80000000;
         }
         D_801217D0[57].tint_r = D_801217D0[57].tint_g = D_801217D0[57].tint_b =
-            ((DisplayActor44 *)D_8011ECD0)[98].brightness = D_800B593C;
+            ((Actor *)D_8011ECD0)[98].brightness = D_800B593C;
         return;
     }
-    ((DisplayActor44 *)D_8011ECD0)[98].draw_flags &= 0xFF7F;
+    ((Actor *)D_8011ECD0)[98].draw_flags &= 0xFF7F;
     D_801217D0[57].flags |= 0x80000000;
 }
 

@@ -235,12 +235,12 @@ s32 func_80146578(void) {
     switch (D_8015EDDC) {
     case 0:
         for (timer = 0; timer < 12; timer++) {
-            ((DisplayActor44 *)D_8011ECD0)[timer + 148].frame_table = (u8 *)D_8015EEA8;
-            ((DisplayActor44 *)D_8011ECD0)[timer + 148].sequence_table = (u8 *)D_8015EEC0;
-            ((DisplayActor44 *)D_8011ECD0)[timer + 148].tpage_table = (u8 *)D_8015EE90;
-            ((DisplayActor44 *)D_8011ECD0)[timer + 148].quad_flags = 0x41000000;
-            ((DisplayActor44 *)D_8011ECD0)[timer + 148].brightness = 0x80;
-            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_43 = 0x13;
+            ((Actor *)D_8011ECD0)[timer + 148].frame_table = (u8 *)D_8015EEA8;
+            ((Actor *)D_8011ECD0)[timer + 148].sequence_table = (u8 *)D_8015EEC0;
+            ((Actor *)D_8011ECD0)[timer + 148].tpage_table = (u8 *)D_8015EE90;
+            ((Actor *)D_8011ECD0)[timer + 148].quad_flags = 0x41000000;
+            ((Actor *)D_8011ECD0)[timer + 148].brightness = 0x80;
+            ((Actor *)D_8011ECD0)[timer + 148].unk_43 = 0x13;
             func_8013E97C(timer + 0x34, 0, 0);
             func_8013E7C0(timer + 0x34, timer + 5, 1, 1);
         }

@@ -2,8 +2,8 @@
 #include "ovl/BUNKASAI.h"
 
 void func_80158EB0(void) {
-    ((BunkaDispatch8 *)&D_80122EB8)->unk_04 = 9;
-    switch (((BunkaDispatch8 *)&D_80122EB8)->unk_00) {
+    ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 9;
+    switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         if (D_800E6280.year == 0x60) {
             func_80042908(0x92);
@@ -714,8 +714,8 @@ void func_80159FBC(void) {
         }
         break;
     case 15:
-        ((Flags7D4F *)&D_800E7D4F)->b1 = 1;
-        ((Flags7D4F *)&D_800E7D4F)->unk_2_4 = 0;
+        ((ExtraModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->unk_2_4 = 0;
         D_800E6280.saved_mode = D_800E6280.mode;
         D_800E6280.saved_stage = D_800E6280.stage;
         D_800E6280.saved_step = D_800E6280.step + 1;
@@ -838,7 +838,7 @@ void func_80159FBC(void) {
         normal_date_speak();
         break;
     case 32:
-        ((Flags7D4F *)&D_800E7D4F)->b0 = 1;
+        ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
         func_80142BC8();
         break;
     default:

@@ -45,15 +45,15 @@ void func_80047560(void) {
 
 void func_800476C0(void) {
     GameState *gs;
-    Rec24 spr;
+    SpriteQuad spr;
     s32 step;
     s32 slot;
     s16 uv; /* T-25606: s16, the tpage UV byte is computed through a halfword */
-    DisplayImage78 *anim;
-    DisplayImagePart0E *part;
+    SpriteFrame *anim;
+    SpritePart *part;
     s32 j;
     s16 *seq;
-    DisplayImagePart0E *parts;
+    SpritePart *parts;
     s32 tpx;
     s32 tpy;
     s32 cnt;
@@ -70,48 +70,48 @@ void func_800476C0(void) {
     search_tpage(0x7FFF, i, 0);
     for (i = 0; i <= *(s32 *)&gs->menu_hit[3]; i++) {
         {
-            if ((((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 0x80) &&
-                (((((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 0x40) != 0x40) || (D_800E6280.frame_count % (((DisplayFixActor44 *)D_8011ECD0)[i].unk_06 + 1) != 0)) &&
-                !(((DisplayFixActor44 *)D_8011ECD0)[i].flags & 0x80)) {
-                if (!(*(s32 *)((DisplayFixActor44 *)D_8011ECD0)[i].tpage_table & 0x80000000) || !(*(s32 *)((DisplayFixActor44 *)D_8011ECD0)[i].frame_table & 0x80000000)) {
+            if ((((ActorFixed *)D_8011ECD0)[i].draw_flags & 0x80) &&
+                (((((ActorFixed *)D_8011ECD0)[i].draw_flags & 0x40) != 0x40) || (D_800E6280.frame_count % (((ActorFixed *)D_8011ECD0)[i].unk_06 + 1) != 0)) &&
+                !(((ActorFixed *)D_8011ECD0)[i].flags & 0x80)) {
+                if (!(*(s32 *)((ActorFixed *)D_8011ECD0)[i].tpage_table & 0x80000000) || !(*(s32 *)((ActorFixed *)D_8011ECD0)[i].frame_table & 0x80000000)) {
                     printf("cls%x[m%xs%xs%xf%x] ", i, D_800E6280.mode, D_800E6280.stage,
                            D_800E6280.step, D_800E6280.substep);
                 /* FAKE: T-25606, label for the never-taken goto at the end of the main path (see there) */
                 print_done:
                     continue;
                 } else {
-                    if (((DisplayFixActor44 *)D_8011ECD0)[i].flags & 0x40) {
-                        tpy = ((DisplayFixActor44 *)D_8011ECD0)[i].frame;
-                        anim = ((DisplayImage78 **)((DisplayFixActor44 *)D_8011ECD0)[i].frame_table)[tpy];
+                    if (((ActorFixed *)D_8011ECD0)[i].flags & 0x40) {
+                        tpy = ((ActorFixed *)D_8011ECD0)[i].frame;
+                        anim = ((SpriteFrame **)((ActorFixed *)D_8011ECD0)[i].frame_table)[tpy];
                     } else {
-                        step = ((DisplayFixActor44 *)D_8011ECD0)[i].frame;
-                        slot = ((DisplayFixActor44 *)D_8011ECD0)[i].sequence_slot;
+                        step = ((ActorFixed *)D_8011ECD0)[i].frame;
+                        slot = ((ActorFixed *)D_8011ECD0)[i].sequence_slot;
                         /* FAKE: T-25317, anim reused for the s16 sequence row (the original holds it in v0,
                            the register anim gets next); 649 -> 595 rows, the shift stays folded */
-                        anim = (DisplayImage78 *)((s16 **)((DisplayFixActor44 *)D_8011ECD0)[i].sequence_table)[slot];
+                        anim = (SpriteFrame *)((s16 **)((ActorFixed *)D_8011ECD0)[i].sequence_table)[slot];
                         tpy = ((s16 *)anim)[step * 2 + 1];
-                        anim = ((DisplayImage78 **)((DisplayFixActor44 *)D_8011ECD0)[i].frame_table)[tpy];
+                        anim = ((SpriteFrame **)((ActorFixed *)D_8011ECD0)[i].frame_table)[tpy];
                     }
                     ox = anim->origin_x;
                     oy = anim->origin_y;
-                    bx = ((DisplayFixActor44 *)D_8011ECD0)[i].x.h[1];
-                    by = ((DisplayFixActor44 *)D_8011ECD0)[i].y.h[1];
+                    bx = ((ActorFixed *)D_8011ECD0)[i].x.h[1];
+                    by = ((ActorFixed *)D_8011ECD0)[i].y.h[1];
                     parts = anim->part;
                     cnt = anim->count;
                     if (cnt != 0) {
                         {
                             for (j = cnt - 1; j >= 0; j--) {
-                                if ((((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 8) && j >= 4) {
+                                if ((((ActorFixed *)D_8011ECD0)[i].draw_flags & 8) && j >= 4) {
                                     j = 3;
                                 }
                                 /* T-25606: the part is indexed as seven halfwords (index j * 7, scaled by 2 in the
                                    array step); ugen then loads parts before j * 7, as the original does */
-                                part = (DisplayImagePart0E *)((s16 *)parts + j * 7);
-                                spr.flags = ((DisplayFixActor44 *)D_8011ECD0)[i].quad_flags;
+                                part = (SpritePart *)((s16 *)parts + j * 7);
+                                spr.flags = ((ActorFixed *)D_8011ECD0)[i].quad_flags;
                                 /* FAKE: T-25606, empty test of part in the join block; without a use there uopt
                                    moves the part sum into both mirror arms (j * 7 becomes a v0 CSE) */
                                 if (part) {}
-                                if (!(((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 1)) {
+                                if (!(((ActorFixed *)D_8011ECD0)[i].draw_flags & 1)) {
                                     if (part->unk_08 & 2) {
                                         spr.x = bx + ox;
                                         spr.anchor_x = (part->unk_0A - ox) + part->unk_00;
@@ -150,19 +150,19 @@ void func_800476C0(void) {
                                         spr.unk_1E = 0x1000;
                                     }
                                 }
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 4) {
+                                if (((ActorFixed *)D_8011ECD0)[i].draw_flags & 4) {
                                     spr.x -= ox;
                                     spr.y -= oy;
                                 }
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_1A != 0x1000 && ((DisplayFixActor44 *)D_8011ECD0)[i].unk_1C != 0x1000) {
+                                if (((ActorFixed *)D_8011ECD0)[i].unk_1A != 0x1000 && ((ActorFixed *)D_8011ECD0)[i].unk_1C != 0x1000) {
                                     spr.w = part->unk_0A + 1;
                                     spr.h = part->unk_0C + 1;
                                 } else {
                                     spr.w = part->unk_0A;
                                     spr.h = part->unk_0C;
                                 }
-                                if ((((DisplayFixActor44 *)D_8011ECD0)[i].unk_04 & 8) == 8) {
-                                    switch (((DisplayFixActor44 *)D_8011ECD0)[i].quad_flags & 0x03000000) {
+                                if ((((ActorFixed *)D_8011ECD0)[i].unk_04 & 8) == 8) {
+                                    switch (((ActorFixed *)D_8011ECD0)[i].quad_flags & 0x03000000) {
                                     case 0:
                                         tpage = search_tpage8(part->unk_04, i, 2);
                                         break;
@@ -177,7 +177,7 @@ void func_800476C0(void) {
                                     spr.unk_0E = (uv & 0xF) * 8;
                                     spr.unk_0F = ((uv >> 4) * 8) + tpy;
                                 } else {
-                                    switch (((DisplayFixActor44 *)D_8011ECD0)[i].quad_flags & 0x03000000) {
+                                    switch (((ActorFixed *)D_8011ECD0)[i].quad_flags & 0x03000000) {
                                     case 0:
                                         tpage = search_tpage(part->unk_04, i, 2);
                                         break;
@@ -192,9 +192,9 @@ void func_800476C0(void) {
                                     spr.unk_0E = (uv & 7) * 0x10;
                                     spr.unk_0F = ((uv >> 3) * 0x10) + tpy;
                                 }
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_43 != 0) {
+                                if (((ActorFixed *)D_8011ECD0)[i].unk_43 != 0) {
                                     spr.unk_10 = 0;
-                                    switch (((DisplayFixActor44 *)D_8011ECD0)[i].unk_43 & 0x60) {
+                                    switch (((ActorFixed *)D_8011ECD0)[i].unk_43 & 0x60) {
                                     case 0x20:
                                         spr.unk_10 = 0x100;
                                         break;
@@ -202,8 +202,8 @@ void func_800476C0(void) {
                                         spr.unk_10 = 0x120;
                                         break;
                                     default:
-                                        if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_05 & 0x80) {
-                                            switch (((DisplayFixActor44 *)D_8011ECD0)[i].unk_05 & 0x7F) {
+                                        if (((ActorFixed *)D_8011ECD0)[i].unk_05 & 0x80) {
+                                            switch (((ActorFixed *)D_8011ECD0)[i].unk_05 & 0x7F) {
                                             case 1:
                                                 spr.unk_10 = ((part->unk_06 & 0xF0) >> 4) * 0x10;
                                                 break;
@@ -224,9 +224,9 @@ void func_800476C0(void) {
                                         }
                                         break;
                                     }
-                                    spr.unk_12 = (((DisplayFixActor44 *)D_8011ECD0)[i].unk_43 & 0x1F) + 0x1E0;
+                                    spr.unk_12 = (((ActorFixed *)D_8011ECD0)[i].unk_43 & 0x1F) + 0x1E0;
                                 } else {
-                                    switch (((DisplayFixActor44 *)D_8011ECD0)[i].unk_05 & 0x7F) {
+                                    switch (((ActorFixed *)D_8011ECD0)[i].unk_05 & 0x7F) {
                                     case 1:
                                         spr.unk_10 = ((part->unk_06 & 0xF0) >> 4) * 0x10;
                                         break;
@@ -246,116 +246,116 @@ void func_800476C0(void) {
                                         spr.unk_10 = 0;
                                         break;
                                     }
-                                    if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_05 & 0x80) {
+                                    if (((ActorFixed *)D_8011ECD0)[i].unk_05 & 0x80) {
                                         spr.unk_12 = ((part->unk_06 & 0xF00) >> 8) + 0x1F0;
                                     } else {
                                         spr.unk_12 = ((part->unk_06 & 0xF00) >> 8) + 0x1E0;
                                     }
                                 }
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 0x20) {
+                                if (((ActorFixed *)D_8011ECD0)[i].draw_flags & 0x20) {
                                     spr.tint_r = col;
                                     spr.tint_g = col;
                                     spr.tint_b = col;
-                                } else if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_40 != 0 || ((DisplayFixActor44 *)D_8011ECD0)[i].unk_41 != 0 || ((DisplayFixActor44 *)D_8011ECD0)[i].unk_42 != 0) {
-                                    spr.tint_r = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_40;
-                                    spr.tint_g = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_41;
-                                    spr.tint_b = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_42;
+                                } else if (((ActorFixed *)D_8011ECD0)[i].unk_40 != 0 || ((ActorFixed *)D_8011ECD0)[i].unk_41 != 0 || ((ActorFixed *)D_8011ECD0)[i].unk_42 != 0) {
+                                    spr.tint_r = ((ActorFixed *)D_8011ECD0)[i].unk_40;
+                                    spr.tint_g = ((ActorFixed *)D_8011ECD0)[i].unk_41;
+                                    spr.tint_b = ((ActorFixed *)D_8011ECD0)[i].unk_42;
                                 } else {
-                                    spr.tint_r = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_07;
-                                    spr.tint_g = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_07;
-                                    spr.tint_b = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_07;
+                                    spr.tint_r = ((ActorFixed *)D_8011ECD0)[i].unk_07;
+                                    spr.tint_g = ((ActorFixed *)D_8011ECD0)[i].unk_07;
+                                    spr.tint_b = ((ActorFixed *)D_8011ECD0)[i].unk_07;
                                 }
-                                spr.unk_20 = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_20;
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 8) {
+                                spr.unk_20 = ((ActorFixed *)D_8011ECD0)[i].unk_20;
+                                if (((ActorFixed *)D_8011ECD0)[i].draw_flags & 8) {
                                     /* T-25606: the rotate is tested in spr (a stack reload that as1 forwards) */
                                     if (spr.unk_20 != 0 || spr.unk_1C != 0x1000 || spr.unk_1E != 0x1000) {
                                         spr.w = (u16)spr.w - 1;
                                         spr.h = spr.h - 1;
                                     }
                                 }
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_1A != 0x1000 || ((DisplayFixActor44 *)D_8011ECD0)[i].unk_1C != 0x1000) {
-                                    spr.unk_1C = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_1A * (spr.unk_1C / 0x1000);
-                                    spr.unk_1E = ((DisplayFixActor44 *)D_8011ECD0)[i].unk_1C * (spr.unk_1E / 0x1000);
+                                if (((ActorFixed *)D_8011ECD0)[i].unk_1A != 0x1000 || ((ActorFixed *)D_8011ECD0)[i].unk_1C != 0x1000) {
+                                    spr.unk_1C = ((ActorFixed *)D_8011ECD0)[i].unk_1A * (spr.unk_1C / 0x1000);
+                                    spr.unk_1E = ((ActorFixed *)D_8011ECD0)[i].unk_1C * (spr.unk_1E / 0x1000);
                                 }
                                 /* FAKE: T-25317, a second scale test around a dead store. uopt counts its two 0x1000
                                    compares (8 use blocks: the constant outranks ox and takes s4), then drops the empty
                                    branch after colouring, so no instruction is added */
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_1A != 0x1000 || ((DisplayFixActor44 *)D_8011ECD0)[i].unk_1C != 0x1000) {
+                                if (((ActorFixed *)D_8011ECD0)[i].unk_1A != 0x1000 || ((ActorFixed *)D_8011ECD0)[i].unk_1C != 0x1000) {
                                     tpx = 0;
                                 }
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_01 == 0) {
+                                if (((ActorFixed *)D_8011ECD0)[i].unk_01 == 0) {
                                     func_80098680(&spr, &((u8 *)&D_800E8C70)[D_8011ECA0 * 0x14], 0);
                                 } else {
                                     func_80098680(&spr, &((u8 *)&D_800E8C70)[D_8011ECA0 * 0x14],
-                                                  (((DisplayFixActor44 *)D_8011ECD0)[i].unk_01 - 1) & 0xFFFF);
+                                                  (((ActorFixed *)D_8011ECD0)[i].unk_01 - 1) & 0xFFFF);
                                 }
                             }
                         }
                     }
-                    if (!(((DisplayFixActor44 *)D_8011ECD0)[i].flags & 0x40) && ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 1) == 1)) {
-                        if ((((DisplayFixActor44 *)D_8011ECD0)[i].unk_06 & 0x80) && (((DisplayFixActor44 *)D_8011ECD0)[i].unk_06 & 0x7F) != 0) {
-                            ((DisplayFixActor44 *)D_8011ECD0)[i].unk_08 += ((DisplayFixActor44 *)D_8011ECD0)[i].unk_06 & 0x7F;
-                        } else if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_06 != 0) {
-                            if (D_800E6280.frame_count % ((DisplayFixActor44 *)D_8011ECD0)[i].unk_06 == 0) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].unk_08++;
+                    if (!(((ActorFixed *)D_8011ECD0)[i].flags & 0x40) && ((((ActorFixed *)D_8011ECD0)[i].flags & 1) == 1)) {
+                        if ((((ActorFixed *)D_8011ECD0)[i].unk_06 & 0x80) && (((ActorFixed *)D_8011ECD0)[i].unk_06 & 0x7F) != 0) {
+                            ((ActorFixed *)D_8011ECD0)[i].unk_08 += ((ActorFixed *)D_8011ECD0)[i].unk_06 & 0x7F;
+                        } else if (((ActorFixed *)D_8011ECD0)[i].unk_06 != 0) {
+                            if (D_800E6280.frame_count % ((ActorFixed *)D_8011ECD0)[i].unk_06 == 0) {
+                                ((ActorFixed *)D_8011ECD0)[i].unk_08++;
                             }
                         } else {
                             /* FAKE: T-25116, empty arm; it keeps a block on the unk_06 == 0 path, where uopt's PRE
                                places the seq and unk_18 loads of the join (the original computes them there) */
                         }
-                        seq = ((s16 **)((DisplayFixActor44 *)D_8011ECD0)[i].sequence_table)[slot];
-                        if (((DisplayFixActor44 *)D_8011ECD0)[i].unk_08 >= seq[step * 2 + 2]) {
-                            if ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 0x10) == 0x10) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame++;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].unk_08 = 0;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].flags &= ~0x20;
-                            } else if ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 0x20) == 0x20) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame--;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].unk_08 = 0;
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].frame <= 0) {
-                                    ((DisplayFixActor44 *)D_8011ECD0)[i].flags &= 0xFFDE;
+                        seq = ((s16 **)((ActorFixed *)D_8011ECD0)[i].sequence_table)[slot];
+                        if (((ActorFixed *)D_8011ECD0)[i].unk_08 >= seq[step * 2 + 2]) {
+                            if ((((ActorFixed *)D_8011ECD0)[i].flags & 0x10) == 0x10) {
+                                ((ActorFixed *)D_8011ECD0)[i].frame++;
+                                ((ActorFixed *)D_8011ECD0)[i].unk_08 = 0;
+                                ((ActorFixed *)D_8011ECD0)[i].flags &= ~0x20;
+                            } else if ((((ActorFixed *)D_8011ECD0)[i].flags & 0x20) == 0x20) {
+                                ((ActorFixed *)D_8011ECD0)[i].frame--;
+                                ((ActorFixed *)D_8011ECD0)[i].unk_08 = 0;
+                                if (((ActorFixed *)D_8011ECD0)[i].frame <= 0) {
+                                    ((ActorFixed *)D_8011ECD0)[i].flags &= 0xFFDE;
                                 }
                             } else {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame++;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].unk_08 = 0;
+                                ((ActorFixed *)D_8011ECD0)[i].frame++;
+                                ((ActorFixed *)D_8011ECD0)[i].unk_08 = 0;
                             }
                         }
-                        if (((DisplayFixActor44 *)D_8011ECD0)[i].frame >= seq[0]) {
-                            if ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 2) == 2) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame = 0;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].flags &= ~3;
-                            } else if ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 4) == 4) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].flags &= 0xFFFA;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame--;
-                            } else if ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 8) == 8) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame = 0;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].flags &= 0xFFFC;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags &= ~0x80;
-                            } else if ((((DisplayFixActor44 *)D_8011ECD0)[i].flags & 0x10) == 0x10) {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].flags &= ~0x10;
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].flags |= 0x20;
-                                if (((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 8) {
+                        if (((ActorFixed *)D_8011ECD0)[i].frame >= seq[0]) {
+                            if ((((ActorFixed *)D_8011ECD0)[i].flags & 2) == 2) {
+                                ((ActorFixed *)D_8011ECD0)[i].frame = 0;
+                                ((ActorFixed *)D_8011ECD0)[i].flags &= ~3;
+                            } else if ((((ActorFixed *)D_8011ECD0)[i].flags & 4) == 4) {
+                                ((ActorFixed *)D_8011ECD0)[i].flags &= 0xFFFA;
+                                ((ActorFixed *)D_8011ECD0)[i].frame--;
+                            } else if ((((ActorFixed *)D_8011ECD0)[i].flags & 8) == 8) {
+                                ((ActorFixed *)D_8011ECD0)[i].frame = 0;
+                                ((ActorFixed *)D_8011ECD0)[i].flags &= 0xFFFC;
+                                ((ActorFixed *)D_8011ECD0)[i].draw_flags &= ~0x80;
+                            } else if ((((ActorFixed *)D_8011ECD0)[i].flags & 0x10) == 0x10) {
+                                ((ActorFixed *)D_8011ECD0)[i].flags &= ~0x10;
+                                ((ActorFixed *)D_8011ECD0)[i].flags |= 0x20;
+                                if (((ActorFixed *)D_8011ECD0)[i].draw_flags & 8) {
                                     if (seq[0] >= 3) {
-                                        ((DisplayFixActor44 *)D_8011ECD0)[i].frame -= 3;
+                                        ((ActorFixed *)D_8011ECD0)[i].frame -= 3;
                                     } else {
-                                        ((DisplayFixActor44 *)D_8011ECD0)[i].frame = 0;
+                                        ((ActorFixed *)D_8011ECD0)[i].frame = 0;
                                     }
                                 } else if (seq[0] >= 2) {
-                                    ((DisplayFixActor44 *)D_8011ECD0)[i].frame -= 1;
+                                    ((ActorFixed *)D_8011ECD0)[i].frame -= 1;
                                 } else {
-                                    ((DisplayFixActor44 *)D_8011ECD0)[i].frame = 0;
+                                    ((ActorFixed *)D_8011ECD0)[i].frame = 0;
                                 }
                             } else {
-                                ((DisplayFixActor44 *)D_8011ECD0)[i].frame = 0;
+                                ((ActorFixed *)D_8011ECD0)[i].frame = 0;
                             }
                         }
                     }
-                    if (((DisplayFixActor44 *)D_8011ECD0)[i].draw_flags & 0x10) {
-                        if (((DisplayFixActor44 *)D_8011ECD0)[i].dx != 0) {
-                            ((DisplayFixActor44 *)D_8011ECD0)[i].x.w += ((DisplayFixActor44 *)D_8011ECD0)[i].dx;
+                    if (((ActorFixed *)D_8011ECD0)[i].draw_flags & 0x10) {
+                        if (((ActorFixed *)D_8011ECD0)[i].dx != 0) {
+                            ((ActorFixed *)D_8011ECD0)[i].x.w += ((ActorFixed *)D_8011ECD0)[i].dx;
                         }
-                        if (((DisplayFixActor44 *)D_8011ECD0)[i].dy != 0) {
-                            ((DisplayFixActor44 *)D_8011ECD0)[i].y.w += ((DisplayFixActor44 *)D_8011ECD0)[i].dy;
+                        if (((ActorFixed *)D_8011ECD0)[i].dy != 0) {
+                            ((ActorFixed *)D_8011ECD0)[i].y.w += ((ActorFixed *)D_8011ECD0)[i].dy;
                         }
                     }
                     /* FAKE: T-25606, never taken ((u32)i < 0 is false; uopt keeps the edge, ugen folds it away).
@@ -485,7 +485,7 @@ s32 search_tpage_multi(s32 arg0, u8 arg1) {
 s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
     s32 j;
     s32 i;
-    DisplayActor44 *record;
+    Actor *record;
     s16 index;
 
     if (arg0 == 0x7FFF) {
@@ -498,7 +498,7 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
         }
         return 0;
     }
-    record = &((DisplayActor44 *)D_8011ECD0)[arg1];
+    record = &((Actor *)D_8011ECD0)[arg1];
     index = (s16)(arg0 >> 6);
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
@@ -532,7 +532,7 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
 s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
     s32 j;
     s32 i;
-    DisplayActor44 *record;
+    Actor *record;
     s16 index;
 
     if (arg0 == 0x7FFF) {
@@ -545,7 +545,7 @@ s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
         }
         return 0;
     }
-    record = &((DisplayActor44 *)D_8011ECD0)[arg1];
+    record = &((Actor *)D_8011ECD0)[arg1];
     index = (s16)(arg0 >> 8);
     for (i = 0xF; i >= 5; i--) {
         for (j = 3; j >= 0; j--) {
@@ -604,11 +604,11 @@ void func_80048DD0(s32 count) {
     printf("%d CLASS_CLEAR \n", count);
     if (count != 0) {
         for (i = 0; i < count && i < 160; i++) {
-            ((DisplayActor44 *)D_8011ECD0)[i].draw_flags = 0;
+            ((Actor *)D_8011ECD0)[i].draw_flags = 0;
         }
     } else {
         for (i = 0; i < 160; i++) {
-            ((DisplayActor44 *)D_8011ECD0)[i].draw_flags = 0;
+            ((Actor *)D_8011ECD0)[i].draw_flags = 0;
         }
     }
 }

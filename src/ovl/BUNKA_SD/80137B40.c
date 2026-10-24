@@ -173,21 +173,21 @@ void func_80137FEC(void) {
     }
     for (i = 0; i < 0x20; i++) {
         func_80048F64(i + 0x60);
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_01 = 4;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].quad_flags = 0x01000000;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].draw_flags = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].flags = 0x40;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].frame_table = D_8013D9AC;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].sequence_table = D_8013D9B0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].tpage_table = (u8 *)D_8013D9A8;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].blink_period = 1;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].brightness = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].x = -0xA0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].y = -0x78;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_43 = 0;
-        ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_04 = 0;
+        ((Actor *)D_8011ECD0)[96 + i].unk_01 = 4;
+        ((Actor *)D_8011ECD0)[96 + i].quad_flags = 0x01000000;
+        ((Actor *)D_8011ECD0)[96 + i].draw_flags = 0;
+        ((Actor *)D_8011ECD0)[96 + i].flags = 0x40;
+        ((Actor *)D_8011ECD0)[96 + i].frame_table = D_8013D9AC;
+        ((Actor *)D_8011ECD0)[96 + i].sequence_table = D_8013D9B0;
+        ((Actor *)D_8011ECD0)[96 + i].tpage_table = (u8 *)D_8013D9A8;
+        ((Actor *)D_8011ECD0)[96 + i].unk_18 = 0;
+        ((Actor *)D_8011ECD0)[96 + i].blink_period = 1;
+        ((Actor *)D_8011ECD0)[96 + i].brightness = 0;
+        ((Actor *)D_8011ECD0)[96 + i].x = -0xA0;
+        ((Actor *)D_8011ECD0)[96 + i].y = -0x78;
+        ((Actor *)D_8011ECD0)[96 + i].unk_05 = 0x80;
+        ((Actor *)D_8011ECD0)[96 + i].unk_43 = 0;
+        ((Actor *)D_8011ECD0)[96 + i].unk_04 = 0;
     }
     load_tpage_buf_lock(5, D_8013D9A8[0], 1);
     load_tpage_buf_lock(6, D_8013D9A8[1], 1);
