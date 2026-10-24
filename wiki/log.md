@@ -1746,3 +1746,11 @@ Every game function is C and every binary rebuilds byte for byte ([[status]]). C
 ## [2026-10-24] build | T-20500 emulator probe merged
 
 [[emulator]]: PCSX-Redux (pinned 8288e927 plus upstream fix 3a24bbcc) with OpenBIOS (MIT) in Docker; the game boots headless to the title menu. tools/emu/run.sh drives breakpoints on main and overlay code, memory watches, call stacks, traces, scripted input, screenshots and save states for phase 2 naming. Ticket stays In Progress for its GameState naming pilot.
+
+## [2026-10-24] decision | Phase 2 naming conventions (ADR 0001)
+
+The user's four phase 2 decisions (names from code and emulator evidence, claims of game meaning marked as hypotheses; O.BIN names kept with one-line English comments; English file, folder and header names with a disc-name map; English game terms except iconic ones) are recorded in `docs/adr/0001-phase-2-naming.md` with the conventions: case, overlay prefixes from a disc-name map, main subsystem prefixes, enums and constants, hypothesis files, locals, offset comments, file and header naming. `CODING_STANDARDS.md` sections 4 and 5 rewritten (8 and 8a aligned, checklist updated). `GLOSSARY.md` created at the repo root from the local glossary seed (traps, people, parameters, calendar, places, clubs, events, systems, mini games). Plan: [[phase2]] ([[tickets/T-27001-phase-2-conventions]]).
+
+## [2026-10-24] ticket | Phase 2 tickets created
+
+[[tickets/T-27000-phase-2-readable-codebase]] (umbrella, In Progress), [[tickets/T-27001-phase-2-conventions]] (In Review), [[tickets/T-27003-pilot-obin-names-overlays]] and [[tickets/T-27004-shared-core-names]] (Backlog, blocked by T-27002, the rename tool, which is written separately). Board cards are added by the kanban sync at merge.
