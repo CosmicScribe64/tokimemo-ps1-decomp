@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] decision | Consult newly measured callback backend state
-
-Live T-25029 reproduces160-word strCallback with75 register-only positions. Existing logging-only diagnostic identifies eval_mov reused stack slot0x10000 and two-dummy path, candidate last writer f_loadstore; normal/logged whole-TU bytes agree. Bypassing existing copy-state shim is neutral, as are address-offset/alignment controls. Exact earlier strCallback consult covered sentinel, not this measured last-writer path. Authorized one read-only Astra consultation on required predecessor/control-flow ordering while preserving reloads/stores/ABI/160words; Sol idles and tests only up to3 new trace-backed hypotheses. No backend-slot patch, input-specific rule or broad source grid authorized. This is a new phase diagnosis, not a match.
-
-## [2026-10-22] ticket | strCallback upstream temporary diagnosis
-
-Created [[tickets/T-25029-main-strcallback-ring]] In Progress in isolated worktree; release src/main/8004F870.c and exclusively own src/main/800563F0.c. Read T-25001/10 negatives before compiling. Trace actual RECT copy inputs/outputs before at most three new causal source tests. No generic grids, shared rules, additional worker or Astra.
-
-## [2026-10-22] build | strCallback small-copy reservation identified
-
-[[tickets/T-25029-main-strcallback-ring]] reproduces160target/160built words,148aligned/150printed,75 register-only instructions. Captured actual8-byte Umov and normal ugen output; shim/raw callback binasm agree. Private offset/alignment/length controls isolate fixed reservation, not source address or second-word count. Existing T-24067 logging-only tool, audited whole-object identical, confirms reused slot+232=10000 selects double dummy t0/t1 before actual second copy wordt2; candidate writer f_loadstore saved gp. Target is consistent with one dummy. No faithful new source mechanism established, so no source controls or build changes. Evidence/limitations in drafts/T-25029/README.md; raw reference/traces stay private. No match or coverage claim.
-
-## [2026-10-22] decision | strCallback bounded branch-route consultation
-
-For [[tickets/T-25029-main-strcallback-ring]], checked prior exact callback Astra history: sentinel bypass only, not the new slot path. One authorized read-only Astra follow-up, Sol idle, found required predecessor branches occur before later scalar operations and next required branch after Umov; f_jump's predicate/emitter order offers no justified source-required pre-copy route. Zero source hypotheses recommended or tested. Preserved exact record ordering and limitations in drafts/T-25029/README.md; no universal source-impossibility or compiler-exception claim.
-
-## [2026-10-22] lint | strCallback mechanism checkpoint
-
-Docker catalog795 tickets,444 sections,3,078 functions; wiki lint zero broken links/zero status mismatches and one existing large-page warning ([[data/t0018-cases]]). `git diff --check` passes. src/, include/ and tools/ unchanged. T-25029 research/consultation preserved for root review; no match or coverage change.
-
-## [2026-10-22] ingest | Preserve callback mechanism and continue unaudited groups
-
-Root reviewed T-25029 pin37bf807db: faithful phase observations and limited required-branch consultation, no production code or promotion. Preserve candidate last-writer caveat and no-universal-impossibility limit. Assigned twoSolmedium read-only passes: T-25031 small overlays and T-25032 otherMAIN, at most12 new candidates each, disjoint from prior24 and contributor claims; stop early on actionable defect. Source800563F0 released after checkpoint, no active source-edit claims. No activeAstra. Objective remains all119 remaining game functions, not merely draft coverage.
-
 ## [2026-10-22] decision | Two concrete source experiments from new screening
 
 Live T-25031 found SHOUGATU8013E50C archived FAKE table-address arguments to renamed matched zero-argument check_para_limit; incoming argument registers unused. Assigned same Sol T-25033 canonical no-argument whole-TU control in src/ovl/SHOUGATU/8013E330.c after ledger check. Ignored arguments may still be original caller behavior, so no match/defect certainty inferred. T-25032 found newest MAIN80046AC8 draft still narrows tile extent to s16 before positivity test whereas target tests full width; assigned same Sol T-25034 correction and whole-TU comparison in src/main/80046500.c. Workers first pin read-only evidence then create implementation tickets. Two disjoint source owners, no activeAstra, no further screening until these controls resolve.
@@ -1657,6 +1633,7 @@ Review fixes: the prefix rule is "a glossary stem, a listed abbreviation, or a r
 
 ## [2026-10-24] ticket | T-27001 Done
 [[tickets/T-27001-phase-2-conventions]] passed the standards review in round 3 (approved, no blocking findings; `tools/wiki.py lint` 0 broken links) and moves to Done: `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md` sections 4 and 5, `GLOSSARY.md`, [[phase2]]. [[tickets/T-27000-phase-2]]'s first criterion is ticked. The board cards for T-27000, T-27001, T-27003 and T-27004 come from the kanban sync at merge. Non-blocking: a Module words row for `pad` would make the `pad_` prefix explicit.
+
 ## [2026-10-24] build | T-27002 review round 2 fixes
 
 [[tickets/T-27002-rename-tool]] stays In Review after the second review's two blocking findings and two small ones were fixed in `tools/rename.py`: replay walks a member chain from the name the struct holds (B1), replay moves objects, island lines and C files that a stale branch left under an old folder or file name and fixes their yaml lines, asm paths and config keys (B2, also chains of three names for file, folder and header rows), the symbol-line dedupe keeps the attributes of the dropped lines (N4), and a table note keeps its `#` (N5). Tests in `tools/test_rename.py`; trial 4 on a scratch copy (two symbols, a member and a file of RENSYU) built 27 of 27, and the replay onto an old-name copy gave the same tree ([[rename-tool]]).
