@@ -1750,3 +1750,6 @@ Fixed the two blocking findings. [[tickets/T-27028-p2-o-taco]]: `func_801335A0` 
 
 ## [2026-10-24] ticket | T-27028 Done
 [[tickets/T-27028-p2-o-taco]] passed the standards and spec review in round 2 (approved, no blocking findings; round-1 sound ids and pad enum verified against the C) and moves to Done. The table `config/renames/proposals/o-taco.tsv` (913 rows) and [[spec/o-taco]] are merged as p2a-o-taco; the six conflicting `core.tsv` pad values are for the core owner (spec section 14).
+
+## [2026-10-24] ticket | T-27028 review round 3 fixes for the TACO table and spec
+Fixed both blocking findings of the round 3 review of [[tickets/T-27028-p2-o-taco]]: the boss start damage percents are 36, 51 and 63 (integer division of `shooter_boss_damage_percent`, thresholds tested on the integer) and the left/right names now use the sign of x (world +x is screen left). Non-blocking items done in `config/renames/proposals/o-taco.tsv` (912 rows) and [[spec/o-taco]]: stale pad conflict notes, comment row columns, `sound_bank` names that follow core, separate particle view type, `TcActor.unk7A` named `counter`, score digit claim, behaviour-label note, table header, no symbols file row. Not touched by design: `wiki/index.md` (needs a line for [[spec/index]]), `wiki/kanban.md`, and the umbrella ticket link that has no file yet.
