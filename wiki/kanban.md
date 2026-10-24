@@ -983,6 +983,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-27019-p2-m-flow|T-27019 Phase 2 naming and spec for m-flow (boot, main loop, mode machine, overlay loader, title, pad, memory card)]]
 - [ ] [[tickets/T-27022-p2-o-date|T-27022 Phase 2 naming and port spec for overlay DATE (dates)]]
 - [ ] [[tickets/T-27026-p2-o-bunkaken|T-27026 Phase 2 naming and port spec for overlay BUNKAKEN (culture festival, visitor variant)]]
+- [ ] [[tickets/T-27023-p2-o-event|T-27023 Phase 2 analysis of overlay EVENT (dead development copy of the girl-scene and date-place code)]]
 
 
 %% kanban:settings
