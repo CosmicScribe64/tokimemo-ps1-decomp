@@ -553,6 +553,21 @@ class FileRenameTest(Fixture):
         self.refused("file include ovl/EVT.h evt.h\n", "stays in include/ovl/")
 
 
+class NamedPlaceholderTest(Fixture):
+    def test_check_reports_a_placeholder_of_a_named_symbol(self):
+        """check refuses func_80041100 in the sources while the symbol files name 0x80041100 (T-27003)."""
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c") + "\nvoid use_it(void) {\n    func_80041100();\n}\n")
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 1)
+        self.assertIn("src/main/80041100.c: func_80041100 is used for 0x80041100, which the symbol files name known_func",
+                      out.getvalue())
+        self.write("config/symbol_addrs.txt", self.read("config/symbol_addrs.txt")
+                   + "func_80041100 = 0x80041100; // alias-view call view\n")
+        out = io.StringIO()
+        self.assertEqual(R.check(self.root, out=out), 0, out.getvalue())     # a deliberate second name is exempt
+        self.assertIn("renames OK", out.getvalue())
+
+
 class LedgerTest(Fixture):
     def test_check_replay_lookup_export(self):
         self.ok("func AAA func_80132000 aaa_start T-1\n")

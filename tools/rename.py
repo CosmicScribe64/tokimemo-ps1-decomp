@@ -11,7 +11,8 @@ Usage (inside Docker, from the repo root):
   rename.py plan TABLE [--ledger NAME] [--allow-alias]   dry run: resolve, check, report; exit 1 on any problem
   rename.py apply TABLE [--ledger NAME] [--allow-alias] [--no-verify] [--build]
                                                     edit, prove (see Proof), append the rows to the ledger
-  rename.py check                                   no ledger name has come back (ninja: build/renames.ok)
+  rename.py check                                   no ledger name has come back, no placeholder of a named main
+                                                    symbol is left in src/ or include/ (ninja: build/renames.ok)
   rename.py replay [LEDGER...]                      apply the whole ledger again; a renamed tree is a no-op
   rename.py lookup NAME [--unit U]                  current name and history of a name
   rename.py export                                  old-to-current mapping, tab separated (tools/wiki.py)
@@ -2409,7 +2410,8 @@ def name_index(tree, files):
 
 
 def check(root, out=sys.stdout):
-    """Problems: old ledger names back in src/, include/, config/; symbol file consistency."""
+    """Problems: old ledger names back in src/, include/, config/; placeholders of named main symbols in src/ and
+    include/; symbol file consistency."""
     tree = Tree(root)
     rows = read_ledger(root)
     problems = []
@@ -2420,9 +2422,10 @@ def check(root, out=sys.stdout):
         ch = {}
     table = symtab.SymbolTable(root)
     problems += ["symbols: " + p for p in table.problems()]
+    files = all_code_files(tree)
+    idx = name_index(tree, files)
+    problems += named_placeholder_problems(tree, table, idx)
     if ch:
-        files = all_code_files(tree)
-        idx = name_index(tree, files)
         for key, (names, rs) in sorted(ch.items(), key=lambda kv: str(kv[0])):
             final, olds = names[-1], names[:-1]
             where = rs[-1].where
@@ -2435,6 +2438,28 @@ def check(root, out=sys.stdout):
     if not problems:
         out.write("renames OK (%d ledger rows)\n" % len(rows))
     return len(problems)
+
+
+def named_placeholder_problems(tree, table, idx):
+    """A placeholder (func_/D_/jtbl_ and the address) in src/ or include/ for a main-exe address that the symbol
+    files name: the name was never carried to the sources (the O.BIN alias debt of audit G2, T-27003). The address
+    of a line marked `alias-view` has two names on purpose and is exempt."""
+    named, exempt = {}, set()
+    for line in table.owned_lines("main"):
+        if symtab.placeholder_addr(line.name) is not None:
+            if line.alias:
+                exempt.add(line.addr)
+        elif not line.alias:
+            named.setdefault(line.addr, line.name)
+    out = []
+    for tok, fs in sorted(idx.items()):
+        addr = symtab.placeholder_addr(tok)
+        if addr is None or addr not in named or addr in exempt:
+            continue
+        for f in sorted(fs & set(scope_files(tree, "main", addr)))[:3]:
+            out.append("%s: %s is used for 0x%08X, which the symbol files name %s; rename it with a func or data row "
+                       "of tools/rename.py" % (f, tok, addr, named[addr]))
+    return out
 
 
 def old_name_hits(tree, ch, key, o, files, idx, table):
