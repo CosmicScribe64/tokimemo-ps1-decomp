@@ -7,34 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] ticket | T-25031 small-overlay candidate qualification
-
-Created [[tickets/T-25031-small-overlay-candidate-triage]] and In Progress card before work. Read-only NAME_ENT/SHOUGATU/VALEN/KANGEI/GYOZI/BUNKA_SD selection excludes prior24, reserved GEKO/OPTION/TEL and exhausted tails; MAIN separately owned. At most12 functions, no builds/source variants/root edits/agents.
-
-## [2026-10-22] query | T-25031 nominates proven zero-argument helper model
-
-Stopped after four reviewed actual remaining functions, current119. Matched check_para_limit at80084D3C overwrites incoming a1/a0 before reads; corrected SHOUGATU E50C archive still passes &sp40 and a record address as FAKE arguments. Verified callee resolves earlier open escape question. Preserved exact target/canonical source evidence and one minimal canonical no-arg proving variant in drafts/T-25031/README.md and [[matching-notes]]. No build/source trials or runtime-bug claim; root assigns implementation. [[tickets/T-25031-small-overlay-candidate-triage]] moves to In Review.
-
-## [2026-10-22] lint | T-25031 actionable checkpoint
-
-Wiki lint zero broken links/status mismatches, one existing data/t0018-cases size warning. Diff check clean and production/header/tools/config unchanged. [[tickets/T-25031-small-overlay-candidate-triage]] remains In Review; root authorized separate T-25033 proving experiment after pin.
-
-## [2026-10-22] ticket | T-25033 canonical helper call control
-
-After separate T-25031 pin e211b9bb5, created [[tickets/T-25033-shougatu-canonical-call]] and In Progress card. Root authorized one current whole-TU no-argument check_para_limit control for corrected SHOUGATU E50C. Exclusive src/ovl/SHOUGATU/8013E330.c, no shared changes or grids; check prior exact variant first.
-
-## [2026-10-22] build | T-25033 canonical call and source-layout reconciliation
-
-No exact no-arg call among37 tracked prior narrow bodies. Canonical control improves archived152to99 aligned cost. Newer in-tree i/girl declarations omitted by the archived body restore exact40/30 table homes and frame58; corrected random field plus canonical call gives93cost,117/118words, first28 exact. [[tickets/T-25033-shougatu-canonical-call]] continues sustained matching in private full-TU candidates; production unchanged.
-
-## [2026-10-22] build | T-25033 matched-family caller transfer closes broad drift
-
-Retaining corrected in-tree local layout, the GYOZI relative's integer-return view for func_800847B8 reduces93to87 aligned cost; explicit u8 narrowing of func_80051A68 result reduces87to9,117words versus118target with exact frame58/table40/30. All remaining differences are entry zero-carrier/store/call and one reload-base register. Continuing the concrete byte-argument transfer in [[tickets/T-25033-shougatu-canonical-call]], no source grid/shared header changes.
-
-## [2026-10-22] build | T-25033 five-line guard and faithful trace pinned for Astra
-
-Updated only owned SHOUGATU E50C source: correct random field, canonical final helper, known relative's marked return/narrowing/byte-view controls. Actual guarded C5cost,117/118words, exact frame/homes; one three-arg status control rejected10cost. Default SHOUGATU checksum and declaration guards pass; no C match counted. Stock/trace four-section fidelity passes. [[tickets/T-25033-shougatu-canonical-call]] remains In Progress for explicitly authorized sole hands-on Astra implementation; coordinator idles after pin. Compact ledger at drafts/T-25033/README.md.
-
 ## [2026-10-22] ingest | Preserve corrected SHOUGATU guard while Astra continues
 
 Root reviewed pin7a9ed5a81 and ancestor T-25031 evidence against CODING_STANDARDS: marked caller views, corrected random field, canonical helper, intact NON_MATCHING fallback. Merged append-only board/log conflicts preserving both histories. Docker rebuilt SHOUGATU and verified its checksum plus headers; wiki lint reports zero broken links/status mismatches, with size warnings for log and data/t0018-cases. This verifies fallback safety, not a C match. Both Astra chats confirmed active; updated [[plan-remaining]] to supersede historical time limits and ownership. Contributor watcher shows no PR changes and issue65 remains the existing GEKO/OPTION claim. Coverage unchanged; T-25033 remains In Progress.
@@ -1635,6 +1607,7 @@ Also fixed: `snd_init` caller is `func_80042134` (core: main_loop), the `snd_xa_
 
 ## [2026-10-23] ticket | T-27014 Done
 [[tickets/T-27014-p2-m-dates-a]] passed review (approved after the round 1 fix, no findings): the class-0 voice-clip pause and resume description in `config/renames/proposals/m-dates-a.tsv` and [[spec/m-dates-a]] matches `src/main/80079B10.c` and the RPG_BAT and BUNKA_SD senders. The branch changes no `src/`, `include/` or symbol files. Moves to Done.
+
 ## [2026-10-24] ingest | m-scheduler phase-2 table and port spec
 Unit m-scheduler (`src/main/8006CB30.c`, 56 functions): read the matched C, its callers and callees and the `p2a-core` table, probed behaviour with a small Lua job on the emulator image (mode byte poked from the title-menu state: first-week queue layout, Sunday build with a holiday, weekly affection decay, meeting record, injury step, vacation transitions), wrote `config/renames/proposals/m-scheduler.tsv` (116 rows: 33 func, 11 comment, 8 data, 9 field, 54 const, 1 file; 15 start with HYPOTHESIS) and [[spec/m-scheduler]] ([[tickets/T-27011-p2-m-scheduler]], In Review).
 Findings: the week queue is built on the Sunday that ends the previous queue; the command check is a 23/28/33-day biorhythm whose result is the half-effect flag; type 0x47 is a visit, queued after a poor Saturday, six good days or an exam week, not only for illness; the event_flags bytes are laid out in per-girl blocks; the meeting selectors (type 0x48) use parameter thresholds that rise once two girls are met.
