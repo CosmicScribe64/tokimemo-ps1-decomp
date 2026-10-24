@@ -7,30 +7,6 @@ type: log
 
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
-## [2026-10-22] build | Root preserves quadrant research checkpoint
-
-Root independently replayed b25963c45 signed-mask candidate in Docker:674 target words,666 candidate words,212 aligned/printed differences, reproducing the worker result. Preserved source and research on main without promoting production or changing coverage. Worker has reported a newer198-difference candidate and continues; it is not yet independently verified.
-
-## [2026-10-22] ticket | T-25044 parameter_up_down claimed
-
-Created [[tickets/T-25044-parameter-up-down]] In Progress in an isolated worktree. Read the earlier eleven-row residual and failed source-control ledger before any matching experiments. No root source or shared declarations changed.
-
-## [2026-10-22] build | T-25044 baseline lifetime trace
-
-Docker full-translation-unit trace confirms the two existing [[tickets/T-25044-parameter-up-down]] residuals. Signed-byte expression and unsigned-carrier controls do not remove the head copies; unsigned carrier additionally reverses products. Private trace and exact source controls remain under build/T-25044; production guard retained.
-
-## [2026-10-22] build | T-25044 mode head resolved diagnostically
-
-A raw-byte lifetime use eliminates the extra nibble copies in [[tickets/T-25044-parameter-up-down]]. The first mismatch now starts at the club row-address result; removing that promoted expression would also restore the downstream temporary numbering. This is a diagnostic improvement, not a function match.
-
-## [2026-10-22] build | T-25044 four-access stack residue
-
-[[tickets/T-25044-parameter-up-down]] now has a complete 307-word source candidate differing only at four saved-row offsets. Reserved padding fixes those offsets but changes the frame, so no candidate is promoted. Stack/object controls are recorded privately and rejected with reasons.
-
-## [2026-10-22] build | T-25044 default C matches parameter_up_down
-
-[[tickets/T-25044-parameter-up-down]] matches all 1228 linked bytes with default C. Direct signed element expressions remove the extra scalar while preserving the separate index lifetime. Full MAIN SHA1 e823bd844a8f8fa4d05483b59c66bc54b8393b26 and header/global/prototype guards pass. Updated [[matching-notes]]; source-only controls retained in drafts/T-25044.
-
 ## [2026-10-22] ticket | T-25044 ready for integration review
 
 Moved [[tickets/T-25044-parameter-up-down]] and its [[kanban]] card to In Review. Coordinator semantic review found no issue; its stale comment finding is resolved. Independent full27 integration remains with root.
@@ -1455,6 +1431,7 @@ Findings: ETC holds seven entries, final exams (0x35), career guidance (0x36), c
 
 ## [2026-10-24] ticket | T-27029 Done
 [[tickets/T-27029-p2-o-etc]] passed review (approved, no blocking findings); the branch changes only `config/renames/proposals/o-etc.tsv`, [[spec/o-etc]], [[spec/index]], the ticket and the log. Fixed at merge: `album_event_log_pack` copies every `event_log` record whose girl equals `current_girl & 0xF` (no per-record date test); `album_anim_0d_show` and `album_anim_2d_show` call the 0C and 2C `tables_set` functions and `album_anim_4b_show` sets no tables. `core.tsv` now names the event log record bytes `scene` (+1) and `category` (+2) (`event_log_add(category, scene)` stores arg 0 at +2, arg 1 at +1); [[spec/core]] and [[spec/m-dates-b]] wording synced. Follow-up: `album_anim_unused_a_ptrs` is read by scene 0x4B. Merged as p2a-o-etc.
+
 ## [2026-10-24] ingest | NAME_ENT phase 2 analysis (T-27030)
 [[tickets/T-27030-p2-o-nameent]]: naming table and port spec for the overlay NAME_ENT (file screens, name and birthday entry, voiced prologue, attract opening). `config/renames/proposals/o-nameent.tsv` has 639 rows (255 function, 228 data, 144 const, 5 file, 4 field, 3 type; 20 marked HYPOTHESIS); [[spec/o-nameent]] gives the four modes (0x11 opening, 0x13 file screens, 0x14 name entry, 0x15 prologue), the stage and step tables, the new-game formulas and the prologue script structure. Checked in the emulator (mode sequence, setup values, SELECT chord preset). Prefix decision: `name_entry_`, `prologue_` from the ADR plus `file_select_` and `opening_`. Nothing under `src/`, `include/` or `config/symbol*` changed.
 
