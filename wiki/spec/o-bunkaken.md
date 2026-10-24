@@ -143,7 +143,7 @@ Which stage a (block, club, year) pair gets is decided by the block's route func
 | Megumi (9) | 122 | - / 123 / 124 | 125 | 126 | - / 127 / 126 | - / 128 / 129 | 130 |
 | Yumi (10) | 131 | - / 132 / 133 | 134 | 135 | - / 136 / 135 | - / 137 / 138 | 139 |
 
-(Yukari: base 72, so literature 73-75; Nozomi base 85: 86-88; Mira base 98: 99-101; the same offsets give the rest.) In a few blocks the computer club's 1997 experiment show is the science stage itself (Yuko, Megumi, Yumi) because the two shows are the same show; in the other blocks it is a separate stage with the computer-room background. The Mio, Yuina and Ayako blocks exist only for the clubs the girl can be in (Mio: literature or drama; Yuina: science or computer; Ayako: art or brass band; core's new-game club assignment). Megumi and Yumi have no 1995 entries: Megumi's route function sends 1995 to `game_reset_to_title`, Yumi's treats every year but 1996 as 1997, and the 1995 points table has no rows for girls 9 and 10 (6.2); this suggests that the two girls cannot be companions in the first year (HYPOTHESIS: they are met only from 1996 on).
+(Yukari: base 72, so literature 73-75; Nozomi base 85: 86-88; Mira base 98: 99-101; the same offsets give the rest.) In a few blocks the computer club's 1997 experiment show is the science stage itself (Yuko, Megumi, Yumi; the stage reads the lab background when `festival_club` is 2 and the computer-room one otherwise) because the two shows are the same show; in the other blocks it is a separate stage with the computer-room background. The Mio, Yuina and Ayako blocks exist only for the clubs the girl can be in (Mio: literature or drama; Yuina: science or computer; Ayako: art or brass band; core's new-game club assignment). Megumi and Yumi have no 1995 entries: Megumi's route function sends 1995 to `game_reset_to_title`, Yumi's treats every year but 1996 as 1997, and the 1995 points table has no rows for girls 9 and 10 (6.2); this suggests that the two girls cannot be companions in the first year (HYPOTHESIS: they are met only from 1996 on).
 
 ### 5.2 Stage 0: the invitation
 
@@ -343,7 +343,15 @@ Overlay tables (`data` rows in the table): `festival_visit_stage_table` (142 poi
 
 `src/ovl/BUNKAKEN/` becomes `src/ovl/festival_visit/`; the 18 files are named by their main content (rows `file` in the table): `entry.c` (80144F70), `stage_table.c` (80145E40), `invitation.c` (8013B510), `companion_menu.c` (80143DD0), `solo_block.c` (80139E50), `script_setters_shiori_yukari_blocks.c` (80132000, 28 setters plus two exhibit blocks), `shiori_club_block.c`, `mio_club_block.c`, `yuina_club_block.c`, `ayako_club_block.c`, `saki_block.c`, `nozomi_block.c`, `mira_block.c`, `yuko_block.c`, `megumi_block.c`, `yumi_block.c`, `birthday.c`, `computer_fortune.c`; the header `include/ovl/festival_visit.h`.
 
-## 11. Quirks a port should know about
+## 11. Port notes
+
+- Model the visit as data plus a small interpreter: the key is (companion, club, year); the value is an exhibit scene made of dialogue groups, a background, optional sub-scenes (stage show, TT, fortune telling) and the mood-rank group tables. The handlers are repetitive on purpose, so the group numbers can be dumped by walking the C of each handler once (the catalog in Appendix A lists the handler, background, script file, portraits and launches).
+- Everything shown is script text from the BUNKA files; the port needs the dumper for those files (groups, speak codes, voice references) described in `m-dates-b`, plus the background, portrait and sound files named in section 7.
+- Keep exactly: the invitation pick (5.2), the picker rules (5.3), the club-girl routing and absence rules (5.4, 5.5, 6.5), the three year tables (6.2), the refused-girl penalty (6.3), the birthday phases (6.6), the fortune grid and its rigging (6.8), the event log record (6.7), and the mood rank from core's `girl_state_rank` and `get_g_zyotai_h`.
+- Replace: the CD reads, VRAM background decode, portrait staging copies, sound bank loads and the display-skip flag (all hardware plumbing), and the per-frame `step` machine (a port may run each exhibit as a coroutine). The two sub-modes become calls: the stage show (BUNKA_SD spec) and the TT game (o-tt spec) with their return values: show variant in, nothing out; TT direct stage in, `tt_stages_cleared` out.
+- Order of effects at the end of a visit: birthday scene (if due), companion gain, refused-girl penalty (both in `festival_visit_apply_points`; the same girl can receive both), event log, clear festival state, day advance.
+
+## 12. Quirks a port should know about
 
 - The mood rank tests in the finish phase and in the event log use the raw companion id: for 0xB they read girl 11, not Shiori (the record written is for girl 0).
 - The 1995 points table has 9 rows; a 1995 visit with girl 9 or 10 would read memory behind it. Megumi's route function refuses 1995; Yumi's maps it to the 1997 stage, so a port should treat rows 9 and 10 of 1995 as absent and keep both girls out of 1995.
@@ -354,9 +362,11 @@ Overlay tables (`data` rows in the table): `festival_visit_stage_table` (142 poi
 - In 1996 girls of the art and drama clubs cannot invite; girl 0 additionally can lose the invitation by the final rule.
 - Entry-phase 0 increments the phase through an aliasing store; a port should just set phase 1.
 
-## 12. Open questions
+## 13. Open questions
 
 - What "bunkaken" abbreviates (prefix choice, section naming note).
+- Core names: `MODE_CULTURE_FESTIVAL_A/B` are neutral and fine; if the orchestrator wants meaning in them, the code supports `_MEMBER` (club id below 6) and `_VISITOR` (6 or more), but no rename is proposed here. The type `CultureFestivalDispatch` (core, HYPOTHESIS) holds the club and the companion; this table names its fields `club` and `companion`.
+- The festival words (section 3) and the TT flag bits are main-scope proposals; the BUNKASAI table will name the same addresses, so the two names must be reconciled before the rename tool runs.
 - Which girl or cast the five BUNKA_SD `festival_show_variant` values stand for (BUNKA_SD spec).
 - Meaning of `syoushin` (affection counter that falls with good choices and rises with refusals: HYPOTHESIS "doubt" or "disappointment").
 - Whether the year 1996 invitation exclusion of the drama and art clubs is a design decision; no code states a reason.
@@ -365,7 +375,7 @@ Overlay tables (`data` rows in the table): `festival_visit_stage_table` (142 poi
 - The names of the BS backgrounds are inferred from use.
 - A port needs a dumper for the BUNKA script files (the groups and speak codes are in the common format of the other SERIFU scripts, see `m-dates-b`).
 
-## 13. Emulator checks used
+## 14. Emulator checks used
 
 A local copy of the probe runner with `--poke` and `--sample` (kept in `build/scratch`, not committed) started from a title-menu save state, set the loader to overlay mode 0x71 and sampled the festival words every 10 frames. Observed: phases 0, 2, 3, 4, 6, 7 on a fresh start; with only Shiori met the picker listed her, her id became 0xB (club none) and the visit went stage 1 -> 3 -> 18 -> 19; two girls poked above the thresholds gave the invitation to the one with the larger sum, accepting led to stage 59, and the finish gave her +2 affection and +1 tokimeki; a refused girl poked into `festival_refused_girl` lost 10 affection and gained 10 syoushin at the end of the art exhibit (stage 14) while the empty companion got nothing; fortune telling with blood codes 2 and 1 stored result 1; with Shiori's club poked to literature the club menu pick 0 routed stage 4 -> 32 -> 33 with companion 0; the Shiori birthday phase ran before the finish and applied option 1's gains. Screenshots taken in these runs (not committed) showed: the opening scene at the school gate with one narration line; the invitation scene with the girl's portrait and the two answer lines (an accepting one and a declining one, the first being option 0); the club menu with six items in two columns in the order literature, drama / science, computer / art, brass band; and the picker with the first met girl listed at the top left and a cancel item at the bottom right. Not run: stage shows (they last about 3,000 frames), the TT launches, the 142 handlers one by one.
 
