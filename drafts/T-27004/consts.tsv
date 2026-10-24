@@ -1,0 +1,238 @@
+const	GirlId	0	GIRL_SHIORI	name table 0x800B3480 entry 0; init flag met=1; GirlRecord index 0
+const	GirlId	1	GIRL_MIO	name table entry 1
+const	GirlId	2	GIRL_YUINA	name table entry 2
+const	GirlId	3	GIRL_AYAKO	name table entry 3
+const	GirlId	4	GIRL_SAKI	name table entry 4
+const	GirlId	5	GIRL_YUKARI	name table entry 5
+const	GirlId	6	GIRL_NOZOMI	name table entry 6
+const	GirlId	7	GIRL_MIRA	name table entry 7
+const	GirlId	8	GIRL_YUKO	name table entry 8
+const	GirlId	9	GIRL_MEGUMI	name table entry 9 (given name of the Mikihara entry)
+const	GirlId	10	GIRL_YUMI	name table entry 10
+const	GirlId	11	GIRL_MIHARU	name table entry 11
+const	GirlId	12	GIRL_REI	name table entry 12 (the rival); init flag met=1
+const	GirlId	13	GIRL_YOSHIO	name table entry 13 (friend, information giver); change_yoshio
+const	GirlId	14	GIRL_SOTOI	name table entry 14 (butler)
+const	GirlId	15	GIRL_PLAYER	birth_day_check_days(0xF) reads the player's own birthday word; the name tables hold a spare given name at index 15
+const	Parameter	0	PARAM_CONDITION	table 0x800B32D0 entry 0, GameState.param_condition
+const	Parameter	1	PARAM_LIBERAL_ARTS	entry 1
+const	Parameter	2	PARAM_SCIENCE	entry 2
+const	Parameter	3	PARAM_ART	entry 3
+const	Parameter	4	PARAM_ATHLETICS	entry 4
+const	Parameter	5	PARAM_TRIVIA	entry 5
+const	Parameter	6	PARAM_LOOKS	entry 6
+const	Parameter	7	PARAM_GUTS	entry 7
+const	Parameter	8	PARAM_STRESS	entry 8
+const	Month	1	MONTH_JANUARY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	2	MONTH_FEBRUARY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	3	MONTH_MARCH	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	4	MONTH_APRIL	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	5	MONTH_MAY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	6	MONTH_JUNE	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	7	MONTH_JULY	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	8	MONTH_AUGUST	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	9	MONTH_SEPTEMBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	10	MONTH_OCTOBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	11	MONTH_NOVEMBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Month	12	MONTH_DECEMBER	GameState.month; 13 is January of the next year in appointment and birthday checks
+const	Weekday	0	WEEKDAY_MONDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	1	WEEKDAY_TUESDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	2	WEEKDAY_WEDNESDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	3	WEEKDAY_THURSDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	4	WEEKDAY_FRIDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	5	WEEKDAY_SATURDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Weekday	6	WEEKDAY_SUNDAY	GameState.weekday; 6 = Sunday (tests == 6)
+const	Club	0	CLUB_LITERATURE	club_name_table entry 0
+const	Club	1	CLUB_DRAMA	entry 1
+const	Club	2	CLUB_SCIENCE	entry 2
+const	Club	3	CLUB_COMPUTER	entry 3 (the table says 'denno', cyber)
+const	Club	4	CLUB_ART	entry 4
+const	Club	5	CLUB_BRASS_BAND	entry 5; NAME_ENT assigns Ayako 4 or 5
+const	Club	6	CLUB_BASEBALL	entry 6; Saki 6 or 7
+const	Club	7	CLUB_SOCCER	entry 7
+const	Club	8	CLUB_TENNIS	entry 8; Yukari
+const	Club	9	CLUB_SWIMMING	entry 9; Nozomi
+const	Club	10	CLUB_BASKETBALL	entry 10; Yumi
+const	Club	11	CLUB_NONE	entry 11; initial GirlRecord club for Mira, Yuko, Megumi, Miharu; player club 11 = no club
+const	Place	0	PLACE_NEIGHBORHOOD_PARK	date place table 0x800B3340 entry 0; appointment words store place + 1
+const	Place	1	PLACE_KIRAMEKI_CENTRAL_PARK	date place table 0x800B3340 entry 1; appointment words store place + 1
+const	Place	2	PLACE_SHOPPING_STREET	date place table 0x800B3340 entry 2; appointment words store place + 1
+const	Place	3	PLACE_AQUARIUM	date place table 0x800B3340 entry 3; appointment words store place + 1
+const	Place	4	PLACE_ZOO	date place table 0x800B3340 entry 4; appointment words store place + 1
+const	Place	5	PLACE_BOTANICAL_GARDEN	date place table 0x800B3340 entry 5; appointment words store place + 1
+const	Place	6	PLACE_PLANETARIUM	date place table 0x800B3340 entry 6; appointment words store place + 1
+const	Place	7	PLACE_ART_MUSEUM	date place table 0x800B3340 entry 7; appointment words store place + 1
+const	Place	8	PLACE_LIBRARY	date place table 0x800B3340 entry 8; appointment words store place + 1
+const	Place	9	PLACE_GAME_CENTER	date place table 0x800B3340 entry 9; appointment words store place + 1
+const	Place	10	PLACE_BOWLING_ALLEY	date place table 0x800B3340 entry 10; appointment words store place + 1
+const	Place	11	PLACE_KARAOKE	date place table 0x800B3340 entry 11; appointment words store place + 1
+const	Place	12	PLACE_AMUSEMENT_PARK	date place table 0x800B3340 entry 12; appointment words store place + 1
+const	Place	13	PLACE_STADIUM	date place table 0x800B3340 entry 13; appointment words store place + 1
+const	Place	14	PLACE_MOVIE_THEATER	date place table 0x800B3340 entry 14; appointment words store place + 1
+const	Place	15	PLACE_CONCERT_HALL	date place table 0x800B3340 entry 15; appointment words store place + 1
+const	Place	16	PLACE_POOL	date place table 0x800B3340 entry 16; appointment words store place + 1
+const	Place	17	PLACE_SEA	date place table 0x800B3340 entry 17; appointment words store place + 1
+const	Place	18	PLACE_SHRINE	date place table 0x800B3340 entry 18; appointment words store place + 1
+const	Place	19	PLACE_SKATING_RINK	date place table 0x800B3340 entry 19; appointment words store place + 1
+const	Place	20	PLACE_SKI_RESORT	date place table 0x800B3340 entry 20; appointment words store place + 1
+const	HealthState	0	HEALTH_OK	player_flags bits 8-11 clear
+const	HealthState	1	HEALTH_INJURED	set by func_80073198 (injury message), cleared by func_800734C4
+const	HealthState	2	HEALTH_NEUROSIS	set by func_800732F8 (neurosis message)
+const	HealthState	3	HEALTH_SICK	set by func_800733D8 (illness message); halves parameter gains; triggers sick visits (event 0x47)
+const	Vacation	0	VACATION_NONE	school term
+const	Vacation	1	VACATION_SUMMER	func_800726F0: month 7 announcement that the break starts tomorrow
+const	Vacation	2	VACATION_WINTER	month 12 announcement
+const	Vacation	3	VACATION_SPRING	month 3 announcement
+const	DayKind	0	DAY_KIND_SCHOOL_DAY	month_calendar.day_kind; 0 and 3 both produce school-day command screens
+const	DayKind	1	DAY_KIND_SUNDAY	initial table: Sundays are 1
+const	DayKind	2	DAY_KIND_HOLIDAY	initial table: national holidays (April 29, May 3-5) are 2
+const	DayKind	3	DAY_KIND_VACATION_DAY	HYPOTHESIS: break weekday; vacation-only random events are gated on kind 3 with vacation 1 or 2
+const	CalendarMarker	0	MARKER_NONE	month_calendar.marker[day]
+const	CalendarMarker	1	MARKER_START_DAY	HYPOTHESIS: set once on the first day (1995-04-04); no calendar mark (frame table D_800B5C10 has no entry for 0 and 1)
+const	CalendarMarker	2	MARKER_NOTICE_A	HYPOTHESIS: pushes a day-notice record (0xFD); in year 96 also the Yumi meeting, in year 97 career guidance
+const	CalendarMarker	4	MARKER_SPORTS_FESTIVAL	pushes DAY_EVENT_SPORTS_FESTIVAL
+const	CalendarMarker	5	MARKER_EXAM	exam period: school days become DAY_EVENT_EXAM
+const	CalendarMarker	6	MARKER_NOTICE_B	HYPOTHESIS: day-notice record
+const	CalendarMarker	8	MARKER_CLUB_SEASON	HYPOTHESIS: next 6 days become club tournament (0x25) or club camp (0x42) records
+const	CalendarMarker	10	MARKER_NOTICE_C	HYPOTHESIS: day-notice record
+const	CalendarMarker	11	MARKER_SCHOOL_TRIP	pushes DAY_EVENT_SCHOOL_TRIP and a holiday week
+const	CalendarMarker	12	MARKER_CULTURE_FESTIVAL	pushes DAY_EVENT_CULTURE_FESTIVAL
+const	CalendarMarker	13	MARKER_CHRISTMAS_PREP	pushes DAY_EVENT_CHRISTMAS_PREP
+const	CalendarMarker	14	MARKER_NOTICE_D	HYPOTHESIS: day-notice record
+const	CalendarMarker	15	MARKER_NEW_YEAR_PREP	pushes DAY_EVENT_NEW_YEAR_PREP
+const	CalendarMarker	16	MARKER_NOTICE_E	HYPOTHESIS: day-notice record
+const	CalendarMarker	17	MARKER_VALENTINE	pushes DAY_EVENT_VALENTINE
+const	CalendarMarker	18	MARKER_CAREER_CHOICE	year 98 only: DAY_EVENT_CAREER_CHOICE
+const	CalendarMarker	19	MARKER_SEASONAL_PARTY	pushes DAY_EVENT_SEASONAL_PARTY
+const	CalendarMarker	20	MARKER_NOTICE_F	HYPOTHESIS: day-notice record
+const	DayEventType	0x00	DAY_EVENT_SCHOOL_DAY	-> mode 0x40; unk_01 = weekday command, unk_02 = command check result, unk_03 = chosen girl
+const	DayEventType	0x10	DAY_EVENT_HOLIDAY	-> mode 0x46
+const	DayEventType	0x20	DAY_EVENT_SPORTS_FESTIVAL	-> mode 0x72 (TAIIKU)
+const	DayEventType	0x24	DAY_EVENT_CULTURE_FESTIVAL	-> mode 0x70 when the player's club id < 6, else 0x71
+const	DayEventType	0x25	DAY_EVENT_CLUB_MASTER_A	HYPOTHESIS: club tournament/award scene -> mode 0x74 (MASTER)
+const	DayEventType	0x26	DAY_EVENT_CLUB_MASTER_B	HYPOTHESIS: -> mode 0x75
+const	DayEventType	0x27	DAY_EVENT_CLUB_MASTER_C	HYPOTHESIS: -> mode 0x76
+const	DayEventType	0x28	DAY_EVENT_CHRISTMAS_PREP	-> mode 0x42 (pre_xmas)
+const	DayEventType	0x2C	DAY_EVENT_NEW_YEAR_PREP	-> mode 0x41 (pre_syogatu)
+const	DayEventType	0x30	DAY_EVENT_SEASONAL_PARTY	HYPOTHESIS name (English form of the overlay prefix; the overlay SHOUGATU is the New Year one and the calendar marker 19 is the seasonal party): -> mode 0x55
+const	DayEventType	0x31	DAY_EVENT_VALENTINE	-> mode 0x54 (VALEN)
+const	DayEventType	0x32	DAY_EVENT_GIRL_BIRTHDAY	-> mode 0x57 (GEKO); built from birth_day_check_days for a met girl
+const	DayEventType	0x33	DAY_EVENT_PLAYER_BIRTHDAY	-> mode 0x56 (GEKO); built from the player's birthday
+const	DayEventType	0x40	DAY_EVENT_EXAM	-> mode 0x35 (ETC)
+const	DayEventType	0x41	DAY_EVENT_SCHOOL_TRIP	-> mode 0x51 (SHUGAKU)
+const	DayEventType	0x42	DAY_EVENT_CLUB_CAMP	HYPOTHESIS name (the KANGEI overlay is rated low confidence): -> mode 0x5F (KANGEI); six in a row for a club member in the club season
+const	DayEventType	0x43	DAY_EVENT_CAREER_GUIDANCE	-> mode 0x36 (ETC)
+const	DayEventType	0x44	DAY_EVENT_GIRL_ENCOUNTER	HYPOTHESIS name (the overlay prefix GEKO stays untranslated until understood): placeholder resolved by schedule_girls_gakko into 0x45, 0x46, an encounter (-> mode 0x59, GEKO) or skipped
+const	DayEventType	0x45	DAY_EVENT_SPECIAL_EVENT	unk_01 girl, unk_02 scene -> mode 0x5D
+const	DayEventType	0x46	DAY_EVENT_GIRL_INVITATION	-> mode 0x5A (date_sasoi_judge: a girl invites the player)
+const	DayEventType	0x47	DAY_EVENT_SICK_VISIT	-> mode 0x61 (OMIMAI); unk_01 = visiting girl
+const	DayEventType	0x48	DAY_EVENT_MEETING	HYPOTHESIS name: unk_01 girl, unk_02 scene; sets affection 0x32 and counter 0 -> mode 0x5B (SHOUGATU 0x80137144 hosts generic scenes: it switches on a scene variable, so "meeting" is not proven)
+const	DayEventType	0x49	DAY_EVENT_AMUSEMENT_PARK	-> mode 0x58 (DATE2)
+const	DayEventType	0x4A	DAY_EVENT_CAREER_CHOICE	-> mode 0x37 (ETC)
+const	DayEventType	0x80	DAY_EVENT_APPOINTMENT	written by appointment_launch (unk_01 girl, unk_02 place); mode 0x50 reads it
+const	DayEventType	0xFA	DAY_EVENT_SKIP	index skipped by the queue reader
+const	DayEventType	0xFB	DAY_EVENT_DAY_END	handled inside the reader (phone-call and rumor checks, index + 1, calendar_advance_day); one per day except Sunday
+const	DayEventType	0xFC	DAY_EVENT_WEEK_END	-> mode 0x32 (weekly check: injury, neurosis, illness, recovery); after Saturday
+const	DayEventType	0xFD	DAY_EVENT_DAY_NOTICE	HYPOTHESIS: announcement screen; -> mode 0x39
+const	DayEventType	0xFE	DAY_EVENT_MONTH_START	-> mode 0x38 (placed first when the queue crosses a month end)
+const	DayEventType	0xFF	DAY_EVENT_NONE	cleared slot = end of the queue; the reader leaves for mode 0x34 (command screen)
+const	MainMode	0x00	MODE_BOOT	func_8005A06C; stage 0 runs the boot sequence, then mode 0x12
+const	MainMode	0x01	MODE_BOOT_WAIT	HYPOTHESIS: waits for boot_hold == 0 then mode 0
+const	MainMode	0x02	MODE_OVERLAY_LOAD	overlay loader state machine (func_80078A0C); resumes overlay_target_mode
+const	MainMode	0x03	MODE_CALL_ENTRY	calls the entry pointer D_80123110 without a loader message
+const	MainMode	0x10	MODE_START	initial mode set by game_state_init; func_80062C28 prepares the screen and switches to 0
+const	MainMode	0x11	MODE_PROLOGUE	NAME_ENT entry 0x80144AD0 (voiced prologue lines); also started by the title idle timeout
+const	MainMode	0x12	MODE_TITLE	func_80062840: four title stages; main_state_set(0x12) from game_reset_to_title
+const	MainMode	0x13	MODE_NAME_ENTRY	NAME_ENT 0x8014231C: new game, name and birthday entry
+const	MainMode	0x14	MODE_NAME_ENT_3	NAME_ENT 0x8013209C; role not settled (NAME_ENT analyst to rename)
+const	MainMode	0x15	MODE_NAME_ENT_4	NAME_ENT 0x8014AF28; role not settled
+const	MainMode	0x20	MODE_OPTION	OPTION 0x801335E8
+const	MainMode	0x21	MODE_OPTION_2	OPTION 0x801389A0
+const	MainMode	0x22	MODE_OPTION_3	OPTION 0x8013C780; also entered by day_event_next when D_800B3C6C is set
+const	MainMode	0x30	MODE_SCHEDULE	schedule_init: builds the day-event queue for the coming week (entered after the command screen)
+const	MainMode	0x31	MODE_DAY_SCREEN	func_80070F14: day screen, then the queue reader dispatches the next event
+const	MainMode	0x32	MODE_WEEK_END	func_80072BC0: HUD init, then the weekly health check steps (injury, neurosis, illness, recoveries)
+const	MainMode	0x34	MODE_COMMAND_SCREEN	func_8005A0B0: weekday command screen where the player picks the next week's command (stage 5 = club joining); entered when the queue reader reaches the end marker 0xFF
+const	MainMode	0x35	MODE_EXAM	ETC 0x801465F8: final exams and rank list
+const	MainMode	0x36	MODE_CAREER_GUIDANCE	ETC 0x8014ABD0
+const	MainMode	0x37	MODE_CAREER_CHOICE	ETC 0x801492C0: job or college choice
+const	MainMode	0x38	MODE_MONTH_START	func_800728A4 (queue type 0xFE)
+const	MainMode	0x39	MODE_DAY_NOTICE	func_800725B0 (queue type 0xFD)
+const	MainMode	0x3A	MODE_HELP	OLH on-line help
+const	MainMode	0x40	MODE_SCHOOL_DAY	week_day: school-day command screen
+const	MainMode	0x41	MODE_NEW_YEAR_PREP	func_80061688 (pre_syogatu)
+const	MainMode	0x42	MODE_CHRISTMAS_PREP	func_80060DF8 (pre_xmas)
+const	MainMode	0x43	MODE_TELEPHONE	TEL 0x801397D0
+const	MainMode	0x44	MODE_RUMOR	uwasa_main (rumor report)
+const	MainMode	0x45	MODE_TELEPHONE_PROFILE	HYPOTHESIS: TEL 0x80132000 (profile/phone book page); the loader draws the calendar under it
+const	MainMode	0x46	MODE_HOLIDAY	func_80075320: holiday command screen, telephone, club join, appointment entry
+const	MainMode	0x50	MODE_DATE	DATE 0x801448D4 (appointment launched)
+const	MainMode	0x51	MODE_SCHOOL_TRIP	SHUGAKU 0x80137490
+const	MainMode	0x52	MODE_NEW_YEAR_A	HYPOTHESIS name (English form of the SHOUGATU overlay prefix): SHOUGATU 0x8013D180 stage dispatcher
+const	MainMode	0x53	MODE_NEW_YEAR_B	HYPOTHESIS name (English form of the SHOUGATU overlay prefix): SHOUGATU 0x801322D4
+const	MainMode	0x54	MODE_VALENTINE	VALEN 0x80132274
+const	MainMode	0x55	MODE_SEASONAL_PARTY	HYPOTHESIS name (queue type 0x30 is the seasonal party): SHOUGATU 0x8013B484
+const	MainMode	0x56	MODE_PLAYER_BIRTHDAY	GEKO 0x80134040 (queue type 0x33)
+const	MainMode	0x57	MODE_GIRL_BIRTHDAY	GEKO 0x80134C90 (queue type 0x32)
+const	MainMode	0x58	MODE_AMUSEMENT_PARK	DATE2 0x80132214 (queue type 0x49)
+const	MainMode	0x59	MODE_GIRL_ENCOUNTER	HYPOTHESIS name (reading of the forced-encounter use; the overlay prefix GEKO stays untranslated): GEKO 0x80132244 (queue type 0x44)
+const	MainMode	0x5A	MODE_GIRL_INVITATION	GEKO 0x801426D0 (queue type 0x46)
+const	MainMode	0x5B	MODE_MEETING	HYPOTHESIS name: SHOUGATU 0x80137144 (queue type 0x48), a generic scene host that switches on D_80144E10
+const	MainMode	0x5C	MODE_AMUSEMENT_PARK_2	DATE2 0x80137F64; started by DATE
+const	MainMode	0x5D	MODE_SPECIAL_EVENT	GEKO 0x8013882C (queue type 0x45)
+const	MainMode	0x5E	MODE_DATE_SCENE	DATE 0x8014C08C: girl-specific scenes
+const	MainMode	0x5F	MODE_CLUB_CAMP	HYPOTHESIS name: KANGEI 0x80132FF8 (queue type 0x42)
+const	MainMode	0x60	MODE_CLUB_CAMP_2	HYPOTHESIS name: KANGEI 0x80132000
+const	MainMode	0x61	MODE_SICK_VISIT	OMIMAI 0x80133120 (queue type 0x47)
+const	MainMode	0x62	MODE_SICK_VISIT_2	OMIMAI 0x80132000
+const	MainMode	0x63	MODE_ENDING	ENDING 0x80132334
+const	MainMode	0x70	MODE_CULTURE_FESTIVAL_A	BUNKASAI 0x80142700 (queue type 0x24, club id < 6)
+const	MainMode	0x71	MODE_CULTURE_FESTIVAL_B	BUNKAKEN 0x80144F70 (queue type 0x24, club id >= 6)
+const	MainMode	0x72	MODE_SPORTS_FESTIVAL	TAIIKU 0x80141280
+const	MainMode	0x73	MODE_PRACTICE_MATCH	RENSYU 0x80132040
+const	MainMode	0x74	MODE_CLUB_MASTER_A	MASTER 0x80132140 (queue type 0x25)
+const	MainMode	0x75	MODE_CLUB_MASTER_B	MASTER 0x80133A2C (0x26)
+const	MainMode	0x76	MODE_CLUB_MASTER_C	MASTER 0x80139150 (0x27)
+const	MainMode	0x80	MODE_CULTURE_STAGE	BUNKA_SD 0x80137890
+const	MainMode	0x81	MODE_RPG_BATTLE	RPG_BAT 0x8013B5B0
+const	MainMode	0x82	MODE_FESTIVAL_STALLS	HYPOTHESIS name (the overlay prefix EN_NICHI stays untranslated until the scenes are read): EN_NICHI 0x80132000
+const	MainMode	0x90	MODE_SHOOTER	TACO (loader default)
+const	MainMode	0x91	MODE_ALBUM	ETC 0x801407F0
+const	MainMode	0xC2	MODE_ETC_C2	ETC 0x80142974; set by ENDING
+const	MainMode	0xC3	MODE_ETC_C3	ETC 0x8014636C
+const	MainMode	0xC4	MODE_ETC_C4	ETC 0x80145A6C
+const	MainMode	0xD0	MODE_TT_GAME	TT hidden mini game; own loader func_8007959C
+const	MainMode	0xFE	MODE_DEBUG_VRAM_VIEW	func_8004F6B0: d-pad scrolls the display start until a pad-2 button; developer tool
+const	MainMode	0xFF	MODE_EXIT	exit_function
+const	InputDevice	0	INPUT_MOUSE	controller id byte high nibble 1
+const	InputDevice	1	INPUT_PAD	other id
+const	InputDevice	0xFF	INPUT_NONE	nothing connected
+const	VoiceMode	0	VOICE_OFF	settings string 'always off'
+const	VoiceMode	1	VOICE_ON	'always on'
+const	VoiceMode	2	VOICE_CANCELABLE	'cut with the cross button'
+const	MenuMode	0	MENU_MODE_MOUSE_LIKE	stored value 0; settings screen item 1
+const	MenuMode	1	MENU_MODE_A	stored value 1; settings screen item 2, pad cursor stepping through the items
+const	MenuMode	2	MENU_MODE_MOUSE_PLUS_A	stored value 2; settings screen item 4, mouse pointer plus pad cursor while L1 is held (menu_check)
+const	MenuMode	3	MENU_MODE_B	stored value 3; settings screen item 3, directional pad cursor (get_near_menu in func_8004FC10)
+const	IconMode	0	ICON_MODE_TYPE_A	settings string
+const	IconMode	1	ICON_MODE_TYPE_B	settings string
+const	IconMode	2	ICON_MODE_FREE	settings string
+const	PadBits	0x0001	PAD_L2	PsyQ pad word as built by func_80043010 (~byte2 << 8 | ~byte3): low byte = L2, R2, L1, R1, triangle, circle, cross, square; second byte = SELECT, L3, R3, START, up, right, down, left; pad 2 is the same word shifted by 16; bits 0x0200 and 0x0400 are not used by the game (the any-button mask 0xF9DF leaves them out)
+const	PadBits	0x0002	PAD_R2	PsyQ layout
+const	PadBits	0x0004	PAD_L1	PsyQ layout; SELECT + START + L1 + R1 held for 0x81 frames on pad 1 runs the reset sequence to mode 0 (pad 2: to mode 0x11), except in modes 0x20, 0x90 and 0xD0
+const	PadBits	0x0008	PAD_R1	PsyQ layout
+const	PadBits	0x0010	PAD_TRIANGLE	PsyQ layout
+const	PadBits	0x0020	PAD_CIRCLE	confirm: settings screens act on pad_pressed & 0x20
+const	PadBits	0x0040	PAD_CROSS	cancel/back: pad_pressed & 0x40 leaves a settings screen
+const	PadBits	0x0080	PAD_SQUARE	PsyQ layout
+const	PadBits	0x0100	PAD_SELECT	pad_pressed & 0x100 steps menu_mode in menu_check; an in-game hint names SELECT as the menu mode switch
+const	PadBits	0x0800	PAD_START	pause toggle on either pad (while pause_allowed is 1); pad 2 START (bit 27 of the pad word) toggles sd_anim_fast; advance mask 0x860 = START | cross | circle
+const	PadBits	0x1000	PAD_UP	menu cursor: up and left move to the previous item
+const	PadBits	0x2000	PAD_RIGHT	next item
+const	PadBits	0x4000	PAD_DOWN	next item
+const	PadBits	0x8000	PAD_LEFT	previous item
+const	MouseButtons	4	MOUSE_RIGHT	GameState.mouse_buttons tested with confirm_button == 1
+const	MouseButtons	8	MOUSE_LEFT	tested with confirm_button == 0
+const	PlayerFlag	bit 16	PLAYER_FLAG_16	ScheduleFlags.b16; OPTION debug page lists b16..b20
+const	PlayerFlag	bit 18	PLAYER_FLAG_AMUSEMENT_PARK_DONE	HYPOTHESIS: set when queue type 0x49 is scheduled (August Wednesday)
+const	PlayerFlag	bit 19	PLAYER_FLAG_PLACE_REPEAT	HYPOTHESIS: DATE sets it when the same place is chosen repeatedly

@@ -1,0 +1,54 @@
+field GameState mode -> game_mode: 69 uses located by gcc in 437 C files, 0 comment mentions
+field GameState stage -> mode_stage: 423 uses located by gcc in 437 C files, 1 comment mentions
+field GameState step -> mode_step: 1433 uses located by gcc in 437 C files, 7 comment mentions
+field GameState mode_timer -> game_mode_timer: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState stage_timer -> mode_stage_timer: 74 uses located by gcc in 437 C files, 0 comment mentions
+field GameState step_timer -> mode_step_timer: 829 uses located by gcc in 437 C files, 1 comment mentions
+field GameState mode_scratch -> game_mode_scratch: 36 uses located by gcc in 437 C files, 2 comment mentions
+field GameState stage_scratch -> mode_stage_scratch: 31 uses located by gcc in 437 C files, 0 comment mentions
+field GameState saved_mode -> saved_game_mode: 51 uses located by gcc in 437 C files, 0 comment mentions
+field GameState saved_stage -> saved_mode_stage: 80 uses located by gcc in 437 C files, 0 comment mentions
+field GameState saved_step -> saved_mode_step: 71 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_target_mode -> ovl_target_game_mode: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_tpage_table -> ovl_tpage_table: 12 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_frame_table -> ovl_frame_table: 10 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_sequence_table -> ovl_sequence_table: 10 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_palette_a -> ovl_palette_a: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_image_buffer -> ovl_image_buffer: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState overlay_palette_b -> ovl_palette_b: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState card_busy -> memory_card_busy: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState card_result -> memory_card_result: 107 uses located by gcc in 437 C files, 0 comment mentions
+field GameState card_job -> memory_card_job: 11 uses located by gcc in 437 C files, 0 comment mentions
+field GameState card_step -> memory_card_step: 14 uses located by gcc in 437 C files, 0 comment mentions
+field GameState card_retry_count -> memory_card_retry_count: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState card_timer -> memory_card_timer: 61 uses located by gcc in 437 C files, 0 comment mentions
+field GameState event_flags -> scene_flags: 176 uses located by gcc in 437 C files, 0 comment mentions
+field GameState events_today -> day_event_count_today: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GameState daily_event_bits -> day_event_done_bits: 87 uses located by gcc in 437 C files, 0 comment mentions
+field GameState girl_event_bits -> girl_scene_bits: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GameState appt_place_0 -> appointment_place_0: 27 uses located by gcc in 437 C files, 0 comment mentions
+field GameState appt_place_1 -> appointment_place_1: 23 uses located by gcc in 437 C files, 0 comment mentions
+field GameState appt_place_2 -> appointment_place_2: 15 uses located by gcc in 437 C files, 0 comment mentions
+field GameState appt_place_3 -> appointment_place_3: 17 uses located by gcc in 437 C files, 0 comment mentions
+field GameState actors_draw_enabled -> actor_draw_enabled: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState player_flags_hi -> player_flags_upper: 81 uses located by gcc in 437 C files, 0 comment mentions
+field GameState frame_hcount_limit -> frame_scanline_limit: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState tpage_req -> tpage_slot_state: 16 uses located by gcc in 437 C files, 0 comment mentions
+field GirlRecord tokimeki_frac -> tokimeki_fraction: 3 uses located by gcc in 437 C files, 0 comment mentions
+field GirlRecord affection_frac -> affection_fraction: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GirlRecord syoushin_frac -> syoushin_fraction: 3 uses located by gcc in 437 C files, 0 comment mentions
+field GirlRecord event_counters -> scene_counters: 80 uses located by gcc in 437 C files, 0 comment mentions
+field ParamValue frac -> fraction: 0 uses located by gcc in 437 C files, 0 comment mentions
+field Actor x_frac -> x_fraction: 1 uses located by gcc in 437 C files, 0 comment mentions
+field Actor y_frac -> y_fraction: 1 uses located by gcc in 437 C files, 0 comment mentions
+field Actor dx_frac -> dx_fraction: 4 uses located by gcc in 437 C files, 0 comment mentions
+field Actor dy_frac -> dy_fraction: 4 uses located by gcc in 437 C files, 0 comment mentions
+field TextEntry attr -> attribute: 11 uses located by gcc in 437 C files, 0 comment mentions
+field ClubRecord exp -> practice_points: 56 uses located by gcc in 437 C files, 0 comment mentions
+47 rows, 249 files to change
+  note: drafts/T-27004/fix_fields.tsv:1: 3 member uses named mode remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fix_fields.tsv:3: 11 member uses named step remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fix_fields.tsv:46: 1 member uses named attr remain in the users of TextEntry (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+applied; ledger config/renames/core.txt
+renames OK (724 ledger rows)
+exit 0

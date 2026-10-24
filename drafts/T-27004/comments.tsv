@@ -1,0 +1,62 @@
+comment	main	normal_date_speak	Wire the dialogue table pointers and run the talk runner for the current scene girl	body: stores the five table pointers then dialogue_run(D_80122CDC, 1, 0)
+comment	main	set_kanji_string	Queue one string (x, y, attribute, text, extra) in the 52-entry text list for drawing	wiki/ref-english-patch.md and the 8-byte TextEntry layout
+comment	main	cd_read_sync_status	Return the CD read status byte (bit 0 = read finished)	returns cd_read_status
+comment	main	cd_read_sectors	Read n sectors to a buffer from an LBA through the CD command ring and wait	queues command 6, D_800B3D60 = 1
+comment	main	dec_bg_cd_read	Start reading a compressed background file unless one of the two cached LBAs of the slot already holds it; returns 0/1 for a cache hit slot, -1 for a read started	body compares D_800B5920
+comment	main	dec_bg_show_set	Show or hide background slot n	D_800B5938[n] = flag & 1
+comment	main	dec_bg_reset	Clear the background cache, show flags and brightness (0x80)	body
+comment	main	set_dec_bri	Set the brightness tint of the decoded backgrounds	D_800B593C = value
+comment	main	get_last_gamen_mode	Return the last screen mode (selects the background draw variant)	returns D_800B5948
+comment	main	normal_date_bg_fadeout	Fade the scene background out	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_bg_fadein	Fade the scene background in	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_bggirl_fadeout	Fade background and portrait out together	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_bggirl_fadein	Fade background and portrait in together	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_girl_in	Slide the girl's portrait in	HYPOTHESIS: from the developer name and call sites
+comment	main	normal_date_girl_out	Slide the girl's portrait out	HYPOTHESIS: from the developer name and call sites
+comment	main	bg_read_sub2	Background read helper: starts the read of the scene background	callers in scene setup
+comment	main	addr_init_bustup	Set the portrait sprite addresses for the current girl	HYPOTHESIS: from the developer name and call sites
+comment	main	k_sub_reset	Cut the text list back to the saved mark	k_reset(text_list_count.mark)
+comment	main	k_sub_reset_point_set	Remember the current text list length as the mark	mark = count
+comment	main	k_sub_disp_start	Start the typewriter at mark + n	k_disp_start(mark + n)
+comment	main	k_reset	Cut the text list to n entries and recompute the glyph totals	body
+comment	main	k_disp_start	Start the typewriter at entry n (skips the glyphs of earlier entries)	body
+comment	main	k_disp_switch	Show or hide a text list entry	HYPOTHESIS: from the developer name and call sites
+comment	main	k_disp_inc	Reveal one more glyph every speed + 1 frames; returns 1 when everything is shown	wiki/ref-english-patch.md
+comment	main	check_end_k	Return nonzero when the typewriter has shown the whole text	HYPOTHESIS: from the developer name and call sites
+comment	main	get_k_work	Return the text list entry n	used with TextEntry in menus and scroll code
+comment	main	gnsx	Draw a name string centred by its length (2, 4 or 6 bytes)	body switch on strlen
+comment	main	sndisp	Wrap and queue a narration string at row y with colour col	body
+comment	main	sndi	Queue a narration string with the speaker name codes expanded	body
+comment	main	xa_wait	Typewriter plus voice wait step used by dialogue lines	HYPOTHESIS: same structure as dialogue_text_step
+comment	main	load_palette	Queue a palette (CLUT) upload for the next VRAM flush	body fills palette_queue
+comment	main	load_tpage_buf_lock	Store a resource id in a tpage slot and queue its image upload	body
+comment	main	tpage_buf_clear	Reset the 64 tpage slots (reserved and free marks) and set the default system pages	body
+comment	main	draw2d3d	Switch the 2D sprite pass (arg 1) and the 3D pass (arg 2) on or off	stores draw_2d_enabled and draw_3d_enabled
+comment	main	back_clear_switch	Turn the per-frame screen clear on or off	stores back_clear
+comment	main	dtd_on_tpage	Draw a sprite from a texture page slot	HYPOTHESIS: from the developer name only
+comment	main	goto_tpage	Select a texture page slot	HYPOTHESIS: from the developer name only
+comment	main	LoadSquare	Upload a rectangle of memory to VRAM (x, y, w, h, data)	wiki/ref-english-patch.md
+comment	main	menu_set	Register a menu: item count and rectangles for menu 0 or 1	body fills menu_items
+comment	main	menu_check	Hit-test the pointer or move the cursor of a menu by menu_mode; returns the hit index	body
+comment	main	menu_bar_show	Draw the highlight bar of the hovered menu item	HYPOTHESIS: from the developer name and call sites
+comment	main	hizuke_init	Create the calendar date actors (month, day, weekday) for the HUD	body
+comment	main	hizuke_show	Per-frame update of the calendar date HUD	HYPOTHESIS: from the developer name and call sites
+comment	main	hizuke_disp_switch	Show or hide the calendar date HUD	HYPOTHESIS: from the developer name and call sites
+comment	main	message_window_init	Create the message window actor	body
+comment	main	message_window_show	Per-frame update of the message window	HYPOTHESIS: from the developer name and call sites
+comment	main	icon_can_use_set	Enable or disable one of the 14 command icons	callers in the queue reader loop over 14 icons
+comment	main	icon_disp_switch	Show or hide the command icons	HYPOTHESIS: from the developer name and call sites
+comment	main	parameter_show_init	Create the digit actors of the parameter panel and snapshot the profile	body
+comment	main	check_para_limit	Clamp girl tokimeki/affection (0..0x80), syoushin (0..0xFF) and the nine parameters (0..999); the queue reader then clamps all three girl counters to 0x80 (girl_counters_clamp)	body
+comment	main	get_g_zyotai_s	Girl state rank 0-4 for scenes (4 worst); bit 7 set when affection is high	body
+comment	main	get_g_zyotai_h	Girl state rank 0-4 from weighted affection and tokimeki (4 if affection < 10, 3 if < 50, 2 if tokimeki < 50, 1 if < 80, else 0)	body
+comment	main	get_h_yuukou	Affection * weight / 100 clamped 0..100 for girl % 13	body
+comment	main	get_h_tokimeki	Weighted tokimeki for girl % 13 with extra terms from the player parameters	body (first lines read)
+comment	main	birth_day_check_days	Return 1 when the girl's (or, for 0xF, the player's) birthday is the given month and day	body
+comment	main	main_state_set	Switch to a mode and reset stage, step, timers, substep	body
+comment	main	dialogue_render	Split a script string into lines and queue them with name code expansion	wiki/ref-english-patch.md
+comment	main	yuukou_down	Once per queue build (weekly): lower affection by 1 (floor 0) for every met girl when the day of month is 1-6, and for girl 0 also on days 14-20	body
+comment	main	syoushin_up	Once per queue build (weekly): add 5 to the syoushin counter of met girls whose weighted affection is below 10	body
+comment	main	schedule_girls_gakko	Resolve girl-encounter placeholders in the day-event queue into special events, invitations, encounters or skips	body
+comment	main	return_step	Restore the main mode, stage and step saved in saved_mode, saved_stage and saved_step by calling main_state_set, main_stage_set and main_step_set	body (src/main/8007C030.c); the fields use the saved_ stem so the name stays unambiguous
+comment	core	include/main_api.h	One declaration of every main-exe symbol (functions, globals, shared structs); keeps its name, splitting it per main module and moving the enums into game_enums.h is a later step	spec section 16 item 14; the header comment (T-3340)

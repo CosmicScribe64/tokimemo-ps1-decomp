@@ -108,3 +108,46 @@ uses). Conventions: `docs/adr/0001-phase-2-naming.md`; stems: `GLOSSARY.md`.
     (`discover -s tools -p 'test_*.py'`) 1,646 tests OK (3 skipped), no `INCLUDE_ASM` in `src/` before or after,
     `funcdiff --resolve` MATCH (compared default build) for `main_step_next`, `main_stage_set`, `main_step_set`,
     `snd_command`, `girl_state_rank`, `bustup_read_start`, `gpu_init`, `frame_render`, `actors_draw`, `dialogue_run`.
+- 2026-10-24 p2-core-apply, review round 1 fix (two blocking findings: names against the ADR and glossary, map rows). 133 more
+  rows through `tools/rename.py` (tables `drafts/T-27004/fix_symbols.tsv`, `fix_types.tsv`, `fix_fields.tsv`, made by
+  `drafts/T-27004/mkfix.py`; ledger `config/renames/core.txt`, now 724 rows), one clean build: 27 of 27 sha1 OK, `ninja progress`
+  6,952 of 6,952, no `INCLUDE_ASM` in `src/`, `rename.py check`, `check_headers.py`, `migrate_globals.py --check` and
+  `sync_protos.py --check-branch` OK, tool suite 1,646 tests OK (3 skipped), `funcdiff --resolve` MATCH (default build) for
+  `mode_step_next`, `game_mode_set`, `audio_command`, `talk_run`, `portrait_read_start`, `memory_card_start`, `actor_draw_all`,
+  `draw_frame`, `boot_loop`, `title_mode_handler`, `talk_render`. Rename chains: the first names stay in the ledger and map to the
+  new ones (`rename.py lookup main_step_next`).
+  - Glossary and ADR conflicts renamed (finding a to f): `main_state_*` to `game_mode_*` (also the patch name `main_state_set`
+    to `game_mode_set`), `main_stage_*`/`main_step_*` to `mode_stage_*`/`mode_step_*` and the GameState fields `mode`, `stage`,
+    `step` and their timers and scratch bytes to `game_mode`, `mode_stage`, `mode_step`; `bustup_*` to `portrait_*` (O.BIN names
+    keep the stem); `card_*` to `memory_card_*` (functions, `card_block`, six fields, `MemoryCardFileRequest`); `snd_*` to `audio_*`;
+    `dialogue_*` to `talk_*` (with the four `Dialogue...` types and the two patch names `dialogue_render` and
+    `dialogue_speak_part` of the M9 list); `event_still_show` and `event_anim_show` to `scene_*`, `event_flags` to `scene_flags`,
+    `events_today` to `day_event_count_today`, `daily_event_bits` to `day_event_done_bits`; `ending_start` to
+    `schedule_ending_start` (ENDING's prefix is not main's); `phone_numbers` to `girl_phone_digits` (read by TEL and SHOUGATU, so
+    the TEL prefix `phone_` stays with TEL).
+  - Unlisted prefixes: renamed to a listed one where one fits. `main_loop` is `boot_loop`; `mode_*` handlers are
+    `<module>_mode_handler` (`boot_`, `title_`, `holiday_`, `ovl_loader_`, `schedule_command_screen_`, `schedule_day_screen_`);
+    `frame_render`, `screen_shake_update`, `debug_number_show` take `draw_`; `icon_bar_update`, `mascot_update`,
+    `screen_frame_draw`, `mascot_choice` take `hud_`; `light_effect_draw` takes `sprite_`; `quarter_flags_rotate` takes
+    `schedule_`; `daily_flags_clear` is `day_event_today_clear`; `game_reset_to_title` is `game_mode_reset_to_title`;
+    `voice_play` is `talk_voice_play`; `overlay_*` is `ovl_*` (functions, `overlay_entry`, six GameState fields);
+    `name_buf_*` is `name_code_*`; `parameter_name_table` is `param_name_table`; `command_deltas` is
+    `school_day_command_deltas`; `last_screen_mode` is `dec_bg_last_screen_mode`; `cd_cmd_*` is `cd_command_*`;
+    `day_events_build_week` and `day_events_clear` are `day_event_queue_*`.
+  - Map rows added in the same commit (ADR main map and glossary, as the ADR asks of a unit): `actor_` (glossary Module word
+    `actor`), `audio_` (Module word `audio`; the ADR text now says the driver takes it), `mode_stage_`/`mode_step_` in the
+    game-mode row, `name_code_` and `scene_` in the talk row, a row for `game_state`, `system_data` and `place_` (glossary rows
+    game state, system data, place), a rule that mode handlers take their module's prefix and end in `_mode_handler`, and `csr` in
+    the unresolved developer abbreviations. Decisions the user may still want to confirm: `audio_` as the sound-driver prefix
+    (the ADR said only that `snd_` is an SDK stem and `sound_` is OPTION's), and `actor_` as a main prefix.
+  - Abbreviations outside the table renamed too: `appt_place_N`, `tokimeki_frac`/`x_frac` and the other `_frac` fields (to
+    `_fraction`), `attr`, `exp` (to `practice_points`, HYPOTHESIS), `player_flags_hi`, `frame_hcount_limit`, `tpage_req`,
+    `GirlFlagBitsSched`, `PlayerFlagsHiBits`; `TacoSettingsBits` and `SaveTacoSettings` take TACO's stem `shooter`.
+  - Not done: the `MainMode` enum tag and its `MODE_` constants. `rename.py` has no row kind for an enum tag or an enumerator (plan:
+    "0 definitions visible"; limit now in [[rename-tool]]). The stem is `game_mode`, so a follow-up needs tool work, then one
+    batch. Sibling proposals (`config/renames/proposals/*.tsv`, `wiki/spec/m-*.md`, `h-*.md`, `o-*.md`) still use the first core
+    names; map them with `rename.py lookup` when those units are reviewed.
+  - Non-blocking items: the build logs in `drafts/T-27004/` are reduced to their proof lines (steps, sha1 OK lines, check
+    lines), and the tables, value files and small logs are committed; the ADR and CODING_STANDARDS example now reads
+    `/* GirlId */`, the comment the tool writes. `wiki/kanban.md` still lists T-27004 under Backlog; the orchestrator syncs the
+    board (this worktree does not edit it).

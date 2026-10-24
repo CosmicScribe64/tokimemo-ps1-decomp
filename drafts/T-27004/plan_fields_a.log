@@ -1,0 +1,284 @@
+field GameState unk_000 -> video_width: 13 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_002 -> video_height: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_004 -> video_interlace: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_014 -> screen_center_x: 191 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_018 -> screen_center_y: 250 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_01C -> prim_arena: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_034 -> sound_active: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_035 -> card_busy: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_036 -> clear_color_r: 68 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_037 -> clear_color_g: 40 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_038 -> clear_color_b: 46 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_039 -> back_clear: 4 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_03A -> screen_brightness: 181 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_03B -> brightness_step: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_03C -> voice_mode: 54 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_03D -> vacation: 21 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_03E -> year: 656 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_03F -> month: 639 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_040 -> day: 204 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_041 -> weekday: 55 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_042 -> day_count: 23 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_044 -> month_calendar: 95 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_0C4 -> player_full_name: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_0D4 -> player_family_name: 235 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_0DC -> player_given_name: 26 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_0E4 -> player_nickname: 13 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_0F4 -> player_flags: 333 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_0F6 -> player_flags_hi: 81 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_0F8 -> player_birthday: 86 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_0FC -> param_condition: 76 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_100 -> param_liberal_arts: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_104 -> param_science: 23 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_108 -> param_art: 25 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10C -> param_athletics: 33 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_110 -> param_trivia: 29 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_114 -> param_looks: 31 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_118 -> param_guts: 25 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_11C -> param_stress: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_120 -> progress_state: 99 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1BC -> girls: 1678 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_53C -> girl_cleared: 63 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_56C -> event_flags: 176 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_66C -> clubs: 102 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_69C -> day_events: 222 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_71C -> day_event_index: 121 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_71D -> events_today: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_71E -> daily_event_bits: 87 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_71F -> daily_check_done: 12 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_720 -> saved_mode: 51 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_721 -> saved_stage: 80 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_722 -> saved_step: 71 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_724 -> appt_place_0: 27 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_725 -> appt_place_1: 23 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_726 -> appt_place_2: 15 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_727 -> appt_place_3: 17 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_728 -> date_place_history: 32 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_72C -> girl_last_date_spot: 14 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_73C -> girl_last_date_spot_timer: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_74C -> girl_event_bits: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_75C -> appointment_flag: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_75D -> date_girl: 102 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_75E -> event_log: 184 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_F5E -> event_log_count: 211 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F5F -> current_girl: 1759 uses located by gcc in 437 C files, 5 comment mentions
+field GameState unk_F60 -> text_lines_total: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F61 -> text_first_line: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F62 -> text_scroll_state: 22 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F64 -> quarter_flags: 52 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_F68 -> last_command: 62 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F6C -> icon_mode: 39 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F6D -> icon_count: 49 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F6E -> sd_anim_fast: 12 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_F6F -> cursor_speed: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F70 -> click_mode: 15 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F73 -> double_click_interval: 23 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F74 -> input_device: 38 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F75 -> confirm_button: 22 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F77 -> mouse_buttons: 12 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F7A -> mouse_x: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F7C -> mouse_y: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F80 -> pad_held: 190 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_F84 -> pad_prev: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F88 -> pad_pressed: 398 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_F8C -> pad_released: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_F90 -> menu_items: 81 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1090 -> menu_count_0: 83 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1091 -> menu_count_1: 0 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1092 -> menu_mode: 31 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1093 -> menu_cursor_0: 173 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1094 -> menu_cursor_1: 152 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1095 -> menu_hit: 16 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10A2 -> tile_layer_enabled: 48 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10A5 -> quad_layer: 57 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10E8 -> quads_enabled: 42 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10EC -> bg_layer_order: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10F0 -> frame_hcount_limit: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10F4 -> timer_ticks: 21 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10F8 -> frame_count: 211 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_10FC -> mode_timer: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1100 -> stage_timer: 74 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1104 -> step_timer: 829 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_1108 -> mode: 69 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1109 -> stage: 423 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_110A -> step: 1433 uses located by gcc in 437 C files, 7 comment mentions
+field GameState unk_110B -> mode_scratch: 36 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_110C -> stage_scratch: 31 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_110D -> substep: 1842 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_110E -> overlay_target_mode: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_110F -> restart_request: 4 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1110 -> paused: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1111 -> pause_allowed: 1 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1112 -> actors_draw_enabled: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1113 -> draw_3d_enabled: 4 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1114 -> draw_2d_enabled: 3 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1115 -> card_result: 107 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_111A -> boot_hold: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_111B -> card_job: 11 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_111C -> card_step: 14 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_111D -> card_retry_count: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1117 -> album_slot: 73 uses located by gcc in 437 C files, 2 comment mentions
+field GameState unk_1118 -> save_slot: 136 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1120 -> card_timer: 61 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1124 -> options_dirty: 29 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1128 -> tpage_req: 16 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1228 -> tpage_buf: 211 uses located by gcc in 437 C files, 1 comment mentions
+field GameState unk_1328 -> palette_queue: 35 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1428 -> palette_queue_count: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1429 -> csr_queue_count: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_142C -> csr_queue: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_163C -> scratch_words: 61 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_183C -> scratch_buffer: 11 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1A3C -> overlay_tpage_table: 12 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1A4C -> overlay_frame_table: 10 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1A5C -> overlay_sequence_table: 10 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1A6C -> overlay_palette_a: 7 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1A7C -> overlay_image_buffer: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GameState unk_1A84 -> overlay_palette_b: 2 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_00 -> tokimeki_frac: 3 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_02 -> tokimeki: 232 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_04 -> affection_frac: 2 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_06 -> affection: 236 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_08 -> syoushin_frac: 3 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_0A -> syoushin: 206 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_0C -> flags: 809 uses located by gcc in 437 C files, 0 comment mentions
+field Rec38 unk_10 -> birthday: 112 uses located by gcc in 437 C files, 2 comment mentions
+field Rec38 unk_14 -> event_counters: 80 uses located by gcc in 437 C files, 0 comment mentions
+field CharFlags b1 -> met: 154 uses located by gcc in 437 C files, 0 comment mentions
+field CharFlags f20 -> club: 26 uses located by gcc in 437 C files, 0 comment mentions
+field CharFlags f9 -> story_stage: 39 uses located by gcc in 437 C files, 0 comment mentions
+field CharFlags b16 -> encounter_done: 1 uses located by gcc in 437 C files, 0 comment mentions
+field CharFlags b17 -> rumor_done: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec0FC unk_00 -> frac: 0 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec0FC unk_02 -> value: 301 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec66C unk_00 -> exp: 56 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec66C unk_02 -> level: 4 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec69C unk_00 -> type: 104 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec69C unk_01 -> girl: 84 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec69C unk_02 -> scene: 30 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec69C unk_03 -> extra: 5 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_00 -> girl: 20 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_01 -> flag: 22 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_02 -> scene: 37 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_03 -> rank: 43 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_04 -> year: 17 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_05 -> month: 14 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_06 -> day: 12 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec75E unk_07 -> weekday: 14 uses located by gcc in 437 C files, 0 comment mentions
+field GsRecF90 unk_00 -> x: 19 uses located by gcc in 437 C files, 0 comment mentions
+field GsRecF90 unk_02 -> y: 19 uses located by gcc in 437 C files, 0 comment mentions
+field GsRecF90 unk_04 -> w: 9 uses located by gcc in 437 C files, 0 comment mentions
+field GsRecF90 unk_05 -> h: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GsRecF90 unk_06 -> hover: 26 uses located by gcc in 437 C files, 0 comment mentions
+field GsRecF90 unk_07 -> disabled: 6 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec044 unk_00 -> day_kind: 41 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec044 unk_20 -> marker: 48 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec01C unk_00 -> size: 1 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec01C unk_04 -> used: 3 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec01C unk_08 -> base: 2 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec1328 unk_00 -> source: 26 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec142C unk_00 -> source: 4 uses located by gcc in 437 C files, 0 comment mentions
+field GsRec142C unk_04 -> slot: 3 uses located by gcc in 437 C files, 0 comment mentions
+field GsDateBits unk_09 -> blood_type: 20 uses located by gcc in 437 C files, 0 comment mentions
+field ScheduleFlags unk_08 -> health: 3 uses located by gcc in 437 C files, 0 comment mentions
+field ScheduleFlags unk_12 -> club: 7 uses located by gcc in 437 C files, 0 comment mentions
+field ScheduleFlags unk_21 -> recovery_days: 0 uses located by gcc in 437 C files, 0 comment mentions
+field ScheduleEntryFlags unk_00 -> place: 7 uses located by gcc in 437 C files, 0 comment mentions
+field ScheduleEntryFlags b24 -> flag: 5 uses located by gcc in 437 C files, 0 comment mentions
+field ScheduleEntryFlags unk_25 -> girl: 11 uses located by gcc in 437 C files, 0 comment mentions
+field DialogueWork unk_00 -> scene: 0 uses located by gcc in 437 C files, 0 comment mentions
+field DialogueWork unk_04 -> girl: 0 uses located by gcc in 437 C files, 0 comment mentions
+field Work800E7D10 unk_000 -> seed: 8 uses located by gcc in 437 C files, 0 comment mentions
+field Entry8 unk_00 -> x: 13 uses located by gcc in 437 C files, 0 comment mentions
+field Entry8 unk_02 -> y: 25 uses located by gcc in 437 C files, 0 comment mentions
+field Entry8 unk_04 -> attr: 11 uses located by gcc in 437 C files, 0 comment mentions
+field Entry8 unk_05 -> glyph_count: 5 uses located by gcc in 437 C files, 0 comment mentions
+field Entry8 unk_06 -> extra: 7 uses located by gcc in 437 C files, 0 comment mentions
+field Entry8 unk_07 -> active: 18 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_02 -> flags: 202 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_03 -> draw_flags: 629 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_06 -> blink_period: 55 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_07 -> brightness: 305 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_0C -> frame_table: 101 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_10 -> sequence_table: 101 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_16 -> sequence_slot: 205 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_1A -> scale_x: 47 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_1C -> scale_y: 53 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_20 -> rotation: 0 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_24 -> x_frac: 1 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_26 -> x: 591 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_28 -> y_frac: 1 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_2A -> y: 596 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_2C -> dx_frac: 4 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_2E -> dx: 109 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_30 -> dy_frac: 4 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_32 -> dy: 2 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_34 -> tpage_table: 113 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayActor44 unk_38 -> quad_flags: 96 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_24 -> x: 82 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_28 -> y: 77 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_2C -> dx: 20 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_30 -> dy: 24 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_0C -> frame_table: 15 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_10 -> sequence_table: 14 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_16 -> sequence_slot: 65 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_18 -> frame: 60 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_34 -> tpage_table: 13 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_38 -> quad_flags: 14 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_02 -> flags: 55 uses located by gcc in 437 C files, 0 comment mentions
+field DisplayFixActor44 unk_03 -> draw_flags: 104 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_00 -> flags: 189 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_04 -> x: 114 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_06 -> y: 180 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_08 -> w: 64 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_0A -> h: 151 uses located by gcc in 437 C files, 4 comment mentions
+field Rec24 unk_14 -> tint_r: 215 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_15 -> tint_g: 178 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_16 -> tint_b: 178 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_18 -> anchor_x: 50 uses located by gcc in 437 C files, 0 comment mentions
+field Rec24 unk_1A -> anchor_y: 50 uses located by gcc in 437 C files, 0 comment mentions
+239 rows, 315 files to change (dry run)
+  note: drafts/T-27004/fields_a.tsv:3: 2 member uses named unk_004 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:4: 14 member uses named unk_014 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:5: 14 member uses named unk_018 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:6: 7 member uses named unk_01C remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:8: 35 member uses named unk_035 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:9: 169 member uses named unk_036 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:10: 8 member uses named unk_037 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:17: 10 member uses named unk_03E remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:26: 1 member uses named unk_0E4 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:31: 2 member uses named unk_100 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:32: 1 member uses named unk_104 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:33: 3 member uses named unk_108 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:34: 1 member uses named unk_10C remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:37: 1 member uses named unk_118 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:65: 4 member uses named unk_F60 remain in the users of GameState (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:138: 766 member uses named unk_00 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:139: 205 member uses named unk_02 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:140: 782 member uses named unk_04 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:141: 223 member uses named unk_06 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:142: 464 member uses named unk_08 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:143: 133 member uses named unk_0A remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:144: 368 member uses named unk_0C remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:145: 550 member uses named unk_10 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:146: 304 member uses named unk_14 remain in the users of Rec38 (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:147: 103 member uses named b1 remain in the users of CharFlags (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:148: 3 member uses named f20 remain in the users of CharFlags (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:149: 5 member uses named f9 remain in the users of CharFlags (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:150: 4 member uses named b16 remain in the users of CharFlags (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:151: 4 member uses named b17 remain in the users of CharFlags (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:152: 766 member uses named unk_00 remain in the users of GsRec0FC (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:153: 205 member uses named unk_02 remain in the users of GsRec0FC (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:154: 766 member uses named unk_00 remain in the users of GsRec66C (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:155: 205 member uses named unk_02 remain in the users of GsRec66C (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:156: 766 member uses named unk_00 remain in the users of GsRec69C (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:157: 271 member uses named unk_01 remain in the users of GsRec69C (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:158: 205 member uses named unk_02 remain in the users of GsRec69C (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:159: 33 member uses named unk_03 remain in the users of GsRec69C (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:160: 766 member uses named unk_00 remain in the users of GsRec75E (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:161: 271 member uses named unk_01 remain in the users of GsRec75E (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: drafts/T-27004/fields_a.tsv:162: 205 member uses named unk_02 remain in the users of GsRec75E (other types, or code gcc does not compile: #if 0, other #ifdef branches)
+  note: ... 76 more
+PROBLEM: proof 2: new gcc error src/ovl/RPG_BAT/801525B0.c:502: 'GameState' has no member named 'unk_3A'
+PROBLEM: proof 2: gcc error gone src/ovl/RPG_BAT/801525B0.c:502: 'GameState' has no member named 'unk_3A'; did you mean 'screen_brightness'?
+exit 1

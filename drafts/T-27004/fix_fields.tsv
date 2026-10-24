@@ -1,0 +1,47 @@
+field	GameState	mode	game_mode	review fix: trap word mode: stem game_mode; set by game_mode_set, dispatched by game_mode_dispatch
+field	GameState	stage	mode_stage	review fix: glossary row 'stage, step': mode_stage
+field	GameState	step	mode_step	review fix: glossary row 'stage, step': mode_step
+field	GameState	mode_timer	game_mode_timer	review fix: stem game_mode
+field	GameState	stage_timer	mode_stage_timer	review fix: stem mode_stage
+field	GameState	step_timer	mode_step_timer	review fix: stem mode_step
+field	GameState	mode_scratch	game_mode_scratch	review fix: stem game_mode
+field	GameState	stage_scratch	mode_stage_scratch	review fix: stem mode_stage
+field	GameState	saved_mode	saved_game_mode	review fix: stem game_mode
+field	GameState	saved_stage	saved_mode_stage	review fix: stem mode_stage
+field	GameState	saved_step	saved_mode_step	review fix: stem mode_step
+field	GameState	overlay_target_mode	ovl_target_game_mode	review fix: glossary row 'overlay': stem ovl; stem game_mode
+field	GameState	overlay_tpage_table	ovl_tpage_table	review fix: stem ovl
+field	GameState	overlay_frame_table	ovl_frame_table	review fix: stem ovl
+field	GameState	overlay_sequence_table	ovl_sequence_table	review fix: stem ovl
+field	GameState	overlay_palette_a	ovl_palette_a	review fix: stem ovl
+field	GameState	overlay_image_buffer	ovl_image_buffer	review fix: stem ovl
+field	GameState	overlay_palette_b	ovl_palette_b	review fix: stem ovl
+field	GameState	card_busy	memory_card_busy	review fix: trap word card: stem memory_card
+field	GameState	card_result	memory_card_result	review fix: stem memory_card
+field	GameState	card_job	memory_card_job	review fix: stem memory_card
+field	GameState	card_step	memory_card_step	review fix: stem memory_card
+field	GameState	card_retry_count	memory_card_retry_count	review fix: stem memory_card
+field	GameState	card_timer	memory_card_timer	review fix: stem memory_card
+field	GameState	event_flags	scene_flags	review fix: trap word event: one-shot scene bytes indexed by the scene number
+field	GameState	events_today	day_event_count_today	review fix: trap word event: counts the day-event records run today
+field	GameState	daily_event_bits	day_event_done_bits	review fix: trap word event: per-day done bits of the day-event queue reader
+field	GameState	girl_event_bits	girl_scene_bits	HYPOTHESIS: trap word event: GEKO tests and sets bits for its scenes
+field	GameState	appt_place_0	appointment_place_0	review fix: appt is not in the abbreviation table
+field	GameState	appt_place_1	appointment_place_1	review fix: appt is not in the abbreviation table
+field	GameState	appt_place_2	appointment_place_2	review fix: appt is not in the abbreviation table
+field	GameState	appt_place_3	appointment_place_3	review fix: appt is not in the abbreviation table
+field	GameState	actors_draw_enabled	actor_draw_enabled	review fix: follows actor_draw_enable
+field	GameState	player_flags_hi	player_flags_upper	review fix: hi is not in the abbreviation table
+field	GameState	frame_hcount_limit	frame_scanline_limit	HYPOTHESIS: hcount is not in the abbreviation table; scanline count the frame waits for
+field	GameState	tpage_req	tpage_slot_state	review fix: req is not in the abbreviation table; 64 per-frame texture-page slot states
+field	GirlRecord	tokimeki_frac	tokimeki_fraction	review fix: frac is not in the abbreviation table
+field	GirlRecord	affection_frac	affection_fraction	review fix: frac is not in the abbreviation table
+field	GirlRecord	syoushin_frac	syoushin_fraction	review fix: frac is not in the abbreviation table
+field	GirlRecord	event_counters	scene_counters	HYPOTHESIS: trap word event: per-girl progress bytes indexed by the scene number
+field	ParamValue	frac	fraction	review fix: frac is not in the abbreviation table
+field	Actor	x_frac	x_fraction	review fix: frac is not in the abbreviation table
+field	Actor	y_frac	y_fraction	review fix: frac is not in the abbreviation table
+field	Actor	dx_frac	dx_fraction	HYPOTHESIS: frac is not in the abbreviation table; x step per frame
+field	Actor	dy_frac	dy_fraction	HYPOTHESIS: frac is not in the abbreviation table; y step per frame
+field	TextEntry	attr	attribute	review fix: attr is not in the abbreviation table
+field	ClubRecord	exp	practice_points	HYPOTHESIS: exp is not in the abbreviation table; club practice points

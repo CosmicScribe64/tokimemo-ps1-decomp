@@ -1,0 +1,14 @@
+type main DialogueWork -> TalkWork: defined in include/main_api.h, 6 tokens and 0 comment mentions in 473 files
+type main DialogueTables -> TalkTables: defined in include/main_api.h, 4 tokens and 0 comment mentions in 473 files
+type main DialogueVoiceRef -> TalkVoiceRef: defined in include/main_api.h, 4 tokens and 0 comment mentions in 473 files
+type main DialogueSelectors -> TalkSelectors: defined in include/main_api.h, 4 tokens and 0 comment mentions in 473 files
+type main CardFileRequest -> MemoryCardFileRequest: defined in include/game.h, 3 tokens and 0 comment mentions in 441 files
+type main EventFlagBlock -> SceneFlagBlock: defined in include/game.h, 5 tokens and 0 comment mentions in 441 files
+type main TacoSettingsBits -> ShooterSettingsBits: defined in include/main_api.h, 4 tokens and 0 comment mentions in 473 files
+type main SaveTacoSettings -> SaveShooterSettings: defined in include/game.h, 4 tokens and 0 comment mentions in 441 files
+type main GirlFlagBitsSched -> ScheduleGirlFlagBits: defined in include/game.h, 11 tokens and 0 comment mentions in 441 files
+type main PlayerFlagsHiBits -> PlayerFlagsUpperBits: defined in src/main/80041000.c, 5 tokens and 0 comment mentions in 9 files
+10 rows, 6 files to change
+applied; ledger config/renames/core.txt
+renames OK (677 ledger rows)
+exit 0

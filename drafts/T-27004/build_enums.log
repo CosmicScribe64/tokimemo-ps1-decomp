@@ -1,0 +1,63 @@
+[1/677] DISC game/ -> disc/files
+[2/677] CHECK SYMBOLS
+symbols OK
+[3/677] CHECK HEADERS
+headers OK
+[116/677] SHA1 CHECK build/SLPM_86.053.bin
+build/SLPM_86.053.bin: OK
+[140/677] SHA1 CHECK build/ovl/BUNKAKEN.bin
+build/ovl/BUNKAKEN.bin: OK
+[165/677] SHA1 CHECK build/ovl/BUNKASAI.bin
+build/ovl/BUNKASAI.bin: OK
+[181/677] SHA1 CHECK build/ovl/BUNKA_SD.bin
+build/ovl/BUNKA_SD.bin: OK
+[187/677] CHECK RENAMES
+renames OK (460 ledger rows)
+[211/677] SHA1 CHECK build/ovl/DATE.bin
+build/ovl/DATE.bin: OK
+[224/677] SHA1 CHECK build/ovl/DATE2.bin
+build/ovl/DATE2.bin: OK
+[238/677] SHA1 CHECK build/ovl/ENDING.bin
+build/ovl/ENDING.bin: OK
+[251/677] SHA1 CHECK build/ovl/EN_NICHI.bin
+build/ovl/EN_NICHI.bin: OK
+[264/677] SHA1 CHECK build/ovl/ETC.bin
+build/ovl/ETC.bin: OK
+[292/677] SHA1 CHECK build/ovl/EVENT.bin
+build/ovl/EVENT.bin: OK
+[315/677] SHA1 CHECK build/ovl/GEKO.bin
+build/ovl/GEKO.bin: OK
+[356/677] SHA1 CHECK build/ovl/GYOZI.bin
+build/ovl/GYOZI.bin: OK
+[368/677] SHA1 CHECK build/ovl/KANGEI.bin
+build/ovl/KANGEI.bin: OK
+[383/677] SHA1 CHECK build/ovl/MASTER.bin
+build/ovl/MASTER.bin: OK
+[391/677] SHA1 CHECK build/ovl/NAME_ENT.bin
+build/ovl/NAME_ENT.bin: OK
+[405/677] SHA1 CHECK build/ovl/OLH.bin
+build/ovl/OLH.bin: OK
+[413/677] SHA1 CHECK build/ovl/OMIMAI.bin
+build/ovl/OMIMAI.bin: OK
+[424/677] SHA1 CHECK build/ovl/OPTION.bin
+build/ovl/OPTION.bin: OK
+[429/677] SHA1 CHECK build/ovl/RENSYU.bin
+build/ovl/RENSYU.bin: OK
+[499/677] SHA1 CHECK build/ovl/RPG_BAT.bin
+build/ovl/RPG_BAT.bin: OK
+[530/677] SHA1 CHECK build/ovl/SHOUGATU.bin
+build/ovl/SHOUGATU.bin: OK
+[547/677] SHA1 CHECK build/ovl/SHUGAKU.bin
+build/ovl/SHUGAKU.bin: OK
+[593/677] SHA1 CHECK build/ovl/TACO.bin
+build/ovl/TACO.bin: OK
+[622/677] SHA1 CHECK build/ovl/TAIIKU.bin
+build/ovl/TAIIKU.bin: OK
+[628/677] SHA1 CHECK build/ovl/TEL.bin
+build/ovl/TEL.bin: OK
+[650/677] CHECK GLOBALS
+[668/677] SHA1 CHECK build/ovl/TT.bin
+build/ovl/TT.bin: OK
+[677/677] SHA1 CHECK build/ovl/VALEN.bin
+build/ovl/VALEN.bin: OK
+exit 0

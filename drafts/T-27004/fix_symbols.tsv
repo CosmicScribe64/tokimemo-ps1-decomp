@@ -1,0 +1,76 @@
+func	main	main_step_next	mode_step_next	review fix: glossary stem mode_step (was main_step_next); step += 1
+func	main	main_stage_set	mode_stage_set	review fix: glossary stem mode_stage (was main_stage_set)
+func	main	main_step_set	mode_step_set	review fix: glossary stem mode_step (was main_step_set)
+func	main	main_stage_next	mode_stage_next	review fix: glossary stem mode_stage (was main_stage_next)
+func	main	main_state_next	game_mode_next	review fix: glossary row 'main state': stem game_mode (was main_state_next)
+func	main	main_state_request_overlay	game_mode_request_overlay	review fix: stem game_mode (was main_state_request_overlay)
+func	main	main_state_dispatch	game_mode_dispatch	review fix: stem game_mode (was main_state_dispatch); object 80042540 owns game_mode_
+func	main	main_state_set	game_mode_set	review fix: the English-patch name fails the glossary row 'main state': game_mode_set (phase2 re-check list, M1)
+func	main	main_loop	boot_loop	review fix: object 800420D0 owns boot_ (ADR main map); bare main_ is not a prefix
+func	main	game_reset_to_title	game_mode_reset_to_title	review fix: bare game_ is not a prefix; it is the game-mode reset (default branch of the mode switches)
+func	main	snd_command	audio_command	review fix: snd_ is an SDK stem (ADR); audio_ is the sound-driver prefix added to the ADR main map
+func	main	snd_command_pump	audio_command_pump	review fix: snd_ is an SDK stem; audio_ prefix
+func	main	snd_bank_load_start	audio_bank_load_start	review fix: snd_ is an SDK stem; audio_ prefix
+func	main	snd_bank_load_poll	audio_bank_load_poll	review fix: snd_ is an SDK stem; audio_ prefix
+func	main	snd_bank_start	audio_bank_start	review fix: snd_ is an SDK stem; audio_ prefix
+func	main	snd_bank_state_reset	audio_bank_state_reset	review fix: snd_ is an SDK stem; audio_ prefix
+func	main	bustup_read_start	portrait_read_start	review fix: glossary row 'bustup': stem portrait (only the O.BIN names keep bustup_)
+func	main	bustup_read_step	portrait_read_step	review fix: stem portrait
+func	main	bustup_show_checked	portrait_show_checked	review fix: stem portrait
+func	main	bustup_build	portrait_build	review fix: stem portrait
+func	main	bustup_layout_set	portrait_layout_set	review fix: stem portrait
+func	main	bustup_quad_offsets	portrait_quad_offsets	HYPOTHESIS: stem portrait; sets quad offsets per girl id of the two portrait quads
+func	main	bustup_wink_update	portrait_wink_update	review fix: stem portrait
+func	main	dialogue_names_set	talk_names_set	review fix: glossary row 'kaiwa': stem talk
+func	main	dialogue_clear	talk_clear	review fix: stem talk
+func	main	dialogue_run	talk_run	review fix: stem talk (the talk runner)
+func	main	dialogue_text_step	talk_text_step	review fix: stem talk
+func	main	dialogue_render	talk_render	review fix: stem talk (phase2 re-check list, M9)
+func	main	dialogue_speak_part	talk_speak_part	review fix: stem talk (phase2 re-check list, M9)
+func	main	voice_play	talk_voice_play	review fix: voice is not a prefix; the voice line belongs to the talk runner (sends sound command 0x300 for a dialogue line)
+func	main	event_still_show	scene_still_show	review fix: trap word event: a scripted scene picture (callers KANGEI, SHOUGATU) takes scene
+func	main	event_anim_show	scene_anim_show	review fix: trap word event: scene animation (DATE event scenes) takes scene
+func	main	icon_bar_update	hud_icon_bar_update	HYPOTHESIS: icon_ is not a prefix; the command icon bar is part of the HUD (hud_)
+func	main	mascot_update	hud_mascot_update	HYPOTHESIS: mascot_ is not a prefix; drawn by the HUD file 800674B0 (hud_)
+func	main	screen_frame_draw	hud_screen_frame_draw	HYPOTHESIS: screen_ is not a prefix; the screen frame is drawn by the HUD file (hud_)
+func	main	light_effect_draw	sprite_light_effect_draw	HYPOTHESIS: light_ is not a prefix; layered effect sprites (sprite_)
+func	main	frame_render	draw_frame	review fix: frame_ is not a prefix; file 80043510 owns draw_ (the per-frame draw pass)
+func	main	screen_shake_update	draw_shake_update	review fix: screen_ is not a prefix; it moves the draw origin screen_center_x/y (draw_)
+func	main	debug_number_show	draw_debug_number	review fix: debug_ is OPTION's debug_menu_ stem; this draws a number (draw_)
+func	main	actors_draw_enable	actor_draw_enable	review fix: actor_ added to the ADR main map (sprite module); plural prefix dropped
+func	main	actors_draw	actor_draw_all	review fix: actor_ prefix; draws every visible actor of the pool
+func	main	cd_cmd_reset	cd_command_reset	review fix: cmd is not in the abbreviation table
+func	main	cd_cmd_push	cd_command_push	review fix: cmd is not in the abbreviation table
+func	main	cd_cmd_pump	cd_command_pump	review fix: cmd is not in the abbreviation table
+func	main	card_start	memory_card_start	review fix: trap word card: stem memory_card
+func	main	card_stop	memory_card_stop	review fix: trap word card: stem memory_card
+func	main	day_events_build_week	day_event_queue_build_week	review fix: prefix day_event_ (ADR) instead of the plural day_events_
+func	main	day_events_clear	day_event_queue_clear	review fix: prefix day_event_ instead of day_events_
+func	main	ending_start	schedule_ending_start	review fix: ending_ is the ENDING overlay's prefix (One owner); this is step 1 of the day screen in the scheduler object 8006CB30 (schedule_)
+func	main	quarter_flags_rotate	schedule_quarter_flags_rotate	review fix: quarter_ is not a prefix; object 8006CB30 owns schedule_
+func	main	daily_flags_clear	day_event_today_clear	review fix: daily_ is not a prefix; clears the per-day queue bits and the day's event count (day_event_)
+func	main	mode_command_screen	schedule_command_screen_handler	review fix: trap word mode: handler of the command screen that ends in schedule_init (mode 0x34)
+func	main	mode_day_screen	schedule_day_screen_handler	review fix: trap word mode: handler of the day screen (mode 0x31) in object 8006CB30 (schedule_)
+func	main	mode_boot	boot_mode_handler	review fix: trap word mode: handler of game mode 0x00 (boot_)
+func	main	mode_title	title_mode_handler	review fix: trap word mode: handler of game mode 0x12, title menu object 80061710 (title_)
+func	main	mode_holiday	holiday_mode_handler	review fix: trap word mode: handler of game mode 0x46, days-off object 80075320 (holiday_)
+func	main	mode_overlay_loader	ovl_loader_mode_handler	review fix: trap word mode: handler of game mode 0x02, loader object 800789E0 (ovl_)
+data	main	card_block	memory_card_block	review fix: trap word card: stem memory_card
+data	main	cd_cmd_ring	cd_command_ring	review fix: cmd is not in the abbreviation table
+data	main	overlay_entry	ovl_entry	review fix: glossary row 'overlay': stem ovl
+data	main	dialogue_tables	talk_tables	review fix: stem talk
+data	main	dialogue_group	talk_group	review fix: stem talk
+data	main	dialogue_line	talk_line	review fix: stem talk
+data	main	dialogue_text_table	talk_text_table	review fix: stem talk
+data	main	dialogue_command_table	talk_command_table	review fix: stem talk
+data	main	dialogue_voice_table	talk_voice_table	review fix: stem talk
+data	main	dialogue_work	talk_work	review fix: stem talk
+data	main	name_buf_family	name_code_family	review fix: glossary row 'name codes': stem name_code
+data	main	name_buf_given	name_code_given	review fix: stem name_code
+data	main	name_buf_player_form	name_code_player_form	review fix: stem name_code
+data	main	name_buf_girl_short	name_code_girl_short	review fix: stem name_code
+data	main	parameter_name_table	param_name_table	review fix: glossary row 'parameter': stem param
+data	main	command_deltas	school_day_command_deltas	review fix: command_ is not a prefix; read only by the school-day object 800737A0 (school_day_)
+data	main	phone_numbers	girl_phone_digits	review fix: phone_ is the TEL overlay's prefix (One owner); 13 rows of 7 digits, one per girl (girl_)
+data	main	last_screen_mode	dec_bg_last_screen_mode	review fix: last_ is not a prefix; selects the dec_bg draw variant (read in the MDEC background object 80057390)
+data	main	mascot_choice	hud_mascot_choice	HYPOTHESIS: mascot_ is not a prefix; read by hud_mascot_update

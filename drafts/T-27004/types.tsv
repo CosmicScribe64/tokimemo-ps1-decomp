@@ -1,0 +1,75 @@
+type	main	WordBytes4	WordBytes	word/bytes union view of D_801255D0 (CD state); size suffix dropped
+type	main	DialogueVoice8	DialogueVoiceRef	leaf of the dialogue voice table (two words per line)
+type	main	DialogueBytes16	DialogueSelectors	16 byte selectors copied to the dialogue handler's stack
+type	main	Rec34Flags	LegacyGirlFlags	flag word of the 0x34-byte girl record that the dead EVENT overlay was linked against
+type	main	Rec34	LegacyGirlRecord	EVENT overlay's older GirlRecord layout (D_800B0A04 in its linked main layout; same s16 fields at +0..+0xA); EVENT is never loaded
+type	main	GsDateBits	BirthdayBits	month bits 0-3, day bits 4-8, blood type bits 9-10 (player word and GirlRecord.birthday)
+type	main	GsWord	WordView	word/halves/bytes/date union used for pad words, flag words and packed fields
+type	main	GsEntry54C	AppointmentEntry	bit view of one appointment word (place, month, day, flag, girl, active)
+type	main	GsSlot54C	AppointmentSlots	8 appointment words plus the first-entry bit view; macros unk_54C/unk_54C_0 read through it
+type	main	GsHalf	HalfView	halfword/bytes union (player_flags halves)
+type	main	NameMetric4	AlbumParam	one saved parameter value of an album slot (metrics[9][16] of SystemData): s16 value at +2
+type	main	WorkSetBits	TacoSettingsBits	HYPOTHESIS: settings bits at SystemData +0x40 (saved flag, mode, selectors); read by TACO
+type	main	Work800E7D10	SystemData	0xEE0-byte area after GameState: random word, album slot table, per-girl persistent flags, TACO settings, names and parameters of 16 album slots, club bytes; saved in the system file
+type	main	CharFlags	GirlFlagBits	bit-field view of GirlRecord.flags (met, club, story stage, event bits)
+type	main	FlagsF64	QuarterFlagBits	bit-field view of GameState.quarter_flags
+type	main	Rec38Flags	GirlFlags	union of GirlRecord.flags views (word, halves, bytes, GirlFlagBits)
+type	main	Rec38	GirlRecord	0x38-byte per-girl record in GameState.girls[16]: tokimeki, affection, syoushin counters, flags, birthday, event counters
+type	main	Rec24	SpriteQuad	0x24-byte textured quad drawn by sprite_set_gpu_poly_ft4: position, size, uv, tint, flags (bit 31 hidden, bit 30 semi-transparent); table D_801217D0
+type	main	Work80125D10	AudioState	0x50-byte work area used by the sound driver (80079B10) and the CD audio code; unk_44/unk_48 are CD command buffers
+type	main	GsRec01C	PrimArena	per draw buffer: size 0x10C00, used offset, base address (SetWorkBase/GetWorkBase)
+type	main	GsRec044	MonthCalendar	day_kind[0x20] ([0] = days in month) and marker[0x20] ([0] = weekday of the 1st) of one month
+type	main	GsRec0FC	ParamValue	one player parameter: 16.16 fixed point, frac at +0, value at +2
+type	main	GsRec66C	ClubRecord	per club: u16 exp at +0, level byte at +2, flag byte at +3 (ClubFlagBits view of the word)
+type	main	GsRec69C	DayEvent	queue record: type, girl, scene, flags
+type	main	GsRec75E	EventLogEntry	girl, flag, scene, rank (get_g_zyotai_h), year, month, day, weekday
+type	main	GsRecF90	MenuItem	menu item rectangle x, y, w, h, hover flag, disabled flag
+type	main	GsRec1328	PaletteLoad	queued palette upload: source pointer and 4 parameter bytes
+type	main	GsRec142C	CsrLoad	queued image upload: source pointer, tpage slot, rect (x, y, w, h)
+type	main	KWork	TextState	text list state: entry count, total glyphs, mark, speed, shown glyph position
+type	main	Flags7D4F	ExtraModeFlags	HYPOTHESIS: byte D_800E7D4F (TT unlock bit, festival return mode bits) in SystemData
+type	main	SpriteCell8	BgCell	PsyQ GsCELL layout
+type	main	SpriteMap10	BgMap	PsyQ GsMAP layout
+type	main	SpriteIndex80	BgMapIndex	cell index array of one BG slot
+type	main	Ring18	CdCommand	entry of the 48-slot CD command ring: command, argument, 16 data bytes
+type	main	StrDecEnv30	StrDecEnv	PsyQ movie sample DECENV; size suffix dropped
+type	main	SaveSettings20	SaveConfigBlock	HYPOTHESIS: 0x14-byte settings record copied by the save routines; protection flag in the last byte
+type	main	SaveSettings24	SaveTacoSettings	HYPOTHESIS: 0x18-byte copy of SystemData +0x40.. (settings bits, three names, three words)
+type	main	SaveMetricWord	SaveAlbumParam	word/AlbumParam union of the system-file image
+type	main	SaveImageView	SystemSaveImage	0xF00 byte image of SystemData as written to the memory card
+type	main	SaveWorkView	SystemDataSaveView	0x58-byte view of the SystemData prefix with the two settings records
+type	main	GsBlockC4	ProfileBlock	GameState +0xC4..+0x140: names, flags, birthday and the nine parameters as saved (0x7C bytes)
+type	main	GsBlock56C	EventFlagBlock	GameState +0x56C..+0x66C as saved (event_flags, 0x100 bytes)
+type	main	SaveGameView	GameSaveImage	0xF00 byte memory-card image of one game save; comments name the GameState source of each field
+type	main	Entry8	TextEntry	8-byte entry of text_list: x, y, attribute, glyph count, extra, visible
+type	main	FileReq	CardFileRequest	stack request of the memory-card file functions: 32-byte name and retry counter
+type	main	MenuIconBits	LastCommandBits	weekday command (bits 0-3) and holiday command (bits 4-7) nibbles of GameState.last_command
+type	main	DisplayActor44	Actor	0x44-byte display actor in actor_pool[160]: sprite frame tables, 16.16 position, scale, rotation, brightness; size suffix dropped
+type	main	DisplayFixActor44	ActorFixed	Actor with +0x24/+0x28 as 16.16 words (units that move actors in fixed point)
+type	main	DisplayImagePart0E	SpritePart	one part of a sprite frame: uv, size, offset, flags
+type	main	DisplayImage78	SpriteFrame	sprite frame: part count, origin and up to 8 SpriteParts
+type	main	DisplayColorPair4	ColorPair555	two packed 5:5:5 colours interpolated by screen_frame_draw
+type	main	BunkaDispatch8	CultureFestivalDispatch	HYPOTHESIS: the word pair D_80122EB8 shared by BUNKASAI and BUNKAKEN
+type	main	SpriteSlot24	BgLayer	0x24-byte PsyQ GsBG-style layer at D_801220D0 (2 slots)
+type	main	GsByteNibbles	NibbleView	low/high nibble byte view
+type	main	ScheduleFlags	PlayerFlagBits	bit view of GameState.player_flags (health, club, flags, recovery counter)
+type	main	ScheduleClubFlags	ClubFlagBits	bit view of a ClubRecord word
+type	main	ScheduleEntryDate	AppointmentDate	month and day halves of an appointment word
+type	main	ScheduleEntryFlags	AppointmentBits	bit view of an appointment word (same layout as AppointmentEntry)
+type	main	NameRecordF00	AlbumSlotRecord	0xF00-byte album slot record read by NAME_ENT and main
+type	main	ScheduleGirlFlags	GirlFlagBitsSched	extra bit view of GirlRecord.flags used by the schedule builder
+type	main	CallPair8	AudioRequestPair	two words passed to cd_audio_request_set (NAME_ENT table rows)
+type	main	SrnRec28	SrnLayer	0x28-byte record of the srn_* tile-layer routines (D_80121750)
+type	main	ModRec14	ModTileSet	0x14-byte tile-set record of the mod_* routines (D_801217A0)
+type	main	StateClearBytes100	GameStateClearBlock	byte view used to clear GameState +0x56C..+0x66C (event_flags and clubs) in one block
+type	main	DrawEnv60	DrawEnvCopy	stack copy of the PsyQ DRAWENV
+type	main	DispEnv14	DispEnvCopy	stack copy of the PsyQ DISPENV
+type	main	SprEnt	SpriteQuadView	second view of SpriteQuad (+0x0A is s16 here, u16 in SpriteQuad); merge candidate once the match allows
+type	main	GsF6Bits	PlayerFlagsHiBits	bit view of the byte at GameState +0xF6 (player_flags_hi byte 0)
+type	main	F6Bits	RecoveryCounterBits	bit view of the same byte with the 3-bit recovery counter in bits 5-7
+type	main	CdRingView	CdRingState	head, tail, status and phase bytes D_80125128..D_8012512B of the CD command ring
+type	main	Pix2In	PixelPairIn	two 5:5:5 pixels read by the colour-bar conversion func_8004B590
+type	main	Pix2Out	PixelPairOut	two 5:5:5 pixels written by func_8004B590
+type	main	ModelRec88	ModelRecord	0x88-byte model record of the 3D init code; size suffix dropped
+type	main	MouseOut	MouseSample	three-word mouse state returned by func_80059860
+type	main	MenuSelection5	MenuSelection	count[2], mode and cursor[2] bytes at GameState +0x1090; the view the menu code casts to

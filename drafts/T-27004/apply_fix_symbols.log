@@ -1,0 +1,89 @@
+func main main_step_next -> mode_step_next: 0x8004284C (main), 4130 tokens and 0 comment mentions in 219 files, 0 config keys
+func main main_stage_set -> mode_stage_set: 0x80042908 (main), 721 tokens and 1 comment mentions in 111 files, 0 config keys
+func main main_step_set -> mode_step_set: 0x80042940 (main), 773 tokens and 2 comment mentions in 122 files, 0 config keys
+func main main_stage_next -> mode_stage_next: 0x80042808 (main), 238 tokens and 0 comment mentions in 82 files, 0 config keys
+func main main_state_next -> game_mode_next: 0x80042798 (main), 1 tokens and 0 comment mentions in 1 files, 0 config keys
+func main main_state_request_overlay -> game_mode_request_overlay: 0x80042960 (main), 4 tokens and 0 comment mentions in 2 files, 0 config keys
+func main main_state_dispatch -> game_mode_dispatch: 0x80042540 (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+func main main_state_set -> game_mode_set: 0x80042878 (main), 308 tokens and 2 comment mentions in 71 files, 0 config keys
+func main main_loop -> boot_loop: 0x80042134 (main), 3 tokens and 0 comment mentions in 2 files, 0 config keys
+func main game_reset_to_title -> game_mode_reset_to_title: 0x80046500 (main), 519 tokens and 0 comment mentions in 128 files, 0 config keys
+func main snd_command -> audio_command: 0x80044750 (main), 1182 tokens and 2 comment mentions in 185 files, 0 config keys
+func main snd_command_pump -> audio_command_pump: 0x80079B34 (main), 7 tokens and 0 comment mentions in 4 files, 0 config keys
+func main snd_bank_load_start -> audio_bank_load_start: 0x80044890 (main), 138 tokens and 0 comment mentions in 89 files, 0 config keys
+func main snd_bank_load_poll -> audio_bank_load_poll: 0x80044E8C (main), 176 tokens and 0 comment mentions in 92 files, 0 config keys
+func main snd_bank_start -> audio_bank_start: 0x8004500C (main), 89 tokens and 0 comment mentions in 42 files, 0 config keys
+func main snd_bank_state_reset -> audio_bank_state_reset: 0x8004482C (main), 66 tokens and 0 comment mentions in 38 files, 0 config keys
+func main bustup_read_start -> portrait_read_start: 0x80062CD0 (main), 383 tokens and 1 comment mentions in 58 files, 0 config keys
+func main bustup_read_step -> portrait_read_step: 0x800866A0 (main), 174 tokens and 1 comment mentions in 31 files, 0 config keys
+func main bustup_show_checked -> portrait_show_checked: 0x80083474 (main), 302 tokens and 0 comment mentions in 47 files, 0 config keys
+func main bustup_build -> portrait_build: 0x80062DBC (main), 8 tokens and 1 comment mentions in 7 files, 0 config keys
+func main bustup_layout_set -> portrait_layout_set: 0x80083440 (main), 191 tokens and 1 comment mentions in 52 files, 0 config keys
+func main bustup_quad_offsets -> portrait_quad_offsets: 0x80085CD4 (main), 3 tokens and 0 comment mentions in 2 files, 0 config keys
+func main bustup_wink_update -> portrait_wink_update: 0x80083808 (main), 43 tokens and 2 comment mentions in 35 files, 0 config keys
+func main dialogue_names_set -> talk_names_set: 0x800847B8 (main), 257 tokens and 1 comment mentions in 112 files, 0 config keys
+func main dialogue_clear -> talk_clear: 0x8008585C (main), 89 tokens and 0 comment mentions in 61 files, 0 config keys
+func main dialogue_run -> talk_run: 0x80082764 (main), 64 tokens and 0 comment mentions in 22 files, 0 config keys
+func main dialogue_text_step -> talk_text_step: 0x8005215C (main), 121 tokens and 1 comment mentions in 6 files, 0 config keys
+func main dialogue_render -> talk_render: 0x80081190 (main), 57 tokens and 0 comment mentions in 7 files, 0 config keys
+func main dialogue_speak_part -> talk_speak_part: 0x8007EF48 (main), 2 tokens and 0 comment mentions in 1 files, 0 config keys
+func main voice_play -> talk_voice_play: 0x80052060 (main), 133 tokens and 0 comment mentions in 12 files, 0 config keys
+func main event_still_show -> scene_still_show: 0x80084E90 (main), 81 tokens and 0 comment mentions in 40 files, 0 config keys
+func main event_anim_show -> scene_anim_show: 0x800850D4 (main), 152 tokens and 3 comment mentions in 42 files, 0 config keys
+func main icon_bar_update -> hud_icon_bar_update: 0x80065B0C (main), 31 tokens and 2 comment mentions in 18 files, 0 config keys
+func main mascot_update -> hud_mascot_update: 0x80067870 (main), 20 tokens and 1 comment mentions in 12 files, 0 config keys
+func main screen_frame_draw -> hud_screen_frame_draw: 0x80066C08 (main), 74 tokens and 0 comment mentions in 51 files, 0 config keys
+func main light_effect_draw -> sprite_light_effect_draw: 0x8006B900 (main), 56 tokens and 0 comment mentions in 22 files, 0 config keys
+func main frame_render -> draw_frame: 0x80043510 (main), 2 tokens and 2 comment mentions in 4 files, 0 config keys
+func main screen_shake_update -> draw_shake_update: 0x80047560 (main), 12 tokens and 0 comment mentions in 11 files, 0 config keys
+func main debug_number_show -> draw_debug_number: 0x8004AE28 (main), 63 tokens and 0 comment mentions in 4 files, 0 config keys
+func main actors_draw_enable -> actor_draw_enable: 0x80048DAC (main), 89 tokens and 0 comment mentions in 68 files, 0 config keys
+func main actors_draw -> actor_draw_all: 0x800476C0 (main), 3 tokens and 1 comment mentions in 4 files, 0 config keys
+func main cd_cmd_reset -> cd_command_reset: 0x800452C4 (main), 66 tokens and 0 comment mentions in 41 files, 0 config keys
+func main cd_cmd_push -> cd_command_push: 0x80045318 (main), 17 tokens and 1 comment mentions in 3 files, 0 config keys
+func main cd_cmd_pump -> cd_command_pump: 0x800455C4 (main), 3 tokens and 1 comment mentions in 3 files, 0 config keys
+func main card_start -> memory_card_start: 0x80053CE0 (main), 66 tokens and 0 comment mentions in 9 files, 0 config keys
+func main card_stop -> memory_card_stop: 0x80053D10 (main), 126 tokens and 0 comment mentions in 11 files, 0 config keys
+func main day_events_build_week -> day_event_queue_build_week: 0x8006D7EC (main), 3 tokens and 2 comment mentions in 3 files, 0 config keys
+func main day_events_clear -> day_event_queue_clear: 0x8006CF38 (main), 2 tokens and 0 comment mentions in 1 files, 0 config keys
+func main ending_start -> schedule_ending_start: 0x80070FD0 (main), 3 tokens and 0 comment mentions in 2 files, 0 config keys
+func main quarter_flags_rotate -> schedule_quarter_flags_rotate: 0x800722C4 (main), 5 tokens and 1 comment mentions in 2 files, 0 config keys
+func main daily_flags_clear -> day_event_today_clear: 0x8007259C (main), 6 tokens and 1 comment mentions in 4 files, 0 config keys
+func main mode_command_screen -> schedule_command_screen_handler: 0x8005A0B0 (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+func main mode_day_screen -> schedule_day_screen_handler: 0x80070F14 (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+func main mode_boot -> boot_mode_handler: 0x8005A06C (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+func main mode_title -> title_mode_handler: 0x80062840 (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+func main mode_holiday -> holiday_mode_handler: 0x80075320 (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+func main mode_overlay_loader -> ovl_loader_mode_handler: 0x80078A0C (main), 2 tokens and 0 comment mentions in 2 files, 0 config keys
+data main card_block -> memory_card_block: 0x80123120 (main), 145 tokens and 4 comment mentions in 4 files, 0 config keys
+data main cd_cmd_ring -> cd_command_ring: 0x80125130 (main), 19 tokens and 1 comment mentions in 2 files, 0 config keys
+data main overlay_entry -> ovl_entry: 0x80123110 (main), 54 tokens and 0 comment mentions in 4 files, 0 config keys
+data main dialogue_tables -> talk_tables: 0x800CA134 (main), 71 tokens and 2 comment mentions in 23 files, 0 config keys
+data main dialogue_group -> talk_group: 0x800CA148 (main), 3491 tokens and 3 comment mentions in 62 files, 0 config keys
+data main dialogue_line -> talk_line: 0x800CA14C (main), 139 tokens and 0 comment mentions in 61 files, 0 config keys
+data main dialogue_text_table -> talk_text_table: 0x800CA160 (main), 215 tokens and 2 comment mentions in 64 files, 0 config keys
+data main dialogue_command_table -> talk_command_table: 0x800CA164 (main), 197 tokens and 0 comment mentions in 61 files, 0 config keys
+data main dialogue_voice_table -> talk_voice_table: 0x800CA168 (main), 197 tokens and 0 comment mentions in 61 files, 0 config keys
+data main dialogue_work -> talk_work: 0x80122CD0 (main), 103 tokens and 2 comment mentions in 38 files, 0 config keys
+data main name_buf_family -> name_code_family: 0x800CA16C (main), 29 tokens and 0 comment mentions in 5 files, 0 config keys
+data main name_buf_given -> name_code_given: 0x800CA174 (main), 7 tokens and 0 comment mentions in 2 files, 0 config keys
+data main name_buf_player_form -> name_code_player_form: 0x800CA17C (main), 16 tokens and 0 comment mentions in 4 files, 0 config keys
+data main name_buf_girl_short -> name_code_girl_short: 0x800CA188 (main), 34 tokens and 0 comment mentions in 16 files, 0 config keys
+data main parameter_name_table -> param_name_table: 0x800B331C (main), 0 tokens and 0 comment mentions in 0 files, 0 config keys
+data main command_deltas -> school_day_command_deltas: 0x800B68E0 (main), 2 tokens and 1 comment mentions in 2 files, 0 config keys
+data main phone_numbers -> girl_phone_digits: 0x800B3778 (main), 15 tokens and 0 comment mentions in 5 files, 0 config keys
+data main last_screen_mode -> dec_bg_last_screen_mode: 0x800B5948 (main), 7 tokens and 0 comment mentions in 3 files, 0 config keys
+data main mascot_choice -> hud_mascot_choice: 0x800B5C08 (main), 18 tokens and 0 comment mentions in 4 files, 0 config keys
+76 rows, 300 files to change
+  note: drafts/T-27004/fix_symbols.tsv:11: include/main_api.h: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/main/8005A0B0.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/main/80061710.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/main/8006CB30.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/main/80075320.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/ovl/BUNKA_SD/801388D0.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/ovl/NAME_ENT/80142A80.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/main/800451D0.c: mentions audio_command already; round trip not checked
+  note: drafts/T-27004/fix_symbols.tsv:11: src/main/8004F870.c: mentions audio_command already; round trip not checked
+applied; ledger config/renames/core.txt
+renames OK (667 ledger rows)
+exit 0

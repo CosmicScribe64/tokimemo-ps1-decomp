@@ -43,7 +43,7 @@ function names carry 48% of all function-name uses, so the shared core comes fir
 |---|---|---|---|---|
 | 0 | Tooling: `tools/rename.py`, `tools/symtab.py`, tests, the tool fixes of audit 3.8, merge replay | T-27002 | about 1.5k lines of Python | Opus design and review, Sonnet code |
 | 1 | Pilot: O.BIN names into the overlays (overlay yamls load `symbol_addrs_obin.txt`; 105 names in 186 overlay files; 56 dual declarations merged; `cd_read_status` moved out of EVENT's range) | [[tickets/T-27003-pilot-obin-names-overlays]] (done on branch `p2-pilot`, In Review: 104 O.BIN and 24 SDK names, 8 overrides; see [[rename-tool]] "Alias rows") | one build | Opus |
-| 2 | Shared core: GameState fields, the core types of `game.h` and `main_api.h` (the 0x44 display pools first), the first enums (girl, place, club, parameter, weekday, game mode, day-event type), the 100 most used main functions; takes over the GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] | [[tickets/T-27004-shared-core-names]] (applied on branch `p2-core-apply`, In Review: 733 of 751 rows; left out: the `u54C` macro aliases, `DisplayActor44.unk_18`, the Month enum and the two file rows, see the ticket comments) | 2-3 batches | Opus, with the emulator |
+| 2 | Shared core: GameState fields, the core types of `game.h` and `main_api.h` (the 0x44 display pools first), the first enums (girl, place, club, parameter, weekday, game mode, day-event type), the 100 most used main functions; takes over the GameState pilot of [[tickets/T-20500-emulator-assisted-naming]] | [[tickets/T-27004-shared-core-names]] (applied on branch `p2-core-apply`, In Review: 733 of 751 rows, then the review fix of 133 rows that brought the names to the ADR and glossary stems; left out: the `u54C` macro aliases, `DisplayActor44.unk_18`, the Month enum, the `MainMode` tag and `MODE_` constants (no row kind) and the two file rows, see the ticket comments) | 2-3 batches | Opus, with the emulator |
 | 3 | Main modules, two at a time (table below): game-logic functions and globals in full, hardware-layer entry points, re-check of the non-O.BIN names in the range, O.BIN comments, then the module header and the file names | one ticket each | 9 units | Sonnet, Opus review |
 | 4 | Overlays, two at a time (table below), one header owner each; state machine and data tables named and explained, port spec in `wiki/spec/` | one ticket each | 24 passes | Sonnet, Opus review |
 | 5 | Locals and parameters of game-logic functions per unit, where they carry game logic (11,174 m2c-style uses in all) | per unit | | Sonnet |
@@ -58,7 +58,7 @@ its own. File names come last because they need the contents understood.
 Step 2's enum list differs from the audit's on purpose. It adds place and club, whose orders are known from
 the name tables (`GLOSSARY.md`), the game mode (GameState 0x1108) and the day-event type. It leaves out the
 month, a number from 1 to 12 that the code compares and counts with. It also leaves out the selector bytes
-at 0x1109, 0x110A and 0x110D, which `main_state_set` clears when it sets the game mode. Step 2 names the
+at 0x1109, 0x110A and 0x110D, which `game_mode_set` clears when it sets the game mode. Step 2 names the
 first two fields (`mode_stage`, `mode_step`), but their values mean something else in every mode, so each
 mode's unit gives them constants; 0x110D waits for the units that use it.
 
@@ -139,16 +139,16 @@ checks its range.
 
 | name (address) | unit | conflict |
 |---|---|---|
-| `main_state_set` (0x80042878) | M1 | English-patch name, not O.BIN; `game_mode_set` by the rules |
 | `file_checksum_ok` (0x8004636C) | M1 | module prefix is `cd_` |
 | `glyph_expand_1bpp` (0x8004F4F0), `font_glyphs` (0x800B6D50), `font_range_table` (0x800B402C) | M3 | module prefix is `text_` |
 | `system_settings_init` (0x8005DC4C) | M5 | prefix is `settings_` |
 | `appointment_find_today` (0x8006AEC4), `club_list_menu` (0x8006B648) | M6 | topics of the days-off and system-menu modules; HUD file takes `hud_` |
 | `special_event_select` (0x8006FB4C) | M7 | bare `event`; stems are `schedule_` and `day_event_` |
 | `telephone_class_init` (0x800782F0) | M8 | `phone` is the TEL overlay's stem; days-off code uses `holiday_` |
-| `dialogue_render` (0x80081190), `dialogue_speak_part` (0x8007EF48), types `DialogueWork`, `DialogueTables`, `DialogueVoice8` | M9 | stem is `talk` |
 | `date_event_trigger` (0x801326B0), `date_event_choose` (0x8013272C) | DATE | bare `event` |
 | `shougatu_stage_dispatch` (0x8013D180) | SHOUGATU | prefixes are `new_year_` and `christmas_`; `stage` is a trap word |
+
+Done by the T-27004 review fix (2026-10-24, [[tickets/T-27004-shared-core-names]]): `main_state_set` is `game_mode_set`; `dialogue_render`, `dialogue_speak_part` and the `Dialogue...` types are `talk_render`, `talk_speak_part` and `Talk...`.
 
 `ovl_load_buf`, `ovl_load_lba`, `girl_name_buf`, the parameter names `src` and `dst`, and the word `init` pass
 since the glossary lists `buf`, `lba`, `src`, `dst` and `init`.

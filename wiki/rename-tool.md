@@ -114,6 +114,10 @@ Limits found by T-27004 (rows the oracle cannot apply, left out of the table unt
   physical line that carries it. The suggestion after "has no member named" (`did you mean 'x'?`) changes with
   the member names and is ignored when the error sets are compared (K&R code such as `D_800E6280.unk_3A` in
   RPG_BAT finds a member of another type by name; it errors in gcc before and after).
+- An enum tag and its enumerators have no row kind: `type main MainMode GameMode` reports "0 definitions visible", and a
+  constant such as `MODE_BOOT` can only be created by `const`, never renamed. Pick the enum's name and the constant prefix
+  before the `const` run (T-27004 review fix: the `MainMode` enum keeps the `MODE_` constants of the first run; the glossary
+  stem is `game_mode`). Needs tool work, then one row renames the tag and the prefix of its constants.
 - A type row with a `HYPOTHESIS` note appends its mark at the definition; the round trip proof removes that mark
   before it checks the inverse substitution.
 

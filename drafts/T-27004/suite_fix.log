@@ -1,0 +1,191 @@
+................................................................................................./work/configure.py:57: ResourceWarning: unclosed file <_io.TextIOWrapper name='config/toolchains.txt' mode='r' encoding='UTF-8'>
+  for lineno, line in enumerate(open(path), 1):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..............................................................................cpp: src/ovl/a.c: No such file or directory
+........../work/tools/test_cc.py:46: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmpj3cy08qb/t.o'>
+  before = open(obj, "rb").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/test_cc.py:48: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmpj3cy08qb/t.o'>
+  self.assertEqual(open(obj, "rb").read(), before)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/test_cc.py:41: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmpmnt2d_n0/raw'>
+  self.assertEqual(open(raw, "rb").read()[20:], b"\0" * 12)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..../work/tools/cc.py:224: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpw65mi8jp/toolchains.txt' mode='r' encoding='UTF-8'>
+  return words[1:]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/cc.py:221: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpw65mi8jp/toolchains.txt' mode='r' encoding='UTF-8'>
+  for line in open(path):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..................../work/tools/../configure.py:69: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpb7_ksw8f/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: toolchain must be `ido <ver> [-W<pass>,<option> ...]` or "
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/../configure.py:69: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpym8sq0pd/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: toolchain must be `ido <ver> [-W<pass>,<option> ...]` or "
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/../configure.py:69: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpu0k94w2a/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: toolchain must be `ido <ver> [-W<pass>,<option> ...]` or "
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/../configure.py:73: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpmyax7yk7/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: %s listed twice" % (where, name))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/../configure.py:57: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpedckv3rx/toolchains.txt' mode='r' encoding='UTF-8'>
+  for lineno, line in enumerate(open(path), 1):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/../configure.py:57: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpyhnrmrky/toolchains.txt' mode='r' encoding='UTF-8'>
+  for lineno, line in enumerate(open(path), 1):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/../configure.py:69: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpxk20f_xv/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: toolchain must be `ido <ver> [-W<pass>,<option> ...]` or "
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/../configure.py:69: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9qnqoaui/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: toolchain must be `ido <ver> [-W<pass>,<option> ...]` or "
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+../work/tools/../configure.py:64: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp9e04limv/toolchains.txt' mode='r' encoding='UTF-8'>
+  sys.exit("configure.py: %s: %s is not a `c` subsegment of any unit" % (where, name))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+........................................................................................................................................functions 0 (matched 0), groups with matched+unmatched 0, unmatched members 0: plans 1, skipped 0
+jump-table groups 0 (0 unmatched members); fillable 0 functions, 0 bytes (applied only with --apply --check); needs jtbl check 0 functions, 0 bytes
+data-in-function groups 0 (0 unmatched members, 0 bytes); fillable 0 functions, 0 bytes (applied only with --apply --check); needs data check 0 functions, 0 bytes
+applied 0 of 1
+...................................................................REPAIR PASS mechanical 2 targets
+REPAIR PASS no-context 1 targets
+REPAIR COVERAGE {'total': 4, 'statuses': {'scored': 3, 'failed': 1}, 'reserved': 1, 'repaired': 2, 'absent': 0}
+.....................................................................................................................................needs repair include/shared header.h
+rewrote include/shared header.h
+header_merge.py: expected a two-parent merge commit
+header_merge.py: fatal: ambiguous argument 'absent': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+.rewrote include/shared.h
+...........Compressing, 0.0% complete... (ratio=100.0%)  Compression complete ... final ratio = 0.0%            
+................/usr/lib/python3.10/sre_compile.py:106: ResourceWarning: unclosed file <_io.FileIO name='/tmp/tmp8_sv857_/d.iso' mode='rb' closefd=True>
+  for op, av in pattern:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+............................................................................m2c.py: asm/nonmatchings/main/probe/func_8013639C.s (main)
+/work/tools/m2c.py:480: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp2npj_lqw/asm/nonmatchings/main/probe/func_8013639C.s' mode='r' encoding='UTF-8'>
+  func_text = open(asm).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.m2c.py: asm/nonmatchings/main/probe/func_8013ACBC.s (main)
+/work/tools/m2c.py:480: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp2npba_7_/asm/nonmatchings/main/probe/func_8013ACBC.s' mode='r' encoding='UTF-8'>
+  func_text = open(asm).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+m2c.py: asm/nonmatchings/main/probe/func_8013C4E4.s (main)
+/work/tools/m2c.py:480: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpmik4bocw/asm/nonmatchings/main/probe/func_8013C4E4.s' mode='r' encoding='UTF-8'>
+  func_text = open(asm).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+m2c.py: asm/nonmatchings/main/probe/func_801489D0.s (main)
+/work/tools/m2c.py:480: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpcsd67_sh/asm/nonmatchings/main/probe/func_801489D0.s' mode='r' encoding='UTF-8'>
+  func_text = open(asm).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+m2c.py: asm/nonmatchings/main/probe/func_8011EDFC.s (main)
+/work/tools/m2c.py:480: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpeh20fa_w/asm/nonmatchings/main/probe/func_8011EDFC.s' mode='r' encoding='UTF-8'>
+  func_text = open(asm).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+........................rewrote include/main_api.h
+rewrote src/main/a.c
+...rewrote include/main_api.h
+..rewrote include/main_api.h
+.rewrote include/main_api.h
+.rewrote include/main_api.h
+rewrote src/main/b.c
+src/main/b.c:2: D_80100000: old view of State D_80100000: write the field access (wiki/game-state.md) (left for a hand rewrite)
+.rewrote include/main_api.h
+.rewrote include/main_api.h
+...rewrote include/main_api.h
+rewrote src/main/a.c
+src/main/a.c:2: D_80100008: no declaration and offset 0x8 is ambiguous (Rec[] .unk_08, Rec .unk_08[0], s16 .unk_08[0].a): declare the old view in include/main_api.h or write the field (left for a hand rewrite)
+.rewrote include/main_api.h
+.rewrote include/main_api.h
+rewrote include/ovl/A.h
+rewrote src/ovl/A/a.c
+.rewrote include/main_api.h
+rewrote src/main/a.c
+...rewrote include/main_api.h
+.rewrote include/main_api.h
+.rewrote include/main_api.h
+src/main/a.c:4: D_80100004: no s8 field at offset 0x4 (there: W .unk_04, s32 .unk_04.w, u8[] .unk_04.b, u8 .unk_04.b[0]) (left for a hand rewrite)
+.rewrote include/main_api.h
+.rewrote include/main_api.h
+src/main/a.c:2: D_8010000C: no s32 field at offset 0xC (there: Rec .unk_08[1], s16 .unk_08[1].a) (left for a hand rewrite)
+.rewrote include/main_api.h
+................................../work/tools/test_obin_tools.py:117: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpqo5r_8cl/s' mode='r' encoding='UTF-8'>
+  self.assertIn("keep = 0x80041000; // type:func size:0x4", open(sp).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/test_obin_tools.py:118: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpqo5r_8cl/s' mode='r' encoding='UTF-8'>
+  self.assertNotIn("skip", open(sp).read())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....................................................00002020-00002040: split at 00001040
+.................permute.py: invalid base
+.............permute.py: no output better than the base in 10 s (out)
+..........permute.py: time limit reached during setup (1 s); search not started
+permute.py: time limit reached during setup (1 s); search not started
+...............................................farm worker 0: STOP requested
+.farm worker 0: claiming main:first (17 s)
+{"function": "first", "unit": "main", "actual_budget": 17}
+farm worker 0: queue drained
+.farm worker 0: claiming main:first (3 s)
+{"function": "first", "unit": "main", "actual_budget": 3}
+.farm worker 0: claiming main:first (17 s)
+{"function": "first", "unit": "main", "score": 2, "baseline_score": 2, "actual_budget": 17}
+farm worker 0: claiming TT:shared (17 s)
+{"function": "shared", "unit": "TT", "score": 2, "baseline_score": 2, "actual_budget": 17}
+farm worker 0: claiming DATE:shared (17 s)
+{"function": "shared", "unit": "DATE", "score": 2, "baseline_score": 2, "actual_budget": 17}
+farm worker 0: queue drained
+.....prepare_disc.py: unpacking game/x.iso into disc/files
+prepare_disc.py: 2 files, 0 skipped (CD-DA/XA streams)
+......................................../work/tools/cc.py:221: ResourceWarning: unclosed file <_io.TextIOWrapper name='config/toolchains.txt' mode='r' encoding='UTF-8'>
+  for line in open(path):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..........................................................................................................................................................................................................................................................................s...........................register_shapes.py: skipping TT:f: missing original asm (/tmp/tmponsob780/TT/f.s)
+....................................................................../work/tools/test_rodata_tools.py:157: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpt787hzql/c.yaml' mode='r' encoding='UTF-8'>
+  text = open(os.path.join(tmp, "c.yaml")).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/rodata_pieces.py:108: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp6suub9yv/nonmatchings/X/func_A.s' mode='r' encoding='utf-8'>
+  text = open(path, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/rodata_pieces.py:108: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpil5fdzuu/nonmatchings/X/func_A.s' mode='r' encoding='utf-8'>
+  text = open(path, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/test_rodata_tools.py:110: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpil5fdzuu/nonmatchings/X/func_A.s' mode='r' encoding='UTF-8'>
+  first = open(os.path.join(self.folder, "func_A.s")).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/test_rodata_tools.py:112: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpil5fdzuu/nonmatchings/X/func_A.s' mode='r' encoding='UTF-8'>
+  self.assertEqual(open(os.path.join(self.folder, "func_A.s")).read(), first)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+./work/tools/rodata_pieces.py:108: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpvzsd2dze/nonmatchings/X/func_A.s' mode='r' encoding='utf-8'>
+  text = open(path, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/rodata_pieces.py:108: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpvzsd2dze/nonmatchings/X/func_B.s' mode='r' encoding='utf-8'>
+  text = open(path, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/test_rodata_tools.py:93: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpvzsd2dze/nonmatchings/X/func_A.s' mode='r' encoding='UTF-8'>
+  a = open(os.path.join(self.folder, "func_A.s")).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/work/tools/test_rodata_tools.py:94: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpvzsd2dze/nonmatchings/X/func_B.s' mode='r' encoding='UTF-8'>
+  b = open(os.path.join(self.folder, "func_B.s")).read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+................................................................................................................../tmp/tmpx9rj91x4/include/main_api.h: added extern s32 D_80122E98;
+/tmp/tmpx9rj91x4/include/main_api.h: added extern u8 D_80122E99[];
+/tmp/tmpx9rj91x4/include/main_api.h: added extern s16 D_80122E9A[4];
+/tmp/tmpx9rj91x4/include/main_api.h: added extern const u8 *renamed_data;
+/tmp/tmpx9rj91x4/include/main_api.h: added extern u32 D_80041000;
+/tmp/tmpx9rj91x4/include/main_api.h: added extern u8 D_8012B537[0x10];
+......./tmp/tmpz0srqoy9/include/main_api.h: 4 symbols
+/tmp/tmpz0srqoy9/include/main_api.h: 4 symbols, 0 guarded
+view changes: 0 benign (K&R against a prototype with wide parameters, implicit int against s32), 0 to confirm by build (implicit int against another return type), 0 risky
+.................................................................................................................................................s....s...............................................................................catalog: 2 tickets, 1 sections, 2 functions
+lint: 0 broken links, 0 status mismatches, 0 large pages
+broken link: overview -> [[missing-page]]
+lint: 1 broken links, 0 status mismatches, 0 large pages
+.rotate-log: moved 2 entries into 1 weekly pages, kept 1
+rotate-log: moved 1 entries into 1 weekly pages, kept 0
+.rotate-log: moved 2 entries into 1 weekly pages, kept 1
+.rotate-notes: moved 8 sections, kept 2 (233 bytes)
+.
+----------------------------------------------------------------------
+Ran 1646 tests in 71.764s
+
+OK (skipped=3)
+exit 0

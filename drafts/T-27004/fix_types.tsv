@@ -1,0 +1,10 @@
+type	main	DialogueWork	TalkWork	review fix: stem talk (phase2 re-check list, M9)
+type	main	DialogueTables	TalkTables	review fix: stem talk
+type	main	DialogueVoiceRef	TalkVoiceRef	review fix: stem talk
+type	main	DialogueSelectors	TalkSelectors	review fix: stem talk
+type	main	CardFileRequest	MemoryCardFileRequest	review fix: trap word card: stem memory_card
+type	main	EventFlagBlock	SceneFlagBlock	review fix: trap word event: the block holds the one-shot scene flags (field scene_flags)
+type	main	TacoSettingsBits	ShooterSettingsBits	review fix: TACO's stem is shooter (disc name Taco is not a stem)
+type	main	SaveTacoSettings	SaveShooterSettings	review fix: TACO's stem is shooter
+type	main	GirlFlagBitsSched	ScheduleGirlFlagBits	review fix: sched is not in the abbreviation table
+type	main	PlayerFlagsHiBits	PlayerFlagsUpperBits	review fix: hi is not in the abbreviation table
