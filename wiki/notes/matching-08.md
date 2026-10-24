@@ -534,3 +534,38 @@ No match; guarded at 4 rows (2 instructions), was INCLUDE_ASM with a 391-row bes
 ## T-25105: main func_8005557C
 
 `func_8005557C` (the game-save writer) matches 1212 literal default-C bytes (303 words). Before this pass it had only m2c drafts (523 rows). The new `SaveGameView` in `include/game.h` gives the bank layout, with `GsBlockC4` (word-aligned 0x7C copy) and `GsBlock56C` (byte-aligned 0x100 copy) for the two block copies. The first typed body was at 425 rows; four causes closed it. (1) Unrolling: IDO unrolled the 256-trip record loop. With one counter shared by all loops, only the last loop in the function is unrolled (truncation tests), and in the original that is only the byte sum. So the byte sum shares the copy loops' counter. (2) That counter is `u32`. With `s32`, the byte-sum bound 0xF00 becomes the same constant as `arg0 * 0xF00`, so uopt holds it in a register and the base turns into `li; multu`. (3) The original computes the bank base twice: a2 for the straight-line stores and a3 again before the first loop. The stores are written through `&D_80123120[arg0 * 0xF00 + 0x200]` and the loops through `((SaveGameView *)&D_80123120[0x200])[arg0]` (FAKE). (4) `GameState *g` is the fourth declared scalar and puts the spills at 0x2C/0x28. Six GameState bytes went from `s8` to `u8` in `main_api.h` (`unk_03C`, `unk_F6C`, `unk_F6D`, `unk_F6E`, `unk_F70`, `unk_F73`): every direct load of them in the game is `lbu`, and 27/27 hashes still pass. Notes, negatives and a follow-up on now-redundant `u8` views: `drafts/T-25105/main/func_8005557C/NOTES.md`.
+
+## T-25105: main func_80055AFC
+
+No match: `func_80055AFC` stays INCLUDE_ASM. It is the game-save loader, the mirror of `func_8005557C`. The best body is 113 rows at the original size (349 words), and it is kept in `drafts/T-25105/main/func_80055AFC/` (`best.c`, plus `best-plain.c` at 114 rows without the FAKE).
+
+What closed:
+- The bank spellings are the same as in the writer: spelling A for the straight-line code, the bank-array element for the loops, and one `u32` counter.
+- Stores go through `GameState *g`. With direct field stores, uopt reuses the head's test loads, which the original reloads.
+
+What is left:
+- The head is a copy-propagation gap, the one in the T-11570 selector-copy family. The original keeps `arg0 = unk_1117 & 1` as a copy, so its bank base (`t5`) is one live range for the whole function. IDO 5.3 propagates the copy into the base and splits it. A volatile read through the splat label (`extern volatile u8 D_800E7397`) gives the original's head and one range. That label is a FAKE: it would need a keep line.
+- The original never uses `t3` or `t4`. The draft has the counter's defs-only range in `t3`, so the original holds one more range at colour 11. That range is not found yet. Together with the two missing frame words (0x48 against 0x40), it accounts for about 50 rows.
+- The colour order of the unrolled 256-record loop (about 40 rows). The original colours the end constant first.
+
+Measured negatives and the next hypothesis: `drafts/T-25105/main/func_80055AFC/NOTES.md`.
+
+## T-25107: MASTER func_801363F4
+
+Matched (2,608 bytes, default build, MASTER sha1 OK), starting from the T-24517 body at 167 register-only rows. Both 0x44-byte record copies were in the wrong block-copy state. In our pipeline the `tools/ugen_pass.py` sentinel decides how many scratch registers ugen burns before a copy's end pointer (two in state B, one in state F). All stores before the first copy are direct global stores, so the pass chose B; the original is F for both copies. A marked FAKE never-true arm before the first copy, `if ((u32)D_8013C578 < 0) { do { *(u8 *)0 = 0; } while ((s32)D_8013C578 < 1); }`, gives the pass an `istr` followed by a signed `les` jump. That makes the procedure sticky F. ugen drops the arm, and as1 deletes the dead byte load. The last 5 rows closed when the point loop stored x before y, as record 1 does. Same open symptom: MASTER `func_801344E0` and ENDING `func_80134270`. Negatives and details: `drafts/T-25107/MASTER/func_801363F4/NOTES.md`.
+
+## T-25107: MASTER func_801344E0
+
+Matched (2,912 bytes, default build), starting from the T-24519 body at 171 rows. The first divergence was the first record copy's end pointer in case 4, one ring slot high: the block-copy state miss that closed `func_801363F4` in the same file. The same two changes closed it: the marked FAKE never-true arm before the first copy (state F for both copies) and x before y in the point loop. The arm alone leaves 5 rows. ENDING `func_80134270` has the same recorded symptom. Notes: `drafts/T-25107/MASTER/func_801344E0/NOTES.md`.
+
+## T-25103: main func_8006C988
+
+Matched (69 words, 276 bytes; default build compiles the C, 27/27 sha1). From the T-24928 guard (5 rows): an `s32 cur` with `n++;` written before `cur = val;` at the end of the loop body keeps the copy as one plain `move` in the join block, where the base advance sits too (the then-arm's `b` steals the advance into its delay slot, which made it look per arm). The first loop written as `for (i = 0; i < 0x100; i++)` instead of `i = 0; do { i++; ... } while (i < 0x100)` puts the induction init before `i = 0` and closed the last two rows. The T-24928 dead `first`/`last` tests are still needed (FAKE). Notes and negatives: `drafts/T-25103/main/func_8006C988/NOTES.md`.
+
+## T-25103: main func_8006A044
+
+Matched (162 words, 648 bytes; the default build compiles the C; 27/27 sha1). It was down as an allocator artifact (T-25012, T-25013 levers 1 and 5, T-25014: about 87 rows). The cause was the source shape. Every flag update in the original is a bit-field store: `lui rA; lbu rB,(rA); ori; sb`, and on the promoted byte `move t,v0; ori; andi v0`. A plain `|=` gives `lui t; lbu t,(t)` with no copy. Single-bit stores through a new `FlagsF64` view of `D_800E6280.unk_F64` (`include/main_api.h`) took it from 174 rows to 86. A dead read of `unk_F64[1]` at the top (FAKE) numbers the byte before the month, which fixes the `$v0`/`$v1` swap. An `s32` (implicit int) return keeps `$v0` live at the exit, so the last store of each arm goes through the promoted byte. That gives MATCH. Controls: with `void` 40 rows, without the dead read 86. Notes: `drafts/T-25103/main/func_8006A044/NOTES.md`.
+
+## T-25103: main func_80067870
+
+Not matched; back to `INCLUDE_ASM`. Best body 75 `funcdiff --resolve` rows (the T-17002 draft measures 122 today), saved with the evidence in `drafts/T-25103/main/func_80067870/` (body.c, NOTES.md). Real fixes: `(-dx * 2) / 3` (the original negates, `* -2` spends `at`), `D_80125C55--` (`cvt_pass` widens no `dec`, so the byte stays a ugen temporary), `x1 = dx + D_80125C50` and the 0x8-case bodies on one line (autotweak); one FAKE `(u32)` on the `D_8011F46A` store gives cvt(D_80125C52) a fourth use so it takes `$a0`. What is left is two allocator effects. (1) `D_8011F426 = y1 - dy` is copy-propagated to `y1 - (15 - ret)`. The T-17002 empty test splits that sub's two uses across blocks, and uopt colours it (`$a1`, prio 1.5) although the emitted code keeps it in `t8`. That phantom pushes `unk_F80` to `$a3`, so `D_800B5C08` cannot be one `$a3` range and the ugen ring runs one register late from word 14 to 97. Three empty tests (D=3) put `unk_F80`/`D_800B5C08` right but the sub then takes `$t0` from x1; an always-false `dy` redefinition removes the range but drops the `move` (235 words). (2) `D_80125C54`'s global range (`$a3`) and cvt(D_80125C54) (`$a2`) interfere, the T-0018 promo gap: about 12 words, with no source lever found. Next hypothesis: in NOTES.md.

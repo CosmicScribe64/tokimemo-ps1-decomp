@@ -724,12 +724,6 @@ s32 func_80054FC0(s32 arg0) {
     memcpy(bank->flags, D_800E7D10.flags, 16);
     bank->unk_24[0] = D_800E7D10.unk_024[0];
     bank->unk_24[1] = D_800E7D10.unk_024[1];
-    /* FAKE: T-25105, an empty signed test with a positive bound after the indexed slot store puts
-       tools/ugen_pass.py in block-copy state F for the two record copies below, which is the
-       original's temporary numbering (one ugen register skipped, not two). The original's state
-       comes from its own compiler; the real source has no such test. */
-    if ((s32)D_800E7D10.selected_slot > 0) {
-    }
     if (D_800E7D10.selected_slot != 0) {
         bank->selected_slot = D_800E7D10.selected_slot % 15U;
     }
