@@ -1,7 +1,7 @@
 ---
 id: T-27025
 title: Phase 2 naming and port spec for overlay BUNKASAI (culture festival, club-member variant)
-status: In Review
+status: Done
 assignee: p2a-o-bunkasai (Sonnet)
 created: 2026-10-24
 updated: 2026-10-24
@@ -47,3 +47,13 @@ The review was not approved: five blocking findings, all reconciliation with nam
 - Notes that named the flag bit 2 `acquainted` and the bits 12 and 13 `festival_call_95/96` now say that these are m-scheduler's HYPOTHESIS names.
 - Spec: the "135 scene functions of one pattern" is 133 of the pattern plus the stage-78 stub and the Ayako follow-up; the open questions say that `D_80122EC0` keeps one `s32` and the two overlays use their own constants.
 - Glossary: six rows added to `GLOSSARY.md` (exhibit, club mate, visitor, fortune telling, backstage, tokimeki gain).
+
+### Review round 2 approved (2026-10-24)
+
+Round 2 review: approved, no findings. All five blocking findings of round 1 are resolved, and no new clear error was found in the rows or lines the fix touched. Each claim was checked against the C in the worktree.
+- `func_80041168`: no table row; the spec uses m-flow's `vram_clear_blocks` (section 3.1 and the stage-163 step 0 text). `src/ovl/BUNKASAI/80150930.c` calls `func_80041168(0xFF)`, which matches.
+- `D_800E7D4F`: no table row; the spec uses `extra_mode_flags` (m-flow, core's `ExtraModeFlags`). The spec's 13 sites that set bit 0 match the 13 `b0 = 1` stores in the overlay C; the "unlocked" meaning is marked HYPOTHESIS.
+- `D_80122E98`: no table row; the spec uses BUNKAKEN's `culture_display_skip`. The C reads it once, at `src/ovl/BUNKASAI/80142700.c`, where it gates `Default_Disp()`; the writes of 1 and 0 around `func_80042908(0xA3)` match "set to 1 around the stage-163 jump".
+- `Flags7D4F.unk_2_4`: no table row; the three bits keep `stage_select`, as in BUNKAKEN and o-tt.
+- Abbreviations: no `compat`, `fn`, `disp` or `gate` remains in the table, spec or ticket. `culture_fortune_blood_table`, `CultureFortuneBloodTable` and the field `stage_function` (also in the row `FnTbl165.f`) are the new names; the fortune lookup in `src/ovl/BUNKASAI/8015AF90.c` indexes `D_80160B50` by the two blood types, which matches.
+- Scope: tables and wiki only. Nothing under `src/`, `include/` or `config/symbol*` changed on the branch (`git diff --name-only` against the merge base over those paths is empty; the only config file is `config/renames/proposals/o-bunkasai.tsv`). Moved to Done; the board card is moved by the kanban sync in the merge step.
