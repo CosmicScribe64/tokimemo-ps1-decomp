@@ -190,7 +190,6 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
                             "missing_files": sum(f["status"] == "missing" for f in files)},
                "deferred": ["runtime_user_supplied_values", "translation_and_rebuild",
                             "bitmap_lettering_inventory_owned_by_media_lane"]}
-    catalog["deferred"].append("semantic_context_enrichment_not_in_checkpoint")
     catalog["non_text_files"] = sum(f["status"] == "non_text" for f in files)
     catalog["character_table_files"] = sum(f["status"] == "exported_table" for f in files)
     catalog["text_completeness"] = {"complete": False, "scope": "source_backed_catalog_in_progress",
@@ -210,8 +209,12 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
             attach_font_references(catalog, catalog["font"])
     if include_source:
         from .text_source import inventory_source_text
+        from .text_context import enrich_source_context
+        from .text_binary import enrich_binary_text
+        from .script_mutations import enrich_script_mutations
         source_repo = REPOSITORY if source_repository is None else Path(source_repository).resolve(strict=True)
         catalog["source_inventory"] = inventory_source_text(source_repo, root)
+        enrich_source_context(catalog["source_inventory"], source_repo, root, use_ast=True)
         snapshot_manifest = source_repo / "snapshot-manifest.json"
         if snapshot_manifest.is_file():
             metadata = json.loads(snapshot_manifest.read_text(encoding="utf-8"))
@@ -219,15 +222,34 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
                                                     ("schema", "source_tree_sha256", "stable_copy_verified")}
         _attach_source_renderer_views(catalog["source_inventory"])
         _attach_typed_dictionary_links(catalog)
+        # The supplement derives fresh MIPS arguments itself before reading data.
+        enrich_binary_text(catalog["source_inventory"], source_repo, root)
+        enrich_script_mutations(catalog, source_repo, root)
         _attach_storage_overlap_metadata(catalog["source_inventory"])
         categories = {}
         for record in catalog["source_inventory"]["records"]:
             categories[record["category"]] = categories.get(record["category"], 0) + 1
         catalog["source_inventory"]["resolved_category_counts"] = categories
+        supplement = catalog["source_inventory"]["binary_text_supplement"]
+        catalog["source_inventory"]["final_inventory_counts"] = {
+            "binary_extents": len(catalog["source_inventory"]["records"]),
+            "supplemental_extents_added": supplement["records_added"],
+            "records_with_mips_context": sum(bool(record.get("mips_contexts"))
+                                             for record in catalog["source_inventory"]["records"])}
         catalog["text_completeness"].update(
             source_literal_byte_blockers=len(catalog["source_inventory"]["blocked"]),
+            source_context_blockers=len(catalog["source_inventory"]["source_context"]["blocked"]),
+            source_mips_blockers=len(catalog["source_inventory"]["mips_context"]["blocked"]),
+            mips_targets_outside_initial_inventory=supplement["calls_considered"],
+            unresolved_mips_constant_targets=sum(item["status"] != "recovered_verified_label_initial_string"
+                                                  for item in supplement["resolutions"]),
+            source_binary_supplement_blockers=len(supplement["blocked"]),
+            runtime_mutation_blockers=len(catalog["runtime_text_mutations"]["blocked"]),
+            unresolved_runtime_write_candidates=len(catalog["runtime_text_mutations"]["unresolved_candidate_ids"]),
             unresolved_semantic_record_count=categories.get("unknown", 0),
             unresolved_semantics_block_completion=True)
+        if "font" in catalog:
+            attach_font_references(catalog, catalog["font"])
     else:
         catalog["deferred"].append("source_inventory_not_requested")
     if output_dir is not None:

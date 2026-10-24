@@ -52,6 +52,22 @@ class FontTests(unittest.TestCase):
         self.assertNotIn("font_reference", tokens[1])
         self.assertEqual(result["font_link_coverage"]["referenced_glyphs"], 1)
 
+    def test_source_runtime_views_and_inline_labels_share_font_ids(self):
+        data, profile = self.fixture()
+        source_token = {"kind": "glyph", "raw_hex": "8181"}
+        runtime_token = {"kind": "unmapped_numeric_glyph", "raw_hex": "8140"}
+        label = {"kind": "inline_label", "label_raw_hex": "81408181"}
+        catalog = {"files": [], "source_inventory": {"c_literal_sites": [
+            {"renderer_view": {"tokens": [source_token]}}]},
+            "runtime_text_mutations": {"rules": [{"targets": [
+                {"conditional_runtime_view": {"text": {"tokens": [runtime_token, label]}}}]}]}}
+        attach_font_references(catalog, font_metadata(data, profile))
+        self.assertEqual(source_token["font_reference"]["glyph_index"], 2)
+        self.assertEqual(runtime_token["font_reference"]["glyph_index"], 0)
+        self.assertEqual([ref["glyph_index"] for ref in label["label_font_references"]], [0, 2])
+        self.assertEqual([ref["relative_byte_offset"] for ref in label["label_font_references"]], [1, 3])
+        self.assertEqual(catalog["font_link_coverage"]["referenced_glyphs"], 2)
+
 
 if __name__ == "__main__":
     unittest.main()

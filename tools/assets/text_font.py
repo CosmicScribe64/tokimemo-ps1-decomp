@@ -74,23 +74,34 @@ def font_reference(raw: bytes, metadata: dict) -> dict:
 
 
 def attach_font_references(catalog: dict, metadata: dict) -> dict:
-    """Add shared bitmap IDs to every direct glyph/code-unit token in a catalog."""
+    """Link rendered code units, including source views and inline labels."""
     catalog["font"] = metadata
     unique = set()
-    records = [r for file in catalog["files"]
-               for r in file.get("script", {}).get("records", []) + file.get("character_lists", {}).get("records", [])]
-    records.extend(r for dictionary in catalog.get("dictionaries", []) for r in dictionary.get("records", []))
-    for record in records:
-        for token in record.get("text", {}).get("tokens", []):
-            if token["kind"] not in ("glyph", "unknown", "unmapped_numeric_glyph"):
-                continue
-            ref = font_reference(bytes.fromhex(token["raw_hex"]), metadata)
-            if ref["status"] == "glyph":
-                # Bank provenance and stride live once in catalog.font.
-                token["font_reference"] = {"id": ref["id"], "glyph_index": ref["glyph_index"]}
-                unique.add(ref["id"])
-            else:
-                token["font_reference"] = ref
+
+    def reference(raw):
+        ref = font_reference(raw, metadata)
+        if ref["status"] == "glyph":
+            # Bank provenance and stride live once in catalog.font.
+            unique.add(ref["id"])
+            return {"id": ref["id"], "glyph_index": ref["glyph_index"]}
+        return ref
+
+    def visit(node):
+        if isinstance(node, dict):
+            if node.get("kind") in ("glyph", "unknown", "unmapped_numeric_glyph") and "raw_hex" in node:
+                node["font_reference"] = reference(bytes.fromhex(node["raw_hex"]))
+            elif node.get("kind") == "inline_label":
+                raw = bytes.fromhex(node["label_raw_hex"])
+                node["label_font_references"] = [
+                    {"relative_byte_offset": offset + 1, **reference(raw[offset:offset + 2])}
+                    for offset in range(0, len(raw), 2)]
+            for value in tuple(node.values()):
+                visit(value)
+        elif isinstance(node, list):
+            for value in node:
+                visit(value)
+
+    visit(catalog)
     catalog["font_link_coverage"] = {"referenced_glyphs": len(unique),
                                      "bitmap_lettering_catalog": "owned_by_media_lane",
                                      "baked_image_text_complete": False}

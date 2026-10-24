@@ -1,13 +1,66 @@
 """Invented fixtures for source-backed text inventory (T-28001)."""
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-from tools.assets.text_source import (_asm_groups, _c_literals, _call_containing, _decoded_view,
+from tools.assets.text_source import (_asm_groups, _c_literals, _call_containing,
+                                     _call_containing_argument, _decoded_view,
+                                     _identifier_is_value_operand,
                                      _literal_extent_candidates, _string_bytes, inventory_source_text)
 
 
 class LiteralTests(unittest.TestCase):
+    def test_inventory_json_is_hash_seed_independent(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "src" / "main").mkdir(parents=True)
+            (root / "src" / "ovl").mkdir()
+            (root / "asm" / "data" / "main").mkdir(parents=True)
+            (root / "asm" / "matchings" / "main" / "80041000").mkdir(parents=True)
+            (root / "asm" / "ovl").mkdir(parents=True)
+            (root / "config").mkdir()
+            (root / "config" / "overlays.txt").write_text("")
+            files = root / "disc" / "files"
+            files.mkdir(parents=True)
+            exe = bytearray(0x1000)
+            exe[0x810:0x812] = b"A\0"
+            exe[0x814:0x816] = b"B\0"
+            (files / "SLPM_86.053").write_bytes(exe)
+            (root / "src" / "main" / "sample.c").write_text(
+                "void f(void) { sndisp(D_A, 0, 0); sndisp(D_B, 0, 0); }\n")
+            (root / "asm" / "data" / "main" / "strings.s").write_text(
+                'dlabel D_A\n    /* 10 80041010 */ .asciz "A"\n'
+                'dlabel D_B\n    /* 14 80041014 */ .asciz "B"\n')
+            (root / "asm" / "matchings" / "main" / "80041000" / "refs.s").write_text(
+                "glabel f\n    lui $a0, %hi(D_B); lui $a1, %hi(D_A)\nendlabel f\n")
+            script = ("import json,sys; from tools.assets.text_source import inventory_source_text; "
+                      "print(json.dumps(inventory_source_text(sys.argv[1]),sort_keys=True, "
+                      "ensure_ascii=False, separators=(',',':')))" )
+            project = Path(__file__).resolve().parents[1]
+            outputs = []
+            for seed in ("1", "913"):
+                env = os.environ.copy()
+                env["PYTHONHASHSEED"] = seed
+                outputs.append(subprocess.run([sys.executable, "-c", script, str(root)],
+                                              cwd=project, env=env, check=True,
+                                              stdout=subprocess.PIPE, text=True).stdout)
+            self.assertEqual(outputs[0], outputs[1])
+
+    def test_cached_call_argument_spans_preserve_nested_delimiters(self):
+        code = "sink(inner(a, b), table[(i, j)], (Pair){ .left=x, .right=y });"
+        positions = [code.index("a, b"), code.index("table"), code.index(".right")]
+        infos = [_call_containing_argument(code, position) for position in positions]
+        self.assertEqual([(item["call"], item["argument_index"]) for item in infos],
+                         [("inner", 0), ("sink", 1), ("sink", 2)])
+
+    def test_identifier_in_array_subscript_index_is_not_a_text_value(self):
+        self.assertFalse(_identifier_is_value_operand("other[D_LABEL]", "D_LABEL"))
+        self.assertTrue(_identifier_is_value_operand("D_LABEL", "D_LABEL"))
+        self.assertTrue(_identifier_is_value_operand("table[D_INDEX]", "table"))
+
     def test_strict_unicode_view_preserves_embedded_nul_and_roundtrips(self):
         view = _decoded_view(bytes.fromhex("8365410042"), False)
         self.assertEqual(view["source_decoded_text"], "テA\0B")
@@ -286,7 +339,8 @@ class LiteralTests(unittest.TestCase):
             main_c_refs = [ref for ref in records["SLPM_86.053"]["reference_sites"]
                            if ref.get("kind") == "C_symbol_reference" and ref.get("label") == "D_MAIN"]
             self.assertEqual(len(main_c_refs), 1)
-            self.assertEqual(main_c_refs[0]["semantic_category"], "display")
+            self.assertIsNone(main_c_refs[0]["semantic_category"])
+            self.assertEqual(main_c_refs[0]["semantic_category_candidate"], "display")
 
     def test_matching_function_proves_data_label_reference_and_code_extent(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -318,9 +372,16 @@ class LiteralTests(unittest.TestCase):
             self.assertEqual(site["function_reference_status"], "unique_same_function_label_and_exact_bytes")
             self.assertEqual(site["function_code_extent"]["status"], "verified_instruction_bytes")
             self.assertTrue(site["function_code_extent"]["sha256"])
+            self.assertEqual(site["stable_id"], "c:main:80041020:1")
+            old_locator = site["source_locator_id"]
             record = next(r for r in inv["records"] if r["raw_hex"] == bytes.fromhex("484900").hex())
             self.assertTrue(any(ref.get("kind") == "matching_function_data_reference" and
                                 ref["confirmed_reference"] for ref in record["reference_sites"]))
+            (repo / "src" / "main" / "sample.c").rename(repo / "src" / "main" / "renamed.c")
+            renamed = inventory_source_text(repo)
+            renamed_site = renamed["c_literal_sites"][0]
+            self.assertEqual(renamed_site["stable_id"], site["stable_id"])
+            self.assertNotEqual(renamed_site["source_locator_id"], old_locator)
 
     def test_invalid_utf8_and_unencodable_literals_are_blocked(self):
         with tempfile.TemporaryDirectory() as temp:

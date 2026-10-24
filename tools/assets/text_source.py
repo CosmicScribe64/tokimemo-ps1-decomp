@@ -9,7 +9,8 @@ address; byte-identical candidates remain grouped as ambiguous.
 from __future__ import annotations
 
 import argparse
-from bisect import bisect_left
+from bisect import bisect_left, bisect_right
+from functools import lru_cache
 import hashlib
 import json
 import re
@@ -175,8 +176,9 @@ def _call_containing(code: str, position: int) -> str | None:
     return min(calls)[1] if calls else None
 
 
-def _call_containing_argument(code: str, position: int) -> dict | None:
-    """Return the smallest call argument containing a source position."""
+@lru_cache(maxsize=8)
+def _call_argument_index(code: str) -> tuple[tuple, tuple[int, ...], tuple[int, ...]]:
+    """Cache source call argument spans once per masked C translation unit."""
     calls = []
     for match in re.finditer(r"\b([A-Za-z_]\w*)\s*\(", code):
         open_pos = match.end() - 1
@@ -199,31 +201,67 @@ def _call_containing_argument(code: str, position: int) -> dict | None:
             elif char == "," and parens == 1 and brackets == 0 and braces == 0:
                 separators.append(i)
             i += 1
-        if close_pos is None or not open_pos < position < close_pos:
+        if close_pos is None:
             continue
         starts = [open_pos + 1, *[comma + 1 for comma in separators]]
         ends = [*separators, close_pos]
         for index, (start, end) in enumerate(zip(starts, ends)):
-            if start <= position <= end:
-                while start < end and code[start].isspace(): start += 1
-                while end > start and code[end - 1].isspace(): end -= 1
-                calls.append((close_pos - match.start(), {"call": match.group(1),
-                             "argument_index": index, "argument_start": start,
-                             "argument_end": end, "argument_expression": code[start:end]}))
-                break
-    return min(calls, key=lambda item: item[0])[1] if calls else None
+            if start < end:
+                calls.append((start, end, close_pos - match.start(), match.start(), match.group(1), index))
+    calls.sort(key=lambda item: item[0])
+    starts = tuple(item[0] for item in calls)
+    prefix_max_end = []
+    high = -1
+    for item in calls:
+        high = max(high, item[1])
+        prefix_max_end.append(high)
+    return tuple(calls), starts, tuple(prefix_max_end)
+
+
+def _call_containing_argument(code: str, position: int) -> dict | None:
+    """Return the innermost call argument containing a source position."""
+    calls, starts, prefix_max_end = _call_argument_index(code)
+    index = bisect_right(starts, position) - 1
+    best = None
+    while index >= 0 and prefix_max_end[index] > position:
+        start, end, call_width, call_start, name, argument_index = calls[index]
+        if start <= position < end:
+            candidate = (call_width, end - start, name, argument_index, start, end, call_start)
+            if best is None or candidate[:2] < best[:2]:
+                best = candidate
+        index -= 1
+    if best is None:
+        return None
+    _, _, name, argument_index, start, end, call_start = best
+    return {"call": name, "argument_index": argument_index,
+            "argument_start": start, "argument_end": end,
+            "argument_expression": code[start:end], "call_start": call_start}
 
 
 def _call_arguments_using_identifier(code: str, identifier: str, start: int, end: int) -> set[tuple[str, int]]:
     calls = set()
-    fragment = code[start:end]
-    for match in re.finditer(r"\b([A-Za-z_]\w*)\s*\(", fragment):
-        for ident in re.finditer(r"\b" + re.escape(identifier) + r"\b", fragment[match.end():]):
-            position = start + match.end() + ident.start()
-            info = _call_containing_argument(code, position)
-            if info and info["call"] == match.group(1):
-                calls.add((info["call"], info["argument_index"]))
+    pattern = re.compile(r"\b" + re.escape(identifier) + r"\b")
+    for ident in pattern.finditer(code, start, end):
+        info = _call_containing_argument(code, ident.start())
+        if info:
+            calls.add((info["call"], info["argument_index"]))
     return calls
+
+
+def _identifier_is_value_operand(expression: str | None, symbol: str) -> bool:
+    """Reject identifiers used as array indexes; AST analysis handles harder cases."""
+    if not expression:
+        return False
+    match = re.search(r"\b" + re.escape(symbol) + r"\b", expression)
+    if not match:
+        return False
+    depth = 0
+    for char in expression[:match.start()]:
+        if char == "[":
+            depth += 1
+        elif char == "]":
+            depth = max(0, depth - 1)
+    return depth == 0
 
 
 def _mask_c_comments(text: str) -> str:
@@ -438,6 +476,7 @@ def _enclosing_function(spans, offset: int) -> str | None:
 def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
     records, blocked, excluded = [], [], []
     file_infos = []
+    function_literal_ordinals = {}
     matching_index = _matching_index(src_root.parent)
     for path in sorted(list((src_root / "main").rglob("*.c")) + list((src_root / "ovl").rglob("*.c"))):
         source_path = path.relative_to(src_root.parent).as_posix()
@@ -533,6 +572,11 @@ def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
                 call_info = {"call": call_name, "argument_index": call_argument_index,
                              "argument_expression": None}
             function_asm = matching_index.get((unit, function), []) if function else []
+            function_ordinal = None
+            if function is not None:
+                function_key = (unit, function)
+                function_literal_ordinals[function_key] = function_literal_ordinals.get(function_key, 0) + 1
+                function_ordinal = function_literal_ordinals[function_key]
             context = code_mask[line_start:] if line_end < 0 else code_mask[line_start:line_end]
             category, reason = _category(raw, context, function, call_name, call_argument_index)
             declaration_prefix = prefix_context
@@ -543,9 +587,14 @@ def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
                 table = re.search(r"([A-Za-z_]\w*)\s*\[[^\]]*\]\s*=\s*$", declaration)
                 if table:
                     table_symbol = table.group(1)
-            records.append({"id": f"c:{source_path}:{line}:{ordinal}", "link_unit": unit,
+            locator_id = f"c:{source_path}:{line}:{ordinal}"
+            records.append({"id": locator_id, "source_locator_id": locator_id,
+                            "stable_id": None, "stable_id_status": "unresolved_original_provenance",
+                            "link_unit": unit,
                             "source_site": {"path": source_path,
                                             "line": line, "ordinal_on_file": ordinal,
+                                            "byte_offset": start,
+                                            "function_literal_ordinal": function_ordinal,
                                             "call": call_name,
                                             "call_argument_index": call_argument_index,
                                             "call_argument_expression": call_argument_expression,
@@ -586,19 +635,25 @@ def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
             argument_index = call_info["argument_index"] if call_info else None
             function = _enclosing_function(spans, token["start"])
             role = string_argument_role(call_name, argument_index)
+            is_value = _identifier_is_value_operand(
+                call_info.get("argument_expression") if call_info else None, symbol)
             semantic = "display" if role == "display" else \
                 "debug_or_format" if role in {"format", "diagnostic"} else None
+            if not is_value:
+                semantic = None
             table_ref_index.setdefault((unit, symbol), []).append(
                 {"path": source, "line": line, "kind": "table_symbol_occurrence_unclassified",
                  "call": call_name, "call_argument_index": argument_index,
-                 "function": function, "semantic_category": semantic})
+                 "function": function, "semantic_category": None,
+                 "semantic_category_candidate": semantic})
     for site in table_sites:
         symbol = site["source_site"]["table_symbol"]
         refs = table_ref_index.get((site["link_unit"], symbol), [])
-        semantics = {ref["semantic_category"] for ref in refs if ref["semantic_category"]}
-        if len(semantics) == 1:
-            site["category"] = next(iter(semantics))
-            site["category_basis"] = "literal belongs to a C table with a same-link-unit semantic use"
+        candidates = {ref["semantic_category_candidate"] for ref in refs
+                      if ref.get("semantic_category_candidate")}
+        if len(candidates) == 1:
+            site["category_candidate"] = next(iter(candidates))
+            site["category_candidate_basis"] = "untyped C table-use occurrence; AST value flow required"
         site["source_site"]["table_reference_sites"] = refs
     return records, blocked, excluded
 
@@ -810,15 +865,18 @@ def _c_symbol_references(src_root: Path, labels: set[str]) -> tuple[list[dict], 
                 if declaration or (call_name is None and function is None):
                     continue
                 role = string_argument_role(call_name, argument_index)
-                semantic_category = None
-                if role == "display":
-                    semantic_category = "display"
-                elif role in {"format", "diagnostic"}:
-                    semantic_category = "debug_or_format"
+                semantic_category_candidate = None
+                is_value = _identifier_is_value_operand(
+                    call_info.get("argument_expression") if call_info else None, symbol)
+                if is_value and role == "display":
+                    semantic_category_candidate = "display"
+                elif is_value and role in {"format", "diagnostic"}:
+                    semantic_category_candidate = "debug_or_format"
                 refs.append({"link_unit": unit, "label": symbol, "path": source_path,
                              "line": line, "call": call_name, "call_argument_index": argument_index,
                              "function": function,
-                             "semantic_category": semantic_category})
+                             "semantic_category": None,
+                             "semantic_category_candidate": semantic_category_candidate})
     return refs, blocked
 
 
@@ -873,6 +931,17 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
         if code_key not in function_extent_cache:
             function_extent_cache[code_key] = _function_code_extent(function_path, code_binary, code_base, code_bias)
         site["function_code_extent"] = function_extent_cache[code_key]
+        extent = site["function_code_extent"]
+        if extent.get("status") == "verified_instruction_bytes" and \
+                isinstance(site["source_site"].get("function_literal_ordinal"), int):
+            address = extent["address"]
+            site["stable_id"] = f"c:{site['link_unit']}:{address:08x}:{site['source_site']['function_literal_ordinal']}"
+            site["stable_id_status"] = "verified_matching_function_entry_and_local_ordinal"
+            site["stable_id_evidence"] = {"function_entry_address": address,
+                                           "function_code_sha256": extent["sha256"],
+                                           "function_literal_ordinal": site["source_site"]["function_literal_ordinal"]}
+        else:
+            site["stable_id_status"] = "unresolved_original_function_or_object_address"
         if site["function_code_extent"].get("status") not in ("verified_instruction_bytes", "original_binary_missing"):
             blocked.append({"id": site["id"], "source_path": site["source_site"]["path"],
                             "line": site["source_site"]["line"], "function_assembly": function_paths[0],
@@ -934,7 +1003,9 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
         if record is None:
             if source not in hashes:
                 hashes[source] = _sha(binary)
-            record = {"id": f"{source}:{offset:08x}:{_sha(raw)[:12]}", "category": category,
+            record_id = f"{source}:{offset:08x}:{_sha(raw)[:12]}"
+            record = {"id": record_id, "stable_id": record_id,
+                      "stable_id_status": "verified_original_binary_extent", "category": category,
                   "category_basis": "zero-only extent contains no translatable bytes" if not any(raw) else
                                     "byte-identical C candidates do not prove a semantic reference",
                   "source": {"path": source, "offset": offset, "address": address,
@@ -974,7 +1045,9 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
             alias_key = (source, offset, alias_raw)
             alias = records_by_extent.get(alias_key)
             if alias is None:
-                alias = {"id": f"{source}:{offset:08x}:{_sha(alias_raw)[:12]}",
+                alias_id = f"{source}:{offset:08x}:{_sha(alias_raw)[:12]}"
+                alias = {"id": alias_id, "stable_id": alias_id,
+                         "stable_id_status": "verified_original_binary_extent",
                          "category": "unknown",
                          "category_basis": "exact C string including an original-byte-verified terminal NUL",
                          "source": {"path": source, "offset": offset, "address": address,
@@ -1039,7 +1112,7 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
                             "status": "function_reference_source_unreadable", "reason": error})
         candidate_records = []
         exact_raws = tuple(sorted(set(_literal_extent_candidates(site)), key=len, reverse=True))
-        for label in refs:
+        for label in sorted(refs):
             for record in label_records.get(label, []):
                 if (_asm_unit(record["source"]["path"]) == site["link_unit"] and
                         bytes.fromhex(record["raw_hex"]) in exact_raws and record not in candidate_records):
@@ -1060,7 +1133,9 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
                 if record is None:
                     if location["source"] not in hashes:
                         hashes[location["source"]] = _sha(binary)
-                    record = {"id": f"{location['source']}:{offset:08x}:{_sha(matched_raw)[:12]}",
+                    record_id = f"{location['source']}:{offset:08x}:{_sha(matched_raw)[:12]}"
+                    record = {"id": record_id, "stable_id": record_id,
+                              "stable_id_status": "verified_original_binary_extent",
                               "category": site["category"],
                               "category_basis": "C literal exact bytes at data label referenced by its matching function",
                               "source": {"path": location["source"], "offset": offset,
@@ -1116,12 +1191,11 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
                 continue
             site_ref = {"kind": "C_symbol_reference", "label": ref["label"],
                         "path": ref["path"], "line": ref["line"], "call": ref["call"],
-                        "semantic_category": ref["semantic_category"], "confirmed_reference": True}
+                        "semantic_category": None,
+                        "semantic_category_candidate": ref.get("semantic_category_candidate"),
+                        "confirmed_reference": True}
             if site_ref not in record["reference_sites"]:
                 record["reference_sites"].append(site_ref)
-            if ref["semantic_category"] == "display":
-                record["category"] = "display"
-                record["category_basis"] = "C source directly references label in known display call"
     if label_records:
         known_labels = set(label_records)
         reference_paths = sorted(list((asm_root / "matchings").rglob("*.s")) + list((asm_root / "ovl").rglob("*.s")) +
@@ -1145,7 +1219,7 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
                 code = re.sub(r'"(?:\\.|[^"\\])*"', '""', code)
                 if re.match(r"\s*(?:dlabel|glabel|jlabel|nonmatching|\.globl)\s+", code):
                     continue
-                for label in set(SYMBOL_TOKEN.findall(code)) & known_labels:
+                for label in sorted(set(SYMBOL_TOKEN.findall(code)) & known_labels):
                     for record in label_records.get(label, []):
                         record_unit = _asm_unit(record["source"]["path"])
                         if reference_unit != record_unit and not (
