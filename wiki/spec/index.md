@@ -28,3 +28,4 @@ One line per unit. Each spec states what the unit does, its state and data with 
 
 - [[spec/o-tt]] - overlay TT, the TwinBee Time Attack mini game: stage, boss and ranking rules, state machine, data tables
 - [[spec/m-dates-a]] - main sound driver (`src/main/80079B10.c`, the file the unit label calls date sequences): command words and classes, bank slots, BGM, sound effects, voice-clip (XA) timing, level meter ([[tickets/T-27014-p2-m-dates-a]])
+- [[spec/m-sysmenu]] - main `src/main/8005A0B0.c`, the player's room screens: weekly command screen (icons, build rules), calendar check, memory-card data screen, system settings and mascot, club joining, rumor report, Christmas and New Year preparation ([[tickets/T-27017-p2-m-sysmenu]])
