@@ -23,7 +23,7 @@ Names are the proposals of `config/renames/proposals/m-flow.tsv`, written withou
 | `80061710.c` | `title_screen.c` | title screen (mode 0x12) and its 3D intro, start mode (0x10) | `title_`, `mode_` |
 | `80053650.c` | `memory_card.c` | memory-card layer, system and game save images, two MDEC still-image helpers | `card_`, `mdec_` |
 
-Prefix choices that differ from the ADR table (`docs/adr/0001-phase-2-naming.md`): the memory card keeps core's `card_` (the ADR row says `memory_card_`; core's `card_start`, `card_stop` and the GameState fields `card_busy`, `card_result`, `card_step` already use it and sibling units use it too), and `timer_` moves from the `80053650` row to the `800420D0` row, because the only timer code is the vblank event in `800420D0.c` (80053650 has none). The ADR rows `boot_` (boot and startup), `pad_` (pad helpers), `title_` and `ovl_` fit as they stand; `mouse_` is the hardware unit's prefix and is used for the mouse functions that sit in `pad_input.c` (rule "topic wins"). `sys_` is used for the two start-up helpers (`sys_init`, `sys_cache_flush`).
+Prefix choices that differ from the ADR table (`docs/adr/0001-phase-2-naming.md`): the memory card keeps core's `card_` (the ADR row says `memory_card_`; core's `card_start`, `card_stop` and the GameState fields `card_busy`, `card_result`, `card_step` already use it and sibling units use it too), and `timer_` moves from the `80053650` row to the `800420D0` row, because the only timer code is the vblank event in `800420D0.c` (80053650 has none). The ADR rows `boot_` (boot and startup), `pad_` (pad helpers), `title_` and `ovl_` fit as they stand; `mouse_` is the hardware unit's prefix and is used for the mouse functions that sit in `pad_input.c` (the ADR rule "One owner": a function takes the prefix of its topic). `sys_` is used for the two start-up helpers (`sys_init`, `sys_cache_flush`).
 
 New headers (declarations move out of `main_api.h`): `include/main/game_init.h`, `main_loop.h`, `game_mode.h`, `pad_input.h`, `overlay_loader.h`, `title_screen.h`, `memory_card.h`. The save-image types (`CardBank`, `GameSaveImage`, `SystemSaveImage`) move with `memory_card.h`.
 
@@ -235,7 +235,7 @@ Mode 0xD0 is not an overlay mode. `mode_tt_game` loads the TT file itself and ru
 
 **Pad word.** `pad_raw_read` builds one 32-bit word: pad 2 in the upper half, pad 1 in the lower, each (direction/system byte << 8) | button byte, all inverted so a pressed button is 1. `PadBits`: low byte L2, R2, L1, R1, triangle, circle, cross, square (0x01-0x80); second byte SELECT, L3, R3, START, up, right, down, left (0x100-0x8000). `pad_raw_read` also has a mouse branch (the two mouse buttons as 0x20 and 0x40) that `pad_poll` never reaches, because mouse mode uses `mouse_to_pad`. `pad_poll`:
 
-1. `pad_prev` := `pad_held`; `pad_held` := the word. A half-word of 0xFFFF in the upper part (pad 2 glitch) is dropped; a lower half of 0xFFFF with a real upper part keeps only the upper part; both -> 0.
+1. `pad_prev` := `pad_held`; `pad_held` := the word. A half-word with all 16 buttons set cannot be a real input (a port read glitch): an upper half of 0xFFFF is dropped, a lower half of 0xFFFF with a real upper part keeps only the upper part, both give 0.
 2. `pad_pressed` := `~pad_prev & pad_held`, `pad_released` := `pad_prev & ~pad_held`.
 3. Turbo: while `pad_turbo` is set a circle press is added to `pad_pressed` on every odd `frame_count`.
 4. Pause: a START press of either pad toggles `paused` (and `actors_draw_enabled`) only while `pause_allowed` is 1; no code ever sets `pause_allowed`, so the pause never happens in the shipped game.
@@ -267,7 +267,7 @@ Mode 0xD0 is not an overlay mode. `mode_tt_game` loads the TT file itself and ru
 
 **Stage 3, the exit.** Step 0: `SND_CMD_FADE_BGM_SLOW` every frame, flash level `step_timer * 2`; at 0x80 frames the actors, pointer and sprite tables are cleared. Step 1: full flash level, then item 0 -> `main_state_set(0x13)`, item 1 -> `main_state_set(0x20)`; with `debug_hud_enabled` set and item 1 chosen, pad right held gives mode 0x21 and pad left held mode 0x22; any other value -> `game_reset_to_title`. Emulator: choosing item 0 at frame 10 calls `main_state_set(0x13)` at frame 172 (0x21 + 0x80 + 1 frames after the press); NAME_ENT was already resident in that run, so the loader skipped the read and mode 0x13 ran from frame 174.
 
-**5.4 The pad code.** From stage 2 on, while `pad_code_entered` is set and `cd_queue_idle()` is true, the title hides the pointer, sends `SND_CMD_STOP_ALL`, calls `main_state_set(0x11)`, `main_stage_set(1)` and plays sound 0x501. Stage 1 of mode 0x11 is the opening movie (`movie_play(0, 0x33B, 0x820)` in NAME_ENT), so the code skips the prologue lines and plays the movie (HYPOTHESIS: a viewing shortcut). The NAME_ENT movie code clears the code state afterwards and returns with `main_state_set(0x12)`.
+**The pad code.** From stage 2 on, while `pad_code_entered` is set and `cd_queue_idle()` is true, the title hides the pointer, sends `SND_CMD_STOP_ALL`, calls `main_state_set(0x11)`, `main_stage_set(1)` and plays sound 0x501. Stage 1 of mode 0x11 is the opening movie (`movie_play(0, 0x33B, 0x820)` in NAME_ENT), so the code skips the prologue lines and plays the movie (HYPOTHESIS: a viewing shortcut). The NAME_ENT movie code clears the code state afterwards and returns with `main_state_set(0x12)`.
 
 ## 6. The memory card
 
@@ -288,7 +288,7 @@ Mode 0xD0 is not an overlay mode. `mode_tt_game` loads the TT file itself and ru
 | `card_save_read_poll` | read file `save_slot` | same shape | 4, or 0xD0 |
 | `card_save_write_poll` | write file `save_slot` | same shape | 0x14, or 0xD0 |
 
-`card_event_handle` is the event step of the check: done -> next step, new card -> the step it is given, timeout -> `card_retry_count` + 1 and step 0 (at 3 retries: `card_busy` 0 and result 0xFF), error -> step 0. `card_status_wait` spins on the BIOS status until it is not 0, closes the file, and counts a retry and restarts the job for the status codes 0x11 and 0x21. A job stepping to `card_step` 16 would end with 0xF0; nothing in `src/` sets that step. In the emulator the check from NAME_ENT starts at frame 395, runs about 76 frames and the scan follows at frame 473.
+`card_event_handle` is the event step of the check: done -> next step, new card -> the step it is given, timeout -> `card_retry_count` + 1 and step 0 (at 3 retries: `card_busy` 0 and result 0xFF), error -> step 0. `card_status_wait` spins on the BIOS status until it is not 0, closes the file, and counts a retry and restarts the job for the status codes 0x11 and 0x21. A job stepping to `card_step` 16 would end with 0xF0; nothing in `src/` sets that step. In the emulator (a blank card image, from the title menu with item 0 chosen at frame 10) the check from NAME_ENT starts at frame 395 and runs 76 poll calls, the scan follows at frame 473, and after 18 poll calls (3 for the missing system file, 14 for the slots, 1 to finish) it ends with result 2 and every `slot_status` 0 (no file); `card_retry_count` stays 3 from the system-file test.
 
 Callers: NAME_ENT (file screens, new game, saves), the command screen's data page (save and load; the m-sysmenu spec, not merged yet), ETC (end of game save), OPTION and TACO (settings), the TT loader, and `card_save_poll` of the scheduler.
 
@@ -317,8 +317,8 @@ Each bank starts with a 32-bit checksum: the sum of the 0xEFC bytes after it, ea
 | image offset | content (source in `system_data`) |
 |---|---|
 | 0x000 | checksum |
-| 0x004 | `slot_status[16]` (0 no file, 1 file exists; the menus put 0xFF while a save is about to create one) |
-| 0x014 | `flags[16]` (persistent per-girl "cleared" flags; core `girl_cleared` is the per-save copy) |
+| 0x004 | `slot_status[16]` (0 no file, 1 file exists; the save and load screens also store 0xFF for a slot that is being written or whose read failed) |
+| 0x014 | `flags[16]` (HYPOTHESIS: persistent per-girl "cleared" flags; core's `girl_cleared` is the per-save copy) |
 | 0x024 | `karaoke_unlock_bits[2]` |
 | 0x026 | `selected_slot`, stored modulo 15 when it is not 0 |
 | 0x028 | the 0x14-byte record at `system_data` +0x2C: the TT game's record (rankings, button codes, result; its last byte is `extra_mode_flags`) |
@@ -411,7 +411,7 @@ Quirks of the original that a port should not copy: `vram_clear_blocks` with 0 o
 4. m-sysmenu proposes `CardResult` (1, 0xD0, 0xF0, 0xF1, 0xFF) and a separate `CardPoll` (2, 3, 4, 0x13, 0x14) for the same field. This table puts all values in `CardResult` with the same names for the shared rows; the `CardPoll` rows should fold into it.
 5. h-cdio and core name the mode 0 handler differently (`boot_mode_run`, `mode_boot`). `title_lights_init` overwrites the three light records that h-cdio names `light_0` to `light_2` with red, blue and green tints, so those names describe the other setup (`initLight`), not the title.
 6. The ADR prefix rows `memory_card_` and `timer_` should be changed as in section 1.
-7. `restart_request`, `pause_allowed` and modes 1, 3 and 0xFF are never written or requested in `src/`; are they dead, or set by code that is not decompiled as C? `main_state_next` and `timer_seed_step` have no caller either.
+7. `restart_request`, `pause_allowed` and modes 1, 3 and 0xFF are never written or requested by any C in `src/`, overlays included, and `main_state_next` and `timer_seed_step` have no caller: they look dead.
 8. The meaning of `slot_girl_marks` (per-girl values 0 to 7 shown as icons in the file screens) and of the bits of `karaoke_unlock_bits` (no setter in `src/`) is open.
 9. `card_step` 16 and result 0xF0 have no setter in this unit.
 10. The 13 title cards: the code shows 13 textures and 13 TMD objects and the screenshot shows pictures of characters; which picture belongs to which texture slot was not traced.
