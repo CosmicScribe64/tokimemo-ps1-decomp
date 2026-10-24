@@ -202,7 +202,7 @@ void func_80139440(void);
 void func_80139F30(void);
 void func_80140F90(void);
 s32 func_80141820(void);
-/* T-24132: guarded drafts in src/ovl/NAME_ENT/80139740.c. */
+/* T-24132: guarded drafts in src/ovl/NAME_ENT/file_select.c. */
 void func_801398EC(void);
 s32 func_8013AF78(s32 arg0);
 

@@ -65,7 +65,7 @@ INCLUDE_RODATA("asm/data/main/scene_library.data", D_800CA36C);
 void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
 extern s32 talk_work[];
-/* Declared here, not in main_api.h: EVENT src/ovl/EVENT/80103B60.c declares the same address as
+/* Declared here, not in main_api.h: EVENT src/ovl/EVENT/nozomi_scenes.c declares the same address as
  * a function table (FnTbl55); moving it needs a MAIN_API_OVERRIDE there. T-11590 */
 extern s32 D_80122D48;
 

@@ -7,6 +7,8 @@ sources: ["src/ovl", "config/overlays", "config/objects", "docs/adr/0001-phase-2
 
 # Overlay C filenames
 
+Current application state: all403overlaymoves are verified complete, alongside34mainobjects. The census/preparation tables below retain the pre-application mapping evidence; final root proofs are recorded at the end.
+
 Preparation for [[tickets/T-27060-all-overlay-c-file-names]], following the user's requirement that
 every game-code C file have an understandable basename. This page covers all overlay folders; main
 files belong to the parallel main-file ticket. The primary chat alone applies moves and owns builds,
@@ -130,3 +132,7 @@ proof, not a claim about the later live HEAD. The primary must rerun its live pl
 proofs. This worker made no source/header/tool/symbol/ledger changes, applied no moves, ran no
 build/clean and made no commits. The ticket stays In Progress until the primary finishes integration
 and its TT integration decision.
+
+## Root application and matching proof
+
+2026-10-24: all403rows applied, retaining26disc-named directories. Togetherwith34mainobjects, all437game C files have logical basenames. Current437prototype views equal original payloads after403intentionalpath-keymappings:0/0/0. CleanDocker27/27matching checks and6952/6952functions,2276920bytes; independent rehash27/27. Independent post-application Standards/Spec reviews confirm pure approvedpathmoves, originalcomments/ranges andunchangedbodies/configboundaries. TT technicalbasenames do notadopt anEnglishfolder/moduleprefix. Earlierpreparation/source-unchanged wording is historical; root sourceapplicationiscomplete. Broadersemanticnaming andheaderclosuremigration remainopen.

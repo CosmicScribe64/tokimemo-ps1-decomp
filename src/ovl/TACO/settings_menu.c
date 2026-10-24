@@ -1,0 +1,387 @@
+/* settings_menu.c: src/ovl/TACO/80135720.c:11 dispatches menu steps; :95 calls changing-value animation or input; :102 renders settings; :341 processes menu cursor and button remapping. Original object 0x80135720-0x80136B40 (config/objects/TACO.txt). */
+#include "common.h"
+#include "ovl/TACO.h"
+
+void func_80135720(void) {
+    D_8015F3F0 = 0;
+    D_8015F3F4 = 0;
+    D_8015F3F8 = 0;
+    D_8015F3FC = 0;
+}
+
+s32 func_80135744(void) {
+    switch (game_state.mode_step) {
+    case 0:
+        func_8013587C();
+        break;
+    case 1:
+        func_801359B4();
+        break;
+    case 2:
+        func_80135994();
+        break;
+    }
+}
+
+/* FAKE: k repeats the stride of i so that uopt strength-reduces arg5 + k and leaves k's initial 0 in v0
+   (live at the exit of this implicit-int function); the original source is unknown. T-19023.
+   "i = 0; do {" on one line orders the preheader moves as the original does. */
+s32 func_801357B0(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+u8 *arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+s32 arg4;
+s32 arg5;
+s32 arg6;
+{
+    s32 i;
+    s32 k;
+    u8 *p;
+
+    k = 0;
+    if (*arg0 != 0) {
+        p = arg0;
+        i = 0; do {
+            func_80139424(*p, arg3, 3, 0x80, arg5 + k, arg6, arg1, arg2, arg4);
+            i += 0xD;
+            p++;
+            k += 0xD;
+        } while (i < 0x111 && *p != 0);
+    }
+}
+
+s32 func_8013587C(void) {
+    switch (game_state.substep) {
+    case 0:
+        dec_bg_reset();
+        cd_read_sectors(8, 0x80162000, 0xB378);
+        func_80135720();
+        game_state.substep += 1;
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            game_state.substep += 1;
+        }
+        break;
+    case 2:
+        func_800536AC(0x2C0, 0, 0x140, 0xF0);
+        func_80135944();
+        mode_step_next();
+        break;
+    }
+}
+
+void func_80135944(void) {
+    RECT r;
+
+    r.x = 0x2C0;
+    r.y = 0;
+    r.w = 0x140;
+    r.h = 0x14;
+    func_8009C7F8(&r, 0, 0, 0);
+    func_8009C674(0);
+}
+
+void func_80135994(void) {
+    mode_stage_set(2);
+}
+
+void func_801359B4(void) {
+    if (D_8015F3F4 == 1) {
+        func_80135F6C();
+    } else {
+        func_80136988();
+    }
+    dec_bg_draw(2);
+    func_80135A04();
+}
+
+/* Implicit-int function without a return value (v0 stays live, which keeps the switch temporaries,
+   T-19023). i is declared before sp44 so that the array sits at 0x44; the loop body stays on the line of
+   the for so that IDO stores element 0 first. */
+s32 func_80135A04(void) {
+    s32 i;
+    s32 sp44[6];
+
+    for (i = 0; i < 6; i++) sp44[i] = 3;
+    sp44[D_8015F3F0] = 5;
+    prim_gradient_rect(-0x88, -0x1C, 0x10E, 0x78, 4, 0x3F3F3F, 0x81);
+    func_801357B0("SETTING", 0x1000, 0x1000, sp44[5], 3, -0x30, -0x40);
+    func_801357B0("AUTO SHOT", 0x1000, 0x1000, sp44[0], 3, -0x78, -0x10);
+    func_801357B0("ROLL BUTTON", 0x1000, 0x1000, sp44[1], 3, -0x78, 8);
+    func_801357B0("SHOT BUTTON", 0x1000, 0x1000, sp44[2], 3, -0x78, 0x20);
+    func_801357B0("BOMB BUTTON", 0x1000, 0x1000, sp44[3], 3, -0x78, 0x38);
+    func_801357B0("EXIT", 0x1000, 0x1000, sp44[4], 3, -0x78, 0x50);
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 0) {
+        switch (D_8015EDD8 & 1) {
+        case 0:
+            func_801357B0("OFF", 0x1000, 0x1000, sp44[0], 3, 0x2A, -0x10);
+            break;
+        case 1:
+            func_801357B0("ON", 0x1000, 0x1000, sp44[0], 3, 0x2A, -0x10);
+            break;
+        }
+    }
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 1) {
+        switch (D_8015EDDC % 3) {
+        case 0:
+            func_801357B0("R12-L12", 0x1000, 0x1000, sp44[1], 3, 0x2A, 8);
+            break;
+        case 1:
+            func_801357B0("R1-L1", 0x1000, 0x1000, sp44[1], 3, 0x2A, 8);
+            break;
+        case 2:
+            func_801357B0("R2-L2", 0x1000, 0x1000, sp44[1], 3, 0x2A, 8);
+            break;
+        }
+    }
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 2) {
+        switch (D_8015EDE0 % 3) {
+        case 0:
+            func_801357B0("@", 0x1000, 0x1000, sp44[2], 3, 0x2A, 0x20);
+            break;
+        case 1:
+            func_801357B0("*", 0x1000, 0x1000, sp44[2], 3, 0x2A, 0x20);
+            break;
+        case 2:
+            func_801357B0("#", 0x1000, 0x1000, sp44[2], 3, 0x2A, 0x20);
+            break;
+        }
+    }
+    if (D_8015F3F4 != 1 || D_8015F3F0 != 3) {
+        switch (D_8015EDE4 % 3) {
+        case 0:
+            func_801357B0("*", 0x1000, 0x1000, sp44[3], 3, 0x2A, 0x38);
+            break;
+        case 1:
+            func_801357B0("#", 0x1000, 0x1000, sp44[3], 3, 0x2A, 0x38);
+            break;
+        case 2:
+            func_801357B0("@", 0x1000, 0x1000, sp44[3], 3, 0x2A, 0x38);
+            break;
+        }
+    }
+}
+
+void func_80135F6C(void) {
+    D_8015F3FC += 1;
+    switch (D_8015F3F0) {
+    case 0:
+        func_80136024();
+        break;
+    case 1:
+        func_801361E8();
+        break;
+    case 2:
+        func_80136438();
+        break;
+    case 3:
+        func_80136688();
+        break;
+    }
+    if (D_8015F3FC >= 0x1F) {
+        D_8015F3FC = 0;
+        D_8015F3F4 = 0;
+    }
+}
+
+void func_80136024(void) {
+    s32 t;
+
+    if (D_8015F3FC < 0xF) {
+        t = (0xF - D_8015F3FC << 0xC) / 15;
+        switch (D_8015F3F8 % 2) {
+        case 0:
+            func_801357B0("OFF", t, 0x1000, 5, 3, 0x2A, -0x10);
+            return;
+        case 1:
+            func_801357B0("ON", t, 0x1000, 5, 3, 0x2A, -0x10);
+            return;
+        }
+    } else {
+        t = ((D_8015F3FC << 0xC) - 0xF000) / 15;
+        switch (D_8015EDD8 & 1) {
+        case 0:
+            func_801357B0("OFF", t, 0x1000, 5, 3, 0x2A, -0x10);
+            return;
+        case 1:
+            func_801357B0("ON", t, 0x1000, 5, 3, 0x2A, -0x10);
+            return;
+        }
+    }
+}
+
+void func_801361E8(void) {
+    s32 temp_hi;
+    s32 temp_lo;
+    s32 temp_lo_2;
+    u32 temp_hi_2;
+
+    if (D_8015F3FC < 0xF) {
+        temp_lo = (s32) ((0xF - D_8015F3FC) << 0xC) / 15;
+        temp_hi = (s32) D_8015F3F8 % 3;
+        switch (temp_hi) {
+        case 0:
+            func_801357B0((s32) "R12-L12", temp_lo, 0x1000, 5, 3, 0x2A, 8);
+            return;
+        case 1:
+            func_801357B0((s32) "R1-L1", temp_lo, 0x1000, 5, 3, 0x2A, 8);
+            return;
+        case 2:
+            func_801357B0((s32) "R2-L2", temp_lo, 0x1000, 5, 3, 0x2A, 8);
+            return;
+        }
+    } else {
+        temp_lo_2 = (s32) ((D_8015F3FC << 0xC) + 0xFFFF1000) / 15;
+        temp_hi_2 = (u8) D_8015EDDC % 3U;
+        switch (temp_hi_2) {
+        case 0:
+            func_801357B0((s32) "R12-L12", temp_lo_2, 0x1000, 5, 3, 0x2A, 8);
+            return;
+        case 1:
+            func_801357B0((s32) "R1-L1", temp_lo_2, 0x1000, 5, 3, 0x2A, 8);
+            return;
+        case 2:
+            func_801357B0((s32) "R2-L2", temp_lo_2, 0x1000, 5, 3, 0x2A, 8);
+            return;
+        }
+    }
+}
+
+void func_80136438(void) {
+    s32 temp_hi;
+    s32 temp_lo;
+    s32 temp_lo_2;
+    u32 temp_hi_2;
+
+    if (D_8015F3FC < 0xF) {
+        temp_lo = (s32) ((0xF - D_8015F3FC) << 0xC) / 15;
+        temp_hi = (s32) D_8015F3F8 % 3;
+        switch (temp_hi) {
+        case 0:
+            func_801357B0((s32) "@", temp_lo, 0x1000, 5, 3, 0x2A, 0x20);
+            return;
+        case 1:
+            func_801357B0((s32) "*", temp_lo, 0x1000, 5, 3, 0x2A, 0x20);
+            return;
+        case 2:
+            func_801357B0((s32) "#", temp_lo, 0x1000, 5, 3, 0x2A, 0x20);
+            return;
+        }
+    } else {
+        temp_lo_2 = (s32) ((D_8015F3FC << 0xC) + 0xFFFF1000) / 15;
+        temp_hi_2 = (u8) D_8015EDE0 % 3U;
+        switch (temp_hi_2) {
+        case 0:
+            func_801357B0((s32) "@", temp_lo_2, 0x1000, 5, 3, 0x2A, 0x20);
+            return;
+        case 1:
+            func_801357B0((s32) "*", temp_lo_2, 0x1000, 5, 3, 0x2A, 0x20);
+            return;
+        case 2:
+            func_801357B0((s32) "#", temp_lo_2, 0x1000, 5, 3, 0x2A, 0x20);
+            return;
+        }
+    }
+}
+
+void func_80136688(void) {
+    s32 temp_hi;
+    s32 temp_lo;
+    s32 temp_lo_2;
+    u32 temp_hi_2;
+
+    if (D_8015F3FC < 0xF) {
+        temp_lo = (s32) ((0xF - D_8015F3FC) << 0xC) / 15;
+        temp_hi = (s32) D_8015F3F8 % 3;
+        switch (temp_hi) {
+        case 0:
+            func_801357B0((s32) "*", temp_lo, 0x1000, 5, 3, 0x2A, 0x38);
+            return;
+        case 1:
+            func_801357B0((s32) "#", temp_lo, 0x1000, 5, 3, 0x2A, 0x38);
+            return;
+        case 2:
+            func_801357B0((s32) "@", temp_lo, 0x1000, 5, 3, 0x2A, 0x38);
+            return;
+        }
+    } else {
+        temp_lo_2 = (s32) ((D_8015F3FC << 0xC) + 0xFFFF1000) / 15;
+        temp_hi_2 = (u8) D_8015EDE4 % 3U;
+        switch (temp_hi_2) {
+        case 0:
+            func_801357B0((s32) "*", temp_lo_2, 0x1000, 5, 3, 0x2A, 0x38);
+            return;
+        case 1:
+            func_801357B0((s32) "#", temp_lo_2, 0x1000, 5, 3, 0x2A, 0x38);
+            return;
+        case 2:
+            func_801357B0((s32) "@", temp_lo_2, 0x1000, 5, 3, 0x2A, 0x38);
+            return;
+        }
+    }
+}
+
+void func_801368D8(u8 *arg0, u8 arg1) {
+    u8 v;
+
+    if (D_8015F3F0 < 4) {
+        D_8015F3F4 = 1;
+    }
+    v = *arg0;
+    D_8015F3F8 = v;
+    if (game_state.pad_pressed & 0x2020) {
+        *arg0 = ((u32)v + arg1 + 1) % (u32)arg1;
+    }
+    if (game_state.pad_pressed & PAD_LEFT) {
+        *arg0 = (*arg0 + arg1 - 1U) % (u32)arg1;
+    }
+}
+
+void func_80136988(void) {
+    if (game_state.pad_pressed & 0x5000) {
+        func_801335A0(0, 0x500);
+    }
+    if (game_state.pad_pressed & PAD_UP) {
+        D_8015F3F0 -= 1;
+    }
+    if (game_state.pad_pressed & PAD_DOWN) {
+        D_8015F3F0 += 1;
+    }
+    if (D_8015F3F0 < 0) {
+        D_8015F3F0 = 4;
+    }
+    if (D_8015F3F0 >= 5) {
+        D_8015F3F0 = 0;
+    }
+    if (game_state.pad_pressed & 0xA020) {
+        if (D_8015F3F0 != 4) {
+            func_801335A0(0, 0x501);
+        }
+        switch (D_8015F3F0) {
+        case 0:
+            func_801368D8(&D_8015EDD8, 2);
+            break;
+        case 1:
+            func_801368D8(&D_8015EDDC, 3);
+            break;
+        case 2:
+            func_801368D8(&D_8015EDE0, 3);
+            break;
+        case 3:
+            func_801368D8(&D_8015EDE4, 3);
+            break;
+        case 4:
+            if (game_state.pad_pressed & PAD_CIRCLE) {
+                func_801335A0(0, 0x502);
+                mode_step_next();
+            }
+            break;
+        }
+    }
+    if (game_state.pad_pressed & 0x840) {
+        func_801335A0(0, 0x502);
+        mode_step_next();
+    }
+}

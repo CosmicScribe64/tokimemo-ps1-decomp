@@ -1,0 +1,749 @@
+/* voice_test_browser.c: src/ovl/OPTION/801389A0.c:432: voice test menu, character/clip selection, list display and audio completion replay; body 443: if (game_state.pad_pressed & 0x08000000) {; 444: D_8013D3F0 = 1 - D_8013D3F0;. Original object 0x801389A0-0x8013A550 (config/objects/OPTION.txt). */
+#include "common.h"
+#include "ovl/OPTION.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D360);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D364);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D368);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D36C);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D370);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D374);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D378);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D37C);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D380);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D39C);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3A0);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3A4);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3A8);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3B0);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3B4);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3B8);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3BC);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3CC);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3DC);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3E0);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3F0);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3F4);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3F8);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D798);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D880);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D968);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013DD58);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E148);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E244);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E340);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E43C);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E538);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E634);
+s32 D_8013E730 = 0;
+s32 D_8013E734 = 0;
+s32 D_8013E738 = 0;
+s32 D_8013E73C = 0;
+
+void func_801389A0(void) {
+    game_state.mode_stage_timer += 1;
+    switch (game_state.mode_stage) {
+    case 0:
+        func_80138A24();
+        break;
+    case 1:
+        func_80138A8C();
+        break;
+    default:
+        game_mode_reset_to_title();
+        break;
+    }
+    hud_screen_frame_draw(0);
+    message_window_title_update();
+}
+
+void func_80138A24(void) {
+    if (game_state.substep == 0) {
+        cd_read_sectors(0x3A, 0x80180000, 0xA1AB);
+        game_state.substep += 1;
+    } else if (cd_read_sync_status() & 1) {
+        mode_stage_next();
+    }
+}
+
+void func_80138A8C(void) {
+    game_state.mode_step_timer.w += 1;
+    switch (game_state.mode_step) {
+    case 0:
+        func_80139198();
+        return;
+    case 1:
+        func_80139878();
+        return;
+    case 2:
+        func_8013990C();
+        return;
+    case 3:
+        func_80138C20();
+        return;
+    case 4:
+        func_80138FC0();
+        return;
+    case 5:
+        func_80138DF8();
+        return;
+    default:
+        game_mode_reset_to_title();
+        return;
+    }
+}
+
+void func_80138B4C(s32 arg0) {
+    s32 i;
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    for (i = 0; i < 16; i++) {
+        a[i] = 0;
+        b[i] = i * 10 - 0x64;
+        c[i] = 0x40;
+        d[i] = 0xA;
+        menu_set(1, 0x10, a, b, c, d);
+    }
+}
+
+void func_80138C20(void) {
+    s32 i;
+    s32 y;
+    s32 next;
+    u8 (*rows)[16];
+
+    if (game_state.substep == 0) {
+        func_80138B4C(0);
+        i = 0;
+        do {
+            next = i + 1;
+            k_disp_switch(next, 0);
+            i++;
+        } while (i != 7);
+        game_state.substep += 1;
+    } else {
+        if (game_state.pad_pressed & PAD_CIRCLE) {
+            if (game_state.menu_cursor_1 != -1) {
+                D_8013D3A4 = game_state.menu_cursor_1 + D_8013D3A4;
+            }
+            func_8013A31C();
+            i = 0;
+            do {
+                next = i + 1;
+                k_disp_switch(next, 1);
+                i++;
+            } while (i != 7);
+            mode_step_set(2);
+        }
+    }
+    i = 0;
+    y = -0x64;
+    do {
+        func_8004AE54((s32) ((u32) (D_8013D3A4 + i) % 63U), -0xA, y, 6);
+        i += 1;
+        y += 0xA;
+    } while (i < 0x10);
+    rows = D_8013DD58;
+    for (i = 0, y = -0x64; i != 0x10; i++, y += 0xA) {
+        func_8004B338((s32) rows[((u32) (D_8013D3A4 + i) % 63U)], 0xA, y);
+    }
+    menu_check(1, cursor_x, cursor_y);
+    menu_bar_show(1);
+    menu_cursor_update(1);
+    menu_bar_show(0);
+    func_8013A4FC();
+    func_8013A484();
+}
+
+void func_80138DF8(void) {
+    s32 i;
+    s32 y;
+    u8 (*rows)[16];
+
+    if (game_state.substep == 0) {
+        func_80138B4C(0);
+        for (i = 0; i < 7; i++) {
+            k_disp_switch(i + 1, 0);
+        }
+        game_state.substep += 1;
+    } else {
+        if (game_state.pad_pressed & PAD_CIRCLE) {
+            if (game_state.menu_cursor_1 != -1) {
+                D_8013D3DC = game_state.menu_cursor_1 + D_8013D3DC;
+            }
+            for (i = 0; i < 7; i++) {
+                k_disp_switch(i + 1, 1);
+            }
+            mode_step_set(2);
+        }
+    }
+    i = 0;
+    y = -0x64;
+    do {
+        func_8004AE54((s32) ((u32) (D_8013D3DC + i) % 58U), -0xA, y, 6);
+        i += 1;
+        y += 0xA;
+    } while (i < 0x10);
+    rows = D_8013D3F8;
+    for (i = 0, y = -0x64; i != 0x10; i++, y += 0xA) {
+        func_8004B338((s32) rows[((u32) (D_8013D3DC + i) % 58U)], 0xA, y);
+    }
+    menu_check(1, cursor_x, cursor_y);
+    menu_bar_show(1);
+    menu_cursor_update(1);
+    menu_bar_show(0);
+    func_8013A4FC();
+    func_8013A484();
+}
+
+void func_80138FC0(void) {
+    s32 i;
+    s32 y;
+    s32 next;
+    u8 (*rows)[16];
+
+    if (game_state.substep == 0) {
+        func_80138B4C(1);
+        i = 0;
+        do {
+            next = i + 1;
+            k_disp_switch(next, 0);
+            i++;
+        } while (i != 7);
+        game_state.substep += 1;
+    } else {
+        if (game_state.pad_pressed & PAD_CIRCLE) {
+            if (game_state.menu_cursor_1 != -1) {
+                D_8013D3A0 = game_state.menu_cursor_1 + D_8013D3A0;
+            }
+            func_8013A304();
+            i = 0;
+            do {
+                next = i + 1;
+                k_disp_switch(next, 1);
+                i++;
+            } while (i != 7);
+            mode_step_set(2);
+        }
+    }
+    i = 0;
+    y = -0x64;
+    do {
+        func_8004AE54((s32) ((u32) (D_8013D3A0 + i) % 63U), -0xA, y, 6);
+        i += 1;
+        y += 0xA;
+    } while (i < 0x10);
+    rows = D_8013D968;
+    for (i = 0, y = -0x64; i != 0x10; i++, y += 0xA) {
+        func_8004B338((s32) rows[((u32) (D_8013D3A0 + i) % 63U)], 0xA, y);
+    }
+    menu_check(1, cursor_x, cursor_y);
+    menu_bar_show(1);
+    menu_cursor_update(1);
+    menu_bar_show(0);
+    func_8013A4FC();
+    func_8013A484();
+}
+
+s32 func_80139198(void) {
+    s32 i;
+    Actor *p;
+
+    func_8004ADAC(4);
+    draw2d3d(1, 0);
+    actor_draw_enable(1);
+    sprite_tables_clear();
+    actor_clear_range(0);
+    back_clear_switch(0);
+    tpage_buf_clear();
+    game_state.tile_layer_enabled = 0;
+    *(s32 *)&game_state.menu_hit[3] = 0xA0;
+    text_system_reset();
+    message_window_set_title((s32) "オプション画面");
+    k_disp_start(1);
+    set_kanji_string(D_8013D364[0], D_8013D372[0], 0, "ＸＡコール", 0);
+    set_kanji_string(D_8013D364[1], D_8013D372[1], 0, "メインＶＡＢトランス", 0);
+    set_kanji_string(D_8013D364[2], D_8013D372[2], 0, "サブＶＡＢトランス", 0);
+    set_kanji_string(D_8013D364[3], D_8013D372[3], 0, "メインＳＥＱコール", 0);
+    set_kanji_string(D_8013D364[4], D_8013D372[4], 0, "サブＳＥＱコール", 0);
+    set_kanji_string(D_8013D364[5], D_8013D372[5], 0, "メインＳＥコール", 0);
+    set_kanji_string(D_8013D364[6], D_8013D372[6], 3, "ＳＥＱーＮＵＭ", 0);
+    game_state.menu_cursor_0 = 0;
+    game_state.menu_cursor_1 = 0;
+    game_state.menu_mode = MENU_MODE_MOUSE_LIKE;
+    cursor_actor_init(0);
+    ((Actor *)actor_pool)[0].draw_flags |= 1;
+    D_8013D3B0 = 0;
+    D_8013D3B4 = 0;
+    D_801220E2 = 0;
+    D_801220E1 = 0;
+    D_801220E0 = 0;
+    /* FAKE: argument evaluation delays the flag clear until after row-address
+     * setup, preserving the original store schedule. T-24002 */
+    menu_set(0, 7, (game_state.screen_brightness = 0, D_8013D364), D_8013D372, D_8013D380, D_8013D38E);
+    menu_bar_color(0, 0x5F7F3F, 9, 8);
+    menu_bar_color(1, 0x7F7F7F, 2, 1);
+    for (i = 0, p = (Actor *)actor_pool; i < 13; i++, p++) {
+        actor_clear(i + 0x60);
+        p[96].unk_01 = 2;
+        p[96].flags = 0x40;
+        p[96].quad_flags = 0x40000000;
+        p[96].draw_flags = 0x94;
+        p[96].frame_table = D_800C5FD4;
+        p[96].sequence_table = D_800C6010;
+        p[96].tpage_table = &D_800C5FCC;
+        p[96].unk_14 = D_800C6014;
+        p[96].unk_04 = 8;
+        p[96].unk_05 = 1;
+        p[96].sequence_slot = 0;
+        p[96].unk_18 = i;
+        p[96].dx = 3 - (rand() & 7);
+        p[96].dy = 4 - (rand() & 7);
+        p[96].dx_fraction = rand();
+        p[96].dy_fraction = rand();
+        p[96].x = 0;
+        p[96].y = 0;
+    }
+    mode_step_next();
+}
+
+/* FAKE: s32 without an explicit return keeps $v0 live at epilogue so as1 retains move $v0, $zero in the third loop preheader. T-24126 */
+s32 func_801394F4(void) {
+    s32 i;
+    Actor *p;
+    s16 temp_v0;
+    s32 dx;
+    s32 dy;
+    s32 count;
+    u8 flags;
+
+    count = 0;
+    for (i = 0, p = (Actor *)actor_pool; i < 13; i++, p++) {
+        dx = abs((((Actor *)actor_pool)->x - p[96].x) & 0x3FF);
+        func_8004AE54(abs((((Actor *)actor_pool)->y - p[96].y) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
+        dx = abs((((Actor *)actor_pool)->x - p[96].x) & 0x3FF);
+        if (((abs((((Actor *)actor_pool)->y - p[96].y) & 0x1FF) + dx) < 0x20) && (game_state.pad_pressed & PAD_CIRCLE)) {
+            flags = p[96].draw_flags;
+            if (flags & 0x10) {
+                p[96].draw_flags = flags & 0xFFEF;
+                if (p[96].x < -0x200) {
+                    p[96].x = 0x200;
+                }
+                if (p[96].x >= 0x201) {
+                    p[96].x = -0x200;
+                }
+                if (p[96].y < -0x200) {
+                    p[96].y = 0x200;
+                }
+                if (p[96].y >= 0x201) {
+                    p[96].y = -0x200;
+                }
+            } else {
+                p[96].draw_flags = flags | 0x10;
+            }
+        }
+        if (!(p[96].draw_flags & 0x10)) {
+            temp_v0 = p[96].unk_08;
+            p[96].unk_08 = temp_v0 + 1;
+            ((ActorFixed *)p)[96].y.w += rsin(temp_v0 << 6) * 4;
+            count += 1;
+        }
+    }
+    func_8004AE54(count, 0, -0x64, 6);
+    if (count == 13) {
+        for (i = 0, p = (Actor *)actor_pool; i < 13; i++, p++) {
+            p[96].x = i * 0x20 - 0x96;
+            p[96].y = -0x64;
+        }
+    } else if (count >= 5) {
+        /* FAKE: i = 0; p = ...; do { on one line with &actor_pool[i + 13] folds D_8011F044 into $s2 before 40 ($s3). T-24126 */
+        i = 0; p = (Actor *)actor_pool; do {
+            if (!(p[96].draw_flags & 0x10)) {
+                dx = p[96].x - (rsin(p[96].unk_08) / 32);
+                dy = p[96].y - (func_800A0140(p[96].unk_08) / 40);
+                if ((dx < -0x10) || (dx >= 0x11)) {
+                    if (dx > 0) {
+                        p[96].x--;
+                    } else {
+                        p[96].x++;
+                    }
+                }
+                if ((dy < -0x10) || (dy >= 0x11)) {
+                    if (dy > 0) {
+                        p[96].y--;
+                    } else {
+                        p[96].y++;
+                    }
+                }
+            }
+            p++;
+        } while (p != &((Actor *)actor_pool)[i + 13]);
+    }
+}
+
+void func_80139878(void) {
+    u8 t;
+
+    *(u8 *)&game_state.screen_brightness += 4;
+    t = *(u8 *)&game_state.screen_brightness;
+    D_801220E2 = t;
+    D_801220E1 = t;
+    D_801220E0 = t;
+    D_801220E8 = 0xA0;
+    D_801220EA = 0x78;
+    /* FAKE: empty test separates raw and truncated byte live ranges. T-10850 */
+    if (t) {
+    }
+    D_801220D4 = 0;
+    D_801220D6 = 0;
+    if (t >= 0x80) {
+        *(u8 *)&game_state.screen_brightness = 0x80;
+        k_disp_start(7);
+        mode_step_next();
+    }
+}
+
+void func_8013990C(void) {
+    D_801220EC = rsin(game_state.mode_step_timer.w << 5);
+    D_801220EE = rsin(game_state.mode_step_timer.w << 5);
+    D_801220F0 = game_state.mode_step_timer.w << 0xC;
+    menu_check(0, cursor_x, cursor_y);
+    menu_bar_show(0);
+    menu_cursor_update(0);
+    func_8013A484();
+    func_80139A30();
+    k_disp_inc();
+    func_801394F4();
+    func_801399C0();
+}
+
+void func_801399C0(void) {
+    if (game_state.pad_pressed & PAD_START) {
+        D_8013D3F4 += 1;
+        func_8007BFB8();
+    }
+    func_8004B338("reverve", 0x78, 0);
+    func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
+}
+
+void func_80139A30(void) {
+    u32 repeat_selector;
+    u32 press_selector;
+    u32 decrease_selector;
+    s32 decreased;
+    /* FAKE: word-sized staging preserves the byte/halfword live ranges;
+     * direct narrow updates use different registers. T-24607 */
+    u32 value;
+    u32 character;
+    GameState *game = &game_state;
+
+    if (game_state.pad_pressed & 0x08000000) {
+        D_8013D3F0 = 1 - D_8013D3F0;
+    }
+    if ((D_8013D3F0 != 0) && (cd_audio_state() & 2)) {
+        game_state.pad_pressed |= PAD_CIRCLE;
+        game_state.pad_held |= PAD_L1;
+    }
+    if (game_state.pad_held & 5) {
+        if (game_state.pad_pressed & PAD_LEFT) {
+            character = game->current_girl;
+            game->current_girl = character + 1;
+        }
+        character = game->current_girl;
+        if (game_state.pad_pressed & PAD_RIGHT) {
+            character = (character - 1) & 0xFF;
+        }
+        if (character == 0xFF) {
+            character = 0xF;
+        }
+        game->current_girl = character;
+        if (character >= 0x11U) {
+            game->current_girl = GIRL_SHIORI;
+        }
+    }
+    if ((D_8013D3B0 | D_8013D3B4) != 0) {
+        func_8013A060();
+    } else if (game_state.pad_pressed & 0x860) {
+        switch (*(u8 *)&game_state.menu_cursor_0) {
+        case 0:
+            func_80139E3C(0);
+            break;
+        case 1:
+            mode_step_set(3);
+            break;
+        case 2:
+            mode_step_set(4);
+            break;
+        case 3:
+            func_8013A010();
+            break;
+        case 4:
+            func_8013A038();
+            break;
+        case 5:
+            if (game_state.pad_pressed & PAD_START) {
+                mode_step_set(5);
+            } else {
+                func_80139F04();
+            }
+            break;
+        case 6:
+            func_80139F8C();
+            break;
+        }
+    }
+    /* FAKE: D_8013D3B8 is volatile for func_80139E3C (T-11340). Its
+     * nonvolatile halfword view here permits the original load coalescing.
+     * Explicit staged stores preserve the observed updates. T-24607 */
+    press_selector = game_state.pad_pressed & 0xF00000;
+    repeat_selector = game_state.pad_held & 0xF00000;
+    if (game_state.pad_held & 0x50000) {
+        switch (repeat_selector) {
+        case 0x200000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 1;
+            break;
+        case 0x400000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0xA;
+            break;
+        case 0x800000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0x64;
+            break;
+        case 0x100000:
+            value = (*(u16 *)&D_8013D3B8);
+            (*(u16 *)&D_8013D3B8) = value + 0x3E8;
+            break;
+        }
+        value = (*(u16 *)&D_8013D3B8);
+    } else {
+        switch (press_selector) {
+        default:
+            value = (*(u16 *)&D_8013D3B8);
+            break;
+        case 0x200000:
+            value = ((*(u16 *)&D_8013D3B8) + 1) & 0xFFFF;
+            break;
+        case 0x400000:
+            value = ((*(u16 *)&D_8013D3B8) + 0xA) & 0xFFFF;
+            break;
+        case 0x800000:
+            value = ((*(u16 *)&D_8013D3B8) + 0x64) & 0xFFFF;
+            break;
+        case 0x100000:
+            value = ((*(u16 *)&D_8013D3B8) + 0x3E8) & 0xFFFF;
+            break;
+        }
+    }
+    decrease_selector = game_state.pad_held & 0xF00000;
+    if (game_state.pad_held & 0xA0000) {
+        switch (decrease_selector) {
+        case 0x200000:
+            decreased = value - 1;
+            /* FAKE: retain the decrement result in v0 before narrowing;
+             * omitting the test adds a copy through v1. T-24607 */
+            if (decreased) {}
+            value = (u16)decreased;
+            break;
+        case 0x400000:
+            decreased = value - 0xA;
+            if (decreased != 0) {
+                value = (u16)decreased;
+            }
+            break;
+        case 0x800000:
+            decreased = value - 0x64;
+            if (decreased != 0) {
+                value = (u16)decreased;
+            }
+            break;
+        case 0x100000:
+            decreased = value - 0x3E8;
+            if (decreased != 0) {
+                value = (u16)decreased;
+            }
+            break;
+        }
+    }
+    (*(u16 *)&D_8013D3B8) = value;
+    if (value >= 0xB54U) {
+        (*(u16 *)&D_8013D3B8) = 0;
+    }
+    func_8013A334();
+}
+
+#define F80_BOOST_9E3C \
+    (((game_state.pad_held ^ 1) * 0) + ((game_state.pad_held ^ 2) * 0) + ((game_state.pad_held ^ 3) * 0) + \
+     ((game_state.pad_held ^ 4) * 0) + ((game_state.pad_held ^ 5) * 0) + ((game_state.pad_held ^ 6) * 0) + \
+     ((game_state.pad_held ^ 7) * 0) + ((game_state.pad_held ^ 8) * 0) + ((game_state.pad_held ^ 9) * 0))
+#define T_BOOST_9E3C \
+    ((((s32)t ^ 1) * 0) + (((s32)t ^ 2) * 0) + (((s32)t ^ 3) * 0) + (((s32)t ^ 4) * 0) + (((s32)t ^ 5) * 0))
+#define T2_BOOST_9E3C ((t2[2] * 0) + (t2[3] * 0) + (t2[4] * 0))
+
+void func_80139E3C(s32 arg0) {
+    u16 v;
+    s32 *t;
+    s32 *t2;
+
+    if (arg0 > 0) {
+        D_8013D3B8 = arg0;
+    }
+    v = D_8013D3B8;
+    if (arg0 < 0) {
+        v++;
+    }
+    /* FAKE: zero-valued xor*0 and ptr[k]*0 terms reproduce uopt's priority ordering ($v0/$v1/$a3) and (void *) cast suppresses cvt_pass widening so ugen holds unk_F5F in $t2. T-24140 */
+    if ((game_state.pad_held + F80_BOOST_9E3C) & PAD_L1) {
+        v++;
+    }
+    if ((game_state.pad_held & PAD_L2) && (v != 0)) {
+        v--;
+    }
+    t = D_8013D360[game_state.current_girl & 0xF];
+    D_8013D3B8 = v + T_BOOST_9E3C;
+    if (t != 0) {
+        t2 = (t + ((s32)t * 0)) + v * 2;
+        cd_audio_request_set(t2[0] + T2_BOOST_9E3C, t2[1], ((D_8013D3B8 = v) * 0) + (u32)(void *)game_state.current_girl);
+    }
+    audio_command(0x300);
+}
+#undef F80_BOOST_9E3C
+#undef T_BOOST_9E3C
+#undef T2_BOOST_9E3C
+
+
+void func_80139F04(void) {
+    if (game_state.pad_held & PAD_L2) {
+        D_8013E730 -= 1;
+    }
+    if (game_state.pad_held & PAD_L1) {
+        D_8013E730 += 1;
+    }
+    if (D_8013E730 < 0) {
+        D_8013E730 = 0x20;
+    }
+    if (D_8013E730 >= 0x21) {
+        D_8013E730 = 0;
+    }
+    audio_command((D_8013E730 | 0x500) & 0xFFFF);
+}
+
+/* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
+void func_80139F8C(void)
+{
+    GameState *g = &game_state;
+    s32 t;
+    u32 value;
+    u16 code;
+    t = g->pad_pressed & 0x60;
+    if (t != 0x20)
+    {
+        if (t == 0x40)
+        {
+            D_8013D3A8--;
+        }
+    }
+    else
+    {
+        D_8013D3A8++;
+    }
+    if (D_8013D3A8 > 0x10)
+    {
+        value = D_8013D3A8;
+        code = (value & 0xFFFF) | 0x1200; /* FAKE: the redundant mask makes IDO copy the byte to a0 first. T-24142 */
+        audio_command(code);
+    }
+}
+
+void func_8013A010(void) {
+    audio_bank_start(0, D_8013D3A8);
+}
+
+void func_8013A038(void) {
+    audio_bank_start(1, D_8013D3A8);
+}
+
+void func_8013A060(void) {
+    if (D_8013D3B0 != 0) {
+        func_8013A1BC();
+        return;
+    }
+    func_8013A09C();
+}
+
+void func_8013A09C(void) {
+    u8 t = D_8013D3B4;
+
+    switch (t) {
+    case 1:
+        audio_bank_load_start(1, 0xBF98, 0xBF79, D_8013E340[D_8013D3A0 % 63], D_8013E244[D_8013D3A0 % 63],
+                      D_8013E148[D_8013D3A0 % 63]);
+        D_8013D3B4 += 1;
+        break;
+    case 2:
+        if (audio_bank_load_poll() == 1) {
+            D_8013D3B4 = 0;
+            strcpy(D_8013D3CC, D_8013D968[D_8013D3A0 % 63]);
+            strcpy(D_8013D3E0, D_8013D3F8[D_8013D3DC % 58]);
+        }
+        break;
+    }
+}
+
+void func_8013A1BC(void) {
+    u8 t = D_8013D3B0;
+
+    switch (t) {
+    case 1:
+        audio_bank_load_start(0, D_8013D880[D_8013D3DC % 58], D_8013D798[D_8013D3DC % 58], D_8013E634[D_8013D3A4 % 63],
+                      D_8013E538[D_8013D3A4 % 63], D_8013E43C[D_8013D3A4 % 63]);
+        D_8013D3B0 += 1;
+        break;
+    case 2:
+        if (audio_bank_load_poll() == 1) {
+            D_8013D3B0 = 0;
+            strcpy(D_8013D3BC, D_8013DD58[D_8013D3A4 % 63]);
+            strcpy(D_8013D3E0, D_8013D3F8[D_8013D3DC % 58]);
+        }
+        break;
+    }
+}
+
+void func_8013A304(void) {
+    D_8013D3B4 += 1;
+}
+
+void func_8013A31C(void) {
+    D_8013D3B0 += 1;
+}
+
+void func_8013A334(void) {
+    func_8004AE54(D_8013D3B8, 0x50, -0x3C, 6);
+    func_8004AE54(game_state.current_girl & 0xF, -0x50, -0x3C, 6);
+    func_8004AE54(D_8013D3B0, 0x50, -0x28, 6);
+    func_8004AE54(D_8013D3B4, 0x50, -0x14, 6);
+    func_8004AE54(D_8013D3A4, 0x50, 0, 6);
+    func_8004B358(D_8013D3BC, -0x96, 8, 6);
+    func_8004AE54(D_8013D3A0, 0x50, 0x14, 6);
+    func_8004B358(D_8013D3CC, -0x96, 0x14, 6);
+    func_8004AE54(D_8013D39C, -0x50, 0xA - D_8013D39C * 0xA, 6);
+    func_8004AE54(D_8013E730, 0x50, 0x28, 6);
+    func_8004B358(D_8013D3E0, -0x96, 0x20, 6);
+    func_8004AE54(D_8013D3A8, 0x50, 0x3C, 6);
+}
+
+void func_8013A484(void) {
+    prim_gradient_rect(-0x50, -0x40, 0xB0, 0x90, 0xA, 0x1E021D, 0);
+    prim_gradient_rect(-0x96, 4, 0x50, 0x2C, 0xA, 0x101802, 0);
+    dtd_on(0xA);
+}
+
+void func_8013A4FC(void) {
+    prim_gradient_rect(-0xA, -0x6E, 0x50, 0xB4, 6, 0xA08080, 2);
+    dtd_on(6);
+}

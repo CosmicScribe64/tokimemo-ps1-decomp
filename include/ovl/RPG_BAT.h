@@ -52,9 +52,9 @@ void func_80134984(void);
 void func_80135B4C(void);
 void func_80135D90(void);
 void func_80135E80(void);
-extern s32 D_8015EDA8[2]; /* defined in RPG_BAT/8014E780.c (T-9010) */
-/* Counters that functions of RPG_BAT/8014E780.c reset together: one variable each, because the
- * original shares one `lui $at` between the stores (T-9010). Defined in RPG_BAT/8014E780.c. */
+extern s32 D_8015EDA8[2]; /* defined in RPG_BAT/battle_lifecycle_and_channels.c (T-9010) */
+/* Counters that functions of RPG_BAT/battle_lifecycle_and_channels.c reset together: one variable each, because the
+ * original shares one `lui $at` between the stores (T-9010). Defined in RPG_BAT/battle_lifecycle_and_channels.c. */
 typedef struct RpgBatWords3 {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;

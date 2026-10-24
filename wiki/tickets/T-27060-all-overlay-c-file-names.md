@@ -1,7 +1,7 @@
 ---
 id: T-27060
 title: Name every overlay C file
-status: In Progress
+status: Done
 assignee: parallel-overlay-chat
 created: 2026-10-24
 updated: 2026-10-24
@@ -17,8 +17,8 @@ Review and prepare logical role names for every C file across all 26 overlays. R
 - [x] Complete source-file census and role-backed proposed mappings, unique case-insensitively per folder.
 - [x] Separate supported file-only tables, no mixed symbol/header-extraction/literal edits.
 - [x] Independent review and all final exact-map dry plans pass.
-- [ ] Parent applies with view/hash proof and the required per-file commits.
-- [ ] No game-code C file remains address/number-named at final phase2 closeout.
+- [x] Parent applies with view/hash proof and the required file-only commit.
+- [x] No game-code C file remains address/number-named at final phase2 closeout.
 
 ## Comments
 
@@ -66,3 +66,7 @@ integration; 31 TT technical candidates are separately reviewed for the primary 
 above. Tables are frozen. No moves, source/header/tool/symbol/ledger edits, builds/clean, commits or
 shared wiki edits were made by this lane. Primary live plans, view/hash proof, per-file commits and
 final source-name census remain outstanding; status stays In Progress.
+
+2026-10-24 root completion: applied all403file-only rows through rename.py, including source-proven technicalTTbasenames within unchangedTTfolder. Optimized full403liveplan0problems; applycheck1286ledgerrowsOK. Fresh437declaration payloads are exact after mapping403path keys in a separate snapshotcopy:0/0/0. CleanDocker27/27checks and6952functions/2276920bytes; independent27/27rehash. Post-application Luna Standards and Sol Spec reviews pass: all403bodies exact exceptfirstcomments/approvedpathreferences, all26YAMLoffsets/types/order/discfields andobjectmetadata preserved. All437gameCfilesnowlogical, zeroaddress/number-onlybasenames. Filename-onlysourcecommit follows; widerphase2semantic/headerwork remainsopen.
+
+2026-10-24 commit granularity clarification: as in the independently reviewed two-file pilot and32-file main sweep, this is one file-only batch commit, separate from all symbol/header/literal changes. Original object histories are traced by exact mappings, firstcomments andconfigobjects; the criterion means file-only separation, not403individualcommits.

@@ -1339,7 +1339,7 @@ typedef struct EtcWork40 {
 
 #ifndef OVL_ETC_T22026_DISPATCH
 #define OVL_ETC_T22026_DISPATCH
-/* Callees of the dispatcher func_8013B1F0 (defined after it in src/ovl/ETC/8013B1F0.c). T-22026. */
+/* Callees of the dispatcher func_8013B1F0 (defined after it in src/ovl/ETC/album_portrait_selection.c). T-22026. */
 void func_8013B98C(s32 arg0);
 void func_8013BA3C(s32 arg0);
 void func_8013BA80(s32 arg0);

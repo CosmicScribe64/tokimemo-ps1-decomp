@@ -1,0 +1,79 @@
+/* game_mode_dispatch.c: src/ovl/TACO/80132000.c:4: per-frame timer and stage selector dispatch the overlay handlers; body 5: game_state.mode_stage_timer += 1; 6: switch (game_state.mode_stage) {. Original object 0x80132000-0x80132220 (config/objects/TACO.txt). */
+#include "common.h"
+#include "ovl/TACO.h"
+
+void func_80132000(void) {
+    game_state.mode_stage_timer += 1;
+    switch (game_state.mode_stage) {
+    case 0:
+        func_80133870();
+        break;
+    case 1:
+        func_801447D0();
+        break;
+    case 2:
+        func_80134D8C();
+        break;
+    case 3:
+        func_80135394();
+        break;
+    case 4:
+        func_80135744();
+        break;
+    case 5:
+        func_80136B40();
+        break;
+    case 6:
+        func_80137590();
+        break;
+    case 7:
+        func_80137A60();
+        break;
+    case 10:
+        func_80137F90();
+        break;
+    case 11:
+        func_80138280();
+        break;
+    case 12:
+        func_801480B0();
+        break;
+    case 21:
+        func_80138450();
+        break;
+    case 22:
+        func_80148FE0();
+        break;
+    case 31:
+        func_80138680();
+        break;
+    case 32:
+        func_80149F90();
+        break;
+    case 8:
+        func_80138890();
+        break;
+    case 9:
+        func_80139170();
+        break;
+    case 45:
+        func_8013B170();
+        break;
+    case 46:
+        func_80142820();
+        break;
+    default:
+        game_mode_reset_to_title();
+        break;
+    }
+    func_80143E9C();
+    func_801446D8();
+}
+
+void func_801321A0(void) {
+    func_80058F9C(0x8018A000, 0, 0);
+    func_80058F9C(0x8018A000, 1, 0);
+    func_80058F9C(0x8018A000, 2, 0);
+    func_80058F9C(0x8018A000, 3, 0);
+    func_80058F9C(0x8018A000, 4, 0);
+}

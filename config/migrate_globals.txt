@@ -14,10 +14,10 @@ aggregate game_state GameState include/main_api.h
 # function of a file, that the frame counter 0x800E7384 must be a separate symbol for its final `+= 1`: the function is plain C
 # and links to the original's bytes with the symbol, and differs in <rows> instruction rows with the symbol folded into
 # GameState. Uses of the symbol outside the proven functions are errors (write D_800E6280.unk_1104.w).
-keep src/ovl/TACO/801447D0.c D_800E7384 proof=func_8014616C:165:bb8762f0 second uopt variable for the late read (byte-match necessity proof, T-20820)
-keep src/ovl/TACO/801447D0.c D_800E7384 proof=func_80146754:156:5e8407a9 second uopt variable for the late read (byte-match necessity proof, T-20820, T-24129)
-keep src/ovl/TACO/80148FE0.c D_800E7384 proof=func_80149538:33:d7dd7f6c second uopt variable for the late read (byte-match necessity proof, T-20820)
-keep src/ovl/TACO/801480B0.c D_800E7384 proof=func_801484E4:32:cda52ed3 second uopt variable for the late read (byte-match necessity proof, T-20820, T-22005)
-keep src/ovl/DATE/80132000.c D_800E71DF proof=func_80137154:94:56706346 second uopt variable for the late read (byte-match necessity proof, T-20820, T-24099)
-keep src/ovl/SHOUGATU/8013E330.c D_800E71DF proof=func_8013EA98:130:cb9e034c alias range for the forced choice and its two reads (byte-match necessity proof, T-20820, T-25501)
-keep src/ovl/GEKO/80142760.c D_800E71DF proof=func_80142C9C:2:e48ab935 second uopt variable for the packed-appointment reload in the first loop (byte-match necessity proof, T-25403)
+keep src/ovl/TACO/opening_and_sky_gradient.c D_800E7384 proof=func_8014616C:165:bb8762f0 second uopt variable for the late read (byte-match necessity proof, T-20820)
+keep src/ovl/TACO/opening_and_sky_gradient.c D_800E7384 proof=func_80146754:156:5e8407a9 second uopt variable for the late read (byte-match necessity proof, T-20820, T-24129)
+keep src/ovl/TACO/arm_tail_boss_scene.c D_800E7384 proof=func_80149538:33:d7dd7f6c second uopt variable for the late read (byte-match necessity proof, T-20820)
+keep src/ovl/TACO/morph_boss_scene.c D_800E7384 proof=func_801484E4:32:cda52ed3 second uopt variable for the late read (byte-match necessity proof, T-20820, T-22005)
+keep src/ovl/DATE/place_scenes.c D_800E71DF proof=func_80137154:94:56706346 second uopt variable for the late read (byte-match necessity proof, T-20820, T-24099)
+keep src/ovl/SHOUGATU/christmas_girl_selection_and_reward.c D_800E71DF proof=func_8013EA98:130:cb9e034c alias range for the forced choice and its two reads (byte-match necessity proof, T-20820, T-25501)
+keep src/ovl/GEKO/invite.c D_800E71DF proof=func_80142C9C:2:e48ab935 second uopt variable for the packed-appointment reload in the first loop (byte-match necessity proof, T-25403)

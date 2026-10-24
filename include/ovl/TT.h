@@ -367,7 +367,7 @@ typedef struct TtActor68 {
     /* 0x60 */ u16 unk_60;
     /* 0x62 */ u16 unk_62;
     /* 0x64 */ u8 pad_64[4];
-} TtActor68; /* size 0x68; object pool step in TT/80133970. T-9760 */
+} TtActor68; /* size 0x68; object pool step in TT/enemy_shots_and_sound. T-9760 */
 #endif
 
 #ifndef OVL_TT_T9760_FUNC_80148460

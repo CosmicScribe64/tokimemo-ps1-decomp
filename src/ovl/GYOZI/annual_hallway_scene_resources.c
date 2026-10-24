@@ -1,0 +1,76 @@
+/* annual_hallway_scene_resources.c: ; src/ovl/GYOZI/annual_hallway_mode_step_dispatch.c:35-60 initializes the hallway scene and calls the resource binder. Original object 0x8013DE30-0x8013E1D0 (config/objects/GYOZI.txt). */
+#include "common.h"
+#include "ovl/GYOZI.h"
+
+void func_8013DE30(void) {
+    D_80148060 = 0x8019725C;
+    D_80148064 = 0x801977B4;
+    D_80148068 = 0x80197CE4;
+    D_8014806C = 0x80198300;
+    D_80148070 = 0x80198894;
+    D_80148074 = 0x80198DD0;
+    D_80148078 = 0x801993F8;
+    D_8014807C = 0x80199A28;
+    D_80148080 = 0x8019A018;
+    D_80148084 = 0x8019A5F8;
+    D_80148088 = 0x8019ABBC;
+    D_8014808C = 0x8019AF48;
+    D_80148090 = 0x8019B2B4;
+    D_80148094 = 0x801972A4;
+    D_80148098 = 0x801977F8;
+    D_8014809C = 0x80197D28;
+    D_801480A0 = 0x80198348;
+    D_801480A4 = 0x801988D8;
+    D_801480A8 = 0x80198E18;
+    D_801480AC = 0x80199440;
+    D_801480B0 = 0x80199A70;
+    D_801480B4 = 0x8019A060;
+    D_801480B8 = 0x8019A644;
+    D_801480BC = 0x8019AC04;
+    D_801480C0 = 0x8019AF58;
+    D_801480C4 = 0x8019B2FC;
+    D_801480C8 = 0x801974F4;
+    D_801480CC = 0x80197A2C;
+    D_801480D0 = 0x80197F5C;
+    D_801480D4 = 0x80198608;
+    D_801480D8 = 0x80198B0C;
+    D_801480DC = 0x80199084;
+    D_801480E0 = 0x801996AC;
+    D_801480E4 = 0x80199CDC;
+    D_801480E8 = 0x8019A2CC;
+    D_801480EC = 0x8019A8CC;
+    D_801480F0 = 0x8019AE70;
+    D_801480F4 = 0x8019AFD0;
+    D_801480F8 = 0x8019B568;
+}
+
+void func_8013E0A4(void) {
+    func_8008E6AC();
+    switch (D_800F6479) {                           /* irregular */
+    case 0:
+        func_8013E1D0();
+        break;
+    case 1:
+        func_8013E5B0();
+        break;
+    default:
+        talk_voice_play();
+        break;
+    }
+    func_8008A148();
+    func_8008F54C();
+    func_80076450(2);
+    func_80074A14();
+    func_80075BFC();
+    func_800748B8();
+    func_8008E8B4();
+}
+
+void func_8013E148(void) {
+    D_800D9234 = (u8 *)&D_80148108;
+    D_800D9238 = (u8 *)&D_8014810C;
+    D_800D923C = D_801480FC;
+    D_800D9240 = D_80148100;
+    D_800D9244 = D_80148104;
+    func_8008D610(D_8012E66C, 1, 0);
+}

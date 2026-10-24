@@ -1,0 +1,405 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+file BUNKAKEN 80132000 script_setters_shiori_yukari_blocks 0x80132000 src/ovl/BUNKAKEN/80132000.c:4: 28 script table setters, Shiori-companion block (stages 18-31), Yukari block (72-84)
+file BUNKAKEN 80137640 saki_block 0x80137640 src/ovl/BUNKAKEN/80137640.c:4: Saki block (stages 58-71)
+file BUNKAKEN 80139E50 solo_block 0x80139E50 src/ovl/BUNKAKEN/80139E50.c:4: solo exhibits (stages 5-10, 12-17) and the solo script helper
+file BUNKAKEN 8013B510 invitation 0x8013B510 src/ovl/BUNKAKEN/8013B510.c:8: stage 0: invitation and invite pick
+file BUNKAKEN 8013BFE0 mio_club_block 0x8013BFE0 src/ovl/BUNKAKEN/8013BFE0.c:7: Mio at her club (stages 44-47)
+file BUNKAKEN 8013CF30 yumi_block 0x8013CF30 src/ovl/BUNKAKEN/8013CF30.c:7: Yumi block (stages 131-139)
+file BUNKAKEN 8013EB30 yuko_block 0x8013EB30 src/ovl/BUNKAKEN/8013EB30.c:7: Yuko block (stages 111-121)
+file BUNKAKEN 80140F60 yuina_club_block 0x80140F60 src/ovl/BUNKAKEN/80140F60.c:4: Yuina at her club (stages 48-52)
+file BUNKAKEN 801428D0 ayako_club_block 0x801428D0 src/ovl/BUNKAKEN/801428D0.c:4: Ayako at her club (stages 53-57)
+file BUNKAKEN 80143DD0 companion_menu 0x80143DD0 src/ovl/BUNKAKEN/80143DD0.c:12: stages 1-3: ask a companion, Yoshio, club menu
+file BUNKAKEN 80144F70 festival_frame_control 0x80144F70 T-27060 src/ovl/BUNKAKEN/80144F70.c:4; per-frame festival initialization/presentation and calls the mode-stage table dispatcher; includes calendar and scene flow control.
+file BUNKAKEN 80145E40 mode_stage_and_club_routes 0x80145E40 T-27060 src/ovl/BUNKAKEN/80145E40.c:9-35; indexes the142-handler table by mode_stage and selects routes from current club, known girls and companion state.
+file BUNKAKEN 80146560 nozomi_block 0x80146560 src/ovl/BUNKAKEN/80146560.c:4: Nozomi block (stages 85-97)
+file BUNKAKEN 80148ED0 birthday 0x80148ED0 src/ovl/BUNKAKEN/80148ED0.c:9: birthday phases 9 and 10 and their tables
+file BUNKAKEN 8014A6A0 shiori_club_block 0x8014A6A0 src/ovl/BUNKAKEN/8014A6A0.c:4: Shiori at her club (stages 32-43)
+file BUNKAKEN 8014E440 mira_block 0x8014E440 src/ovl/BUNKAKEN/8014E440.c:4: Mira block (stages 98-110)
+file BUNKAKEN 80150D30 megumi_block 0x80150D30 src/ovl/BUNKAKEN/80150D30.c:4: Megumi block (stages 122-130)
+file BUNKAKEN 80152680 computer_fortune 0x80152680 src/ovl/BUNKAKEN/80152680.c:61: stage 11: fortune telling by blood type and its grid
+file BUNKASAI 80132000 script_sets 0x80132000 src/ovl/BUNKASAI/80132000.c:4: 22 script set setters (three table pointers each)
+file BUNKASAI 80132480 yuina_visit 0x80132480 src/ovl/BUNKASAI/80132480.c:4: Yuina visit block, stages 46-58
+file BUNKASAI 801354B0 mio_member 0x801354B0 src/ovl/BUNKASAI/801354B0.c:4: Mio member block, stages 42-45
+file BUNKASAI 801362A0 saki_visit 0x801362A0 src/ovl/BUNKASAI/801362A0.c:4: Saki visit block, stages 85-96
+file BUNKASAI 80138A70 yuko_visit 0x80138A70 src/ovl/BUNKASAI/80138A70.c:4: Yuko visit block, stages 133-144
+file BUNKASAI 8013B190 yuina_member 0x8013B190 src/ovl/BUNKASAI/8013B190.c:4: Yuina member block, stages 59-64
+file BUNKASAI 8013C430 ayako_visit 0x8013C430 src/ovl/BUNKASAI/8013C430.c:4: Ayako visit block, stages 65-79
+file BUNKASAI 8013FD90 yumi_visit 0x8013FD90 src/ovl/BUNKASAI/8013FD90.c:4: Yumi visit block, stages 154-162
+file BUNKASAI 80142700 festival_entry 0x80142700 src/ovl/BUNKASAI/80142700.c:4: entry point and phase machine, result, event log, banner titles
+file BUNKASAI 80143770 mira_visit 0x80143770 src/ovl/BUNKASAI/80143770.c:7: Mira visit block, stages 121-132
+file BUNKASAI 80146030 ayako_member 0x80146030 src/ovl/BUNKASAI/80146030.c:7: Ayako member block, stages 80-84
+file BUNKASAI 80146FA0 birthday_scene 0x80146FA0 src/ovl/BUNKASAI/80146FA0.c:4: birthday table setup, phase 9 scene, choice name
+file BUNKASAI 80148040 shiori_visit 0x80148040 src/ovl/BUNKASAI/80148040.c:4: Shiori visit block, stages 15-27
+file BUNKASAI 8014ABC0 yukari_visit 0x8014ABC0 src/ovl/BUNKASAI/8014ABC0.c:4: Yukari visit block, stages 97-108
+file BUNKASAI 8014DD90 nozomi_visit 0x8014DD90 src/ovl/BUNKASAI/8014DD90.c:4: Nozomi visit block, stages 109-120
+file BUNKASAI 80150930 mode_stage_dispatch 0x80150930 T-27060 src/ovl/BUNKASAI/80150930.c:4; routes game_state.mode_stage through the culture-festival handler table; preserves the original dispatcher object.
+file BUNKASAI 801511E0 shiori_member 0x801511E0 src/ovl/BUNKASAI/801511E0.c:4: Shiori member block, stages 1-13
+file BUNKASAI 80154018 mio_visit 0x80154018 src/ovl/BUNKASAI/80154018.c:4: Mio visit block, stages 28-41
+file BUNKASAI 80158EB0 megumi_visit 0x80158EB0 src/ovl/BUNKASAI/80158EB0.c:4: Megumi visit block, stages 145-153
+file BUNKASAI 8015AF90 fortune_telling 0x8015AF90 src/ovl/BUNKASAI/8015AF90.c:63: shared computer fortune stage and its result lookup
+file BUNKA_SD 80132000 literature_speech_contest 0x80132000 T-27060 src/ovl/BUNKA_SD/80132000.c:4,31,65; literature show loading, speaker/script selection and input flow; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 80133540 drama_first_year_show 0x80133540 T-27060 src/ovl/BUNKA_SD/80133540.c:4,29,45; show resource loading, skip/input and timed scripts; drama club year1995; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 80134260 show_display_and_fades 0x80134260 T-27060 src/ovl/BUNKA_SD/80134260.c:4; shared display reset, fade and exit helpers; called from literature, science and drama show step handlers, not one private scene.
+file BUNKA_SD 80134540 computer_show 0x80134540 T-27060 src/ovl/BUNKA_SD/80134540.c:4; computer-club show callbacks and presentation helpers; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 80135160 science_club_second_year_show 0x80135160 T-27060 src/ovl/BUNKA_SD/80135160.c:4; science-club show resources and callbacks; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 801359B0 science_club_final_year_show 0x801359B0 T-27060 src/ovl/BUNKA_SD/801359B0.c:7,16,47; resource/input/show flow; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 80136270 science_club_first_year_show 0x80136270 T-27060 src/ovl/BUNKA_SD/80136270.c:4; show callbacks and image resources; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 801369D0 drama_final_year_show 0x801369D0 T-27060 src/ovl/BUNKA_SD/801369D0.c:4; drama show callbacks, event-list interpreter and images; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 80137890 club_year_show_dispatch 0x80137890 T-27060 src/ovl/BUNKA_SD/80137890.c:4-91; reads club selector and calendar year at14-51, dispatches show callbacks at63-89 and restores the caller overlay mode/stage/step.
+file BUNKA_SD 80137B40 drama_second_year_show 0x80137B40 T-27060 src/ovl/BUNKA_SD/80137B40.c:4,29,45; drama show resources, input and timed scripts; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file BUNKA_SD 801388D0 brass_band_show 0x801388D0 T-27060 src/ovl/BUNKA_SD/801388D0.c:4; brass-band show callbacks and image/script presentation; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89.
+file DATE 80132000 place_scenes 0x80132000 src/ovl/DATE/80132000.c:244: stage 0 and 1 handlers of all 21 places: place setups, arrival, choice scoring, special-scene chooser, date end
+file DATE 80141EE0 entry 0x80141EE0 src/ovl/DATE/80141EE0.c:670: 11 per-girl script section fillers, mode 0x50 entry and the stage 0 and stage 1 dispatchers
+file DATE 80145AA0 player_birthday 0x80145AA0 src/ovl/DATE/80145AA0.c:4: stage 3: the girl greets the player on his birthday
+file DATE 801461B0 rides 0x801461B0 src/ovl/DATE/801461B0.c:20: amusement park rides: roller coaster, ghost house, Ferris wheel, scream machine (virtual ship is separate)
+file DATE 80149310 girl_birthday 0x80149310 src/ovl/DATE/80149310.c:62: stage 2: gift choice on the girl's birthday
+file DATE 8014A1B0 virtual_ship 0x8014A1B0 src/ovl/DATE/8014A1B0.c:24: virtual ship ride (3D, GTE)
+file DATE 8014B1F0 scene_common 0x8014B1F0 src/ovl/DATE/8014B1F0.c:6: scene section pointer init, mode 0x5E entry, shared scene steps and the scene end
+file DATE 8014CC40 scene_yuko 0x8014CC40 src/ovl/DATE/8014CC40.c:73: mode 0x5E scenes of Yuko (girl 8) with the shared gradient quad drawer
+file DATE 8014F0F0 scene_shiori 0x8014F0F0 src/ovl/DATE/8014F0F0.c:7: mode 0x5E scenes of Shiori (girl 0)
+file DATE 80150010 scene_yuina 0x80150010 src/ovl/DATE/80150010.c:7: mode 0x5E scenes of Yuina (girl 2)
+file DATE 80151460 scene_ayako 0x80151460 src/ovl/DATE/80151460.c:8: mode 0x5E scenes of Ayako (girl 3) with the gradient triangle drawer
+file DATE 80152FC0 scene_mira 0x80152FC0 src/ovl/DATE/80152FC0.c:4: mode 0x5E scenes of Mira (girl 7)
+file DATE 80154260 scene_mio 0x80154260 src/ovl/DATE/80154260.c:7: mode 0x5E scenes of Mio (girl 1)
+file DATE 801552B0 scene_yukari 0x801552B0 src/ovl/DATE/801552B0.c:7: mode 0x5E scenes of Yukari (girl 5)
+file DATE 80156600 scene_nozomi 0x80156600 src/ovl/DATE/80156600.c:7: mode 0x5E scenes of Nozomi (girl 6)
+file DATE 80157880 scene_megumi 0x80157880 src/ovl/DATE/80157880.c:7: mode 0x5E scenes of Megumi (girl 9)
+file DATE 801586A0 scene_saki 0x801586A0 src/ovl/DATE/801586A0.c:7: mode 0x5E scenes of Saki (girl 4)
+file DATE 801594B0 scene_yumi 0x801594B0 src/ovl/DATE/801594B0.c:7: mode 0x5E scenes of Yumi (girl 10)
+file DATE 8015A190 miharu_yumi_scenes 0x8015A190 src/ovl/DATE/8015A190.c:7: Miharu introductory scene and shared date-girl continuation handlers, including the continuation used for Yumi
+file DATE2 80132000 date_entry 0x80132000 T-27060 src/ovl/DATE2/80132000.c:4; amusement-park date resource/entry helpers and func_80132214 mode handler; main overlay loader routes game mode0x58 here, whereas0x50 belongs to DATE.
+file DATE2 801326F0 date_scene_steps 0x801326F0 src/ovl/DATE2/801326F0.c:9: date scene callback and step handlers
+file DATE2 80132DE0 date_scene_state 0x80132DE0 src/ovl/DATE2/80132DE0.c:35: date state machine, movie and scene callbacks
+file DATE2 80136D50 player_birthday_dialogue 0x80136D50 T-27060 src/ovl/DATE2/80136D50.c:4,66; player-birthday visit script binding, group1 selection and talk; 80132DE0.c:1448-1476 selects the mode-stage4 route.
+file DATE2 80137360 scene_choices_and_saved_return 0x80137360 T-27060 src/ovl/DATE2/80137360.c:4; local script/choice flow and saved-step return, with a player-birthday test in func_80137948; no unproved girl-birthday identity is assigned.
+file DATE2 80137D50 karaoke_scene_and_return 0x80137D50 T-27060 src/ovl/DATE2/80137D50.c:4; karaoke mode entry func_80137F64, room/title setup func_8013820C, song/audio/text/rating flow and DATE return func_801381A4.
+file ENDING 80132000 graduation_script_resources 0x80132000 T-27060; src/ovl/ENDING/80132000.c:6-35 initializes the graduation dialogue script address tables
+file ENDING 80133030 graduation_candidate_selection 0x80133030 T-27060 src/ovl/ENDING/80133030.c:6,23; mode-step callbacks and graduation candidate ranking in func_801330E4; rank/points, special girl branches and strict-score comparisons. See wiki/spec/o-master-ending.md for rule details.
+file ENDING 80133540 graduation_scene_handlers 0x80133540 T-27060; src/ovl/ENDING/80133540.c:5-18 dispatches mode-step callbacks and updates the ending presentation
+file ENDING 80133C10 graduation_scene_flow 0x80133C10 T-27060; src/ovl/ENDING/80133C10.c:5-47 initializes grouped script and scene resource addresses
+file ENDING 80134D20 graduation_scene_tables 0x80134D20 T-27060; src/ovl/ENDING/80134D20.c:4-10 declares scene data islands
+file ENDING 80137340 ending_audio_visual_update 0x80137340 T-27060; src/ovl/ENDING/80137340.c:5-22 dispatches ending scene callbacks and updates audio-level display
+file ENDING 801396E0 career_and_epilogue_summary 0x801396E0 T-27060 src/ovl/ENDING/801396E0.c:65,113,125,301; binds fifteen-character summary script resources, dispatches summary callbacks, composes career/future summaries from player flags, club levels and parameters, then routes Yoshio versus other candidates.
+file ENDING 8013B6A0 graduation_epilogue_handlers 0x8013B6A0 T-27060; src/ovl/ENDING/8013B6A0.c:5-21 dispatches epilogue scene steps
+file EN_NICHI 80132000 festival_stall_year_dispatch 0x80132000 T-27060; src/ovl/EN_NICHI/80132000.c:63-73 branches the festival-stall flow by game year
+file EN_NICHI 80136B10 festival_stall_scene_dispatch 0x80136B10 T-27060; src/ovl/EN_NICHI/80136B10.c:30-37 dispatches three festival-stall scene stages through its scene table
+file ETC 80132000 confession_and_epilogue_handlers 0x80132000 T-27060; src/ovl/ETC/80132000.c:48-60,143-153,167-173,230-253 covers confession scene flow and epilogue initialization/display
+file ETC 80132880 album_effects_and_animations 0x80132880 T-27060; src/ovl/ETC/80132880.c:4-18 begins color split and VRAM blur helpers; same object contains album animation routines
+file ETC 8013B1F0 album_portrait_selection 0x8013B1F0 T-27060; src/ovl/ETC/8013B1F0.c:4-18 selects portrait resources for album event records
+file ETC 8013BEF0 album_playback 0x8013BEF0 T-27060; src/ovl/ETC/8013BEF0.c:24-31 begins the album playback stage handlers
+file ETC 8013F980 album_model_setup 0x8013F980 T-27060; src/ovl/ETC/8013F980.c:11-20 initializes 3D model and object state
+file ETC 8013FF80 album_mode_entry 0x8013FF80 T-27060; src/ovl/ETC/8013FF80.c:9-24 dispatches album mode entry and stage state
+file ETC 80140F50 album_save_flow 0x80140F50 T-27060; src/ovl/ETC/80140F50.c:4-24 provides album mode save and card-prompt flow
+file ETC 80142B80 staff_roll_asset_load 0x80142B80 T-27060; src/ovl/ETC/80142B80.c:4-16 loads staff-roll assets
+file ETC 80143240 staff_roll_and_clear_save 0x80143240 T-27060; src/ovl/ETC/80143240.c:3-12 defines data used by staff-roll and clear-save stages in this unsplit object
+file ETC 80146400 final_exam 0x80146400 T-27060; src/ovl/ETC/80146400.c:5-12 begins exam scoring and ranking logic
+file ETC 801492C0 career_choice 0x801492C0 T-27060; src/ovl/ETC/801492C0.c:4-32 handles job or university choice mode
+file ETC 8014ABD0 career_guidance 0x8014ABD0 T-27060; src/ovl/ETC/8014ABD0.c:4-18 handles career-guidance talk mode
+file ETC 8014C2D0 calendar_skip_and_resume 0x8014C2D0 T-27060; src/ovl/ETC/8014C2D0.c:4-18 advances six calendar days then resumes day events in both handlers
+file EVENT 800F6000 girl_scene_entry 0x800F6000 src/ovl/EVENT/800F6000.c:4: girl scene frame handler, script section table init and the shared talk, sound and exit steps
+file EVENT 800F7220 yuko_scenes 0x800F7220 src/ovl/EVENT/800F7220.c:4: girl 8 (Yuko) scenes 1-6; girl selector case 8
+file EVENT 800F9680 shiori_scenes 0x800F9680 src/ovl/EVENT/800F9680.c:5: girl 0 (Shiori) scenes 1-6 and 8; also holds the shared script loader and the gradient quad helper
+file EVENT 800FBBF0 yuina_scenes 0x800FBBF0 src/ovl/EVENT/800FBBF0.c:4: girl 2 (Yuina) scenes 1-5
+file EVENT 800FD2F0 rei_scenes 0x800FD2F0 src/ovl/EVENT/800FD2F0.c:7: girl 12 (Rei) scenes 1-3
+file EVENT 800FDC20 ayako_scenes 0x800FDC20 src/ovl/EVENT/800FDC20.c:5: girl 3 (Ayako) scenes 1-5; also the gradient triangle helper
+file EVENT 800FFBE0 mira_scenes 0x800FFBE0 src/ovl/EVENT/800FFBE0.c:4: girl 7 (Mira) scenes 1-6 and 8
+file EVENT 801011A0 mio_scenes 0x801011A0 src/ovl/EVENT/801011A0.c:4: girl 1 (Mio) scenes 1-5
+file EVENT 801024B0 yukari_scenes 0x801024B0 src/ovl/EVENT/801024B0.c:5: girl 5 (Yukari) scenes 1-6
+file EVENT 80103B60 nozomi_scenes 0x80103B60 src/ovl/EVENT/80103B60.c:4: girl 6 (Nozomi) scenes 1-5; also the sprite group shift helper
+file EVENT 801050D0 megumi_scenes 0x801050D0 src/ovl/EVENT/801050D0.c:4: girl 9 (Megumi) scenes 1-6
+file EVENT 80106C20 saki_scenes 0x80106C20 src/ovl/EVENT/80106C20.c:4: girl 4 (Saki) scenes 1-5
+file EVENT 80107FC0 yumi_scenes 0x80107FC0 src/ovl/EVENT/80107FC0.c:5: girl 10 (Yumi) scenes 1-7
+file EVENT 8010A210 miharu_scenes 0x8010A210 src/ovl/EVENT/8010A210.c:4: girl 11 (Miharu) scenes 1-5; also the shared bar overlay helper
+file EVENT 8010B360 yoshio_scenes 0x8010B360 src/ovl/EVENT/8010B360.c:4: girl 13 (Yoshio) scene 1
+file EVENT 8010BB90 place_scene_entry 0x8010BB90 src/ovl/EVENT/8010BB90.c:4: date script section fillers per girl, place frame handler, arrival and place runners, place init
+file EVENT 8010FE10 place_scenes 0x8010FE10 src/ovl/EVENT/8010FE10.c:5: 21 place arrival steps, the shared date steps (special event choice, outcome factors, talk and close steps), effects
+file EVENT 8011C650 ride_movies 0x8011C650 src/ovl/EVENT/8011C650.c:6: amusement park ride movies (roller coaster, ghost house, Ferris wheel, scream ride, virtual ship)
+file GEKO 80132000 walk_home_entry 0x80132000 T-27060 src/ovl/GEKO/80132000.c:4,43,65; binds walk-home script sections, dispatches approach/follow-up mode stages and adapts the talk runner. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 801323E0 walk_home 0x801323E0 T-27060 src/ovl/GEKO/801323E0.c:9,178,284,364,454; approach callbacks, future-calendar/birthday topic selection, choice counter changes and queue completion. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 801338F0 walk_home_followup 0x801338F0 T-27060 src/ovl/GEKO/801338F0.c:12,81,143; follow-up callback dispatch, club/topic flags and dialogue group selection. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80134040 player_birthday 0x80134040 T-27060 src/ovl/GEKO/80134040.c:4,133,219; birthday mode entry, repeat guard, best-met-girl visitor selection and script/display flow. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80134C90 girl_birthday_entry 0x80134C90 T-27060 src/ovl/GEKO/80134C90.c:4; only mode-stage0 dispatches the girl-birthday callbacks, then common text/HUD updates run. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80134D10 birthday_and_shared_scene_flow 0x80134D10 T-27060 src/ovl/GEKO/80134D10.c:375,417,755,1347,1587; girl-birthday logic plus birthday/visit/scene script binders, shared girl-scene entry/talk/load/finish and effects. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 801393C0 yuko_scenes 0x801393C0 T-27060 src/ovl/GEKO/801393C0.c:18,39,69; Yuko selector1 callback table and initialization including her affection increment. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80139910 shiori_scenes 0x80139910 T-27060 src/ovl/GEKO/80139910.c:48,73,218,256,446; Shiori selectors1/2/8, callback/resources and birthday-score initialization. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013AF80 yuina_scenes 0x8013AF80 T-27060 src/ovl/GEKO/8013AF80.c:26,56,102,111,222; Yuina selectors1/7, scene callbacks, RPG handoff and forced-calendar branch. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013B930 rei_scenes 0x8013B930 T-27060 src/ovl/GEKO/8013B930.c:37,101,138,171,209; Rei selectors1/2/3 and the choice outcome that writes scene_flags79. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013C4C0 ayako_scenes 0x8013C4C0 T-27060 src/ovl/GEKO/8013C4C0.c:18,39,54,71; Ayako selector1 dispatch, speaker/resource binding and affection update. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013C980 mira_scenes 0x8013C980 T-27060 src/ovl/GEKO/8013C980.c:31,53,99,108; Mira selectors1/8, scene callbacks, script and affection initialization. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013D0F0 mio_scenes 0x8013D0F0 T-27060 src/ovl/GEKO/8013D0F0.c:23,39,54; Mio selector1, script/talk/resource callbacks and score initialization. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013D4B0 yukari_scenes 0x8013D4B0 T-27060 src/ovl/GEKO/8013D4B0.c:36,66,86,95,136; Yukari selectors1/2 and their callback/score/script initialization. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013DB80 nozomi_scenes 0x8013DB80 T-27060 src/ovl/GEKO/8013DB80.c:18,39,54; Nozomi selector1, script/talk callbacks and score initialization. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013DF70 megumi_scenes 0x8013DF70 T-27060 src/ovl/GEKO/8013DF70.c:33,63,73,134; Megumi selectors1/2 and affection-threshold-dependent score/flag changes. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013EE40 saki_scenes 0x8013EE40 T-27060 src/ovl/GEKO/8013EE40.c:23,39,54,65; Saki selector1, script/resource callbacks and scene-counter/condition changes. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 8013F360 yumi_scenes 0x8013F360 T-27060 src/ovl/GEKO/8013F360.c:47,93,108,152,354; Yumi selectors1/2/7, script/score callbacks and shared color-quad effects. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80140A00 miharu_scenes 0x80140A00 T-27060 src/ovl/GEKO/80140A00.c:69,115,136,166,217; Miharu selectors1/2/4, story-counter group selection and stress/girl-score effects. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80141AF0 yoshio_scenes 0x80141AF0 T-27060 src/ovl/GEKO/80141AF0.c:18,35,67,142; Yoshio callback flow, selected-girl storage and descending six-slot girl ranking. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 801426D0 invite_entry 0x801426D0 T-27060 src/ovl/GEKO/801426D0.c:4; invitation mode-stage0 entry with shared per-frame text/HUD updates. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GEKO 80142760 invite 0x80142760 T-27060 src/ovl/GEKO/80142760.c:9,117,391,452,492,533; invitation script binding, destination eligibility/weights, choices, packed appointment creation and Sunday/override rules. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals.
+file GYOZI 80134000 annual_mode_stage_dispatch 0x80134000 T-27060; src/ovl/GYOZI/80134000.c:49-85 dispatches seven annual-event stages and frame presentation
+file GYOZI 80134520 annual_new_year_scene_dispatch 0x80134520 T-27060; src/ovl/GYOZI/80134520.c:36-52 initializes and enters the New Year scene, including its title label
+file GYOZI 80134C10 annual_text_choice_handlers 0x80134C10 T-27060; src/ovl/GYOZI/80134C10.c:25-56 displays and advances text-choice state
+file GYOZI 80134FD0 annual_dialogue_choices 0x80134FD0 T-27060; src/ovl/GYOZI/80134FD0.c:25-73 reads the selected dialogue and prepares choice responses
+file GYOZI 80135900 annual_shrine_visit 0x80135900 T-27060; src/ovl/GYOZI/80135900.c:18-22 writes the shrine-visit title label
+file GYOZI 80135CA0 annual_shrine_result 0x80135CA0 T-27060; src/ovl/GYOZI/80135CA0.c:63-92 sets result-dialogue and display state
+file GYOZI 80136220 annual_actor_display 0x80136220 T-27060; src/ovl/GYOZI/80136220.c:28-30 draws the framed result actor panels
+file GYOZI 801372B0 annual_scene_helpers 0x801372B0 T-27060; src/ovl/GYOZI/801372B0.c:93-120 dispatches and updates scene helper routines
+file GYOZI 80138510 annual_scene_dispatch 0x80138510 T-27060; src/ovl/GYOZI/80138510.c:46-71 dispatches five scene-stage handlers
+file GYOZI 801388E0 annual_scene_setup 0x801388E0 T-27060; src/ovl/GYOZI/801388E0.c:18-43 initializes sound, sector data and scene state
+file GYOZI 80138B50 annual_girl_selection 0x80138B50 T-27060; src/ovl/GYOZI/80138B50.c:57-78 filters and ranks girl candidates
+file GYOZI 80139920 annual_result_handlers 0x80139920 T-27060; src/ovl/GYOZI/80139920.c:56-125 handles result flow and event log update
+file GYOZI 8013A140 annual_scene_mode_stage_dispatch 0x8013A140 T-27060; src/ovl/GYOZI/8013A140.c:41-92 dispatches scene callback groups by D_800F6479
+file GYOZI 8013A920 annual_scene_mode_step_dispatch 0x8013A920 T-27060; src/ovl/GYOZI/8013A920.c:9-23 dispatches callbacks by D_800F647A
+file GYOZI 8013AE80 annual_choice_scene_handlers 0x8013AE80 T-27060; src/ovl/GYOZI/8013AE80.c:9-27 dispatches six choice-scene steps
+file GYOZI 8013B920 annual_ayako_scenes 0x8013B920 T-27060; src/ovl/GYOZI/8013B920.c:78 sets character index 3 for Ayako; the callbacks display the art/music-room sequences
+file GYOZI 8013BD50 annual_scene_callbacks 0x8013BD50 T-27060; src/ovl/GYOZI/8013BD50.c:4-14 contains callbacks and a scene-state helper
+file GYOZI 8013C3B0 annual_timing_sequence 0x8013C3B0 T-27060; src/ovl/GYOZI/8013C3B0.c:98-119 processes the timed S/T sequence choices
+file GYOZI 8013CDD0 annual_yukari_scenes 0x8013CDD0 T-27060; src/ovl/GYOZI/8013CDD0.c:64 sets character index 5 for Yukari before dispatching its scene callbacks
+file GYOZI 8013D120 annual_nozomi_scenes 0x8013D120 T-27060; src/ovl/GYOZI/8013D120.c:65 sets character index 6 for Nozomi before installing scene resources and talk callbacks
+file GYOZI 8013D470 annual_sound_callbacks 0x8013D470 T-27060; src/ovl/GYOZI/8013D470.c:9-28 provides sound and wait callbacks
+file GYOZI 8013DB50 annual_scene_resource_setup 0x8013DB50 T-27060; src/ovl/GYOZI/8013DB50.c:38-58 initializes display/audio scene resources
+file GYOZI 8013DE30 annual_hallway_scene_resources 0x8013DE30 T-27060; src/ovl/GYOZI/8013E1D0.c:35-60 initializes the hallway scene and calls the resource binder
+file GYOZI 8013E1D0 annual_hallway_mode_step_dispatch 0x8013E1D0 T-27060; src/ovl/GYOZI/8013E1D0.c:9-16 dispatches its callback table using D_800F647A
+file GYOZI 8013E5B0 annual_character_state_helpers 0x8013E5B0 T-27060; src/ovl/GYOZI/8013E5B0.c:36-66 updates displayed character state and flags
+file GYOZI 8013EB10 annual_scene_group_mode_stage_dispatch 0x8013EB10 T-27060; src/ovl/GYOZI/8013EB10.c:286-314 dispatches scene groups using D_800F6479
+file GYOZI 801400D0 annual_mode_step_callbacks 0x801400D0 T-27060; src/ovl/GYOZI/801400D0.c:4-16 dispatches callbacks using D_800F647A and advances the callback state
+file GYOZI 80140740 annual_portrait_and_talk_setup 0x80140740 T-27060; src/ovl/GYOZI/80140740.c:50-59 initializes portrait and dialogue display
+file GYOZI 80140C90 annual_candidate_results 0x80140C90 T-27060; src/ovl/GYOZI/80140C90.c:17-39 evaluates candidate status and follows result state
+file GYOZI 801418B0 annual_result_resources 0x801418B0 T-27060; src/ovl/GYOZI/801418B0.c:36-68 selects result and follow-up state
+file GYOZI 80142D00 annual_actor_animation_resources 0x80142D00 T-27060; src/ovl/GYOZI/80142D00.c:4-10 binds animation resources used by the actor setup callbacks
+file GYOZI 80143110 annual_character_action_dispatch 0x80143110 T-27060; src/ovl/GYOZI/80143110.c:34-59 dispatches callbacks by the current character selector
+file GYOZI 80143AD0 annual_scene_audio_helpers 0x80143AD0 T-27060; src/ovl/GYOZI/80143AD0.c:43-109 updates scene audio and callback state
+file KANGEI 80132000 scene_entry 0x80132000 src/ovl/KANGEI/80132000.c:4: mode 0x60 scene dispatcher and return-to-title branch
+file KANGEI 80132090 scene_callbacks 0x80132090 src/ovl/KANGEI/80132090.c:49: mode 0x60 callback handlers for the scene state table
+file KANGEI 80132E40 day_dispatch_and_script_tables 0x80132E40 T-27060 src/ovl/KANGEI/80132E40.c:4-45; binds common/per-girl script pointer rows, then func_80132FF8 dispatches the day-coded mode_stage and performs scene presentation.
+file KANGEI 80133C10 scene_load_and_display 0x80133C10 T-27060 src/ovl/KANGEI/80133C10.c:9-43; step-table presentation flow, current-girl restoration, two resource loads and shared display initialization; func_80133EF8 runs talk.
+file KANGEI 80134120 girl_meeting_routes 0x80134120 T-27060 src/ovl/KANGEI/80134120.c:24-48; scene callback tables and met/unmet-girl/year route choice, followed by girl-specific background/dialogue setup.
+file KANGEI 801355F0 paired_actor_scene_flow 0x801355F0 T-27060 src/ovl/KANGEI/801355F0.c:9-36; binds two parallel actor resource records, runs an80-entry step callback table and updates their scene presentation.
+file KANGEI 80135F10 scene_pictures_and_effects 0x80135F10 T-27060 src/ovl/KANGEI/80135F10.c:18-48; picture/animation resource binders, callback dispatchers, talk and effect flow; no unconfirmed narrative or folder identity is claimed.
+file KANGEI 80137B90 girl_script_and_choice_flow 0x80137B90 T-27060 src/ovl/KANGEI/80137B90.c:20,244-289,432; per-girl script pointer rows, choice-dependent dialogue groups/rewards, birthday reply resources and saved scene flow.
+file MASTER 80132000 club_master_resource_setup 0x80132000 T-27060; src/ovl/MASTER/80132000.c:3-27 binds resource addresses for the club-mastery flow
+file MASTER 80132140 club_master_mode_stage_dispatch 0x80132140 T-27060 src/ovl/MASTER/80132140.c:6-14; indexes the four-function callback table by game_state.mode_stage and owns its entry/load/talk route helpers; wiki/spec/o-master-ending.md describes the inspected flow.
+file MASTER 80133680 club_tournament_scene 0x80133680 T-27060; src/ovl/MASTER/80133680.c:174-182 and 755-770 use tournament-specific actor/resource setup
+file MASTER 80138490 shiori_birthday_scene 0x80138490 T-27060; src/ovl/MASTER/80138490.c:9-20 starts Shiori's birthday-day scene flow and sets its birthday event bit
+file MASTER 80138EC0 tournament_actor_resources 0x80138EC0 T-27060; src/ovl/MASTER/80138EC0.c:3-7 binds actor frames/sequences consumed in src/ovl/MASTER/80133680.c:1821,1833-1836
+file MASTER 80138F10 tournament_scene_resources 0x80138F10 T-27060; src/ovl/MASTER/80133680.c:174-182 binds the scene frame/sequence/tpage resources and palette
+file MASTER 80138F70 mastery_scene_actor_resources 0x80138F70 T-27060; src/ovl/MASTER/80139000.c:1015-1019 binds actor frame/sequence addresses for its scene
+file MASTER 80138FC0 mastery_talk_tables 0x80138FC0 T-27060; src/ovl/MASTER/80139000.c:173-177 binds the three talk tables for scene dialogue
+file MASTER 80139000 club_master_scene_and_tables 0x80139000 T-27060; src/ovl/MASTER/80139000.c:4-13 defines the scene resource table; spec documents the club-master scene flow
+file NAME_ENT 80132000 name_entry 0x80132000 T-27060 src/ovl/NAME_ENT/80132000.c:103,112,1962,2451; mode0x14 name/preset/grid/birthday input, profile storage and new-game initial scores/clubs.
+file NAME_ENT 80139740 file_select 0x80139740 T-27060 src/ovl/NAME_ENT/80139740.c:85,1045,1753,3195; mode0x13 album/system-file selection, read/write/copy/new/clear flow, retained profiles and summary presentation.
+file NAME_ENT 80142A80 opening 0x80142A80 T-27060 src/ovl/NAME_ENT/80142A80.c:53,277,695; attract picture-sequence callbacks, voice/palette presentation and opening movie flow.
+file NAME_ENT 80144AD0 prologue 0x80144AD0 T-27060 src/ovl/NAME_ENT/80144AD0.c:71,83,105,2742; owns opening-mode dispatcher plus the prologue line player, speaker/voice tables and mode-stage handlers; object stays intact.
+file OLH 80132000 help_questions_and_answers_page 0x80132000 T-27060; src/ovl/OLH/80132000.c:39-48 draws the Q&A corner page and its start-button instruction
+file OLH 80132420 help_system_settings_page 0x80132420 T-27060; src/ovl/OLH/80132420.c:30-46 draws the system-settings page
+file OLH 80132FA0 help_memory_card_page 0x80132FA0 T-27060; src/ovl/OLH/80132FA0.c:30-47 draws the memory-card page
+file OLH 80133B80 help_biorhythm_page 0x80133B80 T-27060; src/ovl/OLH/80133B80.c:30-46 draws the biorhythm page
+file OLH 80134500 help_icons_page 0x80134500 T-27060; src/ovl/OLH/80134500.c:30-46 draws the icon page
+file OLH 80134F40 help_minigame_page 0x80134F40 T-27060; src/ovl/OLH/80134F40.c:30-51 draws the minigame page
+file OLH 80135AC0 help_trivia_page 0x80135AC0 T-27060; src/ovl/OLH/80135AC0.c:30-46 draws the mini-knowledge page
+file OLH 801364E0 help_file_select_page 0x801364E0 T-27060; src/ovl/OLH/801364E0.c:30-46 draws the file-select page
+file OMIMAI 80132000 sick_visit_frame_dispatch 0x80132000 T-27060; src/ovl/OMIMAI/80132000.c:3-21 dispatches sick-visit stages and updates the shared display
+file OMIMAI 801320A0 sick_visit_girl_resource_addresses 0x801320A0 T-27060; src/ovl/OMIMAI/801320A0.c:3-47 initializes girl-specific resource address tables
+file OMIMAI 80132AD0 sick_visit_scene_resource_addresses 0x80132AD0 T-27060; src/ovl/OMIMAI/80132AD0.c:3-34 initializes secondary scene resource address tables in the sick-visit overlay
+file OMIMAI 801331B0 sick_visit_scene_dialogue 0x801331B0 T-27060; src/ovl/OMIMAI/801331B0.c:149-151,361-418 feeds talk tables and owns shared visit callbacks
+file OPTION 80132000 settings_sound_test_and_extras 0x80132000 T-27060 src/ovl/OPTION/80132000.c:557: options stage dispatcher, page input and draw, sound-test track playback and extra-mode launch; body 558: game_state.mode_stage_timer += 1; 560: switch (game_state.mode_stage) {
+file OPTION 801389A0 voice_test_browser 0x801389A0 T-27060 src/ovl/OPTION/801389A0.c:432: voice test menu, character/clip selection, list display and audio completion replay; body 443: if (game_state.pad_pressed & 0x08000000) {; 444: D_8013D3F0 = 1 - D_8013D3F0;
+file OPTION 8013A550 debug_game_data_editors 0x8013A550 T-27060 src/ovl/OPTION/8013A550.c:65: debug pages edit game settings, date, girl records and flags through menu controls; body 75: label_or_month = game_state.weekday; 76: menu_check(0, cursor_x, cursor_y);
+file RENSYU 80132000 practice_match_script_tables 0x80132000 T-27060; src/ovl/RENSYU/80132000.c:3-7 binds three practice-match talk tables
+file RENSYU 80132040 practice_match_mode_stage_dispatch 0x80132040 T-27060; src/ovl/RENSYU/80132040.c:20-25 dispatches the practice-match stage table
+file RPG_BAT 80132000 move_assist_yuko 0x80132000 T-27060 src/ovl/RPG_BAT/80132000.c:4: girl 8 assist in club moves; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 801321D0 club_move_basketball 0x801321D0 T-27060 src/ovl/RPG_BAT/801321D0.c:4: club 10 special move; body 5: if ((s32) D_8015EDAC >= 3 && (s32) D_8015EDAC < 6) {; 6: if (D_80121438 == 0 && D_80121428 == 0) {; club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80132FE0 bear_finale_and_rescue 0x80132FE0 T-27060 src/ovl/RPG_BAT/80132FE0.c:38: bear finale and hunter rescue; body 45: switch (D_8015EDD8) {; 48: func_8013E97C(0x38, 0, 0);; enemy identity from bear name-label creation src/ovl/RPG_BAT/801525B0.c:32; encounter 0x40000 finale dispatch src/ovl/RPG_BAT/8013C890.c:37
+file RPG_BAT 801340F0 girl_action_yoshio 0x801340F0 T-27060 src/ovl/RPG_BAT/801340F0.c:4: partner 13 actions; body 5: switch (D_8015EDF0) {; 7: func_8013415C(); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80134A70 move_assist_shiori 0x80134A70 T-27060 src/ovl/RPG_BAT/80134A70.c:4: girl 0 assist; body 8: switch (D_8015EDAC) {; 10: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 80134D30 club_move_brass_band 0x80134D30 T-27060 src/ovl/RPG_BAT/80134D30.c:7: club 5 special move; body 8: switch (D_8015EDAC) {; 11: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80135AE0 girl_action_megumi 0x80135AE0 T-27060 src/ovl/RPG_BAT/80135AE0.c:4: girl 9 actions; body 5: switch (D_8015EDF0) {; 7: func_80135B4C(); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80136070 girl_action_yumi 0x80136070 T-27060 src/ovl/RPG_BAT/80136070.c:80: girl 10 action; body 81: switch (D_8015EE04) {; 83: D_8015EE0C += 1; partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80136530 move_assist_yuina 0x80136530 T-27060 src/ovl/RPG_BAT/80136530.c:4: girl 2 assist; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 801368B0 club_move_literature 0x801368B0 T-27060 src/ovl/RPG_BAT/801368B0.c:4: club 0 special move; body 5: switch (D_8015EDAC) {; 8: func_8014B738(&D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80136D50 girl_action_saki 0x80136D50 T-27060 src/ovl/RPG_BAT/80136D50.c:26: girl 4 action; body 27: func_80137204(); 28: switch (D_8015EE04) {; partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80137280 enemy_delinquents 0x80137280 T-27060 src/ovl/RPG_BAT/80137280.c:15: delinquent trio: dialogs, attacks, victory, loot; body 16: switch (D_8015ED8C[0]) {; 20: func_8014B738(D_8015E8F0, 2, 0xC8);; delinquent name-label creation src/ovl/RPG_BAT/801525B0.c:36; encounter 0x100000 action dispatch src/ovl/RPG_BAT/8013C890.c:47
+file RPG_BAT 8013A480 move_assist_mira 0x8013A480 T-27060 src/ovl/RPG_BAT/8013A480.c:4: girl 7 assist; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 8013A650 club_move_computer 0x8013A650 T-27060 src/ovl/RPG_BAT/8013A650.c:4: club 3 special move; body 7: switch (D_8015EDAC) {; 10: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 8013AD50 player_attack_guard 0x8013AD50 T-27060 src/ovl/RPG_BAT/8013AD50.c:4: basic attack and guard; body 5: if (!(D_8015EDF0 & 0xFF)) {; 8: if (*(s32 *)0x8015ED98 & 0x100) {
+file RPG_BAT 8013B5B0 battle_dispatch 0x8013B5B0 T-27060 src/ovl/RPG_BAT/8013B5B0.c:7: battle stage switch, fight loop, pause and pad-sequence handling; body 8: if (game_state.mode_stage >= 6 && game_state.mode_stage < 0xA) {; 9: func_8013BEA8();
+file RPG_BAT 8013C5D0 move_assist_ayako 0x8013C5D0 T-27060 src/ovl/RPG_BAT/8013C5D0.c:4: girl 3 assist; body 8: switch (D_8015EDAC) {; 10: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 8013C890 enemy_dispatch 0x8013C890 T-27060 src/ovl/RPG_BAT/8013C890.c:5: enemy action dispatch; body 6: if (func_80144640() < D_8015EDC8 && !(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF) &&; 8: D_8015EBDC = func_8013EA00(0x14, 0x28);
+file RPG_BAT 8013CC90 player_commands_and_club_moves 0x8013CC90 T-27060 src/ovl/RPG_BAT/8013CC90.c:7: player command handling, move dispatch, common move parts; body 10: func_8014BB80(); 11: if (func_801445E8(0) < D_8015ED9C) {
+file RPG_BAT 8013D780 battle_audio_and_asset_loading 0x8013D780 T-27060 src/ovl/RPG_BAT/8013D780.c:24 and :119 select encounter-specific CD asset packs; :4 initiates voiced battle introduction
+file RPG_BAT 8013E300 move_assist_mio 0x8013E300 T-27060 src/ovl/RPG_BAT/8013E300.c:4: girl 1 assist; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 8013E4D0 actor_animation_damage_voice 0x8013E4D0 T-27060 src/ovl/RPG_BAT/8013E4D0.c:4: actor animation and position accessors, damage application, latched sounds and voice waits; body 8: p = (Actor *)actor_pool; 9: for (i = 40; i < 64; i++) {
+file RPG_BAT 8013F4F0 enemy_robot 0x8013F4F0 T-27060 src/ovl/RPG_BAT/8013F4F0.c:203: robot encounter (girl 2's robot); body 204: switch (D_8015EDD8) {; 206: func_801447E0();; robot name-label creation src/ovl/RPG_BAT/801525B0.c:44; encounter 0x8000000 dispatch src/ovl/RPG_BAT/8013C890.c:93
+file RPG_BAT 80141060 battle_sprites_and_hud 0x80141060 T-27060 src/ovl/RPG_BAT/80141060.c:6 clears actor records then fills sprite frames/animation pointers; :244 sets HUD actors
+file RPG_BAT 80141C30 move_assist_nozomi 0x80141C30 T-27060 src/ovl/RPG_BAT/80141C30.c:4: girl 6 assist; body 5: if (func_80156870() != 0) {; 6: func_80141C70(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 80142000 girl_action_shiori 0x80142000 T-27060 src/ovl/RPG_BAT/80142000.c:27: girl 0 action; body 28: switch (D_8015EE00.unk_04) {; 30: func_80143C28(2, 0); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 801421E0 science_club_move 0x801421E0 T-27060 src/ovl/RPG_BAT/801421E0.c:4: club 2 special move; body 7: switch (D_8015EDAC) {; 10: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80142F70 battle_palette_loading 0x80142F70 T-27060 src/ovl/RPG_BAT/80142F70.c:4 loads shared palettes then selects palette and texture uploads by D_8015EB98 encounter mask
+file RPG_BAT 80143830 move_assist_yukari 0x80143830 T-27060 src/ovl/RPG_BAT/80143830.c:4: girl 5 assist; body 7: switch (D_8015EDAC) {; 10: func_8013F1C4(0x79, 0x12000085, 0); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 801439E0 partner_scheduler_and_motion 0x801439E0 T-27060 src/ovl/RPG_BAT/801439E0.c:4: girl action scheduler and shared girl helpers; body 5: if ((func_801446F8() < D_8015EDF4) && !(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF) &&; 7: func_8013D030();
+file RPG_BAT 80144010 battle_stats_and_action_delays 0x80144010 T-27060 src/ovl/RPG_BAT/80144010.c:6: start values, target pick, timers; body 11: sum = 0; 12: D_8015EBA0 = 0xFF;
+file RPG_BAT 801447E0 enemy_action_selection 0x801447E0 T-27060 src/ovl/RPG_BAT/801447E0.c:19: enemy damage rolls and weighted action selectors; body 24: if (game_state.param_guts.value >= 0x97) {; 25: lim = 0x96;
+file RPG_BAT 801454F0 move_assist_megumi 0x801454F0 T-27060 src/ovl/RPG_BAT/801454F0.c:7: girl 9 assist; body 8: if (D_8015EDF0 == 0x40000000) {; 9: switch (D_8015EDAC) {; girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 80145CC0 snake_finale_and_rescue 0x80145CC0 T-27060 src/ovl/RPG_BAT/80145CC0.c:11: snake finale; body 12: switch (D_8015EDD8) {; 15: func_8013E97C(0x38, 0, 0);; enemy identity from snake name-label creation src/ovl/RPG_BAT/801525B0.c:24; encounter 0x10000 finale dispatch src/ovl/RPG_BAT/8013C890.c:17
+file RPG_BAT 801468B0 deer_finale_and_rescue 0x801468B0 T-27060 src/ovl/RPG_BAT/801468B0.c:99: deer finale and monk rescue; body 102: switch (D_8015EDD8) {; 105: func_8013E97C(0x38, 0, 0);; enemy identity from deer name-label creation src/ovl/RPG_BAT/801525B0.c:28; encounter 0x20000 finale dispatch src/ovl/RPG_BAT/8013C890.c:27
+file RPG_BAT 801477E0 partner_action_selection 0x801477E0 T-27060 src/ovl/RPG_BAT/801477E0.c:7: partner damage rolls and weighted action selection; body 12: switch (sel) {; 14: D_8015EBB0 = func_8013EA00(0x4E2, 0x2EE) + 1;
+file RPG_BAT 80147F10 move_assist_saki 0x80147F10 T-27060 src/ovl/RPG_BAT/80147F10.c:4: girl 4 assist; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 801480F0 girl_action_yuina 0x801480F0 T-27060 src/ovl/RPG_BAT/801480F0.c:26: girl 2 action; body 27: switch (D_8015EE04) {; 29: func_80143C28(9, 0); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 801484E0 club_move_soccer 0x801484E0 T-27060 src/ovl/RPG_BAT/801484E0.c:4: club 7 special move; body 5: switch (D_8015EDAC) {; 8: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80148F70 player_damage 0x80148F70 T-27060 src/ovl/RPG_BAT/80148F70.c:4: player damage rolls; body 10: stat = game_state.clubs[D_8015EBA0].practice_points; 11: if (stat < 50) {
+file RPG_BAT 801496F0 move_assist_yumi 0x801496F0 T-27060 src/ovl/RPG_BAT/801496F0.c:4: girl 10 assist; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/801504E0.c:166
+file RPG_BAT 801498C0 club_move_no_club 0x801498C0 T-27060 src/ovl/RPG_BAT/801498C0.c:7: club 11 special move; body 8: switch (D_8015EDAC) {; 11: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 8014A660 club_move_swimming 0x8014A660 T-27060 src/ovl/RPG_BAT/8014A660.c:4: club 9 special move; body 5: switch (D_8015EDAC) {; 8: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 8014ADD0 hud_messages_and_swimming_effect 0x8014ADD0 T-27060 src/ovl/RPG_BAT/8014ADD0.c:84: swimming effect plus HUD numbers, message windows, command menu and damage popups; body 88: div = 1; 89: for (i = 0; i != 4; i++, div *= 10) {
+file RPG_BAT 8014D380 battle_asset_pointers 0x8014D380 T-27060 src/ovl/RPG_BAT/8014D380.c:4 switches on encounter mask D_8015EB98 to assign sprite-sheet/frame/animation/palette asset pointers
+file RPG_BAT 8014DF60 girl_action_mira 0x8014DF60 T-27060 src/ovl/RPG_BAT/8014DF60.c:4: girl 7 action; body 5: switch (D_8015EE04) {; 7: func_8014E64C(); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 8014E780 battle_lifecycle_and_channels 0x8014E780 T-27060 src/ovl/RPG_BAT/8014E780.c:57: stage 0, exit, state clear, channel helpers and the state data; body 59: actor_clear_range(0); 60: cursor_actor_init(0);
+file RPG_BAT 8014F790 finale_aliens 0x8014F790 T-27060 src/ovl/RPG_BAT/8014F790.c:31: alien encounter timer and rescue; body 35: D_8015EE00.unk_00 += 1; 38: if ((D_8015EE00.unk_04 >= 2) && (D_8015EE00.unk_04 < 0x15) && (((Actor *)actor_pool)[125].unk_08 == 1)) {; alien name-label creation src/ovl/RPG_BAT/801525B0.c:39; survival/rescue dispatch src/ovl/RPG_BAT/801439E0.c:14
+file RPG_BAT 801504E0 drama_move_and_partner_assists 0x801504E0 T-27060 src/ovl/RPG_BAT/801504E0.c:29: drama club move, girl-index assist dispatch and shared run-in/run-out animation; body 32: switch (D_8015EDAC) {; 35: func_8014B738(&D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80151C10 girl_action_ayako 0x80151C10 T-27060 src/ovl/RPG_BAT/80151C10.c:7: girl 3 action; body 8: switch (D_8015EE00.unk_04) {; 11: func_8014B738((s32) D_8015E9CC, 1, 0x5A); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80151FC0 trip_enemy_attacks_and_rewards 0x80151FC0 T-27060 src/ovl/RPG_BAT/80151FC0.c:7: trip encounter basic attack and loot; body 8: if (D_8015EB98 == 0x40000) {; 9: func_8013E7C0(0x38, 3, 5, 1);
+file RPG_BAT 801525B0 labels_intro_and_wave_transition 0x801525B0 T-27060 src/ovl/RPG_BAT/801525B0.c:8 creates name labels; :94 slides in enemies; :219 runs alien intro; :419 and :546 generate wave strips
+file RPG_BAT 80154430 art_club_move 0x80154430 T-27060 src/ovl/RPG_BAT/80154430.c:8: club 4 special move; body 11: switch (D_8015EDAC) {; 14: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 80155A70 girl_action_mio 0x80155A70 T-27060 src/ovl/RPG_BAT/80155A70.c:6: girl 1 action; body 7: if (!(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF) && (D_8015EDF0 & 0x80000000) &&; 9: func_8013D030(); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80155CC0 club_move_tennis 0x80155CC0 T-27060 src/ovl/RPG_BAT/80155CC0.c:7: club 8 special move; body 8: switch (D_8015EDAC) {; 11: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file RPG_BAT 801563A0 girl_action_yuko 0x801563A0 T-27060 src/ovl/RPG_BAT/801563A0.c:86: girl 8 action; body 87: switch (D_8015EE04) {; 89: func_8013E7C0(0x1D, 5, 5, 1); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80156870 girl_action_nozomi 0x80156870 T-27060 src/ovl/RPG_BAT/80156870.c:14: girl 6 action; body 15: switch (D_8015EE04) {; 17: if (func_80156870() != 0) {; partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 80156CC0 enemy_alien 0x80156CC0 T-27060 src/ovl/RPG_BAT/80156CC0.c:9: alien actions; body 10: switch (D_8015EDD8) {; 13: func_8014B738(D_8015E8F0, 1, 0x5A);; alien name-label creation src/ovl/RPG_BAT/801525B0.c:39; encounter 0x80000000 dispatch src/ovl/RPG_BAT/8013C890.c:103
+file RPG_BAT 80157AE0 enemy_bancho 0x80157AE0 T-27060 src/ovl/RPG_BAT/80157AE0.c:462: gang boss action, defeat, dialog and reward sequences; body 463: switch (D_8015EDD8) {; 465: if (func_8013E9A8(0xA) == 0) {; gang-boss name-label creation src/ovl/RPG_BAT/801525B0.c:35; boss action masks dispatched src/ovl/RPG_BAT/8013C890.c:72
+file RPG_BAT 80159D50 girl_action_yukari 0x80159D50 T-27060 src/ovl/RPG_BAT/80159D50.c:25: girl 5 action; body 26: switch (D_8015EE04) {; 29: func_8014B738(D_8015E9CC, 1, 0x5A); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24
+file RPG_BAT 8015A1F0 club_move_baseball 0x8015A1F0 T-27060 src/ovl/RPG_BAT/8015A1F0.c:4: club 6 special move; body 5: if (((s32) D_8015EDAC >= 6) && ((s32) D_8015EDAC < 9)) {; 6: func_8013F0F4(0x500, 0xE, 1); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96
+file SHOUGATU 80132000 seasonal_mode_stage_dispatch 0x80132000 T-27060; src/ovl/SHOUGATU/80132000.c:52-86 dispatches seven mode stages and per-frame presentation
+file SHOUGATU 80132550 new_year_scene_setup 0x80132550 T-27060; src/ovl/SHOUGATU/80132550.c:40-69 loads New Year resources and sets the scene title
+file SHOUGATU 80132D00 new_year_outcome 0x80132D00 T-27060; src/ovl/SHOUGATU/80132D00.c:19-53 handles the New Year scene outcome branch
+file SHOUGATU 801330C0 new_year_dialogue 0x801330C0 T-27060; src/ovl/SHOUGATU/801330C0.c:31-70 selects and prepares New Year talk tables
+file SHOUGATU 80133D10 shrine_visit_dialogue 0x80133D10 T-27060; src/ovl/SHOUGATU/80133D10.c:14-34 initializes the shrine-visit title and dialogue state
+file SHOUGATU 80134120 shrine_actor_sequences 0x80134120 T-27060; src/ovl/SHOUGATU/80134120.c:23-45 dispatches shrine-scene actor sequences
+file SHOUGATU 80134890 omikuji_draw_scene 0x80134890 T-27060; src/ovl/SHOUGATU/80134890.c:176-196 begins the omikuji prompt, actor movement and result presentation
+file SHOUGATU 80135B90 scene_resource_tables 0x80135B90 T-27060; src/ovl/SHOUGATU/80135B90.c:6-24 declares scene data islands
+file SHOUGATU 80136F90 meeting_girl_scene_dispatch 0x80136F90 T-27060; src/ovl/SHOUGATU/80136F90.c:34-92 dispatches meeting scenes by the queued girl selector
+file SHOUGATU 80137BB0 yuko_scene_handlers 0x80137BB0 T-27060; src/ovl/SHOUGATU/80137BB0.c:6-19 selects Yuko scene step tables; main loader routes the meeting mode here
+file SHOUGATU 80137FF0 yuina_scene_handlers 0x80137FF0 T-27060; src/ovl/SHOUGATU/80137FF0.c:5-23 dispatches Yuina scene step tables; main loader routes the meeting mode here
+file SHOUGATU 80138B40 ayako_scene_handlers 0x80138B40 T-27060; src/ovl/SHOUGATU/80138B40.c:4-18 dispatches Ayako scene step tables
+file SHOUGATU 801390C0 mira_scene_resources 0x801390C0 T-27060; src/ovl/SHOUGATU/801390C0.c:7-23 binds Mira scene resources
+file SHOUGATU 801397D0 scene_step_handlers 0x801397D0 T-27060; src/ovl/SHOUGATU/801397D0.c:25-42 dispatches five scene-step callbacks
+file SHOUGATU 8013A190 yukari_scene_handlers 0x8013A190 T-27060; src/ovl/SHOUGATU/8013A190.c:11-16 dispatches Yukari scene setup callbacks
+file SHOUGATU 8013A500 nozomi_scene_handlers 0x8013A500 T-27060; src/ovl/SHOUGATU/8013A500.c:4-12 dispatches Nozomi scene setup callbacks
+file SHOUGATU 8013A950 saki_scene_handlers 0x8013A950 T-27060; src/ovl/SHOUGATU/8013A950.c:4-15 dispatches Saki scene setup callbacks
+file SHOUGATU 8013AF10 yumi_scene_handlers 0x8013AF10 T-27060; src/ovl/SHOUGATU/8013AF10.c:4-5 dispatches Yumi scene setup
+file SHOUGATU 8013B210 girl_dialogue_dispatch 0x8013B210 T-27060; src/ovl/SHOUGATU/8013B210.c:46-75 dispatches setup and outcome stages and runs the bound girl dialogue; the mode's seasonal-party identity remains a hypothesis
+file SHOUGATU 8013B5B0 girl_dialogue_setup 0x8013B5B0 T-27060; src/ovl/SHOUGATU/8013B5B0.c:4-10,40-79 dispatches setup steps, initializes talk and scene state, and tests met-girl flags
+file SHOUGATU 8013BA00 girl_dialogue_outcomes 0x8013BA00 T-27060; src/ovl/SHOUGATU/8013BA00.c:4-10,13-50,68-83 dispatches outcome steps, selects the current girl, applies relationship changes and advances the day event
+file SHOUGATU 8013C070 seasonal_scene_dispatch 0x8013C070 T-27060; src/ovl/SHOUGATU/8013C070.c:46-326 dispatches the seasonal scene stages
+file SHOUGATU 8013D660 christmas_mansion_entry 0x8013D660 T-27060; src/ovl/SHOUGATU/8013D660.c:101-149 handles Dec 24 birthday detours before entering the Ijuin mansion scene
+file SHOUGATU 8013DD90 christmas_party_dialogue 0x8013DD90 T-27060; src/ovl/SHOUGATU/8013DD90.c:51-56 increments Rei story stage and sets the party-room location
+file SHOUGATU 8013E330 christmas_girl_selection_and_reward 0x8013E330 T-27060; src/ovl/SHOUGATU/8013E330.c:64-106 resets current girl to Shiori, awards tokimeki by looks threshold, then updates affection and event log
+file SHOUGATU 8013F190 scene_render_tables 0x8013F190 T-27060; src/ovl/SHOUGATU/8013F190.c:7-33 declares render and actor data islands
+file SHOUGATU 80141780 scene_particle_helpers 0x80141780 T-27060; src/ovl/SHOUGATU/80141780.c:56-74 calls the particle/work-array helper family
+file SHUGAKU 80132000 birthday_detours_and_talk 0x80132000 T-27060 src/ovl/SHUGAKU/80132000.c:16-65,299-355; binds per-girl birthday tables, dispatches birthday callbacks, handles saved-stage returns and choice effects. Shared birthday routing/ranking is in func_8013243C; no location-table selection claim.
+file SHUGAKU 80133430 player_birthday_girl_selection 0x80133430 T-27060 src/ovl/SHUGAKU/80133430.c:9-65; binds player-birthday visit scripts, loads AF43, dispatches stage7 callbacks and selects the best eligible girl in func_801337FC; called by 80136380.c:case7.
+file SHUGAKU 80133D60 ayako_scene_and_birthday_detours 0x80133D60 T-27060 src/ovl/SHUGAKU/80133D60.c:4-58; Ayako scene resources/callbacks with lighting, actor-copy/fade behavior and birthday redirects. The Ayako route selects mode_stage9 in 80138A60.c:144-151.
+file SHUGAKU 801344B0 yukari_corridor_scene 0x801344B0 T-27060 src/ovl/SHUGAKU/801344B0.c:4-82; picture/animation resources, corridor scene callbacks, dialogue and scores. The Yukari-specific branch sets mode_stage11 in 801378B0.c:397-400; 80136380.c routes it to func_80134560.
+file SHUGAKU 80134880 corridor_choices_and_return 0x80134880 T-27060 src/ovl/SHUGAKU/80134880.c:9-79,133; corridor picture resources, saved-stage branch selection, girl restoration, choices/counters and scene return; no callback-only ownership claim.
+file SHUGAKU 80135430 yuina_scene_and_actor_effects 0x80135430 T-27060 src/ovl/SHUGAKU/80135430.c:4-34,73-100; Yuina scene resources, callback table and actor fade/effect updates. 801378B0.c:391-394 selects mode_stage8 for Yuina; scene init sets current_girl2.
+file SHUGAKU 80136380 trip_entry_and_script_resources 0x80136380 T-27060 src/ovl/SHUGAKU/80136380.c:4,286; shared per-girl script resources plus func_80137490, the complete overlay mode-stage/frame dispatcher, rendering/HUD updates and girl-specific CD script routing.
+file SHUGAKU 801378B0 destination_choice_and_detour_routing 0x801378B0 T-27060 src/ovl/SHUGAKU/801378B0.c:4-38,103-151,236-265,370-439; departure/arrival setup, destination selection, script cursor/choice flow and Yuina/Yukari detours.
+file SHUGAKU 80138A60 sightseeing_and_companion_selection 0x80138A60 T-27060 src/ovl/SHUGAKU/80138A60.c:9-49,144-177,187-221; sightseeing callbacks/site selection, same-club/girl choice gates, eligible-companion ranking and Ayako detour routing.
+file SHUGAKU 80139D00 destination_outings_and_hotel_lobby 0x80139D00 T-27060 src/ovl/SHUGAKU/80139D00.c:14,151-215,232-335; destination-specific outing callbacks, hotel-lobby branch, girl-dependent choices and birthday/return handling.
+file SHUGAKU 8013AA70 destination_label_and_day_resume 0x8013AA70 T-27060 src/ovl/SHUGAKU/8013AA70.c:4-58; invokes exit callbacks, fills destination label, restores HUD/audio, advances the calendar, applies trip relationship deltas and resumes day events; not callback-table initialization.
+file TACO 80132000 game_mode_dispatch 0x80132000 T-27060 src/ovl/TACO/80132000.c:4: per-frame timer and stage selector dispatch the overlay handlers; body 5: game_state.mode_stage_timer += 1; 6: switch (game_state.mode_stage) {
+file TACO 80132220 player_control 0x80132220 T-27060 src/ovl/TACO/80132220.c:4: player positions, input, fire handling and player update; body 5: D_8015EDB4->unk74 = 0; 6: D_8015EDB4->unk76 = 0;
+file TACO 801335A0 sound_requests 0x801335A0 T-27060 src/ovl/TACO/801335A0.c:4: sound effect throttling and triangle voice playback; body 11: if (D_8015EDB0 != 0) {; 12: if (a == 1 && (b & 0xFF) < 0xA) {
+file TACO 80133870 asset_loading_and_saved_settings 0x80133870 T-27060 src/ovl/TACO/80133870.c:5 dispatches load steps; :32 and :101 request game asset blocks; :377 restores button settings, scores and three-character ranking names from SaveData
+file TACO 80134930 title_and_main_menu 0x80134930 T-27060 src/ovl/TACO/80134930.c:16 initializes animated title models and lights; :94 runs title presentation; :330 dispatches selected main-menu row to play/settings/rankings/instructions/exit
+file TACO 80135720 settings_menu 0x80135720 T-27060 src/ovl/TACO/80135720.c:11 dispatches menu steps; :95 calls changing-value animation or input; :102 renders settings; :341 processes menu cursor and button remapping
+file TACO 80136B40 score_rankings 0x80136B40 T-27060 src/ovl/TACO/80136B40.c:4 dispatches ranking-screen fade/zoom steps; :119 renders stored ranking names D_8015EE04/D_8015EE08/D_8015EE0C and scores; :157 formats score digits
+file TACO 80137590 demo_play 0x80137590 T-27060 src/ovl/TACO/80137590.c:20 initializes demo actors and starts shared enemy script; :84 exits on user input or synthesizes held fire and timed directional pad input
+file TACO 80137A60 how_to_play 0x80137A60 T-27060 src/ovl/TACO/80137A60.c:5 dispatches instruction sequence reached from main-menu row 3 at src/ovl/TACO/80134930.c:343; :45 loads instruction imagery; :69 plays indexed voice ranges; :79 and :118 wait for voice and scroll presentation
+file TACO 80137F90 game_start 0x80137F90 T-27060 src/ovl/TACO/80137F90.c:20 resets score, timer, models and player records; :56 uploads texture pages after load completion; :67 starts playable level by setting mode_stage to 0xB
+file TACO 80138280 swoop_level_flow 0x80138280 T-27060 src/ovl/TACO/80138280.c:4 dispatches playable-level steps; :34 invokes func_80154960; :50 changes mode_stage to 0xC; swoop/debris script bodies src/ovl/TACO/80154960.c:4 and :174
+file TACO 80138450 formation_level_flow 0x80138450 T-27060 src/ovl/TACO/80138450.c:4 dispatches playable-level steps; :42 invokes func_80156A80; :59 changes mode_stage to 0x16; formation script bodies src/ovl/TACO/80156A80.c:4 and :199
+file TACO 80138680 swarm_level_flow 0x80138680 T-27060 src/ovl/TACO/80138680.c:4 dispatches playable-level steps; :39 invokes func_80159090; :56 changes mode_stage to 0x20; swarm script bodies src/ovl/TACO/80159090.c:4 and :64
+file TACO 80138890 result_screen 0x80138890 T-27060 src/ovl/TACO/80138890.c:58 computes capped total from base score, timer, bomb stock and shield; :111 animates bonus and total display; :212 routes to name entry or rankings
+file TACO 80139170 name_entry_and_starfield 0x80139170 T-27060 src/ovl/TACO/80139170.c:4: score name entry plus glyph drawing and starfield update/drawing; original object kept intact; body 5: switch (game_state.mode_step) {; 7: func_8013920C();
+file TACO 8013B170 game_end_and_screen_wipe 0x8013B170 T-27060 src/ovl/TACO/8013B170.c:4: end-stage dispatch, screen snapshot and progressive wipe drawing; body 5: switch (game_state.mode_step) {; 7: func_8013B2A0();
+file TACO 8013B990 collision 0x8013B990 T-27060 src/ovl/TACO/8013B990.c:4: hits, damage, scoring, pickups, bomb damage; body 5: func_8013C1F4(); 6: func_8013C440();
+file TACO 8013D1E0 hit_and_explosion_effects 0x8013D1E0 T-27060 src/ovl/TACO/8013D1E0.c:5: hit spark and explosion spawn, update and sprite draw; body 8: index = D_8015E9F0[0].unk_00.unk6 % 16; 9: particle = &D_8015E9F0[index];
+file TACO 8013DB80 enemy_bullets_and_pickups 0x8013DB80 T-27060 src/ovl/TACO/8013DB80.c:5: enemy bullet allocation/movement/drawing and collectible pickup updates; body 15: h = speed; 16: if (h == 0) {
+file TACO 8013F250 hud_secondary_weapons 0x8013F250 T-27060 src/ovl/TACO/8013F250.c:4: HUD, secondary weapons and target search; body 11: sp34 = (s16) D_8015EDEC / 3600; 12: sp30 = (s32) ((s16) D_8015EDEC % 3600) / 60;
+file TACO 80140DF0 primary_weapons 0x80140DF0 T-27060 src/ovl/TACO/80140DF0.c:4: vulcan, wide shot, beam; body 5: func_80140E18(0); 6: func_80140E18(1);
+file TACO 80141DE0 bombs 0x80141DE0 T-27060 src/ovl/TACO/80141DE0.c:6: bomb state machine and blast bomb shots; body 15: if (func_80142220(arg0) == 0) {; 16: return 0;
+file TACO 80142820 save_and_exit 0x80142820 T-27060 src/ovl/TACO/80142820.c:7: stage 46; body 8: switch (game_state.mode_step) {; 10: func_801428DC();
+file TACO 801430B0 text_assets_and_camera 0x801430B0 T-27060 src/ovl/TACO/801430B0.c:4: number/text drawing, texture uploads, model setup/release, camera and asset-load requests; body 5: func_8004ACC8(0x800000); 20: if (arg0 < 0) {
+file TACO 80143E80 background_and_models 0x80143E80 T-27060 src/ovl/TACO/80143E80.c:11: frame hook, background scrolling, floor grid/horizon and model submission; body 12: D_8015F5F0.a = 0; 13: D_8015F5F0.b = 0x400;
+file TACO 801447D0 opening_and_sky_gradient 0x801447D0 T-27060 src/ovl/TACO/801447D0.c:4: opening fly-in and close-up sequences plus scrolling stars and rotating sky gradient quads; body 5: switch (game_state.mode_step) {; 7: func_8014488C();
+file TACO 80146D60 model_hierarchy_and_pose 0x80146D60 T-27060 src/ovl/TACO/80146D60.c:7: coordinate hierarchy, model linking, pose tables, keyframe tweening and boss joint helpers; body 11: q = D_80127480; 12: func_80099E30(0, q);
+file TACO 801480B0 morph_boss_scene 0x801480B0 T-27060 src/ovl/TACO/801480B0.c:69: boss scene loads multipart model, runs morphing attack controller, handles defeat and damage-light flashes; body 72: func_8013A790(1, 1); 73: for (i = 0; i < 0xB; i++) {
+file TACO 80148FE0 arm_tail_boss_scene 0x80148FE0 T-27060 src/ovl/TACO/80148FE0.c:86: boss scene sets arm poses, runs arm/core/tail attack controller and handles defeat; body 89: for (i = 0; i != 0xC; i++) {; 90: func_801497EC(D_8015FCA8[i], i, D_8015FCD8, D_8015FCB4, D_8015FCC0);
+file TACO 80149F90 morph_and_collapse_bosses 0x80149F90 T-27060 src/ovl/TACO/80149F90.c:323: combined object: morphing boss attack groups and descending final boss collapse/part attacks; body 326: func_8014D2E0(); 327: t = D_8015EDB4[16].unk84[2];
+file TACO 80151C30 arm_tail_boss_attacks 0x80151C30 T-27060 src/ovl/TACO/80151C30.c:4: articulated arms, core, tail, barrages and idle sway attack controllers; body 8: if (D_8015EDB4[16].unk84[2] == 0) {; 9: func_80151D1C(5);
+file TACO 80153AA0 flash_and_pulse_effects 0x80153AA0 T-27060 src/ovl/TACO/80153AA0.c:4: circle flash, full-screen flash, pulse bomb visuals; body 9: func_80153B38(buf, &x, arg2, arg0); 10: p = GetWorkBase(0xC, draw_buffer);
+file TACO 80154230 model_palette_and_color 0x80154230 T-27060 src/ovl/TACO/80154230.c:7: model/object CLUT replacement, flicker, texture-page and flat-color edits; body 19: count = arg0[0]; 20: limit = arg0[2];
+file TACO 80154960 swoop_and_debris_waves 0x80154960 T-27060 src/ovl/TACO/80154960.c:4: timed stage script, debris, swooping and spiral waves, sweep turret and homing mine behaviors; body 9: D_801604C0 += 1; 10: func_8015B59C();
+file TACO 80156A80 formation_and_circling_waves 0x80156A80 T-27060 src/ovl/TACO/80156A80.c:4: timed stage script, patrol and formation ships, gate pairs, circling enemies, carriers and turrets; body 5: D_801604C0 += 1; 6: D_801604C8 += 1;
+file TACO 80159090 swarm_and_orbit_waves 0x80159090 T-27060 src/ovl/TACO/80159090.c:4: timed stage script with swarming ships, wall ships and orbiting parts; body 5: D_801604C0 += 1; 6: func_8015B59C();
+file TACO 8015A900 enemy_dispatch 0x8015A900 T-27060 src/ovl/TACO/8015A900.c:4: behavior switch and the generic leave behaviors; body 5: D_801604C0 = 0; 6: D_801604C4 += 1;
+file TACO 8015ABF0 enemy_pool_and_keyframes 0x8015ABF0 T-27060 src/ovl/TACO/8015ABF0.c:5 resets enemy/model coordinate pools; :27 allocates/spawns; :113 and :137 set poses; :185 updates active records; :260 and :307 animate keyframes/poses; :359 and :465 remove/handle death; :542 and :555 count availability and active enemy kinds
+file TAIIKU 80132000 folk_dance_scene 0x80132000 T-27060; src/ovl/TAIIKU/80132000.c:9-18 begins the folk-dance scene and selects runner participants
+file TAIIKU 80132B40 runner_scene_resources 0x80132B40 T-27060; src/ovl/TAIIKU/801452D0.c:129-133 calls this after runner-scene sector reads; it binds runner resource addresses
+file TAIIKU 80132B90 runner_talk_resources 0x80132B90 T-27060; src/ovl/TAIIKU/80141280.c:73-77 calls it immediately before runner talk-table setup
+file TAIIKU 80132BD0 runner_scene_handlers 0x80132BD0 T-27060; src/ovl/TAIIKU/80132BD0.c:6-12 handles runner setup with four runner-loop counters
+file TAIIKU 80133BF0 folk_dance_talk_resources 0x80133BF0 T-27060; src/ovl/TAIIKU/80132000.c:119-126 calls it before setting folk-dance talk tables
+file TAIIKU 80133C30 candidate_scene_layer_resources 0x80133C30 T-27060; src/ovl/TAIIKU/80138950.c:256-260 uses outputs in func_8004E44C, srn_init and srn_vram_set
+file TAIIKU 80133C80 runner_race_dispatch 0x80133C80 T-27060 src/ovl/TAIIKU/80133C80.c:84,94,169; competition mode-stage dispatch, racer setup and update/input handlers; wiki/spec/o-taiiku.md records the observed runner behavior without claiming a fully decoded win rule.
+file TAIIKU 80138950 candidate_girl_scene 0x80138950 T-27060 src/ovl/TAIIKU/80138950.c:59,256-260; girl-candidate scene callbacks, selectable actors and transition logic with scene-layer resources; wiki/spec/o-taiiku.md provides the inspected selection rules.
+file TAIIKU 80140810 scene_actor_resource_tables 0x80140810 T-27060; src/ovl/TAIIKU/80140810.c:9-12 establishes actor/resource tables for its scene handlers
+file TAIIKU 80141280 festival_entry_and_competition_select 0x80141280 T-27060; src/ovl/TAIIKU/80141280.c:16-225 handles festival entry, competition selection and folk-dance queue cleanup
+file TAIIKU 80141B70 shared_mio_and_festival_entry_talk_resources 0x80141B70 T-27060; src/ovl/TAIIKU/80140810.c:103-106 and src/ovl/TAIIKU/80141280.c:74-77 call it before installing Mio and festival-entry talk tables
+file TAIIKU 80141BB0 candidate_scene_picture_resources 0x80141BB0 T-27060; src/ovl/TAIIKU/80138950.c:139-143 calls it during candidate-scene setup
+file TAIIKU 80141C00 candidate_scene_state_handlers 0x80141C00 T-27060; src/ovl/TAIIKU/80141C00.c:4-16 dispatches state handlers for the Nozomi scene
+file TAIIKU 80142140 nozomi_talk_resources 0x80142140 T-27060; src/ovl/TAIIKU/80141C00.c:76-82 calls it before setting Nozomi talk tables
+file TAIIKU 80142180 mio_scene_picture_resources 0x80142180 T-27060; src/ovl/TAIIKU/80140810.c:189-195 loads Mio still, animation and palette resources
+file TAIIKU 80142240 schoolyard_scene_dispatch 0x80142240 T-27060; src/ovl/TAIIKU/80142240.c:5-10 dispatches the schoolyard-scene stage table
+file TAIIKU 80145210 nozomi_scene_picture_resources 0x80145210 T-27060; src/ovl/TAIIKU/80141C00.c:120-125 calls it before loading Nozomi scene pictures
+file TAIIKU 801452D0 runner_actor_display 0x801452D0 T-27060 src/ovl/TAIIKU/801452D0.c:77,86,150; runner-scene mode-stage callback dispatch, display-record setup, animation/movement and slot updates; wiki/spec/o-taiiku.md records the body-backed actor contracts.
+file TAIIKU 801488F0 scene_display_setup 0x801488F0 T-27060; src/ovl/TAIIKU/801488F0.c:5-9 sets ambient light, camera parameters and scene display state
+file TEL 80132000 call_and_invitation_flow 0x80132000 T-27060 src/ovl/TEL/80132000.c:1733: call stage/step dispatch, ringing and reply routing, next-date slot construction and invitation resolution; body 1749: cal_base_show(); 1750: menu_bar_show(0);
+file TEL 801397D0 appointment_call_scenes 0x801397D0 T-27060 src/ovl/TEL/801397D0.c:56: appointment-dependent phone scenes, same-girl appointment cancellation, ringing/text/voice and exit routing; body 60: sel = ((AppointmentBits *)&game_state.unk_54C[0].w)->girl; 61: for (i = 0; i != 8; i++) {
+file TEL 8013CCD0 profile_and_place_availability 0x8013CCD0 T-27060 src/ovl/TEL/8013CCD0.c:86: girl appraisal sprites, girl profile details and month/place availability table construction; body 101: if (arg0 == 0xB) {; 102: n = 0xC;
+file TT 80132000 animation_and_angle 0x80132000 T-27060 src/ovl/TT/80132000.c:4: frame-list control bytes advance sprite animation; second function computes relative angle; body 9: if (arg0[8] & 0x80) {; 10: arg0[8] &= 0xFF7F;
+file TT 80132130 ranking_view 0x80132130 T-27060 src/ovl/TT/80132130.c:315: ranking display scene (state 7) and its grid background; body 324: control = D_80158A6C; 325: buttons = (TtButtons06 *)(scene + 0x10);
+file TT 80132F10 ground_target_pool 0x80132F10 T-27060 src/ovl/TT/80132F10.c:76: ground target pool: spawn from script, update, draw; body 82: m = -1; 83: g = (u8 *)D_80158A70;
+file TT 80133970 enemy_shots_and_sound 0x80133970 T-27060 src/ovl/TT/80133970.c:7: sound bank loads and latched requests plus enemy shot pool, aim/fan/beam patterns and drawing; body 11: audio_command(0x7F); 12: func_800451E0(0x80162000);
+file TT 80135360 swing_ring_boss 0x80135360 T-27060 src/ovl/TT/80135360.c:227: boss collision, ring layout, swinging ring movement, attack and death sequence; body 234: c = D_80158A8C; 235: switch (*(u16 *)(c + 8)) {
+file TT 801367C0 exit_flow 0x801367C0 T-27060 src/ovl/TT/801367C0.c:4 advances private exit substep and timer, sets scene exit flag q[0x55] after timer reaches 31
+file TT 80136830 play_flow_and_scroll_scripts 0x80136830 T-27060 src/ovl/TT/80136830.c:39 selects scroll/enemy scripts and boss callback by level selector; :75 chooses replay stream; :142 advances scroll accumulator and initializes/updates entity pools; :327 calls selected boss; :13 updates speed gauge; entry dispatch src/ovl/TT/8013E850.c:48
+file TT 801374C0 rope_arm_boss 0x801374C0 T-27060 src/ovl/TT/801374C0.c:408: boss rope contact, side/core damage, rope extension/breakage, ring expansion and attacks; body 417: c = D_80158A8C; 418: s = D_80158AAC;
+file TT 8013A040 game_over_flow 0x8013A040 T-27060 src/ovl/TT/8013A040.c:27: core state 5; body 36: o = 0x14; 37: g = D_80158A60;
+file TT 8013A3E0 multipart_form_boss 0x8013A3E0 T-27060 src/ovl/TT/8013A3E0.c:318: independent part collision/pose handlers, alternate movement forms, attacks and part-death animation; body 323: switch (*(u16 *)(p + 6)) {; 328: if (*(s32 *)(p + 0x3E4) >= 0x2000) {
+file TT 8013BD10 cycling_pickups 0x8013BD10 T-27060 src/ovl/TT/8013BD10.c:276: pickup pool with motion, cloud spawn, shot-driven kind changes and popup labels; avoids unconfirmed bell identity; body 280: c = D_80158A6C; 281: e = D_80158A74;
+file TT 8013C6D0 settings_and_background 0x8013C6D0 T-27060 src/ovl/TT/8013C6D0.c:4: settings/button configuration state plus background renderers; body 8: p[0] = 1; 9: p[1] = 0;
+file TT 8013E290 engine_initialization 0x8013E290 T-27060 src/ovl/TT/8013E290.c:4: VSync event setup, work-state clearing, saved configuration load and video initialization; body 8: p = (s32 *)D_80158A68; 10: ev = OpenEvent(0xF2000003, 2, 0x1000, func_8013EC1C);
+file TT 8013E850 frame_loop_and_pause 0x8013E850 T-27060 src/ovl/TT/8013E850.c:5: overlay entry and frame loop, pause, pad-sequence checks and frame begin/end; body 11: a = D_80158A60; 12: b = D_80158A64;
+file TT 8013F040 beam_and_ring_boss 0x8013F040 T-27060 src/ovl/TT/8013F040.c:645: boss form changes, aimed fan and drone-ring phase, beam phase and thrown-body attack; body 656: mode = ((TtSceneView *) D_80158A8C)->unk_08; 657: other = D_80158A74;
+file TT 801410A0 rope_joint_motion 0x801410A0 T-27060 src/ovl/TT/801410A0.c:7: angle and distance constraint propagation for a chain of rope joints; body 17: n = s[0x1A]; 18: dx = *(s16 *)(s + 0) - *(s16 *)(s + 4);
+file TT 80141450 sprite_packets 0x80141450 T-27060 src/ovl/TT/80141450.c:6: textured quad flip/scale/rotation and sprite packet submission; body 23: p = (POLY_FT4 *)arg0; 25: w = p->x1; h = p->y1;
+file TT 80142110 pad_input_and_replay 0x80142110 T-27060 src/ovl/TT/80142110.c:4: pad poll, pressed/held state and prerecorded input stream playback; body 13: g = D_80158A60; 14: s = D_80158A64;
+file TT 80142350 level_asset_loading 0x80142350 T-27060 src/ovl/TT/80142350.c:5: load state chooses stage-specific CD blocks and advances state; body 12: base = D_80158A60; 13: s = D_80158A64;
+file TT 80142570 boss_parts_and_hits 0x80142570 T-27060 src/ovl/TT/80142570.c:4: field enemy destruction, boss sprite/part/hitbox clearing, hit tests and part animation/drawing; body 8: func_80133AD0(0x60C); 9: p = D_80158A98;
+file TT 80142D40 player_and_asset_uploads 0x80142D40 T-27060 src/ovl/TT/80142D40.c:339: VRAM/CD load helpers plus player spawn/control/movement, hit, pickup effects and draw; body 350: p = D_80158A74; 351: pad = D_80158A60 + 0x20;
+file TT 80144D70 level_clear_and_collisions 0x80144D70 T-27060 src/ovl/TT/80144D70.c:6: stage-clear transition and asset requests plus smart-bomb and overlap/collision pass; body 16: scene = D_80158A60; 17: g = (TtCore30 *)D_80158A64;
+file TT 80145E60 ranking_name_entry 0x80145E60 T-27060 src/ovl/TT/80145E60.c:4: ranking insertion, name-entry display and button input state; body 10: a = D_80158A60; 11: b = D_80158A6C;
+file TT 80146BE0 bomb_pool 0x80146BE0 T-27060 src/ovl/TT/80146BE0.c:4: bomb pool; body 8: i = 0; 9: p = D_80158A84;
+file TT 80147380 falling_sprite_pool 0x80147380 T-27060 src/ovl/TT/80147380.c:4 scans free slots by stride 0x68; :59 spawns falling sprites and also initializes a pickup for kind 0x30; :85 integrates motion and disables offscreen records; :110 updates six records; :132 draws those records and scale effects
+file TT 801478D0 sprite_animation_and_followers 0x801478D0 T-27060 src/ovl/TT/801478D0.c:4: part-sprite animation/drawing plus following-ship trail updates; body 13: temp_v0 = arg0->unk_08; 14: if (temp_v0 & 0x80) {
+file TT 80148210 text_and_time_display 0x80148210 T-27060 src/ovl/TT/80148210.c:4: text pool, sprite-font records, time/name/countdown formatting and random drop helper; body 8: i = 0; 9: p = D_80158AA8;
+file TT 801487D0 debug_font 0x801487D0 T-27060 src/ovl/TT/801487D0.c:5: glyph packet drawing and string, decimal, hex and binary printing; body 12: buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8); 13: if (ch != 0x20) {
+file TT 80148DB0 title_and_projectile_pools 0x80148DB0 T-27060 src/ovl/TT/80148DB0.c:4: title logo/menu/ship state plus bomb-target and player-shot pool operations; body 8: i = 0; 9: p = D_80158A88;
+file TT 8014AF00 air_enemies_and_sprite_drawing 0x8014AF00 T-27060 src/ovl/TT/8014AF00.c:637: air enemy waves/script, movement/explosions and generic tile/textured/transformed sprite drawing; body 640: g = (TtCmdStream *)D_80158A70; 642: if (*(s16 *)g->cmd == -1) {
+file TT 8014D260 fixed_angle_arctangent 0x8014D260 T-27060 src/ovl/TT/8014D260.c:5: lookup-table arctangent with octant and sign restoration; body 11: neg_x = 0; 12: neg_y = 0;
+file VALEN 80132000 valentine_resource_tables 0x80132000 T-27060; src/ovl/VALEN/80132000.c:3-47 initializes valentine resources and dispatches scene stages
+file VALEN 801323D0 valentine_scene_handlers 0x801323D0 T-27060; src/ovl/VALEN/801323D0.c:9-15 dispatches valentine scene callbacks by mode step
+file VALEN 80132760 valentine_girl_selection 0x80132760 T-27060; src/ovl/VALEN/80132760.c:28-62 ranks eligible girls and records selected candidates
+file VALEN 801339D0 valentine_home_scene 0x801339D0 T-27060; src/ovl/VALEN/801339D0.c:22-38 sets the front-of-home location and handles its transition
+file VALEN 80133C70 valentine_girl_scene_resources 0x80133C70 T-27060; src/ovl/VALEN/80133C70.c:3-38 initializes girl-specific scene resource addresses
