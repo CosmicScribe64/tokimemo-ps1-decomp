@@ -47,5 +47,18 @@ T-25608 (the candidate rules against IDO 4.1's ugen):
 - `copy_two_after_store.c`: store, then two copies.
 - `copy_after_proc_store.c`: the previous procedure ends with a store, and the copy is at entry.
 
+T-26000 (branches the 30 cases above leave out; IDO 4.1 against the pass's rule, which fits the 30):
+
+- `copy_ne0_left_if.c`: `odd != 0` that uopt writes with the constant on the left, as in main `strCallback`. 4.1 B,
+  pass B: a compare with a non-constant right operand.
+- `copy_value_and_if.c`: `if (G1 & 1)`, a branch on a value. 4.1 F, pass B.
+- `copy_value_ilod_if.c`: `if (P[1])`, a branch on a loaded byte. 4.1 F, pass B.
+- `copy_value_reg_if.c`: `if ((G1 & 1) && G2)`, the test main `strCallback` has since T-26000. 4.1 F, pass B.
+- `copy_bitfield_if.c`: a one-bit field test (`sll; bgez`), the shape before main `func_8006B0C8`'s compaction copy.
+  4.1 F, pass B; the original has B there, so the pass keeps the state at a branch on a value.
+
+Ucode notation added for these: `(R)` a value uopt keeps in a register, `[0 neq R]` a compare with the constant on
+the left.
+
 Harness: `drafts/T-25608/ido41/` (`cases.sh` runs every case through IDO 4.1's ugen, 5.3's ugen and the
 rules). IDO 4.1 itself is never committed (`wiki/ido-52-evaluation.md`, "Provenance").

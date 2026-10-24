@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Block-copy direction state pass for IDO 5.3 ugen (T-24092).
+"""Block-copy direction state pass for IDO 5.3 ugen (T-24092; IDO 4.1 rule, T-26000).
 
 IDO 5.3's ugen selects between a forward (`F`) and backward (`B`) `lwl`/`lwr`/
 `swl`/`swr` loop in `f_eval_mov` (`Umov`, struct/block copy with size > 32 and
@@ -8,24 +8,33 @@ alignment < 4) by reading an uninitialized byte on its own stack frame at
 a preceding ugen routine left in that stack slot (`< 0x7ff8` -> forward `F`,
 `>= 0x7ff8` -> backward `B`).
 
-In the original compiler that built Tokimeki Memorial, `Umov` uses backward (`B`)
-at procedure entry, after calls, after direct stores (`Ustr`), and after ordinary
-loops or branches (`Ufjp`/`Utjp`), and switches to forward (`F`) only when the
-procedure has executed an indirect store (`Uistr`/`Uistv`) either immediately
-before the copy or inside a preceding counted loop whose branch emits a signed
-immediate `<` comparison (`zblt` with positive immediate, `for (i = 0; i < N; i++)`).
-Once such a branch follows an indirect store, every later copy of the procedure is
-`F`. The branch counts only when no other `Ufjp`/`Utjp` lies between the store and
-it (T-25608): a store inside an earlier loop on a variable bound, followed by the
-next loop's `n >= 1` guard, leaves the copies after it in `B`.
-Known limits of this rule (T-25608, IDO 4.1 check in wiki/ido-52-evaluation.md): on
-30 synthetic cases (tools/ido_eval_cases/ugen_copy_state/) IDO 4.1's ugen, which
-reproduces the original's copy states, disagrees with this rule in 8 shapes, none of
-them in matched code. What fits all 30 is simpler: an indirect store sets `F`, a
-conditional branch that compares two registers sets `B`, nothing else changes the
-state. Adopting that rule needs two FAKE-steered matches re-steered first (main
-`strCallback`, `func_8005938C`); see the follow-up ticket T-26000.
-Details and census: wiki/matching-notes.md, wiki/toolchain.md.
+The pass gives each copy the state that IDO 4.1's ugen gives it in the 30
+measured cases (T-26000); the original compiler that built Tokimeki Memorial
+agrees in every matched function. Each procedure is walked in ucode order:
+  - it starts in `B`; nothing carries over from the previous procedure;
+  - an indirect store (`Uistr`/`Uistv`) sets `F`;
+  - a conditional branch (`Ufjp`/`Utjp`) that tests a compare (`Uequ`, `Uneq`,
+    `Ules`, `Uleq`, `Ugrt`, `Ugeq`, also under `Ulnot` or after `Urstr`) whose
+    right operand is not a constant (`Uldc`) sets `B`: ugen compares two registers
+    there (`bne a1,t7`, or `slt` and then a branch). A compare that uopt writes
+    with the constant on the left (`Uldc 0; x; Uneq`) counts, as in 4.1;
+  - everything else keeps the state: compares against a constant (`beqz`,
+    `blez`, `slti`, `li at,3` and then `beq`), branches on any other value,
+    `Uujp`, calls, direct stores (`Ustr`), labels and the block copies themselves.
+Each `Umov` is compiled in the state the walk has reached at it.
+
+Evidence: 30 one-function cases (tools/ido_eval_cases/ugen_copy_state/, T-20710
+and T-25608) compiled with the build's front end and uopt and IDO 4.1's ugen;
+the rule gives 4.1's state in all 30 (tests in tools/test_ugen_pass.py). It
+replaces the T-24092 rule and its T-25608 refinement (`F` locked by a signed
+positive-immediate `<` branch after an indirect store), which disagreed with 4.1
+in 7 and 8 of those cases.
+Known limit (T-26000): IDO 4.1's ugen also sets `F` at a branch on a value that
+is not a compare (`if (x & 1)`, `if (p[1])`, a one-bit field test). This pass
+keeps the state there, because main func_8006B0C8's original has `B` at a copy
+after such a branch. Compares whose value is stored (`x = a < b;`) were not
+measured. Details and census: wiki/toolchain.md, wiki/ido-52-evaluation.md and
+wiki/matching-notes.md (T-26000).
 
 In stock IDO 5.3 `ugen`, `f_jump` (`Ufjp`/`Utjp`) happens to leave `0` (`< 0x7ff8`)
 in `0xfffe0c0` on non-`zblt` branches, flipping every post-branch block copy to `F`.
@@ -44,7 +53,8 @@ This shim wraps `/opt/ido/5.3/ugen` without modifying the binary:
      `zsb $zero` records before `frame_pass.py` / `as1` runs.
 
 Procedures without `Umov` are not modified. Anything the pass cannot parse or
-delimit exactly aborts with PassError.
+delimit exactly (an unknown record, `Umov` operands it cannot delimit, a
+conditional branch with no condition before it) aborts with PassError.
 
 Usage as the ugen shim:  ugen_pass.py --ugen /opt/ido/5.3/ugen <ugen args...>
 """
@@ -102,6 +112,13 @@ SKIP_OPS = {
         "vreg loc rldc rlod rlda clbd cubd lbgn lend lbdy ltrm unal nop"
     ).split()
 }
+
+# Compares a conditional branch can test; a non-constant right operand sets state B.
+CMP_OPS = {OP[n] for n in "equ neq les leq grt geq".split()}
+# Records that may stand between a conditional branch and its condition: the non-pushing
+# records above, `Ulnot` (uopt folds it into the branch sense) and `Urstr` (uopt writes a
+# register variable back to memory before the branch).
+COND_SKIP = SKIP_OPS | {OP["lnot"], OP["rstr"]}
 
 SENTINEL_OFF = (-0x7777) & 0xFFFFFFFF
 
@@ -218,40 +235,43 @@ def _mov_insert_index(insns, start, mov_idx):
     raise PassError("cannot delimit operands of Umov at record %d" % mov_idx)
 
 
-def _is_signed_blt_pos_imm_jump(insns, start, jump_idx):
-    """True if the fjp/tjp at `jump_idx` emits `zblt` (`s3 == 0x17`) with imm > 0."""
-    fjp_flag = insns[jump_idx].opc == OP["fjp"]
-    idx = jump_idx - 1
-    while idx > start and insns[idx].opc in SKIP_OPS:
+def _skip_back(insns, start, idx, skip=SKIP_OPS):
+    """Index of the last record at or before `idx` (and after `start`) not in `skip`."""
+    while idx > start and insns[idx].opc in skip:
         idx -= 1
-    while idx > start and insns[idx].opc == OP["lnot"]:
-        fjp_flag = not fjp_flag
-        idx -= 1
-        while idx > start and insns[idx].opc in SKIP_OPS:
-            idx -= 1
-    if idx <= start:
+    return idx
+
+
+def _is_register_compare_jump(insns, start, jump_idx):
+    """True if the fjp/tjp at `jump_idx` tests a compare whose right operand is not a constant.
+
+    False for a compare against a constant and for a branch on any other value.
+    """
+    idx = _skip_back(insns, start, jump_idx - 1, COND_SKIP)
+    if idx <= start or insns[idx].opc not in EXPR_POP:
+        raise PassError(
+            "no condition before %s at record %d" % (OPS[insns[jump_idx].opc], jump_idx)
+        )
+    if insns[idx].opc not in CMP_OPS:
         return False
-    cmp_ins = insns[idx]
-    if cmp_ins.dtype not in (DT_I, DT_J):
-        return False
-    rhs_idx = idx - 1
-    while rhs_idx > start and insns[rhs_idx].opc in SKIP_OPS:
-        rhs_idx -= 1
-    rhs = insns[rhs_idx]
-    if rhs.opc != OP["ldc"]:
-        return False
-    c = s32(rhs.words[4])
-    if not fjp_flag:
-        if cmp_ins.opc == OP["les"]:
-            return c > 0
-        if cmp_ins.opc == OP["leq"]:
-            return c + 1 > 0
-    else:
-        if cmp_ins.opc == OP["geq"]:
-            return c > 0
-        if cmp_ins.opc == OP["grt"]:
-            return c + 1 > 0
-    return False
+    rhs_idx = _skip_back(insns, start, idx - 1, COND_SKIP - {OP["lnot"]})
+    if rhs_idx <= start:
+        raise PassError("compare at record %d has no operands" % idx)
+    return insns[rhs_idx].opc != OP["ldc"]
+
+
+def copy_states(insns, start, end):
+    """The state ("B" or "F") of each `Umov` of the procedure `insns[start:end]`, in order."""
+    state, states = "B", []
+    for k in range(start + 1, end):
+        opc = insns[k].opc
+        if opc in (OP["istr"], OP["istv"]):
+            state = "F"
+        elif opc in (OP["fjp"], OP["tjp"]) and _is_register_compare_jump(insns, start, k):
+            state = "B"
+        elif opc == OP["mov"]:
+            states.append(state)
+    return states
 
 
 def _gadget_b(proc_block):
@@ -281,28 +301,11 @@ def rewrite_ucode(insns):
         if not any(insns[k].opc == OP["mov"] for k in range(start, end)):
             continue
         proc_block = insns[start].words[1]
-        uist_armed = False  # an indirect store with no fjp/tjp after it yet
-        uist_rill_loop = False
-        last_state_op = "ent"
-
-        for k in range(start + 1, end):
-            ins = insns[k]
-            opc = ins.opc
-            if opc in (OP["istr"], OP["istv"]):
-                uist_armed = True
-                last_state_op = "uist"
-            elif opc == OP["str"] and ins.mtype != MT_R:
-                last_state_op = "ustr"
-            elif opc in (OP["fjp"], OP["tjp"]):
-                if uist_armed and _is_signed_blt_pos_imm_jump(insns, start, k):
-                    uist_rill_loop = True
-                uist_armed = False
-                last_state_op = "jump"
-            elif opc == OP["mov"]:
-                want_f = uist_rill_loop or (last_state_op == "uist")
-                ins_idx = _mov_insert_index(insns, start, k)
-                gadget = _gadget_f() if want_f else _gadget_b(proc_block)
-                insertions.setdefault(ins_idx, []).extend(gadget)
+        movs = [k for k in range(start + 1, end) if insns[k].opc == OP["mov"]]
+        for k, state in zip(movs, copy_states(insns, start, end)):
+            ins_idx = _mov_insert_index(insns, start, k)
+            gadget = _gadget_f() if state == "F" else _gadget_b(proc_block)
+            insertions.setdefault(ins_idx, []).extend(gadget)
 
     if not insertions:
         return insns, False
