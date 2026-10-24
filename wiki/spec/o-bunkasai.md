@@ -366,3 +366,18 @@ The old addresses of the framework and rule functions (the stage functions follo
 - State changes that matter for the rest of the game: the result formula (8.1) at the end of the day, the birthday scene rewards (7.5), the festival-call flags (8.4), the event log entry (8.2), `acquainted` of the member girl, and `tt_unlocked`. Everything else is presentation.
 - Random choice: only the visitor pick (5.2); any generator works. The visitor list contains the met heroines 0..10 with equal weight.
 - Data to extract from the disc for the scenes: 22 script sets (the files at the sectors of section 9.2 and the groups the code names), the portrait files, the six exhibit backgrounds and the gate background.
+
+## 14. Glossary rows this unit needs
+
+`GLOSSARY.md` has the culture festival (`culture_festival`, prefix `culture_`) and the heroine, club and parameter terms. These words appear in the proposed names and are not yet rows (plain-English stems from the banner titles and from the code; to be added with the first rename that uses them):
+
+| Term | Meaning | Stem | Source |
+|---|---|---|---|
+| exhibit | the player's club presentation at the festival (display, show or performance) | `exhibit` | banner titles passed to the title function |
+| club mate (member) | a heroine whose club field equals the player's club | `member` | code (stage 0 and the member block entries) |
+| visitor | the heroine chosen at random among those met, who joins the exhibit scene | `visitor` | code (`culture_visitor_pick`) |
+| fortune telling | the computer club's 1995 exhibit: a fake computer printout comparing two blood types | `fortune` | banner title, code |
+| game exhibit | the computer club's 1996 exhibit, which runs the TT game | `computer_game` | banner title, code |
+| speech contest, drama play, experiment show, concert, portrait drawing, open sketching, oil painting exhibit | the other exhibits by club and year | the same words | banner titles |
+| backstage | the banner shown after a stage show | `backstage` | banner string |
+| tokimeki gain | the per-girl, per-club, per-year table added to tokimeki at the end | `tokimeki_gain` | code |
