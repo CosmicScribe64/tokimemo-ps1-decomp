@@ -2218,3 +2218,11 @@ Independent read-only audit for [[assets-text]] confirms 508 unique supplemental
 Root applied the exact five-file command7 app packet and two-file save-v4 correction after independent Standards and original Spec re-verification. Actual canonical execution passes 111 route checks, 26 focus checks, 15 native week checkpoints, 28 rest save checks, 50 existing study save checks, 37 codec checks and five shared suites. Fresh Mesa rest playback reaches iteration 163; its full trace, final state, RNG and stop boundary equal the reviewed original-backed route. Both save findings are resolved: rest draw identities restore correctly and authenticated command capabilities survive restore. Evidence: `.claude/orchestrator/state/T-29008/command7-save-live/acceptance.json`; final review `.claude/orchestrator/state/T-29006/v4/final-spec-resolution.json`.
 
 [[tickets/T-29008-assemble-playable-development-app]] and [[tickets/T-29006-port-save-audio-services]] remain In Progress. This remains a captured-boundary development app: study supports the bounded ordinary week, rest stops at its first result. New Game linkage, full rest-week progression, native HUD/audio and held save UI shortcuts remain separate open work. No game C/header/build changes or translation changes.
+
+## [2026-10-25] build | Integrate original bank0 loading control
+
+Applied the four-file prologue bank provider after independent Standards/source review PASS. The loader preserves original cache decisions, request ordering, byte-width counters, readiness/timeout predicates and ordered audio operations. Its content adapter verifies original source calls and ISO identities and exports authenticated metadata outside the project. Root installed tests pass: 24 Godot control checks and six Python checks in both normal and optimized execution. Review independently reproduced ten ISO bindings, two sequence headers and the external pack. Evidence: `.claude/orchestrator/state/T-29012/prologue-bank-provider-v1/{spec-standards-review,canonical-application}.json`.
+
+Actual CD transport, driver readiness delivery, playback, native function timing and the connected normal prologue remain open. This component does not make New Game playable; T-29012 remains In Progress.
+
+See [[tickets/T-29012-native-new-game-initialization]].
