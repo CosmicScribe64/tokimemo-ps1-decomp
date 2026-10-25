@@ -2,10 +2,13 @@
 import hashlib
 import json
 import re
+import struct
 from pathlib import Path, PurePosixPath
 
 SCHEMA = "tokimemo.school-day-media.v1"
 COMMAND7_SCHEMA = "tokimemo.school-day-media.v2"
+HOLIDAY_SCHEMA = "tokimemo.school-day-media.v3"
+HOLIDAY_PROOF = Path(__file__).resolve().parents[2] / "port/godot/schemas/holiday_command0_profile.v1.json"
 COMMAND7_PROOF = Path(__file__).resolve().parents[2] / "port/godot/schemas/command7_background_profile.v1.json"
 MAX_MANIFEST = 8 * 1024 * 1024
 MAX_PNG = 2 * 1024 * 1024
@@ -30,6 +33,7 @@ PART_KEYS = {"part_index", "source_record_offset", "x", "y", "width", "height", 
 SOURCE_PINS = {
     "command_0_background": ("CDROM/BS/C_01_27.BS", 16131, 20032, "7543e723ea06c7db100b148350394f79c1a94ff8961aa65904d4aa1613295992"),
     "command_7_background": ("CDROM/BS/C_01_44.BS", 16283, 17396, "951ec47906f6a19748d2f3b803cb086c0e5af3a467f3cb6819515225bb6365e0"),
+    "holiday_command_0_sd": ("CDROM/HOLI_SD/SD_P24W.NBN", 41487, 83968, "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36"),
     "command_0_sd": ("CDROM/MAIN_SD/SD_P01W.NBN", 42541, 83968, "6fea04f95b7eb68731816fa21395605942b1b912b0b915afcfea4d540da7eb6f"),
     "command_7_sd": ("CDROM/MAIN_SD/SD_P09W.NBN", 43074, 83968, "1ad4b906e8aefbb57fd0b9a22afea9af83a0d5109234f9621abc5f91829e7d28"),
 }
@@ -87,14 +91,20 @@ def validate_pack(pack: str):
     doc = json.loads(manifest.read_text(encoding="utf-8"))
     if not isinstance(doc, dict):
         raise ValueError("manifest JSON must be an object")
-    if set(doc) != {"schema", "version", "provenance", "route_capabilities", "unsupported", "components"}:
+    holiday = doc.get("schema") == HOLIDAY_SCHEMA
+    holiday_proof = json.loads(HOLIDAY_PROOF.read_text()) if holiday else None
+    if set(doc) != {"schema", "version", "provenance", "route_capabilities", "unsupported", "components"} | ({"route_tables"} if holiday else set()):
         raise ValueError("manifest keys differ from v1 contract")
-    extended = doc.get("schema") == COMMAND7_SCHEMA
-    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (2 if extended else 1):
+    extended = doc.get("schema") in (COMMAND7_SCHEMA, HOLIDAY_SCHEMA)
+    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (3 if holiday else 2 if extended else 1):
         raise ValueError("unsupported media schema/version")
-    if doc.get("provenance") != EXPECTED_PROVENANCE:
+    provenance = dict(EXPECTED_PROVENANCE)
+    if holiday:
+        provenance["holiday_profile_sha256"] = holiday_proof["native_profile_sha256"]
+        provenance["readers"] = provenance["readers"] + ["tools/assets/holiday_content_profile.py:build_holiday_profile"]
+    if doc.get("provenance") != provenance:
         raise ValueError("original input/reader provenance differs from reviewed source pins")
-    if doc.get("route_capabilities") != EXPECTED_CAPABILITIES + (["command_7_static_background"] if extended else []):
+    if doc.get("route_capabilities") != EXPECTED_CAPABILITIES + (["command_7_static_background"] if extended else []) + (["holiday_room_static_background", "holiday_command_0_static_background", "holiday_command_0_sd_sequence_0"] if holiday else []):
         raise ValueError("route capabilities differ from bounded supported sources")
     if doc.get("unsupported") != {k: v for k, v in EXPECTED_UNSUPPORTED.items() if not (extended and k == "command_7_background")}:
         raise ValueError("unsupported route capability declarations differ from reviewed scope")
@@ -103,7 +113,7 @@ def validate_pack(pack: str):
         raise ValueError("assets path is missing or a symlink")
     if not isinstance(doc["components"], dict):
         raise ValueError("invalid provenance/components")
-    if set(doc["components"]) != {"command_0_background", "command_0_sd", "command_7_sd"} | ({"command_7_background"} if extended else set()):
+    if set(doc["components"]) != {"command_0_background", "command_0_sd", "command_7_sd"} | ({"command_7_background"} if extended else set()) | ({"holiday_room_background", "holiday_command_0_background", "holiday_command_0_sd"} if holiday else set()):
         raise ValueError("component set differs from bounded capability contract")
     for command in ([0, 7] if extended else [0]):
         key = f"command_{command}_background"
@@ -130,11 +140,27 @@ def validate_pack(pack: str):
             if (not _metadata_equal(bg.get("geometry_context"), proof["geometry_context"])
                     or not _metadata_equal(bg.get("native_read_extent"), proof["native_read_extent"])):
                 raise ValueError("command-7 source/geometry/native extent proof differs from checked profile")
-    for key, expected_index in (("command_0_sd", 3), ("command_7_sd", 16)):
+    if holiday:
+        if not _validate_route_tables(doc.get("route_tables"), holiday_proof["route_tables"]):
+            raise ValueError("holiday/weekday room route table dependencies differ")
+        for key in ("holiday_room_background", "holiday_command_0_background"):
+            bg = doc["components"][key]
+            if not _metadata_equal(bg, holiday_proof["components"][key]):
+                raise ValueError("holiday background source/native/geometry descriptor differs")
+            for field, size in (("image", [320, 88]), ("stp_mask", [320, 88]), ("padded_image", [320, 96]), ("padded_stp_mask", [320, 96])):
+                _read_png(root, bg[field], size)
+    sd_profiles = [("command_0_sd", 3), ("command_7_sd", 16)] + ([("holiday_command_0_sd", 1)] if holiday else [])
+    for key, expected_index in sd_profiles:
+        is_holiday = key == "holiday_command_0_sd"
         c = doc["components"][key]
-        if not isinstance(c, dict) or set(c) != {"kind", "id", "source", "profile_index", "sequence_index", "native_route", "frames", "sequences", "palette", "reader", "capability"}:
+        if not isinstance(c, dict) or set(c) != {"kind", "id", "source", "profile_index", "sequence_index", "native_route", "frames", "sequences", "palette", "reader", "capability"} | ({"caller_profile", "source_profile"} if is_holiday else set()):
             raise ValueError("SD fields differ from v1 contract")
         expected_id = "asset-0c557c34ef671750c707a8dc3573c2c2ea0c31af6e773654523f3024f68bf4e5" if key == "command_0_sd" else "asset-c15fc44db85fe2b1485503e27b84a50e5a7bf9d28866d5efef247d9e172a8c28"
+        if is_holiday:
+            expected_id = "asset-a549506ecd420dccd3d1bbf4d52b344142f1257c2484c0c8bd13dc48e7bc618a"
+            projection = {k: v for k, v in c.items() if k not in ("frames", "sequences", "palette")}
+            if not _metadata_equal(projection, holiday_proof["components"][key]):
+                raise ValueError("holiday SD source/caller/native profile differs")
         if (c.get("kind") != "sd_animation" or c.get("id") != expected_id
                 or c.get("reader") != "tools/assets/image_packs_sd.py:export_sd_ui"
                 or c.get("capability") != "validated_static_sd_frames_and_sequence_prefix"
@@ -142,7 +168,8 @@ def validate_pack(pack: str):
                 or not _exact_int(c.get("sequence_index"), 0, 32767) or c.get("sequence_index") != 0):
             raise ValueError("invalid SD source/profile descriptor")
         _validate_source(key, c)
-        _validate_native_route(c, 0 if key == "command_0_sd" else 7)
+        if not is_holiday:
+            _validate_native_route(c, 0 if key == "command_0_sd" else 7)
         if not SHA.fullmatch(c.get("source", {}).get("sha256", "")) or not SHA.fullmatch(c.get("source", {}).get("exe_sha256", "")):
             raise ValueError("invalid original SD source hashes")
         frames = c.get("frames")
@@ -188,6 +215,8 @@ def validate_pack(pack: str):
                     raise ValueError("SD part exceeds 128x128 texture sheet")
                 if not _int_vector(part.get("clut_vram"), 2, 0, 1023) or part.get("palette_mapping") != "override0x10 and palette_mode2 without bit0x80 select full256-color row at x0; encoded row/column ignored":
                     raise ValueError("invalid selected SD palette mapping metadata")
+            if is_holiday and any(part["clut_vram"] != [0, 496] for part in parts):
+                raise ValueError("holiday SD CLUT differs from original caller row")
             _read_png(root, f.get("png", {}), b[2:])
             _read_png(root, f.get("stp_png", {}), b[2:])
         seqs = c.get("sequences")
@@ -225,7 +254,32 @@ def validate_pack(pack: str):
                 or palette_meta["source_words"] != frames[0]["source_palette_words"]
                 or palette_meta.get("stp_policy") != "source palette load mode1 leaves STP unchanged; separate bit15 mask"):
             raise ValueError("selected SD palette metadata is invalid")
+        if is_holiday and _sd_metadata_sha256(c) != holiday_proof["sd_metadata_sha256"]:
+            raise ValueError("holiday SD frame/sequence/palette metadata digest differs")
     return doc
+
+
+def _sd_metadata_sha256(component):
+    selected = {k: component[k] for k in ("frames", "sequences", "palette")}
+    data = json.dumps(selected, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("ascii")
+    return hashlib.sha256(data).hexdigest()
+
+
+def _validate_route_tables(actual, expected):
+    if (not isinstance(actual, dict) or set(actual) != {"schema", "values", "provenance"}
+            or actual["schema"] != expected["schema"]
+            or not _metadata_equal(actual["provenance"], expected["provenance"])
+            or not isinstance(actual["values"], dict) or set(actual["values"]) != set(expected["provenance"])):
+        return False
+    for name, proof in expected["provenance"].items():
+        values = actual["values"][name]
+        signed = proof["type"] == "s32"
+        if not _int_vector(values, proof["shape"][0], -2147483648 if signed else 0, 2147483647 if signed else 255):
+            return False
+        raw = struct.pack("<" + ("i" if signed else "B") * len(values), *values)
+        if hashlib.sha256(raw).hexdigest() != proof["raw_sha256"]:
+            return False
+    return True
 
 
 def _metadata_equal(actual, expected):

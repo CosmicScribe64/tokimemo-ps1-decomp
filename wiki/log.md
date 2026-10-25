@@ -2286,3 +2286,11 @@ See [[tickets/T-29009-ordinary-week-continuation]].
 ## [2026-10-25] ingest | Widescreen and settings research
 
 Integrated the independently reviewed T-30005 recommendations into [[tickets/T-30001-modern-widescreen]] and [[tickets/T-30002-modern-settings]]. Preserve original art proportions and scene apertures, separate modern UI layout, and verify wider cameras per scene. Settings need accessible navigation and safe display rollback; renderer/platform behavior must be tested. Source audit and primary references remain in the ignored research handoff. No generated art or modernization runtime changes.
+
+## [2026-10-25] query | Refresh current port integration status
+
+Updated [[status]] with the accepted rest-week implementation and current scene/setup limits, superseding older paragraphs that still described rest integration as held. T-29012 UI cleanup is in independent two-axis review; T-29013 content path correction is being reverified before live application. Full Phase 3 remains open.
+
+## [2026-10-25] build | Install reviewed holiday content
+
+Applied the original holiday media packet and resolved shared project-root admission correction after independent review. All thirteen installed afterimages match the reviewed composition. Fresh original-input export reproduces all 129 files; 23 Python checks, actual Godot loader negatives, five shared suites and the current rest/study/save driver pass. See [[tickets/T-29013-native-holiday-command-loop]]. Connected Sunday gameplay is still being implemented; no full route or audio claim.

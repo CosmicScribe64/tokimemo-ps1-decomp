@@ -81,12 +81,11 @@ def _validate_command7_route(route):
         raise ValueError("command-7 native event/selector differs from the reviewed ordinary route")
 
 
-def import_pack(input_path: str, media_path: str, native_profile_path: str, output_path: str) -> dict:
+def import_pack(input_path: str, media_path: str, native_profile_path: str, output_path: str, holiday_profile_path: str | None = None) -> dict:
     root = _root()
     sys.path.insert(0, str(root))
     from tools.assets.input import open_input
-    from tools.assets.image_packs_sd import export_sd_ui
-    from tools.assets.image_mdec import export_mdec
+    from tools.port.media_components import export_sd_component, export_background_component
     from tools.assets.bs_cohort_profile import build_profile_context
     from tools.assets.media_mdec_export import _native_cd_read_extent
 
@@ -108,6 +107,14 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
     native_routes = {r.get("command"): r for r in native.get("routes", []) if isinstance(r, dict)}
     if native.get("source_executable_sha256") != EXE_SHA:
         raise ValueError("native route profile does not pin the reviewed executable")
+    holiday = None
+    if holiday_profile_path is not None:
+        from tools.assets.holiday_content_profile import NATIVE_PROFILE_SHA256, validate_native_profile
+        holiday_file = _no_symlink_path(Path(holiday_profile_path))
+        holiday = _json(holiday_file)
+        if _sha(holiday_file.read_bytes()) != NATIVE_PROFILE_SHA256:
+            raise ValueError("holiday native profile is not the reviewed original route")
+        validate_native_profile(holiday)
     media = _json(media_file)
     if media.get("schema") != "tokimemo.media.v1" or media.get("input", {}).get("source_sha256") != TRACK_SHA:
         raise ValueError("source media manifest schema/input mismatch")
@@ -157,46 +164,10 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
                         or not native_asset or native_asset.get("lba") != src_meta["location"]["lba"]
                         or native_asset.get("sha256") != _sha(data) or native_asset.get("size") != len(data)):
                     raise ValueError("selected SD does not match the fresh-verified native route profile")
-                aid = accepted["id"]
-                raw_dir = stage / "reader" / aid
-                exported = export_sd_ui(data, exe, raw_dir, aid, source_entry=entry)
-                if exported.get("status") != "exported":
-                    raise ValueError("existing SD reader did not export selected source")
-                metadata = exported["metadata"]
-                caller = metadata.get("caller_profile", {})
-                if caller.get("index") != profile_index or caller.get("source_lba") != src_meta["location"]["lba"]:
-                    raise ValueError("SD caller profile/LBA does not match reviewed route source")
-                # Keep every physical frame so the consumer can resolve validated sequence indices.
-                frame_list = []
-                for frame in exported["images"]:
-                    png = _safe_copy(raw_dir / frame["png"], stage_assets / frame["png"])
-                    mask = _safe_copy(raw_dir / frame["stp_png"], stage_assets / frame["stp_png"])
-                    frame_list.append({
-                        "frame_index": frame["frame_index"], "id": f"{aid}:frame:{frame['frame_index']}",
-                        "png": png, "stp_png": mask,
-                        "bounds": [frame["bounds"][0], frame["bounds"][1], frame["width"], frame["height"]],
-                        "origin": frame["origin"], "parts": frame["parts"],
-                        "source_palette_words": frame["source_palette_words"],
-                    })
-                if not frame_list:
-                    raise ValueError("selected SD has no physical frames")
-                sequences = metadata.get("source_sequence_prefix", [])
-                if not sequences or sequences[0].get("sequence_index") != 0:
-                    raise ValueError("selected sequence zero is not in the validated pointer prefix")
-                components[f"command_{command}_sd"] = {
-                    "kind": "sd_animation", "id": aid, "source": {
-                        "path": path, "lba": src_meta["location"]["lba"], "size": len(data),
-                        "sha256": _sha(data), "exe_sha256": _sha(exe),
-                    }, "profile_index": profile_index, "sequence_index": 0,
-                    "native_route": {"command": command, "actual_last_command": route["actual_last_command"],
-                                     "actors": route["actors"], "profile": native["profile"],
-                                     "evidence": route.get("evidence", [])},
-                    "frames": frame_list, "sequences": sequences,
-                    "palette": {"source_words": metadata["source_sequence_prefix"] and exported["images"][0]["source_palette_words"],
-                                "mode": metadata["actor_runtime_palette_mode"], "stp_policy": metadata["stp_policy"]},
-                    "reader": "tools/assets/image_packs_sd.py:export_sd_ui",
-                    "capability": "validated_static_sd_frames_and_sequence_prefix",
-                }
+                native_route = {"command": command, "actual_last_command": route["actual_last_command"],
+                                "actors": route["actors"], "profile": native["profile"], "evidence": route.get("evidence", [])}
+                components[f"command_{command}_sd"], _ = export_sd_component(
+                    data, exe, stage, entry, accepted["id"], "weekly", profile_index, native_route, _safe_copy)
 
             # Each built-in profile rechecks current C/ASM, EXE/table and raw ISO records.
             for command, bg_path, profile_kind in ((0, BG_PATH, "weekly"), (7, COMMAND7_BG_PATH, "command7")):
@@ -222,28 +193,20 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
                     "geometry": profile_context["geometry"],
                     "evidence": bg_rec["source_evidence"],
                 }
-                bg_id = original[bg_path]["id"]
-                bg_raw = stage / "reader" / bg_id
-                bg_result = export_mdec(bg_data, bg_raw, bg_id, source_path=bg_path, context=context)
-                img = bg_result["images"][0]
-                bgfiles = {f: _safe_copy(bg_raw / f, stage_assets / f) for f in bg_result["files"]}
-                components[f"command_{command}_background"] = {
-                    "kind": "mdec_background", "id": bg_id,
-                    "source": {"path": bg_path, "lba": expected_lba, "size": len(bg_data), "sha256": _sha(bg_data)},
-                    "active_size": [320, 88], "padded_size": [320, 96], "active_crop": [0, 0, 320, 88],
-                    "native_route": {"command": command, "actual_last_command": native_routes[command]["actual_last_command"],
-                                     "actors": native_routes[command]["actors"], "profile": native["profile"],
-                                     "evidence": native_routes[command].get("evidence", [])},
-                    "image": bgfiles[img["png"]], "stp_mask": bgfiles[img["stp_png"]],
-                    "padded_image": bgfiles[bg_result["metadata"]["padded_decode"]["png"]],
-                    "padded_stp_mask": bgfiles[bg_result["metadata"]["padded_decode"]["stp_png"]],
-                    "geometry_context": context, "reader": "tools/assets/image_mdec.py:export_mdec",
-                    "capability": "source_profiled_static_background_preview",
-                }
+                native_route = {"command": command, "actual_last_command": native_routes[command]["actual_last_command"],
+                                "actors": native_routes[command]["actors"], "profile": native["profile"],
+                                "evidence": native_routes[command].get("evidence", [])}
+                components[f"command_{command}_background"] = export_background_component(
+                    bg_data, stage, bg_entry, original[bg_path]["id"], context, native_route, _safe_copy)
+
                 if command == 7:
                     # The extra native sector is proved separately and never enters export_mdec.
                     components["command_7_background"]["native_read_extent"] = _native_cd_read_extent(
                         source, bg_entry, TRACK_SHA, 10)
+            if holiday is not None:
+                from tools.port.holiday_media import export_holiday_components
+                extra, holiday_tables = export_holiday_components(source, entries, exe, root, stage, _safe_copy)
+                components.update(extra)
 
         manifest = {
             "schema": SCHEMA, "version": 2,
@@ -256,6 +219,12 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
                             "full_route": "not claimed"},
             "components": components,
         }
+        if holiday is not None:
+            manifest["schema"], manifest["version"] = "tokimemo.school-day-media.v3", 3
+            manifest["provenance"]["holiday_profile_sha256"] = NATIVE_PROFILE_SHA256
+            manifest["provenance"]["readers"].append("tools/assets/holiday_content_profile.py:build_holiday_profile")
+            manifest["route_capabilities"].extend(["holiday_room_static_background", "holiday_command_0_static_background", "holiday_command_0_sd_sequence_0"])
+            manifest["route_tables"] = holiday_tables
         (stage / "manifest.json").write_text(json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
         from tools.port.validate_school_day_media import validate_pack
         validate_pack(str(stage))
@@ -264,7 +233,7 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
             raise ValueError("destination appeared during import; refusing overwrite")
         os.rename(stage, out)
         return {"path": str(out), "manifest_sha256": _sha((out / "manifest.json").read_bytes()),
-                "components": sorted(components), "schema": SCHEMA}
+                "components": sorted(components), "schema": manifest["schema"]}
     except Exception:
         shutil.rmtree(stage, ignore_errors=True)
         raise
@@ -276,8 +245,9 @@ def main():
     p.add_argument("--media-manifest", required=True)
     p.add_argument("--native-profile", required=True)
     p.add_argument("--output", required=True)
+    p.add_argument("--holiday-profile", help="add the reviewed April9 normal holiday command0 content")
     a = p.parse_args()
-    print(json.dumps(import_pack(a.input, a.media_manifest, a.native_profile, a.output), sort_keys=True))
+    print(json.dumps(import_pack(a.input, a.media_manifest, a.native_profile, a.output, a.holiday_profile), sort_keys=True))
 
 
 if __name__ == "__main__":

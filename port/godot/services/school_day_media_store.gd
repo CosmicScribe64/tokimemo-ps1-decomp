@@ -3,13 +3,15 @@ extends RefCounted
 
 const SCHEMA := "tokimemo.school-day-media.v1"
 const COMMAND7_SCHEMA := "tokimemo.school-day-media.v2"
+const HOLIDAY_SCHEMA := "tokimemo.school-day-media.v3"
+const HOLIDAY_PROOF_PATH := "res://schemas/holiday_command0_profile.v1.json"
 const COMMAND7_PROOF_PATH := "res://schemas/command7_background_profile.v1.json"
 const TRACK_SHA := "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
 const EXE_SHA := "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 const MEDIA_SHA := "0c85bbc54be82c7b2597528ccbfc915cd1fb5f99405bd18d845452026b56be37"
 const NATIVE_SHA := "ac246a30ed894bf5b631beaf4f053a8622324094859b11a65a4c0c03d55cb4a3"
-const SD_SOURCE_SHAS := {"command_0_sd": "6fea04f95b7eb68731816fa21395605942b1b912b0b915afcfea4d540da7eb6f", "command_7_sd": "1ad4b906e8aefbb57fd0b9a22afea9af83a0d5109234f9621abc5f91829e7d28"}
-const SD_SOURCE_IDS := {"command_0_sd": "asset-0c557c34ef671750c707a8dc3573c2c2ea0c31af6e773654523f3024f68bf4e5", "command_7_sd": "asset-c15fc44db85fe2b1485503e27b84a50e5a7bf9d28866d5efef247d9e172a8c28"}
+const SD_SOURCE_SHAS := {"holiday_command_0_sd": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36", "command_0_sd": "6fea04f95b7eb68731816fa21395605942b1b912b0b915afcfea4d540da7eb6f", "command_7_sd": "1ad4b906e8aefbb57fd0b9a22afea9af83a0d5109234f9621abc5f91829e7d28"}
+const SD_SOURCE_IDS := {"holiday_command_0_sd": "asset-a549506ecd420dccd3d1bbf4d52b344142f1257c2484c0c8bd13dc48e7bc618a", "command_0_sd": "asset-0c557c34ef671750c707a8dc3573c2c2ea0c31af6e773654523f3024f68bf4e5", "command_7_sd": "asset-c15fc44db85fe2b1485503e27b84a50e5a7bf9d28866d5efef247d9e172a8c28"}
 const MAX_MANIFEST := 8 * 1024 * 1024
 const MAX_PNG := 2 * 1024 * 1024
 const MAX_PIXELS := 4 * 1024 * 1024
@@ -20,6 +22,7 @@ const READER_PINS := ["tools/assets/input.py:open_input", "tools/assets/image_pa
 
 var _root := ""
 var _components: Dictionary = {}
+var _route_tables: Dictionary = {}
 var _loaded_images: Dictionary = {}
 var _error := ""
 
@@ -38,19 +41,37 @@ func open_pack(root: String) -> bool:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
 	if not parsed is Dictionary:
 		return _fail("manifest JSON must be an object")
-	if not _exact_keys(parsed, ["schema", "version", "provenance", "route_capabilities", "unsupported", "components"]):
+	var holiday: bool = parsed.get("schema") == HOLIDAY_SCHEMA
+	var holiday_proof: Dictionary = {}
+	var manifest_keys := ["schema", "version", "provenance", "route_capabilities", "unsupported", "components"]
+	if holiday:
+		manifest_keys.append("route_tables")
+		var proof: Variant = JSON.parse_string(FileAccess.get_file_as_string(HOLIDAY_PROOF_PATH))
+		if not proof is Dictionary:
+			return _fail("holiday technical content profile is unavailable")
+		holiday_proof = proof
+	if not _exact_keys(parsed, manifest_keys):
 		return _fail("manifest keys differ from v1 contract")
-	var extended: bool = parsed.get("schema") == COMMAND7_SCHEMA
-	var version: int = 2 if extended else 1
-	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
+	var extended: bool = parsed.get("schema") in [COMMAND7_SCHEMA, HOLIDAY_SCHEMA]
+	var version: int = 3 if holiday else 2 if extended else 1
+	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA, HOLIDAY_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
 		return _fail("unsupported schema/version")
 	var provenance: Variant = parsed.get("provenance")
-	if not provenance is Dictionary or not _exact_keys(provenance, ["original_input_sha256", "original_executable_sha256", "reviewed_media_manifest_sha256", "native_profile_sha256", "readers"]) or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("reviewed_media_manifest_sha256") != MEDIA_SHA or provenance.get("native_profile_sha256") != NATIVE_SHA or not _string_array_equals(provenance.get("readers"), READER_PINS):
+	var provenance_keys := ["original_input_sha256", "original_executable_sha256", "reviewed_media_manifest_sha256", "native_profile_sha256", "readers"]
+	var readers := READER_PINS.duplicate()
+	if holiday:
+		provenance_keys.append("holiday_profile_sha256")
+		readers.append("tools/assets/holiday_content_profile.py:build_holiday_profile")
+	if not provenance is Dictionary or not _exact_keys(provenance, provenance_keys) or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("reviewed_media_manifest_sha256") != MEDIA_SHA or provenance.get("native_profile_sha256") != NATIVE_SHA or not _string_array_equals(provenance.get("readers"), readers):
 		return _fail("source provenance is not the reviewed route profile")
+	if holiday and provenance.get("holiday_profile_sha256") != holiday_proof["native_profile_sha256"]:
+		return _fail("holiday native profile SHA differs")
 	var caps: Variant = parsed.get("route_capabilities")
 	var expected_caps := ["command_0_static_background", "command_0_sd_sequence_0", "command_7_sd_sequence_0"]
 	if extended:
 		expected_caps.append("command_7_static_background")
+	if holiday:
+		expected_caps.append_array(["holiday_room_static_background", "holiday_command_0_static_background", "holiday_command_0_sd_sequence_0"])
 	if not _string_array_equals(caps, expected_caps):
 		return _fail("route capability declarations differ from supported components")
 	var unsupported: Variant = parsed.get("unsupported")
@@ -63,6 +84,8 @@ func open_pack(root: String) -> bool:
 	var component_keys := ["command_0_background", "command_0_sd", "command_7_sd"]
 	if extended:
 		component_keys.append("command_7_background")
+	if holiday:
+		component_keys.append_array(["holiday_room_background", "holiday_command_0_background", "holiday_command_0_sd"])
 	if not components is Dictionary or not _exact_keys(components, component_keys):
 		return _fail("component set differs from finite preview contract")
 	_root = root
@@ -75,19 +98,43 @@ func open_pack(root: String) -> bool:
 			return _fail("background fields differ from media contract")
 		if not _validate_background(bg, command):
 			return _fail(_error)
-	for pair in [["command_0_sd", 3], ["command_7_sd", 16]]:
+	if holiday:
+		if not _validate_route_tables(parsed.get("route_tables"), holiday_proof["route_tables"]):
+			return _fail("holiday/weekday room dependency tables differ")
+		for key in ["holiday_room_background", "holiday_command_0_background"]:
+			if not _metadata_equal(components[key], holiday_proof["components"][key]):
+				return _fail("holiday background source/native/geometry descriptor differs")
+	var sd_profiles := [["command_0_sd", 3], ["command_7_sd", 16]]
+	if holiday:
+		sd_profiles.append(["holiday_command_0_sd", 1])
+	for pair in sd_profiles:
 		var key: String = pair[0]
 		var expected_profile: int = pair[1]
 		var sd: Variant = components[key]
-		if not sd is Dictionary or not _exact_keys(sd, ["kind", "id", "source", "profile_index", "sequence_index", "native_route", "frames", "sequences", "palette", "reader", "capability"]):
+		var fields := ["kind", "id", "source", "profile_index", "sequence_index", "native_route", "frames", "sequences", "palette", "reader", "capability"]
+		if key == "holiday_command_0_sd":
+			fields.append_array(["caller_profile", "source_profile"])
+		if not sd is Dictionary or not _exact_keys(sd, fields):
 			return _fail("SD fields differ from v1 contract: " + key)
 		if not sd is Dictionary or sd.get("kind") != "sd_animation" or sd.get("id") != SD_SOURCE_IDS[key] or sd.get("reader") != "tools/assets/image_packs_sd.py:export_sd_ui" or sd.get("capability") != "validated_static_sd_frames_and_sequence_prefix" or not _exact_int(sd.get("profile_index"), expected_profile) or int(sd["profile_index"]) != expected_profile or not _exact_int(sd.get("sequence_index"), 0) or int(sd["sequence_index"]) != 0:
 			return _fail("invalid SD profile/sequence descriptor: " + key)
-		if not _validate_sd(sd):
+		if key == "holiday_command_0_sd":
+			var projection: Dictionary = sd.duplicate(true)
+			for omitted in ["frames", "sequences", "palette"]:
+				projection.erase(omitted)
+			if not _metadata_equal(projection, holiday_proof["components"][key]):
+				return _fail("holiday SD source/caller/native profile differs")
+		if not _validate_sd(sd, key):
 			return _fail(_error)
+		if key == "holiday_command_0_sd":
+			var metadata := {"frames": sd["frames"], "sequences": sd["sequences"], "palette": sd["palette"]}
+			if _sha(JSON.stringify(_integer_metadata(metadata), "", true).to_utf8_buffer()) != holiday_proof["sd_metadata_sha256"]:
+				return _fail("holiday SD frame/sequence/palette metadata digest differs")
 	if not _load_all_payloads(components):
 		return _fail(_error)
 	_components = components.duplicate(true)
+	if holiday:
+		_route_tables = parsed["route_tables"]["values"].duplicate(true)
 	_error = ""
 	return true
 
@@ -112,7 +159,7 @@ func get_sequence(component_key: String, sequence_index: int = 0) -> Array:
 
 func get_background(component_key: String = "command_0_background") -> Dictionary:
 	var bg: Dictionary = _components.get(component_key, {})
-	if bg.is_empty():
+	if bg.get("kind") != "mdec_background":
 		return {}
 	var result := bg.duplicate(true)
 	result["image_data"] = _loaded_images[bg["image"]["path"]]
@@ -120,6 +167,9 @@ func get_background(component_key: String = "command_0_background") -> Dictionar
 	result["padded_image_data"] = _loaded_images[bg["padded_image"]["path"]]
 	result["padded_stp_mask_data"] = _loaded_images[bg["padded_stp_mask"]["path"]]
 	return result
+
+func get_route_tables() -> Dictionary:
+	return _route_tables.duplicate(true)
 
 func error_message() -> String:
 	return _error
@@ -159,23 +209,25 @@ func _validate_background(bg: Variant, command: int) -> bool:
 			return false
 	return true
 
-func _validate_sd(sd: Dictionary) -> bool:
+func _validate_sd(sd: Dictionary, key: String) -> bool:
+	var holiday: bool = key == "holiday_command_0_sd"
 	var src: Variant = sd.get("source")
-	var expected_path := "CDROM/MAIN_SD/SD_P01W.NBN" if sd.get("profile_index") == 3 else "CDROM/MAIN_SD/SD_P09W.NBN"
-	var expected_lba := 42541 if sd.get("profile_index") == 3 else 43074
-	if not src is Dictionary or not _exact_keys(src, ["path", "lba", "size", "sha256", "exe_sha256"]) or src.get("path") != expected_path or not _exact_int(src.get("lba"), expected_lba) or int(src["lba"]) != expected_lba or not _exact_int(src.get("size"), 83968) or int(src["size"]) != 83968 or src.get("sha256") != SD_SOURCE_SHAS["command_0_sd" if sd.get("profile_index") == 3 else "command_7_sd"] or src.get("exe_sha256") != EXE_SHA:
+	var expected_path := "CDROM/HOLI_SD/SD_P24W.NBN" if holiday else "CDROM/MAIN_SD/SD_P01W.NBN" if sd.get("profile_index") == 3 else "CDROM/MAIN_SD/SD_P09W.NBN"
+	var expected_lba := 41487 if holiday else 42541 if sd.get("profile_index") == 3 else 43074
+	if not src is Dictionary or not _exact_keys(src, ["path", "lba", "size", "sha256", "exe_sha256"]) or src.get("path") != expected_path or not _exact_int(src.get("lba"), expected_lba) or int(src["lba"]) != expected_lba or not _exact_int(src.get("size"), 83968) or int(src["size"]) != 83968 or src.get("sha256") != SD_SOURCE_SHAS[key] or src.get("exe_sha256") != EXE_SHA:
 		_error = "invalid SD source hashes"
 		return false
-	var route: Variant = sd.get("native_route")
-	var expected_command := 0 if sd.get("profile_index") == 3 else 7
-	if not route is Dictionary or not _exact_keys(route, ["command", "actual_last_command", "actors", "profile", "evidence"]):
-		_error = "SD source is not bound to reviewed native route evidence"
-		return false
-	var route_evidence: Variant = route.get("evidence")
-	var route_actors: Variant = route.get("actors")
-	if not _exact_int(route.get("command"), expected_command) or int(route["command"]) != expected_command or not _exact_int(route.get("actual_last_command"), expected_command) or int(route["actual_last_command"]) != expected_command or not route_actors is Array or route_actors.size() != 1 or not _exact_int(route_actors[0], 96) or int(route_actors[0]) != 96 or route.get("profile") != "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a" or not _valid_evidence(route_evidence):
-		_error = "SD source is not bound to reviewed native route evidence"
-		return false
+	if not holiday:
+		var route: Variant = sd.get("native_route")
+		var expected_command := 0 if sd.get("profile_index") == 3 else 7
+		if not route is Dictionary or not _exact_keys(route, ["command", "actual_last_command", "actors", "profile", "evidence"]):
+			_error = "SD source is not bound to reviewed native route evidence"
+			return false
+		var route_evidence: Variant = route.get("evidence")
+		var route_actors: Variant = route.get("actors")
+		if not _exact_int(route.get("command"), expected_command) or int(route["command"]) != expected_command or not _exact_int(route.get("actual_last_command"), expected_command) or int(route["actual_last_command"]) != expected_command or not route_actors is Array or route_actors.size() != 1 or not _exact_int(route_actors[0], 96) or int(route_actors[0]) != 96 or route.get("profile") != "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a" or not _valid_evidence(route_evidence):
+			_error = "SD source is not bound to reviewed native route evidence"
+			return false
 	var frames: Variant = sd.get("frames")
 	if not frames is Array or frames.is_empty() or frames.size() > 512:
 		_error = "invalid SD frame list"
@@ -264,14 +316,16 @@ func _validate_payload_spec(spec: Variant) -> bool:
 	return true
 
 func _load_all_payloads(components: Dictionary) -> bool:
-	for key in ["command_0_background", "command_7_background"]:
+	for key in ["command_0_background", "command_7_background", "holiday_room_background", "holiday_command_0_background"]:
 		if not components.has(key):
 			continue
 		var bg: Dictionary = components[key]
 		for item in [["image", Vector2i(320, 88)], ["stp_mask", Vector2i(320, 88)], ["padded_image", Vector2i(320, 96)], ["padded_stp_mask", Vector2i(320, 96)]]:
 			if not _load_png(bg[item[0]], item[1]):
 				return false
-	for key in ["command_0_sd", "command_7_sd"]:
+	for key in ["command_0_sd", "command_7_sd", "holiday_command_0_sd"]:
+		if not components.has(key):
+			continue
 		var sd: Dictionary = components[key]
 		for frame in sd["frames"]:
 			var size := Vector2i(int(frame["bounds"][2]), int(frame["bounds"][3]))
@@ -354,7 +408,48 @@ func _metadata_equal(actual: Variant, expected: Variant) -> bool:
 	return typeof(actual) == typeof(expected) and actual == expected
 
 
+func _validate_route_tables(actual: Variant, expected: Dictionary) -> bool:
+	if not actual is Dictionary or not _exact_keys(actual, ["schema", "values", "provenance"]) or actual["schema"] != expected["schema"] or not _metadata_equal(actual["provenance"], expected["provenance"]) or not actual["values"] is Dictionary or not _exact_keys(actual["values"], expected["provenance"].keys()):
+		return false
+	for name in expected["provenance"]:
+		var proof: Dictionary = expected["provenance"][name]
+		var values: Variant = actual["values"][name]
+		if not values is Array or values.size() != int(proof["shape"][0]):
+			return false
+		var signed: bool = proof["type"] == "s32"
+		var width: int = 4 if signed else 1
+		var raw := PackedByteArray()
+		for value in values:
+			if not _range_int(value, -2147483648 if signed else 0, 2147483647 if signed else 255):
+				return false
+			for byte in range(width):
+				raw.append((int(value) >> (8 * byte)) & 255)
+		if _sha(raw) != proof["raw_sha256"]:
+			return false
+	return true
+
+func _integer_metadata(value: Variant) -> Variant:
+	# Source metadata is integral; JSON parsing exposes numbers as floats.
+	if value is float:
+		return int(value)
+	if value is Array:
+		var result: Array = []
+		for item in value:
+			result.append(_integer_metadata(item))
+		return result
+	if value is Dictionary:
+		var result: Dictionary = {}
+		for key in value:
+			result[key] = _integer_metadata(value[key])
+		return result
+	return value
+
+
 func _safe_root(path: String) -> bool:
+	var project_root := ProjectSettings.globalize_path("res://").simplify_path().trim_suffix("/")
+	var normalized := path.simplify_path()
+	if path.begins_with("res://") or normalized == project_root or normalized.begins_with(project_root + "/"):
+		return false
 	if path.is_empty() or not path.is_absolute_path() or not DirAccess.dir_exists_absolute(path):
 		return false
 	var current := "/"
@@ -458,6 +553,7 @@ func _sha(bytes: PackedByteArray) -> String:
 func _clear() -> void:
 	_root = ""
 	_components.clear()
+	_route_tables.clear()
 	_loaded_images.clear()
 	_error = ""
 

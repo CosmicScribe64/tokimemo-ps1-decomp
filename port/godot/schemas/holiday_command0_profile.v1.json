@@ -1,0 +1,1304 @@
+{
+  "components": {
+    "holiday_command_0_background": {
+      "active_crop": [
+        0,
+        0,
+        320,
+        88
+      ],
+      "active_size": [
+        320,
+        88
+      ],
+      "capability": "source_profiled_static_background_preview",
+      "geometry_context": {
+        "evidence": [
+          "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+          "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+          "src/main/scene_library.c:addr_init_holiday_sd",
+          "asm/data/main/holiday.data.s:holiday selector tables"
+        ],
+        "geometry": {
+          "active_decode_rect_height": 88,
+          "active_pixels": {
+            "height": 88,
+            "width": 320
+          },
+          "caller_mode": 0,
+          "display_sprite_pieces_relative_to_draw_origin": [
+            {
+              "origin_offset_xy": [
+                -160,
+                -48
+              ],
+              "size_wh": [
+                192,
+                88
+              ]
+            },
+            {
+              "origin_offset_xy": [
+                32,
+                -48
+              ],
+              "size_wh": [
+                128,
+                88
+              ]
+            }
+          ],
+          "macroblock_rows_from_source_helper": 6,
+          "overread_bytes_used_for_decode": false,
+          "padded_pixels": {
+            "height": 96,
+            "width": 320
+          },
+          "runtime_draw_origin_values_known": false,
+          "source_derived": true,
+          "vram_rectangles_by_dec_bg_decode_to_vram_return": [
+            {
+              "rect_xywh": [
+                704,
+                160,
+                320,
+                88
+              ],
+              "return_value": 0
+            },
+            {
+              "rect_xywh": [
+                320,
+                416,
+                320,
+                88
+              ],
+              "return_value": 1
+            }
+          ]
+        },
+        "height": 88,
+        "padded_height": 96,
+        "source_profile": {
+          "assets": [
+            {
+              "fixed_reader_extent": {
+                "post_file_sectors_claimed_consumed_by_decoder": false,
+                "requested_sectors": 10,
+                "sectors_after_iso_file_extent": 2
+              },
+              "iso_directory_record": {
+                "extent_lba": 16318,
+                "extent_size_bytes": 16048,
+                "identifier": "C_02_01H.BS;1",
+                "record_lba": 16122,
+                "record_length": 60,
+                "record_payload_offset": 1356,
+                "sector_count": 8,
+                "sector_payload_sha256": "5755b9ebec0f1abeb742d8ec0f9f793dafcbf8a2d4051b5c057dcf4fea18316a"
+              },
+              "lba_word": 16318,
+              "path": "CDROM/BS/C_02_01H.BS",
+              "profile_kind": "holiday_command0",
+              "role": "seasonal_room",
+              "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+              "size_bytes": 16048,
+              "source": {
+                "location": {
+                  "lba": 16318
+                },
+                "path": "CDROM/BS/C_02_01H.BS",
+                "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+                "size": 16048
+              },
+              "source_evidence": [
+                "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+                "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+                "src/main/scene_library.c:addr_init_holiday_sd",
+                "asm/data/main/holiday.data.s:holiday selector tables"
+              ]
+            },
+            {
+              "fixed_reader_extent": {
+                "post_file_sectors_claimed_consumed_by_decoder": false,
+                "requested_sectors": 10,
+                "sectors_after_iso_file_extent": 2
+              },
+              "iso_directory_record": {
+                "extent_lba": 16379,
+                "extent_size_bytes": 14840,
+                "identifier": "C_02_03.BS;1",
+                "record_lba": 16122,
+                "record_length": 60,
+                "record_payload_offset": 1776,
+                "sector_count": 8,
+                "sector_payload_sha256": "5755b9ebec0f1abeb742d8ec0f9f793dafcbf8a2d4051b5c057dcf4fea18316a"
+              },
+              "lba_word": 16379,
+              "path": "CDROM/BS/C_02_03.BS",
+              "profile_kind": "holiday_command0",
+              "role": "holiday_command0_background",
+              "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+              "size_bytes": 14840,
+              "source": {
+                "location": {
+                  "lba": 16379
+                },
+                "path": "CDROM/BS/C_02_03.BS",
+                "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+                "size": 14840
+              },
+              "source_evidence": [
+                "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+                "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+                "src/main/scene_library.c:addr_init_holiday_sd",
+                "asm/data/main/holiday.data.s:holiday selector tables"
+              ]
+            }
+          ],
+          "executable": {
+            "path": "SLPM_86.053",
+            "sha256": "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae",
+            "tables": [
+              {
+                "name": "weekday_room",
+                "offset": 479568,
+                "raw_sha256": "d2e556f1d311928d807dc1e23f33eee2517ea740699bb635fdfe9b194fc49a9a",
+                "size": 16,
+                "vaddr": 2148227408
+              },
+              {
+                "name": "room",
+                "offset": 479584,
+                "raw_sha256": "91c37dc04e2daa7f1c5b31945178204eec2a5f26cfd9a7fe2f67d0eae649f55e",
+                "size": 16,
+                "vaddr": 2148227424
+              },
+              {
+                "name": "activity",
+                "offset": 483740,
+                "raw_sha256": "8ee6391fd1f8ba7341f91c70331136978b3606b5b714710f86d61ee520c0593c",
+                "size": 32,
+                "vaddr": 2148231580
+              },
+              {
+                "name": "summer",
+                "offset": 483792,
+                "raw_sha256": "c11e0f25935426ff77589a57c934f688b58380c78d929d422b84ca684731fe63",
+                "size": 8,
+                "vaddr": 2148231632
+              },
+              {
+                "name": "other",
+                "offset": 483800,
+                "raw_sha256": "7760b08ad67064597454aa52a054e19b23e39f20561020699945d5a05234ba1e",
+                "size": 8,
+                "vaddr": 2148231640
+              },
+              {
+                "name": "sd_lbas",
+                "offset": 483808,
+                "raw_sha256": "8cd3c9c949bb8026cb31df7fc508a3db44a18c9ce5945f9ac9bfd463598266f9",
+                "size": 52,
+                "vaddr": 2148231648
+              },
+              {
+                "name": "sd_layout",
+                "offset": 563192,
+                "raw_sha256": "86c1dfd7f942147ed8469faca345e02eeaab340154e829deaf0ee262cb94b184",
+                "size": 78,
+                "vaddr": 2148311032
+              }
+            ]
+          },
+          "native_profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+          "native_result_sha256": "315ae8c2ad8ab517ea6d14b95d3beba4701a2fe8ae6e9ad6ffc04b65f03cb5d2",
+          "native_route": {
+            "actor_contract": {
+              "actor_id": 96,
+              "anchor": [
+                -80,
+                -64
+              ],
+              "draw_flags": 132,
+              "flags": 5,
+              "palette_mode": 2,
+              "palette_override": 16,
+              "sequence_slot": 0
+            },
+            "command": 0,
+            "date": [
+              95,
+              4,
+              9,
+              6
+            ],
+            "event": [
+              16,
+              0,
+              0,
+              0
+            ],
+            "health_nibble": 0,
+            "mode": [
+              70,
+              5,
+              1,
+              0
+            ],
+            "profile": "tokimemo.native-holiday-profile.v1",
+            "profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+            "queue_index": 9,
+            "sd_profile": 1,
+            "season_index": 0,
+            "sequence_index": 0
+          },
+          "pinned_source_files": {
+            "asm/data/data_800B5950.data.s": "4482f3ec44d7a64fbcb1b305e015452e014382d6d819dd8759e730d3f0b2d439",
+            "asm/data/main/holiday.data.s": "009652561fbc1abe936406f96d04cd5cde3e4189fef1ae1e7e4ca73229452815",
+            "asm/libpress_main.s": "330179552d5f4d42a50394a2ad1907f7e6c9984dbaa84fd53603d55fee4bbd7e",
+            "include/game/day_event.h": "efe0cdf794e1bf5f35bd5ff16feeecf3946f4695e98e066c6eca50effdf6c86d",
+            "src/main/actor_sprites.c": "ec04dd6c419b8079ef9430a484eb084c44d7a52029cc1c6ea359fd8571dab546",
+            "src/main/background_images.c": "7eea24dfee7fd3503beedbd1b2f633c40f19102d21f992557d626cba3d036402",
+            "src/main/frame_render_audio.c": "b0932ca59d48bec7b3a3be55b8188b09f55f15721dbe96d84de14f2a0526d08e",
+            "src/main/holiday.c": "50f2a15282a1a0e1c93dff4c56c2bfce4e4dd83867562983f8caa405d5d67061",
+            "src/main/home_screens.c": "e3c03da3bdbf63dd4708fa451cdb5a872eadec531534c3e9e3c031b396fa8f6d",
+            "src/main/hud_panels.c": "b942acb5863f26326c044720768384cf23b156f4736c69f1eda0d34831016ae1",
+            "src/main/memory_card.c": "32fd2c5f413038eee79d940c3a964e47652b472935b34f8597231c60d5979811",
+            "src/main/scene_library.c": "c8a0315a4d4542dc13c8e1788ad199fafd28d5104bce64f08bb3d3b63e4e1a18",
+            "src/main/school_day.c": "d5f975a14823d31d03abecfc2502e71c21a1d5ec45dc79653f84dfaa390f479c"
+          },
+          "profile_kind": "holiday_command0",
+          "sd": {
+            "iso_directory_record": {
+              "extent_lba": 41487,
+              "extent_size_bytes": 83968,
+              "identifier": "SD_P24W.NBN;1",
+              "record_lba": 41445,
+              "record_length": 60,
+              "record_payload_offset": 156,
+              "sector_count": 41,
+              "sector_payload_sha256": "0c2cba6f7944096c50816b7250536e2a73f76cc7490c192979cc43198be0f805"
+            },
+            "lba_word": 41487,
+            "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+            "profile_kind": "holiday_command0",
+            "role": "holiday_command0_sd",
+            "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+            "size_bytes": 83968,
+            "source": {
+              "location": {
+                "lba": 41487
+              },
+              "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+              "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+              "size": 83968
+            },
+            "source_evidence": [
+              "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+              "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+              "src/main/scene_library.c:addr_init_holiday_sd",
+              "asm/data/main/holiday.data.s:holiday selector tables"
+            ]
+          }
+        },
+        "width": 320
+      },
+      "id": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4",
+      "image": {
+        "path": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4.background.png",
+        "sha256": "33bf3085559a8de389788f27fe1a12ddcb1a801ddf4fb9cc9c14a33df83af06b",
+        "size": 34587
+      },
+      "kind": "mdec_background",
+      "native_read_extent": {
+        "declared_iso_size_bytes": 14840,
+        "first_lba": 16379,
+        "iso_extent_sector_count": 8,
+        "last_lba_inclusive": 16388,
+        "overread_lbas": [
+          16387,
+          16388
+        ],
+        "overread_payload_used_for_mdec": false,
+        "payload_extent_sha256": "2ca9c32aecc1cd7bb9f23fa7eb81342185f01bf02dc44f4201463165e7c2b4cc",
+        "raw_sector_extent_sha256": "08bbd67a84988d63a6b7db6ebd1fc37bfc4279fc9c229bee1398ce77dfc13da1",
+        "requested_sector_count": 10,
+        "sectors": [
+          {
+            "form": "Form1",
+            "lba": 16379,
+            "payload_sha256": "076343212d3250c227a17859f24da36581926cc595fcc268153d4b2884f744bf",
+            "raw_sha256": "528afbe8b58b86de93f3e5e6a3ddecd020aec71ad7c257634989dfd5d095b1af",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16380,
+            "payload_sha256": "cb48654bdfaee98b66b61305fdbd50d237e1d763be36dabf4771a825bee63678",
+            "raw_sha256": "1248e0417efc413cc15e1f6094a271ce0e9965744dc737879c7cf1494ac060dd",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16381,
+            "payload_sha256": "d4cf4bfe616eed391feabf552620181348e159f9fff17322ea462625d24e9166",
+            "raw_sha256": "93a15c5cfd9f0b1c2a3fe7c7594cde218a5d4d2481b114a762bbf91e67aee5f5",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16382,
+            "payload_sha256": "d328e4d9e7ba6d6238580210316f305c8400af4c04f144ef55a85b7a08061eea",
+            "raw_sha256": "66f904500831ed0ae12cfd420ec246ca8d90eab93743091bdb02cf9c1203986e",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16383,
+            "payload_sha256": "d76cd05ed8ced7ef42c4c68fd7a00545b3a7f30f1e03fe234f8d266190b6ad1c",
+            "raw_sha256": "8b54a57efec78e4064732f68db728efeb7d985844dd4900afd460a28fbf2f4dd",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16384,
+            "payload_sha256": "68b6ad6aa4155308f4be8ebc1563797c5eb91f0c6623f71a0092a601a0de1256",
+            "raw_sha256": "ab2145b5e3173b91e073d931872706fda55dadbe413a5b825ef766b004843dfc",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16385,
+            "payload_sha256": "7089653e18ab5bf9734c991347637da9f255aa9921881c55da8e6d65ea9772aa",
+            "raw_sha256": "4a69bf50211f9f3a5736cb7d1eec9cb07afdbdbc7b0f3a485b2d422800407869",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16386,
+            "payload_sha256": "f59ba9fbfbe42562a11544355bb38099cbdd8c2d4ebcd904f16a9145e9de4d70",
+            "raw_sha256": "d4e1a1011dbdf67bb2564c8ea2fdceb1387b336292d826ac626ca2ffbf668f74",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16387,
+            "payload_sha256": "f3658fdd800520a103527b2af70fbc6b0ef94ea631a9ad43c66998ab8c89df14",
+            "raw_sha256": "a06224997fc0db2cfedf38aafb35918b4a158b8fb07ecb827d835b213250f9d3",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16388,
+            "payload_sha256": "16860fcb13329efc7a373c16a783e38072906699e53a11b86c099487174fcbb8",
+            "raw_sha256": "3e809ae73263cdc0f26d9a3b696b6b896fd66bdf6352863e590a9034adc5c2ff",
+            "subheader_valid": true
+          }
+        ],
+        "sectors_after_iso_extent": 2
+      },
+      "native_route": {
+        "actor_contract": {
+          "actor_id": 96,
+          "anchor": [
+            -80,
+            -64
+          ],
+          "draw_flags": 132,
+          "flags": 5,
+          "palette_mode": 2,
+          "palette_override": 16,
+          "sequence_slot": 0
+        },
+        "command": 0,
+        "date": [
+          95,
+          4,
+          9,
+          6
+        ],
+        "event": [
+          16,
+          0,
+          0,
+          0
+        ],
+        "health_nibble": 0,
+        "mode": [
+          70,
+          5,
+          1,
+          0
+        ],
+        "profile": "tokimemo.native-holiday-profile.v1",
+        "profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+        "queue_index": 9,
+        "sd_profile": 1,
+        "season_index": 0,
+        "sequence_index": 0
+      },
+      "padded_image": {
+        "path": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4.background.padded.png",
+        "sha256": "8531215e351aa68d92399ea2217af256a78221e2cd3a993d8b09caec12834ba1",
+        "size": 34671
+      },
+      "padded_size": [
+        320,
+        96
+      ],
+      "padded_stp_mask": {
+        "path": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4.background.padded.stp.png",
+        "sha256": "d3b25c49fb0dc91b5e17cdce9bd08c2239c2896982c8bc2f4e2a38630e704eeb",
+        "size": 198
+      },
+      "reader": "tools/assets/image_mdec.py:export_mdec",
+      "source": {
+        "lba": 16379,
+        "path": "CDROM/BS/C_02_03.BS",
+        "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+        "size": 14840
+      },
+      "stp_mask": {
+        "path": "asset-0b8b9f9c3c35bd56459635d36c882f7503e544c24f7cc40bdc4ffe39291cc7d4.background.stp.png",
+        "sha256": "f6c876c6547f81fc017ce59a558e8ea00fa3a08e63b4e12027ca7b3f288e1409",
+        "size": 187
+      }
+    },
+    "holiday_command_0_sd": {
+      "caller_profile": {
+        "equivalent_caller_profiles": [
+          {
+            "family": "holiday",
+            "frame_table_offset": 876,
+            "index": 1,
+            "layout_table_exe_address": 2148311038,
+            "lba_table_exe_address": 2148231652,
+            "read_sector_count": 41,
+            "sequence_table_offset": 908,
+            "source_lba": 41487,
+            "tpage_table_offset": 872
+          }
+        ],
+        "family": "holiday",
+        "frame_table_offset": 876,
+        "index": 1,
+        "layout_table_exe_address": 2148311038,
+        "lba_table_exe_address": 2148231652,
+        "read_sector_count": 41,
+        "sequence_table_offset": 908,
+        "source_lba": 41487,
+        "tpage_table_offset": 872
+      },
+      "capability": "validated_static_sd_frames_and_sequence_prefix",
+      "id": "asset-a549506ecd420dccd3d1bbf4d52b344142f1257c2484c0c8bd13dc48e7bc618a",
+      "kind": "sd_animation",
+      "native_route": {
+        "actor_contract": {
+          "actor_id": 96,
+          "anchor": [
+            -80,
+            -64
+          ],
+          "draw_flags": 132,
+          "flags": 5,
+          "palette_mode": 2,
+          "palette_override": 16,
+          "sequence_slot": 0
+        },
+        "command": 0,
+        "date": [
+          95,
+          4,
+          9,
+          6
+        ],
+        "event": [
+          16,
+          0,
+          0,
+          0
+        ],
+        "health_nibble": 0,
+        "mode": [
+          70,
+          5,
+          1,
+          0
+        ],
+        "profile": "tokimemo.native-holiday-profile.v1",
+        "profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+        "queue_index": 9,
+        "sd_profile": 1,
+        "season_index": 0,
+        "sequence_index": 0
+      },
+      "profile_index": 1,
+      "reader": "tools/assets/image_packs_sd.py:export_sd_ui",
+      "sequence_index": 0,
+      "source": {
+        "exe_sha256": "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae",
+        "lba": 41487,
+        "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+        "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+        "size": 83968
+      },
+      "source_profile": {
+        "assets": [
+          {
+            "fixed_reader_extent": {
+              "post_file_sectors_claimed_consumed_by_decoder": false,
+              "requested_sectors": 10,
+              "sectors_after_iso_file_extent": 2
+            },
+            "iso_directory_record": {
+              "extent_lba": 16318,
+              "extent_size_bytes": 16048,
+              "identifier": "C_02_01H.BS;1",
+              "record_lba": 16122,
+              "record_length": 60,
+              "record_payload_offset": 1356,
+              "sector_count": 8,
+              "sector_payload_sha256": "5755b9ebec0f1abeb742d8ec0f9f793dafcbf8a2d4051b5c057dcf4fea18316a"
+            },
+            "lba_word": 16318,
+            "path": "CDROM/BS/C_02_01H.BS",
+            "profile_kind": "holiday_command0",
+            "role": "seasonal_room",
+            "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+            "size_bytes": 16048,
+            "source": {
+              "location": {
+                "lba": 16318
+              },
+              "path": "CDROM/BS/C_02_01H.BS",
+              "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+              "size": 16048
+            },
+            "source_evidence": [
+              "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+              "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+              "src/main/scene_library.c:addr_init_holiday_sd",
+              "asm/data/main/holiday.data.s:holiday selector tables"
+            ]
+          },
+          {
+            "fixed_reader_extent": {
+              "post_file_sectors_claimed_consumed_by_decoder": false,
+              "requested_sectors": 10,
+              "sectors_after_iso_file_extent": 2
+            },
+            "iso_directory_record": {
+              "extent_lba": 16379,
+              "extent_size_bytes": 14840,
+              "identifier": "C_02_03.BS;1",
+              "record_lba": 16122,
+              "record_length": 60,
+              "record_payload_offset": 1776,
+              "sector_count": 8,
+              "sector_payload_sha256": "5755b9ebec0f1abeb742d8ec0f9f793dafcbf8a2d4051b5c057dcf4fea18316a"
+            },
+            "lba_word": 16379,
+            "path": "CDROM/BS/C_02_03.BS",
+            "profile_kind": "holiday_command0",
+            "role": "holiday_command0_background",
+            "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+            "size_bytes": 14840,
+            "source": {
+              "location": {
+                "lba": 16379
+              },
+              "path": "CDROM/BS/C_02_03.BS",
+              "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+              "size": 14840
+            },
+            "source_evidence": [
+              "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+              "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+              "src/main/scene_library.c:addr_init_holiday_sd",
+              "asm/data/main/holiday.data.s:holiday selector tables"
+            ]
+          }
+        ],
+        "executable": {
+          "path": "SLPM_86.053",
+          "sha256": "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae",
+          "tables": [
+            {
+              "name": "weekday_room",
+              "offset": 479568,
+              "raw_sha256": "d2e556f1d311928d807dc1e23f33eee2517ea740699bb635fdfe9b194fc49a9a",
+              "size": 16,
+              "vaddr": 2148227408
+            },
+            {
+              "name": "room",
+              "offset": 479584,
+              "raw_sha256": "91c37dc04e2daa7f1c5b31945178204eec2a5f26cfd9a7fe2f67d0eae649f55e",
+              "size": 16,
+              "vaddr": 2148227424
+            },
+            {
+              "name": "activity",
+              "offset": 483740,
+              "raw_sha256": "8ee6391fd1f8ba7341f91c70331136978b3606b5b714710f86d61ee520c0593c",
+              "size": 32,
+              "vaddr": 2148231580
+            },
+            {
+              "name": "summer",
+              "offset": 483792,
+              "raw_sha256": "c11e0f25935426ff77589a57c934f688b58380c78d929d422b84ca684731fe63",
+              "size": 8,
+              "vaddr": 2148231632
+            },
+            {
+              "name": "other",
+              "offset": 483800,
+              "raw_sha256": "7760b08ad67064597454aa52a054e19b23e39f20561020699945d5a05234ba1e",
+              "size": 8,
+              "vaddr": 2148231640
+            },
+            {
+              "name": "sd_lbas",
+              "offset": 483808,
+              "raw_sha256": "8cd3c9c949bb8026cb31df7fc508a3db44a18c9ce5945f9ac9bfd463598266f9",
+              "size": 52,
+              "vaddr": 2148231648
+            },
+            {
+              "name": "sd_layout",
+              "offset": 563192,
+              "raw_sha256": "86c1dfd7f942147ed8469faca345e02eeaab340154e829deaf0ee262cb94b184",
+              "size": 78,
+              "vaddr": 2148311032
+            }
+          ]
+        },
+        "native_profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+        "native_result_sha256": "315ae8c2ad8ab517ea6d14b95d3beba4701a2fe8ae6e9ad6ffc04b65f03cb5d2",
+        "native_route": {
+          "actor_contract": {
+            "actor_id": 96,
+            "anchor": [
+              -80,
+              -64
+            ],
+            "draw_flags": 132,
+            "flags": 5,
+            "palette_mode": 2,
+            "palette_override": 16,
+            "sequence_slot": 0
+          },
+          "command": 0,
+          "date": [
+            95,
+            4,
+            9,
+            6
+          ],
+          "event": [
+            16,
+            0,
+            0,
+            0
+          ],
+          "health_nibble": 0,
+          "mode": [
+            70,
+            5,
+            1,
+            0
+          ],
+          "profile": "tokimemo.native-holiday-profile.v1",
+          "profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+          "queue_index": 9,
+          "sd_profile": 1,
+          "season_index": 0,
+          "sequence_index": 0
+        },
+        "pinned_source_files": {
+          "asm/data/data_800B5950.data.s": "4482f3ec44d7a64fbcb1b305e015452e014382d6d819dd8759e730d3f0b2d439",
+          "asm/data/main/holiday.data.s": "009652561fbc1abe936406f96d04cd5cde3e4189fef1ae1e7e4ca73229452815",
+          "asm/libpress_main.s": "330179552d5f4d42a50394a2ad1907f7e6c9984dbaa84fd53603d55fee4bbd7e",
+          "include/game/day_event.h": "efe0cdf794e1bf5f35bd5ff16feeecf3946f4695e98e066c6eca50effdf6c86d",
+          "src/main/actor_sprites.c": "ec04dd6c419b8079ef9430a484eb084c44d7a52029cc1c6ea359fd8571dab546",
+          "src/main/background_images.c": "7eea24dfee7fd3503beedbd1b2f633c40f19102d21f992557d626cba3d036402",
+          "src/main/frame_render_audio.c": "b0932ca59d48bec7b3a3be55b8188b09f55f15721dbe96d84de14f2a0526d08e",
+          "src/main/holiday.c": "50f2a15282a1a0e1c93dff4c56c2bfce4e4dd83867562983f8caa405d5d67061",
+          "src/main/home_screens.c": "e3c03da3bdbf63dd4708fa451cdb5a872eadec531534c3e9e3c031b396fa8f6d",
+          "src/main/hud_panels.c": "b942acb5863f26326c044720768384cf23b156f4736c69f1eda0d34831016ae1",
+          "src/main/memory_card.c": "32fd2c5f413038eee79d940c3a964e47652b472935b34f8597231c60d5979811",
+          "src/main/scene_library.c": "c8a0315a4d4542dc13c8e1788ad199fafd28d5104bce64f08bb3d3b63e4e1a18",
+          "src/main/school_day.c": "d5f975a14823d31d03abecfc2502e71c21a1d5ec45dc79653f84dfaa390f479c"
+        },
+        "profile_kind": "holiday_command0",
+        "sd": {
+          "iso_directory_record": {
+            "extent_lba": 41487,
+            "extent_size_bytes": 83968,
+            "identifier": "SD_P24W.NBN;1",
+            "record_lba": 41445,
+            "record_length": 60,
+            "record_payload_offset": 156,
+            "sector_count": 41,
+            "sector_payload_sha256": "0c2cba6f7944096c50816b7250536e2a73f76cc7490c192979cc43198be0f805"
+          },
+          "lba_word": 41487,
+          "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+          "profile_kind": "holiday_command0",
+          "role": "holiday_command0_sd",
+          "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+          "size_bytes": 83968,
+          "source": {
+            "location": {
+              "lba": 41487
+            },
+            "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+            "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+            "size": 83968
+          },
+          "source_evidence": [
+            "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+            "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+            "src/main/scene_library.c:addr_init_holiday_sd",
+            "asm/data/main/holiday.data.s:holiday selector tables"
+          ]
+        }
+      }
+    },
+    "holiday_room_background": {
+      "active_crop": [
+        0,
+        0,
+        320,
+        88
+      ],
+      "active_size": [
+        320,
+        88
+      ],
+      "capability": "source_profiled_static_background_preview",
+      "geometry_context": {
+        "evidence": [
+          "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+          "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+          "src/main/scene_library.c:addr_init_holiday_sd",
+          "asm/data/main/holiday.data.s:holiday selector tables"
+        ],
+        "geometry": {
+          "active_decode_rect_height": 88,
+          "active_pixels": {
+            "height": 88,
+            "width": 320
+          },
+          "caller_mode": 0,
+          "display_sprite_pieces_relative_to_draw_origin": [
+            {
+              "origin_offset_xy": [
+                -160,
+                -48
+              ],
+              "size_wh": [
+                192,
+                88
+              ]
+            },
+            {
+              "origin_offset_xy": [
+                32,
+                -48
+              ],
+              "size_wh": [
+                128,
+                88
+              ]
+            }
+          ],
+          "macroblock_rows_from_source_helper": 6,
+          "overread_bytes_used_for_decode": false,
+          "padded_pixels": {
+            "height": 96,
+            "width": 320
+          },
+          "runtime_draw_origin_values_known": false,
+          "source_derived": true,
+          "vram_rectangles_by_dec_bg_decode_to_vram_return": [
+            {
+              "rect_xywh": [
+                704,
+                160,
+                320,
+                88
+              ],
+              "return_value": 0
+            },
+            {
+              "rect_xywh": [
+                320,
+                416,
+                320,
+                88
+              ],
+              "return_value": 1
+            }
+          ]
+        },
+        "height": 88,
+        "padded_height": 96,
+        "source_profile": {
+          "assets": [
+            {
+              "fixed_reader_extent": {
+                "post_file_sectors_claimed_consumed_by_decoder": false,
+                "requested_sectors": 10,
+                "sectors_after_iso_file_extent": 2
+              },
+              "iso_directory_record": {
+                "extent_lba": 16318,
+                "extent_size_bytes": 16048,
+                "identifier": "C_02_01H.BS;1",
+                "record_lba": 16122,
+                "record_length": 60,
+                "record_payload_offset": 1356,
+                "sector_count": 8,
+                "sector_payload_sha256": "5755b9ebec0f1abeb742d8ec0f9f793dafcbf8a2d4051b5c057dcf4fea18316a"
+              },
+              "lba_word": 16318,
+              "path": "CDROM/BS/C_02_01H.BS",
+              "profile_kind": "holiday_command0",
+              "role": "seasonal_room",
+              "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+              "size_bytes": 16048,
+              "source": {
+                "location": {
+                  "lba": 16318
+                },
+                "path": "CDROM/BS/C_02_01H.BS",
+                "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+                "size": 16048
+              },
+              "source_evidence": [
+                "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+                "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+                "src/main/scene_library.c:addr_init_holiday_sd",
+                "asm/data/main/holiday.data.s:holiday selector tables"
+              ]
+            },
+            {
+              "fixed_reader_extent": {
+                "post_file_sectors_claimed_consumed_by_decoder": false,
+                "requested_sectors": 10,
+                "sectors_after_iso_file_extent": 2
+              },
+              "iso_directory_record": {
+                "extent_lba": 16379,
+                "extent_size_bytes": 14840,
+                "identifier": "C_02_03.BS;1",
+                "record_lba": 16122,
+                "record_length": 60,
+                "record_payload_offset": 1776,
+                "sector_count": 8,
+                "sector_payload_sha256": "5755b9ebec0f1abeb742d8ec0f9f793dafcbf8a2d4051b5c057dcf4fea18316a"
+              },
+              "lba_word": 16379,
+              "path": "CDROM/BS/C_02_03.BS",
+              "profile_kind": "holiday_command0",
+              "role": "holiday_command0_background",
+              "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+              "size_bytes": 14840,
+              "source": {
+                "location": {
+                  "lba": 16379
+                },
+                "path": "CDROM/BS/C_02_03.BS",
+                "sha256": "1fa26a6b07b8f8114c695b5b7f979616ddb0d3ac676cd7576e7f79fe59d7c3cc",
+                "size": 14840
+              },
+              "source_evidence": [
+                "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+                "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+                "src/main/scene_library.c:addr_init_holiday_sd",
+                "asm/data/main/holiday.data.s:holiday selector tables"
+              ]
+            }
+          ],
+          "executable": {
+            "path": "SLPM_86.053",
+            "sha256": "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae",
+            "tables": [
+              {
+                "name": "weekday_room",
+                "offset": 479568,
+                "raw_sha256": "d2e556f1d311928d807dc1e23f33eee2517ea740699bb635fdfe9b194fc49a9a",
+                "size": 16,
+                "vaddr": 2148227408
+              },
+              {
+                "name": "room",
+                "offset": 479584,
+                "raw_sha256": "91c37dc04e2daa7f1c5b31945178204eec2a5f26cfd9a7fe2f67d0eae649f55e",
+                "size": 16,
+                "vaddr": 2148227424
+              },
+              {
+                "name": "activity",
+                "offset": 483740,
+                "raw_sha256": "8ee6391fd1f8ba7341f91c70331136978b3606b5b714710f86d61ee520c0593c",
+                "size": 32,
+                "vaddr": 2148231580
+              },
+              {
+                "name": "summer",
+                "offset": 483792,
+                "raw_sha256": "c11e0f25935426ff77589a57c934f688b58380c78d929d422b84ca684731fe63",
+                "size": 8,
+                "vaddr": 2148231632
+              },
+              {
+                "name": "other",
+                "offset": 483800,
+                "raw_sha256": "7760b08ad67064597454aa52a054e19b23e39f20561020699945d5a05234ba1e",
+                "size": 8,
+                "vaddr": 2148231640
+              },
+              {
+                "name": "sd_lbas",
+                "offset": 483808,
+                "raw_sha256": "8cd3c9c949bb8026cb31df7fc508a3db44a18c9ce5945f9ac9bfd463598266f9",
+                "size": 52,
+                "vaddr": 2148231648
+              },
+              {
+                "name": "sd_layout",
+                "offset": 563192,
+                "raw_sha256": "86c1dfd7f942147ed8469faca345e02eeaab340154e829deaf0ee262cb94b184",
+                "size": 78,
+                "vaddr": 2148311032
+              }
+            ]
+          },
+          "native_profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+          "native_result_sha256": "315ae8c2ad8ab517ea6d14b95d3beba4701a2fe8ae6e9ad6ffc04b65f03cb5d2",
+          "native_route": {
+            "actor_contract": {
+              "actor_id": 96,
+              "anchor": [
+                -80,
+                -64
+              ],
+              "draw_flags": 132,
+              "flags": 5,
+              "palette_mode": 2,
+              "palette_override": 16,
+              "sequence_slot": 0
+            },
+            "command": 0,
+            "date": [
+              95,
+              4,
+              9,
+              6
+            ],
+            "event": [
+              16,
+              0,
+              0,
+              0
+            ],
+            "health_nibble": 0,
+            "mode": [
+              70,
+              5,
+              1,
+              0
+            ],
+            "profile": "tokimemo.native-holiday-profile.v1",
+            "profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+            "queue_index": 9,
+            "sd_profile": 1,
+            "season_index": 0,
+            "sequence_index": 0
+          },
+          "pinned_source_files": {
+            "asm/data/data_800B5950.data.s": "4482f3ec44d7a64fbcb1b305e015452e014382d6d819dd8759e730d3f0b2d439",
+            "asm/data/main/holiday.data.s": "009652561fbc1abe936406f96d04cd5cde3e4189fef1ae1e7e4ca73229452815",
+            "asm/libpress_main.s": "330179552d5f4d42a50394a2ad1907f7e6c9984dbaa84fd53603d55fee4bbd7e",
+            "include/game/day_event.h": "efe0cdf794e1bf5f35bd5ff16feeecf3946f4695e98e066c6eca50effdf6c86d",
+            "src/main/actor_sprites.c": "ec04dd6c419b8079ef9430a484eb084c44d7a52029cc1c6ea359fd8571dab546",
+            "src/main/background_images.c": "7eea24dfee7fd3503beedbd1b2f633c40f19102d21f992557d626cba3d036402",
+            "src/main/frame_render_audio.c": "b0932ca59d48bec7b3a3be55b8188b09f55f15721dbe96d84de14f2a0526d08e",
+            "src/main/holiday.c": "50f2a15282a1a0e1c93dff4c56c2bfce4e4dd83867562983f8caa405d5d67061",
+            "src/main/home_screens.c": "e3c03da3bdbf63dd4708fa451cdb5a872eadec531534c3e9e3c031b396fa8f6d",
+            "src/main/hud_panels.c": "b942acb5863f26326c044720768384cf23b156f4736c69f1eda0d34831016ae1",
+            "src/main/memory_card.c": "32fd2c5f413038eee79d940c3a964e47652b472935b34f8597231c60d5979811",
+            "src/main/scene_library.c": "c8a0315a4d4542dc13c8e1788ad199fafd28d5104bce64f08bb3d3b63e4e1a18",
+            "src/main/school_day.c": "d5f975a14823d31d03abecfc2502e71c21a1d5ec45dc79653f84dfaa390f479c"
+          },
+          "profile_kind": "holiday_command0",
+          "sd": {
+            "iso_directory_record": {
+              "extent_lba": 41487,
+              "extent_size_bytes": 83968,
+              "identifier": "SD_P24W.NBN;1",
+              "record_lba": 41445,
+              "record_length": 60,
+              "record_payload_offset": 156,
+              "sector_count": 41,
+              "sector_payload_sha256": "0c2cba6f7944096c50816b7250536e2a73f76cc7490c192979cc43198be0f805"
+            },
+            "lba_word": 41487,
+            "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+            "profile_kind": "holiday_command0",
+            "role": "holiday_command0_sd",
+            "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+            "size_bytes": 83968,
+            "source": {
+              "location": {
+                "lba": 41487
+              },
+              "path": "CDROM/HOLI_SD/SD_P24W.NBN",
+              "sha256": "d3d769779a8fd6d7d088978db69870c1fe2f9008c303d40f14f43a6ef6220d36",
+              "size": 83968
+            },
+            "source_evidence": [
+              "src/main/holiday.c:holiday_open_wait_bg/holiday_activity_load/holiday_activity_sd_setup",
+              "src/main/background_images.c:dec_bg_decode_to_vram/dec_bg_draw mode0",
+              "src/main/scene_library.c:addr_init_holiday_sd",
+              "asm/data/main/holiday.data.s:holiday selector tables"
+            ]
+          }
+        },
+        "width": 320
+      },
+      "id": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb",
+      "image": {
+        "path": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb.background.png",
+        "sha256": "b4f603ee1155ed26c34a2e96018b6cef35e435d52977eb15eabcd55f7800b28c",
+        "size": 38396
+      },
+      "kind": "mdec_background",
+      "native_read_extent": {
+        "declared_iso_size_bytes": 16048,
+        "first_lba": 16318,
+        "iso_extent_sector_count": 8,
+        "last_lba_inclusive": 16327,
+        "overread_lbas": [
+          16326,
+          16327
+        ],
+        "overread_payload_used_for_mdec": false,
+        "payload_extent_sha256": "810344903c00b8116502a7f9cfe6c5b76fd0443c73cea96112fe391e0a9a1864",
+        "raw_sector_extent_sha256": "5a8a89a0a200fb5fce88e109db5cb121a24dd233a6027b2a4a847378b1447a2f",
+        "requested_sector_count": 10,
+        "sectors": [
+          {
+            "form": "Form1",
+            "lba": 16318,
+            "payload_sha256": "1fdc5ff296ad48fa5977d0e581779b0e934a623c08705fa6041cc3c498876905",
+            "raw_sha256": "a251ded32a3276a1f884a1e4a11a289cbc36b3bd9c7cf11c267ec4100d305f5c",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16319,
+            "payload_sha256": "47843f14be5dc8496e1720342005aa97668f2268d5d72fa4d175af5ca13cb96f",
+            "raw_sha256": "ce0de0a329e424cea3b62f96c254c516f459b8e7b8aad625542cdeea97a97961",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16320,
+            "payload_sha256": "707ec34f1245491fd59b8430b4dfdd1a2db73dc208a90568b3bf53134ae3dcee",
+            "raw_sha256": "f1a0dda6ac68b58fe522ed5b7b9dce75255d9a91de82d5ee15d20adbd21a8a1a",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16321,
+            "payload_sha256": "adaaef5284801f9d194e5c32d301465ed35b24bfb39d20ce77fa9f1484a278ac",
+            "raw_sha256": "64f30531cb5c2984297ea3cf6f780f20ae19bedc2491fdbb50ff30fcba5cffc8",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16322,
+            "payload_sha256": "c0353f7f78fef337176de7272db1e3617ec330f4cf1ebe4469f164c5e98cdbf3",
+            "raw_sha256": "31df31c219a1be72801442bfd71d81e1db1a16bcc004815db4c297a734dc5e33",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16323,
+            "payload_sha256": "b73fcb4420e10e1f95a8de68a18cc14eca8460f1fcfe363a4aba7acf67d96991",
+            "raw_sha256": "b0a6193ebd77c39a874c0a53b1e2c0b6bd2c2d2d6a8778893a6acb21a31cdd0f",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16324,
+            "payload_sha256": "d1d669658953657f5e8f3f5b2cda17a23f54e124eb563fade271e722f43842bd",
+            "raw_sha256": "0dad0492a4a3cf89a905bbf86654d27382a196e694778a2ca2ba0b3f7eb3e26e",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16325,
+            "payload_sha256": "5294a9e7021728e2e838a390a1b35600cfa11167e908bcaaf48baebfada5a479",
+            "raw_sha256": "51d2f718020ff06ed0d74506b2d367521dabbc4c577f5d1da7de6b349d839f75",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16326,
+            "payload_sha256": "5c36a592d0ad462edbab5e0b429114368a08079342db2cbfad8b2e1dd27afd58",
+            "raw_sha256": "65e1dde40507466fabd172bcf9c07916e13e9364fdc217bb25c83e412aecbe80",
+            "subheader_valid": true
+          },
+          {
+            "form": "Form1",
+            "lba": 16327,
+            "payload_sha256": "5fec230f3240be01f3a2fc15626b09ad1fe57de1832d70aad930f8fa021cb29f",
+            "raw_sha256": "eeb2ba63859630caa8bfbd501763becfa8b64e520becf377c8f4fbfff467f9e4",
+            "subheader_valid": true
+          }
+        ],
+        "sectors_after_iso_extent": 2
+      },
+      "native_route": {
+        "actor_contract": {
+          "actor_id": 96,
+          "anchor": [
+            -80,
+            -64
+          ],
+          "draw_flags": 132,
+          "flags": 5,
+          "palette_mode": 2,
+          "palette_override": 16,
+          "sequence_slot": 0
+        },
+        "command": 0,
+        "date": [
+          95,
+          4,
+          9,
+          6
+        ],
+        "event": [
+          16,
+          0,
+          0,
+          0
+        ],
+        "health_nibble": 0,
+        "mode": [
+          70,
+          5,
+          1,
+          0
+        ],
+        "profile": "tokimemo.native-holiday-profile.v1",
+        "profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+        "queue_index": 9,
+        "sd_profile": 1,
+        "season_index": 0,
+        "sequence_index": 0
+      },
+      "padded_image": {
+        "path": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb.background.padded.png",
+        "sha256": "c1fee2e41b30dfddbd759e8fcc4676129db7405e1ec104166a4fd3402a19a174",
+        "size": 38483
+      },
+      "padded_size": [
+        320,
+        96
+      ],
+      "padded_stp_mask": {
+        "path": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb.background.padded.stp.png",
+        "sha256": "d3b25c49fb0dc91b5e17cdce9bd08c2239c2896982c8bc2f4e2a38630e704eeb",
+        "size": 198
+      },
+      "reader": "tools/assets/image_mdec.py:export_mdec",
+      "source": {
+        "lba": 16318,
+        "path": "CDROM/BS/C_02_01H.BS",
+        "sha256": "98f97915de1e3ec174f47a6fcac79b0dd84052e870e4f6a4babed473ae2a7252",
+        "size": 16048
+      },
+      "stp_mask": {
+        "path": "asset-6acf635b0fa775c476ad8ee4e18488a041d6366b18f22c804c372fde7cf326cb.background.stp.png",
+        "sha256": "f6c876c6547f81fc017ce59a558e8ea00fa3a08e63b4e12027ca7b3f288e1409",
+        "size": 187
+      }
+    }
+  },
+  "native_profile_sha256": "10817b861efde8caef3043c45c931e9f340e7dfcae92f0c43f6699b0652ea445",
+  "route_tables": {
+    "provenance": {
+      "holiday_activity_background_lbas": {
+        "exe_offset": 483740,
+        "raw_sha256": "8ee6391fd1f8ba7341f91c70331136978b3606b5b714710f86d61ee520c0593c",
+        "shape": [
+          8
+        ],
+        "size": 32,
+        "type": "s32",
+        "vaddr": 2148231580
+      },
+      "holiday_sd_lbas": {
+        "exe_offset": 483808,
+        "raw_sha256": "8cd3c9c949bb8026cb31df7fc508a3db44a18c9ce5945f9ac9bfd463598266f9",
+        "shape": [
+          13
+        ],
+        "size": 52,
+        "type": "s32",
+        "vaddr": 2148231648
+      },
+      "holiday_sd_non_summer": {
+        "exe_offset": 483800,
+        "raw_sha256": "7760b08ad67064597454aa52a054e19b23e39f20561020699945d5a05234ba1e",
+        "shape": [
+          8
+        ],
+        "size": 8,
+        "type": "u8",
+        "vaddr": 2148231640
+      },
+      "holiday_sd_summer": {
+        "exe_offset": 483792,
+        "raw_sha256": "c11e0f25935426ff77589a57c934f688b58380c78d929d422b84ca684731fe63",
+        "shape": [
+          8
+        ],
+        "size": 8,
+        "type": "u8",
+        "vaddr": 2148231632
+      },
+      "seasonal_room_background_lbas": {
+        "exe_offset": 479584,
+        "raw_sha256": "91c37dc04e2daa7f1c5b31945178204eec2a5f26cfd9a7fe2f67d0eae649f55e",
+        "shape": [
+          4
+        ],
+        "size": 16,
+        "type": "s32",
+        "vaddr": 2148227424
+      },
+      "weekday_room_background_lbas": {
+        "exe_offset": 479568,
+        "raw_sha256": "d2e556f1d311928d807dc1e23f33eee2517ea740699bb635fdfe9b194fc49a9a",
+        "shape": [
+          4
+        ],
+        "size": 16,
+        "type": "s32",
+        "vaddr": 2148227408
+      }
+    },
+    "schema": "tokimemo.holiday-route-tables.v1"
+  },
+  "schema": "tokimemo.holiday-command0-content-profile.v1",
+  "sd_metadata_sha256": "24e1c78b2aceae01b26524f2694e8a2c1d98bf3d26fdf5b00664a8956436813b"
+}

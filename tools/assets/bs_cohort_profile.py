@@ -323,7 +323,14 @@ def build_profile_context(source, entries, repository_root, profile_kind="weekly
                             "profile_kind": profile_kind},
             "assets": records,
         },
-        "geometry": {"active_pixels": {"width": 320, "height": 88},
+        "geometry": background_geometry_profile(),
+        "assets": records,
+    }
+
+
+def background_geometry_profile():
+    """Return the decode-mode-zero geometry established by the pinned native helpers."""
+    return {"active_pixels": {"width": 320, "height": 88},
                      "padded_pixels": {"width": 320, "height": 96},
                      "source_derived": True,
                      "caller_mode": 0,
@@ -338,6 +345,4 @@ def build_profile_context(source, entries, repository_root, profile_kind="weekly
                          {"origin_offset_xy": [0x20, -0x30], "size_wh": [0x80, 0x58]},
                      ],
                      "runtime_draw_origin_values_known": False,
-                     "overread_bytes_used_for_decode": False},
-        "assets": records,
-    }
+                     "overread_bytes_used_for_decode": False}

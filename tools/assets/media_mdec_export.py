@@ -136,7 +136,11 @@ def export_mdec_source(source, destination, contexts=None, baseline=None, progre
         if contexts is not None:
             raise ValueError("trusted BS profile mode does not accept an external context/report")
         profile_kind = trusted_bs_profile if isinstance(trusted_bs_profile, str) else "weekly"
-        contexts = build_profile_context(source, entries, source_root, profile_kind)
+        if profile_kind == "holiday_command0":
+            from .holiday_content_profile import build_holiday_profile
+            contexts = build_holiday_profile(source, entries, source_root)
+        else:
+            contexts = build_profile_context(source, entries, source_root, profile_kind)
         cohort_records = {record["path"]: record for record in contexts["assets"]}
     elif not isinstance(contexts, dict):
         raise ValueError("contexts report must be an object")
@@ -301,6 +305,7 @@ def main(argv=None):
     parser.add_argument("--contexts")
     parser.add_argument("--bs-caller-cohort", action="store_true",
                         help="use the checked-in finite BS profile and verify current source plus original input")
+    parser.add_argument("--holiday-command0", action="store_true", help="use the finite April9 holiday room/activity profile")
     parser.add_argument("--bs-command7", action="store_true", help="use the strict command-7 weekly background profile")
     parser.add_argument("--bs-seasonal-cohort", action="store_true",
                         help="use the checked-in four-row seasonal school-day profile")
@@ -311,7 +316,7 @@ def main(argv=None):
     parser.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     try:
-        selected_profiles = int(args.bs_caller_cohort) + int(args.bs_seasonal_cohort) + int(args.bs_command7)
+        selected_profiles = int(args.bs_caller_cohort) + int(args.bs_seasonal_cohort) + int(args.bs_command7) + int(args.holiday_command0)
         if bool(args.contexts) == (selected_profiles > 0) or selected_profiles > 1:
             raise ValueError("provide exactly one context or built-in BS profile")
         contexts = json.loads(Path(args.contexts).read_text()) if args.contexts else None
@@ -321,7 +326,7 @@ def main(argv=None):
                                         progress=lambda count: print(f"BS inspected: {count}", flush=True),
                                         only_paths=args.only_source,
                                         repository_root=args.repository_root,
-                                        trusted_bs_profile=("command7" if args.bs_command7 else "seasonal" if args.bs_seasonal_cohort
+                                        trusted_bs_profile=("holiday_command0" if args.holiday_command0 else "command7" if args.bs_command7 else "seasonal" if args.bs_seasonal_cohort
                                                             else args.bs_caller_cohort))
         print(json.dumps(result["coverage"], sort_keys=True))
         return 1 if result["coverage"]["status"].get("invalid") else 0

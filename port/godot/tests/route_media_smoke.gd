@@ -20,7 +20,8 @@ func _initialize() -> void:
 		return
 	var total_frames := 0
 	var manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string(root.path_join("manifest.json")))
-	var extended: bool = manifest.get("schema") == "tokimemo.school-day-media.v2"
+	var holiday: bool = manifest.get("schema") == "tokimemo.school-day-media.v3"
+	var extended: bool = manifest.get("schema") in ["tokimemo.school-day-media.v2", "tokimemo.school-day-media.v3"]
 	var rest_bg: Dictionary = store.get_background("command_7_background")
 	if extended:
 		if rest_bg.is_empty() or rest_bg["image_data"].get_size() != Vector2i(320, 88) or rest_bg["padded_image_data"].get_size() != Vector2i(320, 96):
@@ -29,7 +30,26 @@ func _initialize() -> void:
 	elif not rest_bg.is_empty():
 		_fail("v1 pack exposed unadvertised command-7 background")
 		return
-	for key in ["command_0_sd", "command_7_sd"]:
+	var sd_keys := ["command_0_sd", "command_7_sd"]
+	if holiday:
+		sd_keys.append("holiday_command_0_sd")
+		for key in ["holiday_room_background", "holiday_command_0_background"]:
+			var image: Dictionary = store.get_background(key)
+			if image.is_empty() or image["image_data"].get_size() != Vector2i(320, 88) or image["padded_image_data"].get_size() != Vector2i(320, 96):
+				_fail("holiday background getter failed: " + key)
+				return
+		var tables: Dictionary = store.get_route_tables()
+		if tables.size() != 6 or tables["weekday_room_background_lbas"].size() != 4 or int(tables["weekday_room_background_lbas"][0]) != 16361 or int(tables["seasonal_room_background_lbas"][0]) != 16318:
+			_fail("weekday and holiday room dependencies are missing or conflated")
+			return
+		tables["weekday_room_background_lbas"][0] = 1
+		if int(store.get_route_tables()["weekday_room_background_lbas"][0]) != 16361 or not store.get_background("holiday_command_0_sd").is_empty():
+			_fail("route metadata escaped defensive getters")
+			return
+	elif not store.get_route_tables().is_empty():
+		_fail("older pack exposed unadvertised holiday tables")
+		return
+	for key in sd_keys:
 		var seq := store.get_sequence(key, 0)
 		if seq.is_empty():
 			_fail("sequence zero is unavailable: " + key)
@@ -43,7 +63,7 @@ func _initialize() -> void:
 				_fail("validated SD frame/image is unavailable: " + key)
 				return
 			total_frames += 1
-	if total_frames != 16:
+	if total_frames != (24 if holiday else 16):
 		_fail("sequence frame count changed: %d" % total_frames)
 		return
 	var cases: Array = [
@@ -67,6 +87,24 @@ func _initialize() -> void:
 			{"name": "command7-iso", "mutate": func(d): d["components"]["command_7_background"]["geometry_context"]["source_profile"]["assets"][0]["iso_directory_record"]["record_payload_offset"] = 1117},
 			{"name": "command7-bool", "mutate": func(d): d["components"]["command_7_background"]["geometry_context"]["width"] = true},
 		])
+	if holiday:
+		cases.append_array([
+			{"name": "holiday-missing-room", "mutate": func(d): d["components"].erase("holiday_room_background")},
+			{"name": "holiday-provenance", "mutate": func(d): d["provenance"]["holiday_profile_sha256"] = "0".repeat(64)},
+			{"name": "weekday-room-confusion", "mutate": func(d): d["route_tables"]["values"]["weekday_room_background_lbas"][0] = 16318},
+			{"name": "holiday-overread", "mutate": func(d): d["components"]["holiday_command_0_background"]["native_read_extent"]["overread_payload_used_for_mdec"] = true},
+			{"name": "holiday-sd-caller", "mutate": func(d): d["components"]["holiday_command_0_sd"]["caller_profile"]["index"] = 0},
+			{"name": "holiday-event", "mutate": func(d): d["components"]["holiday_command_0_sd"]["native_route"]["event"][0] = 0},
+			{"name": "holiday-clut", "mutate": func(d): d["components"]["holiday_command_0_sd"]["frames"][0]["parts"][0]["clut_vram"] = [16, 496]},
+			{"name": "holiday-timing-coherent", "mutate": func(d): d["components"]["holiday_command_0_sd"]["sequences"][0]["steps"][0]["duration"] = 5},
+			{"name": "holiday-frame-order", "mutate": func(d): d["components"]["holiday_command_0_sd"]["sequences"][0]["steps"][0]["frame_index"] = 1},
+			{"name": "holiday-frame-origin", "mutate": func(d): d["components"]["holiday_command_0_sd"]["frames"][0]["origin"][0] = 1},
+			{"name": "holiday-coherent-palette", "mutate": func(d): _mutate_holiday_palette(d)},
+			{"name": "holiday-palette-mode", "mutate": func(d): d["components"]["holiday_command_0_sd"]["palette"]["mode"] = 1},
+		])
+		if not _reject_missing_holiday_payload(root):
+			_fail("missing holiday payload was accepted or exposed partial content")
+			return
 	for case in cases:
 		if not _reject_mutated_pack(root, case["name"], case["mutate"]):
 			_fail("invalid fixture was accepted or exposed partial content: " + case["name"])
@@ -120,7 +158,7 @@ func _reject_mutated_pack(source: String, label: String, mutate: Callable) -> bo
 	file.close()
 	var negative = Store.new()
 	var rejected := not negative.open_pack(target)
-	var empty := negative.get_background().is_empty() and negative.get_background("command_7_background").is_empty() and negative.get_frame("command_0_sd", 0).is_empty()
+	var empty := negative.get_background().is_empty() and negative.get_background("command_7_background").is_empty() and negative.get_frame("command_0_sd", 0).is_empty() and negative.get_route_tables().is_empty() and negative.get_background("holiday_room_background").is_empty() and negative.get_frame("holiday_command_0_sd", 0).is_empty()
 	_remove_tree(target)
 	return rejected and empty and not negative.error_message().is_empty()
 
@@ -184,7 +222,7 @@ func _reject_oversized_png(source: String) -> bool:
 	var negative = Store.new()
 	var rejected := not negative.open_pack(target)
 	var bounded_error := negative.error_message().contains("header dimensions")
-	var empty := negative.get_background().is_empty() and negative.get_background("command_7_background").is_empty() and negative.get_frame("command_0_sd", 0).is_empty()
+	var empty := negative.get_background().is_empty() and negative.get_background("command_7_background").is_empty() and negative.get_frame("command_0_sd", 0).is_empty() and negative.get_route_tables().is_empty() and negative.get_background("holiday_room_background").is_empty() and negative.get_frame("holiday_command_0_sd", 0).is_empty()
 	_remove_tree(target)
 	return rejected and bounded_error and empty
 
@@ -193,3 +231,23 @@ func _bytes_sha(bytes: PackedByteArray) -> String:
 	ctx.start(HashingContext.HASH_SHA256)
 	ctx.update(bytes)
 	return ctx.finish().hex_encode()
+
+func _reject_missing_holiday_payload(source: String) -> bool:
+	var target := "/tmp/tokimemo-holiday-missing-payload"
+	_remove_tree(target)
+	if not _copy_tree(source, target):
+		return false
+	var doc: Variant = JSON.parse_string(FileAccess.get_file_as_string(target.path_join("manifest.json")))
+	var image: String = doc["components"]["holiday_command_0_sd"]["frames"][0]["png"]["path"]
+	DirAccess.remove_absolute(target.path_join("assets").path_join(image))
+	var negative = Store.new()
+	var rejected: bool = not negative.open_pack(target)
+	var empty: bool = negative.get_route_tables().is_empty() and negative.get_background().is_empty() and negative.get_background("holiday_room_background").is_empty() and negative.get_frame("holiday_command_0_sd", 0).is_empty()
+	_remove_tree(target)
+	return rejected and empty
+
+func _mutate_holiday_palette(doc: Dictionary) -> void:
+	var sd: Dictionary = doc["components"]["holiday_command_0_sd"]
+	sd["palette"]["source_words"][1] = int(sd["palette"]["source_words"][1]) ^ 1
+	for frame in sd["frames"]:
+		frame["source_palette_words"][1] = int(frame["source_palette_words"][1]) ^ 1

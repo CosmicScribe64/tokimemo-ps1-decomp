@@ -10,6 +10,8 @@ links: ["[[phase3]]", "[[tickets/T-29009-ordinary-week-continuation]]"]
 
 ## Goal
 
+2026-10-25 content integration: root applied the reviewed twelve-file holiday media packet plus the finite project-root rejection fix (thirteen resulting source/test/schema files). A fresh installed export reproduces all 129 reviewed files and manifest `d9e38432d4eac758a774ba4248eed0629148a3050b8a714d1b99c08c1db82005` at `.asset-cache/port/holiday-command0-current-964ce`. Installed Python checks pass 23/23 with no skips; actual Godot getters/negative cases, five shared suites and the current rest/study/save regression driver pass. Review and acceptance evidence: `.claude/orchestrator/state/T-29013/holiday-location-root-review.md` and `canonical-media-proof/acceptance.json`. Original table values, images and palettes remain external. This supplies Sunday content; the connected holiday scene, composed rendering, audio and full route acceptance remain open.
+
 Continue the captured 1995-04-09 route through the original normal-holiday screen, command 0 activity/result, queue exit and next command boundary. This contributes to a complete ordinary week; it must not skip appointments, birthdays, health checks or encounters.
 
 ## Owned scope
