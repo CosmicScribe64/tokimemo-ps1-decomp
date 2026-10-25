@@ -2184,3 +2184,7 @@ Integrated eleven exact reviewed source/test files for [[tickets/T-29011-native-
 ## [2026-10-25] decision | Hold rest app until save composition is fixed
 
 Current-composition review for [[tickets/T-29008-assemble-playable-development-app]] reproduced two save integration defects despite passing standalone rest/native tests: unresolved rest draw IDs and lost command capabilities after load. Root preserved the working canonical app and dispatched the finite correction to the save owner. The rest owner continues [[tickets/T-29009-ordinary-week-continuation]] toward the full ordinary week under a bounded serialized emulator lease. Native HUD, New Game UI and holiday content work continue independently.
+
+## [2026-10-25] ticket | Expand ordinary command content coverage
+
+Opened [[tickets/T-29014-ordinary-command-content-coverage]] for commands 1 through 6 so full-game progress continues alongside rest/save, Sunday, HUD and New Game work. The owner prepares isolated original-input exporter/runtime capability changes; inventory alone is not completion, and root retains shared integration and emulator scheduling.
