@@ -1981,3 +1981,7 @@ Applied four new music source/test files from reviewed v5 after all native/parse
 ## [2026-10-25] lint | Refresh the generated ticket catalog
 
 Regenerated [[tickets/catalog]] from current ticket frontmatter: 1,016 tickets, including T-28006 and the already completed phase 2 statuses. Ticket files and board statuses are unchanged; the generated catalog had retained older columns. Unrelated generated note catalogs retain their exact before-images. No source acceptance or asset-completeness status changed.
+
+## [2026-10-25] decision | Hold isolated NBN and music extensions for native repairs
+
+Published the reviewed seasonal/music v5 commits through `ee27829ae9620b9388e96f80861497b8ee58accc`, independently confirmed on origin/main after 493 coherent tests and all 27 unchanged matching hashes passed. The next NBN candidate stays unapplied despite 498 passing composed tests: independent review reproduces escaped writes from unchecked baseline IDs and incorrect native bottom-row sampling, with missing per-cell catalog fields. Music v6 stays isolated because native cached-FF meta events are incorrectly rejected, despite otherwise proved tempo/control support. Authors prepare separate immutable revisions with actual fixes, fresh output review and independent replay. Current source, exported counts, raw originals and asset-ticket statuses remain unchanged. [[tickets/T-28002-media-asset-export]], [[tickets/T-28006-sequence-music-export]], [[assets-media]], [[asset-export]].
