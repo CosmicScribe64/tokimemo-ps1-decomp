@@ -67,6 +67,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-29013-native-holiday-command-loop|T-29013 Port the first ordinary holiday command loop]]
+
 - [ ] [[tickets/T-29012-native-new-game-initialization|T-29012 Port native New Game initialization and profile rules]]
 
 - [ ] [[tickets/T-28007-complete-text-and-translator-handoff|T-28007 Complete text evidence and prepare translator handoff]]

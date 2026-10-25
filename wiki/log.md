@@ -2148,3 +2148,15 @@ The HUD worker released its private emulator session; root verified no live toki
 ## [2026-10-25] build | Integrate actual ordinary-week application flow
 
 Applied reviewed [[tickets/T-29009-ordinary-week-continuation]] app-v1 after exact before/source/input/proof pins and successful launcher exit verification. Canonical five suites, 26 focus checks, 243-step headless schedules and actual rendered playback pass. All 15 original checkpoints include full progress and three timers; ten first-result checks also pass. The source-proved mirror-tail correction resolves the earlier byte mismatch without dropping comparisons. Captured 250 nested raw frames and published named actual port media; unsupported April 9 remains an unchanged-state stop. No full-week holiday or full-port completion claim.
+
+## [2026-10-25] decision | Keep original character initialization data external
+
+Independent review of [[tickets/T-29012-native-new-game-initialization]] found original girl birthday/blood arrays embedded in the candidate. Confirmed the [[phase3]] external-content requirement applies; author must repair in a separate version and retain original native endpoint comparisons. The reviewed original-table loader does not itself waive other source-derived character data. No New Game code applied yet.
+
+## [2026-10-25] build | Hold rest-command content integration on clean CLI failure
+
+Applied the nine exact reviewed [[tickets/T-29003-port-content-adapter]] command-7 files, then tested the documented production CLI without special PYTHONPATH. It fails before export on package import (`assets`); author is repairing the finite import boundary and adding a clean CLI regression. Keep the application uncommitted until actual replay and review pass. Created [[tickets/T-29013-native-holiday-command-loop]] for the next original holiday-to-command route and granted the week owner the released exclusive private emulator lease.
+
+## [2026-10-25] ticket | Coordinate rest-command app and holiday continuation
+
+The frozen dialogue v2 is in fresh independent review. Its owner now prepares a disjoint isolated command-7 app candidate under [[tickets/T-29008-assemble-playable-development-app]], preserving command-0 week behavior and proving the original rest endpoint. [[tickets/T-29013-native-holiday-command-loop]] reached the genuine holiday menu and continues native input toward the next command boundary with private cards. Protected game source and headers remain unchanged from Phase 2; only the pre-existing m-flow proposal differs under config.

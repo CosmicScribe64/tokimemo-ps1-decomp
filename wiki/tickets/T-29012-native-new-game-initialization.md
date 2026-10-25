@@ -28,3 +28,5 @@ Additive `port/godot/rules/new_game.gd`, focused tests and any strict original-t
 ## Limits
 
 Native Japanese name-entry limits remain the Phase 3 behavior. Later translation layout is separate. Gemini owns all translation wording and its pipeline. A completed initializer alone is not a complete New Game feature.
+
+2026-10-25 v2 review checkpoint: original-function comparisons pass nineteen cases at author scope, but Standards review identified original girl birthday/blood arrays embedded in GDScript. The Phase 3 external-content boundary applies to those character initialization values; no exception is approved. Author is preparing a separate v3 that moves them into source/native-bound external content. Preserve v2 evidence and rerun endpoint comparisons after the adapter change. No canonical application or Done status.
