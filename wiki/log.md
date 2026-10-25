@@ -2298,3 +2298,7 @@ Applied the original holiday media packet and resolved shared project-root admis
 ## [2026-10-25] ticket | Complete widescreen and settings research
 
 Published the reviewed source-backed report in [[widescreen-settings]], linked the index and closed [[tickets/T-30005-widescreen-settings-feasibility]] with its board card. This completes research only; no modernization runtime, generated scenery or quality claim.
+
+## [2026-10-25] build | Publish live HUD candidate captures
+
+Inspected and published two actual Godot-rendered command/activity images from the T-29010 app successor to the existing local visual page. Default developer text is absent; original UI and scene content remain visible. These are candidate port captures, not original-emulator screenshots or a full-frame parity claim. Independent app/source review continues before canonical integration; the full-port percentage is unchanged.
