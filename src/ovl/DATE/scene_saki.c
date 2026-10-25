@@ -205,14 +205,14 @@ void date_scene_saki_winter_audio_command_background_1(void) {
 }
 
 void date_scene_saki_spring(void) {
-    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl38 tbl;
+    s32 fake_padding; /* FAKE: never read; declared first so step_handlers lands at the original frame offset (T-3330) */
+    DateYukariAndSakiSpringSteps step_handlers;
 
-    tbl = date_scene_saki_spring_steps;
+    step_handlers = date_scene_saki_spring_steps;
     if (game_state.mode_step < 8U && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[game_state.mode_step](0x80);
+    step_handlers.callbacks[game_state.mode_step](0x80);
 }
 
 void date_scene_saki_spring_load_data(void) {
@@ -230,14 +230,14 @@ void date_scene_saki_spring_flag_group(void) {
 }
 
 void date_scene_saki_summer(void) {
-    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl56 tbl;
+    s32 fake_padding; /* FAKE: never read; declared first so step_handlers lands at the original frame offset (T-3330) */
+    FnTbl56 step_handlers;
 
-    tbl = date_scene_saki_summer_steps;
+    step_handlers = date_scene_saki_summer_steps;
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[game_state.mode_step](0x80);
+    step_handlers.callbacks[game_state.mode_step](0x80);
 }
 
 void date_scene_saki_summer_load_data(void) {
@@ -247,12 +247,12 @@ void date_scene_saki_summer_load_data(void) {
 }
 
 void date_scene_saki_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl43 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl43 step_handlers;
 
-    tbl = date_scene_saki_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_saki_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_saki_autumn_load_data(void) {
@@ -262,12 +262,12 @@ void date_scene_saki_autumn_load_data(void) {
 }
 
 void date_scene_saki_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl51 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateSakiWinterSteps step_handlers;
 
-    tbl = date_scene_saki_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_saki_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_saki_winter_speak_as_saki(void) {

@@ -14,19 +14,19 @@
 void func_8009B430(s32 arg0, u8 *arg1, s32 arg2);
 
 typedef struct {
-    void (*f[52])();
-} DateDispatch8015A288; /* size 0xD0 */
-extern DateDispatch8015A288 date_scene_yumi_winter_steps;
+    void (*callbacks[52])();
+} DateYumiWinterSteps; /* size 0xD0 */
+extern DateYumiWinterSteps date_scene_yumi_winter_steps;
 
 typedef struct {
-    void (*f[42])();
-} DateDispatch80154004; /* size 0xA8 */
-extern DateDispatch80154004 date_scene_mira_winter_steps;
+    void (*callbacks[42])();
+} DateMiraWinterSteps; /* size 0xA8 */
+extern DateMiraWinterSteps date_scene_mira_winter_steps;
 
 typedef struct {
-    void (*f[48])();
-} DateDispatch80152980; /* size 0xC0 */
-extern DateDispatch80152980 date_scene_ayako_summer_steps;
+    void (*callbacks[48])();
+} DateAyakoSummerSteps; /* size 0xC0 */
+extern DateAyakoSummerSteps date_scene_ayako_summer_steps;
 
 extern s16 date_gift_group;
 extern s16 date_gift_line;
@@ -1196,10 +1196,10 @@ extern u8 date_concert_group;
 extern s16 date_concert_line;
 s32 date_concert_hall_program_talk(void);
 
-typedef struct Tbl21 {
-    /* 0x00 */ u16 v[21];
-} Tbl21; /* size 0x2A */
-extern Tbl21 date_place_sequence_command;
+typedef struct DatePlaceAudioCommands {
+    /* 0x00 */ u16 by_place[21];
+} DatePlaceAudioCommands; /* size 0x2A */
+extern DatePlaceAudioCommands date_place_sequence_command;
 
 extern s16 D_8015DDD0[];
 extern s32 D_8015DE34[3];
@@ -1217,10 +1217,10 @@ extern s8 date_girl_side_next;
 #ifndef OVL_DATE_CALLBACK_T9610
 #define OVL_DATE_CALLBACK_T9610
 /* Complete local-copy dispatch table in date_scene_mira_summer. */
-typedef struct DateCallbacks39 {
+typedef struct DateMiraSummerSteps {
     /* 0x00 */ void (*callback[39])();
-} DateCallbacks39; /* size 0x9C */
-extern DateCallbacks39 date_scene_mira_summer_steps;
+} DateMiraSummerSteps; /* size 0x9C */
+extern DateMiraSummerSteps date_scene_mira_summer_steps;
 #endif
 
 #ifndef OVL_DATE_COUNTER_T9780
@@ -1231,18 +1231,18 @@ s32 date_ferris_wheel_still_copy(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 
 #ifndef OVL_DATE_TABLES_T10020
 #define OVL_DATE_TABLES_T10020
-typedef struct DateChoice8 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} DateChoice8; /* size 0x08; paired arguments, T-10020. */
-typedef struct DateChoices58 {
-    /* 0x00 */ DateChoice8 rows[11];
-} DateChoices58; /* size 0x58 */
-typedef struct DateChoices60 {
-    /* 0x00 */ DateChoice8 rows[12];
-} DateChoices60; /* size 0x60 */
-extern DateChoices58 date_movie_audio_pairs;
-extern DateChoices60 date_concert_audio_pairs;
+typedef struct DateProgramAudioRequest {
+    /* 0x00 */ s32 packed_clip_start;
+    /* 0x04 */ s32 packed_clip_end;
+} DateProgramAudioRequest; /* size 0x08; paired arguments, T-10020. */
+typedef struct DateFilmAudioRequests {
+    /* 0x00 */ DateProgramAudioRequest rows[11];
+} DateFilmAudioRequests; /* size 0x58 */
+typedef struct DateConcertAudioRequests {
+    /* 0x00 */ DateProgramAudioRequest rows[12];
+} DateConcertAudioRequests; /* size 0x60 */
+extern DateFilmAudioRequests date_movie_audio_pairs;
+extern DateConcertAudioRequests date_concert_audio_pairs;
 #endif
 
 #ifndef OVL_DATE_DISPATCH_T10020
@@ -1280,25 +1280,25 @@ extern s16 D_8015CFA0;
 #ifndef DATE_SELECTION_TYPES_T10730
 #define DATE_SELECTION_TYPES_T10730
 /* T-10730: unsigned triples selected by girl, option, then its two-state flag. */
-typedef struct DateChoice3 {
+typedef struct DateChoiceTriple {
     /* 0x00 */ u8 value[3];
-} DateChoice3; /* size 0x03 */
+} DateChoiceTriple; /* size 0x03 */
 
-typedef struct DatePlaceChoices18 {
-    /* 0x00 */ DateChoice3 choice[3][2];
-} DatePlaceChoices18; /* size 0x12 */
+typedef struct DateShopChoiceRow {
+    /* 0x00 */ DateChoiceTriple choice[3][2];
+} DateShopChoiceRow; /* size 0x12 */
 
-typedef struct DateRideChoices36 {
-    /* 0x00 */ DateChoice3 choice[6][2];
-} DateRideChoices36; /* size 0x24 */
+typedef struct DateRideChoiceRow {
+    /* 0x00 */ DateChoiceTriple choice[6][2];
+} DateRideChoiceRow; /* size 0x24 */
 
 #endif
 
 #ifndef OVL_DATE_MOTION_T10730
 #define OVL_DATE_MOTION_T10730
-typedef struct DateMuseumChoices15 {
-    /* 0x00 */ DateChoice3 choice[5];
-} DateMuseumChoices15; /* size 0x0F */
+typedef struct DateMuseumChoiceRow {
+    /* 0x00 */ DateChoiceTriple choice[5];
+} DateMuseumChoiceRow; /* size 0x0F */
 #endif
 
 #ifndef OVL_DATE_FLAG_T10730
@@ -1309,9 +1309,9 @@ extern u8 date_stadium_game_day;
 #ifndef OVL_DATE_COUNTS_T10730
 #define OVL_DATE_COUNTS_T10730
 /* Two signed-halfword local copies in date_neighborhood_park_pick_greeting, from date_opening_count_a/B774. */
-typedef struct DateCounts22 {
+typedef struct DateGreetingCounts {
     /* 0x00 */ s16 value[11];
-} DateCounts22; /* size 0x16 */
+} DateGreetingCounts; /* size 0x16 */
 #endif
 
 #ifndef DATE_SELECTION_VIEW_T10730
@@ -1374,22 +1374,22 @@ extern u8 D_8015BD3C;
 #define OVL_DATE_RIDE_TABLES_T10870_H
 /* date_amusement_park_ride_setup: girl rows contain six rides, two choices per ride,
  * and three byte-valued results per choice (36 bytes per girl). */
-extern DateRideChoices36 *date_class_table_amusement_park;
-extern DateRideChoices36 *date_face_table_amusement_park;
+extern DateRideChoiceRow *date_class_table_amusement_park;
+extern DateRideChoiceRow *date_face_table_amusement_park;
 #endif
 
 #ifndef OVL_DATE_MUSEUM_TABLES_T10870_H
 #define OVL_DATE_MUSEUM_TABLES_T10870_H
 /* date_place_setup_art_museum reads three result bytes from each 15-byte girl row. */
-extern DateMuseumChoices15 *date_class_table_art_museum;
-extern DateMuseumChoices15 *date_face_table_art_museum;
+extern DateMuseumChoiceRow *date_class_table_art_museum;
+extern DateMuseumChoiceRow *date_face_table_art_museum;
 #endif
 
 #ifndef OVL_DATE_EVENT_CHOICE_T10870_H
 #define OVL_DATE_EVENT_CHOICE_T10870_H
 /* date_neighborhood_park_pick_greeting copies eleven signed counts from each table. */
-extern DateCounts22 date_opening_count_a;
-extern DateCounts22 date_opening_count_b;
+extern DateGreetingCounts date_opening_count_a;
+extern DateGreetingCounts date_opening_count_b;
 extern u8 date_birthday_near;
 extern u8 date_hint_roll;
 /* Halfword access view at date_opening_group. The legacy declarations describe
@@ -1487,11 +1487,11 @@ extern s16 date_special_day_line;
 #ifndef OVL_DATE_T11020_H
 #define OVL_DATE_T11020_H
 /* T-11020: 20-byte table copied to the stack (date_choice_score). */
-typedef struct DateTbl20 {
-    /* 0x00 */ s32 w[5];
-} DateTbl20; /* size 0x14 */
-extern DateTbl20 date_syoushin_weight;
-void date_score_multipliers(s16 arg0, s32 *arg1, s32 *arg2);
+typedef struct DateGirlCounterWeights {
+    /* 0x00 */ s32 by_response_class[5];
+} DateGirlCounterWeights; /* size 0x14 */
+extern DateGirlCounterWeights date_syoushin_weight;
+void date_score_multipliers(s16 score_delta, s32 *trivia_multiplier_out, s32 *place_multiplier_out);
 #endif
 #ifndef OVL_DATE_T11020_TABLES_H
 #define OVL_DATE_T11020_TABLES_H
@@ -1536,134 +1536,134 @@ void date_virtual_ship_matrix_helper(void);
 /* Step tables (T-3330, T-17200): one handler per scene step; each handler copies its table to the
  * stack whole and calls tbl.f[game_state.unk_110A]. The types were local to each .c file before. */
 typedef struct {
-    void (*f[15])();
+    void (*callbacks[15])();
 } FnTbl15; /* size 0x3C */
 typedef struct {
-    void (*f[18])();
-} FnTbl18; /* size 0x48 */
+    void (*callbacks[18])();
+} DateNeighborhoodParkSteps; /* size 0x48 */
 typedef struct {
-    void (*f[20])();
-} FnTbl20; /* size 0x50 */
+    void (*callbacks[20])();
+} DateMiharuSceneSteps; /* size 0x50 */
 typedef struct {
-    void (*f[28])();
-} FnTbl28; /* size 0x70 */
+    void (*callbacks[28])();
+} DateGirlBirthdaySteps; /* size 0x70 */
 typedef struct {
-    void (*f[29])();
-} FnTbl29; /* size 0x74 */
+    void (*callbacks[29])();
+} DateStadiumSteps; /* size 0x74 */
 typedef struct {
-    void (*f[31])();
-} FnTbl31; /* size 0x7C */
+    void (*callbacks[31])();
+} DateWinterSportSteps; /* size 0x7C */
 typedef struct {
-    void (*f[32])();
+    void (*callbacks[32])();
 } FnTbl32; /* size 0x80 */
 typedef struct {
-    void (*f[34])();
+    void (*callbacks[34])();
 } FnTbl34; /* size 0x88 */
 typedef struct {
-    void (*f[35])();
+    void (*callbacks[35])();
 } FnTbl35; /* size 0x8C */
 typedef struct {
-    void (*f[36])();
+    void (*callbacks[36])();
 } FnTbl36; /* size 0x90 */
 typedef struct {
-    void (*f[37])();
-} FnTbl37; /* size 0x94 */
+    void (*callbacks[37])();
+} DateArtMuseumSteps; /* size 0x94 */
 typedef struct {
-    void (*f[38])();
-} FnTbl38; /* size 0x98 */
+    void (*callbacks[38])();
+} DateYukariAndSakiSpringSteps; /* size 0x98 */
 typedef struct {
-    void (*f[39])();
+    void (*callbacks[39])();
 } FnTbl39; /* size 0x9C */
 typedef struct {
-    void (*f[40])();
+    void (*callbacks[40])();
 } FnTbl40; /* size 0xA0 */
 typedef struct {
-    void (*f[41])();
+    void (*callbacks[41])();
 } FnTbl41; /* size 0xA4 */
 typedef struct {
-    void (*f[42])();
+    void (*callbacks[42])();
 } FnTbl42; /* size 0xA8 */
 typedef struct {
-    void (*f[43])();
+    void (*callbacks[43])();
 } FnTbl43; /* size 0xAC */
 typedef struct {
-    void (*f[44])();
+    void (*callbacks[44])();
 } FnTbl44; /* size 0xB0 */
 typedef struct {
-    void (*f[45])();
+    void (*callbacks[45])();
 } FnTbl45; /* size 0xB4 */
 typedef struct {
-    void (*f[46])();
-} FnTbl46; /* size 0xB8 */
+    void (*callbacks[46])();
+} DateYumiSummerSteps; /* size 0xB8 */
 typedef struct {
-    void (*f[47])();
+    void (*callbacks[47])();
 } FnTbl47; /* size 0xBC */
 typedef struct {
-    void (*f[48])();
-} FnTbl48; /* size 0xC0 */
+    void (*callbacks[48])();
+} DateShoppingStreetSteps; /* size 0xC0 */
 typedef struct {
-    void (*f[50])();
+    void (*callbacks[50])();
 } FnTbl50; /* size 0xC8 */
 typedef struct {
-    void (*f[51])();
-} FnTbl51; /* size 0xCC */
+    void (*callbacks[51])();
+} DateSakiWinterSteps; /* size 0xCC */
 typedef struct {
-    void (*f[53])();
-} FnTbl53; /* size 0xD4 */
+    void (*callbacks[53])();
+} DateMioWinterSteps; /* size 0xD4 */
 typedef struct {
-    void (*f[55])();
-} FnTbl55; /* size 0xDC */
+    void (*callbacks[55])();
+} DateAyakoSpringSteps; /* size 0xDC */
 typedef struct {
-    void (*f[56])();
+    void (*callbacks[56])();
 } FnTbl56; /* size 0xE0 */
 typedef struct {
-    void (*f[57])();
-} FnTbl57; /* size 0xE4 */
+    void (*callbacks[57])();
+} DateMiraAutumnSteps; /* size 0xE4 */
 typedef struct {
-    void (*f[61])();
-} FnTbl61; /* size 0xF4 */
+    void (*callbacks[61])();
+} DateNozomiSummerSteps; /* size 0xF4 */
 typedef struct {
-    void (*f[63])();
-} FnTbl63; /* size 0xFC */
+    void (*callbacks[63])();
+} DateMegumiSummerSteps; /* size 0xFC */
 typedef struct {
-    void (*f[65])();
-} FnTbl65; /* size 0x104 */
+    void (*callbacks[65])();
+} DateShioriWinterSteps; /* size 0x104 */
 typedef struct {
-    void (*f[67])();
-} FnTbl67; /* size 0x10C */
+    void (*callbacks[67])();
+} DateMioSpringSteps; /* size 0x10C */
 typedef struct {
-    void (*f[74])();
-} FnTbl74; /* size 0x128 */
+    void (*callbacks[74])();
+} DateShrineSteps; /* size 0x128 */
 typedef struct {
-    void (*f[76])();
+    void (*callbacks[76])();
 } FnTbl76; /* size 0x130 */
 typedef struct {
-    void (*f[104])();
-} FnTbl104; /* size 0x1A0 */
+    void (*callbacks[104])();
+} DateAmusementParkSteps; /* size 0x1A0 */
 extern FnTbl76 date_mode_stage_arrival_steps;
-extern FnTbl18 date_neighborhood_park_steps;
+extern DateNeighborhoodParkSteps date_neighborhood_park_steps;
 extern FnTbl35 date_central_park_steps;
-extern FnTbl48 date_shopping_street_steps;
+extern DateShoppingStreetSteps date_shopping_street_steps;
 extern FnTbl32 date_aquarium_steps;
 extern FnTbl35 date_zoo_steps;
 extern FnTbl34 date_botanical_garden_steps;
 extern FnTbl36 date_planetarium_steps;
-extern FnTbl37 date_art_museum_steps;
+extern DateArtMuseumSteps date_art_museum_steps;
 extern FnTbl50 date_library_steps;
 extern FnTbl39 date_game_center_steps;
 extern FnTbl32 date_bowling_alley_steps;
 extern FnTbl34 date_karaoke_steps;
-extern FnTbl104 date_amusement_park_steps;
-extern FnTbl29 date_stadium_steps;
+extern DateAmusementParkSteps date_amusement_park_steps;
+extern DateStadiumSteps date_stadium_steps;
 extern FnTbl45 date_movie_theater_steps;
 extern FnTbl41 date_concert_hall_steps;
 extern FnTbl35 date_pool_steps;
 extern FnTbl76 date_sea_steps;
-extern FnTbl74 date_shrine_steps;
-extern FnTbl31 date_skating_rink_steps;
-extern FnTbl31 date_ski_resort_steps;
+extern DateShrineSteps date_shrine_steps;
+extern DateWinterSportSteps date_skating_rink_steps;
+extern DateWinterSportSteps date_ski_resort_steps;
 extern FnTbl15 date_player_birthday_steps;
-extern FnTbl28 date_girl_birthday_steps;
+extern DateGirlBirthdaySteps date_girl_birthday_steps;
 extern FnTbl42 date_scene_yuko_spring_steps;
 extern FnTbl39 date_scene_yuko_summer_steps;
 extern FnTbl44 date_scene_yuko_autumn_steps;
@@ -1671,65 +1671,65 @@ extern FnTbl43 date_scene_yuko_winter_steps;
 extern FnTbl44 date_scene_yuko_december_steps;
 extern FnTbl41 date_scene_shiori_autumn_steps;
 extern FnTbl43 date_scene_shiori_spring_steps;
-extern FnTbl65 date_scene_shiori_winter_steps;
+extern DateShioriWinterSteps date_scene_shiori_winter_steps;
 extern FnTbl45 date_scene_shiori_summer_steps;
 extern FnTbl40 date_scene_yuina_spring_steps;
 extern FnTbl39 date_scene_yuina_summer_steps;
 extern FnTbl40 date_scene_yuina_autumn_steps;
 extern FnTbl40 date_scene_yuina_winter_steps;
-extern FnTbl55 date_scene_ayako_spring_steps;
+extern DateAyakoSpringSteps date_scene_ayako_spring_steps;
 extern FnTbl42 date_scene_ayako_autumn_steps;
 extern FnTbl47 date_scene_ayako_winter_steps;
 extern FnTbl41 date_scene_mira_spring_steps;
-extern FnTbl57 date_scene_mira_autumn_steps;
+extern DateMiraAutumnSteps date_scene_mira_autumn_steps;
 extern FnTbl15 date_scene_mira_special_steps;
-extern FnTbl67 date_scene_mio_spring_steps;
+extern DateMioSpringSteps date_scene_mio_spring_steps;
 extern FnTbl42 date_scene_mio_summer_steps;
 extern FnTbl41 date_scene_mio_autumn_steps;
-extern FnTbl53 date_scene_mio_winter_steps;
-extern FnTbl38 date_scene_yukari_spring_steps;
+extern DateMioWinterSteps date_scene_mio_winter_steps;
+extern DateYukariAndSakiSpringSteps date_scene_yukari_spring_steps;
 extern FnTbl45 date_scene_yukari_summer_steps;
 extern FnTbl40 date_scene_yukari_autumn_steps;
 extern FnTbl56 date_scene_yukari_winter_steps;
 extern FnTbl50 date_scene_nozomi_spring_steps;
-extern FnTbl61 date_scene_nozomi_summer_steps;
+extern DateNozomiSummerSteps date_scene_nozomi_summer_steps;
 extern FnTbl41 date_scene_nozomi_autumn_steps;
 extern FnTbl43 date_scene_nozomi_winter_steps;
 extern FnTbl47 date_scene_megumi_spring_steps;
-extern FnTbl63 date_scene_megumi_summer_steps;
+extern DateMegumiSummerSteps date_scene_megumi_summer_steps;
 extern FnTbl42 date_scene_megumi_autumn_steps;
 extern FnTbl36 date_scene_megumi_winter_steps;
-extern FnTbl38 date_scene_saki_spring_steps;
+extern DateYukariAndSakiSpringSteps date_scene_saki_spring_steps;
 extern FnTbl56 date_scene_saki_summer_steps;
 extern FnTbl43 date_scene_saki_autumn_steps;
-extern FnTbl51 date_scene_saki_winter_steps;
+extern DateSakiWinterSteps date_scene_saki_winter_steps;
 extern FnTbl44 date_scene_yumi_spring_steps;
-extern FnTbl46 date_scene_yumi_summer_steps;
+extern DateYumiSummerSteps date_scene_yumi_summer_steps;
 extern FnTbl44 date_scene_yumi_autumn_steps;
-extern FnTbl20 date_scene_miharu_spring_steps;
-extern FnTbl20 date_scene_miharu_summer_steps;
+extern DateMiharuSceneSteps date_scene_miharu_spring_steps;
+extern DateMiharuSceneSteps date_scene_miharu_summer_steps;
 #endif
 
 #ifndef OVL_DATE_STACK_TABLES_T17200
 #define OVL_DATE_STACK_TABLES_T17200
 /* Constant tables that one handler copies to the stack whole (T-17200); element types from the loads. */
-typedef struct DateBytes11x21 {
-    /* 0x00 */ u8 v[11][21];
-} DateBytes11x21; /* size 0xE7; date_score_multipliers reads [game_state.unk_F5F][D_800CA2F8] */
-extern DateBytes11x21 date_place_affinity;
+typedef struct DatePlaceAffinityTable {
+    /* 0x00 */ u8 by_girl_and_place[11][21];
+} DatePlaceAffinityTable; /* size 0xE7; date_score_multipliers reads [game_state.unk_F5F][D_800CA2F8] */
+extern DatePlaceAffinityTable date_place_affinity;
 
-typedef struct DateWords21 {
-    /* 0x00 */ s32 v[21];
-} DateWords21; /* size 0x54; date_place_bgm_load_start reads [D_800CA2F8] */
-extern DateWords21 date_place_bank_third_argument;
-extern DateWords21 date_place_bank_first_data_argument;
-extern DateWords21 date_place_bank_second_data_argument;
-extern Tbl21 date_place_load_command; /* date_place_bgm_load_start reads [D_800CA2F8] with lhu */
+typedef struct DatePlaceAudioValues {
+    /* 0x00 */ s32 by_place[21];
+} DatePlaceAudioValues; /* size 0x54; date_place_bgm_load_start reads [D_800CA2F8] */
+extern DatePlaceAudioValues date_place_bank_third_argument;
+extern DatePlaceAudioValues date_place_bank_first_data_argument;
+extern DatePlaceAudioValues date_place_bank_second_data_argument;
+extern DatePlaceAudioCommands date_place_load_command; /* date_place_bgm_load_start reads [D_800CA2F8] with lhu */
 
-typedef struct DateWords2 {
-    /* 0x00 */ s32 v[2];
-} DateWords2; /* size 0x08; date_scene_ayako_spring_clip_play copies it to the stack */
-extern DateWords2 D_8015EF0C;
+typedef struct DateSceneAudioRequest {
+    /* 0x00 */ s32 packed_clip_bounds[2];
+} DateSceneAudioRequest; /* size 0x08; date_scene_ayako_spring_clip_play copies it to the stack */
+extern DateSceneAudioRequest D_8015EF0C;
 
 typedef struct DateShorts8 {
     /* 0x00 */ s16 v[8];
@@ -1749,10 +1749,10 @@ extern DatePairs8 D_8015FB3C;
 extern u8 D_8015F9A0[8];
 extern u8 D_8015F9A8[8];
 
-typedef struct DatePlaceNames2D6 {
-    /* 0x00 */ u8 unk_00[22][33];
-} DatePlaceNames2D6; /* size 0x2D6; date_meeting_place_check copies date_place_names to the stack */
-extern DatePlaceNames2D6 date_place_names;
+typedef struct DatePlaceNameTable {
+    /* 0x00 */ u8 names[22][33];
+} DatePlaceNameTable; /* size 0x2D6; date_meeting_place_check copies date_place_names to the stack */
+extern DatePlaceNameTable date_place_names;
 
 #endif
 

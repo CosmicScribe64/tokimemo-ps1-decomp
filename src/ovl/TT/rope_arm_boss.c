@@ -1,20 +1,20 @@
-/* rope_arm_boss.c: src/ovl/TT/801374C0.c:408: boss rope contact, side/core damage, rope extension/breakage, ring expansion and attacks; body 417: c = D_80158A8C; 418: s = D_80158AAC;. Original object 0x801374C0-0x8013A040 (config/objects/TT.txt). */
+/* rope_arm_boss.c: src/ovl/TT/801374C0.c:408: boss rope contact, side/core damage, rope extension/breakage, ring expansion and attacks; body 417: c = tt_boss; 418: s = tt_boss_rope_buf;. Original object 0x801374C0-0x8013A040 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
 /* Fields used by TT's phase update. T-9720. */
-typedef struct TtPhase3AE {
+typedef struct TtBossSpinView {
     /* 0x000 */ u8 pad000[0x52];
     /* 0x052 */ u8 frame;
     /* 0x053 */ u8 pad053[0x357];
     /* 0x3AA */ u16 phase;
     /* 0x3AC */ u16 step;
-} TtPhase3AE; /* size 0x3AE */
+} TtBossSpinView; /* size 0x3AE */
 
-/* The zero-store chain pair on a (stores 0xA, 8, 6 and 0xF, 0xE, 0xD) gives a the reloads that rank it above &pt and D_80155C64; the one-line loop head and step fix the order of the i/q home stores. T-11860 */
-void func_801374C0(u8 *arg0) {
-    u8 *a;
-    u8 *p;
+/* The zero-store chain pair on a (stores 0xA, 8, 6 and 0xF, 0xE, 0xD) gives a the reloads that rank it above &pt and tt_boss1_hitbox_rope; the one-line loop head and step fix the order of the i/q home stores. T-11860 */
+void tt_boss1_rope_contact(u8 *arg0) {
+    u8 *player;
+    u8 *shot;
     s32 j;
     s32 n;
     /* FAKE: unused homes (pa/pm) place pt at sp+0x68 and the spilled q, i at sp+0x54/0x58 in the 152-byte frame. T-11000. */
@@ -24,248 +24,248 @@ void func_801374C0(u8 *arg0) {
     s32 i;
     u8 *q;
 
-    a = D_80158A74;
+    player = tt_player;
     i = 0; q = arg0; do { /* FAKE: one line, so as1 puts the i/q home stores after the hoisted constants. T-11860 */
         pt[0] = *(s16 *)(q + 0x1E);
         pt[1] = *(s16 *)(q + 0x9E);
-        if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, D_80155C64) != 0) {
-            func_80144094();
-            *(u16 *)(a + 4) = 0x60;
-            /* FAKE: TT's zero-store chain pair; the reloads raise a's priority above &pt and D_80155C64 (s2, s3, s4). T-11860 */
-            *(u16 *)(a + 6) = *(u16 *)(a + 8) = *(u16 *)(a + 0xA) = 0;
-            a[0xD] = a[0xE] = a[0xF] = 0;
+        if (player[0x52] == 0 && player[0] != 0 && tt_box_overlap(player + 0x14, tt_hitboxes, (u8 *)pt, tt_boss1_hitbox_rope) != 0) {
+            tt_player_hit();
+            *(u16 *)(player + 4) = 0x60;
+            /* FAKE: TT's zero-store chain pair; the reloads raise player's priority above &pt and tt_boss1_hitbox_rope (s2, s3, s4). T-11860 */
+            *(u16 *)(player + 6) = *(u16 *)(player + 8) = *(u16 *)(player + 0xA) = 0;
+            player[0xD] = player[0xE] = player[0xF] = 0;
         }
-        p = D_80158A80;
-        for (j = 0, n = 12; j != n; j++, p += 0x54) {
-            if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, D_80155C64) != 0) {
-                *(u16 *)(p + 4) = 0x80;
+        shot = tt_shots;
+        for (j = 0, n = 12; j != n; j++, shot += 0x54) {
+            if (shot[0] != 0 && *(u16 *)(shot + 4) == 0x40 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, (u8 *)pt, tt_boss1_hitbox_rope) != 0) {
+                *(u16 *)(shot + 4) = 0x80;
                 /* FAKE: TT's zero-store chain pair; same idiom as the record above. T-11860 */
-                *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
-                p[0xD] = p[0xE] = p[0xF] = 0;
+                *(u16 *)(shot + 6) = *(u16 *)(shot + 8) = *(u16 *)(shot + 0xA) = 0;
+                shot[0xD] = shot[0xE] = shot[0xF] = 0;
             }
         }
         i += 4; q += 4; /* FAKE: one line, so as1 stores q before i. T-11860 */
     } while (i != 0x20);
 }
 
-/* Sibling of func_80137878 for the four player slots; the c + 0x24C + i * 2 spelling with c's field first gives the original's load and temp order. T-11860 */
-void func_80137654(void) {
-    /* FAKE: unused homes (top, frame_pad) place c at sp+0x90, pt at sp+0x6C and i at sp+0x64 in the 152-byte frame. T-11860 */
+/* Sibling of tt_boss1_core_shot_damage for the four player slots; the c + 0x24C + i * 2 spelling with c's field first gives the original's load and temp order. T-11860 */
+void tt_boss1_side_parts_shot_damage(void) {
+    /* FAKE: unused homes (top, frame_pad) place boss at sp+0x90, pt at sp+0x6C and i at sp+0x64 in the 152-byte frame. T-11860 */
     s32 top;
-    u8 *c;
-    u8 *b;
+    u8 *boss;
+    u8 *core;
     s32 frame_pad[7];
     s16 pt[2];
-    u8 *p;
+    u8 *shot;
     s32 i;
     s32 j;
 
-    c = D_80158A8C;
-    b = D_80158A64;
+    boss = tt_boss;
+    core = tt_core;
     for (i = 0; i < 4; i++) {
-        if (c[i + 0x353] != 0) {
-            (c + i * 0x14)[0x6A] = 0;
-            pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x24C + i * 2);
-            pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x27C + i * 2);
-            p = D_80158A80;
-            for (j = 0; j != 12; j++, p += 0x54) {
+        if (boss[i + 0x353] != 0) {
+            (boss + i * 0x14)[0x6A] = 0;
+            pt[0] = *(s16 *)(boss + 0x14) + *(s16 *)(boss + 0x24C + i * 2);
+            pt[1] = *(s16 *)(boss + 0x16) + *(s16 *)(boss + 0x27C + i * 2);
+            shot = tt_shots;
+            for (j = 0; j != 12; j++, shot += 0x54) {
                 if (j == 12) {} /* FAKE: a second use of 12 keeps the constant in s6 (hoisted to entry) instead of &pt. T-11860 */
-                if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155C6A) != 0) {
-                    b[0x25] = b[0x25] + 1;
-                    if (b[0x24] != 0) {
-                        if (!(b[0x25] & 3)) {
-                            func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
+                if (shot[0] != 0 && *(u16 *)(shot + 4) == 0x40 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, (u8 *)pt, &tt_boss1_hitbox_side_part) != 0) {
+                    core[0x25] = core[0x25] + 1;
+                    if (core[0x24] != 0) {
+                        if (!(core[0x25] & 3)) {
+                            tt_enemy_shot_fire_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x20, 0xA0);
                         }
                     }
-                    func_80133AD0(0x507);
-                    if (c[i + 0x353] != 0) {
+                    tt_se_request(0x507);
+                    if (boss[i + 0x353] != 0) {
                         if (j >= 6) {
-                            *(s16 *)(c + i * 2 + 0x2D8) -= 1;
-                        } else if (*(u16 *)(p + 2) == 9) {
-                            *(s16 *)(c + i * 2 + 0x2D8) -= 4;
+                            *(s16 *)(boss + i * 2 + 0x2D8) -= 1;
+                        } else if (*(u16 *)(shot + 2) == 9) {
+                            *(s16 *)(boss + i * 2 + 0x2D8) -= 4;
                         } else {
-                            *(s16 *)(c + i * 2 + 0x2D8) -= 2;
+                            *(s16 *)(boss + i * 2 + 0x2D8) -= 2;
                         }
-                        if (*(s16 *)(c + i * 2 + 0x2D8) < 0) {
-                            func_80133AD0(0x505);
-                            c[i + 0x353] = 0;
-                            (c + i * 0x14)[0x69] = 0;
+                        if (*(s16 *)(boss + i * 2 + 0x2D8) < 0) {
+                            tt_se_request(0x505);
+                            boss[i + 0x353] = 0;
+                            (boss + i * 0x14)[0x69] = 0;
                         }
                     }
-                    (c + i * 0x14)[0x6A] = 1;
-                    *(u16 *)(p + 4) = 0x80;
-                    p[13] = 0;
-                    p[14] = 0;
-                    p[15] = 0;
-                    *(s16 *)(p + 6) = 0;
-                    *(s16 *)(p + 8) = 0;
-                    *(s16 *)(p + 10) = 0;
+                    (boss + i * 0x14)[0x6A] = 1;
+                    *(u16 *)(shot + 4) = 0x80;
+                    shot[13] = 0;
+                    shot[14] = 0;
+                    shot[15] = 0;
+                    *(s16 *)(shot + 6) = 0;
+                    *(s16 *)(shot + 8) = 0;
+                    *(s16 *)(shot + 10) = 0;
                 }
             }
         }
     }
 }
 
-void func_80137878(void) {
-    u8 *c;
-    u8 *b;
+void tt_boss1_core_shot_damage(void) {
+    u8 *boss;
+    u8 *core;
     /* FAKE: unused homes retain the observed frame. T-11000. */
     s32 frame_pad[8];
     s16 pt[2];
-    u8 *p;
+    u8 *shot;
     s32 i;
     s32 n;
 
-    c = D_80158A8C;
-    pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x254);
-    b = D_80158A64;
-    pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x284);
-    c[0xBA] = 0;
-    p = D_80158A80;
-    for (i = 0, n = 12; i != n; i++, p += 0x54) {
-        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155C70) != 0) {
-            if (*(u16 *)(c + 0x30E) == 2) {
-                b[0x25] = b[0x25] + 1;
-                if (b[0x24] != 0) {
-                    if (!(b[0x25] & 3)) {
-                        if (!(b[0x25] & 7)) {
-                            func_801342CC(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+    boss = tt_boss;
+    pt[0] = *(s16 *)(boss + 0x14) + *(s16 *)(boss + 0x254);
+    core = tt_core;
+    pt[1] = *(s16 *)(boss + 0x16) + *(s16 *)(boss + 0x284);
+    boss[0xBA] = 0;
+    shot = tt_shots;
+    for (i = 0, n = 12; i != n; i++, shot += 0x54) {
+        if (shot[0] != 0 && *(u16 *)(shot + 4) == 0x40 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, (u8 *)pt, &tt_boss1_hitbox_core_shot) != 0) {
+            if (*(u16 *)(boss + 0x30E) == 2) {
+                core[0x25] = core[0x25] + 1;
+                if (core[0x24] != 0) {
+                    if (!(core[0x25] & 3)) {
+                        if (!(core[0x25] & 7)) {
+                            tt_enemy_shot_fire_fan4_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x100, 0x20, 0xA0);
                         } else {
-                            func_80133FB0(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                            tt_enemy_shot_fire_3way_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x100, 0x20, 0xA0);
                         }
                     }
                 }
-                func_80133AD0(0x507);
+                tt_se_request(0x507);
                 if (i >= 6) {
-                    *(s16 *)(c + 0x30C) -= 1;
-                } else if (*(u16 *)(p + 2) == 9) {
-                    *(s16 *)(c + 0x30C) -= 4;
+                    *(s16 *)(boss + 0x30C) -= 1;
+                } else if (*(u16 *)(shot + 2) == 9) {
+                    *(s16 *)(boss + 0x30C) -= 4;
                 } else {
-                    *(s16 *)(c + 0x30C) -= 2;
+                    *(s16 *)(boss + 0x30C) -= 2;
                 }
             } else {
-                func_80133AD0(0x506);
+                tt_se_request(0x506);
             }
-            c[0xBA] = 1;
-            *(u16 *)(p + 4) = 0x80;
-            p[13] = 0;
-            p[14] = 0;
-            p[15] = 0;
-            *(s16 *)(p + 6) = 0;
-            *(s16 *)(p + 8) = 0;
-            *(s16 *)(p + 10) = 0;
+            boss[0xBA] = 1;
+            *(u16 *)(shot + 4) = 0x80;
+            shot[13] = 0;
+            shot[14] = 0;
+            shot[15] = 0;
+            *(s16 *)(shot + 6) = 0;
+            *(s16 *)(shot + 8) = 0;
+            *(s16 *)(shot + 10) = 0;
         }
     }
 }
 
-/* t = s; s += 0xEFC; before the test keeps s in a2 (spilled only around calls) and puts the addiu in the branch delay slot; the comma-for header orders i = 0 before the D_80158AA4 load. T-11860 */
-void func_80137A78(void) {
-    u8 *c;
-    u8 *s;
+/* t = s; s += 0xEFC; before the test keeps s in a2 (spilled only around calls) and puts the addiu in the branch delay slot; the comma-for header orders i = 0 before the tt_sprites load. T-11860 */
+void tt_boss1_collision(void) {
+    u8 *boss;
+    u8 *rope;
     u8 *p;
     s32 i;
     u8 *t;
 
-    c = D_80158A8C;
-    s = D_80158AAC;
-    if (c[0] != 0) {
+    boss = tt_boss;
+    rope = tt_boss_rope_buf;
+    if (boss[0] != 0) {
         for (i = 0; i < 24; i++) {
-            c[i * 0x14 + 0x42] = 0;
+            boss[i * 0x14 + 0x42] = 0;
         }
-        if (c[0x342] == 0) {
-            if (func_801427A8() != 0) {
-                func_80133AD0(0x508);
-                for (i = 0, p = D_80158AA4 + 0xFA0; i < 7; i++) {
+        if (boss[0x342] == 0) {
+            if (tt_boss_check_hits() != 0) {
+                tt_se_request(0x508);
+                for (i = 0, p = tt_sprites + 0xFA0; i < 7; i++) {
                     p -= 0x64;
                     *(s16 *)(p + 0xA6) = 0x3CDF;
                 }
-                p = D_80158AA4 + 0x12C0;
+                p = tt_sprites + 0x12C0;
                 for (i = 0; i < 7; i++, p -= 0x64) {
                     *(s16 *)(p + 0x42) = 0x3CDF;
                 }
             } else {
-                for (i = 0, p = D_80158AA4 + 0xFA0; i < 7; i++) {
+                for (i = 0, p = tt_sprites + 0xFA0; i < 7; i++) {
                     p -= 0x64;
                     *(s16 *)(p + 0xA6) = 0x3CD9;
                 }
-                p = D_80158AA4 + 0x12C0;
+                p = tt_sprites + 0x12C0;
                 for (i = 0; i < 7; i++, p -= 0x64) {
                     *(s16 *)(p + 0x42) = 0x3CD9;
                 }
             }
         }
-        t = s;
-        s += 0xEFC;
-        if (c[0x343] == 0) {
-            func_801374C0(t);
-            func_801374C0(s);
+        t = rope;
+        rope += 0xEFC;
+        if (boss[0x343] == 0) {
+            tt_boss1_rope_contact(t);
+            tt_boss1_rope_contact(rope);
         }
-        if (*(u16 *)(c + 0x30E) == 1) {
-            func_80137654();
-            func_80137878();
-        } else if (*(u16 *)(c + 0x30E) == 2) {
-            func_80137878();
+        if (*(u16 *)(boss + 0x30E) == 1) {
+            tt_boss1_side_parts_shot_damage();
+            tt_boss1_core_shot_damage();
+        } else if (*(u16 *)(boss + 0x30E) == 2) {
+            tt_boss1_core_shot_damage();
         }
     }
 }
 
 /* The u16 store of 8 lets the constant share t5 with the s[0x1A] store; the 0x11C ring row is spelled like the packet loops' s + i * 4 loads so both share one induction variable (a3), and the 2D-array rows keep i * 4 as the loop test; the packet loops' grouped stores share a source line because as1 schedules the stores of one line together. T-11840 */
-void func_80137C20(void) {
-    u8 *c;
+void tt_boss1_init(void) {
+    u8 *boss;
     u8 *s;
     u8 *p;
     s32 i;
     s32 j;
 
-    c = D_80158A8C;
-    s = D_80158AAC;
-    func_80142740();
-    func_80142774();
-    c[0] = 1;
-    c[0x342] = 0;
-    *(s32 *)(c + 0x20) = 0;
-    *(s32 *)(c + 0x24) = 0xFFC00000;
-    *(s16 *)(c + 0x14) = 0;
-    *(s16 *)(c + 0x16) = -0x40;
-    *(s32 *)(c + 0x28) = 0;
-    *(s32 *)(c + 0x2C) = 0x20000;
+    boss = tt_boss;
+    s = tt_boss_rope_buf;
+    tt_boss_parts_hide_all();
+    tt_boss_hitboxes_clear();
+    boss[0] = 1;
+    boss[0x342] = 0;
+    *(s32 *)(boss + 0x20) = 0;
+    *(s32 *)(boss + 0x24) = 0xFFC00000;
+    *(s16 *)(boss + 0x14) = 0;
+    *(s16 *)(boss + 0x16) = -0x40;
+    *(s32 *)(boss + 0x28) = 0;
+    *(s32 *)(boss + 0x2C) = 0x20000;
     for (i = 0; i < 4; i++) {
-        ((TtAnim14 *)(c + 0x38))[i].frames = D_80151A50;
-        ((TtAnim14 *)(c + 0x38))[i].unk_04 = 0;
-        ((TtAnim14 *)(c + 0x38))[i].unk_05 = D_80152C4C[i];
-        ((TtAnim14 *)(c + 0x38))[i].unk_06 = D_80152C50[i];
-        ((TtAnim14 *)(c + 0x38))[i].unk_08 = 0x60;
-        ((TtAnim14 *)(c + 0x38))[i].unk_0B = 0xF;
-        ((TtAnim14 *)(c + 0x38))[i].unk_10 = 0;
-        c[0x310 + i] = 1;
+        ((TtPartAnimation *)(boss + 0x38))[i].sets = tt_sprite_set_table;
+        ((TtPartAnimation *)(boss + 0x38))[i].flip = 0;
+        ((TtPartAnimation *)(boss + 0x38))[i].set = tt_boss1_part_set[i];
+        ((TtPartAnimation *)(boss + 0x38))[i].frame = tt_boss1_part_frame[i];
+        ((TtPartAnimation *)(boss + 0x38))[i].flags = 0x60;
+        ((TtPartAnimation *)(boss + 0x38))[i].clut = 0xF;
+        ((TtPartAnimation *)(boss + 0x38))[i].transform_enable = 0;
+        boss[0x310 + i] = 1;
         if (i < 2) {
-            *(s16 *)(c + 0x2A8 + i * 2) = 10;
+            *(s16 *)(boss + 0x2A8 + i * 2) = 10;
         } else {
-            *(u16 *)(c + 0x2A8 + i * 2) = 8;
+            *(u16 *)(boss + 0x2A8 + i * 2) = 8;
         }
-        *(s16 *)(c + 0x248 + i * 2) = 0;
-        *(s16 *)(c + 0x278 + i * 2) = 0;
+        *(s16 *)(boss + 0x248 + i * 2) = 0;
+        *(s16 *)(boss + 0x278 + i * 2) = 0;
     }
-    *(s16 *)(c + 0x278) = -6;
-    *(s16 *)(c + 0x24C) = 0x18;
-    *(s16 *)(c + 0x27C) = 0x34;
-    *(s16 *)(c + 0x24E) = -0x18;
-    *(s16 *)(c + 0x27E) = 0x34;
-    *(s16 *)(c + 0x30C) = 0x60;
-    *(s16 *)(c + 0x30E) = 0;
-    *(s16 *)(c + 0x3A4) = 0;
-    *(s16 *)(c + 0x3A6) = 0;
-    *(s16 *)(c + 0x3A8) = 0;
-    *(s16 *)(c + 0x3AA) = 0;
-    *(s16 *)(c + 0x3AC) = 0;
-    *(s16 *)(c + 0x364) = 0;
-    *(s16 *)(c + 0x366) = 0;
-    *(s16 *)(c + 0x368) = 0;
-    *(s16 *)(c + 0x36A) = 0;
-    *(s16 *)(c + 0x36C) = 0;
-    c[0x343] = 0;
-    *(s16 *)s = *(s16 *)(c + 0x14) + 0x1C;
-    *(s16 *)(s + 2) = *(s16 *)(c + 0x16) - 0x22;
+    *(s16 *)(boss + 0x278) = -6;
+    *(s16 *)(boss + 0x24C) = 0x18;
+    *(s16 *)(boss + 0x27C) = 0x34;
+    *(s16 *)(boss + 0x24E) = -0x18;
+    *(s16 *)(boss + 0x27E) = 0x34;
+    *(s16 *)(boss + 0x30C) = 0x60;
+    *(s16 *)(boss + 0x30E) = 0;
+    *(s16 *)(boss + 0x3A4) = 0;
+    *(s16 *)(boss + 0x3A6) = 0;
+    *(s16 *)(boss + 0x3A8) = 0;
+    *(s16 *)(boss + 0x3AA) = 0;
+    *(s16 *)(boss + 0x3AC) = 0;
+    *(s16 *)(boss + 0x364) = 0;
+    *(s16 *)(boss + 0x366) = 0;
+    *(s16 *)(boss + 0x368) = 0;
+    *(s16 *)(boss + 0x36A) = 0;
+    *(s16 *)(boss + 0x36C) = 0;
+    boss[0x343] = 0;
+    *(s16 *)s = *(s16 *)(boss + 0x14) + 0x1C;
+    *(s16 *)(s + 2) = *(s16 *)(boss + 0x16) - 0x22;
     *(s16 *)(s + 0x10) = 0xC00;
     *(s16 *)(s + 0x14) = 0xC00;
     *(s16 *)(s + 0x12) = 0xC00;
@@ -284,10 +284,10 @@ void func_80137C20(void) {
             ((s16 (*)[16])(s + 0x9DC))[i][j] = 0xC00;
         }
     }
-    func_801410A0(s);
-    *(s16 *)(s + 0xEFC) = *(s16 *)(c + 0x14) - 0x1C;
+    tt_rope_update(s);
+    *(s16 *)(s + 0xEFC) = *(s16 *)(boss + 0x14) - 0x1C;
     s += 0xEFC;
-    *(s16 *)(s + 2) = *(s16 *)(c + 0x16) - 0x22;
+    *(s16 *)(s + 2) = *(s16 *)(boss + 0x16) - 0x22;
     *(s16 *)(s + 0x10) = 0xC00;
     *(s16 *)(s + 0x14) = 0xC00;
     *(s16 *)(s + 0x12) = 0xC00;
@@ -306,14 +306,14 @@ void func_80137C20(void) {
             ((s16 (*)[16])(s + 0x9DC))[i][j] = 0xC00;
         }
     }
-    func_801410A0(s);
-    p = D_80158AA4 + 0xFA0;
+    tt_rope_update(s);
+    p = tt_sprites + 0xFA0;
     for (i = 0; i < 7; i++) {
         p[0] = 1;
         p[1] = 0;
         *(s16 *)(p + 0x44) = 0;
-        *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) + 0x14;
-        *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) + i * 8 - 0x2A;
+        *(s16 *)(p + 0x14) = *(s16 *)(boss + 0x14) + 0x14;
+        *(s16 *)(p + 0x16) = *(s16 *)(boss + 0x16) + i * 8 - 0x2A;
         *(s16 *)(p + 0x14) = *(s16 *)(s + 0x1E + i * 4) - 8;
         p -= 0x64;
         *(s16 *)(p + 0x7A) = *(s16 *)(s + 0x9E + i * 4) - 8;
@@ -325,13 +325,13 @@ void func_80137C20(void) {
         p[0x9F] = 0x65;
         *(s16 *)(p + 0x74) = 9;
     }
-    p = D_80158AA4 + 0x12C0;
+    p = tt_sprites + 0x12C0;
     for (i = 0; i < 7; i++, p -= 0x64) {
         p[0] = 1;
         p[1] = 0;
         *(s16 *)(p + 0x44) = 0;
-        *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) - 0x24;
-        *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) + i * 8 - 0x2A;
+        *(s16 *)(p + 0x14) = *(s16 *)(boss + 0x14) - 0x24;
+        *(s16 *)(p + 0x16) = *(s16 *)(boss + 0x16) + i * 8 - 0x2A;
         *(s16 *)(p + 0x14) = *(s16 *)(s + 0x1E + i * 4) - 8;
         *(s16 *)(p + 0x16) = *(s16 *)(s + 0x9E + i * 4) - 8;
         *(s16 *)(p + 0x3C) = 0x10; *(s16 *)(p + 0x3E) = 0x10; /* FAKE: one line, as above. T-11840 */
@@ -342,43 +342,43 @@ void func_80137C20(void) {
         p[0x3B] = 0x65;
         *(s16 *)(p + 0x10) = 9;
     }
-    *(u8 **)(c + 0x238) = D_80155C5E;
+    *(u8 **)(boss + 0x238) = tt_boss1_hitbox_core;
 }
 
-void func_80138178(void) {
-    u8 *p = D_80158A8C;
+void tt_boss1_enter(void) {
+    u8 *boss = tt_boss;
 
-    *(s32 *)(p + 0x20) = 0;
-    *(s32 *)(p + 0x24) += 0x10000;
-    *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
-    *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
-    if (*(s16 *)(p + 0x16) >= 0x50) {
-        *(s32 *)(p + 0x24) = 0x500000;
-        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
-        *(s16 *)(p + 0xA) = 0;
-        *(s16 *)(p + 8) = 0;
-        *(s16 *)(p + 6) = 0;
-        p[0xF] = 0;
-        p[0xE] = 0;
-        p[0xD] = 0;
-        *(s16 *)(p + 4) = 0x30;
+    *(s32 *)(boss + 0x20) = 0;
+    *(s32 *)(boss + 0x24) += 0x10000;
+    *(s16 *)(boss + 0x14) = *(s16 *)(boss + 0x22);
+    *(s16 *)(boss + 0x16) = *(s16 *)(boss + 0x26);
+    if (*(s16 *)(boss + 0x16) >= 0x50) {
+        *(s32 *)(boss + 0x24) = 0x500000;
+        *(s16 *)(boss + 0x16) = *(s16 *)(boss + 0x26);
+        *(s16 *)(boss + 0xA) = 0;
+        *(s16 *)(boss + 8) = 0;
+        *(s16 *)(boss + 6) = 0;
+        boss[0xF] = 0;
+        boss[0xE] = 0;
+        boss[0xD] = 0;
+        *(s16 *)(boss + 4) = 0x30;
     }
 }
 
-void func_801381E8(void) {
-    u8 *p = D_80158A8C;
+void tt_boss1_intro_animation(void) {
+    u8 *boss = tt_boss;
 
-    func_80142AF0(D_80152C54, 0);
-    if (p[0x40] & 1) {
-        *(u8 **)(p + 0x218) = D_80155C58;
-        *(s16 *)(p + 4) = 0x40;
+    tt_boss_part_animation_step(tt_boss1_intro_script, 0);
+    if (boss[0x40] & 1) {
+        *(u8 **)(boss + 0x218) = tt_boss1_hitbox_body;
+        *(s16 *)(boss + 4) = 0x40;
     }
 }
 
-void func_80138240(void) {
-    u8 *b = D_80158A8C;
-    u8 *a = D_80158A74;
-    s32 d = *(s16 *)(a + 0x14) - *(s16 *)(b + 0x14);
+void tt_boss1_track_player_x(void) {
+    u8 *boss = tt_boss;
+    u8 *player = tt_player;
+    s32 d = *(s16 *)(player + 0x14) - *(s16 *)(boss + 0x14);
     s32 ad;
     s16 y;
 
@@ -388,261 +388,261 @@ void func_80138240(void) {
         ad = d;
     }
     if (ad < 2) {
-        *(s32 *)(b + 0x20) = *(s16 *)(a + 0x14) << 16;
+        *(s32 *)(boss + 0x20) = *(s16 *)(player + 0x14) << 16;
     } else if (d < 0) {
-        *(s32 *)(b + 0x20) -= 0x4000;
+        *(s32 *)(boss + 0x20) -= 0x4000;
     } else {
-        *(s32 *)(b + 0x20) += 0x4000;
+        *(s32 *)(boss + 0x20) += 0x4000;
     }
-    y = *(s16 *)(b + 0x22);
+    y = *(s16 *)(boss + 0x22);
     if (y >= 0x51) {
-        *(s32 *)(b + 0x20) = 0x500000;
-        y = *(s16 *)(b + 0x22);
+        *(s32 *)(boss + 0x20) = 0x500000;
+        y = *(s16 *)(boss + 0x22);
     } else if (y < -0x50) {
-        *(s32 *)(b + 0x20) = 0xFFB00000;
-        y = *(s16 *)(b + 0x22);
+        *(s32 *)(boss + 0x20) = 0xFFB00000;
+        y = *(s16 *)(boss + 0x22);
     }
-    *(s16 *)(b + 0x14) = y;
+    *(s16 *)(boss + 0x14) = y;
 }
 
 /* Operand order of the sums (x + f() / 64, table lookups) sets the temp numbering; p -= 0x64 before the second store of the loop gives the original delay-slot fill; s += 0xEFC reuses s for the second half. T-11520 */
-void func_80138300(void) {
-    u8 *c;
+void tt_boss1_rope_update(void) {
+    u8 *boss;
     u8 *s;
-    u8 *a;
+    u8 *player;
     u8 *p;
     s32 i;
     s16 x;
     u16 v;
 
-    c = D_80158A8C;
-    s = D_80158AAC;
-    a = D_80158A74;
-    *(s16 *)s = *(s16 *)(c + 0x14) + 0x1C;
-    *(s16 *)(s + 2) = *(s16 *)(c + 0x16) - 0x22;
-    if (*(u16 *)(c + 0x36A) < 0x100) {
-        *(s16 *)(s + 4) = *(s16 *)(a + 0x14);
-        *(s16 *)(s + 6) = *(s16 *)(a + 0x16);
-        if (*(u16 *)(c + 0x3A4) != 0) {
-            *(u16 *)(c + 0x3A8) = 0x400;
+    boss = tt_boss;
+    s = tt_boss_rope_buf;
+    player = tt_player;
+    *(s16 *)s = *(s16 *)(boss + 0x14) + 0x1C;
+    *(s16 *)(s + 2) = *(s16 *)(boss + 0x16) - 0x22;
+    if (*(u16 *)(boss + 0x36A) < 0x100) {
+        *(s16 *)(s + 4) = *(s16 *)(player + 0x14);
+        *(s16 *)(s + 6) = *(s16 *)(player + 0x16);
+        if (*(u16 *)(boss + 0x3A4) != 0) {
+            *(u16 *)(boss + 0x3A8) = 0x400;
         } else {
-            *(u16 *)(c + 0x3A8) = 0x2400;
+            *(u16 *)(boss + 0x3A8) = 0x2400;
         }
     } else {
-        *(s16 *)(s + 4) = *(s16 *)s + func_800A0140(*(u16 *)(c + 0x3A8)) / 64;
-        *(s16 *)(s + 6) = *(s16 *)(s + 2) + rsin(*(u16 *)(c + 0x3A8)) / 64;
-        if (*(u16 *)(c + 0x3A4) != 0) {
-            *(u16 *)(c + 0x3A8) += 0x30;
-            if (*(u16 *)(c + 0x3A8) >= 0x2400) {
-                *(u16 *)(c + 0x36A) = 0;
+        *(s16 *)(s + 4) = *(s16 *)s + func_800A0140(*(u16 *)(boss + 0x3A8)) / 64;
+        *(s16 *)(s + 6) = *(s16 *)(s + 2) + rsin(*(u16 *)(boss + 0x3A8)) / 64;
+        if (*(u16 *)(boss + 0x3A4) != 0) {
+            *(u16 *)(boss + 0x3A8) += 0x30;
+            if (*(u16 *)(boss + 0x3A8) >= 0x2400) {
+                *(u16 *)(boss + 0x36A) = 0;
             }
         } else {
-            *(u16 *)(c + 0x3A8) -= 0x30;
-            if (*(u16 *)(c + 0x3A8) < 0x401) {
-                *(u16 *)(c + 0x36A) = 0;
+            *(u16 *)(boss + 0x3A8) -= 0x30;
+            if (*(u16 *)(boss + 0x3A8) < 0x401) {
+                *(u16 *)(boss + 0x36A) = 0;
             }
         }
     }
-    *(u16 *)(c + 0x36A) += 1;
-    func_801410A0(s);
-    p = D_80158AA4 + 0xFA0;
+    *(u16 *)(boss + 0x36A) += 1;
+    tt_rope_update(s);
+    p = tt_sprites + 0xFA0;
     for (i = 0; i < 7; i++) {
         *(s16 *)(p + 0x14) = *(s16 *)(s + 0x1E + i * 4) - 8;
         p -= 0x64;
         *(s16 *)(p + 0x7A) = *(s16 *)(s + 0x9E + i * 4) - 8;
     }
-    x = *(s16 *)(c + 0x14);
-    *(s16 *)(c + 0x24C) = *(s16 *)(s + 0x3A) - x;
-    *(s16 *)(c + 0x27C) = *(s16 *)(s + 0xBA) - *(s16 *)(c + 0x16);
-    c[0x66] = D_80152C68[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256] + D_80152C88[(*(u16 *)(c + 0x364) >> 3) & 3];
-    c[0x64] = D_80152C78[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256];
+    x = *(s16 *)(boss + 0x14);
+    *(s16 *)(boss + 0x24C) = *(s16 *)(s + 0x3A) - x;
+    *(s16 *)(boss + 0x27C) = *(s16 *)(s + 0xBA) - *(s16 *)(boss + 0x16);
+    boss[0x66] = tt_boss1_arm_frame_by_angle[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256] + tt_boss1_arm_frame_cycle[(*(u16 *)(boss + 0x364) >> 3) & 3];
+    boss[0x64] = tt_boss1_arm_flip_by_angle[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256];
     s += 0xEFC;
     *(s16 *)s = x - 0x1C;
-    *(s16 *)(s + 2) = *(s16 *)(c + 0x16) - 0x22;
-    if (*(u16 *)(c + 0x368) < 0x100) {
-        *(s16 *)(s + 4) = *(s16 *)(a + 0x14);
-        *(s16 *)(s + 6) = *(s16 *)(a + 0x16);
-        if (*(u16 *)(c + 0x3A4) != 0) {
-            *(u16 *)(c + 0x3A6) = 0x2400;
+    *(s16 *)(s + 2) = *(s16 *)(boss + 0x16) - 0x22;
+    if (*(u16 *)(boss + 0x368) < 0x100) {
+        *(s16 *)(s + 4) = *(s16 *)(player + 0x14);
+        *(s16 *)(s + 6) = *(s16 *)(player + 0x16);
+        if (*(u16 *)(boss + 0x3A4) != 0) {
+            *(u16 *)(boss + 0x3A6) = 0x2400;
         } else {
-            *(u16 *)(c + 0x3A6) = 0x400;
+            *(u16 *)(boss + 0x3A6) = 0x400;
         }
     } else {
-        *(s16 *)(s + 4) = *(s16 *)s + func_800A0140(*(u16 *)(c + 0x3A6)) / 64;
-        *(s16 *)(s + 6) = *(s16 *)(s + 2) + rsin(*(u16 *)(c + 0x3A6)) / 64;
-        if (*(u16 *)(c + 0x3A4) != 0) {
-            *(u16 *)(c + 0x3A6) -= 0x30;
-            if (*(u16 *)(c + 0x3A6) < 0x401) {
-                *(u16 *)(c + 0x368) = 0;
-                *(u16 *)(c + 0x3A4) += 1;
-                *(u16 *)(c + 0x3A4) &= 1;
+        *(s16 *)(s + 4) = *(s16 *)s + func_800A0140(*(u16 *)(boss + 0x3A6)) / 64;
+        *(s16 *)(s + 6) = *(s16 *)(s + 2) + rsin(*(u16 *)(boss + 0x3A6)) / 64;
+        if (*(u16 *)(boss + 0x3A4) != 0) {
+            *(u16 *)(boss + 0x3A6) -= 0x30;
+            if (*(u16 *)(boss + 0x3A6) < 0x401) {
+                *(u16 *)(boss + 0x368) = 0;
+                *(u16 *)(boss + 0x3A4) += 1;
+                *(u16 *)(boss + 0x3A4) &= 1;
             }
         } else {
-            *(u16 *)(c + 0x3A6) += 0x30;
-            if (*(u16 *)(c + 0x3A6) >= 0x2400) {
-                *(u16 *)(c + 0x368) = 0;
-                *(u16 *)(c + 0x3A4) += 1;
-                *(u16 *)(c + 0x3A4) &= 1;
+            *(u16 *)(boss + 0x3A6) += 0x30;
+            if (*(u16 *)(boss + 0x3A6) >= 0x2400) {
+                *(u16 *)(boss + 0x368) = 0;
+                *(u16 *)(boss + 0x3A4) += 1;
+                *(u16 *)(boss + 0x3A4) &= 1;
             }
         }
     }
-    *(u16 *)(c + 0x368) += 1;
-    func_801410A0(s);
-    p = D_80158AA4 + 0x12C0;
+    *(u16 *)(boss + 0x368) += 1;
+    tt_rope_update(s);
+    p = tt_sprites + 0x12C0;
     for (i = 0; i < 7; i++) {
         *(s16 *)(p + 0x14) = *(s16 *)(s + 0x1E + i * 4) - 8;
         *(s16 *)(p + 0x16) = *(s16 *)(s + 0x9E + i * 4) - 8;
         p -= 0x64;
     }
-    *(s16 *)(c + 0x24E) = *(s16 *)(s + 0x3A) - *(s16 *)(c + 0x14);
-    v = *(u16 *)(c + 0x364);
-    *(s16 *)(c + 0x27E) = *(s16 *)(s + 0xBA) - *(s16 *)(c + 0x16);
-    c[0x7A] = D_80152C68[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256] + D_80152C88[(v >> 3) & 3];
-    c[0x78] = D_80152C78[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256];
-    *(u16 *)(c + 0x364) = v + 1;
+    *(s16 *)(boss + 0x24E) = *(s16 *)(s + 0x3A) - *(s16 *)(boss + 0x14);
+    v = *(u16 *)(boss + 0x364);
+    *(s16 *)(boss + 0x27E) = *(s16 *)(s + 0xBA) - *(s16 *)(boss + 0x16);
+    boss[0x7A] = tt_boss1_arm_frame_by_angle[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256] + tt_boss1_arm_frame_cycle[(v >> 3) & 3];
+    boss[0x78] = tt_boss1_arm_flip_by_angle[((*(s16 *)(s + 0x9AA) + 0x80) & 0xFFF) / 256];
+    *(u16 *)(boss + 0x364) = v + 1;
 }
 
-/* Sibling of func_80138B90: the s16 0x3D4 store lets 8 share t0 with the loop stores; the 2D-array view of the s rows keeps 0x18 in the strength-reduced pointer of the unrolled loop. T-11860 */
-void func_80138808(void) {
-    u8 *c;
-    u8 *s;
-    u8 *e;
+/* Sibling of tt_boss1_side_parts_init: the s16 0x3D4 store lets 8 share t0 with the loop stores; the 2D-array view of the s rows keeps 0x18 in the strength-reduced pointer of the unrolled loop. T-11860 */
+void tt_boss1_rope_break(void) {
+    u8 *boss;
+    u8 *rope;
+    u8 *sprite;
     s32 i;
     s32 j;
 
-    c = D_80158A8C;
-    s = D_80158AAC;
-    e = D_80158AA4;
-    switch (*(u16 *)(c + 6)) {
+    boss = tt_boss;
+    rope = tt_boss_rope_buf;
+    sprite = tt_sprites;
+    switch (*(u16 *)(boss + 6)) {
     case 0:
-        c[0x343] = 1;
-        for (i = 2; i << 0 < 4; i++) { /* FAKE: an opaque test keeps IDO's unroller off this loop (slti on i, as in the original). T-11860 */
-            ((TtAnim14 *)(c + 0x38))[i].unk_08 = 0x80;
-            ((TtAnim14 *)(c + 0x38))[i].unk_04 = 0;
-            ((TtAnim14 *)(c + 0x38))[i].unk_05 = 2;
-            ((TtAnim14 *)(c + 0x38))[i].unk_06 = D_80152C8C[0];
+        boss[0x343] = 1;
+        for (i = 2; i << 0 < 4; i++) { /* FAKE: an opaque test keeps IDO'rope unroller off this loop (slti on i, as in the original). T-11860 */
+            ((TtPartAnimation *)(boss + 0x38))[i].flags = 0x80;
+            ((TtPartAnimation *)(boss + 0x38))[i].flip = 0;
+            ((TtPartAnimation *)(boss + 0x38))[i].set = 2;
+            ((TtPartAnimation *)(boss + 0x38))[i].frame = tt_boss1_break_script[0];
         }
         for (j = 0; j * 4 < 0x1C; j++) { /* FAKE: same; the original unrolls the second record loop but not this one. T-11860 */
-            ((TtSlot14 *)(c + 0xD8))[j].unk_00 = D_80151A50;
-            ((TtSlot14 *)(c + 0xD8))[j].unk_04 = 0;
-            ((TtSlot14 *)(c + 0xD8))[j].unk_05 = 2;
-            ((TtSlot14 *)(c + 0xD8))[j].unk_0A = 0;
-            ((TtSlot14 *)(c + 0xD8))[j].unk_10 = 0;
-            c[0x318 + j] = 0;
-            ((s16 *)(c + 0x2B8))[j] = 8;
-            ((s16 *)(c + 0x258))[j] = ((s16 (*)[2])(s + 0x1C))[6 - j][1] - *(s16 *)(c + 0x14);
-            ((s16 *)(c + 0x288))[j] = ((s16 (*)[2])(s + 0x9C))[6 - j][1] - *(s16 *)(c + 0x16) - 8;
-            ((TtSlot14 *)(c + 0xD8))[j].unk_08 = 0x80;
+            ((TtPartAnimationView *)(boss + 0xD8))[j].sets = tt_sprite_set_table;
+            ((TtPartAnimationView *)(boss + 0xD8))[j].flip = 0;
+            ((TtPartAnimationView *)(boss + 0xD8))[j].set = 2;
+            ((TtPartAnimationView *)(boss + 0xD8))[j].unk_0A = 0;
+            ((TtPartAnimationView *)(boss + 0xD8))[j].transform_enable = 0;
+            boss[0x318 + j] = 0;
+            ((s16 *)(boss + 0x2B8))[j] = 8;
+            ((s16 *)(boss + 0x258))[j] = ((s16 (*)[2])(rope + 0x1C))[6 - j][1] - *(s16 *)(boss + 0x14);
+            ((s16 *)(boss + 0x288))[j] = ((s16 (*)[2])(rope + 0x9C))[6 - j][1] - *(s16 *)(boss + 0x16) - 8;
+            ((TtPartAnimationView *)(boss + 0xD8))[j].flags = 0x80;
         }
-        s += 0xEFC;
+        rope += 0xEFC;
         for (i = 0; i != 7; i++) {
-            ((TtSlot14 *)(c + 0x178))[i].unk_00 = D_80151A50;
-            ((TtSlot14 *)(c + 0x178))[i].unk_04 = 0;
-            ((TtSlot14 *)(c + 0x178))[i].unk_05 = 2;
-            ((TtSlot14 *)(c + 0x178))[i].unk_0A = 0;
-            ((TtSlot14 *)(c + 0x178))[i].unk_10 = 0;
-            c[0x320 + i] = 0;
-            ((s16 *)(c + 0x2C8))[i] = 8; /* FAKE: the array spelling drops a phantom range so s keeps t5. T-11860 */
-            ((s16 *)(c + 0x268))[i] = ((s16 (*)[2])(s + 0x1C))[6 - i][1] - *(s16 *)(c + 0x14);
-            ((s16 *)(c + 0x298))[i] = ((s16 (*)[2])(s + 0x9C))[6 - i][1] - *(s16 *)(c + 0x16) - 8;
-            ((TtSlot14 *)(c + 0x178))[i].unk_08 = 0x80;
+            ((TtPartAnimationView *)(boss + 0x178))[i].sets = tt_sprite_set_table;
+            ((TtPartAnimationView *)(boss + 0x178))[i].flip = 0;
+            ((TtPartAnimationView *)(boss + 0x178))[i].set = 2;
+            ((TtPartAnimationView *)(boss + 0x178))[i].unk_0A = 0;
+            ((TtPartAnimationView *)(boss + 0x178))[i].transform_enable = 0;
+            boss[0x320 + i] = 0;
+            ((s16 *)(boss + 0x2C8))[i] = 8; /* FAKE: the array spelling drops a phantom range so rope keeps t5. T-11860 */
+            ((s16 *)(boss + 0x268))[i] = ((s16 (*)[2])(rope + 0x1C))[6 - i][1] - *(s16 *)(boss + 0x14);
+            ((s16 *)(boss + 0x298))[i] = ((s16 (*)[2])(rope + 0x9C))[6 - i][1] - *(s16 *)(boss + 0x16) - 8;
+            ((TtPartAnimationView *)(boss + 0x178))[i].flags = 0x80;
         }
-        *(u16 *)(c + 0x36C) = 0;
-        *(s16 *)(c + 0x3D4) = 8;
-        *(s16 *)(c + 6) = 0x40;
+        *(u16 *)(boss + 0x36C) = 0;
+        *(s16 *)(boss + 0x3D4) = 8;
+        *(s16 *)(boss + 6) = 0x40;
         break;
     case 0x40:
-        func_80142AF0(D_80152C8C, 2);
-        func_80142AF0(D_80152C8C, 3);
-        if ((*(u16 *)(c + 0x36C) & 7) == 7) {
-            if (*(u16 *)(c + 0x3D4) < 0xF) {
-                func_80133AD0(0x50A);
-                ((TtAnim14 *)(c + 0x38))[*(u16 *)(c + 0x3D4)].unk_08 = 0x80;
-                c[0x310 + *(u16 *)(c + 0x3D4)] = 1;
-                ((TtAnim14 *)(c + 0xD8))[*(u16 *)(c + 0x3D4)].unk_08 = 0x80;
-                c[0x318 + *(u16 *)(c + 0x3D4)] = 1;
-                (e + 0xD48)[*(u16 *)(c + 0x3D4) * 0x64] = 0;
-                (e + 0xA28)[*(u16 *)(c + 0x3D4) * 0x64] = 0;
+        tt_boss_part_animation_step(tt_boss1_break_script, 2);
+        tt_boss_part_animation_step(tt_boss1_break_script, 3);
+        if ((*(u16 *)(boss + 0x36C) & 7) == 7) {
+            if (*(u16 *)(boss + 0x3D4) < 0xF) {
+                tt_se_request(0x50A);
+                ((TtPartAnimation *)(boss + 0x38))[*(u16 *)(boss + 0x3D4)].flags = 0x80;
+                boss[0x310 + *(u16 *)(boss + 0x3D4)] = 1;
+                ((TtPartAnimation *)(boss + 0xD8))[*(u16 *)(boss + 0x3D4)].flags = 0x80;
+                boss[0x318 + *(u16 *)(boss + 0x3D4)] = 1;
+                (sprite + 0xD48)[*(u16 *)(boss + 0x3D4) * 0x64] = 0;
+                (sprite + 0xA28)[*(u16 *)(boss + 0x3D4) * 0x64] = 0;
             }
-            if (*(u16 *)(c + 0x3D4) >= 0x13) {
-                *(s16 *)(c + 4) = 0x51;
-                *(s16 *)(c + 6) = 0;
+            if (*(u16 *)(boss + 0x3D4) >= 0x13) {
+                *(s16 *)(boss + 4) = 0x51;
+                *(s16 *)(boss + 6) = 0;
             }
-            *(u16 *)(c + 0x3D4) += 1;
+            *(u16 *)(boss + 0x3D4) += 1;
         }
         for (i = 8; i < 15; i++) {
-            func_80142AF0(D_80152C8C, i);
+            tt_boss_part_animation_step(tt_boss1_break_script, i);
         }
         for (i = 16; i != 23; i++) {
-            func_80142AF0(D_80152C8C, i);
+            tt_boss_part_animation_step(tt_boss1_break_script, i);
         }
         break;
     }
-    *(u16 *)(c + 0x36C) += 1;
+    *(u16 *)(boss + 0x36C) += 1;
 }
 
-void func_80138B90(void) {
-    u8 *p;
+void tt_boss1_side_parts_init(void) {
+    u8 *boss;
     s32 i;
 
-    p = D_80158A8C;
+    boss = tt_boss;
     /* IDO unrolls this by two after peeling i = 2; the typed record index folds the second copy into offsets */
     for (i = 2; i < 7; i++) {
-        ((TtAnim14 *)(p + 0x38))[i].frames = D_80151A50;
-        ((TtAnim14 *)(p + 0x38))[i].unk_04 = 0;
-        ((TtAnim14 *)(p + 0x38))[i].unk_05 = 6;
+        ((TtPartAnimation *)(boss + 0x38))[i].sets = tt_sprite_set_table;
+        ((TtPartAnimation *)(boss + 0x38))[i].flip = 0;
+        ((TtPartAnimation *)(boss + 0x38))[i].set = 6;
         if (i == 6) {
-            ((TtAnim14 *)(p + 0x38))[i].unk_06 = 0x14;
+            ((TtPartAnimation *)(boss + 0x38))[i].frame = 0x14;
         } else {
-            ((TtAnim14 *)(p + 0x38))[i].unk_06 = 0x1F;
+            ((TtPartAnimation *)(boss + 0x38))[i].frame = 0x1F;
         }
-        ((TtAnim14 *)(p + 0x38))[i].unk_08 = 0x60;
-        ((TtAnim14 *)(p + 0x38))[i].unk_09 = 0;
-        ((TtAnim14 *)(p + 0x38))[i].unk_0B = 0xF;
-        ((TtAnim14 *)(p + 0x38))[i].unk_10 = 0;
-        p[0x310 + i] = 1;
-        *(s16 *)(p + 0x2A8 + i * 2) = 9;
+        ((TtPartAnimation *)(boss + 0x38))[i].flags = 0x60;
+        ((TtPartAnimation *)(boss + 0x38))[i].hold = 0;
+        ((TtPartAnimation *)(boss + 0x38))[i].clut = 0xF;
+        ((TtPartAnimation *)(boss + 0x38))[i].transform_enable = 0;
+        boss[0x310 + i] = 1;
+        *(s16 *)(boss + 0x2A8 + i * 2) = 9;
         if (i == 6) {
-            *(s16 *)(p + 0x248 + i * 2) = 0;
+            *(s16 *)(boss + 0x248 + i * 2) = 0;
         } else {
-            *(s16 *)(p + 0x248 + i * 2) = i * 16 - 0x38;
+            *(s16 *)(boss + 0x248 + i * 2) = i * 16 - 0x38;
         }
-        *(s16 *)(p + 0x278 + i * 2) = D_80152C40[i - 2];
+        *(s16 *)(boss + 0x278 + i * 2) = tt_boss1_core_part_y[i - 2];
     }
 }
 
-void func_80138D10(void) {
-    switch (*(u16 *)(D_80158A8C + 0x30E)) {
+void tt_boss1_core_animation(void) {
+    switch (*(u16 *)(tt_boss + 0x30E)) {
     case 1:
-        func_80142AF0(D_80152CA4, 6);
+        tt_boss_part_animation_step(tt_boss1_core_script_1, 6);
         break;
     case 2:
-        func_80142AF0(D_80152CB0, 6);
+        tt_boss_part_animation_step(tt_boss1_core_script_2, 6);
         break;
     case 3:
-        func_80142AF0(D_80152CC4, 6);
+        tt_boss_part_animation_step(tt_boss1_core_script_3, 6);
         break;
     }
 }
 
-void func_80138D94(void) {
+void tt_boss1_side_part_animation(void) {
     u8 *base;
     s32 i;
 
-    base = D_80158A8C;
+    base = tt_boss;
     for (i = 2; i < 6; i++) {
         if (base[i + 0x351] != 0) {
-            func_80142AF0(D_80152CD0, i);
+            tt_boss_part_animation_step(tt_boss1_side_part_script_alive, i);
         } else {
-            func_80142AF0(D_80152CE4, i);
+            tt_boss_part_animation_step(tt_boss1_side_part_script_broken, i);
         }
     }
 }
 
 /* T-11510 near miss: structure matches; differences are the register numbers of the hoisted constants in the case-0 slot loop (the original ranks 8, the table pointer, 4, then the bound 18; here 18 comes first) and the delay-slot fill of the sltiu before the 0x4B test; about 73 differing instructions (permuter 8 min: no gain). */
-void func_80138E28(void) {
-    u8 *c;
-    u8 *s;
+void tt_boss1_expand_ring(void) {
+    u8 *boss;
+    u8 *transform;
     u8 *p;
     u8 *e;
     s16 *t;
@@ -650,59 +650,59 @@ void func_80138E28(void) {
     s32 i;
     u16 k;
 
-    k = *(u16 *)(D_80158A8C + 6);
-    c = D_80158A8C;
-    s = D_80158AB0;
+    k = *(u16 *)(tt_boss + 6);
+    boss = tt_boss;
+    transform = tt_transforms;
     switch (k) {
     case 0:
-        *(u16 *)(c + 0x364) = 0;
-        *(u16 *)(c + 0x3D4) = 0;
+        *(u16 *)(boss + 0x364) = 0;
+        *(u16 *)(boss + 0x3D4) = 0;
         /* The unsigned bound is a constant of its own; an int 0x12 would share the hoisted register of the 0x12 stored in the 0x4B block and change the register order. T-11830 */
         for (i = 0x10; i != 0x12U; i++) {
-            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
-            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
-            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
-            c[0x310 + i] = 0;
-            *(s16 *)(c + 0x2A8 + i * 2) = 8;
-            *(s16 *)(c + 0x248 + i * 2) = 0;
-            *(s16 *)(c + 0x278 + i * 2) = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].sets = tt_sprite_set_table;
+            ((TtPartAnimationView *)(boss + 0x38))[i].flip = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].set = 4;
+            ((TtPartAnimationView *)(boss + 0x38))[i].unk_0A = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].transform_enable = 0;
+            boss[0x310 + i] = 0;
+            *(s16 *)(boss + 0x2A8 + i * 2) = 8;
+            *(s16 *)(boss + 0x248 + i * 2) = 0;
+            *(s16 *)(boss + 0x278 + i * 2) = 0;
         }
-        *(s16 *)(c + 6) = 0x40;
+        *(s16 *)(boss + 6) = 0x40;
         return;
     case 0x40:
-        t = D_80152CFC;
-        e = D_80158A8C;
+        t = tt_boss1_expand_timeline;
+        e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            func_80133AD0(0x501);
-            j = t[*(u16 *)(c + 0x3D4) + 4];
-            c[j + 0x310] = 1;
-            c[j * 0x14 + 0x40] = 0x80;
-            *(s16 *)(c + j * 2 + 0x248) = t[*(u16 *)(c + 0x3D4) + 1];
-            *(s16 *)(c + j * 2 + 0x278) = t[*(u16 *)(c + 0x3D4) + 2];
-            *(s16 *)(c + j * 2 + 0x2A8) = t[*(u16 *)(c + 0x3D4) + 3];
-            *(u16 *)(c + 0x3D4) += 5;
+            tt_se_request(0x501);
+            j = t[*(u16 *)(boss + 0x3D4) + 4];
+            boss[j + 0x310] = 1;
+            boss[j * 0x14 + 0x40] = 0x80;
+            *(s16 *)(boss + j * 2 + 0x248) = t[*(u16 *)(boss + 0x3D4) + 1];
+            *(s16 *)(boss + j * 2 + 0x278) = t[*(u16 *)(boss + 0x3D4) + 2];
+            *(s16 *)(boss + j * 2 + 0x2A8) = t[*(u16 *)(boss + 0x3D4) + 3];
+            *(u16 *)(boss + 0x3D4) += 5;
         }
         for (i = 0x10; i < 0x12; i++) {
-            func_80142AF0(D_80150950, i);
+            tt_boss_part_animation_step(tt_boss_death_part_script, i);
         }
-        if (*(u16 *)(c + 0x364) == 0x4B) {
-            c[0x310] = 0;
-            func_80138B90();
-            c[0x52] = 1;
-            p = D_80158AA4 + 0x1900;
+        if (*(u16 *)(boss + 0x364) == 0x4B) {
+            boss[0x310] = 0;
+            tt_boss1_side_parts_init();
+            boss[0x52] = 1;
+            p = tt_sprites + 0x1900;
             for (i = 0; i != 0x10; i++, p += 0x64) {
                 p[0] = 1;
                 p[1] = 0;
                 *(s16 *)(p + 0x44) = 0;
                 p[0x3B] = 0x80;
-                *(u8 **)(p + 0x48) = s;
+                *(u8 **)(p + 0x48) = transform;
                 p[0x4D] = 0;
                 p[0x4E] = 1;
                 p[0x50] = 0;
-                *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) - 8;
-                *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) - 8;
+                *(s16 *)(p + 0x14) = *(s16 *)(boss + 0x14) - 8;
+                *(s16 *)(p + 0x16) = *(s16 *)(boss + 0x16) - 8;
                 p[0x47] = (i & 1) * 0x10 + 0x40;
                 p[0x46] = 0xF0;
                 p[0x4F] = 0;
@@ -713,36 +713,36 @@ void func_80138E28(void) {
                 p[0x4C] = 0;
                 *(s16 *)(p + 0x10) = 8;
             }
-            *(u16 *)(c + 0x3D4) = 0;
+            *(u16 *)(boss + 0x3D4) = 0;
         }
-        if (*(u16 *)(c + 0x364) >= 0x4C) {
-            p = D_80158AA4 + 0x1900;
+        if (*(u16 *)(boss + 0x364) >= 0x4C) {
+            p = tt_sprites + 0x1900;
             for (i = 0; i < 0x10; i++, p += 0x64) {
-                *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) + ((u32)(func_800A0140(i * 0x100) * *(u16 *)(c + 0x3D4)) >> 12) - 8;
-                *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) + ((u32)(rsin(i * 0x100) * *(u16 *)(c + 0x3D4)) >> 12) - 8;
-                p[0x4C] = D_80152D30[(*(u16 *)(c + 0x364) >> 2) & 3];
+                *(s16 *)(p + 0x14) = *(s16 *)(boss + 0x14) + ((u32)(func_800A0140(i * 0x100) * *(u16 *)(boss + 0x3D4)) >> 12) - 8;
+                *(s16 *)(p + 0x16) = *(s16 *)(boss + 0x16) + ((u32)(rsin(i * 0x100) * *(u16 *)(boss + 0x3D4)) >> 12) - 8;
+                p[0x4C] = tt_boss1_ring_palette_cycle[(*(u16 *)(boss + 0x364) >> 2) & 3];
             }
-            *(u16 *)(c + 0x3D4) += 4;
+            *(u16 *)(boss + 0x3D4) += 4;
         }
-        if (*(u16 *)(c + 0x364) >= 0x88) {
-            p = D_80158AA4 + 0x1900;
+        if (*(u16 *)(boss + 0x364) >= 0x88) {
+            p = tt_sprites + 0x1900;
             for (i = 0; i < 0x10; i++, p += 0x64) {
                 p[0] = 0;
             }
-            *(s16 *)(c + 4) = 0x52;
-            *(s16 *)(c + 6) = 0;
+            *(s16 *)(boss + 4) = 0x52;
+            *(s16 *)(boss + 6) = 0;
         }
-        *(u16 *)(c + 0x364) += 1;
+        *(u16 *)(boss + 0x364) += 1;
         return;
     }
 }
 
-void func_8013923C(void) {
-    TtPhase3AE *work;
+void tt_boss1_spin_step(void) {
+    TtBossSpinView *work;
     u16 step;
     u16 phase;
 
-    work = (TtPhase3AE *)D_80158A8C;
+    work = (TtBossSpinView *)tt_boss;
     phase = work->phase += work->step;
     if (phase >= 0x800U) {
         phase = work->phase = 0;
@@ -757,8 +757,8 @@ void func_8013923C(void) {
 }
 
 /* Writing the case-0 short arrays as *(s16 *)(c + 0x2A8 + i * 2) makes c + i * 2 one range with the 0x40 loops (T-11520); TT's zero-store chain pair in the 0xFD block puts the shared c[0x364] tail value in a0. T-11860 */
-void func_801392A0(void) {
-    u8 *c;
+void tt_boss1_death_sequence(void) {
+    u8 *boss;
     u8 *e;
     s16 *t;
     s16 j;
@@ -766,222 +766,222 @@ void func_801392A0(void) {
     u16 k;
     u16 m;
 
-    k = *(u16 *)(D_80158A8C + 6);
-    c = D_80158A8C;
+    k = *(u16 *)(tt_boss + 6);
+    boss = tt_boss;
     switch (k) {
     case 0:
-        func_80142774();
-        *(u16 *)(c + 0x364) = 0;
-        *(u16 *)(c + 0x3D4) = 0;
+        tt_boss_hitboxes_clear();
+        *(u16 *)(boss + 0x364) = 0;
+        *(u16 *)(boss + 0x3D4) = 0;
         for (i = 0x10; i < 0x13; i++) {
-            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
-            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
-            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
-            c[0x310 + i] = 0;
-            *(s16 *)(c + 0x2A8 + i * 2) = 8;
-            *(s16 *)(c + 0x248 + i * 2) = 0;
-            *(s16 *)(c + 0x278 + i * 2) = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].sets = tt_sprite_set_table;
+            ((TtPartAnimationView *)(boss + 0x38))[i].flip = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].set = 4;
+            ((TtPartAnimationView *)(boss + 0x38))[i].unk_0A = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].transform_enable = 0;
+            boss[0x310 + i] = 0;
+            *(s16 *)(boss + 0x2A8 + i * 2) = 8;
+            *(s16 *)(boss + 0x248 + i * 2) = 0;
+            *(s16 *)(boss + 0x278 + i * 2) = 0;
         }
         for (i = 0x13; i != 0x18; i++) {
-            c[0x310 + i] = 0;
+            boss[0x310 + i] = 0;
         }
-        *(s16 *)(c + 6) = 0x40;
-        *(s16 *)(c + 8) = 0;
+        *(s16 *)(boss + 6) = 0x40;
+        *(s16 *)(boss + 8) = 0;
         break;
     case 0x40:
-        t = D_80152D34;
-        e = D_80158A8C;
+        t = tt_boss1_death_timeline;
+        e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            func_80133AD0(0x501);
-            j = t[*(u16 *)(c + 0x3D4) + 4];
-            c[j + 0x310] = 1;
-            c[j * 0x14 + 0x40] = 0x80;
-            *(s16 *)(c + j * 2 + 0x248) = t[*(u16 *)(c + 0x3D4) + 1];
-            *(s16 *)(c + j * 2 + 0x278) = t[*(u16 *)(c + 0x3D4) + 2];
-            *(s16 *)(c + j * 2 + 0x2A8) = t[*(u16 *)(c + 0x3D4) + 3];
-            *(u16 *)(c + 0x3D4) += 5;
+            tt_se_request(0x501);
+            j = t[*(u16 *)(boss + 0x3D4) + 4];
+            boss[j + 0x310] = 1;
+            boss[j * 0x14 + 0x40] = 0x80;
+            *(s16 *)(boss + j * 2 + 0x248) = t[*(u16 *)(boss + 0x3D4) + 1];
+            *(s16 *)(boss + j * 2 + 0x278) = t[*(u16 *)(boss + 0x3D4) + 2];
+            *(s16 *)(boss + j * 2 + 0x2A8) = t[*(u16 *)(boss + 0x3D4) + 3];
+            *(u16 *)(boss + 0x3D4) += 5;
         }
-        m = *(u16 *)(c + 8);
+        m = *(u16 *)(boss + 8);
         switch (m) {
         case 0:
-            if (*(u16 *)(c + 0x364) == 0x78) {
-                func_80133AD0(0x505);
+            if (*(u16 *)(boss + 0x364) == 0x78) {
+                tt_se_request(0x505);
                 for (i = 0; i < 5; i++) {
-                    *(s32 *)(c + 0x3E4 + i * 4) = *(s16 *)(c + 0x27C + i * 2) << 16;
+                    *(s32 *)(boss + 0x3E4 + i * 4) = *(s16 *)(boss + 0x27C + i * 2) << 16;
                 }
-                *(s32 *)(c + 0x3F8) = 0xFFFE0000;
-                *(s32 *)(c + 0x3FC) = 0x1000;
-                *(s16 *)(c + 0x3D6) = 0;
-                *(s16 *)(c + 8) = 0x40;
+                *(s32 *)(boss + 0x3F8) = 0xFFFE0000;
+                *(s32 *)(boss + 0x3FC) = 0x1000;
+                *(s16 *)(boss + 0x3D6) = 0;
+                *(s16 *)(boss + 8) = 0x40;
             }
             break;
         case 0x40:
             for (i = 0; i < 5; i++) {
-                *(s16 *)(c + 0x27C + i * 2) = *(s32 *)(c + 0x3E4 + i * 4) >> 16;
-                *(s32 *)(c + 0x3E4 + i * 4) += *(s32 *)(c + 0x3F8);
+                *(s16 *)(boss + 0x27C + i * 2) = *(s32 *)(boss + 0x3E4 + i * 4) >> 16;
+                *(s32 *)(boss + 0x3E4 + i * 4) += *(s32 *)(boss + 0x3F8);
             }
-            *(s16 *)(c + 0x24C) -= 1;
-            *(s16 *)(c + 0x252) += 1;
-            if (*(u16 *)(c + 0x3D6) == 1) {
-                *(u16 *)(c + 0x3D6) = 0;
-                *(s16 *)(c + 0x24E) -= 1;
-                *(s16 *)(c + 0x250) += 1;
+            *(s16 *)(boss + 0x24C) -= 1;
+            *(s16 *)(boss + 0x252) += 1;
+            if (*(u16 *)(boss + 0x3D6) == 1) {
+                *(u16 *)(boss + 0x3D6) = 0;
+                *(s16 *)(boss + 0x24E) -= 1;
+                *(s16 *)(boss + 0x250) += 1;
             } else {
-                *(u16 *)(c + 0x3D6) = 1;
+                *(u16 *)(boss + 0x3D6) = 1;
             }
-            *(s32 *)(c + 0x3F8) += *(s32 *)(c + 0x3FC);
-            if (*(s16 *)(c + 0x284) >= 0xB1) {
-                *(u16 *)(c + 8) = 0x50;
+            *(s32 *)(boss + 0x3F8) += *(s32 *)(boss + 0x3FC);
+            if (*(s16 *)(boss + 0x284) >= 0xB1) {
+                *(u16 *)(boss + 8) = 0x50;
             }
             break;
         case 0x50:
             break;
         }
         for (i = 0x10; i < 0x13; i++) {
-            func_80142AF0(D_80150950, i);
+            tt_boss_part_animation_step(tt_boss_death_part_script, i);
         }
-        if (*(u16 *)(c + 0x364) == 0xDC) {
-            c[0x311] = 0;
+        if (*(u16 *)(boss + 0x364) == 0xDC) {
+            boss[0x311] = 0;
         }
-        if (*(u16 *)(c + 0x364) == 0xFD) {
+        if (*(u16 *)(boss + 0x364) == 0xFD) {
             for (i = 0; i != 0x18; i++) {
-                c[0x310 + i] = 0;
+                boss[0x310 + i] = 0;
             }
-            /* FAKE: TT's zero-store chain pair; the reloads move the shared c[0x364] value from v0 to a0. T-11860 */
-            *(u16 *)(c + 6) = *(u16 *)(c + 8) = *(u16 *)(c + 0xA) = 0;
-            c[0xD] = c[0xE] = c[0xF] = 0;
-            *(s16 *)(c + 4) = 0xA0;
+            /* FAKE: TT's zero-store chain pair; the reloads move the shared boss[0x364] value from v0 to a0. T-11860 */
+            *(u16 *)(boss + 6) = *(u16 *)(boss + 8) = *(u16 *)(boss + 0xA) = 0;
+            boss[0xD] = boss[0xE] = boss[0xF] = 0;
+            *(s16 *)(boss + 4) = 0xA0;
         }
         break;
     }
-    *(u16 *)(c + 0x364) += 1;
+    *(u16 *)(boss + 0x364) += 1;
 }
 
-void func_801396C4(void) {
-    func_80138300();
+void tt_boss1_ropes_follow(void) {
+    tt_boss1_rope_update();
 }
 
-void func_801396E4(void) {
-    u8 *p = D_80158A8C;
-    u8 *q;
+void tt_boss1_fire_arm_shots(void) {
+    u8 *boss = tt_boss;
+    u8 *rope;
 
-    if ((u32)*(u16 *)(p + 0x366) >= 0x18) {
-        q = D_80158AAC;
-        func_80133D14(*(s16 *)(q + 0x3A), *(s16 *)(q + 0xBA), 0x18, 0xA8);
-        q += 0xEFC;
-        func_80133D14(*(s16 *)(q + 0x3A), *(s16 *)(q + 0xBA), 0x18, 0xA8);
-        *(u16 *)(p + 0x366) = 0;
+    if ((u32)*(u16 *)(boss + 0x366) >= 0x18) {
+        rope = tt_boss_rope_buf;
+        tt_enemy_shot_fire_aimed(*(s16 *)(rope + 0x3A), *(s16 *)(rope + 0xBA), 0x18, 0xA8);
+        rope += 0xEFC;
+        tt_enemy_shot_fire_aimed(*(s16 *)(rope + 0x3A), *(s16 *)(rope + 0xBA), 0x18, 0xA8);
+        *(u16 *)(boss + 0x366) = 0;
         return;
     }
-    *(u16 *)(p + 0x366) += 1;
+    *(u16 *)(boss + 0x366) += 1;
 }
 
 /* Non-prototype declaration for taking the address: the ANSI prototype of 80133970.c (s16/u16 parameters) would change the K&R calls in this file. T-11510 */
-extern void func_80134470();
+extern void tt_enemy_shot_fire_fan9_aimed();
 
-void func_80139770(void) {
+void tt_boss1_phase2_attack(void) {
     void (*fn)();
-    u8 *c;
+    u8 *boss;
     s32 i;
 
-    c = D_80158A8C;
-    if (*(u16 *)(c + 0x30E) == 1) {
-        fn = func_80133FB0;
+    boss = tt_boss;
+    if (*(u16 *)(boss + 0x30E) == 1) {
+        fn = tt_enemy_shot_fire_3way_aimed;
     } else {
-        fn = func_80134470;
+        fn = tt_enemy_shot_fire_fan9_aimed;
     }
-    if (*(u16 *)(D_80158A8C + 0x366) >= 0x30) {
-        func_80133AD0(0x50B);
-        switch (*(u16 *)(c + 0x3A4)) {
+    if (*(u16 *)(tt_boss + 0x366) >= 0x30) {
+        tt_se_request(0x50B);
+        switch (*(u16 *)(boss + 0x3A4)) {
         case 0:
-            if (c[0x52] == 1) {
-                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+            if (boss[0x52] == 1) {
+                fn(*(s16 *)(boss + 0x14), *(s16 *)(boss + 0x16), 0x100, 0x20, 0xAA);
                 for (i = 0; i != 5; i++) {
-                    func_80133E30(*(s16 *)(c + 0x14) + D_80152D9C[i], *(s16 *)(c + 0x16) + D_80152DA8[i], 0x20, D_80152DB4[i], 0xA9);
-                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
-                    c[0x320 + i] = 1;
-                    ((s16 *)(c + 0x268))[i] = D_80152D9C[i];
-                    ((s16 *)(c + 0x298))[i] = D_80152DA8[i];
+                    tt_enemy_shot_fire_angle(*(s16 *)(boss + 0x14) + tt_boss1_fan_x_0[i], *(s16 *)(boss + 0x16) + tt_boss1_fan_y_0[i], 0x20, tt_boss1_fan_angle_0[i], 0xA9);
+                    ((TtPartAnimationView *)(boss + 0x38))[0x10 + i].flags = 0x80;
+                    boss[0x320 + i] = 1;
+                    ((s16 *)(boss + 0x268))[i] = tt_boss1_fan_x_0[i];
+                    ((s16 *)(boss + 0x298))[i] = tt_boss1_fan_y_0[i];
                 }
-                *(u16 *)(c + 0x3A4) = 1;
-                *(u16 *)(c + 0x366) = 0;
+                *(u16 *)(boss + 0x3A4) = 1;
+                *(u16 *)(boss + 0x366) = 0;
             }
             break;
         case 1:
-            if (c[0x52] == 3) {
-                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+            if (boss[0x52] == 3) {
+                fn(*(s16 *)(boss + 0x14), *(s16 *)(boss + 0x16), 0x100, 0x20, 0xAA);
                 for (i = 0; i != 5; i++) {
-                    func_80133E30(*(s16 *)(c + 0x14) + D_80152DC0[i], *(s16 *)(c + 0x16) + D_80152DCC[i], 0x20, D_80152DD8[i], 0xA9);
-                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
-                    c[0x320 + i] = 1;
-                    ((s16 *)(c + 0x268))[i] = D_80152DC0[i];
-                    ((s16 *)(c + 0x298))[i] = D_80152DCC[i];
+                    tt_enemy_shot_fire_angle(*(s16 *)(boss + 0x14) + tt_boss1_fan_x_1[i], *(s16 *)(boss + 0x16) + tt_boss1_fan_y_1[i], 0x20, tt_boss1_fan_angle_1[i], 0xA9);
+                    ((TtPartAnimationView *)(boss + 0x38))[0x10 + i].flags = 0x80;
+                    boss[0x320 + i] = 1;
+                    ((s16 *)(boss + 0x268))[i] = tt_boss1_fan_x_1[i];
+                    ((s16 *)(boss + 0x298))[i] = tt_boss1_fan_y_1[i];
                 }
-                *(u16 *)(c + 0x3A4) = 2;
-                *(u16 *)(c + 0x366) = 0;
+                *(u16 *)(boss + 0x3A4) = 2;
+                *(u16 *)(boss + 0x366) = 0;
             }
             break;
         case 2:
-            if (c[0x52] == 5) {
-                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+            if (boss[0x52] == 5) {
+                fn(*(s16 *)(boss + 0x14), *(s16 *)(boss + 0x16), 0x100, 0x20, 0xAA);
                 for (i = 0; i != 4; i++) {
-                    func_80133E30(*(s16 *)(c + 0x14) + D_80152DE4[i], *(s16 *)(c + 0x16) + D_80152DEC[i], 0x20, D_80152DF4[i], 0xA9);
-                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
-                    c[0x320 + i] = 1;
-                    ((s16 *)(c + 0x268))[i] = D_80152DE4[i];
-                    ((s16 *)(c + 0x298))[i] = D_80152DEC[i];
+                    tt_enemy_shot_fire_angle(*(s16 *)(boss + 0x14) + tt_boss1_fan_x_2[i], *(s16 *)(boss + 0x16) + tt_boss1_fan_y_2[i], 0x20, tt_boss1_fan_angle_2[i], 0xA9);
+                    ((TtPartAnimationView *)(boss + 0x38))[0x10 + i].flags = 0x80;
+                    boss[0x320 + i] = 1;
+                    ((s16 *)(boss + 0x268))[i] = tt_boss1_fan_x_2[i];
+                    ((s16 *)(boss + 0x298))[i] = tt_boss1_fan_y_2[i];
                 }
-                *(u16 *)(c + 0x3A4) = 3;
-                *(u16 *)(c + 0x366) = 0;
+                *(u16 *)(boss + 0x3A4) = 3;
+                *(u16 *)(boss + 0x366) = 0;
             }
             break;
         case 3:
-            if (c[0x52] == 7) {
-                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+            if (boss[0x52] == 7) {
+                fn(*(s16 *)(boss + 0x14), *(s16 *)(boss + 0x16), 0x100, 0x20, 0xAA);
                 for (i = 0; i != 5; i++) {
-                    func_80133E30(*(s16 *)(c + 0x14) + D_80152DFC[i], *(s16 *)(c + 0x16) + D_80152E08[i], 0x20, D_80152E14[i], 0xA9);
-                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
-                    c[0x320 + i] = 1;
-                    ((s16 *)(c + 0x268))[i] = D_80152DFC[i];
-                    ((s16 *)(c + 0x298))[i] = D_80152E08[i];
+                    tt_enemy_shot_fire_angle(*(s16 *)(boss + 0x14) + tt_boss1_fan_x_3[i], *(s16 *)(boss + 0x16) + tt_boss1_fan_y_3[i], 0x20, tt_boss1_fan_angle_3[i], 0xA9);
+                    ((TtPartAnimationView *)(boss + 0x38))[0x10 + i].flags = 0x80;
+                    boss[0x320 + i] = 1;
+                    ((s16 *)(boss + 0x268))[i] = tt_boss1_fan_x_3[i];
+                    ((s16 *)(boss + 0x298))[i] = tt_boss1_fan_y_3[i];
                 }
-                *(u16 *)(c + 0x3A4) = 0;
-                *(u16 *)(c + 0x366) = 0;
+                *(u16 *)(boss + 0x3A4) = 0;
+                *(u16 *)(boss + 0x366) = 0;
             }
             break;
         }
     } else {
-        *(u16 *)(c + 0x366) += 1;
+        *(u16 *)(boss + 0x366) += 1;
     }
     for (i = 0x10; i != 0x15; i++) {
-        func_80142AF0(D_80152D7C, i);
+        tt_boss_part_animation_step(tt_boss1_phase2_script, i);
     }
 }
 
 /* T-11520 near miss: structure and frame match; 28 differing lines. Spill homes of the promoted a/b pointers are at sp+0x34/0x38 here against 0x38/0x3C in the original (one extra home between them; unused pad locals do not move them), and the hoisted constant 1 takes v0 instead of a2 (case 0x40, 0x52 and 0xA0 stores). The case-0x54 u16 store of 0x80 and the u8 store in case 0xA0 are needed to match the shared li a0,0x80 and sb. */
 /* The constant 1 is one hoisted value (a2) over cases 0x40, 0x52, 0x80 and 0xA0 only when every store of it is unsigned (u16/u8), and the case-0x54 u16 store of 0x80 shares the dispatch's li a0,0x80. a and b are declared first for their spill homes at sp+0x3C/0x38. T-11830 */
-void func_80139B98(void) {
-    u8 *a;
-    u8 *b;
-    u8 *c;
-    u8 *d;
+void tt_boss1_update(void) {
+    u8 *sys;
+    u8 *core;
+    u8 *boss;
+    u8 *player;
     s32 i;
     s16 v;
     u16 k;
 
-    c = D_80158A8C;
-    k = *(u16 *)(c + 4);
-    a = D_80158A60;
-    b = D_80158A64;
-    d = D_80158A74;
+    boss = tt_boss;
+    k = *(u16 *)(boss + 4);
+    sys = tt_sys;
+    core = tt_core;
+    player = tt_player;
     switch (k) {
     case 0:
-        func_80142570(a, d);
-        if (b[0x22] != 0 && a[0x52] == 0xFF) {
+        tt_field_enemies_destroy(sys, player);
+        if (core[0x22] != 0 && sys[0x52] == 0xFF) {
             audio_command(0x71);
-        } else if (*(u16 *)(b + 4) == 0) {
+        } else if (*(u16 *)(core + 4) == 0) {
             audio_command(0xB1);
             func_800451E0(0x8019A000);
             audio_command(0x12);
@@ -991,116 +991,116 @@ void func_80139B98(void) {
             audio_command(4);
             audio_command(0x200);
         }
-        func_80137C20();
-        *(s16 *)(c + 4) = 0x20;
+        tt_boss1_init();
+        *(s16 *)(boss + 4) = 0x20;
         break;
     case 0x20:
-        func_80138178();
-        func_801396C4();
+        tt_boss1_enter();
+        tt_boss1_ropes_follow();
         break;
     case 0x30:
-        func_801381E8();
-        func_801396C4();
+        tt_boss1_intro_animation();
+        tt_boss1_ropes_follow();
         break;
     case 0x40:
-        v = *(s16 *)(D_80158A8C + 0x30C);
+        v = *(s16 *)(tt_boss + 0x30C);
         if (v < 0x20) {
-            *(u16 *)(c + 6) = 2;
+            *(u16 *)(boss + 6) = 2;
         } else if (v < 0x40) {
-            *(u16 *)(c + 6) = 1;
+            *(u16 *)(boss + 6) = 1;
         } else {
-            *(u16 *)(c + 6) = 0;
+            *(u16 *)(boss + 6) = 0;
         }
-        func_80138240();
-        func_801396C4();
-        if (*(u16 *)(c + 8) == 0) {
-            func_801396E4();
+        tt_boss1_track_player_x();
+        tt_boss1_ropes_follow();
+        if (*(u16 *)(boss + 8) == 0) {
+            tt_boss1_fire_arm_shots();
         }
-        v = *(s16 *)(c + 0x30C);
+        v = *(s16 *)(boss + 0x30C);
         if (v < 0) {
-            *(s16 *)(c + 4) = 0x50;
-            *(s16 *)(c + 10) = 0;
-            *(u16 *)(c + 8) = 0;
-            *(s16 *)(c + 6) = 0;
-            c[15] = 0;
-            c[14] = 0;
-            c[13] = 0;
+            *(s16 *)(boss + 4) = 0x50;
+            *(s16 *)(boss + 10) = 0;
+            *(u16 *)(boss + 8) = 0;
+            *(s16 *)(boss + 6) = 0;
+            boss[15] = 0;
+            boss[14] = 0;
+            boss[13] = 0;
         } else if (v < 0x20) {
-            c[0x3E] = 0x3A;
+            boss[0x3E] = 0x3A;
         } else if (v < 0x40) {
-            c[0x3E] = 0x36;
+            boss[0x3E] = 0x36;
         }
         break;
     case 0x50:
-        *(s32 *)(c + 0x218) = 0;
-        func_80138808();
+        *(s32 *)(boss + 0x218) = 0;
+        tt_boss1_rope_break();
         break;
     case 0x51:
-        func_80138E28();
+        tt_boss1_expand_ring();
         break;
     case 0x52:
-        *(s16 *)(c + 4) = 0x53;
-        *(u16 *)(c + 0x30E) = 1;
-        *(s16 *)(c + 0x3A4) = 0;
-        *(s16 *)(c + 0x3AA) = 0;
-        *(u16 *)(c + 0x3AC) = 1;
-        *(s16 *)(c + 0x366) = 0;
+        *(s16 *)(boss + 4) = 0x53;
+        *(u16 *)(boss + 0x30E) = 1;
+        *(s16 *)(boss + 0x3A4) = 0;
+        *(s16 *)(boss + 0x3AA) = 0;
+        *(u16 *)(boss + 0x3AC) = 1;
+        *(s16 *)(boss + 0x366) = 0;
         for (i = 0; i < 4; i++) {
-            *(s16 *)(c + 0x2D8 + i * 2) = 0x18;
-            c[0x353 + i] = 1;
+            *(s16 *)(boss + 0x2D8 + i * 2) = 0x18;
+            boss[0x353 + i] = 1;
         }
         for (i = 0x10; i != 0x15; i++) {
-            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
-            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 6;
-            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
-            c[0x310 + i] = 0;
-            *(s16 *)(c + 0x2A8 + i * 2) = 8;
-            *(s16 *)(c + 0x248 + i * 2) = 0;
-            *(s16 *)(c + 0x278 + i * 2) = 0;
-            ((TtSlot14 *)(c + 0x38))[i].unk_08 = 0x60;
+            ((TtPartAnimationView *)(boss + 0x38))[i].sets = tt_sprite_set_table;
+            ((TtPartAnimationView *)(boss + 0x38))[i].flip = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].set = 6;
+            ((TtPartAnimationView *)(boss + 0x38))[i].unk_0A = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].transform_enable = 0;
+            boss[0x310 + i] = 0;
+            *(s16 *)(boss + 0x2A8 + i * 2) = 8;
+            *(s16 *)(boss + 0x248 + i * 2) = 0;
+            *(s16 *)(boss + 0x278 + i * 2) = 0;
+            ((TtPartAnimationView *)(boss + 0x38))[i].flags = 0x60;
         }
         break;
     case 0x53:
-        func_80138240();
-        func_8013923C();
-        func_80138D10();
-        func_80138D94();
-        func_80139770();
-        if (c[0x353] == 0 && c[0x354] == 0 && c[0x355] == 0 && c[0x356] == 0) {
-            *(s16 *)(c + 4) = 0x54;
-            *(s16 *)(c + 0x30E) = 2;
-            *(s16 *)(c + 0x30C) = 0x48;
+        tt_boss1_track_player_x();
+        tt_boss1_spin_step();
+        tt_boss1_core_animation();
+        tt_boss1_side_part_animation();
+        tt_boss1_phase2_attack();
+        if (boss[0x353] == 0 && boss[0x354] == 0 && boss[0x355] == 0 && boss[0x356] == 0) {
+            *(s16 *)(boss + 4) = 0x54;
+            *(s16 *)(boss + 0x30E) = 2;
+            *(s16 *)(boss + 0x30C) = 0x48;
         }
         break;
     case 0x54:
-        func_80138240();
-        func_8013923C();
-        func_80138D10();
-        func_80138D94();
-        func_80139770();
-        if (*(s16 *)(c + 0x30C) < 0) {
-            func_80133AD0(0x504);
-            *(u16 *)(c + 4) = 0x80;
-            *(s16 *)(c + 0x30E) = 3;
-            c[0xB8] = 0x80;
+        tt_boss1_track_player_x();
+        tt_boss1_spin_step();
+        tt_boss1_core_animation();
+        tt_boss1_side_part_animation();
+        tt_boss1_phase2_attack();
+        if (*(s16 *)(boss + 0x30C) < 0) {
+            tt_se_request(0x504);
+            *(u16 *)(boss + 4) = 0x80;
+            *(s16 *)(boss + 0x30E) = 3;
+            boss[0xB8] = 0x80;
         }
         break;
     case 0x80:
         audio_command(0xC1);
-        d[0x52] = 1;
-        func_801392A0();
-        func_80138D10();
-        func_80138D94();
+        player[0x52] = 1;
+        tt_boss1_death_sequence();
+        tt_boss1_core_animation();
+        tt_boss1_side_part_animation();
         break;
     case 0xA0:
         audio_command(0xB1);
-        c[0] = 0;
-        b[0x12] = 0;
-        *(u16 *)((u8 *)D_80158A70 + 0x1E) = 1;
-        *(s16 *)(b + 2) = 0xA0;
+        boss[0] = 0;
+        core[0x12] = 0;
+        *(u16 *)((u8 *)tt_stage_script + 0x1E) = 1;
+        *(s16 *)(core + 2) = 0xA0;
         break;
     }
-    func_80137A78();
+    tt_boss1_collision();
 }

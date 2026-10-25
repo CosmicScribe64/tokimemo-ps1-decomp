@@ -1,0 +1,314 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+param main:text_glyph_pages_clear arg0 page_count - T-27062: clears this many glyph-cache pages; width/layout stays unchanged.
+param main:text_set_advance arg0 glyph_advance - T-27062: validates the horizontal glyph distance as14 or16.
+param main:set_kanji_string col color_index - T-27062: queues position, color byte, text and ordering-slot byte in one text-list entry.
+param main:set_kanji_string str text - T-27062: queues position, color byte, text and ordering-slot byte in one text-list entry.
+param main:set_kanji_string arg4 ordering_slot - T-27062: queues position, color byte, text and ordering-slot byte in one text-list entry.
+param main:k_disp_start arg0 first_entry - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:k_disp_switch arg0 entry_index - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:get_k_work arg0 entry_index - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:set_k_work arg0 entry_index - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:set_k_work arg1 entry_value - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:k_reset arg0 entry_count - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:k_sub_disp_start arg0 entry_offset - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:k_speed_set arg0 reveal_speed - T-27062: text-list entry index/count or typewriter setting is read directly at this argument; existing signed width retained.
+param main:k_disp_switch arg1 visible - T-27062: entry active byte is1 only when this argument is positive.
+local main:k_reset sum glyph_total - T-27062: sums glyph_count of retained entries and writes total/reveal position.
+local main:k_disp_goto_line_end sum glyph_end - T-27062: running glyph-count sum locates the current entry boundary.
+local main:get_now_k sum glyph_end - T-27062: running glyph-count sum locates the current entry boundary.
+param main:load_string str text - T-27062: walks encoded text pairs and uploads each matching font glyph; K&R parameter remains K&R.
+local main:load_string start first_glyph - T-27062: records text-state total before queuing so return is added glyph count.
+param main:menu_check arg0 checked_menu - T-27062: menu selector and signed pointer coordinates passed through the menu hit-test path.
+param main:menu_check arg1 check_pointer_x - T-27062: menu selector and signed pointer coordinates passed through the menu hit-test path.
+param main:menu_check arg2 check_pointer_y - T-27062: menu selector and signed pointer coordinates passed through the menu hit-test path.
+param main:menu_check_1 arg0 hit_test_menu - T-27062: menu selector and signed pointer coordinates passed through the menu hit-test path.
+param main:menu_check_1 arg1 hit_test_x - T-27062: menu selector and signed pointer coordinates passed through the menu hit-test path.
+param main:menu_check_1 arg2 hit_test_y - T-27062: menu selector and signed pointer coordinates passed through the menu hit-test path.
+local main:menu_check x control_mode - T-27062: reads menu_mode and dispatches its low two bits.
+local main:menu_check_1 cnt hit_count - T-27062: counts strict rectangle hits and returns the last matching item.
+local main:menu_check_1 sel hit_item - T-27062: counts strict rectangle hits and returns the last matching item.
+param main:menu_check_2 arg0 cursor_menu - T-27062: selects one menu for cursor hover marking; unused coordinate parameters stay deferred.
+local main:menu_check_2 sel cursor_item - T-27062: records the item equal to the stored signed cursor.
+local main:menu_cursor_update dir direction - T-27062: signed movement direction and bounded disabled-item skip budget; menu_mode behavior unchanged.
+local main:menu_cursor_update n skip_budget - T-27062: signed movement direction and bounded disabled-item skip budget; menu_mode behavior unchanged.
+param main:get_near_menu mode axis - T-27062: axis0 compares x and axis1 y; signed direction-1/+1 rejects opposite-side candidates.
+param main:get_near_menu dir direction - T-27062: axis0 compares x and axis1 y; signed direction-1/+1 rejects opposite-side candidates.
+local main:get_near_menu n item_count - T-27062: nearest-item search preserves signed negative same-row/column preference and tie order.
+local main:get_near_menu best_d best_distance - T-27062: nearest-item search preserves signed negative same-row/column preference and tie order.
+local main:get_near_menu best best_item - T-27062: nearest-item search preserves signed negative same-row/column preference and tie order.
+local main:get_near_menu diff axis_distances - T-27062: nearest-item search preserves signed negative same-row/column preference and tie order.
+param main:menu_bar_color arg0 menu_index - T-27062: packs RGB, ordering-slot nibble and style nibble; index>=16 resets defaults.
+param main:menu_bar_color arg1 rgb_color - T-27062: packs RGB, ordering-slot nibble and style nibble; index>=16 resets defaults.
+param main:menu_bar_color arg2 ordering_slot - T-27062: packs RGB, ordering-slot nibble and style nibble; index>=16 resets defaults.
+param main:menu_bar_color arg3 style_flags - T-27062: packs RGB, ordering-slot nibble and style nibble; index>=16 resets defaults.
+local main:menu_bar_show mode box_style - T-27062: decodes packed style and draws highlight for signed current item.
+local main:menu_bar_show page ordering_slot - T-27062: decodes packed style and draws highlight for signed current item.
+local main:menu_bar_show flag transparency_flag - T-27062: decodes packed style and draws highlight for signed current item.
+local main:menu_bar_show item cursor_item - T-27062: decodes packed style and draws highlight for signed current item.
+param main:x_taku_string_set arg0 first_label - T-27062: queues first two choice labels and third only for count3 with a nonnull third pointer.
+param main:x_taku_string_set arg1 second_label - T-27062: queues first two choice labels and third only for count3 with a nonnull third pointer.
+param main:x_taku_string_set arg2 third_label - T-27062: queues first two choice labels and third only for count3 with a nonnull third pointer.
+param main:x_taku_string_set arg3 choice_count - T-27062: queues first two choice labels and third only for count3 with a nonnull third pointer.
+param main:gnsx arg0 speaker_name - T-27062: name plate centers the encoded name by its byte length.
+param main:sndisp str text - T-27062: splits a talk block and passes row/style through to sndi.
+param main:sndisp y first_row - T-27062: splits a talk block and passes row/style through to sndi.
+param main:sndisp col speaker_style - T-27062: splits a talk block and passes row/style through to sndi.
+local main:sndisp q byte_phase - T-27062: tracks even-byte control positions and split offsets in the copied talk block; array capacity and behavior unchanged.
+local main:sndisp n line_break_count - T-27062: tracks even-byte control positions and split offsets in the copied talk block; array capacity and behavior unchanged.
+local main:sndisp pos line_break_offsets - T-27062: tracks even-byte control positions and split offsets in the copied talk block; array capacity and behavior unchanged.
+local main:sndisp buf block_text - T-27062: tracks even-byte control positions and split offsets in the copied talk block; array capacity and behavior unchanged.
+param main:sndi str text - T-27062: expands name codes then queues one of three rows with style-dependent coordinates.
+param main:sndi y row - T-27062: expands name codes then queues one of three rows with style-dependent coordinates.
+param main:sndi col speaker_style - T-27062: expands name codes then queues one of three rows with style-dependent coordinates.
+local main:sndi s scan_text - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+local main:sndi p name_code_at - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+local main:sndi found name_code_found - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+local main:sndi stage player_expanded_text - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+local main:sndi name expanded_name - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+local main:sndi result expanded_text - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+local main:sndi quoted decorated_text - T-27062: names the code scan and player/girl expansion buffers; inferred matching buffer sizes and FAKE comments stay unchanged.
+param main:set_c_girl arg0 girl_id - T-27062: stores current_girl with unchanged u8 argument type.
+param main:get_g_name arg0 name_buf - T-27062: builds the selected girl-record name form and checks the ID after copying.
+param main:get_g_name arg1 girl_id - T-27062: builds the selected girl-record name form and checks the ID after copying.
+param main:get_p_name arg0 name_buf - T-27062: girl-dependent player address form; selector15 requests full name, so it is not universally a girl ID.
+param main:get_p_name arg1 girl_form - T-27062: girl-dependent player address form; selector15 requests full name, so it is not universally a girl ID.
+param main:get_g_zyotai_s arg0 girl_id - T-27062: selects girl record for weighted score/rank; modulo13 and source width retained where present.
+param main:get_g_zyotai_h arg0 girl_id - T-27062: selects girl record for weighted score/rank; modulo13 and source width retained where present.
+param main:get_h_tokimeki arg0 girl_id - T-27062: selects girl record for weighted score/rank; modulo13 and source width retained where present.
+param main:get_h_yuukou arg0 girl_id - T-27062: selects girl record for weighted score/rank; modulo13 and source width retained where present.
+param main:menu_girl_taku_set arg1 last_text_entry_count - T-27062: out pointer receives each met-girl label queue result, not the selected girl ID.
+local main:menu_girl_taku_set g girl_id - T-27062: item11 maps to record12; record flags decide whether label/item width is enabled.
+local main:menu_girl_taku_set p girl_record - T-27062: item11 maps to record12; record flags decide whether label/item width is enabled.
+local main:xa_wait r text_complete - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:xa_wait a middle_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:xa_wait b bottom_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:xa_wait now revealed_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:xa_wait ph scroll_phase - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:xa_wait t first_visible_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step r text_complete - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step a middle_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step b bottom_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step now revealed_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step ph scroll_phase - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step t first_visible_entry - T-27062: three-row scrolling/typewriter state; hidden fourth line and signed y updates preserved.
+local main:talk_text_step k cd_request_words - T-27062: reads current CD request word2 to decide whether source-B clip follows sourceA.
+param main:talk_voice_play arg0 voice_source_a - T-27062: sources are immediate clip words at index-1 or table pointers otherwise; low selector nibble15 suppresses voice.
+param main:talk_voice_play arg1 voice_source_b - T-27062: sources are immediate clip words at index-1 or table pointers otherwise; low selector nibble15 suppresses voice.
+param main:talk_voice_play arg2 clip_index - T-27062: sources are immediate clip words at index-1 or table pointers otherwise; low selector nibble15 suppresses voice.
+param main:talk_voice_play arg3 voice_selector - T-27062: sources are immediate clip words at index-1 or table pointers otherwise; low selector nibble15 suppresses voice.
+local main:talk_voice_play selector speaker_code - T-27062: low four bits of voice selector;15 records DONE without starting a clip.
+local main:get_h_tokimeki sum weighted_tokimeki - T-27062: weighted tokimeki plus signed per-parameter ladder bonuses; mask/loop omit guts in final accumulation.
+local main:get_h_tokimeki mask bonus_param_mask - T-27062: weighted tokimeki plus signed per-parameter ladder bonuses; mask/loop omit guts in final accumulation.
+local main:get_h_tokimeki kind ladder_kind - T-27062: weighted tokimeki plus signed per-parameter ladder bonuses; mask/loop omit guts in final accumulation.
+local main:get_h_tokimeki use param_bonus_enabled - T-27062: weighted tokimeki plus signed per-parameter ladder bonuses; mask/loop omit guts in final accumulation.
+local main:get_h_tokimeki bonus param_bonus_by_step - T-27062: weighted tokimeki plus signed per-parameter ladder bonuses; mask/loop omit guts in final accumulation.
+local main:get_h_tokimeki lv0 ladder_base_0 - T-27062: threshold base table index0 before kind-specific offsets; remains u32.
+local main:get_h_tokimeki lv1 ladder_base_1 - T-27062: threshold base table index1 before kind-specific offsets; remains u32.
+local main:get_h_tokimeki lv2 ladder_base_2 - T-27062: threshold base table index2 before kind-specific offsets; remains u32.
+local main:get_h_tokimeki lv3 ladder_base_3 - T-27062: threshold base table index3 before kind-specific offsets; remains u32.
+local main:get_h_tokimeki lv4 ladder_base_4 - T-27062: threshold base table index4 before kind-specific offsets; remains u32.
+local main:get_h_tokimeki lv5 ladder_base_5 - T-27062: threshold base table index5 before kind-specific offsets; remains u32.
+local main:get_h_tokimeki lv6 ladder_base_6 - T-27062: threshold base table index6 before kind-specific offsets; remains u32.
+local main:get_h_yuukou t girl_index - T-27062: girl%13 and weighted affection divided by100, clamped0..100.
+local main:get_h_yuukou v weighted_affection - T-27062: girl%13 and weighted affection divided by100, clamped0..100.
+param main:get_h_tokimeki_table arg0 scores_out - T-27062: writes weighted tokimeki for exactly girls0..10.
+param main:get_h_yuukou_table arg0 scores_out - T-27062: writes weighted affection for exactly girls0..10.
+param main:birth_day_check arg0 birthday_subject - T-27062: girl index low nibble15 selects player; implicit caller views stay unchanged.
+param main:birth_day_check_days arg0 birthday_subject - T-27062: compares packed birthday month/day; month13 normalizes1; no fixed-width/type change.
+param main:birth_day_check_days arg1 month - T-27062: compares packed birthday month/day; month13 normalizes1; no fixed-width/type change.
+param main:birth_day_check_days arg2 day - T-27062: compares packed birthday month/day; month13 normalizes1; no fixed-width/type change.
+local main:birth_day_check_days t subject_id - T-27062: masked subject ID and packed month/day source, either player or girl record.
+local main:birth_day_check_days v birthday_word - T-27062: masked subject ID and packed month/day source, either player or girl record.
+param main:girl_points_shiori arg0 closeness_by_girl - T-27062: caller passes rank/points arrays; Shiori/other helper output writes and16-slot wrapper behavior retained.
+param main:girl_points_shiori arg1 points_by_girl - T-27062: caller passes rank/points arrays; Shiori/other helper output writes and16-slot wrapper behavior retained.
+param main:girl_points_others arg0 closeness_by_girl - T-27062: caller passes rank/points arrays; Shiori/other helper output writes and16-slot wrapper behavior retained.
+param main:girl_points_others arg1 points_by_girl - T-27062: caller passes rank/points arrays; Shiori/other helper output writes and16-slot wrapper behavior retained.
+param main:girl_scores arg0 closeness_by_girl - T-27062: caller passes rank/points arrays; Shiori/other helper output writes and16-slot wrapper behavior retained.
+param main:girl_scores arg1 points_by_girl - T-27062: caller passes rank/points arrays; Shiori/other helper output writes and16-slot wrapper behavior retained.
+local main:girl_points_shiori sum scene_count - T-27062: sum of scene counters1..35; minimum pointer begins at second byte and comparisons read p[-1].
+local main:girl_points_shiori p param_minimum_tail - T-27062: sum of scene counters1..35; minimum pointer begins at second byte and comparisons read p[-1].
+local main:girl_points_others val girl_points - T-27062: signed per-girl accumulator and capped parameter-value curve index; mixed loop indices and FAKE unused locals unchanged.
+local main:girl_points_others v curve_bucket - T-27062: signed per-girl accumulator and capped parameter-value curve index; mixed loop indices and FAKE unused locals unchanged.
+local main:girl_scores love weighted_tokimeki - T-27062: 11 initialized weighted inputs are bucketed by5 while loop still touches16 entries; uninitialized tail unchanged.
+local main:girl_scores friendship weighted_affection - T-27062: 11 initialized weighted inputs are bucketed by5 while loop still touches16 entries; uninitialized tail unchanged.
+local main:girl_player_sports_club_check x player_flags_word - T-27062: extracts player club from the high nibble of this u16 word.
+param main:girl_find_by_club arg0 club_id - T-27062: returns first girl0..10 whose club nibble equals this ID, else signed-1.
+local main:girl_points_others sum score_input - T-27062: reused gameplay input holds stress for its capped curve, then each girl scene-counter sum; neutral name preserves both roles.
+param main:parameter_change arg0 parameter_id - T-27062: selects one of the nine Parameter-indexed 16.16 GameState words; field and arithmetic width stay unchanged.
+param main:parameter_change arg1 delta - T-27062: signed increment added to the selected full 16.16 word before the two different lower/upper writes.
+param main:portrait_expression_select arg0 expression_variant - T-27062: selects one of six portrait expression variants; cases choose tpage 7-9 and odd variants offset both V coordinates.
+local main:hizuke_init event day_kind - T-27062: reads the current calendar cell's DayKind; Sunday/holiday kinds select the Sunday palette row.
+local main:portrait_face_update k girl_id - T-27062: current_girl indexes the girl's three-entry lip-sync threshold row.
+local main:portrait_event_face_mouth_lipsync k girl_id - T-27062: current_girl indexes the girl's three-entry lip-sync threshold row for the event picture's mouth layer.
+param main:icon_can_use_set idx icon_index - T-27062: indexes the per-icon enabled byte array.
+param main:icon_can_use_set on enabled - T-27062: writes 1 or 0 to the selected icon's availability byte.
+param main:get_icon_can_use arg0 icon_index - T-27062: indexes the per-icon availability byte returned as a boolean.
+local main:hud_icon_bar_init n zero_position_pair_count - T-27062: counts saved (0,0) free-layout coordinate pairs; at two, resets the layout, then reuses the local as the copy index.
+param main:hud_icon_layout_apply n icon_count - T-27062: selects 14 or 15 menu/icon entries and is stored back to GameState.icon_count.
+param main:hud_icon_move_allowed idx icon_index - T-27062: selects the free-layout position record to test for screen bounds and collision.
+param main:hud_icon_move_allowed dx delta_x - T-27062: horizontal displacement tested at all four moved icon-box corners.
+param main:hud_icon_move_allowed dy delta_y - T-27062: vertical displacement tested at all four moved icon-box corners.
+local main:hud_icon_move_allowed r move_allowed - T-27062: remains 1 when the candidate move passes edge and collision tests, returns 0 on rejection.
+local main:hud_icon_bar_update dx delta_x - T-27062: accepted horizontal free-layout movement applied to the selected icon position and actor.
+local main:hud_icon_bar_update dy delta_y - T-27062: accepted vertical free-layout movement applied to the selected icon position and actor.
+local main:hud_icon_bar_update old previous_cursor_index - T-27062: snapshots menu_cursor_0 before input handling for the selection-change test.
+local main:hud_icon_bar_update n visible_icon_count - T-27062: iteration count for icon draw/animation updates, selected from icon_mode and icon_count.
+local main:hud_summer_phase ret summer_phase - T-27062: returns -1 at the May/September cutoffs, otherwise the summer-month result 0 or 1.
+local main:hud_day_bgm_load v vacation_type - T-27062: GameState vacation value, with the 1996-09-01 override, selects the day-screen music bank.
+local main:hud_day_bgm_load i season_index - T-27062: selects seasonal music-bank entries when vacation_type is the regular school-term value.
+param main:hud_mascot_display_switch arg0 visible - T-27062: nonzero sets and zero clears the visible bit on both mascot actors.
+param main:hud_mascot_set arg0 mascot_choice - T-27062: 0 or >=14 hides/resets the mascot; 1..13 stores the selected choice and configures its actor frames.
+param main:hud_vacation_for_date arg0 month - T-27062: calendar month input for vacation-date boundaries; month 13 is the appointment-style January encoding in this helper.
+param main:hud_vacation_for_date arg1 day_of_month - T-27062: day input compared with the vacation start/end dates.
+local main:calendar_marks_build month calendar_month - T-27062: month component read from player, girl, appointment, schedule and event-log dates.
+local main:calendar_marks_build day day_of_month - T-27062: day component used to place date and event marks in the month columns.
+local main:calendar_marks_build year calendar_year - T-27062: year component used to gate event-log marks against the displayed month.
+local main:calendar_marks_build day0 current_month_third_sunday_day - T-27062: one-based day number computed as 21 minus current month's first-weekday marker, then decremented at CAL_MARK.
+local main:calendar_marks_build day1 next_month_third_sunday_day - T-27062: one-based day number computed as 21 minus next month's first-weekday marker, then decremented at CAL_MARK.
+local main:calendar_marks_build left repeat_days_remaining - T-27062: counts down days on which a multi-day marker frame is repeated.
+local main:calendar_marks_build kind repeated_calendar_frame - T-27062: frame value retained from DAY_KIND and reused on following empty marker days.
+param main:calendar_cell_x arg0 month_side - T-27062: 0 selects the current month column and 1 the next month column.
+param main:calendar_cell_x arg1 day_index - T-27062: zero-based day index used in the calendar-cell x formula.
+param main:calendar_cell_y arg0 month_side - T-27062: 0 selects the current month column and 1 the next month column.
+param main:calendar_cell_y arg1 day_index - T-27062: zero-based day index used in the calendar-cell y formula.
+param main:calendar_month_load arg0 calendar_year - T-27062: encoded year byte (95 plus the game-year offset) selects the month-data record.
+param main:calendar_month_load arg1 calendar_month - T-27062: month byte selects the month-data record within the encoded year.
+param main:calendar_month_load arg2 populate_next_month - T-27062: nonzero copies the visible month view and loads next-month day-count/weekday/calendar arrays.
+local main:calendar_month_load idx month_data_index - T-27062: computed table index for the selected month and its following month.
+local main:calendar_month_load n next_month_day_count - T-27062: q[0] copied to next-month day_kind[0] and bounds its per-day table copy.
+local main:calendar_month_load m next_month_first_weekday - T-27062: q[1] copied to next-month marker[0].
+local main:hud_magazine_page_build n calendar_actor_index - T-27062: actor-pool cursor beginning at 0x61 and advanced as magazine issue graphics are added; earlier year read is dead matching scaffolding.
+local main:hud_magazine_page_build kind magazine_issue_index - T-27062: selects one of 13 issue rows for title, frame, text and progress-state updates.
+param main:hud_appointment_find_today arg0 calendar_year - T-27062: displayed calendar year used by protected-date checks.
+param main:hud_appointment_find_today arg1 calendar_month - T-27062: displayed month; 13 folds to January before matching appointments.
+param main:hud_appointment_find_today arg2 day_of_month - T-27062: displayed day used by protected-date and appointment-date checks.
+param main:hud_appointment_count_for_girl arg0 girl_id - T-27062: matches the girl byte in each active appointment record.
+local main:hud_appointment_count_for_girl n appointment_count - T-27062: counts active appointment slots belonging to the requested girl.
+local main:hud_appointment_list_sort n active_count - T-27062: number of active appointment records compacted at the front and sorted.
+local main:hud_appointment_list_sort keys appointment_date_keys - T-27062: stores month*100+day keys for candidate slots during selection sort.
+local main:hud_appointment_list_sort min earliest_date_key - T-27062: smallest remaining month*100+day key in the selection-sort pass.
+local main:hud_appointment_list_sort k earliest_slot_index - T-27062: slot holding the smallest remaining date key, swapped into position i.
+local main:hud_appointment_list_sort tmp appointment_entry_temp - T-27062: four-byte WordView temporary used to swap two packed appointment entries.
+param main:hud_appointment_add arg0 appointment_entry - T-27062: packed WordView appointment record copied into the first free slot before resorting.
+local main:hud_appointment_add i insertion_slot_index - T-27062: advances to the first inactive appointment slot, bounded by the eight-slot list.
+local main:hud_club_list_menu first first_available_club_id - T-27062: first club index whose quit/availability bit is clear; stored as the initial menu cursor.
+param main:hud_save_slot_info_show arg1 left_summary_column - T-27062: chooses summary x anchor -0x8C (nonzero/left) or -8 (zero/right); callers distinguish save and load/continue summaries.
+local main:hud_save_slot_info_show var_s0 cleared_girl_count - T-27062: counts nonzero cleared-girl flags from the selected SystemData or album record, caps at 99, and formats the clear-count line.
+local main:hud_save_slot_info_show spEC summary_x - T-27062: x anchor for the save-summary lines, selected from arg1.
+local main:hud_save_slot_info_show spC8 slot_date_text - T-27062: reused string buffer for slot/album label and saved-date line.
+local main:hud_save_slot_info_show spA8 player_name_text - T-27062: family/given-name line buffer.
+local main:hud_save_slot_info_show sp88 nickname_text - T-27062: nickname line buffer.
+local main:hud_save_slot_info_show sp68 club_name_text - T-27062: club-affiliation line buffer, using the selected system/album club id.
+local main:hud_save_slot_info_show sp48 clear_count_text - T-27062: formatted cleared-girl count line buffer.
+local main:hud_cursor_update speed base_speed - T-27062: cursor_speed copied and raised to at least one before any pad multiplier.
+local main:hud_cursor_update step movement_step - T-27062: actual x/y movement per accepted directional input (base speed or twice that speed).
+param main:hud_command_roll_poor_result arg0 days_to_advance - T-27062: temporarily advances day_count by this amount while evaluating the command result, then restores it.
+local main:hud_command_roll_poor_result score command_score - T-27062: combines selected biorhythm and command parameters, randomization and stress adjustment before poor-result test.
+local main:hud_command_roll_poor_result failures zero_wave_count - T-27062: counts the selected scale-3 biorhythm probes that return zero and triggers quartering at three.
+local main:hud_command_roll_poor_result day day_count_to_restore - T-27062: saved day_count written back after future-day command scoring.
+local main:hud_command_roll_poor_result old_day original_day_count - T-27062: original day_count used to seed the temporary future-day calculation.
+local main:hud_command_roll_poor_result factor stress_factor - T-27062: stress-derived factor subtracted from 8 when scaling the randomized command score.
+param main:hud_biorhythm_value a include_23_day_wave - T-27062: selects the rsin(day * 0xB2) wave (the 23-day cycle); nonzero includes it.
+param main:hud_biorhythm_value b include_28_day_wave - T-27062: selects the rsin(day * 0x92) wave (the 28-day cycle); nonzero includes it.
+param main:hud_biorhythm_value c include_33_day_wave - T-27062: selects the rsin(day * 0x7C) wave (the 33-day cycle); nonzero includes it.
+local main:hud_biorhythm_value magnitude absolute_wave_magnitude - T-27062: abs(selected wave) is compared with the signed critical limit 0x199.
+local main:hud_biorhythm_value offset birthday_phase_offset - T-27062: result of func_8006C700 added to day_count before wave evaluation.
+local main:hud_biorhythm_value day biorhythm_day - T-27062: birthday phase offset plus day_count, multiplied by each wave's phase step.
+local main:hud_biorhythm_value wave_a wave_23_day - T-27062: rsin result for the 23-day cycle selected by parameter a.
+local main:hud_biorhythm_value wave_b wave_28_day - T-27062: rsin result for the 28-day cycle selected by parameter b.
+local main:hud_biorhythm_value wave_c wave_33_day - T-27062: rsin result for the 33-day cycle selected by parameter c.
+local main:hud_biorhythm_value bad critical_wave_count - T-27062: count of selected waves whose absolute value is below 0x199.
+local main:hud_biorhythm_value count selected_wave_count - T-27062: number of nonzero wave selectors used to divide the combined result.
+local main:hud_biorhythm_value total combined_wave_total - T-27062: signed sum of selected wave contributions and critical-wave penalties.
+local main:hud_biorhythm_birth_offset result birthday_phase_offset - T-27062: returns the player-birthday-derived signed phase offset, with an early-April branch.
+param main:hud_event_log_scan first last_qualifying_girl_out - T-27062: output byte receives the girl id of the final record whose scene is 0, 1, 2 or 0xF; empty log yields 0xFF.
+param main:hud_event_log_scan last final_event_girl_out - T-27062: output byte receives the girl id in the final event-log record; empty log yields 0.
+local main:hud_event_log_scan n event_record_count - T-27062: also indexes each current record; count is capped at 0xFF before return.
+local main:hud_event_log_scan sel last_qualifying_girl_id - T-27062: last event-log girl id whose scene is one of 0, 1, 2 or 0xF; initialized to 0xFF.
+local main:hud_event_log_scan cur final_event_girl_id - T-27062: girl id copied from the last event-log record visited.
+local main:hud_event_log_scan val current_event_girl_id - T-27062: girl id read from the event-log record visited this iteration.
+local main:hud_event_log_scan type scene_id - T-27062: scene byte used to decide whether the record updates the qualifying-girl output.
+param main:portrait_build arg4 expression_variant - T-27062: passed to func_80063520 to select portrait expression texture variant; same actual role as callee expression_variant, source types unchanged.
+local main:settings_command_screen_build event calendar_marker - Marker read at day-1+2 and compared with exam, club-season, and school-trip marker ids; the separate day-1+7 lookup is the culture-festival lookahead.
+param main:settings_command_screen_icons_reset arg0 disable_weekday_commands - Nonzero argument disables weekday command icons 0-7; zero leaves them enabled. Called by command build and holiday flow.
+local main:settings_icon_layout_repair err invalid_icon_coordinate_count - Counts invalid X/Y coordinate components across16 position pairs (8 rows with2 pairs each); a pair with both components invalid contributes2. Free-layout repair tests the result as nonzero.
+local main:settings_icon_layout_repair zero zero_position_pair_count - Counts stored (x,y) positions equal to (0,0); reset needs at least two zero pairs.
+local main:settings_icon_layout_repair saved saved_icon_mode - Temporarily saves/restores the byte view of icon_mode while rebuilding the icon bar.
+local main:settings_command_screen_icon_confirm temp_v0 selected_girl - Return value of girl_find_by_club; -1 means none, otherwise indexes girls[] for the affection update.
+local main:settings_command_screen_icon_confirm temp_v1 player_club_id - Player club nibble shifted from player_flags.h and passed to girl_find_by_club.
+local main:settings_command_screen_icon_confirm temp_v0_2 tomorrow_marker - Calendar marker at day-1+2 selects exam, school-trip, or rest behavior for icon 14.
+local main:settings_command_screen_icon_confirm sp28 menu_result - Set to 1 when a confirm press was handled; returned to the command-screen caller.
+param main:settings_save_load_layout_stash arg0 restore_layout - Nonzero copies saved layout from scratch_words to live layout; zero saves live layout into scratch_words. Used by command, card, and overlay flows.
+param main:settings_labels_draw arg0 highlighted_setting_item - Root item equal to this argument receives highlight color 4; other labels receive color 3.
+local main:settings_save_load_mode_stage_dispatch temp mode_step - Copy of GameState.mode_step used as the save/load step switch selector.
+local main:settings_root_init available unlock_check_count - Result controls only whether root menu w[6] is set to zero; menu cursor is separately reduced modulo 8. Count is nonzero tests across flags[0..12] and girl_cleared[0..12].
+local main:settings_unlocked_mascot_count count nonzero_unlock_check_count - Counts nonzero clear/unlock fields individually; it is a visibility predicate, not a count of distinct unlocked girls.
+local main:settings_unlocked_mascot_count index girl_flag_index - Indexes the 12-entry tail flags and girl_cleared entries 1 through 12; the first entries are checked separately.
+local main:settings_save_load_load_select selection save_slot_index - Selected slot index (menu_cursor_1 + 1), used to inspect slot_status and select the save slot.
+local main:settings_save_load_save_select slot save_slot_index - Selected slot index (menu_cursor_1 + 1), used to inspect slot_status and write the selected save slot.
+local main:settings_save_load_save_select status slot_status - Pointer to SystemData.slot_status[save_slot_index], checked and updated for empty-slot creation.
+local main:settings_save_load_card_check status card_result - Pointer to GameState.memory_card_result, used by card check and timeout/result branches.
+local main:settings_save_load_save_write temp_v0 pressed_buttons - Copy of GameState.pad_pressed, tested for circle and cross during overwrite confirmation.
+local main:settings_save_load_save_write temp_hi voice_girl_id - Current girl reduced modulo 13 and used as the failure voice clip and speaker id.
+local main:settings_save_load_save_write temp_a0 save_slot_index - Byte copy of GameState.save_slot used to index slot_status when canceling an overwrite.
+local main:settings_save_load_save_write temp_v1_2 voice_clip_pair - Pointer to the selected two-word failed-save voice clip pair.
+local main:settings_icon_mode_init sel icon_mode - Unsigned byte copy of stored icon_mode, switched to initialize the selected option item.
+local main:settings_mouse_click_init sel click_mode - Unsigned byte copy of stored click_mode, switched to initialize the selected option item. Keep its declaration's existing FAKE comment: the unsigned byte copy is required for the match.
+local main:settings_voice_mode_init mode voice_mode - Unsigned view of stored voice_mode mapped to the ON, OFF, and cross-button modes.
+local main:settings_new_year_card_sender_count tbl weighted_affection - Table returned by get_h_yuukou_table and read at girl indexes 0-10.
+local main:settings_new_year_card_sender_count n sender_count - Counts girls with met flag and weighted affection >= 0x4D; returned to choose whether the sender scene runs.
+local main:pre_syogatu1 var_s0 girl_index - Indexes weighted-affection table and girl records from 0 through 10 while building sender text.
+local main:pre_syogatu1 var_s1 sender_count - Counts qualifying senders and determines whether to insert a separator.
+local main:pre_syogatu1 sp16C weighted_affection - 12-byte table filled by get_h_yuukou_table and indexed by girl_index for the >= 0x4D/met test.
+local main:pre_syogatu1 sp6C sender_text - Buffer assembled from the fixed introduction, qualifying names, separators and ending.
+local main:pre_syogatu1 sp5C girl_name_buffer - Temporary destination passed to get_g_name before appending the name to sender_text.
+local main:settings_text_speed_init speed text_speed - Value returned by get_k_speed and switched to initialize the selected text-speed menu item.
+local main:settings_command_screen_mode_stage_select state card_job_state - Snapshot of GameState.memory_card_job; 1 polls the background system-file write, 0 disables its icon animation.
+local main:settings_room_click_mascot_holiday variant girl_voice_variant - Bit-7-derived 0/1 selector into girl_voice_clips_by_state for the current girl's voice response.
+local main:settings_room_click_mascot_holiday girl current_girl - Girl id copied from mascot selection, stored as GameState.current_girl and passed as the voice speaker.
+local main:settings_room_click_mascot_holiday pair voice_clip_pair - Pointer to the current girl's voice clip pair, indexed by the state-derived variant.
+local main:settings_room_click_mascot pair voice_clip_pair - Pointer to the selected girl's weekday voice clip pair, passed to the CD audio request.
+local main:holiday_open_init n notice_line_count - Counts the appointment/practice notices already displayed before choosing the next line and cursor.
+local main:holiday_open_init buf holiday_message - Builds appointment, practice-match, and practice-day prompt text.
+local main:holiday_open_init name notice_name_buffer - Name buffer appended to the appointment notice for slot 0's girl.
+local main:holiday_icons_set_available n quit_club_count - Counts club quit flags before disabling the Sunday club command when all 11 are set.
+local main:holiday_phone_dial_shortcut k dial_ring_read_index - Starts at write-position+7 and advances through the wrapped seven-key dial ring while matching each phone digit.
+local main:holiday_phone_dial_shortcut random dial_random_value - rand() result masked to 15 bits and added to the matched girl's tokimeki fraction.
+local main:holiday_activity_bg_sector x queue_index - Selects the current day-event record whose girl byte contains the holiday command.
+local main:holiday_activity_bg_sector h player_flags_word - Copies the player's flags halfword and extracts its club nibble for the club background table.
+local main:holiday_menu_click girl sunday_club_member - Girl found by the club lookup in the Sunday club-command branch; its club flag controls the affection increment.
+local main:holiday_menu_click other_girl weekday_club_member - Girl found by the club lookup in the non-Sunday club-command branch; its club flag controls the affection increment.
+local main:holiday_menu_click handled confirm_hit - Set only when confirm is pressed while the signed icon cursor is nonnegative; returned to stop lower-priority click handlers for that frame.
+param main:appointment_place_candidates arg0 place_choices_out - Output pointer: receives up to three place ids when there are multiple distinct choices, or the slot-0 active bit when fewer than two choices exist.
+local main:appointment_place_candidates cnt place_counts - Counts appointment place ids across the contiguous active appointment prefix; seasonal ids 16-20 are cleared before distinct counting.
+local main:appointment_place_candidates n distinct_place_count - Number of nonzero place counts returned when at least two choices exist.
+local main:appointment_place_candidates m copied_choice_count - Number of distinct place ids copied to the output, capped at three.
+local main:appointment_place_candidates idx place_id - Place id selected from an active appointment while copying distinct choices.
+local main:appointment_start buf place_choices_scratch - Receives appointment_place_candidates output; when fewer than two places exist the helper writes slot-0 active state to its first word, though caller chooses the automatic launch path based on its return value.
+local main:appointment_place_menu_build first first_place - Place id selected for the first menu option.
+local main:appointment_place_menu_build second second_place - Place id selected for the second menu option.
+local main:appointment_place_menu_build third third_place - Place id selected for the third menu option or 0xFF when absent.
+local main:appointment_place_menu_build choices place_candidates - Distinct candidate place ids returned by appointment_place_candidates.
+local main:appointment_place_menu_build var_v1_2 first_choice_index - Random starting index used to rotate the candidate list into menu order.
+local main:appointment_place_menu_build text1 first_place_text - String buffer for the first menu option.
+local main:appointment_place_menu_build text2 second_place_text - String buffer for the second menu option.
+local main:appointment_place_menu_build text3 third_place_text - String buffer for the third menu option.
+local main:appointment_place_confirm sp4C appointment_message - Full confirmation sentence assembled for the chosen place and appointment girl.
+local main:appointment_place_confirm sp2C appointment_girl_name - Temporary name buffer for the appointment girl's displayed name.
+local main:appointment_launch arr offered_places - Three menu place ids saved before replacing the selected slot with the promised true place.
+local main:holiday_activity_pick_sd_set activity holiday_command - Command id from the current day-event record, used to choose the non-club holiday sprite set.
+local main:holiday_activity_pick_sd_set col club_partner_column - Source return0 selects column0; any nonzero return, including sentinel15, selects column1. No partner-exists boolean is claimed.
+local main:holiday_activity_sd_setup temp holiday_activity_result_flag - Current event's scene byte selects the animation result frame; sick/rest paths force it to zero.
+local main:holiday_activity_play b club_activity_result_flag - Current event's scene byte is passed to parameter_up_down as the poor-result flag.
+local main:holiday_activity_play girl club_member_id - Girl found in the current club; stored to date_girl before the first-club-scene eligibility checks.
+local main:holiday_activity_play club club_id - Current player club nibble used for membership, flags, and the club-scene mode argument.
+local main:holiday_tel_exit k phone_digit_index - Digit index derived from substep-4 when queuing the corresponding phone tone.
+local main:holiday_club_select buf club_departure_message - Text buffer assembled with the current club name and the quit-club notice.
+func main func_800737A0 schedule_week_end_exit 0x800737A0 Mode 0x32 stage 0xFF tail calls day_event_next(0), then draws parameter/message/date HUD, icon bar, mascot and decoded background; caller is schedule_week_end_mode_handler in scheduler.c:2221; source body src/main/school_day.c:11-20. Topic is scheduler per ADR, despite the definition residing in the school-day object.
+field ClubRecord unk_03 flags - Four type-specific uses: src/main/scheduler.c:274 clears bit 0; src/main/holiday.c:268 tests it and 1375 sets it; src/main/hud_screens.c:1334 clears it. A club flag bit view is also written; field is a u8 separate from practice_points and level at include/main_api.h:398-399.
+local main:school_day_sd_set_select var_v1 sd_variant - Function body src/main/school_day.c:162-315 derives 0 when record.extra is 0, 1 when nonzero, or 2 when command is athletics and companion is girl 5; indexes the SD variant tables with it.
+local main:school_day_sd_set_select temp_a0 companion_girl - Reads day_events[day_event_index].extra at src/main/school_day.c:172; record construction writes the selected companion to extra in scheduler.c:543,562. Value 0 is GIRL_SHIORI; 0xF is the no-companion sentinel (school_day.c:398). Retain the u8 type.
+local main:school_day_sd_set_select temp_t6 club_id - Extracts (u16)player_flags.h >> 12 for the club SD table switch at src/main/school_day.c:243-277; Club enum values are used as table indexes. Retain u32 local type.
+local main:school_day_sd_set_select temp_t9 other_season_club_id - Same club ID extraction for the other-season club SD table switch at src/main/school_day.c:280-314; retain u32 local type.
+param main:hud_mascot_set mascot_choice mascot_selection - T-27062: preserve selected mascot meaning without reintroducing the retired global mascot_choice alias.

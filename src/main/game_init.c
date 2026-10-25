@@ -257,7 +257,7 @@ void bg_layers_clear(s32 arg0, s32 arg1) {
 
 void func_80041840(void) {
     game_state.input_device = INPUT_PAD;
-    game_state.cursor_speed = 3;
+    game_state.cursor_speed = SETTINGS_CURSOR_SPEED_NORMAL;
     game_state.menu_mode = MENU_MODE_A;
     ovl_entry = 0x80132000;
 }
@@ -446,10 +446,10 @@ void func_80042058(void) {
     game_state.unk_F63 = 0;
     game_state.icon_mode = ICON_MODE_TYPE_A;
     game_state.voice_mode = VOICE_CANCELABLE;
-    game_state.click_mode = 0;
+    game_state.click_mode = SETTINGS_CLICK_MODE_SINGLE;
     game_state.unk_F71 = 0;
     game_state.double_click_interval = 0x20;
-    game_state.confirm_button = 0;
+    game_state.confirm_button = SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT;
     game_state.icon_count = 0xE;
     game_state.sd_anim_fast = 0;
 }

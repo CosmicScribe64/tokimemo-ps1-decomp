@@ -1,0 +1,5 @@
+SETTINGS_CURSOR_SPEED_SLOWEST 1 slowest stored cursor speed
+SETTINGS_CURSOR_SPEED_SLOWER 2 slower stored cursor speed
+SETTINGS_CURSOR_SPEED_NORMAL 3 normal stored cursor speed
+SETTINGS_CURSOR_SPEED_FASTER 4 faster stored cursor speed
+SETTINGS_CURSOR_SPEED_FASTEST 6 fastest stored cursor speed; speed menus skip 5; save/debug restoration can supply other values

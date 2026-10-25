@@ -2,72 +2,72 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-u8 *func_80140F50(void) {
+u8 *misc_card_confirm_label(void) {
     if (game_state.input_device == INPUT_MOUSE) {
-        if (game_state.confirm_button != 0) {
-            return D_80150128;
+        if (game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) {
+            return misc_button_label_right;
         }
-        return D_8015012C;
+        return misc_button_label_left;
     }
-    return D_80150108;
+    return misc_button_label_circle;
 }
 
-u8 *func_80140F94(void) {
+u8 *misc_card_cancel_label(void) {
     if (game_state.input_device == INPUT_MOUSE) {
-        if (game_state.confirm_button != 0) {
-            return D_8015012C;
+        if (game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) {
+            return misc_button_label_left;
         }
-        return D_80150128;
+        return misc_button_label_right;
     }
-    return D_80150124;
+    return misc_button_label_cross;
 }
 
-void func_80140FD8(void) {
+void album_stage_save(void) {
     GameState *g = &game_state;
     g->mode_step_timer.w += 1;
     switch ((u8) g->mode_step) {
     case 0x0:
-        func_801413FC();
+        album_save_step_begin();
         break;
     case 0x1:
-        func_80141468();
+        album_save_step_background();
         break;
     case 0x2:
-        func_801415A4();
+        album_save_step_ask();
         break;
     case 0x3:
-        func_80141700();
+        album_save_step_answer();
         break;
     case 0x4:
-        func_8014175C();
+        album_save_step_card_check();
         break;
     case 0x5:
-        func_80141980();
+        album_save_step_system_file_load();
         break;
     case 0x6:
-        func_80141BE8();
+        album_save_step_write();
         break;
     case 0xA0:
-        func_80141154();
+        album_save_step_card_unformatted();
         break;
     case 0xF0:
-        func_80141E10();
+        album_save_step_no_system_file();
         break;
     case 0xFD:
-        func_80142574();
+        album_save_step_system_file_broken();
         break;
     case 0xFE:
-        func_80142390();
+        album_save_step_card_full();
         break;
     case 0xFF:
-        func_801421AC();
+        album_save_step_no_card();
         break;
     }
-    func_801428EC();
+    album_save_fade_panel_draw();
 }
 
 
-void func_80141154(void) {
+void album_save_step_card_unformatted(void) {
     u8 temp;
     temp = game_state.substep;
     switch (temp) {
@@ -85,10 +85,10 @@ void func_80141154(void) {
     case 2:
         text_system_reset();
         set_kanji_string(-0x78, 0x30, 0xF, (s32) "初期化していいですか？", 0);
-        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
-        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
-        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
-        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) misc_card_yes_text, 0);
+        set_kanji_string(-0x34, 0x5A, 1, misc_card_confirm_label(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) misc_card_no_text, 0);
+        set_kanji_string(0x5C, 0x5A, 2, misc_card_cancel_label(), 0);
         k_disp_start(5);
         game_state.substep += 1;
         break;
@@ -109,7 +109,7 @@ void func_80141154(void) {
         set_kanji_string(-0x78, 0x3E, 1, (s32) "差し込み口１", 0);
         set_kanji_string(-0x78, 0x3E, 0xF, (s32) "　　　　　　にセットして、", 0);
         set_kanji_string(-0x78, 0x4C, 0xF, (s32) "　ボタンを押してください。", 0);
-        set_kanji_string(-0x78, 0x4C, 1, func_80140F50(), 0);
+        set_kanji_string(-0x78, 0x4C, 1, misc_card_confirm_label(), 0);
         game_state.substep += 1;
         k_disp_start(5);
         break;
@@ -122,7 +122,7 @@ void func_80141154(void) {
     dec_bg_draw(2);
 }
 
-void func_801413FC(void) {
+void album_save_step_begin(void) {
     printf("データセーブ");
     if (game_state.options_dirty != 0) {
         audio_bank_state_reset();
@@ -135,7 +135,7 @@ void func_801413FC(void) {
     mode_step_next();
 }
 
-s32 func_80141468(void) {
+s32 album_save_step_background(void) {
     switch (game_state.substep) {
     case 0:
         dec_bg_reset();
@@ -165,17 +165,17 @@ s32 func_80141468(void) {
     }
 }
 
-void func_801415A4(void) {
+void album_save_step_ask(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset_point_set();
         set_kanji_string(-0x78, 0x30, 0, "今回のアルバムモードのデータを", 0);
         set_kanji_string(-0x78, 0x3E, 0, "　ときめきメモリアル・システムファイル", 0);
         set_kanji_string(-0x78, 0x4C, 0, "にセーブしますか。", 0);
-        set_kanji_string(-0x88, 0x5A, 0, D_801500F0, 0);
-        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
-        set_kanji_string(8, 0x5A, 0, D_8015010C, 0);
-        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        set_kanji_string(-0x88, 0x5A, 0, misc_card_yes_text, 0);
+        set_kanji_string(-0x34, 0x5A, 1, misc_card_confirm_label(), 0);
+        set_kanji_string(8, 0x5A, 0, misc_card_no_text, 0);
+        set_kanji_string(0x5C, 0x5A, 2, misc_card_cancel_label(), 0);
         k_sub_disp_start(7);
         printf("データセーブメッセージ");
         game_state.substep += 1;
@@ -189,7 +189,7 @@ void func_801415A4(void) {
     dec_bg_draw(2);
 }
 
-void func_80141700(void) {
+void album_save_step_answer(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         mode_step_next();
     } else if (game_state.pad_pressed & PAD_CROSS) {
@@ -199,7 +199,7 @@ void func_80141700(void) {
     dec_bg_draw(2);
 }
 
-void func_8014175C(void) {
+void album_save_step_card_check(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -252,7 +252,7 @@ void func_8014175C(void) {
     dec_bg_draw(2);
 }
 
-void func_80141980(void) {
+void album_save_step_system_file_load(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -282,7 +282,7 @@ void func_80141980(void) {
     dec_bg_draw(2);
 }
 
-void func_80141ABC(void) {
+void album_event_log_pack(void) {
     s32 count;
     u8 value;
     s32 i;
@@ -307,14 +307,14 @@ void func_80141ABC(void) {
 }
 
 /* Retain the earlier caller's K&R implicit-int view. */
-s32 func_80141BE8(void) {
+s32 album_save_step_write(void) {
     s32 girl;
     s32 *pair;
 
     switch (game_state.substep) {
     case 0:
         memory_card_start();
-        func_80141ABC();
+        album_event_log_pack();
         game_state.substep += 1;
         break;
     case 1:
@@ -363,7 +363,7 @@ s32 func_80141BE8(void) {
     dec_bg_draw(2);
 }
 
-void func_80141E10(void) {
+void album_save_step_no_system_file(void) {
     GameState *g = &game_state;
     switch (g->substep) {
     case 0:
@@ -384,10 +384,10 @@ void func_80141E10(void) {
         k_sub_reset();
         set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルを作成し、", 0);
         set_kanji_string(-0x78, 0x3E, 0, (s32) "アルバムモードをセーブしますか？", 0);
-        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
-        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
-        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
-        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) misc_card_yes_text, 0);
+        set_kanji_string(-0x34, 0x5A, 1, misc_card_confirm_label(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) misc_card_no_text, 0);
+        set_kanji_string(0x5C, 0x5A, 2, misc_card_cancel_label(), 0);
         k_sub_disp_start(6);
         g->substep += 1;
         break;
@@ -439,7 +439,7 @@ void func_80141E10(void) {
     dec_bg_draw(2);
 }
 
-void func_801421AC(void) {
+void album_save_step_no_card(void) {
     u8 *state = &game_state.substep;
 
     switch (*state) {
@@ -459,10 +459,10 @@ void func_801421AC(void) {
     case 2:
         k_sub_reset();
         set_kanji_string(-0x78, 0x30, 0, (s32) "データのセーブを行ないますか？", 0);
-        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
-        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
-        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
-        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) misc_card_yes_text, 0);
+        set_kanji_string(-0x34, 0x5A, 1, misc_card_confirm_label(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) misc_card_no_text, 0);
+        set_kanji_string(0x5C, 0x5A, 2, misc_card_cancel_label(), 0);
         k_sub_disp_start(5);
         *state += 1;
         break;
@@ -478,7 +478,7 @@ void func_801421AC(void) {
     dec_bg_draw(2);
 }
 
-void func_80142390(void) {
+void album_save_step_card_full(void) {
     u8 *state = &game_state.substep;
 
     switch (*state) {
@@ -498,10 +498,10 @@ void func_80142390(void) {
     case 2:
         k_sub_reset();
         set_kanji_string(-0x78, 0x30, 0, (s32) "データのセーブを行ないますか？", 0);
-        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
-        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
-        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
-        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) misc_card_yes_text, 0);
+        set_kanji_string(-0x34, 0x5A, 1, misc_card_confirm_label(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) misc_card_no_text, 0);
+        set_kanji_string(0x5C, 0x5A, 2, misc_card_cancel_label(), 0);
         k_sub_disp_start(5);
         *state += 1;
         break;
@@ -517,7 +517,7 @@ void func_80142390(void) {
     dec_bg_draw(2);
 }
 
-void func_80142574(void) {
+void album_save_step_system_file_broken(void) {
     GameState *g = &game_state;
     switch (g->substep) {
     case 0:
@@ -533,10 +533,10 @@ void func_80142574(void) {
         }
         break;
     case 2:
-        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
-        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
-        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
-        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) misc_card_yes_text, 0);
+        set_kanji_string(-0x34, 0x5A, 1, misc_card_confirm_label(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) misc_card_no_text, 0);
+        set_kanji_string(0x5C, 0x5A, 2, misc_card_cancel_label(), 0);
         k_sub_disp_start(6);
         g->substep += 1;
         break;
@@ -592,7 +592,7 @@ void func_80142574(void) {
     dec_bg_draw(2);
 }
 
-s32 func_801428EC(void) {
+s32 album_save_fade_panel_draw(void) {
     s32 color;
     u8 *shade = &game_state.screen_brightness;
     color = *shade;
@@ -602,13 +602,13 @@ s32 func_801428EC(void) {
     dtd_on_tpage(0, 0, 4, 2, 0);
 }
 
-void func_80142974(void) {
+void staff_roll_entry(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_80143644();
+        staff_roll_stage_load();
         break;
     case 1:
-        func_80143FE0();
+        staff_roll_stage_run();
         break;
     }
     if (cd_audio_state() & 4) {
@@ -627,7 +627,7 @@ void func_80142974(void) {
         }
     }
 }
-void func_80142A4C(void) {
+void staff_roll_pictures_init(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
@@ -654,12 +654,12 @@ void func_80142A4C(void) {
     }
 }
 
-void func_80142AE8(void) {
+void staff_roll_pictures_fade(void) {
     s32 i;
     u8 v;
     u8 a;
 
-    if (D_8015018C > 0) {
+    if (staff_roll_fade_dir > 0) {
         for (i = 0; i < 2; i++) {
             v = sprite_quads[i].tint_r;
             a = v + 1;
@@ -668,7 +668,7 @@ void func_80142AE8(void) {
             }
         }
     }
-    if (D_8015018C < 0) {
+    if (staff_roll_fade_dir < 0) {
         for (i = 0; i < 2; i++) {
             v = sprite_quads[i].tint_r;
             a = v - 1;

@@ -7,13 +7,13 @@
 void prim_gradient_rect();
 s32 memory_card_start();
 
-s32 file_select_number_draw(u32 arg0, s32 arg1, s32 arg2) {
+s32 file_select_number_draw(u32 number, s32 screen_x, s32 screen_y) {
     u8 *p;
     s32 n;
-    u32 x;
+    u32 remaining_number;
     u8 *e;
 
-    x = arg0;
+    remaining_number = number;
     for (n = 0;; n += 8) {
         p = (u8 *)GetWorkBase(0x10, draw_buffer);
         func_8009F090(p);
@@ -21,33 +21,33 @@ s32 file_select_number_draw(u32 arg0, s32 arg1, s32 arg2) {
         p[4] = 0x80;
         p[5] = 0x80;
         p[6] = 0x80;
-        *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg1 - n;
-        *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg2;
-        e = file_select_digit_uv[x % 10];
+        *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + screen_x - n;
+        *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + screen_y;
+        e = file_select_digit_uv[remaining_number % 10];
         p[0xC] = e[0];
         p[0xD] = e[1];
         *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F0);
         AddPrim(D_800E8CA0 + (draw_buffer << 10) + 0xC, p);
-        if (x < 10) {
+        if (remaining_number < 10) {
             dtd_on_tpage(0x200, 0, 3, 0, 1);
             return 1;
         }
-        x = x / 10;
+        remaining_number = remaining_number / 10;
     }
 }
 
 /* T-25057: record display flags and animated tile coordinates. */
 void file_select_girl_icons_visibility_update(void) {
-    s32 tmp;
+    s32 information_page;
     s32 i;
     u32 tile[1]; /* FAKE: T-25057, memory local orders remainder before frame allocation. */
 
     i = 0;
-    tmp = file_select_information_page % 3;
+    information_page = file_select_information_page % 3;
     for (; i < 13; i++) {
         if ((u32)sprite_quads[i].flags < 0) {} /* FAKE: T-25057, erased test orders record induction. */
         tile[0] = game_state.frame_count; /* FAKE: T-25057, dead initialization orders frame before index; removed by uopt. */
-        if (tmp == 0) {
+        if (information_page == 0) {
             if (((AlbumSlotRecord *)memory_card_block)[D_800E8BEF].flags[i] == 0) {
                 sprite_quads[i].flags = 0;
                 tile[0] = (game_state.frame_count >> 2) % 3;
@@ -61,26 +61,26 @@ void file_select_girl_icons_visibility_update(void) {
     }
 }
 
-void file_select_girl_icon_set(s32 arg0, s32 arg1, s32 arg2) {
+void file_select_girl_icon_set(s32 girl_index, s32 screen_x, s32 screen_y) {
     u8 *p;
 
-    p = (u8 *)sprite_quads + arg0 * 36;
+    p = (u8 *)sprite_quads + girl_index * 36;
     p[0x14] = 0x80;
     p[0x15] = 0x80;
     p[0x16] = 0x80;
-    *(s16 *)(p + 4) = arg1;
-    *(s16 *)(p + 6) = arg2;
+    *(s16 *)(p + 4) = screen_x;
+    *(s16 *)(p + 6) = screen_y;
     *(s32 *)p = 0;
     *(s16 *)(p + 8) = 0x10;
     *(s16 *)(p + 0xA) = 0x10;
-    p[0xE] = arg0 / 8 * 0x30 + game_state.frame_count / 32 % 3 * 0x10 + 0x80;
-    p[0xF] = (arg0 & 7) * 0x10;
+    p[0xE] = girl_index / 8 * 0x30 + game_state.frame_count / 32 % 3 * 0x10 + 0x80;
+    p[0xF] = (girl_index & 7) * 0x10;
     *(s16 *)(p + 0xC) = 0x1F;
-    *(s16 *)(p + 0x10) = arg0 * 0x10;
+    *(s16 *)(p + 0x10) = girl_index * 0x10;
     *(s16 *)(p + 0x18) = 8;
     *(s16 *)(p + 0x1A) = 8;
     *(s16 *)(p + 0x12) = 0x1F8;
-    game_state.quad_layer[arg0] = 2;
+    game_state.quad_layer[girl_index] = 2;
 }
 
 void file_select_information_page_input(void) {
@@ -112,21 +112,21 @@ void file_select_information_page_draw(void) {
 }
 
 void file_select_slot_header_draw(void) {
-    u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+    u8 message_text[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     if (D_800E8BEE != 0) {
-        strncpy(sp30, D_800B3288[D_800E7D36], 5);
-        strcat(sp30, "番");
-        set_kanji_string(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+        strncpy(message_text, D_800B3288[D_800E7D36], 5);
+        strcat(message_text, "番");
+        set_kanji_string(-0x20, -0x5C, 0xF, (s32) message_text, 0);
         set_kanji_string(0x20, -0x4B, 0xF, (s32) system_data.family_name[D_800E7D36], 0);
         set_kanji_string(0x4E, -0x4B, 0xF, (s32) system_data.given_name[D_800E7D36], 0);
         set_kanji_string(0x20, -0x3B, 0xF, (s32) system_data.nickname[D_800E7D36], 0);
         set_kanji_string(0x20, -0x2B, 0xF, (s32) club_name_table[system_data.club[D_800E7D36]], 0);
         return;
     }
-    strncpy(sp30, D_800B3288[game_state.save_slot], 5);
-    strcat(sp30, "番");
-    set_kanji_string(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+    strncpy(message_text, D_800B3288[game_state.save_slot], 5);
+    strcat(message_text, "番");
+    set_kanji_string(-0x20, -0x5C, 0xF, (s32) message_text, 0);
     set_kanji_string(0x20, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 0);
     set_kanji_string(0x4E, -0x4B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 0);
     set_kanji_string(0x20, -0x3B, 0xF, (s32) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0);
@@ -135,69 +135,69 @@ void file_select_slot_header_draw(void) {
 
 void file_select_page_clear_counts_draw(void) {
     s32 i;
-    SystemData *w = &system_data;
-    GameState *g = &game_state;
+    SystemData *system_record = &system_data;
+    GameState *file_state = &game_state;
 
     if (D_800E8BEE != 0) {
-        if (w->flags[0] != 0) {
-            file_select_number_draw(w->flags[0], -4, 0x1E);
+        if (system_record->flags[0] != 0) {
+            file_select_number_draw(system_record->flags[0], -4, 0x1E);
         }
-        if (w->flags[1] != 0) {
-            file_select_number_draw(w->flags[1], -4, 0x2E);
+        if (system_record->flags[1] != 0) {
+            file_select_number_draw(system_record->flags[1], -4, 0x2E);
         }
-        if (w->flags[2] != 0) {
-            file_select_number_draw(w->flags[2], -4, 0x3E);
+        if (system_record->flags[2] != 0) {
+            file_select_number_draw(system_record->flags[2], -4, 0x3E);
         }
-        if (w->flags[3] != 0) {
-            file_select_number_draw(w->flags[3], -4, 0x4E);
+        if (system_record->flags[3] != 0) {
+            file_select_number_draw(system_record->flags[3], -4, 0x4E);
         }
-        if (w->flags[4] != 0) {
-            file_select_number_draw(w->flags[4], 0x3C, 0x1E);
+        if (system_record->flags[4] != 0) {
+            file_select_number_draw(system_record->flags[4], 0x3C, 0x1E);
         }
-        if (w->flags[5] != 0) {
-            file_select_number_draw(w->flags[5], 0x3C, 0x2E);
+        if (system_record->flags[5] != 0) {
+            file_select_number_draw(system_record->flags[5], 0x3C, 0x2E);
         }
-        if (w->flags[6] != 0) {
-            file_select_number_draw(w->flags[6], 0x3C, 0x3E);
+        if (system_record->flags[6] != 0) {
+            file_select_number_draw(system_record->flags[6], 0x3C, 0x3E);
         }
-        if (w->flags[7] != 0) {
-            file_select_number_draw(w->flags[7], 0x3C, 0x4E);
+        if (system_record->flags[7] != 0) {
+            file_select_number_draw(system_record->flags[7], 0x3C, 0x4E);
         }
-        if (w->flags[12] != 0) {
-            file_select_number_draw(w->flags[12], 0x88, 0xE);
+        if (system_record->flags[12] != 0) {
+            file_select_number_draw(system_record->flags[12], 0x88, 0xE);
         }
-        if (w->flags[8] != 0) {
-            file_select_number_draw(w->flags[8], 0x88, 0x1E);
+        if (system_record->flags[8] != 0) {
+            file_select_number_draw(system_record->flags[8], 0x88, 0x1E);
         }
-        if (w->flags[9] != 0) {
-            file_select_number_draw(w->flags[9], 0x88, 0x2E);
+        if (system_record->flags[9] != 0) {
+            file_select_number_draw(system_record->flags[9], 0x88, 0x2E);
         }
-        if (w->flags[10] != 0) {
-            file_select_number_draw(w->flags[10], 0x88, 0x3E);
+        if (system_record->flags[10] != 0) {
+            file_select_number_draw(system_record->flags[10], 0x88, 0x3E);
         }
-        if (w->flags[11] != 0) {
-            file_select_number_draw(w->flags[11], 0x88, 0x4E);
+        if (system_record->flags[11] != 0) {
+            file_select_number_draw(system_record->flags[11], 0x88, 0x4E);
         }
         for (i = 0; i < 4; i++) {
-            if (w->flags[i] != 0) {
+            if (system_record->flags[i] != 0) {
                 file_select_girl_icon_set(i, -0x23, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 4; i < 8; i++) {
-            if (w->flags[i] != 0) {
+            if (system_record->flags[i] != 0) {
                 file_select_girl_icon_set(i, 0x1E, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 8; i < 12; i++) {
-            if (w->flags[i] != 0) {
+            if (system_record->flags[i] != 0) {
                 file_select_girl_icon_set(i, 0x69, (i % 4) * 0x10 + 0x1D);
             }
         }
-        if (w->flags[12] != 0) {
+        if (system_record->flags[12] != 0) {
             file_select_girl_icon_set(12, 0x69, 0xD);
         }
         for (i = 0; i < 8; i++) {
-            if (w->flags[i] == 0) {
+            if (system_record->flags[i] == 0) {
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
             } else {
@@ -205,79 +205,79 @@ void file_select_page_clear_counts_draw(void) {
             }
         }
         for (i = 8; i < 12; i++) {
-            if (w->flags[i] == 0) {
+            if (system_record->flags[i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
             }
         }
-        if (w->flags[12] == 0) {
+        if (system_record->flags[12] == 0) {
             ((Actor *)actor_pool)[136].draw_flags |= 0x80;
             ((Actor *)actor_pool)[136].unk_01 = 4;
         } else {
             ((Actor *)actor_pool)[136].draw_flags &= 0x7F;
         }
     } else {
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[0], -4, 0x1E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[0] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[0], -4, 0x1E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[1], -4, 0x2E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[1] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[1], -4, 0x2E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[2], -4, 0x3E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[2] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[2], -4, 0x3E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[3], -4, 0x4E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[3] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[3], -4, 0x4E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[4], 0x3C, 0x1E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[4] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[4], 0x3C, 0x1E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[5], 0x3C, 0x2E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[5] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[5], 0x3C, 0x2E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[6], 0x3C, 0x3E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[6] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[6], 0x3C, 0x3E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[7], 0x3C, 0x4E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[7] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[7], 0x3C, 0x4E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12], 0x88, 0xE);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[12] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[12], 0x88, 0xE);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[8], 0x88, 0x1E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[8] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[8], 0x88, 0x1E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[9], 0x88, 0x2E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[9] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[9], 0x88, 0x2E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[10], 0x88, 0x3E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[10] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[10], 0x88, 0x3E);
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11] != 0) {
-            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[11], 0x88, 0x4E);
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[11] != 0) {
+            file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[11], 0x88, 0x4E);
         }
         for (i = 0; i < 4; i++) {
-            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[i] != 0) {
                 file_select_girl_icon_set(i, -0x23, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 4; i < 8; i++) {
-            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[i] != 0) {
                 file_select_girl_icon_set(i, 0x1E, (i % 4) * 0x10 + 0x1D);
             }
         }
         for (i = 8; i < 12; i++) {
-            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[i] != 0) {
                 file_select_girl_icon_set(i, 0x69, (i % 4) * 0x10 + 0x1D);
             }
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] != 0) {
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[12] != 0) {
             file_select_girl_icon_set(12, 0x69, 0xD);
         }
         for (i = 0; i < 8; i++) {
-            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] == 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[i] == 0) {
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
             } else {
@@ -285,14 +285,14 @@ void file_select_page_clear_counts_draw(void) {
             }
         }
         for (i = 8; i < 12; i++) {
-            if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] == 0) {
+            if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
             }
         }
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[12] == 0) {
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[12] == 0) {
             ((Actor *)actor_pool)[136].draw_flags |= 0x80;
             ((Actor *)actor_pool)[136].unk_01 = 4;
         } else {
@@ -303,8 +303,8 @@ void file_select_page_clear_counts_draw(void) {
 
 void file_select_page_girl_stars_draw(void) {
     s32 i;
-    SystemData *w = &system_data;
-    GameState *g = &game_state;
+    SystemData *system_record = &system_data;
+    GameState *file_state = &game_state;
 
     k_sub_reset_point_set();
     k_sub_disp_start(0);
@@ -313,53 +313,53 @@ void file_select_page_girl_stars_draw(void) {
     }
     if (D_800E8BEE != 0) {
         for (i = 0; i < 8; i++) {
-            if (w->unk_CC8[w->selected_slot][i] == 0) {
+            if (system_record->unk_CC8[system_record->selected_slot][i] == 0) {
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 128].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                ((Actor *)actor_pool)[i + 141].unk_18 = (w->unk_CC8[w->selected_slot][i] & 7) + 0x58;
+                ((Actor *)actor_pool)[i + 141].unk_18 = (system_record->unk_CC8[system_record->selected_slot][i] & 7) + 0x58;
             }
         }
         for (i = 8; i < 11; i++) {
-            if (w->unk_CC8[w->selected_slot][i] == 0) {
+            if (system_record->unk_CC8[system_record->selected_slot][i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                ((Actor *)actor_pool)[i + 141].unk_18 = (w->unk_CC8[w->selected_slot][i] & 7) + 0x58;
+                ((Actor *)actor_pool)[i + 141].unk_18 = (system_record->unk_CC8[system_record->selected_slot][i] & 7) + 0x58;
             }
         }
     } else {
         for (i = 0; i < 8; i++) {
-            if (((GirlFlagBits *)&((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
-                ((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] == 0) {
+            if (((GirlFlagBits *)&((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
+                ((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x37C + i] == 0) {
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 128].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] != 0) {
-                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
+                if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x37C + i] != 0) {
+                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
                 }
             }
         }
         for (i = 8; i < 11; i++) {
-            if (((GirlFlagBits *)&((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
-                ((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] == 0) {
+            if (((GirlFlagBits *)&((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x2C + i * 0x38])->met == 0 ||
+                ((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x37C + i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] != 0) {
-                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)memory_card_block)[g->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
+                if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x37C + i] != 0) {
+                    ((Actor *)actor_pool)[i + 141].unk_18 = (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].unk_2E8[0x37C + i] & 7) + 0x58;
                 }
             }
         }
@@ -394,7 +394,7 @@ void file_select_page_parameters_draw(void) {
     file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].metrics[8].unk_02, 128, 78);
 }
 
-s32 file_select_page_indicator_update(s32 arg0) {
+s32 file_select_page_indicator_update(s32 show_indicators) {
     s32 a;
     s32 b;
     s32 sel[3];
@@ -405,8 +405,8 @@ s32 file_select_page_indicator_update(s32 arg0) {
      * The store is dead (the loop sets d) and emits nothing. */
     register s32 d = D_80120C2B;
 
-    /* FAKE: T-25301, the empty test gives arg0 the first optimizer bit, so it keeps $a0 */
-    if (arg0) {
+    /* FAKE: T-25301, the empty test gives show_indicators the first optimizer bit, so it keeps $a0 */
+    if (show_indicators) {
     }
     for (d = 0; d < 3; d++) {
         sel[d] = 0;
@@ -414,10 +414,10 @@ s32 file_select_page_indicator_update(s32 arg0) {
     /* FAKE: T-25301, copies and masks each on one line (as1 schedules a line as one group); the
      * second empty test ends the block, so the copies give d, c, b, a their optimizer bits */
     d = D_80120C2B; c = D_80120BA3; b = D_80120B5F; a = D_80120BE7;
-    if (arg0) {
+    if (show_indicators) {
     }
     b &= 0x7F; c &= 0x7F; a &= 0x7F; d &= 0x7F;
-    if (arg0 == 0) {
+    if (show_indicators == 0) {
         D_80120BE7 = a;
         D_80120B5F = b;
         D_80120BA3 = c;
@@ -497,69 +497,69 @@ void file_select_slot_summary_draw(void) {
     /* FAKE: unused words preserve the 0x40 stack frame (T-24112) */
     s32 pad[3];
     s32 i;
-    s32 idx;
-    s32 count;
-    SystemData *w = &system_data;
-    GameState *g = &game_state;
+    s32 slot_index;
+    s32 cleared_girls;
+    SystemData *system_record = &system_data;
+    GameState *file_state = &game_state;
 
     if (D_800E8BEE != 0) {
-        count = 0;
+        cleared_girls = 0;
         for (i = 0; i < 13; i++) {
-            if (w->flags[i] != 0) {
-                count++;
+            if (system_record->flags[i] != 0) {
+                cleared_girls++;
             }
         }
         for (i = 0; i < 14; i++) {
-            if (i == w->selected_slot - 1) {
+            if (i == system_record->selected_slot - 1) {
                 ((Actor *)actor_pool_96)[i + 4].unk_43 = 0x11;
             } else {
                 ((Actor *)actor_pool_96)[i + 4].unk_43 = 0;
             }
         }
-        idx = g->menu_cursor_0;
-        if (g->menu_cursor_0 != -1) {
+        slot_index = file_state->menu_cursor_0;
+        if (file_state->menu_cursor_0 != -1) {
             D_80120C6F |= 0x80;
-            D_80120C92 = idx / 7 * 0x1F - 0x82;
-            D_80120C96 = idx % 7 * 0x10 - 0xB;
+            D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+            D_80120C96 = slot_index % 7 * 0x10 - 0xB;
         }
-        file_select_number_draw(w->year[w->selected_slot], 0x30, -0x60);
-        file_select_number_draw(w->month[w->selected_slot], 0x50, -0x60);
-        file_select_number_draw(w->day[w->selected_slot], 0x70, -0x60);
-        file_select_number_draw(count, 0x5A, -0x1D);
+        file_select_number_draw(system_record->year[system_record->selected_slot], 0x30, -0x60);
+        file_select_number_draw(system_record->month[system_record->selected_slot], 0x50, -0x60);
+        file_select_number_draw(system_record->day[system_record->selected_slot], 0x70, -0x60);
+        file_select_number_draw(cleared_girls, 0x5A, -0x1D);
         return;
     }
-    count = 0;
+    cleared_girls = 0;
     for (i = 0; i < 13; i++) {
-        if (((AlbumSlotRecord *)memory_card_block)[g->album_slot].flags[i] != 0) {
-            count++;
+        if (((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].flags[i] != 0) {
+            cleared_girls++;
         }
     }
     for (i = 0; i < 14; i++) {
-        if (i == g->save_slot - 1) {
+        if (i == file_state->save_slot - 1) {
             ((Actor *)actor_pool_96)[i + 4].unk_43 = 0x11;
         } else {
             ((Actor *)actor_pool_96)[i + 4].unk_43 = 0;
         }
     }
-    idx = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].year, 0x30, -0x60);
-    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].month, 0x50, -0x60);
-    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[g->album_slot].day, 0x70, -0x60);
-    file_select_number_draw(count, 0x5A, -0x1D);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].year, 0x30, -0x60);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].month, 0x50, -0x60);
+    file_select_number_draw(((AlbumSlotRecord *)memory_card_block)[file_state->album_slot].day, 0x70, -0x60);
+    file_select_number_draw(cleared_girls, 0x5A, -0x1D);
 }
 
-void file_select_cursor_to_slot(s32 arg0) {
+void file_select_cursor_to_slot(s32 slot_index) {
     s16 x;
     s16 y;
 
-    x = (arg0 / 7) * 0x1F - 0x82;
+    x = (slot_index / 7) * 0x1F - 0x82;
     ((Actor *)actor_pool)->x = x;
-    y = (arg0 % 7) * 0x10 - 0xB;
+    y = (slot_index % 7) * 0x10 - 0xB;
     ((Actor *)actor_pool)->y = y;
     ((Actor *)actor_pool)[119].draw_flags |= 0x80;
     ((Actor *)actor_pool)[119].x = x;
@@ -646,43 +646,43 @@ void file_select_settings_restore(void) {
 
 void file_select_icon_layout_validate(void) {
     s32 i;
-    /* FAKE: unused words preserve the 0x48 stack frame and place err/zero/saved spills at sp+0x34/0x30/0x2C. T-24106 */
+    /* FAKE: unused words preserve the 0x48 stack frame and place invalid_coordinates/origin_icons/saved_icon_mode spills at sp+0x34/0x30/0x2C. T-24106 */
     s32 pad[3];
-    s32 err;
-    s32 zero;
-    s32 saved;
+    s32 invalid_coordinates;
+    s32 origin_icons;
+    s32 saved_icon_mode;
 
-    err = 0;
-    zero = 0;
+    invalid_coordinates = 0;
+    origin_icons = 0;
     /* FAKE: pointer view on unk_F6C emits lbu (declared s8 in header). T-24106 */
     if (*(u8 *)&game_state.icon_mode == 2) {
         for (i = 0; i < 16; i++) {
             if (((s16 *)D_80125C10)[i * 2] >= 0x7D) {
-                err++;
+                invalid_coordinates++;
             }
             if (((s16 *)D_80125C10)[i * 2] < -0x86) {
-                err++;
+                invalid_coordinates++;
             }
             if (((s16 *)D_80125C10)[i * 2 + 1] < -0x54) {
-                err++;
+                invalid_coordinates++;
             }
             if (((s16 *)D_80125C10)[i * 2 + 1] >= 0x55) {
-                err++;
+                invalid_coordinates++;
             }
             if (((s16 *)D_80125C10)[i * 2] == 0 && ((s16 *)D_80125C10)[i * 2 + 1] == 0) {
-                zero++;
+                origin_icons++;
             }
         }
     }
-    printf("err %d \n", err);
-    printf("zero %d \n", zero);
-    if (zero >= 2) {
-        if (err != 0) {
-            saved = *(u8 *)&game_state.icon_mode;
+    printf("err %d \n", invalid_coordinates);
+    printf("zero %d \n", origin_icons);
+    if (origin_icons >= 2) {
+        if (invalid_coordinates != 0) {
+            saved_icon_mode = *(u8 *)&game_state.icon_mode;
             *(u8 *)&game_state.icon_mode = 0;
             hud_icon_bar_init();
             icon_disp_switch(0);
-            *(u8 *)&game_state.icon_mode = saved;
+            *(u8 *)&game_state.icon_mode = saved_icon_mode;
         }
     }
 }
@@ -733,7 +733,7 @@ void file_select_init_settings(void) {
         file_select_menu_mode_lock = 1;
         name_entry_retained_state = 0;
         srand(system_data.seed);
-        k_speed_set(1);
+        k_speed_set(TEXT_SPEED_NORMAL);
         back_clear_switch(1);
         hud_mascot_display_switch(0);
         tpage_buf_clear();
@@ -927,21 +927,21 @@ void file_select_memory_card_check_begin(void) {
 }
 
 void file_select_memory_card_check_poll(void) {
-    u8 sel;
-    GameState *g; /* FAKE: g and the u8 copy of the selector only move it to $v1 (T-11120, permuter) */
+    u8 memory_card_result;
+    GameState *file_state; /* FAKE: file_state and the u8 copy of the selector only move it to $v1 (T-11120, permuter) */
 
     if (func_80053F04() != 0) {
         hud_cursor_show(1);
         memory_card_stop();
-        g = &game_state;
-        sel = g->memory_card_result;
-        if (sel == 1) {
+        file_state = &game_state;
+        memory_card_result = file_state->memory_card_result;
+        if (memory_card_result == 1) {
             printf("EXIST CARD!");
             mode_stage_next();
-        } else if (sel == 0xF1) {
+        } else if (memory_card_result == 0xF1) {
             printf("FILE_SEL UNFORMAT FIND!");
             mode_stage_set(0xC0);
-        } else if (sel == 0xFF) {
+        } else if (memory_card_result == 0xFF) {
             printf("NO CARD!");
             mode_step_next();
         }
@@ -1044,8 +1044,8 @@ void file_select_mode_stage_memory_card_check(void) {
 
 /* Falls through without a return statement. */
 s32 file_select_scan(void) {
-    s32 pad[3]; /* FAKE: unused words above count, the original frame has them (T-9020, T-11120) */
-    s32 count;
+    s32 pad[3]; /* FAKE: unused words above occupied_slots, the original frame has them (T-9020, T-11120) */
+    s32 occupied_slots;
     s32 i;
 
     switch (game_state.substep) {
@@ -1064,16 +1064,16 @@ s32 file_select_scan(void) {
         }
         break;
     case 2:
-        count = 0;
+        occupied_slots = 0;
         for (i = 0; i < 14; i++) {
             if (D_800E7D11[i + 4] != 0) {
-                count++;
+                occupied_slots++;
             }
         }
         text_system_reset();
         if (D_800E8BEE != 0) {
             mode_step_next();
-        } else if (count != 0) {
+        } else if (occupied_slots != 0) {
             mode_step_set(0x20);
         } else {
             mode_step_set(0x40);
@@ -1087,20 +1087,20 @@ s32 file_select_scan(void) {
 void file_select_system_file_read(void) {
     /* FAKE: unused words preserve the 0x40 stack frame. T-22023 */
     s32 pad[2];
-    s32 slot;
+    s32 slot_index;
     s32 i;
-    GameState *g = &game_state;
+    GameState *file_state = &game_state;
 
-    switch (g->substep) {
+    switch (file_state->substep) {
     case 0:
         memory_card_start();
-        g->substep++;
+        file_state->substep++;
         break;
     case 1:
         if (func_80054284() == 3) {
             memory_card_stop();
-            g->substep++;
-        } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {
+            file_state->substep++;
+        } else if (((u32) file_state->memory_card_timer >= 0x201U) || (file_state->memory_card_result == 0xF0)) {
             memory_card_stop();
             func_80056284();
             mode_stage_set(1);
@@ -1108,24 +1108,24 @@ void file_select_system_file_read(void) {
         break;
     case 2:
         if (func_800552DC(0) == -1) {
-            g->substep++;
+            file_state->substep++;
         } else {
             text_system_reset();
             file_select_menu_mode_unlock();
-            slot = 0xFF;
+            slot_index = 0xFF;
             if (system_data.slot_status[system_data.selected_slot] == 1) {
-                slot = system_data.selected_slot - 1;
+                slot_index = system_data.selected_slot - 1;
             } else {
                 for (i = 1; i < 14; i++) {
                     if (system_data.slot_status[i] == 1) {
                         system_data.selected_slot = i;
-                        slot = i - 1;
+                        slot_index = i - 1;
                         break;
                     }
                 }
             }
-            if (slot != 0xFF) {
-                file_select_cursor_to_slot(slot);
+            if (slot_index != 0xFF) {
+                file_select_cursor_to_slot(slot_index);
             }
             file_select_slot_header_draw();
             k_sub_reset_point_set();
@@ -1140,11 +1140,11 @@ void file_select_system_file_read(void) {
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
         k_disp_start(2);
         memory_card_stop();
-        g->substep++;
+        file_state->substep++;
         break;
     case 4:
-        if (g->pad_pressed & 0x60) {
-            g->substep++;
+        if (file_state->pad_pressed & 0x60) {
+            file_state->substep++;
         }
         break;
     case 5:
@@ -1156,12 +1156,12 @@ void file_select_system_file_read(void) {
         set_kanji_string(-0x40, 0x50, 0xF, (s32) D_800B3C88, 0);
         set_kanji_string(0x14, 0x50, 2, (s32) hud_cancel_button_label(), 0);
         k_disp_start(6);
-        g->substep++;
+        file_state->substep++;
         break;
     case 6:
-        if (g->pad_pressed & PAD_CIRCLE) {
-            g->substep++;
-        } else if (g->pad_pressed & PAD_CROSS) {
+        if (file_state->pad_pressed & PAD_CIRCLE) {
+            file_state->substep++;
+        } else if (file_state->pad_pressed & PAD_CROSS) {
             for (i = 0; i < 4; i++) {
                 if (func_80054704(0) == 1) {
                     break;
@@ -1178,30 +1178,30 @@ void file_select_system_file_read(void) {
 
 void file_select_list_input(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
-    s32 n;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    n = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = n / 7 * 0x1F - 0x82;
-        D_80120C96 = n % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[n] == 1) {
-        if (D_800E7D36 == n + 1) {
+    if ((file_state->pad_pressed & 0x820) && (file_state->menu_cursor_0 != -1) && D_800E7D15[slot_index] == 1) {
+        if (D_800E7D36 == slot_index + 1) {
             audio_command(0x501);
             mode_step_set(3);
-            g->save_slot = D_800E7D36;
+            file_state->save_slot = D_800E7D36;
         } else {
-            D_800E7D36 = g->menu_cursor_0 + 1;
+            D_800E7D36 = file_state->menu_cursor_0 + 1;
             text_system_reset();
             file_select_slot_header_draw();
             k_sub_reset_point_set();
             k_sub_disp_start(0);
-            file_select_cursor_to_slot(n);
+            file_select_cursor_to_slot(slot_index);
         }
     }
     file_select_page_indicator_update(1);
@@ -1211,7 +1211,7 @@ void file_select_list_input(void) {
 }
 
 void file_select_album_load(void) {
-    u8 state;
+    u8 memory_card_result;
 
     switch (game_state.substep) {
     case 0:
@@ -1222,10 +1222,10 @@ void file_select_album_load(void) {
         if (func_8005448C() == 4) {
             memory_card_stop();
             game_state.substep++;
-        } else if ((state = game_state.memory_card_result) == 0xF0) {
+        } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
             func_80056284();
             mode_stage_set(1);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (state == 0xD0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
             mode_stage_set(0xFF);
         }
@@ -1249,8 +1249,8 @@ void file_select_album_load(void) {
             func_80054E6C();
             game_state.substep++;
         } else {
-            state = game_state.memory_card_result;
-            printf("s->mem_stat %d \n", state);
+            memory_card_result = game_state.memory_card_result;
+            printf("s->mem_stat %d \n", memory_card_result);
             D_800E7D14[game_state.save_slot] = 0xFF;
             mode_stage_set(0xF0);
         }
@@ -1259,7 +1259,7 @@ void file_select_album_load(void) {
         if (func_80054388() == 0x13) {
             memory_card_stop();
             mode_stage_set(3);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((state = game_state.memory_card_result) == 0xF0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((memory_card_result = game_state.memory_card_result) == 0xF0)) {
             memory_card_stop();
             func_80056284();
             mode_stage_set(1);
@@ -1273,33 +1273,33 @@ void file_select_album_only_read(void) {
     s32 pad[2]; /* FAKE: unused words above the buffer, the original frame has them. T-22023 */
     u8 text[256];
     s32 i;
-    u8 state;
-    GameState *g = &game_state;
+    u8 memory_card_result;
+    GameState *file_state = &game_state;
 
-    switch (g->substep) {
+    switch (file_state->substep) {
     case 0:
         memory_card_start();
         for (i = 1; i < 15; i++) {
             if (system_data.slot_status[i] == 1) {
-                g->save_slot = i;
+                file_state->save_slot = i;
                 break;
             }
         }
         if (i < 15) {
-            g->substep++;
+            file_state->substep++;
         } else {
             memory_card_stop();
             mode_step_set(0x40);
         }
-        printf("load file %d \n", g->save_slot);
+        printf("load file %d \n", file_state->save_slot);
         break;
     case 1:
         if (func_8005448C() == 4) {
-            g->substep++;
-        } else if ((state = g->memory_card_result) == 0xF0) {
+            file_state->substep++;
+        } else if ((memory_card_result = file_state->memory_card_result) == 0xF0) {
             func_80056284();
             mode_stage_set(1);
-        } else if (((u32) g->memory_card_timer >= 0x201U) || (state == 0xD0)) {
+        } else if (((u32) file_state->memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
             func_80056284();
             mode_stage_set(1);
@@ -1311,37 +1311,37 @@ void file_select_album_only_read(void) {
             mode_step_next();
         } else {
             text_system_reset();
-            strcpy(text, D_800B3288[g->save_slot]);
+            strcpy(text, D_800B3288[file_state->save_slot]);
             strcat(text, "番アルバムのデータは");
             set_kanji_string(-0x40, 0x20, 0xF, (s32) text, 0);
             set_kanji_string(-0x40, 0x30, 0xF, (s32) "壊れています。", 0);
-            D_800E7D14[g->save_slot] = 0xFF;
+            D_800E7D14[file_state->save_slot] = 0xFF;
             memory_card_stop();
-            g->substep = 0;
+            file_state->substep = 0;
         }
         break;
     }
 }
 
 void file_select_album_only_list_input(void) {
-    s32 idx;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    idx = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[idx] == 1) {
-        if (g->save_slot == idx + 1) {
+    if ((file_state->pad_pressed & 0x820) && (file_state->menu_cursor_0 != -1) && D_800E7D15[slot_index] == 1) {
+        if (file_state->save_slot == slot_index + 1) {
             mode_step_set(0x24);
         } else {
             mode_step_set(0x22);
-            g->save_slot = g->menu_cursor_0 + 1;
+            file_state->save_slot = file_state->menu_cursor_0 + 1;
         }
     }
     file_select_page_indicator_update(1);
@@ -1467,21 +1467,21 @@ void file_select_create_slot_message(void) {
 }
 
 void file_select_create_slot_choose(void) {
-    s32 idx;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    idx = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1)) {
+    if ((file_state->pad_pressed & 0x820) && (file_state->menu_cursor_0 != -1)) {
         mode_step_next();
-        g->save_slot = g->menu_cursor_0 + 1;
+        file_state->save_slot = file_state->menu_cursor_0 + 1;
     }
 }
 
@@ -1526,20 +1526,20 @@ void file_select_create_system_file_answer(void) {
 }
 
 s32 file_select_create_album_only(void) {
-    u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
-    u8 temp_v0;
+    u8 message_text[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+    u8 slot_status;
 
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        strcpy(sp38, D_800B32CC[game_state.save_slot - 1]);
-        strcat(sp38, "番アルバムを作成しています。");
-        set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        strcpy(message_text, D_800B32CC[game_state.save_slot - 1]);
+        strcat(message_text, "番アルバムを作成しています。");
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) message_text, 0);
         k_disp_start(2);
-        temp_v0 = D_800E7D14[game_state.save_slot];
-        if (temp_v0 == 0xFF) {
+        slot_status = D_800E7D14[game_state.save_slot];
+        if (slot_status == 0xFF) {
             game_state.substep += 1;
-        } else if (temp_v0 == 1) {
+        } else if (slot_status == 1) {
             game_state.substep += 1;
         } else if (func_80054694((s32) game_state.save_slot) == 1) {
             game_state.substep += 1;
@@ -1692,24 +1692,24 @@ void file_select_new_choose_message(void) {
 
 void file_select_new_choose_slot(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
-    s32 n;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    n = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = n / 7 * 0x1F - 0x82;
-        D_80120C96 = n % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1)) {
+    if ((file_state->pad_pressed & 0x820) && (file_state->menu_cursor_0 != -1)) {
         audio_command(0x501);
-        g->save_slot = n + 1;
-        if (D_800E7D15[n] != 0) {
+        file_state->save_slot = slot_index + 1;
+        if (D_800E7D15[slot_index] != 0) {
             mode_step_next();
-            g->save_slot = g->menu_cursor_0 + 1;
+            file_state->save_slot = file_state->menu_cursor_0 + 1;
         } else if (D_800E8BEE != 0) {
             mode_step_set(0xA8);
         } else {
@@ -1861,12 +1861,12 @@ void file_select_new_redo_load_no_system(void) {
 }
 
 void file_select_new_create_with_system(void) {
-    u8 state;
-    s32 result;
+    u8 operation_step;
+    s32 memory_card_operation;
     u8 text[256];
 
-    state = game_state.substep;
-    switch (state) {
+    operation_step = game_state.substep;
+    switch (operation_step) {
     case 0:
         text_system_reset();
         strcpy(text, D_800B32CC[game_state.save_slot - 1]);
@@ -1878,7 +1878,7 @@ void file_select_new_create_with_system(void) {
     default:
         break;
     case 1:
-        if ((result = func_80054694((s32) game_state.save_slot)) == 1) {
+        if ((memory_card_operation = func_80054694((s32) game_state.save_slot)) == 1) {
             game_state.substep += 1;
         } else {
             mode_stage_set(4);
@@ -1891,7 +1891,7 @@ void file_select_new_create_with_system(void) {
         game_state.substep += 1;
         break;
     case 3:
-        if ((result = func_80054590()) == 0x14) {
+        if ((memory_card_operation = func_80054590()) == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
@@ -1908,7 +1908,7 @@ void file_select_new_create_with_system(void) {
         game_state.substep += 1;
         break;
     case 5:
-        if ((result = func_80054388()) == 0x13) {
+        if ((memory_card_operation = func_80054388()) == 0x13) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
@@ -1925,12 +1925,12 @@ void file_select_new_create_with_system(void) {
 }
 
 void file_select_new_create_album_only(void) {
-    u8 state;
-    s32 result;
+    u8 operation_step;
+    s32 memory_card_operation;
     u8 text[256];
 
-    state = game_state.substep;
-    switch (state) {
+    operation_step = game_state.substep;
+    switch (operation_step) {
     case 0:
         text_system_reset();
         strcpy(text, D_800B32CC[game_state.save_slot - 1]);
@@ -1942,7 +1942,7 @@ void file_select_new_create_album_only(void) {
     default:
         break;
     case 1:
-        if ((result = func_80054694((s32) game_state.save_slot)) == 1) {
+        if ((memory_card_operation = func_80054694((s32) game_state.save_slot)) == 1) {
             game_state.substep += 1;
         } else {
             mode_stage_set(4);
@@ -1955,7 +1955,7 @@ void file_select_new_create_album_only(void) {
         game_state.substep += 1;
         break;
     case 3:
-        if ((result = func_80054590()) == 0x14) {
+        if ((memory_card_operation = func_80054590()) == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
@@ -1988,22 +1988,22 @@ void file_select_copy_message(void) {
 
 void file_select_copy_source_choose(void) {
     s32 pad[2]; /* FAKE: unused, gives the original's 0x38 frame; real source unknown. T-16920 */
-    s32 idx;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    idx = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[idx] == 1) {
+    if ((file_state->pad_pressed & 0x820) && (file_state->menu_cursor_0 != -1) && D_800E7D15[slot_index] == 1) {
         audio_command(0x501);
         mode_step_next();
-        g->save_slot = idx + 1;
+        file_state->save_slot = slot_index + 1;
     }
     file_select_buttons_input();
 }
@@ -2022,12 +2022,12 @@ void file_select_copy_source_choose(void) {
 /* Falls through without a return statement. */
 /* The u8 mode copy and the s32 state give the original 0x138 frame (text at sp+0x30). T-11080 */
 s32 file_select_copy_source_load(void) {
-    s32 state;
-    u8 mode;
+    s32 operation_step;
+    u8 memory_card_result;
     u8 text[0x100];
 
-    state = game_state.substep;
-    switch (state) {
+    operation_step = game_state.substep;
+    switch (operation_step) {
     case 0:
         memory_card_start();
         game_state.substep++;
@@ -2036,10 +2036,10 @@ s32 file_select_copy_source_load(void) {
     case 1:
         if (func_8005448C() == 4) {
             game_state.substep++;
-        } else if ((mode = game_state.memory_card_result) == 0xF0) {
+        } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
             func_80056284();
             mode_stage_set(1);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (mode == 0xD0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
             mode_stage_set(0xFF);
         }
@@ -2079,25 +2079,25 @@ s32 file_select_copy_source_load(void) {
 
 
 void file_select_copy_destination_choose(void) {
-    s32 idx;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     file_select_buttons_input();
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    idx = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if (g->pad_pressed & 0x820) {
-        if (g->menu_cursor_0 != -1) {
-            g->save_slot = g->menu_cursor_0 + 1;
-            if (D_800E7D15[idx] != 0) {
+    if (file_state->pad_pressed & 0x820) {
+        if (file_state->menu_cursor_0 != -1) {
+            file_state->save_slot = file_state->menu_cursor_0 + 1;
+            if (D_800E7D15[slot_index] != 0) {
                 mode_step_next();
-            } else if (func_80054694(g->save_slot) == 1) {
+            } else if (func_80054694(file_state->save_slot) == 1) {
                 audio_command(0x501);
                 mode_step_set(0xC6);
             } else {
@@ -2142,14 +2142,14 @@ void file_select_copy_route(void) {
 }
 
 s32 file_select_copy_write_with_system(void) {
-    u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+    u8 message_text[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        strcpy(sp38, D_800B3288[game_state.save_slot]);
-        strcat(sp38, "番アルバムに");
-        set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        strcpy(message_text, D_800B3288[game_state.save_slot]);
+        strcat(message_text, "番アルバムに");
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) message_text, 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
         k_disp_start(2);
         memory_card_start();
@@ -2191,14 +2191,14 @@ s32 file_select_copy_write_with_system(void) {
 
 
 s32 file_select_copy_write_album_only(void) {
-    u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+    u8 message_text[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        strcpy(sp38, D_800B3288[game_state.save_slot]);
-        strcat(sp38, "番アルバムに");
-        set_kanji_string(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        strcpy(message_text, D_800B3288[game_state.save_slot]);
+        strcat(message_text, "番アルバムに");
+        set_kanji_string(-0x40, 0x20, 0xF, (s32) message_text, 0);
         set_kanji_string(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
         k_disp_start(2);
         memory_card_start();
@@ -2240,22 +2240,22 @@ void file_select_clear_message(void) {
 }
 
 void file_select_clear_choose_slot(void) {
-    s32 idx;
-    GameState *g = &game_state;
+    s32 slot_index;
+    GameState *file_state = &game_state;
 
     menu_check(0, cursor_x, cursor_y);
-    g->pad_pressed &= ~0x100;
+    file_state->pad_pressed &= ~0x100;
     menu_cursor_update(0);
-    idx = g->menu_cursor_0;
-    if (g->menu_cursor_0 != -1) {
+    slot_index = file_state->menu_cursor_0;
+    if (file_state->menu_cursor_0 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = slot_index / 7 * 0x1F - 0x82;
+        D_80120C96 = slot_index % 7 * 0x10 - 0xB;
     }
-    if ((g->pad_pressed & 0x820) && (g->menu_cursor_0 != -1) && D_800E7D15[idx] != 0) {
+    if ((file_state->pad_pressed & 0x820) && (file_state->menu_cursor_0 != -1) && D_800E7D15[slot_index] != 0) {
         mode_step_next();
         audio_command(0x501);
-        g->save_slot = g->menu_cursor_0 + 1;
+        file_state->save_slot = file_state->menu_cursor_0 + 1;
     }
     file_select_buttons_input();
 }
@@ -2343,10 +2343,10 @@ void file_select_clear_done(void) {
 }
 
 void file_select_mode_stage_list(void) {
-    u8 state;
+    u8 mode_step;
     game_state.mode_step_timer.w += 1;
-    state = game_state.mode_step;
-    switch (state) {
+    mode_step = game_state.mode_step;
+    switch (mode_step) {
     case 0x0:
         file_select_scan();
         return;
@@ -2497,12 +2497,12 @@ void file_select_mode_stage_list(void) {
 
 /* Falls through without a return statement. */
 s32 file_select_mode_stage_album_broken(void) {
-    u32 i;
+    u32 slot_index;
 
     switch (game_state.substep) {
     case 0:
-        i = game_state.save_slot - 1;
-        cd_audio_request_set(D_800B3A3C[i * 2], D_800B3A3C[i * 2 + 1], i % 13);
+        slot_index = game_state.save_slot - 1;
+        cd_audio_request_set(D_800B3A3C[slot_index * 2], D_800B3A3C[slot_index * 2 + 1], slot_index % 13);
         audio_command(0x300);
         printf("CALL XA");
         game_state.substep++;
@@ -2532,12 +2532,12 @@ s32 file_select_mode_stage_album_broken(void) {
 
 /* Falls through without a return statement. */
 s32 file_select_mode_stage_memory_card_error(void) {
-    u32 i;
+    u32 slot_index;
 
     switch (game_state.substep) {
     case 0:
-        i = game_state.save_slot - 1;
-        cd_audio_request_set(D_800B394C[i * 2], D_800B394C[i * 2 + 1], i % 13);
+        slot_index = game_state.save_slot - 1;
+        cd_audio_request_set(D_800B394C[slot_index * 2], D_800B394C[slot_index * 2 + 1], slot_index % 13);
         audio_command(0x300);
         printf("CALL XA");
         game_state.substep++;
@@ -2563,11 +2563,11 @@ s32 file_select_mode_stage_memory_card_error(void) {
 void file_select_loaded_greeting(void) {
     /* FAKE: unused words preserve the 0x38 stack frame (T-24112) */
     s32 pad[3];
-    u8 i;
-    u8 girl;
-    u8 unk;
-    s32 j;
-    s32 *pair;
+    u8 greeting_girl;
+    u8 qualifying_girl;
+    u8 final_event_girl;
+    s32 clip_variant;
+    s32 *clip_pair;
 
     /* FAKE: unk_110D and unk_03E are already u8; the (u8 *) views emit Ilod/Istr so as1 schedules the base address into the delay slot (T-24112) */
     switch (*(u8 *)&game_state.substep) {
@@ -2577,11 +2577,11 @@ void file_select_loaded_greeting(void) {
         func_80057640(0xF0);
         hud_cursor_show(0);
         sprite_tables_clear();
-        game_state.event_log_count = hud_event_log_scan(&girl, &unk, 1);
-        i = girl;
-        printf("girl %x \n", girl);
-        printf("i %x \n", i);
-        if (i >= 13) {
+        game_state.event_log_count = hud_event_log_scan(&qualifying_girl, &final_event_girl, 1);
+        greeting_girl = qualifying_girl;
+        printf("girl %x \n", qualifying_girl);
+        printf("i %x \n", greeting_girl);
+        if (greeting_girl >= 13) {
             if (*(u8 *)&game_state.year == 0x62 && game_state.month == 3 && game_state.day == 1) {
             } else if (*(u8 *)&game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
             } else {
@@ -2589,36 +2589,36 @@ void file_select_loaded_greeting(void) {
                 audio_command(0xC1);
             }
             *(u8 *)&game_state.substep = 4;
-        } else if (i == 11) {
+        } else if (greeting_girl == 11) {
             if (game_state.scene_flags[0x4D] != 0) {
-                j = 1;
-                pair = D_800B3B9C + i * 4 + j * 2;
-                cd_audio_request_set(pair[0], pair[1], i);
+                clip_variant = 1;
+                clip_pair = D_800B3B9C + greeting_girl * 4 + clip_variant * 2;
+                cd_audio_request_set(clip_pair[0], clip_pair[1], greeting_girl);
                 audio_command(0x300);
                 *(u8 *)&game_state.substep += 1;
             } else {
-                j = 0;
-                pair = D_800B3B9C + i * 4 + j * 2;
-                cd_audio_request_set(pair[0], pair[1], i);
+                clip_variant = 0;
+                clip_pair = D_800B3B9C + greeting_girl * 4 + clip_variant * 2;
+                cd_audio_request_set(clip_pair[0], clip_pair[1], greeting_girl);
                 audio_command(0x300);
                 *(u8 *)&game_state.substep += 1;
             }
-        } else if (i == 12) {
+        } else if (greeting_girl == 12) {
             if (system_data.flags[12] != 0 || game_state.girl_cleared[12] != 0) {
                 if ((u8)game_state.girls[12].flags.b[3] >= 0x29U) {
-                    j = 0;
+                    clip_variant = 0;
                 } else {
-                    j = 1;
+                    clip_variant = 1;
                 }
-                pair = D_800B3B9C + i * 4 + j * 2;
-                cd_audio_request_set(pair[0], pair[1], i);
+                clip_pair = D_800B3B9C + greeting_girl * 4 + clip_variant * 2;
+                cd_audio_request_set(clip_pair[0], clip_pair[1], greeting_girl);
                 printf("伊集院A");
                 audio_command(0x300);
                 *(u8 *)&game_state.substep += 1;
             } else if ((u8)game_state.girls[12].flags.b[3] >= 0x29U) {
-                j = 1;
-                pair = D_800B3B9C + i * 4 + j * 2;
-                cd_audio_request_set(pair[0], pair[1], i);
+                clip_variant = 1;
+                clip_pair = D_800B3B9C + greeting_girl * 4 + clip_variant * 2;
+                cd_audio_request_set(clip_pair[0], clip_pair[1], greeting_girl);
                 audio_command(0x300);
                 printf("伊集院B");
                 *(u8 *)&game_state.substep += 1;
@@ -2627,13 +2627,13 @@ void file_select_loaded_greeting(void) {
                 *(u8 *)&game_state.substep = 4;
             }
         } else {
-            if ((get_g_zyotai_s(i) & 0x7F) == 0) {
-                j = 1;
+            if ((get_g_zyotai_s(greeting_girl) & 0x7F) == 0) {
+                clip_variant = 1;
             } else {
-                j = 0;
+                clip_variant = 0;
             }
-            pair = D_800B3B9C + i * 4 + j * 2;
-            cd_audio_request_set(pair[0], pair[1], i);
+            clip_pair = D_800B3B9C + greeting_girl * 4 + clip_variant * 2;
+            cd_audio_request_set(clip_pair[0], clip_pair[1], greeting_girl);
             audio_command(0x300);
             *(u8 *)&game_state.substep += 1;
         }
@@ -2736,21 +2736,21 @@ void file_select_no_space_message(void) {
 /* FAKE: biased byte cursor, alternate end expression and statement layout preserve addressing and scheduling, T-9580. */
 void file_select_no_space_check(void)
 {
-  u8 *p;
-  u8 *new_var;
+  u8 *slot_status_cursor;
+  u8 *slot_scan_end;
   if (game_state.pad_pressed & 0x860)
   {
-    p = (u8 *) (&system_data); do
+    slot_status_cursor = (u8 *) (&system_data); do
     {
-      if (p[4] == 1)
+      if (slot_status_cursor[4] == 1)
       {
         break;
       }
-      p++;
+      slot_status_cursor++;
     }
-    while (p != (&D_800E7D1F));
-    new_var = ((u8 *) (&system_data)) - -15;
-    if (p == new_var)
+    while (slot_status_cursor != (&D_800E7D1F));
+    slot_scan_end = ((u8 *) (&system_data)) - -15;
+    if (slot_status_cursor == slot_scan_end)
     {
       mode_step_next();
       return;
@@ -2808,9 +2808,9 @@ void file_select_system_file_route(void) {
 
 void file_select_system_file_rebuild(void) {
     s32 i;
-    u8 state;
-    SystemData *w = &system_data;
-    GameState *g = &game_state;
+    u8 memory_card_result;
+    SystemData *system_record = &system_data;
+    GameState *file_state = &game_state;
 
     switch (game_state.substep) {
     case 0:
@@ -2828,7 +2828,7 @@ void file_select_system_file_rebuild(void) {
     case 1:
         if (game_state.pad_pressed & PAD_CIRCLE) {
             for (i = 0; i < 16; i++) {
-                file_select_rebuild_old_counts[i] = w->flags[i];
+                file_select_rebuild_old_counts[i] = system_record->flags[i];
             }
             game_state.substep++;
         } else if (game_state.pad_pressed & PAD_CROSS) {
@@ -2874,27 +2874,27 @@ void file_select_system_file_rebuild(void) {
         if (game_state.save_slot >= 15) {
             for (i = 0; i < 16; i++) {
                 if (file_select_rebuild_old_counts[i] < file_select_rebuild_counts[i]) {
-                    w->flags[i] = file_select_rebuild_counts[i];
+                    system_record->flags[i] = file_select_rebuild_counts[i];
                 } else {
-                    w->flags[i] = file_select_rebuild_old_counts[i];
+                    system_record->flags[i] = file_select_rebuild_old_counts[i];
                 }
                 if (file_select_rebuild_counts[i] != 0 && file_select_rebuild_counts[i] != file_select_rebuild_old_counts[i]) {
-                    w->flags[i] = 1;
+                    system_record->flags[i] = 1;
                 }
             }
             game_state.substep = 32;
         } else {
-            while (w->slot_status[g->save_slot] == 0) {
+            while (system_record->slot_status[file_state->save_slot] == 0) {
                 game_state.save_slot++;
                 if (game_state.save_slot >= 15) {
                     for (i = 0; i < 16; i++) {
                         if (file_select_rebuild_old_counts[i] < file_select_rebuild_counts[i]) {
-                            w->flags[i] = file_select_rebuild_counts[i];
+                            system_record->flags[i] = file_select_rebuild_counts[i];
                         } else {
-                            w->flags[i] = file_select_rebuild_old_counts[i];
+                            system_record->flags[i] = file_select_rebuild_old_counts[i];
                         }
                         if (file_select_rebuild_counts[i] != 0 && file_select_rebuild_counts[i] != file_select_rebuild_old_counts[i]) {
-                            w->flags[i] = 1;
+                            system_record->flags[i] = 1;
                         }
                     }
                     game_state.substep = 32;
@@ -2902,7 +2902,7 @@ void file_select_system_file_rebuild(void) {
                 }
             }
             if (game_state.substep != 32) {
-                w->selected_slot = game_state.save_slot;
+                system_record->selected_slot = game_state.save_slot;
                 game_state.substep++;
                 memory_card_start();
             }
@@ -2912,10 +2912,10 @@ void file_select_system_file_rebuild(void) {
         if (func_8005448C() == 4) {
             memory_card_stop();
             game_state.substep++;
-        } else if ((state = game_state.memory_card_result) == 0xF0) {
+        } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
             func_80056284();
             mode_stage_set(1);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (state == 0xD0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
             mode_stage_set(0xFF);
         }
@@ -2924,7 +2924,7 @@ void file_select_system_file_rebuild(void) {
         if (func_80055A38(0) == 1) {
             game_state.substep++;
         } else {
-            w->slot_status[game_state.save_slot] = 0xFF;
+            system_record->slot_status[game_state.save_slot] = 0xFF;
             game_state.save_slot++;
             game_state.substep = 7;
         }
@@ -2935,19 +2935,19 @@ void file_select_system_file_rebuild(void) {
             game_state.save_slot++;
             game_state.substep = 7;
             for (i = 0; i < 16; i++) {
-                if (g->girl_cleared[i] != 0) {
+                if (file_state->girl_cleared[i] != 0) {
                     file_select_rebuild_counts[i]++;
                 }
             }
         } else {
-            w->slot_status[game_state.save_slot] = 0xFF;
+            system_record->slot_status[game_state.save_slot] = 0xFF;
             game_state.save_slot++;
             game_state.substep = 7;
         }
         break;
     case 32:
         memory_card_start();
-        w->selected_slot = 0;
+        system_record->selected_slot = 0;
         game_state.substep++;
         break;
     case 33:
@@ -2957,7 +2957,7 @@ void file_select_system_file_rebuild(void) {
             mode_step_set(0);
             game_state.substep = 2;
             audio_command(0x50F);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((state = game_state.memory_card_result) == 0xF0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((memory_card_result = game_state.memory_card_result) == 0xF0)) {
             memory_card_stop();
             func_80056284();
             mode_stage_set(1);
@@ -2969,9 +2969,9 @@ void file_select_system_file_rebuild(void) {
 /* Original implicit-int state machine falls through without a return statement. */
 s32 file_select_system_file_create(void) {
     s32 i;
-    u8 state;
-    SystemData *w = &system_data;
-    GameState *g = &game_state;
+    u8 memory_card_result;
+    SystemData *system_record = &system_data;
+    GameState *file_state = &game_state;
 
     switch (game_state.substep) {
     case 0:
@@ -3039,21 +3039,21 @@ s32 file_select_system_file_create(void) {
         if (game_state.save_slot >= 15) {
             game_state.substep = 32;
             for (i = 0; i < 16; i++) {
-                w->flags[i] = file_select_rebuild_counts[i];
+                system_record->flags[i] = file_select_rebuild_counts[i];
             }
         } else {
-            while (w->slot_status[g->save_slot] == 0) {
+            while (system_record->slot_status[file_state->save_slot] == 0) {
                 game_state.save_slot++;
                 if (game_state.save_slot >= 15) {
                     for (i = 0; i < 16; i++) {
-                        w->flags[i] = file_select_rebuild_counts[i];
+                        system_record->flags[i] = file_select_rebuild_counts[i];
                     }
                     game_state.substep = 32;
                     break;
                 }
             }
             if (game_state.substep != 32) {
-                w->selected_slot = game_state.save_slot;
+                system_record->selected_slot = game_state.save_slot;
                 game_state.substep++;
                 memory_card_start();
             }
@@ -3063,10 +3063,10 @@ s32 file_select_system_file_create(void) {
         if (func_8005448C() == 4) {
             memory_card_stop();
             game_state.substep++;
-        } else if ((state = game_state.memory_card_result) == 0xF0) {
+        } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
             func_80056284();
             mode_stage_set(1);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (state == 0xD0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
             mode_stage_set(0xFF);
         }
@@ -3075,7 +3075,7 @@ s32 file_select_system_file_create(void) {
         if (func_80055A38(0) == 1) {
             game_state.substep++;
         } else {
-            w->slot_status[game_state.save_slot] = 0xFF;
+            system_record->slot_status[game_state.save_slot] = 0xFF;
             game_state.save_slot++;
             game_state.substep = 8;
         }
@@ -3086,19 +3086,19 @@ s32 file_select_system_file_create(void) {
             game_state.save_slot++;
             game_state.substep = 8;
             for (i = 0; i < 16; i++) {
-                if (g->girl_cleared[i] != 0) {
+                if (file_state->girl_cleared[i] != 0) {
                     file_select_rebuild_counts[i]++;
                 }
             }
         } else {
-            w->slot_status[game_state.save_slot] = 0xFF;
+            system_record->slot_status[game_state.save_slot] = 0xFF;
             game_state.save_slot++;
             game_state.substep = 8;
         }
         break;
     case 32:
         memory_card_start();
-        w->selected_slot = 0;
+        system_record->selected_slot = 0;
         game_state.substep++;
         break;
     case 33:
@@ -3108,7 +3108,7 @@ s32 file_select_system_file_create(void) {
             mode_step_set(0);
             game_state.substep = 2;
             audio_command(0x50F);
-        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((state = game_state.memory_card_result) == 0xF0)) {
+        } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((memory_card_result = game_state.memory_card_result) == 0xF0)) {
             memory_card_stop();
             func_80056284();
             mode_stage_set(1);
@@ -3257,14 +3257,14 @@ void file_select_flash_update(void) {
 s32 file_select_slot_status_overlay_draw(void) {
     s32 temp_t3;
     s32 temp_t7;
-    s32 var_s0;
+    s32 slot_index;
 
-    for (var_s0 = 0; var_s0 < 14; var_s0++) {
-        if (system_data.slot_status[var_s0 + 1] == 0) {
-            prim_gradient_rect(((var_s0 / 7) * 0x1F) - 0x90, ((var_s0 % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x808080, 0x81);
+    for (slot_index = 0; slot_index < 14; slot_index++) {
+        if (system_data.slot_status[slot_index + 1] == 0) {
+            prim_gradient_rect(((slot_index / 7) * 0x1F) - 0x90, ((slot_index % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x808080, 0x81);
         }
-        if (system_data.slot_status[var_s0 + 1] == 0xFF) {
-            prim_gradient_rect(((var_s0 / 7) * 0x1F) - 0x90, ((var_s0 % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x8080, 0x81);
+        if (system_data.slot_status[slot_index + 1] == 0xFF) {
+            prim_gradient_rect(((slot_index / 7) * 0x1F) - 0x90, ((slot_index % 7) * 0x10) - 0x12, 0x1E, 0xF, 2, 0x8080, 0x81);
         }
     }
     dtd_on_tpage(0, 0, 2, 2, 0);
@@ -3296,13 +3296,13 @@ s32 file_select_slot_status_overlay_draw(void) {
 }
 
 void file_select_buttons_input(void) {
-    s8 *sel; /* FAKE: the switch reads the selector through a pointer so the later read stays a separate range; permuter idiom, T-11120 */
+    s8 *operation_cursor; /* FAKE: the switch reads the selector through a pointer so the later read stays a separate range; permuter idiom, T-11120 */
 
     menu_check(1, cursor_x, cursor_y);
     menu_cursor_update(1);
-    sel = &game_state.menu_cursor_1;
+    operation_cursor = &game_state.menu_cursor_1;
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        switch (*sel) {
+        switch (*operation_cursor) {
         case 0:
             file_select_slot_markers_hide();
             mode_step_set(0xC0);

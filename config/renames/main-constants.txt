@@ -1,0 +1,9 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+const main defines include/main_api.h - signed-v1:eyJoZWFkZXIiOiJpbmNsdWRlL21haW5fYXBpLmgiLCJlbnVtIjpudWxsLCJkZWZpbmVzIjp0cnVlLCJ2YWx1ZXMiOltbIkhVRF9CSU9SSFlUSE1fU0NPUkVfU0NBTEUiLCIxNiIsIlQtMjcwNjIgY29tbWFuZCBhbmQgY2FyZWVyIHNjb3JlIHNjYWxlIl0sWyJIVURfQklPUkhZVEhNX1pFUk9fV0FWRV9QUk9CRV9TQ0FMRSIsIjMiLCJULTI3MDYyIHplcm8tcmV0dXJuIHByb2JlIHNjYWxlIl0sWyJIVURfQklPUkhZVEhNX0RJU0NBUkRFRF9QUk9CRV9TQ0FMRSIsIjIiLCJULTI3MDYyIHVudXNlZCB3cmFwcGVyIGRpc2NhcmRzIHJlc3VsdCJdLFsiSFVEX0JJT1JIWVRITV9HUkFQSF9TQ0FMRSIsIi0zMiIsIlQtMjcwNzAgc2lnbmVkIHNjYWxlIHBhc3NlZCBieSBodWRfYmlvcmh5dGhtX2dyYXBoX2RyYXciXV0sInNpdGVzIjpbIm1haW46aHVkX2Jpb3JoeXRobV92YWx1ZShhcmczKSJdLCJub3RlIjoiIn0=
+const main SpeakerVoiceState include/main_api.h -
+const main TextSpeed include/main_api.h -
+const main defines include/main_api.h -
+const main SettingsClickMode include/main_api.h -
+const main SettingsConfirmButton include/main_api.h -
+const main SettingsCursorSpeed include/main_api.h -

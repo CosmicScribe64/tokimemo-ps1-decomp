@@ -539,7 +539,7 @@ void func_8013855C(void) {
     }
     D_8013C360 += 1;
     if (D_8013C35C == 9 && D_8013C360 != 0) {
-        k_speed_set(0xE);
+        k_speed_set(TEXT_SPEED_EVERY_FIFTEEN_FRAMES);
     }
 }
 

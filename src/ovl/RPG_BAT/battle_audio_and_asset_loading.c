@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-u8 func_8013D780(void) {
+u8 rpg_stage_start_shout(void) {
     switch (game_state.mode_step) {
     case 0:
         game_state.current_girl = GIRL_SOTOI;
@@ -22,9 +22,9 @@ u8 func_8013D780(void) {
     }
 }
 
-void func_8013D834(void) {
+void rpg_stage_load_assets_1(void) {
     if (game_state.substep == 0) {
-        switch (D_8015EB98) {
+        switch (rpg_encounter) {
         case 0x10000:
             audio_bank_load_start(1, 0xC3A8, 0xC38D, 0xD1FB, 0xD1AD, 0xD1A2);
             break;
@@ -41,7 +41,7 @@ void func_8013D834(void) {
             audio_bank_load_start(1, 0xC3C9, 0xC3AA, 0xD1FB, 0xD1AD, 0xD1A2);
             break;
         case 0x100000:
-            switch (D_8015EB9C) {
+            switch (rpg_girl_id) {
             case 2:
             case 4:
             case 5:
@@ -72,8 +72,8 @@ void func_8013D834(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 3) {
-        if (D_8015EBA4 == 1) {
-            switch (D_8015EBA0) {
+        if (rpg_club_move_available == 1) {
+            switch (rpg_player_club) {
             case 1:
             case 5:
             case 6:
@@ -117,9 +117,9 @@ void func_8013D834(void) {
 
 /* s32 without a return: v0 live at the exit keeps as1 from filling the branch delay slots with the next block's lui,
  * as in the original (T-17109). */
-s32 func_8013DC60(void) {
+s32 rpg_stage_load_assets_2(void) {
     if (game_state.substep == 0) {
-        switch (D_8015EB98) {
+        switch (rpg_encounter) {
         case 0x10000:
             cd_read_sectors(0x80, 0x80180000, 0x3A56);
             break;
@@ -142,7 +142,7 @@ s32 func_8013DC60(void) {
         game_state.substep = game_state.substep + 1;
     } else if (game_state.substep == 1) {
         if (cd_read_sync_status() & 1) {
-            if (D_8015EB98 != 0x100000) {
+            if (rpg_encounter != 0x100000) {
                 game_state.substep = 4;
             } else {
                 game_state.substep = game_state.substep + 1;
@@ -156,8 +156,8 @@ s32 func_8013DC60(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 4) {
-        if (D_8015EBA4 == 1) {
-            switch (D_8015EBA0) {
+        if (rpg_club_move_available == 1) {
+            switch (rpg_player_club) {
             case 0:
                 cd_read_sectors(0x21, 0x801D8000, 0x3A08);
                 break;
@@ -206,7 +206,7 @@ s32 func_8013DC60(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 6) {
-        switch (D_8015EB9C) {
+        switch (rpg_girl_id) {
         case 0:
             cd_read_sectors(9, 0x801C7000, 0x3B33);
             break;
@@ -214,7 +214,7 @@ s32 func_8013DC60(void) {
             cd_read_sectors(0x11, 0x801C7000, 0x3B6E);
             break;
         case 2:
-            if (D_8015EB98 != 0x80000000) {
+            if (rpg_encounter != 0x80000000) {
                 cd_read_sectors(0x22, 0x801C7000, 0x3AD6);
             } else {
                 mode_stage_next();

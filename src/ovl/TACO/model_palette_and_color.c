@@ -5,7 +5,7 @@
 /* The header is walked in two steps (arg0++, then arg0 += 8): as1 turns the first add into the
    entry copy `move s0,a0` and moves its offset into the loads and the second add. One add of 9
    is folded into `addiu s0,a0,36` with the loads on a0. T-16562 */
-void func_80154230(arg0, arg1)
+void shooter_set_model_clut(arg0, arg1)
 u32 *arg0;
 u16 arg1;
 {
@@ -23,7 +23,7 @@ u16 arg1;
     command1 = 0x34000609;
     arg0 += 8;
 loop_1:
-    if (func_8015431C((u32)arg0) != 0) {
+    if (shooter_is_model_address((u32)arg0) != 0) {
         command = arg0[0];
         if (command0 == command || command1 == command) {
             word = arg0[2];
@@ -40,7 +40,7 @@ loop_1:
     }
 }
 
-s32 func_8015431C(u32 arg0) {
+s32 shooter_is_model_address(u32 arg0) {
     if (arg0 < 0x8018A000U) {
         return 0;
     }
@@ -50,7 +50,7 @@ s32 func_8015431C(u32 arg0) {
     return 1;
 }
 
-void func_8015435C(s32 arg0, u16 arg1) {
+void shooter_set_object_clut(s32 arg0, u16 arg1) {
     u32 **bounds;
     u32 command;
     u32 command0;
@@ -63,10 +63,10 @@ void func_8015435C(s32 arg0, u16 arg1) {
     command0 = 0x24000507;
     command1 = 0x34000609;
     command2 = 0x24000014;
-    bounds = (u32 **)(D_8015F290 + arg0);
+    bounds = (u32 **)(shooter_model_polygon_ranges + arg0);
     p = bounds[0];
 loop_1:
-    if (func_8015431C((u32)p) != 0) {
+    if (shooter_is_model_address((u32)p) != 0) {
         command = p[0];
         if (command0 == command || command1 == command || command2 == command) {
             word = p[2];
@@ -80,9 +80,9 @@ loop_1:
     }
 }
 
-/* Header walked in two steps for the entry copy, as in func_80154230. command0/command1 are
+/* Header walked in two steps for the entry copy, as in shooter_set_model_clut. command0/command1 are
    folded into the compares but keep their two stack words (the original's 88-byte frame). T-16562 */
-void func_8015443C(arg0, arg1, arg2, arg3)
+void shooter_flicker_model_clut(arg0, arg1, arg2, arg3)
 u32 *arg0;
 u16 arg1;
 s32 arg2;
@@ -100,7 +100,7 @@ s32 arg3;
 
     command0 = 0x24000507;
     command1 = 0x34000609;
-    v = D_8015EDB4[20].unk2;
+    v = shooter_actors[20].mode;
     arg0++;
     count = arg0[0];
     limit = arg0[2];
@@ -118,10 +118,10 @@ s32 arg3;
         interval = rand() % 10 + 5;
     }
 loop_1:
-    if (func_8015431C((u32)arg0) != 0) {
+    if (shooter_is_model_address((u32)arg0) != 0) {
         command = arg0[0];
         if (command == command0 || command == command1) {
-            if (D_8015EDB4[20].unk2 < 0x50) {
+            if (shooter_actors[20].mode < 0x50) {
                 if (i >= interval) {
                     word = arg0[2];
                     arg0[1] = (arg0[1] & 0xFFFF) + ((arg3 << 0x16) + (((arg2 >> 4) & 0x3F) << 0x10));
@@ -150,8 +150,8 @@ loop_1:
     }
 }
 
-/* Header walked in two steps for the entry copy, as in func_80154230. T-16562 */
-void func_801546FC(arg0, arg1, arg2, arg3)
+/* Header walked in two steps for the entry copy, as in shooter_set_model_clut. T-16562 */
+void shooter_set_model_clut_and_page(arg0, arg1, arg2, arg3)
 u32 *arg0;
 u16 arg1;
 s32 arg2;
@@ -171,7 +171,7 @@ s32 arg3;
     command1 = 0x34000609;
     arg0 += 8;
 loop_1:
-    if (func_8015431C((u32)arg0) != 0) {
+    if (shooter_is_model_address((u32)arg0) != 0) {
         command = arg0[0];
         if (command0 == command || command1 == command) {
             word = arg0[2];
@@ -190,7 +190,7 @@ loop_1:
 }
 
 /* The record word is read as *p each time (no local copy) and r/g/b are first the raw shifted/masked word, then the clamped sum: the shifts stay uopt values in $v1/$a0/$a1 as in the original. T-16562 */
-void func_80154820(s32 arg0, s32 arg1) {
+void shooter_set_object_flat_color(s32 arg0, s32 arg1) {
     u32 **bounds;
     u32 *p;
     u32 command0;
@@ -203,10 +203,10 @@ void func_80154820(s32 arg0, s32 arg1) {
     command0 = 0x21010001;
     command1 = 0x21010002;
     command2 = 0x21010304;
-    bounds = (u32 **)(D_8015F290 + arg0);
+    bounds = (u32 **)(shooter_model_polygon_ranges + arg0);
     p = bounds[0];
 loop_1:
-    if (func_8015431C((u32)p) != 0) {
+    if (shooter_is_model_address((u32)p) != 0) {
         if (command0 == p[0] || command1 == p[0] || command2 == p[0]) {
             p += 1;
             r = *p >> 16;

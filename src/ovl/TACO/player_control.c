@@ -1,50 +1,50 @@
-/* player_control.c: src/ovl/TACO/80132220.c:4: player positions, input, fire handling and player update; body 5: D_8015EDB4->unk74 = 0; 6: D_8015EDB4->unk76 = 0;. Original object 0x80132220-0x801335A0 (config/objects/TACO.txt). */
+/* player_control.c: src/ovl/TACO/80132220.c:4: player positions, input, fire handling and player update; body 5: shooter_actors->unk74 = 0; 6: shooter_actors->unk76 = 0;. Original object 0x80132220-0x801335A0 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80132220(void) {
-    D_8015EDB4->unk74 = 0;
-    D_8015EDB4->unk76 = 0;
-    D_8015EDB4->unk78 = 0x800;
-    D_8015EDB4[8].unk74 = 0;
-    D_8015EDB4[8].unk76 = 0;
-    D_8015EDB4[8].unk78 = 0x800;
-    D_8015EDB4->unk2 = 0;
-    D_8015EDB4[8].unk2 = 0;
-    D_8015EDB4->unk3 = 0;
-    D_8015EDB4->unk68 = 0;
-    D_8015EDB4[8].unk68 = 0;
+void shooter_reset_ship_state(void) {
+    shooter_actors->x = 0;
+    shooter_actors->y = 0;
+    shooter_actors->z = 0x800;
+    shooter_actors[8].x = 0;
+    shooter_actors[8].y = 0;
+    shooter_actors[8].z = 0x800;
+    shooter_actors->mode = 0;
+    shooter_actors[8].mode = 0;
+    shooter_actors->phase = 0;
+    shooter_actors->rotation_z = 0;
+    shooter_actors[8].rotation_z = 0;
 }
 
-void func_801322AC(void) {
-    func_801438F0(0x8019C800, 0, D_8015EDB4);
-    D_8015EDB4->unk0[1] = 0x80;
-    D_8015EDB4->unk6C = 0x400;
-    D_8015EDB4->unk6E = 0x400;
-    D_8015EDB4->unk70 = 0x400;
-    func_801438F0(0x8019C800, 1, &D_8015EDB4[8]);
-    D_8015EDB4[8].unk0[1] = 0x80;
-    D_8015EDB4[8].unk6C = 0x400;
-    D_8015EDB4[8].unk6E = 0x400;
-    D_8015EDB4[8].unk70 = 0x400;
-    D_8015EDB4->unk7A = 0;
-    D_8015EDB4[8].unk7A = 0;
-    D_8015EDB4->unk72 = -1;
-    D_8015EDB4[8].unk72 = -1;
-    D_8015EDB4->unk82 = -1;
-    D_8015EDB4[8].unk82 = -1;
-    D_8015EDB4->unk7C = 4;
-    D_8015EDB4->unk7E = 3;
-    D_8015EDB4->unk80 = 0;
-    D_8015EDB4->unk84[1] = 0xFF;
-    D_8015EDB4[8].unk84[1] = 0x80;
-    func_80132220();
-    D_8015EDD0 = 0;
-    D_8015EDD4 = 0;
+void shooter_init_ships(void) {
+    shooter_init_actor_model(0x8019C800, 0, shooter_actors);
+    shooter_actors->flag_bytes[1] = 0x80;
+    shooter_actors->scale_x = 0x400;
+    shooter_actors->scale_y = 0x400;
+    shooter_actors->scale_z = 0x400;
+    shooter_init_actor_model(0x8019C800, 1, &shooter_actors[8]);
+    shooter_actors[8].flag_bytes[1] = 0x80;
+    shooter_actors[8].scale_x = 0x400;
+    shooter_actors[8].scale_y = 0x400;
+    shooter_actors[8].scale_z = 0x400;
+    shooter_actors->counter = 0;
+    shooter_actors[8].counter = 0;
+    shooter_actors->weapon = -1;
+    shooter_actors[8].weapon = -1;
+    shooter_actors->auxiliary = -1;
+    shooter_actors[8].auxiliary = -1;
+    shooter_actors->argument_x = 4;
+    shooter_actors->argument_y = 3;
+    shooter_actors->argument_z = 0;
+    shooter_actors->stats[1] = 0xFF;
+    shooter_actors[8].stats[1] = 0x80;
+    shooter_reset_ship_state();
+    shooter_bonus_popup_timer = 0;
+    shooter_bonus_popup_value = 0;
 }
 
 /* An int function with no return statement (K&R): with it the switch operands sit in $v0 as in the original; a returned result variable moves them to $a0. */
-s32 func_8013240C() {
+s32 shooter_update_player() {
     /* FAKE: pad1..pad4 are unused locals that reserve the original's four extra frame words (m1 at sp+0x30, m2 at sp+0x2C); real source unknown. T-19025 */
     s32 pad1;
     s32 pad2;
@@ -52,56 +52,56 @@ s32 func_8013240C() {
     s32 m1;
     s32 m2;
     s32 pad4;
-    TcActor *p;
+    ShooterActor *p;
     s32 step;
     u32 r;
 
-    p = D_8015EDB4;
+    p = shooter_actors;
     step = 0x20;
     if ((game_state.pad_held & 0xA000) && (game_state.pad_held & 0x5000)) {
         step = 0x2D;
     }
     if (game_state.pad_held & PAD_LEFT) {
-        if (D_8015EDB4->unk74 > 0x800) {
-            p->unk74 = p->unk74 + step * (0x1000 - p->unk74) / 2048;
+        if (shooter_actors->x > 0x800) {
+            p->x = p->x + step * (0x1000 - p->x) / 2048;
         } else {
-            p->unk74 = p->unk74 + step;
+            p->x = p->x + step;
         }
     }
     if (game_state.pad_held & PAD_RIGHT) {
-        if (p->unk74 < -0x800) {
-            p->unk74 = p->unk74 + step * (-0x1000 - p->unk74) / 2048;
+        if (p->x < -0x800) {
+            p->x = p->x + step * (-0x1000 - p->x) / 2048;
         } else {
-            p->unk74 = p->unk74 - step;
+            p->x = p->x - step;
         }
     }
     if (game_state.pad_held & PAD_UP) {
-        if (p->unk76 < -0x700) {
-            p->unk76 = p->unk76 + step * (-0x800 - p->unk76) / 256;
+        if (p->y < -0x700) {
+            p->y = p->y + step * (-0x800 - p->y) / 256;
         } else {
-            p->unk76 = p->unk76 - step;
+            p->y = p->y - step;
         }
     }
     if (game_state.pad_held & PAD_DOWN) {
-        if (p->unk76 > 0x80) {
-            p->unk76 = p->unk76 + step * (0x180 - p->unk76) / 256;
+        if (p->y > 0x80) {
+            p->y = p->y + step * (0x180 - p->y) / 256;
         } else {
-            p->unk76 = p->unk76 + step;
+            p->y = p->y + step;
         }
     }
-    if (p->unk74 < -0x1000) {
-        p->unk74 = -0x1000;
+    if (p->x < -0x1000) {
+        p->x = -0x1000;
     }
-    if (p->unk74 > 0x1000) {
-        p->unk74 = 0x1000;
+    if (p->x > 0x1000) {
+        p->x = 0x1000;
     }
-    if (p->unk76 < -0x800) {
-        p->unk76 = -0x800;
+    if (p->y < -0x800) {
+        p->y = -0x800;
     }
-    if (p->unk76 > 0x180) {
-        p->unk76 = 0x180;
+    if (p->y > 0x180) {
+        p->y = 0x180;
     }
-    switch (D_8015EDDC % 3) {
+    switch (shooter_setting_roll_button % 3) {
     case 0:
         m1 = 5;
         m2 = 0xA;
@@ -115,75 +115,75 @@ s32 func_8013240C() {
         m2 = 2;
         break;
     }
-    if (p->unk3 == 0) {
+    if (p->phase == 0) {
         if (game_state.pad_pressed & m1) {
-            D_8015EDB4[8].unk2 += 1;
-            p->unk2 = 0x81;
-            p->unk3 = 0x7F;
+            shooter_actors[8].mode += 1;
+            p->mode = 0x81;
+            p->phase = 0x7F;
         }
         if (game_state.pad_pressed & m2) {
-            D_8015EDB4[8].unk2 += 1;
-            p->unk2 = 0x82;
-            p->unk3 = 0x7F;
+            shooter_actors[8].mode += 1;
+            p->mode = 0x82;
+            p->phase = 0x7F;
         }
     }
-    if (p->unk2 & 1) {
-        r = p->unk3;
-        p->unk68 += r;
-        p->unk74 += 8;
+    if (p->mode & 1) {
+        r = p->phase;
+        p->rotation_z += r;
+        p->x += 8;
         if (r < 0xF) {
-            if ((p->unk68 & 0xFFF) >= 0xFE1) {
-                p->unk3 = 0;
-                p->unk68 = 0;
-                p->unk2 = 0;
+            if ((p->rotation_z & 0xFFF) >= 0xFE1) {
+                p->phase = 0;
+                p->rotation_z = 0;
+                p->mode = 0;
             }
         } else {
-            p->unk3 = p->unk3 - 1;
-            if (p->unk3 < 0x40) {
-                p->unk2 &= 0x7F;
+            p->phase = p->phase - 1;
+            if (p->phase < 0x40) {
+                p->mode &= 0x7F;
             }
         }
     }
-    if (p->unk2 & 2) {
-        r = p->unk3;
-        p->unk68 -= r;
-        p->unk74 -= 8;
+    if (p->mode & 2) {
+        r = p->phase;
+        p->rotation_z -= r;
+        p->x -= 8;
         if (r < 0xF) {
-            if ((p->unk68 & 0xFFF) < 0x1F) {
-                p->unk3 = 0;
-                p->unk68 = 0;
-                p->unk2 = 0;
+            if ((p->rotation_z & 0xFFF) < 0x1F) {
+                p->phase = 0;
+                p->rotation_z = 0;
+                p->mode = 0;
             }
         } else {
-            p->unk3 = p->unk3 - 1;
-            if (p->unk3 < 0x40) {
-                p->unk2 &= 0x7F;
+            p->phase = p->phase - 1;
+            if (p->phase < 0x40) {
+                p->mode &= 0x7F;
             }
         }
     }
-    if (p->unk2 & 4) {
-        switch (D_8015EDB4->unk7A--) {
+    if (p->mode & 4) {
+        switch (shooter_actors->counter--) {
         case 2:
         case 10:
         case 14:
         case 15:
-            func_801430B0();
+            shooter_flash_red();
             break;
         case 0:
-            D_8015EDB4->unk2 &= 0xFB;
+            shooter_actors->mode &= 0xFB;
             break;
         }
     }
 }
 
-void func_801328B0(void) {
+void shooter_update_wingman(void) {
     /* FAKE: pad1..pad4 are unused locals that reserve the original's extra frame words (idx at sp+0x70, in/out vectors at sp+0x58/0x48, flags at sp+0x40, dist at sp+0x38); real source unknown. T-19025 */
-    TcActor *act;
+    ShooterActor *act;
     u32 len;
     s32 pad1;
     s32 idx;
     s32 pad2;
-    TcActor *q;
+    ShooterActor *q;
     VECTOR in;
     VECTOR out;
     s32 pad3;
@@ -191,7 +191,7 @@ void func_801328B0(void) {
     s32 pad4;
     s32 dist;
 
-    dist = func_80140638(&idx);
+    dist = shooter_count_targets(&idx);
     flags = 0;
     if (dist != 0) {
         if (!(game_state.frame_count & 7)) {
@@ -200,242 +200,242 @@ void func_801328B0(void) {
             flags = 0x20;
         }
     }
-    act = &D_8015EDB4[8];
-    D_8015EDB4[8].unk0[1] = 0x80;
-    act->unk84[3] = 1;
-    act->unk84[0] = 2;
-    if (act->unk72 == 0) {
-        func_80141170(1, flags);
-    } else if (act->unk72 == 1) {
-        func_80141290(1, flags);
+    act = &shooter_actors[8];
+    shooter_actors[8].flag_bytes[1] = 0x80;
+    act->stats[3] = 1;
+    act->stats[0] = 2;
+    if (act->weapon == 0) {
+        shooter_fire_wide_shot(1, flags);
+    } else if (act->weapon == 1) {
+        shooter_fire_beam(1, flags);
     } else {
-        func_80141050(1, flags);
+        shooter_fire_vulcan(1, flags);
     }
-    if (act->unk82 == 0) {
-        func_801404FC(1, flags);
-    } else if (act->unk82 == 1) {
-        func_80140364(1, flags);
+    if (act->auxiliary == 0) {
+        shooter_fire_secondary_homing(1, flags);
+    } else if (act->auxiliary == 1) {
+        shooter_fire_secondary_spread(1, flags);
     }
     if ((u32)dist < 8) {
-        in.vx = D_8015EDB4->unk74 - act->unk74;
-        in.vy = D_8015EDB4->unk76 - act->unk76;
+        in.vx = shooter_actors->x - act->x;
+        in.vy = shooter_actors->y - act->y;
         in.vz = 0;
         len = func_800AA460(&in, &out);
-        switch (act->unk2) {
+        switch (act->mode) {
         default:
-            act->unk2 = 0;
+            act->mode = 0;
         case 0:
-            act->unk0[1] = 0x80;
-            act->unk2 += 1;
+            act->flag_bytes[1] = 0x80;
+            act->mode += 1;
         case 1:
             if (len >= 0x10001) {
-                act->unk74 += out.vx / 103;
-                act->unk76 += out.vy / 103;
+                act->x += out.vx / 103;
+                act->y += out.vy / 103;
             }
             break;
         case 2:
-            act->unk2 += 1;
+            act->mode += 1;
         case 3:
             if (len >= 0x10001) {
-                act->unk74 += out.vy / 103;
-                act->unk76 += out.vx / 103;
+                act->x += out.vy / 103;
+                act->y += out.vx / 103;
             }
             break;
         case 4:
-            act->unk0[1] = 0x80;
-            act->unk2 += 1;
+            act->flag_bytes[1] = 0x80;
+            act->mode += 1;
         case 5:
-            in.vx = D_8015EDB4->unk74 - act->unk74;
-            in.vy = D_8015EDB4->unk76 - act->unk76 + 0x80;
+            in.vx = shooter_actors->x - act->x;
+            in.vy = shooter_actors->y - act->y + 0x80;
             in.vz = 0;
             len = func_800AA460(&in, &out);
             if (len >= 0x641) {
-                act->unk74 += out.vy / 103;
-                act->unk76 += out.vx / 103;
+                act->x += out.vy / 103;
+                act->y += out.vx / 103;
             }
             break;
         case 6:
-            act->unk0[1] = 0x90;
-            act->unk7C = 3 - (rand() & 7);
-            act->unk7E = 3 - (rand() & 7);
-            act->unk2 += 1;
+            act->flag_bytes[1] = 0x90;
+            act->argument_x = 3 - (rand() & 7);
+            act->argument_y = 3 - (rand() & 7);
+            act->mode += 1;
         case 7:
-            if (D_8015EDB4->unk78 + 0x21 < act->unk78) {
-                act->unk80 = -0x20;
+            if (shooter_actors->z + 0x21 < act->z) {
+                act->argument_z = -0x20;
             }
-            if (act->unk78 < 0x29) {
-                act->unk80 = 0x20;
+            if (act->z < 0x29) {
+                act->argument_z = 0x20;
             }
             break;
         case 8:
-            act->unk0[1] = 0x90;
+            act->flag_bytes[1] = 0x90;
             in.vx = 0xF - (rand() & 0x1F);
             in.vy = 0xF - (rand() & 0x1F);
             in.vz = 0xF - (rand() & 0x1F);
             func_800AA460(&in, &out);
-            act->unk7C = out.vx / 103;
-            act->unk7E = out.vy / 103;
-            act->unk80 = out.vz / 103;
-            act->unk2 += 1;
+            act->argument_x = out.vx / 103;
+            act->argument_y = out.vy / 103;
+            act->argument_z = out.vz / 103;
+            act->mode += 1;
         case 9:
             if (!(rand() & 0x7F)) {
-                act->unk2 = 8;
+                act->mode = 8;
             }
             break;
         }
     } else {
-        q = &D_8015EDB4[idx];
-        in.vx = q->unk74 - act->unk74;
-        in.vy = q->unk76 - act->unk76;
+        q = &shooter_actors[idx];
+        in.vx = q->x - act->x;
+        in.vy = q->y - act->y;
         in.vz = 0;
         func_800AA460(&in, &out);
-        act->unk74 += out.vx / 103;
-        act->unk76 += out.vy / 103;
+        act->x += out.vx / 103;
+        act->y += out.vy / 103;
     }
-    act->unk78 += act->unk80;
-    if (act->unk74 > 0x1000) {
-        act->unk74 = 0x1000;
+    act->z += act->argument_z;
+    if (act->x > 0x1000) {
+        act->x = 0x1000;
     }
-    if (act->unk74 < -0x1000) {
-        act->unk74 = -0x1000;
+    if (act->x < -0x1000) {
+        act->x = -0x1000;
     }
-    if (act->unk76 > 0x180) {
-        act->unk76 = 0x180;
+    if (act->y > 0x180) {
+        act->y = 0x180;
     }
-    if (act->unk76 < -0x800) {
-        act->unk76 = -0x800;
+    if (act->y < -0x800) {
+        act->y = -0x800;
     }
     if (!(rand() & 0x3F)) {
-        act->unk80 = 0xF - (rand() & 0x1F);
+        act->argument_z = 0xF - (rand() & 0x1F);
     }
-    if (D_8015EDB4->unk78 + 0x200 < act->unk78) {
-        act->unk80 = -(rand() & 0xF);
+    if (shooter_actors->z + 0x200 < act->z) {
+        act->argument_z = -(rand() & 0xF);
     }
-    if (act->unk78 < -0x1000) {
-        act->unk80 = rand() & 0xF;
+    if (act->z < -0x1000) {
+        act->argument_z = rand() & 0xF;
     }
-    act->unk6C = 0x400;
-    act->unk6E = 0x400;
-    act->unk70 = 0x400;
+    act->scale_x = 0x400;
+    act->scale_y = 0x400;
+    act->scale_z = 0x400;
 }
 
-void func_80132FE8(void) {
-    /* FAKE: pad1..pad3 are unused locals that reserve the original's three frame words above flags (flags at sp+0x30, actor at sp+0x2C, btn at sp+0x28); real source unknown. flags is left unset on the unk2 & 0x40 path and passed to func_80141DE0 as is, as in the original. T-19025 */
+void shooter_update_battle(void) {
+    /* FAKE: pad1..pad3 are unused locals that reserve the original's three frame words above flags (flags at sp+0x30, actor at sp+0x2C, btn at sp+0x28); real source unknown. flags is left unset on the unk2 & 0x40 path and passed to shooter_update_bomb as is, as in the original. T-19025 */
     s32 pad1;
     s32 pad2;
     s32 pad3;
     s32 flags;
-    TcActor *actor;
-    /* FAKE: btn copies game_state.pad_pressed in both arms (the first arm reads it after the flag tests) and all six mask tests use it; it stays live in $v0 across the D_8015EDE4 tests so those take $a0 as in the original. Matches, real source unknown. T-19025 */
+    ShooterActor *actor;
+    /* FAKE: btn copies game_state.pad_pressed in both arms (the first arm reads it after the flag tests) and all six mask tests use it; it stays live in $v0 across the shooter_setting_bomb_button tests so those take $a0 as in the original. Matches, real source unknown. T-19025 */
     s32 btn;
 
-    actor = D_8015EDB4;
-    if (actor->unk2 & 0x40) {
+    actor = shooter_actors;
+    if (actor->mode & 0x40) {
     } else {
-        func_8013240C();
-        func_801328B0();
-        func_80140000();
-        func_80140DF0();
+        shooter_update_player();
+        shooter_update_wingman();
+        shooter_update_secondary_shots();
+        shooter_update_primary_shots();
         flags = 0;
-        if (D_8015EDD8 != 0) {
-            if ((game_state.pad_held & PAD_CIRCLE) && (D_8015EDE0 % 3 == 0) && !(game_state.frame_count & 3)) {
+        if (shooter_setting_auto_shot != 0) {
+            if ((game_state.pad_held & PAD_CIRCLE) && (shooter_setting_shot_button % 3 == 0) && !(game_state.frame_count & 3)) {
                 flags = 0x20;
             }
-            if ((game_state.pad_held & PAD_CROSS) && (D_8015EDE0 % 3 == 1) && !(game_state.frame_count & 3)) {
+            if ((game_state.pad_held & PAD_CROSS) && (shooter_setting_shot_button % 3 == 1) && !(game_state.frame_count & 3)) {
                 flags |= 0x20;
             }
-            if ((game_state.pad_held & PAD_SQUARE) && (D_8015EDE0 % 3 == 2) && !(game_state.frame_count & 3)) {
+            if ((game_state.pad_held & PAD_SQUARE) && (shooter_setting_shot_button % 3 == 2) && !(game_state.frame_count & 3)) {
                 flags |= 0x20;
             }
             btn = game_state.pad_pressed;
         } else {
             btn = game_state.pad_pressed;
             if (btn) {} /* FAKE: empty test of btn; without it the three btn masks that uopt inserts at the end of the first arm come out as 0x20, 0x80, 0x40, the original has 0x80, 0x40, 0x20. T-19025 */
-            if ((btn & 0x20) && (D_8015EDE0 % 3 == 0)) {
+            if ((btn & 0x20) && (shooter_setting_shot_button % 3 == 0)) {
                 flags = 0x20;
             }
-            if ((btn & 0x40) && (D_8015EDE0 % 3 == 1)) {
+            if ((btn & 0x40) && (shooter_setting_shot_button % 3 == 1)) {
                 flags |= 0x20;
             }
-            if ((btn & 0x80) && (D_8015EDE0 % 3 == 2)) {
+            if ((btn & 0x80) && (shooter_setting_shot_button % 3 == 2)) {
                 flags |= 0x20;
             }
         }
-        if ((btn & 0x40) && (D_8015EDE4 % 3 == 0)) {
+        if ((btn & 0x40) && (shooter_setting_bomb_button % 3 == 0)) {
             flags |= 0x40;
         }
-        if ((btn & 0x80) && (D_8015EDE4 % 3 == 1)) {
+        if ((btn & 0x80) && (shooter_setting_bomb_button % 3 == 1)) {
             flags |= 0x40;
         }
-        if ((btn & 0x20) && (D_8015EDE4 % 3 == 2)) {
+        if ((btn & 0x20) && (shooter_setting_bomb_button % 3 == 2)) {
             flags |= 0x40;
         }
-        if (actor->unk72 == 0) {
-            func_80141170(0, flags);
-        } else if (actor->unk72 == 1) {
-            func_80141290(0, flags);
+        if (actor->weapon == 0) {
+            shooter_fire_wide_shot(0, flags);
+        } else if (actor->weapon == 1) {
+            shooter_fire_beam(0, flags);
         } else {
-            func_80141050(0, flags);
+            shooter_fire_vulcan(0, flags);
         }
-        if (actor->unk82 == 0) {
-            func_801404FC(0, flags);
-        } else if (actor->unk82 == 1) {
-            func_80140364(0, flags);
+        if (actor->auxiliary == 0) {
+            shooter_fire_secondary_homing(0, flags);
+        } else if (actor->auxiliary == 1) {
+            shooter_fire_secondary_spread(0, flags);
         }
     }
-    func_80141DE0(flags);
-    func_8013B990();
-    func_8013D348();
-    func_8013D3F4();
-    func_8013DDE4();
-    func_8013C6D4();
-    func_8013E4FC();
+    shooter_update_bomb(flags);
+    shooter_run_collisions();
+    shooter_update_hit_sparks();
+    shooter_update_explosions();
+    shooter_update_enemy_bullets();
+    shooter_collect_items();
+    shooter_update_items();
 }
 
-void func_80133374(void) {
-    if (D_8015EDCC < 3U) {
-        D_8015EDEC -= 1;
+void shooter_check_battle_end(void) {
+    if (shooter_stages_cleared < 3U) {
+        shooter_time_left -= 1;
     }
-    if (D_8015EDEC == 0) {
+    if (shooter_time_left == 0) {
         mode_stage_set(0x2D);
     }
     if (game_state.pad_pressed & PAD_START) {
         mode_stage_set(0x2D);
     }
-    if (D_8015EDB4->unk84[1] == 0) {
+    if (shooter_actors->stats[1] == 0) {
         mode_stage_set(0x2D);
     }
 }
 
-void func_80133410(s32 arg0) {
+void shooter_clear_beam_flags(s32 arg0) {
     s32 i;
 
     if (arg0 == 0) {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 16; i++) D_8015E270[i].unk13 &= ~0x20;
+        for (i = 0; i < 16; i++) shooter_player_primary_shots[i].flags &= ~0x20;
     } else {
         /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-        for (i = 0; i < 16; i++) D_8015E3B0[i].unk13 &= ~0x20;
+        for (i = 0; i < 16; i++) shooter_wingman_primary_shots[i].flags &= ~0x20;
     }
 }
 
-void func_801334BC(void) {
+void shooter_clear_player_shots(void) {
     s32 i;
 
-    D_80160460 = 0;
-    D_80160464 = 0; for (i = 0; i < 16; i++) { /* FAKE: store and loop head on one source line, as1 then schedules the store after the pointer setup */
-        D_8015E270[i].unk13 = 0;
-        D_8015E3B0[i].unk13 = 0;
-        D_8015E4F0[i].unk13 = 0;
-        D_8015E630[i].unk13 = 0;
-        D_8015E770[i].unk13 = 0;
+    shooter_pulse_bomb_active = 0;
+    shooter_pulse_bomb_timer = 0; for (i = 0; i < 16; i++) { /* FAKE: store and loop head on one source line, as1 then schedules the store after the pointer setup */
+        shooter_player_primary_shots[i].flags = 0;
+        shooter_wingman_primary_shots[i].flags = 0;
+        shooter_player_secondary_shots[i].flags = 0;
+        shooter_wingman_secondary_shots[i].flags = 0;
+        shooter_bomb_shots[i].flags = 0;
     }
 }
 
-void func_8013356C(void) {
+void shooter_clear_enemy_bullets(void) {
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        D_8015EB30[i].unk13 = 0;
+        shooter_enemy_bullets[i].flags = 0;
     }
 }

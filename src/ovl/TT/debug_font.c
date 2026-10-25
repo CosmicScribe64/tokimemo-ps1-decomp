@@ -1,19 +1,19 @@
-/* debug_font.c: src/ovl/TT/801487D0.c:5: glyph packet drawing and string, decimal, hex and binary printing; body 12: buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8); 13: if (ch != 0x20) {. Original object 0x801487D0-0x80148DB0 (config/objects/TT.txt). */
+/* debug_font.c: src/ovl/TT/801487D0.c:5: glyph packet drawing and string, decimal, hex and binary printing; body 12: buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8); 13: if (ch != 0x20) {. Original object 0x801487D0-0x80148DB0 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
 /* Font glyph: sprite packet plus draw mode. The comma lines follow the libgpu set* macros (one source line each for as1). T-11860 */
-void func_801487D0(s16 x, s16 y, u8 ch) {
-    TtDrawBuffer80B8 *buffer;
-    TtSpritePacket20 *q;
+void tt_font_glyph_draw(s16 x, s16 y, u8 ch) {
+    TtDrawBuffer *buffer;
+    TtSpritePacket *q;
     s32 pad1; /* FAKE: unused, frame slot above m (0x38). T-11860 */
     DR_MODE *m;
     s32 pad2; /* FAKE: unused, frame slot under m; moves the spill of the ordering-table address to 0x30. T-11860 */
 
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     if (ch != 0x20) {
         ch -= 0x20;
-        q = (TtSpritePacket20 *)buffer->cursor;
+        q = (TtSpritePacket *)buffer->cursor;
         buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
         q->tag.len = 4, q->code = 0x65;
         q->w = 6, q->h = 8;
@@ -36,18 +36,18 @@ void func_801487D0(s16 x, s16 y, u8 ch) {
  * parameters are converted in place at entry, a u8 parameter that is assigned stays in its
  * home slot (lbu/sb 0x54(sp)), and the locals declared before the buffer reserve the slots
  * above it (T-9210). */
-void func_80148974(arg0, arg1, arg2)
+void tt_font_string_draw(arg0, arg1, arg2)
     s16 arg0;
     s16 arg1;
     u8 *arg2;
 {
     while (*arg2 != 0) {
-        func_801487D0(arg0, arg1, *arg2++);
+        tt_font_glyph_draw(arg0, arg1, *arg2++);
         arg0 += 6;
     }
 }
 
-void func_80148A04(arg0, arg1, arg2, arg3)
+void tt_font_signed_decimal_draw(arg0, arg1, arg2, arg3)
     s16 arg0;
     s16 arg1;
     s32 arg2;
@@ -80,10 +80,10 @@ void func_80148A04(arg0, arg1, arg2, arg3)
         m /= 10;
     }
     *p = 0;
-    func_80148974(arg0, arg1, buf);
+    tt_font_string_draw(arg0, arg1, buf);
 }
 
-void func_80148B6C(arg0, arg1, arg2, arg3)
+void tt_font_hex_draw(arg0, arg1, arg2, arg3)
     s16 arg0;
     s16 arg1;
     u32 arg2;
@@ -108,10 +108,10 @@ void func_80148B6C(arg0, arg1, arg2, arg3)
         p++;
     }
     *p = 0;
-    func_80148974(arg0, arg1, buf);
+    tt_font_string_draw(arg0, arg1, buf);
 }
 
-void func_80148C04(arg0, arg1, arg2, arg3)
+void tt_font_binary_draw(arg0, arg1, arg2, arg3)
     s16 arg0;
     s16 arg1;
     u32 arg2;
@@ -136,10 +136,10 @@ void func_80148C04(arg0, arg1, arg2, arg3)
         p++;
     }
     *p = 0;
-    func_80148974(arg0, arg1, buf);
+    tt_font_string_draw(arg0, arg1, buf);
 }
 
-void func_80148C94(arg0, arg1, arg2, arg3)
+void tt_font_decimal_draw(arg0, arg1, arg2, arg3)
     s16 arg0;
     s16 arg1;
     u32 arg2;
@@ -165,5 +165,5 @@ void func_80148C94(arg0, arg1, arg2, arg3)
         m /= 10;
     }
     *p = 0;
-    func_80148974(arg0, arg1, buf);
+    tt_font_string_draw(arg0, arg1, buf);
 }

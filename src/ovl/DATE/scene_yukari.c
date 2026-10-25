@@ -208,12 +208,12 @@ void date_scene_yukari_winter_background_3(void) {
 }
 
 void date_scene_yukari_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl38 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateYukariAndSakiSpringSteps step_handlers;
 
-    tbl = date_scene_yukari_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yukari_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_yukari_spring_load_data(void) {
@@ -224,19 +224,19 @@ void date_scene_yukari_spring_load_data(void) {
 
 /* int result, no return statement (K&R): $v0 stays live at the exit, so as1 keeps the second loop's counter clear below the byte test. T-17205 */
 s32 date_scene_yukari_summer(void) {
-    GameState *g = &game_state;
+    GameState *game = &game_state;
     s16 i;
-    FnTbl45 tbl;
+    FnTbl45 step_handlers;
 
-    tbl = date_scene_yukari_summer_steps;
-    if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
-         (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
-         (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && g->mode_step >= 0x21) {
+    step_handlers = date_scene_yukari_summer_steps;
+    if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
+         (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
+         (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
+        dec_bg_brightness == 0x80 && D_80122D04 == 0 && game->mode_step >= 0x21) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[g->mode_step](0x80);
-    if (func_800853FC == tbl.f[g->mode_step]) {
+    step_handlers.callbacks[game->mode_step](0x80);
+    if (func_800853FC == step_handlers.callbacks[game->mode_step]) {
         for (i = 0; i < 8; i++) {
             ((Actor *)actor_pool)[98 + i].brightness = ((Actor *)actor_pool)[96].brightness;
         }
@@ -246,7 +246,7 @@ s32 date_scene_yukari_summer(void) {
             }
         }
     }
-    if (g->mode_step >= 0x11 && g->mode_step < 0x14) {
+    if (game->mode_step >= 0x11 && game->mode_step < 0x14) {
         date_scene_yukari_summer_actors_update();
     }
 }
@@ -319,17 +319,17 @@ void date_scene_yukari_summer_actors_update(void) {
 }
 
 void date_scene_yukari_autumn(void) {
-    s32 pad; /* FAKE: unused slot above tbl, the original frame has it (T-3330 idiom, real source unknown). T-8010 */
-    FnTbl40 tbl;
+    s32 fake_padding; /* FAKE: unused slot above step_handlers, the original frame has it (T-3330 idiom, real source unknown). T-8010 */
+    FnTbl40 step_handlers;
 
-    tbl = date_scene_yukari_autumn_steps;
+    step_handlers = date_scene_yukari_autumn_steps;
     if (game_state.mode_step < 0xB) {
         date_central_park_particles_update();
     }
     if (game_state.mode_step == 0xB) {
         date_central_park_particles_hide();
     }
-    tbl.f[game_state.mode_step](0x80);
+    step_handlers.callbacks[game_state.mode_step](0x80);
 }
 
 void date_scene_yukari_autumn_load_data(void) {
@@ -339,14 +339,14 @@ void date_scene_yukari_autumn_load_data(void) {
 }
 
 void date_scene_yukari_winter(void) {
-    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl56 tbl;
+    s32 fake_padding; /* FAKE: never read; declared first so step_handlers lands at the original frame offset (T-3330) */
+    FnTbl56 step_handlers;
 
-    tbl = date_scene_yukari_winter_steps;
+    step_handlers = date_scene_yukari_winter_steps;
     if (game_state.mode_step >= 0x1E && game_state.mode_step < 0x2C) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[game_state.mode_step](0x80);
+    step_handlers.callbacks[game_state.mode_step](0x80);
 }
 
 void date_scene_yukari_winter_load_data(void) {

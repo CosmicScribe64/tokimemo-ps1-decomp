@@ -2,8 +2,8 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_800F6000(void) {
-    D_801202D0 = 0x80198390;
+void spot_script_sections_init(void) {
+    spot_script_sections = 0x80198390;
     D_801202D4 = 0x801986F8;
     D_801202D8 = 0x80198A60;
     D_801202DC = 0x80198FE0;
@@ -239,50 +239,50 @@ void func_800F6000(void) {
     D_80120674 = 0x8019B45C;
 }
 
-void func_800F6E84(void) {
+void spot_girl_scene_frame(void) {
     func_8004ACA8();
     switch (D_800EECB4) {
     case 0:
-        func_800F9CFC();
+        spot_shiori_scene_select();
         break;
     case 1:
-        func_80101510();
+        spot_mio_scene_select();
         break;
     case 2:
-        func_800FBF40();
+        spot_yuina_scene_select();
         break;
     case 3:
-        func_800FDF90();
+        spot_ayako_scene_select();
         break;
     case 4:
-        func_80106F90();
+        spot_saki_scene_select();
         break;
     case 5:
-        func_801027E0();
+        spot_yukari_scene_select();
         break;
     case 6:
-        func_80103FF0();
+        spot_nozomi_scene_select();
         break;
     case 7:
-        func_800FFF50();
+        spot_mira_scene_select();
         break;
     case 8:
-        func_800F7690();
+        spot_yuko_scene_select();
         break;
     case 9:
-        func_80105460();
+        spot_megumi_scene_select();
         break;
     case 10:
-        func_801083E0();
+        spot_yumi_scene_select();
         break;
     case 11:
-        func_8010A330();
+        spot_miharu_scene_select();
         break;
     case 12:
-        func_800FD360();
+        spot_rei_scene_select();
         break;
     case 13:
-        func_8010B410();
+        spot_yoshio_scene_select();
         break;
     default:
         func_80015FE0();
@@ -298,49 +298,49 @@ void func_800F6E84(void) {
     func_80017020();
 }
 
-void func_800F6FFC(void) {
+void spot_talk_step_no_choice(void) {
     D_8009471C = &D_80094714;
     D_80094720 = &D_80094718;
-    D_80094724 = D_80120678;
-    D_80094728 = D_8012067C;
-    D_8009472C = D_80120680;
+    D_80094724 = spot_talk_text_table;
+    D_80094728 = spot_talk_command_table;
+    D_8009472C = spot_talk_voice_table;
     func_80049B20(0xFF, 1, 0);
 }
 
-void func_800F7074(void) {
+void spot_talk_step(void) {
     D_8009471C = &D_80094714;
     D_80094720 = &D_80094718;
-    D_80094724 = D_80120678;
-    D_80094728 = D_8012067C;
-    D_8009472C = D_80120680;
+    D_80094724 = spot_talk_text_table;
+    D_80094728 = spot_talk_command_table;
+    D_8009472C = spot_talk_voice_table;
     func_80049B20(D_800EECBC, 1, 0);
 }
 
-void func_800F70F0(void) {
+void spot_sound_bank_load_step(void) {
     func_800143DC(1, 0xB19B, 0xB178, D_8007E7D0[D_800EECB4], D_8007E810[D_800EECB4], D_8007E850[D_800EECB4]);
     func_80011DFC();
 }
 
-void func_800F715C(void) {
+void spot_wait_bank_start_bgm_step(void) {
     if (func_8001496C() == 1) {
         func_800433D0(0x200);
         func_80011DFC();
     }
 }
 
-void func_800F7198(void) {
+void spot_wait_bank_step(void) {
     if (func_8001496C() == 1) {
         func_80011DFC();
     }
 }
 
-void func_800F71CC(void) {
+void spot_bgm_start_step(void) {
     func_800433D0(0x200);
     func_80011DFC();
 }
 
-void func_800F71F4(void) {
+void spot_scene_exit_step(void) {
     func_80011E28(0x60);
 }
 
-INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/girl_scene_entry.rodata", func_8011F530);
+INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/girl_scene_entry.rodata", spot_bios_srand);

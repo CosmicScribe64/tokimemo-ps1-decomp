@@ -52,7 +52,7 @@ void date_ride_dispatch(void) {
 }
 
 u16 date_ride_scream_machine(void) {
-    GameState *g;
+    GameState *game;
     s16 i;
     s16 v;
     u8 x;
@@ -65,10 +65,10 @@ u16 date_ride_scream_machine(void) {
     u32 color;
     u32 timer;
 
-    g = &game_state;
+    game = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->mode_step_timer.u) {
+    switch (game->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
         srand(game_state.frame_count);
@@ -128,7 +128,7 @@ u16 date_ride_scream_machine(void) {
             game_state.quad_layer[i + 6] = 0xB;
         }
         dec_bg_cd_read(0x43CB, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -138,12 +138,12 @@ u16 date_ride_scream_machine(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x80183000);
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 2:
         dec_bg_cd_read(0x43D4, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
@@ -153,12 +153,12 @@ u16 date_ride_scream_machine(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801A1000);
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 4:
         dec_bg_cd_read(0x43DE, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
@@ -168,12 +168,12 @@ u16 date_ride_scream_machine(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801BF000);
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 6:
         dec_bg_cd_read(0x43E7, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
@@ -183,14 +183,14 @@ u16 date_ride_scream_machine(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_8009C8E0(&rect, (void *)0x801DD000);
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 8:
         for (i = 0; i < 4; i++) {
             sprite_quads[i + 4].flags = 0x02000000;
         }
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         audio_command(0x500);
         break;
     case 9:
@@ -210,7 +210,7 @@ u16 date_ride_scream_machine(void) {
         sprite_quads[4].tint_g = color;
         sprite_quads[4].tint_r = color;
         if (value == 0x80) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 10:
@@ -235,17 +235,17 @@ u16 date_ride_scream_machine(void) {
             for (i = 0; i < 4; i++) {
                 sprite_quads[i + 4].flags = 0x82000000;
             }
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 12:
         sp50 = game_state.mode_step;
-        sp4C = g->mode_step_timer.u;
+        sp4C = game->mode_step_timer.u;
         read_bustup();
         /* FAKE: one source line preserves as1 callback load scheduling. T-24089. */
-        g->mode_step_timer.u = sp4C; if (sp50 != game_state.mode_step) {
+        game->mode_step_timer.u = sp4C; if (sp50 != game_state.mode_step) {
             game_state.mode_step--;
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 13:
@@ -254,55 +254,55 @@ u16 date_ride_scream_machine(void) {
     case 21:
     case 23:
         if (cd_read_sync_status() & 1) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 14:
-        sp4C = g->mode_step_timer.u;
+        sp4C = game->mode_step_timer.u;
         sp50 = game_state.mode_step;
         portrait_show_checked();
         if (game_state.mode_step != sp50 + 1) {
             game_state.mode_step = sp50;
-            g->mode_step_timer.u = 12;
+            game->mode_step_timer.u = 12;
             break;
         }
         game_state.mode_step--;
-        g->mode_step_timer.u = sp4C + 1;
+        game->mode_step_timer.u = sp4C + 1;
         break;
     case 15:
         cd_read_sectors_nowait(0xA, 0x80162000, 0x4359);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         break;
     case 17:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->mode_step_timer.u -= 2;
+            game->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         break;
     case 18:
         audio_command(0x200);
-        sp4C = g->mode_step_timer.u;
+        sp4C = game->mode_step_timer.u;
         date_load_girl_script();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp4C + 1;
+        game->mode_step_timer.u = sp4C + 1;
         break;
     case 20:
-        sp4C = g->mode_step_timer.u;
+        sp4C = game->mode_step_timer.u;
         date_load_shared_script();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp4C + 1;
+        game->mode_step_timer.u = sp4C + 1;
         break;
     case 22:
-        sp4C = g->mode_step_timer.u;
+        sp4C = game->mode_step_timer.u;
         date_load_choice_tables();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp4C + 1;
+        game->mode_step_timer.u = sp4C + 1;
         break;
     default:
         hizuke_disp_switch(1);
@@ -310,7 +310,7 @@ u16 date_ride_scream_machine(void) {
         mode_step_next();
         break;
     }
-    if (g->mode_step_timer.u < 9 || g->mode_step_timer.u >= 12) {
+    if (game->mode_step_timer.u < 9 || game->mode_step_timer.u >= 12) {
         return 0;
     }
     p = sprite_quads;
@@ -352,8 +352,8 @@ u16 date_ride_scream_machine(void) {
         p[7].y += 0x14;
     }
     p[4].unk_0F = x;
-    if ((x == 0 && (g->substep == 1 || g->substep == 3)) || (p[6].unk_0F == 0 && (g->substep == 0 || g->substep == 2))) {
-        switch (game_state.substep) { /* FAKE: g-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-24018 */
+    if ((x == 0 && (game->substep == 1 || game->substep == 3)) || (p[6].unk_0F == 0 && (game->substep == 0 || game->substep == 2))) {
+        switch (game_state.substep) { /* FAKE: game-> in the test, the symbol here; one access path keeps the byte in $v0 and drops the reload T-24018 */
         case 0:
             for (i = 0; i < 2; i++) {
                 sprite_quads[i + 4].h = 0;
@@ -398,14 +398,14 @@ u16 date_ride_scream_machine(void) {
     timer = (date_ride_frame + 1) & 0xFFFF;
     date_ride_frame = timer;
     if (timer == 0x12C) {
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
     }
 }
 
 s32 date_ride_ferris_wheel(void) {
     /* FAKE: unused RECT reserves the observed frame words. T-17201. */
     RECT rect;
-    GameState *g;
+    GameState *game;
     u32 sp30;
     s16 var_v1;
     u8 x;
@@ -413,10 +413,10 @@ s32 date_ride_ferris_wheel(void) {
     u32 y;
     DateMovieWork *movie;
 
-    g = &game_state;
+    game = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->mode_step_timer.u) {
+    switch (game->mode_step_timer.u) {
     case 0:
         audio_command(0x201);
         D_80122D2C = 1;
@@ -453,18 +453,18 @@ s32 date_ride_ferris_wheel(void) {
             game_state.quad_layer[var_v1 + 10] = 0xC;
         }
         dec_bg_cd_read(0x43C2, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return 0;
     case 1:
         if (cd_read_sync_status() & 1) {
             func_800536AC(0x140, 0x100, 0x140, 0xA0);
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         return 0;
     case 2:
         cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
         date_ferris_wheel_resources_init();
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return 0;
     case 3:
     case 11:
@@ -472,19 +472,19 @@ s32 date_ride_ferris_wheel(void) {
     case 16:
     case 18:
         if (cd_read_sync_status() & 1) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         return 0;
     case 4:
         load_palette(D_8015CF80, 0x11, 1, 0, 0);
         date_ferris_wheel_still_copy(D_8015CF84, D_8015CF88, D_8015CF8C, D_8015CF90, D_8015CF94, D_8015CF98);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return 0;
     case 5:
         for (var_v1 = 0; var_v1 < 8; var_v1++) {
             sprite_quads[var_v1 + 4].flags &= 0x7FFFFFFF;
         }
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return 0;
     case 6:
         x = (sprite_quads[4].tint_r += 1); y = sprite_quads[4].tint_g = x; sprite_quads[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
@@ -492,7 +492,7 @@ s32 date_ride_ferris_wheel(void) {
             sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
         if (sprite_quads[4].tint_r == 0x40) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         return 0;
     case 7:
@@ -501,7 +501,7 @@ s32 date_ride_ferris_wheel(void) {
             sprite_quads[var_v1 + 4].tint_r = sprite_quads[var_v1 + 4].tint_g = sprite_quads[var_v1 + 4].tint_b = sprite_quads[4].tint_r;
         }
         if (sprite_quads[4].tint_r == 0x80) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 8:
@@ -515,48 +515,48 @@ s32 date_ride_ferris_wheel(void) {
             for (var_v1 = 0; var_v1 < 8; var_v1++) {
                 sprite_quads[var_v1 + 4].flags |= 0x80000000;
             }
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
         }
         break;
     case 10:
         cd_read_sectors_nowait(0xA, 0x80162000, 0x4350);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return 0;
     case 12:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->mode_step_timer.u -= 2;
+            game->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return 0;
     case 13:
-        sp30 = g->mode_step_timer.u;
+        sp30 = game->mode_step_timer.u;
 
         date_load_girl_script();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp30;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp30;
+        game->mode_step_timer.u++;
         return 0;
     case 15:
-        sp30 = g->mode_step_timer.u;
+        sp30 = game->mode_step_timer.u;
 
         date_load_shared_script();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp30;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp30;
+        game->mode_step_timer.u++;
         return 0;
     case 17:
-        sp30 = g->mode_step_timer.u;
+        sp30 = game->mode_step_timer.u;
 
         date_load_choice_tables();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp30;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp30;
+        game->mode_step_timer.u++;
         return 0;
     default:
         mode_step_next();
@@ -585,14 +585,14 @@ s32 date_ride_ferris_wheel(void) {
         }
     }
     if (date_ride_frame == (y = 0x12C)) {
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
     }
 }
 
 /* FAKE: s32 with normal bare returns preserves the original v0 liveness;
  * only the decoder-error path returns zero. Real return type unknown. T-12100. */
 s32 date_ride_roller_coaster(void) {
-    GameState *g;
+    GameState *game;
     s32 current;
     s32 sp54;
     u32 sp50;
@@ -604,10 +604,10 @@ s32 date_ride_roller_coaster(void) {
     u32 color;
     s16 var_v1;
 
-    g = &game_state;
+    game = &game_state;
     movie = (DateMovieWork *)dec_bg_lba_cache;
     D_800B3D60 = 0;
-    switch (g->mode_step_timer.u) {
+    switch (game->mode_step_timer.u) {
     case 0:
         audio_command(0x7F);
         D_80122D2C = 1;
@@ -665,7 +665,7 @@ s32 date_ride_roller_coaster(void) {
             game_state.quad_layer[var_v1 + 6] = 0xb;
         }
         dec_bg_cd_read(0x43B1, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 1:
     case 4:
@@ -680,7 +680,7 @@ s32 date_ride_roller_coaster(void) {
     case 47:
     case 49:
         if (cd_read_sync_status() & 1) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
             return;
         }
         return;
@@ -691,11 +691,11 @@ s32 date_ride_roller_coaster(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x80183000);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 3:
         dec_bg_cd_read(0x43AA, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 5:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -704,11 +704,11 @@ s32 date_ride_roller_coaster(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x8019C000);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 6:
         dec_bg_cd_read(0x43A3, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 8:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -717,11 +717,11 @@ s32 date_ride_roller_coaster(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801B5000);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 9:
         dec_bg_cd_read(0x439C, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 11:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -730,37 +730,37 @@ s32 date_ride_roller_coaster(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C8E0(&rect, (void *)0x801CE000);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 12:
         dec_bg_cd_read(0x4395, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 14:
         func_800536AC(0x140, 0, 0x140, 0xA0);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 15:
         dec_bg_cd_read(0x437D, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 17:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 18:
         dec_bg_cd_read(0x4385, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 20:
         func_800536AC(0x280, 0, 0x140, 0xA0);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 21:
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags & 0x7FFFFFFF);
         }
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u++;
         return;
     case 22:
         value = sprite_quads[4].tint_r;
@@ -780,7 +780,7 @@ s32 date_ride_roller_coaster(void) {
         sprite_quads[4].tint_r = color;
 
         if (value == 0x80) {
-            g->mode_step_timer.u++;
+            game->mode_step_timer.u++;
             return;
         }
         break;
@@ -797,18 +797,18 @@ s32 date_ride_roller_coaster(void) {
         }
         break;
     case 24:
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u++;
         return;
     case 25:
         back_clear_switch(0);
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags | 0x80000000);
         }
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 26:
         dec_bg_cd_read(0x438D, 1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 28:
         func_800536AC(0x140, 0x100, 0x140, 0xA0);
@@ -817,7 +817,7 @@ s32 date_ride_roller_coaster(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_8009C93C(&rect, 0x280, 0);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         back_clear_switch(1);
         return;
     case 29:
@@ -835,14 +835,14 @@ s32 date_ride_roller_coaster(void) {
         }
         date_ride_frame = 0;
         audio_command(0x500);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 30:
     case 32:
     case 34:
         date_ride_quad_shift(8);
         if (++date_ride_frame == 0x14) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -864,7 +864,7 @@ s32 date_ride_roller_coaster(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         date_ride_frame = 0;
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 33:
         rect.x = 0x280;
@@ -884,7 +884,7 @@ s32 date_ride_roller_coaster(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         date_ride_frame = 0;
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 35:
         rect.x = 0x280;
@@ -904,7 +904,7 @@ s32 date_ride_roller_coaster(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         date_ride_frame = 0;
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 36:
         date_ride_quad_shift(8);
@@ -926,7 +926,7 @@ s32 date_ride_roller_coaster(void) {
         sprite_quads[4].tint_r = color;
         }
         if (++date_ride_frame == 0x14) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -948,7 +948,7 @@ s32 date_ride_roller_coaster(void) {
             sprite_quads[var_v1 + 6].y = -0x78;
         }
         date_ride_frame = 0;
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 38:
         date_ride_quad_shift(8);
@@ -969,7 +969,7 @@ s32 date_ride_roller_coaster(void) {
         sprite_quads[4].tint_r = color;
 
         if (value < 4U) {
-            g->mode_step_timer.u += 1;
+            game->mode_step_timer.u += 1;
             return;
         }
         break;
@@ -977,68 +977,68 @@ s32 date_ride_roller_coaster(void) {
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             sprite_quads[var_v1 + 4].flags = (s32) (sprite_quads[var_v1 + 4].flags | 0x80000000);
         }
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u++;
         return;
     case 40:
-        sp50 = g->mode_step_timer.u;
+        sp50 = game->mode_step_timer.u;
 
         sp54 = (s32) game_state.mode_step;
         /* FAKE: one source line preserves as1 callback load scheduling. T-12100. */
-        read_bustup(game_state.mode_step); g->mode_step_timer.u = sp50; if (sp54 != game_state.mode_step) { game_state.mode_step -= 1; g->mode_step_timer.u++; } break;
+        read_bustup(game_state.mode_step); game->mode_step_timer.u = sp50; if (sp54 != game_state.mode_step) { game_state.mode_step -= 1; game->mode_step_timer.u++; } break;
     case 42:
         sp54 = game_state.mode_step;
-        sp50 = g->mode_step_timer.u;
+        sp50 = game->mode_step_timer.u;
 
         portrait_show_checked();
         current = sp54 + 1;
         if (game_state.mode_step != current) {
             game_state.mode_step = sp54;
-            g->mode_step_timer.u = 0x28;
+            game->mode_step_timer.u = 0x28;
             return;
         }
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp50;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp50;
+        game->mode_step_timer.u++;
         return;
     case 43:
         cd_read_sectors_nowait(0xAU, 0x80162000, 0x433E);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 45:
         if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
-            g->mode_step_timer.u -= 2;
+            game->mode_step_timer.u -= 2;
             return 0;
         }
         dec_bg_decode_to_vram(1);
         dec_bg_show_switch(1);
-        g->mode_step_timer.u += 1;
+        game->mode_step_timer.u += 1;
         return;
     case 46:
-        sp50 = g->mode_step_timer.u;
+        sp50 = game->mode_step_timer.u;
 
         date_load_girl_script();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp50;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp50;
+        game->mode_step_timer.u++;
         return;
     case 48:
-        sp50 = g->mode_step_timer.u;
+        sp50 = game->mode_step_timer.u;
 
         date_load_shared_script();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp50;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp50;
+        game->mode_step_timer.u++;
         return;
     case 50:
-        sp50 = g->mode_step_timer.u;
+        sp50 = game->mode_step_timer.u;
 
         date_load_choice_tables();
         game_state.mode_step -= 1;
-        g->mode_step_timer.u = sp50;
-        g->mode_step_timer.u++;
+        game->mode_step_timer.u = sp50;
+        game->mode_step_timer.u++;
         return;
     default:
         mode_step_next();

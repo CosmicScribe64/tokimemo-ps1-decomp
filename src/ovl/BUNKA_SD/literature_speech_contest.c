@@ -159,7 +159,7 @@ void func_80132428(void) {
 
 void func_801325E8(void) {
     func_80132940();
-    k_speed_set(5);
+    k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
     D_8013B7EC = 0;
     mode_step_next();
 }

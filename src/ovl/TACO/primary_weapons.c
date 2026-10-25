@@ -1,86 +1,86 @@
-/* primary_weapons.c: src/ovl/TACO/80140DF0.c:4: vulcan, wide shot, beam; body 5: func_80140E18(0); 6: func_80140E18(1);. Original object 0x80140DF0-0x80141DE0 (config/objects/TACO.txt). */
+/* primary_weapons.c: src/ovl/TACO/80140DF0.c:4: vulcan, wide shot, beam; body 5: shooter_update_primary_shots_of(0); 6: shooter_update_primary_shots_of(1);. Original object 0x80140DF0-0x80141DE0 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80140DF0(void) {
-    func_80140E18(0);
-    func_80140E18(1);
+void shooter_update_primary_shots(void) {
+    shooter_update_primary_shots_of(0);
+    shooter_update_primary_shots_of(1);
 }
 
-void func_80140E18(s32 arg0) {
-    Tc14 *base;
-    Tc14 *p;
-    TcActor *act;
+void shooter_update_primary_shots_of(s32 arg0) {
+    ShooterParticle *base;
+    ShooterParticle *p;
+    ShooterActor *act;
     s32 i;
 
     if (arg0 == 0) {
-        act = D_8015EDB4;
-        base = D_8015E270;
+        act = shooter_actors;
+        base = shooter_player_primary_shots;
     } else {
-        base = D_8015E3B0;
-        act = &D_8015EDB4[8];
+        base = shooter_wingman_primary_shots;
+        act = &shooter_actors[8];
     }
     for (i = 0, p = base; i < 16; i++, p++) {
-        p->unk12 += 1;
-        if (p->unk12 == 0xFF) {
-            p->unk13 = 0;
+        p->age += 1;
+        if (p->age == 0xFF) {
+            p->flags = 0;
         }
-        if (p->unk4 < -0x7D00) {
-            p->unk13 = 0;
+        if (p->z < -0x7D00) {
+            p->flags = 0;
         }
-        switch (p->unk13 & 0x2F) {
+        switch (p->flags & 0x2F) {
         case 4:
-            if (p->unk13 & 0x80) {
-                p->unk0 += p->unk8;
-                p->unk2 += p->unkA;
-                p->unk4 += p->unkC;
-                func_801413B8(base, i);
+            if (p->flags & 0x80) {
+                p->x += p->velocity_x;
+                p->y += p->velocity_y;
+                p->z += p->velocity_z;
+                shooter_draw_vulcan_shot(base, i);
             }
             break;
         case 8:
-            if (p->unk13 & 0x80) {
-                p->unk0 += p->unk8;
-                p->unk2 += p->unkA;
-                p->unk4 += p->unkC;
-                func_801416E8(base, i);
+            if (p->flags & 0x80) {
+                p->x += p->velocity_x;
+                p->y += p->velocity_y;
+                p->z += p->velocity_z;
+                shooter_draw_wide_shot(base, i);
             }
             break;
         }
     }
-    if ((base->unk13 & 0xA0) == 0xA0) {
-        base->unk12 += 1;
-        if (base->unk12 >= 3U) {
-            base[0].unk0 = act->unk74 + 0x40;
-            base[0].unk2 = act->unk76 + 0x20;
-            base[0].unk4 = act->unk78;
-            base[1].unk0 = act->unk74 - 0x40;
-            base[1].unk2 = act->unk76 + 0x20;
-            base[1].unk4 = act->unk78;
-            func_80141B18(base, arg0);
+    if ((base->flags & 0xA0) == 0xA0) {
+        base->age += 1;
+        if (base->age >= 3U) {
+            base[0].x = act->x + 0x40;
+            base[0].y = act->y + 0x20;
+            base[0].z = act->z;
+            base[1].x = act->x - 0x40;
+            base[1].y = act->y + 0x20;
+            base[1].z = act->z;
+            shooter_draw_beam(base, arg0);
         }
-        if (base->unk12 >= 0x81U) {
-            base->unk13 = 0;
-            base[1].unk13 = 0;
+        if (base->age >= 0x81U) {
+            base->flags = 0;
+            base[1].flags = 0;
         }
     }
 }
 
-s32 func_80141050(s32 arg0, s32 arg1) {
+s32 shooter_fire_vulcan(s32 arg0, s32 arg1) {
     s32 pad; /* FAKE: unused local; it gives the original 64-byte frame (pointer spill at sp+0x2C). T-19017 */
     s32 i;
-    TcActor *act;
-    Tc14 *base;
+    ShooterActor *act;
+    ShooterParticle *base;
 
     if (arg0 == 0) {
-        act = D_8015EDB4;
-        base = D_8015E270;
+        act = shooter_actors;
+        base = shooter_player_primary_shots;
     } else {
-        base = D_8015E3B0;
-        act = D_8015EDB4 + 8;
+        base = shooter_wingman_primary_shots;
+        act = shooter_actors + 8;
     }
     if (arg1 & 0x20) {
         for (i = 0; i < 16; i++) {
-            if (!(base[i].unk13 & 0x80)) {
+            if (!(base[i].flags & 0x80)) {
                 break;
             }
         }
@@ -88,37 +88,37 @@ s32 func_80141050(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            func_801335A0(1, 0x500);
+            shooter_play_se(1, 0x500);
         }
-        base[i].unk13 = 0x94;
-        base[i].unk0 = act->unk74 + ((i & 1) << 7) - 0x40;
-        base[i].unk2 = act->unk76 - (arg0 << 7) + 0x80;
-        base[i].unk4 = act->unk78;
-        base[i].unk8 = 0;
-        base[i].unkA = 0;
-        base[i].unkC = -0x200;
-        base[i].unk12 = 0;
+        base[i].flags = 0x94;
+        base[i].x = act->x + ((i & 1) << 7) - 0x40;
+        base[i].y = act->y - (arg0 << 7) + 0x80;
+        base[i].z = act->z;
+        base[i].velocity_x = 0;
+        base[i].velocity_y = 0;
+        base[i].velocity_z = -0x200;
+        base[i].age = 0;
         return 1;
     }
     return 0;
 }
 
-s32 func_80141170(s32 arg0, s32 arg1) {
-    s32 pad; /* FAKE: unused local; it gives the original 64-byte frame, as in func_80141050. T-19017 */
+s32 shooter_fire_wide_shot(s32 arg0, s32 arg1) {
+    s32 pad; /* FAKE: unused local; it gives the original 64-byte frame, as in shooter_fire_vulcan. T-19017 */
     s32 i;
-    TcActor *act;
-    Tc14 *base;
+    ShooterActor *act;
+    ShooterParticle *base;
 
     if (arg0 == 0) {
-        act = D_8015EDB4;
-        base = D_8015E270;
+        act = shooter_actors;
+        base = shooter_player_primary_shots;
     } else {
-        base = D_8015E3B0;
-        act = D_8015EDB4 + 8;
+        base = shooter_wingman_primary_shots;
+        act = shooter_actors + 8;
     }
     if (arg1 & 0x20) {
         for (i = 0; i < 16; i++) {
-            if (!(base[i].unk13 & 0x80)) {
+            if (!(base[i].flags & 0x80)) {
                 break;
             }
         }
@@ -126,34 +126,34 @@ s32 func_80141170(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            func_801335A0(1, 0x502);
+            shooter_play_se(1, 0x502);
         }
-        base[i].unk13 = 0x98;
-        base[i].unk0 = act->unk74 + ((i & 1) << 7) - 0x40;
-        base[i].unk2 = act->unk76 - (arg0 << 6) + 0x40;
-        base[i].unk4 = act->unk78;
-        base[i].unk8 = 0;
-        base[i].unkA = 0;
-        base[i].unkC = -0x200;
-        base[i].unk12 = 0;
+        base[i].flags = 0x98;
+        base[i].x = act->x + ((i & 1) << 7) - 0x40;
+        base[i].y = act->y - (arg0 << 6) + 0x40;
+        base[i].z = act->z;
+        base[i].velocity_x = 0;
+        base[i].velocity_y = 0;
+        base[i].velocity_z = -0x200;
+        base[i].age = 0;
         return 1;
     }
     return 0;
 }
 
-s32 func_80141290(s32 arg0, s32 arg1) {
-    Tc14 *p;
+s32 shooter_fire_beam(s32 arg0, s32 arg1) {
+    ShooterParticle *p;
     s32 free_count;
     s32 offset;
-    TcActor *act;
-    Tc14 *base;
+    ShooterActor *act;
+    ShooterParticle *base;
 
     if (arg0 == 0) {
-        act = D_8015EDB4;
-        base = D_8015E270;
+        act = shooter_actors;
+        base = shooter_player_primary_shots;
     } else {
-        base = D_8015E3B0;
-        act = D_8015EDB4 + 8;
+        base = shooter_wingman_primary_shots;
+        act = shooter_actors + 8;
     }
     free_count = 0;
     if (arg1 & 0x20) {
@@ -161,7 +161,7 @@ s32 func_80141290(s32 arg0, s32 arg1) {
         p = base;
         do {
             offset += 0x14;
-            if (!(p->unk13 & 0x80)) {
+            if (!(p->flags & 0x80)) {
                 free_count += 1;
             }
             p += 1;
@@ -170,32 +170,32 @@ s32 func_80141290(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            func_801335A0(1, 0x501);
+            shooter_play_se(1, 0x501);
         }
-        base->unk13 = 0xB0;
-        base->unk0 = act->unk74;
-        base->unk2 = act->unk76 + 0x20;
-        base->unk4 = act->unk78;
-        base[1].unk0 = (s16) act->unk74;
-        base[1].unk2 = (s16) (act->unk76 + 0x20);
-        base[1].unk4 = (s16) act->unk78;
-        base->unk8 = 0;
-        base->unkA = 0;
-        base->unkC = 0;
-        base->unk12 = 0;
+        base->flags = 0xB0;
+        base->x = act->x;
+        base->y = act->y + 0x20;
+        base->z = act->z;
+        base[1].x = (s16) act->x;
+        base[1].y = (s16) (act->y + 0x20);
+        base[1].z = (s16) act->z;
+        base->velocity_x = 0;
+        base->velocity_y = 0;
+        base->velocity_z = 0;
+        base->age = 0;
         return 1;
     }
     return 0;
 }
 
 /* FAKE: pad and k are unused locals; they reproduce the original frame (208 bytes: eight above m, one word below tbl). Real
- * source unknown, same idiom as func_80140ADC. T-19017 */
-void func_801413B8(Tc14 *arg0, s32 arg1) {
+ * source unknown, same idiom as shooter_draw_secondary_shot. T-19017 */
+void shooter_draw_vulcan_shot(ShooterParticle *arg0, s32 arg1) {
     s32 pad[2];
     MATRIX m;
     SVECTOR v;
     s32 pt[4];
-    Tc14 *rec;
+    ShooterParticle *rec;
     POLY_FT4 *poly;
     s32 dist;
     s32 side;
@@ -206,24 +206,24 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     u8 tbl[2];
     s32 k;
 
-    *(u16 *)tbl = D_8015F580;
+    *(u16 *)tbl = shooter_vulcan_frame_u;
     m = D_80129C40;
     func_800A1100(&m);
     SetRotMatrix(&m);
     rec = &arg0[arg1];
-    v.vz = rec->unk4;
+    v.vz = rec->z;
     for (o = 0; o < 2; o++) {
-        v.vy = rec->unk2 + o * 0x50 - 0x28;
+        v.vy = rec->y + o * 0x50 - 0x28;
         for (j = 0; j < 2; j++) {
-            v.vx = rec->unk0 + j * 0x50 - 0x28;
+            v.vx = rec->x + j * 0x50 - 0x28;
             func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
         if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
             && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
-            side = (rec->unk12 >> 2) & 1;
-            dist = (D_80122754 - rec->unk4) / 127;
+            side = (rec->age >> 2) & 1;
+            dist = (D_80122754 - rec->z) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
             } else if (dist <= 0) {
@@ -237,7 +237,7 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
             poly->clut = func_8009ED74(0x80, 0x1E4);
-            /* FAKE: hand expansion of the PsyQ macro setUVWH(poly, tbl[side], 1, 0xE, 0xE) on one line, as in func_80140ADC
+            /* FAKE: hand expansion of the PsyQ macro setUVWH(poly, tbl[side], 1, 0xE, 0xE) on one line, as in shooter_draw_secondary_shot
              * (as1 schedules the eight stores of one line together). T-19017 */
             poly->u0 = tbl[side], poly->v0 = 1, poly->u1 = tbl[side] + 0xE, poly->v1 = 1, poly->u2 = tbl[side], poly->v2 = 1 + 0xE, poly->u3 = tbl[side] + 0xE, poly->v3 = 1 + 0xE;
             poly->x0 = ((s16 *)pt)[0];
@@ -253,12 +253,12 @@ void func_801413B8(Tc14 *arg0, s32 arg1) {
     }
 }
 
-void func_801416E8(Tc14 *arg0, s32 arg1) {
+void shooter_draw_wide_shot(ShooterParticle *arg0, s32 arg1) {
     s32 pad[2]; /* FAKE: pad and k2 are unused; they reproduce the original frame (208 bytes). T-19017 */
     MATRIX m;
     SVECTOR v;
     s32 pt[4];
-    Tc14 *rec;
+    ShooterParticle *rec;
     POLY_FT4 *poly;
     s32 size;
     s32 o;
@@ -270,23 +270,23 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
     s32 side;
     s32 k2;
 
-    *(u16 *)tbl = D_8015F584;
+    *(u16 *)tbl = shooter_wide_shot_frame_u;
     m = D_80129C40;
     func_800A1100(&m);
     SetRotMatrix(&m);
     rec = &arg0[arg1];
-    dist = (D_80122754 - rec->unk4) / 127;
+    dist = (D_80122754 - rec->z) / 127;
     if (dist >= 0x100) {
         dist = 0xFF;
     } else if (dist <= 0) {
         dist = 1;
     }
     size = (dist * 5 * 8 + 0x280) / 16;
-    v.vz = rec->unk4;
+    v.vz = rec->z;
     for (o = 0; o < 2; o++) {
-        v.vy = rec->unk2 + o * size - size / 2;
+        v.vy = rec->y + o * size - size / 2;
         for (j = 0; j < 2; j++) {
-            v.vx = rec->unk0 + j * size - size / 2;
+            v.vx = rec->x + j * size - size / 2;
             func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
         }
     }
@@ -295,7 +295,7 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
         if (((s16 *)pt)[3] < game_state.screen_center_y[draw_buffer] - 0x200 || game_state.screen_center_y[draw_buffer] + 0x200 < ((s16 *)pt)[7]) {
             return;
         }
-        side = rec->unk12;
+        side = rec->age;
         poly = GetWorkBase(0x28, draw_buffer);
         func_8009F040(poly);
         SetSemiTrans(poly, 1);
@@ -329,7 +329,7 @@ void func_801416E8(Tc14 *arg0, s32 arg1) {
 
 /* FAKE: pad, k1, k7, k8, k2, t, k3 and k4 are unused locals; they reproduce the original frame (224 bytes: eight above m,
  * three words below pt, the homes of depth, flag and fade). Real source unknown. T-19017 */
-void func_80141B18(Tc14 *arg0, s32 arg1) {
+void shooter_draw_beam(ShooterParticle *arg0, s32 arg1) {
     s32 pad[2];
     MATRIX m;
     SVECTOR v;
@@ -349,10 +349,10 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
     s32 k3;
     s32 k4;
 
-    if (arg0->unk12 > 0x80) {
-        fade = 0xFF - arg0->unk12;
+    if (arg0->age > 0x80) {
+        fade = 0xFF - arg0->age;
     } else {
-        fade = arg0->unk12;
+        fade = arg0->age;
     }
     m = D_80129C40;
     func_800A1100(&m);
@@ -362,13 +362,13 @@ void func_80141B18(Tc14 *arg0, s32 arg1) {
     /* The loop test is written on the address expression: it gives the original's sltu against &v.vz (bne with a counter
      * compare); see wiki/matching-notes.md, T-19017. */
     do {
-        v.vz = arg0[j].unk4 + (sgn << 11);
-        v.vy = arg0[j].unk2 + (sgn << 8);
-        v.vx = arg0[j].unk0;
+        v.vz = arg0[j].z + (sgn << 11);
+        v.vy = arg0[j].y + (sgn << 8);
+        v.vx = arg0[j].x;
         func_800AB170(&v, &pt[j * 4], &depth, &flag);
         v.vz = -0x7FFF;
-        v.vy = arg0[j].unk2 + 0x100;
-        v.vx = arg0[j].unk0;
+        v.vy = arg0[j].y + 0x100;
+        v.vx = arg0[j].x;
         func_800AB170(&v, &pt[j * 4 + 2], &depth, &flag);
         j++;
     } while (&pt[j * 4 + 2] < &v.vz);

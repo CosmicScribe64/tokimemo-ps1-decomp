@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-u8 *func_80147380(u8 *arg0, u8 *arg1) {
+u8 *tt_cloud_find_free(u8 *arg0, u8 *arg1) {
     while (arg0 < arg1) {
         if (*arg0 == 0) {
             return arg0;
@@ -12,55 +12,55 @@ u8 *func_80147380(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-void func_801473BC(void) {
-    u8 *p;
+void tt_clouds_clear(void) {
+    u8 *cloud;
 
-    p = D_80158A94;
-    do { /* FAKE: one-pass loop keeps p in $v0 (permuter); real source unknown. T-9320 */
-        p[0] = 0;
+    cloud = tt_clouds;
+    do { /* FAKE: one-pass loop keeps cloud in $v0 (permuter); real source unknown. T-9320 */
+        cloud[0] = 0;
     } while (0);
-    p[0x68] = 0;
-    p[0x138] = 0;
-    p[0x1A0] = 0;
-    p += 0x208;
-    p[0] = 0;
-    p[-0x138] = 0;
+    cloud[0x68] = 0;
+    cloud[0x138] = 0;
+    cloud[0x1A0] = 0;
+    cloud += 0x208;
+    cloud[0] = 0;
+    cloud[-0x138] = 0;
 }
 
-void func_801473E8(void) {
-    u8 *p;
+void tt_clouds_reset(void) {
+    u8 *cloud;
 
-    p = D_80158A94;
-    if (1) { /* FAKE: block, one-pass loop and empty test keep p in $v0 (permuter); real source unknown. T-9320 */
-        *(s16 *)(p + 0x10) = 5;
-        *(s16 *)(p + 0x78) = 5;
-        *(s16 *)(p + 0x148) = 5;
-        *(s16 *)(p + 0x1B0) = 5;
-        *(s16 *)(p + 0x218) = 5;
+    cloud = tt_clouds;
+    if (1) { /* FAKE: block, one-pass loop and empty test keep cloud in $v0 (permuter); real source unknown. T-9320 */
+        *(s16 *)(cloud + 0x10) = 5;
+        *(s16 *)(cloud + 0x78) = 5;
+        *(s16 *)(cloud + 0x148) = 5;
+        *(s16 *)(cloud + 0x1B0) = 5;
+        *(s16 *)(cloud + 0x218) = 5;
         do {
-            p[0] = 0;
+            cloud[0] = 0;
         } while (0);
-        p[0x68] = 0;
-        p[0x138] = 0;
+        cloud[0x68] = 0;
+        cloud[0x138] = 0;
     }
-    p[0x1A0] = 0;
-    if (p) {
+    cloud[0x1A0] = 0;
+    if (cloud) {
     }
-    p += 0x208;
-    p[0] = 0;
-    p[-0x138] = 0;
-    *(s16 *)(p - 0x128) = 5;
+    cloud += 0x208;
+    cloud[0] = 0;
+    cloud[-0x138] = 0;
+    *(s16 *)(cloud - 0x128) = 5;
 }
 
-void func_8014742C(u8 *arg0, u16 arg1) {
+void tt_cloud_activate(u8 *arg0, u16 arg1) {
     arg0[0] = 1;
     *(u16 *)(arg0 + 2) = arg1;
 }
 
-void func_8014743C(s16 arg0, u16 arg1, u8 arg2) {
+void tt_cloud_spawn(s16 arg0, u16 arg1, u8 arg2) {
     u8 *p;
 
-    p = func_80147380(D_80158A94, D_80158A94 + 0x270);
+    p = tt_cloud_find_free(tt_clouds, tt_clouds + 0x270);
     if (p != 0) {
         *(s32 *)(p + 0x20) = arg0 << 16;
         *(s32 *)(p + 0x24) = 0xFFF00000;
@@ -69,9 +69,9 @@ void func_8014743C(s16 arg0, u16 arg1, u8 arg2) {
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         *(s16 *)(p + 0x52) = 0x1000;
-        func_8014742C(p, arg1);
+        tt_cloud_activate(p, arg1);
         if (arg1 == 0x30) {
-            func_8013BF9C(p);
+            tt_bell_spawn_in_cloud(p);
         }
         *(s16 *)(p + 4) = 0x40;
         *(s16 *)(p + 0xA) = 0;
@@ -83,7 +83,7 @@ void func_8014743C(s16 arg0, u16 arg1, u8 arg2) {
     }
 }
 
-void func_8014750C(u8 *arg0) {
+void tt_cloud_update(u8 *arg0) {
     *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
     *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
     *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
@@ -108,60 +108,60 @@ void func_8014750C(u8 *arg0) {
     *(s16 *)(arg0 + 0x52) += *(s8 *)(arg0 + 0x54) * 0x30;
 }
 
-void func_801475C8(void) {
-    TtSlot68 *p;
+void tt_clouds_update(void) {
+    TtCloud *cloud;
     u32 observed;
     u32 i;
     s32 count;
     u16 kind;
 
     i = 0;
-    p = (TtSlot68 *)D_80158A94;
+    cloud = (TtCloud *)tt_clouds;
     count = 6;
     kind = 0x40;
     do {
-        if (p->active != 0 && p->kind == kind) {
-            func_8014750C((u8 *)p);
+        if (cloud->active != 0 && cloud->kind == kind) {
+            tt_cloud_update((u8 *)cloud);
             /* FAKE: empty branch preserves the saved constant allocation (T-9780). */
             goto matched_call; matched_call: ;
         }
         i++;
-        p++;
+        cloud++;
     } while (count != (observed = i)); /* FAKE: copy keeps the counter's compare order (T-9780). */
 }
 
-void func_80147644(void) {
-    TtDrawBuffer80B8 *buffer;
-    TtRectPacket16 *q;
+void tt_clouds_draw(void) {
+    TtDrawBuffer *buffer;
+    TtRectPacket *q;
     u8 *big;
     u8 *e;
-    u8 *p;
+    u8 *cloud;
     s32 i;
 
-    e = D_80158AB0;
-    p = D_80158A94;
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
-    for (i = 0; i != 6; i++, p += 0x68) {
-        if (p[0] == 0) {
+    e = tt_transforms;
+    cloud = tt_clouds;
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
+    for (i = 0; i != 6; i++, cloud += 0x68) {
+        if (cloud[0] == 0) {
             continue;
         }
-        if (*(s16 *)(p + 0x52) < 0xB00) {
-            q = (TtRectPacket16 *)buffer->cursor;
+        if (*(s16 *)(cloud + 0x52) < 0xB00) {
+            q = (TtRectPacket *)buffer->cursor;
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
             q->tag.len = 3; q->code = 0x75;
-            q->x = *(s16 *)(p + 0x14) - 4;
-            q->y = *(s16 *)(p + 0x16) - 3;
+            q->x = *(s16 *)(cloud + 0x14) - 4;
+            q->y = *(s16 *)(cloud + 0x16) - 3;
             q->v = 0x50;
             q->u = 0x58;
             q->clut = 0x3C8B;
             q->tag.addr = buffer->ordering[5].addr;
             buffer->ordering[5].addr = (u32)q;
-        } else if (*(s16 *)(p + 0x52) >= 0xF01) {
-            q = (TtRectPacket16 *)buffer->cursor;
+        } else if (*(s16 *)(cloud + 0x52) >= 0xF01) {
+            q = (TtRectPacket *)buffer->cursor;
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
             q->tag.len = 3; q->code = 0x75;
-            q->x = *(s16 *)(p + 0x14) - 3;
-            q->y = *(s16 *)(p + 0x16) - 3;
+            q->x = *(s16 *)(cloud + 0x14) - 3;
+            q->y = *(s16 *)(cloud + 0x16) - 3;
             q->v = 0x50;
             q->u = 0x50;
             q->clut = 0x3C8B;
@@ -170,9 +170,9 @@ void func_80147644(void) {
         }
         big = (u8 *)buffer->cursor;
         buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x30);
-        *(s16 *)(e + 4) = *(s16 *)(p + 0x14);
-        *(s16 *)(e + 6) = *(s16 *)(p + 0x16);
-        *(s16 *)e = *(s16 *)(e + 2) = *(s16 *)(p + 0x52);
+        *(s16 *)(e + 4) = *(s16 *)(cloud + 0x14);
+        *(s16 *)(e + 6) = *(s16 *)(cloud + 0x16);
+        *(s16 *)e = *(s16 *)(e + 2) = *(s16 *)(cloud + 0x52);
         *(s16 *)(big + 8) = *(s16 *)(e + 4) - 0x1F;
         *(s16 *)(big + 10) = *(s16 *)(e + 6) - 0xF;
         *(s16 *)(big + 16) = 0x40;
@@ -186,6 +186,6 @@ void func_80147644(void) {
         *(u16 *)(big + 14) = 0x3C8B;
         big[44] = 0;
         big[43] = 1;
-        func_80141EBC((TtOtTag *)&buffer->ordering[5], big, e);
+        tt_sprite_sized_submit((TtOtTag *)&buffer->ordering[5], big, e);
     }
 }

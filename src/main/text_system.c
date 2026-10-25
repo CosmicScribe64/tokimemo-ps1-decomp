@@ -16,11 +16,11 @@ INCLUDE_RODATA("asm/data/main/text_system.data", text_font_range_table);
 INCLUDE_RODATA("asm/data/main/text_system.data", D_800B4030);
 INCLUDE_RODATA("asm/data/main/text_system.data", text_font_range_table_end);
 
-void text_glyph_pages_clear(s32 arg0) {
+void text_glyph_pages_clear(s32 page_count) {
     s32 i;
     RECT r;
 
-    for (i = 0; i < arg0; i++) {
+    for (i = 0; i < page_count; i++) {
         r.x = 0x320 + i * 0x40;
         r.y = 0x100;
         r.w = 0x20;
@@ -67,8 +67,8 @@ void text_system_reset(void) {
     }
 }
 
-void text_set_advance(u8 arg0) {
-    if (arg0 == 0x10) {
+void text_set_advance(u8 glyph_advance) {
+    if (glyph_advance == 0x10) {
         text_state.unk_6A = 0x10;
     } else {
         text_state.unk_6A = 0xE;
@@ -79,79 +79,79 @@ void text_unused_stub(void) {
 }
 
 /* Queue one string (x, y, attribute, text, extra) in the 52-entry text list for drawing */
-s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
+s32 set_kanji_string(s16 x, s16 y, u8 color_index, u8 *text, s32 ordering_slot) {
     if (text_state.count >= 0x34) {
         return -1;
     }
-    if (str == 0) {
+    if (text == 0) {
         ((TextEntry *)text_list)[text_state.count].active = 0;
-    } else if (str[0] == 0 || str[1] == 0) {
+    } else if (text[0] == 0 || text[1] == 0) {
         ((TextEntry *)text_list)[text_state.count].active = 0;
     } else {
         ((TextEntry *)text_list)[text_state.count].y = y;
-        ((TextEntry *)text_list)[text_state.count].attribute = col;
+        ((TextEntry *)text_list)[text_state.count].attribute = color_index;
         ((TextEntry *)text_list)[text_state.count].x = x;
-        ((TextEntry *)text_list)[text_state.count].glyph_count = load_string(str, y, col);
-        ((TextEntry *)text_list)[text_state.count].extra = arg4;
+        ((TextEntry *)text_list)[text_state.count].glyph_count = load_string(text, y, color_index);
+        ((TextEntry *)text_list)[text_state.count].extra = ordering_slot;
         ((TextEntry *)text_list)[text_state.count].active = 1;
     }
     return ++text_state.count;
 }
 
 /* Start the typewriter at entry n (skips the glyphs of earlier entries) */
-void k_disp_start(s32 arg0) {
+void k_disp_start(s32 first_entry) {
     s32 i;
 
     text_state.pos = 0;
-    for (i = 0; i < arg0; i++) {
+    for (i = 0; i < first_entry; i++) {
         text_state.pos += text_list[i * 8 + 5];
     }
 }
 
 /* Show or hide a text list entry */
-void k_disp_switch(s32 arg0, s32 arg1) {
-    if (arg1 > 0) {
-        text_list_active0[arg0 * 8] = 1;
+void k_disp_switch(s32 entry_index, s32 visible) {
+    if (visible > 0) {
+        text_list_active0[entry_index * 8] = 1;
     } else {
-        text_list_active0[arg0 * 8] = 0;
+        text_list_active0[entry_index * 8] = 0;
     }
 }
 
 /* Return the text list entry n */
-u8 *get_k_work(s32 arg0) {
-    if (arg0 >= 0x35) {
+u8 *get_k_work(s32 entry_index) {
+    if (entry_index >= 0x35) {
         return text_list_last;
     }
-    return text_list + arg0 * 8;
+    return text_list + entry_index * 8;
 }
 
 s16 *get_ksys(void) {
     return (u8 *)&text_state;
 }
 
-void set_k_work(s32 arg0, TextEntry arg1) {
-    TextEntry *p = (TextEntry *)text_list + arg0;
+void set_k_work(s32 entry_index, TextEntry entry_value) {
+    TextEntry *p = (TextEntry *)text_list + entry_index;
 
-    p->x = arg1.x;
-    p->y = arg1.y;
-    p->attribute = arg1.attribute;
-    p->glyph_count = arg1.glyph_count;
-    p->extra = arg1.extra;
-    p->active = arg1.active;
+    p->x = entry_value.x;
+    p->y = entry_value.y;
+    p->attribute = entry_value.attribute;
+    p->glyph_count = entry_value.glyph_count;
+    p->extra = entry_value.extra;
+    p->active = entry_value.active;
 }
 
 /* Cut the text list to n entries and recompute the glyph totals */
-void k_reset(s32 arg0) {
-    s16 sum;
+void k_reset(s32 entry_count) {
+    s16 glyph_total;
     s32 i;
 
-    sum = 0;
-    for (i = 0; i < arg0; i++) {
-        sum += text_list[i * 8 + 5];
+    glyph_total = 0;
+    for (i = 0; i < entry_count; i++) {
+        glyph_total += text_list[i * 8 + 5];
     }
-    text_state.count = arg0;
-    text_state.total = sum;
-    text_state.pos = sum;
+    text_state.count = entry_count;
+    text_state.total = glyph_total;
+    text_state.pos = glyph_total;
 }
 
 /* Remember the current text list length as the mark */
@@ -165,28 +165,28 @@ void k_sub_reset(void) {
 }
 
 /* Start the typewriter at mark + n */
-void k_sub_disp_start(s32 arg0) {
-    k_disp_start(text_state.mark + arg0);
+void k_sub_disp_start(s32 entry_offset) {
+    k_disp_start(text_state.mark + entry_offset);
 }
 
 s16 k_disp_goto_line_end(void) {
     s32 i;
-    s32 sum;
+    s32 glyph_end;
 
-    sum = 0;
+    glyph_end = 0;
     for (i = 0; i < 0x34; i++) {
-        sum += text_list[i * 8 + 5];
-        if (sum >= text_state.pos) {
-            text_state.pos = sum;
-            return sum;
+        glyph_end += text_list[i * 8 + 5];
+        if (glyph_end >= text_state.pos) {
+            text_state.pos = glyph_end;
+            return glyph_end;
         }
     }
     return -1;
 }
 
-void k_speed_set(u8 arg0) {
-    text_state.speed = arg0;
-    if ((u32)arg0 >= 0x81) {
+void k_speed_set(u8 reveal_speed) {
+    text_state.speed = reveal_speed;
+    if ((u32)reveal_speed >= 0x81) {
         text_state.speed = 0x7F;
     }
 }
@@ -225,12 +225,12 @@ u8 check_set_k(void) {
 
 u8 get_now_k(void) {
     s32 i;
-    s32 sum;
+    s32 glyph_end;
 
-    sum = 0;
+    glyph_end = 0;
     for (i = 0; i < text_state.pos; i++) {
-        sum += text_list[i * 8 + 5];
-        if (sum >= text_state.pos) {
+        glyph_end += text_list[i * 8 + 5];
+        if (glyph_end >= text_state.pos) {
             return i;
         }
     }
@@ -321,8 +321,8 @@ void disp_string(void) {
 /* Declaration order: IDO gives every local a stack slot once one local (start) lives in memory, and the
  * locals declared before it sit above it; these six reproduce the original frame (T-17020, T-3330). The
  * original passes the offset into the range as a second argument to vload_font (a1). */
-s32 load_string(str)
-u8 *str;
+s32 load_string(text)
+u8 *text;
 {
     s32 i;
     u8 *p;
@@ -330,20 +330,20 @@ u8 *str;
     u16 c;
     s32 hi;
     u8 lo;
-    s32 start;
+    s32 first_glyph;
 
-    start = text_state.total;
+    first_glyph = text_state.total;
     while (1) {
-        q = str++;
+        q = text++;
         hi = *q;
-        p = str++;
+        p = text++;
         if (hi == 0 || (lo = *p) == 0) {
-            return text_state.total - start;
+            return text_state.total - first_glyph;
         }
         c = lo + (hi << 8);
         if (c < text_font_range_table[0].first) {
             printf("<kanji.c>error(No-sjis)");
-            return text_state.total - start;
+            return text_state.total - first_glyph;
         }
         for (i = 1; i < 46; i++) {
             if (c < text_font_range_table[i].first) {

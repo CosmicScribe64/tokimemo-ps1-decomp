@@ -4,9 +4,9 @@
 #include "ovl/GEKO.h"
 
 typedef struct {
-    void (*f[50])();
-} FnTbl50; /* size 0xC8 */
-extern FnTbl50 encounter_rei_scene_three_steps;
+    void (*callbacks[50])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013B930.c:7; func_8013BE58 at line171 copies this exact50-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterReiSceneThreeSteps; /* size 0xC8 */
+extern EncounterReiSceneThreeSteps encounter_rei_scene_three_steps;
 
 typedef struct {
     void (*f[39])();
@@ -95,54 +95,54 @@ s32 encounter_rei_scene_audio_load(void) {
 }
 
 typedef struct {
-    void (*f[58])();
-} FnTbl58; /* size 0xE8 */
-extern FnTbl58 encounter_rei_scene_one_steps;
+    void (*callbacks[58])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013B930.c:98; func_8013BBE0 at line101 copies this exact58-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterReiSceneOneSteps; /* size 0xE8 */
+extern EncounterReiSceneOneSteps encounter_rei_scene_one_steps;
 
 void encounter_rei_scene_one_step_dispatch(void) {
-    s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
-    FnTbl58 tbl;
+    s32 mode_step_index; /* unused: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterReiSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_rei_scene_one_steps;
+    mode_step_callbacks = encounter_rei_scene_one_steps;
     if (game_state.mode_step == 0x1B) {
         audio_command(0xCF);
     }
-    tbl.f[game_state.mode_step](0x80);
+    mode_step_callbacks.callbacks[game_state.mode_step](0x80);
 }
 
 void encounter_rei_portrait_show(void) {
-    s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
-    s32 prev;
+    s32 mode_step_after; /* declared before mode_step_before: its stack slot sits above mode_step_before (T-3330) */
+    s32 mode_step_before;
 
-    prev = game_state.mode_step;
+    mode_step_before = game_state.mode_step;
     func_8007C8A4();
-    cur = game_state.mode_step;
-    if (prev != cur) {
-        game_state.mode_step = cur - 1;
+    mode_step_after = game_state.mode_step;
+    if (mode_step_before != mode_step_after) {
+        game_state.mode_step = mode_step_after - 1;
         place_init();
     }
 }
 
 void encounter_rei_background_fade_in(void) {
-    s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
-    s32 prev;
+    s32 mode_step_after; /* declared before mode_step_before: its stack slot sits above mode_step_before (T-3330) */
+    s32 mode_step_before;
 
-    prev = game_state.mode_step;
+    mode_step_before = game_state.mode_step;
     normal_date_bg_fadein();
-    cur = game_state.mode_step;
-    if (prev != cur) {
-        game_state.mode_step = cur - 1;
+    mode_step_after = game_state.mode_step;
+    if (mode_step_before != mode_step_after) {
+        game_state.mode_step = mode_step_after - 1;
         place_init2();
     }
 }
 
 void encounter_rei_scene_two_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl39 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl39 mode_step_callbacks;
 
-    tbl = encounter_rei_scene_two_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_rei_scene_two_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
 }
 
 void encounter_rei_cd_audio_request(void) {
@@ -170,12 +170,12 @@ void encounter_rei_assets_load_1(void) {
 }
 
 void encounter_rei_scene_three_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl50 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterReiSceneThreeSteps mode_step_callbacks;
 
-    tbl = encounter_rei_scene_three_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_rei_scene_three_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
 }
 
 s32 encounter_rei_scene_three_talk(void) {

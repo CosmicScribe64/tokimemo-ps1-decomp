@@ -2,8 +2,8 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_8010B360(void) {
-    D_801240F0 = 0x801CE130;
+void spot_yoshio_still_pointers_1_init(void) {
+    spot_yoshio_still_pointers_1 = 0x801CE130;
     D_801240F4 = 0x801CE134;
     D_801240F8 = 0x801CE15C;
     D_801240FC = *(s16 *)0x801CE170;
@@ -16,24 +16,24 @@ void func_8010B360(void) {
     D_80124118 = 0x801C6000;
 }
 
-void func_8010B410(void) {
-    func_8010B430();
+void spot_yoshio_scene_select(void) {
+    spot_yoshio_scene1_run();
 }
 
-void func_8010B430(void) {
+void spot_yoshio_scene1_run(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
     if (D_800B1AF5 == 0) {
-        func_8010B490();
+        spot_yoshio_scene1_steps_run();
     } else {
         func_80015FE0();
     }
 }
 
-void func_8010B490(void) {
+void spot_yoshio_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
 
-    tbl = D_80124120;
+    tbl = spot_yoshio_scene1_steps;
     func_80078950("s%d %d\n", D_800B1AF6, D_80094714);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
@@ -42,14 +42,14 @@ void func_8010B490(void) {
     }
 }
 
-void func_8010B538(void) {
+void spot_yoshio_scene1_assets_load_01(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8C15);
-    func_8010B360();
+    spot_yoshio_still_pointers_1_init();
     func_80011DFC();
 }
 
-void func_8010B570(void) {
-    func_800F7074();
+void spot_yoshio_scene1_step_36(void) {
+    spot_talk_step();
     D_800EECD0 = 0;
     D_800E9E5F |= 0x80;
     (&D_800E9E5F)[-0x44] |= 0x80;
@@ -62,9 +62,9 @@ void func_8010B570(void) {
 
 /* FAKE: byte lvalues keep the shared constant in a0 and prevent the later
  * index read from being promoted. The opaque record stride also preserves
- * index/base allocation; the canonical EventStateView flag member differs
+ * index/base allocation; the canonical SpotDevelopmentState flag member differs
  * by 26 rows. T-9770/T-20620 recipe verified in T-24053. */
-void func_8010B614(void) {
+void spot_yoshio_scene1_names_set_23(void) {
     u8 *p;
 
     *(u8 *)&D_800B1746 = 4;
@@ -78,7 +78,7 @@ extern s16 D_800E9E3E;
 extern s16 D_800EC194;
 
 /* neighbouring words reached through one base symbol each: as1 keeps the loads after the stores */
-void func_8010B678(void) {
+void spot_yoshio_scene1_set_state_27(void) {
     (&D_800E9E3E)[0x22] += 0x40;
     D_800E9E3E += 0x40;
     D_800EC194 += 0x40;
@@ -86,12 +86,12 @@ void func_8010B678(void) {
     func_80011DFC();
 }
 
-void func_8010B6E4(void) {
-    func_800F7074();
+void spot_yoshio_scene1_step_34(void) {
+    spot_talk_step();
     if (D_80094718 == 2) {
         D_800EECD0 = 0;
         D_800E9E5F |= 0x80;
-        (&D_800E9E5F)[-0x44] |= 0x80; /* FAKE: D_800E9E1B, 0x44 below D_800E9E5F (as in func_8010B570); the record table is unknown. T-9320 */
+        (&D_800E9E5F)[-0x44] |= 0x80; /* FAKE: D_800E9E1B, 0x44 below D_800E9E5F (as in spot_yoshio_scene1_step_36); the record table is unknown. T-9320 */
         D_800E9E74 = 0;
         *(s32 *)D_800EC190 &= 0x7FFFFFFF;
         *(s32 *)(D_800EC190 + 0x24) &= 0x7FFFFFFF;
@@ -101,7 +101,7 @@ void func_8010B6E4(void) {
     } else {
         D_800EECD0 = 1;
         D_800E9E5F |= 0x80;
-        (&D_800E9E5F)[-0x44] |= 0x80; /* FAKE: D_800E9E1B, 0x44 below D_800E9E5F (as in func_8010B570); the record table is unknown. T-9320 */
+        (&D_800E9E5F)[-0x44] |= 0x80; /* FAKE: D_800E9E1B, 0x44 below D_800E9E5F (as in spot_yoshio_scene1_step_36); the record table is unknown. T-9320 */
         *(s32 *)D_800EC190 &= 0x7FFFFFFF;
         *(s32 *)(D_800EC190 + 0x24) &= 0x7FFFFFFF;
         D_800EAFA2 = 0;
@@ -112,18 +112,18 @@ void func_8010B6E4(void) {
     }
 }
 
-void func_8010B844(void) {
+void spot_yoshio_scene1_set_state_33(void) {
     D_80094714 = (u16) D_80094714 + D_800B1746;
     func_80011DFC();
 }
 
-void func_8010B87C(void) {
+void spot_yoshio_scene1_set_state_35(void) {
     D_80094714 = 0xC;
     func_80011DFC();
 }
 
 /* T-9740: integer definition without an explicit return matches the original. */
-s32 func_8010B8A4(void) {
+s32 spot_yoshio_scene1_step_37(void) {
     s32 mask;
     u8 value;
 
@@ -144,7 +144,7 @@ s32 func_8010B8A4(void) {
     }
 }
 
-void func_8010B970(void) {
+void spot_yoshio_scene1_init_00(void) {
     D_800B1746 = 0xD;
     func_80012D2C(1, 0);
     func_8001886C(1);
@@ -159,36 +159,36 @@ void func_8010B970(void) {
     D_80094714 = 0;
     D_80094718 = 0;
     func_80045B14();
-    func_800F6000();
+    spot_script_sections_init();
     func_8003535C();
     func_8003580C();
     func_8004C360();
     D_800F19AB = 0;
     func_8004BC20(D_800B1746);
     func_8004CDDC();
-    func_800F6000();
-    D_80120678 = D_80120634;
-    D_8012067C = *(s32 *)&D_80120654;
-    D_80120680 = D_80120674;
+    spot_script_sections_init();
+    spot_talk_text_table = D_80120634;
+    spot_talk_command_table = *(s32 *)&D_80120654;
+    spot_talk_voice_table = D_80120674;
     func_80078970(D_80094784, "教室");
     D_8012411C = 0;
     func_80011DFC();
 }
 
-void func_8010BA94(void) {
-    func_8010B360();
+void spot_yoshio_scene1_still_show_28(void) {
+    spot_yoshio_still_pointers_1_init();
     func_80012D64(D_80124100, 0x11, 1, 2, 0);
     func_8004C46C(D_80124104, D_80124108, D_8012410C, D_80124110, D_80124114, D_80124118);
-    func_8004C6B0(D_801240F4, D_801240F8, D_801240F0, (s32) D_801240FC);
+    func_8004C6B0(D_801240F4, D_801240F8, spot_yoshio_still_pointers_1, (s32) D_801240FC);
     func_80011DFC();
 }
 
-void func_8010BB3C(void) {
+void spot_yoshio_scene1_bg_load_04(void) {
     func_800469F4(0x3FF0);
     func_80011DFC();
 }
 
-void func_8010BB64(void) {
+void spot_yoshio_scene1_bg_load_18(void) {
     func_800469F4(0x4600);
     func_80011DFC();
 }

@@ -26,7 +26,7 @@ void portrait_hide(s32 arg0) {
     }
 }
 
-void portrait_build(s32 arg0, s32 *arg1, u8 **arg2, u8 *arg3, s32 arg4) {
+void portrait_build(s32 arg0, s32 *arg1, u8 **arg2, u8 *arg3, s32 expression_variant) {
     s16 x0;
     s16 y0;
     s16 w0;
@@ -210,8 +210,8 @@ void portrait_build(s32 arg0, s32 *arg1, u8 **arg2, u8 *arg3, s32 arg4) {
         sprite_quads[5].y = (((Actor *)actor_pool)[31].y + y1) - origin_y;
         game_state.quad_layer[5] = 0x8B;
     }
-    portrait_expression_select(arg4);
-    portrait_value_clear_if_high(arg4);
+    portrait_expression_select(expression_variant);
+    portrait_value_clear_if_high(expression_variant);
 }
 
 void portrait_value_clear_if_high(void) {
@@ -220,8 +220,8 @@ void portrait_value_clear_if_high(void) {
     }
 }
 
-void portrait_expression_select(u32 arg0) {
-    switch (arg0) {
+void portrait_expression_select(u32 expression_variant) {
+    switch (expression_variant) {
     case 0:
         sprite_quads[1].unk_0C = 7;
         sprite_quads[0].unk_0C = 7;
@@ -263,7 +263,7 @@ void portrait_face_update(void) {
     s32 n;
     s32 saved;
     s32 i;
-    u8 k;
+    u8 girl_id;
     s32 face;
 
     ((Actor *)actor_pool)[31].brightness = 0x80;
@@ -286,9 +286,9 @@ void portrait_face_update(void) {
             }
         }
         n = 0;
-        k = game_state.current_girl;
+        girl_id = game_state.current_girl;
         for (i = 0; i < 3; i++) {
-            if (D_800B5A68[k][i] < level) {
+            if (D_800B5A68[girl_id][i] < level) {
                 n = i + 1;
             }
         }
@@ -337,10 +337,10 @@ void bustup_wink(void) {
 }
 
 /* nine +0xFC records, reached by byte offset: the word view (value) and the s16 at +2 (cap) */
-void parameter_change(s32 arg0, s32 arg1) {
-    u8 *p = (u8 *)&game_state + arg0 * 4;
+void parameter_change(s32 parameter_id, s32 delta) {
+    u8 *p = (u8 *)&game_state + parameter_id * 4;
 
-    *(s32 *)(p + 0xFC) += arg1;
+    *(s32 *)(p + 0xFC) += delta;
     if (*(s32 *)(p + 0xFC) < 0) {
         *(s32 *)(p + 0xFC) = 0;
     }
@@ -605,7 +605,7 @@ void hizuke_disp_switch(s32 arg0) {
 void hizuke_init(void) {
     s32 i;
     s32 digit;
-    u8 event;
+    u8 day_kind;
 
     /* FAKE: entry reads preserve unsigned month/day promotion across digit calls
      * under the conversion pass; these assignments are discarded. T-24604. */
@@ -687,8 +687,8 @@ void hizuke_init(void) {
     } else {
         ((Actor *)actor_pool)[23].unk_43 = 0;
     }
-    event = game_state.month_calendar[0].day_kind[game_state.day];
-    if (event == 1 || event == 2) {
+    day_kind = game_state.month_calendar[0].day_kind[game_state.day];
+    if (day_kind == 1 || day_kind == 2) {
         ((Actor *)actor_pool)[23].unk_43 = 0x44;
     }
     ((Actor *)actor_pool)[16].unk_18 = 0x3C;
@@ -771,16 +771,16 @@ void icon_disp_switch(s32 arg0) {
 }
 
 /* Enable or disable one of the 14 command icons */
-void icon_can_use_set(s32 idx, s32 on) {
-    if (on) {
-        D_80125C90[idx] = 1;
+void icon_can_use_set(s32 icon_index, s32 enabled) {
+    if (enabled) {
+        D_80125C90[icon_index] = 1;
     } else {
-        D_80125C90[idx] = 0;
+        D_80125C90[icon_index] = 0;
     }
 }
 
-s32 get_icon_can_use(s32 arg0) {
-    if (D_80125C90[arg0] == 1) {
+s32 get_icon_can_use(s32 icon_index) {
+    if (D_80125C90[icon_index] == 1) {
         return 1;
     }
     return 0;
@@ -789,7 +789,7 @@ s32 get_icon_can_use(s32 arg0) {
 void hud_icon_bar_init(void) {
     GameState *g = &game_state;
     s32 i;
-    s32 n;
+    s32 zero_position_pair_count;
     s32 j;
 
     if (g->icon_mode == ICON_MODE_FREE) {
@@ -847,16 +847,16 @@ void hud_icon_bar_init(void) {
         }
         break;
     case ICON_MODE_FREE:
-        /* Two or more (0, 0) pairs: restore the default table. The copy reuses the counter n (T-25108). */
-        n = 0;
+        /* Two or more (0, 0) pairs: restore the default table. The copy reuses the counter zero_position_pair_count (T-25108). */
+        zero_position_pair_count = 0;
         for (j = 0; j < 15; j++) {
             if (((s16 *)D_80125C10)[j * 2] == 0 && ((s16 *)D_80125C10)[j * 2 + 1] == 0) {
-                n++;
+                zero_position_pair_count++;
             }
-            if (n >= 2) {
-                for (n = 0; n < 15; n++) {
-                    ((s16 *)D_80125C10)[n * 2] = D_800B5AE4[n][0];
-                    ((s16 *)D_80125C10)[n * 2 + 1] = D_800B5AE4[n][1];
+            if (zero_position_pair_count >= 2) {
+                for (zero_position_pair_count = 0; zero_position_pair_count < 15; zero_position_pair_count++) {
+                    ((s16 *)D_80125C10)[zero_position_pair_count * 2] = D_800B5AE4[zero_position_pair_count][0];
+                    ((s16 *)D_80125C10)[zero_position_pair_count * 2 + 1] = D_800B5AE4[zero_position_pair_count][1];
                 }
                 break;
             }
@@ -869,7 +869,7 @@ void hud_icon_bar_init(void) {
     LoadSquare(0x120, 0x1F3, 0x10, 1, &D_800C6220[0x20]);
 }
 
-void hud_icon_layout_apply(s32 n) {
+void hud_icon_layout_apply(s32 icon_count) {
     s32 pad; /* FAKE: preserves original stack homes and frame size. T-24501 */
     s32 i;
     s16 x[16];
@@ -877,29 +877,29 @@ void hud_icon_layout_apply(s32 n) {
     s16 w[16];
     s16 h[16];
 
-    if (n != 15) {
-        n = 14;
+    if (icon_count != 15) {
+        icon_count = 14;
         game_state.icon_count = 14;
     }
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < icon_count; i++) {
         x[i] = ((s16 (*)[2])D_80125C10)[i][0] - 10;
         y[i] = ((s16 (*)[2])D_80125C10)[i][1] - 10;
         w[i] = 20;
         h[i] = 16;
     }
     i = 0; /* FAKE: keeps the saved zero index across menu_set. T-24501 */
-    menu_set(0, n & 0xFF, x, y, w, h);
-    for (i = 0; i < n; i++) {
+    menu_set(0, icon_count & 0xFF, x, y, w, h);
+    for (i = 0; i < icon_count; i++) {
         ((Actor *)actor_pool)[i + 80].sequence_slot = i;
         ((Actor *)actor_pool)[i + 80].x = ((s16 (*)[2])D_80125C10)[i][0];
         ((Actor *)actor_pool)[i + 80].y = ((s16 (*)[2])D_80125C10)[i][1];
     }
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < icon_count; i++) {
         ((Actor *)actor_pool)[i + 64].x = ((s16 (*)[2])D_80125C10)[i][0];
         ((Actor *)actor_pool)[i + 64].y = ((s16 (*)[2])D_80125C10)[i][1];
         ((Actor *)actor_pool)[i + 64].unk_18 = 2;
     }
-    if (n == 15) {
+    if (icon_count == 15) {
         ((Actor *)actor_pool)[94].sequence_slot = 15;
         ((Actor *)actor_pool)[94].x = ((s16 *)D_80125C10)[28];
         ((Actor *)actor_pool)[94].y = ((s16 *)D_80125C10)[29];
@@ -933,24 +933,24 @@ void hud_icon_memory_card_animation_set(u8 arg0) {
  * 4-trip loop: IDO unrolls that loop, keeps the eight corner values in registers (one pair per test,
  * so the outer loop runs out of caller-saved registers and spills the shared subexpressions to
  * sp+0x20..0x28) and leaves the 15-trip loop rolled. T-25108. */
-s32 hud_icon_move_allowed(s32 idx, s32 dx, s32 dy) {
+s32 hud_icon_move_allowed(s32 icon_index, s32 delta_x, s32 delta_y) {
     s32 cx[4];
     s32 cy[4];
     s16 *p;
     s32 i;
     s32 j;
-    s32 r;
+    s32 move_allowed;
     s16 *q; /* FAKE: T-25108, never used; the original's 15th local word is unknown. It keeps the frame at
              * 0x68 and the spill slots at sp+0x20..0x28. */
     s32 tx;
     s32 ty;
 
-    p = (s16 *)&D_80125C10[idx * 4];
-    r = 1;
-    cx[0] = p[0] + dx; cy[0] = p[1] + dy;
-    cx[1] = p[0] + dx + 19; cy[1] = p[1] + dy;
-    cx[2] = p[0] + dx; cy[2] = p[1] + dy + 15;
-    cx[3] = p[0] + dx + 19; cy[3] = p[1] + dy + 15;
+    p = (s16 *)&D_80125C10[icon_index * 4];
+    move_allowed = 1;
+    cx[0] = p[0] + delta_x; cy[0] = p[1] + delta_y;
+    cx[1] = p[0] + delta_x + 19; cy[1] = p[1] + delta_y;
+    cx[2] = p[0] + delta_x; cy[2] = p[1] + delta_y + 15;
+    cx[3] = p[0] + delta_x + 19; cy[3] = p[1] + delta_y + 15;
     if (cx[0] < -160) {
         return 0;
     }
@@ -964,17 +964,17 @@ s32 hud_icon_move_allowed(s32 idx, s32 dx, s32 dy) {
         return 0;
     }
     for (i = 0; i < 15; i++) {
-        if (i != idx) {
+        if (i != icon_index) {
             tx = ((s16 *)&D_80125C10[i * 4])[0];
             ty = ((s16 *)&D_80125C10[i * 4])[1];
             for (j = 0; j < 4; j++) {
                 if (cx[j] >= tx && cx[j] < tx + 20 && cy[j] >= ty && cy[j] < ty + 16) {
-                    r = 0;
+                    move_allowed = 0;
                 }
             }
         }
     }
-    return r;
+    return move_allowed;
 }
 
 /* Cursor step of the 15-icon menu: every third frame of the pad repeat (`unk_F6C % 3 == 2`) moves the
@@ -986,45 +986,45 @@ s32 hud_icon_move_allowed(s32 idx, s32 dx, s32 dy) {
  * The selection index is read through `g`: the stores to D_80125C10 then reload the index expression (the
  * original recomputes the address for the y store), and uopt keeps the index in $s3, re-read after each call. */
 void hud_icon_bar_update(s32 a) {
-    s32 dx;
-    s32 dy;
-    s32 n;
-    u8 old;
+    s32 delta_x;
+    s32 delta_y;
+    s32 visible_icon_count;
+    u8 previous_cursor_index;
     s32 i;
     GameState *g = &game_state;
 
-    old = g->menu_cursor_0;
-    dx = 0;
-    dy = 0;
+    previous_cursor_index = g->menu_cursor_0;
+    delta_x = 0;
+    delta_y = 0;
     if (g->pad_held & PAD_L2) {
         if (g->icon_mode % 3U == 2) {
             switch (g->pad_held & 0xA000) {
             case 0x8000:
-                dx = -g->cursor_speed;
+                delta_x = -g->cursor_speed;
                 break;
             case 0x2000:
-                dx = g->cursor_speed;
+                delta_x = g->cursor_speed;
                 break;
             }
             /* T-25108: an unsigned selector; with a signed one the case constant 0x1000 shares the register
              * of the loop's halfword 0x1000 stores. */
             switch ((u32)g->pad_held & 0x5000) {
             case 0x1000:
-                dy = -g->cursor_speed;
+                delta_y = -g->cursor_speed;
                 break;
             case 0x4000:
-                dy = g->cursor_speed;
+                delta_y = g->cursor_speed;
                 break;
             }
-            if (hud_icon_move_allowed(g->menu_cursor_0, dx, dy) == 0) {
-                dx = 0;
-                dy = 0;
+            if (hud_icon_move_allowed(g->menu_cursor_0, delta_x, delta_y) == 0) {
+                delta_x = 0;
+                delta_y = 0;
             }
-            ((s16 (*)[2])D_80125C10)[g->menu_cursor_0][0] += dx;
-            ((s16 (*)[2])D_80125C10)[g->menu_cursor_0][1] += dy;
+            ((s16 (*)[2])D_80125C10)[g->menu_cursor_0][0] += delta_x;
+            ((s16 (*)[2])D_80125C10)[g->menu_cursor_0][1] += delta_y;
             /* record 0 fields, not cursor_x/cursor_y: as1 keeps the y load behind the x store */
-            ((Actor *)actor_pool)[0].x += dx;
-            ((Actor *)actor_pool)[0].y += dy;
+            ((Actor *)actor_pool)[0].x += delta_x;
+            ((Actor *)actor_pool)[0].y += delta_y;
             hud_icon_layout_apply(g->icon_count);
             if (((s16 (*)[2])D_80125C10)[g->menu_cursor_0][0] > 0x80) {
                 ((s16 (*)[2])D_80125C10)[g->menu_cursor_0][0] = 0x80;
@@ -1049,20 +1049,20 @@ void hud_icon_bar_update(s32 a) {
         menu_check(0, ((Actor *)actor_pool)[0].x, ((Actor *)actor_pool)[0].y);
         menu_cursor_update(0);
     }
-    if (old != D_800B5A9C) {
+    if (previous_cursor_index != D_800B5A9C) {
         D_800B5A9C = g->menu_cursor_0;
         D_800B5AA0 = 0x20;
     } else if (D_800B5AA0 != 0) {
         D_800B5AA0--;
     }
-    n = 14;
+    visible_icon_count = 14;
     if (g->icon_count == 15) {
-        n = 15;
+        visible_icon_count = 15;
     }
     if (g->icon_mode == ICON_MODE_FREE) {
-        n = 15;
+        visible_icon_count = 15;
     }
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < visible_icon_count; i++) {
         if (D_80125C90[i] == 0) {
             ((Actor *)actor_pool)[i + 80].flags = 0;
             ((Actor *)actor_pool)[i + 64].unk_43 = 0x51;
@@ -1283,45 +1283,45 @@ s32 hud_in_summer_months(void) {
 }
 
 s32 hud_summer_phase(void) {
-    s32 ret;
+    s32 summer_phase;
 
-    ret = hud_in_summer_months();
+    summer_phase = hud_in_summer_months();
     if (game_state.month == 9) {
         if (game_state.day >= 0x18U) {
-            ret = -1;
+            summer_phase = -1;
         }
-        /* FAKE: empty test of ret makes ret the first register-allocated local ($v1), the global gets $a0. T-4100 */
-        if (!ret) {
+        /* FAKE: empty test of summer_phase makes summer_phase the first register-allocated local ($v1), the global gets $a0. T-4100 */
+        if (!summer_phase) {
         }
     }
     if (game_state.month == 5) {
         if (game_state.day >= 0x19U) {
-            ret = -1;
+            summer_phase = -1;
         }
     }
-    return ret;
+    return summer_phase;
 }
 
-s32 hud_vacation_for_date(s32 arg0, s32 arg1) {
-    if (arg0 == 8) {
+s32 hud_vacation_for_date(s32 month, s32 day_of_month) {
+    if (month == 8) {
         return 1;
     }
-    if (arg0 == 7 && arg1 >= 0x18) {
+    if (month == 7 && day_of_month >= 0x18) {
         return 1;
     }
-    if (arg0 == 0xC && arg1 >= 0x19) {
+    if (month == 0xC && day_of_month >= 0x19) {
         return 2;
     }
-    if (arg0 == 0xD && arg1 < 8) {
+    if (month == 0xD && day_of_month < 8) {
         return 2;
     }
-    if (arg0 == 1 && arg1 < 8) {
+    if (month == 1 && day_of_month < 8) {
         return 2;
     }
-    if (arg0 == 3 && arg1 >= 0x18) {
+    if (month == 3 && day_of_month >= 0x18) {
         return 3;
     }
-    if (arg0 == 4 && arg1 < 4) {
+    if (month == 4 && day_of_month < 4) {
         return 3;
     }
     return 0;

@@ -11,9 +11,9 @@ typedef struct {
 extern FnTbl22 encounter_megumi_scene_two_steps;
 
 typedef struct {
-    void (*f[46])();
-} FnTbl46; /* size 0xB8 */
-extern FnTbl46 encounter_megumi_scene_one_steps;
+    void (*callbacks[46])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013DF70.c:14; func_8013E11C at line63 copies this exact46-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterMegumiSceneOneSteps; /* size 0xB8 */
+extern EncounterMegumiSceneOneSteps encounter_megumi_scene_one_steps;
 
 void encounter_megumi_assets_bind_1(void) {
     encounter_megumi_pack_1_animation_input_2 = 0x801D22F4;
@@ -62,12 +62,12 @@ void encounter_megumi_scene_two_dispatch(void) {
 }
 
 void encounter_megumi_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl46 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterMegumiSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_megumi_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_megumi_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
     encounter_megumi_falling_quads_update();
 }
 
@@ -133,12 +133,12 @@ void encounter_megumi_still_show_1(void) {
 }
 
 void encounter_megumi_scene_two_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl22 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl22 mode_step_callbacks;
 
-    tbl = encounter_megumi_scene_two_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_megumi_scene_two_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
 }
 
 s32 encounter_megumi_talk_portrait_update(void) {
@@ -176,10 +176,10 @@ void encounter_megumi_high_affection_skip(void) {
 void encounter_megumi_still_fade_out(void) {
     s16 i;
     SpriteQuad *records;
-    s32 before;
-    s32 after;
+    s32 mode_step_before;
+    s32 mode_step_after;
 
-    before = game_state.mode_step;
+    mode_step_before = game_state.mode_step;
     func_800853FC();
     records = (SpriteQuad *)sprite_quads;
     for (i = 4; i < 19; i++) {
@@ -187,8 +187,8 @@ void encounter_megumi_still_fade_out(void) {
             records[i].tint_r = records[i].tint_g = records[i].tint_b = dec_bg_brightness;
         }
     }
-    after = game_state.mode_step;
-    if (before != after) {
+    mode_step_after = game_state.mode_step;
+    if (mode_step_before != mode_step_after) {
         for (i = 4; i < 19; i++) {
             records[i].flags |= 0x80000000;
         }

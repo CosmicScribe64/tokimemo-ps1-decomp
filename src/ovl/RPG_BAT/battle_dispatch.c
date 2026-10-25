@@ -1,13 +1,13 @@
-/* battle_dispatch.c: src/ovl/RPG_BAT/8013B5B0.c:7: battle stage switch, fight loop, pause and pad-sequence handling; body 8: if (game_state.mode_stage >= 6 && game_state.mode_stage < 0xA) {; 9: func_8013BEA8();. Original object 0x8013B5B0-0x8013C5D0 (config/objects/RPG_BAT.txt). */
-#define MAIN_API_OVERRIDE_cd_command_reset /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in func_8013B5B0 (T-20600) */
+/* battle_dispatch.c: src/ovl/RPG_BAT/8013B5B0.c:7: battle stage switch, fight loop, pause and pad-sequence handling; body 8: if (game_state.mode_stage >= 6 && game_state.mode_stage < 0xA) {; 9: rpg_pause_update();. Original object 0x8013B5B0-0x8013C5D0 (config/objects/RPG_BAT.txt). */
+#define MAIN_API_OVERRIDE_cd_command_reset /* implicit int view: the call's $v0 result moves the promoted state byte unk_1109 to $v1 in rpg_entry (T-20600) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
 s32 cd_command_reset();
 
-void func_8013B5B0(void) {
+void rpg_entry(void) {
     if (game_state.mode_stage >= 6 && game_state.mode_stage < 0xA) {
-        func_8013BEA8();
+        rpg_pause_update();
     }
     if (game_state.mode_stage != 9 && !(game_state.menu_mode & 1)) {
         hud_cursor_update();
@@ -19,58 +19,58 @@ void func_8013B5B0(void) {
     }
     switch (game_state.mode_stage) {
     case 0:
-        func_8014E780();
-        func_80144010();
+        rpg_stage_init();
+        rpg_init_player_state();
         break;
     case 1:
-        func_8013D834();
+        rpg_stage_load_assets_1();
         break;
     case 2:
-        func_8013DC60();
+        rpg_stage_load_assets_2();
         break;
     case 3:
-        func_8014D380();
-        func_80142F70();
+        rpg_stage_asset_addresses();
+        rpg_stage_palettes_load();
         break;
     case 4:
-        func_80141060();
-        func_80141A64();
-        func_801525B0();
-        func_8014B294();
+        rpg_stage_sprites_setup();
+        rpg_stage_hud_setup();
+        rpg_stage_labels_init();
+        rpg_hud_numbers_update();
         mode_stage_next();
         break;
     case 5:
-        func_80153784();
+        rpg_stage_wave_transition();
         break;
     case 6:
         back_clear_switch(0);
-        func_8014B294();
-        if (D_8015EB98 == 0x80000000) {
-            func_80152F30();
+        rpg_hud_numbers_update();
+        if (rpg_encounter == 0x80000000) {
+            rpg_stage_intro_aliens();
         } else {
-            func_801529B4();
+            rpg_stage_intro_slide_in();
         }
         break;
     case 7:
-        func_8014B79C();
-        func_8013D780();
+        rpg_message_update();
+        rpg_stage_start_shout();
         break;
     case 8:
-        if (D_8015EB98 == 0x80000000) {
+        if (rpg_encounter == 0x80000000) {
             audio_bank_start(1, 0x200);
         }
         mode_stage_next();
         break;
     case 9:
-        func_8013B910();
+        rpg_stage_fight();
         break;
     case 10:
         audio_command(0xC1);
         mode_stage_next();
         break;
     case 11:
-        func_8013C32C();
-        func_801528DC();
+        rpg_background_wave();
+        rpg_stage_fade_out();
         break;
     case 12:
         audio_bank_state_reset();
@@ -92,7 +92,7 @@ void func_8013B5B0(void) {
         break;
     case 15:
     default:
-        func_8014E8F4();
+        rpg_exit();
         break;
     }
     if (!(game_state.menu_mode & 1)) {
@@ -102,131 +102,131 @@ void func_8013B5B0(void) {
     hud_cursor_show(0);
 }
 
-s32 func_8013B910(void) {
-    func_8013C32C();
-    if (D_8015EC20 == 3) {
-        D_8015EDF4 += 1;
-        func_801439E0();
-        func_8014B79C();
+s32 rpg_stage_fight(void) {
+    rpg_background_wave();
+    if (rpg_pause_state == 3) {
+        rpg_girl_timer += 1;
+        rpg_girl_update();
+        rpg_message_update();
         return 0;
     } else {
-        if ((game_state.pad_pressed & PAD_CROSS) && D_8015EC24 == 0) {
+        if ((game_state.pad_pressed & PAD_CROSS) && rpg_pause_debounce == 0) {
             audio_command(0x74);
-            if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
-                D_8015EE44.unk_08 = D_8015E744 + 1;
+            if (rpg_message.unk_00 >= 3 && rpg_message.unk_08 >= 3) {
+                rpg_message.unk_08 = rpg_message_line_frames + 1;
             }
         }
-        if (D_8015EDC4 != 0x08000002 && (D_8015EDC4 & 0x08000000) && D_8015EE1C != 1) {
-            if (D_8015EE50.unk_00 == 2 || D_8015EE50.unk_00 == 3) {
-                k_disp_switch(D_8015EE40, 1);
-                k_disp_switch(D_8015EDE8, 0);
+        if (rpg_enemy_action != 0x08000002 && (rpg_enemy_action & 0x08000000) && rpg_over != 1) {
+            if (rpg_menu.unk_00 == 2 || rpg_menu.unk_00 == 3) {
+                k_disp_switch(rpg_label_guest, 1);
+                k_disp_switch(rpg_label_enemy, 0);
             } else {
-                k_disp_switch(D_8015EE40, 0);
-                k_disp_switch(D_8015EDE8, 1);
+                k_disp_switch(rpg_label_guest, 0);
+                k_disp_switch(rpg_label_enemy, 1);
             }
         }
-        if (!(D_8015ED98 & 0xFF0111FF)) {
-            D_8015ED9C += 1;
+        if (!(rpg_player_action & 0xFF0111FF)) {
+            rpg_player_ready_timer += 1;
         }
-        if ((D_8015EDC4 & 0xFF) == 0 && !(D_8015ED98 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EDC4 & 0x1000)) {
-            D_8015EDC8 += 1;
+        if ((rpg_enemy_action & 0xFF) == 0 && !(rpg_player_action & 0xFF) && !(rpg_girl_action & 0xFF) && !(rpg_enemy_action & 0x1000)) {
+            rpg_enemy_timer += 1;
         }
-        if ((D_8015EDC4 & 0xFF) == 0 && !(D_8015ED98 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EDF0 & 0x1000) && !(D_8015EDF0 & 0x80000000)) {
-            D_8015EDF4 += 1;
+        if ((rpg_enemy_action & 0xFF) == 0 && !(rpg_player_action & 0xFF) && !(rpg_girl_action & 0xFF) && !(rpg_girl_action & 0x1000) && !(rpg_girl_action & 0x80000000)) {
+            rpg_girl_timer += 1;
         }
-        func_801439E0(D_8015ED98, D_8015EDF0);
-        func_8013C1CC();
-        func_8013CC90();
-        func_8013C1CC();
-        func_8013C890();
-        func_8013C1CC();
-        func_8013C2A0();
-        func_8014B294();
-        func_8014B79C();
+        rpg_girl_update(rpg_player_action, rpg_girl_action);
+        rpg_check_enemy_defeated();
+        rpg_player_update();
+        rpg_check_enemy_defeated();
+        rpg_enemy_update();
+        rpg_check_enemy_defeated();
+        rpg_start_victory_sequence();
+        rpg_hud_numbers_update();
+        rpg_message_update();
         if (D_8015EE60 == 1) {
-            func_8014C4FC();
+            rpg_popup_bounce_0();
         }
         if (D_8015EE6C == 1) {
-            func_8014C804();
+            rpg_popup_bounce_1();
         }
         if (D_8015EE78 == 1) {
-            func_8014CB0C();
+            rpg_popup_bounce_2();
         }
         if (D_8015EE84 == 1) {
-            func_8014CE14();
+            rpg_popup_bounce_3();
         }
-        if (D_8015EB98 == 0x80000000) {
-            func_8015785C();
+        if (rpg_encounter == 0x80000000) {
+            rpg_alien_scene_flicker();
         }
     }
 }
 
-void func_8013BBF8(void) {
+void rpg_code_entry_update(void) {
     RpgWordTbl10 sp58;
     RpgWordTbl10 sp30;
     s32 ten; /* FAKE: named 10 mentioned first puts the hoisted constant before the counters in the bne operands; real source unknown. T-17107 */
 
     ten = 10;
-    sp58 = D_8015E550;
-    sp30 = D_8015E578;
-    D_8015EBEC.unk_00 = func_80043010();
-    if (D_8015EBEC.unk_00 != D_8015EBEC.unk_04) {
-        D_8015EBEC.unk_04 = D_8015EBEC.unk_00;
-        if ((D_8015EBEC.unk_00 & 0xFFFF) != 0) {
-            if (D_8015EBEC.unk_00 == sp58.v[D_8015EBEC.unk_0C]) {
-                D_8015EBEC.unk_0C += 1;
+    sp58 = rpg_code_sequence_a;
+    sp30 = rpg_code_sequence_b;
+    rpg_code_entry.pad_now = func_80043010();
+    if (rpg_code_entry.pad_now != rpg_code_entry.pad_last) {
+        rpg_code_entry.pad_last = rpg_code_entry.pad_now;
+        if ((rpg_code_entry.pad_now & 0xFFFF) != 0) {
+            if (rpg_code_entry.pad_now == sp58.v[rpg_code_entry.sequence_a_progress]) {
+                rpg_code_entry.sequence_a_progress += 1;
             } else {
-                D_8015EBEC.unk_0C = 0;
+                rpg_code_entry.sequence_a_progress = 0;
             }
-            if (D_8015EBEC.unk_00 == sp30.v[D_8015EBEC.unk_08]) {
-                D_8015EBEC.unk_08 += 1;
+            if (rpg_code_entry.pad_now == sp30.v[rpg_code_entry.sequence_b_progress]) {
+                rpg_code_entry.sequence_b_progress += 1;
             } else {
-                D_8015EBEC.unk_08 = 0;
+                rpg_code_entry.sequence_b_progress = 0;
             }
-            if (ten == D_8015EBEC.unk_0C) {
-                D_8015EBEC.unk_0C = 0;
-                switch (D_8015EB98) {
+            if (ten == rpg_code_entry.sequence_a_progress) {
+                rpg_code_entry.sequence_a_progress = 0;
+                switch (rpg_encounter) {
                 case 0x8000000:
-                    D_8015EDC0 = 1;
+                    rpg_enemy_hit_points = 1;
                     /* fallthrough */
                 case 0x10000:
                 case 0x20000:
                 case 0x40000:
-                    if (D_8015ED94 >= 4) {
-                        D_8015EDA0 = 0x1662;
-                        D_8015ED94 = 0x1662;
+                    if (rpg_player_hit_points >= 4) {
+                        rpg_player_hit_points_maximum = 0x1662;
+                        rpg_player_hit_points = 0x1662;
                     }
                     break;
                 case 0x100000:
-                    if (D_8015ED94 > 0 && D_8015ED94 < 10) {
-                        D_8015EDA0 = 0x1661;
-                        D_8015ED94 = 0x1661;
+                    if (rpg_player_hit_points > 0 && rpg_player_hit_points < 10) {
+                        rpg_player_hit_points_maximum = 0x1661;
+                        rpg_player_hit_points = 0x1661;
                     }
                     /* fallthrough */
                 case 0x80000000:
-                    if (D_8015ED94 >= 2 && D_8015ED94 < 10) {
-                        D_8015EDA0 = 0x1661;
-                        D_8015ED94 = 0x1661;
+                    if (rpg_player_hit_points >= 2 && rpg_player_hit_points < 10) {
+                        rpg_player_hit_points_maximum = 0x1661;
+                        rpg_player_hit_points = 0x1661;
                     }
-                    if (D_8015ED94 >= 10) {
-                        D_8015EDA0 += 1;
-                        D_8015ED94 += 1;
-                        if (D_8015EDA0 >= 0x2710) {
-                            D_8015ED94 = 0x270F;
-                            D_8015EDA0 = 0x270F;
+                    if (rpg_player_hit_points >= 10) {
+                        rpg_player_hit_points_maximum += 1;
+                        rpg_player_hit_points += 1;
+                        if (rpg_player_hit_points_maximum >= 0x2710) {
+                            rpg_player_hit_points = 0x270F;
+                            rpg_player_hit_points_maximum = 0x270F;
                         }
                     }
                     break;
                 }
             }
-            if (ten == D_8015EBEC.unk_08) {
-                D_8015EBEC.unk_08 = 0;
-                switch (D_8015EB98) {
+            if (ten == rpg_code_entry.sequence_b_progress) {
+                rpg_code_entry.sequence_b_progress = 0;
+                switch (rpg_encounter) {
                 case 0x100000:
-                    D_8015ED94 = 1;
+                    rpg_player_hit_points = 1;
                     break;
                 case 0x80000000:
-                    D_8015ED94 = 2;
+                    rpg_player_hit_points = 2;
                     break;
                 case 0x10000:
                 case 0x20000:
@@ -239,114 +239,114 @@ void func_8013BBF8(void) {
     }
 }
 
-void func_8013BEA8(void) {
-    if (D_8015EC20 == 3) {
-        func_8013BBF8();
+void rpg_pause_update(void) {
+    if (rpg_pause_state == 3) {
+        rpg_code_entry_update();
     }
-    D_8015EC24 = D_8015EC24 - 1;
-    if (D_8015EC24 < 0) {
-        D_8015EC24 = 0;
+    rpg_pause_debounce = rpg_pause_debounce - 1;
+    if (rpg_pause_debounce < 0) {
+        rpg_pause_debounce = 0;
     }
-    while (D_8015EC20 == 1 && D_8015EC24 == 0) {
+    while (rpg_pause_state == 1 && rpg_pause_debounce == 0) {
         if (!(func_80043010() & 0x800)) {
             while (1) {
                 if (func_80043010() & 0x800) {
-                    func_8013F15C(0x500, 1, 0);
-                    D_8015EC20 = 0;
-                    func_8013E7C0(0x1C, 0x33, 1, 0);
-                    D_8015EC24 = 2;
+                    rpg_se_play_latched_5xx(0x500, 1, 0);
+                    rpg_pause_state = 0;
+                    rpg_actor_set_animation(0x1C, 0x33, 1, 0);
+                    rpg_pause_debounce = 2;
                     break;
                 }
-                func_8013BBF8();
+                rpg_code_entry_update();
             }
         }
     }
-    if ((game_state.pad_pressed & PAD_START) && D_8015EC24 == 0) {
-        if (!(D_8015EDC4 & 0xFF) && !(D_8015ED98 & 0xFF) && !(D_8015EDF0 & 0xFF) && !(D_8015EE1C & 0xFF) &&
-            D_8015EB9C == 9 && D_8015EC20 == 0 && game_state.mode_stage == 9) {
+    if ((game_state.pad_pressed & PAD_START) && rpg_pause_debounce == 0) {
+        if (!(rpg_enemy_action & 0xFF) && !(rpg_player_action & 0xFF) && !(rpg_girl_action & 0xFF) && !(rpg_over & 0xFF) &&
+            rpg_girl_id == 9 && rpg_pause_state == 0 && game_state.mode_stage == 9) {
             audio_command(0x74);
-            if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
-                D_8015EE44.unk_08 = D_8015E744 - 5;
+            if (rpg_message.unk_00 >= 3 && rpg_message.unk_08 >= 3) {
+                rpg_message.unk_08 = rpg_message_line_frames - 5;
             }
-            func_8013F15C(0x500, 1, 0);
-            D_8015EC20 = 3;
-            D_8015EBEC.unk_0C = 0;
-            D_8015EBEC.unk_08 = 0;
-            D_8015EBEC.unk_04 = 0;
-            func_8013E7C0(0x1C, 0x33, 1, 1);
-            D_8015EC24 = 2;
-        } else if (D_8015EC20 != 0) {
-            func_8013F15C(0x500, 1, 0);
-            D_8015EC20 = 0;
-            func_8013E7C0(0x1C, 0x33, 1, 0);
-            D_8015EC24 = 2;
+            rpg_se_play_latched_5xx(0x500, 1, 0);
+            rpg_pause_state = 3;
+            rpg_code_entry.sequence_a_progress = 0;
+            rpg_code_entry.sequence_b_progress = 0;
+            rpg_code_entry.pad_last = 0;
+            rpg_actor_set_animation(0x1C, 0x33, 1, 1);
+            rpg_pause_debounce = 2;
+        } else if (rpg_pause_state != 0) {
+            rpg_se_play_latched_5xx(0x500, 1, 0);
+            rpg_pause_state = 0;
+            rpg_actor_set_animation(0x1C, 0x33, 1, 0);
+            rpg_pause_debounce = 2;
         } else {
             audio_command(0x74);
-            if (D_8015EE44.unk_00 >= 3 && D_8015EE44.unk_08 >= 3) {
-                D_8015EE44.unk_08 = D_8015E744 - 5;
+            if (rpg_message.unk_00 >= 3 && rpg_message.unk_08 >= 3) {
+                rpg_message.unk_08 = rpg_message_line_frames - 5;
             }
-            func_8013F15C(0x500, 1, 0);
-            D_8015EC20 = 1;
-            D_8015EBEC.unk_0C = 0;
-            D_8015EBEC.unk_08 = 0;
-            D_8015EBEC.unk_04 = 0;
-            func_8013E7C0(0x1C, 0x33, 1, 1);
-            D_8015EC24 = 2;
+            rpg_se_play_latched_5xx(0x500, 1, 0);
+            rpg_pause_state = 1;
+            rpg_code_entry.sequence_a_progress = 0;
+            rpg_code_entry.sequence_b_progress = 0;
+            rpg_code_entry.pad_last = 0;
+            rpg_actor_set_animation(0x1C, 0x33, 1, 1);
+            rpg_pause_debounce = 2;
         }
     }
 }
 
 /* s32 without a return: $v0 stays live at the exit, so as1 leaves the first branch slot as a nop (T-9000) */
-s32 func_8013C1CC(void) {
-    if (!(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF)) {
-        if (D_8015EDC4 & 0x100000) {
-            if (D_8015EBC0 == 0 || D_8015EBC4 == 0 || D_8015EBC8 == 0) {
-                D_8015EE1C = 1;
+s32 rpg_check_enemy_defeated(void) {
+    if (!(rpg_player_action & 0xFF) && !(rpg_enemy_action & 0xFF) && !(rpg_girl_action & 0xFF)) {
+        if (rpg_enemy_action & 0x100000) {
+            if (rpg_delinquent_gauges == 0 || rpg_delinquent_hit_points_1 == 0 || rpg_delinquent_hit_points_2 == 0) {
+                rpg_over = 1;
             }
-        } else if (D_8015EDC4 & 0x600000) {
-            if (D_8015EDC0 == 0) {
-                D_8015EE1C = 1;
+        } else if (rpg_enemy_action & 0x600000) {
+            if (rpg_enemy_hit_points == 0) {
+                rpg_over = 1;
             }
-        } else if ((D_8015EDC4 & 0x08000000) && D_8015EDC0 == 0) {
-            D_8015EE1C = 1;
+        } else if ((rpg_enemy_action & 0x08000000) && rpg_enemy_hit_points == 0) {
+            rpg_over = 1;
         }
     }
 }
 
-void func_8013C2A0(void) {
-    if (D_8015EE1C == 1) {
-        switch (D_8015EB98) {
+void rpg_start_victory_sequence(void) {
+    if (rpg_over == 1) {
+        switch (rpg_encounter) {
         case 0x100000:
-            if (D_8015EDC4 & 0x100000) {
-                func_80139510();
+            if (rpg_enemy_action & 0x100000) {
+                rpg_victory_delinquents();
                 return;
             }
-            func_801596E8();
+            rpg_victory_bancho();
             return;
         case 0x8000000:
-            func_8013F82C();
+            rpg_victory_robot();
             break;
         }
     }
 }
 
-void func_8013C32C(void) {
+void rpg_background_wave(void) {
     s32 endpoint;
     s32 height;
     s32 index;
 
-    if ((D_8015EC4C == 1) && (D_8015EB98 & 0x100000)) {
+    if ((rpg_bg_word_5 == 1) && (rpg_encounter & 0x100000)) {
         index = 0;
-        if (D_8015EC20 != 3) {
-            D_8015EC38 += D_8015EC48;
-            if (D_8015EC38 >= D_8015EC40 * 2) {
-                D_8015EC38 = 0;
+        if (rpg_pause_state != 3) {
+            rpg_bg_word_0 += rpg_bg_word_4;
+            if (rpg_bg_word_0 >= rpg_bg_word_2 * 2) {
+                rpg_bg_word_0 = 0;
             }
         }
         do {
             endpoint = index + 7;
-            height = (rsin(((index % D_8015EC44) << 12) / D_8015EC44 + ((D_8015EC38 << 12) / 2) / D_8015EC40) * D_8015EC3C) >> 13;
-            func_80153F3C(height, (rsin(((endpoint % D_8015EC44) << 12) / D_8015EC44 + ((D_8015EC38 << 12) / 2) / D_8015EC40) * D_8015EC3C) >> 13, index, endpoint, 0, 0);
+            height = (rsin(((index % rpg_bg_word_3) << 12) / rpg_bg_word_3 + ((rpg_bg_word_0 << 12) / 2) / rpg_bg_word_2) * rpg_bg_word_1) >> 13;
+            rpg_wave_strip_draw(height, (rsin(((endpoint % rpg_bg_word_3) << 12) / rpg_bg_word_3 + ((rpg_bg_word_0 << 12) / 2) / rpg_bg_word_2) * rpg_bg_word_1) >> 13, index, endpoint, 0, 0);
             index += 8;
         } while (index != 168);
     }

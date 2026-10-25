@@ -122,7 +122,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
     switch (kind) {
     case 0x0:
         D_8013C360 = 0;
-        k_speed_set(0x10);
+        k_speed_set(TEXT_SPEED_EVERY_SEVENTEEN_FRAMES);
         x[1] = -0x66;
         set_kanji_string(x[1], 0x48, 0, "『 ", 0);
         talk_render(x[1] + 0xE, 0x48, 0, buf, 0, "", "", 0);
@@ -130,7 +130,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         break;
     case 0x6:
         D_8013C360 = 0;
-        k_speed_set(0x10);
+        k_speed_set(TEXT_SPEED_EVERY_SEVENTEEN_FRAMES);
         x[1] = -0x66;
         set_kanji_string(x[1], 0x48, 0, "（ ", 0);
         talk_render(x[1] + 0xE, 0x48, 0, buf, 0, "）", "", 0);
@@ -138,7 +138,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         break;
     case 0x1:
         D_8013C360 = 0;
-        k_speed_set(8);
+        k_speed_set(TEXT_SPEED_EVERY_NINE_FRAMES);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
@@ -157,7 +157,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
         break;
     case 0xC:
         D_8013C360 = 0;
-        k_speed_set(8);
+        k_speed_set(TEXT_SPEED_EVERY_NINE_FRAMES);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
@@ -180,7 +180,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
             return 0;
         }
         D_8013C364 = 0;
-        k_speed_set(8);
+        k_speed_set(TEXT_SPEED_EVERY_NINE_FRAMES);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);
@@ -202,7 +202,7 @@ s32 func_80132420(text, kind, arg2, voices, page, step, color)
             return 0;
         }
         D_8013C364 = 0;
-        k_speed_set(8);
+        k_speed_set(TEXT_SPEED_EVERY_NINE_FRAMES);
         if (voices[page][step][0] != 0) {
             if (D_800CA2AC++ == 0 && D_80122CE4 == 0) {
                 cd_audio_request_set(voices[page][step][0], voices[page][step][1], game_state.current_girl);

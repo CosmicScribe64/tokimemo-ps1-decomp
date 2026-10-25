@@ -54,7 +54,7 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/opening.rodata", opening_lyric_te
 void opening_movie(void) {
     s32 pad; /* FAKE: unused; its stack home gives the original 72-byte frame. T-22007 */
     u8 sp43;
-    s32 sp3C;
+    s32 saved_text_speed;
     u8 sp34[8];
 
     game_state.screen_brightness = 0x80;
@@ -65,8 +65,8 @@ void opening_movie(void) {
     hud_cursor_show(0);
     back_clear_switch(1);
     text_system_reset();
-    sp3C = get_k_speed();
-    k_speed_set(3U);
+    saved_text_speed = get_k_speed();
+    k_speed_set(TEXT_SPEED_SLOW);
     set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_00, 0);
     set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_01, 0);
     set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_02, 0);
@@ -103,7 +103,7 @@ void opening_movie(void) {
     func_80048DD0(0);
     game_mode_set(GAME_MODE_TITLE);
     func_8004ADAC((s32) sp43);
-    k_speed_set((u8) sp3C);
+    k_speed_set((u8) saved_text_speed);
     hud_corner_icon_set(0);
     hud_cursor_actor_init(0);
     hud_cursor_show(0);
@@ -115,7 +115,7 @@ void opening_movie(void) {
 void opening_story_load(void) {
     s32 row;
     s32 addresses[8];
-    u8 step;
+    u8 scene_step;
 
     /* Four address columns per 0x10000-byte bank. T-20010. */
     for (row = 0; row < 2; row++) {
@@ -124,8 +124,8 @@ void opening_story_load(void) {
         addresses[row * 4 + 2] = 0x80188000 + row * 0x10000;
         addresses[row * 4 + 3] = 0x8018C000 + row * 0x10000;
     }
-    step = game_state.substep;
-    switch (step) {
+    scene_step = game_state.substep;
+    switch (scene_step) {
     case 0:
         game_state.screen_brightness = 0x80;
         draw2d3d(1, 0);
@@ -280,7 +280,7 @@ void opening_story_scene(void) {
     s32 tiles[8];
     s32 pad1; /* FAKE: unused, see pad0. T-25604 */
     s32 i;
-    u8 step;
+    u8 scene_step;
 
     /* FAKE: T-25319, T-25604: a reference to unk_F5F before the first branch satisfies the entry
      * rule of tools/cvt_pass.py, so the CVTs of the case 16/17 compares go and F5F is one promoted
@@ -289,8 +289,8 @@ void opening_story_scene(void) {
     for (i = 0; i < 8; i++) {
         tiles[i] = 0x80180000 + i * 0x4000;
     }
-    step = game_state.substep;
-    switch (step) {
+    scene_step = game_state.substep;
+    switch (scene_step) {
     case 0:
         if ((((BgLayer *)&bg_layers)[0].unk_10 = ((BgLayer *)&bg_layers)[0].unk_11 = ((BgLayer *)&bg_layers)[0].unk_12++) >= 0x81U) {
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x01000000;

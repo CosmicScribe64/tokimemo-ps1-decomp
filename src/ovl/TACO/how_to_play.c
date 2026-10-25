@@ -2,20 +2,20 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-/* No return value on purpose: implicit-int function, see func_80137BD8. T-6070 */
-s32 func_80137A60(void) {
+/* No return value on purpose: implicit-int function, see shooter_help_step_init. T-6070 */
+s32 shooter_stage_how_to_play(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80137BD8();
+        shooter_help_step_init();
         break;
     case 1:
-        func_80137D00();
+        shooter_help_step_page1();
         break;
     case 2:
-        func_80137E48();
+        shooter_help_step_page2();
         break;
     case 3:
-        func_80137F54();
+        shooter_help_step_exit();
         break;
     }
     if (game_state.pad_pressed & PAD_CROSS) {
@@ -25,7 +25,7 @@ s32 func_80137A60(void) {
     }
 }
 
-void func_80137B14(s32 arg0) {
+void shooter_setup_help_text(s32 arg0) {
     actor_clear(1);
     D_8011ED15 = 8;
     D_8011ED4C = 0;
@@ -43,7 +43,7 @@ void func_80137B14(s32 arg0) {
 }
 
 /* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
-s32 func_80137BD8(void) {
+s32 shooter_help_step_init(void) {
     switch (game_state.substep) {
     case 0:
         func_800450F4(0, 0x201);
@@ -51,40 +51,40 @@ s32 func_80137BD8(void) {
         dec_bg_reset();
         cd_read_sectors(9U, 0x80162000, 0xB380);
         k_reset(0);
-        D_8015EDEC = 0;
+        shooter_time_left = 0;
         actor_draw_enable(1);
         draw2d3d(1, 0);
-        func_80137B14(1);
+        shooter_setup_help_text(1);
         game_state.substep += 1;
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
             func_800536AC(0x2C0, 0, 0x140, 0xF0);
-            func_80135944();
+            shooter_clear_text_strip();
             mode_step_next();
         }
         break;
     }
 }
 
-void func_80137CBC(s32 arg0) {
+void shooter_play_help_voice(s32 arg0) {
     s32 *p;
     s32 i;
 
     i = arg0; /* FAKE: copy of the argument reproduces the original's `move t6,a0`; real source unknown. T-6070 */
-    p = &D_8015F440[i * 2];
+    p = &shooter_help_voice_table[i * 2];
     cd_audio_request_set(p[0], p[1], 8);
     audio_command(0x300);
 }
 
-void func_80137D00(void) {
+void shooter_help_step_page1(void) {
     u16 *p;
 
     switch (game_state.substep) {
     case 0:
-        if (D_8015EDEC < 3) {
-            func_80137CBC(D_8015EDEC);
-            D_8015EDEC += 1;
+        if (shooter_time_left < 3) {
+            shooter_play_help_voice(shooter_time_left);
+            shooter_time_left += 1;
             game_state.substep += 1;
         } else {
             mode_step_next();
@@ -95,7 +95,7 @@ void func_80137D00(void) {
             p[18] = 0xFF00;
             p[25] = 0xFF00;
             p[32] = 0xFF00;
-            func_80137B14(2);
+            shooter_setup_help_text(2);
             D_8011ED3E -= 0x30;
         }
         break;
@@ -116,12 +116,12 @@ void func_80137D00(void) {
     }
 }
 
-void func_80137E48(void) {
+void shooter_help_step_page2(void) {
     switch (game_state.substep) {
     case 0:
-        if (D_8015EDEC < 8) {
-            func_80137CBC(D_8015EDEC);
-            D_8015EDEC += 1;
+        if (shooter_time_left < 8) {
+            shooter_play_help_voice(shooter_time_left);
+            shooter_time_left += 1;
             game_state.substep += 1;
         } else {
             mode_step_next();
@@ -143,8 +143,8 @@ void func_80137E48(void) {
         D_8011ED3E -= 1;
     }
 }
-void func_80137F54(void) {
-    func_80137CBC(8);
+void shooter_help_step_exit(void) {
+    shooter_play_help_voice(8);
     audio_command(0xB1);
     mode_stage_set(2);
 }

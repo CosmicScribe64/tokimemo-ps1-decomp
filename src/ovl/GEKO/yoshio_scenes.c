@@ -29,17 +29,17 @@ void encounter_yoshio_scene_all_dispatch(void) {
 }
 
 typedef struct {
-    void (*f[43])();
-} FnTbl43; /* size 0xAC */
-extern FnTbl43 encounter_yoshio_scene_all_steps;
+    void (*callbacks[43])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80141AF0.c:32; func_80141BFC at line35 copies this exact43-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterYoshioSceneSteps; /* size 0xAC */
+extern EncounterYoshioSceneSteps encounter_yoshio_scene_all_steps;
 
 void encounter_yoshio_scene_all_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl43 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterYoshioSceneSteps mode_step_callbacks;
 
-    tbl = encounter_yoshio_scene_all_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yoshio_scene_all_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
     if (D_8014755C != 0) {
         portrait_face_update();
     }
@@ -143,76 +143,76 @@ s32 encounter_yoshio_portrait_fade_out(void) {
 void encounter_yoshio_ranked_girl_init(void) {
     /* FAKE: preserve the original 0x480 frame; the unused region
      * above the ranking arrays has no recovered source type. T-24605. */
-    u8 frame_pad[0x420];
-    GameState *g;
-    s16 girl;
-    GekoShorts6 scores;
-    GekoShorts6 girls;
+    u8 fake_frame_pad[0x420];
+    GameState *state_data;
+    s16 candidate_girl;
+    EncounterGirlRankingValues ranked_scores;
+    EncounterGirlRankingValues ranked_girls;
 
-    g = &game_state;
-    scores = encounter_yoshio_rank_scores_init;
-    girls = encounter_yoshio_rank_girls_init;
+    state_data = &game_state;
+    ranked_scores = encounter_yoshio_rank_scores_init;
+    ranked_girls = encounter_yoshio_rank_girls_init;
     game_state.date_girl = GIRL_MIO;
-    /* FAKE: break the equal-priority tie between girls[2] and girls[5],
+    /* FAKE: break the equal-priority tie between ranked_girls[2] and ranked_girls[5],
      * preserving their t3/t4 allocation without emitted code. T-24605. */
-    if (girls.v[2]) {}
+    if (ranked_girls.entries[2]) {}
     /* FAKE: the shared line schedules the record base/stride before
-     * the initial girl index. T-24605. */
-    girl = 9; do {
-        if (g->girls[girl].flags.f.met) {
-            if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[0]) {
-                scores.v[5] = scores.v[4];
-                girls.v[5] = girls.v[4];
-                scores.v[4] = scores.v[3];
-                girls.v[4] = girls.v[3];
-                scores.v[3] = scores.v[2];
-                girls.v[3] = girls.v[2];
-                scores.v[2] = scores.v[1];
-                girls.v[2] = girls.v[1];
-                scores.v[1] = scores.v[0];
-                girls.v[1] = girls.v[0];
-                scores.v[0] = g->girls[girl].tokimeki + g->girls[girl].affection;
-                girls.v[0] = girl;
-            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[1]) {
-                scores.v[5] = scores.v[4];
-                girls.v[5] = girls.v[4];
-                scores.v[4] = scores.v[3];
-                girls.v[4] = girls.v[3];
-                scores.v[3] = scores.v[2];
-                girls.v[3] = girls.v[2];
-                scores.v[2] = scores.v[1];
-                girls.v[2] = girls.v[1];
-                scores.v[1] = g->girls[girl].tokimeki + g->girls[girl].affection;
-                girls.v[1] = girl;
-            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[2]) {
-                scores.v[5] = scores.v[4];
-                girls.v[5] = girls.v[4];
-                scores.v[4] = scores.v[3];
-                girls.v[4] = girls.v[3];
-                scores.v[3] = scores.v[2];
-                girls.v[3] = girls.v[2];
-                scores.v[2] = g->girls[girl].tokimeki + g->girls[girl].affection;
-                girls.v[2] = girl;
-            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[3]) {
-                scores.v[5] = scores.v[4];
-                girls.v[5] = girls.v[4];
-                scores.v[4] = scores.v[3];
-                girls.v[4] = girls.v[3];
-                scores.v[3] = g->girls[girl].tokimeki + g->girls[girl].affection;
-                girls.v[3] = girl;
-            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[4]) {
-                scores.v[5] = scores.v[4];
-                girls.v[5] = girls.v[4];
-                scores.v[4] = g->girls[girl].tokimeki + g->girls[girl].affection;
-                girls.v[4] = girl;
-            } else if ((g->girls[girl].tokimeki + g->girls[girl].affection) >= scores.v[5]) {
-                scores.v[5] = g->girls[girl].tokimeki + g->girls[girl].affection;
-                girls.v[5] = girl;
+     * the initial candidate_girl index. T-24605. */
+    candidate_girl = 9; do {
+        if (state_data->girls[candidate_girl].flags.f.met) {
+            if ((state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection) >= ranked_scores.entries[0]) {
+                ranked_scores.entries[5] = ranked_scores.entries[4];
+                ranked_girls.entries[5] = ranked_girls.entries[4];
+                ranked_scores.entries[4] = ranked_scores.entries[3];
+                ranked_girls.entries[4] = ranked_girls.entries[3];
+                ranked_scores.entries[3] = ranked_scores.entries[2];
+                ranked_girls.entries[3] = ranked_girls.entries[2];
+                ranked_scores.entries[2] = ranked_scores.entries[1];
+                ranked_girls.entries[2] = ranked_girls.entries[1];
+                ranked_scores.entries[1] = ranked_scores.entries[0];
+                ranked_girls.entries[1] = ranked_girls.entries[0];
+                ranked_scores.entries[0] = state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection;
+                ranked_girls.entries[0] = candidate_girl;
+            } else if ((state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection) >= ranked_scores.entries[1]) {
+                ranked_scores.entries[5] = ranked_scores.entries[4];
+                ranked_girls.entries[5] = ranked_girls.entries[4];
+                ranked_scores.entries[4] = ranked_scores.entries[3];
+                ranked_girls.entries[4] = ranked_girls.entries[3];
+                ranked_scores.entries[3] = ranked_scores.entries[2];
+                ranked_girls.entries[3] = ranked_girls.entries[2];
+                ranked_scores.entries[2] = ranked_scores.entries[1];
+                ranked_girls.entries[2] = ranked_girls.entries[1];
+                ranked_scores.entries[1] = state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection;
+                ranked_girls.entries[1] = candidate_girl;
+            } else if ((state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection) >= ranked_scores.entries[2]) {
+                ranked_scores.entries[5] = ranked_scores.entries[4];
+                ranked_girls.entries[5] = ranked_girls.entries[4];
+                ranked_scores.entries[4] = ranked_scores.entries[3];
+                ranked_girls.entries[4] = ranked_girls.entries[3];
+                ranked_scores.entries[3] = ranked_scores.entries[2];
+                ranked_girls.entries[3] = ranked_girls.entries[2];
+                ranked_scores.entries[2] = state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection;
+                ranked_girls.entries[2] = candidate_girl;
+            } else if ((state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection) >= ranked_scores.entries[3]) {
+                ranked_scores.entries[5] = ranked_scores.entries[4];
+                ranked_girls.entries[5] = ranked_girls.entries[4];
+                ranked_scores.entries[4] = ranked_scores.entries[3];
+                ranked_girls.entries[4] = ranked_girls.entries[3];
+                ranked_scores.entries[3] = state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection;
+                ranked_girls.entries[3] = candidate_girl;
+            } else if ((state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection) >= ranked_scores.entries[4]) {
+                ranked_scores.entries[5] = ranked_scores.entries[4];
+                ranked_girls.entries[5] = ranked_girls.entries[4];
+                ranked_scores.entries[4] = state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection;
+                ranked_girls.entries[4] = candidate_girl;
+            } else if ((state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection) >= ranked_scores.entries[5]) {
+                ranked_scores.entries[5] = state_data->girls[candidate_girl].tokimeki + state_data->girls[candidate_girl].affection;
+                ranked_girls.entries[5] = candidate_girl;
             }
         }
-        girl--;
-    } while (girl > 0);
-    game_state.date_girl = (u8)girls.v[5];
+        candidate_girl--;
+    } while (candidate_girl > 0);
+    game_state.date_girl = (u8)ranked_girls.entries[5];
     game_state.current_girl = GIRL_YOSHIO;
     draw2d3d(1, 0);
     actor_draw_enable(1);

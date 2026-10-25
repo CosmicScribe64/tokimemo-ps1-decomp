@@ -133,9 +133,9 @@ s32 holiday_shared_birthday_scene_due(void) {
 void holiday_open_init(void) {
     s32 i;
     s32 r;
-    s32 n;
-    u8 buf[0x104];
-    u8 name[0x20];
+    s32 notice_line_count;
+    u8 holiday_message[0x104];
+    u8 notice_name_buffer[0x20];
 
     /* FAKE: T-20940, the clear on one source line (as1 schedules a line as a unit) gives the original's order
      * of the unrolled stores. */
@@ -181,41 +181,41 @@ void holiday_open_init(void) {
         game_state.menu_cursor_0 = 7;
         sndisp("病気で身体が動かない）", 0, 0x1F);
     } else {
-        n = 0;
+        notice_line_count = 0;
         if (hud_appointment_find_today((s32) game_state.year, (s32) game_state.month, (s32) game_state.day) > 0) {
-            strcpy(buf, "今日は、");
-            get_g_name(name, (s32) ((u32) (game_state.unk_54C[0].w * 8) >> 0x1C));
-            strcat(buf, name);
-            strcat(buf, "とデートだ）");
-            sndisp(buf, 0, 0x1F);
+            strcpy(holiday_message, "今日は、");
+            get_g_name(notice_name_buffer, (s32) ((u32) (game_state.unk_54C[0].w * 8) >> 0x1C));
+            strcat(holiday_message, notice_name_buffer);
+            strcat(holiday_message, "とデートだ）");
+            sndisp(holiday_message, 0, 0x1F);
             game_state.menu_cursor_0 = 9;
-            n = 1;
+            notice_line_count = 1;
         }
         if ((girl_player_sports_club_check() == 1) && (((u32) (game_state.day + 6) / 7U) == 3) && (game_state.weekday == WEEKDAY_SUNDAY)) {
             if (((u8) game_state.month % 3U) == 0) {
-                if (n != 0) {
-                    strcpy(buf, "（");
-                    strcat(buf, "今日は、部活の練習試合だ）");
-                    set_kanji_string(-0x56, 0x42, 0U, buf, 0);
+                if (notice_line_count != 0) {
+                    strcpy(holiday_message, "（");
+                    strcat(holiday_message, "今日は、部活の練習試合だ）");
+                    set_kanji_string(-0x56, 0x42, 0U, holiday_message, 0);
                 } else {
-                    strcpy(buf, "今日は、部活の練習試合だ）");
-                    sndisp(buf, n, 0x1F);
+                    strcpy(holiday_message, "今日は、部活の練習試合だ）");
+                    sndisp(holiday_message, notice_line_count, 0x1F);
                 }
-                n += 1;
+                notice_line_count += 1;
             } else {
-                if (n != 0) {
-                    strcpy(buf, "（");
-                    strcat(buf, "今日は、部活の練習日だ）");
-                    set_kanji_string(-0x56, 0x42, 0U, buf, 0);
+                if (notice_line_count != 0) {
+                    strcpy(holiday_message, "（");
+                    strcat(holiday_message, "今日は、部活の練習日だ）");
+                    set_kanji_string(-0x56, 0x42, 0U, holiday_message, 0);
                 } else {
-                    strcpy(buf, "今日は、部活の練習日だ）");
-                    sndisp(buf, n, 0x1F);
+                    strcpy(holiday_message, "今日は、部活の練習日だ）");
+                    sndisp(holiday_message, notice_line_count, 0x1F);
                 }
-                n += 1;
+                notice_line_count += 1;
             }
             game_state.menu_cursor_0 = 4;
         }
-        if (n == 0) {
+        if (notice_line_count == 0) {
             sndisp("今日は何をしようかな？）", 0, 0x1F);
         }
     }
@@ -252,7 +252,7 @@ void holiday_open_wait_bg(void) {
 
 void holiday_icons_set_available(void) {
     s32 i;
-    s32 n;
+    s32 quit_club_count;
 
     if (hud_appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0) {
         icon_can_use_set(9, 0);
@@ -263,13 +263,13 @@ void holiday_icons_set_available(void) {
         icon_can_use_set(0xE, 0);
     }
     if (game_state.weekday == WEEKDAY_SUNDAY) {
-        n = 0;
+        quit_club_count = 0;
         for (i = 0; i < 11; i++) {
-            if (game_state.clubs[i].unk_03 & 1) {
-                n++;
+            if (game_state.clubs[i].flags & 1) {
+                quit_club_count++;
             }
         }
-        if (n >= 11) {
+        if (quit_club_count >= 11) {
             icon_can_use_set(4, 0);
         }
     } else if ((game_state.player_flags.h >> 12) == 11) {
@@ -296,8 +296,8 @@ void holiday_menu_frame(void) {
 s32 holiday_phone_dial_shortcut(void) {
     s32 i;
     s32 j;
-    u32 k;
-    s32 random;
+    u32 dial_ring_read_index;
+    s32 dial_random_value;
 
     if ((((Actor *)actor_pool)->x < -0x40) && (((Actor *)actor_pool)->x >= -0x4F)
         && (((Actor *)actor_pool)->y < 0x18) && (((Actor *)actor_pool)->y >= -0xF)) {
@@ -326,9 +326,9 @@ s32 holiday_phone_dial_shortcut(void) {
         }
         if (game_state.pad_pressed & 0x70) {
             for (i = 0; i < 13; i++) {
-                k = holiday_dial_key_pos + 7;
-                for (j = 0; j < 7; k++, j++) {
-                    if (holiday_dial_keys[k % 7] != girl_phone_digits[i][j]) {
+                dial_ring_read_index = holiday_dial_key_pos + 7;
+                for (j = 0; j < 7; dial_ring_read_index++, j++) {
+                    if (holiday_dial_keys[dial_ring_read_index % 7] != girl_phone_digits[i][j]) {
                         break;
                     }
                     if ((j == 6) && ((u32)(game_state.girls[i].flags.w << 28) >> 31)) {
@@ -343,9 +343,9 @@ s32 holiday_phone_dial_shortcut(void) {
                                 game_state.menu_cursor_0 = i + 1;
                             }
                         }
-                        random = rand();
+                        dial_random_value = rand();
                         /* The original adds to the full first record word. */
-                        *(s32 *)&game_state.girls[i].tokimeki_fraction += random & 0x7FFF;
+                        *(s32 *)&game_state.girls[i].tokimeki_fraction += dial_random_value & 0x7FFF;
                         if (game_state.player_flags_upper.h & 1) {
                             game_state.param_stress.value += 0x20;
                         }
@@ -374,32 +374,32 @@ s32 holiday_phone_dial_shortcut(void) {
 }
 
 s32 holiday_activity_bg_sector(void) {
-    u8 x;
-    u16 h;
+    u8 queue_index;
+    u16 player_flags_word;
 
-    x = game_state.day_event_index;
-    if (game_state.day_events[x].girl != 4) {
-        return holiday_activity_bg_sectors[game_state.day_events[x].girl];
+    queue_index = game_state.day_event_index;
+    if (game_state.day_events[queue_index].girl != 4) {
+        return holiday_activity_bg_sectors[game_state.day_events[queue_index].girl];
     }
-    h = game_state.player_flags.h;
-    return D_800B6780[h >> 0xC];
+    player_flags_word = game_state.player_flags.h;
+    return D_800B6780[player_flags_word >> 0xC];
 }
 
 s32 holiday_menu_click(void) {
-    s32 pad[4]; /* FAKE: preserves the 0x40 frame and handled at sp+0x2C. T-24501 */
-    s32 handled;
-    s32 girl;
-    s32 other_girl;
+    s32 pad[4]; /* FAKE: preserves the 0x40 frame and confirm_hit at sp+0x2C. T-24501 */
+    s32 confirm_hit;
+    s32 sunday_club_member;
+    s32 weekday_club_member;
 
     /* FAKE: unsigned read of the signed state byte reproduces the original lbu. */
     if (((u8)game_state.icon_mode == ICON_MODE_FREE) && (game_state.pad_held & PAD_L2)) {
         return 1;
     }
     /* FAKE: explicit signed-byte views preserve the selector range across packed stores. */
-    handled = 0;
+    confirm_hit = 0;
     if (game_state.pad_pressed & PAD_CIRCLE) {
         if (*(s8 *)&game_state.menu_cursor_0 >= 0) {
-            handled = 1;
+            confirm_hit = 1;
             cd_audio_command(9, 0, 0);
             audio_command(3);
             if (func_8004480C() == 0) {
@@ -420,18 +420,18 @@ s32 holiday_menu_click(void) {
                         game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
                         game_state.day_events[game_state.day_event_index].scene = hud_command_roll_poor_result(1);
                         ((LastCommandBits *)&game_state.last_command)->icon = *(s8 *)&game_state.menu_cursor_0;
-                        girl = girl_find_by_club((s32) ((u16) game_state.player_flags.h >> 0xC));
+                        sunday_club_member = girl_find_by_club((s32) ((u16) game_state.player_flags.h >> 0xC));
                         /* Shift back extracts flag bit 2 and preserves ugen temporary numbering. T-24501 */
-                        if ((girl != -1) && (((s32)(game_state.girls[girl].flags.u << 29) >> 31) != 0)) {
-                            game_state.girls[girl].affection += 1;
+                        if ((sunday_club_member != -1) && (((s32)(game_state.girls[sunday_club_member].flags.u << 29) >> 31) != 0)) {
+                            game_state.girls[sunday_club_member].affection += 1;
                         }
                         mode_stage_set(6);
                     }
                 } else {
-                    other_girl = girl_find_by_club((s32) ((u16) game_state.player_flags.h >> 0xC));
+                    weekday_club_member = girl_find_by_club((s32) ((u16) game_state.player_flags.h >> 0xC));
                     /* Keep the shift-back extraction here for the same temporary sequence. T-24501 */
-                    if ((other_girl != -1) && (((s32)(game_state.girls[other_girl].flags.u << 29) >> 31) != 0)) {
-                        game_state.girls[other_girl].affection += 1;
+                    if ((weekday_club_member != -1) && (((s32)(game_state.girls[weekday_club_member].flags.u << 29) >> 31) != 0)) {
+                        game_state.girls[weekday_club_member].affection += 1;
                     }
                     game_state.day_events[game_state.day_event_index].girl = *(s8 *)&game_state.menu_cursor_0;
                     game_state.day_events[game_state.day_event_index].scene = hud_command_roll_poor_result(1);
@@ -485,18 +485,18 @@ s32 holiday_menu_click(void) {
             break;
         }
     }
-    return handled;
+    return confirm_hit;
 }
 
 
-s32 appointment_place_candidates(u32 *arg0) {
-    /* FAKE: T-10910, T-24135, padA places cnt at sp+0x2C within the 0xB0 frame, and if (1) around cnt[...]++ reproduces the original branch/delay-slot layout. */
+s32 appointment_place_candidates(u32 *place_choices_out) {
+    /* FAKE: T-10910, T-24135, padA places place_counts at sp+0x2C within the 0xB0 frame, and if (1) around place_counts[...]++ reproduces the original branch/delay-slot layout. */
     s32 padA[1];
-    s32 cnt[32];
+    s32 place_counts[32];
     s32 i;
-    s32 n;
-    s32 m;
-    s32 idx;
+    s32 distinct_place_count;
+    s32 copied_choice_count;
+    s32 place_id;
 
     switch (game_state.unk_54C[0].w & 0x1F) {
     case 16:
@@ -507,60 +507,60 @@ s32 appointment_place_candidates(u32 *arg0) {
         return 1;
     default:
         for (i = 0; i < 32; i++) {
-            cnt[i] = 0;
+            place_counts[i] = 0;
         }
         for (i = 0; i < 8; i++) {
             if (!((AppointmentBits *)&game_state.unk_54C[i])->active) {
                 break;
             }
             if (1) {
-                cnt[((AppointmentBits *)&game_state.unk_54C[i])->place]++;
+                place_counts[((AppointmentBits *)&game_state.unk_54C[i])->place]++;
             }
         }
-        cnt[16] = 0;
-        cnt[17] = 0;
-        cnt[19] = 0;
-        cnt[20] = 0;
-        cnt[18] = 0;
-        n = 0;
-        m = 0;
+        place_counts[16] = 0;
+        place_counts[17] = 0;
+        place_counts[19] = 0;
+        place_counts[20] = 0;
+        place_counts[18] = 0;
+        distinct_place_count = 0;
+        copied_choice_count = 0;
         for (i = 0; i < 32; i++) {
-            if (cnt[i] != 0) {
-                n++;
+            if (place_counts[i] != 0) {
+                distinct_place_count++;
             }
         }
-        if (n < 2) {
-            *arg0 = (u32)(game_state.unk_54C[0].w << 2) >> 31;
+        if (distinct_place_count < 2) {
+            *place_choices_out = (u32)(game_state.unk_54C[0].w << 2) >> 31;
             return 1;
         }
         for (i = 0; i < 8; i++) {
             if (!((AppointmentBits *)&game_state.unk_54C[i])->active) {
                 break;
             }
-            if (cnt[idx = ((AppointmentBits *)&game_state.unk_54C[i])->place] != 0) {
-                arg0[m] = idx;
-                m++;
-                cnt[((AppointmentBits *)&game_state.unk_54C[i])->place] = 0;
-                if (m >= 3) {
+            if (place_counts[place_id = ((AppointmentBits *)&game_state.unk_54C[i])->place] != 0) {
+                place_choices_out[copied_choice_count] = place_id;
+                copied_choice_count++;
+                place_counts[((AppointmentBits *)&game_state.unk_54C[i])->place] = 0;
+                if (copied_choice_count >= 3) {
                     break;
                 }
             }
         }
-        return n;
+        return distinct_place_count;
     }
 }
 
 void appointment_start(void) {
-    /* FAKE: T-24135, 4-byte stack slot above buf[32] places buf at sp+0x2C as in the original. */
+    /* FAKE: T-24135, 4-byte stack slot above place_choices_scratch[32] places place_choices_scratch at sp+0x2C as in the original. */
     s32 pad[1];
-    u32 buf[32];
+    u32 place_choices_scratch[32];
 
     game_state.appointment_place_0 = 0xFF;
     game_state.appointment_place_1 = 0xFF;
     game_state.appointment_place_2 = 0xFF;
     game_state.appointment_place_3 = 0xFF;
     hud_appointment_prompt_noop();
-    if (appointment_place_candidates(buf) >= 2) {
+    if (appointment_place_candidates(place_choices_scratch) >= 2) {
         k_reset(1);
         k_sub_reset_point_set();
         gnsx(game_state.player_family_name);
@@ -588,61 +588,61 @@ void appointment_start(void) {
  * 0x108, and string buffers at 0x3C/0x7C/0xBC. */
 void appointment_place_menu_build(void) {
     s32 top_gap; /* FAKE: reserve the original top stack word. T-24501. */
-    s32 third;
-    s32 second;
-    s32 first;
-    s32 choices[32];
+    s32 third_place;
+    s32 second_place;
+    s32 first_place;
+    s32 place_candidates[32];
     s32 list_gap; /* FAKE: reserve the original word between IDs and buffers. T-24501. */
     s32 temp_hi; /* FAKE: unused original draft scalar retained for the diagnosed stack layout. T-24501. */
-    s32 var_v1_2;
-    u8 text1[64];
-    u8 text2[64];
-    u8 text3[64];
+    s32 first_choice_index;
+    u8 first_place_text[64];
+    u8 second_place_text[64];
+    u8 third_place_text[64];
     s32 i;
     for (i = 0; i < 64; i++) {
-        text1[i] = text2[i] = text3[i] = 0;
+        first_place_text[i] = second_place_text[i] = third_place_text[i] = 0;
     }
-    if (appointment_place_candidates(choices) >= 3) {
-        var_v1_2 = rand() % 3;
-        if (var_v1_2 < 0) {
-            var_v1_2 = 0;
+    if (appointment_place_candidates(place_candidates) >= 3) {
+        first_choice_index = rand() % 3;
+        if (first_choice_index < 0) {
+            first_choice_index = 0;
         }
-        first = choices[var_v1_2 % 3];
-        second = choices[(s32) (var_v1_2 + 1) % 3];
-        third = choices[(s32) (var_v1_2 + 2) % 3];
+        first_place = place_candidates[first_choice_index % 3];
+        second_place = place_candidates[(s32) (first_choice_index + 1) % 3];
+        third_place = place_candidates[(s32) (first_choice_index + 2) % 3];
         game_state.appointment_place_0 = 2;
         x_taku_menu_set(1, 3);
-        strcpy(text1, "『");
-        strcat(text1, place_name_table[first]);
-        strcat(text1, &appointment_choice_suffix);
-        strcpy(text2, "『");
-        strcat(text2, place_name_table[second]);
-        strcat(text2, &appointment_choice_suffix);
-        strcpy(text3, "『");
-        strcat(text3, place_name_table[third]);
-        strcat(text3, &appointment_choice_suffix);
-        x_taku_string_set((s32) text1, (s32) text2, (s32) text3, 3);
+        strcpy(first_place_text, "『");
+        strcat(first_place_text, place_name_table[first_place]);
+        strcat(first_place_text, &appointment_choice_suffix);
+        strcpy(second_place_text, "『");
+        strcat(second_place_text, place_name_table[second_place]);
+        strcat(second_place_text, &appointment_choice_suffix);
+        strcpy(third_place_text, "『");
+        strcat(third_place_text, place_name_table[third_place]);
+        strcat(third_place_text, &appointment_choice_suffix);
+        x_taku_string_set((s32) first_place_text, (s32) second_place_text, (s32) third_place_text, 3);
     } else {
-        var_v1_2 = rand() & 1;
-        if (var_v1_2 < 0) {
-            var_v1_2 = 0;
+        first_choice_index = rand() & 1;
+        if (first_choice_index < 0) {
+            first_choice_index = 0;
         }
-        first = choices[var_v1_2 % 2];
-        second = choices[(s32) (var_v1_2 + 1) % 2];
-        third = 0xFF;
+        first_place = place_candidates[first_choice_index % 2];
+        second_place = place_candidates[(s32) (first_choice_index + 1) % 2];
+        third_place = 0xFF;
         game_state.appointment_place_0 = 1;
         x_taku_menu_set(1, 2);
-        strcpy(text1, "『");
-        strcat(text1, place_name_table[first]);
-        strcat(text1, &appointment_choice_suffix);
-        strcpy(text2, "『");
-        strcat(text2, place_name_table[second]);
-        strcat(text2, &appointment_choice_suffix);
-        x_taku_string_set((s32) text1, (s32) text2, 0, 2);
+        strcpy(first_place_text, "『");
+        strcat(first_place_text, place_name_table[first_place]);
+        strcat(first_place_text, &appointment_choice_suffix);
+        strcpy(second_place_text, "『");
+        strcat(second_place_text, place_name_table[second_place]);
+        strcat(second_place_text, &appointment_choice_suffix);
+        x_taku_string_set((s32) first_place_text, (s32) second_place_text, 0, 2);
     }
-    game_state.appointment_place_1 = (u8) first;
-    game_state.appointment_place_2 = (u8) second;
-    game_state.appointment_place_3 = (u8) third;
+    game_state.appointment_place_1 = (u8) first_place;
+    game_state.appointment_place_2 = (u8) second_place;
+    game_state.appointment_place_3 = (u8) third_place;
 }
 
 s32 appointment_place_choose(void) {
@@ -685,10 +685,10 @@ s32 appointment_place_choose(void) {
 /* Implicit int in the original (no return value): the switch selector then stays live in $v0 (or v0,v1,zero in the
  * delay slot of the first beqz). T-17006 */
 s32 appointment_place_confirm(void) {
-    s32 pad; /* FAKE: T-17006, unused local that reproduces the original stack layout (a 4-byte slot above sp4C; the
+    s32 pad; /* FAKE: T-17006, unused local that reproduces the original stack layout (a 4-byte slot above appointment_message; the
               * buffers are otherwise 4 bytes too high); its real use is unknown. */
-    u8 sp4C[0x100];
-    u8 sp2C[0x20];
+    u8 appointment_message[0x100];
+    u8 appointment_girl_name[0x20];
 
     switch (game_state.substep) {
     case 0:
@@ -696,13 +696,13 @@ s32 appointment_place_confirm(void) {
         k_sub_reset_point_set();
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        strcpy(sp4C, "それじゃ、 ");
-        strcat(sp4C, place_name_table[game_state.appointment_place_0]);
-        strcat(sp4C, "で、 ");
-        get_g_name(sp2C, (u32)(game_state.unk_54C[0].w * 8) >> 0x1C);
-        strcat(sp4C, sp2C);
-        strcat(sp4C, "を待つか。）");
-        sndisp(sp4C, 0, 0x1F);
+        strcpy(appointment_message, "それじゃ、 ");
+        strcat(appointment_message, place_name_table[game_state.appointment_place_0]);
+        strcat(appointment_message, "で、 ");
+        get_g_name(appointment_girl_name, (u32)(game_state.unk_54C[0].w * 8) >> 0x1C);
+        strcat(appointment_message, appointment_girl_name);
+        strcat(appointment_message, "を待つか。）");
+        sndisp(appointment_message, 0, 0x1F);
         k_sub_disp_start(4);
         game_state.substep += 1;
         return;
@@ -719,16 +719,16 @@ void appointment_launch(void) {
     GameState *g;
     s32 i;
     s32 j;
-    s32 arr[3];
+    s32 offered_places[3];
 
     g = &game_state;
-    arr[0] = game_state.appointment_place_1;
-    arr[1] = game_state.appointment_place_2;
-    arr[2] = game_state.appointment_place_3;
+    offered_places[0] = game_state.appointment_place_1;
+    offered_places[1] = game_state.appointment_place_2;
+    offered_places[2] = game_state.appointment_place_3;
     game_state.appointment_place_1 = game_state.unk_54C_0.unk_00;
     for (i = 0, j = 2; i < 3; i++) {
-        if (arr[i] != (g->unk_54C[0].w & 0x1F)) {
-            (&game_state.appointment_place_0)[j] = arr[i];
+        if (offered_places[i] != (g->unk_54C[0].w & 0x1F)) {
+            (&game_state.appointment_place_0)[j] = offered_places[i];
             j++;
         }
     }
@@ -778,100 +778,100 @@ void holiday_mode_stage_activity(void) {
 }
 
 void holiday_activity_pick_sd_set(void) {
-    s32 activity;
-    s32 col;
+    s32 holiday_command;
+    s32 club_partner_column;
 
     D_801230D0 = 0xFF;
     if (hud_in_summer_months() == 1) {
-        activity = game_state.day_events[game_state.day_event_index].girl;
-        if (activity == 4) {
+        holiday_command = game_state.day_events[game_state.day_event_index].girl;
+        if (holiday_command == 4) {
             D_801230D0 = 0xFF;
         } else {
-            D_801230D0 = holiday_sd_set_summer[activity];
+            D_801230D0 = holiday_sd_set_summer[holiday_command];
         }
     } else {
-        activity = game_state.day_events[game_state.day_event_index].girl;
-        if (activity == 4) {
+        holiday_command = game_state.day_events[game_state.day_event_index].girl;
+        if (holiday_command == 4) {
             D_801230D0 = 0xFF;
         } else {
-            D_801230D0 = holiday_sd_set_other[activity];
+            D_801230D0 = holiday_sd_set_other[holiday_command];
         }
     }
     if (D_801230D0 == 0xFF) {
-        col = schedule_command_girl_select(4);
-        if (col != 0) {
-            col = 1;
+        club_partner_column = schedule_command_girl_select(4);
+        if (club_partner_column != 0) {
+            club_partner_column = 1;
         }
         if (hud_in_summer_months() == 1) {
             switch (game_state.player_flags.h >> 12) {
             case 0:
-                D_801230D0 = D_800B6890[0][col];
+                D_801230D0 = D_800B6890[0][club_partner_column];
                 break;
             case 1:
-                D_801230D0 = D_800B6890[1][col];
+                D_801230D0 = D_800B6890[1][club_partner_column];
                 break;
             case 2:
-                D_801230D0 = D_800B6890[2][col];
+                D_801230D0 = D_800B6890[2][club_partner_column];
                 break;
             case 3:
-                D_801230D0 = D_800B6890[3][col];
+                D_801230D0 = D_800B6890[3][club_partner_column];
                 break;
             case 4:
-                D_801230D0 = D_800B6890[4][col];
+                D_801230D0 = D_800B6890[4][club_partner_column];
                 break;
             case 5:
-                D_801230D0 = D_800B6890[5][col];
+                D_801230D0 = D_800B6890[5][club_partner_column];
                 break;
             case 6:
-                D_801230D0 = D_800B6890[6][col];
+                D_801230D0 = D_800B6890[6][club_partner_column];
                 break;
             case 7:
-                D_801230D0 = D_800B6890[7][col];
+                D_801230D0 = D_800B6890[7][club_partner_column];
                 break;
             case 8:
-                D_801230D0 = D_800B6890[8][col];
+                D_801230D0 = D_800B6890[8][club_partner_column];
                 break;
             case 9:
-                D_801230D0 = D_800B6890[9][col];
+                D_801230D0 = D_800B6890[9][club_partner_column];
                 break;
             case 10:
-                D_801230D0 = D_800B6890[10][col];
+                D_801230D0 = D_800B6890[10][club_partner_column];
                 break;
             }
         } else {
             switch (game_state.player_flags.h >> 12) {
             case 0:
-                D_801230D0 = D_800B68A8[0][col];
+                D_801230D0 = D_800B68A8[0][club_partner_column];
                 break;
             case 1:
-                D_801230D0 = D_800B68A8[1][col];
+                D_801230D0 = D_800B68A8[1][club_partner_column];
                 break;
             case 2:
-                D_801230D0 = D_800B68A8[2][col];
+                D_801230D0 = D_800B68A8[2][club_partner_column];
                 break;
             case 3:
-                D_801230D0 = D_800B68A8[3][col];
+                D_801230D0 = D_800B68A8[3][club_partner_column];
                 break;
             case 4:
-                D_801230D0 = D_800B68A8[4][col];
+                D_801230D0 = D_800B68A8[4][club_partner_column];
                 break;
             case 5:
-                D_801230D0 = D_800B68A8[5][col];
+                D_801230D0 = D_800B68A8[5][club_partner_column];
                 break;
             case 6:
-                D_801230D0 = D_800B68A8[6][col];
+                D_801230D0 = D_800B68A8[6][club_partner_column];
                 break;
             case 7:
-                D_801230D0 = D_800B68A8[7][col];
+                D_801230D0 = D_800B68A8[7][club_partner_column];
                 break;
             case 8:
-                D_801230D0 = D_800B68A8[8][col];
+                D_801230D0 = D_800B68A8[8][club_partner_column];
                 break;
             case 9:
-                D_801230D0 = D_800B68A8[9][col];
+                D_801230D0 = D_800B68A8[9][club_partner_column];
                 break;
             case 10:
-                D_801230D0 = D_800B68A8[10][col];
+                D_801230D0 = D_800B68A8[10][club_partner_column];
                 break;
             }
         }
@@ -951,15 +951,15 @@ void holiday_activity_load(void) {
 
 void holiday_activity_sd_setup(void) {
     /* FAKE: T-20940, unused local declared first, as the sibling school_day_sd_actors_init declares its record pointer; IDO gives
-     * every local a slot, so temp spills at sp+0x30 as in the original (sp+0x34 without it). */
+     * every local a slot, so holiday_activity_result_flag spills at sp+0x30 as in the original (sp+0x34 without it). */
     DayEvent *rec;
-    s32 temp;
+    s32 holiday_activity_result_flag;
 
     actor_clear(0x60);
-    temp = game_state.day_events[game_state.day_event_index].scene;
+    holiday_activity_result_flag = game_state.day_events[game_state.day_event_index].scene;
     if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1)) {
         addr_init_else_sd(2);
-        temp = 0;
+        holiday_activity_result_flag = 0;
     } else if (game_state.day_events[game_state.day_event_index].girl == 4) {
         addr_init_club_sd(D_801230D0);
         if (schedule_command_girl_select(4) != 0xF) {
@@ -977,14 +977,14 @@ void holiday_activity_sd_setup(void) {
                 ((Actor *)actor_pool)[97].blink_period = 0x82;
             }
             ((Actor *)actor_pool)[97].unk_43 = 0x10;
-            ((Actor *)actor_pool)[97].sequence_slot = (s16)(temp + 2);
+            ((Actor *)actor_pool)[97].sequence_slot = (s16)(holiday_activity_result_flag + 2);
             ((Actor *)actor_pool)[97].x = -0x18;
             ((Actor *)actor_pool)[97].y = -0x40;
         }
     } else {
         if ((D_801230D0 == 6) || (D_801230D0 == 7)) {
             game_state.day_events[game_state.day_event_index].scene = 0;
-            temp = 0;
+            holiday_activity_result_flag = 0;
         }
         addr_init_holiday_sd(D_801230D0);
     }
@@ -1001,7 +1001,7 @@ void holiday_activity_sd_setup(void) {
         ((Actor *)actor_pool)[96].blink_period = 0x82;
     }
     ((Actor *)actor_pool)[96].unk_43 = 0x10;
-    ((Actor *)actor_pool)[96].sequence_slot = temp;
+    ((Actor *)actor_pool)[96].sequence_slot = holiday_activity_result_flag;
     ((Actor *)actor_pool)[96].x = -0x50;
     ((Actor *)actor_pool)[96].y = -0x40;
     mode_step_next();
@@ -1011,9 +1011,9 @@ void holiday_activity_sd_setup(void) {
  * the `()` declaration): club lives in a1 from its second read on. */
 void holiday_activity_play(void) {
     GameState *gs = &game_state;
-    u8 b;
-    s32 girl;
-    u32 club;
+    u8 club_activity_result_flag;
+    s32 club_member_id;
+    u32 club_id;
 
     if (gs->mode_step_timer.w == 0x20) {
         switch (((Actor *)actor_pool)[96].sequence_slot & 1) {
@@ -1024,8 +1024,8 @@ void holiday_activity_play(void) {
             audio_command(0x502);
             break;
         }
-        b = gs->day_events[gs->day_event_index].scene;
-        parameter_up_down(gs->day_events[gs->day_event_index].girl, 1, b);
+        club_activity_result_flag = gs->day_events[gs->day_event_index].scene;
+        parameter_up_down(gs->day_events[gs->day_event_index].girl, 1, club_activity_result_flag);
         parameter_show_init();
         return;
     }
@@ -1035,35 +1035,35 @@ void holiday_activity_play(void) {
     actor_clear(0x60);
     actor_clear(0x61);
     if ((gs->weekday == WEEKDAY_SUNDAY) && (gs->day_events[gs->day_event_index].girl == 4)
-        && ((club = gs->player_flags.h >> 12) != 11) && (gs->clubs[club].practice_points == 6)) {
-        girl = girl_find_by_club(club);
-        gs->date_girl = girl;
-        if ((girl != -1) && (gs->day_count < 0x2DA)) {
-            club = gs->player_flags.h >> 12;
-            /* Club 10 tests the condition twice: under girl == 0, then again for every girl (the first copy falls
+        && ((club_id = gs->player_flags.h >> 12) != 11) && (gs->clubs[club_id].practice_points == 6)) {
+        club_member_id = girl_find_by_club(club_id);
+        gs->date_girl = club_member_id;
+        if ((club_member_id != -1) && (gs->day_count < 0x2DA)) {
+            club_id = gs->player_flags.h >> 12;
+            /* Club 10 tests the condition twice: under club_member_id == 0, then again for every club_member_id (the first copy falls
              * through into the second). Both copies are in the original. */
-            if (club == 10) {
-                if (girl == 0) {
-                    if (gs->girls[girl].flags.f.b2 && gs->girls[girl].flags.f.met
-                        && !((ClubFlagBits *)&gs->clubs[club])->b29
-                        && !gs->girls[girl].flags.f.b18) {
-                        gs->girls[girl].flags.f.b18 = 1;
-                        game_mode_set(GAME_MODE_CLUB_CAMP_2, club);
+            if (club_id == 10) {
+                if (club_member_id == 0) {
+                    if (gs->girls[club_member_id].flags.f.b2 && gs->girls[club_member_id].flags.f.met
+                        && !((ClubFlagBits *)&gs->clubs[club_id])->b29
+                        && !gs->girls[club_member_id].flags.f.b18) {
+                        gs->girls[club_member_id].flags.f.b18 = 1;
+                        game_mode_set(GAME_MODE_CLUB_CAMP_2, club_id);
                         return;
                     }
                 }
-                if (gs->girls[girl].flags.f.b2 && gs->girls[girl].flags.f.met
-                    && !((ClubFlagBits *)&gs->clubs[club])->b29
-                    && !gs->girls[girl].flags.f.b18) {
-                    gs->girls[girl].flags.f.b18 = 1;
-                    game_mode_set(GAME_MODE_CLUB_CAMP_2, club);
+                if (gs->girls[club_member_id].flags.f.b2 && gs->girls[club_member_id].flags.f.met
+                    && !((ClubFlagBits *)&gs->clubs[club_id])->b29
+                    && !gs->girls[club_member_id].flags.f.b18) {
+                    gs->girls[club_member_id].flags.f.b18 = 1;
+                    game_mode_set(GAME_MODE_CLUB_CAMP_2, club_id);
                     return;
                 }
-            } else if (gs->girls[girl].flags.f.met && gs->girls[girl].flags.f.b2
-                       && !((ClubFlagBits *)&gs->clubs[club])->b29
-                       && !gs->girls[girl].flags.f.b18) {
-                gs->girls[girl].flags.f.b18 = 1;
-                game_mode_set(GAME_MODE_CLUB_CAMP_2, club);
+            } else if (gs->girls[club_member_id].flags.f.met && gs->girls[club_member_id].flags.f.b2
+                       && !((ClubFlagBits *)&gs->clubs[club_id])->b29
+                       && !gs->girls[club_member_id].flags.f.b18) {
+                gs->girls[club_member_id].flags.f.b18 = 1;
+                game_mode_set(GAME_MODE_CLUB_CAMP_2, club_id);
                 return;
             }
         }
@@ -1248,18 +1248,18 @@ void holiday_tel_call(void) {
 /* Implicit int: holiday_tel calls it before this definition. */
 s32 holiday_tel_exit(void) {
     GameState *g = &game_state;
-    s32 k;
+    s32 phone_digit_index;
 
     if (g->substep != 11) {
         if ((g->mode_step_timer.w & 7) == 7) {
             if (g->substep == 0) {
                 audio_command(0x504);
             } else if (g->substep >= 4) {
-                k = g->substep - 4;
+                phone_digit_index = g->substep - 4;
                 if (g->current_girl == GIRL_YOSHIO) {
-                    audio_command((u16)(girl_phone_digits[10][k] + 0x505));
+                    audio_command((u16)(girl_phone_digits[10][phone_digit_index] + 0x505));
                 } else {
-                    audio_command((u16)(girl_phone_digits[g->current_girl][k] + 0x505));
+                    audio_command((u16)(girl_phone_digits[g->current_girl][phone_digit_index] + 0x505));
                 }
             }
             g->substep++;
@@ -1348,7 +1348,7 @@ void holiday_club_init(void) {
 }
 
 void holiday_club_select(void) {
-    u8 buf[72];
+    u8 club_departure_message[72];
     GameState *gs;
 
     menu_check(1, (s32) ((Actor *)actor_pool)->x, (s32) ((Actor *)actor_pool)->y);
@@ -1366,13 +1366,13 @@ void holiday_club_select(void) {
         case 1:
             mode_step_set((game_state.mode_step + 2) & 0xFF);
             text_system_reset();
-            strcpy(buf, club_name_table[(u16) game_state.player_flags.h >> 0xC]);
-            strcat(buf, "部を退部した。");
-            sndi(buf, 0, 0xFF);
+            strcpy(club_departure_message, club_name_table[(u16) game_state.player_flags.h >> 0xC]);
+            strcat(club_departure_message, "部を退部した。");
+            sndi(club_departure_message, 0, 0xFF);
             gs = &game_state;
             /* FAKE: T-17006, a bit-field store through the borrowed GirlFlagBits view (one ugen temporary more than
              * `|= 1`, so the original's t6..t0 numbering); the record's real bit-field layout is unknown. */
-            ((GirlFlagBits *)&gs->clubs[game_state.player_flags.h >> 12].unk_03)->b0 = 1;
+            ((GirlFlagBits *)&gs->clubs[game_state.player_flags.h >> 12].flags)->b0 = 1;
             gs->player_flags.b[1] = (gs->player_flags.b[1] & 0xFF0F) | 0xB0;
             k_disp_start(1);
             break;

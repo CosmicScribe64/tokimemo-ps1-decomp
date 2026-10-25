@@ -4,7 +4,7 @@
 
 /* Sets the UVs of a sprite POLY_FT4 (flip mode at +0x28, clamped to 0..255) and optionally scales (+0x2B) and
  * rotates (+0x2C) its corners with the parameters in q. T-11840 */
-void func_80141450(u8 *arg0, TtSprXform *q) {
+void tt_sprite_packet_transform(u8 *arg0, TtSpriteTransform *q) {
     s32 w;
     s32 h;
     s32 cu;
@@ -132,11 +132,11 @@ void func_80141450(u8 *arg0, TtSprXform *q) {
 }
 
 /* The two stores of the 0x2C packet share one line (as1 keeps the li order). */
-void func_80141A1C(TtOtTag *arg0, u8 *arg1, s32 arg2) {
+void tt_sprite8_submit(TtOtTag *arg0, u8 *arg1, s32 arg2) {
     s32 pad; /* FAKE: unused home keeps the 72-byte frame and the spill slot at sp+0x3C. T-11000 */
-    TtDrawBuffer80B8 *buffer;
+    TtDrawBuffer *buffer;
     DR_MODE *m;
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     if (arg1[0x2C] == 0 && arg1[0x2B] == 0 && arg1[0x28] == 0) {
         ((TtOtTag *)arg1)->len = 3;
         arg1[7] = 0x74;
@@ -172,15 +172,15 @@ void func_80141A1C(TtOtTag *arg0, u8 *arg1, s32 arg2) {
     }
     *(s16 *)(arg1 + 0x10) = 8;
     *(s16 *)(arg1 + 0x12) = 8;
-    func_80141450(arg1, arg2);
+    tt_sprite_packet_transform(arg1, arg2);
     ((TtOtTag *)arg1)->addr = arg0->addr;
     arg0->addr = (u32)arg1;
 }
-void func_80141C6C(TtOtTag *arg0, u8 *arg1, s32 arg2) {
+void tt_sprite16_submit(TtOtTag *arg0, u8 *arg1, s32 arg2) {
     s32 pad; /* FAKE: unused home keeps the 72-byte frame and the spill slot at sp+0x3C. T-11500 */
-    TtDrawBuffer80B8 *buffer;
+    TtDrawBuffer *buffer;
     DR_MODE *m;
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     if (arg1[0x2C] == 0 && arg1[0x2B] == 0 && arg1[0x28] == 0) {
         ((TtOtTag *)arg1)->len = 3;
         arg1[7] = 0x7C;
@@ -216,16 +216,16 @@ void func_80141C6C(TtOtTag *arg0, u8 *arg1, s32 arg2) {
     }
     *(s16 *)(arg1 + 0x10) = 0x10;
     *(s16 *)(arg1 + 0x12) = 0x10;
-    func_80141450(arg1, arg2);
+    tt_sprite_packet_transform(arg1, arg2);
     ((TtOtTag *)arg1)->addr = arg0->addr;
     arg0->addr = (u32)arg1;
 }
 
-void func_80141EBC(TtOtTag *arg0, u8 *arg1, s32 arg2) {
+void tt_sprite_sized_submit(TtOtTag *arg0, u8 *arg1, s32 arg2) {
     s32 pad; /* FAKE: unused home keeps the 72-byte frame and the spill slot at sp+0x3C. T-11500 */
-    TtDrawBuffer80B8 *buffer;
+    TtDrawBuffer *buffer;
     DR_MODE *m;
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     if (arg1[0x2C] == 0 && arg1[0x2B] == 0 && arg1[0x28] == 0) {
         ((TtOtTag *)arg1)->len = 4;
         arg1[7] = 0x64;
@@ -259,7 +259,7 @@ void func_80141EBC(TtOtTag *arg0, u8 *arg1, s32 arg2) {
     } else {
         arg1[7] &= ~1;
     }
-    func_80141450(arg1, arg2);
+    tt_sprite_packet_transform(arg1, arg2);
     ((TtOtTag *)arg1)->addr = arg0->addr;
     arg0->addr = (u32)arg1;
 }

@@ -1,211 +1,211 @@
-/* player_attack_guard.c: src/ovl/RPG_BAT/8013AD50.c:4: basic attack and guard; body 5: if (!(D_8015EDF0 & 0xFF)) {; 8: if (*(s32 *)0x8015ED98 & 0x100) {. Original object 0x8013AD50-0x8013B5B0 (config/objects/RPG_BAT.txt). */
+/* player_attack_guard.c: src/ovl/RPG_BAT/8013AD50.c:4: basic attack and guard; body 5: if (!(rpg_girl_action & 0xFF)) {; 8: if (*(s32 *)0x8015ED98 & 0x100) {. Original object 0x8013AD50-0x8013B5B0 (config/objects/RPG_BAT.txt). */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-void func_8013AD50(void) {
-    if (!(D_8015EDF0 & 0xFF)) {
-        /* FAKE: absolute address instead of D_8015ED98: the original's lui and lw use different registers
-         * (as in func_8013D030, T-4010). T-16210 */
+void rpg_player_guard(void) {
+    if (!(rpg_girl_action & 0xFF)) {
+        /* FAKE: absolute address instead of rpg_player_action: the original's lui and lw use different registers
+         * (as in rpg_player_pose_idle, T-4010). T-16210 */
         if (*(s32 *)0x8015ED98 & 0x100) {
-            func_8013E7C0(0x30, 3, 1, 1);
+            rpg_actor_set_animation(0x30, 3, 1, 1);
         } else {
-            func_8013D030();
+            rpg_player_pose_idle();
         }
     }
-    /* FAKE: D_8015EDB4 reached through D_8015EDA8 (one base symbol keeps the switch load after the store,
-     * T-4070); the real aggregate over D_8015EDA8..D_8015EDB8 is not declared yet. T-16210 */
-    D_8015EDA8[3] += 1;
-    switch (D_8015EDA8[1]) {
+    /* FAKE: rpg_player_timer reached through rpg_player_action_words (one base symbol keeps the switch load after the store,
+     * T-4070); the real aggregate over rpg_player_action_words..rpg_player_timer_2 is not declared yet. T-16210 */
+    rpg_player_action_words[3] += 1;
+    switch (rpg_player_action_words[1]) {
     case 0:
-        if (!(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF)) {
-            if (D_8015EDB4 >= 0x97) {
-                D_8015ED98 = 0x104;
-                /* FAKE: D_8015EDA0 read through D_8015ED98 so that as1 keeps the load after the store; the
+        if (!(rpg_enemy_action & 0xFF) && !(rpg_girl_action & 0xFF)) {
+            if (rpg_player_timer >= 0x97) {
+                rpg_player_action = 0x104;
+                /* FAKE: rpg_player_hit_points_maximum read through rpg_player_action so that as1 keeps the load after the store; the
                  * original probably had one aggregate over these words. T-16210 */
-                D_8015EDA4 = (&D_8015ED98)[2] / 20;
-                if (D_8015EDA4 == 0) {
-                    D_8015EDA4 = 1;
+                rpg_player_guard_heal = (&rpg_player_action)[2] / 20;
+                if (rpg_player_guard_heal == 0) {
+                    rpg_player_guard_heal = 1;
                 }
-                strcpy(D_8015E74C, game_state.player_family_name);
-                strcat(D_8015E74C, "の体力が５％回復した");
-                func_8014B738(&D_8015E814, 1, 0x3C);
-                func_8014EBA8();
+                strcpy(rpg_text_player_0, game_state.player_family_name);
+                strcat(rpg_text_player_0, "の体力が５％回復した");
+                rpg_message_show(&rpg_text_player_pointers, 1, 0x3C);
+                rpg_player_step_next();
             }
         }
         break;
     case 1:
-        func_8014EE3C(1);
+        rpg_player_wait_msg_step(1);
         break;
     case 2:
-        func_8013EA60(0, 0x21, D_8015EDA4, 0);
-        func_8013F15C(0x502, 1, 0);
-        func_8014EBA8();
+        rpg_apply_damage(0, 0x21, rpg_player_guard_heal, 0);
+        rpg_se_play_latched_5xx(0x502, 1, 0);
+        rpg_player_step_next();
         break;
     case 3:
-        func_8014ED44(0x14);
+        rpg_player_wait_step(0x14);
         break;
     case 4:
-        func_8014EBEC();
-        D_8015ED9C = func_801445E8(1);
+        rpg_player_action_end();
+        rpg_player_ready_timer = rpg_player_ready_delay(1);
         break;
     }
 }
 
-void func_8013AF1C(void) {
-    switch (D_8015EDAC) {
+void rpg_player_attack(void) {
+    switch (rpg_player_step) {
     case 0:
-        func_80144480();
-        func_8013EFD0(D_8015EBAC);
-        func_80148F70();
-        func_8013E7C0(0x30, 1, 1, 1);
-        func_8014EBA8();
+        rpg_pick_target();
+        rpg_set_target_position_alt(rpg_enemy_slot);
+        rpg_player_damage_roll();
+        rpg_actor_set_animation(0x30, 1, 1, 1);
+        rpg_player_step_next();
         return;
     case 1:
-        func_8013E97C(0x30, -D_8015EDB4, 0);
-        D_8015EDB4 += 3;
-        if (D_8015EDB4 >= 0x21) {
-            func_8013E97C(0x30, -0x20, 0);
-            func_8013E7C0(0x30, 0, 1, 1);
-            func_8014EBA8();
+        rpg_actor_set_position(0x30, -rpg_player_timer, 0);
+        rpg_player_timer += 3;
+        if (rpg_player_timer >= 0x21) {
+            rpg_actor_set_position(0x30, -0x20, 0);
+            rpg_actor_set_animation(0x30, 0, 1, 1);
+            rpg_player_step_next();
             return;
         }
     default:
         return;
     case 2:
-        strcpy(D_8015E74C, game_state.player_family_name);
-        strcat(D_8015E74C, "の攻撃");
-        if (D_8015EBB0 == 0) {
-            strcpy(D_8015E774, D_8015E74C);
-            strcat(D_8015E774, "は失敗した");
+        strcpy(rpg_text_player_0, game_state.player_family_name);
+        strcat(rpg_text_player_0, "の攻撃");
+        if (rpg_damage == 0) {
+            strcpy(rpg_text_player_1, rpg_text_player_0);
+            strcat(rpg_text_player_1, "は失敗した");
         } else {
-            func_8014D11C(D_8015E774, game_state.player_family_name, "は", D_8015EBB0, "のダメージを与えた");
+            rpg_message_format_damage(rpg_text_player_1, game_state.player_family_name, "は", rpg_damage, "のダメージを与えた");
         }
-        func_8014B738(&D_8015E814, 2, 0x3C);
-        D_8015EE48 = 3;
-        func_8013E97C(0x31, D_8015EC28, D_8015EC2C);
-        func_8014EBA8();
+        rpg_message_show(&rpg_text_player_pointers, 2, 0x3C);
+        rpg_message_mode = 3;
+        rpg_actor_set_position(0x31, rpg_target_x, rpg_target_y);
+        rpg_player_step_next();
         return;
     case 3:
-        func_8014ED44(0x19);
+        rpg_player_wait_step(0x19);
         return;
     case 4:
-        if (D_8015EBB0 < 0xC8) {
-            D_8015EC74 = 1;
-        } else if (D_8015EBB0 < 0x1F4) {
-            D_8015EC74 = 2;
-        } else if (D_8015EBB0 < 0x320) {
-            D_8015EC74 = 3;
-        } else if (D_8015EBB0 < 0x44C) {
-            D_8015EC74 = 4;
-        } else if (D_8015EBB0 < 0x514) {
-            D_8015EC74 = 5;
-        } else if (D_8015EBB0 == 0x270F) {
-            D_8015EC74 = 0xA;
+        if (rpg_damage < 0xC8) {
+            rpg_scratch = 1;
+        } else if (rpg_damage < 0x1F4) {
+            rpg_scratch = 2;
+        } else if (rpg_damage < 0x320) {
+            rpg_scratch = 3;
+        } else if (rpg_damage < 0x44C) {
+            rpg_scratch = 4;
+        } else if (rpg_damage < 0x514) {
+            rpg_scratch = 5;
+        } else if (rpg_damage == 0x270F) {
+            rpg_scratch = 0xA;
         } else {
-            D_8015EC74 = 6;
+            rpg_scratch = 6;
         }
         D_80121316 = 0x82;
         D_8012135A = 0x82;
-        func_8014EBA8();
+        rpg_player_step_next();
         return;
     case 5:
-        if (D_8015EBB0 == 0) {
-            func_8013B534();
+        if (rpg_damage == 0) {
+            rpg_player_attack_miss_swing();
             return;
         }
-        func_8013B2F0();
+        rpg_player_attack_hit_flurry();
         return;
     case 6:
-        D_8015EE48 = 1;
+        rpg_message_mode = 1;
         D_80121316 = 1;
         D_8012135A = 1;
-        func_8014EE3C(1);
+        rpg_player_wait_msg_step(1);
         return;
     case 7:
-        func_8013EA60(0, D_8015EBAC, D_8015EBB0, 1);
-        func_8013E7C0(0x30, 2, 1, 1);
-        func_8014EBA8();
+        rpg_apply_damage(0, rpg_enemy_slot, rpg_damage, 1);
+        rpg_actor_set_animation(0x30, 2, 1, 1);
+        rpg_player_step_next();
         return;
     case 8:
-        func_8013E97C(0x30, D_8015EDB4 - 0x20, 0);
-        D_8015EDB4 += 3;
-        if (D_8015EDB4 >= 0x21) {
-            func_8013E97C(0x30, 0, 0);
-            func_8013E7C0(0x30, 0, 1, 1);
-            func_8014EBA8();
+        rpg_actor_set_position(0x30, rpg_player_timer - 0x20, 0);
+        rpg_player_timer += 3;
+        if (rpg_player_timer >= 0x21) {
+            rpg_actor_set_position(0x30, 0, 0);
+            rpg_actor_set_animation(0x30, 0, 1, 1);
+            rpg_player_step_next();
             return;
         }
         break;
     case 9:
-        func_8014EE3C(0);
+        rpg_player_wait_msg_step(0);
         return;
     case 10:
-        func_8014ED44(0x14);
+        rpg_player_wait_step(0x14);
         return;
     case 11:
-        func_8014EBEC();
+        rpg_player_action_end();
         break;
     }
 }
 
-s32 func_8013B2F0(void) {
+s32 rpg_player_attack_hit_flurry(void) {
 
-    if (!(D_8015EC74 & 1)) {
-        switch (D_8015EDB0.unk_00) {
+    if (!(rpg_scratch & 1)) {
+        switch (rpg_player_channel.unk_00) {
         case 0:
-            func_8013E7C0(0x30, 6, 5, 1);
-            func_8014EBD0();
+            rpg_actor_set_animation(0x30, 6, 5, 1);
+            rpg_player_substep_next();
             return;
         case 1:
             /* FAKE: s32 view and dead test keep counter in v1; source unknown. T-9730. */
-            if (!D_8015EC74) {
+            if (!rpg_scratch) {
             }
-            func_8014ED80(4);
+            rpg_player_wait_substep(4);
             return;
         case 2:
-            func_8013E810(0x31, 0xB, 5, 1);
-            func_8013F15C(0x501, 1, 0);
-            func_8014EBD0();
+            rpg_actor_set_animation_alt(0x31, 0xB, 5, 1);
+            rpg_se_play_latched_5xx(0x501, 1, 0);
+            rpg_player_substep_next();
             return;
         case 3:
-            if (func_8013E90C(0x31) != 0) {
-                func_8013E810(0x31, 0xFF, 1, 0);
+            if (rpg_actor_is_idle(0x31) != 0) {
+                rpg_actor_set_animation_alt(0x31, 0xFF, 1, 0);
             }
-            if (func_8013E90C(0x30) != 0) {
-                func_8013E810(0x31, 0xFF, 1, 0);
-                if (--D_8015EC74 == 0) {
-                    func_8014EBA8();
+            if (rpg_actor_is_idle(0x30) != 0) {
+                rpg_actor_set_animation_alt(0x31, 0xFF, 1, 0);
+                if (--rpg_scratch == 0) {
+                    rpg_player_step_next();
                     return;
                 }
-                D_8015EDB0.unk_00 = 0;
+                rpg_player_channel.unk_00 = 0;
             }
             break;
         }
     } else {
-        switch (D_8015EDB0.unk_00) {
+        switch (rpg_player_channel.unk_00) {
         case 0:
-            func_8013E7C0(0x30, 6, 5, 1);
-            func_8014EBD0();
+            rpg_actor_set_animation(0x30, 6, 5, 1);
+            rpg_player_substep_next();
             return;
         case 1:
-            func_8014ED80(4);
+            rpg_player_wait_substep(4);
             return;
         case 2:
-            func_8013E810(0x31, 0xC, 5, 1);
-            func_8013F15C(0x501, 1, 0);
-            func_8014EBD0();
+            rpg_actor_set_animation_alt(0x31, 0xC, 5, 1);
+            rpg_se_play_latched_5xx(0x501, 1, 0);
+            rpg_player_substep_next();
             return;
         case 3:
-            if (func_8013E90C(0x31) != 0) {
-                func_8013E810(0x31, 0xFF, 1, 0);
+            if (rpg_actor_is_idle(0x31) != 0) {
+                rpg_actor_set_animation_alt(0x31, 0xFF, 1, 0);
             }
-            if (func_8013E90C(0x30) != 0) {
-                func_8013E810(0x31, 0xFF, 1, 0);
-                if (--D_8015EC74 == 0) {
-                    func_8014EBA8();
+            if (rpg_actor_is_idle(0x30) != 0) {
+                rpg_actor_set_animation_alt(0x31, 0xFF, 1, 0);
+                if (--rpg_scratch == 0) {
+                    rpg_player_step_next();
                     return;
                 }
-                D_8015EDB0.unk_00 = 0;
+                rpg_player_channel.unk_00 = 0;
             } else {
                 return;
             }
@@ -214,15 +214,15 @@ s32 func_8013B2F0(void) {
     }
 }
 
-void func_8013B534(void) {
-    switch (D_8015EDB0.unk_00) {
+void rpg_player_attack_miss_swing(void) {
+    switch (rpg_player_channel.unk_00) {
     case 0:
-        func_8013E7C0(0x30, 6, 5, 1);
-        func_8014EBD0();
+        rpg_actor_set_animation(0x30, 6, 5, 1);
+        rpg_player_substep_next();
         break;
     case 1:
-        if (func_8013E90C(0x30) != 0) {
-            func_8014EBA8();
+        if (rpg_actor_is_idle(0x30) != 0) {
+            rpg_player_step_next();
         }
         break;
     }

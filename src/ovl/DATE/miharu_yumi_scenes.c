@@ -12,12 +12,12 @@ void date_scene_yumi_summer_load_data(void) {
 }
 
 void date_scene_yumi_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl44 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl44 step_handlers;
 
-    tbl = date_scene_yumi_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yumi_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_yumi_autumn_load_data(void) {
@@ -27,14 +27,14 @@ void date_scene_yumi_autumn_load_data(void) {
 }
 
 void date_scene_yumi_winter(void) {
-    s32 idx;
-    DateDispatch8015A288 tbl;
-    tbl = date_scene_yumi_winter_steps;
+    s32 step_index;
+    DateYumiWinterSteps step_handlers;
+    step_handlers = date_scene_yumi_winter_steps;
     if ((game_state.mode_step >= 0x1D) && (game_state.mode_step < 0x26)) {
         hud_sprite_light_effect_draw();
     }
-    idx = game_state.mode_step;
-    tbl.f[idx](0x3C);
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x3C);
 }
 
 void date_scene_yumi_winter_audio_command_1(void) {
@@ -81,12 +81,12 @@ void date_scene_miharu_start(void) {
 }
 
 void date_scene_miharu_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateMiharuSceneSteps step_handlers;
 
-    tbl = date_scene_miharu_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_miharu_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_miharu_restore_girl(void) {
@@ -101,13 +101,13 @@ void date_scene_miharu_spring_read_portrait(void) {
 }
 
 void date_scene_miharu_summer(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateMiharuSceneSteps step_handlers;
 
-    tbl = date_scene_miharu_summer_steps;
+    step_handlers = date_scene_miharu_summer_steps;
     hud_sprite_light_effect_draw();
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_miharu_summer_read_portrait(void) {

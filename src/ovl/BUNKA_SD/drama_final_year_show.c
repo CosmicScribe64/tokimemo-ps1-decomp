@@ -171,7 +171,7 @@ void func_80136BFC(void) {
 
 void func_80136EDC(void) {
     func_80136F3C();
-    k_speed_set(5);
+    k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
     D_8013CEBC = 0;
     D_8013CEC8 = 1;
     D_8013CECC = 0;

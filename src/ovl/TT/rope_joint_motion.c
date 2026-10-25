@@ -5,7 +5,7 @@
 /* Rope update: turn the head angle (+0x99C, s16[32]) towards the target with wrap at 0x400/0xC00, clamp the head
  * length (+0x11C, s32[32]), shift the per-segment history rows (+0x9DC s16[32][16], +0x19C s32[32][16]) and
  * rebuild the segment positions (+0x1C x, +0x9C y). */
-void func_801410A0(u8 *s) {
+void tt_rope_update(u8 *s) {
     s32 dx;
     s32 dy;
     s32 n;

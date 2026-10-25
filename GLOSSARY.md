@@ -347,6 +347,7 @@ the first name that uses it.
 | `ovl` | overlay | O.BIN, patch |
 | `param` | parameter | O.BIN |
 | `prim` | GPU primitive | SDK |
+| `rgb` | red, green and blue color channels | packed GPU and menu colors |
 | `rpg` | role-playing game (the RPG battle) | strings |
 | `sd` | super-deformed sprite | disc, O.BIN |
 | `src` | source; a parameter name of copy-like functions | SDK (`strcpy`) |

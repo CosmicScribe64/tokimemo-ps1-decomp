@@ -728,21 +728,21 @@ void encounter_scene_scripts_bind(void);
 #ifndef OVL_GEKO_CALLBACK_T9610
 #define OVL_GEKO_CALLBACK_T9610
 /* Complete local-copy dispatch table in encounter_miharu_scene_four_step_dispatch. */
-typedef struct GekoCallbacks64 {
-    /* 0x00 */ void (*callback[64])();
-} GekoCallbacks64; /* size 0x100 */
-extern GekoCallbacks64 encounter_miharu_scene_four_steps;
+typedef struct EncounterMiharuClosingSteps {
+    /* 0x00 */ void (*callback[64])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:731; 64 callbacks copied in Miharu scene4 dispatcher. Fixed-width declarations, offsets and all override views retained. */
+} EncounterMiharuClosingSteps; /* size 0x100 */
+extern EncounterMiharuClosingSteps encounter_miharu_scene_four_steps;
 void encounter_miharu_scene_four_step_dispatch(void);
 #endif
 
 #ifndef OVL_GEKO_THRESHOLDS_T9780
 #define OVL_GEKO_THRESHOLDS_T9780
 /* Threshold table copied by encounter_walk_home_topic_offer. */
-typedef struct GekoThresholds {
-    /* 0x00 */ s16 threshold[11];
-} GekoThresholds; /* size 0x16 */
-extern GekoThresholds encounter_walk_home_topic_replace_thresholds;
-s32 encounter_walk_home_topic_offer(s16 arg0);
+typedef struct EncounterGirlThresholds {
+    /* 0x00 */ s16 by_girl[11]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:741; 11 signed per-girl thresholds; topic-offer and birthday checks. Fixed-width declarations, offsets and all override views retained. */
+} EncounterGirlThresholds; /* size 0x16 */
+extern EncounterGirlThresholds encounter_walk_home_topic_replace_thresholds;
+s32 encounter_walk_home_topic_offer(s16 topic);
 void encounter_megumi_still_fade_out(void);
 void encounter_megumi_still_fade_in(void);
 
@@ -761,20 +761,20 @@ void encounter_invite_progress_place_override(void);
  * and the reads of the copy; the size comment is the size the copy moves. */
 
 /* Days per month (31, 28, 31, 30, ...) or a per-month value; the February entry is patched for leap years. */
-typedef struct GekoMonthDays {
-    /* 0x00 */ s16 day[12];
-} GekoMonthDays; /* size 0x18 */
-extern GekoThresholds encounter_walk_home_birthday_thresholds; /* encounter_walk_home_birthday_topic_check; the same values as encounter_walk_home_topic_replace_thresholds */
-extern GekoMonthDays encounter_walk_home_birthday_month_days;  /* encounter_walk_home_birthday_topic_check */
-extern GekoMonthDays encounter_walk_home_scan_month_days;  /* encounter_walk_home_topic_select */
-extern GekoMonthDays encounter_invite_month_days;  /* encounter_invite_place_select_init */
-extern GekoMonthDays encounter_invite_sunday_month_days;  /* encounter_invite_sunday_component */
+typedef struct EncounterMonthDays {
+    /* 0x00 */ s16 days_in_month[12]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:764; 12 calendar month lengths; leap-day patch and rollover arithmetic. Fixed-width declarations, offsets and all override views retained. */
+} EncounterMonthDays; /* size 0x18 */
+extern EncounterGirlThresholds encounter_walk_home_birthday_thresholds; /* encounter_walk_home_birthday_topic_check; the same values as encounter_walk_home_topic_replace_thresholds */
+extern EncounterMonthDays encounter_walk_home_birthday_month_days;  /* encounter_walk_home_birthday_topic_check */
+extern EncounterMonthDays encounter_walk_home_scan_month_days;  /* encounter_walk_home_topic_select */
+extern EncounterMonthDays encounter_invite_month_days;  /* encounter_invite_place_select_init */
+extern EncounterMonthDays encounter_invite_sunday_month_days;  /* encounter_invite_sunday_component */
 
 /* Twelve SJIS strings of 20 bytes, picked by D_800E6374 >> 12 (encounter_walk_home_followup_init). */
-typedef struct GekoNames12 {
-    /* 0x00 */ u8 name[12][20];
-} GekoNames12; /* size 0xF0 */
-extern GekoNames12 encounter_club_names;
+typedef struct EncounterClubNames {
+    /* 0x00 */ u8 by_club[12][20]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:774; 12 club-name labels indexed by player club. Fixed-width declarations, offsets and all override views retained. */
+} EncounterClubNames; /* size 0xF0 */
+extern EncounterClubNames encounter_club_names;
 
 /* Picture ids passed to portrait_read_start (encounter_girl_birthday_portrait_read). */
 typedef struct GekoWords11 {
@@ -789,10 +789,10 @@ extern GekoWords2 encounter_girl_birthday_yuina_club_portraits;
 extern GekoWords2 encounter_girl_birthday_ayako_club_portraits;
 
 /* Step table of encounter_yuina_scene_one_step_dispatch, indexed by D_800E738A. */
-typedef struct GekoFnTbl42 {
-    /* 0x00 */ void (*f[42])();
-} GekoFnTbl42; /* size 0xA8 */
-extern GekoFnTbl42 encounter_yuina_scene_one_steps;
+typedef struct EncounterYuinaSceneOneSteps {
+    /* 0x00 */ void (*callbacks[42])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:792; 42 callbacks indexed by mode_step for Yuina talk_work1. Fixed-width declarations, offsets and all override views retained. */
+} EncounterYuinaSceneOneSteps; /* size 0xA8 */
+extern EncounterYuinaSceneOneSteps encounter_yuina_scene_one_steps;
 
 /* Three coordinate rows of encounter_yumi_closing_still_show. */
 typedef struct GekoShorts10 {
@@ -804,42 +804,42 @@ extern GekoShorts10 encounter_yumi_closing_actor_y;
 
 /* encounter_yoshio_ranked_girl_init: six halfwords of -1 and six of 1, 1, 1, 0, 0, 0 (the second label is 0x18 bytes, only 0xC
  * are copied); the draft reads both copies as s16. */
-typedef struct GekoShorts6 {
-    /* 0x00 */ s16 v[6];
-} GekoShorts6; /* size 0xC */
-extern GekoShorts6 encounter_yoshio_rank_scores_init;
-extern GekoShorts6 encounter_yoshio_rank_girls_init;
+typedef struct EncounterGirlRankingValues {
+    /* 0x00 */ s16 entries[6]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:807; Six signed entries shared by ranking-score and girl-id initial arrays. Fixed-width declarations, offsets and all override views retained. */
+} EncounterGirlRankingValues; /* size 0xC */
+extern EncounterGirlRankingValues encounter_yoshio_rank_scores_init;
+extern EncounterGirlRankingValues encounter_yoshio_rank_girls_init;
 
 /* Byte and text tables of encounter_invite_place_select_init, encounter_invite_appointment_store and encounter_invite_progress_place_override. */
-typedef struct GekoBytes209 {
-    /* 0x00 */ u8 v[209];
-} GekoBytes209; /* size 0xD1 */
-typedef struct GekoBytes132 {
-    /* 0x00 */ u8 v[132];
-} GekoBytes132; /* size 0x84 */
-typedef struct GekoText627 {
-    /* 0x00 */ u8 v[19][0x21];
-} GekoText627; /* size 0x273 */
-typedef struct GekoBytes37 {
-    /* 0x00 */ u8 v[37];
-} GekoBytes37; /* size 0x25 */
-typedef struct GekoBytes21 {
-    /* 0x00 */ u8 v[21];
-} GekoBytes21; /* size 0x15 */
-extern GekoBytes209 encounter_invite_girl_topic_weights;
-extern GekoBytes132 encounter_invite_movie_theater_availability;
-extern GekoBytes132 encounter_invite_concert_hall_availability;
-extern GekoBytes21 encounter_invite_place_minimum_year;
-extern GekoBytes21 encounter_invite_place_minimum_month;
-extern GekoText627 encounter_invite_topic_names;
-extern GekoBytes37 encounter_invite_previous_place_exclusion;
-extern GekoBytes21 encounter_invite_place_to_topic;
-extern GekoBytes21 encounter_invite_topic_to_place;
-extern GekoBytes21 encounter_invite_progress_place_to_topic;
+typedef struct EncounterGirlInviteWeights {
+    /* 0x00 */ u8 weights[209]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:814; 11 girls x19 invitation-topic byte weights. Fixed-width declarations, offsets and all override views retained. */
+} EncounterGirlInviteWeights; /* size 0xD1 */
+typedef struct EncounterGirlSeasonAvailability {
+    /* 0x00 */ u8 available[132]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:817; 11 girls x12 season availability entries for movie/concert. Fixed-width declarations, offsets and all override views retained. */
+} EncounterGirlSeasonAvailability; /* size 0x84 */
+typedef struct EncounterInviteTopicNames {
+    /* 0x00 */ u8 by_topic[19][0x21]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:820; 19 labels of33 bytes, no labels copied into proposal. Fixed-width declarations, offsets and all override views retained. */
+} EncounterInviteTopicNames; /* size 0x273 */
+typedef struct EncounterPreviousSpotExclusion {
+    /* 0x00 */ u8 excluded_place[37]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:823; 37-byte lookup from prior spot id to excluded place. Fixed-width declarations, offsets and all override views retained. */
+} EncounterPreviousSpotExclusion; /* size 0x25 */
+typedef struct EncounterInvitationByteMap {
+    /* 0x00 */ u8 values[21]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:826; Shared invitation byte-map shape used for place minimum years/months, place-to-topic and topic-to-place mappings; no uniform key/value meaning is asserted. Fixed-width declarations, offsets and all override views retained. */
+} EncounterInvitationByteMap; /* size 0x15 */
+extern EncounterGirlInviteWeights encounter_invite_girl_topic_weights;
+extern EncounterGirlSeasonAvailability encounter_invite_movie_theater_availability;
+extern EncounterGirlSeasonAvailability encounter_invite_concert_hall_availability;
+extern EncounterInvitationByteMap encounter_invite_place_minimum_year;
+extern EncounterInvitationByteMap encounter_invite_place_minimum_month;
+extern EncounterInviteTopicNames encounter_invite_topic_names;
+extern EncounterPreviousSpotExclusion encounter_invite_previous_place_exclusion;
+extern EncounterInvitationByteMap encounter_invite_place_to_topic;
+extern EncounterInvitationByteMap encounter_invite_topic_to_place;
+extern EncounterInvitationByteMap encounter_invite_progress_place_to_topic;
 
 /* Four-byte calendar entry passed by value to hud_appointment_add by encounter_invite_appointment_store (the layout of TelDateEntry in TEL.h,
  * T-10630). */
-typedef union GekoDateEntry {
+typedef union EncounterAppointmentEntry {
     /* 0x00 */ WordView word;
     /* 0x00 */ struct {
         u32 place : 5;  /* bits 0..4 */
@@ -851,8 +851,8 @@ typedef union GekoDateEntry {
         u32 girl : 4;   /* bits 25..28 */
         u32 active : 1; /* bit 29 */
         u32 unk_30 : 2;
-    } bits;
-} GekoDateEntry; /* size 0x04 */
+    } bits; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; include/ovl/GEKO.h:842; Packed appointment word assembled by invitation store; bit layout matches shared appointment record, pending type merge after byte proof. Fixed-width declarations, offsets and all override views retained. */
+} EncounterAppointmentEntry; /* size 0x04 */
 
 /* Per-record halfwords of the SpriteQuad records 4..13 (sprite_quads); the code indexes them with i - 4, so the
  * relocations name encounter_shiori_pack_2_still_image_4 and D_801463F8 (encounter_megumi_falling_quads_init, encounter_shiori_falling_quads_update, encounter_megumi_falling_quads_update). */

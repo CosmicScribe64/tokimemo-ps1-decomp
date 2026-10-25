@@ -1,13 +1,13 @@
-/* flash_and_pulse_effects.c: src/ovl/TACO/80153AA0.c:4: circle flash, full-screen flash, pulse bomb visuals; body 9: func_80153B38(buf, &x, arg2, arg0); 10: p = GetWorkBase(0xC, draw_buffer);. Original object 0x80153AA0-0x80154230 (config/objects/TACO.txt). */
+/* flash_and_pulse_effects.c: src/ovl/TACO/80153AA0.c:4: circle flash, full-screen flash, pulse bomb visuals; body 9: shooter_build_circle_fan(buf, &x, arg2, arg0); 10: p = GetWorkBase(0xC, draw_buffer);. Original object 0x80153AA0-0x80154230 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
-    POLY_G3 *buf[0x28]; /* func_80153B38 fills one POLY_G3 pointer per fan triangle (0xA0 bytes, the original frame). T-19018 */
+void shooter_draw_circle_flash(s32 arg0, s32 arg1, s32 arg2) {
+    POLY_G3 *buf[0x28]; /* shooter_build_circle_fan fills one POLY_G3 pointer per fan triangle (0xA0 bytes, the original frame). T-19018 */
     s32 x;
     s32 p;
 
-    func_80153B38(buf, &x, arg2, arg0);
+    shooter_build_circle_fan(buf, &x, arg2, arg0);
     p = GetWorkBase(0xC, draw_buffer);
     func_8009D294(p, 0, 1, func_8009ECB0(1, arg1, 0, 0), 0);
     AddPrim(draw_buffer * 0x400 + 0x10 + D_800E8CA0, p);
@@ -16,7 +16,7 @@ void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
 
 /* FAKE: integer return type with fallthrough preserves the original loop/result view.
  * T-24603. */
-s32 func_80153B38(buf, arg1, col, r)
+s32 shooter_build_circle_fan(buf, arg1, col, r)
 POLY_G3 **buf;
 s32 *arg1;
 u32 col;
@@ -88,7 +88,7 @@ s32 r;
     }
 }
 
-void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
+void shooter_draw_flash_overlay(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     POLY_F4 *poly;
     s32 sprite;
 
@@ -114,47 +114,47 @@ void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     safe_env(5);
 }
 
-s32 func_80154014(void) {
+s32 shooter_update_pulse_bomb(void) {
     s32 t;
     s32 v;
 
-    D_8015F4F0 = 0x80;
-    t = D_80160464;
+    shooter_star_brightness = 0x80;
+    t = shooter_pulse_bomb_timer;
     if (t < 0x32) {
-        func_8013A790(0, 2);
+        shooter_update_stars(0, 2);
     } else if (t >= 0x32 && t < 0xDC) {
-        func_8013A790(0, 3);
+        shooter_update_stars(0, 3);
     }
     if (t >= 0x32 && t < 0x5A) {
-        func_80153AA0(t * 3 - 0x96, 2, 0xA0A0A0);
+        shooter_draw_circle_flash(t * 3 - 0x96, 2, 0xA0A0A0);
     }
     if (t >= 0x5A && t < 0x96) {
-        func_80153AA0(0x78, 2, 0xA0A0A0);
+        shooter_draw_circle_flash(0x78, 2, 0xA0A0A0);
     }
     if (t >= 0x96 && t < 0xB4) {
-        func_80153AA0(0x10E - t, 2, 0xA0A0A0);
+        shooter_draw_circle_flash(0x10E - t, 2, 0xA0A0A0);
     }
     if (t >= 0xB4 && t < 0xD2) {
-        func_80153AA0(0x276 - t * 3, 2, 0xA0A0A0);
+        shooter_draw_circle_flash(0x276 - t * 3, 2, 0xA0A0A0);
     }
     if (t < 0x32) {
         v = t * 2;
-        func_80153E78(2, v, v, v);
+        shooter_draw_flash_overlay(2, v, v, v);
     } else if (t >= 0x32 && t < 0xD2) {
         if ((t - 0x32) % 3 == 0) {
-            func_80153E78(1, 0xA0, 0xA0, 0xC0);
+            shooter_draw_flash_overlay(1, 0xA0, 0xA0, 0xC0);
         } else {
-            func_80153E78(2, 0x64, 0x64, 0x64);
+            shooter_draw_flash_overlay(2, 0x64, 0x64, 0x64);
         }
     } else if (t >= 0xD2 && t < 0x104) {
         v = 0x208 - t * 2;
-        func_80153E78(2, v, v, v);
+        shooter_draw_flash_overlay(2, v, v, v);
     }
     if (t == 0x104) {
-        D_80160464 = 0;
-        D_80160460 = 0;
+        shooter_pulse_bomb_timer = 0;
+        shooter_pulse_bomb_active = 0;
     } else {
-        D_80160464 += 1;
+        shooter_pulse_bomb_timer += 1;
     }
-    return D_80160460;
+    return shooter_pulse_bomb_active;
 }

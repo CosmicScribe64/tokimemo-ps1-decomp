@@ -13,19 +13,19 @@ extern Actor actor_pool[];
 
 
 void hud_day_bgm_load(void) {
-    u8 v;
-    s32 i;
+    u8 vacation_type;
+    s32 season_index;
 
     audio_command(5);
     audio_command(0x71);
-    v = game_state.vacation;
+    vacation_type = game_state.vacation;
     if (game_state.year == 0x60 && game_state.month == 9 && game_state.day == 1) {
-        v = 1;
+        vacation_type = 1;
     }
-    switch (v) {
+    switch (vacation_type) {
     case 0:
-        i = hud_season_index() & 3;
-        audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[i], D_800B5BF8[i], D_800B5BD8[i]);
+        season_index = hud_season_index() & 3;
+        audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B5BE8[season_index], D_800B5BF8[season_index], D_800B5BD8[season_index]);
         break;
     case 1:
         audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD7D1, 0xD7AF, 0xD7A4);
@@ -46,9 +46,9 @@ void hud_bgm_load_finish_step(void) {
     }
 }
 
-void hud_mascot_display_switch(s32 arg0) {
+void hud_mascot_display_switch(s32 visible) {
     /* D_8011F443 is element 1 (stride 0x44) of the table at D_8011F3FF; the array form keeps IDO from hoisting the second load */
-    if (arg0) {
+    if (visible) {
         D_8011F3FF[0] |= 0x80;
         D_8011F3FF[0x44] |= 0x80;
     } else {
@@ -59,8 +59,8 @@ void hud_mascot_display_switch(s32 arg0) {
 
 /* FAKE: the empty `if (arg0) {}` after the store gives the parameter a second use, so uopt leaves it in $a0 (without it
  * IDO copies it to $a1 at entry and hoists `li a0,27` into the bnez delay slot). The test emits no code. T-17002 */
-void hud_mascot_set(s32 arg0) {
-    if (arg0 == 0 || arg0 >= 0xE) {
+void hud_mascot_set(s32 mascot_selection) {
+    if (mascot_selection == 0 || mascot_selection >= 0xE) {
         D_80125C50 = 0x78;
         D_80125C52 = -0x37;
         D_80125C54 = 0xF;
@@ -69,8 +69,8 @@ void hud_mascot_set(s32 arg0) {
         hud_mascot_display_switch(0);
         return;
     }
-    hud_mascot_choice = arg0;
-    if (arg0) {
+    hud_mascot_choice = mascot_selection;
+    if (mascot_selection) {
     }
     actor_clear(0x1B);
     actor_pool[0x1B].unk_01 = 1;
@@ -202,7 +202,7 @@ void portrait_event_face_mouth_lipsync(void) {
     s32 level;
     s32 n;
     s32 i;
-    u8 k;
+    u8 girl_id;
 
     if (*(u8 *)&game_state.voice_mode != 0) {
         if (cd_audio_state() & 4) {
@@ -224,9 +224,9 @@ void portrait_event_face_mouth_lipsync(void) {
             }
         }
         n = 0;
-        k = game_state.current_girl;
+        girl_id = game_state.current_girl;
         for (i = 0; i < 3; i++) {
-            if (D_800B5A68[k][i] < level) {
+            if (D_800B5A68[girl_id][i] < level) {
                 n = i + 1;
             }
         }
@@ -319,16 +319,16 @@ void calendar_marks_build(void) {
     GameState *gs;
     s32 i;
     s32 n;
-    s32 left;
-    /* FAKE: keeps kind in the original's sixth local slot (sp+0x68) and the frame at 0x80; real local unknown.
+    s32 repeat_days_remaining;
+    /* FAKE: keeps repeated_calendar_frame in the original's sixth local slot (sp+0x68) and the frame at 0x80; real local unknown.
      * T-25103 */
     s32 pad;
-    s32 kind;
-    u32 month;
-    u32 day;
-    s32 day0;
-    s32 day1;
-    u32 year;
+    s32 repeated_calendar_frame;
+    u32 calendar_month;
+    u32 day_of_month;
+    s32 current_month_third_sunday_day;
+    s32 next_month_third_sunday_day;
+    u32 calendar_year;
 
     gs = &game_state;
     for (i = 0; i < 0x20; i++) {
@@ -349,46 +349,46 @@ void calendar_marks_build(void) {
         actor_pool[i + 0x61].y = 0x100;
         actor_pool[i + 0x61].brightness = 0x80;
     }
-    left = 0;
+    repeat_days_remaining = 0;
     n = 0;
-    month = ((WordView *)&game_state.player_birthday)->date.month;
-    day = ((WordView *)&game_state.player_birthday)->date.day;
-    if (month == gs->month) {
-        CAL_MARK(0x6E, 0, day - 1);
+    calendar_month = ((WordView *)&game_state.player_birthday)->date.month;
+    day_of_month = ((WordView *)&game_state.player_birthday)->date.day;
+    if (calendar_month == gs->month) {
+        CAL_MARK(0x6E, 0, day_of_month - 1);
     }
-    if (month == game_state.month + 1) {
-        CAL_MARK(0x6E, 1, day - 1);
+    if (calendar_month == game_state.month + 1) {
+        CAL_MARK(0x6E, 1, day_of_month - 1);
     }
     for (i = 0; i < 11; i++) {
-        month = game_state.girls[i].birthday.date.month;
-        day = game_state.girls[i].birthday.date.day;
+        calendar_month = game_state.girls[i].birthday.date.month;
+        day_of_month = game_state.girls[i].birthday.date.day;
         if (game_state.girls[i].flags.f.b6) {
-            if (month == gs->month) {
-                CAL_MARK(0x6D, 0, day - 1);
+            if (calendar_month == gs->month) {
+                CAL_MARK(0x6D, 0, day_of_month - 1);
             }
-            if (month == game_state.month + 1 || game_state.month + 1 == month + 12) {
-                CAL_MARK(0x6D, 1, day - 1);
+            if (calendar_month == game_state.month + 1 || game_state.month + 1 == calendar_month + 12) {
+                CAL_MARK(0x6D, 1, day_of_month - 1);
             }
         }
     }
     for (i = 0; i < 8; i++) {
-        month = game_state.unk_54C[i].h[0] >> 12;
-        day = game_state.unk_54C[i].h[1] & 0x1F;
+        calendar_month = game_state.unk_54C[i].h[0] >> 12;
+        day_of_month = game_state.unk_54C[i].h[1] & 0x1F;
         if (((AppointmentEntry *)&game_state.unk_54C[i])->active) {
-            if (month == gs->month) {
-                CAL_MARK(0x62, 0, day - 1);
+            if (calendar_month == gs->month) {
+                CAL_MARK(0x62, 0, day_of_month - 1);
             }
-            if (month == game_state.month % 12 + 1) {
-                CAL_MARK(0x62, 1, day - 1);
+            if (calendar_month == game_state.month % 12 + 1) {
+                CAL_MARK(0x62, 1, day_of_month - 1);
             }
         }
     }
     if ((game_state.player_flags.h >> 12) >= 6 && (game_state.player_flags.h >> 12) < 11) {
-        day0 = 0x15 - game_state.month_calendar[0].marker[0];
-        day1 = 0x15 - game_state.month_calendar[1].marker[0];
-        CAL_MARK(0x6F, 0, day0 - 1);
+        current_month_third_sunday_day = 0x15 - game_state.month_calendar[0].marker[0];
+        next_month_third_sunday_day = 0x15 - game_state.month_calendar[1].marker[0];
+        CAL_MARK(0x6F, 0, current_month_third_sunday_day - 1);
         if (game_state.year != 0x62 || game_state.month != 2) {
-            CAL_MARK(0x6F, 1, day1 - 1);
+            CAL_MARK(0x6F, 1, next_month_third_sunday_day - 1);
         }
     }
     for (i = 0; i < gs->month_calendar[0].day_kind[0]; i++) {
@@ -401,28 +401,28 @@ void calendar_marks_build(void) {
                 CAL_MARK(DAY_KIND(0), 0, i);
             }
             if (DAY_KIND(0) == 0x66 && game_state.month != 2) {
-                kind = DAY_KIND(0);
-                left = 6;
+                repeated_calendar_frame = DAY_KIND(0);
+                repeat_days_remaining = 6;
             } else if (DAY_KIND(0) == 0x6C) {
-                kind = DAY_KIND(0);
-                left = 6;
+                repeated_calendar_frame = DAY_KIND(0);
+                repeat_days_remaining = 6;
             } else if (DAY_KIND(0) == 0x67) {
-                kind = DAY_KIND(0);
-                left = 7;
+                repeated_calendar_frame = DAY_KIND(0);
+                repeat_days_remaining = 7;
             } else if (DAY_KIND(0) == 0x6F && game_state.month == 8 &&
                        (game_state.player_flags.h >> 12) < 11) {
-                kind = DAY_KIND(0);
-                left = 6;
+                repeated_calendar_frame = DAY_KIND(0);
+                repeat_days_remaining = 6;
             }
-        } else if (left > 0) {
-            CAL_MARK(kind, 0, i);
+        } else if (repeat_days_remaining > 0) {
+            CAL_MARK(repeated_calendar_frame, 0, i);
         }
-        left--;
+        repeat_days_remaining--;
         if (n + 0x61 >= 0xA0) {
             return;
         }
     }
-    left = 0;
+    repeat_days_remaining = 0;
     for (i = 0; i < gs->month_calendar[1].day_kind[0]; i++) {
         if (game_state.month_calendar[1].marker[i + 1] != 0 && DAY_KIND(1) != 0xFF) {
             if (DAY_KIND(1) == 0x6F) {
@@ -433,38 +433,38 @@ void calendar_marks_build(void) {
                 CAL_MARK(DAY_KIND(1), 1, i);
             }
             if (DAY_KIND(1) == 0x66 && game_state.month != 1) {
-                kind = DAY_KIND(1);
-                left = 6;
+                repeated_calendar_frame = DAY_KIND(1);
+                repeat_days_remaining = 6;
             } else if (DAY_KIND(1) == 0x6C) {
-                kind = DAY_KIND(1);
-                left = 6;
+                repeated_calendar_frame = DAY_KIND(1);
+                repeat_days_remaining = 6;
             } else if (DAY_KIND(1) == 0x67) {
-                kind = DAY_KIND(1);
-                left = 7;
+                repeated_calendar_frame = DAY_KIND(1);
+                repeat_days_remaining = 7;
             } else if (DAY_KIND(1) == 0x6F && game_state.month == 7 &&
                        (game_state.player_flags.h >> 12) < 11) {
-                kind = DAY_KIND(1);
-                left = 6;
+                repeated_calendar_frame = DAY_KIND(1);
+                repeat_days_remaining = 6;
             }
-        } else if (left > 0) {
-            CAL_MARK(kind, 1, i);
+        } else if (repeat_days_remaining > 0) {
+            CAL_MARK(repeated_calendar_frame, 1, i);
         }
-        left--;
+        repeat_days_remaining--;
         if (n + 0x61 >= 0xA0) {
             return;
         }
     }
     for (i = 0; i < 0x100; i++) {
-        year = game_state.event_log[i].year;
-        month = game_state.event_log[i].month;
-        day = game_state.event_log[i].day;
-        if (year == game_state.year && month == game_state.month) {
+        calendar_year = game_state.event_log[i].year;
+        calendar_month = game_state.event_log[i].month;
+        day_of_month = game_state.event_log[i].day;
+        if (calendar_year == game_state.year && calendar_month == game_state.month) {
             if (game_state.event_log[i].girl == 0xC) {
                 if (system_data.flags[12] != 0 || game_state.girl_cleared[12] != 0) {
-                    CAL_MARK(0x62, 0, day - 1);
+                    CAL_MARK(0x62, 0, day_of_month - 1);
                 }
             } else {
-                CAL_MARK(0x62, 0, day - 1);
+                CAL_MARK(0x62, 0, day_of_month - 1);
             }
         }
         if (n + 0x61 >= 0xA0) {
@@ -479,49 +479,49 @@ void calendar_marks_build(void) {
 #undef CAL_MARK
 #undef DAY_KIND
 
-s16 calendar_cell_x(s32 arg0, s32 arg1) {
-    s32 v = game_state.month_calendar[0].marker[arg0 * 0x40];
+s16 calendar_cell_x(s32 month_side, s32 day_index) {
+    s32 v = game_state.month_calendar[0].marker[month_side * 0x40];
 
     if (v == 6) {
         v -= 7;
     }
-    return arg0 * 0x88 + ((v + arg1 + 1) % 7) * 16 - 0x78;
+    return month_side * 0x88 + ((v + day_index + 1) % 7) * 16 - 0x78;
 }
 
-s16 calendar_cell_y(s32 arg0, s32 arg1) {
-    s32 v = game_state.month_calendar[0].marker[arg0 * 0x40];
+s16 calendar_cell_y(s32 month_side, s32 day_index) {
+    s32 v = game_state.month_calendar[0].marker[month_side * 0x40];
 
     if (v == 6) {
         v -= 7;
     }
-    return ((v + arg1 + 1) / 7) * 16 - 0x30;
+    return ((v + day_index + 1) / 7) * 16 - 0x30;
 }
 
 /* FAKE: the loop stores go through the pointer `gs` so uopt reloads month_data_table on every trip as the original does (named
  * stores to game_state keep it in a register); `q` is the +0x800 base of the length/start words. T-11100 */
-void calendar_month_load(u8 arg0, u8 arg1, s32 arg2) {
-    s32 idx;
-    s32 n;
+void calendar_month_load(u8 calendar_year, u8 calendar_month, s32 populate_next_month) {
+    s32 month_data_index;
+    s32 next_month_day_count;
     s32 i;
-    s32 m;
+    s32 next_month_first_weekday;
     GameState *gs;
     s32 *q;
 
-    idx = (arg0 - 95) * 12 + arg1 - 4;
-    if (idx < 35) {
-        LoadSquare(0x3A0, 0x100, 0x20, 0x80, month_data_table[idx]);
-        LoadSquare(0x3A0, 0x180, 0x20, 0x80, month_data_table[idx + 1]);
-        if (arg2 != 0) {
+    month_data_index = (calendar_year - 95) * 12 + calendar_month - 4;
+    if (month_data_index < 35) {
+        LoadSquare(0x3A0, 0x100, 0x20, 0x80, month_data_table[month_data_index]);
+        LoadSquare(0x3A0, 0x180, 0x20, 0x80, month_data_table[month_data_index + 1]);
+        if (populate_next_month != 0) {
             memcpy(&game_state.month_calendar[0], &game_state.month_calendar[1], 0x40);
             gs = &game_state;
-            q = month_data_table[idx + 1] + 0x800;
-            n = q[0];
-            m = q[1];
-            game_state.month_calendar[1].day_kind[0] = n;
-            game_state.month_calendar[1].marker[0] = m;
-            for (i = 0; i < n; i++) {
-                gs->month_calendar[1].day_kind[i + 1] = month_data_table[idx + 1][0x802 + i];
-                gs->month_calendar[1].marker[i + 1] = month_data_table[idx + 1][0x802 + n + i];
+            q = month_data_table[month_data_index + 1] + 0x800;
+            next_month_day_count = q[0];
+            next_month_first_weekday = q[1];
+            game_state.month_calendar[1].day_kind[0] = next_month_day_count;
+            game_state.month_calendar[1].marker[0] = next_month_first_weekday;
+            for (i = 0; i < next_month_day_count; i++) {
+                gs->month_calendar[1].day_kind[i + 1] = month_data_table[month_data_index + 1][0x802 + i];
+                gs->month_calendar[1].marker[i + 1] = month_data_table[month_data_index + 1][0x802 + next_month_day_count + i];
             }
         }
     }
@@ -552,9 +552,9 @@ void hud_biorhythm_graph_draw(void) {
     saved = game_state.day_count;
     game_state.day_count = saved - 8;
     for (i = 0; i != 0x10; i++) {
-        sp10C[i] = hud_biorhythm_value(1, 0, 0, -0x20);
-        spCC[i] = hud_biorhythm_value(0, 1, 0, -0x20);
-        sp8C[i] = hud_biorhythm_value(0, 0, 1, -0x20);
+        sp10C[i] = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_GRAPH_SCALE);
+        spCC[i] = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_GRAPH_SCALE);
+        sp8C[i] = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_GRAPH_SCALE);
         game_state.day_count += 1;
         if (i != 0) {
             prim_gradient_line(i * 0x10 - 0x90, sp10C[i - 1] - 0xC, i * 0x10 - 0x80, sp10C[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x101, (((i + phase) & 0xF) * 4 + half) * 0x101, 0x81);
@@ -724,132 +724,132 @@ void data_save_load_class_init(void) {
  * promotes it to $a3 and reloads it after every call as the original does (register cheat sheet, "narrow selector the
  * original reloads after every call"); the test emits no code. T-17002 */
 #define KEEP_UNK_1117() if ((s32)game_state.album_slot) { }
-void hud_save_slot_info_show(s32 arg0, s32 arg1) {
+void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
     s32 i;
-    s32 var_s0;
-    s32 spEC;
-    s32 j; /* FAKE: unused; keeps the original frame slot between spEC and spC8 (every declared local reserves a slot), real local unknown. T-17002 */
-    u8 spC8[32];
-    u8 spA8[32];
-    u8 sp88[32];
-    u8 sp68[32];
-    u8 sp48[32];
-    s32 sp44; /* FAKE: unused; keeps the original frame slot below sp48, real local unknown. T-17002 */
+    s32 cleared_girl_count;
+    s32 summary_x;
+    s32 j; /* FAKE: unused; keeps the original frame slot between summary_x and slot_date_text (every declared local reserves a slot), real local unknown. T-17002 */
+    u8 slot_date_text[32];
+    u8 player_name_text[32];
+    u8 nickname_text[32];
+    u8 club_name_text[32];
+    u8 clear_count_text[32];
+    s32 sp44; /* FAKE: unused; keeps the original frame slot below clear_count_text, real local unknown. T-17002 */
 
-    if (arg1 != 0) {
-        spEC = -0x8C;
+    if (left_summary_column != 0) {
+        summary_x = -0x8C;
     } else {
-        spEC = -8;
+        summary_x = -8;
     }
     k_sub_reset();
     if ((u8) D_800E8BEE != 0) {
-        var_s0 = 0;
+        cleared_girl_count = 0;
         for (i = 0; i < 13; i++) {
             if (system_data.flags[i] != 0) {
-                var_s0 += 1;
+                cleared_girl_count += 1;
             }
         }
-        strcpy(spC8, D_800B3288[D_800E7D36]);
-        strncat(spC8, "番アルバム", 2);
-        set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
+        strcpy(slot_date_text, D_800B3288[D_800E7D36]);
+        strncat(slot_date_text, "番アルバム", 2);
+        set_kanji_string((s16) (summary_x + 0xC), -0x50, 0xFU, slot_date_text, 0);
         /* FAKE: the byte D_800E7D36 read through the SystemData view; uopt does not CSE it with the D_800E7D36 loads
          * in the else arm, the original reloads it there. Real source unknown. T-17002 */
         if (system_data.selected_slot == 0) {
-            set_kanji_string((s16) spEC, -0x40, 0xFU, "システム", 0);
+            set_kanji_string((s16) summary_x, -0x40, 0xFU, "システム", 0);
         } else {
             if (system_data.slot_status[D_800E7D36] == 0) {
-                set_kanji_string((s16) spEC, -0x40, 0xFU, "未使用", 0);
+                set_kanji_string((s16) summary_x, -0x40, 0xFU, "未使用", 0);
             } else if (system_data.slot_status[D_800E7D36] == 0xFF) {
-                set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
+                set_kanji_string((s16) summary_x, -0x40, 0xFU, "データ異常", 0);
             } else {
-                strcpy(spC8, D_800B3288[(u8) system_data.year[D_800E7D36] / 10U]);
-                strncat(spC8, D_800B3288[(u8) system_data.year[D_800E7D36] % 10U], 2);
-                strncat(spC8, "年", 2);
-                strncat(spC8, D_800B3288[system_data.month[D_800E7D36]], 4);
-                strncat(spC8, "月", 2);
+                strcpy(slot_date_text, D_800B3288[(u8) system_data.year[D_800E7D36] / 10U]);
+                strncat(slot_date_text, D_800B3288[(u8) system_data.year[D_800E7D36] % 10U], 2);
+                strncat(slot_date_text, "年", 2);
+                strncat(slot_date_text, D_800B3288[system_data.month[D_800E7D36]], 4);
+                strncat(slot_date_text, "月", 2);
                 if (system_data.day[D_800E7D36] >= 0xAU) {
-                    strncat(spC8, D_800B3288[system_data.day[D_800E7D36] / 10U], 2);
+                    strncat(slot_date_text, D_800B3288[system_data.day[D_800E7D36] / 10U], 2);
                 }
-                strncat(spC8, D_800B3288[system_data.day[D_800E7D36] % 10U], 2);
-                strncat(spC8, "日", 2);
-                set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
-                strcpy(spA8, "名前…");
-                strncat(spA8, system_data.family_name[D_800E7D36], 6);
-                strncat(spA8, system_data.given_name[D_800E7D36], 6);
-                strcpy(sp88, "あだ名…");
-                strncat(sp88, system_data.nickname[D_800E7D36], 0xD);
-                set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
-                set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
-                strcpy(sp68, "所属部‥");
+                strncat(slot_date_text, D_800B3288[system_data.day[D_800E7D36] % 10U], 2);
+                strncat(slot_date_text, "日", 2);
+                set_kanji_string((s16) summary_x, -0x40, 0xFU, slot_date_text, 0);
+                strcpy(player_name_text, "名前…");
+                strncat(player_name_text, system_data.family_name[D_800E7D36], 6);
+                strncat(player_name_text, system_data.given_name[D_800E7D36], 6);
+                strcpy(nickname_text, "あだ名…");
+                strncat(nickname_text, system_data.nickname[D_800E7D36], 0xD);
+                set_kanji_string((s16) summary_x, -0x30, 0xFU, player_name_text, 0);
+                set_kanji_string((s16) summary_x, -0x20, 0xFU, nickname_text, 0);
+                strcpy(club_name_text, "所属部‥");
                 /* two arguments as in the original: no count is loaded into $a2 before this call */
-                strncat(sp68, club_name_table[system_data.club[D_800E7D36]]);
-                set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
-                strcpy(sp48, "クリア人数‥");
-                if (var_s0 >= 0x64) {
-                    var_s0 = 0x63;
+                strncat(club_name_text, club_name_table[system_data.club[D_800E7D36]]);
+                set_kanji_string((s16) summary_x, -0x10, 0xFU, club_name_text, 0);
+                strcpy(clear_count_text, "クリア人数‥");
+                if (cleared_girl_count >= 0x64) {
+                    cleared_girl_count = 0x63;
                 }
-                if (var_s0 >= 0xA) {
-                    strncat(sp48, D_800B3288[var_s0 / 10], 2);
+                if (cleared_girl_count >= 0xA) {
+                    strncat(clear_count_text, D_800B3288[cleared_girl_count / 10], 2);
                 }
-                strncat(sp48, D_800B3288[var_s0 % 10], 2);
-                set_kanji_string((s16) spEC, 0, 0xFU, sp48, 0);
+                strncat(clear_count_text, D_800B3288[cleared_girl_count % 10], 2);
+                set_kanji_string((s16) summary_x, 0, 0xFU, clear_count_text, 0);
             }
         }
     } else {
-        var_s0 = 0;
+        cleared_girl_count = 0;
         KEEP_UNK_1117();
         for (i = 0; i < 13; i++) {
             if (((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].flags[i] != 0) {
-                var_s0 += 1;
+                cleared_girl_count += 1;
             }
         }
         if (system_data.slot_status[game_state.save_slot] == 0) {
-            set_kanji_string((s16) spEC, -0x40, 0xFU, "未使用", 0);
+            set_kanji_string((s16) summary_x, -0x40, 0xFU, "未使用", 0);
         } else if (system_data.slot_status[game_state.save_slot] == 0xFF) {
-            set_kanji_string((s16) spEC, -0x40, 0xFU, "データ異常", 0);
+            set_kanji_string((s16) summary_x, -0x40, 0xFU, "データ異常", 0);
         } else {
-            strcpy(spC8, D_800B3288[game_state.save_slot]);
-            strncat(spC8, "番アルバム", 2);
-            set_kanji_string((s16) (spEC + 0xC), -0x50, 0xFU, spC8, 0);
+            strcpy(slot_date_text, D_800B3288[game_state.save_slot]);
+            strncat(slot_date_text, "番アルバム", 2);
+            set_kanji_string((s16) (summary_x + 0xC), -0x50, 0xFU, slot_date_text, 0);
             KEEP_UNK_1117();
-            strcpy(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].year / 10U]);
+            strcpy(slot_date_text, D_800B3288[(u8) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].year / 10U]);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[(u8) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].year % 10U], 2);
-            strncat(spC8, "年", 2);
+            strncat(slot_date_text, D_800B3288[(u8) ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].year % 10U], 2);
+            strncat(slot_date_text, "年", 2);
             KEEP_UNK_1117();
-            strncat(spC8, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].month], 4);
-            strncat(spC8, "月", 2);
+            strncat(slot_date_text, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].month], 4);
+            strncat(slot_date_text, "月", 2);
             KEEP_UNK_1117();
             if (((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day >= 0xAU) {
-                strncat(spC8, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day / 10U], 2);
+                strncat(slot_date_text, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day / 10U], 2);
             }
-            strncat(spC8, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day % 10U], 2);
-            strncat(spC8, "日", 2);
-            set_kanji_string((s16) spEC, -0x40, 0xFU, spC8, 0);
-            strcpy(spA8, "名前…");
+            strncat(slot_date_text, D_800B3288[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].day % 10U], 2);
+            strncat(slot_date_text, "日", 2);
+            set_kanji_string((s16) summary_x, -0x40, 0xFU, slot_date_text, 0);
+            strcpy(player_name_text, "名前…");
             KEEP_UNK_1117();
-            strncat(spA8, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 6);
+            strncat(player_name_text, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].family_name, 6);
             KEEP_UNK_1117();
-            strncat(spA8, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 6);
-            strcpy(sp88, "あだ名…");
+            strncat(player_name_text, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].given_name, 6);
+            strcpy(nickname_text, "あだ名…");
             KEEP_UNK_1117();
-            strncat(sp88, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0xD);
-            set_kanji_string((s16) spEC, -0x30, 0xFU, spA8, 0);
-            set_kanji_string((s16) spEC, -0x20, 0xFU, sp88, 0);
-            strcpy(sp68, "所属部‥");
+            strncat(nickname_text, ((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].nickname, 0xD);
+            set_kanji_string((s16) summary_x, -0x30, 0xFU, player_name_text, 0);
+            set_kanji_string((s16) summary_x, -0x20, 0xFU, nickname_text, 0);
+            strcpy(club_name_text, "所属部‥");
             KEEP_UNK_1117();
             /* two arguments as in the original: no count is loaded into $a2 before this call */
-            strncat(sp68, club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 12]);
-            set_kanji_string((s16) spEC, -0x10, 0xFU, sp68, 0);
-            strcpy(sp48, "クリア人数‥");
-            if (var_s0 >= 0x64) {
-                var_s0 = 0x63;
+            strncat(club_name_text, club_name_table[((AlbumSlotRecord *)memory_card_block)[game_state.album_slot].club >> 12]);
+            set_kanji_string((s16) summary_x, -0x10, 0xFU, club_name_text, 0);
+            strcpy(clear_count_text, "クリア人数‥");
+            if (cleared_girl_count >= 0x64) {
+                cleared_girl_count = 0x63;
             }
-            if (var_s0 >= 0xA) {
-                strncat(sp48, D_800B3288[var_s0 / 10], 2);
+            if (cleared_girl_count >= 0xA) {
+                strncat(clear_count_text, D_800B3288[cleared_girl_count / 10], 2);
             }
-            strncat(sp48, D_800B3288[var_s0 % 10], 2);
-            set_kanji_string((s16) spEC, 0, 0xFU, sp48, 0);
+            strncat(clear_count_text, D_800B3288[cleared_girl_count % 10], 2);
+            set_kanji_string((s16) summary_x, 0, 0xFU, clear_count_text, 0);
         }
     }
     k_sub_disp_start(6);
@@ -948,15 +948,15 @@ s32 arg1;
 void hud_magazine_page_build(void) {
     u8 eight; /* FAKE: a named 8 gives the original `beq a1,t0` in cases 8-10 (a literal gives `beq t0,a1`). T-11690 */
     s32 i;
-    s32 n;
-    s32 pad; /* FAKE: keeps the original frame slot between n and kind; real local unknown. T-11690 */
-    s32 kind;
+    s32 calendar_actor_index;
+    s32 pad; /* FAKE: keeps the original frame slot between calendar_actor_index and magazine_issue_index; real local unknown. T-11690 */
+    s32 magazine_issue_index;
 
     eight = 8;
     /* FAKE: dead reads of both selectors; without them uopt does not promote unk_03E and gives unk_03F $a2 instead
      * of $t0. T-11690 */
     i = game_state.month;
-    n = game_state.year;
+    calendar_actor_index = game_state.year;
     actor_clear_upper();
     actor_clear(0x60);
     actor_pool[96].unk_01 = 5;
@@ -990,7 +990,7 @@ void hud_magazine_page_build(void) {
         actor_pool[i + 0x61].y = 0x100;
         actor_pool[i + 0x61].brightness = 0x80;
     }
-    n = 0x61;
+    calendar_actor_index = 0x61;
     switch (game_state.month) {
     case 2:
     case 3:
@@ -998,34 +998,34 @@ void hud_magazine_page_build(void) {
         if (game_state.year == 0x5F) {
             actor_pool[0x61].unk_18 = 0x79;
             actor_pool[0x61].x = 0;
-            kind = 0;
+            magazine_issue_index = 0;
             actor_pool[0x61].y = -0x28;
-            n++;
+            calendar_actor_index++;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E0C, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E25, 0);
         }
         if (game_state.year == 0x60) {
-            kind = 4;
+            magazine_issue_index = 4;
             if (game_state.month != 2) {
                 game_state.progress_state[13] = 1;
             }
-            actor_pool[n].unk_18 = 0x7A; actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-            n++;
-            actor_pool[n].unk_18 = 0x81; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x7A; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
+            actor_pool[calendar_actor_index].unk_18 = 0x81; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x61) {
-            kind = 8;
+            magazine_issue_index = 8;
             if (game_state.month != 2) {
                 game_state.progress_state[11] = 1;
             }
-            actor_pool[n].unk_18 = 0x7A; actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-            n++;
-            actor_pool[n].unk_18 = 0x84; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x7A; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
+            actor_pool[calendar_actor_index].unk_18 = 0x84; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x62) {
-            kind = 0xC;
+            magazine_issue_index = 0xC;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
@@ -1034,25 +1034,25 @@ void hud_magazine_page_build(void) {
     case 6:
     case 7:
         actor_pool[0x61].unk_18 = 0x7B; actor_pool[0x61].x = 0; actor_pool[0x61].y = -0x28;
-        n++;
+        calendar_actor_index++;
         if (game_state.year == 0x5F) {
-            kind = 1;
+            magazine_issue_index = 1;
             if (game_state.month != 5) {
                 game_state.progress_state[1] = 1;
             }
-            actor_pool[n].unk_18 = 0x7E; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x7E; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x60) {
-            kind = 5;
+            magazine_issue_index = 5;
             if (game_state.month != 5) {
                 game_state.progress_state[5] = 1;
             }
-            actor_pool[n].unk_18 = 0x82; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x82; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x61) {
-            kind = 9;
+            magazine_issue_index = 9;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E3E, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E57, 0);
         }
@@ -1061,25 +1061,25 @@ void hud_magazine_page_build(void) {
     case 9:
     case 10:
         actor_pool[0x61].unk_18 = 0x7C; actor_pool[0x61].x = 0; actor_pool[0x61].y = -0x28;
-        n++;
+        calendar_actor_index++;
         if (game_state.year == 0x5F) {
-            kind = 2;
+            magazine_issue_index = 2;
             if (game_state.month != eight) {
                 game_state.progress_state[7] = 1;
             }
-            actor_pool[n].unk_18 = 0x7F; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x7F; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x60) {
-            kind = 6;
+            magazine_issue_index = 6;
             if (game_state.month != eight) {
                 game_state.progress_state[10] = 1;
             }
-            actor_pool[n].unk_18 = 0x83; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x83; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x61) {
-            kind = 0xA;
+            magazine_issue_index = 0xA;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E3E, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E57, 0);
         }
@@ -1087,141 +1087,141 @@ void hud_magazine_page_build(void) {
     case 11:
     case 12:
         actor_pool[0x61].unk_18 = 0x7D; actor_pool[0x61].x = 0; actor_pool[0x61].y = -0x28;
-        n++;
+        calendar_actor_index++;
         if (game_state.year == 0x5F) {
-            kind = 3;
+            magazine_issue_index = 3;
             if (game_state.month == 0xC) {
                 game_state.progress_state[3] = 1;
             }
-            actor_pool[n].unk_18 = 0x80; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x80; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x60) {
-            kind = 7;
+            magazine_issue_index = 7;
             if (game_state.month == 0xC) {
                 game_state.progress_state[6] = 1;
             }
-            actor_pool[n].unk_18 = 0x85; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x85; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x61) {
-            kind = 0xB;
+            magazine_issue_index = 0xB;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
         break;
     case 1:
         actor_pool[0x61].unk_18 = 0x7D; actor_pool[0x61].x = 0; actor_pool[0x61].y = -0x28;
-        n++;
+        calendar_actor_index++;
         if (game_state.year == 0x60) {
-            kind = 3;
+            magazine_issue_index = 3;
             game_state.progress_state[3] = 1;
-            actor_pool[n].unk_18 = 0x80; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x80; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x61) {
-            kind = 7;
+            magazine_issue_index = 7;
             game_state.progress_state[6] = 1;
-            actor_pool[n].unk_18 = 0x85; actor_pool[n].x = 8; actor_pool[n].y = -0x28;
-            n++;
+            actor_pool[calendar_actor_index].unk_18 = 0x85; actor_pool[calendar_actor_index].x = 8; actor_pool[calendar_actor_index].y = -0x28;
+            calendar_actor_index++;
         }
         if (game_state.year == 0x62) {
-            kind = 0xB;
+            magazine_issue_index = 0xB;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
         break;
     }
     if ((game_state.year != 0x5F) || (game_state.month >= 6U)) {
-        actor_pool[n].unk_18 = 0x77; actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+        actor_pool[calendar_actor_index].unk_18 = 0x77; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     }
     if (game_state.year == 0x5F) {
-        actor_pool[n].unk_18 = (s16) (kind + 0x97); actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+        actor_pool[calendar_actor_index].unk_18 = (s16) (magazine_issue_index + 0x97); actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     } else if ((game_state.year == 0x60) && (game_state.month < 2U)) {
-        actor_pool[n].unk_18 = (s16) (kind + 0x97); actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+        actor_pool[calendar_actor_index].unk_18 = (s16) (magazine_issue_index + 0x97); actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     } else {
-        actor_pool[n].unk_01++;
-        actor_pool[n].unk_18 = 0x78; actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
-        actor_pool[n].unk_18 = (s16) (D_800B3750[kind][0] + 0x90); actor_pool[n].x = 0x110; actor_pool[n].y = 0x18;
-        n++;
-        actor_pool[n].unk_18 = (s16) (D_800B3750[kind][1] + 0x90); actor_pool[n].x = 0x110; actor_pool[n].y = 0x28;
-        n++;
-        actor_pool[n].unk_18 = (s16) (D_800B3750[kind][2] + 0x90); actor_pool[n].x = 0x110; actor_pool[n].y = 0x38;
-        n++;
-        set_kanji_string(0x100, 0x10, 6U, D_800B32CC[(kind * 3 + 2) % 12], 0);
-        set_kanji_string(0x100, 0x20, 6U, D_800B32CC[(kind * 3 + 3) % 12], 0);
-        set_kanji_string(0x100, 0x30, 6U, D_800B32CC[(kind * 3 + 4) % 12], 0);
+        actor_pool[calendar_actor_index].unk_01++;
+        actor_pool[calendar_actor_index].unk_18 = 0x78; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
+        actor_pool[calendar_actor_index].unk_18 = (s16) (D_800B3750[magazine_issue_index][0] + 0x90); actor_pool[calendar_actor_index].x = 0x110; actor_pool[calendar_actor_index].y = 0x18;
+        calendar_actor_index++;
+        actor_pool[calendar_actor_index].unk_18 = (s16) (D_800B3750[magazine_issue_index][1] + 0x90); actor_pool[calendar_actor_index].x = 0x110; actor_pool[calendar_actor_index].y = 0x28;
+        calendar_actor_index++;
+        actor_pool[calendar_actor_index].unk_18 = (s16) (D_800B3750[magazine_issue_index][2] + 0x90); actor_pool[calendar_actor_index].x = 0x110; actor_pool[calendar_actor_index].y = 0x38;
+        calendar_actor_index++;
+        set_kanji_string(0x100, 0x10, 6U, D_800B32CC[(magazine_issue_index * 3 + 2) % 12], 0);
+        set_kanji_string(0x100, 0x20, 6U, D_800B32CC[(magazine_issue_index * 3 + 3) % 12], 0);
+        set_kanji_string(0x100, 0x30, 6U, D_800B32CC[(magazine_issue_index * 3 + 4) % 12], 0);
     }
-    if (D_800B5DFC[kind] != 0xFF) {
-        actor_pool[n].unk_18 = (s16) D_800B5DFC[kind]; actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+    if (D_800B5DFC[magazine_issue_index] != 0xFF) {
+        actor_pool[calendar_actor_index].unk_18 = (s16) D_800B5DFC[magazine_issue_index]; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     }
-    set_kanji_string(0x20, -0x5E, 7U, D_800B5D1C[kind], 0);
-    if (D_800B5D0C[kind] != 0xFF) {
-        actor_pool[n].unk_18 = (s16) D_800B5D0C[kind]; actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+    set_kanji_string(0x20, -0x5E, 7U, D_800B5D1C[magazine_issue_index], 0);
+    if (D_800B5D0C[magazine_issue_index] != 0xFF) {
+        actor_pool[calendar_actor_index].unk_18 = (s16) D_800B5D0C[magazine_issue_index]; actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     }
-    set_kanji_string(0x20, -0x3E, 8U, D_800B5C2C[kind], 0);
-    if (kind < 4) {
-        actor_pool[n].unk_18 = (s16) ((kind & 3) + 0x97); actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+    set_kanji_string(0x20, -0x3E, 8U, D_800B5C2C[magazine_issue_index], 0);
+    if (magazine_issue_index < 4) {
+        actor_pool[calendar_actor_index].unk_18 = (s16) ((magazine_issue_index & 3) + 0x97); actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     }
-    if (kind >= 4) {
-        actor_pool[n].unk_18 = (s16) ((kind & 3) + 0x93); actor_pool[n].x = 0; actor_pool[n].y = -0x28;
-        n++;
+    if (magazine_issue_index >= 4) {
+        actor_pool[calendar_actor_index].unk_18 = (s16) ((magazine_issue_index & 3) + 0x93); actor_pool[calendar_actor_index].x = 0; actor_pool[calendar_actor_index].y = -0x28;
+        calendar_actor_index++;
     }
-    set_kanji_string(-0x8F, -0xE, 6U, D_800B5EA4[kind][0], 0);
-    set_kanji_string(-0x8F, 2, 6U, D_800B5EA4[kind][1], 0);
-    set_kanji_string(-0x8F, 0x12, 6U, D_800B5EA4[kind][2], 0);
+    set_kanji_string(-0x8F, -0xE, 6U, D_800B5EA4[magazine_issue_index][0], 0);
+    set_kanji_string(-0x8F, 2, 6U, D_800B5EA4[magazine_issue_index][1], 0);
+    set_kanji_string(-0x8F, 0x12, 6U, D_800B5EA4[magazine_issue_index][2], 0);
     k_sub_reset_point_set();
     k_sub_disp_start(0);
     gnsx(&game_state.player_family_name[0]);
-    sndisp(D_800B66A4[kind], 0, 0x1F);
+    sndisp(D_800B66A4[magazine_issue_index], 0, 0x1F);
 }
 
-s32 hud_appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
+s32 hud_appointment_find_today(s32 calendar_year, s32 calendar_month, s32 day_of_month) {
     s32 i;
     s32 r;
 
     r = 0;
-    if (arg1 == 0xD) {
-        arg1 = 1;
+    if (calendar_month == 0xD) {
+        calendar_month = 1;
     }
-    if (arg1 == 0xC && arg2 == 0x18) {
+    if (calendar_month == 0xC && day_of_month == 0x18) {
         return -1;
     }
-    if (arg1 == 0xD) {
-        if (arg2 == 1) {
+    if (calendar_month == 0xD) {
+        if (day_of_month == 1) {
             return -1;
         }
     }
-    if (arg1 == 1 && arg2 == 1) {
+    if (calendar_month == 1 && day_of_month == 1) {
         return -1;
     }
-    if (arg1 >= 3 && arg0 >= 0x62) {
+    if (calendar_month >= 3 && calendar_year >= 0x62) {
         return -1;
     }
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 8; i++) if (arg1 == ((u32) game_state.unk_54C[i].h[0] >> 12) && arg2 == (game_state.unk_54C[i].h[1] & 0x1F)) r = i + 1;
+    for (i = 0; i < 8; i++) if (calendar_month == ((u32) game_state.unk_54C[i].h[0] >> 12) && day_of_month == (game_state.unk_54C[i].h[1] & 0x1F)) r = i + 1;
     return r;
 }
 
 
-s32 hud_appointment_count_for_girl(s32 arg0) {
+s32 hud_appointment_count_for_girl(s32 girl_id) {
     s32 i;
-    s32 n;
+    s32 appointment_count;
 
-    n = 0;
+    appointment_count = 0;
     for (i = 0; i < 8; i++) {
-        if (((AppointmentBits *)&game_state.unk_54C[i])->active && arg0 == ((AppointmentBits *)&game_state.unk_54C[i])->girl) {
-            n++;
+        if (((AppointmentBits *)&game_state.unk_54C[i])->active && girl_id == ((AppointmentBits *)&game_state.unk_54C[i])->girl) {
+            appointment_count++;
         }
     }
-    return n;
+    return appointment_count;
 }
 
 /* Packs the active schedule entries to the front, clears the rest, and sorts the first n by month * 100 + day
@@ -1231,51 +1231,51 @@ s32 hud_appointment_count_for_girl(s32 arg0) {
 void hud_appointment_list_sort(void) {
     s32 i;
     s32 j;
-    s32 n;
-    s32 k;
-    WordView tmp;
-    s32 keys[8];
-    s32 min;
+    s32 active_count;
+    s32 earliest_slot_index;
+    WordView appointment_entry_temp;
+    s32 appointment_date_keys[8];
+    s32 earliest_date_key;
     s32 pad[9]; /* FAKE: T-25608, unused; the original frame (0xB0, a0 spill at 0x40) has nine more words below g. */
     GameState *g;
 
     g = &game_state;
-    for (n = 0, j = 0; j < 8; j++) {
+    for (active_count = 0, j = 0; j < 8; j++) {
         if (((AppointmentBits *)&g->unk_54C[j])->active) {
-            g->unk_54C[n++] = g->unk_54C[j];
+            g->unk_54C[active_count++] = g->unk_54C[j];
         }
     }
-    for (j = n; j < 8; j++) {
+    for (j = active_count; j < 8; j++) {
         bzero(&g->unk_54C[j], 4);
     }
     if (g->month == 12) {
-        for (j = 0; j < n; j++) {
+        for (j = 0; j < active_count; j++) {
             if (SCHED_DATE(j)->month == 1) {
                 SCHED_DATE(j)->month = 13;
             }
         }
     }
     i = 0;
-    while (i < n) {
-        min = SCHED_DATE(i)->day + SCHED_DATE(i)->month * 100;
-        k = i;
-        for (j = i + 1; j < n; j++) {
-            keys[j] = SCHED_DATE(j)->day + SCHED_DATE(j)->month * 100;
-            if (keys[j] < min) {
-                min = keys[j];
-                k = j;
+    while (i < active_count) {
+        earliest_date_key = SCHED_DATE(i)->day + SCHED_DATE(i)->month * 100;
+        earliest_slot_index = i;
+        for (j = i + 1; j < active_count; j++) {
+            appointment_date_keys[j] = SCHED_DATE(j)->day + SCHED_DATE(j)->month * 100;
+            if (appointment_date_keys[j] < earliest_date_key) {
+                earliest_date_key = appointment_date_keys[j];
+                earliest_slot_index = j;
             }
         }
         /* FAKE: T-25608 (from T-25103), the label splits the swap off the inner-loop exit; without it uopt keeps
          * &game_state in a register from the first loop to the swap, the original never does. */
         goto swap;
     swap:
-        tmp = g->unk_54C[i];
-        g->unk_54C[i] = g->unk_54C[k];
-        g->unk_54C[k] = tmp;
+        appointment_entry_temp = g->unk_54C[i];
+        g->unk_54C[i] = g->unk_54C[earliest_slot_index];
+        g->unk_54C[earliest_slot_index] = appointment_entry_temp;
         i++;
     }
-    for (j = 0; j < n; j++) {
+    for (j = 0; j < active_count; j++) {
         if (SCHED_DATE(j)->month == 13) {
             SCHED_DATE(j)->month = 1;
         }
@@ -1283,18 +1283,18 @@ void hud_appointment_list_sort(void) {
 }
 #undef SCHED_DATE
 
-void hud_appointment_add(WordView arg0) {
-    s32 i;
+void hud_appointment_add(WordView appointment_entry) {
+    s32 insertion_slot_index;
 
-    i = 0;
-    if (((AppointmentBits *)&game_state.unk_54C[i])->active) {
-        if (i) { /* FAKE: the empty test keeps i from folding to 0, the original has `sll t9,zero,2; addu v0,t9,base`; real source unknown. T-9340 */
+    insertion_slot_index = 0;
+    if (((AppointmentBits *)&game_state.unk_54C[insertion_slot_index])->active) {
+        if (insertion_slot_index) { /* FAKE: the empty test keeps insertion_slot_index from folding to 0, the original has `sll t9,zero,2; addu v0,t9,base`; real source unknown. T-9340 */
         }
         do {
-            i++;
-        } while (((AppointmentBits *)&game_state.unk_54C[i])->active && i != 8);
+            insertion_slot_index++;
+        } while (((AppointmentBits *)&game_state.unk_54C[insertion_slot_index])->active && insertion_slot_index != 8);
     }
-    game_state.unk_54C[i] = arg0;
+    game_state.unk_54C[insertion_slot_index] = appointment_entry;
     hud_appointment_list_sort();
 }
 
@@ -1302,8 +1302,8 @@ void hud_appointment_prompt_noop(void) {
 }
 
 void hud_club_list_menu(void) {
-    s32 pad[2]; /* FAKE: reproduces the original's 8-byte gap above `first`; real locals unknown. T-11690 */
-    s32 first;
+    s32 pad[2]; /* FAKE: reproduces the original's 8-byte gap above `first_available_club_id`; real locals unknown. T-11690 */
+    s32 first_available_club_id;
     s32 i;
     s16 x[12];
     s16 y[12];
@@ -1325,16 +1325,16 @@ void hud_club_list_menu(void) {
     D_80120676 = -0x10;
     D_8012067A = -0x13;
     set_kanji_string(-0x80, -0x52, 3, "部活一覧", 0);
-    first = -1;
+    first_available_club_id = -1;
     for (i = 0; i < 0xB; i++) {
         x[i] = (i / 5) * 0x54 - 0x80;
         y[i] = (i % 5) * 0x10 - 0x38;
         w[i] = 0x40;
         h[i] = 0x10;
-        if (!(game_state.clubs[i].unk_03 & 1)) {
+        if (!(game_state.clubs[i].flags & 1)) {
             set_kanji_string(x[i], y[i], 3, club_name_table[i], 0);
-            if (first == -1) {
-                first = i;
+            if (first_available_club_id == -1) {
+                first_available_club_id = i;
             }
         } else {
             w[i] = 0;
@@ -1347,7 +1347,7 @@ void hud_club_list_menu(void) {
     h[i] = 0x10;
     set_kanji_string(x[i], y[i], 3, "取り消し", 0);
     menu_set(1, 0xC, x, y, w, h);
-    game_state.menu_cursor_1 = first;
+    game_state.menu_cursor_1 = first_available_club_id;
     k_sub_reset_point_set();
     sndi("入部する部活を選択してください", 0, 0xFF);
     k_sub_disp_start(1);
@@ -1367,38 +1367,38 @@ void hud_sprite_light_effect_draw(void) {
 
 void hud_cursor_update(void) {
     GameState *g = &game_state;
-    u8 speed;
-    s32 step;
+    u8 base_speed;
+    s32 movement_step;
     u8 temp; /* FAKE: T-25003, first test through a u8 copy keeps the D_800B6708 value in $v0 */
 
     if ((u8)D_8011ECA4 == 0) {
-        speed = g->cursor_speed;
+        base_speed = g->cursor_speed;
         D_8011ECA4 = (u8)D_8011ECA4 + 1;
-        if (speed == 0) {
-            speed = 1;
+        if (base_speed == 0) {
+            base_speed = 1;
         }
-        g->cursor_speed = speed;
-        step = speed;
+        g->cursor_speed = base_speed;
+        movement_step = base_speed;
         if (!(g->menu_mode & 3) && (g->pad_held & 0xFF)) {
-            step = speed * 2;
+            movement_step = base_speed * 2;
         }
         /* FAKE: T-25008, the u8 cast spends the ugen temporary the original spends before the switch */
         if ((u8)g->pad_held & 0xF) {
         } else {
             switch (g->pad_held & 0x5000) {
             case 0x1000:
-                cursor_y -= step;
+                cursor_y -= movement_step;
                 break;
             case 0x4000:
-                cursor_y += step;
+                cursor_y += movement_step;
                 break;
             }
             switch (g->pad_held & 0xA000) {
             case 0x2000:
-                cursor_x += step;
+                cursor_x += movement_step;
                 break;
             case 0x8000:
-                cursor_x -= step;
+                cursor_x -= movement_step;
                 break;
             }
         }
@@ -1475,184 +1475,184 @@ void hud_cursor_show(s32 arg0) {
     }
 }
 
-s32 hud_command_roll_poor_result(s32 arg0) {
+s32 hud_command_roll_poor_result(s32 days_to_advance) {
     /* FAKE: unused stack word matches original 0x40 frame size and local offsets. T-11060 */
     s32 pad;
-    s32 score;
-    s32 failures;
-    u16 day;
-    u16 old_day;
-    s32 factor;
+    s32 command_score;
+    s32 zero_wave_count;
+    u16 day_count_to_restore;
+    u16 original_day_count;
+    s32 stress_factor;
 
-    old_day = game_state.day_count;
-    day = old_day;
-    game_state.day_count = old_day + arg0;
-    score = 0;
+    original_day_count = game_state.day_count;
+    day_count_to_restore = original_day_count;
+    game_state.day_count = original_day_count + days_to_advance;
+    command_score = 0;
     switch (game_state.last_command.w & 15) {
     case 0:
-        score = hud_biorhythm_value(0, 0, 1, 16) + game_state.param_liberal_arts.value / 16;
+        command_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE) + game_state.param_liberal_arts.value / 16;
         break;
     case 1:
-        score = hud_biorhythm_value(0, 0, 1, 16) + game_state.param_science.value / 16;
+        command_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE) + game_state.param_science.value / 16;
         break;
     case 2:
-        score = hud_biorhythm_value(0, 1, 0, 16) + game_state.param_art.value / 16;
+        command_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE) + game_state.param_art.value / 16;
         break;
     case 3:
-        score = hud_biorhythm_value(1, 0, 0, 16) + game_state.param_athletics.value / 16;
+        command_score = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_SCORE_SCALE) + game_state.param_athletics.value / 16;
         break;
     case 4:
         switch ((u16)game_state.player_flags.h >> 12) {
         case 0:
-            score = hud_biorhythm_value(0, 0, 1, 16);
+            command_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 1:
-            score = hud_biorhythm_value(0, 1, 0, 16);
+            command_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 2:
-            score = hud_biorhythm_value(0, 0, 1, 16);
+            command_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 3:
-            score = hud_biorhythm_value(0, 0, 1, 16);
+            command_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 4:
-            score = hud_biorhythm_value(0, 1, 0, 16);
+            command_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 5:
-            score = hud_biorhythm_value(0, 1, 0, 16);
+            command_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 6:
-            score = hud_biorhythm_value(1, 0, 0, 16);
+            command_score = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 7:
-            score = hud_biorhythm_value(1, 0, 0, 16);
+            command_score = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 8:
-            score = hud_biorhythm_value(1, 0, 0, 16);
+            command_score = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 9:
-            score = hud_biorhythm_value(1, 0, 0, 16);
+            command_score = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         case 10:
-            score = hud_biorhythm_value(1, 0, 0, 16);
+            command_score = hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_SCORE_SCALE);
             break;
         }
-        score += (u16)game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >> 4;
+        command_score += (u16)game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points >> 4;
         break;
     case 5:
-        score = hud_biorhythm_value(0, 1, 0, 16) + game_state.param_trivia.value / 16;
+        command_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE) + game_state.param_trivia.value / 16;
         break;
     case 6:
-        score = hud_biorhythm_value(0, 1, 0, 16) + game_state.param_looks.value / 16;
+        command_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE) + game_state.param_looks.value / 16;
         break;
     case 7:
-        hud_biorhythm_value(1, 1, 1, 16);
-        score = 16;
+        hud_biorhythm_value(1, 1, 1, HUD_BIORHYTHM_SCORE_SCALE);
+        command_score = 16;
         break;
     }
-    score += 6;
+    command_score += 6;
     if (game_state.param_stress.value >= 97) {
-        factor = 4;
+        stress_factor = 4;
     } else {
-        factor = game_state.param_stress.value / 32;
+        stress_factor = game_state.param_stress.value / 32;
     }
-    score = rand() % (score + 4);
-    score = (8 - factor) * score / 8;
-    failures = 0;
-    if (hud_biorhythm_value(1, 0, 0, 3) == 0) {
-        failures++;
+    command_score = rand() % (command_score + 4);
+    command_score = (8 - stress_factor) * command_score / 8;
+    zero_wave_count = HUD_BIORHYTHM_ZERO_FAILURES_NONE;
+    if (hud_biorhythm_value(1, 0, 0, HUD_BIORHYTHM_ZERO_WAVE_PROBE_SCALE) == 0) {
+        zero_wave_count++;
     }
-    if (hud_biorhythm_value(0, 1, 0, 3) == 0) {
-        failures++;
+    if (hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_ZERO_WAVE_PROBE_SCALE) == 0) {
+        zero_wave_count++;
     }
-    if (hud_biorhythm_value(0, 0, 1, 3) == 0) {
-        failures++;
+    if (hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_ZERO_WAVE_PROBE_SCALE) == 0) {
+        zero_wave_count++;
     }
-    if (failures == 3) {
-        score /= 4;
+    if (zero_wave_count == HUD_BIORHYTHM_ZERO_FAILURES_ALL_THREE) {
+        command_score /= 4;
     }
-    game_state.day_count = day;
-    if (score >= 4) {
+    game_state.day_count = day_count_to_restore;
+    if (command_score >= 4) {
         return 0;
     }
     return 1;
 }
 
 void hud_biorhythm_probe_discard(void) {
-    hud_biorhythm_value(1, 1, 1, 2);
+    hud_biorhythm_value(1, 1, 1, HUD_BIORHYTHM_DISCARDED_PROBE_SCALE);
 }
 
-s32 hud_biorhythm_value(s32 a, s32 b, s32 c, s32 scale) {
-    s32 magnitude;
-    s32 offset;
-    s32 day;
-    s32 wave_a;
-    s32 wave_b;
-    s32 wave_c;
-    s32 bad;
-    s32 count;
-    s32 total;
+s32 hud_biorhythm_value(s32 include_23_day_wave, s32 include_28_day_wave, s32 include_33_day_wave, s32 scale) {
+    s32 absolute_wave_magnitude;
+    s32 birthday_phase_offset;
+    s32 biorhythm_day;
+    s32 wave_23_day;
+    s32 wave_28_day;
+    s32 wave_33_day;
+    s32 critical_wave_count;
+    s32 selected_wave_count;
+    s32 combined_wave_total;
 
-    wave_a = rsin((day = (offset = hud_biorhythm_birth_offset()) + (u16)game_state.day_count) * 0xB2);
-    wave_b = rsin(day * 0x92);
-    wave_c = rsin(day * 0x7C);
-    bad = 0;
-    count = 0;
-    total = 0;
-    if (a != 0) {
-        count++;
-        if ((magnitude = abs(wave_a)) < 0x199) {
-            total -= 0x1000;
-            bad++;
-        } else if (wave_a > 0) {
-            total += wave_a;
+    wave_23_day = rsin((biorhythm_day = (birthday_phase_offset = hud_biorhythm_birth_offset()) + (u16)game_state.day_count) * 0xB2);
+    wave_28_day = rsin(biorhythm_day * 0x92);
+    wave_33_day = rsin(biorhythm_day * 0x7C);
+    critical_wave_count = 0;
+    selected_wave_count = 0;
+    combined_wave_total = 0;
+    if (include_23_day_wave != 0) {
+        selected_wave_count++;
+        if ((absolute_wave_magnitude = abs(wave_23_day)) < 0x199) {
+            combined_wave_total -= 0x1000;
+            critical_wave_count++;
+        } else if (wave_23_day > 0) {
+            combined_wave_total += wave_23_day;
         } else {
-            total -= wave_a / 2;
+            combined_wave_total -= wave_23_day / 2;
         }
     }
-    if (b != 0) {
-        count++;
-        if ((magnitude = abs(wave_b)) < 0x199) {
-            total -= 0x1000;
-            bad++;
-        } else if (wave_b > 0) {
-            total += wave_b;
+    if (include_28_day_wave != 0) {
+        selected_wave_count++;
+        if ((absolute_wave_magnitude = abs(wave_28_day)) < 0x199) {
+            combined_wave_total -= 0x1000;
+            critical_wave_count++;
+        } else if (wave_28_day > 0) {
+            combined_wave_total += wave_28_day;
         } else {
-            total -= wave_b / 2;
+            combined_wave_total -= wave_28_day / 2;
         }
     }
-    if (c != 0) {
-        count++;
-        if ((magnitude = abs(wave_c)) < 0x199) {
-            total -= 0x1000;
-            bad++;
-        } else if (wave_c > 0) {
-            total += wave_c;
+    if (include_33_day_wave != 0) {
+        selected_wave_count++;
+        if ((absolute_wave_magnitude = abs(wave_33_day)) < 0x199) {
+            combined_wave_total -= 0x1000;
+            critical_wave_count++;
+        } else if (wave_33_day > 0) {
+            combined_wave_total += wave_33_day;
         } else {
-            total -= wave_c / 2;
+            combined_wave_total -= wave_33_day / 2;
         }
     }
-    if (count == 0) return 1;
+    if (selected_wave_count == 0) return 1;
     if (scale > 0) {
-        if (total / count < 0) return 0;
-        return (total * scale / 4096) / count;
+        if (combined_wave_total / selected_wave_count < 0) return 0;
+        return (combined_wave_total * scale / 4096) / selected_wave_count;
     } else if (scale < 0) {
-        if (a != 0) return wave_a * scale / 4096;
-        if (b != 0) return wave_b * scale / 4096;
-        if (c != 0) return wave_c * scale / 4096;
+        if (include_23_day_wave != 0) return wave_23_day * scale / 4096;
+        if (include_28_day_wave != 0) return wave_28_day * scale / 4096;
+        if (include_33_day_wave != 0) return wave_33_day * scale / 4096;
     } else {
-        /* The original retains this count check in the zero-scale path. T-10880. */
-        if (count == 0) return 1;
-        if (count == 1) {
-            if (bad != 0) return -1;
+        /* The original retains this selected_wave_count check in the zero-scale path. T-10880. */
+        if (selected_wave_count == 0) return 1;
+        if (selected_wave_count == 1) {
+            if (critical_wave_count != 0) return -1;
             return 1;
         }
-        if (count == 2) {
-            if (bad != 0) return -1;
+        if (selected_wave_count == 2) {
+            if (critical_wave_count != 0) return -1;
             return 1;
         }
-        if (count == 3) {
-            if (bad >= 2) return -1;
+        if (selected_wave_count == 3) {
+            if (critical_wave_count >= 2) return -1;
             else return 1;
         }
         return 1;
@@ -1660,12 +1660,12 @@ s32 hud_biorhythm_value(s32 a, s32 b, s32 c, s32 scale) {
 }
 
 s32 hud_biorhythm_birth_offset(void) {
-    s32 result;
-    result = -(s32)D_800B670A[game_state.player_birthday & 0xF] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1563;
+    s32 birthday_phase_offset;
+    birthday_phase_offset = -(s32)D_800B670A[game_state.player_birthday & 0xF] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1563;
     if ((game_state.player_birthday & 0xF) == 4 && (((u32)game_state.player_birthday << 23) >> 27) < 4U) {
-        result = -(s32)D_800B670A[3] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1582;
+        birthday_phase_offset = -(s32)D_800B670A[3] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1582;
     }
-    return result;
+    return birthday_phase_offset;
 }
 
 void hud_corner_icon_set(s32 arg0) {
@@ -1726,54 +1726,54 @@ s16 hud_text_marker_bob(void) {
  * 0xF. Clears unk_04 of every record after the list and returns the count, at most 0xFF.
  * T-25103: the for loop orders the induction init before `i = 0`, and `n++` ahead of the join copy
  * keeps `cur = val` (s32, a plain move) at the join instead of a narrowing copy in each arm. */
-s32 hud_event_log_scan(u8 *first, u8 *last, s32 arg2) {
+s32 hud_event_log_scan(u8 *last_qualifying_girl_out, u8 *final_event_girl_out, s32 arg2) {
     GameState *g = &game_state;
     s32 i;
-    s32 n;
-    u8 sel;
-    s32 cur;
-    u8 val;
-    u8 type;
+    s32 event_record_count;
+    u8 last_qualifying_girl_id;
+    s32 final_event_girl_id;
+    u8 current_event_girl_id;
+    u8 scene_id;
 
-    /* FAKE: T-25103 (from T-24928); the dead tests give first/last an early use so their webs are
+    /* FAKE: T-25103 (from T-24928); the dead tests give last_qualifying_girl_out/final_event_girl_out an early use so their webs are
      * coloured $a0/$a1 before the value local's web, which then takes $t0 and pushes the record
-     * base to $t1 as in the original. Without them val takes $a0 and first is spilled. The tests
+     * base to $t1 as in the original. Without them current_event_girl_id takes $a0 and last_qualifying_girl_out is spilled. The tests
      * emit no code. */
-    if (first) {
+    if (last_qualifying_girl_out) {
     }
-    if (last) {
+    if (final_event_girl_out) {
     }
-    sel = 0xFF;
-    cur = 0;
-    n = 0;
+    last_qualifying_girl_id = 0xFF;
+    final_event_girl_id = 0;
+    event_record_count = 0;
     for (i = 0; i < 0x100; i++) {
-        if (g->event_log[n].year == 0) {
+        if (g->event_log[event_record_count].year == 0) {
             break;
         }
-        type = g->event_log[n].scene;
-        if (type != 0 && type != 1 && type != 2 && type != 0xF) {
-            val = g->event_log[n].girl;
+        scene_id = g->event_log[event_record_count].scene;
+        if (scene_id != 0 && scene_id != 1 && scene_id != 2 && scene_id != 0xF) {
+            current_event_girl_id = g->event_log[event_record_count].girl;
         } else {
-            val = g->event_log[n].girl;
-            sel = val;
+            current_event_girl_id = g->event_log[event_record_count].girl;
+            last_qualifying_girl_id = current_event_girl_id;
         }
-        n++;
-        cur = val;
+        event_record_count++;
+        final_event_girl_id = current_event_girl_id;
     }
-    for (i = n; i < 0x100; i++) {
+    for (i = event_record_count; i < 0x100; i++) {
         g->event_log[i].year = 0;
     }
-    *first = sel;
-    *last = cur;
-    if (n >= 0xFF) {
-        n = 0xFF;
+    *last_qualifying_girl_out = last_qualifying_girl_id;
+    *final_event_girl_out = final_event_girl_id;
+    if (event_record_count >= 0xFF) {
+        event_record_count = 0xFF;
     }
-    return n;
+    return event_record_count;
 }
 
 u8 *hud_confirm_button_label(void) {
     if (game_state.input_device == INPUT_MOUSE) {
-        if (game_state.confirm_button != 0) {
+        if (game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) {
             return D_800B672C;
         }
         return D_800B6730;
@@ -1783,7 +1783,7 @@ u8 *hud_confirm_button_label(void) {
 
 u8 *hud_cancel_button_label(void) {
     if (game_state.input_device == INPUT_MOUSE) {
-        if (game_state.confirm_button != 0) {
+        if (game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) {
             return D_800B6730;
         }
         return D_800B672C;

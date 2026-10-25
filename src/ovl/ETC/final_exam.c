@@ -3,7 +3,7 @@
 #include "ovl/ETC.h"
 
 /* FAKE: unused padding array preserves the frame layout. T-10850 */
-s32 func_80146400(void)
+s32 exam_correction_bonus(void)
 {
     s32 x;
     s32 pad[3];
@@ -46,7 +46,7 @@ s32 func_80146400(void)
         x -= 1;
     }
     /* The assignment inside the argument makes IDO load the format string's lui first (T-22029). */
-    printf("補正 %d ", *(p = &D_801506F8[x]));
+    printf("補正 %d ", *(p = &exam_correction_table[x]));
     r = rand() & 7;
     a = *p;
     d = r + a;
@@ -59,7 +59,7 @@ s32 func_80146400(void)
     return (d > 0) * 0;
 }
 
-s32 func_801464D4(s32 mode) {
+s32 exam_event_log_bonus(s32 mode) {
     u32 i;
     GameState *g;
 
@@ -91,19 +91,19 @@ s32 func_801464D4(s32 mode) {
     return 0;
 }
 
-void func_801465F8(void) {
+void exam_entry(void) {
     s32 *p;
     s32 y;
 
     switch (game_state.mode_stage) {
     case 0:
-        func_80146B40();
+        exam_stage_setup();
         break;
     case 1:
-        func_80146714();
+        exam_stage_day();
         break;
     case 2:
-        func_80148078();
+        exam_stage_end();
         break;
     }
     hud_screen_frame_draw(1);
@@ -125,33 +125,33 @@ void func_801465F8(void) {
         p++;
     }
 }
-void func_80146714(void) {
+void exam_stage_day(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.weekday) {
     case WEEKDAY_MONDAY:
-        func_80147650();
+        exam_day_step_language();
         return;
     case WEEKDAY_TUESDAY:
-        func_801476DC();
+        exam_day_step_math();
         return;
     case WEEKDAY_WEDNESDAY:
-        func_80147768();
+        exam_day_step_science();
         return;
     case WEEKDAY_THURSDAY:
-        func_801477F4();
+        exam_day_step_social_studies();
         return;
     case WEEKDAY_FRIDAY:
-        func_80147880();
+        exam_day_step_art();
         return;
     case WEEKDAY_SATURDAY:
-        func_80147F7C();
+        exam_results_step();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_801467C4(void) {
+void exam_setup_init_screen(void) {
     s32 var_s0;
 
     text_system_reset();
@@ -172,13 +172,13 @@ void func_801467C4(void) {
     parameter_show_init();
     if (game_state.weekday == WEEKDAY_MONDAY) {
         audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
-    } else if (((EtcStateFlagsView *)&game_state)->records[game_state.day_event_index].type != DAY_EVENT_EXAM) {
+    } else if (((ExamQueueView *)&game_state)->queue_back2[game_state.day_event_index].type != DAY_EVENT_EXAM) {
         audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
     }
     mode_step_next();
 }
 
-void func_801468FC(void) {
+void exam_setup_background_start(void) {
     s32 r2;
     s32 r;
 
@@ -215,7 +215,7 @@ void func_801468FC(void) {
     }
 }
 
-void func_80146A38(void) {
+void exam_setup_background_wait(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, dec_bg_decode_to_vram(0));
         if (D_800B594C == -1) {
@@ -229,39 +229,39 @@ void func_80146A38(void) {
     }
 }
 
-void func_80146AC0(void) {
+void exam_setup_scores_reset(void) {
     s32 i;
 
     if (game_state.weekday == WEEKDAY_MONDAY) {
         for (i = 0; i < 6; i++) {
-            ((EtcWork40 *)&D_801230D0)->unk_10[i] = 0;
-            ((EtcWork40 *)&D_801230D0)->unk_28[i] = 0;
+            ((ExamWork *)&D_801230D0)->subject_grade[i] = 0;
+            ((ExamWork *)&D_801230D0)->subject_score[i] = 0;
         }
     }
     mode_stage_next();
 }
 
-s32 func_80146B40(void) {
+s32 exam_stage_setup(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801467C4();
+        exam_setup_init_screen();
         break;
     case 1:
-        func_801468FC();
+        exam_setup_background_start();
         break;
     case 2:
-        func_80146A38();
+        exam_setup_background_wait();
         break;
     case 3:
-        func_80146AC0();
+        exam_setup_scores_reset();
         break;
     }
 }
 
-s32 func_80146BC4(void) {
+s32 exam_day_sd_pack_load(void) {
     switch (game_state.substep) {
     case 0:
-        cd_read_sectors(9U, 0x801E0000, *(s32 *)&D_80150720[-(hud_in_summer_months() * 4)]);
+        cd_read_sectors(9U, 0x801E0000, *(s32 *)&misc_sd_pack_lba_other[-(hud_in_summer_months() * 4)]);
         game_state.substep = 1;
         break;
     case 1:
@@ -273,7 +273,7 @@ s32 func_80146BC4(void) {
     }
 }
 
-void func_80146C68(s32 arg0) {
+void exam_player_face_set(s32 arg0) {
     actor_clear(0x60);
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
     ((Actor *)actor_pool_96)->unk_01 = 1;
@@ -291,47 +291,47 @@ void func_80146C68(s32 arg0) {
     ((Actor *)actor_pool_96)->y = -0x40;
 }
 
-s32 func_80146D4C(void) {
+s32 exam_score_day(void) {
     s32 zero; /* FAKE: T-25045, reuses the original T-25007 frame-padding word. */
-    s32 score;
-    EtcWork40 *w;
+    s32 week_total_score;
+    ExamWork *exam_work;
     s32 ret;
-    s32 main;
+    s32 primary_score;
     s32 sub;
-    s32 bio;
-    GameState *g = &game_state;
+    s32 biorhythm_score;
+    GameState *state = &game_state;
 
-    main = 0;
+    primary_score = 0;
     sub = 0;
-    switch (g->weekday) {
+    switch (state->weekday) {
     case WEEKDAY_MONDAY:
-        main = g->param_liberal_arts.value;
-        bio = hud_biorhythm_value(0, 0, 1, 0x10);
+        primary_score = state->param_liberal_arts.value;
+        biorhythm_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE);
         break;
     case WEEKDAY_TUESDAY:
-        main = g->param_science.value;
-        bio = hud_biorhythm_value(0, 0, 1, 0x10);
+        primary_score = state->param_science.value;
+        biorhythm_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE);
         break;
     case WEEKDAY_WEDNESDAY:
-        main = g->param_science.value * 7 / 10;
-        sub = g->param_trivia.value * 3 / 10;
+        primary_score = state->param_science.value * 7 / 10;
+        sub = state->param_trivia.value * 3 / 10;
         if (sub >= 0x27) {
             sub = 0x26;
         }
-        bio = hud_biorhythm_value(0, 1, 1, 0x10);
+        biorhythm_score = hud_biorhythm_value(0, 1, 1, HUD_BIORHYTHM_SCORE_SCALE);
         break;
     case WEEKDAY_THURSDAY:
-        sub = g->param_liberal_arts.value * 3 / 10;
-        main = g->param_trivia.value * 7 / 10;
-        bio = hud_biorhythm_value(0, 0, 1, 0x10);
+        sub = state->param_liberal_arts.value * 3 / 10;
+        primary_score = state->param_trivia.value * 7 / 10;
+        biorhythm_score = hud_biorhythm_value(0, 0, 1, HUD_BIORHYTHM_SCORE_SCALE);
         if (sub >= 0x27) {
             sub = 0x26;
         }
         break;
     case WEEKDAY_FRIDAY:
-        main = g->param_art.value * 8 / 10;
-        sub = g->param_trivia.value * 2 / 10;
-        bio = hud_biorhythm_value(0, 1, 0, 0x10);
+        primary_score = state->param_art.value * 8 / 10;
+        sub = state->param_trivia.value * 2 / 10;
+        biorhythm_score = hud_biorhythm_value(0, 1, 0, HUD_BIORHYTHM_SCORE_SCALE);
         if (sub >= 0x1A) {
             sub = 0x19;
         }
@@ -340,32 +340,32 @@ s32 func_80146D4C(void) {
         game_mode_reset_to_title();
         break;
     }
-    ret = main + sub + bio - 8;
+    ret = primary_score + sub + biorhythm_score - 8;
     /* FAKE: T-25007, the nibble view loads the flag byte into its own temporary as the original does */
-    if (((NibbleView *)&g->player_flags.b[1])->low & 2) {
+    if (((NibbleView *)&state->player_flags.b[1])->low & 2) {
         ret /= 2;
     }
-    printf("main %d sub %d bio %d ret %d ", main, sub, bio, ret);
+    printf("main %d sub %d bio %d ret %d ", primary_score, sub, biorhythm_score, ret);
     if (ret < 0) {
         ret = 1;
     }
-    ret = func_80146400() + ret;
-    sub = func_801464D4(0xF);
+    ret = exam_correction_bonus() + ret;
+    sub = exam_event_log_bonus(0xF);
     ret = (rand() % 10) * sub + ret;
-    w = (EtcWork40 *)&D_801230D0;
+    exam_work = (ExamWork *)&D_801230D0;
     if (ret < 0x80) {
-        w->unk_28[g->weekday] = ret * 100 / 128;
+        exam_work->subject_score[state->weekday] = ret * 100 / 128;
     } else {
-        w->unk_28[g->weekday] = 100 - (rand() & 3);
+        exam_work->subject_score[state->weekday] = 100 - (rand() & 3);
     }
-    printf("今日の成績 %d\t", w->unk_28[g->weekday]);
-    score = w->unk_28[g->weekday] + w->unk_28[5];
-    w->unk_28[5] = score;
+    printf("今日の成績 %d\t", exam_work->subject_score[state->weekday]);
+    week_total_score = exam_work->subject_score[state->weekday] + exam_work->subject_score[5];
+    exam_work->subject_score[5] = week_total_score;
     /* FAKE: T-25045, the late-folded zero and two identities spend one ugen
      * temporary before as1 removes them, preserving the final index registers. */
-    zero = g->weekday * 0;
-    printf("合計点 %d\n", (score + zero) | zero);
-    ret = w->unk_28[g->weekday];
+    zero = state->weekday * 0;
+    printf("合計点 %d\n", (week_total_score + zero) | zero);
+    ret = exam_work->subject_score[state->weekday];
     if (ret < 0x28) {
         ret = 0;
     } else if (ret < 0x3C) {
@@ -381,84 +381,84 @@ s32 func_80146D4C(void) {
         D_801230F4 += 1;
         /* FAKE: T-25007, an extra read of unk_041 raises the priority of its promoted range so every
          * read sits in a3 as in the original (found by the permuter) */
-        if (g->weekday) {
+        if (state->weekday) {
         }
     }
-    w->unk_10[g->weekday] = ret;
+    exam_work->subject_grade[state->weekday] = ret;
     return ret;
 }
 
-void func_8014716C(void) {
+void exam_day_start_language(void) {
     text_system_reset();
     message_window_set_title("期末試験");
     gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第一日目の試験科目は 語学だ。）", 0, 0x1F);
-    if (func_80146D4C() < 2) {
-        func_80146C68(1);
+    if (exam_score_day() < 2) {
+        exam_player_face_set(1);
     } else {
-        func_80146C68(0);
+        exam_player_face_set(0);
     }
     mode_step_next();
 }
 
-void func_801471F4(void) {
+void exam_day_start_math(void) {
     text_system_reset();
     message_window_set_title("期末試験");
     gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第二日目の試験科目は 数学だ。）", 0, 0x1F);
-    if (func_80146D4C() < 2) {
-        func_80146C68(1);
+    if (exam_score_day() < 2) {
+        exam_player_face_set(1);
     } else {
-        func_80146C68(0);
+        exam_player_face_set(0);
     }
     mode_step_next();
 }
 
-void func_8014727C(void) {
+void exam_day_start_science(void) {
     text_system_reset();
     message_window_set_title("期末試験");
     gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第三日目の試験科目は 理科だ。）", 0, 0x1F);
-    if (func_80146D4C() < 2) {
-        func_80146C68(1);
+    if (exam_score_day() < 2) {
+        exam_player_face_set(1);
     } else {
-        func_80146C68(0);
+        exam_player_face_set(0);
     }
     mode_step_next();
 }
 
-void func_80147304(void) {
+void exam_day_start_social_studies(void) {
     text_system_reset();
     message_window_set_title("期末試験");
     gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第四日目の試験科目は 社会だ。）", 0, 0x1F);
-    if (func_80146D4C() < 2) {
-        func_80146C68(1);
+    if (exam_score_day() < 2) {
+        exam_player_face_set(1);
     } else {
-        func_80146C68(0);
+        exam_player_face_set(0);
     }
     mode_step_next();
 }
 
-void func_8014738C(void) {
+void exam_day_start_art(void) {
     text_system_reset();
     message_window_set_title("期末試験");
     gnsx(game_state.player_family_name);
     k_disp_start(2);
     sndisp("第五日目の試験科目は 美術だ。）", 0, 0x1F);
-    if (func_80146D4C() < 2) {
-        func_80146C68(1);
+    if (exam_score_day() < 2) {
+        exam_player_face_set(1);
     } else {
-        func_80146C68(0);
+        exam_player_face_set(0);
     }
     mode_step_next();
 }
 
-void func_80147414(void) {
+void exam_day_wait_anim(void) {
     s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */
     if (game_state.mode_step_timer.w == 0x20) {
         D_80120652 |= 1;
@@ -482,7 +482,7 @@ void func_80147414(void) {
     k_disp_inc();
 }
 
-void func_801474FC(void) {
+void exam_day_comment(void) {
     if (game_state.substep == 0) {
         k_reset(1);
         gnsx(game_state.player_family_name);
@@ -512,127 +512,127 @@ void func_801474FC(void) {
     }
 }
 
-void func_80147630(void) {
+void exam_day_end(void) {
     mode_stage_next();
 }
 
-void func_80147650(void) {
+void exam_day_step_language(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80146BC4();
+        exam_day_sd_pack_load();
         return;
     case 1:
-        func_8014716C();
+        exam_day_start_language();
         return;
     case 2:
-        func_80147414();
+        exam_day_wait_anim();
         return;
     case 3:
-        func_801474FC();
+        exam_day_comment();
         return;
     case 4:
-        func_80147630();
+        exam_day_end();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_801476DC(void) {
+void exam_day_step_math(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80146BC4();
+        exam_day_sd_pack_load();
         return;
     case 1:
-        func_801471F4();
+        exam_day_start_math();
         return;
     case 2:
-        func_80147414();
+        exam_day_wait_anim();
         return;
     case 3:
-        func_801474FC();
+        exam_day_comment();
         return;
     case 4:
-        func_80147630();
+        exam_day_end();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_80147768(void) {
+void exam_day_step_science(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80146BC4();
+        exam_day_sd_pack_load();
         return;
     case 1:
-        func_8014727C();
+        exam_day_start_science();
         return;
     case 2:
-        func_80147414();
+        exam_day_wait_anim();
         return;
     case 3:
-        func_801474FC();
+        exam_day_comment();
         return;
     case 4:
-        func_80147630();
+        exam_day_end();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_801477F4(void) {
+void exam_day_step_social_studies(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80146BC4();
+        exam_day_sd_pack_load();
         return;
     case 1:
-        func_80147304();
+        exam_day_start_social_studies();
         return;
     case 2:
-        func_80147414();
+        exam_day_wait_anim();
         return;
     case 3:
-        func_801474FC();
+        exam_day_comment();
         return;
     case 4:
-        func_80147630();
+        exam_day_end();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_80147880(void) {
+void exam_day_step_art(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80146BC4();
+        exam_day_sd_pack_load();
         return;
     case 1:
-        func_8014738C();
+        exam_day_start_art();
         return;
     case 2:
-        func_80147414();
+        exam_day_wait_anim();
         return;
     case 3:
-        func_801474FC();
+        exam_day_comment();
         return;
     case 4:
-        func_80147630();
+        exam_day_end();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_801480D0(void);
-void func_80148F34(void); /* defined later in this file */
+void exam_ranking_build(void);
+void exam_digit_palette_upload(void); /* defined later in this file */
 
 /* T-25054: results scene and the fourteen result display records.
  * FAKE: retain the legacy non-void fallthrough to keep the switch copy in v0;
  * the only caller ignores the result. A void definition removes that copy. */
-s32 func_8014790C(void) {
+s32 exam_results_show(void) {
     /* FAKE: the 0x10C size only reproduces the 0x188 frame and the buffer at 0x7C (original size unknown). T-22029 */
     u8 buf[0x10C];
     s32 i;
@@ -680,17 +680,17 @@ s32 func_8014790C(void) {
             ((Actor *)actor_pool)[96].x = 0;
             ((Actor *)actor_pool)[96].y = -0x28;
             ((Actor *)actor_pool)[96].brightness = 0x80;
-            func_80148E98();
-            func_80148EE8();
-            func_801480D0();
+            exam_panel_draw_big();
+            exam_panel_draw_header();
+            exam_ranking_build();
             /* FAKE: T-25054, the always-false unsigned comparison folds after
              * uopt, keeping the walked base separate from the indexed base.
              * Keep i's initialization and the following do on one line for
              * the original address schedule. */
             do { r = actor_pool; } while ((u32)game_state.weekday < 0); i = 0; do {
-                x = D_80150630[i];
-                y = D_8015064C[i];
-                v = D_80150684[i];
+                x = exam_row_x[i];
+                y = exam_row_y[i];
+                v = exam_ranking_order[i];
                 ((Actor *)r)[0x61].unk_01 = 3;
                 ((Actor *)r)[0x61].flags = 0x40;
                 ((Actor *)r)[0x61].quad_flags = 0;
@@ -707,7 +707,7 @@ s32 func_8014790C(void) {
                 if (v == 0xD) {
                     strncpy((char *) buf, (char *) game_state.player_family_name, 8);
                     strncat((char *) buf, (char *) game_state.player_given_name, 8);
-                    set_kanji_string(D_80150630[i] + 0x18, D_8015064C[i], 3, buf, 0);
+                    set_kanji_string(exam_row_x[i] + 0x18, exam_row_y[i], 3, buf, 0);
                     printf("%s\n", game_state.player_full_name);
                 } else if (v == 0xA) {
                     set_kanji_string(x + 0x18, y, 3, girl_full_name_table[13], 0);
@@ -730,7 +730,7 @@ s32 func_8014790C(void) {
             } while (i != 0xE);
             k_sub_reset_point_set();
             k_sub_disp_start(0);
-            func_80148F34();
+            exam_digit_palette_upload();
             mode_step_next();
         }
         break;
@@ -742,25 +742,25 @@ typedef struct {
     u8 f0 : 1;
     u8 f1 : 1;
     u8 rest : 6;
-} GsBits0F6;
+} ExamPlayerFlagBits;
 
-void func_80147D74(void) {
-    func_80148BC8();
+void exam_results_react(void) {
+    exam_ranking_numbers_draw();
     game_state.player_flags_upper.b[0] &= 0xFFFD;
     if (game_state.mode_step_timer.u >= 0x79U) {
         gnsx(game_state.player_family_name);
         if (D_801230F4 >= 3) {
             sndisp("３科目以上赤点だった。 明日から、一週間補習だぁ。 勉強しかできないー！）", 0, 0x1F);
             audio_bank_start(1, 0x203);
-            ((GsBits0F6 *)&game_state.player_flags_upper.b[0])->f0 = 1;
+            ((ExamPlayerFlagBits *)&game_state.player_flags_upper.b[0])->f0 = 1;
             game_state.month_calendar[0].marker[game_state.day + 1] = 0x17;
-            ((GsBits0F6 *)&game_state.player_flags_upper.b[0])->f1 = 1;
-        } else if (D_801506F0 < 2) {
+            ((ExamPlayerFlagBits *)&game_state.player_flags_upper.b[0])->f1 = 1;
+        } else if (exam_rank_player < 2) {
             sndisp("やったー、一番だ！ これで試験の帝王だな。）", 0, 0x1F);
             audio_bank_start(1, 0x204);
-        } else if (D_801506F4 != 0) {
+        } else if (exam_player_in_lower_half != 0) {
             sndisp("今回の試験は終了した。）", 0, 0x1F);
-            ((GsBits0F6 *)&game_state.player_flags_upper.b[0])->f1 = 1;
+            ((ExamPlayerFlagBits *)&game_state.player_flags_upper.b[0])->f1 = 1;
             audio_bank_start(1, 0x200);
         } else {
             sndisp("今回の試験は終了した。）", 0, 0x1F);
@@ -771,36 +771,36 @@ void func_80147D74(void) {
         hud_cursor_show(0);
         mode_step_next();
     }
-    func_80148E98();
-    func_80148EE8();
+    exam_panel_draw_big();
+    exam_panel_draw_header();
 }
 
-void func_80147F0C(void) {
+void exam_results_wait(void) {
     if (((game_state.pad_pressed & PAD_CIRCLE) && (u32)game_state.mode_step_timer.w >= 0x101) || (game_state.pad_pressed & PAD_CROSS)) {
         hud_cursor_show(1);
         mode_stage_next();
     }
-    func_80148E98();
-    func_80148EE8();
-    func_80148BC8();
+    exam_panel_draw_big();
+    exam_panel_draw_header();
+    exam_ranking_numbers_draw();
 }
 
-s32 func_80147F7C(void) {
+s32 exam_results_step(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_8014790C();
+        exam_results_show();
         break;
     case 1:
-        func_80147D74();
+        exam_results_react();
         break;
     case 2:
-        func_80147F0C();
+        exam_results_wait();
         break;
     }
 }
 
-void func_80147FFC(void) {
+void exam_end_init(void) {
     parameter_show_init();
     parameter_show_init();
     actor_clear_upper();
@@ -808,26 +808,26 @@ void func_80147FFC(void) {
     mode_step_next();
 }
 
-void func_8014803C(void) {
+void exam_end_leave(void) {
     if (game_state.weekday == WEEKDAY_SATURDAY) {
         audio_bank_start(0, 0);
     }
     day_event_next(0);
 }
 
-void func_80148078(void) {
+void exam_stage_end(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80147FFC();
+        exam_end_init();
         break;
     case 1:
-        func_8014803C();
+        exam_end_leave();
         break;
     }
     parameter_show();
 }
 /* T-25059: generate exam scores, order and ranks, then apply relationship bonuses. */
-void func_801480D0(void) {
+void exam_ranking_build(void) {
     /* FAKE: T-25059, scalar order and the unused word below preserve the
      * original 0xD0 frame and the noise/angle/offset/array stack homes. */
     s32 i;
@@ -848,37 +848,37 @@ void func_801480D0(void) {
     srand(game_state.frame_count);
     for (i = 0; i < 13; i++) {
         first_random = rand();
-        noise = (first_random % (s32)D_80150738[i]) * (((rand() & 1) * 2) - 1);
+        noise = (first_random % (s32)exam_score_spread[i]) * (((rand() & 1) * 2) - 1);
         first_random = rand();
-        a = (first_random % (s32)D_80150738[i]) * ((rand() & 1) * 2 - 1);
-        D_80150668[i] = ((D_80150728[i] + a) * 5) + noise;
-        j = func_801464D4(i);
+        a = (first_random % (s32)exam_score_spread[i]) * ((rand() & 1) * 2 - 1);
+        exam_ranking_value[i] = ((exam_base_score[i] + a) * 5) + noise;
+        j = exam_event_log_bonus(i);
         if (j != 1) {
             if (j == 9) {
-                D_80150668[i] += rand() % 250;
+                exam_ranking_value[i] += rand() % 250;
             }
         } else {
-            D_80150668[i] += rand() % 50;
+            exam_ranking_value[i] += rand() % 50;
         }
-        if (D_80150668[i] >= 501) {
-            D_80150668[i] = 500;
+        if (exam_ranking_value[i] >= 501) {
+            exam_ranking_value[i] = 500;
         }
-        printf("[%d:%d]\n", i, D_80150668[i]);
+        printf("[%d:%d]\n", i, exam_ranking_value[i]);
     }
-    D_80150668[13] = (s16) ((EtcWork40 *)&D_801230D0)->unk_28[5];
+    exam_ranking_value[13] = (s16) ((ExamWork *)&D_801230D0)->subject_score[5];
     do {
         changed = 0;
         for (j = 0; j < 14; j++) {
             for (i = j + 1; i < 14; i++) {
-                if (D_80150668[i] == D_80150668[j]) {
+                if (exam_ranking_value[i] == exam_ranking_value[j]) {
                     changed++;
-                    D_80150668[i]--;
+                    exam_ranking_value[i]--;
                 }
             }
         }
     } while (changed != 0);
     for (i = 0; i < 14; i++) {
-        values[i] = D_80150668[i];
+        values[i] = exam_ranking_value[i];
     }
     for (j = 0; j < 14; j++) {
         selected = 0;
@@ -890,30 +890,30 @@ void func_801480D0(void) {
             }
         }
         values[selected] = 0;
-        D_80150684[j] = selected;
+        exam_ranking_order[j] = selected;
     }
     printf("順位計算\n ");
     for (i = 0; i < 14; i++) {
-        printf("[%d:%d] \n", i, D_80150684[i]);
+        printf("[%d:%d] \n", i, exam_ranking_order[i]);
     }
     printf("順位作成\n ");
     offset = rand() & 3;
     for (i = 0; i < 14; i++) {
-        angle = (D_80150668[i] << 12) / 1000;
+        angle = (exam_ranking_value[i] << 12) / 1000;
         sine = func_800A0140(angle);
-        D_801506BC[i] = (sine * 200) / 4096 + offset + 200;
-        printf("[%d:%d %d %d] \n", i, angle, sine, D_801506BC[i]);
+        exam_ranking_rank[i] = (sine * 200) / 4096 + offset + 200;
+        printf("[%d:%d %d %d] \n", i, angle, sine, exam_ranking_rank[i]);
     }
     do {
         changed = 0;
         for (j = 0; j < 14; j++) {
             for (i = j + 1; i < 14; i++) {
-                if (D_801506BC[i] == D_801506BC[j]) {
+                if (exam_ranking_rank[i] == exam_ranking_rank[j]) {
                     changed++;
-                    if (D_80150668[i] < D_80150668[j]) {
-                        D_801506BC[i]++;
+                    if (exam_ranking_value[i] < exam_ranking_value[j]) {
+                        exam_ranking_rank[i]++;
                     } else {
-                        D_801506BC[i]--;
+                        exam_ranking_rank[i]--;
                     }
                 }
             }
@@ -921,59 +921,59 @@ void func_801480D0(void) {
     } while (changed != 0);
     printf("順位ソート\n ");
     for (i = 0; i < 14; i++) {
-        printf("[%d:%d] \n", i, D_801506BC[i]);
+        printf("[%d:%d] \n", i, exam_ranking_rank[i]);
     }
     minimum = 1000;
     for (i = 0; i < 14; i++) {
-        if (D_801506BC[i] < minimum) {
-            minimum = D_801506BC[i];
+        if (exam_ranking_rank[i] < minimum) {
+            minimum = exam_ranking_rank[i];
         }
     }
     if (minimum >= 9) {
         a = rand() % (minimum - 8) + minimum - 8;
         for (i = 0; i < 14; i++) {
-            D_801506BC[i] -= a;
+            exam_ranking_rank[i] -= a;
         }
     } else if (minimum <= 0) {
         a = 1 - minimum;
         for (i = 0; i < 14; i++) {
-            D_801506BC[i] += a;
+            exam_ranking_rank[i] += a;
         }
     }
-    maximum = D_80150668[0];
+    maximum = exam_ranking_value[0];
     selected = 0;
     for (i = 1; i < 14; i++) {
-        if (maximum < D_80150668[i]) {
-            maximum = D_80150668[i];
+        if (maximum < exam_ranking_value[i]) {
+            maximum = exam_ranking_value[i];
             selected = i;
         }
     }
     if (maximum >= 466) {
-        offset = D_801506BC[selected] - 1;
+        offset = exam_ranking_rank[selected] - 1;
         for (i = 0; i < 14; i++) {
-            D_801506BC[i] -= offset;
+            exam_ranking_rank[i] -= offset;
         }
     }
     printf("順位確定\n ");
     for (i = 0; i < 14; i++) {
-        printf("[%d:%d] \n", i, D_801506BC[i]);
+        printf("[%d:%d] \n", i, exam_ranking_rank[i]);
     }
-    if (D_80150684[0] == 13 && D_80150684[1] == 0) {
-        if (D_801506BC[0] < D_801506BC[13]) {
-            a = D_801506BC[0];
-            D_801506BC[0] = D_801506BC[13];
-            D_801506BC[13] = a;
+    if (exam_ranking_order[0] == 13 && exam_ranking_order[1] == 0) {
+        if (exam_ranking_rank[0] < exam_ranking_rank[13]) {
+            a = exam_ranking_rank[0];
+            exam_ranking_rank[0] = exam_ranking_rank[13];
+            exam_ranking_rank[13] = a;
         }
     }
-    if (D_80150684[0] == 13 && D_801506BC[13] <= 0) {
-        j = 1 - D_801506BC[13];
-        D_801506BC[13] = 1;
+    if (exam_ranking_order[0] == 13 && exam_ranking_rank[13] <= 0) {
+        j = 1 - exam_ranking_rank[13];
+        exam_ranking_rank[13] = 1;
         for (i = 0; i < 13; i++) {
-            D_801506BC[i] += j;
+            exam_ranking_rank[i] += j;
         }
     }
     for (i = 0; i < 11; i++) {
-        if (D_80150668[i] < D_80150668[13]) {
+        if (exam_ranking_value[i] < exam_ranking_value[13]) {
             if (game_state.scene_flags[0xC8 + i] == 0) {
                 game_state.girls[i].tokimeki += 11;
                 game_state.scene_flags[0xC8 + i] = 1;
@@ -982,7 +982,7 @@ void func_801480D0(void) {
             }
         }
     }
-    if (D_801506BC[13] == 1) {
+    if (exam_ranking_rank[13] == 1) {
         for (i = 0; i < 11; i++) {
             game_state.girls[i].tokimeki += 2;
         }
@@ -991,69 +991,69 @@ void func_801480D0(void) {
 
 
 /* Implicit int in the original (no return value): $v0 stays live at the exit, which orders the loop preheader. T-22029 */
-s32 func_80148BC8() {
+s32 exam_ranking_numbers_draw() {
     s16 *x;
     s16 *y;
     s32 i;
 
     for (i = 0; i != 0xE; i++) {
-        if (D_80150684[i] == 0xD) {
-            x = &D_80150630[i];
-            y = &D_8015064C[i];
-            func_80148F7C(D_80150682, *x + 0x86, *y, 1, 0);
-            func_80148F7C(0, *x + 0x8E, *y, 0, 0);
-            func_80148F7C(D_801506F0, *x + 4, *y, 0, 1);
+        if (exam_ranking_order[i] == 0xD) {
+            x = &exam_row_x[i];
+            y = &exam_row_y[i];
+            exam_number_draw(exam_value_player, *x + 0x86, *y, 1, 0);
+            exam_number_draw(0, *x + 0x8E, *y, 0, 0);
+            exam_number_draw(exam_rank_player, *x + 4, *y, 0, 1);
             if (i >= 7) {
-                D_801506F4 = 1;
+                exam_player_in_lower_half = 1;
             } else {
-                D_801506F4 = 0;
+                exam_player_in_lower_half = 0;
             }
-        } else if (D_80150684[i] == 0xA) {
-            x = &D_80150630[i];
-            y = &D_8015064C[i];
-            func_80148F7C(D_8015067C, *x + 0x86, *y, 1, 0);
-            func_80148F7C(0, *x + 0x8E, *y, 0, 0);
-            func_80148F7C(D_801506E4, *x + 4, *y, 0, 1);
-        } else if (D_80150684[i] == 0xB) {
+        } else if (exam_ranking_order[i] == 0xA) {
+            x = &exam_row_x[i];
+            y = &exam_row_y[i];
+            exam_number_draw(exam_value_friend, *x + 0x86, *y, 1, 0);
+            exam_number_draw(0, *x + 0x8E, *y, 0, 0);
+            exam_number_draw(exam_rank_friend, *x + 4, *y, 0, 1);
+        } else if (exam_ranking_order[i] == 0xB) {
             if (game_state.girls[11].flags.f.story_stage != 0) {
-                x = &D_80150630[i];
-                y = &D_8015064C[i];
-                func_80148F7C(D_8015067E, *x + 0x86, *y, 1, 0);
-                func_80148F7C(0, *x + 0x8E, *y, 0, 0);
-                func_80148F7C(D_801506E8, *x + 4, *y, 0, 1);
+                x = &exam_row_x[i];
+                y = &exam_row_y[i];
+                exam_number_draw(exam_value_miharu, *x + 0x86, *y, 1, 0);
+                exam_number_draw(0, *x + 0x8E, *y, 0, 0);
+                exam_number_draw(exam_rank_miharu, *x + 4, *y, 0, 1);
             }
-        } else if (game_state.girls[D_80150684[i]].flags.f.met) {
-            x = &D_80150630[i];
-            y = &D_8015064C[i];
-            func_80148F7C(D_80150668[D_80150684[i]], *x + 0x86, *y, 1, 0);
-            func_80148F7C(0, *x + 0x8E, *y, 0, 0);
-            func_80148F7C(D_801506BC[D_80150684[i]], *x + 4, *y, 0, 1);
+        } else if (game_state.girls[exam_ranking_order[i]].flags.f.met) {
+            x = &exam_row_x[i];
+            y = &exam_row_y[i];
+            exam_number_draw(exam_ranking_value[exam_ranking_order[i]], *x + 0x86, *y, 1, 0);
+            exam_number_draw(0, *x + 0x8E, *y, 0, 0);
+            exam_number_draw(exam_ranking_rank[exam_ranking_order[i]], *x + 4, *y, 0, 1);
         }
     }
 }
 
-void func_80148E98(void) {
+void exam_panel_draw_big(void) {
     prim_gradient_rect(-0xA0, -0x68, 0x140, 0x8E, 5, 0xE0E0E0, 2);
     dtd_on(5);
 }
 
-void func_80148EE8(void) {
+void exam_panel_draw_header(void) {
     prim_gradient_rect(-0x41, -0x70, 0x84, 0x12, 4, 0x30E00, 0);
     dtd_on(4);
 }
 
-void func_80148F34(void) {
+void exam_digit_palette_upload(void) {
     RECT rect;
 
     rect.x = 0x100;
     rect.y = 0x1F0;
     rect.w = 0x10;
     rect.h = 2;
-    func_8009C884(&rect, &D_80150754);
+    func_8009C884(&rect, &exam_digit_palette);
 }
 
 /* FAKE: unused pad[2] preserves the 0x78 frame and 0x5C CSE slot (T-24121). */
-void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void exam_number_draw(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 pad[2];
     SPRT *temp_v0;
     u32 var_s1;
@@ -1084,7 +1084,7 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                 temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
-                temp_v0->u0 = D_80150748[var_s1 % 10U];
+                temp_v0->u0 = exam_digit_u[var_s1 % 10U];
                 temp_v0->v0 = 0;
                 break;
             case 1:
@@ -1092,7 +1092,7 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                 temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
-                temp_v0->u0 = D_80150748[var_s1 % 10U];
+                temp_v0->u0 = exam_digit_u[var_s1 % 10U];
                 temp_v0->v0 = 0x10;
                 break;
             case 2:
@@ -1100,7 +1100,7 @@ void func_80148F7C(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                 temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
                 temp_v0->w = 6;
                 temp_v0->h = 0xC;
-                temp_v0->u0 = D_80150748[var_s1 % 10U];
+                temp_v0->u0 = exam_digit_u[var_s1 % 10U];
                 temp_v0->v0 = 0x20;
                 break;
             }

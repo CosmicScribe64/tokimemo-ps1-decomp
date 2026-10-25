@@ -1,0 +1,28 @@
+// HYPOTHESES, not facts: names of the overlay TT that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+tt_animation_list_step = 0x80132000; // type:func
+tt_bell_find_free = 0x8013BD10; // type:func
+tt_bells_clear = 0x8013BD4C; // type:func
+tt_bells_reset = 0x8013BD80; // type:func
+tt_bell_setup = 0x8013BDC8; // type:func
+tt_bell_set_popup_label = 0x8013BE08; // type:func
+tt_bell_popup_spawn = 0x8013BE9C; // type:func
+tt_bell_init_motion_unused = 0x8013BF68; // type:func
+tt_bell_spawn_in_cloud = 0x8013BF9C; // type:func
+tt_bell_integrate = 0x8013C048; // type:func
+tt_bells_update = 0x8013C0A8; // type:func
+tt_bells_draw = 0x8013C1FC; // type:func
+tt_bell_hit_by_shot = 0x8013C41C; // type:func
+tt_bell_collect = 0x80144A04; // type:func
+tt_collisions_update = 0x801455C8; // type:func
+tt_cloud_spawn = 0x8014743C; // type:func
+tt_sprite_set_7 = 0x8014DC34;
+tt_sprite_set_8 = 0x8014E104;
+tt_animation_lists = 0x8014E34C;
+tt_animation_list_bell_hit = 0x8014E350;
+tt_animation_list_bell_fall = 0x8014E354;
+tt_bell_kind_sequence = 0x80155B10;
+tt_boss4_part_script = 0x80155DF0;
+tt_arm_swing_frames = 0x801567B0;
+tt_options = 0x80158A78;
+tt_bells = 0x80158A90;

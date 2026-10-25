@@ -10,37 +10,37 @@ typedef struct {
     u8 r1, g1, b1, pad1;
     s32 unk20[3];
     u8 r2, g2, b2, pad2;
-} TacoLightBlock;
+} ShooterLightBlock;
 
-extern TacoLightBlock D_80122760;
+extern ShooterLightBlock D_80122760;
 
-void func_80134930(void) {
+void shooter_title_setup(void) {
     game_state.clear_color_g = 0;
     game_state.clear_color_r = 0;
     game_state.clear_color_b = 0;
     draw2d3d(1, 1);
     initView();
-    func_80146D60(-0xFA0);
+    shooter_init_object_hierarchy(-0xFA0);
     initModelingData_init(0x8019C800);
-    func_801471D0(0x8019C800);
-    func_80147488(1, D_8015F3E0[0], 0);
-    D_80127090.unk0 = 0;
+    shooter_link_model_objects(0x8019C800);
+    shooter_apply_keyframe(1, shooter_title_pose_tables[0], 0);
+    D_80127090.attribute = 0;
     D_80128880[1].x = 0x32;
     D_80128880[1].z = 0x32;
     D_80128880[1].y = 0xD2;
-    func_80147488(2, D_8015F3E0[1], 0);
-    D_801270A0.unk0 = 0;
+    shooter_apply_keyframe(2, shooter_title_pose_tables[1], 0);
+    D_801270A0.attribute = 0;
     D_80128880[2].x = 0x4B;
     D_80128880[2].z = -0x32;
     D_80128880[2].y = 0xC3;
-    D_8015F3E8 = 0;
+    shooter_title_frame = 0;
 }
 
-s32 func_80134A18(void) {
+s32 shooter_title_animate(void) {
     s32 i;
     s32 frame;
 
-    frame = D_8015F3E8;
+    frame = shooter_title_frame;
     if (frame < 0x20) {
         if (D_80122760.r0 < 0xC0) {
             /* Chained stores: IDO stores the middle and left targets first and the read one last, the original order. */
@@ -58,85 +58,85 @@ s32 func_80134A18(void) {
         }
     } else if (frame >= 0x20 && frame < 0x54) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 1);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 1);
         }
     } else if (frame >= 0x54 && frame < 0x68) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 2);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 2);
         }
     } else if (frame >= 0x68 && frame < 0x72) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 3);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 3);
         }
     } else if (frame >= 0x72 && frame < 0x7C) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 4);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 4);
         }
     } else if (frame >= 0x7C && frame < 0x9A) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 5);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 5);
         }
     } else if (frame >= 0x9A && frame < 0xAE) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 6);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 6);
         }
     } else if (frame >= 0xAE && frame < 0xEA) {
         for (i = 0; i < 2; i++) {
-            func_80147488(i + 1, D_8015F3E0[i], 7);
+            shooter_apply_keyframe(i + 1, shooter_title_pose_tables[i], 7);
         }
     } else if (frame >= 0xF0) {
         return 1;
     }
-    D_8015F3E8 = D_8015F3E8 + 1;
+    shooter_title_frame = shooter_title_frame + 1;
     return 0;
 }
 
 
-void func_80134D8C(void) {
+void shooter_stage_title(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80134EBC();
+        shooter_title_step_init();
         break;
     case 1:
-        func_80135220();
+        shooter_title_step_wait();
         break;
     case 2:
-        func_80135278();
+        shooter_title_step_reveal();
         break;
     case 3:
-        func_801352CC();
+        shooter_title_step_hold();
         break;
     case 4:
-        func_80135330();
+        shooter_title_step_advance();
         break;
     case 5:
-        func_80135350();
+        shooter_title_step_finish();
         break;
     }
-    func_80134A18();
-    func_8013506C();
+    shooter_title_animate();
+    shooter_draw_title_stars();
     if (game_state.mode_stage_timer == 0xA0) {
-        func_801335A0(0, 0x504);
+        shooter_play_se(0, 0x504);
     }
     if (game_state.mode_stage_timer == 0x40) {
-        func_801335A0(0, 0x505);
+        shooter_play_se(0, 0x505);
     }
     if (game_state.mode_stage_timer == 0x80) {
-        func_801335A0(0, 0x506);
+        shooter_play_se(0, 0x506);
     }
     if (game_state.mode_stage_timer == 0xC0) {
-        func_801335A0(0, 0x507);
+        shooter_play_se(0, 0x507);
     }
 }
 
-void func_80134EBC(void) {
+void shooter_title_step_init(void) {
     s32 i;
 
-    D_8015EDB0 = 0;
+    shooter_background_flags = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_r = 0;
-    D_8015EDE8 = 0;
+    shooter_menu_cursor = 0;
     game_state.clear_color_b = 0;
     func_80059048();
     draw2d3d(1, 1);
@@ -150,12 +150,12 @@ void func_80134EBC(void) {
         game_state.scratch_words[128 + i] = 0;
     }
     load_palette(&game_state.scratch_words[0], 0x1F, 1, 1, 0);
-    func_80134FB8();
-    func_80134930();
+    shooter_setup_text_layer();
+    shooter_title_setup();
     mode_step_next();
 }
 
-void func_80134FB8(void) {
+void shooter_setup_text_layer(void) {
     actor_clear(1);
     D_8011ED15 = 8;
     D_8011ED4C = 0;
@@ -171,7 +171,7 @@ void func_80134FB8(void) {
     D_8011ED3E = -0x64;
 }
 
-void func_8013506C(void) {
+void shooter_draw_title_stars(void) {
     /* FAKE: unused 4-byte local reserves the top frame word so the $a3 spill sits at 0x3C($sp) in the 0x48 frame (T-24120). */
     s32 pad[1];
     s32 i;
@@ -190,13 +190,13 @@ void func_8013506C(void) {
         if (game_state.scratch_words[128 + i] != 0) {
             x = (u32)game_state.scratch_words[128 + i] >> 16;
             y = game_state.scratch_words[128 + i] & 0xFFFF;
-            func_80143574(x - 0xA0, y - 0x78, (x * y + game_state.frame_count) & 0xFFFFFF);
+            shooter_draw_dot(x - 0xA0, y - 0x78, (x * y + game_state.frame_count) & 0xFFFFFF);
         }
     }
 }
 
 
-s32 func_8013515C(void) {
+s32 shooter_title_reveal_step(void) {
     s32 i;
     s32 n;
 
@@ -214,7 +214,7 @@ s32 func_8013515C(void) {
     return n;
 }
 
-void func_80135220(void) {
+void shooter_title_step_wait(void) {
     if ((u32)game_state.mode_step_timer.w >= 0xD1U) {
         mode_step_next();
     } else if (game_state.pad_pressed & 0x860) {
@@ -222,15 +222,15 @@ void func_80135220(void) {
     }
 }
 
-void func_80135278(void) {
-    if (func_8013515C() == 0) {
+void shooter_title_step_reveal(void) {
+    if (shooter_title_reveal_step() == 0) {
         mode_step_next();
     } else if (game_state.pad_pressed & 0x860) {
         mode_step_set(5);
     }
 }
 
-void func_801352CC(void) {
+void shooter_title_step_hold(void) {
     if ((u32)game_state.mode_step_timer.w < 0xFFU) {
         if (game_state.pad_pressed != 0) {
             mode_step_set(5);
@@ -242,95 +242,95 @@ void func_801352CC(void) {
     mode_step_next();
 }
 
-void func_80135330(void) {
+void shooter_title_step_advance(void) {
     mode_step_next();
 }
 
-void func_80135350(void) {
+void shooter_title_step_finish(void) {
     func_80059048();
     load_palette(game_state.ovl_palette_a, 0x1F, 1, 1, 0);
     mode_stage_set(3);
 }
 
-void func_80135394(void) {
+void shooter_stage_menu(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80135418();
+        shooter_menu_step_init();
         break;
     case 1:
-        func_8013546C();
+        shooter_menu_step_select();
         break;
     case 2:
-        func_80135638();
+        shooter_menu_step_confirm();
         break;
     }
-    func_8013506C();
+    shooter_draw_title_stars();
 }
-void func_80135418(void) {
+void shooter_menu_step_init(void) {
     func_8009C210(0);
     func_80059048();
     func_800591D8(0);
-    func_80134FB8();
+    shooter_setup_text_layer();
     D_8011ED1B = 0x40;
     D_8011ED3E = -0x78;
     mode_step_next();
 }
 
-void func_8013546C(void) {
+void shooter_menu_step_select(void) {
     if (game_state.pad_pressed & 0x5100) {
         if (game_state.pad_pressed & PAD_UP) {
-            D_8015EDE8 -= 1;
+            shooter_menu_cursor -= 1;
         }
         if (game_state.pad_pressed & PAD_DOWN) {
-            D_8015EDE8 += 1;
+            shooter_menu_cursor += 1;
         }
         if (game_state.pad_pressed & PAD_SELECT) {
-            D_8015EDE8 += 1;
+            shooter_menu_cursor += 1;
         }
-        if (D_8015EDE8 < 0) {
-            D_8015EDE8 = 4;
+        if (shooter_menu_cursor < 0) {
+            shooter_menu_cursor = 4;
         }
-        if (D_8015EDE8 >= 5) {
-            D_8015EDE8 = 0;
+        if (shooter_menu_cursor >= 5) {
+            shooter_menu_cursor = 0;
         }
-        func_801335A0(0, 0x500);
+        shooter_play_se(0, 0x500);
     }
     if (game_state.pad_pressed & 0x820) {
-        func_801335A0(0, 0x501);
+        shooter_play_se(0, 0x501);
         mode_step_next();
     }
-    func_8013555C();
+    shooter_menu_draw_item();
     if ((u32) game_state.mode_stage_timer >= 0x385U) {
         mode_stage_set(6);
     }
 }
 
-/* The menu index D_8015EDE8 is an s8 elsewhere (compared < 0); these switches read it as the unsigned byte the original uses. T-16560 */
-s32 func_8013555C(void) {
-    switch (*(u8 *)&D_8015EDE8) {
+/* The menu index shooter_menu_cursor is an s8 elsewhere (compared < 0); these switches read it as the unsigned byte the original uses. T-16560 */
+s32 shooter_menu_draw_item(void) {
+    switch (*(u8 *)&shooter_menu_cursor) {
     case 0:
-        func_801432F0("GAME START", -0x40, 0x48, 2);
+        shooter_draw_text("GAME START", -0x40, 0x48, 2);
         break;
     case 1:
-        func_801432F0("  OPTION  ", -0x40, 0x48, 3);
+        shooter_draw_text("  OPTION  ", -0x40, 0x48, 3);
         break;
     case 2:
-        func_801432F0("  SCORES  ", -0x40, 0x48, 5);
+        shooter_draw_text("  SCORES  ", -0x40, 0x48, 5);
         break;
     case 3:
-        func_801432F0("OPERATIONS", -0x40, 0x48, 6);
+        shooter_draw_text("OPERATIONS", -0x40, 0x48, 6);
         break;
     case 4:
-        func_801432F0("   EXIT   ", -0x40, 0x48, 0);
+        shooter_draw_text("   EXIT   ", -0x40, 0x48, 0);
         break;
     }
 }
 
-/* The switch reads D_8015EDE8 as an unsigned byte, as func_8013555C does. T-16560 */
-s32 func_80135638(void) {
+/* The switch reads shooter_menu_cursor as an unsigned byte, as shooter_menu_draw_item does. T-16560 */
+s32 shooter_menu_step_confirm(void) {
     if ((u32) game_state.mode_step_timer.u >= 0x41U) {
-        switch (*(u8 *)&D_8015EDE8) {
+        switch (*(u8 *)&shooter_menu_cursor) {
         case 0:
             mode_stage_set(0xA);
             break;
@@ -352,6 +352,6 @@ s32 func_80135638(void) {
         actor_draw_enable(0);
     }
     if (game_state.mode_step_timer.u & 4) {
-        func_8013555C();
+        shooter_menu_draw_item();
     }
 }

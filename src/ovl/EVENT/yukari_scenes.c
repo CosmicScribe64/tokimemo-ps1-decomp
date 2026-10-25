@@ -1,12 +1,12 @@
 /* yukari_scenes.c: src/ovl/EVENT/801024B0.c:5: girl 5 (Yukari) scenes 1-6. Original object 0x801024B0-0x80103B60 (config/objects/EVENT.txt). */
-#define MAIN_API_OVERRIDE_func_8004C6B0 /* s32 return (like DATE sibling scene_anim_show in src/main/scene_library.c): consumes $v0 in ugen for func_80102E54 (T-24090) */
+#define MAIN_API_OVERRIDE_func_8004C6B0 /* s32 return (like DATE sibling scene_anim_show in src/main/scene_library.c): consumes $v0 in ugen for spot_yukari_scene4_still_show_stats_03 (T-24090) */
 #include "common.h"
 #include "ovl/EVENT.h"
 
 s32 func_8004C6B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-void func_801024B0(void) {
-    D_80122680 = 0x801CE0F4;
+void spot_yukari_still_pointers_1_init(void) {
+    spot_yukari_still_pointers_1 = 0x801CE0F4;
     D_80122684 = 0x801CE0F8;
     D_80122688 = 0x801CE118;
     D_8012268C = *(s16 *)0x801CE12C;
@@ -19,8 +19,8 @@ void func_801024B0(void) {
     D_801226A8 = 0x801C6000;
 }
 
-void func_80102560(void) {
-    D_801226AC = 0x801CE07C;
+void spot_yukari_still_pointers_2_init(void) {
+    spot_yukari_still_pointers_2 = 0x801CE07C;
     D_801226B0 = 0x801CE080;
     D_801226B4 = 0x801CE090;
     D_801226B8 = *(s16 *)0x801CE0A4;
@@ -33,8 +33,8 @@ void func_80102560(void) {
     D_801226D4 = 0x801C6000;
 }
 
-void func_80102610(void) {
-    D_801226D8 = 0x801CE31C;
+void spot_yukari_still_pointers_3_init(void) {
+    spot_yukari_still_pointers_3 = 0x801CE31C;
     D_801226DC = 0x801CE320;
     D_801226E0 = 0x801CE39C;
     D_801226E4 = *(s16 *)0x801CE3BC;
@@ -47,8 +47,8 @@ void func_80102610(void) {
     D_80122700 = 0x801C6000;
 }
 
-void func_801026C0(void) {
-    D_80122704 = 0x801CE124;
+void spot_yukari_still_pointers_4_init(void) {
+    spot_yukari_still_pointers_4 = 0x801CE124;
     D_80122708 = 0x801CE128;
     D_8012270C = 0x801CE148;
     D_80122710 = *(s16 *)0x801CE15C;
@@ -61,8 +61,8 @@ void func_801026C0(void) {
     D_8012272C = 0x801C6000;
 }
 
-void func_80102770(void) {
-    D_80122730 = 0x801B0000;
+void spot_yukari_tile_pointers_1_init(void) {
+    spot_yukari_tile_pointers_1 = 0x801B0000;
     D_80122734 = 0x801B2000;
     D_80122738 = 0x801B6000;
     D_8012273C = 0x801BA000;
@@ -71,25 +71,25 @@ void func_80102770(void) {
     D_80122748 = 0x801C6000;
 }
 
-void func_801027E0(void) {
+void spot_yukari_scene_select(void) {
     switch (D_800EECB0) {
     case 1:
-        func_80102890();
+        spot_yukari_scene1_run();
         return;
     case 2:
-        func_801028F0();
+        spot_yukari_scene2_run();
         return;
     case 3:
-        func_801034E8();
+        spot_yukari_scene3_run();
         return;
     case 4:
-        func_801035BC();
+        spot_yukari_scene4_run();
         return;
     case 5:
-        func_801039E8();
+        spot_yukari_scene5_run();
         return;
     case 6:
-        func_80103ABC();
+        spot_yukari_scene6_run();
         return;
     default:
         func_80015FE0();
@@ -97,25 +97,25 @@ void func_801027E0(void) {
     }
 }
 
-void func_80102890(void) {
+void spot_yukari_scene1_run(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
     if (D_800B1AF5 == 0) {
-        func_80102950();
+        spot_yukari_scene1_steps_run();
         return;
     }
     func_80015FE0();
 }
 
-void func_801028F0(void) {
+void spot_yukari_scene2_run(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
     if (D_800B1AF5 == 0) {
-        func_80102A24();
+        spot_yukari_scene2_steps_run();
         return;
     }
     func_80015FE0();
 }
 
-void func_80102950(void) {
+void spot_yukari_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl32 tbl;
 
@@ -125,23 +125,23 @@ void func_80102950(void) {
     tbl.f[idx](0x80);
 }
 
-void func_801029EC(void) {
+void spot_yukari_scene1_assets_load_10(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8439);
-    func_801024B0();
+    spot_yukari_still_pointers_1_init();
     func_80011DFC();
 }
 
-void func_80102A24(void) {
+void spot_yukari_scene2_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl19 tbl;
 
-    tbl = D_801227FC;
+    tbl = spot_yukari_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
     idx = D_800B1AF6;
     tbl.f[idx]();
 }
 
-void func_80102AB0(void) {
+void spot_yukari_shared_init_1(void) {
     D_800B1746 = 5;
     func_80012D2C(1, 0);
     func_8001886C(1);
@@ -156,17 +156,17 @@ void func_80102AB0(void) {
     D_80094714 = 0;
     D_80094718 = 0;
     func_80045B14();
-    func_800F6000();
+    spot_script_sections_init();
     func_8003535C();
     func_8003580C();
     func_8004C360();
     D_800F19AB = 0;
     func_8004BC20(D_800B1746);
     func_8004CDDC();
-    func_800F6000();
-    D_80120678 = D_80120444;
-    D_8012067C = D_80120460;
-    D_80120680 = D_8012047C;
+    spot_script_sections_init();
+    spot_talk_text_table = D_80120444;
+    spot_talk_command_table = D_80120460;
+    spot_talk_voice_table = D_8012047C;
     func_80078970(D_80094784, "廊下");
     if (D_800EECB0 == 1) {
         D_800B0B0E[0] += 1;
@@ -176,33 +176,33 @@ void func_80102AB0(void) {
     func_80011DFC();
 }
 
-void func_80102C0C(void) {
-    func_801024B0();
+void spot_yukari_scene1_still_show_20(void) {
+    spot_yukari_still_pointers_1_init();
     func_80012D64(D_80122690, 0x11, 1, 2, 0);
     func_8004C46C(D_80122694, D_80122698, D_8012269C, D_801226A0, D_801226A4, D_801226A8);
-    func_8004C6B0(D_80122684, D_80122688, D_80122680, (s32) D_8012268C);
+    func_8004C6B0(D_80122684, D_80122688, spot_yukari_still_pointers_1, (s32) D_8012268C);
     ((Actor *)D_800EAFA0)->unk_04 = ((Actor *)D_800EAFA0)[1].unk_04 = 8;
     func_80011DFC();
 }
 
-void func_80102CC4(void) {
-    D_80120678 = D_80120448;
-    D_8012067C = D_80120464;
-    D_80120680 = D_80120480;
+void spot_yukari_scene2_step_01(void) {
+    spot_talk_text_table = D_80120448;
+    spot_talk_command_table = D_80120464;
+    spot_talk_voice_table = D_80120480;
     func_80078970(D_80094784, "廊下");
     D_800B0A04[5].unk_02 += 1;
     func_8004C250();
     func_80011DFC();
 }
 
-void func_80102D40(void) {
-    D_80120678 = D_8012044C;
-    D_8012067C = D_80120468;
-    D_80120680 = D_80120484;
-    func_80102560();
+void spot_yukari_scene3_still_show_stats_03(void) {
+    spot_talk_text_table = D_8012044C;
+    spot_talk_command_table = D_80120468;
+    spot_talk_voice_table = D_80120484;
+    spot_yukari_still_pointers_2_init();
     func_80012D64(D_801226BC, 0x11, 1, 2, 0);
     func_8004C46C(D_801226C0, D_801226C4, D_801226C8, D_801226CC, D_801226D0, D_801226D4);
-    func_8004C6B0(D_801226B0, D_801226B4, D_801226AC, D_801226B8);
+    func_8004C6B0(D_801226B0, D_801226B4, spot_yukari_still_pointers_2, D_801226B8);
     D_800B0A04[5].unk_02 += 2;
     D_800B0A04[5].unk_06 += 1;
     D_800B0A04[5].unk_0A -= 0xA;
@@ -210,21 +210,21 @@ void func_80102D40(void) {
     func_80011DFC();
 }
 
-void func_80102E54(void) {
+void spot_yukari_scene4_still_show_stats_03(void) {
     Actor *m = (Actor *)D_800E9620;
     s16 i;
 
-    D_80120678 = D_80120450;
-    D_8012067C = D_8012046C;
-    D_80120680 = D_80120488;
+    spot_talk_text_table = D_80120450;
+    spot_talk_command_table = D_8012046C;
+    spot_talk_voice_table = D_80120488;
     D_800B0A04[5].unk_02 += 2;
     D_800B0A04[5].unk_06 += 1;
     D_800B0A04[5].unk_0A -= 0x14;
     func_8004C250();
-    func_80102610();
+    spot_yukari_still_pointers_3_init();
     func_80012D64(D_801226E8, 0x11, 1, 2, 0);
     func_8004C46C(D_801226EC, D_801226F0, D_801226F4, D_801226F8, D_801226FC, D_80122700);
-    func_8004C6B0(D_801226DC, D_801226E0, D_801226D8, D_801226E4);
+    func_8004C6B0(D_801226DC, D_801226E0, spot_yukari_still_pointers_3, D_801226E4);
     m[96].unk_04 = m[97].unk_04 = 8;
     for (i = 0; i < 8; i++) {
         D_8012274C[i] = 0;
@@ -240,14 +240,14 @@ void func_80102E54(void) {
     func_80011DFC();
 }
 
-void func_801030F4(void) {
-    D_80120678 = D_80120454;
-    D_8012067C = D_80120470;
-    D_80120680 = D_8012048C;
-    func_801026C0();
+void spot_yukari_scene5_still_show_stats_03(void) {
+    spot_talk_text_table = D_80120454;
+    spot_talk_command_table = D_80120470;
+    spot_talk_voice_table = D_8012048C;
+    spot_yukari_still_pointers_4_init();
     func_80012D64(D_80122714, 0x11, 1, 2, 0);
     func_8004C46C(D_80122718, D_8012271C, D_80122720, D_80122724, D_80122728, D_8012272C);
-    func_8004C6B0(D_80122708, D_8012270C, D_80122704, D_80122710);
+    func_8004C6B0(D_80122708, D_8012270C, spot_yukari_still_pointers_4, D_80122710);
     D_800B0A04[5].unk_02 += 3;
     D_800B0A04[5].unk_06 += 2;
     D_800B0A04[5].unk_0A -= 0x14;
@@ -255,12 +255,12 @@ void func_801030F4(void) {
     func_80011DFC();
 }
 
-void func_80103208(void) {
-    D_80120678 = D_80120458;
-    D_8012067C = D_80120474;
-    D_80120680 = D_80120490;
-    func_80102770();
-    func_80012D64(D_80122730, 0x11, 1, 2, 0);
+void spot_yukari_scene6_still_show_stats_03(void) {
+    spot_talk_text_table = D_80120458;
+    spot_talk_command_table = D_80120474;
+    spot_talk_voice_table = D_80120490;
+    spot_yukari_tile_pointers_1_init();
+    func_80012D64(spot_yukari_tile_pointers_1, 0x11, 1, 2, 0);
     func_8004C46C(D_80122734, D_80122738, D_8012273C, D_80122740, D_80122744, D_80122748);
     func_8004C6B0(0, 0, 0, 0);
     D_800B0A04[5].unk_02 += 1;
@@ -270,89 +270,89 @@ void func_80103208(void) {
     func_80011DFC();
 }
 
-void func_80103308(void) {
+void spot_yukari_scene1_bg_load_03(void) {
     func_800469F4(0x3FE8);
     func_80011DFC();
 }
 
-void func_80103330(void) {
+void spot_yukari_scene1_bg_load_21(void) {
     func_800469F4(0x463D);
     func_80011DFC();
 }
 
-void func_80103358(void) {
+void spot_yukari_scene2_bg_load_02(void) {
     func_800469F4(0x3FE8);
     func_80011DFC();
 }
 
-void func_80103380(void) {
+void spot_yukari_scene3_bg_load_12(void) {
     func_800469F4(0x4835);
     func_80011DFC();
 }
 
-void func_801033A8(void) {
+void spot_yukari_scene3_bg_load_20(void) {
     func_800469F4(0x454C);
     func_80011DFC();
 }
 
-void func_801033D0(void) {
+void spot_yukari_scene4_bg_load_14(void) {
     func_800469F4(0x47FC);
     func_80011DFC();
 }
 
-void func_801033F8(void) {
+void spot_yukari_scene4_bg_load_29(void) {
     func_800469F4(0x450A);
     func_80011DFC();
 }
 
-void func_80103420(void) {
+void spot_yukari_scene5_bg_load_12(void) {
     func_800469F4(0x4726);
     func_80011DFC();
 }
 
-void func_80103448(void) {
+void spot_yukari_scene5_bg_load_20(void) {
     func_800469F4(0x4284);
     func_80011DFC();
 }
 
-void func_80103470(void) {
+void spot_yukari_scene6_bg_load_17(void) {
     func_800469F4(0x47D1);
     func_80011DFC();
 }
 
-void func_80103498(void) {
+void spot_yukari_scene6_bg_load_25(void) {
     func_800469F4(0x44DB);
     func_80011DFC();
 }
 
-void func_801034C0(void) {
+void spot_yukari_scene6_bg_load_39(void) {
     func_800469F4(0x44D1);
     func_80011DFC();
 }
 
-void func_801034E8(void) {
+void spot_yukari_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl38 tbl;
 
-    tbl = D_80122848;
+    tbl = spot_yukari_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
 }
 
-void func_80103584(void) {
+void spot_yukari_scene3_assets_load_00(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8476);
-    func_80102560();
+    spot_yukari_still_pointers_2_init();
     func_80011DFC();
 }
 
 /* FAKE: s32 return type (implicit int from forward call at line 85) keeps $v0 live at epilogue, and unused pad local places tbl at sp+0x28 in the 0xE0 frame (T-3330); T-24105 */
-s32 func_801035BC(void) {
+s32 spot_yukari_scene4_run(void) {
     s32 pad;
     s16 i;
     EvFnTbl44 tbl;
 
-    tbl = D_801228E0;
+    tbl = spot_yukari_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
     tbl.f[D_800B1AF6](0x80);
     if (tbl.f[D_800B1AF6] == func_8004C984) {
@@ -366,22 +366,22 @@ s32 func_801035BC(void) {
         }
     }
     if ((D_800B1AF6 >= 0x11) && (D_800B1AF6 < 0x14)) {
-        func_80103774();
+        spot_yukari_scene4_sprites_update();
     }
 }
 
-void func_80103714(void) {
+void spot_yukari_scene4_assets_load_00(void) {
     func_80015D28(0x3D, 0x801B0000, 0x84B3);
-    func_80102610();
+    spot_yukari_still_pointers_3_init();
     func_80011DFC();
 }
 
-void func_8010374C(void) {
+void spot_yukari_scene4_se_play_11(void) {
     func_800433D0(0x502);
     func_80011DFC();
 }
 
-void func_80103774(void) {
+void spot_yukari_scene4_sprites_update(void) {
     ActorFixed *m = (ActorFixed *)D_800E9620;
     u8 *st;
     EvPairs8 sp68;
@@ -425,27 +425,27 @@ void func_80103774(void) {
     }
 }
 
-void func_801039E8(void) {
+void spot_yukari_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
-    tbl = D_801229B0;
+    tbl = spot_yukari_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
 }
 
-void func_80103A84(void) {
+void spot_yukari_scene5_assets_load_00(void) {
     func_80015D28(0x3D, 0x801B0000, 0x84F0);
-    func_801026C0();
+    spot_yukari_still_pointers_4_init();
     func_80011DFC();
 }
 
-void func_80103ABC(void) {
+void spot_yukari_scene6_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl56 tbl;
 
-    tbl = D_80122A50;
+    tbl = spot_yukari_scene6_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);

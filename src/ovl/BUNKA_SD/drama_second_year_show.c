@@ -156,7 +156,7 @@ void func_80137D6C(void) {
 
 void func_80137F8C(void) {
     func_80137FEC();
-    k_speed_set(5);
+    k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
     D_8013D988 = 0;
     D_8013D994 = 1;
     D_8013D998 = 0;

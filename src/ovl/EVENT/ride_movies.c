@@ -3,7 +3,7 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-/* FAKE: O.BIN entry returns a status in $v0, reserving r2 across the call in func_8011C750. T-24089 */
+/* FAKE: O.BIN entry returns a status in $v0, reserving r2 across the call in spot_ride_scream_virtual_movie. T-24089 */
 s32 func_8004AFB8();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -17,7 +17,7 @@ INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/ride_movies.data", D_801258D8);
 INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/ride_movies.data", D_801258DC);
 INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/ride_movies.data", D_801258E0);
 /* T-22009: the four halfword arrays are defined here so IDO shares one lui $at between the stores of
- * func_8011EDFC. D_801258FC ends at 0x80125902; D_80125904 is the zero fill that follows it up to the last
+ * spot_ride_ghost_house_movie. D_801258FC ends at 0x80125902; D_80125904 is the zero fill that follows it up to the last
  * word of the overlay file, D_80125FFC (0x10124FE6; no EVENT code references it). */
 s16 D_801258E4[3] = { 0, 0, 0 };
 s16 D_801258EC[3] = { 0, 0, 0 };
@@ -26,7 +26,7 @@ s16 D_801258FC[3] = { 0, 0, 0 };
 u8 D_80125904[0x6F8] = { 0 };
 u32 D_80125FFC = 0x10124FE6;
 
-void func_8011C650(void) {
+void spot_ride_movie_pointers_init(void) {
     D_801258C0 = 0x801C6000;
     D_801258C4 = 0x801AE000;
     D_801258C8 = 0x801B2000;
@@ -36,28 +36,28 @@ void func_8011C650(void) {
     D_801258D8 = 0x801C2000;
 }
 
-void func_8011C6C4(void) {
-    switch (*(u32 *)&D_80125320) {
+void spot_ride_movie_run(void) {
+    switch (*(u32 *)&spot_ride) {
     case 0:
-        func_8011DDB8();
+        spot_ride_coaster_movie();
         return;
     case 1:
-        func_8011EDFC();
+        spot_ride_ghost_house_movie();
         return;
     case 2:
-        func_8011D5C4();
+        spot_ride_ferris_wheel_movie();
         return;
     case 3:
-        func_8011C750();
+        spot_ride_scream_virtual_movie();
         return;
     case 4:
-        func_8011C750();
+        spot_ride_scream_virtual_movie();
         return;
     }
 }
 
-u16 func_8011C750(void) {
-    EventMovieState *g;
+u16 spot_ride_scream_virtual_movie(void) {
+    SpotDevelopmentStepView *g;
     s16 i;
     s16 v;
     u8 x;
@@ -65,18 +65,18 @@ u16 func_8011C750(void) {
     s32 sp50;
     u32 sp4C;
     SpriteQuad *p;
-    EventMovieWork *movie;
+    SpotRideMovieWork *movie;
     u8 value;
     u32 color;
     u32 timer;
 
-    g = (EventMovieState *)&D_800B1AF0;
-    movie = (EventMovieWork *)D_800F1990;
+    g = (SpotDevelopmentStepView *)&D_800B1AF0;
+    movie = (SpotRideMovieWork *)D_800F1990;
 
-    switch (g->unk_00) {
+    switch (g->step_timer) {
     case 0:
         D_800EED08 = 1;
-        func_8011F530(D_800B1AE4);
+        spot_bios_srand(D_800B1AE4);
         func_800433D0(0x207);
         movie->unk_06 = 0;
         movie->unk_02 = 0;
@@ -89,7 +89,7 @@ u16 func_8011C750(void) {
         movie->unk_1A = 0;
         func_800352B4(0);
         D_801258E0 = 2;
-        g->unk_09 = 0;
+        g->substep = 0;
         D_801258DC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-24018 */
             ((SpriteQuad *)D_800EC190)[i + 4].w = (i << 6) + 0x80;
             ((SpriteQuad *)D_800EC190)[i + 4].flags = 0x82000000;
@@ -109,7 +109,7 @@ u16 func_8011C750(void) {
             ((SpriteQuad *)D_800EC190)[i + 4].unk_20 = 0;
             ((SpriteQuad *)D_800EC190)[i + 4].x = (i << 7) - 0xA0;
             ((SpriteQuad *)D_800EC190)[i + 4].y = -0x78;
-            ((EventEffectTables *)D_800B0860)->unk_1031[i] = 0xB;
+            ((SpotDevelopmentEffectView *)D_800B0860)->unk_1031[i] = 0xB;
         }
         for (i = 0; i < 2; i++) {
             ((SpriteQuad *)D_800EC190)[i + 6].w = (i << 6) + 0x80;
@@ -130,10 +130,10 @@ u16 func_8011C750(void) {
             ((SpriteQuad *)D_800EC190)[i + 6].unk_20 = 0;
             ((SpriteQuad *)D_800EC190)[i + 6].x = (i << 7) - 0xA0;
             ((SpriteQuad *)D_800EC190)[i + 6].y = -0x78;
-            ((EventEffectTables *)D_800B0860)->unk_1031[i + 2] = 0xB;
+            ((SpotDevelopmentEffectView *)D_800B0860)->unk_1031[i + 2] = 0xB;
         }
         func_8002746C(0x433B, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 1:
         if (func_80015A44() & 1) {
@@ -143,12 +143,12 @@ u16 func_8011C750(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_800651F8(&rect, (void *)0x80183000);
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 2:
         func_8002746C(0x4344, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 3:
         if (func_80015A44() & 1) {
@@ -158,12 +158,12 @@ u16 func_8011C750(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_800651F8(&rect, (void *)0x801A1000);
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 4:
         func_8002746C(0x434E, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 5:
         if (func_80015A44() & 1) {
@@ -173,12 +173,12 @@ u16 func_8011C750(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_800651F8(&rect, (void *)0x801BF000);
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 6:
         func_8002746C(0x4357, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 7:
         if (func_80015A44() & 1) {
@@ -188,14 +188,14 @@ u16 func_8011C750(void) {
             rect.w = 0x180;
             rect.h = 0xA0;
             func_800651F8(&rect, (void *)0x801DD000);
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 8:
         for (i = 0; i < 4; i++) {
             ((SpriteQuad *)D_800EC190)[i + 4].flags = 0x02000000;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 9:
         value = ((SpriteQuad *)D_800EC190)[4].tint_r;
@@ -214,7 +214,7 @@ u16 func_8011C750(void) {
         ((SpriteQuad *)D_800EC190)[4].tint_g = color;
         ((SpriteQuad *)D_800EC190)[4].tint_r = color;
         if (value == 0x80) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 10:
@@ -239,17 +239,17 @@ u16 func_8011C750(void) {
             for (i = 0; i < 4; i++) {
                 ((SpriteQuad *)D_800EC190)[i + 4].flags = 0x82000000;
             }
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 12:
         sp50 = D_800B1AF6;
-        sp4C = g->unk_00;
+        sp4C = g->step_timer;
         func_8004AFB8();
-        g->unk_00 = sp4C;
+        g->step_timer = sp4C;
         if (sp50 != D_800B1AF6) {
             D_800B1AF6--;
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 13:
@@ -258,17 +258,17 @@ u16 func_8011C750(void) {
     case 21:
     case 23:
         if (func_80015A44() & 1) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 14:
-        sp4C = g->unk_00;
+        sp4C = g->step_timer;
         func_8004A9CC();
         D_800B1AF6 -= 1;
-        g->unk_00 = sp4C + 1;
+        g->step_timer = sp4C + 1;
         break;
     case 15:
-        switch (*(u32 *)&D_80125320) {
+        switch (*(u32 *)&spot_ride) {
         case 0:
             func_800469F4(0x42AE);
             break;
@@ -285,30 +285,30 @@ u16 func_8011C750(void) {
             func_800469F4(0x42D2);
             break;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 17:
         func_8002755C(1);
         func_80027438(1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         break;
     case 18:
-        sp4C = g->unk_00;
-        func_8011A62C();
-        g->unk_06 -= 1;
-        g->unk_00 = sp4C + 1;
+        sp4C = g->step_timer;
+        spot_date_script_load_step();
+        g->step -= 1;
+        g->step_timer = sp4C + 1;
         break;
     case 20:
-        sp4C = g->unk_00;
-        func_8011A7FC();
-        g->unk_06 -= 1;
-        g->unk_00 = sp4C + 1;
+        sp4C = g->step_timer;
+        spot_common_script_load_step();
+        g->step -= 1;
+        g->step_timer = sp4C + 1;
         break;
     case 22:
-        sp4C = g->unk_00;
-        func_8011A838();
-        g->unk_06 -= 1;
-        g->unk_00 = sp4C + 1;
+        sp4C = g->step_timer;
+        spot_place_tables_load_step();
+        g->step -= 1;
+        g->step_timer = sp4C + 1;
         break;
     default:
         func_800352B4(1);
@@ -359,8 +359,8 @@ u16 func_8011C750(void) {
         p[7].y += 0x14;
     }
     p[4].unk_0F = x;
-    if ((x == 0 && (g->unk_09 == 1 || g->unk_09 == 3)) || (p[6].unk_0F == 0 && (g->unk_09 == 0 || g->unk_09 == 2))) {
-        switch (g->unk_09) {
+    if ((x == 0 && (g->substep == 1 || g->substep == 3)) || (p[6].unk_0F == 0 && (g->substep == 0 || g->substep == 2))) {
+        switch (g->substep) {
         case 0:
             for (i = 0; i < 2; i++) {
                 ((SpriteQuad *)D_800EC190)[i + 4].h = 0;
@@ -398,8 +398,8 @@ u16 func_8011C750(void) {
             func_800137AC(0x280, 0, 0x180, 0xA0, 0x801DD000);
             break;
         }
-        if (++g->unk_09 >= 4) {
-            g->unk_09 = 0;
+        if (++g->substep >= 4) {
+            g->substep = 0;
         }
     }
     timer = (D_801258DC + 1) & 0xFFFF;
@@ -409,21 +409,21 @@ u16 func_8011C750(void) {
     }
 }
 
-s32 func_8011D5C4(void) {
+s32 spot_ride_ferris_wheel_movie(void) {
     /* FAKE: unused RECT reserves the observed frame words. T-24028. */
     RECT rect;
-    EventMovieState *g;
+    SpotDevelopmentStepView *g;
     u32 sp30;
     s16 var_v1;
     u8 x;
     /* FAKE: second fade copy holds v1 in cases 6/7/9; dead stores in the tail block cvt_pass widening so uopt promotes D_801258DC to a3. T-24028, T-24089. */
     u32 y;
-    EventMovieWork *movie;
+    SpotRideMovieWork *movie;
 
-    g = (EventMovieState *)&D_800B1AF0;
-    movie = (EventMovieWork *)D_800F1990;
+    g = (SpotDevelopmentStepView *)&D_800B1AF0;
+    movie = (SpotRideMovieWork *)D_800F1990;
 
-    switch (g->unk_00) {
+    switch (g->step_timer) {
     case 0:
         D_800EED08 = 1;
         func_800433D0(0x203);
@@ -460,19 +460,19 @@ s32 func_8011D5C4(void) {
             D_800B0860[var_v1 + 0x1037] = 0xC;
         }
         func_8002746C(0x4332, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return 0;
     case 1:
         if (func_80015A44() & 1) {
             func_8002469C(0x140, 0x100, 0x140, 0xA0);
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         return 0;
     case 2:
         func_800433D0(0x502);
         func_80015D28(0x31, 0x801AE000, 0xACA8);
-        func_8011C650();
-        g->unk_00 += 1;
+        spot_ride_movie_pointers_init();
+        g->step_timer += 1;
         return 0;
     case 3:
     case 11:
@@ -480,20 +480,20 @@ s32 func_8011D5C4(void) {
     case 16:
     case 18:
         if (func_80015A44() & 1) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         return 0;
     case 4:
         func_80012D64(D_801258C0, 0x11, 1, 0, 0);
         func_8004C46C(D_801258C4, D_801258C8, D_801258CC, D_801258D0, D_801258D4, D_801258D8);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return 0;
     case 5:
         for (var_v1 = 0; var_v1 < 8; var_v1++) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].flags &= 0x7FFFFFFF;
         }
         func_800433D0(0x503);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return 0;
     case 6:
         x = (((SpriteQuad *)D_800EC190)[4].tint_r += 1); y = ((SpriteQuad *)D_800EC190)[4].tint_g = x; ((SpriteQuad *)D_800EC190)[4].tint_b = y; /* FAKE: one source line preserves store order. T-24028. */
@@ -501,7 +501,7 @@ s32 func_8011D5C4(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].tint_r = ((SpriteQuad *)D_800EC190)[var_v1 + 4].tint_g = ((SpriteQuad *)D_800EC190)[var_v1 + 4].tint_b = ((SpriteQuad *)D_800EC190)[4].tint_r;
         }
         if (((SpriteQuad *)D_800EC190)[4].tint_r == 0x40) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         return 0;
     case 7:
@@ -510,7 +510,7 @@ s32 func_8011D5C4(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].tint_r = ((SpriteQuad *)D_800EC190)[var_v1 + 4].tint_g = ((SpriteQuad *)D_800EC190)[var_v1 + 4].tint_b = ((SpriteQuad *)D_800EC190)[4].tint_r;
         }
         if (((SpriteQuad *)D_800EC190)[4].tint_r == 0x80) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 8:
@@ -524,11 +524,11 @@ s32 func_8011D5C4(void) {
             for (var_v1 = 0; var_v1 < 8; var_v1++) {
                 ((SpriteQuad *)D_800EC190)[var_v1 + 4].flags |= 0x80000000;
             }
-            g->unk_00 += 1;
+            g->step_timer += 1;
         }
         break;
     case 10:
-        switch (*(u32 *)&D_80125320) {
+        switch (*(u32 *)&spot_ride) {
         case 0:
             func_800469F4(0x42AE);
             break;
@@ -545,36 +545,36 @@ s32 func_8011D5C4(void) {
             func_800469F4(0x42D2);
             break;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return 0;
     case 12:
         func_8002755C(1);
         func_80027438(1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return 0;
     case 13:
-        sp30 = g->unk_00;
+        sp30 = g->step_timer;
 
-        func_8011A62C();
+        spot_date_script_load_step();
         D_800B1AF6 -= 1;
-        g->unk_00 = sp30;
-        g->unk_00++;
+        g->step_timer = sp30;
+        g->step_timer++;
         return 0;
     case 15:
-        sp30 = g->unk_00;
+        sp30 = g->step_timer;
 
-        func_8011A7FC();
+        spot_common_script_load_step();
         D_800B1AF6 -= 1;
-        g->unk_00 = sp30;
-        g->unk_00++;
+        g->step_timer = sp30;
+        g->step_timer++;
         return 0;
     case 17:
-        sp30 = g->unk_00;
+        sp30 = g->step_timer;
 
-        func_8011A838();
+        spot_place_tables_load_step();
         D_800B1AF6 -= 1;
-        g->unk_00 = sp30;
-        g->unk_00++;
+        g->step_timer = sp30;
+        g->step_timer++;
         return 0;
     default:
         func_80011DFC();
@@ -603,26 +603,26 @@ s32 func_8011D5C4(void) {
         }
     }
     if (D_801258DC == (y = 0x12C)) {
-        g->unk_00 += 1;
+        g->step_timer += 1;
     }
 }
 
-void func_8011DDB8(void) {
-    EventMovieState *g;
+void spot_ride_coaster_movie(void) {
+    SpotDevelopmentStepView *g;
     s16 var_v1;
     s32 sp54;
     u32 sp50;
     RECT rect;
-    EventMovieWork *movie;
+    SpotRideMovieWork *movie;
     /* FAKE: unused view reserves the observed 0x60 frame slot (as in DATE func_80147958). T-24097 */
-    EventMovieWork *header;
+    SpotRideMovieWork *header;
     u8 value;
     u32 color;
 
-    g = (EventMovieState *)&D_800B1AF0;
-    movie = (EventMovieWork *)D_800F1990;
+    g = (SpotDevelopmentStepView *)&D_800B1AF0;
+    movie = (SpotRideMovieWork *)D_800F1990;
 
-    switch (g->unk_00) {
+    switch (g->step_timer) {
     case 0:
         D_800EED08 = 1;
         movie->unk_06 = 0;
@@ -655,7 +655,7 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].unk_20 = 0;
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].x = (var_v1 << 7) - 0xA0;
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].y = -0x78;
-            ((EventEffectTables *)D_800B0860)->unk_1031[var_v1] = 0xB;
+            ((SpotDevelopmentEffectView *)D_800B0860)->unk_1031[var_v1] = 0xB;
         }
         for (var_v1 = 0; var_v1 < 2; var_v1++) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].w = (var_v1 << 6) + 0x80;
@@ -676,10 +676,10 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].unk_20 = 0;
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].x = (var_v1 << 7) - 0xA0;
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].y = -0x78;
-            ((EventEffectTables *)D_800B0860)->unk_1031[var_v1 + 2] = 0xB;
+            ((SpotDevelopmentEffectView *)D_800B0860)->unk_1031[var_v1 + 2] = 0xB;
         }
         func_8002746C(0x4321, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 1:
     case 4:
@@ -694,7 +694,7 @@ void func_8011DDB8(void) {
     case 47:
     case 49:
         if (func_80015A44() & 1) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
             return;
         }
         return;
@@ -705,11 +705,11 @@ void func_8011DDB8(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_800651F8(&rect, (void *)0x80183000);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 3:
         func_8002746C(0x431A, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 5:
         func_8002469C(0x140, 0x100, 0x140, 0xA0);
@@ -718,11 +718,11 @@ void func_8011DDB8(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_800651F8(&rect, (void *)0x8019C000);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 6:
         func_8002746C(0x4313, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 8:
         func_8002469C(0x140, 0x100, 0x140, 0xA0);
@@ -731,11 +731,11 @@ void func_8011DDB8(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_800651F8(&rect, (void *)0x801B5000);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 9:
         func_8002746C(0x430C, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 11:
         func_8002469C(0x140, 0x100, 0x140, 0xA0);
@@ -744,37 +744,37 @@ void func_8011DDB8(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_800651F8(&rect, (void *)0x801CE000);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 12:
         func_8002746C(0x4305, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 14:
         func_8002469C(0x140, 0, 0x140, 0xA0);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 15:
         func_8002746C(0x42ED, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 17:
         func_8002469C(0x140, 0x100, 0x140, 0xA0);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 18:
         func_8002746C(0x42F5, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 20:
         func_8002469C(0x280, 0, 0x140, 0xA0);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 21:
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].flags &= 0x7FFFFFFF;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 22:
         value = ((SpriteQuad *)D_800EC190)[4].tint_r;
@@ -793,13 +793,13 @@ void func_8011DDB8(void) {
         ((SpriteQuad *)D_800EC190)[4].tint_g = color;
         ((SpriteQuad *)D_800EC190)[4].tint_r = color;
         if (value == 0x80) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
             func_800433D0(0x500);
         }
         break;
     case 23:
         if (!(D_801258DC & 7)) {
-            func_8011ED50(4);
+            spot_ride_movie_shift_sprites(4);
         }
         if (++D_801258DC == 0x140) {
             D_801258DC = 0;
@@ -807,18 +807,18 @@ void func_8011DDB8(void) {
         }
         break;
     case 24:
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 25:
         func_80012D40(0);
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].flags |= 0x80000000;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 26:
         func_8002746C(0x42FD, 1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 28:
         func_8002469C(0x140, 0x100, 0x140, 0xA0);
@@ -827,7 +827,7 @@ void func_8011DDB8(void) {
         rect.w = 0x140;
         rect.h = 0xA0;
         func_80065234(&rect, 0x280, 0);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         func_80012D40(1);
         return;
     case 29:
@@ -845,14 +845,14 @@ void func_8011DDB8(void) {
         }
         D_801258DC = 0;
         func_800433D0(0x501);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 30:
     case 32:
     case 34:
-        func_8011ED50(8);
+        spot_ride_movie_shift_sprites(8);
         if (++D_801258DC == 0x14) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
             return;
         }
         return;
@@ -874,7 +874,7 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].y = -0x78;
         }
         D_801258DC = 0;
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 33:
         rect.x = 0x280;
@@ -894,7 +894,7 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].y = -0x78;
         }
         D_801258DC = 0;
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 35:
         rect.x = 0x280;
@@ -914,10 +914,10 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].y = -0x78;
         }
         D_801258DC = 0;
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 36:
-        func_8011ED50(8);
+        spot_ride_movie_shift_sprites(8);
         if ((u16) D_801258DC >= 8U) {
             value = ((SpriteQuad *)D_800EC190)[4].tint_r;
             value -= 4;
@@ -936,7 +936,7 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[4].tint_r = color;
         }
         if (++D_801258DC == 0x14) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
             return;
         }
         return;
@@ -958,10 +958,10 @@ void func_8011DDB8(void) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 6].y = -0x78;
         }
         D_801258DC = 0;
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 38:
-        func_8011ED50(8);
+        spot_ride_movie_shift_sprites(8);
         value = ((SpriteQuad *)D_800EC190)[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
@@ -979,7 +979,7 @@ void func_8011DDB8(void) {
         ((SpriteQuad *)D_800EC190)[4].tint_r = color;
 
         if (value < 4U) {
-            g->unk_00 += 1;
+            g->step_timer += 1;
             return;
         }
         return;
@@ -987,26 +987,26 @@ void func_8011DDB8(void) {
         for (var_v1 = 0; var_v1 < 4; var_v1++) {
             ((SpriteQuad *)D_800EC190)[var_v1 + 4].flags |= 0x80000000;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 40:
-        sp54 = g->unk_06;
-        sp50 = g->unk_00;
+        sp54 = g->step;
+        sp50 = g->step_timer;
         func_8004AFB8();
-        g->unk_00 = sp50;
-        if (sp54 != g->unk_06) {
-            g->unk_06--;
-            g->unk_00 += 1;
+        g->step_timer = sp50;
+        if (sp54 != g->step) {
+            g->step--;
+            g->step_timer += 1;
         }
         return;
     case 42:
-        sp50 = g->unk_00;
+        sp50 = g->step_timer;
         func_8004A9CC();
-        g->unk_06 -= 1;
-        g->unk_00 = sp50 + 1;
+        g->step -= 1;
+        g->step_timer = sp50 + 1;
         return;
     case 43:
-        switch (*(u32 *)&D_80125320) {
+        switch (*(u32 *)&spot_ride) {
         case 0:
             func_800469F4(0x42AE);
             break;
@@ -1023,30 +1023,30 @@ void func_8011DDB8(void) {
             func_800469F4(0x42D2);
             break;
         }
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 45:
         func_8002755C(1);
         func_80027438(1);
-        g->unk_00 += 1;
+        g->step_timer += 1;
         return;
     case 46:
-        sp50 = g->unk_00;
-        func_8011A62C();
-        g->unk_06 -= 1;
-        g->unk_00 = sp50 + 1;
+        sp50 = g->step_timer;
+        spot_date_script_load_step();
+        g->step -= 1;
+        g->step_timer = sp50 + 1;
         return;
     case 48:
-        sp50 = g->unk_00;
-        func_8011A7FC();
-        g->unk_06 -= 1;
-        g->unk_00 = sp50 + 1;
+        sp50 = g->step_timer;
+        spot_common_script_load_step();
+        g->step -= 1;
+        g->step_timer = sp50 + 1;
         return;
     case 50:
-        sp50 = g->unk_00;
-        func_8011A838();
-        g->unk_06 -= 1;
-        g->unk_00 = sp50 + 1;
+        sp50 = g->step_timer;
+        spot_place_tables_load_step();
+        g->step -= 1;
+        g->step_timer = sp50 + 1;
         return;
     default:
         func_80011DFC();
@@ -1058,7 +1058,7 @@ void func_8011DDB8(void) {
 }
 
 /* T-10040: the implicit result view matches DATE func_80148924. */
-s32 func_8011ED50(s16 arg0) {
+s32 spot_ride_movie_shift_sprites(s16 arg0) {
     ((SpriteQuad *)D_800EC190)[4].y += arg0;
     ((SpriteQuad *)D_800EC190)[5].y += arg0;
     ((SpriteQuad *)D_800EC190)[4].h -= arg0;
@@ -1069,7 +1069,7 @@ s32 func_8011ED50(s16 arg0) {
     ((SpriteQuad *)D_800EC190)[7].unk_0F -= arg0;
 }
 
-void func_8011EDFC(void) {
+void spot_ride_ghost_house_movie(void) {
     s16 *temp_v0;
     s16 *var_a0;
     s16 temp_v0_2;
@@ -1080,10 +1080,10 @@ void func_8011EDFC(void) {
     u8 temp_s0;
     u8 temp_s0_2;
 
-    switch (((EventTransitionState *)&D_800B1AF0)->unk_00) {
+    switch (((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer) {
     case 0:
         D_800EED08 = 1;
-        func_8011F530(D_800B1AE4);
+        spot_bios_srand(D_800B1AE4);
         func_800433D0(0x202);
         D_801258DC = 0;
         func_800352B4(0);
@@ -1094,7 +1094,7 @@ void func_8011EDFC(void) {
         D_801258EC[0] = -0x28;
         D_801258EC[1] = 0;
         D_801258EC[2] = -0x3C;
-        ((EventTransitionState *)&D_800B1AF0)->unk_00 += 1;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer += 1;
         D_801258F4[0] = (func_800789A0() % 3) - 1;
         D_801258F4[1] = (func_800789A0() % 3) - 1;
         D_801258F4[2] = (func_800789A0() % 3) - 1;
@@ -1104,25 +1104,25 @@ void func_8011EDFC(void) {
         break;
     case 1:
         if (func_80015A44() & 1) {
-            ((EventTransitionState *)&D_800B1AF0)->unk_00 += 1;
+            ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer += 1;
             break;
         }
         break;
     case 2:
         func_8002755C(1);
         func_80027438(1);
-        ((EventTransitionState *)&D_800B1AF0)->unk_00 += 1;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer += 1;
         break;
     case 3:
-        temp_s0 = ((EventTransitionState *)&D_800B1AF0)->unk_06;
-        temp_s1 = ((EventTransitionState *)&D_800B1AF0)->unk_00;
+        temp_s0 = ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step;
+        temp_s1 = ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer;
         func_80046480();
-        ((EventTransitionState *)&D_800B1AF0)->unk_00 = temp_s1;
-        if (temp_s0 != ((EventTransitionState *)&D_800B1AF0)->unk_06) {
-            ((EventTransitionState *)&D_800B1AF0)->unk_00 = temp_s1 + 1;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer = temp_s1;
+        if (temp_s0 != ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step) {
+            ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer = temp_s1 + 1;
             func_800433D0(0x201);
         }
-        ((EventTransitionState *)&D_800B1AF0)->unk_06 = temp_s0;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step = temp_s0;
         break;
     case 4:
         var_s3 = 0;
@@ -1168,24 +1168,24 @@ void func_8011EDFC(void) {
         func_8001BB10(D_801258E4[1], D_801258EC[1], 0xA, 2, 2, 0x804040, 1, 1);
         func_8001BB10(D_801258E4[2], D_801258EC[2], 0xA, 2, 2, 0x800000, 1, 1);
         if (D_801258DC++ == 0x12C) {
-            ((EventTransitionState *)&D_800B1AF0)->unk_00 += 1;
+            ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer += 1;
             func_800433D0(0x202);
             break;
         }
         break;
     case 5:
-        temp_s0_2 = ((EventTransitionState *)&D_800B1AF0)->unk_06;
-        temp_s1_3 = ((EventTransitionState *)&D_800B1AF0)->unk_00;
+        temp_s0_2 = ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step;
+        temp_s1_3 = ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer;
         func_80046598();
-        ((EventTransitionState *)&D_800B1AF0)->unk_00 = temp_s1_3;
-        if (temp_s0_2 != ((EventTransitionState *)&D_800B1AF0)->unk_06) {
-            ((EventTransitionState *)&D_800B1AF0)->unk_00 = temp_s1_3 + 1;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer = temp_s1_3;
+        if (temp_s0_2 != ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step) {
+            ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer = temp_s1_3 + 1;
         }
-        ((EventTransitionState *)&D_800B1AF0)->unk_06 = temp_s0_2;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step = temp_s0_2;
         break;
     case 6:
         func_80027438(1);
-        ((EventTransitionState *)&D_800B1AF0)->unk_00 += 1;
+        ((SpotDevelopmentStepViewShort *)&D_800B1AF0)->step_timer += 1;
         break;
     default:
         func_800433D0(0x206);

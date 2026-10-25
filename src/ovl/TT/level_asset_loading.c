@@ -1,18 +1,18 @@
-/* level_asset_loading.c: src/ovl/TT/80142350.c:5: load state chooses stage-specific CD blocks and advances state; body 12: base = D_80158A60; 13: s = D_80158A64;. Original object 0x80142350-0x80142570 (config/objects/TT.txt). */
+/* level_asset_loading.c: src/ovl/TT/80142350.c:5: load state chooses stage-specific CD blocks and advances state; body 12: base = tt_sys; 13: s = tt_core;. Original object 0x80142350-0x80142570 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
-/* T-11800: matched. T-11550 temp (FAKE) moves the constant 1 to a1; an empty if (buttons) {} in a default case (FAKE) keeps the TtButtons06 pointer live through the case dispatch, so it is coloured after the constant 1 and takes a2 as in the original. */
-void func_80142350(void) {
+/* T-11800: matched. T-11550 temp (FAKE) moves the constant 1 to a1; an empty if (buttons) {} in a default case (FAKE) keeps the TtPadView pointer live through the case dispatch, so it is coloured after the constant 1 and takes a2 as in the original. */
+void tt_state_load(void) {
     u8 *base;
     u8 *s;
-    TtButtons06 *buttons;
+    TtPadView *buttons;
     u8 v;
     u8 temp; /* FAKE: holds the reloaded base[0x52]; its range in a0 moves the constant 1 to a1. T-11550 */
 
-    base = D_80158A60;
-    s = D_80158A64;
-    buttons = (TtButtons06 *)(base + 0x10);
+    base = tt_sys;
+    s = tt_core;
+    buttons = (TtPadView *)(base + 0x10);
     *(u16 *)s = 1;
     s[9] = 0;
     s[10] = 0;
@@ -32,37 +32,37 @@ void func_80142350(void) {
         if (v != 0) {
             switch (v) {
             case 1:
-                func_8014304C(0x80016000, 0xC812, 0x2420);
-                func_8014304C(0x8002E800, 0xC7C1, 0x69E4);
-                func_8014304C(0x8019A000, 0xC7C5, 0x27D60);
+                tt_cd_read_start(0x80016000, 0xC812, 0x2420);
+                tt_cd_read_start(0x8002E800, 0xC7C1, 0x69E4);
+                tt_cd_read_start(0x8019A000, 0xC7C5, 0x27D60);
                 break;
             case 2:
-                func_8014304C(0x80016000, 0xC869, 0x2420);
-                func_8014304C(0x8002E800, 0xC817, 0x69E4);
-                func_8014304C(0x8019A000, 0xC81A, 0x27D60);
+                tt_cd_read_start(0x80016000, 0xC869, 0x2420);
+                tt_cd_read_start(0x8002E800, 0xC817, 0x69E4);
+                tt_cd_read_start(0x8019A000, 0xC81A, 0x27D60);
                 break;
             case 3:
-                func_8014304C(0x80016000, 0xC8BD, 0x2420);
-                func_8014304C(0x8002E800, 0xC86D, 0x69E4);
-                func_8014304C(0x8019A000, 0xC871, 0x27D60);
+                tt_cd_read_start(0x80016000, 0xC8BD, 0x2420);
+                tt_cd_read_start(0x8002E800, 0xC86D, 0x69E4);
+                tt_cd_read_start(0x8019A000, 0xC871, 0x27D60);
                 break;
             case 4:
-                func_8014304C(0x80016000, 0xC916, 0x2420);
-                func_8014304C(0x8002E800, 0xC8C1, 0x69E4);
-                func_8014304C(0x8019A000, 0xC8C6, 0x27D60);
+                tt_cd_read_start(0x80016000, 0xC916, 0x2420);
+                tt_cd_read_start(0x8002E800, 0xC8C1, 0x69E4);
+                tt_cd_read_start(0x8019A000, 0xC8C6, 0x27D60);
                 break;
             default:
                 if (buttons) { /* FAKE: an empty test in a default case keeps buttons live through the case dispatch (before the calls), so it is coloured after the constant 1 and takes $a2. T-11800 */
                 }
                 break;
             }
-            func_8014304C(0x8001A000, 0xBFD1, 0xE20);
-            func_8014304C(0x801C2000, 0xBF9C, 0x1A680);
+            tt_cd_read_start(0x8001A000, 0xBFD1, 0xE20);
+            tt_cd_read_start(0x801C2000, 0xBF9C, 0x1A680);
             *(u16 *)s = 2;
         } else {
             *(u16 *)s = 1;
         }
-    } else if (buttons->unk_04 & 0xF0) {
+    } else if (buttons->pressed & 0xF0) {
         *(u16 *)s = 1;
     }
 }

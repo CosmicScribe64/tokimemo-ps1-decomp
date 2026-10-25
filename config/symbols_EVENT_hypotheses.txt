@@ -1,0 +1,14 @@
+// HYPOTHESES, not facts: names of the overlay EVENT that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+spot_scene_exit_step = 0x800F71F4; // type:func
+spot_ayako_scene2_pick_maximum_input = 0x800FEDC8; // type:func
+spot_wipe_gradient_draw = 0x800FF320; // type:func
+spot_special_day_talk_step = 0x80117B30; // type:func
+spot_all_places_equal_step = 0x80119074; // type:func
+spot_meeting_names_step = 0x8011AC18; // type:func
+spot_meeting_decide_step = 0x8011AD7C; // type:func
+spot_meeting_place_check_step = 0x8011AF20; // type:func
+spot_meeting_choice_menu_step = 0x8011AFBC; // type:func
+spot_arrival_wait_step = 0x8011AFFC; // type:func
+spot_mira_mood_jump_step = 0x8011C3F4; // type:func
+spot_place_affinity = 0x8012536C;

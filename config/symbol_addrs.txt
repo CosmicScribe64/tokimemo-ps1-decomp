@@ -242,6 +242,7 @@ schedule_health_sick_start = 0x800733D8; // type:func
 schedule_health_injury_recover = 0x800734C4; // type:func
 schedule_health_neurosis_recover = 0x800735B8; // type:func
 schedule_health_sick_recover = 0x800736AC; // type:func
+school_day_week_end_exit = 0x800737A0; // type:func
 school_day_background_read = 0x80073A40; // type:func
 school_day_screen_init = 0x80073AD8; // type:func
 school_day_sd_set_select = 0x80073CB0; // type:func

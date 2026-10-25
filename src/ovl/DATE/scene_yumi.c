@@ -212,12 +212,12 @@ void date_scene_yumi_winter_background_3(void) {
 }
 
 void date_scene_yumi_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl44 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl44 step_handlers;
 
-    tbl = date_scene_yumi_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yumi_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_yumi_spring_audio_command_1(void) {
@@ -232,18 +232,18 @@ void date_scene_yumi_spring_load_data(void) {
 }
 
 void date_scene_yumi_summer(void) {
-    GameState *g = &game_state; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl46 tbl;
+    GameState *game = &game_state; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateYumiSummerSteps step_handlers;
 
-    tbl = date_scene_yumi_summer_steps;
-    if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
-         (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
-         (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && (g->mode_step < 0xD || g->mode_step >= 0x21)) {
+    step_handlers = date_scene_yumi_summer_steps;
+    if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
+         (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
+         (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
+        dec_bg_brightness == 0x80 && D_80122D04 == 0 && (game->mode_step < 0xD || game->mode_step >= 0x21)) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[g->mode_step](0x80);
-    if (D_80122D04 != 0 && g->frame_count % 150 == 0) {
+    step_handlers.callbacks[game->mode_step](0x80);
+    if (D_80122D04 != 0 && game->frame_count % 150 == 0) {
         date_scene_yumi_summer_audio_command_1();
     }
 }

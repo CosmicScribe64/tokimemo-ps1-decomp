@@ -109,17 +109,17 @@ void encounter_miharu_scene_four_dispatch(void) {
 }
 
 typedef struct {
-    void (*f[27])();
-} FnTbl27; /* size 0x6C */
-extern FnTbl27 encounter_miharu_scene_one_steps;
+    void (*callbacks[27])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80140A00.c:112; func_80140D80 at line115 copies this exact27-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterMiharuSceneOneSteps; /* size 0x6C */
+extern EncounterMiharuSceneOneSteps encounter_miharu_scene_one_steps;
 
 void encounter_miharu_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl27 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterMiharuSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_miharu_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    mode_step_callbacks = encounter_miharu_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index]();
 }
 
 void encounter_miharu_audio_command_1(void) {
@@ -130,17 +130,17 @@ void encounter_miharu_audio_command_1(void) {
 }
 
 typedef struct {
-    void (*f[28])();
-} FnTbl28; /* size 0x70 */
-extern FnTbl28 encounter_miharu_scene_two_steps;
+    void (*callbacks[28])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80140A00.c:133; func_80140E40 at line136 copies this exact28-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterMiharuSceneTwoSteps; /* size 0x70 */
+extern EncounterMiharuSceneTwoSteps encounter_miharu_scene_two_steps;
 
 void encounter_miharu_scene_two_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl28 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterMiharuSceneTwoSteps mode_step_callbacks;
 
-    tbl = encounter_miharu_scene_two_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_miharu_scene_two_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
 }
 
 s32 encounter_miharu_talk_audio_command(void) {
@@ -165,17 +165,17 @@ void encounter_miharu_still_show_1(void) {
 }
 
 void encounter_miharu_story_group_select(void) {
-    u32 value;
-    GameState *g;
+    u32 story_stage_value;
+    GameState *state_data;
 
-    g = &game_state;
-    value = g->girls[11].flags.f.story_stage;
-    if (value >= 5U) {
-        g->girls[11].flags.f.story_stage = 4;
-        value = game_state.girls[11].flags.f.story_stage;
+    state_data = &game_state;
+    story_stage_value = state_data->girls[11].flags.f.story_stage;
+    if (story_stage_value >= 5U) {
+        state_data->girls[11].flags.f.story_stage = 4;
+        story_stage_value = game_state.girls[11].flags.f.story_stage;
     }
-    D_800CA150 = (u16)D_800CA150 + value * 2;
-    g->girls[11].flags.f.story_stage++;
+    D_800CA150 = (u16)D_800CA150 + story_stage_value * 2;
+    state_data->girls[11].flags.f.story_stage++;
     mode_step_next();
 }
 
@@ -256,7 +256,7 @@ void encounter_miharu_scene_init_2(void) {
 }
 
 void encounter_miharu_scene_init_3(void) {
-    s16 var_s0;
+    s16 icon_index;
 
     game_state.current_girl = GIRL_MIHARU;
     draw2d3d(1, 0);
@@ -274,11 +274,11 @@ void encounter_miharu_scene_init_3(void) {
     message_window_init();
     text_marker_hide();
     hud_icon_bar_init();
-    var_s0 = 0;
+    icon_index = 0;
     do {
-        icon_can_use_set(var_s0, 0);
-        var_s0 += 1;
-    } while (var_s0 < 0xF);
+        icon_can_use_set(icon_index, 0);
+        icon_index += 1;
+    } while (icon_index < 0xF);
     hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
@@ -342,15 +342,15 @@ void encounter_miharu_bg_load_13(void) {
 }
 
 void encounter_miharu_closing_bg_request(void) {
-    s32 temp_v0;
+    s32 background_read_result;
 
     D_800B3D60 = 0;
-    temp_v0 = dec_bg_cd_read(0x3FB6, 0);
-    if (temp_v0 == *dec_bg_show) {
+    background_read_result = dec_bg_cd_read(0x3FB6, 0);
+    if (background_read_result == *dec_bg_show) {
         mode_step_next();
         mode_step_next();
         mode_step_next();
-    } else if (temp_v0 == (1 - *dec_bg_show)) {
+    } else if (background_read_result == (1 - *dec_bg_show)) {
         mode_step_next();
         mode_step_next();
     }
@@ -358,16 +358,16 @@ void encounter_miharu_closing_bg_request(void) {
 }
 
 void encounter_miharu_scene_four_step_dispatch(void) {
-    u8 index;
-    GekoCallbacks64 table;
+    u8 mode_step_index;
+    EncounterMiharuClosingSteps mode_step_callbacks;
 
-    table = encounter_miharu_scene_four_steps;
-    index = game_state.mode_step;
-    table.callback[index](0x20);
-    index = game_state.mode_step;
-    if (index >= 36 && index < 43) {
+    mode_step_callbacks = encounter_miharu_scene_four_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callback[mode_step_index](0x20);
+    mode_step_index = game_state.mode_step;
+    if (mode_step_index >= 36 && mode_step_index < 43) {
         hud_sprite_light_effect_draw();
-    } else if (index == 49) {
+    } else if (mode_step_index == 49) {
         encounter_scene_light_effect_init();
     }
 }

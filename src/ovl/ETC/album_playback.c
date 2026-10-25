@@ -20,40 +20,40 @@ typedef struct {
     /* 0x12 */ s16 y2;
     /* 0x14 */ s16 x3;
     /* 0x16 */ s16 y3;
-} EtcPolyF4; /* size 0x18 */
+} AlbumPolyF4View; /* size 0x18 */
 
-void func_8013BEF0(void) {
-    D_80150030 = (u8 *)0x8019DCFC;
-    D_80150034 = (u8 *)0x8019DD00;
-    D_80150038 = (u8 *)0x8019DDC0;
-    D_8015003C = *(s16 *)0x8019DDF8;
+void album_portrait_tables_init(void) {
+    album_portrait_tpage_table = (u8 *)0x8019DCFC;
+    album_portrait_frame_table = (u8 *)0x8019DD00;
+    album_portrait_sequence_table = (u8 *)0x8019DDC0;
+    album_portrait_frame_count = *(s16 *)0x8019DDF8;
 }
 
-void func_8013BF34(void) {
+void album_stage_playback(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013BFFC();
+        album_playback_page_start();
         return;
     case 1:
-        func_8013C330(2, 0);
+        album_playback_photo(2, 0);
         return;
     case 2:
-        func_8013C330(3, 1);
+        album_playback_photo(3, 1);
         return;
     case 3:
-        func_8013C330(4, 2);
+        album_playback_photo(4, 2);
         return;
     case 4:
-        func_8013C700();
+        album_playback_photo_last();
         return;
     case 5:
-        func_8013C8EC();
+        album_playback_voice();
         return;
     case 6:
-        func_8013CC74();
+        album_playback_end_check();
         return;
     case 7:
-        func_8013CCE4();
+        album_playback_ui_restore();
         /* fallthrough */
     default:
         return;
@@ -61,40 +61,40 @@ void func_8013BF34(void) {
 }
 
 /* T-24069: retain the earlier caller's K&R implicit-int view. */
-s32 func_8013BFFC(void) {
+s32 album_playback_page_start(void) {
     GameState *g = &game_state;
     /* FAKE: join step/status loads through one word temporary to preserve
      * the original v1 allocation; original local declarations unknown. T-24069. */
     s32 value;
     switch (g->substep) {
     case 0:
-        func_8013FC08();
+        album_clear_buffer_area();
         bg_layers = 0x80000000;
-        if (D_80150068 > 0) {
-            D_80150070 = 0;
+        if (album_ui_reload_request > 0) {
+            album_load_state = 0;
         }
-        if ((value = D_80150070) == -1) {
-            D_801500D4 = 0x800;
-            func_8013FA7C();
+        if ((value = album_load_state) == -1) {
+            album_model_angle = 0x800;
+            album_model_matrix_update();
             mode_stage_next();
         } else {
             g->substep = (value = g->substep) + 1;
         }
         break;
     case 1:
-        if (D_80150068 > 0) {
-            func_8013E89C(1);
-            if ((value = D_80150070) >= 3) {
-                if (D_80150068 == 1) {
-                    D_80150070 = 0;
+        if (album_ui_reload_request > 0) {
+            album_event_advance(1);
+            if ((value = album_load_state) >= 3) {
+                if (album_ui_reload_request == 1) {
+                    album_load_state = 0;
                 } else {
-                    D_80150068 = 0;
-                    D_80150070 = 0;
+                    album_ui_reload_request = 0;
+                    album_load_state = 0;
                 }
                 g->substep = (value = g->substep) + 1;
-            } else if ((value = D_80150070) == -1) {
-                D_801500D4 = 0x800;
-                func_8013FA7C();
+            } else if ((value = album_load_state) == -1) {
+                album_model_angle = 0x800;
+                album_model_matrix_update();
                 mode_step_set(5);
             }
         } else {
@@ -102,7 +102,7 @@ s32 func_8013BFFC(void) {
         }
         break;
     case 2:
-        if (func_8013F3F8() == 1) {
+        if (album_event_is_special_portrait() == 1) {
             cd_read_sectors(0xEU, 0x80197000, 0xA9D0);
             g->substep = (value = g->substep) + 1;
         } else {
@@ -110,76 +110,76 @@ s32 func_8013BFFC(void) {
         }
         break;
     case 3:
-        if (func_8013F3F8() == 0) {
-            if (D_8014E0C0 == 1) {
+        if (album_event_is_special_portrait() == 0) {
+            if (album_event_has_background == 1) {
                 dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-                func_8013DEA0(1);
+                album_picture_sprites_draw(1);
             }
-            func_8013ECDC();
-            func_8013EDF8();
-            func_8013E364();
+            album_event_resources_show();
+            album_portrait_face_update();
+            album_date_counters_draw();
             g->substep = (value = g->substep) + 1;
-        } else if ((func_8013F3F8() == 1) && (cd_read_sync_status() & 1)) {
-            if (D_8014E0C0 == 1) {
+        } else if ((album_event_is_special_portrait() == 1) && (cd_read_sync_status() & 1)) {
+            if (album_event_has_background == 1) {
                 dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-                func_8013DEA0(1);
+                album_picture_sprites_draw(1);
             }
-            func_8013ECDC();
-            if (func_8013F3F8() == 1) {
-                func_8013F498();
+            album_event_resources_show();
+            if (album_event_is_special_portrait() == 1) {
+                album_special_portrait_setup();
             }
-            func_8013EDF8();
-            func_8013E364();
+            album_portrait_face_update();
+            album_date_counters_draw();
             g->substep = (value = g->substep) + 1;
         }
         break;
     case 4:
-        func_8013D264();
-        func_8013D2C0();
-        func_8013EE28();
-        func_801328A4(0x28, 0x3C);
-        if (D_80150064 < 0xFF) {
-            D_80150080 = D_80150064;
-            D_80150064 += 1;
+        album_vram_copy_to_backbuffer();
+        album_vram_copy_other_buffer();
+        album_event_hide_current();
+        album_vram_blur(0x28, 0x3C);
+        if (album_event_index < 0xFF) {
+            album_prev_event_index = album_event_index;
+            album_event_index += 1;
         }
-        if ((D_801500D8 == 0) || (D_801500D8 == 2)) {
-            func_8013EEFC();
+        if ((album_secret_mode == 0) || (album_secret_mode == 2)) {
+            album_event_skip_other_girls();
         }
         mode_step_next();
         break;
     }
-    func_8013D32C();
+    album_background_quads_draw();
 }
 
 
 /* T-14501: retain the earlier callers' K&R implicit-int view. */
-s32 func_8013C330(s32 arg0, s32 arg1) {
+s32 album_playback_photo(s32 arg0, s32 arg1) {
     switch (game_state.substep) {
     case 0:
-        func_80132C3C();
+        album_fade_quads_draw();
         break;
     case 1:
-        func_8013D570(0, 0);
-        func_8013E89C(arg0);
-        if (D_80150070 >= 3) {
+        album_photo_zoom_draw(0, 0);
+        album_event_advance(arg0);
+        if (album_load_state >= 3) {
             game_state.substep += 1;
-            D_80150070 = 0;
-        } else if (D_80150070 == -1) {
+            album_load_state = 0;
+        } else if (album_load_state == -1) {
             game_state.substep += 1;
         }
         break;
     case 2:
-        func_8013D570(0, 0);
+        album_photo_zoom_draw(0, 0);
         if ((game_state.current_girl == GIRL_REI) || (game_state.current_girl == GIRL_MIHARU)) {
-            func_8013F054();
+            album_special_girl_voice();
         }
-        if (((D_8015006C == 0) || (D_8015006C >= 3)) && ((game_state.pad_pressed & PAD_CIRCLE) || (D_801500D8 == 0) || (D_801500D8 == 1))) {
+        if (((album_voice_state == 0) || (album_voice_state >= 3)) && ((game_state.pad_pressed & PAD_CIRCLE) || (album_secret_mode == 0) || (album_secret_mode == 1))) {
             game_state.substep += 1;
-            D_8015006C = 0;
+            album_voice_state = 0;
         }
         break;
     case 3:
-        func_8013D570(game_state.mode_step_timer.u * 2, arg1);
+        album_photo_zoom_draw(game_state.mode_step_timer.u * 2, arg1);
         if ((u32) game_state.mode_step_timer.u < 0x28U) {
             game_state.mode_step_timer.u += 1;
         } else {
@@ -187,17 +187,17 @@ s32 func_8013C330(s32 arg0, s32 arg1) {
         }
         break;
     case 4:
-        func_8013FC08();
-        if (D_80150070 == -1) {
-            D_801500D4 = 0x800;
-            func_8013FA7C();
+        album_clear_buffer_area();
+        if (album_load_state == -1) {
+            album_model_angle = 0x800;
+            album_model_matrix_update();
             mode_step_set(5);
         } else {
             game_state.substep += 1;
         }
         break;
     case 5:
-        if (func_8013F3F8() == 1) {
+        if (album_event_is_special_portrait() == 1) {
             cd_read_sectors(0xEU, 0x80197000, 0xA9D0);
             game_state.substep += 1;
         } else {
@@ -205,80 +205,80 @@ s32 func_8013C330(s32 arg0, s32 arg1) {
         }
         break;
     case 6:
-        if (func_8013F3F8() == 0) {
-            if (D_8014E0C0 == 1) {
+        if (album_event_is_special_portrait() == 0) {
+            if (album_event_has_background == 1) {
                 dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-                func_8013DEA0(1);
+                album_picture_sprites_draw(1);
             }
-            func_8013ECDC();
-            func_8013EDF8();
-            func_8013E364();
+            album_event_resources_show();
+            album_portrait_face_update();
+            album_date_counters_draw();
             game_state.substep += 1;
         }
-        if ((func_8013F3F8() == 1) && (cd_read_sync_status() & 1)) {
-            if (D_8014E0C0 == 1) {
+        if ((album_event_is_special_portrait() == 1) && (cd_read_sync_status() & 1)) {
+            if (album_event_has_background == 1) {
                 dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-                func_8013DEA0(1);
+                album_picture_sprites_draw(1);
             }
-            func_8013ECDC();
-            if (func_8013F3F8() == 1) {
-                func_8013F498();
+            album_event_resources_show();
+            if (album_event_is_special_portrait() == 1) {
+                album_special_portrait_setup();
             }
-            func_8013EDF8();
-            func_8013E364();
+            album_portrait_face_update();
+            album_date_counters_draw();
             game_state.substep += 1;
         }
         break;
     case 7:
-        func_8013D264();
-        func_8013D2C0();
-        func_8013EE28();
-        func_801328A4(0x28, 0x3C);
-        if (D_80150064 < 0xFF) {
-            D_80150080 = D_80150064;
-            D_80150064 += 1;
+        album_vram_copy_to_backbuffer();
+        album_vram_copy_other_buffer();
+        album_event_hide_current();
+        album_vram_blur(0x28, 0x3C);
+        if (album_event_index < 0xFF) {
+            album_prev_event_index = album_event_index;
+            album_event_index += 1;
         }
-        if ((D_801500D8 == 0) || (D_801500D8 == 2)) {
-            func_8013EEFC();
+        if ((album_secret_mode == 0) || (album_secret_mode == 2)) {
+            album_event_skip_other_girls();
         }
         mode_step_next();
         break;
     }
-    func_8013D32C();
+    album_background_quads_draw();
 }
 
-s32 func_8013C700(void) {
+s32 album_playback_photo_last(void) {
     switch (game_state.substep) {
     case 0:
-        func_8013D32C();
-        func_80132C3C();
+        album_background_quads_draw();
+        album_fade_quads_draw();
     default:
         break;
     case 1:
-        func_8013D32C();
-        func_8013D570(0, 0);
-        func_8013E89C(5);
-        if (D_80150070 >= 3) {
-            D_80150070 = 0;
+        album_background_quads_draw();
+        album_photo_zoom_draw(0, 0);
+        album_event_advance(5);
+        if (album_load_state >= 3) {
+            album_load_state = 0;
             game_state.substep += 1;
-        } else if (D_80150070 == -1) {
+        } else if (album_load_state == -1) {
             game_state.substep += 1;
         }
         break;
     case 2:
-        func_8013D32C();
-        func_8013D570(0, 0);
+        album_background_quads_draw();
+        album_photo_zoom_draw(0, 0);
         if ((game_state.current_girl == GIRL_REI) || (game_state.current_girl == GIRL_MIHARU)) {
-            func_8013F054();
+            album_special_girl_voice();
         }
-        if (((D_8015006C == 0) || (D_8015006C >= 3)) && ((game_state.pad_pressed & PAD_CIRCLE) || (D_801500D8 == 0) || (D_801500D8 == 1))) {
-            D_8015006C = 0;
+        if (((album_voice_state == 0) || (album_voice_state >= 3)) && ((game_state.pad_pressed & PAD_CIRCLE) || (album_secret_mode == 0) || (album_secret_mode == 1))) {
+            album_voice_state = 0;
             game_state.substep += 1;
         }
         break;
     case 3:
-        func_8013D32C();
-        func_8013D570(game_state.mode_step_timer.u * 2, 3);
+        album_background_quads_draw();
+        album_photo_zoom_draw(game_state.mode_step_timer.u * 2, 3);
         if ((u32) game_state.mode_step_timer.u < 0x28U) {
             game_state.mode_step_timer.u += 1;
         } else {
@@ -286,9 +286,9 @@ s32 func_8013C700(void) {
         }
         break;
     case 4:
-        func_8013FC08();
-        D_801500D4 = 0x800;
-        func_8013FA7C();
+        album_clear_buffer_area();
+        album_model_angle = 0x800;
+        album_model_matrix_update();
         mode_step_next();
         break;
     }
@@ -296,7 +296,7 @@ s32 func_8013C700(void) {
 
 /* FAKE: retain the s32 fallthrough matching view; original return type is unproven,
  * and the sole caller ignores the result. T-24075. */
-s32 func_8013C8EC(void) {
+s32 album_playback_voice(void) {
 
     if ((game_state.current_girl == GIRL_REI) || (game_state.current_girl == GIRL_MIHARU)) {
         mode_step_next();
@@ -305,31 +305,31 @@ s32 func_8013C8EC(void) {
         case 0:
             if (game_state.current_girl == GIRL_SHIORI) {
                 do {
-                    D_801500C0 = rand() % D_8014E0A4[game_state.current_girl];
-                } while ((D_801500C0 == D_80150078) || (D_801500C0 == 20) || (D_801500C0 == 0));
+                    album_voice_clip = rand() % album_voice_clip_count[game_state.current_girl];
+                } while ((album_voice_clip == album_last_voice_clip) || (album_voice_clip == 20) || (album_voice_clip == 0));
             } else if (game_state.current_girl == GIRL_YUINA) {
                 do {
-                    D_801500C0 = rand() % D_8014E0A4[game_state.current_girl];
-                } while ((D_801500C0 == D_80150078) || (D_801500C0 == 8));
+                    album_voice_clip = rand() % album_voice_clip_count[game_state.current_girl];
+                } while ((album_voice_clip == album_last_voice_clip) || (album_voice_clip == 8));
             } else if (game_state.current_girl == GIRL_AYAKO) {
                 do {
-                    D_801500C0 = rand() % D_8014E0A4[game_state.current_girl];
-                } while ((D_801500C0 == D_80150078) || (D_801500C0 == 9));
+                    album_voice_clip = rand() % album_voice_clip_count[game_state.current_girl];
+                } while ((album_voice_clip == album_last_voice_clip) || (album_voice_clip == 9));
             } else if (game_state.current_girl == GIRL_SAKI) {
                 do {
-                    D_801500C0 = rand() % D_8014E0A4[game_state.current_girl];
-                } while ((D_801500C0 == D_80150078) || (D_801500C0 == 13));
+                    album_voice_clip = rand() % album_voice_clip_count[game_state.current_girl];
+                } while ((album_voice_clip == album_last_voice_clip) || (album_voice_clip == 13));
             } else if (game_state.current_girl == GIRL_MEGUMI) {
                 do {
-                    D_801500C0 = rand() % D_8014E0A4[game_state.current_girl];
-                } while ((D_801500C0 == D_80150078) || (D_801500C0 == 0));
+                    album_voice_clip = rand() % album_voice_clip_count[game_state.current_girl];
+                } while ((album_voice_clip == album_last_voice_clip) || (album_voice_clip == 0));
             } else {
                 do {
-                    D_801500C0 = rand() % D_8014E0A4[game_state.current_girl];
-                } while ((D_801500C0 == D_80150078));
+                    album_voice_clip = rand() % album_voice_clip_count[game_state.current_girl];
+                } while ((album_voice_clip == album_last_voice_clip));
             }
-            D_80150078 = D_801500C0;
-            cd_audio_request_set(D_801500C4[D_801500C0 * 2], D_801500C4[D_801500C0 * 2 + 1], game_state.current_girl);
+            album_last_voice_clip = album_voice_clip;
+            cd_audio_request_set(album_voice_clip_table[album_voice_clip * 2], album_voice_clip_table[album_voice_clip * 2 + 1], game_state.current_girl);
             audio_command(0x300);
             game_state.substep += 1;
             break;
@@ -347,22 +347,22 @@ s32 func_8013C8EC(void) {
     }
 }
 
-void func_8013CC74(void) {
-    if ((D_80150054 == 0 && D_80150058 == 0 && D_8015005C == 0) || D_80150064 == 0xFF) {
+void album_playback_end_check(void) {
+    if ((album_event_year == 0 && album_event_month == 0 && album_event_day == 0) || album_event_index == 0xFF) {
         mode_stage_next();
         return;
     }
     mode_step_next();
 }
 
-s32 func_8013CCE4(void) {
+s32 album_playback_ui_restore(void) {
     s32 pad; /* FAKE: unused slot, the original frame has it (real source unknown). T-22019 */
     s32 buf[6];
     u32 i;
 
     switch (game_state.substep) {
     case 0:
-        if (D_80150068 > 0) {
+        if (album_ui_reload_request > 0) {
             cd_read_sectors(0x69U, 0x801A0000, 0xB389);
             game_state.substep += 1;
         } else {
@@ -370,13 +370,13 @@ s32 func_8013CCE4(void) {
         }
         break;
     case 1:
-        if (D_80150068 == 0) {
+        if (album_ui_reload_request == 0) {
             game_state.substep += 1;
-        } else if (D_80150068 > 0) {
+        } else if (album_ui_reload_request > 0) {
             if (cd_read_sync_status() & 1) {
                 memcpy((void *)0x801E2000, 0x801A0600, 0x18000);
-                if (D_80150068 == 1) {
-                    D_80150068 = 2;
+                if (album_ui_reload_request == 1) {
+                    album_ui_reload_request = 2;
                 }
                 game_state.substep += 1;
             }
@@ -395,11 +395,11 @@ s32 func_8013CCE4(void) {
         }
         break;
     case 3:
-        if (D_801500D4 >= 0xC00) {
+        if (album_model_angle >= 0xC00) {
             mode_step_set(0);
         } else {
-            D_801500D4 += 8;
-            func_8013FA7C();
+            album_model_angle += 8;
+            album_model_matrix_update();
         }
         break;
     }
@@ -409,46 +409,46 @@ s32 func_8013CCE4(void) {
  * epilogue and as1 hoists li t9,0xC00 instead of lui v0,0x8000 in case 5;
  * dummy entry read of unk_F5F seeds cvt_pass.py entry_locations so uopt
  * promotes unk_F5F to v1 in case 0. T-24129. */
-s32 func_8013CF2C(void) {
+s32 album_stage_finale(void) {
     u8 unused;
 
     unused = game_state.current_girl;
-    if ((D_80150064 == 0) || (D_801500E0 == 1)) {
+    if ((album_event_index == 0) || (album_skip_requested == 1)) {
         *(u8 *)&game_state.mode_stage_scratch = 5;
     }
     switch (*(u8 *)&game_state.mode_stage_scratch) {
     case 0:
         if ((u32) game_state.mode_stage_timer >= 0x79U) {
             if (game_state.current_girl == GIRL_SHIORI) {
-                func_8013F320(0x14);
-                if (D_8015006C >= 3) {
+                album_voice_play(0x14);
+                if (album_voice_state >= 3) {
                     *(u8 *)&game_state.mode_stage_scratch += 1;
-                    D_8015006C = 0;
+                    album_voice_state = 0;
                 }
             } else if (game_state.current_girl == GIRL_YUINA) {
-                func_8013F320(8);
-                if (D_8015006C == 2) {
+                album_voice_play(8);
+                if (album_voice_state == 2) {
                     game_state.mode_stage_timer = 0;
                 }
-                if (D_8015006C >= 3) {
+                if (album_voice_state >= 3) {
                     if ((u32) game_state.mode_stage_timer >= 0x3DU) {
                         *(u8 *)&game_state.mode_stage_scratch += 1;
-                        D_8015006C = 0;
+                        album_voice_state = 0;
                     } else {
                         game_state.mode_stage_timer += 1;
                     }
                 }
             } else if (game_state.current_girl == GIRL_SAKI) {
-                func_8013F320(0xD);
-                if (D_8015006C >= 3) {
+                album_voice_play(0xD);
+                if (album_voice_state >= 3) {
                     *(u8 *)&game_state.mode_stage_scratch += 1;
-                    D_8015006C = 0;
+                    album_voice_state = 0;
                 }
             } else if (game_state.current_girl == GIRL_REI) {
-                func_8013F320(7);
-                if (D_8015006C >= 3) {
+                album_voice_play(7);
+                if (album_voice_state >= 3) {
                     *(u8 *)&game_state.mode_stage_scratch += 1;
-                    D_8015006C = 0;
+                    album_voice_state = 0;
                 }
             } else {
                 *(u8 *)&game_state.mode_stage_scratch += 1;
@@ -456,7 +456,7 @@ s32 func_8013CF2C(void) {
         }
         break;
     case 1:
-        cd_audio_request_set(D_8014DBF8[game_state.current_girl * 2], D_8014DBF8[game_state.current_girl * 2 + 1], game_state.current_girl);
+        cd_audio_request_set(album_finale_clip[game_state.current_girl * 2], album_finale_clip[game_state.current_girl * 2 + 1], game_state.current_girl);
         audio_command(0x300);
         *(u8 *)&game_state.mode_stage_scratch += 1;
         break;
@@ -478,24 +478,24 @@ s32 func_8013CF2C(void) {
         }
         break;
     case 5:
-        func_8013E1DC(game_state.mode_stage_timer);
+        album_fade_white_draw(game_state.mode_stage_timer);
         if ((u32) game_state.mode_stage_timer >= 0x12DU) {
-            D_801500E0 = 0;
-            D_80150070 = 0;
-            D_80150064 = 0;
-            D_801500D8 = 0;
-            D_801500DC = 0;
+            album_skip_requested = 0;
+            album_load_state = 0;
+            album_event_index = 0;
+            album_secret_mode = 0;
+            album_phase = 0;
             *(s32 *)&bg_layers = 0x80000000;
             D_801220F4 = 0x80000000;
-            D_801500D4 = 0xC00;
-            func_8013FA7C();
+            album_model_angle = 0xC00;
+            album_model_matrix_update();
             mode_stage_set(0xFF);
         }
         break;
     }
 }
 
-void func_8013D264(void) {
+void album_vram_copy_to_backbuffer(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
     RECT rect;
 
@@ -507,7 +507,7 @@ void func_8013D264(void) {
     func_8009C674(0);
 }
 
-void func_8013D2C0(void) {
+void album_vram_copy_other_buffer(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
     RECT rect;
 
@@ -519,7 +519,7 @@ void func_8013D2C0(void) {
     func_8009C674(0);
 }
 
-s32 func_8013D32C(void) {
+s32 album_background_quads_draw(void) {
     s32 i;
     POLY_FT4 *poly[2];
 
@@ -554,7 +554,7 @@ s32 func_8013D32C(void) {
 
 /* FAKE: one source line per vertex (x and y, u and v, the colour). as1 schedules by source line, and
  * case 0 needs x2, h and y2 on one line; the original layout is plausible but unproven. T-25113 */
-s32 func_8013D570(s32 arg0, s32 arg1) {
+s32 album_photo_zoom_draw(s32 arg0, s32 arg1) {
     s32 i;
     POLY_FT4 *poly[2];
     s32 h;
@@ -600,7 +600,7 @@ s32 func_8013D570(s32 arg0, s32 arg1) {
     }
 }
 
-void func_8013DEA0(s32 arg0) {
+void album_picture_sprites_draw(s32 arg0) {
     SPRT *temp_v0;
     SPRT *temp_v0_2;
 
@@ -640,14 +640,14 @@ void func_8013DEA0(s32 arg0) {
     goto_tpage(0x200, 0x100, 0xD, 0, 2);
 }
 
-void func_8013E094(u8 *arg0) {
+void album_portrait_part_positions_set(u8 *arg0) {
     s32 pad; /* FAKE: unused slot above base, the original frame has it (T-3330 idiom, real source unknown). T-10710 */
     s16 base;
     u8 *p;
     s16 e1;
     s16 e2;
 
-    if (D_8015004C == 0xA && D_80150050 == 1) {
+    if (album_event_girl == 0xA && album_event_season == 1) {
         D_8011F536 = -0x15;
         D_8011F4F2 = -0x15;
     } else {
@@ -678,10 +678,10 @@ void func_8013E094(u8 *arg0) {
     }
 }
 
-void func_8013E1DC(arg0)
+void album_fade_white_draw(arg0)
 s32 arg0;
 {
-    EtcPolyF4 *poly;
+    AlbumPolyF4View *poly;
     s32 sprite;
 
     poly = GetWorkBase(0x18, draw_buffer);
@@ -709,29 +709,29 @@ s32 arg0;
     safe_env(0);
 }
 
-void func_8013E364(void) {
-    if (D_8015005C < 0xA && D_80150058 < 0xA) {
-        func_8013FC64(D_80150054, 0x50, 0x2D, 0);
-        func_8013FC64(-D_80150058, 0x64, 0x2D, 0);
-        func_8013E524(0xE5, 0x3E);
-    } else if (D_8015005C >= 0xA && D_80150058 < 0xA) {
-        func_8013FC64(D_80150054, 0x4B, 0x2D, 0);
-        func_8013FC64(-D_80150058, 0x5F, 0x2D, 0);
-        func_8013E524(0xE0, 0x42);
-    } else if (D_8015005C < 0xA && D_80150058 >= 0xA) {
-        func_8013FC64(D_80150054, 0x4B, 0x2D, 0);
-        func_8013FC64(-D_80150058, 0x64, 0x2D, 0);
-        func_8013E524(0xE0, 0x42);
-    } else if (D_8015005C >= 0xA && D_80150058 >= 0xA) {
-        func_8013FC64(D_80150054, 0x46, 0x2D, 0);
-        func_8013FC64(-D_80150058, 0x5F, 0x2D, 0);
-        func_8013E524(0xDB, 0x47);
+void album_date_counters_draw(void) {
+    if (album_event_day < 0xA && album_event_month < 0xA) {
+        album_number_sprite_draw(album_event_year, 0x50, 0x2D, 0);
+        album_number_sprite_draw(-album_event_month, 0x64, 0x2D, 0);
+        album_counter_backing_draw(0xE5, 0x3E);
+    } else if (album_event_day >= 0xA && album_event_month < 0xA) {
+        album_number_sprite_draw(album_event_year, 0x4B, 0x2D, 0);
+        album_number_sprite_draw(-album_event_month, 0x5F, 0x2D, 0);
+        album_counter_backing_draw(0xE0, 0x42);
+    } else if (album_event_day < 0xA && album_event_month >= 0xA) {
+        album_number_sprite_draw(album_event_year, 0x4B, 0x2D, 0);
+        album_number_sprite_draw(-album_event_month, 0x64, 0x2D, 0);
+        album_counter_backing_draw(0xE0, 0x42);
+    } else if (album_event_day >= 0xA && album_event_month >= 0xA) {
+        album_number_sprite_draw(album_event_year, 0x46, 0x2D, 0);
+        album_number_sprite_draw(-album_event_month, 0x5F, 0x2D, 0);
+        album_counter_backing_draw(0xDB, 0x47);
     }
-    func_8013FC64(-D_8015005C, 0x78, 0x2D, 0);
+    album_number_sprite_draw(-album_event_day, 0x78, 0x2D, 0);
 }
 
 /* Port of the TACO sibling func_80153E78 (T-17300). */
-void func_8013E524(s32 a, s32 b) {
+void album_counter_backing_draw(s32 a, s32 b) {
     POLY_F4 *poly;
     s32 sprite;
 
@@ -758,138 +758,138 @@ void func_8013E524(s32 a, s32 b) {
 }
 
 /* Both record tables are read through pointer locals: the original reloads the +5 byte for the switch, direct
- * game_state.event_log[...] accesses CSE it with the earlier load. The second table is the EtcConfig8 record array
+ * game_state.event_log[...] accesses CSE it with the earlier load. The second table is the AlbumLogEntry record array
  * at system_data + 0x58 (main_api.h): a byte pointer plus `[11]` after the scaled index keeps the +0x58 as the
  * displacement, while a typed base folds it into the address (T-22019). */
-void func_8013E6AC(void) {
+void album_event_record_load(void) {
     GameState *g = &game_state;
     u8 *w = (u8 *)&system_data;
 
     if (g->options_dirty == 0) {
-        D_8015004C = g->event_log[D_80150064].girl;
-        D_80150044 = g->event_log[D_80150064].flag;
-        D_80150040 = g->event_log[D_80150064].scene;
-        D_80150048 = g->event_log[D_80150064].rank % 6U;
-        D_80150054 = g->event_log[D_80150064].year;
-        D_80150058 = g->event_log[D_80150064].month;
-        D_8015005C = g->event_log[D_80150064].day;
-        D_80150060 = g->event_log[D_80150064].weekday;
-        switch (g->event_log[D_80150064].month) {
+        album_event_girl = g->event_log[album_event_index].girl;
+        album_event_scene = g->event_log[album_event_index].flag;
+        album_event_category = g->event_log[album_event_index].scene;
+        album_event_mood = g->event_log[album_event_index].rank % 6U;
+        album_event_year = g->event_log[album_event_index].year;
+        album_event_month = g->event_log[album_event_index].month;
+        album_event_day = g->event_log[album_event_index].day;
+        album_event_weekday = g->event_log[album_event_index].weekday;
+        switch (g->event_log[album_event_index].month) {
         case 3:
         case 4:
         case 5:
-            D_80150050 = 0;
+            album_event_season = 0;
             return;
         case 6:
         case 7:
         case 8:
-            D_80150050 = 1;
+            album_event_season = 1;
             return;
         case 9:
         case 10:
         case 11:
-            D_80150050 = 2;
+            album_event_season = 2;
             return;
         case 1:
         case 2:
         case 12:
-            D_80150050 = 3;
+            album_event_season = 3;
             return;
         }
     } else {
-        D_8015004C = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_00;
-        D_80150044 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_01;
-        D_80150040 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_02;
-        D_80150048 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_03 % 6U;
-        D_80150054 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_04;
-        D_80150058 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_05;
-        D_8015005C = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_06;
-        D_80150060 = ((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_07;
-        switch (((EtcConfig8 *)(w + D_80150064 * 8))[11].unk_05) {
+        album_event_girl = ((AlbumLogEntry *)(w + album_event_index * 8))[11].girl;
+        album_event_scene = ((AlbumLogEntry *)(w + album_event_index * 8))[11].scene;
+        album_event_category = ((AlbumLogEntry *)(w + album_event_index * 8))[11].category;
+        album_event_mood = ((AlbumLogEntry *)(w + album_event_index * 8))[11].mood % 6U;
+        album_event_year = ((AlbumLogEntry *)(w + album_event_index * 8))[11].year;
+        album_event_month = ((AlbumLogEntry *)(w + album_event_index * 8))[11].month;
+        album_event_day = ((AlbumLogEntry *)(w + album_event_index * 8))[11].day;
+        album_event_weekday = ((AlbumLogEntry *)(w + album_event_index * 8))[11].weekday;
+        switch (((AlbumLogEntry *)(w + album_event_index * 8))[11].month) {
         case 3:
         case 4:
         case 5:
-            D_80150050 = 0;
+            album_event_season = 0;
             return;
         case 6:
         case 7:
         case 8:
-            D_80150050 = 1;
+            album_event_season = 1;
             return;
         case 9:
         case 10:
         case 11:
-            D_80150050 = 2;
+            album_event_season = 2;
             return;
         case 1:
         case 2:
         case 12:
-            D_80150050 = 3;
+            album_event_season = 3;
         }
     }
 }
 
-s32 func_8013E89C(s32 arg0) {
-    switch (D_80150070) {
+s32 album_event_advance(s32 arg0) {
+    switch (album_load_state) {
     case -1:
         break;
     case 0:
-        func_8013E6AC();
-        if (func_8013EAC0() != 0) {
-            func_8013EB90(arg0);
-            D_80150070 += 1;
+        album_event_record_load();
+        if (album_event_find_valid() != 0) {
+            album_event_resources_request(arg0);
+            album_load_state += 1;
         } else {
-            D_80150070 = -1;
+            album_load_state = -1;
         }
         break;
     case 1:
-        if ((D_8014F990 == 1) || (D_8015007C == 1)) {
+        if ((album_event_is_portrait == 1) || (album_anim_active == 1)) {
             if (cd_read_sync_status() & 1) {
                 dec_bg_reset();
-                func_80132FB0(D_80150040, D_80150044, D_8015004C, D_80150050);
-                if ((D_8014E0C0 == 0) && (D_8014F990 == 1)) {
-                    if (D_80150064 < 0xFF) {
-                        D_80150064 += 1;
+                album_event_background_load(album_event_category, album_event_scene, album_event_girl, album_event_season);
+                if ((album_event_has_background == 0) && (album_event_is_portrait == 1)) {
+                    if (album_event_index < 0xFF) {
+                        album_event_index += 1;
                     }
-                    if ((D_801500D8 == 0) || (D_801500D8 == 2)) {
-                        func_8013EEFC();
+                    if ((album_secret_mode == 0) || (album_secret_mode == 2)) {
+                        album_event_skip_other_girls();
                     }
-                    D_80150070 = 0;
-                } else if (D_8014E0C0 == 1) {
-                    D_80150070 += 1;
+                    album_load_state = 0;
+                } else if (album_event_has_background == 1) {
+                    album_load_state += 1;
                 } else {
-                    D_80150070 = 3;
+                    album_load_state = 3;
                 }
             }
-        } else if ((D_8014F990 == 0) && (D_8015007C == 0)) {
-            if (D_80150064 < 0xFF) {
-                D_80150064 += 1;
+        } else if ((album_event_is_portrait == 0) && (album_anim_active == 0)) {
+            if (album_event_index < 0xFF) {
+                album_event_index += 1;
             }
-            if ((D_801500D8 == 0) || (D_801500D8 == 2)) {
-                func_8013EEFC();
+            if ((album_secret_mode == 0) || (album_secret_mode == 2)) {
+                album_event_skip_other_girls();
             }
-            D_80150070 = 0;
+            album_load_state = 0;
         }
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            D_80150070 += 1;
+            album_load_state += 1;
         }
         break;
     }
 }
 
-s32 func_8013EAC0(void) {
-    if (D_80150054 == 0 && D_80150058 == 0 && D_8015005C == 0) {
+s32 album_event_find_valid(void) {
+    if (album_event_year == 0 && album_event_month == 0 && album_event_day == 0) {
         while (1) {
-            if (D_80150064 < 0xFF) {
-                D_80150064 += 1;
+            if (album_event_index < 0xFF) {
+                album_event_index += 1;
             }
-            func_8013E6AC();
-            if (D_80150054 != 0 && D_80150058 != 0 && D_8015005C != 0) {
+            album_event_record_load();
+            if (album_event_year != 0 && album_event_month != 0 && album_event_day != 0) {
                 return 1;
             }
-            if (D_80150064 == 0xFF) {
+            if (album_event_index == 0xFF) {
                 return 0;
             }
         }
@@ -897,77 +897,77 @@ s32 func_8013EAC0(void) {
     return 1;
 }
 
-s32 func_8013EB90(s32 arg0) {
+s32 album_event_resources_request(s32 arg0) {
     s32 temp_v0;
 
-    func_8013B1F0(D_80150040, D_80150044, D_8015004C, D_80150050);
-    if ((D_8014F990 == 0) && ((D_80150040 == 2) || (D_80150040 == 8))) {
-        if ((D_80150040 == 8) && (D_80150044 == 0xE)) {
+    album_event_picture_select(album_event_category, album_event_scene, album_event_girl, album_event_season);
+    if ((album_event_is_portrait == 0) && ((album_event_category == 2) || (album_event_category == 8))) {
+        if ((album_event_category == 8) && (album_event_scene == 0xE)) {
             cd_read_sectors(0x71U, 0x801AE000, 0x8768);
-            D_8015007C = 1;
-            D_80150068 = arg0;
-        } else if ((D_80150040 == 8) && (D_80150044 == 0x46)) {
+            album_anim_active = 1;
+            album_ui_reload_request = arg0;
+        } else if ((album_event_category == 8) && (album_event_scene == 0x46)) {
             cd_read_sectors(0x71U, 0x801B0000, 0x85B6);
-            D_8015007C = 1;
-            D_80150068 = arg0;
-        } else if (D_80150040 == 2) {
-            temp_v0 = D_80150044;
-            cd_read_sectors(D_8014F828[temp_v0], 0x801B0000, D_8014F6C0[temp_v0]);
-            D_8015007C = 1;
-            if (D_80150044 == 0x20) {
-                D_80150068 = arg0;
+            album_anim_active = 1;
+            album_ui_reload_request = arg0;
+        } else if (album_event_category == 2) {
+            temp_v0 = album_event_scene;
+            cd_read_sectors(album_anim_sectors[temp_v0], 0x801B0000, album_anim_lba[temp_v0]);
+            album_anim_active = 1;
+            if (album_event_scene == 0x20) {
+                album_ui_reload_request = arg0;
             }
         }
     }
 }
 
-void func_8013ECDC(void) {
-    func_801408F0();
-    if (D_8014F990 == 1) {
-        func_8013ED8C();
-    } else if (D_8015007C == 1) {
-        func_80136448();
+void album_event_resources_show(void) {
+    album_tpage_slots_reset();
+    if (album_event_is_portrait == 1) {
+        album_portrait_show();
+    } else if (album_anim_active == 1) {
+        album_anim_show_dispatch();
     }
 }
 
-void func_8013ED38(void) {
-    D_80150084 = (u8 *)0x80180084;
-    D_80150088 = (u8 *)0x80180098;
-    D_8015008C = (u8 *)0x8018009C;
-    D_80150090 = *(s16 *)0x801960AC;
-    D_80150094 = (u8 *)0x801800AC;
+void album_bustup_tables_init(void) {
+    album_bustup_tpage_table = (u8 *)0x80180084;
+    album_bustup_frame_table = (u8 *)0x80180098;
+    album_bustup_sequence_table = (u8 *)0x8018009C;
+    album_bustup_frame_count = *(s16 *)0x801960AC;
+    album_bustup_palette = (u8 *)0x801800AC;
 }
 
-void func_8013ED8C(void) {
-    func_8013ED38();
+void album_portrait_show(void) {
+    album_bustup_tables_init();
     sprite_quads_clear(0, 0x40);
-    portrait_build(D_80150094, D_80150084, D_80150088, D_8015008C, D_80150048);
-    func_8013E094(D_80150088);
+    portrait_build(album_bustup_palette, album_bustup_tpage_table, album_bustup_frame_table, album_bustup_sequence_table, album_event_mood);
+    album_portrait_part_positions_set(album_bustup_frame_table);
 }
 
-void func_8013EDF8(void) {
-    if (D_8014F990 == 1) {
+void album_portrait_face_update(void) {
+    if (album_event_is_portrait == 1) {
         portrait_face_update();
     }
 }
 
-void func_8013EE28(void) {
-    if (D_8014F990 == 1) {
-        func_8013EEAC();
-    } else if (D_8015007C == 1) {
-        func_8013EE7C();
+void album_event_hide_current(void) {
+    if (album_event_is_portrait == 1) {
+        album_portrait_hide();
+    } else if (album_anim_active == 1) {
+        album_anim_hide();
     }
 }
 
-void func_8013EE7C(void) {
-    D_8015007C = 0;
+void album_anim_hide(void) {
+    album_anim_active = 0;
     bg_layers = 0x80000000;
     D_80120653 = 0;
     D_80120697 = 0;
     D_801206DB = 0;
 }
 
-void func_8013EEAC(void) {
+void album_portrait_hide(void) {
     D_8011F50F = 0;
     D_8011F4CB = 0;
     D_80120653 = 0;
@@ -979,44 +979,44 @@ void func_8013EEAC(void) {
     sprite_quads[5].flags = 0x80000000;
 }
 
-void func_8013EEFC(void) {
+void album_event_skip_other_girls(void) {
 loop_1:
-    func_8013E6AC();
-    if ((D_80150054 == 0) && (D_80150058 == 0) && (D_8015005C == 0)) {
+    album_event_record_load();
+    if ((album_event_year == 0) && (album_event_month == 0) && (album_event_day == 0)) {
 loop_4:
-        if (D_80150064 < 0xFF) {
-            D_80150064 += 1;
+        if (album_event_index < 0xFF) {
+            album_event_index += 1;
         }
-        func_8013E6AC();
-        if ((D_80150054 == 0) || (D_80150058 == 0) || (D_8015005C == 0)) {
-            if (D_80150064 == 0xFF) {
-                D_80150070 = -1;
+        album_event_record_load();
+        if ((album_event_year == 0) || (album_event_month == 0) || (album_event_day == 0)) {
+            if (album_event_index == 0xFF) {
+                album_load_state = -1;
             } else {
                 goto loop_4;
             }
         }
     }
-    if (D_8015004C != game_state.current_girl) {
-        if (D_80150070 == -1) {
+    if (album_event_girl != game_state.current_girl) {
+        if (album_load_state == -1) {
             return;
         }
-        if (D_80150064 < 0xFF) {
-            D_80150064 += 1;
+        if (album_event_index < 0xFF) {
+            album_event_index += 1;
             goto loop_1;
         }
-        if (D_80150064 == 0xFF) {
-            D_80150070 = -1;
+        if (album_event_index == 0xFF) {
+            album_load_state = -1;
         } else {
             goto loop_1;
         }
     }
 }
 
-/* Called undeclared (implicit int) by func_8013BFFC and func_8013C330; no value is returned. The search walks the
- * records down from D_80150064 - 1 with the decrement before the tests (the original's pointer step comes before
+/* Called undeclared (implicit int) by album_playback_page_start and album_playback_photo; no value is returned. The search walks the
+ * records down from album_event_index - 1 with the decrement before the tests (the original's pointer step comes before
  * the compares); the record and the selector are read through `g`, which keeps the two final unk_F5F reads
  * separate as in the original. T-25113. */
-s32 func_8013F054(void) {
+s32 album_special_girl_voice(void) {
     GameState *g = &game_state;
     u8 *w = (u8 *)&system_data;
     s32 i;
@@ -1024,16 +1024,16 @@ s32 func_8013F054(void) {
     s32 a;
     u8 b;
 
-    i = D_80150064;
+    i = album_event_index;
     b = 0;
     a = 0;
     type = 0;
     if (g->options_dirty == 0) {
-        if (D_801500D8 == 1 || D_801500D8 == 3) {
+        if (album_secret_mode == 1 || album_secret_mode == 3) {
             type = g->event_log[i - 1].girl;
             a = g->event_log[i - 1].scene;
             b = g->event_log[i - 1].flag;
-        } else if ((D_801500D8 == 0 || D_801500D8 == 2) && i >= 0) {
+        } else if ((album_secret_mode == 0 || album_secret_mode == 2) && i >= 0) {
             do {
                 i--;
                 if ((g->event_log[i].girl == 0xC && g->current_girl == GIRL_REI) ||
@@ -1046,74 +1046,74 @@ s32 func_8013F054(void) {
             } while (i >= 0);
         }
     } else {
-        type = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_00;
-        a = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_02;
-        b = ((EtcConfig8 *)(w + D_80150080 * 8))[11].unk_01;
+        type = ((AlbumLogEntry *)(w + album_prev_event_index * 8))[11].girl;
+        a = ((AlbumLogEntry *)(w + album_prev_event_index * 8))[11].category;
+        b = ((AlbumLogEntry *)(w + album_prev_event_index * 8))[11].scene;
     }
     if (g->current_girl == GIRL_REI && type == 0xC) {
         if (a == 4) {
-            func_8013F320(1);
+            album_voice_play(1);
         } else if (a == 6) {
-            func_8013F320(2);
+            album_voice_play(2);
         } else if (a == 7) {
-            func_8013F320(3);
+            album_voice_play(3);
         } else if (a == 2 && b == 0x4F) {
-            func_8013F320(5);
+            album_voice_play(5);
         } else if (a == 2 && b == 0x50) {
-            func_8013F320(4);
+            album_voice_play(4);
         } else if (a == 2 && b == 0x51) {
-            func_8013F320(6);
+            album_voice_play(6);
         }
     } else if (g->current_girl == GIRL_MIHARU && type == 0xB) {
         if (a == 2 && b == 0x4A) {
-            func_8013F320(0);
+            album_voice_play(0);
         } else if ((a == 2 && b == 0x4C) || (a == 0xB && b != 0x1E)) {
-            func_8013F320(1);
+            album_voice_play(1);
         } else if ((a == 2 && b == 0x4E) || (a == 0xB && b == 0x1E)) {
-            func_8013F320(2);
+            album_voice_play(2);
         } else if (a == 0x12) {
-            func_8013F320(3);
+            album_voice_play(3);
         }
     }
 }
 
-/* T-24129: retain the earlier caller's K&R implicit-int view (func_8013CF2C). */
-s32 func_8013F320(s32 arg0) {
-    switch (D_8015006C) {
+/* T-24129: retain the earlier caller's K&R implicit-int view (album_stage_finale). */
+s32 album_voice_play(s32 arg0) {
+    switch (album_voice_state) {
     case 0:
-        cd_audio_request_set(D_801500C4[arg0 * 2], D_801500C4[arg0 * 2 + 1], game_state.current_girl);
+        cd_audio_request_set(album_voice_clip_table[arg0 * 2], album_voice_clip_table[arg0 * 2 + 1], game_state.current_girl);
         audio_command(0x300);
-        D_8015006C += 1;
+        album_voice_state += 1;
         break;
     case 1:
         if (cd_audio_state() & 4) {
-            D_8015006C += 1;
+            album_voice_state += 1;
         }
         break;
     case 2:
         if (cd_audio_state() & 2) {
-            D_8015006C += 1;
+            album_voice_state += 1;
         }
         break;
     }
 }
 
-s32 func_8013F3F8(void) {
-    if (D_80150040 == 0x15 &&
-        (D_80150044 == 6 || D_80150044 == 7 || D_80150044 == 8 || D_80150044 == 9 || D_80150044 == 10)) {
-        if ((D_8015004C == 0 || D_8015004C == 1 || D_8015004C == 4 || D_8015004C == 6 || D_8015004C == 9 ||
-             D_8015004C == 10) &&
-            D_80150048 == 5) {
+s32 album_event_is_special_portrait(void) {
+    if (album_event_category == 0x15 &&
+        (album_event_scene == 6 || album_event_scene == 7 || album_event_scene == 8 || album_event_scene == 9 || album_event_scene == 10)) {
+        if ((album_event_girl == 0 || album_event_girl == 1 || album_event_girl == 4 || album_event_girl == 6 || album_event_girl == 9 ||
+             album_event_girl == 10) &&
+            album_event_mood == 5) {
             return 1;
         }
     }
     return 0;
 }
 
-void func_8013F498(void) {
+void album_special_portrait_setup(void) {
     /* FAKE: unsigned halfword stores prevent IDO sharing constant 7 with the byte selector. T-9750. */
-    func_801408F0();
-    func_8013BEF0();
+    album_tpage_slots_reset();
+    album_portrait_tables_init();
     actor_clear(0x60);
     D_80120651 = 0;
     D_80120688 = 0x01000000;
@@ -1125,59 +1125,59 @@ void func_8013F498(void) {
     D_80120693 = 0x10;
     D_80120676 = 0;
     D_8012067A = -0xD;
-    D_8012065C = D_80150034;
-    D_80120660 = D_80150038;
-    D_80120684 = D_80150030;
-    D_80120664 = D_8015003C;
+    D_8012065C = album_portrait_frame_table;
+    D_80120660 = album_portrait_sequence_table;
+    D_80120684 = album_portrait_tpage_table;
+    D_80120664 = album_portrait_frame_count;
     D_80120652 = 1;
     D_80120653 = 0x84;
     D_80120668 = 2;
-    if (D_8015004C == 0) {
-        if ((D_80150058 == 6) || (D_80150058 == 7) || (D_80150058 == 8) || (D_80150058 == 9)) {
+    if (album_event_girl == 0) {
+        if ((album_event_month == 6) || (album_event_month == 7) || (album_event_month == 8) || (album_event_month == 9)) {
             D_80120666 = 0;
         } else {
             D_80120666 = 1;
         }
     }
-    if (D_8015004C == 1) {
-        if ((D_80150058 == 6) || (D_80150058 == 7) || (D_80150058 == 8) || (D_80150058 == 9)) {
+    if (album_event_girl == 1) {
+        if ((album_event_month == 6) || (album_event_month == 7) || (album_event_month == 8) || (album_event_month == 9)) {
             D_80120666 = 2;
         } else {
             D_80120666 = 3;
         }
     }
-    if (D_8015004C == 4) {
-        if ((D_80150058 == 6) || (D_80150058 == 7) || (D_80150058 == 8) || (D_80150058 == 9)) {
+    if (album_event_girl == 4) {
+        if ((album_event_month == 6) || (album_event_month == 7) || (album_event_month == 8) || (album_event_month == 9)) {
             D_80120666 = 4;
         } else {
             D_80120666 = 5;
         }
-        if (D_80150060 == 0xFF) {
+        if (album_event_weekday == 0xFF) {
             *(u16 *)&sprite_quads[0].unk_0C = 7;
             sprite_quads[0].unk_0E = 0x70;
         }
     }
-    if (D_8015004C == 6) {
-        if ((D_80150058 == 6) || (D_80150058 == 7) || (D_80150058 == 8) || (D_80150058 == 9)) {
+    if (album_event_girl == 6) {
+        if ((album_event_month == 6) || (album_event_month == 7) || (album_event_month == 8) || (album_event_month == 9)) {
             D_80120666 = 6;
         } else {
             D_80120666 = 7;
             D_8012067A = -0x12;
         }
     }
-    if (D_8015004C == 9) {
-        if ((D_80150058 == 6) || (D_80150058 == 7) || (D_80150058 == 8) || (D_80150058 == 9)) {
+    if (album_event_girl == 9) {
+        if ((album_event_month == 6) || (album_event_month == 7) || (album_event_month == 8) || (album_event_month == 9)) {
             D_80120666 = 8;
         } else {
             D_80120666 = 9;
         }
-        if (D_80150060 == 0xFF) {
+        if (album_event_weekday == 0xFF) {
             *(u16 *)&sprite_quads[0].unk_0C = 7;
             sprite_quads[0].unk_0E = 0x70;
         }
     }
-    if (D_8015004C == 0xA) {
-        if ((D_80150058 == 6) || (D_80150058 == 7) || (D_80150058 == 8) || (D_80150058 == 9)) {
+    if (album_event_girl == 0xA) {
+        if ((album_event_month == 6) || (album_event_month == 7) || (album_event_month == 8) || (album_event_month == 9)) {
             D_80120666 = 0xA;
         } else {
             D_80120666 = 0xB;
@@ -1185,7 +1185,7 @@ void func_8013F498(void) {
     }
 }
 
-void func_8013F77C(void) {
+void album_debug_fill_miharu(void) {
     /* FAKE: record view spans legacy scalar declarations; canonical main BSS aggregate is pending. T-9750. */
     /* FAKE: loop store grouped on header line retains as1 unrolled-store order. T-9750. */
     s32 i;
@@ -1193,44 +1193,44 @@ void func_8013F77C(void) {
     for (i = 0; i < 13; i++) { game_state.girl_cleared[i] = 1; }
     game_state.girl_cleared[11] = 5;
     game_state.current_girl = GIRL_MIHARU;
-    ((EtcConfig8 *)&system_data)[11].unk_00 = 0xB;
-    ((EtcConfig8 *)&system_data)[11].unk_02 = 0xB;
-    ((EtcConfig8 *)&system_data)[11].unk_01 = 0x1D;
-    ((EtcConfig8 *)&system_data)[11].unk_03 = 0;
-    ((EtcConfig8 *)&system_data)[11].unk_04 = 0x60;
-    ((EtcConfig8 *)&system_data)[11].unk_05 = 4;
-    ((EtcConfig8 *)&system_data)[11].unk_06 = 0x19;
-    ((EtcConfig8 *)&system_data)[11].unk_07 = 0;
-    ((EtcConfig8 *)&system_data)[12].unk_00 = 0xB;
-    ((EtcConfig8 *)&system_data)[12].unk_02 = 0xB;
-    ((EtcConfig8 *)&system_data)[12].unk_01 = 0x1E;
-    ((EtcConfig8 *)&system_data)[12].unk_03 = 0;
-    ((EtcConfig8 *)&system_data)[12].unk_04 = 0x60;
-    ((EtcConfig8 *)&system_data)[12].unk_05 = 8;
-    ((EtcConfig8 *)&system_data)[12].unk_06 = 0x19;
-    ((EtcConfig8 *)&system_data)[12].unk_07 = 0;
-    ((EtcConfig8 *)&system_data)[13].unk_00 = 0xB;
-    ((EtcConfig8 *)&system_data)[13].unk_02 = 0xB;
-    ((EtcConfig8 *)&system_data)[13].unk_01 = 0xB;
-    ((EtcConfig8 *)&system_data)[13].unk_03 = 0;
-    ((EtcConfig8 *)&system_data)[13].unk_04 = 0x60;
-    ((EtcConfig8 *)&system_data)[13].unk_05 = 7;
-    ((EtcConfig8 *)&system_data)[13].unk_06 = 0x19;
-    ((EtcConfig8 *)&system_data)[13].unk_07 = 0;
-    ((EtcConfig8 *)&system_data)[14].unk_00 = 0xB;
-    ((EtcConfig8 *)&system_data)[14].unk_02 = 0xB;
-    ((EtcConfig8 *)&system_data)[14].unk_01 = 0xA;
-    ((EtcConfig8 *)&system_data)[14].unk_03 = 0;
-    ((EtcConfig8 *)&system_data)[14].unk_04 = 0x60;
-    ((EtcConfig8 *)&system_data)[14].unk_05 = 2;
-    ((EtcConfig8 *)&system_data)[14].unk_06 = 0x19;
-    ((EtcConfig8 *)&system_data)[14].unk_07 = 0;
-    ((EtcConfig8 *)&system_data)[15].unk_00 = 0xB;
-    ((EtcConfig8 *)&system_data)[15].unk_02 = 0x12;
-    ((EtcConfig8 *)&system_data)[15].unk_01 = 0;
-    ((EtcConfig8 *)&system_data)[15].unk_03 = 0;
-    ((EtcConfig8 *)&system_data)[15].unk_04 = 0x60;
-    ((EtcConfig8 *)&system_data)[15].unk_05 = 5;
-    ((EtcConfig8 *)&system_data)[15].unk_06 = 0x19;
-    ((EtcConfig8 *)&system_data)[15].unk_07 = 0;
+    ((AlbumLogEntry *)&system_data)[11].girl = 0xB;
+    ((AlbumLogEntry *)&system_data)[11].category = 0xB;
+    ((AlbumLogEntry *)&system_data)[11].scene = 0x1D;
+    ((AlbumLogEntry *)&system_data)[11].mood = 0;
+    ((AlbumLogEntry *)&system_data)[11].year = 0x60;
+    ((AlbumLogEntry *)&system_data)[11].month = 4;
+    ((AlbumLogEntry *)&system_data)[11].day = 0x19;
+    ((AlbumLogEntry *)&system_data)[11].weekday = 0;
+    ((AlbumLogEntry *)&system_data)[12].girl = 0xB;
+    ((AlbumLogEntry *)&system_data)[12].category = 0xB;
+    ((AlbumLogEntry *)&system_data)[12].scene = 0x1E;
+    ((AlbumLogEntry *)&system_data)[12].mood = 0;
+    ((AlbumLogEntry *)&system_data)[12].year = 0x60;
+    ((AlbumLogEntry *)&system_data)[12].month = 8;
+    ((AlbumLogEntry *)&system_data)[12].day = 0x19;
+    ((AlbumLogEntry *)&system_data)[12].weekday = 0;
+    ((AlbumLogEntry *)&system_data)[13].girl = 0xB;
+    ((AlbumLogEntry *)&system_data)[13].category = 0xB;
+    ((AlbumLogEntry *)&system_data)[13].scene = 0xB;
+    ((AlbumLogEntry *)&system_data)[13].mood = 0;
+    ((AlbumLogEntry *)&system_data)[13].year = 0x60;
+    ((AlbumLogEntry *)&system_data)[13].month = 7;
+    ((AlbumLogEntry *)&system_data)[13].day = 0x19;
+    ((AlbumLogEntry *)&system_data)[13].weekday = 0;
+    ((AlbumLogEntry *)&system_data)[14].girl = 0xB;
+    ((AlbumLogEntry *)&system_data)[14].category = 0xB;
+    ((AlbumLogEntry *)&system_data)[14].scene = 0xA;
+    ((AlbumLogEntry *)&system_data)[14].mood = 0;
+    ((AlbumLogEntry *)&system_data)[14].year = 0x60;
+    ((AlbumLogEntry *)&system_data)[14].month = 2;
+    ((AlbumLogEntry *)&system_data)[14].day = 0x19;
+    ((AlbumLogEntry *)&system_data)[14].weekday = 0;
+    ((AlbumLogEntry *)&system_data)[15].girl = 0xB;
+    ((AlbumLogEntry *)&system_data)[15].category = 0x12;
+    ((AlbumLogEntry *)&system_data)[15].scene = 0;
+    ((AlbumLogEntry *)&system_data)[15].mood = 0;
+    ((AlbumLogEntry *)&system_data)[15].year = 0x60;
+    ((AlbumLogEntry *)&system_data)[15].month = 5;
+    ((AlbumLogEntry *)&system_data)[15].day = 0x19;
+    ((AlbumLogEntry *)&system_data)[15].weekday = 0;
 }

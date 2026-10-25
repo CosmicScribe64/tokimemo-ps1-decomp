@@ -118,7 +118,7 @@ void func_801321EC(void) {
     hud_mascot_display_switch(0);
     mode_step_next();
     D_80139B14 = game_state.cursor_speed;
-    game_state.cursor_speed = 1;
+    game_state.cursor_speed = SETTINGS_CURSOR_SPEED_SLOWEST;
 }
 
 void func_80132278(void) {

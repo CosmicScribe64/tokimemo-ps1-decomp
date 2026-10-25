@@ -136,7 +136,7 @@ void func_8013376C(void) {
 
 void func_80133924(void) {
     func_80133984();
-    k_speed_set(5);
+    k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
     D_8013C6C8 = 0;
     D_8013C6D4 = 1;
     D_8013C6D8 = 0;

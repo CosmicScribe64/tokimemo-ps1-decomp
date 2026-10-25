@@ -110,58 +110,58 @@ void settings_command_screen_setup_wait(void) {
 }
 
 void settings_icon_layout_repair(void) {
-    /* FAKE: unused words preserve the 0x40 stack frame and the saved spill at sp+0x28. T-24142 */
+    /* FAKE: unused words preserve the 0x40 stack frame and the saved_icon_mode spill at sp+0x28. T-24142 */
     s32 pad[2];
     s32 i;
-    s32 err;
-    s32 zero;
-    s32 saved;
+    s32 invalid_icon_coordinate_count;
+    s32 zero_position_pair_count;
+    s32 saved_icon_mode;
 
-    err = 0;
-    zero = 0;
+    invalid_icon_coordinate_count = 0;
+    zero_position_pair_count = 0;
     /* FAKE: pointer view on unk_F6C emits lbu (declared s8 in header). T-24142 */
     if (*(u8 *)&game_state.icon_mode == 2) {
         for (i = 0; i < 8; i++) {
             if (((s16 *)D_80125C10)[i * 4 + 0] >= 0x7D) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 0] < -0x86) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 1] < -0x54) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 1] >= 0x55) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 0] == 0 && ((s16 *)D_80125C10)[i * 4 + 1] == 0) {
-                zero++;
+                zero_position_pair_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 2] >= 0x7D) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 2] < -0x86) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 3] < -0x54) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 3] >= 0x55) {
-                err++;
+                invalid_icon_coordinate_count++;
             }
             if (((s16 *)D_80125C10)[i * 4 + 2] == 0 && ((s16 *)D_80125C10)[i * 4 + 3] == 0) {
-                zero++;
+                zero_position_pair_count++;
             }
         }
     }
-    if (zero >= 2) {
-        if (err != 0) {
+    if (zero_position_pair_count >= 2) {
+        if (invalid_icon_coordinate_count != 0) {
             game_state.icon_count = 0xF;
-            saved = *(u8 *)&game_state.icon_mode;
+            saved_icon_mode = *(u8 *)&game_state.icon_mode;
             *(u8 *)&game_state.icon_mode = 0;
             hud_icon_bar_init();
             icon_disp_switch(0);
-            *(u8 *)&game_state.icon_mode = saved;
+            *(u8 *)&game_state.icon_mode = saved_icon_mode;
         }
     }
 }
@@ -193,7 +193,7 @@ void settings_command_screen_reload_calendar(void) {
  * that sum and adds the offsets 2 and 7 to it, T-24301). */
 void settings_command_screen_build(void) {
     GameState *gs = &game_state;
-    u8 event;
+    u8 calendar_marker;
 
     back_clear_switch(0);
     actor_clear_upper();
@@ -210,8 +210,8 @@ void settings_command_screen_build(void) {
     message_window_init();
     parameter_disp_switch(1);
     tpage_buf_clear();
-    event = gs->month_calendar[0].marker[gs->day - 1 + 2];
-    if (event == 5) {
+    calendar_marker = gs->month_calendar[0].marker[gs->day - 1 + 2];
+    if (calendar_marker == 5) {
         gs->icon_count = 0xF;
         hud_icon_bar_init();
         hud_icon_layout_apply((u8)gs->icon_count);
@@ -219,7 +219,7 @@ void settings_command_screen_build(void) {
         gs->menu_cursor_0 = 0xE;
         icon_can_use_set(0xE, 1);
         sndisp("明日からテストだ）", 0, 0x1F);
-    } else if (event == 8 && (gs->player_flags.h >> 12) != 0xB) {
+    } else if (calendar_marker == 8 && (gs->player_flags.h >> 12) != 0xB) {
         gs->icon_count = 0xE;
         hud_icon_bar_init();
         hud_icon_layout_apply((u8)gs->icon_count);
@@ -250,7 +250,7 @@ void settings_command_screen_build(void) {
             settings_room_sick_icon_load();
             sndisp("文化祭に向けて部活をせねば でも病気で身体が動かない）", 0, 0x1F);
         }
-    } else if (event == 0xB) {
+    } else if (calendar_marker == 0xB) {
         gs->icon_count = 0xF;
         hud_icon_bar_init();
         hud_icon_layout_apply((u8)gs->icon_count);
@@ -326,7 +326,7 @@ void settings_room_bg_load_finish(void) {
     }
 }
 
-void settings_command_screen_icons_reset(s32 arg0) {
+void settings_command_screen_icons_reset(s32 disable_weekday_commands) {
     s32 i;
 
     icon_can_use_set(0xA, 0);
@@ -338,7 +338,7 @@ void settings_command_screen_icons_reset(s32 arg0) {
     if ((game_state.player_flags.h >> 0xC) == 0xB) {
         icon_can_use_set(4, 0);
     }
-    if (arg0 != 0) {
+    if (disable_weekday_commands != 0) {
         for (i = 0; i != 8; i++) {
             icon_can_use_set(i, 0);
         }
@@ -375,13 +375,13 @@ void settings_room_sick_icon_show(void) {
 }
 
 void settings_command_screen_mode_stage_select(void) {
-    u8 state; /* T-9410: keep the selector in v1 across the compare chain. */
+    u8 card_job_state; /* T-9410: keep the selector in v1 across the compare chain. */
     if (game_state.mode_step == 0) {
         settings_command_screen_select_frame();
     }
     settings_room_sick_icon_show();
-    state = game_state.memory_card_job;
-    if (state == 1) {
+    card_job_state = game_state.memory_card_job;
+    if (card_job_state == 1) {
         if (func_80054388() == 0x13) {
             audio_command(0x50F);
             game_state.memory_card_job = 0;
@@ -391,7 +391,7 @@ void settings_command_screen_mode_stage_select(void) {
             game_state.memory_card_job = 0;
             memory_card_stop();
         }
-    } else if (state == 0) {
+    } else if (card_job_state == 0) {
         hud_icon_memory_card_animation_set(0U);
     }
 }
@@ -452,22 +452,22 @@ s32 settings_room_click_radio_holiday(void) {
 }
 
 s32 settings_room_click_mascot_holiday(void) {
-    /* FAKE: unused word homes preserve girl at sp+0x2C and frame 0x38. T-10010. */
+    /* FAKE: unused word homes preserve current_girl at sp+0x2C and frame 0x38. T-10010. */
     s32 pad[2];
-    s32 girl;
-    s32 variant;
-    s32 *pair;
+    s32 current_girl;
+    s32 girl_voice_variant;
+    s32 *voice_clip_pair;
 
     if ((*D_8011F3FF & 0x80) && (cursor_x < (D_8011F422 + 0xC)) && ((D_8011F422 - 0xC) < cursor_x) && (cursor_y < (D_8011F426 + 0x30)) && (D_8011F426 < cursor_y) && (game_state.pad_pressed & PAD_CIRCLE) && ((u32) (game_state.frame_count - settings_room_mascot_holiday_stamp) >= 0xF1U)) {
         game_state.current_girl = D_8011F414;
-        girl = (s32) D_8011F414;
+        current_girl = (s32) D_8011F414;
         if (get_g_zyotai_s((s32) D_8011F414) & 0x80) {
-            variant = 1;
+            girl_voice_variant = 1;
         } else {
-            variant = 0;
+            girl_voice_variant = 0;
         }
-        pair = D_800B3B9C + girl * 4 + variant * 2;
-        cd_audio_request_set(pair[0], pair[1], girl);
+        voice_clip_pair = D_800B3B9C + current_girl * 4 + girl_voice_variant * 2;
+        cd_audio_request_set(voice_clip_pair[0], voice_clip_pair[1], current_girl);
         audio_command(0x300);
         return 1;
     }
@@ -475,11 +475,11 @@ s32 settings_room_click_mascot_holiday(void) {
 }
 
 s32 settings_room_click_mascot(void) {
-    s32 *pair;
+    s32 *voice_clip_pair;
 
     if ((*D_8011F3FF & 0x80) && (cursor_x < (D_8011F422 + 0xC)) && ((D_8011F422 - 0xC) < cursor_x) && (cursor_y < (D_8011F426 + 0x30)) && (D_8011F426 < cursor_y) && (game_state.pad_pressed & PAD_CIRCLE) && ((u32) (game_state.frame_count - settings_room_mascot_stamp) >= 0xF1U)) {
-        pair = D_800B37D4 + D_8011F414 * 2;
-        cd_audio_request_set(pair[0], pair[1], (s32)(game_state.current_girl = D_8011F414));
+        voice_clip_pair = D_800B37D4 + D_8011F414 * 2;
+        cd_audio_request_set(voice_clip_pair[0], voice_clip_pair[1], (s32)(game_state.current_girl = D_8011F414));
         audio_command(0x300);
         return 1;
     }
@@ -502,18 +502,18 @@ void settings_command_screen_select_frame(void) {
 
 s32 settings_command_screen_icon_confirm(void) {
     s32 pad[3]; /* FAKE: T-25004, frame 0x38 with the result at sp+0x28 (T-24301). */
-    s32 sp28;
-    s32 temp_v0;
-    u32 temp_v1;
-    u8 temp_v0_2;
+    s32 menu_result;
+    s32 selected_girl;
+    u32 player_club_id;
+    u8 tomorrow_marker;
 
     if (((u8) game_state.icon_mode == ICON_MODE_FREE) && (game_state.pad_held & PAD_L2)) {
         return 1;
     }
-    sp28 = 0;
+    menu_result = 0;
     if (game_state.pad_pressed & PAD_CIRCLE) {
         if (game_state.menu_cursor_0 >= 0) {
-            sp28 = 1;
+            menu_result = 1;
             cd_audio_command(9, 0, 0);
             audio_command(3);
             if (func_8004480C() == 0) {
@@ -530,14 +530,14 @@ s32 settings_command_screen_icon_confirm(void) {
                 } else {
                     /* T-25039: define the call argument only on this path so
                      * the shared shift stays in $v1 until the call. */
-                    temp_v1 = game_state.player_flags.h >> 0xC;
+                    player_club_id = game_state.player_flags.h >> 0xC;
                     /* FAKE: T-25004, a second read of the halfword makes uopt keep the load in a register
                      * ($a1), so the shift costs no ugen temporary (permuter find). */
                     if (game_state.player_flags.h) {
                     }
-                    temp_v0 = girl_find_by_club(temp_v1);
-                    if ((temp_v0 != -1) && game_state.girls[temp_v0].flags.f.b2) {
-                        game_state.girls[temp_v0].affection += 1;
+                    selected_girl = girl_find_by_club(player_club_id);
+                    if ((selected_girl != -1) && game_state.girls[selected_girl].flags.f.b2) {
+                        game_state.girls[selected_girl].affection += 1;
                     }
                     game_mode_set(GAME_MODE_SCHEDULE);
                     game_state.last_command.date.month = game_state.menu_cursor_0;
@@ -584,12 +584,12 @@ s32 settings_command_screen_icon_confirm(void) {
         case 14:
             if (get_icon_can_use(game_state.menu_cursor_0) != 0) {
                 game_state.last_command.date.month = 0xE;
-                temp_v0_2 = (&game_state.month_calendar[0].marker[1])[game_state.day];
-                if (temp_v0_2 == 5) {
+                tomorrow_marker = (&game_state.month_calendar[0].marker[1])[game_state.day];
+                if (tomorrow_marker == 5) {
                     audio_command(0x500);
                     game_mode_set(GAME_MODE_SCHEDULE);
                     sndisp("明日からテストだ）", 0, 0x1F);
-                } else if (temp_v0_2 == 0xB) {
+                } else if (tomorrow_marker == 0xB) {
                     audio_command(0x500);
                     game_mode_set(GAME_MODE_SCHEDULE);
                     sndisp("明日から修学旅行だ）", 0, 0x1F);
@@ -601,7 +601,7 @@ s32 settings_command_screen_icon_confirm(void) {
             break;
         }
     }
-    return sp28;
+    return menu_result;
 }
 
 void settings_command_screen_mode_stage_calendar(void) {
@@ -651,9 +651,9 @@ void settings_command_screen_calendar_exit(void) {
 }
 
 void settings_save_load_mode_stage_dispatch(void) {
-    u8 temp;
-    temp = (u8) game_state.mode_step;
-    switch (temp) {
+    u8 mode_step;
+    mode_step = (u8) game_state.mode_step;
+    switch (mode_step) {
     case 0x0:
         settings_save_load_menu_init();
         break;
@@ -803,19 +803,19 @@ void settings_save_load_menu_init(void) {
 }
 
 s32 settings_save_load_card_check(void) {
-    u8 *status;
+    u8 *card_result;
 
-    status = &game_state.memory_card_result;
+    card_result = &game_state.memory_card_result;
     switch (game_state.substep) {
     case 0:
         if (func_80053F04() != 0) {
-            if (*status == 1) {
+            if (*card_result == 1) {
                 memory_card_stop();
                 game_state.substep++;
-            } else if (*status == 0xF1) {
+            } else if (*card_result == 0xF1) {
                 memory_card_stop();
                 mode_step_set(0xA0);
-            } else if (*status == 0xFF) {
+            } else if (*card_result == 0xFF) {
                 memory_card_stop();
                 mode_step_set(0xFF);
             }
@@ -861,7 +861,7 @@ s32 settings_save_load_card_check(void) {
             k_disp_start(4);
             mode_step_next();
             memory_card_stop();
-        } else if (((u32)game_state.memory_card_timer > 0x200) || (*status == 0xF0)) {
+        } else if (((u32)game_state.memory_card_timer > 0x200) || (*card_result == 0xF0)) {
             memory_card_stop();
             mode_step_set(0xFF);
         }
@@ -948,8 +948,8 @@ void settings_save_load_menu(void) {
     }
 }
 
-void settings_save_load_layout_stash(s32 arg0) {
-    if (arg0 != 0) {
+void settings_save_load_layout_stash(s32 restore_layout) {
+    if (restore_layout != 0) {
         memcpy(D_80125C10, game_state.scratch_words, 0x40);
         D_80125C50 = game_state.scratch_words[32];
         D_80125C52 = game_state.scratch_words[33];
@@ -1067,15 +1067,15 @@ void settings_save_load_save_info_read(void) {
 
 /* The menu handler of ETC func_80144DF0 with the cancel arm first (T-24301). */
 void settings_save_load_save_select(void) {
-    s32 pad[2]; /* FAKE: T-24301, with `pad2` reproduces the 0x40 frame and the slots of status/slot */
-    u8 *status;
-    s32 slot;
+    s32 pad[2]; /* FAKE: T-24301, with `pad2` reproduces the 0x40 frame and the slots of slot_status/save_slot_index */
+    u8 *slot_status;
+    s32 save_slot_index;
     s32 pad2; /* FAKE: T-24301, see pad */
 
     menu_check(1, cursor_x, cursor_y);
     menu_cursor_update(1);
     menu_bar_show(1);
-    slot = game_state.menu_cursor_1 + 1;
+    save_slot_index = game_state.menu_cursor_1 + 1;
     k_disp_inc();
     if (game_state.pad_pressed & PAD_CROSS) {
         settings_save_load_layout_stash(1);
@@ -1084,26 +1084,26 @@ void settings_save_load_save_select(void) {
         game_state.memory_card_job = 0;
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         if (game_state.menu_cursor_1 != -1) {
-            status = &system_data.slot_status[slot];
-            if (*status == 0) {
+            slot_status = &system_data.slot_status[save_slot_index];
+            if (*slot_status == 0) {
                 /* FAKE: T-24301 (as T-24209), byte view store + plain re-read promote unk_1118 to v0 */
-                ((u8 *)&game_state)[0x1118] = slot;
+                ((u8 *)&game_state)[0x1118] = save_slot_index;
                 if (func_80054694(game_state.save_slot) == 1) {
                     func_80054704(game_state.save_slot);
-                    *status = 0xFF;
+                    *slot_status = 0xFF;
                     memory_card_start();
                     mode_step_next();
                 } else {
                     mode_step_set(0xF0);
                 }
-            } else if (slot == game_state.save_slot) {
+            } else if (save_slot_index == game_state.save_slot) {
                 memory_card_start();
                 mode_step_next();
             } else {
-                game_state.save_slot = slot;
+                game_state.save_slot = save_slot_index;
                 if ((u8) D_800E8BEE != 0) {
                     /* FAKE: T-24301 (as T-24209), the repeated view store keeps unk_1118 promoted in both arms */
-                    ((u8 *)&game_state)[0x1118] = slot;
+                    ((u8 *)&game_state)[0x1118] = save_slot_index;
                     D_800E7D36 = game_state.save_slot;
                     hud_save_slot_info_show(0, 0);
                     game_state.menu_cursor_1 = D_800E7D36 - 1;
@@ -1119,10 +1119,10 @@ void settings_save_load_save_select(void) {
 
 /* FAKE: u8 view of the switch selector keeps the compares on the global ($v1), as in the original (T-5010, T-24111) */
 s32 settings_save_load_save_write(void) {
-    s32 temp_v0;
-    u32 temp_hi;
-    u8 temp_a0;
-    s32 *temp_v1_2;
+    s32 pressed_buttons;
+    u32 voice_girl_id;
+    u8 save_slot_index;
+    s32 *voice_clip_pair;
 
     switch (*(u8 *)&game_state.substep) {
     case 0:
@@ -1136,14 +1136,14 @@ s32 settings_save_load_save_write(void) {
         game_state.substep = game_state.substep + 1;
         break;
     case 1:
-        temp_v0 = game_state.pad_pressed;
-        if (temp_v0 & 0x20) {
+        pressed_buttons = game_state.pad_pressed;
+        if (pressed_buttons & 0x20) {
             game_state.substep = game_state.substep + 1;
-        } else if (temp_v0 & 0x40) {
+        } else if (pressed_buttons & 0x40) {
             mode_step_set(3);
-            temp_a0 = game_state.save_slot;
-            if (system_data.slot_status[temp_a0] == 0xFF) {
-                system_data.slot_status[temp_a0] = 0;
+            save_slot_index = game_state.save_slot;
+            if (system_data.slot_status[save_slot_index] == 0xFF) {
+                system_data.slot_status[save_slot_index] = 0;
             }
         }
         break;
@@ -1163,9 +1163,9 @@ s32 settings_save_load_save_write(void) {
             game_state.substep = game_state.substep + 1;
             memory_card_stop();
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
-            temp_hi = (u8) game_state.current_girl % 13U;
-            temp_v1_2 = (temp_hi * 2) + D_800B39C4;
-            cd_audio_request_set(temp_v1_2[0], temp_v1_2[1], (s32) temp_hi);
+            voice_girl_id = (u8) game_state.current_girl % 13U;
+            voice_clip_pair = (voice_girl_id * 2) + D_800B39C4;
+            cd_audio_request_set(voice_clip_pair[0], voice_clip_pair[1], (s32) voice_girl_id);
             audio_command(0x300);
             memory_card_stop();
             mode_step_set(0xFF);
@@ -1292,20 +1292,20 @@ void settings_save_load_load_info_read(void) {
 s32 settings_save_load_load_select(void) {
     /* FAKE: two-word local reserves the observed sp+0x2C spill home. T-12030. */
     s32 stack_home[2];
-    s32 selection;
+    s32 save_slot_index;
 
     menu_check(1, cursor_x, cursor_y);
     menu_bar_show(1);
     menu_cursor_update(1);
-    selection = game_state.menu_cursor_1 + 1;
+    save_slot_index = game_state.menu_cursor_1 + 1;
     k_disp_inc();
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        if (D_800E7D14[selection] != 0) {
-            if (selection == (u8) game_state.save_slot) {
+        if (D_800E7D14[save_slot_index] != 0) {
+            if (save_slot_index == (u8) game_state.save_slot) {
                 memory_card_start();
                 mode_step_next();
             } else {
-                game_state.save_slot = (s8) selection;
+                game_state.save_slot = (s8) save_slot_index;
                 if ((u8) D_800E8BEE != 0) {
                     D_800E7D36 = (u8) game_state.save_slot;
                     hud_save_slot_info_show(0, 1);
@@ -1534,7 +1534,7 @@ void settings_mode_stage_dispatch(void) {
 
 s32 settings_root_init(void) {
     s32 i;
-    s32 available;
+    s32 unlock_check_count;
     s16 x[8];
     s16 y[8];
     s16 w[8];
@@ -1551,8 +1551,8 @@ s32 settings_root_init(void) {
         h[i] = 0xC;
     }
     settings_labels_draw(-1);
-    available = settings_unlocked_mascot_count();
-    if (available == 0) {
+    unlock_check_count = settings_unlocked_mascot_count();
+    if (unlock_check_count == 0) {
         w[6] = 0;
     }
     k_sub_reset_point_set();
@@ -1572,29 +1572,29 @@ s32 settings_unlocked_mascot_count(void) {
         /* 0x14 */ u8 flags[12];
     } TailFlags; /* size 0x20; observed byte view */
     TailFlags *tail;
-    s32 count;
-    s32 index;
+    s32 nonzero_unlock_check_count;
+    s32 girl_flag_index;
 
-    count = 0;
+    nonzero_unlock_check_count = 0;
     if (((TailFlags *)D_800E7D11)->first != 0) {
-        count = 1;
+        nonzero_unlock_check_count = 1;
     }
     if (game_state.girl_cleared[0] != 0) {
-        count++;
+        nonzero_unlock_check_count++;
     }
     tail = (TailFlags *)D_800E7D11;
-    for (index = 0; index < 12; index++) {
-        if (tail->flags[index] != 0) {
-            count++;
+    for (girl_flag_index = 0; girl_flag_index < 12; girl_flag_index++) {
+        if (tail->flags[girl_flag_index] != 0) {
+            nonzero_unlock_check_count++;
         }
-        if (game_state.girl_cleared[(index + 1) & 0xFFFFFFFF] != 0) {
-            count++;
+        if (game_state.girl_cleared[(girl_flag_index + 1) & 0xFFFFFFFF] != 0) {
+            nonzero_unlock_check_count++;
         }
     }
-    return count;
+    return nonzero_unlock_check_count;
 }
 
-s32 settings_labels_draw(s32 arg0) {
+s32 settings_labels_draw(s32 highlighted_setting_item) {
     s32 i;
     s16 x[8];
     s16 y[8];
@@ -1607,7 +1607,7 @@ s32 settings_labels_draw(s32 arg0) {
         y[i] = -0x40 + i * 0xC;
         w[i] = 0x60;
         h[i] = 0xC;
-        if (i == arg0) {
+        if (i == highlighted_setting_item) {
             colour[i] = 4;
         } else {
             colour[i] = 3;
@@ -1667,7 +1667,7 @@ void settings_root_menu(void) {
 
 s32 settings_text_speed_init(void) {
     s32 i = 0;
-    s32 speed;
+    s32 text_speed;
     s16 x[3];
     s16 y[3];
     s16 w[3];
@@ -1689,8 +1689,8 @@ s32 settings_text_speed_init(void) {
     k_sub_reset_point_set();
     set_kanji_string(-0x80, 0x32, 0U, "文字出力のスピードを変更します", 0);
     menu_set(1, 3, x, y, w, h);
-    speed = get_k_speed();
-    switch (speed) {
+    text_speed = get_k_speed();
+    switch (text_speed) {
     default:
     case 0:
         game_state.menu_cursor_1 = 2;
@@ -1720,19 +1720,19 @@ void settings_text_speed_menu(void) {
         case 0:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを遅くしました", 0);
-            k_speed_set(3);
+            k_speed_set(TEXT_SPEED_SLOW);
             mode_step_next();
             return;
         case 1:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを普通にしました", 0);
-            k_speed_set(1);
+            k_speed_set(TEXT_SPEED_NORMAL);
             mode_step_next();
             return;
         case 2:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを速くしました", 0);
-            k_speed_set(0);
+            k_speed_set(TEXT_SPEED_FAST);
             mode_step_next();
             break;
         }
@@ -1748,7 +1748,7 @@ void settings_text_speed_done(void) {
 }
 
 void settings_icon_mode_init(void) {
-    u8 sel;
+    u8 icon_mode;
     s32 i;
     s16 x[4];
     s16 y[4];
@@ -1770,8 +1770,8 @@ void settings_icon_mode_init(void) {
     k_sub_reset_point_set();
     set_kanji_string(-0x80, 0x32, 0, "アイコンの位置の設定をします", 0);
     menu_set(1, 3, x, y, w, h);
-    sel = game_state.icon_mode;
-    switch (sel) {
+    icon_mode = game_state.icon_mode;
+    switch (icon_mode) {
     default:
     case 0:
         game_state.menu_cursor_1 = 0;
@@ -1920,7 +1920,7 @@ void settings_mouse_confirm_init(void) {
     k_sub_reset_point_set();
     set_kanji_string(-0x80, 0x32, 0, "決定ボタンを選択します", 0);
     menu_set(1, 2, x, y, w, h);
-    if (game_state.confirm_button == 0 || game_state.confirm_button != 1) {
+    if (game_state.confirm_button == SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT || game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_RIGHT) {
         game_state.menu_cursor_1 = 1;
     } else {
         game_state.menu_cursor_1 = 0;
@@ -1943,13 +1943,13 @@ void settings_mouse_confirm_menu(void) {
         case 0:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "右ボタンで決定にしました", 0);
-            game_state.confirm_button = 1;
+            game_state.confirm_button = SETTINGS_CONFIRM_BUTTON_MOUSE_RIGHT;
             mode_step_next();
             return;
         case 1:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "左ボタンで決定にしました", 0);
-            game_state.confirm_button = 0;
+            game_state.confirm_button = SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT;
             mode_step_next();
             break;
         }
@@ -1964,7 +1964,7 @@ void settings_mouse_confirm_done(void) {
 }
 
 void settings_mouse_click_init(void) {
-    u8 sel; /* FAKE: copy of the unsigned byte (the field is s8) kept in $v0 as the original does (T-5010) */
+    u8 click_mode; /* FAKE: copy of the unsigned byte (the field is s8) kept in $v0 as the original does (T-5010) */
     s32 i;
     s16 x[4];
     s16 y[4];
@@ -1985,8 +1985,8 @@ void settings_mouse_click_init(void) {
     k_sub_reset_point_set();
     set_kanji_string(-0x80, 0x32, 0, "クリックモードを設定します", 0);
     menu_set(1, 2, x, y, w, h);
-    sel = game_state.click_mode;
-    switch (sel) {
+    click_mode = game_state.click_mode;
+    switch (click_mode) {
     case 0:
         game_state.menu_cursor_1 = 0;
         break;
@@ -2012,13 +2012,13 @@ void settings_mouse_click_menu(void) {
         case 0:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "シングルクリックにしました", 0);
-            game_state.click_mode = 0;
+            game_state.click_mode = SETTINGS_CLICK_MODE_SINGLE;
             mode_step_next();
             return;
         case 1:
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "ダブルクリックにしました", 0);
-            game_state.click_mode = 1;
+            game_state.click_mode = SETTINGS_CLICK_MODE_DOUBLE;
             mode_step_next();
             break;
         }
@@ -2070,7 +2070,7 @@ void settings_mouse_click_speed_menu(void) {
     k_disp_inc();
     if (game_state.pad_pressed & PAD_CROSS) {
         mode_step_set(0);
-    } else if (((game_state.confirm_button != 0) && (game_state.mouse_buttons & MOUSE_RIGHT)) || ((game_state.confirm_button == 0) && (game_state.mouse_buttons & MOUSE_LEFT))) {
+    } else if (((game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) && (game_state.mouse_buttons & MOUSE_RIGHT)) || ((game_state.confirm_button == 0) && (game_state.mouse_buttons & MOUSE_LEFT))) {
         switch (game_state.menu_cursor_1) {
         case 0:
             k_sub_reset();
@@ -2242,19 +2242,19 @@ s32 settings_cursor_speed_init(void) {
     menu_set(1, 5, x, y, w, h);
     switch (game_state.cursor_speed) {
     default:
-    case 1:
+    case SETTINGS_CURSOR_SPEED_SLOWEST:
         game_state.menu_cursor_1 = 0;
         break;
-    case 2:
+    case SETTINGS_CURSOR_SPEED_SLOWER:
         game_state.menu_cursor_1 = 1;
         break;
-    case 3:
+    case SETTINGS_CURSOR_SPEED_NORMAL:
         game_state.menu_cursor_1 = 2;
         break;
-    case 4:
+    case SETTINGS_CURSOR_SPEED_FASTER:
         game_state.menu_cursor_1 = 3;
         break;
-    case 6:
+    case SETTINGS_CURSOR_SPEED_FASTEST:
         game_state.menu_cursor_1 = 4;
         break;
     }
@@ -2279,7 +2279,7 @@ void settings_cursor_speed_menu(void) {
             } else {
                 set_kanji_string(-0x80, 0x42, 0, "遅くしました", 0);
             }
-            game_state.cursor_speed = 1;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_SLOWEST;
             game_state.input_device = INPUT_NONE;
             mode_step_next();
             break;
@@ -2291,7 +2291,7 @@ void settings_cursor_speed_menu(void) {
             } else {
                 set_kanji_string(-0x80, 0x42, 0, "少し遅くしました", 0);
             }
-            game_state.cursor_speed = 2;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_SLOWER;
             game_state.input_device = INPUT_NONE;
             mode_step_next();
             break;
@@ -2299,7 +2299,7 @@ void settings_cursor_speed_menu(void) {
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "カーソルの移動速度を", 0);
             set_kanji_string(-0x80, 0x42, 0, "ふつうにしました", 0);
-            game_state.cursor_speed = 3;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_NORMAL;
             game_state.input_device = INPUT_NONE;
             mode_step_next();
             break;
@@ -2311,7 +2311,7 @@ void settings_cursor_speed_menu(void) {
             } else {
                 set_kanji_string(-0x80, 0x42, 0, "少し速くしました", 0);
             }
-            game_state.cursor_speed = 4;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_FASTER;
             game_state.input_device = INPUT_NONE;
             mode_step_next();
             break;
@@ -2323,7 +2323,7 @@ void settings_cursor_speed_menu(void) {
             } else {
                 set_kanji_string(-0x80, 0x42, 0, "速くしました", 0);
             }
-            game_state.cursor_speed = 6;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_FASTEST;
             game_state.input_device = INPUT_NONE;
             mode_step_next();
             break;
@@ -2341,7 +2341,7 @@ void settings_cursor_speed_done(void) {
 
 s32 settings_voice_mode_init(void) {
     s32 i;
-    s32 mode;
+    s32 voice_mode;
     s16 x[3];
     s16 y[3];
     s16 w[3];
@@ -2362,8 +2362,8 @@ s32 settings_voice_mode_init(void) {
     k_sub_reset_point_set();
     set_kanji_string(-0x80, 0x32, 0U, "音声のモードを設定します", 0);
     menu_set(1, 3, x, y, w, h);
-    mode = (u8)game_state.voice_mode;
-    switch (mode) {
+    voice_mode = (u8)game_state.voice_mode;
+    switch (voice_mode) {
     case 1:
         game_state.menu_cursor_1 = 0;
         break;
@@ -2758,16 +2758,16 @@ void settings_christmas_prep_mode_handler(void) {
 }
 
 s32 settings_new_year_card_sender_count(void) {
-    s32 pad[2]; /* FAKE: unused, gives the 0x48 frame and the n/tbl slots. T-7020 */
-    u8 tbl[12];
+    s32 pad[2]; /* FAKE: unused, gives the 0x48 frame and the sender_count/weighted_affection slots. T-7020 */
+    u8 weighted_affection[12];
     s32 i;
-    s32 n;
+    s32 sender_count;
 
-    n = 0;
-    get_h_yuukou_table(tbl);
+    sender_count = 0;
+    get_h_yuukou_table(weighted_affection);
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
-    for (i = 0; i < 11; i++) if (tbl[i] >= 0x4DU && game_state.girls[i].flags.f.met) n++;
-    return n;
+    for (i = 0; i < 11; i++) if (weighted_affection[i] >= 0x4DU && game_state.girls[i].flags.f.met) sender_count++;
+    return sender_count;
 }
 
 void settings_new_year_card_scene_start(void) {
@@ -2903,33 +2903,33 @@ void pre_syogatu0(void) {
 }
 
 s32 pre_syogatu1(void) {
-    s32 var_s0;
-    s32 var_s1;
+    s32 girl_index;
+    s32 sender_count;
     /* FAKE: two words recover the observed frame without moving the buffers. T-17005 */
     s32 stack_home[2];
-    u8 sp16C[0xC];
-    u8 sp6C[0x100];
-    u8 sp5C[0x10];
+    u8 weighted_affection[0xC];
+    u8 sender_text[0x100];
+    u8 girl_name_buffer[0x10];
 
     switch (game_state.substep) {
     case 0:
-        get_h_yuukou_table(sp16C);
+        get_h_yuukou_table(weighted_affection);
         k_sub_reset();
-        strcpy(sp6C, "やった！ ");
-        var_s1 = 0;
-        for (var_s0 = 0; var_s0 < 0xB; var_s0++) {
-            if ((sp16C[var_s0] >= 0x4DU) && (game_state.girls[var_s0].flags.f.met)) {
-                if (var_s1 != 0) {
-                    strcat(sp6C, "と、 ");
+        strcpy(sender_text, "やった！ ");
+        sender_count = 0;
+        for (girl_index = 0; girl_index < 0xB; girl_index++) {
+            if ((weighted_affection[girl_index] >= 0x4DU) && (game_state.girls[girl_index].flags.f.met)) {
+                if (sender_count != 0) {
+                    strcat(sender_text, "と、 ");
                 }
-                get_g_name(sp5C, var_s0);
-                strcat(sp6C, sp5C);
-                var_s1 += 1;
+                get_g_name(girl_name_buffer, girl_index);
+                strcat(sender_text, girl_name_buffer);
+                sender_count += 1;
             }
         }
-        strcat(sp6C, "から、 年賀状をもらったラッキー。）");
+        strcat(sender_text, "から、 年賀状をもらったラッキー。）");
         gnsx(game_state.player_family_name);
-        sndisp(sp6C, 0, 0x1F);
+        sndisp(sender_text, 0, 0x1F);
         game_state.substep += 1;
         return;
     case 1:

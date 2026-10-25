@@ -44,6 +44,8 @@ options:
     - config/symbol_addrs_sdk.txt
     - config/labels/RPG_BAT.txt
     - config/symbol_addrs_hypotheses.txt
+    - config/symbols_RPG_BAT.txt
+    - config/symbols_RPG_BAT_hypotheses.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/RPG_BAT_undefined_funcs_auto.txt

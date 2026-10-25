@@ -360,12 +360,12 @@ void date_scene_yuko_december_background_1(void) {
 }
 
 void date_scene_yuko_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl42 step_handlers;
 
-    tbl = date_scene_yuko_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yuko_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (D_80122D04 != 0) {
         date_scene_yuko_spring_picture_animate();
     }
@@ -403,25 +403,25 @@ void date_scene_yuko_spring_load_data_2(void) {
  * reads as pointer loads; the table entry is read three times (no function-pointer local), so it is
  * one CSE value and the selector range outranks the table address in uopt. T-10320, T-12100, T-17203 */
 void date_scene_yuko_summer(void) {
-    u8 *selector;
-    FnTbl39 tbl;
+    u8 *step_cursor;
+    FnTbl39 step_handlers;
 
-    selector = &game_state.mode_step;
-    tbl = date_scene_yuko_summer_steps;
-    if (place_init2 == tbl.f[*selector]) {
+    step_cursor = &game_state.mode_step;
+    step_handlers = date_scene_yuko_summer_steps;
+    if (place_init2 == step_handlers.callbacks[*step_cursor]) {
         D_80120653 |= 0x80;
     }
-    if (normal_date_bg_out == tbl.f[*selector]) {
+    if (normal_date_bg_out == step_handlers.callbacks[*step_cursor]) {
         D_80120653 &= 0xFF7F;
     }
-    tbl.f[*selector](0x80);
+    step_handlers.callbacks[*step_cursor](0x80);
     if (D_80122D04 != 0) {
         date_scene_yuko_summer_sign_animate();
     }
-    if (*selector == 0xE) {
+    if (*step_cursor == 0xE) {
         date_scene_yuko_summer_light_beams();
     }
-    if (*selector >= 0x19 && *selector < 0x24) {
+    if (*step_cursor >= 0x19 && *step_cursor < 0x24) {
         date_parade_sign_palette_cycle();
     }
 }
@@ -510,12 +510,12 @@ void date_scene_yuko_summer_light_beams(void) {
 }
 
 void date_scene_yuko_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl44 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl44 step_handlers;
 
-    tbl = date_scene_yuko_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yuko_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (game_state.mode_step == 0xD) {
         date_scene_yuko_autumn_beam_lights();
     }
@@ -523,12 +523,12 @@ void date_scene_yuko_autumn(void) {
 
 /* FAKE: the GameState pointer local moves the incremented counter to $v1 as in the original (T-9380, found with the permuter) */
 s32 date_scene_yuko_autumn_load_data(void) {
-    GameState *g;
-    u32 n;
+    GameState *game;
+    u32 elapsed_frames;
 
-    g = &game_state;
-    n = ++g->mode_step_timer.u;
-    if (n < 0x10) {
+    game = &game_state;
+    elapsed_frames = ++game->mode_step_timer.u;
+    if (elapsed_frames < 0x10) {
         return 0;
     }
     cd_read_sectors(0x3D, 0x801B0000, 0x7E55);
@@ -600,12 +600,12 @@ void date_scene_yuko_autumn_beam_lights(void) {
 }
 
 void date_scene_yuko_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl43 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl43 step_handlers;
 
-    tbl = date_scene_yuko_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yuko_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_yuko_winter_speak_with_face(void) {
@@ -628,12 +628,12 @@ void date_scene_yuko_winter_load_data(void) {
 }
 
 void date_scene_yuko_december(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl44 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl44 step_handlers;
 
-    tbl = date_scene_yuko_december_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yuko_december_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (D_80122D04 != 0 && game_state.frame_count % 180 == 0) {
         audio_command(0x501);
     }

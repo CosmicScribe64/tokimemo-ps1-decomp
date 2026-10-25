@@ -1,76 +1,76 @@
-/* swarm_and_orbit_waves.c: src/ovl/TACO/80159090.c:4: timed stage script with swarming ships, wall ships and orbiting parts; body 5: D_801604C0 += 1; 6: func_8015B59C();. Original object 0x80159090-0x8015A900 (config/objects/TACO.txt). */
+/* swarm_and_orbit_waves.c: src/ovl/TACO/80159090.c:4: timed stage script with swarming ships, wall ships and orbiting parts; body 5: shooter_script_timer += 1; 6: shooter_update_enemies();. Original object 0x80159090-0x8015A900 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80159090(void) {
-    D_801604C0 += 1;
-    func_8015B59C();
-    if (((s32) D_801604C0 % 30) == 0) {
-        if (D_801604C4 < 4) {
-            if (func_8015CCC8(2) < 0xA) {
-                func_80159260();
+void shooter_update_stage3_script(void) {
+    shooter_script_timer += 1;
+    shooter_update_enemies();
+    if (((s32) shooter_script_timer % 30) == 0) {
+        if (shooter_script_phase < 4) {
+            if (shooter_count_enemies_of_kind(2) < 0xA) {
+                shooter_spawn_swarm_ship();
             }
-        } else if ((D_801604C4 < 6) && (func_8015CCC8(2) < 3)) {
-            func_80159260();
+        } else if ((shooter_script_phase < 6) && (shooter_count_enemies_of_kind(2) < 3)) {
+            shooter_spawn_swarm_ship();
         }
     }
-    switch (D_801604C4) {
+    switch (shooter_script_phase) {
     case 0:
-        func_80159878(D_801604C4);
-        func_8015A900();
+        shooter_spawn_wall_ships(shooter_script_phase);
+        shooter_next_script_phase();
     default:
         break;
     case 1:
     case 2:
     case 3:
-        if (func_8015CCC8(3) == 0) {
-            func_80159878(D_801604C4);
-            func_8015A900();
+        if (shooter_count_enemies_of_kind(3) == 0) {
+            shooter_spawn_wall_ships(shooter_script_phase);
+            shooter_next_script_phase();
         }
         break;
     case 4:
-        if (func_8015CCC8(3) == 0) {
-            func_8015A900();
+        if (shooter_count_enemies_of_kind(3) == 0) {
+            shooter_next_script_phase();
         }
         break;
     case 5:
-        func_8015A900();
+        shooter_next_script_phase();
         break;
     case 6:
-        func_8015A900();
+        shooter_next_script_phase();
         break;
     case 7:
     case 8:
     case 9:
     case 10:
-        if (func_8015CE64() == 0) {
-            func_8015A164(D_801604C4 - 3);
-            func_8015A900();
+        if (shooter_count_active_enemies() == 0) {
+            shooter_spawn_guardian_ring(shooter_script_phase - 3);
+            shooter_next_script_phase();
         }
         break;
     case 11:
-        if (func_8015CCC8(0xFF) == 0) {
-            func_8015A900();
+        if (shooter_count_enemies_of_kind(0xFF) == 0) {
+            shooter_next_script_phase();
         }
         break;
     case 12:
-        if (func_8015CE64() == 0) {
-            func_8015ABF0();
+        if (shooter_count_active_enemies() == 0) {
+            shooter_reset_enemies();
             mode_step_next();
         }
         break;
     }
 }
 
-s32 func_80159260(void) {
-    TcPos vel;
-    TcPos pos;
-    /* FAKE: unused TcPos below the two positions reproduces the frame and their offsets; real locals unknown. T-16560 */
-    TcPos pad;
+s32 shooter_spawn_swarm_ship(void) {
+    ShooterPosition vel;
+    ShooterPosition pos;
+    /* FAKE: unused ShooterPosition below the two positions reproduces the frame and their offsets; real locals unknown. T-16560 */
+    ShooterPosition pad;
     s32 r;
     u32 kind;
 
-    srand(D_801604C0);
+    srand(shooter_script_timer);
     r = rand();
     pos.x = ((rand() % 2500) + (r % 1500)) - 0x7D0;
     r = rand();
@@ -81,43 +81,43 @@ s32 func_80159260(void) {
     kind = rand() % 5U;
     switch (kind) {
     case 0:
-        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
+        shooter_spawn_enemy(2, 0x20, vel, pos, shooter_zero_position_b, 4, 0x10);
         return;
     case 1:
-        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0x10);
+        shooter_spawn_enemy(2, 0x20, vel, pos, shooter_zero_position_b, 4, 0x10);
         return;
     case 2:
-        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        shooter_spawn_enemy(2, 0x20, vel, pos, shooter_zero_position_b, 4, 0);
         return;
     case 3:
-        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        shooter_spawn_enemy(2, 0x20, vel, pos, shooter_zero_position_b, 4, 0);
         return;
     case 4:
-        func_8015ACCC(2, 0x20, vel, pos, D_801604E4, 4, 0);
+        shooter_spawn_enemy(2, 0x20, vel, pos, shooter_zero_position_b, 4, 0);
         return;
     }
 }
 
-void func_80159678(s32 arg0) {
-    (arg0 + D_8015EDB4)->unk74 -= (((((arg0 + D_8015EDB4)->unk78 << 5) / 25000) * func_800A0140((arg0 + D_8015EDB4)->unk7A << 5)) >> 0xC);
-    (arg0 + D_8015EDB4)->unk76 -= (((((arg0 + D_8015EDB4)->unk78 << 4) / 25000) * rsin((arg0 + D_8015EDB4)->unk7A << 7)) >> 0xC);
-    if ((arg0 + D_8015EDB4)->unk7A >= 0x12D) {
-        (arg0 + D_8015EDB4)->unk78 += 0x100;
-        (arg0 + D_8015EDB4)->unk74 += ((D_8015EDB4->unk74 + (arg0 + D_8015EDB4)->unk7C) - (arg0 + D_8015EDB4)->unk74) / 10;
-        (arg0 + D_8015EDB4)->unk76 += ((D_8015EDB4->unk76 + (arg0 + D_8015EDB4)->unk7E) - (arg0 + D_8015EDB4)->unk76) / 10;
+void shooter_behavior_swarm_ship(s32 arg0) {
+    (arg0 + shooter_actors)->x -= (((((arg0 + shooter_actors)->z << 5) / 25000) * func_800A0140((arg0 + shooter_actors)->counter << 5)) >> 0xC);
+    (arg0 + shooter_actors)->y -= (((((arg0 + shooter_actors)->z << 4) / 25000) * rsin((arg0 + shooter_actors)->counter << 7)) >> 0xC);
+    if ((arg0 + shooter_actors)->counter >= 0x12D) {
+        (arg0 + shooter_actors)->z += 0x100;
+        (arg0 + shooter_actors)->x += ((shooter_actors->x + (arg0 + shooter_actors)->argument_x) - (arg0 + shooter_actors)->x) / 10;
+        (arg0 + shooter_actors)->y += ((shooter_actors->y + (arg0 + shooter_actors)->argument_y) - (arg0 + shooter_actors)->y) / 10;
     }
-    if ((arg0 + D_8015EDB4)->unk78 >= 0x1001) {
-        func_8015C208(arg0);
+    if ((arg0 + shooter_actors)->z >= 0x1001) {
+        shooter_remove_enemy(arg0);
     }
 }
 
-s32 func_80159878(s32 arg0) {
-    /* FAKE: unused TcPos above the two positions reproduces the frame (0x60) and their offsets; real locals unknown. T-16561 */
-    TcPos pad;
-    TcPos sp50;
-    TcPos sp48;
+s32 shooter_spawn_wall_ships(s32 arg0) {
+    /* FAKE: unused ShooterPosition above the two positions reproduces the frame (0x60) and their offsets; real locals unknown. T-16561 */
+    ShooterPosition pad;
+    ShooterPosition sp50;
+    ShooterPosition sp48;
 
-    srand(D_801604C0);
+    srand(shooter_script_timer);
     sp48.x = 0;
     sp48.z = 0;
     sp50.z = -0x4E20;
@@ -127,16 +127,16 @@ s32 func_80159878(s32 arg0) {
     case 2:
         sp48.y = 0x400; sp50.x = 0x1B58;
         sp50.y = -0x4B0;
-        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0);
         sp50.y = -0xC8;
-        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0);
         sp48.y = 0xC00; sp50.x = -0x1B58;
         sp50.y = -0x2BC;
         if (arg0 == 0) {
-            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 0xA, 0xE0);
+            shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 0xA, 0xE0);
             return;
         }
-        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 0xA, 0);
+        shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 0xA, 0);
         return;
     case 1:
         /* fallthrough */
@@ -144,23 +144,23 @@ s32 func_80159878(s32 arg0) {
         sp48.y = 0xC00; sp50.x = -0x1B58;
         sp50.y = -0x4B0;
         if (arg0 == 3) {
-            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0x50);
+            shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0x50);
         } else {
-            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+            shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0);
         }
         sp50.y = -0xC8;
         if (arg0 == 1) {
-            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0x50);
+            shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0x50);
         } else {
-            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+            shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0);
         }
         sp48.y = 0x400; sp50.x = 0x1B58;
         sp50.y = -0x2BC;
         if (arg0 == 3) {
-            func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 0xA, 0x80);
+            shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 0xA, 0x80);
             return;
         }
-        func_8015ACCC(3, 0x21, D_801604D4, sp50, sp48, 8, 0);
+        shooter_spawn_enemy(3, 0x21, shooter_zero_position_a, sp50, sp48, 8, 0);
         return;
     default:
         /* the empty default adds the basic blocks that keep arg0 out of $s0 (uopt allocation cost); the original reloads it from its home. T-16561 */
@@ -168,32 +168,32 @@ s32 func_80159878(s32 arg0) {
     }
 }
 
-void func_80159F60(s32 arg0) {
-    TcPos pos;
+void shooter_behavior_wall_ship(s32 arg0) {
+    ShooterPosition pos;
 
-    (arg0 + D_8015EDB4)->unk74 += -(arg0 + D_8015EDB4)->unk74 / 50;
-    if ((arg0 + D_8015EDB4)->unk7A >= 0xB5) {
-        (arg0 + D_8015EDB4)->unk7A = 0;
+    (arg0 + shooter_actors)->x += -(arg0 + shooter_actors)->x / 50;
+    if ((arg0 + shooter_actors)->counter >= 0xB5) {
+        (arg0 + shooter_actors)->counter = 0;
     }
-    if (((arg0 + D_8015EDB4)->unk7A % 10) == 0) {
-        if (abs((arg0 + D_8015EDB4)->unk74) < 0x3E8) {
-            pos.x = (arg0 + D_8015EDB4)->unk74;
-            pos.y = (arg0 + D_8015EDB4)->unk76;
-            pos.z = (arg0 + D_8015EDB4)->unk78;
-            switch ((arg0 + D_8015EDB4)->unk76) {
+    if (((arg0 + shooter_actors)->counter % 10) == 0) {
+        if (abs((arg0 + shooter_actors)->x) < 0x3E8) {
+            pos.x = (arg0 + shooter_actors)->x;
+            pos.y = (arg0 + shooter_actors)->y;
+            pos.z = (arg0 + shooter_actors)->z;
+            switch ((arg0 + shooter_actors)->y) {
             case -1200:
-                if ((arg0 + D_8015EDB4)->unk7A < 0x3C) {
-                    func_8013DB80(pos, 0x180, 0xC0);
+                if ((arg0 + shooter_actors)->counter < 0x3C) {
+                    shooter_spawn_enemy_bullet(pos, 0x180, 0xC0);
                 }
                 break;
             case -700:
-                if ((arg0 + D_8015EDB4)->unk7A >= 0x3D && (arg0 + D_8015EDB4)->unk7A < 0x78) {
-                    func_8013DB80(pos, 0x180, 0x82);
+                if ((arg0 + shooter_actors)->counter >= 0x3D && (arg0 + shooter_actors)->counter < 0x78) {
+                    shooter_spawn_enemy_bullet(pos, 0x180, 0x82);
                 }
                 break;
             case -200:
-                if ((arg0 + D_8015EDB4)->unk7A >= 0x79) {
-                    func_8013DB80(pos, 0x180, 0xC0);
+                if ((arg0 + shooter_actors)->counter >= 0x79) {
+                    shooter_spawn_enemy_bullet(pos, 0x180, 0xC0);
                 }
                 break;
             }
@@ -201,17 +201,17 @@ void func_80159F60(s32 arg0) {
     }
 }
 
-void func_8015A164(s32 arg0) {
-    /* FAKE: unused leading TcPos local reproduces the frame (see func_80156F50); real locals unknown. T-9180 */
-    TcPos p0;
-    TcPos pos;
-    TcPos vel;
+void shooter_spawn_guardian_ring(s32 arg0) {
+    /* FAKE: unused leading ShooterPosition local reproduces the frame (see shooter_spawn_patroller); real locals unknown. T-9180 */
+    ShooterPosition p0;
+    ShooterPosition pos;
+    ShooterPosition vel;
     s32 i;
     s32 j;
 
-    srand(D_801604C0);
+    srand(shooter_script_timer);
     pos.z = 0x4E20;
-    func_8015ACCC(0xD, 0x23, D_801604D4, pos, D_801604E4, 0x28, 0xD0);
+    shooter_spawn_enemy(0xD, 0x23, shooter_zero_position_a, pos, shooter_zero_position_b, 0x28, 0xD0);
     i = 0;
     if (arg0 > 0) {
         j = 0;
@@ -219,86 +219,86 @@ void func_8015A164(s32 arg0) {
             vel.y = 0x800;
             vel.x = 0;
             vel.z = 0;
-            vel.unk6 = j / arg0;
-            func_8015ACCC(0xD, 0x22, D_801604D4, pos, vel, 0x14, (rand() % 9) * 0x10);
+            vel.w = j / arg0;
+            shooter_spawn_enemy(0xD, 0x22, shooter_zero_position_a, pos, vel, 0x14, (rand() % 9) * 0x10);
             i += 1;
             j += 0x1000;
         } while (i != arg0);
     }
 }
 
-void func_8015A378(s32 arg0) {
-    switch ((arg0 + D_8015EDB4)->unk7C) {
+void shooter_behavior_orbiting_orb(s32 arg0) {
+    switch ((arg0 + shooter_actors)->argument_x) {
     case 0:
-        D_8015EDB4[arg0].unk74 = (rsin((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
-        D_8015EDB4[arg0].unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC) - 0x2BC;
-        D_8015EDB4[arg0].unk78 = -0x4E20;
-        D_8015EDB4[arg0].unk6E = 1;
-        (arg0 + D_8015EDB4)->unk7C += 1;
+        shooter_actors[arg0].x = (rsin((arg0 + shooter_actors)->param) * 0x3E8) >> 0xC;
+        shooter_actors[arg0].y = ((func_800A0140((arg0 + shooter_actors)->param) * 0x3E8) >> 0xC) - 0x2BC;
+        shooter_actors[arg0].z = -0x4E20;
+        shooter_actors[arg0].scale_y = 1;
+        (arg0 + shooter_actors)->argument_x += 1;
         break;
     case 1:
-        (arg0 + D_8015EDB4)->unk6E = (arg0 + D_8015EDB4)->unk7A << 9;
-        (arg0 + D_8015EDB4)->unk84[0] = ((arg0 + D_8015EDB4)->unk7A * 0x16) / 32;
-        if ((arg0 + D_8015EDB4)->unk6E >= (arg0 + D_8015EDB4)->unk6C) {
-            (arg0 + D_8015EDB4)->unk7C += 1;
-            D_8015EDB4[arg0].unk7A = 0;
+        (arg0 + shooter_actors)->scale_y = (arg0 + shooter_actors)->counter << 9;
+        (arg0 + shooter_actors)->stats[0] = ((arg0 + shooter_actors)->counter * 0x16) / 32;
+        if ((arg0 + shooter_actors)->scale_y >= (arg0 + shooter_actors)->scale_x) {
+            (arg0 + shooter_actors)->argument_x += 1;
+            shooter_actors[arg0].counter = 0;
         }
         break;
     case 2:
-        D_8015EDB4[arg0].unk74 = (rsin((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
-        D_8015EDB4[arg0].unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC) - 0x2BC;
-        (arg0 + D_8015EDB4)->unk6A += 0x20;
-        if ((arg0 + D_8015EDB4)->unk7A >= 0x259) {
-            (arg0 + D_8015EDB4)->unk7C += 1;
-            D_8015EDB4[arg0].unk7A = 0;
+        shooter_actors[arg0].x = (rsin((arg0 + shooter_actors)->param) * 0x3E8) >> 0xC;
+        shooter_actors[arg0].y = ((func_800A0140((arg0 + shooter_actors)->param) * 0x3E8) >> 0xC) - 0x2BC;
+        (arg0 + shooter_actors)->param += 0x20;
+        if ((arg0 + shooter_actors)->counter >= 0x259) {
+            (arg0 + shooter_actors)->argument_x += 1;
+            shooter_actors[arg0].counter = 0;
         }
         break;
     case 3:
-        (arg0 + D_8015EDB4)->unk6E = (0x10 - (arg0 + D_8015EDB4)->unk7A) << 9;
-        (arg0 + D_8015EDB4)->unk84[0] = ((0x10 - (arg0 + D_8015EDB4)->unk7A) << 5) / 32;
-        if ((arg0 + D_8015EDB4)->unk6E <= 0) {
-            func_8015C208(arg0);
+        (arg0 + shooter_actors)->scale_y = (0x10 - (arg0 + shooter_actors)->counter) << 9;
+        (arg0 + shooter_actors)->stats[0] = ((0x10 - (arg0 + shooter_actors)->counter) << 5) / 32;
+        if ((arg0 + shooter_actors)->scale_y <= 0) {
+            shooter_remove_enemy(arg0);
         }
         break;
     }
 }
 
-void func_8015A680(s32 arg0) {
-    TcPos pos;
+void shooter_behavior_guardian_core(s32 arg0) {
+    ShooterPosition pos;
 
-    pos.x = (arg0 + D_8015EDB4)->unk74;
-    pos.y = (arg0 + D_8015EDB4)->unk76;
-    pos.z = (arg0 + D_8015EDB4)->unk78;
-    switch ((arg0 + D_8015EDB4)->unk7C) {
+    pos.x = (arg0 + shooter_actors)->x;
+    pos.y = (arg0 + shooter_actors)->y;
+    pos.z = (arg0 + shooter_actors)->z;
+    switch ((arg0 + shooter_actors)->argument_x) {
     case 0:
-        (arg0 + D_8015EDB4)->unk74 = 0;
-        D_8015EDB4[arg0].unk76 = -0x2BC;
-        D_8015EDB4[arg0].unk78 = -0x4E20;
-        D_8015EDB4[arg0].unk6E = 1;
-        (arg0 + D_8015EDB4)->unk7C += 1;
+        (arg0 + shooter_actors)->x = 0;
+        shooter_actors[arg0].y = -0x2BC;
+        shooter_actors[arg0].z = -0x4E20;
+        shooter_actors[arg0].scale_y = 1;
+        (arg0 + shooter_actors)->argument_x += 1;
         break;
     case 1:
-        (arg0 + D_8015EDB4)->unk6E = (arg0 + D_8015EDB4)->unk7A << 9;
-        (arg0 + D_8015EDB4)->unk84[0] = ((arg0 + D_8015EDB4)->unk7A * 0x16) / 32;
-        if ((arg0 + D_8015EDB4)->unk6E >= (arg0 + D_8015EDB4)->unk6C) {
-            (arg0 + D_8015EDB4)->unk7C += 1;
-            D_8015EDB4[arg0].unk7A = 0;
+        (arg0 + shooter_actors)->scale_y = (arg0 + shooter_actors)->counter << 9;
+        (arg0 + shooter_actors)->stats[0] = ((arg0 + shooter_actors)->counter * 0x16) / 32;
+        if ((arg0 + shooter_actors)->scale_y >= (arg0 + shooter_actors)->scale_x) {
+            (arg0 + shooter_actors)->argument_x += 1;
+            shooter_actors[arg0].counter = 0;
         }
         break;
     case 2:
-        if (((arg0 + D_8015EDB4)->unk7A % 15) == 0) {
-            func_8013DB80(pos, 0x100, 0xC2);
+        if (((arg0 + shooter_actors)->counter % 15) == 0) {
+            shooter_spawn_enemy_bullet(pos, 0x100, 0xC2);
         }
-        if ((arg0 + D_8015EDB4)->unk7A >= 0x259) {
-            (arg0 + D_8015EDB4)->unk7C += 1;
-            D_8015EDB4[arg0].unk7A = 0;
+        if ((arg0 + shooter_actors)->counter >= 0x259) {
+            (arg0 + shooter_actors)->argument_x += 1;
+            shooter_actors[arg0].counter = 0;
         }
         break;
     case 3:
-        (arg0 + D_8015EDB4)->unk6E = (0x10 - (arg0 + D_8015EDB4)->unk7A) << 9;
-        (arg0 + D_8015EDB4)->unk84[0] = ((0x10 - (arg0 + D_8015EDB4)->unk7A) << 5) / 32;
-        if ((arg0 + D_8015EDB4)->unk6E <= 0) {
-            func_8015C208(arg0);
+        (arg0 + shooter_actors)->scale_y = (0x10 - (arg0 + shooter_actors)->counter) << 9;
+        (arg0 + shooter_actors)->stats[0] = ((0x10 - (arg0 + shooter_actors)->counter) << 5) / 32;
+        if ((arg0 + shooter_actors)->scale_y <= 0) {
+            shooter_remove_enemy(arg0);
         }
         break;
     }

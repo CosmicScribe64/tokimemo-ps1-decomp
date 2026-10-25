@@ -1,76 +1,76 @@
-/* game_end_and_screen_wipe.c: src/ovl/TACO/8013B170.c:4: end-stage dispatch, screen snapshot and progressive wipe drawing; body 5: switch (game_state.mode_step) {; 7: func_8013B2A0();. Original object 0x8013B170-0x8013B990 (config/objects/TACO.txt). */
+/* game_end_and_screen_wipe.c: src/ovl/TACO/8013B170.c:4: end-stage dispatch, screen snapshot and progressive wipe drawing; body 5: switch (game_state.mode_step) {; 7: shooter_game_end_step_init();. Original object 0x8013B170-0x8013B990 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_8013B170(void) {
+void shooter_stage_game_end(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013B2A0();
+        shooter_game_end_step_init();
         break;
     case 1:
-        func_8013B398();
+        shooter_game_end_step_wait();
         break;
     case 2:
-        func_8013B3C4();
+        shooter_game_end_step_leave();
         break;
     }
     if (game_state.mode_step != 0) {
         if (game_state.frame_count & 0x10) {
-            if ((u8) D_8015EDCC >= 3U) {
-                func_801432F0((s32) "MISSION COMPLETE", -0x40, 0, 2);
-            } else if (D_8015EDEC == 0) {
-                func_801432F0((s32) "TIME OVER", -0x40, 0, 1);
+            if ((u8) shooter_stages_cleared >= 3U) {
+                shooter_draw_text((s32) "MISSION COMPLETE", -0x40, 0, 2);
+            } else if (shooter_time_left == 0) {
+                shooter_draw_text((s32) "TIME OVER", -0x40, 0, 1);
             } else {
-                func_801432F0((s32) "GAME OVER", -0x40, 0, 1);
+                shooter_draw_text((s32) "GAME OVER", -0x40, 0, 1);
             }
         }
-        func_8013B460(0x64);
+        shooter_draw_screen_wipe(0x64);
     } else {
-        func_8013F250();
+        shooter_draw_hud();
     }
-    func_80143B58();
+    shooter_process_load_request();
 }
 
-void func_8013B2A0(void) {
+void shooter_game_end_step_init(void) {
     s32 pad; /* FAKE: unused 4-byte local gives frame 0x40 and puts flag at sp+0x38; real source unknown. T-19030 */
     s32 flag;
-    TcPos save;
+    ShooterPosition save;
 
-    if (D_8015EDBC == 0) {
-        func_8013B404();
-        func_801347A8();
+    if (shooter_load_request == 0) {
+        shooter_snapshot_screen();
+        shooter_hide_all_models();
         func_80059048();
-        save = *(TcPos *)&D_8015EDB4->unk7C;
-        flag = D_8015EDB4->unk84[1];
-        func_80143AF4();
-        *(TcPos *)&D_8015EDB4->unk7C = save;
-        D_8015EDB4->unk84[1] = flag;
+        save = *(ShooterPosition *)&shooter_actors->argument_x;
+        flag = shooter_actors->stats[1];
+        shooter_release_all_actor_models();
+        *(ShooterPosition *)&shooter_actors->argument_x = save;
+        shooter_actors->stats[1] = flag;
         /* FAKE: element chain through the first symbol shares one li between the last two stores and
          * keeps a separate lui per store (struct-field chains and separate statements load three
          * constants); GameState fields unk_036..unk_038. T-19030 */
         (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = (&game_state.clear_color_r)[2] = 0x10;
-        D_8015EDB0 = 0;
-        D_8015EDBC = 0x44;
+        shooter_background_flags = 0;
+        shooter_load_request = 0x44;
         func_800450F4(0, 0x202);
         mode_step_next();
     }
 }
 
-void func_8013B398(void) {
+void shooter_game_end_step_wait(void) {
     if (game_state.pad_pressed != 0) {
         mode_step_next();
     }
 }
 
-void func_8013B3C4(void) {
-    if (D_8015EDBC == 0) {
+void shooter_game_end_step_leave(void) {
+    if (shooter_load_request == 0) {
         if (func_80044C98() == 1) {
             mode_stage_set(8);
         }
     }
 }
 
-void func_8013B404(void) {
+void shooter_snapshot_screen(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
     RECT rect;
 
@@ -86,8 +86,8 @@ void func_8013B404(void) {
  * smaller first). The original stores p->y3 after the eight UV byte stores and after the lui of the
  * AddPrim argument, which needs the y3 statement on a later line than the AddPrim call. Each `#line`
  * pair gives the y3 statement that line and restores the numbering; the real source layout is unknown
- * (drafts/T-25137/TACO/func_8013B460/NOTES.md). */
-s32 func_8013B460(s32 arg0) {
+ * (drafts/T-25137/TACO/shooter_draw_screen_wipe/NOTES.md). */
+s32 shooter_draw_screen_wipe(s32 arg0) {
     GameState *g = &game_state;
     s32 pad; /* FAKE: unused word gives the frame home slot of the original; real source unknown. T-19030 */
     POLY_FT4 *p;

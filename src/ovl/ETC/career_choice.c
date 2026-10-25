@@ -2,22 +2,22 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-void func_801492C0(void) {
+void career_choice_entry(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_801498BC();
+        career_choice_stage_prompt();
         break;
     case 1:
-        func_8014A6D4();
+        career_choice_stage_university();
         break;
     case 2:
-        func_8014A9A4();
+        career_choice_stage_job();
         break;
     case 3:
-        func_8014AB5C();
+        career_choice_stage_club_dream();
         break;
     case 4:
-        func_8014AB88();
+        career_choice_leave();
         break;
     }
     hud_cursor_update();
@@ -26,11 +26,11 @@ void func_801492C0(void) {
     message_window_title_update();
     hud_screen_frame_draw(0);
     dec_bg_draw(get_last_gamen_mode());
-    func_8014988C();
+    career_choice_panel_update();
     hud_mascot_update();
 }
 
-s32 func_80149394(void) {
+s32 career_choice_init_screen(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     actor_clear_upper();
@@ -47,15 +47,15 @@ s32 func_80149394(void) {
     k_sub_disp_start(0);
     message_window_title_show(0);
     dec_bg_draw(0);
-    D_80150E94 = 0;
-    D_80150EA0 = rand() % 12;
-    D_80150E98 = 0;
-    D_80150E9C = 0;
+    career_choice_question_no = 0;
+    career_choice_threshold_start = rand() % 12;
+    career_choice_tier = 0;
+    career_choice_correct_count = 0;
     mode_step_next();
 }
 
 
-s32 func_80149468(void) {
+s32 career_choice_mastered_club(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
@@ -67,7 +67,7 @@ s32 func_80149468(void) {
 }
 
 /* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
-s32 func_801495CC(void) {
+s32 career_choice_prompt(void) {
     s32 sp28;
     s32 r;
 
@@ -76,9 +76,9 @@ s32 func_801495CC(void) {
         k_sub_reset();
         gnsx(game_state.player_family_name);
         if (game_state.player_flags_upper.b[1] != 0) {
-            sndisp(D_80150954, 0, 0xF);
+            sndisp(career_choice_job_prompt_text, 0, 0xF);
         } else {
-            sndisp(D_801508EC, 0, 0xF);
+            sndisp(career_choice_university_prompt_text, 0, 0xF);
         }
         game_state.substep += 1;
         return;
@@ -87,23 +87,23 @@ s32 func_801495CC(void) {
         return;
     case 2:
         k_sub_reset();
-        r = func_80149468();
+        r = career_choice_mastered_club();
         if (r != -1) {
             sp28 = r;
             x_taku_menu_set(0, 3);
             if (game_state.player_flags_upper.b[1] != 0) {
-                x_taku_string_set(D_8015096C, D_80150984, D_801508BC[sp28], 3);
+                x_taku_string_set(career_choice_job_first_choice_text, career_choice_job_second_choice_text, career_club_dream_name[sp28], 3);
             } else {
-                x_taku_string_set(D_80150904, D_8015091C, D_801508BC[sp28], 3);
+                x_taku_string_set(career_choice_university_first_choice_text, career_choice_university_second_choice_text, career_club_dream_name[sp28], 3);
             }
             k_sub_disp_start(3);
             game_state.menu_cursor_0 = 0;
         } else {
             x_taku_menu_set(0, 2);
             if (game_state.player_flags_upper.b[1] != 0) {
-                x_taku_string_set(D_8015096C, D_80150984, 0, 2);
+                x_taku_string_set(career_choice_job_first_choice_text, career_choice_job_second_choice_text, 0, 2);
             } else {
-                x_taku_string_set(D_80150904, D_8015091C, 0, 2);
+                x_taku_string_set(career_choice_university_first_choice_text, career_choice_university_second_choice_text, 0, 2);
             }
             k_sub_disp_start(2);
             game_state.menu_cursor_0 = 0;
@@ -113,7 +113,7 @@ s32 func_801495CC(void) {
     }
 }
 
-s32 func_8014979C(void) {
+s32 career_choice_menu(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -140,33 +140,33 @@ s32 func_8014979C(void) {
     }
 }
 
-void func_8014988C(void) {
+void career_choice_panel_update(void) {
     if (D_8011F553 & 0x80) {
         parameter_show();
     }
 }
 
-s32 func_801498BC(void) {
+s32 career_choice_stage_prompt(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80149394();
+        career_choice_init_screen();
         break;
     case 1:
-        func_801495CC();
+        career_choice_prompt();
         break;
     case 2:
-        func_8014979C();
+        career_choice_menu();
         break;
     }
 }
 
-s32 func_80149928(void) {
+s32 career_choice_university_tier_prompt(void) {
     switch (game_state.substep) {
     case 0:
         game_state.player_flags_upper.b[1] = 0;
         k_sub_reset();
         gnsx(&game_state.player_family_name);
-        sndisp(&D_8015093C, 0, 0x1F);
+        sndisp(&career_choice_university_tier_prompt_text, 0, 0x1F);
         game_state.substep += 1;
         break;
     case 1:
@@ -175,7 +175,7 @@ s32 func_80149928(void) {
     case 2:
         k_sub_reset();
         x_taku_menu_set(0, 3);
-        x_taku_string_set((s32)D_8015099C, (s32)D_801509B0, (s32)D_801509C4, 3);
+        x_taku_string_set((s32)career_choice_university_first_tier_text, (s32)career_choice_university_second_tier_text, (s32)career_choice_university_third_tier_text, 3);
         k_sub_disp_start(3);
         game_state.menu_cursor_0 = 0;
         mode_step_next();
@@ -183,34 +183,34 @@ s32 func_80149928(void) {
     }
 }
 
-s32 func_80149A08(void) {
+s32 career_choice_tier_menu(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (game_state.menu_cursor_0) {
         case 0:
-            D_80150E98 = 0;
+            career_choice_tier = 0;
             mode_step_next();
             break;
         case 1:
-            D_80150E98 = 1;
+            career_choice_tier = 1;
             mode_step_next();
             break;
         case 2:
-            D_80150E98 = 2;
+            career_choice_tier = 2;
             mode_step_next();
             break;
         }
     }
 }
 
-void func_80149AC4(void) {
+void career_choice_tier_confirm(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80150A9C[D_80150E98], 0, 0xF);
+        sndisp(career_choice_university_tier_line[career_choice_tier], 0, 0xF);
         game_state.substep += 1;
         return;
     case 1:
@@ -219,7 +219,7 @@ void func_80149AC4(void) {
     case 2:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(&D_80150CFC, 0, 0xF);
+        sndisp(&career_choice_tier_confirm_text, 0, 0xF);
         game_state.substep += 1;
         return;
     case 3:
@@ -235,14 +235,14 @@ void func_80149AC4(void) {
 
 
 /* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
-s32 func_80149BC0(void) {
+s32 career_choice_exam_room_load(void) {
     s32 r;
 
     switch (*(u8 *)&game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80150D20, 0, 0x1F);
+        sndisp(career_choice_exam_room_text, 0, 0x1F);
         k_sub_disp_start(2);
         r = dec_bg_cd_read(0x463B, 1);
         if (r != -1) {
@@ -277,7 +277,7 @@ s32 func_80149BC0(void) {
     }
 }
 
-s32 func_80149D3C(void) {
+s32 career_choice_exam_sound_load(void) {
     switch (game_state.substep) {
     case 0:
         audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
@@ -292,7 +292,7 @@ s32 func_80149D3C(void) {
     }
 }
 
-s32 func_80149DD8(void) {
+s32 career_choice_exam_sd_load(void) {
     switch (game_state.substep) {
     case 0:
         cd_read_sectors(9U, 0x801E0000, 0x7D81);
@@ -301,14 +301,14 @@ s32 func_80149DD8(void) {
     case 1:
         if (cd_read_sync_status() & 1) {
             addr_init_else_sd(1);
-            func_80149E68();
+            career_choice_exam_face_init();
             mode_step_next();
         }
         break;
     }
 }
 
-void func_80149E68(void) {
+void career_choice_exam_face_init(void) {
     actor_clear(0x60);
     ((Actor *)actor_pool_96)->unk_01 = 1;
     ((Actor *)actor_pool_96)->flags = 4;
@@ -326,74 +326,74 @@ void func_80149E68(void) {
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
 }
 
-void func_80149F48(void) {
+void career_choice_exam_question(void) {
     /* FAKE: dead register load from unsigned global before switch triggers OPTN zcopy:0 in cvt_pass.py (T-24129). */
     register s32 pad;
-    s32 var_a1;
-    s32 var_v0;
-    s32 var_v1;
+    s32 answer_wrong;
+    s32 club_bonus;
+    s32 subject_score;
 
     pad = game_state.substep;
-    var_a1 = 0;
-    switch (D_80150E94 % 3) {
+    answer_wrong = 0;
+    switch (career_choice_question_no % 3) {
     case 0:
-        var_v0 = game_state.clubs[0].practice_points >> 4;
-        var_v1 = game_state.param_liberal_arts.value;
-        if ((var_v0 > 0) && (var_v0 >= 0x15)) {
-            var_v0 = 0x14;
+        club_bonus = game_state.clubs[0].practice_points >> 4;
+        subject_score = game_state.param_liberal_arts.value;
+        if ((club_bonus > 0) && (club_bonus >= 0x15)) {
+            club_bonus = 0x14;
         }
-        var_v1 += var_v0;
+        subject_score += club_bonus;
         if (game_state.player_flags.b[1] & 0xF) {
-            var_v1 = var_v1 / 2;
+            subject_score = subject_score / 2;
         }
         break;
     case 1:
-        var_v0 = game_state.clubs[2].practice_points >> 4;
-        var_v1 = game_state.param_science.value;
-        if ((var_v0 > 0) && (var_v0 >= 0x15)) {
-            var_v0 = 0x14;
+        club_bonus = game_state.clubs[2].practice_points >> 4;
+        subject_score = game_state.param_science.value;
+        if ((club_bonus > 0) && (club_bonus >= 0x15)) {
+            club_bonus = 0x14;
         }
-        var_v1 += var_v0;
+        subject_score += club_bonus;
         if (game_state.player_flags.b[1] & 0xF) {
-            var_v1 = var_v1 / 2;
+            subject_score = subject_score / 2;
         }
         break;
     default:
         printf("DEFAUT:");
         /* fallthrough */
     case 2:
-        var_v0 = game_state.clubs[4].practice_points >> 4;
-        var_v1 = game_state.param_art.value;
-        if ((var_v0 > 0) && (var_v0 >= 0x15)) {
-            var_v0 = 0x14;
+        club_bonus = game_state.clubs[4].practice_points >> 4;
+        subject_score = game_state.param_art.value;
+        if ((club_bonus > 0) && (club_bonus >= 0x15)) {
+            club_bonus = 0x14;
         }
-        var_v1 += var_v0;
+        subject_score += club_bonus;
         if (game_state.player_flags.b[1] & 0xF) {
-            var_v1 = var_v1 / 2;
+            subject_score = subject_score / 2;
         }
         break;
     }
-    if (D_80150E98 == 1) {
-        var_v1 += 0x26;
+    if (career_choice_tier == 1) {
+        subject_score += 0x26;
     }
-    if (D_80150E98 == 2) {
-        var_v1 += 0x36;
+    if (career_choice_tier == 2) {
+        subject_score += 0x36;
     }
-    D_80150E94 += 1;
-    if (var_v1 < (&D_80150EA4)[(D_80150EA0 + D_80150E94) % 12]) {
-        var_a1 = 1;
+    career_choice_question_no += 1;
+    if (subject_score < (&career_choice_threshold)[(career_choice_threshold_start + career_choice_question_no) % 12]) {
+        answer_wrong = 1;
     }
-    if (var_a1 == 0) {
-        D_80150E9C += 1;
+    if (answer_wrong == 0) {
+        career_choice_correct_count += 1;
     }
     ((Actor *)actor_pool_96)->flags = 5;
     ((Actor *)actor_pool_96)->unk_08 = 0;
-    ((Actor *)actor_pool_96)->sequence_slot = var_a1;
+    ((Actor *)actor_pool_96)->sequence_slot = answer_wrong;
     ((Actor *)actor_pool_96)->unk_18 = 0;
     game_state.substep += 1;
 }
 
-s32 func_8014A180(void) {
+s32 career_choice_exam_question_wait(void) {
     if (D_80120652 & 1) {
         game_state.mode_step_timer.w = 0;
         return;
@@ -406,7 +406,7 @@ s32 func_8014A180(void) {
         }
     }
     if (D_80120658++ >= 0x3D) {
-        if (D_80150E94 >= 0xA) {
+        if (career_choice_question_no >= 0xA) {
             game_state.substep += 1;
             return;
         }
@@ -414,13 +414,13 @@ s32 func_8014A180(void) {
     }
 }
 
-s32 func_8014A258(void) {
+s32 career_choice_exam_run(void) {
     switch (game_state.substep) {
     case 0:
-        func_80149F48();
+        career_choice_exam_question();
         break;
     case 1:
-        func_8014A180();
+        career_choice_exam_question_wait();
         break;
     case 2:
         mode_step_next();
@@ -428,8 +428,8 @@ s32 func_8014A258(void) {
     }
 }
 
-s32 func_8014A2C4(void) {
-    switch (D_80150E9C) {
+s32 career_choice_exam_grade(void) {
+    switch (career_choice_correct_count) {
     case 10:
         return 0;
     case 8:
@@ -450,29 +450,29 @@ s32 func_8014A2C4(void) {
     }
 }
 
-s32 func_8014A32C(void) {
+s32 career_choice_interview_ok(void) {
     if (game_state.param_trivia.value + game_state.param_looks.value > 0x100) {
         return 1;
     }
     return 0;
 }
 
-void func_8014A360(void) {
+void career_choice_result_code_set(void) {
     if (game_state.player_flags_upper.b[1]) {
-        switch (D_80150E98) {
+        switch (career_choice_tier) {
         case 2:
-            if (func_8014A2C4() < 2) {
+            if (career_choice_exam_grade() < 2) {
                 game_state.player_flags_upper.b[1] = 0x20;
-            } else if (func_8014A2C4() == 2 && func_8014A32C()) {
+            } else if (career_choice_exam_grade() == 2 && career_choice_interview_ok()) {
                 game_state.player_flags_upper.b[1] = 0x20;
             } else {
                 game_state.player_flags_upper.b[1] = 0xA0;
             }
             break;
         case 1:
-            if (func_8014A2C4() < 2) {
+            if (career_choice_exam_grade() < 2) {
                 game_state.player_flags_upper.b[1] = 0x10;
-            } else if (func_8014A2C4() == 2 && func_8014A32C()) {
+            } else if (career_choice_exam_grade() == 2 && career_choice_interview_ok()) {
                 game_state.player_flags_upper.b[1] = 0x10;
             } else {
                 game_state.player_flags_upper.b[1] = 0x90;
@@ -480,9 +480,9 @@ void func_8014A360(void) {
             break;
         case 0:
         default:
-            if (func_8014A2C4() < 2) {
+            if (career_choice_exam_grade() < 2) {
                 game_state.player_flags_upper.b[1] = 8;
-            } else if (func_8014A2C4() == 2 && func_8014A32C()) {
+            } else if (career_choice_exam_grade() == 2 && career_choice_interview_ok()) {
                 game_state.player_flags_upper.b[1] = 8;
             } else {
                 game_state.player_flags_upper.b[1] = 0x88;
@@ -490,16 +490,16 @@ void func_8014A360(void) {
             break;
         }
     } else {
-        switch (D_80150E98) {
+        switch (career_choice_tier) {
         case 2:
-            if (func_8014A2C4() < 2) {
+            if (career_choice_exam_grade() < 2) {
                 game_state.player_flags_upper.b[1] = 4;
             } else {
                 game_state.player_flags_upper.b[1] = 0x84;
             }
             break;
         case 1:
-            if (func_8014A2C4() < 2) {
+            if (career_choice_exam_grade() < 2) {
                 game_state.player_flags_upper.b[1] = 2;
             } else {
                 game_state.player_flags_upper.b[1] = 0x82;
@@ -507,7 +507,7 @@ void func_8014A360(void) {
             break;
         case 0:
         default:
-            if (func_8014A2C4() < 2) {
+            if (career_choice_exam_grade() < 2) {
                 game_state.player_flags_upper.b[1] = 1;
             } else {
                 game_state.player_flags_upper.b[1] = 0x81;
@@ -518,15 +518,15 @@ void func_8014A360(void) {
     printf("shinro %x \n", game_state.player_flags_upper.b[1]);
 }
 
-void func_8014A534(void) {
+void career_choice_result_talk(void) {
     u32 temp_v0;
 
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80150E60[func_8014A2C4()], 0, 0x1F);
-        temp_v0 = func_8014A2C4();
+        sndisp(career_choice_result_line[career_choice_exam_grade()], 0, 0x1F);
+        temp_v0 = career_choice_exam_grade();
         switch (temp_v0) {
         case 0:
             audio_bank_start(1, 0x204);
@@ -555,14 +555,14 @@ void func_8014A534(void) {
     case 2:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(&D_80150E78, 0, 0x1F);
+        sndisp(&career_choice_announce_line, 0, 0x1F);
         game_state.substep += 1;
         return;
     case 3:
         xa_wait();
         return;
     case 4:
-        func_8014A360();
+        career_choice_result_code_set();
         mode_stage_set(4);
         /* fallthrough */
     default:
@@ -571,45 +571,45 @@ void func_8014A534(void) {
 }
 
 
-void func_8014A6D4(void) {
+void career_choice_stage_university(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80149928();
+        career_choice_university_tier_prompt();
         return;
     case 1:
-        func_80149A08();
+        career_choice_tier_menu();
         return;
     case 2:
-        func_80149AC4();
+        career_choice_tier_confirm();
         return;
     case 3:
-        func_80149BC0();
+        career_choice_exam_room_load();
         return;
     case 4:
-        func_80149D3C();
+        career_choice_exam_sound_load();
         return;
     case 5:
-        func_80149DD8();
+        career_choice_exam_sd_load();
         return;
     case 6:
-        func_8014A258();
+        career_choice_exam_run();
         return;
     case 7:
-        func_8014A534();
+        career_choice_result_talk();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_8014A7A4(void) {
+void career_choice_job_tier_prompt(void) {
     switch (game_state.substep) {
     case 0:
         game_state.player_flags_upper.b[1] = 1;
         k_sub_reset();
         gnsx(&game_state.player_family_name[0]);
-        sndisp(&D_801509D8, 0, 0x1F);
+        sndisp(&career_choice_job_tier_prompt_text, 0, 0x1F);
         game_state.substep += 1;
         return;
     case 1:
@@ -618,7 +618,7 @@ void func_8014A7A4(void) {
     case 2:
         k_sub_reset();
         x_taku_menu_set(0, 3);
-        x_taku_string_set(&D_801509F4, &D_80150A0C, &D_80150A24, 3);
+        x_taku_string_set(&career_choice_job_first_tier_text, &career_choice_job_second_tier_text, &career_choice_job_third_tier_text, 3);
         k_sub_disp_start(3);
         game_state.menu_cursor_0 = 0;
         mode_step_next();
@@ -634,12 +634,12 @@ void func_8014A7A4(void) {
     }
 }
 
-void func_8014A8A8(void) {
+void career_choice_job_tier_confirm(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80150B08[D_80150E98], 0, 0xF);
+        sndisp(career_choice_job_tier_line[career_choice_tier], 0, 0xF);
         game_state.substep += 1;
         return;
     case 1:
@@ -648,7 +648,7 @@ void func_8014A8A8(void) {
     case 2:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(&D_80150CFC, 0, 0xF);
+        sndisp(&career_choice_tier_confirm_text, 0, 0xF);
         game_state.substep += 1;
         return;
     case 3:
@@ -663,39 +663,39 @@ void func_8014A8A8(void) {
 }
 
 
-void func_8014A9A4(void) {
+void career_choice_stage_job(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_8014A7A4();
+        career_choice_job_tier_prompt();
         return;
     case 1:
-        func_80149A08();
+        career_choice_tier_menu();
         return;
     case 2:
-        func_8014A8A8();
+        career_choice_job_tier_confirm();
         return;
     case 3:
-        func_80149BC0();
+        career_choice_exam_room_load();
         return;
     case 4:
-        func_80149D3C();
+        career_choice_exam_sound_load();
         return;
     case 5:
-        func_80149DD8();
+        career_choice_exam_sd_load();
         return;
     case 6:
-        func_8014A258();
+        career_choice_exam_run();
         return;
     case 7:
-        func_8014A534();
+        career_choice_result_talk();
         /* fallthrough */
     default:
         return;
     }
 }
 
-s32 func_8014AA74(void) {
+s32 career_choice_club_dream(void) {
     s32 temp_v0;
     s32 sp28;
 
@@ -703,9 +703,9 @@ s32 func_8014AA74(void) {
     case 0:
         k_sub_reset();
         gnsx(&game_state.player_family_name);
-        temp_v0 = func_80149468();
+        temp_v0 = career_choice_mastered_club();
         sp28 = temp_v0;
-        sndisp(D_80150CCC[temp_v0], 0, 0xF);
+        sndisp(career_club_dream_line[temp_v0], 0, 0xF);
         if ((u16)game_state.clubs[sp28].practice_points >= 0x19BU) {
             game_state.player_flags_upper.b[1] = 0x40;
         } else {
@@ -722,13 +722,13 @@ s32 func_8014AA74(void) {
     }
 }
 
-void func_8014AB5C(void) {
+void career_choice_stage_club_dream(void) {
     if (game_state.mode_step == 0) {
-        func_8014AA74();
+        career_choice_club_dream();
     }
 }
 
-void func_8014AB88(void) {
+void career_choice_leave(void) {
     actor_clear_upper();
     printf("shinro %x \n", game_state.player_flags_upper.b[1]);
     day_event_next(1);

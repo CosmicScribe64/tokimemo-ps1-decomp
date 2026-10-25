@@ -229,12 +229,12 @@ void date_scene_ayako_winter_background_2(void) {
 }
 
 void date_scene_ayako_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl55 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateAyakoSpringSteps step_handlers;
 
-    tbl = date_scene_ayako_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    step_handlers = date_scene_ayako_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index]();
     if (game_state.mode_step == 0x1A || game_state.mode_step == 0x1B) {
         date_scene_ayako_spring_stripes_effect();
     }
@@ -251,12 +251,12 @@ s32 date_scene_ayako_spring_clip_play(void) {
     s16 i;
     s32 found;
     s16 *rec;
-    DateWords2 tbl;
+    DateSceneAudioRequest tbl;
 
     tbl = D_8015EF0C;
     if (game_state.mode_step_timer.u == 0) {
         D_80120696 = 1;
-        cd_audio_request_set(tbl.v[0], tbl.v[1], 0xF);
+        cd_audio_request_set(tbl.packed_clip_bounds[0], tbl.packed_clip_bounds[1], 0xF);
         audio_command(0xBF);
         audio_command(0x300);
         game_state.mode_step_timer.u += 1;
@@ -393,7 +393,7 @@ void date_scene_ayako_spring_stripe_draw(arg0, arg1, arg2)
     s16 arg2;
 {
     /* FAKE: 8 unused bytes above tbl give the original's frame (0x78) and tbl offset (0x50); the real locals are unknown. T-9310 */
-    s32 pad[2];
+    s32 fake_padding[2];
     DtTbl tbl;
 
     tbl = D_8015EF14;
@@ -416,17 +416,17 @@ void date_scene_ayako_spring_load_data_2(void) {
 }
 
 void date_scene_ayako_summer(void) {
-    s32 idx;
-    DateDispatch80152980 tbl;
-    tbl = date_scene_ayako_summer_steps;
+    s32 step_index;
+    DateAyakoSummerSteps step_handlers;
+    step_handlers = date_scene_ayako_summer_steps;
     if (game_state.mode_step >= 0x10 && game_state.mode_step < 0x13) {
         date_scene_light_beams();
     }
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (game_state.mode_step >= 0xF && game_state.mode_step < 0x14) {
         D_801206DB |= 0x80;
         D_801206DF = dec_bg_brightness;
@@ -448,12 +448,12 @@ void date_scene_ayako_summer_sprite_value_set(void) {
 }
 
 void date_scene_ayako_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl42 step_handlers;
 
-    tbl = date_scene_ayako_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_ayako_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_ayako_autumn_load_data(void) {
@@ -463,12 +463,12 @@ void date_scene_ayako_autumn_load_data(void) {
 }
 
 void date_scene_ayako_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl47 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl47 step_handlers;
 
-    tbl = date_scene_ayako_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_ayako_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_ayako_winter_speak_with_face(void) {
@@ -521,10 +521,10 @@ void date_scene_ayako_winter_answer_face(void) {
 
 /* Implicit int with no return value: the callers above come before this definition (T-20600). */
 s32 date_gradient_triangle_draw(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
-    GameState *g;
+    GameState *game;
     POLY_G3 *poly;
 
-    g = &game_state;
+    game = &game_state;
     poly = GetWorkBase(0x1C, draw_buffer);
     func_8009F004(poly);
     SetSemiTrans(poly, trans);
@@ -532,11 +532,11 @@ s32 date_gradient_triangle_draw(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, 
     poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
     poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
     poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
-    poly->x0 = g->screen_center_x[draw_buffer] + x0;
-    poly->y0 = g->screen_center_y[draw_buffer] + y0;
-    poly->x1 = g->screen_center_x[draw_buffer] + x1;
-    poly->y1 = g->screen_center_y[draw_buffer] + y1;
-    poly->x2 = g->screen_center_x[draw_buffer] + x2;
-    poly->y2 = g->screen_center_y[draw_buffer] + y2;
+    poly->x0 = game->screen_center_x[draw_buffer] + x0;
+    poly->y0 = game->screen_center_y[draw_buffer] + y0;
+    poly->x1 = game->screen_center_x[draw_buffer] + x1;
+    poly->y1 = game->screen_center_y[draw_buffer] + y1;
+    poly->x2 = game->screen_center_x[draw_buffer] + x2;
+    poly->y2 = game->screen_center_y[draw_buffer] + y2;
     AddPrim(&D_800E8CA0[(draw_buffer << 10) + z * 4], poly);
 }

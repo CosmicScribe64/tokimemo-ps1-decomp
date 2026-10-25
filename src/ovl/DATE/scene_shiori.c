@@ -213,12 +213,12 @@ void date_scene_reset_choices(void) {
 }
 
 void date_scene_shiori_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl41 step_handlers;
 
-    tbl = date_scene_shiori_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_shiori_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_shiori_autumn_load_data(void) {
@@ -228,14 +228,14 @@ void date_scene_shiori_autumn_load_data(void) {
 }
 
 void date_scene_shiori_spring(void) {
-    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl43 tbl;
+    s32 fake_padding; /* FAKE: never read; declared first so step_handlers lands at the original frame offset (T-3330) */
+    FnTbl43 step_handlers;
 
-    tbl = date_scene_shiori_spring_steps;
+    step_handlers = date_scene_shiori_spring_steps;
     if (game_state.mode_step < 0xAU && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[game_state.mode_step]();
+    step_handlers.callbacks[game_state.mode_step]();
 }
 
 void date_scene_shiori_spring_load_data(void) {
@@ -245,12 +245,12 @@ void date_scene_shiori_spring_load_data(void) {
 }
 
 void date_scene_shiori_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl65 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateShioriWinterSteps step_handlers;
 
-    tbl = date_scene_shiori_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    step_handlers = date_scene_shiori_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index]();
 }
 
 void date_scene_shiori_winter_audio_command_1(void) {
@@ -271,16 +271,16 @@ s32 date_scene_shiori_winter_shake_and_wait(void) {
 }
 
 s32 date_scene_shiori_winter_speak_with_effect(void) {
-    s32 unused; /* FAKE: extra local moves the spill slot of sel to sp+0x28; real source unknown. T-4090 */
-    s32 sel;
+    s32 fake_padding; /* FAKE: extra local moves the spill slot of saved_step_timer to sp+0x28; real source unknown. T-4090 */
+    s32 saved_step_timer;
 
     date_scene_speak();
     if ((u16) D_800CA154 == 2) {
-        sel = game_state.mode_step_timer.w;
+        saved_step_timer = game_state.mode_step_timer.w;
         event_face1();
         game_state.mode_step -= 1;
-        game_state.mode_step_timer.w = sel + 1;
-        if (sel == 1) {
+        game_state.mode_step_timer.w = saved_step_timer + 1;
+        if (saved_step_timer == 1) {
             audio_command(0x201);
             audio_command(0x502);
         }
@@ -299,15 +299,15 @@ void date_scene_shiori_winter_ferris_wheel_title(void) {
 }
 
 void date_scene_shiori_summer(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl45 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl45 step_handlers;
 
-    tbl = date_scene_shiori_summer_steps;
+    step_handlers = date_scene_shiori_summer_steps;
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_shiori_summer_audio_command_1(void) {

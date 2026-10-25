@@ -1,0 +1,8 @@
+TEXT_SPEED_FAST 0 T-27062 one glyph per frame
+TEXT_SPEED_NORMAL 1 T-27062 one glyph every two frames
+TEXT_SPEED_SLOW 3 T-27062 one glyph every four frames
+TEXT_SPEED_EVERY_SIX_FRAMES 5 T-27062 one glyph every six frames
+TEXT_SPEED_EVERY_NINE_FRAMES 8 T-27062 one glyph every nine frames
+TEXT_SPEED_EVERY_FIFTEEN_FRAMES 14 T-27062 one glyph every fifteen frames
+TEXT_SPEED_EVERY_SEVENTEEN_FRAMES 16 T-27062 one glyph every seventeen frames
+TEXT_SPEED_EVERY_THIRTY_ONE_FRAMES 30 T-27062 one glyph every thirty-one frames

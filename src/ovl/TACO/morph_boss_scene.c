@@ -1,90 +1,90 @@
-/* morph_boss_scene.c: src/ovl/TACO/801480B0.c:69: boss scene loads multipart model, runs morphing attack controller, handles defeat and damage-light flashes; body 72: func_8013A790(1, 1); 73: for (i = 0; i < 0xB; i++) {. Original object 0x801480B0-0x80148FE0 (config/objects/TACO.txt). */
+/* morph_boss_scene.c: src/ovl/TACO/801480B0.c:69: boss scene loads multipart model, runs morphing attack controller, handles defeat and damage-light flashes; body 72: shooter_update_stars(1, 1); 73: for (i = 0; i < 0xB; i++) {. Original object 0x801480B0-0x80148FE0 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_801480B0(void) {
+void shooter_stage_boss1(void) {
     if ((u32)game_state.mode_stage_timer < 0x60 && (game_state.frame_count & 0x10)) {
-        func_801432F0((s32)"1ST BOSS", -0x30, 0, 2);
+        shooter_draw_text((s32)"1ST BOSS", -0x30, 0, 2);
     }
     switch (game_state.mode_step) {
     case 0:
-        func_80148184();
+        shooter_boss1_step_init();
         break;
     case 1:
-        func_80148308();
+        shooter_boss1_step_entrance();
         break;
     case 2:
-        func_801483B0();
+        shooter_boss1_step_fight();
         break;
     case 3:
-        func_801484E4();
+        shooter_boss1_step_defeat();
         break;
     }
-    func_8013F250();
-    func_80132FE8();
-    func_80133374();
+    shooter_draw_hud();
+    shooter_update_battle();
+    shooter_check_battle_end();
 }
 
-void func_80148184(void) {
+void shooter_boss1_step_init(void) {
     s32 i;
 
-    if (D_8015EDBC == 0) {
-        D_8015EDBC = 0x20;
-        func_80143730(0x80162000, 0xE);
-        func_80143730(0x80172000, 0xC);
-        func_8014866C();
-        func_80146D60(0);
-        func_801471D0(0x8018D000);
-        /* pointer argument: as an int constant it is shared with the func_80143730 argument in a callee-saved register */
+    if (shooter_load_request == 0) {
+        shooter_load_request = 0x20;
+        shooter_load_texture_page(0x80162000, 0xE);
+        shooter_load_texture_page(0x80172000, 0xC);
+        shooter_boss1_set_lights();
+        shooter_init_object_hierarchy(0);
+        shooter_link_model_objects(0x8018D000);
+        /* pointer argument: as an int constant it is shared with the shooter_load_texture_page argument in a callee-saved register */
         load_csr_tp((void *)0x80162000, 8, 1, 0, 0, 0x100, 0x100);
-        func_80146F74(0, D_8015EDB4->unk74 - 0xBB8, D_8015EDB4->unk76 + 0x3E8, -0x109A0, 0, 0xBE, 0, 0, 0);
+        shooter_move_model(0, shooter_actors->x - 0xBB8, shooter_actors->y + 0x3E8, -0x109A0, 0, 0xBE, 0, 0, 0);
         for (i = 1; i < 0x1F; i++) {
-            func_801472D4(i, 0, D_8015F840[i - 1].a, D_8015F840[i - 1].b, D_8015F930[i - 1].a, D_8015F930[i - 1].b);
-            D_80127080[i].unk0 = 0;
+            shooter_set_pose_from_tables(i, 0, shooter_boss1_rest_pose_pointers[i - 1].translation, shooter_boss1_rest_pose_pointers[i - 1].rotation, shooter_boss1_rest_pose_flags[i - 1].translation_fixed, shooter_boss1_rest_pose_flags[i - 1].rotation_fixed);
+            D_80127080[i].attribute = 0;
         }
         D_80128880[0].x = 0;
         D_80128880[0].y = 0xBE;
         D_80128880[0].z = 0;
-        func_80148B58(0);
+        shooter_boss1_reset_parts(0);
         mode_step_next();
     }
 }
 
-void func_80148308(void) {
+void shooter_boss1_step_entrance(void) {
     s32 i;
     u32 t;
 
-    func_8013A790(1, 1);
+    shooter_update_stars(1, 1);
     t = game_state.mode_step_timer.u;
     if (t < 0x47E) {
         game_state.mode_step_timer.u = t; /* FAKE: the original writes the counter back before the call (store in the jal delay slot), source unknown. T-9370 */
-        func_8014AB50(t);
+        shooter_boss1_entrance_script(t);
     } else {
-        func_80148B58(1);
-        for (i = 1; i < 0x1F; i++) D_80127080[i].unk0 = 0;
+        shooter_boss1_reset_parts(1);
+        for (i = 1; i < 0x1F; i++) D_80127080[i].attribute = 0;
         mode_step_next();
     }
     game_state.mode_step_timer.u += 1;
 }
 
-void func_801483B0(void) {
+void shooter_boss1_step_fight(void) {
     s32 i;
 
-    func_8013A790(1, 1);
+    shooter_update_stars(1, 1);
     for (i = 0; i < 0xB; i++) {
-        func_801487A4(D_8015FA44[i], i, D_8015FA80, D_8015FA50, D_8015FA68);
+        shooter_boss1_update_part(shooter_boss1_part_objects[i], i, shooter_boss1_part_offsets, shooter_boss1_part_radius, shooter_boss1_part_hit_points);
     }
-    func_80148D6C();
-    func_8014B2A4(game_state.mode_step_timer.w);
-    if (func_80147B24(0xB, D_8015FA68) >= 0x50) {
-        D_80127090.unk0 = 0x40000000;
+    shooter_boss1_update_damage_lights();
+    shooter_boss1_update_ai(game_state.mode_step_timer.w);
+    if (shooter_boss_damage_percent(0xB, shooter_boss1_part_hit_points) >= 0x50) {
+        D_80127090.attribute = 0x40000000;
         for (i = 3; i < 0x1F; i++) {
-            D_80127080[i].unk0 = 0x40000000;
+            D_80127080[i].attribute = 0x40000000;
             /* FAKE: loop-invariant store; uopt hoists it behind the loop address setup, which places it as the original does. Real source unknown. T-10320 */
-            D_801270A0.unk0 = 0x40000000;
+            D_801270A0.attribute = 0x40000000;
         }
-        func_801335A0(0, 0x505);
-        D_8015EDCC += 1;
+        shooter_play_se(0, 0x505);
+        shooter_stages_cleared += 1;
         mode_step_next();
     }
     game_state.mode_step_timer.w += 1;
@@ -92,7 +92,7 @@ void func_801483B0(void) {
 
 /* s32 with no return (v0 live at the exit): with void the first spill of the counter is `sw v0` instead of the original's
  * `sw t0`. T-22005 */
-s32 func_801484E4() {
+s32 shooter_boss1_step_defeat() {
     s32 pad[2]; /* FAKE: reserves the 8 bytes of frame the original has below the spill slot; real local unknown. T-22005 */
     s32 t;
     u8 a;
@@ -102,33 +102,33 @@ s32 func_801484E4() {
     t = game_state.mode_step_timer.w;
     if (t < 0x78) {
         if (t % 60 == 0) {
-            func_801335A0(0, 0x508);
+            shooter_play_se(0, 0x508);
         }
-        func_80147E80(0);
+        shooter_boss_death_explosions(0);
     }
     if (t == 0x64) {
-        for (i = 1; i < 0x1F; i++) D_80127080[i].unk0 = 0x80000000;
+        for (i = 1; i < 0x1F; i++) D_80127080[i].attribute = 0x80000000;
     }
     if (t < 0x78) {
-        func_80153E78(1, 0xE0, 0xE0, 0xE0);
+        shooter_draw_flash_overlay(1, 0xE0, 0xE0, 0xE0);
     } else if (t >= 0x78 && t < 0xB0) {
         a = 0x2C0 - t * 4;
-        func_80153E78(1, a, a, a);
+        shooter_draw_flash_overlay(1, a, a, a);
     } else if (t >= 0xB0 && t < 0xF0) {
         b = t * 4 - 0x2C0;
-        func_80153E78(2, b, b, b);
+        shooter_draw_flash_overlay(2, b, b, b);
     } else if (t == 0xF0) {
-        func_80143730(0x80162000, 0xE);
-        func_80143730(0x80172000, 0xC);
+        shooter_load_texture_page(0x80162000, 0xE);
+        shooter_load_texture_page(0x80172000, 0xC);
         mode_stage_set(0x15);
     }
     /* FAKE: the frame counter is read through its own symbol for the final `+= 1`. The original reads it twice, as two uopt
-     * variables (the compare chain, then the increment). Keep line with proof=func_801484E4:32:cda52ed3 in config/migrate_globals.txt,
+     * variables (the compare chain, then the increment). Keep line with proof=shooter_boss1_step_defeat:32:cda52ed3 in config/migrate_globals.txt,
      * wiki/keep-lines.md. T-22005 */
     D_800E7384 += 1;
 }
 
-void func_8014866C(void) {
+void shooter_boss1_set_lights(void) {
     D_80122760 = -0x64;
     D_80122764 = 0x1E;
     D_80122768 = -0x1E;
@@ -155,7 +155,7 @@ void func_8014866C(void) {
 }
 
 /* arg2: 8-byte position records of four s16; arg3, arg4: byte pairs, all indexed by arg1. The s16 index `arg1 * 4 + k` is a two-step scaling (the original's extra ugen temporary, T-19013); the index-first sums for arg3 and arg4 set the operand order. */
-void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4) {
+void shooter_boss1_update_part(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4) {
     u8 st;
     MATRIX m;
     SVECTOR vec;
@@ -165,101 +165,101 @@ void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4) {
     s32 py;
 
     sel = arg1 + 0x10;
-    if (D_8015EDB4[17].unk2 == 1) {
+    if (shooter_actors[17].mode == 1) {
         px = ((s16 *)arg2)[arg1 * 4];
         py = ((s16 *)arg2)[arg1 * 4 + 1];
-        D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3);
-        if (arg0 == 0x1C && D_8015EDB4[16].unk84[2] == 1) {
-            D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
+        shooter_actors[sel].stats[0] = *(arg1 * 2 + (u8 *)arg3);
+        if (arg0 == 0x1C && shooter_actors[16].stats[2] == 1) {
+            shooter_actors[sel].stats[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
         }
-        if ((arg0 == 0x1C || arg0 == 0x1B || arg0 == 0x15) && D_8015EDB4[21].unk84[2] == 1) {
-            D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
+        if ((arg0 == 0x1C || arg0 == 0x1B || arg0 == 0x15) && shooter_actors[21].stats[2] == 1) {
+            shooter_actors[sel].stats[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
         }
-    } else if (D_8015EDB4[17].unk2 == 0x1D) {
+    } else if (shooter_actors[17].mode == 0x1D) {
         px = ((s16 *)arg2)[arg1 * 4 + 2];
         py = ((s16 *)arg2)[arg1 * 4 + 3];
-        D_8015EDB4[sel].unk84[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
-        if ((arg0 == 0x1B || arg0 == 0x1C) && D_8015EDB4[22].unk84[2] != 0 && D_8015EDB4[23].unk84[2] == 0) {
-            D_8015EDB4[sel].unk84[0] = 0;
+        shooter_actors[sel].stats[0] = *(arg1 * 2 + (u8 *)arg3 + 1);
+        if ((arg0 == 0x1B || arg0 == 0x1C) && shooter_actors[22].stats[2] != 0 && shooter_actors[23].stats[2] == 0) {
+            shooter_actors[sel].stats[0] = 0;
         }
     }
     m = *(MATRIX *)D_80125C60;
-    func_8015D0D0((D_80128880[0].x << 12) / 360, &m);
-    func_8015CF30((D_80128880[0].z << 12) / 360, &m);
-    func_8015D270((D_80128880[0].y << 12) / 360, &m);
-    vec.vx = D_80127480[arg0].unk18;
-    vec.vy = D_80127480[arg0].unk1C;
-    vec.vz = D_80127480[arg0].unk20;
+    shooter_rotation_matrix_x((D_80128880[0].x << 12) / 360, &m);
+    shooter_rotation_matrix_z((D_80128880[0].z << 12) / 360, &m);
+    shooter_rotation_matrix_y((D_80128880[0].y << 12) / 360, &m);
+    vec.vx = D_80127480[arg0].x;
+    vec.vy = D_80127480[arg0].y;
+    vec.vz = D_80127480[arg0].z;
     ApplyMatrixSV(&m, &vec, &rot);
-    D_8015EDB4[sel].unk74 = D_80127480[0].unk18 + rot.vx + px;
-    D_8015EDB4[sel].unk76 = D_80127480[0].unk1C + rot.vy + py;
-    D_8015EDB4[sel].unk78 = D_80127480[0].unk20 + rot.vz;
-    st = (sel + D_8015EDB4)->unk84[1];
-    if (st < 0x15U && (sel + D_8015EDB4)->unk82 < (sel + D_8015EDB4)->unk7A) {
-        (sel + D_8015EDB4)->unk84[1] = *(arg1 * 2 + (u8 *)arg4);
-        (sel + D_8015EDB4)->unk82 += 1;
-        st = D_8015EDB4[sel].unk84[1];
+    shooter_actors[sel].x = D_80127480[0].x + rot.vx + px;
+    shooter_actors[sel].y = D_80127480[0].y + rot.vy + py;
+    shooter_actors[sel].z = D_80127480[0].z + rot.vz;
+    st = (sel + shooter_actors)->stats[1];
+    if (st < 0x15U && (sel + shooter_actors)->auxiliary < (sel + shooter_actors)->counter) {
+        (sel + shooter_actors)->stats[1] = *(arg1 * 2 + (u8 *)arg4);
+        (sel + shooter_actors)->auxiliary += 1;
+        st = shooter_actors[sel].stats[1];
     }
     if (st == 0) {
         if ((game_state.mode_step_timer.w & 1) == 0) {
-            D_80127080[arg0].unk0 = 0x40000000;
+            D_80127080[arg0].attribute = 0x40000000;
         } else {
-            D_80127080[arg0].unk0 = 0x80000000;
+            D_80127080[arg0].attribute = 0x80000000;
         }
     }
 }
 
-void func_80148B58(s32 arg0) {
+void shooter_boss1_reset_parts(s32 arg0) {
     s32 index;
 
     index = 0x10;
     do {
-        func_80143B34(index);
+        shooter_release_actor_model(index);
         index += 1;
     } while (index < 0x3F);
     index = 0;
     if (arg0 > 0) {
         do {
-            func_80147928(D_8015FA44[index], index, 0x8018D000, D_8015FA50, D_8015FA68, 2);
+            shooter_attach_boss_part(shooter_boss1_part_objects[index], index, 0x8018D000, shooter_boss1_part_radius, shooter_boss1_part_hit_points, 2);
             index += 1;
         } while (index != 0xB);
     }
-    D_8015EDB4[16].unk84[2] = 0;
-    D_8015EDB4[16].unk3 = 0;
-    D_8015EDB4[16].unk2 = 0;
-    D_8015EDB4[17].unk84[2] = 0;
-    D_8015EDB4[17].unk3 = 0;
-    D_8015EDB4[17].unk2 = 1;
-    D_8015EDB4[18].unk84[2] = 0;
-    D_8015EDB4[18].unk3 = 0;
-    D_8015EDB4[18].unk2 = 0;
-    D_8015EDB4[19].unk84[2] = 0;
-    D_8015EDB4[19].unk3 = 0;
-    D_8015EDB4[19].unk2 = 0;
-    D_8015EDB4[20].unk84[2] = 0;
-    D_8015EDB4[20].unk3 = 0;
-    D_8015EDB4[20].unk2 = 0;
-    D_8015EDB4[21].unk84[2] = 0;
-    D_8015EDB4[21].unk3 = 0;
-    D_8015EDB4[21].unk2 = 0;
-    D_8015EDB4[22].unk84[2] = 0;
-    D_8015EDB4[22].unk3 = 0;
-    D_8015EDB4[22].unk2 = 0;
-    D_8015EDB4[23].unk84[2] = 0;
-    D_8015EDB4[24].unk84[2] = 0;
-    D_8015EDB4[24].unk3 = 0;
-    D_8015EDB4[24].unk2 = 0;
-    D_8015EDB4[25].unk84[2] = 0;
-    D_8015EDB4[25].unk3 = 0;
-    D_8015EDB4[25].unk2 = 0;
+    shooter_actors[16].stats[2] = 0;
+    shooter_actors[16].phase = 0;
+    shooter_actors[16].mode = 0;
+    shooter_actors[17].stats[2] = 0;
+    shooter_actors[17].phase = 0;
+    shooter_actors[17].mode = 1;
+    shooter_actors[18].stats[2] = 0;
+    shooter_actors[18].phase = 0;
+    shooter_actors[18].mode = 0;
+    shooter_actors[19].stats[2] = 0;
+    shooter_actors[19].phase = 0;
+    shooter_actors[19].mode = 0;
+    shooter_actors[20].stats[2] = 0;
+    shooter_actors[20].phase = 0;
+    shooter_actors[20].mode = 0;
+    shooter_actors[21].stats[2] = 0;
+    shooter_actors[21].phase = 0;
+    shooter_actors[21].mode = 0;
+    shooter_actors[22].stats[2] = 0;
+    shooter_actors[22].phase = 0;
+    shooter_actors[22].mode = 0;
+    shooter_actors[23].stats[2] = 0;
+    shooter_actors[24].stats[2] = 0;
+    shooter_actors[24].phase = 0;
+    shooter_actors[24].mode = 0;
+    shooter_actors[25].stats[2] = 0;
+    shooter_actors[25].phase = 0;
+    shooter_actors[25].mode = 0;
 }
 
-void func_80148D6C(void) {
+void shooter_boss1_update_damage_lights(void) {
     u32 v;
     u8 t;
 
-    v = func_80147B24(0xB, D_8015FA68);
-    if (D_8015EDB4[20].unk2 < v) {
+    v = shooter_boss_damage_percent(0xB, shooter_boss1_part_hit_points);
+    if (shooter_actors[20].mode < v) {
         D_80122760 = 0;
         D_80122764 = 0;
         D_80122768 = -0x64;
@@ -281,9 +281,9 @@ void func_80148D6C(void) {
         D_8012278D = 0x80;
         D_8012278E = 0x80;
         func_8009AD70(2, &D_80122780);
-        t = D_8015EDB4[20].unk3;
+        t = shooter_actors[20].phase;
         if (t >= 3U) {
-            D_8015EDB4[20].unk2 = v;
+            shooter_actors[20].mode = v;
             D_80122760 = -0x64;
             D_80122764 = 0x1E;
             D_80122768 = -0x1E;
@@ -305,9 +305,9 @@ void func_80148D6C(void) {
             D_8012278D = 0x30;
             D_8012278E = 0x30;
             func_8009AD70(2, &D_80122780);
-            D_8015EDB4[20].unk3 = 0;
+            shooter_actors[20].phase = 0;
         } else {
-            D_8015EDB4[20].unk3 = t + 1;
+            shooter_actors[20].phase = t + 1;
         }
     }
 }

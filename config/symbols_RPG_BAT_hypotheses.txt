@@ -1,0 +1,4 @@
+// HYPOTHESES, not facts: names of the overlay RPG_BAT that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+rpg_nozomi_is_calm = 0x80156870; // type:func
+rpg_guest_value = 0x8015EE18;

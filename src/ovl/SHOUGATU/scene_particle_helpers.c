@@ -106,7 +106,7 @@ void func_80141B98(void) {
 void func_80141BC0(void) {
     D_8014653C = get_k_speed();
     D_80122CFC = 0x72;
-    k_speed_set(0x1E);
+    k_speed_set(TEXT_SPEED_EVERY_THIRTY_ONE_FRAMES);
     k_disp_start(2);
     mode_step_next();
 }

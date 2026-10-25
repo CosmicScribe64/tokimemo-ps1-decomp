@@ -1,57 +1,57 @@
-/* save_and_exit.c: src/ovl/TACO/80142820.c:7: stage 46; body 8: switch (game_state.mode_step) {; 10: func_801428DC();. Original object 0x80142820-0x801430B0 (config/objects/TACO.txt). */
+/* save_and_exit.c: src/ovl/TACO/80142820.c:7: stage 46; body 8: switch (game_state.mode_step) {; 10: shooter_exit_step_save_settings();. Original object 0x80142820-0x801430B0 (config/objects/TACO.txt). */
 #define MAIN_API_OVERRIDE_strncpy /* matched as int: the call's $v0 result range (main_api.h: void), T-19009 */
 #include "common.h"
 #include "ovl/TACO.h"
 
 s32 strncpy();
 
-void func_80142820(void) {
+void shooter_stage_exit(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801428DC();
+        shooter_exit_step_save_settings();
         break;
     case 1:
-        func_80142FE8();
+        shooter_exit_step_stop_sound();
         break;
     case 2:
-        func_80142AF0();
+        shooter_exit_step_write_memory_card();
         break;
     case 3:
-        func_80142EC4();
+        shooter_exit_step_reload_main_data_1();
         break;
     case 4:
-        func_80142EE4();
+        shooter_exit_step_reload_main_data_2();
         break;
     case 5:
-        func_80142F0C();
+        shooter_exit_step_reload_main_data_3();
         break;
     case 6:
-        func_80142F34();
+        shooter_exit_step_load_day_data();
         break;
     case 7:
-        func_80142DE0();
+        shooter_exit_step_return();
         break;
     }
 }
 
-/* Settings block at system_data +0x40 (SystemData in main_api.h since T-20900; the loader func_801345D4 in
+/* Settings block at system_data +0x40 (SystemData in main_api.h since T-20900; the loader shooter_load_settings_and_scores in
  * 80133870.c has its own view of it, T-16562): byte 0 holds the "saved" flag, the mode and the selector, byte 1 two
  * more selectors. Every access relocates against the one symbol system_data: as1 then hoists the flag byte load over
  * the word stores, as the original does (separate symbols D_800E7D50/D_800E7D5C keep it after them). T-19009 */
 
-void func_801428DC(void) {
+void shooter_exit_step_save_settings(void) {
     system_data.bits.flag = 1;
-    system_data.w0 = D_8015EDF8;
-    system_data.w1 = D_8015EDFC;
-    system_data.w2 = D_8015EE00;
-    strncpy(system_data.name0, D_8015EE04, 3);
-    strncpy(system_data.name1, D_8015EE08, 3);
-    strncpy(system_data.name2, D_8015EE0C, 3);
+    system_data.w0 = shooter_high_score_1;
+    system_data.w1 = shooter_high_score_2;
+    system_data.w2 = shooter_high_score_3;
+    strncpy(system_data.name0, shooter_high_score_name_1, 3);
+    strncpy(system_data.name1, shooter_high_score_name_2, 3);
+    strncpy(system_data.name2, shooter_high_score_name_3, 3);
     /* the % 2 folds away, but keeps the extra copy of the value that the original has */
-    system_data.bits.mode = D_8015EDD8 % 2;
-    system_data.bits.sel = D_8015EDDC % 3;
-    system_data.bits.hi = D_8015EDE0 % 3;
-    system_data.bits.lo = D_8015EDE4 % 3;
+    system_data.bits.mode = shooter_setting_auto_shot % 2;
+    system_data.bits.sel = shooter_setting_roll_button % 3;
+    system_data.bits.hi = shooter_setting_shot_button % 3;
+    system_data.bits.lo = shooter_setting_bomb_button % 3;
     sprite_tables_clear();
     draw2d3d(0, 0);
     game_state.screen_center_x[0] = 0xA0;
@@ -64,13 +64,13 @@ void func_801428DC(void) {
     }
     func_8005907C();
     func_80059048();
-    func_801347A8();
+    shooter_hide_all_models();
     actor_clear_range(0);
     actor_draw_enable(0);
     mode_step_next();
 }
 
-void func_80142AF0(void) {
+void shooter_exit_step_write_memory_card(void) {
     GameState *gs = &game_state;
     s32 temp;
 
@@ -150,15 +150,15 @@ typedef struct {
     u32 pad0 : 1;
     u32 flag : 1;
     u32 pad1 : 30;
-} TcBits;
+} ShooterUnlockBits;
 
-void func_80142DE0(void) {
+void shooter_exit_step_return(void) {
     text_system_reset();
     dec_bg_reset();
     draw2d3d(1, 0);
     actor_draw_enable(1);
     *(s32 *) &game_state.menu_hit[3] = 0x9F;
-    if (((TcBits *) &D_800E7D50)->flag == 1) {
+    if (((ShooterUnlockBits *) &D_800E7D50)->flag == 1) {
         actor_clear_range(0);
         tpage_buf_clear();
         game_mode_set(game_state.saved_game_mode);
@@ -175,21 +175,21 @@ void func_80142DE0(void) {
     game_mode_set(GAME_MODE_TITLE);
 }
 
-void func_80142EC4(void) {
+void shooter_exit_step_reload_main_data_1(void) {
     func_80059E00();
 }
 
-void func_80142EE4(void) {
+void shooter_exit_step_reload_main_data_2(void) {
     func_80059BE8();
     mode_step_next();
 }
 
-void func_80142F0C(void) {
+void shooter_exit_step_reload_main_data_3(void) {
     func_8004ADE4();
     mode_step_next();
 }
 
-u8 func_80142F34(void) {
+u8 shooter_exit_step_load_day_data(void) {
     switch (game_state.substep) {
     case 0:
         cd_read_sectors(0x95, 0x801A0000, 0x9B94);
@@ -207,7 +207,7 @@ u8 func_80142F34(void) {
     }
 }
 
-u8 func_80142FE8(void) {
+u8 shooter_exit_step_stop_sound(void) {
     switch (game_state.substep) {
     case 0:
         audio_bank_state_reset();

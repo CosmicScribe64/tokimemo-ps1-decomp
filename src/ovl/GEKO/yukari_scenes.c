@@ -65,12 +65,12 @@ void encounter_yukari_scene_two_dispatch(void) {
 }
 
 void encounter_yukari_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl32 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl32 mode_step_callbacks;
 
-    tbl = encounter_yukari_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yukari_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
 }
 
 void encounter_yukari_assets_load_1(void) {
@@ -85,12 +85,12 @@ typedef struct {
 extern FnTbl23 encounter_yukari_scene_two_steps;
 
 void encounter_yukari_scene_two_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl23 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl23 mode_step_callbacks;
 
-    tbl = encounter_yukari_scene_two_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    mode_step_callbacks = encounter_yukari_scene_two_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index]();
 }
 
 void encounter_yukari_scene_init_1(void) {

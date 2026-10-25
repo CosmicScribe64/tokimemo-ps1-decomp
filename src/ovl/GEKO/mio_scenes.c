@@ -38,12 +38,12 @@ void encounter_mio_scene_one_dispatch(void) {
 }
 
 void encounter_mio_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl39 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl39 mode_step_callbacks;
 
-    tbl = encounter_mio_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_mio_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
 }
 
 void encounter_mio_assets_load_1(void) {

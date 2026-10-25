@@ -1,0 +1,12 @@
+// HYPOTHESES, not facts: names of the overlay TACO that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+shooter_play_triangle_voice = 0x80133738; // type:func
+shooter_load_step_sound_banks = 0x80133AF4; // type:func
+shooter_stage_how_to_play = 0x80137A60; // type:func
+shooter_play_help_voice = 0x80137CBC; // type:func
+shooter_snapshot_screen = 0x8013B404; // type:func
+shooter_exit_step_write_memory_card = 0x80142AF0; // type:func
+shooter_exit_step_load_day_data = 0x80142F34; // type:func
+shooter_exit_step_stop_sound = 0x80142FE8; // type:func
+shooter_triangle_voice_table = 0x8015E238;
+shooter_help_voice_table = 0x8015F440;

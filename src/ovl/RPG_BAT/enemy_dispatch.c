@@ -1,118 +1,118 @@
-/* enemy_dispatch.c: src/ovl/RPG_BAT/8013C890.c:5: enemy action dispatch; body 6: if (func_80144640() < D_8015EDC8 && !(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF) &&; 8: D_8015EBDC = func_8013EA00(0x14, 0x28);. Original object 0x8013C890-0x8013CC90 (config/objects/RPG_BAT.txt). */
-#define RPG_BAT_OVERRIDE_func_8013C890 /* defined s32 without a return: v0 live at the exit keeps the lw ra delay slot (T-17113); callers see void */
+/* enemy_dispatch.c: src/ovl/RPG_BAT/8013C890.c:5: enemy action dispatch; body 6: if (rpg_enemy_action_threshold() < rpg_enemy_timer && !(rpg_player_action & 0xFF) && !(rpg_enemy_action & 0xFF) && !(rpg_over & 0xFF) &&; 8: rpg_enemy_delay_extra = rpg_rand2(0x14, 0x28);. Original object 0x8013C890-0x8013CC90 (config/objects/RPG_BAT.txt). */
+#define RPG_BAT_OVERRIDE_rpg_enemy_update /* defined s32 without a return: v0 live at the exit keeps the lw ra delay slot (T-17113); callers see void */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-s32 func_8013C890(void) {
-    if (func_80144640() < D_8015EDC8 && !(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF) &&
-        !(D_8015EDF0 & 0xFF)) {
-        D_8015EBDC = func_8013EA00(0x14, 0x28);
-        D_8015EDC8 = 0;
-        D_8015EDC4 |= func_80144B7C();
-        if (!(D_8015EDC4 & 0xFF)) {
-            D_8015EDC8 = func_8013EA00(0x3C, 0x5A);
+s32 rpg_enemy_update(void) {
+    if (rpg_enemy_action_threshold() < rpg_enemy_timer && !(rpg_player_action & 0xFF) && !(rpg_enemy_action & 0xFF) && !(rpg_over & 0xFF) &&
+        !(rpg_girl_action & 0xFF)) {
+        rpg_enemy_delay_extra = rpg_rand2(0x14, 0x28);
+        rpg_enemy_timer = 0;
+        rpg_enemy_action |= rpg_enemy_pick_action();
+        if (!(rpg_enemy_action & 0xFF)) {
+            rpg_enemy_timer = rpg_rand2(0x3C, 0x5A);
         }
     }
-    if (D_8015EDC4 & 0xFF) {
-        switch (D_8015EDC4 & 0xFFFF0000) {
+    if (rpg_enemy_action & 0xFF) {
+        switch (rpg_enemy_action & 0xFFFF0000) {
         case 0x10000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_80152080();
+                rpg_enemy_trip_attack();
                 break;
             case 2:
-                func_80145CC0();
+                rpg_enemy_snake_finale();
                 break;
             }
             break;
         case 0x20000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_80152080();
+                rpg_enemy_trip_attack();
                 break;
             case 2:
-                func_80146C30();
+                rpg_enemy_deer_finale();
                 break;
             }
             break;
         case 0x40000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_80152080();
+                rpg_enemy_trip_attack();
                 break;
             case 2:
-                func_80133108();
+                rpg_enemy_bear_finale();
                 break;
             }
             break;
         case 0x100000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_80138120();
+                rpg_enemy_delinquent_taunt();
                 break;
             case 2:
-                func_801387F0();
+                rpg_enemy_delinquent_punch();
                 break;
             case 3:
-                func_80138170();
+                rpg_enemy_delinquent_punch_miss();
                 break;
             case 4:
-                func_80138324();
+                rpg_enemy_delinquent_punch_ally();
                 break;
             case 5:
-                func_80138B9C();
+                rpg_enemy_delinquent_punch_knockdown();
                 break;
             case 6:
-                func_80138F6C();
+                rpg_enemy_delinquent_punch_cover();
                 break;
             case 7:
-                func_80139460();
+                rpg_enemy_player_defeated();
                 break;
             }
             break;
         case 0x200000:
         case 0x400000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_80158A0C();
+                rpg_enemy_bancho_taunt();
                 break;
             case 2:
-                func_80158C4C();
+                rpg_enemy_bancho_attack();
                 break;
             case 3:
-                func_8015906C();
+                rpg_enemy_bancho_phase_two();
                 break;
             case 4:
-                func_80159214();
+                rpg_enemy_bancho_attack_powered();
                 break;
             case 5:
-                func_80159620();
+                rpg_enemy_player_defeated_bancho();
                 break;
             }
             break;
         case 0x8000000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_8013FD8C();
+                rpg_enemy_robot_attack();
                 break;
             case 2:
-                func_80140CC8();
+                rpg_enemy_robot_intro();
                 break;
             }
             break;
         case 0x80000000:
-            switch (D_8015EDC4 & 0xFFFF) {
+            switch (rpg_enemy_action & 0xFFFF) {
             case 1:
-                func_80156D78();
+                rpg_enemy_alien_attack_1();
                 break;
             case 2:
-                func_80157158();
+                rpg_enemy_alien_attack_2();
                 break;
             case 3:
-                func_80157640();
+                rpg_enemy_alien_retreat();
                 break;
             case 4:
-                func_80156CC0();
+                rpg_enemy_alien_chatter();
                 break;
             }
             break;

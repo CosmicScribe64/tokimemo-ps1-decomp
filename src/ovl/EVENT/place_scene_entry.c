@@ -2,8 +2,8 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_8010BB90(void) {
-    D_801241D0 = 0x80197DD4;
+void spot_fill_sections_common(void) {
+    spot_date_common_pointers = 0x80197DD4;
     D_801241D4 = 0x80197620;
     D_801241D8 = 0x80197E30;
     D_801241DC = 0x80197E44;
@@ -17,8 +17,8 @@ void func_8010BB90(void) {
     D_801241FC = 0x80197E4C;
 }
 
-void func_8010BC54(void) {
-    D_80124200 = 0x80198684;
+void spot_fill_sections_shiori(void) {
+    spot_date_sections = 0x80198684;
     D_80124204 = 0x80198C94;
     D_80124208 = 0x80199054;
     D_8012420C = 0x801994B0;
@@ -101,8 +101,8 @@ void func_8010BC54(void) {
     D_80124340 = 0x8019D530;
 }
 
-void func_8010C168(void) {
-    D_80124200 = 0x8019863C;
+void spot_fill_sections_mio(void) {
+    spot_date_sections = 0x8019863C;
     D_80124204 = 0x80198C14;
     D_80124208 = 0x80198FC4;
     D_8012420C = 0x80199568;
@@ -182,8 +182,8 @@ void func_8010C168(void) {
     D_80124340 = 0x8019DB78;
 }
 
-void func_8010C64C(void) {
-    D_80124200 = 0x801985C4;
+void spot_fill_sections_yuina(void) {
+    spot_date_sections = 0x801985C4;
     D_80124204 = 0x80198B7C;
     D_80124208 = 0x80198EB0;
     D_8012420C = 0x801992A8;
@@ -263,8 +263,8 @@ void func_8010C64C(void) {
     D_80124340 = 0x8019CD4C;
 }
 
-void func_8010CB30(void) {
-    D_80124200 = 0x801985C8;
+void spot_fill_sections_ayako(void) {
+    spot_date_sections = 0x801985C8;
     D_80124204 = 0x80198B80;
     D_80124208 = 0x80198ECC;
     D_8012420C = 0x801992E4;
@@ -344,8 +344,8 @@ void func_8010CB30(void) {
     D_80124340 = 0x8019D240;
 }
 
-void func_8010D014(void) {
-    D_80124200 = 0x8019863C;
+void spot_fill_sections_saki(void) {
+    spot_date_sections = 0x8019863C;
     D_80124204 = 0x80198BF8;
     D_80124208 = 0x80198F64;
     D_8012420C = 0x801993A4;
@@ -428,8 +428,8 @@ void func_8010D014(void) {
     D_80124340 = 0x8019D150;
 }
 
-void func_8010D528(void) {
-    D_80124200 = 0x801985BC;
+void spot_fill_sections_yukari(void) {
+    spot_date_sections = 0x801985BC;
     D_80124204 = 0x80198B8C;
     D_80124208 = 0x80198EE0;
     D_8012420C = 0x801992FC;
@@ -512,8 +512,8 @@ void func_8010D528(void) {
     D_80124340 = 0x8019D654;
 }
 
-void func_8010DA3C(void) {
-    D_80124200 = 0x8019846C;
+void spot_fill_sections_nozomi(void) {
+    spot_date_sections = 0x8019846C;
     D_80124204 = 0x801989E8;
     D_80124208 = 0x80198CE4;
     D_8012420C = 0x801990C8;
@@ -596,8 +596,8 @@ void func_8010DA3C(void) {
     D_80124340 = 0x8019CC90;
 }
 
-void func_8010DF50(void) {
-    D_80124200 = 0x80198728;
+void spot_fill_sections_mira(void) {
+    spot_date_sections = 0x80198728;
     D_80124204 = 0x80198DC8;
     D_80124208 = 0x801990F0;
     D_8012420C = 0x80199514;
@@ -680,8 +680,8 @@ void func_8010DF50(void) {
     D_80124340 = 0x8019D858;
 }
 
-void func_8010E464(void) {
-    D_80124200 = 0x801984C0;
+void spot_fill_sections_yuko(void) {
+    spot_date_sections = 0x801984C0;
     D_80124204 = 0x80198A3C;
     D_80124208 = 0x80198D80;
     D_8012420C = 0x80199150;
@@ -761,8 +761,8 @@ void func_8010E464(void) {
     D_80124340 = 0x8019CCFC;
 }
 
-void func_8010E948(void) {
-    D_80124200 = 0x80198600;
+void spot_fill_sections_megumi(void) {
+    spot_date_sections = 0x80198600;
     D_80124204 = 0x80198B80;
     D_80124208 = 0x80198EC8;
     D_8012420C = 0x8019928C;
@@ -842,8 +842,8 @@ void func_8010E948(void) {
     D_80124340 = 0x8019D2F8;
 }
 
-void func_8010EE2C(void) {
-    D_80124200 = 0x8019868C;
+void spot_fill_sections_yumi(void) {
+    spot_date_sections = 0x8019868C;
     D_80124204 = 0x80198DA0;
     D_80124208 = 0x80199134;
     D_8012420C = 0x801995D0;
@@ -926,7 +926,7 @@ void func_8010EE2C(void) {
     D_80124340 = 0x8019D870;
 }
 
-void func_8010F340(void) {
+void spot_place_init_step(void) {
     func_80012D2C(1, 0);
     func_8001886C(1);
     func_80010678();
@@ -942,13 +942,13 @@ void func_8010F340(void) {
     func_800201FC(1);
     func_8003535C();
     func_8003580C();
-    D_801243B0 = D_800B0F2C;
+    spot_place = D_800B0F2C;
     /* FAKE: u32 view of the s32 D_800EECB4; the plain store changes the register of the later D_800B0F30 compare; T-22011 */
     *(u32 *)&D_800EECB4 = D_800B0F30;
     D_80094730 = 0;
-    D_801252E4 = 1;
+    spot_arrival_mode = 1;
     if (!(D_800B1AE4 & 3) && (D_800B0F30 != 2)) {
-        D_801252E4 = 0;
+        spot_arrival_mode = 0;
     }
     D_801243B4 = 0;
     D_80124384 = 0;
@@ -965,14 +965,14 @@ void func_8010F340(void) {
     func_80011DFC();
 }
 
-void func_8010F4B8(void) {
+void spot_place_scene_frame(void) {
     func_8004ACA8();
     switch (D_800B1AF5) {                           /* irregular */
     case 0:
-        func_8010F55C();
+        spot_place_arrival_run();
         break;
     case 1:
-        func_8010F74C();
+        spot_place_scene_run();
         break;
     default:
         func_80015FE0();
@@ -987,80 +987,80 @@ void func_8010F4B8(void) {
     func_8004AEB0();
 }
 
-s32 func_8010F55C(void) {
+s32 spot_place_arrival_run(void) {
     s32 pad[5]; /* FAKE: 20 bytes above tbl place tbl at sp+0x30 in the 0x138 frame (T-3330) */
     FnTbl61 tbl;
 
-    tbl = D_801243B8;
-    if (tbl.f[D_800B1AF6] == func_80111E60) {
+    tbl = spot_place_arrival_steps;
+    if (tbl.f[D_800B1AF6] == spot_place_neighborhood_park_arrival) {
         /* FAKE: second-block reference to D_800B1AF6 promotes it to $a1 at function entry */
-        switch (D_800B1AF6 * 0 + D_801243B0) {
+        switch (D_800B1AF6 * 0 + spot_place) {
         case 1:
-            tbl.f[D_800B1AF6] = func_80111F04;
+            tbl.f[D_800B1AF6] = spot_place_kirameki_central_park_arrival;
             break;
         case 2:
-            tbl.f[D_800B1AF6] = func_801139CC;
+            tbl.f[D_800B1AF6] = spot_place_shopping_street_arrival;
             break;
         case 3:
-            tbl.f[D_800B1AF6] = func_8011220C;
+            tbl.f[D_800B1AF6] = spot_place_aquarium_arrival;
             break;
         case 4:
-            tbl.f[D_800B1AF6] = func_80112460;
+            tbl.f[D_800B1AF6] = spot_place_zoo_arrival;
             break;
         case 5:
-            tbl.f[D_800B1AF6] = func_80112750;
+            tbl.f[D_800B1AF6] = spot_place_botanical_garden_arrival;
             break;
         case 6:
-            tbl.f[D_800B1AF6] = func_80112930;
+            tbl.f[D_800B1AF6] = spot_place_planetarium_arrival;
             break;
         case 7:
-            tbl.f[D_800B1AF6] = func_80112BEC;
+            tbl.f[D_800B1AF6] = spot_place_art_museum_arrival;
             break;
         case 8:
-            tbl.f[D_800B1AF6] = func_801130F0;
+            tbl.f[D_800B1AF6] = spot_place_library_arrival;
             break;
         case 9:
-            tbl.f[D_800B1AF6] = func_80113300;
+            tbl.f[D_800B1AF6] = spot_place_game_center_arrival;
             break;
         case 10:
-            tbl.f[D_800B1AF6] = func_80113520;
+            tbl.f[D_800B1AF6] = spot_place_bowling_alley_arrival;
             break;
         case 11:
-            tbl.f[D_800B1AF6] = func_801136FC;
+            tbl.f[D_800B1AF6] = spot_place_karaoke_arrival;
             break;
         case 12:
-            tbl.f[D_800B1AF6] = func_801138D8;
+            tbl.f[D_800B1AF6] = spot_place_amusement_park_arrival;
             break;
         case 13:
-            tbl.f[D_800B1AF6] = func_80113A40;
+            tbl.f[D_800B1AF6] = spot_place_stadium_arrival;
             break;
         case 14:
-            tbl.f[D_800B1AF6] = func_80113CA0;
+            tbl.f[D_800B1AF6] = spot_place_movie_theater_arrival;
             break;
         case 15:
-            tbl.f[D_800B1AF6] = func_80113FD4;
+            tbl.f[D_800B1AF6] = spot_place_concert_hall_arrival;
             break;
         case 16:
-            tbl.f[D_800B1AF6] = func_801142E8;
+            tbl.f[D_800B1AF6] = spot_place_pool_arrival;
             break;
         case 17:
-            tbl.f[D_800B1AF6] = func_801144AC;
+            tbl.f[D_800B1AF6] = spot_place_sea_arrival;
             break;
         case 18:
-            tbl.f[D_800B1AF6] = func_801146B4;
+            tbl.f[D_800B1AF6] = spot_place_shrine_arrival;
             break;
         case 19:
-            tbl.f[D_800B1AF6] = func_80114784;
+            tbl.f[D_800B1AF6] = spot_place_skating_rink_arrival;
             break;
         case 20:
-            tbl.f[D_800B1AF6] = func_80114948;
+            tbl.f[D_800B1AF6] = spot_place_ski_resort_arrival;
             break;
         }
     }
     tbl.f[D_800B1AF6](0x80);
 }
 
-s32 func_8010F74C(void) {
+s32 spot_place_scene_run(void) {
     s32 pad; /* FAKE: unused, declared first so the 21 tables sit 4 bytes lower as in the original; T-22011 */
     FnTbl18 spD04;
     FnTbl35 spC78;
@@ -1085,29 +1085,29 @@ s32 func_8010F74C(void) {
     FnTbl31 sp30;
     void (**tbl)();
 
-    spD04 = D_801244AC;
-    spC78 = D_801244F4;
-    spBB8 = D_80124580;
-    spB38 = D_80124640;
-    spAAC = D_801246C0;
-    spA24 = D_8012474C;
-    sp994 = D_801247D4;
-    sp900 = D_80124864;
-    sp870 = D_801248F8;
-    sp7D4 = D_80124988;
-    sp754 = D_80124A24;
-    sp6D4 = D_80124AA4;
-    sp538 = D_80124B24;
-    sp4C4 = D_80124CC0;
-    sp410 = D_80124D34;
-    sp36C = D_80124DE8;
-    sp2D8 = D_80124E8C;
-    sp21C = D_80124F20;
-    sp128 = D_80124FDC;
-    spAC = *(FnTbl31 *)&D_801250D0;
-    sp30 = D_8012514C;
+    spD04 = spot_place_neighborhood_park_steps;
+    spC78 = spot_place_kirameki_central_park_steps;
+    spBB8 = spot_place_shopping_street_steps;
+    spB38 = spot_place_aquarium_steps;
+    spAAC = spot_place_zoo_steps;
+    spA24 = spot_place_botanical_garden_steps;
+    sp994 = spot_place_planetarium_steps;
+    sp900 = spot_place_art_museum_steps;
+    sp870 = spot_place_library_steps;
+    sp7D4 = spot_place_game_center_steps;
+    sp754 = spot_place_bowling_alley_steps;
+    sp6D4 = spot_place_karaoke_steps;
+    sp538 = spot_place_amusement_park_steps;
+    sp4C4 = spot_place_stadium_steps;
+    sp410 = spot_place_movie_theater_steps;
+    sp36C = spot_place_concert_hall_steps;
+    sp2D8 = spot_place_pool_steps;
+    sp21C = spot_place_sea_steps;
+    sp128 = spot_place_shrine_steps;
+    spAC = *(FnTbl31 *)&spot_place_skating_rink_steps;
+    sp30 = spot_place_ski_resort_steps;
     tbl = spD04.f;
-    switch (D_801243B0) {
+    switch (spot_place) {
     case 0:
         tbl = spD04.f;
         break;
@@ -1178,15 +1178,15 @@ s32 func_8010F74C(void) {
     }
     tbl[D_800B1AF6](0x80);
     if (D_800EECF0 != 0) {
-        func_8011B848();
+        spot_particles_update();
     }
     /* FAKE: zero-multiplied block references keep tbl in $v0 and promote D_800B1AF6 to $v1 at .L8010FDD8 */
     if ((tbl == spC78.f) && ((u8) D_800B1AF6 + ((s32)tbl * 0) >= 0xCU) && ((u8) D_800B1AF6 + ((s32)tbl * 0) < 0x15U)) {
-        func_8011C164();
+        spot_place_falling_sprites_update();
     }
     if (tbl == spC78.f + D_800B1AF6 * 0) {
         if (D_800B1AF6 + ((s32)tbl * 0) == 0x15) {
-            func_8011C11C();
+            spot_place_falling_sprites_hide();
         }
     }
 }

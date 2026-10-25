@@ -642,7 +642,7 @@ s32 func_80133718(void) {
             game_state.menu_cursor_1 = 2;
             break;
         default:
-            k_speed_set(0);
+            k_speed_set(TEXT_SPEED_FAST);
             game_state.menu_cursor_1 = 0;
             break;
         }
@@ -672,19 +672,19 @@ s32 func_8013394C(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (g->menu_cursor_1) {
         case 0:
-            k_speed_set(0);
+            k_speed_set(TEXT_SPEED_FAST);
             game_state.options_dirty |= 0x80;
             mode_step_next();
             audio_command(0x501);
             break;
         case 1:
-            k_speed_set(1);
+            k_speed_set(TEXT_SPEED_NORMAL);
             game_state.options_dirty |= 0x80;
             mode_step_next();
             audio_command(0x501);
             break;
         case 2:
-            k_speed_set(3);
+            k_speed_set(TEXT_SPEED_SLOW);
             game_state.options_dirty |= 0x80;
             mode_step_next();
             audio_command(0x501);
@@ -964,7 +964,7 @@ void func_801344E4(void) {
                 ((Actor *)actor_pool)[i + 14].unk_18 = j; ((Actor *)actor_pool)[i + 14].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 14].x = 0;
                 ((Actor *)actor_pool)[i + 14].y = k;
-                if (game_state.confirm_button == 1) {
+                if (game_state.confirm_button == SETTINGS_CONFIRM_BUTTON_MOUSE_RIGHT) {
                     ((Actor *)actor_pool)[14].unk_18++;
                 } else {
                     ((Actor *)actor_pool)[15].unk_18++;
@@ -1098,13 +1098,13 @@ void func_80134C00(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (sel) {
         case 0:
-            game_state.confirm_button = 1;
+            game_state.confirm_button = SETTINGS_CONFIRM_BUTTON_MOUSE_RIGHT;
             game_state.options_dirty |= 0x10;
             mode_step_next();
             audio_command(0x501);
             break;
         case 1:
-            game_state.confirm_button = 0;
+            game_state.confirm_button = SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT;
             game_state.options_dirty |= 0x10;
             mode_step_next();
             audio_command(0x501);
@@ -1173,13 +1173,13 @@ void func_80134E64(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (sel) {
         case 0:
-            game_state.click_mode = 0;
+            game_state.click_mode = SETTINGS_CLICK_MODE_SINGLE;
             game_state.options_dirty |= 0x40;
             mode_step_next();
             audio_command(0x501);
             break;
         case 1:
-            game_state.click_mode = 1;
+            game_state.click_mode = SETTINGS_CLICK_MODE_DOUBLE;
             game_state.options_dirty |= 0x40;
             mode_step_next();
             audio_command(0x501);
@@ -1252,7 +1252,7 @@ void func_80135110(void) {
             ((Actor *)actor_pool_96)[i + 18].unk_18 = j + 0x2A;
         }
     }
-    if (((game_state.confirm_button != 0) && (game_state.mouse_buttons & MOUSE_RIGHT)) || ((game_state.confirm_button == 0) && (game_state.mouse_buttons & MOUSE_LEFT))) {
+    if (((game_state.confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) && (game_state.mouse_buttons & MOUSE_RIGHT)) || ((game_state.confirm_button == 0) && (game_state.mouse_buttons & MOUSE_LEFT))) {
         switch (sel) {
         case 0:
             game_state.options_dirty |= 0x20;
@@ -1292,7 +1292,7 @@ void func_80135110(void) {
 void func_801352FC(void) {
     if ((*(u8 *)&game_state.double_click_interval != 0) && ((u32) ((game_state.frame_count / *(u8 *)&game_state.double_click_interval) & 3) < 2U)) {
         if ((u32) ((u32) game_state.frame_count % *(u8 *)&game_state.double_click_interval) < 2U) {
-            if (game_state.confirm_button == 0) {
+            if (game_state.confirm_button == SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) {
                 D_80120BB8 = 0x78;
                 return;
             }
@@ -1627,35 +1627,35 @@ s32 func_801361FC(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         switch (sel) {
         case 0:
-            game_state.cursor_speed = 1;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_SLOWEST;
             game_state.input_device = INPUT_NONE;
             game_state.options_dirty |= 8;
             mode_step_next();
             audio_command(0x501);
             break;
         case 1:
-            game_state.cursor_speed = 2;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_SLOWER;
             game_state.input_device = INPUT_NONE;
             game_state.options_dirty |= 8;
             mode_step_next();
             audio_command(0x501);
             break;
         case 2:
-            game_state.cursor_speed = 3;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_NORMAL;
             game_state.input_device = INPUT_NONE;
             game_state.options_dirty |= 8;
             mode_step_next();
             audio_command(0x501);
             break;
         case 3:
-            game_state.cursor_speed = 4;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_FASTER;
             game_state.input_device = INPUT_NONE;
             game_state.options_dirty |= 8;
             mode_step_next();
             audio_command(0x501);
             break;
         case 4:
-            game_state.cursor_speed = 6;
+            game_state.cursor_speed = SETTINGS_CURSOR_SPEED_FASTEST;
             game_state.input_device = INPUT_NONE;
             game_state.options_dirty |= 8;
             mode_step_next();

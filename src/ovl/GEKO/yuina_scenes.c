@@ -6,9 +6,9 @@
 extern u32 talk_work;
 
 typedef struct {
-    void (*f[41])();
-} FnTbl41; /* size 0xA4 */
-extern FnTbl41 encounter_yuina_scene_seven_steps;
+    void (*callbacks[41])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013AF80.c:9; func_8013B2C8 at line102 copies this exact41-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterYuinaSceneSevenSteps; /* size 0xA4 */
+extern EncounterYuinaSceneSevenSteps encounter_yuina_scene_seven_steps;
 
 void encounter_yuina_assets_bind_1(void) {
     D_80146600 = 0x801D212C;
@@ -55,13 +55,13 @@ void encounter_yuina_scene_seven_dispatch(void) {
 }
 
 s32 encounter_yuina_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
     s32 level;
-    GekoFnTbl42 tbl;
+    EncounterYuinaSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_yuina_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yuina_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
     if (D_80122D04 != 0) {
         /* FAKE: Actor view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
         ((Actor *)actor_pool_96)[3].brightness = dec_bg_brightness;
@@ -101,12 +101,12 @@ void encounter_yuina_assets_load_1(void) {
 }
 
 void encounter_yuina_scene_seven_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterYuinaSceneSevenSteps mode_step_callbacks;
 
-    tbl = encounter_yuina_scene_seven_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yuina_scene_seven_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
 }
 
 void encounter_yuina_rpg_enter(void) {
@@ -120,7 +120,7 @@ void encounter_yuina_rpg_enter(void) {
 }
 
 void encounter_yuina_rpg_return_init(void) {
-    s32 pad; /* FAKE: unused scalar reproduces RECT home at +0x2C; original local unknown. T-9770 */
+    s32 fake_stack_pad; /* FAKE: unused scalar reproduces RECT home at +0x2C; original local unknown. T-9770 */
     RECT r;
 
     draw2d3d(1, 0);

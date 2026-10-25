@@ -2,75 +2,75 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80132000(void) {
+void shooter_entry(void) {
     game_state.mode_stage_timer += 1;
     switch (game_state.mode_stage) {
     case 0:
-        func_80133870();
+        shooter_stage_load();
         break;
     case 1:
-        func_801447D0();
+        shooter_stage_opening();
         break;
     case 2:
-        func_80134D8C();
+        shooter_stage_title();
         break;
     case 3:
-        func_80135394();
+        shooter_stage_menu();
         break;
     case 4:
-        func_80135744();
+        shooter_stage_settings();
         break;
     case 5:
-        func_80136B40();
+        shooter_stage_scores();
         break;
     case 6:
-        func_80137590();
+        shooter_stage_demo();
         break;
     case 7:
-        func_80137A60();
+        shooter_stage_how_to_play();
         break;
     case 10:
-        func_80137F90();
+        shooter_stage_game_start();
         break;
     case 11:
-        func_80138280();
+        shooter_stage_stage1();
         break;
     case 12:
-        func_801480B0();
+        shooter_stage_boss1();
         break;
     case 21:
-        func_80138450();
+        shooter_stage_stage2();
         break;
     case 22:
-        func_80148FE0();
+        shooter_stage_boss2();
         break;
     case 31:
-        func_80138680();
+        shooter_stage_stage3();
         break;
     case 32:
-        func_80149F90();
+        shooter_stage_boss3();
         break;
     case 8:
-        func_80138890();
+        shooter_stage_result();
         break;
     case 9:
-        func_80139170();
+        shooter_stage_name_entry();
         break;
     case 45:
-        func_8013B170();
+        shooter_stage_game_end();
         break;
     case 46:
-        func_80142820();
+        shooter_stage_exit();
         break;
     default:
         game_mode_reset_to_title();
         break;
     }
-    func_80143E9C();
-    func_801446D8();
+    shooter_frame_update();
+    shooter_draw_models();
 }
 
-void func_801321A0(void) {
+void shooter_palette_reset(void) {
     func_80058F9C(0x8018A000, 0, 0);
     func_80058F9C(0x8018A000, 1, 0);
     func_80058F9C(0x8018A000, 2, 0);

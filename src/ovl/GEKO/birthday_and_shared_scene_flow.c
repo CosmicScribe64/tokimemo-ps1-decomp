@@ -105,8 +105,8 @@ INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", enc
 /* Scene table, indexed by game_state.mode_step in encounter_girl_birthday_dispatch. Defined in C as the original did:
  * as1 treats every function named in this file's data as an address-taken label, so each
  * jump-table dispatch here gets an edge back to the function entries (T-25150). */
-typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
-GekoFnTable73 encounter_girl_birthday_steps = { {
+typedef struct EncounterGirlBirthdaySteps { /* 0x00 */ void (*callbacks[73])(); } EncounterGirlBirthdaySteps; /* size 0x124 */ /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80134D10.c:107; 73 callbacks defined in source; mode_step dispatch. Fixed-width declarations, offsets and all override views retained. */
+EncounterGirlBirthdaySteps encounter_girl_birthday_steps = { {
     encounter_girl_birthday_init, encounter_girl_birthday_audio_load, encounter_girl_birthday_audio_wait, encounter_girl_birthday_scripts_load, func_8007C784,
     encounter_girl_birthday_opening_skip, mode_step_next, mode_step_next, mode_step_next, mode_step_next,
     mode_step_next, encounter_girl_birthday_context_skip, mode_step_next, encounter_girl_birthday_choice_talk, normal_date_two_select,
@@ -369,9 +369,9 @@ void portrait_layout_set(s32 arg0);
 void *strcpy(void *dst, void *src);
 
 typedef struct {
-    u8 s[0xCC3];
-} DateTxt; /* size 0xCC3 */
-extern DateTxt encounter_girl_birthday_reply_names;
+    u8 names[0xCC3]; /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80134D10.c:372; 11 x3 x3 fixed33-byte reply-name records. Fixed-width declarations, offsets and all override views retained. */
+} EncounterBirthdayReplyNames; /* size 0xCC3 */
+extern EncounterBirthdayReplyNames encounter_girl_birthday_reply_names;
 
 void encounter_girl_birthday_scripts_bind(void) {
     encounter_girl_birthday_text_section_0 = 0x801B0478;
@@ -459,12 +459,12 @@ void encounter_player_birthday_scripts_bind(void) {
 
 void encounter_girl_birthday_dispatch(void) {
 
-    s32 idx;
-    GekoFnTable73 table;
+    s32 mode_step_index;
+    EncounterGirlBirthdaySteps mode_step_callbacks;
 
-    table = encounter_girl_birthday_steps;
-    idx = game_state.mode_step;
-    table.f[idx](0x80);
+    mode_step_callbacks = encounter_girl_birthday_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
     if ((u8) encounter_girl_birthday_scene_frame != 0) {
         hud_screen_frame_draw(2);
         func_80083A10();
@@ -486,33 +486,33 @@ void encounter_girl_birthday_dispatch(void) {
 
 
 void encounter_girl_birthday_bg_request(void) {
-    s32 var_v0;
+    s32 background_read_result;
 
     D_800B3D60 = 0;
     if ((encounter_girl_birthday_background_variant != 0) || (game_state.day_event_done_bits & 0x20)) {
         if (((u8) game_state.month >= 3U) && ((u8) game_state.month < 6U)) {
-            var_v0 = dec_bg_cd_read(0x3FE9, 0);
+            background_read_result = dec_bg_cd_read(0x3FE9, 0);
         } else if (((u8) game_state.month >= 6U) && ((u8) game_state.month < 9U)) {
-            var_v0 = dec_bg_cd_read(0x3FF2, 0);
+            background_read_result = dec_bg_cd_read(0x3FF2, 0);
         } else if (((u8) game_state.month >= 9U) && ((u8) game_state.month < 0xCU)) {
-            var_v0 = dec_bg_cd_read(0x3FD7, 0);
+            background_read_result = dec_bg_cd_read(0x3FD7, 0);
         } else {
-            var_v0 = dec_bg_cd_read(0x3FE0, 0);
+            background_read_result = dec_bg_cd_read(0x3FE0, 0);
         }
     } else if (((u8) game_state.month >= 3U) && ((u8) game_state.month < 6U)) {
-        var_v0 = dec_bg_cd_read(0x3FBE, 0);
+        background_read_result = dec_bg_cd_read(0x3FBE, 0);
     } else if (((u8) game_state.month >= 6U) && ((u8) game_state.month < 9U)) {
-        var_v0 = dec_bg_cd_read(0x3FC6, 0);
+        background_read_result = dec_bg_cd_read(0x3FC6, 0);
     } else if (((u8) game_state.month >= 9U) && ((u8) game_state.month < 0xCU)) {
-        var_v0 = dec_bg_cd_read(0x3FAD, 0);
+        background_read_result = dec_bg_cd_read(0x3FAD, 0);
     } else {
-        var_v0 = dec_bg_cd_read(0x3FB6, 0);
+        background_read_result = dec_bg_cd_read(0x3FB6, 0);
     }
-    if (var_v0 == *dec_bg_show) {
+    if (background_read_result == *dec_bg_show) {
         mode_step_next();
         mode_step_next();
         mode_step_next();
-    } else if (var_v0 == (1 - *dec_bg_show)) {
+    } else if (background_read_result == (1 - *dec_bg_show)) {
         mode_step_next();
         mode_step_next();
     }
@@ -618,38 +618,38 @@ void encounter_girl_birthday_visit_scripts_load(void) {
 
 s32 encounter_girl_birthday_player_birthday_check(void) {
     s16 i;
-    s16 best;
-    u32 cur;
-    u32 bestState;
-    u32 state;
-    u32 newState;
-    u8 yuukou;
+    s16 best_girl;
+    u32 incumbent_girl;
+    u32 best_girl_state;
+    u32 girl_state_result;
+    u32 candidate_girl_state;
+    u8 affection;
     u8 tokimeki;
-    u8 bestTokimeki;
+    u8 best_tokimeki;
 
-    best = 0xFF;
-    bestState = 4;
+    best_girl = 0xFF;
+    best_girl_state = 4;
     for (i = 0; i < 11; i++) {
-        /* FAKE: T-24302, empty test; gives bestState and newState the original s-registers. */
+        /* FAKE: T-24302, empty test; gives best_girl_state and candidate_girl_state the original s-registers. */
         if (i) {}
         if (game_state.girls[i].flags.f.met) {
-            state = get_g_zyotai_s(i) & 0x7F;
-            newState = state & 0xFF;
-            if ((u8) state < bestState ||
+            girl_state_result = get_g_zyotai_s(i) & 0x7F;
+            candidate_girl_state = girl_state_result & 0xFF;
+            if ((u8) girl_state_result < best_girl_state ||
                 /* FAKE: T-24302, "* 1" keeps the original bne operand order. */
-                ((cur = best, bestState * 1 == (u8) state) &&
-                 (yuukou = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
-                  bestTokimeki = get_h_tokimeki(cur),
-                  get_h_yuukou(cur) + bestTokimeki < tokimeki + yuukou))) {
-                best = (u8) i;
-                bestState = (u8) newState;
+                ((incumbent_girl = best_girl, best_girl_state * 1 == (u8) girl_state_result) &&
+                 (affection = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
+                  best_tokimeki = get_h_tokimeki(incumbent_girl),
+                  get_h_yuukou(incumbent_girl) + best_tokimeki < tokimeki + affection))) {
+                best_girl = (u8) i;
+                best_girl_state = (u8) candidate_girl_state;
             }
         }
     }
-    state = get_g_zyotai_s(game_state.current_girl);
+    girl_state_result = get_g_zyotai_s(game_state.current_girl);
     if ((game_state.player_birthday & 0xF) == game_state.month &&
         ((u32) (game_state.player_birthday << 23) >> 27) == game_state.day &&
-        !(game_state.day_event_done_bits & 4) && (u8) (state & 0x7F) < 2 && game_state.current_girl == best) {
+        !(game_state.day_event_done_bits & 4) && (u8) (girl_state_result & 0x7F) < 2 && game_state.current_girl == best_girl) {
         /* FAKE: T-24302, two byte-view ORs spend the ugen temporaries the original uses (ori t8). */
         ((u8 *)&game_state)[0x71E] |= 0x44;
         ((u8 *)&game_state)[0x71E] |= 0x44;
@@ -669,7 +669,7 @@ s32 encounter_girl_birthday_talk_with_audio_command(void) {
 }
 
 s32 encounter_girl_birthday_finish(void) {
-    u8 state;
+    u8 restore_substep;
 
     if (game_state.day_event_done_bits & 0x20) {
         audio_command(0xCF);
@@ -677,13 +677,13 @@ s32 encounter_girl_birthday_finish(void) {
         return 0;
     }
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010). */
-    state = *(u8 *)&game_state.substep;
-    if (state == 0) {
+    restore_substep = *(u8 *)&game_state.substep;
+    if (restore_substep == 0) {
         hud_day_bgm_load();
-        state = game_state.substep + 1;
+        restore_substep = game_state.substep + 1;
     }
-    game_state.substep = state;
-    if (state == 1) {
+    game_state.substep = restore_substep;
+    if (restore_substep == 1) {
         if ((u32)game_state.mode_step_timer.w++ >= 0x400) {
             cd_command_reset();
             audio_bank_state_reset();
@@ -754,23 +754,23 @@ void encounter_girl_birthday_scene_init(void) {
 }
 
 s32 encounter_girl_birthday_init(void) {
-    s32 pad1; /* FAKE: T-11900 frame slot: keeps i at sp+0x62 */
+    s32 fake_stack_pad; /* FAKE: T-11900 frame slot: keeps i at sp+0x62 */
     s16 i;
-    s32 pad[8]; /* FAKE: T-11900 frame slots: keep zyotai at sp+0x3F and rect at sp+0x34 */
-    u8 zyotai;
+    s32 fake_frame_pad[8]; /* FAKE: T-11900 frame slots: keep girl_state at sp+0x3F and rect at sp+0x34 */
+    u8 girl_state;
     RECT rect;
-    GameState *gs = &game_state;
+    GameState *state_data = &game_state;
 
-    gs->current_girl = gs->day_events[gs->day_event_index].girl;
-    if ((gs->current_girl == GIRL_SHIORI && (gs->day_event_done_bits & 1)) || (gs->current_girl != GIRL_SHIORI && (gs->day_event_done_bits & 2))) {
+    state_data->current_girl = state_data->day_events[state_data->day_event_index].girl;
+    if ((state_data->current_girl == GIRL_SHIORI && (state_data->day_event_done_bits & 1)) || (state_data->current_girl != GIRL_SHIORI && (state_data->day_event_done_bits & 2))) {
         encounter_girl_birthday_finish();
         return 0;
     }
-    if (!gs->girls[gs->current_girl].flags.f.b6 && gs->current_girl != GIRL_SHIORI) {
+    if (!state_data->girls[state_data->current_girl].flags.f.b6 && state_data->current_girl != GIRL_SHIORI) {
         encounter_girl_birthday_finish();
         return 0;
     }
-    encounter_girl_birthday_background_variant = (gs->day_event_done_bits & 0x10) > 0;
+    encounter_girl_birthday_background_variant = (state_data->day_event_done_bits & 0x10) > 0;
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -788,12 +788,12 @@ s32 encounter_girl_birthday_init(void) {
     encounter_girl_birthday_club_context = 0;
     encounter_girl_birthday_holiday_context = 1;
     /* The day tables at +0x44/+0x64 are indexed by day - 1 from +0x45/+0x65 (hence `- 1 + 1`).
-     * FAKE: T-11900 the call reads the date through game_state, not gs: through gs uopt keeps
+     * FAKE: T-11900 the call reads the date through game_state, not state_data: through state_data uopt keeps
      * unk_03E/unk_03F in the argument registers for the whole function. */
-    if (gs->month != 12 || gs->day != 24) {
-        if (gs->weekday != WEEKDAY_SUNDAY && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0xA && gs->month_calendar[0].marker[gs->day - 1 + 1] != 0x10 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 1 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 2 && gs->month_calendar[0].day_kind[gs->day - 1 + 1] != 3 && encounter_girl_birthday_background_variant == 0) {
+    if (state_data->month != 12 || state_data->day != 24) {
+        if (state_data->weekday != WEEKDAY_SUNDAY && state_data->month_calendar[0].marker[state_data->day - 1 + 1] != 0xA && state_data->month_calendar[0].marker[state_data->day - 1 + 1] != 0x10 && state_data->month_calendar[0].day_kind[state_data->day - 1 + 1] != 1 && state_data->month_calendar[0].day_kind[state_data->day - 1 + 1] != 2 && state_data->month_calendar[0].day_kind[state_data->day - 1 + 1] != 3 && encounter_girl_birthday_background_variant == 0) {
             encounter_girl_birthday_holiday_context = 0;
-        } else if ((gs->last_command.b[0] >> 4) == 4 && (gs->player_flags.h >> 12) == (gs->girls[gs->current_girl].flags.b[2] >> 4) && (hud_appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0 || gs->current_girl != ((u32)(gs->unk_54C[0].w << 3) >> 28))) {
+        } else if ((state_data->last_command.b[0] >> 4) == 4 && (state_data->player_flags.h >> 12) == (state_data->girls[state_data->current_girl].flags.b[2] >> 4) && (hud_appointment_find_today(game_state.year, game_state.month, game_state.day) <= 0 || state_data->current_girl != ((u32)(state_data->unk_54C[0].w << 3) >> 28))) {
             encounter_girl_birthday_holiday_context = 0;
             encounter_girl_birthday_club_context = 1;
         }
@@ -808,27 +808,27 @@ s32 encounter_girl_birthday_init(void) {
     talk_clear();
     text_marker_hide();
     D_80122D2C = 0;
-    gs->tile_layer_enabled = 0;
-    gs->quads_enabled = 1;
-    if (gs->current_girl == GIRL_SHIORI) {
-        gs->day_event_done_bits |= 1;
+    state_data->tile_layer_enabled = 0;
+    state_data->quads_enabled = 1;
+    if (state_data->current_girl == GIRL_SHIORI) {
+        state_data->day_event_done_bits |= 1;
     } else {
-        gs->day_event_done_bits |= 2;
+        state_data->day_event_done_bits |= 2;
     }
-    gs->screen_brightness = 0x80;
+    state_data->screen_brightness = 0x80;
     dec_bg_brightness = 0x80;
     D_800B5940 = 0;
     addr_init_bustup();
     encounter_girl_birthday_phone_prelude_timer = 0;
-    encounter_girl_birthday_phone_ring_limit = gs->frame_count % 3 + 2;
-    zyotai = get_g_zyotai_s(gs->current_girl) & 0x7F;
+    encounter_girl_birthday_phone_ring_limit = state_data->frame_count % 3 + 2;
+    girl_state = get_g_zyotai_s(state_data->current_girl) & 0x7F;
     encounter_girl_birthday_group = 0;
     encounter_girl_birthday_line = 0;
-    talk_group = (zyotai >= 2) + (zyotai >= 3) + (zyotai >= 4) + 30;
+    talk_group = (girl_state >= 2) + (girl_state >= 3) + (girl_state >= 4) + 30;
     talk_line = 0;
-    talk_names_set(gs->current_girl);
+    talk_names_set(state_data->current_girl);
     encounter_girl_birthday_scripts_bind();
-    switch (gs->current_girl) {
+    switch (state_data->current_girl) {
     case GIRL_SHIORI:
         strcpy(D_800CA1DC, "自宅前");
         encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_1;
@@ -873,7 +873,7 @@ s32 encounter_girl_birthday_init(void) {
         talk_text_table = encounter_girl_birthday_text_section_8;
         talk_command_table = encounter_girl_birthday_command_section_8;
         talk_voice_table = encounter_girl_birthday_voice_section_8;
-        if (zyotai < 2) {
+        if (girl_state < 2) {
             encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_7;
             encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_7;
             encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_7;
@@ -903,14 +903,14 @@ s32 encounter_girl_birthday_init(void) {
         encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_12;
         break;
     }
-    if (gs->month >= 4) {
-        encounter_girl_birthday_school_year = gs->year - 0x5F;
+    if (state_data->month >= 4) {
+        encounter_girl_birthday_school_year = state_data->year - 0x5F;
     } else {
-        encounter_girl_birthday_school_year = gs->year - 0x60;
+        encounter_girl_birthday_school_year = state_data->year - 0x60;
     }
     encounter_girl_birthday_portrait_active = 0;
     encounter_girl_birthday_phone_phase_counter = 0;
-    if ((gs->year == 0x5F && gs->month == 6 && gs->day == 3) || (gs->year == 0x60 && gs->month == 6 && gs->day == 1) || (gs->year == 0x61 && gs->month == 6 && gs->day == 7) || (gs->year == 0x5F && gs->month == 10 && gs->day == 14) || (gs->year == 0x60 && gs->month == 10 && gs->day == 12) || (gs->year == 0x61 && gs->month == 10 && gs->day == 11)) {
+    if ((state_data->year == 0x5F && state_data->month == 6 && state_data->day == 3) || (state_data->year == 0x60 && state_data->month == 6 && state_data->day == 1) || (state_data->year == 0x61 && state_data->month == 6 && state_data->day == 7) || (state_data->year == 0x5F && state_data->month == 10 && state_data->day == 14) || (state_data->year == 0x60 && state_data->month == 10 && state_data->day == 12) || (state_data->year == 0x61 && state_data->month == 10 && state_data->day == 11)) {
         rect.x = 0x140;
         rect.y = 0x1A0;
         rect.w = 0x140;
@@ -921,7 +921,7 @@ s32 encounter_girl_birthday_init(void) {
         func_8009C7F8(&rect, 8, 0, 0);
     }
     mode_step_next();
-    if (encounter_girl_birthday_background_variant != 0 || (gs->day_event_done_bits & 0x20)) {
+    if (encounter_girl_birthday_background_variant != 0 || (state_data->day_event_done_bits & 0x20)) {
         mode_step_set(0x43);
     }
     if (encounter_girl_birthday_holiday_context != 0) {
@@ -1140,15 +1140,15 @@ void encounter_girl_birthday_school_talk(void) {
 }
 
 void encounter_girl_birthday_girl_state_group_offset(void) {
-    s32 v;
+    s32 girl_state;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    v = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (v == 2) {
+    girl_state = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (girl_state == 2) {
         encounter_girl_birthday_group += 2;
-    } else if (v == 3) {
+    } else if (girl_state == 3) {
         encounter_girl_birthday_group += 4;
-    } else if (v == 4) {
+    } else if (girl_state == 4) {
         encounter_girl_birthday_group += 6;
     }
     mode_step_next();
@@ -1172,18 +1172,18 @@ void encounter_girl_birthday_holiday_girl_in(void) {
 }
 
 void encounter_girl_birthday_reply_group_select(void) {
-    s32 v;
+    s32 girl_state;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    v = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    girl_state = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
     if (encounter_girl_birthday_holiday_context == 1) {
         encounter_girl_birthday_group = 6;
     }
-    if (v == 2) {
+    if (girl_state == 2) {
         encounter_girl_birthday_group += 2;
-    } else if (v == 3) {
+    } else if (girl_state == 3) {
         encounter_girl_birthday_group += 4;
-    } else if (v == 4) {
+    } else if (girl_state == 4) {
         encounter_girl_birthday_group += 6;
     }
     mode_step_next();
@@ -1330,11 +1330,11 @@ void encounter_girl_birthday_holiday_portrait_show(void) {
 }
 
 void encounter_girl_birthday_reply_name_copy(void) {
-    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    DateTxt tbl;
+    s32 fake_stack_pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    EncounterBirthdayReplyNames reply_names;
 
-    tbl = encounter_girl_birthday_reply_names;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + encounter_girl_birthday_school_year * 0x63 + D_80122CDC * 0x21]);
+    reply_names = encounter_girl_birthday_reply_names;
+    strcpy(D_800CA25C, &reply_names.names[game_state.current_girl * 0x129 + encounter_girl_birthday_school_year * 0x63 + D_80122CDC * 0x21]);
 }
 
 void encounter_girl_birthday_background_out(void) {
@@ -1732,17 +1732,17 @@ void encounter_scene_audio_start(void) {
 }
 
 s32 encounter_scene_finish(void) {
-    u8 state;
+    u8 restore_substep;
 
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-22010, T-24115). */
-    state = *(u8 *)&game_state.substep;
-    if (state == 0) {
+    restore_substep = *(u8 *)&game_state.substep;
+    if (restore_substep == 0) {
         audio_command(0xB2);
         hud_day_bgm_load();
-        state = game_state.substep + 1;
+        restore_substep = game_state.substep + 1;
     }
-    game_state.substep = state;
-    if (state == 1) {
+    game_state.substep = restore_substep;
+    if (restore_substep == 1) {
         if ((u32)game_state.mode_step_timer.w++ >= 0x400U) {
             cd_command_reset();
             audio_bank_state_reset();

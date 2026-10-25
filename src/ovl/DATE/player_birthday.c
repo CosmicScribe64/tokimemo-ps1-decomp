@@ -45,12 +45,12 @@ void date_player_birthday_sections_init(void) {
 }
 
 void date_mode_stage_player_birthday(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl15 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl15 step_handlers;
 
-    tbl = date_player_birthday_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_player_birthday_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if ((D_80122D44 & 1) && (dec_bg_brightness == 0x80)) {
         hud_sprite_light_effect_draw();
     }
@@ -63,11 +63,11 @@ void date_player_birthday_load_data(void) {
 }
 
 void date_player_birthday_start(void) {
-    u8 x;
+    u8 girl_state_flags;
 
     game_state.day_event_done_bits |= 8;
-    x = get_g_zyotai_s(game_state.current_girl);
-    if ((x & 0x7F) >= 2U) {
+    girl_state_flags = get_g_zyotai_s(game_state.current_girl);
+    if ((girl_state_flags & 0x7F) >= 2U) {
         mode_step_set(9);
         return;
     }

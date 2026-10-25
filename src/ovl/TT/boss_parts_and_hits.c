@@ -1,13 +1,13 @@
-/* boss_parts_and_hits.c: src/ovl/TT/80142570.c:4: field enemy destruction, boss sprite/part/hitbox clearing, hit tests and part animation/drawing; body 8: func_80133AD0(0x60C); 9: p = D_80158A98;. Original object 0x80142570-0x80142D40 (config/objects/TT.txt). */
+/* boss_parts_and_hits.c: src/ovl/TT/80142570.c:4: field enemy destruction, boss sprite/part/hitbox clearing, hit tests and part animation/drawing; body 8: tt_se_request(0x60C); 9: p = tt_air_enemies;. Original object 0x80142570-0x80142D40 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
-void func_80142570(void) {
+void tt_field_enemies_destroy(void) {
     u8 *p;
     s32 i;
 
-    func_80133AD0(0x60C);
-    p = D_80158A98;
+    tt_se_request(0x60C);
+    p = tt_air_enemies;
     i = 0;
     do {
         i++;
@@ -19,7 +19,7 @@ void func_80142570(void) {
         }
         p += 0x78;
     } while (i < 0x40);
-    p = D_80158A9C;
+    p = tt_ground_targets;
     for (i = 0; i < 0x20; i++) {
         if (*p != 0 && *(u16 *)(p + 4) == 0x40) {
             *(u16 *)(p + 4) = 0x70;
@@ -31,12 +31,12 @@ void func_80142570(void) {
     }
 }
 
-void func_801426F0(void) {
+void tt_boss_sprites_clear(void) {
     s32 i;
-    u8 *p = D_80158A8C;
-    u8 *r = D_80158AA4 + 0xC80;
+    u8 *boss = tt_boss;
+    u8 *r = tt_sprites + 0xC80;
 
-    p[0] = 0;
+    boss[0] = 0;
     r[0xC8] = 0;
     r[0x64] = 0;
     r[0] = 0;
@@ -47,163 +47,163 @@ void func_801426F0(void) {
     }
 }
 
-void func_80142740(void) {
-    u8 *p = D_80158A8C;
+void tt_boss_parts_hide_all(void) {
+    u8 *boss = tt_boss;
     s32 i;
 
     for (i = 0; i < 0x18; i++) {
-        p[0x310 + i] = 0;
+        boss[0x310 + i] = 0;
     }
 }
 
-void func_80142774(void) {
-    u8 *p = D_80158A8C;
+void tt_boss_hitboxes_clear(void) {
+    u8 *boss = tt_boss;
     s32 i;
 
     for (i = 0; i < 12; i++) {
-        *(s32 *)(p + 0x218 + i * 4) = 0;
+        *(s32 *)(boss + 0x218 + i * 4) = 0;
     }
 }
 
-u8 func_801427A8(void) {
-    u8 *b;
-    u8 *m;
-    u8 *c;
-    u8 *a;
-    u8 *r;
+u8 tt_boss_check_hits(void) {
+    u8 *core;
+    u8 *run;
+    u8 *boss;
+    u8 *player;
+    u8 *shot;
     s32 i;
     s32 j;
     s32 k;
     s8 ret; /* s8: an u8 ret = 1 would share the hoisted 1 (s0) of the 0x42 loop. T-11860 */
 
-    b = D_80158A64;
-    m = D_80158A6C;
-    c = D_80158A8C;
-    a = D_80158A74;
-    r = D_80158A80;
+    core = tt_core;
+    run = tt_run;
+    boss = tt_boss;
+    player = tt_player;
+    shot = tt_shots;
     ret = 0;
-    for (i = 0; i < 12; i++, r += 0x54) {
-        if (r[0] != 0 && *(u16 *)(r + 4) == 0x40) {
+    for (i = 0; i < 12; i++, shot += 0x54) {
+        if (shot[0] != 0 && *(u16 *)(shot + 4) == 0x40) {
             for (j = 0; j < 4; j++) {
-                if (*(u8 **)(c + 0x218 + j * 4) != 0 && func_80145508(r + 0x14, &D_80155B36, c + 0x14, *(u8 **)(c + 0x218 + j * 4)) != 0) {
-                    b[0x25] = b[0x25] + 1;
+                if (*(u8 **)(boss + 0x218 + j * 4) != 0 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, boss + 0x14, *(u8 **)(boss + 0x218 + j * 4)) != 0) {
+                    core[0x25] = core[0x25] + 1;
                     ret = 1;
-                    if (b[0x24] != 0 && !(b[0x25] & 3)) {
-                        if (m[0xB] < 2) {
-                            if (!(b[0x25] & 7)) {
-                                func_801342CC(*(s16 *)(r + 0x14), *(s16 *)(r + 0x16), 0x100, 0x20, 0xA0);
+                    if (core[0x24] != 0 && !(core[0x25] & 3)) {
+                        if (run[0xB] < 2) {
+                            if (!(core[0x25] & 7)) {
+                                tt_enemy_shot_fire_fan4_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x100, 0x20, 0xA0);
                             } else {
-                                func_80133FB0(*(s16 *)(r + 0x14), *(s16 *)(r + 0x16), 0x100, 0x20, 0xA0);
+                                tt_enemy_shot_fire_3way_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x100, 0x20, 0xA0);
                             }
                         } else {
-                            func_80133D14(*(s16 *)(r + 0x14), *(s16 *)(r + 0x16), 0x20, 0xA0);
+                            tt_enemy_shot_fire_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x20, 0xA0);
                         }
                     }
                     for (k = 0; k < 0x18; k++) {
-                        c[k * 0x14 + 0x42] = 1;
+                        boss[k * 0x14 + 0x42] = 1;
                     }
                     if (i >= 6) {
-                        *(s16 *)(c + 0x30C) -= 1;
-                    } else if (*(u16 *)(r + 2) == 9) {
-                        *(s16 *)(c + 0x30C) -= 4;
+                        *(s16 *)(boss + 0x30C) -= 1;
+                    } else if (*(u16 *)(shot + 2) == 9) {
+                        *(s16 *)(boss + 0x30C) -= 4;
                     } else {
-                        *(s16 *)(c + 0x30C) -= 2;
+                        *(s16 *)(boss + 0x30C) -= 2;
                     }
-                    *(u16 *)(r + 4) = 0x80;
-                    *(u16 *)(r + 0xA) = 0;
-                    *(u16 *)(r + 8) = 0;
-                    *(u16 *)(r + 6) = 0;
-                    r[0xF] = 0;
-                    r[0xE] = 0;
-                    r[0xD] = 0;
+                    *(u16 *)(shot + 4) = 0x80;
+                    *(u16 *)(shot + 0xA) = 0;
+                    *(u16 *)(shot + 8) = 0;
+                    *(u16 *)(shot + 6) = 0;
+                    shot[0xF] = 0;
+                    shot[0xE] = 0;
+                    shot[0xD] = 0;
                 }
             }
             for (j = 4; j < 8; j++) {
-                if (*(u8 **)(c + 0x218 + j * 4) != 0 && func_80145508(r + 0x14, &D_80155B36, c + 0x14, *(u8 **)(c + 0x218 + j * 4)) != 0) {
-                    *(u16 *)(r + 4) = 0x80;
-                    *(u16 *)(r + 0xA) = 0;
-                    *(u16 *)(r + 8) = 0;
-                    *(u16 *)(r + 6) = 0;
-                    r[0xF] = 0;
-                    r[0xE] = 0;
-                    r[0xD] = 0;
+                if (*(u8 **)(boss + 0x218 + j * 4) != 0 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, boss + 0x14, *(u8 **)(boss + 0x218 + j * 4)) != 0) {
+                    *(u16 *)(shot + 4) = 0x80;
+                    *(u16 *)(shot + 0xA) = 0;
+                    *(u16 *)(shot + 8) = 0;
+                    *(u16 *)(shot + 6) = 0;
+                    shot[0xF] = 0;
+                    shot[0xE] = 0;
+                    shot[0xD] = 0;
                 }
             }
         }
     }
     for (i = 4; i < 12; i++) {
-        if (*(u8 **)(c + 0x218 + i * 4) == 0) continue;
-        if (a[0x52] != 0 || a[0] == 0 || func_80145508(a + 0x14, D_80155B30, c + 0x14, *(u8 **)(c + 0x218 + i * 4)) == 0) continue;
-        func_80144094();
-        *(u16 *)(a + 4) = 0x60;
-        *(u16 *)(a + 0xA) = 0;
-        *(u16 *)(a + 8) = 0;
-        *(u16 *)(a + 6) = 0;
-        a[0xF] = 0;
-        a[0xE] = 0;
-        a[0xD] = 0;
+        if (*(u8 **)(boss + 0x218 + i * 4) == 0) continue;
+        if (player[0x52] != 0 || player[0] == 0 || tt_box_overlap(player + 0x14, tt_hitboxes, boss + 0x14, *(u8 **)(boss + 0x218 + i * 4)) == 0) continue;
+        tt_player_hit();
+        *(u16 *)(player + 4) = 0x60;
+        *(u16 *)(player + 0xA) = 0;
+        *(u16 *)(player + 8) = 0;
+        *(u16 *)(player + 6) = 0;
+        player[0xF] = 0;
+        player[0xE] = 0;
+        player[0xD] = 0;
     }
     return ret;
 }
 
-void func_80142AF0(void *arg0, s32 arg1) {
-    u8 *p = D_80158A8C;
-    TtAnim14 *a = (TtAnim14 *)(p + 0x38) + arg1;
+void tt_boss_part_animation_step(void *arg0, s32 arg1) {
+    u8 *boss = tt_boss;
+    TtPartAnimation *a = (TtPartAnimation *)(boss + 0x38) + arg1;
     s32 k;
     s16 *s;
     s16 v;
 
-    /* FAKE: the two reads of the index tables go through an s32 view of D_80158A8C, so uopt reloads the pointer (lw t9) instead of reusing p. T-11860 */
-    if (p[0] != 0 && ((u8 *)*(s32 *)&D_80158A8C)[arg1 + 0x310] != 0) {
-        if (a->unk_08 & 0x80) {
-            a->unk_08 &= ~0x80;
-            a->unk_06 = ((s16 *)arg0)[0];
-            a->unk_09 = ((s16 *)arg0)[1];
-            p[arg1 + 0x328] = 0;
+    /* FAKE: the two reads of the index tables go through an s32 view of tt_boss, so uopt reloads the pointer (lw t9) instead of reusing boss. T-11860 */
+    if (boss[0] != 0 && ((u8 *)*(s32 *)&tt_boss)[arg1 + 0x310] != 0) {
+        if (a->flags & 0x80) {
+            a->flags &= ~0x80;
+            a->frame = ((s16 *)arg0)[0];
+            a->hold = ((s16 *)arg0)[1];
+            boss[arg1 + 0x328] = 0;
             return;
         }
-        if (a->unk_08 & 0x20) {
-            a->unk_08 &= ~0x20;
-            p[arg1 + 0x328] = 0;
+        if (a->flags & 0x20) {
+            a->flags &= ~0x20;
+            boss[arg1 + 0x328] = 0;
             return;
         }
-        if (a->unk_09 == 0) {
-            k = ((u8 *)*(s32 *)&D_80158A8C)[arg1 + 0x328] + 2; /* FAKE: s32 view, see above. T-11860 */
+        if (a->hold == 0) {
+            k = ((u8 *)*(s32 *)&tt_boss)[arg1 + 0x328] + 2; /* FAKE: s32 view, see above. T-11860 */
             s = (s16 *)((u8 *)arg0 + k * 2);
             v = *s;
             if (v == -1) {
-                a->unk_08 |= 1;
-                a->unk_08 |= 0x40;
-                a->unk_06 = s[-2];
+                a->flags |= 1;
+                a->flags |= 0x40;
+                a->frame = s[-2];
             } else if (v == -2) {
-                a->unk_06 = ((s16 *)arg0)[0];
-                a->unk_09 = ((s16 *)arg0)[1];
+                a->frame = ((s16 *)arg0)[0];
+                a->hold = ((s16 *)arg0)[1];
                 k = 0;
             } else if (v == -3) {
-                p[arg1 + 0x310] = 0;
-                a->unk_08 |= 1;
+                boss[arg1 + 0x310] = 0;
+                a->flags |= 1;
             } else {
-                a->unk_06 = v;
-                a->unk_09 = s[1];
+                a->frame = v;
+                a->hold = s[1];
             }
-            p[arg1 + 0x328] = k;
+            boss[arg1 + 0x328] = k;
         } else {
-            a->unk_09--;
+            a->hold--;
         }
     }
 }
 
-void func_80142C70(void) {
+void tt_boss_draw(void) {
     s32 i;
     u8 *base;
 
-    base = D_80158A8C;
+    base = tt_boss;
     if (base[0] != 0) {
         for (i = 0; i != 0x18; i++) {
             if (base[i + 0x310] != 0) {
                 *(s16 *)(base + 0x14) = *(s16 *)(base + 0x22) + *(s16 *)(base + 0x248 + i * 2);
                 *(s16 *)(base + 0x16) = *(s16 *)(base + 0x26) + *(s16 *)(base + 0x278 + i * 2);
-                func_80147A18(base + 0x14, base + 0x38 + i * 0x14, *(u16 *)(base + 0x2A8 + i * 2));
+                tt_part_sprite_draw(base + 0x14, base + 0x38 + i * 0x14, *(u16 *)(base + 0x2A8 + i * 2));
             }
         }
         *(s16 *)(base + 0x14) = *(s16 *)(base + 0x22);

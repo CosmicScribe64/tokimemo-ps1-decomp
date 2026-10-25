@@ -2,8 +2,8 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_800FBBF0(void) {
-    D_801211E0 = 0x801D21D8;
+void spot_yuina_still_pointers_1_init(void) {
+    spot_yuina_still_pointers_1 = 0x801D21D8;
     D_801211E4 = 0x801D21E0;
     D_801211E8 = 0x801D2218;
     D_801211EC = *(s16 *)0x801D2238;
@@ -16,8 +16,8 @@ void func_800FBBF0(void) {
     D_80121208 = 0x801C6000;
 }
 
-void func_800FBCA0(void) {
-    D_8012120C = 0x801B0000;
+void spot_yuina_tile_pointers_1_init(void) {
+    spot_yuina_tile_pointers_1 = 0x801B0000;
     D_80121210 = 0x801B2000;
     D_80121214 = 0x801B6000;
     D_80121218 = 0x801BA000;
@@ -26,8 +26,8 @@ void func_800FBCA0(void) {
     D_80121224 = 0x801C6000;
 }
 
-void func_800FBD10(void) {
-    D_80121228 = 0x801CE19C;
+void spot_yuina_still_pointers_2_init(void) {
+    spot_yuina_still_pointers_2 = 0x801CE19C;
     D_8012122C = 0x801CE1A0;
     D_80121230 = 0x801CE1D8;
     D_80121234 = *(s16 *)0x801CE1F4;
@@ -40,8 +40,8 @@ void func_800FBD10(void) {
     D_80121250 = 0x801C6000;
 }
 
-void func_800FBDC0(void) {
-    D_80121254 = 0x801D2368;
+void spot_yuina_overlay_pointers_1_init(void) {
+    spot_yuina_overlay_pointers_1 = 0x801D2368;
     D_80121258 = 0x801D236C;
     D_8012125C = 0x801D239C;
     D_80121260 = *(s16 *)0x801D23B8;
@@ -56,8 +56,8 @@ void func_800FBDC0(void) {
     D_80121284 = 0x801CE000;
 }
 
-void func_800FBE90(void) {
-    D_80121288 = 0x801D2170;
+void spot_yuina_still_pointers_3_init(void) {
+    spot_yuina_still_pointers_3 = 0x801D2170;
     D_8012128C = 0x801D2178;
     D_80121290 = 0x801D21A4;
     D_80121294 = *(s16 *)0x801D21C0;
@@ -70,22 +70,22 @@ void func_800FBE90(void) {
     D_801212B0 = 0x801C6000;
 }
 
-void func_800FBF40(void) {
+void spot_yuina_scene_select(void) {
     switch (D_800EECB0) {
     case 1:
-        func_800FBFE0();
+        spot_yuina_scene1_run();
         return;
     case 2:
-        func_800FCD0C();
+        spot_yuina_scene2_run();
         return;
     case 3:
-        func_800FCDD8();
+        spot_yuina_scene3_run();
         return;
     case 4:
-        func_800FD00C();
+        spot_yuina_scene4_run();
         return;
     case 5:
-        func_800FD1C0();
+        spot_yuina_scene5_run();
         return;
     default:
         func_80015FE0();
@@ -93,22 +93,22 @@ void func_800FBF40(void) {
     }
 }
 
-void func_800FBFE0(void) {
+void spot_yuina_scene1_run(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
     if (D_800B1AF5 == 0) {
-        func_800FC040();
+        spot_yuina_scene1_steps_run();
         return;
     }
     func_80015FE0();
 }
 
 /* FAKE: s32 return type and unused pad local keep $v0 live at epilogue and place tbl at sp+0x28 in the 0xD8 frame (T-3330); *(u8 *)&D_801212B4 avoids signed load promotion; T-24105 */
-s32 func_800FC040(void) {
+s32 spot_yuina_scene1_steps_run(void) {
     s32 pad;
     s32 v;
     FnTbl42 tbl;
 
-    tbl = D_801212B8;
+    tbl = spot_yuina_scene1_steps;
     tbl.f[D_800B1AF6](0x80);
     if (D_800EECE0 != 0) {
         D_800EB06F |= 0x80;
@@ -135,13 +135,13 @@ s32 func_800FC040(void) {
     D_800EB06F &= 0xFF7F;
 }
 
-void func_800FC184(void) {
+void spot_yuina_scene1_assets_load_06(void) {
     func_80015D28(0x45, 0x801B0000, 0x7D8F);
-    func_800FBBF0();
+    spot_yuina_still_pointers_1_init();
     func_80011DFC();
 }
 
-void func_800FC1BC(void) {
+void spot_yuina_scene1_init_00(void) {
     D_800B1746 = 2;
     func_80012D2C(1, 0);
     func_8001886C(1);
@@ -155,16 +155,16 @@ void func_800FC1BC(void) {
     D_80094714 = 0;
     D_80094718 = 0;
     func_80045B14();
-    func_800F6000();
+    spot_script_sections_init();
     func_8003535C();
     func_8003580C();
     func_8004C360();
     func_8004BC20(D_800B1746);
     func_8004CDDC();
-    func_800F6000();
-    D_80120678 = D_8012036C;
-    D_8012067C = D_80120384;
-    D_80120680 = D_8012039C;
+    spot_script_sections_init();
+    spot_talk_text_table = D_8012036C;
+    spot_talk_command_table = D_80120384;
+    spot_talk_voice_table = D_8012039C;
     func_80078970(D_80094784, "屋上");
     D_801212B4 = 0;
     D_800B0A04[2].unk_02 += 1;
@@ -173,8 +173,8 @@ void func_800FC1BC(void) {
     func_80011DFC();
 }
 
-void func_800FC300(void) {
-    func_800FBBF0();
+void spot_yuina_scene1_still_show_08(void) {
+    spot_yuina_still_pointers_1_init();
     func_80012D64(D_801211F0, 0x11, 1, 2, 0);
     func_8004C46C(D_801211F4, D_801211F8, D_801211FC, D_80121200, D_80121204, D_80121208);
     func_8004C6B0(0, 0, 0, 0);
@@ -185,7 +185,7 @@ void func_800FC300(void) {
     D_800EB06F = 4;
     D_800EB078 = D_801211E4;
     D_800EB07C = D_801211E8;
-    D_800EB0A0 = D_801211E0;
+    D_800EB0A0 = spot_yuina_still_pointers_1;
     D_800EB080 = D_801211EC;
     D_800EB082 = 4;
     D_800EB084 = 0;
@@ -200,12 +200,12 @@ void func_800FC300(void) {
     func_80011DFC();
 }
 
-void func_800FC46C(void) {
-    D_80120678 = D_80120370;
-    D_8012067C = D_80120388;
-    D_80120680 = D_801203A0;
-    func_800FBCA0();
-    func_80012D64(D_8012120C, 0x11, 1, 2, 0);
+void spot_yuina_scene2_still_show_stats_03(void) {
+    spot_talk_text_table = D_80120370;
+    spot_talk_command_table = D_80120388;
+    spot_talk_voice_table = D_801203A0;
+    spot_yuina_tile_pointers_1_init();
+    func_80012D64(spot_yuina_tile_pointers_1, 0x11, 1, 2, 0);
     func_8004C46C(D_80121210, D_80121214, D_80121218, D_8012121C, D_80121220, D_80121224);
     func_8004C6B0(0, 0, 0, 0);
     D_800B0A04[2].unk_02 += 3;
@@ -215,29 +215,29 @@ void func_800FC46C(void) {
     func_80011DFC();
 }
 
-void func_800FC56C(void) {
-    D_80120678 = D_80120374;
-    D_8012067C = D_8012038C;
-    D_80120680 = D_801203A4;
+void spot_yuina_scene3_still_show_stats_06(void) {
+    spot_talk_text_table = D_80120374;
+    spot_talk_command_table = D_8012038C;
+    spot_talk_voice_table = D_801203A4;
     D_800B0A04[2].unk_02 += 2;
     D_800B0A04[2].unk_0A -= 0xA;
     func_8004C250();
-    func_800FBD10();
+    spot_yuina_still_pointers_2_init();
     func_80012D64(D_80121238, 0x11, 1, 2, 0);
     func_8004C46C(D_8012123C, D_80121240, D_80121244, D_80121248, D_8012124C, D_80121250);
-    func_8004C6B0(D_8012122C, D_80121230, D_80121228, D_80121234);
+    func_8004C6B0(D_8012122C, D_80121230, spot_yuina_still_pointers_2, D_80121234);
     ((Actor *)D_800EAFA0)[2] = ((Actor *)D_800EAFA0)[0];
     func_80011DFC();
 }
 
-void func_800FC6B8(void) {
-    D_80120678 = D_80120378;
-    D_8012067C = D_80120390;
-    D_80120680 = D_801203A8;
-    func_800FBDC0();
+void spot_yuina_scene4_still_show_stats_03(void) {
+    spot_talk_text_table = D_80120378;
+    spot_talk_command_table = D_80120390;
+    spot_talk_voice_table = D_801203A8;
+    spot_yuina_overlay_pointers_1_init();
     func_80012D64(D_80121264, 0x11, 1, 2, 0);
     func_8004C46C(D_8012126C, D_80121270, D_80121274, D_80121278, D_8012127C, D_80121280);
-    func_8004C6B0(D_80121258, D_8012125C, D_80121254, D_80121260);
+    func_8004C6B0(D_80121258, D_8012125C, spot_yuina_overlay_pointers_1, D_80121260);
     func_800189C4(0x62);
     D_800EB029 = 9;
     D_800EB02A = 1;
@@ -245,7 +245,7 @@ void func_800FC6B8(void) {
     D_800EB02B = 4;
     D_800EB034 = D_80121258;
     D_800EB038 = D_8012125C;
-    D_800EB05C = D_80121254;
+    D_800EB05C = spot_yuina_overlay_pointers_1;
     D_800EB03C = D_80121260;
     D_800EB03E = 4;
     D_800EB040 = 0;
@@ -277,21 +277,21 @@ void func_800FC6B8(void) {
     D_800EC318 = 0;
     D_800EC2FC = 5;
     D_800EC2FE = -0x1E;
-    ((EventStateView *)&D_800B0860)->unk_1037 = 0xB;
-    ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_06 += 2;
-    ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_0A -= 0xA;
+    ((SpotDevelopmentState *)&D_800B0860)->unk_1037 = 0xB;
+    ((SpotDevelopmentState *)&D_800B0860)->girls[2].unk_06 += 2;
+    ((SpotDevelopmentState *)&D_800B0860)->girls[2].unk_0A -= 0xA;
     func_8004C250();
     func_80011DFC();
 }
 
-void func_800FC994(void) {
-    D_80120678 = D_8012037C;
-    D_8012067C = D_80120394;
-    D_80120680 = D_801203AC;
-    func_800FBE90();
+void spot_yuina_scene5_still_show_stats_03(void) {
+    spot_talk_text_table = D_8012037C;
+    spot_talk_command_table = D_80120394;
+    spot_talk_voice_table = D_801203AC;
+    spot_yuina_still_pointers_3_init();
     func_80012D64(D_80121298, 0x11, 1, 2, 0);
     func_8004C46C(D_8012129C, D_801212A0, D_801212A4, D_801212A8, D_801212AC, D_801212B0);
-    func_8004C6B0(D_8012128C, D_80121290, D_80121288, D_80121294);
+    func_8004C6B0(D_8012128C, D_80121290, spot_yuina_still_pointers_3, D_80121294);
     func_800189C4(0x62);
     D_800EB029 = 9;
     D_800EB02A = 1;
@@ -299,7 +299,7 @@ void func_800FC994(void) {
     D_800EB02B = 4;
     D_800EB034 = D_8012128C;
     D_800EB038 = D_80121290;
-    D_800EB05C = D_80121288;
+    D_800EB05C = spot_yuina_still_pointers_3;
     D_800EB03C = D_80121294;
     D_800EB03E = 4;
     D_800EB040 = 0;
@@ -317,98 +317,98 @@ void func_800FC994(void) {
     func_80011DFC();
 }
 
-void func_800FCB7C(void) {
+void spot_yuina_scene1_bg_load_09(void) {
     func_800469F4(0x40C6);
     func_80011DFC();
 }
 
-void func_800FCBA4(void) {
+void spot_yuina_scene1_bg_load_21(void) {
     func_800469F4(0x4613);
     func_80011DFC();
 }
 
-void func_800FCBCC(void) {
+void spot_yuina_scene2_bg_load_10(void) {
     func_800469F4(0x4500);
     func_80011DFC();
 }
 
-void func_800FCBF4(void) {
+void spot_yuina_scene2_bg_load_24(void) {
     func_800469F4(0x44F6);
     func_80011DFC();
 }
 
-void func_800FCC1C(void) {
+void spot_yuina_scene3_bg_load_09(void) {
     func_800469F4(0x486C);
     func_80011DFC();
 }
 
-void func_800FCC44(void) {
+void spot_yuina_scene3_bg_load_21(void) {
     func_800469F4(0x45AA);
     func_80011DFC();
 }
 
-void func_800FCC6C(void) {
+void spot_yuina_scene4_bg_load_10(void) {
     func_800469F4(0x478B);
     func_80011DFC();
 }
 
-void func_800FCC94(void) {
+void spot_yuina_scene4_bg_load_19(void) {
     func_800469F4(0x444F);
     func_80011DFC();
 }
 
-void func_800FCCBC(void) {
+void spot_yuina_scene5_bg_load_13(void) {
     func_800469F4(0x44B4);
     func_80011DFC();
 }
 
-void func_800FCCE4(void) {
+void spot_yuina_scene5_bg_load_23(void) {
     func_800469F4(0x4499);
     func_80011DFC();
 }
 
-void func_800FCD0C(void) {
+void spot_yuina_scene2_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
 
-    tbl = D_80121360;
+    tbl = spot_yuina_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
     idx = D_800B1AF6;
     tbl.f[idx]();
 }
 
-void func_800FCDA0(void) {
+void spot_yuina_scene2_assets_load_00(void) {
     func_80015D28(0x35, 0x801B0000, 0x7DD4);
-    func_800FBCA0();
+    spot_yuina_tile_pointers_1_init();
     func_80011DFC();
 }
 
-void func_800FCDD8(void) {
+void spot_yuina_scene3_run(void) {
     s32 idx; /* FAKE: unused, declared before tbl for its stack slot (T-3330) */
     FnTbl39 tbl;
     u32 r;
 
-    tbl = D_80121404;
+    tbl = spot_yuina_scene3_steps;
     tbl.f[D_800B1AF6](0x80);
     if (D_800B1AF6 >= 0xD && D_800B1AF6 < 0x10) {
         r = D_800B1AE4 % 180;
         if (r == (D_800B1AE4 * 0)) { /* FAKE: permuter find, the no-op multiply moves the load into $v1 */
-            func_800FCFA4();
+            spot_yuina_scene3_se_a();
             r = D_800B1AE4 % 180;
         }
         if (r == 0x5A) {
-            func_800FCFC4();
+            spot_yuina_scene3_se_b();
         }
     }
 }
 
-void func_800FCEBC(void) {
+void spot_yuina_scene3_assets_load_00(void) {
     func_80015D28(0x3D, 0x801B0000, 0x7E09);
-    func_800FBD10();
+    spot_yuina_still_pointers_2_init();
     func_80011DFC();
 }
 
-void func_800FCEF4(void) {
+void spot_yuina_scene3_still_fade_out_19(void) {
     func_8004C984();
     D_800EB02F = D_800F19AB;
     if ((u8) D_800F19AB < 8U) {
@@ -416,7 +416,7 @@ void func_800FCEF4(void) {
     }
 }
 
-void func_800FCF40(void) {
+void spot_yuina_scene3_set_state_17(void) {
     ((Actor *)D_800EAFA0)[2].brightness = 0x80;
     ((Actor *)D_800EAFA0)[2].draw_flags |= 0x80;
     ((Actor *)D_800EAFA0)[2].unk_08 = 0;
@@ -426,24 +426,24 @@ void func_800FCF40(void) {
     func_80011DFC();
 }
 
-void func_800FCFA4(void) {
+void spot_yuina_scene3_se_a(void) {
     func_800433D0(0x500);
 }
 
-void func_800FCFC4(void) {
+void spot_yuina_scene3_se_b(void) {
     func_800433D0(0x503);
 }
 
-void func_800FCFE4(void) {
+void spot_yuina_scene3_se_play_16(void) {
     func_800433D0(0x504);
     func_80011DFC();
 }
 
-void func_800FD00C(void) {
+void spot_yuina_scene4_run(void) {
     s32 idx;
     FnTbl39 tbl;
 
-    tbl = D_801214A0;
+    tbl = spot_yuina_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
@@ -462,22 +462,22 @@ void func_800FD00C(void) {
     ((SpriteQuad *)D_800EC190)[10].flags |= 0x80000000;
 }
 
-void func_800FD160(void) {
+void spot_yuina_scene4_se_play_15(void) {
     func_800433D0(0x502);
     func_80011DFC();
 }
 
-void func_800FD188(void) {
+void spot_yuina_scene4_assets_load_00(void) {
     func_80015D28(0x45, 0x801B0000, 0x7E46);
-    func_800FBDC0();
+    spot_yuina_overlay_pointers_1_init();
     func_80011DFC();
 }
 
-void func_800FD1C0(void) {
+void spot_yuina_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl38 tbl;
 
-    tbl = D_8012153C;
+    tbl = spot_yuina_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
@@ -489,8 +489,8 @@ void func_800FD1C0(void) {
     D_800EB02B &= 0xFF7F;
 }
 
-void func_800FD2AC(void) {
+void spot_yuina_scene5_assets_load_00(void) {
     func_80015D28(0x45, 0x801B0000, 0x7E8B);
-    func_800FBE90();
+    spot_yuina_still_pointers_3_init();
     func_80011DFC();
 }

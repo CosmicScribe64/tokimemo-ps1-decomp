@@ -33,7 +33,7 @@ extern s32 file_select_menu_mode_lock;
 extern u8 D_800E8BEE;
 void file_select_settings_restore(void);
 void file_select_buttons_input(void);
-void prologue_petals_update(s32 arg0);
+void prologue_petals_update(s32 motion_variant);
 void prologue_names_crossfade(void);
 void prologue_board_load(void);
 void prologue_board_scroll(void);
@@ -43,7 +43,7 @@ extern u8 file_select_no_space_text[];
 void name_entry_new_game_setup(void);
 void file_select_slot_header_draw(void);
 extern s32 file_select_information_page;
-void file_select_cursor_to_slot(s32 arg0);
+void file_select_cursor_to_slot(s32 slot_index);
 void name_entry_load_init(void);
 void name_entry_load_fade_in(void);
 void opening_story_mode_stage(void);
@@ -103,17 +103,17 @@ void name_entry_input_actors_init(void);
 void name_entry_background_setup(void);
 void name_entry_cell_cursor_update(void);
 void name_entry_step_init(void);
-void name_entry_frames_draw(s32 arg0);
+void name_entry_frames_draw(s32 alternate_color);
 void name_entry_family_name_input(void);
 void name_entry_given_name_init(void);
 void name_entry_given_name_input(void);
 void name_entry_nickname_init(void);
 void name_entry_nickname_input(void);
-void name_entry_birthday_frames_draw(s32 arg0);
+void name_entry_birthday_frames_draw(s32 alternate_color);
 void name_entry_birthday_init(void);
 void name_entry_birthday_input(void);
 void name_entry_confirm_init(void);
-void name_entry_confirm_frames_draw(s32 arg0);
+void name_entry_confirm_frames_draw(s32 shiori_profile);
 void name_entry_empty_callback(void);
 void name_entry_confirm_input(void);
 void name_entry_shiori_birthday_init(void);
@@ -144,7 +144,7 @@ extern s32 file_select_iris_y;
 extern s32 file_select_iris_x_speed;
 extern s32 file_select_iris_y_speed;
 void file_select_slot_information_show(void);
-void name_entry_actor_animation_start(s32 arg0);
+void name_entry_actor_animation_start(s32 actor_index);
 
 extern u8 name_entry_small_digit_uv[]; /* u8 (u, v) pairs, one per decimal digit */
 extern u8 name_entry_retained_family_name[];
@@ -204,7 +204,7 @@ void file_select_system_file_rebuild(void);
 s32 file_select_system_file_create(void);
 /* T-24132: guarded drafts in src/ovl/NAME_ENT/file_select.c. */
 void file_select_girl_icons_visibility_update(void);
-s32 file_select_page_indicator_update(s32 arg0);
+s32 file_select_page_indicator_update(s32 show_indicators);
 
 #endif /* OVL_NAME_ENT_H */
 extern u8 name_entry_cursor;
@@ -217,7 +217,7 @@ void name_entry_birthday_actors_init();
 void name_entry_birthday_text_draw();
 extern s32 name_entry_tab;
 void name_entry_preset_chord_check();
-void name_entry_digit_sprite_draw(s32 arg0, s32 arg1, s32 arg2);
+void name_entry_digit_sprite_draw(s32 digit_index, s32 screen_x, s32 screen_y);
 void name_entry_number_sprites_draw();
 
 
@@ -248,18 +248,18 @@ extern u8 *prologue_blood_texts[4];
 #ifndef OVL_NAME_ENT_PROFILE_FLAGS_H
 #define OVL_NAME_ENT_PROFILE_FLAGS_H
 /* GameState +0x1CC: month/day/blood-type fields read by 80149E3C. T-10860. */
-typedef struct NameProfileFlags {
+typedef struct NameEntryBirthdayBits {
     /* 0x00 */ u32 month : 4;
     /* 0x00 */ u32 day : 5;
     /* 0x00 */ u32 blood_type : 2;
     /* 0x00 */ u32 unk_0B : 21;
-} NameProfileFlags; /* size 0x04 */
+} NameEntryBirthdayBits; /* size 0x04 */
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_FORWARD_H
 #define OVL_NAME_ENT_T10860_FORWARD_H
 void prologue_palette_adjust(void);
-void prologue_background_slot_set(u32 arg0, s32 arg1);
+void prologue_background_slot_set(u32 image_address, s32 palette_row_offset);
 void prologue_white_palette_set(void);
 #endif
 
@@ -278,13 +278,13 @@ s32 prologue_white_boxes_draw(void);
 #ifndef OVL_NAME_ENT_DIALOGUE_TABLES_H
 #define OVL_NAME_ENT_DIALOGUE_TABLES_H
 /* Paired command words, indexed at stride 8 by the dialogue byte (T-10860). */
-typedef struct NameCommandPair8 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-} NameCommandPair8; /* size 0x08 */
-extern NameCommandPair8 prologue_line_clips[43];
+typedef struct PrologueClipPair {
+    /* 0x00 */ s32 packed_clip_start;
+    /* 0x04 */ s32 packed_clip_end;
+} PrologueClipPair; /* size 0x08 */
+extern PrologueClipPair prologue_line_clips[43];
 /* At least 43 dialogue pairs; this splat label also covers trailing untyped data. */
-extern NameCommandPair8 prologue_line_clips_second[];
+extern PrologueClipPair prologue_line_clips_second[];
 extern u8 prologue_line_speakers[44];
 extern s32 prologue_voice_started;
 void prologue_actor96_set_scene_06(void);
@@ -333,20 +333,20 @@ extern u8 name_entry_player_blood;
 extern u8 name_entry_shiori_month;
 extern u8 name_entry_shiori_day;
 extern u8 name_entry_shiori_blood;
-void name_entry_birthday_hit_test(s32 arg0);
+void name_entry_birthday_hit_test(s32 shiori_profile);
 #endif
 
 #ifndef OVL_NAME_ENT_T10890_CHARACTER_TABLES
 #define OVL_NAME_ENT_T10890_CHARACTER_TABLES
 /* T-10890: 17 pointers per kana table (CD28..CD6C and CD6C..CDB0).
  * Existing scalar declarations retain the first-pointer view for older callers. */
-typedef struct NameKanaPages44 {
+typedef struct NameEntryKanaPage {
     /* 0x00 */ u8 *text[17];
-} NameKanaPages44; /* size 0x44; index = row * 3 + column / 6 */
+} NameEntryKanaPage; /* size 0x44; index = row * 3 + column / 6 */
 extern u8 *name_entry_reading_labels[45];
 extern u16 *name_entry_candidate_counts;
 extern u8 **name_entry_candidate_lists;
-void name_entry_character_put(s32 arg0);
+void name_entry_character_put(s32 name_part);
 void name_entry_overlay_tables_set(void);
 #endif
 

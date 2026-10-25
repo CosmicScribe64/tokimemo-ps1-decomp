@@ -1,32 +1,32 @@
-/* collision.c: src/ovl/TACO/8013B990.c:4: hits, damage, scoring, pickups, bomb damage; body 5: func_8013C1F4(); 6: func_8013C440();. Original object 0x8013B990-0x8013D1E0 (config/objects/TACO.txt). */
+/* collision.c: src/ovl/TACO/8013B990.c:4: hits, damage, scoring, pickups, bomb damage; body 5: shooter_hit_ships_with_bullets(); 6: shooter_hit_ships_with_bodies();. Original object 0x8013B990-0x8013D1E0 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_8013B990(void) {
-    func_8013C1F4();
-    func_8013C440();
-    if (game_state.mode_stage == 0xC && D_8015EDCC != 0) {
+void shooter_run_collisions(void) {
+    shooter_hit_ships_with_bullets();
+    shooter_hit_ships_with_bodies();
+    if (game_state.mode_stage == 0xC && shooter_stages_cleared != 0) {
         return;
     }
-    if (game_state.mode_stage == 0x16 && D_8015EDCC >= 2) {
+    if (game_state.mode_stage == 0x16 && shooter_stages_cleared >= 2) {
         return;
     }
-    if (game_state.mode_stage == 0x20 && D_8015EDCC >= 3) {
+    if (game_state.mode_stage == 0x20 && shooter_stages_cleared >= 3) {
         return;
     }
-    func_8013BAC4(D_8015E270, 1, 0);
-    func_8013BAC4(D_8015E4F0, 4, 0);
-    func_8013BAC4(D_8015E3B0, 1, 1);
-    func_8013BAC4(D_8015E630, 4, 1);
-    D_8015EDF0 = D_8015EDF0 / 10 * 10 + 1;
-    if (D_8015EDF0 >= 0x989680) {
-        D_8015EDF0 = 0x98967F;
+    shooter_hit_enemies_with_shots(shooter_player_primary_shots, 1, 0);
+    shooter_hit_enemies_with_shots(shooter_player_secondary_shots, 4, 0);
+    shooter_hit_enemies_with_shots(shooter_wingman_primary_shots, 1, 1);
+    shooter_hit_enemies_with_shots(shooter_wingman_secondary_shots, 4, 1);
+    shooter_score = shooter_score / 10 * 10 + 1;
+    if (shooter_score >= 0x989680) {
+        shooter_score = 0x98967F;
     }
 }
 
 /* FAKE: s32 with no return keeps v0 live at the exit, so as1 fills the first branch slot of the
- * particle loop from the latch (void moves the kind test there), as in func_8013C1F4. T-25111. */
-s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
+ * particle loop from the latch (void moves the kind test there), as in shooter_hit_ships_with_bullets. T-25111. */
+s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2) {
     /* The order of these scalars sets their frame homes (i third, damage tenth). T-25111. */
     s32 x;
     s32 y;
@@ -39,10 +39,10 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
     s32 kind;
     u32 damage;
     s32 width;
-    TcDamage9 damageTable;
+    ShooterShotDamage damageTable;
     u32 scores[256];
 
-    damageTable = D_8015F548;
+    damageTable = shooter_shot_damage_by_kind;
     /* FAKE: through the byte view, tools/cvt_pass.py does not see a switch on an unsigned global
      * and leaves global copy propagation on. The y distances then fold into their compares, as in
      * the original (no `move a0,v0`), and the stage is still compared in v1. T-25111. */
@@ -57,34 +57,34 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
         for (j = 0; j < 256; j++) scores[j] = 0x320;
         break;
     default:
-        for (j = 0; j < 256; j++) scores[j] = D_8015F504[j];
+        for (j = 0; j < 256; j++) scores[j] = shooter_score_by_class[j];
         break;
     }
-    D_8015F500 = 0;
-    if (arg0->unk13 & 0x20) {
+    shooter_hit_sound_played = 0;
+    if (arg0->flags & 0x20) {
         for (i = 0; i != 2; i++) {
             if (game_state.frame_count & 1) {
-                x = (i + arg0)->unk0;
-                y = (i + arg0)->unk2;
-                if (arg2 == 0) z = D_8015EDB4[0].unk78;
-                else z = D_8015EDB4[8].unk78;
+                x = (i + arg0)->x;
+                y = (i + arg0)->y;
+                if (arg2 == 0) z = shooter_actors[0].z;
+                else z = shooter_actors[8].z;
                 for (j = 16; j != 63; j++) {
-                    if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
-                        radius = (j + D_8015EDB4)->unk84[0] * 16;
-                        xdist = abs(x - (j + D_8015EDB4)->unk74);
-                        ydist = abs(y - (j + D_8015EDB4)->unk76);
+                    if (((j + shooter_actors)->flag_bytes[1] & 0x80) && ((j + shooter_actors)->stats[3] & 1) && (j + shooter_actors)->stats[1] != 0 && (j + shooter_actors)->stats[0] != 0) {
+                        radius = (j + shooter_actors)->stats[0] * 16;
+                        xdist = abs(x - (j + shooter_actors)->x);
+                        ydist = abs(y - (j + shooter_actors)->y);
                         if (xdist < radius + 0x18 && ydist < radius + 0x18) {
-                            if ((j + D_8015EDB4)->unk78 < z) {
-                                if (D_8015F500 == 0 && arg2 == 0) {
-                                    D_8015F500 = 1;
-                                    func_801335A0(1, 0x507);
+                            if ((j + shooter_actors)->z < z) {
+                                if (shooter_hit_sound_played == 0 && arg2 == 0) {
+                                    shooter_hit_sound_played = 1;
+                                    shooter_play_se(1, 0x507);
                                 }
-                                if ((j + D_8015EDB4)->unk84[1] != 0) (j + D_8015EDB4)->unk84[1]--;
-                                func_8013D2A0(x, y, (j + D_8015EDB4)->unk78 - 0x200);
-                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 20;
-                                /* continue, not a fall-through: with a plain if, ugen reuses the stored D_8015EDF0 (T-25111) */
-                                if ((j + D_8015EDB4)->unk84[1] != 0) continue;
-                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
+                                if ((j + shooter_actors)->stats[1] != 0) (j + shooter_actors)->stats[1]--;
+                                shooter_spawn_hit_spark(x, y, (j + shooter_actors)->z - 0x200);
+                                shooter_score += scores[(shooter_actors + j)->stats[2] % 17] / 20;
+                                /* continue, not a fall-through: with a plain if, ugen reuses the stored shooter_score (T-25111) */
+                                if ((j + shooter_actors)->stats[1] != 0) continue;
+                                shooter_score += scores[(shooter_actors + j)->stats[2] % 17];
                             }
                         }
                     }
@@ -93,34 +93,34 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
         }
     }
     for (i = 0; i < 16; i++) {
-        if (((i + arg0)->unk13 & 0x80) && (kind = (i + arg0)->unk13 & 15) != 0) {
-            x = (i + arg0)->unk0;
-            y = (i + arg0)->unk2;
-            z = (i + arg0)->unk4;
-            damage = damageTable.bytes[kind];
+        if (((i + arg0)->flags & 0x80) && (kind = (i + arg0)->flags & 15) != 0) {
+            x = (i + arg0)->x;
+            y = (i + arg0)->y;
+            z = (i + arg0)->z;
+            damage = damageTable.by_kind[kind];
             if (kind == 8) width = 0x60;
             else width = 0x30;
             for (j = 16; j != 63; j++) {
-                if (((j + D_8015EDB4)->unk0[1] & 0x80) && ((j + D_8015EDB4)->unk84[3] & 1) && (j + D_8015EDB4)->unk84[1] != 0 && (j + D_8015EDB4)->unk84[0] != 0) {
-                    radius = (j + D_8015EDB4)->unk84[0] * 16;
-                    if (abs(z - (j + D_8015EDB4)->unk78) < radius + 0x100) {
-                        xdist = abs(x - (j + D_8015EDB4)->unk74);
-                        ydist = abs(y - (j + D_8015EDB4)->unk76);
+                if (((j + shooter_actors)->flag_bytes[1] & 0x80) && ((j + shooter_actors)->stats[3] & 1) && (j + shooter_actors)->stats[1] != 0 && (j + shooter_actors)->stats[0] != 0) {
+                    radius = (j + shooter_actors)->stats[0] * 16;
+                    if (abs(z - (j + shooter_actors)->z) < radius + 0x100) {
+                        xdist = abs(x - (j + shooter_actors)->x);
+                        ydist = abs(y - (j + shooter_actors)->y);
                         if (xdist < radius + width && ydist < radius + width) {
-                            if (D_8015F500 == 0 && arg2 == 0) {
-                                D_8015F500 = 1;
-                                func_801335A0(1, 0x507);
+                            if (shooter_hit_sound_played == 0 && arg2 == 0) {
+                                shooter_hit_sound_played = 1;
+                                shooter_play_se(1, 0x507);
                             }
-                            if (damage < (j + D_8015EDB4)->unk84[1]) (j + D_8015EDB4)->unk84[1] -= damage;
-                            else (j + D_8015EDB4)->unk84[1] = 0;
-                            if ((j + D_8015EDB4)->unk84[1] == 0) (j + D_8015EDB4)->unk84[3] &= 0xF0;
-                            (i + arg0)->unk12 = 0;
-                            (i + arg0)->unk13 = 0;
-                            func_8013D2A0(((j + D_8015EDB4)->unk74 + x) / 2, ((j + D_8015EDB4)->unk76 + y) / 2, z - 0x200);
-                            D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17] / 10 * damage;
-                            if ((j + D_8015EDB4)->unk84[1] == 0) {
-                                func_801335A0(1, 0x508);
-                                D_8015EDF0 += scores[(D_8015EDB4 + j)->unk84[2] % 17];
+                            if (damage < (j + shooter_actors)->stats[1]) (j + shooter_actors)->stats[1] -= damage;
+                            else (j + shooter_actors)->stats[1] = 0;
+                            if ((j + shooter_actors)->stats[1] == 0) (j + shooter_actors)->stats[3] &= 0xF0;
+                            (i + arg0)->age = 0;
+                            (i + arg0)->flags = 0;
+                            shooter_spawn_hit_spark(((j + shooter_actors)->x + x) / 2, ((j + shooter_actors)->y + y) / 2, z - 0x200);
+                            shooter_score += scores[(shooter_actors + j)->stats[2] % 17] / 10 * damage;
+                            if ((j + shooter_actors)->stats[1] == 0) {
+                                shooter_play_se(1, 0x508);
+                                shooter_score += scores[(shooter_actors + j)->stats[2] % 17];
                             }
                             break;
                         }
@@ -133,48 +133,48 @@ s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2) {
 
 /* FAKE: s32 with no return keeps the loop counter init (v0) live at the exit (void drops two
  * instructions); the hit in the second loop returns before it. T-19006. */
-s32 func_8013C1F4(void) {
+s32 shooter_hit_ships_with_bullets(void) {
     u32 i;
     s32 a;
     s32 b;
     u8 value;
     u8 value2;
-    D_8015F500 = 0;
-    if (!(D_8015EDB4->unk2 & 0x80)) {
+    shooter_hit_sound_played = 0;
+    if (!(shooter_actors->mode & 0x80)) {
         for (i = 0; i < 16; i++) {
-            if (D_8015EB30[i].unk13 & 0x80) {
-                a = abs(D_8015EB30[i].unk0 - D_8015EDB4->unk74);
-                b = abs(D_8015EB30[i].unk2 - D_8015EDB4->unk76);
-                if (abs(D_8015EB30[i].unk4 - D_8015EDB4->unk78) < 0x100 && b < 0x80 && a < 0x80) {
-                    D_8015EB30[i].unk13 = 0;
-                    func_801335A0(1, 0x506);
-                    D_8015EDB4->unk2 |= 4;
-                    value = D_8015EDB4->unk84[1];
+            if (shooter_enemy_bullets[i].flags & 0x80) {
+                a = abs(shooter_enemy_bullets[i].x - shooter_actors->x);
+                b = abs(shooter_enemy_bullets[i].y - shooter_actors->y);
+                if (abs(shooter_enemy_bullets[i].z - shooter_actors->z) < 0x100 && b < 0x80 && a < 0x80) {
+                    shooter_enemy_bullets[i].flags = 0;
+                    shooter_play_se(1, 0x506);
+                    shooter_actors->mode |= 4;
+                    value = shooter_actors->stats[1];
                     if (value >= 5) {
-                        D_8015EDB4->unk84[1] = value - 4;
+                        shooter_actors->stats[1] = value - 4;
                     } else {
-                        D_8015EDB4->unk84[1] = 0;
+                        shooter_actors->stats[1] = 0;
                     }
-                    D_8015EDB4->unk7A = 0x10;
+                    shooter_actors->counter = 0x10;
                     break;
                 }
             }
         }
     }
-    if (!(D_8015EDB4[8].unk2 & 0x80)) {
+    if (!(shooter_actors[8].mode & 0x80)) {
         for (i = 0; i < 16; i++) {
-            if (D_8015EB30[i].unk13 & 0x80) {
-                a = abs(D_8015EB30[i].unk0 - D_8015EDB4[8].unk74);
-                b = abs(D_8015EB30[i].unk2 - D_8015EDB4[8].unk76);
-                if (abs(D_8015EB30[i].unk4 - D_8015EDB4[8].unk78) < 0x100 && b < 0x80 && a < 0x80) {
-                    D_8015EB30[i].unk13 = 0;
-                    value2 = D_8015EDB4[8].unk84[1];
+            if (shooter_enemy_bullets[i].flags & 0x80) {
+                a = abs(shooter_enemy_bullets[i].x - shooter_actors[8].x);
+                b = abs(shooter_enemy_bullets[i].y - shooter_actors[8].y);
+                if (abs(shooter_enemy_bullets[i].z - shooter_actors[8].z) < 0x100 && b < 0x80 && a < 0x80) {
+                    shooter_enemy_bullets[i].flags = 0;
+                    value2 = shooter_actors[8].stats[1];
                     if (value2 >= 5) {
-                        D_8015EDB4[8].unk84[1] = value2 - 4;
+                        shooter_actors[8].stats[1] = value2 - 4;
                     } else {
-                        D_8015EDB4[8].unk84[1] = 0;
+                        shooter_actors[8].stats[1] = 0;
                     }
-                    D_8015EDB4[8].unk7A = 0x10;
+                    shooter_actors[8].counter = 0x10;
                     return;
                 }
             }
@@ -183,9 +183,9 @@ s32 func_8013C1F4(void) {
 }
 
 /* FAKE: s32 with no return keeps the loop counter init (v0) live at the exit (void changes the output),
- * as in func_8013C1F4. The first loop is entered by a goto instead of an enclosing if: the if form
- * shares the guard's load of D_8015EDB4 with the loop's pointer, the original loads it again. T-19006. */
-s32 func_8013C440(void) {
+ * as in shooter_hit_ships_with_bullets. The first loop is entered by a goto instead of an enclosing if: the if form
+ * shares the guard's load of shooter_actors with the loop's pointer, the original loads it again. T-19006. */
+s32 shooter_hit_ships_with_bodies(void) {
     u32 i;
     s32 a;
     s32 b;
@@ -193,48 +193,48 @@ s32 func_8013C440(void) {
     s32 limit;
     u8 value;
     u8 value2;
-    D_8015F500 = 0;
-    if (D_8015EDB4->unk2 & 0x80) {
+    shooter_hit_sound_played = 0;
+    if (shooter_actors->mode & 0x80) {
         goto skip1;
     }
     for (i = 16; i < 63; i++) {
-        if (((i + D_8015EDB4)->unk0[1] & 0xC0) && ((i + D_8015EDB4)->unk84[1] != 0)) {
-            a = abs((i + D_8015EDB4)->unk74 - D_8015EDB4->unk74);
-            b = abs((i + D_8015EDB4)->unk76 - D_8015EDB4->unk76);
-            c = abs((i + D_8015EDB4)->unk78 - D_8015EDB4->unk78);
-            limit = (s32)(i + D_8015EDB4)->unk84[0] << 4;
+        if (((i + shooter_actors)->flag_bytes[1] & 0xC0) && ((i + shooter_actors)->stats[1] != 0)) {
+            a = abs((i + shooter_actors)->x - shooter_actors->x);
+            b = abs((i + shooter_actors)->y - shooter_actors->y);
+            c = abs((i + shooter_actors)->z - shooter_actors->z);
+            limit = (s32)(i + shooter_actors)->stats[0] << 4;
             if (c < 0x100 && b < limit && a < limit) {
-                func_801335A0(1, 0x506);
-                D_8015EDB4->unk2 |= 4;
-                value = D_8015EDB4->unk84[1];
+                shooter_play_se(1, 0x506);
+                shooter_actors->mode |= 4;
+                value = shooter_actors->stats[1];
                 if (value >= 0xD) {
-                    D_8015EDB4->unk84[1] = value - 0xC;
+                    shooter_actors->stats[1] = value - 0xC;
                 } else {
-                    D_8015EDB4->unk84[1] = 0;
+                    shooter_actors->stats[1] = 0;
                 }
-                D_8015EDB4->unk7A = 0x10;
+                shooter_actors->counter = 0x10;
                 break;
             }
         }
     }
 skip1:
-    if (D_8015EDB4[8].unk2 & 0x80) {
+    if (shooter_actors[8].mode & 0x80) {
         return;
     }
     for (i = 0; i < 16; i++) {
-        if (((i + D_8015EDB4)->unk0[1] & 0xC0) && ((i + D_8015EDB4)->unk84[1] != 0)) {
-            a = abs((i + D_8015EDB4)->unk74 - D_8015EDB4[8].unk74);
-            b = abs((i + D_8015EDB4)->unk76 - D_8015EDB4[8].unk76);
-            c = abs((i + D_8015EDB4)->unk78 - D_8015EDB4[8].unk78);
-            limit = (s32)(i + D_8015EDB4)->unk84[0] << 4;
+        if (((i + shooter_actors)->flag_bytes[1] & 0xC0) && ((i + shooter_actors)->stats[1] != 0)) {
+            a = abs((i + shooter_actors)->x - shooter_actors[8].x);
+            b = abs((i + shooter_actors)->y - shooter_actors[8].y);
+            c = abs((i + shooter_actors)->z - shooter_actors[8].z);
+            limit = (s32)(i + shooter_actors)->stats[0] << 4;
             if (c < 0x100 && b < limit && a < limit) {
-                value2 = D_8015EDB4[8].unk84[1];
+                value2 = shooter_actors[8].stats[1];
                 if (value2 >= 0xD) {
-                    D_8015EDB4[8].unk84[1] = value2 - 0xC;
+                    shooter_actors[8].stats[1] = value2 - 0xC;
                 } else {
-                    D_8015EDB4[8].unk84[1] = 0;
+                    shooter_actors[8].stats[1] = 0;
                 }
-                D_8015EDB4[8].unk7A = 0x10;
+                shooter_actors[8].counter = 0x10;
                 return;
             }
         }
@@ -242,10 +242,10 @@ skip1:
 }
 
 /* FAKE: s32 with no return keeps the second loop's counter init (v0) live at the first loop's exit
- * (void drops the `move v0,zero`), as in func_8013C1F4. T-25111. */
-s32 func_8013C6D4(void) {
+ * (void drops the `move v0,zero`), as in shooter_hit_ships_with_bullets. T-25111. */
+s32 shooter_collect_items(void) {
     s32 pad[6]; /* FAKE: T-25111, six home words above the locals; the original frame has them, their source is unknown */
-    Tc14 *p;
+    ShooterParticle *p;
     s32 dy;
     s32 dx;
     u8 kind;
@@ -263,14 +263,14 @@ s32 func_8013C6D4(void) {
     got2 = -7;
     got_bonus = -7;
     got5 = -7;
-    for (p = D_8015EC70; p < D_8015EC70 + 16; p++) {
-        if (p->unk13 & 0x80) {
-            dx = abs(p->unk0 - D_8015EDB4->unk74);
-            dy = abs(p->unk2 - D_8015EDB4->unk76);
-            if (abs(p->unk4 - D_8015EDB4->unk78) < 0x200 && dy < 0x200 && dx < 0x200) {
-                D_8015EDF0 += 1000;
-                kind = p->unk11;
-                p->unk13 = 0;
+    for (p = shooter_items; p < shooter_items + 16; p++) {
+        if (p->flags & 0x80) {
+            dx = abs(p->x - shooter_actors->x);
+            dy = abs(p->y - shooter_actors->y);
+            if (abs(p->z - shooter_actors->z) < 0x200 && dy < 0x200 && dx < 0x200) {
+                shooter_score += 1000;
+                kind = p->argument;
+                p->flags = 0;
                 switch (kind) {
                 case 0:
                 case 1:
@@ -281,56 +281,56 @@ s32 func_8013C6D4(void) {
                     break;
                 case 3:
                 case 4:
-                    func_801335A0(1, 0x509);
-                    if (D_8015EDB4->unk7C == 0) {
-                        D_8015EDB4->unk7C = p->unk11;
-                    } else if (D_8015EDB4->unk7E == 0) {
-                        D_8015EDB4->unk7E = p->unk11;
+                    shooter_play_se(1, 0x509);
+                    if (shooter_actors->argument_x == 0) {
+                        shooter_actors->argument_x = p->argument;
+                    } else if (shooter_actors->argument_y == 0) {
+                        shooter_actors->argument_y = p->argument;
                     } else {
-                        D_8015EDB4->unk80 = p->unk11;
+                        shooter_actors->argument_z = p->argument;
                     }
                     break;
                 case 5:
                     got5 = 1;
-                    value = D_8015EDB4->unk84[1];
+                    value = shooter_actors->stats[1];
                     if (value < 0xEF) {
-                        D_8015EDB4->unk84[1] = value + 0x10;
+                        shooter_actors->stats[1] = value + 0x10;
                     } else {
-                        D_8015EDB4->unk84[1] = 0xFF;
+                        shooter_actors->stats[1] = 0xFF;
                     }
                     break;
                 default:
-                    D_8015EDD0 = 0x20;
+                    shooter_bonus_popup_timer = 0x20;
                     got_bonus = 1;
-                    D_8015EDD4 = 1;
+                    shooter_bonus_popup_value = 1;
                     switch (rand() & 7) {
                     case 0:
-                        D_8015EDD4 = 100;
+                        shooter_bonus_popup_value = 100;
                         break;
                     case 1:
-                        D_8015EDD4 = 200;
+                        shooter_bonus_popup_value = 200;
                         break;
                     case 2:
-                        D_8015EDD4 = 400;
+                        shooter_bonus_popup_value = 400;
                         break;
                     case 3:
-                        D_8015EDD4 = 800;
+                        shooter_bonus_popup_value = 800;
                         break;
                     case 4:
-                        D_8015EDD4 = 1600;
+                        shooter_bonus_popup_value = 1600;
                         break;
                     case 5:
-                        D_8015EDD4 = 3200;
+                        shooter_bonus_popup_value = 3200;
                         break;
                     case 6:
-                        D_8015EDD4 = 6400;
+                        shooter_bonus_popup_value = 6400;
                         break;
                     case 7:
-                    default: /* every path assigns D_8015EDD4, so uopt keeps it in v0 up to the sum */
-                        D_8015EDD4 = 57300;
+                    default: /* every path assigns shooter_bonus_popup_value, so uopt keeps it in v0 up to the sum */
+                        shooter_bonus_popup_value = 57300;
                         break;
                     }
-                    D_8015EDF0 += D_8015EDD4;
+                    shooter_score += shooter_bonus_popup_value;
                     break;
                 case 7:
                     last_kind = -1;
@@ -340,35 +340,35 @@ s32 func_8013C6D4(void) {
         }
     }
     for (i = 0; i < 16; i++) {
-        if (D_8015EC70[i].unk13 & 0x80) {
-            v = D_8015EC70[i].unk11;
+        if (shooter_items[i].flags & 0x80) {
+            v = shooter_items[i].argument;
             if (v != 3 && v != 4) {
-                dx = abs(D_8015EC70[i].unk0 - D_8015EDB4[8].unk74);
-                dy = abs(D_8015EC70[i].unk2 - D_8015EDB4[8].unk76);
-                v = abs(D_8015EC70[i].unk4 - D_8015EDB4[8].unk78);
+                dx = abs(shooter_items[i].x - shooter_actors[8].x);
+                dy = abs(shooter_items[i].y - shooter_actors[8].y);
+                v = abs(shooter_items[i].z - shooter_actors[8].z);
                 if (v < 0x200 && dy < 0x200 && dx < 0x200) {
-                    v = D_8015EC70[i].unk11;
-                    D_8015EC70[i].unk13 = 0;
+                    v = shooter_items[i].argument;
+                    shooter_items[i].flags = 0;
                     switch (v) {
                     case 0:
                     case 1:
                     case 7:
-                        D_8015EDB4[8].unk72 = v;
+                        shooter_actors[8].weapon = v;
                         break;
                     case 2:
-                        v = D_8015EDB4[8].unk82;
+                        v = shooter_actors[8].auxiliary;
                         if (v == -1) {
-                            D_8015EDB4[8].unk82 = 1;
-                            v = D_8015EDB4[8].unk82;
+                            shooter_actors[8].auxiliary = 1;
+                            v = shooter_actors[8].auxiliary;
                         }
-                        D_8015EDB4[8].unk82 = 1 - v;
+                        shooter_actors[8].auxiliary = 1 - v;
                         break;
                     case 5:
-                        value = D_8015EDB4[8].unk84[1];
+                        value = shooter_actors[8].stats[1];
                         if (value < 0xEF) {
-                            D_8015EDB4[8].unk84[1] = value + 0x10;
+                            shooter_actors[8].stats[1] = value + 0x10;
                         } else {
-                            D_8015EDB4[8].unk84[1] = 0xFF;
+                            shooter_actors[8].stats[1] = 0xFF;
                         }
                         break;
                     }
@@ -376,43 +376,43 @@ s32 func_8013C6D4(void) {
             }
         }
     }
-    if (last_kind != D_8015EDB4->unk72) {
+    if (last_kind != shooter_actors->weapon) {
         if (last_kind != -7) {
-            D_8015EDB4->unk72 = last_kind;
+            shooter_actors->weapon = last_kind;
             switch (last_kind) {
             case -1:
-                func_80133410(0);
-                func_801335A0(1, 0x500);
+                shooter_clear_beam_flags(0);
+                shooter_play_se(1, 0x500);
                 sound_ok = 0;
                 break;
             case 0:
-                func_80133410(0);
-                func_801335A0(1, 0x514);
+                shooter_clear_beam_flags(0);
+                shooter_play_se(1, 0x514);
                 sound_ok = 0;
                 break;
             case 1:
-                func_80133410(0);
-                func_801335A0(1, 0x512);
+                shooter_clear_beam_flags(0);
+                shooter_play_se(1, 0x512);
                 sound_ok = 0;
                 break;
             }
         }
     }
     if (got2 == 1) {
-        v = D_8015EDB4->unk82;
+        v = shooter_actors->auxiliary;
         if (v == -1) {
-            D_8015EDB4->unk82 = 1;
-            v = D_8015EDB4->unk82;
+            shooter_actors->auxiliary = 1;
+            v = shooter_actors->auxiliary;
         }
-        D_8015EDB4->unk82 = 1 - v;
+        shooter_actors->auxiliary = 1 - v;
         if (sound_ok != 0) {
-            switch (D_8015EDB4->unk82) {
+            switch (shooter_actors->auxiliary) {
             case 0:
-                func_801335A0(1, 0x511);
+                shooter_play_se(1, 0x511);
                 sound_ok = 0;
                 break;
             case 1:
-                func_801335A0(1, 0x516);
+                shooter_play_se(1, 0x516);
                 sound_ok = 0;
                 break;
             }
@@ -420,67 +420,67 @@ s32 func_8013C6D4(void) {
     }
     if (got5 == 1) {
         if (sound_ok != 0) {
-            func_801335A0(1, 0x510);
+            shooter_play_se(1, 0x510);
             sound_ok = 0;
         }
     }
     if (got_bonus == 1) {
         if (sound_ok != 0) {
-            func_801335A0(1, 0x509);
+            shooter_play_se(1, 0x509);
         }
     }
 }
 
 /* FAKE: s32 with no return keeps v0 live at the exit (void changes one instruction), as in
- * func_8013CE78. The i == 8 test is dead (the loop starts at 16) but the original has it. T-19006. */
-s32 func_8013CC40(void) {
+ * shooter_bomb_damage_all. The i == 8 test is dead (the loop starts at 16) but the original has it. T-19006. */
+s32 shooter_explode_dead_enemies(void) {
     u32 i;
     for (i = 16; i < 64; i++) {
-        if (((i + D_8015EDB4)->unk84[1] == 0) && ((i + D_8015EDB4)->unk0[1] & 0x80)) {
+        if (((i + shooter_actors)->stats[1] == 0) && ((i + shooter_actors)->flag_bytes[1] & 0x80)) {
             if (!(game_state.frame_count & 0x1F)) {
-                func_801335A0(1, 0x508);
+                shooter_play_se(1, 0x508);
             }
-            func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);
-            func_8013D1E0(*(TcPos *)&(i + D_8015EDB4)->unk74, *(TcPos *)&(i + D_8015EDB4)->unk7C, 0);
+            shooter_spawn_explosion(*(ShooterPosition *)&(i + shooter_actors)->x, *(ShooterPosition *)&(i + shooter_actors)->argument_x, 0);
+            shooter_spawn_explosion(*(ShooterPosition *)&(i + shooter_actors)->x, *(ShooterPosition *)&(i + shooter_actors)->argument_x, 0);
             if (i == 8) {
-                (D_8015EDB4 + i)->unk84[1] = rand() & 0x3F;
-                (D_8015EDB4 + i)->unk74 = rand() % 100;
-                (D_8015EDB4 + i)->unk76 = rand() % 100;
+                (shooter_actors + i)->stats[1] = rand() & 0x3F;
+                (shooter_actors + i)->x = rand() % 100;
+                (shooter_actors + i)->y = rand() % 100;
             }
         }
     }
 }
 
-void func_8013CE70(void) {
+void shooter_nop(void) {
 }
 
 /* FAKE: s32 fall-through and the two pointer-addition orders retain the
  * original result/address registers. T-10010. */
-s32 func_8013CE78(void) {
+s32 shooter_bomb_damage_all(void) {
     u32 i;
     u8 value;
     for (i = 16; i < 64; i++) {
-        if (((i + D_8015EDB4)->unk0[1] & 0x80) && ((i + D_8015EDB4)->unk84[3] & 1)) {
-            value = (i + D_8015EDB4)->unk84[1];
-            if (value != 0 && (i + D_8015EDB4)->unk84[0] != 0) {
+        if (((i + shooter_actors)->flag_bytes[1] & 0x80) && ((i + shooter_actors)->stats[3] & 1)) {
+            value = (i + shooter_actors)->stats[1];
+            if (value != 0 && (i + shooter_actors)->stats[0] != 0) {
                 if (value >= 3U) {
-                    (i + D_8015EDB4)->unk84[1] = value - 2;
+                    (i + shooter_actors)->stats[1] = value - 2;
                 } else {
-                    (i + D_8015EDB4)->unk84[1] = 0;
+                    (i + shooter_actors)->stats[1] = 0;
                 }
-                func_8013D2A0((i + D_8015EDB4)->unk74, (i + D_8015EDB4)->unk76, (i + D_8015EDB4)->unk78 - 0x200);
-                if ((i + D_8015EDB4)->unk84[1] == 0) {
-                    func_801335A0(1, 0x508);
-                    D_8015EDF0 += D_8015F504[(D_8015EDB4 + i)->unk84[2] % 17U];
+                shooter_spawn_hit_spark((i + shooter_actors)->x, (i + shooter_actors)->y, (i + shooter_actors)->z - 0x200);
+                if ((i + shooter_actors)->stats[1] == 0) {
+                    shooter_play_se(1, 0x508);
+                    shooter_score += shooter_score_by_class[(shooter_actors + i)->stats[2] % 17U];
                 }
             }
         }
     }
 }
 
-/* FAKE: s32 with no return keeps v0 live at the exit, as in func_8013CE78 (void changes one
+/* FAKE: s32 with no return keeps v0 live at the exit, as in shooter_bomb_damage_all (void changes one
  * instruction). T-19006. */
-s32 func_8013CFD8(void) {
+s32 shooter_bomb_damage_by_distance(void) {
     u32 i;
     s16 x;
     s16 y;
@@ -489,12 +489,12 @@ s32 func_8013CFD8(void) {
     s32 d;
     s32 t;
     s32 u;
-    x = D_8015E770[0].unk0;
-    y = D_8015E770[0].unk2;
+    x = shooter_bomb_shots[0].x;
+    y = shooter_bomb_shots[0].y;
     for (i = 16; i < 64; i++) {
-        if (((i + D_8015EDB4)->unk0[1] & 0x80) && ((i + D_8015EDB4)->unk84[3] & 1) && ((i + D_8015EDB4)->unk84[1] != 0) && ((i + D_8015EDB4)->unk84[0] != 0)) {
-            t = abs(x - (i + D_8015EDB4)->unk74);
-            u = abs(y - (i + D_8015EDB4)->unk76);
+        if (((i + shooter_actors)->flag_bytes[1] & 0x80) && ((i + shooter_actors)->stats[3] & 1) && ((i + shooter_actors)->stats[1] != 0) && ((i + shooter_actors)->stats[0] != 0)) {
+            t = abs(x - (i + shooter_actors)->x);
+            u = abs(y - (i + shooter_actors)->y);
             a = 0x1000 - t;
             if (a < 0) {
                 a = 0;
@@ -505,16 +505,16 @@ s32 func_8013CFD8(void) {
             }
             d = (a + b) / 256;
             if (d != 0) {
-                func_8013D2A0((i + D_8015EDB4)->unk74, (i + D_8015EDB4)->unk76, (i + D_8015EDB4)->unk78 - 0x200);
+                shooter_spawn_hit_spark((i + shooter_actors)->x, (i + shooter_actors)->y, (i + shooter_actors)->z - 0x200);
             }
-            if ((u32)d < (i + D_8015EDB4)->unk84[1]) {
-                (i + D_8015EDB4)->unk84[1] -= d;
+            if ((u32)d < (i + shooter_actors)->stats[1]) {
+                (i + shooter_actors)->stats[1] -= d;
             } else {
-                (i + D_8015EDB4)->unk84[1] = 0;
+                (i + shooter_actors)->stats[1] = 0;
             }
-            if ((i + D_8015EDB4)->unk84[1] == 0) {
-                func_801335A0(1, 0x508);
-                D_8015EDF0 += D_8015F504[(D_8015EDB4 + i)->unk84[2] % 17U];
+            if ((i + shooter_actors)->stats[1] == 0) {
+                shooter_play_se(1, 0x508);
+                shooter_score += shooter_score_by_class[(shooter_actors + i)->stats[2] % 17U];
             }
         }
     }

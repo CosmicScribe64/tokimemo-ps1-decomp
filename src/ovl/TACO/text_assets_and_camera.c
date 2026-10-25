@@ -2,11 +2,11 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_801430B0(void) {
+void shooter_flash_red(void) {
     func_8004ACC8(0x800000);
 }
 
-void func_801430D0(arg0, arg1, arg2, arg3)
+void shooter_draw_number(arg0, arg1, arg2, arg3)
 s32 arg0;
 s32 arg1;
 s32 arg2;
@@ -39,7 +39,7 @@ s32 arg3;
                 sprite->b0 = 0x80;
                 sprite->x0 = game_state.screen_center_x[draw_buffer] + arg1 - xoff;
                 sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
-                uv = &D_8015F5A0[n % 10 * 2];
+                uv = &shooter_digit_uv[n % 10 * 2];
                 sprite->u0 = uv[0] + 0x80;
                 sprite->v0 = uv[1];
                 sprite->clut = func_8009ED74(arg3 * 0x10, 0x1EF);
@@ -56,7 +56,7 @@ s32 arg3;
 }
 
 /* The character is read as *s in every test (no local copy): uopt then keeps the load in $v1 and the `*s - 0x30` / `*s - 0x41` values in $a0, as the original does. T-16562 */
-void func_801432F0(arg0, arg1, arg2, arg3)
+void shooter_draw_text(arg0, arg1, arg2, arg3)
 u8 *arg0;
 s32 arg1;
 s32 arg2;
@@ -82,25 +82,25 @@ s32 arg3;
             sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
             if (*s >= 0x30 && *s < 0x3A) {
                 idx = *s - 0x30;
-                sprite->u0 = D_8015F5A0[idx * 2] + 0x80;
-                sprite->v0 = D_8015F5A0[idx * 2 + 1];
+                sprite->u0 = shooter_digit_uv[idx * 2] + 0x80;
+                sprite->v0 = shooter_digit_uv[idx * 2 + 1];
             } else {
                 idx = *s - 0x41;
                 if (idx < 0x1A) {
-                    sprite->u0 = D_8015F5B4[idx * 2] + 0x80;
-                    sprite->v0 = D_8015F5B4[idx * 2 + 1];
+                    sprite->u0 = shooter_letter_uv[idx * 2] + 0x80;
+                    sprite->v0 = shooter_letter_uv[idx * 2 + 1];
                 } else if (*s == 0x2E) {
-                    sprite->u0 = D_8015F5E8 + 0x80;
-                    sprite->v0 = D_8015F5E9;
+                    sprite->u0 = shooter_glyph_period_u + 0x80;
+                    sprite->v0 = shooter_glyph_period_v;
                 } else if (*s == 0x2D) {
-                    sprite->u0 = D_8015F5EA + 0x80;
-                    sprite->v0 = D_8015F5EB;
+                    sprite->u0 = shooter_glyph_hyphen_u + 0x80;
+                    sprite->v0 = shooter_glyph_hyphen_v;
                 } else if (*s == 0x20) {
-                    sprite->u0 = D_8015F5EC + 0x80;
-                    sprite->v0 = D_8015F5ED;
+                    sprite->u0 = shooter_glyph_space_u + 0x80;
+                    sprite->v0 = shooter_glyph_space_v;
                 } else {
-                    sprite->u0 = D_8015F5EE + 0x80;
-                    sprite->v0 = D_8015F5EF;
+                    sprite->u0 = shooter_glyph_other_u + 0x80;
+                    sprite->v0 = shooter_glyph_other_v;
                 }
             }
             /* FAKE: w and h on one source line give the original's store order (h first) and the register for 0xC. T-16562 */
@@ -112,7 +112,7 @@ s32 arg3;
     dtd_on_tpage(0x340, 0x180, 1, 0, 0);
 }
 
-void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
+void shooter_draw_dot(s32 arg0, s32 arg1, s32 arg2) {
     s32 pad; /* FAKE: unused local declared first puts p at sp+0x28 as in the original; real source unknown. T-6070 */
     u8 *p;
 
@@ -127,7 +127,7 @@ void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
     AddPrim((draw_buffer << 10) + 0x3C + D_800E8CA0, p);
 }
 
-void func_80143644(void) {
+void shooter_menu_cursor_move(void) {
     game_state.menu_mode = MENU_MODE_A;
     if (game_state.pad_pressed & PAD_UP) {
         if (game_state.menu_cursor_0 != 0) {
@@ -145,7 +145,7 @@ void func_80143644(void) {
     }
 }
 
-void func_801436D4(void) {
+void shooter_snapshot_screen_copy(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
     RECT rect;
 
@@ -157,7 +157,7 @@ void func_801436D4(void) {
     func_8009C674(0);
 }
 
-void func_80143730(s32 arg0, s32 arg1) {
+void shooter_load_texture_page(s32 arg0, s32 arg1) {
     s32 x;
     s32 y;
 
@@ -169,7 +169,7 @@ void func_80143730(s32 arg0, s32 arg1) {
     LoadSquare(x + 0x40, y + 0x80, 0x40, 0x80, arg0 + 0xC000);
 }
 
-void func_80143814(s32 arg0, s32 arg1) {
+void shooter_load_texture_page_32(s32 arg0, s32 arg1) {
     s32 x;
     s32 y;
 
@@ -181,7 +181,7 @@ void func_80143814(s32 arg0, s32 arg1) {
     LoadSquare(x + 0x20, y + 0x80, 0x20, 0x80, arg0 + 0x6000);
 }
 
-void func_801438F0(s32 arg0, s32 arg1, u8 *arg2) {
+void shooter_init_actor_model(s32 arg0, s32 arg1, u8 *arg2) {
     s32 pad[3]; /* FAKE: 12 bytes of unused locals above sp28 reproduce the original frame (0x38, sp28 at 0x28); real source unknown. T-4040 */
     s32 sp28;
 
@@ -192,7 +192,7 @@ void func_801438F0(s32 arg0, s32 arg1, u8 *arg2) {
     *(s32 *)(arg2 + 4) = 0;
 }
 
-void func_8014394C(void) {
+void shooter_set_white_lights(void) {
     D_80122760 = 0;
     D_80122764 = 0;
     D_80122768 = -0x64;
@@ -218,7 +218,7 @@ void func_8014394C(void) {
     func_8009B340(0);
 }
 
-void func_80143A74(void) {
+void shooter_init_camera(void) {
     func_8009AD30(0x800);
     D_80122740 = 0;
     D_80122744 = 0;
@@ -233,7 +233,7 @@ void func_80143A74(void) {
     func_8009AD60(0x7FFF);
 }
 
-void func_80143AF4(void) {
+void shooter_release_all_actor_models(void) {
     s32 i;
 
     for (i = 2; i != 0xA0; i += 2) {
@@ -241,68 +241,68 @@ void func_80143AF4(void) {
     }
 }
 
-void func_80143B34(s32 arg0) {
+void shooter_release_actor_model(s32 arg0) {
     func_80059688((arg0 * 2) + 2);
 }
 
-void func_80143B58(void) {
-    switch (D_8015EDBC) {
+void shooter_process_load_request(void) {
+    switch (shooter_load_request) {
     case 0: /* empty case of its own: the jump table starts at 0 and its entry 0 is not the default */
         break;
     case 0x10:
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB69B);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB6BB);
         cd_read_sectors_nowait(8, 0x80182000, 0xB47E);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x14:
         audio_bank_load_start(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x18:
         cd_read_sectors_nowait(0x12, 0x8018D000, 0xB438);
         cd_read_sectors(0xC, 0x801E0000, 0xB44A);
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB418);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x20:
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB647);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB5A0);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x24:
         audio_bank_load_start(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x28:
         cd_read_sectors_nowait(7, 0x80196000, 0xB45B);
         cd_read_sectors(5, 0x801E0000, 0xB462);
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB535);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x30:
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB67B);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB5C1);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x34:
         audio_bank_load_start(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x38:
         cd_read_sectors_nowait(0xA, 0x801A7000, 0xB515);
         cd_read_sectors(0x15, 0x801E0000, 0xB51F);
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB5FC);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB61D);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     case 0x44:
         audio_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
-        D_8015EDBC += 1;
+        shooter_load_request += 1;
         break;
     default:
         if (func_80045288() == 1) {
-            D_8015EDBC = 0;
+            shooter_load_request = 0;
         }
         break;
     }

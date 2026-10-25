@@ -1,22 +1,22 @@
-/* girl_action_ayako.c: src/ovl/RPG_BAT/80151C10.c:7: girl 3 action; body 8: switch (D_8015EE00.unk_04) {; 11: func_8014B738((s32) D_8015E9CC, 1, 0x5A); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24. Original object 0x80151C10-0x80151FC0 (config/objects/RPG_BAT.txt). */
-#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the call's $v0 moves the selector of func_80151C10 to $v1 (T-17102) */
+/* girl_action_ayako.c: src/ovl/RPG_BAT/80151C10.c:7: girl 3 action; body 8: switch (rpg_girl_channel.unk_04) {; 11: rpg_message_show((s32) rpg_text_girl_pointers, 1, 0x5A); partner-id dispatch src/ovl/RPG_BAT/801439E0.c:24. Original object 0x80151C10-0x80151FC0 (config/objects/RPG_BAT.txt). */
+#define RPG_BAT_OVERRIDE_rpg_actor_set_animation /* implicit int view: the call's $v0 moves the selector of rpg_girl_action_ayako to $v1 (T-17102) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-s32 func_8013E7C0();
+s32 rpg_actor_set_animation();
 
-void func_80151C10(void) {
-    switch (D_8015EE00.unk_04) {
+void rpg_girl_action_ayako(void) {
+    switch (rpg_girl_channel.unk_04) {
     case 0x0:
-        strcpy(D_8015E904, "　　　　　ポコポコ乱れ撃ち　　　　　");
-        func_8014B738((s32) D_8015E9CC, 1, 0x5A);
-        func_8013E54C(0xFF);
-        D_8015EC74 = func_8013E9A8(4) + 3;
-        D_8015EC7C = 0;
-        func_8014F230();
+        strcpy(rpg_text_girl_0, "　　　　　ポコポコ乱れ撃ち　　　　　");
+        rpg_message_show((s32) rpg_text_girl_pointers, 1, 0x5A);
+        rpg_effects_select_asset_set(0xFF);
+        rpg_scratch = rpg_rand(4) + 3;
+        rpg_move_value_0 = 0;
+        rpg_girl_step_next();
         return;
     case 0x1:
-        func_8014F448(1);
+        rpg_girl_wait_msg_step(1);
         return;
     case 0x2:
     case 0x3:
@@ -42,74 +42,74 @@ void func_80151C10(void) {
     case 0x17:
     case 0x18:
     case 0x19:
-        if (!(D_8015EE00.unk_04 & 1)) {
-            if (D_8015EE00.unk_0C == 0) {
-                func_80151F38();
-                func_8013E7C0(0x1D, 5, 1, 1);
-                D_8015EC78 = func_8013E9A8(0x38) - 0x30;
-                D_8015EE00.unk_0C += 1;
+        if (!(rpg_girl_channel.unk_04 & 1)) {
+            if (rpg_girl_channel.unk_0C == 0) {
+                rpg_ayako_shot_pick();
+                rpg_actor_set_animation(0x1D, 5, 1, 1);
+                rpg_move_timer = rpg_rand(0x38) - 0x30;
+                rpg_girl_channel.unk_0C += 1;
                 return;
             }
-            func_80143DA8(0x1D, 0, D_8015EC7C, -0xEF, D_8015EC78, 0x1E);
+            rpg_girl_move_linear(0x1D, 0, rpg_move_value_0, -0xEF, rpg_move_timer, 0x1E);
             return;
         }
-        /* FAKE: u32 view of the s32 counter; plain D_8015EC74 hoists its lui above the sub and renumbers the temporaries. Real type unknown. T-17102 */
-        if (*(u32 *)&D_8015EC74 == ((D_8015EE00.unk_04 - 3) / 2)) {
-            func_80151F38();
-            func_8013E7C0(0x1D, 6, 1, 1);
-            D_8015EE00.unk_04 = 0x32;
+        /* FAKE: u32 view of the s32 counter; plain rpg_scratch hoists its lui above the sub and renumbers the temporaries. Real type unknown. T-17102 */
+        if (*(u32 *)&rpg_scratch == ((rpg_girl_channel.unk_04 - 3) / 2)) {
+            rpg_ayako_shot_pick();
+            rpg_actor_set_animation(0x1D, 6, 1, 1);
+            rpg_girl_channel.unk_04 = 0x32;
             return;
         }
-        if (D_8015EE00.unk_0C == 0) {
-            func_80151F38();
-            func_8013E7C0(0x1D, 6, 1, 1);
-            D_8015EC7C = func_8013E9A8(0x38) - 0x30;
-            D_8015EE00.unk_0C += 1;
+        if (rpg_girl_channel.unk_0C == 0) {
+            rpg_ayako_shot_pick();
+            rpg_actor_set_animation(0x1D, 6, 1, 1);
+            rpg_move_value_0 = rpg_rand(0x38) - 0x30;
+            rpg_girl_channel.unk_0C += 1;
             return;
         }
-        func_80143DA8(0x1D, -0xEF, D_8015EC78, 0, D_8015EC7C, 0x1E);
+        rpg_girl_move_linear(0x1D, -0xEF, rpg_move_timer, 0, rpg_move_value_0, 0x1E);
         return;
     case 0x32:
-        func_80143DA8(0x1D, -0xEF, D_8015EC78, 0, 0, 0x1E);
+        rpg_girl_move_linear(0x1D, -0xEF, rpg_move_timer, 0, 0, 0x1E);
         return;
     case 0x33:
-        func_8013E7C0(0x1D, 0, 1, 1);
-        func_801477E0();
-        if (D_8015EDC4 & 0x100000) {
-            func_8013EA60(0, 0, D_8015EBB0, 1);
-            func_8013EA60(1, 1, D_8015EBB4, 1);
-            func_8013EA60(2, 2, D_8015EBB8, 1);
-            func_8013EA60(3, 0x21, D_8015EBBC, 1);
+        rpg_actor_set_animation(0x1D, 0, 1, 1);
+        rpg_girl_damage_roll();
+        if (rpg_enemy_action & 0x100000) {
+            rpg_apply_damage(0, 0, rpg_damage, 1);
+            rpg_apply_damage(1, 1, rpg_damage_slot1, 1);
+            rpg_apply_damage(2, 2, rpg_damage_slot2, 1);
+            rpg_apply_damage(3, 0x21, rpg_damage_to_player_extra, 1);
         } else {
-            func_8013EA60(0, 3, D_8015EBB0, 1);
-            func_8013EA60(1, 0x21, D_8015EBBC, 1);
+            rpg_apply_damage(0, 3, rpg_damage, 1);
+            rpg_apply_damage(1, 0x21, rpg_damage_to_player_extra, 1);
         }
-        func_8014F230();
+        rpg_girl_step_next();
         return;
     case 0x34:
-        func_8014F350(0x3C);
+        rpg_girl_wait_step(0x3C);
         return;
     case 0x35:
-        func_8014F278();
+        rpg_girl_action_end();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_80151F38(void) {
+void rpg_ayako_shot_pick(void) {
     s32 temp_v0;
 
-    temp_v0 = func_8013E9A8(3);
+    temp_v0 = rpg_rand(3);
     switch (temp_v0) {
     case 0:
-        func_8013F15C(0x50E, 1, 0);
+        rpg_se_play_latched_5xx(0x50E, 1, 0);
         return;
     case 1:
-        func_8013F15C(0x50F, 1, 0);
+        rpg_se_play_latched_5xx(0x50F, 1, 0);
         return;
     case 2:
-        func_8013F15C(0x510, 1, 0);
+        rpg_se_play_latched_5xx(0x510, 1, 0);
         return;
     }
 }

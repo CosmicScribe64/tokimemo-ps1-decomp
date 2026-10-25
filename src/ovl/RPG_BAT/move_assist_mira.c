@@ -1,55 +1,55 @@
-/* move_assist_mira.c: src/ovl/RPG_BAT/8013A480.c:4: girl 7 assist; body 7: switch (D_8015EDAC) {; 9: func_801516E4(); girl-index assist dispatch src/ovl/RPG_BAT/drama_move_and_partner_assists.c:166. Original object 0x8013A480-0x8013A650 (config/objects/RPG_BAT.txt). */
+/* move_assist_mira.c: src/ovl/RPG_BAT/8013A480.c:4: girl 7 assist; body 7: switch (rpg_player_step) {; 9: rpg_girl_run_in(); girl-index assist dispatch src/ovl/RPG_BAT/drama_move_and_partner_assists.c:166. Original object 0x8013A480-0x8013A650 (config/objects/RPG_BAT.txt). */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-void func_8013A480(void) {
+void rpg_move_assist_mira(void) {
     s32 temp_v1;
 
-    switch (D_8015EDAC) {
+    switch (rpg_player_step) {
     case 6:
-        func_801516E4();
+        rpg_girl_run_in();
     default:
         break;
     case 7:
-        strcpy(D_8015E74C, "鏡「つまらないわ…よっ！");
-        func_8014B738((s32) &D_8015E814, 1, 0x1F4);
-        func_8013E810(0x1D, 0xA, 1, 1);
-        func_8013F1C4(0x71, 0x11000078, 0);
-        func_8014EBA8();
+        strcpy(rpg_text_player_0, "鏡「つまらないわ…よっ！");
+        rpg_message_show((s32) &rpg_text_player_pointers, 1, 0x1F4);
+        rpg_actor_set_animation_alt(0x1D, 0xA, 1, 1);
+        rpg_voice_play_once(0x71, 0x11000078, 0);
+        rpg_player_step_next();
         break;
     case 8:
-        func_8014ED44(0x5A);
+        rpg_player_wait_step(0x5A);
         break;
     case 9:
-        func_80150B90();
-        temp_v1 = D_8015EDB4 + 1;
-        D_8015EDB4 = temp_v1;
+        rpg_girl_effect_a();
+        temp_v1 = rpg_player_timer + 1;
+        rpg_player_timer = temp_v1;
         if (temp_v1 >= 0x12D) {
-            D_8015EE4C = D_8015E744 + 1;
-            func_8013E810(0x1D, 0, 1, 1);
-            func_8014EBA8();
+            rpg_message_frame = rpg_message_line_frames + 1;
+            rpg_actor_set_animation_alt(0x1D, 0, 1, 1);
+            rpg_player_step_next();
         }
         if (cd_audio_state() == 4) {
-            D_8015ED38 = 1;
+            rpg_voice_playing_seen = 1;
         }
-        if (D_8015ED38 == 1) {
+        if (rpg_voice_playing_seen == 1) {
             if (cd_audio_state() == 2) {
-                D_8015EE4C = D_8015E744 + 1;
-                func_8013E810(0x1D, 0, 1, 1);
-                D_8015ED38 = 0;
-                func_8014EBA8();
+                rpg_message_frame = rpg_message_line_frames + 1;
+                rpg_actor_set_animation_alt(0x1D, 0, 1, 1);
+                rpg_voice_playing_seen = 0;
+                rpg_player_step_next();
             }
         }
         break;
     case 10:
-        func_80150B90();
-        func_8014ED44(0x1E);
+        rpg_girl_effect_a();
+        rpg_player_wait_step(0x1E);
         break;
     case 11:
-        func_80151984();
+        rpg_girl_run_out();
         break;
     case 12:
-        D_8015EDAC = 0x64;
+        rpg_player_step = 0x64;
         break;
     }
 }

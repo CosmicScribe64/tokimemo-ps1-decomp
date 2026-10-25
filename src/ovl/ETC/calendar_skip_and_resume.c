@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-void func_8014C2D0(void) {
+void misc_unused_skip_week_a(void) {
     calendar_advance_day();
     calendar_advance_day();
     calendar_advance_day();
@@ -12,7 +12,7 @@ void func_8014C2D0(void) {
     day_event_next(1);
 }
 
-void func_8014C320(void) {
+void misc_unused_skip_week_b(void) {
     calendar_advance_day();
     calendar_advance_day();
     calendar_advance_day();

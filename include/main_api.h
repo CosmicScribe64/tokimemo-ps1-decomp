@@ -193,8 +193,8 @@ typedef struct ShooterSettingsBits {
 /* The 0xEE0-byte work area at 0x800E7D10 (main clears it with bzero(&system_data, 0xEE0); +0 is the word main
  * steps by 0x377 and NAME_ENT seeds srand with). One struct for main's FlagsWork24 (T-9540, T-12030), the album
  * view NameMetricWork of main and NAME_ENT (T-10880) and TACO's settings TcSetAll (T-19009), T-20900. TACO's
- * loader still reads +0x40 through its own word/byte union (TcSave), ETC the 8-byte records from +0x58 through
- * EtcConfig8. */
+ * loader still reads +0x40 through its own word/byte union (ShooterSettingsBlock), ETC the 8-byte records from +0x58 through
+ * AlbumLogEntry. */
 typedef struct SystemData {
     /* 0x000 */ s32 seed;
     /* 0x004 */ u8 slot_status[16];
@@ -395,7 +395,7 @@ typedef struct ParamValue {
 typedef struct ClubRecord {
     /* 0x00 */ u16 practice_points; /* HYPOTHESIS: club practice points (KANGEI +2, thresholds 0x64/0xC8/0x164, ETC >> 4, 0x19B) */
     /* 0x02 */ u8 level; /* HYPOTHESIS: low nibble read through a u16 view is a team level; RENSYU adds 5, MASTER compares 8/10 */
-    /* 0x03 */ u8 unk_03;
+    /* 0x03 */ u8 flags;
 } ClubRecord; /* size 0x04 */
 
 /* 32 records at +0x69C (cleared as words, then byte +0 set to 0xFF; indexed by GameState.day_event_index). */
@@ -528,13 +528,13 @@ typedef struct GameState {
     /* 0xF6C */ u8 icon_mode; /* IconMode */
     /* 0xF6D */ u8 icon_count;
     /* 0xF6E */ u8 sd_anim_fast;
-    /* 0xF6F */ u8 cursor_speed;
-    /* 0xF70 */ u8 click_mode;
+    /* 0xF6F */ u8 cursor_speed; /* SettingsCursorSpeed */
+    /* 0xF70 */ u8 click_mode; /* SettingsClickMode */
     /* 0xF71 */ s8 unk_F71;
     /* 0xF72 */ u8 unk_F72;
     /* 0xF73 */ u8 double_click_interval;
     /* 0xF74 */ u8 input_device; /* InputDevice */
-    /* 0xF75 */ u8 confirm_button;
+    /* 0xF75 */ u8 confirm_button; /* SettingsConfirmButton */
     /* 0xF76 */ u8 unk_F76;
     /* 0xF77 */ u8 mouse_buttons;
     /* 0xF78 */ u8 unk_F78;
@@ -2123,7 +2123,7 @@ void func_80043448(void);
 s32 func_80046590(s16 arg0, u8 arg1);
 void func_80046754(void *arg0, s32 arg1, s32 arg2);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
-u8 *get_k_work(s32 arg0);
+u8 *get_k_work(s32 entry_index);
 void text_glyph_expand();
 void draw2d3d(u8 arg0, u8 arg1);
 void back_clear_switch(s32 arg0);
@@ -2251,21 +2251,21 @@ void func_8004DEAC();
 void func_8004DEE4();
 void srn_init(s32, u32 *, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
-void text_glyph_pages_clear(s32 arg0);
+void text_glyph_pages_clear(s32 page_count);
 void text_system_reset(void);
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
-s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4);
+s32 set_kanji_string(s16 x, s16 y, u8 color_index, u8 *text, s32 ordering_slot);
 #endif
-void k_disp_start(s32 arg0);
-void k_disp_switch(s32 arg0, s32 arg1);
-void k_reset(s32 arg0);
+void k_disp_start(s32 first_entry);
+void k_disp_switch(s32 entry_index, s32 visible);
+void k_reset(s32 entry_count);
 void k_sub_reset_point_set(void);
 #ifndef MAIN_API_OVERRIDE_k_sub_reset
 void k_sub_reset(void);
 #endif
-void k_sub_disp_start(s32 arg0);
+void k_sub_disp_start(s32 entry_offset);
 s16 k_disp_goto_line_end(void);
-void k_speed_set(u8 arg0);
+void k_speed_set(u8 reveal_speed);
 u8 get_k_speed(void);
 s32 k_disp_inc(void);
 s32 check_end_k(void);
@@ -2285,38 +2285,38 @@ s32 menu_check_2();
 void menu_cursor_update();
 void func_800504CC();
 s32 func_80050AB8();
-void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void menu_bar_color(s32 menu_index, s32 rgb_color, s32 ordering_slot, s32 style_flags);
 void menu_bar_show();
 void x_taku_menu_set(s32 arg0, s32 arg1);
 void func_80050D60();
-void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void x_taku_string_set(s32 first_label, s32 second_label, s32 third_label, s32 choice_count);
 #ifndef MAIN_API_OVERRIDE_gnsx
-void gnsx(u8 *arg0);
+void gnsx(u8 *speaker_name);
 #endif
 void sndisp();
 void sndi(u8 *arg0, s32 arg1, s32 arg2);
 #ifndef MAIN_API_OVERRIDE_set_c_girl
-void set_c_girl(u8 arg0);
+void set_c_girl(u8 girl_id);
 #endif
-s32 get_g_name(u8 *arg0, s32 arg1);
+s32 get_g_name(u8 *name_buf, s32 girl_id);
 void get_p_name();
 #ifndef MAIN_API_OVERRIDE_get_g_zyotai_s
-s32 get_g_zyotai_s(s32 arg0);
+s32 get_g_zyotai_s(s32 girl_id);
 #endif
 #ifndef MAIN_API_OVERRIDE_get_g_zyotai_h
-s32 get_g_zyotai_h(s32 arg0);
+s32 get_g_zyotai_h(s32 girl_id);
 #endif
 void xa_wait(void);
 void func_80051DD8();
 void text_wait_confirm();
 void talk_voice_play();
 #ifndef MAIN_API_OVERRIDE_get_h_tokimeki
-u32 get_h_tokimeki(s32 arg0);
+u32 get_h_tokimeki(s32 girl_id);
 #endif
 #ifndef MAIN_API_OVERRIDE_get_h_yuukou
-u32 get_h_yuukou(s32 arg0);
+u32 get_h_yuukou(s32 girl_id);
 #endif
-s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2);
+s32 birth_day_check_days(s32 birthday_subject, s32 month, s32 day);
 void func_800530E0();
 s32 girl_player_sports_club_check();
 void func_80053650(s32 arg0, s32 arg1, s32 arg2);
@@ -2397,7 +2397,7 @@ void settings_command_screen_build();
 void settings_room_bg_load_start(void);
 void func_8005ABC0();
 void settings_room_bg_load_finish(void);
-void settings_command_screen_icons_reset(s32 arg0);
+void settings_command_screen_icons_reset(s32 disable_weekday_commands);
 void settings_room_sick_icon_load(void);
 void settings_room_sick_icon_show(void);
 void settings_command_screen_mode_stage_select();
@@ -2421,7 +2421,7 @@ void settings_command_screen_calendar_wait(void);
 void settings_command_screen_calendar_exit(void);
 void settings_save_load_mode_stage_dispatch();
 void func_8005BD20();
-void settings_save_load_layout_stash(s32 arg0);
+void settings_save_load_layout_stash(s32 restore_layout);
 void settings_save_load_load_prompt(void);
 s32 settings_save_load_load_select(void);
 s32 settings_save_load_card_check(void);
@@ -2436,7 +2436,7 @@ extern u8 D_800B59F8[];
 extern u8 D_800B5A1C[];
 void settings_mouse_click_speed_menu(void);
 s32 settings_voice_mode_init(void);
-s32 settings_labels_draw(s32 arg0);
+s32 settings_labels_draw(s32 highlighted_setting_item);
 s32 settings_text_speed_init(void);
 s32 settings_root_init(void);
 s32 settings_mascot_menu(void);
@@ -2473,7 +2473,7 @@ void func_800627DC(void);
 void portrait_read_start(); /* unprototyped: main callers pass no argument, overlays pass one */
 void portrait_build();
 void portrait_value_clear_if_high(); /* unprototyped: callers pass an argument, the definition ignores it */
-void portrait_expression_select(u32 arg0);
+void portrait_expression_select(u32 expression_variant);
 void portrait_face_update();
 void bustup_wink(void);
 void parameter_disp_switch();
@@ -2486,7 +2486,7 @@ void message_disp_switch(s32 arg0);
 void message_window_init(void);
 void message_window_show(void);
 void icon_disp_switch(s32 a);
-void icon_can_use_set(s32 idx, s32 on);
+void icon_can_use_set(s32 icon_index, s32 enabled);
 void hud_icon_bar_init(void);
 void hud_icon_layout_apply();  /* K&R: with an (s32) prototype OPTION.bin no longer matches (T-25108) */
 void hud_icon_memory_card_animation_set(u8 arg0);
@@ -2502,16 +2502,16 @@ s32 hud_in_summer_months(void);
 void hud_screen_frame_draw(s32 a);
 void hud_season_bgm_load(void);
 void hud_day_bgm_load(void);
-void hud_mascot_display_switch(s32 arg0);
+void hud_mascot_display_switch(s32 visible);
 void hud_mascot_set();
 void hud_mascot_update(void);
 void portrait_event_face_mouth_lipsync(void);
 s32 portrait_event_face_eyes_animation_start(void);
 void calendar_screen_init(void);
 void calendar_marks_build(void);
-s16 calendar_cell_x(s32 arg0, s32 arg1);
-s16 calendar_cell_y(s32 arg0, s32 arg1);
-void calendar_month_load(u8 arg0, u8 arg1, s32 arg2);
+s16 calendar_cell_x(s32 month_side, s32 day_index);
+s16 calendar_cell_y(s32 month_side, s32 day_index);
+void calendar_month_load(u8 calendar_year, u8 calendar_month, s32 populate_next_month);
 void calendar_view_update();
 void cal_base_show(void);
 void cal_sprite_init(void);
@@ -2924,7 +2924,6 @@ void func_800BCDF0();
 void func_800BCE10();
 #endif
 s32 func_800BDC20();
-void func_801040F0(void);
 s32 portrait_event_face_mouth_animation_start(void);
 #ifndef MAIN_API_OVERRIDE_girl_scores
 s32 girl_scores();
@@ -2941,7 +2940,7 @@ void func_8004AFB8();
 #endif
 void func_800651F8();
 void func_80065234();
-void hud_appointment_add(WordView arg0);
+void hud_appointment_add(WordView appointment_entry);
 /* SD_GetCDLevel request/output prefix, verified from halfword accesses. T-10870. */
 typedef struct CdLevelWork {
     /* 0x00 */ u16 unk_00; /* left output */
@@ -3105,5 +3104,48 @@ void func_80067678();
 void func_80067628();
 extern s32 D_800E9600; /* word index used for legacy viewport and ordering-table offsets */
 extern u8 D_800B2580[]; /* address-only ordering-table base, byte extent unknown */
+
+#define HUD_BIORHYTHM_SCORE_SCALE 16 /* T-27062 command and career score scale */
+#define HUD_BIORHYTHM_ZERO_WAVE_PROBE_SCALE 3 /* T-27062 zero-return probe scale */
+#define HUD_BIORHYTHM_DISCARDED_PROBE_SCALE 2 /* T-27062 unused wrapper discards result */
+#define HUD_BIORHYTHM_GRAPH_SCALE -32 /* T-27070 signed scale passed by hud_biorhythm_graph_draw */
+
+enum SpeakerVoiceState {
+    SPEAKER_VOICE_PENDING = 0, /* T-27062 request not yet started */
+    SPEAKER_VOICE_PLAYING = 1, /* T-27062 playback observed */
+    SPEAKER_VOICE_DONE = 2 /* T-27062 finished or no voice */
+};
+
+enum TextSpeed {
+    TEXT_SPEED_FAST = 0, /* T-27062 one glyph per frame */
+    TEXT_SPEED_NORMAL = 1, /* T-27062 one glyph every two frames */
+    TEXT_SPEED_SLOW = 3, /* T-27062 one glyph every four frames */
+    TEXT_SPEED_EVERY_SIX_FRAMES = 5, /* T-27062 one glyph every six frames */
+    TEXT_SPEED_EVERY_NINE_FRAMES = 8, /* T-27062 one glyph every nine frames */
+    TEXT_SPEED_EVERY_FIFTEEN_FRAMES = 14, /* T-27062 one glyph every fifteen frames */
+    TEXT_SPEED_EVERY_SEVENTEEN_FRAMES = 16, /* T-27062 one glyph every seventeen frames */
+    TEXT_SPEED_EVERY_THIRTY_ONE_FRAMES = 30 /* T-27062 one glyph every thirty-one frames */
+};
+
+#define HUD_BIORHYTHM_ZERO_FAILURES_NONE 0 /* T-27062 no zero-return probes so far */
+#define HUD_BIORHYTHM_ZERO_FAILURES_ALL_THREE 3 /* T-27062 all three probes returned zero */
+
+enum SettingsClickMode {
+    SETTINGS_CLICK_MODE_SINGLE = 0, /* single-click mode stored value */
+    SETTINGS_CLICK_MODE_DOUBLE = 1 /* double-click mode stored value */
+};
+
+enum SettingsConfirmButton {
+    SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT = 0, /* left mouse button confirms */
+    SETTINGS_CONFIRM_BUTTON_MOUSE_RIGHT = 1 /* right mouse button confirms */
+};
+
+enum SettingsCursorSpeed {
+    SETTINGS_CURSOR_SPEED_SLOWEST = 1, /* slowest stored cursor speed */
+    SETTINGS_CURSOR_SPEED_SLOWER = 2, /* slower stored cursor speed */
+    SETTINGS_CURSOR_SPEED_NORMAL = 3, /* normal stored cursor speed */
+    SETTINGS_CURSOR_SPEED_FASTER = 4, /* faster stored cursor speed */
+    SETTINGS_CURSOR_SPEED_FASTEST = 6 /* fastest stored cursor speed; speed menus skip 5; save/debug restoration can supply other values */
+};
 
 #endif /* MAIN_API_H */

@@ -1,62 +1,62 @@
-/* pad_input_and_replay.c: src/ovl/TT/80142110.c:4: pad poll, pressed/held state and prerecorded input stream playback; body 13: g = D_80158A60; 14: s = D_80158A64;. Original object 0x80142110-0x80142350 (config/objects/TT.txt). */
+/* pad_input_and_replay.c: src/ovl/TT/80142110.c:4: pad poll, pressed/held state and prerecorded input stream playback; body 13: g = tt_sys; 14: s = tt_core;. Original object 0x80142110-0x80142350 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
-void func_80142110(void) {
-    u8 *s;
-    u8 *g;
+void tt_pad_update(void) {
+    u8 *core;
+    u8 *sys;
     u16 *a;
     u16 *b;
     s32 x;
     s32 c;
     u16 t;
 
-    g = D_80158A60;
-    s = D_80158A64;
-    a = (u16 *)(g + 0x10);
-    b = (u16 *)(g + 0x20);
+    sys = tt_sys;
+    core = tt_core;
+    a = (u16 *)(sys + 0x10);
+    b = (u16 *)(sys + 0x20);
     func_80042A00();
     x = func_80043010();
     a[1] = a[0];
-    if (g[0x54] != 0) {
+    if (sys[0x54] != 0) {
         a[0] = ((u16 *)&x)[1];
     } else {
         a[0] = ((u16 *)&x)[0];
     }
     a[2] = a[0] & ~a[1];
     b[1] = b[0];
-    *(u16 *)(g + 0x50) &= 0xFFF;
-    if (s[0x22] != 0) {
-        c = *(*(u16 *)(g + 0x50) + *(u8 **)(g + 0x4C));
-        b[0] = (u16)((u16)(c & 0xF0) << 8) | (c & 3); /* FAKE: the two u16 conversions give the original's skipped ugen temporaries. T-11860 */
-        *(u16 *)(g + 0x50) += 1;
-        *(u16 *)(g + 0x50) &= 0xFFF;
+    *(u16 *)(sys + 0x50) &= 0xFFF;
+    if (core[0x22] != 0) {
+        c = *(*(u16 *)(sys + 0x50) + *(u8 **)(sys + 0x4C));
+        b[0] = (u16)((u16)(c & 0xF0) << 8) | (c & 3); /* FAKE: the two u16 conversions give the original'core skipped ugen temporaries. T-11860 */
+        *(u16 *)(sys + 0x50) += 1;
+        *(u16 *)(sys + 0x50) &= 0xFFF;
     } else {
         c = (a[0] & 0xFFFF) & 0xFF00; /* FAKE: the redundant mask (with an s32 c) loads a[0] into a ugen temporary, not into c. T-11870 */
         b[0] = c;
         t = a[0] << 8;
-        b[0] |= (t >> (g[0x44] + 8)) & 1;
-        b[0] |= (t >> (g[0x45] + 7)) & 2;
-        if (g[0x43] != 0) {
+        b[0] |= (t >> (sys[0x44] + 8)) & 1;
+        b[0] |= (t >> (sys[0x45] + 7)) & 2;
+        if (sys[0x43] != 0) {
             if (b[0] & 1) {
-                if (g[0x46] >= 6) {
-                    g[0x46] = 0;
+                if (sys[0x46] >= 6) {
+                    sys[0x46] = 0;
                     b[0] ^= 1;
                 } else {
-                    g[0x46]++;
+                    sys[0x46]++;
                 }
             } else {
-                g[0x46] = 6;
+                sys[0x46] = 6;
             }
             if (b[0] & 2) {
-                if (g[0x47] >= 6) {
-                    g[0x47] = 0;
+                if (sys[0x47] >= 6) {
+                    sys[0x47] = 0;
                     b[0] ^= 2;
                 } else {
-                    g[0x47]++;
+                    sys[0x47]++;
                 }
             } else {
-                g[0x47] = 6;
+                sys[0x47] = 6;
             }
         }
     }

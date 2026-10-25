@@ -317,7 +317,7 @@ void func_80133A14(void) {
 }
 
 /* Non-void return type and pointer local `state = &D_80120666` match week_day_main0
- * (src/main/school_day.c) and ETC:func_80147414 (T-6050, T-24122). */
+ * (src/main/school_day.c) and ETC:exam_day_wait_anim (T-6050, T-24122). */
 s32 func_80133A54(void) {
     s16 *state;
     u8 a;

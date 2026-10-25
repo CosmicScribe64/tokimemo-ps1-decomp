@@ -2,28 +2,28 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-void func_8014ABD0(void) {
+void career_guidance_entry(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_8014AE20();
+        career_guidance_stage_setup();
         break;
     case 1:
-        func_8014B750();
+        career_guidance_stage_talk();
         break;
     case 2:
-        func_8014B978();
+        career_guidance_stage_choice();
         break;
     case 3:
-        func_8014BB94();
+        career_guidance_stage_ask_others();
         break;
     case 4:
-        func_8014C018();
+        career_guidance_stage_university();
         break;
     case 5:
-        func_8014C250();
+        career_guidance_stage_job();
         break;
     case 6:
-        func_8014C2A4();
+        career_guidance_leave();
         break;
     }
     hud_cursor_update();
@@ -35,7 +35,7 @@ void func_8014ABD0(void) {
     hud_mascot_update();
 }
 
-void func_8014ACB4(void) {
+void career_guidance_init_screen(void) {
     s32 temp_v0;
     s32 sp28;
 
@@ -66,14 +66,14 @@ void func_8014ACB4(void) {
     }
 }
 
-void func_8014AD94(void) {
+void career_guidance_background_wait(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
         mode_step_next();
     }
 }
 
-void func_8014ADDC(void) {
+void career_guidance_title_show(void) {
     message_window_set_title("進路指導");
     k_sub_reset_point_set();
     k_sub_disp_start(0);
@@ -81,26 +81,26 @@ void func_8014ADDC(void) {
     mode_stage_next();
 }
 
-s32 func_8014AE20(void) {
+s32 career_guidance_stage_setup(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014ACB4();
+        career_guidance_init_screen();
         break;
     case 1:
-        func_8014AD94();
+        career_guidance_background_wait();
         break;
     case 2:
-        func_8014ADDC();
+        career_guidance_title_show();
         break;
     }
 }
 
-s32 func_8014AE8C(void) {
+s32 career_guidance_intro_line(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80150EE0, 0, 0xF);
+        sndisp(career_guidance_intro_text, 0, 0xF);
         game_state.substep += 1;
         break;
     case 1:
@@ -112,15 +112,15 @@ s32 func_8014AE8C(void) {
     }
 }
 
-s32 func_8014AF28(void) {
+s32 career_guidance_assess_params(void) {
     s32 index;
     s32 count;
 
-    D_80151870 = 0;
-    D_80151874 = 0;
-    D_80151878 = 0;
+    career_guidance_body_mind_deficit = 0;
+    career_guidance_trivia_deficit = 0;
+    career_guidance_looks_deficit = 0;
     count = 0;
-    D_8015186C = 0;
+    career_guidance_academic_deficit = 0;
     /* The nine contiguous parameter records start at GameState +0xFC. */
     for (index = 1; index != 8; index++) {
         printf("param %d %d \n", index, ((ParamValue *)((u8 *)&game_state + 0xFC))[index].value);
@@ -129,53 +129,53 @@ s32 func_8014AF28(void) {
         }
     }
     if (game_state.param_liberal_arts.value < 0x65) {
-        D_8015186C += 1;
+        career_guidance_academic_deficit += 1;
     }
     if (game_state.param_science.value < 0x65) {
-        D_8015186C++;
+        career_guidance_academic_deficit++;
     }
     if (game_state.param_art.value < 0x65) {
-        D_8015186C++;
+        career_guidance_academic_deficit++;
     }
     if (game_state.param_athletics.value < 0x65) {
-        D_80151870 += 1;
+        career_guidance_body_mind_deficit += 1;
     }
     if (game_state.param_guts.value < 0x65) {
-        D_80151870 += 2;
+        career_guidance_body_mind_deficit += 2;
     }
     if (game_state.param_trivia.value < 0x65) {
-        D_80151874 += 1;
+        career_guidance_trivia_deficit += 1;
     }
     if (game_state.param_looks.value < 0x65) {
-        D_80151878 += 1;
+        career_guidance_looks_deficit += 1;
     }
     return count;
 }
 
-s32 func_8014B0D0(void) {
-    s32 var_s7;
+s32 career_guidance_closest_girl(void) {
+    s32 selected_girl;
     u8 *var_s1;
     u8 temp_v0;
-    s32 var_s2;
+    s32 best_closeness;
     u8 sp70[16];
     s16 sp50[16];
-    s32 var_s0;
+    s32 girl_index;
 
     girl_scores(sp70, sp50);
-    var_s2 = 0x3C;
-    var_s7 = 0;
-    for (var_s0 = 1, var_s1 = &sp70[1]; var_s0 != 11; var_s0++, var_s1++) {
-        printf("%d %d \n", var_s0, *var_s1);
+    best_closeness = 0x3C;
+    selected_girl = 0;
+    for (girl_index = 1, var_s1 = &sp70[1]; girl_index != 11; girl_index++, var_s1++) {
+        printf("%d %d \n", girl_index, *var_s1);
         temp_v0 = *var_s1;
-        if ((var_s2 < temp_v0) && game_state.girls[var_s0].flags.f.met) {
-            var_s7 = var_s0;
-            var_s2 = temp_v0;
+        if ((best_closeness < temp_v0) && game_state.girls[girl_index].flags.f.met) {
+            selected_girl = girl_index;
+            best_closeness = temp_v0;
         }
     }
-    return var_s7;
+    return selected_girl;
 }
 
-void func_8014B1B4(void) {
+void career_guidance_self_assessment(void) {
     GameState *g = &game_state;
     s32 sp28;
     s32 temp_v0;
@@ -183,7 +183,7 @@ void func_8014B1B4(void) {
 
     switch (g->substep) {
     case 0x0:
-        temp_v0 = func_8014AF28();
+        temp_v0 = career_guidance_assess_params();
         if (temp_v0 == 7) {
             g->substep = 0x10;
             return;
@@ -197,7 +197,7 @@ void func_8014B1B4(void) {
     case 0x10:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(&D_80151674, 0, 0xF);
+        sndisp(&career_guidance_all_params_high_text, 0, 0xF);
         g->substep += 1;
         return;
     case 0x11:
@@ -209,7 +209,7 @@ void func_8014B1B4(void) {
     case 0x20:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(&D_801516F0, 0, 0xF);
+        sndisp(&career_guidance_no_params_high_text, 0, 0xF);
         g->substep += 1;
         return;
     case 0x21:
@@ -221,7 +221,7 @@ void func_8014B1B4(void) {
     case 0x30:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(&D_801516BC, 0, 0xF);
+        sndisp(&career_guidance_mixed_params_text, 0, 0xF);
         g->substep += 1;
         return;
     case 0x31:
@@ -229,19 +229,19 @@ void func_8014B1B4(void) {
         return;
     case 0x32:
         k_sub_reset();
-        if (D_8015186C == 0) {
+        if (career_guidance_academic_deficit == 0) {
             g->substep += 2;
-        } else if (D_8015186C == 1) {
+        } else if (career_guidance_academic_deficit == 1) {
             gnsx(g->player_family_name);
-            sndisp(&D_80151738, 0, 0xF);
+            sndisp(&career_guidance_one_academic_deficit_text, 0, 0xF);
             g->substep += 1;
-        } else if (D_8015186C == 2) {
+        } else if (career_guidance_academic_deficit == 2) {
             gnsx(g->player_family_name);
-            sndisp(&D_80151758, 0, 0xF);
+            sndisp(&career_guidance_two_academic_deficits_text, 0, 0xF);
             g->substep += 1;
         } else {
             gnsx(g->player_family_name);
-            sndisp(&D_80151778, 0, 0xF);
+            sndisp(&career_guidance_three_academic_deficits_text, 0, 0xF);
             g->substep += 1;
         }
         get_k_work(3)[4] = 1;
@@ -251,19 +251,19 @@ void func_8014B1B4(void) {
         return;
     case 0x34:
         k_sub_reset();
-        if (D_80151870 == 0) {
+        if (career_guidance_body_mind_deficit == 0) {
             g->substep += 2;
-        } else if (D_80151870 == 1) {
+        } else if (career_guidance_body_mind_deficit == 1) {
             gnsx(g->player_family_name);
-            sndisp(&D_801517B4, 0, 0xF);
+            sndisp(&career_guidance_athletics_deficit_text, 0, 0xF);
             g->substep += 1;
-        } else if (D_80151870 == 2) {
+        } else if (career_guidance_body_mind_deficit == 2) {
             gnsx(g->player_family_name);
-            sndisp(&D_801517D4, 0, 0xF);
+            sndisp(&career_guidance_guts_deficit_text, 0, 0xF);
             g->substep += 1;
         } else {
             gnsx(g->player_family_name);
-            sndisp(&D_80151794, 0, 0xF);
+            sndisp(&career_guidance_body_mind_deficits_text, 0, 0xF);
             g->substep += 1;
         }
         get_k_work(3)[4] = 1;
@@ -273,9 +273,9 @@ void func_8014B1B4(void) {
         return;
     case 0x36:
         k_sub_reset();
-        if (D_80151874 != 0) {
+        if (career_guidance_trivia_deficit != 0) {
             gnsx(g->player_family_name);
-            sndisp(&D_801517F4, 0, 0xF);
+            sndisp(&career_guidance_trivia_deficit_text, 0, 0xF);
             get_k_work(3)[4] = 1;
             g->substep += 1;
             return;
@@ -287,9 +287,9 @@ void func_8014B1B4(void) {
         return;
     case 0x38:
         k_sub_reset();
-        if (D_80151878 != 0) {
+        if (career_guidance_looks_deficit != 0) {
             gnsx(g->player_family_name);
-            sndisp(&D_80151810, 0, 0xF);
+            sndisp(&career_guidance_looks_deficit_text, 0, 0xF);
             get_k_work(3)[4] = 1;
             g->substep += 1;
             return;
@@ -303,7 +303,7 @@ void func_8014B1B4(void) {
         g->substep = 0x40;
         return;
     case 0x40:
-        temp_v0_2 = func_8014B0D0();
+        temp_v0_2 = career_guidance_closest_girl();
         sp28 = temp_v0_2;
         if (temp_v0_2 == 0) {
             g->substep = 0x50;
@@ -312,7 +312,7 @@ void func_8014B1B4(void) {
         k_sub_reset();
         gnsx(g->player_family_name);
         g->current_girl = (s8) sp28;
-        sndisp(&D_80151844, 0, 0xF);
+        sndisp(&career_guidance_selected_girl_text, 0, 0xF);
         g->substep += 1;
         return;
     case 0x41:
@@ -324,7 +324,7 @@ void func_8014B1B4(void) {
     case 0x50:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(&D_8015182C, 0, 0xF);
+        sndisp(&career_guidance_assessment_close_text, 0, 0xF);
         g->substep += 1;
         return;
     case 0x51:
@@ -339,23 +339,23 @@ void func_8014B1B4(void) {
 }
 
 
-s32 func_8014B750(void) {
+s32 career_guidance_stage_talk(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014AE8C();
+        career_guidance_intro_line();
         break;
     case 1:
-        func_8014B1B4();
+        career_guidance_self_assessment();
         break;
     }
 }
 
-void func_8014B7A4(void) {
+void career_guidance_question(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(&game_state.player_family_name[0]);
-        sndisp(&D_80150EFC, 0, 0xF);
+        sndisp(&career_guidance_question_open_text, 0, 0xF);
         game_state.substep += 1;
         return;
     case 1:
@@ -364,7 +364,7 @@ void func_8014B7A4(void) {
     case 2:
         k_sub_reset();
         gnsx(&game_state.player_family_name[0]);
-        sndisp(&D_80150F38, 0, 0x1F);
+        sndisp(&career_guidance_question_followup_text, 0, 0x1F);
         game_state.substep += 1;
         /* fallthrough */
     case 3:
@@ -373,7 +373,7 @@ void func_8014B7A4(void) {
     case 4:
         k_sub_reset();
         x_taku_menu_set(0, 3);
-        x_taku_string_set(&D_80150F58, &D_80150F6C, &D_80150F80, 3);
+        x_taku_string_set(&career_guidance_university_choice_text, &career_guidance_job_choice_text, &career_guidance_third_choice_text, 3);
         k_sub_disp_start(3);
         game_state.menu_cursor_0 = 0;
         mode_step_next();
@@ -383,7 +383,7 @@ void func_8014B7A4(void) {
     }
 }
 
-s32 func_8014B8CC(void) {
+s32 career_guidance_choice_menu(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -402,18 +402,18 @@ s32 func_8014B8CC(void) {
     }
 }
 
-s32 func_8014B978(void) {
+s32 career_guidance_stage_choice(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014B7A4();
+        career_guidance_question();
         break;
     case 1:
-        func_8014B8CC();
+        career_guidance_choice_menu();
         break;
     }
 }
 
-s32 func_8014B9CC(void) {
+s32 career_guidance_ask_others_prompt(void) {
     s32 sp34; /* FAKE: unused local, the original frame is 8 bytes larger (T-3330 slot rule); source unknown. T-6040 */
     s32 sp30;
 
@@ -421,7 +421,7 @@ s32 func_8014B9CC(void) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80150F98, 0, 0xF);
+        sndisp(career_guidance_ask_others_text, 0, 0xF);
         game_state.substep += 1;
         break;
     case 1:
@@ -437,19 +437,19 @@ s32 func_8014B9CC(void) {
     }
 }
 
-void func_8014BA8C(void) {
+void career_guidance_ask_others_select(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
     if ((game_state.pad_pressed & PAD_CIRCLE) && game_state.menu_cursor_0 != -1) {
         k_sub_reset();
         gnsx(&game_state.player_family_name);
-        sndisp(D_80151358[game_state.menu_cursor_0], 0, 0xF);
+        sndisp(career_guidance_girl_plan_line[game_state.menu_cursor_0], 0, 0xF);
         mode_step_next();
     }
 }
 
-s32 func_8014BB34(void) {
+s32 career_guidance_ask_others_return(void) {
     switch (game_state.substep) {
     case 0:
         xa_wait();
@@ -461,26 +461,26 @@ s32 func_8014BB34(void) {
     }
 }
 
-s32 func_8014BB94(void) {
+s32 career_guidance_stage_ask_others(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014B9CC();
+        career_guidance_ask_others_prompt();
         break;
     case 1:
-        func_8014BA8C();
+        career_guidance_ask_others_select();
         break;
     case 2:
-        func_8014BB34();
+        career_guidance_ask_others_return();
         break;
     }
 }
 
-void func_8014BC00(void) {
+void career_guidance_university_talk(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp((u8 *) &D_80150F58, 0, 0xF);
+        sndisp((u8 *) &career_guidance_university_choice_text, 0, 0xF);
         game_state.player_flags_upper.b[1] = 0;
         game_state.substep += 1;
         return;
@@ -490,7 +490,7 @@ void func_8014BC00(void) {
     case 2:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(&D_80151398, 0, 0x1F);
+        sndisp(&career_guidance_verdict_intro_text, 0, 0x1F);
         game_state.substep += 1;
         return;
     case 3:
@@ -499,8 +499,8 @@ void func_8014BC00(void) {
     case 4:
         k_sub_reset();
         gnsx((u8 *)"先生");
-        sndisp(D_801514A4[func_8014BDE0() & 3], 0, 0xE);
-        talk_voice_play((s32) &D_801514B4, (s32) &D_801514D4, func_8014BDE0() & 3, 0xE);
+        sndisp(career_guidance_university_line[career_guidance_university_verdict() & 3], 0, 0xE);
+        talk_voice_play((s32) &career_guidance_university_voice_a, (s32) &career_guidance_university_voice_b, career_guidance_university_verdict() & 3, 0xE);
         game_state.substep += 1;
         return;
     case 5:
@@ -509,7 +509,7 @@ void func_8014BC00(void) {
     case 6:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80151664[func_8014BDE0() & 3], 0, 0xF);
+        sndisp(career_guidance_reaction_line[career_guidance_university_verdict() & 3], 0, 0xF);
         game_state.substep += 1;
         return;
     case 7:
@@ -524,7 +524,7 @@ void func_8014BC00(void) {
 }
 
 
-s32 func_8014BDE0(void) {
+s32 career_guidance_university_verdict(void) {
     s32 pad; /* FAKE: unused local, makes the frame 0x38 and puts the spill at sp+0x2C as in the original; real source unknown. T-4010 */
     s32 sum;
     s32 n;
@@ -554,10 +554,10 @@ s32 func_8014BDE0(void) {
     return 3 - n;
 }
 
-s32 func_8014BE98(void) {
+s32 career_guidance_job_verdict(void) {
     s32 n;
 
-    n = -func_8014BDE0() * 2 + 6;
+    n = -career_guidance_university_verdict() * 2 + 6;
     if (game_state.param_trivia.value >= 0x3D) {
         n += 1;
     }
@@ -577,7 +577,7 @@ s32 func_8014BE98(void) {
 }
 
 /* The fallthrough s32 form preserves the selector/result copies. T-10020. */
-s32 func_8014BF2C(void) {
+s32 career_guidance_teacher_background(void) {
     s32 result;
     GameState *state;
 
@@ -606,23 +606,23 @@ s32 func_8014BF2C(void) {
     }
 }
 
-s32 func_8014C018(void) {
+s32 career_guidance_stage_university(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014BF2C();
+        career_guidance_teacher_background();
         break;
     case 1:
-        func_8014BC00();
+        career_guidance_university_talk();
         break;
     }
 }
 
-void func_8014C06C(void) {
+void career_guidance_job_talk(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp((u8 *) &D_80150F6C, 0, 0xF);
+        sndisp((u8 *) &career_guidance_job_choice_text, 0, 0xF);
         game_state.player_flags_upper.b[1] = 1;
         game_state.substep += 1;
         return;
@@ -632,7 +632,7 @@ void func_8014C06C(void) {
     case 2:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(&D_80151398, 0, 0x1F);
+        sndisp(&career_guidance_verdict_intro_text, 0, 0x1F);
         game_state.substep += 1;
         return;
     case 3:
@@ -641,8 +641,8 @@ void func_8014C06C(void) {
     case 4:
         k_sub_reset();
         gnsx((u8 *)"先生");
-        sndisp(D_801515E4[func_8014BE98() & 3], 0, 0xE);
-        talk_voice_play((s32) &D_801515F4, (s32) &D_80151614, func_8014BE98() & 3, 0xE);
+        sndisp(career_guidance_job_line[career_guidance_job_verdict() & 3], 0, 0xE);
+        talk_voice_play((s32) &career_guidance_job_voice_a, (s32) &career_guidance_job_voice_b, career_guidance_job_verdict() & 3, 0xE);
         game_state.substep += 1;
         return;
     case 5:
@@ -651,7 +651,7 @@ void func_8014C06C(void) {
     case 6:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_80151664[func_8014BE98() & 3], 0, 0xF);
+        sndisp(career_guidance_reaction_line[career_guidance_job_verdict() & 3], 0, 0xF);
         game_state.substep += 1;
         return;
     case 7:
@@ -666,17 +666,17 @@ void func_8014C06C(void) {
 }
 
 
-s32 func_8014C250(void) {
+s32 career_guidance_stage_job(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8014BF2C();
+        career_guidance_teacher_background();
         break;
     case 1:
-        func_8014C06C();
+        career_guidance_job_talk();
         break;
     }
 }
 
-void func_8014C2A4(void) {
+void career_guidance_leave(void) {
     day_event_next(1);
 }

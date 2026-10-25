@@ -301,64 +301,64 @@ void date_scene_mode_handler(void) {
 }
 
 s32 date_scene_end(void) {
-    GameState *g = &game_state;
+    GameState *game = &game_state;
     /* FAKE: constant-7 local keeps the original bne operand order (constant register first) for the D_80122CD4 compares; T-17206 */
-    s32 seven = 7;
+    s32 fake_mira_id = 7;
     /* FAKE: u32 local copy of D_800CA2F8 puts the history value in v1 like the original; T-17206 */
-    u32 cur;
+    u32 place_history_value;
 
-    if (g->substep == 0) {
+    if (game->substep == 0) {
         hud_day_bgm_load();
-        g->substep++;
+        game->substep++;
     }
-    if (g->substep == 1) {
-        if (g->mode_step_timer.u++ >= 0x400U) {
+    if (game->substep == 1) {
+        if (game->mode_step_timer.u++ >= 0x400U) {
             cd_command_reset();
             audio_bank_state_reset();
-            g->substep = 0;
+            game->substep = 0;
         }
         if (audio_bank_load_poll() == 1) {
-            g->substep += 1;
+            game->substep += 1;
         } else {
             return 0;
         }
     }
-    if ((g->param_looks.value >= 0x23) || ((g->param_looks.value >= 0x1E) && (g->current_girl != GIRL_MIRA))) {
+    if ((game->param_looks.value >= 0x23) || ((game->param_looks.value >= 0x1E) && (game->current_girl != GIRL_MIRA))) {
         if (D_80122D08 >= 0) {
-            g->girl_last_date_spot[g->current_girl] = D_80122D08;
-            g->girl_last_date_spot_timer[g->current_girl] = 0xC;
+            game->girl_last_date_spot[game->current_girl] = D_80122D08;
+            game->girl_last_date_spot_timer[game->current_girl] = 0xC;
         }
         if (D_80122D08 == 8) {
-            g->girl_last_date_spot[g->current_girl] = 7;
+            game->girl_last_date_spot[game->current_girl] = 7;
         }
         if (D_80122D08 == 6) {
-            g->girl_last_date_spot[g->current_girl] = 5;
+            game->girl_last_date_spot[game->current_girl] = 5;
         }
     }
-    if (((seven != D_80122CD4) || (talk_work != 6)) && (D_80122CD4 != 0xB)) {
-        u8 v = g->event_log[g->event_log_count - 1].scene;
-        if ((v == 1) || (v == 0)) {
-            g->event_log_count -= 1;
+    if (((fake_mira_id != D_80122CD4) || (talk_work != 6)) && (D_80122CD4 != 0xB)) {
+        u8 last_logged_scene = game->event_log[game->event_log_count - 1].scene;
+        if ((last_logged_scene == 1) || (last_logged_scene == 0)) {
+            game->event_log_count -= 1;
         }
-        if ((seven == D_80122CD4) && (talk_work == 2)) {
+        if ((fake_mira_id == D_80122CD4) && (talk_work == 2)) {
             D_80122D48 = (u8) D_8015E204 + 1;
         }
         event_log_add(2, D_800CA368);
     }
-    g->girls[g->current_girl].syoushin -= 0x28;
-    if ((g->month == 5) && ((g->day == 4) || (g->day == 5)) && (g->girls[g->current_girl].flags.f.b4)) {
-        g->girls[g->current_girl].tokimeki += 2;
+    game->girls[game->current_girl].syoushin -= 0x28;
+    if ((game->month == 5) && ((game->day == 4) || (game->day == 5)) && (game->girls[game->current_girl].flags.f.b4)) {
+        game->girls[game->current_girl].tokimeki += 2;
     }
-    if ((g->month == 5) && ((g->day == 3) || (g->day == 4))) {
-        g->girls[g->current_girl].flags.f.b4 = 1;
+    if ((game->month == 5) && ((game->day == 3) || (game->day == 4))) {
+        game->girls[game->current_girl].flags.f.b4 = 1;
     }
     check_para_limit();
-    cur = D_800CA2F8;
-    g->appointment_place_0 = cur;
-    g->date_place_history[3] = g->date_place_history[2];
-    g->date_place_history[2] = g->date_place_history[1];
-    g->date_place_history[1] = g->date_place_history[0];
-    g->date_place_history[0] = cur;
+    place_history_value = D_800CA2F8;
+    game->appointment_place_0 = place_history_value;
+    game->date_place_history[3] = game->date_place_history[2];
+    game->date_place_history[2] = game->date_place_history[1];
+    game->date_place_history[1] = game->date_place_history[0];
+    game->date_place_history[0] = place_history_value;
     D_80122D44 = 0;
     return day_event_next(1);
 }

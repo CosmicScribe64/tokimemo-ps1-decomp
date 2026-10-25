@@ -1,52 +1,52 @@
-/* swoop_level_flow.c: src/ovl/TACO/80138280.c:4 dispatches playable-level steps; :34 invokes func_80154960; :50 changes mode_stage to 0xC; swoop/debris script bodies src/ovl/TACO/swoop_and_debris_waves.c:4 and :174. Original object 0x80138280-0x80138450 (config/objects/TACO.txt). */
+/* swoop_level_flow.c: src/ovl/TACO/80138280.c:4 dispatches playable-level steps; :34 invokes shooter_update_stage1_script; :50 changes mode_stage to 0xC; swoop/debris script bodies src/ovl/TACO/swoop_and_debris_waves.c:4 and :174. Original object 0x80138280-0x80138450 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80138280(void) {
+void shooter_stage_stage1(void) {
     if ((u32) game_state.mode_stage_timer < 0x60 && (game_state.frame_count & 0x10)) {
-        func_801432F0("1ST STAGE", -0x40, 0, 2);
+        shooter_draw_text("1ST STAGE", -0x40, 0, 2);
     }
     switch (game_state.mode_step) {
     case 0:
-        func_80138348();
+        shooter_stage1_step_init();
         break;
     case 1:
-        func_8013838C();
+        shooter_stage1_step_run();
         break;
     case 2:
-        func_8013840C();
+        shooter_stage1_step_end();
         break;
     }
-    func_8013A790(1, 1);
-    func_8013F250();
-    func_80132FE8();
-    func_80133374();
+    shooter_update_stars(1, 1);
+    shooter_draw_hud();
+    shooter_update_battle();
+    shooter_check_battle_end();
 }
 
-void func_80138348(void) {
-    D_8015EDBC = 0x14;
-    D_8015EDC0 = 0;
-    D_8015EDB0 = 0x80;
-    func_8015ABF0();
+void shooter_stage1_step_init(void) {
+    shooter_load_request = 0x14;
+    shooter_sound_bank_wait_state = 0;
+    shooter_background_flags = 0x80;
+    shooter_reset_enemies();
     mode_step_next();
 }
 
-void func_8013838C(void) {
-    func_80154960();
-    if ((D_8015EDBC == 0) && (D_8015EDC0 == 0)) {
-        D_8015EDC0 = 1;
+void shooter_stage1_step_run(void) {
+    shooter_update_stage1_script();
+    if ((shooter_load_request == 0) && (shooter_sound_bank_wait_state == 0)) {
+        shooter_sound_bank_wait_state = 1;
     }
-    if (D_8015EDC0 == 1) {
-        D_8015EDC4 = func_80044C98();
-        if (D_8015EDC4 == 1) {
-            D_8015EDC0 = 2;
+    if (shooter_sound_bank_wait_state == 1) {
+        shooter_sound_bank_poll_result = func_80044C98();
+        if (shooter_sound_bank_poll_result == 1) {
+            shooter_sound_bank_wait_state = 2;
         }
     }
 }
 
-void func_8013840C(void) {
-    if (D_8015EDBC == 0) {
-        D_8015EDBC = 0x18;
+void shooter_stage1_step_end(void) {
+    if (shooter_load_request == 0) {
+        shooter_load_request = 0x18;
         func_800450F4(1, 0x200);
         mode_stage_set(0xC);
     }

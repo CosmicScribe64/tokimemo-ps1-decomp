@@ -8,50 +8,50 @@
 #include "psx_types.h"
 #include "game.h"
 
-void func_8015C2CC(s32 arg0);
-extern s16 D_801606AC[], D_801606C4[], D_80160858[], D_8016090C[], D_80160A60[];
+void shooter_animate_enemy(s32 arg0);
+extern s16 shooter_enemy_keys_a[], shooter_enemy_keys_b[], shooter_enemy_keys_c[], shooter_enemy_keys_d[], shooter_enemy_keys_e[];
 
-/* state handlers of the loading screen driver func_80133870 (T-16562) */
-s32 func_80133980(void);
-void func_80133AF4(void);
-void func_80133C08(void);
-s32 func_80133E98(void);
-s32 func_80134500(void);
+/* state handlers of the loading screen driver shooter_stage_load (T-16562) */
+s32 shooter_load_step_boot(void);
+void shooter_load_step_sound_banks(void);
+void shooter_load_step_textures(void);
+s32 shooter_load_step_models(void);
+s32 shooter_load_step_finish(void);
 
-void func_8013F468(void);
-void func_8013F7D8(void);
-void func_8013F9C0(void);
-void func_8013FBF0(void);
+void shooter_draw_reticle(void);
+void shooter_draw_bomb_stock(void);
+void shooter_draw_bomb_panel(void);
+void shooter_draw_shield_gauge(void);
 
-extern s32 D_801604C0;
-extern s32 D_801604C4;
-extern s32 D_801604C8;
-extern s32 D_801604CC;
-extern s32 D_801604D0;
-extern s32 D_8015F3F0;
-extern s32 D_8015F3F4;
-extern s32 D_8015F3F8;
-extern s32 D_8015F3FC;
-extern s32 D_8015F4DC;
-extern s32 D_8015F4E0;
-extern s32 D_8015F4E4;
-extern s32 D_8015F4E8;
-extern s32 D_8015F4F8;
+extern s32 shooter_script_timer;
+extern s32 shooter_script_phase;
+extern s32 shooter_script_sub_timer;
+extern s32 shooter_script_counter;
+extern s32 shooter_circler_pairing;
+extern s32 shooter_settings_cursor;
+extern s32 shooter_settings_changing;
+extern s32 shooter_settings_old_value;
+extern s32 shooter_settings_animation_frame;
+extern s32 shooter_name_entry_position;
+extern s32 shooter_name_ring_index;
+extern s32 shooter_name_ring_offset;
+extern s32 shooter_name_ring_speed;
+extern s32 shooter_name_entry_intro;
 
 /* TACO tables; field names after the first user, no semantics known. */
-typedef struct TcPos {
+typedef struct ShooterPosition {
     /* 0x00 */ s16 x;
     /* 0x02 */ s16 y;
     /* 0x04 */ s16 z;
-    /* 0x06 */ s16 unk6;
-} TcPos; /* size 0x08 */
+    /* 0x06 */ s16 w;
+} ShooterPosition; /* size 0x08 */
 
 /* Object handle (T-16560): GsDOBJ2 layout; unk0 attribute (0x80000000 hides it), unk4[0] the
- * TcObj50 coordinate object, unk4[1] the model, unk4[2] the id. func_8009B430 (GsLinkObject4) fills it. */
-typedef struct Tc10 {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4[3];
-} Tc10; /* size 0x10 */
+ * ShooterCoordinate coordinate object, unk4[1] the model, unk4[2] the id. func_8009B430 (GsLinkObject4) fills it. */
+typedef struct ShooterModelHandle {
+    /* 0x00 */ s32 attribute;
+    /* 0x04 */ s32 links[3];
+} ShooterModelHandle; /* size 0x10 */
 
 /*
  * Coordinate object (T-16560). Same layout as libgs GsCOORDINATE2: a flag word (0 marks the local
@@ -59,626 +59,626 @@ typedef struct Tc10 {
  * the library computes, and the param/super/sub links. func_80099E30 (GsInitCoordinate2) takes
  * a pointer to one. The translation stays three scalars because matched code reads them as such.
  */
-typedef struct TcObj50 {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s16 unk4[3][3];
+typedef struct ShooterCoordinate {
+    /* 0x00 */ s32 flag;
+    /* 0x04 */ s16 rotation[3][3];
     /* 0x16 */ s16 unk16;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-    /* 0x24 */ MATRIX unk24;
-    /* 0x44 */ s32 unk44;
-    /* 0x48 */ struct TcObj50 *unk48;
-    /* 0x4C */ struct TcObj50 *unk4C;
-} TcObj50; /* size 0x50 */
+    /* 0x18 */ s32 x;
+    /* 0x1C */ s32 y;
+    /* 0x20 */ s32 z;
+    /* 0x24 */ MATRIX world;
+    /* 0x44 */ s32 param;
+    /* 0x48 */ struct ShooterCoordinate *parent;
+    /* 0x4C */ struct ShooterCoordinate *child;
+} ShooterCoordinate; /* size 0x50 */
 
-extern TcPos D_80128880[];
-extern Tc10 D_80127080[];
-extern TcObj50 D_80127480[];
-/* coordinate objects 1-3 of D_80127480, named separately because func_801497EC compares against their addresses (T-19019) */
-extern TcObj50 D_801274D0;
-extern TcObj50 D_80127520;
-extern TcObj50 D_80127570;
+extern ShooterPosition D_80128880[];
+extern ShooterModelHandle D_80127080[];
+extern ShooterCoordinate D_80127480[];
+/* coordinate objects 1-3 of D_80127480, named separately because shooter_boss2_update_part compares against their addresses (T-19019) */
+extern ShooterCoordinate D_801274D0;
+extern ShooterCoordinate D_80127520;
+extern ShooterCoordinate D_80127570;
 
 /*
- * Actor record, 79 of them at D_8015EDB4 (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
+ * Actor record, 79 of them at shooter_actors (loops stop at byte offset 0x29F8). T-16560: unk0[1] holds
  * flag bits (0x80, 0x40); +0x04 is the actor's object handle and +0x14 its coordinate object
- * (func_8013801C passes &actor->unk14 to func_80099E30). unk74..unk7A and unk7C..unk82 are copied
- * as two eight-byte TcPos values (lwl/lwr pairs) into by-value TcPos arguments.
+ * (shooter_game_start_step_init passes &actor->unk14 to func_80099E30). unk74..unk7A and unk7C..unk82 are copied
+ * as two eight-byte ShooterPosition values (lwl/lwr pairs) into by-value ShooterPosition arguments.
  */
-typedef struct TcActor {
-    /* 0x00 */ u8 unk0[2];
-    /* 0x02 */ u8 unk2;
-    /* 0x03 */ u8 unk3;
-    /* 0x04 */ Tc10 unk4;
-    /* 0x14 */ TcObj50 unk14;
-    /* 0x64 */ s16 unk64;
-    /* 0x66 */ s16 unk66;
-    /* 0x68 */ s16 unk68;
-    /* 0x6A */ s16 unk6A;
-    /* 0x6C */ s16 unk6C;
-    /* 0x6E */ s16 unk6E;
-    /* 0x70 */ s16 unk70;
-    /* 0x72 */ s16 unk72;
-    /* 0x74 */ s16 unk74;
-    /* 0x76 */ s16 unk76;
-    /* 0x78 */ s16 unk78;
-    /* 0x7A */ s16 unk7A;
-    /* 0x7C */ s16 unk7C;
-    /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84[4];
-} TcActor; /* size 0x88 */
+typedef struct ShooterActor {
+    /* 0x00 */ u8 flag_bytes[2];
+    /* 0x02 */ u8 mode;
+    /* 0x03 */ u8 phase;
+    /* 0x04 */ ShooterModelHandle model;
+    /* 0x14 */ ShooterCoordinate coordinate;
+    /* 0x64 */ s16 rotation_x;
+    /* 0x66 */ s16 rotation_y;
+    /* 0x68 */ s16 rotation_z;
+    /* 0x6A */ s16 param;
+    /* 0x6C */ s16 scale_x;
+    /* 0x6E */ s16 scale_y;
+    /* 0x70 */ s16 scale_z;
+    /* 0x72 */ s16 weapon;
+    /* 0x74 */ s16 x;
+    /* 0x76 */ s16 y;
+    /* 0x78 */ s16 z;
+    /* 0x7A */ s16 counter;
+    /* 0x7C */ s16 argument_x;
+    /* 0x7E */ s16 argument_y;
+    /* 0x80 */ s16 argument_z;
+    /* 0x82 */ s16 auxiliary;
+    /* 0x84 */ u8 stats[4];
+} ShooterActor; /* size 0x88 */
 
-extern TcActor *D_8015EDB4;
+extern ShooterActor *shooter_actors;
 
-void func_80140028(s32 arg0);
-s32 func_801407D4(s32 *arg0, TcPos arg1);
-void func_80140E18(s32 arg0);
-void func_8015ABF0(void);
-void func_801563E4(s32 arg0);
-s32 func_80156178(void);
-void func_80154F74(void);
-void func_801553AC(void);
-void func_8015595C(void);
-void func_80137CBC(s32 arg0);
-extern Tc10 D_80127090;
-extern Tc10 D_801270A0;
-extern s32 D_8015EDB0;
-extern u8 D_8015EDBC;
-extern u8 D_8015EDC0;
+void shooter_update_secondary_shots_of(s32 arg0);
+s32 shooter_find_target(s32 *arg0, ShooterPosition arg1);
+void shooter_update_primary_shots_of(s32 arg0);
+void shooter_reset_enemies(void);
+void shooter_spawn_homing_mines(s32 arg0);
+s32 shooter_spawn_stage1_mid_boss(void);
+void shooter_spawn_debris(void);
+void shooter_spawn_swoop_wave(void);
+void shooter_spawn_spiral_pair(void);
+void shooter_play_help_voice(s32 arg0);
+extern ShooterModelHandle D_80127090;
+extern ShooterModelHandle D_801270A0;
+extern s32 shooter_background_flags;
+extern u8 shooter_load_request;
+extern u8 shooter_sound_bank_wait_state;
 
-void func_80135F6C(void);
-void func_80136988(void);
-s32 func_80135A04(void);
-s32 func_8013515C(void);
-void func_80134FB8(void);
-s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
-s32 func_8014F820(void);
-void func_8013AFDC(void);
-void func_8013A790(s32 arg0, s32 arg1);
-void func_8013AD64(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_8013760C();
-void func_8013788C();
-void func_8014F210(void);
-void func_8015185C(void);
-s32 func_801335A0();
-void func_80133410(s32 arg0);
-s32 func_80134A18();
-void func_80134EBC(void);
-void func_8013506C();
-void func_80135220(void);
-void func_80135278(void);
-void func_801352CC(void);
-void func_80135330(void);
-void func_80135350(void);
-/* func_8014927C: a 12-byte id table and three tables passed by address */
-extern u8 D_8015FCA8[];
-extern u8 D_8015FCB4[];
-extern u8 D_8015FCC0[];
-extern u8 D_8015FCD8[];
-extern u8 D_8015FE95;
-extern u8 D_8015FEA0[];
-extern u8 D_8015FEAC[];
-extern u8 D_8015FEC4[];
-extern s32 D_8015EDF0;
-extern s32 D_8015EE00;
+void shooter_settings_draw_changing(void);
+void shooter_settings_input(void);
+s32 shooter_settings_draw(void);
+s32 shooter_title_reveal_step(void);
+void shooter_setup_text_layer(void);
+s32 shooter_boss3_update_part(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
+s32 shooter_boss3_collapse_motion(void);
+void shooter_init_stars(void);
+void shooter_update_stars(s32 arg0, s32 arg1);
+void shooter_draw_star(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 shooter_demo_step_init();
+void shooter_demo_step_run();
+void shooter_boss3_descend_motion(void);
+void shooter_boss3_fire_pattern(void);
+s32 shooter_play_se();
+void shooter_clear_beam_flags(s32 arg0);
+s32 shooter_title_animate();
+void shooter_title_step_init(void);
+void shooter_draw_title_stars();
+void shooter_title_step_wait(void);
+void shooter_title_step_reveal(void);
+void shooter_title_step_hold(void);
+void shooter_title_step_advance(void);
+void shooter_title_step_finish(void);
+/* shooter_boss2_step_entrance: a 12-byte id table and three tables passed by address */
+extern u8 shooter_boss2_part_objects[];
+extern u8 shooter_boss2_part_radius[];
+extern u8 shooter_boss2_part_hit_points[];
+extern u8 shooter_boss2_part_offsets[];
+extern u8 shooter_boss3_part_objects_1;
+extern u8 shooter_boss3_part_radius[];
+extern u8 shooter_boss3_part_hit_points[];
+extern u8 shooter_boss3_part_offsets[];
+extern s32 shooter_score;
+extern s32 shooter_high_score_3;
 
-void func_80136FBC(s32 arg0, s32 arg1);
-void func_80154960(void);
-void func_80156A80(void);
-void func_80159090(void);
-void func_8015C208();
-void func_80139FB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8013A580(s32 arg0);
-void func_80132220(void);
-void func_801334BC(void);
-void func_8013356C(void);
-s32 func_8013CE78(void);
-s32 func_8013CFD8(void);
-s32 func_80154014(void);
-s32 func_80142220(s32 arg0);
-s16 func_801420DC();
-s32 func_801423B0(void);
-extern s32 D_8015F400;
-extern u8 D_8015EDC4;
+void shooter_draw_ranking(s32 arg0, s32 arg1);
+void shooter_update_stage1_script(void);
+void shooter_update_stage2_script(void);
+void shooter_update_stage3_script(void);
+void shooter_remove_enemy();
+void shooter_draw_glyph_ring(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void shooter_draw_entered_name(s32 arg0);
+void shooter_reset_ship_state(void);
+void shooter_clear_player_shots(void);
+void shooter_clear_enemy_bullets(void);
+s32 shooter_bomb_damage_all(void);
+s32 shooter_bomb_damage_by_distance(void);
+s32 shooter_update_pulse_bomb(void);
+s32 shooter_try_start_bomb(s32 arg0);
+s16 shooter_consume_bomb();
+s32 shooter_update_blast_shots(void);
+extern s32 shooter_scores_zoom;
+extern u8 shooter_sound_bank_poll_result;
 
-void func_8014394C(void);
-void func_8013F874(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80143F40(void);
-void func_80143B58(void);
-void func_80133694(void);
-void func_80144094(void);
-void func_80144430(void);
-void func_801446D0(void);
-void func_80143FF4(void);
-extern u8 D_8015EDCC;
-extern s16 D_8015EDEC;
+void shooter_set_white_lights(void);
+void shooter_draw_bomb_icon(s32 arg0, s32 arg1, s32 arg2);
+s32 shooter_scroll_background(void);
+void shooter_process_load_request(void);
+void shooter_tick_se_cooldowns(void);
+void shooter_draw_floor_grid(void);
+void shooter_draw_horizon_bands(void);
+void shooter_nop_background_layer(void);
+void shooter_update_camera(void);
+extern u8 shooter_stages_cleared;
+extern s16 shooter_time_left;
 
-void func_80144E3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s32 arg6);
-void func_80136024(void);
-void func_801361E8(void);
-void func_80136438(void);
-void func_80136688(void);
-void func_8015131C(s32 arg0);
+void shooter_draw_sky_gradient(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s32 arg5, s32 arg6);
+void shooter_settings_animation_auto_shot(void);
+void shooter_settings_animation_roll(void);
+void shooter_settings_animation_shot(void);
+void shooter_settings_animation_bomb(void);
+void shooter_boss3_sway_motion(s32 arg0);
 
-void func_80146F74(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
-void func_8014FBD4(s32 arg0);
-void func_8015163C(s32 arg0, s32 arg1);
-void func_80151264(u32 arg0);
-void func_801517AC(s32 arg0);
-void func_8014927C(void);
-void func_80149538(void);
-void func_8014A79C(void);
-void func_8014D2E0(void);
-s32 func_80147B24(s32 arg0, void *arg1);
-void func_8014B374(s32 arg0);
-void func_8014B4B4(s32 arg0);
-void func_8014EB24(s32 arg0);
-void func_8014EF14(s32 arg0);
-void func_8014F044(void);
-void func_80146D60(s32 arg0);
-#ifndef TACO_OVERRIDE_func_801471D0 /* 80146D60.c defines it with a pointer parameter (T-19015) */
-void func_801471D0(s32 arg0);
+void shooter_move_model(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+void shooter_boss3_pose_idle(s32 arg0);
+void shooter_boss3_set_part_visibility(s32 arg0, s32 arg1);
+void shooter_boss3_update_sway(u32 arg0);
+void shooter_fade_white(s32 arg0);
+void shooter_boss2_step_entrance(void);
+void shooter_boss2_step_defeat(void);
+void shooter_boss3_reset_parts(void);
+void shooter_boss1_run_attack_mode(void);
+s32 shooter_boss_damage_percent(s32 arg0, void *arg1);
+void shooter_boss1_morph_to_form2(s32 arg0);
+void shooter_boss1_morph_to_form1(s32 arg0);
+void shooter_boss1_form2_group_e_motion(s32 arg0);
+void shooter_boss1_form2_group_f_motion(s32 arg0);
+void shooter_boss1_pick_attack_mode(void);
+void shooter_init_object_hierarchy(s32 arg0);
+#ifndef TACO_OVERRIDE_shooter_link_model_objects /* 80146D60.c defines it with a pointer parameter (T-19015) */
+void shooter_link_model_objects(s32 arg0);
 #endif
-void func_80147488(s32 arg0, s16 *arg1, s32 arg2);
-extern s32 D_8015F3E0[2]; /* two model slots, T-19011 */
-extern s16 *D_8015F82C[2]; /* model data pointers for func_80147488, T-19002 */
-extern s16 D_8015F3E8;
+void shooter_apply_keyframe(s32 arg0, s16 *arg1, s32 arg2);
+extern s32 shooter_title_pose_tables[2]; /* two model slots, T-19011 */
+extern s16 *shooter_opening_pose_tables[2]; /* model data pointers for shooter_apply_keyframe, T-19002 */
+extern s16 shooter_title_frame;
 
-void func_80144CC0(u8 *arg0);
-void func_80146E3C(void);
-void func_80144D90(s32 arg0);
-void func_8014C3B4(s32 arg0);
-void func_8014C8DC(void);
+void shooter_init_scrolling_stars(u8 *arg0);
+void shooter_set_dark_lights(void);
+void shooter_select_sky_palette(s32 arg0);
+void shooter_boss1_update_group_e(s32 arg0);
+void shooter_boss1_rest_group_e(void);
 
-void func_8014C978(s32 arg0);
-void func_8014D200(void);
+void shooter_boss1_update_group_f(s32 arg0);
+void shooter_boss1_rest_group_f(void);
 
 /* T-1321 */
-void func_8014DF50(s32 arg0);
-typedef struct Tc14 {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ s16 unkA;
-    /* 0x0C */ s16 unkC;
+void shooter_boss1_scatter_motion(s32 arg0);
+typedef struct ShooterParticle {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ s16 z;
+    /* 0x06 */ s16 w;
+    /* 0x08 */ s16 velocity_x;
+    /* 0x0A */ s16 velocity_y;
+    /* 0x0C */ s16 velocity_z;
     /* 0x0E */ s16 unkE;
     /* 0x10 */ u8 unk10;
-    /* 0x11 */ u8 unk11;
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ u8 unk13;
-} Tc14; /* size 0x14; same record as TacoParticle14 (two TcPos, four bytes), T-16560 */
-void func_80140ADC(Tc14 *arg0, s32 arg1);
-void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
-void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3);
-void func_80152C60(s32 arg0);
-void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
-extern s32 D_8015F4F0;
-extern s32 D_80160460;
-extern s32 D_80160464;
-extern s32 D_80160470;
+    /* 0x11 */ u8 argument;
+    /* 0x12 */ u8 age;
+    /* 0x13 */ u8 flags;
+} ShooterParticle; /* size 0x14; same record as ShooterParticleView (two ShooterPosition, four bytes), T-16560 */
+void shooter_draw_secondary_shot(ShooterParticle *arg0, s32 arg1);
+void shooter_boss2_update_arm_attack_a(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
+void shooter_boss2_update_arm_attack_c(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3);
+void shooter_boss2_update_all_arms_attack(s32 arg0);
+void shooter_boss2_update_arm_attack_b(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
+extern s32 shooter_star_brightness;
+extern s32 shooter_pulse_bomb_active;
+extern s32 shooter_pulse_bomb_timer;
+extern s32 shooter_stage1_mid_boss_slot;
 extern u16 *D_801FAA84;
-extern s32 D_8015F490[5];
-extern s32 D_8015F4A4;
-extern s32 D_8015F4A8;
-void func_80153AA0(s32 arg0, s32 arg1, s32 arg2);
-void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3);
-extern Tc14 D_8015E270[];
+extern s32 shooter_result_values[5];
+extern s32 shooter_count_target;
+extern s32 shooter_count_current;
+void shooter_draw_circle_flash(s32 arg0, s32 arg1, s32 arg2);
+void shooter_draw_flash_overlay(s32 arg0, u8 arg1, u8 arg2, u8 arg3);
+extern ShooterParticle shooter_player_primary_shots[];
 /* result screen (T-19006): counter and bonus drawers of 8013B990.c */
-s32 func_8013C1F4(void);
-s32 func_8013C440(void);
-s32 func_8013C6D4(void);
-s32 func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
-extern Tc14 D_8015E3B0[];
-/* func_8013EAA4: per-kind frame count, CLUT row, U and V tables (T-25110) */
-extern u8 D_8015F560[8], D_8015F568[8], D_8015F570[8], D_8015F578[8];
-extern u16 D_8015F580;
-extern u16 D_8015F584;
-void func_801413B8(Tc14 *arg0, s32 arg1);
-void func_801416E8(Tc14 *arg0, s32 arg1);
-void func_80141B18(Tc14 *arg0, s32 arg1);
-extern u8 D_8015FA68[];
-void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
-extern s32 D_8015F4F4;
-void func_80143B34();
-extern u8 D_80161D9C[];
-void func_8015C0A0();
+s32 shooter_hit_ships_with_bullets(void);
+s32 shooter_hit_ships_with_bodies(void);
+s32 shooter_collect_items(void);
+s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2);
+extern ShooterParticle shooter_wingman_primary_shots[];
+/* shooter_draw_item: per-kind frame count, CLUT row, U and V tables (T-25110) */
+extern u8 shooter_item_frame_count[8], shooter_item_clut_row[8], shooter_item_u[8], shooter_item_v[8];
+extern u16 shooter_vulcan_frame_u;
+extern u16 shooter_wide_shot_frame_u;
+void shooter_draw_vulcan_shot(ShooterParticle *arg0, s32 arg1);
+void shooter_draw_wide_shot(ShooterParticle *arg0, s32 arg1);
+void shooter_draw_beam(ShooterParticle *arg0, s32 arg1);
+extern u8 shooter_boss1_part_hit_points[];
+void shooter_fire_from_joint(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
+extern s32 shooter_scores_fade;
+void shooter_release_actor_model();
+extern u8 shooter_coordinate_owner[];
+void shooter_set_enemy_visibility();
 
-void func_80143730();
+void shooter_load_texture_page();
 
-extern u8 D_8015E220;
+extern u8 shooter_se_cooldown;
 
-extern u8 D_8015E221;
+extern u8 shooter_se_cooldown_1;
 
-extern u8 D_8015E222[];
+extern u8 shooter_se_cooldown_2[];
 
-extern s32 D_8015F290[];
+extern s32 shooter_model_polygon_ranges[];
 
-extern s16 *D_80160034[];
-extern s16 *D_801603F0[];
-void func_8014BED8(void);
-void func_8014BCEC(s32 arg0);
-extern u8 D_8015FE94[];
-void func_8014F5F0();
-void func_80147674(s32 arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
-s32 func_8014FFDC(s32 arg0);
-void func_8014BE14(s32 arg0);
-void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg5);
-void func_801511C0(s32 arg0, s32 arg1);
-extern s16 *D_801600A8;
-extern s16 *D_801600AC[];
-extern s16 *D_801600B4;
-extern s16 *D_801600B8[];
-extern s16 *D_80160040[];
-extern s16 *D_80160054[];
-extern s16 *D_80160078[];
-extern s16 *D_801600A0[];
-void func_8014C2E4(void);
-extern s32 D_8015FEF0[];
-extern u8 D_8015FFE0[];
-s32 func_801472D4(); /* Returns -1 for unaligned input buffers; T-9610. */
-void func_8014B2A4(s32 arg0);
-s32 func_8014B8B4(s32 arg0, s32 arg1, s32 arg2);
-void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4);
-void func_8014DA6C(s32 arg0);
-s32 func_8014E5F8(s32 arg0);
-s32 func_8014E1A0(s32 arg0);
-void func_8014E048(void);
-extern s16 *D_801600C0[];
-extern s16 *D_801600D4[];
-extern s16 *D_801600E0[];
-extern s16 *D_801600E8;
-extern s16 *D_801600EC[];
-void func_8014C0D4(s32 arg0);
-void func_8014C1DC(s32 arg0);
-void func_8014A8E0(void);
-void func_8014F2A0(void);
-void func_8013920C();
-void func_80139424();
-void func_80139AB0();
-void func_80139BCC();
-void func_80139B54();
-void func_80139394();
-void func_801393F4();
-void func_8014D3B4(s32 arg0);
-void func_8014D918();
-void func_8014DC94();
-void func_8014E4A4();
-void func_8014EA4C();
-void func_8014EC4C();
-void func_8014EE3C();
-void func_80135418(void);
-void func_80138160(void);
-void func_801438F0();
-extern s8 D_8015EDD0;
-extern s32 D_8015EDD4;
-void func_801532C4();
-void func_801536BC();
+extern s16 *shooter_boss1_group_c_poses[];
+extern s16 *shooter_boss2_arm_poses[];
+void shooter_boss1_rest_group_c(void);
+void shooter_boss1_update_group_c(s32 arg0);
+extern u8 shooter_boss3_part_objects[];
+void shooter_boss3_defeat_motion();
+void shooter_apply_keyframe_tween(s32 arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 shooter_boss3_pose_group_attack_a(s32 arg0);
+void shooter_boss1_pose_group_c(s32 arg0);
+void shooter_attach_boss_part(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg5);
+void shooter_boss3_rest_group_attack(s32 arg0, s32 arg1);
+extern s16 *shooter_boss1_group_e_pose_a;
+extern s16 *shooter_boss1_group_e_poses_b[];
+extern s16 *shooter_boss1_group_e_pose_c;
+extern s16 *shooter_boss1_group_e_poses_d[];
+extern s16 *shooter_boss1_group_d_poses_a[];
+extern s16 *shooter_boss1_group_d_poses_b[];
+extern s16 *shooter_boss1_group_d_poses_c[];
+extern s16 *shooter_boss1_group_d_poses_d[];
+void shooter_boss1_rest_group_d(void);
+extern s32 shooter_boss1_morph_pose_pointers[];
+extern u8 shooter_boss1_morph_pose_flags[];
+s32 shooter_set_pose_from_tables(); /* Returns -1 for unaligned input buffers; T-9610. */
+void shooter_boss1_update_ai(s32 arg0);
+s32 shooter_boss1_pose_group_pair(s32 arg0, s32 arg1, s32 arg2);
+void shooter_boss1_update_group_pair_short(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4);
+void shooter_boss1_group_pair_motion(s32 arg0);
+s32 shooter_boss1_form2_group_d_motion(s32 arg0);
+s32 shooter_boss1_lunge_motion(s32 arg0);
+void shooter_boss1_mode_lunge(void);
+extern s16 *shooter_boss1_group_f_poses_a[];
+extern s16 *shooter_boss1_group_f_poses_b[];
+extern s16 *shooter_boss1_group_f_poses_c[];
+extern s16 *shooter_boss1_group_f_pose_d;
+extern s16 *shooter_boss1_group_f_poses_e[];
+void shooter_boss1_pose_group_d_form1(s32 arg0);
+void shooter_boss1_pose_group_d_form2(s32 arg0);
+void shooter_boss3_update_damage_lights(void);
+void shooter_boss3_update_ai(void);
+void shooter_name_entry_step_init();
+void shooter_draw_glyph();
+void shooter_name_entry_step_intro();
+void shooter_name_entry_step_input();
+void shooter_name_entry_step_outro();
+void shooter_name_entry_step_fade();
+void shooter_name_entry_step_done();
+void shooter_boss1_mode_sway(s32 arg0);
+void shooter_boss1_mode_group_pair();
+void shooter_boss1_mode_scatter();
+void shooter_boss1_mode_form2_group_d();
+void shooter_boss1_mode_form2_group_e();
+void shooter_boss1_mode_rain();
+void shooter_boss1_mode_form2_group_f();
+void shooter_menu_step_init(void);
+void shooter_game_start_step_wait(void);
+void shooter_init_actor_model();
+extern s8 shooter_bonus_popup_timer;
+extern s32 shooter_bonus_popup_value;
+void shooter_boss2_update_arms();
+void shooter_boss2_update_idle_sway();
 
-void func_801534E0(s32 arg0);
+void shooter_boss2_pick_arm_attack(s32 arg0);
 
-void func_8014394C();
-void func_801345D4();
-void func_8013474C();
-void func_801347F4(s32 *arg0);
-extern s32 D_8015F440[];
-s32 func_80137BD8(void);
-void func_80137D00(void);
-void func_80137E48(void);
-void func_80137F54(void);
-s32 func_8013587C(void);
-void func_801359B4(void);
-void func_80135994(void);
-s32 func_80135744(void);
+void shooter_set_white_lights();
+void shooter_load_settings_and_scores();
+void shooter_init_coordinate_objects();
+void shooter_link_model_handles(s32 *arg0);
+extern s32 shooter_help_voice_table[];
+s32 shooter_help_step_init(void);
+void shooter_help_step_page1(void);
+void shooter_help_step_page2(void);
+void shooter_help_step_exit(void);
+s32 shooter_settings_step_init(void);
+void shooter_settings_step_run(void);
+void shooter_settings_step_exit(void);
+s32 shooter_stage_settings(void);
 
-void func_80138520(void);
-void func_801385B4(void);
-void func_80138634(void);
-s32 func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g);
-extern TcPos D_801604D4;
-extern TcPos D_801604E4;
+void shooter_stage2_step_init(void);
+void shooter_stage2_step_run(void);
+void shooter_stage2_step_end(void);
+s32 shooter_spawn_enemy(s32 a, s32 b, ShooterPosition c, ShooterPosition d, ShooterPosition e, s32 f, s32 g);
+extern ShooterPosition shooter_zero_position_a;
+extern ShooterPosition shooter_zero_position_b;
 
-extern TcPos D_801604DC;
+extern ShooterPosition shooter_circler_start_position;
 
-void func_80138348(void);
-void func_8013838C(void);
-void func_8013840C(void);
-extern s32 D_8016001C[];
+void shooter_stage1_step_init(void);
+void shooter_stage1_step_run(void);
+void shooter_stage1_step_end(void);
+extern s32 shooter_boss1_group_pair_poses[];
 
-void func_8014EDCC(s32 arg0);
-void func_8014B5F0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
-void func_80135944(void);
-extern s32 D_8015EDF8;
-extern s32 D_8015EDFC;
-extern u8 D_8015EE04[];
-extern u8 D_8015EE08[];
-extern u8 D_8015EE0C[];
-extern s32 D_8015F4D8;
-extern u8 D_8015F4B0[];
-void func_8013A764(void);
-typedef struct TacoRnd {
-    s32 a;
-    s32 b;
-} TacoRnd;
-extern TacoRnd *D_8015F4EC;
-extern u8 D_8015EDD8;
-s32 func_801357B0();
-extern s8 D_8015EDB8;
+void shooter_boss1_rain_group_c(s32 arg0);
+void shooter_boss1_update_group_pair(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
+void shooter_clear_text_strip(void);
+extern s32 shooter_high_score_1;
+extern s32 shooter_high_score_2;
+extern u8 shooter_high_score_name_1[];
+extern u8 shooter_high_score_name_2[];
+extern u8 shooter_high_score_name_3[];
+extern s32 shooter_name_entry_rank;
+extern u8 shooter_name_glyph_table[];
+void shooter_name_entry_reset(void);
+typedef struct ShooterStar {
+    s32 angle;
+    s32 radius;
+} ShooterStar;
+extern ShooterStar *shooter_stars;
+extern u8 shooter_setting_auto_shot;
+s32 shooter_draw_label();
+extern s8 shooter_loader_flag;
 
-void func_8013873C(void);
-void func_801387C0(void);
-void func_80138840(void);
-extern Tc14 D_8015E4F0[];
-extern Tc14 D_8015E630[];
-extern Tc14 D_8015E770[];
+void shooter_stage3_step_init(void);
+void shooter_stage3_step_run(void);
+void shooter_stage3_step_end(void);
+extern ShooterParticle shooter_player_secondary_shots[];
+extern ShooterParticle shooter_wingman_secondary_shots[];
+extern ShooterParticle shooter_bomb_shots[];
 
-void func_801493D4(void);
-void func_80149D1C(void);
-void func_80151C30();
+void shooter_boss2_step_fight(void);
+void shooter_boss2_update_damage_lights(void);
+void shooter_boss2_update_ai();
 
-void func_801478F8();
-void func_801521EC();
-void func_80147400();
-extern s32 D_8015FC94;
-extern s32 D_8015FC98[];
-typedef struct TcPair8 {
-    s32 a;
-    s32 b;
-} TcPair8;
-extern TcPair8 D_8015FAE0[];
-extern s32 D_8015E238[]; /* word pairs, read as a flat table by func_80133738 (T-16561) */
-typedef struct TcPair2 {
-    u8 a;
-    u8 b;
-} TcPair2;
-extern TcPair2 D_8015FBF8[];
-extern TcPair8 D_80160290[]; /* read at i - 1, T-16563 */
-extern TcPair2 D_801603A8[]; /* read at i - 1, T-16563 */
-extern TcPair8 D_8015F840[]; /* read at i - 1, T-19013 */
-extern TcPair2 D_8015F930[]; /* read at i - 1, T-19013 */
-/* FAKE: not data of its own. D_801603D4 + 4 * i is D_80160444 + 4 * (i - 0x1C); IDO keeps the symbol as the
- * induction base, so only this base gives func_80152808 its zero-offset pointer walk (D_80160448). T-16563 */
-extern s16 *D_801603D4[];
-void func_801490B4(void);
+void shooter_set_rotation_from_pose();
+void shooter_boss2_rest_arm();
+void shooter_read_model_polygon_ranges();
+extern s32 shooter_boss2_core_pose;
+extern s32 shooter_boss2_tail_poses[];
+typedef struct ShooterPosePointers {
+    s32 translation;
+    s32 rotation;
+} ShooterPosePointers;
+extern ShooterPosePointers shooter_boss2_rest_pose_pointers[];
+extern s32 shooter_triangle_voice_table[]; /* word pairs, read as a flat table by shooter_play_triangle_voice (T-16561) */
+typedef struct ShooterPoseFlags {
+    u8 translation_fixed;
+    u8 rotation_fixed;
+} ShooterPoseFlags;
+extern ShooterPoseFlags shooter_boss2_rest_pose_flags[];
+extern ShooterPosePointers shooter_boss2_part_pose_pointers[]; /* read at i - 1, T-16563 */
+extern ShooterPoseFlags shooter_boss2_part_pose_flags[]; /* read at i - 1, T-16563 */
+extern ShooterPosePointers shooter_boss1_rest_pose_pointers[]; /* read at i - 1, T-19013 */
+extern ShooterPoseFlags shooter_boss1_rest_pose_flags[]; /* read at i - 1, T-19013 */
+/* FAKE: not data of its own. shooter_boss2_tail_rest_poses + 4 * i is shooter_boss2_core_tail_poses + 4 * (i - 0x1C); IDO keeps the symbol as the
+ * induction base, so only this base gives shooter_boss2_update_tail its zero-offset pointer walk (D_80160448). T-16563 */
+extern s16 *shooter_boss2_tail_rest_poses[];
+void shooter_boss2_step_init(void);
 
-void func_80149B7C(void);
+void shooter_boss2_reset_parts(void);
 
 /* T-9520: globals used by the matched wave-8 functions. */
-extern u8 D_8015EDDC;
-extern u8 D_8015EDE0;
-extern u8 D_8015EDE4;
+extern u8 shooter_setting_roll_button;
+extern u8 shooter_setting_shot_button;
+extern u8 shooter_setting_bomb_button;
 
-void func_8013F430(void);
-
-/* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_8015A164(s32 arg0);
+void shooter_draw_hud_panels(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80134450(void);
+void shooter_spawn_guardian_ring(s32 arg0);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_8014488C(void);
-void func_80144998(void);
+void shooter_upload_texture_banks(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80136C00(void);
-void func_80136D00(void);
-void func_80136D78(void);
-void func_80136F4C(void);
-void func_80136E08(void);
-s32 func_80136C60(void);
-void func_80136CD8(void);
+void shooter_opening_step_init(void);
+void shooter_opening_step_end(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void shooter_scores_step_init(void);
+void shooter_scores_step_stars_in(void);
+void shooter_scores_step_zoom_in(void);
+void shooter_scores_step_show(void);
+void shooter_scores_step_zoom_out(void);
+s32 shooter_scores_step_stars_out(void);
+void shooter_scores_step_exit(void);
 
 #endif
 
-typedef struct TacoCam {
-    /* 0x0 */ s16 a;
-    /* 0x2 */ s16 b;
-    /* 0x4 */ s16 c;
-    /* 0x6 */ s16 d;
-} TacoCam; /* size 0x8 */
-extern TacoCam D_8015F5F0;
-typedef struct TcTex4 {
+typedef struct ShooterBackgroundScroll {
+    /* 0x0 */ s16 x;
+    /* 0x2 */ s16 y;
+    /* 0x4 */ s16 scroll_z;
+    /* 0x6 */ s16 tile_phase;
+} ShooterBackgroundScroll; /* size 0x8 */
+extern ShooterBackgroundScroll shooter_background_scroll;
+typedef struct ShooterTextureCoordinates {
     /* 0x0 */ u8 b[4];
-} TcTex4; /* size 0x4 */
-extern TcTex4 D_8015F5F8;
-extern TcTex4 D_8015F5FC;
-void func_80139118(void);
-void func_80158CDC(s16 arg0, s16 arg1, s16 arg2);
-void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
-extern s8 D_8015EDE8;
-void func_80148184(void);
-void func_80148308(void);
-s32 func_801484E4();
-void func_8014866C(void);
-void func_801487A4(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4);
-void func_8014AB50();
-s32 func_8014CB24(s32 arg0);
-void func_8014BC80(s32 arg0, s32 arg1);
-void func_80148B58();
-extern u8 D_8015F404[];
-extern u8 D_8015F410[];
-extern u8 D_8015F41C[];
-void func_80137264(u8 *arg0, s32 arg1);
-typedef struct TacoDigits {
-    /* 0x00 */ u8 s[11];
-} TacoDigits; /* size 0xB: "0123456789" */
-extern TacoDigits D_8015F428;
-void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
-void func_80152110(s32 arg0, s32 arg1, s32 arg2);
-void func_801531E8();
-extern u8 D_8015E22C[];
-void func_8014A070(void);
-void func_8014A1D4(void);
-void func_8014A234(void);
-void func_8014A390(void);
-void func_8014A42C(void);
-extern s32 D_80160138[];
-extern u8 D_80160216[];
-extern s32 D_801601D0;
-extern s32 D_801601D4;
-extern u8 D_8016023C;
-extern u8 D_8016023D;
+} ShooterTextureCoordinates; /* size 0x4 */
+extern ShooterTextureCoordinates shooter_floor_tile_u;
+extern ShooterTextureCoordinates shooter_floor_tile_v;
+void shooter_result_step_next(void);
+void shooter_spawn_turret_a(s16 arg0, s16 arg1, s16 arg2);
+void shooter_spawn_turret_b(s16 arg0, s16 arg1, s16 arg2);
+extern s8 shooter_menu_cursor;
+void shooter_boss1_step_init(void);
+void shooter_boss1_step_entrance(void);
+s32 shooter_boss1_step_defeat();
+void shooter_boss1_set_lights(void);
+void shooter_boss1_update_part(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4);
+void shooter_boss1_entrance_script();
+s32 shooter_boss1_pose_group_f(s32 arg0);
+void shooter_boss1_rest_group_pair(s32 arg0, s32 arg1);
+void shooter_boss1_reset_parts();
+extern u8 shooter_score_text_1[];
+extern u8 shooter_score_text_2[];
+extern u8 shooter_score_text_3[];
+void shooter_format_score(u8 *arg0, s32 arg1);
+typedef struct ShooterScoreTemplate {
+    /* 0x00 */ u8 characters[11];
+} ShooterScoreTemplate; /* size 0xB: "0123456789" */
+extern ShooterScoreTemplate shooter_score_text_template;
+void shooter_draw_ranking_text(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void shooter_boss2_pose_arm_a(s32 arg0, s32 arg1, s32 arg2);
+void shooter_boss2_pose_arm_b();
+extern u8 shooter_se_cooldown_range[];
+void shooter_boss3_step_init(void);
+void shooter_boss3_step_descend(void);
+void shooter_boss3_step_fight(void);
+void shooter_boss3_step_defeat(void);
+void shooter_boss3_step_collapse(void);
+extern s32 shooter_boss3_idle_pose_pointers_joint_7[];
+extern u8 shooter_boss3_idle_pose_flags_joint_7[];
+extern s32 shooter_boss3_idle_pose_pointers_joint_27;
+extern s32 shooter_boss3_idle_pose_pointers_joint_27_rotation;
+extern u8 shooter_boss3_idle_pose_flags_joint_27;
+extern u8 shooter_boss3_idle_pose_flags_joint_27_rotation;
 extern s32 D_8015FEF8[];
 extern u8 D_8015FFE2[];
-extern s32 D_80160108[];
-extern s32 D_80160168[];
-extern s32 D_801601E0[];
-extern u8 D_8016020A[];
-extern u8 D_80160222[];
-extern u8 D_80160240[];
-extern s16 *D_80160268[];
-extern s16 *D_80160280;
-void func_80150F44(s32 arg0);
-void func_8014C578(s32 arg0);
-void func_80150B3C(s32 arg0);
-extern s32 D_8015FD18[];
-extern u8 D_8015FE1A[];
-void func_80151678(void);
-extern s32 D_801601C8;
-extern s32 D_801601CC;
-extern u8 D_8016023A;
-extern u8 D_8016023B;
-void func_8014F9B0(void);
-void func_8014FDC0(void);
-void func_801508D0(void);
-void func_80150DE8(void);
-void func_8014D530(s32 arg0, s32 arg1);
-void func_80153774(s32 arg0);
-void func_8015AB18(s32 arg0);
-void func_8015AB80(s32 arg0);
+extern s32 shooter_boss3_idle_pose_pointers[];
+extern s32 shooter_boss3_idle_pose_pointers_joint_13[];
+extern s32 shooter_boss3_idle_pose_pointers_joint_28[];
+extern u8 shooter_boss3_idle_pose_flags[];
+extern u8 shooter_boss3_idle_pose_flags_joint_13[];
+extern u8 shooter_boss3_idle_pose_flags_joint_28[];
+extern s16 *shooter_boss3_group_attack_b_poses[];
+extern s16 *shooter_boss3_rest_rotation_references_13;
+void shooter_boss3_pose_group_attack_c(s32 arg0);
+void shooter_boss1_pose_group_e(s32 arg0);
+void shooter_boss3_pose_group_attack_b(s32 arg0);
+extern s32 shooter_boss3_rest_pose_pointers[];
+extern u8 shooter_boss3_rest_pose_flags[];
+void shooter_boss3_set_lights(void);
+extern s32 shooter_boss3_idle_pose_pointers_joint_26;
+extern s32 shooter_boss3_idle_pose_pointers_joint_26_rotation;
+extern u8 shooter_boss3_idle_pose_flags_joint_26;
+extern u8 shooter_boss3_idle_pose_flags_joint_26_rotation;
+void shooter_boss3_update_damage_stage(void);
+void shooter_boss3_update_group_attack_a(void);
+void shooter_boss3_update_group_attack_b(void);
+void shooter_boss3_update_group_attack_c(void);
+void shooter_boss1_sway_motion(s32 arg0, s32 arg1);
+void shooter_boss2_sway_motion_alt(s32 arg0);
+void shooter_behavior_leave_forward(s32 arg0);
+void shooter_behavior_leave_back(s32 arg0);
 
 #ifndef OVL_TACO_MATCHED_VIEWS_T9520
 #define OVL_TACO_MATCHED_VIEWS_T9520
 /* Coordinate object: MATRIX payload at +4, total stride 0x50. T-9610. */
-typedef struct TcTransformObj50 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ MATRIX transform;
+typedef struct ShooterCoordinateView {
+    /* 0x00 */ s32 flag;
+    /* 0x04 */ MATRIX local;
     /* 0x24 */ u8 pad24[0x2C];
-} TcTransformObj50; /* size 0x50, full word view of TcObj50 */
-void func_8013B2A0(void);
-void func_8013B398(void);
-void func_8013B3C4(void);
-void func_8013B404(void);
+} ShooterCoordinateView; /* size 0x50, full word view of ShooterCoordinate */
+void shooter_game_end_step_init(void);
+void shooter_game_end_step_wait(void);
+void shooter_game_end_step_leave(void);
+void shooter_snapshot_screen(void);
 #endif
 
-/* Position and velocity copies/loads use two existing eight-byte TcPos records. */
-typedef struct TacoParticle14 {
-    /* 0x00 */ TcPos unk_00;
-    /* 0x08 */ TcPos unk_08;
+/* Position and velocity copies/loads use two existing eight-byte ShooterPosition records. */
+typedef struct ShooterParticleView {
+    /* 0x00 */ ShooterPosition position;
+    /* 0x08 */ ShooterPosition velocity;
     /* 0x10 */ u8 unk_10;
-    /* 0x11 */ u8 unk_11;
-    /* 0x12 */ u8 unk_12;
-    /* 0x13 */ u8 unk_13;
-} TacoParticle14; /* size 0x14 */
-extern TacoParticle14 D_8015E9F0[];
+    /* 0x11 */ u8 image_index;
+    /* 0x12 */ u8 age;
+    /* 0x13 */ u8 flags;
+} ShooterParticleView; /* size 0x14 */
+extern ShooterParticleView shooter_explosions[];
 
-extern TacoParticle14 D_8015E8B0[];
+extern ShooterParticleView shooter_hit_sparks[];
 
 #ifndef OVL_TACO_INITIALIZATION_T9780
 #define OVL_TACO_INITIALIZATION_T9780
-void func_8013801C(void);
-void func_801571E8(void);
-void func_801572D8(void);
-void func_801573C8(void);
-void func_80157AE0(void);
-void func_8015800C(void);
-void func_80158AB0(void);
-void func_801589B0(void);
+void shooter_game_start_step_init(void);
+void shooter_spawn_formation_positive_x(void);
+void shooter_spawn_formation_negative_x(void);
+void shooter_spawn_formation_v(void);
+void shooter_spawn_gate_pair(void);
+void shooter_spawn_circling_pair(void);
+void shooter_spawn_carrier(void);
+void shooter_dismiss_circlers(void);
 #endif
 
 #ifndef OVL_TACO_DIRECTIONS_T9780
 #define OVL_TACO_DIRECTIONS_T9780
-typedef struct TcDirection {
+typedef struct ShooterPlanarVelocity {
     /* 0x00 */ s32 x;
     /* 0x04 */ s32 y;
-} TcDirection; /* size 0x08 */
-typedef struct TcDirections28 {
-    /* 0x00 */ TcDirection pos[5];
-} TcDirections28; /* size 0x28 */
-typedef struct TcRotations14 {
-    /* 0x00 */ s32 rotation[5];
-} TcRotations14; /* size 0x14 */
-extern TcDirections28 D_80160480;
-extern TcRotations14 D_801604A8;
+} ShooterPlanarVelocity; /* size 0x08 */
+typedef struct ShooterFormationVelocities {
+    /* 0x00 */ ShooterPlanarVelocity vectors[5];
+} ShooterFormationVelocities; /* size 0x28 */
+typedef struct ShooterFormationSpins {
+    /* 0x00 */ s32 spins[5];
+} ShooterFormationSpins; /* size 0x14 */
+extern ShooterFormationVelocities shooter_formation_velocities;
+extern ShooterFormationSpins shooter_formation_spins;
 #endif
 
 #ifndef OVL_TACO_ACTOR_INIT_T10020
 #define OVL_TACO_ACTOR_INIT_T10020
-extern u8 D_8015FA44[];
-extern u8 D_8015FA50[];
+extern u8 shooter_boss1_part_objects[];
+extern u8 shooter_boss1_part_radius[];
 #endif
 
 #ifndef OVL_TACO_MENU_RESOURCE_T10020
 #define OVL_TACO_MENU_RESOURCE_T10020
-extern s32 D_801603A0;
-extern s32 D_801603A4;
-extern u8 D_801603EC;
-extern u8 D_801603ED;
-void func_8015266C(u32 arg0);
-void func_80152764(s32 arg0);
-void func_80152944(s32 arg0, s32 arg1);
-void func_80152DB4(s32 arg0, s32 arg1, s32 arg2);
-void func_801523D0(s32 arg0, s32 arg1, s32 arg2);
-extern s16 *D_80160444[]; /* six pointers: [0] 0x23's model, [1..4] the walk of func_80152944; T-16563 */
+extern s32 shooter_boss2_core_pose_pointers;
+extern s32 shooter_boss2_core_pose_pointers_rotation;
+extern u8 shooter_boss2_core_pose_flags;
+extern u8 shooter_boss2_core_pose_flags_rotation;
+void shooter_boss2_update_core(u32 arg0);
+void shooter_boss2_pose_core(s32 arg0);
+void shooter_boss2_pose_tail(s32 arg0, s32 arg1);
+void shooter_boss2_pose_all_arms(s32 arg0, s32 arg1, s32 arg2);
+void shooter_boss2_pose_arm_c(s32 arg0, s32 arg1, s32 arg2);
+extern s16 *shooter_boss2_core_tail_poses[]; /* six pointers: [0] 0x23's model, [1..4] the walk of shooter_boss2_pose_tail; T-16563 */
 #endif
 
 #ifndef OVL_TACO_T10010_SELECTION
 #define OVL_TACO_T10010_SELECTION
-void func_8013546C(void);
+void shooter_menu_step_select(void);
 #endif
 
 #ifndef OVL_TACO_T10010_SCORE_TABLE
 #define OVL_TACO_T10010_SCORE_TABLE
-extern s32 D_8015F500; /* T-19006 */
-extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
-/* Damage per particle kind (low nibble of Tc14.unk13), copied whole into a local by
- * func_8013BAC4. T-25111. */
-typedef struct TcDamage9 {
-    u8 bytes[9];
-} TcDamage9;
-extern TcDamage9 D_8015F548;
+extern s32 shooter_hit_sound_played; /* T-19006 */
+extern s32 shooter_score_by_class[]; /* Word score table indexed modulo 17. T-10010. */
+/* Damage per particle kind (low nibble of ShooterParticle.flags), copied whole into a local by
+ * shooter_hit_enemies_with_shots. T-25111. */
+typedef struct ShooterShotDamage {
+    u8 by_kind[9];
+} ShooterShotDamage;
+extern ShooterShotDamage shooter_shot_damage_by_kind;
 /* Defined in 8013D1E0.c; the s16 parameters give the callers their argument narrowing. T-25111. */
-s32 func_8013D2A0(s16 x, s16 y, s16 z);
+s32 shooter_spawn_hit_spark(s16 x, s16 y, s16 z);
 
-extern Tc14 D_8015EB30[16];
-extern Tc14 D_8015EC70[16]; /* the table after D_8015EB30; also its end address (T-16560) */
-s32 func_8013DEE4();
-extern u8 D_8015FA80[];
-void func_801483B0(void);
-void func_80148D6C(void);
-void func_8013E778();
-void func_8013EAA4();
-void func_801428DC(void);
-u8 func_80142FE8(void);
-void func_80142AF0(void);
-void func_80142EC4(void);
-void func_80142EE4(void);
-void func_80142F0C(void);
-u8 func_80142F34(void);
-void func_80142DE0(void);
-void func_80142820(void);
+extern ShooterParticle shooter_enemy_bullets[16];
+extern ShooterParticle shooter_items[16]; /* the table after shooter_enemy_bullets; also its end address (T-16560) */
+s32 shooter_draw_enemy_bullet();
+extern u8 shooter_boss1_part_offsets[];
+void shooter_boss1_step_fight(void);
+void shooter_boss1_update_damage_lights(void);
+void shooter_draw_item_weapon();
+void shooter_draw_item();
+void shooter_exit_step_save_settings(void);
+u8 shooter_exit_step_stop_sound(void);
+void shooter_exit_step_write_memory_card(void);
+void shooter_exit_step_reload_main_data_1(void);
+void shooter_exit_step_reload_main_data_2(void);
+void shooter_exit_step_reload_main_data_3(void);
+u8 shooter_exit_step_load_day_data(void);
+void shooter_exit_step_return(void);
+void shooter_stage_exit(void);
 
-extern u16 D_8015F590;
-void func_801424A8(s32 arg0, s32 arg1);
+extern u16 shooter_blast_shot_frame_u;
+void shooter_draw_blast_shot(s32 arg0, s32 arg1);
 #endif
 
 /* Font UV pairs (u, v), T-16562: digits 0-9, letters A-Z, then '.', '-', ' ' and a fallback glyph. */
-extern u8 D_8015F5A0[20];
-extern u8 D_8015F5B4[52];
-extern u8 D_8015F5E8, D_8015F5E9, D_8015F5EA, D_8015F5EB, D_8015F5EC, D_8015F5ED, D_8015F5EE, D_8015F5EF;
+extern u8 shooter_digit_uv[20];
+extern u8 shooter_letter_uv[52];
+extern u8 shooter_glyph_period_u, shooter_glyph_period_v, shooter_glyph_hyphen_u, shooter_glyph_hyphen_v, shooter_glyph_space_u, shooter_glyph_space_v, shooter_glyph_other_u, shooter_glyph_other_v;
 
-extern u8 D_80161ECD;
-extern s32 D_8016024C[];
-extern s32 D_80160264;
-extern u8 D_80161E20[]; /* trigger count per kind (T-10810) */
-extern s32 *D_80161E60[]; /* per kind: table of (s32, s32) pairs (T-10810) */
-extern s32 D_80161DDC[]; /* per kind: base handle of the kind's objects (T-19026) */
-extern s16 D_80161EA4[]; /* per kind: initial value of actor unk6C..unk70 (T-19026) */
-extern u8 D_80161EC8[]; /* per kind: initial value of actor unk84[0] (T-19026) */
-void func_8015B1B8();
-void func_8015B2AC(s32 arg0, s16 *arg1);
+extern u8 shooter_enemy_radius_5;
+extern s32 shooter_boss3_rest_rotation_references[];
+extern s32 shooter_boss3_rest_rotation_references_6;
+extern u8 shooter_enemy_joint_count[]; /* trigger count per kind (T-10810) */
+extern s32 *shooter_enemy_joint_poses[]; /* per kind: table of (s32, s32) pairs (T-10810) */
+extern s32 shooter_enemy_model_base[]; /* per kind: base handle of the kind's objects (T-19026) */
+extern s16 shooter_enemy_scale[]; /* per kind: initial value of actor unk6C..unk70 (T-19026) */
+extern u8 shooter_enemy_radius[]; /* per kind: initial value of actor unk84[0] (T-19026) */
+void shooter_set_pose_from_table();
+void shooter_apply_initial_pose(s32 arg0, s16 *arg1);

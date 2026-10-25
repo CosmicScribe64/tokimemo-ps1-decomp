@@ -2,31 +2,31 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-void func_80132000(void) {
+void misc_stub_wait_stage_next(void) {
     if ((game_state.pad_pressed & PAD_CROSS) || ((game_state.frame_count & 0x2FF) == 0x2FF)) {
         mode_stage_next();
     }
 }
 
-void func_80132048(u8 arg0) {
+void misc_stub_wait_mode_set(u8 arg0) {
     if ((game_state.pad_pressed & PAD_CROSS) || (game_state.frame_count & 0x2FF) == 0x2FF) {
         game_mode_set(arg0);
     }
 }
 
-void func_80132098(void) {
+void confession_judge_stub_entry(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_80132148();
+        confession_judge_stub_stage_judge();
         break;
     case 1:
-        func_80132204();
+        confession_judge_stub_stage_butler();
         break;
     case 2:
-        func_80132290();
+        confession_judge_stub_stage_message();
         break;
     case 3:
-        func_80132344();
+        confession_judge_stub_stage_letter();
         break;
     }
     message_window_show();
@@ -36,17 +36,17 @@ void func_80132098(void) {
     hud_cursor_update();
     message_window_title_update();
 }
-void func_80132148(void) {
+void confession_judge_stub_stage_judge(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80132198();
+        confession_judge_stub_judge_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_80132198(void) {
+void confession_judge_stub_judge_init(void) {
     s32 i;
 
     for (i = 0x60; i < 0xA0; i++) {
@@ -59,34 +59,34 @@ void func_80132198(void) {
     mode_step_next();
 }
 
-void func_80132204(void) {
+void confession_judge_stub_stage_butler(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80132254();
+        confession_judge_stub_butler_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_80132254(void) {
+void confession_judge_stub_butler_init(void) {
     text_system_reset();
     message_window_set_title("外井告白シーン");
     k_disp_start(1);
     mode_step_next();
 }
 
-void func_80132290(void) {
+void confession_judge_stub_stage_message(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801322E0();
+        confession_judge_stub_message_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_801322E0(void) {
+void confession_judge_stub_message_init(void) {
     func_80044774(0);
     cd_audio_request_set(0x3000656, 0xB000E0C, 0xF);
     audio_command(0x300);
@@ -96,52 +96,52 @@ void func_801322E0(void) {
     mode_step_next();
 }
 
-void func_80132344(void) {
+void confession_judge_stub_stage_letter(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80132394();
+        confession_judge_stub_letter_init();
         break;
     case 1:
-        func_80132048(0x63);
+        misc_stub_wait_mode_set(0x63);
         break;
     }
 }
-void func_80132394(void) {
+void confession_judge_stub_letter_init(void) {
     text_system_reset();
     message_window_set_title("机の中に手紙が");
     k_disp_start(1);
     mode_step_next();
 }
 
-void func_801323D0(void) {
+void confession_scene_stub_entry(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_80132460();
+        confession_scene_stub_stage_data_load();
         break;
     case 1:
-        func_80132558();
+        confession_scene_stub_stage_silhouette();
         break;
     case 2:
-        func_801325E4();
+        confession_scene_stub_stage_bustup_scroll();
         break;
     case 3:
-        func_80132670();
+        confession_scene_stub_stage_scene();
         break;
     }
     hud_screen_frame_draw(0);
     message_window_title_update();
 }
-void func_80132460(void) {
+void confession_scene_stub_stage_data_load(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801324B0();
+        confession_scene_stub_data_load_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_801324B0(void) {
+void confession_scene_stub_data_load_init(void) {
     if (game_state.substep == 0) {
         audio_bank_load_start(0, 0, 0, 0xCE6D, 0xCE33, 0xCE1E);
         game_state.substep += 1;
@@ -155,80 +155,80 @@ void func_801324B0(void) {
     }
 }
 
-void func_80132558(void) {
+void confession_scene_stub_stage_silhouette(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801325A8();
+        confession_scene_stub_silhouette_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_801325A8(void) {
+void confession_scene_stub_silhouette_init(void) {
     text_system_reset();
     message_window_set_title("シルエット画面");
     k_disp_start(1);
     mode_step_next();
 }
 
-void func_801325E4(void) {
+void confession_scene_stub_stage_bustup_scroll(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80132634();
+        confession_scene_stub_bustup_scroll_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_80132634(void) {
+void confession_scene_stub_bustup_scroll_init(void) {
     text_system_reset();
     message_window_set_title("バストアップスクロール");
     k_disp_start(1);
     mode_step_next();
 }
 
-void func_80132670(void) {
+void confession_scene_stub_stage_scene(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801326C0();
+        confession_scene_stub_scene_init();
         break;
     case 1:
-        func_80132048(0xC1);
+        misc_stub_wait_mode_set(0xC1);
         break;
     }
 }
-void func_801326C0(void) {
+void confession_scene_stub_scene_init(void) {
     text_system_reset();
     message_window_set_title("告白シーン");
     k_disp_start(1);
     mode_step_next();
 }
 
-void func_801326FC(void) {
+void epilogue_stub_entry(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_8013275C();
+        epilogue_stub_stage_prepare();
         break;
     case 1:
-        func_801327F0();
+        epilogue_stub_stage_show();
         break;
     }
     message_window_title_update();
     hud_screen_frame_draw(0);
 }
-void func_8013275C(void) {
+void epilogue_stub_stage_prepare(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801327AC();
+        epilogue_stub_prepare_init();
         break;
     case 1:
-        func_80132000();
+        misc_stub_wait_stage_next();
         break;
     }
 }
-void func_801327AC(void) {
+void epilogue_stub_prepare_init(void) {
     audio_command(0x200);
     text_system_reset();
     message_window_set_title("エピローグ用初期化");
@@ -236,17 +236,17 @@ void func_801327AC(void) {
     mode_step_next();
 }
 
-void func_801327F0(void) {
+void epilogue_stub_stage_show(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80132840();
+        epilogue_stub_show_init();
         break;
     case 1:
-        func_80132048(0xC2);
+        misc_stub_wait_mode_set(0xC2);
         break;
     }
 }
-void func_80132840(void) {
+void epilogue_stub_show_init(void) {
     text_system_reset();
     message_window_set_title("エピローグ");
     k_disp_start(1);

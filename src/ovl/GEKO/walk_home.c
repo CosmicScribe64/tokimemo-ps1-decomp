@@ -8,12 +8,12 @@ typedef struct {
 extern FnTbl33 encounter_walk_home_approach_steps;
 
 void encounter_walk_home_approach_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl33 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl33 mode_step_callbacks;
 
-    tbl = encounter_walk_home_approach_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_walk_home_approach_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
 }
 
 void encounter_walk_home_scripts_load(void) {
@@ -156,20 +156,20 @@ void encounter_walk_home_girl_script_select(void) {
 }
 
 /* FAKE: s32 fall-through preserves narrowing through v0 (T-9780). */
-s32 encounter_walk_home_topic_offer(s16 arg0) {
-    /* FAKE: place the 22-byte table at sp+0x14 (T-9780). */
-    s32 pad;
-    GekoThresholds table;
+s32 encounter_walk_home_topic_offer(s16 topic) {
+    /* FAKE: place the 22-byte girl_thresholds at sp+0x14 (T-9780). */
+    s32 fake_stack_pad;
+    EncounterGirlThresholds girl_thresholds;
 
-    table = encounter_walk_home_topic_replace_thresholds;
+    girl_thresholds = encounter_walk_home_topic_replace_thresholds;
     if (encounter_walk_home_topic == 0) {
-        encounter_walk_home_topic = arg0;
+        encounter_walk_home_topic = topic;
     } else if (encounter_walk_home_topic == 10) {
-        if ((game_state.frame_count & 7) >= (u32)table.threshold[game_state.current_girl]) {
-            encounter_walk_home_topic = arg0;
+        if ((game_state.frame_count & 7) >= (u32)girl_thresholds.by_girl[game_state.current_girl]) {
+            encounter_walk_home_topic = topic;
         }
     } else if (game_state.frame_count & 1) {
-        encounter_walk_home_topic = arg0;
+        encounter_walk_home_topic = topic;
     }
 }
 
@@ -177,55 +177,55 @@ s32 encounter_walk_home_topic_offer(s16 arg0) {
  * every exit but the first. A `return girl` makes uopt keep the selector out of $v0
  * (girl in $v1, the record pointer and day in $v0, a `move v0,v1` at the exits). */
 s32 encounter_walk_home_birthday_topic_check(void) {
-    u32 date;
-    u8 girl;
+    u32 birthday_word;
+    u8 girl_id;
     u8 month;
-    GekoThresholds thr;
-    GekoMonthDays days;
+    EncounterGirlThresholds girl_thresholds;
+    EncounterMonthDays month_lengths;
     u32 day; /* its home after the two tables gives the 0x50 frame (T-24709) */
 
-    thr = encounter_walk_home_birthday_thresholds;
-    days = encounter_walk_home_birthday_month_days;
+    girl_thresholds = encounter_walk_home_birthday_thresholds;
+    month_lengths = encounter_walk_home_birthday_month_days;
     if (game_state.year == 0x60) {
-        days.day[1] = 29;
+        month_lengths.days_in_month[1] = 29;
     }
-    girl = game_state.current_girl;
-    if (!game_state.girls[girl].flags.f.b6) {
+    girl_id = game_state.current_girl;
+    if (!game_state.girls[girl_id].flags.f.b6) {
         return 0;
     }
-    if ((game_state.frame_count & 7) < thr.threshold[girl] || encounter_walk_home_topic == 0) {
-        date = game_state.girls[girl].birthday.w;
+    if ((game_state.frame_count & 7) < girl_thresholds.by_girl[girl_id] || encounter_walk_home_topic == 0) {
+        birthday_word = game_state.girls[girl_id].birthday.w;
         month = game_state.month;
         day = game_state.day;
-        if (month == (date & 0xF)) {
-            if (((date << 23) >> 27) - day < 21 && ((date << 23) >> 27) - day != 0) {
+        if (month == (birthday_word & 0xF)) {
+            if (((birthday_word << 23) >> 27) - day < 21 && ((birthday_word << 23) >> 27) - day != 0) {
                 encounter_walk_home_topic = 10;
             }
-        } else if (((date & 0xF) - month + 12) % 12 == 1 &&
-                   /* FAKE: T-11910 the no-op `date = date` side effect makes cfe emit the
+        } else if (((birthday_word & 0xF) - month + 12) % 12 == 1 &&
+                   /* FAKE: T-11910 the no-op `birthday_word = birthday_word` side effect makes cfe emit the
                     * day bits before the table load (the original's ugen temporary order) */
-                   days.day[(month + 10) % 12] + ((date = date) << 23 >> 27) - day < 20) {
+                   month_lengths.days_in_month[(month + 10) % 12] + ((birthday_word = birthday_word) << 23 >> 27) - day < 20) {
             encounter_walk_home_topic = 10;
         }
     }
-    /* FAKE: T-11910 keeps girl live to the exit so it holds $v0 there and day takes $v1 */
-    if (girl) {}
+    /* FAKE: T-11910 keeps girl_id live to the exit so it holds $v0 there and day takes $v1 */
+    if (girl_id) {}
 }
 
 /* Old-style definition: encounter_walk_home_topic_select calls it with four arguments (it reads two), so
  * no prototype may be in scope for that call; the bytes are the same as with
  * `(s16 arg0, s16 arg1)` (T-25401). */
-void encounter_walk_home_calendar_topic_check(arg0, arg1)
-s16 arg0;
-s16 arg1;
+void encounter_walk_home_calendar_topic_check(calendar_row, day_index)
+s16 calendar_row;
+s16 day_index;
 {
-    s32 pad; /* FAKE: unused local that places status at sp+0x33 and the frame at 0x38 (T-3330) */
-    u8 status;
+    s32 fake_stack_pad; /* FAKE: unused local that places girl_state at sp+0x33 and the frame at 0x38 (T-3330) */
+    u8 girl_state;
 
-    status = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     /* FAKE: indirect byte reads keep encounter_walk_home_topic in $t7 across the two compares instead of promoting it to $v1 (T-24115) */
     if ((*(u8 *)&encounter_walk_home_topic != 1) && (*(u8 *)&encounter_walk_home_topic != 0x10)) {
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 0xC) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xC) {
             if (game_state.current_girl == GIRL_SHIORI) {
                 if (((u32) ((u16) game_state.player_flags.h >> 0xC) < 6U) || ((u32) (game_state.girls[0].flags.b[2] >> 4) < 6U)) {
                     encounter_walk_home_topic_offer(2);
@@ -234,11 +234,11 @@ s16 arg1;
                 encounter_walk_home_topic_offer(2);
             }
         }
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 4) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 4) {
             encounter_walk_home_topic_offer(6);
         }
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 0xB) {
-            if ((status < 2U) || (game_state.current_girl == GIRL_YUMI)) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xB) {
+            if ((girl_state < 2U) || (game_state.current_girl == GIRL_YUMI)) {
                 encounter_walk_home_topic_offer(7);
             } else {
                 encounter_walk_home_topic_offer(8);
@@ -247,31 +247,31 @@ s16 arg1;
         if ((game_state.year == 0x61) && (game_state.month == 9) && ((u8) game_state.day < 0xEU) && (game_state.current_girl == GIRL_YUMI)) {
             encounter_walk_home_topic_offer(8);
         }
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 6) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 6) {
             encounter_walk_home_topic_offer(0xB);
         }
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 0xE) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xE) {
             encounter_walk_home_topic_offer(0xC);
         }
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 0x14) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0x14) {
             encounter_walk_home_topic_offer(0xD);
         }
         /* FAKE: indirect byte reads stop uopt from CSE-sharing unk_03E with the earlier 0x61 compare across calls (T-24115) */
-        if ((*(u8 *)&game_state.year == 0x60) && (game_state.month_calendar[arg0].marker[arg1 + 1] == 2)) {
+        if ((*(u8 *)&game_state.year == 0x60) && (game_state.month_calendar[calendar_row].marker[day_index + 1] == 2)) {
             encounter_walk_home_topic_offer(0xE);
         }
-        if ((*(u8 *)&game_state.year == 0x61) && (game_state.month_calendar[arg0].marker[arg1 + 1] == 2)) {
+        if ((*(u8 *)&game_state.year == 0x61) && (game_state.month_calendar[calendar_row].marker[day_index + 1] == 2)) {
             encounter_walk_home_topic_offer(0xF);
         }
-        if (game_state.month_calendar[arg0].marker[arg1 + 1] == 0xF) {
+        if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xF) {
             encounter_walk_home_topic_offer(9);
         }
     }
-    if ((game_state.month_calendar[arg0].marker[arg1 + 1] == 5) && (encounter_walk_home_topic != 0x10)) {
+    if ((game_state.month_calendar[calendar_row].marker[day_index + 1] == 5) && (encounter_walk_home_topic != 0x10)) {
         encounter_walk_home_topic = 0;
         encounter_walk_home_topic_offer(1);
     }
-    if (game_state.month_calendar[arg0].marker[arg1 + 1] == 0x15) {
+    if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0x15) {
         encounter_walk_home_topic = 0;
         encounter_walk_home_topic_offer(0x10);
     }
@@ -286,24 +286,24 @@ s32 encounter_walk_home_topic_select(void) {
     u8 month;
     u8 day;
     s16 i;
-    s32 n;
-    GekoMonthDays days;
+    s32 days_in_month;
+    EncounterMonthDays month_lengths;
 
-    days = encounter_walk_home_scan_month_days;
+    month_lengths = encounter_walk_home_scan_month_days;
     if (game_state.year == 0x60) {
-        days.day[1] = 29;
+        month_lengths.days_in_month[1] = 29;
     }
     encounter_walk_home_topic = 0;
     for (i = 1; i < 20; i++) {
-        n = days.day[game_state.month - 1];
-        if (n >= game_state.day + i) {
+        days_in_month = month_lengths.days_in_month[game_state.month - 1];
+        if (days_in_month >= game_state.day + i) {
             day = game_state.day;
             month = game_state.month;
             encounter_walk_home_calendar_topic_check(0, (s16) (day + i - 1), day, month);
         } else {
             day = game_state.day;
             month = game_state.month;
-            encounter_walk_home_calendar_topic_check(1, (s16) (day + i - n - 1), day, month);
+            encounter_walk_home_calendar_topic_check(1, (s16) (day + i - days_in_month - 1), day, month);
         }
     }
     encounter_walk_home_birthday_topic_check();
@@ -323,18 +323,18 @@ void encounter_walk_home_high_girl_counter_talk(void) {
 }
 
 void encounter_walk_home_girl_state_group_select(void) {
-    u8 temp_v0;
+    u8 girl_state_result;
 
-    temp_v0 = get_g_zyotai_s(game_state.current_girl);
-    if (((temp_v0 & 0x7F) == 4) || (encounter_walk_home_high_girl_counter != 0)) {
+    girl_state_result = get_g_zyotai_s(game_state.current_girl);
+    if (((girl_state_result & 0x7F) == 4) || (encounter_walk_home_high_girl_counter != 0)) {
         encounter_walk_home_group += 0x12;
         portrait_layout_set(4U);
         encounter_walk_home_followup_allowed = 0;
     } else {
-        if ((temp_v0 & 0x7F) == 2) {
+        if ((girl_state_result & 0x7F) == 2) {
             encounter_walk_home_group += 6;
         }
-        if ((temp_v0 & 0x7F) == 3) {
+        if ((girl_state_result & 0x7F) == 3) {
             encounter_walk_home_group += 0xC;
         }
     }
@@ -342,15 +342,15 @@ void encounter_walk_home_girl_state_group_select(void) {
 }
 
 void encounter_walk_home_choice_skip_check(void) {
-    u8 temp_v0;
+    u8 girl_state_result;
 
-    temp_v0 = get_g_zyotai_s(game_state.current_girl);
-    if (((temp_v0 & 0x7F) == 4) || (encounter_walk_home_high_girl_counter != 0)) {
+    girl_state_result = get_g_zyotai_s(game_state.current_girl);
+    if (((girl_state_result & 0x7F) == 4) || (encounter_walk_home_high_girl_counter != 0)) {
         mode_step_next();
         mode_step_next();
         mode_step_next();
         mode_step_next();
-    } else if ((game_state.current_girl == GIRL_NOZOMI) && ((temp_v0 & 0x7F) < 2U)) {
+    } else if ((game_state.current_girl == GIRL_NOZOMI) && ((girl_state_result & 0x7F) < 2U)) {
         mode_step_next();
         mode_step_next();
         mode_step_next();
@@ -363,53 +363,53 @@ void encounter_walk_home_choice_skip_check(void) {
  * placing the loop initialization on the do line keeps the base address setup
  * before it. The byte view of the selected girl reverses the branch operands. */
 void encounter_walk_home_choice_apply(void) {
-    s16 var_s1;
-    s32 temp_s2;
-    s32 temp_t3;
-    s32 temp_v0;
-    s32 var_s6;
+    s16 other_girl;
+    s32 tokimeki_band;
+    s32 counter_random_offset;
+    s32 girl_state_result;
+    s32 other_counter_base;
 
-    temp_v0 = get_g_zyotai_s(game_state.current_girl);
+    girl_state_result = get_g_zyotai_s(game_state.current_girl);
     if (D_80122CDC != 0) {
         encounter_walk_home_followup_allowed = 0;
-        temp_s2 = ((s16) game_state.girls[game_state.current_girl].tokimeki / 20) & 0xFF;
-        temp_t3 = ((u32) game_state.frame_count % (u32) (temp_s2 + 1)) & 0xFF;
-        if ((u32) (temp_v0 & 0x7F & 0xFF) < 2U) {
-            game_state.girls[game_state.current_girl].syoushin = game_state.girls[game_state.current_girl].syoushin + temp_t3 + 0xA;
+        tokimeki_band = ((s16) game_state.girls[game_state.current_girl].tokimeki / 20) & 0xFF;
+        counter_random_offset = ((u32) game_state.frame_count % (u32) (tokimeki_band + 1)) & 0xFF;
+        if ((u32) (girl_state_result & 0x7F & 0xFF) < 2U) {
+            game_state.girls[game_state.current_girl].syoushin = game_state.girls[game_state.current_girl].syoushin + counter_random_offset + 0xA;
         } else {
-            game_state.girls[game_state.current_girl].syoushin = game_state.girls[game_state.current_girl].syoushin + temp_t3 + 6;
+            game_state.girls[game_state.current_girl].syoushin = game_state.girls[game_state.current_girl].syoushin + counter_random_offset + 6;
         }
         encounter_walk_home_group += 2;
     } else {
         encounter_walk_home_followup_allowed = 1;
-        if ((game_state.current_girl == GIRL_SHIORI) || (game_state.current_girl == GIRL_MIRA) || (game_state.current_girl == GIRL_MIO) || (game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_YUKO) || (var_s6 = 4, (game_state.current_girl == GIRL_MEGUMI))) {
-            var_s6 = 0;
-            if ((u32) (temp_v0 & 0x7F & 0xFF) >= 3U) {
+        if ((game_state.current_girl == GIRL_SHIORI) || (game_state.current_girl == GIRL_MIRA) || (game_state.current_girl == GIRL_MIO) || (game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_YUKO) || (other_counter_base = 4, (game_state.current_girl == GIRL_MEGUMI))) {
+            other_counter_base = 0;
+            if ((u32) (girl_state_result & 0x7F & 0xFF) >= 3U) {
                 encounter_walk_home_followup_allowed = 0;
             } else {
-                var_s6 = 4;
+                other_counter_base = 4;
             }
         }
-        var_s1 = 0; do {
-            if (var_s1) {}
-            if ((((u32) (game_state.girls[var_s1].flags.w << 0x1E) >> 0x1F) != 0) && (var_s1 != (*(u8 *)&game_state.current_girl))) {
-                temp_s2 = ((s16) game_state.girls[var_s1].tokimeki / 20) & 0xFF;
-                game_state.girls[var_s1].syoushin = ((rand() % (u32) (temp_s2 + 1)) & 0xFF) + (game_state.girls[var_s1].syoushin + var_s6);
+        other_girl = 0; do {
+            if (other_girl) {}
+            if ((((u32) (game_state.girls[other_girl].flags.w << 0x1E) >> 0x1F) != 0) && (other_girl != (*(u8 *)&game_state.current_girl))) {
+                tokimeki_band = ((s16) game_state.girls[other_girl].tokimeki / 20) & 0xFF;
+                game_state.girls[other_girl].syoushin = ((rand() % (u32) (tokimeki_band + 1)) & 0xFF) + (game_state.girls[other_girl].syoushin + other_counter_base);
             }
-            var_s1 += 1;
-        } while (var_s1 < 0xB);
+            other_girl += 1;
+        } while (other_girl < 0xB);
     }
     check_para_limit();
     mode_step_next();
 }
 
 void encounter_walk_home_followup_check(void) {
-    s32 result;
-    u8 status;
+    s32 girl_state_result;
+    u8 girl_state;
 
-    result = get_g_zyotai_s(game_state.current_girl);
-    status = result & 0x7F;
-    if ((status == 4) || (encounter_walk_home_high_girl_counter != 0) || ((game_state.current_girl == GIRL_NOZOMI) && (status < 2U))) {
+    girl_state_result = get_g_zyotai_s(game_state.current_girl);
+    girl_state = girl_state_result & 0x7F;
+    if ((girl_state == 4) || (encounter_walk_home_high_girl_counter != 0) || ((game_state.current_girl == GIRL_NOZOMI) && (girl_state < 2U))) {
         audio_command(0x24);
         audio_command(0x507);
     }
@@ -417,12 +417,12 @@ void encounter_walk_home_followup_check(void) {
         mode_step_next();
         return;
     }
-    if (((u8) encounter_walk_home_followup_allowed == 0) && (game_state.current_girl == GIRL_NOZOMI) && (status < 2U)) {
+    if (((u8) encounter_walk_home_followup_allowed == 0) && (game_state.current_girl == GIRL_NOZOMI) && (girl_state < 2U)) {
         mode_step_next();
         return;
     }
     if ((u8) encounter_walk_home_followup_allowed == 0) {
-        if ((status < 2U) && (encounter_walk_home_high_girl_counter == 0)) {
+        if ((girl_state < 2U) && (encounter_walk_home_high_girl_counter == 0)) {
             encounter_walk_home_text_table = encounter_walk_home_text_section_10;
             encounter_walk_home_command_table = encounter_walk_home_command_section_10;
             encounter_walk_home_voice_table = encounter_walk_home_voice_section_10;
@@ -438,10 +438,10 @@ void encounter_walk_home_followup_check(void) {
 }
 
 void encounter_walk_home_choice_exit(void) {
-    u8 temp_v0;
+    u8 girl_state_result;
 
-    temp_v0 = get_g_zyotai_s(game_state.current_girl);
-    if (((u32)(temp_v0 & 0x7F) < 2U) && (D_80122CDC != 0)) {
+    girl_state_result = get_g_zyotai_s(game_state.current_girl);
+    if (((u32)(girl_state_result & 0x7F) < 2U) && (D_80122CDC != 0)) {
         if ((game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_MIRA) || (game_state.current_girl == GIRL_MEGUMI)) {
             func_80083418();
             return;

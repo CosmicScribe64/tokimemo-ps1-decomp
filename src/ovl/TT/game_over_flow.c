@@ -1,58 +1,58 @@
-/* game_over_flow.c: src/ovl/TT/8013A040.c:27: core state 5; body 36: o = 0x14; 37: g = D_80158A60;. Original object 0x8013A040-0x8013A3E0 (config/objects/TT.txt). */
+/* game_over_flow.c: src/ovl/TT/8013A040.c:27: core state 5; body 36: o = 0x14; 37: g = tt_sys;. Original object 0x8013A040-0x8013A3E0 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
-void func_8013A040(void) {
-    u8 *p = D_80158A60;
-    u8 *q = D_80158A64;
-    u8 *r = D_80158AA8 + 0x9D8;
-    u16 *pad = (u16 *)(p + 0x10);
+void tt_game_over_tick(void) {
+    u8 *sys = tt_sys;
+    u8 *core = tt_core;
+    u8 *r = tt_texts + 0x9D8;
+    u16 *pad = (u16 *)(sys + 0x10);
 
-    if ((*(u16 *)(p + 8) >> 4) & 1) {
+    if ((*(u16 *)(sys + 8) >> 4) & 1) {
         *(u16 *)(r + 6) = 1;
     } else {
         *(u16 *)(r + 6) = 0;
     }
-    if (q[0x22] == 0) {
+    if (core[0x22] == 0) {
         if ((pad[2] & 0x800) || (pad[2] & 0x20)) {
-            q[9] = 1;
+            core[9] = 1;
         }
     }
-    if (*(u16 *)(q + 0x26) >= 0x1A4) {
-        q[9] = 1;
+    if (*(u16 *)(core + 0x26) >= 0x1A4) {
+        core[9] = 1;
         return;
     }
-    *(u16 *)(q + 0x26) += 1;
+    *(u16 *)(core + 0x26) += 1;
 }
 
-void func_8013A0DC(void) {
-    u8 *g;
+void tt_state_game_over(void) {
+    u8 *sys;
     u8 *s;
-    u8 *c;
-    u8 *t;
+    u8 *run;
+    u8 *stage_script;
     u8 *q;
-    u8 *e;
+    u8 *boss;
     u32 o; /* FAKE: second spelling of the pad offset keeps the pad word in a ugen temp (t2) instead of a uopt CSE. T-11850 */
 
     o = 0x14;
-    g = D_80158A60;
-    c = D_80158A6C;
-    t = (u8 *)D_80158A70;
-    s = D_80158A64;
-    *(s32 *)t += *(s32 *)c;
+    sys = tt_sys;
+    run = tt_run;
+    stage_script = (u8 *)tt_stage_script;
+    s = tt_core;
+    *(s32 *)stage_script += *(s32 *)run;
     switch (*(u16 *)(s + 4)) {
     case 0:
-        if (s[0x22] != 0 && g[0x52] == 0xFF) {
+        if (s[0x22] != 0 && sys[0x52] == 0xFF) {
             audio_command(0xB1);
         } else {
             audio_command(0x22);
             audio_command(0x2F);
             audio_command(4);
             audio_command(0x203);
-            c[0xF] = 1;
+            run[0xF] = 1;
         }
         s[0x11] = 0;
-        q = D_80158AA8 + 0x9D8;
+        q = tt_texts + 0x9D8;
         *(s16 *)(q + 0xA) = -0x24;
         *(s16 *)(q + 0xC) = 0x74;
         *(s16 *)(q + 0xE) = 9;
@@ -60,10 +60,10 @@ void func_8013A0DC(void) {
         q[0] = 1;
         *(s16 *)(q + 6) = 0;
         *(s16 *)(q + 0x10) = 0;
-        if (*(u16 *)(t + 2) > 0x400) {
-            *(s32 *)(c + 4) = 0;
+        if (*(u16 *)(stage_script + 2) > 0x400) {
+            *(s32 *)(run + 4) = 0;
         } else {
-            *(s32 *)(c + 4) = 0x8000;
+            *(s32 *)(run + 4) = 0x8000;
         }
         *(s16 *)(s + 0x26) = 0;
         *(u16 *)(s + 4) = 0x40;
@@ -72,26 +72,26 @@ void func_8013A0DC(void) {
         switch (*(u16 *)(s + 2)) {
         case 0x40:
         default:
-            if (*(u16 *)(t + 2) > 0x400) {
-                e = D_80158A8C;
-                *(s16 *)(e + 4) = 0;
-                e[0xC] = 0;
-                /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and t to v1. T-11860 */
-                *(u16 *)(e + 6) = *(u16 *)(e + 8) = *(u16 *)(e + 0xA) = 0;
-                e[0xD] = e[0xE] = e[0xF] = 0;
+            if (*(u16 *)(stage_script + 2) > 0x400) {
+                boss = tt_boss;
+                *(s16 *)(boss + 4) = 0;
+                boss[0xC] = 0;
+                /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and stage_script to v1. T-11860 */
+                *(u16 *)(boss + 6) = *(u16 *)(boss + 8) = *(u16 *)(boss + 0xA) = 0;
+                boss[0xD] = boss[0xE] = boss[0xF] = 0;
                 *(u16 *)(s + 2) = 0x50;
                 }
             break;
         case 0x50:
-            if (*(u16 *)(t + 0x1E) == 0) {
-                (*(void (**)(void))(t + 0xC))();
+            if (*(u16 *)(stage_script + 0x1E) == 0) {
+                (*(void (**)(void))(stage_script + 0xC))();
             }
             break;
         }
-        func_8013A040();
+        tt_game_over_tick();
         if (s[9] != 0) {
             if (s[0x22] != 0) {
-                if (g[0x52] == 0xFF) {
+                if (sys[0x52] == 0xFF) {
                     *(s16 *)s = 1;
                 } else {
                     *(s16 *)s = 8;
@@ -99,26 +99,26 @@ void func_8013A0DC(void) {
             } else {
                 *(s16 *)s = 7;
             }
-            /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and t to v1. T-11860 */
+            /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and stage_script to v1. T-11860 */
             *(u16 *)(s + 2) = *(u16 *)(s + 4) = *(u16 *)(s + 6) = 0;
             s[9] = s[0xA] = s[0xB] = 0;
         }
         break;
     }
-    if (s[0x22] != 0 && g[0x52] == 0xFF && ((*(u16 *)(g + o) & 0x800) || (*(u16 *)(g + 0x14) & 0x20))) {
+    if (s[0x22] != 0 && sys[0x52] == 0xFF && ((*(u16 *)(sys + o) & 0x800) || (*(u16 *)(sys + 0x14) & 0x20))) {
         *(s16 *)s = 1;
-        /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and t to v1. T-11860 */
+        /* FAKE: TT zero-store chain pair; the dead chain reloads keep ranges that move s to a1 and stage_script to v1. T-11860 */
         *(u16 *)(s + 2) = *(u16 *)(s + 4) = *(u16 *)(s + 6) = 0;
         s[9] = s[0xA] = s[0xB] = 0;
     }
-    func_8014AB48();
-    func_80147074();
-    func_80149108();
-    func_8013C0A8();
-    func_801475C8();
-    func_8014C680();
-    func_801333D4();
-    func_80134BBC();
-    func_8013D150();
-    func_80136830();
+    tt_shots_update();
+    tt_bombs_update();
+    tt_bomb_targets_update();
+    tt_bells_update();
+    tt_clouds_update();
+    tt_air_enemies_update();
+    tt_ground_targets_update();
+    tt_enemy_shots_update();
+    tt_scroll_speed_update();
+    tt_speed_gauge_update();
 }

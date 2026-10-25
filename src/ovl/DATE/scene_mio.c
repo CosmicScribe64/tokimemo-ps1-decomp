@@ -215,12 +215,12 @@ void date_scene_mio_winter_audio_command_background_1(void) {
 }
 
 void date_scene_mio_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl67 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateMioSpringSteps step_handlers;
 
-    tbl = date_scene_mio_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_mio_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_mio_spring_load_data(void) {
@@ -255,18 +255,18 @@ void date_scene_mio_spring_scream_machine_title(void) {
 }
 
 void date_scene_mio_summer(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl42 step_handlers;
 
-    tbl = date_scene_mio_summer_steps;
+    step_handlers = date_scene_mio_summer_steps;
     if (game_state.mode_step >= 0xF && game_state.mode_step < 0x12) {
         date_scene_light_beams();
     }
     if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_mio_summer_load_data(void) {
@@ -276,12 +276,12 @@ void date_scene_mio_summer_load_data(void) {
 }
 
 void date_scene_mio_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl41 step_handlers;
 
-    tbl = date_scene_mio_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_mio_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_mio_autumn_load_data(void) {
@@ -291,13 +291,13 @@ void date_scene_mio_autumn_load_data(void) {
 }
 
 void date_scene_mio_winter(void) {
-    s32 idx; /* declared before tbl with i: two words above tbl (T-3330) */
+    s32 step_index; /* declared before step_handlers with i: two words above step_handlers (T-3330) */
     s16 i;
-    FnTbl53 tbl;
+    DateMioWinterSteps step_handlers;
 
-    tbl = date_scene_mio_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_mio_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (game_state.mode_step == 0xE) {
         if (game_state.pad_pressed & 0xFF9FFF9F) {
             D_8015F5D0 = 1 - (u8) D_8015F5D0;
@@ -330,12 +330,12 @@ void date_scene_mio_winter_narration_speak(void) {
 }
 
 s32 date_scene_mio_winter_load_data(void) {
-    GameState *g;
-    u32 state;
+    GameState *game;
+    u32 elapsed_frames;
 
-    g = &game_state;
-    state = ++g->mode_step_timer.u;
-    if (state < 16) {
+    game = &game_state;
+    elapsed_frames = ++game->mode_step_timer.u;
+    if (elapsed_frames < 16) {
         return 0;
     }
     cd_read_sectors(0x3D, 0x801B0000, 0x872B);

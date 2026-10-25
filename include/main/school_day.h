@@ -19,7 +19,7 @@ extern u8 D_800B68C0[16];
 extern u8 D_800B68D0[16];
 extern s8 school_day_command_deltas[8][9];
 extern s8 club_activity_deltas[][9];
-void func_800737A0(void);
+void school_day_week_end_exit(void);
 u8 week_day_init(void);
 s32 get_weekly_bg_sector(void);
 u8 school_day_screen_init(void);

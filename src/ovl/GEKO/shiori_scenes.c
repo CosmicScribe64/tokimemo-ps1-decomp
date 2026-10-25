@@ -7,9 +7,9 @@ extern u32 talk_work;
 
 
 typedef struct {
-    void (*f[55])();
-} FnTbl55; /* size 0xDC */
-extern FnTbl55 encounter_shiori_scene_eight_steps;
+    void (*callbacks[55])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80139910.c:10; func_8013A2EC at line256 copies this exact55-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterShioriSceneEightSteps; /* size 0xDC */
+extern EncounterShioriSceneEightSteps encounter_shiori_scene_eight_steps;
 
 typedef struct {
     void (*f[39])();
@@ -72,12 +72,12 @@ void encounter_shiori_scene_one_dispatch(void) {
 }
 
 void encounter_shiori_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl39 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl39 mode_step_callbacks;
 
-    tbl = encounter_shiori_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_shiori_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
     encounter_shiori_falling_quads_update();
 }
 
@@ -101,10 +101,10 @@ void encounter_shiori_assets_load_1(void) {
 
 void encounter_shiori_still_fade_out(void) {
     s16 i;
-    u8 state;
+    u8 mode_step_before;
     u8 colour;
 
-    state = game_state.mode_step;
+    mode_step_before = game_state.mode_step;
     func_800853FC();
     colour = (u8)dec_bg_brightness;
 
@@ -113,7 +113,7 @@ void encounter_shiori_still_fade_out(void) {
             sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = colour;
         }
     }
-    if (state != game_state.mode_step) {
+    if (mode_step_before != game_state.mode_step) {
         for (i = 4; i < 19; i++) {
             sprite_quads[i].flags |= 0x80000000;
             audio_command(0x1506);
@@ -217,12 +217,12 @@ typedef struct {
 extern FnTbl23 encounter_shiori_scene_two_steps;
 
 void encounter_shiori_scene_two_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl23 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl23 mode_step_callbacks;
 
-    tbl = encounter_shiori_scene_two_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    mode_step_callbacks = encounter_shiori_scene_two_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index]();
     if (game_state.mode_step >= 0xD) {
         if (game_state.mode_step < 0x14) {
             hud_sprite_light_effect_draw();
@@ -239,15 +239,15 @@ void encounter_shiori_scene_eight_dispatch(void) {
 }
 
 void encounter_shiori_birthday_bg_request(void) {
-    s32 temp_v0;
+    s32 background_read_result;
 
     D_800B3D60 = 0;
-    temp_v0 = dec_bg_cd_read(0x3FBE, 0);
-    if (temp_v0 == *dec_bg_show) {
+    background_read_result = dec_bg_cd_read(0x3FBE, 0);
+    if (background_read_result == *dec_bg_show) {
         mode_step_next();
         mode_step_next();
         mode_step_next();
-    } else if (temp_v0 == (1 - *dec_bg_show)) {
+    } else if (background_read_result == (1 - *dec_bg_show)) {
         mode_step_next();
         mode_step_next();
     }
@@ -255,16 +255,16 @@ void encounter_shiori_birthday_bg_request(void) {
 }
 
 void encounter_shiori_scene_eight_step_dispatch(void) {
-    void (**p)();
-    FnTbl55 tbl;
+    void (**current_callback)();
+    EncounterShioriSceneEightSteps mode_step_callbacks;
 
-    tbl = encounter_shiori_scene_eight_steps;
-    tbl.f[game_state.mode_step](0x80);
-    p = &tbl.f[game_state.mode_step];
-    if (tbl.f[game_state.mode_step] == func_80085368) {
+    mode_step_callbacks = encounter_shiori_scene_eight_steps;
+    mode_step_callbacks.callbacks[game_state.mode_step](0x80);
+    current_callback = &mode_step_callbacks.callbacks[game_state.mode_step];
+    if (mode_step_callbacks.callbacks[game_state.mode_step] == func_80085368) {
         D_801206DB |= 0x80;
     }
-    if (func_800853FC == *p) {
+    if (func_800853FC == *current_callback) {
         /* FAKE: empty double test (decomp-permuter, score 20), same register-choice shift as SHOUGATU func_80136078 (T-4090); real source unknown. T-10820 */
         if (!game_state.mode_step && !game_state.mode_step) {
         }
@@ -274,10 +274,10 @@ void encounter_shiori_scene_eight_step_dispatch(void) {
 }
 
 s32 encounter_shiori_birthday_phone_talk(void) {
-    u16 ca154;
+    u16 line_copy;
 
     /* FAKE: u16 temp on the first D_800CA154 test keeps uopt from CSE-promoting D_800CA154 to $v0. T-24095 */
-    if ((game_state.pad_pressed & 0x400040) && (ca154 = D_800CA154) != 0 && D_800CA154 < 4U && game_state.mode_step_timer.u >= 2U) {
+    if ((game_state.pad_pressed & 0x400040) && (line_copy = D_800CA154) != 0 && D_800CA154 < 4U && game_state.mode_step_timer.u >= 2U) {
         audio_command(0x1508);
         D_80122D00 = 0;
         k_reset(1);

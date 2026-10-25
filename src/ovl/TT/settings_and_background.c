@@ -2,31 +2,31 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-void func_8013C6D0(void) {
-    u8 *q = D_80158A6C;
-    u8 *p = D_80158AA4;
+void tt_button_cursor_init(void) {
+    u8 *run = tt_run;
+    u8 *sprite = tt_sprites;
 
-    p[0] = 1;
-    p[1] = 0;
-    *(s16 *)(p + 0x44) = 0;
-    *(s16 *)(p + 0x14) = -0x60;
-    *(s16 *)(p + 0x16) = q[0xA] * 16 + 0x60;
-    *(s16 *)(p + 0x3C) = 8;
-    *(s16 *)(p + 0x3E) = 8;
-    p[0x46] = 0;
-    p[0x47] = 0x18;
-    *(s16 *)(p + 0x40) = 0xA;
-    *(s16 *)(p + 0x42) = 0x3C0F;
-    p[0x3B] = 0x65;
-    *(s16 *)(p + 0x10) = 0;
+    sprite[0] = 1;
+    sprite[1] = 0;
+    *(s16 *)(sprite + 0x44) = 0;
+    *(s16 *)(sprite + 0x14) = -0x60;
+    *(s16 *)(sprite + 0x16) = run[0xA] * 16 + 0x60;
+    *(s16 *)(sprite + 0x3C) = 8;
+    *(s16 *)(sprite + 0x3E) = 8;
+    sprite[0x46] = 0;
+    sprite[0x47] = 0x18;
+    *(s16 *)(sprite + 0x40) = 0xA;
+    *(s16 *)(sprite + 0x42) = 0x3C0F;
+    sprite[0x3B] = 0x65;
+    *(s16 *)(sprite + 0x10) = 0;
 }
 
-void func_8013C740(void) {
-    *(s16 *)(D_80158AA4 + 0x16) = D_80158A6C[0xA] * 16 + 0x60;
+void tt_button_cursor_update(void) {
+    *(s16 *)(tt_sprites + 0x16) = tt_run[0xA] * 16 + 0x60;
 }
 
-void func_8013C764(u16 arg0, u16 arg1) {
-    u8 *p = D_80158A60;
+void tt_button_code_set(u16 arg0, u16 arg1) {
+    u8 *sys = tt_sys;
     u8 v = 0;
 
     if (arg0 != 0) {
@@ -46,14 +46,14 @@ void func_8013C764(u16 arg0, u16 arg1) {
             v = 1;
         }
         if (arg1 == 0) {
-            p[0x44] = v;
+            sys[0x44] = v;
         } else {
-            p[0x45] = v;
+            sys[0x45] = v;
         }
     }
 }
 
-u16 func_8013C818(u8 arg0, s8 *arg1) {
+u16 tt_button_code_label(u8 arg0, s8 *arg1) {
     u16 ret;
 
     switch (arg0) {
@@ -93,219 +93,219 @@ u16 func_8013C818(u8 arg0, s8 *arg1) {
     return ret;
 }
 
-void func_8013C8DC(void) {
-    u8 *q;
-    TtPoolDraw14 *p;
+void tt_button_config_init(void) {
+    u8 *sys;
+    TtText *p;
     s32 i;
 
-    p = (TtPoolDraw14 *)D_80158AA8;
-    q = D_80158A60;
-    D_80158A6C[0xA] = 0;
-    func_8013C6D0();
-    p->unk_00 = 1;
+    p = (TtText *)tt_texts;
+    sys = tt_sys;
+    tt_run[0xA] = 0;
+    tt_button_cursor_init();
+    p->active = 1;
     p->x = -0x48;
     p->y = 0x30;
     p->text = 0x12;
-    p->unk_02 = 0xF;
+    p->palette = 0xF;
     p->flags = 0;
-    p->ot = 0;
+    p->layer = 0;
     p++;
     for (i = 0; i < 3; i++, p++) {
-        p->unk_00 = 1;
+        p->active = 1;
         p->x = -0x50;
         p->y = i * 16 + 0x60;
-        p->text = D_80155D50[i];
-        p->unk_02 = 0xF;
+        p->text = tt_menu_text_ids[i];
+        p->palette = 0xF;
         p->flags = 0;
-        p->ot = 0;
+        p->layer = 0;
     }
-    p = (TtPoolDraw14 *)D_80158AA8 + 16;
-    p->unk_00 = 1;
+    p = (TtText *)tt_texts + 16;
+    p->active = 1;
     p->x = 0x30;
     p->y = 0x60;
-    p->text = func_8013C818(q[0x44], (s8 *)&p->unk_02);
+    p->text = tt_button_code_label(sys[0x44], (s8 *)&p->palette);
     p->flags = 0;
-    p->ot = 0;
-    p[1].unk_00 = 1;
+    p->layer = 0;
+    p[1].active = 1;
     p[1].x = 0x30;
     p[1].y = 0x70;
     p++;
-    p->text = func_8013C818(q[0x45], (s8 *)&p->unk_02);
+    p->text = tt_button_code_label(sys[0x45], (s8 *)&p->palette);
     p->flags = 0;
-    p->ot = 0;
+    p->layer = 0;
 }
 
-void func_8013CA0C(void) {
-    u8 *p;
-    s32 pad[3]; /* FAKE: unused locals between p and r, real source unknown (frame layout). T-9130 */
+void tt_button_config_update(void) {
+    u8 *sys;
+    s32 pad[3]; /* FAKE: unused locals between sys and r, real source unknown (frame layout). T-9130 */
     u8 *r;
     u8 *q;
-    u8 *a;
-    u8 *b;
+    u8 *core;
+    u8 *run;
 
-    p = D_80158A60;
-    a = D_80158A64;
-    b = D_80158A6C;
-    q = p + 0x10;
-    if (*(u16 *)(p + 0x14) & 0x1000) {
-        b[0xA] -= 1;
-        if ((s8)b[0xA] < 0) {
-            b[0xA] = 2;
+    sys = tt_sys;
+    core = tt_core;
+    run = tt_run;
+    q = sys + 0x10;
+    if (*(u16 *)(sys + 0x14) & 0x1000) {
+        run[0xA] -= 1;
+        if ((s8)run[0xA] < 0) {
+            run[0xA] = 2;
         }
     } else if (*(u16 *)(q + 4) & 0x4000) {
-        b[0xA] += 1;
-        if (b[0xA] >= 3U) {
-            b[0xA] = 0;
+        run[0xA] += 1;
+        if (run[0xA] >= 3U) {
+            run[0xA] = 0;
         }
     }
-    if ((*(u16 *)(q + 4) & 0x820) && b[0xA] == 2) {
-        *(u16 *)(a + 4) = 0;
-        *(u16 *)(a + 2) = 0;
+    if ((*(u16 *)(q + 4) & 0x820) && run[0xA] == 2) {
+        *(u16 *)(core + 4) = 0;
+        *(u16 *)(core + 2) = 0;
     }
-    if (b[0xA] == 0 || b[0xA] == 1) {
+    if (run[0xA] == 0 || run[0xA] == 1) {
         if (*(u16 *)(q + 4) & 0xFF) {
-            func_8013C764(*(u16 *)(q + 4), b[0xA]);
+            tt_button_code_set(*(u16 *)(q + 4), run[0xA]);
         }
     }
-    r = D_80158AA8 + 0x140;
-    *(s16 *)(r + 0xE) = func_8013C818(p[0x44], D_80158AA8 + 0x142);
+    r = tt_texts + 0x140;
+    *(s16 *)(r + 0xE) = tt_button_code_label(sys[0x44], tt_texts + 0x142);
     r += 0x14;
-    *(s16 *)(r + 0xE) = func_8013C818(p[0x45], r + 2);
-    func_8013C740();
+    *(s16 *)(r + 0xE) = tt_button_code_label(sys[0x45], r + 2);
+    tt_button_cursor_update();
 }
 
-void func_8013CB58(void) {
-    u8 *p = D_80158A64;
+void tt_button_config_run(void) {
+    u8 *core = tt_core;
 
-    switch (*(u16 *)(p + 4)) {
+    switch (*(u16 *)(core + 4)) {
     case 0x0:
-        func_8014CBD0();
-        func_80148210();
-        func_80143570();
-        func_8014A7E0();
-        func_80146BE0();
-        func_80148DB0();
-        func_80147CE0();
-        func_8014AF3C();
-        func_80132F4C();
-        func_80133B70();
-        func_8013BD4C();
-        func_801473BC();
-        func_801426F0();
-        func_8013C8DC();
-        *(u16 *)(p + 4) = 0x40;
+        tt_sprites_clear();
+        tt_texts_clear();
+        tt_player_clear();
+        tt_shots_clear();
+        tt_bombs_clear();
+        tt_bomb_targets_clear();
+        tt_options_clear();
+        tt_air_enemies_clear();
+        tt_ground_targets_clear();
+        tt_enemy_shots_clear();
+        tt_bells_clear();
+        tt_clouds_clear();
+        tt_boss_sprites_clear();
+        tt_button_config_init();
+        *(u16 *)(core + 4) = 0x40;
         break;
     case 0x40:
-        func_8013CA0C();
+        tt_button_config_update();
         break;
     }
 }
 
-void func_8013CC24(void) {
-    u8 *q;
+void tt_settings_menu_init(void) {
+    u8 *sys;
     s32 i;
-    TtPoolDraw14 *p;
+    TtText *p;
 
-    q = D_80158A60;
-    p = (TtPoolDraw14 *)D_80158AA8;
-    D_80158A6C[0xA] = 0;
-    func_8013C6D0();
-    p->unk_00 = 1;
+    sys = tt_sys;
+    p = (TtText *)tt_texts;
+    tt_run[0xA] = 0;
+    tt_button_cursor_init();
+    p->active = 1;
     p->x = -0x18;
     p->y = 0x30;
     p->text = 4;
-    p->unk_02 = 0xF;
+    p->palette = 0xF;
     p->flags = 0;
-    p->ot = 0;
+    p->layer = 0;
     p++;
     for (i = 0; i < 4; i++, p++) {
-        p->unk_00 = 1;
+        p->active = 1;
         p->x = -0x50;
         p->y = i * 16 + 0x60;
-        p->text = D_80155D50[i + 4];
-        p->unk_02 = 0xF;
+        p->text = tt_menu_text_ids[i + 4];
+        p->palette = 0xF;
         p->flags = 0;
-        p->ot = 0;
+        p->layer = 0;
     }
-    p = (TtPoolDraw14 *)D_80158AA8 + 16;
-    p->unk_00 = 1;
+    p = (TtText *)tt_texts + 16;
+    p->active = 1;
     p->x = 0x20;
     p->y = 0x70;
-    p->unk_02 = 0xF;
+    p->palette = 0xF;
     p->flags = 0;
-    p->ot = 0;
-    if (q[0x43] != 0) {
+    p->layer = 0;
+    if (sys[0x43] != 0) {
         p->text = 0x18;
     } else {
         p->text = 0x19;
     }
-    p[1].unk_00 = 1;
+    p[1].active = 1;
     p[1].x = 0x20;
     p[1].y = 0x80;
-    p[1].unk_02 = 0xF;
+    p[1].palette = 0xF;
     p[1].flags = 0;
-    p[1].ot = 0;
+    p[1].layer = 0;
     p++;
-    if (q[0x49] != 0) {
+    if (sys[0x49] != 0) {
         p->text = 0x16;
     } else {
         p->text = 0x15;
     }
 }
 
-void func_8013CDC0(void) {
-    s32 pad; /* FAKE: unused home; the spill slots of t, s, g sit at sp+0x48/0x44/0x40 only with it. T-11500 */
+void tt_settings_menu_update(void) {
+    s32 pad; /* FAKE: unused home; the spill slots of t, run, g sit at sp+0x48/0x44/0x40 only with it. T-11500 */
     u8 *t;
-    u8 *s;
+    u8 *run;
     u8 *g;
-    u8 *a;
+    u8 *sys;
 
-    a = D_80158A60;
-    t = D_80158A64;
-    s = D_80158A6C;
-    g = a + 0x10;
-    if (*(u16 *)(a + 0x14) & 0x1000) {
-        s[10] -= 1;
-        if ((s8)s[10] < 0) {
-            s[10] = 3;
+    sys = tt_sys;
+    t = tt_core;
+    run = tt_run;
+    g = sys + 0x10;
+    if (*(u16 *)(sys + 0x14) & 0x1000) {
+        run[10] -= 1;
+        if ((s8)run[10] < 0) {
+            run[10] = 3;
         }
     } else if (*(u16 *)(g + 4) & 0x4000) {
-        s[10] += 1;
-        if (s[10] >= 4) {
-            s[10] = 0;
+        run[10] += 1;
+        if (run[10] >= 4) {
+            run[10] = 0;
         }
     }
     if (*(u16 *)(g + 4) & 0x8000) {
-        switch (s[10]) {
+        switch (run[10]) {
         case 1:
-            a[0x43] = 0;
-            *(s16 *)(D_80158AA8 + 0x14E) = 0x19;
+            sys[0x43] = 0;
+            *(s16 *)(tt_texts + 0x14E) = 0x19;
             break;
         case 2:
-            a[0x49] = 0;
-            *(s16 *)(D_80158AA8 + 0x162) = 0x15;
+            sys[0x49] = 0;
+            *(s16 *)(tt_texts + 0x162) = 0x15;
             {
-                TtFrame80B8 *p1;
+                TtFrame *frame;
 
-                p1 = (TtFrame80B8 *)D_80158AB4;
-                SetDefDispEnv(&p1[0].disp_rect, 0x140, 0, 0x140, 0xF0);
-                SetDefDispEnv(&p1[1].disp_rect, 0, 0, 0x140, 0xF0);
+                frame = (TtFrame *)tt_frames;
+                SetDefDispEnv(&frame[0].disp_rect, 0x140, 0, 0x140, 0xF0);
+                SetDefDispEnv(&frame[1].disp_rect, 0, 0, 0x140, 0xF0);
             }
             break;
         }
     } else if (*(u16 *)(g + 4) & 0x2000) {
-        switch (s[10]) {
+        switch (run[10]) {
         case 1:
-            a[0x43] = 1;
-            *(s16 *)(D_80158AA8 + 0x14E) = 0x18;
+            sys[0x43] = 1;
+            *(s16 *)(tt_texts + 0x14E) = 0x18;
             break;
         case 2:
-            a[0x49] = 1;
-            *(s16 *)(D_80158AA8 + 0x162) = 0x16;
+            sys[0x49] = 1;
+            *(s16 *)(tt_texts + 0x162) = 0x16;
             {
-                TtFrame80B8 *p2;
+                TtFrame *p2;
 
-                p2 = (TtFrame80B8 *)D_80158AB4;
+                p2 = (TtFrame *)tt_frames;
                 SetDefDispEnv(&p2[0].disp_rect, 0x160, 0, 0x100, 0xF0);
                 SetDefDispEnv(&p2[1].disp_rect, 0x20, 0, 0x100, 0xF0);
             }
@@ -313,7 +313,7 @@ void func_8013CDC0(void) {
         }
     }
     if (*(u16 *)(g + 4) & 0x820) {
-        switch (s[10]) {
+        switch (run[10]) {
         case 0:
             *(s16 *)(t + 2) = 0x50;
             break;
@@ -328,149 +328,149 @@ void func_8013CDC0(void) {
             break;
         }
     }
-    func_8013C740();
+    tt_button_cursor_update();
 }
 
-void func_8013D060(void) {
-    u8 *p = D_80158A64;
+void tt_state_settings(void) {
+    u8 *core = tt_core;
 
-    switch (*(u16 *)(p + 2)) {
+    switch (*(u16 *)(core + 2)) {
     case 0x0:
-        func_8014CBD0();
-        func_80148210();
-        func_80143570();
-        func_8014A7E0();
-        func_80146BE0();
-        func_80148DB0();
-        func_80147CE0();
-        func_8014AF3C();
-        func_80132F4C();
-        func_80133B70();
-        func_8013BD4C();
-        func_801473BC();
-        func_801426F0();
-        p[0x11] = 0;
-        p[0x1C] = 0;
-        p[0x13] = 0;
-        p[0x14] = 0;
-        p[0x15] = 0;
-        func_8013CC24();
-        *(u16 *)(p + 2) = 0x40;
+        tt_sprites_clear();
+        tt_texts_clear();
+        tt_player_clear();
+        tt_shots_clear();
+        tt_bombs_clear();
+        tt_bomb_targets_clear();
+        tt_options_clear();
+        tt_air_enemies_clear();
+        tt_ground_targets_clear();
+        tt_enemy_shots_clear();
+        tt_bells_clear();
+        tt_clouds_clear();
+        tt_boss_sprites_clear();
+        core[0x11] = 0;
+        core[0x1C] = 0;
+        core[0x13] = 0;
+        core[0x14] = 0;
+        core[0x15] = 0;
+        tt_settings_menu_init();
+        *(u16 *)(core + 2) = 0x40;
         break;
     case 0x40:
-        func_8013CDC0();
+        tt_settings_menu_update();
         break;
     case 0x50:
-        func_8013CB58();
+        tt_button_config_run();
         break;
     }
 }
 
-void func_8013D150(void) {
-    u8 *p;
-    s32 *q;
-    s32 *r;
-    u8 *t;
+void tt_scroll_speed_update(void) {
+    u8 *core;
+    s32 *run;
+    s32 *stage_script;
+    u8 *player;
     u8 mode;
     u16 w;
     s16 h;
     s32 cur;
     s32 diff;
 
-    p = D_80158A64;
-    q = (s32 *)D_80158A6C;
-    r = D_80158A70;
-    t = D_80158A74;
-    mode = p[0x1C];
+    core = tt_core;
+    run = (s32 *)tt_run;
+    stage_script = tt_stage_script;
+    player = tt_player;
+    mode = core[0x1C];
     if (mode == 0x10) {
-        *(u16 *)(p + 0x32) = *(u16 *)(p + 0x32) + 1;
-        w = *(u16 *)(p + 0x34);
+        *(u16 *)(core + 0x32) = *(u16 *)(core + 0x32) + 1;
+        w = *(u16 *)(core + 0x34);
         if (w < 0x101) {
-            *(u16 *)(p + 0x34) = 0x100;
+            *(u16 *)(core + 0x34) = 0x100;
         } else {
-            *(u16 *)(p + 0x34) = w - 0x20;
+            *(u16 *)(core + 0x34) = w - 0x20;
         }
     } else if (mode == 0x11) {
-        *(u16 *)(p + 0x32) = *(u16 *)(p + 0x32) + 1;
-        w = *(u16 *)(p + 0x34);
+        *(u16 *)(core + 0x32) = *(u16 *)(core + 0x32) + 1;
+        w = *(u16 *)(core + 0x34);
         if (w >= 0x1000) {
-            *(u16 *)(p + 0x34) = 0x1000;
-            p[0x1C] = 2;
+            *(u16 *)(core + 0x34) = 0x1000;
+            core[0x1C] = 2;
         } else {
-            *(u16 *)(p + 0x34) = w + 0x40;
+            *(u16 *)(core + 0x34) = w + 0x40;
         }
     }
-    if (*(u16 *)((u8 *)r + 2) >= 0x401) {
-        q[1] = 0;
+    if (*(u16 *)((u8 *)stage_script + 2) >= 0x401) {
+        run[1] = 0;
     } else {
-        h = *(s16 *)(t + 0x16);
+        h = *(s16 *)(player + 0x16);
         if (h < 0x50) {
-            q[1] = 0x30000;
+            run[1] = 0x30000;
         } else {
-            q[1] = 0x28000 - (((h - 0x50) / 32) << 15);
+            run[1] = 0x28000 - (((h - 0x50) / 32) << 15);
         }
-        if (q[1] < 0x8000) {
-            q[1] = 0x8000;
+        if (run[1] < 0x8000) {
+            run[1] = 0x8000;
         }
-        if (q[1] > 0x30000) {
-            q[1] = 0x30000;
+        if (run[1] > 0x30000) {
+            run[1] = 0x30000;
         }
     }
-    if (q[1] < q[0]) {
-        q[0] -= 0x400;
+    if (run[1] < run[0]) {
+        run[0] -= 0x400;
     } else {
-        q[0] += 0x200;
+        run[0] += 0x200;
     }
-    diff = q[0] - q[1];
+    diff = run[0] - run[1];
     cur = (diff < 0) ? -diff : diff;
     if (cur < 0x1000) {
-        q[0] = q[1];
+        run[0] = run[1];
     }
 }
 
-/* The cursor is read again for the increment (as in func_8013D508); with v + 1 IDO puts v in $a0, the original in $a1. T-11860 */
-void func_8013D2E0(void) {
-    u8 *c;
-    TtDrawBuffer80B8 *p;
+/* The cursor is read again for the increment (as in tt_bg_tilemap_draw); with v + 1 IDO puts v in $a0, the original in $a1. T-11860 */
+void tt_bg_flat_draw(void) {
+    u8 *core;
+    TtDrawBuffer *p;
     TILE *v;
 
-    c = D_80158A64;
-    p = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    core = tt_core;
+    p = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     v = (TILE *)p->cursor;
     p->cursor = (DR_MODE *)((u8 *)p->cursor + 0x10);
     ((TtOtTag *)v)->len = 3, v->code = 0x61;
-    v->r0 = c[0x13], v->g0 = c[0x14], v->b0 = c[0x15];
+    v->r0 = core[0x13], v->g0 = core[0x14], v->b0 = core[0x15];
     v->x0 = -0x80, v->y0 = 8;
     v->w = 0x100, v->h = 0xE8;
     ((TtOtTag *)v)->addr = p->ordering[15].addr;
     p->ordering[15].addr = (u32)v;
 }
 
-void func_8013D3C0(void) {
-    u8 *c;
-    TtDrawBuffer80B8 *p;
+void tt_bg_flat_fade_draw(void) {
+    u8 *core;
+    TtDrawBuffer *frame;
     TILE *v;
     u32 r;
     u32 g;
     u32 b;
 
-    c = D_80158A64;
-    p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
-    v = (TILE *)p->cursor;
-    p->cursor = (DR_MODE *)(v + 1);
+    core = tt_core;
+    frame = ((TtVideoView *)tt_video)->index + (TtDrawBuffer *)tt_frames;
+    v = (TILE *)frame->cursor;
+    frame->cursor = (DR_MODE *)(v + 1);
     /* comma expressions as in the libgpu setTile/setWH macros (one source line for as1) */
     ((TtOtTag *)v)->len = 3, v->code = 0x61;
     /* FAKE: dead store; it numbers g before r, so uopt colours g first (original: r in a2, g in a1). T-11630 */
     g = 0;
-    r = (c[0x13] * c[0x1D]) >> 7;
+    r = (core[0x13] * core[0x1D]) >> 7;
     if ((s32)r >= 0x100) {
         r = 0xFF;
     }
-    g = (c[0x14] * c[0x1E]) >> 7;
+    g = (core[0x14] * core[0x1E]) >> 7;
     if ((s32)g >= 0x100) {
         g = 0xFF;
     }
-    b = (c[0x15] * c[0x1F]) >> 7;
+    b = (core[0x15] * core[0x1F]) >> 7;
     if ((s32)b >= 0x100) {
         b = 0xFF;
     }
@@ -480,42 +480,42 @@ void func_8013D3C0(void) {
     v->x0 = -0x80;
     v->y0 = 8;
     v->w = 0x100, v->h = 0xE8;
-    ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
-    (&p->ordering[15])->addr = (u32)v;
+    ((TtOtTag *)v)->addr = *(u32 *)&frame->ordering[15];
+    (&frame->ordering[15])->addr = (u32)v;
 }
 
-/* Tile map of D_80158A64 + 0x18, used only by the draw functions below: index (u16 per cell), 3-byte records, flag bytes. */
+/* Tile map of tt_core + 0x18, used only by the draw functions below: index (u16 per cell), 3-byte records, flag bytes. */
 typedef struct TtTileMap {
     /* 0x00 */ u8 *index;
     /* 0x04 */ u8 *record;
     /* 0x08 */ u8 *flags;
 } TtTileMap;
 
-void func_8013D508(void) {
-    TtDrawBuffer80B8 *buffer;
-    TtRectPacket16 *q;
+void tt_bg_tilemap_draw(void) {
+    TtDrawBuffer *buffer;
+    TtRectPacket *q;
     DR_MODE *m;
-    u8 *c;
+    u8 *core;
     u8 *r;
     s32 row;
     s32 col;
     s16 scroll;
     TtTileMap *tm;
-    TtCmdStream *st;
+    TtStageScript *stage_script;
 
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
-    st = (TtCmdStream *)D_80158A70;
-    scroll = 0x300 - st->time;
-    c = D_80158A64;
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
+    stage_script = (TtStageScript *)tt_stage_script;
+    scroll = 0x300 - stage_script->progress;
+    core = tt_core;
     for (row = 0; row != 0x100; row += 0x10) {
         for (col = 0; col != 0x10; col++) {
-            q = (TtRectPacket16 *)buffer->cursor;
+            q = (TtRectPacket *)buffer->cursor;
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
             q->code = 0x7D;
             q->tag.len = 3;
             q->x = (col << 4) - 0x80;
             q->y = row - (scroll & 0xF);
-            tm = *(TtTileMap **)(c + 0x18);
+            tm = *(TtTileMap **)(core + 0x18);
             r = tm->record + tm->index[(row + col + (scroll & ~0xF)) & 0x3FF] * 3;
             q->u = (r[1] & 7) << 4;
             q->v = (r[0] << 7) + ((r[1] >> 3) << 4);
@@ -531,34 +531,34 @@ void func_8013D508(void) {
     buffer->ordering[13].addr = (u32)m;
 }
 
-void func_8013D73C(void) {
-    TtDrawBuffer80B8 *buffer;
-    TtRectPacket16 *q;
+void tt_bg_tilemap_fade_draw(void) {
+    TtDrawBuffer *buffer;
+    TtRectPacket *q;
     DR_MODE *m;
-    u8 *c;
+    u8 *core;
     u8 *r;
     s32 row;
     s32 col;
     s16 scroll;
     TtTileMap *tm;
-    TtCmdStream *st;
+    TtStageScript *stage_script;
 
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
-    st = (TtCmdStream *)D_80158A70;
-    scroll = 0x300 - st->time;
-    c = D_80158A64;
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
+    stage_script = (TtStageScript *)tt_stage_script;
+    scroll = 0x300 - stage_script->progress;
+    core = tt_core;
     for (row = 0; row != 0x100; row += 0x10) {
         for (col = 0; col != 0x10; col++) {
-            q = (TtRectPacket16 *)buffer->cursor;
+            q = (TtRectPacket *)buffer->cursor;
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
             q->code = 0x7C;
             q->tag.len = 3;
-            q->r = c[0x1D];
-            q->g = c[0x1E];
-            q->b = c[0x1F];
+            q->r = core[0x1D];
+            q->g = core[0x1E];
+            q->b = core[0x1F];
             q->y = row - (scroll & 0xF);
             q->x = (col << 4) - 0x80;
-            tm = *(TtTileMap **)(c + 0x18);
+            tm = *(TtTileMap **)(core + 0x18);
             r = tm->record + tm->index[(row + col + (scroll & ~0xF)) & 0x3FF] * 3;
             q->u = (r[1] & 7) << 4;
             q->v = (r[0] << 7) + ((r[1] >> 3) << 4);
@@ -574,12 +574,12 @@ void func_8013D73C(void) {
     buffer->ordering[13].addr = (u32)m;
 }
 
-void func_8013D988(void) {
-    u8 *c;
-    s32 pad1; /* FAKE: unused, frame slot under c (0x530). T-11840 */
-    TtCmdStream *st;
+void tt_bg_tilemap_warp_draw(void) {
+    u8 *core;
+    s32 pad1; /* FAKE: unused, frame slot under core (0x530). T-11840 */
+    TtStageScript *stage_script;
     POLY_FT4 *p;
-    TtDrawBuffer80B8 *buffer;
+    TtDrawBuffer *buffer;
     u8 *r;
     s32 j;
     s32 pad2; /* FAKE: unused, frame slot between j and i (0x518). T-11840 */
@@ -598,18 +598,18 @@ void func_8013D988(void) {
     s16 x[17][17];
     s16 y[17][17];
 
-    st = (TtCmdStream *)D_80158A70;
-    c = D_80158A64;
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    stage_script = (TtStageScript *)tt_stage_script;
+    core = tt_core;
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     for (i = 0; i < 17; i++) {
         for (j = 0; j < 17; j++) {
-            x[j][i] = ((j - 8) * (0x8800 - ((TtCore36 *)c)->unk_34)) / 0x780;
-            y[j][i] = ((i - 8) * (0x8800 - ((TtCore36 *)c)->unk_34)) / 0x780;
-            x[j][i] += (s16)(func_800A0140((((TtCore36 *)c)->unk_32 << 5) + i * 0x200) / ((TtCore36 *)c)->unk_34);
-            y[j][i] += (s16)(rsin((((TtCore36 *)c)->unk_32 << 5) + j * 0x200) / ((TtCore36 *)c)->unk_34);
+            x[j][i] = ((j - 8) * (0x8800 - ((TtCoreWarpView *)core)->warp_divisor)) / 0x780;
+            y[j][i] = ((i - 8) * (0x8800 - ((TtCoreWarpView *)core)->warp_divisor)) / 0x780;
+            x[j][i] += (s16)(func_800A0140((((TtCoreWarpView *)core)->warp_phase << 5) + i * 0x200) / ((TtCoreWarpView *)core)->warp_divisor);
+            y[j][i] += (s16)(rsin((((TtCoreWarpView *)core)->warp_phase << 5) + j * 0x200) / ((TtCoreWarpView *)core)->warp_divisor);
         }
     }
-    scroll = 0x300 - st->time;
+    scroll = 0x300 - stage_script->progress;
     for (i = 0; i != 0x100; i += 0x10) {
         for (j = 0; j < 16; j++) {
             p = (POLY_FT4 *)buffer->cursor;
@@ -624,7 +624,7 @@ void func_8013D988(void) {
             x3 = x[j + 1][i / 16 + 1];
             y3 = y[j + 1][i / 16 + 1] - (s16)(scroll & 0xF) + 0x80;
             p->x0 = x0, p->y0 = y0, p->x1 = x1, p->y1 = y1, p->x2 = x2, p->y2 = y2, p->x3 = x3, p->y3 = y3;
-            r = (*(TtTileMap **)(c + 0x18))->record + (*(TtTileMap **)(c + 0x18))->index[(i + j + (scroll & ~0xF)) & 0x3FF] * 3;
+            r = (*(TtTileMap **)(core + 0x18))->record + (*(TtTileMap **)(core + 0x18))->index[(i + j + (scroll & ~0xF)) & 0x3FF] * 3;
             u = (r[1] & 7) << 4;
             v = (r[1] >> 3) << 4;
             if (r[0] == 1) {
@@ -639,33 +639,33 @@ void func_8013D988(void) {
     }
 }
 
-void func_8013DE10(void) {
+void tt_bg_sky_draw(void) {
     s32 pad1; /* FAKE: unused, with pad2 reproduces the 0x78 frame. T-11510 */
     s32 pad2; /* FAKE: see pad1. T-11510 */
-    TtDrawBuffer80B8 *buffer;
-    TtRectPacket16 *q;
+    TtDrawBuffer *buffer;
+    TtRectPacket *q;
     POLY_G4 *g;
     DR_MODE *m;
-    u8 *c;
+    u8 *core;
     u8 *r;
     s32 row;
     s32 col;
 
-    c = D_80158A64;
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    core = tt_core;
+    buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
     for (row = 0; row != 0x80; row += 0x10) {
         for (col = 0; col != 0x10; col++) {
-            q = (TtRectPacket16 *)buffer->cursor;
+            q = (TtRectPacket *)buffer->cursor;
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
             q->code = 0x7D;
             q->tag.len = 3;
             q->x = (col << 4) - 0x80;
             q->y = row + 0x70;
-            r = ((TtTileMap *)*(u8 **)(c + 0x18))->record + ((TtTileMap *)*(u8 **)(c + 0x18))->index[(row + col) & 0x3FF] * 3;
+            r = ((TtTileMap *)*(u8 **)(core + 0x18))->record + ((TtTileMap *)*(u8 **)(core + 0x18))->index[(row + col) & 0x3FF] * 3;
             /* Operand order of both sums and of the flags address sets the ugen temps (t6/t7); found with
                tools/order_search.py. T-11540 */
-            q->u = ((r[1] & 7) << 4) + (*(r[0] + ((TtTileMap *)*(u8 **)(c + 0x18))->flags) & 0x80);
-            q->v = ((r[1] >> 3) << 4) + ((*(r[0] + ((TtTileMap *)*(u8 **)(c + 0x18))->flags) & 0x40) * 2);
+            q->u = ((r[1] & 7) << 4) + (*(r[0] + ((TtTileMap *)*(u8 **)(core + 0x18))->flags) & 0x80);
+            q->v = ((r[1] >> 3) << 4) + ((*(r[0] + ((TtTileMap *)*(u8 **)(core + 0x18))->flags) & 0x40) * 2);
             q->clut = (((r[2] >> 4) + 0xF0) << 6) + (r[2] & 0xF);
             q->tag.addr = buffer->ordering[13].addr;
             buffer->ordering[13].addr = (u32)q;
@@ -698,27 +698,27 @@ void func_8013DE10(void) {
     buffer->ordering[15].addr = (u32)m;
 }
 
-void func_8013E1E8(void) {
-    switch (D_80158A64[0x1C]) {
+void tt_bg_draw(void) {
+    switch (tt_core[0x1C]) {
     case 0:
-        func_8013D2E0();
+        tt_bg_flat_draw();
         return;
     case 1:
-        func_8013D3C0();
+        tt_bg_flat_fade_draw();
         return;
     case 2:
-        func_8013D508();
+        tt_bg_tilemap_draw();
         return;
     case 3:
-        func_8013D73C();
+        tt_bg_tilemap_fade_draw();
         return;
     case 0x10:
     case 0x11:
-        func_8013D988();
+        tt_bg_tilemap_warp_draw();
         return;
     case 0x20:
     case 0x21:
-        func_8013DE10();
+        tt_bg_sky_draw();
         /* fallthrough */
     default:
         return;

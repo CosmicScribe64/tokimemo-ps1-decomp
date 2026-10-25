@@ -127,7 +127,7 @@ void func_80042CB0(void) {
     if (*(u8 *)&g->click_mode == 0 || (*(u8 *)&g->click_mode != 0 && *(u8 *)&g->unk_F71 != 0 && *(u8 *)&g->double_click_interval + 8 != *(u8 *)&g->unk_F71 && g->unk_F72 == g->mouse_buttons)) {
         g->unk_F72 = 0;
         *(u8 *)&g->unk_F71 = 0;
-        if (g->confirm_button != 0) {
+        if (g->confirm_button != SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT) {
             if (g->unk_F76 & 4) {
                 g->pad_held |= PAD_CIRCLE;
             } else if (g->unk_F76 & 8) {

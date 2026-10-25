@@ -1,33 +1,33 @@
-/* ranking_view.c: src/ovl/TT/80132130.c:315: ranking display scene (state 7) and its grid background; body 324: control = D_80158A6C; 325: buttons = (TtButtons06 *)(scene + 0x10);. Original object 0x80132130-0x80132F10 (config/objects/TT.txt). */
+/* ranking_view.c: src/ovl/TT/80132130.c:315: ranking display scene (state 7) and its grid background; body 324: control = tt_run; 325: buttons = (TtPadView *)(scene + 0x10);. Original object 0x80132130-0x80132F10 (config/objects/TT.txt). */
 #include "common.h"
 #include "ovl/TT.h"
 
-void func_80132130(void) {
-    u8 *p = D_80158AA4;
+void tt_ranking_heading_init(void) {
+    u8 *sprite = tt_sprites;
 
-    p[0] = 1;
-    p[1] = 0;
-    *(s16 *)(p + 0x44) = 8;
-    *(s16 *)(p + 0x14) = -0x38;
-    *(s16 *)(p + 0x16) = 0x48;
-    *(s16 *)(p + 0x3C) = 0x70;
-    *(s16 *)(p + 0x3E) = 0x10;
-    p[0x46] = 0;
-    p[0x47] = 0x60;
-    *(s16 *)(p + 0x40) = 0xA;
-    *(s16 *)(p + 0x42) = 0x3C08;
-    p[0x3B] = 0x65;
-    *(s16 *)(p + 0x10) = 0;
+    sprite[0] = 1;
+    sprite[1] = 0;
+    *(s16 *)(sprite + 0x44) = 8;
+    *(s16 *)(sprite + 0x14) = -0x38;
+    *(s16 *)(sprite + 0x16) = 0x48;
+    *(s16 *)(sprite + 0x3C) = 0x70;
+    *(s16 *)(sprite + 0x3E) = 0x10;
+    sprite[0x46] = 0;
+    sprite[0x47] = 0x60;
+    *(s16 *)(sprite + 0x40) = 0xA;
+    *(s16 *)(sprite + 0x42) = 0x3C08;
+    sprite[0x3B] = 0x65;
+    *(s16 *)(sprite + 0x10) = 0;
 }
 
-void func_80132198(u8 arg0, u8 arg1, u8 arg2) {
-    u8 *q;
-    u8 *r;
+void tt_ranking_rows_init(u8 arg0, u8 arg1, u8 arg2) {
+    u8 *sys;
+    u8 *text_record;
     s32 i;
     u8 c; /* set by the switch for every i; IDO still loads and stores its stack home */
 
-    q = D_80158A60;
-    r = D_80158AA8;
+    sys = tt_sys;
+    text_record = tt_texts;
     for (i = 0; i != 3; i++) {
         switch (i) {
         case 0:
@@ -40,62 +40,62 @@ void func_80132198(u8 arg0, u8 arg1, u8 arg2) {
             c = arg2;
             break;
         }
-        *(s16 *)(r + 0xA) = -0x4C;
-        *(s16 *)(r + 0xC) = i * 0x10 + 0x78;
-        *(s16 *)(r + 0xE) = i + 0xE;
-        r[2] = c;
-        r[0] = 1;
-        *(s16 *)(r + 6) = 8;
-        *(s16 *)(r + 0x10) = 0;
-        *(s16 *)(r + 0x1E) = -0x1C;
-        *(s16 *)(r + 0x20) = i * 0x10 + 0x78;
-        *(s16 *)(r + 0x22) = i + 0x28;
-        r[0x16] = c;
-        r[0x14] = 1;
-        *(s16 *)(r + 0x1A) = 8;
-        *(s16 *)(r + 0x24) = 0;
-        r += 0x28;
-        func_80148584(*(u16 *)(q + i * 6 + 0x30), i + 0x28);
-        func_801486D8((s32)(q + i * 6 + 0x32), i + 0x2B);
-        *(s16 *)(r + 0xA) = 0x34;
-        *(s16 *)(r + 0xC) = i * 0x10 + 0x78;
-        *(s16 *)(r + 0xE) = i + 0x2B;
-        r[2] = c;
-        r[0] = 1;
-        *(s16 *)(r + 6) = 8;
-        *(s16 *)(r + 0x10) = 0;
-        r += 0x14;
+        *(s16 *)(text_record + 0xA) = -0x4C;
+        *(s16 *)(text_record + 0xC) = i * 0x10 + 0x78;
+        *(s16 *)(text_record + 0xE) = i + 0xE;
+        text_record[2] = c;
+        text_record[0] = 1;
+        *(s16 *)(text_record + 6) = 8;
+        *(s16 *)(text_record + 0x10) = 0;
+        *(s16 *)(text_record + 0x1E) = -0x1C;
+        *(s16 *)(text_record + 0x20) = i * 0x10 + 0x78;
+        *(s16 *)(text_record + 0x22) = i + 0x28;
+        text_record[0x16] = c;
+        text_record[0x14] = 1;
+        *(s16 *)(text_record + 0x1A) = 8;
+        *(s16 *)(text_record + 0x24) = 0;
+        text_record += 0x28;
+        tt_time_text_set(*(u16 *)(sys + i * 6 + 0x30), i + 0x28);
+        tt_name_text_set((s32)(sys + i * 6 + 0x32), i + 0x2B);
+        *(s16 *)(text_record + 0xA) = 0x34;
+        *(s16 *)(text_record + 0xC) = i * 0x10 + 0x78;
+        *(s16 *)(text_record + 0xE) = i + 0x2B;
+        text_record[2] = c;
+        text_record[0] = 1;
+        *(s16 *)(text_record + 6) = 8;
+        *(s16 *)(text_record + 0x10) = 0;
+        text_record += 0x14;
     }
 }
 
 /* Fills the 25 grid records and the corner, frame and panel records after them, then the colour bytes
  * for scene arg0. The u16 stores of 8, 0xD and 0xC give the original register allocation. T-11840 */
-void func_8013230C(u8 arg0, u8 arg1) {
+void tt_ranking_panel_init(u8 arg0, u8 arg1) {
     u8 *state;
     u8 *p;
-    u8 *g;
+    u8 *transform;
     s32 i;
 
-    state = D_80158A64;
-    /* FAKE: p, g and the loop header on one line put the hoisted (arg0 >> 4) chain ahead of the p load (as1 order). T-11840 */
-    p = D_80158AA4 + 0x1900; g = D_80158AB0; for (i = 0; i < 25; i++) {
-        *(s16 *)(g + 4) = (i / 5) * 0x48 - 0x5C;
-        *(s16 *)(g + 6) = (i % 5) * 0x48 - 0x48;
-        *(s16 *)(g + 0) = 0x1000;
-        *(s16 *)(g + 2) = 0x1000;
+    state = tt_core;
+    /* FAKE: p, transform and the loop header on one line put the hoisted (arg0 >> 4) chain ahead of the p load (as1 order). T-11840 */
+    p = tt_sprites + 0x1900; transform = tt_transforms; for (i = 0; i < 25; i++) {
+        *(s16 *)(transform + 4) = (i / 5) * 0x48 - 0x5C;
+        *(s16 *)(transform + 6) = (i % 5) * 0x48 - 0x48;
+        *(s16 *)(transform + 0) = 0x1000;
+        *(s16 *)(transform + 2) = 0x1000;
         p[0] = 1;
         p[1] = 0;
         *(u16 *)(p + 0x44) = 8;
         p[0x3B] = 0x80;
-        *(u8 **)(p + 0x48) = g;
+        *(u8 **)(p + 0x48) = transform;
         p[0x4D] = 0;
         p[0x4E] = 1;
         p[0x3A] = 0x40;
         p[0x39] = 0x40;
         p[0x38] = 0x40;
         p[0x50] = 0;
-        *(s16 *)(p + 0x14) = *(s16 *)(g + 4) - 0x24;
-        *(s16 *)(p + 0x16) = *(s16 *)(g + 6) - 0x24;
+        *(s16 *)(p + 0x14) = *(s16 *)(transform + 4) - 0x24;
+        *(s16 *)(p + 0x16) = *(s16 *)(transform + 6) - 0x24;
         p[0x46] = 0x38; p[0x47] = 0xB8; /* FAKE: one line for the original li order. T-11840 */
         p[0x4F] = arg1;
         *(s16 *)(p + 0x3C) = 0x48;
@@ -105,7 +105,7 @@ void func_8013230C(u8 arg0, u8 arg1) {
         p[0x4C] = 0;
         *(u16 *)(p + 0x10) = 0xD;
         p += 0x64;
-        g += 0x10;
+        transform += 0x10;
     }
     for (i = 0; i < 4; i++, p += 0x64) {
         p[0] = 1;
@@ -240,160 +240,160 @@ void func_8013230C(u8 arg0, u8 arg1) {
     }
 }
 
-void func_80132810(void) {
+void tt_ranking_grid_scroll(void) {
     s32 i;
-    TtGridCore *state;
-    TtGrid10 *grid;
-    TtGrid64 *tiles;
-    state = (TtGridCore *)D_80158A64;
+    TtCoreGridView *state;
+    TtTransformView *grid;
+    TtSpriteView *tiles;
+    state = (TtCoreGridView *)tt_core;
     i = 0;
-    tiles = (TtGrid64 *)(D_80158AA4 + 0x1900);
-    grid = (TtGrid10 *)D_80158AB0;
+    tiles = (TtSpriteView *)(tt_sprites + 0x1900);
+    grid = (TtTransformView *)tt_transforms;
     for (; i < 25; i++) {
-        grid->x = (i / 5) * 0x48 - state->offset - 0x5C;
-        grid->y = state->offset + (i % 5) * 0x48 - 0x48;
+        grid->x = (i / 5) * 0x48 - state->scroll_offset - 0x5C;
+        grid->y = state->scroll_offset + (i % 5) * 0x48 - 0x48;
         tiles->x = grid->x - 0x24;
         tiles->y = grid->y - 0x24;
         tiles++;
         grid++;
     }
-    if (++state->offset >= 0x48U) {
-        state->offset = 0;
+    if (++state->scroll_offset >= 0x48U) {
+        state->scroll_offset = 0;
     }
 }
 
-void func_80132B88(void) {
-    u8 *p;
+void tt_ranking_fade_in(void) {
+    u8 *core;
     u8 *q;
     s32 i;
 
-    p = D_80158A64;
-    p[0x1D] += 4;
-    p[0x1E] = p[0x1F] = p[0x1D];
-    if (p[0x1D] >= 0x80U) {
-        q = D_80158AA8;
+    core = tt_core;
+    core[0x1D] += 4;
+    core[0x1E] = core[0x1F] = core[0x1D];
+    if (core[0x1D] >= 0x80U) {
+        q = tt_texts;
         for (i = 0; i < 0x80; i++) {
             q += 0x14;
             *(s16 *)(q - 0xE) = 0;
         }
-        q = D_80158AA4;
+        q = tt_sprites;
         for (i = 0; i < 0x80; i++) {
             *(s16 *)(q + 0x44) = 0;
             q += 0x64;
         }
-        *(s16 *)(p + 2) = 0x40;
+        *(s16 *)(core + 2) = 0x40;
     }
-    func_80132810();
+    tt_ranking_grid_scroll();
 }
 
-void func_80132C24(void) {
-    u8 *p;
+void tt_ranking_fade_out(void) {
+    u8 *core;
     u8 *q;
     s32 i;
 
-    p = D_80158A64;
-    if (p[0x1D] == 0x80U) {
+    core = tt_core;
+    if (core[0x1D] == 0x80U) {
         i = 0;
-        q = D_80158AA8;
+        q = tt_texts;
         for (; i < 0x80; i++) {
             q += 0x14;
             *(s16 *)(q - 0xE) = 8;
         }
-        q = D_80158AA4;
+        q = tt_sprites;
         for (i = 0; i < 0x80; i++) {
             *(s16 *)(q + 0x44) = 8;
             q += 0x64;
         }
     }
-    p[0x1D] -= 4;
-    p[0x1E] = p[0x1F] = p[0x1D];
-    if (p[0x1D] == 0) {
-        p[9] = 1;
+    core[0x1D] -= 4;
+    core[0x1E] = core[0x1F] = core[0x1D];
+    if (core[0x1D] == 0) {
+        core[9] = 1;
     }
-    func_80132810();
+    tt_ranking_grid_scroll();
 }
 
-void func_80132CCC(void) {
-    u8 *scene = D_80158A60;
+void tt_state_ranking_view(void) {
+    u8 *scene = tt_sys;
     /* FAKE (T-9780): retain the unused selector home between the saved pointers. */
     u16 pad_selector;
     u8 *control;
-    TtButtons06 *buttons;
+    TtPadView *buttons;
     u16 flags;
-    TtCore30 *state = (TtCore30 *)D_80158A64;
+    TtCore *state = (TtCore *)tt_core;
 
-    control = D_80158A6C;
-    buttons = (TtButtons06 *)(scene + 0x10);
-    switch (state->unk_02) {
+    control = tt_run;
+    buttons = (TtPadView *)(scene + 0x10);
+    switch (state->sub_state) {
     case 0:
         audio_command(0x22);
         audio_command(0x2F);
         audio_command(4);
         audio_command(0x204);
-        func_8014CBD0();
-        func_80148210();
-        func_80143570();
-        func_8014A7E0();
-        func_80146BE0();
-        func_80148DB0();
-        func_80147CE0();
-        func_8014AF3C();
-        func_80132F4C();
-        func_80133B70();
-        func_8013BD4C();
-        func_801473BC();
-        func_801426F0();
-        state->unk_11 = 0;
-        state->unk_1C = 1;
-        state->unk_1D = 0;
-        state->unk_1E = 0;
-        state->unk_1F = 0;
-        func_80132130();
-        func_80132198(2, 6, 4);
-        func_8013230C(0xD, 0);
-        state->unk_2E = 0;
-        if (state->unk_22 != 0) {
-            state->unk_26 = 0x12CU;
+        tt_sprites_clear();
+        tt_texts_clear();
+        tt_player_clear();
+        tt_shots_clear();
+        tt_bombs_clear();
+        tt_bomb_targets_clear();
+        tt_options_clear();
+        tt_air_enemies_clear();
+        tt_ground_targets_clear();
+        tt_enemy_shots_clear();
+        tt_bells_clear();
+        tt_clouds_clear();
+        tt_boss_sprites_clear();
+        state->pause_allowed = 0;
+        state->bg_mode = 1;
+        state->fade_r = 0;
+        state->fade_g = 0;
+        state->fade_b = 0;
+        tt_ranking_heading_init();
+        tt_ranking_rows_init(2, 6, 4);
+        tt_ranking_panel_init(0xD, 0);
+        state->fade_level = 0;
+        if (state->autoplay != 0) {
+            state->timer = 0x12CU;
         } else {
-            state->unk_26 = 0xE10U;
+            state->timer = 0xE10U;
         }
-        state->unk_02 = 0x20;
+        state->sub_state = 0x20;
         break;
     case 0x20:
-        func_80132B88((u8 *)buttons);
+        tt_ranking_fade_in((u8 *)buttons);
         break;
     case 0x40:
-        func_80132810((u8 *)buttons);
-        if ((state->unk_26 -= 1) == 0) {
-            state->unk_02 = 0x80;
+        tt_ranking_grid_scroll((u8 *)buttons);
+        if ((state->timer -= 1) == 0) {
+            state->sub_state = 0x80;
         }
-        if ((state->unk_22 == 0) && ((flags = buttons->unk_04, ((flags & 0x20) != 0)) || (flags & 0x800))) {
-            state->unk_1D = 0x80;
-            state->unk_1E = 0x80;
-            state->unk_1F = 0x80;
-            state->unk_02 = 0x80;
+        if ((state->autoplay == 0) && ((flags = buttons->pressed, ((flags & 0x20) != 0)) || (flags & 0x800))) {
+            state->fade_r = 0x80;
+            state->fade_g = 0x80;
+            state->fade_b = 0x80;
+            state->sub_state = 0x80;
         }
         break;
     case 0x80:
         audio_command(0xB1);
-        func_80132C24();
+        tt_ranking_fade_out();
         break;
     }
-    if (state->unk_09 != 0) {
+    if (state->request_next != 0) {
         if (scene[83] == 0) {
             if (control[15] != 0) {
-                state->unk_00 = 8;
+                state->state = 8;
             } else {
-                state->unk_00 = 1;
+                state->state = 1;
             }
         } else {
-            state->unk_00 = 1;
+            state->state = 1;
         }
-        state->unk_06 = 0;
-        state->unk_04 = 0;
-        state->unk_02 = 0;
-        state->unk_0B = 0;
-        state->unk_0A = 0;
-        state->unk_09 = 0U;
+        state->phase = 0;
+        state->sub_step = 0;
+        state->sub_state = 0;
+        state->flag_b = 0;
+        state->flag_a = 0;
+        state->request_next = 0U;
     }
 }

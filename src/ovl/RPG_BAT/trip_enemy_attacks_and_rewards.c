@@ -1,110 +1,110 @@
-/* trip_enemy_attacks_and_rewards.c: src/ovl/RPG_BAT/80151FC0.c:7: trip encounter basic attack and loot; body 8: if (D_8015EB98 == 0x40000) {; 9: func_8013E7C0(0x38, 3, 5, 1);. Original object 0x80151FC0-0x801525B0 (config/objects/RPG_BAT.txt). */
-#define MAIN_API_OVERRIDE_strcpy /* matched with strcpy returning its destination: with the void prototype the switch on D_8015EB98 in func_80152384 takes v0, not v1 (main_api.h: void). T-17101 */
+/* trip_enemy_attacks_and_rewards.c: src/ovl/RPG_BAT/80151FC0.c:7: trip encounter basic attack and loot; body 8: if (rpg_encounter == 0x40000) {; 9: rpg_actor_set_animation(0x38, 3, 5, 1);. Original object 0x80151FC0-0x801525B0 (config/objects/RPG_BAT.txt). */
+#define MAIN_API_OVERRIDE_strcpy /* matched with strcpy returning its destination: with the void prototype the switch on rpg_encounter in rpg_trip_loot_text takes v0, not v1 (main_api.h: void). T-17101 */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
 void *strcpy(void *dst, void *src);
 
-void func_80151FC0(void) {
-    if (D_8015EB98 == 0x40000) {
-        func_8013E7C0(0x38, 3, 5, 1);
+void rpg_trip_attack_hit_effect(void) {
+    if (rpg_encounter == 0x40000) {
+        rpg_actor_set_animation(0x38, 3, 5, 1);
     } else {
-        func_8013E7C0(0x38, 4, 5, 1);
+        rpg_actor_set_animation(0x38, 4, 5, 1);
     }
-    switch (D_8015EB98) {
+    switch (rpg_encounter) {
     case 0x10000:
-        func_8013F15C(0x505, 1, 0);
+        rpg_se_play_latched_5xx(0x505, 1, 0);
         return;
     case 0x20000:
-        func_8013F15C(0x506, 1, 0);
+        rpg_se_play_latched_5xx(0x506, 1, 0);
         return;
     case 0x40000:
-        func_8013F15C(0x505, 1, 0);
+        rpg_se_play_latched_5xx(0x505, 1, 0);
         return;
     }
 }
 
-void func_80152080(void) {
+void rpg_enemy_trip_attack(void) {
     /* FAKE: two unused locals reserve the 8 bytes of frame above the sp34 spill; real source unknown. T-17101 */
     s32 home0;
     s32 home1;
     s32 sp34;
 
-    switch (D_8015EDD8) {
+    switch (rpg_enemy_step) {
     case 0:
-        func_801447E0();
-        switch (D_8015EB98) {
+        rpg_enemy_damage_roll();
+        switch (rpg_encounter) {
         case 0x10000:
-            strcpy(D_8015E828, "　　　　　テール・パンチ　　　　　");
+            strcpy(rpg_text_enemy_0, "　　　　　テール・パンチ　　　　　");
             break;
         case 0x20000:
-            strcpy(D_8015E828, "　　　　　暴れん坊頭突き　　　　　");
+            strcpy(rpg_text_enemy_0, "　　　　　暴れん坊頭突き　　　　　");
             break;
         case 0x40000:
-            strcpy(D_8015E828, "　　　　クラッシュ・クロー　　　　");
+            strcpy(rpg_text_enemy_0, "　　　　クラッシュ・クロー　　　　");
             break;
         }
-        func_8014D11C(D_8015E850, game_state.player_family_name, "は", D_8015EBB0, "のダメージを受けた");
-        func_8014B738(D_8015E8F0, 2, 0x3C);
-        func_8014EF3C();
+        rpg_message_format_damage(rpg_text_enemy_1, game_state.player_family_name, "は", rpg_damage, "のダメージを受けた");
+        rpg_message_show(rpg_text_enemy_pointers, 2, 0x3C);
+        rpg_enemy_step_next();
     default:
         break;
     case 1:
-        D_8015EE48 = 3;
-        D_8015EDE0 += 1;
-        if ((D_8015EDE0 % 3) == 0) {
+        rpg_message_mode = 3;
+        rpg_enemy_timer_a += 1;
+        if ((rpg_enemy_timer_a % 3) == 0) {
             ((Actor *)actor_pool)[155].unk_40 = 0xFF;
         } else {
             ((Actor *)actor_pool)[155].unk_40 = 0;
         }
-        if (D_8015EDE0 >= 0x10) {
-            func_8014EF3C();
+        if (rpg_enemy_timer_a >= 0x10) {
+            rpg_enemy_step_next();
         }
         break;
     case 2:
-        if (!(D_8015ED98 & 0x100)) {
-            func_8013E7C0(0x30, 5, 1, 1);
+        if (!(rpg_player_action & 0x100)) {
+            rpg_actor_set_animation(0x30, 5, 1, 1);
         }
         D_80121531 = 3;
-        func_80151FC0();
-        D_8015EC74 = func_8013E9A8(4) + 1;
-        sp34 = func_8013E9A8(0x14);
-        func_8013E97C(0x38, sp34 - 5, func_8013E9A8(0x14) - 5);
-        func_8014EF3C();
+        rpg_trip_attack_hit_effect();
+        rpg_scratch = rpg_rand(4) + 1;
+        sp34 = rpg_rand(0x14);
+        rpg_actor_set_position(0x38, sp34 - 5, rpg_rand(0x14) - 5);
+        rpg_enemy_step_next();
         break;
     case 3:
-        if (func_8013E90C(0x38) != 0) {
-            func_80151FC0();
-            sp34 = func_8013E9A8(0x14);
-            func_8013E97C(0x38, sp34 - 5, func_8013E9A8(0x14) - 5);
-            if (--D_8015EC74 == 0) {
-                func_8014EF3C();
+        if (rpg_actor_is_idle(0x38) != 0) {
+            rpg_trip_attack_hit_effect();
+            sp34 = rpg_rand(0x14);
+            rpg_actor_set_position(0x38, sp34 - 5, rpg_rand(0x14) - 5);
+            if (--rpg_scratch == 0) {
+                rpg_enemy_step_next();
             }
         }
         break;
     case 4:
-        if (func_8013E90C(0x38) != 0) {
-            func_8013E7C0(0x38, 0xFF, 5, 0);
-            func_8014EF3C();
-            D_8015EE48 = 1;
+        if (rpg_actor_is_idle(0x38) != 0) {
+            rpg_actor_set_animation(0x38, 0xFF, 5, 0);
+            rpg_enemy_step_next();
+            rpg_message_mode = 1;
         }
         break;
     case 5:
-        func_8014F178(1);
+        rpg_enemy_wait_msg_step(1);
         break;
     case 6:
-        func_8013EA60(0, 0x21, D_8015EBB0, 1);
-        func_8014EF3C();
+        rpg_apply_damage(0, 0x21, rpg_damage, 1);
+        rpg_enemy_step_next();
         break;
     case 7:
-        func_8014F178(0);
+        rpg_enemy_wait_msg_step(0);
         break;
     case 8:
-        func_8014F080(0x14);
+        rpg_enemy_wait_step(0x14);
         break;
     case 9:
-        func_8013D030();
-        func_8014EF8C();
+        rpg_player_pose_idle();
+        rpg_enemy_action_end();
         break;
     }
 }
@@ -133,7 +133,7 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/trip_enemy_attacks_and_rewards.roda
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/trip_enemy_attacks_and_rewards.rodata", D_8015D84C);
 
-void func_80152384(void) {
+void rpg_trip_loot_text(void) {
     RpgStrTbl4 spA0;
     RpgStrTbl4 sp90;
     RpgStrTbl4 sp80;
@@ -142,12 +142,12 @@ void func_80152384(void) {
     s32 count;
     RpgWordTbl4 sp64;
 
-    spA0 = D_8015EFA0;
-    sp90 = D_8015EFB0;
-    sp80 = D_8015EFC0;
-    sp64 = D_8015EFD0;
+    spA0 = rpg_loot_names_snake;
+    sp90 = rpg_loot_names_deer;
+    sp80 = rpg_loot_names_bear;
+    sp64 = rpg_loot_flags_init_trip;
     count = 0;
-    if (func_8013E9A8(5) == 0) {
+    if (rpg_rand(5) == 0) {
         n = 3;
     } else {
         n = 2;
@@ -155,26 +155,26 @@ void func_80152384(void) {
     i = 0;
     if (n > 0) {
         do {
-            sp64.v[func_8013E9A8(4)] = 1;
+            sp64.v[rpg_rand(4)] = 1;
             i += 1;
         } while (i != n);
     }
     for (i = 0; i < 4; i++) {
         if (sp64.v[i] == 1) {
-            strcpy(((u8 **)D_8015EB70)[count + 4], "おたから：");
-            switch (D_8015EB98) {
+            strcpy(((u8 **)rpg_text_result_pointers)[count + 4], "おたから：");
+            switch (rpg_encounter) {
             case 0x10000:
-                strcat(((u8 **)D_8015EB70)[count + 4], spA0.s[i]);
+                strcat(((u8 **)rpg_text_result_pointers)[count + 4], spA0.s[i]);
                 break;
             case 0x20000:
-                strcat(((u8 **)D_8015EB70)[count + 4], sp90.s[i]);
+                strcat(((u8 **)rpg_text_result_pointers)[count + 4], sp90.s[i]);
                 break;
             case 0x40000:
-                strcat(((u8 **)D_8015EB70)[count + 4], sp80.s[i]);
+                strcat(((u8 **)rpg_text_result_pointers)[count + 4], sp80.s[i]);
                 break;
             }
             count += 1;
         }
     }
-    D_8015ED14 = count + 4;
+    rpg_result_line_count = count + 4;
 }

@@ -239,12 +239,12 @@ void date_scene_mira_winter_background_2(void) {
 }
 
 void date_scene_mira_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl41 step_handlers;
 
-    tbl = date_scene_mira_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_mira_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_mira_spring_audio_command_2(void) {
@@ -274,23 +274,23 @@ void date_scene_mira_spring_answer_palette(void) {
 }
 
 void date_scene_mira_summer(void) {
-    u8 index;
-    DateCallbacks39 table;
+    u8 step_index;
+    DateMiraSummerSteps step_handlers;
 
-    table = date_scene_mira_summer_steps;
-    index = game_state.mode_step;
-    if ((index >= 27 || index < 8) && dec_bg_brightness == 0x80) {
+    step_handlers = date_scene_mira_summer_steps;
+    step_index = game_state.mode_step;
+    if ((step_index >= 27 || step_index < 8) && dec_bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
-    index = game_state.mode_step;
-    table.callback[index](0x80);
+    step_index = game_state.mode_step;
+    step_handlers.callback[step_index](0x80);
 }
 
 void date_scene_mira_summer_group_by_mood(void) {
-    u32 v;
+    u32 alternate_girl_state;
 
-    v = get_g_zyotai_h(GIRL_MIRA);
-    D_800CA150 = (v >= 1) + (v >= 2) + (v >= 3) + 1;
+    alternate_girl_state = get_g_zyotai_h(GIRL_MIRA);
+    D_800CA150 = (alternate_girl_state >= 1) + (alternate_girl_state >= 2) + (alternate_girl_state >= 3) + 1;
     date_scene_speak();
 }
 
@@ -301,12 +301,12 @@ void date_scene_mira_summer_load_data(void) {
 }
 
 void date_scene_mira_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl57 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateMiraAutumnSteps step_handlers;
 
-    tbl = date_scene_mira_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_mira_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_mira_autumn_answer_branch(void) {
@@ -351,17 +351,17 @@ void date_scene_mira_autumn_load_data(void) {
 }
 
 void date_scene_mira_winter(void) {
-    s32 idx;
-    DateDispatch80154004 tbl;
-    tbl = date_scene_mira_winter_steps;
+    s32 step_index;
+    DateMiraWinterSteps step_handlers;
+    step_handlers = date_scene_mira_winter_steps;
     if (game_state.mode_step < 9) {
         hud_sprite_light_effect_draw();
     }
     if ((game_state.mode_step >= 0x16) && (game_state.mode_step < 0x1C)) {
         hud_sprite_light_effect_draw();
     }
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_mira_winter_audio_command_1(void) {
@@ -379,14 +379,14 @@ void date_scene_mira_winter_load_data(void) {
  * widening CVT, whose CSE temporary (two compares) costs a 4-byte frame slot the original does not
  * have (0x70 against 0x68). Same words otherwise. T-17203 */
 void date_scene_mira_special(void) {
-    GameState *g = &game_state; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl15 tbl;
+    GameState *game = &game_state; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl15 step_handlers;
 
-    tbl = date_scene_mira_special_steps;
-    if (g->mode_step < 0xC) {
-        if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
-             (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
-             (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
+    step_handlers = date_scene_mira_special_steps;
+    if (game->mode_step < 0xC) {
+        if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
+             (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
+             (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
             dec_bg_brightness == 0x80) {
             hud_sprite_light_effect_draw();
         } else if (((DateSelectionView *)&D_800CA2F8)->place == 0x11 ||
@@ -394,5 +394,5 @@ void date_scene_mira_special(void) {
             hud_sprite_light_effect_draw();
         }
     }
-    tbl.f[g->mode_step](0x80);
+    step_handlers.callbacks[game->mode_step](0x80);
 }

@@ -743,104 +743,104 @@ void date_mode_handler(void) {
 }
 
 void date_mode_stage_arrival(void) {
-    /* FAKE: register avoids g's home word; three pads retain table +0x2C. T-24113 */
-    register GameState *g = &game_state;
-    s32 pad0, pad1, pad2; /* FAKE: unused words give the frame of the original; real source unknown. T-24113 */
-    u8 sel; /* FAKE: copy of D_800CA2F8 reproduces the hoisted lbu; real source unknown. T-24113 */
-    FnTbl76 tbl;
+    /* FAKE: register avoids game's home word; three pads retain table +0x2C. T-24113 */
+    register GameState *game = &game_state;
+    s32 fake_padding_0, fake_padding_1, fake_padding_2; /* FAKE: unused words give the frame of the original; real source unknown. T-24113 */
+    u8 fake_place_copy; /* FAKE: copy of D_800CA2F8 reproduces the hoisted lbu; real source unknown. T-24113 */
+    FnTbl76 step_handlers;
 
-    tbl = date_mode_stage_arrival_steps;
-    if (&date_place_setup_neighborhood_park == tbl.f[g->mode_step]) {
+    step_handlers = date_mode_stage_arrival_steps;
+    if (&date_place_setup_neighborhood_park == step_handlers.callbacks[game->mode_step]) {
         switch (D_800CA2F8) {
         case 1:
-            tbl.f[g->mode_step] = date_place_setup_central_park;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_central_park;
             break;
         case 2:
-            tbl.f[g->mode_step] = date_place_setup_shopping_street;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_shopping_street;
             break;
         case 3:
-            tbl.f[g->mode_step] = date_place_setup_aquarium;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_aquarium;
             break;
         case 4:
-            tbl.f[g->mode_step] = date_place_setup_zoo;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_zoo;
             break;
         case 5:
-            tbl.f[g->mode_step] = date_place_setup_botanical_garden;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_botanical_garden;
             break;
         case 6:
-            tbl.f[g->mode_step] = date_place_setup_planetarium;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_planetarium;
             break;
         case 7:
-            tbl.f[g->mode_step] = date_place_setup_art_museum;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_art_museum;
             break;
         case 8:
-            tbl.f[g->mode_step] = date_place_setup_library;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_library;
             break;
         case 9:
-            tbl.f[g->mode_step] = date_place_setup_game_center;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_game_center;
             break;
         case 10:
-            tbl.f[g->mode_step] = date_place_setup_bowling_alley;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_bowling_alley;
             break;
         case 11:
-            tbl.f[g->mode_step] = date_place_setup_karaoke;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_karaoke;
             break;
         case 12:
-            tbl.f[g->mode_step] = date_place_setup_amusement_park;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_amusement_park;
             break;
         case 13:
-            tbl.f[g->mode_step] = date_place_setup_stadium;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_stadium;
             break;
         case 14:
-            tbl.f[g->mode_step] = date_place_setup_movie_theater;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_movie_theater;
             break;
         case 15:
-            tbl.f[g->mode_step] = date_place_setup_concert_hall;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_concert_hall;
             break;
         case 16:
-            tbl.f[g->mode_step] = date_place_setup_pool;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_pool;
             break;
         case 17:
-            tbl.f[g->mode_step] = date_place_setup_sea;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_sea;
             break;
         case 18:
-            tbl.f[g->mode_step] = date_place_setup_shrine;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_shrine;
             break;
         case 19:
-            tbl.f[g->mode_step] = date_place_setup_skating_rink;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_skating_rink;
             break;
         case 20:
-            tbl.f[g->mode_step] = date_place_setup_ski_resort;
+            step_handlers.callbacks[game->mode_step] = date_place_setup_ski_resort;
             break;
         default:
             break;
         }
     }
-    sel = D_800CA2F8;
-    if (g->mode_step != 0) {
-        if (((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) {
+    fake_place_copy = D_800CA2F8;
+    if (game->mode_step != 0) {
+        if (((game->year == 0x5F) && (game->month == 7) && (game->day == 0x17)) || ((game->year == 0x60) && (game->month == 7) && (game->day == 0x1C)) || ((game->year == 0x61) && (game->month == 7) && (game->day == 0x1B))) {
             if (dec_bg_brightness == 0x80) {
                 hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             }
-        } else if ((sel == 0x11) && (dec_bg_brightness == 0x80) && (g->mode_step != 0x14) && (g->mode_step != 0x15)) {
+        } else if ((fake_place_copy == 0x11) && (dec_bg_brightness == 0x80) && (game->mode_step != 0x14) && (game->mode_step != 0x15)) {
             hud_sprite_light_effect_draw();
             D_80122D44 = 1;
         } else {
-            if ((sel == 0x10) && (dec_bg_brightness == 0x80) && (g->mode_step != 0x14) && (g->mode_step != 0x15)) {
+            if ((fake_place_copy == 0x10) && (dec_bg_brightness == 0x80) && (game->mode_step != 0x14) && (game->mode_step != 0x15)) {
                 hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
-            } else if ((g->mode_step == 0x14) && (game_state.appointment_place_0 == 0x11)) {
+            } else if ((game->mode_step == 0x14) && (game_state.appointment_place_0 == 0x11)) {
                 hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
-            } else if ((g->mode_step == 0x14) && (game_state.appointment_place_0 == 0x10)) {
+            } else if ((game->mode_step == 0x14) && (game_state.appointment_place_0 == 0x10)) {
                 hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             }
         }
     }
-    tbl.f[g->mode_step](0x80);
-    if ((D_800CA2F8 == 0xB) && (g->mode_step >= 0x2CU) && (g->mode_step < 0x30U) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
+    step_handlers.callbacks[game->mode_step](0x80);
+    if ((D_800CA2F8 == 0xB) && (game->mode_step >= 0x2CU) && (game->mode_step < 0x30U) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
         D_800CA2FC = 2;
         audio_command(0x601);
     }
@@ -849,188 +849,188 @@ void date_mode_stage_arrival(void) {
 /* FAKE: selector byte uses neighboring s16 symbol D_800CA2E8 + 0x10
  * (0x800CA2F8) to preserve comparison ordering. Aggregate ownership unknown. */
 void date_mode_stage_place(void) {
-    GameState *g = &game_state; /* FAKE: its home word is the 4 bytes above the tables (frame 0xE38); real source unknown. T-24011 */
-    FnTbl18 spDEC;
-    FnTbl35 spD60;
-    FnTbl48 spCA0;
-    FnTbl32 spC20;
-    FnTbl35 spB94;
-    FnTbl34 spB0C;
-    FnTbl36 spA7C;
-    FnTbl37 sp9E8;
-    FnTbl50 sp920;
-    FnTbl39 sp884;
-    FnTbl32 sp804;
-    FnTbl34 sp77C;
-    FnTbl104 sp5DC;
-    FnTbl29 sp568;
-    FnTbl45 sp4B4;
-    FnTbl41 sp410;
-    FnTbl35 sp384;
-    FnTbl76 sp254;
-    FnTbl74 sp12C;
-    FnTbl31 spB0;
-    FnTbl31 sp34;
-    void (**base)();
-    /* FAKE: in-comparison constant captures preserve operand order; declaring
-     * this byte after base preserves all 21 table offsets and frame. T-24051 */
-    u8 comparison;
+    GameState *game = &game_state; /* FAKE: its home word is the 4 bytes above the tables (frame 0xE38); real source unknown. T-24011 */
+    DateNeighborhoodParkSteps neighborhood_park_steps;
+    FnTbl35 central_park_steps;
+    DateShoppingStreetSteps shopping_street_steps;
+    FnTbl32 aquarium_steps;
+    FnTbl35 zoo_steps;
+    FnTbl34 botanical_garden_steps;
+    FnTbl36 planetarium_steps;
+    DateArtMuseumSteps art_museum_steps;
+    FnTbl50 library_steps;
+    FnTbl39 game_center_steps;
+    FnTbl32 bowling_steps;
+    FnTbl34 karaoke_steps;
+    DateAmusementParkSteps amusement_park_steps;
+    DateStadiumSteps stadium_steps;
+    FnTbl45 movie_theater_steps;
+    FnTbl41 concert_hall_steps;
+    FnTbl35 pool_steps;
+    FnTbl76 sea_steps;
+    DateShrineSteps shrine_steps;
+    DateWinterSportSteps skating_steps;
+    DateWinterSportSteps ski_steps;
+    void (**active_steps)();
+    /* FAKE: in-fake_comparison constant captures preserve operand order; declaring
+     * this byte after active_steps preserves all 21 table offsets and frame. T-24051 */
+    u8 fake_comparison;
 
-    spDEC = date_neighborhood_park_steps;
-    spD60 = date_central_park_steps;
-    spCA0 = date_shopping_street_steps;
-    spC20 = date_aquarium_steps;
-    spB94 = date_zoo_steps;
-    spB0C = date_botanical_garden_steps;
-    spA7C = date_planetarium_steps;
-    sp9E8 = date_art_museum_steps;
-    sp920 = date_library_steps;
-    sp884 = date_game_center_steps;
-    sp804 = date_bowling_alley_steps;
-    sp77C = date_karaoke_steps;
-    sp5DC = date_amusement_park_steps;
-    sp568 = date_stadium_steps;
-    sp4B4 = date_movie_theater_steps;
-    sp410 = date_concert_hall_steps;
-    sp384 = date_pool_steps;
-    sp254 = date_sea_steps;
-    sp12C = date_shrine_steps;
-    spB0 = date_skating_rink_steps;
-    sp34 = date_ski_resort_steps;
+    neighborhood_park_steps = date_neighborhood_park_steps;
+    central_park_steps = date_central_park_steps;
+    shopping_street_steps = date_shopping_street_steps;
+    aquarium_steps = date_aquarium_steps;
+    zoo_steps = date_zoo_steps;
+    botanical_garden_steps = date_botanical_garden_steps;
+    planetarium_steps = date_planetarium_steps;
+    art_museum_steps = date_art_museum_steps;
+    library_steps = date_library_steps;
+    game_center_steps = date_game_center_steps;
+    bowling_steps = date_bowling_alley_steps;
+    karaoke_steps = date_karaoke_steps;
+    amusement_park_steps = date_amusement_park_steps;
+    stadium_steps = date_stadium_steps;
+    movie_theater_steps = date_movie_theater_steps;
+    concert_hall_steps = date_concert_hall_steps;
+    pool_steps = date_pool_steps;
+    sea_steps = date_sea_steps;
+    shrine_steps = date_shrine_steps;
+    skating_steps = date_skating_rink_steps;
+    ski_steps = date_ski_resort_steps;
     switch (((u8 *)&D_800CA2E8)[0x10]) {
     case 0:
-        base = spDEC.f;
+        active_steps = neighborhood_park_steps.callbacks;
         break;
     case 1:
-        base = spD60.f;
+        active_steps = central_park_steps.callbacks;
         break;
     case 2:
-        base = spCA0.f;
+        active_steps = shopping_street_steps.callbacks;
         break;
     case 3:
-        base = spC20.f;
+        active_steps = aquarium_steps.callbacks;
         break;
     case 4:
-        base = spB94.f;
+        active_steps = zoo_steps.callbacks;
         break;
     case 5:
-        base = spB0C.f;
+        active_steps = botanical_garden_steps.callbacks;
         break;
     case 6:
-        base = spA7C.f;
+        active_steps = planetarium_steps.callbacks;
         break;
     case 7:
-        base = sp9E8.f;
+        active_steps = art_museum_steps.callbacks;
         break;
     case 8:
-        base = sp920.f;
+        active_steps = library_steps.callbacks;
         break;
     case 9:
-        base = sp884.f;
+        active_steps = game_center_steps.callbacks;
         break;
     case 10:
-        base = sp804.f;
+        active_steps = bowling_steps.callbacks;
         break;
     case 11:
-        base = sp77C.f;
+        active_steps = karaoke_steps.callbacks;
         break;
     case 12:
-        base = sp5DC.f;
+        active_steps = amusement_park_steps.callbacks;
         break;
     case 13:
-        base = sp568.f;
+        active_steps = stadium_steps.callbacks;
         break;
     case 14:
-        base = sp4B4.f;
+        active_steps = movie_theater_steps.callbacks;
         break;
     case 15:
-        base = sp410.f;
+        active_steps = concert_hall_steps.callbacks;
         break;
     case 16:
-        base = sp384.f;
+        active_steps = pool_steps.callbacks;
         break;
     case 17:
-        base = sp254.f;
+        active_steps = sea_steps.callbacks;
         break;
     case 18:
-        base = sp12C.f;
+        active_steps = shrine_steps.callbacks;
         break;
     case 19:
-        base = spB0.f;
+        active_steps = skating_steps.callbacks;
         break;
     case 20:
-        base = sp34.f;
+        active_steps = ski_steps.callbacks;
         break;
     default:
-        base = spDEC.f;
+        active_steps = neighborhood_park_steps.callbacks;
         break;
     }
-    if (&normal_date_move_place == base[g->mode_step]) {
-        if (g->substep == 0) {
+    if (&normal_date_move_place == active_steps[game->mode_step]) {
+        if (game->substep == 0) {
             date_girl_side = *(u8 *)&date_girl_side_next;
         }
-        if ((((u8 *)&D_800CA2E8)[0x10] != (comparison = 1)) && (((u8 *)&D_800CA2E8)[0x10] != 4) && (((u8 *)&D_800CA2E8)[0x10] != 0xC)) {
-            if (((g->substep == 0) && (date_girl_side == (comparison = 1))) || ((g->substep == 0xE) && (date_girl_side == 0))) {
+        if ((((u8 *)&D_800CA2E8)[0x10] != (fake_comparison = 1)) && (((u8 *)&D_800CA2E8)[0x10] != 4) && (((u8 *)&D_800CA2E8)[0x10] != 0xC)) {
+            if (((game->substep == 0) && (date_girl_side == (fake_comparison = 1))) || ((game->substep == 0xE) && (date_girl_side == 0))) {
                 date_girl_side_next = 1 - date_girl_side;
             }
         }
-        g->substep += 1;
+        game->substep += 1;
     }
-    if ((((g->year == 0x5F) && (g->month == 7) && (g->day == 0x17)) || ((g->year == 0x60) && (g->month == 7) && (g->day == 0x1C)) || ((g->year == 0x61) && (g->month == 7) && (g->day == 0x1B))) && (dec_bg_brightness == (comparison = 0x80)) && (*(u8 *)&date_girl_side_next != 0) && (date_ride_dispatch != base[g->mode_step])) {
+    if ((((game->year == 0x5F) && (game->month == 7) && (game->day == 0x17)) || ((game->year == 0x60) && (game->month == 7) && (game->day == 0x1C)) || ((game->year == 0x61) && (game->month == 7) && (game->day == 0x1B))) && (dec_bg_brightness == (fake_comparison = 0x80)) && (*(u8 *)&date_girl_side_next != 0) && (date_ride_dispatch != active_steps[game->mode_step])) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 1)) && (D_800CA2FC == 0) && (g->mode_step >= 0xC) && (g->mode_step < 0x15) && (g->month >= 3) && (g->month < 9) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 1)) && (D_800CA2FC == 0) && (game->mode_step >= 0xC) && (game->mode_step < 0x15) && (game->month >= 3) && (game->month < 9) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (g->mode_step >= 7) && (g->mode_step < 0x11) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (game->mode_step >= 7) && (game->mode_step < 0x11) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step < 8) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step < 8) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 9) && (g->mode_step < 0x1E) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 9) && (game->mode_step < 0x1E) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 0x1F) && (g->mode_step < 0x2C) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x1F) && (game->mode_step < 0x2C) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 0x2D) && (g->mode_step < 0x31) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x2D) && (game->mode_step < 0x31) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x11)) && (g->mode_step >= 0x3E) && (g->mode_step < 0x49) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x3E) && (game->mode_step < 0x49) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->mode_step < 8) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step < 8) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->mode_step >= 9) && (g->mode_step < 0x13) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step >= 9) && (game->mode_step < 0x13) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (comparison = 0x10)) && (g->mode_step >= 0x14) && (g->mode_step < 0x22) && (dec_bg_brightness == (comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step >= 0x14) && (game->mode_step < 0x22) && (dec_bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     }
-    base[g->mode_step](0x80);
-    if ((((u8 *)&D_800CA2E8)[0x10] == 0xC) && (g->mode_step >= 0x45) && (g->mode_step < 0x5B) && (D_80122D34 != 0)) {
+    active_steps[game->mode_step](0x80);
+    if ((((u8 *)&D_800CA2E8)[0x10] == 0xC) && (game->mode_step >= 0x45) && (game->mode_step < 0x5B) && (D_80122D34 != 0)) {
         D_80120653 |= 0x80;
         date_parade_sign_palette_cycle();
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0xC) && (g->mode_step >= 0x5B)) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0xC) && (game->mode_step >= 0x5B)) {
         D_80120653 &= 0x7F;
     }
     if (D_80122D14 != 0) {
         date_shrine_fireworks_update();
     }
-    if ((((u8 *)&D_800CA2E8)[0x10] == 1) && (g->mode_step >= 0xC)) {
-        if (g->mode_step < 0x15) {
+    if ((((u8 *)&D_800CA2E8)[0x10] == 1) && (game->mode_step >= 0xC)) {
+        if (game->mode_step < 0x15) {
             date_central_park_particles_update();
         }
     }
     if (((u8 *)&D_800CA2E8)[0x10] == 1) {
-        if (g->mode_step == 0x15) {
+        if (game->mode_step == 0x15) {
             date_central_park_particles_hide();
         }
     }
-    if ((((u8 *)&D_800CA2E8)[0x10] == 0xB) && (g->mode_step < 9) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
+    if ((((u8 *)&D_800CA2E8)[0x10] == 0xB) && (game->mode_step < 9) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
         D_800CA2FC = 2;
         audio_command(0x601);
     }

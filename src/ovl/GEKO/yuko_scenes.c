@@ -33,17 +33,17 @@ void encounter_yuko_scene_one_dispatch(void) {
 }
 
 typedef struct {
-    void (*f[53])();
-} FnTbl53; /* size 0xD4 */
-extern FnTbl53 encounter_yuko_scene_one_steps;
+    void (*callbacks[53])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/801393C0.c:36; func_801394EC at line39 copies this exact53-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterYukoSceneOneSteps; /* size 0xD4 */
+extern EncounterYukoSceneOneSteps encounter_yuko_scene_one_steps;
 
 void encounter_yuko_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl53 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterYukoSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_yuko_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yuko_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
     D_80120652 = 1;
 }
 

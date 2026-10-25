@@ -2677,7 +2677,7 @@ void k_disp_inc2(void) {
         D_80122CFC = 0;
         sp2B = get_k_speed();
         if (game_state.pad_held & 0x600060) {
-            k_speed_set(0);
+            k_speed_set(TEXT_SPEED_FAST);
         }
         k_disp_inc();
         k_speed_set(sp2B);

@@ -14,8 +14,8 @@ typedef struct {
 extern FnTbl23 encounter_yumi_scene_two_steps;
 
 typedef struct {
-    void (*f[61])();
-} FnTbl61; /* size 0xF4 */
+    void (*callbacks[61])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013F360.c:17; func_8013F850 at line152 copies this exact61-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterYumiSceneSevenSteps; /* size 0xF4 */
 
 void encounter_yumi_assets_bind_1(void) {
     encounter_yumi_pack_1_animation_input_2 = 0x801D21BC;
@@ -87,17 +87,17 @@ void encounter_yumi_scene_seven_dispatch(void) {
 }
 
 typedef struct {
-    void (*f[49])();
-} FnTbl49; /* size 0xC4 */
-extern FnTbl49 encounter_yumi_scene_one_steps;
+    void (*callbacks[49])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013F360.c:90; func_8013F5F0 at line93 copies this exact49-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterYumiSceneOneSteps; /* size 0xC4 */
+extern EncounterYumiSceneOneSteps encounter_yumi_scene_one_steps;
 
 void encounter_yumi_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl49 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterYumiSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_yumi_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yumi_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
 }
 
 void encounter_yumi_assets_load_1(void) {
@@ -107,12 +107,12 @@ void encounter_yumi_assets_load_1(void) {
 }
 
 void encounter_yumi_scene_two_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl23 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    FnTbl23 mode_step_callbacks;
 
-    tbl = encounter_yumi_scene_two_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yumi_scene_two_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.f[mode_step_index](0x80);
 }
 
 void encounter_yumi_scene_repeat_group_offset(void) {
@@ -139,24 +139,24 @@ void encounter_yumi_scene_repeat_skip(void) {
 }
 
 void encounter_yumi_girl_state_group_offset(void) {
-    u8 s;
+    u8 girl_state;
 
-    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (s >= 2U) {
+    girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (girl_state >= 2U) {
         D_800CA150 = (u16)D_800CA150 + 2;
     }
     mode_step_next();
 }
 
-extern FnTbl61 encounter_yumi_scene_seven_steps;
+extern EncounterYumiSceneSevenSteps encounter_yumi_scene_seven_steps;
 
 void encounter_yumi_scene_seven_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl61 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterYumiSceneSevenSteps mode_step_callbacks;
 
-    tbl = encounter_yumi_scene_seven_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_yumi_scene_seven_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
     if ((encounter_yumi_white_flash_enabled != 0) && (game_state.mode_step >= 0x20U)) {
         encounter_yumi_white_flash_draw();
     }
@@ -166,15 +166,15 @@ void encounter_yumi_scene_seven_step_dispatch(void) {
 }
 
 void encounter_yumi_closing_bg_request(void) {
-    s32 temp_v0;
+    s32 background_read_result;
 
     D_800B3D60 = 0;
-    temp_v0 = dec_bg_cd_read(0x3FCE, 0);
-    if (temp_v0 == *dec_bg_show) {
+    background_read_result = dec_bg_cd_read(0x3FCE, 0);
+    if (background_read_result == *dec_bg_show) {
         mode_step_next();
         mode_step_next();
         mode_step_next();
-    } else if (temp_v0 == (1 - *dec_bg_show)) {
+    } else if (background_read_result == (1 - *dec_bg_show)) {
         mode_step_next();
         mode_step_next();
     }
@@ -326,7 +326,7 @@ void encounter_yumi_closing_actors_init(void) {
  * keeps the post-call label that prevents as1 from hoisting $ra into the branch delay slot. T-24090 */
 void encounter_yumi_closing_actors_update(void) {
     s16 i;
-    s32 any;
+    s32 fake_any_actor;
 
     for (i = 0; i < 0xA; i++) {
         if (encounter_yumi_closing_actor_timer >= (u32)(i * 0x1E)) {
@@ -339,15 +339,15 @@ void encounter_yumi_closing_actors_update(void) {
             actor_pool[i * 0x44 + 0x1A4F] &= ~0x80;
         }
     }
-    any = 0;
+    fake_any_actor = 0;
     i = 0;
     do {
         if (actor_pool[i * 0x44 + 0x1A4F] & 0x80) {
-            any = 1;
+            fake_any_actor = 1;
         }
         i++;
     } while (i < 0xA);
-    if (any == 0 && rand()) {
+    if (fake_any_actor == 0 && rand()) {
     }
     encounter_yumi_closing_actor_timer += 1;
 }
@@ -399,7 +399,7 @@ void encounter_yumi_still_show_1(void) {
 }
 
 void encounter_yumi_scene_init_2(void) {
-    u8 state;
+    u8 girl_state;
 
     game_state.current_girl = GIRL_YUMI;
     draw2d3d(1, 0);
@@ -426,8 +426,8 @@ void encounter_yumi_scene_init_2(void) {
     encounter_scene_text_table = encounter_scene_text_section_68;
     encounter_scene_command_table = encounter_scene_command_section_68;
     encounter_scene_voice_table = encounter_scene_voice_section_68;
-    state = get_g_zyotai_s(GIRL_YUMI) & 0x7F;
-    if ((u32)state < 2U) {
+    girl_state = get_g_zyotai_s(GIRL_YUMI) & 0x7F;
+    if ((u32)girl_state < 2U) {
         game_state.girls[10].tokimeki += 1;
     }
     game_state.girls[10].affection += 2;
@@ -483,7 +483,7 @@ void encounter_yumi_scene_init_3(void) {
 
 void encounter_yumi_closing_still_show(void) {
     /* FAKE: unused 4-byte local places t0..t2 at the original stack offsets; real source unknown. T-24092 */
-    s32 pad;
+    s32 fake_stack_pad;
     s16 i;
     GekoShorts10 t0;
     GekoShorts10 t1;

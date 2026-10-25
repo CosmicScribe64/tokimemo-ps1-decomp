@@ -7,15 +7,15 @@
 extern s32 memcpy();
 extern s32 func_8004A1A0();
 
-void func_8013FF80(void) {
+void album_stage_load(void) {
     if (game_state.mode_step == 0) {
-        func_8013FFAC();
+        album_load_step();
     }
 }
 
-void func_80140AE4(void);
+void album_secret_mode_update(void);
 
-s32 func_8013FFAC(void) {
+s32 album_load_step(void) {
     /* FAKE: `register` makes i a VREG, so the dead entry read below is a direct unsigned
      * global stored into a VREG and cvt_pass.py emits OPTN 405 0 (zcopy off): the second
      * table loop keeps its runtime index. It replaces a dead two-case switch, whose extra VREG
@@ -43,9 +43,9 @@ s32 func_8013FFAC(void) {
         text_system_reset();
         back_clear_switch(1);
         tpage_buf_clear();
-        D_801500C0 = 0;
-        func_801408F0();
-        D_801500C4 = D_8014E070[game_state.current_girl % 13U];
+        album_voice_clip = 0;
+        album_tpage_slots_reset();
+        album_voice_clip_table = album_voice_clips[game_state.current_girl % 13U];
         audio_bank_load_start(0, 0xBF98, 0xBF98, 0xCFA7, 0xCF8B, 0xCF83);
         (*(u8 *)&game_state.substep) += 1;
     default:
@@ -76,7 +76,7 @@ s32 func_8013FFAC(void) {
         break;
     case 5:
         draw2d3d(1, 1);
-        func_8013F980();
+        album_model_init();
         func_80061710();
         func_80061790();
         func_800618B0();
@@ -97,7 +97,7 @@ s32 func_8013FFAC(void) {
         /* FAKE: the empty branch ends the uopt block, so j (set to 2 below) does not share a
          * block with 0x01000000, which then takes $a0 as in the original (T-25314) */
         goto split_peel; split_peel: ;
-        /* FAKE: explicit peel plus unsigned 2..6 loop, the matched func_8013CCE4 recipe
+        /* FAKE: explicit peel plus unsigned 2..6 loop, the matched album_playback_ui_restore recipe
          * (T-24706): the unsigned body sums do not CSE with the signed peel literals. T-25128 */
         sp54[0] = 0x80180600; sp54[1] = 0x80184600; for (j = 2; j < 6; j++) { k = j * 0x4000; sp54[j] = 0x80180600 + k; } /* the k temporary gives the shift $v0 and the pointer $v1 (T-25314) */
 
@@ -110,9 +110,9 @@ s32 func_8013FFAC(void) {
         (&D_801220E0)[0] = (&D_801220E1)[0] = (&D_801220E2)[0] = 0x80;
         game_state.screen_brightness = 0;
         memcpy((void *)0x801E2000, 0x80180600, 0x18000);
-        /* FAKE: flat view of D_8014DB90 as in func_8013CF2C; the * 2 index spends the
+        /* FAKE: flat view of album_intro_clip as in album_stage_finale; the * 2 index spends the
          * ugen slot the original spends. T-25128 */
-        cd_audio_request_set(((s32 *)D_8014DB90)[game_state.current_girl * 2], ((s32 *)D_8014DB90)[game_state.current_girl * 2 + 1], game_state.current_girl);
+        cd_audio_request_set(((s32 *)album_intro_clip)[game_state.current_girl * 2], ((s32 *)album_intro_clip)[game_state.current_girl * 2 + 1], game_state.current_girl);
         audio_command(0x300);
         (*(u8 *)&game_state.substep) += 1;
         break;
@@ -122,7 +122,7 @@ s32 func_8013FFAC(void) {
         }
         break;
     case 7:
-        func_80140AE4();
+        album_secret_mode_update();
         if ((u8) game_state.screen_brightness < 0x81U) {
             D_80122106 = game_state.screen_brightness;
             D_80122105 = game_state.screen_brightness;
@@ -130,7 +130,7 @@ s32 func_8013FFAC(void) {
             game_state.screen_brightness += 1;
         }
         if (cd_audio_state() & 2) {
-            D_801500DC += 1;
+            album_phase += 1;
             D_800B3CF8 = 0;
             D_800B3CFC = 0;
             D_800B3D00 = 0;
@@ -149,25 +149,25 @@ s32 func_8013FFAC(void) {
         }
         if (game_state.current_girl == GIRL_SHIORI) {
             if ((u32) game_state.mode_step_timer.w >= 0x1EU) {
-                func_8013F320(0);
-                if (D_8015006C >= 3) {
-                    D_8015006C = 0;
+                album_voice_play(0);
+                if (album_voice_state >= 3) {
+                    album_voice_state = 0;
                     (*(u8 *)&game_state.substep) += 1;
                 }
             }
         } else if (game_state.current_girl == GIRL_MEGUMI) {
             if ((u32) game_state.mode_step_timer.w >= 0x1EU) {
-                func_8013F320(0);
-                if (D_8015006C >= 3) {
-                    D_8015006C = 0;
+                album_voice_play(0);
+                if (album_voice_state >= 3) {
+                    album_voice_state = 0;
                     (*(u8 *)&game_state.substep) += 1;
                 }
             }
         } else if (game_state.current_girl == GIRL_REI) {
             if ((u32) game_state.mode_step_timer.w >= 0x1EU) {
-                func_8013F320(0);
-                if (D_8015006C >= 3) {
-                    D_8015006C = 0;
+                album_voice_play(0);
+                if (album_voice_state >= 3) {
+                    album_voice_state = 0;
                     (*(u8 *)&game_state.substep) += 1;
                 }
             }
@@ -188,7 +188,7 @@ s32 func_8013FFAC(void) {
         }
         break;
     case 10:
-        func_8013FC08();
+        album_clear_buffer_area();
         (*(u8 *)&game_state.substep) += 1;
         break;
     case 11:
@@ -197,70 +197,70 @@ s32 func_8013FFAC(void) {
         (*(u8 *)&game_state.substep) += 1;
         break;
     case 12:
-        D_801500D4 = 0x800;
-        func_8013FA7C();
+        album_model_angle = 0x800;
+        album_model_matrix_update();
         D_801220F4 = 0x80000000;
         (*(u8 *)&game_state.substep) += 1;
         break;
     case 13:
-        func_80140AE4();
+        album_secret_mode_update();
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            if ((D_801500D8 == 0) || (D_801500D8 == 2)) {
-                func_8013EEFC();
+            if ((album_secret_mode == 0) || (album_secret_mode == 2)) {
+                album_event_skip_other_girls();
             }
             (*(u8 *)&game_state.substep) += 1;
         }
         break;
     case 14:
-        if (D_80150070 >= 3) {
-            if (D_801500D4 >= 0xC00) {
-                D_80150070 = 0;
+        if (album_load_state >= 3) {
+            if (album_model_angle >= 0xC00) {
+                album_load_state = 0;
                 mode_stage_next();
             } else {
                 goto block_50;
             }
         } else {
 block_50:
-            if ((D_80150070 == -1) && (D_801500D4 >= 0xC00)) {
+            if ((album_load_state == -1) && (album_model_angle >= 0xC00)) {
                 mode_stage_next();
             } else {
-                func_8013E89C(1);
-                D_801500D4 += 8;
-                func_8013FA7C();
+                album_event_advance(1);
+                album_model_angle += 8;
+                album_model_matrix_update();
             }
         }
         break;
     }
 }
 
-void func_801407F0(void) {
+void album_entry(void) {
     game_state.mode_stage_timer += 1;
     switch (game_state.mode_stage) {
     case 0:
-        func_8013FF80();
+        album_stage_load();
         break;
     case 1:
-        func_8013BF34();
+        album_stage_playback();
         break;
     case 2:
-        func_8013CF2C();
+        album_stage_finale();
         break;
     case 0xFF:
-        func_80140FD8();
+        album_stage_save();
         break;
     }
     message_window_title_update();
     if (game_state.mode_stage != 0xFF) {
-        if (D_801500E0 == 0 && (game_state.pad_pressed & PAD_START)) {
-            func_8013FC08();
-            D_801500D4 = 0x800;
-            func_8013FA7C();
-            D_801500E0 = 1;
+        if (album_skip_requested == 0 && (game_state.pad_pressed & PAD_START)) {
+            album_clear_buffer_area();
+            album_model_angle = 0x800;
+            album_model_matrix_update();
+            album_skip_requested = 1;
             mode_stage_set(2);
         }
     }
 }
-void func_801408F0(void) {
+void album_tpage_slots_reset(void) {
     game_state.tpage_buf[10] = 0;
     game_state.tpage_buf[11] = 0;
     game_state.tpage_buf[12] = 0;
@@ -311,37 +311,37 @@ void func_801408F0(void) {
     game_state.tpage_buf[55] = -1;
     game_state.tpage_buf[56] = -1;
     game_state.tpage_buf[57] = -1;
-    if ((func_8013F3F8() == 1) && (D_80150060 == 0xFF)) {
+    if ((album_event_is_special_portrait() == 1) && (album_event_weekday == 0xFF)) {
         game_state.tpage_buf[7] = 0;
     }
 }
 
-void func_80140AE4(void) {
-    func_80140BC4();
-    func_80140DC8();
-    /* FAKE: do-while block puts D_801500DC in $v0 instead of $a0; real source unknown. T-24207 */
-    do { func_80140E80(); } while (0);
-    if (D_801500DC == 0) {
+void album_secret_mode_update(void) {
+    album_cleared_level();
+    album_event_flag_count_check();
+    /* FAKE: do-while block puts album_phase in $v0 instead of $a0; real source unknown. T-24207 */
+    do { album_all_met_check(); } while (0);
+    if (album_phase == 0) {
         /* FAKE: `!= 0` costs one ugen temporary and no code, so the rotor starts at $t7. T-24207 */
-        if (((func_80143240() == 1) != 0) && (game_state.pad_held & 0x09000000)) {
-            if (D_801500D8 != 1) {
+        if (((misc_all_girls_cleared() == 1) != 0) && (game_state.pad_held & 0x09000000)) {
+            if (album_secret_mode != 1) {
                 audio_command(0x50E);
             }
-            D_801500D8 = 1;
+            album_secret_mode = 1;
         }
-    } else if (D_801500DC == 1) {
+    } else if (album_phase == 1) {
         if (D_800B3CFC == 1) {
             audio_command(0x50E);
-            if (D_801500D8 == 1) {
-                D_801500D8 = 3;
+            if (album_secret_mode == 1) {
+                album_secret_mode = 3;
             } else {
-                D_801500D8 = 2;
+                album_secret_mode = 2;
             }
         }
     }
 }
 
-s32 func_80140BC4(void) {
+s32 album_cleared_level(void) {
     s32 r;
     r = 0;
     if (game_state.options_dirty == 0) {
@@ -356,7 +356,7 @@ s32 func_80140BC4(void) {
     return r;
 }
 
-s32 func_80140DC8(void) {
+s32 album_event_flag_count_check(void) {
     s32 i;
     s32 n;
 
@@ -372,7 +372,7 @@ s32 func_80140DC8(void) {
     return 0;
 }
 
-s32 func_80140E80(void) {
+s32 album_all_met_check(void) {
     s32 i;
     s32 n;
 

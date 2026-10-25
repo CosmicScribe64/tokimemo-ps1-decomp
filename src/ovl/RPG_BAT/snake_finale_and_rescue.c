@@ -1,230 +1,230 @@
-/* snake_finale_and_rescue.c: src/ovl/RPG_BAT/80145CC0.c:11: snake finale; body 12: switch (D_8015EDD8) {; 15: func_8013E97C(0x38, 0, 0);; enemy identity from snake name-label creation src/ovl/RPG_BAT/labels_intro_and_wave_transition.c:24; encounter 0x10000 finale dispatch src/ovl/RPG_BAT/8013C890.c:17. Original object 0x80145CC0-0x801468B0 (config/objects/RPG_BAT.txt). */
-#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the calls' $v0 moves the D_8015EDE0 timer to $v1 (T-17101) */
-#define RPG_BAT_OVERRIDE_func_8013E97C /* implicit int view, same reason (T-17101) */
-#define RPG_BAT_OVERRIDE_func_8013F15C /* implicit int view: the call's $v0 moves the D_8015EDDC selector of func_80146578 to $v1 (T-17101) */
+/* snake_finale_and_rescue.c: src/ovl/RPG_BAT/80145CC0.c:11: snake finale; body 12: switch (rpg_enemy_step) {; 15: rpg_actor_set_position(0x38, 0, 0);; enemy identity from snake name-label creation src/ovl/RPG_BAT/labels_intro_and_wave_transition.c:24; encounter 0x10000 finale dispatch src/ovl/RPG_BAT/8013C890.c:17. Original object 0x80145CC0-0x801468B0 (config/objects/RPG_BAT.txt). */
+#define RPG_BAT_OVERRIDE_rpg_actor_set_animation /* implicit int view: the calls' $v0 moves the rpg_enemy_timer_a timer to $v1 (T-17101) */
+#define RPG_BAT_OVERRIDE_rpg_actor_set_position /* implicit int view, same reason (T-17101) */
+#define RPG_BAT_OVERRIDE_rpg_se_play_latched_5xx /* implicit int view: the call's $v0 moves the rpg_enemy_substep selector of rpg_snake_finale_rescuer_strike to $v1 (T-17101) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-s32 func_8013E7C0();
-s32 func_8013E97C();
-s32 func_8013F15C();
+s32 rpg_actor_set_animation();
+s32 rpg_actor_set_position();
+s32 rpg_se_play_latched_5xx();
 
-void func_80145CC0(void) {
-    switch (D_8015EDD8) {
+void rpg_enemy_snake_finale(void) {
+    switch (rpg_enemy_step) {
     case 0:
-        strcpy(D_8015E828, "　　　　アストラルファング　　　　");
-        func_8013E97C(0x38, 0, 0);
+        strcpy(rpg_text_enemy_0, "　　　　アストラルファング　　　　");
+        rpg_actor_set_position(0x38, 0, 0);
         D_80121531 = 4;
-        func_8013E7C0(0x38, 1, 1, 1);
-        func_8014EF3C();
+        rpg_actor_set_animation(0x38, 1, 1, 1);
+        rpg_enemy_step_next();
         break;
     case 1:
-        func_8014F080(0x3C);
+        rpg_enemy_wait_step(0x3C);
         break;
     case 2:
-        func_8014B738((s32) D_8015E8F0, 1, 0x3C);
-        func_8013E7C0(0x38, 0xFF, 1, 0);
-        func_8014EF3C();
+        rpg_message_show((s32) rpg_text_enemy_pointers, 1, 0x3C);
+        rpg_actor_set_animation(0x38, 0xFF, 1, 0);
+        rpg_enemy_step_next();
         break;
     case 3:
-        func_8014F080(0x14);
+        rpg_enemy_wait_step(0x14);
         break;
     case 4:
-        func_8013E7C0(0x38, 2, 5, 1);
-        func_8013F15C(0x507, 1, 0);
-        func_8014EF3C();
+        rpg_actor_set_animation(0x38, 2, 5, 1);
+        rpg_se_play_latched_5xx(0x507, 1, 0);
+        rpg_enemy_step_next();
         break;
     case 5:
-        D_8015EDE0 += 3;
-        func_8013E97C(0x38, (s32) (D_8015EDE0 * 0x90) / 100, 0);
-        if (D_8015EDE0 >= 0x65) {
-            func_8013F15C(0x506, 1, 0);
-            func_8013E97C(0x38, 0x90, 0);
-            func_8013E7C0(0x38, 3, 1, 1);
-            func_8014EF3C();
+        rpg_enemy_timer_a += 3;
+        rpg_actor_set_position(0x38, (s32) (rpg_enemy_timer_a * 0x90) / 100, 0);
+        if (rpg_enemy_timer_a >= 0x65) {
+            rpg_se_play_latched_5xx(0x506, 1, 0);
+            rpg_actor_set_position(0x38, 0x90, 0);
+            rpg_actor_set_animation(0x38, 3, 1, 1);
+            rpg_enemy_step_next();
         }
         break;
     case 6:
-        func_8014F080(0xA);
+        rpg_enemy_wait_step(0xA);
         break;
     case 7:
-        func_8013EA60(0, 0x21, D_8015ED94 - 3, 1);
-        func_8013E7C0(0x38, 0xFF, 1, 0);
-        func_8013E7C0(0x30, 4, 1, 1);
-        D_8015ED98 = 0x1000;
-        func_8014EF3C();
+        rpg_apply_damage(0, 0x21, rpg_player_hit_points - 3, 1);
+        rpg_actor_set_animation(0x38, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x30, 4, 1, 1);
+        rpg_player_action = 0x1000;
+        rpg_enemy_step_next();
         break;
     case 8:
-        func_8014F080(0x96);
+        rpg_enemy_wait_step(0x96);
         break;
     case 9:
-        strcpy(D_8015E828, game_state.player_family_name);
-        strcat(D_8015E828, "「だめだ！　やられてしまう！");
-        func_8014B738((s32) D_8015E8F0, 1, 0x78);
-        func_8014EF3C();
+        strcpy(rpg_text_enemy_0, game_state.player_family_name);
+        strcat(rpg_text_enemy_0, "「だめだ！　やられてしまう！");
+        rpg_message_show((s32) rpg_text_enemy_pointers, 1, 0x78);
+        rpg_enemy_step_next();
         break;
     case 10:
-        func_8014F178(1);
+        rpg_enemy_wait_msg_step(1);
         break;
     case 11:
-        strcpy(D_8015E828, "？？？「ピキィー！");
-        func_8014B738((s32) D_8015E8F0, 1, 0x5A);
-        func_8014EF3C();
+        strcpy(rpg_text_enemy_0, "？？？「ピキィー！");
+        rpg_message_show((s32) rpg_text_enemy_pointers, 1, 0x5A);
+        rpg_enemy_step_next();
         break;
     case 12:
-        func_8014F080(0xA);
+        rpg_enemy_wait_step(0xA);
         break;
     case 13:
-        func_8013F15C(0x50B, 1, 0);
-        func_8014EF3C();
+        rpg_se_play_latched_5xx(0x50B, 1, 0);
+        rpg_enemy_step_next();
         break;
     case 14:
-        func_8014F178(1);
+        rpg_enemy_wait_msg_step(1);
         break;
     case 15:
-        strcpy(D_8015E828, game_state.player_family_name);
-        strcat(D_8015E828, "「なっ、なんだ！");
-        func_8014B738((s32) D_8015E8F0, 1, 0x5A);
-        func_8014EF3C();
+        strcpy(rpg_text_enemy_0, game_state.player_family_name);
+        strcat(rpg_text_enemy_0, "「なっ、なんだ！");
+        rpg_message_show((s32) rpg_text_enemy_pointers, 1, 0x5A);
+        rpg_enemy_step_next();
         break;
     case 16:
-        func_8014F178(1);
+        rpg_enemy_wait_msg_step(1);
         break;
     case 17:
-        D_8015EDE0 += 1;
-        if (D_8015EDE0 < 0x3D) {
+        rpg_enemy_timer_a += 1;
+        if (rpg_enemy_timer_a < 0x3D) {
 
-            if (!(D_8015EDE0 & 1)) {
-                func_8013E7C0(0x30, 0xFF, 1, 0);
-                if (D_8015EB9C != 0xE) {
-                    func_8013E7C0(0x1D, 0xFF, 1, 0);
+            if (!(rpg_enemy_timer_a & 1)) {
+                rpg_actor_set_animation(0x30, 0xFF, 1, 0);
+                if (rpg_girl_id != 0xE) {
+                    rpg_actor_set_animation(0x1D, 0xFF, 1, 0);
                 }
             } else {
-                func_8013E7C0(0x30, 0xFF, 1, 1);
-                if (D_8015EB9C != 0xE) {
-                    func_8013E7C0(0x1D, 0xFF, 1, 1);
+                rpg_actor_set_animation(0x30, 0xFF, 1, 1);
+                if (rpg_girl_id != 0xE) {
+                    rpg_actor_set_animation(0x1D, 0xFF, 1, 1);
                 }
             }
         }
-        func_8013E97C(0x28, 0, 0);
-        if (D_8015EDE0 >= 0x3D) {
+        rpg_actor_set_position(0x28, 0, 0);
+        if (rpg_enemy_timer_a >= 0x3D) {
 
-            if (!(D_8015EDE0 & 1)) {
-                func_8013E7C0(0x28, 0, 1, 1);
+            if (!(rpg_enemy_timer_a & 1)) {
+                rpg_actor_set_animation(0x28, 0, 1, 1);
             } else {
-                func_8013E7C0(0x28, 0, 1, 0);
+                rpg_actor_set_animation(0x28, 0, 1, 0);
             }
         }
-        if (D_8015EDE0 >= 0x78) {
-            func_8014EF3C();
+        if (rpg_enemy_timer_a >= 0x78) {
+            rpg_enemy_step_next();
         }
         break;
     case 18:
-        strcpy(D_8015E828, "正義のマングース参上！");
-        strcpy(D_8015E850, "　　　　　マングース斬鉄剣　　　　　");
-        func_8014B738((s32) D_8015E8F0, 2, 0x5A);
-        D_8015EE18 ^= 0x10000000;
-        func_8014EF3C();
+        strcpy(rpg_text_enemy_0, "正義のマングース参上！");
+        strcpy(rpg_text_enemy_1, "　　　　　マングース斬鉄剣　　　　　");
+        rpg_message_show((s32) rpg_text_enemy_pointers, 2, 0x5A);
+        rpg_guest_value ^= 0x10000000;
+        rpg_enemy_step_next();
         break;
     case 19:
-        func_8014F178(1);
+        rpg_enemy_wait_msg_step(1);
         break;
     case 20:
-        func_8013E7C0(0x28, 1, 5, 1);
-        func_8013F15C(0x509, 1, 0);
-        func_8014EF3C();
+        rpg_actor_set_animation(0x28, 1, 5, 1);
+        rpg_se_play_latched_5xx(0x509, 1, 0);
+        rpg_enemy_step_next();
         break;
     case 21:
-        if (func_8013E90C(0x28) != 0) {
-            func_8013E7C0(0x28, 2, 1, 1);
-            func_8013F15C(0x50A, 1, 0);
-            func_8014EF3C();
+        if (rpg_actor_is_idle(0x28) != 0) {
+            rpg_actor_set_animation(0x28, 2, 1, 1);
+            rpg_se_play_latched_5xx(0x50A, 1, 0);
+            rpg_enemy_step_next();
         }
         break;
     case 22:
-        D_8015EDE0 += 1;
-        func_8013E97C(0x28, (-D_8015EDE0) << 3, 0);
-        if ((D_8015EDE0 == 0x13) || (D_8015EDE0 == 0x16) || (D_8015EDE0 == 0x19) || (D_8015EDE0 == 0x1C)) {
-            func_8013EA30(0xFF);
+        rpg_enemy_timer_a += 1;
+        rpg_actor_set_position(0x28, (-rpg_enemy_timer_a) << 3, 0);
+        if ((rpg_enemy_timer_a == 0x13) || (rpg_enemy_timer_a == 0x16) || (rpg_enemy_timer_a == 0x19) || (rpg_enemy_timer_a == 0x1C)) {
+            rpg_fade_set_level(0xFF);
         } else {
-            func_8013EA30(0x80);
+            rpg_fade_set_level(0x80);
         }
-        if (D_8015EDE0 >= 0x26) {
-            func_8014EF3C();
+        if (rpg_enemy_timer_a >= 0x26) {
+            rpg_enemy_step_next();
         }
         break;
     case 23:
-        func_8014F080(0x1E);
+        rpg_enemy_wait_step(0x1E);
         break;
     case 24:
-        func_8013E97C(0x28, -0xC0, -0xA0);
-        func_8013E7C0(0x28, 3, 1, 1);
-        func_8013F15C(0x50A, 1, 0);
-        func_8014EF3C();
+        rpg_actor_set_position(0x28, -0xC0, -0xA0);
+        rpg_actor_set_animation(0x28, 3, 1, 1);
+        rpg_se_play_latched_5xx(0x50A, 1, 0);
+        rpg_enemy_step_next();
         break;
     case 25:
-        D_8015EDE0 += 1;
-        func_8013E97C(0x28, -0xC0, (D_8015EDE0 * 8) - 0xA0);
-        if ((D_8015EDE0 == 0xD) || (D_8015EDE0 == 0x10) || (D_8015EDE0 == 0x13) || (D_8015EDE0 == 0x16)) {
-            func_8013EA30(0xFF);
+        rpg_enemy_timer_a += 1;
+        rpg_actor_set_position(0x28, -0xC0, (rpg_enemy_timer_a * 8) - 0xA0);
+        if ((rpg_enemy_timer_a == 0xD) || (rpg_enemy_timer_a == 0x10) || (rpg_enemy_timer_a == 0x13) || (rpg_enemy_timer_a == 0x16)) {
+            rpg_fade_set_level(0xFF);
         } else {
-            func_8013EA30(0x80);
+            rpg_fade_set_level(0x80);
         }
-        if (D_8015EDE0 >= 0x1F) {
-            func_8014EF3C();
+        if (rpg_enemy_timer_a >= 0x1F) {
+            rpg_enemy_step_next();
         }
         break;
     case 26:
-        func_8014F080(0x3C);
+        rpg_enemy_wait_step(0x3C);
         break;
     case 27:
-        func_80146578();
+        rpg_snake_finale_rescuer_strike();
         break;
     case 28:
-        func_8014F080(0x1E);
+        rpg_enemy_wait_step(0x1E);
         break;
     case 29:
-        func_8013E7C0(0x30, 0, 1, 1);
-        if (D_8015EB9C != 0xE) {
-            func_8013E7C0(0x1D, 0, 1, 1);
+        rpg_actor_set_animation(0x30, 0, 1, 1);
+        if (rpg_girl_id != 0xE) {
+            rpg_actor_set_animation(0x1D, 0, 1, 1);
         }
-        k_disp_switch(D_8015EDE8, 0);
-        strcpy(D_8015E9E0, "戦闘に勝った！！");
-        strcpy(D_8015EA08, "ありがとう、正義のマングース");
-        strcpy(D_8015EA30, "経験値　：８２０ＥＸＰ");
-        strcpy(D_8015EA58, "お金　　：１７５ゴールド");
-        func_80152384();
-        func_8014EF3C();
+        k_disp_switch(rpg_label_enemy, 0);
+        strcpy(rpg_text_result_0, "戦闘に勝った！！");
+        strcpy(rpg_text_result_1, "ありがとう、正義のマングース");
+        strcpy(rpg_text_result_2, "経験値　：８２０ＥＸＰ");
+        strcpy(rpg_text_result_3, "お金　　：１７５ゴールド");
+        rpg_trip_loot_text();
+        rpg_enemy_step_next();
         break;
     case 30:
-        func_8014F080(0x3C);
+        rpg_enemy_wait_step(0x3C);
         break;
     case 31:
         audio_bank_start(1, 0x202);
-        func_8014EF3C();
+        rpg_enemy_step_next();
         break;
     case 32:
-        func_8014B738((s32) D_8015EB70, D_8015ED14, 0x5A);
-        func_8013E7C0(0x30, 9, 1, 1);
-        if (D_8015EB9C != 0xE) {
-            func_8013E7C0(0x1D, 4, 1, 1);
+        rpg_message_show((s32) rpg_text_result_pointers, rpg_result_line_count, 0x5A);
+        rpg_actor_set_animation(0x30, 9, 1, 1);
+        if (rpg_girl_id != 0xE) {
+            rpg_actor_set_animation(0x1D, 4, 1, 1);
         }
-        func_8014EF3C();
+        rpg_enemy_step_next();
         break;
     case 33:
-        func_8014F178(0);
+        rpg_enemy_wait_msg_step(0);
         break;
     case 34:
         mode_stage_next();
         break;
     default:
-        func_8014EF8C();
+        rpg_enemy_action_end();
         break;
     }
 }
 
-/* The caller (func_80145CC0) calls this without a prototype, so it is int here and returns nothing (K&R). */
-s32 func_80146578(void) {
+/* The caller (rpg_enemy_snake_finale) calls this without a prototype, so it is int here and returns nothing (K&R). */
+s32 rpg_snake_finale_rescuer_strike(void) {
     s32 timer; /* also the loop counter of the three loops */
     s32 x_neg;
     s32 bounce;
@@ -232,58 +232,58 @@ s32 func_80146578(void) {
     s32 y;
     s32 zero[1]; /* FAKE: a one-word array keeps the 0 in its stack word and reloads it for the later calls (a scalar is folded away); T-17101 */
 
-    func_8013F15C(0x508, 0, 1);
-    switch (D_8015EDDC) {
+    rpg_se_play_latched_5xx(0x508, 0, 1);
+    switch (rpg_enemy_substep) {
     case 0:
         for (timer = 0; timer < 12; timer++) {
-            ((Actor *)actor_pool)[timer + 148].frame_table = (u8 *)D_8015EEA8;
-            ((Actor *)actor_pool)[timer + 148].sequence_table = (u8 *)D_8015EEC0;
-            ((Actor *)actor_pool)[timer + 148].tpage_table = (u8 *)D_8015EE90;
+            ((Actor *)actor_pool)[timer + 148].frame_table = (u8 *)rpg_asset_frames_1;
+            ((Actor *)actor_pool)[timer + 148].sequence_table = (u8 *)rpg_asset_animation_1;
+            ((Actor *)actor_pool)[timer + 148].tpage_table = (u8 *)rpg_asset_sheet_1;
             ((Actor *)actor_pool)[timer + 148].quad_flags = 0x41000000;
             ((Actor *)actor_pool)[timer + 148].brightness = 0x80;
             ((Actor *)actor_pool)[timer + 148].unk_43 = 0x13;
-            func_8013E97C(timer + 0x34, 0, 0);
-            func_8013E7C0(timer + 0x34, timer + 5, 1, 1);
+            rpg_actor_set_position(timer + 0x34, 0, 0);
+            rpg_actor_set_animation(timer + 0x34, timer + 5, 1, 1);
         }
-        func_8014EF6C();
+        rpg_enemy_substep_next();
         break;
     case 1:
-        D_8015EDE0 += 1;
-        timer = D_8015EDE0;
+        rpg_enemy_timer_a += 1;
+        timer = rpg_enemy_timer_a;
         bounce = rsin((timer << 11) / 100) >> 8;
         x_neg = (timer * -0x30) / 100;
-        func_8013E97C(0x34, x_neg, x_neg - bounce);
+        rpg_actor_set_position(0x34, x_neg, x_neg - bounce);
         y = x_neg - bounce;
         /* FAKE: the store of 0 rides in the argument so it lands in the call's delay slot; T-17101 */
-        func_8013E97C(0x35, zero[0] = 0, y);
+        rpg_actor_set_position(0x35, zero[0] = 0, y);
         x_pos = (timer * 0x30) / 100;
-        func_8013E97C(0x36, x_pos, y);
+        rpg_actor_set_position(0x36, x_pos, y);
         y = ((timer * -0x10) / 100) - bounce;
-        func_8013E97C(0x37, x_neg, y);
-        func_8013E97C(0x38, zero[0], y);
-        func_8013E97C(0x39, x_pos, y);
+        rpg_actor_set_position(0x37, x_neg, y);
+        rpg_actor_set_position(0x38, zero[0], y);
+        rpg_actor_set_position(0x39, x_pos, y);
         y = ((timer * 0x10) / 100) - bounce;
-        func_8013E97C(0x3A, x_neg, y);
-        func_8013E97C(0x3B, zero[0], y);
-        func_8013E97C(0x3C, x_pos, y);
-        func_8013E97C(0x3D, (timer * 0x60) / 100, y);
+        rpg_actor_set_position(0x3A, x_neg, y);
+        rpg_actor_set_position(0x3B, zero[0], y);
+        rpg_actor_set_position(0x3C, x_pos, y);
+        rpg_actor_set_position(0x3D, (timer * 0x60) / 100, y);
         y = x_pos - bounce;
-        func_8013E97C(0x3E, zero[0], y);
-        func_8013E97C(0x3F, x_pos, y);
-        if (D_8015EDE0 >= 0x51) {
-            if (!(D_8015EDE0 & 1)) {
+        rpg_actor_set_position(0x3E, zero[0], y);
+        rpg_actor_set_position(0x3F, x_pos, y);
+        if (rpg_enemy_timer_a >= 0x51) {
+            if (!(rpg_enemy_timer_a & 1)) {
                 for (timer = 0; timer < 12; timer++) {
-                    func_8013E7C0(timer + 0x34, timer + 5, 1, 1);
+                    rpg_actor_set_animation(timer + 0x34, timer + 5, 1, 1);
                 }
             } else {
                 for (timer = 0; timer < 12; timer++) {
-                    func_8013E7C0(timer + 0x34, timer + 5, 1, 0);
+                    rpg_actor_set_animation(timer + 0x34, timer + 5, 1, 0);
                 }
             }
         }
-        if (D_8015EDE0 >= 0x65) {
-            D_8015EE18 ^= 0x10000000;
-            func_8014EF3C();
+        if (rpg_enemy_timer_a >= 0x65) {
+            rpg_guest_value ^= 0x10000000;
+            rpg_enemy_step_next();
         }
         break;
     }

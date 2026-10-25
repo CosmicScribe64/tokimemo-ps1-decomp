@@ -191,12 +191,12 @@ void date_scene_megumi_winter_background_1(void) {
 }
 
 void date_scene_megumi_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl47 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl47 step_handlers;
 
-    tbl = date_scene_megumi_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_megumi_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_megumi_spring_speak_unhidden(void) {
@@ -220,17 +220,17 @@ void date_scene_megumi_spring_load_data(void) {
 }
 
 void date_scene_megumi_summer(void) {
-    GameState *g = &game_state; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl63 tbl;
+    GameState *game = &game_state; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateMegumiSummerSteps step_handlers;
 
-    tbl = date_scene_megumi_summer_steps;
-    if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
-         (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
-         (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
+    step_handlers = date_scene_megumi_summer_steps;
+    if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
+         (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
+         (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
         dec_bg_brightness == 0x80 && D_80122D04 == 0) {
         hud_sprite_light_effect_draw();
     }
-    tbl.f[g->mode_step](0x80);
+    step_handlers.callbacks[game->mode_step](0x80);
 }
 
 void date_scene_megumi_summer_load_data(void) {
@@ -265,12 +265,12 @@ void date_scene_megumi_summer_audio_command_5(void) {
 }
 
 void date_scene_megumi_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl42 step_handlers;
 
-    tbl = date_scene_megumi_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_megumi_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_megumi_autumn_load_data(void) {
@@ -280,12 +280,12 @@ void date_scene_megumi_autumn_load_data(void) {
 }
 
 void date_scene_megumi_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl36 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl36 step_handlers;
 
-    tbl = date_scene_megumi_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_megumi_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_megumi_winter_load_data(void) {

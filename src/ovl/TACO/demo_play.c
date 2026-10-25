@@ -2,73 +2,73 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-s32 func_80137590(void) {
+s32 shooter_stage_demo(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013760C();
+        shooter_demo_step_init();
         break;
     case 1:
-        func_8013788C();
+        shooter_demo_step_run();
         break;
     }
     if (game_state.frame_count & 0x10) {
-        func_801432F0("DEMO PLAY", -0x40, 0, 2);
+        shooter_draw_text("DEMO PLAY", -0x40, 0, 2);
     }
 }
 
 /* s32 without a return (v0 live at the exit) and the u8 view of the selector reproduce the original switch; the empty
    default adds the basic blocks that keep the 0x801AC000 constant out of a third s register. T-16561 */
-s32 func_8013760C(void) {
+s32 shooter_demo_step_init(void) {
     s32 i;
     s32 end;
 
     switch (*(u8 *)&game_state.substep) {
     case 0:
-        func_8013AFDC();
-        D_8015F4F0 = 0x80;
-        D_8015EDCC = 0;
-        D_8015EDF0 = 0;
-        D_8015EDB0 = 0x80;
-        D_8015EDEC = 0x4650;
-        func_80134884();
-        D_8015EDBC = 0x10;
+        shooter_init_stars();
+        shooter_star_brightness = 0x80;
+        shooter_stages_cleared = 0;
+        shooter_score = 0;
+        shooter_background_flags = 0x80;
+        shooter_time_left = 0x4650;
+        shooter_clear_particle_tables();
+        shooter_load_request = 0x10;
         game_state.clear_color_r = 0;
         game_state.clear_color_g = 0;
         game_state.clear_color_b = 0;
         func_800591D8(1);
         k_reset(0);
         back_clear_switch(1);
-        func_80143A74();
-        func_8014394C();
+        shooter_init_camera();
+        shooter_set_white_lights();
         func_80059048();
-        func_801347A8();
-        func_80143AF4();
+        shooter_hide_all_models();
+        shooter_release_all_actor_models();
         i = 0;
         end = 0x29F8;
         do {
             /* FAKE: the (u8 *)i + (u32)ptr form puts the index first in the addu, as the original; plain ptr + i puts the pointer first. T-16561 */
-            func_80099E30(0, (u8 *)i + (u32)D_8015EDB4 + 0x14);
-            func_801438F0(0x801AC000, 0, (u8 *)i + (u32)D_8015EDB4);
+            func_80099E30(0, (u8 *)i + (u32)shooter_actors + 0x14);
+            shooter_init_actor_model(0x801AC000, 0, (u8 *)i + (u32)shooter_actors);
             i += 0x88;
         } while (i != end);
-        func_801322AC();
-        func_80132220();
-        func_801334BC();
+        shooter_init_ships();
+        shooter_reset_ship_state();
+        shooter_clear_player_shots();
         D_8011ED17 &= 0x7F;
         game_state.substep += 1;
         break;
     case 1:
-        if (D_8015EDBC == 0) {
-            func_8015ABF0();
-            D_8015EDB0 = 0x80;
-            D_8015EDB4[0].unk84[1] = 0xFF;
-            D_8015EDB4[8].unk84[1] = 0xFF;
+        if (shooter_load_request == 0) {
+            shooter_reset_enemies();
+            shooter_background_flags = 0x80;
+            shooter_actors[0].stats[1] = 0xFF;
+            shooter_actors[8].stats[1] = 0xFF;
             switch (game_state.frame_count & 3) {
             case 0:
-                D_8015EDB4[0].unk72 = 0;
+                shooter_actors[0].weapon = 0;
                 break;
             case 1:
-                D_8015EDB4[0].unk72 = 1;
+                shooter_actors[0].weapon = 1;
                 break;
             }
             load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
@@ -82,15 +82,15 @@ s32 func_8013760C(void) {
     }
 }
 
-void func_8013788C(void) {
+void shooter_demo_step_run(void) {
     u32 t;
 
-    func_80154960();
+    shooter_update_stage1_script();
     if (game_state.pad_pressed != 0) {
-        func_80143AF4();
-        func_801347A8();
+        shooter_release_all_actor_models();
+        shooter_hide_all_models();
         func_80059048();
-        func_8015ABF0();
+        shooter_reset_enemies();
         func_800591D8(0);
         mode_stage_set(2);
     } else {
@@ -121,15 +121,15 @@ void func_8013788C(void) {
         if (t >= 0x1CD && t < 0x1E0) {
             game_state.pad_held |= 0x9000;
         }
-        func_8013A790(1, 1);
-        func_8013F250();
-        func_80132FE8();
+        shooter_update_stars(1, 1);
+        shooter_draw_hud();
+        shooter_update_battle();
     }
     if ((u32) game_state.mode_stage_timer >= 0x709U) {
-        func_80143AF4();
-        func_801347A8();
+        shooter_release_all_actor_models();
+        shooter_hide_all_models();
         func_80059048();
-        func_8015ABF0();
+        shooter_reset_enemies();
         func_800591D8(0);
         mode_stage_set(2);
     }

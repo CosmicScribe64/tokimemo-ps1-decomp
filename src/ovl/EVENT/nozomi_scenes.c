@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
-void func_80103B60(s16 dx, s16 dy) {
+void spot_sprite_group_shift(s16 dx, s16 dy) {
     s16 i;
 
     for (i = 0; i < 6; i++) {
@@ -11,28 +11,28 @@ void func_80103B60(s16 dx, s16 dy) {
     }
 }
 
-void func_80103BC0(void) {
+void spot_yukari_scene6_assets_load_00(void) {
     func_80015D28(0x35, 0x801B0000, 0x852D);
-    func_80102770();
+    spot_yukari_tile_pointers_1_init();
     func_80011DFC();
 }
 
-void func_80103BF8(void) {
+void spot_yukari_scene6_branch_09(void) {
     if (D_800B0A04[5].unk_0C.b14) {
         D_80094714 += 1;
     }
     func_80011DFC();
 }
 
-void func_80103C3C(void) {
+void spot_yukari_scene6_branch_11(void) {
     if (!D_800B0A04[5].unk_0C.b14) {
         D_80094714 += 1;
     }
     func_80011DFC();
 }
 
-void func_80103C80(void) {
-    D_80122B30 = 0x801CE124;
+void spot_nozomi_still_pointers_1_init(void) {
+    spot_nozomi_still_pointers_1 = 0x801CE124;
     D_80122B34 = 0x801CE128;
     D_80122B38 = 0x801CE148;
     D_80122B3C = *(s16 *)0x801CE15C;
@@ -45,8 +45,8 @@ void func_80103C80(void) {
     D_80122B58 = 0x801C6000;
 }
 
-void func_80103D30(void) {
-    D_80122B5C = 0x801CE0DC;
+void spot_nozomi_still_pointers_2_init(void) {
+    spot_nozomi_still_pointers_2 = 0x801CE0DC;
     D_80122B60 = 0x801CE0E0;
     D_80122B64 = 0x801CE0F8;
     D_80122B68 = *(s16 *)0x801CE10C;
@@ -59,8 +59,8 @@ void func_80103D30(void) {
     D_80122B84 = 0x801C6000;
 }
 
-void func_80103DE0(void) {
-    D_80122B88 = 0x801D20F8;
+void spot_nozomi_still_pointers_3_init(void) {
+    spot_nozomi_still_pointers_3 = 0x801D20F8;
     D_80122B8C = 0x801D2100;
     D_80122B90 = 0x801D2120;
     D_80122B94 = *(s16 *)0x801D213C;
@@ -73,8 +73,8 @@ void func_80103DE0(void) {
     D_80122BB0 = 0x801C6000;
 }
 
-void func_80103E90(void) {
-    D_80122BB4 = 0x801D2240;
+void spot_nozomi_still_pointers_4_init(void) {
+    spot_nozomi_still_pointers_4 = 0x801D2240;
     D_80122BB8 = 0x801D2248;
     D_80122BBC = 0x801D2288;
     D_80122BC0 = *(s16 *)0x801D22A0;
@@ -87,8 +87,8 @@ void func_80103E90(void) {
     D_80122BDC = 0x801C6000;
 }
 
-void func_80103F40(void) {
-    D_80122BE0 = 0x801CE080;
+void spot_nozomi_still_pointers_5_init(void) {
+    spot_nozomi_still_pointers_5 = 0x801CE080;
     D_80122BE4 = 0x801CE084;
     D_80122BE8 = 0x801CE094;
     D_80122BEC = *(s16 *)0x801CE0A8;
@@ -101,22 +101,22 @@ void func_80103F40(void) {
     D_80122C08 = 0x801C6000;
 }
 
-void func_80103FF0(void) {
+void spot_nozomi_scene_select(void) {
     switch (D_800EECB0) {
     case 1:
-        func_80104090();
+        spot_nozomi_scene1_run();
         return;
     case 2:
-        func_801049B4();
+        spot_nozomi_scene2_run();
         return;
     case 3:
-        func_80104B50();
+        spot_nozomi_scene3_run();
         return;
     case 4:
-        func_80104E64();
+        spot_nozomi_scene4_run();
         return;
     case 5:
-        func_80104F80();
+        spot_nozomi_scene5_run();
         return;
     default:
         func_80015FE0();
@@ -124,32 +124,32 @@ void func_80103FF0(void) {
     }
 }
 
-void func_80104090(void) {
+void spot_nozomi_scene1_run(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
     if (D_800B1AF5 == 0) {
-        func_801040F0();
+        spot_nozomi_scene1_steps_run();
         return;
     }
     func_80015FE0();
 }
 
-void func_801040F0(void) {
+void spot_nozomi_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl29 tbl;
 
-    tbl = D_80122C0C;
+    tbl = spot_nozomi_scene1_steps;
     idx = D_800B1AF6;
     func_80078950("s%d %d\n", idx, D_800E9E63);
     tbl.f[D_800B1AF6]();
 }
 
-void func_8010418C(void) {
+void spot_nozomi_scene1_assets_load_07(void) {
     func_80015D28(0x3D, 0x801B0000, 0x85A7);
-    func_80103C80();
+    spot_nozomi_still_pointers_1_init();
     func_80011DFC();
 }
 
-void func_801041C4(void) {
+void spot_nozomi_scene1_init_00(void) {
     D_800B1746 = 6;
     func_80012D2C(1, 0);
     func_8001886C(1);
@@ -164,17 +164,17 @@ void func_801041C4(void) {
     D_80094714 = 0;
     D_80094718 = 0;
     func_80045B14();
-    func_800F6000();
+    spot_script_sections_init();
     func_8003535C();
     func_8003580C();
     func_8004C360();
     D_800F19AB = 0;
     func_8004BC20(D_800B1746);
     func_8004CDDC();
-    func_800F6000();
-    D_80120678 = D_80120498;
-    D_8012067C = D_801204AC;
-    D_80120680 = D_801204C0;
+    spot_script_sections_init();
+    spot_talk_text_table = D_80120498;
+    spot_talk_command_table = D_801204AC;
+    spot_talk_voice_table = D_801204C0;
     func_80078970(D_80094784, "廊下");
     D_800B0A04[6].unk_02 += 1;
     D_800B0A04[6].unk_06 += 2;
@@ -182,22 +182,22 @@ void func_801041C4(void) {
     func_80011DFC();
 }
 
-void func_80104310(void) {
-    func_80103C80();
+void spot_nozomi_scene1_still_show_09(void) {
+    spot_nozomi_still_pointers_1_init();
     func_80012D64(D_80122B40, 0x11, 1, 2, 0);
     func_8004C46C(D_80122B44, D_80122B48, D_80122B4C, D_80122B50, D_80122B54, D_80122B58);
-    func_8004C6B0(D_80122B34, D_80122B38, D_80122B30, (s32) D_80122B3C);
+    func_8004C6B0(D_80122B34, D_80122B38, spot_nozomi_still_pointers_1, (s32) D_80122B3C);
     func_80011DFC();
 }
 
-void func_801043B8(void) {
-    D_80120678 = D_8012049C;
-    D_8012067C = D_801204B0;
-    D_80120680 = D_801204C4;
-    func_80103D30();
+void spot_nozomi_scene2_still_show_stats_01(void) {
+    spot_talk_text_table = D_8012049C;
+    spot_talk_command_table = D_801204B0;
+    spot_talk_voice_table = D_801204C4;
+    spot_nozomi_still_pointers_2_init();
     func_80012D64(D_80122B6C, 0x11, 1, 2, 0);
     func_8004C46C(D_80122B70, D_80122B74, D_80122B78, D_80122B7C, D_80122B80, D_80122B84);
-    func_8004C6B0(D_80122B60, D_80122B64, D_80122B5C, D_80122B68);
+    func_8004C6B0(D_80122B60, D_80122B64, spot_nozomi_still_pointers_2, D_80122B68);
     D_800B0A04[6].unk_02 += 1;
     D_800B0A04[6].unk_06 += 1;
     D_800B0A04[6].unk_0A -= 0x14;
@@ -205,14 +205,14 @@ void func_801043B8(void) {
     func_80011DFC();
 }
 
-void func_801044CC(void) {
-    D_80120678 = D_801204A0;
-    D_8012067C = D_801204B4;
-    D_80120680 = D_801204C8;
-    func_80103DE0();
+void spot_nozomi_scene3_still_show_stats_03(void) {
+    spot_talk_text_table = D_801204A0;
+    spot_talk_command_table = D_801204B4;
+    spot_talk_voice_table = D_801204C8;
+    spot_nozomi_still_pointers_3_init();
     func_80012D64(D_80122B98, 0x11, 1, 2, 0);
     func_8004C46C(D_80122B9C, D_80122BA0, D_80122BA4, D_80122BA8, D_80122BAC, D_80122BB0);
-    func_8004C6B0(D_80122B8C, D_80122B90, D_80122B88, D_80122B94);
+    func_8004C6B0(D_80122B8C, D_80122B90, spot_nozomi_still_pointers_3, D_80122B94);
     D_800B0A04[6].unk_02 += 3;
     D_800B0A04[6].unk_06 += 2;
     D_800B0A04[6].unk_0A -= 0x14;
@@ -220,14 +220,14 @@ void func_801044CC(void) {
     func_80011DFC();
 }
 
-void func_801045E0(void) {
-    D_80120678 = D_801204A4;
-    D_8012067C = D_801204B8;
-    D_80120680 = D_801204CC;
-    func_80103E90();
+void spot_nozomi_scene4_still_show_stats_03(void) {
+    spot_talk_text_table = D_801204A4;
+    spot_talk_command_table = D_801204B8;
+    spot_talk_voice_table = D_801204CC;
+    spot_nozomi_still_pointers_4_init();
     func_80012D64(D_80122BC4, 0x11, 1, 2, 0);
     func_8004C46C(D_80122BC8, D_80122BCC, D_80122BD0, D_80122BD4, D_80122BD8, D_80122BDC);
-    func_8004C6B0(D_80122BB8, D_80122BBC, D_80122BB4, D_80122BC0);
+    func_8004C6B0(D_80122BB8, D_80122BBC, spot_nozomi_still_pointers_4, D_80122BC0);
     D_800B0A04[6].unk_02 += 2;
     D_800B0A04[6].unk_06 += 2;
     D_800B0A04[6].unk_0A -= 0xA;
@@ -235,10 +235,10 @@ void func_801045E0(void) {
     func_80011DFC();
 }
 
-void func_801046F4(void) {
-    D_80120678 = D_801204A8;
-    D_8012067C = D_801204BC;
-    D_80120680 = D_801204D0;
+void spot_nozomi_scene5_still_show_stats_03(void) {
+    spot_talk_text_table = D_801204A8;
+    spot_talk_command_table = D_801204BC;
+    spot_talk_voice_table = D_801204D0;
     if (((u8)func_8002328C(6) & 0x7F) < 2U) {
         D_800B0A04[6].unk_02 += 3;
         D_800B0A04[6].unk_06 += 2;
@@ -248,80 +248,80 @@ void func_801046F4(void) {
     }
     D_800B0A04[6].unk_0A -= 0x14;
     func_8004C250();
-    func_80103F40();
+    spot_nozomi_still_pointers_5_init();
     func_80012D64(D_80122BF0, 0x11, 1, 2, 0);
     func_8004C46C(D_80122BF4, D_80122BF8, D_80122BFC, D_80122C00, D_80122C04, D_80122C08);
-    func_8004C6B0(D_80122BE4, D_80122BE8, D_80122BE0, D_80122BEC);
+    func_8004C6B0(D_80122BE4, D_80122BE8, spot_nozomi_still_pointers_5, D_80122BEC);
     func_80011DFC();
 }
 
-void func_8010484C(void) {
+void spot_nozomi_scene1_bg_load_03(void) {
     func_800469F4(0x3FDE);
     func_80011DFC();
 }
 
-void func_80104874(void) {
+void spot_nozomi_scene2_bg_load_11(void) {
     func_800469F4(0x47A7);
     func_80011DFC();
 }
 
-void func_8010489C(void) {
+void spot_nozomi_scene2_bg_load_20(void) {
     func_800469F4(0x446A);
     func_80011DFC();
 }
 
-void func_801048C4(void) {
+void spot_nozomi_scene3_bg_load_11(void) {
     func_800469F4(0x4814);
     func_80011DFC();
 }
 
-void func_801048EC(void) {
+void spot_nozomi_scene3_bg_load_35(void) {
     func_800469F4(0x451C);
     func_80011DFC();
 }
 
-void func_80104914(void) {
+void spot_nozomi_scene4_bg_load_11(void) {
     func_800469F4(0x483E);
     func_80011DFC();
 }
 
-void func_8010493C(void) {
+void spot_nozomi_scene4_bg_load_21(void) {
     func_800469F4(0x454C);
     func_80011DFC();
 }
 
-void func_80104964(void) {
+void spot_nozomi_scene5_bg_load_12(void) {
     func_800469F4(0x4876);
     func_80011DFC();
 }
 
-void func_8010498C(void) {
+void spot_nozomi_scene5_bg_load_25(void) {
     func_800469F4(0x45A0);
     func_80011DFC();
 }
 
-void func_801049B4(void) {
+void spot_nozomi_scene2_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl50 tbl;
 
-    tbl = D_80122C80;
+    tbl = spot_nozomi_scene2_steps;
     idx = D_800B1AF6;
     func_80078950("%d\n", idx);
     tbl.f[D_800B1AF6](0x80);
 }
 
-void func_80104A48(void) {
+void spot_nozomi_scene2_se_play_09(void) {
     func_800433D0(0x500);
     func_80011DFC();
 }
 
-void func_80104A70(void) {
+void spot_nozomi_scene2_assets_load_05(void) {
     func_80015D28(0x3D, 0x801B0000, 0x85E4);
-    func_80103D30();
+    spot_nozomi_still_pointers_2_init();
     func_80011DFC();
 }
 
-void func_80104AA8(void) {
+void spot_nozomi_scene2_step_35(void) {
     if (func_8002328C(D_800B1746) < 2U) {
         func_8004A8EC(0);
         return;
@@ -329,7 +329,7 @@ void func_80104AA8(void) {
     func_8004A8EC(func_8002336C(D_800B1746));
 }
 
-void func_80104B00(void) {
+void spot_nozomi_scene2_branch_on_mood_07(void) {
     u8 s;
 
     s = func_8002328C(D_800B1746) & 0x7F;
@@ -339,28 +339,28 @@ void func_80104B00(void) {
     func_80011DFC();
 }
 
-void func_80104B50(void) {
+void spot_nozomi_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl55 tbl;
 
-    tbl = D_80122D48;
+    tbl = spot_nozomi_scene3_steps;
     idx = D_800B1AF6;
     func_80078950("%d\n", idx);
     tbl.f[D_800B1AF6](0x80);
 }
 
-void func_80104BDC(void) {
+void spot_nozomi_scene3_assets_load_00(void) {
     func_80015D28(0x45, 0x801B0000, 0x8621);
-    func_80103DE0();
+    spot_nozomi_still_pointers_3_init();
     func_80011DFC();
 }
 
-void func_80104C14(void) {
+void spot_nozomi_scene3_se_play_15(void) {
     func_800433D0(0x500);
     func_80011DFC();
 }
 
-void func_80104C3C(void) {
+void spot_nozomi_scene3_set_state_18(void) {
     /* Port of the DATE clone func_801572E4 (T-17400). */
     s16 i;
 
@@ -377,7 +377,7 @@ void func_80104C3C(void) {
     func_80011DFC();
 }
 
-s32 func_80104D48(void) {
+s32 spot_nozomi_scene3_branch_19(void) {
     D_800B0860[6] += 0x10;
     D_800B0860[7] += 0x10;
     D_800B0860[8] += 0x10;
@@ -386,7 +386,7 @@ s32 func_80104D48(void) {
     }
 }
 
-void func_80104DB4(void) {
+void spot_nozomi_scene3_set_state_20(void) {
     s16 i;
 
     D_800B0860[7] = 0;
@@ -401,23 +401,23 @@ void func_80104DB4(void) {
     func_80011DFC();
 }
 
-void func_80104E64(void) {
+void spot_nozomi_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl41 tbl;
 
-    tbl = D_80122E24;
+    tbl = spot_nozomi_scene4_steps;
     idx = D_800B1AF6;
     func_80078950("%d\n", idx);
     tbl.f[D_800B1AF6](0x80);
 }
 
-void func_80104EF8(void) {
+void spot_nozomi_scene4_assets_load_00(void) {
     func_80015D28(0x45, 0x801B0000, 0x8666);
-    func_80103E90();
+    spot_nozomi_still_pointers_4_init();
     func_80011DFC();
 }
 
-void func_80104F30(void) {
+void spot_nozomi_scene4_branch_on_mood_07(void) {
     /* the u8 cast reproduces the conversion of the callee's u8 result (andi) that shifts the temporary registers */
     if (((u8)func_8002328C(D_800B1746) & 0x7F) >= 2U) {
         D_80094714 += 3;
@@ -425,28 +425,28 @@ void func_80104F30(void) {
     func_80011DFC();
 }
 
-void func_80104F80(void) {
+void spot_nozomi_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
-    tbl = D_80122EC8;
+    tbl = spot_nozomi_scene5_steps;
     idx = D_800B1AF6;
     func_80078950("%d %d %d\n", idx, D_80094714, D_80094718);
     tbl.f[D_800B1AF6](0x80);
 }
 
-void func_8010501C(void) {
+void spot_shared_assets_load_1(void) {
     func_80015D28(0x3D, 0x801B0000, 0x86AB);
-    func_80103F40();
+    spot_nozomi_still_pointers_5_init();
     func_80011DFC();
 }
 
-void func_80105054(void) {
+void spot_nozomi_scene5_se_play_11(void) {
     func_800433D0(0x501);
     func_80011DFC();
 }
 
-void func_8010507C(void) {
+void spot_nozomi_scene5_branch_on_mood_07(void) {
     u8 temp;
     temp = (u32) (func_8002328C(D_800B1746) & 0x7F);
     if (temp >= 2U) {

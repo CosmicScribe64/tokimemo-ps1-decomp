@@ -104,35 +104,35 @@ void prologue_line_start(void) {
 }
 
 void prologue_line_run(void) {
-    s32 now;
-    s32 ph;
-    s32 r;
+    s32 current_text_line;
+    s32 scroll_phase;
+    s32 text_complete;
     u8 *a;
     u8 *b;
     u32 t;
 
-    r = 0;
-    now = get_now_k();
-    /* FAKE: pointer views on unk_F62/unk_F61 avoid cvt_pass widening so uopt keeps the scroll fields in caller-saved temps, and redundant `else if (ph != 0)` preserves the branch (same as xa_wait, T-17018). T-24106 */
+    text_complete = 0;
+    current_text_line = get_now_k();
+    /* FAKE: pointer views on unk_F62/unk_F61 avoid cvt_pass widening so uopt keeps the scroll fields in caller-saved temps, and redundant `else if (scroll_phase != 0)` preserves the branch (same as xa_wait, T-17018). T-24106 */
     if (*(u8 *)&game_state.text_scroll_state & 0x80) {
-        ph = *(u8 *)&game_state.text_scroll_state & 0x7F;
-        if (*(u8 *)&game_state.text_first_line + 2 >= (u32)now) {
-            r = k_disp_inc();
-            now = get_now_k();
+        scroll_phase = *(u8 *)&game_state.text_scroll_state & 0x7F;
+        if (*(u8 *)&game_state.text_first_line + 2 >= (u32)current_text_line) {
+            text_complete = k_disp_inc();
+            current_text_line = get_now_k();
             t = game_state.text_first_line;
-            if (now == t + 3) {
+            if (current_text_line == t + 3) {
                 if (game_state.text_lines_total >= t + 3) {
-                    k_disp_switch(now, 0);
+                    k_disp_switch(current_text_line, 0);
                 }
             }
-        } else if (ph == 0) {
+        } else if (scroll_phase == 0) {
             k_disp_switch(*(u8 *)&game_state.text_first_line, 0);
             a = get_k_work(game_state.text_first_line + 1);
             b = get_k_work(game_state.text_first_line + 2);
             *(s16 *)(a + 2) -= 2;
             *(s16 *)(b + 2) -= 2;
             game_state.text_scroll_state += 1;
-        } else if (ph != 0) {
+        } else if (scroll_phase != 0) {
             a = get_k_work(*(u8 *)&game_state.text_first_line + 1);
             b = get_k_work(game_state.text_first_line + 2);
             *(s16 *)(a + 2) -= 2;
@@ -146,7 +146,7 @@ void prologue_line_run(void) {
             }
         }
     } else {
-        r = k_disp_inc();
+        text_complete = k_disp_inc();
         get_now_k();
     }
     if (cd_audio_state() & 4) {
@@ -159,7 +159,7 @@ void prologue_line_run(void) {
                 if ((((s32 *)prologue_line_clips)[*(u8 *)&prologue_line * 2] != ((s32 *)prologue_line_clips_second)[*(u8 *)&prologue_line * 2]) && (((s32 *)prologue_line_clips_second)[*(u8 *)&prologue_line * 2] != ((s32 *)t)[2])) {
                     cd_audio_request_set(((s32 *)prologue_line_clips_second)[*(u8 *)&prologue_line * 2], ((s32 *)prologue_line_clips_second)[*(u8 *)&prologue_line * 2 + 1], prologue_line_speakers[*(u8 *)&prologue_line]);
                     audio_command(0x300);
-                } else if (r == 1) {
+                } else if (text_complete == 1) {
                     game_state.mode_step_timer.w += 1;
                     game_state.text_scroll_state = 0;
                 }
@@ -167,7 +167,7 @@ void prologue_line_run(void) {
                 game_state.mode_step_timer.w = 0;
             }
         }
-    } else if (r == 1) {
+    } else if (text_complete == 1) {
         game_state.mode_step_timer.w += 1;
         game_state.text_scroll_state = 0;
     } else {
@@ -205,7 +205,7 @@ void prologue_arrival_scene_init(void) {
         game_state.tile_layer_enabled = 0;
         srand(game_state.frame_count);
         text_system_reset();
-        k_speed_set(5);
+        k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
         message_window_set_title((s32) "プロローグ");
         k_disp_start(1);
         k_sub_reset_point_set();
@@ -268,20 +268,20 @@ void prologue_arrival_scene_init(void) {
 }
 
 void prologue_arrival_line(void) {
-    u8 *state = &game_state.substep;
-    switch (*state) {
+    u8 *scene_step = &game_state.substep;
+    switch (*scene_step) {
     case 0:
         back_clear_switch(0);
         game_state.screen_brightness = 0x80;
         prologue_line = 0;
         prologue_line_start();
-        *state += 1;
+        *scene_step += 1;
         return;
     case 1:
         prologue_line_run();
         return;
     case 2:
-        *state += 1;
+        *scene_step += 1;
         game_state.mode_step_timer.u = 0;
         /* fallthrough */
     case 3:
@@ -334,7 +334,7 @@ void prologue_petals_init(void) {
     }
 }
 
-void prologue_petals_update(s32 arg0) {
+void prologue_petals_update(s32 motion_variant) {
     ActorFixed *p;
 
     /* FAKE: sharing the initialization and loop source line places the actor
@@ -342,12 +342,12 @@ void prologue_petals_update(s32 arg0) {
     p = (ActorFixed *)actor_pool; do {
         p[96].unk_07++;
         p[96].x.w += rsin(p[96].unk_07 << 5) * 8;
-        if (arg0 == 0) {
+        if (motion_variant == 0) {
             p[96].x.h[1]--;
         }
         p[96].y.h[1]++;
         if (p[96].y.h[1] >= 41) {
-            if (arg0 == 1 && p >= (ActorFixed *)D_8011EDE0) {
+            if (motion_variant == 1 && p >= (ActorFixed *)D_8011EDE0) {
                 p[96].draw_flags = 0;
             }
             p[96].x.h[1] = (rand() % 320) - 160;
@@ -453,25 +453,25 @@ void prologue_mode_stage_board(void) {
     }
 }
 void prologue_names_crossfade(void) {
-    GameState *g;
+    GameState *scene_state;
     /* The calls below were matched without a prototype (main_api.h: void(u8)); the other functions of this file use it. */
     extern void set_dec_bri();
 
-    g = &game_state;
-    switch (g->substep) {
+    scene_state = &game_state;
+    switch (scene_state->substep) {
     case 0:
         dec_bg_cd_read(0x4966, 1);
         prologue_line = 2;
         prologue_scene_counter = 0;
         prologue_line_start();
         dec_bg_draw(1);
-        g->substep += 1;
+        scene_state->substep += 1;
         return;
     case 1:
         if (cd_read_sync_status() & 1) {
             dec_bg_decode_to_vram(1);
             prologue_scene_counter = 0x80;
-            g->substep += 1;
+            scene_state->substep += 1;
             func_80057D1C(0x80);
         }
         dec_bg_draw(1);
@@ -482,7 +482,7 @@ void prologue_names_crossfade(void) {
             prologue_scene_counter -= 3;
             func_80057D1C(prologue_scene_counter & 0xFF);
         } else {
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         func_80058398(1);
         prologue_line_run();
@@ -502,14 +502,14 @@ void prologue_names_crossfade(void) {
         func_80057D1C(0x80);
         set_dec_bri(prologue_scene_counter & 0xFF);
         cd_read_sectors(0x31U, 0x801A4000, 0xAB18);
-        g->substep += 1;
+        scene_state->substep += 1;
         return;
     case 5:
         if (prologue_scene_counter >= 3) {
             prologue_scene_counter -= 1;
             set_dec_bri(prologue_scene_counter & 0xFF);
         } else {
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         dec_bg_draw(1);
         return;
@@ -518,7 +518,7 @@ void prologue_names_crossfade(void) {
             prologue_palette_adjust();
             actor_clear_upper();
             cd_read_sectors(0x11U, 0x80180000, 0xAC3F);
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         dec_bg_draw(1);
         return;
@@ -536,7 +536,7 @@ void prologue_names_crossfade(void) {
             D_80120655 = 0x80;
             D_80120676 = -0xA0;
             D_8012067A = -0x78;
-            g->substep += 1;
+            scene_state->substep += 1;
             dec_bg_cd_read(0xACDD, 1);
         }
         dec_bg_draw(1);
@@ -598,17 +598,17 @@ void prologue_mode_stage_names(void) {
     }
 }
 
-void prologue_background_slot_set(u32 arg0, s32 arg1) {
+void prologue_background_slot_set(u32 image_address, s32 palette_row_offset) {
     s32 i;
     u32 addr[6];
-    /* FAKE: unused local preserves the 0x70 stack frame and places arg0 + 0x18000 spill at sp+0x4C. T-24106 */
+    /* FAKE: unused local preserves the 0x70 stack frame and places image_address + 0x18000 spill at sp+0x4C. T-24106 */
     s32 pad;
 
     /* FAKE: single-line loop orders the unrolled stores in as1. T-24106 */
-    for (i = 0; i < 6; i++) { addr[i] = arg0 + i * 0x4000; }
-    func_8004A1A0(addr, 0, 6, 3, 2, arg1 + 0x1E0, -0xA0, -0x78, 8, 8);
-    load_palette((u8 *)(arg0 + 0x18000), 0xF, 1, 2, 0);
-    func_8004B590(arg0 + 0x18000, (s32) game_state.scratch_words);
+    for (i = 0; i < 6; i++) { addr[i] = image_address + i * 0x4000; }
+    func_8004A1A0(addr, 0, 6, 3, 2, palette_row_offset + 0x1E0, -0xA0, -0x78, 8, 8);
+    load_palette((u8 *)(image_address + 0x18000), 0xF, 1, 2, 0);
+    func_8004B590(image_address + 0x18000, (s32) game_state.scratch_words);
     load_palette(game_state.scratch_words, 0xE, 1, 2, 0);
     game_state.bg_layer_order[0] = 0xD;
     ((BgLayer *)&bg_layers)[0].unk_00 = 0x41000000;
@@ -1156,18 +1156,18 @@ void prologue_lip_synchronization_line_11(void) {
 }
 
 void prologue_line_11_run(void) {
-    GameState *g;
+    GameState *scene_state;
 
-    g = &game_state;
-    switch (g->substep) {
+    scene_state = &game_state;
+    switch (scene_state->substep) {
     case 0:
         prologue_line = 0xB;
         prologue_line_start();
-        g->substep += 1;
+        scene_state->substep += 1;
         break;
     case 1:
         if (cd_audio_state() & 4) {
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         if (D_80120676 < -0xA0) {
             D_80120676 += 1;
@@ -1182,26 +1182,26 @@ void prologue_line_11_run(void) {
         break;
     case 3:
         dec_bg_cd_read(0xAD00, 1);
-        g->substep += 1;
+        scene_state->substep += 1;
         /* fallthrough */
     case 4:
         if (cd_read_sync_status() & 1) {
             audio_bank_load_start(1, 0, 0, 0xCCCB, 0xCC86, 0xCC82);
             audio_command(5);
             audio_command(0xB1);
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         break;
     case 5:
         if (audio_bank_load_poll() == 1) {
             cd_read_sectors(0x31U, 0x801A4000, 0xAAB6);
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         break;
     case 6:
         if (cd_read_sync_status() & 1) {
             cd_read_sectors(9U, 0x801F0000, 0xABFC);
-            g->substep += 1;
+            scene_state->substep += 1;
         }
         break;
     case 7:
@@ -2231,10 +2231,10 @@ void prologue_lines_20_to_31_run(void) {
     u8 text[128];
     s32 i;
 
-    GameState *g;
+    GameState *prologue_state;
 
-    g = &game_state;
-    switch (g->substep) {
+    prologue_state = &game_state;
+    switch (prologue_state->substep) {
     case 0:
         x = D_80120676;
         if (x < -0xA0) {
@@ -2242,7 +2242,7 @@ void prologue_lines_20_to_31_run(void) {
         }
         prologue_line = 0x14;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 1:
         x = D_80120676;
@@ -2255,24 +2255,24 @@ void prologue_lines_20_to_31_run(void) {
     case 2:
         prologue_line = 0x15;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 3:
         prologue_line_run();
         break;
     case 4:
         prologue_actor99_set_lines_20_to_31();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 5:
         if (!(D_8012071E & 1)) {
-            g->substep += 1;
+            prologue_state->substep += 1;
         }
         break;
     case 6:
         prologue_line = 0x16;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 7:
         prologue_line_run();
@@ -2281,7 +2281,7 @@ void prologue_lines_20_to_31_run(void) {
     case 8:
         prologue_line = 0x17;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 9:
         prologue_line_run();
@@ -2290,7 +2290,7 @@ void prologue_lines_20_to_31_run(void) {
         prologue_actor100_set_lines_20_to_31();
         prologue_line = 0x18;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 11:
         if (D_8012078A >= -0x77) {
@@ -2301,20 +2301,20 @@ void prologue_lines_20_to_31_run(void) {
         break;
     case 12:
         k_sub_reset();
-        gnsx(&g->player_family_name[0]);
+        gnsx(&prologue_state->player_family_name[0]);
         /* FAKE: same-line body fixes unrolled store scheduling. T-10860. */
         for (i = 0; i < 128; i++) { text[i] = 0; }
-        strcpy(text, D_800B3288[((NameProfileFlags *)&g->girls[0].birthday)->month]);
+        strcpy(text, D_800B3288[((NameEntryBirthdayBits *)&prologue_state->girls[0].birthday)->month]);
         strncat(text, "月", 2);
-        if (((NameProfileFlags *)&g->girls[0].birthday)->day >= 0xAU) {
-            strncat(text, D_800B3288[((NameProfileFlags *)&g->girls[0].birthday)->day / 10U], 2);
+        if (((NameEntryBirthdayBits *)&prologue_state->girls[0].birthday)->day >= 0xAU) {
+            strncat(text, D_800B3288[((NameEntryBirthdayBits *)&prologue_state->girls[0].birthday)->day / 10U], 2);
             }
-        strncat(text, D_800B3288[((NameProfileFlags *)&g->girls[0].birthday)->day % 10U], 2);
+        strncat(text, D_800B3288[((NameEntryBirthdayBits *)&prologue_state->girls[0].birthday)->day % 10U], 2);
         strncat(text, "日。", 4);
         sndisp(text, 0, 0xF);
-        g->current_girl = GIRL_PLAYER;
+        prologue_state->current_girl = GIRL_PLAYER;
         k_sub_disp_start(1);
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 13:
         prologue_line_run();
@@ -2323,7 +2323,7 @@ void prologue_lines_20_to_31_run(void) {
     case 14:
         prologue_line = 0x19;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 15:
         prologue_line_run();
@@ -2331,15 +2331,15 @@ void prologue_lines_20_to_31_run(void) {
         break;
     case 16:
         k_sub_reset();
-        gnsx(&g->player_family_name[0]);
+        gnsx(&prologue_state->player_family_name[0]);
         /* FAKE: same-line body fixes unrolled store scheduling. T-10860. */
         for (i = 0; i < 128; i++) { text[i] = 0; }
-        strcpy(text, prologue_blood_texts[((NameProfileFlags *)&g->girls[0].birthday)->blood_type]);
+        strcpy(text, prologue_blood_texts[((NameEntryBirthdayBits *)&prologue_state->girls[0].birthday)->blood_type]);
         strncat(text, "型。", 4);
         sndisp(text, 0, 0xF);
-        g->current_girl = GIRL_PLAYER;
+        prologue_state->current_girl = GIRL_PLAYER;
         k_sub_disp_start(1);
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 17:
         prologue_line_run();
@@ -2348,7 +2348,7 @@ void prologue_lines_20_to_31_run(void) {
     case 18:
         prologue_line = 0x1A;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 19:
         prologue_line_run();
@@ -2357,7 +2357,7 @@ void prologue_lines_20_to_31_run(void) {
     case 20:
         prologue_line = 0x1B;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 21:
         prologue_line_run();
@@ -2366,7 +2366,7 @@ void prologue_lines_20_to_31_run(void) {
     case 22:
         prologue_line = 0x1C;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 23:
         prologue_line_run();
@@ -2375,7 +2375,7 @@ void prologue_lines_20_to_31_run(void) {
     case 24:
         prologue_line = 0x1D;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 25:
         prologue_line_run();
@@ -2392,13 +2392,13 @@ void prologue_lines_20_to_31_run(void) {
             D_801206BA = x;
             D_80120676 = x;
         } else {
-            g->substep += 1;
+            prologue_state->substep += 1;
         }
         break;
     case 27:
         prologue_line = 0x1E;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 28:
         prologue_line_run();
@@ -2406,25 +2406,25 @@ void prologue_lines_20_to_31_run(void) {
     case 29:
         prologue_line = 0x1F;
         prologue_line_start();
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 30:
         prologue_line_run();
         break;
     case 31:
         dec_bg_cd_read(0xACD4, 1);
-        g->substep += 1;
+        prologue_state->substep += 1;
         break;
     case 32:
         if (cd_read_sync_status() & 1) {
             cd_read_sectors(0x31U, 0x801A4000, 0xAA54);
-            g->substep += 1;
+            prologue_state->substep += 1;
         }
         break;
     case 33:
         if (cd_read_sync_status() & 1) {
             cd_read_sectors(0x19U, 0x801E8000, 0xABCA);
-            g->substep += 1;
+            prologue_state->substep += 1;
         }
         break;
     case 34:
@@ -2726,7 +2726,7 @@ void prologue_finish_run(void) {
     default:
     case 1:
         D_800B3DB0 = 0;
-        k_speed_set(3);
+        k_speed_set(TEXT_SPEED_SLOW);
         game_state.menu_mode = MENU_MODE_A;
         game_mode_set(GAME_MODE_COMMAND_SCREEN);
         mode_stage_set(0xFF);

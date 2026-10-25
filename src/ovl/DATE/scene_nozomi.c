@@ -209,12 +209,12 @@ void date_scene_nozomi_winter_background_2(void) {
 }
 
 void date_scene_nozomi_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl50 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl50 step_handlers;
 
-    tbl = date_scene_nozomi_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_nozomi_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_nozomi_spring_audio_command_1(void) {
@@ -238,26 +238,26 @@ void date_scene_nozomi_spring_mood_face(void) {
 }
 
 void date_scene_nozomi_spring_group_by_mood(void) {
-    u8 s;
+    u8 girl_state;
 
-    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (s >= 2U) {
+    girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (girl_state >= 2U) {
         D_800CA150 = (u16)D_800CA150 + 5;
     }
     mode_step_next();
 }
 
 void date_scene_nozomi_summer(void) {
-    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl61 tbl;
+    s32 fake_padding; /* FAKE: never read; declared first so step_handlers lands at the original frame offset (T-3330) */
+    DateNozomiSummerSteps step_handlers;
 
-    tbl = date_scene_nozomi_summer_steps;
+    step_handlers = date_scene_nozomi_summer_steps;
     if (game_state.mode_step < 4 || game_state.mode_step >= 0x2C) {
         if (dec_bg_brightness == 0x80) {
             hud_sprite_light_effect_draw();
         }
     }
-    tbl.f[game_state.mode_step](0x80);
+    step_handlers.callbacks[game_state.mode_step](0x80);
 }
 
 void date_scene_nozomi_summer_load_data(void) {
@@ -315,12 +315,12 @@ void date_scene_nozomi_summer_fade_reset(void) {
 }
 
 void date_scene_nozomi_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl41 step_handlers;
 
-    tbl = date_scene_nozomi_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_nozomi_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_nozomi_autumn_load_data(void) {
@@ -330,41 +330,41 @@ void date_scene_nozomi_autumn_load_data(void) {
 }
 
 void date_scene_nozomi_autumn_group_by_mood(void) {
-    u8 s;
+    u8 girl_state;
 
-    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (s >= 2U) {
+    girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (girl_state >= 2U) {
         D_800CA150 = (u16)D_800CA150 + 3;
     }
     mode_step_next();
 }
 
 void date_scene_nozomi_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl43 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl43 step_handlers;
 
-    tbl = date_scene_nozomi_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_nozomi_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
 }
 
 void date_scene_nozomi_winter_speak_with_face(void) {
-    u8 x;
-    u32 t;
+    u8 girl_state_flags;
+    u32 girl_state;
     /* FAKE: constant-1 local keeps the original bne operand order (constant register first); T-17206 */
-    s32 one;
+    s32 fake_first_tick;
 
-    one = 1;
+    fake_first_tick = 1;
     date_scene_speak();
-    x = get_g_zyotai_s(GIRL_NOZOMI);
-    t = x & 0x7F;
-    if ((t >= 2U) && (D_800CA154 == 8) && (one == game_state.mode_step_timer.w)) {
+    girl_state_flags = get_g_zyotai_s(GIRL_NOZOMI);
+    girl_state = girl_state_flags & 0x7F;
+    if ((girl_state >= 2U) && (D_800CA154 == 8) && (fake_first_tick == game_state.mode_step_timer.w)) {
         portrait_layout_set(2);
-    } else if ((t >= 2U) && (D_800CA154 == 0xA) && (one == game_state.mode_step_timer.w)) {
+    } else if ((girl_state >= 2U) && (D_800CA154 == 0xA) && (fake_first_tick == game_state.mode_step_timer.w)) {
         portrait_layout_set(3);
-    } else if ((t >= 2U) && (D_800CA154 == 6) && (one == game_state.mode_step_timer.w)) {
+    } else if ((girl_state >= 2U) && (D_800CA154 == 6) && (fake_first_tick == game_state.mode_step_timer.w)) {
         portrait_layout_set(1);
-    } else if ((t >= 2U) && (D_800CA154 == 0xC) && (one == game_state.mode_step_timer.w)) {
+    } else if ((girl_state >= 2U) && (D_800CA154 == 0xC) && (fake_first_tick == game_state.mode_step_timer.w)) {
         portrait_layout_set(1);
     }
     game_state.mode_step_timer.w += 1;
@@ -382,10 +382,10 @@ void date_scene_nozomi_winter_audio_command_1(void) {
 }
 
 void date_scene_nozomi_winter_group_by_mood(void) {
-    u8 s;
+    u8 girl_state;
 
-    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (s >= 2U) {
+    girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (girl_state >= 2U) {
         D_800CA150 = (u16)D_800CA150 + 3;
     }
     mode_step_next();

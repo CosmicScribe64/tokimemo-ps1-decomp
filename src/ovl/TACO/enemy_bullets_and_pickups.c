@@ -2,8 +2,8 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-/* FAKE: pad_a, pad_e and pad_c are unused locals; with div they reproduce the original frame (0x68: i at sp+0x60, vin at 0x4C, vout at 0x3C, h at 0x3A, the strength-reduced D_8015EB30[i] pointer spilled at 0x2C); real locals unknown. T-19028 */
-s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
+/* FAKE: pad_a, pad_e and pad_c are unused locals; with div they reproduce the original frame (0x68: i at sp+0x60, vin at 0x4C, vout at 0x3C, h at 0x3A, the strength-reduced shooter_enemy_bullets[i] pointer spilled at 0x2C); real locals unknown. T-19028 */
+s32 shooter_spawn_enemy_bullet(ShooterPosition pos, s32 speed, s32 flags) {
     s32 pad_a;
     s32 i;
     s32 pad_e;
@@ -18,22 +18,22 @@ s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
         h = 0x100;
     }
     for (i = 0; i < 16; i++) {
-        if (!(D_8015EB30[i].unk13 & 0x80)) {
+        if (!(shooter_enemy_bullets[i].flags & 0x80)) {
             break;
         }
     }
     if (i >= 16) {
         return -1;
     }
-    D_8015EB30[i].unk12 = 0;
-    D_8015EB30[i].unk13 = 0x80;
-    D_8015EB30[i].unk0 = pos.x;
-    D_8015EB30[i].unk2 = pos.y;
-    D_8015EB30[i].unk4 = pos.z;
+    shooter_enemy_bullets[i].age = 0;
+    shooter_enemy_bullets[i].flags = 0x80;
+    shooter_enemy_bullets[i].x = pos.x;
+    shooter_enemy_bullets[i].y = pos.y;
+    shooter_enemy_bullets[i].z = pos.z;
     if (flags & 0x80) {
-        vin.vx = D_8015EDB4->unk74 - pos.x;
-        vin.vy = D_8015EDB4->unk76 - pos.y;
-        vin.vz = D_8015EDB4->unk78 - pos.z;
+        vin.vx = shooter_actors->x - pos.x;
+        vin.vy = shooter_actors->y - pos.y;
+        vin.vz = shooter_actors->z - pos.z;
         if (flags & 0x40) {
             vin.vx = vin.vx - (rand() & 0xFF) + 0x7F;
             vin.vy = vin.vy - (rand() & 0xFF) + 0x7F;
@@ -41,51 +41,51 @@ s32 func_8013DB80(TcPos pos, s32 speed, s32 flags) {
         }
         func_800AA460(&vin, &vout);
         div = 0x1000 / h + 1;
-        D_8015EB30[i].unk8 = vout.vx / div;
-        D_8015EB30[i].unkA = vout.vy / div;
-        D_8015EB30[i].unkC = vout.vz / div;
+        shooter_enemy_bullets[i].velocity_x = vout.vx / div;
+        shooter_enemy_bullets[i].velocity_y = vout.vy / div;
+        shooter_enemy_bullets[i].velocity_z = vout.vz / div;
     } else {
-        D_8015EB30[i].unkC = h;
-        D_8015EB30[i].unk8 = 0;
-        D_8015EB30[i].unkA = 0;
+        shooter_enemy_bullets[i].velocity_z = h;
+        shooter_enemy_bullets[i].velocity_x = 0;
+        shooter_enemy_bullets[i].velocity_y = 0;
     }
-    D_8015EB30[i].unk11 = flags;
+    shooter_enemy_bullets[i].argument = flags;
     return i;
 }
 
-void func_8013DDE4(void) {
-    Tc14 *p;
+void shooter_update_enemy_bullets(void) {
+    ShooterParticle *p;
     s32 i;
 
     /* FAKE: init and `do` share a source line (as1 schedules by line); the second base is spelled from the
      * end label so that IDO does not share the first loop's address. Same bytes as the original. T-10320 */
-    p = D_8015EB30; do {
-        p->unk12 = p->unk12 + 1;
-        if (p->unk12 == 0xFF) {
-            p->unk13 = 0;
+    p = shooter_enemy_bullets; do {
+        p->age = p->age + 1;
+        if (p->age == 0xFF) {
+            p->flags = 0;
         }
-        if (p->unk4 >= 0x2711) {
-            p->unk13 = 0;
+        if (p->z >= 0x2711) {
+            p->flags = 0;
         }
-        if (p->unk13 & 0x80) {
-            p->unk0 = p->unk0 + p->unk8;
-            p->unk2 = p->unk2 + p->unkA;
-            p->unk4 = p->unk4 + p->unkC;
+        if (p->flags & 0x80) {
+            p->x = p->x + p->velocity_x;
+            p->y = p->y + p->velocity_y;
+            p->z = p->z + p->velocity_z;
         }
         p++;
-    } while (p < D_8015EC70);
-    p = (Tc14 *)((u8 *)D_8015EC70 - 0x140);
+    } while (p < shooter_items);
+    p = (ShooterParticle *)((u8 *)shooter_items - 0x140);
     i = 0;
     do {
-        if (p->unk13 & 0x80) {
-            func_8013DEE4(i);
+        if (p->flags & 0x80) {
+            shooter_draw_enemy_bullet(i);
         }
         i++;
         p++;
     } while (i != 0x10);
 }
 
-s32 func_8013DEE4(s32 arg0) {
+s32 shooter_draw_enemy_bullet(s32 arg0) {
     /* FAKE: pad is an unused local; it holds the 4-byte slot that puts the original frame at 0xD8 (m at
      * sp+0xB0, kind at 0x80, v at 0x6C) and the colour switch temporary at 0x68. T-25110 */
     s32 pad;
@@ -104,8 +104,8 @@ s32 func_8013DEE4(s32 arg0) {
     s32 step;
     SVECTOR v;
 
-    v = *(SVECTOR *)&D_8015EB30[arg0];
-    kind = D_8015EB30[arg0].unk11 & 0xF;
+    v = *(SVECTOR *)&shooter_enemy_bullets[arg0];
+    kind = shooter_enemy_bullets[arg0].argument & 0xF;
     m = D_80129C40;
     v.vz -= 0x200;
     func_800A1100(&m);
@@ -216,105 +216,105 @@ s32 func_8013DEE4(s32 arg0) {
     }
 }
 
-s32 func_8013E424(pos, kind)
-TcPos pos;
+s32 shooter_spawn_item(pos, kind)
+ShooterPosition pos;
 s32 kind;
 {
     s32 pad3;
     s32 i;
     /* FAKE: 48 unused bytes around i reproduce the original frame (0x60, i at sp+0x58, the strength-reduced
-     * D_8015EC70[i] pointer spilled at sp+0x28); real locals unknown. T-19028 */
-    Tc14 pad0;
-    Tc14 pad1;
+     * shooter_items[i] pointer spilled at sp+0x28); real locals unknown. T-19028 */
+    ShooterParticle pad0;
+    ShooterParticle pad1;
     s32 pad2;
 
     for (i = 0; i < 16; i++) {
-        if (!(D_8015EC70[i].unk13 & 0x80)) {
+        if (!(shooter_items[i].flags & 0x80)) {
             break;
         }
     }
     if (i >= 16) {
         return -1;
     }
-    D_8015EC70[i].unk12 = 0;
-    D_8015EC70[i].unk13 = 0x80;
-    D_8015EC70[i].unk0 = pos.x;
-    D_8015EC70[i].unk2 = pos.y;
-    D_8015EC70[i].unk4 = pos.z;
-    D_8015EC70[i].unk8 = 0x3F - (rand() & 0x7F);
-    D_8015EC70[i].unkA = 0x3F - (rand() & 0x7F);
-    D_8015EC70[i].unkC = 0x50;
-    D_8015EC70[i].unk11 = kind;
+    shooter_items[i].age = 0;
+    shooter_items[i].flags = 0x80;
+    shooter_items[i].x = pos.x;
+    shooter_items[i].y = pos.y;
+    shooter_items[i].z = pos.z;
+    shooter_items[i].velocity_x = 0x3F - (rand() & 0x7F);
+    shooter_items[i].velocity_y = 0x3F - (rand() & 0x7F);
+    shooter_items[i].velocity_z = 0x50;
+    shooter_items[i].argument = kind;
     return i;
 }
 
-void func_8013E4FC(void) {
-    Tc14 *p;
+void shooter_update_items(void) {
+    ShooterParticle *p;
     s32 i;
 
     /* FAKE: the loop entry is written on one source line; as1 schedules by line and this orders the
      * end-pointer and base setup as the original does. T-10320 */
-    p = D_8015EC70; do { p->unk12 += 1; if (p->unk12 == 0xFF) { p->unk12 = 0;
-            p->unk13 += 1;
+    p = shooter_items; do { p->age += 1; if (p->age == 0xFF) { p->age = 0;
+            p->flags += 1;
         }
-        if (p->unk13 == 0x85) {
-            p->unk13 = 0;
+        if (p->flags == 0x85) {
+            p->flags = 0;
         }
-        if (p->unk4 >= 0x2711) {
-            p->unk13 = 0;
+        if (p->z >= 0x2711) {
+            p->flags = 0;
         }
-        if (p->unk13 & 0x80) {
-            p->unk0 += p->unk8;
-            p->unk2 += p->unkA;
-            p->unk4 += p->unkC;
-            if (p->unk8 > 0) {
-                p->unk8 -= 1;
+        if (p->flags & 0x80) {
+            p->x += p->velocity_x;
+            p->y += p->velocity_y;
+            p->z += p->velocity_z;
+            if (p->velocity_x > 0) {
+                p->velocity_x -= 1;
             }
-            if (p->unkA > 0) {
-                p->unkA -= 1;
+            if (p->velocity_y > 0) {
+                p->velocity_y -= 1;
             }
-            if (p->unk8 < 0) {
-                p->unk8 += 1;
+            if (p->velocity_x < 0) {
+                p->velocity_x += 1;
             }
-            if (p->unkA < 0) {
-                p->unkA += 1;
+            if (p->velocity_y < 0) {
+                p->velocity_y += 1;
             }
-            if (!(p->unk13 & 4)) {
-                if (p->unk0 > 0x800) {
-                    p->unk0 = 0x800;
+            if (!(p->flags & 4)) {
+                if (p->x > 0x800) {
+                    p->x = 0x800;
                 }
-                if (p->unk0 < -0x800) {
-                    p->unk0 = -0x800;
+                if (p->x < -0x800) {
+                    p->x = -0x800;
                 }
-                if (p->unk2 > 0x80) {
-                    p->unk2 = 0x80;
+                if (p->y > 0x80) {
+                    p->y = 0x80;
                 }
-                if (p->unk2 < -0x700) {
-                    p->unk2 = -0x700;
+                if (p->y < -0x700) {
+                    p->y = -0x700;
                 }
-                if (p->unk4 > D_8015EDB4->unk78 + 0x10) {
-                    if (p->unkC > 0) {
-                        p->unkC = p->unkC * -1;
+                if (p->z > shooter_actors->z + 0x10) {
+                    if (p->velocity_z > 0) {
+                        p->velocity_z = p->velocity_z * -1;
                     }
                 }
-                if (p->unk4 < -0x1000) {
-                    if (p->unkC < 0) {
-                        p->unkC = p->unkC * -1;
+                if (p->z < -0x1000) {
+                    if (p->velocity_z < 0) {
+                        p->velocity_z = p->velocity_z * -1;
                     }
                 }
             }
         }
         p++;
-    } while (p < (Tc14 *)&D_8015EDB0);
+    } while (p < (ShooterParticle *)&shooter_background_flags);
     /* FAKE: the base is spelled from the end label so that IDO does not share the first loop's address; same bytes. T-10320 */
-    p = (Tc14 *)((u8 *)&D_8015EDB0 - 0x140);
+    p = (ShooterParticle *)((u8 *)&shooter_background_flags - 0x140);
     i = 0;
     do {
-        if (p->unk13 & 0x80) {
-            if (p->unk11 < 2) {
-                func_8013E778(i);
+        if (p->flags & 0x80) {
+            if (p->argument < 2) {
+                shooter_draw_item_weapon(i);
             } else {
-                func_8013EAA4(i);
+                shooter_draw_item(i);
             }
         }
         i++;
@@ -322,8 +322,8 @@ void func_8013E4FC(void) {
     } while (i != 0x10);
 }
 
-void func_8013E778(s32 arg0) {
-    s32 pad[2]; /* FAKE: eight unused bytes above m reproduce the original frame (208), as in func_8013D528; T-19028 */
+void shooter_draw_item_weapon(s32 arg0) {
+    s32 pad[2]; /* FAKE: eight unused bytes above m reproduce the original frame (208), as in shooter_draw_hit_spark; T-19028 */
     MATRIX m;
     SVECTOR w;
     s32 pt[4];
@@ -339,10 +339,10 @@ void func_8013E778(s32 arg0) {
     s32 rot;
 
     m = D_80129C40;
-    v = *(SVECTOR *)&D_8015EC70[arg0];
+    v = *(SVECTOR *)&shooter_items[arg0];
     v.vz -= 0x200;
-    kind = D_8015EC70[arg0].unk11;
-    sel = (D_8015EC70[arg0].unk12 >> 2) & 7;
+    kind = shooter_items[arg0].argument;
+    sel = (shooter_items[arg0].age >> 2) & 7;
     func_800A1100(&m);
     SetRotMatrix(&m);
     w.vz = v.vz;
@@ -371,7 +371,7 @@ void func_8013E778(s32 arg0) {
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(1, 1, 0x2C0, 0x100);
             poly->clut = func_8009ED74(0, kind + 0x1E2);
-            /* FAKE: hand expansion of a PsyQ setUVWH-style macro on one line, as in func_8013D528: as1 schedules the
+            /* FAKE: hand expansion of a PsyQ setUVWH-style macro on one line, as in shooter_draw_hit_spark: as1 schedules the
              * eight UV stores of one line together; separate statements change their order. T-19028 */
             poly->u0 = 0x61, poly->v0 = (sel << 5) + 1, poly->u1 = 0x7F, poly->v1 = (sel << 5) + 1, poly->u2 = 0x61, poly->v2 = (sel << 5) + 0x1F, poly->u3 = 0x7F, poly->v3 = (sel << 5) + 0x1F;
             poly->x0 = ((s16 *)pt)[0];
@@ -387,17 +387,17 @@ void func_8013E778(s32 arg0) {
     }
 }
 
-void func_8013EAA4(s32 arg0) {
+void shooter_draw_item(s32 arg0) {
     /* FAKE: pad and pad_a are unused; they hold the original frame (0x110: matrix at sp+0xE8, v at 0xC0, pt
      * at 0xB0, pos at 0xA8, depth/flag at 0x94/0x90, kind/phase at 0x88/0x84, height at 0x74, uopt spill
      * homes from 0x6C down). Real locals unknown. T-25110, T-25201 */
-    Tc14 *particle;
+    ShooterParticle *particle;
     POLY_FT4 *poly;
     MATRIX matrix;
     s32 pad[8];
     SVECTOR v;
     s32 pt[4];
-    TcPos pos;
+    ShooterPosition pos;
     s32 dist;
     s32 o;
     s32 j;
@@ -414,11 +414,11 @@ void func_8013EAA4(s32 arg0) {
     u32 frame;
 
     matrix = D_80129C40;
-    particle = &D_8015EC70[arg0];
-    pos = *(TcPos *)particle;
+    particle = &shooter_items[arg0];
+    pos = *(ShooterPosition *)particle;
     pos.z -= 0x200;
-    kind = particle->unk11 & 7;
-    phase = particle->unk12 >> 1;
+    kind = particle->argument & 7;
+    phase = particle->age >> 1;
     func_800A1100(&matrix);
     SetRotMatrix(&matrix);
     v.vz = pos.z;
@@ -444,21 +444,21 @@ void func_8013EAA4(s32 arg0) {
             poly->g0 = 0x80;
             poly->b0 = 0x80;
             poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
-            if (D_8015F560[kind] != 0) {
-                frame = phase % D_8015F560[kind];
+            if (shooter_item_frame_count[kind] != 0) {
+                frame = phase % shooter_item_frame_count[kind];
             } else {
                 frame = 0;
             }
-            row = D_8015F568[kind];
+            row = shooter_item_clut_row[kind];
             poly->clut = func_8009ED74(frame * 0x10, row + 0x1E0);
-            poly->u0 = D_8015F570[kind] + 1;
-            poly->v0 = D_8015F578[kind] + 1;
-            poly->u1 = D_8015F570[kind] + 0xF;
-            poly->v1 = D_8015F578[kind] + 1;
-            poly->u2 = D_8015F570[kind] + 1;
-            poly->v2 = D_8015F578[kind] + 0xF;
-            poly->u3 = D_8015F570[kind] + 0xF;
-            poly->v3 = D_8015F578[kind] + 0xF;
+            poly->u0 = shooter_item_u[kind] + 1;
+            poly->v0 = shooter_item_v[kind] + 1;
+            poly->u1 = shooter_item_u[kind] + 0xF;
+            poly->v1 = shooter_item_v[kind] + 1;
+            poly->u2 = shooter_item_u[kind] + 1;
+            poly->v2 = shooter_item_v[kind] + 0xF;
+            poly->u3 = shooter_item_u[kind] + 0xF;
+            poly->v3 = shooter_item_v[kind] + 0xF;
             poly->x0 = ((s16 *)pt)[4];
             poly->y0 = ((s16 *)pt)[5];
             poly->x1 = ((s16 *)pt)[0];
@@ -468,7 +468,7 @@ void func_8013EAA4(s32 arg0) {
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
             AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
-            height = (rsin(particle->unk12 * 0x10) << 7) / 4096;
+            height = (rsin(particle->age * 0x10) << 7) / 4096;
             /* FAKE: half is a constant local that only steers uopt (real source unknown). It is propagated
              * into its uses (its slot stays), so the third grid's o * 0x100 becomes a later item than
              * j * size * 2, which takes the first spill home (sp+0x64), and the vertical temporary gets
@@ -501,7 +501,7 @@ void func_8013EAA4(s32 arg0) {
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
             AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
-            size = (func_800A0140(particle->unk12 * 0x10) << 7) / 4096;
+            size = (func_800A0140(particle->age * 0x10) << 7) / 4096;
             v.vz = pos.z;
             for (o = 0; o < 2; o++) {
                 v.vy = pos.y + o * half * 2 - half;

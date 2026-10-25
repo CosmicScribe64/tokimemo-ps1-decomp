@@ -2,61 +2,61 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-void func_80137F90(void) {
+void shooter_stage_game_start(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_8013801C();
+        shooter_game_start_step_init();
         break;
     case 1:
-        func_80138160();
+        shooter_game_start_step_wait();
         break;
     case 2:
-        func_8013822C();
+        shooter_game_start_step_begin();
         break;
     }
-    func_8013F250();
-    func_80132FE8();
+    shooter_draw_hud();
+    shooter_update_battle();
 }
-void func_8013801C(void) {
+void shooter_game_start_step_init(void) {
     s32 var_s0;
 
-    func_8013AFDC();
-    D_8015F4F0 = 0x80;
-    D_8015EDCC = 0;
-    D_8015EDF0 = 0;
-    D_8015EDB0 = 0x80;
-    D_8015EDEC = 0x4650;
-    func_80134884();
-    D_8015EDBC = 0x10;
+    shooter_init_stars();
+    shooter_star_brightness = 0x80;
+    shooter_stages_cleared = 0;
+    shooter_score = 0;
+    shooter_background_flags = 0x80;
+    shooter_time_left = 0x4650;
+    shooter_clear_particle_tables();
+    shooter_load_request = 0x10;
     game_state.clear_color_r = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;
-    func_801335A0(0, 0x503);
+    shooter_play_se(0, 0x503);
     func_800591D8(1);
     k_reset(0);
     back_clear_switch(1);
-    func_80143A74();
-    func_8014394C();
+    shooter_init_camera();
+    shooter_set_white_lights();
     func_80059048();
-    func_801347A8();
-    func_80143AF4();
+    shooter_hide_all_models();
+    shooter_release_all_actor_models();
     /* FAKE: shared source line schedules the loop setup (T-9780). */
     var_s0 = 0; do {
         /* FAKE: integer address arithmetic preserves index-first addu (T-9780). */
-        func_80099E30(0, (void *)(var_s0 + (u32)D_8015EDB4 + 0x14));
-        func_801438F0(0x801AC000, 0, var_s0 + (u32)D_8015EDB4);
+        func_80099E30(0, (void *)(var_s0 + (u32)shooter_actors + 0x14));
+        shooter_init_actor_model(0x801AC000, 0, var_s0 + (u32)shooter_actors);
         var_s0 += 0x88;
     } while (var_s0 != 0x29F8);
-    func_801322AC();
-    func_80132220();
-    func_801334BC();
+    shooter_init_ships();
+    shooter_reset_ship_state();
+    shooter_clear_player_shots();
     mode_step_next();
 }
 
-void func_80138160(void) {
-    func_8013A790(1, 1);
-    if (D_8015EDBC == 0) {
+void shooter_game_start_step_wait(void) {
+    shooter_update_stars(1, 1);
+    if (shooter_load_request == 0) {
         func_800450F4(0, 0x203);
         load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
         load_csr_tp(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
@@ -65,10 +65,10 @@ void func_80138160(void) {
     }
 }
 
-s32 func_8013822C(void) {
-    D_8015EDEC = 0x4650;
-    D_8015EDF0 = 0;
-    D_8015EDB4->unk84[1] = 0xFF;
-    D_8015EDB4[8].unk84[1] = 0xFF;
+s32 shooter_game_start_step_begin(void) {
+    shooter_time_left = 0x4650;
+    shooter_score = 0;
+    shooter_actors->stats[1] = 0xFF;
+    shooter_actors[8].stats[1] = 0xFF;
     mode_stage_set(0xB);
 }

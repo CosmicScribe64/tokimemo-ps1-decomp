@@ -1,15 +1,16 @@
 #ifndef OVL_EVENT_H
 #define OVL_EVENT_H
 
+/* EVENT Nozomi scene-step dispatcher; overlay code overlaps main BSS. T-27064. */
+void spot_nozomi_scene1_steps_run(void);
+
 #define MAIN_API_OVERRIDE_D_8012274C /* EVENT load-time array view, main context is s32 (T-24037). */
 #define MAIN_API_OVERRIDE_D_80122754 /* EVENT load-time array view, main context is s32 (T-24037). */
 #define MAIN_API_OVERRIDE_D_80122764 /* EVENT load-time array view, main context is s32 (T-24037). */
 #define MAIN_API_OVERRIDE_D_80122774 /* EVENT load-time array view, main context is s32 (T-24037). */
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_80120674 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
-#define MAIN_API_OVERRIDE_D_80120678 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_801206B8 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
-#define MAIN_API_OVERRIDE_D_801206BC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120658 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_8012066C /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120698 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
@@ -32,14 +33,13 @@
 #define MAIN_API_OVERRIDE_D_80121874 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
 #define MAIN_API_OVERRIDE_D_801206B0 /* EVENT overlay data at this address, s32 (main_api.h: volatile s16) */
 
-#define MAIN_API_OVERRIDE_D_80122EC8 /* EVENT table of 40 function pointers (main_api.h: s32, used by TAIIKU) */
 #include "common.h"
 #include "game.h"
 
 void func_80011DFC();
-void func_8010B430();
+void spot_yoshio_scene1_run();
 s32 func_8001496C();
-extern s32 D_80123E90;
+extern s32 spot_miharu_tile_pointers_1;
 extern s32 D_80123E94;
 extern s32 D_80123E98;
 extern s32 D_80123E9C;
@@ -54,9 +54,9 @@ extern s32 D_801258CC;
 extern s32 D_801258D0;
 extern s32 D_801258D4;
 extern s32 D_801258D8;
-extern s32 D_80120678;
-extern s32 D_8012067C;
-extern s32 D_80120680;
+extern s32 spot_talk_text_table;
+extern s32 spot_talk_command_table;
+extern s32 spot_talk_voice_table;
 extern s16 D_8012437C;
 extern s16 D_80124380;
 extern s32 D_80124224;
@@ -67,38 +67,38 @@ extern s16 D_80124388;
 extern s32 D_801241D4;
 extern s32 D_801241E4;
 extern s32 D_801241F4;
-extern u8 D_8012531C;
-void func_8011C6C4(void);
+extern u8 spot_place_variant;
+void spot_ride_movie_run(void);
 extern s32 D_8012079C;
 extern s32 D_801207A0;
 extern s16 D_801207A4;
 extern s32 D_801207A8;
-extern s32 D_80120CA8;
+extern s32 spot_shiori_tile_pointers_1;
 extern s32 D_80120CAC;
 extern s32 D_80120CB0;
 extern s32 D_80120CB4;
 extern s32 D_80120CB8;
 extern s32 D_80120CBC;
 extern s32 D_80120CC0;
-extern s32 D_8012120C;
+extern s32 spot_yuina_tile_pointers_1;
 extern s32 D_80121210;
 extern s32 D_80121214;
 extern s32 D_80121218;
 extern s32 D_8012121C;
 extern s32 D_80121220;
 extern s32 D_80121224;
-extern s32 D_801215E0;
+extern s32 spot_rei_tile_pointers_1;
 extern s32 D_801215E4;
 extern s32 D_801215E8;
 extern s32 D_801215EC;
 extern s32 D_801215F0;
 extern s32 D_801215F4;
 extern s32 D_801215F8;
-extern s32 D_80122730;
+extern s32 spot_yukari_tile_pointers_1;
 extern s32 D_80122734;
 extern s32 D_80122738;
 extern s32 D_8012273C;
-extern s32 D_801252BC;
+extern s32 spot_place_frame_pointers;
 extern s32 D_801252C0;
 extern s32 D_801252C4;
 extern s32 D_801252C8;
@@ -106,7 +106,7 @@ extern s32 D_801252CC;
 extern s32 D_801252D0;
 extern s32 D_801252DC;
 extern s32 D_801252E0;
-extern s32 D_80120690;
+extern s32 spot_yuko_still_pointers_1;
 extern s32 D_80120694;
 extern s32 D_80120698;
 extern s16 D_8012069C;
@@ -115,7 +115,7 @@ extern s32 D_801206AC;
 extern s32 D_801206B0;
 extern s32 D_801206B4;
 extern s32 D_801206B8;
-extern s32 D_801206BC;
+extern s32 spot_yuko_still_pointers_2;
 extern s32 D_801206C0;
 extern s32 D_801206C4;
 extern s16 D_801206C8;
@@ -131,7 +131,7 @@ extern s32 D_801206FC;
 extern s32 D_80120700;
 extern s32 D_80120704;
 extern s32 D_80120708;
-extern s32 D_80120714;
+extern s32 spot_yuko_still_pointers_4;
 extern s32 D_80120718;
 extern s32 D_8012071C;
 extern s16 D_80120720;
@@ -140,7 +140,7 @@ extern s32 D_80120730;
 extern s32 D_80120734;
 extern s32 D_80120738;
 extern s32 D_8012073C;
-extern s32 D_80120740;
+extern s32 spot_yuko_still_pointers_5;
 extern s32 D_80120744;
 extern s32 D_80120748;
 extern s16 D_8012074C;
@@ -154,7 +154,7 @@ extern s32 D_80120784;
 extern s32 D_80120788;
 extern s32 D_8012078C;
 extern s32 D_80120790;
-extern s32 D_80120C24;
+extern s32 spot_shiori_still_pointers_1;
 extern s32 D_80120C28;
 extern s32 D_80120C2C;
 extern s16 D_80120C30;
@@ -165,7 +165,7 @@ extern s32 D_80120C40;
 extern s32 D_80120C44;
 extern s32 D_80120C48;
 extern s32 D_80120C4C;
-extern s32 D_80120C50;
+extern s32 spot_shiori_still_pointers_2;
 extern s32 D_80120C54;
 extern s32 D_80120C58;
 extern s16 D_80120C5C;
@@ -176,7 +176,7 @@ extern s32 D_80120C6C;
 extern s32 D_80120C70;
 extern s32 D_80120C74;
 extern s32 D_80120C78;
-extern s32 D_80120C7C;
+extern s32 spot_shiori_still_pointers_3;
 extern s32 D_80120C80;
 extern s32 D_80120C84;
 extern s16 D_80120C88;
@@ -187,7 +187,7 @@ extern s32 D_80120C98;
 extern s32 D_80120C9C;
 extern s32 D_80120CA0;
 extern s32 D_80120CA4;
-extern s32 D_80120CC4;
+extern s32 spot_shiori_still_pointers_4;
 extern s32 D_80120CC8;
 extern s32 D_80120CCC;
 extern s16 D_80120CD0;
@@ -198,7 +198,7 @@ extern s32 D_80120CE0;
 extern s32 D_80120CE4;
 extern s32 D_80120CE8;
 extern s32 D_80120CEC;
-extern s32 D_801211E0;
+extern s32 spot_yuina_still_pointers_1;
 extern s32 D_801211E4;
 extern s32 D_801211E8;
 extern s16 D_801211EC;
@@ -209,7 +209,7 @@ extern s32 D_801211FC;
 extern s32 D_80121200;
 extern s32 D_80121204;
 extern s32 D_80121208;
-extern s32 D_80121228;
+extern s32 spot_yuina_still_pointers_2;
 extern s32 D_8012122C;
 extern s32 D_80121230;
 extern s16 D_80121234;
@@ -219,7 +219,7 @@ extern s32 D_80121244;
 extern s32 D_80121248;
 extern s32 D_8012124C;
 extern s32 D_80121250;
-extern s32 D_80121288;
+extern s32 spot_yuina_still_pointers_3;
 extern s32 D_8012128C;
 extern s32 D_80121290;
 extern s16 D_80121294;
@@ -230,7 +230,7 @@ extern s32 D_801212A4;
 extern s32 D_801212A8;
 extern s32 D_801212AC;
 extern s32 D_801212B0;
-extern s32 D_80121800;
+extern s32 spot_ayako_still_pointers_1;
 extern s32 D_80121804;
 extern s16 D_8012180C;
 extern s32 D_80121810;
@@ -239,7 +239,7 @@ extern s32 D_8012181C;
 extern s32 D_80121820;
 extern s32 D_80121824;
 extern s32 D_80121828;
-extern s32 D_8012182C;
+extern s32 spot_ayako_still_pointers_2;
 extern s32 D_80121830;
 extern s32 D_80121834;
 extern s16 D_80121838;
@@ -249,7 +249,7 @@ extern s32 D_80121848;
 extern s32 D_8012184C;
 extern s32 D_80121850;
 extern s32 D_80121854;
-extern s32 D_80121858;
+extern s32 spot_ayako_still_pointers_3;
 extern s32 D_8012185C;
 extern s32 D_80121868;
 extern s32 D_8012186C;
@@ -268,7 +268,7 @@ extern s32 D_801218A0;
 extern s32 D_801218A4;
 extern s32 D_801218A8;
 extern s32 D_801218AC;
-extern s32 D_801218B0;
+extern s32 spot_ayako_still_pointers_5;
 extern s32 D_801218B4;
 extern s32 D_801218B8;
 extern s16 D_801218BC;
@@ -279,7 +279,7 @@ extern s32 D_801218CC;
 extern s32 D_801218D0;
 extern s32 D_801218D4;
 extern s32 D_801218D8;
-extern s32 D_80121D20;
+extern s32 spot_mira_still_pointers_1;
 extern s32 D_80121D24;
 extern s32 D_80121D28;
 extern s16 D_80121D2C;
@@ -290,7 +290,7 @@ extern s32 D_80121D3C;
 extern s32 D_80121D40;
 extern s32 D_80121D44;
 extern s32 D_80121D48;
-extern s32 D_80121D4C;
+extern s32 spot_mira_still_pointers_2;
 extern s32 D_80121D50;
 extern s32 D_80121D54;
 extern s16 D_80121D58;
@@ -301,7 +301,7 @@ extern s32 D_80121D68;
 extern s32 D_80121D6C;
 extern s32 D_80121D70;
 extern s32 D_80121D74;
-extern s32 D_80121D78;
+extern s32 spot_mira_still_pointers_3;
 extern s32 D_80121D7C;
 extern s32 D_80121D80;
 extern s16 D_80121D84;
@@ -312,7 +312,7 @@ extern s32 D_80121D94;
 extern s32 D_80121D98;
 extern s32 D_80121D9C;
 extern s32 D_80121DA0;
-extern s32 D_80121DA4;
+extern s32 spot_mira_still_pointers_4;
 extern s32 D_80121DA8;
 extern s32 D_80121DAC;
 extern s16 D_80121DB0;
@@ -323,7 +323,7 @@ extern s32 D_80121DC0;
 extern s32 D_80121DC4;
 extern s32 D_80121DC8;
 extern s32 D_80121DCC;
-extern s32 D_80121DD0;
+extern s32 spot_mira_still_pointers_5;
 extern s32 D_80121DD4;
 extern s32 D_80121DD8;
 extern s16 D_80121DDC;
@@ -334,7 +334,7 @@ extern s32 D_80121DEC;
 extern s32 D_80121DF0;
 extern s32 D_80121DF4;
 extern s32 D_80121DF8;
-extern s32 D_801221D0;
+extern s32 spot_mio_still_pointers_1;
 extern s32 D_801221D4;
 extern s32 D_801221D8;
 extern s16 D_801221DC;
@@ -345,7 +345,7 @@ extern s32 D_801221EC;
 extern s32 D_801221F0;
 extern s32 D_801221F4;
 extern s32 D_801221F8;
-extern s32 D_801221FC;
+extern s32 spot_mio_still_pointers_2;
 extern s32 D_80122200;
 extern s32 D_80122204;
 extern s16 D_80122208;
@@ -356,7 +356,7 @@ extern s32 D_80122218;
 extern s32 D_8012221C;
 extern s32 D_80122220;
 extern s32 D_80122224;
-extern s32 D_80122228;
+extern s32 spot_mio_still_pointers_3;
 extern s32 D_8012222C;
 extern s32 D_80122230;
 extern s16 D_80122234;
@@ -367,7 +367,7 @@ extern s32 D_80122244;
 extern s32 D_80122248;
 extern s32 D_8012224C;
 extern s32 D_80122250;
-extern s32 D_80122254;
+extern s32 spot_mio_still_pointers_4;
 extern s32 D_80122258;
 extern s32 D_8012225C;
 extern s16 D_80122260;
@@ -378,7 +378,7 @@ extern s32 D_80122270;
 extern s32 D_80122274;
 extern s32 D_80122278;
 extern s32 D_8012227C;
-extern s32 D_80122280;
+extern s32 spot_mio_still_pointers_5;
 extern s32 D_80122284;
 extern s32 D_80122288;
 extern s16 D_8012228C;
@@ -389,7 +389,7 @@ extern s32 D_8012229C;
 extern s32 D_801222A0;
 extern s32 D_801222A4;
 extern s32 D_801222A8;
-extern s32 D_80122680;
+extern s32 spot_yukari_still_pointers_1;
 extern s32 D_80122684;
 extern s32 D_80122688;
 extern s16 D_8012268C;
@@ -400,7 +400,7 @@ extern s32 D_8012269C;
 extern s32 D_801226A0;
 extern s32 D_801226A4;
 extern s32 D_801226A8;
-extern s32 D_801226AC;
+extern s32 spot_yukari_still_pointers_2;
 extern s32 D_801226B0;
 extern s32 D_801226B4;
 extern s16 D_801226B8;
@@ -411,7 +411,7 @@ extern s32 D_801226C8;
 extern s32 D_801226CC;
 extern s32 D_801226D0;
 extern s32 D_801226D4;
-extern s32 D_801226D8;
+extern s32 spot_yukari_still_pointers_3;
 extern s32 D_801226DC;
 extern s32 D_801226E0;
 extern s16 D_801226E4;
@@ -422,7 +422,7 @@ extern s32 D_801226F4;
 extern s32 D_801226F8;
 extern s32 D_801226FC;
 extern s32 D_80122700;
-extern s32 D_80122704;
+extern s32 spot_yukari_still_pointers_4;
 extern s32 D_80122708;
 extern s32 D_8012270C;
 extern s16 D_80122710;
@@ -433,7 +433,7 @@ extern s32 D_80122720;
 extern s32 D_80122724;
 extern s32 D_80122728;
 extern s32 D_8012272C;
-extern s32 D_80122B30;
+extern s32 spot_nozomi_still_pointers_1;
 extern s32 D_80122B34;
 extern s32 D_80122B38;
 extern s16 D_80122B3C;
@@ -444,7 +444,7 @@ extern s32 D_80122B4C;
 extern s32 D_80122B50;
 extern s32 D_80122B54;
 extern s32 D_80122B58;
-extern s32 D_80122B5C;
+extern s32 spot_nozomi_still_pointers_2;
 extern s32 D_80122B60;
 extern s32 D_80122B64;
 extern s16 D_80122B68;
@@ -455,7 +455,7 @@ extern s32 D_80122B78;
 extern s32 D_80122B7C;
 extern s32 D_80122B80;
 extern s32 D_80122B84;
-extern s32 D_80122B88;
+extern s32 spot_nozomi_still_pointers_3;
 extern s32 D_80122B8C;
 extern s32 D_80122B90;
 extern s16 D_80122B94;
@@ -466,7 +466,7 @@ extern s32 D_80122BA4;
 extern s32 D_80122BA8;
 extern s32 D_80122BAC;
 extern s32 D_80122BB0;
-extern s32 D_80122BB4;
+extern s32 spot_nozomi_still_pointers_4;
 extern s32 D_80122BB8;
 extern s32 D_80122BBC;
 extern s16 D_80122BC0;
@@ -477,7 +477,7 @@ extern s32 D_80122BD0;
 extern s32 D_80122BD4;
 extern s32 D_80122BD8;
 extern s32 D_80122BDC;
-extern s32 D_80122BE0;
+extern s32 spot_nozomi_still_pointers_5;
 extern s32 D_80122BE4;
 extern s32 D_80122BE8;
 extern s16 D_80122BEC;
@@ -488,7 +488,7 @@ extern s32 D_80122BFC;
 extern s32 D_80122C00;
 extern s32 D_80122C04;
 extern s32 D_80122C08;
-extern s32 D_80122F9C;
+extern s32 spot_megumi_still_pointers_1;
 extern s32 D_80122FA0;
 extern s32 D_80122FA4;
 extern s16 D_80122FA8;
@@ -499,7 +499,7 @@ extern s32 D_80122FB8;
 extern s32 D_80122FBC;
 extern s32 D_80122FC0;
 extern s32 D_80122FC4;
-extern s32 D_80122FC8;
+extern s32 spot_megumi_still_pointers_2;
 extern s32 D_80122FCC;
 extern s32 D_80122FD0;
 extern s16 D_80122FD4;
@@ -510,7 +510,7 @@ extern s32 D_80122FE4;
 extern s32 D_80122FE8;
 extern s32 D_80122FEC;
 extern s32 D_80122FF0;
-extern s32 D_80122FF4;
+extern s32 spot_megumi_still_pointers_3;
 extern s32 D_80122FF8;
 extern s32 D_80122FFC;
 extern s16 D_80123000;
@@ -521,7 +521,7 @@ extern s32 D_80123010;
 extern s32 D_80123014;
 extern s32 D_80123018;
 extern s32 D_8012301C;
-extern s32 D_80123020;
+extern s32 spot_megumi_still_pointers_4;
 extern s32 D_80123024;
 extern s32 D_80123028;
 extern s16 D_8012302C;
@@ -532,7 +532,7 @@ extern s32 D_8012303C;
 extern s32 D_80123040;
 extern s32 D_80123044;
 extern s32 D_80123048;
-extern s32 D_80123430;
+extern s32 spot_saki_still_pointers_1;
 extern s32 D_80123434;
 extern s32 D_80123438;
 extern s16 D_8012343C;
@@ -543,7 +543,7 @@ extern s32 D_8012344C;
 extern s32 D_80123450;
 extern s32 D_80123454;
 extern s32 D_80123458;
-extern s32 D_8012345C;
+extern s32 spot_saki_still_pointers_2;
 extern s32 D_80123460;
 extern s32 D_80123464;
 extern s16 D_80123468;
@@ -554,7 +554,7 @@ extern s32 D_80123478;
 extern s32 D_8012347C;
 extern s32 D_80123480;
 extern s32 D_80123484;
-extern s32 D_80123488;
+extern s32 spot_saki_still_pointers_3;
 extern s32 D_8012348C;
 extern s32 D_80123490;
 extern s16 D_80123494;
@@ -565,7 +565,7 @@ extern s32 D_801234A4;
 extern s32 D_801234A8;
 extern s32 D_801234AC;
 extern s32 D_801234B0;
-extern s32 D_801234B4;
+extern s32 spot_saki_still_pointers_4;
 extern s32 D_801234B8;
 extern s32 D_801234BC;
 extern s16 D_801234C0;
@@ -576,7 +576,7 @@ extern s32 D_801234D0;
 extern s32 D_801234D4;
 extern s32 D_801234D8;
 extern s32 D_801234DC;
-extern s32 D_801234E0;
+extern s32 spot_saki_still_pointers_5;
 extern s32 D_801234E4;
 extern s32 D_801234E8;
 extern s16 D_801234EC;
@@ -587,7 +587,7 @@ extern s32 D_801234FC;
 extern s32 D_80123500;
 extern s32 D_80123504;
 extern s32 D_80123508;
-extern s32 D_80123880;
+extern s32 spot_yumi_still_pointers_1;
 extern s32 D_80123884;
 extern s32 D_80123888;
 extern s16 D_8012388C;
@@ -598,7 +598,7 @@ extern s32 D_8012389C;
 extern s32 D_801238A0;
 extern s32 D_801238A4;
 extern s32 D_801238A8;
-extern s32 D_801238AC;
+extern s32 spot_yumi_still_pointers_2;
 extern s32 D_801238B0;
 extern s32 D_801238B4;
 extern s16 D_801238B8;
@@ -609,7 +609,7 @@ extern s32 D_801238C8;
 extern s32 D_801238CC;
 extern s32 D_801238D0;
 extern s32 D_801238D4;
-extern s32 D_801238D8;
+extern s32 spot_yumi_still_pointers_3;
 extern s32 D_801238DC;
 extern s32 D_801238E0;
 extern s16 D_801238E4;
@@ -620,7 +620,7 @@ extern s32 D_801238F4;
 extern s32 D_801238F8;
 extern s32 D_801238FC;
 extern s32 D_80123900;
-extern s32 D_80123904;
+extern s32 spot_yumi_still_pointers_4;
 extern s32 D_80123908;
 extern s32 D_8012390C;
 extern s16 D_80123910;
@@ -631,7 +631,7 @@ extern s32 D_80123920;
 extern s32 D_80123924;
 extern s32 D_80123928;
 extern s32 D_8012392C;
-extern s32 D_80123930;
+extern s32 spot_yumi_still_pointers_5;
 extern s32 D_80123934;
 extern s32 D_80123938;
 extern s16 D_8012393C;
@@ -642,7 +642,7 @@ extern s32 D_8012394C;
 extern s32 D_80123950;
 extern s32 D_80123954;
 extern s32 D_80123958;
-extern s32 D_8012395C;
+extern s32 spot_yumi_still_pointers_6;
 extern s32 D_80123960;
 extern s32 D_80123964;
 extern s16 D_80123968;
@@ -653,7 +653,7 @@ extern s32 D_80123978;
 extern s32 D_8012397C;
 extern s32 D_80123980;
 extern s32 D_80123984;
-extern s32 D_80123EAC;
+extern s32 spot_miharu_still_pointers_1;
 extern s32 D_80123EB0;
 extern s32 D_80123EB4;
 extern s16 D_80123EB8;
@@ -664,7 +664,7 @@ extern s32 D_80123EC8;
 extern s32 D_80123ECC;
 extern s32 D_80123ED0;
 extern s32 D_80123ED4;
-extern s32 D_801240F0;
+extern s32 spot_yoshio_still_pointers_1;
 extern s32 D_801240F4;
 extern s32 D_801240F8;
 extern s16 D_801240FC;
@@ -675,7 +675,7 @@ extern s32 D_8012410C;
 extern s32 D_80124110;
 extern s32 D_80124114;
 extern s32 D_80124118;
-extern s32 D_801241D0;
+extern s32 spot_date_common_pointers;
 extern s32 D_801241D8;
 extern s32 D_801241DC;
 extern s32 D_801241E0;
@@ -684,7 +684,7 @@ extern s32 D_801241EC;
 extern s32 D_801241F0;
 extern s32 D_801241F8;
 extern s32 D_801241FC;
-extern s32 D_80120BF0;
+extern s32 spot_shiori_overlay_pointers_1;
 extern s32 D_80120BF4;
 extern s32 D_80120BF8;
 extern s16 D_80120BFC;
@@ -697,7 +697,7 @@ extern s32 D_80120C14;
 extern s32 D_80120C18;
 extern s32 D_80120C1C;
 extern s32 D_80120C20;
-extern s32 D_80121254;
+extern s32 spot_yuina_overlay_pointers_1;
 extern s32 D_80121258;
 extern s32 D_8012125C;
 extern s16 D_80121260;
@@ -709,7 +709,7 @@ extern s32 D_80121274;
 extern s32 D_80121278;
 extern s32 D_80121280;
 extern s32 D_80121284;
-extern s32 D_80122F70;
+extern s32 spot_megumi_overlay_pointers_1;
 extern s32 D_80122F74;
 extern s32 D_80122F78;
 extern s16 D_80122F7C;
@@ -720,7 +720,7 @@ extern s32 D_80122F8C;
 extern s32 D_80122F90;
 extern s32 D_80122F94;
 extern s32 D_80122F98;
-extern s32 D_80125270;
+extern s32 spot_place_asset_pointers;
 extern s32 D_80125274;
 extern s32 D_80125278;
 extern s32 D_80125280;
@@ -738,7 +738,7 @@ extern s32 D_801252AC;
 extern s32 D_801252B0;
 extern s32 D_801252B4;
 extern s32 D_801252B8;
-extern s32 D_801251D0;
+extern s32 spot_place_result_tables;
 extern s32 D_801251D4;
 extern s32 D_801251D8;
 extern s32 D_801251DC;
@@ -778,7 +778,7 @@ extern s32 D_80125260;
 extern s32 D_80125264;
 extern s32 D_80125268;
 extern s32 D_8012526C;
-extern s32 D_80124200;
+extern s32 spot_date_sections;
 extern s32 D_80124204;
 extern s32 D_80124208;
 extern s32 D_8012420C;
@@ -856,7 +856,7 @@ extern s32 D_80124340;
 extern s32 D_80124240;
 extern s32 D_801242AC;
 extern s32 D_80124318;
-extern s32 D_801202D0;
+extern s32 spot_script_sections;
 extern s32 D_801202D4;
 extern s32 D_801202D8;
 extern s32 D_801202DC;
@@ -1090,108 +1090,108 @@ void func_80011EC4();
 void func_800335E0();
 void func_800201FC();
 extern u8 D_801243B4;
-extern u8 D_801252E4;
-extern u8 D_80125320;
+extern u8 spot_arrival_mode;
+extern u8 spot_ride;
 extern u8 D_80125324;
 extern u8 D_801252F4;
 extern u8 D_801252F8;
 extern u8 D_801252FC;
-extern s16 D_80124394;
+extern s16 spot_reaction_tier_cells;
 extern s16 D_80124396;
 extern s16 D_80124398;
-extern s16 D_8012439C;
+extern s16 spot_reaction_cells;
 extern s16 D_8012439E;
 extern s16 D_801243A0;
-extern s16 D_801243A4;
+extern s16 spot_reaction_low_cells;
 extern s16 D_801243A6;
 extern s16 D_801243A8;
 void func_80015D28();
-void func_800F7220();
-void func_800F72D0();
-void func_800F7380();
-void func_800F7430();
-void func_800F74E0();
-void func_800F7590();
-void func_800F9900();
-void func_800F9C4C();
-void func_800F99CC();
-void func_800F9A7C();
-void func_800F9B2C();
-void func_800F9BDC();
-void func_800FBBF0();
-void func_800FBCA0();
-void func_800FBD10();
-void func_800FBDC0();
-void func_800FD2F0();
-void func_800FDC20();
-void func_800FDCD0();
-void func_800FDD80();
-void func_800FDE30();
-void func_800FDEE0();
-void func_800FFBE0();
-void func_800FFC90();
-void func_800FFD40();
-void func_800FFDF0();
-void func_800FFEA0();
-void func_801011A0();
-void func_80101250();
-void func_80101300();
-void func_801013B0();
-void func_80101460();
-void func_801024B0();
-void func_80102560();
-void func_80102610();
-void func_801026C0();
-void func_80102770();
-void func_80103C80();
-void func_80103D30();
-void func_80103DE0();
-void func_80103E90();
-void func_80103F40();
-void func_801050D0();
-void func_801051A0();
-void func_80105250();
-void func_80105300();
-void func_80106C20();
-void func_80106CD0();
-void func_80106D80();
-void func_80106E30();
-void func_80106EE0();
-void func_80107FC0();
-void func_80108330();
-void func_80108070();
-void func_80108120();
-void func_801081D0();
-void func_8010A280();
-void func_8010B360();
-void func_801101B4();
+void spot_yuko_still_pointers_1_init();
+void spot_yuko_still_pointers_2_init();
+void spot_yuko_still_pointers_3_init();
+void spot_yuko_still_pointers_4_init();
+void spot_yuko_still_pointers_5_init();
+void spot_yuko_still_pointers_6_init();
+void spot_shiori_overlay_pointers_1_init();
+void spot_shiori_still_pointers_4_init();
+void spot_shiori_still_pointers_1_init();
+void spot_shiori_still_pointers_2_init();
+void spot_shiori_still_pointers_3_init();
+void spot_shiori_tile_pointers_1_init();
+void spot_yuina_still_pointers_1_init();
+void spot_yuina_tile_pointers_1_init();
+void spot_yuina_still_pointers_2_init();
+void spot_yuina_overlay_pointers_1_init();
+void spot_rei_tile_pointers_1_init();
+void spot_ayako_still_pointers_1_init();
+void spot_ayako_still_pointers_2_init();
+void spot_ayako_still_pointers_3_init();
+void spot_ayako_still_pointers_4_init();
+void spot_ayako_still_pointers_5_init();
+void spot_mira_still_pointers_1_init();
+void spot_mira_still_pointers_2_init();
+void spot_mira_still_pointers_3_init();
+void spot_mira_still_pointers_4_init();
+void spot_mira_still_pointers_5_init();
+void spot_mio_still_pointers_1_init();
+void spot_mio_still_pointers_2_init();
+void spot_mio_still_pointers_3_init();
+void spot_mio_still_pointers_4_init();
+void spot_mio_still_pointers_5_init();
+void spot_yukari_still_pointers_1_init();
+void spot_yukari_still_pointers_2_init();
+void spot_yukari_still_pointers_3_init();
+void spot_yukari_still_pointers_4_init();
+void spot_yukari_tile_pointers_1_init();
+void spot_nozomi_still_pointers_1_init();
+void spot_nozomi_still_pointers_2_init();
+void spot_nozomi_still_pointers_3_init();
+void spot_nozomi_still_pointers_4_init();
+void spot_nozomi_still_pointers_5_init();
+void spot_megumi_overlay_pointers_1_init();
+void spot_megumi_still_pointers_1_init();
+void spot_megumi_still_pointers_2_init();
+void spot_megumi_still_pointers_3_init();
+void spot_saki_still_pointers_1_init();
+void spot_saki_still_pointers_2_init();
+void spot_saki_still_pointers_3_init();
+void spot_saki_still_pointers_4_init();
+void spot_saki_still_pointers_5_init();
+void spot_yumi_still_pointers_1_init();
+void spot_yumi_still_pointers_6_init();
+void spot_yumi_still_pointers_2_init();
+void spot_yumi_still_pointers_3_init();
+void spot_yumi_still_pointers_4_init();
+void spot_miharu_still_pointers_1_init();
+void spot_yoshio_still_pointers_1_init();
+void spot_place_frame_pointers_init();
 void func_80015FE0();
-void func_800F9DF8();
-void func_800FA5C0();
-void func_800FA6A0();
-void func_80118B4C();
-void func_8010BB90();
-void func_8010FE10();
-void func_80108280();
-void func_80110094();
+void spot_shiori_scene1_steps_run();
+void spot_shiori_scene2_steps_run();
+void spot_shiori_scene8_steps_run();
+void spot_outcome_apply_step();
+void spot_fill_sections_common();
+void spot_place_result_pointers_init();
+void spot_yumi_still_pointers_5_init();
+void spot_place_asset_pointers_init();
 void func_800143DC();
-void func_801053B0();
+void spot_megumi_still_pointers_4_init();
 void func_800137AC();
 void func_8001A16C();
-void func_80108B24();
-void func_800F7074();
-void func_801189B4();
-void func_80118A60();
-extern u8 D_801243B0;
-void func_801190F0();
-void func_800F6000();
-extern s16 D_8012438C;
+void spot_yumi_scene7_gradient_quad_draw();
+void spot_talk_step();
+void spot_portrait_read_a();
+void spot_portrait_read_b();
+extern u8 spot_place;
+void spot_place_empty_step();
+void spot_script_sections_init();
+extern s16 spot_face_cells;
 extern s16 D_8012438E;
 extern s16 D_80124390;
-void func_80114B0C();
+void spot_reaction_rows_build_step();
 void func_800189C4();
 void func_8001A0CC();
-void func_800F9730();
+void spot_gradient_quad_draw();
 void func_8001A1EC();
 s32 func_8002328C();
 extern u8 D_80125300;
@@ -1200,36 +1200,36 @@ extern u8 D_80125304;
 extern u8 D_80125308;
 void func_80033E88();
 extern s8 D_80125310;
-s32 func_801103A0(void);
-void func_800FBE90();
-void func_800F7640();
-void func_800F77A0();
-void func_800F8C2C();
-void func_801055D0();
-void func_80105910();
-void func_80105DF8();
+s32 spot_date_event_choose(void);
+void spot_yuina_still_pointers_3_init();
+void spot_yuko_animation_pointers_1_init();
+void spot_yuko_scene1_steps_run();
+void spot_yuko_scene4_gradient_sprites_draw();
+void spot_megumi_scene1_steps_run();
+void spot_megumi_scene2_steps_run();
+void spot_megumi_scene1_sprites_update();
 
-void func_80107090(void);
+void spot_saki_scene1_steps_run(void);
 
-void func_80100070();
+void spot_mira_scene1_steps_run();
 
-void func_80100254();
-void func_80101610();
-void func_8010A4F0();
-void func_8010A5AC();
-void func_8010AE7C();
-void func_8010B490();
+void spot_mira_scene8_steps_run();
+void spot_mio_scene1_steps_run();
+void spot_miharu_scene1_steps_run();
+void spot_miharu_scene2_steps_run();
+void spot_miharu_scene4_steps_run();
+void spot_yoshio_scene1_steps_run();
 
 extern u8 D_8012436C;
 extern s16 D_80124370;
 extern u8 D_80125314;
-s32 func_800FA25C(void);
+s32 spot_shiori_scene1_sprites_update(void);
 extern s16 D_80120CF0[16];
 extern s16 D_80120D10[16];
 
 /* T-24081: signed-field view of SpriteQuad at +0x0A/+0x0E so constant 8 ($s3) and 0x18 ($s5) are shared with s16 unk_08
  * without taking the address of a cast u8[] element (which folds into base + offset instead of ixa). */
-typedef struct EventRec24 {
+typedef struct SpotSpriteQuad {
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ s16 unk_06;
@@ -1238,147 +1238,147 @@ typedef struct EventRec24 {
     /* 0x0C */ s16 unk_0C;
     /* 0x0E */ s8 unk_0E;
     /* 0x0F */ u8 pad_0F[0x15];
-} EventRec24; /* size 0x24 */
-void func_80105DF8(void);
+} SpotSpriteQuad; /* size 0x24 */
+void spot_megumi_scene1_sprites_update(void);
 
 extern u8 D_80125328;
-void func_800FD4FC();
-void func_800FD604();
-void func_800FD6E0();
+void spot_rei_scene1_steps_run();
+void spot_rei_scene2_steps_run();
+void spot_rei_scene3_steps_run();
 extern s8 D_801252E8;
-extern s16 D_80124344;
+extern s16 spot_dialogue_group_offset;
 extern u8 D_80124374;
 extern s16 D_80124378;
 extern u8 D_80125318;
-s32 func_800FC040(void);
-void func_80102950();
-void func_80102A24();
-void func_801085C0();
-void func_80108680();
-void func_801087F8();
+s32 spot_yuina_scene1_steps_run(void);
+void spot_yukari_scene1_steps_run();
+void spot_yukari_scene2_steps_run();
+void spot_yumi_scene1_steps_run();
+void spot_yumi_scene2_steps_run();
+void spot_yumi_scene7_steps_run();
 extern s8 D_80123988;
 extern s32 D_8012398C;
-void func_80108D00(void);
-void func_801087A8(void);
-void func_800FCF40(void);
-void func_800FC46C(void);
-void func_80103208(void);
-void func_80109948(void);
-void func_800FC994(void);
-void func_800FD1C0(void);
-void func_800FBFE0();
-void func_800FCD0C();
-void func_800FCDD8();
-void func_800FD00C();
-void func_80102890();
-void func_801028F0();
-void func_801034E8();
-s32 func_801035BC(void);
-void func_80103774(void);
-void func_801039E8();
-void func_80103ABC();
-void func_801084A0();
-void func_80108500();
-void func_80109E14();
-void func_80109EE8();
-void func_8010A008();
-void func_8010A0E4();
-void func_80108560();
-extern s16 D_8012435C;
+void spot_yumi_scene7_step_37(void);
+void spot_yumi_scene2_branch_on_mood_14(void);
+void spot_yuina_scene3_set_state_17(void);
+void spot_yuina_scene2_still_show_stats_03(void);
+void spot_yukari_scene6_still_show_stats_03(void);
+void spot_yumi_scene5_still_show_stats_03(void);
+void spot_yuina_scene5_still_show_stats_03(void);
+void spot_yuina_scene5_run(void);
+void spot_yuina_scene1_run();
+void spot_yuina_scene2_run();
+void spot_yuina_scene3_run();
+void spot_yuina_scene4_run();
+void spot_yukari_scene1_run();
+void spot_yukari_scene2_run();
+void spot_yukari_scene3_run();
+s32 spot_yukari_scene4_run(void);
+void spot_yukari_scene4_sprites_update(void);
+void spot_yukari_scene5_run();
+void spot_yukari_scene6_run();
+void spot_yumi_scene1_run();
+void spot_yumi_scene2_run();
+void spot_yumi_scene3_run();
+void spot_yumi_scene4_run();
+void spot_yumi_scene5_run();
+void spot_yumi_scene6_run();
+void spot_yumi_scene7_run();
+extern s16 spot_mood_tier;
 extern u8 D_80124360;
-void func_800FD3DC();
-void func_800FD43C();
-void func_800FD49C();
+void spot_rei_scene1_run();
+void spot_rei_scene2_run();
+void spot_rei_scene3_run();
 
 extern s16 D_801207AC;
 extern s16 D_801207B0;
 extern s16 D_801207B4;
-void func_801015B0(void);
-void func_80101F24(void);
-void func_80102118(void);
-void func_801021FC(void);
-void func_801022C0(void);
+void spot_mio_scene1_run(void);
+void spot_mio_scene2_run(void);
+void spot_mio_scene3_run(void);
+void spot_mio_scene4_run(void);
+void spot_mio_scene5_run(void);
 void func_80036A8C();
 void func_800372E0(s32 a);
 void func_80035774(void);
 void func_800358D0(void);
-void func_8010F4B8(void);
-s32 func_80116360(void);
-void func_80116460(void);
-void func_8011651C(void);
-void func_80118F40(void);
-void func_80118FC8(void);
-s32 func_80117A68();
-s32 func_80117A10(void);
-void func_80117CEC(void);
+void spot_place_scene_frame(void);
+s32 spot_place_shopping_street_branch_27(void);
+void spot_place_shopping_street_branch_on_mood_16(void);
+void spot_place_shopping_street_branch_on_mood_18(void);
+void spot_place_pool_face_step_24(void);
+void spot_place_sea_face_step_35(void);
+s32 spot_arrival_talk_step();
+s32 spot_arrival_talk_gate_step(void);
+void spot_talk_until_done_step(void);
 extern u8 D_80124364;
 extern u8 D_80124368;
-void func_8011838C(void);
-void func_800FDBF4(void);
-void func_8010BB64(void);
+void spot_place_neighborhood_park_talk_variant_06(void);
+void spot_rei_scene3_bg_load_02(void);
+void spot_yoshio_scene1_bg_load_18(void);
 
-void func_800FCFA4(void);
-void func_800FCFC4(void);
+void spot_yuina_scene3_se_a(void);
+void spot_yuina_scene3_se_b(void);
 
-void func_80107030(void);
+void spot_saki_scene1_run(void);
 
 extern u8 D_8012411C;
-void func_80108AD8(void);
-void func_80108DD4(void);
-void func_80109FB0(void);
-void func_800F8970(void);
+void spot_yumi_scene7_flash_draw(void);
+void spot_yumi_scene7_sprites_update(void);
+void spot_yumi_scene4_se_play(void);
+void spot_yuko_scene3_gradient_sprites_draw(void);
 
-void func_8010A3D0(void);
-void func_8010A430(void);
-void func_8010A490(void);
-void func_8010AD70(void);
-void func_8010B29C(void);
-void func_800F9DBC(void);
-void func_800FA584(void);
-void func_800FB67C(void);
-void func_800FB728(void);
-void func_800FB7E8(void);
-void func_800FB920(void);
-void func_800FA664(void);
-void func_80107CEC(void);
-void func_80107E20(void);
-void func_80107A28(void);
-void func_80107BB0(void);
+void spot_miharu_scene1_run(void);
+void spot_miharu_scene2_run(void);
+void spot_miharu_scene4_run(void);
+void spot_miharu_scene3_run(void);
+void spot_miharu_scene5_run(void);
+void spot_shiori_scene1_run(void);
+void spot_shiori_scene2_run(void);
+void spot_shiori_scene3_run(void);
+void spot_shiori_scene4_run(void);
+void spot_shiori_scene5_run(void);
+void spot_shiori_scene6_run(void);
+void spot_shiori_scene8_run(void);
+void spot_saki_scene4_run(void);
+void spot_saki_scene5_run(void);
+void spot_saki_scene2_run(void);
+void spot_saki_scene3_run(void);
 extern s8 D_801212B4;
-void func_80104090(void);
-void func_801049B4(void);
-void func_80104B50(void);
-void func_80104E64(void);
-void func_80104F80(void);
-void func_80105510(void);
-void func_80105570(void);
-void func_80106834(void);
-void func_80106908(void);
-void func_80106A8C(void);
-void func_80106B48(void);
-void func_80100010(void);
-void func_801001F4(void);
-void func_80100CEC(void);
-void func_80100E30(void);
-void func_80100F04(void);
-void func_80100FC0(void);
-void func_80101104(void);
-void func_801010B4(void);
-void func_80104F30(void);
+void spot_nozomi_scene1_run(void);
+void spot_nozomi_scene2_run(void);
+void spot_nozomi_scene3_run(void);
+void spot_nozomi_scene4_run(void);
+void spot_nozomi_scene5_run(void);
+void spot_megumi_scene1_run(void);
+void spot_megumi_scene2_run(void);
+void spot_megumi_scene3_run(void);
+void spot_megumi_scene4_run(void);
+void spot_megumi_scene5_run(void);
+void spot_megumi_scene6_run(void);
+void spot_mira_scene1_run(void);
+void spot_mira_scene8_run(void);
+void spot_mira_scene2_run(void);
+void spot_mira_scene3_run(void);
+void spot_mira_scene4_run(void);
+void spot_mira_scene5_run(void);
+void spot_mira_scene6_run(void);
+void spot_mira_unused_branch_on_mood_2(void);
+void spot_nozomi_scene4_branch_on_mood_07(void);
 
 #endif /* OVL_EVENT_H */
 extern s16 D_80124348;
-void func_800FE030(void);
-void func_800FEA38(void);
-void func_800FF61C();
-void func_800FF770();
-void func_800FF82C();
-void func_800F7740(void);
-void func_800F84E0(void);
-void func_800F86C4(void);
-void func_800F8B50(void);
-void func_800F93FC(void);
-void func_800F9558(void);
+void spot_ayako_scene1_run(void);
+void spot_ayako_scene2_run(void);
+void spot_ayako_scene3_run();
+void spot_ayako_scene4_run();
+void spot_ayako_scene5_run();
+void spot_yuko_scene1_run(void);
+void spot_yuko_scene2_run(void);
+void spot_yuko_scene3_run(void);
+void spot_yuko_scene4_run(void);
+void spot_yuko_scene5_run(void);
+void spot_yuko_scene6_run(void);
 extern s8 D_801218DC[];
 
 #ifndef OVL_EVENT_W8_3_TYPES_H
@@ -1386,10 +1386,10 @@ extern s8 D_801218DC[];
 typedef struct EventCallbackTable47 {
     /* 0x00 */ void (*callback[47])(s32);
 } EventCallbackTable47; /* size 0xBC */
-extern EventCallbackTable47 D_80120E24;
-void func_800FA850(void);
-void func_80105B00(void);
-void func_80105BC4(void);
+extern EventCallbackTable47 spot_shiori_scene8_steps;
+void spot_shiori_scene8_face_update(void);
+void spot_megumi_scene1_still_fade_out_37(void);
+void spot_megumi_scene1_still_fade_in_35(void);
 
 #endif /* OVL_EVENT_W8_3_TYPES_H */
 
@@ -1397,54 +1397,54 @@ void func_80105BC4(void);
 #define OVL_EVENT_RECORDS_T9740
 /* D_800E9620 records 30/31 are read as Actor (game.h, T-9740, T-20900).
  * D_800EC190 uses the shared SpriteQuad game-record layout. */
-s32 func_8010B8A4(void);
+s32 spot_yoshio_scene1_step_37(void);
 #endif
 
 #ifndef EVENT_TABLE_E7_T9940
 #define EVENT_TABLE_E7_T9940
-typedef struct EventTableE7 {
-    /* 0x00 */ u8 unk_00[11][21];
-} EventTableE7; /* size 0xE7; inline copy includes a three-byte tail */
-extern EventTableE7 D_8012536C;
+typedef struct SpotPlaceAffinityTable {
+    /* 0x00 */ u8 unk_00[11][21]; /* HYPOTHESIS: type used for 11 heroines x 21 places of preference values; body indexes it as table[girl][place] */
+} SpotPlaceAffinityTable; /* size 0xE7; inline copy includes a three-byte tail */
+extern SpotPlaceAffinityTable spot_place_affinity;
 #endif
 
 
 #ifndef OVL_EVENT_T10040
 #define OVL_EVENT_T10040
 /* Forward declarations for the original object, T-10040. */
-void func_8011C650(void);
-u16 func_8011C750(void);
-s32 func_8011D5C4(void);
-void func_8011DDB8(void);
-void func_8011EDFC(void);
+void spot_ride_movie_pointers_init(void);
+u16 spot_ride_scream_virtual_movie(void);
+s32 spot_ride_ferris_wheel_movie(void);
+void spot_ride_coaster_movie(void);
+void spot_ride_ghost_house_movie(void);
 
 /* T-10040: dialogue data and object-local forward declarations. */
-s32 func_8011ED50(s16 arg0);
+s32 spot_ride_movie_shift_sprites(s16 arg0);
 
 /* Stage/fade view at D_800B1AF0; store/load ordering in 8011EDFC. */
-typedef struct EventTransitionState {
-    /* 0x00 */ s32 unk_00;
+typedef struct SpotDevelopmentStepViewShort {
+    /* 0x00 */ s32 step_timer;
     /* 0x04 */ u8 pad04[2];
-    /* 0x06 */ u8 unk_06;
+    /* 0x06 */ u8 step;
     /* 0x07 */ u8 pad07;
-} EventTransitionState; /* size 0x08; T-10040 */
+} SpotDevelopmentStepViewShort; /* size 0x08; T-10040 */
 extern s16 D_801258E4[3];
 extern s16 D_801258EC[3];
 extern s16 D_801258F4[3];
 extern s16 D_801258FC[3];
 extern u16 D_801258DC;
 typedef struct EvFnTbl53 { void (*f[53])(); } EvFnTbl53;
-extern EvFnTbl53 D_801225A8;
+extern EvFnTbl53 spot_mio_scene5_steps;
 typedef struct EvFnTbl44 { void (*f[44])(); } EvFnTbl44;
-extern EvFnTbl44 D_801228E0;
-void func_8011B5A8(void);
+extern EvFnTbl44 spot_yukari_scene4_steps;
+void spot_place_shrine_set_state_38(void);
 
 #endif
 
 #ifndef OVL_EVENT_T10630_H
 #define OVL_EVENT_T10630_H
-/* Movie control bytes at D_800F1990, cleared by func_8011DDB8. */
-typedef struct EventMovieWork {
+/* Movie control bytes at D_800F1990, cleared by spot_ride_coaster_movie. */
+typedef struct SpotRideMovieWork {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ s16 unk_04;
@@ -1456,7 +1456,7 @@ typedef struct EventMovieWork {
     /* 0x19 */ s8 unk_19;
     /* 0x1A */ s8 unk_1A;
     /* 0x1B */ u8 pad1B;
-} EventMovieWork; /* size 0x1C, minimum observed extent */
+} SpotRideMovieWork; /* size 0x1C, minimum observed extent */
 s32 func_80015A44();
 void func_8002469C();
 void func_80027438();
@@ -1467,134 +1467,134 @@ void func_800352B4();
 
 /* T-10630: signed UV step and RNG seed helper in the EVENT object. */
 extern s16 D_801258E0;
-void func_8011F530(u32 seed);
+void spot_bios_srand(u32 seed);
 
 #ifndef EVENT_SELECTION_TYPES_T10730
 #define EVENT_SELECTION_TYPES_T10730
 /* T-10730: unsigned triples selected by girl, option, then its two-state flag. */
-typedef struct EventChoice3 {
+typedef struct SpotResultTriple {
     /* 0x00 */ u8 value[3];
-} EventChoice3; /* size 0x03 */
+} SpotResultTriple; /* size 0x03 */
 
-typedef struct EventPlaceChoices18 {
-    /* 0x00 */ EventChoice3 choice[3][2];
-} EventPlaceChoices18; /* size 0x12 */
+typedef struct SpotShopChoiceTable {
+    /* 0x00 */ SpotResultTriple choice[3][2];
+} SpotShopChoiceTable; /* size 0x12 */
 
-typedef struct EventRideChoices36 {
-    /* 0x00 */ EventChoice3 choice[6][2];
-} EventRideChoices36; /* size 0x24 */
+typedef struct SpotRideChoiceTable {
+    /* 0x00 */ SpotResultTriple choice[6][2];
+} SpotRideChoiceTable; /* size 0x24 */
 
 #endif
 
 #ifndef OVL_EVENT_MOTION_T10730
 #define OVL_EVENT_MOTION_T10730
-typedef struct EventMuseumChoices15 {
-    /* 0x00 */ EventChoice3 choice[5];
-} EventMuseumChoices15; /* size 0x0F */
+typedef struct SpotMuseumChoiceTable {
+    /* 0x00 */ SpotResultTriple choice[5];
+} SpotMuseumChoiceTable; /* size 0x0F */
 #endif
 
 #ifndef OVL_EVENT_STATE_T10730
 #define OVL_EVENT_STATE_T10730
 /* T-10730: legacy EVENT state, offsets relative to D_800B0860. */
-typedef struct EventStateView {
+typedef struct SpotDevelopmentState {
     /* T-24017: signed halfwords indexed by the word at D_800E9600. */
     /* 0x000 */ u8 pad_000[0x14];
-    /* 0x014 */ s16 unk_014[2];
-    /* 0x018 */ s16 unk_018[2];
+    /* 0x014 */ s16 screen_center_x[2];
+    /* 0x018 */ s16 screen_center_y[2];
     /* 0x01C */ u8 pad_01C[0x19];
-    /* 0x035 */ u8 unk_035;
-    /* 0x036 */ u8 unk_036;
-    /* 0x037 */ u8 unk_037;
+    /* 0x035 */ u8 year;
+    /* 0x036 */ u8 month;
+    /* 0x037 */ u8 day;
     /* 0x038 */ u8 pad_038[0xAC];
-    /* 0x0E4 */ GirlFlags unk_0E4;
+    /* 0x0E4 */ GirlFlags player_flags; /* HYPOTHESIS: dev counterpart of core's player_flags (shipped +0xF4; dev +0xE4 by the +0x10 shift of the parameter block); the special event chooser tests bit 1 of it for the Yuko winter event where the DATE twin tests ScheduleFlags bit 17 of player_flags in the same condition (dev bit numbering assumed) */
     /* 0x0E8 */ u8 pad_0E8[0x16];
-    /* 0x0FE */ s16 unk_0FE;
+    /* 0x0FE */ s16 athletics;
     /* 0x100 */ u8 pad_100[0xA4];
-    /* 0x1A4 */ LegacyGirlRecord unk_1A4[12];
+    /* 0x1A4 */ LegacyGirlRecord girls[12];
     /* 0x414 */ u8 pad_414[0x1B6];
-    /* 0x5CA */ u8 unk_5CA[0x4B];
+    /* 0x5CA */ u8 scene_flags[0x4B];
     /* 0x615 */ u8 pad_615[0xB3];
-    /* 0x6C8 */ s8 unk_6C8;
-    /* 0x6C9 */ s8 unk_6C9;
-    /* 0x6CA */ s8 unk_6CA;
+    /* 0x6C8 */ s8 saved_game_mode;
+    /* 0x6C9 */ s8 saved_mode_stage;
+    /* 0x6CA */ s8 saved_mode_step;
     /* T-15200: selector-indexed bytes at D_800B0F35 and flag D_800B0F45.
      * Twelve slots follow the existing LegacyGirlRecord table extent; semantics unknown. */
     /* 0x6CB */ u8 pad_6CB[0xA];
-    /* 0x6D5 */ u8 unk_6D5[12];
+    /* 0x6D5 */ u8 girl_last_date_spot[12];
     /* 0x6E1 */ u8 pad_6E1[4];
-    /* 0x6E5 */ u8 unk_6E5;
+    /* 0x6E5 */ u8 appointment_flag;
     /* 0x6E6 */ u8 pad_6E6[0x800];
-    /* 0xEE6 */ u8 unk_EE6;
+    /* 0xEE6 */ u8 current_girl;
     /* 0xEE7 */ u8 pad_EE7[0x25];
-    /* 0xF0C */ s32 unk_F0C;
+    /* 0xF0C */ s32 pad_pressed;
     /* 0xF10 */ u8 pad_F10[0x127];
     /* 0x1037 */ u8 unk_1037;
     /* 0x1038 */ u8 pad_1038[0x25D];
-    /* 0x1295 */ u8 unk_1295;
-    /* 0x1296 */ u8 unk_1296;
+    /* 0x1295 */ u8 stage;
+    /* 0x1296 */ u8 step;
     /* 0x1297 */ u8 pad_1297;
-} EventStateView; /* minimum size 0x1298 */
+} SpotDevelopmentState; /* minimum size 0x1298 */
 
-/* Unsigned counter view at D_800B1AF0 (func_800FEAE8, matching DATE game_state.unk_1104.u). */
-typedef struct EventFrameCounter {
+/* Unsigned counter view at D_800B1AF0 (spot_ayako_scene2_step_23, matching DATE game_state.unk_1104.u). */
+typedef struct SpotFrameCounter {
     /* 0x00 */ u32 u;
-} EventFrameCounter; /* size 0x04 */
+} SpotFrameCounter; /* size 0x04 */
 
 /* Bit 1 of LegacyGirlRecord.unk_0C is tested with a word shift/sign test (T-14300). */
-typedef struct EventRecordFlags {
+typedef struct SpotLegacyGirlFlagBits {
     /* 0x00 */ u32 lo : 1;
     /* 0x00 */ u32 bit1 : 1;
     /* 0x00 */ u32 hi : 30;
-} EventRecordFlags; /* size 0x04 */
+} SpotLegacyGirlFlagBits; /* size 0x04 */
 
 /* T-24103: LegacyGirlRecord view with GirlFlags at +0x0C, WordView at +0x10 and the 0x20-byte
- * place-visit counter array at +0x14 (func_8011767C, func_80119110). */
-typedef struct EventGirlRec34 {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
-    /* 0x04 */ s16 unk_04;
-    /* 0x06 */ s16 unk_06;
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ GirlFlags unk_0C;
-    /* 0x10 */ WordView unk_10;
-    /* 0x14 */ u8 unk_14[0x20];
-} EventGirlRec34; /* size 0x34 */
+ * place-visit counter array at +0x14 (spot_place_neighborhood_park_special_case_04, spot_scene_close_step). */
+typedef struct SpotLegacyGirlRecord {
+    /* 0x00 */ s16 tokimeki_fraction;
+    /* 0x02 */ s16 tokimeki;
+    /* 0x04 */ s16 affection_fraction;
+    /* 0x06 */ s16 affection;
+    /* 0x08 */ s16 syoushin_fraction;
+    /* 0x0A */ s16 syoushin; /* HYPOTHESIS: game interpretation unknown; retain core's developer term for the halfword at +0xA; in this build the scene steps subtract 10 to 28 after good outcomes and add 10 to 20 after bad ones, and spot_scene_close_step subtracts 0x28 */
+    /* 0x0C */ GirlFlags flags;
+    /* 0x10 */ WordView birthday;
+    /* 0x14 */ u8 scene_counters[0x20];
+} SpotLegacyGirlRecord; /* size 0x34 */
 
-typedef struct EventStateGirlView {
+typedef struct SpotDevelopmentStateGirls {
     /* 0x000 */ u8 pad_000[0x35];
-    /* 0x035 */ u8 unk_035;
-    /* 0x036 */ u8 unk_036;
-    /* 0x037 */ u8 unk_037;
+    /* 0x035 */ u8 year;
+    /* 0x036 */ u8 month;
+    /* 0x037 */ u8 day;
     /* 0x038 */ u8 pad_038[0xCE];
-    /* 0x106 */ s16 unk_106;
+    /* 0x106 */ s16 looks;
     /* 0x108 */ u8 pad_108[0x9C];
-    /* 0x1A4 */ EventGirlRec34 unk_1A4[12];
+    /* 0x1A4 */ SpotLegacyGirlRecord girls[12];
     /* 0x414 */ u8 pad_414[0x2B8];
-    /* 0x6CC */ u8 unk_6CC;
+    /* 0x6CC */ u8 appointment_place_0; /* HYPOTHESIS: name follows core's appointment_place_0 (shipped unk_724, a core HYPOTHESIS: recent appointment places); dev +0x6CC is D_800B0F2C, which spot_place_init_step copies to spot_place as DATE func_80144720 copies unk_724 to D_800CA2F8, and spot_scene_close_step writes the date place back here as DATE func_8013CDF8 writes unk_724 */
     /* 0x6CD */ u8 pad_6CD[8];
-    /* 0x6D5 */ u8 unk_6D5[12];
+    /* 0x6D5 */ u8 girl_last_date_spot[12];
     /* 0x6E1 */ u8 pad_6E1[0x805];
-    /* 0xEE6 */ u8 unk_EE6;
+    /* 0xEE6 */ u8 current_girl;
     /* 0xEE7 */ u8 pad_EE7[0x39D];
-    /* 0x1284 */ s32 unk_1284;
+    /* 0x1284 */ s32 frame_count;
     /* 0x1288 */ u8 pad_1288[8];
-    /* 0x1290 */ s32 unk_1290;
-    /* 0x1294 */ u8 unk_1294;
-} EventStateGirlView; /* minimum size 0x1298 */
+    /* 0x1290 */ s32 step_timer;
+    /* 0x1294 */ u8 mode;
+} SpotDevelopmentStateGirls; /* minimum size 0x1298 */
 
-/* T-24103: 16.16 fixed-point word view of LegacyGirlRecord +0x00/+0x04/+0x08 (func_80118B4C). */
-typedef struct EventGirlRec34Fix {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
+/* T-24103: 16.16 fixed-point word view of LegacyGirlRecord +0x00/+0x04/+0x08 (spot_outcome_apply_step). */
+typedef struct SpotLegacyGirlRecordFixed {
+    /* 0x00 */ s32 tokimeki_fixed;
+    /* 0x04 */ s32 affection_fixed;
+    /* 0x08 */ s32 syoushin_fixed;
     /* 0x0C */ u8 pad_0C[0x28];
-} EventGirlRec34Fix; /* size 0x34 */
+} SpotLegacyGirlRecordFixed; /* size 0x34 */
 
-typedef struct EventStateFixView {
+typedef struct SpotDevelopmentStateFixed {
     /* 0x000 */ u8 pad_000[0x1A4];
-    /* 0x1A4 */ EventGirlRec34Fix unk_1A4[12];
-} EventStateFixView; /* size 0x414 */
+    /* 0x1A4 */ SpotLegacyGirlRecordFixed girls[12];
+} SpotDevelopmentStateFixed; /* size 0x414 */
 
 extern u8 D_801252EC;
 extern u8 D_801252F0;
@@ -1602,52 +1602,52 @@ extern u8 D_801252F0;
 
 #ifndef OVL_EVENT_MOVIE_STATE_T10830_H
 #define OVL_EVENT_MOVIE_STATE_T10830_H
-/* Scene-control view at D_800B1AF0. Extends EventTransitionState's
- * observed prefix with the page selector used by func_8011C750. */
-typedef struct EventMovieState {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 pad04;
-    /* 0x05 */ u8 unk_05;
-    /* 0x06 */ u8 unk_06;
+/* Scene-control view at D_800B1AF0. Extends SpotDevelopmentStepViewShort's
+ * observed prefix with the page selector used by spot_ride_scream_virtual_movie. */
+typedef struct SpotDevelopmentStepView {
+    /* 0x00 */ s32 step_timer;
+    /* 0x04 */ u8 mode;
+    /* 0x05 */ u8 stage;
+    /* 0x06 */ u8 step;
     /* 0x07 */ u8 pad07[2];
-    /* 0x09 */ u8 unk_09;
+    /* 0x09 */ u8 substep;
     /* 0x0A */ u8 pad0A[2];
-} EventMovieState; /* size 0x0C; observed fields through byte 0x09 */
+} SpotDevelopmentStepView; /* size 0x0C; observed fields through byte 0x09 */
 #endif
 
 #ifndef OVL_EVENT_PARTICLE_T10870_H
 #define OVL_EVENT_PARTICLE_T10870_H
 /* Partial state view at D_800B0860. The word table's observed accesses
  * extend through element 57; its full allocation size is not yet known. */
-typedef struct EventEffectTables {
+typedef struct SpotDevelopmentEffectView {
     /* 0x0000 */ u8 pad0000[0x1031];
     /* 0x1031 */ u8 unk_1031[6];
     /* 0x1037 */ u8 pad1037[0x371];
     /* 0x13A8 */ s32 unk_13A8[58];
-} EventEffectTables; /* size 0x1490, minimum observed extent */
+} SpotDevelopmentEffectView; /* size 0x1490, minimum observed extent */
 
 extern s32 D_801257DC[10];
 extern s16 D_8012527C;
 extern s32 D_8012585C;
 extern s16 D_80125860;
 extern u8 D_80125864;
-/* func_8011BE00 preserves twenty horizontal coordinate words. */
+/* spot_place_kirameki_central_park_step_10 preserves twenty horizontal coordinate words. */
 extern WordView D_80125868[20];
 #endif
 
 #ifndef OVL_EVENT_RESULT_ROW_T10870_H
 #define OVL_EVENT_RESULT_ROW_T10870_H
-/* Three signed results at D_8012438C and D_8012439C. The rows are
+/* Three signed results at spot_face_cells and spot_reaction_cells. The rows are
  * separate allocations/views, not adjacent elements of one array. */
-typedef struct EventResultRow6 {
+typedef struct SpotResultCells {
     /* 0x00 */ s16 value[3];
-} EventResultRow6; /* size 0x06 */
+} SpotResultCells; /* size 0x06 */
 #endif
-typedef struct EventBirthday4 {
+typedef struct SpotBirthdayBits {
     /* 0x00 */ u32 month : 4;
     /* 0x00 */ u32 day : 5;
     /* 0x00 */ u32 rest : 23;
-} EventBirthday4; /* size 0x04 */
+} SpotBirthdayBits; /* size 0x04 */
 extern s8 D_8012532C;
 extern s16 D_80124354;
 extern u8 D_80124358;
@@ -1656,13 +1656,13 @@ extern s16 D_801243A2;
 extern s8 D_8012530C;
 void func_80011E8C();
 
-typedef struct EventTable2D6 {
+typedef struct SpotPlaceNameTable {
     /* 0x00 */ u8 unk_00[22][33];
-} EventTable2D6; /* size 0x2D6 */
-extern EventTable2D6 D_80125504;
+} SpotPlaceNameTable; /* size 0x2D6 */
+extern SpotPlaceNameTable spot_place_names;
 extern s16 D_8012434C;
 extern s16 D_80124350;
-void func_80115C18(void);
+void spot_ride_setup(void);
 
 #ifndef OVL_EVENT_STEP_TABLES_T17400
 #define OVL_EVENT_STEP_TABLES_T17400
@@ -1778,96 +1778,96 @@ typedef struct {
 typedef struct {
     void (*f[103])();
 } FnTbl103; /* size 0x19C */
-extern FnTbl52 D_801207B8;
-extern FnTbl41 D_80120888;
-extern FnTbl35 D_8012092C;
-extern FnTbl47 D_801209B8;
-extern FnTbl42 D_80120A94;
-extern FnTbl42 D_80120B3C;
-extern FnTbl39 D_80120D30;
-extern FnTbl22 D_80120DCC;
-extern FnTbl45 D_80120EE0;
-extern FnTbl44 D_80120F94;
-extern FnTbl58 D_80121044;
-extern FnTbl45 D_8012112C;
-extern FnTbl42 D_801212B8; /* unmatched user */
-extern FnTbl41 D_80121360;
-extern FnTbl39 D_80121404;
-extern FnTbl39 D_801214A0; /* unmatched user */
-extern FnTbl38 D_8012153C;
-extern FnTbl51 D_801215FC;
-extern FnTbl37 D_801216C8;
-extern FnTbl41 D_8012175C;
-extern FnTbl32 D_801218E8; /* unmatched user */
-extern FnTbl49 D_80121968;
-extern FnTbl48 D_80121AF8; /* unmatched user */
-extern FnTbl42 D_80121BB8;
-extern FnTbl45 D_80121C60;
-extern FnTbl38 D_80121DFC;
-extern FnTbl21 D_80121E94;
-extern FnTbl40 D_80121EE8;
-extern FnTbl38 D_80121F88;
-extern FnTbl51 D_80122020;
-extern FnTbl15 D_80122194;
-extern FnTbl39 D_801222AC;
-extern FnTbl67 D_80122348;
-extern FnTbl39 D_80122454;
-extern FnTbl46 D_801224F0;
-extern FnTbl19 D_801227FC;
-extern FnTbl38 D_80122848;
-extern FnTbl40 D_801229B0;
-extern FnTbl56 D_80122A50;
-extern FnTbl29 D_80122C0C;
-extern FnTbl50 D_80122C80;
-extern FnTbl55 D_80122D48;
-extern FnTbl41 D_80122E24;
-extern FnTbl40 D_80122EC8;
-extern FnTbl45 D_8012304C;
-extern FnTbl20 D_80123100;
-extern FnTbl47 D_80123150;
-extern FnTbl63 D_8012320C;
-extern FnTbl36 D_80123308;
-extern FnTbl36 D_80123398;
-extern FnTbl35 D_8012350C;
-extern FnTbl37 D_80123598;
-extern FnTbl55 D_8012362C;
-extern FnTbl40 D_80123708;
-extern FnTbl51 D_801237A8;
-extern FnTbl47 D_80123990;
-extern FnTbl21 D_80123A4C;
-extern FnTbl55 D_80123AA0;
-extern FnTbl41 D_80123BB8;
-extern FnTbl44 D_80123C5C;
-extern FnTbl44 D_80123D0C;
-extern FnTbl52 D_80123DBC;
-extern FnTbl22 D_80123ED8;
-extern FnTbl25 D_80123F30;
-extern FnTbl14 D_80123F94;
-extern FnTbl56 D_80123FCC; /* unmatched user */
-extern FnTbl14 D_801240AC;
-extern FnTbl42 D_80124120;
-extern FnTbl61 D_801243B8; /* unmatched user */
-extern FnTbl18 D_801244AC; /* unmatched user */
-extern FnTbl35 D_801244F4; /* unmatched user */
-extern FnTbl48 D_80124580; /* unmatched user */
-extern FnTbl32 D_80124640; /* unmatched user */
-extern FnTbl35 D_801246C0; /* unmatched user */
-extern FnTbl34 D_8012474C; /* unmatched user */
-extern FnTbl36 D_801247D4; /* unmatched user */
-extern FnTbl37 D_80124864; /* unmatched user */
-extern FnTbl36 D_801248F8; /* unmatched user */
-extern FnTbl39 D_80124988; /* unmatched user */
-extern FnTbl32 D_80124A24; /* unmatched user */
-extern FnTbl32 D_80124AA4; /* unmatched user */
-extern FnTbl103 D_80124B24; /* unmatched user */
-extern FnTbl29 D_80124CC0; /* unmatched user */
-extern FnTbl45 D_80124D34; /* unmatched user */
-extern FnTbl41 D_80124DE8; /* unmatched user */
-extern FnTbl37 D_80124E8C; /* unmatched user */
-extern FnTbl47 D_80124F20; /* unmatched user */
-extern FnTbl61 D_80124FDC; /* unmatched user */
-extern FnTbl22 D_801250D0; /* unmatched user */
-extern FnTbl31 D_8012514C; /* unmatched user */
+extern FnTbl52 spot_yuko_scene1_steps;
+extern FnTbl41 spot_yuko_scene2_steps;
+extern FnTbl35 spot_yuko_scene3_steps;
+extern FnTbl47 spot_yuko_scene4_steps;
+extern FnTbl42 spot_yuko_scene5_steps;
+extern FnTbl42 spot_yuko_scene6_steps;
+extern FnTbl39 spot_shiori_scene1_steps;
+extern FnTbl22 spot_shiori_scene2_steps;
+extern FnTbl45 spot_shiori_scene3_steps;
+extern FnTbl44 spot_shiori_scene4_steps;
+extern FnTbl58 spot_shiori_scene5_steps;
+extern FnTbl45 spot_shiori_scene6_steps;
+extern FnTbl42 spot_yuina_scene1_steps; /* unmatched user */
+extern FnTbl41 spot_yuina_scene2_steps;
+extern FnTbl39 spot_yuina_scene3_steps;
+extern FnTbl39 spot_yuina_scene4_steps; /* unmatched user */
+extern FnTbl38 spot_yuina_scene5_steps;
+extern FnTbl51 spot_rei_scene1_steps;
+extern FnTbl37 spot_rei_scene2_steps;
+extern FnTbl41 spot_rei_scene3_steps;
+extern FnTbl32 spot_ayako_scene1_steps; /* unmatched user */
+extern FnTbl49 spot_ayako_scene2_steps;
+extern FnTbl48 spot_ayako_scene3_steps; /* unmatched user */
+extern FnTbl42 spot_ayako_scene4_steps;
+extern FnTbl45 spot_ayako_scene5_steps;
+extern FnTbl38 spot_mira_scene1_steps;
+extern FnTbl21 spot_mira_scene8_steps;
+extern FnTbl40 spot_mira_scene2_steps;
+extern FnTbl38 spot_mira_scene3_steps;
+extern FnTbl51 spot_mira_scene4_steps;
+extern FnTbl15 spot_mira_scene6_steps;
+extern FnTbl39 spot_mio_scene1_steps;
+extern FnTbl67 spot_mio_scene2_steps;
+extern FnTbl39 spot_mio_scene3_steps;
+extern FnTbl46 spot_mio_scene4_steps;
+extern FnTbl19 spot_yukari_scene2_steps;
+extern FnTbl38 spot_yukari_scene3_steps;
+extern FnTbl40 spot_yukari_scene5_steps;
+extern FnTbl56 spot_yukari_scene6_steps;
+extern FnTbl29 spot_nozomi_scene1_steps;
+extern FnTbl50 spot_nozomi_scene2_steps;
+extern FnTbl55 spot_nozomi_scene3_steps;
+extern FnTbl41 spot_nozomi_scene4_steps;
+extern FnTbl40 spot_nozomi_scene5_steps;
+extern FnTbl45 spot_megumi_scene1_steps;
+extern FnTbl20 spot_megumi_scene2_steps;
+extern FnTbl47 spot_megumi_scene3_steps;
+extern FnTbl63 spot_megumi_scene4_steps;
+extern FnTbl36 spot_megumi_scene5_steps;
+extern FnTbl36 spot_megumi_scene6_steps;
+extern FnTbl35 spot_saki_scene1_steps;
+extern FnTbl37 spot_saki_scene2_steps;
+extern FnTbl55 spot_saki_scene3_steps;
+extern FnTbl40 spot_saki_scene4_steps;
+extern FnTbl51 spot_saki_scene5_steps;
+extern FnTbl47 spot_yumi_scene1_steps;
+extern FnTbl21 spot_yumi_scene2_steps;
+extern FnTbl55 spot_yumi_scene7_steps;
+extern FnTbl41 spot_yumi_scene3_steps;
+extern FnTbl44 spot_yumi_scene4_steps;
+extern FnTbl44 spot_yumi_scene5_steps;
+extern FnTbl52 spot_yumi_scene6_steps;
+extern FnTbl22 spot_miharu_scene1_steps;
+extern FnTbl25 spot_miharu_scene2_steps;
+extern FnTbl14 spot_miharu_scene3_steps;
+extern FnTbl56 spot_miharu_scene4_steps; /* unmatched user */
+extern FnTbl14 spot_miharu_scene5_steps;
+extern FnTbl42 spot_yoshio_scene1_steps;
+extern FnTbl61 spot_place_arrival_steps; /* unmatched user */
+extern FnTbl18 spot_place_neighborhood_park_steps; /* unmatched user */
+extern FnTbl35 spot_place_kirameki_central_park_steps; /* unmatched user */
+extern FnTbl48 spot_place_shopping_street_steps; /* unmatched user */
+extern FnTbl32 spot_place_aquarium_steps; /* unmatched user */
+extern FnTbl35 spot_place_zoo_steps; /* unmatched user */
+extern FnTbl34 spot_place_botanical_garden_steps; /* unmatched user */
+extern FnTbl36 spot_place_planetarium_steps; /* unmatched user */
+extern FnTbl37 spot_place_art_museum_steps; /* unmatched user */
+extern FnTbl36 spot_place_library_steps; /* unmatched user */
+extern FnTbl39 spot_place_game_center_steps; /* unmatched user */
+extern FnTbl32 spot_place_bowling_alley_steps; /* unmatched user */
+extern FnTbl32 spot_place_karaoke_steps; /* unmatched user */
+extern FnTbl103 spot_place_amusement_park_steps; /* unmatched user */
+extern FnTbl29 spot_place_stadium_steps; /* unmatched user */
+extern FnTbl45 spot_place_movie_theater_steps; /* unmatched user */
+extern FnTbl41 spot_place_concert_hall_steps; /* unmatched user */
+extern FnTbl37 spot_place_pool_steps; /* unmatched user */
+extern FnTbl47 spot_place_sea_steps; /* unmatched user */
+extern FnTbl61 spot_place_shrine_steps; /* unmatched user */
+extern FnTbl22 spot_place_skating_rink_steps; /* unmatched user */
+extern FnTbl31 spot_place_ski_resort_steps; /* unmatched user */
 #endif
 
 #ifndef OVL_EVENT_RECORD_COPIES_T17400
@@ -1876,11 +1876,11 @@ extern FnTbl31 D_8012514C; /* unmatched user */
 typedef struct {
     s32 a;
     s32 b;
-} EvEnt; /* size 0x08 */
+} SpotLinePair; /* size 0x08 */
 typedef struct {
-    EvEnt e[4];
+    SpotLinePair e[4];
 } EvTbl; /* size 0x20: four (a, b) pairs, copied to the stack whole */
-extern EvEnt D_80121A2C;
+extern SpotLinePair D_80121A2C;
 extern EvTbl D_80120A74;
 extern EvTbl D_80121AD8;
 #endif
@@ -1891,74 +1891,74 @@ extern EvTbl D_80121AD8;
  * then reads by index. Element widths from the reads of the copy (lh for the halfword tables). */
 typedef struct {
     u16 v[21];
-} U16x21; /* size 0x2A */
-extern U16x21 D_80125454; /* func_8011A8E4 */
-extern U16x21 D_80125480; /* func_8011A8E4 */
-extern U16x21 D_801254AC; /* func_8011A8E4 */
-extern U16x21 D_801254D8; /* func_8011AB00 */
+} SpotPlaceHalfwords; /* size 0x2A */
+extern SpotPlaceHalfwords spot_place_bank_argument_f; /* spot_place_bank_load_step */
+extern SpotPlaceHalfwords spot_place_bank_argument_d; /* spot_place_bank_load_step */
+extern SpotPlaceHalfwords spot_place_bank_argument_e; /* spot_place_bank_load_step */
+extern SpotPlaceHalfwords spot_place_bgm_ids; /* spot_place_bgm_start_step */
 typedef struct {
     s16 v[8][2];
-} EvPairs8; /* size 0x20: func_80103774 reads v[i][1] (lh 0x6A + 4 * i) */
+} EvPairs8; /* size 0x20: spot_yukari_scene4_sprites_update reads v[i][1] (lh 0x6A + 4 * i) */
 extern EvPairs8 D_80122990;
 typedef struct {
     s16 v[41][2];
-} EvShorts82; /* size 0xA4: 41 (start, end) frame pairs in func_800FEAE8 */
-extern EvShorts82 D_80121A34; /* func_800FEAE8 */
+} EvShorts82; /* size 0xA4: 41 (start, end) frame pairs in spot_ayako_scene2_step_23 */
+extern EvShorts82 D_80121A34; /* spot_ayako_scene2_step_23 */
 typedef struct {
     s16 v[10];
 } EvShorts10; /* size 0x14 */
-extern EvShorts10 D_80123B7C; /* func_80109404, with the next two */
+extern EvShorts10 D_80123B7C; /* spot_yumi_scene7_still_show_07, with the next two */
 extern EvShorts10 D_80123B90;
 extern EvShorts10 D_80123BA4;
 typedef struct {
     s16 v[11];
 } EvShorts11; /* size 0x16 */
-extern EvShorts11 D_80125330; /* func_8011767C */
+extern EvShorts11 D_80125330; /* spot_place_neighborhood_park_special_case_04 */
 extern EvShorts11 D_80125348;
 typedef struct {
     s16 v[5];
 } EvShorts5; /* size 0x0A */
-extern EvShorts5 D_80125360; /* func_80118B4C */
+extern EvShorts5 spot_outcome_terms; /* spot_outcome_apply_step */
 #endif
 
 #ifndef OVL_EVENT_PROTOS_T17400
 #define OVL_EVENT_PROTOS_T17400
-void func_8010AFE4(void); /* T-17400: defined in 8010A210.c after its first caller */
-s32 func_800FEAE8(void);
-s32 func_800FEDC8(void);
-s32 func_8010F55C(void);
-s32 func_8010F74C(void);
-void func_80111E60(void);
-void func_80111F04(void);
-void func_8011220C(void);
-void func_80112460(void);
-void func_80112750(void);
-void func_80112930(void);
-void func_80112BEC(void);
-void func_801130F0(void);
-void func_80113300(void);
-void func_80113520(void);
-void func_801136FC(void);
-void func_801138D8(void);
-void func_801139CC(void);
-void func_80113A40(void);
-void func_80113CA0(void);
-void func_80113FD4(void);
-void func_801142E8(void);
-void func_801144AC(void);
-void func_801146B4(void);
-void func_80114784(void);
-void func_80114948(void);
-void func_80114B0C(void);
-void func_8011B848(void);
-void func_8011C11C(void);
-s32 func_8011C164(void);
+void spot_bars_overlay_draw(void); /* T-17400: defined in 8010A210.c after its first caller */
+s32 spot_ayako_scene2_step_23(void);
+s32 spot_ayako_scene2_pick_maximum_input(void);
+s32 spot_place_arrival_run(void);
+s32 spot_place_scene_run(void);
+void spot_place_neighborhood_park_arrival(void);
+void spot_place_kirameki_central_park_arrival(void);
+void spot_place_aquarium_arrival(void);
+void spot_place_zoo_arrival(void);
+void spot_place_botanical_garden_arrival(void);
+void spot_place_planetarium_arrival(void);
+void spot_place_art_museum_arrival(void);
+void spot_place_library_arrival(void);
+void spot_place_game_center_arrival(void);
+void spot_place_bowling_alley_arrival(void);
+void spot_place_karaoke_arrival(void);
+void spot_place_amusement_park_arrival(void);
+void spot_place_shopping_street_arrival(void);
+void spot_place_stadium_arrival(void);
+void spot_place_movie_theater_arrival(void);
+void spot_place_concert_hall_arrival(void);
+void spot_place_pool_arrival(void);
+void spot_place_sea_arrival(void);
+void spot_place_shrine_arrival(void);
+void spot_place_skating_rink_arrival(void);
+void spot_place_ski_resort_arrival(void);
+void spot_reaction_rows_build_step(void);
+void spot_particles_update(void);
+void spot_place_falling_sprites_hide(void);
+s32 spot_place_falling_sprites_update(void);
 #endif
 
 #ifndef OVL_EVENT_LEGACY_RENDER_T24017
 #define OVL_EVENT_LEGACY_RENDER_T24017
 /* Legacy address is outside the current MAIN executable range. The returned
- * word is consumed as a packet pointer by func_80108B24. T-24017. */
+ * word is consumed as a packet pointer by spot_yumi_scene7_gradient_quad_draw. T-24017. */
 void *func_80019D00();
 #endif
 
@@ -1970,6 +1970,6 @@ extern s16 D_80122754[8]; /* x coordinates, lh stride 2 */
 extern s16 D_80122764[8]; /* y coordinates, lh stride 2 */
 extern u8 D_80122774[8]; /* counters, lbu/sb stride 1 */
 typedef s16 EvMovieShort;
-extern EvMovieShort D_800F19D0[4]; /* func_800FEDC8 */
+extern EvMovieShort D_800F19D0[4]; /* spot_ayako_scene2_pick_maximum_input */
 
 #endif

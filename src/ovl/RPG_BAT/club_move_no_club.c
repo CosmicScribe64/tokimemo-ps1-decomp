@@ -1,305 +1,305 @@
-/* club_move_no_club.c: src/ovl/RPG_BAT/801498C0.c:7: club 11 special move; body 8: switch (D_8015EDAC) {; 11: func_8014B738((s32) &D_8015E814, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96. Original object 0x801498C0-0x8014A660 (config/objects/RPG_BAT.txt). */
-#define RPG_BAT_OVERRIDE_func_8013F0F4 /* implicit int view: the call's $v0 keeps the compare-chain values in func_80149C5C off $v0 (T-20600) */
+/* club_move_no_club.c: src/ovl/RPG_BAT/801498C0.c:7: club 11 special move; body 8: switch (rpg_player_step) {; 11: rpg_message_show((s32) &rpg_text_player_pointers, 1, 0x5A); club-index dispatch src/ovl/RPG_BAT/8013CC90.c:96. Original object 0x801498C0-0x8014A660 (config/objects/RPG_BAT.txt). */
+#define RPG_BAT_OVERRIDE_rpg_se_play_latched_6xx /* implicit int view: the call's $v0 keeps the compare-chain values in rpg_no_club_step_5 off $v0 (T-20600) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-s32 func_8013F0F4();
+s32 rpg_se_play_latched_6xx();
 
-void func_801498C0(void) {
-    switch (D_8015EDAC) {
+void rpg_club_move_no_club(void) {
+    switch (rpg_player_step) {
     case 0:
-        strcpy(D_8015E74C, "　　　　　　　気分最高　　　　　　　");
-        func_8014B738((s32) &D_8015E814, 1, 0x5A);
-        func_8014EEF4();
-        func_80144480();
-        func_8013EFD0(D_8015EBAC);
-        func_80148F70();
-        if (D_8015EBAC == 1) {
+        strcpy(rpg_text_player_0, "　　　　　　　気分最高　　　　　　　");
+        rpg_message_show((s32) &rpg_text_player_pointers, 1, 0x5A);
+        rpg_sparks_park();
+        rpg_pick_target();
+        rpg_set_target_position_alt(rpg_enemy_slot);
+        rpg_player_damage_roll();
+        if (rpg_enemy_slot == 1) {
             D_801215FD = 4;
             D_80121685 = 4;
         }
-        switch (D_8015EC34) {
+        switch (rpg_escalation_counter) {
         default:
         case 0:
-            D_8015EC74 = 5;
+            rpg_scratch = 5;
             break;
         case 1:
-            D_8015EC74 = 6;
+            rpg_scratch = 6;
             break;
         case 2:
-            D_8015EC74 = 7;
+            rpg_scratch = 7;
             break;
         case 3:
-            D_8015EC74 = 8;
+            rpg_scratch = 8;
             break;
         case 4:
-            D_8015EC74 = 9;
+            rpg_scratch = 9;
             break;
         case 5:
-            D_8015EC74 = 0xA;
+            rpg_scratch = 0xA;
             break;
         }
-        func_8014EBA8();
-        func_8014EBA8();
+        rpg_player_step_next();
+        rpg_player_step_next();
         return;
     case 2:
-        func_8013D418();
+        rpg_move_approach();
         return;
     case 3:
-        func_8014A3DC();
+        rpg_no_club_step_3();
         return;
     case 4:
-        func_8014A16C();
+        rpg_no_club_step_4();
         return;
     case 5:
-        func_80149C5C();
+        rpg_no_club_step_5();
         return;
     case 6:
-        func_80149AA8();
+        rpg_no_club_step_6();
         return;
     case 7:
-        func_8013D3E4();
-        func_8014EBA8();
+        rpg_apply_damage_single();
+        rpg_player_step_next();
         return;
     case 8:
-        func_8013D59C();
+        rpg_move_return();
         return;
     case 9:
-        func_8014EBEC();
-        D_8015EC34 = 0;
+        rpg_player_action_end();
+        rpg_escalation_counter = 0;
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_80149AA8(void) {
-    switch (D_8015EDB0.unk_00) {
+void rpg_no_club_step_6(void) {
+    switch (rpg_player_channel.unk_00) {
     case 0:
-        func_8013E7C0(0x28, 0xFF, 1, 0);
-        func_8013E810(0x29, 0xE, 5, 1);
-        func_8014EBD0();
+        rpg_actor_set_animation(0x28, 0xFF, 1, 0);
+        rpg_actor_set_animation_alt(0x29, 0xE, 5, 1);
+        rpg_player_substep_next();
         break;
     case 1:
-        if (D_8012114C + 3 == D_8015EC74) {
-            func_8013EA30(0xFF);
-            switch (D_8015EC34) {
+        if (D_8012114C + 3 == rpg_scratch) {
+            rpg_fade_set_level(0xFF);
+            switch (rpg_escalation_counter) {
             case 0:
             default:
-                func_8013F0F4(0x505, 1, 0);
+                rpg_se_play_latched_6xx(0x505, 1, 0);
                 break;
             case 1:
-                func_8013F0F4(0x505, 1, 0);
+                rpg_se_play_latched_6xx(0x505, 1, 0);
                 break;
             case 2:
-                func_8013F0F4(0x506, 1, 0);
+                rpg_se_play_latched_6xx(0x506, 1, 0);
                 break;
             case 3:
-                func_8013F0F4(0x507, 1, 0);
+                rpg_se_play_latched_6xx(0x507, 1, 0);
                 break;
             case 4:
-                func_8013F0F4(0x508, 1, 0);
+                rpg_se_play_latched_6xx(0x508, 1, 0);
                 break;
             case 5:
-                func_8013F0F4(0x509, 1, 0);
+                rpg_se_play_latched_6xx(0x509, 1, 0);
                 break;
             }
-            func_8014EBD0();
+            rpg_player_substep_next();
         }
         break;
     case 2:
-        D_8012114C = D_8015EC74 - 3;
-        func_8014ED80(0xA);
+        D_8012114C = rpg_scratch - 3;
+        rpg_player_wait_substep(0xA);
         break;
     case 3:
-        func_8013EA30(0x80);
-        func_8013E810(0x29, 0xFF, 1, 0);
-        func_8014EBA8();
+        rpg_fade_set_level(0x80);
+        rpg_actor_set_animation_alt(0x29, 0xFF, 1, 0);
+        rpg_player_step_next();
         break;
     }
 }
 
-/* Implicit int with no return value: the call in func_801498C0 comes before this definition. */
-s32 func_80149C5C(void) {
+/* Implicit int with no return value: the call in rpg_club_move_no_club comes before this definition. */
+s32 rpg_no_club_step_5(void) {
     s32 x;
     s32 y;
 
-    x = (D_8015EC28 - 0xE0) * D_8015EDB0.unk_04 / 1000 + 0xE0;
-    y = (D_8015EC2C - 0x58) * D_8015EDB0.unk_04 / 1000 + 0x58;
-    if (D_8015EBAC == 0) {
-        if (D_8015EDB0.unk_04 * 0x1800 / 1000 > 0) {
-            func_8013F0F4(0x504, 0, 2);
+    x = (rpg_target_x - 0xE0) * rpg_player_channel.unk_04 / 1000 + 0xE0;
+    y = (rpg_target_y - 0x58) * rpg_player_channel.unk_04 / 1000 + 0x58;
+    if (rpg_enemy_slot == 0) {
+        if (rpg_player_channel.unk_04 * 0x1800 / 1000 > 0) {
+            rpg_se_play_latched_6xx(0x504, 0, 2);
         }
-        if (D_8015EDB0.unk_04 * 0x1800 / 1000 > 0x400) {
-            func_8013F0F4(0x504, 0, 3);
+        if (rpg_player_channel.unk_04 * 0x1800 / 1000 > 0x400) {
+            rpg_se_play_latched_6xx(0x504, 0, 3);
         }
-        if (D_8015EDB0.unk_04 * 0x1800 / 1000 > 0x800) {
-            func_8013F0F4(0x504, 0, 4);
+        if (rpg_player_channel.unk_04 * 0x1800 / 1000 > 0x800) {
+            rpg_se_play_latched_6xx(0x504, 0, 4);
         }
-        if (D_8015EDB0.unk_04 * 0x1800 / 1000 > 0xC00) {
-            func_8013F0F4(0x504, 0, 5);
+        if (rpg_player_channel.unk_04 * 0x1800 / 1000 > 0xC00) {
+            rpg_se_play_latched_6xx(0x504, 0, 5);
         }
-        if (D_8015EDB0.unk_04 * 0x1800 / 1000 > 0x1000) {
-            func_8013F0F4(0x504, 0, 6);
+        if (rpg_player_channel.unk_04 * 0x1800 / 1000 > 0x1000) {
+            rpg_se_play_latched_6xx(0x504, 0, 6);
         }
-        if (D_8015EDB0.unk_04 * 0x1800 / 1000 > 0x1400) {
-            func_8013F0F4(0x504, 0, 7);
+        if (rpg_player_channel.unk_04 * 0x1800 / 1000 > 0x1400) {
+            rpg_se_play_latched_6xx(0x504, 0, 7);
         }
     } else {
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0) {
-            func_8013F0F4(0x504, 0, 2);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0) {
+            rpg_se_play_latched_6xx(0x504, 0, 2);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0x400) {
-            func_8013F0F4(0x504, 0, 3);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0x400) {
+            rpg_se_play_latched_6xx(0x504, 0, 3);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0x800) {
-            func_8013F0F4(0x504, 0, 4);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0x800) {
+            rpg_se_play_latched_6xx(0x504, 0, 4);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0xC00) {
-            func_8013F0F4(0x504, 0, 5);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0xC00) {
+            rpg_se_play_latched_6xx(0x504, 0, 5);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0x1000) {
-            func_8013F0F4(0x504, 0, 6);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0x1000) {
+            rpg_se_play_latched_6xx(0x504, 0, 6);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0x1400) {
-            func_8013F0F4(0x504, 0, 7);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0x1400) {
+            rpg_se_play_latched_6xx(0x504, 0, 7);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0x1800) {
-            func_8013F0F4(0x504, 0, 8);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0x1800) {
+            rpg_se_play_latched_6xx(0x504, 0, 8);
         }
-        if (D_8015EDB0.unk_04 * 0x2000 / 1000 > 0x1C00) {
-            func_8013F0F4(0x504, 0, 9);
+        if (rpg_player_channel.unk_04 * 0x2000 / 1000 > 0x1C00) {
+            rpg_se_play_latched_6xx(0x504, 0, 9);
         }
     }
-    if (D_8015EBAC == 0) {
-        func_8013E97C(0x29, x, (rsin(D_8015EDB0.unk_04 * 0x1800 / 1000) >> 8) + y);
-        func_8013E97C(0x28, x, (rsin(D_8015EDB0.unk_04 * 0x1800 / 1000) >> 8) + y);
+    if (rpg_enemy_slot == 0) {
+        rpg_actor_set_position(0x29, x, (rsin(rpg_player_channel.unk_04 * 0x1800 / 1000) >> 8) + y);
+        rpg_actor_set_position(0x28, x, (rsin(rpg_player_channel.unk_04 * 0x1800 / 1000) >> 8) + y);
     } else {
-        func_8013E97C(0x29, x, (rsin(D_8015EDB0.unk_04 * 0x2000 / 1000) >> 8) + y);
-        func_8013E97C(0x28, x, (rsin(D_8015EDB0.unk_04 * 0x2000 / 1000) >> 8) + y);
+        rpg_actor_set_position(0x29, x, (rsin(rpg_player_channel.unk_04 * 0x2000 / 1000) >> 8) + y);
+        rpg_actor_set_position(0x28, x, (rsin(rpg_player_channel.unk_04 * 0x2000 / 1000) >> 8) + y);
     }
-    if (D_8015EBAC == 0) {
-        D_8015EDB0.unk_04 += 0xC;
+    if (rpg_enemy_slot == 0) {
+        rpg_player_channel.unk_04 += 0xC;
     } else {
-        D_8015EDB0.unk_04 += 8;
+        rpg_player_channel.unk_04 += 8;
     }
-    if (D_8015EDB0.unk_04 > 0x3E8) {
-        func_8014EBA8();
+    if (rpg_player_channel.unk_04 > 0x3E8) {
+        rpg_player_step_next();
     }
 }
 
-void func_8014A16C(void) {
-    switch (D_8015EDB0.unk_00) {
+void rpg_no_club_step_4(void) {
+    switch (rpg_player_channel.unk_00) {
     case 0:
-        func_8013E7C0(0x2A, 0xFF, 1, 0);
-        func_8013E7C0(0x2B, 0xFF, 1, 0);
-        func_8013E7C0(0x2C, 0xFF, 1, 0);
-        func_8013E7C0(0x2D, 0xFF, 1, 0);
-        func_8013E7C0(0x2E, 0xFF, 1, 0);
-        func_8013E7C0(0x2F, 0xFF, 1, 0);
-        func_8013E7C0(0x34, 5, 5, 1);
-        func_8013E97C(0x29, 0xFB, 0x3D);
-        func_8013E97C(0x28, 0xFB, 0x3D);
-        func_8014EBD0();
+        rpg_actor_set_animation(0x2A, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x2B, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x2C, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x2D, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x2E, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x2F, 0xFF, 1, 0);
+        rpg_actor_set_animation(0x34, 5, 5, 1);
+        rpg_actor_set_position(0x29, 0xFB, 0x3D);
+        rpg_actor_set_position(0x28, 0xFB, 0x3D);
+        rpg_player_substep_next();
         break;
     case 1:
-        func_8014ED80(3);
+        rpg_player_wait_substep(3);
         break;
     case 2:
-        func_8013E97C(0x29, 0x102, 0x45);
-        func_8013E97C(0x28, 0x102, 0x45);
-        func_8014EBD0();
+        rpg_actor_set_position(0x29, 0x102, 0x45);
+        rpg_actor_set_position(0x28, 0x102, 0x45);
+        rpg_player_substep_next();
         break;
     case 3:
-        func_8014ED80(3);
+        rpg_player_wait_substep(3);
         break;
     case 4:
-        func_8013E97C(0x29, 0x107, 0x4C);
-        func_8013E97C(0x28, 0x107, 0x4C);
-        func_8014EBD0();
+        rpg_actor_set_position(0x29, 0x107, 0x4C);
+        rpg_actor_set_position(0x28, 0x107, 0x4C);
+        rpg_player_substep_next();
         break;
     case 5:
-        func_8014ED80(5);
+        rpg_player_wait_substep(5);
         break;
     case 6:
-        func_8013E97C(0x29, 0x109, 0x53);
-        func_8013E97C(0x28, 0x109, 0x53);
-        func_8014EBD0();
+        rpg_actor_set_position(0x29, 0x109, 0x53);
+        rpg_actor_set_position(0x28, 0x109, 0x53);
+        rpg_player_substep_next();
         break;
     case 7:
-        func_8014ED80(5);
+        rpg_player_wait_substep(5);
         break;
     case 8:
-        func_8013E97C(0x29, 0x108, 0x58);
-        func_8013E97C(0x28, 0x108, 0x58);
-        func_8014EBD0();
+        rpg_actor_set_position(0x29, 0x108, 0x58);
+        rpg_actor_set_position(0x28, 0x108, 0x58);
+        rpg_player_substep_next();
         break;
     case 9:
-        func_8014ED80(7);
+        rpg_player_wait_substep(7);
         break;
     case 10:
-        func_8013E97C(0x29, 0x108 - D_8015EDB8, 0x58);
-        func_8013E97C(0x28, 0x108 - D_8015EDB8, 0x58);
-        D_8015EDB8 += 2;
-        if (D_8015EDB8 >= 0x28) {
-            func_8014EBA8();
+        rpg_actor_set_position(0x29, 0x108 - rpg_player_timer_2, 0x58);
+        rpg_actor_set_position(0x28, 0x108 - rpg_player_timer_2, 0x58);
+        rpg_player_timer_2 += 2;
+        if (rpg_player_timer_2 >= 0x28) {
+            rpg_player_step_next();
         }
         break;
     }
 }
 
 /* int-returning (implicit int in the original): v0 is live out, so as1 keeps the lui of the promoted
- * D_8015EDA4 behind the case 4 branch; with a void return it moves it above (T-17115) */
-s32 func_8014A3DC(void) {
-    if (D_8015EDB0.unk_00 < 5) {
-        func_8013F0F4(0x503, 0x1E, 1);
+ * rpg_player_guard_heal behind the case 4 branch; with a void return it moves it above (T-17115) */
+s32 rpg_no_club_step_3(void) {
+    if (rpg_player_channel.unk_00 < 5) {
+        rpg_se_play_latched_6xx(0x503, 0x1E, 1);
     }
-    switch (D_8015EDB0.unk_00) {
+    switch (rpg_player_channel.unk_00) {
     case 0:
-        func_8013E7C0(0x34, 3, 1, 1);
-        func_8013E7C0(0x2F, 0xD, 5, 1);
-        func_8014EBD0();
+        rpg_actor_set_animation(0x34, 3, 1, 1);
+        rpg_actor_set_animation(0x2F, 0xD, 5, 1);
+        rpg_player_substep_next();
         return;
     case 1:
-        func_8014EDFC(0x2F);
+        rpg_player_wait_animation_substep(0x2F);
         return;
     case 2:
-        func_8013E7C0(0x2F, 7, 1, 1);
-        func_8013E7C0(0x2A, 8, 1, 1);
-        func_8013E7C0(0x2B, 9, 1, 1);
-        func_8013E7C0(0x2C, 0xA, 1, 1);
-        func_8013E7C0(0x2D, 0xB, 1, 1);
-        func_8013E7C0(0x2E, 0xC, 1, 1);
-        func_8014EBD0();
+        rpg_actor_set_animation(0x2F, 7, 1, 1);
+        rpg_actor_set_animation(0x2A, 8, 1, 1);
+        rpg_actor_set_animation(0x2B, 9, 1, 1);
+        rpg_actor_set_animation(0x2C, 0xA, 1, 1);
+        rpg_actor_set_animation(0x2D, 0xB, 1, 1);
+        rpg_actor_set_animation(0x2E, 0xC, 1, 1);
+        rpg_player_substep_next();
         return;
     case 3:
-        func_8013E97C(0x29, 0xF0, 0x38);
-        func_8013E97C(0x28, 0xF0, 0x38);
-        func_8013E810(0x29, 0xF, 1, 1);
-        func_8014EBD0();
+        rpg_actor_set_position(0x29, 0xF0, 0x38);
+        rpg_actor_set_position(0x28, 0xF0, 0x38);
+        rpg_actor_set_animation_alt(0x29, 0xF, 1, 1);
+        rpg_player_substep_next();
         return;
     case 4:
-        if (D_8015EDB8 >= 0x1F) {
-            D_8015EDB8 = 0;
-            if (++D_8015EDA4 == D_8015EC74) {
-                func_8014EBD0();
+        if (rpg_player_timer_2 >= 0x1F) {
+            rpg_player_timer_2 = 0;
+            if (++rpg_player_guard_heal == rpg_scratch) {
+                rpg_player_substep_next();
             } else {
-                func_8013E810(0x29, D_8015EDA4 + 0xF, 1, 1);
-                if ((D_8015EDA4 == 6) || (D_8015EDA4 == 7)) {
-                    func_8013E810(0x28, 6, 1, 1);
+                rpg_actor_set_animation_alt(0x29, rpg_player_guard_heal + 0xF, 1, 1);
+                if ((rpg_player_guard_heal == 6) || (rpg_player_guard_heal == 7)) {
+                    rpg_actor_set_animation_alt(0x28, 6, 1, 1);
                 }
-                if ((D_8015EDA4 == 8) || (D_8015EDA4 == 9)) {
-                    func_8013E810(0x28, 0x19, 1, 1);
+                if ((rpg_player_guard_heal == 8) || (rpg_player_guard_heal == 9)) {
+                    rpg_actor_set_animation_alt(0x28, 0x19, 1, 1);
                 }
             }
         }
-        D_8015EDB8 += 1;
+        rpg_player_timer_2 += 1;
         return;
     case 5:
-        func_8014ED80(0x1E);
+        rpg_player_wait_substep(0x1E);
         return;
     case 6:
-        func_8014EBA8();
+        rpg_player_step_next();
         /* fallthrough */
     default:
         return;

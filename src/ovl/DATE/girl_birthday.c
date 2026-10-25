@@ -57,8 +57,8 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/girl_birthday.data", date_girl_birthday_s
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/girl_birthday.data", date_gift_names);
 
 typedef struct {
-    u8 s[0xCC3];
-} DateTxt; /* size 0xCC3 */
+    u8 text_bytes[0xCC3];
+} DateGiftNameTable; /* size 0xCC3 */
 
 void date_gift_sections_init(void) {
     D_8015CFD0 = 0x801B0478;
@@ -103,12 +103,12 @@ void date_gift_sections_init(void) {
 }
 
 void date_mode_stage_girl_birthday(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl28 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    DateGirlBirthdaySteps step_handlers;
 
-    tbl = date_girl_birthday_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_girl_birthday_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if ((D_80122D44 & 1) && (dec_bg_brightness == 0x80)) {
         hud_sprite_light_effect_draw();
     }
@@ -132,26 +132,26 @@ void date_gift_choice_restore(void) {
 }
 
 s32 date_gift_start(void) {
-    GameState *g = &game_state;
+    GameState *game = &game_state;
 
-    if (!g->girls[g->current_girl].flags.f.b6) {
-        g->mode_step += 0x11;
+    if (!game->girls[game->current_girl].flags.f.b6) {
+        game->mode_step += 0x11;
         return 0;
     }
-    if (g->current_girl == GIRL_SHIORI) {
-        g->day_event_done_bits |= 1;
+    if (game->current_girl == GIRL_SHIORI) {
+        game->day_event_done_bits |= 1;
     } else {
-        g->day_event_done_bits |= 2;
+        game->day_event_done_bits |= 2;
     }
-    if (((D_800CA2F8 == 0) || (D_800CA2F8 == 0x12)) && (g->event_log_count < 0xFE)) {
-        g->event_log_count -= 1;
+    if (((D_800CA2F8 == 0) || (D_800CA2F8 == 0x12)) && (game->event_log_count < 0xFE)) {
+        game->event_log_count -= 1;
     }
     event_log_add(0xA, D_80122D08);
     date_gift_choice = D_80122CDC;
     date_gift_group = 0x1D;
     date_gift_line = 0;
-    talk_names_set(g->current_girl);
-    switch (g->current_girl) {
+    talk_names_set(game->current_girl);
+    switch (game->current_girl) {
     case GIRL_SHIORI:
         date_gift_text = D_8015CFD4;
         date_gift_command = D_8015D008;
@@ -213,24 +213,24 @@ s32 date_gift_start(void) {
         date_gift_command = D_8015D034;
         date_gift_voice = D_8015D068;
     }
-    if (g->month >= 4) {
-        date_school_year = g->year - 0x5F;
+    if (game->month >= 4) {
+        date_school_year = game->year - 0x5F;
     } else {
-        date_school_year = g->year - 0x60;
+        date_school_year = game->year - 0x60;
     }
     mode_step_next();
 }
 
 void date_gift_reaction_group_by_mood(void) {
-    u32 v;
+    u32 girl_state;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    v = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (v < 2U) {
+    girl_state = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (girl_state < 2U) {
         date_gift_group += 2;
-    } else if (v == 2) {
+    } else if (girl_state == 2) {
         date_gift_group += 4;
-    } else if (v == 3) {
+    } else if (girl_state == 3) {
         date_gift_group += 6;
     } else {
         date_gift_group += 8;
@@ -240,13 +240,13 @@ void date_gift_reaction_group_by_mood(void) {
 }
 
 void date_gift_pick_reply_group(void) {
-    s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x28 as in the original; real source unknown. T-4010 */
-    u8 buf[3] = "こ";
+    s32 fake_padding; /* FAKE: unused local above reply_prefix, puts reply_prefix at sp+0x28 as in the original; real source unknown. T-4010 */
+    u8 reply_prefix[3] = "こ";
 
     date_gift_group = D_80122CDC * 2 + 0xD;
     if (D_80122CDC == 0) {
-        (**(u8 ***)(date_gift_text + date_gift_group * 4 + 4))[0] = buf[0];
-        (**(u8 ***)(date_gift_text + date_gift_group * 4 + 4))[1] = buf[1];
+        (**(u8 ***)(date_gift_text + date_gift_group * 4 + 4))[0] = reply_prefix[0];
+        (**(u8 ***)(date_gift_text + date_gift_group * 4 + 4))[1] = reply_prefix[1];
     }
     mode_step_next();
 }
@@ -272,14 +272,14 @@ void date_gift_prepare_choice(void) {
     mode_step_next();
 }
 
-extern DateTxt date_gift_names;
+extern DateGiftNameTable date_gift_names;
 
 void date_gift_name_set(void) {
-    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    DateTxt tbl;
+    s32 fake_padding; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    DateGiftNameTable gift_names;
 
-    tbl = date_gift_names;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + date_school_year * 0x63 + D_80122CDC * 0x21]);
+    gift_names = date_gift_names;
+    strcpy(D_800CA25C, &gift_names.text_bytes[game_state.current_girl * 0x129 + date_school_year * 0x63 + D_80122CDC * 0x21]);
 }
 
 void date_gift_speak(void) {

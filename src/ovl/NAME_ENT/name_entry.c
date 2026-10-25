@@ -101,13 +101,13 @@ u8 name_entry_initial_scores[20] = {
     0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-void name_entry_preset_apply(s32 arg0) {
-    s32 rem;
+void name_entry_preset_apply(s32 preset_index) {
+    s32 preset_row;
 
-    rem = arg0 % 15;
-    strncpy(name_entry_family_name, name_entry_preset_family_names + rem * 8, 8);
-    strncpy(name_entry_given_name, name_entry_preset_given_names + rem * 8, 8);
-    strncpy(name_entry_nickname, name_entry_preset_nicknames + rem * 0xC, 0xC);
+    preset_row = preset_index % 15;
+    strncpy(name_entry_family_name, name_entry_preset_family_names + preset_row * 8, 8);
+    strncpy(name_entry_given_name, name_entry_preset_given_names + preset_row * 8, 8);
+    strncpy(name_entry_nickname, name_entry_preset_nicknames + preset_row * 0xC, 0xC);
 }
 
 void name_entry_mode_handler(void) {
@@ -161,7 +161,7 @@ void name_entry_load_init(void)
     dec_bg_reset();
     dec_bg_show_switch(2);
     cd_read_sectors_nowait(0xAU, 0x80162000, 0xAA18);
-    game_state.cursor_speed = 3;
+    game_state.cursor_speed = SETTINGS_CURSOR_SPEED_NORMAL;
     dec_bg_brightness = 0;
     game_state.substep = 1;
  ;
@@ -192,7 +192,7 @@ void name_entry_load_init(void)
  * register. Removing any one loses the match; see T-20013. */
 void name_entry_load_fade_in(void) {
     s32 i;
-    s32 val;
+    s32 brightness;
     u8 **p;
 
     if (game_state.substep == 0) {
@@ -209,13 +209,13 @@ void name_entry_load_fade_in(void) {
             game_state.screen_brightness = 0;
         }
     } else {
-        val = (dec_bg_brightness + 4) & 0xFF;
-        D_801220E1 = (val & -1);
-        D_801220E0 = (val & -1);
-        dec_bg_brightness = (val & -1);
-        D_801220E2 = (val & -1);
-        game_state.screen_brightness = (val & -1);
-        if ((u32)val >= 0x80) {
+        brightness = (dec_bg_brightness + 4) & 0xFF;
+        D_801220E1 = (brightness & -1);
+        D_801220E0 = (brightness & -1);
+        dec_bg_brightness = (brightness & -1);
+        D_801220E2 = (brightness & -1);
+        game_state.screen_brightness = (brightness & -1);
+        if ((u32)brightness >= 0x80) {
             func_80057640(0xF0);
             name_entry_input_actors_init();
             bg_layers = 0x80000000;
@@ -366,39 +366,39 @@ void name_entry_background_setup(void) {
     load_palette(game_state.ovl_palette_a, 0x10, 1, 2, 0);
 }
 
-void name_entry_slot_markers_update(s32 arg0) {
+void name_entry_slot_markers_update(s32 name_part) {
     s32 i;
     s32 x;
     s32 y;
     s32 pad; /* FAKE: unused; its stack home gives the original 72-byte frame. T-11650 */
 
-    if (arg0 == 0 && name_entry_cursor >= 3) {
+    if (name_part == 0 && name_entry_cursor >= 3) {
         name_entry_cursor = 0xC;
     }
-    if (arg0 == 1 && name_entry_cursor >= 6) {
+    if (name_part == 1 && name_entry_cursor >= 6) {
         name_entry_cursor = 0xC;
     }
-    if (arg0 == 2 && name_entry_cursor >= 11) {
+    if (name_part == 2 && name_entry_cursor >= 11) {
         name_entry_cursor = 0xC;
     }
     if (game_state.pad_pressed & PAD_CIRCLE) {
         x = ((Actor *)actor_pool)[0].x;
         y = ((Actor *)actor_pool)[0].y;
-        if (arg0 == 0) {
+        if (name_part == 0) {
             for (i = 0; i < 3; i++) {
                 if (x < i * 16 - 0x58 && i * 16 - 0x68 < x
                     && y < -0x46 && y >= -0x55) {
                     name_entry_cursor = i;
                 }
             }
-        } else if (arg0 == 1) {
+        } else if (name_part == 1) {
             for (i = 0; i < 3; i++) {
                 if (x < i * 16 - 0x20 && i * 16 - 0x30 < x
                     && y < -0x46 && y >= -0x55) {
                     name_entry_cursor = i + 3;
                 }
             }
-        } else if (arg0 == 2) {
+        } else if (name_part == 2) {
             for (i = 0; i < 5; i++) {
                 if (x < i * 16 + 0x58 && i * 16 < x - 0x48
                     && y < -0x46 && y >= -0x55) {
@@ -639,9 +639,9 @@ void name_entry_reading_rows_draw(void) {
     set_kanji_string(0x48, 0x58, 0xA, name_entry_hiragana_rows_08, 0);
 }
 
-void name_entry_hiragana_page_draw(s32 arg0) {
+void name_entry_hiragana_page_draw(s32 heading_text) {
     text_system_reset();
-    set_kanji_string(-0x98, -0x68, 0, arg0, 0);
+    set_kanji_string(-0x98, -0x68, 0, heading_text, 0);
     set_kanji_string(-0x78, -0x30, 0xA, name_entry_hiragana_rows, 0);
     set_kanji_string(-0x78, -0x20, 0xA, name_entry_hiragana_rows_03, 0);
     set_kanji_string(-0x78, -0x10, 0xA, name_entry_hiragana_rows_06, 0);
@@ -661,9 +661,9 @@ void name_entry_hiragana_page_draw(s32 arg0) {
     set_kanji_string(0x48, 0x10, 0xA, name_entry_hiragana_rows_14, 0);
 }
 
-void name_entry_katakana_page_draw(s32 arg0) {
+void name_entry_katakana_page_draw(s32 heading_text) {
     text_system_reset();
-    set_kanji_string(-0x98, -0x68, 0xA, arg0, 0);
+    set_kanji_string(-0x98, -0x68, 0xA, heading_text, 0);
     set_kanji_string(-0x78, -0x30, 0xA, name_entry_katakana_rows, 0);
     set_kanji_string(-0x78, -0x20, 0xA, name_entry_katakana_rows_03, 0);
     set_kanji_string(-0x78, -0x10, 0xA, name_entry_katakana_rows_06, 0);
@@ -683,7 +683,7 @@ void name_entry_katakana_page_draw(s32 arg0) {
     set_kanji_string(0x48, 0x10, 0xA, name_entry_katakana_rows_14, 0);
 }
 
-void name_entry_symbol_page_draw(u8 *arg0) {
+void name_entry_symbol_page_draw(u8 *heading_text) {
     s32 i;
     u8 *p;
     u8 *text;
@@ -703,7 +703,7 @@ void name_entry_symbol_page_draw(u8 *arg0) {
         line5[i] = 0;
     }
     text_system_reset();
-    set_kanji_string(-0x98, -0x68, 0xA, arg0, 0);
+    set_kanji_string(-0x98, -0x68, 0xA, heading_text, 0);
     if (name_entry_candidate_counts[38] < name_entry_page_scroll * 16 + 0x50) {
         name_entry_page_scroll = (name_entry_candidate_counts[38] >> 4) - 5;
         if (name_entry_page_scroll < 0) {
@@ -768,7 +768,7 @@ void name_entry_symbol_page_draw(u8 *arg0) {
     }
 }
 
-void name_entry_kanji_page_draw(s32 arg0) {
+void name_entry_kanji_page_draw(s32 heading_selector) {
     s32 i;
     s32 pad[2]; /* FAKE: unused; its home gives the original 0x110-byte frame. T-11650 */
     u8 *text;
@@ -778,7 +778,7 @@ void name_entry_kanji_page_draw(s32 arg0) {
     u8 line3[0x24];
     u8 line4[0x24];
 
-    switch (arg0) {
+    switch (heading_selector) {
     case 0:
         if (game_state.mode_step == 1) {
             name_entry_prompt_text = name_entry_family_prompt_text;
@@ -943,12 +943,12 @@ s32 name_entry_reading_hit_test(void) {
 }
 
 void name_entry_reading_select(void) {
-    s32 prev;
+    s32 previous_reading;
 
-    prev = name_entry_reading;
+    previous_reading = name_entry_reading;
     if ((game_state.pad_pressed & PAD_CIRCLE) && name_entry_reading_column != -1 && name_entry_reading_row != -1) {
         name_entry_reading = name_entry_reading_row * 15 + name_entry_reading_column % 6 + name_entry_reading_column / 6 * 5;
-        if (name_entry_reading != prev) {
+        if (name_entry_reading != previous_reading) {
             name_entry_page_scroll = 0;
         }
     }
@@ -957,96 +957,96 @@ void name_entry_reading_select(void) {
 /* FAKE: indirect remainder loads and empty column tests preserve distinct
  * value ranges; | 0 preserves comparison operand order. T-20013 records the
  * individual removal controls for these matching constraints. */
-void name_entry_character_put(s32 arg0) {
-    s32 selected;
-    u32 index;
+void name_entry_character_put(s32 name_part) {
+    s32 name_slot;
+    u32 character_index;
     s32 column;
-    u8 *dest;
+    u8 *name_buffer;
 
-    index = name_entry_cursor;
-    selected = index;
-    switch (arg0) {
+    character_index = name_entry_cursor;
+    name_slot = character_index;
+    switch (name_part) {
     case 0:
-        if (selected >= 3) {
-            selected = 2;
+        if (name_slot >= 3) {
+            name_slot = 2;
         }
         break;
     case 1:
-        index = name_entry_cursor;
-        selected = index - 3;
-        if (selected >= 3) {
-            selected = 2;
+        character_index = name_entry_cursor;
+        name_slot = character_index - 3;
+        if (name_slot >= 3) {
+            name_slot = 2;
         }
         break;
     case 2:
-        index = name_entry_cursor;
-        selected = index - 6;
-        if (selected >= 5) {
-            selected = 4;
+        character_index = name_entry_cursor;
+        name_slot = character_index - 6;
+        if (name_slot >= 5) {
+            name_slot = 4;
         }
         break;
     }
-    switch (arg0) {
+    switch (name_part) {
     case 0:
-        dest = name_entry_family_name;
+        name_buffer = name_entry_family_name;
         break;
     case 1:
-        dest = name_entry_given_name;
+        name_buffer = name_entry_given_name;
         break;
     case 2:
-        dest = name_entry_nickname;
+        name_buffer = name_entry_nickname;
         break;
     }
     switch (name_entry_tab) {
     case 0:
         column = *(s32 *)&name_entry_cell_column % 6;
         if ((column | 0) == 5) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else if (name_entry_cell_row == 2 && (name_entry_cell_column == 9 || name_entry_cell_column == 10)) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else if (name_entry_cell_row == 3 && (name_entry_cell_column == 3 || name_entry_cell_column == 4)) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else if (name_entry_cell_row == 5 && name_entry_cell_column >= 11) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else {
-            dest[selected * 2] = ((NameKanaPages44 *)&name_entry_hiragana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][column * 2];
-            dest[selected * 2 + 1] = ((NameKanaPages44 *)&name_entry_hiragana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][((s32)name_entry_cell_column % 6) * 2 + 1];
+            name_buffer[name_slot * 2] = ((NameEntryKanaPage *)&name_entry_hiragana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][column * 2];
+            name_buffer[name_slot * 2 + 1] = ((NameEntryKanaPage *)&name_entry_hiragana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][((s32)name_entry_cell_column % 6) * 2 + 1];
         }
         break;
     case 1:
         column = *(s32 *)&name_entry_cell_column % 6;
         if ((column | 0) == 5) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else if (name_entry_cell_row == 2 && (name_entry_cell_column == 9 || name_entry_cell_column == 10)) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else if (name_entry_cell_row == 3 && (name_entry_cell_column == 3 || name_entry_cell_column == 4)) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else if (name_entry_cell_row == 5 && name_entry_cell_column >= 11) {
-            dest[selected * 2] = D_800B3644[0];
-            dest[selected * 2 + 1] = D_800B3644[1];
+            name_buffer[name_slot * 2] = D_800B3644[0];
+            name_buffer[name_slot * 2 + 1] = D_800B3644[1];
         } else {
-            dest[selected * 2] = ((NameKanaPages44 *)&name_entry_katakana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][column * 2];
-            dest[selected * 2 + 1] = ((NameKanaPages44 *)&name_entry_katakana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][((s32)name_entry_cell_column % 6) * 2 + 1];
+            name_buffer[name_slot * 2] = ((NameEntryKanaPage *)&name_entry_katakana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][column * 2];
+            name_buffer[name_slot * 2 + 1] = ((NameEntryKanaPage *)&name_entry_katakana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][((s32)name_entry_cell_column % 6) * 2 + 1];
         }
         break;
     case 2:
         if (name_entry_cell_column) {
         }
         if (name_entry_cell_column < 16) {
-            index = name_entry_cell_row * 16 + name_entry_page_scroll * 16 + name_entry_cell_column;
-            if (index < name_entry_candidate_counts[38]) {
-                dest[selected * 2] = name_entry_candidate_lists[38][index * 2];
-                dest[selected * 2 + 1] = name_entry_candidate_lists[38][index * 2 + 1];
+            character_index = name_entry_cell_row * 16 + name_entry_page_scroll * 16 + name_entry_cell_column;
+            if (character_index < name_entry_candidate_counts[38]) {
+                name_buffer[name_slot * 2] = name_entry_candidate_lists[38][character_index * 2];
+                name_buffer[name_slot * 2 + 1] = name_entry_candidate_lists[38][character_index * 2 + 1];
             } else {
-                dest[selected * 2] = D_800B3644[0];
-                dest[selected * 2 + 1] = D_800B3644[1];
+                name_buffer[name_slot * 2] = D_800B3644[0];
+                name_buffer[name_slot * 2 + 1] = D_800B3644[1];
             }
         }
         break;
@@ -1055,30 +1055,30 @@ void name_entry_character_put(s32 arg0) {
         }
         if (name_entry_cell_column < 16) {
             if (name_entry_reading == 38) {
-                index = name_entry_cell_row * 16 + name_entry_page_scroll * 16 + name_entry_cell_column;
-                if (index < name_entry_candidate_counts[name_entry_reading]) {
-                    dest[selected * 2] = name_entry_candidate_lists[name_entry_reading][index * 2];
-                    dest[selected * 2 + 1] = name_entry_candidate_lists[name_entry_reading][index * 2 + 1];
+                character_index = name_entry_cell_row * 16 + name_entry_page_scroll * 16 + name_entry_cell_column;
+                if (character_index < name_entry_candidate_counts[name_entry_reading]) {
+                    name_buffer[name_slot * 2] = name_entry_candidate_lists[name_entry_reading][character_index * 2];
+                    name_buffer[name_slot * 2 + 1] = name_entry_candidate_lists[name_entry_reading][character_index * 2 + 1];
                 } else {
-                    dest[selected * 2] = D_800B3644[0];
-                    dest[selected * 2 + 1] = D_800B3644[1];
+                    name_buffer[name_slot * 2] = D_800B3644[0];
+                    name_buffer[name_slot * 2 + 1] = D_800B3644[1];
                 }
             } else if (name_entry_cell_row == 0) {
                 if (name_entry_cell_column < strlen(name_entry_reading_labels[name_entry_reading]) / 2) {
-                    dest[selected * 2] = name_entry_reading_labels[name_entry_reading][name_entry_cell_column * 2];
-                    dest[selected * 2 + 1] = name_entry_reading_labels[name_entry_reading][name_entry_cell_column * 2 + 1];
+                    name_buffer[name_slot * 2] = name_entry_reading_labels[name_entry_reading][name_entry_cell_column * 2];
+                    name_buffer[name_slot * 2 + 1] = name_entry_reading_labels[name_entry_reading][name_entry_cell_column * 2 + 1];
                 } else {
-                    dest[selected * 2] = D_800B3644[0];
-                    dest[selected * 2 + 1] = D_800B3644[1];
+                    name_buffer[name_slot * 2] = D_800B3644[0];
+                    name_buffer[name_slot * 2 + 1] = D_800B3644[1];
                 }
             } else {
-                index = name_entry_cell_row * 16 + name_entry_page_scroll * 16 + name_entry_cell_column - 16;
-                if (index < name_entry_candidate_counts[name_entry_reading]) {
-                    dest[selected * 2] = name_entry_candidate_lists[name_entry_reading][index * 2];
-                    dest[selected * 2 + 1] = name_entry_candidate_lists[name_entry_reading][index * 2 + 1];
+                character_index = name_entry_cell_row * 16 + name_entry_page_scroll * 16 + name_entry_cell_column - 16;
+                if (character_index < name_entry_candidate_counts[name_entry_reading]) {
+                    name_buffer[name_slot * 2] = name_entry_candidate_lists[name_entry_reading][character_index * 2];
+                    name_buffer[name_slot * 2 + 1] = name_entry_candidate_lists[name_entry_reading][character_index * 2 + 1];
                 } else {
-                    dest[selected * 2] = D_800B3644[0];
-                    dest[selected * 2 + 1] = D_800B3644[1];
+                    name_buffer[name_slot * 2] = D_800B3644[0];
+                    name_buffer[name_slot * 2 + 1] = D_800B3644[1];
                 }
             }
         }
@@ -1097,59 +1097,59 @@ void name_entry_names_draw(void) {
 
 /* FAKE: s32 result with no return statement: as a void function the build loses the original's `move v0,zero`; no caller
  * reads the result. T-20810, T-21520 */
-s32 name_entry_name_finish(s32 arg0) {
+s32 name_entry_name_finish(s32 name_part) {
     s32 i;
-    s32 n;
-    s32 r;
+    s32 blank_bytes;
+    s32 preset_row;
 
-    r = rand() % 15;
-    n = 0;
-    if (arg0 == 0) {
+    preset_row = rand() % 15;
+    blank_bytes = 0;
+    if (name_part == 0) {
         for (i = 0; i < 6; i++) {
             if (name_entry_family_name[i] == D_800B3644[i & 1]) {
-                n++;
+                blank_bytes++;
             }
         }
-        if (name_entry_family_name[n] == 0) {
-            strncpy(name_entry_family_name, name_entry_preset_family_names + r * 8, 8);
+        if (name_entry_family_name[blank_bytes] == 0) {
+            strncpy(name_entry_family_name, name_entry_preset_family_names + preset_row * 8, 8);
         }
-        if (n == 6) {
-            strncpy(name_entry_family_name, name_entry_preset_family_names + r * 8, 8);
+        if (blank_bytes == 6) {
+            strncpy(name_entry_family_name, name_entry_preset_family_names + preset_row * 8, 8);
         }
         if (name_entry_family_name[0] == 0) {
-            strncpy(name_entry_family_name, name_entry_preset_family_names + r * 8, 8);
+            strncpy(name_entry_family_name, name_entry_preset_family_names + preset_row * 8, 8);
         }
     }
-    if (arg0 == 1) {
+    if (name_part == 1) {
         for (i = 0; i < 6; i++) {
             if (name_entry_given_name[i] == D_800B3644[i & 1]) {
-                n++;
+                blank_bytes++;
             }
         }
-        if (name_entry_given_name[n] == 0) {
-            strncpy(name_entry_given_name, name_entry_preset_given_names + r * 8, 8);
+        if (name_entry_given_name[blank_bytes] == 0) {
+            strncpy(name_entry_given_name, name_entry_preset_given_names + preset_row * 8, 8);
         }
-        if (n == 6) {
-            strncpy(name_entry_given_name, name_entry_preset_given_names + r * 8, 8);
+        if (blank_bytes == 6) {
+            strncpy(name_entry_given_name, name_entry_preset_given_names + preset_row * 8, 8);
         }
         if (name_entry_given_name[0] == 0) {
-            strncpy(name_entry_given_name, name_entry_preset_given_names + r * 8, 8);
+            strncpy(name_entry_given_name, name_entry_preset_given_names + preset_row * 8, 8);
         }
     }
-    if (arg0 == 2) {
+    if (name_part == 2) {
         for (i = 0; i < 10; i++) {
             if (name_entry_nickname[i] == D_800B3644[i & 1]) {
-                n++;
+                blank_bytes++;
             }
         }
-        if (name_entry_nickname[n] == 0) {
-            strncpy(name_entry_nickname, name_entry_preset_nicknames + r * 12, 12);
+        if (name_entry_nickname[blank_bytes] == 0) {
+            strncpy(name_entry_nickname, name_entry_preset_nicknames + preset_row * 12, 12);
         }
-        if (n == 10) {
-            strncpy(name_entry_nickname, name_entry_preset_nicknames + r * 12, 12);
+        if (blank_bytes == 10) {
+            strncpy(name_entry_nickname, name_entry_preset_nicknames + preset_row * 12, 12);
         }
         if (name_entry_nickname[0] == 0) {
-            strncpy(name_entry_nickname, name_entry_preset_nicknames + r * 12, 12);
+            strncpy(name_entry_nickname, name_entry_preset_nicknames + preset_row * 12, 12);
         }
     }
 }
@@ -1243,7 +1243,7 @@ void name_entry_preset_chord_check(void) {
 }
 
 void name_entry_step_init(void) {
-    u8 *p;
+    u8 *name_character;
 
     /* u8 view of the s8 flag name_entry_retained_state (unsigned compare against 2). T-11650 */
     if (*(u8 *)&name_entry_retained_state < 2) {
@@ -1258,17 +1258,17 @@ void name_entry_step_init(void) {
             name_entry_shiori_day = (u8) name_entry_retained_shiori_day % 31;
             name_entry_shiori_blood = (u8) name_entry_retained_shiori_blood & 3;
         } else {
-            for (p = name_entry_family_name; p < &name_entry_family_name[6]; p += 2) {
-                strcpy(p, D_800B3644);
+            for (name_character = name_entry_family_name; name_character < &name_entry_family_name[6]; name_character += 2) {
+                strcpy(name_character, D_800B3644);
             }
-            for (p = name_entry_given_name; p < &name_entry_given_name[6]; p += 2) {
-                strcpy(p, D_800B3644);
+            for (name_character = name_entry_given_name; name_character < &name_entry_given_name[6]; name_character += 2) {
+                strcpy(name_character, D_800B3644);
             }
             /* FAKE: initialisation on the do line gives the original as1 order of the two addiu. T-11650 */
-            p = name_entry_nickname; do {
-                strcpy(p, D_800B3644);
-                p += 2;
-            } while (p != &name_entry_nickname_end);
+            name_character = name_entry_nickname; do {
+                strcpy(name_character, D_800B3644);
+                name_character += 2;
+            } while (name_character != &name_entry_nickname_end);
             name_entry_nickname_end = 0;
             name_entry_given_name[7] = 0;
             name_entry_given_name[6] = 0;
@@ -1299,10 +1299,10 @@ void name_entry_step_init(void) {
     mode_step_next();
 }
 
-void name_entry_frames_draw(s32 arg0) {
+void name_entry_frames_draw(s32 alternate_color) {
     s32 col;
 
-    if (arg0 != 0) {
+    if (alternate_color != 0) {
         col = 0x90002;
     } else {
         col = 0x8081F;
@@ -1470,8 +1470,8 @@ void name_entry_given_name_init(void) {
 }
 
 void name_entry_given_name_input(void) {
-    u8 cur;
-    u8 temp;
+    u8 backtrack_cursor;
+    u8 insertion_cursor;
 
     hud_cursor_update();
     name_entry_cell_hit_test();
@@ -1484,17 +1484,17 @@ void name_entry_given_name_input(void) {
     }
     name_entry_scroll_arrows_update();
     if (game_state.pad_pressed & PAD_CROSS) {
-        cur = (*(u16 *)&name_entry_cursor);
-        if (cur == 0xC) {
-            cur = 6;
+        backtrack_cursor = (*(u16 *)&name_entry_cursor);
+        if (backtrack_cursor == 0xC) {
+            backtrack_cursor = 6;
         }
-        name_entry_cursor = cur;
-        if (cur >= 4) {
-            name_entry_cursor = cur - 1;
+        name_entry_cursor = backtrack_cursor;
+        if (backtrack_cursor >= 4) {
+            name_entry_cursor = backtrack_cursor - 1;
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
-        temp = name_entry_cursor;
-        if (temp < 6 && name_entry_cell_column >= 0 && name_entry_cell_row >= 0) {
+        insertion_cursor = name_entry_cursor;
+        if (insertion_cursor < 6 && name_entry_cell_column >= 0 && name_entry_cell_row >= 0) {
             name_entry_character_put(1);
             name_entry_names_draw();
         }
@@ -1648,10 +1648,10 @@ void name_entry_nickname_input(void) {
     }
 }
 
-void name_entry_birthday_frames_draw(s32 arg0) {
+void name_entry_birthday_frames_draw(s32 alternate_color) {
     s32 color;
 
-    if (arg0 != 0) {
+    if (alternate_color != 0) {
         color = 0x90002;
     } else {
         color = 0x8081F;
@@ -1733,8 +1733,8 @@ void name_entry_birthday_actors_init(void) {
     ((Actor *)actor_pool)[107].unk_01 = 1;
 }
 
-void name_entry_actor_animation_start(s32 arg0) {
-    u8 *p = actor_pool + arg0 * 0x44;
+void name_entry_actor_animation_start(s32 actor_index) {
+    u8 *p = actor_pool + actor_index * 0x44;
 
     if (!(p[2] & 1)) {
         *(s16 *)(p + 0x18) = 0;
@@ -1784,7 +1784,7 @@ void name_entry_birthday_field_marks_update(void) {
     }
 }
 
-void name_entry_birthday_hit_test(s32 arg0) {
+void name_entry_birthday_hit_test(s32 shiori_profile) {
     s32 i;
     s32 x;
     s32 mouse_x;
@@ -1802,7 +1802,7 @@ void name_entry_birthday_hit_test(s32 arg0) {
                 y < ((Actor *)actor_pool)[0].y && ((Actor *)actor_pool)[0].y < y + 16) {
                 ((Actor *)actor_pool)[104].x = x + 22;
                 ((Actor *)actor_pool)[104].y = y + 6;
-                if (arg0 != 0) {
+                if (shiori_profile != 0) {
                     name_entry_shiori_month = i;
                 } else {
                     name_entry_player_month = i;
@@ -1821,7 +1821,7 @@ void name_entry_birthday_hit_test(s32 arg0) {
                 y < ((Actor *)actor_pool)[0].y && ((Actor *)actor_pool)[0].y < y + 16) {
                 ((Actor *)actor_pool)[104].x = x + 1;
                 ((Actor *)actor_pool)[104].y = y + 6;
-                if (arg0 != 0) {
+                if (shiori_profile != 0) {
                     name_entry_shiori_day = i;
                 } else {
                     name_entry_player_day = i;
@@ -1839,7 +1839,7 @@ void name_entry_birthday_hit_test(s32 arg0) {
                 72 < ((Actor *)actor_pool)[0].y && ((Actor *)actor_pool)[0].y < 88) {
                 ((Actor *)actor_pool)[104].x = x + 16;
                 ((Actor *)actor_pool)[104].y = 78;
-                if (arg0 != 0) {
+                if (shiori_profile != 0) {
                     name_entry_shiori_blood = i;
                 } else {
                     name_entry_player_blood = i;
@@ -1849,46 +1849,46 @@ void name_entry_birthday_hit_test(s32 arg0) {
     }
 }
 
-void name_entry_birthday_text_draw(arg0)
-s32 arg0;
+void name_entry_birthday_text_draw(display_shiori_profile)
+s32 display_shiori_profile;
 {
-    s32 a;
-    s32 b;
-    s32 c;
+    s32 month_selection;
+    s32 day_selection;
+    s32 blood_selection;
 
-    if (arg0 != 0) {
-        a = name_entry_shiori_month;
-        b = name_entry_shiori_day;
-        c = name_entry_shiori_blood;
+    if (display_shiori_profile != 0) {
+        month_selection = name_entry_shiori_month;
+        day_selection = name_entry_shiori_day;
+        blood_selection = name_entry_shiori_blood;
     } else {
-        a = name_entry_player_month;
-        b = name_entry_player_day;
-        c = name_entry_player_blood;
+        month_selection = name_entry_player_month;
+        day_selection = name_entry_player_day;
+        blood_selection = name_entry_player_blood;
     }
     k_sub_reset();
-    if (a == 0xFF) {
+    if (month_selection == 0xFF) {
         set_kanji_string(-0x50, -0x58, 0xE, "　", 0);
         set_kanji_string(-0x40, -0x58, 0xE, "　", 0);
     } else {
-        if (a >= 9) {
+        if (month_selection >= 9) {
             set_kanji_string(-0x50, -0x58, 0xE, D_800B3288[1], 0);
         } else {
             set_kanji_string(-0x50, -0x58, 0xE, "　", 0);
         }
-        set_kanji_string(-0x40, -0x58, 0xE, D_800B3288[(a + 1) % 10], 0);
+        set_kanji_string(-0x40, -0x58, 0xE, D_800B3288[(month_selection + 1) % 10], 0);
     }
-    if (b == 0xFF) {
+    if (day_selection == 0xFF) {
         set_kanji_string(-0x20, -0x58, 0xE, "　", 0);
         set_kanji_string(-0x10, -0x58, 0xE, "　", 0);
     } else {
-        if (b >= 9) {
-            set_kanji_string(-0x20, -0x58, 0xE, D_800B3288[(b + 1) / 10], 0);
+        if (day_selection >= 9) {
+            set_kanji_string(-0x20, -0x58, 0xE, D_800B3288[(day_selection + 1) / 10], 0);
         } else {
             set_kanji_string(-0x20, -0x58, 0xE, D_800B3644, 0);
         }
-        set_kanji_string(-0x10, -0x58, 0xE, D_800B3288[(b + 1) % 10], 0);
+        set_kanji_string(-0x10, -0x58, 0xE, D_800B3288[(day_selection + 1) % 10], 0);
     }
-    switch (c) {
+    switch (blood_selection) {
     case 0:
         set_kanji_string(0x60, -0x58, 0xE, "　", 0);
         set_kanji_string(0x70, -0x58, 0xE, "Ａ", 0);
@@ -1909,13 +1909,13 @@ s32 arg0;
     k_sub_disp_start(6);
 }
 
-void name_entry_birthday_buttons_update(s32 arg0) {
+void name_entry_birthday_buttons_update(s32 shiori_profile) {
     s32 pad; /* FAKE: unused locals around the two cursor values, which the original reads without ever assigning them (T-3330 layout) */
-    s32 sp30;
-    s32 sp2C;
+    s32 fake_hit_x;
+    s32 fake_hit_y;
     s32 pad2;
 
-    if (sp30 >= -0x9D && sp30 < -0x80 && sp2C >= 0x51 && sp2C < 0x60) {
+    if (fake_hit_x >= -0x9D && fake_hit_x < -0x80 && fake_hit_y >= 0x51 && fake_hit_y < 0x60) {
         D_8012093F |= 0x80;
         if (game_state.pad_pressed & PAD_CIRCLE) {
             name_entry_birthday_finalize();
@@ -1927,7 +1927,7 @@ void name_entry_birthday_buttons_update(s32 arg0) {
     if (name_entry_cursor == 3) {
         D_801208FB |= 0x80;
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            name_entry_birthday_finalize(arg0);
+            name_entry_birthday_finalize(shiori_profile);
             mode_step_next();
         }
     } else {
@@ -1936,14 +1936,14 @@ void name_entry_birthday_buttons_update(s32 arg0) {
 }
 
 void name_entry_birthday_input(void) {
-    u8 temp;
+    u8 birthday_field;
     hud_cursor_update();
     name_entry_birthday_field_marks_update();
     name_entry_birthday_text_draw(0);
     name_entry_birthday_buttons_update(0);
     if (game_state.pad_pressed & PAD_CROSS) {
-        temp = name_entry_cursor;
-        if (temp != 0) {
+        birthday_field = name_entry_cursor;
+        if (birthday_field != 0) {
             name_entry_cursor -= 1;
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
@@ -1960,12 +1960,12 @@ void name_entry_birthday_input(void) {
     name_entry_day_grid_numbers_draw();
 }
 
-void name_entry_birthday_finalize(arg0)
-s32 arg0;
+void name_entry_birthday_finalize(finalize_shiori_profile)
+s32 finalize_shiori_profile;
 {
-    s32 a;
+    s32 calendar_month;
 
-    if (arg0 != 0) {
+    if (finalize_shiori_profile != 0) {
         if (name_entry_shiori_month == 0xFF) {
             name_entry_shiori_month = rand() % 12;
         }
@@ -1975,20 +1975,20 @@ s32 arg0;
         if (name_entry_shiori_blood == 0xFF) {
             name_entry_shiori_blood = rand() % 3;
         }
-        a = name_entry_shiori_month + 1;
-        if (a == 2 && name_entry_shiori_day + 1 >= 0x1D) {
+        calendar_month = name_entry_shiori_month + 1;
+        if (calendar_month == 2 && name_entry_shiori_day + 1 >= 0x1D) {
             name_entry_shiori_day = 0x1B;
         }
-        if (a == 4 && name_entry_shiori_day + 1 >= 0x1F) {
+        if (calendar_month == 4 && name_entry_shiori_day + 1 >= 0x1F) {
             name_entry_shiori_day = 0x1D;
         }
-        if (a == 6 && name_entry_shiori_day + 1 >= 0x1F) {
+        if (calendar_month == 6 && name_entry_shiori_day + 1 >= 0x1F) {
             name_entry_shiori_day = 0x1D;
         }
-        if (a == 9 && name_entry_shiori_day + 1 >= 0x1F) {
+        if (calendar_month == 9 && name_entry_shiori_day + 1 >= 0x1F) {
             name_entry_shiori_day = 0x1D;
         }
-        if (a == 0xB && name_entry_shiori_day + 1 >= 0x1F) {
+        if (calendar_month == 0xB && name_entry_shiori_day + 1 >= 0x1F) {
             name_entry_shiori_day = 0x1D;
         }
     } else {
@@ -2001,20 +2001,20 @@ s32 arg0;
         if (name_entry_player_blood == 0xFF) {
             name_entry_player_blood = rand() % 3;
         }
-        a = name_entry_player_month + 1;
-        if (a == 2 && name_entry_player_day + 1 >= 0x1D) {
+        calendar_month = name_entry_player_month + 1;
+        if (calendar_month == 2 && name_entry_player_day + 1 >= 0x1D) {
             name_entry_player_day = 0x1B;
         }
-        if (a == 4 && name_entry_player_day + 1 >= 0x1F) {
+        if (calendar_month == 4 && name_entry_player_day + 1 >= 0x1F) {
             name_entry_player_day = 0x1D;
         }
-        if (a == 6 && name_entry_player_day + 1 >= 0x1F) {
+        if (calendar_month == 6 && name_entry_player_day + 1 >= 0x1F) {
             name_entry_player_day = 0x1D;
         }
-        if (a == 9 && name_entry_player_day + 1 >= 0x1F) {
+        if (calendar_month == 9 && name_entry_player_day + 1 >= 0x1F) {
             name_entry_player_day = 0x1D;
         }
-        if (a == 0xB && name_entry_player_day + 1 >= 0x1F) {
+        if (calendar_month == 0xB && name_entry_player_day + 1 >= 0x1F) {
             name_entry_player_day = 0x1D;
         }
     }
@@ -2022,24 +2022,24 @@ s32 arg0;
 
 void name_entry_day_grid_numbers_draw(void) {
     s32 i;
-    s32 y;
+    s32 digit_x;
 
-    for (i = 1, y = -0x70; i < 0xA; i++, y += 0x18) {
-        name_entry_digit_sprite_draw(i, y, 8);
+    for (i = 1, digit_x = -0x70; i < 0xA; i++, digit_x += 0x18) {
+        name_entry_digit_sprite_draw(i, digit_x, 8);
     }
-    for (i = 0, y = 0x70; i < 2; i++, y += 0x18) {
-        name_entry_number_sprites_draw(i + 0xA, y, 8);
+    for (i = 0, digit_x = 0x70; i < 2; i++, digit_x += 0x18) {
+        name_entry_number_sprites_draw(i + 0xA, digit_x, 8);
     }
-    for (i = 0, y = -0x68; i < 0xB; i++, y += 0x18) {
-        name_entry_number_sprites_draw(i + 0xC, y, 0x18);
+    for (i = 0, digit_x = -0x68; i < 0xB; i++, digit_x += 0x18) {
+        name_entry_number_sprites_draw(i + 0xC, digit_x, 0x18);
     }
-    for (i = 0, y = -0x68; i != 9; i++, y += 0x18) {
-        name_entry_number_sprites_draw(i + 0x17, y, 0x28);
+    for (i = 0, digit_x = -0x68; i != 9; i++, digit_x += 0x18) {
+        name_entry_number_sprites_draw(i + 0x17, digit_x, 0x28);
     }
     goto_tpage(0x140, 0, 2, 0, 0);
 }
 
-void name_entry_digit_sprite_draw(s32 arg0, s32 arg1, s32 arg2) {
+void name_entry_digit_sprite_draw(s32 digit_index, s32 screen_x, s32 screen_y) {
     u8 *p;
     u8 *q;
 
@@ -2049,9 +2049,9 @@ void name_entry_digit_sprite_draw(s32 arg0, s32 arg1, s32 arg2) {
     p[4] = game_state.screen_brightness;
     p[5] = game_state.screen_brightness;
     p[6] = game_state.screen_brightness;
-    *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg1;
-    *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg2;
-    q = name_entry_wide_digit_uv + arg0 * 2;
+    *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + screen_x;
+    *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + screen_y;
+    q = name_entry_wide_digit_uv + digit_index * 2;
     p[0xC] = q[0];
     p[0xD] = q[1];
     *(s16 *)(p + 0x12) = 0x10;
@@ -2060,7 +2060,7 @@ void name_entry_digit_sprite_draw(s32 arg0, s32 arg1, s32 arg2) {
     AddPrim((draw_buffer << 10) + 8 + D_800E8CA0, p);
 }
 
-void name_entry_number_sprites_draw(s32 arg0, s32 arg1, s32 arg2) {
+void name_entry_number_sprites_draw(s32 number, s32 screen_x, s32 screen_y) {
     SPRT *sprite;
     u8 *uv;
 
@@ -2070,9 +2070,9 @@ void name_entry_number_sprites_draw(s32 arg0, s32 arg1, s32 arg2) {
     sprite->r0 = game_state.screen_brightness;
     sprite->g0 = game_state.screen_brightness;
     sprite->b0 = game_state.screen_brightness;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + arg1 - 8;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
-    uv = &name_entry_small_digit_uv[arg0 / 10 * 2];
+    sprite->x0 = game_state.screen_center_x[draw_buffer] + screen_x - 8;
+    sprite->y0 = game_state.screen_center_y[draw_buffer] + screen_y;
+    uv = &name_entry_small_digit_uv[number / 10 * 2];
     sprite->u0 = uv[0];
     sprite->v0 = uv[1];
     setWH(sprite, 8, 0x10);
@@ -2084,9 +2084,9 @@ void name_entry_number_sprites_draw(s32 arg0, s32 arg1, s32 arg2) {
     sprite->r0 = game_state.screen_brightness;
     sprite->g0 = game_state.screen_brightness;
     sprite->b0 = game_state.screen_brightness;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + arg1;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
-    uv = &name_entry_small_digit_uv[arg0 % 10 * 2];
+    sprite->x0 = game_state.screen_center_x[draw_buffer] + screen_x;
+    sprite->y0 = game_state.screen_center_y[draw_buffer] + screen_y;
+    uv = &name_entry_small_digit_uv[number % 10 * 2];
     sprite->u0 = uv[0];
     sprite->v0 = uv[1];
     setWH(sprite, 8, 0x10);
@@ -2158,15 +2158,15 @@ void name_entry_confirm_init(void) {
     mode_step_next();
 }
 
-void name_entry_confirm_frames_draw(s32 arg0) {
+void name_entry_confirm_frames_draw(s32 shiori_profile) {
     s32 color;
 
-    if (arg0 != 0) {
+    if (shiori_profile != 0) {
         color = 0x90002;
     } else {
         color = 0x8081F;
     }
-    if (arg0 != 0) {
+    if (shiori_profile != 0) {
         prim_gradient_rect(-0x7E, -0x3D, 0x11A, 0x58, 4, color, 0x83);
     } else {
         prim_gradient_rect(-0x7E, -0x3D, 0x11A, 0x76, 4, color, 0x83);
@@ -2254,14 +2254,14 @@ void name_entry_shiori_birthday_init(void) {
 }
 
 void name_entry_shiori_birthday_input(void) {
-    u8 temp;
+    u8 birthday_field;
     hud_cursor_update();
     name_entry_birthday_field_marks_update();
     name_entry_birthday_text_draw(1);
     name_entry_birthday_buttons_update(1);
     if (game_state.pad_pressed & PAD_CROSS) {
-        temp = name_entry_cursor;
-        if (temp != 0) {
+        birthday_field = name_entry_cursor;
+        if (birthday_field != 0) {
             name_entry_cursor -= 1;
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
@@ -2384,52 +2384,52 @@ void name_entry_commit(void) {
 /* FAKE: s32 with no return statement, as declared in NAME_ENT.h: with a void declaration the caller
  * name_entry_new_game_setup allocates its date registers differently; no caller reads the result. T-25149 */
 s32 name_entry_profile_store(void) {
-    s32 n;
+    s32 written_characters;
     s32 i;
-    GameState *gs;
-    /* FAKE: 0x20 bytes give the original's 96-byte frame with buf at sp+0x34; the copies need only
+    GameState *profile_state;
+    /* FAKE: 0x20 bytes give the original's 96-byte frame with full_name_buffer at sp+0x34; the copies need only
      * 17 bytes and the real size is unknown. T-25149 */
-    u8 buf[0x20];
-    u8 c;
+    u8 full_name_buffer[0x20];
+    u8 first_byte;
 
-    for (n = 0; n < 8; n++) {
-        game_state.player_family_name[n] = 0;
-        game_state.player_given_name[n] = 0;
+    for (written_characters = 0; written_characters < 8; written_characters++) {
+        game_state.player_family_name[written_characters] = 0;
+        game_state.player_given_name[written_characters] = 0;
     }
-    for (n = 0; n < 0x10; n++) {
-        game_state.player_full_name[n] = 0;
-        game_state.player_nickname[n] = 0;
+    for (written_characters = 0; written_characters < 0x10; written_characters++) {
+        game_state.player_full_name[written_characters] = 0;
+        game_state.player_nickname[written_characters] = 0;
     }
-    /* Stores through gs may alias the name arrays, so uopt reloads the second byte in each test
+    /* Stores through profile_state may alias the name arrays, so uopt reloads the second byte in each test
      * while as1 still hoists it above the stores; the full-width space bytes stay promoted. T-25149 */
-    gs = &game_state;
-    for (i = 0, n = 0; i < 6; i += 2) {
-        c = name_entry_family_name[i];
-        if ((c != D_800B3644[0] || name_entry_family_name[i + 1] != D_800B3644[1]) && (c != 0 || name_entry_family_name[i + 1] != 0)) {
-            gs->player_family_name[n * 2] = c;
-            gs->player_family_name[n * 2 + 1] = name_entry_family_name[i + 1];
-            n++;
+    profile_state = &game_state;
+    for (i = 0, written_characters = 0; i < 6; i += 2) {
+        first_byte = name_entry_family_name[i];
+        if ((first_byte != D_800B3644[0] || name_entry_family_name[i + 1] != D_800B3644[1]) && (first_byte != 0 || name_entry_family_name[i + 1] != 0)) {
+            profile_state->player_family_name[written_characters * 2] = first_byte;
+            profile_state->player_family_name[written_characters * 2 + 1] = name_entry_family_name[i + 1];
+            written_characters++;
         }
     }
-    for (i = 0, n = 0; i < 6; i += 2) {
-        c = name_entry_given_name[i];
-        if ((c != D_800B3644[0] || name_entry_given_name[i + 1] != D_800B3644[1]) && (c != 0 || name_entry_given_name[i + 1] != 0)) {
-            gs->player_given_name[n * 2] = c;
-            gs->player_given_name[n * 2 + 1] = name_entry_given_name[i + 1];
-            n++;
+    for (i = 0, written_characters = 0; i < 6; i += 2) {
+        first_byte = name_entry_given_name[i];
+        if ((first_byte != D_800B3644[0] || name_entry_given_name[i + 1] != D_800B3644[1]) && (first_byte != 0 || name_entry_given_name[i + 1] != 0)) {
+            profile_state->player_given_name[written_characters * 2] = first_byte;
+            profile_state->player_given_name[written_characters * 2 + 1] = name_entry_given_name[i + 1];
+            written_characters++;
         }
     }
-    for (i = 0, n = 0; i < 10; i += 2) {
-        c = name_entry_nickname[i];
-        if ((c != D_800B3644[0] || name_entry_nickname[i + 1] != D_800B3644[1]) && (c != 0 || name_entry_nickname[i + 1] != 0)) {
-            gs->player_nickname[n * 2] = c;
-            gs->player_nickname[n * 2 + 1] = name_entry_nickname[i + 1];
-            n++;
+    for (i = 0, written_characters = 0; i < 10; i += 2) {
+        first_byte = name_entry_nickname[i];
+        if ((first_byte != D_800B3644[0] || name_entry_nickname[i + 1] != D_800B3644[1]) && (first_byte != 0 || name_entry_nickname[i + 1] != 0)) {
+            profile_state->player_nickname[written_characters * 2] = first_byte;
+            profile_state->player_nickname[written_characters * 2 + 1] = name_entry_nickname[i + 1];
+            written_characters++;
         }
     }
-    strncpy(buf, game_state.player_family_name, 8);
-    strncat(buf, game_state.player_given_name, 8);
-    strncpy(game_state.player_full_name, buf, 0x10);
+    strncpy(full_name_buffer, game_state.player_family_name, 8);
+    strncat(full_name_buffer, game_state.player_given_name, 8);
+    strncpy(game_state.player_full_name, full_name_buffer, 0x10);
     /* FAKE: the redundant `& 3` on the two-bit fields spends the ugen temporary the original spends
      * there (as1 deletes the AND); without it every later temporary is one register low. T-25149 */
     ((WordView *)&game_state.player_birthday)->date.month = name_entry_player_month + 1;
@@ -2450,28 +2450,28 @@ void name_entry_overlay_tables_set(void) {
 }
 
 void name_entry_new_game_setup(void) {
-    /* FAKE: register + pre-call initializers place month/day/idx on $v0/$a2/$a1 after name_entry_profile_store. T-24113 */
+    /* FAKE: register + pre-call initializers place month/day/compatibility_index on $v0/$a2/$a1 after name_entry_profile_store. T-24113 */
     register u32 month;
     u32 day;
-    u32 idx;
-    u32 var_t0;
+    u32 compatibility_index;
+    u32 shiori_club;
 
     month = name_entry_cursor;
     day = 0;
-    idx = 0;
+    compatibility_index = 0;
     func_80041878();
     name_entry_profile_store();
     month = game_state.girls[0].birthday.date.month;
     day = game_state.girls[0].birthday.date.day;
     game_state.girls[0].flags.f.club = (s32)(day * 3 + month) % 11;
-    idx = name_entry_blood_compatibility_level[game_state.girls[0].birthday.date.blood_type + (*(NameProfileFlags *)&game_state.player_birthday).blood_type * 4] - 1;
-    game_state.girls[0].affection = name_entry_initial_scores[idx * 3];
-    game_state.girls[0].tokimeki = name_entry_initial_scores[idx * 3 + 1];
-    game_state.girls[0].syoushin = name_entry_initial_scores[idx * 3 + 2];
-    var_t0 = game_state.girls[0].flags.f.club;
-    if (var_t0 == 0) {
+    compatibility_index = name_entry_blood_compatibility_level[game_state.girls[0].birthday.date.blood_type + (*(NameEntryBirthdayBits *)&game_state.player_birthday).blood_type * 4] - 1;
+    game_state.girls[0].affection = name_entry_initial_scores[compatibility_index * 3];
+    game_state.girls[0].tokimeki = name_entry_initial_scores[compatibility_index * 3 + 1];
+    game_state.girls[0].syoushin = name_entry_initial_scores[compatibility_index * 3 + 2];
+    shiori_club = game_state.girls[0].flags.f.club;
+    if (shiori_club == 0) {
         game_state.girls[1].flags.f.club = CLUB_DRAMA;
-    } else if (var_t0 == 1) {
+    } else if (shiori_club == 1) {
         game_state.girls[1].flags.f.club = CLUB_LITERATURE;
     } else if (rand() & 1) {
         game_state.girls[1].flags.f.club = CLUB_DRAMA;
@@ -2479,9 +2479,9 @@ void name_entry_new_game_setup(void) {
         game_state.girls[1].flags.f.club = CLUB_LITERATURE;
     }
     game_state.girls[1].birthday.date.blood_type = 1;
-    if (var_t0 == 2) {
+    if (shiori_club == 2) {
         game_state.girls[2].flags.f.club = CLUB_COMPUTER;
-    } else if (var_t0 == 3) {
+    } else if (shiori_club == 3) {
         game_state.girls[2].flags.f.club = CLUB_SCIENCE;
     } else if (rand() & 1) {
         game_state.girls[2].flags.f.club = CLUB_COMPUTER;
@@ -2489,9 +2489,9 @@ void name_entry_new_game_setup(void) {
         game_state.girls[2].flags.f.club = CLUB_SCIENCE;
     }
     game_state.girls[2].birthday.date.blood_type = 1;
-    if (var_t0 == 4) {
+    if (shiori_club == 4) {
         game_state.girls[3].flags.f.club = CLUB_BRASS_BAND;
-    } else if (var_t0 == 5) {
+    } else if (shiori_club == 5) {
         game_state.girls[3].flags.f.club = CLUB_ART;
     } else if (rand() & 1) {
         game_state.girls[3].flags.f.club = CLUB_BRASS_BAND;
@@ -2499,9 +2499,9 @@ void name_entry_new_game_setup(void) {
         game_state.girls[3].flags.f.club = CLUB_ART;
     }
     game_state.girls[3].birthday.date.blood_type = 2;
-    if (var_t0 == 6) {
+    if (shiori_club == 6) {
         game_state.girls[4].flags.f.club = CLUB_SOCCER;
-    } else if (var_t0 == 7) {
+    } else if (shiori_club == 7) {
         game_state.girls[4].flags.f.club = CLUB_BASEBALL;
     } else if (rand() & 1) {
         game_state.girls[4].flags.f.club = CLUB_SOCCER;

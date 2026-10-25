@@ -4,55 +4,55 @@
 #include "common.h"
 #include "game.h"
 
-extern s32 D_8015EDD4;
-extern s32 D_8015EDD8;
-extern s32 D_8015EDDC;
-extern s32 D_8015EDE0;
-extern s32 D_8015EDE4;
+extern s32 rpg_enemy_attack_count;
+extern s32 rpg_enemy_step;
+extern s32 rpg_enemy_substep;
+extern s32 rpg_enemy_timer_a;
+extern s32 rpg_enemy_timer_b;
 
-extern s32 D_8015EC28;
-extern s32 D_8015EC2C;
+extern s32 rpg_target_x;
+extern s32 rpg_target_y;
 extern s32 D_8015EC6C;
-extern s32 D_8015E744;
-#ifndef RPG_BAT_OVERRIDE_D_8015ED98
-extern s32 D_8015ED98;
+extern s32 rpg_message_line_frames;
+#ifndef RPG_BAT_OVERRIDE_rpg_player_action
+extern s32 rpg_player_action;
 #endif
-extern s32 D_8015EBDC;
-extern s32 D_8015EBD8;
-extern s32 D_8015EBE0;
-extern s32 D_8015EDC4;
-extern s32 D_8015EDF0;
-extern s32 D_8015EE1C;
-s32 func_8013E9A8(s32);
-void func_8013EA60(s32, s32, s32, s32);
-extern s32 D_8015EBAC;
-extern s32 D_8015EBB0;
-void func_8014EBA8(void);
-void func_8014EBD0(void);
-void func_8014F230(void);
-extern s32 D_8015EE10;
-void func_8014F258(void);
-void func_8014F500(void);
-void func_8014F524(void);
+extern s32 rpg_enemy_delay_extra;
+extern s32 rpg_enemy_damage_scale;
+extern s32 rpg_enemy_miss_weight;
+extern s32 rpg_enemy_action;
+extern s32 rpg_girl_action;
+extern s32 rpg_over;
+s32 rpg_rand(s32);
+void rpg_apply_damage(s32, s32, s32, s32);
+extern s32 rpg_enemy_slot;
+extern s32 rpg_damage;
+void rpg_player_step_next(void);
+void rpg_player_substep_next(void);
+void rpg_girl_step_next(void);
+extern s32 rpg_girl_timer_b;
+void rpg_girl_substep_next(void);
+void rpg_finale_step_next(void);
+void rpg_finale_substep_next(void);
 
-void func_80140E70(void);
-void func_80141C70(void);
-void func_80141E38(void);
-s32 func_80137280(void);
-void func_8014EF8C(void);
+void rpg_robot_palette_cycle(void);
+void rpg_move_assist_nozomi_polite(void);
+void rpg_move_assist_nozomi_rough(void);
+s32 rpg_dialog_delinquent_taunt(void);
+void rpg_enemy_action_end(void);
 
-extern s32 D_8015ED64[][4];
-extern s32 D_8015ED94;
+extern s32 rpg_voice_started[][4];
+extern s32 rpg_player_hit_points;
 
-extern u8 **D_8015E740;
-extern s32 D_8015E748;
-void func_8013415C(void);
-void func_80134570(void);
-void func_80134984(void);
-void func_80135B4C(void);
-void func_80135D90(void);
-void func_80135E80(void);
-extern s32 D_8015EDA8[2]; /* defined in RPG_BAT/battle_lifecycle_and_channels.c (T-9010) */
+extern u8 **rpg_message_lines;
+extern s32 rpg_message_line_count;
+void rpg_yoshio_punch(void);
+void rpg_yoshio_kick(void);
+void rpg_yoshio_potion(void);
+void rpg_megumi_flinch(void);
+void rpg_megumi_pause(void);
+void rpg_megumi_shout(void);
+extern s32 rpg_player_action_words[2]; /* defined in RPG_BAT/battle_lifecycle_and_channels.c (T-9010) */
 /* Counters that functions of RPG_BAT/battle_lifecycle_and_channels.c reset together: one variable each, because the
  * original shares one `lui $at` between the stores (T-9010). Defined in RPG_BAT/battle_lifecycle_and_channels.c. */
 typedef struct RpgBatWords3 {
@@ -66,88 +66,88 @@ typedef struct RpgBatWords4 {
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
 } RpgBatWords4; /* size 0x10 */
-extern RpgBatWords3 D_8015EDB0;
-extern RpgBatWords4 D_8015EE00;
-extern RpgBatWords4 D_8015EE30;
-extern RpgBatWords3 D_8015EE44;
-extern RpgBatWords3 D_8015EE50;
-void func_80139510(void);
+extern RpgBatWords3 rpg_player_channel;
+extern RpgBatWords4 rpg_girl_channel;
+extern RpgBatWords4 rpg_finale_channel;
+extern RpgBatWords3 rpg_message;
+extern RpgBatWords3 rpg_menu;
+void rpg_victory_delinquents(void);
 /* T-24013: callbacks reached before their definitions. */
-void func_80139E88(void);
-void func_8013A034(void);
-void func_8013A2F4(void);
-void func_8013F82C(void);
-void func_801596E8(void);
-extern s32 D_8015EB98;
-extern s32 D_8015EBB4;
-extern s32 D_8015EBB8;
-extern s32 D_8015EC14;
-extern s32 D_8015EC74;
-s32 func_801373A8(void);
-extern s32 D_8015EB9C;
-s32 func_80144C84();
-s32 func_801452C0();
-s32 func_801453B4();
-extern s32 D_8015EBBC;
+void rpg_loot_text_delinquents(void);
+void rpg_bancho_asset_load(void);
+void rpg_bancho_flash(void);
+void rpg_victory_robot(void);
+void rpg_victory_bancho(void);
+extern s32 rpg_encounter;
+extern s32 rpg_damage_slot1;
+extern s32 rpg_damage_slot2;
+extern s32 rpg_result_code;
+extern s32 rpg_scratch;
+s32 rpg_dialog_delinquent_defeat_taunt(void);
+extern s32 rpg_girl_id;
+s32 rpg_enemy_pick_delinquent();
+s32 rpg_enemy_pick_bancho_2();
+s32 rpg_enemy_pick_alien();
+extern s32 rpg_damage_to_player_extra;
 /* The prototypes below can be hidden by a file that was matched with the implicit int view the
  * original callers had: it defines RPG_BAT_OVERRIDE_<name> before its includes and declares
  * `s32 <name>();` itself (the definitions in 8013E4D0.c are void; T-16210). */
-#ifndef RPG_BAT_OVERRIDE_func_8013E7C0
-void func_8013E7C0(s32 a, s32 b, s32 c, s32 d);
+#ifndef RPG_BAT_OVERRIDE_rpg_actor_set_animation
+void rpg_actor_set_animation(s32 a, s32 b, s32 c, s32 d);
 #endif
-#ifndef RPG_BAT_OVERRIDE_func_8013E810
-void func_8013E810(s32 a, s32 b, s32 c, s32 d);
+#ifndef RPG_BAT_OVERRIDE_rpg_actor_set_animation_alt
+void rpg_actor_set_animation_alt(s32 a, s32 b, s32 c, s32 d);
 #endif
-#ifndef RPG_BAT_OVERRIDE_func_8013E97C
-void func_8013E97C(s32 a, s32 b, s32 c);
+#ifndef RPG_BAT_OVERRIDE_rpg_actor_set_position
+void rpg_actor_set_position(s32 a, s32 b, s32 c);
 #endif
 
-void func_8014F080(s32 arg0);
-void func_8014EF3C(void);
+void rpg_enemy_wait_step(s32 frames);
+void rpg_enemy_step_next(void);
 
-#ifndef RPG_BAT_OVERRIDE_func_8013F0F4
-void func_8013F0F4(s32 a, s32 b, s32 c);
+#ifndef RPG_BAT_OVERRIDE_rpg_se_play_latched_6xx
+void rpg_se_play_latched_6xx(s32 a, s32 b, s32 c);
 #endif
-void func_801328C4(s32 a, s32 b);
-s32 func_8014A3DC(void);
+void rpg_basketball_spark_burst(s32 a, s32 b);
+s32 rpg_no_club_step_3(void);
 /* Same override rule as the pair above (the definition in 8013E4D0.c is void; T-17101). */
-#ifndef RPG_BAT_OVERRIDE_func_8013F15C
-void func_8013F15C(s32 a, s32 b, s32 c);
+#ifndef RPG_BAT_OVERRIDE_rpg_se_play_latched_5xx
+void rpg_se_play_latched_5xx(s32 a, s32 b, s32 c);
 #endif
-s32 func_8013E90C(s32 i);
-s32 func_80156870(void);
+s32 rpg_actor_is_idle(s32 i);
+s32 rpg_nozomi_is_calm(void);
 
-void func_80153A60(void);
-void func_80153B08(void);
-void func_80153D20(void);
-void func_80153F3C(s32, s32, s32, s32, s32, s32);
-void func_80154220(s32 *xy, s32 *uv, s32 arg2, s32 arg3, s32 arg4); /* four (x, y) and four (u, v) words */
-extern s32 D_8015EC38;
-extern s32 D_8015EC3C;
-extern s32 D_8015EC40;
-extern s32 D_8015EC44;
-extern s32 D_8015ED28;
-extern s32 D_8015ED2C;
-extern s32 D_8015ED30;
-extern s32 D_8015ED34;
-extern s32 D_8015EC48;
-extern s32 D_8015EC4C;
-s32 func_80154760(void);
-void func_80155868(s32, s32, s32, s32, s32, s32, s32, s32, s32);
+void rpg_wave_fade_step(void);
+void rpg_wave_strips_a(void);
+void rpg_wave_strips_b(void);
+void rpg_wave_strip_draw(s32, s32, s32, s32, s32, s32);
+void rpg_wave_quad_draw(s32 *xy, s32 *uv, s32 arg2, s32 arg3, s32 arg4); /* four (x, y) and four (u, v) words */
+extern s32 rpg_bg_word_0;
+extern s32 rpg_bg_word_1;
+extern s32 rpg_bg_word_2;
+extern s32 rpg_bg_word_3;
+extern s32 rpg_ripple_phase_2;
+extern s32 rpg_ripple_phase_2_step;
+extern s32 rpg_ripple_period_2;
+extern s32 rpg_ripple_width_2;
+extern s32 rpg_bg_word_4;
+extern s32 rpg_bg_word_5;
+s32 rpg_art_step_7(void);
+void rpg_art_draw_shape(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 /* defined in C in one object, called from another (T-0500) */
-s32 func_8013EA00(s32 arg0, s32 arg1);
+s32 rpg_rand2(s32 upper_bound_a, s32 upper_bound_b);
 
-extern s16 D_8015E5A0[][12];
-extern s32 D_8015EE5C;
+extern s16 rpg_popup_bounce_table[][12];
+extern s32 rpg_popup_0;
 extern s32 D_8015EE60;
-extern s32 D_8015EE68;
-extern s32 D_8015EE74;
-extern s32 D_8015EE80;
+extern s32 rpg_popup_1;
+extern s32 rpg_popup_2;
+extern s32 rpg_popup_3;
 extern s32 D_8015EE64;
-void func_8013E8B8(s32 a0, s32 a1, s32 a2);
-void func_8013E864(s32 arg0, s32 arg1, s32 arg2);
-void func_8014EB58(s32 arg0);
+void rpg_popup_digit_set_animation(s32 a0, s32 a1, s32 a2);
+void rpg_record_set_animation(s32 arg0, s32 arg1, s32 arg2);
+void rpg_message_next_state(s32 channel);
 extern s32 D_8015EE6C;
 extern s32 D_8015EE70;
 extern s32 D_8015EE78;
@@ -155,267 +155,267 @@ extern s32 D_8015EE7C;
 extern s32 D_8015EE84;
 extern s32 D_8015EE88;
 /* T-5000: six words read and written as one object (the original keeps loads after the stores). */
-typedef struct RpgRec18 {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s32 unk_14;
-} RpgRec18; /* size 0x18 */
-extern RpgRec18 D_8015EC58;
-void func_80150DE0(void);
-extern s32 D_8015EEE8;
-extern s32 D_8015EC20;
-extern s32 D_8015EC24;
-extern s32 D_8015ED9C;
-extern s32 D_8015EDC8;
-extern s32 D_8015EDE8;
-extern s32 D_8015EDF4;
-extern s32 D_8015EE40;
-s32 func_8013C1CC(void);
-void func_8013C2A0(void);
-void func_8013C32C(void);
-void func_8013BEA8(void);
-s32 func_8013B910(void);
-#ifndef RPG_BAT_OVERRIDE_func_8013C890
-void func_8013C890(void);
+typedef struct RpgMoveParams {
+    /* 0x00 */ s32 param_0;
+    /* 0x04 */ s32 param_1;
+    /* 0x08 */ s32 param_2;
+    /* 0x0C */ s32 param_3;
+    /* 0x10 */ s32 param_4;
+    /* 0x14 */ s32 param_5;
+} RpgMoveParams; /* size 0x18 */
+extern RpgMoveParams rpg_move_params;
+void rpg_girl_run_set_rect(void);
+extern s32 rpg_asset_palette_5;
+extern s32 rpg_pause_state;
+extern s32 rpg_pause_debounce;
+extern s32 rpg_player_ready_timer;
+extern s32 rpg_enemy_timer;
+extern s32 rpg_label_enemy;
+extern s32 rpg_girl_timer;
+extern s32 rpg_label_guest;
+s32 rpg_check_enemy_defeated(void);
+void rpg_start_victory_sequence(void);
+void rpg_background_wave(void);
+void rpg_pause_update(void);
+s32 rpg_stage_fight(void);
+#ifndef RPG_BAT_OVERRIDE_rpg_enemy_update
+void rpg_enemy_update(void);
 #endif
-void func_8013CC90(void);
-void func_801439E0();
-void func_8014B294(void);
-void func_8014B79C(void);
-void func_8014C4FC(void);
-void func_8014C804(void);
-void func_801495DC(void);
-void func_8014CB0C(void);
-void func_8014CE14(void);
-/* Pad-sequence matcher state of func_8013BBF8, one aggregate. The original keeps the store of unk_00 in front
+void rpg_player_update(void);
+void rpg_girl_update();
+void rpg_hud_numbers_update(void);
+void rpg_message_update(void);
+void rpg_popup_bounce_0(void);
+void rpg_popup_bounce_1(void);
+void rpg_player_basic_damage(void);
+void rpg_popup_bounce_2(void);
+void rpg_popup_bounce_3(void);
+/* Pad-sequence matcher state of rpg_code_entry_update, one aggregate. The original keeps the store of unk_00 in front
  * of the load of unk_04; four separate scalars let the build sink that store into the branch delay slot (T-17107). */
-typedef struct RpgPadSeq {
-    /* 0x00 */ s32 unk_00; /* pad word read this frame (D_8015EBEC) */
-    /* 0x04 */ s32 unk_04; /* pad word of the previous change (D_8015EBF0) */
-    /* 0x08 */ s32 unk_08; /* position in the D_8015E578 sequence (D_8015EBF4) */
-    /* 0x0C */ s32 unk_0C; /* position in the D_8015E550 sequence (D_8015EBF8) */
-} RpgPadSeq; /* size 0x10 */
-extern RpgPadSeq D_8015EBEC;
-void func_8013BBF8();
-/* Battle counters; one struct because as1 then keeps the access order of the original (T-4030, func_801452C0). */
-typedef struct RpgStat {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
-    /* 0x0C */ s32 unk_0C; /* T-17100: the words between are the scalars D_8015EC08..D_8015EC30 */
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s32 unk_14;
-    /* 0x18 */ s32 unk_18;
-    /* 0x1C */ s32 unk_1C;
-    /* 0x20 */ s32 unk_20;
-    /* 0x24 */ s32 unk_24;
-    /* 0x28 */ s32 unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-} RpgStat; /* size 0x3C */
-extern RpgStat D_8015EBFC;
+typedef struct RpgCodeEntry {
+    /* 0x00 */ s32 pad_now; /* pad word read this frame (rpg_code_entry) */
+    /* 0x04 */ s32 pad_last; /* pad word of the previous change (D_8015EBF0) */
+    /* 0x08 */ s32 sequence_b_progress; /* position in the rpg_code_sequence_b sequence (D_8015EBF4) */
+    /* 0x0C */ s32 sequence_a_progress; /* position in the rpg_code_sequence_a sequence (D_8015EBF8) */
+} RpgCodeEntry; /* size 0x10 */
+extern RpgCodeEntry rpg_code_entry;
+void rpg_code_entry_update();
+/* Battle counters; one struct because as1 then keeps the access order of the original (T-4030, rpg_enemy_pick_bancho_2). */
+typedef struct RpgBattleState {
+    /* 0x00 */ s32 enemy_weight_0;
+    /* 0x04 */ s32 enemy_weight_1;
+    /* 0x08 */ s32 enemy_weight_2;
+    /* 0x0C */ s32 enemy_weight_3; /* T-17100: the words between are the scalars D_8015EC08..rpg_special_gauge */
+    /* 0x10 */ s32 girl_weight_wait;
+    /* 0x14 */ s32 girl_weight_act;
+    /* 0x18 */ s32 result_code;
+    /* 0x1C */ s32 saved_girl;
+    /* 0x20 */ s32 boss_event;
+    /* 0x24 */ s32 pause_state;
+    /* 0x28 */ s32 pause_debounce;
+    /* 0x2C */ s32 target_x;
+    /* 0x30 */ s32 target_y;
+    /* 0x34 */ s32 special_gauge;
+    /* 0x38 */ s32 escalation_counter;
+} RpgBattleState; /* size 0x3C */
+extern RpgBattleState rpg_state;
 
-extern s32 D_8015EE0C;
+extern s32 rpg_girl_timer_a;
 
-extern s32 D_8015ED3C[];
+extern s32 rpg_se_latch[];
 
-extern s32 D_8015EBE4;
+extern s32 rpg_voice_wait_frames;
 
-extern s32 D_8015ED8C[2]; /* [1] is D_8015ED90; one base symbol keeps loads behind stores (T-4070) */
+extern s32 rpg_dialog_step[2]; /* [1] is D_8015ED90; one base symbol keeps loads behind stores (T-4070) */
 
-void func_80134A70();
-void func_8013E300();
-void func_80136530();
-void func_8013C5D0();
-void func_80147F10();
-void func_80143830();
-void func_80141C30();
-void func_8013A480();
-void func_80132000();
-void func_801454F0();
-void func_801496F0();
-void func_8014B738();
-void func_8014ED80();
-void func_8014EE98();
-void func_80150F84();
-void func_80151F38(void);
-extern u8 D_8015E814;
-extern s32 D_8015EC18;
-void func_8013F1C4();
-extern u8 D_8015E904[];
-extern u8 D_8015E9CC[];
-extern s32 D_8015EC50;
-extern s32 D_8015EC54;
+void rpg_move_assist_shiori();
+void rpg_move_assist_mio();
+void rpg_move_assist_yuina();
+void rpg_move_assist_ayako();
+void rpg_move_assist_saki();
+void rpg_move_assist_yukari();
+void rpg_move_assist_nozomi();
+void rpg_move_assist_mira();
+void rpg_move_assist_yuko();
+void rpg_move_assist_megumi();
+void rpg_move_assist_yumi();
+void rpg_message_show();
+void rpg_player_wait_substep();
+void rpg_player_wait_msg_substep();
+void rpg_drama_pick_lines();
+void rpg_ayako_shot_pick(void);
+extern u8 rpg_text_player_pointers;
+extern s32 rpg_saved_girl;
+void rpg_voice_play_once();
+extern u8 rpg_text_girl_0[];
+extern u8 rpg_text_girl_pointers[];
+extern s32 rpg_motion;
+extern s32 rpg_motion_dy;
 
-extern s32 D_8015EDEC;
-void func_8014EF6C(void);
-void func_8014F1D4(s32 arg0);
-void func_8014F278();
-void func_8014F350();
-void func_8013F250();
-void func_8013F220();
+extern s32 rpg_girl_hit_points;
+void rpg_enemy_substep_next(void);
+void rpg_enemy_wait_msg_substep_unused(s32 line_count);
+void rpg_girl_action_end();
+void rpg_girl_wait_step();
+void rpg_voice_wait();
+void rpg_voice_reset();
 
-extern u8 D_8015E74C[];
-extern s32 D_8015EC78;
-extern s32 D_8015EDB8;
-/* A file that reads the first word as a scalar (func_80147930, T-17109) defines RPG_BAT_OVERRIDE_D_8015EBCC and declares `extern s32 D_8015EBCC;` itself. */
-#ifndef RPG_BAT_OVERRIDE_D_8015EBCC
-extern s32 D_8015EBCC[3];
+extern u8 rpg_text_player_0[];
+extern s32 rpg_move_timer;
+extern s32 rpg_player_timer_2;
+/* A file that reads the first word as a scalar (rpg_girl_pick_action, T-17109) defines RPG_BAT_OVERRIDE_rpg_delinquent_charmed_0 and declares `extern s32 rpg_delinquent_charmed_0;` itself. */
+#ifndef RPG_BAT_OVERRIDE_rpg_delinquent_charmed_0
+extern s32 rpg_delinquent_charmed_0[3];
 #endif
-extern s32 D_8015EEE4;
-extern u8 D_8015E774[];
-extern u8 D_8015E79C[];
-extern u8 D_8015E850[];
-extern u8 D_8015E878[];
-extern u8 D_8015E8A0[];
-extern u8 D_8015EA08[];
-extern u8 D_8015EA30[];
-extern u8 D_8015EA58[];
-extern u8 D_8015EA80[];
-extern u8 D_8015EAA8[];
-extern s32 D_8015EDA0;
-extern s32 D_8015EDA4;
-extern u32 D_8015EE08;
-void func_8014F38C();
-extern s32 D_8015EDC0;
-extern s32 D_8015EDCC;
-extern u32 D_8015EE04;
-void func_8015A11C(void);
-extern s32 D_8015EBD0;
-extern s32 D_8015EBD4;
-extern u32 D_8015EBA0;
-extern s32 D_8015EBA8;
-void func_801321D0(void);
-void func_80134D30(void);
-void func_801368B0(void);
-void func_8013A650(void);
-void func_801421E0(void);
-void func_801484E0(void);
-void func_801498C0(void);
-void func_8014A660(void);
-void func_801505B8(void);
-void func_80154430(void);
-void func_80155CC0(void);
-void func_8015A1F0(void);
-extern s32 D_8015EE38;
-void func_8014EDFC();
-void func_801340F0();
-void func_80135AE0();
-void func_80136374();
-void func_80136E2C();
-void func_8013D030();
-void func_8013D0D4(void);
-void func_801420EC();
-s32 func_801446F8();
-s32 func_801447B8(void);
-void func_80150AA4(void);
-void func_80151108(void);
-void func_80151380(s32 arg0);
-s32 func_801513C8(void);
-s32 func_801515F0(void);
-s32 func_80147930();
-void func_801481C8();
-void func_8014DF60();
-void func_8014F88C();
-void func_8014FDBC();
-void func_80151C10();
-s32 func_80155A70();
-s32 func_8013B2F0(void);
-void func_8013B534(void);
-void func_8015675C();
-void func_801568A4();
-void func_80159E28();
+extern s32 rpg_asset_palette_4;
+extern u8 rpg_text_player_1[];
+extern u8 rpg_text_player_2[];
+extern u8 rpg_text_enemy_1[];
+extern u8 rpg_text_enemy_2[];
+extern u8 rpg_text_enemy_3[];
+extern u8 rpg_text_result_1[];
+extern u8 rpg_text_result_2[];
+extern u8 rpg_text_result_3[];
+extern u8 rpg_text_result_4[];
+extern u8 rpg_text_result_5[];
+extern s32 rpg_player_hit_points_maximum;
+extern s32 rpg_player_guard_heal;
+extern u32 rpg_girl_substep;
+void rpg_girl_wait_substep();
+extern s32 rpg_enemy_hit_points;
+extern s32 rpg_enemy_hit_points_maximum;
+extern u32 rpg_girl_step;
+void rpg_yukari_call_father(void);
+extern s32 rpg_delinquent_charmed_1;
+extern s32 rpg_delinquent_charmed_2;
+extern u32 rpg_player_club;
+extern s32 rpg_special_ready;
+void rpg_club_move_basketball(void);
+void rpg_club_move_brass_band(void);
+void rpg_club_move_literature(void);
+void rpg_club_move_computer(void);
+void rpg_club_move_science(void);
+void rpg_club_move_soccer(void);
+void rpg_club_move_no_club(void);
+void rpg_club_move_swimming(void);
+void rpg_club_move_drama(void);
+void rpg_club_move_art(void);
+void rpg_club_move_tennis(void);
+void rpg_club_move_baseball(void);
+extern s32 rpg_finale_timer;
+void rpg_player_wait_animation_substep();
+void rpg_girl_action_yoshio();
+void rpg_girl_action_megumi();
+void rpg_girl_action_yumi();
+void rpg_girl_action_saki();
+void rpg_player_pose_idle();
+void rpg_club_move_dispatch(void);
+void rpg_girl_action_shiori();
+s32 rpg_girl_action_delay();
+s32 rpg_has_boss_event(void);
+void rpg_move_assist_dispatch(void);
+void rpg_drama_step_3(void);
+void rpg_drama_overlay_fade(s32 arg0);
+s32 rpg_drama_overlay_spawn(void);
+s32 rpg_drama_overlay_hide(void);
+s32 rpg_girl_pick_action();
+void rpg_girl_action_yuina();
+void rpg_girl_action_mira();
+void rpg_girl_survival_timer();
+void rpg_girl_rescue_sequence();
+void rpg_girl_action_ayako();
+s32 rpg_girl_action_mio();
+s32 rpg_player_attack_hit_flurry(void);
+void rpg_player_attack_miss_swing(void);
+void rpg_girl_action_yuko();
+void rpg_girl_action_nozomi();
+void rpg_girl_action_yukari();
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s32 D_8015EE48;
+extern s32 rpg_message_mode;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s32 D_8015EDF8;
+extern s32 rpg_girl_hit_points_maximum;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s32 D_8015EDB4;
-extern s32 D_8015ECC4;
-void func_80148714(void);
-extern s32 D_8015EE4C;
+extern s32 rpg_player_timer;
+extern s32 rpg_move_limit;
+void rpg_soccer_step_8(void);
+extern s32 rpg_message_frame;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_801359FC(void);
+void rpg_brass_band_step_3(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_8013673C(void);
+void rpg_move_assist_yuina_flash(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80137204(void);
-void func_80137148(s32 arg0, s32 arg1);
-s32 func_8014ADD0(s32 arg0, s32 arg1);
-void func_8015785C(void);
+void rpg_saki_effects_tick(void);
+void rpg_saki_effect_step(s32 actor, s32 animation);
+s32 rpg_swimming_main_effect(s32 arg0, s32 arg1);
+void rpg_alien_scene_flicker(void);
 
 #endif
-extern u8 D_8015E9E0[];
-extern u8 D_8015EB70[];
-extern u8 D_8015E828[];
-extern u8 D_8015E8F0[];
-extern s32 D_8015EBC0;
-extern s32 D_8015EBC4;
-extern s32 D_8015EBC8;
-#ifndef RPG_BAT_OVERRIDE_D_8015EDAC
-/* The six words D_8015EBC0..D_8015EBD4 are one aggregate; func_8013EA60 only matches when it reads them through
+extern u8 rpg_text_result_0[];
+extern u8 rpg_text_result_pointers[];
+extern u8 rpg_text_enemy_0[];
+extern u8 rpg_text_enemy_pointers[];
+extern s32 rpg_delinquent_gauges;
+extern s32 rpg_delinquent_hit_points_1;
+extern s32 rpg_delinquent_hit_points_2;
+#ifndef RPG_BAT_OVERRIDE_rpg_player_step
+/* The six words rpg_delinquent_gauges..rpg_delinquent_charmed_2 are one aggregate; rpg_apply_damage only matches when it reads them through
  * one struct (the original loads the counter above the flag-byte store, scalars give the other order; T-17107). */
-typedef struct RpgGauge {
-    /* 0x00 */ s32 cur[3];  /* D_8015EBC0, D_8015EBC4, D_8015EBC8 */
-    /* 0x0C */ s32 flag[3]; /* D_8015EBCC, D_8015EBD0, D_8015EBD4 */
-} RpgGauge; /* size 0x18 */
+typedef struct RpgDelinquentGauges {
+    /* 0x00 */ s32 hit_points[3];  /* rpg_delinquent_gauges, rpg_delinquent_hit_points_1, rpg_delinquent_hit_points_2 */
+    /* 0x0C */ s32 charmed[3]; /* rpg_delinquent_charmed_0, rpg_delinquent_charmed_1, rpg_delinquent_charmed_2 */
+} RpgDelinquentGauges; /* size 0x18 */
 /* FAKE: interim view. The scalar names above stay for the files that still use them (801504E0.c, 8014DF60.c,
- * 80154430.c, func_8013C1CC), so RPG_GAUGE reaches the aggregate through the first symbol until those are
- * migrated to a real `RpgGauge D_8015EBC0`. T-17107 */
-#define RPG_GAUGE ((RpgGauge *)&D_8015EBC0)
-extern u32 D_8015EDAC;
+ * 80154430.c, rpg_check_enemy_defeated), so RPG_GAUGE reaches the aggregate through the first symbol until those are
+ * migrated to a real `RpgDelinquentGauges rpg_delinquent_gauges`. T-17107 */
+#define RPG_GAUGE ((RpgDelinquentGauges *)&rpg_delinquent_gauges)
+extern u32 rpg_player_step;
 #endif
-void func_80136A9C(void);
-void func_80136BD8(void);
-void func_80136CCC(void);
-extern u32 D_8015EC34;
-void func_8013EA30();
-void func_8014F3C8();
-void func_80136070();
-void func_801361AC();
-extern u32 D_8015ED38;
+void rpg_literature_step_7(void);
+void rpg_literature_step_8(void);
+void rpg_literature_step_9(void);
+extern u32 rpg_escalation_counter;
+void rpg_fade_set_level();
+void rpg_girl_wait_animation_step();
+void rpg_dialog_yumi_fake_cry();
+void rpg_dialog_enemy_apologizes();
+extern u32 rpg_voice_playing_seen;
 
-void func_8014E1A4();
-void func_8014E28C();
+void rpg_mira_charm_apply();
+void rpg_mira_reject_line();
 
-extern s32 D_8015EC1C;
+extern s32 rpg_boss_event;
 extern s32 D_8015EE28;
 extern s32 D_8015EE20;
-typedef struct RpgClearWords50 {
+typedef struct RpgBattleScratch {
     /* 0x00 */ s32 values[50];
-} RpgClearWords50; /* size 0xC8 */
+} RpgBattleScratch; /* size 0xC8 */
 
 
-void func_80148654(void);
-void func_80148B08(void);
+void rpg_soccer_step_3(void);
+void rpg_soccer_step_9(void);
 
 /* T-9780: second dialogue text buffer. */
-s32 func_80142544(void);
-void func_801426B0(void);
-void func_80142CB8(void);
+s32 rpg_science_step_7(void);
+void rpg_science_step_10(void);
+void rpg_science_step_20(void);
 
 #ifndef OVL_RPG_HEALTH_RECORDS_T9780
 #define OVL_RPG_HEALTH_RECORDS_T9780
-extern s32 D_8015EDBC;
-extern s32 D_8015EE14;
-extern s32 D_8015ED14;
+extern s32 rpg_label_player;
+extern s32 rpg_label_girl;
+extern s32 rpg_result_line_count;
 #endif
 
 #ifndef OVL_RPG_BAT_TRANSITION_T9740
 #define OVL_RPG_BAT_TRANSITION_T9740
 
 /* Packed shade used by the scene transition renderer. T-9740. */
-typedef union RpgColorWord {
+typedef union RpgPackedColor {
     /* 0x00 */ u32 word;
     /* 0x00 */ struct {
         /* 0x00 */ u8 r;
@@ -423,185 +423,185 @@ typedef union RpgColorWord {
         /* 0x02 */ u8 b;
         /* 0x03 */ u8 code;
     } rgb;
-} RpgColorWord; /* size 0x04 */
+} RpgPackedColor; /* size 0x04 */
 
-/* Three words rooted at D_8015EE08; the last advances by two per frame. */
-typedef struct RpgTransition0C {
-    /* 0x00 */ u32 unk_00;
+/* Three words rooted at rpg_girl_substep; the last advances by two per frame. */
+typedef struct RpgTransitionState {
+    /* 0x00 */ u32 step;
     /* 0x04 */ u32 unk_04;
-    /* 0x08 */ s32 unk_08;
-} RpgTransition0C; /* size 0x0C */
+    /* 0x08 */ s32 frame_offset;
+} RpgTransitionState; /* size 0x0C */
 
-void func_80150120(void);
+void rpg_alien_departure(void);
 
 #endif
 
 
 #ifndef OVL_RPG_ASSET_WORDS_T9720
 #define OVL_RPG_ASSET_WORDS_T9720
-/* Word values copied into 0x44-byte draw records by func_8013E54C. */
-#ifndef RPG_BAT_OVERRIDE_D_8015EE8C
-extern s32 D_8015EE8C;
+/* Word values copied into 0x44-byte draw records by rpg_effects_select_asset_set. */
+#ifndef RPG_BAT_OVERRIDE_rpg_asset_sheet_0
+extern s32 rpg_asset_sheet_0;
 #endif
-extern s32 D_8015EE90;
-extern s32 D_8015EE9C;
-extern s32 D_8015EEA0;
-extern s32 D_8015EEA4;
-extern s32 D_8015EEA8;
-extern s32 D_8015EEB4;
-extern s32 D_8015EEB8;
-extern s32 D_8015EEBC;
-extern s32 D_8015EEC0;
-extern s32 D_8015EECC;
-extern s32 D_8015EED0;
+extern s32 rpg_asset_sheet_1;
+extern s32 rpg_asset_sheet_4;
+extern s32 rpg_asset_sheet_5;
+extern s32 rpg_asset_frames_0;
+extern s32 rpg_asset_frames_1;
+extern s32 rpg_asset_frames_4;
+extern s32 rpg_asset_frames_5;
+extern s32 rpg_asset_animation_0;
+extern s32 rpg_asset_animation_1;
+extern s32 rpg_asset_animation_4;
+extern s32 rpg_asset_animation_5;
 #endif
 
 
 #ifndef OVL_RPG_BAT_W9_FF28_H
 #define OVL_RPG_BAT_W9_FF28_H
 /* Dispatcher has no result read by its callers. T-9750. */
-void func_8013FF28(void);
+void rpg_robot_attack_1_motion(void);
 #endif /* OVL_RPG_BAT_W9_FF28_H */
 
 
-#ifndef W9_RPG_BAT_func_8013A98C
-#define W9_RPG_BAT_func_8013A98C
-void func_8013A98C(void);
+#ifndef W9_RPG_BAT_rpg_computer_step_13
+#define W9_RPG_BAT_rpg_computer_step_13
+void rpg_computer_step_13(void);
 #endif
 
-#ifndef W9_RPG_BAT_func_8013ACA4
-#define W9_RPG_BAT_func_8013ACA4
-void func_8013ACA4(void);
+#ifndef W9_RPG_BAT_rpg_computer_step_15
+#define W9_RPG_BAT_rpg_computer_step_15
+void rpg_computer_step_15(void);
 #endif
 
 
-#ifndef W9_RPG_BAT_D_8015EBA4
-#define W9_RPG_BAT_D_8015EBA4
-extern s32 D_8015EBA4;
+#ifndef W9_RPG_BAT_rpg_club_move_available
+#define W9_RPG_BAT_rpg_club_move_available
+extern s32 rpg_club_move_available;
 #endif
 
-#ifndef W9_RPG_BAT_D_8015EED4
-#define W9_RPG_BAT_D_8015EED4
-extern s32 D_8015EED4;
+#ifndef W9_RPG_BAT_rpg_asset_palette_0
+#define W9_RPG_BAT_rpg_asset_palette_0
+extern s32 rpg_asset_palette_0;
 #endif
 
-#ifndef W9_RPG_BAT_D_8015EED8
-#define W9_RPG_BAT_D_8015EED8
-extern s32 D_8015EED8;
+#ifndef W9_RPG_BAT_rpg_asset_palette_1
+#define W9_RPG_BAT_rpg_asset_palette_1
+extern s32 rpg_asset_palette_1;
 #endif
 
-#ifndef W9_RPG_BAT_D_8015EEDC
-#define W9_RPG_BAT_D_8015EEDC
-extern s32 D_8015EEDC;
+#ifndef W9_RPG_BAT_rpg_asset_palette_2
+#define W9_RPG_BAT_rpg_asset_palette_2
+extern s32 rpg_asset_palette_2;
 #endif
 
-#ifndef W9_RPG_BAT_D_8015EEE0
-#define W9_RPG_BAT_D_8015EEE0
-extern s32 D_8015EEE0;
+#ifndef W9_RPG_BAT_rpg_asset_palette_3
+#define W9_RPG_BAT_rpg_asset_palette_3
+extern s32 rpg_asset_palette_3;
 #endif
 
-#ifndef W9_RPG_BAT_D_8015EEEC
-#define W9_RPG_BAT_D_8015EEEC
-extern s32 D_8015EEEC;
+#ifndef W9_RPG_BAT_rpg_asset_palette_6
+#define W9_RPG_BAT_rpg_asset_palette_6
+extern s32 rpg_asset_palette_6;
 #endif
 
-#ifndef W9_RPG_BAT_func_80155E80
-#define W9_RPG_BAT_func_80155E80
-void func_80155E80(void);
+#ifndef W9_RPG_BAT_rpg_tennis_step_5
+#define W9_RPG_BAT_rpg_tennis_step_5
+void rpg_tennis_step_5(void);
 #endif
 
 #ifndef W9_RPG_TEXT_E92C
 #define W9_RPG_TEXT_E92C
-extern u8 D_8015E92C[]; /* text destination; size unknown, func_801563A0. T-9710 */
+extern u8 rpg_text_girl_1[]; /* text destination; size unknown, rpg_dialog_yuko_listen. T-9710 */
 #endif
 
 #ifndef RPG_BAT_MOTION_T9930
 #define RPG_BAT_MOTION_T9930
-void func_80142DF4(void);
+void rpg_science_step_23(void);
 #endif
 
 #ifndef OVL_RPG_BAT_TOGGLE_T10030
 #define OVL_RPG_BAT_TOGGLE_T10030
-extern s32 D_8015EC70;
-void func_8013D3E4(void);
-void func_8015461C(void);
+extern s32 rpg_move_target_actor;
+void rpg_apply_damage_single(void);
+void rpg_art_step_8(void);
 extern s32 D_8015EC68;
 #endif
-void func_8014E300(void);
-void func_8014E5B4(s32 arg0);
+void rpg_mira_move(void);
+void rpg_mira_target_position(s32 target_slot);
 
 #ifndef OVL_RPG_BAT_PTRS_T10720
 #define OVL_RPG_BAT_PTRS_T10720
-extern s32 D_8015EE94;
-extern s32 D_8015EE98;
-extern s32 D_8015EEAC;
-extern s32 D_8015EEB0;
-extern s32 D_8015EEC4;
-extern s32 D_8015EEC8;
+extern s32 rpg_asset_sheet_2;
+extern s32 rpg_asset_sheet_3;
+extern s32 rpg_asset_frames_2;
+extern s32 rpg_asset_frames_3;
+extern s32 rpg_asset_animation_2;
+extern s32 rpg_asset_animation_3;
 #endif
 
 #ifndef OVL_RPG_BAT_T10850_TYPES
 #define OVL_RPG_BAT_T10850_TYPES
 /* T-10850: initializer is called before its definition in its original object. */
-s32 func_8014E994(void);
+s32 rpg_state_clear(void);
 #endif
 
 
 #ifndef OVL_RPG_BAT_T12040
 #define OVL_RPG_BAT_T12040
-void func_80132348(void);
-void func_80132A94(s32 arg0, s32 arg1);
+void rpg_basketball_step_6(void);
+void rpg_basketball_spark_start(s32 x, s32 y);
 
 /* T-12040: displacement and the six rectangle words share EC50..EC6F. */
-typedef struct RpgMotion20 {
+typedef struct RpgMoveMotion {
     /* 0x00 */ s32 dx;
     /* 0x04 */ s32 dy;
-    /* 0x08 */ RpgRec18 rect;
-} RpgMotion20; /* size 0x20 */
-void func_8015A6D4(void);
-void func_8015A744(void);
-void func_8015A8B4(void);
-s32 func_80132B34(void);
-void func_80132CE4(void);
-void func_80132DE8(void);
-void func_80132EE0(void);
+    /* 0x08 */ RpgMoveParams rect;
+} RpgMoveMotion; /* size 0x20 */
+void rpg_baseball_step_7(void);
+void rpg_baseball_step_8(void);
+void rpg_baseball_step_9(void);
+s32 rpg_basketball_set_target_rect(void);
+void rpg_basketball_step_3(void);
+void rpg_basketball_step_4(void);
+void rpg_basketball_step_5(void);
 
 /* T-12040: position and displacement share the EC28..EC57 work range. */
-typedef struct RpgMotion30 {
+typedef struct RpgActorMotion {
     /* 0x00 */ s32 x;
     /* 0x04 */ s32 y;
     /* 0x08 */ u8 unk_08[0x20];
     /* 0x28 */ s32 dx;
     /* 0x2C */ s32 dy;
-} RpgMotion30; /* size 0x30 */
+} RpgActorMotion; /* size 0x30 */
 
 #endif
 
 #ifndef OVL_RPG_BAT_T12300_DECLS
 #define OVL_RPG_BAT_T12300_DECLS
 /* T-12300: word flag defined in 8014E780.c and read by 80145CC0.c. */
-extern s32 D_8015EE18;
-/* T-12300: word counters cleared by func_8014A660 (sw accesses). */
-extern s32 D_8015EC7C;
-extern s32 D_8015EC80;
-extern s32 D_8015ECB8;
-extern s32 D_8015ECE0;
-extern s32 D_8015ED08;
-extern s32 D_8015ECEC;
-extern s32 D_8015ECF0;
-extern s32 D_8015ECF4;
-extern s32 D_8015ECF8;
+extern s32 rpg_guest_value;
+/* T-12300: word counters cleared by rpg_club_move_swimming (sw accesses). */
+extern s32 rpg_move_value_0;
+extern s32 rpg_move_value_1;
+extern s32 rpg_move_x_start;
+extern s32 rpg_move_x_end;
+extern s32 rpg_move_extent;
+extern s32 rpg_effect_phase_0;
+extern s32 rpg_effect_phase_1;
+extern s32 rpg_effect_phase_2;
+extern s32 rpg_effect_phase_3;
 /* Existing guarded definitions later in 8014A660.c. */
-void func_8014AB84(s32 arg0, s32 arg1, s32 arg2);
-void func_8014AC74(void);
+void rpg_swimming_splash_spawn(s32 effect_group, s32 x, s32 y);
+void rpg_swimming_splash_update(void);
 
 #ifndef OVL_RPG_BAT_T17100_TABLES
 #define OVL_RPG_BAT_T17100_TABLES
 /* T-17100: constant tables that unmatched functions copy whole to the stack
  * (an lw/sw run, written in C as one struct assignment, like StrTbl41). */
-typedef struct RpgDirTable {
-    /* 0x00 */ s32 v[16]; /* eight (x, y) unit steps at 45 degrees, 0x100 = 1.0 */
-} RpgDirTable; /* size 0x40 */
+typedef struct RpgSparkDirections {
+    /* 0x00 */ s32 offsets[16]; /* eight (x, y) unit steps at 45 degrees, 0x100 = 1.0 */
+} RpgSparkDirections; /* size 0x40 */
 typedef struct RpgStrTbl4 {
     /* 0x00 */ u8 *s[4];
 } RpgStrTbl4; /* size 0x10 */
@@ -611,25 +611,25 @@ typedef struct RpgWordTbl4 {
 typedef struct RpgWordTbl10 {
     /* 0x00 */ s32 v[10];
 } RpgWordTbl10; /* size 0x28 */
-typedef struct RpgHalfTbl12 {
-    /* 0x00 */ s16 v[12]; /* six (x, y) offsets */
-} RpgHalfTbl12; /* size 0x18 */
-extern RpgDirTable D_8015E4F0;  /* func_801328C4 */
-extern RpgStrTbl4 D_8015E530;   /* func_80139E88 */
-extern RpgWordTbl4 D_8015E540;  /* func_80139E88 */
-extern RpgWordTbl10 D_8015E550; /* func_8013BBF8 */
-extern RpgWordTbl10 D_8015E578; /* func_8013BBF8 */
-extern RpgHalfTbl12 D_8015E720; /* func_8014BB80 */
-extern RpgStrTbl4 D_8015EFA0;   /* func_80152384 */
-extern RpgStrTbl4 D_8015EFB0;   /* func_80152384 */
-extern RpgStrTbl4 D_8015EFC0;   /* func_80152384 */
-extern RpgWordTbl4 D_8015EFD0;  /* func_80152384 */
-extern RpgStrTbl4 D_8015EFE0;   /* func_80159B40 */
-extern RpgStrTbl4 D_8015EFF0;   /* func_80159B40 */
-extern RpgWordTbl4 D_8015F000;  /* func_80159B40 (the first 16 bytes of a zero block) */
-/* T-17100: called by func_801498C0 before their definitions. */
-void func_80149AA8(void);
-void func_8014A16C(void);
+typedef struct RpgMenuPositions {
+    /* 0x00 */ s16 coordinates[12]; /* six (x, y) offsets */
+} RpgMenuPositions; /* size 0x18 */
+extern RpgSparkDirections rpg_spark_directions;  /* rpg_basketball_spark_burst */
+extern RpgStrTbl4 rpg_loot_names_delinquents;   /* rpg_loot_text_delinquents */
+extern RpgWordTbl4 rpg_loot_flags_init;  /* rpg_loot_text_delinquents */
+extern RpgWordTbl10 rpg_code_sequence_a; /* rpg_code_entry_update */
+extern RpgWordTbl10 rpg_code_sequence_b; /* rpg_code_entry_update */
+extern RpgMenuPositions rpg_menu_item_positions; /* rpg_command_menu_update */
+extern RpgStrTbl4 rpg_loot_names_snake;   /* rpg_trip_loot_text */
+extern RpgStrTbl4 rpg_loot_names_deer;   /* rpg_trip_loot_text */
+extern RpgStrTbl4 rpg_loot_names_bear;   /* rpg_trip_loot_text */
+extern RpgWordTbl4 rpg_loot_flags_init_trip;  /* rpg_trip_loot_text */
+extern RpgStrTbl4 rpg_loot_names_bancho;   /* rpg_loot_text_bancho */
+extern RpgStrTbl4 rpg_titles_bancho;   /* rpg_loot_text_bancho */
+extern RpgWordTbl4 rpg_loot_flags_init_bancho;  /* rpg_loot_text_bancho (the first 16 bytes of a zero block) */
+/* T-17100: called by rpg_club_move_no_club before their definitions. */
+void rpg_no_club_step_6(void);
+void rpg_no_club_step_4(void);
 #endif
 
 #endif

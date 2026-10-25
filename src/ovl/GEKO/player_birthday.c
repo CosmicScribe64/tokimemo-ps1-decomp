@@ -37,21 +37,21 @@ void encounter_player_birthday_mode_handler(void) {
 }
 
 typedef struct {
-    void (*f[29])();
-} FnTbl29; /* size 0x74 */
-extern FnTbl29 encounter_player_birthday_steps;
+    void (*callbacks[29])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80134040.c:40; func_801341A0 at line43 copies this exact29-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterPlayerBirthdaySteps; /* size 0x74 */
+extern EncounterPlayerBirthdaySteps encounter_player_birthday_steps;
 
 void encounter_player_birthday_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl29 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterPlayerBirthdaySteps mode_step_callbacks;
 
-    tbl = encounter_player_birthday_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    mode_step_callbacks = encounter_player_birthday_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index](0x80);
 }
 
 s32 encounter_player_birthday_finish(void) {
-    u8 state;
+    u8 restore_substep;
 
     if (game_state.day_event_done_bits & 0x40) {
         audio_command(0xCF);
@@ -59,13 +59,13 @@ s32 encounter_player_birthday_finish(void) {
         return 0;
     }
     /* FAKE: read through a u8 view so the base and the result share $v0 (T-24035). */
-    state = *(u8 *)&game_state.substep;
-    if (state == 0) {
+    restore_substep = *(u8 *)&game_state.substep;
+    if (restore_substep == 0) {
         hud_day_bgm_load();
-        state = game_state.substep + 1;
+        restore_substep = game_state.substep + 1;
     }
-    game_state.substep = state;
-    if (state == 1) {
+    game_state.substep = restore_substep;
+    if (restore_substep == 1) {
         if ((u32)game_state.mode_step_timer.w++ >= 0x400) {
             cd_command_reset();
             audio_bank_state_reset();
@@ -133,7 +133,7 @@ void encounter_player_birthday_scripts_load(void) {
 
 s32 encounter_player_birthday_init(void) {
     s16 i;
-    u8 saved;
+    u8 saved_talk_byte;
 
     if (*(u8 *)&game_state.day_event_done_bits & 4) {
         encounter_player_birthday_finish();
@@ -151,9 +151,9 @@ s32 encounter_player_birthday_init(void) {
     k_reset(1);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    saved = D_80122D40;
+    saved_talk_byte = D_80122D40;
     talk_clear();
-    D_80122D40 = saved;
+    D_80122D40 = saved_talk_byte;
     D_80122D38 = 1;
     game_state.screen_brightness = 0x80;
     dec_bg_brightness = 0;
@@ -175,8 +175,8 @@ s32 encounter_player_birthday_init(void) {
 }
 
 void encounter_player_birthday_closing_init(void) {
-    s32 pad; /* FAKE: unused slot above sp2B, the original frame has it (real source unknown). T-8070 */
-    u8 sp2B;
+    s32 fake_stack_pad; /* FAKE: unused slot above saved_talk_byte, the original frame has it (real source unknown). T-8070 */
+    u8 saved_talk_byte;
 
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -185,9 +185,9 @@ void encounter_player_birthday_closing_init(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    sp2B = D_80122D40;
+    saved_talk_byte = D_80122D40;
     talk_clear();
-    D_80122D40 = sp2B;
+    D_80122D40 = saved_talk_byte;
     strcpy(D_800CA19C, "玄関");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
@@ -219,46 +219,46 @@ void encounter_player_birthday_talk(void) {
  * cur and newState keep the record base from being hoisted out of the loop. */
 s32 encounter_player_birthday_girl_select(void) {
     s16 i;
-    s32 next;
-    s16 best;
-    u32 cur;
-    u32 bestState;
-    u32 state;
-    u32 newState;
-    u8 yuukou;
+    s32 next_girl_index;
+    s16 best_girl;
+    u32 incumbent_girl;
+    u32 best_girl_state;
+    u32 girl_state_result;
+    u32 candidate_girl_state;
+    u8 affection;
     u8 tokimeki;
-    u8 bestTokimeki;
-    u8 girl;
+    u8 best_tokimeki;
+    u8 selected_girl;
 
-    best = 0xFF;
-    bestState = 4;
+    best_girl = 0xFF;
+    best_girl_state = 4;
     i = 0;
     do {
         if (!game_state.girls[i].flags.f.met) {
-            next = i + 1;
-        } else if (!(game_state.day_event_done_bits & 0x80) || (next = i + 1, next != (*(u32 *)&D_80122D40))) {
-            next = i + 1;
-            state = get_g_zyotai_s(i) & 0x7F;
-            newState = state & 0xFF;
-            if ((u8) state < bestState ||
-                (bestState * 1 == (u8) state && (cur = best, bestState << 0 == (u8) state) &&
-                 (yuukou = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
-                  bestTokimeki = get_h_tokimeki(cur),
-                  get_h_yuukou(cur) + bestTokimeki < tokimeki + yuukou))) {
-                best = (u8) i;
-                bestState = (u8) newState;
+            next_girl_index = i + 1;
+        } else if (!(game_state.day_event_done_bits & 0x80) || (next_girl_index = i + 1, next_girl_index != (*(u32 *)&D_80122D40))) {
+            next_girl_index = i + 1;
+            girl_state_result = get_g_zyotai_s(i) & 0x7F;
+            candidate_girl_state = girl_state_result & 0xFF;
+            if ((u8) girl_state_result < best_girl_state ||
+                (best_girl_state * 1 == (u8) girl_state_result && (incumbent_girl = best_girl, best_girl_state << 0 == (u8) girl_state_result) &&
+                 (affection = get_h_yuukou(i), tokimeki = get_h_tokimeki(i),
+                  best_tokimeki = get_h_tokimeki(incumbent_girl),
+                  get_h_yuukou(incumbent_girl) + best_tokimeki < tokimeki + affection))) {
+                best_girl = (u8) i;
+                best_girl_state = (u8) candidate_girl_state;
             }
         }
-        i = (s16) next; if (i) {}
+        i = (s16) next_girl_index; if (i) {}
     } while (i < 11);
-    state = get_g_zyotai_s(best) & 0xFF;
+    girl_state_result = get_g_zyotai_s(best_girl) & 0xFF;
     D_80122D40 = 0;
-    if ((state & 0x7F) >= 2 || best == 0xFF || (girl = best, game_state.day_event_done_bits & 8)) {
+    if ((girl_state_result & 0x7F) >= 2 || best_girl == 0xFF || (selected_girl = best_girl, game_state.day_event_done_bits & 8)) {
         mode_step_set(0x17);
         return 0;
     }
-    game_state.current_girl = girl;
-    talk_names_set(girl);
+    game_state.current_girl = selected_girl;
+    talk_names_set(selected_girl);
     encounter_player_birthday_scripts_bind();
     encounter_player_birthday_girl_script_select();
     return mode_step_next();

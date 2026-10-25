@@ -1,0 +1,5 @@
+// HYPOTHESES, not facts: names of the overlay ETC that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+album_secret_mode_update = 0x80140AE4; // type:func
+exam_event_log_bonus = 0x801464D4; // type:func
+album_secret_mode = 0x801500D8;

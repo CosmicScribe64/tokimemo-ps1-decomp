@@ -244,12 +244,12 @@ void date_scene_yuina_winter_audio_command_background_1(void) {
 }
 
 void date_scene_yuina_spring(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl40 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl40 step_handlers;
 
-    tbl = date_scene_yuina_spring_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    step_handlers = date_scene_yuina_spring_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index]();
     if (D_80122D04 != 0) {
         date_scene_yuina_spring_radial_lines();
         D_800B5BD4 = 9;
@@ -264,16 +264,16 @@ void date_scene_yuina_spring_radial_lines(void) {
     s32 col0;
     s16 i;
     s32 col1;
-    GameState *g = &game_state;
+    GameState *game = &game_state;
     u32 grey;
     s32 offset;
 
     grey = dec_bg_brightness / 10;
     offset = 0;
     col1 = col0 = (grey * 19 << 16) | (grey * 19 << 8) | (grey * 19);
-    if (g->frame_count % 45 < 15) {
+    if (game->frame_count % 45 < 15) {
         offset = 0xAA;
-    } else if (g->frame_count % 45 < 30) {
+    } else if (game->frame_count % 45 < 30) {
         offset = 0x155;
     }
     for (i = 0; i < 16; i++) {
@@ -291,23 +291,23 @@ void date_scene_yuina_spring_load_data(void) {
 }
 
 void date_scene_yuina_summer(void) {
-    GameState *g = &game_state; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl39 tbl;
+    GameState *game = &game_state; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl39 step_handlers;
 
-    tbl = date_scene_yuina_summer_steps;
-    if (((g->year == 0x5F && g->month == 7 && g->day == 0x17) ||
-         (g->year == 0x60 && g->month == 7 && g->day == 0x1C) ||
-         (g->year == 0x61 && g->month == 7 && g->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && g->mode_step >= 0x1A) {
+    step_handlers = date_scene_yuina_summer_steps;
+    if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
+         (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
+         (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
+        dec_bg_brightness == 0x80 && D_80122D04 == 0 && game->mode_step >= 0x1A) {
         hud_sprite_light_effect_draw();
     }
 
-    tbl.f[g->mode_step](0x80);
-    if (g->mode_step >= 0xD && g->mode_step < 0x10) {
-        if (g->frame_count % 180 == 0) {
+    step_handlers.callbacks[game->mode_step](0x80);
+    if (game->mode_step >= 0xD && game->mode_step < 0x10) {
+        if (game->frame_count % 180 == 0) {
             date_scene_yuina_summer_audio_command_1();
         }
-        if (g->frame_count % 180 == 0x5A) {
+        if (game->frame_count % 180 == 0x5A) {
             date_scene_yuina_summer_audio_command_2();
         }
     }
@@ -353,12 +353,12 @@ void date_scene_yuina_summer_audio_command_3(void) {
 /* D_80121FD4 is record 57 of the SpriteQuad table and D_801206D8 record 98 of the actor_pool display
  * records; the chain assignment keeps the loaded byte in one register for all four stores. */
 void date_scene_yuina_autumn(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl40 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl40 step_handlers;
 
-    tbl = date_scene_yuina_autumn_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yuina_autumn_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (D_80122D04 != 0) {
         ((Actor *)actor_pool)[98].draw_flags |= 0x80;
         if (game_state.frame_count % 40 < 20) {
@@ -386,12 +386,12 @@ void date_scene_yuina_autumn_load_data(void) {
 }
 
 void date_scene_yuina_winter(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl40 tbl;
+    s32 step_index; /* declared before step_handlers: its stack slot sits above step_handlers (T-3330) */
+    FnTbl40 step_handlers;
 
-    tbl = date_scene_yuina_winter_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    step_handlers = date_scene_yuina_winter_steps;
+    step_index = game_state.mode_step;
+    step_handlers.callbacks[step_index](0x80);
     if (D_80122D04 != 0) {
         D_801206DB |= 0x80;
         D_801206DF = dec_bg_brightness;

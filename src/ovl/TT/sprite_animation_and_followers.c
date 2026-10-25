@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-void func_801478D0(TtAnimState *arg0) {
+void tt_sprite_animation_step(TtAnimationView *arg0) {
     TtAnimFrame *frame;
     TtAnimFrame ***temp_v0_2;
     u8 temp_a1;
@@ -11,56 +11,56 @@ void func_801478D0(TtAnimState *arg0) {
     u8 temp_t9;
     u8 temp_v0;
 
-    temp_v0 = arg0->unk_08;
+    temp_v0 = arg0->flags;
     if (temp_v0 & 0x80) {
-        arg0->unk_08 = (u8) (temp_v0 & 0xFF7F);
-        arg0->unk_06 = 0U;
-        frame = **((TtAnimFrame ***)D_80151A50 + arg0->unk_05);
-        arg0->unk_09 = frame->unk2;
+        arg0->flags = (u8) (temp_v0 & 0xFF7F);
+        arg0->frame = 0U;
+        frame = **((TtAnimFrame ***)tt_sprite_set_table + arg0->set);
+        arg0->hold = frame->hold;
         return;
     }
     if (temp_v0 & 0x20) {
-        arg0->unk_08 = (u8) (temp_v0 & 0xFFDF);
-        frame = **((TtAnimFrame ***)D_80151A50 + arg0->unk_05) + arg0->unk_06;
-        arg0->unk_09 = frame->unk2;
+        arg0->flags = (u8) (temp_v0 & 0xFFDF);
+        frame = **((TtAnimFrame ***)tt_sprite_set_table + arg0->set) + arg0->frame;
+        arg0->hold = frame->hold;
         return;
     }
-    if (!(temp_v0 & 0x40) && (--arg0->unk_09 == 0)) {
-        temp_v0_2 = arg0->unk_05 + (TtAnimFrame ***)D_80151A50;
-        temp_a1 = arg0->unk_06;
+    if (!(temp_v0 & 0x40) && (--arg0->hold == 0)) {
+        temp_v0_2 = arg0->set + (TtAnimFrame ***)tt_sprite_set_table;
+        temp_a1 = arg0->frame;
         frame = **temp_v0_2 + temp_a1;
-        temp_a2 = frame->unk3;
+        temp_a2 = frame->loop_back;
         temp_t1 = temp_a1 + 1;
         if (temp_a2 == 0) {
-            arg0->unk_06 = temp_t1;
+            arg0->frame = temp_t1;
             frame = **temp_v0_2 + (temp_t1 & 0xFF);
-            arg0->unk_09 = frame->unk2;
+            arg0->hold = frame->hold;
             return;
         }
         temp_t9 = temp_a1 - temp_a2;
         if (temp_a2 == 0xFF) {
-            arg0->unk_08 = (u8) (arg0->unk_08 | 1);
+            arg0->flags = (u8) (arg0->flags | 1);
             return;
         }
-        arg0->unk_06 = temp_t9;
+        arg0->frame = temp_t9;
         frame = **temp_v0_2 + (temp_t9 & 0xFF);
-        arg0->unk_09 = frame->unk2;
+        arg0->hold = frame->hold;
     }
 }
 
-void func_80147A18(arg0, arg1, arg2)
+void tt_part_sprite_draw(arg0, arg1, arg2)
     u8 *arg0;
-    TtSprAnim *arg1;
+    TtSpriteAnimation *arg1;
     u16 arg2;
 {
     s32 pad[2]; /* FAKE: unused, sizes the 0x78 frame with the call spill at sp+0x50. T-11850 */
-    TtDrawBuffer80B8 *buf;
-    u8 *q;
-    TtSprSet **sets;
-    TtSprSet *set;
-    TtSprFrame *fr;
-    TtSprSeq *seq;
-    TtSprPart *part;
+    TtDrawBuffer *buf;
+    u8 *transform;
+    TtSpriteSet **sets;
+    TtSpriteSet *set;
+    TtSpriteFrame *fr;
+    TtSpriteSequence *seq;
+    TtSpritePart *part;
     u8 *pal;
     u16 clut;
     s32 n;
@@ -72,8 +72,8 @@ void func_80147A18(arg0, arg1, arg2)
     s32 y;
     u8 b;
 
-    buf = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
-    q = D_80158AB0;
+    buf = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8);
+    transform = tt_transforms;
     sets = arg1->sets;
     if (sets != 0) {
         set = sets[arg1->set];
@@ -82,11 +82,11 @@ void func_80147A18(arg0, arg1, arg2)
         part = set->parts + seq->start + seq->count - 1;
         pal = set->attr;
         clut = set->clut;
-        *(s16 *)(q + 4) = *(s16 *)(arg0 + 0);
-        *(s16 *)(q + 6) = *(s16 *)(arg0 + 2);
-        if (arg1->unk_10 != 0) {
-            *(s16 *)(q + 0) = arg1->x;
-            *(s16 *)(q + 2) = arg1->y;
+        *(s16 *)(transform + 4) = *(s16 *)(arg0 + 0);
+        *(s16 *)(transform + 6) = *(s16 *)(arg0 + 2);
+        if (arg1->transform_enable != 0) {
+            *(s16 *)(transform + 0) = arg1->x;
+            *(s16 *)(transform + 2) = arg1->y;
         }
         for (n = seq->count; n > 0; n--, part--) {
             v = (u8 *)buf->cursor;
@@ -113,7 +113,7 @@ void func_80147A18(arg0, arg1, arg2)
             v[0x29] = 0;
             v[0x2A] = 1;
             *(s16 *)(v + 0x16) = *c & 0x1F;
-            if (arg1->clutOverride != 0) {
+            if (arg1->clut_override != 0) {
                 b = arg1->clut;
                 *(s16 *)(v + 0xE) = clut + (b & 0xF) + (b & 0xF0) * 4;
             } else {
@@ -121,51 +121,51 @@ void func_80147A18(arg0, arg1, arg2)
                 *(s16 *)(v + 0xE) = clut + (b & 0xF) + (b & 0xF0) * 4;
             }
             v[0x2C] = 0;
-            v[0x2B] = arg1->unk_10;
-            func_80141C6C(&buf->ordering[arg2], v, q);
+            v[0x2B] = arg1->transform_enable;
+            tt_sprite16_submit(&buf->ordering[arg2], v, transform);
         }
     }
 }
 
-void func_80147CE0(void) {
+void tt_options_clear(void) {
     s32 i = 0;
-    u8 *p = D_80158A78;
+    u8 *follower = tt_options;
 
     do {
         i += 1;
-        p += 0xA4;
-        p[-0xA4] = 0;
+        follower += 0xA4;
+        follower[-0xA4] = 0;
     } while (i != 3);
 }
 
-void func_80147D08(void) {
+void tt_options_reset(void) {
     s32 i;
-    u8 *p;
+    u8 *follower;
     u8 *q;
-    int new_var; /* FAKE: the dead test of D_80158A78 reserves a0/a1 so the hoisted constants start at a2, as in the original; same trick as func_8014A814. T-10910 */
+    int new_var; /* FAKE: the dead test of tt_options reserves a0/a1 so the hoisted constants start at a2, as in the original; same trick as tt_shots_reset. T-10910 */
 
-    for (i = 0, p = D_80158A78; i < 3; i++, p += 0xA4) {
-        p[0] = 0;
-        new_var = D_80158A78 && D_80158A78;
-        *(s16 *)(p + 2) = 4;
-        *(s16 *)(p + 0x10) = 2;
-        *(u8 **)(p + 0x38) = D_80151A50;
-        p[0x3C] = 0;
-        p[0x3D] = 0;
-        p[0x3E] = 0x37;
-        p[0x40] = 0x60;
-        p[0x48] = 0;
-        *(s16 *)(p + 4) = 0x40;
-        *(s16 *)(p + 0xA) = 0;
-        *(s16 *)(p + 8) = 0;
-        *(s16 *)(p + 6) = 0;
-        p[0xF] = 0;
-        if (new_var && D_80158A78) { /* FAKE: see above. T-10910 */
+    for (i = 0, follower = tt_options; i < 3; i++, follower += 0xA4) {
+        follower[0] = 0;
+        new_var = tt_options && tt_options;
+        *(s16 *)(follower + 2) = 4;
+        *(s16 *)(follower + 0x10) = 2;
+        *(u8 **)(follower + 0x38) = tt_sprite_set_table;
+        follower[0x3C] = 0;
+        follower[0x3D] = 0;
+        follower[0x3E] = 0x37;
+        follower[0x40] = 0x60;
+        follower[0x48] = 0;
+        *(s16 *)(follower + 4) = 0x40;
+        *(s16 *)(follower + 0xA) = 0;
+        *(s16 *)(follower + 8) = 0;
+        *(s16 *)(follower + 6) = 0;
+        follower[0xF] = 0;
+        if (new_var && tt_options) { /* FAKE: see above. T-10910 */
         }
-        p[0xE] = 0;
-        p[0xD] = 0;
+        follower[0xE] = 0;
+        follower[0xD] = 0;
     }
-    for (i = 0, q = D_80158A7C + 0xC0; i < 6; i++, q += 0x60) {
+    for (i = 0, q = tt_arms + 0xC0; i < 6; i++, q += 0x60) {
         q[0] = 0;
         *(s16 *)(q + 2) = 0;
         *(s16 *)(q + 4) = 0;
@@ -177,7 +177,7 @@ void func_80147D08(void) {
         q[0xE] = 0;
         q[0xD] = 0;
         *(s16 *)(q + 0x10) = 2;
-        *(u8 **)(q + 0x38) = D_80151A50;
+        *(u8 **)(q + 0x38) = tt_sprite_set_table;
         q[0x3C] = 0;
         q[0x3D] = 0;
         q[0x3E] = 0;
@@ -185,14 +185,14 @@ void func_80147D08(void) {
     }
 }
 
-void func_80147F14(u8 *arg0) {
+void tt_option_trail_step(u8 *arg0) {
     s32 i;
-    u8 *q;
+    u8 *player;
 
-    q = D_80158A74;
-    if (arg0 == D_80158A78) {
-        *(s16 *)(arg0 + 0x62) = *(s16 *)(q + 0x14);
-        *(s16 *)(arg0 + 0x82) = *(s16 *)(q + 0x16);
+    player = tt_player;
+    if (arg0 == tt_options) {
+        *(s16 *)(arg0 + 0x62) = *(s16 *)(player + 0x14);
+        *(s16 *)(arg0 + 0x82) = *(s16 *)(player + 0x16);
     } else {
         *(s16 *)(arg0 + 0x62) = *(s16 *)(arg0 - 0x54);
         *(s16 *)(arg0 + 0x82) = *(s16 *)(arg0 - 0x34);
@@ -207,11 +207,11 @@ void func_80147F14(u8 *arg0) {
 
 /* Three-store chains (u16 6, 8, A; bytes D, E, F) keep their zero in v1/a1 like the original; two-store chains or s16
  * give $zero stores. The loop is unrolled by IDO (T-11850). */
-void func_80147FD0(u8 *arg0) {
+void tt_option_activate(u8 *arg0) {
     s32 i;
     u8 *src;
 
-    src = D_80158A74;
+    src = tt_player;
     arg0[0] = 1;
     *(s16 *)(arg0 + 4) = 0x40;
     /* FAKE: both chains on one line give the original store order (as1 schedules by source line). T-11850 */
@@ -224,41 +224,41 @@ void func_80147FD0(u8 *arg0) {
     }
 }
 
-void func_801480BC(void) {
+void tt_options_update(void) {
     s32 i;
-    u8 *p;
-    u8 *a;
+    u8 *player;
+    u8 *follower;
     u8 *b;
 
-    p = D_80158A74;
-    if (p[0x53] != 0) {
-        a = D_80158A78;
+    player = tt_player;
+    if (player[0x53] != 0) {
+        follower = tt_options;
         i = 0;
-        b = D_80158A7C + 0xC0;
+        b = tt_arms + 0xC0;
         for (; i < 3; i++) {
-            func_80147F14(a);
-            b[0x3E] = p[0x5A] + 0x38;
-            a += 0xA4;
+            tt_option_trail_step(follower);
+            b[0x3E] = player[0x5A] + 0x38;
+            follower += 0xA4;
             b += 0xC0;
-            b[-0x22] = p[0x5B] + 0x3D;
+            b[-0x22] = player[0x5B] + 0x3D;
         }
     }
 }
 
-void func_80148154(void) {
+void tt_options_draw(void) {
     s32 i;
     u8 *pos;
     u8 *p;
     u8 *q;
 
-    if (D_80158A74[0x53] != 0) {
-        for (i = 0, p = D_80158A78, q = D_80158A7C + 0xC0; i != 3; i++, p += 0xA4, q += 0x60) {
+    if (tt_player[0x53] != 0) {
+        for (i = 0, p = tt_options, q = tt_arms + 0xC0; i != 3; i++, p += 0xA4, q += 0x60) {
             pos = p + 0x14;
             if (p[0] != 0) {
-                func_80147A18(pos, p + 0x38, *(u16 *)(p + 0x10));
-                func_80147A18(pos, q + 0x38, *(u16 *)(q + 0x10));
+                tt_part_sprite_draw(pos, p + 0x38, *(u16 *)(p + 0x10));
+                tt_part_sprite_draw(pos, q + 0x38, *(u16 *)(q + 0x10));
                 q += 0x60;
-                func_80147A18(pos, q + 0x38, *(u16 *)(q + 0x10));
+                tt_part_sprite_draw(pos, q + 0x38, *(u16 *)(q + 0x10));
             }
         }
     }

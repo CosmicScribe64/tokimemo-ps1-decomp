@@ -618,7 +618,7 @@ void func_80135ECC(void) {
     game_state.tpage_buf[28] = 1;
     game_state.tpage_buf[29] = 1;
     game_state.tpage_buf[30] = 1;
-    k_speed_set(0x10);
+    k_speed_set(TEXT_SPEED_EVERY_SEVENTEEN_FRAMES);
     text_system_reset();
     k_reset(1);
     text_glyph_pages_clear(3);

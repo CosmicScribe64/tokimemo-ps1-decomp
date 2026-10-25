@@ -275,7 +275,7 @@ void schedule_club_flag0_clear(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        game_state.clubs[i].unk_03 &= 0xFFFE;
+        game_state.clubs[i].flags &= 0xFFFE;
     }
 }
 
@@ -2225,7 +2225,7 @@ void schedule_week_end_mode_handler(void) {
         break;
     default:
     case 0xFF:
-        func_800737A0();
+        school_day_week_end_exit();
         break;
     }
     parameter_show();

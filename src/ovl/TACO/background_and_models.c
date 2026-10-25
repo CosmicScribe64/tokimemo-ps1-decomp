@@ -1,70 +1,70 @@
-/* background_and_models.c: src/ovl/TACO/80143E80.c:11: frame hook, background scrolling, floor grid/horizon and model submission; body 12: D_8015F5F0.a = 0; 13: D_8015F5F0.b = 0x400;. Original object 0x80143E80-0x801447D0 (config/objects/TACO.txt). */
+/* background_and_models.c: src/ovl/TACO/80143E80.c:11: frame hook, background scrolling, floor grid/horizon and model submission; body 12: shooter_background_scroll.a = 0; 13: shooter_background_scroll.b = 0x400;. Original object 0x80143E80-0x801447D0 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-TacoCam D_8015F5F0 = { 0, 0x400, 0, 0 };
-INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", D_8015F5F8);
-INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", D_8015F5FC);
+ShooterBackgroundScroll shooter_background_scroll = { 0, 0x400, 0, 0 };
+INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_floor_tile_u);
+INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_floor_tile_v);
 INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", D_8015F604);
-INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", D_8015F82C);
+INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_opening_pose_tables);
 
-void func_80143E80(void) {
-    D_8015F5F0.a = 0;
-    D_8015F5F0.b = 0x400;
-    D_8015F5F0.c = 0;
-    D_8015F5F0.d = 0;
+void shooter_init_background_scroll(void) {
+    shooter_background_scroll.x = 0;
+    shooter_background_scroll.y = 0x400;
+    shooter_background_scroll.scroll_z = 0;
+    shooter_background_scroll.tile_phase = 0;
 }
 
-void func_80143E9C(void) {
-    if (D_8015EDB0 != 0) {
-        func_80143FF4();
-        func_80143F40();
-        func_80143B58();
-        func_80133694();
+void shooter_frame_update(void) {
+    if (shooter_background_flags != 0) {
+        shooter_update_camera();
+        shooter_scroll_background();
+        shooter_process_load_request();
+        shooter_tick_se_cooldowns();
     }
-    if (D_8015EDB0 & 1) {
-        func_80144094();
+    if (shooter_background_flags & 1) {
+        shooter_draw_floor_grid();
     }
-    if (D_8015EDB0 & 2) {
-        func_80144430();
+    if (shooter_background_flags & 2) {
+        shooter_draw_horizon_bands();
     }
-    if (D_8015EDB0 & 4) {
-        func_801446D0();
-    }
-}
-
-s32 func_80143F40(void) {
-    D_8015F5F0.c += 0x80;
-    if (D_8015F5F0.c >= 0x1001) {
-        D_8015F5F0.c -= 0x1000;
-        D_8015F5F0.d += 1;
-    }
-    if (D_8015F5F0.c < 0) {
-        D_8015F5F0.c += 0x1000;
-        D_8015F5F0.d -= 1;
-    }
-    if (D_8015F5F0.a >= 0x801) {
-        D_8015F5F0.a -= 0x800;
-    }
-    if (D_8015F5F0.a < 0) {
-        D_8015F5F0.a += 0x800;
+    if (shooter_background_flags & 4) {
+        shooter_nop_background_layer();
     }
 }
 
-void func_80143FF4(void) {
-    D_80122740 = D_8015EDB4->unk74;
-    D_80122744 = D_8015EDB4->unk76;
-    D_80122748 = D_8015EDB4->unk78;
-    D_8012274C = D_8015EDB4->unk74;
-    D_80122750 = D_8015EDB4->unk76;
+s32 shooter_scroll_background(void) {
+    shooter_background_scroll.scroll_z += 0x80;
+    if (shooter_background_scroll.scroll_z >= 0x1001) {
+        shooter_background_scroll.scroll_z -= 0x1000;
+        shooter_background_scroll.tile_phase += 1;
+    }
+    if (shooter_background_scroll.scroll_z < 0) {
+        shooter_background_scroll.scroll_z += 0x1000;
+        shooter_background_scroll.tile_phase -= 1;
+    }
+    if (shooter_background_scroll.x >= 0x801) {
+        shooter_background_scroll.x -= 0x800;
+    }
+    if (shooter_background_scroll.x < 0) {
+        shooter_background_scroll.x += 0x800;
+    }
+}
+
+void shooter_update_camera(void) {
+    D_80122740 = shooter_actors->x;
+    D_80122744 = shooter_actors->y;
+    D_80122748 = shooter_actors->z;
+    D_8012274C = shooter_actors->x;
+    D_80122750 = shooter_actors->y;
     D_80122754 = 0;
-    D_80122758 = D_8015EDB4->unk68 * 0x168;
+    D_80122758 = shooter_actors->rotation_z * 0x168;
     D_8012275C = 0;
     func_80099540(&D_80122740);
 }
 
-void func_80144094(void) {
+void shooter_draw_floor_grid(void) {
     s32 pad[2]; /* FAKE: eight unused bytes above m reproduce the original frame (608); T-24136 */
     MATRIX m;
     SVECTOR v;
@@ -77,25 +77,25 @@ void func_80144094(void) {
     s32 depth;
     s32 flag;
     s32 j;
-    TcTex4 ut;
-    TcTex4 vt;
+    ShooterTextureCoordinates ut;
+    ShooterTextureCoordinates vt;
     s32 k;
 
-    ut = D_8015F5F8;
-    vt = D_8015F5FC;
+    ut = shooter_floor_tile_u;
+    vt = shooter_floor_tile_v;
     m = D_80129C40;
     func_800A1100(&m);
     SetRotMatrix(&m);
-    v.vy = D_8015F5F0.b;
+    v.vy = shooter_background_scroll.y;
     for (ang = 0, i = 0; i < 9; i++) {
         if (i == 8) {
             v.vz = ang;
         } else {
             /* FAKE: | 0 flips commutative Uadd operand order to addu t5, s8, t4 (T-24136) */
-            v.vz = (ang | 0) + D_8015F5F0.c;
+            v.vz = (ang | 0) + shooter_background_scroll.scroll_z;
         }
         for (j = 0; j < 13; j++) {
-            v.vx = 0x3000 - j * 0x800 + D_8015F5F0.a;
+            v.vx = 0x3000 - j * 0x800 + shooter_background_scroll.x;
             func_800AB170(&v, &sxy[j][i], &depth, &flag);
         }
         ang -= 0x1000;
@@ -115,7 +115,7 @@ void func_80144094(void) {
                     poly->b0 = 0x80;
                     poly->tpage = func_8009ECB0(1, 0, 0x200, 0x100);
                     poly->clut = func_8009ED74(0, 0x1ED);
-                    idx = (j + i + D_8015F5F0.d) & 7;
+                    idx = (j + i + shooter_background_scroll.tile_phase) & 7;
                     if (idx >= 4) {
                         idx = 0;
                     }
@@ -143,7 +143,7 @@ void func_80144094(void) {
     }
 }
 
-void func_80144430(void) {
+void shooter_draw_horizon_bands(void) {
     s32 pad[2]; /* FAKE: eight unused bytes above m reproduce the original frame (216); T-19009 */
     MATRIX m;
     SVECTOR v;
@@ -165,7 +165,7 @@ void func_80144430(void) {
     v.vz = -0x7FFF;
     rot = 0;
     for (o = 0; o < 2; o++) {
-        v.vy = D_8015F5F0.b + rot / 4 + 0x80;
+        v.vy = shooter_background_scroll.y + rot / 4 + 0x80;
         for (j = 0; j < 5; j++) {
             v.vx = 0x4000 - j * 0x2000 + D_8012274C;
             func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
@@ -204,26 +204,26 @@ void func_80144430(void) {
     }
 }
 
-void func_801446D0(void) {
+void shooter_nop_background_layer(void) {
 }
 
-void func_801446D8(void) {
+void shooter_draw_models(void) {
     /* FAKE: two spare workspace words retain the observed frame size;
      * keeping the pointer init on the do line permits the original schedule.
      * T-9510: the transform helpers themselves use 32-byte workspaces. */
     u32 sp70[10];
     u32 sp50[8];
-    Tc10 *var_s0;
+    ShooterModelHandle *var_s0;
 
     if (game_state.draw_3d_enabled != 0) {
         func_80099540(&D_80122740);
         var_s0 = D_80127080; do {
-            func_80099B10(var_s0->unk4[0], &sp50, &sp70);
+            func_80099B10(var_s0->links[0], &sp50, &sp70);
             func_80099F04(&sp50);
-            func_8009A200(var_s0->unk4[0], &sp70);
+            func_8009A200(var_s0->links[0], &sp70);
             func_80099ED8(&sp70);
             func_8009A4D0((s32) var_s0, (s32) ((u8 *)&D_800E8C70 + (draw_buffer * 0x14)), 6, 0x1F800000);
             var_s0++;
-        } while (var_s0 != (Tc10 *)D_80127480);
+        } while (var_s0 != (ShooterModelHandle *)D_80127480);
     }
 }

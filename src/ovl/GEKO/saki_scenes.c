@@ -3,9 +3,9 @@
 #include "ovl/GEKO.h"
 
 typedef struct {
-    void (*f[35])();
-} FnTbl35; /* size 0x8C */
-extern FnTbl35 encounter_saki_scene_one_steps;
+    void (*callbacks[35])(); /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/8013EE40.c:6; func_8013EF6C at line39 copies this exact35-callback table and dispatches by mode_step; scene number is the actual talk_work selector, not a narrative identity. */
+} EncounterSakiSceneOneSteps; /* size 0x8C */
+extern EncounterSakiSceneOneSteps encounter_saki_scene_one_steps;
 
 void encounter_saki_assets_bind_1(void) {
     encounter_saki_pack_1_animation_input_2 = 0x801CE124;
@@ -38,12 +38,12 @@ void encounter_saki_scene_one_dispatch(void) {
 }
 
 void encounter_saki_scene_one_step_dispatch(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl35 tbl;
+    s32 mode_step_index; /* declared before mode_step_callbacks: its stack slot sits above mode_step_callbacks (T-3330) */
+    EncounterSakiSceneOneSteps mode_step_callbacks;
 
-    tbl = encounter_saki_scene_one_steps;
-    idx = game_state.mode_step;
-    tbl.f[idx]();
+    mode_step_callbacks = encounter_saki_scene_one_steps;
+    mode_step_index = game_state.mode_step;
+    mode_step_callbacks.callbacks[mode_step_index]();
 }
 
 void encounter_saki_assets_load_1(void) {
