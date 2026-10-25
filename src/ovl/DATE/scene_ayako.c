@@ -129,7 +129,7 @@ void date_scene_ayako_summer_setup(void) {
     load_palette(D_8015EDAC, 0x11, 1, 2, 0);
     scene_still_show(D_8015EDB0, D_8015EDB4, D_8015EDB8, D_8015EDBC, D_8015EDC0, D_8015EDC4);
     scene_anim_show(D_8015EDA0, D_8015EDA4, D_8015ED9C, (s32) D_8015EDA8);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     actor_clear(0x62);
     D_801206D9 = 9;
     D_801206DA = 0;
@@ -184,7 +184,7 @@ void date_scene_ayako_winter_setup(void) {
     load_palette(D_8015EE04, 0x11, 1, 2, 0);
     scene_still_show(D_8015EE08, D_8015EE0C, D_8015EE10, D_8015EE14, D_8015EE18, D_8015EE1C);
     scene_anim_show(D_8015EDF8, D_8015EDFC, D_8015EDF4, (s32) D_8015EE00);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -261,7 +261,7 @@ s32 date_scene_ayako_spring_clip_play(void) {
         audio_command(0x300);
         game_state.mode_step_timer.u += 1;
     } else {
-        if (func_80046094() == 9 && game_state.mode_step_timer.u >= 0x3D) {
+        if (cd_last_command() == 9 && game_state.mode_step_timer.u >= 0x3D) {
             D_80120696 = 0;
             mode_step_next();
             audio_command(0x202);
@@ -422,14 +422,14 @@ void date_scene_ayako_summer(void) {
     if (game_state.mode_step >= 0x10 && game_state.mode_step < 0x13) {
         date_scene_light_beams();
     }
-    if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
+    if (D_80122D04 == 0 && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_index = game_state.mode_step;
     step_handlers.callbacks[step_index](0x80);
     if (game_state.mode_step >= 0xF && game_state.mode_step < 0x14) {
         D_801206DB |= 0x80;
-        D_801206DF = dec_bg_brightness;
+        D_801206DF = bg_brightness;
     }
     if (game_state.mode_step >= 0x14) {
         D_801206DB &= ~0x80;
@@ -513,10 +513,10 @@ void date_scene_ayako_winter_skip_by_answer(void) {
 
 void date_scene_ayako_winter_answer_face(void) {
     if (D_80122CDC == 0) {
-        func_80083378();
+        face_expression_0();
         return;
     }
-    func_800833A0();
+    face_expression_1();
 }
 
 /* Implicit int with no return value: the callers above come before this definition (T-20600). */
@@ -532,11 +532,11 @@ s32 date_gradient_triangle_draw(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, 
     poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
     poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
     poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
-    poly->x0 = game->screen_center_x[draw_buffer] + x0;
-    poly->y0 = game->screen_center_y[draw_buffer] + y0;
-    poly->x1 = game->screen_center_x[draw_buffer] + x1;
-    poly->y1 = game->screen_center_y[draw_buffer] + y1;
-    poly->x2 = game->screen_center_x[draw_buffer] + x2;
-    poly->y2 = game->screen_center_y[draw_buffer] + y2;
-    AddPrim(&D_800E8CA0[(draw_buffer << 10) + z * 4], poly);
+    poly->x0 = game->draw_origin_x[draw_buffer] + x0;
+    poly->y0 = game->draw_origin_y[draw_buffer] + y0;
+    poly->x1 = game->draw_origin_x[draw_buffer] + x1;
+    poly->y1 = game->draw_origin_y[draw_buffer] + y1;
+    poly->x2 = game->draw_origin_x[draw_buffer] + x2;
+    poly->y2 = game->draw_origin_y[draw_buffer] + y2;
+    AddPrim(&draw_ot_tags[(draw_buffer << 10) + z * 4], poly);
 }

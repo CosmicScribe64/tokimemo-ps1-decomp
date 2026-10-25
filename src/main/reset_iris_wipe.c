@@ -4,25 +4,25 @@
 #include "psx_types.h"
 
 s32 game_mode_reset_to_title(void) {
-    func_800789E0();
+    ovl_load_reset();
     game_state_init(0);
     game_mode_set(GAME_MODE_TITLE);
     sprite_tables_clear();
-    func_80048DD0(0);
+    actor_deactivate(0);
     back_clear_switch(1);
     dec_bg_reset();
     audio_bank_state_reset();
     tpage_buf_clear();
     audio_command(0x7F);
-    func_8007BDE8();
-    func_8007B844();
+    audio_shutdown();
+    audio_init();
     cd_command_reset();
-    func_80041878();
-    func_80042058();
+    boot_game_data_init();
+    boot_settings_defaults_set();
     return -1;
 }
 
-s32 func_80046590(s16 arg0, u8 arg1) {
+s32 cd_decimal_digit(s16 arg0, u8 arg1) {
     s32 p;
     u32 i;
 
@@ -40,7 +40,7 @@ s32 func_80046590(s16 arg0, u8 arg1) {
     return (arg0 / (p / 10)) % 10;
 }
 
-s32 func_80046684(s32 arg0) {
+s32 cd_binary_coded_decimal_to_integer(s32 arg0) {
     s32 result;
     s32 mul;
     s32 i;
@@ -54,7 +54,7 @@ s32 func_80046684(s32 arg0) {
     return result;
 }
 
-void func_80046754(void *arg0, s32 arg1, s32 arg2) {
+void cd_iris_texture_build(void *arg0, s32 arg1, s32 arg2) {
     s32 x;
     s32 y;
     s32 shade;
@@ -107,7 +107,7 @@ void func_80046754(void *arg0, s32 arg1, s32 arg2) {
     LoadSquare(load_x, load_y, 32U, 128U, arg0);
 }
 
-s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+s32 cd_iris_wipe_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
     GameState *gs;
     void *primitive;
     s32 quadrant;
@@ -156,63 +156,63 @@ s32 func_80046AC8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
         }
         switch (quadrant) {
         case 0:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
             radius = (s32) (arg3 << 7) / 4096;
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + radius);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + radius);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
             /* FAKE: T-25124 (from T-25034), the one-line comma groups of UV stores and the goto
                to the shared label after case 3 reproduce the original UV store and branch
                layout; the original source is unknown. */
             goto block_16;
         case 1:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
             radius = (s32) (arg3 << 7) / 4096;
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
             extent = -radius;
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + extent);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + radius);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + radius);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + extent);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
             goto block_16;
         case 2:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
             radius = (s32) (arg3 << 7) / 4096;
             extent = -radius;
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + radius);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + radius);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + radius);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
             goto block_16;
         case 3:
-            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
             extent = -((s32) (arg3 << 7) / 4096);
-            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->screen_center_y[draw_buffer] + arg5);
-            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->screen_center_x[draw_buffer] + arg4);
-            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + extent);
-            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + extent);
-            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x1 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y1 = (s16) (gs->draw_origin_y[draw_buffer] + arg5);
+            ((POLY_GT4 *)primitive)->x2 = (s16) (gs->draw_origin_x[draw_buffer] + arg4);
+            ((POLY_GT4 *)primitive)->y2 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + extent);
+            ((POLY_GT4 *)primitive)->x3 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + extent);
+            ((POLY_GT4 *)primitive)->y3 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + extent);
             ((POLY_GT4 *)primitive)->u0 = 0, ((POLY_GT4 *)primitive)->v0 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u1 = 0x7F, ((POLY_GT4 *)primitive)->v1 = ((arg0 & 0x20) * 4), ((POLY_GT4 *)primitive)->u2 = 0, ((POLY_GT4 *)primitive)->v2 = row + 0x7F, ((POLY_GT4 *)primitive)->u3 = 0x7F, ((POLY_GT4 *)primitive)->v3 = row + 0x7F;
 block_16:
             break;
         }
         ((POLY_GT4 *)primitive)->tpage = func_8009ECB0(0, 0, (arg0 & 0xF) << 6, ((arg0 & 0x20) * 4) + ((arg0 & 0x10) * 0x10));
         ((POLY_GT4 *)primitive)->clut = func_8009ED74(arg1, arg2);
-        AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + order * 4], primitive);
+        AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + order * 4], primitive);
         dtd_on_tpage(0, 0, order, 1, 0);
     }
     quadrant = 0;
@@ -230,45 +230,45 @@ block_16:
             ((TILE *)primitive)->b0 = (u16)(arg6 & 0xFF);
             switch (quadrant) {
             case 0:
-                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] - 0xA0);
-                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] - 0x78);
+                ((TILE *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] - 0xA0);
+                ((TILE *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] - 0x78);
                 ((TILE *)primitive)->w = 0x140;
                 extent = (arg5 - ((s32) (arg3 << 7) / 4096)) + 0x78;
                 ((TILE *)primitive)->h = extent;
                 if (extent > 0) {
-                    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + order * 4], primitive);
+                    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + order * 4], primitive);
                 }
                 break;
             case 1:
-                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] - 0xA0);
-                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] - 0x78);
+                ((TILE *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] - 0xA0);
+                ((TILE *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] - 0x78);
                 extent = (arg4 - ((s32) (arg3 << 7) / 4096)) + 0xA0;
                 ((TILE *)primitive)->w = extent;
                 ((TILE *)primitive)->h = 0xF0;
                 if (extent > 0) {
-                    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + order * 4], primitive);
+                    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + order * 4], primitive);
                 }
                 break;
             case 2:
-                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] - 0xA0);
+                ((TILE *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] - 0xA0);
                 radius = (s32) (arg3 << 7) / 4096;
                 extent = (-arg5 - radius) + 0x78;
-                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] + arg5 + radius);
+                ((TILE *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] + arg5 + radius);
                 ((TILE *)primitive)->h = extent;
                 ((TILE *)primitive)->w = 0x140;
                 if (extent > 0) {
-                    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + order * 4], primitive);
+                    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + order * 4], primitive);
                 }
                 break;
             case 3:
                 radius = (s32) (arg3 << 7) / 4096;
-                ((TILE *)primitive)->x0 = (s16) (gs->screen_center_x[draw_buffer] + arg4 + radius);
+                ((TILE *)primitive)->x0 = (s16) (gs->draw_origin_x[draw_buffer] + arg4 + radius);
                 extent = (-arg4 - radius) + 0xA0;
-                ((TILE *)primitive)->y0 = (s16) (gs->screen_center_y[draw_buffer] - 0x78);
+                ((TILE *)primitive)->y0 = (s16) (gs->draw_origin_y[draw_buffer] - 0x78);
                 ((TILE *)primitive)->w = extent;
                 ((TILE *)primitive)->h = 0xF0;
                 if (extent > 0) {
-                    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + order * 4], primitive);
+                    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + order * 4], primitive);
                 }
                 break;
             }

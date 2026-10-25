@@ -2,28 +2,28 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-void func_801378B0(void) {
+void trip_departure_scene_resource_pointer_setup(void) {
     D_8013C870 = 0x801D60E0;
     D_8013C874 = 0x801D60E4;
     D_8013C878 = 0x801D60F4;
     D_8013C880 = 0x801D0000;
 }
 
-void func_801378F0(void) {
+void trip_departure_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl41 tbl;
+    TripAlternateSceneCallbacks tbl;
 
     tbl = D_8013C884;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80137978(void) {
+void trip_trip_day_counter_reset(void) {
     D_800CA2DC = 0;
     mode_step_next();
 }
 
-void func_8013799C(void) {
+void trip_health_status_departure_message(void) {
     s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x30 as in the original; real source unknown. T-4010 */
     u8 buf[3] = "　";
 
@@ -34,7 +34,7 @@ void func_8013799C(void) {
             (**(u8 ***)(D_800CA2D0 + 8))[1] = buf[1];
             (**(u8 ***)(D_800CA2D0 + 8))[2] = buf[2];
         }
-        func_801386C4();
+        trip_destination_response_talk_run();
         if (game_state.substep == 0) {
             if (D_800CA2DC == 2) {
                 set_kanji_string(-0x48, 0x30, 0, "くぅー、", 0);
@@ -49,16 +49,16 @@ void func_8013799C(void) {
     }
 }
 
-void func_80137AF8(void) {
-    func_801386C4();
+void trip_departure_talk_and_wait_tick(void) {
+    trip_destination_response_talk_run();
     if ((D_800CA2E0 == 2) && (game_state.mode_step_timer.w == 1)) {
         D_80122CFC = 0x3C;
     }
     game_state.mode_step_timer.w += 1;
 }
 
-void func_80137B54(void) {
-    D_800B3D60 = 0;
+void trip_audio_bank_load_start(void) {
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xC512, 0xC4E7, 0xD557, 0xD508, 0xD4F1);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -66,7 +66,7 @@ void func_80137B54(void) {
     mode_step_next();
 }
 
-void func_80137BBC(void) {
+void trip_audio_bank_load_poll_retry(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -77,7 +77,7 @@ void func_80137BBC(void) {
     }
 }
 
-void func_80137C3C(void) {
+void trip_destination_audio_transition(void) {
     audio_command(0x23);
     audio_command(0x24);
     audio_command(0x2E);
@@ -95,13 +95,13 @@ void func_80137C3C(void) {
     mode_step_next();
 }
 
-void func_80137CC0(void) {
+void trip_departure_dialogue_sector_load(void) {
     cd_read_sectors(0x2D, 0x80197000, 0xAF7C);
-    func_80136380();
+    trip_girl_script_pointer_table_setup();
     mode_step_next();
 }
 
-void func_80137CFC(void) {
+void trip_departure_scene_ui_and_state_initialize(void) {
     s16 i;
 
     draw2d3d(1, 0);
@@ -112,13 +112,13 @@ void func_80137CFC(void) {
     tpage_buf_clear();
     text_system_reset();
     talk_clear();
-    strcpy(D_800CA19C, "修学旅行");
+    strcpy(scene_place_title, "修学旅行");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0x80;
-    D_800B5940 = 0;
+    bg_brightness = 0x80;
+    bg_fade_amount = 0;
     hizuke_init();
     message_window_init();
     hud_icon_bar_init();
@@ -128,7 +128,7 @@ void func_80137CFC(void) {
     hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    dec_bg_brightness = 0x80;
+    bg_brightness = 0x80;
     D_800CA2DC = 0;
     D_800CA2E0 = 0;
     addr_init_bustup();
@@ -136,25 +136,25 @@ void func_80137CFC(void) {
     text_marker_hide();
     talk_names_set(0);
     strcpy(name_code_girl_short, game_state.player_family_name);
-    func_80136380();
+    trip_girl_script_pointer_table_setup();
     D_800CA2D0 = D_8013C44C;
     D_800CA2D4 = D_8013C480;
     D_800CA2D8 = D_8013C4B4;
     D_80122CE0 = 0xFF;
     D_800CA2EC = 0;
     for (i = 0; i < 0xA; i++) {
-        D_800CA2B0[i] = game_state.girls[i].flags.f.met >= 1;
+        select_girl_menu_enabled[i] = game_state.girls[i].flags.f.met >= 1;
     }
-    D_800CA2B0[10] = 0;
-    D_800CA2F0 = 0;
+    select_girl_menu_enabled[10] = 0;
+    scene_trip_day_state = 0;
     mode_step_next();
 }
 
-void func_80137F04(void) {
+void trip_background_decode_branch(void) {
     s32 temp_v0;
 
     D_80122CE0 = 0xFF;
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     temp_v0 = dec_bg_cd_read(0x3FAD, 0);
     if (temp_v0 == *dec_bg_show) {
         mode_step_next();
@@ -167,8 +167,8 @@ void func_80137F04(void) {
     mode_step_next();
 }
 
-s32 func_80137F90(void) {
-    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+s32 trip_background_header_validate_and_decode(void) {
+    if ((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         mode_step_next();
         game_state.mode_step -= 3;
@@ -178,12 +178,12 @@ s32 func_80137F90(void) {
     mode_step_next();
 }
 
-void func_8013801C(void) {
+void trip_background_show_disable(void) {
     dec_bg_show_switch(0);
     mode_step_next();
 }
 
-void func_80138044(void) {
+void trip_destination_background_scene_initialize(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -192,13 +192,13 @@ void func_80138044(void) {
     tpage_buf_clear();
     text_system_reset();
     talk_clear();
-    strcpy(D_800CA19C, "修学旅行");
+    strcpy(scene_place_title, "修学旅行");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -216,7 +216,7 @@ void func_80138044(void) {
     mode_step_next();
 }
 
-void func_80138154(void) {
+void trip_destination_background_variant_load(void) {
     u8 sel = D_800CA2CC; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
@@ -233,46 +233,46 @@ void func_80138154(void) {
     mode_step_next();
 }
 
-void func_801381BC(void) {
+void trip_destination_selection_label_store(void) {
     D_800CA2CC = D_80122CDC;
     switch (D_80122CDC) {
     case 0:
-        strcpy(D_800CA23C, "京都・奈良");
-        strcpy(D_800CA1DC, "京都・奈良");
+        strcpy(name_code_s, "京都・奈良");
+        strcpy(scene_place_title_2, "京都・奈良");
         break;
     case 1:
-        strcpy(D_800CA23C, "沖縄");
-        strcpy(D_800CA1DC, "沖縄");
+        strcpy(name_code_s, "沖縄");
+        strcpy(scene_place_title_2, "沖縄");
         break;
     case 2:
-        strcpy(D_800CA23C, "北海道");
-        strcpy(D_800CA1DC, "北海道");
+        strcpy(name_code_s, "北海道");
+        strcpy(scene_place_title_2, "北海道");
         break;
     }
     mode_step_next();
 }
 
-void func_80138290(void) {
+void trip_destination_city_label_store(void) {
     s32 temp;
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        strcpy(D_800CA23C, "京都");
+        strcpy(name_code_s, "京都");
         break;
     case 1:
-        strcpy(D_800CA23C, "沖縄");
+        strcpy(name_code_s, "沖縄");
         break;
     case 2:
-        strcpy(D_800CA23C, "北海道");
+        strcpy(name_code_s, "北海道");
         break;
     }
     mode_step_next();
 }
 
-void func_80138320(void) {
+void trip_destination_actor_load_mode_step_timer_dispatch(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
-        func_801383C8();
+        trip_destination_actor_sector_load();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
@@ -280,10 +280,10 @@ void func_80138320(void) {
         }
         break;
     case 2:
-        func_80138400();
+        trip_destination_actor_and_palette_setup();
         break;
     case 3:
-        func_801385A8();
+        trip_destination_actor_slide_update();
         break;
     default:
         game_mode_reset_to_title();
@@ -291,14 +291,14 @@ void func_80138320(void) {
     }
 }
 
-void func_801383C8(void) {
+void trip_destination_actor_sector_load(void) {
     cd_read_sectors(0xD, 0x801D0000, 0xBB98);
     game_state.mode_step_timer.w += 1;
 }
 
-void func_80138400(void) {
+void trip_destination_actor_and_palette_setup(void) {
     u8 temp;
-    func_801378B0();
+    trip_departure_scene_resource_pointer_setup();
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
@@ -336,7 +336,7 @@ void func_80138400(void) {
     game_state.mode_step_timer.w += 1;
 }
 
-s16 func_801385A8(void) {
+s16 trip_destination_actor_slide_update(void) {
     if (D_80120676 < -0x1DF) {
         k_reset(1);
         actor_clear(0x60);
@@ -349,7 +349,7 @@ s16 func_801385A8(void) {
     }
 }
 
-void func_8013864C(void) {
+void trip_default_destination_talk_run(void) {
     talk_tables = &D_800CA2DC;
     D_800CA138 = &D_800CA2E0;
     D_800CA13C = D_800CA2D0;
@@ -358,7 +358,7 @@ void func_8013864C(void) {
     talk_run(0xFF, 1, 0);
 }
 
-void func_801386C4(void) {
+void trip_destination_response_talk_run(void) {
     talk_tables = &D_800CA2DC;
     D_800CA138 = &D_800CA2E0;
     D_800CA13C = D_800CA2D0;
@@ -367,7 +367,7 @@ void func_801386C4(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80138740(void) {
+void trip_birthday_and_special_route_gate(void) {
     /* FAKE: `g = &game_state` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1; dead entry read `s = D_800CA2CC` puts D_800CA2CC in cvt_pass entry locations (T-24114). */
     GameState *g = &game_state;
     s32 s;
@@ -404,7 +404,7 @@ void func_80138740(void) {
     mode_step_next();
 }
 
-void func_801388D8(void) {
+void trip_birthday_route_gate_alt(void) {
     /* FAKE: `g = &game_state` breaks uopt's global-load tie so unk_03F gets $a0 and unk_1BC[0].unk_10.w gets $v1 (T-24114). */
     GameState *g = &game_state;
     s32 s;

@@ -64,7 +64,7 @@ s32 encounter_yuina_scene_one_step_dispatch(void) {
     mode_step_callbacks.callbacks[mode_step_index](0x80);
     if (D_80122D04 != 0) {
         /* FAKE: Actor view on the first two stores keeps as1 from hoisting the unk_03C load above sb D_80120723. T-24095 */
-        ((Actor *)actor_pool_96)[3].brightness = dec_bg_brightness;
+        ((Actor *)actor_pool_96)[3].brightness = bg_brightness;
         ((Actor *)actor_pool_96)[3].draw_flags |= 0x80;
         if ((u8)game_state.voice_mode != VOICE_OFF) {
             if (!encounter_yuina_voice_trigger_latched) {
@@ -148,7 +148,7 @@ void encounter_yuina_rpg_return_init(void) {
     talk_names_set(game_state.current_girl);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -183,7 +183,7 @@ void encounter_yuina_scene_init_1(void) {
     encounter_scene_text_table = encounter_scene_text_section_14;
     encounter_scene_command_table = encounter_scene_command_section_14;
     encounter_scene_voice_table = encounter_scene_voice_section_14;
-    strcpy(D_800CA19C, "屋上");
+    strcpy(scene_place_title, "屋上");
     encounter_yuina_voice_trigger_latched = 0;
     game_state.girls[2].tokimeki += 1;
     game_state.girls[2].affection += 2;
@@ -246,7 +246,7 @@ void encounter_yuina_final_scene_init(void) {
     encounter_scene_text_table = encounter_scene_text_section_20;
     encounter_scene_command_table = encounter_scene_command_section_20;
     encounter_scene_voice_table = encounter_scene_voice_section_20;
-    strcpy(D_800CA19C, "近所の公園");
+    strcpy(scene_place_title, "近所の公園");
     D_800CA368 = 0x14;
     mode_step_next();
 }

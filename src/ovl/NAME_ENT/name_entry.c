@@ -123,8 +123,8 @@ void name_entry_mode_handler(void) {
         break;
     }
     dec_bg_draw(2);
-    func_8004B19C(bg_layers, 0, 0x50);
-    func_8004B19C(D_801220F4, 0, 0x5A);
+    debug_print_hex(bg_layers, 0, 0x50);
+    debug_print_hex(D_801220F4, 0, 0x5A);
 }
 
 void name_entry_mode_stage_load(void) {
@@ -156,13 +156,13 @@ void name_entry_load_init(void)
     game_state.clear_color_r = 0;
     game_state.clear_color_b = 0;
     tpage_buf_clear();
-    func_80041168(0);
+    vram_clear_blocks(0);
     game_state.tile_layer_enabled = 0;
     dec_bg_reset();
     dec_bg_show_switch(2);
     cd_read_sectors_nowait(0xAU, 0x80162000, 0xAA18);
     game_state.cursor_speed = SETTINGS_CURSOR_SPEED_NORMAL;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     game_state.substep = 1;
  ;
   }
@@ -171,8 +171,8 @@ void name_entry_load_init(void)
   {
     if (cd_read_sync_status() & 1)
     {
-      func_80053650(0x80167000, 0x80188000, 0x80162000);
-      func_800536AC(0x140, 0x100, 0x140, 0xF0);
+      bg_still_buffers_set(0x80167000, 0x80188000, 0x80162000);
+      bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xF0);
       cd_read_sectors(0x36U, 0x80190000, 0xA9E2);
       game_state.substep += 1;
     }
@@ -209,14 +209,14 @@ void name_entry_load_fade_in(void) {
             game_state.screen_brightness = 0;
         }
     } else {
-        brightness = (dec_bg_brightness + 4) & 0xFF;
+        brightness = (bg_brightness + 4) & 0xFF;
         D_801220E1 = (brightness & -1);
         D_801220E0 = (brightness & -1);
-        dec_bg_brightness = (brightness & -1);
+        bg_brightness = (brightness & -1);
         D_801220E2 = (brightness & -1);
         game_state.screen_brightness = (brightness & -1);
         if ((u32)brightness >= 0x80) {
-            func_80057640(0xF0);
+            bg_capture_screen(0xF0);
             name_entry_input_actors_init();
             bg_layers = 0x80000000;
             D_801220D4 = -0x18;
@@ -225,8 +225,8 @@ void name_entry_load_fade_in(void) {
             mode_stage_next();
         }
     }
-    func_8004B19C(dec_bg_brightness, 0, 0);
-    func_8004B19C(D_801220E0, 0, 0x10);
+    debug_print_hex(bg_brightness, 0, 0);
+    debug_print_hex(D_801220E0, 0, 0x10);
 }
 
 void name_entry_input_actors_init(void) {
@@ -359,7 +359,7 @@ void name_entry_background_setup(void) {
     name_entry_overlay_tables_set();
     /* FAKE: loop body on the for line gives the original as1 schedule. T-11650 */
     for (i = 0; i < 6; i++) { buf[i] = (u32)game_state.ovl_image_buffer + i * 0x4000; }
-    func_8004A1A0(buf, 0, 6, 3, 2, 0x1F8, -0xA0, -0x78, 8, 0xD);
+    prim_bg_slot_setup(buf, 0, 6, 3, 2, 0x1F8, -0xA0, -0x78, 8, 0xD);
     bg_layers |= 0x40000000;
     game_state.tpage_buf[search_tpage_multi(*(s32 *)game_state.ovl_tpage_table, 2)] = *(s32 *)game_state.ovl_tpage_table;
     load_palette(game_state.ovl_palette_b, 0x18, 1, 2, 0);
@@ -2049,15 +2049,15 @@ void name_entry_digit_sprite_draw(s32 digit_index, s32 screen_x, s32 screen_y) {
     p[4] = game_state.screen_brightness;
     p[5] = game_state.screen_brightness;
     p[6] = game_state.screen_brightness;
-    *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + screen_x;
-    *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + screen_y;
+    *(s16 *)(p + 8) = game_state.draw_origin_x[draw_buffer] + screen_x;
+    *(s16 *)(p + 0xA) = game_state.draw_origin_y[draw_buffer] + screen_y;
     q = name_entry_wide_digit_uv + digit_index * 2;
     p[0xC] = q[0];
     p[0xD] = q[1];
     *(s16 *)(p + 0x12) = 0x10;
     *(s16 *)(p + 0x10) = 0x10;
     *(s16 *)(p + 0xE) = func_8009ED74(0x10, 0x1F0);
-    AddPrim((draw_buffer << 10) + 8 + D_800E8CA0, p);
+    AddPrim((draw_buffer << 10) + 8 + draw_ot_tags, p);
 }
 
 void name_entry_number_sprites_draw(s32 number, s32 screen_x, s32 screen_y) {
@@ -2070,28 +2070,28 @@ void name_entry_number_sprites_draw(s32 number, s32 screen_x, s32 screen_y) {
     sprite->r0 = game_state.screen_brightness;
     sprite->g0 = game_state.screen_brightness;
     sprite->b0 = game_state.screen_brightness;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + screen_x - 8;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + screen_y;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] + screen_x - 8;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + screen_y;
     uv = &name_entry_small_digit_uv[number / 10 * 2];
     sprite->u0 = uv[0];
     sprite->v0 = uv[1];
     setWH(sprite, 8, 0x10);
     sprite->clut = func_8009ED74(0x10, 0x1F0);
-    AddPrim((draw_buffer << 10) + 8 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 8 + draw_ot_tags, (s32)sprite);
     sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 0);
     sprite->r0 = game_state.screen_brightness;
     sprite->g0 = game_state.screen_brightness;
     sprite->b0 = game_state.screen_brightness;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + screen_x;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + screen_y;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] + screen_x;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + screen_y;
     uv = &name_entry_small_digit_uv[number % 10 * 2];
     sprite->u0 = uv[0];
     sprite->v0 = uv[1];
     setWH(sprite, 8, 0x10);
     sprite->clut = func_8009ED74(0x10, 0x1F0);
-    AddPrim((draw_buffer << 10) + 8 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 8 + draw_ot_tags, (s32)sprite);
 }
 
 void name_entry_confirm_actors_init(void) {
@@ -2459,7 +2459,7 @@ void name_entry_new_game_setup(void) {
     month = name_entry_cursor;
     day = 0;
     compatibility_index = 0;
-    func_80041878();
+    boot_game_data_init();
     name_entry_profile_store();
     month = game_state.girls[0].birthday.date.month;
     day = game_state.girls[0].birthday.date.day;

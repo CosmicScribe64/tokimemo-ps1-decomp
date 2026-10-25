@@ -1,18 +1,18 @@
 /* destination_outings_and_hotel_lobby.c: src/ovl/SHUGAKU/80139D00.c:14,151-215,232-335; destination-specific outing callbacks, hotel-lobby branch, girl-dependent choices and birthday/return handling. Original object 0x80139D00-0x8013AA70 (config/objects/SHUGAKU.txt). */
-#define SHUGAKU_OVERRIDE_func_801386C4 /* s32 return view occupies $v0 after call so unk_F5F promotes to $v1 (T-24108) */
+#define SHUGAKU_OVERRIDE_trip_destination_response_talk_run /* s32 return view occupies $v0 after call so unk_F5F promotes to $v1 (T-24108) */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-s32 func_801386C4(void);
+s32 trip_destination_response_talk_run(void);
 
-void func_80139D00(void) {
+void trip_destination_scene_resource_pointer_setup(void) {
     D_8013CAF0 = 0x801E20DC;
     D_8013CAF4 = 0x801E20F8;
     D_8013CAF8 = 0x801E2114;
     D_8013CB00 = 0x801E0000;
 }
 
-void func_80139D40(void) {
+void trip_destination_outing_callback_dispatch(void) {
     u8 kind;
     u8 index;
     ShugakuFn68 tbl;
@@ -25,7 +25,7 @@ void func_80139D40(void) {
         }
     }
     tbl.f[game_state.mode_step](0x40);
-    if (tbl.f[game_state.mode_step] == func_8013864C && D_8013CB04 == 0) {
+    if (tbl.f[game_state.mode_step] == trip_default_destination_talk_run && D_8013CB04 == 0) {
         kind = ((u8 **)D_800CA2D4)[D_800CA2DC][D_800CA2E0];
         if (kind == 8 || kind == 3) {
             audio_command(0x207);
@@ -35,7 +35,7 @@ void func_80139D40(void) {
 }
 
 /* FAKE: byte view keeps selector base in a0; direct member access uses v0. Original source unknown. T-9710. */
-void func_80139E8C(void) {
+void trip_destination_outing_scene_initialize(void) {
     u8 var_a0;
     RECT rect;
 
@@ -67,7 +67,7 @@ void func_80139E8C(void) {
     talk_names_set(var_a0);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -76,7 +76,7 @@ void func_80139E8C(void) {
     mode_step_next();
 }
 
-s32 func_80139FD4(void) {
+s32 trip_destination_lobby_actor_data_validate(void) {
     if (D_800CA2CC == 1) {
         if (((*(s32 *)D_8013CAF0) != 0x801E2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (4)) != 0x801E6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (8)) != 0x801EA120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (12)) != 0x801EE120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (16)) != 0x801F2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (20)) != 0x801F6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (24)) != 0x801FA120) || (*(s32 *)D_8013CAF8 != 0x801E20A8)) {
             game_state.mode_step -= 2;
@@ -107,17 +107,17 @@ block_11:
     return mode_step_next();
 }
 
-void func_8013A1B4(void) {
+void trip_destination_lobby_mode_step_skip(void) {
     mode_step_set(0x22);
 }
 
-/* FAKE: T-24108, dead entry read of unk_F5F satisfies cvt_pass's entry condition; dead s32 result from func_801386C4 takes the sp+0x2C slot (placing temp_a0 at sp+0x2B) and blocks $v0 after the call so unk_F5F is promoted to $v1. */
-void func_8013A1D4(void) {
+/* FAKE: T-24108, dead entry read of unk_F5F satisfies cvt_pass's entry condition; dead s32 result from trip_destination_response_talk_run takes the sp+0x2C slot (placing temp_a0 at sp+0x2B) and blocks $v0 after the call so unk_F5F is promoted to $v1. */
+void trip_yuina_talk_and_portrait_layout_update(void) {
     s32 pad;
     u8 temp_a0;
 
     pad = game_state.current_girl;
-    pad = func_801386C4();
+    pad = trip_destination_response_talk_run();
     if (game_state.current_girl == GIRL_YUINA) {
         temp_a0 = get_g_zyotai_h(game_state.current_girl);
         if ((D_800CA2E0 == 7) && (D_80122CDC != 0)) {
@@ -131,7 +131,7 @@ void func_8013A1D4(void) {
     }
 }
 
-void func_8013A274(void) {
+void trip_girl_specific_portrait_layout_set(void) {
     if (game_state.current_girl == GIRL_YUINA) {
         portrait_layout_set(3);
     }
@@ -141,18 +141,18 @@ void func_8013A274(void) {
     mode_step_next();
 }
 
-void func_8013A2D8(void) {
+void trip_destination_choice_dialogue_gate(void) {
     if (D_80122CDC == 0) {
         mode_step_next();
         return;
     }
-    func_801386C4();
+    trip_destination_response_talk_run();
 }
 
-void func_8013A314(void) {
+void trip_hotel_lobby_background_and_route_select(void) {
     if (D_80122CDC == 0) {
         bg_read_sub2(0x4225);
-        strcpy(D_800CA19C, "ホテル・ロビー");
+        strcpy(scene_place_title, "ホテル・ロビー");
     } else {
         mode_step_next();
         mode_step_next();
@@ -161,12 +161,12 @@ void func_8013A314(void) {
     mode_step_next();
 }
 
-void func_8013A37C(void) {
+void trip_destination_counter_add(void) {
     D_800CA2DC += D_800CA2CC;
     mode_step_next();
 }
 
-void func_8013A3B4(void) {
+void trip_destination_counter_response_adjust(void) {
     if (D_800CA2EC == 0) {
         D_800CA2DC = (D_800CA2DC - (D_80122CDC * 2)) + 2;
     } else {
@@ -175,22 +175,22 @@ void func_8013A3B4(void) {
     mode_step_next();
 }
 
-void func_8013A42C(void) {
+void trip_destination_outing_background_and_log(void) {
     u8 temp;
     D_8013CB04 = 0;
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
         bg_read_sub2(0x4267);
-        strcpy(D_800CA19C, "土産屋");
+        strcpy(scene_place_title, "土産屋");
         break;
     case 1:
         bg_read_sub2(0x4255);
-        strcpy(D_800CA19C, "浜辺");
+        strcpy(scene_place_title, "浜辺");
         break;
     default:
         bg_read_sub2(0x427B);
-        strcpy(D_800CA19C, "クラーク像前");
+        strcpy(scene_place_title, "クラーク像前");
         break;
     }
     if (D_800CA2EC == 0) {
@@ -199,27 +199,27 @@ void func_8013A42C(void) {
     mode_step_next();
 }
 
-void func_8013A4F8(void) {
+void trip_destination_outing_background_select(void) {
     s32 temp;
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
         bg_read_sub2(0x4267);
-        strcpy(D_800CA19C, "土産屋");
+        strcpy(scene_place_title, "土産屋");
         break;
     case 1:
         bg_read_sub2(0x4255);
-        strcpy(D_800CA19C, "浜辺");
+        strcpy(scene_place_title, "浜辺");
         break;
     default:
         bg_read_sub2(0x427B);
-        strcpy(D_800CA19C, "クラーク像前");
+        strcpy(scene_place_title, "クラーク像前");
         break;
     }
     mode_step_next();
 }
 
-void func_8013A59C(void) {
+void trip_destination_rpg_battle_launch(void) {
     if (D_800CA2CC == 0) {
         D_80122CE0 = 2;
     } else if (D_800CA2CC == 1) {
@@ -237,11 +237,11 @@ void func_8013A59C(void) {
     game_mode_set(GAME_MODE_RPG_BATTLE);
 }
 
-void func_8013A648(void) {
+void trip_choice_relationship_update(void) {
     D_800CA2DC = (D_800CA2DC - D_800CA2CC) + (D_80122CDC == 1) + ((D_80122CDC == 2) * 3) + 2;
     D_800CA2F4 = D_80122CDC > 0;
     if (D_80122CDC == 0) {
-        func_80137C3C();
+        trip_destination_audio_transition();
     } else {
         game_state.girls[game_state.current_girl].tokimeki += 5;
     }
@@ -256,10 +256,10 @@ void func_8013A648(void) {
     mode_step_next();
 }
 
-void func_8013A74C(void) {
+void trip_destination_lobby_sector_load_gate(void) {
     if (D_800CA2CC == 1) {
         cd_read_sectors(0x3D, 0x801E0000, 0xBD04);
-        func_80139D00();
+        trip_destination_scene_resource_pointer_setup();
         mode_step_next();
         return;
     }
@@ -267,7 +267,7 @@ void func_8013A74C(void) {
     mode_step_next();
 }
 
-void func_8013A7AC(void) {
+void trip_destination_lobby_actor_initialize(void) {
     if (D_800CA2CC == 1) {
         load_palette(D_8013CB00, 0x11, 0, 1, 0);
         actor_clear(0x61);
@@ -294,34 +294,34 @@ void func_8013A7AC(void) {
     mode_step_next();
 }
 
-void func_8013A8D8(void) {
+void trip_destination_background_fade_in(void) {
     if (D_800CA2CC == 1) {
-        D_8012069B = dec_bg_brightness;
+        D_8012069B = bg_brightness;
     }
     normal_date_bg_fadein();
 }
 
-void func_8013A918(void) {
+void trip_destination_choice_background_fade_in(void) {
     if (D_800CA2CC == 1 && D_80122CDC != 0) {
-        D_8012069B = dec_bg_brightness;
-        if (dec_bg_brightness != 0) {
+        D_8012069B = bg_brightness;
+        if (bg_brightness != 0) {
             D_80120697 |= 0x80;
         }
     }
     normal_date_bg_fadein();
 }
 
-s32 func_8013A980(void) {
+s32 trip_destination_background_girl_fade_out(void) {
     normal_date_bggirl_fadeout();
     if (D_800CA2CC == 1) {
-        D_8012069B = dec_bg_brightness;
-        if ((u8) dec_bg_brightness < 8U) {
+        D_8012069B = bg_brightness;
+        if ((u8) bg_brightness < 8U) {
             D_80120697 &= 0x7F;
         }
     }
 }
 
-void func_8013A9E0(void) {
+void trip_saki_low_status_birthday_route_gate(void) {
     u32 temp_t8;
 
     temp_t8 = (u8)get_g_zyotai_s(GIRL_SAKI) & 0x7F;

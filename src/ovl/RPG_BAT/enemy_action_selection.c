@@ -9,9 +9,9 @@
 
 typedef struct RpgBattleView {
     /* 0x00 */ s32 flag[3]; /* rpg_delinquent_charmed_0..rpg_delinquent_charmed_2 (RpgDelinquentGauges.charmed) */
-    /* 0x0C */ s32 unk_0C;  /* rpg_enemy_damage_scale */
-    /* 0x10 */ s32 unk_10;  /* rpg_enemy_delay_extra */
-    /* 0x14 */ s32 unk_14;  /* rpg_enemy_miss_weight */
+    /* 0x0C */ s32 enemy_damage_scale;  /* rpg_enemy_damage_scale */
+    /* 0x10 */ s32 enemy_delay_extra;  /* rpg_enemy_delay_extra */
+    /* 0x14 */ s32 enemy_miss_weight;  /* rpg_enemy_miss_weight */
     /* 0x18 */ u8 pad[0x18]; /* rpg_voice_wait_frames..D_8015EBFB, RpgCodeEntry rpg_code_entry among them */
     /* 0x30 */ RpgBattleState stat; /* rpg_state */
 } RpgBattleView; /* size 0x6C */
@@ -157,7 +157,7 @@ s32 rpg_enemy_pick_delinquent(void) {
             rpg_delinquent_charmed_0.stat.enemy_weight_3 = 0x28;
         }
     }
-    total = rpg_delinquent_charmed_0.unk_14 + rpg_delinquent_charmed_0.stat.enemy_weight_0 + rpg_delinquent_charmed_0.stat.enemy_weight_1 + rpg_delinquent_charmed_0.stat.enemy_weight_2 + rpg_delinquent_charmed_0.stat.enemy_weight_3;
+    total = rpg_delinquent_charmed_0.enemy_miss_weight + rpg_delinquent_charmed_0.stat.enemy_weight_0 + rpg_delinquent_charmed_0.stat.enemy_weight_1 + rpg_delinquent_charmed_0.stat.enemy_weight_2 + rpg_delinquent_charmed_0.stat.enemy_weight_3;
     roll = rpg_rand(total);
     if (roll < rpg_delinquent_charmed_0.stat.enemy_weight_0) {
         rpg_delinquent_charmed_0.stat.enemy_weight_0 -= 5;
@@ -167,24 +167,24 @@ s32 rpg_enemy_pick_delinquent(void) {
         /* FAKE: T-24522, comma return keeps the decrement on the return line (as1 schedules per line). */
         return (rpg_delinquent_charmed_0.stat.enemy_weight_1 -= 5, 0);
     }
-    if (roll < rpg_delinquent_charmed_0.unk_14 + rpg_delinquent_charmed_0.stat.enemy_weight_0 + rpg_delinquent_charmed_0.stat.enemy_weight_1 + rpg_delinquent_charmed_0.stat.enemy_weight_2) {
+    if (roll < rpg_delinquent_charmed_0.enemy_miss_weight + rpg_delinquent_charmed_0.stat.enemy_weight_0 + rpg_delinquent_charmed_0.stat.enemy_weight_1 + rpg_delinquent_charmed_0.stat.enemy_weight_2) {
         if (rpg_delinquent_charmed_0.flag[rpg_enemy_slot] == 1) {
             rpg_damage = rpg_rand2(0x64, 0x64);
             return 4;
         }
         rpg_delinquent_charmed_0.stat.enemy_weight_2 -= 5;
-        rpg_delinquent_charmed_0.unk_14 -= 0x14;
+        rpg_delinquent_charmed_0.enemy_miss_weight -= 0x14;
         if (rpg_delinquent_charmed_0.stat.enemy_weight_2 < 0) {
             rpg_delinquent_charmed_0.stat.enemy_weight_2 = 0;
         }
-        if (rpg_delinquent_charmed_0.unk_14 < 0) {
-            rpg_delinquent_charmed_0.unk_14 = 0;
+        if (rpg_delinquent_charmed_0.enemy_miss_weight < 0) {
+            rpg_delinquent_charmed_0.enemy_miss_weight = 0;
         }
         return 3;
     }
     rpg_delinquent_charmed_0.stat.enemy_weight_3 -= 5;
     if (rpg_has_boss_event() == 0) {
-        rpg_delinquent_charmed_0.unk_0C += 0x19;
+        rpg_delinquent_charmed_0.enemy_damage_scale += 0x19;
     }
     if (rpg_delinquent_charmed_0.flag[rpg_enemy_slot] == 1) {
         rpg_damage = rpg_rand2(0x64, 0x64);
@@ -201,7 +201,7 @@ s32 rpg_enemy_pick_delinquent(void) {
     if (rpg_player_action != 0x100) {
         if (rpg_rand(0x64) < 5) {
             rpg_damage = rpg_rand2(0xA, 0xA);
-            rpg_damage = rpg_delinquent_charmed_0.unk_0C * rpg_damage;
+            rpg_damage = rpg_delinquent_charmed_0.enemy_damage_scale * rpg_damage;
             rpg_damage /= 1000;
             rpg_delinquent_charmed_0.stat.escalation_counter += 1;
             return 5;
@@ -210,7 +210,7 @@ s32 rpg_enemy_pick_delinquent(void) {
     rpg_damage = rpg_rand2(0x7D, 0x4B);
     rpg_damage *= 0xE1 - lim;
     rpg_damage /= 150;
-    rpg_damage = rpg_delinquent_charmed_0.unk_0C * rpg_damage;
+    rpg_damage = rpg_delinquent_charmed_0.enemy_damage_scale * rpg_damage;
     rpg_damage /= 1000;
     if (rpg_player_action & 0x100) {
         rpg_damage = rpg_damage / 10;

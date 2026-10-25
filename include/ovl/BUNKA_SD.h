@@ -11,70 +11,70 @@
 s32 set_kanji_string();
 
 /* T-12090: dispatcher and its later definitions in 80132000.c. */
-void func_80132428(void);
-void func_801325E8(void);
-void func_8013261C(void);
-void func_801327E4(void);
-void func_80132DB8(u32 arg0);
-void func_80132DFC(void);
+void stage_show_mode_step_dispatch(void);
+void stage_show_actor_and_event_state_init(void);
+void stage_show_frame_wait(void);
+void stage_show_frame_state_wait(void);
+void stage_show_timed_step_wait(u32 arg0);
+void stage_show_selector_prompt_wait(void);
 
 /* BUNKA_SD functions called across the overlay. */
-void func_8013376C(void);
-void func_80136BFC(void);
-void func_80137D6C(void);
-void func_801322EC(void);
-void func_801336AC(void);
-void func_80133FA4(void);
-void func_801341F0(s32 arg0);
-void func_801345BC(void);
-void func_801362EC(void);
-void func_80136B3C(void);
-void func_80137CAC(void);
-void func_8013867C(void);
-void func_80138860(s32 arg0);
-void func_80138ADC(void);
-void func_80132940(void);
-void func_80134938(void);
-void func_80135630(void);
-void func_80135CD4(void);
-void func_80136578(void);
-void func_80138810(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80132708(void);
+void stage_show_scene_a_dispatch(void);
+void stage_show_scene_b_dispatch(void);
+void stage_show_scene_c_dispatch(void);
+void stage_show_input_update(void);
+void stage_show_scene_a_input_update(void);
+void stage_show_drama_first_show_event_list_init(void);
+void stage_show_drama_first_show_actor_slot_clear(s32 arg0);
+void stage_show_computer_show_input_update(void);
+void stage_show_science_first_show_input_update(void);
+void stage_show_scene_b_input_update(void);
+void stage_show_scene_c_input_update(void);
+void stage_show_drama_second_event_text_and_audio_display(void);
+void stage_show_drama_second_kanji_line_start(s32 arg0);
+void stage_show_brass_band_input_update(void);
+void stage_show_actor_scene_init(void);
+void stage_show_computer_show_actor_texture_setup(void);
+void stage_show_science_second_show_actor_texture_setup(void);
+void stage_show_science_final_show_actor_texture_setup(void);
+void stage_show_science_first_show_actor_table_initialize(void);
+void stage_show_drama_second_actor_slot_state_set(s32 arg0, s32 arg1, s32 arg2);
+s32 stage_show_picture_index_set(void);
 
-void func_80134B88(void);
-s32 func_80134D94(void);
-void func_80133984(void);
-void func_80136F3C(void);
-void func_80137FEC(void);
-void func_801377D4(s32 arg0, s32 arg1, s32 arg2);
+void stage_show_computer_show_timed_audio_commands(void);
+s32 stage_show_computer_show_frame_and_fade_update(void);
+void stage_show_scene_a_actor_init(void);
+void stage_show_drama_final_show_actor_table_initialize(void);
+void stage_show_drama_second_show_actor_table_initialize(void);
+void stage_show_drama_final_actor_slot_state_set(s32 arg0, s32 arg1, s32 arg2);
 
-void func_80135F38(void);
-void func_801361B8(void);
-void func_80138D48(void);
-void func_80138B3C(void);
-void func_801341A0(s32 arg0, s32 arg1, s32 arg2);
-void func_80136904(void);
-void func_801369AC(void);
-void func_80137620(void);
-void func_80137824(s32 arg0);
+void stage_show_science_final_show_timed_audio_commands(void);
+void stage_show_science_final_show_frame_state_update(void);
+void stage_show_brass_band_show_actor_picture_setup(void);
+void stage_show_brass_band_mode_step_dispatch(void);
+void stage_show_drama_first_show_actor_slot_setup(s32 arg0, s32 arg1, s32 arg2);
+void stage_show_science_first_show_timed_audio_commands(void);
+void stage_show_science_first_show_initial_frame_state(void);
+void stage_show_drama_final_event_text_and_audio_display(void);
+void stage_show_drama_final_kanji_line_start(s32 arg0);
 extern s32 D_8013C700;
-extern s32 D_8013CEC8, D_8013CECC, D_8013CED0, D_8013CED4;
+extern s32 stage_show_scene_b_event_cursor, stage_show_scene_b_script_index, stage_show_scene_b_frame, stage_show_scene_b_interpreter_state;
 
 extern s32 D_8013B7EC;
-extern s32 D_8013C6C8, D_8013C6D4, D_8013C6D8, D_8013C6DC, D_8013C6E0, D_8013C6E4;
-extern s32 D_8013CEBC, D_8013CED8;
-extern s32 D_8013D988, D_8013D994, D_8013D998, D_8013D99C, D_8013D9A0, D_8013D9A4;
+extern s32 stage_show_scene_a_text_cursor, stage_show_scene_a_event_cursor, stage_show_scene_a_script_index, stage_show_scene_a_frame, stage_show_scene_a_interpreter_state, stage_show_scene_a_text_active;
+extern s32 D_8013CEBC, stage_show_scene_b_text_active;
+extern s32 stage_show_scene_c_text_cursor, stage_show_scene_c_event_cursor, stage_show_scene_c_script_index, stage_show_scene_c_frame, stage_show_scene_c_interpreter_state, stage_show_scene_c_text_active;
 
-void func_80134260();
-void func_80134418();
-s32 func_801389DC();
-void func_80138CAC();
-void func_8013987C();
-s32 func_801388D0(void);
-void func_80138C34(void);
-s32 func_80135160(void);
-s32 func_801359B0(void);
-s32 func_80136270(void);
+void stage_show_scene_state_reset();
+void stage_show_actor_brightness_ramp_up();
+s32 stage_show_brass_band_sector_and_track_setup();
+void stage_show_brass_band_show_playback_tick();
+void stage_show_brass_band_actor_brightness_fade();
+s32 stage_show_brass_band_audio_transition(void);
+void stage_show_brass_band_cd_audio_end_wait(void);
+s32 stage_show_science_second_show_sector_load(void);
+s32 stage_show_science_final_show_sector_load(void);
+s32 stage_show_science_first_show_sector_load(void);
 
 extern s32 D_8013B808;
 
@@ -82,23 +82,23 @@ extern s32 D_8013B80C;
 
 extern u8 D_8013B810[];
 extern u8 D_8013B938[];
-extern u8 *D_8013C6CC;
-extern u8 *D_8013C6D0;
+extern u8 *stage_show_scene_a_text_data;
+extern u8 *stage_show_scene_a_voice_data;
 extern u8 D_8013C750[];
 extern u8 D_8013C7B4[];
 extern u8 *D_8013CEC0;
 extern u8 *D_8013CEC4;
-s32 func_801369D0(void);
+s32 stage_show_scene_b_data_load(void);
 extern u8 D_8013CEF0[];
 extern u8 D_8013CFC8[];
-extern u8 *D_8013D98C;
-extern u8 *D_8013D990;
-s32 func_80137B40(void);
-void func_801346D4(void);
-void func_80135B44(void);
-void func_80135A2C(void);
-void func_801352F4(void);
-void func_801351DC(void);
+extern u8 *stage_show_scene_c_text_data;
+extern u8 *stage_show_scene_c_voice_data;
+s32 stage_show_scene_c_data_load(void);
+void stage_show_computer_show_mode_step_dispatch(void);
+void stage_show_science_final_show_mode_step_dispatch(void);
+void stage_show_science_final_show_input_update(void);
+void stage_show_science_second_show_mode_step_dispatch(void);
+void stage_show_science_second_show_input_update(void);
 
 /* T-9730: address-only script data selected by the background dispatcher. */
 extern u8 D_8013B670[];
@@ -114,43 +114,43 @@ extern u8 *D_8013B7F0;
 extern u8 *D_8013B7F4;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_801347CC(void);
-void func_80134800(void);
+void stage_show_computer_show_audio_start(void);
+void stage_show_computer_show_animation_tick(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80135C3C(void);
-void func_80135C70(void);
+void stage_show_science_final_show_audio_start(void);
+void stage_show_science_final_show_animation_tick(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_8013540C(void);
-void func_80135440(void);
-s32 func_801354C8(void);
+void stage_show_science_second_show_audio_start(void);
+void stage_show_science_second_show_animation_tick(void);
+s32 stage_show_science_second_show_display_state_update(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80133924(void);
-void func_80133CC4(void);
+void stage_show_scene_a_state_init(void);
+void stage_show_scene_a_actor_set(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80137F8C(void);
-void func_80138898(u32 arg0);
-void func_8013838C(void);
-void func_801383CC(void);
+void stage_show_drama_second_show_state_initialize(void);
+void stage_show_drama_second_timer_gate(u32 arg0);
+void stage_show_drama_second_event_actor_set_a(void);
+void stage_show_drama_second_event_actor_set_b(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-void func_80136EDC(void);
-void func_801371BC(void);
-void func_8013731C(void);
-void func_8013785C(u32 arg0);
-void func_8013722C(void);
-void func_801372BC(void);
-void func_801364B4(void);
-void func_801364F0(void);
-void func_801363BC(void);
+void stage_show_drama_final_show_state_initialize(void);
+void stage_show_drama_final_event_actor_set_a(void);
+void stage_show_drama_final_event_list_step(void);
+void stage_show_drama_final_timer_gate(u32 arg0);
+void stage_show_drama_final_event_actor_clear_and_set(void);
+void stage_show_drama_final_event_actor_set_b(void);
+void stage_show_science_first_show_audio_start(void);
+void stage_show_science_first_show_animation_tick(void);
+void stage_show_science_first_show_mode_step_dispatch(void);
 
 /* T-12090: typed display setup data and pending dispatcher callees. */
-void func_80139290(void);
-void func_80132FF0(void);
-void func_80133204(void);
+void stage_show_brass_band_animation_frame_select(void);
+void stage_show_speaker_label_wait(void);
+void stage_show_script_line_render(void);
 extern u8 *D_8013B7F8;
 extern u8 *D_8013B7FC;
 extern u8 *D_8013B800;
@@ -162,20 +162,20 @@ extern u8 *D_8013D9CC;
 
 /* T-18100: scene scripts. The three scenes (A: 80133540.c, B: 801369D0.c, C: 80137B40.c) each
  * keep a table of event lists, one list per script, and a table of the text each script opens with
- * (passed to func_801341F0 / func_80137824 / func_80138860 as a word). An event fires when its
- * unk_00 equals the scene's frame counter (D_8013C6DC, D_8013CED0, D_8013D99C). */
+ * (passed to stage_show_drama_first_show_actor_slot_clear / stage_show_drama_final_kanji_line_start / stage_show_drama_second_kanji_line_start as a word). An event fires when its
+ * unk_00 equals the scene's frame counter (stage_show_scene_a_frame, stage_show_scene_b_frame, stage_show_scene_c_frame). */
 typedef struct BsdEvent {
-    /* 0x00 */ s32 unk_00; /* frame */
-    /* 0x04 */ s32 unk_04; /* 0x0FFFFFFF ends the list; bits 16..23 display slot, bits 0..7 image
+    /* 0x00 */ s32 frame; /* frame */
+    /* 0x04 */ s32 command_word; /* 0x0FFFFFFF ends the list; bits 16..23 display slot, bits 0..7 image
                             * (0xFE hides the slot), bits 28..31 start the script's text */
 } BsdEvent; /* size 0x08 */
 
-extern s32 D_8013BA20[29];       /* scene A text */
-extern BsdEvent *D_8013C654[29]; /* scene A event lists */
-extern s32 D_8013C814[12];       /* scene B text */
-extern BsdEvent *D_8013CE8C[12]; /* scene B event lists */
-extern s32 D_8013D0C0[31];       /* scene C text */
-extern BsdEvent *D_8013D90C[31]; /* scene C event lists */
+extern s32 stage_show_scene_a_text_script_addresses[29];       /* scene A text */
+extern BsdEvent *stage_show_scene_a_event_lists[29]; /* scene A event lists */
+extern s32 stage_show_scene_b_text_script_addresses[12];       /* scene B text */
+extern BsdEvent *stage_show_scene_b_event_lists[12]; /* scene B event lists */
+extern s32 stage_show_scene_c_text_script_addresses[31];       /* scene C text */
+extern BsdEvent *stage_show_scene_c_event_lists[31]; /* scene C event lists */
 
 /* T-18100: loaded picture sets, four words each, set in .data to fixed addresses of the loaded
  * scene file: the texture-page table handed to load_tpage_buf_lock, two image pointers stored in

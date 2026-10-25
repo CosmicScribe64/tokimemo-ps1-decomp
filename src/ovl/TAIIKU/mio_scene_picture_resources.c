@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-void func_80142180(void) {
+void sports_mio_scene_picture_resource_addresses_init(void) {
     D_8014A0E0 = 0x801B93F0;
     D_8014A0E4 = 0x801B9360;
     D_8014A0E8 = 0x801B93D8;

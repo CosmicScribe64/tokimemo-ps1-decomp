@@ -6,7 +6,7 @@ typedef struct {
 } FnTbl12; /* size 0x30 */
 extern FnTbl12 D_801346FC;
 
-void func_80133C70(void) {
+void valentine_birthday_pointer_setup(void) {
     D_80134660 = 0x801B00DC;
     D_80134664 = 0x801B02AC;
     D_80134668 = 0x801B03C8;
@@ -48,7 +48,7 @@ void func_80133C70(void) {
     D_801346F8 = 0x801B155C;
 }
 
-void func_80133EE4(void) {
+void valentine_birthday_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl12 tbl;
 
@@ -57,7 +57,7 @@ void func_80133EE4(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80133F58(void) {
+void valentine_birthday_girl_entry(void) {
     if (game_state.current_girl == GIRL_MEGUMI) {
         mode_step_next();
         return;
@@ -65,13 +65,13 @@ void func_80133F58(void) {
     normal_date_girl_in();
 }
 
-void func_80133F98(void) {
+void valentine_birthday_sector_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80133C70();
+    valentine_birthday_pointer_setup();
     mode_step_next();
 }
 
-void func_80133FD0(void) {
+void valentine_birthday_scene_setup(void) {
     D_8013448C = D_80134400;
     D_80134490 = D_80134434;
     D_80134494 = D_80134468;
@@ -82,8 +82,8 @@ void func_80133FD0(void) {
 
 /* T-24211, T-24900: matches with the default arm's three globals declared volatile in VALEN.h
  * (FAKE there); otherwise as1 hoists the default block's first two lui. */
-void func_80134030(void) {
-    func_80133C70();
+void valentine_birthday_event_mark(void) {
+    valentine_birthday_pointer_setup();
     /* two statements: the single expression (x & 0xFFF7) | 4 takes $t6/$t7/$t8 where the original has $v0, $t7, $t9 */
     game_state.day_event_done_bits &= 0xFFF7;
     game_state.day_event_done_bits |= 4;
@@ -149,7 +149,7 @@ void func_80134030(void) {
     mode_step_next();
 }
 
-void func_801342E8(void) {
+void valentine_saved_state_restore(void) {
     mode_stage_set(game_state.saved_mode_stage);
     mode_step_set(game_state.saved_mode_step);
 }

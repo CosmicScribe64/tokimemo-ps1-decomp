@@ -10,7 +10,7 @@ void shooter_draw_circle_flash(s32 arg0, s32 arg1, s32 arg2) {
     shooter_build_circle_fan(buf, &x, arg2, arg0);
     p = GetWorkBase(0xC, draw_buffer);
     func_8009D294(p, 0, 1, func_8009ECB0(1, arg1, 0, 0), 0);
-    AddPrim(draw_buffer * 0x400 + 0x10 + D_800E8CA0, p);
+    AddPrim(draw_buffer * 0x400 + 0x10 + draw_ot_tags, p);
     safe_env(4);
 }
 
@@ -83,7 +83,7 @@ s32 r;
         (*p)->r2 = dr;
         (*p)->g2 = dg;
         (*p)->b2 = db;
-        AddPrim(draw_buffer * 0x400 + 0x10 + D_800E8CA0, (s32)*p);
+        AddPrim(draw_buffer * 0x400 + 0x10 + draw_ot_tags, (s32)*p);
         p++;
     }
 }
@@ -97,20 +97,20 @@ void shooter_draw_flash_overlay(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
     SetSemiTrans(poly, 1);
     SetShadeTex(poly, 1);
     poly->x0 = 0;
-    poly->y0 = game_state.screen_center_y[draw_buffer] - 0x78;
+    poly->y0 = game_state.draw_origin_y[draw_buffer] - 0x78;
     poly->x1 = 0x200;
-    poly->y1 = game_state.screen_center_y[draw_buffer] - 0x78;
+    poly->y1 = game_state.draw_origin_y[draw_buffer] - 0x78;
     poly->x2 = 0;
-    poly->y2 = game_state.screen_center_y[draw_buffer] + 0x78;
+    poly->y2 = game_state.draw_origin_y[draw_buffer] + 0x78;
     poly->x3 = 0x200;
-    poly->y3 = game_state.screen_center_y[draw_buffer] + 0x78;
+    poly->y3 = game_state.draw_origin_y[draw_buffer] + 0x78;
     poly->r0 = arg1;
     poly->g0 = arg2;
     poly->b0 = arg3;
-    AddPrim(draw_buffer * 0x400 + 0x14 + D_800E8CA0, poly);
+    AddPrim(draw_buffer * 0x400 + 0x14 + draw_ot_tags, poly);
     sprite = GetWorkBase(0xC, draw_buffer);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, arg0, 0, 0), 0);
-    AddPrim(draw_buffer * 0x400 + 0x14 + D_800E8CA0, sprite);
+    AddPrim(draw_buffer * 0x400 + 0x14 + draw_ot_tags, sprite);
     safe_env(5);
 }
 

@@ -105,8 +105,8 @@ void encounter_shiori_still_fade_out(void) {
     u8 colour;
 
     mode_step_before = game_state.mode_step;
-    func_800853FC();
-    colour = (u8)dec_bg_brightness;
+    scene_still_fade_out();
+    colour = (u8)bg_brightness;
 
     for (i = 4; i < 19; i++) {
         if (colour < 0x60U) {
@@ -130,8 +130,8 @@ void encounter_shiori_still_fade_in(void) {
             sprite_quads[i].flags &= 0x7FFFFFFF;
         }
     }
-    func_80085368();
-    colour = (u8)dec_bg_brightness;
+    scene_still_fade_in();
+    colour = (u8)bg_brightness;
     for (i = 4; i < 19; i++) {
         if (colour < 0x61U) {
             sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = colour;
@@ -241,7 +241,7 @@ void encounter_shiori_scene_eight_dispatch(void) {
 void encounter_shiori_birthday_bg_request(void) {
     s32 background_read_result;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     background_read_result = dec_bg_cd_read(0x3FBE, 0);
     if (background_read_result == *dec_bg_show) {
         mode_step_next();
@@ -261,10 +261,10 @@ void encounter_shiori_scene_eight_step_dispatch(void) {
     mode_step_callbacks = encounter_shiori_scene_eight_steps;
     mode_step_callbacks.callbacks[game_state.mode_step](0x80);
     current_callback = &mode_step_callbacks.callbacks[game_state.mode_step];
-    if (mode_step_callbacks.callbacks[game_state.mode_step] == func_80085368) {
+    if (mode_step_callbacks.callbacks[game_state.mode_step] == scene_still_fade_in) {
         D_801206DB |= 0x80;
     }
-    if (func_800853FC == *current_callback) {
+    if (scene_still_fade_out == *current_callback) {
         /* FAKE: empty double test (decomp-permuter, score 20), same register-choice shift as SHOUGATU func_80136078 (T-4090); real source unknown. T-10820 */
         if (!game_state.mode_step && !game_state.mode_step) {
         }
@@ -281,7 +281,7 @@ s32 encounter_shiori_birthday_phone_talk(void) {
         audio_command(0x1508);
         D_80122D00 = 0;
         k_reset(1);
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         D_800CA154 = 3;
     } else if (check_end_k() != 0 && D_800CA154 < 4U) {
         if (game_state.substep++ < 0x40U) {
@@ -311,7 +311,7 @@ void encounter_shiori_assets_load_2(void) {
 }
 
 void encounter_shiori_audio_load_1(void) {
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xC007, 0xBFF7, 0xCBA3, 0xCB53, 0xCB4E);
     mode_step_next();
 }
@@ -363,7 +363,7 @@ void encounter_shiori_scene_init_1(void) {
     encounter_scene_text_table = encounter_scene_text_section_6;
     encounter_scene_command_table = encounter_scene_command_section_6;
     encounter_scene_voice_table = encounter_scene_voice_section_6;
-    strcpy(D_800CA19C, "教室");
+    strcpy(scene_place_title, "教室");
     if (talk_work == 1) {
         game_state.girls[0].tokimeki += 1;
         game_state.girls[0].affection += 2;
@@ -437,7 +437,7 @@ void encounter_shiori_scene_init_2(void) {
     encounter_scene_text_table = encounter_scene_text_section_7;
     encounter_scene_command_table = encounter_scene_command_section_7;
     encounter_scene_voice_table = encounter_scene_voice_section_7;
-    strcpy(D_800CA19C, "自宅前");
+    strcpy(scene_place_title, "自宅前");
     game_state.param_stress.value -= 1;
     check_para_limit();
     D_800CA368 = 1;
@@ -463,12 +463,12 @@ void encounter_shiori_birthday_init(void) {
     *(u8 *)&game_state.day_event_done_bits |= 5;
     D_80122D38 = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0x80;
-    D_800B5940 = 0;
+    bg_brightness = 0x80;
+    bg_fade_amount = 0;
     srand(game_state.frame_count);
     game_state.current_girl = GIRL_SHIORI;
-    strcpy(D_800CA19C, "詩織の部屋");
-    strcpy(D_800CA1DC, "自宅前");
+    strcpy(scene_place_title, "詩織の部屋");
+    strcpy(scene_place_title_2, "自宅前");
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
@@ -495,7 +495,7 @@ void encounter_shiori_birthday_scene_init(void) {
     text_marker_hide();
     hizuke_init();
     message_window_init();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     D_800CA368 = 7;
     mode_step_next();
 }

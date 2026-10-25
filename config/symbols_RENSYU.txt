@@ -1,0 +1,17 @@
+// Names of the overlay RENSYU (tools/rename.py, T-27002): facts, with the evidence in the ledger (config/renames/).
+practice_intro_talk_pointer_setup = 0x80132000; // type:func
+practice_mode_stage_dispatch = 0x80132040; // type:func
+practice_intro_mode_step_dispatch = 0x801320E0; // type:func
+practice_candidate_and_day_scene_select = 0x80132390; // type:func
+practice_selected_girl_scene_dispatch = 0x80132A28; // type:func
+practice_club_scene_setup = 0x80132F10; // type:func
+practice_result_grade_calculate = 0x8013325C; // type:func
+practice_result_dialogue_select = 0x80133628; // type:func
+practice_result_girl_dialogue = 0x80133990; // type:func
+practice_match_result_apply = 0x80133CB8; // type:func
+practice_selected_girl_portrait_select = 0x80133E5C; // type:func
+practice_club10_actor_tables_setup = 0x80133F60; // type:func
+practice_club7_actor_tables_setup = 0x80133FB4; // type:func
+practice_club9_actor_tables_setup = 0x80134008; // type:func
+practice_club8_actor_tables_setup = 0x8013405C; // type:func
+practice_club6_actor_tables_setup = 0x801340B0; // type:func

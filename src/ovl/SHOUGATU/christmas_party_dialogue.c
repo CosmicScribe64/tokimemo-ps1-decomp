@@ -8,21 +8,21 @@ typedef struct {
     u32 rest : 30;
 } Bit1Flag;
 
-void func_8013DD90(void) {
+void christmas_party_resource_addresses_init(void) {
     D_80145FD0 = 0x801A6558;
     D_80145FD4 = 0x801A655C;
     D_80145FD8 = 0x801A6580;
     D_80145FE0 = 0x801A0000;
 }
 
-s32 func_8013DDD0(void) {
+s32 christmas_party_actor_update(void) {
     s32 index;
     ShoCallbacks23 table;
 
     table = D_80145FE8;
     index = game_state.mode_step;
     table.f[index](0x80);
-    ((Actor *)actor_pool_96)->brightness = dec_bg_brightness;
+    ((Actor *)actor_pool_96)->brightness = bg_brightness;
     if (((Actor *)actor_pool_96)->unk_18 == 0 && ((Actor *)actor_pool_96)->unk_08 == 0) {
         ((Actor *)actor_pool_96)->sequence_slot++;
         if (((Actor *)actor_pool_96)->sequence_slot >= 3) {
@@ -31,17 +31,17 @@ s32 func_8013DDD0(void) {
     }
 }
 
-void func_8013DEBC(void) {
+void christmas_party_audio_start(void) {
     audio_command(0x204);
     mode_step_next();
 }
 
-void func_8013DEE4(void) {
+void christmas_party_display_flag_set(void) {
     D_80120653 |= 0x80;
     mode_step_next();
 }
 
-void func_8013DF14(void) {
+void christmas_party_story_progress_init(void) {
     /* FAKE: pointer alias for increment/compare paired with direct global store in the if-body so uopt shares $v0 for lw/lbu/sb at +0x468/+0x469 without forwarding the byte into the clamp store. T-24088 */
     GameState *state;
 
@@ -53,10 +53,10 @@ void func_8013DF14(void) {
     }
     strcpy(name_code_girl_short, "伊集院");
     strcpy(girl_name_buf, "伊集院");
-    strcpy(D_800CA1DC, "パーティー会場");
+    strcpy(scene_place_title_2, "パーティー会場");
     D_80145F2C = 9;
     mode_step_next();
-    func_8013DD90();
+    christmas_party_resource_addresses_init();
     load_palette(D_80145FE0, 0x11, 1, 3, 0);
     actor_clear(0x60);
     D_80120651 = 0xC;
@@ -77,28 +77,28 @@ void func_8013DF14(void) {
     D_80120654 = 8;
 }
 
-void func_8013E0C8(void) {
+void christmas_party_background_read(void) {
     bg_read_sub2(0x41D4);
     mode_step_next();
 }
 
-void func_8013E0F0(void) {
+void christmas_party_story_progress_selector_update(void) {
     D_80145F2C += game_state.girls[12].flags.f.story_stage * 3 - 3;
     mode_step_next();
 }
 
-void func_8013E13C(void) {
+void christmas_party_portrait_read(void) {
     portrait_read_start(0x5855);
     mode_step_next();
 }
 
-void func_8013E164(void) {
+void christmas_party_scene_resource_read(void) {
     cd_read_sectors(0xD, 0x801A0000, 0xBD9F);
-    func_8013DD90();
+    christmas_party_resource_addresses_init();
     mode_step_next();
 }
 
-void func_8013E19C(void) {
+void christmas_party_candidate_select(void) {
     s32 r;
     u8 a;
     u8 pad; /* FAKE: unused byte between a and b, real source unknown (frame layout) */

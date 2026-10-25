@@ -109,8 +109,8 @@ s32 shooter_draw_hit_spark(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
         rot += 0x100;
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
-            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200
+            && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - arg2) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
@@ -141,7 +141,7 @@ s32 shooter_draw_hit_spark(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }
@@ -176,8 +176,8 @@ s32 shooter_draw_explosion_sprite(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
-            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200
+            && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - arg2) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
@@ -202,7 +202,7 @@ s32 shooter_draw_explosion_sprite(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }

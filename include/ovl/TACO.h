@@ -62,7 +62,7 @@ typedef struct ShooterModelHandle {
 typedef struct ShooterCoordinate {
     /* 0x00 */ s32 flag;
     /* 0x04 */ s16 rotation[3][3];
-    /* 0x16 */ s16 unk16;
+    /* 0x16 */ s16 alignment_pad;
     /* 0x18 */ s32 x;
     /* 0x1C */ s32 y;
     /* 0x20 */ s32 z;
@@ -246,8 +246,8 @@ typedef struct ShooterParticle {
     /* 0x08 */ s16 velocity_x;
     /* 0x0A */ s16 velocity_y;
     /* 0x0C */ s16 velocity_z;
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ u8 unk10;
+    /* 0x0E */ s16 unused_word;
+    /* 0x10 */ u8 unused_byte;
     /* 0x11 */ u8 argument;
     /* 0x12 */ u8 age;
     /* 0x13 */ u8 flags;
@@ -570,7 +570,7 @@ void shooter_snapshot_screen(void);
 typedef struct ShooterParticleView {
     /* 0x00 */ ShooterPosition position;
     /* 0x08 */ ShooterPosition velocity;
-    /* 0x10 */ u8 unk_10;
+    /* 0x10 */ u8 unused_byte;
     /* 0x11 */ u8 image_index;
     /* 0x12 */ u8 age;
     /* 0x13 */ u8 flags;
@@ -681,4 +681,4 @@ extern s32 shooter_enemy_model_base[]; /* per kind: base handle of the kind's ob
 extern s16 shooter_enemy_scale[]; /* per kind: initial value of actor unk6C..unk70 (T-19026) */
 extern u8 shooter_enemy_radius[]; /* per kind: initial value of actor unk84[0] (T-19026) */
 void shooter_set_pose_from_table();
-void shooter_apply_initial_pose(s32 arg0, s16 *arg1);
+void shooter_apply_initial_pose(s32 object_index, s16 *pose_record);

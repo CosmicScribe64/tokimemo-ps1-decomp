@@ -2,14 +2,14 @@
 #define OVL_MASTER_H
 
 /* T-24038: event-record logger, called before its definition; result is unused. */
-void func_8013B448(void);
+void master_tournament_result_log(void);
 
 #include "common.h"
 #include "game.h"
 
 /* MASTER overlay (load address 0x80132000): externs and types. */
 
-extern u32 D_8013C2D0; /* three pointers set by func_80132000 and siblings */
+extern u32 D_8013C2D0; /* three pointers set by master_set_award_text_assets_1 and siblings */
 extern u32 D_8013C2D4;
 extern u32 D_8013C2D8;
 extern u32 D_8013C4A0; /* same, second group */
@@ -37,7 +37,7 @@ extern s32 D_8013C764;
 extern s32 D_8013C768;
 extern s16 D_8013C76C;
 extern s32 D_8013C770;
-void func_80138490();
+void master_player_birthday_scene_run();
 extern s32 D_8013C4B0;
 extern s32 D_8013C4B4;
 extern s32 D_8013C4B8;
@@ -47,8 +47,8 @@ extern s32 D_8013C4C4;
 extern s16 D_8013C4C8;
 extern s16 D_8013C4CC;
 extern s32 D_8013C4D0;
-void func_80138EC0();
-void func_80138F70();
+void master_set_companion_actor_assets_a();
+void master_set_companion_actor_assets_c();
 extern s32 D_8013C4D4;
 extern s32 D_8013C4D8;
 extern s32 D_8013C4DC;
@@ -88,14 +88,14 @@ extern s32 D_8013C560;
 extern s32 D_8013C564;
 extern s32 D_8013C568;
 extern s32 D_8013C56C;
-extern u8 D_8013C790;
+extern u8 master_final_tournament_companion_index;
 extern s32 D_8013C2E0;
-extern u8 D_8013C784;
+extern u8 master_final_tournament_grade;
 
 /* T-9960: called by the preceding state machine in the same object. */
-void func_80138E58(void);
+void master_birthday_response_name_select(void);
 
-/* T-9960: eleven word-sized text ids copied into func_801350A8's frame. */
+/* T-9960: eleven word-sized text ids copied into master_player_birthday_scene's frame. */
 typedef struct MasterWords11 {
     /* 0x00 */ s32 v[11];
 } MasterWords11; /* size 0x2C */
@@ -110,8 +110,8 @@ typedef struct MasterPoint2 {
     /* 0x00 */ s16 x;
     /* 0x02 */ s16 y;
 } MasterPoint2; /* size 0x04 */
-extern s32 D_8013C570;
-extern u8 D_8013C578;
+extern s32 master_tournament_stage_index;
+extern u8 master_tournament_result_grade;
 extern u8 D_8013C588;
 extern MasterPoint2 D_8013C58C[10];
 extern s16 D_8013C5B4[10];
@@ -132,28 +132,28 @@ extern MasterHalfwords13 D_8013C6DC;
 extern MasterHalfwords13 D_8013C7E8;
 extern MasterHalfwords13 D_8013C804;
 extern MasterHalfwords13 D_8013C820;
-extern MasterHalfwords5 D_8013C640;
-extern u8 D_8013C584;
+extern MasterHalfwords5 master_tournament_grade_thresholds;
+extern u8 master_tournament_companion_index;
 extern s32 D_8013C574;
-extern u8 D_8013C57C[5];
+extern u8 master_tournament_result_markers[5];
 #endif
 
 /* Calls from the large scene handlers to later definitions in this object. */
-void func_80137BF4(void);
-void func_80137F94(void);
-void func_80138088(void);
-void func_80138374(void);
-void func_80138F10(void);
+void master_update_tournament_audience_animation(void);
+void master_tournament_player_actor_setup(void);
+void master_log_tournament_companion_event(void);
+void master_log_tournament_companion_followup(void);
+void master_set_companion_actor_assets_b(void);
 
 /* T-10630: eleven resource IDs copied by the neighboring selector. */
 extern MasterWords11 D_8013C678;
 
-/* T-18600: called by func_80133374 before its definition. */
-void func_8013348C(void);
+/* T-18600: called by master_tournament_reward_apply before its definition. */
+void master_tournament_event_log_append(void);
 
 /* T-13001: later helpers called by the typed-table scene handlers. */
-void func_8013B354(void);
-void func_8013B804(void);
+void master_tournament_companion_actor_setup(void);
+void master_log_tournament_followup_event(void);
 
 #ifndef OVL_MASTER_T18600_H
 #define OVL_MASTER_T18600_H
@@ -170,16 +170,16 @@ typedef struct FnTbl30 {
 typedef struct PtrTbl3 {
     /* 0x00 */ void *p[3];
 } PtrTbl3; /* size 0x0C */
-/* Thirteen words indexed by D_8013C2E0 or D_8013C790: text ids and thresholds. */
+/* Thirteen words indexed by D_8013C2E0 or master_final_tournament_companion_index: text ids and thresholds. */
 typedef struct MasterWords13 {
     /* 0x00 */ s32 v[13];
 } MasterWords13; /* size 0x34 */
 
-extern FnTbl4 D_8013C2E4;        /* func_80132140's scene states */
-extern FnTbl30 D_8013C5C8;       /* func_80133A2C's scene states */
+extern FnTbl4 D_8013C2E4;        /* master_award_mode_stage_dispatch's scene states */
+extern FnTbl30 master_tournament_mode_stage_callbacks;       /* master_tournament_scene_mode_stage_dispatch's scene states */
 extern PtrTbl3 D_8013C700;
-extern FnTbl7 D_8013C798;        /* func_80139150's scene states */
-/* func_801326B4's eight stack tables, in frame order sp1A8..sp3C */
+extern FnTbl7 master_final_tournament_mode_stage_callbacks;        /* master_tournament_mode_stage_dispatch's scene states */
+/* master_companion_dialogue_scene_run's eight stack tables, in frame order sp1A8..sp3C */
 extern MasterWords13 D_8013C2F4;
 extern MasterWords13 D_8013C328;
 extern MasterWords13 D_8013C35C;
@@ -188,11 +188,11 @@ extern MasterWords13 D_8013C3C4;
 extern MasterWords13 D_8013C3F8;
 extern MasterWords13 D_8013C42C;
 extern MasterWords13 D_8013C460; /* followed by three zero words of padding */
-extern MasterWords13 D_8013C7B4; /* func_80139810 */
-extern MasterHalfwords13 D_8013C6A4; /* func_80135CF4 */
+extern MasterWords13 D_8013C7B4; /* master_companion_portrait_load */
+extern MasterHalfwords13 D_8013C6A4; /* master_tournament_companion_dialogue_scene */
 
-/* Second baseball event (func_80139CC8), the twin of D_8013C574..D_8013C584. */
+/* Second baseball event (master_tournament_final_grade_scene), the twin of D_8013C574..master_tournament_companion_index. */
 extern u8 D_8013C780;
-extern u8 D_8013C788[5];         /* like D_8013C57C[5]; D_8013C78C is element 4 */
+extern u8 D_8013C788[5];         /* like master_tournament_result_markers[5]; D_8013C78C is element 4 */
 extern s16 D_8013C794;
 #endif

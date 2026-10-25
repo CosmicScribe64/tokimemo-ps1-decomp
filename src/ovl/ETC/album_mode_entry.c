@@ -1,11 +1,11 @@
 /* album_mode_entry.c: ; src/ovl/ETC/8013FF80.c:9-24 dispatches album mode entry and stage state. Original object 0x8013FF80-0x80140F50 (config/objects/ETC.txt). */
 #define MAIN_API_OVERRIDE_memcpy /* original called it undeclared (implicit int), as 8013BEF0.c (T-24706); keeps $v0 off the case 5 table address, T-25314 */
-#define MAIN_API_OVERRIDE_func_8004A1A0 /* original called it undeclared (implicit int): its $v0 result keeps 0x01000000 off $v0 after the first call, T-25314 */
+#define MAIN_API_OVERRIDE_prim_bg_slot_setup /* original called it undeclared (implicit int): its $v0 result keeps 0x01000000 off $v0 after the first call, T-25314 */
 #include "common.h"
 #include "ovl/ETC.h"
 
 extern s32 memcpy();
-extern s32 func_8004A1A0();
+extern s32 prim_bg_slot_setup();
 
 void album_stage_load(void) {
     if (game_state.mode_step == 0) {
@@ -77,9 +77,9 @@ s32 album_load_step(void) {
     case 5:
         draw2d3d(1, 1);
         album_model_init();
-        func_80061710();
-        func_80061790();
-        func_800618B0();
+        title_view_init();
+        title_lights_init();
+        title_coordinates_init();
         load_palette(0x80180000, 0x1F, 1, 3, 0);
         load_palette(0x80180200, 0x1E, 1, 3, 0);
         load_palette(0x80180400, 0x1D, 1, 3, 0);
@@ -88,7 +88,7 @@ s32 album_load_step(void) {
             sp54[i] = i * 0x4000 + 0x80198600;
         }
         i = 0; /* FAKE: dead reassignment keeps the first loop rolled (T-25128) */
-        func_8004A1A0(sp54, 1, 6, 3, 2, 0x1FE, -0xA0, -0x7D, 0xC, 0x15);
+        prim_bg_slot_setup(sp54, 1, 6, 3, 2, 0x1FE, -0xA0, -0x7D, 0xC, 0x15);
         D_801220F4 = 0x01000000;
         D_80122106 = 0;
         D_80122105 = 0;
@@ -101,7 +101,7 @@ s32 album_load_step(void) {
          * (T-24706): the unsigned body sums do not CSE with the signed peel literals. T-25128 */
         sp54[0] = 0x80180600; sp54[1] = 0x80184600; for (j = 2; j < 6; j++) { k = j * 0x4000; sp54[j] = 0x80180600 + k; } /* the k temporary gives the shift $v0 and the pointer $v1 (T-25314) */
 
-        func_8004A1A0(sp54, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 0x18);
+        prim_bg_slot_setup(sp54, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 0x18);
         /* FAKE: the empty branch keeps the call's $v0 result out of the 0x80 chain's block,
          * so the chain keeps $v0 (T-25314) */
         goto split_call; split_call: ;
@@ -131,9 +131,9 @@ s32 album_load_step(void) {
         }
         if (cd_audio_state() & 2) {
             album_phase += 1;
-            D_800B3CF8 = 0;
-            D_800B3CFC = 0;
-            D_800B3D00 = 0;
+            pad_code_index = 0;
+            pad_code_entered = 0;
+            pad_code_timer = 0;
             game_state.mode_step_timer.w = 0;
             (*(u8 *)&game_state.substep) += 1;
         }
@@ -330,7 +330,7 @@ void album_secret_mode_update(void) {
             album_secret_mode = 1;
         }
     } else if (album_phase == 1) {
-        if (D_800B3CFC == 1) {
+        if (pad_code_entered == 1) {
             audio_command(0x50E);
             if (album_secret_mode == 1) {
                 album_secret_mode = 3;

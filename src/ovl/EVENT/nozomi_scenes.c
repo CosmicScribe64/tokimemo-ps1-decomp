@@ -135,7 +135,7 @@ void spot_nozomi_scene1_run(void) {
 
 void spot_nozomi_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl29 tbl;
+    SpotNozomiAndStadiumStepTable tbl;
 
     tbl = spot_nozomi_scene1_steps;
     idx = D_800B1AF6;
@@ -302,7 +302,7 @@ void spot_nozomi_scene5_bg_load_25(void) {
 
 void spot_nozomi_scene2_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl50 tbl;
+    SpotNozomiScene2StepTable tbl;
 
     tbl = spot_nozomi_scene2_steps;
     idx = D_800B1AF6;
@@ -341,7 +341,7 @@ void spot_nozomi_scene2_branch_on_mood_07(void) {
 
 void spot_nozomi_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl55 tbl;
+    SpotNozomiSakiAndYumiSceneStepTable tbl;
 
     tbl = spot_nozomi_scene3_steps;
     idx = D_800B1AF6;
@@ -403,7 +403,7 @@ void spot_nozomi_scene3_set_state_20(void) {
 
 void spot_nozomi_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable tbl;
 
     tbl = spot_nozomi_scene4_steps;
     idx = D_800B1AF6;
@@ -427,7 +427,7 @@ void spot_nozomi_scene4_branch_on_mood_07(void) {
 
 void spot_nozomi_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl40 tbl;
+    SpotMiraYukariNozomiAndSakiSceneStepTable tbl;
 
     tbl = spot_nozomi_scene5_steps;
     idx = D_800B1AF6;

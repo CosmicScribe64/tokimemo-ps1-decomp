@@ -24,7 +24,7 @@ void shooter_stage_stage2(void) {
 }
 
 void shooter_stage2_step_init(void) {
-    func_800450F4(0, 0x203);
+    audio_bgm_play_short(0, 0x203);
     audio_command(0x24);
     shooter_set_white_lights();
     shooter_reset_ship_state();
@@ -45,7 +45,7 @@ void shooter_stage2_step_run(void) {
         shooter_sound_bank_wait_state = 1;
     }
     if (shooter_sound_bank_wait_state == 1) {
-        shooter_sound_bank_poll_result = func_80044C98();
+        shooter_sound_bank_poll_result = audio_bank_transfer_poll();
         if (shooter_sound_bank_poll_result == 1) {
             shooter_sound_bank_wait_state = 2;
         }
@@ -56,7 +56,7 @@ void shooter_stage2_step_end(void) {
     if (shooter_load_request == 0) {
         shooter_reset_enemies();
         shooter_load_request = 0x28;
-        func_800450F4(1, 0x201);
+        audio_bgm_play_short(1, 0x201);
         mode_stage_set(0x16);
     }
 }

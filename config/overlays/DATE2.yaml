@@ -43,6 +43,7 @@ options:
     - config/symbol_addrs_obin.txt
     - config/symbol_addrs_sdk.txt
     - config/symbol_addrs_hypotheses.txt
+    - config/symbols_DATE2.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/DATE2_undefined_funcs_auto.txt

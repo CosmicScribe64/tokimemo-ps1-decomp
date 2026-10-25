@@ -1145,11 +1145,11 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/enemy_delinquents.rodata", D_8015B7
 
 void rpg_loot_text_delinquents(void) {
     /* the three scalars sit between the tables: they set flags at sp+0x64 (T-17103) */
-    RpgStrTbl4 names;
+    RpgRewardTextTable names;
     s32 n;
     s32 count;
     s32 i;
-    RpgWordTbl4 flags;
+    RpgRewardSelectionFlags flags;
 
     names = rpg_loot_names_delinquents;
     flags = rpg_loot_flags_init;
@@ -1165,26 +1165,26 @@ void rpg_loot_text_delinquents(void) {
         case 1:
         case 2:
         case 3:
-            flags.v[0] = 1;
+            flags.selected[0] = 1;
             break;
         case 4:
         case 5:
         case 6:
-            flags.v[1] = 1;
+            flags.selected[1] = 1;
             break;
         case 7:
         case 8:
-            flags.v[2] = 1;
+            flags.selected[2] = 1;
             break;
         case 9:
-            flags.v[3] = 1;
+            flags.selected[3] = 1;
             break;
         }
     }
     for (i = 0; i < 4; i++) {
-        if (flags.v[i] == 1) {
+        if (flags.selected[i] == 1) {
             strcpy(*(void **)(rpg_text_result_pointers + n * 4 + 12), "おたから：");
-            strcat(*(void **)(rpg_text_result_pointers + n * 4 + 12), names.s[i]);
+            strcat(*(void **)(rpg_text_result_pointers + n * 4 + 12), names.strings[i]);
             n++;
         }
     }

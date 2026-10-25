@@ -109,14 +109,14 @@ void encounter_yukari_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_42;
     encounter_scene_command_table = encounter_scene_command_section_42;
     encounter_scene_voice_table = encounter_scene_voice_section_42;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     if (talk_work == 1) {
         game_state.girls[5].affection += 1;
         game_state.girls[5].syoushin -= 1;
@@ -153,14 +153,14 @@ void encounter_yukari_scene_init_2(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_43;
     encounter_scene_command_table = encounter_scene_command_section_43;
     encounter_scene_voice_table = encounter_scene_voice_section_43;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     game_state.girls[5].tokimeki += 1;
     check_para_limit();
     D_800CA368 = 0x22;

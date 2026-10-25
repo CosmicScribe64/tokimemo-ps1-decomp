@@ -9,7 +9,7 @@ typedef struct GyoziFlag2 {
     /* 0x00 */ u8 rest : 6;
 } GyoziFlag2; /* size 0x01 */
 
-void func_8013A140(void) {
+void annual_scene_mode_callback_addresses_init(void) {
     D_80147430 = 0x801976E8;
     D_80147434 = 0x80198B88;
     D_80147438 = 0x8019A368;
@@ -39,17 +39,17 @@ void func_8013A140(void) {
     D_80147498 = 0x8019EDB0;
 }
 
-void func_8013A2F4(void) {
+void annual_scene_mode_dispatch(void) {
     func_8008E6AC();
     switch (D_800F6479) {
     case 0:
-        func_8013A5F4();
+        annual_scene_selected_girl_resource_setup();
         break;
     case 1:
-        func_8013A76C();
+        annual_scene_choice_completion_gate();
         break;
     case 2:
-        func_8013A7C8();
+        annual_scene_resource_sector_read();
         break;
     case 3:
         func_80089244();
@@ -63,34 +63,34 @@ void func_8013A2F4(void) {
             talk_voice_play();
             break;
         case 1:
-            func_8013C4D0();
+            annual_timing_sequence_substate_dispatch();
             break;
         case 2:
-            func_8013AE80();
+            annual_choice_scene_substate_dispatch();
             break;
         case 3:
-            func_8013B920();
+            annual_ayako_scene_group_dispatch();
             break;
         case 4:
-            func_8013D550();
+            annual_sound_callback_dispatch();
             break;
         case 5:
-            func_8013CDD0();
+            annual_yukari_scene_substate_dispatch();
             break;
         case 6:
-            func_8013D120();
+            annual_nozomi_scene_group_dispatch();
             break;
         case 7:
-            func_8013BFB4();
+            annual_scene_mode_step_dispatch_call();
             break;
         case 8:
-            func_8013A920();
+            annual_scene_substate_dispatch();
             break;
         case 9:
             talk_voice_play();
             break;
         case 10:
-            func_8013DB50();
+            annual_scene_mode_step_update();
             break;
         default:
             talk_voice_play();
@@ -98,7 +98,7 @@ void func_8013A2F4(void) {
         }
         break;
     case 5:
-        func_8013A4E8();
+        annual_scene_selected_girl_state_apply();
         break;
     default:
         talk_voice_play();
@@ -114,7 +114,7 @@ void func_8013A2F4(void) {
     func_800530E0();
 }
 
-void func_8013A4E8(void) {
+void annual_scene_selected_girl_state_apply(void) {
     u8 girl;
     GyoziWork *work;
 
@@ -136,7 +136,7 @@ extern s32 D_800C3280[];
 extern s32 D_800C32C0[];
 extern s32 D_800C3300[];
 
-void func_8013A5F4(void) {
+void annual_scene_selected_girl_resource_setup(void) {
     u16 a1;
     u16 a2;
 
@@ -169,25 +169,25 @@ void func_8013A5F4(void) {
     func_8004DDD8();
 }
 
-void func_8013A76C(void) {
+void annual_scene_choice_completion_gate(void) {
     if (func_80050AB8() == 1) {
         func_8004DDD8();
     }
 }
 
-void func_8013A7A0(void) {
+void annual_scene_audio_command_0200(void) {
     func_80086AB0(0x200);
     func_8004DE1C();
 }
 
-void func_8013A7C8(void) {
+void annual_scene_resource_sector_read(void) {
     func_80051DD8(0x10, 0x80197000, 0xA3B8);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_801474B0 = D_800F5A2D[D_800F5AAC * 4];
     func_8004DDD8();
 }
 
-void func_8013A820(void) {
+void annual_scene_talk_run_current(void) {
     D_800D9234 = (u8 *)&D_801474A8;
     D_800D9238 = (u8 *)&D_801474AC;
     D_800D923C = D_8014749C;
@@ -196,7 +196,7 @@ void func_8013A820(void) {
     func_8008D610(D_8012E66C, 1, 0);
 }
 
-void func_8013A89C(void) {
+void annual_scene_talk_run_current_with_flags(void) {
     D_800D9234 = (u8 *) &D_801474A8;
     D_800D9238 = (u8 *) &D_801474AC;
     D_800D923C = D_8014749C;

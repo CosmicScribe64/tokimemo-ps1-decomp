@@ -3,45 +3,45 @@
 #include "game.h"
 #include "psx_types.h"
 
-void func_8004AD60(s32 arg0) {
+void debug_hud_level_step(s32 arg0) {
     if ((arg0 & 0xFF) == 0) {
-        D_800B3D80 = 0;
+        debug_hud_level = 0;
     } else {
-        D_800B3D80 = D_800B3D80 - 1;
+        debug_hud_level = debug_hud_level - 1;
     }
-    if ((u32)D_800B3D80 >= 9U) {
-        D_800B3D80 = 8;
+    if ((u32)debug_hud_level >= 9U) {
+        debug_hud_level = 8;
     }
 }
 
-void func_8004ADAC(u8 arg0) {
-    D_800B3D80 = arg0;
+void debug_hud_level_set(u8 arg0) {
+    debug_hud_level = arg0;
     if ((u32)arg0 >= 9) {
-        D_800B3D80 = 8;
+        debug_hud_level = 8;
     }
 }
 
-u8 func_8004ADD4(void) {
-    return D_800B3D80;
+u8 debug_hud_level_get(void) {
+    return debug_hud_level;
 }
 
-void func_8004ADE4(void) {
-    if (D_800B3220 != 0) {
+void debug_font_load(void) {
+    if (debug_hud_enabled != 0) {
         LoadSquare(0x2C0, 0x1E0, 0x40, 0x20, (void *)0x801F0020);
     }
 }
 
-/* FAKE: func_8004AE54 takes four arguments and the original leaves a0-a2 untouched; passing the
+/* FAKE: debug_print_int_color takes four arguments and the original leaves a0-a2 untouched; passing the
  * (unused) incoming a0-a2 through reproduces that, real source unknown. T-0800 */
 void draw_debug_number(s32 a0, s32 a1, s32 a2) {
-    if (D_800B3220 != 0) {
-        func_8004AE54(a0, a1, a2, 0xF);
+    if (debug_hud_enabled != 0) {
+        debug_print_int_color(a0, a1, a2, 0xF);
     }
 }
 
 /* tpx and tpy are declared locals so that the allocator spills the later one (tpy, sp+0x5C) and keeps tpx in
  * $fp, as the original does; as bare expressions it spills the other. T-17013 */
-void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
+void debug_print_int_color(s32 a0, s32 a1, s32 a2, s32 a3) {
     SPRT_8 *p;
     s32 n;
     s32 v;
@@ -49,7 +49,7 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
     s32 tpy;
 
     n = 0;
-    if (D_800B3D80 >= 4 && D_800B3220 != 0) {
+    if (debug_hud_level >= 4 && debug_hud_enabled != 0) {
         v = abs(a0);
         /* Both v >= 0 tests (here and at the loop end) are always true, but the original has the
          * bltz/bgez branches, so they stay. T-17013 */
@@ -63,12 +63,12 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
                 p->r0 = 0x80;
                 p->g0 = 0x80;
                 p->b0 = 0x80;
-                p->x0 = game_state.screen_center_x[draw_buffer] + a1 - n * 5;
-                p->y0 = game_state.screen_center_y[draw_buffer] + a2;
-                p->u0 = D_800B3D84[(v % 10) * 2];
-                p->v0 = D_800B3D84[(v % 10) * 2 + 1];
+                p->x0 = game_state.draw_origin_x[draw_buffer] + a1 - n * 5;
+                p->y0 = game_state.draw_origin_y[draw_buffer] + a2;
+                p->u0 = debug_font_uv[(v % 10) * 2];
+                p->v0 = debug_font_uv[(v % 10) * 2 + 1];
                 p->clut = func_8009ED74(tpx, tpy);
-                AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
+                AddPrim(draw_ot_tags + (draw_buffer << 10) + 4, p);
                 if (v < 10) {
                     n++;
                     break;
@@ -86,25 +86,25 @@ void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3) {
             p->r0 = 0x80;
             p->g0 = 0x80;
             p->b0 = 0x80;
-            p->x0 = game_state.screen_center_x[draw_buffer] + a1 - n * 5;
-            p->y0 = game_state.screen_center_y[draw_buffer] + a2;
-            p->u0 = D_800B3D84[0x12] + 8;
-            p->v0 = D_800B3D84[0x13];
+            p->x0 = game_state.draw_origin_x[draw_buffer] + a1 - n * 5;
+            p->y0 = game_state.draw_origin_y[draw_buffer] + a2;
+            p->u0 = debug_font_uv[0x12] + 8;
+            p->v0 = debug_font_uv[0x13];
             p->clut = func_8009ED74(tpx, tpy);
-            AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
+            AddPrim(draw_ot_tags + (draw_buffer << 10) + 4, p);
         }
         dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
     }
 }
 
-void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
+void debug_print_hex(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
     s32 n;
     u32 x;
     u8 *e;
 
     n = 0;
-    if (D_800B3D80 >= 4 && D_800B3220 != 0) {
+    if (debug_hud_level >= 4 && debug_hud_enabled != 0) {
         x = arg0;
         for (;;) {
             p = (u8 *)GetWorkBase(0x10, draw_buffer);
@@ -113,13 +113,13 @@ void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
             p[4] = 0x80;
             p[5] = 0x80;
             p[6] = 0x80;
-            *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg1 - n * 6;
-            e = D_800B3D84 + (x & 0xF) * 2;
-            *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg2;
+            *(s16 *)(p + 8) = game_state.draw_origin_x[draw_buffer] + arg1 - n * 6;
+            e = debug_font_uv + (x & 0xF) * 2;
+            *(s16 *)(p + 0xA) = game_state.draw_origin_y[draw_buffer] + arg2;
             p[0xC] = e[0];
             p[0xD] = e[1];
             *(s16 *)(p + 0xE) = func_8009ED74(0x100, 0x1FF);
-            AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
+            AddPrim(draw_ot_tags + (draw_buffer << 10) + 4, p);
             if (x < 0x10) {
                 dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
                 break;
@@ -130,11 +130,11 @@ void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void func_8004B338(s32 arg0, s32 arg1, s32 arg2) {
-    func_8004B358(arg0, arg1, arg2, 0xF);
+void debug_print_string(s32 arg0, s32 arg1, s32 arg2) {
+    debug_print_string_color(arg0, arg1, arg2, 0xF);
 }
 
-s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
+s32 debug_print_string_color(s32 a0, s32 a1, s32 a2, s32 a3) {
     SPRT *p;
     s32 x;
     u8 c;
@@ -145,10 +145,10 @@ s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
     /* FAKE: unused local pads stack frame to 0x88 and places spilled tpy at sp+0x5C. T-24123 */
     s32 pad;
 
-    if (D_800B3D80 < 4) {
+    if (debug_hud_level < 4) {
         return 0;
     }
-    if (D_800B3220 == 0) {
+    if (debug_hud_enabled == 0) {
         return 0;
     }
     ptr = (u8 *)a0;
@@ -164,19 +164,19 @@ s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
         p->r0 = 0x80;
         p->g0 = 0x80;
         p->b0 = 0x80;
-        p->x0 = game_state.screen_center_x[draw_buffer] + x;
-        p->y0 = game_state.screen_center_y[draw_buffer] + a2;
+        p->x0 = game_state.draw_origin_x[draw_buffer] + x;
+        p->y0 = game_state.draw_origin_y[draw_buffer] + a2;
         if (flag != 0) {
             x += 6;
         } else {
             x += 8;
         }
         if (flag != 0) {
-            p->u0 = D_800B3D84[0x14] + c * 8 - 8;
-            p->v0 = D_800B3D84[0x15];
+            p->u0 = debug_font_uv[0x14] + c * 8 - 8;
+            p->v0 = debug_font_uv[0x15];
         } else {
-            p->u0 = D_800B3D84[0x14] + c * 8 - 8;
-            p->v0 = D_800B3D84[0x15] - 0x10;
+            p->u0 = debug_font_uv[0x14] + c * 8 - 8;
+            p->v0 = debug_font_uv[0x15] - 0x10;
         }
         if (flag != 0) {
             setWH(p, 6, 0xC);
@@ -184,7 +184,7 @@ s32 func_8004B358(s32 a0, s32 a1, s32 a2, s32 a3) {
             setWH(p, 8, 8);
         }
         p->clut = func_8009ED74(tpx, tpy);
-        AddPrim(D_800E8CA0 + (draw_buffer << 10) + 4, p);
+        AddPrim(draw_ot_tags + (draw_buffer << 10) + 4, p);
         ptr++;
     }
     dtd_on_tpage(0x2C0, 0x100, 1, 0, 0);
@@ -214,7 +214,7 @@ typedef struct {
     u16 x1 : 1;
 } PixelPairOut;
 
-void func_8004B590(arg0, arg1)
+void color_palette_to_gray(arg0, arg1)
 PixelPairIn *arg0;
 PixelPairOut *arg1;
 {
@@ -381,7 +381,7 @@ s32 db;
     u32 v;
     u32 s;
 
-    func_8004B590(arg0, arg1);
+    color_palette_to_gray(arg0, arg1);
     p = arg1;
     for (i = 0; i != 0x80; i++) {
         s = p->r0 + p->g0 + p->b0;

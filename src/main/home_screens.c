@@ -315,7 +315,7 @@ void settings_room_bg_load_start(void) {
 void settings_room_bg_load_finish(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, dec_bg_decode_to_vram(0));
-        if (D_800B594C == -1) {
+        if (bg_decode_result == -1) {
             dec_bg_reset();
             dec_bg_cd_read(D_800B5950[hud_season_index()], 0);
         } else {
@@ -382,7 +382,7 @@ void settings_command_screen_mode_stage_select(void) {
     settings_room_sick_icon_show();
     card_job_state = game_state.memory_card_job;
     if (card_job_state == 1) {
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             audio_command(0x50F);
             game_state.memory_card_job = 0;
             memory_card_stop();
@@ -400,7 +400,7 @@ s32 settings_room_click_window(void) {
     if (cursor_x < 0x22 && cursor_x >= -0xD && cursor_y < 8 && cursor_y >= -0xB) {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             audio_command(0xB1);
-            func_80044774(0);
+            audio_bgm_stop(0);
             cd_audio_request_set(0x1D000185, 0x17000397, 0);
             audio_command(0x300);
             return 1;
@@ -425,7 +425,7 @@ s32 settings_room_click_radio(void) {
     if ((cursor_x < 8) && (cursor_x >= -0x27) && (cursor_y < 0x24) && (cursor_y >= 0x19)) {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             audio_command(0xD1);
-            func_80044774(0);
+            audio_bgm_stop(0);
             p = settings_room_radio_clips + ((u16)game_state.day_count & 7) * 2;
             cd_audio_request_set(p[0], p[1], 0xE);
             audio_command(0x300);
@@ -441,7 +441,7 @@ s32 settings_room_click_radio_holiday(void) {
     if ((cursor_x < 8) && (cursor_x >= -0x27) && (cursor_y < 0x24) && (cursor_y >= 0x19)) {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             audio_command(0xD1);
-            func_80044774(0);
+            audio_bgm_stop(0);
             p = settings_room_radio_clips_holiday + ((u16)game_state.day_count & 7) * 2;
             cd_audio_request_set(p[0], p[1], 0xE);
             audio_command(0x300);
@@ -516,7 +516,7 @@ s32 settings_command_screen_icon_confirm(void) {
             menu_result = 1;
             cd_audio_command(9, 0, 0);
             audio_command(3);
-            if (func_8004480C() == 0) {
+            if (audio_bgm_is_playing() == 0) {
                 audio_bank_start(0, 0);
             }
         }
@@ -796,7 +796,7 @@ void settings_save_load_menu_init(void) {
     set_kanji_string(-0x80, 0x52, 0U, D_800B5A1C, 0);
     set_kanji_string(-0x80, 0x5A, 0U, D_800B5A1C, 0);
     k_sub_disp_start(1);
-    func_80056284();
+    memory_card_state_reset();
     menu_set(1, 2, x, y, w, h);
     game_state.menu_cursor_1 = 0;
     mode_step_next();
@@ -808,7 +808,7 @@ s32 settings_save_load_card_check(void) {
     card_result = &game_state.memory_card_result;
     switch (game_state.substep) {
     case 0:
-        if (func_80053F04() != 0) {
+        if (memory_card_check_poll() != 0) {
             if (*card_result == 1) {
                 memory_card_stop();
                 game_state.substep++;
@@ -829,7 +829,7 @@ s32 settings_save_load_card_check(void) {
         game_state.substep++;
         break;
     case 2:
-        if (func_80054140() == 2) {
+        if (memory_card_scan_poll() == 2) {
             game_state.substep++;
         } else if ((u32)game_state.memory_card_timer > 0x200) {
             mode_step_set(0xFF);
@@ -851,8 +851,8 @@ s32 settings_save_load_card_check(void) {
         }
         break;
     case 4:
-        if (func_80054284() == 3) {
-            func_800552DC(0);
+        if (memory_card_system_read_poll() == 3) {
+            memory_card_system_bank_load(0);
             settings_save_load_layout_stash(1);
             k_sub_reset();
             set_kanji_string(-0x80, 0x32, 0, "セーブまたはロードを選んでください", 0);
@@ -896,7 +896,7 @@ s32 settings_save_load_format_prompt(void) {
         break;
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            if (func_80054108() == 1) {
+            if (memory_card_format() == 1) {
                 mode_step_set(0);
             } else {
                 settings_save_load_layout_stash(1);
@@ -1043,7 +1043,7 @@ void settings_save_load_save_info_read(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (game_state.memory_card_timer >= 0x201U || game_state.memory_card_result == 0xD0) {
@@ -1052,7 +1052,7 @@ void settings_save_load_save_info_read(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             mode_step_set(4);
             hud_save_slot_info_show(0, 0);
             settings_save_load_save_prompt();
@@ -1088,8 +1088,8 @@ void settings_save_load_save_select(void) {
             if (*slot_status == 0) {
                 /* FAKE: T-24301 (as T-24209), byte view store + plain re-read promote unk_1118 to v0 */
                 ((u8 *)&game_state)[0x1118] = save_slot_index;
-                if (func_80054694(game_state.save_slot) == 1) {
-                    func_80054704(game_state.save_slot);
+                if (memory_card_file_create(game_state.save_slot) == 1) {
+                    memory_card_file_delete(game_state.save_slot);
                     *slot_status = 0xFF;
                     memory_card_start();
                     mode_step_next();
@@ -1158,7 +1158,7 @@ s32 settings_save_load_save_write(void) {
         game_state.substep = game_state.substep + 1;
         break;
     case 3:
-        if (func_80054590() == 0x14) {
+        if (memory_card_save_write_poll() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep = game_state.substep + 1;
             memory_card_stop();
@@ -1177,7 +1177,7 @@ s32 settings_save_load_save_write(void) {
             game_state.memory_card_job = 1;
             D_800E7D36 = game_state.save_slot;
             game_state.save_slot = 0;
-            func_80054E6C();
+            memory_card_slot_summary_store();
             settings_save_load_layout_stash(1);
             mode_stage_set(0);
             mode_step_set(2);
@@ -1267,7 +1267,7 @@ void settings_save_load_load_info_read(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
@@ -1276,7 +1276,7 @@ void settings_save_load_load_info_read(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             hud_save_slot_info_show(0, 1);
             mode_step_set(7);
             settings_save_load_load_prompt();
@@ -1333,7 +1333,7 @@ void settings_save_load_load_read(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             game_state.substep += 1;
             memory_card_stop();
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
@@ -1342,7 +1342,7 @@ void settings_save_load_load_read(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             game_state.substep += 1;
         } else {
             mode_step_set(0xE0);
@@ -1368,7 +1368,7 @@ void settings_save_load_load_read(void) {
         }
         break;
     case 5:
-        if (func_80055AFC(0) == 1) {
+        if (memory_card_game_bank_load(0) == 1) {
             mode_step_next();
         } else {
             mode_step_set(0xE0);
@@ -1402,8 +1402,8 @@ s32 settings_save_load_load_finish(void) {
         break;
     case 2:
         if (audio_bank_load_poll() == 1) {
-            func_80041878();
-            func_80041F48();
+            boot_game_data_init();
+            boot_event_state_init();
             game_state.event_log_count = 0;
             parameter_disp_switch(0);
             hizuke_disp_switch(0);
@@ -2634,7 +2634,7 @@ void rumor_scene_init(void) {
 void rumor_bg_wait(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, dec_bg_decode_to_vram(0));
-        if (D_800B594C == -1) {
+        if (bg_decode_result == -1) {
             dec_bg_reset();
             dec_bg_cd_read(D_800B5950[hud_season_index()], 0);
         } else {
@@ -2774,7 +2774,7 @@ void settings_new_year_card_scene_start(void) {
     if (settings_new_year_card_sender_count() != 0) {
         set_dec_bri(0);
         text_system_reset();
-        func_80057640(0xA0);
+        bg_capture_screen(0xA0);
         actor_clear_upper();
         sprite_tables_clear();
         hizuke_init();
@@ -2809,7 +2809,7 @@ void pre_syogatu_init1(void) {
             mode_step_next();
         }
     }
-    func_80057710();
+    bg_wipe_step();
 }
 
 void pre_syogatu_init2(void) {

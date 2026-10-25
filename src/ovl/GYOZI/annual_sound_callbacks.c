@@ -7,45 +7,45 @@ typedef struct {
 } FnTbl20; /* size 0x50 */
 extern FnTbl20 D_80147F04;
 
-void func_8013D470(void) {
+void annual_callback_audio_4040(void) {
     func_8008A0D4(0x4040);
     func_8004DE1C();
 }
 
-void func_8013D498(void) {
+void annual_callback_audio_6346(void) {
     func_80072734(0x6346);
     func_8004DE1C();
 }
 
-void func_8013D4C0(void) {
+void annual_callback_audio_6157(void) {
     func_80072734(0x6157);
     func_8004DE1C();
 }
 
-void func_8013D4E8(void) {
+void annual_callback_conditional_selector_5(void) {
     if (((u32) D_800F5488 >> 0x1C) == 9) {
         D_801474A8 = 5;
     }
     func_8004DE1C();
 }
 
-void func_8013D528(void) {
+void annual_callback_selector_3(void) {
     D_801474A8 = 3;
     func_8004DE1C();
 }
 
-void func_8013D550(void) {
+void annual_sound_callback_dispatch(void) {
     u8 sel = D_801474B8; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
     case 0:
-        func_8013D5B0();
+        annual_sound_callback_group_0_dispatch();
         return;
     case 1:
-        func_8013D62C();
+        annual_sound_callback_group_1_dispatch();
         return;
     default:
-        func_8013D6B4();
+        annual_sound_callback_default_group_dispatch();
         return;
     }
 }
@@ -55,7 +55,7 @@ typedef struct {
 } FnTbl37; /* size 0x94 */
 extern FnTbl37 D_80147E70;
 
-void func_8013D5B0(void) {
+void annual_sound_callback_group_0_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl37 tbl;
 
@@ -64,7 +64,7 @@ void func_8013D5B0(void) {
     tbl.f[idx]();
 }
 
-void func_8013D62C(void) {
+void annual_sound_callback_group_1_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -75,7 +75,7 @@ void func_8013D62C(void) {
 
 extern FnTbl20 D_80147F54;
 
-void func_8013D6B4(void) {
+void annual_sound_callback_default_group_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -84,12 +84,12 @@ void func_8013D6B4(void) {
     tbl.f[idx]();
 }
 
-void func_8013D73C(void) {
+void annual_callback_audio_658f(void) {
     func_80072734(0x658F);
     func_8004DE1C();
 }
 
-void func_8013D764(void) {
+void annual_sound_scene_state_init(void) {
     func_8004EDE0(1, 0);
     func_80054864(1);
     func_8004C670();
@@ -109,7 +109,7 @@ void func_8013D764(void) {
     func_8008FC10();
     /* FAKE: byte lvalue keeps the store and call argument in a0; original spelling unknown. T-9530 */
     func_8008F618(*(u8 *)&D_800F53A0.unk_F2F = 4);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_8014749C = D_8014744C;
     D_801474A0 = D_80147470;
     D_801474A4 = D_80147494;
@@ -119,7 +119,7 @@ void func_8013D764(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_sound_callbacks.rodata", D_80145C20);
 
-void func_8013D884(void) {
+void annual_sound_table_0_callback(void) {
     D_801474A8 = 0;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145C20);
@@ -128,7 +128,7 @@ void func_8013D884(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_sound_callbacks.rodata", D_80145C28);
 
-void func_8013D8C8(void) {
+void annual_sound_table_12_callback(void) {
     D_801474A8 = 0xC;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145C28);
@@ -137,31 +137,31 @@ void func_8013D8C8(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_sound_callbacks.rodata", D_80145C34);
 
-void func_8013D910(void) {
+void annual_sound_table_15_callback(void) {
     D_801474A8 = 0xF;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145C34);
     func_8004DE1C();
 }
 
-void func_8013D958(void) {
+void annual_callback_audio_3ff5(void) {
     func_8008A0D4(0x3FF5);
     func_8004DE1C();
 }
 
-void func_8013D980(void) {
+void annual_callback_audio_4037(void) {
     func_8008A0D4(0x4037);
     func_8004DE1C();
 }
 
-void func_8013D9A8(void) {
+void annual_callback_conditional_selector_6(void) {
     if (((u32) D_800F563A >> 4) == 7) {
         D_801474A8 = 6;
     }
     func_8004DE1C();
 }
 
-void func_8013D9E8(void) {
+void annual_callback_conditional_selector_8_or_10(void) {
     if (((D_800F5638 << 0x1D) >> 0x1F) == (D_800F5488 >> 0x1C)) {
         if (((u32)D_800F563A >> 4) == 7) {
             D_801474A8 = 0xA;
@@ -172,14 +172,14 @@ void func_8013D9E8(void) {
     func_8004DE1C();
 }
 
-void func_8013DA58(void) {
+void annual_callback_conditional_selector_4(void) {
     if (((D_800F5638 << 0x1D) >> 0x1F) != (D_800F5488 >> 0x1C)) {
         D_801474A8 = 4;
     }
     func_8004DE1C();
 }
 
-void func_8013DAA4(void) {
+void annual_callback_conditional_advance_sequence(void) {
     if (((u32) (D_800F5638 << 0x1D) >> 0x1F) == ((u32) D_800F5488 >> 0x1C)) {
         func_8004DE1C();
         func_8004DE1C();

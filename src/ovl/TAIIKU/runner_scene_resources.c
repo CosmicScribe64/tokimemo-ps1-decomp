@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-void func_80132B40(void) {
+void sports_runner_resource_addresses_init(void) {
     D_80148EF0 = 0x801A19CC;
     D_80148EF4 = 0x8018F000;
     D_80148EF8 = 0x8019D000;

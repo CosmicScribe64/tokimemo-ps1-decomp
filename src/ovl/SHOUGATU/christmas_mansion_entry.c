@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_8013D660(void) {
+void new_year_ijuin_entry_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl33 tbl;
 
@@ -11,7 +11,7 @@ void func_8013D660(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013D6D4(void) {
+void new_year_mansion_audio_bank_load_start(void) {
     audio_bank_load_start(1, 0xC621, 0xC613, 0xD93B, 0xD8F0, 0xD8D0);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -19,7 +19,7 @@ void func_8013D6D4(void) {
     mode_step_next();
 }
 
-void func_8013D734(void) {
+void new_year_mansion_audio_bank_wait(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x202);
         mode_step_next();
@@ -31,18 +31,18 @@ void func_8013D734(void) {
     }
 }
 
-void func_8013D7BC(void) {
+void new_year_mansion_background_resource_read(void) {
     cd_read_sectors(0xE, 0x80197000, 0xAFBC);
-    func_8013C070();
+    new_year_scene_callback_addresses_init();
     mode_step_next();
 }
 
-void func_8013D7F8(void) {
+void new_year_mansion_timeout_init(void) {
     D_80122CFC = 0x1E;
     mode_step_next();
 }
 
-void func_8013D820(void) {
+void new_year_mansion_story_threshold_route(void) {
     s16 thresh = game_state.girls[12].flags.f.story_stage * 25 + 150;
 
     if (game_state.param_athletics.value >= thresh &&
@@ -63,7 +63,7 @@ void func_8013D820(void) {
     mode_step_next();
 }
 
-void func_8013D92C(void) {
+void new_year_mansion_story_progress_update(void) {
     s16 v;
     /* FAKE: GameState *g splits the second unk_1BC[14].unk_0C access from the first so uopt keeps it in $t2 instead of promoting to $v0. T-24130 */
     GameState *g = &game_state;
@@ -89,16 +89,16 @@ void func_8013D92C(void) {
     mode_step_next();
 }
 
-void func_8013DA5C(void) {
+void new_year_girl14_story_flag_talk_gate(void) {
     if (((u32) (game_state.girls[14].flags.w << 0x14) >> 0x1D) == 1) {
-        func_8013D2A8();
+        new_year_current_talk_start();
         return;
     }
     mode_step_next();
     mode_step_next();
 }
 
-s32 func_8013DAAC(void) {
+s32 new_year_ijuin_birthday_dispatch(void) {
     GameState *g;
 
     if (game_state.girls[0].birthday.date.month == 12 &&
@@ -124,12 +124,12 @@ s32 func_8013DAAC(void) {
     tpage_buf_clear();
     text_system_reset();
     talk_clear();
-    strcpy(D_800CA19C, "伊集院邸");
+    strcpy(scene_place_title, "伊集院邸");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     D_80145F2C = 0;
     D_80145F30 = 0;
     addr_init_bustup();
@@ -147,27 +147,27 @@ s32 func_8013DAAC(void) {
         strcpy(name_code_girl_short, "外井");
     }
     game_state.current_girl = GIRL_REI;
-    func_8013C070();
+    new_year_scene_callback_addresses_init();
     D_80145F20 = D_80145AFC;
     D_80145F24 = D_80145B30;
     D_80145F28 = D_80145B64;
     mode_step_next();
 }
 
-void func_8013DCFC(void) {
+void new_year_mansion_background_read(void) {
     bg_read_sub2(0x41CA);
     mode_step_next();
 }
 
-void func_8013DD24(void) {
+void new_year_mansion_portrait_read(void) {
     portrait_read_start(0x6B24);
     mode_step_next();
 }
 
-void func_8013DD4C(void) {
+void new_year_mansion_mode_advance(void) {
     mode_stage_next();
 }
 
-void func_8013DD6C(void) {
+void new_year_mansion_mode_select_4(void) {
     mode_stage_set(4);
 }

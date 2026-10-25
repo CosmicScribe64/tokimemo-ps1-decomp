@@ -145,7 +145,7 @@ void spot_yumi_scene7_run(void) {
 
 void spot_yumi_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl47 tbl;
+    SpotYukoMegumiYumiAndSeaStepTable tbl;
 
     tbl = spot_yumi_scene1_steps;
     idx = D_800B1AF6;
@@ -160,7 +160,7 @@ void spot_yumi_scene1_assets_load_07(void) {
 
 void spot_yumi_scene2_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl21 tbl;
+    SpotMiraAndYumiSceneStepTable tbl;
 
     tbl = spot_yumi_scene2_steps;
     idx = D_800B1AF6;
@@ -198,7 +198,7 @@ void spot_yumi_scene2_branch_on_mood_14(void) {
 
 void spot_yumi_scene7_steps_run(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl55 tbl;
+    SpotNozomiSakiAndYumiSceneStepTable tbl;
 
     tbl = spot_yumi_scene7_steps;
     tbl.f[D_800B1AF6](0x80);
@@ -460,9 +460,9 @@ void spot_yumi_scene7_init_00(void) {
 void spot_yumi_scene7_still_show_07(void) {
     /* FAKE: unused 8-byte local places t0..t2 at the original stack offsets; real source unknown. T-24092 */
     s32 pad[2];
-    EvShorts10 t0;
-    EvShorts10 t1;
-    EvShorts10 t2;
+    SpotYumiSpriteLayoutValues t0;
+    SpotYumiSpriteLayoutValues t1;
+    SpotYumiSpriteLayoutValues t2;
     s16 i;
 
     t0 = D_80123B7C;
@@ -643,7 +643,7 @@ void spot_yumi_scene7_bg_load_33(void) {
 
 void spot_yumi_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable tbl;
 
     tbl = spot_yumi_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
@@ -659,7 +659,7 @@ void spot_yumi_scene3_assets_load_00(void) {
 
 void spot_yumi_scene4_run(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
-    FnTbl44 tbl;
+    SpotShioriAndYumiSceneStepTable tbl;
 
     tbl = spot_yumi_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -681,7 +681,7 @@ void spot_yumi_scene4_assets_load_00(void) {
 
 void spot_yumi_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl44 tbl;
+    SpotShioriAndYumiSceneStepTable tbl;
 
     tbl = spot_yumi_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
@@ -697,7 +697,7 @@ void spot_yumi_scene5_assets_load_00(void) {
 
 void spot_yumi_scene6_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl52 tbl;
+    SpotYukoAndYumiSceneStepTable tbl;
 
     tbl = spot_yumi_scene6_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

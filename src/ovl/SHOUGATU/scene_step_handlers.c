@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_801397D0(void) {
+void new_year_scene_asset_addresses_init(void) {
     D_801453B0 = (u8 *)0x801E60CC;
     D_801453B4 = (u8 *)0x801E60D0;
     D_801453B8 = (u8 *)0x801E60E4;
@@ -23,29 +23,29 @@ void func_801397D0(void) {
     D_801453F4 = (u8 *)0x801E2000;
 }
 
-void func_801398F0(void) {
+void new_year_scene_callback_group_dispatch(void) {
     u8 sel = D_80144E14; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
     case 0:
-        func_80139980();
+        new_year_scene_callback_group_0_dispatch();
         return;
     case 1:
-        func_80139A08();
+        new_year_scene_callback_group_1_dispatch();
         return;
     case 2:
-        func_80139A90();
+        new_year_scene_callback_group_2_dispatch();
         return;
     case 3:
-        func_80139B0C();
+        new_year_scene_callback_group_3_dispatch();
         return;
     default:
-        func_80139B94();
+        new_year_scene_callback_group_4_dispatch();
         return;
     }
 }
 
-void func_80139980(void) {
+void new_year_scene_callback_group_0_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -54,7 +54,7 @@ void func_80139980(void) {
     tbl.f[idx]();
 }
 
-void func_80139A08(void) {
+void new_year_scene_callback_group_1_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -63,7 +63,7 @@ void func_80139A08(void) {
     tbl.f[idx]();
 }
 
-void func_80139A90(void) {
+void new_year_scene_callback_group_2_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl25 tbl;
 
@@ -72,7 +72,7 @@ void func_80139A90(void) {
     tbl.f[idx]();
 }
 
-void func_80139B0C(void) {
+void new_year_scene_callback_group_3_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -81,7 +81,7 @@ void func_80139B0C(void) {
     tbl.f[idx]();
 }
 
-void func_80139B94(void) {
+void new_year_scene_callback_group_4_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl37 tbl;
 
@@ -90,8 +90,8 @@ void func_80139B94(void) {
     tbl.f[idx]();
 }
 
-s32 func_80139C10(void) {
-    func_80137AB4();
+s32 new_year_scene_mio_audio_wait(void) {
+    new_year_meeting_talk_run();
     if (D_80144E0C == 2) {
         if (game_state.mode_step_timer.w++ == 1) {
             audio_command(0x501);
@@ -99,31 +99,31 @@ s32 func_80139C10(void) {
     }
 }
 
-void func_80139C68(void) {
+void new_year_scene_mio_current_girl_update(void) {
     game_state.current_girl = GIRL_MIO;
-    func_80137AB4();
+    new_year_meeting_talk_run();
 }
 
-void func_80139C90(void) {
+void new_year_scene_resource_read(void) {
     cd_read_sectors(0x71, 0x801AE000, 0x8768);
-    func_801397D0();
+    new_year_scene_asset_addresses_init();
     mode_step_next();
 }
 
-void func_80139CCC(void) {
+void new_year_library_scene_state_init(void) {
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     D_80122CF8 = 0;
     D_80122CF4 = 0;
-    D_800B5940 = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     text_marker_hide();
     /* FAKE: the store inside the call shares $a0 with the argument (T-9020, T-9170) */
     talk_names_set(*(u8 *)&game_state.current_girl = 1);
-    func_80136F90();
+    new_year_meeting_dialogue_addresses_init();
     D_80144DFC = D_80144DA0;
     /* three words of a 0x24-byte record array reached through one base: as1 keeps the loads in order */
     D_80144E00 = (&D_80144DA0)[9];
@@ -131,41 +131,41 @@ void func_80139CCC(void) {
     mode_step_next();
 }
 
-void func_80139D80(void) {
+void new_year_library_scene_selector_0(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "図書室");
+    strcpy(scene_place_title, "図書室");
     mode_step_next();
 }
 
-void func_80139DC4(void) {
+void new_year_library_scene_selector_3(void) {
     D_80144E08 = 3;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "図書室");
+    strcpy(scene_place_title, "図書室");
     mode_step_next();
 }
 
-void func_80139E0C(void) {
+void new_year_library_scene_selector_6(void) {
     D_80144E08 = 6;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "図書室");
+    strcpy(scene_place_title, "図書室");
     mode_step_next();
 }
 
-void func_80139E54(void) {
+void new_year_library_target_scene_init(void) {
     ((Bits64B8 *)&game_state.girls[game_state.current_girl].flags.b[0])->f = 1;
     D_80144E08 = 0xA;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "図書室");
+    strcpy(scene_place_title, "図書室");
     mode_step_next();
 }
 
-void func_80139EC8(void) {
+void new_year_theater_scene_resource_setup(void) {
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
     D_80144E08 = 0xD;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "演劇部");
-    func_801397D0();
+    strcpy(scene_place_title, "演劇部");
+    new_year_scene_asset_addresses_init();
     if (((u8)game_state.month >= 6U) && ((u8)game_state.month < 0xAU)) {
         load_palette((s32)D_801453C0, 0x11, 1, 2, 0);
         scene_still_show((s32)D_801453C8, (s32)D_801453CC, (s32)D_801453D0, (s32)D_801453D4, (s32)D_801453D8, (s32)D_801453DC);
@@ -182,32 +182,32 @@ void func_80139EC8(void) {
     mode_step_next();
 }
 
-void func_8013A098(void) {
+void new_year_scene_background_read_40bc_a(void) {
     bg_read_sub2(0x40BC);
     mode_step_next();
 }
 
-void func_8013A0C0(void) {
+void new_year_scene_background_read_403b(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_8013A0E8(void) {
+void new_year_scene_background_read_40bc_b(void) {
     bg_read_sub2(0x40BC);
     mode_step_next();
 }
 
-void func_8013A110(void) {
+void new_year_scene_background_read_40b2(void) {
     bg_read_sub2(0x40B2);
     mode_step_next();
 }
 
-void func_8013A138(void) {
+void new_year_scene_background_read_46c4(void) {
     bg_read_sub2(0x46C4);
     mode_step_next();
 }
 
-void func_8013A160(void) {
+void new_year_scene_portrait_read_5d6e(void) {
     portrait_read_start(0x5D6E);
     mode_step_next();
 }

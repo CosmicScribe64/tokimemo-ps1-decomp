@@ -372,7 +372,7 @@ void date_arrival_init(void) {
     }
     tpage_buf_clear(date_arrival);
     addr_init_bustup();
-    D_800CA2AC = 0;
+    talk_voice_wait_frames = 0;
     date_show_taken = 0;
     mode_step_next();
 }
@@ -651,7 +651,7 @@ s32 date_scene_choose(void) {
 
 void date_place_enter_check(void) {
     k_reset(0);
-    message_window_set_title(D_800CA19C);
+    message_window_set_title(scene_place_title);
     date_scene_choose();
 }
 
@@ -661,7 +661,7 @@ void date_place_setup_neighborhood_park(void) {
     talk_voice_table = D_8015BEB4;
     D_80122CF4 = 0;
     D_800CA2FC = 0;
-    strcpy(D_800CA19C, "近所の公園");
+    strcpy(scene_place_title, "近所の公園");
     date_groups_per_variant = 2;
     D_800CA22C[0] = 0;
     D_800CA22C[1] = 0;
@@ -685,8 +685,8 @@ void date_place_setup_central_park(void) {
     talk_command_table = D_8015BE80;
     talk_voice_table = D_8015BEEC;
     D_80122CF4 = 0;
-    strcpy(D_800CA19C, "きらめき中央公園");
-    strcpy(D_800CA1DC, "並木道");
+    strcpy(scene_place_title, "きらめき中央公園");
+    strcpy(scene_place_title_2, "並木道");
     date_groups_per_variant = 3;
     girl_state_flags = get_g_zyotai_s(game->current_girl);
     alternate_girl_state = get_g_zyotai_h(game->current_girl);
@@ -695,12 +695,12 @@ void date_place_setup_central_park(void) {
             D_800CA2FC = 0;
         } else {
             D_800CA2FC = 2;
-            strcpy(D_800CA1DC, "桜並木");
+            strcpy(scene_place_title_2, "桜並木");
         }
     } else if (!(game->girls[game->current_girl].scene_counters[1] & 1)) {
         if (((u8) game->month >= 6U) && ((u8) game->month < 9U) && (game->scene_flags[70] == 0) && (girl_state_flags == 0x80) && (alternate_girl_state == 0) && (game->current_girl == GIRL_YUMI)) {
             D_800CA2FC = 1;
-            strcpy(D_800CA1DC, "池");
+            strcpy(scene_place_title_2, "池");
         } else {
             D_800CA2FC = 0;
         }
@@ -708,7 +708,7 @@ void date_place_setup_central_park(void) {
         D_800CA2FC = 0;
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "池");
+        strcpy(scene_place_title_2, "池");
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 1;
@@ -736,19 +736,19 @@ void date_place_setup_aquarium(void) {
     talk_text_table = D_8015BE08;
     talk_command_table = D_8015BE74;
     talk_voice_table = D_8015BEE0;
-    strcpy(D_800CA19C, "水族館");
+    strcpy(scene_place_title, "水族館");
     date_groups_per_variant = 3;
     if ((game->girls[game->current_girl].scene_counters[6] == 0) && (((u8) game->year >= 0x61U) || ((game->year == 0x60) && ((u8) game->month >= 3U)))) {
         D_800CA2FC = 2;
-        strcpy(D_800CA1DC, "イルカショー");
+        strcpy(scene_place_title_2, "イルカショー");
         D_80122D08 = 6;
     } else if (!(game->girls[game->current_girl].scene_counters[5] & 1)) {
         D_800CA2FC = 0;
-        strcpy(D_800CA1DC, "館内");
+        strcpy(scene_place_title_2, "館内");
         D_80122D08 = 5;
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "館内");
+        strcpy(scene_place_title_2, "館内");
         D_80122D08 = 5;
     }
     choice_offset = D_800CA2FC * 3;
@@ -773,24 +773,24 @@ void date_place_setup_zoo(void) {
     talk_text_table = D_8015BDCC;
     talk_command_table = D_8015BE38;
     talk_voice_table = D_8015BEA4;
-    strcpy(D_800CA19C, "動物園");
+    strcpy(scene_place_title, "動物園");
     date_groups_per_variant = 3;
     if ((game->girls[game->current_girl].scene_counters[8] == 0) && (((u8) game->year >= 0x60U) || ((game->year == 0x5F) && ((u8) game->month >= 0xCU)))) {
         D_800CA2FC = 2;
-        strcpy(D_800CA1DC, "園内");
+        strcpy(scene_place_title_2, "園内");
         D_80122D08 = 8;
     } else if (!(game->girls[game->current_girl].scene_counters[7] & 1)) {
         D_800CA2FC = 0;
-        strcpy(D_800CA1DC, "園内");
+        strcpy(scene_place_title_2, "園内");
         D_80122D08 = 7;
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "園内");
+        strcpy(scene_place_title_2, "園内");
         D_80122D08 = 7;
     }
     if (game->current_girl == GIRL_MIRA) {
         D_80122D08 = 7;
-        strcpy(D_800CA1DC, "園内");
+        strcpy(scene_place_title_2, "園内");
         visit_variant = (u8) game->girls[game->current_girl].scene_counters[7] % 3U;
         if (visit_variant == 0) {
             D_800CA2FC = 0;
@@ -821,8 +821,8 @@ void date_place_setup_botanical_garden(void) {
     talk_text_table = D_8015BDF4;
     talk_command_table = D_8015BE60;
     talk_voice_table = D_8015BECC;
-    strcpy(D_800CA19C, "植物園");
-    strcpy(D_800CA1DC, "園内");
+    strcpy(scene_place_title, "植物園");
+    strcpy(scene_place_title_2, "園内");
     date_groups_per_variant = 3;
     if (game_state.current_girl == GIRL_MIRA) {
         date_groups_per_variant = 5;
@@ -854,14 +854,14 @@ void date_place_setup_planetarium(void) {
     talk_text_table = D_8015BDEC;
     talk_command_table = D_8015BE58;
     talk_voice_table = D_8015BEC4;
-    strcpy(D_800CA19C, "プラネタリウム");
+    strcpy(scene_place_title, "プラネタリウム");
     date_groups_per_variant = 7;
     if (!(game->girls[game->current_girl].scene_counters[0xA] & 1)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 0;
-        strcpy(D_800CA1DC, "館内");
+        strcpy(scene_place_title_2, "館内");
     } else {
         ((DateSelectionView *)&D_800CA2F8)->option = 1;
-        strcpy(D_800CA1DC, "館内");
+        strcpy(scene_place_title_2, "館内");
         if (game->current_girl == GIRL_YUMI) {
             talk_group = 1;
         }
@@ -921,7 +921,7 @@ void date_place_setup_art_museum(void) {
     talk_text_table = date_section_text;
     talk_command_table = date_section_command;
     talk_voice_table = date_section_voice;
-    strcpy(D_800CA19C, "美術館");
+    strcpy(scene_place_title, "美術館");
     date_groups_per_variant = fake_shared_constant;
     date_exhibit_painters_active = 0;
     date_exhibit_sculpture_active = 0;
@@ -929,7 +929,7 @@ void date_place_setup_art_museum(void) {
     if ((game->year == 0x61) && ((u8) game->month >= 9U) && ((u8) game->month < 0xCU)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 2;
         date_exhibit_artist_active = 1;
-        strcpy(D_800CA1DC, "ガーギー展");
+        strcpy(scene_place_title_2, "ガーギー展");
         if ((game->girls[game->current_girl].scene_counters[12] != 0) && (game->current_girl != fake_shared_constant)) {
             ((DateSelectionView *)&D_800CA2F8)->option = 5;
         }
@@ -940,7 +940,7 @@ void date_place_setup_art_museum(void) {
     } else if ((game->year == 0x61) && ((u8) game->month >= 3U) && ((u8) game->month < 6U)) {
         ((DateSelectionView *)&D_800CA2F8)->option = fake_shared_constant;
         date_exhibit_sculpture_active = 1;
-        strcpy(D_800CA1DC, "彫塑展");
+        strcpy(scene_place_title_2, "彫塑展");
         if (game->girls[game->current_girl].scene_counters[13] != 0) {
             ((DateSelectionView *)&D_800CA2F8)->option = 5;
         }
@@ -951,7 +951,7 @@ void date_place_setup_art_museum(void) {
     } else if ((game->year == 0x5F) && ((u8) game->month >= 9U) && ((u8) game->month < 0xCU)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 4;
         date_exhibit_painters_active = 1;
-        strcpy(D_800CA1DC, "有名画家展");
+        strcpy(scene_place_title_2, "有名画家展");
         if (game->girls[game->current_girl].scene_counters[14] != 0) {
             ((DateSelectionView *)&D_800CA2F8)->option = 5;
         }
@@ -961,11 +961,11 @@ void date_place_setup_art_museum(void) {
         }
     } else if (!(game->girls[game->current_girl].scene_counters[11] & 1)) {
         ((DateSelectionView *)&D_800CA2F8)->option = 0;
-        strcpy(D_800CA1DC, "館内");
+        strcpy(scene_place_title_2, "館内");
         D_80122D08 = 0xB;
     } else {
         ((DateSelectionView *)&D_800CA2F8)->option = 1;
-        strcpy(D_800CA1DC, "館内");
+        strcpy(scene_place_title_2, "館内");
         D_80122D08 = 0xB;
         if (game->current_girl == GIRL_MIRA) {
             talk_group = 2;
@@ -1017,14 +1017,14 @@ void date_place_setup_library(void) {
     talk_text_table = D_8015BE0C;
     talk_command_table = D_8015BE78;
     talk_voice_table = D_8015BEE4;
-    strcpy(D_800CA19C, "図書館");
+    strcpy(scene_place_title, "図書館");
     date_groups_per_variant = 3;
     if (!(game->girls[game->current_girl].scene_counters[0xF] & 1)) {
         D_800CA2FC = 0;
-        strcpy(D_800CA1DC, "図書館内");
+        strcpy(scene_place_title_2, "図書館内");
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "図書館内");
+        strcpy(scene_place_title_2, "図書館内");
         if (game->current_girl == GIRL_MIRA) {
             talk_group = 3;
         } else if (game->current_girl == GIRL_YUMI) {
@@ -1033,7 +1033,7 @@ void date_place_setup_library(void) {
     }
     if ((game->current_girl == GIRL_YUKO) && (game->girls[game->current_girl].scene_counters[0xF] != 0)) {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "図書館内");
+        strcpy(scene_place_title_2, "図書館内");
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0xF;
@@ -1057,14 +1057,14 @@ void date_place_setup_game_center(void) {
     talk_text_table = D_8015BDD4;
     talk_command_table = D_8015BE40;
     talk_voice_table = D_8015BEAC;
-    strcpy(D_800CA19C, "ゲームセンター");
+    strcpy(scene_place_title, "ゲームセンター");
     date_groups_per_variant = 0;
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x10] & 1)) {
         D_800CA2FC = 0;
-        strcpy(D_800CA1DC, "ビデオゲームコーナー");
+        strcpy(scene_place_title_2, "ビデオゲームコーナー");
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "ビデオゲームコーナー");
+        strcpy(scene_place_title_2, "ビデオゲームコーナー");
     }
     D_80122D08 = 0x10;
     if ((game_state.year >= 0x61) || ((game_state.year >= 0x60) && (game_state.month >= 9))) {
@@ -1093,14 +1093,14 @@ void date_place_setup_bowling_alley(void) {
     talk_text_table = D_8015BDC4;
     talk_command_table = D_8015BE30;
     talk_voice_table = D_8015BE9C;
-    strcpy(D_800CA19C, "ボーリング場");
+    strcpy(scene_place_title, "ボーリング場");
     date_groups_per_variant = 3;
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x12] & 1)) {
         D_800CA2FC = 0;
-        strcpy(D_800CA1DC, "ボーリング場");
+        strcpy(scene_place_title_2, "ボーリング場");
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "ボーリング場");
+        strcpy(scene_place_title_2, "ボーリング場");
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x12;
@@ -1124,14 +1124,14 @@ void date_place_setup_karaoke(void) {
     talk_text_table = D_8015BDD8;
     talk_command_table = D_8015BE44;
     talk_voice_table = D_8015BEB0;
-    strcpy(D_800CA19C, "カラオケ");
+    strcpy(scene_place_title, "カラオケ");
     date_groups_per_variant = 3;
     if ((game_state.girls[game_state.current_girl].scene_counters[0x13] % 3) == 0) {
         D_800CA2FC = 0;
-        strcpy(D_800CA1DC, "ＢＯＸ内");
+        strcpy(scene_place_title_2, "ＢＯＸ内");
     } else {
         D_800CA2FC = 1;
-        strcpy(D_800CA1DC, "ＢＯＸ内");
+        strcpy(scene_place_title_2, "ＢＯＸ内");
     }
     choice_offset = D_800CA2FC * 3;
     D_80122D08 = 0x13;
@@ -1168,7 +1168,7 @@ void date_place_setup_amusement_park(void) {
         date_park_newest_rides = 0;
     }
     date_groups_per_variant = 0;
-    strcpy(D_800CA19C, "遊園地");
+    strcpy(scene_place_title, "遊園地");
     bg_read_sub2(0x432B);
     event_log_add(1, 0x14);
     mode_step_next();
@@ -1179,7 +1179,7 @@ void date_place_setup_shopping_street(void) {
     talk_command_table = D_8015BE64;
     talk_voice_table = D_8015BED0;
     date_groups_per_variant = 0;
-    strcpy(D_800CA19C, "ショッピング街");
+    strcpy(scene_place_title, "ショッピング街");
     bg_read_sub2(0x4520);
     event_log_add(1, 2);
     mode_step_next();
@@ -1203,8 +1203,8 @@ void date_place_setup_stadium(void) {
     talk_text_table = D_8015BE04;
     talk_command_table = D_8015BE70;
     talk_voice_table = D_8015BEDC;
-    strcpy(D_800CA19C, "スタジアム");
-    strcpy(D_800CA1DC, "スタジアム内");
+    strcpy(scene_place_title, "スタジアム");
+    strcpy(scene_place_title_2, "スタジアム内");
     date_groups_per_variant = 3;
     if ((game->month == 1) || (game->month == 3) || (game->month == 6) || (game->month == 0xB)) {
         special_month = 1;
@@ -1289,8 +1289,8 @@ void date_place_setup_movie_theater(void) {
         }
     }
     D_80122D08 = 0x23;
-    strcpy(D_800CA19C, "映画館");
-    strcpy(D_800CA1DC, "館内");
+    strcpy(scene_place_title, "映画館");
+    strcpy(scene_place_title_2, "館内");
     choice_offset = date_movie_index * 3;
     D_800CA22C[0] = (s16) *((game->current_girl * 0x21) + date_class_table_movie_theater + choice_offset);
     D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((game->current_girl * 0x21) + date_class_table_movie_theater + choice_offset) + (1));
@@ -1310,7 +1310,7 @@ void date_scene_reveal_start(void) {
         }
         game_state.substep = 1;
     }
-    func_8007C8A4();
+    scene_bg_wipe_in();
 }
 
 void date_place_reload_steps(void) {
@@ -1401,8 +1401,8 @@ void date_place_setup_concert_hall(void) {
         }
     }
     D_80122D08 = 0x24;
-    strcpy(D_800CA19C, "コンサート会場");
-    strcpy(D_800CA1DC, "会場内");
+    strcpy(scene_place_title, "コンサート会場");
+    strcpy(scene_place_title_2, "会場内");
     choice_offset = date_concert_index * 3;
     D_800CA22C[0] = (s16) *((game->current_girl * 0x24) + date_class_table_concert_hall + choice_offset);
     D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((game->current_girl * 0x24) + date_class_table_concert_hall + choice_offset) + (1));
@@ -1425,8 +1425,8 @@ void date_place_setup_pool(void) {
     talk_command_table = D_8015BE54;
     talk_voice_table = D_8015BEC0;
     date_groups_per_variant = 3;
-    strcpy(D_800CA19C, "プール");
-    strcpy(D_800CA1DC, "プール内");
+    strcpy(scene_place_title, "プール");
+    strcpy(scene_place_title_2, "プール内");
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x1D] & 1)) {
         D_800CA2FC = 0;
     } else {
@@ -1458,8 +1458,8 @@ void date_place_setup_sea(void) {
     if (game_state.current_girl == GIRL_NOZOMI) {
         date_groups_per_variant = 0;
     }
-    strcpy(D_800CA19C, "海岸");
-    strcpy(D_800CA1DC, "浜辺");
+    strcpy(scene_place_title, "海岸");
+    strcpy(scene_place_title_2, "浜辺");
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x1E] & 1)) {
         D_800CA2FC = 0;
     } else {
@@ -1486,8 +1486,8 @@ void date_place_setup_shrine(void) {
     talk_text_table = D_8015BDD0;
     talk_command_table = D_8015BE3C;
     talk_voice_table = D_8015BEA8;
-    strcpy(D_800CA19C, "縁日");
-    strcpy(D_800CA1DC, "花火大会");
+    strcpy(scene_place_title, "縁日");
+    strcpy(scene_place_title_2, "花火大会");
     date_groups_per_variant = 5;
     *D_800CA21C = 0;
     D_800CA21E = (u8)(get_g_zyotai_s(game_state.current_girl) & 0x7F);
@@ -1511,8 +1511,8 @@ void date_place_setup_skating_rink(void) {
     talk_command_table = D_8015BE68;
     talk_voice_table = D_8015BED4;
     date_groups_per_variant = 3;
-    strcpy(D_800CA19C, "スケート場");
-    strcpy(D_800CA1DC, "スケートリンク");
+    strcpy(scene_place_title, "スケート場");
+    strcpy(scene_place_title_2, "スケートリンク");
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x1F] & 1)) {
         D_800CA2FC = 0;
     } else {
@@ -1542,8 +1542,8 @@ void date_place_setup_ski_resort(void) {
     talk_command_table = D_8015BE6C;
     talk_voice_table = D_8015BED8;
     date_groups_per_variant = 3;
-    strcpy(D_800CA19C, "スキー場");
-    strcpy(D_800CA1DC, "ゲレンデ");
+    strcpy(scene_place_title, "スキー場");
+    strcpy(scene_place_title_2, "ゲレンデ");
     ski_visits = game_state.girls[game_state.current_girl].scene_counters[0x20];
     if (!(ski_visits & 1)) {
         D_800CA2FC = 0;
@@ -1631,7 +1631,7 @@ void date_shopping_street_enter_shop(void) {
     fake_selector_read = game_state.current_girl;
     date_shop_index = D_80122CDC;
     if (D_80122CDC == 0) {
-        strcpy(D_800CA1DC, "ブティック");
+        strcpy(scene_place_title_2, "ブティック");
         if (!(game_state.girls[game_state.current_girl].scene_counters[2] & 1)) {
             D_800CA2FC = 0;
         } else {
@@ -1659,7 +1659,7 @@ void date_shopping_street_enter_shop(void) {
         D_800CA21C[2] = (s16) *(game->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 2);
         bg_read_sub2(0x4529);
     } else if (D_80122CDC == 1) {
-        strcpy(D_800CA1DC, "ファンシーショップ");
+        strcpy(scene_place_title_2, "ファンシーショップ");
         if (!(game_state.girls[game_state.current_girl].scene_counters[3] & 1)) {
             D_800CA2FC = 0;
         } else {
@@ -1693,7 +1693,7 @@ void date_shopping_street_enter_shop(void) {
         D_800CA21C[2] = (s16) *(game->current_girl * 0x12 + date_face_table_shopping_street + choice_offset + 8);
         bg_read_sub2(0x4532);
     } else {
-        strcpy(D_800CA1DC, "ジャンク屋");
+        strcpy(scene_place_title_2, "ジャンク屋");
         shop_visits = game_state.girls[game_state.current_girl].scene_counters[4];
         if (!(shop_visits & 1)) {
             D_800CA2FC = 0;
@@ -1858,7 +1858,7 @@ void date_amusement_park_enter_hero_show(void) {
     u8 show_repeat_variant;
 
     audio_command(0x207);
-    strcpy(D_800CA19C, "ヒーローショー");
+    strcpy(scene_place_title, "ヒーローショー");
     bg_read_sub2(0x4374);
     if (!(game_state.girls[game_state.current_girl].scene_counters[0x14] & 1)) {
         show_repeat_variant = 0;
@@ -1930,7 +1930,7 @@ s32 date_amusement_park_choose_ride(void) {
 }
 
 void date_amusement_park_enter_night_parade(void) {
-    strcpy(D_800CA1DC, "ナイトパレード");
+    strcpy(scene_place_title_2, "ナイトパレード");
     audio_command(0x204);
     bg_read_sub2(0x436B);
     game_state.event_log_count -= 1;
@@ -1949,7 +1949,7 @@ void date_amusement_park_enter_main_area(void) {
     if (date_show_taken != 0) {
         audio_command(0x200);
     }
-    strcpy(D_800CA1DC, "遊園地");
+    strcpy(scene_place_title_2, "遊園地");
     mode_step_next();
 }
 
@@ -2174,7 +2174,7 @@ void date_sea_load_background(void) {
 void date_sea_enter_deserted_island(void) {
     u8 log_count;
 
-    strcpy(D_800CA1DC, "無人島");
+    strcpy(scene_place_title_2, "無人島");
     bg_read_sub2(0x45B6);
     log_count = game_state.event_log_count;
     /* FAKE: 8-byte records at GameState+0x758 are not a declared aggregate yet; byte read through the base. T-8070 */
@@ -2218,9 +2218,9 @@ void date_amusement_park_ride_setup(void) {
     s32 ghost_choice_offset;
     s32 wheel_choice_offset;
 
-    strcpy(D_800CA1DC, "遊園地");
+    strcpy(scene_place_title_2, "遊園地");
     if ((u8) date_ride_index == 0) {
-        strcpy(D_800CA19C, "ジェットコースター");
+        strcpy(scene_place_title, "ジェットコースター");
         if (!(game->girls[game->current_girl].scene_counters[21] & 1)) {
             D_800CA2FC = 0;
         } else {
@@ -2237,7 +2237,7 @@ void date_amusement_park_ride_setup(void) {
         return;
     }
     if ((u8) date_ride_index == 3) {
-        strcpy(D_800CA19C, "絶叫マシーンビビール");
+        strcpy(scene_place_title, "絶叫マシーンビビール");
         if (!(game->girls[game->current_girl].scene_counters[24] & 1)) {
             D_800CA2FC = 0;
         } else {
@@ -2254,7 +2254,7 @@ void date_amusement_park_ride_setup(void) {
         return;
     }
     if ((u8) date_ride_index == 1) {
-        strcpy(D_800CA19C, "ゴーストハウス");
+        strcpy(scene_place_title, "ゴーストハウス");
         if (!(game->girls[game->current_girl].scene_counters[22] & 1)) {
             D_800CA2FC = 0;
         } else {
@@ -2271,7 +2271,7 @@ void date_amusement_park_ride_setup(void) {
         return;
     }
     if ((u8) date_ride_index == 4) {
-        strcpy(D_800CA19C, "バーチャルシップ");
+        strcpy(scene_place_title, "バーチャルシップ");
         if (!(game->girls[game->current_girl].scene_counters[25] & 1)) {
             D_800CA2FC = 0;
         } else {
@@ -2287,7 +2287,7 @@ void date_amusement_park_ride_setup(void) {
         D_800CA21C[2] = (s16) *(game->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + ship_choice_offset + 26);
         return;
     }
-    strcpy(D_800CA19C, "観覧車");
+    strcpy(scene_place_title, "観覧車");
     if (!(game->girls[game->current_girl].scene_counters[23] & 1)) {
         D_800CA2FC = 0;
     } else {
@@ -2407,10 +2407,10 @@ void date_game_center_enter_medal_corner(void) {
     if (D_80122CDC != 0) {
         if (!(game_state.girls[game_state.current_girl].scene_counters[0x11] & 1)) {
             D_800CA2FC = 2;
-            strcpy(D_800CA1DC, "メダルゲームコーナー");
+            strcpy(scene_place_title_2, "メダルゲームコーナー");
         } else {
             D_800CA2FC = 3;
-            strcpy(D_800CA1DC, "メダルゲームコーナー");
+            strcpy(scene_place_title_2, "メダルゲームコーナー");
         }
         choice_offset = D_800CA2FC * 3;
         D_80122D08 = 0x11;
@@ -2622,7 +2622,7 @@ void date_amusement_park_group_by_variant(void) {
 }
 
 void date_amusement_park_title(void) {
-    strcpy(D_800CA1DC, "遊園地内");
+    strcpy(scene_place_title_2, "遊園地内");
     mode_step_next();
 }
 
@@ -2825,7 +2825,7 @@ void date_shrine_return_setup(void) {
     talk_names_set(game_state.current_girl);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -3211,13 +3211,13 @@ s32 date_movie_theater_film_talk(void) {
         return 0;
     }
     D_80122CF0 = 0xA;
-    if ((func_80046094() == 9) && (check_end_k() != 0)) {
+    if ((cd_last_command() == 9) && (check_end_k() != 0)) {
         audio_command(0x201);
         D_80122CE4 = 0;
         k_reset(1);
         D_80122CF0 = 0;
         D_8011ED5B &= 0xFF7F;
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         mode_step_next();
     }
 }
@@ -3243,13 +3243,13 @@ s32 date_concert_hall_program_talk(void) {
         return 0;
     }
     D_80122CF0 = 0xA;
-    if ((func_80046094() == 9) && (check_end_k() != 0)) {
+    if ((cd_last_command() == 9) && (check_end_k() != 0)) {
         audio_command(0x200);
         D_80122CE4 = 0;
         k_reset(1);
         D_80122CF0 = 0;
         D_8011ED5B &= 0xFF7F;
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         mode_step_next();
     }
 }
@@ -3294,7 +3294,7 @@ void date_shopping_street_extra_face(void) {
             return;
         }
         if (game_state.current_girl == GIRL_YUKO) {
-            func_80083418();
+            face_expression_4();
             return;
         }
         if ((game_state.current_girl == GIRL_YUKARI) && (game_state.girls[5].scene_counters[4] == 0)) {
@@ -3303,10 +3303,10 @@ void date_shopping_street_extra_face(void) {
         }
         if ((game_state.current_girl == GIRL_YUKARI) && (game_state.girls[5].scene_counters[4] != 0)) {
             talk_group += 1;
-            func_800833F0();
+            face_expression_3();
             return;
         }
-        func_800833F0();
+        face_expression_3();
         return;
     }
     mode_step_next();
@@ -3526,15 +3526,15 @@ void date_sea_mood_face_step(void) {
 
 void date_amusement_park_yuina_reaction(void) {
     if (game_state.current_girl == GIRL_YUINA) {
-        func_800833F0();
+        face_expression_3();
         game_state.girls[2].tokimeki -= 1;
         game_state.girls[2].affection -= 1;
     } else if ((game_state.current_girl == GIRL_MIO) && (game_state.girls[1].scene_counters[0x1A] == 0)) {
-        func_80083378();
+        face_expression_0();
         game_state.girls[2].tokimeki += 1;
         game_state.girls[2].affection += 1;
     } else {
-        func_800833A0();
+        face_expression_1();
         game_state.girls[2].tokimeki += 1;
     }
     check_para_limit();
@@ -3670,7 +3670,7 @@ void date_ambush_after_battle(void) {
     talk_names_set(game_state.current_girl);
     addr_init_bustup();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -4024,7 +4024,7 @@ void date_botanical_garden_mira_skip(void) {
 
 s32 date_art_museum_mira_face(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 1) && ((D_800CA2FC == 2) || (D_800CA2FC == 0))) {
-        func_80083418();
+        face_expression_4();
         return 0;
     }
     mode_step_next();
@@ -4036,11 +4036,11 @@ s32 date_art_museum_mira_face(void) {
 
 void date_art_museum_variant_face(void) {
     if (D_800CA2FC == 0) {
-        func_80083418();
+        face_expression_4();
         return;
     }
     if (D_800CA2FC == 2) {
-        func_80083418();
+        face_expression_4();
         return;
     }
     date_art_museum_choice_face();
@@ -4087,7 +4087,7 @@ void date_game_center_mira_extra_talk(void) {
 
 void date_game_center_mira_worst_face(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 0) && (D_800CA2FC == 1)) {
-        func_80083418();
+        face_expression_4();
         return;
     }
     mode_step_next();
@@ -4095,7 +4095,7 @@ void date_game_center_mira_worst_face(void) {
 
 void date_game_center_mira_face_1(void) {
     if ((game_state.current_girl == GIRL_MIRA) && (D_80122CDC == 0) && (D_800CA2FC == 1)) {
-        func_800833A0();
+        face_expression_1();
         return;
     }
     mode_step_next();
@@ -4250,10 +4250,10 @@ void date_shrine_closing_talk(void) {
 void date_shrine_answer_face(void) {
     if (D_80122CDC == 0) {
         if (game_state.current_girl == GIRL_MIRA) {
-            func_800833A0();
+            face_expression_1();
             return;
         }
-        func_80083378();
+        face_expression_0();
         return;
     }
     mode_step_next();
@@ -4261,10 +4261,10 @@ void date_shrine_answer_face(void) {
 
 void date_shopping_street_megumi_face(void) {
     if (game_state.current_girl == GIRL_MEGUMI) {
-        func_80083378();
+        face_expression_0();
         return;
     }
-    func_800833A0();
+    face_expression_1();
 }
 
 void date_load_girl_script(void) {
@@ -4407,7 +4407,7 @@ void date_place_bgm_load_start(void) {
     arg2 = 0xBF79;
     next_ids = date_place_load_command;
     audio_command(0xCF);
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     if (D_800CA2F8 == 2) {
         arg1 = 0xC517;
         arg2 = 0xC514;
@@ -4503,16 +4503,16 @@ s32 date_meeting_place_check(void) {
         return;
     }
     if (game_state.appointment_place_2 == game_state.appointment_place_0) {
-        strcpy(D_800CA25C, place_names.names[game_state.appointment_place_1]);
+        strcpy(name_code_a, place_names.names[game_state.appointment_place_1]);
     } else {
-        strcpy(D_800CA25C, place_names.names[(s32)game_state.appointment_place_2]);
+        strcpy(name_code_a, place_names.names[(s32)game_state.appointment_place_2]);
     }
     if (game_state.appointment_place_3 != 0xFF) {
         date_meeting_group = 3;
         if (game_state.appointment_place_3 == game_state.appointment_place_0) {
-            strcpy(D_800CA280, place_names.names[game_state.appointment_place_1]);
+            strcpy(name_code_m, place_names.names[game_state.appointment_place_1]);
         } else {
-            strcpy(D_800CA280, place_names.names[(s32)game_state.appointment_place_3]);
+            strcpy(name_code_m, place_names.names[(s32)game_state.appointment_place_3]);
         }
     }
     mode_step_next();
@@ -4639,13 +4639,13 @@ void date_shrine_fireworks_setup(void) {
             game_state.tpage_buf[i] = -1;
             game_state.tpage_buf[i + 32] = -1;
         }
-        dec_bg_lba_cache[2] = 0;
+        bg_lba_cache[2] = 0;
     } else {
         for (i = 21; i < 26; i++) {
             game_state.tpage_buf[i] = -1;
             game_state.tpage_buf[i + 16] = -1;
         }
-        dec_bg_lba_cache[3] = 0;
+        bg_lba_cache[3] = 0;
     }
     D_800B5BD4 = 13;
     D_8015BD3C = 0x80;
@@ -4653,7 +4653,7 @@ void date_shrine_fireworks_setup(void) {
     D_8015BD34 = 0;
     D_8015BD38 = 1;
     date_fireworks_resources_init();
-    load_palette(D_800CA130, 15, 1, 2, 0);
+    load_palette(face_palette, 15, 1, 2, 0);
     ((ActorFixed *)actor_pool)[31].unk_43 = 15;
     ((SpriteQuad *)sprite_quads)[0].unk_12 = 0x1EF;
     ((SpriteQuad *)sprite_quads)[1].unk_12 = 0x1EF;
@@ -4743,7 +4743,7 @@ void date_shrine_fireworks_fade(void) {
         for (i = 58; i < 64; i++) {
             ((SpriteQuad *)sprite_quads)[i].flags |= 0x80000000;
         }
-        load_palette(D_800CA130, 0x10, 1, 2, 0);
+        load_palette(face_palette, 0x10, 1, 2, 0);
         for (i = 11; i < 16; i++) {
             game_state.tpage_buf[i] = 0x77;
             game_state.tpage_buf[i + 32] = 0x77;
@@ -4940,7 +4940,7 @@ s32 date_central_park_particles_update(void) {
         return 0;
     }
     for (i = 0; i < 20; i++) {
-        ((ActorFixed *)actor_pool)[i + 98].unk_07 = dec_bg_brightness;
+        ((ActorFixed *)actor_pool)[i + 98].unk_07 = bg_brightness;
         ((ActorFixed *)actor_pool)[i + 98].draw_flags |= 0x80;
         ((ActorFixed *)actor_pool)[i + 98].dx += (date_particle_targets[i].w - ((ActorFixed *)actor_pool)[i + 98].x.w) >> 8;
         ((ActorFixed *)actor_pool)[i + 98].x.w += ((ActorFixed *)actor_pool)[i + 98].dx;

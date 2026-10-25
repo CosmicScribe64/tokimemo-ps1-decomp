@@ -882,12 +882,12 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/enemy_bancho.rodata", D_8015E19C);
 
 /* The declaration order sets the frame layout (T-17105): the original has three scalar slots between the second string table and the flag table, and one counter serves both loops. */
 s32 rpg_loot_text_bancho(void) {
-    RpgStrTbl4 sp88;
-    RpgStrTbl4 sp78;
+    RpgRewardTextTable sp88;
+    RpgRewardTextTable sp78;
     s32 count;
     s32 n;
     s32 i;
-    RpgWordTbl4 sp5C;
+    RpgRewardSelectionFlags sp5C;
 
     sp88 = rpg_loot_names_bancho;
     sp78 = rpg_titles_bancho;
@@ -904,30 +904,30 @@ s32 rpg_loot_text_bancho(void) {
         case 1:
         case 2:
         case 3:
-            sp5C.v[0] = 1;
+            sp5C.selected[0] = 1;
             break;
         case 4:
         case 5:
         case 6:
-            sp5C.v[1] = 1;
+            sp5C.selected[1] = 1;
             break;
         case 7:
         case 8:
-            sp5C.v[2] = 1;
+            sp5C.selected[2] = 1;
             break;
         case 9:
-            sp5C.v[3] = 1;
+            sp5C.selected[3] = 1;
             break;
         }
     }
     for (i = 0; i < 4; i++) {
-        if (sp5C.v[i] == 1) {
+        if (sp5C.selected[i] == 1) {
             strcpy(((void **)rpg_text_result_pointers)[count + 3], "おたから：");
-            strcat(((void **)rpg_text_result_pointers)[count + 3], sp88.s[i]);
+            strcat(((void **)rpg_text_result_pointers)[count + 3], sp88.strings[i]);
             count++;
         }
     }
     strcpy(((void **)rpg_text_result_pointers)[count + 3], "獲得称号：");
-    strcat(((void **)rpg_text_result_pointers)[count + 3], sp78.s[rpg_rand(4)]);
+    strcat(((void **)rpg_text_result_pointers)[count + 3], sp78.strings[rpg_rand(4)]);
     rpg_result_line_count = count + 4;
 }

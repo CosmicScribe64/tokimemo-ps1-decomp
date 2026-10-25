@@ -4,7 +4,7 @@
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_801206DA /* matched as u8 (main_api.h: s8) */
 #define MAIN_API_OVERRIDE_talk_names_set /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
-#define MAIN_API_OVERRIDE_func_80046094 /* matched with s32(): the result is compared unmasked (main_api.h: u8(void)) */
+#define MAIN_API_OVERRIDE_cd_last_command /* matched with s32(): the result is compared unmasked (main_api.h: u8(void)) */
 
 #include "common.h"
 #include "game.h"
@@ -300,7 +300,7 @@ extern s32 encounter_scene_text_section_23;
 extern s32 encounter_scene_command_section_23;
 extern s32 encounter_scene_voice_section_23;
 void encounter_rei_scene_one_step_dispatch(void);
-s32 func_80046094();
+s32 cd_last_command();
 void encounter_yuko_scene_one_step_dispatch(void);
 
 void encounter_nozomi_scene_one_step_dispatch(void);

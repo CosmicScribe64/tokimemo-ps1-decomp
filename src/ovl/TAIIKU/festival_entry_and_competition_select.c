@@ -9,7 +9,7 @@ s32 set_dec_bri();
  * array `tbl` below also puts its initialiser in this object's .data, right after this table. */
 s32 D_8014A070[6] = { 0 };
 
-void func_80141280(void) {
+void sports_festival_entry_and_scene_select(void) {
     s32 i;
     s32 j;
     s32 tbl[6] = { 0x80197000, 0x80193000, 0x8018F000, 0x8019B000, 0x8019F000, 0x801A3000 };
@@ -71,8 +71,8 @@ void func_80141280(void) {
             D_80122EC8 += 1;
             text_marker_hide();
             talk_names_set(0);
-            func_80132B90();
-            func_80141B70();
+            sports_runner_talk_resource_addresses_init();
+            sports_mio_festival_talk_resource_addresses_init();
             talk_group = 0;
             /* FAKE: the (u8) narrowing adds the ugen temporary the original has for this test (T-19032) */
             if ((u8)(game_state.player_flags.b[1] & 2)) {
@@ -97,14 +97,14 @@ void func_80141280(void) {
     case 7:
         normal_date_speak_012();
         if (game_state.mode_step != 0) {
-            func_80141964();
+            sports_festival_choice_menu_init();
             game_state.mode_step = 0;
             D_80122EC8 = 8;
         }
         Default_Disp();
         return;
     case 8:
-        func_801419F8();
+        sports_festival_choice_menu_update();
         if (game_state.mode_step != 0) {
             /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
@@ -115,7 +115,7 @@ void func_80141280(void) {
                 D_80122EC8 = 0xD;
                 break;
             case 2:
-                func_80141AE8();
+                sports_festival_first_followup_select();
                 break;
             default:
                 game_mode_reset_to_title();
@@ -134,7 +134,7 @@ void func_80141280(void) {
         Default_Disp();
         return;
     case 10:
-        func_801419F8();
+        sports_festival_choice_menu_update();
         if (game_state.mode_step != 0) {
             /* FAKE: u32 view through the address gives the selector $v1, as in the original (T-19032) */
             switch (*(u32 *)&D_80122CDC) {
@@ -145,7 +145,7 @@ void func_80141280(void) {
                 D_80122EC8 = 0xF;
                 break;
             case 2:
-                func_80141B28();
+                sports_festival_second_followup_select();
                 break;
             default:
                 game_mode_reset_to_title();
@@ -164,31 +164,31 @@ void func_80141280(void) {
         Default_Disp();
         return;
     case 12:
-        func_801452D0();
+        sports_controller_c_mode_dispatch();
         if (D_80122ECC == 1) {
             D_80122EC8 = 0x10;
         }
         break;
     case 13:
-        func_80133C80();
+        sports_runner_race_mode_dispatch();
         if (D_80122ECC == 1) {
             D_80122EC8 = 0x10;
         }
         break;
     case 14:
-        func_80142240();
+        sports_schoolyard_mode_dispatch();
         if (D_80122ECC == 1) {
             D_80122EC8 = 0x10;
         }
         break;
     case 15:
-        func_80138A34();
+        sports_candidate_mode_dispatch();
         if (D_80122ECC == 1) {
             D_80122EC8 = 0x10;
         }
         break;
     case 16:
-        func_80132000();
+        sports_folk_dance_entry();
         if (D_80122ECC == 2) {
             D_80122EC8 += 1;
         }
@@ -223,7 +223,7 @@ void func_80141280(void) {
     }
 }
 
-void func_80141964(void) {
+void sports_festival_choice_menu_init(void) {
     s32 pad; /* FAKE: unused word above the arrays, the original frame has it (T-9020) */
     s16 x[3];
     s16 y[3];
@@ -241,7 +241,7 @@ void func_80141964(void) {
     hud_cursor_show(1);
 }
 
-s32 func_801419F8(void) {
+s32 sports_festival_choice_menu_update(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_cursor_update(0);
     menu_bar_show(0);
@@ -265,14 +265,14 @@ s32 func_801419F8(void) {
     }
 }
 
-void func_80141AE8(void) {
+void sports_festival_first_followup_select(void) {
     D_80122EC8 = 9;
     talk_group = 2;
     talk_line = 0;
     k_reset(1);
 }
 
-void func_80141B28(void) {
+void sports_festival_second_followup_select(void) {
     D_80122EC8 = 0xB;
     talk_group = 1;
     talk_line = 0;

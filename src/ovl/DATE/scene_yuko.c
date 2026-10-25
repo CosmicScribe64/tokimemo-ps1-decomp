@@ -183,7 +183,7 @@ void date_scene_yuko_spring_setup(void) {
     load_palette(D_8015E230, 0x11, 1, 2, 0);
     scene_still_show(D_8015E234, D_8015E238, D_8015E23C, D_8015E240, D_8015E244, D_8015E248);
     scene_anim_show(D_8015E224, D_8015E228, D_8015E220, (s32) D_8015E22C);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     date_scene_yuko_spring_data_init_2();
     load_palette(D_8015E30C, 0x12, 1, 2, 0);
     actor_clear(0x62);
@@ -211,7 +211,7 @@ void date_scene_yuko_summer_setup(void) {
     ActorFixed *sprites;
     ActorFixed scene;
 
-    strcpy(D_800CA1DC, "ナイトパレード");
+    strcpy(scene_place_title_2, "ナイトパレード");
     game_state.day_event_done_bits |= 7;
     date_scene_text = D_8015DE58;
     date_scene_command = D_8015DF94;
@@ -228,7 +228,7 @@ void date_scene_yuko_summer_setup(void) {
     load_palette(D_8015E25C, 0x13, 1, 2, 0);
     scene_still_show(D_8015E260, D_8015E264, D_8015E268, D_8015E26C, D_8015E270, D_8015E274);
     scene_anim_show(D_8015E250, D_8015E254, D_8015E24C, (s32) D_8015E258);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     sprites = (ActorFixed *)actor_pool_96;
     scene = sprites[0];
     sprites[3] = scene;
@@ -261,7 +261,7 @@ void date_scene_yuko_autumn_setup(void) {
     load_palette(D_8015E288, 0x11, 1, 2, 0);
     scene_still_show(D_8015E28C, D_8015E290, D_8015E294, D_8015E298, D_8015E29C, D_8015E2A0);
     scene_anim_show(D_8015E27C, D_8015E280, D_8015E278, (s32) D_8015E284);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -277,7 +277,7 @@ void date_scene_yuko_winter_setup(void) {
     load_palette(D_8015E2B4, 0x11, 1, 2, 0);
     scene_still_show(D_8015E2B8, D_8015E2BC, D_8015E2C0, D_8015E2C4, D_8015E2C8, D_8015E2CC);
     scene_anim_show(D_8015E2A8, D_8015E2AC, D_8015E2A4, D_8015E2B0);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_800CA224[0] = 3;
     D_800CA224[1] = 3;
     D_800CA224[2] = 3;
@@ -462,7 +462,7 @@ void date_scene_yuko_summer_load_data_2(void) {
 }
 
 void date_scene_yuko_summer_still_fade_in(void) {
-    func_80085368();
+    scene_still_fade_in();
     ((Actor *)actor_pool_96)[2].draw_flags |= 0x80;
     ((Actor *)actor_pool_96)[3].draw_flags |= 0x80;
     ((Actor *)actor_pool_96)[2].brightness = ((Actor *)actor_pool_96)->brightness;
@@ -470,7 +470,7 @@ void date_scene_yuko_summer_still_fade_in(void) {
 }
 
 void date_scene_yuko_summer_still_fade_out(void) {
-    func_800853FC();
+    scene_still_fade_out();
     if (((Actor *)actor_pool_96)->brightness == 0) {
         ((Actor *)actor_pool_96)[2].draw_flags &= 0xFF7F;
         ((Actor *)actor_pool_96)[3].draw_flags &= 0xFF7F;
@@ -689,13 +689,13 @@ void date_gradient_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s
     p->r1 = (((u32)arg8 >> 16) & 0xFF); p->g1 = (((u32)arg8 >> 8) & 0xFF); p->b1 = ((u32)arg8 & 0xFF);
     p->r2 = (((u32)arg9 >> 16) & 0xFF); p->g2 = (((u32)arg9 >> 8) & 0xFF); p->b2 = ((u32)arg9 & 0xFF);
     p->r3 = (((u32)arg9 >> 16) & 0xFF); p->g3 = (((u32)arg9 >> 8) & 0xFF); p->b3 = ((u32)arg9 & 0xFF);
-    p->x0 = game_state.screen_center_x[draw_buffer] + arg0;
-    p->y0 = game_state.screen_center_y[draw_buffer] + arg1;
-    p->x1 = game_state.screen_center_x[draw_buffer] + arg2;
-    p->y1 = game_state.screen_center_y[draw_buffer] + arg3;
-    p->x2 = game_state.screen_center_x[draw_buffer] + arg4;
-    p->y2 = game_state.screen_center_y[draw_buffer] + arg5;
-    p->x3 = game_state.screen_center_x[draw_buffer] + arg6;
-    p->y3 = game_state.screen_center_y[draw_buffer] + arg7;
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + (arg10 * 4)], (s32)p);
+    p->x0 = game_state.draw_origin_x[draw_buffer] + arg0;
+    p->y0 = game_state.draw_origin_y[draw_buffer] + arg1;
+    p->x1 = game_state.draw_origin_x[draw_buffer] + arg2;
+    p->y1 = game_state.draw_origin_y[draw_buffer] + arg3;
+    p->x2 = game_state.draw_origin_x[draw_buffer] + arg4;
+    p->y2 = game_state.draw_origin_y[draw_buffer] + arg5;
+    p->x3 = game_state.draw_origin_x[draw_buffer] + arg6;
+    p->y3 = game_state.draw_origin_y[draw_buffer] + arg7;
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + (arg10 * 4)], (s32)p);
 }

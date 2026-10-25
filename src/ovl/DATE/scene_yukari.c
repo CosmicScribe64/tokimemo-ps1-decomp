@@ -232,11 +232,11 @@ s32 date_scene_yukari_summer(void) {
     if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
          (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
          (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && game->mode_step >= 0x21) {
+        bg_brightness == 0x80 && D_80122D04 == 0 && game->mode_step >= 0x21) {
         hud_sprite_light_effect_draw();
     }
     step_handlers.callbacks[game->mode_step](0x80);
-    if (func_800853FC == step_handlers.callbacks[game->mode_step]) {
+    if (scene_still_fade_out == step_handlers.callbacks[game->mode_step]) {
         for (i = 0; i < 8; i++) {
             ((Actor *)actor_pool)[98 + i].brightness = ((Actor *)actor_pool)[96].brightness;
         }

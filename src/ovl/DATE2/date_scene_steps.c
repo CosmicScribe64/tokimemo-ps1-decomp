@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl31; /* size 0x7C */
 extern FnTbl31 D_8013A440;
 
-void func_801326F0(void) {
+void amusement_scene_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl31 tbl;
 
@@ -19,10 +19,10 @@ void func_801326F0(void) {
     }
 }
 
-void func_8013279C(void) {
+void amusement_scene_background_load_poll(void) {
     s32 t;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     t = dec_bg_cd_read(0x3FC6, 0);
     if (t == dec_bg_show) {
         mode_step_next();
@@ -35,8 +35,8 @@ void func_8013279C(void) {
     mode_step_next();
 }
 
-s32 func_8013281C(void) {
-    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+s32 amusement_scene_background_header_check(void) {
+    if ((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         mode_step_next();
         game_state.mode_step -= 3;
@@ -46,18 +46,18 @@ s32 func_8013281C(void) {
     mode_step_next();
 }
 
-void func_801328A8(void) {
+void amusement_background_display_disable(void) {
     dec_bg_show_switch(0);
     mode_step_next();
 }
 
 /* FAKE: s32 fall-through preserves the original implicit v0 result. T-10010. */
-s32 func_801328D0(void) {
+s32 amusement_opening_text_input_update(void) {
     if ((game_state.pad_pressed & 0x400040) && game_state.mode_step_timer.u >= 2U) {
         audio_command(0x1508);
         D_80122D00 = 0;
         k_reset(1);
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         D_8013A428 = 1;
         D_8013A42C = 0;
         mode_step_next();
@@ -70,7 +70,7 @@ s32 func_801328D0(void) {
         game_state.substep = 0;
         k_reset(1);
     }
-    func_801325F4();
+    amusement_script_response_talk_run();
     if (game_state.mode_step_timer.u++ == 0) {
         if (D_8013A42C < 3 && D_8013A428 == 0) {
             audio_command(0x609);
@@ -78,24 +78,24 @@ s32 func_801328D0(void) {
     }
 }
 
-void func_801329F0(void) {
-    func_80132670();
+void amusement_opening_talk_audio_update_0(void) {
+    amusement_opening_talk_run_line_1();
     if (game_state.mode_step_timer.w++ == 0) {
         if (D_8013A42C == 1) {
             audio_command(0x60A);
         }
     }
 }
-void func_80132A48(void) {
-    func_80132670();
+void amusement_opening_talk_audio_update_1(void) {
+    amusement_opening_talk_run_line_1();
     if (game_state.mode_step_timer.w++ == 0) {
         if (D_8013A42C == 1) {
             audio_command(0x60B);
         }
     }
 }
-void func_80132AA0(void) {
-    D_800B3D60 = 0;
+void amusement_opening_audio_bank_load(void) {
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xC657, 0xC623, 0xDA9F, 0xDA4F, 0xDA3D);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -103,7 +103,7 @@ void func_80132AA0(void) {
     mode_step_next();
 }
 
-void func_80132B08(void) {
+void amusement_opening_audio_load_retry(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -114,18 +114,18 @@ void func_80132B08(void) {
     }
 }
 
-void func_80132B88(void) {
+void amusement_opening_audio_transition(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_80132BB0(void) {
+void amusement_opening_sector_load(void) {
     cd_read_sectors(0x11, 0x80197000, 0xAEEC);
-    func_80132000();
+    amusement_scene_script_pointer_setup();
     mode_step_next();
 }
 
-void func_80132BEC(void) {
+void amusement_opening_scene_ui_reset(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -139,23 +139,23 @@ void func_80132BEC(void) {
     mode_step_next();
 }
 
-void func_80132C60(void) {
+void amusement_scene_entry_initialize(void) {
     game_state.day_event_done_bits |= 0x10;
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     text_system_reset();
-    strcpy(D_800CA19C, "遊園地");
-    strcpy(D_800CA1DC, "園内");
+    strcpy(scene_place_title, "遊園地");
+    strcpy(scene_place_title_2, "園内");
     k_reset(1);
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0x80;
-    D_800B5940 = 0;
+    bg_brightness = 0x80;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     text_marker_hide();
     talk_names_set(0);
-    func_80132000();
+    amusement_scene_script_pointer_setup();
     D_8013A404 = D_8013A3A8;
     D_8013A408 = D_8013A3D4;
     D_8013A40C = D_8013A400;
@@ -168,12 +168,12 @@ void func_80132C60(void) {
     mode_step_next();
 }
 
-void func_80132D84(void) {
+void amusement_scene_background_load_a(void) {
     bg_read_sub2(0x432B);
     mode_step_next();
 }
 
-void func_80132DAC(void) {
+void amusement_scene_background_load_b(void) {
     bg_read_sub2(0x4335);
     mode_step_next();
 }

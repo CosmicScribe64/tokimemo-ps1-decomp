@@ -111,71 +111,71 @@ s32 shooter_spawn_enemy(s32 a, s32 b, ShooterPosition c, ShooterPosition d, Shoo
 }
 
 /* Declare i, j before matrix so matrix sits at the original stack offset (T-16563). */
-void shooter_set_pose_from_table(arg0, arg1, arg2, arg3)
-    s32 arg0;
-    s16 *arg1;
-    s16 *arg2;
-    s32 arg3;
+void shooter_set_pose_from_table(object_index, translation_table, rotation_table, frame_index)
+    s32 object_index;
+    s16 *translation_table;
+    s16 *rotation_table;
+    s32 frame_index;
 {
     s32 i;
     s32 j;
     MATRIX matrix;
     ShooterCoordinateView *obj;
 
-    arg2 += arg3 * 9;
-    arg1 += arg3 * 3;
+    rotation_table += frame_index * 9;
+    translation_table += frame_index * 3;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-            matrix.m[i][j] = *arg2++;
+            matrix.m[i][j] = *rotation_table++;
         }
-        matrix.t[i] = *arg1++;
+        matrix.t[i] = *translation_table++;
     }
-    obj = (ShooterCoordinateView *)&D_80127480[arg0];
+    obj = (ShooterCoordinateView *)&D_80127480[object_index];
     obj->local = matrix;
     obj->flag = 0;
 }
 
-void shooter_apply_initial_pose(s32 arg0, s16 *arg1) {
+void shooter_apply_initial_pose(s32 object_index, s16 *pose_record) {
     s32 pad[7]; /* FAKE: unused local reproduces the original frame (0x60) and spill offsets; real source unknown. T-6070 */
     ShooterCoordinate *o;
     ShooterPosition *pos;
     u8 *q;
 
-    o = &D_80127480[arg0];
-    o->x += arg1[0];
-    o->y += arg1[1];
-    o->z += arg1[2];
-    pos = &D_80128880[arg0];
-    pos->x = arg1[3];
-    pos->z = arg1[4];
+    o = &D_80127480[object_index];
+    o->x += pose_record[0];
+    o->y += pose_record[1];
+    o->z += pose_record[2];
+    pos = &D_80128880[object_index];
+    pos->x = pose_record[3];
+    pos->z = pose_record[4];
     q = (u8 *)o->rotation;
-    pos->y = arg1[5];
+    pos->y = pose_record[5];
     shooter_rotation_matrix_x((pos->x << 12) / 360, q);
     shooter_rotation_matrix_z((pos->z << 12) / 360, q);
     shooter_rotation_matrix_y((pos->y << 12) / 360, q);
     *(s32 *)o = 0;
 }
 
-void shooter_apply_pose_key(s32 arg0, s16 *arg1, s32 arg2) {
+void shooter_apply_pose_key(s32 object_index, s16 *pose_frames, s32 frame_index) {
     /* The pointer precedes the payload to preserve its local layout. T-9520. */
     ShooterCoordinateView *obj;
     MATRIX matrix;
     ShooterPosition *pos;
 
-    arg1 += arg2 * 6;
-    matrix = *(MATRIX *)D_80125C60;
-    obj = (ShooterCoordinateView *)&D_80127480[arg0];
-    matrix.t[0] = obj->local.t[0] + arg1[0];
-    matrix.t[1] = obj->local.t[1] + arg1[1];
-    matrix.t[2] = obj->local.t[2] + arg1[2];
-    pos = &D_80128880[arg0];
-    pos->x += arg1[3];
-    arg1 += 4;
+    pose_frames += frame_index * 6;
+    matrix = *(MATRIX *)view_base_matrix;
+    obj = (ShooterCoordinateView *)&D_80127480[object_index];
+    matrix.t[0] = obj->local.t[0] + pose_frames[0];
+    matrix.t[1] = obj->local.t[1] + pose_frames[1];
+    matrix.t[2] = obj->local.t[2] + pose_frames[2];
+    pos = &D_80128880[object_index];
+    pos->x += pose_frames[3];
+    pose_frames += 4;
     shooter_rotation_matrix_x((pos->x << 12) / 360, &matrix);
-    pos->z += *arg1;
-    arg1++;
+    pos->z += *pose_frames;
+    pose_frames++;
     shooter_rotation_matrix_z((pos->z << 12) / 360, &matrix);
-    pos->y += *arg1;
+    pos->y += *pose_frames;
     shooter_rotation_matrix_y((pos->y << 12) / 360, &matrix);
     obj->local = matrix;
     obj->flag = 0;
@@ -258,9 +258,9 @@ void shooter_update_enemies(void) {
 
 /* FAKE: the actor is addressed through a byte-offset view in the loop: one pointer then serves the field loads and
  * &unk14, the array form builds a second one. Real source unknown. T-16563 */
-void shooter_animate_enemy_keys(s32 arg0, s16 *arg1) {
+void shooter_animate_enemy_keys(s32 actor_index, s16 *keyframe_script) {
     s32 i;
-    s32 val;
+    s32 pose_frame_index;
     s16 frame;
     s32 phase;
     s32 j;
@@ -268,31 +268,31 @@ void shooter_animate_enemy_keys(s32 arg0, s16 *arg1) {
     s32 last;
     u8 *id;
 
-    frame = shooter_actors[arg0].auxiliary;
-    if (frame >= arg1[3]) {
-        shooter_actors[arg0].auxiliary = 0;
-        frame = shooter_actors[arg0].auxiliary;
+    frame = shooter_actors[actor_index].auxiliary;
+    if (frame >= keyframe_script[3]) {
+        shooter_actors[actor_index].auxiliary = 0;
+        frame = shooter_actors[actor_index].auxiliary;
     }
-    phase = frame % arg1[2];
+    phase = frame % keyframe_script[2];
     n = 0;
     for (i = 0;; i++) {
-        if (phase < arg1[4 + i * 2]) {
+        if (phase < keyframe_script[4 + i * 2]) {
             if (i) {} /* FAKE: the empty test splits the live range of i at the found key, so i and j * 4 get s1 and s0 as in the original. T-16563 */
-            val = arg1[5 + i * 2];
+            pose_frame_index = keyframe_script[5 + i * 2];
             break;
         }
     }
     id = shooter_coordinate_owner;
-    j = arg1[0];
-    last = arg1[1];
+    j = keyframe_script[0];
+    last = keyframe_script[1];
     for (i = 0; i != 0x40; i++, id++) {
-        if (arg0 == *id) {
+        if (actor_index == *id) {
             if (n >= j) {
-                if (((ShooterActor *)((u8 *)shooter_actors + arg0 * 0x88))->auxiliary % arg1[2] == 0) {
-                    func_80099E30((s32)&((ShooterActor *)((u8 *)shooter_actors + arg0 * 0x88))->coordinate, (i + D_80127480));
-                    shooter_apply_initial_pose(i, shooter_enemy_joint_poses[shooter_actors[arg0].stats[2]][j]);
+                if (((ShooterActor *)((u8 *)shooter_actors + actor_index * 0x88))->auxiliary % keyframe_script[2] == 0) {
+                    func_80099E30((s32)&((ShooterActor *)((u8 *)shooter_actors + actor_index * 0x88))->coordinate, (i + D_80127480));
+                    shooter_apply_initial_pose(i, shooter_enemy_joint_poses[shooter_actors[actor_index].stats[2]][j]);
                 } else {
-                    shooter_apply_pose_key(i, shooter_enemy_joint_poses[((ShooterActor *)((u8 *)shooter_actors + arg0 * 0x88))->stats[2]][j], val);
+                    shooter_apply_pose_key(i, shooter_enemy_joint_poses[((ShooterActor *)((u8 *)shooter_actors + actor_index * 0x88))->stats[2]][j], pose_frame_index);
                 }
                 j++;
             }
@@ -305,66 +305,66 @@ void shooter_animate_enemy_keys(s32 arg0, s16 *arg1) {
 }
 
 /* No local actor pointer (see shooter_set_enemy_visibility); `n = 0` after the first test lands in its branch delay slot as in the original. T-16563 */
-void shooter_animate_enemy_poses(s32 arg0) {
+void shooter_animate_enemy_poses(s32 actor_index) {
     u32 n;
     s32 i;
     s32 *rec;
 
-    if ((arg0 + shooter_actors)->auxiliary >= 0xF) {
-        (arg0 + shooter_actors)->auxiliary = 0;
+    if ((actor_index + shooter_actors)->auxiliary >= 0xF) {
+        (actor_index + shooter_actors)->auxiliary = 0;
     }
     n = 0;
     for (i = 0; i < 0x40; i++) {
-        if (arg0 == shooter_coordinate_owner[i]) {
-            rec = shooter_enemy_joint_poses[(arg0 + shooter_actors)->stats[2]] + n * 2;
-            shooter_set_pose_from_table(i, rec[0], rec[1], (arg0 + shooter_actors)->auxiliary);
+        if (actor_index == shooter_coordinate_owner[i]) {
+            rec = shooter_enemy_joint_poses[(actor_index + shooter_actors)->stats[2]] + n * 2;
+            shooter_set_pose_from_table(i, rec[0], rec[1], (actor_index + shooter_actors)->auxiliary);
             n++;
         }
-        if (n >= shooter_enemy_joint_count[(arg0 + shooter_actors)->stats[2]]) {
+        if (n >= shooter_enemy_joint_count[(actor_index + shooter_actors)->stats[2]]) {
             break;
         }
     }
 }
 
 /* The actor is addressed as (arg1 + shooter_actors) in every use, no local: uopt then keeps it in $v0 and the index multiply comes first (T-16563). */
-void shooter_set_enemy_visibility(s32 arg0, s32 arg1) {
+void shooter_set_enemy_visibility(s32 visibility_mode, s32 actor_index) {
     s32 i;
 
-    if ((arg1 + shooter_actors)->flag_bytes[1] & 0x80) {
-        if (arg0 == 1) {
-            if ((arg1 + shooter_actors)->stats[2] < 0xB) {
-                (arg1 + shooter_actors)->model.attribute = 0;
+    if ((actor_index + shooter_actors)->flag_bytes[1] & 0x80) {
+        if (visibility_mode == 1) {
+            if ((actor_index + shooter_actors)->stats[2] < 0xB) {
+                (actor_index + shooter_actors)->model.attribute = 0;
                 return;
             }
-            (arg1 + shooter_actors)->model.attribute = 0x80000000;
+            (actor_index + shooter_actors)->model.attribute = 0x80000000;
             for (i = 0; i < 0x40; i++) {
-                if (arg1 == shooter_coordinate_owner[i]) {
+                if (actor_index == shooter_coordinate_owner[i]) {
                     D_80127080[i].attribute = 0;
                 }
             }
             return;
         }
-        if ((arg1 + shooter_actors)->stats[2] < 9) {
-            (arg1 + shooter_actors)->model.attribute = 0x80000000;
+        if ((actor_index + shooter_actors)->stats[2] < 9) {
+            (actor_index + shooter_actors)->model.attribute = 0x80000000;
             return;
         }
-        (arg1 + shooter_actors)->model.attribute = 0x80000000;
+        (actor_index + shooter_actors)->model.attribute = 0x80000000;
         for (i = 0; i < 0x40; i++) {
-            if (arg1 == shooter_coordinate_owner[i]) {
+            if (actor_index == shooter_coordinate_owner[i]) {
                 D_80127080[i].attribute = 0x80000000;
             }
         }
     }
 }
 
-void shooter_remove_enemy(s32 arg0) {
+void shooter_remove_enemy(s32 actor_index) {
     s32 i;
 
-    shooter_set_enemy_visibility(0, arg0);
-    shooter_actors[arg0].flag_bytes[1] = 0;
-    shooter_actors[arg0].stats[2] = 0;
+    shooter_set_enemy_visibility(0, actor_index);
+    shooter_actors[actor_index].flag_bytes[1] = 0;
+    shooter_actors[actor_index].stats[2] = 0;
     for (i = 0; i < 0x40; i++) {
-        if (arg0 == shooter_coordinate_owner[i]) {
+        if (actor_index == shooter_coordinate_owner[i]) {
             shooter_coordinate_owner[i] = 0;
         }
     }

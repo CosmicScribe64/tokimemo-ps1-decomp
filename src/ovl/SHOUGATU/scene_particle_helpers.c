@@ -1,12 +1,12 @@
 /* scene_particle_helpers.c: ; src/ovl/SHOUGATU/80141780.c:56-74 calls the particle/work-array helper family. Original object 0x80141780-0x80143540 (config/objects/SHOUGATU.txt). */
-#define SHOUGATU_OVERRIDE_func_8013D5D8 /* s32 return consumes $v0 in ugen for func_8014265C (T-24098) */
+#define SHOUGATU_OVERRIDE_new_year_current_selector_talk_start /* s32 return consumes $v0 in ugen for new_year_scene_actor_input_update (T-24098) */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 #include "game.h"
 
-s32 func_8013D5D8();
+s32 new_year_current_selector_talk_start();
 
-void func_80141780(void) {
+void new_year_scene_particle_addresses_init(void) {
     D_801464B0 = 0x801DA680;
     D_801464B4 = 0x801DA68C;
     D_801464B8 = 0x801DA72C;
@@ -23,11 +23,11 @@ void func_80141780(void) {
     D_801464E0 = 0x801D6000;
 }
 
-void func_80141850(void) {
+void new_year_scene_particle_resource_addresses_init_alt(void) {
     D_801464E4 = 0x801D2430;
     D_801464E8 = 0x801D2434;
     D_801464EC = 0x801D2498;
-    /* address literal, see func_80141780 */
+    /* address literal, see new_year_scene_particle_addresses_init */
     D_801464F0 = *(s16 *)0x801D24B4;
     D_801464F4 = 0x801B0000;
     D_801464C4 = 0x801D2000;
@@ -40,7 +40,7 @@ void func_80141850(void) {
     D_801464E0 = 0x801CE000;
 }
 
-void func_80141920(void) {
+void new_year_scene_particle_resource_addresses_init_third(void) {
     D_80146510 = (u8 *)0x801D22D0;
     D_80146514 = (u8 *)0x801D22D8;
     D_80146518 = (u8 *)0x801D233C;
@@ -54,7 +54,7 @@ void func_80141920(void) {
     D_80146538 = (u8 *)0x801C6000;
 }
 
-void func_801419D0(void) {
+void new_year_scene_particle_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
     s16 n;
@@ -63,7 +63,7 @@ void func_801419D0(void) {
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (game_state.mode_step < 0x10U) {
-        ((Actor *)actor_pool)[96].brightness = (u8)dec_bg_brightness;
+        ((Actor *)actor_pool)[96].brightness = (u8)bg_brightness;
         if (((Actor *)actor_pool)[96].unk_18 == 0 && ((Actor *)actor_pool)[96].unk_08 == 0) {
             n = ((Actor *)actor_pool)[96].sequence_slot + 1;
             ((Actor *)actor_pool)[96].sequence_slot = n;
@@ -72,15 +72,15 @@ void func_801419D0(void) {
             }
         }
     }
-    func_80141D20();
+    new_year_scene_particle_effect_update();
 }
 
-void func_80141AC0(void) {
+void new_year_scene_flag_set(void) {
     D_800B5A60 = 1;
     mode_step_next();
 }
 
-void func_80141AE8(void) {
+void new_year_scene_text_display_tick(void) {
     u32 r;
     u8 flag;
 
@@ -92,18 +92,18 @@ void func_80141AE8(void) {
     if (((u32)game_state.mode_step_timer.w < 0x73U || (u32)game_state.mode_step_timer.w % 60U != 6) && !((u8)D_80120652 & 1)) {
         flag = 0;
     }
-    func_8013D5D8();
+    new_year_current_selector_talk_start();
     if (flag == 0 && D_80122CD8 != 0) {
         D_80120652 = 0;
     }
 }
 
-void func_80141B98(void) {
+void new_year_scene_audio_command_0208(void) {
     audio_command(0x208);
     mode_step_next();
 }
 
-void func_80141BC0(void) {
+void new_year_scene_text_speed_start(void) {
     D_8014653C = get_k_speed();
     D_80122CFC = 0x72;
     k_speed_set(TEXT_SPEED_EVERY_THIRTY_ONE_FRAMES);
@@ -111,13 +111,13 @@ void func_80141BC0(void) {
     mode_step_next();
 }
 
-void func_80141C0C(void) {
+void new_year_scene_text_speed_restore(void) {
     k_speed_set(D_8014653C);
     k_disp_start(1);
     mode_step_next();
 }
 
-void func_80141C44(void) {
+void new_year_scene_texture_square_load(void) {
     LoadSquare(0x280, 0, 0x40, 0x80, D_801464E0);
     game_state.tpage_buf[10] = 1;
     D_80120666 = 2;
@@ -125,13 +125,13 @@ void func_80141C44(void) {
     mode_step_next();
 }
 
-void func_80141CA0(void) {
+void new_year_scene_particle_sector_read(void) {
     cd_read_sectors(0x55, 0x801B0000, 0x8065);
-    func_80141780();
+    new_year_scene_particle_addresses_init();
     mode_step_next();
 }
 
-void func_80141CD8(void) {
+void new_year_scene_particle_effect_start(void) {
     D_801467FC = 1;
     if (game_state.current_girl == GIRL_SHIORI) {
         audio_command(0x206);
@@ -141,7 +141,7 @@ void func_80141CD8(void) {
 }
 
 /* Fall-through s32 return retains the early-exit return 0. T-24098 */
-s32 func_80141D20(void) {
+s32 new_year_scene_particle_effect_update(void) {
     s16 i;
 
     if (D_801467FC == 0) {
@@ -168,7 +168,7 @@ s32 func_80141D20(void) {
         D_80146540[D_801467FC - 1] = 0x10000 / (D_80146798[D_801467FC - 1] + (D_80146798[D_801467FC - 1] >= 3) * 2 + 1);
     }
     for (i = 4; i < D_801467FC + 4; i++) {
-        sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = dec_bg_brightness;
+        sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = bg_brightness;
         sprite_quads[i].flags &= 0x7FFFFFFF;
         if (D_80146800 % (u32)D_80146798[i - 4] == 0) {
             sprite_quads[i].y += 1;
@@ -196,8 +196,8 @@ s32 func_80141D20(void) {
     D_80146800 += 1;
 }
 
-void func_801421D4(void) {
-    s16 i;
+void new_year_particle_scene_setup_and_reward(void) {
+    s16 particle_index;
 
     srand(game_state.frame_count);
     D_800CA150 = 0;
@@ -205,38 +205,38 @@ void func_801421D4(void) {
     addr_init_bustup();
     talk_names_set(game_state.current_girl);
     message_window_title_show(0);
-    func_80141780();
-    func_8013C2E4();
+    new_year_scene_particle_addresses_init();
+    new_year_scene_particle_actor_resource_addresses_init();
     D_80145F34 = D_80145B9C;
     D_80145F38 = D_80145CD8;
     D_80145F3C = D_80145E14;
     load_palette(D_801464C4, 0x12, 1, 3, 0);
-    for (i = 4; i < 0x36; i++) {
-        sprite_quads[i].flags = 0xC1000000;
-        sprite_quads[i].x = rand() % 320 - 0x9F;
-        ((Fix32 *)D_80146608)[i - 4].h[0] = 0;
-        ((Fix32 *)D_80146608)[i - 4].h[1] = sprite_quads[i].x;
-        D_801466D0[i - 4] = ((Fix32 *)D_80146608)[i - 4].w;
-        sprite_quads[i].y = -0x78;
-        sprite_quads[i].w = 8;
+    for (particle_index = 4; particle_index < 0x36; particle_index++) {
+        sprite_quads[particle_index].flags = 0xC1000000;
+        sprite_quads[particle_index].x = rand() % 320 - 0x9F;
+        ((Fix32 *)D_80146608)[particle_index - 4].h[0] = 0;
+        ((Fix32 *)D_80146608)[particle_index - 4].h[1] = sprite_quads[particle_index].x;
+        D_801466D0[particle_index - 4] = ((Fix32 *)D_80146608)[particle_index - 4].w;
+        sprite_quads[particle_index].y = -0x78;
+        sprite_quads[particle_index].w = 8;
         /* SpriteQuad.h is u8[2] in game.h; original writes a 16-bit halfword sh. T-24098 */
-        *(s16 *)&sprite_quads[i].h = 8;
-        sprite_quads[i].unk_0C = 0xA;
-        sprite_quads[i].unk_0E = 0;
-        sprite_quads[i].unk_0F = 0;
-        sprite_quads[i].unk_10 = 0;
-        sprite_quads[i].unk_12 = 0x1F2;
-        sprite_quads[i].tint_r = 0x80;
-        sprite_quads[i].tint_g = 0x80;
-        sprite_quads[i].tint_b = 0x80;
-        sprite_quads[i].anchor_x = 0;
-        sprite_quads[i].anchor_y = 0;
-        sprite_quads[i].unk_1C = 0x1000;
-        sprite_quads[i].unk_1E = 0x1000;
-        sprite_quads[i].unk_20 = 0;
-        game_state.quad_layer[i] = 9;
-        D_80146798[i - 4] = 2;
-        D_80146540[i - 4] = 0x8000;
+        *(s16 *)&sprite_quads[particle_index].h = 8;
+        sprite_quads[particle_index].unk_0C = 0xA;
+        sprite_quads[particle_index].unk_0E = 0;
+        sprite_quads[particle_index].unk_0F = 0;
+        sprite_quads[particle_index].unk_10 = 0;
+        sprite_quads[particle_index].unk_12 = 0x1F2;
+        sprite_quads[particle_index].tint_r = 0x80;
+        sprite_quads[particle_index].tint_g = 0x80;
+        sprite_quads[particle_index].tint_b = 0x80;
+        sprite_quads[particle_index].anchor_x = 0;
+        sprite_quads[particle_index].anchor_y = 0;
+        sprite_quads[particle_index].unk_1C = 0x1000;
+        sprite_quads[particle_index].unk_1E = 0x1000;
+        sprite_quads[particle_index].unk_20 = 0;
+        game_state.quad_layer[particle_index] = 9;
+        D_80146798[particle_index - 4] = 2;
+        D_80146540[particle_index - 4] = 0x8000;
     }
     load_palette(D_801464C0, 0x11, 1, 2, 0);
     scene_still_show(D_801464C8, D_801464CC, D_801464D0, D_801464D4, D_801464D8, D_801464DC);
@@ -250,50 +250,50 @@ void func_801421D4(void) {
     mode_step_next();
 }
 
-void func_801424CC(void) {
+void new_year_scene_background_and_log_load(void) {
     bg_read_sub2(0x475A);
     event_log_add(2, 6);
     mode_step_next();
 }
 
-void func_80142500(void) {
+void new_year_scene_effect_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl51 tbl;
 
     tbl = D_801468A4;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
-    func_8014288C();
+    new_year_scene_quad_effect_update();
 }
 
-void func_8014257C(void) {
+void new_year_scene_portrait_read(void) {
     portrait_read_start(0x5C8D);
     mode_step_next();
 }
 
-void func_801425A4(void) {
+void new_year_scene_audio_command_0207(void) {
     audio_command(0x207);
     mode_step_next();
 }
 
-void func_801425CC(void) {
+void new_year_scene_portrait_layout_set(void) {
     portrait_layout_set(5);
     mode_step_next();
 }
 
-void func_801425F4(void) {
+void new_year_cd_resource_sector_read(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8571);
-    func_80141850();
+    new_year_scene_particle_resource_addresses_init_alt();
     mode_step_next();
 }
 
-void func_8014262C(void) {
+void new_year_scene_flag_clear(void) {
     D_801206DB &= 0x7F;
     mode_step_next();
 }
 
-void func_8014265C(void) {
-    func_8013D5D8();
+void new_year_scene_actor_input_update(void) {
+    new_year_current_selector_talk_start();
     if (game_state.mode_step_timer.w++ == 0) {
         /* FAKE: the original has two identical block-copy loops here (both in State B, the state at
          * entry), and one copy line gives one loop; the repeated line is the only form found that
@@ -310,7 +310,7 @@ void func_8014265C(void) {
     }
 }
 
-void func_80142784(void) {
+void new_year_scene_selector_reward_or_skip(void) {
     if (D_80122CDC != 0) {
         game_state.mode_step += 0x18;
         game_state.scene_flags[0x34] = 2;
@@ -323,14 +323,14 @@ void func_80142784(void) {
     mode_step_next();
 }
 
-void func_80142844(void) {
+void new_year_scene_texture_square_load_alt(void) {
     LoadSquare(0x280, 0, 0x40, 0x80, D_801464E0);
     game_state.tpage_buf[10] = 1;
     mode_step_next();
 }
 
 /* Fall-through s32 return retains the early-exit return 0. T-24098 */
-s32 func_8014288C(void) {
+s32 new_year_scene_quad_effect_update(void) {
     s16 i;
     s16 count;
 
@@ -365,7 +365,7 @@ s32 func_8014288C(void) {
         }
     }
     for (i = 4; i < count + 4; i++) {
-        sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = dec_bg_brightness;
+        sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = bg_brightness;
         sprite_quads[i].flags &= 0x7FFFFFFF;
         if (D_80146800 % (u32)D_80146798[i - 4] == 0) {
             sprite_quads[i].y += 1;
@@ -396,24 +396,24 @@ s32 func_8014288C(void) {
     D_80146800 += 1;
 }
 
-void func_80142DA0(void) {
+void new_year_ijuin_scene_effect_setup(void) {
     s16 i;
 
     D_800CA150 = 0;
     D_800CA154 = 0;
     addr_init_bustup();
-    func_8013C2E4();
+    new_year_scene_particle_actor_resource_addresses_init();
     talk_names_set(game_state.current_girl);
-    func_80141850();
+    new_year_scene_particle_resource_addresses_init_alt();
     load_palette(D_801464F4, 0x11, 1, 2, 0);
     scene_still_show(D_801464F8, D_801464FC, D_80146500, D_80146504, D_80146508, D_8014650C);
     scene_anim_show(D_801464E8, D_801464EC, D_801464E4, D_801464F0);
     ((Actor *)actor_pool_96)->unk_04 = ((Actor *)actor_pool_96)[1].unk_04 = 8;
-    func_8013C2E4();
+    new_year_scene_particle_actor_resource_addresses_init();
     D_80145F34 = D_80145BFC;
     D_80145F38 = D_80145D38;
     D_80145F3C = D_80145E74;
-    strcpy(D_800CA19C, "伊集院邸");
+    strcpy(scene_place_title, "伊集院邸");
     load_palette(D_801464C4, 0x12, 1, 3, 0);
     for (i = 4; i < 0x36; i++) {
         sprite_quads[i].flags = 0xC1000000;
@@ -447,21 +447,21 @@ void func_80142DA0(void) {
     mode_step_next();
 }
 
-void func_8014306C(void) {
+void new_year_scene_background_and_log_load_alt(void) {
     bg_read_sub2(0x4752);
     event_log_add(2, 0x34);
     mode_step_next();
 }
 
 /* Fall-through s32 return retains the counter result in v0. T-24004 */
-s32 func_801430A0(void) {
+s32 new_year_scene_effect_mode_handler(void) {
     s32 idx;
     FnTbl48 tbl;
     tbl = D_80146970;
     idx = game_state.mode_step;
     tbl.f[idx](0x3C);
     if (game_state.mode_step < 0x11U) {
-        ((Actor *)actor_pool)[96].brightness = dec_bg_brightness;
+        ((Actor *)actor_pool)[96].brightness = bg_brightness;
         if (((Actor *)actor_pool)[96].unk_18 == 0 && ((Actor *)actor_pool)[96].unk_08 == 0) {
             ((Actor *)actor_pool)[96].sequence_slot += 1;
             if (((Actor *)actor_pool)[96].sequence_slot >= 3) ((Actor *)actor_pool)[96].sequence_slot = 0;
@@ -471,28 +471,28 @@ s32 func_801430A0(void) {
         ((Actor *)actor_pool)[98].draw_flags |= 0x80;
         D_801206DF = ((Actor *)actor_pool)[96].brightness;
         if ((u32)game_state.frame_count % 300U == 0) {
-            func_80143228();
+            new_year_scene_audio_command_0504();
             D_801206DA = 3;
         }
     } else { ((Actor *)actor_pool)[98].draw_flags &= 0xFF7F; }
 }
 
-void func_80143200(void) {
+void new_year_scene_audio_command_0205(void) {
     audio_command(0x205);
     mode_step_next();
 }
 
-void func_80143228(void) {
+void new_year_scene_audio_command_0504(void) {
     audio_command(0x504);
 }
 
-void func_80143248(void) {
+void new_year_scene_portrait_sector_read(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8BC9);
-    func_80141920();
+    new_year_scene_particle_resource_addresses_init_third();
     mode_step_next();
 }
 
-void func_80143280(void) {
+void new_year_scene_effect_state_reset(void) {
     D_801206F0 = 0;
     D_801206E0 = 0;
     D_801206DA = 3;
@@ -500,11 +500,11 @@ void func_80143280(void) {
     mode_step_next();
 }
 
-void func_801432C4(void) {
+void new_year_scene_talk_setup_and_reward(void) {
     D_800CA150 = 0;
     D_800CA154 = 0;
     talk_names_set(game_state.current_girl);
-    func_8013C2E4();
+    new_year_scene_particle_actor_resource_addresses_init();
     D_80145F34 = D_80145C5C;
     D_80145F38 = D_80145D98;
     D_80145F3C = D_80145ED4;
@@ -512,13 +512,13 @@ void func_801432C4(void) {
     game_state.girls[game_state.current_girl].tokimeki += 1;
     game_state.girls[game_state.current_girl].affection += 2;
     check_para_limit();
-    strcpy(D_800CA19C, "近所の公園");
+    strcpy(scene_place_title, "近所の公園");
 }
 
-void func_801433A4(void) {
+void new_year_scene_portrait_actor_setup(void) {
     game_state.tpage_buf[26] = -1;
     game_state.tpage_buf[58] = -1;
-    func_80141920();
+    new_year_scene_particle_resource_addresses_init_third();
     load_palette(D_80146520, 0x11, 1, 2, 0);
     scene_still_show((s32) D_80146524, (s32) D_80146528, (s32) D_8014652C, (s32) D_80146530, (s32) D_80146534,
                   (s32) D_80146538);
@@ -533,12 +533,12 @@ void func_801433A4(void) {
     mode_step_next();
 }
 
-void func_801434E0(void) {
+void new_year_scene_background_load_42e2(void) {
     bg_read_sub2(0x42E2);
     mode_step_next();
 }
 
-void func_80143508(void) {
+void new_year_scene_background_and_log_load_47c3(void) {
     bg_read_sub2(0x47C3);
     event_log_add(2, 0x42);
     mode_step_next();

@@ -34,7 +34,7 @@ u8 D_8014885C[36] = {
     2, 3, 0, 1, 0, 1, 4, 2, 3, 0, 5, 1,
 };
 
-void func_801418B0(void) {
+void annual_result_primary_resource_addresses_init(void) {
     D_801487F0 = (u8 *)0x801D6360;
     D_801487F4 = (u8 *)0x801D6384;
     D_801487F8 = (u8 *)0x801D6414;
@@ -42,7 +42,7 @@ void func_801418B0(void) {
     D_80148800 = (u8 *)0x801B0000;
 }
 
-void func_80141900(void) {
+void annual_result_secondary_resource_addresses_init(void) {
     D_80148804 = 0x801DDBB4;
     D_80148808 = 0x801DDBB8;
     D_8014880C = 0x801DDC70;
@@ -50,13 +50,13 @@ void func_80141900(void) {
 }
 
 /* Return type preserves the original fall-through schedule. T-20006. */
-s32 func_80141944(void) {
-    s32 idx; /* Index precedes the copied table (T-3330, T-20006). */
-    GzCallbacks68 table;
+s32 annual_result_actor_mode_step_dispatch(void) {
+    s32 mode_step_index; /* Index precedes the copied result_mode_step_callbacks (T-3330, T-20006). */
+    GzCallbacks68 result_mode_step_callbacks;
 
-    table = D_80148880;
-    idx = D_800F647A;
-    table.callbacks[idx](0x80);
+    result_mode_step_callbacks = D_80148880;
+    mode_step_index = D_800F647A;
+    result_mode_step_callbacks.callbacks[mode_step_index](0x80);
     if (D_800F647A < 8) {
         D_8012B8C0[0].brightness = D_801317EB;
         if (D_8012B8C0[0].unk_18 == 0 && D_8012B8C0[0].unk_08 == 0) {
@@ -66,32 +66,32 @@ s32 func_80141944(void) {
         }
     }
     if (D_800F647A >= 0xA && D_80148820 != 0) {
-        func_801428EC();
+        annual_result_choice_geometry_draw();
     }
     if (D_800F647A >= 0xA && D_80148824 != 0) {
-        func_80142C14();
+        annual_result_character_idle_advance();
     }
 }
 
-void func_80141A94(void) {
+void annual_result_audio_state_reset(void) {
     func_8004C6A0(0, 0x40);
     func_80050D60(0, 0);
     func_80081D30(1);
 }
 
-void func_80141ACC(void) {
+void annual_result_actor_display_setup(void) {
     s32 unused; /* FAKE: restore observed implicit-copy offsets. T-13202. */
-    s16 i;
+    s16 result_actor_resource_index;
 
     D_8014881C = 0;
     D_80148820 = 0;
     D_80148824 = 0;
-    func_801418B0();
-    i = 0;
+    annual_result_primary_resource_addresses_init();
+    result_actor_resource_index = 0;
     do {
-        func_8004EE18(D_80148800, (i + 0x10) & 0xFF, 1, 2, i);
-        i++;
-    } while (i < 9);
+        func_8004EE18(D_80148800, (result_actor_resource_index + 0x10) & 0xFF, 1, 2, result_actor_resource_index);
+        result_actor_resource_index++;
+    } while (result_actor_resource_index < 9);
     func_800549E8(0x60);
     ((Actor *)D_80129F40)[96].unk_01 = 8;
     ((Actor *)D_80129F40)[96].flags = 0x40;
@@ -111,7 +111,7 @@ void func_80141ACC(void) {
     ((Actor *)D_80129F40)[96].unk_05 = 0x80;
     ((Actor *)D_80129F40)[96].unk_04 = 0;
     ((Actor *)D_80129F40)[97] = ((Actor *)D_80129F40)[96];
-    func_80141900();
+    annual_result_secondary_resource_addresses_init();
     func_8004EE18((u8 *) D_80148814, 0x1F, 1, 2, 0);
     ((Actor *)D_80129F40)[98] = ((Actor *)D_80129F40)[96];
     ((Actor *)D_80129F40)[98].unk_01 = 0xB;
@@ -147,7 +147,7 @@ void func_80141ACC(void) {
     func_8004DE1C();
 }
 
-void func_8014206C(void) {
+void annual_result_actor_group_hide(void) {
     /* Signed local preserves the original compare operand order. T-20005. */
     s32 selector = D_801486E4;
     if (selector && selector != 7) {
@@ -164,7 +164,7 @@ void func_8014206C(void) {
     func_8004DE1C();
 }
 
-void func_8014210C(void) {
+void annual_result_position_layout_init(void) {
     s16 a[4];
     s16 b[4];
     s16 c[4];
@@ -183,54 +183,54 @@ void func_8014210C(void) {
 }
 
 /* Fall-through s32 return preserves the early-return register ($v0 = 0). T-24137. */
-s32 func_801421B4(void) {
-    s16 i;
-    GyoziWork *g;
+s32 annual_result_order_input_process(void) {
+    s16 result_position_candidate;
+    GyoziWork *annual_work_state;
 
-    g = &D_800F53A0;
-    D_80148828[0] = g->unk_10C8 % 4;
-    i = 1;
+    annual_work_state = &D_800F53A0;
+    D_80148828[0] = annual_work_state->unk_10C8 % 4;
+    result_position_candidate = 1;
     while (1) {
-        D_80148828[1] = (g->unk_10C8 * 2 + i) % 4;
+        D_80148828[1] = (annual_work_state->unk_10C8 * 2 + result_position_candidate) % 4;
         if (D_80148828[0] != D_80148828[1]) {
             break;
         }
-        i++;
+        result_position_candidate++;
     }
     while (1) {
-        D_80148828[2] = (g->unk_10C8 / 10 + i) % 4;
+        D_80148828[2] = (annual_work_state->unk_10C8 / 10 + result_position_candidate) % 4;
         if (D_80148828[0] != D_80148828[2] && D_80148828[1] != D_80148828[2]) {
             break;
         }
-        i++;
+        result_position_candidate++;
     }
     while (1) {
-        D_80148828[3] = i % 4;
+        D_80148828[3] = result_position_candidate % 4;
         if (D_80148828[0] != D_80148828[3] && D_80148828[1] != D_80148828[3] && D_80148828[2] != D_80148828[3]) {
             break;
         }
-        i++;
+        result_position_candidate++;
     }
-    for (i = 0; i < 4; i++) {
-        if (D_80148828[i] == 1) {
-            D_80148828[i] = 0xB;
-        } else if (D_80148828[i] == 2) {
-            D_80148828[i] = D_80148754;
-        } else if (D_80148828[i] == 3) {
-            D_80148828[i] = D_80148758;
+    for (result_position_candidate = 0; result_position_candidate < 4; result_position_candidate++) {
+        if (D_80148828[result_position_candidate] == 1) {
+            D_80148828[result_position_candidate] = 0xB;
+        } else if (D_80148828[result_position_candidate] == 2) {
+            D_80148828[result_position_candidate] = D_80148754;
+        } else if (D_80148828[result_position_candidate] == 3) {
+            D_80148828[result_position_candidate] = D_80148758;
         }
     }
     func_8005BE34(0, ((Actor *)D_80129F40)[0].x, ((Actor *)D_80129F40)[0].y, D_80148828);
     func_8005C1B8(0);
-    if (g->unk_F58 & 0x600060) {
+    if (annual_work_state->unk_F58 & 0x600060) {
         if (func_8005B32C() != 0) {
-            if (g->unk_F60[0].hover != 0) {
+            if (annual_work_state->unk_F60[0].hover != 0) {
                 D_80148818 = 0;
-            } else if (g->unk_F60[2].hover != 0) {
+            } else if (annual_work_state->unk_F60[2].hover != 0) {
                 D_80148818 = 1;
-            } else if (g->unk_F60[4].hover != 0) {
+            } else if (annual_work_state->unk_F60[4].hover != 0) {
                 D_80148818 = 2;
-            } else if (g->unk_F60[6].hover != 0) {
+            } else if (annual_work_state->unk_F60[6].hover != 0) {
                 D_80148818 = 3;
             } else {
                 return 0;
@@ -241,21 +241,21 @@ s32 func_801421B4(void) {
             ((Actor *)D_80129F40)[97].draw_flags |= 0x80;
             ((Actor *)D_80129F40)[97].unk_18 =
                 D_80148828[D_80148818]
-                + (g->unk_03E == 0x60) * 0xB
-                + (g->unk_03E == 0x61) * 0x17
-                - (D_80148828[D_80148818] == 0xB && g->unk_03E == 0x5F)
+                + (annual_work_state->unk_03E == 0x60) * 0xB
+                + (annual_work_state->unk_03E == 0x61) * 0x17
+                - (D_80148828[D_80148818] == 0xB && annual_work_state->unk_03E == 0x5F)
                 + 1;
             /* FAKE: *(u8 *)& keeps D_80148818 unwidened ($a2); !(!=) and * 0 keep 0x5F in $a1 without CSE. T-24137. */
             ((Actor *)D_80129F40)[97].x = *(u8 *)&D_80148818 * 0x4E - *(u8 *)&D_80148818 - 0x75;
             ((Actor *)D_80129F40)[97].y = -0x3C;
             ((Actor *)D_80129F40)[97].scale_y = 0;
-            D_80148620 += D_80148828[D_80148818] * 3 + g->unk_03E - 0x5F;
+            D_80148620 += D_80148828[D_80148818] * 3 + annual_work_state->unk_03E - 0x5F;
             D_80148820 = 1;
-            if ((!(g->unk_03E != 0x5F) && D_80148828[D_80148818] == 0 && g->unk_100.value >= 0x64)
-                || ((D_80148828[D_80148818] == 0 & g->unk_03E == 0x5F) && g->unk_670 >= 0x64)
-                || ((D_80148828[D_80148818] == 1 & (g->unk_03E + (g->unk_03E * 0)) == 0x5F) && g->unk_0FA >= 0x46)
-                || ((D_80148828[D_80148818] == 1 & g->unk_03E == 0x61) && g->unk_0FA >= 0x64)
-                || ((D_80148828[D_80148818] == 2 & g->unk_03E == 0x60) && g->unk_0FA >= 0x64)) {
+            if ((!(annual_work_state->unk_03E != 0x5F) && D_80148828[D_80148818] == 0 && annual_work_state->unk_100.value >= 0x64)
+                || ((D_80148828[D_80148818] == 0 & annual_work_state->unk_03E == 0x5F) && annual_work_state->unk_670 >= 0x64)
+                || ((D_80148828[D_80148818] == 1 & (annual_work_state->unk_03E + (annual_work_state->unk_03E * 0)) == 0x5F) && annual_work_state->unk_0FA >= 0x46)
+                || ((D_80148828[D_80148818] == 1 & annual_work_state->unk_03E == 0x61) && annual_work_state->unk_0FA >= 0x64)
+                || ((D_80148828[D_80148818] == 2 & annual_work_state->unk_03E == 0x60) && annual_work_state->unk_0FA >= 0x64)) {
                 D_80148624 = 1;
             }
             func_8004DE1C();
@@ -263,12 +263,12 @@ s32 func_801421B4(void) {
     }
 }
 
-void func_801425F4(void) {
+void annual_result_audio_command_play_4183(void) {
     func_8008A0D4(0x4183);
     func_8004DE1C();
 }
 
-void func_8014261C(void) {
+void annual_result_actor_display_reset(void) {
     s16 i;
 
     for (i = 0; i < 6; i++) {
@@ -279,7 +279,7 @@ void func_8014261C(void) {
     func_8004DE1C();
 }
 
-s32 func_8014267C(void) {
+s32 annual_result_choice_route(void) {
     D_8012E6BC = 0;
     if (D_801486E4 == 0) {
         D_800F62CF = 0;
@@ -308,7 +308,7 @@ s32 func_8014267C(void) {
     func_8004DE1C();
 }
 
-void func_80142790(void) {
+void annual_result_choice_sound_play(void) {
     if (D_80148828[D_80148818] == 0xB) {
         func_80086AB0(0x200);
     } else {
@@ -317,7 +317,7 @@ void func_80142790(void) {
     func_8004DE1C();
 }
 
-void func_801427E4(void) {
+void annual_result_transition_timer_advance(void) {
     s16 v;
 
     v = D_8012B920 + 0x200;
@@ -327,17 +327,17 @@ void func_801427E4(void) {
     }
 }
 
-void func_80142828(void) {
+void annual_result_scene_command_4d_issue(void) {
     func_80051DD8(0x4D, 0x801B0000, 0xB0C5);
     func_8004DE1C();
 }
 
-void func_80142858(void) {
+void annual_result_scene_command_0e_issue(void) {
     func_80051DD8(0xE, 0x801D7000, 0xB112);
     func_8004DE1C();
 }
 
-void func_8014288C(void) {
+void annual_result_choice_effect_reset(void) {
     D_80148624 = 0;
     if (D_80148828[D_80148818] == 0xB) {
         D_80148620 = 0x27;
@@ -348,7 +348,7 @@ void func_8014288C(void) {
 }
 
 /* Return type preserves the existing caller declaration and original fall-through schedule. T-24101. */
-s32 func_801428EC(void) {
+s32 annual_result_choice_geometry_draw(void) {
     s32 unused; /* FAKE: unused local pads stack frame to 0x48 bytes. T-24101. */
     s16 dy;
     s16 dx;
@@ -359,7 +359,7 @@ s32 func_801428EC(void) {
         dy = 0;
         dx = 0;
     }
-    func_80142A8C(
+    annual_result_gouraud_triangle_emit(
         ((Actor *)D_80129F40)[97].x - dx - 0x1C,
         ((Actor *)D_80129F40)[97].y + dy - 0x1C,
         ((Actor *)D_80129F40)[97].x - 1,
@@ -369,7 +369,7 @@ s32 func_801428EC(void) {
         D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + D_80148828[D_80148818]]][0],
         D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + D_80148828[D_80148818]]][1],
         9, 0);
-    func_80142A8C(
+    annual_result_gouraud_triangle_emit(
         ((Actor *)D_80129F40)[97].x + dx + 0x1C,
         ((Actor *)D_80129F40)[97].y - dy + 0x1C,
         ((Actor *)D_80129F40)[97].x + dx + 0x1C,
@@ -383,7 +383,7 @@ s32 func_801428EC(void) {
 }
 
 /* Return type preserves the existing implicit caller ABI and original schedule. T-24019. */
-s32 func_80142A8C(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+s32 annual_result_gouraud_triangle_emit(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
     GyoziWork *g;
     POLY_G3 *poly;
 
@@ -404,7 +404,7 @@ s32 func_80142A8C(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1
     func_800AB984(&D_800F7710[(D_80129F10 << 10) + z * 4], poly, poly);
 }
 
-void func_80142C14(void) {
+void annual_result_character_idle_advance(void) {
     s16 i;
 
     for (i = 0; i < 3; i++) {

@@ -2,39 +2,39 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-void func_80132FA0(void) {
+void help_memory_card_topic_dispatch(void) {
     switch (game_state.mode_step) {
     case 0x0:
-        func_8013306C();
+        help_memory_card_menu_draw();
         break;
     case 0x1:
-        func_801331C8();
+        help_memory_card_menu_input();
         break;
     case 0x10:
-        func_801332F8();
+        help_memory_card_page_1_render();
         break;
     case 0x20:
-        func_801333E4();
+        help_memory_card_page_2_render();
         break;
     case 0x30:
-        func_80133508();
+        help_memory_card_page_3_render();
         break;
     case 0x40:
-        func_8013362C();
+        help_memory_card_page_4_render();
         break;
     case 0x50:
-        func_8013376C();
+        help_memory_card_page_5_render();
         break;
     case 0x60:
-        func_801338C8();
+        help_memory_card_page_6_render();
         break;
     case 0x70:
-        func_80133A24();
+        help_memory_card_page_7_render();
         break;
     }
 }
 
-void func_8013306C(void) {
+void help_memory_card_menu_draw(void) {
     s32 i;
     s32 r;
     s32 padx[1]; /* FAKE: unused words above and below the arrays reproduce the original frame 0xC0 and array offsets; real source unknown. T-9310 */
@@ -62,7 +62,7 @@ void func_8013306C(void) {
     mode_step_next();
 }
 
-void func_801331C8(void) {
+void help_memory_card_menu_input(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -101,7 +101,7 @@ void func_801331C8(void) {
     }
 }
 
-s32 func_801332F8(void) {
+s32 help_memory_card_page_1_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -120,7 +120,7 @@ s32 func_801332F8(void) {
     }
 }
 
-s32 func_801333E4(void) {
+s32 help_memory_card_page_2_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -141,7 +141,7 @@ s32 func_801333E4(void) {
     }
 }
 
-s32 func_80133508(void) {
+s32 help_memory_card_page_3_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -162,7 +162,7 @@ s32 func_80133508(void) {
     }
 }
 
-s32 func_8013362C(void) {
+s32 help_memory_card_page_4_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -184,7 +184,7 @@ s32 func_8013362C(void) {
     }
 }
 
-s32 func_8013376C(void) {
+s32 help_memory_card_page_5_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -207,7 +207,7 @@ s32 func_8013376C(void) {
     }
 }
 
-s32 func_801338C8(void) {
+s32 help_memory_card_page_6_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -230,7 +230,7 @@ s32 func_801338C8(void) {
     }
 }
 
-s32 func_80133A24(void) {
+s32 help_memory_card_page_7_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();

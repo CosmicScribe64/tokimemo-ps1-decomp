@@ -1,22 +1,22 @@
 /* boot_assets.c: src/main/80059B40.c; Boot-stage state machine reads common assets from CD, relocates texture pointers, loads tpage cache, initializes palettes/UI actors, and proceeds toward title setup; retains all six original definitions. Original object 0x80059B40-0x8005A0B0 (config/objects/main.txt). */
-#define MAIN_API_OVERRIDE_D_800C9730 /* matched as the s32 table it is (11 words up to sprite_frame_table); main_api.h: u8[]; T-17008 */
+#define MAIN_API_OVERRIDE_actor_default_texture_blocks /* matched as the s32 table it is (11 words up to sprite_frame_table); main_api.h: u8[]; T-17008 */
 #define MAIN_API_OVERRIDE_D_800C5FCC /* matched as the two-word table up to D_800C5FD4; main_api.h: s32; T-17008 */
 #include "common.h"
 #include "game.h"
 
-extern s32 D_800C9730[11];
+extern s32 actor_default_texture_blocks[11];
 extern s32 D_800C5FCC[2];
 
-void func_80059B40(void) {
+void boot_mode_step(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80059E00();
+        boot_data_load_step();
         return;
     case 1:
-        func_80059BC0();
+        boot_hud_textures_step();
         return;
     case 2:
-        func_8004ADE4();
+        debug_font_load();
         mode_step_next();
         return;
     default:
@@ -25,37 +25,37 @@ void func_80059B40(void) {
     }
 }
 
-void func_80059BC0(void) {
-    func_80059BE8();
+void boot_hud_textures_step(void) {
+    boot_hud_textures_load();
     mode_step_next();
 }
 
-void func_80059BE8(void) {
+void boot_hud_textures_load(void) {
     s32 i;
     s32 k;
 
     /* FAKE: the subtract loops need the 0x80000 in a register (`subu rd,rs,s0`, shared with the add loops); a literal `-= 0x80000` becomes `addu` of 0xFFF80000. Real source unknown. T-17008 */
     k = 0x80000;
-    if (!(D_800C9730[0] & 0x80000)) {
+    if (!(actor_default_texture_blocks[0] & 0x80000)) {
         for (i = 0; i < 11; i++) {
-            D_800C9730[i] += 0x80000;
+            actor_default_texture_blocks[i] += 0x80000;
         }
         for (i = 0; i < 2; i++) {
             D_800C5FCC[i] += 0x80000;
         }
     }
-    load_tpage_buf_lock(0x1F, D_800C9730[7], 2);
-    load_tpage_buf_lock(0x1E, D_800C9730[8], 2);
-    load_tpage_buf_lock(0x1D, D_800C9730[9], 2);
-    load_tpage_buf_lock(0x1C, D_800C9730[10], 2);
+    load_tpage_buf_lock(0x1F, actor_default_texture_blocks[7], 2);
+    load_tpage_buf_lock(0x1E, actor_default_texture_blocks[8], 2);
+    load_tpage_buf_lock(0x1D, actor_default_texture_blocks[9], 2);
+    load_tpage_buf_lock(0x1C, actor_default_texture_blocks[10], 2);
     load_tpage_buf_lock(0x1B, D_800C5FCC[0], 2);
     load_tpage_buf_lock(0x3B, D_800C5FCC[1], 2);
-    load_tpage_buf_lock(0x3C, D_800C9730[0], 2);
-    load_tpage_buf_lock(0x3D, D_800C9730[1], 2);
-    load_tpage_buf_lock(0x3E, D_800C9730[2], 2);
-    load_tpage_buf_lock(0x3F, D_800C9730[3], 2);
+    load_tpage_buf_lock(0x3C, actor_default_texture_blocks[0], 2);
+    load_tpage_buf_lock(0x3D, actor_default_texture_blocks[1], 2);
+    load_tpage_buf_lock(0x3E, actor_default_texture_blocks[2], 2);
+    load_tpage_buf_lock(0x3F, actor_default_texture_blocks[3], 2);
     for (i = 0; i < 11; i++) {
-        D_800C9730[i] -= k;
+        actor_default_texture_blocks[i] -= k;
     }
     for (i = 0; i < 2; i++) {
         D_800C5FCC[i] -= k;
@@ -71,16 +71,16 @@ void func_80059BE8(void) {
 }
 
 /* FAKE: u8 views give the original's global access (LOD): `andi`/`or v0` copy of the increment; the s32 return keeps that copy live (T-5010) */
-s32 func_80059E00(void) {
+s32 boot_data_load_step(void) {
     if (*(u8 *)&game_state.substep == 0) {
         printf("LDVI");
         back_clear_switch(1);
-        func_80041168(0xFF);
+        vram_clear_blocks(0xFF);
         cd_read_sectors(0x35, 0x80180000, 0x9D85);
         *(u8 *)&game_state.substep += 1;
     } else if (*(u8 *)&game_state.substep == 1) {
         if (cd_read_sync_status() & 1) {
-            func_80059EF0();
+            boot_hud_init();
             cd_read_sectors_nowait(8, 0x801F0000, 0x9C97);
             *(u8 *)&game_state.substep += 1;
         }
@@ -89,7 +89,7 @@ s32 func_80059E00(void) {
     }
 }
 
-void func_80059EF0(void) {
+void boot_hud_init(void) {
     s32 i;
     s32 j;
 
@@ -128,7 +128,7 @@ void func_80059EF0(void) {
 
 void boot_mode_handler(void) {
     if (game_state.mode_stage == 0) {
-        func_80059B40();
+        boot_mode_step();
         return;
     }
     game_mode_set(GAME_MODE_TITLE);

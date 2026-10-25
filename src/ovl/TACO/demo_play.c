@@ -35,12 +35,12 @@ s32 shooter_demo_step_init(void) {
         game_state.clear_color_r = 0;
         game_state.clear_color_g = 0;
         game_state.clear_color_b = 0;
-        func_800591D8(1);
+        view_display_set_wide_or_standard(1);
         k_reset(0);
         back_clear_switch(1);
         shooter_init_camera();
         shooter_set_white_lights();
-        func_80059048();
+        view_model_slots_clear();
         shooter_hide_all_models();
         shooter_release_all_actor_models();
         i = 0;
@@ -89,9 +89,9 @@ void shooter_demo_step_run(void) {
     if (game_state.pad_pressed != 0) {
         shooter_release_all_actor_models();
         shooter_hide_all_models();
-        func_80059048();
+        view_model_slots_clear();
         shooter_reset_enemies();
-        func_800591D8(0);
+        view_display_set_wide_or_standard(0);
         mode_stage_set(2);
     } else {
         game_state.pad_pressed |= PAD_CIRCLE;
@@ -128,9 +128,9 @@ void shooter_demo_step_run(void) {
     if ((u32) game_state.mode_stage_timer >= 0x709U) {
         shooter_release_all_actor_models();
         shooter_hide_all_models();
-        func_80059048();
+        view_model_slots_clear();
         shooter_reset_enemies();
-        func_800591D8(0);
+        view_display_set_wide_or_standard(0);
         mode_stage_set(2);
     }
 }

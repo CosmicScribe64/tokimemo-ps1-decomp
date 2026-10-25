@@ -1059,7 +1059,7 @@ void talk_text_step(void) {
     if (speaker_voice_state == SPEAKER_VOICE_PENDING && (cd_audio_state() & 4)) {
         speaker_voice_state = SPEAKER_VOICE_PLAYING;
     }
-    cd_request_words = (s32 *)func_80046284();
+    cd_request_words = (s32 *)cd_audio_request_get();
     if (speaker_voice_state == SPEAKER_VOICE_PLAYING) {
         if (cd_audio_state() & 2) {
             if (speaker_voice_index != -1) {

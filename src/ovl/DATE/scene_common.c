@@ -296,7 +296,7 @@ void date_scene_mode_handler(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
     draw_shake_update();
 }
 

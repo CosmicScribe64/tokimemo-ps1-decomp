@@ -653,5 +653,5 @@ void rpg_wave_quad_draw(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     p->v2 = arg1[5] + 1;
     p->u3 = arg1[6] + 1;
     p->v3 = arg1[7] + 1;
-    AddPrim((draw_buffer << 0xA) + 0x20 + D_800E8CA0, (s32)p);
+    AddPrim((draw_buffer << 0xA) + 0x20 + draw_ot_tags, (s32)p);
 }

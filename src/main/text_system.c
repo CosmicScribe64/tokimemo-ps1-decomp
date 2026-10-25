@@ -271,12 +271,12 @@ void disp_string(void) {
             p->r0 = game_state.screen_brightness;
             p->g0 = game_state.screen_brightness;
             p->b0 = game_state.screen_brightness;
-            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_state.unk_6A;
-            p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer];
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.draw_origin_x[draw_buffer] + k * text_state.unk_6A;
+            p->y0 = ((TextEntry *)text_list)[j].y + game_state.draw_origin_y[draw_buffer];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
             p->clut = func_8009ED74((((TextEntry *)text_list)[j].attribute & 8) * 4 + 0x100, (((TextEntry *)text_list)[j].attribute & 7) + 0x1F8);
-            AddPrim(&D_800E8CA0[(draw_buffer << 10) + ot * 4], p);
+            AddPrim(&draw_ot_tags[(draw_buffer << 10) + ot * 4], p);
 
             p = (SPRT_8 *)GetWorkBase(0x10, draw_buffer);
             func_8009F090(p);
@@ -285,11 +285,11 @@ void disp_string(void) {
             p->r0 = 0;
             p->g0 = 0;
             p->b0 = 0;
-            p->x0 = ((TextEntry *)text_list)[j].x + game_state.screen_center_x[draw_buffer] + k * text_state.unk_6A + 1;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.draw_origin_x[draw_buffer] + k * text_state.unk_6A + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
-            p->y0 = ((TextEntry *)text_list)[j].y + game_state.screen_center_y[draw_buffer] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
+            p->y0 = ((TextEntry *)text_list)[j].y + game_state.draw_origin_y[draw_buffer] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
             p->clut = func_8009ED74((((TextEntry *)text_list)[j].attribute & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attribute & 7) + 0x1F8);
-            AddPrim(&D_800E8CA0[(draw_buffer << 10) + ot * 4], p);
+            AddPrim(&draw_ot_tags[(draw_buffer << 10) + ot * 4], p);
 
             if (i == 0x7F) {
                 goto_tpage(0x300, 0x100, ot, 0, 0);

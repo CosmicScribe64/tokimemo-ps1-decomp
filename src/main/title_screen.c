@@ -2,7 +2,7 @@
 #include "common.h"
 #include "game.h"
 
-void func_80061710(void) {
+void title_view_init(void) {
     func_8009AD30(0x3E8);
     D_80122740 = 0;
     D_80122744 = 0;
@@ -17,40 +17,40 @@ void func_80061710(void) {
     func_8009AD60(0x10000);
 }
 
-void func_80061790(void) {
-    D_80122760 = 0;
+void title_lights_init(void) {
+    view_light_0 = 0;
     D_80122764 = 0;
     D_80122768 = 0x64;
     D_8012276C = 0xFF;
     D_8012276D = 0x80;
     D_8012276E = 0x80;
-    func_8009AD70(0, &D_80122760);
-    D_80122770 = 0;
+    func_8009AD70(0, &view_light_0);
+    view_light_1 = 0;
     D_80122774 = 0x64;
     D_80122778 = 0;
     D_8012277C = 0x80;
     D_8012277D = 0x80;
     D_8012277E = 0xFF;
-    func_8009AD70(1, &D_80122770);
-    D_80122780 = 0x64;
+    func_8009AD70(1, &view_light_1);
+    view_light_2 = 0x64;
     D_80122784 = 0;
     D_80122788 = 0;
     D_8012278C = 0x80;
     D_8012278D = 0xFF;
     D_8012278E = 0x80;
-    func_8009AD70(2, &D_80122780);
+    func_8009AD70(2, &view_light_2);
     GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
 
-void func_800618B0(void) {
-    TaiikuBig *p;
+void title_coordinates_init(void) {
+    GraphicsCoordinate2 *p;
 
     /* FAKE: init and loop head on one source line give the original's addiu order (as1 schedules by line, T-7020) */
-    p = D_801227A0; do {
+    p = view_coordinates; do {
         func_80099E30(0, p);
-        p->unk20 = 0xFA0;
-        p->unk0 = 0;
+        p->translate_z = 0xFA0;
+        p->flag = 0;
         p++;
     } while (p != D_80122CA0);
 }
@@ -59,7 +59,7 @@ void func_800618B0(void) {
  * on the model loaded at 0x801F0000: map the data, check the object count word (13), then link the 16 and 13 objects.
  * The address is an integer (`m`), not a pointer: a pointer is folded into `lui; lw 8(t6)` by uopt, and the `u32`
  * view keeps the count compare's `li at,13` apart from the divisor. T-17010 */
-s32 func_8006190C(void) {
+s32 title_models_link(void) {
     s32 m;
     s32 r;
     s32 i;
@@ -72,22 +72,22 @@ s32 func_8006190C(void) {
     }
     m += 4;
     for (i = 0; i < 16; i++) {
-        func_8009B430(m, (u8 *)&D_80122640[i * 4], 0);
-        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
-        D_80122640[i * 4] = 0;
+        func_8009B430(m, (u8 *)&model_objects[i * 4], 0);
+        model_objects[i * 4 + 1] = (u32)&view_coordinates[i];
+        model_objects[i * 4] = 0;
     }
     r = rand();
     for (i = 0; i < 13; i++) {
-        func_8009B430(m, (u8 *)&D_80122640[i * 4], (r + i) % 13);
-        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
-        D_80122640[i * 4] = 0;
+        func_8009B430(m, (u8 *)&model_objects[i * 4], (r + i) % 13);
+        model_objects[i * 4 + 1] = (u32)&view_coordinates[i];
+        model_objects[i * 4] = 0;
     }
 }
 
 /* Setup steps selected by game_state.substep: 0 resets the display state, 1 starts the CD
  * read of the model data to 0x801F0000, 2 duplicates its first sector into the next twelve and reads the
  * textures to 0x80180000, 3 loads palettes and texture pages, sets up actor 96 and the 13 models. T-25119 */
-void func_80061A3C(void) {
+void title_setup_stage(void) {
     s32 i;
     u8 *p;
     s32 tbl[8];
@@ -96,13 +96,13 @@ void func_80061A3C(void) {
 
     switch (game_state.substep) {
     case 0:
-        D_800B3CFC = 0;
-        D_800B3D00 = 0;
-        D_800B3CF8 = 0;
+        pad_code_entered = 0;
+        pad_code_timer = 0;
+        pad_code_index = 0;
         tpage_buf_clear();
         actor_clear_range(0);
         dec_bg_reset();
-        func_80041168(0xFE);
+        vram_clear_blocks(0xFE);
         text_system_reset();
         message_window_title_show(0);
         back_clear_switch(1);
@@ -154,7 +154,7 @@ void func_80061A3C(void) {
             for (i = 0; i < 8; i++) {
                 tbl[i] = 0x801B4000 + i * 0x4000;
             }
-            func_8004A1A0(tbl, 0, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0xD);
+            prim_bg_slot_setup(tbl, 0, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0xD);
             load_palette(0x801CC000, 0xF, 1, 3, 0);
             actor_clear(0x60);
             ((Actor *)actor_pool)[96].unk_01 = 0xD;
@@ -176,20 +176,20 @@ void func_80061A3C(void) {
             back_clear_switch(0);
             srand(game_state.timer_ticks);
             draw2d3d(1, 1);
-            func_80061710();
-            func_80061790();
-            func_800618B0();
+            title_view_init();
+            title_lights_init();
+            title_coordinates_init();
             /* FAKE: an empty test of the int result ends the block after the call; otherwise its
              * return register v0 is reserved there and the copy pointers below take v1/a0 instead of
              * v0/v1. T-25119 */
-            if (func_8006190C()) {
+            if (title_models_link()) {
             }
             /* FAKE: positions 1..13 of the D_801230D0 work area, reached through its first word as in
-             * func_80062948 (its other words are not declared as an aggregate yet); the first copy is a
+             * title_photos_update (its other words are not declared as an aggregate yet); the first copy is a
              * statement of its own, the loop of 12 is unrolled by four. T-25119 */
-            (&D_801230D0)[1] = D_800B5A40[0];
+            (&D_801230D0)[1] = title_photo_offsets[0];
             for (i = 1; i < 13; i++) {
-                (&D_801230D0)[i + 1] = D_800B5A40[i];
+                (&D_801230D0)[i + 1] = title_photo_offsets[i];
             }
             mode_stage_next();
         }
@@ -197,7 +197,7 @@ void func_80061A3C(void) {
     }
 }
 
-void func_80061EFC(void) {
+void title_intro_backdrop_step(void) {
     u32 c;
     c = game_state.screen_brightness;
     if (c < 0x80U) {
@@ -213,17 +213,17 @@ void func_80061EFC(void) {
         /* Chain written as element stores: one li for all three (T-9210). */
         (&game_state.clear_color_r)[0] = (&game_state.clear_color_g)[0] = (&game_state.clear_color_b)[0] = 0xFF;
         back_clear_switch(1);
-        func_80059048();
+        view_model_slots_clear();
         game_state.screen_brightness = 0x80;
         mode_stage_next();
     }
 }
 
-void func_80061FC4(void) {
-    func_8004AC18((s32)((u32)game_state.mode_step_timer.w >> 1));
+void title_intro_flash_step(void) {
+    prim_flash_gray((s32)((u32)game_state.mode_step_timer.w >> 1));
     if (((u32)game_state.mode_step_timer.w >> 1 >= 0xFFU) || (game_state.pad_pressed & 0x860)) {
         bg_layers = 0x80000000;
-        func_80059048();
+        view_model_slots_clear();
         hud_cursor_actor_init(0);
         hud_cursor_show(0);
         back_clear_switch(1);
@@ -249,8 +249,8 @@ void func_80061FC4(void) {
     }
 }
 
-void func_8006211C(void) {
-    func_8004AC18(0xFF - game_state.mode_step_timer.w);
+void title_intro_logo_step(void) {
+    prim_flash_gray(0xFF - game_state.mode_step_timer.w);
     if ((u32)game_state.mode_step_timer.w >= 0xFFU) {
         mode_stage_next();
     } else if (game_state.pad_pressed & 0x860) {
@@ -258,23 +258,23 @@ void func_8006211C(void) {
     }
 }
 
-void func_8006218C(void) {
+void title_intro_stage(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80061EFC();
+        title_intro_backdrop_step();
         break;
     case 1:
-        func_80061FC4();
+        title_intro_flash_step();
         break;
     case 2:
-        func_8006211C();
+        title_intro_logo_step();
         break;
     }
-    func_80062948();
+    title_photos_update();
 }
 
-void func_80062210(void) {
+void title_menu_setup_step(void) {
     s16 pad[4]; /* FAKE: unused pad grows the frame to the original 0x80; real source unknown. T-17010 */
     s16 x[2];
     s16 y[2];
@@ -293,7 +293,7 @@ void func_80062210(void) {
     (&game_state.screen_brightness)[0] = 0x80;
     hud_cursor_actor_init(0);
     hud_cursor_show(1);
-    func_800623E4();
+    title_menu_cursor_update();
     for (i = 0, j = 0; i < 3; i++, j += 2) {
         actor_clear(i + 0x60);
         ((Actor *)actor_pool)[i + 0x60].unk_01 = 0xD;
@@ -316,7 +316,7 @@ void func_80062210(void) {
     mode_step_next();
 }
 
-void func_800623E4(void) {
+void title_menu_cursor_update(void) {
     if (game_state.input_device != INPUT_MOUSE) {
         cursor_y = D_801230D0 * 16 + 0x46;
         cursor_x = 0x40;
@@ -353,8 +353,8 @@ void func_800623E4(void) {
     }
 }
 
-void func_80062524(void) {
-    func_800623E4();
+void title_menu_select_step(void) {
+    title_menu_cursor_update();
     if (game_state.pad_pressed & 0x820) {
         hud_cursor_show(0);
         mode_step_next();
@@ -368,42 +368,42 @@ void func_80062524(void) {
     }
 }
 
-void func_800625C0(void) {
+void title_menu_highlight(void) {
     u8 *p = actor_pool + D_801230D0 * 0x44;
 
     p[0x19C7] |= 0x40;
 }
 
-void func_800625F4(void) {
-    func_800625C0();
+void title_menu_confirm_step(void) {
+    title_menu_highlight();
     if ((u32)game_state.mode_step_timer.w >= 0x21U) {
         mode_stage_next();
     }
 }
 
-void func_80062634(void) {
+void title_menu_stage(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80062210();
+        title_menu_setup_step();
         return;
     case 1:
-        func_80062524();
+        title_menu_select_step();
         return;
     case 2:
-        func_800625F4();
+        title_menu_confirm_step();
         return;
     }
 }
-void func_800626B0(void) {
-    func_8004AC18(0xFF);
+void title_exit_dispatch_step(void) {
+    prim_flash_gray(0xFF);
     switch (*(u32 *)&D_801230D0) {
     case 0:
         game_mode_set(GAME_MODE_FILE_SELECT);
         break;
     case 1:
         game_mode_set(GAME_MODE_OPTION);
-        if (D_800B3220 == 1) {
+        if (debug_hud_enabled == 1) {
             if (game_state.pad_held & PAD_RIGHT) {
                 game_mode_set(GAME_MODE_OPTION_2);
             } else if (game_state.pad_held & PAD_LEFT) {
@@ -417,11 +417,11 @@ void func_800626B0(void) {
     }
 }
 
-void func_80062764(void) {
+void title_exit_fade_step(void) {
     audio_command(0xD1);
-    func_8004AC18(game_state.mode_step_timer.w * 2);
+    prim_flash_gray(game_state.mode_step_timer.w * 2);
     if ((u32)game_state.mode_step_timer.w >= 0x80U) {
-        func_80048DD0(0);
+        actor_deactivate(0);
         hud_cursor_actor_init(0);
         hud_cursor_show(0);
         sprite_tables_clear();
@@ -429,14 +429,14 @@ void func_80062764(void) {
     }
 }
 
-void func_800627DC(void) {
+void title_exit_stage(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80062764();
+        title_exit_fade_step();
         return;
     case 1:
-        func_800626B0();
+        title_exit_dispatch_step();
         return;
     }
 }
@@ -445,23 +445,23 @@ void title_mode_handler(void) {
     game_state.mode_stage_timer += 1;
     switch (game_state.mode_stage) {
     case 0:
-        func_80061A3C();
+        title_setup_stage();
         break;
     case 1:
-        func_8006218C();
+        title_intro_stage();
         break;
     case 2:
-        func_80062634();
+        title_menu_stage();
         break;
     case 3:
-        func_800627DC();
+        title_exit_stage();
         break;
     default:
         game_mode_reset_to_title();
         break;
     }
-    if (D_800B3CFC != 0) {
-        if (func_80045288() == 1) {
+    if (pad_code_entered != 0) {
+        if (cd_queue_idle() == 1) {
             if (game_state.mode_stage >= 2) {
                 hud_cursor_show(0);
                 audio_command(0x7F);
@@ -473,11 +473,11 @@ void title_mode_handler(void) {
     }
 }
 
-/* Places the 13 rotating models: model i (D_801227A0[i], a GsCOORDINATE2 record) gets a local
+/* Places the 13 rotating models: model i (view_coordinates[i], a GsCOORDINATE2 record) gets a local
  * matrix from a rotation that depends on the frame counter, an identity scale and a translation
  * from position word i + 1 of the D_801230D0 work area, which then moves on by 2 or 3.
- * s32 because func_8006218C calls it before this definition (implicit int). T-25119 */
-s32 func_80062948(void) {
+ * s32 because title_intro_stage calls it before this definition (implicit int). T-25119 */
+s32 title_photos_update(void) {
     s32 i;
     s32 j;
     SVECTOR rot;
@@ -494,8 +494,8 @@ s32 func_80062948(void) {
         rot.vz = (game_state.frame_count | 0) * (j + 2) * -2 - 2;
         rot.vx = rsin(game_state.frame_count * 10 * (j + 1)) / 12 + 0x7FD;
         rot.vy = func_800A0140(game_state.frame_count * 10 * (j + 1)) / 12 - 5;
-        m = *(MATRIX *)D_80125C60;
-        s = *(MATRIX *)D_80125C60;
+        m = *(MATRIX *)view_base_matrix;
+        s = *(MATRIX *)view_base_matrix;
         RotMatrix(&rot, &m);
         m.t[0] = 0;
         m.t[1] = 0;
@@ -518,20 +518,20 @@ s32 func_80062948(void) {
         /* FAKE: `- (0 - p)` puts (v & 1) before the reloaded position in the addu, as in the
          * original; `+ p` is ordered position first. T-25119 */
         (&D_801230D0)[i + 1] = (v & 1) - (0 - (&D_801230D0)[i + 1]) + 2;
-        *(MATRIX *)D_801227A0[i].unk4 = m;
-        D_801227A0[i].unk0 = 0;
+        *(MATRIX *)view_coordinates[i].unk4 = m;
+        view_coordinates[i].flag = 0;
     }
 }
 
-void func_80062C28(void) {
+void game_mode_start_mode_handler(void) {
     set_movie_offset(0, 0);
-    func_80056BA8(0, 0xA7, 0x190);
+    movie_play(0, 0xA7, 0x190);
     func_80088070();
     cd_audio_command(9, 0, 0);
     cd_audio_command(0xA, 0, 0);
-    func_80053650(0x80167000, 0x80162000, 0x80162000);
+    bg_still_buffers_set(0x80167000, 0x80162000, 0x80162000);
     func_8009C210(1);
-    func_80041168(0);
+    vram_clear_blocks(0);
     func_8009C674(0);
     back_clear_switch(1);
     game_mode_set(GAME_MODE_BOOT);

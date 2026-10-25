@@ -311,15 +311,15 @@ void rpg_girl_run_set_rect(void) {
 }
 
 typedef struct {
-    u8 *s[41];
-} StrTbl41; /* size 0xA4 */
-extern StrTbl41 rpg_drama_lines;
+    u8 *lines[41];
+} RpgDramaLineTable; /* size 0xA4 */
+extern RpgDramaLineTable rpg_drama_lines;
 
 void rpg_drama_pick_lines(void) {
     s32 a;
     s32 b;
     s32 c;
-    StrTbl41 tbl;
+    RpgDramaLineTable tbl;
 
     tbl = rpg_drama_lines;
     a = rpg_rand(0x29);
@@ -334,9 +334,9 @@ void rpg_drama_pick_lines(void) {
     if (c == b) {
         c = (c + 1) % 41;
     }
-    strcpy(rpg_text_player_0, tbl.s[a]);
-    strcpy(rpg_text_player_1, tbl.s[b]);
-    strcpy(rpg_text_player_2, tbl.s[c]);
+    strcpy(rpg_text_player_0, tbl.lines[a]);
+    strcpy(rpg_text_player_1, tbl.lines[b]);
+    strcpy(rpg_text_player_2, tbl.lines[c]);
 }
 
 void rpg_drama_step_3(void) {

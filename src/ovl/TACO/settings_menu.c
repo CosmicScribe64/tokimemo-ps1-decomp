@@ -65,7 +65,7 @@ s32 shooter_settings_step_init(void) {
         }
         break;
     case 2:
-        func_800536AC(0x2C0, 0, 0x140, 0xF0);
+        bg_still_decode_to_vram(0x2C0, 0, 0x140, 0xF0);
         shooter_clear_text_strip();
         mode_step_next();
         break;

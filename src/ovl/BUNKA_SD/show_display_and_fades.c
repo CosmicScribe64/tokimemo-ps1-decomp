@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKA_SD.h"
 
-void func_80134260(void) {
+void stage_show_scene_state_reset(void) {
     talk_clear();
     actor_clear_upper();
     k_reset(1);
@@ -23,7 +23,7 @@ void func_80134260(void) {
     mode_step_next();
 }
 
-s32 func_80134314(void) {
+s32 stage_show_scene_finish_wait(void) {
     if (game_state.substep == 0) {
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         game_state.substep += 1;
@@ -45,8 +45,8 @@ s32 func_80134314(void) {
     }
 }
 
-/* FAKE: u8 views keep one promoted counter range as in func_8013987C; original source unknown. T-24035 */
-void func_80134418(void) {
+/* FAKE: u8 views keep one promoted counter range as in stage_show_brass_band_actor_brightness_fade; original source unknown. T-24035 */
+void stage_show_actor_brightness_ramp_up(void) {
     s32 i;
 
     for (i = 0; i < 0x40; i++) {
@@ -63,8 +63,8 @@ void func_80134418(void) {
     }
 }
 
-/* FAKE: T-24035. The u8 views keep the counter in one promoted range; *= 0 preserves its zero register for the clear loop instead of folding the stores to sb zero, as in matched sibling func_8013987C. Original source unknown. */
-void func_801344A8(void) {
+/* FAKE: T-24035. The u8 views keep the counter in one promoted range; *= 0 preserves its zero register for the clear loop instead of folding the stores to sb zero, as in matched sibling stage_show_brass_band_actor_brightness_fade. Original source unknown. */
+void stage_show_actor_brightness_ramp_down(void) {
     s32 i;
 
     for (i = 0; i < 0x40; i++) {

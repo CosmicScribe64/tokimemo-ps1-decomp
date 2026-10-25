@@ -4,7 +4,7 @@
 
 #define DISP(n) (((Actor *)actor_pool)[n])
 
-void func_80132BD0(void) {
+void sports_dance_actors_init(void) {
     s32 i;
     s32 j; /* FAKE: five unused word locals reproduce the original frame (arrays at 0x68, frame 0x128); real locals unknown. T-19031 */
     s32 k;
@@ -42,9 +42,9 @@ void func_80132BD0(void) {
     }
 }
 
-void func_80132E20(arg0, arg1)
-s16 arg0;
-s32 arg1;
+void sports_dance_actors_position(actor_horizontal_offset, placement_candidate_count)
+s16 actor_horizontal_offset;
+s32 placement_candidate_count;
 {
     s32 i;
     s32 j;
@@ -56,10 +56,10 @@ s32 arg1;
 
     sp78 = D_80148FB8;
     for (i = 0; i < 0x17; i++) {
-        for (j = 0; j < arg1; j++) {
-            spA8[j] = sp78.v[i] + j * 0x500 - arg0 - 0xA0;
+        for (j = 0; j < placement_candidate_count; j++) {
+            spA8[j] = sp78.v[i] + j * 0x500 - actor_horizontal_offset - 0xA0;
         }
-        for (j = 0; j < arg1; j++) {
+        for (j = 0; j < placement_candidate_count; j++) {
             t = abs(spA8[j]);
             if (t < abs(spA8[0])) {
                 spA8[0] = spA8[j];
@@ -80,12 +80,12 @@ s32 arg1;
     }
 }
 
-void func_801330D4(void) {
-    func_801330FC();
-    func_801331D0();
+void sports_runner_scene_graphics_init(void) {
+    sports_dance_background_upload();
+    sports_runner_scene_background_tile_upload();
 }
 
-void func_801330FC(void) {
+void sports_dance_background_upload(void) {
     /* FAKE: two unused word slots reproduce the eight-byte frame tail.
      * T-9560; original local declarations unknown. */
     s32 unused0;
@@ -97,7 +97,7 @@ void func_801330FC(void) {
     rect.y = 0;
     rect.w = 0x20;
     rect.h = 0x70;
-    func_8004E44C(0, (u32 *)D_801491C4, D_801491C0);
+    layer_tileset_init(0, (u32 *)D_801491C4, D_801491C0);
     srn_init(0, D_801491C8, 0);
     srn_vram_set(0, 5, 0x580, 0xF0);
     func_8009C93C(&rect, 0x3C0, 0);
@@ -106,7 +106,7 @@ void func_801330FC(void) {
     }
 }
 
-void func_801331D0(void) {
+void sports_runner_scene_background_tile_upload(void) {
     /* FAKE: unused 8-byte local reproduces the original frame (real source unknown). T-9150 */
     s32 pad[2];
     RECT r;
@@ -126,7 +126,7 @@ void func_801331D0(void) {
     }
 }
 
-void func_80133258(void) {
+void sports_runner_scene_actor_init(void) {
     s32 i;
     TaiBytes10 sp88;
     TaiikuHalf10 sp74;
@@ -161,13 +161,13 @@ void func_80133258(void) {
     }
 }
 
-void func_80133438(void) {
-    func_80132E20(0, 1);
+void sports_runner_scene_scroll_update(void) {
+    sports_dance_actors_position(0, 1);
     Scroll(0, 0xF, 0, 0x70, 0x280);
     Scroll(0, 0xF, 0x70, 0x80, 0x80);
 }
 
-void func_80133494(void) {
+void sports_runner_day_scene_setup(void) {
     switch (game_state.mode_step) {
     case 0:
         audio_command(0xBF);
@@ -175,13 +175,13 @@ void func_80133494(void) {
         mode_step_next();
         break;
     case 1:
-        func_80059E00();
+        boot_data_load_step();
         break;
     case 2:
-        func_80059BC0();
+        boot_hud_textures_step();
         break;
     case 3:
-        func_8004ADE4();
+        debug_font_load();
         dec_bg_reset();
         set_dec_bri(0);
         hud_cursor_actor_init(0);
@@ -223,7 +223,7 @@ void func_80133494(void) {
     parameter_disp_switch(0);
 }
 
-void func_80133644(void) {
+void sports_shiori_date_scene_step(void) {
     portrait_wink_update();
     switch (game_state.mode_step) {
     case 0:
@@ -251,7 +251,7 @@ void func_80133644(void) {
         break;
     case 4:
         talk_names_set(0U);
-        func_80132B90();
+        sports_runner_talk_resource_addresses_init();
         talk_group = 3;
         talk_line = 0;
         talk_text_table = D_80148F00;
@@ -294,33 +294,33 @@ void func_80133644(void) {
     Default_Disp();
 }
 
-void func_8013384C(arg0, arg1)
-s32 arg0;
-u8 arg1;
+void sports_scene_audio_sequence_request(audio_request_selector, audio_request_column)
+s32 audio_request_selector;
+u8 audio_request_column;
 {
     /* Promoted parameter locals precede the table copies (T-9560). */
-    s32 index;
-    s32 column;
+    s32 secondary_audio_selector;
+    s32 audio_table_column;
     TaiikuWords48 a;
     TaiikuWords48 b;
 
     a = D_80149030;
     b = D_801490F0;
-    if (arg0 == 11) {
-        index = 0;
+    if (audio_request_selector == 11) {
+        secondary_audio_selector = 0;
     } else {
-        index = arg0;
+        secondary_audio_selector = audio_request_selector;
     }
-    column = arg1;
-    cd_audio_request_set(a.unk_00[arg0][column], b.unk_00[arg0][column], index);
+    audio_table_column = audio_request_column;
+    cd_audio_request_set(a.unk_00[audio_request_selector][audio_table_column], b.unk_00[audio_request_selector][audio_table_column], secondary_audio_selector);
     audio_command(0x300);
 }
 
-void func_80133928(s32 arg0) {
+void sports_dance_actor_move_clamp(s32 actor_index) {
     u8 *p;
 
-    func_801339C4();
-    p = actor_pool + arg0 * 0x44;
+    sports_dance_actor_move();
+    p = actor_pool + actor_index * 0x44;
     if (*(s16 *)(p + 0x26) >= 0x90) {
         *(s16 *)(p + 0x26) = 0x90;
     }
@@ -335,8 +335,8 @@ void func_80133928(s32 arg0) {
     }
 }
 
-void func_801339C4(arg0)
-s32 arg0;
+void sports_dance_actor_move(actor_index)
+s32 actor_index;
 {
     u8 *p;
     s32 *ptr; /* FAKE: the pointer to the selector word moves the load into $v1 as in the original; found with decomp-permuter. T-10910 */
@@ -346,39 +346,39 @@ s32 arg0;
 
     switch (sel) {
     case 0x3000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x28) += -0x1E000;
         *(s32 *)(p + 0x24) += 0x22000;
         break;
     case 0x9000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x28) += -0x1E000;
         *(s32 *)(p + 0x24) += -0x22000;
         break;
     case 0x6000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x28) += 0x1E000;
         *(s32 *)(p + 0x24) += 0x22000;
         break;
     case 0xC000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x28) += 0x1E000;
         *(s32 *)(p + 0x24) += -0x22000;
         break;
     case 0x1000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x28) += -0x20000;
         break;
     case 0x4000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x28) += 0x20000;
         break;
     case 0x8000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x24) += -0x24000;
         break;
     case 0x2000:
-        p = actor_pool + arg0 * 0x44;
+        p = actor_pool + actor_index * 0x44;
         *(s32 *)(p + 0x24) += 0x24000;
         break;
     }

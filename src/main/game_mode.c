@@ -52,7 +52,7 @@ void game_mode_dispatch(void) {
         ((s32 (*)()) ovl_entry)();
         break;
     case 0x10:
-        func_80062C28();
+        game_mode_start_mode_handler();
         break;
     case 0x38:
         schedule_month_start_mode_handler();
@@ -67,7 +67,7 @@ void game_mode_dispatch(void) {
         ovl_loader_mode_handler();
         break;
     case 0xD0:
-        func_8007959C();
+        game_mode_tt_game_mode_handler();
         break;
     case 0x11:
     case 0x13:
@@ -117,7 +117,7 @@ void game_mode_dispatch(void) {
     case 0xC2:
     case 0xC3:
     case 0xC4:
-        func_8004B338((s32)"LOAD FUNC EXEC", 0x14, 0x2C);
+        debug_print_string((s32)"LOAD FUNC EXEC", 0x14, 0x2C);
         ((s32 (*)()) ovl_entry)();
         break;
     default:
@@ -188,7 +188,7 @@ void game_mode_set(s32 arg0) {
     game_state.substep = 0;
     game_mode_request_overlay();
     t = game_state.ovl_target_game_mode;
-    D_800CA2AC = 0;
+    talk_voice_wait_frames = 0;
     if (t != 0x5E) {
         if (t != 0x50) {
             message_window_title_show(0);

@@ -134,7 +134,7 @@ void date_scene_shiori_winter_still_setup(void) {
     load_palette(D_8015E6F8, 0x11, 1, 2, 0);
     scene_still_show(D_8015E6FC, D_8015E700, D_8015E704, D_8015E708, D_8015E70C, D_8015E710);
     scene_anim_show(D_8015E6EC, D_8015E6F0, D_8015E6E8, D_8015E6F4);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -232,7 +232,7 @@ void date_scene_shiori_spring(void) {
     FnTbl43 step_handlers;
 
     step_handlers = date_scene_shiori_spring_steps;
-    if (game_state.mode_step < 0xAU && dec_bg_brightness == 0x80) {
+    if (game_state.mode_step < 0xAU && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_handlers.callbacks[game_state.mode_step]();
@@ -260,10 +260,10 @@ void date_scene_shiori_winter_audio_command_1(void) {
 
 s32 date_scene_shiori_winter_shake_and_wait(void) {
     if (game_state.mode_step_timer.w == 0) {
-        func_8007BFA8();
+        audio_bgm_next_clear();
         audio_command(0xB1);
         audio_command(0x501);
-        func_80047550();
+        draw_shake_start();
     }
     if (game_state.mode_step_timer.w++ == 0x80) {
         mode_step_next();
@@ -294,7 +294,7 @@ void date_scene_shiori_winter_load_data(void) {
 }
 
 void date_scene_shiori_winter_ferris_wheel_title(void) {
-    strcpy(D_800CA1DC, "観覧車");
+    strcpy(scene_place_title_2, "観覧車");
     mode_step_next();
 }
 
@@ -303,7 +303,7 @@ void date_scene_shiori_summer(void) {
     FnTbl45 step_handlers;
 
     step_handlers = date_scene_shiori_summer_steps;
-    if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
+    if (D_80122D04 == 0 && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_index = game_state.mode_step;

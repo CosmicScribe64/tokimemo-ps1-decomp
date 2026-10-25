@@ -7,34 +7,34 @@ typedef struct {
 } FnTbl25; /* size 0x64 */
 extern FnTbl25 D_80148114;
 
-void func_8013E1D0(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+void annual_hallway_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before hallway_mode_step_callbacks: its stack slot sits above hallway_mode_step_callbacks (T-3330) */
+    FnTbl25 hallway_mode_step_callbacks;
 
-    tbl = D_80148114;
-    idx = D_800F647A;
-    tbl.f[idx](0x80);
+    hallway_mode_step_callbacks = D_80148114;
+    mode_step_index = D_800F647A;
+    hallway_mode_step_callbacks.f[mode_step_index](0x80);
 }
 
-void func_8013E24C(void) {
+void annual_hallway_resource_pointer_setup(void) {
     func_800504CC(1, 0xB290, 0xB271, 0xBB4E, 0xBB06, 0xBAF5);
     func_8004DE1C();
 }
 
-void func_8013E290(void) {
+void annual_hallway_conditional_sound(void) {
     if (func_80050AB8() == 1) {
         func_80086AB0(0x202);
         func_8004DE1C();
     }
 }
 
-void func_8013E2CC(void) {
+void annual_hallway_scene_resource_command(void) {
     func_80051DD8(9, 0x80197000, 0xA46B);
-    func_8013DE30();
+    annual_hallway_resource_addresses_init();
     func_8004DE1C();
 }
 
-void func_8013E308(void) {
+void annual_hallway_scene_state_init(void) {
     s16 i;
 
     func_8004EDE0(1, 0);
@@ -57,7 +57,7 @@ void func_8013E308(void) {
     func_8008FC10();
     /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom, as SHOUGATU func_8013B758); T-17600 */
     func_8008F618(*(u8 *)&D_800F62CF = 0xC);
-    func_8013DE30();
+    annual_hallway_resource_addresses_init();
     D_801480FC = D_8014806C;
     D_80148100 = D_801480A0;
     D_80148104 = D_801480D4;
@@ -72,33 +72,33 @@ void func_8013E308(void) {
     func_8004DE1C();
 }
 
-void func_8013E47C(void) {
+void annual_hallway_audio_setup(void) {
     func_80090960(7, 0);
     func_8008A0D4(0x3FED);
     func_8004DE1C();
 }
 
-void func_8013E4B0(void) {
+void annual_hallway_year_counter_delta(void) {
     D_80148108 += ((u8) D_800F53DE >= 0x61U) * 4;
     func_8004DE1C();
 }
 
-void func_8013E4F4(void) {
+void annual_hallway_flag_clear_counter_delta(void) {
     if (D_80148110 == 0) {
         D_80148108 += 1;
     }
     func_8004DE1C();
 }
 
-void func_8013E534(void) {
+void annual_hallway_flag_clear_route(void) {
     if (D_80148110 != 0) {
         func_8004DE1C();
         return;
     }
-    func_8013E148();
+    annual_hallway_scene_load_setup();
 }
 
-void func_8013E570(void) {
+void annual_hallway_flag_set_exit_route(void) {
     if (D_80148110 != 0) {
         func_8004DDD8();
         return;

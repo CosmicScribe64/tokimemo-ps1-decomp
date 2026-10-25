@@ -7,25 +7,25 @@ typedef struct {
 } FnTbl24; /* size 0x60 */
 extern FnTbl24 D_801477F8;
 
-void func_8013AE80(void) {
+void annual_choice_scene_substate_dispatch(void) {
     switch (D_801474B8) {
     case 0:
-        func_8013AF1C();
+        annual_choice_scene_mode_step_dispatch();
         return;
     case 1:
-        func_8013B03C();
+        annual_choice_scene_group_b_step_dispatch();
         return;
     case 2:
-        func_8013B0C4();
+        annual_choice_scene_timing_step_dispatch();
         return;
     case 3:
-        func_8013B2B8();
+        annual_choice_scene_fourth_mode_step_dispatch();
         return;
     case 4:
-        func_8013B340();
+        annual_choice_scene_fifth_mode_step_dispatch();
         return;
     default:
-        func_8013B3B4();
+        annual_choice_scene_default_mode_step_dispatch();
         return;
     }
 }
@@ -36,13 +36,13 @@ typedef struct {
 
 extern FnTbl20 D_80147654;
 
-void func_8013AF1C(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+void annual_choice_scene_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before choice_scene_mode_step_callbacks: its stack slot sits above choice_scene_mode_step_callbacks (T-3330) */
+    FnTbl20 choice_scene_mode_step_callbacks;
 
-    tbl = D_80147654;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    choice_scene_mode_step_callbacks = D_80147654;
+    mode_step_index = D_800F647A;
+    choice_scene_mode_step_callbacks.f[mode_step_index]();
     if (D_801474A8 == 1) {
         if (D_801474AC == 8) {
             if (D_800F6474++ == 0) {
@@ -52,8 +52,8 @@ void func_8013AF1C(void) {
     }
 }
 
-void func_8013AFE8(void) {
-    func_8013A820();
+void annual_choice_scene_timing_advance(void) {
+    annual_scene_talk_run_current();
     if (D_801474AC == 2) {
         if (D_800F6474++ == 0) {
             func_80086AB0(0x501);
@@ -63,32 +63,32 @@ void func_8013AFE8(void) {
 
 extern FnTbl20 D_801476A4;
 
-void func_8013B03C(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+void annual_choice_scene_group_b_step_dispatch(void) {
+    s32 mode_step_index; /* declared before choice_scene_callbacks: its stack slot sits above choice_scene_callbacks (T-3330) */
+    FnTbl20 choice_scene_callbacks;
 
-    tbl = D_801476A4;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    choice_scene_callbacks = D_801476A4;
+    mode_step_index = D_800F647A;
+    choice_scene_callbacks.f[mode_step_index]();
 }
 
-void func_8013B0C4(void) {
-    s32 idx; /* declared before table: its stack slot sits above it (T-3330) */
-    GzCallbacks90 table;
+void annual_choice_scene_timing_step_dispatch(void) {
+    s32 mode_step_index; /* declared before choice_timing_callbacks: its stack slot sits above it (T-3330) */
+    GzCallbacks90 choice_timing_callbacks;
 
-    table = D_801476F4;
+    choice_timing_callbacks = D_801476F4;
     if (D_80147650 == 0 && D_800F647A >= 0x13 && D_800F647A < 0x1C) {
         func_80056574(0x60, -0x10, 0x30, 8, 8, 0xD);
     }
     if (D_80147650 == 1 && D_800F647A >= 0x13 && D_800F647A < 0x1C) {
         func_80056574(-0x3C, -0x20, 0x20, 8, 8, 0xD);
     }
-    idx = D_800F647A;
-    table.callbacks[idx]();
+    mode_step_index = D_800F647A;
+    choice_timing_callbacks.callbacks[mode_step_index]();
 }
 
-void func_8013B1D0(void) {
-    func_8013A820();
+void annual_choice_scene_substate_timing_advance(void) {
+    annual_scene_talk_run_current();
     if (D_800F6474++ == 0) {
         if (D_801474AC == 3) {
             func_80086AB0(0x500);
@@ -96,17 +96,17 @@ void func_8013B1D0(void) {
     }
 }
 
-void func_8013B228(void) {
+void annual_choice_scene_audio_command_0500(void) {
     func_80086AB0(0x500);
     func_8004DE1C();
 }
 
-void func_8013B250(void) {
+void annual_choice_scene_audio_command_0501(void) {
     func_80086AB0(0x501);
     func_8004DE1C();
 }
 
-void func_8013B278(void) {
+void annual_choice_scene_selector_advance(void) {
     if (D_80147650 != 0) {
         D_801474A8 += 1;
     }
@@ -118,7 +118,7 @@ typedef struct {
 } FnTbl29; /* size 0x74 */
 extern FnTbl29 D_80147784;
 
-void func_8013B2B8(void) {
+void annual_choice_scene_fourth_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl29 tbl;
 
@@ -127,7 +127,7 @@ void func_8013B2B8(void) {
     tbl.f[idx]();
 }
 
-void func_8013B340(void) {
+void annual_choice_scene_fifth_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl24 tbl;
 
@@ -138,7 +138,7 @@ void func_8013B340(void) {
 
 extern FnTbl20 D_80147858;
 
-void func_8013B3B4(void) {
+void annual_choice_scene_default_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -147,7 +147,7 @@ void func_8013B3B4(void) {
     tbl.f[idx]();
 }
 
-void func_8013B43C(void) {
+void annual_choice_scene_setup(void) {
     func_8004EDE0(1, 0);
     func_80054864(1);
     func_8004C670();
@@ -166,7 +166,7 @@ void func_8013B43C(void) {
     func_80074950();
     func_8008FC10();
     func_8008F618(*(u8 *)&D_800F62CF = 2);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_8014749C = D_80147434;
     D_801474A0 = D_80147458;
     D_801474A4 = D_8014747C;
@@ -178,21 +178,21 @@ void func_8013B43C(void) {
     func_8004DE1C();
 }
 
-void func_8013B55C(void) {
+void annual_choice_scene_text_state_init_0(void) {
     D_801474A8 = 0;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, "\213\263\216\272");
     func_8004DE1C();
 }
 
-void func_8013B5A0(void) {
+void annual_choice_scene_text_state_init_3(void) {
     D_801474A8 = 3;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, "\213\263\216\272");
     func_8004DE1C();
 }
 
-void func_8013B5E8(void) {
+void annual_choice_scene_text_state_init_6(void) {
     D_801474A8 = 6;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, "\230\114\211\272");
@@ -200,7 +200,7 @@ void func_8013B5E8(void) {
     func_8004DE1C();
 }
 
-void func_8013B644(void) {
+void annual_choice_scene_girl_flag_set_0e(void) {
     ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
     D_801474A8 = 0xE;
     D_801474AC = 0;
@@ -209,7 +209,7 @@ void func_8013B644(void) {
     func_8004DE1C();
 }
 
-void func_8013B6CC(void) {
+void annual_choice_scene_girl_flag_set_12(void) {
     ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
     D_801474A8 = 0x12;
     D_801474AC = 0;
@@ -217,7 +217,7 @@ void func_8013B6CC(void) {
     func_8004DE1C();
 }
 
-void func_8013B740(void) {
+void annual_choice_scene_girl_flag_set_17(void) {
     ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
     D_801474A8 = 0x17;
     D_801474AC = 0;
@@ -225,17 +225,17 @@ void func_8013B740(void) {
     func_8004DE1C();
 }
 
-void func_8013B7B4(void) {
+void annual_choice_scene_background_load_3fff(void) {
     func_8008A0D4(0x3FFF);
     func_8004DE1C();
 }
 
-void func_8013B7DC(void) {
+void annual_choice_scene_background_load_3fe3(void) {
     func_8008A0D4(0x3FE3);
     func_8004DE1C();
 }
 
-void func_8013B804(void) {
+void annual_choice_scene_sound_select(void) {
     if (D_80147650 != 0) {
         func_8008A0D4(0x406F);
     } else {
@@ -244,24 +244,24 @@ void func_8013B804(void) {
     func_8004DE1C();
 }
 
-void func_8013B848(void) {
+void annual_choice_scene_background_load_4065(void) {
     func_8008A0D4(0x4065);
     func_8004DE1C();
 }
 
-void func_8013B870(void) {
+void annual_choice_scene_background_load_406f(void) {
     func_8008A0D4(0x406F);
     func_8004DE1C();
 }
 
-void func_8013B898(void) {
+void annual_choice_scene_selector_advance_if_clear(void) {
     if (D_80147650 != 0) {
         D_801474A8 += 1;
     }
     func_8004DE1C();
 }
 
-void func_8013B8D8(void) {
+void annual_choice_scene_selector_advance_if_set(void) {
     if (D_80147650 == 0) {
         D_801474A8 += 1;
     }

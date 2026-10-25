@@ -1,7 +1,7 @@
 /* sick_visit_scene_resource_addresses.c: ; src/ovl/OMIMAI/80132AD0.c:3-34 initializes secondary scene resource address tables in the sick-visit overlay. Original object 0x80132AD0-0x801331B0 (config/objects/OMIMAI.txt). */
 #include "ovl/OMIMAI.h"
 
-void func_80132AD0(void) {
+void sick_visit_mode_stage1_girl_talk_pointer_setup(void) {
     D_80134B60[0] = 0x801B00DC;
     D_80134B60[1] = 0x801B02AC;
     D_80134B60[2] = 0x801B03C8;
@@ -48,7 +48,7 @@ typedef struct {
 } FnTbl12; /* size 0x30 */
 extern FnTbl12 D_80134BFC;
 
-void func_80132D44(void) {
+void sick_visit_mode_stage1_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl12 tbl;
 
@@ -58,13 +58,13 @@ void func_80132D44(void) {
     hud_screen_frame_draw(2);
 }
 
-void func_80132DC0(void) {
+void sick_visit_mode_stage1_sector_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80132AD0();
+    sick_visit_mode_stage1_girl_talk_pointer_setup();
     mode_step_next();
 }
 
-void func_80132DF8(void) {
+void sick_visit_mode_stage1_day_event_mark(void) {
     event_log_add(0xD, 0x25);
     game_state.day_event_done_bits |= 4;
     talk_text_table = D_80134A8C;
@@ -75,14 +75,14 @@ void func_80132DF8(void) {
     mode_step_next();
 }
 
-void func_80132E78(void) {
-    func_80132EB0();
+void sick_visit_mode_stage1_girl_dialogue_setup(void) {
+    sick_visit_mode_stage1_talk_table_select();
     talk_group = 1;
     talk_line = 0;
     mode_step_next();
 }
 
-void func_80132EB0(void) {
+void sick_visit_mode_stage1_talk_table_select(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         talk_text_table = D_80134B60[1];
@@ -141,10 +141,10 @@ void func_80132EB0(void) {
     }
 }
 
-void func_80133120(void) {
+void sick_visit_common_mode_dispatch(void) {
     portrait_wink_update();
     if (game_state.mode_stage == 0) {
-        func_80133424();
+        sick_visit_common_mode_step_callback_dispatch();
     } else {
         game_mode_reset_to_title();
     }
@@ -154,5 +154,5 @@ void func_80133120(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }

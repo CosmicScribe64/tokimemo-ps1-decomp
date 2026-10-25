@@ -193,7 +193,7 @@ void encounter_miharu_scene_init_1(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -203,7 +203,7 @@ void encounter_miharu_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     strcpy(name_code_family, game_state.player_family_name);
     strcpy(name_code_girl_short, "謎の女");
     talk_clear();
@@ -236,7 +236,7 @@ void encounter_miharu_scene_init_2(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     strcpy(name_code_family, game_state.player_family_name);
     talk_clear();
     encounter_scene_text_table = encounter_scene_text_section_75;
@@ -282,7 +282,7 @@ void encounter_miharu_scene_init_3(void) {
     hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    dec_bg_brightness = 0x80;
+    bg_brightness = 0x80;
     strcpy(name_code_family, game_state.player_family_name);
     strcpy(name_code_girl_short, "館林");
     strcpy(girl_name_buf, "館林さん");
@@ -292,8 +292,8 @@ void encounter_miharu_scene_init_3(void) {
     encounter_scene_text_table = encounter_scene_text_section_77;
     encounter_scene_command_table = encounter_scene_command_section_77;
     encounter_scene_voice_table = encounter_scene_voice_section_77;
-    strcpy(D_800CA19C, "きらめき中央公園");
-    strcpy(D_800CA1DC, "並木道");
+    strcpy(scene_place_title, "きらめき中央公園");
+    strcpy(scene_place_title_2, "並木道");
     mode_step_next();
 }
 
@@ -344,7 +344,7 @@ void encounter_miharu_bg_load_13(void) {
 void encounter_miharu_closing_bg_request(void) {
     s32 background_read_result;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     background_read_result = dec_bg_cd_read(0x3FB6, 0);
     if (background_read_result == *dec_bg_show) {
         mode_step_next();
@@ -375,7 +375,7 @@ void encounter_miharu_scene_four_step_dispatch(void) {
 void encounter_miharu_closing_girl_in(void) {
     if (game_state.substep == 0) {
         k_reset(0);
-        message_window_set_title(D_800CA1DC);
+        message_window_set_title(scene_place_title_2);
         game_state.substep += 1;
     }
     normal_date_girl_in();
@@ -436,7 +436,7 @@ void encounter_miharu_text_clear(void) {
     k_reset(1);
     D_80122CE4 = 0;
     D_80122CF0 = 0;
-    D_800CA2AC = 0;
+    talk_voice_wait_frames = 0;
     mode_step_next();
 }
 

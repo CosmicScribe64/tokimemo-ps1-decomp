@@ -17,18 +17,18 @@ extern FnTbl33 D_80139C80;
 
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-/* Scene table, indexed by game_state.mode_step in func_801341E8. Defining it here as the
+/* Scene table, indexed by game_state.mode_step in camp_scene_callback_dispatch. Defining it here as the
  * original did matters for code: as1 treats every function named in this file's data as
- * an address-taken label, so the jump-table dispatch of func_80134724 gets an edge back to
+ * an address-taken label, so the jump-table dispatch of camp_scene_text_index_select gets an edge back to
  * that function's entry. The resulting loop changes as1's block weights and its choice for
  * the switch's range-check delay slot (T-25150). */
 FnTbl30 D_80139B30 = { {
-    func_80134374, func_8013425C, func_801342EC, func_80133CB0, func_8007C784,
-    func_80133CEC, func_8007C784, func_80134724, func_80134BC4, func_8007C784,
-    dec_init, change_dec_bg, func_8007C8A4, place_init, func_8013454C,
-    func_8007C784, portrait_show_checked, normal_date_girl_in, func_80133EF8, normal_date_girl_out,
-    normal_date_bg_out, func_801338B4, func_80133734, func_80133834, func_80133CB0,
-    func_8007C784, func_80133CEC, func_8007C784, func_80133C84, game_mode_reset_to_title,
+    camp_candidate_scene_initialize, camp_girl_meeting_audio_bank_load_start, camp_girl_meeting_audio_bank_poll_retry, camp_dialogue_data_sector_load, scene_wait_cd_read,
+    camp_scene_data_sector_load, scene_wait_cd_read, camp_scene_text_index_select, camp_club_location_label_select, scene_wait_cd_read,
+    dec_init, change_dec_bg, scene_bg_wipe_in, place_init, camp_candidate_portrait_read,
+    scene_wait_cd_read, portrait_show_checked, normal_date_girl_in, camp_opening_talk_run, normal_date_girl_out,
+    normal_date_bg_out, camp_audio_bank_start, camp_audio_bank_retry, camp_audio_load_poll_retry_alt, camp_dialogue_data_sector_load,
+    scene_wait_cd_read, camp_scene_data_sector_load, scene_wait_cd_read, camp_current_girl_restore, game_mode_reset_to_title,
 } };
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/girl_meeting_routes.data", D_80139BA8);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/girl_meeting_routes.data", D_80139BD4);
@@ -36,19 +36,19 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/girl_meeting_routes.data", D_80139BDC
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/girl_meeting_routes.data", D_80139BE4);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/girl_meeting_routes.data", D_80139BEC);
 
-void func_80134120(void) {
+void camp_current_girl_scene_gate(void) {
     if ((game_state.current_girl != 0xFF) && game_state.girls[game_state.current_girl].flags.f.met) {
-        func_801341E8();
+        camp_scene_callback_dispatch();
         return;
     }
     if ((game_state.current_girl != 0xFF) && !game_state.girls[game_state.current_girl].flags.f.met && ((u8)game_state.year < 0x61U) && (game_state.current_girl != GIRL_YUMI)) {
-        func_80134DB0();
+        camp_unmet_girl_callback_dispatch();
         return;
     }
     mode_stage_next();
 }
 
-void func_801341E8(void) {
+void camp_scene_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl30 tbl;
 
@@ -57,7 +57,7 @@ void func_801341E8(void) {
     tbl.f[idx](0x20);
 }
 
-void func_8013425C(void) {
+void camp_girl_meeting_audio_bank_load_start(void) {
     audio_bank_load_start(1, 0xBF98, 0xBF79, (&D_800B3688)[game_state.current_girl], (&D_800B36C8)[game_state.current_girl], (&D_800B3708)[game_state.current_girl]);
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
@@ -66,7 +66,7 @@ void func_8013425C(void) {
     mode_step_next();
 }
 
-void func_801342EC(void) {
+void camp_girl_meeting_audio_bank_poll_retry(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
         mode_step_next();
@@ -78,7 +78,7 @@ void func_801342EC(void) {
     }
 }
 
-void func_80134374(void) {
+void camp_candidate_scene_initialize(void) {
     s16 i;
     u32 v;
 
@@ -93,7 +93,7 @@ void func_80134374(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
@@ -113,7 +113,7 @@ void func_80134374(void) {
         game_state.current_girl = GIRL_YUMI;
     }
     talk_names_set(game_state.current_girl);
-    func_80132E74();
+    camp_day_phase_dialogue_pointer_table_setup();
     D_80139AD0 = (KObj *)D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
@@ -121,7 +121,7 @@ void func_80134374(void) {
     mode_step_next();
 }
 
-void func_8013454C(void) {
+void camp_candidate_portrait_read(void) {
     u8 girl;
     KangeiWords11 all;
     KangeiWords2 first;
@@ -166,7 +166,7 @@ void func_8013454C(void) {
  * names this function: the dispatch `jr` then has an edge back to the entry, the loop gives the
  * dispatch a lighter as1 weight than the default arm, and as1 fills the slot from the dispatch
  * instead of hoisting the default's `sll` (T-25150; history T-24201, T-24902, T-25042). */
-void func_80134724(void) {
+void camp_scene_text_index_select(void) {
     u8 s;
     s16 v;
     s16 c2;
@@ -239,13 +239,13 @@ void func_80134724(void) {
         D_80139ADC = v * 4 + s + 3;
         break;
     }
-    func_801349D4();
+    camp_current_girl_scene_pointer_bind();
     mode_step_next();
 }
 
-void func_801349D4(void) {
-    func_80132E74();
-    func_80132E40();
+void camp_current_girl_scene_pointer_bind(void) {
+    camp_day_phase_dialogue_pointer_table_setup();
+    camp_background_pointer_setup();
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_80139AD0 = (KObj *) D_80139A50[0];
@@ -290,53 +290,53 @@ void func_801349D4(void) {
     }
 }
 
-void func_80134BC4(void) {
+void camp_club_location_label_select(void) {
     u32 selection;
 
     selection = (u16) game_state.player_flags.h >> 0xC;
     switch (selection) {
     case 0:
-        strcpy(D_800CA19C, "図書室");
+        strcpy(scene_place_title, "図書室");
         bg_read_sub2(0x40BC);
         break;
     case 1:
-        strcpy(D_800CA19C, "演劇部");
+        strcpy(scene_place_title, "演劇部");
         bg_read_sub2(0x40B2);
         break;
     case 2:
-        strcpy(D_800CA19C, "実験室");
+        strcpy(scene_place_title, "実験室");
         bg_read_sub2(0x40C6);
         break;
     case 3:
-        strcpy(D_800CA19C, "電脳部室");
+        strcpy(scene_place_title, "電脳部室");
         bg_read_sub2(0x40D0);
         break;
     case 4:
-        strcpy(D_800CA19C, "美術室");
+        strcpy(scene_place_title, "美術室");
         bg_read_sub2(0x40D9);
         break;
     case 5:
-        strcpy(D_800CA19C, "音楽室");
+        strcpy(scene_place_title, "音楽室");
         bg_read_sub2(0x40E2);
         break;
     case 6:
-        strcpy(D_800CA19C, "グランド");
+        strcpy(scene_place_title, "グランド");
         bg_read_sub2(0x4296);
         break;
     case 7:
-        strcpy(D_800CA19C, "グランド");
+        strcpy(scene_place_title, "グランド");
         bg_read_sub2(0x4296);
         break;
     case 8:
-        strcpy(D_800CA19C, "グランド");
+        strcpy(scene_place_title, "グランド");
         bg_read_sub2(0x4296);
         break;
     case 9:
-        strcpy(D_800CA19C, "プール");
+        strcpy(scene_place_title, "プール");
         bg_read_sub2(0x40A0);
         break;
     default:
-        strcpy(D_800CA19C, "体育館");
+        strcpy(scene_place_title, "体育館");
         bg_read_sub2(0x40A9);
         break;
     }
@@ -344,7 +344,7 @@ void func_80134BC4(void) {
     mode_step_next();
 }
 
-void func_80134DB0(void) {
+void camp_unmet_girl_callback_dispatch(void) {
     s32 pad; /* FAKE: unused slot above tblA, the original frame has 8 more bytes (T-3330 idiom, real source unknown). T-8010 */
     FnTbl37 tblA;
     FnTbl33 tblB;
@@ -359,19 +359,19 @@ void func_80134DB0(void) {
     tblB.f[game_state.mode_step](0x80);
 }
 
-void func_80134EA8(void) {
+void camp_temporary_sotoi_talk_run(void) {
     s32 pad; /* FAKE: unused local above the saved selector (the original frame has the copy at sp+0x28), T-6050 */
     u32 sp;
 
     game_state.current_girl = GIRL_SOTOI;
     sp = game_state.mode_step;
-    func_80133EF8();
+    camp_opening_talk_run();
     if (sp != game_state.mode_step) {
         game_state.current_girl = game_state.date_girl;
     }
 }
 
-void func_80134F00(void) {
+void camp_date_girl_scene_initialize(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -383,7 +383,7 @@ void func_80134F00(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
@@ -392,7 +392,7 @@ void func_80134F00(void) {
     addr_init_bustup();
     text_marker_hide();
     talk_names_set(game_state.date_girl);
-    func_80132E74();
+    camp_day_phase_dialogue_pointer_table_setup();
     D_80139AD0 = (KObj *) D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
@@ -403,12 +403,12 @@ void func_80134F00(void) {
 /* FAKE: entry read of unk_F5F puts it in cvt_pass's entry set ($v1) and keeps rect at
  * 0x34($sp); empty `if (rect.x == 1U)` promotes LDC 1U to $v0; pointer dereference on
  * unk_1104 puts $v0 first in `bne $v0, $t7` via uoptinput's == swap (T-22016, T-24122, T-24131). */
-void func_80135004(void) {
+void camp_portrait_bustup_render_update(void) {
     u8 pad;
     RECT rect;
 
     pad = game_state.current_girl;
-    func_80133EF8();
+    camp_opening_talk_run();
     if (D_80139AE0 == 2) {
         if (rect.x == 1U) {}
         if (*(u32 *)&game_state.mode_step_timer == 1U) {
@@ -419,7 +419,7 @@ void func_80135004(void) {
                 rect.h = 0x80;
                 func_8009C8E0(&rect, (void *)0x80180000);
                 func_8009C674(0);
-                portrait_build(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h(game_state.current_girl) & 0x7F);
+                portrait_build(face_palette, face_images, face_frame_tables, face_sequences, (u8)get_g_zyotai_h(game_state.current_girl) & 0x7F);
                 portrait_face_update();
             }
         }
@@ -427,7 +427,7 @@ void func_80135004(void) {
     game_state.mode_step_timer.w += 1;
 }
 
-void func_801350E0(void) {
+void camp_portrait_rectangle_restore(void) {
     RECT rect;
 
     portrait_show_checked();
@@ -438,13 +438,13 @@ void func_801350E0(void) {
     func_8009C884(&rect, (void *)0x80180000);
 }
 
-void func_8013512C(void) {
+void camp_current_girl_affection_set(void) {
     game_state.girls[game_state.current_girl].affection = 0x32;
     audio_command(0x24);
-    func_80135438();
+    camp_girl_met_flag_set();
 }
 
-void func_80135178(void) {
+void camp_nozomi_wait_gate(void) {
     if (game_state.current_girl == GIRL_NOZOMI) {
         don_wait();
         return;
@@ -452,7 +452,7 @@ void func_80135178(void) {
     mode_step_next();
 }
 
-void func_801351B8(void) {
+void camp_scene_audio_transition(void) {
     audio_command(0x23);
     audio_command(0x24);
     audio_command(0x2E);
@@ -464,68 +464,68 @@ void func_801351B8(void) {
     mode_step_next();
 }
 
-void func_80135220(void) {
+void camp_scene_audio_transition_alt(void) {
     audio_command(0x24);
     audio_command(0x501);
     mode_step_next();
 }
 
-void func_80135250(void) {
+void camp_current_girl_affection_set_high(void) {
     game_state.girls[game_state.current_girl].affection = 0x46;
     D_80139ADC = 3;
-    func_801349D4();
+    camp_current_girl_scene_pointer_bind();
     mode_step_next();
 }
 
-void func_801352A4(void) {
+void camp_background_location_select(void) {
     if ((u8)game_state.current_girl < GIRL_SAKI) {
         bg_read_sub2(0x42A9);
-        strcpy(D_800CA19C, "ロビー");
+        strcpy(scene_place_title, "ロビー");
     } else {
         bg_read_sub2(0x4296);
-        strcpy(D_800CA19C, "グランド");
+        strcpy(scene_place_title, "グランド");
     }
     mode_step_next();
 }
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/girl_meeting_routes.rodata", D_8013980C);
 
-void func_80135314(void) {
+void camp_background_event_log_update(void) {
     bg_read_sub2(0x42C6);
     event_log_add(0xE, 0xB);
-    strcpy(D_800CA1DC, &D_8013980C);
+    strcpy(scene_place_title_2, &D_8013980C);
     mode_step_next();
 }
 
-void func_8013535C(void) {
+void camp_background_event_log_update_alt(void) {
     bg_read_sub2(0x429F);
     event_log_add(0xE, 0xC);
     mode_step_next();
 }
 
-void func_80135390(void) {
+void camp_nozomi_talk_audio_update(void) {
     if ((D_80139AE0 == 2) && (game_state.current_girl == GIRL_NOZOMI)) {
         D_80139AE4 = 2;
     } else {
         D_80139AE4 = 0;
     }
-    func_80133EF8();
+    camp_opening_talk_run();
     if ((D_80139AE0 == 3) && (game_state.mode_step_timer.w++ == 0)) {
         if (game_state.current_girl == GIRL_NOZOMI) {
             audio_command(0x503);
-            func_80047550();
+            draw_shake_start();
         }
     }
 }
 
 /* Bits 1 and 2 of the current girl's flag word; the index is read again after the first store (T-7010). */
-void func_80135438(void) {
+void camp_girl_met_flag_set(void) {
     game_state.girls[game_state.current_girl].flags.f.met = 1;
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
     mode_stage_next();
 }
 
-void func_801354AC(void) {
+void camp_current_girl_fixed_portrait_read(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         portrait_read_start(0x55DF);
@@ -555,7 +555,7 @@ void func_801354AC(void) {
     mode_step_next();
 }
 
-void func_80135570(void) {
+void camp_special_portrait_read(void) {
     switch (game_state.current_girl) {
     case GIRL_MIO:
         portrait_read_start(0x5F30);

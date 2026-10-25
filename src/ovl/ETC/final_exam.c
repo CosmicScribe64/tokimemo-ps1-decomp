@@ -120,8 +120,8 @@ void exam_entry(void) {
     dec_bg_draw(0);
     p = &D_801230D0;
     for (y = 0x28; y != 0x58; y += 8) {
-        func_8004B19C(p[10], 0x40, y);
-        func_8004B19C(p[4], 0x50, y);
+        debug_print_hex(p[10], 0x40, y);
+        debug_print_hex(p[4], 0x50, y);
         p++;
     }
 }
@@ -198,7 +198,7 @@ void exam_setup_background_start(void) {
             }
         }
     } else {
-        if (func_8004481C() == 0) {
+        if (audio_bgm_current_set() == 0) {
             audio_bank_start(1, 0x205);
         }
         r2 = dec_bg_cd_read(0x3FA4, 0);
@@ -218,7 +218,7 @@ void exam_setup_background_start(void) {
 void exam_setup_background_wait(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, dec_bg_decode_to_vram(0));
-        if (D_800B594C == -1) {
+        if (bg_decode_result == -1) {
             dec_bg_reset();
             dec_bg_cd_read(0x3FA4, 0);
         } else {
@@ -1080,24 +1080,24 @@ void exam_number_draw(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
             temp_v0->b0 = 0x80;
             switch (arg3) {
             case 0:
-                temp_v0->x0 = ((game_state.screen_center_x[draw_buffer] + arg1) - (var_s4 * 8)) - (arg4 * 2);
-                temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
+                temp_v0->x0 = ((game_state.draw_origin_x[draw_buffer] + arg1) - (var_s4 * 8)) - (arg4 * 2);
+                temp_v0->y0 = game_state.draw_origin_y[draw_buffer] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = exam_digit_u[var_s1 % 10U];
                 temp_v0->v0 = 0;
                 break;
             case 1:
-                temp_v0->x0 = ((game_state.screen_center_x[draw_buffer] + arg1) - (var_s4 * 8)) + (arg4 * 4);
-                temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
+                temp_v0->x0 = ((game_state.draw_origin_x[draw_buffer] + arg1) - (var_s4 * 8)) + (arg4 * 4);
+                temp_v0->y0 = game_state.draw_origin_y[draw_buffer] + arg2;
                 temp_v0->w = 8;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = exam_digit_u[var_s1 % 10U];
                 temp_v0->v0 = 0x10;
                 break;
             case 2:
-                temp_v0->x0 = ((game_state.screen_center_x[draw_buffer] + arg1) - (var_s4 * 6)) + (arg4 * 4);
-                temp_v0->y0 = game_state.screen_center_y[draw_buffer] + arg2;
+                temp_v0->x0 = ((game_state.draw_origin_x[draw_buffer] + arg1) - (var_s4 * 6)) + (arg4 * 4);
+                temp_v0->y0 = game_state.draw_origin_y[draw_buffer] + arg2;
                 temp_v0->w = 6;
                 temp_v0->h = 0xC;
                 temp_v0->u0 = exam_digit_u[var_s1 % 10U];
@@ -1105,7 +1105,7 @@ void exam_number_draw(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
                 break;
             }
             temp_v0->clut = func_8009ED74(0x100, arg4 + 0x1F0);
-            AddPrim(draw_buffer * 0x400 + 4 + D_800E8CA0, temp_v0);
+            AddPrim(draw_buffer * 0x400 + 4 + draw_ot_tags, temp_v0);
             if (var_s1 < 0xAU) {
                 dtd_on_tpage(0x140, 0, 1, 0, 0);
                 return;

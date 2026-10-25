@@ -7,33 +7,33 @@
 
 /* GYOZI data. */
 extern u8 D_801474B8;
-void func_80137188(void);
-void func_8013AF1C(void);
-void func_8013B03C(void);
-void func_8013B0C4(void);
-void func_8013B2B8(void);
-void func_8013B340(void);
-void func_8013B3B4(void);
+void annual_omikuji_result_selector_apply(void);
+void annual_choice_scene_mode_step_dispatch(void);
+void annual_choice_scene_group_b_step_dispatch(void);
+void annual_choice_scene_timing_step_dispatch(void);
+void annual_choice_scene_fourth_mode_step_dispatch(void);
+void annual_choice_scene_fifth_mode_step_dispatch(void);
+void annual_choice_scene_default_mode_step_dispatch(void);
 extern u8 D_80148820;
 extern u8 D_80148824;
-void func_8013BFD4();
-void func_8013DB70();
+void annual_scene_54_entry_callback_dispatch();
+void annual_scene_mode_step_dispatch();
 extern s16 D_801474A8;
 extern s16 D_80148620;
 extern s32 D_80146358;
 extern s32 D_8014635C;
 extern s32 D_80146360;
-void func_80137E84(void);
+void annual_scene_text_row_select(void);
 extern s16 D_80147220;
 extern s16 D_80147224[];
-extern volatile u8 D_80147240; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` into the func_8013907C `sel == 9` branch slot, which holds the dispatch `sll` in the original (wiki/as1-scheduler-rule.md, as VALEN D_80134544); real declaration unknown. T-25120 */
+extern volatile u8 D_80147240; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` into the annual_candidate_list_entry_setup `sel == 9` branch slot, which holds the dispatch `sll` in the original (wiki/as1-scheduler-rule.md, as VALEN D_80134544); real declaration unknown. T-25120 */
 extern s16 D_8014723C;
 extern u8 D_80147244;
 extern u8 D_80145F60;
-s32 func_801343A4(void);
+s32 annual_mode_scene_data_setup(void);
 extern u8 D_80145EC8;
 extern u8 D_80148110;
-void func_8013E148(void);
+void annual_hallway_scene_load_setup(void);
 extern s32 D_8012E66C;
 extern u8 D_80146364;
 extern s16 D_801474AC;
@@ -74,8 +74,8 @@ extern u8 D_8012B8C3;
 extern s8 D_8012B94A;
 extern u8 D_8012B94B;
 extern s8 D_801461A0;
-void func_80134000();
-void func_80136220();
+void annual_mode_resource_addresses_init();
+void annual_result_actor_display_resource_addresses_init();
 extern s32 D_80146224;
 extern s32 D_80146258;
 extern s32 D_8014628C;
@@ -90,17 +90,17 @@ extern s32 D_80147168;
 extern u8 D_80147650;
 extern s32 D_8012E6B0;
 extern u8 D_801317EB; /* T-20006: original readers use lbu. */
-void func_801372B0();
-void func_80137524();
-void func_8013829C();
-void func_80138510();
-void func_80138858();
-void func_8013A140();
-void func_8013A820();
-void func_8013BEA0();
-void func_8013C3B0();
-void func_8013CE0C();
-void func_8013CEB0();
+void annual_scene_group_resource_addresses_init();
+void annual_result_resource_addresses_init();
+void annual_result_dialogue_resources_select();
+void annual_scene_resource_addresses_init();
+void annual_scene_group_load_setup();
+void annual_scene_mode_callback_addresses_init();
+void annual_scene_talk_run_current();
+void annual_scene_resource_address_scalars_init();
+void annual_timing_sequence_resource_addresses_init();
+void annual_yukari_scene_group_a_step_dispatch();
+void annual_yukari_scene_group_b_step_dispatch();
 extern s32 D_801480FC;
 extern s32 D_80148100;
 extern s32 D_80148104;
@@ -116,12 +116,12 @@ extern s32 D_80148804;
 extern s32 D_80148808;
 extern s32 D_8014880C;
 extern s32 D_80148814;
-void func_8013D15C();
-void func_8013D20C();
-void func_8013DE30();
-void func_8013EB10();
-void func_8013FD20();
-void func_80140740();
+void annual_nozomi_scene_primary_mode_step_dispatch();
+void annual_nozomi_scene_secondary_mode_step_dispatch();
+void annual_hallway_resource_addresses_init();
+void annual_scene_group_callback_addresses_init();
+void annual_result_talk_run_current();
+void annual_result_portrait_resource_addresses_init();
 extern s32 D_801488F0;
 extern s32 D_801488F4;
 extern s32 D_801488F8;
@@ -133,10 +133,10 @@ extern s16 D_8012CAD4;
 extern s16 D_80148EAC;
 extern s16 D_8012B950;
 extern s16 D_8012B960;
-void func_80142D00();
-void func_80143AD0();
-void func_80143BA0();
-void func_80143C70();
+void annual_actor_animation_resource_addresses_init();
+void annual_scene_resource_addresses_set();
+void annual_scene_resource_addresses_set_alt();
+void annual_scene_resource_addresses_set_second_alt();
 extern u8 D_801458A0;
 extern u8 D_801458E8;
 extern u8 D_801459E0;
@@ -211,7 +211,7 @@ typedef struct GyoziGirl {
     /* 0x0C */ u8 unk_0C[2];
     /* 0x0E */ s16 unk_0E;
     /* 0x10 */ u8 unk_10[4];
-    /* 0x14 */ s32 unk_14; /* T-17600: lw in func_801378D0 and func_80140464 */
+    /* 0x14 */ s32 unk_14; /* T-17600: lw in annual_girl_date_result_flag_update and annual_ijuin_birthday_dispatch */
     /* 0x18 */ u8 unk_18[0x20];
 } GyoziGirl; /* size 0x38 */
 
@@ -249,17 +249,17 @@ typedef struct GyoziWork {
     /* 0x10D9 */ u8 unk_10D9; /* D_800F6479 (T-24523) */
 } GyoziWork; /* size 0x10DC, including trailing alignment; the object goes on */
 extern GyoziWork D_800F53A0;
-void func_80141550(void);
-void func_8013D5B0();
-void func_8013D62C();
-void func_8013D6B4();
-void func_8013B980();
-void func_8013B9FC();
-void func_8013BA84();
-void func_8013A998();
-void func_8013AAAC();
-void func_8013AB34();
-void func_8013ABBC();
+void annual_result_dialogue_tables_select(void);
+void annual_sound_callback_group_0_dispatch();
+void annual_sound_callback_group_1_dispatch();
+void annual_sound_callback_default_group_dispatch();
+void annual_ayako_scene_primary_mode_step_dispatch();
+void annual_ayako_scene_secondary_mode_step_dispatch();
+void annual_ayako_scene_default_mode_step_dispatch();
+void annual_primary_scene_mode_step_dispatch();
+void annual_scene_mode_step_group_1_dispatch();
+void annual_scene_mode_step_group_2_dispatch();
+void annual_scene_group_default_mode_step_dispatch();
 extern s32 D_80147430;
 extern s32 D_80147434;
 extern s32 D_80147438;
@@ -335,7 +335,7 @@ extern s32 D_801462DC;
 extern s32 D_801462E0;
 extern s32 D_801462E4;
 extern s32 D_801462E8;
-extern volatile s32 D_801462EC; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80139E4C default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
+extern volatile s32 D_801462EC; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the annual_result_dialogue_addresses_select default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
 extern s32 D_801462F0;
 extern s32 D_801462F4;
 extern s32 D_801462F8;
@@ -348,7 +348,7 @@ extern s32 D_80146310;
 extern s32 D_80146314;
 extern s32 D_80146318;
 extern s32 D_8014631C;
-extern volatile s32 D_80146320; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80139E4C default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
+extern volatile s32 D_80146320; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the annual_result_dialogue_addresses_select default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
 extern s32 D_80146324;
 extern s32 D_80146328;
 extern s32 D_8014632C;
@@ -361,7 +361,7 @@ extern s32 D_80146344;
 extern s32 D_80146348;
 extern s32 D_8014634C;
 extern s32 D_80146350;
-extern volatile s32 D_80146354; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80139E4C default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
+extern volatile s32 D_80146354; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the annual_result_dialogue_addresses_select default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
 extern s32 D_801470F0;
 extern s32 D_801470F4;
 extern s32 D_801470F8;
@@ -515,15 +515,15 @@ extern u8 D_80148818;
 extern u8 D_80148828[4]; /* T-17600: D_8014882C follows */
 extern u32 D_8014882C[6][2];
 extern u8 D_8014885C[36];
-extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it (decomp-permuter, T-4090) */
+extern volatile s16 D_8012B920; /* volatile: annual_result_transition_timer_advance only matches with it (decomp-permuter, T-4090) */
 
 extern s32 D_8012E668;
-#ifndef GYOZI_OVERRIDE_func_80140050
-void func_80140050();
+#ifndef GYOZI_OVERRIDE_annual_result_talk_run_current_alt
+void annual_result_talk_run_current_alt();
 #endif
 
-s32 func_80144018(void);
-s32 func_80144B70(void);
+s32 annual_scene_falling_sprite_effect_update(void);
+s32 annual_scene_falling_sprite_effect_update_alt(void);
 
 /* Three consecutive records at D_8012B8C0 (T-4070): accessing the flag bytes through one base symbol
  * keeps IDO from hoisting loads above earlier stores, as in the original. */
@@ -542,20 +542,20 @@ extern s32 D_80148BE4;
 extern s32 D_80148BE8;
 
 extern u8 D_801474B0;
-void func_8013A2F4();
-void func_8013A4E8();
-void func_8013A5F4();
-void func_8013A76C();
-void func_8013A920();
-void func_8013AE80();
-void func_8013B920();
-void func_8013BFB4();
-void func_8013C4D0();
-void func_8013CDD0();
-void func_8013D120();
-void func_8013D550();
-void func_8013DB50();
-void func_8013A7C8();
+void annual_scene_mode_dispatch();
+void annual_scene_selected_girl_state_apply();
+void annual_scene_selected_girl_resource_setup();
+void annual_scene_choice_completion_gate();
+void annual_scene_substate_dispatch();
+void annual_choice_scene_substate_dispatch();
+void annual_ayako_scene_group_dispatch();
+void annual_scene_mode_step_dispatch_call();
+void annual_timing_sequence_substate_dispatch();
+void annual_yukari_scene_substate_dispatch();
+void annual_nozomi_scene_group_dispatch();
+void annual_sound_callback_dispatch();
+void annual_scene_mode_step_update();
+void annual_scene_resource_sector_read();
 extern u8 *D_801479B0;
 extern u8 *D_801479B4;
 extern u8 *D_801479B8;
@@ -592,31 +592,31 @@ extern u8 *D_80147B08;
 extern u8 *D_80147B0C;
 extern u8 *D_80147B10;
 extern u8 *D_80147B14;
-void func_8013C560();
-void func_8013C5E8();
-void func_8013C670();
-void func_8013C6EC();
-s32 func_8013C774(void);
+void annual_timing_sequence_group_a_step_dispatch();
+void annual_timing_sequence_group_b_step_dispatch();
+void annual_timing_sequence_group_c_step_dispatch();
+void annual_timing_sequence_group_d_step_dispatch();
+s32 annual_timing_sequence_choice_sounds_dispatch(void);
 
-void func_801388E0(void);
-void func_80138BF0(void);
-void func_80139920(void);
-void func_80139D34(void);
-void func_8013E1D0(void);
-void func_80134FD0(void);
-void func_80134C10(void);
-void func_80135900(void);
-void func_801436E4(void);
-void func_80143780(void);
+void annual_scene_setup_mode_step_dispatch(void);
+void annual_candidate_scene_mode_step_dispatch(void);
+void annual_result_mode_step_dispatch(void);
+void annual_result_followup_mode_step_dispatch(void);
+void annual_hallway_mode_step_dispatch(void);
+void annual_dialogue_choice_mode_step_dispatch(void);
+void annual_text_choice_mode_step_dispatch(void);
+void annual_shrine_visit_mode_step_dispatch(void);
+void annual_character_action_group12_dispatch(void);
+void annual_character_action_group17_dispatch(void);
 extern u8 *D_801487F0;
 extern u8 *D_801487F4;
 extern u8 *D_801487F8;
 extern s16 D_801487FC;
 extern u8 *D_80148800;
-void func_801418B0(void);
+void annual_result_primary_resource_addresses_init(void);
 
 extern s32 D_8012E6C0;
-void func_80143858(void);
+void annual_character_action_group17_secondary_dispatch(void);
 
 /* Bit 2 of GyoziGirl.unk_10[0], set as a bit-field store: `|= 4` gives one temporary too many (T-9000, same idiom as SHOUGATU Bits64B8) */
 typedef struct {
@@ -655,12 +655,12 @@ extern s32 D_80148BB0;
 extern s32 D_80148BB4;
 extern s32 D_80148BB8;
 extern s32 D_80148BBC;
-void func_8013CF2C(void);
+void annual_yukari_scene_setup(void);
 
 extern s32 D_80148358;
 extern s32 D_80148490;
 extern s32 D_801485C8;
-void func_8013ED84(void);
+void annual_scene_group_text_command_addresses_init(void);
 typedef struct {
     u32 b0:1;
     u32 b1:1;
@@ -903,8 +903,8 @@ extern s32 D_80148610;
 extern s32 D_8012E688;
 extern s32 D_8012E698;
 extern s32 D_8012E69C;
-void func_8013CB18(void);
-void func_8013D764(void);
+void annual_timing_theater_title_setup(void);
+void annual_sound_scene_state_init(void);
 
 #ifndef OVL_GYOZI_W8_3_TYPES_H
 #define OVL_GYOZI_W8_3_TYPES_H
@@ -937,12 +937,12 @@ extern GyoziWord4 D_801474B4;
 #ifndef OVL_GYOZI_SELECT_CALL_T9720
 #define OVL_GYOZI_SELECT_CALL_T9720
 /* Defined in 80134520.c; selection helper calls it before its definition. */
-void func_80134938(void);
+void annual_girl_dialogue_tables_select(void);
 #endif
 
 #ifndef OVL_GYOZI_T10010_SCENE_PROTOTYPE
 #define OVL_GYOZI_T10010_SCENE_PROTOTYPE
-void func_80135730(void);
+void annual_dialogue_fallback_resource_setup(void);
 extern u8 D_8014617C[][5]; /* T-25129: 5-byte name strings, indexed by D_80146178 */
 #endif
 
@@ -953,13 +953,13 @@ typedef struct GyoziTextCC3 {
     /* 0x000 */ u8 bytes[0xCC3];
 } GyoziTextCC3; /* size 0xCC3 */
 extern GyoziTextCC3 D_80146428;
-/* T-10850: signed halfword sprite fields loaded by func_80136488. */
+/* T-10850: signed halfword sprite fields loaded by annual_result_actor_group_setup. */
 extern s16 D_80146168;
 extern s16 D_8014616C;
-void func_80134EDC(void);
-void func_80134520(void);
-void func_80135CA0(void);
-void func_801342A4(void);
+void annual_text_choice_voice_resource_by_girl(void);
+void annual_new_year_mode_step_dispatch(void);
+void annual_shrine_result_mode_step_dispatch(void);
+void annual_mode_handler(void);
 
 #endif
 
@@ -985,21 +985,21 @@ typedef struct GzCallbacks90 {
 typedef struct GzCallbacksBC {
     /* 0x00 */ GzCallback callbacks[47];
 } GzCallbacksBC; /* size 0xBC */
-extern GzCallbacks90 D_801476F4; /* func_8013B0C4 */
-extern GzCallbacks90 D_80147C6C; /* func_8013C774 */
-extern GzCallbacks68 D_80148880; /* func_80141944 */
-extern GzCallbacksBC D_8014901C; /* func_80145384 */
-/* T-20006: scene callback callees and the word flag read by func_80145384. */
-s32 func_80141944(void);
-s32 func_80145384(void);
-s32 func_801428EC(void);
-void func_80142C14(void);
-void func_80145520(void);
+extern GzCallbacks90 D_801476F4; /* annual_choice_scene_timing_step_dispatch */
+extern GzCallbacks90 D_80147C6C; /* annual_timing_sequence_choice_sounds_dispatch */
+extern GzCallbacks68 D_80148880; /* annual_result_actor_mode_step_dispatch */
+extern GzCallbacksBC D_8014901C; /* annual_scene_mansion_effect_update */
+/* T-20006: scene callback callees and the word flag read by annual_scene_mansion_effect_update. */
+s32 annual_result_actor_mode_step_dispatch(void);
+s32 annual_scene_mansion_effect_update(void);
+s32 annual_result_choice_geometry_draw(void);
+void annual_result_character_idle_advance(void);
+void annual_callback_effect_504(void);
 extern s32 D_8012E694;
-/* T-17600: 0x24-byte records indexed with stride 0x24 (func_80144018, func_80144B70): the field widths of
+/* T-17600: 0x24-byte records indexed with stride 0x24 (annual_scene_falling_sprite_effect_update, annual_scene_falling_sprite_effect_update_alt): the field widths of
  * main's SpriteQuad table sprite_quads, 0xB270 above it as the display records D_80129F40 are above actor_pool. */
 extern SpriteQuad D_8012CA40[];
-/* T-17600: one entry per falling dumpling (func_80144018, func_801444CC, func_80144B70, func_80145084). The
+/* T-17600: one entry per falling dumpling (annual_scene_falling_sprite_effect_update, annual_scene_falling_sprite_effect_init, annual_scene_falling_sprite_effect_update_alt, annual_ijuin_mansion_effect_init). The
  * dumpling count D_80148EAC stops at 50 and the arrays end where the next begins; the record index i of
  * D_8012CA40 starts at 4, and the [i - 4] accesses fold into %lo, so splat names D_80148BE0, D_80148D70 and
  * D_80148E40 at the bases minus 0x10 / 8. */
@@ -1008,7 +1008,7 @@ extern s32 D_80148CB8[50]; /* 16.16 fixed point: the s16 at +2 is also read alon
 extern s32 D_80148D80[50];
 extern s16 D_80148E48[50];
 extern s32 D_80148EB0; /* T-17600: frame counter of the dumpling scene, next to the count D_80148EAC */
-/* T-17600: two s16 tables of 8, indexed by the same value (func_80140E0C, func_80140F90, func_801412A4);
+/* T-17600: two s16 tables of 8, indexed by the same value (annual_candidate_girl_result_apply, annual_random_target_girl_select_and_reward, annual_target_girl_select_and_reward);
  * D_8014877C follows the second. */
 extern s16 D_8014875C[8];
 extern s16 D_8014876C[8];

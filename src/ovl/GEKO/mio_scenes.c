@@ -76,7 +76,7 @@ void encounter_mio_scene_init_1(void) {
     encounter_scene_text_table = encounter_scene_text_section_37;
     encounter_scene_command_table = encounter_scene_command_section_37;
     encounter_scene_voice_table = encounter_scene_voice_section_37;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     game_state.girls[1].tokimeki += 1;
     game_state.girls[1].affection += 2;
     check_para_limit();

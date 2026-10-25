@@ -1,7 +1,7 @@
 /* tournament_scene_resources.c: ; src/ovl/MASTER/80133680.c:174-182 binds the scene frame/sequence/tpage resources and palette. Original object 0x80138F10-0x80138F70 (config/objects/MASTER.txt). */
 #include "ovl/MASTER.h"
 
-void func_80138F10(void) {
+void master_set_companion_actor_assets_b(void) {
     D_8013C720 = 0x801A403C;
     D_8013C724 = 0x801A4048;
     D_8013C728 = 0x801A4098;

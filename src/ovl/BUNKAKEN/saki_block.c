@@ -2,18 +2,18 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-void func_80137640(void) {
+void tour_stage_saki_route(void) {
     switch (D_80122EB8) {
     case 0:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x3B);
+            mode_stage_set(TOUR_STAGE_SAKI_LITERATURE_POEMS);
             return;
         case 0x60:
-            mode_stage_set(0x3C);
+            mode_stage_set(TOUR_STAGE_SAKI_LITERATURE_ANTHOLOGY);
             return;
         case 0x61:
-            mode_stage_set(0x3D);
+            mode_stage_set(TOUR_STAGE_SAKI_LITERATURE_SPEECH);
             return;
         default:
             game_mode_reset_to_title();
@@ -21,43 +21,43 @@ void func_80137640(void) {
         }
         break;
     case 1:
-        mode_stage_set(0x3E);
+        mode_stage_set(TOUR_STAGE_SAKI_DRAMA);
         return;
     case 2:
-        mode_stage_set(0x3F);
+        mode_stage_set(TOUR_STAGE_SAKI_SCIENCE);
         return;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x40);
+            mode_stage_set(TOUR_STAGE_SAKI_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(0x41);
+            mode_stage_set(TOUR_STAGE_SAKI_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(0x42);
+            mode_stage_set(TOUR_STAGE_SAKI_COMPUTER_EXPERIMENT);
             return;
         }
         break;
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x43);
+            mode_stage_set(TOUR_STAGE_SAKI_ART_PORTRAIT);
             return;
         case 0x60:
-            mode_stage_set(0x44);
+            mode_stage_set(TOUR_STAGE_SAKI_ART_SKETCH);
             return;
         case 0x61:
-            mode_stage_set(0x45);
+            mode_stage_set(TOUR_STAGE_SAKI_ART_OIL);
             return;
         }
         break;
     case 5:
         if (game_state.year == 0x61) {
-            mode_stage_set(0x47);
+            mode_stage_set(TOUR_STAGE_SAKI_BRASS_1997);
             return;
         }
-        mode_stage_set(0x46);
+        mode_stage_set(TOUR_STAGE_SAKI_BRASS);
         return;
     default:
         game_mode_reset_to_title();
@@ -65,9 +65,9 @@ void func_80137640(void) {
     }
 }
 
-void func_80137804(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_literature_poems(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -79,7 +79,7 @@ void func_80137804(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -90,8 +90,8 @@ void func_80137804(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 2;
@@ -101,7 +101,7 @@ void func_80137804(void) {
                 talk_group = 4;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -115,8 +115,8 @@ void func_80137804(void) {
         normal_date_speak();
         break;
     case 8:
-        temp_v0_2 = girl_state_rank(4);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(4);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 3;
@@ -142,7 +142,7 @@ void func_80137804(void) {
         normal_date_speak();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -150,9 +150,9 @@ void func_80137804(void) {
     }
 }
 
-void func_80137A38(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_literature_anthology(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -164,7 +164,7 @@ void func_80137A38(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -175,8 +175,8 @@ void func_80137A38(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 6;
@@ -188,7 +188,7 @@ void func_80137A38(void) {
                 talk_group = 8;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -202,8 +202,8 @@ void func_80137A38(void) {
         normal_date_speak();
         break;
     case 8:
-        temp_v0_2 = girl_state_rank(4);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(4);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 9;
@@ -244,7 +244,7 @@ void func_80137A38(void) {
         normal_date_speak();
         break;
     case 16:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -252,9 +252,9 @@ void func_80137A38(void) {
     }
 }
 
-void func_80137CD8(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_literature_speech(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -266,7 +266,7 @@ void func_80137CD8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -277,8 +277,8 @@ void func_80137CD8(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0xD;
@@ -288,7 +288,7 @@ void func_80137CD8(void) {
                 talk_group = 0xE;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -308,7 +308,7 @@ void func_80137CD8(void) {
         break;
     case 9:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             D_80125CA0 = 0xC0;
             addr_init_bustup();
             game_state.current_girl = GIRL_SAKI;
@@ -321,8 +321,8 @@ void func_80137CD8(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = girl_state_rank(4);
-            switch (temp_v0_2) {
+            girl_rank_2 = girl_state_rank(4);
+            switch (girl_rank_2) {
             case 0:
             case 1:
                 talk_group = 0xF;
@@ -332,7 +332,7 @@ void func_80137CD8(void) {
                 talk_group = 0x10;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 12:
@@ -349,7 +349,7 @@ void func_80137CD8(void) {
         normal_date_speak();
         break;
     case 16:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -357,9 +357,9 @@ void func_80137CD8(void) {
     }
 }
 
-void func_80137FB8(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_drama(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -371,7 +371,7 @@ void func_80137FB8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -382,8 +382,8 @@ void func_80137FB8(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x11;
@@ -395,7 +395,7 @@ void func_80137FB8(void) {
                 talk_group = 0x13;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -421,7 +421,7 @@ void func_80137FB8(void) {
         }
         break;
     case 10:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
         addr_init_bustup();
@@ -435,8 +435,8 @@ void func_80137FB8(void) {
     case 12:
         if (cd_read_sync_status() & 1) {
             if (game_state.year == 0x5F) {
-                temp_v0_2 = girl_state_rank(4);
-                switch (temp_v0_2) {
+                girl_rank_2 = girl_state_rank(4);
+                switch (girl_rank_2) {
                 case 0:
                 case 1:
                     talk_group = 0x14;
@@ -453,7 +453,7 @@ void func_80137FB8(void) {
             } else {
                 talk_group = (game_state.year * 2) - 0xA8;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 13:
@@ -470,7 +470,7 @@ void func_80137FB8(void) {
         normal_date_speak();
         break;
     case 17:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -478,8 +478,8 @@ void func_80137FB8(void) {
     }
 }
 
-void func_80138340(void) {
-    s32 temp_v0;
+void tour_stage_saki_science(void) {
+    s32 girl_rank;
 
     switch (game_state.mode_step) {
     case 0:
@@ -491,7 +491,7 @@ void func_80138340(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -502,8 +502,8 @@ void func_80138340(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x1B;
@@ -513,7 +513,7 @@ void func_80138340(void) {
                 talk_group = 0x1C;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -533,7 +533,7 @@ void func_80138340(void) {
         break;
     case 9:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             D_80125CA0 = 0xC0;
             addr_init_bustup();
             game_state.current_girl = GIRL_SAKI;
@@ -560,7 +560,7 @@ void func_80138340(void) {
             if (girl_state_rank(4) >= 2) {
                 talk_group += 1;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 12:
@@ -593,7 +593,7 @@ void func_80138340(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -601,10 +601,10 @@ void func_80138340(void) {
     }
 }
 
-void func_801386C0(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
+void tour_stage_saki_computer_fortune(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
+    s32 girl_rank_3;
 
     switch (game_state.mode_step) {
     case 0:
@@ -616,7 +616,7 @@ void func_801386C0(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -627,8 +627,8 @@ void func_801386C0(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x25;
@@ -640,7 +640,7 @@ void func_801386C0(void) {
                 talk_group = 0x27;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -653,7 +653,7 @@ void func_801386C0(void) {
         audio_command(0x202);
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        mode_stage_set(0xB);
+        mode_stage_set(TOUR_STAGE_FORTUNE_TELLING);
         break;
     case 8:
         cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
@@ -664,8 +664,8 @@ void func_801386C0(void) {
         break;
     case 10:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = girl_state_rank(4);
-            switch (temp_v0_2) {
+            girl_rank_2 = girl_state_rank(4);
+            switch (girl_rank_2) {
             case 0:
             case 1:
                 talk_group = 0x28;
@@ -678,15 +678,15 @@ void func_801386C0(void) {
                 break;
             }
             talk_group += D_80122EA8;
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 11:
         normal_date_speak();
         break;
     case 12:
-        temp_v0_3 = girl_state_rank(4);
-        switch (temp_v0_3) {
+        girl_rank_3 = girl_state_rank(4);
+        switch (girl_rank_3) {
         case 0:
         case 1:
             talk_group = 0x31;
@@ -714,7 +714,7 @@ void func_801386C0(void) {
         normal_date_speak();
         break;
     case 17:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -722,11 +722,11 @@ void func_801386C0(void) {
     }
 }
 
-void func_80138A08(void) {
+void tour_stage_saki_computer_game(void) {
     GameState *g = &game_state;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
+    s32 girl_rank;
+    s32 girl_rank_2;
+    s32 girl_rank_3;
     switch (g->mode_step) {
     case 0:
         dec_bg_cd_read(0x4105, 1);
@@ -737,7 +737,7 @@ void func_80138A08(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -748,8 +748,8 @@ void func_80138A08(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x34;
@@ -759,7 +759,7 @@ void func_80138A08(void) {
                 talk_group = 0x35;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -774,19 +774,19 @@ void func_80138A08(void) {
         g->saved_game_mode = g->game_mode;
         g->saved_mode_stage = g->mode_stage;
         g->saved_mode_step = g->mode_step + 1;
-        mode_stage_set(0x8D);
+        mode_stage_set(TOUR_STAGE_TT_NARRATOR);
         break;
     case 8:
         D_80122E98 = 1;
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        mode_stage_set(0x8C);
+        mode_stage_set(TOUR_STAGE_RESUME);
         break;
     case 9:
         audio_command(0xBF);
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         message_window_init();
         hizuke_init();
@@ -824,8 +824,8 @@ void func_80138A08(void) {
         break;
     case 15:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = girl_state_rank(4);
-            switch (temp_v0_2) {
+            girl_rank_2 = girl_state_rank(4);
+            switch (girl_rank_2) {
             case 0:
             case 1:
                 talk_group = 0x36;
@@ -838,15 +838,15 @@ void func_80138A08(void) {
             if ((u8) D_800E7D4E < 2U) {
                 talk_group += 1;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 16:
         normal_date_speak();
         break;
     case 17:
-        temp_v0_3 = girl_state_rank(4);
-        switch (temp_v0_3) {
+        girl_rank_3 = girl_state_rank(4);
+        switch (girl_rank_3) {
         case 0:
         case 1:
             talk_group = 0x3A;
@@ -873,7 +873,7 @@ void func_80138A08(void) {
         break;
     case 22:
         ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -881,9 +881,9 @@ void func_80138A08(void) {
     }
 }
 
-void func_80138EB8(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_computer_experiment(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -895,7 +895,7 @@ void func_80138EB8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -906,8 +906,8 @@ void func_80138EB8(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x3C;
@@ -917,7 +917,7 @@ void func_80138EB8(void) {
                 talk_group = 0x3D;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -936,7 +936,7 @@ void func_80138EB8(void) {
         portrait_read_step(0x66BF);
         break;
     case 9:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         game_state.current_girl = GIRL_SAKI;
@@ -948,8 +948,8 @@ void func_80138EB8(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = girl_state_rank(4);
-            switch (temp_v0_2) {
+            girl_rank_2 = girl_state_rank(4);
+            switch (girl_rank_2) {
             case 0:
             case 1:
                 talk_group = 0x3E;
@@ -959,7 +959,7 @@ void func_80138EB8(void) {
                 talk_group = 0x3F;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 12:
@@ -976,7 +976,7 @@ void func_80138EB8(void) {
         normal_date_speak();
         break;
     case 16:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -984,8 +984,8 @@ void func_80138EB8(void) {
     }
 }
 
-void func_80139184(void) {
-    s32 temp_v0;
+void tour_stage_saki_art_portrait(void) {
+    s32 girl_rank;
 
     switch (game_state.mode_step) {
     case 0:
@@ -997,7 +997,7 @@ void func_80139184(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -1008,8 +1008,8 @@ void func_80139184(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x40;
@@ -1019,7 +1019,7 @@ void func_80139184(void) {
                 talk_group = 0x43;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -1048,7 +1048,7 @@ void func_80139184(void) {
         normal_date_speak();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -1056,8 +1056,8 @@ void func_80139184(void) {
     }
 }
 
-void func_80139364(void) {
-    s32 temp_v0;
+void tour_stage_saki_art_sketch(void) {
+    s32 girl_rank;
 
     switch (game_state.mode_step) {
     case 0:
@@ -1069,7 +1069,7 @@ void func_80139364(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -1080,8 +1080,8 @@ void func_80139364(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x46;
@@ -1091,7 +1091,7 @@ void func_80139364(void) {
                 talk_group = 0x49;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -1121,7 +1121,7 @@ void func_80139364(void) {
         normal_date_speak();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -1129,9 +1129,9 @@ void func_80139364(void) {
     }
 }
 
-void func_8013954C(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_art_oil(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -1143,7 +1143,7 @@ void func_8013954C(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -1154,8 +1154,8 @@ void func_8013954C(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x4C;
@@ -1165,7 +1165,7 @@ void func_8013954C(void) {
                 talk_group = 0x4E;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -1179,8 +1179,8 @@ void func_8013954C(void) {
         normal_date_speak();
         break;
     case 8:
-        temp_v0_2 = girl_state_rank(4);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(4);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 0x4D;
@@ -1206,7 +1206,7 @@ void func_8013954C(void) {
         normal_date_speak();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -1214,9 +1214,9 @@ void func_8013954C(void) {
     }
 }
 
-void func_80139780(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_saki_brass(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -1228,7 +1228,7 @@ void func_80139780(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -1239,8 +1239,8 @@ void func_80139780(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x50;
@@ -1250,7 +1250,7 @@ void func_80139780(void) {
                 talk_group = 0x51;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -1269,7 +1269,7 @@ void func_80139780(void) {
         portrait_read_step(0x66BF);
         break;
     case 9:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         game_state.current_girl = GIRL_SAKI;
@@ -1281,8 +1281,8 @@ void func_80139780(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = girl_state_rank(4);
-            switch (temp_v0_2) {
+            girl_rank_2 = girl_state_rank(4);
+            switch (girl_rank_2) {
             case 0:
             case 1:
                 talk_group = 0x52;
@@ -1295,7 +1295,7 @@ void func_80139780(void) {
             if (game_state.year == 0x60) {
                 talk_group += 2;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 12:
@@ -1312,7 +1312,7 @@ void func_80139780(void) {
         normal_date_speak();
         break;
     case 16:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -1320,10 +1320,10 @@ void func_80139780(void) {
     }
 }
 
-void func_80139A6C(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
-    s32 temp_v0_3;
+void tour_stage_saki_brass_1997(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
+    s32 girl_rank_3;
 
     switch (game_state.mode_step) {
     case 0:
@@ -1335,7 +1335,7 @@ void func_80139A6C(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
             mode_step_next();
@@ -1346,8 +1346,8 @@ void func_80139A6C(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(4);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(4);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x50;
@@ -1357,7 +1357,7 @@ void func_80139A6C(void) {
                 talk_group = 0x51;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 5:
@@ -1388,8 +1388,8 @@ void func_80139A6C(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            temp_v0_2 = girl_state_rank(4);
-            switch (temp_v0_2) {
+            girl_rank_2 = girl_state_rank(4);
+            switch (girl_rank_2) {
             case 0:
             case 1:
                 talk_group = 0x56;
@@ -1399,7 +1399,7 @@ void func_80139A6C(void) {
                 talk_group = 0x5A;
                 break;
             }
-            func_80139DEC();
+            tour_saki_script_begin();
         }
         break;
     case 12:
@@ -1415,8 +1415,8 @@ void func_80139A6C(void) {
         normal_date_speak();
         break;
     case 15:
-        temp_v0_3 = girl_state_rank(4);
-        switch (temp_v0_3) {
+        girl_rank_3 = girl_state_rank(4);
+        switch (girl_rank_3) {
         case 0:
         case 1:
             talk_group = 0x59;
@@ -1442,7 +1442,7 @@ void func_80139A6C(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -1450,12 +1450,12 @@ void func_80139A6C(void) {
     }
 }
 
-void func_80139DEC(void) {
+void tour_saki_script_begin(void) {
     talk_names_set(4);
-    func_8013223C();
+    tour_script_saki();
     talk_line = 0;
-    talk_text_table = D_80155E90;
-    talk_command_table = D_80155E94;
-    talk_voice_table = D_80155E98;
+    talk_text_table = tour_script_text;
+    talk_command_table = tour_script_commands;
+    talk_voice_table = tour_script_voices;
     mode_step_next();
 }

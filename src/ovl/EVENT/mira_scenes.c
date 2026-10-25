@@ -112,7 +112,7 @@ void spot_mira_scene1_run(void) {
 
 void spot_mira_scene1_steps_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl38 tbl;
+    SpotYuinaMiraAndYukariSceneStepTable tbl;
 
     tbl = spot_mira_scene1_steps;
     func_80078950("s%d %d\n", D_800B1AF6, D_800E9E63);
@@ -154,7 +154,7 @@ void spot_mira_scene8_run(void) {
 
 void spot_mira_scene8_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl21 tbl;
+    SpotMiraAndYumiSceneStepTable tbl;
 
     tbl = spot_mira_scene8_steps;
     idx = D_800B1AF6;
@@ -375,7 +375,7 @@ void spot_mira_scene8_bg_load_03(void) {
 
 void spot_mira_scene2_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl40 tbl;
+    SpotMiraYukariNozomiAndSakiSceneStepTable tbl;
 
     tbl = spot_mira_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -404,7 +404,7 @@ void spot_mira_scene2_palette_load_15(void) {
 
 void spot_mira_scene3_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl38 tbl;
+    SpotYuinaMiraAndYukariSceneStepTable tbl;
 
     tbl = spot_mira_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
@@ -419,7 +419,7 @@ void spot_mira_scene3_assets_load_01(void) {
 
 void spot_mira_scene4_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl51 tbl;
+    SpotReiMiraAndSakiSceneStepTable tbl;
 
     tbl = spot_mira_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -434,9 +434,9 @@ void spot_mira_scene4_assets_load_00(void) {
 
 void spot_mira_scene5_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl42 tbl;
+    SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable tbl;
 
-    tbl = *(FnTbl42 *)&D_801220EC;
+    tbl = *(SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable *)&D_801220EC;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
     tbl.f[D_800B1AF6](0x80);
 }
@@ -462,7 +462,7 @@ void spot_mira_unused_branch_on_mood_2(void) {
 
 void spot_mira_scene6_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl15 tbl;
+    SpotMiraScene6StepTable tbl;
 
     tbl = spot_mira_scene6_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

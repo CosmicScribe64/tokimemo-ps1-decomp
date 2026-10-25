@@ -1,16 +1,16 @@
 /* festival_frame_control.c: src/ovl/BUNKAKEN/80144F70.c:4; per-frame festival initialization/presentation and calls the mode-stage table dispatcher; includes calendar and scene flow control. Original object 0x80144F70-0x80145E40 (config/objects/BUNKAKEN.txt). */
-#define MAIN_API_OVERRIDE_get_g_zyotai_h /* T-18500: func_80145A64 passes two arguments (main_api.h: one). */
+#define MAIN_API_OVERRIDE_get_g_zyotai_h /* T-18500: tour_event_log_add passes two arguments (main_api.h: one). */
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
 s32 get_g_zyotai_h();
 
-void func_80144F70(void) {
+void tour_entry(void) {
     s32 i;
     GameState *g = &game_state;
-    BunkakenBytes11 sp3C;
+    TourUnusedBytes sp3C;
 
-    sp3C = D_80155F90;
+    sp3C = tour_unused_table;
     portrait_wink_update();
     switch (D_80122EC0) {
     case 0:
@@ -18,7 +18,7 @@ void func_80144F70(void) {
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->girls[i].flags.f.met;
+            select_girl_menu_enabled[i] = g->girls[i].flags.f.met;
         }
         talk_clear();
         dec_bg_reset();
@@ -57,27 +57,27 @@ void func_80144F70(void) {
         break;
     case 4:
         normal_date_bg_fadein();
-        func_80145500();
+        tour_phase_next_on_step();
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
             talk_names_set(0U);
-            func_801324E0();
+            tour_script_common();
             talk_group = 0;
             talk_line = 0;
-            talk_text_table = (s32) D_80155E90;
-            talk_command_table = (s32) D_80155E94;
-            talk_voice_table = (s32) D_80155E98;
+            talk_text_table = (s32) tour_script_text;
+            talk_command_table = (s32) tour_script_commands;
+            talk_voice_table = (s32) tour_script_voices;
             D_80122EC0 += 1;
         }
         break;
     case 6:
         normal_date_speak();
-        func_80145500();
+        tour_phase_next_on_step();
         break;
     case 7:
-        func_80145E40();
+        tour_stage_run();
         break;
     case 8:
         if (((g->girls[0].birthday.w & 0xF) == g->month) && (((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B) == g->day) && !(g->day_event_done_bits & 1) && ((D_80122EBC == 0) || (D_80122EBC == 0xB))) {
@@ -95,11 +95,11 @@ void func_80144F70(void) {
                 hud_day_bgm_load();
                 mode_stage_next();
             } else if (audio_bank_load_poll() == 1) {
-                func_80145550();
+                tour_apply_points();
                 if (D_80122EBC != 0xFF) {
                     D_80122EBC = D_80122EBC; /* FAKE: T-22018, same store-back before the call */
                     if (girl_state_rank(D_80122EBC) < 4) {
-                        func_80145A64();
+                        tour_event_log_add();
                     }
                 }
                 for (i = 0; i < 0x40; i++) {
@@ -113,10 +113,10 @@ void func_80144F70(void) {
         }
         break;
     case 9:
-        func_80149144();
+        tour_phase_shiori_birthday();
         break;
     case 10:
-        func_8014A0E0();
+        tour_phase_player_birthday();
         break;
     default:
         game_mode_reset_to_title();
@@ -127,74 +127,74 @@ void func_80144F70(void) {
     }
 }
 
-void func_80145500(void) {
+void tour_phase_next_on_step(void) {
     if (game_state.mode_step != 0) {
         game_state.mode_step = 0;
         D_80122EC0 += 1;
     }
 }
 
-void func_80145530(void) {
+void tour_finish_visit(void) {
     game_state.mode_stage = 0;
     game_state.mode_step = 0;
     D_80122EC0 = 8;
 }
 
-void func_80145550(void) {
-    GameState *g = &game_state;
-    u8 pad; /* FAKE: T-18500, an unused byte above v puts v at sp+0xDA, the home its uninitialized default read uses */
-    u8 v;
-    BunkakenBytes9x6 a;
-    BunkakenBytes11x6 b;
-    BunkakenBytes11x6 c;
-    s32 sel;
+void tour_apply_points(void) {
+    GameState *state = &game_state;
+    u8 pad; /* FAKE: T-18500, an unused byte above tokimeki_gain puts tokimeki_gain at sp+0xDA, the home its uninitialized default read uses */
+    u8 tokimeki_gain;
+    TourPoints1995 points_1995;
+    TourPointsLaterYears points_1996;
+    TourPointsLaterYears points_1997;
+    s32 year_index;
 
-    a = D_80155F9C;
-    b = D_80155FD4;
-    c = D_80156018;
-    sel = (g->year - 0x5F) & 0xFF;
+    points_1995 = tour_points_1995;
+    points_1996 = tour_points_1996;
+    points_1997 = tour_points_1997;
+    year_index = (state->year - 0x5F) & 0xFF;
     if (D_80122EBC == 0xB) {
-        g->girls[0].affection += 2;
-        switch (sel) {
+        state->girls[0].affection += 2;
+        switch (year_index) {
         case 0:
-            v = a.b[0][D_80122EB8];
+            tokimeki_gain = points_1995.codes[0][D_80122EB8];
             break;
         case 1:
-            v = b.b[0][D_80122EB8];
+            tokimeki_gain = points_1996.codes[0][D_80122EB8];
             break;
         case 2:
-            v = c.b[0][D_80122EB8];
+            tokimeki_gain = points_1997.codes[0][D_80122EB8];
             break;
         }
-        if (v != 0) {
-            v--;
+        if (tokimeki_gain != 0) {
+            tokimeki_gain--;
         }
-        g->girls[0].tokimeki += v;
+        state->girls[0].tokimeki += tokimeki_gain;
     } else if (D_80122EBC < 0xB) {
-        g->girls[D_80122EBC].affection += 2;
-        switch (sel) {
+        state->girls[D_80122EBC].affection += 2;
+        switch (year_index) {
         case 0:
-            v = a.b[D_80122EBC][D_80122EB8];
+            tokimeki_gain = points_1995.codes[D_80122EBC][D_80122EB8];
             break;
         case 1:
-            v = b.b[D_80122EBC][D_80122EB8];
+            tokimeki_gain = points_1996.codes[D_80122EBC][D_80122EB8];
             break;
         case 2:
-            v = c.b[D_80122EBC][D_80122EB8];
+            tokimeki_gain = points_1997.codes[D_80122EBC][D_80122EB8];
             break;
         }
-        if (v != 0) {
-            v--;
+        if (tokimeki_gain != 0) {
+            tokimeki_gain--;
         }
-        g->girls[D_80122EBC].tokimeki += v;
+        state->girls[D_80122EBC].tokimeki += tokimeki_gain;
     }
     if (D_80122EA4 != 0xFF) {
-        g->girls[D_80122EA4].affection -= 0xA;
-        g->girls[D_80122EA4].syoushin += 0xA;
+        state->girls[D_80122EA4].affection -= 0xA;
+        state->girls[D_80122EA4].syoushin += 0xA;
     }
 }
 
-void func_80145844(void) {
+void tour_window_title_set(void) {
     k_reset(0);
     switch (D_80122EB8) {
     case 0:
@@ -249,23 +249,23 @@ void func_80145844(void) {
     k_disp_start(1);
 }
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/festival_frame_control.rodata", D_80154B84);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/festival_frame_control.rodata", tour_title_backstage);
 
-void func_801459FC(void) {
+void tour_title_backstage_show(void) {
     k_reset(0);
-    message_window_set_title(&D_80154B84);
+    message_window_set_title(&tour_title_backstage);
     k_disp_start(1);
 }
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/festival_frame_control.rodata", D_80154B8C);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/festival_frame_control.rodata", tour_title_blank);
 
-void func_80145A30(void) {
+void tour_title_clear(void) {
     k_reset(0);
-    message_window_set_title(&D_80154B8C);
+    message_window_set_title(&tour_title_blank);
     message_window_title_show(0);
 }
 
-void func_80145A64(void) {
+void tour_event_log_add(void) {
     GameState *g = &game_state;
     u8 v;
 

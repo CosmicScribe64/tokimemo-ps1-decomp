@@ -6,7 +6,7 @@
 ShooterBackgroundScroll shooter_background_scroll = { 0, 0x400, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_floor_tile_u);
 INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_floor_tile_v);
-INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", D_8015F604);
+INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_opening_pose_frames);
 INCLUDE_RODATA("asm/ovl/TACO/data/TACO/background_and_models.data", shooter_opening_pose_tables);
 
 void shooter_init_background_scroll(void) {
@@ -107,7 +107,7 @@ void shooter_draw_floor_grid(void) {
         for (j = 0; j < 12; j++) {
             q = (s16 *)&sxy[j][i];
             if (q[20] >= 0 && q[2] < 0x201) {
-                if (q[1] >= game_state.screen_center_y[k] - 0x200 && game_state.screen_center_y[k] + 0x400 >= q[3]) {
+                if (q[1] >= game_state.draw_origin_y[k] - 0x200 && game_state.draw_origin_y[k] + 0x400 >= q[3]) {
                     poly = GetWorkBase(0x28, k);
                     func_8009F040(poly);
                     poly->r0 = 0x80;
@@ -135,7 +135,7 @@ void shooter_draw_floor_grid(void) {
                     poly->y2 = q[19];
                     poly->x3 = q[20];
                     poly->y3 = q[21];
-                    AddPrim(D_800E8CA0 + ((draw_buffer << 10) + 0x3F8), poly);
+                    AddPrim(draw_ot_tags + ((draw_buffer << 10) + 0x3F8), poly);
                     k = draw_buffer;
                 }
             }
@@ -199,7 +199,7 @@ void shooter_draw_horizon_bands(void) {
             poly->y2 = q[5];
             poly->x3 = q[6];
             poly->y3 = q[7];
-            AddPrim(D_800E8CA0 + (draw_buffer << 10) + 0x3F4, poly);
+            AddPrim(draw_ot_tags + (draw_buffer << 10) + 0x3F4, poly);
         }
     }
 }
@@ -222,7 +222,7 @@ void shooter_draw_models(void) {
             func_80099F04(&sp50);
             func_8009A200(var_s0->links[0], &sp70);
             func_80099ED8(&sp70);
-            func_8009A4D0((s32) var_s0, (s32) ((u8 *)&D_800E8C70 + (draw_buffer * 0x14)), 6, 0x1F800000);
+            func_8009A4D0((s32) var_s0, (s32) ((u8 *)&draw_ot_table + (draw_buffer * 0x14)), 6, 0x1F800000);
             var_s0++;
         } while (var_s0 != (ShooterModelHandle *)D_80127480);
     }

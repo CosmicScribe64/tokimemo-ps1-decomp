@@ -29,19 +29,19 @@
 #include "main/day_event.h"
 #include "main/school_day.h"
 
-/* T-12010: D_801255D0 is saved as a word and read as four bytes. */
+/* T-12010: cd_result is saved as a word and read as four bytes. */
 typedef union WordBytes {
     u32 word;
     u8 bytes[4];
 } WordBytes;
-extern WordBytes D_801255D0;
+extern WordBytes cd_result;
 /* T-12040: halfword tested by the RPG battle command dispatcher. */
 extern s16 D_80121428;
 
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
 typedef struct TalkVoiceRef {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
+    /* 0x00 */ s32 clip_start;
+    /* 0x04 */ s32 clip_end;
 } TalkVoiceRef; /* size 0x08 */
 
 /* T-10730: sixteen byte selectors copied to the dialogue handler's stack. */
@@ -55,34 +55,34 @@ typedef struct TalkWork {
     /* 0x00 */ s32 scene;
     /* 0x04 */ s32 girl;
     /* 0x08 */ s32 unk_08;
-    /* 0x0C */ s32 unk_0C;
+    /* 0x0C */ s32 choice;
     /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s32 unk_14;
+    /* 0x14 */ s32 line_wait;
     /* 0x18 */ s32 unk_18;
-    /* 0x1C */ s32 unk_1C;
-    /* 0x20 */ s32 unk_20;
-    /* 0x24 */ s32 unk_24;
-    /* 0x28 */ s32 unk_28;
-    /* 0x2C */ s32 unk_2C;
-    /* 0x30 */ s32 unk_30;
-    /* 0x34 */ s32 unk_34;
-    /* 0x38 */ s32 unk_38;
-    /* 0x3C */ s32 unk_3C;
-    /* 0x40 */ s32 unk_40;
+    /* 0x1C */ s32 choice_saved;
+    /* 0x20 */ s32 voice_state;
+    /* 0x24 */ s32 girl_visible;
+    /* 0x28 */ s32 bg_visible;
+    /* 0x2C */ s32 text_delay;
+    /* 0x30 */ s32 line_auto;
+    /* 0x34 */ s32 event_still_visible;
+    /* 0x38 */ s32 date_spot;
+    /* 0x3C */ s32 event_eyes_hold; /* HYPOTHESIS: alias of scene_event_eyes_hold */
+    /* 0x40 */ s32 event_mouth_anim;
     /* 0x44 */ s32 unk_44;
-    /* 0x48 */ s32 unk_48;
-    /* 0x4C */ s32 unk_4C;
-    /* 0x50 */ s32 unk_50;
+    /* 0x48 */ s32 line_clear;
+    /* 0x4C */ s32 text_silent;
+    /* 0x50 */ s32 mouth_lock; /* HYPOTHESIS: alias of scene_mouth_lock */
     /* 0x54 */ s32 unk_54;
-    /* 0x58 */ s32 unk_58;
-    /* 0x5C */ s32 unk_5C;
-    /* 0x60 */ s32 unk_60;
+    /* 0x58 */ s32 row_offset; /* HYPOTHESIS: dialogue rows shift by 16 * this value; no writer outside talk_clear, which sets it to zero */
+    /* 0x5C */ s32 cursor_hide;
+    /* 0x60 */ s32 menu_active;
     /* 0x64 */ s32 unk_64;
     /* 0x68 */ s32 unk_68;
-    /* 0x6C */ s32 unk_6C;
+    /* 0x6C */ s32 wipe_kind;
     /* 0x70 */ s32 unk_70;
     /* 0x74 */ s32 unk_74;
-    /* 0x78 */ s32 unk_78;
+    /* 0x78 */ s32 rank_override;
 } TalkWork; /* minimum size 0x7C */
 
 /* T-10730: pointer slots at talk_tables..D_800CA144. The cursor pointers
@@ -135,7 +135,7 @@ typedef struct LegacyGirlRecord {
 typedef struct BirthdayBits {
     /* 0x00 */ u32 month : 4;
     u32 day : 5;
-    u32 blood_type : 2; /* T-17021: set to 1 at init (func_800419FC); OptionDateBits.f9 */
+    u32 blood_type : 2; /* T-17021: set to 1 at init (boot_player_init); OptionDateBits.f9 */
     u32 rest : 21;
 } BirthdayBits; /* size 0x04 */
 
@@ -199,9 +199,9 @@ typedef struct SystemData {
     /* 0x000 */ s32 seed;
     /* 0x004 */ u8 slot_status[16];
     /* 0x014 */ u8 flags[16];
-    /* 0x024 */ u8 unk_024[2];
+    /* 0x024 */ u8 karaoke_unlock_bits[2];
     /* 0x026 */ u8 selected_slot;
-    /* 0x027 */ u8 unk_027[0x19];
+    /* 0x027 */ u8 album_state[0x19];
     /* 0x040 */ ShooterSettingsBits bits;
     /* 0x042 */ u8 name0[3];
     /* 0x045 */ u8 name1[3];
@@ -210,7 +210,7 @@ typedef struct SystemData {
     /* 0x04C */ s32 w0;
     /* 0x050 */ s32 w1;
     /* 0x054 */ s32 w2;
-    /* 0x058 */ u8 unk_058[0x800];
+    /* 0x058 */ u8 album_entries[0x800];
     /* 0x858 */ u8 year[16];
     /* 0x868 */ u8 month[16];
     /* 0x878 */ u8 day[16];
@@ -218,8 +218,8 @@ typedef struct SystemData {
     /* 0x908 */ u8 given_name[16][8];
     /* 0x988 */ u8 nickname[16][16];
     /* 0xA88 */ AlbumParam metrics[9][16];
-    /* 0xCC8 */ u8 unk_CC8[16][16]; /* per slot: the 16 bytes of GameState +0x518 (T-25105) */
-    /* 0xDC8 */ u8 unk_DC8[0x100];
+    /* 0xCC8 */ u8 slot_girl_marks[16][16]; /* per slot: the 16 bytes of GameState +0x518 (T-25105) */ /* HYPOTHESIS: per save slot 16 bytes copied from girl record 15's event counters by card_slot_summary_store; NAME_ENT shows an icon of frame 0x58 + (v & 7) for each heroine 0-10 whose byte is non-zero (a per-girl state of that save) */
+    /* 0xDC8 */ u8 layout_settings[0x100];
     /* 0xEC8 */ u8 club[16];
     /* 0xED8 */ u8 unk_ED8[8];
 } SystemData; /* size 0xEE0 */
@@ -330,35 +330,35 @@ typedef struct SpriteQuad {
  * stores and loads in source order, as for one object (wiki/data-types.md); unk_44 and unk_48 are
  * message buffers passed to cd_audio_command. */
 typedef struct AudioState {
-    /* 0x00 */ u32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s32 unk_14;
-    /* 0x18 */ s32 unk_18;
-    /* 0x1C */ s16 unk_1C;
-    /* 0x1E */ s16 unk_1E;
-    /* 0x20 */ s16 unk_20;
-    /* 0x22 */ s16 unk_22;
-    /* 0x24 */ u16 unk_24;
-    /* 0x26 */ s16 unk_26;
-    /* 0x28 */ s16 unk_28;
-    /* 0x2A */ s16 unk_2A;
-    /* 0x2C */ s16 unk_2C;
-    /* 0x2E */ s16 unk_2E;
-    /* 0x30 */ s16 unk_30;
-    /* 0x32 */ s16 unk_32;
-    /* 0x34 */ u16 unk_34;
-    /* 0x36 */ u16 unk_36;
-    /* 0x38 */ u16 unk_38;
-    /* 0x3A */ s16 unk_3A;
-    /* 0x3C */ s16 unk_3C;
-    /* 0x3E */ s16 unk_3E;
-    /* 0x40 */ u16 unk_40;
-    /* 0x42 */ u16 unk_42;
-    /* 0x44 */ u8 unk_44[4];
-    /* 0x48 */ u8 unk_48[8];
+    /* 0x00 */ u32 state_flags;
+    /* 0x04 */ s32 request_flags;
+    /* 0x08 */ s32 xa_clip_start;
+    /* 0x0C */ s32 xa_clip_end;
+    /* 0x10 */ s32 xa_next_start;
+    /* 0x14 */ s32 xa_next_end;
+    /* 0x18 */ s32 xa_resume_position;
+    /* 0x1C */ s16 xa_volume;
+    /* 0x1E */ s16 xa_volume_full;
+    /* 0x20 */ s16 bgm_volume;
+    /* 0x22 */ s16 bgm_volume_full;
+    /* 0x24 */ u16 se_volume;
+    /* 0x26 */ s16 se_volume_default;
+    /* 0x28 */ s16 bgm_sequence_handle;
+    /* 0x2A */ s16 bgm_sequence_id;
+    /* 0x2C */ s16 bgm_next_sequence_id;
+    /* 0x2E */ s16 bgm_fade_accumulator;
+    /* 0x30 */ s16 bgm_fade_step;
+    /* 0x32 */ s16 bgm_fade_rate;
+    /* 0x34 */ u16 xa_fade_accumulator;
+    /* 0x36 */ u16 xa_fade_step;
+    /* 0x38 */ u16 xa_fade_rate;
+    /* 0x3A */ s16 sequence_pack_set;
+    /* 0x3C */ s16 bgm_slot;
+    /* 0x3E */ s16 bgm_auxiliary_slot;
+    /* 0x40 */ u16 se_slot_a; /* HYPOTHESIS: this slot holds the shared system-sound bank (h-graphics: files b,c are shared banks and slot 0 is the small one); fact: VAB slot for class 5 effects, 0 or 3 (ids 0x21/0x24) */
+    /* 0x42 */ u16 se_slot_b;
+    /* 0x44 */ u8 cd_mode_param[4];
+    /* 0x48 */ u8 xa_params[8];
 } AudioState; /* size 0x50 */
 
 /* ---- GameState (T-5100) ----
@@ -455,8 +455,8 @@ typedef struct GameState {
     /* 0x002 */ u16 video_height;
     /* 0x004 */ u16 video_interlace; /* HYPOTHESIS: third argument of the display-mode call, 0 everywhere it is set */
     /* 0x006 */ u8 unk_006[0xE];
-    /* 0x014 */ s16 screen_center_x[2];        /* indexed by draw_buffer */
-    /* 0x018 */ s16 screen_center_y[2];        /* indexed by draw_buffer */
+    /* 0x014 */ s16 draw_origin_x[2];        /* indexed by draw_buffer */
+    /* 0x018 */ s16 draw_origin_y[2];        /* indexed by draw_buffer */
     /* 0x01C */ PrimArena prim_arena[2];  /* indexed by draw_buffer (SetWorkBase) */
     /* 0x034 */ u8 sound_active;
     /* 0x035 */ u8 memory_card_busy;
@@ -495,7 +495,7 @@ typedef struct GameState {
     /* 0x53C */ u8 girl_cleared[0x10]; /* HYPOTHESIS: per-girl flag; the mascot menu lists girl i when this or the saved SystemData.flags[i] is set; ETC graduation counts them */
     /* 0x54C */ AppointmentSlots u54C;
     /* 0x56C */ u8 scene_flags[0xFC];
-    /* 0x668 */ u8 unk_668[4];
+    /* 0x668 */ u8 saved_settings[4];
     /* 0x66C */ ClubRecord clubs[12];
     /* 0x69C */ DayEvent day_events[32];
     /* 0x71C */ u8 day_event_index;
@@ -530,14 +530,14 @@ typedef struct GameState {
     /* 0xF6E */ u8 sd_anim_fast;
     /* 0xF6F */ u8 cursor_speed; /* SettingsCursorSpeed */
     /* 0xF70 */ u8 click_mode; /* SettingsClickMode */
-    /* 0xF71 */ s8 unk_F71;
-    /* 0xF72 */ u8 unk_F72;
+    /* 0xF71 */ s8 click_timer;
+    /* 0xF72 */ u8 click_button;
     /* 0xF73 */ u8 double_click_interval;
     /* 0xF74 */ u8 input_device; /* InputDevice */
     /* 0xF75 */ u8 confirm_button; /* SettingsConfirmButton */
-    /* 0xF76 */ u8 unk_F76;
+    /* 0xF76 */ u8 mouse_held;
     /* 0xF77 */ u8 mouse_buttons;
-    /* 0xF78 */ u8 unk_F78;
+    /* 0xF78 */ u8 mouse_held_previous;
     /* 0xF79 */ u8 unk_F79;
     /* 0xF7A */ s16 mouse_x;
     /* 0xF7C */ s16 mouse_y;
@@ -690,7 +690,7 @@ extern u8 D_800B1AF9;
 extern s32 D_800B1C1C;
 extern s32 D_800B1C70;
 extern s32 D_800B1CF0;
-extern u8 D_800B3220;
+extern u8 debug_hud_enabled;
 extern u8 *D_800B3288[];
 extern u8 **D_800B32CC;
 /* T-20940: name table, 16 string pointers up to D_800B3578 (12 girls, then four more). telephone_class_init
@@ -724,7 +724,7 @@ extern u8 D_800B3750[][3];
 extern u8 girl_phone_digits[13][7];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
-extern u8 D_800B3938[];
+extern u8 memory_card_file_prefix[];
 extern s32 D_800B394C[];
 extern s32 D_800B39C4[];
 extern s32 D_800B3A3C[];
@@ -732,25 +732,25 @@ extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
 extern u8 D_800B3C88[];
-extern s8 D_800B3CA0;
-extern u8 D_800B3CA4;
-extern u32 D_800B3CA8[20];
-#ifndef MAIN_API_OVERRIDE_D_800B3CFC
-extern u8 D_800B3CFC;
+extern s8 pad_turbo;
+extern u8 pad_reset_frames;
+extern u32 pad_code_table[20];
+#ifndef MAIN_API_OVERRIDE_pad_code_entered
+extern u8 pad_code_entered;
 #endif
-extern u8 D_800B3D00;
+extern u8 pad_code_timer;
 extern u8 D_800B3D24;
-extern u8 D_800B3D40;
-extern u8 D_800B3D44;
-extern u8 D_800B3D48;
+extern u8 audio_bgm_playing;
+extern u8 audio_bgm_set;
+extern u8 audio_bgm_sequence;
 extern u8 D_800B3D54[];
-extern u8 D_800B3D60;
-extern s32 D_800B3D68;
-extern s32 D_800B3D6C;
+extern u8 cd_read_checked;
+extern s32 cd_sectors_left;
+extern s32 cd_last_read_lba;
 extern s32 cd_audio_request[4]; /* defined in src/main/cd_queue.c (T-9010) */
-extern s32 D_800B3648[16];
-extern u8 D_800B3D80;
-extern u8 D_800B3D84[];
+extern s32 cd_audio_speaker_offset_table[16];
+extern u8 debug_hud_level;
+extern u8 debug_font_uv[];
 extern s8 D_800B3DB0;
 extern u8 text_list[];
 extern u8 text_list_active0[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
@@ -797,28 +797,28 @@ extern u8 girl_points_mask_strong[12];
 extern u8 girl_points_mask_normal[12];
 extern s8 girl_points_param_curve[15];
 extern s8 girl_points_stress_curve[15];
-extern u8 D_800B4390[];
-extern u8 *D_800B58B0;
-extern s32 D_800B58E4;
-extern s32 D_800B58F8;
-extern s32 D_800B58FC;
-extern s32 D_800B5900;
-extern s32 dec_bg_lba_cache[4];
+extern u8 memory_card_icon_palettes[];
+extern u8 *memory_card_icon_images;
+extern s32 memory_card_file_descriptor;
+extern s32 movie_offset_x;
+extern s32 movie_offset_y;
+extern s32 movie_flags;
+extern s32 bg_lba_cache[4];
 #ifndef MAIN_API_OVERRIDE_dec_bg_show
-extern u8 dec_bg_show[];  /* flags; dec_bg_brightness and D_800B5940 are also declared as scalars */
+extern u8 dec_bg_show[];  /* flags; bg_brightness and bg_fade_amount are also declared as scalars */
 #endif
 extern u8 D_800B5939;
-extern u8 dec_bg_brightness;
-extern u8 D_800B5940;
-extern s32 D_800B5944;
+extern u8 bg_brightness;
+extern u8 bg_fade_amount;
+extern s32 bg_wipe_count;
 extern s32 dec_bg_last_screen_mode;
-extern s32 D_800B594C;
+extern s32 bg_decode_result;
 extern u8 D_800B5A68[][3];
 extern s32 D_800B5950[];
 extern s32 D_800B5960[];
 extern s16 settings_room_mascot_holiday_stamp;
 extern s16 settings_room_mascot_stamp;
-extern s16 D_800B5A40[13]; /* T-25119: 13 halfwords func_80061A3C copies into the words at D_801230D4 */
+extern s16 title_photo_offsets[13]; /* T-25119: 13 halfwords title_setup_stage copies into the words at D_801230D4 */
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern s32 D_800B5A98; /* T-17011: counter of portrait_face_update (CD level high-water mark) */
@@ -879,7 +879,7 @@ extern u8 holiday_sd_set_other[8];
 extern s32 holiday_sd_set_sectors[];
 /* T-17000: message table of holiday_magazine_show, indexed by holiday_magazine_hint_index() and passed to sndisp. */
 extern u8 *holiday_magazine_hints[];
-extern u8 D_800B6D30;
+extern u8 ovl_load_screen_mode;
 extern u8 ovl_load_state;
 extern u8 ovl_load_sectors;
 extern s32 ovl_load_buf;
@@ -896,13 +896,13 @@ extern u8 D_800C5FD4[];
 extern u8 D_800C6010[];
 extern s16 D_800C6014;
 extern s32 D_800C6020;
-/* T-17000: word tables walked by func_80059EF0 (and hud_icon_bar_init) up to the next symbol: eight words
+/* T-17000: word tables walked by boot_hud_init (and hud_icon_bar_init) up to the next symbol: eight words
  * ending at D_800C6220, 32 words ending at D_800C6340. */
 extern s32 D_800C6200[8];
 extern s32 D_800C62C0[32];
 extern u8 D_800C6220[];
-#ifndef MAIN_API_OVERRIDE_D_800C9730
-extern u8 D_800C9730[];
+#ifndef MAIN_API_OVERRIDE_actor_default_texture_blocks
+extern u8 actor_default_texture_blocks[];
 #endif
 extern s32 D_800C9734;
 extern s32 D_800C9738;
@@ -912,18 +912,18 @@ extern s32 D_800C9750;
 extern s32 D_800C9754;
 extern s32 D_800C9758;
 extern u8 sprite_frame_table[];
-extern u8 D_800C9A14[];
+extern u8 actor_default_sequence_table[];
 extern s16 D_800C9A54;
 extern u8 D_800C9A60[];
 extern u8 D_800C9D60[];
-extern u16 D_800C9F60[];
-extern u16 D_800C9FF8[];
-extern u16 D_800CA048[];
-extern u16 D_800CA108[];
-extern s32 D_800CA120;
-extern s32 D_800CA124;
-extern s32 D_800CA128;
-extern s32 D_800CA130;
+extern u16 sd_table_weekday[];
+extern u16 sd_table_holiday[];
+extern u16 sd_table_club[];
+extern u16 sd_table_else[];
+extern s32 face_images;
+extern s32 face_frame_tables;
+extern s32 face_sequences;
+extern s32 face_palette;
 extern u8 *talk_tables;
 extern u8 *D_800CA138;
 extern s32 D_800CA13C;
@@ -945,9 +945,9 @@ extern u8 name_code_given[];
 extern u8 name_code_player_form[];
 extern u8 name_code_girl_short[];
 extern u8 girl_name_buf[];
-extern u8 D_800CA19C[];
-extern u8 D_800CA1DC[];
-extern u8 D_800CA248[]; /* text buffer (SHOUGATU func_801359FC, T-17500) */
+extern u8 scene_place_title[];
+extern u8 scene_place_title_2[];
+extern u8 name_code_o[]; /* text buffer (SHOUGATU func_801359FC, T-17500) */
 /* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
  * with one chain assignment, which gives the original's shared register only for array elements. */
 extern s16 D_800CA21C[4];
@@ -956,18 +956,18 @@ extern s16 D_800CA224[4];
 extern s16 D_800CA22C[4];
 extern s16 D_800CA234[4];
 extern s16 D_800CA236;
-extern u8 D_800CA23C[];
-extern u8 D_800CA250[];
-extern u8 D_800CA25C[];
-extern u8 D_800CA280[];
-extern u8 D_800CA2A4[4]; /* [1], [2] are the former D_800CA2A5/6 */
+extern u8 name_code_s[];
+extern u8 name_code_w[];
+extern u8 name_code_a[];
+extern u8 name_code_m[];
+extern u8 talk_choice_order[4]; /* [1], [2] are the former D_800CA2A5/6 */
 extern u8 D_800CA2A5;
 extern u8 D_800CA2A6;
-extern u8 D_800CA2A8;
-extern s16 D_800CA2AC;
-extern u8 D_800CA2B0[];
-extern s16 D_800CA2C0;
-extern u8 D_800CA2C4;
+extern u8 talk_voice_waiting;
+extern s16 talk_voice_wait_frames;
+extern u8 select_girl_menu_enabled[];
+extern s16 talk_next_row_y;
+extern u8 talk_voice_cancelled;
 extern s32 D_800CA2C8;
 extern u8 D_800CA2CC;
 extern s32 D_800CA2D0;
@@ -978,17 +978,17 @@ extern s16 D_800CA2E0;
 extern s16 D_800CA2E4;
 extern s16 D_800CA2E8;
 extern u8 D_800CA2EC;
-extern s8 D_800CA2F0;
+extern s8 scene_trip_day_state;
 extern u8 D_800CA2F4;
 extern u8 D_800CA2F8;
 extern u8 D_800CA2FC;
-extern s16 D_800CA300[12];
-extern s16 D_800CA318[12];
-extern s16 D_800CA348[12];
-extern u8 D_800CA360;
+extern s16 select_girl_menu_x[12];
+extern s16 select_girl_menu_y[12];
+extern s16 select_girl_menu_height[12];
+extern u8 scene_mouth_frames_reversed_saved;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
-extern TalkSelectors D_800CA36C;
+extern TalkSelectors talk_voice_speaker_by_girl;
 extern u8 *D_800D9234;
 extern u8 *D_800D9238;
 extern s32 D_800D923C;
@@ -1009,17 +1009,17 @@ extern u8 D_800D9328[];
 extern u8 D_800D9334[];
 extern u8 D_800D9388[];
 extern s32 D_800DE500[];
-extern s8 *D_800E36C0[];
-extern s32 D_800E36C8[];
-extern s32 D_800E36D0[];
-extern s32 D_800E36D8;
-extern s32 D_800E36DC;
-extern s32 D_800E36E0;
-extern s32 D_800E36E4;
-extern u16 D_800E36E8;
-extern u16 D_800E36EA;
-extern s32 D_800E36F0;
-extern s32 D_800E36F4;
+extern s8 *mouse_pad_buffers[];
+extern s32 mouse_position_x[];
+extern s32 mouse_position_y[];
+extern s32 mouse_x_min;
+extern s32 mouse_x_max;
+extern s32 mouse_y_min;
+extern s32 mouse_y_max;
+extern u16 mouse_sense_x;
+extern u16 mouse_sense_y;
+extern s32 vsync_timer_start;
+extern s32 vsync_timer_elapsed;
 extern GameState game_state;
 extern u8 D_800E71DF; /* selected girl, GameState.current_girl: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820, T-24099, T-25501) */
 extern s32 D_800E7384; /* frame counter, GameState.mode_step_timer.w: kept as a separate symbol by keep lines with a proof (config/migrate_globals.txt, T-20820) */
@@ -1052,7 +1052,7 @@ extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
 /* T-17000: bit-field view of the flag byte D_800E7D4F. `lui rA; lbu rB,%lo(D_800E7D4F)(rA); ori; sb` with
- * rB != rA is a bit-field store (T-7010); func_8007959C sets b0 so. BUNKASAI and BUNKAKEN read the same
+ * rB != rA is a bit-field store (T-7010); game_mode_tt_game_mode_handler sets b0 so. BUNKASAI and BUNKAKEN read the same
  * view (their BunkaReturnFlags, BunkasaiModeFlags and BunkakenModeFlags, folded in by T-20900). */
 typedef struct ExtraModeFlags {
     u8 b0 : 1;
@@ -1067,13 +1067,13 @@ extern u8 D_800E7D68;
 extern s8 D_800E8BEE;
 #endif
 extern u8 D_800E8BEF;
-extern u8 D_800E8BF0[];
-extern u8 D_800E8C30[];
-extern s32 D_800E8C70;
+extern u8 pad_buffer_1[];
+extern u8 pad_buffer_2[];
+extern s32 draw_ot_table;
 extern u8 *D_800E8C74;
 extern s32 D_800E8C84;
 extern u8 *D_800E8C88;
-extern u8 D_800E8CA0[];
+extern u8 draw_ot_tags[];
 extern u8 D_800E90A0[];
 extern u8 D_800E9620[];
 extern u8 D_800E96AB;
@@ -1208,15 +1208,15 @@ extern s32 D_800F6680;
 extern u8 D_800F7710[];
 extern s32 draw_buffer;
 extern s8 D_8011ECA4;
-extern s32 D_8011ECA8;
-extern s32 D_8011ECAC;
-extern s32 D_8011ECB0;
-extern s32 D_8011ECB4;
-extern s32 D_8011ECB8;
-extern s32 D_8011ECBC;
-extern s32 D_8011ECC0;
-extern s32 D_8011ECC4;
-extern s32 D_8011ECC8;
+extern s32 timer_event;
+extern s32 memory_card_software_event_done;
+extern s32 memory_card_software_event_error;
+extern s32 memory_card_software_event_timeout;
+extern s32 memory_card_software_event_new_card;
+extern s32 memory_card_hardware_event_done;
+extern s32 memory_card_hardware_event_error;
+extern s32 memory_card_hardware_event_timeout;
+extern s32 memory_card_hardware_event_new_card;
 #ifndef MAIN_API_OVERRIDE_actor_pool
 extern u8 actor_pool[]; /* 0x44-byte records; DATE uses entries 96..99 (T-10730). */
 #endif
@@ -1658,8 +1658,8 @@ extern s8 D_8012168B;
 extern u8 D_8012170F;
 extern s16 D_80121726;
 extern s16 D_80121728;
-extern u8 D_80121750[];
-extern u8 D_801217A0[];
+extern u8 layer_records[];
+extern u8 layer_tileset_records[];
 extern SpriteQuad sprite_quads[]; /* at least 12 records */
 extern s16 D_801217D6;
 extern u8 D_801217E4;
@@ -1719,7 +1719,7 @@ extern u8 D_80122105;
 extern u8 D_80122106;
 /* T-25010 (moved from include/ovl/OPTION.h): the cell maps, cells and cell indexes of the two BG slots,
  * BgLayer (game.h, GsBG layout) at bg_layers + n * 0x24, whose +0x14 points at map n. Main
- * func_8004A1A0 sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
+ * prim_bg_slot_setup sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
 typedef struct BgCell {
     /* 0x00 */ u8 u;
     /* 0x01 */ u8 v;
@@ -1743,24 +1743,24 @@ typedef struct BgMapIndex {
     /* 0x00 */ u16 v[64];
 } BgMapIndex; /* size 0x80 */
 
-extern BgMap D_80122120[2];
-extern BgCell D_80122140[2][64];
-extern BgMapIndex D_80122540[2];
+extern BgMap layer_bg_maps[2];
+extern BgCell layer_bg_cells[2][64];
+extern BgMapIndex layer_bg_cell_indices[2];
 extern s16 D_80122790;
 extern s32 D_80122794;
 extern s8 D_80122798;
 extern s8 D_80122799;
 extern s8 D_8012279A;
-/* 0x50-byte records at D_801227A0 (16 entries; D_80122CA0 is the end address the loops compare against) */
-typedef struct TaiikuBig {
-    /* 0x00 */ s32 unk0;
+/* 0x50-byte records at view_coordinates (16 entries; D_80122CA0 is the end address the loops compare against) */
+typedef struct GraphicsCoordinate2 {
+    /* 0x00 */ s32 flag;
     /* 0x04 */ u8 unk4[0x1C];
-    /* 0x20 */ s32 unk20;
+    /* 0x20 */ s32 translate_z;
     /* 0x24 */ u8 unk24[0x2C];
-} TaiikuBig; /* size 0x50 */
-extern TaiikuBig D_801227A0[];
-extern TaiikuBig D_80122CA0[];
-extern u32 D_80122640[];
+} GraphicsCoordinate2; /* size 0x50 */
+extern GraphicsCoordinate2 view_coordinates[];
+extern GraphicsCoordinate2 D_80122CA0[];
+extern u32 model_objects[];
 extern s32 D_80122740;
 extern s32 D_80122744;
 extern s32 D_80122748;
@@ -1773,8 +1773,8 @@ extern s32 D_80122754;
 #endif
 extern s32 D_80122758;
 extern s32 D_8012275C;
-#ifndef MAIN_API_OVERRIDE_D_80122760
-extern s32 D_80122760;
+#ifndef MAIN_API_OVERRIDE_view_light_0
+extern s32 view_light_0;
 #endif
 #ifndef MAIN_API_OVERRIDE_D_80122764
 extern s32 D_80122764;
@@ -1783,7 +1783,7 @@ extern s32 D_80122768;
 extern u8 D_8012276C;
 extern u8 D_8012276D;
 extern u8 D_8012276E;
-extern s32 D_80122770;
+extern s32 view_light_1;
 #ifndef MAIN_API_OVERRIDE_D_80122774
 extern s32 D_80122774;
 #endif
@@ -1791,7 +1791,7 @@ extern s32 D_80122778;
 extern u8 D_8012277C;
 extern u8 D_8012277D;
 extern u8 D_8012277E;
-extern s32 D_80122780;
+extern s32 view_light_2;
 extern s32 D_80122784;
 extern s32 D_80122788;
 extern u8 D_8012278C;
@@ -1833,7 +1833,7 @@ extern u8 D_80122DD0[];
 extern s32 D_80122E90;
 extern s32 D_80122E94;
 extern u32 D_80122E9C;
-extern s32 D_80122EA0;
+extern s32 audio_bank_wait_done;
 extern s32 D_80122EA4;
 extern s32 D_80122EAC;
 #ifndef MAIN_API_OVERRIDE_D_80122EB8
@@ -1853,10 +1853,10 @@ extern s32 D_801230F4;
 extern u32 ovl_entry;
 /* One bank of the memory-card save image: D_80123320[2] follows the 0x200-byte header at memory_card_block; header
  * and banks together are one 0x2000-byte card block. T-17007 */
-typedef struct SaveBank {
-    /* 0x000 */ s32 checksum;      /* byte sum of data (func_80055A38) */
+typedef struct MemoryCardBank {
+    /* 0x000 */ s32 checksum;      /* byte sum of data (memory_card_bank_validate) */
     /* 0x004 */ u8 data[0xEFC];
-} SaveBank; /* size 0xF00 */
+} MemoryCardBank; /* size 0xF00 */
 extern u8 memory_card_block[];
 extern u8 D_80123122;
 extern u8 D_80123123;
@@ -1864,32 +1864,32 @@ extern u8 D_80123124[];
 extern u8 D_80123164[];
 extern u8 D_80123180[];
 extern u8 D_801231A0[];
-extern SaveBank D_80123320[2];
-extern s32 D_80125120;
-extern s32 D_80125124;
-extern u8 D_80125128;
-extern u8 D_80125129;
+extern MemoryCardBank D_80123320[2];
+extern s32 boot_global_pointer;
+extern s32 boot_previous_stack_pointer;
+extern u8 cd_queue_head;
+extern u8 cd_queue_tail;
 extern u8 cd_read_status;
-extern s8 D_8012512B;
-/* 0x18-byte entry of the 48-entry ring at cd_command_ring (read index D_80125128, write index
- * D_80125129; filled by cd_command_push). data[15] is cleared on every write and set to 0xFF when
+extern s8 cd_queue_phase;
+/* 0x18-byte entry of the 48-entry ring at cd_command_ring (read index cd_queue_head, write index
+ * cd_queue_tail; filled by cd_command_push). data[15] is cleared on every write and set to 0xFF when
  * the caller passes 1 instead of a data pointer. */
 typedef struct CdCommand {
-    /* 0x00 */ u8 cmd;
-    /* 0x04 */ s32 arg;
-    /* 0x08 */ u8 data[16];
+    /* 0x00 */ u8 command;
+    /* 0x04 */ s32 lba;
+    /* 0x08 */ u8 param[16];
 } CdCommand; /* size 0x18 */
 extern CdCommand cd_command_ring[];
-extern s32 D_801255B0;
-extern u8 D_801255B4;
-extern u8 D_801255B5;
-extern u8 D_801255B8;
-extern u8 D_801255C0[];
-extern u8 D_801255C8[];
-extern s32 D_801255D8;
-extern u8 D_801255DC;
-extern s16 D_801255E0;
-extern s16 D_801255E2;
+extern s32 cd_audio_position;
+extern u8 cd_state;
+extern u8 cd_read_count;
+extern u8 cd_mode_scratch;
+extern u8 cd_read_sync_result[];
+extern u8 cd_sync_result[];
+extern s32 cd_load_destination_base;
+extern u8 draw_shake_counter;
+extern s16 draw_shake_x;
+extern s16 draw_shake_y;
 extern u32 text_glyph_upload_ring[];
 extern s16 menu_vram_view_x;
 extern s16 menu_vram_view_y;
@@ -1897,9 +1897,9 @@ extern s32 speaker_voice_source_a;
 extern s32 speaker_voice_source_b;
 extern s32 speaker_voice_index;
 extern s32 speaker_voice_state;
-extern s32 D_80125C04;
-extern s32 D_80125C08;
-extern s32 D_80125C0C;
+extern s32 bg_still_bitstream;
+extern s32 bg_still_variable_length_code_buffer;
+extern s32 bg_still_out_buffer;
 extern u8 D_80125C10[];
 extern s16 D_80125C50;
 extern s16 D_80125C52;
@@ -1920,7 +1920,7 @@ typedef struct StHEADER {
 } StHEADER; /* size 0x1C */
 
 /* PsyQ movie sample DECENV (strSetDefDecEnv, strCallback, strNext, strSync), T-9930, T-17014. */
-typedef struct StrDecEnv {
+typedef struct MovieDecodeEnvironment {
     /* 0x00 */ u8 *vlcbuf[2];
     /* 0x08 */ s32 vlcid;
     /* 0x0C */ u8 *imgbuf;
@@ -1928,24 +1928,24 @@ typedef struct StrDecEnv {
     /* 0x20 */ s32 rectid;
     /* 0x24 */ RECT slice;
     /* 0x2C */ s32 isdone;
-} StrDecEnv; /* size 0x30 */
+} MovieDecodeEnvironment; /* size 0x30 */
 
-/* Movie (STR) player state at 0x80180000 behind D_80125C58 (strInit, strNext, strCallback,
- * func_80056BA8); the ring buffer behind +0x44 is reached by byte offset. T-17014 */
-typedef struct StrCtx {
-    /* 0x00 */ u8 pos[4];
-    /* 0x04 */ StrDecEnv dec;
-    /* 0x34 */ s32 endflag;
+/* Movie (STR) player state at 0x80180000 behind movie_context (strInit, strNext, strCallback,
+ * movie_play); the ring buffer behind +0x44 is reached by byte offset. T-17014 */
+typedef struct MovieStreamContext {
+    /* 0x00 */ u8 start_position[4];
+    /* 0x04 */ MovieDecodeEnvironment decode_environment;
+    /* 0x34 */ s32 end_flag;
     /* 0x38 */ s32 unk_38;
     /* 0x3C */ s32 width;
     /* 0x40 */ s32 height;
-} StrCtx; /* accessed prefix, size 0x44+ */
-extern StrCtx *D_80125C58;
+} MovieStreamContext; /* accessed prefix, size 0x44+ */
+extern MovieStreamContext *movie_context;
 extern s32 D_80125C5C;
-extern s32 D_800B58F0; /* frame number of the last movie frame (strNext) */
-extern u32 D_800B58F4; /* end frame of the movie, set by func_80056BA8 (strNext) */
-extern u8 D_800B5904[22]; /* movie subtitle frame table (func_8005715C) */
-extern u8 D_80125C60[];
+extern s32 movie_last_frame; /* frame number of the last movie frame (strNext) */
+extern u32 movie_end_frame; /* end frame of the movie, set by movie_play (strNext) */
+extern u8 movie_caption_marks[22]; /* movie subtitle frame table (movie_captions_update) */
+extern u8 view_base_matrix[];
 extern s16 D_80125C80[]; /* four s16 slots, written at index (tick & 3) (ENDING func_80137730) */
 extern u8 D_80125C90[];
 extern s16 D_80125CA0;
@@ -1978,30 +1978,30 @@ extern u16 D_80125D50;
 extern u16 D_80125D52;
 extern u8 D_80125D5E;
 extern u8 D_80125D5F;
-extern s32 D_80125D60[];
+extern s32 audio_bank_header_address[];
 extern s32 D_80125D64;
 extern s32 D_80125D68;
 extern s32 D_80125D6C;
-extern s32 D_80125D70[];
-extern s32 D_80125D80[];
+extern s32 audio_bank_body_address[];
+extern s32 audio_bank_sound_ram_address[];
 extern s32 D_80125D84;
 extern s32 D_80125D88;
 extern s32 D_80125D8C;
-extern s32 D_80125D90;
+extern s32 audio_bank_body_size;
 extern s32 D_80125D94;
 extern s32 D_80125D98;
 extern s32 D_80125D9C;
-/* T-17000: per-channel tables of func_8007BBE8 and func_8007AF0C, indexed by channel << 6 and
+/* T-17000: per-channel tables of audio_sequence_pack_index and audio_bgm_start, indexed by channel << 6 and
  * channel << 5: 0x40-byte rows of words and 0x20-byte rows of halfwords (two rows each would end at
- * D_80125E20 and D_80125E60). */
-extern s32 D_80125DA0[][16];
-extern s16 D_80125E20[][16];
-extern u16 D_80125E60;
+ * audio_sequence_reverb_depth and audio_cd_level). */
+extern s32 audio_sequence_address[][16];
+extern s16 audio_sequence_reverb_depth[][16];
+extern u16 audio_cd_level;
 extern u16 D_80125E62;
 extern s16 D_80125E64;
 extern s16 D_80125E66;
 extern s16 D_80125E68;
-extern u8 D_80125E70[];
+extern u8 audio_sequence_table[];
 extern s16 D_80126080[]; /* two 0x200-entry s16 tables (+0, +0x400), SD_CalcCDAve */
 extern s32 D_8012749C;
 extern s32 D_801274A0;
@@ -2014,7 +2014,7 @@ extern s32 holiday_activity_bg_sectors[];
 extern s8 D_80120E49;
 extern u16 D_800B670A[];
 extern u8 D_80089C84;
-extern u8 D_800CA2BC;
+extern u8 talk_text_scroll_pending;
 extern s16 D_800EB042;
 extern s16 D_800EB044;
 extern u8 D_80123324[];
@@ -2022,8 +2022,8 @@ extern u8 D_800B0E72;
 extern u32 settings_room_radio_clips[16];
 extern u32 settings_room_radio_clips_holiday[16];
 extern u32 D_800B0C4C;
-extern u8 D_800E94A0[];
-extern u8 D_800FD4A0[];
+extern u8 draw_work_buffers[];
+extern u8 prim_arena_buffers[];
 extern s16 D_800B0962;
 extern u8 D_800E7D4E;
 extern s32 D_80122E98;
@@ -2041,10 +2041,10 @@ extern s32 D_801230D4;
 extern s32 D_801230D8;
 extern s16 D_800F54B6;
 extern u8 D_800D9320[];
-extern TaiikuBig D_80122840[];
-extern TaiikuBig D_80122B10[];
+extern GraphicsCoordinate2 D_80122840[];
+extern GraphicsCoordinate2 D_80122B10[];
 extern u8 D_80122660[];
-extern s16 D_800CA330[];
+extern s16 select_girl_menu_width[];
 extern u32 menu_bar_style[16];
 extern s16 D_801217D4;
 extern u8 D_800EC1C8;
@@ -2060,7 +2060,7 @@ extern s16 D_800F1990[14];
 extern u8 D_80120694[];
 #endif
 extern s32 D_80122CD8;
-extern u8 D_800B3CF8;
+extern u8 pad_code_index;
 
 /* T-10860: declaration generated by sync_protos.py. */
 #ifndef MAIN_API_STRNCAT_T10860
@@ -2081,47 +2081,47 @@ void func_8003580C();
 void func_80036884();
 void func_80037A90();
 void func_8003C2C0();
-void func_800410AC(void);
-void func_8004111C(void);
-void func_80041168(s32 arg0);
+void gpu_environment_reset(void);
+void vram_clear_framebuffers(void);
+void vram_clear_blocks(s32 arg0);
 void game_state_init(s32 arg0);
 void sprite_tables_clear(void);
 void sprite_quads_clear(s32 arg0, s32 arg1);
 void bg_layers_clear(s32 arg0, s32 arg1);
-void func_80041878(void);
-void func_800418B0(void);
-void func_800419FC(void);
-void func_80041C2C(void);
-void func_80041F48(void);
-void func_80042058(void);
+void boot_game_data_init(void);
+void boot_calendar_init(void);
+void boot_player_init(void);
+void boot_girls_init(void);
+void boot_event_state_init(void);
+void boot_settings_defaults_set(void);
 void boot_loop();
-void func_800422C8(void);
-void func_80042418(void);
-void func_80042458(void);
-void func_80042488(void);
-void func_800424FC(void);
+void boot_frame_begin(void);
+void sys_init(void);
+void sys_cache_flush(void);
+void timer_event_start(void);
+void timer_event_stop(void);
 s32 mode_stage_next(void);
 s32 mode_step_next(void);
 void game_mode_set();
 s32 mode_stage_set(s32 arg0);
 s32 mode_step_set(s32 arg0);
 s32 game_mode_request_overlay(void);
-void func_80042A00(void);
+void pad_update(void);
 void csr_load_vram(s32 arg0);
 void palette_load_vram(s32 arg0);
 void disp_string(void);
-void func_8004A14C(s32 arg0, RECT rect, s32 arg3);
-s32 func_80042AC8();
-void func_80042BD4(void);
-void func_80042C30(void);
-void func_80042C74(void);
-void func_80042CB0();
-s32 func_80043010(void);
-s32 func_800430C0(void);
+void prim_fill_rect(s32 arg0, RECT rect, s32 arg3);
+s32 pad_device_detect();
+void mouse_driver_init(void);
+void pad_driver_init(void);
+void pad_state_clear(void);
+void mouse_to_pad();
+s32 pad_raw_read(void);
+s32 pad_poll(void);
 void func_800433D0(s32 arg0);
-void func_80043448(void);
-s32 func_80046590(s16 arg0, u8 arg1);
-void func_80046754(void *arg0, s32 arg1, s32 arg2);
+void pad_code_update(void);
+s32 cd_decimal_digit(s16 arg0, u8 arg1);
+void cd_iris_texture_build(void *arg0, s32 arg1, s32 arg2);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 entry_index);
 void text_glyph_expand();
@@ -2133,44 +2133,44 @@ void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4);
 #ifndef MAIN_API_OVERRIDE_audio_command
 s32 audio_command(s32 arg0);
 #endif
-s32 func_80044774(s32 arg0);
-u8 func_8004480C(void);
+s32 audio_bgm_stop(s32 arg0);
+u8 audio_bgm_is_playing(void);
 void audio_bank_state_reset(void);
 void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-s32 func_80044C98(void);
+s32 audio_bank_transfer_poll(void);
 s32 audio_bank_load_poll(void);
 s32 audio_bank_start();
-s32 func_800450F4(s32 arg0, s32 arg1);
-s32 func_800451D0();
+s32 audio_bgm_play_short(s32 arg0, s32 arg1);
+s32 cd_load_destination_base_get();
 #ifndef MAIN_API_OVERRIDE_cd_command_reset
 void cd_command_reset(void);
 #endif
 #ifndef MAIN_API_OVERRIDE_cd_audio_command
-void cd_audio_command(s32 arg0, s32 arg1, u8 *arg2);
+void cd_audio_command(s32 cd_operation_id, s32 sector_lba, u8 *command_params);
 #endif
 void func_80045B14(void);
 s32 func_80045FF4(void);
-#ifndef MAIN_API_OVERRIDE_func_80046094
-u8 func_80046094(void);
+#ifndef MAIN_API_OVERRIDE_cd_last_command
+u8 cd_last_command(void);
 #endif
 u8 cd_read_sync_status(void);
 u8 cd_done_count(void);
 u8 cd_audio_state(void);
 s32 cd_audio_ticks(void);
 void cd_audio_request_set(s32, s32, s32);
-void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
+void cd_read_param_pack(u8 sector_count, s32 destination_address, s32 *read_parameter_out);
 #ifndef MAIN_API_OVERRIDE_cd_read_sectors_nowait
 void cd_read_sectors_nowait(u8 arg0, s32 arg1, s32 arg2);
 #endif
 #ifndef MAIN_API_OVERRIDE_cd_read_sectors
 void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2);
 #endif
-s32 file_checksum_ok();
+s32 cd_file_checksum_ok();
 s32 game_mode_reset_to_title(void);
 void func_800469F4();
 void func_80046A7C();
 void func_80046B88();
-void func_80047550(void);
+void draw_shake_start(void);
 void draw_shake_update();
 void tpage_buf_clear_all(void);
 #ifndef MAIN_API_OVERRIDE_search_tpage_multi
@@ -2182,11 +2182,11 @@ void tpage_buf_clear(void);
 void _sys_default_tpage_set(void);
 void load_tpage_buf_lock();
 void actor_draw_enable(s32 arg0);
-void func_80048DD0(s32 arg0);
+void actor_deactivate(s32 arg0);
 void actor_clear_upper(void);
 void actor_clear_range(s32 arg0);
 void actor_clear(s32 arg0);
-u8 func_8004901C(void);
+u8 draw_brightness_get(void);
 s32 GetWorkBase(s32 arg0, s32 arg1);
 void safe_env(s32 arg0);
 void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
@@ -2196,8 +2196,8 @@ void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
 void prim_gradient_rect(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 #endif
 s32 func_80049B20();
-#ifndef MAIN_API_OVERRIDE_func_8004A1A0
-void func_8004A1A0();
+#ifndef MAIN_API_OVERRIDE_prim_bg_slot_setup
+void prim_bg_slot_setup();
 #endif
 void func_8004A2C4();
 void func_8004A4D8();
@@ -2205,22 +2205,22 @@ void func_8004A734(void);
 void func_8004A764();
 void func_8004A7C4();
 void func_8004A7F4();
-void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+void prim_glow_disc(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 #ifndef MAIN_API_OVERRIDE_func_8004A8EC
 void func_8004A8EC();
 #endif
-#ifndef MAIN_API_OVERRIDE_func_8004AC18
-void func_8004AC18(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_prim_flash_gray
+void prim_flash_gray(s32 arg0);
 #endif
 void func_8004ACA8();
-void func_8004ACC8(s32 arg0);
-void func_8004ADE4(void);
+void prim_flash_color_wide(s32 arg0);
+void debug_font_load(void);
 void draw_debug_number(s32 a0, s32 a1, s32 a2);
-void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
+void debug_print_int_color(s32 a0, s32 a1, s32 a2, s32 a3);
 void func_8004AEB0();
-void func_8004B19C(s32 a, s32 b, s32 c);
-void func_8004B338(s32 arg0, s32 arg1, s32 arg2);
-s32 func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void debug_print_hex(s32 a, s32 b, s32 c);
+void debug_print_string(s32 arg0, s32 arg1, s32 arg2);
+s32 debug_print_string_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag);
 void func_8004BB54();
 s32 func_8004BC20(s32 arg0);
@@ -2250,7 +2250,7 @@ void func_8004DE1C(void);
 void func_8004DEAC();
 void func_8004DEE4();
 void srn_init(s32, u32 *, s32);
-void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
+void layer_tileset_init(s32 arg0, u32 *arg1, s32 arg2);
 void text_glyph_pages_clear(s32 page_count);
 void text_system_reset(void);
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
@@ -2319,43 +2319,43 @@ u32 get_h_yuukou(s32 girl_id);
 s32 birth_day_check_days(s32 birthday_subject, s32 month, s32 day);
 void func_800530E0();
 s32 girl_player_sports_club_check();
-void func_80053650(s32 arg0, s32 arg1, s32 arg2);
-s32 func_800536AC();
+void bg_still_buffers_set(s32 arg0, s32 arg1, s32 arg2);
+s32 bg_still_decode_to_vram();
 void card_ev_set(void);
 void Sw_Start(void);
 void Hw_Start(void);
 u8 Sw_Test(void);
 void Sw_Clear(void);
 void Hw_Clear(void);
-void func_80053CC0(void);
+void memory_card_step_next(void);
 #ifndef MAIN_API_OVERRIDE_memory_card_start
 void memory_card_start(void);
 #endif
 #ifndef MAIN_API_OVERRIDE_memory_card_stop
 void memory_card_stop(void);
 #endif
-s32 func_80053F04(void);
-s32 func_80054140(void);
-u8 func_80054284(void);
-s32 func_800552DC(s32 arg0);
+s32 memory_card_check_poll(void);
+s32 memory_card_scan_poll(void);
+u8 memory_card_system_read_poll(void);
+s32 memory_card_system_bank_load(s32 arg0);
 void func_80053EFC();
-s32 func_80054388();
-u8 func_8005448C(void);
+s32 memory_card_system_write_poll();
+u8 memory_card_save_read_poll(void);
 void func_80054864();
 void func_8005493C();
 void func_800549E8();
-s32 func_80054AF4(s32 arg0);
+s32 memory_card_file_exists(s32 file_index);
 void *func_80054B60();
-void func_80054C4C(void);
-s32 func_80055A38(s32);
-s32 func_80055AFC(s32 arg0);
-s32 func_80056070(u8 *buf, s32 arg1);
-void func_80056284(void);
+void memory_card_block_clear(void);
+s32 memory_card_bank_validate(s32);
+s32 memory_card_game_bank_load(s32 arg0);
+s32 memory_card_file_name_build(u8 *buf, s32 arg1);
+void memory_card_state_reset(void);
 void set_movie_offset(s16 arg0, s16 arg1);
 void strCallback(void);
 void strKickCD(s32 arg0);
-s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2);
-void func_8005715C(s32 arg0); /* defined after its caller func_80056BA8 */
+s32 movie_play(s32 movie_name_or_zero, s32 requested_end_frame, s32 movie_start_sector);
+void movie_captions_update(s32 arg0); /* defined after its caller movie_play */
 #ifndef MAIN_API_OVERRIDE_set_dec_bri
 void set_dec_bri(u8 arg0);
 #endif
@@ -2365,29 +2365,29 @@ void dec_bg_show_switch(s32 arg0);
 void dec_bg_show_set(s32 arg0, s32 arg1);
 s32 dec_bg_cd_read(s32 arg0, s32 arg1);
 s32 dec_bg_decode_to_vram();
-void func_80057640();
-s32 func_80057710(void);
+void bg_capture_screen();
+s32 bg_wipe_step(void);
 void dec_bg_draw(s32 a);
-void func_80057D28(s32);
-void func_80058398();
+void bg_fade_draw(s32);
+void bg_crossfade_draw();
 void initView(void);
 void initCoordinate();
 void initModelingData_init(s32 *arg0);
-s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2);
-void func_80059048();
-void func_800590CC();
-void func_800591D8(s32 arg0);
-void func_80059308(void);
-void func_80059688(s32 arg0);
+s32 view_link_object(u32 *model_data_address, s32 destination_slot, u32 object_index);
+void view_model_slots_clear();
+void view_display_set_narrow_or_standard();
+void view_display_set_wide_or_standard(s32 arg0);
+void view_frame_buffers_clear(void);
+void view_model_record_init(s32 arg0);
 void SenseMouse(u16 arg0, u16 arg1);
 void SetMouse(s32 arg0, u32 arg1, u32 arg2);
-void func_80059938(s32 port);
-void func_80059B04();
-void func_80059B40(void);
-void func_80059BC0(void);
-void func_80059BE8(void);
-s32 func_80059E00(void);
-void func_80059EF0(void);
+void mouse_update(s32 port);
+void audio_debug_load_error_report();
+void boot_mode_step(void);
+void boot_hud_textures_step(void);
+void boot_hud_textures_load(void);
+s32 boot_data_load_step(void);
+void boot_hud_init(void);
 s32 settings_command_screen_mode_stage_reload(void);
 void settings_command_screen_mode_stage_setup(void);
 void settings_command_screen_setup_reset(void);
@@ -2457,19 +2457,19 @@ s32 pre_xmas_init(void);
 s32 settings_new_year_card_sender_count();
 s32 pre_syogatu_init();
 s32 settings_new_year_scene_mode_stage_dispatch();
-void func_80061710(void);
-void func_80061790(void);
-void func_800618B0();
-void func_80061EFC(void);
-void func_8006211C(void);
-void func_8006218C(void);
-void func_80062210(void);
-void func_800623E4(void);
-void func_80062524(void);
-void func_800625C0(void);
-void func_800626B0(void);
-void func_80062764(void);
-void func_800627DC(void);
+void title_view_init(void);
+void title_lights_init(void);
+void title_coordinates_init();
+void title_intro_backdrop_step(void);
+void title_intro_logo_step(void);
+void title_intro_stage(void);
+void title_menu_setup_step(void);
+void title_menu_cursor_update(void);
+void title_menu_select_step(void);
+void title_menu_highlight(void);
+void title_exit_dispatch_step(void);
+void title_exit_fade_step(void);
+void title_exit_stage(void);
 void portrait_read_start(); /* unprototyped: main callers pass no argument, overlays pass one */
 void portrait_build();
 void portrait_value_clear_if_high(); /* unprototyped: callers pass an argument, the definition ignores it */
@@ -2564,75 +2564,75 @@ void holiday_club_join_exit(void);
 void func_80078950();
 void func_80078970();
 s32 func_800789A0();
-void func_800789E0(void);
-void func_80078A94();
-s32 func_80078C48();
+void ovl_load_reset(void);
+void ovl_load_screen_draw();
+s32 ovl_load_start();
 void ovl_load_poll(void);
 void ovl_load_verify(void);
-void func_80079070();
-s32 func_80079524(void);
-void func_80079800(void);
-void func_80079B10(u16 arg0);
-void func_80079C70(void);
-void func_80079D28(s16 arg0);
-s32 func_80079E00(s32 arg0);
-void func_80079E4C(void);
-void func_80079E9C(void);
-void func_80079F00(void);
-void func_8007A008(void);
-void func_8007A080();
-void func_8007A4DC();
-void func_8007A50C(void);
-void func_8007A5BC();
-void func_8007A6AC();
-void func_8007A868(void);
-void func_8007A924(s32 arg0);
-void func_8007A98C();
-void func_8007AB24(u16 arg0);
-void func_8007ABE0();
-void func_8007AD6C();
-void func_8007ADD8();
-void func_8007AEC0(void);
-void func_8007AF0C(void);
-void func_8007B144();
-void func_8007B2B4();
-void func_8007B358(u16 arg0);
-#ifndef MAIN_API_OVERRIDE_func_8007B3DC
-void func_8007B3DC(u16 arg0);
+void ovl_load_enter();
+s32 game_mode_is_tt_game(void);
+void game_mode_tt_game_save_step(void);
+void audio_command_submit(u16 command_word);
+void audio_bank_transfer_schedule(void);
+void audio_bank_transfer(s16 arg0);
+s32 audio_bgm_bank_ready(s32 arg0);
+void audio_xa_frame_update(void);
+void audio_xa_check_end(void);
+void audio_xa_start_poll(void);
+void audio_pending_update(void);
+void audio_control_dispatch();
+void audio_xa_fade_update();
+void audio_xa_fade_tick(void);
+void audio_xa_fade_finish();
+void audio_command_xa();
+void audio_xa_promote_next(void);
+void audio_xa_play(s32 arg0);
+void audio_xa_control();
+void audio_xa_fade_start(u16 arg0);
+void audio_bgm_update();
+void audio_bgm_fade_finish();
+void audio_command_bgm();
+void audio_bgm_request_start(void);
+void audio_bgm_start(void);
+void audio_bgm_control();
+void audio_bgm_fade_start();
+void audio_command_se_a(u16 audio_se_a_command);
+#ifndef MAIN_API_OVERRIDE_audio_command_se_b
+void audio_command_se_b(u16 audio_se_b_command);
 #endif
-#ifndef MAIN_API_OVERRIDE_func_8007B460
-void func_8007B460(u16 arg0);
+#ifndef MAIN_API_OVERRIDE_audio_command_se_bgm_bank
+void audio_command_se_bgm_bank(u16 audio_se_bgm_command);
 #endif
-#ifndef MAIN_API_OVERRIDE_func_8007B4E4
-void func_8007B4E4(u16 arg0);
+#ifndef MAIN_API_OVERRIDE_audio_command_se_bgm_auxiliary
+void audio_command_se_bgm_auxiliary(u16 audio_se_auxiliary_command);
 #endif
-void func_8007B568(s32 arg0, s32 arg1);
-void func_8007B5CC();
-s32 func_8007B5EC(u16 a);
-void func_8007B640(void);
-u16 func_8007B64C();
-void func_8007B6E0();
-void func_8007B734();
-void func_8007B7E0();
-void func_8007B844(void);
-void func_8007B8F8();
-void func_8007B99C(u16 arg0);
-void func_8007BA54(void);
-void func_8007BAAC(void);
-void func_8007BCFC();
-void func_8007BDE8(void);
-void func_8007BE94(s16 arg0);
-void func_8007BF04(s16 arg0);
-void func_8007BFA8();
-void func_8007BFB8(void);
+void audio_se_play(s32 sound_key, s32 packed_note);
+void audio_se_stop();
+s32 audio_queue_push(u16 a);
+void audio_queue_clear(void);
+u16 audio_queue_pop();
+void audio_xa_forget();
+void audio_xa_reset();
+void audio_voices_kill();
+void audio_init(void);
+void audio_bank_layout_init();
+void audio_bank_body_address_set(u16 arg0);
+void audio_cd_audio_init(void);
+void audio_state_init(void);
+void audio_output_mode_set();
+void audio_shutdown(void);
+void audio_bank_request_transfer(s16 arg0);
+void audio_bank_dispose(s16 arg0);
+void audio_bgm_next_clear();
+void audio_reverb_off_toggle(void);
 void SD_InitCDLevelInfo(void);
 void SD_GetCDLevel();
 void addr_init_else_sd(s32 arg0);
 void addr_init_bustup(void);
-void func_8007C784(void);
-void func_8007C8A4(void);
-s32 func_8007C8D8();
-s32 func_8007D8AC();
+void scene_wait_cd_read(void);
+void scene_bg_wipe_in(void);
+s32 scene_bg_wipe_in_step();
+s32 scene_bg_wipe_out_step();
 #ifndef MAIN_API_OVERRIDE_normal_date_girl_in
 void normal_date_girl_in();
 #endif
@@ -2657,8 +2657,8 @@ void change_dec_bg(void);
 s32 dec_init(void);
 void bg_read_sub2(s32 arg0);
 void check_k_scroll();
-void wait_sub_sub(s16 arg0);
-void func_80081128(void);
+void wait_sub_sub(s16 wait_frames);
+void talk_voice_skip_check(void);
 #ifndef MAIN_API_OVERRIDE_talk_render
 /* K&R arguments are narrowed by the callee; its renderer result is returned. T-20007. */
 s32 talk_render();
@@ -2672,17 +2672,17 @@ s32 normal_date_three_select_main(void);
 void normal_date_two_select(void);
 void normal_date_two_select_init(void);
 s32 normal_date_two_select_main(void);
-void func_80083378(void);
-void func_800833A0(void);
-void func_800833F0(void);
-void func_80083418(void);
+void face_expression_0(void);
+void face_expression_1(void);
+void face_expression_3(void);
+void face_expression_4(void);
 #ifndef MAIN_API_OVERRIDE_portrait_layout_set
 void portrait_layout_set(u8 arg0);
 #endif
-void func_80083338(void);
+void face_expression_mood(void);
 s32 portrait_show_checked(void);
 s32 portrait_wink_update();
-void func_80083A10();
+void scene_frame_update();
 #ifndef MAIN_API_OVERRIDE_read_bustup
 void read_bustup();
 #endif
@@ -2693,24 +2693,22 @@ void talk_names_set(u8 arg0);
 #ifndef MAIN_API_OVERRIDE_select_girl_init
 void select_girl_init(s32 arg0);
 #endif
-s32 select_girl_main(s32 arg0);
+s32 select_girl_main(s32 omit_back);
 #ifndef MAIN_API_OVERRIDE_func_80084C98
 void func_80084C98();
 #endif
-void sprite_brightness(s16 idx, u8 val);
+void sprite_brightness(s16 sprite_index, u8 brightness);
 void check_para_limit(void);
 void text_marker_hide(void);
 s32 scene_still_show(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 scene_anim_show();
-void func_80085234();
-#ifndef MAIN_API_OVERRIDE_func_80085368
-void func_80085368(void);
+void scene_still_layer_set();
+/* T-18000: SHUGAKU compares callback entries with this function address via %hi/%lo loads. */
+#ifndef MAIN_API_OVERRIDE_scene_still_fade_in
+void scene_still_fade_in(void);
 #endif
-/* T-18000: the same address as func_80085368; SHUGAKU compares callback entries with it, and its
- * asm names the address D_80085368 (a %hi/%lo pair, not a jal), so only that name links there. */
-void D_80085368(void);
-#ifndef MAIN_API_OVERRIDE_func_800853FC
-void func_800853FC(void);
+#ifndef MAIN_API_OVERRIDE_scene_still_fade_out
+void scene_still_fade_out(void);
 #endif
 void event_face0(void);
 void event_face1(void);
@@ -2722,7 +2720,7 @@ void normal_date_speak_1line();
 void normal_date_speak(void);
 #endif
 s32 event_log_add();
-void portrait_quad_offsets(u8 a);
+void portrait_quad_offsets(u8 expression_index);
 #ifndef MAIN_API_OVERRIDE_scene_screen_reset
 void scene_screen_reset(s32 arg0, s32 arg1);
 #endif
@@ -2735,9 +2733,9 @@ void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 #endif
 void Default_Disp(void);
-s32 func_8008647C(void);
+s32 select_girl_by_scores(void);
 s32 girl_state_rank(s32 a);
-void func_800867CC(void);
+void audio_bank_wait_latch(void);
 void DecDCTReset(s32 mode);
 void func_800869A4(s32 a);
 void func_800869C8(s32 arg0);
@@ -2876,7 +2874,7 @@ void _bu_init(void);
 s32 _card_auto(s32 arg0);
 s32 _card_status(s32 chan);
 #ifndef MAIN_API_OVERRIDE_bzero
-void *bzero(void *p, s32 n); /* BIOS A(0x28); main func_80055AFC stores the result in a local (T-25310) */
+void *bzero(void *p, s32 n); /* BIOS A(0x28); main memory_card_game_bank_load stores the result in a local (T-25310) */
 #endif
 #ifndef MAIN_API_OVERRIDE_strncpy
 void strncpy(void *dst, void *src, s32 n);
@@ -2928,7 +2926,7 @@ s32 portrait_event_face_mouth_animation_start(void);
 #ifndef MAIN_API_OVERRIDE_girl_scores
 s32 girl_scores();
 #endif
-s32 func_800463E8(void);
+s32 cd_busy_marker_draw(void);
 #ifndef MAIN_API_OVERRIDE_prim_gradient_line
 s32 prim_gradient_line();
 #endif
@@ -2942,13 +2940,13 @@ void func_800651F8();
 void func_80065234();
 void hud_appointment_add(WordView appointment_entry);
 /* SD_GetCDLevel request/output prefix, verified from halfword accesses. T-10870. */
-typedef struct CdLevelWork {
-    /* 0x00 */ u16 unk_00; /* left output */
-    /* 0x02 */ u16 unk_02; /* right output */
-    /* 0x04 */ u16 unk_04; /* output precision: shift by 16 minus this value */
-    /* 0x06 */ u16 unk_06; /* sample count */
-    /* 0x08 */ u16 unk_08; /* method, square and shaping selectors */
-} CdLevelWork; /* accessed size 0x0A */
+typedef struct CdLevelMeter {
+    /* 0x00 */ u16 left; /* left output */
+    /* 0x02 */ u16 right; /* right output */
+    /* 0x04 */ u16 precision_bits; /* output precision: shift by 16 minus this value */
+    /* 0x06 */ u16 sample_count; /* sample count */
+    /* 0x08 */ u16 options; /* method, square and shaping selectors */
+} CdLevelMeter; /* accessed size 0x0A */
 void read_bustup_uniform(void);
 void set_tarao_sprt();
 void set_tarao_bg(s32 arg0);
@@ -2999,7 +2997,7 @@ extern s32 D_800B3D34;
 extern s32 D_800B3D38;
 extern s32 D_800B3D3C;
 extern u8 D_800B3D20;
-extern s32 D_800B3D10[4]; /* four timestamps, draw_frame and func_8004443C (T-25003) */
+extern s32 draw_horizontal_blank_stamps[4]; /* four timestamps, draw_frame and draw_time_bars (T-25003) */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
@@ -3094,7 +3092,7 @@ void settings_mascot_done(void);
 void settings_exit(void);
 
 /* T-14200: canonical declaration of the existing MAIN definition. */
-void func_80041840(void);
+void pad_defaults_set(void);
 
 /* Legacy EVENT renderer call-site views, T-24017. The packet pointers are
  * passed in a0/a1; return values are unused. Keep the unknown legacy names. */

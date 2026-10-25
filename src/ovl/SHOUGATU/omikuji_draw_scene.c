@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80134890(void) {
+void new_year_omikuji_resource_addresses_init(void) {
     D_80143DB0 = 0x801DABE0;
     D_80143DB4 = 0x801DB684;
     D_80143DB8 = 0x801DABE8;
@@ -15,19 +15,19 @@ void func_80134890(void) {
     D_80143DD4 = 0x801C2000;
 }
 
-void func_80134930(void) {
-    u16 idx; /* FAKE: u16 and the second call argument put idx in $a1 as the original does (permuter); real prototype unknown. T-8080 */
-    FnTbl31 tbl;
+void new_year_omikuji_mode_step_dispatch(void) {
+    u16 mode_step_index; /* FAKE: u16 and the second call argument put mode_step_index in $a1 as the original does (permuter); real prototype unknown. T-8080 */
+    FnTbl31 omikuji_scene_callbacks;
 
-    tbl = D_80143DE0;
+    omikuji_scene_callbacks = D_80143DE0;
     if (D_80143B20 != 0) {
-        idx = game_state.mode_step;
-        if ((void (*)())normal_date_girl_in == tbl.f[idx]) {
-            tbl.f[idx] = mode_step_next;
+        mode_step_index = game_state.mode_step;
+        if ((void (*)())normal_date_girl_in == omikuji_scene_callbacks.f[mode_step_index]) {
+            omikuji_scene_callbacks.f[mode_step_index] = mode_step_next;
         }
     }
-    idx = game_state.mode_step;
-    tbl.f[idx](0x40, idx);
+    mode_step_index = game_state.mode_step;
+    omikuji_scene_callbacks.f[mode_step_index](0x40, mode_step_index);
     if (D_80143DDC != 0) {
         _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0x64, 0xD, 0xE0FF, 0xFFFF);
         _sprite_set_box_shade_tarao(-0xA0, -0x14, 0x140, 0x3C, 0xD, 0x6060, 0xE0FF);
@@ -36,8 +36,8 @@ void func_80134930(void) {
 }
 
 /* K&R return shape: failure returns zero; scene advance falls through. T-10030. */
-s32 func_80134A54(void) {
-    func_80134890();
+s32 new_year_omikuji_asset_guard(void) {
+    new_year_omikuji_resource_addresses_init();
     if (((s32 *)D_80143DB4)[0] != 0x801CC000 ||
         ((s32 *)D_80143DB4)[1] != 0x801CE000 ||
         ((s32 *)D_80143DB4)[2] != 0x801D0000 ||
@@ -59,14 +59,14 @@ s32 func_80134A54(void) {
         game_state.mode_step -= 2;
         return 0;
     }
-    if (file_checksum_ok(0x37, 0x801C0000) == 0) {
+    if (cd_file_checksum_ok(0x37, 0x801C0000) == 0) {
         game_state.mode_step -= 2;
         return 0;
     }
     mode_step_next();
 }
 
-void func_80134C34(void) {
+void new_year_omikuji_background_and_log_setup(void) {
     if ((D_80143B20 == 0) && (game_state.event_log[game_state.event_log_count - 1].scene != 5)) {
         if (D_80143B24 != 0) {
             event_log_add(5, 5);
@@ -78,11 +78,11 @@ void func_80134C34(void) {
     mode_step_next();
 }
 
-void func_80134CB4(void) {
+void new_year_omikuji_actors_init(void) {
     s16 i;
 
     D_80143DDC = 0;
-    func_80134890();
+    new_year_omikuji_resource_addresses_init();
     load_palette(D_80143DD0, 0x11, 1, 2, 0);
     for (i = 0; i < 3; i++) {
         actor_clear(i + 0x60);
@@ -129,42 +129,42 @@ void func_80134CB4(void) {
     mode_step_next();
 }
 
-void func_80134F10(void) {
+void new_year_omikuji_audio_command_0201(void) {
     audio_command(0x201);
     mode_step_next();
 }
 
-void func_80134F38(void) {
+void new_year_omikuji_audio_command_0200(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_80134F60(void) {
+void new_year_omikuji_yuina_extra_step(void) {
     if ((game_state.current_girl == GIRL_YUINA) && (D_80143B20 == 0)) {
         mode_step_next();
     }
     mode_step_next();
 }
 
-void func_80134FAC(void) {
-    if ((D_80143DD8 == 3) || (D_80143DD8 == 4)) {
+void new_year_omikuji_dialogue_group_advance(void) {
+    if ((new_year_omikuji_selector == 3) || (new_year_omikuji_selector == 4)) {
         D_80143B00 += 2;
-    } else if (D_80143DD8 != 0) {
+    } else if (new_year_omikuji_selector != 0) {
         D_80143B00 += 1;
     }
     mode_step_next();
 }
 
-void func_80135014(void) {
-    if (D_80143DD8 == 0) {
+void new_year_omikuji_dialogue_group_advance_alt(void) {
+    if (new_year_omikuji_selector == 0) {
         D_80143B00 += 2;
-    } else if ((D_80143DD8 != 3) && (D_80143DD8 != 4)) {
+    } else if ((new_year_omikuji_selector != 3) && (new_year_omikuji_selector != 4)) {
         D_80143B00 += 1;
     }
     mode_step_next();
 }
 
-void func_8013507C(void) {
+void new_year_omikuji_actors_show(void) {
     ((Actor *)actor_pool_96)->draw_flags |= 0x80;
     ((Actor *)actor_pool_96)[1].flags = 1;
     ((Actor *)actor_pool_96)[1].draw_flags |= 0x80;
@@ -174,7 +174,7 @@ void func_8013507C(void) {
     mode_step_next();
 }
 
-s32 func_801350F8(void) {
+s32 new_year_omikuji_scene(void) {
     /* FAKE: T-25132: the timer byte is read through a local pointer, so uopt keeps one register for it instead of
      * a promoted global plus a widened copy (as in DATE func_8013AF1C, T-21520). */
     GameState *g = &game_state;
@@ -280,7 +280,7 @@ s32 func_801350F8(void) {
         if (g->substep < 0x87) {
             return 0;
         }
-        func_801359FC();
+        new_year_omikuji_result_text();
         set_kanji_string(-0x68, 0x30, 0, sp5C, 0);
         game_state.mode_step_timer.w++;
         return 0;
@@ -296,28 +296,28 @@ s32 func_801350F8(void) {
     case 8:
         /* FAKE: T-25132: an empty test of the selector makes ugen load it at the head of the case, so as1
          * schedules its `lui` before the first flag store, as the original does (1 swapped pair without it). */
-        if (D_80143DD8 != 0) {
+        if (new_year_omikuji_selector != 0) {
         }
         ((Actor *)actor_pool)[96].draw_flags |= 0x80;
         ((Actor *)actor_pool)[96].flags = 0x40;
-        ((Actor *)actor_pool)[96].unk_18 = D_80143DD8 + 0xD;
+        ((Actor *)actor_pool)[96].unk_18 = new_year_omikuji_selector + 0xD;
         ((Actor *)actor_pool)[96].x = -0xA0;
         ((Actor *)actor_pool)[96].y = -0x78;
         ((ActorFixed *)actor_pool)[96].dy = 0;
         /* FAKE: T-25132: the (s32) index casts read the widened selector, the one register of the tests (a plain
          * u8 index gives uopt a second register for it). */
-        if (D_80143DD8 == 3 || D_80143DD8 == 4) {
-            sprintf(sp6C, "%sだ・・・", sp38.s[(s32)D_80143DD8]);
+        if (new_year_omikuji_selector == 3 || new_year_omikuji_selector == 4) {
+            sprintf(sp6C, "%sだ・・・", sp38.s[(s32)new_year_omikuji_selector]);
             ((Actor *)actor_pool)[99].draw_flags |= 0x80;
             ((Actor *)actor_pool)[99].flags = 0x40;
             ((Actor *)actor_pool)[99].unk_18 = 7;
-        } else if (D_80143DD8 != 0) {
-            sprintf(sp6C, "おっ、%sだ。", sp38.s[(s32)D_80143DD8]);
+        } else if (new_year_omikuji_selector != 0) {
+            sprintf(sp6C, "おっ、%sだ。", sp38.s[(s32)new_year_omikuji_selector]);
             ((Actor *)actor_pool)[99].unk_18 = 6;
             D_80143DDC = 1;
             ((Actor *)actor_pool)[99].draw_flags &= 0x7F;
         } else {
-            sprintf(sp6C, "ラッキー！%sだ！！", sp38.s[(s32)D_80143DD8]);
+            sprintf(sp6C, "ラッキー！%sだ！！", sp38.s[(s32)new_year_omikuji_selector]);
             ((Actor *)actor_pool)[99].unk_18 = 6;
             D_80143DDC = 1;
             ((Actor *)actor_pool)[99].draw_flags &= 0x7F;
@@ -337,7 +337,7 @@ s32 func_801350F8(void) {
             k_reset(1);
             D_80122CE4 = 0;
             D_80122CF0 = 0;
-            D_800CA2AC = 0;
+            talk_voice_wait_frames = 0;
             D_8011ED5B &= 0xFF7F;
             game_state.mode_step_timer.w++;
             return 1;
@@ -346,7 +346,7 @@ s32 func_801350F8(void) {
             k_reset(1);
             D_80122CE4 = 0;
             D_80122CF0 = 0;
-            D_800CA2AC = 0;
+            talk_voice_wait_frames = 0;
             D_8011ED5B &= 0xFF7F;
             game_state.mode_step_timer.w++;
             return 1;
@@ -360,29 +360,29 @@ s32 func_801350F8(void) {
     }
 }
 
-void func_801359FC(void) {
+void new_year_omikuji_result_text(void) {
     s32 pad; /* FAKE: preserves labels at stack +0x28 (T-3330). T-24084 */
     ShoStr7x5 labels;
 
     labels = D_80143E80;
-    D_80143DD8 = game_state.frame_count & 7;
-    if (D_80143DD8 != 0) {
-        D_80143DD8--;
+    new_year_omikuji_selector = game_state.frame_count & 7;
+    if (new_year_omikuji_selector != 0) {
+        new_year_omikuji_selector--;
     }
-    if (game_state.current_girl == GIRL_AYAKO && D_80143DD8 == 3) {
-        D_80143DD8 = 4;
+    if (game_state.current_girl == GIRL_AYAKO && new_year_omikuji_selector == 3) {
+        new_year_omikuji_selector = 4;
     }
-    strcpy(D_800CA248, labels.s[D_80143DD8]);
-    if (D_80143DD8 == 0) {
+    strcpy(name_code_o, labels.s[new_year_omikuji_selector]);
+    if (new_year_omikuji_selector == 0) {
         game_state.param_stress.value -= 5;
     }
-    if (D_80143DD8 == 4) {
+    if (new_year_omikuji_selector == 4) {
         game_state.param_stress.value += 5;
     }
     check_para_limit();
 }
 
-void func_80135B10(void) {
+void new_year_omikuji_actors_clear(void) {
     actor_clear(0x60);
     actor_clear(0x61);
     actor_clear(0x62);
@@ -391,7 +391,7 @@ void func_80135B10(void) {
     mode_step_next();
 }
 
-void func_80135B54(void) {
+void new_year_omikuji_data_sector_read(void) {
     cd_read_sectors(0x37, 0x801C0000, 0xBD5E);
     mode_step_next();
 }

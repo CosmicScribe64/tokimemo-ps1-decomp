@@ -37,7 +37,7 @@ void shooter_stage1_step_run(void) {
         shooter_sound_bank_wait_state = 1;
     }
     if (shooter_sound_bank_wait_state == 1) {
-        shooter_sound_bank_poll_result = func_80044C98();
+        shooter_sound_bank_poll_result = audio_bank_transfer_poll();
         if (shooter_sound_bank_poll_result == 1) {
             shooter_sound_bank_wait_state = 2;
         }
@@ -47,7 +47,7 @@ void shooter_stage1_step_run(void) {
 void shooter_stage1_step_end(void) {
     if (shooter_load_request == 0) {
         shooter_load_request = 0x18;
-        func_800450F4(1, 0x200);
+        audio_bgm_play_short(1, 0x200);
         mode_stage_set(0xC);
     }
 }

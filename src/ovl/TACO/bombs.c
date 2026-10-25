@@ -215,7 +215,7 @@ void shooter_draw_blast_shot(s32 arg0, s32 arg1) {
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
         /* FAKE: indirect load via (u8 *)&draw_buffer + local y keeps uopt from copy-propagating k in BB_cond1 so k gets $a1 directly (T-24120). */
         k = *(s32 *)((u8 *)&draw_buffer);
-        y = game_state.screen_center_y[k];
+        y = game_state.draw_origin_y[k];
         if (((s16 *)pt)[3] >= y - 0x200
             && y + 0x200 >= ((s16 *)pt)[7]) {
             side = (rec->age >> 2) & 1;
@@ -236,7 +236,7 @@ void shooter_draw_blast_shot(s32 arg0, s32 arg1) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((draw_buffer << 10) + 0x10 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + 0x10 + draw_ot_tags, poly);
         }
     }
 }

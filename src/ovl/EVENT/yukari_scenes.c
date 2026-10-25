@@ -117,9 +117,9 @@ void spot_yukari_scene2_run(void) {
 
 void spot_yukari_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl32 tbl;
+    SpotAyakoYukariAquariumBowlingAndKaraokeStepTable tbl;
 
-    tbl = *(FnTbl32 *)&D_8012277C;
+    tbl = *(SpotAyakoYukariAquariumBowlingAndKaraokeStepTable *)&D_8012277C;
     func_80078950("s%d %d\n", D_800B1AF6, D_800E9E63);
     idx = D_800B1AF6;
     tbl.f[idx](0x80);
@@ -133,7 +133,7 @@ void spot_yukari_scene1_assets_load_10(void) {
 
 void spot_yukari_scene2_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl19 tbl;
+    SpotYukariScene2StepTable tbl;
 
     tbl = spot_yukari_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -332,7 +332,7 @@ void spot_yukari_scene6_bg_load_39(void) {
 
 void spot_yukari_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl38 tbl;
+    SpotYuinaMiraAndYukariSceneStepTable tbl;
 
     tbl = spot_yukari_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
@@ -350,7 +350,7 @@ void spot_yukari_scene3_assets_load_00(void) {
 s32 spot_yukari_scene4_run(void) {
     s32 pad;
     s16 i;
-    EvFnTbl44 tbl;
+    SpotYukariScene4StepTable tbl;
 
     tbl = spot_yukari_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -384,7 +384,7 @@ void spot_yukari_scene4_se_play_11(void) {
 void spot_yukari_scene4_sprites_update(void) {
     ActorFixed *m = (ActorFixed *)D_800E9620;
     u8 *st;
-    EvPairs8 sp68;
+    SpotYukariFallYThresholdPairs sp68;
     s16 i;
 
     sp68 = D_80122990;
@@ -427,7 +427,7 @@ void spot_yukari_scene4_sprites_update(void) {
 
 void spot_yukari_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl40 tbl;
+    SpotMiraYukariNozomiAndSakiSceneStepTable tbl;
 
     tbl = spot_yukari_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
@@ -443,7 +443,7 @@ void spot_yukari_scene5_assets_load_00(void) {
 
 void spot_yukari_scene6_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl56 tbl;
+    SpotYukariAndMiharuSceneStepTable tbl;
 
     tbl = spot_yukari_scene6_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

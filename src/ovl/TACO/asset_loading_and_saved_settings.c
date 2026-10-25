@@ -49,7 +49,7 @@ s32 shooter_load_step_boot(void) {
         shooter_loader_flag = 0;
         cd_read_sectors(0x21, 0x80180000, 0xB4F3);
         cd_read_sectors(1, 0x801FA800, 0xB514);
-        func_80041168(0xFF);
+        vram_clear_blocks(0xFF);
         game_state.substep += 1;
         return;
     case 1:
@@ -77,7 +77,7 @@ void shooter_load_step_sound_banks(void) {
         game_state.substep += 1;
         return;
     case 1:
-        if (func_80044C98() == 1) {
+        if (audio_bank_transfer_poll() == 1) {
             game_state.substep += 1;
             return;
         }
@@ -88,7 +88,7 @@ void shooter_load_step_sound_banks(void) {
         game_state.substep += 1;
         return;
     case 3:
-        if (func_80044C98() == 1) {
+        if (audio_bank_transfer_poll() == 1) {
             game_state.substep += 1;
             return;
         }
@@ -368,9 +368,9 @@ typedef struct ShooterSettingsBlock {
             u8 name1[3];    /* 0x45 */
             u8 name2[3];    /* 0x48 */
             u8 pad4B;
-            s32 unk4C;      /* 0x4C */
-            s32 unk50;      /* 0x50 */
-            s32 unk54;      /* 0x54 */
+            s32 ranking_score_1;      /* 0x4C */
+            s32 ranking_score_2;      /* 0x50 */
+            s32 ranking_score_3;      /* 0x54 */
         } s;
     } set;
 } ShooterSettingsBlock;
@@ -380,9 +380,9 @@ void shooter_load_settings_and_scores(void) {
 
     save = (ShooterSettingsBlock *)&system_data;
     if (save->set.word & 1) {
-        shooter_high_score_1 = save->set.s.unk4C;
-        shooter_high_score_2 = save->set.s.unk50;
-        shooter_high_score_3 = save->set.s.unk54;
+        shooter_high_score_1 = save->set.s.ranking_score_1;
+        shooter_high_score_2 = save->set.s.ranking_score_2;
+        shooter_high_score_3 = save->set.s.ranking_score_3;
         shooter_setting_auto_shot = save->set.w.mode;
         shooter_setting_roll_button = save->set.w.sel;
         shooter_setting_shot_button = save->set.h.hi;
@@ -416,7 +416,7 @@ void shooter_init_coordinate_objects(void) {
 void shooter_hide_all_models(void) {
     s32 i;
 
-    func_80059048();
+    view_model_slots_clear();
     for (i = 0; i < 0x40; i++) {
         D_80127080[i].attribute = 0x80000000;
     }

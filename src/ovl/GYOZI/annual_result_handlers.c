@@ -7,16 +7,16 @@ typedef struct {
 } FnTbl9; /* size 0x24 */
 extern FnTbl9 D_80147330;
 
-void func_80139920(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl9 tbl;
+void annual_result_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before result_callbacks: its stack slot sits above result_callbacks (T-3330) */
+    FnTbl9 result_callbacks;
 
-    tbl = D_80147330;
-    idx = D_800F647A;
-    tbl.f[idx](0x80);
+    result_callbacks = D_80147330;
+    mode_step_index = D_800F647A;
+    result_callbacks.f[mode_step_index](0x80);
 }
 
-void func_80139994(void) {
+void annual_result_display_helpers_run(void) {
     func_80050D60(0, 0);
     func_80081D30(1);
 }
@@ -28,7 +28,7 @@ typedef struct {
     u8 pad1 : 6;
 } GyoziBit1;
 
-void func_801399C0(void) {
+void annual_candidate_rank_dialogue_setup(void) {
     if (D_80147240 != 0) {
         ((GyoziBit1 *)&D_800F53A0.girl[9].unk_10[0])->f = 1;
     }
@@ -49,12 +49,12 @@ void func_801399C0(void) {
     func_8004DE1C();
 }
 
-void func_80139A98(void) {
+void annual_result_audio_command_play_40ed(void) {
     func_8008A0D4(0x40ED);
     func_8004DE1C();
 }
 
-void func_80139AC0(void) {
+void annual_result_dialogue_resource_addresses_init(void) {
     D_801462BC = 0x801B00D0;
     D_801462C0 = 0x801B0274;
     D_801462C4 = 0x801B0374;
@@ -101,22 +101,22 @@ typedef struct {
 } FnTbl12; /* size 0x30 */
 extern FnTbl12 D_801473FC;
 
-void func_80139D34(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl12 tbl;
+void annual_result_followup_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before result_followup_callbacks: its stack slot sits above result_followup_callbacks (T-3330) */
+    FnTbl12 result_followup_callbacks;
 
-    tbl = D_801473FC;
-    idx = D_800F647A;
-    tbl.f[idx](0x80);
+    result_followup_callbacks = D_801473FC;
+    mode_step_index = D_800F647A;
+    result_followup_callbacks.f[mode_step_index](0x80);
 }
 
-void func_80139DA8(void) {
+void annual_shrine_result_scene_resource_command_issue(void) {
     func_80051DD8(3, 0x801B0000, 0xA3FB);
-    func_80137524();
+    annual_result_resource_addresses_init();
     func_8004DE1C();
 }
 
-void func_80139DE0(void) {
+void annual_result_dialogue_default_setup(void) {
     func_80090960(0xD, 0x26);
     D_8014718C = D_80147100;
     D_80147190 = D_80147134;
@@ -130,10 +130,10 @@ void func_80139DE0(void) {
  * default arm's three globals declared volatile in GYOZI.h (FAKE there).
  * FAKE: the switch discriminant goes through the base of D_800F5AAE
  * ((&D_800F5AAE)[0x821] = D_800F62CF) so the byte store stays before the load;
- * same idiom as func_801381DC (as1 keeps the store before a same-base load).
+ * same idiom as annual_result_status_flag_and_route_update (as1 keeps the store before a same-base load).
  * Real source unknown. */
-void func_80139E4C(void) {
-    func_80137524();
+void annual_result_dialogue_addresses_select(void) {
+    annual_result_resource_addresses_init();
     D_800F5AAE &= ~8;
     D_800F5AAE |= 4;
     switch ((&D_800F5AAE)[0x821]) {
@@ -198,7 +198,7 @@ void func_80139E4C(void) {
     func_8004DE1C();
 }
 
-void func_8013A104(void) {
+void annual_result_display_values_apply(void) {
     func_8004DEAC(D_800F5AB1);
     func_8004DEE4(D_800F5AB2);
 }

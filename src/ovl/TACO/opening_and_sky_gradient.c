@@ -76,7 +76,7 @@ void shooter_draw_scrolling_stars(s32 *arg0, s32 arg1, s32 arg2) {
         arg0[i * 2] += arg1;
         arg0[i * 2 + 1] += arg2;
         x = arg0[i * 2];
-        y = arg0[i * 2 + 1] + game_state.screen_center_y[draw_buffer];
+        y = arg0[i * 2 + 1] + game_state.draw_origin_y[draw_buffer];
         if ((x < 0) || (x >= 0x141)) {
             if (arg1 > 0) {
                 arg0[i * 2] = 0;
@@ -110,12 +110,12 @@ void shooter_draw_scrolling_stars(s32 *arg0, s32 arg1, s32 arg2) {
             pkt[i]->b0 = 0xFF;
         }
         if ((rand() % 3) > 0) {
-            AddPrim((draw_buffer << 10) + 0x190 + D_800E8CA0, (s32)pkt[i]);
+            AddPrim((draw_buffer << 10) + 0x190 + draw_ot_tags, (s32)pkt[i]);
         }
     }
     fade = GetWorkBase(0xC, draw_buffer);
     func_8009D294(fade, 0, 0, func_8009ECB0(1, 1, 0, 0), 0);
-    AddPrim((draw_buffer << 10) + D_800E8CA0, fade);
+    AddPrim((draw_buffer << 10) + draw_ot_tags, fade);
     safe_env(0);
 }
 
@@ -229,13 +229,13 @@ void shooter_draw_sky_gradient(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, 
         switch (i) {
         case 0:
             (*p)->x0 = (s16) arg0;
-            (*p)->y0 = (s16) (game_state.screen_center_y[draw_buffer] + arg1);
+            (*p)->y0 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1);
             (*p)->x1 = (arg0 + 0x140);
-            (*p)->y1 = (s16) (game_state.screen_center_y[draw_buffer] + arg1);
+            (*p)->y1 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1);
             (*p)->x2 = (s16) arg0;
-            (*p)->y2 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
+            (*p)->y2 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->x3 = (arg0 + 0x140);
-            (*p)->y3 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
+            (*p)->y3 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->r0 = (u8) r0;
             (*p)->g0 = g0;
             (*p)->b0 = (u8) b0;
@@ -251,13 +251,13 @@ void shooter_draw_sky_gradient(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, 
             break;
         case 1:
             (*p)->x0 = (s16) arg0;
-            (*p)->y0 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y0 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->x1 = (arg0 + 0x140);
-            (*p)->y1 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y1 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->x2 = (s16) arg0;
-            (*p)->y2 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
+            (*p)->y2 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
             (*p)->x3 = (arg0 + 0x140);
-            (*p)->y3 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
+            (*p)->y3 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2) + (arg2 / 3));
             (*p)->r0 = r2;
             (*p)->g0 = g2;
             (*p)->b0 = b2;
@@ -273,13 +273,13 @@ void shooter_draw_sky_gradient(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, 
             break;
         case 2:
             (*p)->x0 = (s16) arg0;
-            (*p)->y0 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
+            (*p)->y0 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->x1 = (arg0 + 0x140);
-            (*p)->y1 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3));
+            (*p)->y1 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3));
             (*p)->x2 = (s16) arg0;
-            (*p)->y2 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y2 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->x3 = (arg0 + 0x140);
-            (*p)->y3 = (s16) (game_state.screen_center_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
+            (*p)->y3 = (s16) (game_state.draw_origin_y[draw_buffer] + arg1 + (arg2 / 3) + (arg2 / 2));
             (*p)->r0 = r2;
             (*p)->g0 = g2;
             (*p)->b0 = b2;
@@ -302,12 +302,12 @@ void shooter_draw_sky_gradient(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, 
     }
     /* FAKE: grouping keeps the saved offset/base initialization before the pointer loop. T-24502 */
     i = arg3 * 4; p = polys; end = polys + 3; do {
-        AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + i, *p);
+        AddPrim(draw_ot_tags + (draw_buffer << 0xA) + i, *p);
         p += 1;
     } while (p != end);
     p = (POLY_G4 **)GetWorkBase(0xC, draw_buffer);
     func_8009D294((s32) p, 0, 0, func_8009ECB0(1, 1, 0, 0), 0);
-    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + i, (s32) p);
+    AddPrim(draw_ot_tags + (draw_buffer << 0xA) + i, (s32) p);
     safe_env(arg3);
 }
 
@@ -339,7 +339,7 @@ s32 shooter_rotate_gradient_quads(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     input.vx = 0;
     input.vy = 0;
     input.vz = 0;
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     angle = (arg1 << 12) / 360;
     matrix.t[0] = 0;
     matrix.t[1] = 0;
@@ -351,7 +351,7 @@ s32 shooter_rotate_gradient_quads(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     input.vx = arg0[2]->x1 - x;
     input.vy = arg0[2]->y1 - y;
     input.vz = 0;
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     matrix.t[1] = 0;
     matrix.t[2] = 0;
     matrix.t[0] = input.vx;
@@ -362,7 +362,7 @@ s32 shooter_rotate_gradient_quads(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     input.vx = arg0[2]->x2 - x;
     input.vy = arg0[2]->y2 - y;
     input.vz = 0;
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     matrix.t[1] = 0;
     matrix.t[2] = 0;
     matrix.t[0] = input.vx;
@@ -373,7 +373,7 @@ s32 shooter_rotate_gradient_quads(POLY_G4 **arg0, s32 arg1, s32 arg2) {
     input.vx = arg0[2]->x3 - x;
     input.vy = arg0[2]->y3 - y;
     input.vz = 0;
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     matrix.t[1] = 0;
     matrix.t[2] = 0;
     matrix.t[0] = input.vx;

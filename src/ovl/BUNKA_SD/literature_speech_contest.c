@@ -3,7 +3,7 @@
 #include "game.h"
 #include "ovl/BUNKA_SD.h"
 
-s32 func_80132000(void) {
+s32 stage_show_audio_sector_load(void) {
     if (game_state.substep == 0) {
         audio_bank_load_start(1, 0xBEFB, 0xBEE2, 0xD258, 0xD208, 0xD200);
         game_state.substep = game_state.substep + 1;
@@ -12,7 +12,7 @@ s32 func_80132000(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 2) {
-        if (func_80044F94(1) == 1) {
+        if (audio_bank_transfer_done(1) == 1) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 3) {
@@ -25,7 +25,7 @@ s32 func_80132000(void) {
     }
 }
 
-void func_80132148(void) {
+void stage_show_script_select(void) {
     switch (D_80122EAC) {
     case 0:
         D_8013B7F0 = D_8013B74C;
@@ -63,7 +63,7 @@ void func_80132148(void) {
     mode_step_next();
 }
 
-void func_801322EC(void) {
+void stage_show_input_update(void) {
     s32 i;
 
     if (game_state.mode_step >= 5U && game_state.mode_step < 15U) {
@@ -71,7 +71,7 @@ void func_801322EC(void) {
             if (cd_audio_state() != 2) {
                 audio_command(0x74);
             }
-            func_80132428();
+            stage_show_mode_step_dispatch();
             for (i = 0; i < 10; i++) {
                 actor_pool[(i * 0x44) + 0x1986] = 0x82;
             }
@@ -85,17 +85,17 @@ void func_801322EC(void) {
         audio_command(0xC4);
         mode_step_set(13);
     }
-    func_80132428();
+    stage_show_mode_step_dispatch();
 }
 
-void func_80132428(void) {
+void stage_show_mode_step_dispatch(void) {
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     switch (game_state.mode_step) {
     case 0:
         audio_command(0xC1);
-        func_80134260();
+        stage_show_scene_state_reset();
         break;
     case 1:
         if ((u32) game_state.mode_step_timer.u >= 0x1FU) {
@@ -103,51 +103,51 @@ void func_80132428(void) {
         }
         break;
     case 2:
-        func_80132000();
+        stage_show_audio_sector_load();
         break;
     case 3:
-        func_80132148();
+        stage_show_script_select();
         break;
     case 4:
-        func_801325E8();
+        stage_show_actor_and_event_state_init();
         audio_command(0xE4);
         break;
     case 5:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         break;
     case 6:
-        func_8013261C();
+        stage_show_frame_wait();
         break;
     case 7:
-        func_80132708();
-        func_80132DFC();
+        stage_show_picture_index_set();
+        stage_show_selector_prompt_wait();
         break;
     case 8:
-        func_80132DB8(0xF);
+        stage_show_timed_step_wait(0xF);
         break;
     case 9:
-        func_80132708();
-        func_80132FF0();
+        stage_show_picture_index_set();
+        stage_show_speaker_label_wait();
         break;
     case 10:
-        func_80132DB8(0x1E);
+        stage_show_timed_step_wait(0x1E);
         break;
     case 11:
-        func_80132708();
-        func_80133204();
+        stage_show_picture_index_set();
+        stage_show_script_line_render();
         break;
     case 12:
-        func_801327E4();
+        stage_show_frame_state_wait();
         break;
     case 13:
         k_reset(1);
         mode_step_next();
         break;
     case 14:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         break;
     case 15:
-        func_80134314();
+        stage_show_scene_finish_wait();
         break;
     default:
         game_mode_reset_to_title();
@@ -157,14 +157,14 @@ void func_80132428(void) {
 }
 
 
-void func_801325E8(void) {
-    func_80132940();
+void stage_show_actor_and_event_state_init(void) {
+    stage_show_actor_scene_init();
     k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
     D_8013B7EC = 0;
     mode_step_next();
 }
 
-void func_8013261C(void) {
+void stage_show_frame_wait(void) {
     /* FAKE: the read through a pointer makes uopt compare constant-first as the original does (its D_801206F0 is
      * probably a member of an aggregate we do not know); real source unknown. T-16930 */
     s16 *state = &D_801206F0;
@@ -191,45 +191,45 @@ void func_8013261C(void) {
     }
 }
 
-s32 func_80132708(void) {
-    u8 v;
-    u32 q;
-    s32 t;
+s32 stage_show_picture_index_set(void) {
+    u8 stage_frame;
+    u32 frame_group;
+    s32 picture_offset;
 
-    v = *(u8 *)&game_state.mode_stage_scratch;
+    stage_frame = *(u8 *)&game_state.mode_stage_scratch;
     D_801206DA = 0x40;
-    q = v / 14;
-    if (q >= 2) {
-        v = 0;
-        q = 0;
+    frame_group = stage_frame / 14;
+    if (frame_group >= 2) {
+        stage_frame = 0;
+        frame_group = 0;
     }
-    t = q * 2;
-    /* FAKE: dead test keeps q * 2 computed once before the switch (T-10310) */
-    if (t < 0) {
+    picture_offset = frame_group * 2;
+    /* FAKE: dead test keeps frame_group * 2 computed once before the switch (T-10310) */
+    if (picture_offset < 0) {
     }
     switch (D_80122EAC) {
     case 0:
-        D_801206F0 = 0x19 - t;
+        D_801206F0 = 0x19 - picture_offset;
         break;
     case 1:
-        D_801206F0 = 0x45 - t;
+        D_801206F0 = 0x45 - picture_offset;
         break;
     case 2:
-        D_801206F0 = 0x71 - t;
+        D_801206F0 = 0x71 - picture_offset;
         break;
     case 3:
-        D_801206F0 = 0x9D - t;
+        D_801206F0 = 0x9D - picture_offset;
         break;
     case 4:
     default:
-        D_801206F0 = 0xBD - t;
+        D_801206F0 = 0xBD - picture_offset;
         break;
     }
-    v = v + 1;
-    game_state.mode_stage_scratch = v;
+    stage_frame = stage_frame + 1;
+    game_state.mode_stage_scratch = stage_frame;
 }
 
-void func_801327E4(void) {
+void stage_show_frame_state_wait(void) {
     if (game_state.mode_step_timer.w == 1) {
         D_8013B80C = 0;
         D_801206DB = 4;
@@ -261,7 +261,7 @@ void func_801327E4(void) {
     }
 }
 
-void func_80132940(void) {
+void stage_show_actor_scene_init(void) {
     u16 frame;
     s32 i;
     Actor *record;
@@ -367,8 +367,8 @@ void func_80132940(void) {
 }
 
 
-void func_80132DB8(u32 arg0) {
-    func_80132708();
+void stage_show_timed_step_wait(u32 arg0) {
+    stage_show_picture_index_set();
     if (arg0 < (u32)game_state.mode_step_timer.u) {
         mode_step_next();
     }
@@ -496,7 +496,7 @@ INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/literature_speech_contest.rodata"
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/literature_speech_contest.rodata", D_80139EF4);
 
-void func_80132DFC(void) {
+void stage_show_selector_prompt_wait(void) {
     if (game_state.mode_step_timer.w == 1) {
         set_kanji_string(-0x78, 0x30, 0, (s32) "題目", 0);
         switch (D_80122EAC) {
@@ -536,7 +536,7 @@ void func_80132DFC(void) {
     k_disp_inc();
 }
 
-void func_80132FF0(void) {
+void stage_show_speaker_label_wait(void) {
     /* FAKE: 24-byte capacity reproduces observed stack homes; original capacity unknown. T-12090 */
     u8 sp38[24];
     s32 sp34;
@@ -581,7 +581,7 @@ void func_80132FF0(void) {
 }
 
 
-void func_80133204(void) {
+void stage_show_script_line_render(void) {
     s32 index;
     u8 command;
     s32 *voice;

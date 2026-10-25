@@ -86,7 +86,7 @@ void encounter_walk_home_followup_init(void) {
     u32 girl_club;
 
     club_names = encounter_club_names;
-    strcpy(&D_800CA280, club_names.by_club[game_state.player_flags.h >> 12]);
+    strcpy(&name_code_m, club_names.by_club[game_state.player_flags.h >> 12]);
     game_state.girls[game_state.current_girl].flags.f.b0 = 1;
     if (encounter_walk_home_topic == 10) {
         game_state.girls[game_state.current_girl].flags.f.b6 = 1;

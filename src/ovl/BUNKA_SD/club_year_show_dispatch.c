@@ -3,7 +3,7 @@
 #include "ovl/BUNKA_SD.h"
 
 /* Implicit int (K&R), no return value: the switch copy in $v0 stays live as the result. */
-s32 func_80137890(void) {
+s32 stage_show_club_year_show_mode_stage_dispatch(void) {
     switch (*(u8 *)&game_state.mode_stage) { /* FAKE: T-22003, scalar view keeps the selector in $v1 with the $v0 switch copy */
     case 0x0:
         hud_screen_frame_draw(2);
@@ -62,31 +62,31 @@ s32 func_80137890(void) {
         mode_step_set((u8)D_80122EB4);
         break;
     case 0xF0:
-        func_801362EC();
+        stage_show_science_first_show_input_update();
         break;
     case 0xF1:
-        func_801351DC();
+        stage_show_science_second_show_input_update();
         break;
     case 0xF2:
-        func_80135A2C();
+        stage_show_science_final_show_input_update();
         break;
     case 0xF3:
-        func_801345BC();
+        stage_show_computer_show_input_update();
         break;
     case 0xF4:
-        func_80138ADC();
+        stage_show_brass_band_input_update();
         break;
     case 0xF5:
-        func_801322EC();
+        stage_show_input_update();
         break;
     case 0xF6:
-        func_801336AC();
+        stage_show_scene_a_input_update();
         break;
     case 0xF7:
-        func_80137CAC();
+        stage_show_scene_c_input_update();
         break;
     case 0xF8:
-        func_80136B3C();
+        stage_show_scene_b_input_update();
         break;
     }
 }

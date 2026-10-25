@@ -2,7 +2,7 @@
 // tools/split_objects.py, do not edit. splat names a symbol only when something in the same
 // subsegment points at it; strings reached through .data pointer tables lost their labels when
 // the rodata was cut into per-object islands, so they are listed here.
-D_8015D774 = 0x8015D774;
+culture_backstage_title = 0x8015D774;
 D_80160380 = 0x80160380;
 D_80160388 = 0x80160388;
 D_80160390 = 0x80160390;

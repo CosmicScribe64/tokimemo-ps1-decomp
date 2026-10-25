@@ -8,27 +8,27 @@
 /* SHOUGATU data. */
 extern u8 D_80146160;
 extern u8 D_80146164;
-void func_80143228(void); /* T-24004: called by dispatcher before definition */
-void func_8013EE30(void);
+void new_year_scene_audio_command_0504(void); /* T-24004: called by dispatcher before definition */
+void christmas_girl_dialogue_resource_select(void);
 
-void func_801391F4();
-void func_8013AF30();
+void new_year_mira_scene_mode_step_dispatch();
+void new_year_yumi_scene_mode_step_dispatch();
 extern s16 D_80145F2C;
-#ifndef SHOUGATU_OVERRIDE_func_80137AB4
-void func_80137AB4(void);
+#ifndef SHOUGATU_OVERRIDE_new_year_meeting_talk_run
+void new_year_meeting_talk_run(void);
 #endif
 extern s32 D_80143FE8;
 extern s32 D_80143FEC;
 extern s32 D_80143FF0;
-void func_80136884(void);
+void new_year_scene_selector_text_copy(void);
 extern u8 D_80143B20;
-s32 func_801323D4(void);
+s32 new_year_talk_run_current(void);
 extern u8 D_80143B18;
 extern u8 D_80145A10;
-void func_8013B528(void);
-void func_80135E04(void);
-void func_80135B90(void);
-void func_801359FC(void);
+void new_year_girl_dialogue_run(void);
+void new_year_scene_dialogue_command_voice_addresses_init(void);
+void new_year_scene_dialogue_addresses_init(void);
+void new_year_omikuji_result_text(void);
 extern u8 D_80143FF4;
 extern s16 D_80144E08;
 extern s16 D_80144E0C;
@@ -84,57 +84,57 @@ extern s32 D_80144DEC;
 extern s32 D_80144DF0;
 extern s32 D_80144DF4;
 extern s32 D_80144DF8;
-void func_80136D18();
-void func_801390C0();
-void func_8013DD90();
-void func_80140780();
-void func_80141780();
-void func_80141850();
-void func_80141920();
-void func_80132000();
-void func_801397D0();
+void new_year_scene_girl_dialogue_tables_select();
+void new_year_mira_scene_resource_addresses_init();
+void christmas_party_resource_addresses_init();
+void christmas_dialogue_resource_addresses_init();
+void new_year_scene_particle_addresses_init();
+void new_year_scene_particle_resource_addresses_init_alt();
+void new_year_scene_particle_resource_addresses_init_third();
+void new_year_resource_addresses_init();
+void new_year_scene_asset_addresses_init();
 extern u8 D_80144E14;
-void func_8013A1CC();
-void func_8013A27C();
-void func_8013A53C();
-void func_8013A600();
-void func_8013B210();
-void func_8013C070();
+void new_year_yukari_scene_primary_mode_step_dispatch();
+void new_year_yukari_scene_secondary_mode_step_dispatch();
+void new_year_nozomi_scene_primary_mode_step_dispatch();
+void new_year_nozomi_scene_secondary_mode_step_dispatch();
+void new_year_girl_talk_resource_addresses_init();
+void new_year_scene_callback_addresses_init();
 extern s16 D_801467FC;
 extern u8 D_8014653C;
-void func_8013D2A8();
+void new_year_current_talk_start();
 extern u8 D_80146050;
-extern u8 D_80143DD8;
+extern u8 new_year_omikuji_selector;
 extern u8 D_80144F10;
 extern u8 D_80143B24;
 extern s32 D_80143EB4;
 extern s32 D_80143EE8;
 extern s32 D_80143F1C;
-#ifndef SHOUGATU_OVERRIDE_func_8013D5D8
-void func_8013D5D8();
+#ifndef SHOUGATU_OVERRIDE_new_year_current_selector_talk_start
+void new_year_current_selector_talk_start();
 #endif
-void func_80136F90();
+void new_year_meeting_dialogue_addresses_init();
 extern u8 D_80145FE4;
 extern u8 D_80144E10;
 extern u8 D_80146158;
 extern u8 D_80146168[];
-void func_8013D324();
+void new_year_current_talk_step();
 extern u8 D_80143D20;
-void func_80138BA0();
-void func_80138C1C();
-void func_80138CA4();
-void func_8013A9B0();
-void func_8013AA24();
-void func_8013AAAC();
-void func_80137C28();
-void func_80137D68();
-void func_80139980();
-void func_80139A08();
-void func_80139A90();
-void func_80139B0C();
-void func_80139B94();
-void func_8013B5B0();
-void func_8013BA00();
+void new_year_ayako_scene_primary_mode_step_dispatch();
+void new_year_ayako_scene_secondary_mode_step_dispatch();
+void new_year_ayako_scene_default_mode_step_dispatch();
+void new_year_saki_callback_group_0_dispatch();
+void new_year_saki_callback_group_1_dispatch();
+void new_year_saki_callback_group_default_dispatch();
+void new_year_yuko_callback_common_dispatch();
+void new_year_yuko_callback_default_dispatch();
+void new_year_scene_callback_group_0_dispatch();
+void new_year_scene_callback_group_1_dispatch();
+void new_year_scene_callback_group_2_dispatch();
+void new_year_scene_callback_group_3_dispatch();
+void new_year_scene_callback_group_4_dispatch();
+void new_year_girl_dialogue_setup_dispatch();
+void new_year_relationship_outcome_dispatch();
 extern s32 D_80145960;
 extern s32 D_80145964;
 extern s32 D_80145968;
@@ -630,25 +630,25 @@ extern s32 D_80143AEC;
 extern s32 D_80143AF0;
 
 extern u8 D_80143B14;
-void func_8013D660(void);
-void func_8013843C(void);
-void func_80132550(void);
-void func_801324C8(void);
-void func_8013397C(void);
-void func_80134120(void);
-void func_80132D00(void);
-void func_80133D10(void);
-void func_80141358(void);
-void func_8013808C(void);
-void func_80138354(void);
-void func_801384B0(void);
-void func_8013B9C0(void);
-void func_80140F54(void);
-void func_801401DC(void);
-void func_8014102C(void);
-void func_80141180(void);
-void func_801415C8(void);
-void func_80142500(void);
+void new_year_ijuin_entry_step_dispatch(void);
+void new_year_yuina_scene_fourth_mode_step_dispatch(void);
+void new_year_scene_step_dispatch(void);
+void new_year_talk_run_current_with_flags(void);
+void new_year_dialogue_fallback_table_setup(void);
+void new_year_shrine_actor_mode_step_dispatch(void);
+void new_year_result_step_dispatch(void);
+void new_year_shrine_dialogue_mode_step_dispatch(void);
+void christmas_yukari_mode_step_dispatch(void);
+void new_year_yuina_scene_primary_mode_step_dispatch(void);
+void new_year_yuina_scene_dialogue_audio_tick_alt(void);
+void new_year_yuina_scene_fifth_mode_step_dispatch(void);
+void new_year_hallway_scene_exit_branch(void);
+void christmas_mio_mode_step_dispatch(void);
+void christmas_result_progress_threshold(void);
+void christmas_yuina_mode_step_dispatch(void);
+void christmas_ayako_mode_step_dispatch(void);
+void christmas_yuko_mode_step_dispatch(void);
+void new_year_scene_effect_mode_step_dispatch(void);
 extern s32 D_80143DB0;
 extern s32 D_80143DB4;
 extern s32 D_80143DB8;
@@ -659,16 +659,16 @@ extern s16 D_80143DC8;
 extern s16 D_80143DCC;
 extern s32 D_80143DD0;
 extern s32 D_80143DD4;
-void func_80134890(void);
+void new_year_omikuji_resource_addresses_init(void);
 extern u8 *D_80146130;
 extern u8 *D_80146134;
 extern u8 *D_80146138;
 extern s16 D_8014613C;
 extern u8 *D_80146140;
-void func_8013F190(void);
-void func_801381B8(void);
-void func_80138524(void);
-void func_8013FA80(void);
+void new_year_scene_actor_resource_addresses_init(void);
+void new_year_yuina_scene_secondary_mode_step_dispatch(void);
+void new_year_yuina_scene_default_mode_step_dispatch(void);
+void new_year_scene_choice_menu_init(void);
 
 /* Bit 2 of the first byte of a GirlRecord flag word, set as a bit-field store: `|= 4` gives one temporary too many (T-6010, T-9000) */
 typedef struct {
@@ -676,15 +676,15 @@ typedef struct {
     u8 f:1;
     u8 rest:5;
 } Bits64B8;
-void func_8013E19C(void);
+void christmas_party_candidate_select(void);
 
-void func_8013C2E4(void);
+void new_year_scene_particle_actor_resource_addresses_init(void);
 /* Three Shift-JIS strings of 9 bytes (27 bytes, so the struct copy ends with lwl/swl). */
 typedef struct SjisStr3 {
     u8 s[3][9];
 } SjisStr3;
 extern SjisStr3 D_80143D88;
-void func_80136770(void);
+void new_year_player_birthday_status_gate(void);
 
 extern u8 D_80143DDC;
 extern s32 D_801464B0;
@@ -713,19 +713,19 @@ extern s32 D_8014650C;
 
 #ifndef OVL_SHOUGATU_RECORDS_T9740
 #define OVL_SHOUGATU_RECORDS_T9740
-/* T-9740: the 28 callbacks copied by func_8013E330. */
+/* T-9740: the 28 callbacks copied by christmas_girl_dialogue_step_dispatch. */
 typedef struct ShoCalendarFn28 {
     /* 0x00 */ void (*f[28])();
 } ShoCalendarFn28; /* size 0x70 */
 extern ShoCalendarFn28 D_8014605C;
 
-s32 func_8013E330(void);
+s32 christmas_girl_dialogue_step_dispatch(void);
 #endif
 
 /* Scene initializer; original byte stores at D_80143B1C (T-9740). */
 extern u8 D_80143B1C;
-void func_801326F8(void);
-void func_80132A34(void);
+void new_year_scene_init(void);
+void new_year_girl_dialogue_tables_select(void);
 
 #ifndef OVL_SHOUGATU_BYTE_FLAGS_T10010
 #define OVL_SHOUGATU_BYTE_FLAGS_T10010
@@ -737,25 +737,25 @@ typedef struct ShouByteFlags {
     /* 0x00, bit 3 */ u8 b3 : 1;
     /* 0x00, bits 4-7 */ u8 rest : 4;
 } ShouByteFlags; /* size 0x01 */
-void func_801366A4(void);
-void func_80141AE8(void);
+void new_year_scene_status_talk_group_select(void);
+void new_year_scene_text_display_tick(void);
 
 #endif
 
 #ifndef OVL_SHOUGATU_T10850_TYPES
 #define OVL_SHOUGATU_T10850_TYPES
-/* T-10850: 23 callback pointers copied by func_8013DDD0. */
+/* T-10850: 23 callback pointers copied by christmas_party_actor_update. */
 typedef struct ShoCallbacks23 {
     /* 0x00 */ void (*f[23])();
 } ShoCallbacks23; /* size 0x5C */
 extern ShoCallbacks23 D_80145FE8;
 
-void func_80138240(void);
-void func_80137FF0(void);
-void func_801385AC(void);
-void func_80132FCC(void);
-void func_8013F070(void);
-void func_8013D3B4(void);
+void new_year_yuina_scene_third_mode_step_dispatch(void);
+void new_year_yuina_scene_group_dispatch(void);
+void new_year_yuina_scene_state_init(void);
+void new_year_girl_portrait_load(void);
+void new_year_christmas_portrait_resource_select(void);
+void new_year_girl_scene_resource_load(void);
 
 #endif
 
@@ -769,15 +769,15 @@ extern s8 D_8014615C;
 #ifndef OVL_SHOUGATU_T15600_DISPATCH
 #define OVL_SHOUGATU_T15600_DISPATCH
 /* T-15600: definitions in 80136F90.c / 8013F190.c, called by the earlier dispatcher. */
-s32 func_8013737C(void);
-void func_80137664(void); /* T-17500 */
-void func_801377CC(void);
-void func_80137818(void);
-void func_80137A04(void);
-void func_80141224(void); /* T-24109 */
-void func_801413F4(void);
-void func_801414E0(void);
-void func_80141678(void);
+s32 new_year_meeting_completion_state_apply(void);
+void new_year_meeting_scene_init(void); /* T-17500 */
+void new_year_meeting_audio_bank_load_start(void);
+void new_year_meeting_audio_bank_load_retry(void);
+void new_year_meeting_resources_load(void);
+void christmas_saki_mode_step_dispatch(void); /* T-24109 */
+void christmas_nozomi_mode_step_dispatch(void);
+void christmas_mira_mode_step_dispatch(void);
+void christmas_megumi_mode_step_dispatch(void);
 #endif
 
 #ifndef OVL_SHOUGATU_STEP_TABLES_T17500
@@ -921,22 +921,22 @@ typedef struct ShoShorts7 {
     /* 0x00 */ s16 v[7];
 } ShoShorts7; /* size 0xE */
 /* {0x46, 0x80, 0xA0, 0xC0, 0xE0, 0x100, 0x3E8} and {0, 3, 5, 7, 9, 0xB, 0x10}: two per function */
-extern ShoShorts7 D_801460CC; /* func_8013E50C */
+extern ShoShorts7 D_801460CC; /* christmas_shiori_stat_reward_apply */
 extern ShoShorts7 D_801460DC;
-extern ShoShorts7 D_801460EC; /* func_8013E6E4 */
+extern ShoShorts7 D_801460EC; /* christmas_girl_select_and_reward */
 extern ShoShorts7 D_801460FC;
-extern ShoShorts7 D_8014610C; /* func_8013EA98 */
+extern ShoShorts7 D_8014610C; /* christmas_alternate_girl_select_and_reward */
 extern ShoShorts7 D_8014611C;
 
 /* Seven 5-byte Shift-JIS strings (35 bytes: the copy ends with lwl/swl); read as s[i]. */
 typedef struct ShoStr7x5 {
     /* 0x00 */ u8 s[7][5];
 } ShoStr7x5; /* size 0x23 */
-extern ShoStr7x5 D_80143E5C; /* func_801350F8 */
-extern ShoStr7x5 D_80143E80; /* func_801359FC */
+extern ShoStr7x5 D_80143E5C; /* new_year_omikuji_scene */
+extern ShoStr7x5 D_80143E80; /* new_year_omikuji_result_text */
 
-/* Six pairs of colour words passed by value to func_80140510 (`*8` index), and a 3 x 12 byte
- * selector table indexed [D_800E62BE][...]; both copied by func_80140314. */
+/* Six pairs of colour words passed by value to christmas_result_gouraud_triangle_submit (`*8` index), and a 3 x 12 byte
+ * selector table indexed [D_800E62BE][...]; both copied by christmas_result_choice_triangles_draw. */
 typedef struct ShoColors6x2 {
     /* 0x00 */ u32 v[6][2];
 } ShoColors6x2; /* size 0x30 */
@@ -948,15 +948,15 @@ extern ShoBytes3x12 D_80146208;
 extern u8 D_80146054;
 extern u8 D_80146058;
 
-/* Work arrays of the func_80141D20 family, 50 entries each (counter D_801467FC < 0x32). The
+/* Work arrays of the new_year_scene_particle_effect_update family, 50 entries each (counter D_801467FC < 0x32). The
  * original writes D_80146540[i - 1] as %lo(D_8014653C)+i*4; D_8014653C itself is a separate u8. */
 extern s32 D_80146540[50];
 extern s32 D_80146608[50];
 extern s32 D_801466D0[50];
 extern s16 D_80146798[50];
 extern u32 D_80146800;
-s32 func_80141D20(void);
-s32 func_8014288C(void);
+s32 new_year_scene_particle_effect_update(void);
+s32 new_year_scene_quad_effect_update(void);
 #endif
 
 #endif /* OVL_SHOUGATU_H */

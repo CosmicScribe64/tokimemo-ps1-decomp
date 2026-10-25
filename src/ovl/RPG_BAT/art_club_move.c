@@ -404,13 +404,13 @@ void rpg_art_draw_shape(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
     /* FAKE: each (unused - unused) adds one variable reference and no code. uopt ends a block after 20 references and
      * the original has its boundary after y1 (arg3 is reloaded for x2, arg0 for x0); without them it falls after y2 and
      * arg3 is reloaded early into $a3. T-17106 */
-    p->x0 = game_state.screen_center_x[draw_buffer] + arg0 + (unused - unused);
-    p->y0 = game_state.screen_center_y[draw_buffer] + arg1 + (unused - unused);
-    p->x1 = game_state.screen_center_x[draw_buffer] + arg0 + (unused - unused);
-    p->y1 = game_state.screen_center_y[draw_buffer] + arg2 + (unused - unused);
-    p->x2 = game_state.screen_center_x[draw_buffer] + arg3;
-    p->y2 = game_state.screen_center_y[draw_buffer] + arg4;
-    p->x3 = game_state.screen_center_x[draw_buffer] + arg3;
-    p->y3 = game_state.screen_center_y[draw_buffer] + arg5;
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + (arg8 * 4)], (s32)p);
+    p->x0 = game_state.draw_origin_x[draw_buffer] + arg0 + (unused - unused);
+    p->y0 = game_state.draw_origin_y[draw_buffer] + arg1 + (unused - unused);
+    p->x1 = game_state.draw_origin_x[draw_buffer] + arg0 + (unused - unused);
+    p->y1 = game_state.draw_origin_y[draw_buffer] + arg2 + (unused - unused);
+    p->x2 = game_state.draw_origin_x[draw_buffer] + arg3;
+    p->y2 = game_state.draw_origin_y[draw_buffer] + arg4;
+    p->x3 = game_state.draw_origin_x[draw_buffer] + arg3;
+    p->y3 = game_state.draw_origin_y[draw_buffer] + arg5;
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + (arg8 * 4)], (s32)p);
 }

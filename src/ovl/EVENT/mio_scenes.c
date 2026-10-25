@@ -106,7 +106,7 @@ void spot_mio_scene1_run(void) {
 
 void spot_mio_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl39 tbl;
+    SpotShioriYuinaMioAndGameCenterStepTable tbl;
 
     tbl = spot_mio_scene1_steps;
     idx = D_800B1AF6;
@@ -288,7 +288,7 @@ void spot_mio_scene5_bg_load_24(void) {
 
 void spot_mio_scene2_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl67 tbl;
+    SpotMioScene2StepTable tbl;
 
     tbl = spot_mio_scene2_steps;
     func_80078950(" %d %d\n", D_800B1AF6, (&spot_reaction_low_cells)[D_800EECBC]);
@@ -329,7 +329,7 @@ void spot_mio_scene2_label_set_08(void) {
 
 void spot_mio_scene3_run(void) {
     s32 idx;
-    FnTbl39 tbl;
+    SpotShioriYuinaMioAndGameCenterStepTable tbl;
 
     tbl = spot_mio_scene3_steps;
     func_80078950(" %d\n", D_800B1AF6);
@@ -348,7 +348,7 @@ void spot_mio_scene3_assets_load_00(void) {
 
 void spot_mio_scene4_run(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    FnTbl46 tbl;
+    SpotMioScene4StepTable tbl;
 
     tbl = spot_mio_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -365,7 +365,7 @@ void spot_mio_scene5_run(void) {
     /* FAKE: unused local reserves the 4 bytes above tbl in the 0x108 frame (T-3330 layout); T-24105 */
     s32 pad;
     s16 i;
-    EvFnTbl53 tbl;
+    SpotMioScene5StepTable tbl;
 
     tbl = spot_mio_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

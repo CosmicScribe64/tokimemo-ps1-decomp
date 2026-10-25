@@ -220,8 +220,8 @@ void shooter_draw_vulcan_shot(ShooterParticle *arg0, s32 arg1) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
-            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200
+            && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             side = (rec->age >> 2) & 1;
             dist = (D_80122754 - rec->z) / 127;
             if (dist >= 0x100) {
@@ -248,7 +248,7 @@ void shooter_draw_vulcan_shot(ShooterParticle *arg0, s32 arg1) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }
@@ -292,7 +292,7 @@ void shooter_draw_wide_shot(ShooterParticle *arg0, s32 arg1) {
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
         /* The early return (not a nested if) gives the original's separate load of draw_buffer for the GetWorkBase call. T-22005 */
-        if (((s16 *)pt)[3] < game_state.screen_center_y[draw_buffer] - 0x200 || game_state.screen_center_y[draw_buffer] + 0x200 < ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] < game_state.draw_origin_y[draw_buffer] - 0x200 || game_state.draw_origin_y[draw_buffer] + 0x200 < ((s16 *)pt)[7]) {
             return;
         }
         side = rec->age;
@@ -323,7 +323,7 @@ void shooter_draw_wide_shot(ShooterParticle *arg0, s32 arg1) {
         poly->y2 = ((s16 *)pt)[5];
         poly->x3 = ((s16 *)pt)[6];
         poly->y3 = ((s16 *)pt)[7];
-        AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+        AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
     }
 }
 
@@ -400,6 +400,6 @@ void shooter_draw_beam(ShooterParticle *arg0, s32 arg1) {
     poly->y2 = pt[7];
     poly->x3 = pt[4];
     poly->y3 = pt[5];
-    AddPrim((draw_buffer << 10) + 0x10 + D_800E8CA0, poly);
+    AddPrim((draw_buffer << 10) + 0x10 + draw_ot_tags, poly);
     dtd_on_tpage(0x340, 0x100, 4, 1, 0);
 }

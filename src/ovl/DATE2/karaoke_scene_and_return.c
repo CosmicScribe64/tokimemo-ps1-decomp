@@ -1,7 +1,7 @@
-/* karaoke_scene_and_return.c: src/ovl/DATE2/80137D50.c:4; karaoke mode entry func_80137F64, room/title setup func_8013820C, song/audio/text/rating flow and DATE return func_801381A4. Original object 0x80137D50-0x8013A020 (config/objects/DATE2.txt). */
-#define MAIN_API_OVERRIDE_D_800B3CFC /* T-11880: func_801388C0 matched with the word as a u8[4] (main_api.h: u8 scalar); the scalar view keeps a second register range */
-#define MAIN_API_OVERRIDE_menu_set /* T-11880: func_801385CC keeps the call result live in v0 (implicit int view; main_api.h: void) */
-#define set_kanji_string func_8004E788_main_api /* T-24094: func_801395C8 passes void * string pointers as arg 3 without A->J cvt */
+/* karaoke_scene_and_return.c: src/ovl/DATE2/80137D50.c:4; karaoke mode entry amusement_karaoke_return_frame_update, room/title setup amusement_karaoke_return_dialogue_setup, song/audio/text/rating flow and DATE return amusement_return_to_date. Original object 0x80137D50-0x8013A020 (config/objects/DATE2.txt). */
+#define MAIN_API_OVERRIDE_pad_code_entered /* T-11880: amusement_karaoke_return_menu_input matched with the word as a u8[4] (main_api.h: u8 scalar); the scalar view keeps a second register range */
+#define MAIN_API_OVERRIDE_menu_set /* T-11880: amusement_karaoke_return_menu_build keeps the call result live in v0 (implicit int view; main_api.h: void) */
+#define set_kanji_string func_8004E788_main_api /* T-24094: amusement_karaoke_result_text_page_display passes void * string pointers as arg 3 without A->J cvt */
 #include "common.h"
 #include "ovl/DATE2.h"
 #undef set_kanji_string
@@ -68,10 +68,10 @@ typedef struct {
     void (*f[13])();
 } FnTbl13; /* size 0x34 */
 extern FnTbl13 D_8013B600;
-extern u8 D_800B3CFC[4];
+extern u8 pad_code_entered[4];
 s32 menu_set();
 
-void func_80137D50(void) {
+void amusement_karaoke_return_pointer_setup(void) {
     D_8013B540 = 0x801B00A4;
     D_8013B544 = 0x801B0238;
     D_8013B548 = 0x801B03C8;
@@ -107,20 +107,20 @@ void func_80137D50(void) {
     D_8013B5C0 = 0x801B10E4;
 }
 
-void func_80137F64(void) {
+void amusement_karaoke_return_frame_update(void) {
     portrait_wink_update();
-    func_80138048();
+    amusement_karaoke_mode_step_dispatch();
     check_k_scroll();
     k_disp_inc2();
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
     draw_shake_update();
 }
 
-void func_80137FCC(void) {
+void amusement_karaoke_return_talk_run(void) {
     talk_tables = &D_8013B5F8;
     D_800CA138 = &D_8013B5FC;
     D_800CA13C = D_8013B5EC;
@@ -129,7 +129,7 @@ void func_80137FCC(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80138048(void) {
+void amusement_karaoke_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl13 tbl;
 
@@ -138,45 +138,45 @@ void func_80138048(void) {
     tbl.f[idx](0x40);
 }
 
-void func_801380C4(void) {
+void amusement_karaoke_return_sector_load(void) {
     cd_read_sectors(2, 0x801E8000, 0xBD02);
-    func_80138100();
+    amusement_karaoke_return_asset_pointer_setup();
     mode_step_next();
 }
 
-void func_80138100(void) {
+void amusement_karaoke_return_asset_pointer_setup(void) {
     D_8013B5D4 = 0x801E80D0;
     D_8013B5D8 = 0x801E82C0;
     D_8013B5DC = 0x801E8444;
     D_8013B5E0 = 0x801E8700;
 }
 
-void func_80138144(void) {
+void amusement_karaoke_return_audio_setup(void) {
     audio_command(0x202);
     D_80122D20 = 0;
     mode_step_next();
 }
 
-void func_80138170(void) {
+void amusement_karaoke_return_portrait_layout_update(void) {
     if (D_80122CDC != 0) {
         portrait_layout_set(2);
     }
     mode_step_next();
 }
 
-void func_801381A4(void) {
+void amusement_return_to_date(void) {
     game_mode_set(GAME_MODE_DATE);
     mode_stage_set(1);
     mode_step_set(0x11);
 }
 
-void func_801381D4(void) {
+void amusement_karaoke_return_dialogue_sector_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF39);
-    func_80137D50();
+    amusement_karaoke_return_pointer_setup();
     mode_step_next();
 }
 
-void func_8013820C(void) {
+void amusement_karaoke_return_dialogue_setup(void) {
 
     *D_800CA234 = 0;
     D_800CA236 = 0;
@@ -189,7 +189,7 @@ void func_8013820C(void) {
     D_80122CDC = 0;
     D_8013B5CC = 0;
     D_8013B5D0 = 0;
-    func_80137D50();
+    amusement_karaoke_return_pointer_setup();
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_8013B5EC = D_8013B544;
@@ -253,13 +253,13 @@ void func_8013820C(void) {
 }
 
 
-void func_8013850C(void) {
+void amusement_karaoke_return_timer_dispatch(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
-        func_8013856C();
+        amusement_karaoke_return_substep_dispatch();
         return;
     case 1:
-        func_80138A3C();
+        amusement_karaoke_audio_substep_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -267,13 +267,13 @@ void func_8013850C(void) {
     }
 }
 
-void func_8013856C(void) {
+void amusement_karaoke_return_substep_dispatch(void) {
     switch (game_state.substep) {
     case 0:
-        func_801385CC();
+        amusement_karaoke_return_menu_build();
         return;
     case 1:
-        func_801388C0();
+        amusement_karaoke_return_menu_input();
         return;
     default:
         game_mode_reset_to_title();
@@ -281,7 +281,7 @@ void func_8013856C(void) {
     }
 }
 
-s32 func_801385CC(void) {
+s32 amusement_karaoke_return_menu_build(void) {
     s32 set_kanji_string(s16 x, s16 y, s32 c, s32 d, s32 e);
     GameState *g = &game_state;
     s16 i;
@@ -304,7 +304,7 @@ s32 func_801385CC(void) {
     D_8013B5E4[2] = 0;
     D_8013B5E4[3] = 0;
     k_reset(1);
-    if ((system_data.unk_024[0] & 1) || (D_8013B5CC != 0)) {
+    if ((system_data.karaoke_unlock_bits[0] & 1) || (D_8013B5CC != 0)) {
         if (D_8013B5CC >= 2U) {
             strcpy(lab.v[0], "恋は…（歌付き）");
         }
@@ -312,11 +312,11 @@ s32 func_801385CC(void) {
         k_disp_start(set_kanji_string(x[0], y[0], 0, (s32)lab.v[0], 0));
     }
     k_disp_start(set_kanji_string(x[1], y[1], 0, (s32)lab.v[1], 0));
-    if ((system_data.unk_024[0] & 4) || (D_8013B5CC != 0)) {
+    if ((system_data.karaoke_unlock_bits[0] & 4) || (D_8013B5CC != 0)) {
         D_8013B5E4[2] = (strlen(lab.v[2]) / 2) * 0x10;
         k_disp_start(set_kanji_string(x[2], y[2], 0, (s32)lab.v[2], 0));
     }
-    if ((system_data.unk_024[0] & 8) || (D_8013B5CC != 0)) {
+    if ((system_data.karaoke_unlock_bits[0] & 8) || (D_8013B5CC != 0)) {
         if (D_8013B5CC >= 2U) {
             strcpy(lab.v[3], "女々しい…（歌付き）");
         }
@@ -335,22 +335,22 @@ s32 func_801385CC(void) {
     g->substep++;
 }
 
-s32 func_801388C0(void) {
+s32 amusement_karaoke_return_menu_input(void) {
     s16 i;
 
     menu_check(0, cursor_x, cursor_y);
     menu_cursor_update(0);
     menu_bar_show(0);
-    if (D_800B3CFC[0] != 0 && D_800B3CFC[0] != D_8013B5D0) {
+    if (pad_code_entered[0] != 0 && pad_code_entered[0] != D_8013B5D0) {
         audio_command(0x601);
         if (++D_8013B5CC >= 3) {
             D_8013B5CC = 1;
         }
         game_state.substep = 0;
-        D_800B3CFC[0] = 0;
-        D_800B3CF8 = 0;
+        pad_code_entered[0] = 0;
+        pad_code_index = 0;
     }
-    D_8013B5D0 = D_800B3CFC[0];
+    D_8013B5D0 = pad_code_entered[0];
     if (game_state.pad_pressed & 0x600060) {
         for (i = 0; i < 4; i++) {
             if (((MenuItem (*)[2])game_state.menu_items)[i][0].hover != 0 && D_8013B5E4[i] != 0) {
@@ -367,19 +367,19 @@ s32 func_801388C0(void) {
     }
 }
 
-s32 func_80138A3C(void) {
+s32 amusement_karaoke_audio_substep_dispatch(void) {
     switch (game_state.substep) {
     case 0:
-        func_80138A90();
+        amusement_karaoke_cd_audio_request();
         break;
     case 1:
-        func_80138BEC();
+        amusement_karaoke_result_update();
         break;
     }
 }
 
 /* FAKE: leading byte fixes copy offsets; integer fallthrough retains allocation. T-9550 */
-s32 func_80138A90(void) {
+s32 amusement_karaoke_cd_audio_request(void) {
     u8 pad[1];
     Date2LoadPairs4 loads;
     Date2LoadPair first;
@@ -401,10 +401,10 @@ s32 func_80138A90(void) {
     game_state.substep++;
 }
 
-void func_80138BEC(void) {
+void amusement_karaoke_result_update(void) {
     u8 t;
 
-    if ((func_80046094() == 9) && (D_8013B5C8 >= 0x79)) {
+    if ((cd_last_command() == 9) && (D_8013B5C8 >= 0x79)) {
         mode_step_next();
         D_80122CDC = 0;
         game_state.girls[game_state.current_girl].tokimeki += 2;
@@ -428,22 +428,22 @@ void func_80138BEC(void) {
     }
     switch (D_8013B5C4) {
     case 2:
-        func_80138E0C();
+        amusement_karaoke_result_table_display_30();
         break;
     case 0:
-        func_80138F8C();
+        amusement_karaoke_result_table_display_51();
         break;
     case 3:
-        func_801391A0();
+        amusement_karaoke_result_table_display_39();
         break;
     default:
-        func_801393B4();
+        amusement_karaoke_result_table_display_81();
         break;
     }
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
-void func_80138E0C(void) {
+void amusement_karaoke_result_table_display_30(void) {
     s32 set_kanji_string(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
@@ -463,13 +463,13 @@ void func_80138E0C(void) {
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
-        func_801395C8((s16)(selected | 0));
+        amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
     if (D_8013B5C8 == 3540) k_reset(1);
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
-void func_80138F8C(void) {
+void amusement_karaoke_result_table_display_51(void) {
     s32 set_kanji_string(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
@@ -489,13 +489,13 @@ void func_80138F8C(void) {
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
-        func_801395C8((s16)(selected | 0));
+        amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
     if (D_8013B5C8 == 6364) k_reset(1);
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
-void func_801391A0(void) {
+void amusement_karaoke_result_table_display_39(void) {
     s32 set_kanji_string(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
@@ -515,13 +515,13 @@ void func_801391A0(void) {
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
-        func_801395C8((s16)(selected | 0));
+        amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
     if (D_8013B5C8 == 5400) k_reset(1);
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
-void func_801393B4(void) {
+void amusement_karaoke_result_table_display_81(void) {
     s32 set_kanji_string(s16 x, s16 y, s32 c, s32 d, s32 e);
     s16 index;
     s16 selected;
@@ -541,13 +541,13 @@ void func_801393B4(void) {
     }
     if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
         k_reset(1);
-        func_801395C8((s16)(selected | 0));
+        amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
     if (D_8013B5C8 == 4620) k_reset(1);
 }
 
 /* FAKE: reuse p for the last call result to save one cfe vreg slot (-2532) so uopt places the two spill homes at sp+0x44/0x48. T-24094 */
-void func_801395C8(arg0)
+void amusement_karaoke_result_text_page_display(arg0)
     s16 arg0;
 {
     s32 set_kanji_string(s16 x, s16 y, s32 c, void *d, s32 e);

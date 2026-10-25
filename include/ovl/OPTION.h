@@ -14,78 +14,78 @@ extern s32 D_8013E730;
 extern u8 D_8013D3E0[];
 extern u8 D_8013D3CC[];
 extern u8 D_8013D3BC[];
-extern volatile u16 D_8013D3B8; /* volatile: both stores of func_80139E3C stay (T-11340) */
-extern u8 D_8013D3A4;
-extern u8 D_8013D3A0;
+extern volatile u16 D_8013D3B8; /* volatile: both stores of options_debug_audio_play_request stay (T-11340) */
+extern u8 options_voice_test_character_clip_index;
+extern u8 options_voice_test_music_clip_index;
 extern s8 D_8013D39C;
 extern u8 D_8013D3F0;
 
-void func_80132AB8(void);
-void func_80132BA8(void);
-void func_80133010(void);
+void options_exit_fade_to_title(void);
+void options_main_menu_init(void);
+void options_menu_background_load(void);
 
-void func_8013A09C(void);
-void func_8013A1BC(void);
-void func_801320C0(void);
-void func_8013A484(void);
-void func_80133CB8(void);
-s32 func_80133330(void);
-void func_80133F50(void);
-void func_801342A8(void);
-void func_80135110(void);
-void func_801352FC(void);
-void func_8013554C(void);
-void func_801359A4(void);
-void func_80135C0C(void);
-void func_80136688(void);
-void func_801368FC(void);
-void func_80136A50(void);
-void func_80136C30(void);
-s32 func_80136F3C(void);
-s32 func_801373C8(void);
-s32 func_801376A8(void);
-void func_80139878(void);
+void options_debug_audio_bank_load_music(void);
+void options_debug_audio_bank_load_voice(void);
+void options_mode_stage_gradient_mask_update(void);
+void options_voice_test_background_gradient_draw(void);
+void options_icon_mode_menu_build(void);
+s32 options_main_menu_select(void);
+void options_icon_mode_select(void);
+void options_icon_mode_page_close(void);
+void options_double_click_interval_select(void);
+void options_double_click_indicator_update(void);
+void options_menu_mode_page_initialize(void);
+void options_menu_mode_select(void);
+void options_menu_mode_page_exit_zoom(void);
+void options_voice_mode_page_initialize(void);
+void options_voice_mode_selection_update(void);
+void options_voice_mode_page_exit_zoom(void);
+void options_extras_page_initialize(void);
+s32 sound_test_unlocked_track_count(void);
+s32 options_extras_submenu_a_initialize(void);
+s32 options_extras_submenu_a_selection_update(void);
+void options_voice_test_fade_in(void);
 
-void func_80139A30();
-void func_80139E3C(s32 arg0);
-void func_80139F04(void);
-void func_80139F8C(void);
-void func_8013A010(void);
-void func_8013A038(void);
-void func_8013A060(void);
-void func_8013A334(void);
-s32 func_801394F4(void);
-void func_801399C0();
+void options_debug_audio_input_handle();
+void options_debug_audio_play_request(s32 arg0);
+void options_debug_audio_bank_command(void);
+void options_debug_audio_bank_select(void);
+void options_debug_audio_bank_start_primary(void);
+void options_debug_audio_bank_start_secondary(void);
+void options_debug_audio_bank_load_dispatch(void);
+void options_voice_test_debug_status_draw(void);
+s32 options_voice_test_actor_selection_update(void);
+void options_debug_audio_name_display_toggle();
 
 extern u8 D_8013D3F4;
 extern s8 D_8013D180;
-void func_80138A24(void);
-void func_80138A8C();
-void func_8013AF10(void);
-s32 func_8013B3BC(void);
-void func_8013B568(void);
-s32 func_8013BE78(void);
-void func_8013BFF8(void);
-s32 func_8013C3B0(void);
-void func_8013C52C(void);
-s32 func_8013C72C(void);
-void func_8013447C(void);
-void func_80134210(void);
-void func_80135DE0(void);
-void func_80136BC8(void);
-s32 func_80133718(void);
-s32 func_8013394C(void);
-s32 func_80133AD8(void);
-s32 func_80133C4C(void);
-s32 func_80135E48(void);
-s32 func_801361FC(void);
-s32 func_80136434(void);
-s32 func_8013661C(void);
-s32 func_8013AC30(void);
-void func_8013A604(void);
-void func_8013ACD4(void);
-s32 func_8013AD10(void);
-void func_80132384();
+void options_debug_audio_background_load(void);
+void options_debug_audio_step_dispatch();
+void options_debug_player_data_editor(void);
+s32 options_debug_player_data_mode_step_dispatch(void);
+void options_debug_girl_data_editor(void);
+s32 options_debug_girl_data_mode_step_dispatch(void);
+void options_debug_day_event_data_editor(void);
+s32 options_debug_day_event_data_mode_step_dispatch(void);
+void options_debug_scene_launcher_select(void);
+s32 options_debug_scene_launcher_mode_step_dispatch(void);
+void options_icon_mode_page_dispatch(void);
+void options_icon_data_refresh(void);
+void options_menu_mode_step_dispatch(void);
+void options_voice_mode_page_dispatch(void);
+s32 options_text_speed_menu_build(void);
+s32 options_text_speed_select(void);
+s32 options_text_speed_page_close(void);
+s32 options_text_speed_mode_step_dispatch(void);
+s32 options_cursor_speed_page_initialize(void);
+s32 options_cursor_speed_select(void);
+s32 options_cursor_speed_page_exit_zoom(void);
+s32 options_cursor_speed_mode_step_dispatch(void);
+s32 options_debug_calendar_data_reload(void);
+void options_debug_calendar_page_initialize(void);
+void options_debug_calendar_audio_wait(void);
+s32 options_debug_calendar_mode_step_dispatch(void);
+void options_page_zoom_in_update();
 
 extern u8 D_8013E740;
 extern s32 D_8013E844[];
@@ -97,20 +97,20 @@ extern s32 D_8013E7C4[];
 extern s32 D_8013E804[];
 
 /* Audio selection tables: 16-byte text rows, T-14400. */
-extern u8 D_8013DD58[63][16];
-extern u8 D_8013D968[63][16];
-extern u8 D_8013D3F8[58][16];
-extern u8 D_8013D3DC;
-void func_8013A304(void);
-void func_8013A31C(void);
-void func_8013A4FC(void);
-void func_80138DF8(void);
-void func_80138C20(void);
-void func_80138FC0(void);
+extern u8 options_voice_test_character_clip_labels[63][16];
+extern u8 options_voice_test_music_clip_labels[63][16];
+extern u8 options_voice_test_character_labels[58][16];
+extern u8 options_voice_test_character_index;
+void options_debug_audio_music_load_begin(void);
+void options_debug_audio_voice_load_begin(void);
+void options_voice_test_selection_gradient_draw(void);
+void options_debug_audio_voice_list_page(void);
+void options_debug_audio_track_list_page(void);
+void options_debug_audio_second_track_list_page(void);
 
 #ifndef OVL_OPTION_DISPATCH_T10020
 #define OVL_OPTION_DISPATCH_T10020
-void func_8013990C(void);
+void options_debug_audio_menu_update(void);
 #endif
 
 #ifndef OVL_OPTION_GRID_T10010
@@ -126,36 +126,36 @@ extern u32 *D_8013D2C4[];
 extern s32 D_8013D2FC;
 #endif
 
-/* Menu rows of func_80139198 as four parallel arrays (x, y, w, h), passed to menu_set (T-17800). */
+/* Menu rows of options_debug_audio_menu_init as four parallel arrays (x, y, w, h), passed to menu_set (T-17800). */
 extern s16 D_8013D364[7];
 extern s16 D_8013D372[7];
 extern s16 D_8013D380[7];
 extern s16 D_8013D38E[7];
 
-/* Word tables indexed by `D_8013D3DC % 58` and by `D_8013D3A0 % 63` / `D_8013D3A4 % 63`, read with lw
- * (func_8013A09C, func_8013A1BC); each ends where the next label starts (T-17800). */
-extern s32 D_8013D798[58];
-extern s32 D_8013D880[58];
-extern s32 D_8013E148[63];
-extern s32 D_8013E244[63];
-extern s32 D_8013E340[63];
-extern s32 D_8013E43C[63];
-extern s32 D_8013E538[63];
-extern s32 D_8013E634[63];
+/* Word tables indexed by `options_voice_test_character_index % 58` and by `options_voice_test_music_clip_index % 63` / `options_voice_test_character_clip_index % 63`, read with lw
+ * (options_debug_audio_bank_load_music, options_debug_audio_bank_load_voice); each ends where the next label starts (T-17800). */
+extern s32 options_voice_test_character_bank_load_commands[58];
+extern s32 options_voice_test_character_bank_load_arguments[58];
+extern s32 options_voice_test_music_bank_load_arg_1[63];
+extern s32 options_voice_test_music_bank_load_arg_2[63];
+extern s32 options_voice_test_music_bank_load_arg_3[63];
+extern s32 options_voice_test_character_bank_load_arg_1[63];
+extern s32 options_voice_test_character_bank_load_arg_2[63];
+extern s32 options_voice_test_character_bank_load_arg_3[63];
 
-/* Scroll state of func_801326BC (T-17800). */
+/* Scroll state of options_background_palette_cycle_update (T-17800). */
 extern s32 D_8013D300;
 extern s32 D_8013D304;
 extern s32 D_8013D308;
 
-/* Four pointers walked up to the next label, D_8013D360 (func_8013554C, T-17800). */
+/* Four pointers walked up to the next label, D_8013D360 (options_menu_mode_page_initialize, T-17800). */
 extern u8 *D_8013D350[4];
 
-/* The BG slot tables D_80122120, D_80122140, D_80122540 and their types are in main_api.h (T-25010). */
+/* The BG slot tables layer_bg_maps, layer_bg_cells, layer_bg_cell_indices and their types are in main_api.h (T-25010). */
 
 /* Views of shared records, moved here from the .c files (T-17800). */
 
-/* Four s16 rows filled by func_801325A0 for menu_set. */
+/* Four s16 rows filled by options_page_row_geometry_fill for menu_set. */
 typedef struct Arrs4x8 {
     /* 0x00 */ s16 a[8];
     /* 0x10 */ s16 b[8];
@@ -163,7 +163,7 @@ typedef struct Arrs4x8 {
     /* 0x30 */ s16 d[8];
 } Arrs4x8; /* size 0x40 */
 
-void func_801325A0(Arrs4x8 *p);
+void options_page_row_geometry_fill(Arrs4x8 *option_row_geometry);
 
 /* Packed GirlRecord settings fields, T-14400. */
 typedef struct OptionCharBits {
@@ -186,7 +186,7 @@ typedef struct OptionCharBits {
 
 
 /* Packed date word at GameState +0xF8 and GirlRecord +0x10: BirthdayBits (main_api.h) plus the two bits at 9-10,
- * read as `& 0xF`, `<< 0x17 >> 0x1B`, `<< 0x15 >> 0x1E` (func_8013A7EC, T-17800). */
+ * read as `& 0xF`, `<< 0x17 >> 0x1B`, `<< 0x15 >> 0x1E` (options_debug_calendar_and_player_birthday_editor, T-17800). */
 typedef struct OptionDateBits {
     /* 0x00 */ u32 f0 : 4;
     /* 0x00 */ u32 f4 : 5;
@@ -195,7 +195,7 @@ typedef struct OptionDateBits {
 } OptionDateBits; /* size 0x04 */
 
 
-/* 8-bit bitfield view used to prevent uopt from CSE-ing the second D_800B3220 load in func_80133330 (T-24117). */
+/* 8-bit bitfield view used to prevent uopt from CSE-ing the second debug_hud_enabled load in options_main_menu_select (T-24117). */
 typedef struct OptionByteBf {
     /* 0x00 */ u8 x : 8;
 } OptionByteBf; /* size 0x01 */

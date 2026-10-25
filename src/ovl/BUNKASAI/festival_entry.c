@@ -2,12 +2,12 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-void func_80142700(void) {
+void culture_festival_mode_handler(void) {
     s32 i;
     GameState *g = &game_state;
-    BunkasaiGirlBytes sp3C;
+    CultureUnusedBytes sp3C;
 
-    sp3C = D_80160520;
+    sp3C = culture_unused_bytes;
     portrait_wink_update();
     switch (D_80122EC0) {
     case 0:
@@ -16,7 +16,7 @@ void func_80142700(void) {
         scene_screen_reset(1, 0);
         talk_clear();
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->girls[i].flags.f.met;
+            select_girl_menu_enabled[i] = g->girls[i].flags.f.met;
         }
         dec_bg_reset();
         message_window_init();
@@ -54,27 +54,27 @@ void func_80142700(void) {
         break;
     case 4:
         normal_date_bg_fadein();
-        func_80142B98();
+        culture_phase_next_on_step();
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
             talk_names_set(0U);
-            func_801323A8();
+            culture_script_set_intro();
             talk_group = 0;
             talk_line = 0;
-            talk_text_table = (s32) D_801604F0;
-            talk_command_table = (s32) D_801604F4;
-            talk_voice_table = (s32) D_801604F8;
+            talk_text_table = (s32) culture_script_text_table;
+            talk_command_table = (s32) culture_script_command_table;
+            talk_voice_table = (s32) culture_script_voice_table;
             D_80122EC0 += 1;
         }
         break;
     case 6:
         normal_date_speak();
-        func_80142B98();
+        culture_phase_next_on_step();
         break;
     case 7:
-        func_80150930();
+        culture_stage_dispatch();
         break;
     case 8:
         if ((g->month == (g->girls[0].birthday.w & 0xF)) && (g->day == ((u32) (g->girls[0].birthday.w << 0x17) >> 0x1B)) && !(g->day_event_done_bits & 1)) {
@@ -86,8 +86,8 @@ void func_80142700(void) {
             hud_day_bgm_load();
             mode_stage_next();
         } else if (audio_bank_load_poll() == 1) {
-            func_80142BE8();
-            func_801433C0();
+            culture_result_apply();
+            culture_event_log_add();
             for (i = 0; i < 64; i++) {
                 ((s32 *)D_80122DD0)[i] = 0;
             }
@@ -98,7 +98,7 @@ void func_80142700(void) {
         }
         break;
     case 9:
-        func_80147214();
+        culture_birthday_scene();
         break;
     default:
         game_mode_reset_to_title();
@@ -109,66 +109,66 @@ void func_80142700(void) {
     }
 }
 
-void func_80142B98(void) {
+void culture_phase_next_on_step(void) {
     if (game_state.mode_step != 0) {
         game_state.mode_step = 0;
         D_80122EC0 += 1;
     }
 }
 
-void func_80142BC8(void) {
+void culture_scene_end(void) {
     game_state.mode_stage = 0;
     game_state.mode_step = 0;
     D_80122EC0 = 8;
 }
 
 /* FAKE: s32 return type reserves $v0 in uopt so bonus gets $a3; pad1/pad2 place amount at sp+0x11C; (&g->unk_0FC) indexes across the 4-entry Sub_0FC block. T-24094 */
-s32 func_80142BE8(void) {
+s32 culture_result_apply(void) {
     s32 i;
     GameState *g = &game_state;
     u8 pad1;
     u8 pad2;
     u8 val;
     u8 amount;
-    BunkasaiColumns sel;
-    BunkasaiGirlColumns first;
-    BunkasaiGirlColumns second;
-    BunkasaiGirlColumns third;
+    CultureClubParamIndex sel;
+    CultureTokimekiGains first;
+    CultureTokimekiGains second;
+    CultureTokimekiGains third;
     u32 bonus;
 
-    sel = D_8016052C;
-    first = D_80160534;
-    second = D_80160584;
-    third = D_801605D4;
+    sel = culture_club_param_index;
+    first = culture_tokimeki_gain_95;
+    second = culture_tokimeki_gain_96;
+    third = culture_tokimeki_gain_97;
     bonus = ((u32) (g->clubs[g->player_flags.h >> 12].practice_points >> 3) / (u32) (g->year - 94) +
-             (&g->param_condition)[sel.v[g->player_flags.h >> 12]].value / 20) & 0xFF;
+             (&g->param_condition)[sel.param_index[g->player_flags.h >> 12]].value / 20) & 0xFF;
     if (bonus >= 11) {
         bonus = 10;
     }
     switch ((g->year - 95) & 0xFF) {
     case 0:
         for (i = 0; i < 13; i++) {
-            val = first.v[i][g->player_flags.h >> 12] >> 1;
+            val = first.gain[i][g->player_flags.h >> 12] >> 1;
             g->girls[i].tokimeki += bonus;
             g->girls[i].tokimeki += val;
         }
-        amount = first.v[D_80122EBC][g->player_flags.h >> 12];
+        amount = first.gain[D_80122EBC][g->player_flags.h >> 12];
         break;
     case 1:
         for (i = 0; i < 13; i++) {
-            val = second.v[i][g->player_flags.h >> 12] >> 1;
+            val = second.gain[i][g->player_flags.h >> 12] >> 1;
             g->girls[i].tokimeki += bonus;
             g->girls[i].tokimeki += val;
         }
-        amount = second.v[D_80122EBC][g->player_flags.h >> 12];
+        amount = second.gain[D_80122EBC][g->player_flags.h >> 12];
         break;
     case 2:
         for (i = 0; i < 13; i++) {
-            val = third.v[i][g->player_flags.h >> 12] >> 1;
+            val = third.gain[i][g->player_flags.h >> 12] >> 1;
             g->girls[i].tokimeki += bonus;
             g->girls[i].tokimeki += val;
         }
-        amount = third.v[D_80122EBC][g->player_flags.h >> 12];
+        amount = third.gain[D_80122EBC][g->player_flags.h >> 12];
         break;
     }
     if (amount != 0) {
@@ -178,7 +178,7 @@ s32 func_80142BE8(void) {
     g->girls[D_80122EBC].tokimeki += amount;
 }
 
-void func_801431D4(void) {
+void culture_exhibit_title_show(void) {
     k_reset(0);
     switch (D_80122EB8) {
     case 0:
@@ -233,15 +233,15 @@ void func_801431D4(void) {
     k_disp_start(1);
 }
 
-INCLUDE_RODATA("asm/ovl/BUNKASAI/data/BUNKASAI/festival_entry.rodata", D_8015D774);
+INCLUDE_RODATA("asm/ovl/BUNKASAI/data/BUNKASAI/festival_entry.rodata", culture_backstage_title);
 
-void func_8014338C(void) {
+void culture_backstage_title_show(void) {
     k_reset(0);
-    message_window_set_title(&D_8015D774);
+    message_window_set_title(&culture_backstage_title);
     k_disp_start(1);
 }
 
-void func_801433C0(void) {
+void culture_event_log_add(void) {
     /* FAKE: 4-byte stack pad places sp2B at sp+0x2B instead of sp+0x2F. T-24094 */
     s32 pad;
     u8 sp2B;

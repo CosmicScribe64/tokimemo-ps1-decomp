@@ -60,7 +60,7 @@ void encounter_walk_home_mode_handler(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }
 
 s32 encounter_walk_home_talk(void) {

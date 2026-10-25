@@ -51,14 +51,14 @@ void staff_roll_start_variant(void) {
     staff_roll_credit_lines_init();
     if (staff_roll_variant == 1) {
         draw2d3d(1, 1);
-        func_80061710();
-        func_80061790();
-        func_800618B0();
+        title_view_init();
+        title_lights_init();
+        title_coordinates_init();
         staff_roll_models_init();
         mode_stage_next();
         return;
     }
-    func_80044774(0);
+    audio_bgm_stop(0);
     cd_audio_request_set(0x07000001, 0x02000E0C, 0xF);
     audio_command(0x300);
     staff_roll_pictures_place();
@@ -75,8 +75,8 @@ void staff_roll_model_matrix_update(void) {
     VECTOR scale;
     s32 pad2[2];
 
-    m1 = *(MATRIX *)D_80125C60;
-    m2 = *(MATRIX *)D_80125C60;
+    m1 = *(MATRIX *)view_base_matrix;
+    m2 = *(MATRIX *)view_base_matrix;
     RotMatrix(&staff_roll_model_rotation, &m1);
     scale.vx = 0x1000;
     scale.vy = 0x1000;
@@ -87,12 +87,12 @@ void staff_roll_model_matrix_update(void) {
     m1.t[1] = staff_roll_model_y;
     m1.t[2] = staff_roll_model_z;
     *(MATRIX *)D_801227A4 = m1;
-    D_801227A0->unk0 = 0;
+    view_coordinates->flag = 0;
 }
 
 void staff_roll_models_init(void) {
     s32 model;
-    TaiikuBig *record;
+    GraphicsCoordinate2 *record;
     u32 *object;
 
     model = 0x801F9004;
@@ -100,16 +100,16 @@ void staff_roll_models_init(void) {
     model += 4;
     model += 4;
     /* FAKE: initializer/do line grouping reproduces setup order; original line layout unknown. T-24094 */
-    object = D_80122640; record = D_801227A0; do {
+    object = model_objects; record = view_coordinates; do {
         func_8009B430(model, (u8 *)object, 0);
         object[1] = (u32)record;
         record++;
         object += 4;
         object[-4] = 0x80000000;
     } while (record != D_80122CA0);
-    func_8009B430(model, (u8 *)D_80122640, 0);
-    D_80122640[1] = (u32)D_801227A0;
-    D_80122640[0] = 0;
+    func_8009B430(model, (u8 *)model_objects, 0);
+    model_objects[1] = (u32)view_coordinates;
+    model_objects[0] = 0;
     staff_roll_model_x = -0x60;
     staff_roll_model_y = 0x20;
     staff_roll_model_z = -0x300;
@@ -130,7 +130,7 @@ void staff_roll_stage_load(void) {
     staff_roll_pictures_fade();
 }
 void staff_roll_music_start(void) {
-    func_80044774(0);
+    audio_bgm_stop(0);
     cd_audio_request_set(0x07000001, 0x02000E0C, 0xF);
     audio_command(0x300);
     mode_step_next();
@@ -213,7 +213,7 @@ s32 staff_roll_credit_lines_update(void) {
     s32 j;
 
     if (staff_roll_line_index < 0x11D) {
-        func_8004B19C(staff_roll_line_index, 0x28, 0x28);
+        debug_print_hex(staff_roll_line_index, 0x28, 0x28);
         for (i = 0; i < 7; i++) {
             j = i + 0x60;
             ((Actor *)actor_pool)[i + 0x60].y -= 1;
@@ -272,13 +272,13 @@ void staff_roll_models_step(void) {
     if (((u32)game_state.mode_step_timer.w >= 0x259U) && (cd_audio_state() & 2)) {
         mode_step_next();
     }
-    func_8004B19C(staff_roll_model_x, 0x14, -0x28);
-    func_8004B19C(staff_roll_model_y, 0x14, -0x1E);
-    func_8004B19C(staff_roll_model_z, 0x14, -0x14);
-    func_8004B19C(game_state.mode_step_timer.w, 0, -0xA);
-    func_8004B19C(sp30, 0, 0);
-    func_8004B19C(staff_roll_girl_slot, 0, 0xA);
-    func_8004B19C(staff_roll_girl_order[staff_roll_girl_slot - 1], 0, 0x14);
+    debug_print_hex(staff_roll_model_x, 0x14, -0x28);
+    debug_print_hex(staff_roll_model_y, 0x14, -0x1E);
+    debug_print_hex(staff_roll_model_z, 0x14, -0x14);
+    debug_print_hex(game_state.mode_step_timer.w, 0, -0xA);
+    debug_print_hex(sp30, 0, 0);
+    debug_print_hex(staff_roll_girl_slot, 0, 0xA);
+    debug_print_hex(staff_roll_girl_order[staff_roll_girl_slot - 1], 0, 0x14);
     if (game_state.pad_held & PAD_LEFT) {
         staff_roll_model_x += 0x14;
     }
@@ -339,7 +339,7 @@ void staff_roll_models_leave(void) {
     }
     staff_roll_model_z -= 0xC8;
     if (staff_roll_model_z < -0x7530) {
-        func_80059048();
+        view_model_slots_clear();
         if (g->current_girl >= GIRL_YOSHIO) {
             game_mode_set(GAME_MODE_TITLE);
         } else {
@@ -477,10 +477,10 @@ void staff_roll_pictures_step(void) {
     if (fc->u >= 0x259 && (cd_audio_state() & 2)) {
         mode_step_set(2);
     }
-    func_8004B19C(fc->w, 0, -0xA);
-    func_8004B19C(quot, 0, 0);
-    func_8004B19C(staff_roll_girl_slot, 0, 0xA);
-    func_8004B19C(staff_roll_girl_order[staff_roll_girl_slot - 1], 0, 0x14);
+    debug_print_hex(fc->w, 0, -0xA);
+    debug_print_hex(quot, 0, 0);
+    debug_print_hex(staff_roll_girl_slot, 0, 0xA);
+    debug_print_hex(staff_roll_girl_order[staff_roll_girl_slot - 1], 0, 0x14);
 }
 
 s32 clear_save_ask_init(void) {
@@ -543,7 +543,7 @@ void clear_save_card_check_step(void) {
 
     switch (gs->substep) {
     case 0:
-        if (func_80053F04() != 0) {
+        if (memory_card_check_poll() != 0) {
             if (gs->memory_card_result == 1) {
                 memory_card_stop();
                 gs->substep += 1;
@@ -564,7 +564,7 @@ void clear_save_card_check_step(void) {
         gs->substep += 1;
         break;
     case 2:
-        if (func_80054140() == 2) {
+        if (memory_card_scan_poll() == 2) {
             gs->substep += 1;
         } else if ((u32) gs->memory_card_timer >= 0x201U) {
             mode_step_set(0xFF);
@@ -584,8 +584,8 @@ void clear_save_card_check_step(void) {
         }
         break;
     case 4:
-        if (func_80054284() == 3) {
-            func_800552DC();
+        if (memory_card_system_read_poll() == 3) {
+            memory_card_system_bank_load();
             text_system_reset();
             set_kanji_string(-0x80, 0x32, 0, (s32) "セーブするアルバムを選んでください", 0);
             k_disp_start(1);
@@ -604,10 +604,10 @@ s32 clear_save_stage_prepare(void) {
     switch (game_state.mode_step) {
     case 0:
         game_state.screen_brightness = 0;
-        func_80059E00();
+        boot_data_load_step();
         break;
     case 1:
-        func_80059BC0();
+        boot_hud_textures_step();
         break;
     case 2:
         clear_save_ask_init();
@@ -670,7 +670,7 @@ void clear_save_new_slot_step(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (game_state.memory_card_timer >= 0x201U || game_state.memory_card_result == 0xD0) {
@@ -679,7 +679,7 @@ void clear_save_new_slot_step(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             mode_step_set(2);
             hud_save_slot_info_show(0, 0);
             settings_save_load_save_prompt();
@@ -706,7 +706,7 @@ void clear_save_slot_select(void) {
                 /* FAKE: T-24209, byte view store + plain re-read lets uopt
                  * promote unk_1118 to v0 (andi v0; move a0) */
                 ((u8 *)&game_state)[0x1118] = slot;
-                if (func_80054694(game_state.save_slot) == 1) {
+                if (memory_card_file_create(game_state.save_slot) == 1) {
                     memory_card_start();
                     mode_step_next();
                 } else {
@@ -755,7 +755,7 @@ void clear_save_write_step(void) {
         g->substep += 1;
         break;
     case 1:
-        if (func_80054590() == 0x14) {
+        if (memory_card_save_write_poll() == 0x14) {
             D_800E7D14[g->save_slot] = 1;
             g->substep += 1;
             memory_card_stop();
@@ -770,14 +770,14 @@ void clear_save_write_step(void) {
             g->memory_card_job = 1;
             D_800E7D36 = g->save_slot;
             g->save_slot = 0;
-            func_80054E6C();
+            memory_card_slot_summary_store();
             g->substep += 1;
         } else {
             mode_stage_set(2);
         }
         break;
     case 3:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             mode_stage_set(2);
         } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {
@@ -901,7 +901,7 @@ void clear_save_card_unformatted_step(void) {
         break;
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            if (func_80054108() == 1) {
+            if (memory_card_format() == 1) {
                 game_state.substep = 0x10;
             } else {
                 memory_card_start();
@@ -928,7 +928,7 @@ void clear_save_card_unformatted_step(void) {
         }
         break;
     case 16:
-        if (func_80054694(0) == 1) {
+        if (memory_card_file_create(0) == 1) {
             game_state.substep += 1;
         } else {
             memory_card_start();
@@ -940,11 +940,11 @@ void clear_save_card_unformatted_step(void) {
         *D_800E7D14 = 1;
         game_state.save_slot = 0;
         memory_card_start();
-        func_80054E6C();
+        memory_card_slot_summary_store();
         game_state.substep += 1;
         break;
     case 18:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
@@ -1082,8 +1082,8 @@ void last_photo_load_step(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_800590CC(1);
-            func_8004A1A0(sp5C, 0, 4, 2, 2, 0x1FF, -0x80, -0x78, 8, 9);
+            view_display_set_narrow_or_standard(1);
+            prim_bg_slot_setup(sp5C, 0, 4, 2, 2, 0x1FF, -0x80, -0x78, 8, 9);
             load_palette(0x80190000, 0x1F, 1, 3, 0);
             mode_stage_next();
             mode_step_set(0);
@@ -1091,7 +1091,7 @@ void last_photo_load_step(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0(sp5C, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 8, 9);
+            prim_bg_slot_setup(sp5C, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 8, 9);
             load_palette(0x80198000, 0x1F, 1, 3, 0);
             mode_stage_next();
             cd_audio_request_set(0x1D000077, 0x1000007B, 0);
@@ -1100,7 +1100,7 @@ void last_photo_load_step(void) {
         }
         break;
     }
-    func_8004AC18(0xFF);
+    prim_flash_gray(0xFF);
 }
 
 void last_photo_stage_load(void) {
@@ -1112,7 +1112,7 @@ void last_photo_stage_load(void) {
 void last_photo_fade_in_step(void) {
     back_clear_switch(1);
     if (game_state.substep != 0 && (u32)game_state.mode_step_timer.w < 0xFF) {
-        func_8004AC18(0xFF - game_state.mode_step_timer.w);
+        prim_flash_gray(0xFF - game_state.mode_step_timer.w);
     }
 }
 
@@ -1151,7 +1151,7 @@ void last_photo_stage_show(void) {
     }
     /* (u32): the original compares the s32 counters unsigned (sltiu); T-1321 */
     if ((u32) game_state.mode_stage_timer < 0xFFU) {
-        func_8004AC18(0xFF - game_state.mode_stage_timer);
+        prim_flash_gray(0xFF - game_state.mode_stage_timer);
     }
     if (game_state.pad_pressed & 0x860) {
         mode_stage_next();
@@ -1163,7 +1163,7 @@ void last_photo_leave_choose(void) {
     sprite_tables_clear();
     actor_clear_upper();
     func_8009C5E0(0);
-    func_8004111C();
+    vram_clear_framebuffers();
     if (game_state.options_dirty != 0) {
         mode_step_set(3);
         return;
@@ -1177,7 +1177,7 @@ void last_photo_leave_choose(void) {
 
 void last_photo_leave_to_clear_save(void) {
     if (game_state.video_width == 0x100) {
-        func_800590CC(0);
+        view_display_set_narrow_or_standard(0);
     }
     game_mode_set(GAME_MODE_ETC_C4);
     func_8009C5E0(1);
@@ -1185,7 +1185,7 @@ void last_photo_leave_to_clear_save(void) {
 
 void last_photo_leave_to_album(void) {
     if (game_state.video_width == 0x100) {
-        func_800590CC(0);
+        view_display_set_narrow_or_standard(0);
     }
     game_mode_set(GAME_MODE_ALBUM);
     func_8009C5E0(1);
@@ -1193,7 +1193,7 @@ void last_photo_leave_to_album(void) {
 
 void last_photo_leave_to_title(void) {
     if (game_state.video_width == 0x100) {
-        func_800590CC(0);
+        view_display_set_narrow_or_standard(0);
     }
     game_state.current_girl += 0x10;
     game_mode_set(GAME_MODE_TITLE);

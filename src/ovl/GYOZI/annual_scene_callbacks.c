@@ -2,17 +2,17 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_8013BD50(void) {
+void annual_scene_audio_command_play_4080(void) {
     func_8008A0D4(0x4080);
     func_8004DE1C();
 }
 
-void func_8013BD78(void) {
+void annual_scene_audio_command_play_4078(void) {
     func_8008A0D4(0x4078);
     func_8004DE1C();
 }
 
-void func_8013BDA0(void) {
+void annual_scene_selected_girl_flag_and_score_update(void) {
     s32 a;
     s32 b;
 
@@ -36,7 +36,7 @@ void func_8013BDA0(void) {
     func_8004DE1C();
 }
 
-void func_8013BEA0(void) {
+void annual_scene_resource_address_scalars_init(void) {
     D_801479B0 = (u8 *)0x801E8088;
     D_801479B4 = (u8 *)0x801E808C;
     D_801479B8 = (u8 *)0x801E80A0;
@@ -57,8 +57,8 @@ void func_8013BEA0(void) {
     D_801479F4 = (u8 *)0x801E4000;
 }
 
-void func_8013BFB4(void) {
-    func_8013BFD4();
+void annual_scene_mode_step_dispatch_call(void) {
+    annual_scene_54_entry_callback_dispatch();
 }
 
 typedef struct {
@@ -66,7 +66,7 @@ typedef struct {
 } FnTbl54; /* size 0xD8 */
 extern FnTbl54 D_801479F8;
 
-void func_8013BFD4(void) {
+void annual_scene_54_entry_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl54 tbl;
 
@@ -80,19 +80,19 @@ void func_8013BFD4(void) {
     }
 }
 
-void func_8013C070(void) {
+void annual_scene_resource_command_and_addresses_init(void) {
     func_80051DD8(0x71, 0x801B0000, 0x82A1);
-    func_8013BEA0();
+    annual_scene_resource_address_scalars_init();
     func_8004DE1C();
 }
 
-void func_8013C0A8(void) {
+void annual_scene_audio_command_play_0501(void) {
     func_80086AB0(0x501);
     func_8004DE1C();
 }
 
-void func_8013C0D0(void) {
-    func_8013A820();
+void annual_scene_state_flag_update(void) {
+    annual_scene_talk_run_current();
     if (D_801474AC == 3) {
         D_8012E6B0 = 1;
         return;
@@ -100,7 +100,7 @@ void func_8013C0D0(void) {
     D_8012E6B0 = 0;
 }
 
-void func_8013C118(void) {
+void annual_scene_resource_state_setup(void) {
     func_8004EDE0(1, 0);
     func_80054864(1);
     func_8004C670();
@@ -118,14 +118,14 @@ void func_8013C118(void) {
     func_800744A0();
     func_80074950();
     func_8008FC10();
-    /* FAKE: indirect byte-store and reload via address-of shares $a0 across both stores and the call (T-9020 idiom, as in func_8013AC38 and func_8013DC00). T-24084 */
+    /* FAKE: indirect byte-store and reload via address-of shares $a0 across both stores and the call (T-9020 idiom, as in annual_scene_group_state_init and func_8013DC00). T-24084 */
     *(u8 *)&D_800F5ACD = *(u8 *)&D_800F62CF = 7;
     func_8008F618(*(u8 *)&D_800F62CF);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_8014749C = D_8014743C;
     D_801474A0 = D_80147460;
     D_801474A4 = D_80147484;
-    func_8013BEA0();
+    annual_scene_resource_address_scalars_init();
     if (D_800F53DF >= 6U && D_800F53DF < 0xAU) {
         func_8004EE18((s32)D_801479C0, 0x11, 1, 2, 0);
         func_8008FD1C((s32)D_801479C8, (s32)D_801479CC, (s32)D_801479D0, (s32)D_801479D4, (s32)D_801479D8, (s32)D_801479DC);
@@ -139,19 +139,19 @@ void func_8013C118(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_scene_callbacks.rodata", D_80145BA0);
 
-void func_8013C310(void) {
+void annual_scene_callback_state_reset(void) {
     D_801474A8 = 0;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145BA0);
     func_8004DE1C();
 }
 
-void func_8013C354(void) {
+void annual_scene_audio_command_play_3fed(void) {
     func_8008A0D4(0x3FED);
     func_8004DE1C();
 }
 
-void func_8013C37C(void) {
+void annual_scene_audio_command_play_466f(void) {
     func_8008A0D4(0x466F);
     func_8004DE1C();
 }

@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl20; /* size 0x50 */
 extern FnTbl20 D_80147B18;
 
-void func_8013C3B0(void) {
+void annual_timing_sequence_resource_addresses_init(void) {
     D_80147AD0 = (u8 *)0x801E60CC;
     D_80147AD4 = (u8 *)0x801E60D0;
     D_80147AD8 = (u8 *)0x801E60E4;
@@ -28,46 +28,46 @@ void func_8013C3B0(void) {
     D_80147B14 = (u8 *)0x801E2000;
 }
 
-void func_8013C4D0(void) {
-    u8 sel = D_801474B8; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+void annual_timing_sequence_substate_dispatch(void) {
+    u8 timing_sequence_substate = D_801474B8; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
-    switch (sel) {
+    switch (timing_sequence_substate) {
     case 0:
-        func_8013C560();
+        annual_timing_sequence_group_a_step_dispatch();
         return;
     case 1:
-        func_8013C5E8();
+        annual_timing_sequence_group_b_step_dispatch();
         return;
     case 2:
-        func_8013C670();
+        annual_timing_sequence_group_c_step_dispatch();
         return;
     case 3:
-        func_8013C6EC();
+        annual_timing_sequence_group_d_step_dispatch();
         return;
     default:
-        func_8013C774();
+        annual_timing_sequence_choice_sounds_dispatch();
         return;
     }
 }
 
-void func_8013C560(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+void annual_timing_sequence_group_a_step_dispatch(void) {
+    s32 mode_step_index; /* declared before timing_sequence_callbacks: its stack slot sits above timing_sequence_callbacks (T-3330) */
+    FnTbl20 timing_sequence_callbacks;
 
-    tbl = D_80147B18;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    timing_sequence_callbacks = D_80147B18;
+    mode_step_index = D_800F647A;
+    timing_sequence_callbacks.f[mode_step_index]();
 }
 
 extern FnTbl20 D_80147B68;
 
-void func_8013C5E8(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+void annual_timing_sequence_group_b_step_dispatch(void) {
+    s32 mode_step_index; /* declared before timing_sequence_callbacks: its stack slot sits above timing_sequence_callbacks (T-3330) */
+    FnTbl20 timing_sequence_callbacks;
 
-    tbl = D_80147B68;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    timing_sequence_callbacks = D_80147B68;
+    mode_step_index = D_800F647A;
+    timing_sequence_callbacks.f[mode_step_index]();
 }
 
 typedef struct {
@@ -75,34 +75,34 @@ typedef struct {
 } FnTbl25; /* size 0x64 */
 extern FnTbl25 D_80147BB8;
 
-void func_8013C670(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+void annual_timing_sequence_group_c_step_dispatch(void) {
+    s32 mode_step_index; /* declared before timing_sequence_callbacks: its stack slot sits above timing_sequence_callbacks (T-3330) */
+    FnTbl25 timing_sequence_callbacks;
 
-    tbl = D_80147BB8;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    timing_sequence_callbacks = D_80147BB8;
+    mode_step_index = D_800F647A;
+    timing_sequence_callbacks.f[mode_step_index]();
 }
 
 extern FnTbl20 D_80147C1C;
 
-void func_8013C6EC(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+void annual_timing_sequence_group_d_step_dispatch(void) {
+    s32 mode_step_index; /* declared before timing_sequence_callbacks: its stack slot sits above timing_sequence_callbacks (T-3330) */
+    FnTbl20 timing_sequence_callbacks;
 
-    tbl = D_80147C1C;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    timing_sequence_callbacks = D_80147C1C;
+    mode_step_index = D_800F647A;
+    timing_sequence_callbacks.f[mode_step_index]();
 }
 
 /* Return type preserves the original fall-through schedule. T-20005. */
-s32 func_8013C774(void) {
-    s32 idx; /* declared before table: its stack slot sits above it (T-3330) */
-    GzCallbacks90 table;
+s32 annual_timing_sequence_choice_sounds_dispatch(void) {
+    s32 mode_step_index; /* declared before timing_sequence_callbacks: its stack slot sits above it (T-3330) */
+    GzCallbacks90 timing_sequence_callbacks;
 
-    table = D_80147C6C;
-    idx = D_800F647A;
-    table.callbacks[idx]();
+    timing_sequence_callbacks = D_80147C6C;
+    mode_step_index = D_800F647A;
+    timing_sequence_callbacks.callbacks[mode_step_index]();
     if (D_800F62F0 & 0x100) {
         if (D_800F53A0.unk_01C[0x23] >= 6 && D_800F53A0.unk_01C[0x23] < 9) {
             func_8004EE18(D_80147AE0, 0x11, 1, 0, 0);
@@ -121,13 +121,13 @@ s32 func_8013C774(void) {
     }
 }
 
-void func_8013C8E0(void) {
+void annual_timing_audio_resource_init(void) {
     func_80051DD8(0x71, 0x801AE000, 0x8453);
-    func_8013C3B0();
+    annual_timing_sequence_resource_addresses_init();
     func_8004DE1C();
 }
 
-void func_8013C91C(void) {
+void annual_timing_scene_state_init(void) {
     D_800F6412 = 0;
     D_800F6458 = 1;
     func_8009068C();
@@ -140,7 +140,7 @@ void func_8013C91C(void) {
     func_8008FC10();
     /* FAKE: the store inside the call shares $a0 with the argument (T-9020, T-9170) */
     func_8008F618(*(u8 *)&D_800F62CF = 1);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_8014749C = D_80147440;
     /* three words of a 0x24-byte record array reached through one base: as1 keeps the loads in order */
     D_801474A0 = (&D_80147440)[9];
@@ -150,7 +150,7 @@ void func_8013C91C(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_timing_sequence.rodata", D_80145BB8);
 
-void func_8013C9D0(void) {
+void annual_timing_selector_0_callback(void) {
     D_801474A8 = 0;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145BB8);
@@ -159,7 +159,7 @@ void func_8013C9D0(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_timing_sequence.rodata", D_80145BC0);
 
-void func_8013CA14(void) {
+void annual_timing_selector_3_callback(void) {
     D_801474A8 = 3;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145BC0);
@@ -168,14 +168,14 @@ void func_8013CA14(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_timing_sequence.rodata", D_80145BC8);
 
-void func_8013CA5C(void) {
+void annual_timing_selector_6_callback(void) {
     D_801474A8 = 6;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145BC8);
     func_8004DE1C();
 }
 
-void func_8013CAA4(void) {
+void annual_timing_library_title_callback(void) {
     ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
     D_801474A8 = 0xA;
     D_801474AC = 0;
@@ -183,12 +183,12 @@ void func_8013CAA4(void) {
     func_8004DE1C();
 }
 
-void func_8013CB18(void) {
+void annual_timing_theater_title_setup(void) {
     ((GirlFlag4 *)&D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10[0])->f = 1;
     D_801474A8 = 0xD;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, "演劇部");
-    func_8013C3B0();
+    annual_timing_sequence_resource_addresses_init();
     if (((u8) D_800F53A0.unk_01C[0x23] >= 6U) && ((u8) D_800F53A0.unk_01C[0x23] < 0xAU)) {
         func_8004EE18(D_80147AE0, 0x11, 1, 2, 0);
         func_8008FD1C(D_80147AE8, D_80147AEC, D_80147AF0, D_80147AF4, D_80147AF8, D_80147AFC);
@@ -204,32 +204,32 @@ void func_8013CB18(void) {
     func_8004DE1C();
 }
 
-void func_8013CCDC(void) {
+void annual_callback_audio_405b_a(void) {
     func_8008A0D4(0x405B);
     func_8004DE1C();
 }
 
-void func_8013CD04(void) {
+void annual_callback_audio_3fe3(void) {
     func_8008A0D4(0x3FE3);
     func_8004DE1C();
 }
 
-void func_8013CD2C(void) {
+void annual_callback_audio_405b_b(void) {
     func_8008A0D4(0x405B);
     func_8004DE1C();
 }
 
-void func_8013CD54(void) {
+void annual_callback_audio_4052(void) {
     func_8008A0D4(0x4052);
     func_8004DE1C();
 }
 
-void func_8013CD7C(void) {
+void annual_callback_audio_4643(void) {
     func_8008A0D4(0x4643);
     func_8004DE1C();
 }
 
-void func_8013CDA4(void) {
+void annual_callback_audio_5e5a(void) {
     func_80072734(0x5E5A);
     func_8004DE1C();
 }

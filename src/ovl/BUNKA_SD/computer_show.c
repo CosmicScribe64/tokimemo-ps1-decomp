@@ -5,7 +5,7 @@
 
 extern u8 D_80120656;
 
-s32 func_80134540(void) {
+s32 stage_show_computer_club_sector_load(void) {
     if (game_state.substep == 0) {
         cd_read_sectors(0x85, 0x80180000, 0x4BD4);
         game_state.substep += 1;
@@ -15,12 +15,12 @@ s32 func_80134540(void) {
 }
 
 /* FAKE: the D_8012069A store shares a source line with the loop head; as1 schedules by line and this gives the original's order of the loop setup (T-7020, T-9380) */
-void func_801345BC(void) {
+void stage_show_computer_show_input_update(void) {
     s32 i;
 
     if ((game_state.mode_step >= 3) && (game_state.mode_step < 7)) {
         if (game_state.pad_held & PAD_CIRCLE) {
-            func_801346D4();
+            stage_show_computer_show_mode_step_dispatch();
             D_80120656 = 0x82;
             D_8012069A = 0x82; for (i = 0; i < 2; i++) {
                 D_8011ED58[(i + 1) * 0x110 + 0x18BA] = 0x82;
@@ -41,28 +41,28 @@ void func_801345BC(void) {
     if ((game_state.mode_step >= 3) && (game_state.mode_step < 6) && (game_state.pad_held & PAD_CROSS)) {
         mode_step_set(5);
     }
-    func_801346D4();
+    stage_show_computer_show_mode_step_dispatch();
 }
 
-void func_801346D4(void) {
+void stage_show_computer_show_mode_step_dispatch(void) {
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     switch (game_state.mode_step) {
     case 0:
-        func_80134260();
+        stage_show_scene_state_reset();
         return;
     case 1:
-        func_80134540();
+        stage_show_computer_club_sector_load();
         return;
     case 2:
-        func_801347CC();
+        stage_show_computer_show_audio_start();
         return;
     case 3:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         return;
     case 4:
-        func_80134800();
+        stage_show_computer_show_animation_tick();
         return;
     case 5:
         audio_command(0xC1);
@@ -70,10 +70,10 @@ void func_801346D4(void) {
         mode_step_next();
         return;
     case 6:
-        func_80134850();
+        stage_show_computer_show_actor_brightness_fade();
         return;
     case 7:
-        func_80134314();
+        stage_show_scene_finish_wait();
         return;
     default:
         game_mode_reset_to_title();
@@ -81,17 +81,17 @@ void func_801346D4(void) {
     }
 }
 
-void func_801347CC(void) {
+void stage_show_computer_show_audio_start(void) {
     audio_bank_start(1, 0x201);
-    func_80134938();
+    stage_show_computer_show_actor_texture_setup();
     mode_step_next();
 }
 
-void func_80134800(void) {
+void stage_show_computer_show_animation_tick(void) {
     u32 t;
 
-    func_80134B88();
-    func_80134D94();
+    stage_show_computer_show_timed_audio_commands();
+    stage_show_computer_show_frame_and_fade_update();
     t = game_state.mode_step_timer.u + 1;
     game_state.mode_step_timer.u = t;
     if (t >= 0x818) {
@@ -99,8 +99,8 @@ void func_80134800(void) {
     }
 }
 
-/* FAKE: T-22021. The bytes game_state.game_mode_scratch and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see func_8013987C in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; `s32` without a return matches the implicit-int call earlier in this file (no prototype); the original source is unknown. */
-s32 func_80134850(void) {
+/* FAKE: T-22021. The bytes game_state.game_mode_scratch and unk_110C are read and written only as u8 views, so uopt promotes each to one register (see stage_show_brass_band_actor_brightness_fade in 801388D0.c); `*= 0` keeps the `move v1,zero` that a plain `= 0` folds into `sb zero`; `s32` without a return matches the implicit-int call earlier in this file (no prototype); the original source is unknown. */
+s32 stage_show_computer_show_actor_brightness_fade(void) {
     s32 i;
     u32 q;
 
@@ -127,7 +127,7 @@ s32 func_80134850(void) {
     }
 }
 
-void func_80134938(void) {
+void stage_show_computer_show_actor_texture_setup(void) {
     s32 i;
 
     for (i = 0; i < 0x10; i++) {
@@ -173,7 +173,7 @@ void func_80134938(void) {
     search_load_tpage_buf_lock(D_8013C710[14], 1);
 }
 
-void func_80134B88(void) {
+void stage_show_computer_show_timed_audio_commands(void) {
     /* u32 selector: sltiu compares and the selector stays in $v0 (T-8020) */
     switch ((u32)game_state.mode_step_timer.w) {                     /* irregular */
     case 0x4F2:
@@ -238,7 +238,7 @@ void func_80134B88(void) {
  * GameState read goes through `g`: uopt does not copy-propagate an expression that holds a load through a
  * pointer, so the fade colour stays one variable (as in ETC func_80144224, T-25146) and the first counter is
  * loaded straight into its own register. Grey level is (0x68E - frame) * 0x10201. T-25142, T-25306 */
-s32 func_80134D94(void) {
+s32 stage_show_computer_show_frame_and_fade_update(void) {
     u32 q;
     s32 b;
     s32 col;
@@ -275,7 +275,7 @@ s32 func_80134D94(void) {
             b = 0;
             q = 0;
         }
-        /* FAKE: T-25142. `q * 1` is not a plain copy, so copy propagation keeps a range for the arm value (`move v0,a0` at the switch head); the empty test keeps it before the switch (as `q * 2` in func_80132708). */
+        /* FAKE: T-25142. `q * 1` is not a plain copy, so copy propagation keeps a range for the arm value (`move v0,a0` at the switch head); the empty test keeps it before the switch (as `q * 2` in stage_show_picture_index_set). */
         t = q * 1;
         if (t < 0) {
         }
@@ -337,7 +337,7 @@ s32 func_80134D94(void) {
         u32 w;
         u32 n;
 
-        /* FAKE: T-25306. u8 view of the s8 counter, read with lbu as in func_80134850 (T-22021). */
+        /* FAKE: T-25306. u8 view of the s8 counter, read with lbu as in stage_show_computer_show_actor_brightness_fade (T-22021). */
         n = *(u8 *)&g->mode_stage_scratch;
         D_80120762 = 0x40;
         w = n / 14;

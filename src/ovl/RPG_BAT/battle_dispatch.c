@@ -162,23 +162,23 @@ s32 rpg_stage_fight(void) {
 }
 
 void rpg_code_entry_update(void) {
-    RpgWordTbl10 sp58;
-    RpgWordTbl10 sp30;
+    RpgPadButtonSequence sp58;
+    RpgPadButtonSequence sp30;
     s32 ten; /* FAKE: named 10 mentioned first puts the hoisted constant before the counters in the bne operands; real source unknown. T-17107 */
 
     ten = 10;
     sp58 = rpg_code_sequence_a;
     sp30 = rpg_code_sequence_b;
-    rpg_code_entry.pad_now = func_80043010();
+    rpg_code_entry.pad_now = pad_raw_read();
     if (rpg_code_entry.pad_now != rpg_code_entry.pad_last) {
         rpg_code_entry.pad_last = rpg_code_entry.pad_now;
         if ((rpg_code_entry.pad_now & 0xFFFF) != 0) {
-            if (rpg_code_entry.pad_now == sp58.v[rpg_code_entry.sequence_a_progress]) {
+            if (rpg_code_entry.pad_now == sp58.buttons[rpg_code_entry.sequence_a_progress]) {
                 rpg_code_entry.sequence_a_progress += 1;
             } else {
                 rpg_code_entry.sequence_a_progress = 0;
             }
-            if (rpg_code_entry.pad_now == sp30.v[rpg_code_entry.sequence_b_progress]) {
+            if (rpg_code_entry.pad_now == sp30.buttons[rpg_code_entry.sequence_b_progress]) {
                 rpg_code_entry.sequence_b_progress += 1;
             } else {
                 rpg_code_entry.sequence_b_progress = 0;
@@ -248,9 +248,9 @@ void rpg_pause_update(void) {
         rpg_pause_debounce = 0;
     }
     while (rpg_pause_state == 1 && rpg_pause_debounce == 0) {
-        if (!(func_80043010() & 0x800)) {
+        if (!(pad_raw_read() & 0x800)) {
             while (1) {
-                if (func_80043010() & 0x800) {
+                if (pad_raw_read() & 0x800) {
                     rpg_se_play_latched_5xx(0x500, 1, 0);
                     rpg_pause_state = 0;
                     rpg_actor_set_animation(0x1C, 0x33, 1, 0);

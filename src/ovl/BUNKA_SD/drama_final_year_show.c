@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKA_SD.h"
 
-s32 func_801369D0(void) {
+s32 stage_show_scene_b_data_load(void) {
     if (game_state.substep == 0) {
         audio_bank_load_start(1, 0xBEFB, 0xBEE2, 0xD19D, 0xD170, 0xD164);
         game_state.substep = game_state.substep + 1;
@@ -11,7 +11,7 @@ s32 func_801369D0(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 2) {
-        if (func_80044F94(1) == 1) {
+        if (audio_bank_transfer_done(1) == 1) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 3) {
@@ -27,123 +27,123 @@ s32 func_801369D0(void) {
     }
 }
 
-void func_80136B3C(void) {
+void stage_show_scene_b_input_update(void) {
     if (game_state.mode_step >= 3 && game_state.mode_step < 0x26 && (game_state.pad_held & PAD_CIRCLE)) {
         if (cd_audio_state() != 2) {
             audio_command(0x74);
         }
-        func_80136BFC();
+        stage_show_scene_b_dispatch();
     }
     if (game_state.mode_step >= 3 && game_state.mode_step < 0x24 && (game_state.pad_held & PAD_CROSS)) {
         audio_command(0xC1);
         audio_command(0xC4);
         mode_step_set(0x23);
     }
-    func_80136BFC();
+    stage_show_scene_b_dispatch();
 }
 
-void func_80136BFC(void) {
+void stage_show_scene_b_dispatch(void) {
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     switch (game_state.mode_step) {
     case 0:
-        func_80134260();
+        stage_show_scene_state_reset();
         audio_command(0x7F);
         break;
     case 1:
-        func_801369D0();
+        stage_show_scene_b_data_load();
         break;
     case 2:
         audio_command(0x200);
-        func_80136EDC();
+        stage_show_drama_final_show_state_initialize();
         break;
     case 3:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         break;
     case 4:
-        func_80138898(0x78U);
+        stage_show_drama_second_timer_gate(0x78U);
         break;
     case 5:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         break;
     case 6:
-        func_801371BC();
+        stage_show_drama_final_event_actor_set_a();
         break;
     case 7:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         break;
     case 8:
     case 9:
     case 10:
     case 11:
-        func_801373D0();
+        stage_show_scene_b_event_list_run();
         break;
     case 12:
         audio_command(0xC1);
         mode_step_next();
         break;
     case 13:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         break;
     case 14:
-        func_8013731C();
+        stage_show_drama_final_event_list_step();
         break;
     case 15:
-        func_8013785C(0x3C);
+        stage_show_drama_final_timer_gate(0x3C);
         break;
     case 16:
-        func_8013722C();
+        stage_show_drama_final_event_actor_clear_and_set();
         break;
     case 17:
-        func_8013785C(0x3C);
+        stage_show_drama_final_timer_gate(0x3C);
         break;
     case 18:
         audio_command(0x201);
         mode_step_next();
         break;
     case 19:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         break;
     case 20:
-        func_8013785C(0x78);
+        stage_show_drama_final_timer_gate(0x78);
         break;
     case 21:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         break;
     case 22:
-        func_8013785C(0x1E);
+        stage_show_drama_final_timer_gate(0x1E);
         break;
     case 23:
-        func_8013731C();
+        stage_show_drama_final_event_list_step();
         break;
     case 24:
-        func_8013785C(0xF);
+        stage_show_drama_final_timer_gate(0xF);
         break;
     case 25:
-        func_8013731C();
+        stage_show_drama_final_event_list_step();
         break;
     case 26:
-        func_801372BC();
+        stage_show_drama_final_event_actor_set_b();
         break;
     case 27:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         break;
     case 28:
     case 29:
     case 30:
-        func_801373D0();
+        stage_show_scene_b_event_list_run();
         break;
     case 31:
         audio_command(0x202);
         mode_step_next();
         break;
     case 32:
-        func_8013785C(0x78);
+        stage_show_drama_final_timer_gate(0x78);
         break;
     case 33:
     case 34:
-        func_801373D0();
+        stage_show_scene_b_event_list_run();
         break;
     case 35:
         audio_command(0xC1);
@@ -157,10 +157,10 @@ void func_80136BFC(void) {
         }
         break;
     case 37:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         break;
     case 38:
-        func_80134314();
+        stage_show_scene_finish_wait();
         break;
     default:
         game_mode_reset_to_title();
@@ -169,19 +169,19 @@ void func_80136BFC(void) {
     game_state.mode_step_timer.u += 1;
 }
 
-void func_80136EDC(void) {
-    func_80136F3C();
+void stage_show_drama_final_show_state_initialize(void) {
+    stage_show_drama_final_show_actor_table_initialize();
     k_speed_set(TEXT_SPEED_EVERY_SIX_FRAMES);
     D_8013CEBC = 0;
-    D_8013CEC8 = 1;
-    D_8013CECC = 0;
-    D_8013CED0 = 0;
-    D_8013CED4 = 0;
-    D_8013CED8 = 0;
+    stage_show_scene_b_event_cursor = 1;
+    stage_show_scene_b_script_index = 0;
+    stage_show_scene_b_frame = 0;
+    stage_show_scene_b_interpreter_state = 0;
+    stage_show_scene_b_text_active = 0;
     mode_step_next();
 }
 
-void func_80136F3C(void) {
+void stage_show_drama_final_show_actor_table_initialize(void) {
     s32 i;
 
     for (i = 0; i < 0x10; i++) {
@@ -205,8 +205,8 @@ void func_80136F3C(void) {
         ((Actor *)actor_pool)[96 + i].unk_43 = 0;
         ((Actor *)actor_pool)[96 + i].unk_04 = 0;
     }
-    func_801377D4(0, 0x40, 1);
-    func_801377D4(0x1F, 0x44, 1);
+    stage_show_drama_final_actor_slot_state_set(0, 0x40, 1);
+    stage_show_drama_final_actor_slot_state_set(0x1F, 0x44, 1);
     load_tpage_buf_lock(5, D_8013CEDC[0], 1);
     load_tpage_buf_lock(6, D_8013CEDC[1], 1);
     load_tpage_buf_lock(7, D_8013CEDC[2], 1);
@@ -222,53 +222,53 @@ void func_80136F3C(void) {
     load_tpage_buf_lock(0x15, D_8013CEDC[12], 1);
 }
 
-void func_801371BC(void) {
-    func_801377D4(0, 0x44, 1);
-    func_801377D4(1, 0x18, 1);
-    func_801377D4(2, 0, 1);
-    func_801377D4(3, 1, 1);
-    func_801377D4(0x1F, 0x41, 1);
+void stage_show_drama_final_event_actor_set_a(void) {
+    stage_show_drama_final_actor_slot_state_set(0, 0x44, 1);
+    stage_show_drama_final_actor_slot_state_set(1, 0x18, 1);
+    stage_show_drama_final_actor_slot_state_set(2, 0, 1);
+    stage_show_drama_final_actor_slot_state_set(3, 1, 1);
+    stage_show_drama_final_actor_slot_state_set(0x1F, 0x41, 1);
     mode_step_next();
 }
 
-void func_8013722C(void) {
-    func_801377D4(1, 0xFF, 0);
-    func_801377D4(2, 0xFF, 0);
-    func_801377D4(3, 0xFF, 0);
-    func_801377D4(4, 0xFF, 0);
-    func_801377D4(5, 0xFF, 0);
-    func_801377D4(0, 0x44, 1);
-    func_801377D4(0x1F, 0x42, 1);
+void stage_show_drama_final_event_actor_clear_and_set(void) {
+    stage_show_drama_final_actor_slot_state_set(1, 0xFF, 0);
+    stage_show_drama_final_actor_slot_state_set(2, 0xFF, 0);
+    stage_show_drama_final_actor_slot_state_set(3, 0xFF, 0);
+    stage_show_drama_final_actor_slot_state_set(4, 0xFF, 0);
+    stage_show_drama_final_actor_slot_state_set(5, 0xFF, 0);
+    stage_show_drama_final_actor_slot_state_set(0, 0x44, 1);
+    stage_show_drama_final_actor_slot_state_set(0x1F, 0x42, 1);
     mode_step_next();
 }
 
-void func_801372BC(void) {
-    func_801377D4(0, 0x44, 1);
-    func_801377D4(1, 0x26, 1);
-    func_801377D4(2, 0x27, 1);
-    func_801377D4(0x1F, 0x43, 1);
+void stage_show_drama_final_event_actor_set_b(void) {
+    stage_show_drama_final_actor_slot_state_set(0, 0x44, 1);
+    stage_show_drama_final_actor_slot_state_set(1, 0x26, 1);
+    stage_show_drama_final_actor_slot_state_set(2, 0x27, 1);
+    stage_show_drama_final_actor_slot_state_set(0x1F, 0x43, 1);
     mode_step_next();
 }
 
-void func_8013731C(void) {
+void stage_show_drama_final_event_list_step(void) {
     if (game_state.mode_step_timer.u == 1) {
-        func_80137824(D_8013C814[D_8013CECC]);
+        stage_show_drama_final_kanji_line_start(stage_show_scene_b_text_script_addresses[stage_show_scene_b_script_index]);
         game_state.mode_stage_timer = 1;
-        func_80137620();
+        stage_show_drama_final_event_text_and_audio_display();
         return;
     }
-    func_80137620();
+    stage_show_drama_final_event_text_and_audio_display();
     if (game_state.mode_stage_timer == 0) {
-        D_8013CECC += 1;
-        D_8013CEC8 = 1;
-        D_8013CED0 = 0;
-        D_8013CED4 = 0;
+        stage_show_scene_b_script_index += 1;
+        stage_show_scene_b_event_cursor = 1;
+        stage_show_scene_b_frame = 0;
+        stage_show_scene_b_interpreter_state = 0;
         k_reset(1);
         mode_step_next();
     }
 }
 
-s32 func_801373D0(void) {
+s32 stage_show_scene_b_event_list_run(void) {
     BsdEvent *list;
     BsdEvent *ev;
     s32 i;
@@ -276,59 +276,59 @@ s32 func_801373D0(void) {
     s32 img;
 
     if (game_state.mode_stage_timer == 0) {
-        D_8013CED8 = 0;
-        if (D_8013CED4 != 0) {
-            switch (D_8013CED4) {
+        stage_show_scene_b_text_active = 0;
+        if (stage_show_scene_b_interpreter_state != 0) {
+            switch (stage_show_scene_b_interpreter_state) {
             case 1:
                 game_state.mode_step_timer.w = 0;
                 break;
             case 2:
-                D_8013CECC++;
-                D_8013CED0 = 0;
-                D_8013CED4 = 0;
-                D_8013CEC8 = 1;
+                stage_show_scene_b_script_index++;
+                stage_show_scene_b_frame = 0;
+                stage_show_scene_b_interpreter_state = 0;
+                stage_show_scene_b_event_cursor = 1;
                 k_reset(1);
                 mode_step_next();
                 return 0;
             }
         }
     }
-    list = D_8013CE8C[D_8013CECC];
-    if (D_8013CED4 == 0) {
-        D_8013CED4 = 1;
+    list = stage_show_scene_b_event_lists[stage_show_scene_b_script_index];
+    if (stage_show_scene_b_interpreter_state == 0) {
+        stage_show_scene_b_interpreter_state = 1;
     }
-    if (D_8013CED4 == 1) {
-        for (i = D_8013CEC8; i < 0xFFFF; i++) {
+    if (stage_show_scene_b_interpreter_state == 1) {
+        for (i = stage_show_scene_b_event_cursor; i < 0xFFFF; i++) {
             /* FAKE: T-22003, the word view with i * 2 takes the ugen temporary that the
              * original's index expression takes; &list[i] gives $t1 for $t2 in the loop */
             ev = (BsdEvent *)((s32 *)list + i * 2);
-            if (D_8013CED0 == ev->unk_00) {
-                if (ev->unk_04 == 0x0FFFFFFF) {
-                    D_8013CED4 = 2;
+            if (stage_show_scene_b_frame == ev->frame) {
+                if (ev->command_word == 0x0FFFFFFF) {
+                    stage_show_scene_b_interpreter_state = 2;
                     i = 0xFFFF;
                 } else {
-                    slot = (ev->unk_04 & 0xFF0000) >> 16;
-                    img = ev->unk_04 & 0xFF;
+                    slot = (ev->command_word & 0xFF0000) >> 16;
+                    img = ev->command_word & 0xFF;
                     if (img == 0xFE) {
-                        func_801377D4(slot, 0x50, 0);
+                        stage_show_drama_final_actor_slot_state_set(slot, 0x50, 0);
                     } else {
-                        func_801377D4(slot, img, 1);
+                        stage_show_drama_final_actor_slot_state_set(slot, img, 1);
                     }
-                    if (ev->unk_04 & 0xF0000000) {
-                        func_80137824(D_8013C814[D_8013CECC]);
+                    if (ev->command_word & 0xF0000000) {
+                        stage_show_drama_final_kanji_line_start(stage_show_scene_b_text_script_addresses[stage_show_scene_b_script_index]);
                         game_state.mode_stage_timer = 1;
-                        D_8013CED8 = 1;
+                        stage_show_scene_b_text_active = 1;
                     }
                 }
             } else {
-                D_8013CEC8 = i;
+                stage_show_scene_b_event_cursor = i;
                 i = 0xFFFF;
             }
         }
     }
-    D_8013CED0++;
-    if (D_8013CED8 == 1) {
-        func_80137620();
+    stage_show_scene_b_frame++;
+    if (stage_show_scene_b_text_active == 1) {
+        stage_show_drama_final_event_text_and_audio_display();
     }
 }
 
@@ -406,7 +406,7 @@ INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/drama_final_year_show.rodata", D_
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/drama_final_year_show.rodata", D_8013AD88);
 
-void func_80137620(void) {
+void stage_show_drama_final_event_text_and_audio_display(void) {
     s32 index;
     s32 *coordinates;
 
@@ -441,7 +441,7 @@ void func_80137620(void) {
     k_disp_inc();
 }
 
-void func_801377D4(s32 arg0, s32 arg1, s32 arg2) {
+void stage_show_drama_final_actor_slot_state_set(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
 
     if (arg2 == 1) {
@@ -454,11 +454,11 @@ void func_801377D4(s32 arg0, s32 arg1, s32 arg2) {
     *(s16 *)(p + 0x1998) = arg1;
 }
 
-void func_80137824(s32 arg0) {
+void stage_show_drama_final_kanji_line_start(s32 arg0) {
     k_disp_start(set_kanji_string(-0x80, 0x30, 0, arg0, 0));
 }
 
-void func_8013785C(u32 arg0) {
+void stage_show_drama_final_timer_gate(u32 arg0) {
     if (arg0 < (u32) game_state.mode_step_timer.w) {
         mode_step_next();
     }

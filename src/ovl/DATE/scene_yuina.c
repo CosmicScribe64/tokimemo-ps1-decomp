@@ -110,7 +110,7 @@ void date_scene_yuina_summer_setup(void) {
     scene_still_show((s32) D_8015EA70, (s32) D_8015EA74, (s32) D_8015EA78, (s32) D_8015EA7C, (s32) D_8015EA80, (s32) D_8015EA84);
     scene_anim_show((s32) D_8015EA60, (s32) D_8015EA64, (s32) D_8015EA5C, (s32) D_8015EA68);
     ((Actor *)actor_pool)[98] = ((Actor *)actor_pool)[96];
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -176,7 +176,7 @@ void date_scene_yuina_winter_setup(void) {
     load_palette((s32) D_8015EACC, 0x11, 1, 2, 0);
     scene_still_show((s32) D_8015EAD0, (s32) D_8015EAD4, (s32) D_8015EAD8, (s32) D_8015EADC, (s32) D_8015EAE0, (s32) D_8015EAE4);
     scene_anim_show((s32) D_8015EAC0, (s32) D_8015EAC4, (s32) D_8015EABC, (s32) D_8015EAC8);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     actor_clear(0x62);
     D_801206D9 = 9;
     D_801206DA = 1;
@@ -268,7 +268,7 @@ void date_scene_yuina_spring_radial_lines(void) {
     u32 grey;
     s32 offset;
 
-    grey = dec_bg_brightness / 10;
+    grey = bg_brightness / 10;
     offset = 0;
     col1 = col0 = (grey * 19 << 16) | (grey * 19 << 8) | (grey * 19);
     if (game->frame_count % 45 < 15) {
@@ -298,7 +298,7 @@ void date_scene_yuina_summer(void) {
     if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
          (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
          (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && game->mode_step >= 0x1A) {
+        bg_brightness == 0x80 && D_80122D04 == 0 && game->mode_step >= 0x1A) {
         hud_sprite_light_effect_draw();
     }
 
@@ -320,9 +320,9 @@ void date_scene_yuina_summer_load_data(void) {
 }
 
 void date_scene_yuina_summer_still_fade_out(void) {
-    func_800853FC();
-    D_801206DF = dec_bg_brightness;
-    if ((u8) dec_bg_brightness < 8U) {
+    scene_still_fade_out();
+    D_801206DF = bg_brightness;
+    if ((u8) bg_brightness < 8U) {
         D_801206DB &= 0xFF7F;
     }
 }
@@ -367,7 +367,7 @@ void date_scene_yuina_autumn(void) {
             sprite_quads[57].flags |= 0x80000000;
         }
         sprite_quads[57].tint_r = sprite_quads[57].tint_g = sprite_quads[57].tint_b =
-            ((Actor *)actor_pool)[98].brightness = dec_bg_brightness;
+            ((Actor *)actor_pool)[98].brightness = bg_brightness;
         return;
     }
     ((Actor *)actor_pool)[98].draw_flags &= 0xFF7F;
@@ -394,7 +394,7 @@ void date_scene_yuina_winter(void) {
     step_handlers.callbacks[step_index](0x80);
     if (D_80122D04 != 0) {
         D_801206DB |= 0x80;
-        D_801206DF = dec_bg_brightness;
+        D_801206DF = bg_brightness;
         return;
     }
     D_801206DB &= 0xFF7F;

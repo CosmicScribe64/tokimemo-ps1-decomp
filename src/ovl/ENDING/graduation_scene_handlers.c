@@ -3,11 +3,11 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 
-void func_80133540(void) {
+void ending_companion_scene_step_dispatch(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     EdFnTbl43 tbl;
 
-    tbl = D_8013C3E4;
+    tbl = ending_companion_scene_step_callbacks;
     portrait_wink_update();
     tbl.f[game_state.mode_step](0x80);
     check_k_scroll();
@@ -16,10 +16,10 @@ void func_80133540(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }
 
-void func_801335F4(void) {
+void ending_set_selected_girl_portrait_layout(void) {
     if (D_8013C3E0 == 0xC) {
         portrait_layout_set(4);
     } else {
@@ -28,7 +28,7 @@ void func_801335F4(void) {
     mode_step_next();
 }
 
-void func_8013363C(void) {
+void ending_copy_image_pages_to_vram_buffer(void) {
     memcpy((void *)(0x801A0000 + game_state.mode_step_timer.w * 0x2800), 0x80180000 + game_state.mode_step_timer.w * 0x2800, 0x2800);
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step_timer.w == 9) {
@@ -36,7 +36,7 @@ void func_8013363C(void) {
     }
 }
 
-void func_801336A8(void) {
+void ending_decode_image_rectangle(void) {
     s32 pad; /* FAKE: unused local reproduces the extra 4-byte frame slot above rect; real source unknown. T-4030 */
     RECT rect;
     rect.x = 0x140;
@@ -53,7 +53,7 @@ void func_801336A8(void) {
     mode_step_next();
 }
 
-void func_80133738(void) {
+void ending_copy_image_pages_from_vram_buffer(void) {
     memcpy((void *)(0x80180000 + game_state.mode_step_timer.w * 0x2800), 0x801A0000 + game_state.mode_step_timer.w * 0x2800, 0x2800);
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step_timer.w == 9) {
@@ -61,7 +61,7 @@ void func_80133738(void) {
     }
 }
 
-void func_801337A4(void) {
+void ending_show_image_rectangle(void) {
     RECT rect;
     rect.x = 0x140;
     rect.y = 0x80;
@@ -71,10 +71,10 @@ void func_801337A4(void) {
     mode_step_next();
 }
 
-void func_801337F0(void) {
+void ending_dialogue_line_update(void) {
     if (talk_line == 4) {
         portrait_layout_set(4);
-        load_palette(D_800CA130, 0x10, 1, 2, 1);
+        load_palette(face_palette, 0x10, 1, 2, 1);
     }
     normal_date_speak();
     if (talk_line == 7) {
@@ -84,7 +84,7 @@ void func_801337F0(void) {
     D_80122D20 = 0;
 }
 
-void func_80133870(void) {
+void ending_date_girl_portrait_load(void) {
     if (game_state.date_girl == GIRL_SOTOI) {
         portrait_read_start(0x6B24);
     } else {
@@ -93,12 +93,12 @@ void func_80133870(void) {
     mode_step_next();
 }
 
-void func_801338B8(void) {
-    load_palette(D_800CA130, 0x10, 1, 2, 1);
+void ending_load_scene_palette(void) {
+    load_palette(face_palette, 0x10, 1, 2, 1);
     mode_step_next();
 }
 
-s32 func_801338F8(void) {
+s32 ending_prepare_rei_dialogue(void) {
     if ((u32)game_state.girls[14].flags.w << 0x14 >> 0x1D < 3U) {
         mode_stage_next();
         return 0;
@@ -109,16 +109,16 @@ s32 func_801338F8(void) {
     talk_group = 0;
     talk_line = 0;
     strcpy(name_code_girl_short, "外井");
-    func_80132000();
-    talk_text_table = D_8013C280[0][15];
-    talk_command_table = D_8013C280[1][15];
-    talk_voice_table = D_8013C280[2][15];
+    ending_graduation_dialogue_resource_table_init();
+    talk_text_table = ending_dialogue_resource_tables[0][15];
+    talk_command_table = ending_dialogue_resource_tables[1][15];
+    talk_voice_table = ending_dialogue_resource_tables[2][15];
     mode_step_next();
 }
 
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_handlers.rodata", D_8013BFB8);
 
-void func_801339C0(void) {
+void ending_set_rei_name_for_dialogue(void) {
     game_state.date_girl = GIRL_REI;
     strcpy(name_code_girl_short, D_8013BFB8);
     mode_step_next();
@@ -126,18 +126,18 @@ void func_801339C0(void) {
 
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_handlers.rodata", D_8013BFC0);
 
-void func_80133A00(void) {
+void ending_set_sotoi_name_for_dialogue(void) {
     game_state.date_girl = GIRL_SOTOI;
     strcpy(name_code_girl_short, D_8013BFC0);
     mode_step_next();
 }
 
-void func_80133A40(void) {
+void ending_restore_saved_girl(void) {
     game_state.current_girl = D_8013C3E0;
     mode_step_next();
 }
 
-void func_80133A6C(void) {
+void ending_gate_candidate_scene_flags(void) {
     if (game_state.current_girl >= GIRL_YOSHIO) {
         mode_stage_set(7);
         D_800E7D34 |= 8;
@@ -147,11 +147,11 @@ void func_80133A6C(void) {
     D_800E7D34 |= 4;
 }
 
-void func_80133AD0(void) {
+void ending_secondary_scene_step_dispatch(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     EdFnTbl9 tbl;
 
-    tbl = D_8013C490;
+    tbl = ending_secondary_scene_step_callbacks;
     portrait_wink_update();
     tbl.f[game_state.mode_step](0x80);
     check_k_scroll();
@@ -160,20 +160,20 @@ void func_80133AD0(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }
 
-void func_80133B80(void) {
+void ending_start_scene_dialogue_13(void) {
     talk_group = 0;
     talk_line = 0;
-    func_80132000();
-    talk_text_table = D_8013C280[0][13];
-    talk_command_table = D_8013C280[1][13];
-    talk_voice_table = D_8013C280[2][13];
+    ending_graduation_dialogue_resource_table_init();
+    talk_text_table = ending_dialogue_resource_tables[0][13];
+    talk_command_table = ending_dialogue_resource_tables[1][13];
+    talk_voice_table = ending_dialogue_resource_tables[2][13];
     mode_step_next();
 }
 
-void func_80133BE0(void) {
+void ending_read_background_sector_4055(void) {
     bg_read_sub2(0x4055);
     mode_step_next();
 }

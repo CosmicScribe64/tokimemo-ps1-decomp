@@ -989,7 +989,7 @@ void spot_place_scene_frame(void) {
 
 s32 spot_place_arrival_run(void) {
     s32 pad[5]; /* FAKE: 20 bytes above tbl place tbl at sp+0x30 in the 0x138 frame (T-3330) */
-    FnTbl61 tbl;
+    SpotPlaceArrivalAndShrineStepTable tbl;
 
     tbl = spot_place_arrival_steps;
     if (tbl.f[D_800B1AF6] == spot_place_neighborhood_park_arrival) {
@@ -1062,27 +1062,27 @@ s32 spot_place_arrival_run(void) {
 
 s32 spot_place_scene_run(void) {
     s32 pad; /* FAKE: unused, declared first so the 21 tables sit 4 bytes lower as in the original; T-22011 */
-    FnTbl18 spD04;
-    FnTbl35 spC78;
-    FnTbl48 spBB8;
-    FnTbl32 spB38;
-    FnTbl35 spAAC;
-    FnTbl34 spA24;
-    FnTbl36 sp994;
-    FnTbl37 sp900;
-    FnTbl36 sp870;
-    FnTbl39 sp7D4;
-    FnTbl32 sp754;
-    FnTbl32 sp6D4;
-    FnTbl103 sp538;
-    FnTbl29 sp4C4;
-    FnTbl45 sp410;
-    FnTbl41 sp36C;
-    FnTbl37 sp2D8;
-    FnTbl47 sp21C;
-    FnTbl61 sp128;
-    FnTbl31 spAC;
-    FnTbl31 sp30;
+    SpotNeighborhoodParkDateStepTable spD04;
+    SpotYukoSakiCentralParkAndZooStepTable spC78;
+    SpotAyakoAndShoppingStreetStepTable spBB8;
+    SpotAyakoYukariAquariumBowlingAndKaraokeStepTable spB38;
+    SpotYukoSakiCentralParkAndZooStepTable spAAC;
+    SpotBotanicalGardenDateStepTable spA24;
+    SpotMegumiPlanetariumAndLibraryStepTable sp994;
+    SpotReiSakiArtMuseumAndPoolStepTable sp900;
+    SpotMegumiPlanetariumAndLibraryStepTable sp870;
+    SpotShioriYuinaMioAndGameCenterStepTable sp7D4;
+    SpotAyakoYukariAquariumBowlingAndKaraokeStepTable sp754;
+    SpotAyakoYukariAquariumBowlingAndKaraokeStepTable sp6D4;
+    SpotAmusementParkDateStepTable sp538;
+    SpotNozomiAndStadiumStepTable sp4C4;
+    SpotShioriAyakoMegumiAndMovieTheaterStepTable sp410;
+    SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable sp36C;
+    SpotReiSakiArtMuseumAndPoolStepTable sp2D8;
+    SpotYukoMegumiYumiAndSeaStepTable sp21C;
+    SpotPlaceArrivalAndShrineStepTable sp128;
+    SpotSkatingAndSkiDateStepTable spAC;
+    SpotSkatingAndSkiDateStepTable sp30;
     void (**tbl)();
 
     spD04 = spot_place_neighborhood_park_steps;
@@ -1104,7 +1104,7 @@ s32 spot_place_scene_run(void) {
     sp2D8 = spot_place_pool_steps;
     sp21C = spot_place_sea_steps;
     sp128 = spot_place_shrine_steps;
-    spAC = *(FnTbl31 *)&spot_place_skating_rink_steps;
+    spAC = *(SpotSkatingAndSkiDateStepTable *)&spot_place_skating_rink_steps;
     sp30 = spot_place_ski_resort_steps;
     tbl = spD04.f;
     switch (spot_place) {

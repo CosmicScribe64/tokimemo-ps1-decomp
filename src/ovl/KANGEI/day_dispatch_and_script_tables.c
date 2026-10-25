@@ -1,14 +1,14 @@
-/* day_dispatch_and_script_tables.c: src/ovl/KANGEI/80132E40.c:4-45; binds common/per-girl script pointer rows, then func_80132FF8 dispatches the day-coded mode_stage and performs scene presentation. Original object 0x80132E40-0x80133C10 (config/objects/KANGEI.txt). */
+/* day_dispatch_and_script_tables.c: src/ovl/KANGEI/80132E40.c:4-45; binds common/per-girl script pointer rows, then camp_mode_stage_dispatch dispatches the day-coded mode_stage and performs scene presentation. Original object 0x80132E40-0x80133C10 (config/objects/KANGEI.txt). */
 #include "common.h"
 #include "ovl/KANGEI.h"
 
-void func_80132E40(void) {
+void camp_background_pointer_setup(void) {
     D_80139A50[0] = 0x801C1400;
     D_80139A50[1] = 0x801C1D6C;
     D_80139A50[2] = 0x801CA47C;
 }
 
-void func_80132E74(void) {
+void camp_day_phase_dialogue_pointer_table_setup(void) {
     D_80139A5C[0][0] = 0x80199CD4;
     D_80139A5C[0][1] = 0x8019EE30;
     D_80139A5C[0][2] = 0x801A422C;
@@ -38,7 +38,7 @@ void func_80132E74(void) {
 /* Day dispatcher of the overlay.
  * FAKE: T-24301, D_80139AC0 (s8) is read through a u8 view; the view keeps it promoted in $v1 as in the
  * original (the plain field or a (u8) cast gives temporaries, 88 rows). */
-void func_80132FF8(void) {
+void camp_mode_stage_dispatch(void) {
     u8 day;
 
     portrait_wink_update();
@@ -52,103 +52,103 @@ void func_80132FF8(void) {
     }
     switch (day) {
     case 0:
-        func_801335F0();
+        camp_entry_state_initialize();
         break;
     case 1:
-        func_801337B4();
+        camp_audio_load_poll_retry();
         break;
     case 2:
-        func_80133C10();
+        camp_mode_step_scene_phase_callback_dispatch();
         break;
     case 3:
         vacation_day_init();
         break;
     case 4:
-        func_80133A14();
+        camp_mode_step_timer_update();
         break;
     case 5:
-        func_80138078();
+        camp_birthday_scene_gate();
         break;
     case 6:
-        func_801335A0();
+        camp_calendar_day_advance();
         break;
     case 7:
         vacation_day_init();
         break;
     case 8:
-        func_80133A14();
+        camp_mode_step_timer_update();
         break;
     case 9:
-        func_80134120();
+        camp_current_girl_scene_gate();
         break;
     case 10:
-        func_80138078();
+        camp_birthday_scene_gate();
         break;
     case 11:
-        func_801335A0();
+        camp_calendar_day_advance();
         break;
     case 12:
-        func_80135678();
+        camp_paired_actor_step_dispatch();
         break;
     case 13:
         vacation_day_init();
         break;
     case 14:
-        func_80133A14();
+        camp_mode_step_timer_update();
         break;
     case 15:
-        func_80138078();
+        camp_birthday_scene_gate();
         break;
     case 16:
-        func_801335A0();
+        camp_calendar_day_advance();
         break;
     case 17:
-        func_80135678();
+        camp_paired_actor_step_dispatch();
         break;
     case 18:
         vacation_day_init();
         break;
     case 19:
-        func_80133A14();
+        camp_mode_step_timer_update();
         break;
     case 20:
-        func_80138078();
+        camp_birthday_scene_gate();
         break;
     case 21:
-        func_801335A0();
+        camp_calendar_day_advance();
         break;
     case 22:
-        func_80135678();
+        camp_paired_actor_step_dispatch();
         break;
     case 23:
         vacation_day_init();
         break;
     case 24:
-        func_80133A14();
+        camp_mode_step_timer_update();
         break;
     case 25:
-        func_80138078();
+        camp_birthday_scene_gate();
         break;
     case 26:
-        func_801335A0();
+        camp_calendar_day_advance();
         break;
     case 27:
         vacation_day_init();
         break;
     case 28:
-        func_80133A14();
+        camp_mode_step_timer_update();
         break;
     case 29:
-        func_80136D58();
+        camp_scene_result_callback_dispatch();
         break;
     case 30:
-        func_80138078();
+        camp_birthday_scene_gate();
         break;
     case 31:
-        func_80136018();
+        camp_scene_picture_callback_dispatch();
         break;
     case 32:
-        func_801338EC();
+        camp_day_event_complete();
         break;
     default:
         game_mode_reset_to_title();
@@ -168,10 +168,10 @@ void func_80132FF8(void) {
     day = game_state.mode_stage;
     if (((day == 2) || (day == 5) || (day == 9) || (day == 0xA) || (day == 0xC) || (day == 0xF) || (day == 0x11) || (day == 0x14) || (day == 0x16) || (day == 0x19) || (day == 0x1D) || (day == 0x1F)) && (game_state.mode_step != 0) && (*(u8 *)&D_80139AC0 == 0)) {
         hud_screen_frame_draw(2);
-        func_80083A10();
+        scene_frame_update();
     } else if ((day == 0x1E) && (*(u8 *)&D_80139AC0 == 0)) {
         hud_screen_frame_draw(2);
-        func_80083A10();
+        scene_frame_update();
     } else if (*(u8 *)&D_80139AC0 == 1) {
         dec_bg_draw(0);
         if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((game_state.pad_held & 0xF000F000) || (D_80122D30 == 1))) {
@@ -197,7 +197,7 @@ void func_80132FF8(void) {
     draw_shake_update();
 }
 
-void func_801335A0(void) {
+void camp_calendar_day_advance(void) {
     game_state.day_event_index += 1;
     D_80139AC4 = 0;
     D_80139AC8 = 0;
@@ -206,10 +206,10 @@ void func_801335A0(void) {
     mode_stage_next();
 }
 
-void func_801335F0(void) {
+void camp_entry_state_initialize(void) {
     s16 var_s0;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xC06F, 0xC065, 0xCC33, 0xCBE3, 0xCBD9);
     if (audio_bank_load_poll() == 1) {
         mode_stage_next();
@@ -217,7 +217,7 @@ void func_801335F0(void) {
     D_80139ABC = 0;
     D_80139AC0 = 0;
     D_80139AC4 = 0;
-    func_80133D28();
+    camp_scene_candidate_initialize();
     game_state.day -= 1;
     hizuke_init();
     game_state.day += 1;
@@ -231,12 +231,12 @@ void func_801335F0(void) {
     /* FAKE: dead byte test keeps the packed-record address in v0 (T-9580). */
     if (game_state.screen_brightness == 0) {}
     ((KangeiStateView *)&game_state)->modes[(u16)game_state.player_flags.h >> 12].mode++;
-    dec_bg_brightness = 0x80;
+    bg_brightness = 0x80;
     mode_stage_next();
 }
 
-void func_80133734(void) {
-    D_800B3D60 = 0;
+void camp_audio_bank_retry(void) {
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xC06F, 0xC065, 0xCC33, 0xCBE3, 0xCBD9);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -247,7 +247,7 @@ void func_80133734(void) {
     mode_step_next();
 }
 
-void func_801337B4(void) {
+void camp_audio_load_poll_retry(void) {
     if (audio_bank_load_poll() == 1) {
         mode_stage_next();
     }
@@ -258,7 +258,7 @@ void func_801337B4(void) {
     }
 }
 
-void func_80133834(void) {
+void camp_audio_load_poll_retry_alt(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -269,14 +269,14 @@ void func_80133834(void) {
     }
 }
 
-void func_801338B4(void) {
+void camp_audio_bank_start(void) {
     if (game_state.mode_step_timer.w == 0) {
         audio_bank_start(0, 0);
     }
     mode_step_next();
 }
 
-s32 func_801338EC(void) {
+s32 camp_day_event_complete(void) {
     s32 pad; /* FAKE: unused local puts rect at the original offset; real source unknown. T-9320 */
     RECT rect;
 
@@ -309,16 +309,16 @@ s32 func_801338EC(void) {
     return day_event_next(1);
 }
 
-void func_80133A14(void) {
+void camp_mode_step_timer_update(void) {
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step == 0) {
-        func_80133A54();
+        camp_day_event_parameter_update();
     }
 }
 
 /* Non-void return type and pointer local `state = &D_80120666` match week_day_main0
  * (src/main/school_day.c) and ETC:exam_day_wait_anim (T-6050, T-24122). */
-s32 func_80133A54(void) {
+s32 camp_day_event_parameter_update(void) {
     s16 *state;
     u8 a;
     u8 b;

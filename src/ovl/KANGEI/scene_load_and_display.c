@@ -1,4 +1,4 @@
-/* scene_load_and_display.c: src/ovl/KANGEI/80133C10.c:9-43; step-table presentation flow, current-girl restoration, two resource loads and shared display initialization; func_80133EF8 runs talk. Original object 0x80133C10-0x80134120 (config/objects/KANGEI.txt). */
+/* scene_load_and_display.c: src/ovl/KANGEI/80133C10.c:9-43; step-table presentation flow, current-girl restoration, two resource loads and shared display initialization; camp_opening_talk_run runs talk. Original object 0x80133C10-0x80134120 (config/objects/KANGEI.txt). */
 #include "common.h"
 #include "ovl/KANGEI.h"
 
@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl15; /* size 0x3C */
 extern FnTbl15 D_80139AE8;
 
-void func_80133C10(void) {
+void camp_mode_step_scene_phase_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl15 tbl;
 
@@ -16,24 +16,24 @@ void func_80133C10(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80133C84(void) {
+void camp_current_girl_restore(void) {
     game_state.current_girl = game_state.date_girl;
     mode_stage_next();
 }
 
-void func_80133CB0(void) {
+void camp_dialogue_data_sector_load(void) {
     cd_read_sectors(0x3B, 0x80197000, 0xAE60);
-    func_80132E74();
+    camp_day_phase_dialogue_pointer_table_setup();
     mode_step_next();
 }
 
-void func_80133CEC(void) {
+void camp_scene_data_sector_load(void) {
     cd_read_sectors(0x2D, 0x801B4400, 0xAE9B);
-    func_80132E40();
+    camp_background_pointer_setup();
     mode_step_next();
 }
 
-void func_80133D28(void) {
+void camp_scene_candidate_initialize(void) {
     s16 i;
     u32 v;
 
@@ -48,7 +48,7 @@ void func_80133D28(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
@@ -69,7 +69,7 @@ void func_80133D28(void) {
     }
     game_state.date_girl = game_state.current_girl;
     talk_names_set(game_state.current_girl);
-    func_80132E74();
+    camp_day_phase_dialogue_pointer_table_setup();
     D_80139AD0 = (KObj *)D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
@@ -78,7 +78,7 @@ void func_80133D28(void) {
     mode_step_next();
 }
 
-void func_80133EF8(void) {
+void camp_opening_talk_run(void) {
     talk_tables = (u8 *)&D_80139ADC;
     D_800CA138 = (u8 *)&D_80139AE0;
     D_800CA13C = (s32)D_80139AD0;
@@ -87,7 +87,7 @@ void func_80133EF8(void) {
     talk_run(0xFF, 1, *(u8 *)&D_80139AE4);
 }
 
-void func_80133F74(void) {
+void camp_response_talk_run(void) {
     talk_tables = (u8 *)&D_80139ADC;
     D_800CA138 = (u8 *)&D_80139AE0;
     D_800CA13C = (s32)D_80139AD0;
@@ -96,7 +96,7 @@ void func_80133F74(void) {
     talk_run(D_80122CDC, 1, *(u8 *)&D_80139AE4);
 }
 
-void func_80133FF4(void) {
+void camp_talk_run_advance_on_complete(void) {
     talk_tables = (u8 *)&D_80139ADC;
     D_800CA138 = (u8 *)&D_80139AE0;
     D_800CA13C = (s32)D_80139AD0;
@@ -107,7 +107,7 @@ void func_80133FF4(void) {
     }
 }
 
-void func_80134084(void) {
+void camp_background_clear_and_load(void) {
     RECT rect;
 
     dec_bg_reset();
@@ -121,5 +121,5 @@ void func_80134084(void) {
     func_8009C7F8(&rect, 8, 0, 0);
     bg_read_sub2(0x428D);
     mode_step_next();
-    strcpy(D_800CA19C, "合宿所");
+    strcpy(scene_place_title, "合宿所");
 }

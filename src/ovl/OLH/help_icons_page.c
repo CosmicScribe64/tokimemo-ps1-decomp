@@ -2,39 +2,39 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-void func_80134500(void) {
+void help_icon_topic_dispatch(void) {
     switch (game_state.mode_step) {
     case 0x0:
-        func_801345CC();
+        help_icon_menu_draw();
         break;
     case 0x1:
-        func_801346F4();
+        help_icon_menu_input();
         break;
     case 0x10:
-        func_80134824();
+        help_icon_page_1_render();
         break;
     case 0x20:
-        func_801348F4();
+        help_icon_page_2_render();
         break;
     case 0x30:
-        func_801349FC();
+        help_icon_page_3_render();
         break;
     case 0x40:
-        func_80134B3C();
+        help_icon_page_4_render();
         break;
     case 0x50:
-        func_80134C28();
+        help_icon_page_5_render();
         break;
     case 0x60:
-        func_80134D14();
+        help_icon_page_6_render();
         break;
     case 0x70:
-        func_80134E00();
+        help_icon_page_7_render();
         break;
     }
 }
 
-void func_801345CC(void) {
+void help_icon_menu_draw(void) {
     s32 i;
     s32 r;
     s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame; real source unknown. T-9320 */
@@ -50,14 +50,14 @@ void func_801345CC(void) {
         b[i] = i * 0x10 - 0x32;
         c[i] = 0xE8;
         d[i] = 0x10;
-        r = set_kanji_string(a[i], b[i], 0xF, (&D_8013BF60)[i], 0); /* FAKE: string pointer table reached through its first symbol, as in func_80133C4C. T-9320 */
+        r = set_kanji_string(a[i], b[i], 0xF, (&D_8013BF60)[i], 0); /* FAKE: string pointer table reached through its first symbol, as in help_biorhythm_menu_draw. T-9320 */
     }
     menu_set(0, 8, a, b, c, d);
     k_disp_start(r);
     mode_step_next();
 }
 
-void func_801346F4(void) {
+void help_icon_menu_input(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -96,7 +96,7 @@ void func_801346F4(void) {
     }
 }
 
-s32 func_80134824(void) {
+s32 help_icon_page_1_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -114,7 +114,7 @@ s32 func_80134824(void) {
     }
 }
 
-s32 func_801348F4(void) {
+s32 help_icon_page_2_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -134,7 +134,7 @@ s32 func_801348F4(void) {
     }
 }
 
-s32 func_801349FC(void) {
+s32 help_icon_page_3_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -156,7 +156,7 @@ s32 func_801349FC(void) {
     }
 }
 
-s32 func_80134B3C(void) {
+s32 help_icon_page_4_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -175,7 +175,7 @@ s32 func_80134B3C(void) {
     }
 }
 
-s32 func_80134C28(void) {
+s32 help_icon_page_5_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -194,7 +194,7 @@ s32 func_80134C28(void) {
     }
 }
 
-s32 func_80134D14(void) {
+s32 help_icon_page_6_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -213,7 +213,7 @@ s32 func_80134D14(void) {
     }
 }
 
-s32 func_80134E00(void) {
+s32 help_icon_page_7_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();

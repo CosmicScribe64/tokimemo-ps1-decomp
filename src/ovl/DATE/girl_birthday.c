@@ -109,7 +109,7 @@ void date_mode_stage_girl_birthday(void) {
     step_handlers = date_girl_birthday_steps;
     step_index = game_state.mode_step;
     step_handlers.callbacks[step_index](0x80);
-    if ((D_80122D44 & 1) && (dec_bg_brightness == 0x80)) {
+    if ((D_80122D44 & 1) && (bg_brightness == 0x80)) {
         hud_sprite_light_effect_draw();
     }
 }
@@ -279,7 +279,7 @@ void date_gift_name_set(void) {
     DateGiftNameTable gift_names;
 
     gift_names = date_gift_names;
-    strcpy(D_800CA25C, &gift_names.text_bytes[game_state.current_girl * 0x129 + date_school_year * 0x63 + D_80122CDC * 0x21]);
+    strcpy(name_code_a, &gift_names.text_bytes[game_state.current_girl * 0x129 + date_school_year * 0x63 + D_80122CDC * 0x21]);
 }
 
 void date_gift_speak(void) {

@@ -7,18 +7,18 @@
 s32 func_800BCE10();
 s32 func_800BCDF0();
 
-void func_80138B50(void) {
+void annual_candidate_scene_audio_setup(void) {
     func_8008A0D4(0x3FED);
     func_80090960(6, 0);
     func_8004DE1C();
 }
 
-void func_80138B84(void) {
+void annual_candidate_scene_audio_command_play_40c1(void) {
     func_8008A0D4(0x40C1);
     func_8004DE1C();
 }
 
-void func_80138BAC(void) {
+void annual_candidate_scene_selector_update(void) {
     D_80147198 = (D_80147198 + (D_800F53DE * 3)) - 0x120;
     func_8004DE1C();
 }
@@ -28,7 +28,7 @@ typedef struct {
 } FnTbl56; /* size 0xE0 */
 extern FnTbl56 D_80147248;
 
-void func_80138BF0(void) {
+void annual_candidate_scene_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl56 tbl;
 
@@ -37,7 +37,7 @@ void func_80138BF0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80138C78(void) {
+void annual_candidate_target_selector_reset(void) {
     D_800F62CF = 0;
     func_8004DE1C();
 }
@@ -55,7 +55,7 @@ typedef struct {
 } CandList; /* only the part up to special is used */
 #define CL (*(CandList *)D_80147224)
 
-void func_80138C9C(void) {
+void annual_candidate_list_build_and_rotate(void) {
     s16 r;
     s16 sp4C[13];
     s16 i;
@@ -120,7 +120,7 @@ void func_80138C9C(void) {
  * the assignment value then stays in $a0 for the store and the first call, and the later reads
  * form one promoted range of unk_F2F that takes $v1 once func_8005EBE0 has its s32 parameter
  * (main_api.h). D_80147240 is volatile in GYOZI.h for the dispatch `sll` slot (T-25120). */
-s32 func_8013907C(void) {
+s32 annual_candidate_list_entry_setup(void) {
     GyoziWork *w;
     u8 s;
 
@@ -199,7 +199,7 @@ s32 func_8013907C(void) {
     func_8004DE1C();
 }
 
-void func_801393C8(void) {
+void annual_candidate_scene_background_select(void) {
     s32 pad;
     s32 bg;
 
@@ -249,7 +249,7 @@ void func_801393C8(void) {
         func_800BCE10(&D_800D92E0, "教室");
         bg = 0x3FF5;
     }
-    /* FAKE: non-volatile view of D_80147240 (volatile in GYOZI.h for func_8013907C) keeps the original local order of its `lui`. T-25120 */
+    /* FAKE: non-volatile view of D_80147240 (volatile in GYOZI.h for annual_candidate_list_entry_setup) keeps the original local order of its `lui`. T-25120 */
     if (D_800F62CF == 9 && *(u8 *)&D_80147240 == 1 && D_80147244 < 2U) {
         func_800BCE10(&D_800D92E0, "廊下");
         bg = 0x3FED;
@@ -278,12 +278,12 @@ void func_801393C8(void) {
     func_8004DE1C();
 }
 
-void func_801396D8(void) {
+void annual_candidate_list_index_advance(void) {
     D_80147220 += 1;
     func_8004DEE4(1);
 }
 
-void func_8013970C(void) {
+void annual_candidate_dialogue_copy_and_advance(void) {
     if (func_800BDC20(&D_800D92A0, &D_800D92E0) == 0) {
         func_8004DE1C();
     }
@@ -291,7 +291,7 @@ void func_8013970C(void) {
     func_8004DE1C();
 }
 
-void func_80139764(void) {
+void annual_special_candidate_skip_route(void) {
     if ((D_80147240 == 1) && (D_800F62CF == 9)) {
         D_800F647A += 6;
         return;
@@ -301,25 +301,25 @@ void func_80139764(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_girl_selection.rodata", D_80145A40);
 
-void func_801397BC(void) {
+void annual_candidate_scene_fixed_text_setup(void) {
     func_800BCE10(&D_800D92E0, &D_80145A40);
     func_8008A0D4(0x401A);
     func_8004DE1C();
 }
 
-void func_801397F8(void) {
+void annual_candidate_voice_resource_play_53a1(void) {
     func_8008F618(0);
     func_80072734(0x53A1);
     func_8004DE1C();
 }
 
-void func_80139828(void) {
+void annual_candidate_voice_resource_play_63cd(void) {
     func_8008F618(9);
     func_80072734(0x63CD);
     func_8004DE1C();
 }
 
-s32 func_80139858(void) {
+s32 annual_candidate_date_rank_route(void) {
     s32 v;
 
     v = D_800F5490;
@@ -332,7 +332,7 @@ s32 func_80139858(void) {
         return 0;
     }
     if (func_8005EBE0(D_800F62CF) >= 0x46U) {
-        func_80138858();
+        annual_scene_group_load_setup();
         return;
     }
     func_8004DE1C();

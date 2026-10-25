@@ -1,4 +1,4 @@
-/* enemy_shots_and_sound.c: src/ovl/TT/80133970.c:7: sound bank loads and latched requests plus enemy shot pool, aim/fan/beam patterns and drawing; body 11: audio_command(0x7F); 12: func_800451E0(0x80162000);. Original object 0x80133970-0x80135360 (config/objects/TT.txt). */
+/* enemy_shots_and_sound.c: src/ovl/TT/80133970.c:7: sound bank loads and latched requests plus enemy shot pool, aim/fan/beam patterns and drawing; body 11: audio_command(0x7F); 12: cd_load_destination_base_set(0x80162000);. Original object 0x80133970-0x80135360 (config/objects/TT.txt). */
 #define MAIN_API_OVERRIDE_audio_command /* unprototyped call preserves u16 argument conversion */
 #include "common.h"
 #include "ovl/TT.h"
@@ -10,7 +10,7 @@ void tt_sound_banks_load(void) {
     s32 j;
 
     audio_command(0x7F);
-    func_800451E0(0x80162000);
+    cd_load_destination_base_set(0x80162000);
     audio_command(0x11);
     audio_command(0x22);
     audio_command(0x21);
@@ -19,9 +19,9 @@ void tt_sound_banks_load(void) {
     do {
         audio_command_pump();
         func_800AD950(0);
-    } while (i++ < 0x10000 && func_80044F94(0) == 0);
+    } while (i++ < 0x10000 && audio_bank_transfer_done(0) == 0);
     audio_command(0x7F);
-    func_800451E0(0x8019A000);
+    cd_load_destination_base_set(0x8019A000);
     audio_command(0x12);
     audio_command(0x23);
     audio_command(0x24);
@@ -30,20 +30,20 @@ void tt_sound_banks_load(void) {
     do {
         audio_command_pump();
         func_800AD950(0);
-    } while (j++ < 0x10000 && func_80044F94(1) == 0);
+    } while (j++ < 0x10000 && audio_bank_transfer_done(1) == 0);
 }
 
 void tt_sound_bank_stage_reload(void) {
     s32 i;
 
     audio_command_pump();
-    func_800451E0(0x8019A000);
+    cd_load_destination_base_set(0x8019A000);
     audio_command(0x12);
     i = 0;
     do {
         audio_command_pump();
         func_800AD950(0);
-    } while (i++ < 0x10000 && func_80044F94(1) == 0);
+    } while (i++ < 0x10000 && audio_bank_transfer_done(1) == 0);
 }
 
 void tt_se_request(sound_command)
@@ -526,46 +526,46 @@ void tt_enemy_shot_home(TtEnemyShot *p) {
     p->heading = v;
 }
 
-void tt_enemy_shot_beam_update(TtEnemyShot *p) {
+void tt_enemy_shot_beam_update(TtEnemyShot *beam) {
     TtBossView *scene;
     u16 state;
 
     scene = (TtBossView *)tt_boss;
-    if (p->homing_age == 15) {
-        p->beam_length = 0;
-        p->state = 0x40;
-        p->step2 = 0;
-        p->step = 0;
-        p->phase = 0;
-        p->tick2 = 0;
-        p->tick1 = 0;
-        p->tick0 = 0;
+    if (beam->homing_age == 15) {
+        beam->beam_length = 0;
+        beam->state = 0x40;
+        beam->step2 = 0;
+        beam->step = 0;
+        beam->phase = 0;
+        beam->tick2 = 0;
+        beam->tick1 = 0;
+        beam->tick0 = 0;
     }
-    state = p->state;
+    state = beam->state;
     switch (state) {
     case 0x20:
         /* FAKE: empty comparison reserves a2 for the shared 0x20 constant
          * while state stays in v1; real source unknown. T-9760 */
-        if ((!p->state) && (!p->state)) {}
-        p->position_x += (scene->unk_14 - p->heading) << 16;
-        p->heading = scene->unk_14;
+        if ((!beam->state) && (!beam->state)) {}
+        beam->position_x += (scene->x - beam->heading) << 16;
+        beam->heading = scene->x;
         break;
     case 0x40:
-        p->beam_length += 4;
-        if (p->beam_length >= 0x20) {
-            p->beam_length = 0x20;
-            p->velocity_y = 0x40000;
-            p->state = 0x50;
-            p->step2 = 0;
-            p->step = 0;
-            p->phase = 0;
-            p->tick2 = 0;
-            p->tick1 = 0;
-            p->tick0 = 0;
+        beam->beam_length += 4;
+        if (beam->beam_length >= 0x20) {
+            beam->beam_length = 0x20;
+            beam->velocity_y = 0x40000;
+            beam->state = 0x50;
+            beam->step2 = 0;
+            beam->step = 0;
+            beam->phase = 0;
+            beam->tick2 = 0;
+            beam->tick1 = 0;
+            beam->tick0 = 0;
         }
         break;
     }
-    p->homing_age++;
+    beam->homing_age++;
 }
 
 void tt_enemy_shots_update(void) {

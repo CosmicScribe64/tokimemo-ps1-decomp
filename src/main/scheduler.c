@@ -57,7 +57,7 @@ void last_date_spot_timer_dec(void) {
 
 /* If no BGM is active, start sound bank 0, sequence 0 */
 void restore_bgm(void) {
-    if (func_8004480C() == 0) {
+    if (audio_bgm_is_playing() == 0) {
         audio_bank_start(0, 0);
     }
 }
@@ -85,7 +85,7 @@ void schedule_step_prepare(void) {
 
 s32 schedule_memory_card_save_poll(void) {
     if (game_state.memory_card_job == 1) {
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             audio_command(0x50F);
             game_state.memory_card_job = 0;
             memory_card_stop();

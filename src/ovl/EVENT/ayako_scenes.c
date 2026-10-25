@@ -112,7 +112,7 @@ void spot_ayako_scene1_run(void) {
 
 void spot_ayako_scene1_steps_run(void) {
     s32 pad; /* FAKE: unused local above tmp; the original frame is 4 bytes larger, real source unknown. T-4080 */
-    FnTbl32 tmp;
+    SpotAyakoYukariAquariumBowlingAndKaraokeStepTable tmp;
 
     tmp = spot_ayako_scene1_steps;
     func_80078950("s%d\n", D_800B1AF6);
@@ -303,7 +303,7 @@ void spot_ayako_scene5_bg_load_30(void) {
 
 void spot_ayako_scene2_run(void) {
     s32 idx; /* FAKE: unused local declared before the table, the original frame has the table 4 bytes lower (T-3330) */
-    FnTbl49 tbl;
+    SpotAyakoScene2StepTable tbl;
 
     tbl = spot_ayako_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -318,7 +318,7 @@ s32 spot_ayako_scene2_step_23(void) {
     s16 hit;
     s32 found;
     SpotLinePair ent;
-    EvShorts82 tbl;
+    SpotAyakoReactionAnimationWindows tbl;
 
     ent = D_80121A2C;
     tbl = D_80121A34;
@@ -508,7 +508,7 @@ void spot_wipe_gradient_draw(arg0, arg1, arg2)
     /* Port of the DATE clone func_80152684 (T-17400). */
     /* FAKE: 8 unused bytes above tbl give the original's frame and tbl offset, as in the clone; real locals unknown. T-9310 */
     s32 pad[2];
-    EvTbl tbl;
+    SpotGradientColorPairs tbl;
 
     tbl = D_80121AD8;
     if (arg0 < 0x140) {
@@ -531,7 +531,7 @@ void spot_ayako_scene2_assets_load_00(void) {
 
 void spot_ayako_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl48 tbl;
+    SpotAyakoAndShoppingStreetStepTable tbl;
 
     tbl = spot_ayako_scene3_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -561,7 +561,7 @@ void spot_ayako_scene3_set_state_17(void) {
 
 void spot_ayako_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable tbl;
 
     tbl = spot_ayako_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -577,7 +577,7 @@ void spot_ayako_scene4_assets_load_00(void) {
 
 void spot_ayako_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl45 tbl;
+    SpotShioriAyakoMegumiAndMovieTheaterStepTable tbl;
 
     tbl = spot_ayako_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

@@ -16,12 +16,12 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801491E
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801491E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801491EC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_80149204);
-TaiRunnersA D_80149208 = { 0 };
+SportsRunnersA sports_runner_a_runners = { 0 };
 TaiHalves D_80149298 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_8014929C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492A0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492A4);
-/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, func_80135480. */
+/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, sports_runner_race_state_init. */
 u8 D_801492A8[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492AC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492B8);
@@ -29,7 +29,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492C
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492C8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_801492F4);
-/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, func_80133CFC. */
+/* Defined in the unit (not an island piece) so that stores to it share one lui at; T-16551, sports_runner_race_resource_setup. */
 s32 D_801492F8[10] = { 0x801BB000, 0x801BF000, 0x801C3000, 0x801C7000, 0x801CB000, 0x801D3000, 0x801D7000, 0x801DB000, 0x801DF000, 0x801E3000 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_80149320);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_race_dispatch.data", D_8014933C);
@@ -82,18 +82,18 @@ typedef struct {
 } FnTbl10; /* size 0x28 */
 extern FnTbl10 D_8014933C;
 
-void func_80133C80(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    s32 pad; /* FAKE: unused local; the original frame has a second word above tbl (two-word case, T-3330), real source unknown. T-4080 */
-    FnTbl10 tbl;
+void sports_runner_race_mode_dispatch(void) {
+    s32 mode_stage_index; /* declared before runner_race_callbacks: its stack slot sits above runner_race_callbacks (T-3330) */
+    s32 pad; /* FAKE: unused local; the original frame has a second word above runner_race_callbacks (two-word case, T-3330), real source unknown. T-4080 */
+    FnTbl10 runner_race_callbacks;
 
-    tbl = D_8014933C;
-    idx = game_state.mode_stage;
-    tbl.f[idx]();
+    runner_race_callbacks = D_8014933C;
+    mode_stage_index = game_state.mode_stage;
+    runner_race_callbacks.f[mode_stage_index]();
 }
 
-void func_80133CFC(void) {
-    s32 i;
+void sports_runner_race_resource_setup(void) {
+    s32 resource_index;
     s32 j; /* FAKE: unused local; the original frame has a second word above the tables (the offsets of sp9C.. only match with it), real source unknown. T-16551 */
     s32 sp9C;
     TaiikuW5 sp88;
@@ -109,28 +109,28 @@ void func_80133CFC(void) {
         scene_screen_reset(1, 1);
         actor_clear_range(0);
         hud_cursor_show(0);
-        for (i = 0; i < 11; i++) {
-            game_state.tpage_buf[i + 5] = 8;
+        for (resource_index = 0; resource_index < 11; resource_index++) {
+            game_state.tpage_buf[resource_index + 5] = 8;
         }
-        for (i = 0; i < 3; i++) {
-            game_state.tpage_buf[i + 0x25] = 8;
+        for (resource_index = 0; resource_index < 3; resource_index++) {
+            game_state.tpage_buf[resource_index + 0x25] = 8;
         }
         game_state.tpage_buf[28] = 8;
         game_state.tpage_buf[63] = 8;
         D_801492C4 = sp9C;
-        for (i = 0; i < 5; i++) {
-            D_801492C8[i] = sp88.v[i];
+        for (resource_index = 0; resource_index < 5; resource_index++) {
+            D_801492C8[resource_index] = sp88.v[resource_index];
         }
-        for (i = 0; i < 7; i++) {
-            D_801492DC[i] = sp6C.v[i];
+        for (resource_index = 0; resource_index < 7; resource_index++) {
+            D_801492DC[resource_index] = sp6C.v[resource_index];
         }
         /* The first two words are written out and the loop starts at 2: IDO unrolls the 8-word copy by four, and this split
          * gives the original's single shared lui at for the two stores (D_801492F8 is defined in this unit for the same
          * reason, see matching-notes T-16551). */
         D_801492F8[0] = sp44.v[0];
         D_801492F8[1] = sp44.v[1];
-        for (i = 2; i < 10; i++) {
-            D_801492F8[i] = sp44.v[i];
+        for (resource_index = 2; resource_index < 10; resource_index++) {
+            D_801492F8[resource_index] = sp44.v[resource_index];
         }
         mode_step_next();
         break;
@@ -148,15 +148,15 @@ void func_80133CFC(void) {
         break;
     case 3:
         if (Fade_Out_Main() != 0 && (cd_read_sync_status() & 1)) {
-            func_80140810();
-            func_801407C0();
+            sports_scene_actor_resource_addresses_init();
+            sports_candidate_model_resource_addresses_init();
             search_load_tpage_buf_lock(D_801492C4, 1);
-            for (i = 0; i < 16; i++) {
-                load_palette(D_80149FA4, (u8) (i + 0x10), 1, 1, i);
+            for (resource_index = 0; resource_index < 16; resource_index++) {
+                load_palette(D_80149FA4, (u8) (resource_index + 0x10), 1, 1, resource_index);
             }
-            func_80135480();
-            func_801356E0();
-            func_80135778();
+            sports_runner_race_state_init();
+            sports_runner_sprite_memory_init();
+            sports_runner_display_context_init();
             cd_read_sectors(0xC1, 0x8018F000, 0xB6DE);
             mode_stage_next();
         }
@@ -167,7 +167,7 @@ void func_80133CFC(void) {
     }
 }
 
-void func_80134060(void) {
+void sports_runner_race_scene_setup(void) {
     s32 i;
     s32 idx;
     s32 j; /* FAKE: unused upper word reproduces the original table homes. T-24521. */
@@ -258,7 +258,7 @@ void func_80134060(void) {
         if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
             actor_clear(0x60);
             game_state.tpage_buf[21] = -1;
-            func_80133C30();
+            sports_candidate_scene_layer_resource_addresses_init();
             for (i = 0; i < 6; i++) {
                 search_load_tpage_buf_lock(D_8014A070[i], 1);
             }
@@ -266,12 +266,12 @@ void func_80134060(void) {
         }
         break;
     case 6:
-        func_801330D4();
-        func_80132BD0();
-        func_80135830();
-        func_80135AD0();
-        func_80135DF8();
-        func_80135F3C();
+        sports_runner_scene_graphics_init();
+        sports_dance_actors_init();
+        sports_runner_actor_group_init();
+        sports_runner_obstacle_actor_init();
+        sports_runner_obstacle_sequences_assign();
+        sports_runner_animation_and_rival_select();
         audio_command(0x505);
         Fade_In_Init();
         mode_stage_next();
@@ -282,35 +282,35 @@ void func_80134060(void) {
     }
 }
 
-void func_801345A4(void) {
+void sports_runner_race_phase_one(void) {
     switch (game_state.mode_step) {
     case 0:
         if (Fade_In_Main() != 0) {
             Vblnk_Timer_Init();
             mode_step_next();
         }
-        func_80133438();
+        sports_runner_scene_scroll_update();
         break;
     case 1:
         if (Vblnk_Timer() >= 0x5B) {
             audio_command(0x502);
-            D_80122EA0 = 0;
+            audio_bank_wait_done = 0;
             audio_bank_load_start(0, 0xBF98, 0xBF79, 0xC107, 0xC0C2, 0xD6B7);
             mode_step_next();
         }
-        func_80133438();
+        sports_runner_scene_scroll_update();
         break;
     case 2:
-        func_800867CC();
-        func_801368B8();
-        func_801369F0();
-        func_80136DA4();
-        func_80132E20((s32) D_80149298.halves.high, 3);
-        func_80137EA8();
-        func_801365C8();
-        func_80136E80();
-        func_80137C44();
-        func_80137440();
+        audio_bank_wait_latch();
+        sports_runner_actor_timer_increment();
+        sports_runner_player_control_update();
+        sports_runner_scroll_update();
+        sports_dance_actors_position((s32) D_80149298.halves.high, 3);
+        sports_runner_finish_line_update();
+        sports_runner_obstacle_scroll_update();
+        sports_runner_cpu_update();
+        sports_runner_finish_actor_display_update();
+        sports_runner_finish_audio_and_lane_update();
         if (D_80149298.halves.high >= 0x140) {
             mode_stage_next();
         }
@@ -321,7 +321,7 @@ void func_801345A4(void) {
     }
 }
 
-void func_801346FC(void) {
+void sports_runner_race_phase_two(void) {
     s16 text_x;
     s16 panel_x;
     s32 index_home; /* FAKE: preserves the original table offsets after index inlining. T-10890. */
@@ -338,24 +338,24 @@ void func_801346FC(void) {
     delta_y = D_80149498;
     switch (game_state.mode_step) {
     case 0:
-        func_800867CC();
-        if ((D_80122EA0 == 1) && (D_801491D4 == 0)) {
+        audio_bank_wait_latch();
+        if ((audio_bank_wait_done == 1) && (D_801491D4 == 0)) {
             D_801491D4 = 1;
             audio_command(0x1605);
             audio_command(0x700);
         }
-        func_801368B8();
-        D_80149208.player.unk_18 = ((s32) D_801491E8 >> 1) + 1;
-        D_80149208.player.unk_10 = 1;
-        func_80136BB4();
-        func_80136E80();
-        func_80137C44();
+        sports_runner_actor_timer_increment();
+        sports_runner_a_runners.player.unk_18 = ((s32) D_801491E8 >> 1) + 1;
+        sports_runner_a_runners.player.speed = 1;
+        sports_runner_player_animation_update();
+        sports_runner_cpu_update();
+        sports_runner_finish_actor_display_update();
         Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
         Scroll(((s16) D_80149298.halves.high >> 1) & 0x7F, 0xF, 0x70, 0x80, 0x80);
-        func_80132E20((s32) D_80149298.halves.high, 3);
-        func_80137EA8();
-        func_80137440();
-        func_801365C8();
+        sports_dance_actors_position((s32) D_80149298.halves.high, 3);
+        sports_runner_finish_line_update();
+        sports_runner_finish_audio_and_lane_update();
+        sports_runner_obstacle_scroll_update();
         D_80149298.word += 0x18000;
         ((Actor *)actor_pool)[96].x--;
         if (((Actor *)actor_pool)[96].x < -0xAF) {
@@ -383,35 +383,35 @@ void func_801346FC(void) {
         }
         break;
     case 1:
-        if ((D_80122EA0 != 0) && (D_801491D4 == 0)) {
+        if ((audio_bank_wait_done != 0) && (D_801491D4 == 0)) {
             D_801491D4 = 1;
             audio_command(0x1605);
             audio_command(0x700);
         }
-        func_801368B8();
-        func_80136E80();
-        func_80137C44();
-        func_80137544();
-        func_801365C8();
+        sports_runner_actor_timer_increment();
+        sports_runner_cpu_update();
+        sports_runner_finish_actor_display_update();
+        sports_runner_rival_choice_input_process();
+        sports_runner_obstacle_scroll_update();
         Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
         Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
-        func_80132E20((s32) D_80149298.halves.high, 3);
-        func_80137EA8();
-        if (D_80149208.player.unk_01 != 0) {
+        sports_dance_actors_position((s32) D_80149298.halves.high, 3);
+        sports_runner_finish_line_update();
+        if (sports_runner_a_runners.player.unk_01 != 0) {
             mode_step_next();
         }
         break;
     case 2:
-        func_801368B8();
-        func_80136E80();
-        func_80137C44();
-        func_801365C8();
+        sports_runner_actor_timer_increment();
+        sports_runner_cpu_update();
+        sports_runner_finish_actor_display_update();
+        sports_runner_obstacle_scroll_update();
         Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
         Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
-        func_80137EA8();
-        if (func_80137784(0) != 0) {
-            D_80149208.player.unk_01 = 0U;
-            D_80149208.player.unk_00 = 1;
+        sports_runner_finish_line_update();
+        if (sports_runner_finish_actor_slide_update(0) != 0) {
+            sports_runner_a_runners.player.unk_01 = 0U;
+            sports_runner_a_runners.player.unk_00 = 1;
             if (D_80122E94 == 1) {
                 D_801491E8 += delta_x.value[D_80149320[D_801491DC]];
                 D_801491E4 += delta_y.value[D_80149320[D_801491DC]];
@@ -428,19 +428,19 @@ void func_801346FC(void) {
     }
 }
 
-void func_80134D94(void) {
+void sports_runner_course_end_transition(void) {
     s32 var_s0;
 
     switch (game_state.mode_step) {
     case 0:
-        func_801368B8();
-        func_801369F0();
-        func_801365C8();
-        func_80136E80();
-        func_80137C44();
-        func_80136DA4();
-        func_80132E20((s32) D_80149298.halves.high, 3);
-        func_80137EA8();
+        sports_runner_actor_timer_increment();
+        sports_runner_player_control_update();
+        sports_runner_obstacle_scroll_update();
+        sports_runner_cpu_update();
+        sports_runner_finish_actor_display_update();
+        sports_runner_scroll_update();
+        sports_dance_actors_position((s32) D_80149298.halves.high, 3);
+        sports_runner_finish_line_update();
         if (D_80149298.halves.high >= 0x401) {
             audio_command(0x1700);
             audio_command(0x605);
@@ -448,13 +448,13 @@ void func_80134D94(void) {
         }
         break;
     case 1:
-        func_801368B8();
-        func_801369F0();
-        func_80136E80();
-        func_80137C44();
-        func_80132E20((s32) D_80149298.halves.high, 3);
-        func_80136DA4();
-        if (func_80137EA8() != 0) {
+        sports_runner_actor_timer_increment();
+        sports_runner_player_control_update();
+        sports_runner_cpu_update();
+        sports_runner_finish_actor_display_update();
+        sports_dance_actors_position((s32) D_80149298.halves.high, 3);
+        sports_runner_scroll_update();
+        if (sports_runner_finish_line_update() != 0) {
             audio_command(0x604);
             Fade_Out_Init();
             mode_step_next();
@@ -463,7 +463,7 @@ void func_80134D94(void) {
     case 2:
         Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
         Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
-        func_80132E20((s32) D_80149298.halves.high, 3);
+        sports_dance_actors_position((s32) D_80149298.halves.high, 3);
         if (Fade_Out_Main() != 0) {
             audio_command(0xC2);
             var_s0 = 0;
@@ -476,7 +476,7 @@ void func_80134D94(void) {
                 actor_clear(var_s0 + 0x4C);
                 var_s0 += 1;
             } while (var_s0 != 0xA);
-            func_80138224();
+            sports_runner_finish_actor_group_init();
             mode_stage_next();
         }
         break;
@@ -486,7 +486,7 @@ void func_80134D94(void) {
     }
 }
 
-void func_80134F98(void) {
+void sports_runner_race_result_apply(void) {
     s32 j; /* FAKE: upper word preserves the table and counter spill homes. T-24521. */
     s32 i;
     TaiWords11 table;
@@ -507,14 +507,14 @@ void func_80134F98(void) {
             } else {
                 audio_bank_start(1, 0x206);
             }
-            D_80149208.player.unk_03 = 0;
-            D_80149208.player.unk_0C = 0;
+            sports_runner_a_runners.player.animation_frame = 0;
+            sports_runner_a_runners.player.unk_0C = 0;
             mode_step_next();
         }
         break;
     case 2:
-        D_80149208.player.unk_0C += 1;
-        func_80138800();
+        sports_runner_a_runners.player.unk_0C += 1;
+        sports_runner_finish_animation_update();
         for (i = 0; i < 4; i++) {
             ((Actor *)actor_pool)[96 + i].x -= 1;
         }
@@ -523,11 +523,11 @@ void func_80134F98(void) {
         }
         if ((((Actor *)actor_pool)[107].x < -0x9F) || (((Actor *)actor_pool)[108].x < -0x9F) || (((Actor *)actor_pool)[109].x < -0x9F) || (((Actor *)actor_pool)[110].x < -0x9F)) {
             if (D_80122E94 == 1) {
-                func_80138950();
+                sports_candidate_scene_audio_request();
             } else {
                 for (i = 0; i != 4; i++) {
                     if (D_801491E0[i] == 1) {
-                        func_8013384C(table.value[D_801491EC], (u8)i);
+                        sports_scene_audio_sequence_request(table.value[D_801491EC], (u8)i);
                     }
                 }
             }
@@ -536,7 +536,7 @@ void func_80134F98(void) {
         }
         break;
     case 3:
-        func_80138800();
+        sports_runner_finish_animation_update();
         if (D_80122E94 == 1) {
             if (D_80120ABA < -0x58) {
                 D_80120ABA += 4;
@@ -592,7 +592,7 @@ void func_80134F98(void) {
 /* FAKE: T-24133. `u32 raw` with `if (raw) {}` and `raw = 0` keeps the raw flags byte in $a0 and its `& 0xF` mask in $v1
  * without a J<-L widening CVT; sharing `GameState *t` for the `unk_02` read and packing `s16 v` above `sp38` keeps the
  * 0x58 frame and loads `unk_02` directly into $v0. */
-void func_80135480(void) {
+void sports_runner_race_state_init(void) {
     s32 i;
     GameState *t;
     s16 v;
@@ -603,29 +603,29 @@ void func_80135480(void) {
     for (i = 0; i < 11; i++) {
         D_80149320[i] = sp38.v[i];
     }
-    /* FAKE: indexes the four runners (player, cpu[3]) from the player record, as in func_801368B8. T-16551 */
+    /* FAKE: indexes the four runners (player, cpu[3]) from the player record, as in sports_runner_actor_timer_increment. T-16551 */
     for (i = 0; i < 4; i++) {
         D_801491E0[i] = 0;
-        (&D_80149208.player)[i].unk_20.halves.high = i * 8;
-        (&D_80149208.player)[i].unk_00 = 0;
-        (&D_80149208.player)[i].unk_01 = 0;
-        (&D_80149208.player)[i].unk_02 = 0;
-        (&D_80149208.player)[i].unk_06 = 0;
-        (&D_80149208.player)[i].unk_03 = 0;
-        (&D_80149208.player)[i].unk_04 = 0;
-        (&D_80149208.player)[i].unk_0C = 0;
-        (&D_80149208.player)[i].unk_0E = 0;
-        (&D_80149208.player)[i].unk_10 = 0;
-        (&D_80149208.player)[i].unk_14 = 0;
-        (&D_80149208.player)[i].unk_18 = 0;
-        (&D_80149208.player)[i].unk_1C = 0;
-        (&D_80149208.player)[i].unk_20.halves.low = 0;
-        (&D_80149208.player)[i].unk_05 = 0;
-        (&D_80149208.player)[i].unk_08 = 0;
-        (&D_80149208.player)[i].unk_0A = 0;
-        (&D_80149208.player)[i].unk_07 = 0;
+        (&sports_runner_a_runners.player)[i].track_position.halves.high = i * 8;
+        (&sports_runner_a_runners.player)[i].unk_00 = 0;
+        (&sports_runner_a_runners.player)[i].unk_01 = 0;
+        (&sports_runner_a_runners.player)[i].display_actor_index = 0;
+        (&sports_runner_a_runners.player)[i].unk_06 = 0;
+        (&sports_runner_a_runners.player)[i].animation_frame = 0;
+        (&sports_runner_a_runners.player)[i].unk_04 = 0;
+        (&sports_runner_a_runners.player)[i].unk_0C = 0;
+        (&sports_runner_a_runners.player)[i].unk_0E = 0;
+        (&sports_runner_a_runners.player)[i].speed = 0;
+        (&sports_runner_a_runners.player)[i].unk_14 = 0;
+        (&sports_runner_a_runners.player)[i].unk_18 = 0;
+        (&sports_runner_a_runners.player)[i].unk_1C = 0;
+        (&sports_runner_a_runners.player)[i].track_position.halves.low = 0;
+        (&sports_runner_a_runners.player)[i].start_sequence_state = 0;
+        (&sports_runner_a_runners.player)[i].unk_08 = 0;
+        (&sports_runner_a_runners.player)[i].unk_0A = 0;
+        (&sports_runner_a_runners.player)[i].unk_07 = 0;
     }
-    D_80149208.player.unk_20.halves.high = -0xA0;
+    sports_runner_a_runners.player.track_position.halves.high = -0xA0;
     D_80149204 = 0;
     D_801491D4 = 0;
     D_8014929C = 0;
@@ -666,10 +666,10 @@ void func_80135480(void) {
     D_801491DC = 0xFF;
 }
 
-void func_801356E0(void) {
+void sports_runner_sprite_memory_init(void) {
     s32 i;
 
-    func_8004E44C(0, D_80149FAC, D_80149FA0);
+    layer_tileset_init(0, D_80149FAC, D_80149FA0);
     srn_init(0, D_80149FA8, 0);
     srn_vram_set(0, 5, 0x580, 0xF0);
     for (i = 0; i < 3; i++) {
@@ -680,7 +680,7 @@ void func_801356E0(void) {
     }
 }
 
-void func_80135778(void) {
+void sports_runner_display_context_init(void) {
     actor_clear(0x60);
     D_80120651 = 3;
     D_80120688 = 0x01000000;
@@ -696,7 +696,7 @@ void func_80135778(void) {
     D_80120656 = 2;
 }
 
-void func_80135830(void) {
+void sports_runner_actor_group_init(void) {
     s32 i;
     TaiShorts20 sp84;
     TaiShorts20 sp5C;
@@ -752,7 +752,7 @@ void func_80135830(void) {
     ((Actor *)actor_pool)[0].y = 0;
 }
 
-void func_80135AD0(void) {
+void sports_runner_obstacle_actor_init(void) {
     s32 i;
     s32 count;
     s32 row;
@@ -795,18 +795,18 @@ void func_80135AD0(void) {
         ((Actor *)actor_pool)[i + 46].scale_y = 0x1000;
         ((Actor *)actor_pool)[i + 46].brightness = 128;
         ((Actor *)actor_pool)[i + 46].y = -48 - row * 16;
-        ((Actor *)actor_pool)[i + 46].sequence_slot = func_80135D24();
+        ((Actor *)actor_pool)[i + 46].sequence_slot = sports_runner_obstacle_sequence_select();
         while (((Actor *)actor_pool)[i + 46].sequence_slot == ((Actor *)actor_pool)[i + 45].sequence_slot) {
-            ((Actor *)actor_pool)[i + 46].sequence_slot = func_80135D24();
+            ((Actor *)actor_pool)[i + 46].sequence_slot = sports_runner_obstacle_sequence_select();
         }
         ((Actor *)actor_pool)[i + 46].unk_18 = 0;
     }
 }
 
-s32 func_80135D24(void) {
+s32 sports_runner_obstacle_sequence_select(void) {
     s32 row;
     s32 random;
-    TaiRandomTable table;
+    SportsRandomTable table;
 
     table = D_80149570;
     random = rand() % 11;
@@ -821,12 +821,12 @@ s32 func_80135D24(void) {
     return table.value[row][random % 10];
 }
 
-void func_80135DF8(void) {
+void sports_runner_obstacle_sequences_assign(void) {
     s32 index;
     s32 row;
     s32 column;
     s32 skip;
-    TaiRandomTable table;
+    SportsRandomTable table;
 
     table = D_8014964C;
     index = 0;
@@ -846,19 +846,19 @@ void func_80135DF8(void) {
 
 /* Display records of the 0x44-byte pool. T-25106. */
 #define DISP(n) (((Actor *)actor_pool)[n])
-/* FAKE: record of runner index n (TaiRunnerA.unk_02), counted from record 46 instead of from the
+/* FAKE: record of runner index n (SportsRunnerA.display_actor_index), counted from record 46 instead of from the
  * pool start: the u8 index stays unsigned and every product shares one 0x44 constant, as in the
  * original. The pool is one array; the real source is unknown. T-25106 */
 #define RUNNER_DISP(n) ((&DISP(46))[n])
 /* FAKE: runner n (0 the player) indexed from the player record; the object is player + cpu[3],
- * not one array. As in func_80138680 and func_801368B8. T-25106 */
-#define RUN(n) ((&D_80149208.player)[n])
+ * not one array. As in sports_runner_finish_display_selector and sports_runner_actor_timer_increment. T-25106 */
+#define RUN(n) ((&sports_runner_a_runners.player)[n])
 /* Picks a random display record for each runner: the player's from 10..29, the others' from
  * 0..29, never 19, and no two runners (or the extra record D_801491D8) with the same unk_16 value.
  * The comparisons read the records directly, with no local for the value: uopt's PRE then keeps
  * one value per test in the original's registers. FAKE: `pad` is an unused third word above the
  * copied tables, where the original frame keeps 12 bytes. T-25106 */
-void func_80135F3C(void) {
+void sports_runner_animation_and_rival_select(void) {
     s32 i;
     s32 j;
     s32 pad;
@@ -871,18 +871,18 @@ void func_80135F3C(void) {
     player_codes = D_80149754;
     rival_codes = D_8014976C;
     flags = D_80149784;
-    D_80149208.player.unk_02 = rand() % 20 + 10;
-    while (D_80149208.player.unk_02 == 19) {
-        D_80149208.player.unk_02 = rand() % 20 + 10;
+    sports_runner_a_runners.player.display_actor_index = rand() % 20 + 10;
+    while (sports_runner_a_runners.player.display_actor_index == 19) {
+        sports_runner_a_runners.player.display_actor_index = rand() % 20 + 10;
     }
-    RUNNER_DISP(D_80149208.player.unk_02).sequence_slot = player_codes.v[D_801491EC];
+    RUNNER_DISP(sports_runner_a_runners.player.display_actor_index).sequence_slot = player_codes.v[D_801491EC];
     for (i = 0; i < 3; i++) {
-        D_80149208.cpu[i].unk_02 = rand() % 30;
-        while (D_80149208.cpu[i].unk_02 == 19) {
-            D_80149208.cpu[i].unk_02 = rand() % 30;
+        sports_runner_a_runners.cpu[i].display_actor_index = rand() % 30;
+        while (sports_runner_a_runners.cpu[i].display_actor_index == 19) {
+            sports_runner_a_runners.cpu[i].display_actor_index = rand() % 30;
         }
     }
-    D_801491DC = func_8008647C();
+    D_801491DC = select_girl_by_scores();
     if (girl_state_rank(D_801491DC) < 2 && D_801491DC != choices.value[D_801491EC]) {
         D_801491D8 = rand() % 10;
         RUNNER_DISP(D_801491D8).sequence_slot = rival_codes.v[D_801491DC];
@@ -896,24 +896,24 @@ void func_80135F3C(void) {
     }
     for (i = 0; i < 3; i++) {
         for (j = 1; j <= i + 1; j++) {
-            while (RUNNER_DISP(D_80149208.cpu[i].unk_02).sequence_slot == RUNNER_DISP(RUN(i + 1 - j).unk_02).sequence_slot
-                   || RUNNER_DISP(D_80149208.cpu[i].unk_02).sequence_slot == RUNNER_DISP(D_801491D8).sequence_slot) {
-                D_80149208.cpu[i].unk_02 = rand() % 30;
+            while (RUNNER_DISP(sports_runner_a_runners.cpu[i].display_actor_index).sequence_slot == RUNNER_DISP(RUN(i + 1 - j).display_actor_index).sequence_slot
+                   || RUNNER_DISP(sports_runner_a_runners.cpu[i].display_actor_index).sequence_slot == RUNNER_DISP(D_801491D8).sequence_slot) {
+                sports_runner_a_runners.cpu[i].display_actor_index = rand() % 30;
             }
         }
     }
     for (i = 0; i < 4; i++) {
-        DISP(107 + i).sequence_slot = RUNNER_DISP(RUN(i).unk_02).sequence_slot >> 3;
+        DISP(107 + i).sequence_slot = RUNNER_DISP(RUN(i).display_actor_index).sequence_slot >> 3;
     }
     for (i = 0; i < 4; i++) {
-        DISP(107 + i).unk_43 = flags.value[RUNNER_DISP(RUN(i).unk_02).sequence_slot >> 3][RUNNER_DISP(RUN(i).unk_02).sequence_slot & 7];
+        DISP(107 + i).unk_43 = flags.value[RUNNER_DISP(RUN(i).display_actor_index).sequence_slot >> 3][RUNNER_DISP(RUN(i).display_actor_index).sequence_slot & 7];
     }
 }
 #undef RUN
 #undef RUNNER_DISP
 #undef DISP
 
-void func_801365C8(void) {
+void sports_runner_obstacle_scroll_update(void) {
     s32 i;
     s32 j;
     s32 span;
@@ -961,7 +961,7 @@ void func_801365C8(void) {
             if (D_801491D8 == i && ((Actor *)actor_pool)[107].flags != 0 && (&D_80122E94)[0] == 1) {
                 ((Actor *)actor_pool)[46 + i].flags = 0;
                 ((Actor *)actor_pool)[46 + i].draw_flags = 0;
-            } else if (i == (&D_80149208.player)[j].unk_02 && ((Actor *)actor_pool)[107 + j].flags != 0) {
+            } else if (i == (&sports_runner_a_runners.player)[j].display_actor_index && ((Actor *)actor_pool)[107 + j].flags != 0) {
                 if (j == 0) {
                     if ((&D_80122E94)[0] == 0xFF) {
                         ((Actor *)actor_pool)[46 + i].flags = 0;
@@ -972,7 +972,7 @@ void func_801365C8(void) {
                     ((Actor *)actor_pool)[46 + i].draw_flags = 0;
                 }
             }
-            if (i == (&D_80149208.player)[j].unk_02 && ((Actor *)actor_pool)[107 + j].flags == 0) {
+            if (i == (&sports_runner_a_runners.player)[j].display_actor_index && ((Actor *)actor_pool)[107 + j].flags == 0) {
                 ((Actor *)actor_pool)[46 + i].flags = 1;
                 ((Actor *)actor_pool)[46 + i].draw_flags = 0xA4;
             }
@@ -984,77 +984,77 @@ void func_801365C8(void) {
     }
 }
 
-s32 func_801368B8() {
+s32 sports_runner_actor_timer_increment() {
     s32 i;
 
     /* FAKE: indexes the four runners (player, cpu[3]) from the player record; the object is player + cpu[3], not one array.
      * IDO unrolls the loop, and the peeled first runner is what makes the scheduling match. T-16551 */
     for (i = 0; i < 4; i++) {
-        (&D_80149208.player)[i].unk_0C += 1;
-        (&D_80149208.player)[i].unk_0E += 1;
-        (&D_80149208.player)[i].unk_14 += 1;
-        (&D_80149208.player)[i].unk_1C += 1;
+        (&sports_runner_a_runners.player)[i].unk_0C += 1;
+        (&sports_runner_a_runners.player)[i].unk_0E += 1;
+        (&sports_runner_a_runners.player)[i].unk_14 += 1;
+        (&sports_runner_a_runners.player)[i].unk_1C += 1;
     }
-    D_80149208.player.unk_07 += 1;
+    sports_runner_a_runners.player.unk_07 += 1;
 }
 
-void func_801369F0(void) {
-    func_80136A28();
-    func_80136AB0();
-    func_80136B18();
-    func_80136BB4();
+void sports_runner_player_control_update(void) {
+    sports_runner_player_speed_input_update();
+    sports_runner_player_position_integrate();
+    sports_runner_player_screen_position_update();
+    sports_runner_player_animation_update();
 }
 
-void func_80136A28(void) {
+void sports_runner_player_speed_input_update(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
         D_80149204 = 1;
     }
-    if (D_80149208.player.unk_14 >= 0x10U) {
+    if (sports_runner_a_runners.player.unk_14 >= 0x10U) {
         if (D_80149204 != 0) {
-            if (D_80149208.player.unk_18 < 0) {
-                D_80149208.player.unk_18 = 0;
+            if (sports_runner_a_runners.player.unk_18 < 0) {
+                sports_runner_a_runners.player.unk_18 = 0;
             }
-            D_80149208.player.unk_10 = D_801491E4;
+            sports_runner_a_runners.player.speed = D_801491E4;
         } else {
-            D_80149208.player.unk_10 = -0x300;
+            sports_runner_a_runners.player.speed = -0x300;
         }
-        D_80149208.player.unk_14 = 0;
+        sports_runner_a_runners.player.unk_14 = 0;
         D_80149204 = 0;
     }
 }
 
-void func_80136AB0(void) {
-    if ((u32)D_80149208.player.unk_1C >= 0xB) {
-        D_80149208.player.unk_18 += D_80149208.player.unk_10;
-        if (D_80149208.player.unk_18 < -0x10000) {
-            D_80149208.player.unk_18 = -0x10000;
+void sports_runner_player_position_integrate(void) {
+    if ((u32)sports_runner_a_runners.player.unk_1C >= 0xB) {
+        sports_runner_a_runners.player.unk_18 += sports_runner_a_runners.player.speed;
+        if (sports_runner_a_runners.player.unk_18 < -0x10000) {
+            sports_runner_a_runners.player.unk_18 = -0x10000;
         }
-        if (D_801491E8 < D_80149208.player.unk_18) {
-            D_80149208.player.unk_18 = D_801491E8;
+        if (D_801491E8 < sports_runner_a_runners.player.unk_18) {
+            sports_runner_a_runners.player.unk_18 = D_801491E8;
         }
-        D_80149208.player.unk_1C = 0;
+        sports_runner_a_runners.player.unk_1C = 0;
     }
 }
 
-void func_80136B18(void) {
-    TaiRunnerA *state;
+void sports_runner_player_screen_position_update(void) {
+    SportsRunnerA *state;
 
-    state = &D_80149208.player;
-    if (D_80149208.player.unk_10 < 0 || D_80149298.halves.high == 0) {
-        D_80149208.player.unk_20.word -= D_8014929C;
+    state = &sports_runner_a_runners.player;
+    if (sports_runner_a_runners.player.speed < 0 || D_80149298.halves.high == 0) {
+        sports_runner_a_runners.player.track_position.word -= D_8014929C;
     } else {
-        D_80149208.player.unk_20.word = D_80149208.player.unk_20.word + 0x8000;
+        sports_runner_a_runners.player.track_position.word = sports_runner_a_runners.player.track_position.word + 0x8000;
     }
-    if (state->unk_20.halves.high >= -0x1F) {
-        state->unk_20.halves.high = -0x20;
+    if (state->track_position.halves.high >= -0x1F) {
+        state->track_position.halves.high = -0x20;
     }
-    if (state->unk_20.halves.high < -0x9F) {
-        state->unk_20.halves.high = -0xA0;
+    if (state->track_position.halves.high < -0x9F) {
+        state->track_position.halves.high = -0xA0;
     }
-    D_80120676 = state->unk_20.halves.high;
+    D_80120676 = state->track_position.halves.high;
 }
 
-void func_80136BB4(void) {
+void sports_runner_player_animation_update(void) {
     u16 limit;
     TaiikuU11 limits;
     u8 temp;
@@ -1064,41 +1064,41 @@ void func_80136BB4(void) {
     if (D_80122E94 == 1) {
         limit = limits.v[D_801491DC];
     } else {
-        limit = limits.v[((Actor *)actor_pool)[46 + D_80149208.player.unk_02].sequence_slot >> 3];
+        limit = limits.v[((Actor *)actor_pool)[46 + sports_runner_a_runners.player.display_actor_index].sequence_slot >> 3];
     }
-    if ((limit < D_80149208.player.unk_0E) && (D_80149208.player.unk_18 != 0)) {
-        if (D_80149208.player.unk_04 >= 5U) {
-            D_80149208.player.unk_04 = 0;
+    if ((limit < sports_runner_a_runners.player.unk_0E) && (sports_runner_a_runners.player.unk_18 != 0)) {
+        if (sports_runner_a_runners.player.unk_04 >= 5U) {
+            sports_runner_a_runners.player.unk_04 = 0;
         } else {
-            D_80149208.player.unk_04++;
+            sports_runner_a_runners.player.unk_04++;
         }
-        D_80149208.player.unk_0E = 0;
+        sports_runner_a_runners.player.unk_0E = 0;
     }
-    count = D_80149208.player.unk_0C;
-    if (((count >= 6U) && (D_80149208.player.unk_10 > 0)) || ((count >= 8U) && (((s32) D_801491E8 >> 1) < D_80149208.player.unk_18)) || ((count >= 11U) && (D_80149208.player.unk_18 != 0))) {
-        temp = D_80149208.player.unk_03;
+    count = sports_runner_a_runners.player.unk_0C;
+    if (((count >= 6U) && (sports_runner_a_runners.player.speed > 0)) || ((count >= 8U) && (((s32) D_801491E8 >> 1) < sports_runner_a_runners.player.unk_18)) || ((count >= 11U) && (sports_runner_a_runners.player.unk_18 != 0))) {
+        temp = sports_runner_a_runners.player.animation_frame;
         if (temp >= 5U) {
-            D_80149208.player.unk_03 = 0;
+            sports_runner_a_runners.player.animation_frame = 0;
         } else {
-            D_80149208.player.unk_03 = D_80149208.player.unk_03 + 1;
+            sports_runner_a_runners.player.animation_frame = sports_runner_a_runners.player.animation_frame + 1;
         }
-        D_80149208.player.unk_0C = 0;
+        sports_runner_a_runners.player.unk_0C = 0;
     }
-    ((Actor *)actor_pool)[96].unk_18 = *(s16 *)(D_801492AC + D_80149208.player.unk_03 * 2);
-    if ((D_8014929C == 0) && (D_80149208.player.unk_10 <= 0)) {
-        D_80149208.player.unk_03 = 5;
+    ((Actor *)actor_pool)[96].unk_18 = *(s16 *)(D_801492AC + sports_runner_a_runners.player.animation_frame * 2);
+    if ((D_8014929C == 0) && (sports_runner_a_runners.player.speed <= 0)) {
+        sports_runner_a_runners.player.animation_frame = 5;
         ((Actor *)actor_pool)[96].unk_18 = 0x90;
     }
 }
 
-s32 func_80136DA4() {
+s32 sports_runner_scroll_update() {
     s32 temp;
-    D_8014929C += D_80149208.player.unk_10;
+    D_8014929C += sports_runner_a_runners.player.speed;
     temp = (*(u32 *)&D_801491E8);
     if (temp < D_8014929C) {
         D_8014929C = D_801491E8;
     }
-    if (D_8014929C < 0 || (D_80149208.player.unk_10 < 0 && D_80149208.player.unk_20.halves.high < -0x9F)) {
+    if (D_8014929C < 0 || (sports_runner_a_runners.player.speed < 0 && sports_runner_a_runners.player.track_position.halves.high < -0x9F)) {
         D_8014929C = 0;
     }
     D_80149298.word += D_8014929C;
@@ -1106,36 +1106,36 @@ s32 func_80136DA4() {
     Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
 }
 
-void func_80136E80(void) {
-    func_80136EC0();
-    func_8013703C();
-    func_80137090();
-    func_80137228();
-    func_8013732C();
+void sports_runner_cpu_update(void) {
+    sports_runner_cpu_phase_update();
+    sports_runner_cpu_speed_config_copy();
+    sports_runner_cpu_motion_state_update();
+    sports_runner_position_and_finish_update();
+    sports_runner_actor_animation_state_update();
 }
 
 /* Signed selector keeps the case constants distinct from byte stores. T-12020. */
-void func_80136EC0(void) {
+void sports_runner_cpu_phase_update(void) {
     s32 i;
     TaiWait3 wait;
 
     wait = D_801497F4;
     for (i = 0; i < 3; i++) {
-        if (D_80149208.cpu[i].unk_01 != 0) {
-            switch ((s32)D_80149208.cpu[i].unk_05) {
+        if (sports_runner_a_runners.cpu[i].unk_01 != 0) {
+            switch ((s32)sports_runner_a_runners.cpu[i].start_sequence_state) {
             case 0:
-                D_80149208.cpu[i].unk_08 = rand() % 120 + wait.value[i] + 60;
-                D_80149208.cpu[i].unk_05++;
+                sports_runner_a_runners.cpu[i].unk_08 = rand() % 120 + wait.value[i] + 60;
+                sports_runner_a_runners.cpu[i].start_sequence_state++;
                 break;
             case 1:
-                if (++D_80149208.cpu[i].unk_0A >= D_80149208.cpu[i].unk_08) {
-                    D_80149208.cpu[i].unk_05++;
+                if (++sports_runner_a_runners.cpu[i].unk_0A >= sports_runner_a_runners.cpu[i].unk_08) {
+                    sports_runner_a_runners.cpu[i].start_sequence_state++;
                 }
                 break;
             case 2:
-                if (func_80137784(i + 1) != 0) {
-                    D_80149208.cpu[i].unk_01 = 0;
-                    D_80149208.cpu[i].unk_00 = 1;
+                if (sports_runner_finish_actor_slide_update(i + 1) != 0) {
+                    sports_runner_a_runners.cpu[i].unk_01 = 0;
+                    sports_runner_a_runners.cpu[i].unk_00 = 1;
                 }
                 break;
             default:
@@ -1151,20 +1151,20 @@ typedef struct {
 } Tw3; /* size 0xC */
 extern Tw3 D_801497FC;
 
-void func_8013703C(void) {
+void sports_runner_cpu_speed_config_copy(void) {
     s32 i;
     Tw3 t;
 
     t = D_801497FC;
     for (i = 0; i < 3; i++) {
-        D_80149208.cpu[i].unk_10 = t.w[i];
+        sports_runner_a_runners.cpu[i].speed = t.w[i];
     }
 }
 
-/* Slot records of 0x24 bytes at D_80149208 + 0x24 * i, reached as members of D_80149208 so IDO sees the object
+/* Slot records of 0x24 bytes at sports_runner_a_runners + 0x24 * i, reached as members of sports_runner_a_runners so IDO sees the object
  * (loop-invariant D_80120A72 is hoisted). FAKE: the unused-looking s16 y reserves the 4 stack bytes the original has
  * and `th.v[i] <= (y = ...)` keeps the load order. T-10720. */
-void func_80137090(void) {
+void sports_runner_cpu_motion_state_update(void) {
     s32 i;
     s16 y;
     TaiikuI3 lim;
@@ -1173,37 +1173,37 @@ void func_80137090(void) {
     lim = D_80149808;
     th = D_80149814;
     for (i = 0; i < 3; i++) {
-        if (D_80149208.cpu[i].unk_06 == 1 && D_80120A72 + i * 8 + 0x148 < *(s16 *)(actor_pool + i * 0x44 + 0x19EA)) {
-            D_80149208.cpu[i].unk_18 = 0;
+        if (sports_runner_a_runners.cpu[i].unk_06 == 1 && D_80120A72 + i * 8 + 0x148 < *(s16 *)(actor_pool + i * 0x44 + 0x19EA)) {
+            sports_runner_a_runners.cpu[i].unk_18 = 0;
         } else {
-            if (th.v[i] <= (y = D_80149208.cpu[i].unk_20.halves.high) && D_80149208.cpu[i].unk_00 == 0) {
-                D_80149208.cpu[i].unk_18 = 0;
-                D_80149208.cpu[i].unk_01 = 1;
-            } else if (y >= 0x140 && D_80149208.cpu[i].unk_00 == 0) {
-                D_80149208.cpu[i].unk_18 = (lim.v[i] >> 1) + 1;
-            } else if (D_80149208.cpu[i].unk_1C >= 0xB && D_80149208.cpu[i].unk_01 == 0 && D_80149208.cpu[i].unk_06 == 0) {
-                D_80149208.cpu[i].unk_18 += D_80149208.cpu[i].unk_10;
-                if (D_80149208.cpu[i].unk_18 < 0) {
-                    D_80149208.cpu[i].unk_18 = 0;
+            if (th.v[i] <= (y = sports_runner_a_runners.cpu[i].track_position.halves.high) && sports_runner_a_runners.cpu[i].unk_00 == 0) {
+                sports_runner_a_runners.cpu[i].unk_18 = 0;
+                sports_runner_a_runners.cpu[i].unk_01 = 1;
+            } else if (y >= 0x140 && sports_runner_a_runners.cpu[i].unk_00 == 0) {
+                sports_runner_a_runners.cpu[i].unk_18 = (lim.v[i] >> 1) + 1;
+            } else if (sports_runner_a_runners.cpu[i].unk_1C >= 0xB && sports_runner_a_runners.cpu[i].unk_01 == 0 && sports_runner_a_runners.cpu[i].unk_06 == 0) {
+                sports_runner_a_runners.cpu[i].unk_18 += sports_runner_a_runners.cpu[i].speed;
+                if (sports_runner_a_runners.cpu[i].unk_18 < 0) {
+                    sports_runner_a_runners.cpu[i].unk_18 = 0;
                 }
-                if (lim.v[i] < D_80149208.cpu[i].unk_18) {
-                    D_80149208.cpu[i].unk_18 = lim.v[i];
+                if (lim.v[i] < sports_runner_a_runners.cpu[i].unk_18) {
+                    sports_runner_a_runners.cpu[i].unk_18 = lim.v[i];
                 }
-                D_80149208.cpu[i].unk_1C = 0;
+                sports_runner_a_runners.cpu[i].unk_1C = 0;
             }
         }
     }
 }
 
-void func_80137228(void) {
+void sports_runner_position_and_finish_update(void) {
     s32 i;
     s32 k;
 
     for (i = 0; i < 3; i++) {
-        D_80149208.cpu[i].unk_20.word += D_80149208.cpu[i].unk_18;
-        if (((Actor *)actor_pool)[111].x + (i + 1) * 8 < D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0x60 && D_80149208.cpu[i].unk_06 == 0) {
+        sports_runner_a_runners.cpu[i].track_position.word += sports_runner_a_runners.cpu[i].unk_18;
+        if (((Actor *)actor_pool)[111].x + (i + 1) * 8 < sports_runner_a_runners.cpu[i].track_position.halves.high - D_80149298.halves.high - 0x60 && sports_runner_a_runners.cpu[i].unk_06 == 0) {
             ((Actor *)actor_pool)[112].unk_18 = 0x8D;
-            if (D_80149208.cpu[i].unk_06 == 0) {
+            if (sports_runner_a_runners.cpu[i].unk_06 == 0) {
                 k = 0;
                 if (D_801491E0[0] != 0) {
                     do {
@@ -1212,10 +1212,10 @@ void func_80137228(void) {
                 }
                 D_801491E0[k] = i + 2;
             }
-            D_80149208.cpu[i].unk_06 = 1;
+            sports_runner_a_runners.cpu[i].unk_06 = 1;
         }
-        ((Actor *)actor_pool)[97 + i].x = D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high - 0xA0;
-        if (D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high >= 0x1E1 || D_80149208.cpu[i].unk_20.halves.high - D_80149298.halves.high < -0xA0) {
+        ((Actor *)actor_pool)[97 + i].x = sports_runner_a_runners.cpu[i].track_position.halves.high - D_80149298.halves.high - 0xA0;
+        if (sports_runner_a_runners.cpu[i].track_position.halves.high - D_80149298.halves.high >= 0x1E1 || sports_runner_a_runners.cpu[i].track_position.halves.high - D_80149298.halves.high < -0xA0) {
             ((Actor *)actor_pool)[97 + i].draw_flags = 0;
         } else {
             ((Actor *)actor_pool)[97 + i].draw_flags = 0xA4;
@@ -1223,15 +1223,15 @@ void func_80137228(void) {
     }
 }
 
-/* FAKE: byte-offset walk over the cpu runners of D_80149208; written as TaiRunnerA fields (p = &D_80149208.cpu[i],
- * or the byte base plus 0x24 * i cast to TaiRunnerA *) the code differs (checked in the T-16550 review). T-16550 */
-void func_8013732C(void) {
+/* FAKE: byte-offset walk over the cpu runners of sports_runner_a_runners; written as SportsRunnerA fields (p = &sports_runner_a_runners.cpu[i],
+ * or the byte base plus 0x24 * i cast to SportsRunnerA *) the code differs (checked in the T-16550 review). T-16550 */
+void sports_runner_actor_animation_state_update(void) {
     s32 i;
     u8 *p;
     u32 t;
     s32 k;
     for (i = 0; i < 3; i++) {
-        p = ((u8 *)&D_80149208) + i * 0x24;
+        p = ((u8 *)&sports_runner_a_runners) + i * 0x24;
         if (p[0x25] != 0) {
             ((Actor *)actor_pool)[i + 97].unk_18 = i + 0x88;
         } else {
@@ -1252,7 +1252,7 @@ void func_8013732C(void) {
 }
 
 /* The original leaves the K&R result in v0 without an explicit return. */
-s32 func_80137440(void) {
+s32 sports_runner_finish_audio_and_lane_update(void) {
     s32 timer;
     s16 y;
     Actor *record;
@@ -1262,7 +1262,7 @@ s32 func_80137440(void) {
     timer = *(s16 *)&D_80149298.halves.high;
     if (timer < 0x3C1) {
         if (((D_80120676 + 0x10) >= D_80120786) && (D_80120762 != 0)) {
-            if (D_80122EA0 == 1) {
+            if (audio_bank_wait_done == 1) {
                 audio_command(0x609);
             } else {
                 audio_command(0x509);
@@ -1288,7 +1288,7 @@ s32 func_80137440(void) {
     }
 }
 
-void func_80137544(void) {
+void sports_runner_rival_choice_input_process(void) {
     u8 sel;
     s32 i;
     s32 a;
@@ -1300,15 +1300,15 @@ void func_80137544(void) {
 
     one = 1;
     Yubi(0x6A);
-    if (D_800B3CFC != 0 && D_80122E94 == 0xFF) {
-        if (one == D_80122EA0) {
+    if (pad_code_entered != 0 && D_80122E94 == 0xFF) {
+        if (one == audio_bank_wait_done) {
             audio_command(0x60E);
         } else {
             audio_command(0x50E);
         }
         D_80122E94 = 1;
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
-        if (D_80149208.player.unk_07 >= 0x29U) {
+        if (sports_runner_a_runners.player.unk_07 >= 0x29U) {
             i = 0;
             a = -0xA0;
             b = -0x80;
@@ -1337,15 +1337,15 @@ void func_80137544(void) {
                 b += 0x20;
             } while (i != 10);
             if (one == D_80122E94 && sel == D_801491D8 && D_801491DC != 0xFF) {
-                if (one == D_80122EA0) {
+                if (one == audio_bank_wait_done) {
                     audio_command(0x60C);
                 } else {
                     audio_command(0x50C);
                 }
-                D_80149208.player.unk_01 = 1;
-            } else if (sel == D_80149208.player.unk_02) {
+                sports_runner_a_runners.player.unk_01 = 1;
+            } else if (sel == sports_runner_a_runners.player.display_actor_index) {
                 audio_command(0x601);
-                D_80149208.player.unk_01 = 1;
+                sports_runner_a_runners.player.unk_01 = 1;
                 D_80122E94 = 0xFF;
                 D_801491DC = 0xFF;
             } else {
@@ -1354,7 +1354,7 @@ void func_80137544(void) {
                 pos = pos;
                 audio_command(0x600);
             }
-            D_80149208.player.unk_07 = 0;
+            sports_runner_a_runners.player.unk_07 = 0;
         }
     }
 }
@@ -1367,16 +1367,16 @@ void func_80137544(void) {
  * arg0 tests stay bnez. T-25502. */
 #define DISP(n) (((Actor *)actor_pool)[n])
 #define DISPF(n) (((ActorFixed *)actor_pool)[n])
-/* FAKE: shared player/cpu[3] index, as in matched func_80138680; T-25106. */
-#define RUN(n) ((&D_80149208.player)[n])
+/* FAKE: shared player/cpu[3] index, as in matched sports_runner_finish_display_selector; T-25106. */
+#define RUN(n) ((&sports_runner_a_runners.player)[n])
 /* FAKE: (s32) on the runner's record index. Without it the u8 index takes its own unsigned 0x44 and
  * the entry product is strength-reduced; the original shares one li t5,68 with the arg0 products. T-25106 */
-s32 func_80137784(s32 arg0) {
+s32 sports_runner_finish_actor_slide_update(s32 arg0) {
     s32 i;
 
-    if (DISP(46 + (s32)RUN(arg0).unk_02).flags != 0 && (arg0 != 0 || D_80122E94 == 0xFF)) {
-        DISP(46 + (s32)RUN(arg0).unk_02).flags = 0;
-        DISP(46 + (s32)RUN(arg0).unk_02).draw_flags = 0;
+    if (DISP(46 + (s32)RUN(arg0).display_actor_index).flags != 0 && (arg0 != 0 || D_80122E94 == 0xFF)) {
+        DISP(46 + (s32)RUN(arg0).display_actor_index).flags = 0;
+        DISP(46 + (s32)RUN(arg0).display_actor_index).draw_flags = 0;
         if (arg0 == 0) {
             for (i = 0; i < 3; i++) {
                 DISP(104 + i).flags = 0;
@@ -1386,8 +1386,8 @@ s32 func_80137784(s32 arg0) {
         }
         DISP(107 + arg0).flags = 1;
         DISP(107 + arg0).draw_flags = 0xA4;
-        DISP(107 + arg0).x = (((s16)RUN(arg0).unk_02 % 10) << 5) - D_80149298.halves.high + 0x1E0;
-        DISP(107 + arg0).y = -((s16)RUN(arg0).unk_02 / 10) * 16 - 0x30;
+        DISP(107 + arg0).x = (((s16)RUN(arg0).display_actor_index % 10) << 5) - D_80149298.halves.high + 0x1E0;
+        DISP(107 + arg0).y = -((s16)RUN(arg0).display_actor_index / 10) * 16 - 0x30;
         D_8014982C[arg0] = (DISPF(96 + arg0).x.w - DISPF(107 + arg0).x.w) >> 7;
         D_8014983C[arg0] = (DISPF(96 + arg0).y.w - DISPF(107 + arg0).y.w) >> 7;
         D_8014984C[arg0].w = DISPF(107 + arg0).x.w - DISPF(96 + arg0).x.w;
@@ -1395,22 +1395,22 @@ s32 func_80137784(s32 arg0) {
             DISP(107 + arg0).draw_flags |= 1;
         }
         D_8014981C[arg0] = 0;
-        RUN(arg0).unk_03 = 0;
+        RUN(arg0).animation_frame = 0;
         RUN(arg0).unk_04 = 0;
         RUN(arg0).unk_0C = 0;
         RUN(arg0).unk_0E = 0;
-        RUN(arg0).unk_10 = 0;
+        RUN(arg0).speed = 0;
         RUN(arg0).unk_14 = 0;
         RUN(arg0).unk_18 = 0;
         RUN(arg0).unk_1C = 0;
         if (arg0 == 0) {
-            D_80149208.player.unk_20.halves.high = -0xA0;
+            sports_runner_a_runners.player.track_position.halves.high = -0xA0;
             D_8014929C = 0;
         }
         return 0;
     }
     /* FAKE: record D_801491D8 indexed from record 46, so the u8 global stays unsigned and its product is
-     * strength-reduced, as in func_80135F3C. T-25106 */
+     * strength-reduced, as in sports_runner_animation_and_rival_select. T-25106 */
     if ((&DISP(46))[D_801491D8].flags != 0 && D_80122E94 == 1 && arg0 == 0) {
         (&DISP(46))[D_801491D8].flags = 0;
         (&DISP(46))[D_801491D8].draw_flags = 0;
@@ -1434,15 +1434,15 @@ s32 func_80137784(s32 arg0) {
             DISP(107).draw_flags = 0xA5;
         }
         D_8014981C[0] = 0;
-        D_80149208.player.unk_03 = 0;
-        D_80149208.player.unk_04 = 0;
-        D_80149208.player.unk_0C = 0;
-        D_80149208.player.unk_0E = 0;
-        D_80149208.player.unk_10 = 0;
-        D_80149208.player.unk_14 = 0;
-        D_80149208.player.unk_18 = 0;
-        D_80149208.player.unk_1C = 0;
-        D_80149208.player.unk_20.halves.high = -0xA0;
+        sports_runner_a_runners.player.animation_frame = 0;
+        sports_runner_a_runners.player.unk_04 = 0;
+        sports_runner_a_runners.player.unk_0C = 0;
+        sports_runner_a_runners.player.unk_0E = 0;
+        sports_runner_a_runners.player.speed = 0;
+        sports_runner_a_runners.player.unk_14 = 0;
+        sports_runner_a_runners.player.unk_18 = 0;
+        sports_runner_a_runners.player.unk_1C = 0;
+        sports_runner_a_runners.player.track_position.halves.high = -0xA0;
         D_8014929C = 0;
         return 0;
     }
@@ -1470,7 +1470,7 @@ s32 func_80137784(s32 arg0) {
 
 /* Display-record view shared with the matched game-C sibling. T-24008. */
 #define DISP(n) (((Actor *)actor_pool)[n])
-/* FAKE: display record of runner n (TaiRunnerA.unk_02), counted from record 46. Indexing from that
+/* FAKE: display record of runner n (SportsRunnerA.display_actor_index), counted from record 46. Indexing from that
  * record lets a u8 global index stay unsigned, as the runner field does, so both share one 0x44
  * constant; DISP(46 + n) widens the global and gives it the counter's constant. T-25106. */
 #define RUNNER_DISP(n) ((&DISP(46))[n])
@@ -1478,39 +1478,39 @@ s32 func_80137784(s32 arg0) {
  * expression as the first loop's DISP(107 + i), and the second loop then ends on the runner
  * pointer instead of the record pointer. T-25106 */
 #define DISP_AT(i) ((Actor *)(actor_pool + (i) * 0x44))
-s32 func_80137C44(void) {
+s32 sports_runner_finish_actor_display_update(void) {
     s32 i;
     s32 x;
     s32 pos;
-    TaiRunnerA *runner;
+    SportsRunnerA *runner;
 
-    for (i = 0, runner = &D_80149208.player; i < 4; i++, runner++) {
+    for (i = 0, runner = &sports_runner_a_runners.player; i < 4; i++, runner++) {
         if (runner->unk_00 != 0) {
             DISP(107 + i).x = DISP(96 + i).x - 8;
             if (i == 0) {
                 /* FAKE: read through an address view; an indirect load is not a plain variable, so uopt
                  * keeps the constant first (bne t4,a1), as in the original. T-25106 */
                 if (*(s32 *)&D_80122E94 == 1) {
-                    DISP(107).unk_18 = D_801492B8[D_80149208.player.unk_04] + ((RUNNER_DISP(D_801491D8).sequence_slot >> 3) * 6);
+                    DISP(107).unk_18 = D_801492B8[sports_runner_a_runners.player.unk_04] + ((RUNNER_DISP(D_801491D8).sequence_slot >> 3) * 6);
                 } else {
-                    DISP(107).unk_18 = D_801492B8[D_80149208.player.unk_04] + ((RUNNER_DISP(runner->unk_02).sequence_slot >> 3) * 6);
+                    DISP(107).unk_18 = D_801492B8[sports_runner_a_runners.player.unk_04] + ((RUNNER_DISP(runner->display_actor_index).sequence_slot >> 3) * 6);
                 }
             } else {
-                DISP(107 + i).unk_18 = D_801492B8[runner->unk_03] + ((RUNNER_DISP(runner->unk_02).sequence_slot >> 3) * 6);
+                DISP(107 + i).unk_18 = D_801492B8[runner->animation_frame] + ((RUNNER_DISP(runner->display_actor_index).sequence_slot >> 3) * 6);
             }
             if (i + 0x90 == DISP(96 + i).unk_18) {
                 /* FAKE: address view as above. T-25106 */
                 if (*(s32 *)&D_80122E94 == 1) {
                     DISP(107 + i).unk_18 = D_80149320[D_801491DC] * 6 + 5;
                 } else {
-                    DISP(107 + i).unk_18 = ((RUNNER_DISP(runner->unk_02).sequence_slot >> 3) * 6) + 5;
+                    DISP(107 + i).unk_18 = ((RUNNER_DISP(runner->display_actor_index).sequence_slot >> 3) * 6) + 5;
                 }
             }
         }
     }
     pos = D_80149298.halves.high;
     for (i = 0; i < 3; i++) {
-        if (((D_80149208.cpu[i].unk_05 == 2 && DISP_AT(i)[108].flags != 0) || D_80149208.cpu[i].unk_00 == 1) && (x = D_80149208.cpu[i].unk_20.halves.high - pos) < 0x140 && x >= -0x13F) {
+        if (((sports_runner_a_runners.cpu[i].start_sequence_state == 2 && DISP_AT(i)[108].flags != 0) || sports_runner_a_runners.cpu[i].unk_00 == 1) && (x = sports_runner_a_runners.cpu[i].track_position.halves.high - pos) < 0x140 && x >= -0x13F) {
             DISP_AT(i)[108].draw_flags = 0xA4;
         } else {
             DISP_AT(i)[108].draw_flags = 0;
@@ -1522,17 +1522,17 @@ s32 func_80137C44(void) {
 
 /* Keep the explicit final else and assign result slot zero first: uopt spills
  * the result-loop pointer and writes the promoted first byte after its neighbors. T-24008. */
-s32 func_80137EA8(void) {
-    s32 i;
-    s32 k;
-    TkS16x4 tbl;
+s32 sports_runner_finish_line_update(void) {
+    s32 finish_order_index;
+    s32 cpu_runner_index;
+    TkS16x4 finish_line_offsets;
 
-    tbl = D_8014985C;
+    finish_line_offsets = D_8014985C;
     if (DISP(111).flags == 0 && D_80149298.halves.high >= 0x781) {
-        for (k = 0; k < 3; k++) {
-            DISP(111 + k).flags = 0x40;
-            DISP(111 + k).draw_flags = 0xA4;
-            if (D_80149208.cpu[k].unk_06 == 1) {
+        for (cpu_runner_index = 0; cpu_runner_index < 3; cpu_runner_index++) {
+            DISP(111 + cpu_runner_index).flags = 0x40;
+            DISP(111 + cpu_runner_index).draw_flags = 0xA4;
+            if (sports_runner_a_runners.cpu[cpu_runner_index].unk_06 == 1) {
                 DISP(112).draw_flags = 0;
             }
         }
@@ -1540,14 +1540,14 @@ s32 func_80137EA8(void) {
     if (DISP(112).unk_18 == 0x8D) {
         DISP(112).draw_flags |= 0x40;
     }
-    for (k = 0; k < 3; k++) {
-        if (D_80149208.cpu[k].unk_06 == 1 && DISP(97 + k).x >= DISP(112).x + 0x30) {
+    for (cpu_runner_index = 0; cpu_runner_index < 3; cpu_runner_index++) {
+        if (sports_runner_a_runners.cpu[cpu_runner_index].unk_06 == 1 && DISP(97 + cpu_runner_index).x >= DISP(112).x + 0x30) {
             DISP(112).draw_flags = 0;
             DISP(112).flags = 0;
         }
     }
-    for (k = 0; &tbl.v[k] < &tbl.v[4]; k++) {
-        DISP(111 + k).x = tbl.v[k] - D_80149298.halves.high * 2 - 0xA0;
+    for (cpu_runner_index = 0; &finish_line_offsets.v[cpu_runner_index] < &finish_line_offsets.v[4]; cpu_runner_index++) {
+        DISP(111 + cpu_runner_index).x = finish_line_offsets.v[cpu_runner_index] - D_80149298.halves.high * 2 - 0xA0;
     }
     if (DISP(114).x < -0xDC && DISP(114).draw_flags != 0) {
         DISP(114).draw_flags = 0;
@@ -1561,13 +1561,13 @@ s32 func_80137EA8(void) {
             DISP(112).unk_18 = 0x8D;
             DISP(112).x = DISP(113).x + 0x20;
         }
-        k = 0;
-        while (D_801491E0[k] != 0) {
-            k++;
+        cpu_runner_index = 0;
+        while (D_801491E0[cpu_runner_index] != 0) {
+            cpu_runner_index++;
         }
-        D_801491E0[k] = 1;
-        for (i = k + 1; i < 4; i++) {
-            D_801491E0[i] = func_8013815C();
+        D_801491E0[cpu_runner_index] = 1;
+        for (finish_order_index = cpu_runner_index + 1; finish_order_index < 4; finish_order_index++) {
+            D_801491E0[finish_order_index] = sports_runner_cpu_place_select();
         }
         if (D_80122E94 == 1) {
             D_801491E0[0] = 3;
@@ -1586,30 +1586,30 @@ s32 func_80137EA8(void) {
 
 /* FAKE: v[6] instead of three elements reproduces the original local offset
  * (0x1c); the real source is unknown. T-0016 */
-s32 func_8013815C(void) {
-    s16 v[6];
-    s32 i;
+s32 sports_runner_cpu_place_select(void) {
+    s16 cpu_place_values[6];
+    s32 cpu_runner_index;
 
-    for (i = 0; i < 3; i++) {
-        if (D_80149208.cpu[i].unk_06 == 0) {
-            v[i] = *(s16 *)(actor_pool + i * 0x44 + 0x19EA);
+    for (cpu_runner_index = 0; cpu_runner_index < 3; cpu_runner_index++) {
+        if (sports_runner_a_runners.cpu[cpu_runner_index].unk_06 == 0) {
+            cpu_place_values[cpu_runner_index] = *(s16 *)(actor_pool + cpu_runner_index * 0x44 + 0x19EA);
         } else {
-            v[i] = -0xF00;
+            cpu_place_values[cpu_runner_index] = -0xF00;
         }
     }
-    if (v[0] >= v[1] && v[0] >= v[2]) {
-        D_80149208.cpu[0].unk_06 = 1;
+    if (cpu_place_values[0] >= cpu_place_values[1] && cpu_place_values[0] >= cpu_place_values[2]) {
+        sports_runner_a_runners.cpu[0].unk_06 = 1;
         return 2;
     }
-    if (v[1] >= v[2]) {
-        D_80149208.cpu[1].unk_06 = 1;
+    if (cpu_place_values[1] >= cpu_place_values[2]) {
+        sports_runner_a_runners.cpu[1].unk_06 = 1;
         return 3;
     }
-    D_80149208.cpu[2].unk_06 = 1;
+    sports_runner_a_runners.cpu[2].unk_06 = 1;
     return 4;
 }
 
-void func_80138224(void) {
+void sports_runner_finish_actor_group_init(void) {
     s32 i;
     s32 j; /* FAKE: unused local; the original frame is 8 bytes larger, two words above spA4 (a second counter?), real source unknown. T-16551 */
     TaiBytes10 spA4;
@@ -1635,11 +1635,11 @@ void func_80138224(void) {
         ((Actor *)actor_pool)[96 + i].tpage_table = (u8 *)D_801492F8;
         ((Actor *)actor_pool)[96 + i].unk_14 = D_8014A02C;
         ((Actor *)actor_pool)[96 + i].sequence_slot = 0;
-        ((Actor *)actor_pool)[96 + i].unk_18 = func_80138680(i, 1);
+        ((Actor *)actor_pool)[96 + i].unk_18 = sports_runner_finish_display_selector(i, 1);
         ((Actor *)actor_pool)[96 + i].scale_x = 0x1000;
         ((Actor *)actor_pool)[96 + i].scale_y = 0x1000;
         ((Actor *)actor_pool)[96 + i].brightness = 0x80;
-        ((Actor *)actor_pool)[96 + i].x = func_801388E4(i);
+        ((Actor *)actor_pool)[96 + i].x = sports_runner_finish_marker_x_select(i);
         ((Actor *)actor_pool)[96 + i].y = 0x28 - i * 0x18;
     }
     for (i = 0; i < 4; i++) {
@@ -1656,11 +1656,11 @@ void func_80138224(void) {
         ((Actor *)actor_pool)[107 + i].tpage_table = (u8 *)D_801492F8;
         ((Actor *)actor_pool)[107 + i].unk_14 = D_8014A02C;
         ((Actor *)actor_pool)[107 + i].sequence_slot = 0;
-        ((Actor *)actor_pool)[107 + i].unk_18 = func_80138680(i, 0);
+        ((Actor *)actor_pool)[107 + i].unk_18 = sports_runner_finish_display_selector(i, 0);
         ((Actor *)actor_pool)[107 + i].scale_x = 0x1000;
         ((Actor *)actor_pool)[107 + i].scale_y = 0x1000;
         ((Actor *)actor_pool)[107 + i].brightness = 0x80;
-        ((Actor *)actor_pool)[107 + i].x = func_801388E4(i);
+        ((Actor *)actor_pool)[107 + i].x = sports_runner_finish_marker_x_select(i);
         ((Actor *)actor_pool)[107 + i].y = 0x28 - i * 0x18;
     }
     for (i = 0; i != 10; i++) {
@@ -1709,7 +1709,7 @@ void func_80138224(void) {
     ((Actor *)actor_pool)[112].y = -0xF8;
 }
 
-s32 func_80138680(s32 arg0, s32 arg1) {
+s32 sports_runner_finish_display_selector(s32 arg0, s32 arg1) {
     s32 key;
     s32 slot;
     TaiWords4 small;
@@ -1737,36 +1737,36 @@ s32 func_80138680(s32 arg0, s32 arg1) {
         if (D_80122E94 == 1 && slot == 4) {
             slot += large.value[D_80149320[D_801491DC]];
         } else {
-            /* FAKE: indexes the four runners (player, cpu[3]) of D_80149208 from the player record; the
-             * object is player + cpu[3], not one array (see TaiRunnersA). T-16550 */
-            slot += large.value[((Actor *)actor_pool)[(&D_80149208.player)[arg0].unk_02 + 46].sequence_slot >> 3];
+            /* FAKE: indexes the four runners (player, cpu[3]) of sports_runner_a_runners from the player record; the
+             * object is player + cpu[3], not one array (see SportsRunnersA). T-16550 */
+            slot += large.value[((Actor *)actor_pool)[(&sports_runner_a_runners.player)[arg0].display_actor_index + 46].sequence_slot >> 3];
         }
     }
     return slot;
 }
 
-void func_80138800(void) {
+void sports_runner_finish_animation_update(void) {
     s32 i;
     s16 t;
 
-    if (D_80149208.player.unk_0C >= 0xBU) {
-        D_80149208.player.unk_03 += 1;
-        D_80149208.player.unk_0C = 0;
+    if (sports_runner_a_runners.player.unk_0C >= 0xBU) {
+        sports_runner_a_runners.player.animation_frame += 1;
+        sports_runner_a_runners.player.unk_0C = 0;
     }
-    if (D_80149208.player.unk_03 >= 4U) {
-        D_80149208.player.unk_03 = 0;
+    if (sports_runner_a_runners.player.animation_frame >= 4U) {
+        sports_runner_a_runners.player.animation_frame = 0;
     }
     for (i = 0; i < 4; i++) {
-        t = func_80138680(i, 1);
-        *(s16 *)(actor_pool + i * 0x44 + 0x1998) = D_80149208.player.unk_03 + t;
+        t = sports_runner_finish_display_selector(i, 1);
+        *(s16 *)(actor_pool + i * 0x44 + 0x1998) = sports_runner_a_runners.player.animation_frame + t;
     }
     for (i = 0; i != 4; i++) {
-        t = func_80138680(i, 0);
-        *(s16 *)(actor_pool + i * 0x44 + 0x1C84) = (D_80149208.player.unk_03 & 1) + t;
+        t = sports_runner_finish_display_selector(i, 0);
+        *(s16 *)(actor_pool + i * 0x44 + 0x1C84) = (sports_runner_a_runners.player.animation_frame & 1) + t;
     }
 }
 
-s16 func_801388E4(s32 arg0) {
+s16 sports_runner_finish_marker_x_select(s32 arg0) {
     s32 key;
     s32 slot;
 

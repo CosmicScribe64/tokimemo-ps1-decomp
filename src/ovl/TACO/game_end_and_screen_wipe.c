@@ -39,7 +39,7 @@ void shooter_game_end_step_init(void) {
     if (shooter_load_request == 0) {
         shooter_snapshot_screen();
         shooter_hide_all_models();
-        func_80059048();
+        view_model_slots_clear();
         save = *(ShooterPosition *)&shooter_actors->argument_x;
         flag = shooter_actors->stats[1];
         shooter_release_all_actor_models();
@@ -51,7 +51,7 @@ void shooter_game_end_step_init(void) {
         (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = (&game_state.clear_color_r)[2] = 0x10;
         shooter_background_flags = 0;
         shooter_load_request = 0x44;
-        func_800450F4(0, 0x202);
+        audio_bgm_play_short(0, 0x202);
         mode_step_next();
     }
 }
@@ -64,7 +64,7 @@ void shooter_game_end_step_wait(void) {
 
 void shooter_game_end_step_leave(void) {
     if (shooter_load_request == 0) {
-        if (func_80044C98() == 1) {
+        if (audio_bank_transfer_poll() == 1) {
             mode_stage_set(8);
         }
     }
@@ -100,19 +100,19 @@ s32 shooter_draw_screen_wipe(s32 arg0) {
     p->r0 = 0x80;
     p->g0 = 0x80;
     p->b0 = 0x80;
-    p->x0 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
-    p->y0 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x1 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
-    p->y1 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x2 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
-    p->y2 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
-    p->x3 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
+    p->x0 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
+    p->y0 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x1 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
+    p->y1 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x2 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) - 0x100;
+    p->y2 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->x3 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 9) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100 - 0x100;
 #line 115
-    p->y3 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->y3 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
 #line 112
     /* one comma statement, the shape of the libgpu setUV4 macro: gives the original's store order and constant registers. T-24200 */
     p->u0 = 0, p->v0 = 0, p->u1 = 0xFF, p->v1 = 0, p->u2 = 0, p->v2 = 0xF0, p->u3 = 0xFF, p->v3 = 0xF0;
-    AddPrim((draw_buffer << 0xA) + 0x3FC + D_800E8CA0, p);
+    AddPrim((draw_buffer << 0xA) + 0x3FC + draw_ot_tags, p);
     p = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
     func_8009F040(p);
     SetSemiTrans(p, 0);
@@ -121,16 +121,16 @@ s32 shooter_draw_screen_wipe(s32 arg0) {
     p->r0 = 0x80;
     p->g0 = 0x80;
     p->b0 = 0x80;
-    p->x0 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
-    p->y0 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x1 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
-    p->y1 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
-    p->x2 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
-    p->y2 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
-    p->x3 = g->screen_center_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
+    p->x0 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
+    p->y0 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x1 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
+    p->y1 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 - 0x78;
+    p->x2 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100);
+    p->y2 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->x3 = g->draw_origin_x[draw_buffer] + (((0x64 - arg0) << 8) / 100 - ((0x64 - arg0) * 0x10) / 100) + (arg0 << 8) / 100;
 #line 135
-    p->y3 = g->screen_center_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
+    p->y3 = g->draw_origin_y[draw_buffer] + ((0x64 - arg0) << 6) / 100 + (arg0 * 0xF0) / 100 - 0x78;
 #line 133
     p->u0 = 0, p->v0 = 0, p->u1 = 0xFF, p->v1 = 0, p->u2 = 0, p->v2 = 0xF0, p->u3 = 0xFF, p->v3 = 0xF0;
-    AddPrim((draw_buffer << 0xA) + 0x3FC + D_800E8CA0, p);
+    AddPrim((draw_buffer << 0xA) + 0x3FC + draw_ot_tags, p);
 }

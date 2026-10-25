@@ -48,6 +48,7 @@ options:
     - config/symbol_addrs_main.txt
     - config/labels/main.txt
     - config/symbol_addrs_hypotheses.txt
+    - config/symbol_addrs_main_hypotheses.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/undefined_funcs_auto.txt

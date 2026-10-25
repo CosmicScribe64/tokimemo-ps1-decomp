@@ -3,17 +3,17 @@
 #include "ovl/TAIIKU.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-/* Defined in the unit (not an island piece) so that the stores to the runner list share one lui at; T-19031, func_80132000. */
+/* Defined in the unit (not an island piece) so that the stores to the runner list share one lui at; T-19031, sports_folk_dance_entry. */
 u8 D_80148EC0[4] = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/folk_dance_scene.data", D_80148EC4);
 
-void func_80132000(void) {
+void sports_folk_dance_entry(void) {
     s32 i;
     s32 j;
-    s32 n;
-    u8 count;
-    u8 a;
-    u8 b;
+    s32 participant_swap_count;
+    u8 met_girl_count;
+    u8 first_girl;
+    u8 second_girl;
     u8 t;
     u8 sp74[11];
     s32 k;
@@ -44,40 +44,40 @@ void func_80132000(void) {
         break;
     case 1:
         if (audio_bank_load_poll() == 1) {
-            count = 0;
+            met_girl_count = 0;
             if (j) {} /* FAKE: empty test splits the live range of j. T-19031 */
             for (j = 0; j < 11; j++) {
                 if (game_state.girls[j].flags.f.met == 1) {
-                    sp74[count] = j;
-                    count++;
+                    sp74[met_girl_count] = j;
+                    met_girl_count++;
                 }
             }
-            if (count < 3) {
+            if (met_girl_count < 3) {
                 D_80122ECC = 2;
             } else {
                 if (D_80122E90 == 0) {
                     dec_bg_cd_read(0x4133, 1);
                 }
                 game_state.screen_brightness = 0x80;
-                a = sp74[rand() % count];
-                b = sp74[rand() % count];
+                first_girl = sp74[rand() % met_girl_count];
+                second_girl = sp74[rand() % met_girl_count];
                 if (D_80122E90 != 0) {
-                    a = sp74[1];
-                    b = sp74[2];
+                    first_girl = sp74[1];
+                    second_girl = sp74[2];
                 } else {
-                    while (a == 0) {
-                        a = sp74[rand() % count];
+                    while (first_girl == 0) {
+                        first_girl = sp74[rand() % met_girl_count];
                     }
-                    while ((a == b) || (b == 0)) {
-                        b = sp74[rand() % count];
+                    while ((first_girl == second_girl) || (second_girl == 0)) {
+                        second_girl = sp74[rand() % met_girl_count];
                     }
                     D_80122E90 += 1;
                 }
                 D_80148EC0[0] = 0;
-                D_80148EC0[1] = a;
-                D_80148EC0[2] = b;
-                n = rand() & 0x1F;
-                for (j = 0; j < n; j++) {
+                D_80148EC0[1] = first_girl;
+                D_80148EC0[2] = second_girl;
+                participant_swap_count = rand() & 0x1F;
+                for (j = 0; j < participant_swap_count; j++) {
                     k = rand() % 3;
                     l = rand() % 3;
                     t = D_80148EC0[k];
@@ -91,7 +91,7 @@ void func_80132000(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80132970();
+            sports_folk_dance_log_append();
             audio_bank_start(0, 0x200);
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(sp3C.value[D_80148EC0[0]]);
@@ -117,7 +117,7 @@ void func_80132000(void) {
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
             talk_names_set(D_80148EC0[0]);
-            func_80133BF0();
+            sports_folk_dance_talk_resource_addresses_init();
             talk_group = 0;
             talk_line = 0;
             talk_text_table = D_801491B0;
@@ -271,26 +271,26 @@ void func_80132000(void) {
 
 /* The GameState pointer makes the record stores indirect, so the runner list
  * byte is reloaded for each use as in the original (T-16554). */
-void func_80132970(void) {
-    GameState *gs;
-    s32 i;
+void sports_folk_dance_log_append(void) {
+    GameState *game_state_ptr;
+    s32 participant_index;
 
-    gs = &game_state;
-    for (i = 0; i < 3; i++) {
-        gs->event_log[gs->event_log_count].girl = D_80148EC0[i];
-        gs->event_log[gs->event_log_count].scene = 0x13;
-        gs->event_log[gs->event_log_count].flag = 0;
-        gs->event_log[gs->event_log_count].rank = get_g_zyotai_h(D_80148EC0[i]);
-        if ((i == 2) && (gs->girls[D_80148EC0[i]].syoushin >= 0x4C)) {
-            gs->event_log[gs->event_log_count].rank = 4;
+    game_state_ptr = &game_state;
+    for (participant_index = 0; participant_index < 3; participant_index++) {
+        game_state_ptr->event_log[game_state_ptr->event_log_count].girl = D_80148EC0[participant_index];
+        game_state_ptr->event_log[game_state_ptr->event_log_count].scene = 0x13;
+        game_state_ptr->event_log[game_state_ptr->event_log_count].flag = 0;
+        game_state_ptr->event_log[game_state_ptr->event_log_count].rank = get_g_zyotai_h(D_80148EC0[participant_index]);
+        if ((participant_index == 2) && (game_state_ptr->girls[D_80148EC0[participant_index]].syoushin >= 0x4C)) {
+            game_state_ptr->event_log[game_state_ptr->event_log_count].rank = 4;
         }
-        gs->event_log[gs->event_log_count].year = gs->year;
-        gs->event_log[gs->event_log_count].month = gs->month;
-        gs->event_log[gs->event_log_count].day = gs->day;
-        gs->event_log[gs->event_log_count].weekday = gs->weekday;
-        gs->event_log_count++;
-        if (gs->event_log_count >= 0xFF) {
-            gs->event_log_count = 0xFE;
+        game_state_ptr->event_log[game_state_ptr->event_log_count].year = game_state_ptr->year;
+        game_state_ptr->event_log[game_state_ptr->event_log_count].month = game_state_ptr->month;
+        game_state_ptr->event_log[game_state_ptr->event_log_count].day = game_state_ptr->day;
+        game_state_ptr->event_log[game_state_ptr->event_log_count].weekday = game_state_ptr->weekday;
+        game_state_ptr->event_log_count++;
+        if (game_state_ptr->event_log_count >= 0xFF) {
+            game_state_ptr->event_log_count = 0xFE;
         }
     }
 }

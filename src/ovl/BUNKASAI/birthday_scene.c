@@ -2,49 +2,49 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-void func_80146FA0(void) {
-    D_80160640 = 0x801B00DC;
-    D_80160644 = 0x801B02AC;
-    D_80160648 = 0x801B03C8;
-    D_8016064C = 0x801B04C4;
-    D_80160650 = 0x801B0668;
-    D_80160654 = 0x801B0808;
-    D_80160658 = 0x801B09DC;
-    D_8016065C = 0x801B0BE8;
-    D_80160660 = 0x801B0D8C;
-    D_80160664 = 0x801B0F5C;
-    D_80160668 = 0x801B1164;
-    D_8016066C = 0x801B12D8;
-    D_80160670 = 0x801B1454;
-    D_80160674 = 0x801B00F4;
-    D_80160678 = 0x801B02C8;
-    D_8016067C = 0x801B03D0;
-    D_80160680 = 0x801B04DC;
-    D_80160684 = 0x801B0680;
-    D_80160688 = 0x801B0820;
-    D_8016068C = 0x801B09F8;
-    D_80160690 = 0x801B0C00;
-    D_80160694 = 0x801B0DA4;
-    D_80160698 = 0x801B0F78;
-    D_8016069C = 0x801B1180;
-    D_801606A0 = 0x801B12E0;
-    D_801606A4 = 0x801B1470;
-    D_801606A8 = 0x801B01A8;
-    D_801606AC = 0x801B0398;
-    D_801606B0 = 0x801B03F0;
-    D_801606B4 = 0x801B0590;
-    D_801606B8 = 0x801B0734;
-    D_801606BC = 0x801B08D4;
-    D_801606C0 = 0x801B0AE4;
-    D_801606C4 = 0x801B0CB4;
-    D_801606C8 = 0x801B0E58;
-    D_801606CC = 0x801B1064;
-    D_801606D0 = 0x801B126C;
-    D_801606D4 = 0x801B1338;
-    D_801606D8 = 0x801B155C;
+void culture_birthday_tables_init(void) {
+    culture_birthday_text_table_00 = 0x801B00DC;
+    culture_birthday_text_table_01 = 0x801B02AC;
+    culture_birthday_text_table_02 = 0x801B03C8;
+    culture_birthday_text_table_03 = 0x801B04C4;
+    culture_birthday_text_table_04 = 0x801B0668;
+    culture_birthday_text_table_05 = 0x801B0808;
+    culture_birthday_text_table_06 = 0x801B09DC;
+    culture_birthday_text_table_07 = 0x801B0BE8;
+    culture_birthday_text_table_08 = 0x801B0D8C;
+    culture_birthday_text_table_09 = 0x801B0F5C;
+    culture_birthday_text_table_10 = 0x801B1164;
+    culture_birthday_text_table_11 = 0x801B12D8;
+    culture_birthday_text_table_12 = 0x801B1454;
+    culture_birthday_command_table_00 = 0x801B00F4;
+    culture_birthday_command_table_01 = 0x801B02C8;
+    culture_birthday_command_table_02 = 0x801B03D0;
+    culture_birthday_command_table_03 = 0x801B04DC;
+    culture_birthday_command_table_04 = 0x801B0680;
+    culture_birthday_command_table_05 = 0x801B0820;
+    culture_birthday_command_table_06 = 0x801B09F8;
+    culture_birthday_command_table_07 = 0x801B0C00;
+    culture_birthday_command_table_08 = 0x801B0DA4;
+    culture_birthday_command_table_09 = 0x801B0F78;
+    culture_birthday_command_table_10 = 0x801B1180;
+    culture_birthday_command_table_11 = 0x801B12E0;
+    culture_birthday_command_table_12 = 0x801B1470;
+    culture_birthday_voice_table_00 = 0x801B01A8;
+    culture_birthday_voice_table_01 = 0x801B0398;
+    culture_birthday_voice_table_02 = 0x801B03F0;
+    culture_birthday_voice_table_03 = 0x801B0590;
+    culture_birthday_voice_table_04 = 0x801B0734;
+    culture_birthday_voice_table_05 = 0x801B08D4;
+    culture_birthday_voice_table_06 = 0x801B0AE4;
+    culture_birthday_voice_table_07 = 0x801B0CB4;
+    culture_birthday_voice_table_08 = 0x801B0E58;
+    culture_birthday_voice_table_09 = 0x801B1064;
+    culture_birthday_voice_table_10 = 0x801B126C;
+    culture_birthday_voice_table_11 = 0x801B1338;
+    culture_birthday_voice_table_12 = 0x801B155C;
 }
 
-void func_80147214(void) {
+void culture_birthday_scene(void) {
     u32 temp_t1;
     u32 temp_v0;
     u32 temp_v0_2;
@@ -67,12 +67,12 @@ void func_80147214(void) {
                 audio_bank_load_start(1, 0xC478, 0xC44B, 0xCA95, 0xCA4F, 0xCA3E);
                 game_state.current_girl = GIRL_SHIORI;
                 talk_names_set(0U);
-                func_80132444();
+                culture_script_set_birthday();
                 talk_group = 0;
                 talk_line = 0;
-                talk_text_table = (s32) D_801604F0;
-                talk_command_table = (s32) D_801604F4;
-                talk_voice_table = (s32) D_801604F8;
+                talk_text_table = (s32) culture_script_text_table;
+                talk_command_table = (s32) culture_script_command_table;
+                talk_voice_table = (s32) culture_script_voice_table;
                 mode_step_next();
             }
         }
@@ -102,7 +102,7 @@ void func_80147214(void) {
     case 0x6:
         game_state.girls[0].affection -= 1;
         game_state.girls[0].syoushin += 5;
-        func_80142BC8();
+        culture_scene_end();
         break;
     case 0x7:
         if (audio_bank_load_poll() == 1) {
@@ -185,7 +185,7 @@ void func_80147214(void) {
         normal_date_three_select();
         break;
     case 0xD:
-        func_80147F8C();
+        culture_birthday_choice_name_set();
         talk_group = 6;
         mode_step_next();
         break;
@@ -327,7 +327,7 @@ void func_80147214(void) {
         normal_date_speak();
         break;
     case 0x23:
-        func_80142BC8();
+        culture_scene_end();
         break;
     case 0x24:
         if (audio_bank_load_poll() == 1) {
@@ -360,12 +360,12 @@ void func_80147214(void) {
         break;
     case 0x2A:
         if (cd_read_sync_status() & 1) {
-            func_80146FA0();
+            culture_birthday_tables_init();
             talk_group = 1;
             talk_line = 0;
-            talk_text_table = D_80160644;
-            talk_command_table = D_80160678;
-            talk_voice_table = D_801606AC;
+            talk_text_table = culture_birthday_text_table_01;
+            talk_command_table = culture_birthday_command_table_01;
+            talk_voice_table = culture_birthday_voice_table_01;
             mode_step_next();
         }
         break;
@@ -378,12 +378,12 @@ void func_80147214(void) {
         break;
     case 0x2D:
         if (cd_read_sync_status() & 1) {
-            func_80132444();
+            culture_script_set_birthday();
             talk_group = 0x26;
             talk_line = 0;
-            talk_text_table = (s32) D_801604F0;
-            talk_command_table = (s32) D_801604F4;
-            talk_voice_table = (s32) D_801604F8;
+            talk_text_table = (s32) culture_script_text_table;
+            talk_command_table = (s32) culture_script_command_table;
+            talk_voice_table = (s32) culture_script_voice_table;
             mode_step_next();
         }
         break;
@@ -460,7 +460,7 @@ void func_80147214(void) {
         normal_date_speak();
         break;
     case 0x3D:
-        func_80142BC8();
+        culture_scene_end();
         break;
     case 0x3E:
         normal_date_girl_in();
@@ -478,11 +478,11 @@ void func_80147214(void) {
     }
 }
 
-void func_80147F8C(void) {
+void culture_birthday_choice_name_set(void) {
     u8 *name;
-    BunkasaiNameTable tbl;
+    CultureChoiceNames tbl;
 
-    tbl = D_801606DC;
-    name = tbl.s[game_state.year - 95][D_80122CDC];
-    strcpy(D_800CA25C, name);
+    tbl = culture_choice_names;
+    name = tbl.names[game_state.year - 95][D_80122CDC];
+    strcpy(name_code_a, name);
 }

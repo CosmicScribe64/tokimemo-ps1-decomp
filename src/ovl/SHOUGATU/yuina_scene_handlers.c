@@ -3,30 +3,30 @@
 #include "game.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80137FF0(void) {
+void new_year_yuina_scene_group_dispatch(void) {
     switch (D_80144E14) {
     case 0:
-        func_8013808C();
+        new_year_yuina_scene_primary_mode_step_dispatch();
         return;
     case 1:
-        func_801381B8();
+        new_year_yuina_scene_secondary_mode_step_dispatch();
         return;
     case 2:
-        func_80138240();
+        new_year_yuina_scene_third_mode_step_dispatch();
         return;
     case 3:
-        func_8013843C();
+        new_year_yuina_scene_fourth_mode_step_dispatch();
         return;
     case 4:
-        func_801384B0();
+        new_year_yuina_scene_fifth_mode_step_dispatch();
         return;
     default:
-        func_80138524();
+        new_year_yuina_scene_default_mode_step_dispatch();
         return;
     }
 }
 
-void func_8013808C(void) {
+void new_year_yuina_scene_primary_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -42,8 +42,8 @@ void func_8013808C(void) {
     }
 }
 
-s32 func_80138158(void) {
-    func_80137AB4();
+s32 new_year_yuina_scene_dialogue_audio_tick(void) {
+    new_year_meeting_talk_run();
     if (D_80144E0C == 2) {
         if (game_state.mode_step_timer.w++ == 1) {
             audio_command(0x24);
@@ -52,7 +52,7 @@ s32 func_80138158(void) {
     }
 }
 
-void func_801381B8(void) {
+void new_year_yuina_scene_secondary_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -61,24 +61,24 @@ void func_801381B8(void) {
     tbl.f[idx]();
 }
 
-void func_80138240(void) {
+void new_year_yuina_scene_third_mode_step_dispatch(void) {
     s32 idx;
     FnTbl37 table;
 
     table = D_80144FB4;
     idx = game_state.mode_step;
     if (D_80144F10 == 0 && game_state.mode_step >= 0x13 && game_state.mode_step < 0x1C) {
-        func_8004A414(0x60, -0x10, 0x30, 8, 8, 0xD);
+        prim_disc_tiles(0x60, -0x10, 0x30, 8, 8, 0xD);
     }
     if (D_80144F10 == 1 && game_state.mode_step >= 0x13 && game_state.mode_step < 0x1C) {
-        func_8004A414(-0x3C, -0x20, 0x20, 8, 8, 0xD);
+        prim_disc_tiles(-0x3C, -0x20, 0x20, 8, 8, 0xD);
     }
     idx = game_state.mode_step;
     table.f[idx]();
 }
 
-void func_80138354(void) {
-    func_80137AB4();
+void new_year_yuina_scene_dialogue_audio_tick_alt(void) {
+    new_year_meeting_talk_run();
     if (game_state.mode_step_timer.w++ == 0) {
         if (D_80144E0C == 3) {
             audio_command(0x500);
@@ -86,24 +86,24 @@ void func_80138354(void) {
     }
 }
 
-void func_801383AC(void) {
+void new_year_yuina_scene_audio_command_0500(void) {
     audio_command(0x500);
     mode_step_next();
 }
 
-void func_801383D4(void) {
+void new_year_yuina_scene_audio_command_0501(void) {
     audio_command(0x501);
     mode_step_next();
 }
 
-void func_801383FC(void) {
+void new_year_yuina_scene_group_state_advance(void) {
     if (D_80144F10 != 0) {
         D_80144E08 += 1;
     }
     mode_step_next();
 }
 
-void func_8013843C(void) {
+void new_year_yuina_scene_fourth_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl30 tbl;
 
@@ -112,7 +112,7 @@ void func_8013843C(void) {
     tbl.f[idx]();
 }
 
-void func_801384B0(void) {
+void new_year_yuina_scene_fifth_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl24 tbl;
 
@@ -121,7 +121,7 @@ void func_801384B0(void) {
     tbl.f[idx]();
 }
 
-void func_80138524(void) {
+void new_year_yuina_scene_default_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -130,7 +130,7 @@ void func_80138524(void) {
     tbl.f[idx]();
 }
 
-void func_801385AC(void) {
+void new_year_yuina_scene_state_init(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -142,14 +142,14 @@ void func_801385AC(void) {
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     talk_names_set(*(u8 *)&game_state.current_girl = 2);
-    func_80136F90();
+    new_year_meeting_dialogue_addresses_init();
     D_80144DFC = D_80144D94;
     D_80144E00 = D_80144DB8;
     D_80144E04 = D_80144DDC;
@@ -161,21 +161,21 @@ void func_801385AC(void) {
     mode_step_next();
 }
 
-void func_801386CC(void) {
+void new_year_yuina_scene_classroom_state_init(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "教室");
+    strcpy(scene_place_title, "教室");
     mode_step_next();
 }
 
-void func_80138710(void) {
+void new_year_yuina_scene_classroom_state_init_alt(void) {
     D_80144E08 = 3;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "教室");
+    strcpy(scene_place_title, "教室");
     mode_step_next();
 }
 
-void func_80138758(void) {
+void new_year_yuina_scene_corridor_lab_state_init(void) {
     s32 unused; /* FAKE: preserves RECT at stack +0x2C. T-10010. */
     RECT rect;
 
@@ -189,47 +189,47 @@ void func_80138758(void) {
     ((ShouByteFlags *)&game_state.girls[game_state.current_girl].flags.b[2])->b3 = 1;
     D_80144E08 = 6;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "廊下");
-    strcpy(D_800CA1DC, "実験室");
+    strcpy(scene_place_title, "廊下");
+    strcpy(scene_place_title_2, "実験室");
     mode_step_next();
 }
 
-void func_80138868(void) {
+void new_year_yuina_scene_classroom_lab_state_init(void) {
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
     D_80144E08 = 0xE;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "教室");
-    strcpy(D_800CA1DC, "実験室");
+    strcpy(scene_place_title, "教室");
+    strcpy(scene_place_title_2, "実験室");
     mode_step_next();
 }
 
-void func_801388F0(void) {
+void new_year_yuina_scene_laboratory_state_init(void) {
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
     D_80144E08 = 0x12;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "実験室");
+    strcpy(scene_place_title, "実験室");
     mode_step_next();
 }
 
-void func_80138964(void) {
+void new_year_yuina_scene_laboratory_state_init_alt(void) {
     game_state.girls[game_state.current_girl].flags.f.b2 = 1;
     D_80144E08 = 0x17;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "実験室");
+    strcpy(scene_place_title, "実験室");
     mode_step_next();
 }
 
-void func_801389D8(void) {
+void new_year_yuina_scene_background_load_405f(void) {
     bg_read_sub2(0x405F);
     mode_step_next();
 }
 
-void func_80138A00(void) {
+void new_year_yuina_scene_background_load_403b(void) {
     bg_read_sub2(0x403B);
     mode_step_next();
 }
 
-void func_80138A28(void) {
+void new_year_yuina_scene_background_variant_load(void) {
     if (D_80144F10 != 0) {
         bg_read_sub2(0x40D0);
     } else {
@@ -238,24 +238,24 @@ void func_80138A28(void) {
     mode_step_next();
 }
 
-void func_80138A6C(void) {
+void new_year_yuina_scene_background_load_40c6(void) {
     bg_read_sub2(0x40C6);
     mode_step_next();
 }
 
-void func_80138A94(void) {
+void new_year_yuina_scene_background_load_40d0(void) {
     bg_read_sub2(0x40D0);
     mode_step_next();
 }
 
-void func_80138ABC(void) {
+void new_year_yuina_scene_state_conditional_advance(void) {
     if (D_80144F10 != 0) {
         D_80144E08 += 1;
     }
     mode_step_next();
 }
 
-void func_80138AFC(void) {
+void new_year_yuina_scene_state_conditional_advance_alt(void) {
     if (D_80144F10 == 0) {
         D_80144E08 += 1;
     }

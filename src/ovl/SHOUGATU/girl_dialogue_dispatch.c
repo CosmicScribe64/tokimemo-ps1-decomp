@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_8013B210(void) {
+void new_year_girl_talk_resource_addresses_init(void) {
     D_80145960 = 0x80197270;
     D_80145964 = 0x801977D8;
     D_80145968 = 0x80197D18;
@@ -44,14 +44,14 @@ void func_8013B210(void) {
     D_801459F8 = 0x8019B610;
 }
 
-void func_8013B484(void) {
+void new_year_girl_dialogue_progress_update(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_8013B5B0();
+        new_year_girl_dialogue_setup_dispatch();
         break;
     case 1:
-        func_8013BA00();
+        new_year_relationship_outcome_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -63,10 +63,10 @@ void func_8013B484(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }
 
-void func_8013B528(void) {
+void new_year_girl_dialogue_run(void) {
     talk_tables = (u8 *) &D_80145A08;
     D_800CA138 = (u8 *) &D_80145A0C;
     D_800CA13C = D_801459FC;

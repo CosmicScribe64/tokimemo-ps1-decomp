@@ -43,15 +43,15 @@ INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_year_dispatch.data
 s32 D_80139B24 = 0;
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_year_dispatch.data", D_80139B28);
 
-void func_80132000(void) {
+void stalls_year_variant_dispatch(void) {
     if (game_state.year == 0x5F) {
-        func_801320C0();
+        stalls_first_year_mode_stage_dispatch();
     } else {
-        func_80136B10();
+        stalls_later_year_callback_dispatch();
     }
 }
 
-void func_80132040(void) {
+void stalls_asset_pointer_setup(void) {
     D_801391E0 = 0x801E0400;
     D_801391E4 = 0x801E20F8;
     D_801391E8 = 0x801E2120;
@@ -62,43 +62,43 @@ void func_80132040(void) {
     D_801391FC = 0x801E0408;
 }
 
-void func_801320C0(void) {
+void stalls_first_year_mode_stage_dispatch(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_8013216C();
+        stalls_intro_substep_dispatch();
         return;
     case 1:
-        func_80132834();
+        stalls_title_fade_input_dispatch();
         return;
     case 2:
-        func_80132450();
-        func_8013275C();
+        stalls_actor_graphics_setup();
+        stalls_game_state_reset();
         mode_stage_next();
         return;
     case 3:
-        func_80132A0C();
+        stalls_game_frame_update();
         return;
     case 4:
-        func_801362A4();
+        stalls_result_summary_dispatch();
         return;
     case 5:
-        func_80132278();
+        stalls_saved_caller_state_restore();
         /* fallthrough */
     default:
         return;
     }
 }
 
-void func_8013216C(void) {
+void stalls_intro_substep_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_801321EC();
+        stalls_intro_scene_reset();
         return;
     case 1:
-        func_80132308();
+        stalls_intro_sector_load();
         return;
     case 2:
-        func_80132378();
+        stalls_palette_load();
         return;
     default:
     case 3:
@@ -106,7 +106,7 @@ void func_8013216C(void) {
         return;
     }
 }
-void func_801321EC(void) {
+void stalls_intro_scene_reset(void) {
     scene_screen_reset(1, 0);
     audio_command(0x7F);
     hud_cursor_actor_init(0);
@@ -121,7 +121,7 @@ void func_801321EC(void) {
     game_state.cursor_speed = SETTINGS_CURSOR_SPEED_SLOWEST;
 }
 
-void func_80132278(void) {
+void stalls_saved_caller_state_restore(void) {
     tpage_buf_clear();
     actor_clear_upper();
     hud_cursor_actor_init(0);
@@ -135,7 +135,7 @@ void func_80132278(void) {
     mode_step_set((s32) game_state.saved_mode_step);
 }
 
-void func_80132308(void) {
+void stalls_intro_sector_load(void) {
     if (game_state.substep == 0) {
         audio_command(0x201);
         cd_read_sectors(0x3F, 0x801B0000, 0x7C8C);
@@ -145,7 +145,7 @@ void func_80132308(void) {
     }
 }
 
-void func_80132378(void) {
+void stalls_palette_load(void) {
     load_palette(D_80139210, 0x10, 1, 1, 0);
     load_palette(D_80139210, 0x11, 1, 1, 1);
     load_palette(D_80139210, 0x12, 1, 1, 2);
@@ -158,7 +158,7 @@ void func_80132378(void) {
 /* Loads the textures and sets up display records 96..159, 144..147 and 152..155. Implicit int (the
  * caller has no prototype). The second loop indexes records 96..115 absolutely; the same loop on
  * actor_pool_96 (record 96) puts its walk in other registers. T-20920 */
-s32 func_80132450(void) {
+s32 stalls_actor_graphics_setup(void) {
     s32 i;
 
     load_tpage_buf_lock(5, D_80139204[0], 1);
@@ -218,14 +218,14 @@ s32 func_80132450(void) {
     ((Actor *)actor_pool)[147].y = 0x18;
 }
 
-void func_8013275C(void) {
+void stalls_game_state_reset(void) {
     s32 index;
     s32 *word;
 
     for (index = 0; index < 10; index++) {
-        func_80134258(index, 0);
+        stalls_random_object_spawn(index, 0);
     }
-    func_801354E0();
+    stalls_particle_grid_reset();
     /* FAKE: reusing index for this reset keeps the first loop bound
      * as an immediate comparison instead of a saved register. T-10020. */
     index = 0;
@@ -246,13 +246,13 @@ void func_8013275C(void) {
     D_80139B18 = 0;
 }
 
-s32 func_80132834(void) {
+s32 stalls_title_fade_input_dispatch(void) {
     s32 i;
 
     switch (game_state.mode_step) {
     case 0:
         game_state.screen_brightness = 0;
-        func_8004E44C(0, (u32 *) D_80139218, D_80139200);
+        layer_tileset_init(0, (u32 *) D_80139218, D_80139200);
         srn_init(0, (u32 *) D_80139214, 0);
         srn_vram_set(0, 5, 0x580, 0xF0);
         Fade_In_Init();
@@ -296,24 +296,24 @@ s32 func_80132834(void) {
     }
 }
 
-void func_80132A0C(void) {
+void stalls_game_frame_update(void) {
     s32 v;
 
-    func_80136A2C();
+    stalls_wave_response_update();
     v = D_80139B1C - 1;
     D_80139B1C = v;
     if (v < 0) {
         D_80139B1C = 0;
     }
-    func_80132B40();
-    func_8013556C();
-    func_80132ADC();
-    func_80132D44();
-    func_801338EC();
+    stalls_brightness_ramp_up();
+    stalls_particle_field_update();
+    stalls_light_animation_update();
+    stalls_object_mode_substate_dispatch();
+    stalls_object_scene_update();
 }
 
 /* FAKE: permuter expression/layout spelling preserves target scheduling; original source unknown. T-9710. */
-s32 func_80132A74(arg0, arg1, arg2, arg3)
+s32 stalls_cursor_distance_squared(arg0, arg1, arg2, arg3)
 s16 arg0;
 s16 arg1;
 s16 arg2;
@@ -331,7 +331,7 @@ s16 arg3;
     return x + y;
 }
 
-void func_80132ADC(void) {
+void stalls_light_animation_update(void) {
     D_80139B24 += 1;
     if (D_80139B24 >= 0x36) {
         D_80139B24 = 0;
@@ -346,7 +346,7 @@ void func_80132ADC(void) {
     }
 }
 
-s32 func_80132B40(void) {
+s32 stalls_brightness_ramp_up(void) {
     s32 i;
 
     if (D_8013921C == 0x7C) {
@@ -370,7 +370,7 @@ s32 func_80132B40(void) {
     }
 }
 
-void func_80132C4C(void) {
+void stalls_brightness_ramp_down(void) {
     s32 i;
 
     if (D_8013921C == 4) {
@@ -394,30 +394,30 @@ void func_80132C4C(void) {
     }
 }
 
-void func_80132D44(void) {
+void stalls_object_mode_substate_dispatch(void) {
     switch (D_80139AF8) {                           /* irregular */
     case 0:
-        func_801333B0();
+        stalls_target_selection_score_update();
         return;
     case 1:
-        func_8013358C();
+        stalls_target_release_score_update();
         return;
     case 2:
-        func_80132EE8();
+        stalls_score_completion_update();
         return;
     case 3:
-        func_80132DC4();
+        stalls_idle_timeout_update();
         return;
     }
 }
 
-void func_80132DC4(void) {
+void stalls_idle_timeout_update(void) {
     if (D_80139AFC == 0) {
         audio_command(0x504);
     }
     D_80139AFC += 1;
     D_80121548 = 0x1E;
-    func_80132E3C();
+    stalls_cursor_and_selection_input();
     if (D_80139AFC >= 0xB4) {
         D_80121533 = 0;
         D_80121531 = 3;
@@ -425,25 +425,25 @@ void func_80132DC4(void) {
     }
 }
 
-void func_80132E3C(void) {
-    func_801330D0();
+void stalls_cursor_and_selection_input(void) {
+    stalls_cursor_position_update();
     if (game_state.pad_held & PAD_CIRCLE) {
         if (D_80121531 != 7) {
-            func_80135A48(cursor_x, cursor_y);
-            func_801369F4(0x501);
+            stalls_wave_start(cursor_x, cursor_y);
+            stalls_audio_command_debounce(0x501);
         }
         D_80121531 = 7;
         return;
     }
     if (D_80121531 != 3) {
-        func_80135A48(cursor_x, cursor_y);
-        func_801369F4(0x502);
+        stalls_wave_start(cursor_x, cursor_y);
+        stalls_audio_command_debounce(0x502);
     }
     D_80121531 = 3;
 }
 
 /* FAKE: end before i = 0 on one line and non-invariant * 0 on LHS of != align preheader la order and bne v0,a3 operand order. T-24131 */
-void func_80132EE8(void) {
+void stalls_score_completion_update(void) {
     s32 i;
     EnObj *end;
 
@@ -462,8 +462,8 @@ void func_80132EE8(void) {
         } while ((EnObj *)((u8 *)end + (D_8013984C->unk_00 * 0)) != &D_8013984C[i]);
         game_state.mouse_x = ((Actor *)actor_pool)[152].x;
         game_state.mouse_y = ((Actor *)actor_pool)[152].y;
-        func_80135A48(((Actor *)actor_pool)->x, ((Actor *)actor_pool)->y);
-        func_801369F4(0x502);
+        stalls_wave_start(((Actor *)actor_pool)->x, ((Actor *)actor_pool)->y);
+        stalls_audio_command_debounce(0x502);
         D_80139AF8 = 3;
     }
     if (D_80139AFC >= 60) {
@@ -471,7 +471,7 @@ void func_80132EE8(void) {
         game_state.mouse_y = ((Actor *)actor_pool)[152].y;
         D_80139AFC = 0;
         D_80139AF8 = 0;
-        func_801369F4(0x50D);
+        stalls_audio_command_debounce(0x50D);
         for (i = 0; i < 10; i++) {
             if (D_8013984C[i].unk_00 & 0x80) {
                 D_8013984C[i].unk_00 = 0;
@@ -485,7 +485,7 @@ void func_80132EE8(void) {
  * through the record view, so their loads stay after the stores as in the original; the clamp goes
  * through a pointer to the pool, whose reloads after each store and $v1 base match. Replaces the
  * T-10610 NON_MATCHING draft. T-20920 */
-void func_801330D0(void) {
+void stalls_cursor_position_update(void) {
     s32 sel;
     s32 v;
     s32 d;
@@ -552,19 +552,19 @@ void func_801330D0(void) {
 
 /* FAKE: s32 without return keeps the clamp accumulator in v0 and the original
  * split epilogue. Original return type is unconfirmed. T-14000. */
-s32 func_801333B0(void) {
+s32 stalls_target_selection_score_update(void) {
     s32 i;
 
-    func_801330D0();
+    stalls_cursor_position_update();
     D_80139AFC += 1;
     if ((game_state.pad_held & PAD_CIRCLE) && D_80139AFC >= 4) {
-        func_80135A48(cursor_x, cursor_y);
-        func_801369F4(0x501);
+        stalls_wave_start(cursor_x, cursor_y);
+        stalls_audio_command_debounce(0x501);
         D_80139AF8 = 1;
         D_80139AFC = 0;
         D_80121531 = 7;
         D_80139AF4 += 2;
-        func_801337E0();
+        stalls_cursor_object_proximity_classify();
         for (i = 0; i < 10; i++) {
             if (D_80139B08[i] == 2) {
                 D_80139AF4 += 0x20;
@@ -580,11 +580,11 @@ s32 func_801333B0(void) {
 
 /* FAKE: * 0 and | 0 idioms align uopt constant LIFO order ($t0..$t2), CSE priority
  * ($v0/$v1), and bne operand order without emitting instructions in ugen. T-24131 */
-s32 func_8013358C(void) {
+s32 stalls_target_release_score_update(void) {
     s32 i;
     s32 v;
 
-    func_801330D0();
+    stalls_cursor_position_update();
     D_80139AFC += 1;
     if (D_80139AFC >= 0x19) {
         D_80139AFC = 0;
@@ -595,12 +595,12 @@ s32 func_8013358C(void) {
         }
     }
     if (!(game_state.pad_held & PAD_CIRCLE) && D_80139AFC >= 4) {
-        func_80135A48(cursor_x, cursor_y);
-        func_801369F4(0x502);
+        stalls_wave_start(cursor_x, cursor_y);
+        stalls_audio_command_debounce(0x502);
         D_80139AF8 = 0;
         D_80121531 = 3;
         D_80139AFC = 0;
-        func_801337E0();
+        stalls_cursor_object_proximity_classify();
         for (i = 0; i < 10; i++) {
             if (D_80139B08[i] == 2) {
                 v = ((D_80139B04 == 4) * 0) + D_8013984C[i].unk_00;
@@ -628,7 +628,7 @@ s32 func_8013358C(void) {
 }
 
 
-void func_801337E0(void) {
+void stalls_cursor_object_proximity_classify(void) {
     s32 distance;
     s32 radius;
     u8 *status;
@@ -641,7 +641,7 @@ void func_801337E0(void) {
     radius *= radius;
     /* FAKE: this shared line preserves the loop-setup load schedule. T-10020. */
     object = D_8013984C; status = D_80139B08; do {
-        distance = func_80132A74((s32) object->unk_14.h[1], (s32) object->unk_18.h[1], (s32) cursor_x, (s32) cursor_y);
+        distance = stalls_cursor_distance_squared((s32) object->unk_14.h[1], (s32) object->unk_18.h[1], (s32) cursor_x, (s32) cursor_y);
         if (object->unk_00 != 0) {
             if (distance < radius) {
                 *status = 2;
@@ -658,14 +658,14 @@ void func_801337E0(void) {
     } while (status != D_80139B12);
 }
 
-void func_801338EC(void) {
-    func_801340CC();
-    func_80134258(1);
-    func_80133924();
-    func_80133CA8();
+void stalls_object_scene_update(void) {
+    stalls_object_out_of_bounds_clear();
+    stalls_random_object_spawn(1);
+    stalls_object_ai_update_dispatch();
+    stalls_object_actor_render_update();
 }
 
-void func_80133924(void) {
+void stalls_object_ai_update_dispatch(void) {
     s32 i;
     s32 *p;
     u8 n;
@@ -674,11 +674,11 @@ void func_80133924(void) {
     for (i = 0, n = 10; i != n; i++) {
         if (!(p[0] & 0x80)) {
             if ((D_80121531 == 7) && (p[1] != 0)) {
-                func_80134C1C(i);
-                func_801339D4(i);
+                stalls_object_special_ai_update(i);
+                stalls_object_motion_update(i);
             } else {
-                func_80134800(i);
-                func_801339D4(i);
+                stalls_object_random_steering_update(i);
+                stalls_object_motion_update(i);
             }
         }
         p += 12;
@@ -688,7 +688,7 @@ void func_80133924(void) {
 /* Moves object arg0: kind 4 drifts at a fixed step, the others steer by unk_2C and move at the
  * speed of class unk_28; unk_14/unk_18 are 16.16 positions, unk_1C the angle (4096 = 360 degrees).
  * Index form: a pointer local changes the spill slot and the frame. T-20920 */
-void func_801339D4(s32 arg0) {
+void stalls_object_motion_update(s32 arg0) {
     D_8013984C[arg0].unk_24--;
     if (D_8013984C[arg0].unk_00 == 4) {
         D_8013984C[arg0].unk_14.w += (func_800A0140(D_8013984C[arg0].unk_1C) * 0x8000) >> 12;
@@ -765,7 +765,7 @@ void func_801339D4(s32 arg0) {
     }
 }
 
-void func_80133CA8(void) {
+void stalls_object_actor_render_update(void) {
     s32 i;
     s16 v;
 
@@ -773,11 +773,11 @@ void func_80133CA8(void) {
         if (D_8013984C[i].unk_00 & 0x80) {
             ((Actor *)actor_pool)[128 + i].unk_01 = 3;
             D_8013984C[i].unk_10 += 4;
-            func_80133F00(i, 1);
+            stalls_object_collision_actor_setup(i, 1);
         } else {
             D_8013984C[i].unk_10 += 1;
             ((Actor *)actor_pool)[128 + i].unk_01 = 7;
-            func_80133F00(i, 0);
+            stalls_object_collision_actor_setup(i, 0);
         }
         if (D_8013984C[i].unk_10 >= 15) {
             D_8013984C[i].unk_10 = 0;
@@ -794,7 +794,7 @@ void func_80133CA8(void) {
             if (D_8013984C[i].unk_0C >= 6) {
                 D_8013984C[i].unk_0C = 0;
             }
-            v = D_80139A34[func_80134008(i)][D_8013984C[i].unk_0C];
+            v = D_80139A34[stalls_object_direction_sector_select(i)][D_8013984C[i].unk_0C];
             if (v & 0x80) {
                 ((Actor *)actor_pool)[128 + i].draw_flags = 0x85;
             } else {
@@ -809,7 +809,7 @@ void func_80133CA8(void) {
             if (D_8013984C[i].unk_0C >= 4) {
                 D_8013984C[i].unk_0C = 0;
             }
-            v = D_80139A34[func_80134008(i) + 8][D_8013984C[i].unk_0C];
+            v = D_80139A34[stalls_object_direction_sector_select(i) + 8][D_8013984C[i].unk_0C];
             if (v & 0x80) {
                 ((Actor *)actor_pool)[128 + i].draw_flags = 0x85;
             } else {
@@ -824,7 +824,7 @@ void func_80133CA8(void) {
     }
 }
 
-void func_80133F00(arg0, arg1)
+void stalls_object_collision_actor_setup(arg0, arg1)
 s32 arg0;
 s32 arg1;
 {
@@ -864,7 +864,7 @@ s32 arg1;
     }
 }
 
-s32 func_80134008(s32 arg0) {
+s32 stalls_object_direction_sector_select(s32 arg0) {
     s32 v;
 
     v = D_8013984C[arg0].unk_1C;
@@ -895,7 +895,7 @@ s32 func_80134008(s32 arg0) {
     return 0;
 }
 
-void func_801340CC(void) {
+void stalls_object_out_of_bounds_clear(void) {
     s32 i;
     s32 x;
     s32 y;
@@ -904,13 +904,13 @@ void func_801340CC(void) {
     for (i = 0; i < 10; i++) if (D_8013984C[i].unk_14.h[1] < -0xC0 || D_8013984C[i].unk_14.h[1] >= 0xC1 || D_8013984C[i].unk_18.h[1] < -0x98 || D_8013984C[i].unk_18.h[1] >= 0x99) D_8013984C[i].unk_00 = 0;
 }
 
-void func_80134258(s32 arg0) {
+void stalls_random_object_spawn(s32 arg0) {
     s32 n;
     s32 m;
     s32 r;
     s32 i;
 
-    func_80134784(&n, &m);
+    stalls_object_type_count(&n, &m);
     for (i = 0; i != 10; i++) {
         if (D_8013984C[i].unk_00 == 0 && n * 10 < rand() % 100) {
             r = rand();
@@ -942,12 +942,12 @@ void func_80134258(s32 arg0) {
             }
             D_8013984C[i].unk_0C = 0;
             D_8013984C[i].unk_10 = 0;
-            func_801344F0(i, arg0);
+            stalls_object_spawn_position_init(i, arg0);
         }
     }
 }
 
-void func_801344F0(s32 arg0, s32 arg1) {
+void stalls_object_spawn_position_init(s32 arg0, s32 arg1) {
     s32 temp_hi;
     s32 temp_hi_2;
     s32 temp_v1;
@@ -1001,7 +1001,7 @@ void func_801344F0(s32 arg0, s32 arg1) {
     }
 }
 
-void func_80134784(s32 *arg0, s32 *arg1) {
+void stalls_object_type_count(s32 *arg0, s32 *arg1) {
     s32 i;
 
     *arg0 = 0;
@@ -1023,8 +1023,8 @@ void func_80134784(s32 *arg0, s32 *arg1) {
 }
 
 /* When the countdown unk_24 of object arg0 has run out, picks its next unk_28 (the speed class of
- * func_801339D4) and unk_2C (the steering mode) at random. Index form as in T-18200. T-20920 */
-void func_80134800(s32 arg0) {
+ * stalls_object_motion_update) and unk_2C (the steering mode) at random. Index form as in T-18200. T-20920 */
+void stalls_object_random_steering_update(s32 arg0) {
     s32 r;
 
     if (D_8013984C[arg0].unk_24 <= 0) {
@@ -1109,7 +1109,7 @@ void func_80134800(s32 arg0) {
 
 /* FAKE: the record pointer stays an expression; as a local it is spilled to another stack slot than the original's (T-3330, T-9330) */
 #define EN_OBJ(i) (&D_8013984C[i])
-void func_80134C1C(arg0)
+void stalls_object_special_ai_update(arg0)
 s32 arg0;
 {
     s32 d;
@@ -1123,25 +1123,25 @@ s32 arg0;
             EN_OBJ(arg0)->unk_2C = 1;
         }
     }
-    d = func_80132A74(EN_OBJ(arg0)->unk_14.h[1], EN_OBJ(arg0)->unk_18.h[1], cursor_x, cursor_y);
-    switch (func_80135274(arg0)) {
+    d = stalls_cursor_distance_squared(EN_OBJ(arg0)->unk_14.h[1], EN_OBJ(arg0)->unk_18.h[1], cursor_x, cursor_y);
+    switch (stalls_cursor_relative_direction_sector(arg0)) {
     case 0:
-        func_80134D74(arg0, d);
+        stalls_object_steer_handler_00(arg0, d);
         break;
     case 1:
-        func_80134F2C(arg0, d);
+        stalls_object_steer_handler_01(arg0, d);
         break;
     case 2:
-        func_80135044(arg0, d);
+        stalls_object_steer_handler_02(arg0, d);
         break;
     case 3:
-        func_8013515C(arg0, d);
+        stalls_object_steer_handler_03(arg0, d);
         break;
     }
-    func_80134800(arg0);
+    stalls_object_random_steering_update(arg0);
 }
 
-void func_80134D74(s32 arg0, s32 arg1) {
+void stalls_object_steer_handler_00(s32 arg0, s32 arg1) {
     s32 temp_v0;
     EnObj *temp_s0;
 
@@ -1197,7 +1197,7 @@ void func_80134D74(s32 arg0, s32 arg1) {
     }
 }
 
-void func_80134F2C(s32 arg0, s32 arg1) {
+void stalls_object_steer_handler_01(s32 arg0, s32 arg1) {
 
     if (EN_OBJ(arg0)->unk_28 < 3) {
         switch (EN_OBJ(arg0)->unk_04) {
@@ -1233,7 +1233,7 @@ void func_80134F2C(s32 arg0, s32 arg1) {
     }
 }
 
-void func_80135044(s32 arg0, s32 arg1) {
+void stalls_object_steer_handler_02(s32 arg0, s32 arg1) {
 
     if (EN_OBJ(arg0)->unk_28 < 3) {
         switch (EN_OBJ(arg0)->unk_04) {
@@ -1269,7 +1269,7 @@ void func_80135044(s32 arg0, s32 arg1) {
     }
 }
 
-void func_8013515C(s32 arg0, s32 arg1) {
+void stalls_object_steer_handler_03(s32 arg0, s32 arg1) {
     EnObj *p;
 
     p = &D_8013984C[arg0];
@@ -1302,16 +1302,16 @@ void func_8013515C(s32 arg0, s32 arg1) {
 }
 
 /* The quadrant (0..3) of display record 0 as seen from object arg0, turned by the object's
- * direction func_80134008(arg0) (0..7). dir is unset for other values, so IDO keeps it in memory
+ * direction stalls_object_direction_sector_select(arg0) (0..7). dir is unset for other values, so IDO keeps it in memory
  * (sp+0x2C); dx, dy, dir declared in this order give the original's slots. T-20920 */
-s32 func_80135274(s32 arg0) {
+s32 stalls_cursor_relative_direction_sector(s32 arg0) {
     s32 dx;
     s32 dy;
     s32 dir;
 
     dx = cursor_x - D_8013984C[arg0].unk_14.h[1];
     dy = cursor_y - D_8013984C[arg0].unk_18.h[1];
-    switch (func_80134008(arg0)) {
+    switch (stalls_object_direction_sector_select(arg0)) {
     case 0:
         if (dy < dx) {
             dir = 0;
@@ -1396,7 +1396,7 @@ s32 func_80135274(s32 arg0) {
     return dir;
 }
 
-void func_801354E0(void) {
+void stalls_particle_grid_reset(void) {
     s32 i;
     s32 j;
 
@@ -1410,20 +1410,20 @@ void func_801354E0(void) {
     D_801392A8 = 0;
 }
 
-void func_8013556C(void) {
+void stalls_particle_field_update(void) {
     D_80139220 += 1;
-    func_80135600();
+    stalls_particle_grid_position_update();
     D_80139224 += 3;
     if (D_80139224 >= 0x1000) {
         D_80139224 = 0;
     }
     D_801392A4 = (rsin(D_80139224) * 8) >> 12;
     D_801392A8 = (func_800A0140(D_80139224) * 0x10) >> 12;
-    func_801359D0();
-    func_80135F54();
+    stalls_active_wave_update();
+    stalls_wave_grid_draw();
 }
 
-void func_80135600(void) {
+void stalls_particle_grid_position_update(void) {
     s32 x;
     s32 y;
     s32 b;
@@ -1440,13 +1440,13 @@ void func_80135600(void) {
 }
 
 
-void func_801359D0(void) {
+void stalls_active_wave_update(void) {
     s32 i;
 
     for (i = 0; i != 10; i++) {
         if (D_80139278[i] != 0) {
             D_80139278[i] += 1;
-            func_80135ACC(i);
+            stalls_wave_grid_displacement(i);
             if (D_80139278[i] >= 0x51) {
                 D_80139278[i] = 0;
             }
@@ -1455,7 +1455,7 @@ void func_801359D0(void) {
 }
 
 /* Implicit int in the original (no return value): as1 then leaves the nop after the second test. T-18200 */
-s32 func_80135A48(s32 arg0, s32 arg1) {
+s32 stalls_wave_start(s32 arg0, s32 arg1) {
     if (D_80139278[D_801392A0] <= 0 || D_80139278[D_801392A0] >= 10) {
         D_801392A0++;
         if (D_801392A0 >= 10) {
@@ -1470,7 +1470,7 @@ s32 func_80135A48(s32 arg0, s32 arg1) {
 /* Pushes the grid points of ring arg0 (radius 5 * age) outwards or inwards in four bands. x and y are
  * 16.16 locals of which only the integer half is set; r0..r7 are the band bounds, and with x and y in
  * memory each declared local takes a stack slot (T-3330), which gives the original frame. T-20920 */
-void func_80135ACC(s32 arg0) {
+void stalls_wave_grid_displacement(s32 arg0) {
     s32 i;
     s32 j;
     s32 d;
@@ -1491,7 +1491,7 @@ void func_80135ACC(s32 arg0) {
         for (i = 0, px = -25; i < 15; i++, px += 25) {
             x.h[1] = px;
             y.h[1] = py;
-            d = func_80132A74(D_80139228[arg0].unk_00.h[1], D_80139228[arg0].unk_04.h[1], x.h[1], y.h[1]);
+            d = stalls_cursor_distance_squared(D_80139228[arg0].unk_00.h[1], D_80139228[arg0].unk_04.h[1], x.h[1], y.h[1]);
             r0 = D_80139278[arg0] * 5;
             r1 = r0 + 5;
             if (r0 * r0 <= d) {
@@ -1529,18 +1529,18 @@ void func_80135ACC(s32 arg0) {
     }
 }
 
-void func_80135F54(void) {
+void stalls_wave_grid_draw(void) {
     s32 i;
     s32 j;
 
     for (j = 0; j < 11; j++) {
         for (i = 0; i < 14; i++) {
-            func_80135FBC(i, j);
+            stalls_wave_grid_cell_draw(i, j);
         }
     }
 }
 
-void func_80135FBC(s32 arg0, s32 arg1) {
+void stalls_wave_grid_cell_draw(s32 arg0, s32 arg1) {
     POLY_FT4 *poly;
     s32 p[4][2];
     s32 u0;
@@ -1602,21 +1602,21 @@ void func_80135FBC(s32 arg0, s32 arg1) {
     poly->v1 = v1;
     poly->v0 = v0;
     poly->u0 = u0;
-    AddPrim(draw_buffer * 0x400 + 0x14 + D_800E8CA0, poly);
+    AddPrim(draw_buffer * 0x400 + 0x14 + draw_ot_tags, poly);
 }
 
-s32 func_801362A4(void) {
+s32 stalls_result_summary_dispatch(void) {
     s32 pad; /* FAKE: unused word above x/y preserves frame size 0x38 and spill offsets 0x2C/0x30 (T-24107) */
     s32 x;
     s32 y;
 
-    func_80136A2C();
-    func_8013556C();
-    func_80132ADC();
-    func_801338EC();
+    stalls_wave_response_update();
+    stalls_particle_field_update();
+    stalls_light_animation_update();
+    stalls_object_scene_update();
     switch (game_state.mode_step) {
     case 0:
-        func_80136700();
+        stalls_score_panel_fade_draw();
         break;
     case 1:
         if (D_80139B00 == 0 && D_80139B04 == 0) {
@@ -1646,17 +1646,17 @@ s32 func_801362A4(void) {
             }
             if (x == D_80139B00 && y == D_80139B04) {
                 audio_command(0x505);
-                func_80136904(D_80139B00, D_80139B04);
+                stalls_counter_digit_set(D_80139B00, D_80139B04);
                 mode_step_next();
             }
-            func_80136904(x, y);
+            stalls_counter_digit_set(x, y);
             if (game_state.substep != 0) {
                 audio_command(0x505);
             }
             game_state.substep++;
         }
         if (game_state.pad_pressed & PAD_CROSS) {
-            func_80136904(D_80139B00, D_80139B04);
+            stalls_counter_digit_set(D_80139B00, D_80139B04);
             if (D_80139B00 == 0 && D_80139B04 == 0) {
                 mode_step_next();
             } else {
@@ -1687,7 +1687,7 @@ s32 func_801362A4(void) {
             case 3:
                 if (cd_audio_state() == 2) {
                     audio_command(0x505);
-                    func_80136904(1, 0);
+                    stalls_counter_digit_set(1, 0);
                     mode_step_next();
                 }
                 break;
@@ -1715,7 +1715,7 @@ s32 func_801362A4(void) {
         }
         break;
     case 5:
-        func_80132C4C();
+        stalls_brightness_ramp_down();
         if (D_8013921C == 0) {
             mode_stage_next();
         }
@@ -1723,7 +1723,7 @@ s32 func_801362A4(void) {
     }
 }
 
-void func_80136700(void) {
+void stalls_score_panel_fade_draw(void) {
     s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */
     POLY_F4 *poly;
 
@@ -1733,15 +1733,15 @@ void func_80136700(void) {
     poly->r0 = D_80139B20;
     poly->g0 = D_80139B20;
     poly->b0 = D_80139B20;
-    poly->x0 = game_state.screen_center_x[draw_buffer] - 0x58;
-    poly->y0 = game_state.screen_center_y[draw_buffer] - 0x40;
-    poly->x1 = game_state.screen_center_x[draw_buffer] + 0x58;
-    poly->y1 = game_state.screen_center_y[draw_buffer] - 0x40;
-    poly->x2 = game_state.screen_center_x[draw_buffer] - 0x58;
-    poly->y2 = game_state.screen_center_y[draw_buffer] + 0x30;
-    poly->x3 = game_state.screen_center_x[draw_buffer] + 0x58;
-    poly->y3 = game_state.screen_center_y[draw_buffer] + 0x30;
-    AddPrim(draw_buffer * 0x400 + 8 + D_800E8CA0, poly);
+    poly->x0 = game_state.draw_origin_x[draw_buffer] - 0x58;
+    poly->y0 = game_state.draw_origin_y[draw_buffer] - 0x40;
+    poly->x1 = game_state.draw_origin_x[draw_buffer] + 0x58;
+    poly->y1 = game_state.draw_origin_y[draw_buffer] - 0x40;
+    poly->x2 = game_state.draw_origin_x[draw_buffer] - 0x58;
+    poly->y2 = game_state.draw_origin_y[draw_buffer] + 0x30;
+    poly->x3 = game_state.draw_origin_x[draw_buffer] + 0x58;
+    poly->y3 = game_state.draw_origin_y[draw_buffer] + 0x30;
+    AddPrim(draw_buffer * 0x400 + 8 + draw_ot_tags, poly);
     dtd_on_tpage(0, 0, 2, 2, 0);
     if (D_80139B20 == 0) {
         D_801215FF = 0x80;
@@ -1758,7 +1758,7 @@ void func_80136700(void) {
     }
 }
 
-void func_80136904(s32 arg0, s32 arg1) {
+void stalls_counter_digit_set(s32 arg0, s32 arg1) {
     D_80121313 = 0x84;
     D_80121357 = 0x84;
     D_8012139B = 0x84;
@@ -1775,7 +1775,7 @@ void func_80136904(s32 arg0, s32 arg1) {
     }
 }
 
-void func_801369F4(s32 arg0) {
+void stalls_audio_command_debounce(s32 arg0) {
     if (D_80139B1C <= 0) {
         D_80139B1C = 1;
         audio_command(arg0 & 0xFFFF);
@@ -1784,12 +1784,12 @@ void func_801369F4(s32 arg0) {
 
 /* A plain index loop: IDO unrolls it by two into the original's pointer walk (T-10850 had written the
  * unrolled form by hand, with a FAKE). T-20920 */
-void func_80136A2C(void) {
+void stalls_wave_response_update(void) {
     s32 i;
 
-    if (D_800B3CFC != 0) {
-        D_800B3CF8 = 0;
-        D_800B3CFC = 0;
+    if (pad_code_entered != 0) {
+        pad_code_index = 0;
+        pad_code_entered = 0;
         D_80139B18++;
     }
     if (D_80139B18 > 0) {

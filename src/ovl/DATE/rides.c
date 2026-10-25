@@ -66,8 +66,8 @@ u16 date_ride_scream_machine(void) {
     u32 timer;
 
     game = &game_state;
-    movie = (DateMovieWork *)dec_bg_lba_cache;
-    D_800B3D60 = 0;
+    movie = (DateMovieWork *)bg_lba_cache;
+    cd_read_checked = 0;
     switch (game->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
@@ -132,7 +132,7 @@ u16 date_ride_scream_machine(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x140, 0x100, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x140, 0x100, 0x180, 0xA0);
             rect.x = 0x140;
             rect.y = 0x100;
             rect.w = 0x180;
@@ -147,7 +147,7 @@ u16 date_ride_scream_machine(void) {
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x280, 0, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x280, 0, 0x180, 0xA0);
             rect.x = 0x280;
             rect.y = 0;
             rect.w = 0x180;
@@ -162,7 +162,7 @@ u16 date_ride_scream_machine(void) {
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x140, 0x100, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x140, 0x100, 0x180, 0xA0);
             rect.x = 0x140;
             rect.y = 0x100;
             rect.w = 0x180;
@@ -177,7 +177,7 @@ u16 date_ride_scream_machine(void) {
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x280, 0, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x280, 0, 0x180, 0xA0);
             rect.x = 0x280;
             rect.y = 0;
             rect.w = 0x180;
@@ -274,7 +274,7 @@ u16 date_ride_scream_machine(void) {
         game->mode_step_timer.u += 1;
         break;
     case 17:
-        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+        if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
@@ -414,8 +414,8 @@ s32 date_ride_ferris_wheel(void) {
     DateMovieWork *movie;
 
     game = &game_state;
-    movie = (DateMovieWork *)dec_bg_lba_cache;
-    D_800B3D60 = 0;
+    movie = (DateMovieWork *)bg_lba_cache;
+    cd_read_checked = 0;
     switch (game->mode_step_timer.u) {
     case 0:
         audio_command(0x201);
@@ -457,7 +457,7 @@ s32 date_ride_ferris_wheel(void) {
         return 0;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x140, 0x100, 0x140, 0xA0);
+            bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
             game->mode_step_timer.u += 1;
         }
         return 0;
@@ -523,7 +523,7 @@ s32 date_ride_ferris_wheel(void) {
         game->mode_step_timer.u += 1;
         return 0;
     case 12:
-        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+        if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
@@ -605,8 +605,8 @@ s32 date_ride_roller_coaster(void) {
     s16 var_v1;
 
     game = &game_state;
-    movie = (DateMovieWork *)dec_bg_lba_cache;
-    D_800B3D60 = 0;
+    movie = (DateMovieWork *)bg_lba_cache;
+    cd_read_checked = 0;
     switch (game->mode_step_timer.u) {
     case 0:
         audio_command(0x7F);
@@ -685,7 +685,7 @@ s32 date_ride_roller_coaster(void) {
         }
         return;
     case 2:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -698,7 +698,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 5:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -711,7 +711,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 8:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -724,7 +724,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 11:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -737,7 +737,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 14:
-        func_800536AC(0x140, 0, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0, 0x140, 0xA0);
         game->mode_step_timer.u += 1;
         return;
     case 15:
@@ -745,7 +745,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 17:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         game->mode_step_timer.u += 1;
         return;
     case 18:
@@ -753,7 +753,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 20:
-        func_800536AC(0x280, 0, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x280, 0, 0x140, 0xA0);
         game->mode_step_timer.u += 1;
         return;
     case 21:
@@ -811,7 +811,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 28:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0;
         rect.w = 0x140;
@@ -1005,7 +1005,7 @@ s32 date_ride_roller_coaster(void) {
         game->mode_step_timer.u += 1;
         return;
     case 45:
-        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+        if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
@@ -1102,10 +1102,10 @@ s32 date_ride_ghost_house(void) {
         }
         break;
     case 2:
-        if (((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000)) {
+        if (((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
-            ((RECT *)dec_bg_lba_cache)[0].w = 0;
-            ((RECT *)dec_bg_lba_cache)[0].h = 0;
+            ((RECT *)bg_lba_cache)[0].w = 0;
+            ((RECT *)bg_lba_cache)[0].h = 0;
             game_state.mode_step_timer.u -= 2;
             return 0;
         }
@@ -1162,9 +1162,9 @@ s32 date_ride_ghost_house(void) {
             }
             var_s3++;
         } while (var_s3 < 3);
-        func_8004A814((s32) D_8015CFA4[0], (s32) D_8015CFAC[0], 0xA, 2, 2, 0x808080, 3, 1);
-        func_8004A814((s32) D_8015CFA4[1], (s32) D_8015CFAC[1], 0xA, 2, 2, 0x804040, 3, 1);
-        func_8004A814((s32) D_8015CFA4[2], (s32) D_8015CFAC[2], 0xA, 2, 2, 0x800000, 3, 1);
+        prim_glow_disc((s32) D_8015CFA4[0], (s32) D_8015CFAC[0], 0xA, 2, 2, 0x808080, 3, 1);
+        prim_glow_disc((s32) D_8015CFA4[1], (s32) D_8015CFAC[1], 0xA, 2, 2, 0x804040, 3, 1);
+        prim_glow_disc((s32) D_8015CFA4[2], (s32) D_8015CFAC[2], 0xA, 2, 2, 0x800000, 3, 1);
         if (((u32) (*(s32 *)&game_state.frame_count) % 50U) == 0) {
             if (!(rand() & 3)) {
                 audio_command(0x504);
@@ -1214,7 +1214,7 @@ s32 date_ride_ghost_house(void) {
 void date_ride_background_skip(s32 arg0) {
     s32 temp_v0;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     temp_v0 = dec_bg_cd_read(arg0, 1);
     if (temp_v0 == D_800B5939) {
         printf("same\n");

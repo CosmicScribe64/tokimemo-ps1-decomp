@@ -15,13 +15,13 @@ extern FnTbl26R D_8014877C;
 /* The record fields at 0x8012B8C7..0x8012B8D8 are reached through one base: the original keeps the
  * stores and loads in program order (separate scalars let as1 hoist the loads). The result of the
  * last operation is left in $v0 without a return statement (T-4060). */
-s16 func_80140C90(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl26R tbl;
+s16 annual_candidate_result_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before candidate_result_callbacks: its stack slot sits above candidate_result_callbacks (T-3330) */
+    FnTbl26R candidate_result_callbacks;
 
-    tbl = D_8014877C;
-    idx = D_800F647A;
-    tbl.f[idx](0x80);
+    candidate_result_callbacks = D_8014877C;
+    mode_step_index = D_800F647A;
+    candidate_result_callbacks.f[mode_step_index](0x80);
     *(s8 *)(&D_8012B8C2 + 5) = *(u8 *)&D_801317EB;
     if ((*(s16 *)(&D_8012B8C2 + 0x16) == 0) && (*(s16 *)(&D_8012B8C2 + 6) == 0)) {
         *(s16 *)(&D_8012B8C2 + 0x14) = *(s16 *)(&D_8012B8C2 + 0x14) + 1;
@@ -31,23 +31,23 @@ s16 func_80140C90(void) {
     }
 }
 
-void func_80140D7C(void) {
+void annual_candidate_rank_gate(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if (((u8)func_8005E0E0(*(u8 *)&D_800F62CF) & 0x7F) != 4) {
         func_8004DE1C();
         return;
     }
-    func_8013FD20();
+    annual_result_talk_run_current();
 }
 
-void func_80140DCC(void) {
+void annual_candidate_override_counter_update(void) {
     if (D_80148750 != 0) {
         D_80148620 += 1;
     }
     func_8004DE1C();
 }
 
-void func_80140E0C(void) {
+void annual_candidate_girl_result_apply(void) {
     s16 i;
     s32 girl;
 
@@ -78,37 +78,37 @@ void func_80140E0C(void) {
     func_8004DE1C();
 }
 
-void func_80140F90(void) {
-    s16 i;
-    s16 count;
-    s32 status;
+void annual_random_target_girl_select_and_reward(void) {
+    s16 girl_index;
+    s16 met_girl_count;
+    s32 candidate_status;
 
-    count = 0;
-    for (i = 0; i < 11; i++) {
-        count += ((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 >= 1;
+    met_girl_count = 0;
+    for (girl_index = 0; girl_index < 11; girl_index++) {
+        met_girl_count += ((GyoziBits32 *)D_800F53A0.girl[girl_index].unk_10)->b1 >= 1;
     }
-    i = 0;
+    girl_index = 0;
     do {
         /* FAKE: multiplication by one preserves the original sum operand order. T-24523 */
-        D_800F53A0.unk_F2F = (D_800F6468 * 1 + i) % 10U + 1;
-        func_800BCDF0("num%d girl%d\n", count, D_800F53A0.unk_F2F);
-        i++;
+        D_800F53A0.unk_F2F = (D_800F6468 * 1 + girl_index) % 10U + 1;
+        func_800BCDF0("num%d girl%d\n", met_girl_count, D_800F53A0.unk_F2F);
+        girl_index++;
     } while ((!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && D_800F53A0.unk_F2F >= 9) ||
-        (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && count >= 2));
+        (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 && met_girl_count >= 2));
     if (D_80148750 != 0) {
         D_800F53A0.unk_F2F = 9;
     }
     D_80148754 = D_800F53A0.unk_F2F;
     D_80148620 = 0;
     /* FAKE: the redundant byte conversion reserves the original temporary slots. T-24523 */
-    status = (u8)func_8005E0E0(D_800F53A0.unk_F2F);
-    if (D_800F53A0.unk_F2F == 6 && (status & 0x7F) >= 2U) {
+    candidate_status = (u8)func_8005E0E0(D_800F53A0.unk_F2F);
+    if (D_800F53A0.unk_F2F == 6 && (candidate_status & 0x7F) >= 2U) {
         D_80148620++;
     }
-    if ((status & 0x7F) == 4) {
+    if ((candidate_status & 0x7F) == 4) {
         D_80148620++;
     }
-    func_80141550();
+    annual_result_dialogue_tables_select();
     func_8008F618(D_800F62CF);
     if (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 || (D_80148750 != 0 && D_800F53A0.unk_F2F == 9)) {
         ((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 = 1;
@@ -121,17 +121,17 @@ void func_80140F90(void) {
         return;
     }
     D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 4;
-    for (i = 0; i < 7; i++) {
-        if (D_800F54AE < D_8014875C[i]) {
+    for (girl_index = 0; girl_index < 7; girl_index++) {
+        if (D_800F54AE < D_8014875C[girl_index]) {
             break;
         }
     }
-    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += D_8014876C[i];
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += D_8014876C[girl_index];
     func_80090960(4, 0);
     func_8004DE1C();
 }
 
-void func_801412A4(void) {
+void annual_target_girl_select_and_reward(void) {
     s16 i;
     s16 count;
 
@@ -154,7 +154,7 @@ void func_801412A4(void) {
     }
     D_80148758 = D_800F53A0.unk_F2F;
     D_80148620 = 0;
-    func_80141550();
+    annual_result_dialogue_tables_select();
     func_8008F618(D_800F62CF);
     if (!((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1) {
         ((GyoziBits32 *)D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10)->b1 = 1;
@@ -177,7 +177,7 @@ void func_801412A4(void) {
     func_8004DE1C();
 }
 
-void func_80141550(void) {
+void annual_result_dialogue_tables_select(void) {
     switch (D_800F62CF) {
     case 1:
         D_80148614 = D_801481E4;
@@ -233,7 +233,7 @@ void func_80141550(void) {
     }
 }
 
-void func_80141790(void) {
+void annual_candidate_voice_resource_select(void) {
     switch (D_800F62CF) {
     case 0:
         func_80072734(0x5617);

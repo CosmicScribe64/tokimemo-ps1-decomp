@@ -387,7 +387,7 @@ s32 album_playback_ui_restore(void) {
             /* FAKE: the two-literal line and the one-line loop keep as1's
              * scheduling; the byte chain shares one li, as the original. T-24706 */
             buf[0] = 0x801E2000; buf[1] = 0x801E6000; for (i = 2; i < 6; i++) buf[i] = 0x801E2000 + i * 0x4000;
-            func_8004A1A0(buf, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 5);
+            prim_bg_slot_setup(buf, 0, 6, 3, 2, 0x1FF, -0xA0, -0x7D, 0xD, 5);
             bg_layers = 0x01000000;
             (&D_801220E0)[0] = (&D_801220E0)[1] = (&D_801220E0)[2] = 0x80;
             game_state.screen_brightness = 0x80;
@@ -530,13 +530,13 @@ s32 album_background_quads_draw(void) {
         SetShadeTex(poly[i], 0);
         poly[i]->tpage = func_8009ECB0(2, 0, 0x280 + i * 0x80, 0);
         poly[i]->x0 = i * 0xA0;
-        poly[i]->y0 = game_state.screen_center_y[draw_buffer] - 0x78;
+        poly[i]->y0 = game_state.draw_origin_y[draw_buffer] - 0x78;
         poly[i]->x1 = (i + 1) * 0xA0;
-        poly[i]->y1 = game_state.screen_center_y[draw_buffer] - 0x78;
+        poly[i]->y1 = game_state.draw_origin_y[draw_buffer] - 0x78;
         poly[i]->x2 = i * 0xA0;
-        poly[i]->y2 = game_state.screen_center_y[draw_buffer] + 0x78;
+        poly[i]->y2 = game_state.draw_origin_y[draw_buffer] + 0x78;
         poly[i]->x3 = (i + 1) * 0xA0;
-        poly[i]->y3 = game_state.screen_center_y[draw_buffer] + 0x78;
+        poly[i]->y3 = game_state.draw_origin_y[draw_buffer] + 0x78;
         poly[i]->u0 = i * 0x20;
         poly[i]->v0 = 0;
         poly[i]->u1 = (i + 5) * 0x20;
@@ -548,7 +548,7 @@ s32 album_background_quads_draw(void) {
         poly[i]->r0 = 0x80;
         poly[i]->g0 = 0x80;
         poly[i]->b0 = 0x80;
-        AddPrim(draw_buffer * 0x400 + 0x38 + D_800E8CA0, poly[i]);
+        AddPrim(draw_buffer * 0x400 + 0x38 + draw_ot_tags, poly[i]);
     }
 }
 
@@ -567,28 +567,28 @@ s32 album_photo_zoom_draw(s32 arg0, s32 arg1) {
         poly[i]->tpage = func_8009ECB0(2, 0, 0x140 + i * 0x80, 0x100);
         switch (arg1) {
         case 0:
-            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = game_state.screen_center_y[draw_buffer] - 0x65;
-            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = game_state.screen_center_y[draw_buffer] - 0x65;
-            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = game_state.screen_center_y[draw_buffer] + h - 0x65;
-            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = game_state.screen_center_y[draw_buffer] + h - 0x65;
+            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = game_state.draw_origin_y[draw_buffer] - 0x65;
+            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = game_state.draw_origin_y[draw_buffer] - 0x65;
+            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = game_state.draw_origin_y[draw_buffer] + h - 0x65;
+            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = game_state.draw_origin_y[draw_buffer] + h - 0x65;
             break;
         case 1:
-            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = game_state.screen_center_y[draw_buffer] - 0x65;
-            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = game_state.screen_center_y[draw_buffer] - 0x65;
-            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = game_state.screen_center_y[draw_buffer] + h - 0x65;
-            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = game_state.screen_center_y[draw_buffer] + h - 0x65;
+            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = game_state.draw_origin_y[draw_buffer] - 0x65;
+            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = game_state.draw_origin_y[draw_buffer] - 0x65;
+            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = game_state.draw_origin_y[draw_buffer] + h - 0x65;
+            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = game_state.draw_origin_y[draw_buffer] + h - 0x65;
             break;
         case 2:
-            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
-            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
-            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
-            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x0 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; poly[i]->y0 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x1 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0x88; poly[i]->y1 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x2 = 0x18 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80; h = 0xA0 - arg0; poly[i]->y2 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x3 = 0xA0 - arg0 * 11 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80; poly[i]->y3 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
             break;
         case 3:
-            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
-            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
-            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
-            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = game_state.screen_center_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x0 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; poly[i]->y0 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x1 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y1 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 - 0x65;
+            poly[i]->x2 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 + 0x18; h = 0xA0 - arg0; poly[i]->y2 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
+            poly[i]->x3 = arg0 * 141 / 80 + i * 0x88 - arg0 * i * 0x44 / 80 - arg0 * 0x44 / 80 + 0xA0; poly[i]->y3 = game_state.draw_origin_y[draw_buffer] + arg0 * 112 / 80 + h - 0x65;
             break;
         }
         poly[i]->u0 = i * 8 + 0x18; poly[i]->v0 = 0x13;
@@ -596,7 +596,7 @@ s32 album_photo_zoom_draw(s32 arg0, s32 arg1) {
         poly[i]->u2 = i * 8 + 0x18; poly[i]->v2 = 0xB3;
         poly[i]->u3 = i * 8 + 0xA0; poly[i]->v3 = 0xB3;
         poly[i]->r0 = 0x80; poly[i]->g0 = 0x80; poly[i]->b0 = 0x80;
-        AddPrim(draw_buffer * 0x400 + 0x28 + D_800E8CA0, poly[i]);
+        AddPrim(draw_buffer * 0x400 + 0x28 + draw_ot_tags, poly[i]);
     }
 }
 
@@ -612,14 +612,14 @@ void album_picture_sprites_draw(s32 arg0) {
     temp_v0->g0 = 0x80;
     temp_v0->b0 = 0x80;
     if (arg0 == 1) {
-        temp_v0->x0 = (s16) (game_state.screen_center_x[draw_buffer] - 0xA0);
-        temp_v0->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x65);
+        temp_v0->x0 = (s16) (game_state.draw_origin_x[draw_buffer] - 0xA0);
+        temp_v0->y0 = (s16) (game_state.draw_origin_y[draw_buffer] - 0x65);
         temp_v0->v0 = 0;
         temp_v0->u0 = 0;
         /* FAKE: paired stores share a source line for the original as1 order. T-9930. */
         temp_v0->w = 0xC0; temp_v0->h = 0xA0;
     }
-    AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, temp_v0);
+    AddPrim((draw_buffer << 0xA) + 0x34 + draw_ot_tags, temp_v0);
     goto_tpage(0x140, 0x100, 0xD, 0, 2);
     temp_v0_2 = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(temp_v0_2);
@@ -629,14 +629,14 @@ void album_picture_sprites_draw(s32 arg0) {
     temp_v0_2->g0 = 0x80;
     temp_v0_2->b0 = 0x80;
     if (arg0 == 1) {
-        temp_v0_2->x0 = (s16) (game_state.screen_center_x[draw_buffer] + 0x20);
-        temp_v0_2->y0 = (s16) (game_state.screen_center_y[draw_buffer] - 0x65);
+        temp_v0_2->x0 = (s16) (game_state.draw_origin_x[draw_buffer] + 0x20);
+        temp_v0_2->y0 = (s16) (game_state.draw_origin_y[draw_buffer] - 0x65);
         temp_v0_2->v0 = 0;
         temp_v0_2->u0 = 0;
         /* FAKE: same dimension-store scheduling dependency as above. T-9930. */
         temp_v0_2->w = 0x80; temp_v0_2->h = 0xA0;
     }
-    AddPrim((draw_buffer << 0xA) + 0x34 + D_800E8CA0, temp_v0_2);
+    AddPrim((draw_buffer << 0xA) + 0x34 + draw_ot_tags, temp_v0_2);
     goto_tpage(0x200, 0x100, 0xD, 0, 2);
 }
 
@@ -692,20 +692,20 @@ s32 arg0;
         arg0 = 0xFF;
     }
     poly->x0 = 0;
-    poly->y0 = game_state.screen_center_y[draw_buffer] - 0x78;
+    poly->y0 = game_state.draw_origin_y[draw_buffer] - 0x78;
     poly->x1 = 0x140;
-    poly->y1 = game_state.screen_center_y[draw_buffer] - 0x78;
+    poly->y1 = game_state.draw_origin_y[draw_buffer] - 0x78;
     poly->x2 = 0;
-    poly->y2 = game_state.screen_center_y[draw_buffer] + 0x78;
+    poly->y2 = game_state.draw_origin_y[draw_buffer] + 0x78;
     poly->x3 = 0x140;
-    poly->y3 = game_state.screen_center_y[draw_buffer] + 0x78;
+    poly->y3 = game_state.draw_origin_y[draw_buffer] + 0x78;
     poly->b0 = arg0;
     poly->g0 = arg0;
     poly->r0 = arg0;
-    AddPrim(draw_buffer * 0x400 + D_800E8CA0, poly);
+    AddPrim(draw_buffer * 0x400 + draw_ot_tags, poly);
     sprite = GetWorkBase(0xC, draw_buffer);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, 2, 0, 0), 0);
-    AddPrim(draw_buffer * 0x400 + D_800E8CA0, sprite);
+    AddPrim(draw_buffer * 0x400 + draw_ot_tags, sprite);
     safe_env(0);
 }
 
@@ -740,20 +740,20 @@ void album_counter_backing_draw(s32 a, s32 b) {
     SetSemiTrans(poly, 1);
     SetShadeTex(poly, 0);
     poly->x0 = a;
-    poly->y0 = game_state.screen_center_y[draw_buffer] + 0x2B;
+    poly->y0 = game_state.draw_origin_y[draw_buffer] + 0x2B;
     poly->x1 = a + b;
-    poly->y1 = game_state.screen_center_y[draw_buffer] + 0x2B;
+    poly->y1 = game_state.draw_origin_y[draw_buffer] + 0x2B;
     poly->x2 = a;
-    poly->y2 = game_state.screen_center_y[draw_buffer] + 0x37;
+    poly->y2 = game_state.draw_origin_y[draw_buffer] + 0x37;
     poly->x3 = a + b;
-    poly->y3 = game_state.screen_center_y[draw_buffer] + 0x37;
+    poly->y3 = game_state.draw_origin_y[draw_buffer] + 0x37;
     poly->b0 = 0;
     poly->g0 = 0;
     poly->r0 = 0;
-    AddPrim(draw_buffer * 0x400 + 0xC + D_800E8CA0, poly);
+    AddPrim(draw_buffer * 0x400 + 0xC + draw_ot_tags, poly);
     sprite = GetWorkBase(0xC, draw_buffer);
     func_8009D294(sprite, 0, 0, func_8009ECB0(1, 0, 0, 0), 0);
-    AddPrim(draw_buffer * 0x400 + 0xC + D_800E8CA0, sprite);
+    AddPrim(draw_buffer * 0x400 + 0xC + draw_ot_tags, sprite);
     safe_env(3);
 }
 

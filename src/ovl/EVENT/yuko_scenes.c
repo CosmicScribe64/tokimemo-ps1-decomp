@@ -131,7 +131,7 @@ void spot_yuko_scene1_run(void) {
 
 void spot_yuko_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl52 tbl;
+    SpotYukoAndYumiSceneStepTable tbl;
 
     tbl = spot_yuko_scene1_steps;
     idx = D_800B1AF6;
@@ -384,7 +384,7 @@ void spot_yuko_scene6_bg_load_10(void) {
 
 void spot_yuko_scene2_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable tbl;
 
     tbl = spot_yuko_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -424,7 +424,7 @@ void spot_yuko_unused_set_state_1(void) {
 
 void spot_yuko_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl35 tbl;
+    SpotYukoSakiCentralParkAndZooStepTable tbl;
 
     tbl = spot_yuko_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
@@ -492,7 +492,7 @@ void spot_yuko_scene3_gradient_sprites_draw(void) {
 
 void spot_yuko_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl47 tbl;
+    SpotYukoMegumiYumiAndSeaStepTable tbl;
 
     tbl = spot_yuko_scene4_steps;
     idx = D_800B1AF6;
@@ -510,7 +510,7 @@ void spot_yuko_scene4_assets_load_00(void) {
 
 void spot_yuko_scene4_gradient_sprites_draw(void) {
     s32 pad[1]; /* FAKE: one unused word above tbl gives the original local offset (0x54); real source unknown. T-9310 */
-    EvTbl tbl;
+    SpotGradientColorPairs tbl;
 
     tbl = D_80120A74;
     if (D_800B1AE4 % 120 == 0) {
@@ -553,7 +553,7 @@ void spot_yuko_scene4_gradient_sprites_draw(void) {
 
 void spot_yuko_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable tbl;
 
     tbl = spot_yuko_scene5_steps;
     idx = D_800B1AF6;
@@ -587,7 +587,7 @@ void spot_yuko_unused_branch_on_mood_2(void) {
 
 void spot_yuko_scene6_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable tbl;
 
     tbl = spot_yuko_scene6_steps;
     func_80078950("%d\n", D_800B1AF6);

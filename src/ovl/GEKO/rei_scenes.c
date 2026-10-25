@@ -86,7 +86,7 @@ s32 encounter_rei_scene_audio_load(void) {
     if ((u32)game_state.mode_step_timer.w++ < 0x40U) {
         return 0;
     }
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     audio_bank_load_start(0, 0, 0, 0xD989, 0xD949, 0xD941);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -115,7 +115,7 @@ void encounter_rei_portrait_show(void) {
     s32 mode_step_before;
 
     mode_step_before = game_state.mode_step;
-    func_8007C8A4();
+    scene_bg_wipe_in();
     mode_step_after = game_state.mode_step;
     if (mode_step_before != mode_step_after) {
         game_state.mode_step = mode_step_after - 1;
@@ -181,12 +181,12 @@ void encounter_rei_scene_three_step_dispatch(void) {
 s32 encounter_rei_scene_three_talk(void) {
     encounter_scene_talk();
     if ((u16) D_800CA154 == 9 && check_end_k() != 0) {
-        if (*(u8 *) &game_state.voice_mode == 0 || (*(u8 *) &game_state.voice_mode != 0 && func_80046094() == 9)) {
+        if (*(u8 *) &game_state.voice_mode == 0 || (*(u8 *) &game_state.voice_mode != 0 && cd_last_command() == 9)) {
             D_80122CE4 = 0;
             k_reset(1);
             D_80122CF0 = 0;
             D_8011ED5B &= 0xFF7F;
-            D_800CA2AC = 0;
+            talk_voice_wait_frames = 0;
             D_800CA150 = (u16) D_800CA150 + 1;
             D_800CA154 = 0;
             mode_step_next();
@@ -242,15 +242,15 @@ void encounter_rei_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_21;
     encounter_scene_command_table = encounter_scene_command_section_21;
     encounter_scene_voice_table = encounter_scene_voice_section_21;
-    strcpy(D_800CA19C, "廊下");
-    strcpy(D_800CA1DC, "廃工場前");
+    strcpy(scene_place_title, "廊下");
+    strcpy(scene_place_title_2, "廃工場前");
     if (talk_work == 1) {
         game_state.param_stress.value += 5;
     }
@@ -279,14 +279,14 @@ void encounter_rei_scene_init_2(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_22;
     encounter_scene_command_table = encounter_scene_command_section_22;
     encounter_scene_voice_table = encounter_scene_voice_section_22;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     D_800CA368 = 0x50;
     mode_step_next();
 }

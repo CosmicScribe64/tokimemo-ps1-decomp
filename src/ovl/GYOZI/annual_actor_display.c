@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_80136220(void) {
+void annual_result_actor_display_resource_addresses_init(void) {
     D_80146150 = (s32 *)0x801DABCC;
     D_80146154 = (s32 *)0x801DB66C;
     D_80146158 = (s32 *)0x801DABD4;
@@ -13,18 +13,18 @@ void func_80136220(void) {
     D_80146174 = 0x801C2000;
 }
 
-void func_801362A0(void) {
-    u8 index;
-    GyoziCallbackTable30 table;
+void annual_result_actor_display_mode_step_dispatch(void) {
+    u8 mode_step_index;
+    GyoziCallbackTable30 result_actor_callbacks;
 
-    table = D_801461A4;
+    result_actor_callbacks = D_801461A4;
     if (D_80145F60 != 0) {
-        if (table.callback[D_800F647A] == D_80089BD4) {
-            table.callback[D_800F647A] = D_80089B6C;
+        if (result_actor_callbacks.callback[D_800F647A] == D_80089BD4) {
+            result_actor_callbacks.callback[D_800F647A] = D_80089B6C;
         }
     }
-    index = D_800F647A;
-    table.callback[index](0x40, index);
+    mode_step_index = D_800F647A;
+    result_actor_callbacks.callback[mode_step_index](0x40, mode_step_index);
     if ((u8)D_801461A0 != 0) {
         func_800904A8(-0xA0, -0x78, 0x140, 0x64, 0xD, 0xE0FF, 0xFFFF);
         func_800904A8(-0xA0, -0x14, 0x140, 0x3C, 0xD, 0x6060, 0xE0FF);
@@ -32,8 +32,8 @@ void func_801362A0(void) {
     }
 }
 
-void func_801363BC(void) {
-    func_80136220();
+void annual_result_actor_resource_ready_check(void) {
+    annual_result_actor_display_resource_addresses_init();
     if ((*D_80146150 & 0x80000000) && (*D_80146158 & 0x80000000) && (*D_80146160 & 0x80000000)) {
         func_8004DE1C();
         return;
@@ -41,17 +41,17 @@ void func_801363BC(void) {
     D_800F647A -= 2;
 }
 
-void func_80136454(void) {
+void annual_result_actor_audio_load(void) {
     func_80090960(5, 2);
     func_8008A0D4(0x419F);
     func_8004DE1C();
 }
 
-void func_80136488(void) {
+void annual_result_actor_group_setup(void) {
     s16 i;
 
     D_801461A0 = 0;
-    func_80136220();
+    annual_result_actor_display_resource_addresses_init();
     func_8004EE18(D_80146170, 0x11, 1, 2, 0);
     for (i = 0; i < 3; i++) {
         func_800549E8(i + 0x60);
@@ -98,24 +98,24 @@ void func_80136488(void) {
     func_8004DE1C();
 }
 
-void func_801366E4(void) {
+void annual_callback_effect_201(void) {
     func_80086AB0(0x201);
     func_8004DE1C();
 }
 
-void func_8013670C(void) {
+void annual_callback_effect_200(void) {
     func_80086AB0(0x200);
     func_8004DE1C();
 }
 
-void func_80136734(void) {
+void annual_result_selector_step_advance(void) {
     if (D_800F62CF == 2) {
         func_8004DE1C();
     }
     func_8004DE1C();
 }
 
-void func_8013676C(void) {
+void annual_result_choice_step_increment_a(void) {
     if ((D_80146178 == 3) || (D_80146178 == 4)) {
         D_80145EB4 += 2;
     } else if (D_80146178 != 0) {
@@ -124,7 +124,7 @@ void func_8013676C(void) {
     func_8004DE1C();
 }
 
-void func_801367D4(void) {
+void annual_result_choice_step_increment_b(void) {
     if (D_80146178 == 0) {
         D_80145EB4 += 2;
     } else if ((D_80146178 != 3) && (D_80146178 != 4)) {
@@ -133,7 +133,7 @@ void func_801367D4(void) {
     func_8004DE1C();
 }
 
-void func_8013683C(void) {
+void annual_result_actor_visibility_enable(void) {
     D_8012B8C0[0].draw_flags |= 0x80;
     D_8012B8C0[1].flags = 1;
     D_8012B8C0[1].draw_flags |= 0x80;
@@ -143,7 +143,7 @@ void func_8013683C(void) {
     func_8004DE1C();
 }
 
-s32 func_801368B8(void) {
+s32 annual_omikuji_scene(void) {
     s32 pad = D_800F647D + D_80146178; /* FAKE: T-25129, dead entry read: the cvt pass then keeps both u8 globals in one register; also the 0x7C frame slot */
     u8 sp64[] = "おみくじを引きます。";
     u8 sp4C[] = "うおりゃあああ〜・・・";
@@ -242,7 +242,7 @@ s32 func_801368B8(void) {
         if (D_800F647D < 0x87) {
             return 0;
         }
-        func_80137188();
+        annual_omikuji_result_selector_apply();
         func_8005AE00(-0x68, 0x30, 0, sp3C, 0);
         D_800F6474++;
         return 0;
@@ -315,7 +315,7 @@ s32 func_801368B8(void) {
     }
 }
 
-void func_80137188(void) {
+void annual_omikuji_result_selector_apply(void) {
     D_80146178 = D_800F6468 & 7;
     if (D_80146178 != 0) {
         D_80146178--;
@@ -330,7 +330,7 @@ void func_80137188(void) {
     func_8008FB00();
 }
 
-void func_80137238(void) {
+void annual_result_actor_group_clear(void) {
     func_800549E8(0x60);
     func_800549E8(0x61);
     func_800549E8(0x62);
@@ -339,7 +339,7 @@ void func_80137238(void) {
     func_8004DE1C();
 }
 
-void func_8013727C(void) {
+void annual_result_scene_resource_load(void) {
     func_80051DD8(0x37, 0x801C0000, 0xB081);
     func_8004DE1C();
 }

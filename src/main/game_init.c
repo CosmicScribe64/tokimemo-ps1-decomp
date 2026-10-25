@@ -12,15 +12,15 @@ void gpu_init(void) {
     func_80097D90(0x140, 0xF0, 0, 0, 0);
     func_80098380();
     func_80098490(0, 0, 0, 0xF0);
-    D_800E8C70 = 8;
-    D_800E8C74 = D_800E8CA0;
+    draw_ot_table = 8;
+    D_800E8C74 = draw_ot_tags;
     D_800E8C84 = 8;
     D_800E8C88 = D_800E90A0;
     func_80098530();
     InitGeom();
     func_800985A0();
     draw_buffer = func_80098370();
-    func_800410AC();
+    gpu_environment_reset();
 }
 
 /* Stack copies of the PsyQ DRAWENV (0x60 bytes here) and DISPENV (0x14 bytes); libgpu.h has only RECT. */
@@ -35,7 +35,7 @@ typedef struct DispEnvCopy {
     /* 0x10 */ u8 rest[4];
 } DispEnvCopy; /* size 0x14 */
 
-void func_800410AC(void) {
+void gpu_environment_reset(void) {
     DrawEnvCopy draw;
     DispEnvCopy disp;
 
@@ -53,7 +53,7 @@ void func_800410AC(void) {
     func_8009CCF4(&disp);
 }
 
-void func_8004111C(void) {
+void vram_clear_framebuffers(void) {
     RECT rect;
 
     rect.w = 640; rect.h = 480; /* FAKE: both on one source line, as1 then stores h before w */
@@ -63,7 +63,7 @@ void func_8004111C(void) {
     func_8009C674(0);
 }
 
-void func_80041168(s32 arg0) {
+void vram_clear_blocks(s32 arg0) {
     s32 i;
     s32 j;
     s32 k;
@@ -77,25 +77,25 @@ void func_80041168(s32 arg0) {
         func_8009C7F8(&rect, 0, 0, 0);
         i = 1;
         do {
-            func_80041168(i);
+            vram_clear_blocks(i);
             i++;
         } while (i != 0x40);
     } else {
         j = 0;
         if (arg0 == 0xFE) {
             do {
-                func_80041168(0xF - j);
-                func_80041168(0x2F - j);
-                func_80041168(j + 0x15);
-                func_80041168(j + 0x35);
+                vram_clear_blocks(0xF - j);
+                vram_clear_blocks(0x2F - j);
+                vram_clear_blocks(j + 0x15);
+                vram_clear_blocks(j + 0x35);
                 j++;
             } while (j != 5);
         } else if (arg0 == 0) {
             k = 0;
             do {
                 if (((k & 0xF) >= 5) && ((k & 0xF) < 0xF) && (k < 0x16)) {
-                    func_80041168(k);
-                    func_80041168(k + 0x20);
+                    vram_clear_blocks(k);
+                    vram_clear_blocks(k + 0x20);
                 }
                 k++;
             } while (k != 0x20);
@@ -113,7 +113,7 @@ void func_80041168(s32 arg0) {
 void game_state_init(s32 arg0) {
     func_8009C210(0);
     if (arg0 != 0) {
-        func_80041168(0xFF);
+        vram_clear_blocks(0xFF);
         bzero(&game_state, 0x1A8C);
     }
     game_state.video_width = 0x140;
@@ -122,10 +122,10 @@ void game_state_init(s32 arg0) {
     game_state.clear_color_r = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;
-    game_state.screen_center_x[0] = 0xA0;
-    game_state.screen_center_x[1] = 0xA0;
-    game_state.screen_center_y[0] = 0x168;
-    game_state.screen_center_y[1] = 0x78;
+    game_state.draw_origin_x[0] = 0xA0;
+    game_state.draw_origin_x[1] = 0xA0;
+    game_state.draw_origin_y[0] = 0x168;
+    game_state.draw_origin_y[1] = 0x78;
     game_state.frame_count = 0;
     game_state.game_mode_timer = 0;
     game_state.mode_stage_timer = 0;
@@ -141,7 +141,7 @@ void game_state_init(s32 arg0) {
     game_state.frame_scanline_limit = 0x106;
     /* Word initialization overlaps the byte selectors read by the menus. */
     *(s32 *)&game_state.menu_hit[3] = 0x9F;
-    func_8004902C();
+    draw_brightness_reset();
     game_state.back_clear = 0;
     game_state.draw_3d_enabled = 0;
     game_state.draw_2d_enabled = 0;
@@ -154,7 +154,7 @@ void game_state_init(s32 arg0) {
     dec_bg_reset();
     audio_bank_state_reset();
     menu_bar_color(0x10, 0, 0, 8);
-    func_80041840();
+    pad_defaults_set();
     strncpy(game_state.player_full_name, "ときめき", 0x10);
     strncpy(game_state.player_family_name, "アルバ", 8);
     strncpy(game_state.player_given_name, "ム作成", 8);
@@ -166,12 +166,12 @@ void game_state_init(s32 arg0) {
     hud_cursor_show(0);
     hud_text_marker_set(1);
     hud_text_marker_set(0);
-    func_80041878();
-    func_80054C4C();
+    boot_game_data_init();
+    memory_card_block_clear();
     bzero(D_80122DD0, 0x100);
     bzero(&talk_work, 0x100);
     bzero(&D_801230D0, 0x40);
-    func_80042058();
+    boot_settings_defaults_set();
 }
 
 void sprite_tables_clear(void) {
@@ -255,21 +255,21 @@ void bg_layers_clear(s32 arg0, s32 arg1) {
     }
 }
 
-void func_80041840(void) {
+void pad_defaults_set(void) {
     game_state.input_device = INPUT_PAD;
     game_state.cursor_speed = SETTINGS_CURSOR_SPEED_NORMAL;
     game_state.menu_mode = MENU_MODE_A;
     ovl_entry = 0x80132000;
 }
 
-void func_80041878(void) {
-    func_800418B0();
-    func_800419FC();
-    func_80041C2C();
-    func_80041F48();
+void boot_game_data_init(void) {
+    boot_calendar_init();
+    boot_player_init();
+    boot_girls_init();
+    boot_event_state_init();
 }
 
-void func_800418B0(void) {
+void boot_calendar_init(void) {
     game_state.vacation = VACATION_NONE;
     game_state.year = 0x5F;
     game_state.month = 4;
@@ -307,7 +307,7 @@ typedef struct PlayerFlagsUpperBits {
     /* 0x00, bits 3-7 */ u8 unk_03 : 5;
 } PlayerFlagsUpperBits; /* size 0x01 */
 
-void func_800419FC(void) {
+void boot_player_init(void) {
     s32 i;
 
     bzero(game_state.player_full_name, 0x7C);
@@ -356,7 +356,7 @@ void func_800419FC(void) {
     memcpy(&game_state.progress_state[0x20], game_state.player_full_name, 0x7C);
 }
 
-void func_80041C2C(void) {
+void boot_girls_init(void) {
     GameState *g = &game_state;
     s32 i;
 
@@ -409,7 +409,7 @@ void func_80041C2C(void) {
     g->girls[13].birthday.date.day = 4;
 }
 
-void func_80041F48(void) {
+void boot_event_state_init(void) {
     s32 i;
 
     bzero(game_state.unk_54C, 0x20);
@@ -438,7 +438,7 @@ void func_80041F48(void) {
     bzero(game_state.event_log, 0x800);
 }
 
-void func_80042058(void) {
+void boot_settings_defaults_set(void) {
     game_state.current_girl = GIRL_SHIORI;
     game_state.text_lines_total = 0;
     game_state.text_first_line = 0;
@@ -447,7 +447,7 @@ void func_80042058(void) {
     game_state.icon_mode = ICON_MODE_TYPE_A;
     game_state.voice_mode = VOICE_CANCELABLE;
     game_state.click_mode = SETTINGS_CLICK_MODE_SINGLE;
-    game_state.unk_F71 = 0;
+    game_state.click_timer = 0;
     game_state.double_click_interval = 0x20;
     game_state.confirm_button = SETTINGS_CONFIRM_BUTTON_MOUSE_LEFT;
     game_state.icon_count = 0xE;

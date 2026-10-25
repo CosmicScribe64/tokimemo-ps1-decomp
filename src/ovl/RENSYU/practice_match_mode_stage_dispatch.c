@@ -24,7 +24,7 @@ typedef struct {
 } FnTbl8; /* size 0x20 */
 extern FnTbl8 D_801342D4;
 
-void func_80132040(void) {
+void practice_mode_stage_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl8 tbl;
 
@@ -33,7 +33,7 @@ void func_80132040(void) {
     tbl.f[idx]();
 }
 
-void func_801320E0(void) {
+void practice_intro_mode_step_dispatch(void) {
     u32 temp_t4;
 
     switch (game_state.mode_step) {
@@ -69,7 +69,7 @@ void func_801320E0(void) {
         if (cd_read_sync_status() & 1) {
             talk_names_set(0U);
             text_marker_hide();
-            func_80132000();
+            practice_intro_talk_pointer_setup();
             talk_text_table = D_801342B0;
             talk_command_table = D_801342B4;
             temp_t4 = (u16) game_state.player_flags.h >> 0xC;
@@ -124,7 +124,7 @@ void func_801320E0(void) {
  * there; `((unk_03F < kU) * 0)` in the two `else if` conditions strips CVT J<-L via
  * COMPARE_OPS and extends unk_03F's live range so uopt emits RLOD into $v0 at .L801324CC
  * while ugen discards `* 0` with zero instructions. */
-void func_80132390(void) {
+void practice_candidate_and_day_scene_select(void) {
     s32 sum0;
     s32 sum10;
     s32 temp_a0;
@@ -138,7 +138,7 @@ void func_80132390(void) {
     tbl2 = D_80134328;
     switch (game_state.mode_step) {
     case 0:
-        temp_a0 = func_8008647C();
+        temp_a0 = select_girl_by_scores();
         if (((((u32)game_state.unk_54C[0].w << 2) >> 31) == 1) &&
             (game_state.year == (((u32)game_state.unk_54C[0].w << 20) >> 25)) &&
             ((game_state.month + (game_state.month * 0)) == (game_state.unk_54C[0].h[0] >> 12)) &&
@@ -194,7 +194,7 @@ void func_80132390(void) {
                     }
                 }
                 if (((u16)game_state.player_flags.h >> 12) == ((u8)game_state.girls[D_801342D0].flags.b[2] >> 4)) {
-                    func_80133E5C();
+                    practice_selected_girl_portrait_select();
                 } else if ((game_state.month >= 6U) && (game_state.month < 10U)) {
                     portrait_read_start(tbl1.v[D_801342D0]);
                 } else {
@@ -273,7 +273,7 @@ void func_80132390(void) {
  * `(((pad + 1) + (pad + 1)) * 0)` in case 6 places a CSE into $v0 inside `* 0` (discarded
  * by ugen with zero instructions) so cvt_pass's `_constant_first` does not swap $v0 first
  * in `D_801342D0 == 6` and `D_801342D0 == 10` in case 11. */
-void func_80132A28(void) {
+void practice_selected_girl_scene_dispatch(void) {
     s32 pad;
     s16 a;
     RensyuTbl13 tbl;
@@ -298,7 +298,7 @@ void func_80132A28(void) {
         if (cd_read_sync_status() & 1) {
             audio_bank_start(1, 0);
             talk_names_set(D_801342D0);
-            func_80132000();
+            practice_intro_talk_pointer_setup();
             talk_text_table = D_801342B0;
             talk_command_table = D_801342B4;
             talk_voice_table = D_801342B8;
@@ -312,7 +312,7 @@ void func_80132A28(void) {
             }
             if (D_801342D0 == 0xB) {
                 audio_command(0x500);
-                func_80047550();
+                draw_shake_start();
             }
         }
         break;
@@ -410,7 +410,7 @@ void func_80132A28(void) {
     Default_Disp();
 }
 
-void func_80132F10(void) {
+void practice_club_scene_setup(void) {
     s32 var_s0;
 
     switch (game_state.mode_step) {
@@ -477,19 +477,19 @@ void func_80132F10(void) {
         if (cd_read_sync_status() & 1) {
             switch ((u16) game_state.player_flags.h >> 0xC) {
             case 6:
-                func_801340B0();
+                practice_club6_actor_tables_setup();
                 break;
             case 7:
-                func_80133FB4();
+                practice_club7_actor_tables_setup();
                 break;
             case 8:
-                func_8013405C();
+                practice_club8_actor_tables_setup();
                 break;
             case 9:
-                func_80134008();
+                practice_club9_actor_tables_setup();
                 break;
             case 10:
-                func_80133F60();
+                practice_club10_actor_tables_setup();
                 break;
             default:
                 game_mode_reset_to_title();
@@ -513,7 +513,7 @@ void func_80132F10(void) {
 /* FAKE: scalar byte views on unk_110A and D_801342C4 preserve the target live ranges and
  * swap_count store placement; unused local `a` and reusing `value` as the second shuffle
  * index place `tbl` at 0x40(sp) and `swap_count` at 0x64(sp) (T-19020, T-24102). */
-void func_8013325C(void) {
+void practice_result_grade_calculate(void) {
     u8 swap;
     u8 other;
     s32 i;
@@ -611,7 +611,7 @@ void func_8013325C(void) {
  * the jump-table entry into `case 0` so uopt does not emit `UNAL(0,$4,$gp)` (`.alias $4,$gp`)
  * immediately before the `case 0` label; ugen discards `(s32)&tbl * 0` with zero instructions
  * emitted and as1 schedules `lui $v0` into the `lbu $t1` load-delay slot. */
-void func_80133628(void) {
+void practice_result_dialogue_select(void) {
     s32 girl;
     s16 diff;
     RensyuTbl11 tbl;
@@ -697,8 +697,8 @@ void func_80133628(void) {
 /* FAKE: T-24122. Unused `pad` and `a` place `tbl` at 0x30(sp); reading D_801342D0 before
  * portrait_wink_update() puts it in cvt_pass's entry set so uopt promotes it to $a0 across the
  * switch; the empty raw-byte test on unk_1BC[4].unk_0C.b[2] retains separate live ranges
- * for the raw byte ($a1) and its high nibble ($v0), matching SHOUGATU:func_801341E4. */
-void func_80133990(void) {
+ * for the raw byte ($a1) and its high nibble ($v0), matching SHOUGATU:new_year_shrine_saki_status_talk_gate. */
+void practice_result_girl_dialogue(void) {
     s32 pad;
     s16 a;
     RensyuTbl13 tbl;
@@ -791,7 +791,7 @@ void func_80133990(void) {
     Default_Disp();
 }
 
-void func_80133CB8(void) {
+void practice_match_result_apply(void) {
     s32 i;
     u32 temp_t8;
 
@@ -836,7 +836,7 @@ void func_80133CB8(void) {
     Default_Disp();
 }
 
-void func_80133E5C(void) {
+void practice_selected_girl_portrait_select(void) {
     switch (D_801342D0) {
     case 0:
         switch ((u32)game_state.girls[0].flags.b[2] >> 4) {
@@ -873,7 +873,7 @@ void func_80133E5C(void) {
     }
 }
 
-void func_80133F60(void) {
+void practice_club10_actor_tables_setup(void) {
     D_801343D0 = 0x801A42D4;
     D_801343D4 = 0x801A42E0;
     D_801343D8 = 0x801A4330;
@@ -881,7 +881,7 @@ void func_80133F60(void) {
     D_801343E0 = 0x80197000;
 }
 
-void func_80133FB4(void) {
+void practice_club7_actor_tables_setup(void) {
     D_801343D0 = 0x801A3E3C;
     D_801343D4 = 0x801A3E48;
     D_801343D8 = 0x801A3E90;
@@ -889,7 +889,7 @@ void func_80133FB4(void) {
     D_801343E0 = 0x80197000;
 }
 
-void func_80134008(void) {
+void practice_club9_actor_tables_setup(void) {
     D_801343D0 = 0x801A42E4;
     D_801343D4 = 0x801A42F0;
     D_801343D8 = 0x801A4368;
@@ -897,7 +897,7 @@ void func_80134008(void) {
     D_801343E0 = 0x80197000;
 }
 
-void func_8013405C(void) {
+void practice_club8_actor_tables_setup(void) {
     D_801343D0 = 0x801A432C;
     D_801343D4 = 0x801A4338;
     D_801343D8 = 0x801A4394;
@@ -905,7 +905,7 @@ void func_8013405C(void) {
     D_801343E0 = 0x80197000;
 }
 
-void func_801340B0(void) {
+void practice_club6_actor_tables_setup(void) {
     D_801343D0 = 0x801A403C;
     D_801343D4 = 0x801A4048;
     D_801343D8 = 0x801A4098;

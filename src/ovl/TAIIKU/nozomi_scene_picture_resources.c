@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-void func_80145210(void) {
+void sports_nozomi_scene_picture_resource_addresses_init(void) {
     D_8014A390 = 0x801B523C;
     D_8014A394 = 0x801B518C;
     D_8014A398 = 0x801B51DC;

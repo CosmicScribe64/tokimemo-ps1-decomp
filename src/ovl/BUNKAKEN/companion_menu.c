@@ -6,20 +6,20 @@
 void talk_names_set();
 
 typedef struct {
-    s32 w[6];
-} Tbl6_80144D38;
-extern Tbl6_80144D38 D_80155F70;
+    s32 labels[6];
+} TourClubMenuLabels;
+extern TourClubMenuLabels tour_club_menu_labels;
 
-void func_80143DD0(void) {
-    s32 temp_v0_3;
-    s32 temp_v0_6;
+void tour_stage_ask_companion(void) {
+    s32 girl_rank_3;
+    s32 girl_rank_6;
     s32 var_v0;
     s32 var_v0_2;
     u8 temp_t4;
-    u32 temp_v0;
-    u32 temp_v0_2;
-    u32 temp_v0_4;
-    u32 temp_v0_5;
+    u32 girl_rank;
+    u32 girl_rank_2;
+    u32 girl_rank_4;
+    u32 girl_rank_5;
 
     switch (game_state.mode_step) {
     case 0:
@@ -34,12 +34,12 @@ void func_80143DD0(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_801324E0();
+            tour_script_common();
             talk_group = 1;
             talk_line = 0;
-            talk_text_table = (s32) D_80155E90;
-            talk_command_table = (s32) D_80155E94;
-            talk_voice_table = (s32) D_80155E98;
+            talk_text_table = (s32) tour_script_text;
+            talk_command_table = (s32) tour_script_commands;
+            talk_voice_table = (s32) tour_script_voices;
             mode_step_next();
         }
         break;
@@ -63,7 +63,7 @@ void func_80143DD0(void) {
         if (D_80122EBC != 0xFF) {
             D_80122EBC = 0xFF;
         }
-        mode_stage_set(2);
+        mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 7:
         normal_date_speak();
@@ -101,7 +101,7 @@ void func_80143DD0(void) {
         normal_date_speak();
         break;
     case 13:
-        portrait_read_step(D_80155EA0[D_80122EBC]);
+        portrait_read_step(tour_portrait_lba[D_80122EBC]);
         break;
     case 14:
         addr_init_bustup();
@@ -111,15 +111,15 @@ void func_80143DD0(void) {
             game_state.current_girl = (u8) D_80122EBC;
         }
         portrait_show_checked();
-        cd_read_sectors(D_80155F00[D_80122EBC], 0x801E8000, D_80155F0C[D_80122EBC]);
+        cd_read_sectors(tour_invite_script_sectors[D_80122EBC], 0x801E8000, tour_invite_script_lba[D_80122EBC]);
         break;
     case 15:
         normal_date_girl_in();
         break;
     case 16:
         if (cd_read_sync_status() & 1) {
-            D_80155ED0[D_80122EBC]();
-            func_8013BFA0();
+            tour_invite_script_setter[D_80122EBC]();
+            tour_script_tables_apply();
             if (D_80122EBC == 0) {
                 mode_step_set(0x14);
             } else if (D_80122EBC < 4) {
@@ -137,11 +137,11 @@ void func_80143DD0(void) {
         break;
     case 19:
         D_80122EBC = 0xFF;
-        mode_stage_set(2);
+        mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 20:
-        temp_v0 = girl_state_rank(0);
-        switch (temp_v0) {
+        girl_rank = girl_state_rank(0);
+        switch (girl_rank) {
         case 0:
         case 1:
             talk_group = 0x10;
@@ -163,8 +163,8 @@ void func_80143DD0(void) {
         normal_date_speak();
         break;
     case 22:
-        temp_v0_2 = girl_state_rank(0);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(0);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 0x11;
@@ -205,8 +205,8 @@ void func_80143DD0(void) {
         normal_date_speak();
         break;
     case 26:
-        temp_v0_3 = girl_state_rank(0);
-        switch (temp_v0_3) {
+        girl_rank_3 = girl_state_rank(0);
+        switch (girl_rank_3) {
         case 0:
         case 1:
             talk_group = 0x19;
@@ -233,11 +233,11 @@ void func_80143DD0(void) {
         break;
     case 30:
         D_80122EBC = 0xFF;
-        mode_stage_set(2);
+        mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 31:
-        temp_v0_4 = girl_state_rank(D_80122EBC);
-        switch (temp_v0_4) {
+        girl_rank_4 = girl_state_rank(D_80122EBC);
+        switch (girl_rank_4) {
         case 0:
         case 1:
             talk_group = 8;
@@ -259,8 +259,8 @@ void func_80143DD0(void) {
         normal_date_speak();
         break;
     case 33:
-        temp_v0_5 = girl_state_rank(D_80122EBC);
-        switch (temp_v0_5) {
+        girl_rank_5 = girl_state_rank(D_80122EBC);
+        switch (girl_rank_5) {
         case 0:
         case 1:
             talk_group = 9;
@@ -303,8 +303,8 @@ void func_80143DD0(void) {
         normal_date_speak();
         break;
     case 37:
-        temp_v0_6 = girl_state_rank(D_80122EBC);
-        switch (temp_v0_6) {
+        girl_rank_6 = girl_state_rank(D_80122EBC);
+        switch (girl_rank_6) {
         case 0:
         case 1:
             talk_group = 0xC;
@@ -335,7 +335,7 @@ void func_80143DD0(void) {
         break;
     case 41:
         D_80122EBC = 0xFF;
-        mode_stage_set(2);
+        mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 42:
         if (D_80122EBC == 0xB) {
@@ -386,7 +386,7 @@ void func_80143DD0(void) {
         } else if ((D_80122EBC == 8) && (girl_state_rank(8) >= 2)) {
             mode_step_next();
         } else {
-            mode_stage_set(3);
+            mode_stage_set(TOUR_STAGE_CLUB_MENU);
         }
         break;
     case 45:
@@ -417,7 +417,7 @@ void func_80143DD0(void) {
         normal_date_speak();
         break;
     case 49:
-        mode_stage_set(3);
+        mode_stage_set(TOUR_STAGE_CLUB_MENU);
         break;
     default:
         game_mode_reset_to_title();
@@ -425,7 +425,7 @@ void func_80143DD0(void) {
     }
 }
 
-void func_80144A70(void) {
+void tour_stage_yoshio(void) {
     switch (game_state.mode_step) {
     case 0:
         portrait_read_step(0x6C5F);
@@ -442,12 +442,12 @@ void func_80144A70(void) {
     case 3:
         if (cd_read_sync_status() & 1) {
             talk_names_set(0xDU);
-            func_801324E0();
+            tour_script_common();
             talk_group = 6;
             talk_line = 0;
-            talk_text_table = (s32) D_80155E90;
-            talk_command_table = (s32) D_80155E94;
-            talk_voice_table = (s32) D_80155E98;
+            talk_text_table = (s32) tour_script_text;
+            talk_command_table = (s32) tour_script_commands;
+            talk_voice_table = (s32) tour_script_voices;
             mode_step_next();
         }
         break;
@@ -484,7 +484,7 @@ void func_80144A70(void) {
         normal_date_speak();
         break;
     case 10:
-        mode_stage_set(3);
+        mode_stage_set(TOUR_STAGE_CLUB_MENU);
         break;
     default:
         game_mode_reset_to_title();
@@ -492,14 +492,14 @@ void func_80144A70(void) {
     }
 }
 
-void func_80144C5C(void) {
+void tour_stage_club_menu(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_80144D38();
+        tour_club_menu_init();
         mode_step_next();
         return;
     case 1:
-        func_80144E9C();
+        tour_club_menu_update();
         return;
     case 2:
         ((CultureFestivalDispatch *)&D_80122EB8)->unk_00 = D_80122CDC;
@@ -522,31 +522,31 @@ void func_80144C5C(void) {
     }
 }
 
-void func_80144D38(void) {
+void tour_club_menu_init(void) {
     s32 i;
     s32 pad[2]; /* FAKE: unused local above the arrays reproduces the original frame 0xC0; real source unknown. T-9350 */
-    s16 a[6];
-    s16 b[6];
-    s16 c[6];
-    s16 d[6];
-    Tbl6_80144D38 tbl;
+    s16 label_x[6];
+    s16 label_y[6];
+    s16 label_width[6];
+    s16 label_height[6];
+    TourClubMenuLabels club_menu_labels;
 
-    tbl = D_80155F70;
+    club_menu_labels = tour_club_menu_labels;
     k_reset(1);
     for (i = 0; i < 6; i++) {
-        a[i] = (i & 1) * 0x78 - 0x80;
-        b[i] = (i >> 1) * 0x10 + 0x32;
-        set_kanji_string(a[i], b[i], 0, tbl.w[i], 0);
-        c[i] = 0x78;
-        d[i] = 0x10;
+        label_x[i] = (i & 1) * 0x78 - 0x80;
+        label_y[i] = (i >> 1) * 0x10 + 0x32;
+        set_kanji_string(label_x[i], label_y[i], 0, club_menu_labels.labels[i], 0);
+        label_width[i] = 0x78;
+        label_height[i] = 0x10;
     }
     D_80122D30 = 1;
     k_disp_start(7);
-    menu_set(0, 6, a, b, c, d);
+    menu_set(0, 6, label_x, label_y, label_width, label_height);
     hud_cursor_actor_init(0);
 }
 
-void func_80144E9C(void) {
+void tour_club_menu_update(void) {
     s32 i;
 
     menu_check(0, cursor_x, cursor_y);
@@ -568,14 +568,14 @@ void func_80144E9C(void) {
     }
 }
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", D_80154920);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", tour_menu_literature);
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", D_80154930);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", tour_menu_drama);
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", D_80154940);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", tour_menu_science);
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", D_80154950);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", tour_menu_computer);
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", D_80154960);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", tour_menu_art);
 
-INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", D_80154970);
+INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/companion_menu.rodata", tour_menu_brass);

@@ -5,51 +5,51 @@
 #include "game.h"
 
 /* Overlay-local externs (T-1300). */
-void func_80138800(void);
-void func_80138950(void);
-void func_80135830(void);
-void func_80135AD0(void);
-void func_80135DF8(void);
-void func_80135F3C(void);
-void func_80136A28(void);
-void func_80136AB0(void);
-void func_80136B18(void);
-void func_80136BB4(void);
-void func_8013B200(void);
-void func_8013B3B0(void);
-void func_8013B608(void);
-void func_8013B78C(void);
-void func_8013B94C(void);
-void func_8013BB3C(void);
-void func_8013BCEC(void);
-void func_8013C33C(void);
-void func_8013C4E4(s32 arg0);
-void func_8013C5C8(s32 arg0);
-void func_8013C694(void);
-void func_8013CD34(void);
-void func_8013CF88(void);
-void func_8013D114(void);
-void func_8013D2B4(void);
-void func_8013D788(void);
-void func_8013E1FC(void);
-void func_8013E894(void);
-void func_8013EC60(void);
-void func_8013FC5C(void);
-void func_80146884(void);
-void func_8014692C(void);
-void func_80146994(void);
-void func_80146A60(void);
-void func_801470A0(void);
-void func_80147120(void);
-void func_80147210(void);
-void func_80147318(void);
-void func_801331D0(void);
-void func_801330FC(void);
-void func_80147928(void);
-void func_80147594(void);
-void func_80143C84(void);
-void func_80143CC0(void);
-void func_8014756C(void);
+void sports_runner_finish_animation_update(void);
+void sports_candidate_scene_audio_request(void);
+void sports_runner_actor_group_init(void);
+void sports_runner_obstacle_actor_init(void);
+void sports_runner_obstacle_sequences_assign(void);
+void sports_runner_animation_and_rival_select(void);
+void sports_runner_player_speed_input_update(void);
+void sports_runner_player_position_integrate(void);
+void sports_runner_player_screen_position_update(void);
+void sports_runner_player_animation_update(void);
+void sports_candidate_sequence_effect_update_a(void);
+void sports_candidate_sequence_effect_update_b(void);
+void sports_candidate_sequence_effect_update_c(void);
+void sports_candidate_sequence_effect_update_d(void);
+void sports_candidate_sequence_effect_update_e(void);
+void sports_candidate_sequence_effect_update_f(void);
+void sports_candidate_sequence_effect_phase_update(void);
+void sports_candidate_sequence_effect_update_g(void);
+void sports_candidate_motion_velocity_set(s32 arg0);
+void sports_candidate_motion_position_approach(s32 arg0);
+void sports_candidate_motion_bounds_clamp(void);
+void sports_candidate_motion_input_update(void);
+void sports_candidate_motion_integrate(void);
+void sports_candidate_motion_project_and_bound(void);
+void sports_candidate_model_rotation_update(void);
+void sports_candidate_motion_speed_and_scroll_update(void);
+void sports_candidate_floor_strip_draw(void);
+void sports_candidate_rotated_floor_strip_draw(void);
+void sports_candidate_floor_transition_draw(void);
+void sports_candidate_scene_progress_update(void);
+void sports_controller_c_player_velocity_input_update(void);
+void sports_controller_c_player_velocity_integrate(void);
+void sports_controller_c_player_position_clamp(void);
+void sports_controller_c_player_sequence_select(void);
+void sports_controller_c_cpu_velocity_target_update(void);
+void sports_controller_c_cpu_motion_update(void);
+void sports_controller_c_cpu_position_integrate(void);
+void sports_controller_c_slot_animation_update(void);
+void sports_runner_scene_background_tile_upload(void);
+void sports_dance_background_upload(void);
+void sports_controller_c_player_direction_update(void);
+void sports_controller_c_motion_choices_update(void);
+void sports_schoolyard_player_direction_set(void);
+void sports_schoolyard_player_velocity_integrate(void);
+void sports_controller_c_motion_choice_update(void);
 
 extern s32 D_8014A124;
 extern s32 D_8014A128;
@@ -121,14 +121,14 @@ extern s32 D_8014A3B4;
 extern s32 D_8014A3B8;
 
 extern s32 D_80149940;
-typedef struct TaiikuPair {
+typedef struct SportsPairValue {
     /* 0x0 */ s16 unk0;
     /* 0x2 */ s16 val;
-} TaiikuPair; /* size 0x4 */
-extern TaiikuPair D_801499B0[];
-extern volatile u16 D_801499B2; /* D_801499B0[0].val as a u16 flag; volatile is FAKE (func_8013C33C), T-11640 */
-extern volatile u16 D_801499A2; /* D_801499A0.unk_02 as a u16 counter; volatile is FAKE (func_8013B3B0, func_8013B94C), T-24124 */
-extern volatile s32 D_80149974; /* D_80149968.unk_0C as a volatile s32; volatile is FAKE (func_8013B94C), T-24124 */
+} SportsPairValue; /* size 0x4 */
+extern SportsPairValue D_801499B0[];
+extern volatile u16 D_801499B2; /* D_801499B0[0].val as a u16 flag; volatile is FAKE (sports_candidate_sequence_effect_update_g), T-11640 */
+extern volatile u16 D_801499A2; /* D_801499A0.unk_02 as a u16 counter; volatile is FAKE (sports_candidate_sequence_effect_update_b, sports_candidate_sequence_effect_update_e), T-24124 */
+extern volatile s32 D_80149974; /* D_80149968.unk_0C as a volatile s32; volatile is FAKE (sports_candidate_sequence_effect_update_e), T-24124 */
 
 extern s32 D_80149FB0;
 extern s32 D_80149FC0;
@@ -139,30 +139,30 @@ extern s32 D_8014A008;
 extern s16 D_8014A020;
 extern s16 D_8014A030;
 extern s16 D_8014A040;
-void func_80136EC0(void);
-void func_8013703C(void);
-void func_80137090(void);
-void func_80137228(void);
-void func_8013732C(void);
-void func_8013F3A4(s32);
-void func_8013F948(void);
-void func_80147F58(s32);
-void func_801482BC(s32);
-void func_80147A6C(s32);
-void func_80147B14(s32);
-s32 func_80141CDC();
-void func_80132E20(); /* K&R definition in 80132BD0.c (s16 first parameter) */
-void func_80132970(void);
-void func_80133BF0(void);
-s32 func_80140A90();
+void sports_runner_cpu_phase_update(void);
+void sports_runner_cpu_speed_config_copy(void);
+void sports_runner_cpu_motion_state_update(void);
+void sports_runner_position_and_finish_update(void);
+void sports_runner_actor_animation_state_update(void);
+void sports_candidate_runner_display_position_update(s32);
+void sports_candidate_runner_blink_animation_update(void);
+void sports_controller_c_slot_animation_threshold_check(s32);
+void sports_controller_c_slot_move_finish(s32);
+void sports_controller_c_slot_position_step(s32);
+void sports_controller_c_slot_actor_position_update(s32);
+s32 sports_nozomi_courtyard_scene_step();
+void sports_dance_actors_position(); /* K&R definition in 80132BD0.c (s16 first parameter) */
+void sports_folk_dance_log_append(void);
+void sports_folk_dance_talk_resource_addresses_init(void);
+s32 sports_mio_ground_scene_step();
 extern u8 D_8014A110;
-void func_80143D24(void);
-void func_80143DD0(void);
-void func_80143F50(void);
-void func_8014357C(void);
-void func_80143398(void);
-void func_80143470(void);
-void func_80145190(void);
+void sports_schoolyard_player_position_clamp(void);
+void sports_schoolyard_player_sequence_update(void);
+void sports_schoolyard_input_state_update(void);
+void sports_schoolyard_controller_state_init(void);
+void sports_schoolyard_sprite_resource_setup(void);
+void sports_schoolyard_primary_actor_setup(void);
+void sports_schoolyard_resource_addresses_init(void);
 typedef struct TaiikuRec {
     /* 0x0 */ s32 unk0;
     /* 0x4 */ s32 unk4;
@@ -171,35 +171,35 @@ typedef struct TaiikuRec {
 } TaiikuRec; /* size 0x10 */
 extern s32 D_80149944;
 
-void func_801339C4();
+void sports_dance_actor_move();
 extern s32 D_801492C4;
-void func_8013DDB8(void);
-s8 func_8013FE44();
-void func_80144834(void);
-void func_801448D4(void);
-void func_801449A0(void);
-void func_80144B40(void);
-void func_80144C70(void);
-void func_80144E54(void);
-void func_80142FB8(void);
-void func_80143814(void);
+void sports_candidate_camera_transition_update(void);
+s8 sports_girl_scene_result_candidate_select();
+void sports_schoolyard_cpu_speed_limit_update(void);
+void sports_schoolyard_cpu_acceleration_update(void);
+void sports_schoolyard_runner_position_and_finish_order_update(void);
+void sports_schoolyard_cpu_animation_state_advance(void);
+void sports_schoolyard_cpu_random_animation_transition(void);
+void sports_schoolyard_actor_group_init(void);
+void sports_schoolyard_result_flow_update(void);
+void sports_schoolyard_actor_display_init(void);
 extern s32 D_8014A4F4;
-extern s32 D_8014A4F8[12]; /* tpage buffer ids, loaded in func_80145640. T-16553 */
-extern s32 D_8014A528[9];
-s32 func_801485C4(void);
-s32 func_80148678(void);
-void func_801487B4(void);
-void func_80148820(void);
-void func_80148194(s32 arg0);
-void func_80145EF4(void);
-void func_80145F8C(void);
-void func_8014607C(void);
-void func_80146338(void);
-void func_80148228(s32 arg0);
+extern s32 sports_controller_c_texture_page_buffer_ids[12]; /* tpage buffer ids, loaded in sports_controller_c_resource_load. T-16553 */
+extern s32 sports_controller_c_texture_page_buffer_ids_table_b[9];
+s32 sports_controller_c_result_actor_approach(void);
+s32 sports_controller_c_result_sequence_shift(void);
+void sports_controller_c_result_actor_motion_start(void);
+void sports_controller_c_result_sequence_advance(void);
+void sports_controller_c_slot_motion_a_start(s32 arg0);
+void sports_controller_c_sprite_resource_setup(void);
+void sports_controller_c_primary_actor_init(void);
+void sports_controller_c_state_init(void);
+void sports_controller_c_actor_display_init(void);
+void sports_controller_c_slot_motion_b_start(s32 arg0);
 extern u8 D_8014A1FC;
-void func_80146B8C(void);
-void func_801488F0(s16 *);
-void func_8013D9B4(void);
+void sports_controller_c_player_sequence_advance(void);
+void sports_scene_display_parameters_set(s16 *);
+void sports_candidate_background_quad_draw(void);
 extern s16 D_80149204;
 extern s32 D_801491E4;
 extern u8 D_801491E0[4];
@@ -212,17 +212,17 @@ typedef struct {
 } TaiikuSel; /* size 8 */
 extern TaiikuSel D_80149988;
 extern s32 D_8014999C;
-void func_8013B104(void);
-void func_8013C780(void);
-void func_8013C978(void);
+void sports_candidate_sequence_state_dispatch(void);
+void sports_candidate_effect_animation_step(void);
+void sports_candidate_effect_motion_state_update(void);
 
 extern u8 D_8014A3C4;
 extern s32 D_8014A3D0;
 extern s32 D_8014A3E0;
 extern s32 D_8014A3DC;
-void func_80146C20(void);
-extern u8 D_8014A3D8[]; /* next free slot gets i + 2 for runner i (func_80147210) */
-/* Four s16 values added to the actor_pool records (func_8014038C copies them to a local). */
+void sports_controller_c_scroll_integrate(void);
+extern u8 D_8014A3D8[]; /* next free slot gets i + 2 for runner i (sports_controller_c_cpu_position_integrate) */
+/* Four s16 values added to the actor_pool records (sports_girl_result_actor_sequence_advance copies them to a local). */
 typedef struct TkS16x4 {
     /* 0x0 */ s16 v[4];
 } TkS16x4; /* size 0x8 */
@@ -230,15 +230,15 @@ extern TkS16x4 D_80149F8C;
 extern TkS16x4 D_8014A360;
 extern u8 D_801492AC[];
 extern u8 D_8014A1D4[];
-extern s32 D_8014A208[8]; /* tpage buffer ids, func_8014280C */
-extern s32 D_8014A228[11]; /* tpage buffer ids, func_8014280C */
-extern s16 D_8014A1E8[]; /* s16 table paired with D_8014A1D4 (func_80143DD0) */
-void func_801452D0(void);
-void func_80141964(void);
-s32 func_801419F8(void);
-void func_80141AE8(void);
-void func_80141B28(void);
-void func_80141B70(void);
+extern s32 D_8014A208[8]; /* tpage buffer ids, sports_schoolyard_scene_audio_sequence */
+extern s32 D_8014A228[11]; /* tpage buffer ids, sports_schoolyard_scene_audio_sequence */
+extern s16 D_8014A1E8[]; /* s16 table paired with D_8014A1D4 (sports_schoolyard_player_sequence_update) */
+void sports_controller_c_mode_dispatch(void);
+void sports_festival_choice_menu_init(void);
+s32 sports_festival_choice_menu_update(void);
+void sports_festival_first_followup_select(void);
+void sports_festival_second_followup_select(void);
+void sports_mio_festival_talk_resource_addresses_init(void);
 
 typedef struct {
     s32 v[11];
@@ -246,12 +246,12 @@ typedef struct {
 extern u8 D_801491DC;
 extern TaiikuTbl11 D_801498E8;
 extern TaiikuTbl11 D_80149914;
-void func_8014684C(void);
-void func_80147068(void);
-void func_80147520(void);
-void func_80147F10(void);
+void sports_controller_c_player_frame_update(void);
+void sports_controller_c_cpu_frame_update(void);
+void sports_controller_c_frame_update(void);
+void sports_controller_c_slot_motion_update(void);
 extern s16 D_8014A3DE;
-extern u8 D_8014A120[]; /* next free slot gets i + 2 for runner i (func_801449A0) */
+extern u8 D_8014A120[]; /* next free slot gets i + 2 for runner i (sports_schoolyard_runner_position_and_finish_order_update) */
 extern s32 D_8014A130[];
 extern s16 D_8014A1CE;
 
@@ -260,7 +260,7 @@ extern s32 D_80149954;
 extern s16 D_80149958;
 extern s16 D_8014995A;
 extern u8 D_801499D4[];
-void func_8013B5C0(void);
+void sports_candidate_sequence_audio_counter_update(void);
 extern u8 D_8014A118;
 
 typedef struct TkCnt {
@@ -277,33 +277,33 @@ typedef union {
     } halves;
 } TaiHalves; /* size 0x4 */
 extern TaiHalves D_80149298; /* defined in 80133C80.c */
-void func_80133438(void);
-void func_801345A4(void);
-void func_801365C8(void);
-s32 func_801368B8();
-void func_801369F0(void);
-s32 func_80136DA4();
-void func_80136E80(void);
-void func_80137544(void);
-void func_80135480(void);
-s32 func_80137440();
-s32 func_80137C44();
-s32 func_80137EA8();
-void func_80134D94(void);
-void func_80138224();
-s32 func_80138680();
-void func_801356E0(void);
-void func_80135778(void);
-s16 func_801388E4();
+void sports_runner_scene_scroll_update(void);
+void sports_runner_race_phase_one(void);
+void sports_runner_obstacle_scroll_update(void);
+s32 sports_runner_actor_timer_increment();
+void sports_runner_player_control_update(void);
+s32 sports_runner_scroll_update();
+void sports_runner_cpu_update(void);
+void sports_runner_rival_choice_input_process(void);
+void sports_runner_race_state_init(void);
+s32 sports_runner_finish_audio_and_lane_update();
+s32 sports_runner_finish_actor_display_update();
+s32 sports_runner_finish_line_update();
+void sports_runner_course_end_transition(void);
+void sports_runner_finish_actor_group_init();
+s32 sports_runner_finish_display_selector();
+void sports_runner_sprite_memory_init(void);
+void sports_runner_display_context_init(void);
+s16 sports_runner_finish_marker_x_select();
 
 #ifndef OVL_TAIIKU_W8_3_TYPES_H
 #define OVL_TAIIKU_W8_3_TYPES_H
 /* Local random-selection table: eleven rows of ten signed halfwords.
- * Both the block copy and row stride are visible in func_80135D24. T-9530. */
-typedef struct TaiRandomTable {
+ * Both the block copy and row stride are visible in sports_runner_obstacle_sequence_select. T-9530. */
+typedef struct SportsRandomTable {
     /* 0x00 */ s16 value[11][10];
-} TaiRandomTable; /* size 0xDC */
-extern TaiRandomTable D_80149570;
+} SportsRandomTable; /* size 0xDC */
+extern SportsRandomTable D_80149570;
 extern s16 D_801491EC;
 
 typedef struct TaiWords4 {
@@ -316,17 +316,17 @@ extern TaiWords4 D_801498AC;
 extern TaiWords11 D_801498BC;
 extern s16 D_80149320[];
 extern s32 D_8014929C;
-extern s16 D_801492A0; /* func_80135480 */
-extern u8 D_801492A4[2]; /* func_80135480 */
-extern u8 D_801492A8[4]; /* func_80135480 */
+extern s16 D_801492A0; /* sports_runner_race_state_init */
+extern u8 D_801492A4[2]; /* sports_runner_race_state_init */
+extern u8 D_801492A8[4]; /* sports_runner_race_state_init */
 #endif /* OVL_TAIIKU_W8_3_TYPES_H */
 #ifndef TAIIKU_W8_CONTROLLER_TYPES_H
 #define TAIIKU_W8_CONTROLLER_TYPES_H
-/* Game C runner records (801452D0.c): D_8014A3E4 is the player, D_8014A400[3] the three other
- * runners, two objects: func_801482BC indexes D_8014A400 by runner - 1 and the loops of
- * func_801470A0/func_80147120 by i; written as one 4-element array they compile differently.
+/* Game C runner records (801452D0.c): sports_controller_c_player_controller is the player, sports_controller_c_cpu_controllers[3] the three other
+ * runners, two objects: sports_controller_c_slot_move_finish indexes sports_controller_c_cpu_controllers by runner - 1 and the loops of
+ * sports_controller_c_cpu_velocity_target_update/sports_controller_c_cpu_motion_update by i; written as one 4-element array they compile differently.
  * T-9570, T-16550. */
-typedef struct TaiikuController {
+typedef struct SportsController {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
     /* 0x02 */ u16 unk_02;
@@ -336,13 +336,13 @@ typedef struct TaiikuController {
     /* 0x10 */ s32 unk_10;
     /* 0x14 */ s32 unk_14;
     /* 0x18 */ Fix32 position;
-} TaiikuController; /* size 0x1C */
-extern TaiikuController D_8014A3E4;
-extern TaiikuController D_8014A400[3];
+} SportsController; /* size 0x1C */
+extern SportsController sports_controller_c_player_controller;
+extern SportsController sports_controller_c_cpu_controllers[3];
 
 #endif
 
-/* T-9510: coordinate bounds loaded with LH in func_8013C5C8. */
+/* T-9510: coordinate bounds loaded with LH in sports_candidate_motion_position_approach. */
 
 #ifndef OVL_TAIIKU_T9510_COORD_TYPES
 #define OVL_TAIIKU_T9510_COORD_TYPES
@@ -371,12 +371,12 @@ extern s32 D_8014A1D0;
 
 #ifndef OVL_TAIIKU_RANDOM_T9610
 #define OVL_TAIIKU_RANDOM_T9610
-extern TaiRandomTable D_8014964C;
+extern SportsRandomTable D_8014964C;
 #endif
 
 #ifndef OVL_TAIIKU_W9_2_INIT_FIELDS_H
 #define OVL_TAIIKU_W9_2_INIT_FIELDS_H
-/* Workspace address words and asset halfwords used by func_80140810. T-9720. */
+/* Workspace address words and asset halfwords used by sports_scene_actor_resource_addresses_init. T-9720. */
 extern s32 D_80149FB4;
 extern s32 D_80149FB8;
 extern s32 D_80149FBC;
@@ -425,38 +425,38 @@ extern s16 D_8018EC6C;
 extern s16 D_8018EC70;
 extern s16 D_8018EC74;
 /* T-9930: calls from the race-state dispatcher; matched definitions below it. */
-void func_80143AC8(void);
-void func_80143C04(void);
-void func_80144768(void);
+void sports_schoolyard_frame_counters_advance(void);
+void sports_schoolyard_player_frame_update(void);
+void sports_schoolyard_cpu_animation_and_motion_update(void);
 #endif
 
 #ifndef OVL_TAIIKU_SLOT_T10020
 #define OVL_TAIIKU_SLOT_T10020
-/* Game C runner sprite records D_8014A454[4], one per runner of D_8014A3E4 (T-10020, T-10850, T-16550). */
-typedef struct TaiikuSlot1C {
+/* Game C runner sprite records sports_runner_display_slots[4], one per runner of sports_controller_c_player_controller (T-10020, T-10850, T-16550). */
+typedef struct SportsRunnerDisplaySlot {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ u8 unk_0C;
-    /* 0x0D */ u8 unk_0D;
+    /* 0x0D */ u8 motion_timer;
     /* 0x0E */ u8 unk_0E;
     /* 0x0F */ u8 unk_0F;
     /* 0x10 */ u8 pad_10[4];
     /* 0x14 */ u16 unk_14;
-    /* 0x16 */ u16 unk_16;
+    /* 0x16 */ u16 cooldown;
     /* 0x18 */ u16 unk_18;
     /* 0x1A */ u8 pad_1A[2];
-} TaiikuSlot1C; /* size 0x1C */
-extern TaiikuSlot1C D_8014A454[4];
+} SportsRunnerDisplaySlot; /* size 0x1C */
+extern SportsRunnerDisplaySlot sports_runner_display_slots[4];
 #endif
 
 #ifndef OVL_TAIIKU_T10010_SCROLL_POSITION
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
-void func_8014430C(void);
+void sports_schoolyard_scroll_update(void);
 extern Fix32 D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
-void func_8013D254(void);
+void sports_candidate_motion_reset(void);
 extern s32 D_80149948;
 
 typedef struct {
@@ -488,7 +488,7 @@ typedef struct {
     s32 unk_04;
     s32 unk_08;
 } Taiiku3s32; /* size 0xC */
-/* 0x20-byte block at D_80149968 (T-11640): func_8013D114 reads the high halves of the 16.16 words at
+/* 0x20-byte block at D_80149968 (T-11640): sports_candidate_motion_project_and_bound reads the high halves of the 16.16 words at
  * 0x14 and 0x18 through the block's base address, so the words are fields of one object. */
 typedef struct {
     /* 0x00 */ s32 unk_00;
@@ -500,8 +500,8 @@ typedef struct {
     /* 0x14 */ s32 unk_14;
     /* 0x18 */ s32 unk_18;
     /* 0x1C */ s16 unk_1C[2]; /* [0] x, [1] y */
-} TaiikuBall; /* size 0x20 */
-extern TaiikuBall D_80149968;
+} SportsFixedPointBlock; /* size 0x20 */
+extern SportsFixedPointBlock D_80149968;
 extern Taiiku3s32 D_80149990;
 
 
@@ -509,64 +509,64 @@ extern Taiiku3s32 D_80149990;
 
 
 /* Game A runner record (80133C80.c), 0x24 bytes. The 16.16 word at 0x20 is the track position,
- * read by its signed high half. Game C's TaiikuController has the same roles at other offsets
+ * read by its signed high half. Game C's SportsController has the same roles at other offsets
  * (speed 0x10, timers, position). T-16550. */
-typedef struct TaiRunnerA {
+typedef struct SportsRunnerA {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u8 unk_02; /* index of the runner's display record (actor_pool record 46 + n) */
-    /* 0x03 */ u8 unk_03; /* animation frame */
+    /* 0x02 */ u8 display_actor_index; /* index of the runner's display record (actor_pool record 46 + n) */
+    /* 0x03 */ u8 animation_frame; /* animation frame */
     /* 0x04 */ u8 unk_04;
-    /* 0x05 */ u8 unk_05; /* state of the start sequence */
+    /* 0x05 */ u8 start_sequence_state; /* state of the start sequence */
     /* 0x06 */ u8 unk_06;
     /* 0x07 */ u8 unk_07;
     /* 0x08 */ u16 unk_08;
     /* 0x0A */ u16 unk_0A;
     /* 0x0C */ u16 unk_0C;
     /* 0x0E */ u16 unk_0E;
-    /* 0x10 */ s32 unk_10; /* speed */
+    /* 0x10 */ s32 speed; /* speed */
     /* 0x14 */ u32 unk_14;
     /* 0x18 */ s32 unk_18;
     /* 0x1C */ u32 unk_1C;
-    /* 0x20 */ TaiHalves unk_20; /* 16.16 position */
-} TaiRunnerA; /* size 0x24 */
+    /* 0x20 */ TaiHalves track_position; /* 16.16 position */
+} SportsRunnerA; /* size 0x24 */
 /* Game B runner record (80142240.c), 0x24 bytes: a second layout for the same roles as
- * TaiRunnerA (speed 0x08, accumulated speed 0x0C, timers 0x10/0x18/0x1A, 16.16 position 0x14). T-16550. */
-typedef struct TaiRunnerB {
-    /* 0x00 */ u8 unk_00; /* animation frame */
+ * SportsRunnerA (speed 0x08, accumulated speed 0x0C, timers 0x10/0x18/0x1A, 16.16 position 0x14). T-16550. */
+typedef struct SportsRunnerB {
+    /* 0x00 */ u8 animation_frame; /* animation frame */
     /* 0x01 */ u8 unk_01;
     /* 0x02 */ u8 unk_02;
     /* 0x03 */ u8 pad_03;
     /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08; /* speed */
+    /* 0x08 */ s32 speed; /* speed */
     /* 0x0C */ s32 unk_0C;
     /* 0x10 */ u32 unk_10;
-    /* 0x14 */ TaiHalves unk_14; /* 16.16 position */
+    /* 0x14 */ TaiHalves track_position; /* 16.16 position */
     /* 0x18 */ u16 unk_18;
     /* 0x1A */ u16 unk_1A;
     /* 0x1C */ s32 unk_1C;
     /* 0x20 */ s32 unk_20;
-} TaiRunnerB; /* size 0x24 */
-/* D_8014A13C[4]: [0] the player, [1..3] the other runners; every access goes through
- * %lo(D_8014A13C). The u8 view it had made IDO keep the array base in a register for the
- * constant-index clamps of func_80143D24, which a struct member does not; a 4-element array does. T-16550. */
-extern TaiRunnerB D_8014A13C[4];
+} SportsRunnerB; /* size 0x24 */
+/* sports_controller_c_runners[4]: [0] the player, [1..3] the other runners; every access goes through
+ * %lo(sports_controller_c_runners). The u8 view it had made IDO keep the array base in a register for the
+ * constant-index clamps of sports_schoolyard_player_position_clamp, which a struct member does not; a 4-element array does. T-16550. */
+extern SportsRunnerB sports_controller_c_runners[4];
 
-/* D_80149208..D_80149297: the player and three other runners, one object. Every access in the
- * original goes through %lo(D_80149208); the matched loops index the other runners by i from 0
- * (cpu[i]), and func_80138680 indexes all four by runner number. T-16550. */
-typedef struct TaiRunnersA {
-    /* 0x00 */ TaiRunnerA player;
-    /* 0x24 */ TaiRunnerA cpu[3];
-} TaiRunnersA; /* size 0x90 */
-extern TaiRunnersA D_80149208;
+/* sports_runner_a_runners..D_80149297: the player and three other runners, one object. Every access in the
+ * original goes through %lo(sports_runner_a_runners); the matched loops index the other runners by i from 0
+ * (cpu[i]), and sports_runner_finish_display_selector indexes all four by runner number. T-16550. */
+typedef struct SportsRunnersA {
+    /* 0x00 */ SportsRunnerA player;
+    /* 0x24 */ SportsRunnerA cpu[3];
+} SportsRunnersA; /* size 0x90 */
+extern SportsRunnersA sports_runner_a_runners;
 
 #endif
 
 
 #ifndef OVL_TAIIKU_LIMITS_T10720
 #define OVL_TAIIKU_LIMITS_T10720
-/* Limit tables copied to the stack by func_80137090. */
+/* Limit tables copied to the stack by sports_runner_cpu_motion_state_update. */
 typedef struct {
     /* 0x00 */ s32 v[3];
 } TaiikuI3; /* size 0xC */
@@ -595,7 +595,7 @@ extern s32 D_80149960;
 #ifndef OVL_TAIIKU_T10850_TYPES
 #define OVL_TAIIKU_T10850_TYPES
 
-/* T-10850: stack copies in func_80147B14, two 0x14 and two 0x10 byte tables. */
+/* T-10850: stack copies in sports_controller_c_slot_actor_position_update, two 0x14 and two 0x10 byte tables. */
 typedef struct TaiikuHalf10 {
     /* 0x00 */ s16 h[10];
 } TaiikuHalf10; /* size 0x14 */
@@ -609,7 +609,7 @@ extern TaiikuHalf8 D_8014A658;
 extern u16 D_8014A4C4[8];
 extern u16 D_8014A4D8[6];
 extern u16 D_8014A4E8[6];
-extern TaiikuHalf8 D_8014A668; /* copied to a stack table in func_80147F58. T-16553 */
+extern TaiikuHalf8 D_8014A668; /* copied to a stack table in sports_controller_c_slot_animation_threshold_check. T-16553 */
 extern u16 D_8014A4D4[8]; /* with D_8014A4C4 and D_8014A4E4: sprite frame offsets by animation step. T-16553 */
 extern u16 D_8014A4E4[8];
 #endif
@@ -623,7 +623,7 @@ typedef struct TaiikuCamera0C {
     /* 0x08 */ s32 angle;
 } TaiikuCamera0C; /* size 0x0C */
 /* T-25102: the 0x100-byte block at D_80122DD0 (main bzeroes it) as TAIIKU uses it: the camera and, at 0xF4,
- * the step of the track-grid intro that other functions still read as D_80122EC4. func_8013DDB8 matches
+ * the step of the track-grid intro that other functions still read as D_80122EC4. sports_candidate_camera_transition_update matches
  * only with the step and the camera reached through one symbol: as1 keeps the order of accesses to one
  * symbol (the step load stays above the camera stores), and reorders accesses to two. */
 typedef struct TaiikuWork {
@@ -635,7 +635,7 @@ typedef struct TaiikuWork {
 
 #ifndef OVL_TAIIKU_RESULT_TABLES_T10890
 #define OVL_TAIIKU_RESULT_TABLES_T10890
-/* Eleven parallel per-character result entries, copied by func_801346FC. */
+/* Eleven parallel per-character result entries, copied by sports_runner_race_phase_two. */
 typedef struct TaiText11 {
     /* 0x00 */ u8 *value[11];
 } TaiText11; /* size 0x2C */
@@ -645,7 +645,7 @@ extern TaiText11 D_80149440;
 extern TaiWords11 D_8014946C;
 extern TaiWords11 D_80149498;
 extern u8 D_801491D4;
-s32 func_80137784(s32 arg0);
+s32 sports_runner_finish_actor_slide_update(s32 arg0);
 #endif
 
 #ifndef OVL_TAIIKU_SELECTION_T10890
@@ -664,11 +664,11 @@ extern u8 D_801491D8;
 #ifndef OVL_TAIIKU_MOTION_CALLS_T10890
 #define OVL_TAIIKU_MOTION_CALLS_T10890
 /* Definitions in 80132BD0.c and 80138950.c. T-10890. */
-void func_80133928(s32 arg0);
-void func_8013ACBC(void);
-void func_8013AE14(void);
-void func_8013AEFC(void);
-s32 func_8013AF74(void);
+void sports_dance_actor_move_clamp(s32 actor_index);
+void sports_candidate_motion_state_init(void);
+void sports_candidate_animation_selector_update(void);
+void sports_candidate_pointer_position_clamp(void);
+s32 sports_candidate_pointer_region_select(void);
 #endif
 
 #ifndef OVL_TAIIKU_ACTOR_MOTION_T10890
@@ -677,8 +677,8 @@ s32 func_8013AF74(void);
 extern TaiHalves D_801499C0;
 /* Indexed at arg0=1..3; the leading byte is the preceding data padding. */
 extern u8 D_801499CB[4];
-s32 func_8013FB14(s32 arg0);
-s16 func_8013FBA8(s32 arg0);
+s32 sports_candidate_runner_state_select(s32 arg0);
+s16 sports_candidate_runner_phase_select(s32 arg0);
 #endif
 
  
@@ -691,17 +691,17 @@ typedef struct TaiShorts12 {
 extern TaiShorts12 D_801493C0;
 extern TaiShorts12 D_801493D4;
 extern TaiShorts12 D_801493E8;
-/* Texture-page handles walked in func_80134060. */
+/* Texture-page handles walked in sports_runner_race_scene_setup. */
 extern s32 D_801492C8[5];
 extern s32 D_801492DC[6];
 extern s32 D_801492F4;
 extern s32 D_801492F8[10];
 extern s32 D_8014A070[6];
-void func_80133C30(void);
-void func_801330D4(void);
+void sports_candidate_scene_layer_resource_addresses_init(void);
+void sports_runner_scene_graphics_init(void);
 #endif
 
-/* T-11080: six-entry s16 table in the data of 80133C80.c (read by func_80137C44). */
+/* T-11080: six-entry s16 table in the data of 80133C80.c (read by sports_runner_finish_actor_display_update). */
 extern s16 D_801492B8[6];
 
 #ifndef OVL_TAIIKU_WAIT3_T12020
@@ -713,29 +713,29 @@ extern TaiWait3 D_801497F4;
 
 #endif
 
-/* Eleven character IDs used by func_80135AD0. T-12020. */
+/* Eleven character IDs used by sports_runner_obstacle_actor_init. T-12020. */
 extern TaiikuS11 D_80149558;
 
-/* Eleven animation limits copied by func_80136BB4. T-12020. */
+/* Eleven animation limits copied by sports_runner_player_animation_update. T-12020. */
 extern TaiikuU11 D_801497DC;
 
 #ifndef OVL_TAIIKU_T13600_DECLS
 #define OVL_TAIIKU_T13600_DECLS
 /* T-13600: scene dispatcher and helpers defined later in 80138950.c. */
-void func_80139330(void);
-void func_8013A63C(void);
-void func_8013A6FC(void);
-void func_8013CCFC(void);
-void func_8013B0AC(void);
-void func_8013F35C(void);
+void sports_candidate_scene_frame_update(void);
+void sports_candidate_scene_frame_counters_advance(void);
+void sports_candidate_scene_actor_state_update(void);
+void sports_candidate_motion_update(void);
+void sports_candidate_sequence_effect_dispatch(void);
+void sports_candidate_rival_display_update(void);
 #endif
 
 #ifndef OVL_TAIIKU_RUNNERS_T11640
 #define OVL_TAIIKU_RUNNERS_T11640
 /* T-11640: TAIIKU's view of the actor_pool display records (Actor layout). The bytes at
- * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
+ * 0x01 and 0x06 are signed here: sports_girl_scene_result_actor_setup stores them with constants that the original keeps
  * apart from the unsigned switch constants of its later loops, which a u8 field merges. T-20900: with the
- * shared u8 record func_80138DF8, func_80139610 and func_801400D8 do not match, so this view stays; its other
+ * shared u8 record sports_girl_scene_choose, sports_girl_scene_result_update and sports_girl_scene_result_actor_setup do not match, so this view stays; its other
  * fields are the shared layout. */
 typedef struct TaiikuActor44 {
     /* 0x00 */ u8 unk_00;
@@ -775,14 +775,14 @@ typedef struct TaiikuActor44 {
     /* 0x42 */ u8 unk_42;
     /* 0x43 */ u8 unk_43;
 } TaiikuActor44; /* size 0x44 */
-/* T-11640: per-runner tables of func_8013FC5C (runners 1..3; D_801499B4 holds their 16.16 positions). */
-extern TaiHalves D_801499B4[]; /* 16.16 positions; D_801499B0[1..3] seen from func_8013FB14 */
+/* T-11640: per-runner tables of sports_candidate_scene_progress_update (runners 1..3; D_801499B4 holds their 16.16 positions). */
+extern TaiHalves D_801499B4[]; /* 16.16 positions; D_801499B0[1..3] seen from sports_candidate_runner_state_select */
 extern TaiikuI3 D_80149F80; /* speed added to each position, copied to the stack */
 extern u16 D_801499C4[];
 extern u8 D_801499CC[];
 extern s32 D_80149DF4[];
 extern s32 D_80149DAC[];
-/* Tables func_80138AA8 copies to the stack and then into D_80149DA4/D_80149DAC/D_80149DF4. */
+/* Tables sports_scene_asset_load_setup copies to the stack and then into D_80149DA4/D_80149DAC/D_80149DF4. */
 typedef struct {
     /* 0x00 */ s32 v[2];
 } TaiikuW2; /* size 8 */
@@ -797,7 +797,7 @@ extern TaiikuW18 D_80149E34;
 extern TaiikuW5 D_80149E7C;
 extern s32 D_80149964;
 extern s16 D_80149966;
-/* GTE layouts used by func_8013D2B4 and func_8013FEF0 (moved from 80138950.c, T-11640). */
+/* GTE layouts used by sports_candidate_model_rotation_update and sports_candidate_model_transform_update (moved from 80138950.c, T-11640). */
 typedef struct {
     s16 vx;
     s16 vy;
@@ -807,35 +807,35 @@ typedef struct {
 
 
 
-/* Track grid tables filled by func_80139AB0 (80 entries each). */
+/* Track grid tables filled by sports_candidate_scene_state_init (80 entries each). */
 extern s16 D_801499E4[];
 extern s16 D_80149A84[];
 extern s16 D_80149B24[];
 extern s16 D_80149BC4[];
 extern s16 D_80149C64[];
 extern s16 D_80149D04[];
-void func_80139AB0(void);
-void func_80139DDC(void);
-void func_80139E34(void);
-void func_8013FEF0(void);
-void func_801400D8(void);
-void func_80140338(void);
-void func_8014038C(void);
-void func_80140414(void);
-void func_80145044(void);
-void func_801450C0(void);
-void func_80145148(void);
-void func_8013384C(); /* K&R definition in 80132BD0.c (u8 second parameter) */
-void func_80139FE4(void);
-void func_8013A314(void);
-void func_8014045C(void);
-void func_801404DC(void);
-void func_8014064C(void);
-void func_801406A8(); /* K&R definition */
-void func_80140738(s32 arg0, s32 arg1);
-void func_8013BEF8(void);
-void func_8013C0E4(void);
-/* Tables func_80138DF8 copies to the stack and indexes by D_80149940. */
+void sports_candidate_scene_state_init(void);
+void sports_candidate_scene_render_resource_setup(void);
+void sports_candidate_actor_display_init(void);
+void sports_candidate_model_transform_update(void);
+void sports_girl_scene_result_actor_setup(void);
+void sports_girl_result_actor_motion_update(void);
+void sports_girl_result_actor_sequence_advance(void);
+void sports_girl_result_animation_toggle(void);
+void sports_schoolyard_runner_animation_step(void);
+void sports_schoolyard_runner_animation_table_step(void);
+void sports_schoolyard_actor_visibility_toggle(void);
+void sports_scene_audio_sequence_request(); /* K&R definition in 80132BD0.c (u8 second parameter) */
+void sports_girl_scene_flagged_actors_scroll(void);
+void sports_girl_scene_actors_init(void);
+void sports_candidate_model_lighting_init(void);
+void sports_candidate_scene_lighting_init(void);
+void sports_candidate_model_slots_init(void);
+void sports_candidate_model_draw_packets_init(); /* K&R definition */
+void sports_candidate_model_draw_packet_bind(s32 arg0, s32 arg1);
+void sports_candidate_sequence_direction_audio_update(void);
+void sports_candidate_actor_proximity_motion_update(void);
+/* Tables sports_girl_scene_choose copies to the stack and indexes by D_80149940. */
 extern TaiWords11 D_80149E90;
 extern TaiWords11 D_80149EBC;
 typedef struct {
@@ -844,7 +844,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ u8 v[16];
 } TaiikuB16; /* size 0x10 */
-/* Scene tables of func_8013A314, copied to the stack: x, y and frame of records 96..111. */
+/* Scene tables of sports_girl_scene_actors_init, copied to the stack: x, y and frame of records 96..111. */
 extern TaiikuH16 D_80149F00;
 extern TaiikuH16 D_80149F20;
 extern TaiikuB16 D_80149F40;
@@ -894,49 +894,49 @@ typedef struct TaiWords9 {
 typedef struct TaiWords12 {
     /* 0x00 */ s32 v[12];
 } TaiWords12; /* size 0x30 */
-extern s32 D_8014A56C; /* func_80145370 */
-extern TaiWords12 D_8014A570; /* func_80145370 */
-extern TaiWords9 D_8014A5A0; /* func_80145370 */
-extern TaiWords11 D_80148EC4; /* func_80132000 */
-extern TaiBytes23 D_80148F10; /* func_80132BD0 */
-extern TaiShorts23 D_80148FB8; /* func_80132E20 */
-extern TaiShorts23 D_80148F28; /* func_80132BD0 */
-extern TaiShorts23 D_80148F58; /* func_80132BD0 */
-extern TaiShorts23 D_80148F88; /* func_80132BD0 */
-extern TaiBytes10 D_80148FE8; /* func_80133258 */
-extern TaiikuHalf10 D_80148FF4; /* func_80133258 */
-extern TaiikuHalf10 D_80149008; /* func_80133258 */
-extern TaiikuHalf10 D_8014901C; /* func_80133258 */
-extern s32 D_80149364; /* func_80133CFC */
-extern TaiikuW5 D_80149368; /* func_80133CFC */
-extern TaiWords7 D_8014937C; /* func_80133CFC */
-extern TaiWords10 D_80149398; /* func_80133CFC */
-extern TaiWords11 D_801494C4; /* 0x2C-byte table copied by func_80134F98. T-24521. */
-extern TaiikuS11 D_801494F0; /* func_80135480 */
-extern TaiShorts20 D_80149508; /* func_80135830 */
-extern TaiShorts20 D_80149530; /* func_80135830 */
-/* Four 16-byte runner-slot objects of func_80137784 (player, cpu 1..3). T-25106. */
+extern s32 D_8014A56C; /* sports_controller_c_resource_setup */
+extern TaiWords12 D_8014A570; /* sports_controller_c_resource_setup */
+extern TaiWords9 D_8014A5A0; /* sports_controller_c_resource_setup */
+extern TaiWords11 D_80148EC4; /* sports_folk_dance_entry */
+extern TaiBytes23 D_80148F10; /* sports_dance_actors_init */
+extern TaiShorts23 D_80148FB8; /* sports_dance_actors_position */
+extern TaiShorts23 D_80148F28; /* sports_dance_actors_init */
+extern TaiShorts23 D_80148F58; /* sports_dance_actors_init */
+extern TaiShorts23 D_80148F88; /* sports_dance_actors_init */
+extern TaiBytes10 D_80148FE8; /* sports_runner_scene_actor_init */
+extern TaiikuHalf10 D_80148FF4; /* sports_runner_scene_actor_init */
+extern TaiikuHalf10 D_80149008; /* sports_runner_scene_actor_init */
+extern TaiikuHalf10 D_8014901C; /* sports_runner_scene_actor_init */
+extern s32 D_80149364; /* sports_runner_race_resource_setup */
+extern TaiikuW5 D_80149368; /* sports_runner_race_resource_setup */
+extern TaiWords7 D_8014937C; /* sports_runner_race_resource_setup */
+extern TaiWords10 D_80149398; /* sports_runner_race_resource_setup */
+extern TaiWords11 D_801494C4; /* 0x2C-byte table copied by sports_runner_race_result_apply. T-24521. */
+extern TaiikuS11 D_801494F0; /* sports_runner_race_state_init */
+extern TaiShorts20 D_80149508; /* sports_runner_actor_group_init */
+extern TaiShorts20 D_80149530; /* sports_runner_actor_group_init */
+/* Four 16-byte runner-slot objects of sports_runner_finish_actor_slide_update (player, cpu 1..3). T-25106. */
 extern s32 D_8014981C[4];
 extern s32 D_8014982C[4];
 extern s32 D_8014983C[4];
 extern Fix32 D_8014984C[4];
-extern TkS16x4 D_8014985C; /* func_80137EA8 */
-extern TaiBytes10 D_80149864; /* func_80138224 */
-extern TaiikuHalf10 D_80149870; /* func_80138224 */
-extern TaiikuHalf10 D_80149884; /* func_80138224 */
-extern TaiikuHalf10 D_80149898; /* func_80138224 */
-extern TaiWords6 D_8014A088; /* initialiser of the auto array tbl in func_80141280 (its .data, after D_8014A070), end bound in func_80145640 */
-extern TaiikuHalf10 D_8014A27C; /* func_80142400 */
-extern TaiikuHalf10 D_8014A290; /* func_80142400 */
-extern TaiWords8 D_8014A2A4; /* func_80142400 */
-extern TaiWords11 D_8014A2C4; /* func_80142400 */
-extern TaiShorts12 D_8014A2F0; /* func_80143814 */
-extern TaiShorts12 D_8014A304; /* func_80143814 */
-extern TkS16x4 D_8014A318; /* func_80144464 */
-extern TaiShorts12x D_8014A5C4; /* func_80146338 */
-extern TaiShorts12x D_8014A5DC; /* func_80146338 */
-extern TkS16x4 D_8014A5F4; /* func_80146D18 */
+extern TkS16x4 D_8014985C; /* sports_runner_finish_line_update */
+extern TaiBytes10 D_80149864; /* sports_runner_finish_actor_group_init */
+extern TaiikuHalf10 D_80149870; /* sports_runner_finish_actor_group_init */
+extern TaiikuHalf10 D_80149884; /* sports_runner_finish_actor_group_init */
+extern TaiikuHalf10 D_80149898; /* sports_runner_finish_actor_group_init */
+extern TaiWords6 D_8014A088; /* initialiser of the auto array tbl in sports_festival_entry_and_scene_select (its .data, after D_8014A070), end bound in sports_controller_c_resource_load */
+extern TaiikuHalf10 D_8014A27C; /* sports_schoolyard_scene_resource_setup */
+extern TaiikuHalf10 D_8014A290; /* sports_schoolyard_scene_resource_setup */
+extern TaiWords8 D_8014A2A4; /* sports_schoolyard_scene_resource_setup */
+extern TaiWords11 D_8014A2C4; /* sports_schoolyard_scene_resource_setup */
+extern TaiShorts12 D_8014A2F0; /* sports_schoolyard_actor_display_init */
+extern TaiShorts12 D_8014A304; /* sports_schoolyard_actor_display_init */
+extern TkS16x4 D_8014A318; /* sports_schoolyard_finish_order_update */
+extern TaiShorts12x D_8014A5C4; /* sports_controller_c_actor_display_init */
+extern TaiShorts12x D_8014A5DC; /* sports_controller_c_actor_display_init */
+extern TkS16x4 D_8014A5F4; /* sports_controller_c_finish_order_update */
 #endif
 
-/* Result of func_80141CDC: set to 1 by its last state. T-16550. */
+/* Result of sports_nozomi_courtyard_scene_step: set to 1 by its last state. T-16550. */
 extern s32 D_8014A0C0;

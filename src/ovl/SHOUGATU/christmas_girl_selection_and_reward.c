@@ -15,14 +15,14 @@ s32 printf(void *arg0, ...);
 extern s32 D_80122D48;
 
 /* T-9740: integer definition without an explicit return matches the original. */
-s32 func_8013E330(void) {
-    s32 idx;
-    ShoCalendarFn28 table;
+s32 christmas_girl_dialogue_step_dispatch(void) {
+    s32 mode_step_index;
+    ShoCalendarFn28 christmas_girl_mode_step_callbacks;
 
-    table = D_8014605C;
-    idx = game_state.mode_step;
-    table.f[idx](0x80);
-    ((Actor *)actor_pool)[96].brightness = dec_bg_brightness;
+    christmas_girl_mode_step_callbacks = D_8014605C;
+    mode_step_index = game_state.mode_step;
+    christmas_girl_mode_step_callbacks.f[mode_step_index](0x80);
+    ((Actor *)actor_pool)[96].brightness = bg_brightness;
     if (((Actor *)actor_pool)[96].unk_18 == 0 && ((Actor *)actor_pool)[96].unk_08 == 0) {
         ((Actor *)actor_pool)[96].sequence_slot += 1;
         if (((Actor *)actor_pool)[96].sequence_slot >= 3) {
@@ -31,27 +31,27 @@ s32 func_8013E330(void) {
     }
 }
 
-void func_8013E410(void) {
+void christmas_shiori_status_gate(void) {
     u8 kind;
 
     kind = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
     if ((D_80146050 != 0) || (kind == 4)) {
-        func_8013D2A8();
+        new_year_current_talk_start();
         return;
     }
     mode_step_next();
 }
 
-void func_8013E464(void) {
+void christmas_current_girl_status_gate(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if (((u8)get_g_zyotai_s(game_state.current_girl) & 0x7F) != 4) {
         mode_step_next();
         return;
     }
-    func_8013D2A8();
+    new_year_current_talk_start();
 }
 
-void func_8013E4B4(void) {
+void christmas_reward_mode_step_update(void) {
     if (D_80146050 != 0) {
         if (D_80145F2C == 1) {
             D_80145F2C += 1;
@@ -62,18 +62,18 @@ void func_8013E4B4(void) {
     mode_step_next();
 }
 
-void func_8013E50C(void) {
-    s16 i;
-    s32 girl;
-    ShoShorts7 sp40;
-    ShoShorts7 sp30;
+void christmas_shiori_stat_reward_apply(void) {
+    s16 looks_reward_tier_index;
+    s32 current_girl_index;
+    ShoShorts7 looks_reward_thresholds;
+    ShoShorts7 tokimeki_reward_values;
 
-    sp40 = D_801460CC;
-    sp30 = D_801460DC;
+    looks_reward_thresholds = D_801460CC;
+    tokimeki_reward_values = D_801460DC;
     /* FAKE: multiply by zero keeps this byte promoted across the conditional;
      * literal zero loses the entry a2 carrier and its later reload. T-25033 */
-    girl = game_state.current_girl * 0;
-    game_state.current_girl = girl;
+    current_girl_index = game_state.current_girl * 0;
+    game_state.current_girl = current_girl_index;
     D_80146050 = 0;
     if (game_state.girls[9].flags.f.met == 0 &&
         game_state.girls[9].tokimeki >= 20 && (game_state.frame_count & 1)) {
@@ -87,36 +87,36 @@ void func_8013E50C(void) {
     D_80145F28 = D_80145B3C;
     talk_names_set(game_state.current_girl);
     game_state.girls[game_state.current_girl].affection += 4;
-    for (i = 0; i < 7; i++) {
-        if (game_state.param_looks.value < sp40.v[i]) {
+    for (looks_reward_tier_index = 0; looks_reward_tier_index < 7; looks_reward_tier_index++) {
+        if (game_state.param_looks.value < looks_reward_thresholds.v[looks_reward_tier_index]) {
             break;
         }
     }
-    game_state.girls[game_state.current_girl].tokimeki += sp30.v[i];
+    game_state.girls[game_state.current_girl].tokimeki += tokimeki_reward_values.v[looks_reward_tier_index];
     check_para_limit();
     event_log_add(4, 0);
     mode_step_next();
 }
 
-void func_8013E6E4(void) {
-    s16 i;
-    s16 count;
-    s32 status;
-    ShoShorts7 sp50;
-    ShoShorts7 sp40;
+void christmas_girl_select_and_reward(void) {
+    s16 girl_selection_scan_index;
+    s16 met_girl_count;
+    s32 selected_girl_status;
+    ShoShorts7 looks_reward_thresholds;
+    ShoShorts7 tokimeki_reward_values;
 
-    sp50 = D_801460EC;
-    sp40 = D_801460FC;
-    count = 0;
-    for (i = 0; i < 11; i++) {
-        count += game_state.girls[i].flags.f.met >= 1;
+    looks_reward_thresholds = D_801460EC;
+    tokimeki_reward_values = D_801460FC;
+    met_girl_count = 0;
+    for (girl_selection_scan_index = 0; girl_selection_scan_index < 11; girl_selection_scan_index++) {
+        met_girl_count += game_state.girls[girl_selection_scan_index].flags.f.met >= 1;
     }
-    i = 0;
+    girl_selection_scan_index = 0;
     do {
         /* FAKE: multiplication by one preserves the original sum operand order. T-25038 */
-        game_state.current_girl = (game_state.frame_count * 1 + i) % 10U + 1;
-        printf("num%d girl%d\n", count, game_state.current_girl);
-        i++;
+        game_state.current_girl = (game_state.frame_count * 1 + girl_selection_scan_index) % 10U + 1;
+        printf("num%d girl%d\n", met_girl_count, game_state.current_girl);
+        girl_selection_scan_index++;
         if (!game_state.girls[game_state.current_girl].flags.f.met && game_state.current_girl >= GIRL_MEGUMI) {
             continue;
         }
@@ -127,7 +127,7 @@ void func_8013E6E4(void) {
         if (*(u8 *)&game_state.current_girl == 6 && (game_state.girls[0].flags.b[2] >> 4) == 9) {
             continue;
         }
-        if (!game_state.girls[game_state.current_girl].flags.f.met && count >= 2) {
+        if (!game_state.girls[game_state.current_girl].flags.f.met && met_girl_count >= 2) {
             continue;
         }
         break;
@@ -139,14 +139,14 @@ void func_8013E6E4(void) {
     D_80145F2C = 0;
     /* FAKE: narrowing spends the original temporary slots; the byte argument
      * view prevents selector promotion through the club filters. T-25038 */
-    status = (u8)get_g_zyotai_s(*(u8 *)&game_state.current_girl);
-    if (game_state.current_girl == GIRL_NOZOMI && (status & 0x7F) >= 2U) {
+    selected_girl_status = (u8)get_g_zyotai_s(*(u8 *)&game_state.current_girl);
+    if (game_state.current_girl == GIRL_NOZOMI && (selected_girl_status & 0x7F) >= 2U) {
         D_80145F2C++;
     }
-    if ((status & 0x7F) == 4) {
+    if ((selected_girl_status & 0x7F) == 4) {
         D_80145F2C++;
     }
-    func_8013EE30();
+    christmas_girl_dialogue_resource_select();
     talk_names_set(game_state.current_girl);
     if (!game_state.girls[game_state.current_girl].flags.f.met || (D_80146050 != 0 && game_state.current_girl == GIRL_MEGUMI)) {
         game_state.girls[game_state.current_girl].flags.f.met = 1;
@@ -163,52 +163,52 @@ void func_8013E6E4(void) {
         return;
     }
     game_state.girls[game_state.current_girl].affection += 4;
-    for (i = 0; i < 7; i++) {
-        if (game_state.param_looks.value < sp50.v[i]) {
+    for (girl_selection_scan_index = 0; girl_selection_scan_index < 7; girl_selection_scan_index++) {
+        if (game_state.param_looks.value < looks_reward_thresholds.v[girl_selection_scan_index]) {
             break;
         }
     }
-    game_state.girls[game_state.current_girl].tokimeki += sp40.v[i];
+    game_state.girls[game_state.current_girl].tokimeki += tokimeki_reward_values.v[girl_selection_scan_index];
     event_log_add(4, 0);
     check_para_limit();
     mode_step_next();
 }
 
-void func_8013EA98(void) {
-    s16 i;
-    s16 count;
-    u32 status;
-    ShoShorts7 sp50;
-    ShoShorts7 sp40;
+void christmas_alternate_girl_select_and_reward(void) {
+    s16 girl_selection_scan_index;
+    s16 met_girl_count;
+    u32 girl_selection_scan_counter;
+    ShoShorts7 looks_reward_thresholds;
+    ShoShorts7 tokimeki_reward_values;
 
-    sp50 = D_8014610C;
-    sp40 = D_8014611C;
-    count = 0;
+    looks_reward_thresholds = D_8014610C;
+    tokimeki_reward_values = D_8014611C;
+    met_girl_count = 0;
     /* FAKE (T-25501): the increment inside the subscript, not in the for
-     * header, keeps the loop's block shape (header i++ gives 8 rows). */
-    for (i = 0; i < 11;) {
-        count += game_state.girls[i++].flags.f.met >= 1;
+     * header, keeps the loop's block shape (header girl_selection_scan_index++ gives 8 rows). */
+    for (girl_selection_scan_index = 0; girl_selection_scan_index < 11;) {
+        met_girl_count += game_state.girls[girl_selection_scan_index++].flags.f.met >= 1;
     }
-    status = 0;
+    girl_selection_scan_counter = 0;
     /* FAKE (T-25501): the "* 0" terms in this loop are references that uopt
      * counts and ugen folds away. The b1 re-read makes the >= 9 test an alias
      * hole of the selector; the selector and counter terms set the colouring
      * order of the loop ranges (selector piece in t4, counter in v0).
      * The three *(u8 *)& views of unk_F5F in the == 5, == 6 and D_80146054
      * compares are also FAKE: plain reads give 236, 227 and 224 rows.
-     * The u32 counter with the (s16) truncation is FAKE too: status++ gives
+     * The u32 counter with the (s16) truncation is FAKE too: girl_selection_scan_counter++ gives
      * 314 rows and an s16 counter 2; the counter is reused below. */
     do {
-        game_state.current_girl = (game_state.frame_count + status) % 10U + 1;
-        status = (s16)(status + 1);
+        game_state.current_girl = (game_state.frame_count + girl_selection_scan_counter) % 10U + 1;
+        girl_selection_scan_counter = (s16)(girl_selection_scan_counter + 1);
         if (game_state.girls[game_state.current_girl].flags.f.met || game_state.current_girl < 9 + game_state.girls[game_state.current_girl].flags.f.met * 0) {
-            if (*(u8 *)&game_state.current_girl != 5 || ((game_state.girls[0].flags.b[2] >> 4) + game_state.current_girl * 0 + status * 0) != 8) {
-                if (game_state.current_girl != GIRL_NOZOMI || ((game_state.girls[0].flags.b[2] >> 4) + *(u8 *)&game_state.current_girl * 0 + status * 0) != 9) {
+            if (*(u8 *)&game_state.current_girl != 5 || ((game_state.girls[0].flags.b[2] >> 4) + game_state.current_girl * 0 + girl_selection_scan_counter * 0) != 8) {
+                if (game_state.current_girl != GIRL_NOZOMI || ((game_state.girls[0].flags.b[2] >> 4) + *(u8 *)&game_state.current_girl * 0 + girl_selection_scan_counter * 0) != 9) {
                     if (D_80146054 != *(u8 *)&game_state.current_girl) {
                         if (game_state.girls[game_state.current_girl].flags.f.met) {
                             break;
                         }
-                        if (count < 3) {
+                        if (met_girl_count < 3) {
                             break;
                         }
                     }
@@ -222,21 +222,21 @@ void func_8013EA98(void) {
      * of unk_F5F, which gives the v1 piece of the original. The byte-view
      * "* 0" term in the forced store keeps the selector range live through
      * the exit path (152 rows without it). */
-    status = D_80145FE4;
-    if ((status == 7 || status == 9) && D_80146054 != status + game_state.girls[status * 0].affection * 0) {
-        D_800E71DF = status + *(u8 *)&game_state.current_girl * 0;
+    girl_selection_scan_counter = D_80145FE4;
+    if ((girl_selection_scan_counter == 7 || girl_selection_scan_counter == 9) && D_80146054 != girl_selection_scan_counter + game_state.girls[girl_selection_scan_counter * 0].affection * 0) {
+        D_800E71DF = girl_selection_scan_counter + *(u8 *)&game_state.current_girl * 0;
     }
     D_80146058 = D_800E71DF;
     D_80145F2C = 0;
-    /* FAKE: narrowing as in func_8013E6E4. T-25038 */
-    status = (u8)get_g_zyotai_s(D_800E71DF);
-    if (game_state.current_girl == GIRL_NOZOMI && (status & 0x7F) >= 2U) {
+    /* FAKE: narrowing as in christmas_girl_select_and_reward. T-25038 */
+    girl_selection_scan_counter = (u8)get_g_zyotai_s(D_800E71DF);
+    if (game_state.current_girl == GIRL_NOZOMI && (girl_selection_scan_counter & 0x7F) >= 2U) {
         D_80145F2C++;
     }
-    if ((status & 0x7F) == 4) {
+    if ((girl_selection_scan_counter & 0x7F) == 4) {
         D_80145F2C++;
     }
-    func_8013EE30();
+    christmas_girl_dialogue_resource_select();
     /* FAKE (T-25501): the byte view passes the selector itself, which pins
      * its range to a0 here and forces uopt to split the loop piece. */
     talk_names_set(*(u8 *)&game_state.current_girl);
@@ -250,19 +250,19 @@ void func_8013EA98(void) {
         mode_stage_set(5);
     } else {
         game_state.girls[game_state.current_girl].affection += 4;
-        for (i = 0; i < 7; i++) {
-            if (game_state.param_looks.value < sp50.v[i]) {
+        for (girl_selection_scan_index = 0; girl_selection_scan_index < 7; girl_selection_scan_index++) {
+            if (game_state.param_looks.value < looks_reward_thresholds.v[girl_selection_scan_index]) {
                 break;
             }
         }
-        game_state.girls[game_state.current_girl].tokimeki += sp40.v[i];
+        game_state.girls[game_state.current_girl].tokimeki += tokimeki_reward_values.v[girl_selection_scan_index];
         event_log_add(4, 0);
         mode_step_next();
     }
     check_para_limit();
 }
 
-void func_8013EE30(void) {
+void christmas_girl_dialogue_resource_select(void) {
     switch (game_state.current_girl) {
     case GIRL_MIO:
         D_80145F20 = D_80145AE4;
@@ -319,7 +319,7 @@ void func_8013EE30(void) {
     }
 }
 
-void func_8013F070(void) {
+void new_year_christmas_portrait_resource_select(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         portrait_read_start(0x56C0);

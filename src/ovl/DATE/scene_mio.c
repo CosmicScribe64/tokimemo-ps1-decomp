@@ -94,7 +94,7 @@ void date_scene_mio_spring_still_setup(void) {
     load_palette(D_8015F530, 0x11, 1, 2, 0);
     scene_still_show(D_8015F534, D_8015F538, D_8015F53C, D_8015F540, D_8015F544, D_8015F548);
     scene_anim_show(D_8015F524, D_8015F528, D_8015F520, D_8015F52C);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -250,7 +250,7 @@ void date_scene_mio_spring_answer_branch(void) {
 }
 
 void date_scene_mio_spring_scream_machine_title(void) {
-    strcpy(D_800CA1DC, "絶叫マシーンビビール");
+    strcpy(scene_place_title_2, "絶叫マシーンビビール");
     mode_step_next();
 }
 
@@ -262,7 +262,7 @@ void date_scene_mio_summer(void) {
     if (game_state.mode_step >= 0xF && game_state.mode_step < 0x12) {
         date_scene_light_beams();
     }
-    if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
+    if (D_80122D04 == 0 && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_index = game_state.mode_step;
@@ -304,17 +304,17 @@ void date_scene_mio_winter(void) {
         }
         if ((u32) game_state.frame_count % 3U == 0) {
             if ((u8) D_8015F5D0 != 0) {
-                dec_bg_brightness = 0x80;
-            } else if (dec_bg_brightness == 0x80) {
-                dec_bg_brightness = 0x60;
+                bg_brightness = 0x80;
+            } else if (bg_brightness == 0x80) {
+                bg_brightness = 0x60;
             } else {
-                dec_bg_brightness = 0x80;
+                bg_brightness = 0x80;
             }
-            ((Actor *)actor_pool)[96].brightness = dec_bg_brightness;
-            ((Actor *)actor_pool)[97].brightness = dec_bg_brightness;
+            ((Actor *)actor_pool)[96].brightness = bg_brightness;
+            ((Actor *)actor_pool)[97].brightness = bg_brightness;
             /* One chain assignment for the three bytes: separate stores give other registers (T-20600). */
             for (i = 0x3A; i < 0x40; i++) {
-                sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = dec_bg_brightness;
+                sprite_quads[i].tint_r = sprite_quads[i].tint_g = sprite_quads[i].tint_b = bg_brightness;
             }
         }
     }

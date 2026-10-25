@@ -1383,10 +1383,10 @@ extern s8 D_801218DC[];
 
 #ifndef OVL_EVENT_W8_3_TYPES_H
 #define OVL_EVENT_W8_3_TYPES_H
-typedef struct EventCallbackTable47 {
+typedef struct SpotShioriScene8StepTable {
     /* 0x00 */ void (*callback[47])(s32);
-} EventCallbackTable47; /* size 0xBC */
-extern EventCallbackTable47 spot_shiori_scene8_steps;
+} SpotShioriScene8StepTable; /* size 0xBC */
+extern SpotShioriScene8StepTable spot_shiori_scene8_steps;
 void spot_shiori_scene8_face_update(void);
 void spot_megumi_scene1_still_fade_out_37(void);
 void spot_megumi_scene1_still_fade_in_35(void);
@@ -1433,10 +1433,10 @@ extern s16 D_801258EC[3];
 extern s16 D_801258F4[3];
 extern s16 D_801258FC[3];
 extern u16 D_801258DC;
-typedef struct EvFnTbl53 { void (*f[53])(); } EvFnTbl53;
-extern EvFnTbl53 spot_mio_scene5_steps;
-typedef struct EvFnTbl44 { void (*f[44])(); } EvFnTbl44;
-extern EvFnTbl44 spot_yukari_scene4_steps;
+typedef struct SpotMioScene5StepTable { void (*f[53])(); } SpotMioScene5StepTable;
+extern SpotMioScene5StepTable spot_mio_scene5_steps;
+typedef struct SpotYukariScene4StepTable { void (*f[44])(); } SpotYukariScene4StepTable;
+extern SpotYukariScene4StepTable spot_yukari_scene4_steps;
 void spot_place_shrine_set_state_38(void);
 
 #endif
@@ -1668,206 +1668,206 @@ void spot_ride_setup(void);
 #define OVL_EVENT_STEP_TABLES_T17400
 /* Step tables (T-3330, T-17400): one handler per scene step; each handler copies its table to the stack
  * whole and calls tbl.f[D_800B1AF6]. NN is the run of code pointers in the data. The types and externs were
- * local to each .c file before; the tables of the unmatched handlers are declared here too. D_801220EC (FnTbl42)
- * and D_8012277C (FnTbl32) stay main_api.h scalars read through a cast: main_api.h has no override guard for them. */
+ * local to each .c file before; the tables of the unmatched handlers are declared here too. D_801220EC (SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable)
+ * and D_8012277C (SpotAyakoYukariAquariumBowlingAndKaraokeStepTable) stay main_api.h scalars read through a cast: main_api.h has no override guard for them. */
 typedef struct {
     void (*f[14])();
-} FnTbl14; /* size 0x38 */
+} SpotMiharuScene3And5StepTable; /* size 0x38 */
 typedef struct {
     void (*f[15])();
-} FnTbl15; /* size 0x3C */
+} SpotMiraScene6StepTable; /* size 0x3C */
 typedef struct {
     void (*f[18])();
-} FnTbl18; /* size 0x48 */
+} SpotNeighborhoodParkDateStepTable; /* size 0x48 */
 typedef struct {
     void (*f[19])();
-} FnTbl19; /* size 0x4C */
+} SpotYukariScene2StepTable; /* size 0x4C */
 typedef struct {
     void (*f[20])();
-} FnTbl20; /* size 0x50 */
+} SpotMegumiScene2StepTable; /* size 0x50 */
 typedef struct {
     void (*f[21])();
-} FnTbl21; /* size 0x54 */
+} SpotMiraAndYumiSceneStepTable; /* size 0x54 */
 typedef struct {
     void (*f[22])();
-} FnTbl22; /* size 0x58 */
+} SpotShioriAndMiharuSceneStepTable; /* size 0x58 */
 typedef struct {
     void (*f[25])();
-} FnTbl25; /* size 0x64 */
+} SpotMiharuScene2StepTable; /* size 0x64 */
 typedef struct {
     void (*f[29])();
-} FnTbl29; /* size 0x74 */
+} SpotNozomiAndStadiumStepTable; /* size 0x74 */
 typedef struct {
     void (*f[31])();
-} FnTbl31; /* size 0x7C */
+} SpotSkatingAndSkiDateStepTable; /* size 0x7C */
 typedef struct {
     void (*f[32])();
-} FnTbl32; /* size 0x80 */
+} SpotAyakoYukariAquariumBowlingAndKaraokeStepTable; /* size 0x80 */
 typedef struct {
     void (*f[34])();
-} FnTbl34; /* size 0x88 */
+} SpotBotanicalGardenDateStepTable; /* size 0x88 */
 typedef struct {
     void (*f[35])();
-} FnTbl35; /* size 0x8C */
+} SpotYukoSakiCentralParkAndZooStepTable; /* size 0x8C */
 typedef struct {
     void (*f[36])();
-} FnTbl36; /* size 0x90 */
+} SpotMegumiPlanetariumAndLibraryStepTable; /* size 0x90 */
 typedef struct {
     void (*f[37])();
-} FnTbl37; /* size 0x94 */
+} SpotReiSakiArtMuseumAndPoolStepTable; /* size 0x94 */
 typedef struct {
     void (*f[38])();
-} FnTbl38; /* size 0x98 */
+} SpotYuinaMiraAndYukariSceneStepTable; /* size 0x98 */
 typedef struct {
     void (*f[39])();
-} FnTbl39; /* size 0x9C */
+} SpotShioriYuinaMioAndGameCenterStepTable; /* size 0x9C */
 typedef struct {
     void (*f[40])();
-} FnTbl40; /* size 0xA0 */
+} SpotMiraYukariNozomiAndSakiSceneStepTable; /* size 0xA0 */
 typedef struct {
     void (*f[41])();
-} FnTbl41; /* size 0xA4 */
+} SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable; /* size 0xA4 */
 typedef struct {
     void (*f[42])();
-} FnTbl42; /* size 0xA8 */
+} SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable; /* size 0xA8 */
 typedef struct {
     void (*f[44])();
-} FnTbl44; /* size 0xB0 */
+} SpotShioriAndYumiSceneStepTable; /* size 0xB0 */
 typedef struct {
     void (*f[45])();
-} FnTbl45; /* size 0xB4 */
+} SpotShioriAyakoMegumiAndMovieTheaterStepTable; /* size 0xB4 */
 typedef struct {
     void (*f[46])();
-} FnTbl46; /* size 0xB8 */
+} SpotMioScene4StepTable; /* size 0xB8 */
 typedef struct {
     void (*f[47])();
-} FnTbl47; /* size 0xBC */
+} SpotYukoMegumiYumiAndSeaStepTable; /* size 0xBC */
 typedef struct {
     void (*f[48])();
-} FnTbl48; /* size 0xC0 */
+} SpotAyakoAndShoppingStreetStepTable; /* size 0xC0 */
 typedef struct {
     void (*f[49])();
-} FnTbl49; /* size 0xC4 */
+} SpotAyakoScene2StepTable; /* size 0xC4 */
 typedef struct {
     void (*f[50])();
-} FnTbl50; /* size 0xC8 */
+} SpotNozomiScene2StepTable; /* size 0xC8 */
 typedef struct {
     void (*f[51])();
-} FnTbl51; /* size 0xCC */
+} SpotReiMiraAndSakiSceneStepTable; /* size 0xCC */
 typedef struct {
     void (*f[52])();
-} FnTbl52; /* size 0xD0 */
+} SpotYukoAndYumiSceneStepTable; /* size 0xD0 */
 typedef struct {
     void (*f[55])();
-} FnTbl55; /* size 0xDC */
+} SpotNozomiSakiAndYumiSceneStepTable; /* size 0xDC */
 typedef struct {
     void (*f[56])();
-} FnTbl56; /* size 0xE0 */
+} SpotYukariAndMiharuSceneStepTable; /* size 0xE0 */
 typedef struct {
     void (*f[58])();
-} FnTbl58; /* size 0xE8 */
+} SpotShioriScene5StepTable; /* size 0xE8 */
 typedef struct {
     void (*f[61])();
-} FnTbl61; /* size 0xF4 */
+} SpotPlaceArrivalAndShrineStepTable; /* size 0xF4 */
 typedef struct {
     void (*f[63])();
-} FnTbl63; /* size 0xFC */
+} SpotMegumiScene4StepTable; /* size 0xFC */
 typedef struct {
     void (*f[67])();
-} FnTbl67; /* size 0x10C */
+} SpotMioScene2StepTable; /* size 0x10C */
 typedef struct {
     void (*f[103])();
-} FnTbl103; /* size 0x19C */
-extern FnTbl52 spot_yuko_scene1_steps;
-extern FnTbl41 spot_yuko_scene2_steps;
-extern FnTbl35 spot_yuko_scene3_steps;
-extern FnTbl47 spot_yuko_scene4_steps;
-extern FnTbl42 spot_yuko_scene5_steps;
-extern FnTbl42 spot_yuko_scene6_steps;
-extern FnTbl39 spot_shiori_scene1_steps;
-extern FnTbl22 spot_shiori_scene2_steps;
-extern FnTbl45 spot_shiori_scene3_steps;
-extern FnTbl44 spot_shiori_scene4_steps;
-extern FnTbl58 spot_shiori_scene5_steps;
-extern FnTbl45 spot_shiori_scene6_steps;
-extern FnTbl42 spot_yuina_scene1_steps; /* unmatched user */
-extern FnTbl41 spot_yuina_scene2_steps;
-extern FnTbl39 spot_yuina_scene3_steps;
-extern FnTbl39 spot_yuina_scene4_steps; /* unmatched user */
-extern FnTbl38 spot_yuina_scene5_steps;
-extern FnTbl51 spot_rei_scene1_steps;
-extern FnTbl37 spot_rei_scene2_steps;
-extern FnTbl41 spot_rei_scene3_steps;
-extern FnTbl32 spot_ayako_scene1_steps; /* unmatched user */
-extern FnTbl49 spot_ayako_scene2_steps;
-extern FnTbl48 spot_ayako_scene3_steps; /* unmatched user */
-extern FnTbl42 spot_ayako_scene4_steps;
-extern FnTbl45 spot_ayako_scene5_steps;
-extern FnTbl38 spot_mira_scene1_steps;
-extern FnTbl21 spot_mira_scene8_steps;
-extern FnTbl40 spot_mira_scene2_steps;
-extern FnTbl38 spot_mira_scene3_steps;
-extern FnTbl51 spot_mira_scene4_steps;
-extern FnTbl15 spot_mira_scene6_steps;
-extern FnTbl39 spot_mio_scene1_steps;
-extern FnTbl67 spot_mio_scene2_steps;
-extern FnTbl39 spot_mio_scene3_steps;
-extern FnTbl46 spot_mio_scene4_steps;
-extern FnTbl19 spot_yukari_scene2_steps;
-extern FnTbl38 spot_yukari_scene3_steps;
-extern FnTbl40 spot_yukari_scene5_steps;
-extern FnTbl56 spot_yukari_scene6_steps;
-extern FnTbl29 spot_nozomi_scene1_steps;
-extern FnTbl50 spot_nozomi_scene2_steps;
-extern FnTbl55 spot_nozomi_scene3_steps;
-extern FnTbl41 spot_nozomi_scene4_steps;
-extern FnTbl40 spot_nozomi_scene5_steps;
-extern FnTbl45 spot_megumi_scene1_steps;
-extern FnTbl20 spot_megumi_scene2_steps;
-extern FnTbl47 spot_megumi_scene3_steps;
-extern FnTbl63 spot_megumi_scene4_steps;
-extern FnTbl36 spot_megumi_scene5_steps;
-extern FnTbl36 spot_megumi_scene6_steps;
-extern FnTbl35 spot_saki_scene1_steps;
-extern FnTbl37 spot_saki_scene2_steps;
-extern FnTbl55 spot_saki_scene3_steps;
-extern FnTbl40 spot_saki_scene4_steps;
-extern FnTbl51 spot_saki_scene5_steps;
-extern FnTbl47 spot_yumi_scene1_steps;
-extern FnTbl21 spot_yumi_scene2_steps;
-extern FnTbl55 spot_yumi_scene7_steps;
-extern FnTbl41 spot_yumi_scene3_steps;
-extern FnTbl44 spot_yumi_scene4_steps;
-extern FnTbl44 spot_yumi_scene5_steps;
-extern FnTbl52 spot_yumi_scene6_steps;
-extern FnTbl22 spot_miharu_scene1_steps;
-extern FnTbl25 spot_miharu_scene2_steps;
-extern FnTbl14 spot_miharu_scene3_steps;
-extern FnTbl56 spot_miharu_scene4_steps; /* unmatched user */
-extern FnTbl14 spot_miharu_scene5_steps;
-extern FnTbl42 spot_yoshio_scene1_steps;
-extern FnTbl61 spot_place_arrival_steps; /* unmatched user */
-extern FnTbl18 spot_place_neighborhood_park_steps; /* unmatched user */
-extern FnTbl35 spot_place_kirameki_central_park_steps; /* unmatched user */
-extern FnTbl48 spot_place_shopping_street_steps; /* unmatched user */
-extern FnTbl32 spot_place_aquarium_steps; /* unmatched user */
-extern FnTbl35 spot_place_zoo_steps; /* unmatched user */
-extern FnTbl34 spot_place_botanical_garden_steps; /* unmatched user */
-extern FnTbl36 spot_place_planetarium_steps; /* unmatched user */
-extern FnTbl37 spot_place_art_museum_steps; /* unmatched user */
-extern FnTbl36 spot_place_library_steps; /* unmatched user */
-extern FnTbl39 spot_place_game_center_steps; /* unmatched user */
-extern FnTbl32 spot_place_bowling_alley_steps; /* unmatched user */
-extern FnTbl32 spot_place_karaoke_steps; /* unmatched user */
-extern FnTbl103 spot_place_amusement_park_steps; /* unmatched user */
-extern FnTbl29 spot_place_stadium_steps; /* unmatched user */
-extern FnTbl45 spot_place_movie_theater_steps; /* unmatched user */
-extern FnTbl41 spot_place_concert_hall_steps; /* unmatched user */
-extern FnTbl37 spot_place_pool_steps; /* unmatched user */
-extern FnTbl47 spot_place_sea_steps; /* unmatched user */
-extern FnTbl61 spot_place_shrine_steps; /* unmatched user */
-extern FnTbl22 spot_place_skating_rink_steps; /* unmatched user */
-extern FnTbl31 spot_place_ski_resort_steps; /* unmatched user */
+} SpotAmusementParkDateStepTable; /* size 0x19C */
+extern SpotYukoAndYumiSceneStepTable spot_yuko_scene1_steps;
+extern SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable spot_yuko_scene2_steps;
+extern SpotYukoSakiCentralParkAndZooStepTable spot_yuko_scene3_steps;
+extern SpotYukoMegumiYumiAndSeaStepTable spot_yuko_scene4_steps;
+extern SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable spot_yuko_scene5_steps;
+extern SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable spot_yuko_scene6_steps;
+extern SpotShioriYuinaMioAndGameCenterStepTable spot_shiori_scene1_steps;
+extern SpotShioriAndMiharuSceneStepTable spot_shiori_scene2_steps;
+extern SpotShioriAyakoMegumiAndMovieTheaterStepTable spot_shiori_scene3_steps;
+extern SpotShioriAndYumiSceneStepTable spot_shiori_scene4_steps;
+extern SpotShioriScene5StepTable spot_shiori_scene5_steps;
+extern SpotShioriAyakoMegumiAndMovieTheaterStepTable spot_shiori_scene6_steps;
+extern SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable spot_yuina_scene1_steps; /* unmatched user */
+extern SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable spot_yuina_scene2_steps;
+extern SpotShioriYuinaMioAndGameCenterStepTable spot_yuina_scene3_steps;
+extern SpotShioriYuinaMioAndGameCenterStepTable spot_yuina_scene4_steps; /* unmatched user */
+extern SpotYuinaMiraAndYukariSceneStepTable spot_yuina_scene5_steps;
+extern SpotReiMiraAndSakiSceneStepTable spot_rei_scene1_steps;
+extern SpotReiSakiArtMuseumAndPoolStepTable spot_rei_scene2_steps;
+extern SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable spot_rei_scene3_steps;
+extern SpotAyakoYukariAquariumBowlingAndKaraokeStepTable spot_ayako_scene1_steps; /* unmatched user */
+extern SpotAyakoScene2StepTable spot_ayako_scene2_steps;
+extern SpotAyakoAndShoppingStreetStepTable spot_ayako_scene3_steps; /* unmatched user */
+extern SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable spot_ayako_scene4_steps;
+extern SpotShioriAyakoMegumiAndMovieTheaterStepTable spot_ayako_scene5_steps;
+extern SpotYuinaMiraAndYukariSceneStepTable spot_mira_scene1_steps;
+extern SpotMiraAndYumiSceneStepTable spot_mira_scene8_steps;
+extern SpotMiraYukariNozomiAndSakiSceneStepTable spot_mira_scene2_steps;
+extern SpotYuinaMiraAndYukariSceneStepTable spot_mira_scene3_steps;
+extern SpotReiMiraAndSakiSceneStepTable spot_mira_scene4_steps;
+extern SpotMiraScene6StepTable spot_mira_scene6_steps;
+extern SpotShioriYuinaMioAndGameCenterStepTable spot_mio_scene1_steps;
+extern SpotMioScene2StepTable spot_mio_scene2_steps;
+extern SpotShioriYuinaMioAndGameCenterStepTable spot_mio_scene3_steps;
+extern SpotMioScene4StepTable spot_mio_scene4_steps;
+extern SpotYukariScene2StepTable spot_yukari_scene2_steps;
+extern SpotYuinaMiraAndYukariSceneStepTable spot_yukari_scene3_steps;
+extern SpotMiraYukariNozomiAndSakiSceneStepTable spot_yukari_scene5_steps;
+extern SpotYukariAndMiharuSceneStepTable spot_yukari_scene6_steps;
+extern SpotNozomiAndStadiumStepTable spot_nozomi_scene1_steps;
+extern SpotNozomiScene2StepTable spot_nozomi_scene2_steps;
+extern SpotNozomiSakiAndYumiSceneStepTable spot_nozomi_scene3_steps;
+extern SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable spot_nozomi_scene4_steps;
+extern SpotMiraYukariNozomiAndSakiSceneStepTable spot_nozomi_scene5_steps;
+extern SpotShioriAyakoMegumiAndMovieTheaterStepTable spot_megumi_scene1_steps;
+extern SpotMegumiScene2StepTable spot_megumi_scene2_steps;
+extern SpotYukoMegumiYumiAndSeaStepTable spot_megumi_scene3_steps;
+extern SpotMegumiScene4StepTable spot_megumi_scene4_steps;
+extern SpotMegumiPlanetariumAndLibraryStepTable spot_megumi_scene5_steps;
+extern SpotMegumiPlanetariumAndLibraryStepTable spot_megumi_scene6_steps;
+extern SpotYukoSakiCentralParkAndZooStepTable spot_saki_scene1_steps;
+extern SpotReiSakiArtMuseumAndPoolStepTable spot_saki_scene2_steps;
+extern SpotNozomiSakiAndYumiSceneStepTable spot_saki_scene3_steps;
+extern SpotMiraYukariNozomiAndSakiSceneStepTable spot_saki_scene4_steps;
+extern SpotReiMiraAndSakiSceneStepTable spot_saki_scene5_steps;
+extern SpotYukoMegumiYumiAndSeaStepTable spot_yumi_scene1_steps;
+extern SpotMiraAndYumiSceneStepTable spot_yumi_scene2_steps;
+extern SpotNozomiSakiAndYumiSceneStepTable spot_yumi_scene7_steps;
+extern SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable spot_yumi_scene3_steps;
+extern SpotShioriAndYumiSceneStepTable spot_yumi_scene4_steps;
+extern SpotShioriAndYumiSceneStepTable spot_yumi_scene5_steps;
+extern SpotYukoAndYumiSceneStepTable spot_yumi_scene6_steps;
+extern SpotShioriAndMiharuSceneStepTable spot_miharu_scene1_steps;
+extern SpotMiharuScene2StepTable spot_miharu_scene2_steps;
+extern SpotMiharuScene3And5StepTable spot_miharu_scene3_steps;
+extern SpotYukariAndMiharuSceneStepTable spot_miharu_scene4_steps; /* unmatched user */
+extern SpotMiharuScene3And5StepTable spot_miharu_scene5_steps;
+extern SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable spot_yoshio_scene1_steps;
+extern SpotPlaceArrivalAndShrineStepTable spot_place_arrival_steps; /* unmatched user */
+extern SpotNeighborhoodParkDateStepTable spot_place_neighborhood_park_steps; /* unmatched user */
+extern SpotYukoSakiCentralParkAndZooStepTable spot_place_kirameki_central_park_steps; /* unmatched user */
+extern SpotAyakoAndShoppingStreetStepTable spot_place_shopping_street_steps; /* unmatched user */
+extern SpotAyakoYukariAquariumBowlingAndKaraokeStepTable spot_place_aquarium_steps; /* unmatched user */
+extern SpotYukoSakiCentralParkAndZooStepTable spot_place_zoo_steps; /* unmatched user */
+extern SpotBotanicalGardenDateStepTable spot_place_botanical_garden_steps; /* unmatched user */
+extern SpotMegumiPlanetariumAndLibraryStepTable spot_place_planetarium_steps; /* unmatched user */
+extern SpotReiSakiArtMuseumAndPoolStepTable spot_place_art_museum_steps; /* unmatched user */
+extern SpotMegumiPlanetariumAndLibraryStepTable spot_place_library_steps; /* unmatched user */
+extern SpotShioriYuinaMioAndGameCenterStepTable spot_place_game_center_steps; /* unmatched user */
+extern SpotAyakoYukariAquariumBowlingAndKaraokeStepTable spot_place_bowling_alley_steps; /* unmatched user */
+extern SpotAyakoYukariAquariumBowlingAndKaraokeStepTable spot_place_karaoke_steps; /* unmatched user */
+extern SpotAmusementParkDateStepTable spot_place_amusement_park_steps; /* unmatched user */
+extern SpotNozomiAndStadiumStepTable spot_place_stadium_steps; /* unmatched user */
+extern SpotShioriAyakoMegumiAndMovieTheaterStepTable spot_place_movie_theater_steps; /* unmatched user */
+extern SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable spot_place_concert_hall_steps; /* unmatched user */
+extern SpotReiSakiArtMuseumAndPoolStepTable spot_place_pool_steps; /* unmatched user */
+extern SpotYukoMegumiYumiAndSeaStepTable spot_place_sea_steps; /* unmatched user */
+extern SpotPlaceArrivalAndShrineStepTable spot_place_shrine_steps; /* unmatched user */
+extern SpotShioriAndMiharuSceneStepTable spot_place_skating_rink_steps; /* unmatched user */
+extern SpotSkatingAndSkiDateStepTable spot_place_ski_resort_steps; /* unmatched user */
 #endif
 
 #ifndef OVL_EVENT_RECORD_COPIES_T17400
@@ -1879,10 +1879,10 @@ typedef struct {
 } SpotLinePair; /* size 0x08 */
 typedef struct {
     SpotLinePair e[4];
-} EvTbl; /* size 0x20: four (a, b) pairs, copied to the stack whole */
+} SpotGradientColorPairs; /* size 0x20: four (a, b) pairs, copied to the stack whole */
 extern SpotLinePair D_80121A2C;
-extern EvTbl D_80120A74;
-extern EvTbl D_80121AD8;
+extern SpotGradientColorPairs D_80120A74;
+extern SpotGradientColorPairs D_80121AD8;
 #endif
 
 #ifndef OVL_EVENT_STACK_TABLES_T17400
@@ -1898,27 +1898,27 @@ extern SpotPlaceHalfwords spot_place_bank_argument_e; /* spot_place_bank_load_st
 extern SpotPlaceHalfwords spot_place_bgm_ids; /* spot_place_bgm_start_step */
 typedef struct {
     s16 v[8][2];
-} EvPairs8; /* size 0x20: spot_yukari_scene4_sprites_update reads v[i][1] (lh 0x6A + 4 * i) */
-extern EvPairs8 D_80122990;
+} SpotYukariFallYThresholdPairs; /* size 0x20: spot_yukari_scene4_sprites_update reads v[i][1] (lh 0x6A + 4 * i) */
+extern SpotYukariFallYThresholdPairs D_80122990;
 typedef struct {
     s16 v[41][2];
-} EvShorts82; /* size 0xA4: 41 (start, end) frame pairs in spot_ayako_scene2_step_23 */
-extern EvShorts82 D_80121A34; /* spot_ayako_scene2_step_23 */
+} SpotAyakoReactionAnimationWindows; /* size 0xA4: 41 (start, end) frame pairs in spot_ayako_scene2_step_23 */
+extern SpotAyakoReactionAnimationWindows D_80121A34; /* spot_ayako_scene2_step_23 */
 typedef struct {
     s16 v[10];
-} EvShorts10; /* size 0x14 */
-extern EvShorts10 D_80123B7C; /* spot_yumi_scene7_still_show_07, with the next two */
-extern EvShorts10 D_80123B90;
-extern EvShorts10 D_80123BA4;
+} SpotYumiSpriteLayoutValues; /* size 0x14 */
+extern SpotYumiSpriteLayoutValues D_80123B7C; /* spot_yumi_scene7_still_show_07, with the next two */
+extern SpotYumiSpriteLayoutValues D_80123B90;
+extern SpotYumiSpriteLayoutValues D_80123BA4;
 typedef struct {
     s16 v[11];
-} EvShorts11; /* size 0x16 */
-extern EvShorts11 D_80125330; /* spot_place_neighborhood_park_special_case_04 */
-extern EvShorts11 D_80125348;
+} SpotGirlChoiceModulusTable; /* size 0x16 */
+extern SpotGirlChoiceModulusTable D_80125330; /* spot_place_neighborhood_park_special_case_04 */
+extern SpotGirlChoiceModulusTable D_80125348;
 typedef struct {
     s16 v[5];
-} EvShorts5; /* size 0x0A */
-extern EvShorts5 spot_outcome_terms; /* spot_outcome_apply_step */
+} SpotOutcomeTermTable; /* size 0x0A */
+extern SpotOutcomeTermTable spot_outcome_terms; /* spot_outcome_apply_step */
 #endif
 
 #ifndef OVL_EVENT_PROTOS_T17400

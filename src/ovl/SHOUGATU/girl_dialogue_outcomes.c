@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_8013BA00(void) {
+void new_year_relationship_outcome_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl19 tbl;
 
@@ -11,8 +11,8 @@ void func_8013BA00(void) {
     tbl.f[idx](0x80);
 }
 
-s32 func_8013BA7C(void) {
-    s16 i;
+s32 new_year_dialogue_relationship_outcome_apply(void) {
+    s16 girl_record_index;
 
     if (game_state.substep == 0) {
         hud_day_bgm_load();
@@ -30,14 +30,14 @@ s32 func_8013BA7C(void) {
             return 0;
         }
     }
-    for (i = 0; i < 11; i++) {
-        if (((ShouByteFlags *)&game_state.girls[i].flags.b[1])->b0 != 0) {
-            ((ShouByteFlags *)&game_state.girls[i].flags.b[1])->b0 = 0;
-            if (i != (s32)game_state.current_girl) {
-                game_state.girls[i].affection = game_state.girls[i].affection + 1;
-                /* FAKE: uopt CSE priority boost so &game_state + i * 0x38 gets $v0 (i in $v1)
+    for (girl_record_index = 0; girl_record_index < 11; girl_record_index++) {
+        if (((ShouByteFlags *)&game_state.girls[girl_record_index].flags.b[1])->b0 != 0) {
+            ((ShouByteFlags *)&game_state.girls[girl_record_index].flags.b[1])->b0 = 0;
+            if (girl_record_index != (s32)game_state.current_girl) {
+                game_state.girls[girl_record_index].affection = game_state.girls[girl_record_index].affection + 1;
+                /* FAKE: uopt CSE priority boost so &game_state + girl_record_index * 0x38 gets $v0 (girl_record_index in $v1)
                  * and &game_state gets $a1 (0x38 in $a2), matching pre-unification GameState layout. T-24125. */
-                if (game_state.girls[i].affection) {
+                if (game_state.girls[girl_record_index].affection) {
                 }
                 if (game_state.girls[0].affection) {
                 }
@@ -51,7 +51,7 @@ s32 func_8013BA7C(void) {
     day_event_next(1);
 }
 
-void func_8013BC2C(void) {
+void new_year_relationship_snapshot_init(void) {
     s16 i;
 
     D_801459FC = D_8014598C;
@@ -60,38 +60,38 @@ void func_8013BC2C(void) {
     D_80145A08 = 0;
     D_80145A0C = 0;
     for (i = 0; i < 0xB; i++) {
-        D_800CA2B0[i] = (game_state.girls[i].flags.b[1] & 1) >= 1;
+        select_girl_menu_enabled[i] = (game_state.girls[i].flags.b[1] & 1) >= 1;
     }
     mode_step_next();
 }
 
-void func_8013BCE0(void) {
+void new_year_selected_girl_context_set(void) {
     game_state.current_girl = (u8) D_80122CDC;
     event_log_add(7, 0);
     talk_names_set(game_state.current_girl);
     mode_step_next();
 }
 
-void func_8013BD2C(void) {
-    u8 s;
+void new_year_current_girl_status_selector_update(void) {
+    u8 current_girl_status;
 
-    s = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    if (s >= 2U) {
+    current_girl_status = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    if (current_girl_status >= 2U) {
         D_80145A08 += 2;
     }
-    if (s >= 3U) {
+    if (current_girl_status >= 3U) {
         D_80145A08 += 2;
     }
-    if (s == 4) {
+    if (current_girl_status == 4) {
         D_80145A08 += 2;
     }
-    if (game_state.current_girl == GIRL_MEGUMI && s < 2U) {
+    if (game_state.current_girl == GIRL_MEGUMI && current_girl_status < 2U) {
         portrait_layout_set(0);
     }
     mode_step_next();
 }
 
-void func_8013BDE0(void) {
+void new_year_current_girl_dialogue_resource_select(void) {
 
     D_80145A08 = 0;
     switch (game_state.current_girl) {

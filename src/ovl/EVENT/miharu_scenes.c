@@ -78,7 +78,7 @@ void spot_miharu_scene4_run(void) {
 
 void spot_miharu_scene1_steps_run(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
-    FnTbl22 tbl;
+    SpotShioriAndMiharuSceneStepTable tbl;
 
     tbl = spot_miharu_scene1_steps;
     func_80078950("s%d %d\n", D_800B1AF6, D_80094714);
@@ -92,7 +92,7 @@ void spot_miharu_scene1_se_play_09(void) {
 
 void spot_miharu_scene2_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+    SpotMiharuScene2StepTable tbl;
 
     tbl = spot_miharu_scene2_steps;
     idx = D_800B1AF6;
@@ -115,25 +115,25 @@ void spot_miharu_scene2_still_show_11(void) {
  * original word reload after the byte store. The full SDK aggregate is still
  * unknown. T-9920. */
 void spot_miharu_scene1_branch_15(void) {
-    struct SeqFlags {
+    struct SpotMiharuSequenceCounterFlags {
         unsigned int lo : 9;
         unsigned int count : 3;
         unsigned int hi : 20;
     };
-    struct SeqBits {
+    struct SpotMiharuSequenceCounterStateView {
         u8 pad[0x3EC];
         unsigned int lo : 9;
         unsigned int count : 3;
         unsigned int hi : 20;
     };
-    struct SeqBits *seq;
+    struct SpotMiharuSequenceCounterStateView *seq;
     s32 value;
 
-    seq = (struct SeqBits *)D_800B0860;
-    value = ((struct SeqFlags *)(D_800B0860 + 0x3EC))->count;
+    seq = (struct SpotMiharuSequenceCounterStateView *)D_800B0860;
+    value = ((struct SpotMiharuSequenceCounterFlags *)(D_800B0860 + 0x3EC))->count;
     if (value >= 5U) {
         seq->count = 4;
-        value = ((struct SeqFlags *)(D_800B0860 + 0x3EC))->count;
+        value = ((struct SpotMiharuSequenceCounterFlags *)(D_800B0860 + 0x3EC))->count;
     }
     D_80094714 += value * 2;
     seq->count++;
@@ -291,7 +291,7 @@ void spot_miharu_scene2_bg_load_14(void) {
 
 void spot_miharu_scene3_run(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
-    FnTbl14 tbl;
+    SpotMiharuScene3And5StepTable tbl;
 
     tbl = spot_miharu_scene3_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -315,7 +315,7 @@ void spot_miharu_scene4_bg_load_38(void) {
 
 void spot_miharu_scene4_steps_run(void) {
     u8 index;
-    FnTbl56 table;
+    SpotYukariAndMiharuSceneStepTable table;
 
     table = spot_miharu_scene4_steps;
     index = D_800B1AF6;
@@ -373,7 +373,7 @@ void spot_miharu_scene4_step_35(void) {
 
 void spot_miharu_scene5_run(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
-    FnTbl14 tbl;
+    SpotMiharuScene3And5StepTable tbl;
 
     tbl = spot_miharu_scene5_steps;
     func_80078950("%d\n", D_800B1AF6);

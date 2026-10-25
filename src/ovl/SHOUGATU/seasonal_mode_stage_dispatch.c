@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80132000(void) {
+void new_year_resource_addresses_init(void) {
     D_80143A40 = 0x80197424;
     D_80143A44 = 0x801988E8;
     D_80143A48 = 0x8019AA94;
@@ -50,29 +50,29 @@ void func_80132000(void) {
     D_80143AF0 = 0x801B0678;
 }
 
-void func_801322D4(void) {
+void new_year_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_80132550();
+        new_year_scene_step_dispatch();
         break;
     case 1:
-        func_80132D00();
+        new_year_result_step_dispatch();
         break;
     case 2:
-        func_801330C0();
+        new_year_dialogue_mode_step_dispatch();
         break;
     case 3:
-        func_80133D10();
+        new_year_shrine_dialogue_mode_step_dispatch();
         break;
     case 4:
-        func_80134120();
+        new_year_shrine_actor_mode_step_dispatch();
         break;
     case 5:
-        func_80134930();
+        new_year_omikuji_mode_step_dispatch();
         break;
     case 6:
-        func_80136078();
+        new_year_secondary_scene_step_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -84,10 +84,10 @@ void func_801322D4(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }
 
-s32 func_801323D4(void) {
+s32 new_year_talk_run_current(void) {
     talk_tables = &D_80143B00;
     D_800CA138 = &D_80143B04;
     D_800CA13C = D_80143AF4;
@@ -96,7 +96,7 @@ s32 func_801323D4(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80132450(void) {
+void new_year_talk_run_default(void) {
     talk_tables = &D_80143B00;
     D_800CA138 = &D_80143B04;
     D_800CA13C = D_80143AF4;
@@ -105,7 +105,7 @@ void func_80132450(void) {
     talk_run(0xFF, 1, 0);
 }
 
-void func_801324C8(void) {
+void new_year_talk_run_current_with_flags(void) {
     talk_tables = (u8 *) &D_80143B00;
     D_800CA138 = (u8 *) &D_80143B04;
     D_800CA13C = D_80143AF4;

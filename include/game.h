@@ -10,7 +10,7 @@
 /* Game types (structs) of the main exe. The declarations of its functions and globals live in
  * main_api.h (T-3340); this file only adds types that need a struct definition. */
 
-/* T-24501: saved records copied as whole objects by func_800552DC/func_80054FC0.
+/* T-24501: saved records copied as whole objects by memory_card_system_bank_load/memory_card_system_bank_build.
  * HYPOTHESIS: these are settings records; field meanings remain unknown. The 20-byte
  * record owns the protection flag in its last byte. The 24-byte record preserves
  * SystemData bits, names and words without changing their canonical declarations. */
@@ -42,13 +42,13 @@ typedef struct SystemSaveImage {
     /* 0x000 */ s32 checksum;
     /* 0x004 */ u8 slot_status[16];
     /* 0x014 */ u8 flags[16];
-    /* 0x024 */ u8 unk_24[2];
+    /* 0x024 */ u8 karaoke_unlock_bits[2];
     /* 0x026 */ u8 selected_slot;
     /* 0x027 */ u8 unk_27;
     /* 0x028 */ SaveConfigBlock config0;
     /* 0x03C */ SaveShooterSettings config1;
-    /* 0x054 */ u8 unk_54[2];
-    /* 0x056 */ u8 records[0x800];
+    /* 0x054 */ u8 album_state[2];
+    /* 0x056 */ u8 album_entries[0x800];
     /* 0x856 */ u8 year[16];
     /* 0x866 */ u8 month[16];
     /* 0x876 */ u8 day[16];
@@ -58,8 +58,8 @@ typedef struct SystemSaveImage {
     /* 0xA86 */ u8 club[16];
     /* 0xA96 */ u8 pad_A96[2];
     /* 0xA98 */ SaveAlbumParam metrics[9][16];
-    /* 0xCD8 */ u8 unk_CD8[0x100];
-    /* 0xDD8 */ u8 unk_DD8[0x100];
+    /* 0xCD8 */ u8 slot_girl_marks[0x100];
+    /* 0xDD8 */ u8 layout_settings[0x100];
     /* 0xED8 */ u8 unk_ED8[0x28];
 } SystemSaveImage; /* size 0xF00 */
 
@@ -70,7 +70,7 @@ typedef struct SystemDataSaveView {
 } SystemDataSaveView; /* size 0x58 */
 
 /* GameState +0xC4..+0x140 (text buffers, +0xF8 and the nine +0xFC records) as the game save
- * copies it: one word-aligned 0x7C-byte record (func_8005557C). T-25105 */
+ * copies it: one word-aligned 0x7C-byte record (memory_card_game_bank_build). T-25105 */
 typedef struct ProfileBlock {
     /* 0x000 */ s32 w[0x1F];
 } ProfileBlock; /* size 0x7C */
@@ -80,41 +80,41 @@ typedef struct SceneFlagBlock {
     /* 0x000 */ u8 b[0x100];
 } SceneFlagBlock; /* size 0x100 */
 
-/* One bank of the memory-card image holding a game save (func_8005557C writes it from GameState;
+/* One bank of the memory-card image holding a game save (memory_card_game_bank_build writes it from GameState;
  * the comments name the source field). T-25105 */
 typedef struct GameSaveImage {
     /* 0x000 */ s32 checksum;
-    /* 0x004 */ u8 unk_004;             /* unk_03D */
-    /* 0x005 */ u8 unk_005;             /* unk_03E */
-    /* 0x006 */ u8 unk_006;             /* unk_03F */
-    /* 0x007 */ u8 unk_007;             /* unk_040 */
-    /* 0x008 */ u8 unk_008;             /* unk_041 */
+    /* 0x004 */ u8 vacation;             /* unk_03D */
+    /* 0x005 */ u8 year;             /* unk_03E */
+    /* 0x006 */ u8 month;             /* unk_03F */
+    /* 0x007 */ u8 day;             /* unk_040 */
+    /* 0x008 */ u8 weekday;             /* unk_041 */
     /* 0x009 */ u8 pad_009;
-    /* 0x00A */ u16 unk_00A;            /* unk_042 */
-    /* 0x00C */ MonthCalendar unk_00C[2];    /* unk_044 */
-    /* 0x08C */ ProfileBlock unk_08C;      /* unk_0C4 */
-    /* 0x108 */ GirlRecord unk_108[16];      /* unk_1BC */
-    /* 0x488 */ u8 unk_488[16];         /* unk_53C */
-    /* 0x498 */ WordView unk_498[8];      /* unk_54C */
-    /* 0x4B8 */ WordView unk_4B8[12];     /* unk_66C */
-    /* 0x4E8 */ SceneFlagBlock unk_4E8;     /* unk_56C */
-    /* 0x5E8 */ u8 unk_5E8[4];          /* unk_728 */
-    /* 0x5EC */ u8 unk_5EC[16];         /* unk_72C */
-    /* 0x5FC */ u8 unk_5FC[16];         /* unk_73C */
-    /* 0x60C */ u8 unk_60C[16];         /* unk_74C */
-    /* 0x61C */ EventLogEntry unk_61C[256];  /* unk_75E */
-    /* 0xE1C */ u8 unk_E1C;             /* unk_F6C */
-    /* 0xE1D */ u8 unk_E1D;             /* unk_F6D */
-    /* 0xE1E */ u8 unk_E1E;             /* unk_1092 */
-    /* 0xE1F */ u8 unk_E1F;             /* unk_F6E */
-    /* 0xE20 */ u8 unk_E20;             /* unk_03C */
+    /* 0x00A */ u16 day_count;            /* unk_042 */
+    /* 0x00C */ MonthCalendar month_calendar[2];    /* unk_044 */
+    /* 0x08C */ ProfileBlock profile;      /* unk_0C4 */
+    /* 0x108 */ GirlRecord girls[16];      /* unk_1BC */
+    /* 0x488 */ u8 girl_cleared[16];         /* unk_53C */
+    /* 0x498 */ WordView appointments[8];      /* unk_54C */
+    /* 0x4B8 */ WordView clubs[12];     /* unk_66C */
+    /* 0x4E8 */ SceneFlagBlock scene_flags;     /* unk_56C */
+    /* 0x5E8 */ u8 date_place_history[4];          /* unk_728 */
+    /* 0x5EC */ u8 girl_last_date_spot[16];         /* unk_72C */
+    /* 0x5FC */ u8 girl_last_date_spot_timer[16];         /* unk_73C */
+    /* 0x60C */ u8 girl_scene_bits[16];         /* unk_74C */
+    /* 0x61C */ EventLogEntry event_log[256];  /* unk_75E */
+    /* 0xE1C */ u8 icon_mode;             /* unk_F6C */
+    /* 0xE1D */ u8 icon_count;             /* unk_F6D */
+    /* 0xE1E */ u8 menu_mode;             /* unk_1092 */
+    /* 0xE1F */ u8 sd_anim_fast;             /* unk_F6E */
+    /* 0xE20 */ u8 voice_mode;             /* unk_03C */
     /* 0xE21 */ u8 pad_E21[3];
-    /* 0xE24 */ WordView unk_E24;         /* unk_F68 */
-    /* 0xE28 */ u8 unk_E28;             /* unk_F6F */
-    /* 0xE29 */ u8 unk_E29;             /* unk_F70 */
-    /* 0xE2A */ u8 unk_E2A;             /* unk_F73 */
-    /* 0xE2B */ u8 unk_E2B;             /* unk_F75 */
-    /* 0xE2C */ WordView unk_E2C;         /* unk_F64 */
+    /* 0xE24 */ WordView last_command;         /* unk_F68 */
+    /* 0xE28 */ u8 cursor_speed;             /* unk_F6F */
+    /* 0xE29 */ u8 click_mode;             /* unk_F70 */
+    /* 0xE2A */ u8 double_click_interval;             /* unk_F73 */
+    /* 0xE2B */ u8 confirm_button;             /* unk_F75 */
+    /* 0xE2C */ WordView quarter_flags;         /* unk_F64 */
     /* 0xE30 */ u8 unk_E30[0xD0];
 } GameSaveImage; /* size 0xF00 */
 
@@ -128,8 +128,8 @@ typedef struct TextEntry {
     /* 0x07 */ s8 active;
 } TextEntry; /* size 0x08 */
 
-/* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
- * counter; layout read from the frame (counter at +0x20 in func_80054704). */
+/* Stack request of the memory-card file functions (memory_card_file_create, memory_card_file_delete): name buffer plus a retry
+ * counter; layout read from the frame (counter at +0x20 in memory_card_file_delete). */
 typedef struct MemoryCardFileRequest {
     /* 0x00 */ u8 name[32];
     /* 0x20 */ s32 retry;
@@ -417,7 +417,7 @@ typedef struct AudioRequestPair {
 
 #ifndef GAME_T17015_SRN_REC
 #define GAME_T17015_SRN_REC
-/* D_80121750: 0x28-byte records of the srn_* screen routines. srn_init fills one,
+/* layer_records: 0x28-byte records of the srn_* screen routines. srn_init fills one,
  * srn_vram_set and srn_set read it. T-17015. */
 typedef struct SrnLayer {
     /* 0x00 */ u8 unk_00[2];
@@ -442,14 +442,14 @@ typedef struct SrnLayer {
     /* 0x20 */ u32 unk_20;
     /* 0x24 */ u8 *unk_24;
 } SrnLayer; /* size 0x28 */
-/* Record i of D_80121750. srn_set indexes the global array directly: with a record pointer as1
+/* Record i of layer_records. srn_set indexes the global array directly: with a record pointer as1
  * cannot move the record loads above the stack stores (T-25006). */
-#define SRN_REC(i) (((SrnLayer *)D_80121750)[i])
+#define SRN_REC(i) (((SrnLayer *)layer_records)[i])
 #endif
 
 #ifndef GAME_T25006_MOD_REC
 #define GAME_T25006_MOD_REC
-/* D_801217A0: 0x14-byte tile-set records of the mod_* routines (mod_set_gpu reads one). T-25006. */
+/* layer_tileset_records: 0x14-byte tile-set records of the mod_* routines (mod_set_gpu reads one). T-25006. */
 typedef struct ModTileSet {
     /* 0x00 */ u32 *unk_00;
     /* 0x04 */ u32 *unk_04;

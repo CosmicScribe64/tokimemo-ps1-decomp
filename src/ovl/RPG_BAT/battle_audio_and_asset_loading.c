@@ -68,7 +68,7 @@ void rpg_stage_load_assets_1(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 2) {
-        if (func_80044F94(1) == 1) {
+        if (audio_bank_transfer_done(1) == 1) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 3) {
@@ -107,7 +107,7 @@ void rpg_stage_load_assets_1(void) {
             game_state.substep = game_state.substep + 1;
         }
     } else if (game_state.substep == 5) {
-        if (func_80044F94(0) == 1) {
+        if (audio_bank_transfer_done(0) == 1) {
             game_state.substep = game_state.substep + 1;
         }
     } else {

@@ -105,7 +105,7 @@ void date_scene_saki_summer_setup(void) {
     load_palette(D_8016047C, 0x11, 1, 2, 0);
     scene_still_show(D_80160480, D_80160484, D_80160488, D_8016048C, D_80160490, D_80160494);
     scene_anim_show(D_80160470, D_80160474, D_8016046C, (s32) D_80160478);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_80122D0C = 1;
     game_state.girls[4].tokimeki += 3;
     game_state.girls[4].affection += 2;
@@ -128,7 +128,7 @@ void date_scene_saki_autumn_setup(void) {
     load_palette(D_801604A8, 0x11, 1, 2, 0);
     scene_still_show(D_801604AC, D_801604B0, D_801604B4, D_801604B8, D_801604BC, D_801604C0);
     scene_anim_show(D_8016049C, D_801604A0, D_80160498, (s32) D_801604A4);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     game_state.girls[4].affection += 2;
     game_state.girls[4].syoushin -= 0x14;
     check_para_limit();
@@ -143,7 +143,7 @@ void date_scene_saki_winter_setup(void) {
     load_palette(D_801604D4, 0x11, 1, 2, 0);
     scene_still_show(D_801604D8, D_801604DC, D_801604E0, D_801604E4, D_801604E8, D_801604EC);
     scene_anim_show(D_801604C8, D_801604CC, D_801604C4, (s32) D_801604D0);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     game_state.girls[4].tokimeki += 1;
     game_state.girls[4].affection += 1;
     game_state.girls[4].syoushin -= 0x14;
@@ -209,7 +209,7 @@ void date_scene_saki_spring(void) {
     DateYukariAndSakiSpringSteps step_handlers;
 
     step_handlers = date_scene_saki_spring_steps;
-    if (game_state.mode_step < 8U && dec_bg_brightness == 0x80) {
+    if (game_state.mode_step < 8U && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_handlers.callbacks[game_state.mode_step](0x80);
@@ -234,7 +234,7 @@ void date_scene_saki_summer(void) {
     FnTbl56 step_handlers;
 
     step_handlers = date_scene_saki_summer_steps;
-    if (D_80122D04 == 0 && dec_bg_brightness == 0x80) {
+    if (D_80122D04 == 0 && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_handlers.callbacks[game_state.mode_step](0x80);

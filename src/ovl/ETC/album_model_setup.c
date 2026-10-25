@@ -11,7 +11,7 @@ typedef struct {
 
 void album_model_init(void) {
     s32 model;
-    TaiikuBig *record;
+    GraphicsCoordinate2 *record;
     u32 *object;
 
     model = 0x801FA804;
@@ -20,16 +20,16 @@ void album_model_init(void) {
     printf("NOBJ %x\n", *(u32 *)model);
     model += 4;
     /* FAKE: initializer/do line grouping reproduces setup order; original line layout unknown. T-24064. */
-    object = D_80122640; record = D_801227A0; do {
+    object = model_objects; record = view_coordinates; do {
         func_8009B430(model, (u8 *)object, 0);
         object[1] = (u32)record;
         record++;
         object += 4;
         object[-4] = 0x80000000;
     } while (record != D_80122CA0);
-    func_8009B430(model, (u8 *)D_80122640, 0);
-    D_80122640[1] = (u32)D_801227A0;
-    D_80122640[0] = 0;
+    func_8009B430(model, (u8 *)model_objects, 0);
+    model_objects[1] = (u32)view_coordinates;
+    model_objects[0] = 0;
     album_model_x = 0x9F;
     album_model_y = -0x78;
     album_model_z = 0;
@@ -52,8 +52,8 @@ void album_model_matrix_update(void) {
     if (album_model_angle >= 0xC00) {
         rot.vy = 0xC00;
     }
-    m1 = *(MATRIX *)D_80125C60;
-    m2 = *(MATRIX *)D_80125C60;
+    m1 = *(MATRIX *)view_base_matrix;
+    m2 = *(MATRIX *)view_base_matrix;
     RotMatrix(&rot, &m1);
     scale.vx = 0x1000;
     scale.vy = 0x1000;
@@ -64,7 +64,7 @@ void album_model_matrix_update(void) {
     m1.t[1] = album_model_y;
     m1.t[2] = album_model_z;
     *(MATRIX *)D_801227A4 = m1;
-    *(s32 *)(D_801227A4 - 4) = 0; /* FAKE: D_801227A0 reached through D_801227A4; TAIIKU declares it as TaiikuBig[], so it has no common declaration (CODING_STANDARDS 8a). T-4010 */
+    *(s32 *)(D_801227A4 - 4) = 0; /* FAKE: view_coordinates reached through D_801227A4; TAIIKU declares it as GraphicsCoordinate2[], so it has no common declaration (CODING_STANDARDS 8a). T-4010 */
 }
 
 void album_clear_buffer_area(void) {
@@ -106,12 +106,12 @@ void album_number_sprite_draw(s32 a, s32 b, s32 c, s32 d) {
             p->r0 = 0x80;
             p->g0 = 0x80;
             p->b0 = 0x80;
-            p->x0 = game_state.screen_center_x[draw_buffer] + b - n * 8;
-            p->y0 = game_state.screen_center_y[draw_buffer] + c;
+            p->x0 = game_state.draw_origin_x[draw_buffer] + b - n * 8;
+            p->y0 = game_state.draw_origin_y[draw_buffer] + c;
             p->u0 = album_digit_uv[(v % 10) * 2];
             p->v0 = album_digit_uv[(v % 10) * 2 + 1];
             p->clut = func_8009ED74(tpx, 0x1FD);
-            AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, p);
+            AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, p);
             if (v < 10) {
                 break;
             }
@@ -131,12 +131,12 @@ void album_number_sprite_draw(s32 a, s32 b, s32 c, s32 d) {
         p->r0 = 0x80;
         p->g0 = 0x80;
         p->b0 = 0x80;
-        p->x0 = game_state.screen_center_x[draw_buffer] + b - xoff;
-        p->y0 = game_state.screen_center_y[draw_buffer] + c;
+        p->x0 = game_state.draw_origin_x[draw_buffer] + b - xoff;
+        p->y0 = game_state.draw_origin_y[draw_buffer] + c;
         p->u0 = album_minus_u;
         p->v0 = album_minus_v;
         p->clut = func_8009ED74(tpx, 0x1FD);
-        AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, p);
+        AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, p);
     }
     dtd_on_tpage(0x3C0, 0, 1, 0, 1);
 }

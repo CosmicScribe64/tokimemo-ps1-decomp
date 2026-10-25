@@ -134,13 +134,13 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/trip_enemy_attacks_and_rewards.roda
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/trip_enemy_attacks_and_rewards.rodata", D_8015D84C);
 
 void rpg_trip_loot_text(void) {
-    RpgStrTbl4 spA0;
-    RpgStrTbl4 sp90;
-    RpgStrTbl4 sp80;
+    RpgRewardTextTable spA0;
+    RpgRewardTextTable sp90;
+    RpgRewardTextTable sp80;
     s32 i;
     s32 n;
     s32 count;
-    RpgWordTbl4 sp64;
+    RpgRewardSelectionFlags sp64;
 
     spA0 = rpg_loot_names_snake;
     sp90 = rpg_loot_names_deer;
@@ -155,22 +155,22 @@ void rpg_trip_loot_text(void) {
     i = 0;
     if (n > 0) {
         do {
-            sp64.v[rpg_rand(4)] = 1;
+            sp64.selected[rpg_rand(4)] = 1;
             i += 1;
         } while (i != n);
     }
     for (i = 0; i < 4; i++) {
-        if (sp64.v[i] == 1) {
+        if (sp64.selected[i] == 1) {
             strcpy(((u8 **)rpg_text_result_pointers)[count + 4], "おたから：");
             switch (rpg_encounter) {
             case 0x10000:
-                strcat(((u8 **)rpg_text_result_pointers)[count + 4], spA0.s[i]);
+                strcat(((u8 **)rpg_text_result_pointers)[count + 4], spA0.strings[i]);
                 break;
             case 0x20000:
-                strcat(((u8 **)rpg_text_result_pointers)[count + 4], sp90.s[i]);
+                strcat(((u8 **)rpg_text_result_pointers)[count + 4], sp90.strings[i]);
                 break;
             case 0x40000:
-                strcat(((u8 **)rpg_text_result_pointers)[count + 4], sp80.s[i]);
+                strcat(((u8 **)rpg_text_result_pointers)[count + 4], sp80.strings[i]);
                 break;
             }
             count += 1;

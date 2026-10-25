@@ -1,11 +1,11 @@
 /* opening.c: src/ovl/NAME_ENT/80142A80.c:53,277,695; attract picture-sequence callbacks, voice/palette presentation and opening movie flow. Original object 0x80142A80-0x80144AD0 (config/objects/NAME_ENT.txt). */
-#define MAIN_API_OVERRIDE_func_8004AC18 /* original called it undeclared (implicit int): its $v0 result keeps v0 busy after the calls in opening_story_scene, T-25604 */
+#define MAIN_API_OVERRIDE_prim_flash_gray /* original called it undeclared (implicit int): its $v0 result keeps v0 busy after the calls in opening_story_scene, T-25604 */
 #define MAIN_API_OVERRIDE_D_8012070C /* opening_story_voice_meter_update: pointer view of the record field (main_api.h: s32), T-22007 */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
 extern s32 *D_8012070C;
-extern s32 func_8004AC18();
+extern s32 prim_flash_gray();
 
 /* The 21 song-line strings are placed from their rodata pieces (rodata_pieces.py), not copied into the source. T-22007 */
 extern u8 opening_lyric_text_00[];
@@ -58,9 +58,9 @@ void opening_movie(void) {
     u8 sp34[8];
 
     game_state.screen_brightness = 0x80;
-    sp43 = func_8004ADD4();
-    func_8004ADAC(0);
-    func_80048DD0(0);
+    sp43 = debug_hud_level_get();
+    debug_hud_level_set(0);
+    actor_deactivate(0);
     hud_corner_icon_set(1);
     hud_cursor_show(0);
     back_clear_switch(1);
@@ -90,26 +90,26 @@ void opening_movie(void) {
     set_kanji_string(-0x88, 0x5C, 8, (s32) opening_lyric_text_20, 0);
     k_disp_start(0);
     set_movie_offset(0x18, 0x10);
-    func_80056BA8(0, 0x33B, 0x820);
+    movie_play(0, 0x33B, 0x820);
     func_80088070();
     sp34[0] = 0x80;
     cd_audio_command(0xE, 0, sp34);
     cd_audio_command(9, 0, 0);
     cd_audio_command(0xA, 0, 0);
-    func_80053650(0x80167000, 0x80162000, 0x80162000);
+    bg_still_buffers_set(0x80167000, 0x80162000, 0x80162000);
     func_8009C210(1);
-    func_80041168(0);
+    vram_clear_blocks(0);
     func_8009C674(0);
-    func_80048DD0(0);
+    actor_deactivate(0);
     game_mode_set(GAME_MODE_TITLE);
-    func_8004ADAC((s32) sp43);
+    debug_hud_level_set((s32) sp43);
     k_speed_set((u8) saved_text_speed);
     hud_corner_icon_set(0);
     hud_cursor_actor_init(0);
     hud_cursor_show(0);
-    D_800B3CF8 = 0;
-    D_800B3CFC = 0;
-    D_800B3D00 = 0;
+    pad_code_index = 0;
+    pad_code_entered = 0;
+    pad_code_timer = 0;
 }
 
 void opening_story_load(void) {
@@ -131,7 +131,7 @@ void opening_story_load(void) {
         draw2d3d(1, 0);
         actor_draw_enable(1);
         hud_cursor_show(0);
-        func_80048DD0(0);
+        actor_deactivate(0);
         actor_clear_upper();
         sprite_tables_clear();
         text_system_reset();
@@ -154,7 +154,7 @@ void opening_story_load(void) {
         return;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0((s32) addresses, 0, 4, 2, 2, 0x1FF, -0xA0, -0x78, 8, 9);
+            prim_bg_slot_setup((s32) addresses, 0, 4, 2, 2, 0x1FF, -0xA0, -0x78, 8, 9);
             load_palette(0x80190000, 0x1F, 1, 3, 0);
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x80000000;
             game_state.substep = game_state.substep + 1;
@@ -167,7 +167,7 @@ void opening_story_load(void) {
         return;
     case 4:
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0((s32) addresses, 0, 4, 2, 2, 0x1FE, -0xA0, -0x78, 8, 0xB);
+            prim_bg_slot_setup((s32) addresses, 0, 4, 2, 2, 0x1FE, -0xA0, -0x78, 8, 0xB);
             load_palette(0x80190000, 0x1E, 1, 3, 0);
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x80000000;
             game_state.substep = game_state.substep + 1;
@@ -180,7 +180,7 @@ void opening_story_load(void) {
         return;
     case 6:
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0((s32) addresses, 0, 4, 2, 2, 0x1FD, -0xA0, -0x78, 8, 0xD);
+            prim_bg_slot_setup((s32) addresses, 0, 4, 2, 2, 0x1FD, -0xA0, -0x78, 8, 0xD);
             load_palette(0x80190000, 0x1D, 1, 3, 0);
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x80000000;
             game_state.substep = game_state.substep + 1;
@@ -193,7 +193,7 @@ void opening_story_load(void) {
         return;
     case 8:
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0((s32) addresses, 1, 8, 4, 2, 0x1EE, -0x140, -0x78, 8, 0x15);
+            prim_bg_slot_setup((s32) addresses, 1, 8, 4, 2, 0x1EE, -0x140, -0x78, 8, 0x15);
             load_palette(0x801A0000, 0xE, 1, 3, 0);
             ((BgLayer *)&bg_layers)[1].unk_00 = 0x51000000;
             ((BgLayer *)&bg_layers)[1].unk_11 = 0;
@@ -216,7 +216,7 @@ void opening_story_load(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0((s32) addresses, 0, 8, 4, 2, 0x1EF, -0xA0, -0x78, 8, 5);
+            prim_bg_slot_setup((s32) addresses, 0, 8, 4, 2, 0x1EF, -0xA0, -0x78, 8, 5);
             load_palette(0x801A0000, 0xF, 1, 3, 0);
             ((BgLayer *)&bg_layers)[0].unk_11 = 0;
             ((BgLayer *)&bg_layers)[0].unk_10 = 0;
@@ -272,7 +272,7 @@ void opening_story_voice_meter_update(void);
 void opening_story_actor97_random_animation(void);
 
 /* Introduction scene state machine. T-25604: case 9 hides the three records with one chain
- * (sprite_quads[2] is read back, so uopt keeps it in a2 and the selector gets t0), func_8004AC18 is
+ * (sprite_quads[2] is read back, so uopt keeps it in a2 and the selector gets t0), prim_flash_gray is
  * called undeclared (its $v0 result keeps v0 busy after each call), and every tile fill counts with
  * i. */
 void opening_story_scene(void) {
@@ -319,7 +319,7 @@ void opening_story_scene(void) {
         if ((game_state.frame_count & 3) == 3) {
             ((BgLayer *)&bg_layers)[0].unk_04 -= 1;
             if (((BgLayer *)&bg_layers)[1].unk_04++ >= -0xEF) {
-                func_8004A1A0((s32) tiles, 0, 8, 4, 2, 0x1EF, -0xA0, -0x78, 8, 5);
+                prim_bg_slot_setup((s32) tiles, 0, 8, 4, 2, 0x1EF, -0xA0, -0x78, 8, 5);
                 load_palette((s32 *)0x801A0000U, 0xF, 1, 3, 0);
                 ((BgLayer *)&bg_layers)[0].unk_11 = 0;
                 ((BgLayer *)&bg_layers)[0].unk_00 = 0x51000000;
@@ -350,7 +350,7 @@ void opening_story_scene(void) {
             }
             /* FAKE: T-25319, T-25604: ^ 0 drops the a0 argument preference of the promoted field;
              * gives the target's move a0,v0 and F8 in a0. */
-            func_8004B19C(((BgLayer *)&bg_layers)[0].unk_04 ^ 0, 0, 0);
+            debug_print_hex(((BgLayer *)&bg_layers)[0].unk_04 ^ 0, 0, 0);
             if (((BgLayer *)&bg_layers)[0].unk_04 == -0x118) {
                 text_system_reset();
                 set_kanji_string(-0x90, 0x14, 0, "そのたもとで卒業の日に、", 0);
@@ -378,7 +378,7 @@ void opening_story_scene(void) {
                     tiles[i] = 0x801B0000 + i * 0x4000;
                 }
             }
-            func_8004A1A0((s32) tiles, 1, 6, 3, 2, 0x1EE, -0xA0, -0x78, 8, 0x15);
+            prim_bg_slot_setup((s32) tiles, 1, 6, 3, 2, 0x1EE, -0xA0, -0x78, 8, 0x15);
             load_palette((s32 *)0x801C8000U, 0xE, 1, 3, 0);
             ((BgLayer *)&bg_layers)[1].unk_10 = ((BgLayer *)&bg_layers)[1].unk_11 = ((BgLayer *)&bg_layers)[1].unk_12 = 0;
             for (i = 0; i < 3; i++) {
@@ -420,9 +420,9 @@ void opening_story_scene(void) {
         break;
     case 9:
         if ((u8) ((BgLayer *)&bg_layers)[0].unk_10 < 0xFEU) {
-            func_8004AC18(((BgLayer *)&bg_layers)[0].unk_10++);
+            prim_flash_gray(((BgLayer *)&bg_layers)[0].unk_10++);
         } else {
-            func_8004AC18(0xFF);
+            prim_flash_gray(0xFF);
             *(u32 *)&sprite_quads->flags = *(u32 *)&sprite_quads[1].flags = *(u32 *)&sprite_quads[2].flags = 0x80000000;
             ((BgLayer *)&bg_layers)[1].unk_00 = 0x80000000;
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x01000000;
@@ -432,9 +432,9 @@ void opening_story_scene(void) {
         }
         break;
     case 10:
-        func_8004AC18(0xFF);
+        prim_flash_gray(0xFF);
         if (cd_read_sync_status() & 1) {
-            func_8004A1A0((s32) tiles, 0, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0xD);
+            prim_bg_slot_setup((s32) tiles, 0, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0xD);
             load_palette((s32 *)0x801C8000U, 0xF, 1, 3, 0);
             ((BgLayer *)&bg_layers)[0].unk_00 = 0x01000000;
             cd_read_sectors(0xAEU, 0x80180000U, 0x9DF6);
@@ -442,7 +442,7 @@ void opening_story_scene(void) {
         }
         break;
     case 11:
-        func_8004AC18(0xFF);
+        prim_flash_gray(0xFF);
         if (cd_read_sync_status() & 1) {
             tpage_buf_clear();
             i = 0;
@@ -475,7 +475,7 @@ void opening_story_scene(void) {
             D_80120652 |= 1;
         }
         if (((BgLayer *)&bg_layers)[1].unk_10 != 0) {
-            func_8004AC18(((BgLayer *)&bg_layers)[1].unk_10--);
+            prim_flash_gray(((BgLayer *)&bg_layers)[1].unk_10--);
         } else if ((u32) game_state.mode_step_timer.u >= 0x12DU) {
             game_state.substep++;
         } else if (!(D_80120652 & 1)) {
@@ -489,7 +489,7 @@ void opening_story_scene(void) {
                 tiles[i] = 0x80186000 + i * 0x4000;
             }
         }
-        func_8004A1A0((s32) tiles, 1, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0x15);
+        prim_bg_slot_setup((s32) tiles, 1, 6, 3, 2, 0x1EF, -0xA0, -0x78, 8, 0x15);
         ((BgLayer *)&bg_layers)[0].unk_00 = 0x80000000;
         ((BgLayer *)&bg_layers)[1].unk_00 = 0x01000000;
         load_palette((s32 *)0x8019E000U, 0xF, 1, 2, 0);
@@ -539,7 +539,7 @@ void opening_story_scene(void) {
                 tiles[i] = 0x801BA7F0 + i * 0x4000;
             }
         }
-        func_8004A1A0((s32) tiles, 0, 6, 3, 2, 0x1EE, -0xA0, -0x78, 8, 0x15);
+        prim_bg_slot_setup((s32) tiles, 0, 6, 3, 2, 0x1EE, -0xA0, -0x78, 8, 0x15);
         ((BgLayer *)&bg_layers)[1].unk_00 = 0x80000000;
         ((BgLayer *)&bg_layers)[0].unk_00 = 0x01000000;
         load_palette((s32 *)0x801D27F0U, 0xE, 1, 2, 0);
@@ -599,7 +599,7 @@ void opening_story_scene(void) {
         }
         break;
     case 19:
-        func_8004AC18((s32) game_state.mode_step_timer.u);
+        prim_flash_gray((s32) game_state.mode_step_timer.u);
         if ((u32) game_state.mode_step_timer.u >= 0xFFU) {
             mode_step_next();
         }
@@ -685,11 +685,11 @@ void opening_story_actor97_random_animation(void) {
 }
 
 void opening_story_end(void) {
-    func_8004AC18(0xFF);
+    prim_flash_gray(0xFF);
     cd_command_reset();
-    func_80041168(0);
+    vram_clear_blocks(0);
     sprite_tables_clear();
-    func_80048DD0(0);
+    actor_deactivate(0);
     audio_command(0x71);
     audio_command(0x7F);
     mode_stage_next();

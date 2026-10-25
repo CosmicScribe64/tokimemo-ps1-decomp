@@ -3,7 +3,7 @@
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D10);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", draw_horizontal_blank_stamps);
 INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D14);
 INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D18);
 INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D1C);
@@ -15,9 +15,9 @@ s32 D_800B3D30 = 0;
 s32 D_800B3D34 = 0;
 s32 D_800B3D38 = 0;
 s32 D_800B3D3C = 0;
-INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D40);
-INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D44);
-INCLUDE_RODATA("asm/data/main/frame_render_audio.data", D_800B3D48);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", audio_bgm_playing);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", audio_bgm_set);
+INCLUDE_RODATA("asm/data/main/frame_render_audio.data", audio_bgm_sequence);
 u8 D_800B3D4C = 0;
 u8 D_800B3D50 = 0;
 u8 D_800B3D54[12] = { 0 };
@@ -33,8 +33,8 @@ void draw_frame(s32 arg0) {
     u8 v;
     GameState *g = &game_state;
 
-    D_800B3D10[1] = func_80098650();
-    func_80049044();
+    draw_horizontal_blank_stamps[1] = func_80098650();
+    draw_brightness_step();
     if (g->actor_draw_enabled == 1) {
         actor_draw_all();
     }
@@ -46,9 +46,9 @@ void draw_frame(s32 arg0) {
         for (i = 0; i < 0x40; i++) {
             v = g->quad_layer[i];
             if (v & 0x80) {
-                func_80098680(rec, (u8 *)&D_800E8C70 + draw_buffer * 0x14, (u8)(v - 1) & 0x7F);
+                func_80098680(rec, (u8 *)&draw_ot_table + draw_buffer * 0x14, (u8)(v - 1) & 0x7F);
             } else {
-                func_80098B80(rec, (u8 *)&D_800E8C70 + draw_buffer * 0x14, (u8)(v - 1) & 0x7F);
+                func_80098B80(rec, (u8 *)&draw_ot_table + draw_buffer * 0x14, (u8)(v - 1) & 0x7F);
             }
             rec++;
         }
@@ -57,47 +57,47 @@ void draw_frame(s32 arg0) {
             for (i = 0; i < 2; i++) {
                 v = g->bg_layer_order[i];
                 if (v < 0x80) {
-                    func_80098D00((u8 *)&bg_layers + i * 0x24, (u8 *)&D_800E8C70 + draw_buffer * 0x14, (u16)(v - 1));
+                    func_80098D00((u8 *)&bg_layers + i * 0x24, (u8 *)&draw_ot_table + draw_buffer * 0x14, (u16)(v - 1));
                 }
             }
         }
     }
     if (g->draw_3d_enabled != 0) {
         func_80099540(&D_80122740);
-        obj = D_80122640; do {
+        obj = model_objects; do {
             func_80099B10(obj[1], &sp50, &sp70);
             func_80099F04(&sp50);
             func_8009A200(obj[1], &sp70);
             func_80099ED8(&sp70);
-            func_8009A4D0((s32)obj, (s32)((u8 *)&D_800E8C70 + (draw_buffer * 0x14)), 6, 0x1F800000);
+            func_8009A4D0((s32)obj, (s32)((u8 *)&draw_ot_table + (draw_buffer * 0x14)), 6, 0x1F800000);
             obj += 4;
         } while (obj != (u32 *)&D_80122740);
-        func_8005938C();
+        view_models_update_draw();
     }
     if (arg0 != 0) {
-        D_800B3D10[2] = func_80098650();
+        draw_horizontal_blank_stamps[2] = func_80098650();
         csr_load_vram(0);
         palette_load_vram(0);
         if (g->game_mode != 0x90 || g->mode_stage < 10 || g->mode_stage == 12) {
             func_8009C674(0);
         }
-        D_800B3D10[3] = func_80098650();
+        draw_horizontal_blank_stamps[3] = func_80098650();
         if (g->game_mode == 0x90 && g->mode_stage >= 10) {
             func_800AD950(2);
             func_8009C210(1);
         } else if (func_80098650() < g->frame_scanline_limit) {
             func_800AD950(0);
         }
-        D_800B3D10[0] = func_80098650();
-        func_80042A00();
+        draw_horizontal_blank_stamps[0] = func_80098650();
+        pad_update();
     }
     func_8009C210(1);
     func_8009ABF0();
     func_8009AC20();
     if (g->back_clear != 0) {
-        func_8009824C(g->clear_color_r, g->clear_color_g, g->clear_color_b, (u8 *)&D_800E8C70 + draw_buffer * 0x14);
+        func_8009824C(g->clear_color_r, g->clear_color_g, g->clear_color_b, (u8 *)&draw_ot_table + draw_buffer * 0x14);
     }
-    func_8009AD00((u8 *)&D_800E8C70 + draw_buffer * 0x14);
+    func_8009AD00((u8 *)&draw_ot_table + draw_buffer * 0x14);
 }
 
 /* Switch the 2D sprite pass (arg 1) and the 3D pass (arg 2) on or off */
@@ -366,7 +366,7 @@ void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
 void func_80044434(void) {
 }
 
-void func_8004443C(void) {
+void draw_time_bars(void) {
     /* FAKE: T-25003, the two unused words give the original stack layout (colors at sp+0x64, rect at
      * sp+0x58, frame 0x78); without them the colors and rect move and 17 rows differ. */
     s32 pad0;
@@ -375,10 +375,10 @@ void func_8004443C(void) {
     RECT rect;
     s32 pad1;
 
-    colors[0] = D_800B3D10[0] / 264;
-    colors[1] = D_800B3D10[1] / 264;
-    colors[2] = D_800B3D10[2] / 264;
-    colors[3] = D_800B3D10[3] / 264;
+    colors[0] = draw_horizontal_blank_stamps[0] / 264;
+    colors[1] = draw_horizontal_blank_stamps[1] / 264;
+    colors[2] = draw_horizontal_blank_stamps[2] / 264;
+    colors[3] = draw_horizontal_blank_stamps[3] / 264;
     for (i = 0; i < 4; i++) {
         if (colors[i] >= 3) {
             colors[i] = 0x800000;
@@ -393,17 +393,17 @@ void func_8004443C(void) {
     rect.w = 4;
     for (i = 0; i < 4; i++) {
         rect.x = 0x8C + i * 4;
-        rect.h = D_800B3D10[i] * 16 / 264;
+        rect.h = draw_horizontal_blank_stamps[i] * 16 / 264;
         rect.y = 0x4C - rect.h;
-        func_8004A14C(i + 6, rect, colors[i]);
+        prim_fill_rect(i + 6, rect, colors[i]);
     }
     rect.x = 0x88;
     rect.h = 16;
     rect.y = 0x3C;
-    func_8004A14C(i + 6, rect, 0x808080);
+    prim_fill_rect(i + 6, rect, 0x808080);
 }
 
-void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
+void vram_palette_row_copy(s32 arg0, s32 arg1, s32 arg2) {
     RECT rect;
     s32 x;
 
@@ -416,12 +416,12 @@ void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 s32 audio_command(s32 arg0) {
-    func_80079B10(arg0 & 0xFFFF);
+    audio_command_submit(arg0 & 0xFFFF);
     return 1;
 }
 
 
-s32 func_80044774(s32 arg0) {
+s32 audio_bgm_stop(s32 arg0) {
     s32 *p;
 
     if (arg0 != 0) {
@@ -433,27 +433,27 @@ s32 func_80044774(s32 arg0) {
         return -1;
     }
     if (arg0 != 0) {
-        audio_bank_start(D_800B3D44, D_800B3D48, arg0);
+        audio_bank_start(audio_bgm_set, audio_bgm_sequence, arg0);
     } else {
         audio_command(0x1200);
     }
-    D_800B3D40 = arg0;
+    audio_bgm_playing = arg0;
     return arg0 & 0xFF;
 }
 
-u8 func_8004480C(void) {
-    return D_800B3D40;
+u8 audio_bgm_is_playing(void) {
+    return audio_bgm_playing;
 }
 
-u8 func_8004481C(void) {
-    return D_800B3D44;
+u8 audio_bgm_current_set(void) {
+    return audio_bgm_set;
 }
 
 
 void audio_bank_state_reset(void) {
     D_800B3D54[0] = 0;
     D_800B3D54[1] = 0;
-    D_800B3D44 = 0xFF;
+    audio_bgm_set = 0xFF;
     D_800B3D30 = 0;
     D_800B3D34 = 0;
     D_800B3D38 = 0;
@@ -462,11 +462,11 @@ void audio_bank_state_reset(void) {
     D_800B3D2C = 0;
     D_800B3D4C = 0;
     D_800B3D50 = 0;
-    D_800B3D48 = 0;
+    audio_bgm_sequence = 0;
 }
 
 void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
-    D_800B3D44 = 0xFF;
+    audio_bgm_set = 0xFF;
     D_800B3D28 = 0;
     D_800B3D2C = 0;
     D_800B3D24 = (u8) a;
@@ -474,7 +474,7 @@ void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
     D_800B3D50 = 1;
     D_800B3D20 = cd_done_count();
     if (a == 0) {
-        func_800451E0(0x801B8000);
+        cd_load_destination_base_set(0x801B8000);
         if (D_800B3D30 == b) {
             D_800B3D20 -= 2;
             D_800B3D28 = 1;
@@ -520,7 +520,7 @@ void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
         D_800B3D2C = 1;
         return;
     }
-    func_800451E0(0x801B8000);
+    cd_load_destination_base_set(0x801B8000);
     if (D_800B3D38 == b) {
         D_800B3D20 -= 2;
         D_800B3D28 = 1;
@@ -566,15 +566,15 @@ void audio_bank_load_start(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f) {
     D_800B3D2C = 1;
 }
 
-s32 func_80044C98(void) {
+s32 audio_bank_transfer_poll(void) {
     if ((u32) (((cd_done_count() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
         if (D_800B3D4C == 0) {
-            func_80044D54();
+            audio_bank_transfer_start();
             D_800B3D4C++;
         } else {
             /* The counter is incremented as the value of the compare: this keeps load and
              * increment in one register range ($v1), as in the original (T-17019). */
-            if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
+            if ((++D_800B3D4C > 0xC0U) || (audio_bank_transfer_done((s32) D_800B3D24) != 0)) {
                 D_800B3D54[D_800B3D24] = 0;
                 return 1;
             }
@@ -583,37 +583,37 @@ s32 func_80044C98(void) {
     return -1;
 }
 
-s32 func_80044D54(void) {
+s32 audio_bank_transfer_start(void) {
     if (D_800B3D24 == 0) {
         if (D_800B3D28 == 0 && D_800B3D2C == 0) {
-            func_800451E0(0x801B8000);
+            cd_load_destination_base_set(0x801B8000);
             audio_command(0x11);
             return 1;
         }
         if (D_800B3D28 == 0) {
-            func_800451E0(0x801B8000);
+            cd_load_destination_base_set(0x801B8000);
             audio_command(0x13);
             return 1;
         }
         if (D_800B3D2C == 0) {
-            func_800451E0(0x801C8000);
+            cd_load_destination_base_set(0x801C8000);
             audio_command(0x14);
             return 1;
         }
         return 0;
     }
     if (D_800B3D28 == 0 && D_800B3D2C == 0) {
-        func_800451E0(0x801B8000);
+        cd_load_destination_base_set(0x801B8000);
         audio_command(0x12);
         return 1;
     }
     if (D_800B3D28 == 0) {
-        func_800451E0(0x801E0000);
+        cd_load_destination_base_set(0x801E0000);
         audio_command(0x16);
         return 1;
     }
     if (D_800B3D2C == 0) {
-        func_800451E0(0x801B8000);
+        cd_load_destination_base_set(0x801B8000);
         audio_command(0x15);
         return 1;
     }
@@ -623,12 +623,12 @@ s32 func_80044D54(void) {
 s32 audio_bank_load_poll(void) {
     if ((u32) (((cd_done_count() - D_800B3D20) + 0x100) & 0xFF) >= 5U) {
         if (D_800B3D4C == 0) {
-            func_80044D54();
+            audio_bank_transfer_start();
             D_800B3D4C++;
         } else {
             /* The counter is incremented as the value of the compare: this keeps load and
              * increment in one register range ($v1), as in the original (T-17019). */
-            if ((++D_800B3D4C > 0xC0U) || (func_80044F94((s32) D_800B3D24) != 0)) {
+            if ((++D_800B3D4C > 0xC0U) || (audio_bank_transfer_done((s32) D_800B3D24) != 0)) {
                 if (D_800B3D24 == 0) {
                     audio_command(0x22);
                     audio_command(0x21);
@@ -646,14 +646,14 @@ s32 audio_bank_load_poll(void) {
     return -1;
 }
 
-s32 func_80044F94(s32 arg0) {
+s32 audio_bank_transfer_done(s32 arg0) {
     if (arg0 == 0) {
-        if (func_80079E00(0) != 0 && func_80079E00(1) != 0) {
+        if (audio_bgm_bank_ready(0) != 0 && audio_bgm_bank_ready(1) != 0) {
             return 1;
         }
         return 0;
     }
-    if (func_80079E00(2) != 0 && func_80079E00(3) != 0) {
+    if (audio_bgm_bank_ready(2) != 0 && audio_bgm_bank_ready(3) != 0) {
         return 1;
     }
     return 0;
@@ -681,13 +681,13 @@ s32 audio_bank_start(s32 arg0, s32 arg1) {
         audio_command(0x2E);
         audio_command((arg1 | 0x200) & 0xFFFF);
     }
-    D_800B3D44 = (u8) arg0;
-    D_800B3D48 = (u8) arg1;
-    D_800B3D40 = 1;
+    audio_bgm_set = (u8) arg0;
+    audio_bgm_sequence = (u8) arg1;
+    audio_bgm_playing = 1;
     /* no return here: the original returns the v0 of the last audio_command call (implicit int) */
 }
 
-s32 func_800450F4(s32 arg0, s32 arg1) {
+s32 audio_bgm_play_short(s32 arg0, s32 arg1) {
     s32 *var_v0;
 
     if (arg0 != 0) {
@@ -707,8 +707,8 @@ s32 func_800450F4(s32 arg0, s32 arg1) {
         audio_command(0x2E);
         audio_command((arg1 | 0x200) & 0xFFFF);
     }
-    D_800B3D44 = (u8) arg0;
-    D_800B3D48 = (u8) arg1;
-    D_800B3D40 = 1;
+    audio_bgm_set = (u8) arg0;
+    audio_bgm_sequence = (u8) arg1;
+    audio_bgm_playing = 1;
     /* no return here: the original returns the v0 of the last audio_command call (implicit int) */
 }

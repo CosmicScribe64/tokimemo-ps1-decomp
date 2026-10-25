@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl23; /* size 0x5C */
 extern FnTbl23 D_80145F00;
 
-void func_80134C10(void) {
+void annual_text_choice_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
@@ -16,24 +16,24 @@ void func_80134C10(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80134C98(void) {
+void annual_text_choice_sound_play_0603(void) {
     func_80086AB0(0x603);
     func_8004DE1C();
 }
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_text_choice_handlers.rodata", D_801458A0);
 
-void func_80134CC0(void) {
+void annual_text_choice_static_text_install(void) {
     func_800BCE10(&D_800D92E0, &D_801458A0);
     func_8004DE1C();
 }
 
-void func_80134CF4(void) {
+void annual_text_choice_audio_command_play_40e5(void) {
     func_8008A0D4(0x40E5);
     func_8004DE1C();
 }
 
-void func_80134D1C(void) {
+void annual_text_choice_target_branch(void) {
     if (D_8012E66C != 0) {
         if ((D_800F62CF == 2) || (D_800F62CF == 7) || (D_800F62CF == 8) || (D_800F62CF == 9) || (D_800F62CF == 0xA)) {
             func_8008E310();
@@ -45,7 +45,7 @@ void func_80134D1C(void) {
     func_8004DE1C();
 }
 
-void func_80134D9C(void) {
+void annual_outcome_values_apply(void) {
     if (D_8012E66C != 0) {
         D_80145EB4 += 1;
         D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A -= 1;
@@ -58,7 +58,7 @@ void func_80134D9C(void) {
     func_8004DE1C();
 }
 
-void func_80134EA0(void) {
+void annual_text_choice_zero_route(void) {
     if (D_8012E66C == 0) {
         func_8004DEAC(3);
         return;
@@ -66,7 +66,7 @@ void func_80134EA0(void) {
     func_8004DE1C();
 }
 
-void func_80134EDC(void) {
+void annual_text_choice_voice_resource_by_girl(void) {
     switch (D_800F62CF) {
     case 0:
         func_80072734(0x5671);

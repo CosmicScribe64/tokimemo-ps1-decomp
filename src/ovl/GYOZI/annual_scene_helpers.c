@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_801372B0(void) {
+void annual_scene_group_resource_addresses_init(void) {
     D_80146220 = 0x801B0480;
     D_80146224 = 0x801B12D0;
     D_80146228 = 0x801B2668;
@@ -44,7 +44,7 @@ void func_801372B0(void) {
     D_801462B8 = 0x801BA0E8;
 }
 
-void func_80137524(void) {
+void annual_result_resource_addresses_init(void) {
     D_801462BC = 0x801B00D0;
     D_801462C0 = 0x801B0274;
     D_801462C4 = 0x801B0374;
@@ -91,7 +91,7 @@ typedef struct {
 } FnTbl48; /* size 0xC0 */
 extern FnTbl48 D_80146368;
 
-void func_80137798(void) {
+void annual_scene_callback_dispatch(void) {
     u16 idx; /* FAKE: u16 and the second call argument put idx in $a1 as the original does (permuter); real prototype unknown. T-8080 */
     FnTbl48 tbl;
 
@@ -106,7 +106,7 @@ void func_80137798(void) {
     tbl.f[idx](0x80, idx);
 }
 
-void func_80137854(void) {
+void annual_scene_rank_score_gate(void) {
     u32 temp_t8;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
@@ -115,13 +115,13 @@ void func_80137854(void) {
         if (D_800F6474++ == 0) {
             D_80145EB4 = 0x2A;
         }
-        func_801343A4();
+        annual_mode_scene_data_setup();
         return;
     }
     func_8004DE1C();
 }
 
-void func_801378D0(void) {
+void annual_girl_date_result_flag_update(void) {
     s32 r;
 
     r = func_8005E0E0(D_800F53A0.unk_F2F);
@@ -130,7 +130,7 @@ void func_801378D0(void) {
         (D_80145F60 == 0) &&
         (D_800F53A0.unk_F2F == 0)) {
         D_800F5AAE |= 1;
-        /* FAKE: reach D_800F647A through D_800F5AAE (as in func_80137D70) so as1 keeps the load below the store, and use indirect reads of D_800F53E0/D_800F5490 and the (u8) r cast (T-2020) as in SHOUGATU twin func_80136204; real source unknown. T-24080 */
+        /* FAKE: reach D_800F647A through D_800F5AAE (as in annual_girl_date_status_flag_update) so as1 keeps the load below the store, and use indirect reads of D_800F53E0/D_800F5490 and the (u8) r cast (T-2020) as in SHOUGATU twin func_80136204; real source unknown. T-24080 */
         (&D_800F5AAE)[0x9CC] += 4;
     } else if (((&D_800F53DF)[1] == ((u32)((*(s32 *)&D_800F5490) << 0x17) >> 0x1B)) &&
                (D_800F53DF == ((*(s32 *)&D_800F5490) & 0xF)) &&
@@ -145,7 +145,7 @@ void func_801378D0(void) {
     func_8004DE1C();
 }
 
-void func_80137A0C(void) {
+void annual_scene_rank_and_year_score_update(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if ((u32) ((u8)func_8005E0E0(D_800F62CF) & 0x7F) >= 2U) {
         D_80145EB4 += 2;
@@ -156,12 +156,12 @@ void func_80137A0C(void) {
     func_8004DE1C();
 }
 
-void func_80137A80(void) {
+void annual_scene_audio_command_play_418c(void) {
     func_8008A0D4(0x418C);
     func_8004DE1C();
 }
 
-void func_80137AA8(void) {
+void annual_scene_selected_girl_field_increment(void) {
     if (D_80145F60 == 0) {
         D_800F53A0.girl[D_800F62CF].unk_0A += 1;
     }
@@ -170,29 +170,29 @@ void func_80137AA8(void) {
     func_80081D30(1);
 }
 
-void func_80137B18(void) {
+void annual_scene_resource_command_and_setup(void) {
     func_80051DD8(0x13, 0x801B0000, 0xA3C8);
-    func_801372B0();
+    annual_scene_group_resource_addresses_init();
     func_8004DE1C();
 }
 
-void func_80137B50(void) {
+void annual_scene_choice_state_save(void) {
     D_8012E66C = D_80146364;
     func_8004DE1C();
 }
 
-void func_80137B7C(void) {
+void annual_scene_choice_state_restore_setup(void) {
     D_80146364 = (u8) D_8012E66C;
     D_800D9248 = 0;
     D_800D924C = 0;
-    func_801372B0();
+    annual_scene_group_resource_addresses_init();
     D_800D9258 = D_80146224;
     D_800D925C = D_80146258;
     D_800D9260 = D_8014628C;
     func_8004DE1C();
 }
 
-void func_80137BEC(void) {
+void annual_scene_choice_girl_stats_and_route(void) {
     if (D_8012E66C != 0) {
         D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A -= 1;
         D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0E += 5;
@@ -205,7 +205,7 @@ void func_80137BEC(void) {
     func_8004DE1C();
 }
 
-void func_80137CAC(void) {
+void annual_scene_status_to_dialogue_counter(void) {
     u32 temp_t6;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
@@ -222,12 +222,12 @@ void func_80137CAC(void) {
     func_8004DE1C();
 }
 
-void func_80137D3C(void) {
+void annual_scene_choice_to_dialogue_counter(void) {
     D_800D9248 = (D_8012E66C * 2) + 0xD;
     func_8004DE1C();
 }
 
-void func_80137D70(void) {
+void annual_girl_date_status_flag_update(void) {
     s32 r;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
@@ -246,16 +246,16 @@ void func_80137D70(void) {
     }
 }
 
-void func_80137E24(void) {
+void annual_scene_dialogue_resource_setup(void) {
     D_800D9248 = 0x1D;
     D_800D9258 = D_80146358;
     D_800D925C = D_8014635C;
     D_800D9260 = D_80146360;
-    func_80137E84();
+    annual_scene_text_row_select();
     func_8004DE1C();
 }
 
-void func_80137E84(void) {
+void annual_scene_text_row_select(void) {
     s32 girl;
     GyoziTextCC3 table;
 
@@ -264,7 +264,7 @@ void func_80137E84(void) {
     func_800BCE10(D_800D9334, &table.bytes[girl * 0x129 + D_800F53DE * 0x63 + D_8012E66C * 0x21 - 0x2520]);
 }
 
-void func_80137F48(void) {
+void annual_scene_dialogue_selector_and_resources_save(void) {
     D_80146358 = D_800D9258;
     D_8014635C = D_800D925C;
     D_80146360 = D_800D9260;
@@ -278,7 +278,7 @@ void func_80137F48(void) {
     func_8004DE1C();
 }
 
-void func_80137FEC(void) {
+void annual_shrine_choice_girl_stats_apply(void) {
     func_8008E408(D_8012E66C + 1);
     func_80072FE8();
     if (D_8012E66C == 0) {
@@ -297,14 +297,14 @@ void func_80137FEC(void) {
     func_8004DE1C();
 }
 
-void func_801381A4(void) {
+void annual_result_scene_resource_command_issue(void) {
     func_80051DD8(3, 0x801B0000, 0xA3FB);
-    func_80137524();
+    annual_result_resource_addresses_init();
     func_8004DE1C();
 }
 
 /* the load of D_800F62CF goes through the base of D_800F5AAE: as1 then keeps the byte store before it (no store in the jal slot) */
-void func_801381DC(void) {
+void annual_result_status_flag_and_route_update(void) {
     D_800F5AAE |= 8;
     if ((u32)((u8)func_8005E0E0((&D_800F5AAE)[0x821]) & 0x7F) >= 2U) {
         D_800F647A += 6;
@@ -315,14 +315,14 @@ void func_801381DC(void) {
     func_8004DE1C();
 }
 
-void func_80138264(void) {
+void annual_result_dialogue_selector_setup(void) {
     D_800D9248 = 1;
     D_800D924C = 0;
-    func_8013829C();
+    annual_result_dialogue_resources_select();
     func_8004DE1C();
 }
 
-void func_8013829C(void) {
+void annual_result_dialogue_resources_select(void) {
     switch (D_800F62CF) {
     case 0:
         D_800D9258 = D_801462C0;

@@ -51,7 +51,7 @@ void date_mode_stage_player_birthday(void) {
     step_handlers = date_player_birthday_steps;
     step_index = game_state.mode_step;
     step_handlers.callbacks[step_index](0x80);
-    if ((D_80122D44 & 1) && (dec_bg_brightness == 0x80)) {
+    if ((D_80122D44 & 1) && (bg_brightness == 0x80)) {
         hud_sprite_light_effect_draw();
     }
 }

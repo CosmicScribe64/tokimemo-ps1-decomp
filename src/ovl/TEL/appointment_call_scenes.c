@@ -7,38 +7,38 @@
 /* The legacy call view returns int; canonical k_sub_reset retains void. */
 s32 k_sub_reset();
 
-void func_801397D0(void) {
+void phone_outgoing_call_mode_stage_dispatch(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_stage) {
     case 0:
-        func_801399CC();
+        phone_date_invitation_mode_dispatch();
         break;
     case 1:
-        func_8013A228();
+        phone_date_result_mode_dispatch();
         break;
     case 2:
-        func_8013A40C();
+        phone_outgoing_call_mode_dispatch_a();
         break;
     case 3:
-        func_8013A478();
+        phone_outgoing_call_mode_dispatch_b();
         break;
     case 4:
-        func_8013A79C();
+        phone_special_call_mode_dispatch();
         break;
     case 5:
-        func_8013A820();
+        phone_outgoing_call_mode_dispatch_c();
         break;
     case 6:
-        func_8013BF70();
+        phone_high_syoushin_call_dispatch();
         break;
     case 7:
-        func_8013C46C();
+        phone_lost_gift_response_dispatch();
         break;
     case 8:
-        func_8013C968();
+        phone_club_absence_exit_dispatch();
         break;
     case 9:
-        func_8013CB34();
+        phone_culture_festival_club_notice_dispatch();
         break;
     }
     hizuke_show();
@@ -54,7 +54,7 @@ void func_801397D0(void) {
     }
 }
 
-void func_80139920(void) {
+void phone_same_girl_appointments_cancel(void) {
     s32 i;
     u32 sel;
 
@@ -68,29 +68,29 @@ void func_80139920(void) {
     hud_appointment_list_sort();
 }
 
-s32 func_801399CC(void) {
+s32 phone_date_invitation_mode_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
         if (((u32) (game_state.unk_54C[0].w * 8) >> 0x1C) == 0xA) {
             mode_step_set(0xA);
             return;
         }
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         return;
     case 1:
-        func_80139FEC();
+        phone_appointment_result_dialogue_run();
         return;
     case 2:
-        func_8013A2F0();
+        phone_wrong_date_place_response();
         return;
     case 3:
-        func_8013BF50();
+        phone_return_to_day_screen();
         return;
     case 10:
-        func_8013AA30();
+        phone_home_call_scene_init();
         return;
     case 11:
-        func_80139AA4();
+        phone_opening_call_dialogue_run();
         return;
     default:
         mode_step_next();
@@ -98,7 +98,7 @@ s32 func_801399CC(void) {
     }
 }
 
-void func_80139AA4(void) {
+void phone_opening_call_dialogue_run(void) {
     switch (game_state.substep) {
     case 0:
         k_disp_inc();
@@ -195,19 +195,19 @@ void func_80139AA4(void) {
 
 /* FAKE: the implicit return keeps the selector in v0, and the repeated table
  * expression preserves the original address-temporary order after CSE. T-9720. */
-s32 func_80139E3C(void) {
+s32 phone_missed_date_relationship_adjust(void) {
     GirlRecord *girl;
     s16 delta;
     u32 index;
 
     index = (u32)(game_state.unk_54C[0].w * 8) >> 0x1C;
     girl = &game_state.girls[index];
-    delta = D_801444A0[index];
-    girl->affection -= D_801444A0[index];
+    delta = phone_missed_appointment_stat_delta[index];
+    girl->affection -= phone_missed_appointment_stat_delta[index];
     girl->syoushin += delta;
 }
 
-s32 func_80139E90(void) {
+s32 phone_missed_appointment_response(void) {
     /* FAKE: 4 spare bytes above the buffers reproduce the original frame (0x150); real locals unknown. T-9180 */
     s32 pad;
     u8 name[0x100];
@@ -215,7 +215,7 @@ s32 func_80139E90(void) {
 
     switch (game_state.substep) {
     case 0:
-        func_80139E3C();
+        phone_missed_date_relationship_adjust();
         k_sub_reset();
         gnsx(game_state.player_family_name);
         strcpy(name, "しまった！！今日は、 ");
@@ -241,13 +241,13 @@ s32 func_80139E90(void) {
         xa_wait();
         return;
     default:
-        func_80139920();
+        phone_same_girl_appointments_cancel();
         mode_step_next();
         break;
     }
 }
 
-void func_80139FEC(void) {
+void phone_appointment_result_dialogue_run(void) {
     s32 status;
     /* FAKE: unused word preserves the index spill at sp+0x30. T-10860. */
     s32 unused;
@@ -307,39 +307,39 @@ void func_80139FEC(void) {
     }
 }
 
-s32 func_8013A228(void) {
+s32 phone_date_result_mode_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
         if (((u32) (game_state.unk_54C[0].w * 8) >> 0x1C) == 0xA) {
             mode_step_set(0xA);
             return;
         }
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         return;
     case 1:
-        func_80139FEC();
+        phone_appointment_result_dialogue_run();
         return;
     case 2:
-        func_80139E90();
+        phone_missed_appointment_response();
         return;
     case 3:
-        func_8013BF50();
+        phone_return_to_day_screen();
         return;
     case 10:
-        func_8013AA30();
+        phone_home_call_scene_init();
         return;
     case 11:
-        func_80139AA4();
+        phone_opening_call_dialogue_run();
         /* fallthrough */
     default:
         return;
     }
 }
 
-s32 func_8013A2F0(void) {
+s32 phone_wrong_date_place_response(void) {
     switch (game_state.substep) {
     case 0:
-        func_80139E3C();
+        phone_missed_date_relationship_adjust();
         k_sub_reset();
         gnsx(game_state.player_family_name);
         sndisp("しまった！！ デートの場所を 間違えたのか〜。）", 0, 0x1F);
@@ -361,44 +361,44 @@ s32 func_8013A2F0(void) {
         xa_wait();
         return;
     default:
-        func_80139920();
+        phone_same_girl_appointments_cancel();
         mode_step_next();
         break;
     }
 }
 
-s32 func_8013A40C(void) {
+s32 phone_outgoing_call_mode_dispatch_a(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AA30();
+        phone_home_call_scene_init();
         break;
     case 1:
-        func_8013B54C();
+        phone_missed_appointment_result_dialogue_run();
         break;
     case 2:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013A478(void) {
+s32 phone_outgoing_call_mode_dispatch_b(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         break;
     case 1:
-        func_8013A4FC();
+        phone_miharu_call_dialogue();
         break;
     case 2:
-        func_8013A76C();
+        phone_miharu_progress_increment();
         break;
     case 3:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013A4FC(void) {
+s32 phone_miharu_call_dialogue(void) {
     /* FAKE: unused word and declaration order retain girl at sp+0x2C. T-10860. */
     s32 unused;
     s32 table_index;
@@ -460,43 +460,43 @@ s32 func_8013A4FC(void) {
     }
 }
 
-void func_8013A76C(void) {
+void phone_miharu_progress_increment(void) {
     game_state.girls[11].flags.b[3] = game_state.girls[11].flags.b[3] + 1;
     mode_step_next();
 }
 
-s32 func_8013A79C(void) {
+s32 phone_special_call_mode_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AA30();
+        phone_home_call_scene_init();
         break;
     case 1:
-        func_8013ADC0();
+        phone_yoshio_relationship_report_run();
         break;
     case 2:
-        func_8013BE38();
+        phone_relationship_deltas_apply();
         break;
     case 3:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013A820(void) {
+s32 phone_outgoing_call_mode_dispatch_c(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         break;
     case 1:
-        func_8013A88C();
+        phone_fireworks_call_dialogue();
         break;
     case 2:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013A88C(void) {
+s32 phone_fireworks_call_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         xa_wait();
@@ -540,7 +540,7 @@ s32 func_8013A88C(void) {
     }
 }
 
-s32 func_8013AA30(void) {
+s32 phone_home_call_scene_init(void) {
     s32 temp_v0;
 
     /* FAKE: scalar selector view preserves branch and decoder-result registers. T-10860. */
@@ -593,7 +593,7 @@ s32 func_8013AA30(void) {
     }
 }
 
-s32 func_8013AC0C(void) {
+s32 phone_answering_message_scene_init(void) {
     s32 temp_v0;
 
     /* FAKE: scalar selector view preserves branch and decoder-result registers. T-10860. */
@@ -641,7 +641,7 @@ s32 func_8013AC0C(void) {
     }
 }
 
-s32 func_8013ADC0(void) {
+s32 phone_yoshio_relationship_report_run(void) {
     /* FAKE: unused locals place buffers at sp+0x54/+0x34 in the 0x158 frame. T-10860. */
     s32 frame_pad0;
     u8 text[256];
@@ -752,7 +752,7 @@ s32 func_8013ADC0(void) {
         k_sub_reset();
         gnsx(&game_state.player_family_name[0]);
         strcpy(text, "どうやら好雄の話では、俺が ");
-        get_g_name(name, func_8013BDDC());
+        get_g_name(name, phone_high_syoushin_girl_find());
         strcat(text, name);
         strcat(text, "を、 傷つけたといううわさが、 流れてたそうだ。）");
         sndisp(text, 0, 0x1F);
@@ -844,7 +844,7 @@ s32 func_8013ADC0(void) {
 }
 
 
-s32 func_8013B54C(void) {
+s32 phone_missed_appointment_result_dialogue_run(void) {
     /* FAKE: unused words reproduce the observed 0x158-byte frame. T-10860. */
     s32 frame_pad[2];
     u32 girl;
@@ -1070,7 +1070,7 @@ s32 func_8013B54C(void) {
 }
 
 
-s32 func_8013BDDC(void) {
+s32 phone_high_syoushin_girl_find(void) {
     s32 i;
     s32 found;
 
@@ -1084,7 +1084,7 @@ s32 func_8013BDDC(void) {
     return found;
 }
 
-void func_8013BE38(void) {
+void phone_relationship_deltas_apply(void) {
     /* FAKE: unused homes preserve the 0x38 frame and selected at sp+0x2C. T-10860. */
     s32 unused[2];
     s32 selected;
@@ -1103,39 +1103,39 @@ void func_8013BE38(void) {
     ((TelRecordFlags *)&game_state.girls[selected].flags)->b13 = 0;
     do {
         if (game_state.girls[i].flags.f.met == 1) {
-            game_state.girls[i].tokimeki -= D_801444B8[i];
-            game_state.girls[i].affection -= D_801444C4[i];
+            game_state.girls[i].tokimeki -= phone_high_syoushin_tokimeki_penalty[i];
+            game_state.girls[i].affection -= phone_high_syoushin_affection_penalty[i];
         }
         i += 1;
     } while (i != 0xB);
     mode_step_next();
 }
 
-void func_8013BF50(void) {
+void phone_return_to_day_screen(void) {
     game_mode_set(GAME_MODE_DAY_SCREEN);
 }
 
-s32 func_8013BF70(void) {
+s32 phone_high_syoushin_call_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         break;
     case 1:
-        func_8013BFDC();
+        phone_high_syoushin_call_response();
         break;
     case 2:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013BFDC(void) {
+s32 phone_high_syoushin_call_response(void) {
     GameState *g;
     s32 status;
     s32 girl;
 
     g = &game_state;
-    status = func_8013C3E0();
+    status = phone_b12_girl_find();
     g->current_girl = status;
     girl = (s32) status;
     switch (g->substep) {
@@ -1235,7 +1235,7 @@ s32 func_8013BFDC(void) {
     }
 }
 
-s32 func_8013C3E0(void) {
+s32 phone_b12_girl_find(void) {
     s32 i;
 
     for (i = 0; i != 0xB; i++) {
@@ -1247,27 +1247,27 @@ s32 func_8013C3E0(void) {
     return 0;
 }
 
-s32 func_8013C46C(void) {
+s32 phone_lost_gift_response_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         break;
     case 1:
-        func_8013C4D8();
+        phone_b13_girl_response();
         break;
     case 2:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013C4D8(void) {
+s32 phone_b13_girl_response(void) {
     GameState *g;
     s32 status;
     s32 girl;
 
     g = &game_state;
-    status = func_8013C8DC();
+    status = phone_b13_girl_find();
     g->current_girl = status;
     girl = (s32) status;
     switch (g->substep) {
@@ -1367,7 +1367,7 @@ s32 func_8013C4D8(void) {
     }
 }
 
-s32 func_8013C8DC(void) {
+s32 phone_b13_girl_find(void) {
     s32 i;
 
     for (i = 0; i != 0xB; i++) {
@@ -1379,21 +1379,21 @@ s32 func_8013C8DC(void) {
     return 0;
 }
 
-s32 func_8013C968(void) {
+s32 phone_club_absence_exit_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         break;
     case 1:
-        func_8013C9D4();
+        phone_club_leave_state_apply();
         break;
     case 2:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013C9D4(void) {
+s32 phone_club_leave_state_apply(void) {
     u32 temp_t8;
 
     switch (game_state.substep) {
@@ -1430,21 +1430,21 @@ s32 func_8013C9D4(void) {
     }
 }
 
-s32 func_8013CB34(void) {
+s32 phone_culture_festival_club_notice_dispatch(void) {
     switch (game_state.mode_step) {
     case 0:
-        func_8013AC0C();
+        phone_answering_message_scene_init();
         break;
     case 1:
-        func_8013CBA0();
+        phone_culture_festival_club_notice_dialogue();
         break;
     case 2:
-        func_8013BF50();
+        phone_return_to_day_screen();
         break;
     }
 }
 
-s32 func_8013CBA0(void) {
+s32 phone_culture_festival_club_notice_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         xa_wait();

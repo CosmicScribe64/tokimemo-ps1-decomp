@@ -2,8 +2,8 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_8013DB50(void) {
-    func_8013DB70();
+void annual_scene_mode_step_update(void) {
+    annual_scene_mode_step_dispatch();
 }
 
 typedef struct {
@@ -11,7 +11,7 @@ typedef struct {
 } FnTbl42; /* size 0xA8 */
 extern FnTbl42 D_80147FB0;
 
-void func_8013DB70(void) {
+void annual_scene_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl42 tbl;
 
@@ -20,8 +20,8 @@ void func_8013DB70(void) {
     tbl.f[idx]();
 }
 
-void func_8013DBE4(void) {
-    func_8013A820();
+void annual_scene_result_flag_update(void) {
+    annual_scene_talk_run_current();
     if (D_801474AC == 2) {
         D_8012E6B0 = 1;
         return;
@@ -36,7 +36,7 @@ typedef struct {
     u8 pad1 : 4;
 } GyoziBit3;
 
-void func_8013DC2C(void) {
+void annual_scene_resource_state_init(void) {
     func_8004EDE0(1, 0);
     func_80054864(1);
     func_8004C670();
@@ -46,7 +46,7 @@ void func_8013DC2C(void) {
     func_8005ABC0();
     D_800F6412 = 0;
     /* FAKE: D_800F6458 written as the GyoziWork member so IDO keeps the girl[10] bit-field load below this store; the
-     * original most likely uses the scalar as func_8013AC38 does. T-17600 */
+     * original most likely uses the scalar as annual_scene_group_state_init does. T-17600 */
     D_800F53A0.unk_10B8 = 1;
     /* FAKE: bit-field view of the flag byte; the original record probably declares the field itself. T-17600 */
     ((GyoziBit3 *)&D_800F53A0.girl[10].unk_10[0])->f = 1;
@@ -58,10 +58,10 @@ void func_8013DC2C(void) {
     func_800744A0();
     func_80074950();
     func_8008FC10();
-    /* FAKE: byte-typed chain store and reload, the T-9020 idiom as in func_8013AC38. T-17600 */
+    /* FAKE: byte-typed chain store and reload, the T-9020 idiom as in annual_scene_group_state_init. T-17600 */
     *(u8 *)&D_800F5ACD = *(u8 *)&D_800F62CF = 0xA;
     func_8008F618(*(u8 *)&D_800F62CF);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_8014749C = D_80147450;
     D_801474A0 = D_80147474;
     D_801474A4 = D_80147498;
@@ -70,26 +70,26 @@ void func_8013DC2C(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_scene_resource_setup.rodata", D_80145C40);
 
-void func_8013DD38(void) {
+void annual_scene_table_0_callback(void) {
     D_801474A8 = 0;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145C40);
     func_8004DE1C();
 }
 
-void func_8013DD7C(void) {
+void annual_callback_audio_3fc0(void) {
     func_8008A0D4(0x3FC0);
     func_8004DE1C();
 }
 
-void func_8013DDA4(void) {
+void annual_scene_selector_increment_below_threshold(void) {
     if ((u8) D_800F5833 < 2U) {
         D_801474A8 += 1;
     }
     func_8004DE1C();
 }
 
-void func_8013DDE8(void) {
+void annual_scene_selector_increment_at_threshold(void) {
     if ((u8) D_800F5833 >= 2U) {
         D_801474A8 += 1;
     }

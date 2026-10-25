@@ -1,8 +1,8 @@
-/* date_entry.c: src/ovl/DATE2/80132000.c:4; amusement-park date resource/entry helpers and func_80132214 mode handler; main overlay loader routes game mode0x58 here, whereas0x50 belongs to DATE. Original object 0x80132000-0x801326F0 (config/objects/DATE2.txt). */
+/* date_entry.c: src/ovl/DATE2/80132000.c:4; amusement-park date resource/entry helpers and amusement_mode_stage_dispatch mode handler; main overlay loader routes game mode0x58 here, whereas0x50 belongs to DATE. Original object 0x80132000-0x801326F0 (config/objects/DATE2.txt). */
 #include "common.h"
 #include "ovl/DATE2.h"
 
-void func_80132000(void) {
+void amusement_scene_script_pointer_setup(void) {
     D_8013A380 = 0x80197410;
     D_8013A384 = 0x80198070;
     D_8013A388 = 0x80198CBC;
@@ -38,23 +38,23 @@ void func_80132000(void) {
     D_8013A400 = 0x8019F39C;
 }
 
-void func_80132214(void) {
+void amusement_mode_stage_dispatch(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_801326F0();
+        amusement_scene_callback_dispatch();
         break;
     case 1:
-        func_80132DE0();
+        amusement_mode_step_callback_dispatch();
         break;
     case 2:
-        func_80136660();
+        amusement_birthday_callback_dispatch();
         break;
     case 3:
-        func_801375D4();
+        amusement_karaoke_saved_return_callback_dispatch();
         break;
     case 4:
-        func_80136FC4();
+        amusement_birthday_mode_stage4_step_callback_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -67,14 +67,14 @@ void func_80132214(void) {
         dec_bg_draw(0);
     } else {
         hud_screen_frame_draw(2);
-        func_80083A10();
+        scene_frame_update();
     }
     message_window_show();
     message_window_title_update();
     hizuke_show();
 }
 
-void func_80132334(void) {
+void amusement_scene_talk_run(void) {
     talk_tables = &D_8013A428;
     D_800CA138 = &D_8013A42C;
     D_800CA13C = D_8013A404;
@@ -83,7 +83,7 @@ void func_80132334(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_801323B0(void) {
+void amusement_scene_alt_talk_run(void) {
     talk_tables = &D_8013A430;
     D_800CA138 = &D_8013A434;
     D_800CA13C = D_8013A384;
@@ -92,7 +92,7 @@ void func_801323B0(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8013242C(void) {
+void amusement_scene_talk_run_alt(void) {
     talk_tables = &D_8013A438;
     D_800CA138 = &D_8013A43C;
     D_800CA13C = D_8013A410;
@@ -101,7 +101,7 @@ void func_8013242C(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_801324A8(void) {
+void amusement_response_talk_run(void) {
     if (D_80122CDC != 0) {
         talk_tables = &D_8013A438;
         D_800CA138 = &D_8013A43C;
@@ -118,7 +118,7 @@ void func_801324A8(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8013257C(void) {
+void amusement_script_opening_talk_run(void) {
     talk_tables = &D_8013A428;
     D_800CA138 = &D_8013A42C;
     D_800CA13C = D_8013A404;
@@ -127,7 +127,7 @@ void func_8013257C(void) {
     talk_run(0xFF, 1, 0);
 }
 
-void func_801325F4(void) {
+void amusement_script_response_talk_run(void) {
     talk_tables = &D_8013A428;
     D_800CA138 = &D_8013A42C;
     D_800CA13C = D_8013A404;
@@ -136,7 +136,7 @@ void func_801325F4(void) {
     talk_run(D_80122CDC, 1, 2);
 }
 
-void func_80132670(void) {
+void amusement_opening_talk_run_line_1(void) {
     talk_tables = (u8 *) &D_8013A428;
     D_800CA138 = (u8 *) &D_8013A42C;
     D_800CA13C = D_8013A404;

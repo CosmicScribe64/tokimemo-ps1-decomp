@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-void func_80133D60(void) {
+void trip_ayako_scene_resource_pointer_setup(void) {
     D_8013BFD0 = (u8 *)0x801D2384;
     D_8013BFD4 = (u8 *)0x801D238C;
     D_8013BFD8 = (u8 *)0x801D23F0;
@@ -16,9 +16,9 @@ void func_80133D60(void) {
     D_8013BFF8 = (u8 *)0x801C6000;
 }
 
-void func_80133E10(void) {
+void trip_ayako_mode_step_callback_dispatch(void) {
     u8 index;
-    ShFnTbl44 table;
+    TripSceneStepCallbacks table;
 
     table = D_8013C008;
     if (game_state.mode_step < 8) {
@@ -29,14 +29,14 @@ void func_80133E10(void) {
     index = game_state.mode_step;
     table.f[index](0x80);
     index = game_state.mode_step;
-    if (D_80085368 == table.f[index]) {
+    if (scene_still_fade_in == table.f[index]) {
         ((Actor *)actor_pool)[98].draw_flags |= 0x80;
         ((Actor *)actor_pool)[98].brightness = ((Actor *)actor_pool)[96].brightness;
     }
     if (index >= 0xD && index < 0x16) {
         ((Actor *)actor_pool)[98].brightness = ((Actor *)actor_pool)[96].brightness;
     }
-    if (func_800853FC == table.f[index]) {
+    if (scene_still_fade_out == table.f[index]) {
         ((Actor *)actor_pool)[98].brightness = ((Actor *)actor_pool)[96].brightness;
         if (((Actor *)actor_pool)[98].brightness < 8) {
             ((Actor *)actor_pool)[98].draw_flags &= 0xFF7F;
@@ -44,7 +44,7 @@ void func_80133E10(void) {
     }
 }
 
-void func_80133F6C(void) {
+void trip_special_birthday_route(void) {
     if (((game_state.girls[0].birthday.w & 0xF) == game_state.month) && (((u32) (game_state.girls[0].birthday.w << 0x17) >> 0x1B) == game_state.day)) {
         game_state.date_girl = game_state.current_girl;
         game_state.current_girl = GIRL_SHIORI;
@@ -59,34 +59,34 @@ void func_80133F6C(void) {
     mode_step_next();
 }
 
-s32 func_80134024(void) {
-    func_801343B0();
+s32 trip_ayako_talk_tick(void) {
+    trip_ayako_response_talk_run();
     if (game_state.mode_step_timer.w++ == 0x3C) {
         D_801206AA = 1;
     }
 }
 
-void func_80134070(void) {
+void trip_scene_affection_update(void) {
     game_state.girls[game_state.current_girl].affection = game_state.girls[game_state.current_girl].affection + 2;
     check_para_limit();
     audio_command(0x201);
-    func_80132BCC();
+    trip_saved_mode_stage_restore();
 }
 
-void func_801340C8(void) {
+void trip_ayako_scene_sector_load(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x83FB);
-    func_80133D60();
+    trip_ayako_scene_resource_pointer_setup();
     mode_step_next();
 }
 
-void func_80134100(void) {
+void trip_liberal_arts_threshold_check(void) {
     if (game_state.param_liberal_arts.value >= 0x78) {
         mode_step_next();
     }
     mode_step_next();
 }
 
-void func_80134138(void) {
+void trip_ayako_scene_select(void) {
     game_state.current_girl = GIRL_AYAKO;
     D_80120666 = 2;
     D_801206EE = 4;
@@ -96,7 +96,7 @@ void func_80134138(void) {
 
 INCLUDE_RODATA("asm/ovl/SHUGAKU/data/SHUGAKU/ayako_scene_and_birthday_detours.rodata", D_8013AD70);
 
-void func_80134184(void) {
+void trip_sotoi_speaker_setup(void) {
     game_state.current_girl = GIRL_SOTOI;
     D_80120666 = 4;
     D_801206EE = 2;
@@ -104,28 +104,28 @@ void func_80134184(void) {
     mode_step_next();
 }
 
-void func_801341DC(void) {
+void trip_liberal_arts_counter_update(void) {
     if (game_state.param_liberal_arts.value >= 0x78) {
         D_800CA2E4 += 3;
     }
     mode_step_next();
 }
 
-void func_80134220(void) {
+void trip_ayako_background_event_log(void) {
     audio_command(0x204);
     bg_read_sub2(0x476A);
     event_log_add(2, 0x1A);
     mode_step_next();
 }
 
-void func_8013425C(void) {
-    func_801365F4();
+void trip_ayako_scene_display_setup(void) {
+    trip_scene_script_resource_pointer_setup();
     D_8013BFFC = D_8013C530;
     D_8013C000 = D_8013C66C;
     D_8013C004 = D_8013C7A8;
     D_800CA2E4 = 0;
     D_800CA2E8 = 0;
-    func_80133D60();
+    trip_ayako_scene_resource_pointer_setup();
     load_palette(D_8013BFE0, 0x11, 1, 2, 0);
     scene_still_show(D_8013BFE4, D_8013BFE8, D_8013BFEC, D_8013BFF0, D_8013BFF4, D_8013BFF8);
     scene_anim_show(D_8013BFD4, D_8013BFD8, D_8013BFD0, D_8013BFDC);
@@ -136,7 +136,7 @@ void func_8013425C(void) {
     mode_step_next();
 }
 
-void func_801343B0(void) {
+void trip_ayako_response_talk_run(void) {
     talk_tables = &D_800CA2E4;
     D_800CA138 = &D_800CA2E8;
     D_800CA13C = D_8013BFFC;
@@ -145,7 +145,7 @@ void func_801343B0(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8013442C(void) {
+void trip_ayako_default_talk_run(void) {
     talk_tables = (u8 *) &D_800CA2E4;
     D_800CA138 = (u8 *) &D_800CA2E8;
     D_800CA13C = D_8013BFFC;

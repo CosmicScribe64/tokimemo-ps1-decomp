@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80132D00(void) {
+void new_year_result_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
@@ -11,34 +11,34 @@ void func_80132D00(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80132D88(void) {
+void new_year_outcome_sound(void) {
     audio_command(0x603);
     mode_step_next();
 }
 
-void func_80132DB0(void) {
-    strcpy(D_800CA1DC, "正月");
+void new_year_outcome_title_set(void) {
+    strcpy(scene_place_title_2, "正月");
     mode_step_next();
 }
 
-void func_80132DE4(void) {
+void new_year_outcome_background_read(void) {
     bg_read_sub2(0x4144);
     mode_step_next();
 }
 
-void func_80132E0C(void) {
+void new_year_outcome_voice_select(void) {
     if (D_80122CDC != 0) {
         if ((game_state.current_girl == GIRL_YUINA) || (game_state.current_girl == GIRL_MIRA) || (game_state.current_girl == GIRL_YUKO) || (game_state.current_girl == GIRL_MEGUMI) || (game_state.current_girl == GIRL_YUMI)) {
-            func_80083418();
+            face_expression_4();
             return;
         }
-        func_800833F0();
+        face_expression_3();
         return;
     }
     mode_step_next();
 }
 
-void func_80132E8C(void) {
+void new_year_outcome_parameters_apply(void) {
     if (D_80122CDC != 0) {
         D_80143B00 += 1;
         game_state.girls[game_state.current_girl].affection -= 1;
@@ -51,7 +51,7 @@ void func_80132E8C(void) {
     mode_step_next();
 }
 
-void func_80132F90(void) {
+void new_year_outcome_mode_select(void) {
     if (D_80122CDC == 0) {
         mode_stage_set(3);
         return;
@@ -59,7 +59,7 @@ void func_80132F90(void) {
     mode_step_next();
 }
 
-void func_80132FCC(void) {
+void new_year_girl_portrait_load(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         portrait_read_start(0x571A);

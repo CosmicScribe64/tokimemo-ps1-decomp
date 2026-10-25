@@ -12,38 +12,38 @@ typedef struct {
 } FnTbl19; /* size 0x4C */
 extern FnTbl19 D_80147D64;
 
-void func_8013CDD0(void) {
+void annual_yukari_scene_substate_dispatch(void) {
     if (D_801474B8 == 0) {
-        func_8013CE0C();
+        annual_yukari_scene_group_a_step_dispatch();
         return;
     }
-    func_8013CEB0();
+    annual_yukari_scene_group_b_step_dispatch();
 }
 
-void func_8013CE0C(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl25 tbl;
+void annual_yukari_scene_group_a_step_dispatch(void) {
+    s32 mode_step_index; /* declared before yukari_scene_callbacks: its stack slot sits above yukari_scene_callbacks (T-3330) */
+    FnTbl25 yukari_scene_callbacks;
 
-    tbl = D_80147D00;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    yukari_scene_callbacks = D_80147D00;
+    mode_step_index = D_800F647A;
+    yukari_scene_callbacks.f[mode_step_index]();
 }
 
-void func_8013CE88(void) {
+void annual_yukari_scene_sound_play(void) {
     func_80086AB0(0x502);
     func_8004DE1C();
 }
 
-void func_8013CEB0(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl19 tbl;
+void annual_yukari_scene_group_b_step_dispatch(void) {
+    s32 mode_step_index; /* declared before yukari_scene_callbacks: its stack slot sits above yukari_scene_callbacks (T-3330) */
+    FnTbl19 yukari_scene_callbacks;
 
-    tbl = D_80147D64;
-    idx = D_800F647A;
-    tbl.f[idx]();
+    yukari_scene_callbacks = D_80147D64;
+    mode_step_index = D_800F647A;
+    yukari_scene_callbacks.f[mode_step_index]();
 }
 
-void func_8013CF2C(void) {
+void annual_yukari_scene_setup(void) {
     func_8004EDE0(1, 0);
     func_80054864(1);
     func_8004C670();
@@ -63,7 +63,7 @@ void func_8013CF2C(void) {
     func_8008FC10();
     /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-9120 */
     func_8008F618(*(u8 *)&D_800F62CF = 5);
-    func_8013A140();
+    annual_scene_mode_callback_addresses_init();
     D_8014749C = D_80147444;
     D_801474A0 = D_80147468;
     D_801474A4 = D_8014748C;
@@ -72,7 +72,7 @@ void func_8013CF2C(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_yukari_scenes.rodata", D_80145BE0);
 
-void func_8013D01C(void) {
+void annual_yukari_scene_text_state_reset(void) {
     D_801474A8 = 0;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145BE0);
@@ -81,19 +81,19 @@ void func_8013D01C(void) {
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_yukari_scenes.rodata", D_80145BEC);
 
-void func_8013D060(void) {
+void annual_yukari_scene_text_state_select(void) {
     D_801474A8 = 5;
     D_801474AC = 0;
     func_800BCE10(&D_800D92A0, &D_80145BEC);
     func_8004DE1C();
 }
 
-void func_8013D0A8(void) {
+void annual_yukari_scene_audio_play(void) {
     func_8008A0D4(0x4037);
     func_8004DE1C();
 }
 
-void func_8013D0D0(void) {
+void annual_yukari_scene_voice_select(void) {
     if (D_800F62CF == 5) {
         func_80072734(0x5F0E);
     } else {

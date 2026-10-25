@@ -2399,8 +2399,8 @@ void spot_place_neighborhood_park_branch_on_mood_00(void) {
 void spot_place_neighborhood_park_special_case_04(void) {
     u32 month_diff;
     u8 status;
-    EvShorts11 counts_a;
-    EvShorts11 counts_b;
+    SpotGirlChoiceModulusTable counts_a;
+    SpotGirlChoiceModulusTable counts_b;
     u8 first_clear;
     s32 heart;
 
@@ -2851,7 +2851,7 @@ void spot_outcome_apply_step(void) {
     s16 sp4A;
     s16 sp48;
     s32 padMid;
-    EvShorts5 sp38;
+    SpotOutcomeTermTable sp38;
 
     sp38 = spot_outcome_terms;
     func_8004A8EC((&spot_face_cells)[D_800EECBC]);

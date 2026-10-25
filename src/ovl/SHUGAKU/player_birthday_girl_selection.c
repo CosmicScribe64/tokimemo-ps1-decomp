@@ -1,4 +1,4 @@
-/* player_birthday_girl_selection.c: src/ovl/SHUGAKU/80133430.c:9-65; binds player-birthday visit scripts, loads AF43, dispatches stage7 callbacks and selects the best eligible girl in func_801337FC; called by 80136380.c:case7. Original object 0x80133430-0x80133D60 (config/objects/SHUGAKU.txt). */
+/* player_birthday_girl_selection.c: src/ovl/SHUGAKU/80133430.c:9-65; binds player-birthday visit scripts, loads AF43, dispatches stage7 callbacks and selects the best eligible girl in trip_low_status_companion_select; called by 80136380.c:case7. Original object 0x80133430-0x80133D60 (config/objects/SHUGAKU.txt). */
 #define MAIN_API_OVERRIDE_get_h_tokimeki /* u8 return narrows the metric byte on return (T-24122). */
 #define MAIN_API_OVERRIDE_get_h_yuukou   /* u8 return narrows the metric byte on return (T-24122). */
 #include "common.h"
@@ -7,7 +7,7 @@
 u8 get_h_tokimeki(s32 arg0);
 u8 get_h_yuukou(s32 arg0);
 
-void func_80133430(void) {
+void trip_scene_pointer_table_setup(void) {
     D_8013BE70 = 0x801B00DC;
     D_8013BE74 = 0x801B02AC;
     D_8013BE78 = 0x801B03C8;
@@ -49,41 +49,41 @@ void func_80133430(void) {
     D_8013BF08 = 0x801B155C;
 }
 
-void func_801336A4(void) {
+void trip_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl43 tbl;
+    TripTravelSceneCallbacks tbl;
 
     tbl = D_8013BF20;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80133720(void) {
+void trip_scene_sector_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80133430();
+    trip_scene_pointer_table_setup();
     mode_step_next();
 }
 
-void func_80133758(void) {
+void trip_scene_dialogue_setup(void) {
     talk_names_set(game_state.current_girl);
-    func_80133430();
-    func_80133A68();
-    if (*(u8 *)&D_800CA2F0 != 2) {
-        if (dec_bg_brightness != 0) {
-            D_800CA2F0 = 1;
+    trip_scene_pointer_table_setup();
+    trip_companion_dialogue_pointer_bind();
+    if (*(u8 *)&scene_trip_day_state != 2) {
+        if (bg_brightness != 0) {
+            scene_trip_day_state = 1;
         } else {
-            D_800CA2F0 = 0;
+            scene_trip_day_state = 0;
         }
     }
     D_8013BF18 = 0;
     D_8013BF1C = 0;
     mode_step_next();
-    if (*(u8 *)&D_800CA2F0 == 2) {
+    if (*(u8 *)&scene_trip_day_state == 2) {
         game_state.mode_step += 2;
     }
 }
 
-s32 func_801337FC(void) {
+s32 trip_low_status_companion_select(void) {
     s16 i;
     u8 best_i;
     u8 best_s;
@@ -94,7 +94,7 @@ s32 func_801337FC(void) {
     for (i = 0; i < 10; i++) {
         /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s5 (T-24122). */
         if (1) {}
-        if (D_800CA2B0[i] != 0) {
+        if (select_girl_menu_enabled[i] != 0) {
             s = get_g_zyotai_s(i) & 0x7F;
             /* FAKE: duplicate `s == best_s` shifts uopt's live-range priority between s and best_s (T-24122). */
             if (s < best_s ||
@@ -116,7 +116,7 @@ s32 func_801337FC(void) {
         /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $s7, 0xff` (T-24122). */
         game_state.current_girl = (best_i & 0) + best_i;
         talk_names_set(game_state.current_girl);
-        func_80133A68();
+        trip_companion_dialogue_pointer_bind();
         if (game_state.saved_game_mode != 6) {
             event_log_add(0xD, 0x26);
         } else {
@@ -144,7 +144,7 @@ s32 func_801337FC(void) {
     mode_step_next();
 }
 
-void func_80133A68(void) {
+void trip_companion_dialogue_pointer_bind(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_8013BF0C = D_8013BE74;
@@ -206,7 +206,7 @@ void func_80133A68(void) {
     }
 }
 
-void func_80133CD8(void) {
+void trip_companion_talk_run(void) {
     talk_tables = (u8 *) &D_8013BF18;
     D_800CA138 = (u8 *) &D_8013BF1C;
     D_800CA13C = D_8013BF0C;

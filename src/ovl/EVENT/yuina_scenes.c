@@ -106,7 +106,7 @@ void spot_yuina_scene1_run(void) {
 s32 spot_yuina_scene1_steps_run(void) {
     s32 pad;
     s32 v;
-    FnTbl42 tbl;
+    SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable tbl;
 
     tbl = spot_yuina_scene1_steps;
     tbl.f[D_800B1AF6](0x80);
@@ -369,7 +369,7 @@ void spot_yuina_scene5_bg_load_23(void) {
 
 void spot_yuina_scene2_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl41 tbl;
+    SpotYukoYuinaReiNozomiYumiAndConcertHallStepTable tbl;
 
     tbl = spot_yuina_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -385,7 +385,7 @@ void spot_yuina_scene2_assets_load_00(void) {
 
 void spot_yuina_scene3_run(void) {
     s32 idx; /* FAKE: unused, declared before tbl for its stack slot (T-3330) */
-    FnTbl39 tbl;
+    SpotShioriYuinaMioAndGameCenterStepTable tbl;
     u32 r;
 
     tbl = spot_yuina_scene3_steps;
@@ -441,7 +441,7 @@ void spot_yuina_scene3_se_play_16(void) {
 
 void spot_yuina_scene4_run(void) {
     s32 idx;
-    FnTbl39 tbl;
+    SpotShioriYuinaMioAndGameCenterStepTable tbl;
 
     tbl = spot_yuina_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -475,7 +475,7 @@ void spot_yuina_scene4_assets_load_00(void) {
 
 void spot_yuina_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl38 tbl;
+    SpotYuinaMiraAndYukariSceneStepTable tbl;
 
     tbl = spot_yuina_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

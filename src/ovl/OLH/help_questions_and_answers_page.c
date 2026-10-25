@@ -2,48 +2,48 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-void func_80132000(void) {
+void help_mode_stage_dispatch(void) {
     switch (game_state.mode_stage) {
     case 0x0:
-        func_80132114();
+        help_category_menu_draw();
         break;
     case 0x1:
-        func_80132294();
+        help_category_menu_input();
         break;
     case 0x2:
-        func_801323AC();
+        help_return_to_command_screen();
         break;
     case 0x10:
-        func_80132420();
+        help_system_settings_topic_dispatch();
         break;
     case 0x20:
-        func_80132FA0();
+        help_memory_card_topic_dispatch();
         break;
     case 0x30:
-        func_801364E0();
+        help_file_select_topic_dispatch();
         break;
     case 0x40:
-        func_80133B80();
+        help_biorhythm_topic_dispatch();
         break;
     case 0x50:
-        func_80134500();
+        help_icon_topic_dispatch();
         break;
     case 0x60:
-        func_80134F40();
+        help_subgame_topic_dispatch();
         break;
     case 0x70:
-        func_80135AC0();
+        help_small_tips_topic_dispatch();
         break;
     }
     hud_cursor_update();
     if (game_state.pad_pressed & PAD_START) {
         game_mode_set(GAME_MODE_COMMAND_SCREEN);
     }
-    func_801323CC();
+    help_background_gradient_draw();
     message_window_title_update();
 }
 
-void func_80132114(void) {
+void help_category_menu_draw(void) {
     s32 i;
     s32 r;
     u8 col; /* FAKE: the chain below through a local keeps 0xA0 in one register and gives the original's third word above the arrays; real source unknown. T-19005 */
@@ -72,7 +72,7 @@ void func_80132114(void) {
     mode_stage_next();
 }
 
-void func_80132294(void) {
+void help_category_menu_input(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -107,11 +107,11 @@ void func_80132294(void) {
     }
 }
 
-void func_801323AC(void) {
+void help_return_to_command_screen(void) {
     game_mode_set(GAME_MODE_COMMAND_SCREEN);
 }
 
-void func_801323CC(void) {
+void help_background_gradient_draw(void) {
     prim_gradient_rect(-0x90, -0x58, 0x120, 0xC4, 4, 0xA0A0A0, 2);
     dtd_on(4);
 }

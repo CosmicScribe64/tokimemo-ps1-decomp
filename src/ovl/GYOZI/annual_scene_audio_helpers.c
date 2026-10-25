@@ -1,13 +1,13 @@
 /* annual_scene_audio_helpers.c: ; src/ovl/GYOZI/80143AD0.c:43-109 updates scene audio and callback state. Original object 0x80143AD0-0x80145840 (config/objects/GYOZI.txt). */
-#define MAIN_API_OVERRIDE_func_8008FF60 /* s32 return (like DATE sibling scene_anim_show in main_api.h): consumes $v0 in ugen for func_801444CC and func_80145084 (T-24098) */
-#define GYOZI_OVERRIDE_func_80140050 /* s32 return consumes $v0 in ugen for func_8014494C (T-24098) */
+#define MAIN_API_OVERRIDE_func_8008FF60 /* s32 return (like DATE sibling scene_anim_show in main_api.h): consumes $v0 in ugen for annual_scene_falling_sprite_effect_init and annual_ijuin_mansion_effect_init (T-24098) */
+#define GYOZI_OVERRIDE_annual_result_talk_run_current_alt /* s32 return consumes $v0 in ugen for annual_scene_secondary_actor_update (T-24098) */
 #include "common.h"
 #include "ovl/GYOZI.h"
 
 s32 func_8008FF60();
-s32 func_80140050();
+s32 annual_result_talk_run_current_alt();
 
-void func_80143AD0(void) {
+void annual_scene_resource_addresses_set(void) {
     D_80148B60 = 0x801DA680;
     D_80148B64 = 0x801DA68C;
     D_80148B68 = 0x801DA72C;
@@ -24,7 +24,7 @@ void func_80143AD0(void) {
     D_80148B90 = 0x801D6000;
 }
 
-void func_80143BA0(void) {
+void annual_scene_resource_addresses_set_alt(void) {
     D_80148B94 = 0x801D2430;
     D_80148B98 = 0x801D2434;
     D_80148B9C = 0x801D2498;
@@ -41,7 +41,7 @@ void func_80143BA0(void) {
     D_80148B90 = 0x801CE000;
 }
 
-void func_80143C70(void) {
+void annual_scene_resource_addresses_set_second_alt(void) {
     D_80148BC0 = 0x801D22D0;
     D_80148BC4 = 0x801D22D8;
     D_80148BC8 = 0x801D233C;
@@ -60,7 +60,7 @@ typedef struct {
 } FnTbl39; /* size 0x9C */
 extern FnTbl39 D_80148EB4;
 
-void func_80143D20(void) {
+void annual_scene_effect_callback_update(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl39 tbl;
 
@@ -78,10 +78,10 @@ void func_80143D20(void) {
             }
         }
     }
-    func_80144018();
+    annual_scene_falling_sprite_effect_update();
 }
 
-void func_80143E08(void) {
+void annual_scene_effect_timer_update(void) {
     u32 r;
     u8 flag;
 
@@ -93,18 +93,18 @@ void func_80143E08(void) {
     if (((u32)D_800F6474 < 0x73U || (u32)D_800F6474 % 60U != 6) && !((u8)D_8012B8C2 & 1)) {
         flag = 0;
     }
-    func_80140050();
+    annual_result_talk_run_current_alt();
     if (flag == 0 && D_8012E668 != 0) {
         D_8012B8C2 = 0;
     }
 }
 
-void func_80143EB8(void) {
+void annual_scene_effect_audio_206(void) {
     func_80086AB0(0x206);
     func_8004DE1C();
 }
 
-void func_80143EE0(void) {
+void annual_scene_effect_state_init(void) {
     D_80148BEC = func_8005B28C();
     D_8012E68C = 0x72;
     func_8005B264(0x1E);
@@ -112,32 +112,32 @@ void func_80143EE0(void) {
     func_8004DE1C();
 }
 
-void func_80143F2C(void) {
+void annual_scene_effect_state_restore(void) {
     func_8005B264(D_80148BEC);
     func_8005AEFC(1);
     func_8004DE1C();
 }
 
-void func_80143F64(void) {
+void annual_scene_background_draw(void) {
     func_8004F860(0x280, 0, 0x40, 0x80, D_80148B90);
     D_800F65C0 = 1;
     func_8004DE1C();
 }
 
-void func_80143FAC(void) {
+void annual_scene_background_resource_load(void) {
     func_80051DD8(0x55, 0x801B0000, 0x7D78);
-    func_80143AD0();
+    annual_scene_resource_addresses_set();
     func_8004DE1C();
 }
 
-void func_80143FE4(void) {
+void annual_scene_effect_counter_init(void) {
     D_80148EAC = 1;
     D_8012CAD4 = -0x64;
     func_8004DE1C();
 }
 
 /* Fall-through s32 return retains the early-exit return 0. T-24098 */
-s32 func_80144018(void) {
+s32 annual_scene_falling_sprite_effect_update(void) {
     s16 i;
 
     if (D_80148EAC == 0) {
@@ -192,7 +192,7 @@ s32 func_80144018(void) {
     D_80148EB0 += 1;
 }
 
-void func_801444CC(void) {
+void annual_scene_falling_sprite_effect_init(void) {
     s16 i;
 
     func_800BCE90(D_800F6468);
@@ -200,8 +200,8 @@ void func_801444CC(void) {
     D_800D9254 = 0;
     func_80089200();
     func_8008F618(D_800F62CF);
-    func_80143AD0();
-    func_8013ED84();
+    annual_scene_resource_addresses_set();
+    annual_scene_group_text_command_addresses_init();
     D_80148628 = D_8014829C;
     D_8014862C = D_801483D4;
     D_80148630 = D_8014850C;
@@ -245,7 +245,7 @@ void func_801444CC(void) {
     func_8004DE1C();
 }
 
-void func_801447BC(void) {
+void annual_callback_audio_46b9(void) {
     func_8008A0D4(0x46B9);
     func_80090960(4, 2);
     func_8004DE1C();
@@ -256,44 +256,44 @@ typedef struct {
 } FnTbl51; /* size 0xCC */
 extern FnTbl51 D_80148F50;
 
-void func_801447F0(void) {
+void annual_scene_secondary_effect_update(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl51 tbl;
 
     tbl = D_80148F50;
     idx = D_800F647A;
     tbl.f[idx](0x80);
-    func_80144B70();
+    annual_scene_falling_sprite_effect_update_alt();
 }
 
-void func_8014486C(void) {
+void annual_callback_audio_5be4(void) {
     func_80072734(0x5BE4);
     func_8004DE1C();
 }
 
-void func_80144894(void) {
+void annual_callback_effect_207(void) {
     func_80086AB0(0x207);
     func_8004DE1C();
 }
 
-void func_801448BC(void) {
+void annual_callback_effect_mode_5(void) {
     func_8008E408(5);
     func_8004DE1C();
 }
 
-void func_801448E4(void) {
+void annual_scene_alt_background_resource_load(void) {
     func_80051DD8(0x45, 0x801B0000, 0x825C);
-    func_80143BA0();
+    annual_scene_resource_addresses_set_alt();
     func_8004DE1C();
 }
 
-void func_8014491C(void) {
+void annual_scene_effect_flag_clear(void) {
     D_8012B94B &= 0x7F;
     func_8004DE1C();
 }
 
-void func_8014494C(void) {
-    func_80140050();
+void annual_scene_secondary_actor_update(void) {
+    annual_result_talk_run_current_alt();
     if (D_800F6474++ == 0) {
         /* FAKE: the original has two identical block-copy loops here (both in State B, the state at
          * entry), and one copy line gives one loop; the repeated line is the only form found that
@@ -310,7 +310,7 @@ void func_8014494C(void) {
     }
 }
 
-void func_80144A74(void) {
+void annual_scene_target_result_update(void) {
     if (D_8012E66C == 0) {
         D_800F647A += 0x18;
         return;
@@ -322,14 +322,14 @@ void func_80144A74(void) {
     func_8004DE1C();
 }
 
-void func_80144B28(void) {
+void annual_scene_alt_background_draw(void) {
     func_8004F860(0x280, 0, 0x40, 0x80, D_80148B90);
     D_800F65C0 = 1;
     func_8004DE1C();
 }
 
 /* Fall-through s32 return retains the early-exit return 0. T-24098 */
-s32 func_80144B70(void) {
+s32 annual_scene_falling_sprite_effect_update_alt(void) {
     s16 i;
     s16 count;
 
@@ -395,20 +395,20 @@ s32 func_80144B70(void) {
     D_80148EB0 += 1;
 }
 
-void func_80145084(void) {
+void annual_ijuin_mansion_effect_init(void) {
     s16 i;
 
     D_800D9250 = 0;
     D_800D9254 = 0;
     func_80089200();
-    func_8013ED84();
+    annual_scene_group_text_command_addresses_init();
     func_8008F618(D_800F62CF);
-    func_80143BA0();
+    annual_scene_resource_addresses_set_alt();
     func_8004EE18(D_80148BA4, 0x11, 1, 2, 0);
     func_8008FD1C(D_80148BA8, D_80148BAC, D_80148BB0, D_80148BB4, D_80148BB8, D_80148BBC);
     func_8008FF60(D_80148B98, D_80148B9C, D_80148B94, D_80148BA0);
     D_8012B8C0[0].unk_04 = D_8012B8C0[1].unk_04 = 8;
-    func_8013ED84();
+    annual_scene_group_text_command_addresses_init();
     D_80148628 = D_801482F8;
     D_8014862C = D_80148430;
     D_80148630 = D_80148568;
@@ -446,14 +446,14 @@ void func_80145084(void) {
     func_8004DE1C();
 }
 
-void func_80145350(void) {
+void annual_callback_audio_46b1(void) {
     func_8008A0D4(0x46B1);
     func_80090960(4, 3);
     func_8004DE1C();
 }
 
 /* Return type preserves the original fall-through schedule. T-20006. */
-s32 func_80145384(void) {
+s32 annual_scene_mansion_effect_update(void) {
     s32 idx; /* Index precedes the copied table (T-3330, T-20006). */
     GzCallbacksBC table;
 
@@ -472,7 +472,7 @@ s32 func_80145384(void) {
         D_8012B8C0[2].draw_flags |= 0x80;
         D_8012B8C0[2].brightness = D_8012B8C0[0].brightness;
         if ((u32)D_800F6468 % 300U == 0) {
-            func_80145520();
+            annual_callback_effect_504();
             D_8012B8C0[2].flags = 3;
         }
     } else {
@@ -480,22 +480,22 @@ s32 func_80145384(void) {
     }
 }
 
-void func_801454F8(void) {
+void annual_callback_effect_205(void) {
     func_80086AB0(0x205);
     func_8004DE1C();
 }
 
-void func_80145520(void) {
+void annual_callback_effect_504(void) {
     func_80086AB0(0x504);
 }
 
-void func_80145540(void) {
+void annual_scene_third_resource_load(void) {
     func_80051DD8(0x45, 0x801B0000, 0x88B4);
-    func_80143C70();
+    annual_scene_resource_addresses_set_second_alt();
     func_8004DE1C();
 }
 
-void func_80145578(void) {
+void annual_scene_effect_state_reset(void) {
     D_8012B960 = 0;
     D_8012B950 = 0;
     D_8012B94A = 3;
@@ -503,11 +503,11 @@ void func_80145578(void) {
     func_8004DE1C();
 }
 
-void func_801455BC(void) {
+void annual_neighborhood_park_effect_init(void) {
     D_800D9250 = 0;
     D_800D9254 = 0;
     func_8008F618(D_800F62CF);
-    func_8013ED84();
+    annual_scene_group_text_command_addresses_init();
     D_80148628 = D_80148358;
     D_8014862C = D_80148490;
     D_80148630 = D_801485C8;
@@ -518,10 +518,10 @@ void func_801455BC(void) {
     func_800BCE10(&D_800D92A0, "近所の公園");
 }
 
-void func_8014569C(void) {
+void annual_scene_tertiary_actor_group_init(void) {
     D_800F6600 = -1;
     D_800F6680 = -1;
-    func_80143C70();
+    annual_scene_resource_addresses_set_second_alt();
     func_8004EE18(D_80148BD0, 0x11, 1, 2, 0);
     func_8008FD1C(D_80148BD4, D_80148BD8, D_80148BDC, D_80148BE0, D_80148BE4, D_80148BE8);
     func_8008FF60(D_80148BC4, D_80148BC8, D_80148BC0, D_80148BCC);
@@ -535,12 +535,12 @@ void func_8014569C(void) {
     func_8004DE1C();
 }
 
-void func_801457D8(void) {
+void annual_callback_audio_4280(void) {
     func_8008A0D4(0x4280);
     func_8004DE1C();
 }
 
-void func_80145800(void) {
+void annual_callback_audio_4718(void) {
     func_8008A0D4(0x4718);
     func_80090960(4, 4);
     func_8004DE1C();

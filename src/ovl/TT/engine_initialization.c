@@ -147,5 +147,5 @@ void tt_video_init(void) {
 }
 
 void tt_vram_clear(void) {
-    func_8004111C();
+    vram_clear_framebuffers();
 }

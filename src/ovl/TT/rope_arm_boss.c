@@ -983,7 +983,7 @@ void tt_boss1_update(void) {
             audio_command(0x71);
         } else if (*(u16 *)(core + 4) == 0) {
             audio_command(0xB1);
-            func_800451E0(0x8019A000);
+            cd_load_destination_base_set(0x8019A000);
             audio_command(0x12);
             audio_command(0x23);
             audio_command(0x2E);

@@ -746,7 +746,7 @@ void tt_state_title(void) {
     case 3:
         if (*(u16 *)(tt_sys + 0xA4) != 0) {
             *(u16 *)(sys + 0xA4) = 0;
-            if (func_80044F94(1) != 0) {
+            if (audio_bank_transfer_done(1) != 0) {
                 *(u16 *)(s + 2) += 1;
             }
         }

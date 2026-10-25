@@ -106,7 +106,7 @@ void spot_saki_scene1_run(void) {
 
 void spot_saki_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl35 tbl;
+    SpotYukoSakiCentralParkAndZooStepTable tbl;
 
     tbl = spot_saki_scene1_steps;
     idx = D_800B1AF6;
@@ -291,7 +291,7 @@ void spot_saki_scene5_bg_load_32(void) {
 
 void spot_saki_scene2_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl37 tbl;
+    SpotReiSakiArtMuseumAndPoolStepTable tbl;
 
     tbl = spot_saki_scene2_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -323,7 +323,7 @@ void spot_saki_scene2_branch_16(void) {
 
 void spot_saki_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl55 tbl;
+    SpotNozomiSakiAndYumiSceneStepTable tbl;
 
     tbl = spot_saki_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
@@ -347,7 +347,7 @@ void spot_saki_scene3_assets_load_00(void) {
 
 void spot_saki_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl40 tbl;
+    SpotMiraYukariNozomiAndSakiSceneStepTable tbl;
 
     tbl = spot_saki_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -371,7 +371,7 @@ void spot_saki_scene4_assets_load_00(void) {
 
 void spot_saki_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl51 tbl;
+    SpotReiMiraAndSakiSceneStepTable tbl;
 
     tbl = spot_saki_scene5_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

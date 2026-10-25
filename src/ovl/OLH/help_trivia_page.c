@@ -2,42 +2,42 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-void func_80135AC0(void) {
+void help_small_tips_topic_dispatch(void) {
     switch (game_state.mode_step) {
     case 0x0:
-        func_80135B8C();
+        help_small_tips_menu_draw();
         break;
     case 0x1:
-        func_80135CB4();
+        help_small_tips_menu_input();
         break;
     case 0x10:
-        func_80135DD4();
+        help_small_tips_page_1_render();
         break;
     case 0x20:
-        func_80135EC0();
+        help_small_tips_page_2_render();
         break;
     case 0x30:
-        func_80136000();
+        help_small_tips_page_3_render();
         break;
     case 0x40:
-        func_80136124();
+        help_small_tips_page_4_render();
         break;
     case 0x50:
-        func_80136210();
+        help_small_tips_page_5_render();
         break;
     case 0x60:
-        func_801362C4();
+        help_small_tips_page_6_render();
         break;
     case 0x70:
-        func_801363CC();
+        help_small_tips_page_7_render();
         break;
     }
 }
 
-void func_80135B8C(void) {
+void help_small_tips_menu_draw(void) {
     s32 i;
     s32 r;
-    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame 0xC0; same as OLH func_801324EC. T-19005 */
+    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame 0xC0; same as OLH help_system_settings_menu_draw. T-19005 */
     s16 a[8];
     s16 b[8];
     s16 c[8];
@@ -57,7 +57,7 @@ void func_80135B8C(void) {
     mode_step_next();
 }
 
-void func_80135CB4(void) {
+void help_small_tips_menu_input(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -94,7 +94,7 @@ void func_80135CB4(void) {
     }
 }
 
-s32 func_80135DD4(void) {
+s32 help_small_tips_page_1_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -113,7 +113,7 @@ s32 func_80135DD4(void) {
     }
 }
 
-s32 func_80135EC0(void) {
+s32 help_small_tips_page_2_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -135,7 +135,7 @@ s32 func_80135EC0(void) {
     }
 }
 
-s32 func_80136000(void) {
+s32 help_small_tips_page_3_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -156,7 +156,7 @@ s32 func_80136000(void) {
     }
 }
 
-s32 func_80136124(void) {
+s32 help_small_tips_page_4_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -175,7 +175,7 @@ s32 func_80136124(void) {
     }
 }
 
-s32 func_80136210(void) {
+s32 help_small_tips_page_5_render(void) {
     switch (game_state.substep) {                           /* irregular */
     case 0:
         k_sub_reset();
@@ -192,7 +192,7 @@ s32 func_80136210(void) {
     }
 }
 
-s32 func_801362C4(void) {
+s32 help_small_tips_page_6_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -212,7 +212,7 @@ s32 func_801362C4(void) {
     }
 }
 
-s32 func_801363CC(void) {
+s32 help_small_tips_page_7_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();

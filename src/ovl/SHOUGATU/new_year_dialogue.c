@@ -1,25 +1,25 @@
 /* new_year_dialogue.c: ; src/ovl/SHOUGATU/801330C0.c:31-70 selects and prepares New Year talk tables. Original object 0x801330C0-0x80133D10 (config/objects/SHOUGATU.txt). */
-#define MAIN_API_OVERRIDE_talk_names_set /* Word argument at this call (func_80133760); T-17500. */
+#define MAIN_API_OVERRIDE_talk_names_set /* Word argument at this call (new_year_target_dialogue_setup); T-17500. */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 void talk_names_set();
 
-void func_801330C0(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl60 tbl;
+void new_year_dialogue_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before new_year_dialogue_callbacks: its stack slot sits above new_year_dialogue_callbacks (T-3330) */
+    FnTbl60 new_year_dialogue_callbacks;
 
-    tbl = D_80143BC4;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    new_year_dialogue_callbacks = D_80143BC4;
+    mode_step_index = game_state.mode_step;
+    new_year_dialogue_callbacks.f[mode_step_index](0x80);
 }
 
-void func_80133134(void) {
+void new_year_dialogue_prompt_sound(void) {
     audio_command(0x603);
     mode_step_next();
 }
 
-s32 func_8013315C(void) {
-    func_801323D4();
+s32 new_year_dialogue_first_tick_audio(void) {
+    new_year_talk_run_current();
     if (game_state.mode_step_timer.w++ == 0) {
         if (((u8 **)D_80143AF8)[D_80143B00][D_80143B04 - 1] == 7) {
             if (strcmp(((s32 **)D_80143AF4)[D_80143B00][D_80143B04 - 1], "ガチャ") == 0) {
@@ -29,7 +29,7 @@ s32 func_8013315C(void) {
     }
 }
 
-s32 func_80133208(void) {
+s32 new_year_dialogue_phone_digit_audio(void) {
     s32 sound_id;
 
     if ((game_state.pad_pressed & 0x400040) &&
@@ -38,7 +38,7 @@ s32 func_80133208(void) {
         audio_command(0x1508);
         D_80122D00 = 0;
         k_reset(1);
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         D_80143B04 = 4;
     } else {
         if ((check_end_k() != 0) && (D_80143B04 < 5)) {
@@ -68,14 +68,14 @@ s32 func_80133208(void) {
             k_reset(1);
         }
     }
-    func_801323D4();
+    new_year_talk_run_current();
     if ((D_80143B04 < 5) && (game_state.mode_step_timer.w == 1)) {
         audio_command(0x608);
     }
     game_state.mode_step_timer.w += 1;
 }
 
-s32 func_801333F0(void) {
+s32 new_year_dialogue_input_update_short(void) {
     s32 sound_id;
 
     if ((game_state.pad_pressed & 0x400040) &&
@@ -84,7 +84,7 @@ s32 func_801333F0(void) {
         audio_command(0x1508);
         D_80122D00 = 0;
         k_reset(1);
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         D_80143B04 = 2;
     } else {
         if ((check_end_k() != 0) && (D_80143B04 < 3)) {
@@ -114,7 +114,7 @@ s32 func_801333F0(void) {
             k_reset(1);
         }
     }
-    func_801323D4();
+    new_year_talk_run_current();
     if ((D_80143B04 < 3) && (game_state.mode_step_timer.w == 1)) {
         /* FAKE: preserve the original unchanged halfword store. T-24052. */
         D_80143B04 = D_80143B04;
@@ -129,8 +129,8 @@ s32 func_801333F0(void) {
     game_state.mode_step_timer.w += 1;
 }
 
-void func_80133610(void) {
-    strcpy(D_800CA1DC, "正月");
+void new_year_dialogue_resource_state_init(void) {
+    strcpy(scene_place_title_2, "正月");
     D_80143BC0 = 0;
     D_80143B20 = 0;
     D_80143B18 = 1;
@@ -141,34 +141,34 @@ void func_80133610(void) {
     mode_step_next();
 }
 
-void func_80133698(void) {
+void new_year_dialogue_background_select(void) {
     if (D_80143B14 == 0) {
         bg_read_sub2(0x4167);
-        strcpy(D_800CA19C, "正月");
+        strcpy(scene_place_title, "正月");
         k_reset(0);
-        message_window_set_title(D_800CA19C);
+        message_window_set_title(scene_place_title);
     } else {
         game_state.mode_step += 3;
     }
     mode_step_next();
 }
 
-void func_80133710(void) {
+void new_year_dialogue_background_read_primary(void) {
     bg_read_sub2(0x4167);
     mode_step_next();
 }
 
-void func_80133738(void) {
+void new_year_dialogue_background_read_alternate(void) {
     bg_read_sub2(0x4144);
     mode_step_next();
 }
 
-s32 func_80133760(void) {
+s32 new_year_target_dialogue_setup(void) {
     s32 girl;
     u8 previous;
 
     if (D_80122CDC == 0xB) {
-        func_8013397C();
+        new_year_dialogue_fallback_table_setup();
         return 0;
     }
     girl = D_80122CDC;
@@ -187,7 +187,7 @@ s32 func_80133760(void) {
         return 0;
     }
     game_state.current_girl = (u8)girl;
-    func_80132A34();
+    new_year_girl_dialogue_tables_select();
     talk_names_set(game_state.current_girl);
     D_80143B00 = 9;
     mode_step_next();
@@ -195,7 +195,7 @@ s32 func_80133760(void) {
     mode_step_next();
 }
 
-void func_80133874(void) {
+void new_year_dialogue_group_reset(void) {
     D_80143B00 = 7;
     D_80143AF4 = D_80143A48;
     D_80143AF8 = D_80143A84;
@@ -204,7 +204,7 @@ void func_80133874(void) {
     game_state.mode_step -= 5;
 }
 
-void func_801338DC(void) {
+void new_year_dialogue_status_branch_update(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if (((u8)get_g_zyotai_s(game_state.current_girl) & 0x7F) != 4) {
         D_80143B00 += 1;
@@ -216,14 +216,14 @@ void func_801338DC(void) {
     mode_step_next();
 }
 
-void func_80133948(void) {
+void new_year_dialogue_conditional_step_advance(void) {
     if (D_80122CDC == 0) {
         mode_step_next();
     }
     mode_step_next();
 }
 
-void func_8013397C(void) {
+void new_year_dialogue_fallback_table_setup(void) {
     D_80143B20 = 1;
     D_80143B00 = 0;
     D_80143AF4 = D_80143A40;
@@ -232,7 +232,7 @@ void func_8013397C(void) {
     mode_stage_next();
 }
 
-void func_801339DC(void) {
+void new_year_dialogue_status_group_update(void) {
     s32 temp_t6;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
@@ -251,12 +251,12 @@ void func_801339DC(void) {
     mode_step_next();
 }
 
-void func_80133A60(void) {
+void new_year_dialogue_group_select_0x27(void) {
     D_80143B00 = 0x27;
     mode_step_next();
 }
 
-void func_80133A88(void) {
+void new_year_shrine_invitation_outcome_update(void) {
     if (D_80122CDC != 0) {
         D_80143B00 += 1;
         game_state.girls[0].tokimeki -= 1;
@@ -273,7 +273,7 @@ void func_80133A88(void) {
     mode_step_next();
 }
 
-void func_80133B44(void) {
+void new_year_shrine_invitation_prompt(void) {
     /* FAKE: two unused slots preserve the original local-buffer placement. T-24523 */
     s32 pad1;
     s32 pad2;
@@ -296,7 +296,7 @@ void func_80133B44(void) {
             game_state.substep = 1;
         }
         sp44 = game_state.mode_step;
-        func_801323D4();
+        new_year_talk_run_current();
         if (sp44 != game_state.mode_step) {
             mode_stage_next();
         }
@@ -305,7 +305,7 @@ void func_80133B44(void) {
     }
 }
 
-void func_80133CDC(void) {
+void new_year_dialogue_group_select_0x0f(void) {
     D_80143B00 = 0xF;
     mode_step_next();
 }

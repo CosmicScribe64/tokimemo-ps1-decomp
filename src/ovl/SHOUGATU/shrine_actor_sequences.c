@@ -4,7 +4,7 @@
 #include "ovl/SHOUGATU.h"
 void talk_names_set();
 
-void func_80134120(void) {
+void new_year_shrine_actor_mode_step_dispatch(void) {
     void (**p)();
     FnTbl25 tbl;
 
@@ -21,7 +21,7 @@ void func_80134120(void) {
     tbl.f[game_state.mode_step](0x80);
 }
 
-void func_801341E4(void) {
+void new_year_shrine_saki_status_talk_gate(void) {
     u16 six;
     u32 result;
     u32 mode;
@@ -43,11 +43,11 @@ void func_801341E4(void) {
             }
         }
     }
-    func_801323D4();
+    new_year_talk_run_current();
 }
 
-void func_8013428C(void) {
-    func_801323D4();
+void new_year_shrine_conditional_audio_update(void) {
+    new_year_talk_run_current();
     if ((D_80143B04 == 2) && (game_state.substep == 0) && (D_8011ED5B & 0x80)) {
         audio_command(0x202);
         game_state.substep += 1;
@@ -58,12 +58,12 @@ void func_8013428C(void) {
     }
 }
 
-void func_80134340(void) {
+void new_year_shrine_date_girl_save(void) {
     game_state.date_girl = game_state.current_girl;
     mode_step_next();
 }
 
-void func_8013436C(void) {
+void new_year_shrine_background_and_log_setup(void) {
     if ((D_80143B20 == 0) && !(game_state.frame_count & 1) && (game_state.event_log[game_state.event_log_count - 1].scene != 5)) {
         if (D_80143B24 != 0) {
             event_log_add(5, 4);
@@ -75,16 +75,16 @@ void func_8013436C(void) {
     mode_step_next();
 }
 
-void func_80134400(void) {
+void new_year_shrine_choice_effect_apply(void) {
     s32 pad; /* FAKE: unused local declared first puts tbl at sp+0x28 as in the original; real source unknown. T-9340 */
     SjisStr3 tbl;
 
     tbl = D_80143D88;
     D_80143D20 = D_80122CDC;
     D_80143B00 += D_80122CDC;
-    strcpy(D_800CA250, tbl.s[D_80122CDC]);
+    strcpy(name_code_w, tbl.s[D_80122CDC]);
     if (D_80143B20 == 0 && game_state.date_girl == GIRL_AYAKO && D_80122CDC == 2) {
-        strcpy(D_800CA250, tbl.s[1]);
+        strcpy(name_code_w, tbl.s[1]);
     }
     if (D_80122CDC == 0) {
         game_state.param_liberal_arts.value += 0xA;
@@ -98,7 +98,7 @@ void func_80134400(void) {
     mode_step_next();
 }
 
-void func_80134554(void) {
+void new_year_shrine_choice_selector_adjust(void) {
     u8 sel = D_80143D20; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
@@ -114,7 +114,7 @@ void func_80134554(void) {
     mode_step_next();
 }
 
-void func_801345C8(void) {
+void new_year_shrine_status_choice_adjust(void) {
     s32 v;
 
     if (D_80143B20 == 0) {
@@ -131,7 +131,7 @@ void func_801345C8(void) {
     mode_step_next();
 }
 
-void func_80134648(void) {
+void new_year_shrine_status_choice_adjust_alt(void) {
     s32 v;
 
     if (D_80143B20 == 0) {
@@ -152,7 +152,7 @@ void func_80134648(void) {
     mode_step_next();
 }
 
-void func_801346E8(void) {
+void new_year_shrine_choice_step_skip(void) {
     if (D_80122CDC != 2) {
         mode_step_next();
         mode_step_next();
@@ -164,7 +164,7 @@ void func_801346E8(void) {
 /* FAKE: empty do loops and size ^ 0 preserve the two original multiplications
  * and temporary allocation; keep statement-per-line layout. Source unknown.
  * The word-argument prototype override above is required here. T-9520. */
-void func_80134730(void)
+void new_year_shrine_selected_girl_reward_apply(void)
 {
     u32 size;
     s32 index;
@@ -179,13 +179,13 @@ void func_80134730(void)
     mode_step_next();
 }
 
-void func_801347B4(void) {
+void new_year_shrine_choice_save(void) {
     D_80122CEC = D_80122CDC;
     mode_step_next();
 }
 
 /* FAKE: passing girl to talk_names_set colors the entry range to $a0, and the outer * 0 subtree reserves $v1 so game_state.current_girl is promoted to $a0 after get_g_zyotai_s without emitting instructions in ugen. T-24137 */
-void func_801347E0(void) {
+void new_year_shrine_date_girl_restore(void) {
     u32 state;
     s32 girl;
 

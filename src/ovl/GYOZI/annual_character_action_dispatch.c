@@ -17,22 +17,22 @@ typedef struct {
 } Word4; /* size 0x4 */
 extern Word4 D_80148970;
 
-void func_80143110(void) {
+void annual_character_state_word_store(void) {
     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
     func_8004DE1C();
 }
 
-void func_80143314(void);
-void func_801433E0(void);
-void func_80143520(void);
-void func_801435C4(void);
-void func_801436E4(void);
-void func_80143780(void);
-void func_80143858(void);
-void func_80143940(void);
-void func_801439F0(void);
+void annual_character_action_group16_dispatch(void);
+void annual_character_action_group14_dispatch(void);
+void annual_character_action_group10_dispatch(void);
+void annual_character_action_group14_secondary_dispatch(void);
+void annual_character_action_group12_dispatch(void);
+void annual_character_action_group17_dispatch(void);
+void annual_character_action_group17_secondary_dispatch(void);
+void annual_character_action_group11_dispatch(void);
+void annual_character_action_group11_secondary_dispatch(void);
 
-s16 func_80143160(void) {
+s16 annual_character_action_mode_step_dispatch(void) {
     if (D_800F647A == 0) {
         D_80148970 = *(Word4 *)&D_800F53A0.girl[D_800F53A0.unk_F2F].unk_08[0];
         D_800F53A0.girl[D_800F62CF].unk_0A = 0x32;
@@ -42,31 +42,31 @@ s16 func_80143160(void) {
         talk_voice_play();
         break;
     case 1:
-        func_80143314();
+        annual_character_action_group16_dispatch();
         break;
     case 2:
-        func_801433E0();
+        annual_character_action_group14_dispatch();
         break;
     case 3:
-        func_80143520();
+        annual_character_action_group10_dispatch();
         break;
     case 4:
-        func_801435C4();
+        annual_character_action_group14_secondary_dispatch();
         break;
     case 5:
-        func_801436E4();
+        annual_character_action_group12_dispatch();
         break;
     case 6:
-        func_80143780();
+        annual_character_action_group17_dispatch();
         break;
     case 7:
-        func_80143858();
+        annual_character_action_group17_secondary_dispatch();
         break;
     case 8:
-        func_80143940();
+        annual_character_action_group11_dispatch();
         break;
     case 9:
-        func_801439F0();
+        annual_character_action_group11_secondary_dispatch();
         break;
     case 10:
         talk_voice_play();
@@ -86,7 +86,7 @@ typedef struct {
 } FnTbl16; /* size 0x40 */
 extern FnTbl16 D_80148974;
 
-void func_80143314(void) {
+void annual_character_action_group16_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl16 tbl;
 
@@ -95,12 +95,12 @@ void func_80143314(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80143390(void) {
+void annual_character_action_counter_set_3_variant_1(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
-void func_801433B8(void) {
+void annual_character_action_sound_play_0500(void) {
     func_80086AB0(0x500);
     func_8004DE1C();
 }
@@ -110,7 +110,7 @@ typedef struct {
 } FnTbl14; /* size 0x38 */
 extern FnTbl14 D_801489B4;
 
-void func_801433E0(void) {
+void annual_character_action_group14_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl14 tbl;
 
@@ -119,19 +119,19 @@ void func_801433E0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80143468(void) {
+void annual_character_action_counter_set_3_variant_2(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
-void func_80143490(void) {
+void annual_character_action_counter_increment_flag3(void) {
     if (((u32) D_800F55CA >> 4) == 3) {
         D_80148620 += 1;
     }
     func_8004DE1C();
 }
 
-void func_801434D8(void) {
+void annual_character_action_counter_increment_not_flag3(void) {
     if (((u32) D_800F55CA >> 4) != 3) {
         D_80148620 += 1;
     }
@@ -143,7 +143,7 @@ typedef struct {
 } FnTbl10; /* size 0x28 */
 extern FnTbl10 D_801489EC;
 
-void func_80143520(void) {
+void annual_character_action_group10_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl10 tbl;
 
@@ -152,14 +152,14 @@ void func_80143520(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8014359C(void) {
+void annual_character_action_counter_set_3_variant_3(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
 extern FnTbl14 D_80148A14;
 
-void func_801435C4(void) {
+void annual_character_action_group14_secondary_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl14 tbl;
 
@@ -168,24 +168,24 @@ void func_801435C4(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8014364C(void) {
+void annual_character_action_sound_play_0501(void) {
     func_80086AB0(0x501);
     func_8004DE1C();
 }
 
-void func_80143674(void) {
+void annual_character_action_counter_increment_flag7(void) {
     if (((u32) D_800F563A >> 4) == 7) {
         D_80148620 += 3;
     }
     func_8004DE1C();
 }
 
-void func_801436BC(void) {
+void annual_character_action_counter_set_3_variant_4(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
-void func_801436E4(void) {
+void annual_character_action_group12_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl12 tbl;
 
@@ -194,12 +194,12 @@ void func_801436E4(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80143758(void) {
+void annual_character_action_counter_set_3_variant_5(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
-void func_80143780(void) {
+void annual_character_action_group17_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl17 tbl;
 
@@ -208,19 +208,19 @@ void func_80143780(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80143808(void) {
+void annual_character_action_counter_set_4(void) {
     D_80148620 = 4;
     func_8004DE1C();
 }
 
-void func_80143830(void) {
+void annual_character_action_sound_play_0505(void) {
     func_80086AB0(0x505);
     func_8004DE1C();
 }
 
 extern FnTbl17 D_80148AC0;
 
-void func_80143858(void) {
+void annual_character_action_group17_secondary_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl17 tbl;
 
@@ -229,14 +229,14 @@ void func_80143858(void) {
     tbl.f[idx](0x80);
 }
 
-void func_801438E0(void) {
+void annual_character_action_confirm_input_gate(void) {
     if (func_8005B32C() != 0) {
         func_8005B06C(1);
         func_8004DE1C();
     }
 }
 
-void func_80143918(void) {
+void annual_character_action_counter_set_3_variant_6(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
@@ -246,7 +246,7 @@ typedef struct {
 } FnTbl11; /* size 0x2C */
 extern FnTbl11 D_80148B04;
 
-void func_80143940(void) {
+void annual_character_action_group11_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl11 tbl;
 
@@ -255,14 +255,14 @@ void func_80143940(void) {
     tbl.f[idx](0x80);
 }
 
-void func_801439C8(void) {
+void annual_character_action_counter_set_3_variant_7(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
 extern FnTbl11 D_80148B30;
 
-void func_801439F0(void) {
+void annual_character_action_group11_secondary_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl11 tbl;
 
@@ -271,12 +271,12 @@ void func_801439F0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80143A78(void) {
+void annual_character_action_counter_set_3_variant_8(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
-void func_80143AA0(void) {
+void annual_character_action_voice_resource_play_5617(void) {
     func_80072734(0x5617);
     func_8004DE1C();
 }

@@ -31,7 +31,7 @@ void spot_yoshio_scene1_run(void) {
 
 void spot_yoshio_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl42 tbl;
+    SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable tbl;
 
     tbl = spot_yoshio_scene1_steps;
     func_80078950("s%d %d\n", D_800B1AF6, D_80094714);

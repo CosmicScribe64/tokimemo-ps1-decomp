@@ -1,9 +1,9 @@
-/* text_assets_and_camera.c: src/ovl/TACO/801430B0.c:4: number/text drawing, texture uploads, model setup/release, camera and asset-load requests; body 5: func_8004ACC8(0x800000); 20: if (arg0 < 0) {. Original object 0x801430B0-0x80143E80 (config/objects/TACO.txt). */
+/* text_assets_and_camera.c: src/ovl/TACO/801430B0.c:4: number/text drawing, texture uploads, model setup/release, camera and asset-load requests; body 5: prim_flash_color_wide(0x800000); 20: if (arg0 < 0) {. Original object 0x801430B0-0x80143E80 (config/objects/TACO.txt). */
 #include "common.h"
 #include "ovl/TACO.h"
 
 void shooter_flash_red(void) {
-    func_8004ACC8(0x800000);
+    prim_flash_color_wide(0x800000);
 }
 
 void shooter_draw_number(arg0, arg1, arg2, arg3)
@@ -37,13 +37,13 @@ s32 arg3;
                 sprite->r0 = 0x80;
                 sprite->g0 = 0x80;
                 sprite->b0 = 0x80;
-                sprite->x0 = game_state.screen_center_x[draw_buffer] + arg1 - xoff;
-                sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
+                sprite->x0 = game_state.draw_origin_x[draw_buffer] + arg1 - xoff;
+                sprite->y0 = game_state.draw_origin_y[draw_buffer] + arg2;
                 uv = &shooter_digit_uv[n % 10 * 2];
                 sprite->u0 = uv[0] + 0x80;
                 sprite->v0 = uv[1];
                 sprite->clut = func_8009ED74(arg3 * 0x10, 0x1EF);
-                AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+                AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
                 if (n < 10) {
                     break;
                 }
@@ -77,9 +77,9 @@ s32 arg3;
             sprite->r0 = 0x80;
             sprite->g0 = 0x80;
             sprite->b0 = 0x80;
-            sprite->x0 = game_state.screen_center_x[draw_buffer] + x;
+            sprite->x0 = game_state.draw_origin_x[draw_buffer] + x;
             x += 0xC;
-            sprite->y0 = game_state.screen_center_y[draw_buffer] + arg2;
+            sprite->y0 = game_state.draw_origin_y[draw_buffer] + arg2;
             if (*s >= 0x30 && *s < 0x3A) {
                 idx = *s - 0x30;
                 sprite->u0 = shooter_digit_uv[idx * 2] + 0x80;
@@ -106,7 +106,7 @@ s32 arg3;
             /* FAKE: w and h on one source line give the original's store order (h first) and the register for 0xC. T-16562 */
             sprite->w = 0xC; sprite->h = 0x10;
             sprite->clut = func_8009ED74(arg3 << 4, 0x1EF);
-            AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+            AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
         } while (*++s != 0);
     }
     dtd_on_tpage(0x340, 0x180, 1, 0, 0);
@@ -122,9 +122,9 @@ void shooter_draw_dot(s32 arg0, s32 arg1, s32 arg2) {
     /* FAKE: p[4] and p[5] on one source line give the original's store order 5, 4, 6 (line-based scheduling). T-6070 */
     p[4] = (arg2 >> 16) & 0xFF; p[5] = (arg2 >> 8) & 0xFF;
     p[6] = arg2 & 0xFF;
-    *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + arg0;
-    *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + arg1;
-    AddPrim((draw_buffer << 10) + 0x3C + D_800E8CA0, p);
+    *(s16 *)(p + 8) = game_state.draw_origin_x[draw_buffer] + arg0;
+    *(s16 *)(p + 0xA) = game_state.draw_origin_y[draw_buffer] + arg1;
+    AddPrim((draw_buffer << 10) + 0x3C + draw_ot_tags, p);
 }
 
 void shooter_menu_cursor_move(void) {
@@ -193,27 +193,27 @@ void shooter_init_actor_model(s32 arg0, s32 arg1, u8 *arg2) {
 }
 
 void shooter_set_white_lights(void) {
-    D_80122760 = 0;
+    view_light_0 = 0;
     D_80122764 = 0;
     D_80122768 = -0x64;
     D_8012276C = 0xFF;
     D_8012276D = 0xFF;
     D_8012276E = 0xFF;
-    func_8009AD70(0, &D_80122760);
-    D_80122770 = 0;
+    func_8009AD70(0, &view_light_0);
+    view_light_1 = 0;
     D_80122774 = 0x64;
     D_80122778 = -0x64;
     D_8012277C = 0xFF;
     D_8012277D = 0xFF;
     D_8012277E = 0xFF;
-    func_8009AD70(1, &D_80122770);
-    D_80122780 = -0x64;
+    func_8009AD70(1, &view_light_1);
+    view_light_2 = -0x64;
     D_80122784 = 0;
     D_80122788 = -0x64;
     D_8012278C = 0xFF;
     D_8012278D = 0xFF;
     D_8012278E = 0xFF;
-    func_8009AD70(2, &D_80122780);
+    func_8009AD70(2, &view_light_2);
     GsSetAmbient(0x800, 0x800, 0x800);
     func_8009B340(0);
 }
@@ -237,12 +237,12 @@ void shooter_release_all_actor_models(void) {
     s32 i;
 
     for (i = 2; i != 0xA0; i += 2) {
-        func_80059688(i);
+        view_model_record_init(i);
     }
 }
 
 void shooter_release_actor_model(s32 arg0) {
-    func_80059688((arg0 * 2) + 2);
+    view_model_record_init((arg0 * 2) + 2);
 }
 
 void shooter_process_load_request(void) {
@@ -301,7 +301,7 @@ void shooter_process_load_request(void) {
         shooter_load_request += 1;
         break;
     default:
-        if (func_80045288() == 1) {
+        if (cd_queue_idle() == 1) {
             shooter_load_request = 0;
         }
         break;

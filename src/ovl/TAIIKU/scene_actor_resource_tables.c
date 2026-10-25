@@ -1,16 +1,16 @@
 /* scene_actor_resource_tables.c: ; src/ovl/TAIIKU/80140810.c:9-12 establishes actor/resource tables for its scene handlers. Original object 0x80140810-0x80141280 (config/objects/TAIIKU.txt). */
-#define MAIN_API_OVERRIDE_func_80085368 /* callers ignore the result, the original calls it as int; blocks $v0 (T-16554) */
-#define MAIN_API_OVERRIDE_func_800853FC /* callers ignore the result, the original calls it as int (T-16554) */
+#define MAIN_API_OVERRIDE_scene_still_fade_in /* callers ignore the result, the original calls it as int; blocks $v0 (T-16554) */
+#define MAIN_API_OVERRIDE_scene_still_fade_out /* callers ignore the result, the original calls it as int (T-16554) */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-s32 func_80085368();
-s32 func_800853FC();
+s32 scene_still_fade_in();
+s32 scene_still_fade_out();
 
 /* FAKE: literal asset bases retain the independent source loads; named
  * declarations hoist their bases. The asset data is loaded outside this
  * overlay (T-3300, T-9720). */
-void func_80140810(void) {
+void sports_scene_actor_resource_addresses_init(void) {
     D_80149FB0 = 0x80180144;
     D_80149FB4 = 0x801820FC;
     D_80149FB8 = 0x80183E7C;
@@ -55,13 +55,13 @@ void func_80140810(void) {
     D_8014A054 = *(s16 *)0x8018EC74;
 }
 
-s32 func_80140A90(void) {
+s32 sports_mio_ground_scene_step(void) {
     s32 i;
 
     portrait_wink_update();
     switch (game_state.mode_step) {
     case 0:
-        D_80122EA0 = 0;
+        audio_bank_wait_done = 0;
         text_system_reset();
         tpage_buf_clear();
         game_state.tpage_buf[0x1A] = -1;
@@ -101,7 +101,7 @@ s32 func_80140A90(void) {
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
             talk_names_set(1U);
-            func_80141B70();
+            sports_mio_festival_talk_resource_addresses_init();
             talk_group = 0;
             talk_line = 0;
             talk_text_table = D_8014A0A0;
@@ -187,7 +187,7 @@ s32 func_80140A90(void) {
         break;
     case 22:
         if (cd_read_sync_status() & 1) {
-            func_80142180();
+            sports_mio_scene_picture_resource_addresses_init();
             load_palette(D_8014A0F0, 0x11, 1, 2, 0);
             scene_still_show(D_8014A0F4, D_8014A0F8, D_8014A0FC, D_8014A100, D_8014A104, D_8014A108);
             scene_anim_show(D_8014A0E4, D_8014A0E8, D_8014A0E0, (s32) D_8014A0EC);
@@ -203,7 +203,7 @@ s32 func_80140A90(void) {
         normal_date_speak();
         break;
     case 24:
-        func_80047550();
+        draw_shake_start();
         k_reset(1);
         set_kanji_string(-0x80, 0x32, 0, (s32) "ドシン", 0);
         audio_command(0x60A);
@@ -227,7 +227,7 @@ s32 func_80140A90(void) {
         }
         break;
     case 28:
-        func_80085368();
+        scene_still_fade_in();
         ((Actor *)actor_pool)[98].draw_flags |= 0x80;
         ((Actor *)actor_pool)[98].brightness += 4;
         if (((Actor *)actor_pool)[98].brightness >= 0x80) {
@@ -282,7 +282,7 @@ s32 func_80140A90(void) {
         normal_date_speak();
         break;
     case 37:
-        func_800853FC();
+        scene_still_fade_out();
         ((Actor *)actor_pool)[98].brightness -= 4;
         if (((Actor *)actor_pool)[98].brightness < 3) {
             ((Actor *)actor_pool)[98].brightness = 0;

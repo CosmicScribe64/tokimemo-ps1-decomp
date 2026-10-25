@@ -26,18 +26,18 @@ u8 flags;
     /* FAKE: explicit colour masks and comma grouping preserve renderer scheduling (T-20600, T-24041). */
     line->r0 = (c0 >> 16) & 0xFF, line->g0 = (c0 >> 8) & 0xFF, line->b0 = c0 & 0xFF;
     line->r1 = (c1 >> 16) & 0xFF, line->g1 = (c1 >> 8) & 0xFF, line->b1 = c1 & 0xFF;
-    line->x0 = g->screen_center_x[draw_buffer] + x0;
-    line->y0 = g->screen_center_y[draw_buffer] + y0;
-    line->x1 = g->screen_center_x[draw_buffer] + x1;
-    line->y1 = g->screen_center_y[draw_buffer] + y1;
-    AddPrim(&D_800E8CA0[(draw_buffer << 10) + ((flags & 0x7F) * 4)], line);
+    line->x0 = g->draw_origin_x[draw_buffer] + x0;
+    line->y0 = g->draw_origin_y[draw_buffer] + y0;
+    line->x1 = g->draw_origin_x[draw_buffer] + x1;
+    line->y1 = g->draw_origin_y[draw_buffer] + y1;
+    AddPrim(&draw_ot_tags[(draw_buffer << 10) + ((flags & 0x7F) * 4)], line);
 }
 
-void func_8004A14C(s32 arg0, RECT rect, s32 arg3) {
+void prim_fill_rect(s32 arg0, RECT rect, s32 arg3) {
     prim_gradient_rect(rect.x, rect.y, rect.w, rect.h, 1, arg3, 1);
 }
 
-void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
+void prim_bg_slot_setup(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x, s32 y, s32 flag, s32 tp) {
     BgLayer *bg;
     u8 cellh;
     s32 row;
@@ -56,7 +56,7 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
     bg->unk_10 = 0x80;
     bg->unk_11 = 0x80;
     bg->unk_12 = 0x80;
-    bg->unk_14 = (u32)&D_80122120[slot];
+    bg->unk_14 = (u32)&layer_bg_maps[slot];
     bg->unk_18 = 0;
     bg->unk_1A = 0;
     bg->unk_1C = 0x1000;
@@ -67,12 +67,12 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
     }
     bg->unk_20 = 0;
     /* Indexed, not through a map local: with four locals the cell and index spills land at sp+0x58/0x54. */
-    D_80122120[slot].cellw = 0x80;
-    D_80122120[slot].cellh = cellh;
-    D_80122120[slot].ncellw = w;
-    D_80122120[slot].ncellh = h;
-    D_80122120[slot].base = D_80122140[slot];
-    D_80122120[slot].index = D_80122540[slot].v;
+    layer_bg_maps[slot].cellw = 0x80;
+    layer_bg_maps[slot].cellh = cellh;
+    layer_bg_maps[slot].ncellw = w;
+    layer_bg_maps[slot].ncellh = h;
+    layer_bg_maps[slot].base = layer_bg_cells[slot];
+    layer_bg_maps[slot].index = layer_bg_cell_indices[slot].v;
     for (row = 0; row < h; row++) {
         for (col = 0; col < w; col++) {
             load_tpage_buf_lock(tp + col + row * 32, tex[row * w + col], 1);
@@ -80,12 +80,12 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
     }
     for (row = 0; row < h; row++) {
         for (col = 0; col < w; col++) {
-            D_80122540[slot].v[row * w + col] = row * w + col;
-            D_80122140[slot][row * w + col].u = 0;
-            D_80122140[slot][row * w + col].v = row * 0x78;
-            D_80122140[slot][row * w + col].tpage = tp + col;
-            D_80122140[slot][row * w + col].cba = func_8009ED74(0, clut);
-            D_80122140[slot][row * w + col].flag = 0;
+            layer_bg_cell_indices[slot].v[row * w + col] = row * w + col;
+            layer_bg_cells[slot][row * w + col].u = 0;
+            layer_bg_cells[slot][row * w + col].v = row * 0x78;
+            layer_bg_cells[slot][row * w + col].tpage = tp + col;
+            layer_bg_cells[slot][row * w + col].cba = func_8009ED74(0, clut);
+            layer_bg_cells[slot][row * w + col].flag = 0;
             if (row * w + col > 0x40) {
                 printf("BG_ERROR:p_line.c \n");
             }
@@ -94,7 +94,7 @@ void func_8004A1A0(s32 *tex, s32 slot, s32 count, s32 w, s32 h, s32 clut, s32 x,
     game_state.bg_layer_order[slot] = flag;
 }
 
-void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+void prim_disc_tiles(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     GameState *g;
     POLY_GT4 *poly;
     s32 x;
@@ -120,14 +120,14 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
                     /* FAKE: T-25122, hand expansions of the PsyQ macros setXYWH, setUVWH(poly, 0xC0, 0x50, 0x10, 0x10)
                      * and setRGB0..setRGB3, one comma statement per macro as they expand. One statement per field
                      * gives other saved-register colours, constant registers and store order (142 diff lines). */
-                    poly->x0 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2,
-                        poly->y0 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2,
-                        poly->x1 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2 + (s16)arg3,
-                        poly->y1 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2,
-                        poly->x2 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2,
-                        poly->y2 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2 + (s16)arg4,
-                        poly->x3 = g->screen_center_x[draw_buffer] + (s16)x - arg3 / 2 + (s16)arg3,
-                        poly->y3 = g->screen_center_y[draw_buffer] + (s16)y - arg4 / 2 + (s16)arg4;
+                    poly->x0 = g->draw_origin_x[draw_buffer] + (s16)x - arg3 / 2,
+                        poly->y0 = g->draw_origin_y[draw_buffer] + (s16)y - arg4 / 2,
+                        poly->x1 = g->draw_origin_x[draw_buffer] + (s16)x - arg3 / 2 + (s16)arg3,
+                        poly->y1 = g->draw_origin_y[draw_buffer] + (s16)y - arg4 / 2,
+                        poly->x2 = g->draw_origin_x[draw_buffer] + (s16)x - arg3 / 2,
+                        poly->y2 = g->draw_origin_y[draw_buffer] + (s16)y - arg4 / 2 + (s16)arg4,
+                        poly->x3 = g->draw_origin_x[draw_buffer] + (s16)x - arg3 / 2 + (s16)arg3,
+                        poly->y3 = g->draw_origin_y[draw_buffer] + (s16)y - arg4 / 2 + (s16)arg4;
                     poly->u0 = 0xC0, poly->v0 = 0x50,
                         poly->u1 = 0xC0 + 0x10, poly->v1 = 0x50,
                         poly->u2 = 0xC0, poly->v2 = 0x50 + 0x10,
@@ -137,9 +137,9 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
                     poly->r2 = 0x80, poly->g2 = 0x80, poly->b2 = 0x80;
                     poly->r3 = 0x80, poly->g3 = 0x80, poly->b3 = 0x80;
                     poly->tpage = func_8009ECB0(0, 0, 0x3C0, 0x100);
-                    poly->clut = func_8009ED74(g->screen_center_x[draw_buffer] + (s16)x + (rand() & 8),
-                                               (s16)y + g->screen_center_y[draw_buffer] + (rand() & 8));
-                    AddPrim(&D_800E8CA0[(draw_buffer << 10) + arg5 * 4], poly);
+                    poly->clut = func_8009ED74(g->draw_origin_x[draw_buffer] + (s16)x + (rand() & 8),
+                                               (s16)y + g->draw_origin_y[draw_buffer] + (rand() & 8));
+                    AddPrim(&draw_ot_tags[(draw_buffer << 10) + arg5 * 4], poly);
                 }
                 y += arg4;
             } while (y < arg1 + arg2);
@@ -147,7 +147,7 @@ void func_8004A414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     }
 }
 
-void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+void prim_glow_disc(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
     GameState *state;
     TILE *tile;
     s32 x;
@@ -181,11 +181,11 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
                     func_8009F0F4(tile);
                     SetSemiTrans(tile, 1);
                     state = &game_state;
-                    tile->x0 = state->screen_center_x[draw_buffer] + (s16)x - arg3 / 2;
+                    tile->x0 = state->draw_origin_x[draw_buffer] + (s16)x - arg3 / 2;
                     /* FAKE: T-24501, narrow only the stored 16-bit coordinate.
                      * The full-width y loop/distance values are unchanged. The
                      * erased conversion preserves original temporary allocation. */
-                    tile->y0 = state->screen_center_y[draw_buffer] + (s16)y - arg4 / 2;
+                    tile->y0 = state->draw_origin_y[draw_buffer] + (s16)y - arg4 / 2;
                     /* The target uses the x step for both dimensions. */
                     setWH(tile, arg3, arg3);
                     abs_x = abs(arg0 - x);
@@ -209,7 +209,7 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
                     tile->r0 = r;
                     tile->g0 = g;
                     tile->b0 = b;
-                    AddPrim(&D_800E8CA0[(draw_buffer << 10) + arg7 * 4], tile);
+                    AddPrim(&draw_ot_tags[(draw_buffer << 10) + arg7 * 4], tile);
                 }
                 y += arg4;
             } while (y < arg1 + arg2);
@@ -218,7 +218,7 @@ void func_8004A814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     dtd_on_tpage(0, 0, arg7, arg6 & 3, 0);
 }
 
-void func_8004AC18(s32 arg0) {
+void prim_flash_gray(s32 arg0) {
     s32 level;
     s32 color;
 
@@ -233,7 +233,7 @@ void func_8004AC18(s32 arg0) {
     dtd_on_tpage(0, 0, 1, 1, 1);
 }
 
-void func_8004ACC8(s32 arg0) {
+void prim_flash_color_wide(s32 arg0) {
     prim_gradient_rect(-0x100, -0x78, 0x100, 0xF0, 1, arg0, 0x81);
     prim_gradient_rect(0, -0x78, 0x100, 0xF0, 1, arg0, 0x81);
     dtd_on_tpage(0, 0, 1, 1, 1);

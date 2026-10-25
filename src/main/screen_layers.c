@@ -48,13 +48,13 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x1 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x2 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
+    poly->x0 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x, poly->y0 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x1 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y1 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x2 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x, poly->y2 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0xFF, poly->y3 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + arg8 * 4], poly);
 
     /* 1-pixel column after the left page */
     poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
@@ -70,13 +70,13 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = arg4 / 256 * 4 + 4, poly->v1 = 0,
         poly->u2 = arg4 / 256 * 4 + 3, poly->v2 = arg3->h,
         poly->u3 = arg4 / 256 * 4 + 4, poly->v3 = arg3->h;
-    poly->x0 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x1 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x2 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[draw_buffer] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
+    poly->x0 = g->draw_origin_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y0 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x1 = g->draw_origin_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 1, poly->y1 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x2 = g->draw_origin_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x, poly->y2 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->draw_origin_x[draw_buffer] - (arg4 & 0xFF) + arg3->x + 0x100, poly->y3 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4 - 4], poly);
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + arg8 * 4 - 4], poly);
 
     /* middle page */
     poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
@@ -92,13 +92,13 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x1 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x2 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
+    poly->x0 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y0 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x1 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y1 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x2 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x100, poly->y2 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x1FF, poly->y3 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + arg8 * 4], poly);
 
     /* 1-pixel column after the middle page */
     poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
@@ -114,13 +114,13 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = arg4 / 256 * 4 + 8, poly->v1 = 0,
         poly->u2 = arg4 / 256 * 4 + 7, poly->v2 = arg3->h,
         poly->u3 = arg4 / 256 * 4 + 8, poly->v3 = arg3->h;
-    poly->x0 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x1 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x2 = g->screen_center_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[draw_buffer] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
+    poly->x0 = g->draw_origin_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y0 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x1 = g->draw_origin_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x101, poly->y1 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x2 = g->draw_origin_x[draw_buffer] + (0xFF - (arg4 & 0xFF)) + arg3->x + 0x100, poly->y2 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->draw_origin_x[draw_buffer] - (arg4 & 0xFF) + arg3->x + 0x200, poly->y3 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, 0x3C0, 0);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + arg8 * 4], poly);
 
     /* right page */
     poly = (POLY_FT4 *)GetWorkBase(0x28, draw_buffer);
@@ -136,13 +136,13 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
         poly->u1 = 0xFF, poly->v1 = (arg0 & 0x20) * 4,
         poly->u2 = 0, poly->v2 = (arg0 & 0x20) * 4 + arg3->h,
         poly->u3 = 0xFF, poly->v3 = (arg0 & 0x20) * 4 + arg3->h;
-    poly->x0 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x1 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->screen_center_y[draw_buffer] + arg3->y,
-        poly->x2 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h,
-        poly->x3 = g->screen_center_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->screen_center_y[draw_buffer] + arg3->y + arg3->h;
+    poly->x0 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y0 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x1 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y1 = g->draw_origin_y[draw_buffer] + arg3->y,
+        poly->x2 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x200, poly->y2 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h,
+        poly->x3 = g->draw_origin_x[draw_buffer] + -(arg4 & 0xFF) + arg3->x + 0x2FF, poly->y3 = g->draw_origin_y[draw_buffer] + arg3->y + arg3->h;
     poly->tpage = func_8009ECB0(arg1, arg2 & 3, ((arg0 & 0xF) << 6) + (arg4 & 0x7F00) / divisor + pageWidth * 2, (arg0 & 0x10) * 0x10 + (arg0 & 0x20) * 4);
     poly->clut = func_8009ED74(arg6, arg7);
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + arg8 * 4], poly);
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + arg8 * 4], poly);
 }
 
 /* Matching notes (T-17015): the count and order of the 15 declared locals set the frame size and the
@@ -167,7 +167,7 @@ s32 srn_vram_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     SrnLayer *rec;
 
     func_8009C674(0);
-    rec = (SrnLayer *)(D_80121750 + arg0 * 0x28);
+    rec = (SrnLayer *)(layer_records + arg0 * 0x28);
     w0 = rec->unk_0E;
     h0 = rec->unk_0F;
     tw = rec->unk_10;
@@ -220,7 +220,7 @@ void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-/* Uploads one frame of tile-set record idx of D_801217A0 to VRAM. Each tile word holds a glyph number
+/* Uploads one frame of tile-set record idx of layer_tileset_records to VRAM. Each tile word holds a glyph number
  * (bits 16-23), a source index into p->unk_00 (bits 24-31) and the get_fnt flags (bits 0-7); get_fnt
  * expands the glyph into buf and LoadSquare copies buf into the texture page selected by page, at x / 2
  * plus the column offset, both divided by the record's mode ratio (1 or 2), and at y plus the row offset.
@@ -246,7 +246,7 @@ void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
     s32 ypos;
     s32 size;
 
-    p = (ModTileSet *)(D_801217A0 + idx * 0x14);
+    p = (ModTileSet *)(layer_tileset_records + idx * 0x14);
     if (p->unk_0E[0] == 8) {
         size = 8;
     } else {
@@ -352,7 +352,7 @@ void func_8004DAC4(s32 arg0) {
     s32 *p = &arg0;
 }
 
-/* Draws one frame of a tile-set record as 8x8 sprites: record idx of D_801217A0 holds a rows x cols
+/* Draws one frame of a tile-set record as 8x8 sprites: record idx of layer_tileset_records holds a rows x cols
  * grid per frame, each word the UV byte, the texture page index and the clut column of one tile.
  * search_tpage_multi is viewed as returning u16 here: the original compares the raw result with the
  * last page and keeps the narrowed copy (implicit int misses 51 lines).
@@ -379,8 +379,8 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 ypos;
     ModTileSet *p;
 
-    bright = func_8004901C();
-    p = (ModTileSet *)(D_801217A0 + idx * 0x14);
+    bright = draw_brightness_get();
+    p = (ModTileSet *)(layer_tileset_records + idx * 0x14);
     /* FAKE: T-25201, a dead store to idx after p is set; with idx changed, uopt does not copy-propagate
      * p's expression, so p is spilled at its own home (sp+0x6C) instead of a temporary one word lower */
     idx = 0;
@@ -434,7 +434,7 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
                 last = tpage;
             }
             s->clut = func_8009ED74(cx + clut * 16, cy);
-            AddPrim(D_800E8CA0 + (draw_buffer << 10) + pri * 4 + 4, s);
+            AddPrim(draw_ot_tags + (draw_buffer << 10) + pri * 4 + 4, s);
         }
     }
     goto_tpage((last & 0xF) << 6, (last & 0x10) << 4, pri + 1, 0, 0);
@@ -464,8 +464,8 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 mode;
     s32 padC[1];
 
-    bright = func_8004901C();
-    p = (ModTileSet *)(D_801217A0 + idx * 0x14);
+    bright = draw_brightness_get();
+    p = (ModTileSet *)(layer_tileset_records + idx * 0x14);
     /* FAKE: T-25104, one line per case so that as1 stores mode before the attribute in cases 3 to 5 */
     switch (p->unk_08) {
     case 0: sp.flags = 0x01000000; mode = 1; break;
@@ -518,7 +518,7 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
                     }
                     sp.unk_10 = cx + clut * 16;
                     sp.unk_12 = cy;
-                    func_80098B80(&sp, (u8 *)&D_800E8C70 + draw_buffer * 0x14, pri);
+                    func_80098B80(&sp, (u8 *)&draw_ot_table + draw_buffer * 0x14, pri);
                     col++;
                     data++;
                     cols = p->unk_0C;
@@ -601,7 +601,7 @@ s32 srn_set(s32 arg0) {
 void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
     u8 *p;
 
-    p = D_80121750 + arg0 * 0x28;
+    p = layer_records + arg0 * 0x28;
     p[0xD] = (arg1[0] & 0xFF00) >> 8;
     *(s16 *)(p + 2) = 0;
     *(s16 *)(p + 6) = 0;
@@ -610,7 +610,7 @@ void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
     p[0xE] = (arg1[1] & 0xFF000000) >> 24;
     p[0xF] = (arg1[1] & 0xFF0000) >> 16;
     p[0x10] = (arg1[1] & 0xFF00) >> 8;
-    /* FAKE: the no-op "& 0xFF" consumes one IDO temp number, as in func_8004E44C. T-4070 */
+    /* FAKE: the no-op "& 0xFF" consumes one IDO temp number, as in layer_tileset_init. T-4070 */
     p[0x11] = arg1[1] & 0xFF;
     p[0x12] = (arg1[2] & 0xFF000000) >> 24;
     p[0x13] = (arg1[2] & 0xFF0000) >> 16;
@@ -620,13 +620,13 @@ void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
     *(s16 *)(p + 0x18) = 0x1E0;
     *(u32 *)(p + 0x1C) = arg1[4];
     *(u32 *)(p + 0x20) = arg1[3];
-    *(u8 **)(p + 0x24) = D_801217A0 + arg2 * 0x14;
+    *(u8 **)(p + 0x24) = layer_tileset_records + arg2 * 0x14;
 }
 
-void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2) {
+void layer_tileset_init(s32 arg0, u32 *arg1, s32 arg2) {
     u8 *p;
 
-    p = D_801217A0 + arg0 * 0x14;
+    p = layer_tileset_records + arg0 * 0x14;
     *(s32 *)p = arg2;
     *(u32 **)(p + 4) = arg1 + 4;
     p[8] = (arg1[0] & 0xFF000000) >> 24;

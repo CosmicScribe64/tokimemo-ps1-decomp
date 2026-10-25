@@ -288,8 +288,8 @@ void calendar_screen_init(void) {
     D_80120688 = 0x40000000;
     D_80120653 = 0x84;
     D_8012065C = sprite_frame_table;
-    D_80120660 = D_800C9A14;
-    D_80120684 = D_800C9730;
+    D_80120660 = actor_default_sequence_table;
+    D_80120684 = actor_default_texture_blocks;
     D_80120664 = D_800C9A54;
     D_80120654 = 8;
     D_80120655 = 1;
@@ -338,8 +338,8 @@ void calendar_marks_build(void) {
         actor_pool[i + 0x61].quad_flags = 0;
         actor_pool[i + 0x61].draw_flags = 0x8C;
         actor_pool[i + 0x61].frame_table = sprite_frame_table;
-        actor_pool[i + 0x61].sequence_table = D_800C9A14;
-        actor_pool[i + 0x61].tpage_table = D_800C9730;
+        actor_pool[i + 0x61].sequence_table = actor_default_sequence_table;
+        actor_pool[i + 0x61].tpage_table = actor_default_texture_blocks;
         actor_pool[i + 0x61].unk_14 = D_800C9A54;
         actor_pool[i + 0x61].unk_04 = 8;
         actor_pool[i + 0x61].unk_05 = 1;
@@ -710,8 +710,8 @@ void data_save_load_class_init(void) {
     D_80120688 = 0x40000000;
     D_80120653 = 0x84;
     D_8012065C = sprite_frame_table;
-    D_80120660 = D_800C9A14;
-    D_80120684 = D_800C9730;
+    D_80120660 = actor_default_sequence_table;
+    D_80120684 = actor_default_texture_blocks;
     D_80120664 = D_800C9A54;
     D_80120654 = 8;
     D_80120655 = 1;
@@ -964,8 +964,8 @@ void hud_magazine_page_build(void) {
     actor_pool[96].quad_flags = 0x40000000;
     actor_pool[96].draw_flags = 0x84;
     actor_pool[96].frame_table = sprite_frame_table;
-    actor_pool[96].sequence_table = D_800C9A14;
-    actor_pool[96].tpage_table = D_800C9730;
+    actor_pool[96].sequence_table = actor_default_sequence_table;
+    actor_pool[96].tpage_table = actor_default_texture_blocks;
     actor_pool[96].unk_14 = D_800C9A54;
     actor_pool[96].unk_04 = 8;
     actor_pool[96].unk_05 = 1;
@@ -979,8 +979,8 @@ void hud_magazine_page_build(void) {
         actor_pool[i + 0x61].quad_flags = 0;
         actor_pool[i + 0x61].draw_flags = 0x84;
         actor_pool[i + 0x61].frame_table = sprite_frame_table;
-        actor_pool[i + 0x61].sequence_table = D_800C9A14;
-        actor_pool[i + 0x61].tpage_table = D_800C9730;
+        actor_pool[i + 0x61].sequence_table = actor_default_sequence_table;
+        actor_pool[i + 0x61].tpage_table = actor_default_texture_blocks;
         actor_pool[i + 0x61].unk_14 = D_800C9A54;
         actor_pool[i + 0x61].unk_04 = 8;
         actor_pool[i + 0x61].unk_05 = 1;
@@ -1316,8 +1316,8 @@ void hud_club_list_menu(void) {
     D_80120688 = 0x40000000;
     D_80120653 = 0x84;
     D_8012065C = sprite_frame_table;
-    D_80120660 = D_800C9A14;
-    D_80120684 = D_800C9730;
+    D_80120660 = actor_default_sequence_table;
+    D_80120684 = actor_default_texture_blocks;
     D_80120664 = D_800C9A54;
     D_80120654 = 8;
     D_80120655 = 1;
@@ -1442,8 +1442,8 @@ void hud_cursor_actor_init(s32 arg0) {
     actor_pool[0].quad_flags = 0;
     actor_pool[0].draw_flags = 0x84;
     actor_pool[0].frame_table = sprite_frame_table;
-    actor_pool[0].sequence_table = D_800C9A14;
-    actor_pool[0].tpage_table = D_800C9730;
+    actor_pool[0].sequence_table = actor_default_sequence_table;
+    actor_pool[0].tpage_table = actor_default_texture_blocks;
     actor_pool[0].unk_14 = D_800C9A54;
     actor_pool[0].unk_04 = 8;
     actor_pool[0].unk_05 = 1;
@@ -1679,8 +1679,8 @@ void hud_corner_icon_set(s32 arg0) {
         D_8011F0CF = 0;
     }
     D_8011F0D8 = sprite_frame_table;
-    D_8011F0DC = D_800C9A14;
-    D_8011F100 = D_800C9730;
+    D_8011F0DC = actor_default_sequence_table;
+    D_8011F100 = actor_default_texture_blocks;
     D_8011F0E0 = D_800C9A54;
     D_8011F0D0 = 8;
     D_8011F0D1 = 1;
@@ -1697,8 +1697,8 @@ void hud_text_marker_set(s32 arg0) {
     D_8011ED5A = 0x40;
     D_8011ED90 = 0x40000000;
     D_8011ED64 = sprite_frame_table;
-    D_8011ED68 = D_800C9A14;
-    D_8011ED8C = D_800C9730;
+    D_8011ED68 = actor_default_sequence_table;
+    D_8011ED8C = actor_default_texture_blocks;
     D_8011ED70 = 1;
     D_8011ED5C = 8;
     D_8011ED5D = 1;

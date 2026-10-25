@@ -171,7 +171,7 @@ void encounter_invite_place_select_init(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     event_log_add(9, 0);
     if (sunday_year == 0x5F) {
         if ((sunday_month >= 4U) && (sunday_month < 6U)) {
@@ -290,8 +290,8 @@ void encounter_invite_place_select_init(void) {
     *(s32 *)&game_state.quads_enabled = 1;
     talk_clear();
     *(u8 *)&game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
@@ -362,7 +362,7 @@ void encounter_invite_place_select_init(void) {
         encounter_invite_voice_table = encounter_invite_voice_section_12;
         break;
     }
-    strcpy(D_800CA280, topic_names.by_topic[encounter_invite_topic]);
+    strcpy(name_code_m, topic_names.by_topic[encounter_invite_topic]);
     mode_step_next();
 }
 
@@ -440,10 +440,10 @@ void encounter_invite_second_choice_apply(void) {
 void encounter_invite_choice_exit(void) {
     if (D_80122CDC != 0) {
         if (game_state.current_girl == GIRL_YUINA || game_state.current_girl == GIRL_MIRA || game_state.current_girl == GIRL_MEGUMI || game_state.current_girl == GIRL_YUMI) {
-            func_80083418();
+            face_expression_4();
             return;
         }
-        func_800833F0();
+        face_expression_3();
         return;
     }
     game_state.girls[game_state.current_girl].affection += 1;

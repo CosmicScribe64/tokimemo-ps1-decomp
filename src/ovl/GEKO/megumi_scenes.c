@@ -180,11 +180,11 @@ void encounter_megumi_still_fade_out(void) {
     s32 mode_step_after;
 
     mode_step_before = game_state.mode_step;
-    func_800853FC();
+    scene_still_fade_out();
     records = (SpriteQuad *)sprite_quads;
     for (i = 4; i < 19; i++) {
-        if (dec_bg_brightness < 112) {
-            records[i].tint_r = records[i].tint_g = records[i].tint_b = dec_bg_brightness;
+        if (bg_brightness < 112) {
+            records[i].tint_r = records[i].tint_g = records[i].tint_b = bg_brightness;
         }
     }
     mode_step_after = game_state.mode_step;
@@ -205,11 +205,11 @@ void encounter_megumi_still_fade_in(void) {
             records[i].flags &= 0x7FFFFFFF;
         }
     }
-    func_80085368();
+    scene_still_fade_in();
     records = (SpriteQuad *)sprite_quads;
     for (i = 4; i < 19; i++) {
-        if (dec_bg_brightness < 113) {
-            records[i].tint_r = records[i].tint_g = records[i].tint_b = dec_bg_brightness;
+        if (bg_brightness < 113) {
+            records[i].tint_r = records[i].tint_g = records[i].tint_b = bg_brightness;
         }
     }
 }
@@ -233,14 +233,14 @@ void encounter_megumi_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_54;
     encounter_scene_command_table = encounter_scene_command_section_54;
     encounter_scene_voice_table = encounter_scene_voice_section_54;
-    strcpy(D_800CA19C, "教室");
+    strcpy(scene_place_title, "教室");
     D_800CA368 = 0x3C;
     mode_step_next();
 }
@@ -314,7 +314,7 @@ void encounter_megumi_scene_init_2(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -324,7 +324,7 @@ void encounter_megumi_scene_init_2(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();

@@ -103,7 +103,7 @@ s32 arg0;
         shooter_result_values[4] = arg0;
     }
     audio_command(0x24);
-    func_80059048();
+    view_model_slots_clear();
     shooter_release_all_actor_models();
     mode_step_next();
 }
@@ -204,14 +204,14 @@ s32 shooter_result_step_show(void) {
             game_state.substep = 0xA;
         } else {
             shooter_score = shooter_result_values[4];
-            func_80059308();
+            view_frame_buffers_clear();
             mode_step_next();
         }
     }
 }
 
 void shooter_result_step_next(void) {
-    func_800591D8(0);
+    view_display_set_wide_or_standard(0);
     if (shooter_high_score_3 < shooter_score) {
         mode_stage_set(9);
         return;

@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl13; /* size 0x34 */
 extern FnTbl13 D_80145ECC;
 
-void func_80134520(void) {
+void annual_new_year_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl13 tbl;
 
@@ -16,25 +16,25 @@ void func_80134520(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013459C(void) {
+void annual_new_year_resource_pointer_setup(void) {
     func_800504CC(1, 0xB678, 0xB65A, 0xC2FD, 0xC2D9, 0xC2D4);
     func_8004DE1C();
 }
 
-void func_801345E0(void) {
+void annual_new_year_conditional_sound(void) {
     if (func_80050AB8() == 1) {
         func_80086AB0(0x200);
         func_8004DE1C();
     }
 }
 
-void func_8013461C(void) {
+void annual_new_year_scene_resource_command(void) {
     func_80051DD8(0x33, 0x80197000, 0xA400);
-    func_80134000();
+    annual_mode_resource_addresses_init();
     func_8004DE1C();
 }
 
-void func_80134658(void) {
+void annual_new_year_scene_state_init(void) {
     s16 i;
 
     D_800F5AAE |= 8;
@@ -56,7 +56,7 @@ void func_80134658(void) {
     func_800744A0();
     func_80074950();
     func_8008FC10();
-    func_80134000();
+    annual_mode_resource_addresses_init();
     func_8008F618(0);
     D_80145EB4 = 0;
     D_80145EB8 = 0;
@@ -67,45 +67,45 @@ void func_80134658(void) {
     func_8004DE1C();
 }
 
-void func_801347AC(void) {
+void annual_new_year_audio_command_play_4107(void) {
     func_8008A0D4(0x4107);
     func_8004DE1C();
 }
 
-void func_801347D4(void) {
-    s32 i;
-    u8 best_i;
-    u8 best_s;
-    u8 s;
-    GyoziGirl *g;
+void annual_eligible_girl_select(void) {
+    s32 girl_index;
+    u8 best_rank_girl;
+    u8 best_girl_rank;
+    u8 candidate_girl_rank;
+    GyoziGirl *best_girl_record;
 
-    best_i = 0xFF;
-    best_s = 4;
-    for (i = 0; i < 11; i++) {
-        /* FAKE: empty reads order best_i ($s3) and 11 ($s4) ahead of &D_800F53A0 ($s5) and 56 ($s6). T-24128. */
-        if (best_i) {}
-        if (i == 11) {}
-        if (((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 != 0) {
-            s = func_8005E0E0(i);
+    best_rank_girl = 0xFF;
+    best_girl_rank = 4;
+    for (girl_index = 0; girl_index < 11; girl_index++) {
+        /* FAKE: empty reads order best_rank_girl ($s3) and 11 ($s4) ahead of &D_800F53A0 ($s5) and 56 ($s6). T-24128. */
+        if (best_rank_girl) {}
+        if (girl_index == 11) {}
+        if (((GyoziBits32 *)D_800F53A0.girl[girl_index].unk_10)->b1 != 0) {
+            candidate_girl_rank = func_8005E0E0(girl_index);
             /* FAKE: empty read keeps `move $v1, $v0` before `andi $t9, $v1, 0x7F`. T-24128. */
-            if (s) {}
-            s &= 0x7F;
-            if (s < best_s ||
-                (s == best_s &&
-                 (g = &D_800F53A0.girl[best_i],
-                  g->unk_0A + g->unk_06 <
-                      D_800F53A0.girl[i].unk_0A + D_800F53A0.girl[i].unk_06))) {
-                best_i = i;
-                best_s = s;
+            if (candidate_girl_rank) {}
+            candidate_girl_rank &= 0x7F;
+            if (candidate_girl_rank < best_girl_rank ||
+                (candidate_girl_rank == best_girl_rank &&
+                 (best_girl_record = &D_800F53A0.girl[best_rank_girl],
+                  best_girl_record->unk_0A + best_girl_record->unk_06 <
+                      D_800F53A0.girl[girl_index].unk_0A + D_800F53A0.girl[girl_index].unk_06))) {
+                best_rank_girl = girl_index;
+                best_girl_rank = candidate_girl_rank;
             }
         }
     }
-    s = func_8005E0E0(best_i) & 0x7F;
-    if (best_i != 0xFF && s < 2U) {
-        /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $s3, 0xff` (T-24122). */
-        D_800F62CF = (best_i & 0) + best_i;
+    candidate_girl_rank = func_8005E0E0(best_rank_girl) & 0x7F;
+    if (best_rank_girl != 0xFF && candidate_girl_rank < 2U) {
+        /* FAKE: `(best_rank_girl & 0) +` keeps cfe'candidate_girl_rank CVT J L narrowing so uopt emits `andi $a0, $s3, 0xff` (T-24122). */
+        D_800F62CF = (best_rank_girl & 0) + best_rank_girl;
         func_8008F618(D_800F62CF);
-        func_80134938();
+        annual_girl_dialogue_tables_select();
         D_80145EB4 = 0;
         D_80145EB8 = 0;
         D_80145EC4 = 1;
@@ -116,7 +116,7 @@ void func_801347D4(void) {
     }
 }
 
-void func_80134938(void) {
+void annual_girl_dialogue_tables_select(void) {
     u32 temp_v0;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */

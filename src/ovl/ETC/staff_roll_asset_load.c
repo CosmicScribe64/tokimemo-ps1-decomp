@@ -50,7 +50,7 @@ void staff_roll_load_step(void) {
             staff_roll_fade_dir = 1;
             load_tpage_buf_lock(0x15, 0x80180000, 1);
             load_tpage_buf_lock(0x16, 0x80184000, 1);
-            func_8004B590(0x80188000, game_state.scratch_words);
+            color_palette_to_gray(0x80188000, game_state.scratch_words);
             load_palette(game_state.scratch_words, 0x1F, 1, 1, 0);
             staff_roll_pictures_init();
             cd_read_sectors(1, 0x801F9000, 0xBE1D);

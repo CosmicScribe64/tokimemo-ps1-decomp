@@ -6,7 +6,7 @@ typedef struct {
 } FnTbl31; /* size 0x7C */
 extern FnTbl31 D_801344A0;
 
-void func_801323D0(void) {
+void valentine_scene_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl31 tbl;
 
@@ -15,7 +15,7 @@ void func_801323D0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013244C(void) {
+void valentine_audio_bank_load_start(void) {
     audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
     if (audio_bank_load_poll() == 1) {
         audio_command(0x201);
@@ -24,7 +24,7 @@ void func_8013244C(void) {
     mode_step_next();
 }
 
-void func_801324B4(void) {
+void valentine_audio_bank_load_retry(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x201);
         mode_step_next();
@@ -36,13 +36,13 @@ void func_801324B4(void) {
     }
 }
 
-void func_8013253C(void) {
+void valentine_scene_sector_load(void) {
     cd_read_sectors(7, 0x80197000, 0xAFAC);
-    func_80132000();
+    valentine_scene_pointer_setup();
     mode_step_next();
 }
 
-void func_80132578(void) {
+void valentine_scene_setup(void) {
     game_state.day_event_done_bits |= 0x10;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -51,18 +51,18 @@ void func_80132578(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    func_80132000();
+    valentine_scene_pointer_setup();
     D_8013448C = D_80134400;
     D_80134490 = D_80134434;
     D_80134494 = D_80134468;
@@ -74,18 +74,18 @@ void func_80132578(void) {
     mode_step_next();
 }
 
-void func_801326B8(void) {
+void valentine_place_event_log(void) {
     bg_read_sub2(0x4045);
     event_log_add(6, 0);
     mode_step_next();
 }
 
-void func_801326EC(void) {
+void valentine_background_read(void) {
     bg_read_sub2(0x4122);
     mode_step_next();
 }
 
-void func_80132714(void) {
+void valentine_year_scene_offset(void) {
     D_80134498 = (D_80134498 + (game_state.year * 4)) - 0x180;
     mode_step_next();
 }

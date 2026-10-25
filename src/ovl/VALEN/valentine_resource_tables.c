@@ -1,7 +1,7 @@
 /* valentine_resource_tables.c: ; src/ovl/VALEN/80132000.c:3-47 initializes valentine resources and dispatches scene stages. Original object 0x80132000-0x801323D0 (config/objects/VALEN.txt). */
 #include "ovl/VALEN.h"
 
-void func_80132000(void) {
+void valentine_scene_pointer_setup(void) {
     D_801343F0 = 0x8019722C;
     D_801343F4 = 0x80197520;
     D_801343F8 = 0x80197958;
@@ -43,20 +43,20 @@ void func_80132000(void) {
     D_80134488 = 0x8019A618;
 }
 
-void func_80132274(void) {
+void valentine_mode_stage_dispatch(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_801323D0();
+        valentine_scene_mode_step_callback_dispatch();
         break;
     case 1:
-        func_80132760();
+        valentine_girl_selection_callback_dispatch();
         break;
     case 2:
-        func_801339D0();
+        valentine_return_callback_dispatch();
         break;
     case 3:
-        func_80133EE4();
+        valentine_birthday_callback_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -68,10 +68,10 @@ void func_80132274(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }
 
-void func_80132348(void) {
+void valentine_talk_driver(void) {
     talk_tables = (u8 *)&D_80134498;
     D_800CA138 = (u8 *)&D_8013449C;
     D_800CA13C = D_8013448C;

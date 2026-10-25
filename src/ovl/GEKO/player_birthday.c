@@ -18,7 +18,7 @@ void encounter_player_birthday_mode_handler(void) {
     message_window_title_update();
     hizuke_show();
     if (D_80122D38 == 0) {
-        func_80083A10();
+        scene_frame_update();
     }
     if (D_80122D38 != 0) {
         hud_screen_frame_draw(1);
@@ -147,7 +147,7 @@ s32 encounter_player_birthday_init(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "玄関");
+    strcpy(scene_place_title, "玄関");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
@@ -156,8 +156,8 @@ s32 encounter_player_birthday_init(void) {
     D_80122D40 = saved_talk_byte;
     D_80122D38 = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
@@ -188,13 +188,13 @@ void encounter_player_birthday_closing_init(void) {
     saved_talk_byte = D_80122D40;
     talk_clear();
     D_80122D40 = saved_talk_byte;
-    strcpy(D_800CA19C, "玄関");
+    strcpy(scene_place_title, "玄関");
     k_reset(1);
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();

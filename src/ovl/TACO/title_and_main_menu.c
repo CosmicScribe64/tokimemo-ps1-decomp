@@ -1,18 +1,18 @@
 /* title_and_main_menu.c: src/ovl/TACO/80134930.c:16 initializes animated title models and lights; :94 runs title presentation; :330 dispatches selected main-menu row to play/settings/rankings/instructions/exit. Original object 0x80134930-0x80135720 (config/objects/TACO.txt). */
-#define MAIN_API_OVERRIDE_D_80122760 /* three-light block (3 x 16 bytes) sharing base symbol for as1 load hoisting (T-24107) */
+#define MAIN_API_OVERRIDE_view_light_0 /* three-light block (3 x 16 bytes) sharing base symbol for as1 load hoisting (T-24107) */
 #include "common.h"
 #include "ovl/TACO.h"
 
 typedef struct {
-    s32 unk00[3];
+    s32 light0_vector[3];
     u8 r0, g0, b0, pad0;
-    s32 unk10[3];
+    s32 light1_vector[3];
     u8 r1, g1, b1, pad1;
-    s32 unk20[3];
+    s32 light2_vector[3];
     u8 r2, g2, b2, pad2;
 } ShooterLightBlock;
 
-extern ShooterLightBlock D_80122760;
+extern ShooterLightBlock view_light_0;
 
 void shooter_title_setup(void) {
     game_state.clear_color_g = 0;
@@ -42,16 +42,16 @@ s32 shooter_title_animate(void) {
 
     frame = shooter_title_frame;
     if (frame < 0x20) {
-        if (D_80122760.r0 < 0xC0) {
+        if (view_light_0.r0 < 0xC0) {
             /* Chained stores: IDO stores the middle and left targets first and the read one last, the original order. */
-            D_80122760.r0 = D_80122760.g0 = D_80122760.b0 = D_80122760.b0 + 6;
-            D_80122760.r1 = D_80122760.g1 = D_80122760.b1 = D_80122760.b1 + 1;
+            view_light_0.r0 = view_light_0.g0 = view_light_0.b0 = view_light_0.b0 + 6;
+            view_light_0.r1 = view_light_0.g1 = view_light_0.b1 = view_light_0.b1 + 1;
             /* FAKE: repeated masked sum makes a uopt CSE range in $v0 while keeping the ugen temporary slot (T-22006, T-24107). */
-            D_80122760.g2 = (D_80122760.b2 + 1) & 0xFF;
-            D_80122760.r2 = D_80122760.b2 = (D_80122760.b2 + 1) & 0xFF;
-            func_8009AD70(0, (s32) &D_80122760);
-            func_8009AD70(1, (s32) &D_80122770);
-            func_8009AD70(2, (s32) &D_80122780);
+            view_light_0.g2 = (view_light_0.b2 + 1) & 0xFF;
+            view_light_0.r2 = view_light_0.b2 = (view_light_0.b2 + 1) & 0xFF;
+            func_8009AD70(0, (s32) &view_light_0);
+            func_8009AD70(1, (s32) &view_light_1);
+            func_8009AD70(2, (s32) &view_light_2);
         }
         if (frame < 0xF) {
             game_state.clear_color_b += 1;
@@ -138,7 +138,7 @@ void shooter_title_step_init(void) {
     game_state.clear_color_r = 0;
     shooter_menu_cursor = 0;
     game_state.clear_color_b = 0;
-    func_80059048();
+    view_model_slots_clear();
     draw2d3d(1, 1);
     actor_draw_enable(1);
     k_reset(0);
@@ -236,7 +236,7 @@ void shooter_title_step_hold(void) {
             mode_step_set(5);
             return;
         }
-        func_8004AC18(0xFF - game_state.mode_step_timer.w);
+        prim_flash_gray(0xFF - game_state.mode_step_timer.w);
         return;
     }
     mode_step_next();
@@ -247,7 +247,7 @@ void shooter_title_step_advance(void) {
 }
 
 void shooter_title_step_finish(void) {
-    func_80059048();
+    view_model_slots_clear();
     load_palette(game_state.ovl_palette_a, 0x1F, 1, 1, 0);
     mode_stage_set(3);
 }
@@ -269,8 +269,8 @@ void shooter_stage_menu(void) {
 }
 void shooter_menu_step_init(void) {
     func_8009C210(0);
-    func_80059048();
-    func_800591D8(0);
+    view_model_slots_clear();
+    view_display_set_wide_or_standard(0);
     shooter_setup_text_layer();
     D_8011ED1B = 0x40;
     D_8011ED3E = -0x78;

@@ -2,49 +2,49 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-void func_80139E50(void) {
+void tour_stage_solo_route(void) {
     switch (D_80122EB8) {
     case 0:
         if (game_state.year == 0x61) {
-            mode_stage_set(7);
+            mode_stage_set(TOUR_STAGE_SOLO_LITERATURE_SPEECH);
             return;
         }
-        mode_stage_set(6);
+        mode_stage_set(TOUR_STAGE_SOLO_LITERATURE_COLLECTION);
         return;
     case 1:
-        mode_stage_set(8);
+        mode_stage_set(TOUR_STAGE_SOLO_DRAMA);
         return;
     case 2:
-        mode_stage_set(9);
+        mode_stage_set(TOUR_STAGE_SOLO_SCIENCE);
         return;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0xA);
+            mode_stage_set(TOUR_STAGE_SOLO_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(0xC);
+            mode_stage_set(TOUR_STAGE_SOLO_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(0xD);
+            mode_stage_set(TOUR_STAGE_SOLO_COMPUTER_EXPERIMENT);
             return;
         }
         break;
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0xE);
+            mode_stage_set(TOUR_STAGE_SOLO_ART_PORTRAIT);
             return;
         case 0x60:
-            mode_stage_set(0xF);
+            mode_stage_set(TOUR_STAGE_SOLO_ART_SKETCH);
             return;
         case 0x61:
-            mode_stage_set(0x10);
+            mode_stage_set(TOUR_STAGE_SOLO_ART_OIL);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0x11);
+        mode_stage_set(TOUR_STAGE_SOLO_BRASS);
         return;
     default:
         game_mode_reset_to_title();
@@ -52,7 +52,7 @@ void func_80139E50(void) {
     }
 }
 
-void func_80139FB8(void) {
+void tour_stage_solo_literature_collection(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x40EA, 1);
@@ -65,7 +65,7 @@ void func_80139FB8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -82,7 +82,7 @@ void func_80139FB8(void) {
             } else {
                 talk_group = 0x33;
             }
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -96,7 +96,7 @@ void func_80139FB8(void) {
         mode_step_next();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -104,7 +104,7 @@ void func_80139FB8(void) {
     }
 }
 
-void func_8013A118(void) {
+void tour_stage_solo_literature_speech(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x467C, 1);
@@ -117,7 +117,7 @@ void func_8013A118(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -129,7 +129,7 @@ void func_8013A118(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x36;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -144,7 +144,7 @@ void func_8013A118(void) {
         game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         cd_read_sectors(5U, 0x801E8000, 0x49BA);
         mode_step_next();
@@ -155,7 +155,7 @@ void func_8013A118(void) {
     case 10:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x37;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 13:
@@ -163,7 +163,7 @@ void func_8013A118(void) {
         mode_step_next();
         break;
     case 15:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -171,7 +171,7 @@ void func_8013A118(void) {
     }
 }
 
-void func_8013A2FC(void) {
+void tour_stage_solo_drama(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x467C, 1);
@@ -184,7 +184,7 @@ void func_8013A2FC(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -197,7 +197,7 @@ void func_8013A2FC(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x38;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -218,7 +218,7 @@ void func_8013A2FC(void) {
         break;
     case 9:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             D_80125CA0 = 0xC0;
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
@@ -228,7 +228,7 @@ void func_8013A2FC(void) {
     case 11:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x39;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 14:
@@ -236,7 +236,7 @@ void func_8013A2FC(void) {
         mode_step_next();
         break;
     case 16:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -244,7 +244,7 @@ void func_8013A2FC(void) {
     }
 }
 
-void func_8013A518(void) {
+void tour_stage_solo_science(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x40FC, 1);
@@ -257,7 +257,7 @@ void func_8013A518(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -270,7 +270,7 @@ void func_8013A518(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x3A;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -285,7 +285,7 @@ void func_8013A518(void) {
         game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         cd_read_sectors(5U, 0x801E8000, 0x49BA);
         mode_step_next();
@@ -293,7 +293,7 @@ void func_8013A518(void) {
     case 10:
         if (cd_read_sync_status() & 1) {
             talk_group = game_state.year - 0x24;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 13:
@@ -301,7 +301,7 @@ void func_8013A518(void) {
         mode_step_next();
         break;
     case 15:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -309,7 +309,7 @@ void func_8013A518(void) {
     }
 }
 
-void func_8013A6F4(void) {
+void tour_stage_solo_computer_fortune(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x4105, 1);
@@ -321,7 +321,7 @@ void func_8013A6F4(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -333,7 +333,7 @@ void func_8013A6F4(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x3E;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -345,7 +345,7 @@ void func_8013A6F4(void) {
         audio_command(0x202);
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        mode_stage_set(0xB);
+        mode_stage_set(TOUR_STAGE_FORTUNE_TELLING);
         break;
     case 7:
         D_80122EBC = 0xFF;
@@ -355,7 +355,7 @@ void func_8013A6F4(void) {
     case 8:
         if (cd_read_sync_status() & 1) {
             talk_group = D_80122EA8 + 0x3F;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 11:
@@ -363,7 +363,7 @@ void func_8013A6F4(void) {
         mode_step_next();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -371,7 +371,7 @@ void func_8013A6F4(void) {
     }
 }
 
-void func_8013A8CC(void) {
+void tour_stage_solo_computer_game(void) {
     GameState *g = &game_state;
     switch (g->mode_step) {
     case 0:
@@ -384,7 +384,7 @@ void func_8013A8CC(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            func_80145844();
+            tour_window_title_set();
             talk_group = 0x42;
             mode_step_next();
         }
@@ -404,19 +404,19 @@ void func_8013A8CC(void) {
         g->saved_game_mode = g->game_mode;
         g->saved_mode_stage = g->mode_stage;
         g->saved_mode_step = g->mode_step + 1;
-        mode_stage_set(0x8D);
+        mode_stage_set(TOUR_STAGE_TT_NARRATOR);
         break;
     case 7:
         D_80122E98 = 1;
         D_80122EB0 = (s32) g->mode_stage;
         D_80122EB4 = g->mode_step + 1;
-        mode_stage_set(0x8C);
+        mode_stage_set(TOUR_STAGE_RESUME);
         break;
     case 8:
         audio_command(0xBF);
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         message_window_init();
         text_marker_hide();
@@ -446,7 +446,7 @@ void func_8013A8CC(void) {
     case 12:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x43;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 13:
@@ -464,7 +464,7 @@ void func_8013A8CC(void) {
         break;
     case 17:
         ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -472,7 +472,7 @@ void func_8013A8CC(void) {
     }
 }
 
-void func_8013ABF0(void) {
+void tour_stage_solo_computer_experiment(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x4105, 1);
@@ -485,7 +485,7 @@ void func_8013ABF0(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -498,7 +498,7 @@ void func_8013ABF0(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x44;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -513,7 +513,7 @@ void func_8013ABF0(void) {
         game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         cd_read_sectors(5U, 0x801E8000, 0x49BA);
         mode_step_next();
@@ -521,7 +521,7 @@ void func_8013ABF0(void) {
     case 10:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x45;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 13:
@@ -529,7 +529,7 @@ void func_8013ABF0(void) {
         mode_step_next();
         break;
     case 15:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -537,7 +537,7 @@ void func_8013ABF0(void) {
     }
 }
 
-void func_8013ADC4(void) {
+void tour_stage_solo_art_portrait(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x410F, 1);
@@ -549,7 +549,7 @@ void func_8013ADC4(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -561,7 +561,7 @@ void func_8013ADC4(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x46;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -573,7 +573,7 @@ void func_8013ADC4(void) {
         mode_step_next();
         break;
     case 9:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -581,7 +581,7 @@ void func_8013ADC4(void) {
     }
 }
 
-void func_8013AF00(void) {
+void tour_stage_solo_art_sketch(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x4118, 1);
@@ -592,7 +592,7 @@ void func_8013AF00(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -603,7 +603,7 @@ void func_8013AF00(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            func_8013B4A0();
+            tour_solo_script_begin();
             talk_names_set(0xDU);
             talk_group = 0x47;
         }
@@ -668,7 +668,7 @@ void func_8013AF00(void) {
         normal_date_speak();
         break;
     case 22:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -676,7 +676,7 @@ void func_8013AF00(void) {
     }
 }
 
-void func_8013B170(void) {
+void tour_stage_solo_art_oil(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x410F, 1);
@@ -689,7 +689,7 @@ void func_8013B170(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -702,7 +702,7 @@ void func_8013B170(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x4C;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -716,7 +716,7 @@ void func_8013B170(void) {
         mode_step_next();
         break;
     case 13:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -724,7 +724,7 @@ void func_8013B170(void) {
     }
 }
 
-void func_8013B2AC(void) {
+void tour_stage_solo_brass(void) {
     switch (game_state.mode_step) {
     case 0:
         dec_bg_cd_read(0x467C, 1);
@@ -737,7 +737,7 @@ void func_8013B2AC(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
@@ -750,7 +750,7 @@ void func_8013B2AC(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x4F;
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 5:
@@ -765,7 +765,7 @@ void func_8013B2AC(void) {
         game_mode_set(GAME_MODE_CULTURE_STAGE);
         break;
     case 8:
-        func_80145844();
+        tour_window_title_set();
         D_80125CA0 = 0xC0;
         cd_read_sectors(5U, 0x801E8000, 0x49BA);
         mode_step_next();
@@ -777,7 +777,7 @@ void func_8013B2AC(void) {
             } else {
                 talk_group = 0x50;
             }
-            func_8013B4A0();
+            tour_solo_script_begin();
         }
         break;
     case 13:
@@ -785,7 +785,7 @@ void func_8013B2AC(void) {
         mode_step_next();
         break;
     case 15:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -793,12 +793,12 @@ void func_8013B2AC(void) {
     }
 }
 
-void func_8013B4A0(void) {
+void tour_solo_script_begin(void) {
     talk_names_set(0);
-    func_801324E0();
+    tour_script_common();
     talk_line = 0;
-    talk_text_table = D_80155E90;
-    talk_command_table = D_80155E94;
-    talk_voice_table = D_80155E98;
+    talk_text_table = tour_script_text;
+    talk_command_table = tour_script_commands;
+    talk_voice_table = tour_script_voices;
     mode_step_next();
 }

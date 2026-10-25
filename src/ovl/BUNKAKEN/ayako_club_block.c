@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-void func_801428D0(void) {
+void tour_stage_ayako_club_route(void) {
     ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 3;
     switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 4:
@@ -10,31 +10,31 @@ void func_801428D0(void) {
         case 0x5F:
             if (girl_state_rank(3) == 4 && !game_state.girls[3].flags.f.b2) {
                 ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
-                mode_stage_set(5);
+                mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
                 return;
             }
-            mode_stage_set(0x36);
+            mode_stage_set(TOUR_STAGE_AYAKO_CLUB_ART_PORTRAIT);
             return;
         case 0x60:
             if (girl_state_rank(3) == 4 && !game_state.girls[3].flags.f.b2) {
                 ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
-                mode_stage_set(5);
+                mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
                 return;
             }
-            mode_stage_set(0x37);
+            mode_stage_set(TOUR_STAGE_AYAKO_CLUB_ART_SKETCH);
             return;
         case 0x61:
             if (girl_state_rank(3) == 4 && !game_state.girls[3].flags.f.b2) {
                 ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 0xFF;
-                mode_stage_set(5);
+                mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
                 return;
             }
-            mode_stage_set(0x38);
+            mode_stage_set(TOUR_STAGE_AYAKO_CLUB_ART_OIL);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0x39);
+        mode_stage_set(TOUR_STAGE_AYAKO_CLUB_BRASS);
         return;
     default:
         game_mode_reset_to_title();
@@ -42,10 +42,10 @@ void func_801428D0(void) {
     }
 }
 
-void func_80142A40(void) {
+void tour_stage_ayako_club_art_portrait(void) {
     GameState *g = &game_state;
-    s32 temp_v0;
-    s32 temp_v0_2;
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (g->mode_step) {
     case 0:
@@ -76,7 +76,7 @@ void func_80142A40(void) {
         addr_init_bustup();
         g->current_girl = GIRL_AYAKO;
         portrait_show_checked();
-        func_80145844();
+        tour_window_title_set();
         cd_read_sectors(9U, 0x801E8000, 0x4B0A);
         break;
     case 7:
@@ -91,9 +91,9 @@ void func_80142A40(void) {
         break;
     case 9:
         if (cd_read_sync_status() & 1) {
-            func_80143D68();
-            temp_v0 = girl_state_rank(3);
-            switch (temp_v0) {
+            tour_ayako_club_script_begin();
+            girl_rank = girl_state_rank(3);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 4;
@@ -126,8 +126,8 @@ void func_80142A40(void) {
         normal_date_speak();
         break;
     case 13:
-        temp_v0_2 = girl_state_rank(3);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(3);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 5;
@@ -238,7 +238,7 @@ void func_80142A40(void) {
         normal_date_speak();
         break;
     case 39:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -246,10 +246,10 @@ void func_80142A40(void) {
     }
 }
 
-void func_80142FD4(void) {
+void tour_stage_ayako_club_art_sketch(void) {
     GameState *g = &game_state;
-    s32 temp_v0;
-    s32 temp_v0_2;
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (g->mode_step) {
     case 0:
@@ -261,7 +261,7 @@ void func_80142FD4(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B0A);
             mode_step_next();
@@ -272,8 +272,8 @@ void func_80142FD4(void) {
         break;
     case 4:
         if (cd_read_sync_status() & 1) {
-            temp_v0 = girl_state_rank(3);
-            switch (temp_v0) {
+            girl_rank = girl_state_rank(3);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x20;
@@ -291,7 +291,7 @@ void func_80142FD4(void) {
             } else {
                 g->current_girl = GIRL_AYAKO;
             }
-            func_80143D68();
+            tour_ayako_club_script_begin();
             if ((girl_state_rank(3) == 4) || (D_80122EA4 == 3)) {
                 talk_names_set(0xDU);
                 portrait_read_start(0x6C5F);
@@ -334,8 +334,8 @@ void func_80142FD4(void) {
         }
         break;
     case 11:
-        temp_v0_2 = girl_state_rank(3);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(3);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 0x26;
@@ -370,7 +370,7 @@ void func_80142FD4(void) {
         normal_date_speak();
         break;
     case 18:
-        func_80145530();
+        tour_finish_visit();
         break;
     case 19:
         normal_date_two_select();
@@ -410,9 +410,9 @@ void func_80142FD4(void) {
 }
 
 /* T-12230: existing GirlFlagBits bitfields reproduce the target register choices. */
-void func_80143494(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
+void tour_stage_ayako_club_art_oil(void) {
+    s32 girl_rank;
+    s32 girl_rank_2;
 
     switch (game_state.mode_step) {
     case 0:
@@ -424,7 +424,7 @@ void func_80143494(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x58DC);
             mode_step_next();
@@ -450,9 +450,9 @@ void func_80143494(void) {
         break;
     case 6:
         if (cd_read_sync_status() & 1) {
-            func_80143D68();
-            temp_v0 = girl_state_rank(3);
-            switch (temp_v0) {
+            tour_ayako_club_script_begin();
+            girl_rank = girl_state_rank(3);
+            switch (girl_rank) {
             case 0:
             case 1:
                 talk_group = 0x30;
@@ -486,8 +486,8 @@ void func_80143494(void) {
         normal_date_speak();
         break;
     case 10:
-        temp_v0_2 = girl_state_rank(3);
-        switch (temp_v0_2) {
+        girl_rank_2 = girl_state_rank(3);
+        switch (girl_rank_2) {
         case 0:
         case 1:
             talk_group = 0x31;
@@ -546,7 +546,7 @@ void func_80143494(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -554,9 +554,9 @@ void func_80143494(void) {
     }
 }
 
-void func_801438F8(void) {
+void tour_stage_ayako_club_brass(void) {
     GameState *g = &game_state;
-    s32 temp_v0;
+    s32 girl_rank;
 
     switch (g->mode_step) {
     case 0:
@@ -568,7 +568,7 @@ void func_801438F8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_80145844();
+            tour_window_title_set();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(9U, 0x801E8000, 0x4B0A);
             mode_step_next();
@@ -580,7 +580,7 @@ void func_801438F8(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             talk_group = 0x3F;
-            func_80143D68();
+            tour_ayako_club_script_begin();
         }
         break;
     case 5:
@@ -605,8 +605,8 @@ void func_801438F8(void) {
         }
         break;
     case 10:
-        func_80145A30();
-        func_80143D68();
+        tour_title_clear();
+        tour_ayako_club_script_begin();
         if (g->girls[3].flags.f.b2) {
             mode_step_set(0xC);
         } else {
@@ -632,7 +632,7 @@ void func_801438F8(void) {
         break;
     case 15:
         if (cd_read_sync_status() & 1) {
-            func_801459FC();
+            tour_title_backstage_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -645,8 +645,8 @@ void func_801438F8(void) {
         }
         break;
     case 17:
-        temp_v0 = girl_state_rank(3);
-        switch (temp_v0) {
+        girl_rank = girl_state_rank(3);
+        switch (girl_rank) {
         case 0:
         case 1:
             talk_group = (g->year * 3) - 0xDD;
@@ -688,7 +688,7 @@ void func_801438F8(void) {
         normal_date_speak();
         break;
     case 23:
-        func_80145530();
+        tour_finish_visit();
         break;
     default:
         game_mode_reset_to_title();
@@ -696,12 +696,12 @@ void func_801438F8(void) {
     }
 }
 
-void func_80143D68(void) {
+void tour_ayako_club_script_begin(void) {
     talk_names_set(3);
-    func_801321D4();
+    tour_script_ayako_club();
     talk_line = 0;
-    talk_text_table = D_80155E90;
-    talk_command_table = D_80155E94;
-    talk_voice_table = D_80155E98;
+    talk_text_table = tour_script_text;
+    talk_command_table = tour_script_commands;
+    talk_voice_table = tour_script_voices;
     mode_step_next();
 }

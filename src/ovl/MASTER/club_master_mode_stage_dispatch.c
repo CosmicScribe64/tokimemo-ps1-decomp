@@ -1,10 +1,10 @@
 /* club_master_mode_stage_dispatch.c: src/ovl/MASTER/80132140.c:6-14; indexes the four-function callback table by game_state.mode_stage and owns its entry/load/talk route helpers; wiki/spec/o-master-ending.md describes the inspected flow. Original object 0x80132140-0x80133680 (config/objects/MASTER.txt). */
-#define MAIN_API_OVERRIDE_talk_names_set /* T-25130: called without a prototype, as an implicit int; func_801326B4 passes the full word D_8013C2E0 (main_api.h narrows it to u8, lbu), and a void view moves its v0/v1 ranges (39 rows). */
+#define MAIN_API_OVERRIDE_talk_names_set /* T-25130: called without a prototype, as an implicit int; master_companion_dialogue_scene_run passes the full word D_8013C2E0 (main_api.h narrows it to u8, lbu), and a void view moves its v0/v1 ranges (39 rows). */
 #include "ovl/MASTER.h"
 
 s32 talk_names_set();
 
-void func_80132140(void) {
+void master_award_mode_stage_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl4 tbl;
 
@@ -13,7 +13,7 @@ void func_80132140(void) {
     tbl.f[idx]();
 }
 
-void func_801321B0(void) {
+void master_award_intro_step_run(void) {
     switch (game_state.mode_step) {
     case 0:
         audio_command(0xBF);
@@ -91,7 +91,7 @@ void func_801321B0(void) {
     Default_Disp();
 }
 
-void func_80132444(void) {
+void master_award_dialogue_tables_select(void) {
     u32 temp_t8;
     u8 temp_t6;
 
@@ -102,27 +102,27 @@ void func_80132444(void) {
         switch (temp_t8) {
         case 0:
             cd_read_sectors(3U, 0x801E8000, 0xA9DE);
-            func_80132104();
+            master_set_award_text_assets_0();
             break;
         case 1:
             cd_read_sectors(3U, 0x801E8000, 0xA9B4);
-            func_80132000();
+            master_set_award_text_assets_1();
             break;
         case 2:
             cd_read_sectors(3U, 0x801E8000, 0xA9BF);
-            func_8013209C();
+            master_set_award_text_assets_2();
             break;
         case 3:
             cd_read_sectors(3U, 0x801E8000, 0xA9B7);
-            func_80132034();
+            master_set_award_text_assets_3();
             break;
         case 4:
             cd_read_sectors(3U, 0x801E8000, 0xA9BC);
-            func_80132068();
+            master_set_award_text_assets_4();
             break;
         case 5:
             cd_read_sectors(3U, 0x801E8000, 0xA9C2);
-            func_801320D0();
+            master_set_award_text_assets_5();
             break;
         default:
             game_mode_reset_to_title();
@@ -176,7 +176,7 @@ void func_80132444(void) {
  * test away and no code is emitted. Removing any one of the six gives 229 register rows. */
 #define KEEP_MODE_LIVE() if ((u32) game_state.player_flags.h < 0) {}
 
-void func_801326B4(void) {
+void master_companion_dialogue_scene_run(void) {
     u32 mode;
     s32 i;
     s32 best;
@@ -207,7 +207,7 @@ void func_801326B4(void) {
             hud_cursor_show(0);
             hizuke_init();
             message_window_init();
-            best = func_8008647C();
+            best = select_girl_by_scores();
             if ((u8) game_state.girls[0xC].flags.b[3] >= 0x41U) {
                 D_8013C2E0 = 0xC;
             } else {
@@ -305,13 +305,13 @@ void func_801326B4(void) {
             break;
         case 3:
             if (cd_read_sync_status() & 1) {
-                func_80132034();
+                master_set_award_text_assets_3();
                 talk_text_table = (s32) D_8013C2D0;
                 talk_command_table = (s32) D_8013C2D4;
                 talk_voice_table = (s32) D_8013C2D8;
                 talk_group = (s16) spA4.v[D_8013C2E0];
                 if (D_8013C2E0 == 0xB) {
-                    func_80047550();
+                    draw_shake_start();
                     audio_command(0x500);
                 }
                 audio_command(0x200);
@@ -347,7 +347,7 @@ void func_801326B4(void) {
         mode = game_state.player_flags.h;
         if ((mode >> 0xC) != 3) {
             if (D_8013C2E0 == 0xB) {
-                func_80047550();
+                draw_shake_start();
                 audio_command(0x500);
             }
             audio_command(0x200);
@@ -455,7 +455,7 @@ void func_801326B4(void) {
     Default_Disp();
 }
 
-void func_80133374(void) {
+void master_tournament_reward_apply(void) {
     s32 i;
 
     game_state.day_event_done_bits |= 0x10;
@@ -470,12 +470,12 @@ void func_80133374(void) {
     talk_clear();
     dec_bg_reset();
     set_dec_bri(0);
-    func_8013348C();
+    master_tournament_event_log_append();
     day_event_next(1);
     Default_Disp();
 }
 
-void func_8013348C(void) {
+void master_tournament_event_log_append(void) {
     u32 sel; /* declared before kind: its slot sits above kind's stack home (sp+0x2B), T-18600 */
     u8 kind;
 

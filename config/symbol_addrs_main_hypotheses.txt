@@ -1,0 +1,3 @@
+// HYPOTHESES, not facts: names of main-exe symbols inside EVENT's range (main yaml only) that claim a game meaning the code does not prove
+// (tools/rename.py, T-27002; the evidence is in the ledger, config/renames/).
+audio_bank_wait_done = 0x80122EA0;

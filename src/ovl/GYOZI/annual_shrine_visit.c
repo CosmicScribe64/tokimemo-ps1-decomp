@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl23; /* size 0x5C */
 extern FnTbl23 D_80146060;
 
-void func_80135900(void) {
+void annual_shrine_visit_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
@@ -16,7 +16,7 @@ void func_80135900(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80135988(void) {
+void annual_shrine_visit_title_score_setup(void) {
     s16 v;
 
     func_800BCE10(&D_800D92A0, "初詣");
@@ -40,15 +40,15 @@ void func_80135988(void) {
     func_8004DE1C();
 }
 
-void func_80135A20(void) {
+void annual_shrine_visit_flag_gate(void) {
     if (D_80145F60 != 0) {
-        func_801343A4();
+        annual_mode_scene_data_setup();
         return;
     }
     func_8004DE1C();
 }
 
-void func_80135A5C(void) {
+void annual_shrine_visit_choice_branch(void) {
     if (D_8012E66C != 0) {
         func_8008E2E0();
         return;
@@ -56,13 +56,13 @@ void func_80135A5C(void) {
     func_8008E280();
 }
 
-void func_80135A98(void) {
+void annual_shrine_visit_audio_setup(void) {
     func_80090960(5, 0);
     func_8008A0D4(0x418C);
     func_8004DE1C();
 }
 
-void func_80135ACC(void) {
+void annual_shrine_visit_exit_gate(void) {
     if ((D_800F62CF != 5) || (D_80145F60 != 0) || (D_80145EC8 == 0)) {
         func_8004DDD8();
         return;
@@ -70,38 +70,38 @@ void func_80135ACC(void) {
     func_8004DE1C();
 }
 
-void func_80135B30(void) {
+void annual_shrine_visit_special_step_advance(void) {
     if (D_80145F60 != 0) {
         D_800F647A += 4;
     }
     func_8004DE1C();
 }
 
-void func_80135B70(void) {
+void annual_shrine_visit_state_gate_ec8_zero(void) {
     if (D_80145EC8 == 0) {
         func_8004DE1C();
         return;
     }
-    func_801343A4();
+    annual_mode_scene_data_setup();
 }
 
-void func_80135BAC(void) {
+void annual_shrine_visit_target_five_gate(void) {
     if ((D_800F62CF == 5) && (D_80145EC8 == 0)) {
-        func_801343A4();
+        annual_mode_scene_data_setup();
         return;
     }
     func_8004DE1C();
 }
 
-void func_80135C00(void) {
+void annual_shrine_visit_state_gate_ec8_nonzero(void) {
     if (D_80145EC8 != 0) {
-        func_801343A4();
+        annual_mode_scene_data_setup();
         return;
     }
     func_8004DE1C();
 }
 
-void func_80135C3C(void) {
+void annual_shrine_visit_selected_girl_stats_adjust(void) {
     D_800F53A0.girl[5].unk_0A -= 1;
     D_800F53A0.girl[5].unk_06 -= 1;
     D_800F53A0.girl[5].unk_0E += 0xA;

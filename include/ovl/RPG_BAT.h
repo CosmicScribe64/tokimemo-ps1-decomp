@@ -598,35 +598,35 @@ void rpg_swimming_splash_update(void);
 #ifndef OVL_RPG_BAT_T17100_TABLES
 #define OVL_RPG_BAT_T17100_TABLES
 /* T-17100: constant tables that unmatched functions copy whole to the stack
- * (an lw/sw run, written in C as one struct assignment, like StrTbl41). */
+ * (an lw/sw run, written in C as one struct assignment, like RpgDramaLineTable). */
 typedef struct RpgSparkDirections {
     /* 0x00 */ s32 offsets[16]; /* eight (x, y) unit steps at 45 degrees, 0x100 = 1.0 */
 } RpgSparkDirections; /* size 0x40 */
-typedef struct RpgStrTbl4 {
-    /* 0x00 */ u8 *s[4];
-} RpgStrTbl4; /* size 0x10 */
-typedef struct RpgWordTbl4 {
-    /* 0x00 */ s32 v[4];
-} RpgWordTbl4; /* size 0x10 */
-typedef struct RpgWordTbl10 {
-    /* 0x00 */ s32 v[10];
-} RpgWordTbl10; /* size 0x28 */
+typedef struct RpgRewardTextTable {
+    /* 0x00 */ u8 *strings[4];
+} RpgRewardTextTable; /* size 0x10 */
+typedef struct RpgRewardSelectionFlags {
+    /* 0x00 */ s32 selected[4];
+} RpgRewardSelectionFlags; /* size 0x10 */
+typedef struct RpgPadButtonSequence {
+    /* 0x00 */ s32 buttons[10];
+} RpgPadButtonSequence; /* size 0x28 */
 typedef struct RpgMenuPositions {
     /* 0x00 */ s16 coordinates[12]; /* six (x, y) offsets */
 } RpgMenuPositions; /* size 0x18 */
 extern RpgSparkDirections rpg_spark_directions;  /* rpg_basketball_spark_burst */
-extern RpgStrTbl4 rpg_loot_names_delinquents;   /* rpg_loot_text_delinquents */
-extern RpgWordTbl4 rpg_loot_flags_init;  /* rpg_loot_text_delinquents */
-extern RpgWordTbl10 rpg_code_sequence_a; /* rpg_code_entry_update */
-extern RpgWordTbl10 rpg_code_sequence_b; /* rpg_code_entry_update */
+extern RpgRewardTextTable rpg_loot_names_delinquents;   /* rpg_loot_text_delinquents */
+extern RpgRewardSelectionFlags rpg_loot_flags_init;  /* rpg_loot_text_delinquents */
+extern RpgPadButtonSequence rpg_code_sequence_a; /* rpg_code_entry_update */
+extern RpgPadButtonSequence rpg_code_sequence_b; /* rpg_code_entry_update */
 extern RpgMenuPositions rpg_menu_item_positions; /* rpg_command_menu_update */
-extern RpgStrTbl4 rpg_loot_names_snake;   /* rpg_trip_loot_text */
-extern RpgStrTbl4 rpg_loot_names_deer;   /* rpg_trip_loot_text */
-extern RpgStrTbl4 rpg_loot_names_bear;   /* rpg_trip_loot_text */
-extern RpgWordTbl4 rpg_loot_flags_init_trip;  /* rpg_trip_loot_text */
-extern RpgStrTbl4 rpg_loot_names_bancho;   /* rpg_loot_text_bancho */
-extern RpgStrTbl4 rpg_titles_bancho;   /* rpg_loot_text_bancho */
-extern RpgWordTbl4 rpg_loot_flags_init_bancho;  /* rpg_loot_text_bancho (the first 16 bytes of a zero block) */
+extern RpgRewardTextTable rpg_loot_names_snake;   /* rpg_trip_loot_text */
+extern RpgRewardTextTable rpg_loot_names_deer;   /* rpg_trip_loot_text */
+extern RpgRewardTextTable rpg_loot_names_bear;   /* rpg_trip_loot_text */
+extern RpgRewardSelectionFlags rpg_loot_flags_init_trip;  /* rpg_trip_loot_text */
+extern RpgRewardTextTable rpg_loot_names_bancho;   /* rpg_loot_text_bancho */
+extern RpgRewardTextTable rpg_titles_bancho;   /* rpg_loot_text_bancho */
+extern RpgRewardSelectionFlags rpg_loot_flags_init_bancho;  /* rpg_loot_text_bancho (the first 16 bytes of a zero block) */
 /* T-17100: called by rpg_club_move_no_club before their definitions. */
 void rpg_no_club_step_6(void);
 void rpg_no_club_step_4(void);

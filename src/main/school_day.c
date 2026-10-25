@@ -148,7 +148,7 @@ u8 school_day_screen_init(void) {
         case 1:
             if (cd_read_sync_status() & 1) {
                 dec_bg_show_set(0, dec_bg_decode_to_vram(0));
-                if (D_800B594C == -1) {
+                if (bg_decode_result == -1) {
                     dec_bg_reset();
                     school_day_background_read();
                 } else {
@@ -338,13 +338,13 @@ u8 school_day_sd_load(void) {
     } else if (game_state.substep == 1) {
         if (cd_read_sync_status() & 1) {
             if (((game_state.player_flags.b[1] & 0xF) == 3) && !(game_state.player_flags_upper.h & 1) && ((game_state.last_command.w & 0xF) == 7)) {
-                if (file_checksum_ok(9, 0x801E0000) != 0) {
+                if (cd_file_checksum_ok(9, 0x801E0000) != 0) {
                     mode_step_next();
                 } else {
                     game_state.substep = 0;
                 }
             } else {
-                if (file_checksum_ok(0x29, 0x801E0000) != 0) {
+                if (cd_file_checksum_ok(0x29, 0x801E0000) != 0) {
                     mode_step_next();
                 } else {
                     game_state.substep = 0;

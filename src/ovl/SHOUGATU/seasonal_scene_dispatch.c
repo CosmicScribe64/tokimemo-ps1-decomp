@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_8013C070(void) {
+void new_year_scene_callback_addresses_init(void) {
     D_80145AD0 = 0x801972B8;
     D_80145AD4 = 0x80197830;
     D_80145AD8 = 0x80197E10;
@@ -44,7 +44,7 @@ void func_8013C070(void) {
     D_80145B68 = 0x8019DBC8;
 }
 
-void func_8013C2E4(void) {
+void new_year_scene_particle_actor_resource_addresses_init(void) {
     D_80145B6C = 0x80198304;
     D_80145CA8 = 0x80198340;
     D_80145B70 = 0x801987BC;
@@ -284,35 +284,35 @@ void func_8013C2E4(void) {
     D_80145F1C = 0x8019B494;
 }
 
-void shougatu_stage_dispatch(void) {
+void new_year_secondary_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_8013D660();
+        new_year_ijuin_entry_step_dispatch();
         break;
     case 1:
-        func_8013DDD0();
+        christmas_party_actor_update();
         break;
     case 2:
-        func_8013E330();
+        christmas_girl_dialogue_step_dispatch();
         break;
     case 3:
-        func_8013F224();
+        new_year_scene_result_callback_update();
         break;
     case 4:
-        func_801407C0();
+        christmas_mode_step_dispatch();
         break;
     case 5:
-        func_80140DC0();
+        christmas_girl_scene_handler_dispatch();
         break;
     case 6:
-        func_801419D0();
+        new_year_scene_particle_mode_step_dispatch();
         break;
     case 7:
-        func_80142500();
+        new_year_scene_effect_mode_step_dispatch();
         break;
     case 8:
-        func_801430A0();
+        new_year_scene_effect_mode_handler();
         break;
     default:
         game_mode_reset_to_title();
@@ -324,11 +324,11 @@ void shougatu_stage_dispatch(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
     draw_shake_update();
 }
 
-void func_8013D2A8(void) {
+void new_year_current_talk_start(void) {
     talk_tables = &D_80145F2C;
     D_800CA138 = &D_80145F30;
     D_800CA13C = D_80145F20;
@@ -337,7 +337,7 @@ void func_8013D2A8(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_8013D324(void) {
+void new_year_current_talk_step(void) {
     talk_tables = (u8 *)&D_80145F2C;
     D_800CA138 = (u8 *)&D_80145F30;
     D_800CA13C = D_80145F20;
@@ -348,7 +348,7 @@ void func_8013D324(void) {
     }
 }
 
-void func_8013D3B4(void) {
+void new_year_girl_scene_resource_load(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
@@ -392,11 +392,11 @@ void func_8013D3B4(void) {
         game_mode_reset_to_title();
         break;
     }
-    func_8013C2E4();
+    new_year_scene_particle_actor_resource_addresses_init();
     mode_step_next();
 }
 
-void func_8013D560(void) {
+void new_year_default_talk_start(void) {
     talk_tables = &D_800CA150;
     D_800CA138 = &D_800CA154;
     D_800CA13C = D_80145F34;
@@ -405,7 +405,7 @@ void func_8013D560(void) {
     talk_run(0xFF, 1, 0);
 }
 
-void func_8013D5D8(void) {
+void new_year_current_selector_talk_start(void) {
     talk_tables = (u8 *) &D_800CA150;
     D_800CA138 = (u8 *) &D_800CA154;
     D_800CA13C = D_80145F34;

@@ -12,10 +12,10 @@ typedef struct EnObj {
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
     /* 0x10 */ s32 unk_10;
-    /* 0x14 */ Fix32 unk_14; /* 16.16 x: words in func_801339D4, the integer half .h[1] elsewhere (T-20920) */
+    /* 0x14 */ Fix32 unk_14; /* 16.16 x: words in stalls_object_motion_update, the integer half .h[1] elsewhere (T-20920) */
     /* 0x18 */ Fix32 unk_18; /* 16.16 y */
     /* 0x1C */ s32 unk_1C;
-    /* 0x20 */ s32 unk_20; /* 16.16 step of the motion of func_801339D4 (T-20920) */
+    /* 0x20 */ s32 unk_20; /* 16.16 step of the motion of stalls_object_motion_update (T-20920) */
     /* 0x24 */ s32 unk_24;
     /* 0x28 */ s32 unk_28;
     /* 0x2C */ s32 unk_2C;
@@ -28,7 +28,7 @@ extern EnObj D_8013984C[10];
 extern s32 D_80139B1C;
 extern s32 D_80139B14;
 extern s32 D_80139210;
-/* T-18200: asset addresses read by func_80132450 and func_80132834; D_80139204 points at three tpage addresses. */
+/* T-18200: asset addresses read by stalls_actor_graphics_setup and stalls_title_fade_input_dispatch; D_80139204 points at three tpage addresses. */
 extern s32 D_80139200;
 extern s32 *D_80139204;
 extern s32 D_80139208;
@@ -37,35 +37,35 @@ extern s32 D_80139214;
 extern s32 D_80139218;
 
 /* EN_NICHI functions */
-void func_801320C0(void);
-void func_80135FBC(s32 arg0, s32 arg1);
-void func_80136B10(void);
+void stalls_first_year_mode_stage_dispatch(void);
+void stalls_wave_grid_cell_draw(s32 arg0, s32 arg1);
+void stalls_later_year_callback_dispatch(void);
 /* Entries of the 80136B10.c scene table D_80139C5C (defined in that file, T-25201). */
-void func_80136B74(void);
-void func_80136DEC(void);
-void func_8013735C(void);
-void func_801340CC(void);
-void func_80134258(s32 arg0);
-void func_801344F0(s32 arg0, s32 arg1);
-void func_80134784(s32 *arg0, s32 *arg1);
-void func_80133F00(); /* K&R definition */
-void func_80133924(void);
-void func_80133CA8(void);
-void func_801330D0(void);
-s32 func_80135A48(s32 arg0, s32 arg1); /* implicit int, no return value */
-void func_80135600(void);
-void func_801359D0(void);
-void func_80135F54(void);
-void func_801369F4(s32 arg0);
-void func_80136700(void);
-void func_80136904(s32 arg0, s32 arg1);
-s32 func_80132B40(void);
-void func_80132D44(void);
-void func_80132E3C(void);
-void func_8013556C(void);
-void func_80136A2C(void);
-void func_801338EC(void);
-void func_80132ADC(void);
+void stalls_presentation_intro_dispatch(void);
+void stalls_game_actor_setup(void);
+void stalls_game_state_dispatch(void);
+void stalls_object_out_of_bounds_clear(void);
+void stalls_random_object_spawn(s32 arg0);
+void stalls_object_spawn_position_init(s32 arg0, s32 arg1);
+void stalls_object_type_count(s32 *arg0, s32 *arg1);
+void stalls_object_collision_actor_setup(); /* K&R definition */
+void stalls_object_ai_update_dispatch(void);
+void stalls_object_actor_render_update(void);
+void stalls_cursor_position_update(void);
+s32 stalls_wave_start(s32 arg0, s32 arg1); /* implicit int, no return value */
+void stalls_particle_grid_position_update(void);
+void stalls_active_wave_update(void);
+void stalls_wave_grid_draw(void);
+void stalls_audio_command_debounce(s32 arg0);
+void stalls_score_panel_fade_draw(void);
+void stalls_counter_digit_set(s32 arg0, s32 arg1);
+s32 stalls_brightness_ramp_up(void);
+void stalls_object_mode_substate_dispatch(void);
+void stalls_cursor_and_selection_input(void);
+void stalls_particle_field_update(void);
+void stalls_wave_response_update(void);
+void stalls_object_scene_update(void);
+void stalls_light_animation_update(void);
 
 extern s32 D_801391E0;
 extern s32 D_801391E4;
@@ -77,24 +77,24 @@ extern s32 D_801391F8;
 extern s32 D_801391FC;
 
 extern s32 D_80139AF8;
-s32 func_801333B0();
-void func_801337E0(void);
+s32 stalls_target_selection_score_update();
+void stalls_cursor_object_proximity_classify(void);
 
-s32 func_8013358C();
-void func_80132EE8();
-void func_80132DC4();
+s32 stalls_target_release_score_update();
+void stalls_score_completion_update();
+void stalls_idle_timeout_update();
 
 extern s32 D_80139AFC;
 extern s32 D_80139278[10];
-void func_80135ACC(s32 arg0);
-void func_80134C1C();
-void func_801339D4(s32 arg0);
-void func_80134800(s32 arg0);
+void stalls_wave_grid_displacement(s32 arg0);
+void stalls_object_special_ai_update();
+void stalls_object_motion_update(s32 arg0);
+void stalls_object_random_steering_update(s32 arg0);
 extern s32 D_8013921C;
 
-void func_801321EC(void);
-void func_80132308(void);
-void func_80132378(void);
+void stalls_intro_scene_reset(void);
+void stalls_intro_sector_load(void);
+void stalls_palette_load(void);
 extern s32 D_80139220;
 extern s32 D_80139224;
 extern s32 D_801392A4;
@@ -102,12 +102,12 @@ extern s32 D_801392A8;
 
 extern s32 D_80139B20;
 
-s32 func_80132A74();
-void func_80134D74();
-void func_80134F2C();
-void func_80135044();
-void func_8013515C();
-s32 func_80135274(s32 arg0);
+s32 stalls_cursor_distance_squared();
+void stalls_object_steer_handler_00();
+void stalls_object_steer_handler_01();
+void stalls_object_steer_handler_02();
+void stalls_object_steer_handler_03();
+s32 stalls_cursor_relative_direction_sector(s32 arg0);
 
 extern u16 D_80139C58;
 extern u8 D_80139C30;
@@ -115,16 +115,16 @@ extern u8 D_80139C34[8];
 extern u8 D_80139C3C[8];
 extern u8 D_80139C44[8];
 extern s16 D_80139C4C[6];
-void func_80137C58(void);
-void func_80137E2C(void);
-s32 func_80137FEC();
-void func_80138CCC(void);
+void stalls_target_collision_update(void);
+void stalls_progress_meter_draw(void);
+s32 stalls_target_collision_resolve();
+void stalls_eligible_girl_frame_select(void);
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;
 
 #ifndef OVL_EN_NICHI_T9720_TABLES
 #define OVL_EN_NICHI_T9720_TABLES
-/* Local copies in func_80137FEC: twelve halfwords and 33 callbacks. */
+/* Local copies in stalls_target_collision_resolve: twelve halfwords and 33 callbacks. */
 typedef struct EnHalf12 {
     /* 0x00 */ s16 value[12];
 } EnHalf12; /* size 0x18 */
@@ -138,13 +138,13 @@ extern EnFn33 D_80139D1C;
 
 #ifndef W9_EN_RESET_TABLE
 #define W9_EN_RESET_TABLE
-/* A 16.16 point (x, y): func_80135ACC reads and writes the words, the other users the integer
+/* A 16.16 point (x, y): stalls_wave_grid_displacement reads and writes the words, the other users the integer
  * halves .h[1] (T-20920; T-9710 had four halfwords). */
 typedef struct EnFixPos {
     /* 0x00 */ Fix32 unk_00;
     /* 0x04 */ Fix32 unk_04;
 } EnFixPos; /* size 0x08 */
-extern EnFixPos D_801392AC[15][12]; /* the point grid: 15 rows of 12 (func_801354E0, func_80135600, func_80135ACC, func_80135FBC) */
+extern EnFixPos D_801392AC[15][12]; /* the point grid: 15 rows of 12 (stalls_particle_grid_reset, stalls_particle_grid_position_update, stalls_wave_grid_displacement, stalls_wave_grid_cell_draw) */
 #endif
 
 #ifndef OVL_EN_NICHI_DISTANCE_T10020
@@ -161,15 +161,15 @@ extern s32 D_801392A0;
 extern s32 D_80139AF4;
 extern s32 D_80139B04;
 extern s32 D_80139B18;
-void func_801354E0(void);
+void stalls_particle_grid_reset(void);
 #endif
 
 #ifndef OVL_EN_NICHI_TABLES_T10020
 #define OVL_EN_NICHI_TABLES_T10020
-void func_8013216C(void);
-void func_80132278(void);
-void func_8013275C(void);
-void func_80132A0C(void);
+void stalls_intro_substep_dispatch(void);
+void stalls_saved_caller_state_restore(void);
+void stalls_game_state_reset(void);
+void stalls_game_frame_update(void);
 extern u8 D_80139A2C[8]; /* follows the D_8013984C records, read as their end (T-10810); object kind -> sprite flag (T-18200) */
 extern EnFixPos D_80139228[10]; /* pop-up centres (T-10810), ten up to D_80139278 */
 #endif
@@ -179,18 +179,18 @@ extern EnFixPos D_80139228[10]; /* pop-up centres (T-10810), ten up to D_8013927
 /* T-10850: 64 words copied to the local motion lookup table. */
 typedef union EnWords64 {
     /* 0x000 */ s32 words[64];
-    /* 0x000 */ s32 value[8][8]; /* matrix access in func_80135600, T-14000 */
+    /* 0x000 */ s32 value[8][8]; /* matrix access in stalls_particle_grid_position_update, T-14000 */
 } EnWords64; /* size 0x100 */
 extern EnWords64 D_80139B28;
 #endif
 
 #ifndef OVL_EN_NICHI_T18200_TYPES
 #define OVL_EN_NICHI_T18200_TYPES
-/* T-18200: sprite frames of the objects, six halfwords per row; func_80133CA8 reads row
- * func_80134008(i) for kinds 1..3 and row 8 + func_80134008(i) for kind 4. Ends at D_80139AF4. */
+/* T-18200: sprite frames of the objects, six halfwords per row; stalls_object_actor_render_update reads row
+ * stalls_object_direction_sector_select(i) for kinds 1..3 and row 8 + stalls_object_direction_sector_select(i) for kind 4. Ends at D_80139AF4. */
 extern s16 D_80139A34[16][6];
 
-/* T-18200: tables that func_80136DEC and func_80138CCC copy to the stack as one block
+/* T-18200: tables that stalls_game_actor_setup and stalls_eligible_girl_frame_select copy to the stack as one block
  * (lw/sw runs, then an lhu/sh tail for the odd sizes); element type from the drafts' reads. */
 typedef struct EnHalf22 {
     /* 0x00 */ s16 value[22];
@@ -204,10 +204,10 @@ typedef struct EnHalf64 {
 typedef struct EnHalf13 {
     /* 0x00 */ s16 value[13];
 } EnHalf13; /* size 0x1A */
-extern EnHalf22 D_80139C68; /* func_80136DEC: 22 display records, +0x14 */
-extern EnHalf22 D_80139C94; /* func_80136DEC: +0x22 */
-extern EnHalf22 D_80139CC0; /* func_80136DEC: +0x26 */
-extern EnBytes22 D_80139CEC; /* func_80136DEC: +0x01 */
-extern EnHalf64 D_80139DA0; /* func_80138CCC: picked by rand() & 0x3F */
-extern EnHalf13 D_80139E20; /* func_80138CCC: one value per girl, 13 */
+extern EnHalf22 D_80139C68; /* stalls_game_actor_setup: 22 display records, +0x14 */
+extern EnHalf22 D_80139C94; /* stalls_game_actor_setup: +0x22 */
+extern EnHalf22 D_80139CC0; /* stalls_game_actor_setup: +0x26 */
+extern EnBytes22 D_80139CEC; /* stalls_game_actor_setup: +0x01 */
+extern EnHalf64 D_80139DA0; /* stalls_eligible_girl_frame_select: picked by rand() & 0x3F */
+extern EnHalf13 D_80139E20; /* stalls_eligible_girl_frame_select: one value per girl, 13 */
 #endif

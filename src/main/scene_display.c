@@ -23,13 +23,13 @@ void scene_screen_reset(s32 arg0, s32 arg1) {
 }
 
 void Vblnk_Timer_Init(void) {
-    D_800E36F0 = game_state.timer_ticks;
-    D_800E36F4 = 0;
+    vsync_timer_start = game_state.timer_ticks;
+    vsync_timer_elapsed = 0;
 }
 
 s32 Vblnk_Timer(void) {
-    D_800E36F4 = game_state.timer_ticks - D_800E36F0;
-    return D_800E36F4;
+    vsync_timer_elapsed = game_state.timer_ticks - vsync_timer_start;
+    return vsync_timer_elapsed;
 }
 
 void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
@@ -59,17 +59,17 @@ void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
         p->v2 = arg2 + arg3;
         p->v1 = arg2;
         p->v0 = arg2;
-        p->x0 = game_state.screen_center_x[draw_buffer] + i * 0x40 - 0xA0;
-        p->y0 = game_state.screen_center_y[draw_buffer] + arg2 - 0x78;
-        p->x1 = game_state.screen_center_x[draw_buffer] + i * 0x40 - 0x60;
-        p->y1 = game_state.screen_center_y[draw_buffer] + arg2 - 0x78;
-        p->x2 = game_state.screen_center_x[draw_buffer] + i * 0x40 - 0xA0;
-        p->y2 = game_state.screen_center_y[draw_buffer] + arg2 + arg3 - 0x78;
-        p->x3 = game_state.screen_center_x[draw_buffer] + i * 0x40 - 0x60;
-        p->y3 = game_state.screen_center_y[draw_buffer] + arg2 + arg3 - 0x78;
+        p->x0 = game_state.draw_origin_x[draw_buffer] + i * 0x40 - 0xA0;
+        p->y0 = game_state.draw_origin_y[draw_buffer] + arg2 - 0x78;
+        p->x1 = game_state.draw_origin_x[draw_buffer] + i * 0x40 - 0x60;
+        p->y1 = game_state.draw_origin_y[draw_buffer] + arg2 - 0x78;
+        p->x2 = game_state.draw_origin_x[draw_buffer] + i * 0x40 - 0xA0;
+        p->y2 = game_state.draw_origin_y[draw_buffer] + arg2 + arg3 - 0x78;
+        p->x3 = game_state.draw_origin_x[draw_buffer] + i * 0x40 - 0x60;
+        p->y3 = game_state.draw_origin_y[draw_buffer] + arg2 + arg3 - 0x78;
         p->tpage = func_8009ECB0(1, 0, (((u32)(i * 0x20) + (u32)arg0) / 0x40 * 0x40) % (u32)arg4 + 0x140, 0);
         p->clut = func_8009ED74(0, 0x1F0);
-        AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg1 * 4, p);
+        AddPrim(draw_ot_tags + (draw_buffer << 10) + arg1 * 4, p);
     }
     /* FAKE: raises `(u8)arg2` priority above `arg3` and `arg2 + arg3` so `$s6 = arg2, $s7 = arg3, $s8 = arg2 + arg3`. T-24127 */
     if ((u8)arg2) {}
@@ -136,7 +136,7 @@ void Yubi(s32 idx) {
 void Default_Disp(void) {
     k_disp_inc2();
     check_k_scroll();
-    func_80083A10();
+    scene_frame_update();
     message_window_show();
     hizuke_show();
     hud_screen_frame_draw(2);
@@ -144,7 +144,7 @@ void Default_Disp(void) {
     draw_shake_update();
 }
 
-s32 func_8008647C(void) {
+s32 select_girl_by_scores(void) {
     s32 sum1;
     s32 sum2;
     s32 cur;
@@ -190,7 +190,7 @@ s32 func_8008647C(void) {
 }
 
 /* FAKE: same-line swap and pointer read retain the original halfword load order. T-9550 */
-s32 func_80086640(void)
+s32 actor_pair_swap_sequences(void)
 {
 
   s16 *right;
@@ -214,11 +214,11 @@ void portrait_read_step(void) {
         return;
     }
     if (cd_read_sync_status() & 1) {
-        if (*(s32 *)D_800CA120 != 0x801820AC || *(s32 *)(D_800CA120 + 4) != 0x801860AC || *(s32 *)(D_800CA120 + 8) != 0x8018A0AC || *(s32 *)(D_800CA120 + 0xC) != 0x8018E0AC || *(s32 *)(D_800CA120 + 0x10) != 0x801920AC || *(s32 *)D_800CA128 != 0x8018005C || *(s32 *)(D_800CA128 + 4) != 0x80180070 || *(s32 *)D_800CA124 != 0x80180000) {
+        if (*(s32 *)face_images != 0x801820AC || *(s32 *)(face_images + 4) != 0x801860AC || *(s32 *)(face_images + 8) != 0x8018A0AC || *(s32 *)(face_images + 0xC) != 0x8018E0AC || *(s32 *)(face_images + 0x10) != 0x801920AC || *(s32 *)face_sequences != 0x8018005C || *(s32 *)(face_sequences + 4) != 0x80180070 || *(s32 *)face_frame_tables != 0x80180000) {
             game_state.substep = 0;
             return;
         }
-        if (file_checksum_ok(0x2D, 0x80180000) == 0) {
+        if (cd_file_checksum_ok(0x2D, 0x80180000) == 0) {
             game_state.substep = 0;
             return;
         }
@@ -226,10 +226,10 @@ void portrait_read_step(void) {
     }
 }
 
-void func_800867CC(void) {
-    if (D_80122EA0 == 0) {
+void audio_bank_wait_latch(void) {
+    if (audio_bank_wait_done == 0) {
         if (audio_bank_load_poll() == 1) {
-            D_80122EA0 = 1;
+            audio_bank_wait_done = 1;
         }
     }
 }

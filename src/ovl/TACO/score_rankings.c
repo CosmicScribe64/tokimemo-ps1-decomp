@@ -36,13 +36,13 @@ void shooter_stage_scores(void) {
 
 void shooter_scores_step_init(void) {
     shooter_init_stars();
-    func_800450F4(0, 0x202);
+    audio_bgm_play_short(0, 0x202);
     game_state.clear_color_r = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;
     back_clear_switch(1);
     shooter_background_flags = 0;
-    func_80059048();
+    view_model_slots_clear();
     mode_step_next();
 }
 

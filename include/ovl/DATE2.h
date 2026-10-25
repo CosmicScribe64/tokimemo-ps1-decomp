@@ -10,7 +10,7 @@
 #include "game.h"
 
 extern u8 dec_bg_show;
-void func_80138048(void);
+void amusement_karaoke_mode_step_dispatch(void);
 
 extern u16 D_8013B5D0;
 extern s16 D_8013A428;
@@ -24,16 +24,16 @@ extern s16 D_8013B5FC;
 extern s32 D_8013B5D4, D_8013B5D8, D_8013B5DC, D_8013B5E0;
 
 /* DATE2 functions called across the overlay. */
-void func_80132000(void);
-void func_80133258(void);
-void func_801335A4(void);
-void func_80136D50(void);
-void func_80137360(void);
-void func_80137D50(void);
-void func_80138100(void);
-void func_80132670(void);
-void func_80133620(void);
-void func_80137A2C(void);
+void amusement_scene_script_pointer_setup(void);
+void amusement_date_girl_dialogue_pointer_bind(void);
+void amusement_shiori_name_portrait_setup(void);
+void amusement_karaoke_pointer_setup(void);
+void amusement_karaoke_dialogue_pointer_setup(void);
+void amusement_karaoke_return_pointer_setup(void);
+void amusement_karaoke_return_asset_pointer_setup(void);
+void amusement_opening_talk_run_line_1(void);
+void amusement_date_girl_portrait_read(void);
+void amusement_karaoke_indexed_text_select(void);
 
 extern u8 D_8013A818;
 extern s32 D_8013A384, D_8013A3B0, D_8013A3DC, D_8013A410, D_8013A414, D_8013A418;
@@ -42,13 +42,13 @@ extern s32 D_8013A774, D_8013A7A8, D_8013A7DC;
 extern s32 D_8013A5B0, D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8;
 extern s32 D_8013A404, D_8013A408, D_8013A40C;
 
-void func_801370E4(void);
-void func_801365DC(s32 arg0);
+void amusement_karaoke_girl_pointer_bind(void);
+void amusement_decoded_background_read_retry(s32 arg0);
 
-s32 func_801348F0(); /* returns 0 on most paths (or v0,zero,zero) T-11880 */
-s32 func_80133AF0(); /* returns 0, or the timer from the dot animation T-11880 */
-s32 func_801350A4(); /* returns 0 on the header-error path only T-11880 */
-s32 func_80135E50();
+s32 amusement_decoded_scene_sequence_b(); /* returns 0 on most paths (or v0,zero,zero) T-11880 */
+s32 amusement_decoded_scene_sequence_a(); /* returns 0, or the timer from the dot animation T-11880 */
+s32 amusement_decoded_scene_sequence_c(); /* returns 0 on the header-error path only T-11880 */
+s32 amusement_random_scene_sprite_sequence();
 extern s32 D_8013A380;
 extern s32 D_8013A388;
 extern s32 D_8013A38C;
@@ -186,46 +186,46 @@ extern s32 D_8013B5B4;
 extern s32 D_8013B5B8;
 extern s32 D_8013B5BC;
 extern s32 D_8013B5C0;
-s32 func_801385CC();
-s32 func_801388C0();
-void func_80138BEC(void);
-s32 func_80138A3C(void);
-void func_80136660(void);
-void func_8013856C(void);
-void func_8013850C(void);
+s32 amusement_karaoke_return_menu_build();
+s32 amusement_karaoke_return_menu_input();
+void amusement_karaoke_result_update(void);
+s32 amusement_karaoke_audio_substep_dispatch(void);
+void amusement_birthday_callback_dispatch(void);
+void amusement_karaoke_return_substep_dispatch(void);
+void amusement_karaoke_return_timer_dispatch(void);
 
 extern u8 D_8013B5C4;
 extern s16 D_8013B5C8;
-void func_80138E0C(void);
-void func_80138F8C(void);
-void func_801391A0(void);
-void func_801393B4(void);
+void amusement_karaoke_result_table_display_30(void);
+void amusement_karaoke_result_table_display_51(void);
+void amusement_karaoke_result_table_display_39(void);
+void amusement_karaoke_result_table_display_81(void);
 /* Copied by DATE2 threshold walkers; lengths follow their signed halfword loops. */
 typedef struct Date2Threshold30 { /* size 0x3C */
     /* 0x00 */ s16 values[30];
 } Date2Threshold30;
 extern Date2Threshold30 D_8013B6B8;
-void func_801395C8();
+void amusement_karaoke_result_text_page_display();
 
-/* func_80138F8C copies 0x66 bytes and scans 51 signed halfwords. */
+/* amusement_karaoke_result_table_display_51 copies 0x66 bytes and scans 51 signed halfwords. */
 typedef struct Date2Threshold51 { /* size 0x66 */
     /* 0x00 */ s16 values[51];
 } Date2Threshold51;
 extern Date2Threshold51 D_8013B6F4;
 
-/* func_801391A0: local copy is 0x4e bytes, scanned as 39 halfwords. */
+/* amusement_karaoke_result_table_display_39: local copy is 0x4e bytes, scanned as 39 halfwords. */
 typedef struct Date2Threshold39 { /* size 0x4e */
     /* 0x00 */ s16 values[39];
 } Date2Threshold39;
 extern Date2Threshold39 D_8013B75C;
 
-/* func_801393B4: local copy is 0xa2 bytes, scanned as 81 halfwords. */
+/* amusement_karaoke_result_table_display_81: local copy is 0xa2 bytes, scanned as 81 halfwords. */
 typedef struct Date2Threshold81 { /* size 0xa2 */
     /* 0x00 */ s16 values[81];
 } Date2Threshold81;
 extern Date2Threshold81 D_8013B7AC;
 
-/* func_80138A90 copies four pairs of word-sized load parameters plus two fallback pairs. */
+/* amusement_karaoke_cd_audio_request copies four pairs of word-sized load parameters plus two fallback pairs. */
 typedef struct Date2LoadPair { /* size 0x08 */
     /* 0x00 */ s32 unk_00;
     /* 0x04 */ s32 unk_04;
@@ -237,9 +237,9 @@ extern Date2LoadPairs4 D_8013B688;
 extern Date2LoadPair D_8013B6A8, D_8013B6B0;
 extern u8 D_8013B5CC;
 
-/* T-18800: func_80135E50's three moving dots, as in its DATE twin func_801489D0 (D_8015CFA4..):
+/* T-18800: amusement_random_scene_sprite_sequence's three moving dots, as in its DATE twin func_801489D0 (D_8015CFA4..):
  * x and y positions and their steps, three s16 each at a stride of 8 bytes. D_8013A5CC is the
- * step counter (sh/lhu), D_8013A5D0 the scene timer of func_80133AF0 (sh/lh). */
+ * step counter (sh/lhu), D_8013A5D0 the scene timer of amusement_decoded_scene_sequence_a (sh/lh). */
 extern u16 D_8013A5CC;
 extern s16 D_8013A5D0;
 extern s16 D_8013A5D4[3];
@@ -247,7 +247,7 @@ extern s16 D_8013A5DC[3];
 extern s16 D_8013A5E4[3];
 extern s16 D_8013A5EC[3];
 
-/* T-18800: the four menu labels of func_801385CC and func_801388C0: their widths (passed to
+/* T-18800: the four menu labels of amusement_karaoke_return_menu_build and amusement_karaoke_return_menu_input: their widths (passed to
  * menu_set as one s16[4], tested in a loop) and the 21-byte strings copied to the stack whole
  * (0x54 bytes, the label at 0x50 + 21 * i). */
 extern s16 D_8013B5E4[4];
@@ -256,10 +256,10 @@ typedef struct Date2Labels4x21 { /* size 0x54 */
 } Date2Labels4x21;
 extern Date2Labels4x21 D_8013B634;
 
-/* T-11880: func_801348F0 (the DATE movie view, same guard and layout as include/ovl/DATE.h). */
+/* T-11880: amusement_decoded_scene_sequence_b (the DATE movie view, same guard and layout as include/ovl/DATE.h). */
 #ifndef OVL_DATE_MOVIE_T10830_H
 #define OVL_DATE_MOVIE_T10830_H
-/* Overlay access view at dec_bg_lba_cache (see include/ovl/DATE.h). */
+/* Overlay access view at bg_lba_cache (see include/ovl/DATE.h). */
 typedef struct DateMovieWork {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
@@ -280,12 +280,12 @@ typedef struct DateMovieWork {
     /* 0x28 */ s32 unk_28;
 } DateMovieWork; /* size 0x2C, minimum observed extent */
 
-/* First two words of the bitstream reached through D_80125C04. */
+/* First two words of the bitstream reached through bg_still_bitstream. */
 typedef struct DateMovieHeader8 {
     /* 0x00 */ u32 unk_00;
     /* 0x04 */ u32 unk_04;
 } DateMovieHeader8; /* size 0x08, minimum observed extent */
 #endif
-void func_80132BB0(void);
+void amusement_opening_sector_load(void);
 
 #endif /* OVL_DATE2_H */

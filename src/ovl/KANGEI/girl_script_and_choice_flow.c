@@ -17,7 +17,7 @@ typedef struct {
 } FnTbl40; /* size 0xA0 */
 extern FnTbl40 D_8013A4D0;
 
-void func_80137B90(void) {
+void camp_script_pointer_table_bind(void) {
     D_8013A170[0][0][0] = 0x801B00DC;
     D_8013A170[0][0][1] = 0x801B02AC;
     D_8013A170[0][0][2] = 0x801B03C8;
@@ -59,7 +59,7 @@ void func_80137B90(void) {
     D_8013A170[0][2][12] = 0x801B155C;
 }
 
-void func_80137E04(void) {
+void camp_script_pointer_table_bind_alt(void) {
     D_8013A170[1][0][0] = 0x801B0478;
     D_8013A170[1][0][1] = 0x801B13A4;
     D_8013A170[1][0][2] = 0x801B2998;
@@ -101,20 +101,20 @@ void func_80137E04(void) {
     D_8013A170[1][2][12] = 0x801BAB90;
 }
 
-void func_80138078(void) {
+void camp_birthday_scene_gate(void) {
     if ((((u32) (game_state.girls[0].birthday.w << 0x17) >> 0x1B) == game_state.day) && ((game_state.girls[0].birthday.w & 0xF) == game_state.month) && ((u8) D_80139AC4 == 0)) {
-        func_80138158();
+        camp_birthday_callback_dispatch();
         return;
     }
     if ((((u32) (game_state.player_birthday << 0x17) >> 0x1B) == game_state.day) && ((game_state.player_birthday & 0xF) == game_state.month)) {
-        func_801383D0();
+        camp_player_birthday_callback_dispatch();
         return;
     }
     mode_stage_next();
     D_80139AC0 = 0;
 }
 
-void func_8013812C(void) {
+void camp_birthday_callback_state_set(void) {
     D_80139AC4 = 1;
     mode_step_set(0);
 }
@@ -129,7 +129,7 @@ typedef struct {
 } FnTbl68; /* size 0x110 */
 extern FnTbl68 D_8013A3C0;
 
-void func_80138158(void) {
+void camp_birthday_callback_dispatch(void) {
     s32 idx; /* declared before the tables: its stack slot sits above them (T-3330) */
     FnTbl67 a;
     FnTbl68 b;
@@ -145,12 +145,12 @@ void func_80138158(void) {
     b.f[idx](0x80);
 }
 
-void func_80138264(void) {
+void camp_birthday_step_flag_set(void) {
     D_8013A2A8 = 1;
     mode_step_next();
 }
 
-void func_8013828C(void) {
+void camp_birthday_scene_setup(void) {
     game_state.day_event_done_bits |= 4;
     portrait_layout_set(get_g_zyotai_h(game_state.current_girl));
     D_80139AD0 = (KObj *) D_8013A170[0][0][1];
@@ -158,11 +158,11 @@ void func_8013828C(void) {
     D_80139AD8 = D_8013A170[0][2][1];
     D_80139ADC = 1;
     D_80139AE0 = 0;
-    func_801392D4();
+    camp_current_girl_script_pointer_bind();
     mode_step_next();
 }
 
-void func_80138320(void) {
+void camp_shiori_status_branch(void) {
     u8 s;
 
     s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -173,7 +173,7 @@ void func_80138320(void) {
     mode_step_next();
 }
 
-void func_8013836C(void) {
+void camp_player_birthday_step_branch(void) {
     if (((u32)(game_state.player_birthday << 0x17) >> 0x1B) == game_state.day && (game_state.player_birthday & 0xF) == game_state.month) {
         game_state.mode_step += 0xC;
         return;
@@ -181,7 +181,7 @@ void func_8013836C(void) {
     mode_step_next();
 }
 
-void func_801383D0(void) {
+void camp_player_birthday_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
@@ -190,12 +190,12 @@ void func_801383D0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013844C(void) {
+void camp_dialogue_state_clear_and_dispatch(void) {
     D_80139AC0 = 0;
-    func_80133C84();
+    camp_current_girl_restore();
 }
 
-void func_80138470(void) {
+void camp_response_parameter_update(void) {
     if (D_80122CDC != 0) {
         game_state.girls[game_state.current_girl].affection -= 1;
         game_state.girls[game_state.current_girl].syoushin += 5;
@@ -208,7 +208,7 @@ void func_80138470(void) {
     mode_step_next();
 }
 
-void func_8013852C(void) {
+void camp_year_script_select(void) {
     u8 year;
 
     if (game_state.month >= 4) {
@@ -229,21 +229,21 @@ void func_8013852C(void) {
     mode_step_next();
 }
 
-void func_801385E0(void) {
+void camp_script_row_one_bind(void) {
     D_80139AD0 = (KObj *)D_8013A170[1][0][1];
     D_80139AD4 = D_8013A170[1][1][1];
     D_80139AD8 = D_8013A170[1][2][1];
     D_80139ADC = 3;
-    func_80139540();
+    camp_script_text_copy_from_selector();
     mode_step_next();
 }
 
-void func_80138640(void) {
+void camp_shiori_scene_state_setup(void) {
     s32 unused; /* FAKE: the original frame has one more 4-byte local above sp2A (same extra scalar as the T-3330 table functions); its real use is unknown. T-4040 */
     s16 sp2A;
 
     sp2A = (s16) D_80122CDC;
-    func_80134374();
+    camp_candidate_scene_initialize();
     D_80122CDC = (s32) sp2A;
     D_80139AC0 = 0;
     game_state.current_girl = GIRL_SHIORI;
@@ -254,7 +254,7 @@ void func_80138640(void) {
     D_80139ADC = 4;
 }
 
-void func_801386C4(void) {
+void camp_shiori_portrait_variant_load(void) {
     u8 s;
 
     s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -266,7 +266,7 @@ void func_801386C4(void) {
     mode_step_next();
 }
 
-void func_80138728(void) {
+void camp_status_script_offset(void) {
     u8 s;
 
     s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -280,13 +280,13 @@ void func_80138728(void) {
     mode_step_next();
 }
 
-void func_801387B8(void) {
+void camp_choice_script_offset_set(void) {
     portrait_layout_set(D_80122CDC + 1);
     D_80139ADC = (D_80122CDC * 2) + 0xD;
     mode_step_next();
 }
 
-void func_801387FC(void) {
+void camp_choice_response_branch(void) {
     if (D_80122CDC != 0) {
         D_80139AC0 = 1;
         game_state.mode_step += 0x39;
@@ -296,12 +296,12 @@ void func_801387FC(void) {
     mode_step_next();
 }
 
-void func_8013885C(void) {
+void camp_script_index_set_22(void) {
     D_80139ADC = 0x22;
     mode_step_next();
 }
 
-void func_80138884(void) {
+void camp_shiori_status_script_offset_set(void) {
     u8 s;
 
     s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -309,7 +309,7 @@ void func_80138884(void) {
     mode_step_next();
 }
 
-void func_801388E4(void) {
+void camp_shiori_status_script_offset_set_alt(void) {
     u8 s;
 
     s = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -317,7 +317,7 @@ void func_801388E4(void) {
     mode_step_next();
 }
 
-void func_80138944(void) {
+void camp_player_girl_club_compare(void) {
     D_8013A2B0 = game_state.current_girl;
     if (((u32) game_state.player_flags.h >> 0xC) == ((u32) game_state.girls[game_state.current_girl].flags.b[2] >> 4)) {
         mode_step_next();
@@ -331,15 +331,15 @@ void func_80138944(void) {
     mode_step_next();
 }
 
-void func_801389F4(void) {
+void camp_saved_girl_scene_restore(void) {
     game_state.current_girl = D_8013A2B0;
-    func_801392D4();
+    camp_current_girl_script_pointer_bind();
     D_80139ADC = 0;
     D_80139AE0 = 0;
     mode_step_next();
 }
 
-void func_80138A34(void) {
+void camp_current_girl_portrait_resource_load_alt(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         portrait_read_start(0x541D);
@@ -378,8 +378,8 @@ void func_80138A34(void) {
     mode_step_next();
 }
 
-void func_80138B28(void) {
-    D_800B3D60 = 0;
+void camp_low_status_girl_select(void) {
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -387,7 +387,7 @@ void func_80138B28(void) {
     mode_step_next();
 }
 
-void func_80138B90(void) {
+void camp_audio_bank_load_poll_retry(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
         mode_step_next();
@@ -399,7 +399,7 @@ void func_80138B90(void) {
     }
 }
 
-void func_80138C18(void) {
+void camp_scene_ui_state_reset(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -411,7 +411,7 @@ void func_80138C18(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_clear();
     parameter_disp_switch(0);
     parameter_disp_switch(0);
@@ -422,19 +422,19 @@ void func_80138C18(void) {
     mode_step_next();
 }
 
-void func_80138CD0(void) {
+void camp_script_sector_load_group_one(void) {
     cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
-    func_80137E04();
+    camp_script_pointer_table_bind_alt();
     mode_step_next();
 }
 
-void func_80138D08(void) {
+void camp_script_sector_load_group_zero(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80137B90();
+    camp_script_pointer_table_bind();
     mode_step_next();
 }
 
-void func_80138D40(void) {
+void camp_shiori_scene_entry_setup(void) {
     s16 var_s0;
 
     D_8013A2A8 = 0;
@@ -449,26 +449,26 @@ void func_80138D40(void) {
     hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    dec_bg_brightness = 0x80;
+    bg_brightness = 0x80;
     ((Actor *)actor_pool_96)->draw_flags &= 0x7F;
     ((Actor *)actor_pool_96)[1].draw_flags &= 0x7F;
     k_reset(1);
     game_state.current_girl = GIRL_SHIORI;
     D_80139ADC = 0;
     D_80139AE0 = 0;
-    func_80137E04();
-    func_80138F54();
+    camp_script_pointer_table_bind_alt();
+    camp_script_row_one_pointer_bind();
     talk_names_set(game_state.current_girl);
     D_80139AC0 = 1;
     mode_step_next();
 }
 
-void func_80138E3C(void) {
+void camp_scene_background_load(void) {
     bg_read_sub2(0x42A9);
     mode_step_next();
 }
 
-void func_80138E64(void) {
+void camp_scene_background_event_log_select(void) {
     s32 pad; /* FAKE: unused local above s, puts s at sp+0x2B as in the original; real source unknown (T-3330 layout) */
     u8 s;
 
@@ -491,13 +491,13 @@ void func_80138E64(void) {
     mode_step_next();
 }
 
-void func_80138F54(void) {
+void camp_script_row_one_pointer_bind(void) {
     D_80139AD0 = (KObj *)D_8013A170[1][0][1];
     D_80139AD4 = D_8013A170[1][1][1];
     D_80139AD8 = D_8013A170[1][2][1];
 }
 
-s32 func_80138F88(void) {
+s32 camp_low_status_candidate_select(void) {
     s16 i;
     u8 best_i;
     u8 best_s;
@@ -554,7 +554,7 @@ s32 func_80138F88(void) {
     text_system_reset();
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_clear();
     parameter_disp_switch(0);
     icon_disp_switch(0);
@@ -563,7 +563,7 @@ s32 func_80138F88(void) {
     addr_init_bustup();
     text_marker_hide();
     talk_names_set(game_state.current_girl);
-    func_80132E74();
+    camp_day_phase_dialogue_pointer_table_setup();
     D_80139AD0 = (KObj *) D_80139A5C[0][6];
     D_80139AD4 = D_80139A5C[1][6];
     D_80139AD8 = D_80139A5C[2][6];
@@ -571,14 +571,14 @@ s32 func_80138F88(void) {
     D_80139ADC = 0;
     D_80139AE0 = 0;
     talk_names_set(game_state.current_girl);
-    func_801392D4();
+    camp_current_girl_script_pointer_bind();
     if ((u8)D_80139AC4 != 0 && (u8)D_8013A2A8 == 0) {
         game_state.mode_step += 2;
     }
     mode_step_next();
 }
 
-void func_801392D4(void) {
+void camp_current_girl_script_pointer_bind(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_80139AD0 = (KObj *) D_8013A170[0][0][1];
@@ -638,10 +638,10 @@ void func_801392D4(void) {
     }
 }
 
-void func_80139540(void) {
+void camp_script_text_copy_from_selector(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     DateTxt tbl;
 
     tbl = D_8013A570;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + D_8013A2AC * 0x63 + D_80122CDC * 0x21]);
+    strcpy(name_code_a, &tbl.s[game_state.current_girl * 0x129 + D_8013A2AC * 0x63 + D_80122CDC * 0x21]);
 }

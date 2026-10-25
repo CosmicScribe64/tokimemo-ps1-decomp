@@ -2,6 +2,7 @@
 #include "common.h"
 #include "game.h"
 
+/* Shuts down CD, SPU, timers and callbacks and reloads PSX.EXE from the disc (mode 0xFF). */
 void exit_function(void) {
     s32 pad; /* FAKE: unused local reserves a stack word (frame home). T-11170 */
     u8 sp2B;
@@ -14,7 +15,7 @@ void exit_function(void) {
     func_800869C8(0);
     func_80087E08(0);
     func_800879A8(0);
-    CloseEvent(D_8011ECA8);
+    CloseEvent(timer_event);
     StopRCnt(-0x0E000000);
     StopRCnt(-0x0DFFFFFF);
     StopRCnt(-0x0DFFFFFE);

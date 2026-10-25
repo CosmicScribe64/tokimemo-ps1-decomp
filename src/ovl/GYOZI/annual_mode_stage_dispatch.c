@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_80134000(void) {
+void annual_mode_resource_addresses_init(void) {
     D_80145E00 = 0x80197418;
     D_80145E04 = 0x8019888C;
     D_80145E08 = 0x8019A9A8;
@@ -47,29 +47,29 @@ void func_80134000(void) {
     D_80145EA4 = 0x801B0304;
 }
 
-void func_801342A4(void) {
+void annual_mode_handler(void) {
     func_8008E6AC();
     switch (D_800F6479) {
     case 0:
-        func_80134520();
+        annual_new_year_mode_step_dispatch();
         break;
     case 1:
-        func_80134C10();
+        annual_text_choice_mode_step_dispatch();
         break;
     case 2:
-        func_80134FD0();
+        annual_dialogue_choice_mode_step_dispatch();
         break;
     case 3:
-        func_80135900();
+        annual_shrine_visit_mode_step_dispatch();
         break;
     case 4:
-        func_80135CA0();
+        annual_shrine_result_mode_step_dispatch();
         break;
     case 5:
-        func_801362A0();
+        annual_result_actor_display_mode_step_dispatch();
         break;
     case 6:
-        func_80137798();
+        annual_scene_callback_dispatch();
         break;
     default:
         talk_voice_play();
@@ -85,7 +85,7 @@ void func_801342A4(void) {
 }
 
 /* Integer return type matches the setup callers. T-20001. */
-s32 func_801343A4(void) {
+s32 annual_mode_scene_data_setup(void) {
     D_800D9234 = (u8 *) &D_80145EB4;
     D_800D9238 = (u8 *) &D_80145EB8;
     D_800D923C = D_80145EA8;
@@ -94,7 +94,7 @@ s32 func_801343A4(void) {
     func_8008D610(D_8012E66C, 1, 0);
 }
 
-void func_80134420(void) {
+void annual_mode_scene_data_setup_default(void) {
     D_800D9234 = (u8 *)&D_80145EB4;
     D_800D9238 = (u8 *)&D_80145EB8;
     D_800D923C = D_80145EA8;
@@ -103,7 +103,7 @@ void func_80134420(void) {
     func_8008D610(0xFF, 1, 0);
 }
 
-void func_80134498(void) {
+void annual_mode_scene_data_setup_variant(void) {
     D_800D9234 = (u8 *) &D_80145EB4;
     D_800D9238 = (u8 *) &D_80145EB8;
     D_800D923C = D_80145EA8;

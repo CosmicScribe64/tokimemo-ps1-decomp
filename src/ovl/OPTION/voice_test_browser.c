@@ -13,42 +13,42 @@ INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D378)
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D37C);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D380);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D39C);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3A0);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3A4);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_music_clip_index);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_clip_index);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3A8);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3B0);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3B4);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3B8);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3BC);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3CC);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3DC);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_index);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3E0);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3F0);
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3F4);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D3F8);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D798);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D880);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013D968);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013DD58);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E148);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E244);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E340);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E43C);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E538);
-INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", D_8013E634);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_labels);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_bank_load_commands);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_bank_load_arguments);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_music_clip_labels);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_clip_labels);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_music_bank_load_arg_1);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_music_bank_load_arg_2);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_music_bank_load_arg_3);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_bank_load_arg_1);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_bank_load_arg_2);
+INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/voice_test_browser.data", options_voice_test_character_bank_load_arg_3);
 s32 D_8013E730 = 0;
 s32 D_8013E734 = 0;
 s32 D_8013E738 = 0;
 s32 D_8013E73C = 0;
 
-void func_801389A0(void) {
+void options_debug_audio_menu_handler(void) {
     game_state.mode_stage_timer += 1;
     switch (game_state.mode_stage) {
     case 0:
-        func_80138A24();
+        options_debug_audio_background_load();
         break;
     case 1:
-        func_80138A8C();
+        options_debug_audio_step_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -58,7 +58,7 @@ void func_801389A0(void) {
     message_window_title_update();
 }
 
-void func_80138A24(void) {
+void options_debug_audio_background_load(void) {
     if (game_state.substep == 0) {
         cd_read_sectors(0x3A, 0x80180000, 0xA1AB);
         game_state.substep += 1;
@@ -67,26 +67,26 @@ void func_80138A24(void) {
     }
 }
 
-void func_80138A8C(void) {
+void options_debug_audio_step_dispatch(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80139198();
+        options_debug_audio_menu_init();
         return;
     case 1:
-        func_80139878();
+        options_voice_test_fade_in();
         return;
     case 2:
-        func_8013990C();
+        options_debug_audio_menu_update();
         return;
     case 3:
-        func_80138C20();
+        options_debug_audio_track_list_page();
         return;
     case 4:
-        func_80138FC0();
+        options_debug_audio_second_track_list_page();
         return;
     case 5:
-        func_80138DF8();
+        options_debug_audio_voice_list_page();
         return;
     default:
         game_mode_reset_to_title();
@@ -94,7 +94,7 @@ void func_80138A8C(void) {
     }
 }
 
-void func_80138B4C(s32 arg0) {
+void options_voice_test_character_rows_initialize(s32 arg0) {
     s32 i;
     s16 a[16];
     s16 b[16];
@@ -110,14 +110,14 @@ void func_80138B4C(s32 arg0) {
     }
 }
 
-void func_80138C20(void) {
+void options_debug_audio_track_list_page(void) {
     s32 i;
     s32 y;
     s32 next;
     u8 (*rows)[16];
 
     if (game_state.substep == 0) {
-        func_80138B4C(0);
+        options_voice_test_character_rows_initialize(0);
         i = 0;
         do {
             next = i + 1;
@@ -128,9 +128,9 @@ void func_80138C20(void) {
     } else {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             if (game_state.menu_cursor_1 != -1) {
-                D_8013D3A4 = game_state.menu_cursor_1 + D_8013D3A4;
+                options_voice_test_character_clip_index = game_state.menu_cursor_1 + options_voice_test_character_clip_index;
             }
-            func_8013A31C();
+            options_debug_audio_voice_load_begin();
             i = 0;
             do {
                 next = i + 1;
@@ -143,29 +143,29 @@ void func_80138C20(void) {
     i = 0;
     y = -0x64;
     do {
-        func_8004AE54((s32) ((u32) (D_8013D3A4 + i) % 63U), -0xA, y, 6);
+        debug_print_int_color((s32) ((u32) (options_voice_test_character_clip_index + i) % 63U), -0xA, y, 6);
         i += 1;
         y += 0xA;
     } while (i < 0x10);
-    rows = D_8013DD58;
+    rows = options_voice_test_character_clip_labels;
     for (i = 0, y = -0x64; i != 0x10; i++, y += 0xA) {
-        func_8004B338((s32) rows[((u32) (D_8013D3A4 + i) % 63U)], 0xA, y);
+        debug_print_string((s32) rows[((u32) (options_voice_test_character_clip_index + i) % 63U)], 0xA, y);
     }
     menu_check(1, cursor_x, cursor_y);
     menu_bar_show(1);
     menu_cursor_update(1);
     menu_bar_show(0);
-    func_8013A4FC();
-    func_8013A484();
+    options_voice_test_selection_gradient_draw();
+    options_voice_test_background_gradient_draw();
 }
 
-void func_80138DF8(void) {
+void options_debug_audio_voice_list_page(void) {
     s32 i;
     s32 y;
     u8 (*rows)[16];
 
     if (game_state.substep == 0) {
-        func_80138B4C(0);
+        options_voice_test_character_rows_initialize(0);
         for (i = 0; i < 7; i++) {
             k_disp_switch(i + 1, 0);
         }
@@ -173,7 +173,7 @@ void func_80138DF8(void) {
     } else {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             if (game_state.menu_cursor_1 != -1) {
-                D_8013D3DC = game_state.menu_cursor_1 + D_8013D3DC;
+                options_voice_test_character_index = game_state.menu_cursor_1 + options_voice_test_character_index;
             }
             for (i = 0; i < 7; i++) {
                 k_disp_switch(i + 1, 1);
@@ -184,30 +184,30 @@ void func_80138DF8(void) {
     i = 0;
     y = -0x64;
     do {
-        func_8004AE54((s32) ((u32) (D_8013D3DC + i) % 58U), -0xA, y, 6);
+        debug_print_int_color((s32) ((u32) (options_voice_test_character_index + i) % 58U), -0xA, y, 6);
         i += 1;
         y += 0xA;
     } while (i < 0x10);
-    rows = D_8013D3F8;
+    rows = options_voice_test_character_labels;
     for (i = 0, y = -0x64; i != 0x10; i++, y += 0xA) {
-        func_8004B338((s32) rows[((u32) (D_8013D3DC + i) % 58U)], 0xA, y);
+        debug_print_string((s32) rows[((u32) (options_voice_test_character_index + i) % 58U)], 0xA, y);
     }
     menu_check(1, cursor_x, cursor_y);
     menu_bar_show(1);
     menu_cursor_update(1);
     menu_bar_show(0);
-    func_8013A4FC();
-    func_8013A484();
+    options_voice_test_selection_gradient_draw();
+    options_voice_test_background_gradient_draw();
 }
 
-void func_80138FC0(void) {
+void options_debug_audio_second_track_list_page(void) {
     s32 i;
     s32 y;
     s32 next;
     u8 (*rows)[16];
 
     if (game_state.substep == 0) {
-        func_80138B4C(1);
+        options_voice_test_character_rows_initialize(1);
         i = 0;
         do {
             next = i + 1;
@@ -218,9 +218,9 @@ void func_80138FC0(void) {
     } else {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             if (game_state.menu_cursor_1 != -1) {
-                D_8013D3A0 = game_state.menu_cursor_1 + D_8013D3A0;
+                options_voice_test_music_clip_index = game_state.menu_cursor_1 + options_voice_test_music_clip_index;
             }
-            func_8013A304();
+            options_debug_audio_music_load_begin();
             i = 0;
             do {
                 next = i + 1;
@@ -233,27 +233,27 @@ void func_80138FC0(void) {
     i = 0;
     y = -0x64;
     do {
-        func_8004AE54((s32) ((u32) (D_8013D3A0 + i) % 63U), -0xA, y, 6);
+        debug_print_int_color((s32) ((u32) (options_voice_test_music_clip_index + i) % 63U), -0xA, y, 6);
         i += 1;
         y += 0xA;
     } while (i < 0x10);
-    rows = D_8013D968;
+    rows = options_voice_test_music_clip_labels;
     for (i = 0, y = -0x64; i != 0x10; i++, y += 0xA) {
-        func_8004B338((s32) rows[((u32) (D_8013D3A0 + i) % 63U)], 0xA, y);
+        debug_print_string((s32) rows[((u32) (options_voice_test_music_clip_index + i) % 63U)], 0xA, y);
     }
     menu_check(1, cursor_x, cursor_y);
     menu_bar_show(1);
     menu_cursor_update(1);
     menu_bar_show(0);
-    func_8013A4FC();
-    func_8013A484();
+    options_voice_test_selection_gradient_draw();
+    options_voice_test_background_gradient_draw();
 }
 
-s32 func_80139198(void) {
+s32 options_debug_audio_menu_init(void) {
     s32 i;
     Actor *p;
 
-    func_8004ADAC(4);
+    debug_hud_level_set(4);
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -312,7 +312,7 @@ s32 func_80139198(void) {
 }
 
 /* FAKE: s32 without an explicit return keeps $v0 live at epilogue so as1 retains move $v0, $zero in the third loop preheader. T-24126 */
-s32 func_801394F4(void) {
+s32 options_voice_test_actor_selection_update(void) {
     s32 i;
     Actor *p;
     s16 temp_v0;
@@ -324,7 +324,7 @@ s32 func_801394F4(void) {
     count = 0;
     for (i = 0, p = (Actor *)actor_pool; i < 13; i++, p++) {
         dx = abs((((Actor *)actor_pool)->x - p[96].x) & 0x3FF);
-        func_8004AE54(abs((((Actor *)actor_pool)->y - p[96].y) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
+        debug_print_int_color(abs((((Actor *)actor_pool)->y - p[96].y) & 0x1FF) + dx, -0x8C, i * 8 - 0x64, 6);
         dx = abs((((Actor *)actor_pool)->x - p[96].x) & 0x3FF);
         if (((abs((((Actor *)actor_pool)->y - p[96].y) & 0x1FF) + dx) < 0x20) && (game_state.pad_pressed & PAD_CIRCLE)) {
             flags = p[96].draw_flags;
@@ -353,7 +353,7 @@ s32 func_801394F4(void) {
             count += 1;
         }
     }
-    func_8004AE54(count, 0, -0x64, 6);
+    debug_print_int_color(count, 0, -0x64, 6);
     if (count == 13) {
         for (i = 0, p = (Actor *)actor_pool; i < 13; i++, p++) {
             p[96].x = i * 0x20 - 0x96;
@@ -385,7 +385,7 @@ s32 func_801394F4(void) {
     }
 }
 
-void func_80139878(void) {
+void options_voice_test_fade_in(void) {
     u8 t;
 
     *(u8 *)&game_state.screen_brightness += 4;
@@ -407,30 +407,30 @@ void func_80139878(void) {
     }
 }
 
-void func_8013990C(void) {
+void options_debug_audio_menu_update(void) {
     D_801220EC = rsin(game_state.mode_step_timer.w << 5);
     D_801220EE = rsin(game_state.mode_step_timer.w << 5);
     D_801220F0 = game_state.mode_step_timer.w << 0xC;
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
-    func_8013A484();
-    func_80139A30();
+    options_voice_test_background_gradient_draw();
+    options_debug_audio_input_handle();
     k_disp_inc();
-    func_801394F4();
-    func_801399C0();
+    options_voice_test_actor_selection_update();
+    options_debug_audio_name_display_toggle();
 }
 
-void func_801399C0(void) {
+void options_debug_audio_name_display_toggle(void) {
     if (game_state.pad_pressed & PAD_START) {
         D_8013D3F4 += 1;
-        func_8007BFB8();
+        audio_reverb_off_toggle();
     }
-    func_8004B338("reverve", 0x78, 0);
-    func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
+    debug_print_string("reverve", 0x78, 0);
+    debug_print_hex(D_8013D3F4 & 1, 0x78, 0xA);
 }
 
-void func_80139A30(void) {
+void options_debug_audio_input_handle(void) {
     u32 repeat_selector;
     u32 press_selector;
     u32 decrease_selector;
@@ -466,11 +466,11 @@ void func_80139A30(void) {
         }
     }
     if ((D_8013D3B0 | D_8013D3B4) != 0) {
-        func_8013A060();
+        options_debug_audio_bank_load_dispatch();
     } else if (game_state.pad_pressed & 0x860) {
         switch (*(u8 *)&game_state.menu_cursor_0) {
         case 0:
-            func_80139E3C(0);
+            options_debug_audio_play_request(0);
             break;
         case 1:
             mode_step_set(3);
@@ -479,24 +479,24 @@ void func_80139A30(void) {
             mode_step_set(4);
             break;
         case 3:
-            func_8013A010();
+            options_debug_audio_bank_start_primary();
             break;
         case 4:
-            func_8013A038();
+            options_debug_audio_bank_start_secondary();
             break;
         case 5:
             if (game_state.pad_pressed & PAD_START) {
                 mode_step_set(5);
             } else {
-                func_80139F04();
+                options_debug_audio_bank_command();
             }
             break;
         case 6:
-            func_80139F8C();
+            options_debug_audio_bank_select();
             break;
         }
     }
-    /* FAKE: D_8013D3B8 is volatile for func_80139E3C (T-11340). Its
+    /* FAKE: D_8013D3B8 is volatile for options_debug_audio_play_request (T-11340). Its
      * nonvolatile halfword view here permits the original load coalescing.
      * Explicit staged stores preserve the observed updates. T-24607 */
     press_selector = game_state.pad_pressed & 0xF00000;
@@ -574,7 +574,7 @@ void func_80139A30(void) {
     if (value >= 0xB54U) {
         (*(u16 *)&D_8013D3B8) = 0;
     }
-    func_8013A334();
+    options_voice_test_debug_status_draw();
 }
 
 #define F80_BOOST_9E3C \
@@ -585,7 +585,7 @@ void func_80139A30(void) {
     ((((s32)t ^ 1) * 0) + (((s32)t ^ 2) * 0) + (((s32)t ^ 3) * 0) + (((s32)t ^ 4) * 0) + (((s32)t ^ 5) * 0))
 #define T2_BOOST_9E3C ((t2[2] * 0) + (t2[3] * 0) + (t2[4] * 0))
 
-void func_80139E3C(s32 arg0) {
+void options_debug_audio_play_request(s32 arg0) {
     u16 v;
     s32 *t;
     s32 *t2;
@@ -617,7 +617,7 @@ void func_80139E3C(s32 arg0) {
 #undef T2_BOOST_9E3C
 
 
-void func_80139F04(void) {
+void options_debug_audio_bank_command(void) {
     if (game_state.pad_held & PAD_L2) {
         D_8013E730 -= 1;
     }
@@ -634,7 +634,7 @@ void func_80139F04(void) {
 }
 
 /* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
-void func_80139F8C(void)
+void options_debug_audio_bank_select(void)
 {
     GameState *g = &game_state;
     s32 t;
@@ -660,90 +660,90 @@ void func_80139F8C(void)
     }
 }
 
-void func_8013A010(void) {
+void options_debug_audio_bank_start_primary(void) {
     audio_bank_start(0, D_8013D3A8);
 }
 
-void func_8013A038(void) {
+void options_debug_audio_bank_start_secondary(void) {
     audio_bank_start(1, D_8013D3A8);
 }
 
-void func_8013A060(void) {
+void options_debug_audio_bank_load_dispatch(void) {
     if (D_8013D3B0 != 0) {
-        func_8013A1BC();
+        options_debug_audio_bank_load_voice();
         return;
     }
-    func_8013A09C();
+    options_debug_audio_bank_load_music();
 }
 
-void func_8013A09C(void) {
+void options_debug_audio_bank_load_music(void) {
     u8 t = D_8013D3B4;
 
     switch (t) {
     case 1:
-        audio_bank_load_start(1, 0xBF98, 0xBF79, D_8013E340[D_8013D3A0 % 63], D_8013E244[D_8013D3A0 % 63],
-                      D_8013E148[D_8013D3A0 % 63]);
+        audio_bank_load_start(1, 0xBF98, 0xBF79, options_voice_test_music_bank_load_arg_3[options_voice_test_music_clip_index % 63], options_voice_test_music_bank_load_arg_2[options_voice_test_music_clip_index % 63],
+                      options_voice_test_music_bank_load_arg_1[options_voice_test_music_clip_index % 63]);
         D_8013D3B4 += 1;
         break;
     case 2:
         if (audio_bank_load_poll() == 1) {
             D_8013D3B4 = 0;
-            strcpy(D_8013D3CC, D_8013D968[D_8013D3A0 % 63]);
-            strcpy(D_8013D3E0, D_8013D3F8[D_8013D3DC % 58]);
+            strcpy(D_8013D3CC, options_voice_test_music_clip_labels[options_voice_test_music_clip_index % 63]);
+            strcpy(D_8013D3E0, options_voice_test_character_labels[options_voice_test_character_index % 58]);
         }
         break;
     }
 }
 
-void func_8013A1BC(void) {
+void options_debug_audio_bank_load_voice(void) {
     u8 t = D_8013D3B0;
 
     switch (t) {
     case 1:
-        audio_bank_load_start(0, D_8013D880[D_8013D3DC % 58], D_8013D798[D_8013D3DC % 58], D_8013E634[D_8013D3A4 % 63],
-                      D_8013E538[D_8013D3A4 % 63], D_8013E43C[D_8013D3A4 % 63]);
+        audio_bank_load_start(0, options_voice_test_character_bank_load_arguments[options_voice_test_character_index % 58], options_voice_test_character_bank_load_commands[options_voice_test_character_index % 58], options_voice_test_character_bank_load_arg_3[options_voice_test_character_clip_index % 63],
+                      options_voice_test_character_bank_load_arg_2[options_voice_test_character_clip_index % 63], options_voice_test_character_bank_load_arg_1[options_voice_test_character_clip_index % 63]);
         D_8013D3B0 += 1;
         break;
     case 2:
         if (audio_bank_load_poll() == 1) {
             D_8013D3B0 = 0;
-            strcpy(D_8013D3BC, D_8013DD58[D_8013D3A4 % 63]);
-            strcpy(D_8013D3E0, D_8013D3F8[D_8013D3DC % 58]);
+            strcpy(D_8013D3BC, options_voice_test_character_clip_labels[options_voice_test_character_clip_index % 63]);
+            strcpy(D_8013D3E0, options_voice_test_character_labels[options_voice_test_character_index % 58]);
         }
         break;
     }
 }
 
-void func_8013A304(void) {
+void options_debug_audio_music_load_begin(void) {
     D_8013D3B4 += 1;
 }
 
-void func_8013A31C(void) {
+void options_debug_audio_voice_load_begin(void) {
     D_8013D3B0 += 1;
 }
 
-void func_8013A334(void) {
-    func_8004AE54(D_8013D3B8, 0x50, -0x3C, 6);
-    func_8004AE54(game_state.current_girl & 0xF, -0x50, -0x3C, 6);
-    func_8004AE54(D_8013D3B0, 0x50, -0x28, 6);
-    func_8004AE54(D_8013D3B4, 0x50, -0x14, 6);
-    func_8004AE54(D_8013D3A4, 0x50, 0, 6);
-    func_8004B358(D_8013D3BC, -0x96, 8, 6);
-    func_8004AE54(D_8013D3A0, 0x50, 0x14, 6);
-    func_8004B358(D_8013D3CC, -0x96, 0x14, 6);
-    func_8004AE54(D_8013D39C, -0x50, 0xA - D_8013D39C * 0xA, 6);
-    func_8004AE54(D_8013E730, 0x50, 0x28, 6);
-    func_8004B358(D_8013D3E0, -0x96, 0x20, 6);
-    func_8004AE54(D_8013D3A8, 0x50, 0x3C, 6);
+void options_voice_test_debug_status_draw(void) {
+    debug_print_int_color(D_8013D3B8, 0x50, -0x3C, 6);
+    debug_print_int_color(game_state.current_girl & 0xF, -0x50, -0x3C, 6);
+    debug_print_int_color(D_8013D3B0, 0x50, -0x28, 6);
+    debug_print_int_color(D_8013D3B4, 0x50, -0x14, 6);
+    debug_print_int_color(options_voice_test_character_clip_index, 0x50, 0, 6);
+    debug_print_string_color(D_8013D3BC, -0x96, 8, 6);
+    debug_print_int_color(options_voice_test_music_clip_index, 0x50, 0x14, 6);
+    debug_print_string_color(D_8013D3CC, -0x96, 0x14, 6);
+    debug_print_int_color(D_8013D39C, -0x50, 0xA - D_8013D39C * 0xA, 6);
+    debug_print_int_color(D_8013E730, 0x50, 0x28, 6);
+    debug_print_string_color(D_8013D3E0, -0x96, 0x20, 6);
+    debug_print_int_color(D_8013D3A8, 0x50, 0x3C, 6);
 }
 
-void func_8013A484(void) {
+void options_voice_test_background_gradient_draw(void) {
     prim_gradient_rect(-0x50, -0x40, 0xB0, 0x90, 0xA, 0x1E021D, 0);
     prim_gradient_rect(-0x96, 4, 0x50, 0x2C, 0xA, 0x101802, 0);
     dtd_on(0xA);
 }
 
-void func_8013A4FC(void) {
+void options_voice_test_selection_gradient_draw(void) {
     prim_gradient_rect(-0xA, -0x6E, 0x50, 0xB4, 6, 0xA08080, 2);
     dtd_on(6);
 }

@@ -5,7 +5,7 @@
 
 extern s16 D_801207BC;
 
-s32 func_801388D0(void) {
+s32 stage_show_brass_band_audio_transition(void) {
     if (game_state.substep == 0) {
         if (cd_audio_state() == 2) {
             game_state.substep += 1;
@@ -27,7 +27,7 @@ s32 func_801388D0(void) {
 }
 
 
-s32 func_801389DC(void) {
+s32 stage_show_brass_band_sector_and_track_setup(void) {
     if (game_state.substep == 0) {
         cd_read_sectors(0x56, 0x80180000, 0x4F1D);
         game_state.substep += 1;
@@ -49,44 +49,44 @@ s32 func_801389DC(void) {
     }
 }
 
-void func_80138ADC(void) {
+void stage_show_brass_band_input_update(void) {
     if ((u32)game_state.mode_step >= 3 && (u32)game_state.mode_step < 6 && (game_state.pad_held & PAD_CROSS)) {
         mode_step_set(5);
         audio_command(0xC4);
     }
-    func_80138B3C();
+    stage_show_brass_band_mode_step_dispatch();
 }
 
-void func_80138B3C(void) {
+void stage_show_brass_band_mode_step_dispatch(void) {
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     switch (game_state.mode_step) {
     case 0:
-        func_80134260();
+        stage_show_scene_state_reset();
         audio_command(0x7F);
         return;
     case 1:
-        func_801389DC();
+        stage_show_brass_band_sector_and_track_setup();
         return;
     case 2:
-        func_80138C34();
+        stage_show_brass_band_cd_audio_end_wait();
         return;
     case 3:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         return;
     case 4:
-        func_80138CAC();
+        stage_show_brass_band_show_playback_tick();
         return;
     case 5:
         k_reset(1);
         mode_step_next();
         return;
     case 6:
-        func_8013987C();
+        stage_show_brass_band_actor_brightness_fade();
         return;
     case 7:
-        func_801388D0();
+        stage_show_brass_band_audio_transition();
         return;
     default:
         game_mode_reset_to_title();
@@ -94,10 +94,10 @@ void func_80138B3C(void) {
     }
 }
 
-void func_80138C34(void) {
+void stage_show_brass_band_cd_audio_end_wait(void) {
     if (cd_audio_state() & 4) {
         if (game_state.mode_stage_timer++ >= 1U) {
-            func_80138D48();
+            stage_show_brass_band_show_actor_picture_setup();
             mode_step_next();
             cd_audio_command(9, 0, 0);
         }
@@ -106,11 +106,11 @@ void func_80138C34(void) {
     }
 }
 
-void func_80138CAC(void) {
+void stage_show_brass_band_show_playback_tick(void) {
     GameState *g;
 
-    func_80139100();
-    func_80139290();
+    stage_show_brass_band_audio_frame_and_end_check();
+    stage_show_brass_band_animation_frame_select();
     g = &game_state;
     g->mode_step_timer.u += 1;
     if ((g->mode_step_timer.u + 0x90000000U) == 0xFA && g->year != 0x60) {
@@ -121,7 +121,7 @@ void func_80138CAC(void) {
     }
 }
 
-void func_80138D48(void) {
+void stage_show_brass_band_show_actor_picture_setup(void) {
     s32 frame;
     s32 i;
     Actor *record;
@@ -206,16 +206,16 @@ void func_80138D48(void) {
 }
 
 
-s32 func_80139100(void) {
+s32 stage_show_brass_band_audio_frame_and_end_check(void) {
     if (game_state.mode_step_timer.u == 0xBE) {
         game_state.mode_stage_timer = cd_audio_ticks() - 0x1000;
     }
     if (game_state.mode_step_timer.u == 0xBC) {
         audio_command(0x300);
     }
-    func_8004B19C(cd_audio_ticks(), 0, 0);
-    func_8004B19C(game_state.mode_stage_timer, 0, 0x10);
-    func_8004B19C(cd_audio_ticks() - game_state.mode_stage_timer, 0, 0x20);
+    debug_print_hex(cd_audio_ticks(), 0, 0);
+    debug_print_hex(game_state.mode_stage_timer, 0, 0x10);
+    debug_print_hex(cd_audio_ticks() - game_state.mode_stage_timer, 0, 0x20);
     if (game_state.mode_step_timer.u >= 0xC0U) {
         if (game_state.mode_step_timer.u < 0x70000000U) {
             switch (game_state.year) {
@@ -240,7 +240,7 @@ s32 func_80139100(void) {
     }
 }
 
-void func_80139290(void) {
+void stage_show_brass_band_animation_frame_select(void) {
     GameState *g = &game_state;
     switch (g->mode_step_timer.u) {
     case 0x1D:
@@ -409,7 +409,7 @@ void func_80139290(void) {
 }
 
 /* FAKE: T-22021. The byte game_state.game_mode_scratch is read and written only as a u8 view, so uopt promotes it to one register for the whole function (a local copy splits the range and adds a `move`). `*= 0` is the clear that survives constant folding: it keeps the `move v1,zero` and the loop stores of that register (a plain `= 0` folds to `sb zero`); the original source is unknown. */
-void func_8013987C(void) {
+void stage_show_brass_band_actor_brightness_fade(void) {
     s32 i;
 
     for (i = 0; i < 0x40; i++) {

@@ -6,20 +6,20 @@
 
 /* OMIMAI overlay (load address 0x80132000): externs and types. */
 
-void func_8013285C(void);
-void func_80132AD0();
-void func_80132EB0();
-void func_801331B0();
-void func_801320A0();
+void sick_visit_girl_talk_pointer_select(void);
+void sick_visit_mode_stage1_girl_talk_pointer_setup();
+void sick_visit_mode_stage1_talk_table_select();
+void sick_visit_common_mode_girl_talk_pointer_setup();
+void sick_visit_mode_stage0_girl_talk_pointer_setup();
 extern s32 D_80134A8C;
 extern s32 D_80134ABC;
 extern s32 D_80134AEC;
-void func_80133424();
-void func_801337EC();
-void func_801340E4(void);
+void sick_visit_common_mode_step_callback_dispatch();
+void sick_visit_day_event_girl_setup();
+void sick_visit_common_girl_talk_pointer_select(void);
 
 /* three parallel tables per object (13 words each), indexed by a fixed slot per value of
- * game_state.unk_F5F (func_8013285C, func_80132EB0, func_801340E4; T-0500) */
+ * game_state.unk_F5F (sick_visit_girl_talk_pointer_select, sick_visit_mode_stage1_talk_table_select, sick_visit_common_girl_talk_pointer_select; T-0500) */
 extern s32 D_80134A60[];
 extern s32 D_80134A90[];
 extern s32 D_80134AC0[];
@@ -33,10 +33,10 @@ extern s32 D_80134C5C;
 extern s32 D_80134C90;
 extern s32 D_80134CC4;
 extern u8 D_80134CCC;
-s32 func_801323F8(void);
-s32 func_80133500(void);
+s32 sick_visit_day_event_complete(void);
+s32 sick_visit_common_day_event_complete(void);
 
-/* Girl-indexed value tables of func_80134628 (copied to the stack, T-19012). */
+/* Girl-indexed value tables of sick_visit_portrait_select (copied to the stack, T-19012). */
 typedef struct OmimaiWords11 {
     /* 0x00 */ s32 unk_00[11];
 } OmimaiWords11; /* size 0x2C */

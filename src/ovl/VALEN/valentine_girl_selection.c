@@ -17,7 +17,7 @@ typedef struct {
 } FnTbl56; /* size 0xE0 */
 extern FnTbl56 D_8013454C;
 
-void func_80132760(void) {
+void valentine_girl_selection_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl56 tbl;
 
@@ -26,12 +26,12 @@ void func_80132760(void) {
     tbl.f[idx](0x80);
 }
 
-void func_801327E8(void) {
+void valentine_special_girl_talk_setup(void) {
     talk_names_set(9);
-    func_80132348();
+    valentine_talk_driver();
 }
 
-void func_80132810(void) {
+void valentine_shiori_select(void) {
     game_state.current_girl = GIRL_SHIORI;
     mode_step_next();
 }
@@ -42,7 +42,7 @@ void func_80132810(void) {
  * `r` stays ahead of the rotation loop's guard instead of being copied into it. The direct
  * game_state reads stay available, so the player's affinity is hoisted out of the last loop. Each
  * sum is written in the order the original loads its two fields. */
-void func_80132834(void) {
+void valentine_girl_candidates_select(void) {
     s16 r;
     s16 candidates[13];
     GameState *state;
@@ -99,7 +99,7 @@ void func_80132834(void) {
         for (i = 0; i < D_8013453C; i++) {
             D_80134524[i] = candidates[(i + r) % D_8013453C];
         }
-        func_8013387C();
+        valentine_candidate_order_shuffle();
     }
     for (i = 0; i < D_8013453C; i++) {
         if (D_80134524[i] == 0 && game_state.girls[0].tokimeki >= 70) {
@@ -125,7 +125,7 @@ void func_80132834(void) {
  * a volatile access (VALEN.h) to keep `lui v0` out of the `sel == 9` slot, and the second
  * read keeps uopt from loading the byte once instead (13 rows). In the original the
  * `sel == 9` slot holds the switch's dispatch `sll` (wiki/as1-scheduler-rule.md). */
-s32 func_80132D0C(void) {
+s32 valentine_candidate_scene_select(void) {
     s32 mode;
     GameState *state;
 
@@ -214,7 +214,7 @@ s32 func_80132D0C(void) {
     mode_step_next();
 }
 
-void func_80133088(void) {
+void valentine_scene_place_select(void) {
     GameState *state;
     s32 id;
 
@@ -235,41 +235,41 @@ void func_80133088(void) {
     }
     switch (D_80134548) {
     case 0:
-        strcpy(D_800CA1DC, "廊下");
+        strcpy(scene_place_title_2, "廊下");
         id = 0x4045;
         break;
     case 1:
-        strcpy(D_800CA1DC, "教室");
+        strcpy(scene_place_title_2, "教室");
         id = 0x4055;
         break;
     case 2:
-        strcpy(D_800CA1DC, "校舎裏");
+        strcpy(scene_place_title_2, "校舎裏");
         id = 0x407A;
         break;
     default:
-        strcpy(D_800CA1DC, "屋上");
+        strcpy(scene_place_title_2, "屋上");
         id = 0x4084;
         break;
     }
     if (state->current_girl != GIRL_SHIORI) {
         if (D_80134520 + 1 == D_8013453C) {
-            strcpy(D_800CA1DC, "校門前");
+            strcpy(scene_place_title_2, "校門前");
             id = 0x4032;
         }
         if ((D_80134520 + 2 == D_8013453C) && (D_80134524[D_80134520 + 1] == 0)) {
-            strcpy(D_800CA1DC, "校門前");
+            strcpy(scene_place_title_2, "校門前");
             id = 0x4032;
         }
     }
-    /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for func_80132D0C, T-24903)
+    /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for valentine_candidate_scene_select, T-24903)
      * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
     if ((D_80134520 + 1 == D_8013453C) && (state->current_girl == GIRL_SHIORI) &&
         ((state->girls[0].tokimeki >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
-        strcpy(D_800CA1DC, "自宅前");
+        strcpy(scene_place_title_2, "自宅前");
         id = 0x414C;
     }
     if ((state->current_girl == GIRL_MEGUMI) && (D_80134544 == 1)) {
-        strcpy(D_800CA1DC, "教室");
+        strcpy(scene_place_title_2, "教室");
         id = 0x4055;
     }
     if (state->current_girl == GIRL_SHIORI) {
@@ -326,20 +326,20 @@ void func_80133088(void) {
     mode_step_next();
 }
 
-void func_801334DC(void) {
+void valentine_candidate_index_advance(void) {
     D_80134520 += 1;
     mode_step_set(1);
 }
 
-void func_80133510(void) {
-    if (strcmp(D_800CA19C, D_800CA1DC) == 0) {
+void valentine_scene_location_sync(void) {
+    if (strcmp(scene_place_title, scene_place_title_2) == 0) {
         mode_step_next();
     }
-    strcpy(D_800CA19C, D_800CA1DC);
+    strcpy(scene_place_title, scene_place_title_2);
     mode_step_next();
 }
 
-void func_80133568(void) {
+void valentine_special_candidate_step(void) {
     if ((D_80134544 == 1) && (game_state.current_girl == GIRL_MEGUMI)) {
         game_state.mode_step += 6;
         return;
@@ -347,26 +347,26 @@ void func_80133568(void) {
     mode_step_next();
 }
 
-void func_801335C0(void) {
-    strcpy(D_800CA1DC, "校舎裏");
-    strcpy(D_800CA19C, "　");
+void valentine_school_backdrop_setup(void) {
+    strcpy(scene_place_title_2, "校舎裏");
+    strcpy(scene_place_title, "　");
     bg_read_sub2(0x407A);
     mode_step_next();
 }
 
-void func_80133610(void) {
+void valentine_shiori_portrait_setup(void) {
     talk_names_set(0);
     portrait_read_start(0x544A);
     mode_step_next();
 }
 
-void func_80133640(void) {
+void valentine_girl9_portrait_setup(void) {
     talk_names_set(9);
     portrait_read_start(0x64D0);
     mode_step_next();
 }
 
-s32 func_80133670(void) {
+s32 valentine_megumi_birthday_gate(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &game_state;
@@ -378,7 +378,7 @@ s32 func_80133670(void) {
 }
 
 /* s32: the first exit returns 0 (or v0,zero,zero in its branch delay slot), the second is a bare return and the last call falls off the end. T-19016 */
-s32 func_80133728(void) {
+s32 valentine_birthday_scene_gate(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &game_state;
@@ -389,13 +389,13 @@ s32 func_80133728(void) {
         return 0;
     }
     if (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != GIRL_SHIORI)) || ((game_state.girls[0].tokimeki >= 0x46) && (g->current_girl == GIRL_SHIORI))) {
-        func_80132348();
+        valentine_talk_driver();
         return;
     }
     mode_step_next();
 }
 
-void func_8013387C(void) {
+void valentine_candidate_order_shuffle(void) {
     s16 n;
     s16 i;
     s16 j;

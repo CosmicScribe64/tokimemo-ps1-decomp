@@ -93,7 +93,7 @@ void date_scene_yumi_spring_setup(void) {
     load_palette(D_801607F0, 0x11, 1, 2, 0);
     scene_still_show(D_801607F4, D_801607F8, D_801607FC, D_80160800, D_80160804, D_80160808);
     scene_anim_show(D_801607E4, D_801607E8, D_801607E0, D_801607EC);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_800CA224[0] = 2;
     D_800CA224[1] = 2;
     D_800CA224[2] = 2;
@@ -107,7 +107,7 @@ void date_scene_yumi_summer_setup(void) {
     date_scene_text = D_8015DF68;
     date_scene_command = D_8015E0A4;
     date_scene_voice = D_8015E1E0;
-    strcpy(D_800CA1DC, "池");
+    strcpy(scene_place_title_2, "池");
     game_state.girls[10].tokimeki += 3;
     game_state.girls[10].affection += 2;
     game_state.girls[10].syoushin -= 0x14;
@@ -130,7 +130,7 @@ void date_scene_yumi_autumn_setup(void) {
     load_palette(D_80160848, 0x11, 1, 2, 0);
     scene_still_show(D_8016084C, D_80160850, D_80160854, D_80160858, D_8016085C, D_80160860);
     scene_anim_show(D_8016083C, D_80160840, D_80160838, D_80160844);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -146,7 +146,7 @@ void date_scene_yumi_winter_setup(void) {
     load_palette(D_80160874, 0x11, 1, 2, 0);
     scene_still_show(D_80160878, D_8016087C, D_80160880, D_80160884, D_80160888, D_8016088C);
     scene_anim_show(D_80160868, D_8016086C, D_80160864, D_80160870);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_800CA224[0] = 2;
     D_800CA224[1] = 2;
     D_800CA224[2] = 2;
@@ -239,7 +239,7 @@ void date_scene_yumi_summer(void) {
     if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
          (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
          (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0 && (game->mode_step < 0xD || game->mode_step >= 0x21)) {
+        bg_brightness == 0x80 && D_80122D04 == 0 && (game->mode_step < 0xD || game->mode_step >= 0x21)) {
         hud_sprite_light_effect_draw();
     }
     step_handlers.callbacks[game->mode_step](0x80);

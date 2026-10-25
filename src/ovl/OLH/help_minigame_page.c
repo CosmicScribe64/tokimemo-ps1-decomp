@@ -2,39 +2,39 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-void func_80134F40(void) {
+void help_subgame_topic_dispatch(void) {
     switch (game_state.mode_step) {
     case 0x0:
-        func_8013500C();
+        help_subgame_menu_draw();
         break;
     case 0x1:
-        func_80135190();
+        help_subgame_menu_input();
         break;
     case 0x10:
-        func_801352A0();
+        help_subgame_page_1_render();
         break;
     case 0x20:
-        func_8013538C();
+        help_subgame_page_2_render();
         break;
     case 0x30:
-        func_80135494();
+        help_subgame_page_3_render();
         break;
     case 0x40:
-        func_8013559C();
+        help_subgame_page_4_render();
         break;
     case 0x50:
-        func_801356DC();
+        help_subgame_page_5_render();
         break;
     case 0x60:
-        func_80135828();
+        help_subgame_page_6_render();
         break;
     case 0x70:
-        func_80135974();
+        help_subgame_page_7_render();
         break;
     }
 }
 
-void func_8013500C(void) {
+void help_subgame_menu_draw(void) {
     s32 i;
     s32 r;
     s32 padx[2]; /* FAKE: two unused words above the arrays reproduce the original frame 0xC0; real source unknown. T-9310 */
@@ -67,7 +67,7 @@ void func_8013500C(void) {
     mode_step_next();
 }
 
-void func_80135190(void) {
+void help_subgame_menu_input(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -100,7 +100,7 @@ void func_80135190(void) {
     }
 }
 
-s32 func_801352A0(void) {
+s32 help_subgame_page_1_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -119,7 +119,7 @@ s32 func_801352A0(void) {
     }
 }
 
-s32 func_8013538C(void) {
+s32 help_subgame_page_2_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -139,7 +139,7 @@ s32 func_8013538C(void) {
     }
 }
 
-s32 func_80135494(void) {
+s32 help_subgame_page_3_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -159,7 +159,7 @@ s32 func_80135494(void) {
     }
 }
 
-s32 func_8013559C(void) {
+s32 help_subgame_page_4_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -181,7 +181,7 @@ s32 func_8013559C(void) {
     }
 }
 
-s32 func_801356DC(void) {
+s32 help_subgame_page_5_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -203,7 +203,7 @@ s32 func_801356DC(void) {
     }
 }
 
-s32 func_80135828(void) {
+s32 help_subgame_page_6_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -225,7 +225,7 @@ s32 func_80135828(void) {
     }
 }
 
-s32 func_80135974(void) {
+s32 help_subgame_page_7_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();

@@ -24,27 +24,27 @@ void shooter_init_object_hierarchy(s32 arg0) {
 }
 
 void shooter_set_dark_lights(void) {
-    D_80122760 = 0x14;
+    view_light_0 = 0x14;
     D_80122764 = 0x64;
     D_80122768 = -0x64;
     D_8012276C = 0xB0;
     D_8012276D = 0xB0;
     D_8012276E = 0xB0;
-    func_8009AD70(0, &D_80122760);
-    D_80122770 = 0x14;
+    func_8009AD70(0, &view_light_0);
+    view_light_1 = 0x14;
     D_80122774 = -0x64;
     D_80122778 = 0x64;
     D_8012277C = 0x80;
     D_8012277D = 0x80;
     D_8012277E = 0x80;
-    func_8009AD70(1, &D_80122770);
-    D_80122780 = -0x14;
+    func_8009AD70(1, &view_light_1);
+    view_light_2 = -0x14;
     D_80122784 = 0x14;
     D_80122788 = -0x64;
     D_8012278C = 0x60;
     D_8012278D = 0x60;
     D_8012278E = 0x60;
-    func_8009AD70(2, &D_80122780);
+    func_8009AD70(2, &view_light_2);
     GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
@@ -54,7 +54,7 @@ void shooter_move_model(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
     MATRIX matrix;
     ShooterPosition *pos;
 
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     matrix.t[0] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[0] + arg1;
     matrix.t[1] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[1] + arg2;
     matrix.t[2] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[2] + arg3;
@@ -172,7 +172,7 @@ void shooter_apply_keyframe(s32 arg0, s16 *arg1, s32 arg2) {
     ShooterPosition *pos;
 
     arg1 += arg2 * 6;
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     matrix.t[0] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[0] + arg1[0];
     matrix.t[1] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[1] + arg1[1];
     matrix.t[2] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[2] + arg1[2];
@@ -195,7 +195,7 @@ void shooter_apply_keyframe_tween(s32 arg0, s16 *arg1, s32 arg2, s32 arg3, s32 a
     ShooterPosition *pos;
 
     arg1 += arg2 * 6;
-    matrix = *(MATRIX *)D_80125C60;
+    matrix = *(MATRIX *)view_base_matrix;
     matrix.t[0] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[0] + arg1[0];
     matrix.t[1] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[1] + arg1[1];
     matrix.t[2] = ((ShooterCoordinateView *)&D_80127480[arg0])->local.t[2] + arg1[2];
@@ -281,7 +281,7 @@ void shooter_fire_from_joint(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s
     SVECTOR rot;
     ShooterPosition out;
 
-    m = *(MATRIX *)D_80125C60;
+    m = *(MATRIX *)view_base_matrix;
     shooter_rotation_matrix_x((D_80128880[arg0].x << 12) / 360, &m);
     shooter_rotation_matrix_z((D_80128880[arg0].z << 12) / 360, &m);
     shooter_rotation_matrix_y((D_80128880[arg0].y << 12) / 360, &m);

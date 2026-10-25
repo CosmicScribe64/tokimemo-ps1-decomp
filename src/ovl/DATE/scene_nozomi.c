@@ -117,7 +117,7 @@ void date_scene_nozomi_summer_setup(void) {
     load_palette(D_8015FD1C, 0x11, 1, 2, 0);
     scene_still_show(D_8015FD20, D_8015FD24, D_8015FD28, D_8015FD2C, D_8015FD30, D_8015FD34);
     scene_anim_show(D_8015FD10, D_8015FD14, D_8015FD0C, (s32) D_8015FD18);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     game_state.girls[6].tokimeki += 3;
     game_state.girls[6].affection += 2;
     game_state.girls[6].syoushin -= 0x14;
@@ -133,7 +133,7 @@ void date_scene_nozomi_autumn_setup(void) {
     load_palette(D_8015FD48, 0x11, 1, 2, 0);
     scene_still_show(D_8015FD4C, D_8015FD50, D_8015FD54, D_8015FD58, D_8015FD5C, D_8015FD60);
     scene_anim_show(D_8015FD3C, D_8015FD40, D_8015FD38, (s32) D_8015FD44);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     game_state.girls[6].tokimeki += 2;
     game_state.girls[6].affection += 2;
     game_state.girls[6].syoushin -= 0xA;
@@ -158,7 +158,7 @@ void date_scene_nozomi_winter_setup(void) {
     load_palette(D_8015FD74, 0x11, 1, 2, 0);
     scene_still_show(D_8015FD78, D_8015FD7C, D_8015FD80, D_8015FD84, D_8015FD88, D_8015FD8C);
     scene_anim_show(D_8015FD68, D_8015FD6C, D_8015FD64, D_8015FD70);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -173,7 +173,7 @@ void date_scene_nozomi_spring_background_2(void) {
 }
 
 void date_scene_nozomi_summer_island_title(void) {
-    strcpy(D_800CA1DC, "無人島");
+    strcpy(scene_place_title_2, "無人島");
     bg_read_sub2(0x45B6);
     mode_step_next();
 }
@@ -253,7 +253,7 @@ void date_scene_nozomi_summer(void) {
 
     step_handlers = date_scene_nozomi_summer_steps;
     if (game_state.mode_step < 4 || game_state.mode_step >= 0x2C) {
-        if (dec_bg_brightness == 0x80) {
+        if (bg_brightness == 0x80) {
             hud_sprite_light_effect_draw();
         }
     }

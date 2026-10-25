@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_80138510(void) {
+void annual_scene_resource_addresses_init(void) {
     D_801470F0 = 0x80197210;
     D_801470F4 = 0x80197504;
     D_801470F8 = 0x801978B8;
@@ -44,20 +44,20 @@ void func_80138510(void) {
     D_80147188 = 0x8019A4A4;
 }
 
-void func_80138784(void) {
+void annual_scene_group_mode_update(void) {
     func_8008E6AC();
     switch (D_800F6479) {
     case 0:
-        func_801388E0();
+        annual_scene_setup_mode_step_dispatch();
         break;
     case 1:
-        func_80138BF0();
+        annual_candidate_scene_mode_step_dispatch();
         break;
     case 2:
-        func_80139920();
+        annual_result_mode_step_dispatch();
         break;
     case 3:
-        func_80139D34();
+        annual_result_followup_mode_step_dispatch();
         break;
     default:
         talk_voice_play();
@@ -72,7 +72,7 @@ void func_80138784(void) {
     func_8008E8B4();
 }
 
-void func_80138858(void) {
+void annual_scene_group_load_setup(void) {
     D_800D9234 = (u8 *)&D_80147198;
     D_800D9238 = (u8 *)&D_8014719C;
     D_800D923C = D_8014718C;

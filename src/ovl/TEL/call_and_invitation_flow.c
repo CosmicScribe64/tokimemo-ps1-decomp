@@ -1,17 +1,17 @@
 /* call_and_invitation_flow.c: src/ovl/TEL/80132000.c:1733: call stage/step dispatch, ringing and reply routing, next-date slot construction and invitation resolution; body 1749: cal_base_show(); 1750: menu_bar_show(0);. Original object 0x80132000-0x801397D0 (config/objects/TEL.txt). */
-#define MAIN_API_OVERRIDE_set_c_girl /* K&R void() passes D_801405E4 without u8 narrowing in func_80134FE4 (T-24126). */
+#define MAIN_API_OVERRIDE_set_c_girl /* K&R void() passes phone_selected_target_girl without u8 narrowing in phone_reply_route (T-24126). */
 #include "common.h"
 #include "ovl/TEL.h"
 
 void set_c_girl();
 
-void func_80132000(void) {
+void phone_mode_handler(void) {
     switch (game_state.mode_stage) {
     case 0:
-        func_80132060();
+        phone_call_step_dispatch();
         return;
     case 1:
-        func_80134BE0();
+        phone_call_mode_dispatch();
         return;
     default:
         game_mode_reset_to_title();
@@ -19,23 +19,23 @@ void func_80132000(void) {
     }
 }
 
-void func_80132060(void) {
+void phone_call_step_dispatch(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0:
-        func_80132138();
+        phone_ring_animation_step();
         break;
     case 1:
-        func_8013226C();
+        phone_incoming_call_answer_scene();
         break;
     case 2:
-        func_80132FC4();
+        phone_relationship_information_menu_scene();
         break;
     case 3:
-        func_80133D54();
+        phone_selected_girl_information_menu_scene();
         break;
     case 4:
-        func_801345C4();
+        phone_selected_girl_information_dialogue_scene();
         break;
     }
     hud_screen_frame_draw(1);
@@ -47,7 +47,7 @@ void func_80132060(void) {
     hud_cursor_update();
 }
 
-void func_80132138(void) {
+void phone_ring_animation_step(void) {
     if (*(u8 *)&game_state.substep == 0) {
         sndi("Ｔｒｒｒｒ…", 0, 0x2F);
         audio_command(0x508);
@@ -77,7 +77,7 @@ void func_80132138(void) {
     k_disp_inc();
 }
 
-void func_8013226C(void) {
+void phone_incoming_call_answer_scene(void) {
     /* FAKE: buffer extent preserves the original sp+0x3C address. T-10040. */
     u8 sp3C[36];
     u8 sp2C[16];
@@ -391,7 +391,7 @@ void func_8013226C(void) {
     cal_base_show();
 }
 
-void func_80132FC4(void) {
+void phone_relationship_information_menu_scene(void) {
     /* FAKE: extent preserves the observed sp+0x3C buffer home. T-10040. */
     u8 sp3C[44];
     s32 var_a0;
@@ -714,7 +714,7 @@ void func_80132FC4(void) {
     cal_base_show();
 }
 
-void func_80133D54(void) {
+void phone_selected_girl_information_menu_scene(void) {
     /* FAKE: buffer extent preserves the original frame and sp+0x5C address. T-10040. */
     u8 sp5C[44];
     u8 sp3C[32];
@@ -724,7 +724,7 @@ void func_80133D54(void) {
     switch (game_state.substep) {
     case 0:
         text_system_reset();
-        func_8013CCD0();
+        phone_profile_appraisal_init();
         k_sub_reset_point_set();
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -905,7 +905,7 @@ void func_80133D54(void) {
     appraisal_base_show();
 }
 
-void func_801345C4(void) {
+void phone_selected_girl_information_dialogue_scene(void) {
     u8 state;
     switch (game_state.substep) {
     case 0:
@@ -919,7 +919,7 @@ void func_801345C4(void) {
         break;
     case 2:
         text_system_reset();
-        func_8013D03C((s32) game_state.menu_cursor_1, (s32) &D_801230D4);
+        phone_profile_details_draw((s32) game_state.menu_cursor_1, (s32) &D_801230D4);
         k_sub_reset_point_set();
         k_sub_disp_start(0);
         if (game_state.menu_cursor_1 == 0xA) {
@@ -1065,68 +1065,68 @@ void func_801345C4(void) {
     appraisal_base_show();
 }
 
-void func_80134BE0(void) {
+void phone_call_mode_dispatch(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
     case 0x0:
-        func_80134DA0();
+        phone_call_target_route();
         break;
     case 0x1:
-        func_80134FE4();
+        phone_reply_route();
         break;
     case 0x2:
-        func_80135FFC();
+        phone_selected_girl_report_single_line_a();
         break;
     case 0x3:
-        func_801352F0();
+        phone_selected_girl_report_opening_dialogue();
         break;
     case 0x4:
-        func_801360E4();
+        phone_selected_girl_report_single_line_b();
         break;
     case 0x8:
-        func_8013586C();
+        phone_selected_girl_report_followup_dialogue_a();
         break;
     case 0x9:
-        func_80135A44();
+        phone_selected_girl_progress_report_dialogue();
         break;
     case 0xA:
-        func_80135C4C();
+        phone_selected_girl_report_followup_dialogue_b();
         break;
     case 0x5:
-        func_801361CC();
+        phone_selected_girl_report_single_line_c();
         break;
     case 0x7:
-        func_80135E28();
+        phone_selected_girl_report_followup_dialogue_c();
         break;
     case 0x6:
-        func_801362B4();
+        phone_selected_girl_report_single_line_d();
         break;
     case 0x10:
-        func_801396EC();
+        phone_answering_machine_scene();
         break;
     case 0x30:
-        func_80136724();
+        phone_date_invitation_resolve();
         break;
     case 0x20:
-        func_8013639C();
+        phone_date_slot_menu_open();
         break;
     case 0x40:
-        func_801380D8();
+        phone_rei_call_dialogue_and_progress_gate();
         break;
     case 0x41:
-        func_801384F0();
+        phone_rei_call_followup_dialogue();
         break;
     case 0x42:
-        func_8013883C();
+        phone_rei_extended_call_dialogue();
         break;
     case 0x43:
-        func_80138D20();
+        phone_rei_call_final_dialogue();
         break;
     case 0x44:
-        func_80139064();
+        phone_rei_call_additional_dialogue();
         break;
     case 0x45:
-        func_801393A8();
+        phone_rei_call_additional_dialogue_b();
         break;
     }
     hud_screen_frame_draw(1);
@@ -1137,7 +1137,7 @@ void func_80134BE0(void) {
     hud_cursor_update();
 }
 
-void func_80134DA0(void) {
+void phone_call_target_route(void) {
     if (*(u8 *)&game_state.substep == 0) {
         sndi("Ｔｒｒｒｒ…", 0, 0x2F);
         audio_command(0x508);
@@ -1145,9 +1145,9 @@ void func_80134DA0(void) {
         D_801230D0 = (rand() & 3) + 1;
         *(u8 *)&game_state.substep = 1;
         if (*(u8 *)&game_state.current_girl == 0xB) {
-            D_801405E4 = 0xC;
+            phone_selected_target_girl = 0xC;
         } else {
-            D_801405E4 = *(u8 *)&game_state.current_girl;
+            phone_selected_target_girl = *(u8 *)&game_state.current_girl;
         }
     } else if (*(u8 *)&game_state.substep == 1) {
         if ((game_state.mode_step_timer.u & 0x7F) == 1) {
@@ -1169,9 +1169,9 @@ void func_80134DA0(void) {
                 mode_step_set(0x10);
             } else if (*(u8 *)&game_state.year == 0x62 && *(u8 *)&game_state.month == 2 && *(u8 *)&game_state.day == 0x16) {
                 mode_step_set(0x10);
-            } else if (func_8013655C() == 0) {
+            } else if (phone_available_date_slots_build() == 0) {
                 mode_step_set(0x10);
-            } else if (D_801405E4 == 0xC) {
+            } else if (phone_selected_target_girl == 0xC) {
                 mode_step_set(0x40);
             } else {
                 mode_step_next();
@@ -1183,19 +1183,19 @@ void func_80134DA0(void) {
     k_disp_inc();
 }
 
-void func_80134FE4(void) {
+void phone_reply_route(void) {
     u8 zy;
 
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        set_c_girl(D_801405E4);
-        game_state.girls[D_801405E4].flags.b[3] += 1;
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndi(D_801406E0[D_801405E4], 0, D_801405E4);
+        set_c_girl(phone_selected_target_girl);
+        game_state.girls[phone_selected_target_girl].flags.b[3] += 1;
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndi(D_801406E0[phone_selected_target_girl], 0, phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
-        talk_voice_play((s32) D_80140710, (s32) D_80140770, (s32) D_801405E4, (s32) D_801405E4);
+        talk_voice_play((s32) D_80140710, (s32) D_80140770, (s32) phone_selected_target_girl, (s32) phone_selected_target_girl);
         break;
     case 1:
         talk_text_step();
@@ -1211,18 +1211,18 @@ void func_80134FE4(void) {
         xa_wait();
         break;
     case 4:
-        if (get_g_zyotai_s(D_801405E4) == 4) {
-            game_state.girls[D_801405E4].affection = 0x10;
+        if (get_g_zyotai_s(phone_selected_target_girl) == 4) {
+            game_state.girls[phone_selected_target_girl].affection = 0x10;
             mode_step_set(3);
-            if (D_801405E4 == 7) {
+            if (phone_selected_target_girl == 7) {
                 game_state.substep = 0;
             } else {
                 game_state.substep = 4;
             }
         } else {
-            zy = get_g_zyotai_s(D_801405E4) & 0x7F;
+            zy = get_g_zyotai_s(phone_selected_target_girl) & 0x7F;
             if (zy < 2U) {
-                zy = D_801405E4;
+                zy = phone_selected_target_girl;
                 if (zy == 0) {
                     mode_step_set(8);
                 } else if ((zy == 7) && (game_state.girls[zy].flags.b[3] & 1)) {
@@ -1233,7 +1233,7 @@ void func_80134FE4(void) {
                     mode_step_set(4);
                 }
             } else if (zy == 2) {
-                zy = D_801405E4;
+                zy = phone_selected_target_girl;
                 if ((zy == 0xA) && (game_state.girls[zy].flags.b[3] & 1)) {
                     mode_step_set(7);
                 }
@@ -1251,7 +1251,7 @@ void func_80134FE4(void) {
     cal_base_show();
 }
 
-void func_801352F0(void) {
+void phone_selected_girl_report_opening_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -1277,9 +1277,9 @@ void func_801352F0(void) {
         break;
     case 4:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_801434D4[D_801405E4], 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_80143500, (s32) &D_80143558, (s32) D_801405E4, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_801434D4[phone_selected_target_girl], 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_80143500, (s32) &D_80143558, (s32) phone_selected_target_girl, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1289,7 +1289,7 @@ void func_801352F0(void) {
     case 6:
         k_sub_reset();
         gnsx(game_state.player_family_name);
-        sndisp(D_801437BC[D_801405E4], 0, 0x1F);
+        sndisp(D_801437BC[phone_selected_target_girl], 0, 0x1F);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1298,9 +1298,9 @@ void func_801352F0(void) {
         break;
     case 8:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80143958[D_801405E4], 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_80143984, (s32) &D_801439DC, (s32) D_801405E4, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80143958[phone_selected_target_girl], 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_80143984, (s32) &D_801439DC, (s32) phone_selected_target_girl, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1341,9 +1341,9 @@ void func_801352F0(void) {
         break;
     case 20:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80143BA0[D_801405E4], 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_80143BCC, (s32) &D_80143C24, (s32) D_801405E4, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80143BA0[phone_selected_target_girl], 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_80143BCC, (s32) &D_80143C24, (s32) phone_selected_target_girl, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1384,7 +1384,7 @@ void func_801352F0(void) {
     cal_base_show();
 }
 
-void func_8013586C(void) {
+void phone_selected_girl_report_followup_dialogue_a(void) {
     /* T-10040: share the XA table address across dialogue setup. */
     u8 girl;
     u32 *table;
@@ -1392,9 +1392,9 @@ void func_8013586C(void) {
     case 0:
         table = D_80141084;
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_8014107C, 0, (s32) D_801405E4);
-        girl = D_801405E4;
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_8014107C, 0, (s32) phone_selected_target_girl);
+        girl = phone_selected_target_girl;
         talk_voice_play((s32) table, (s32) table, 0, (s32) girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -1414,9 +1414,9 @@ void func_8013586C(void) {
         break;
     case 4:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80140AD8[D_801405E4], 0, (s32) D_801405E4);
-        girl = D_801405E4;
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80140AD8[phone_selected_target_girl], 0, (s32) phone_selected_target_girl);
+        girl = phone_selected_target_girl;
         talk_voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) girl, (s32) girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
@@ -1432,18 +1432,18 @@ void func_8013586C(void) {
     cal_base_show();
 }
 
-void func_80135A44(void) {
+void phone_selected_girl_progress_report_dialogue(void) {
     u32 sp28;
     u32 temp_hi;
 
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        temp_hi = (u32) ((u8) game_state.girls[D_801405E4].flags.b[3] >> 1) % 3U;
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        temp_hi = (u32) ((u8) game_state.girls[phone_selected_target_girl].flags.b[3] >> 1) % 3U;
         sp28 = temp_hi;
-        sndisp(D_801410BC[temp_hi], 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_801410D4, (s32) &D_80141104, (s32) sp28, (s32) D_801405E4);
+        sndisp(D_801410BC[temp_hi], 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_801410D4, (s32) &D_80141104, (s32) sp28, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1462,9 +1462,9 @@ void func_80135A44(void) {
         break;
     case 4:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_801410CC, 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_801410D4, (s32) &D_80141104, 4, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_801410CC, 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_801410D4, (s32) &D_80141104, 4, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1479,13 +1479,13 @@ void func_80135A44(void) {
     cal_base_show();
 }
 
-void func_80135C4C(void) {
+void phone_selected_girl_report_followup_dialogue_b(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80141094, 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_8014109C, (s32) &D_801410AC, 0, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80141094, 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_8014109C, (s32) &D_801410AC, 0, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1504,9 +1504,9 @@ void func_80135C4C(void) {
         break;
     case 4:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80140AD8[D_801405E4], 0, (s32) D_801405E4);
-        talk_voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) D_801405E4, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80140AD8[phone_selected_target_girl], 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) D_80140B04, (s32) D_80140B5C, (s32) phone_selected_target_girl, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1521,13 +1521,13 @@ void func_80135C4C(void) {
     cal_base_show();
 }
 
-void func_80135E28(void) {
+void phone_selected_girl_report_followup_dialogue_c(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80141040, 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_8014104C, (s32) &D_80141064, 0, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80141040, 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_8014104C, (s32) &D_80141064, 0, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1546,9 +1546,9 @@ void func_80135E28(void) {
         break;
     case 4:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80141048, 0, (s32) D_801405E4);
-        talk_voice_play((s32) &D_8014104C, (s32) &D_80141064, 2, (s32) D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80141048, 0, (s32) phone_selected_target_girl);
+        talk_voice_play((s32) &D_8014104C, (s32) &D_80141064, 2, (s32) phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1563,13 +1563,13 @@ void func_80135E28(void) {
     cal_base_show();
 }
 
-void func_80135FFC(void) {
+void phone_selected_girl_report_single_line_a(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
-        talk_voice_play(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80140AD8[phone_selected_target_girl], 0, phone_selected_target_girl);
+        talk_voice_play(D_80140B04, D_80140B5C, phone_selected_target_girl, phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1584,13 +1584,13 @@ void func_80135FFC(void) {
     cal_base_show();
 }
 
-void func_801360E4(void) {
+void phone_selected_girl_report_single_line_b(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80140AD8[D_801405E4], 0, D_801405E4);
-        talk_voice_play(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80140AD8[phone_selected_target_girl], 0, phone_selected_target_girl);
+        talk_voice_play(D_80140B04, D_80140B5C, phone_selected_target_girl, phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1605,13 +1605,13 @@ void func_801360E4(void) {
     cal_base_show();
 }
 
-void func_801361CC(void) {
+void phone_selected_girl_report_single_line_c(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80140D18[D_801405E4], 0, D_801405E4);
-        talk_voice_play(D_80140D44, D_80140D9C, D_801405E4, D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80140D18[phone_selected_target_girl], 0, phone_selected_target_girl);
+        talk_voice_play(D_80140D44, D_80140D9C, phone_selected_target_girl, phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1626,13 +1626,13 @@ void func_801361CC(void) {
     cal_base_show();
 }
 
-void func_801362B4(void) {
+void phone_selected_girl_report_single_line_d(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
-        gnsx(girl_short_name_table[D_801405E4]);
-        sndisp(D_80140F0C[D_801405E4], 0, D_801405E4);
-        talk_voice_play(D_80140F38, D_80140F90, D_801405E4, D_801405E4);
+        gnsx(girl_short_name_table[phone_selected_target_girl]);
+        sndisp(D_80140F0C[phone_selected_target_girl], 0, phone_selected_target_girl);
+        talk_voice_play(D_80140F38, D_80140F90, phone_selected_target_girl, phone_selected_target_girl);
         k_sub_disp_start(0);
         game_state.substep += 1;
         break;
@@ -1647,14 +1647,14 @@ void func_801362B4(void) {
     cal_base_show();
 }
 
-void func_8013639C(void) {
+void phone_date_slot_menu_open(void) {
     /* T-10040: separate signed-byte loads through an unsigned index home. */
     u32 choice;
     switch (game_state.substep) {
     case 0:
         calendar_screen_init();
         cal_sprite_init();
-        func_8013655C();
+        phone_available_date_slots_build();
         text_system_reset();
         set_kanji_string(-0x80, 0x32, 0, (s32) "デートする日を選んで下さい", 0);
         k_disp_start(1);
@@ -1668,9 +1668,9 @@ void func_8013639C(void) {
         choice = game_state.menu_cursor_1;
         if ((choice != -1) && (game_state.pad_pressed & PAD_CIRCLE)) {
             cal_sprite_disp_switch(0);
-            D_80140558 = D_801405A4[game_state.menu_cursor_1];
+            D_80140558 = phone_candidate_date_month_values[game_state.menu_cursor_1];
             choice = game_state.menu_cursor_1;
-            D_80140554 = D_80140564[choice];
+            D_80140554 = phone_candidate_date_day_values[choice];
             if ((game_state.month == 0xC) && (D_80140558 == 1)) {
                 D_8014055C = game_state.year + 1;
             } else {
@@ -1687,7 +1687,7 @@ void func_8013639C(void) {
     calendar_view_update();
 }
 
-s32 func_8013655C(void) {
+s32 phone_available_date_slots_build(void) {
     /* T-10040: month offset precedes the four halfword arrays in the frame. */
     s32 var_s6;
     s16 spEC[16];
@@ -1718,8 +1718,8 @@ s32 func_8013655C(void) {
                 (&spCC[0])[var_t0] = calendar_cell_y(var_s6, (var_s0 - 1)) - 0x10;
                 (&spAC[0])[var_t0] = 0x10;
                 (&sp8C[0])[var_t0] = 0x10;
-                D_80140564[var_t0] = (s32) var_s0;
-                D_801405A4[var_t0] = var_s6 + game_state.month;
+                phone_candidate_date_day_values[var_t0] = (s32) var_s0;
+                phone_candidate_date_month_values[var_t0] = var_s6 + game_state.month;
                 var_t0++;
             }
         }
@@ -1731,7 +1731,7 @@ s32 func_8013655C(void) {
     return var_t0;
 }
 
-void func_80136724(void) {
+void phone_date_invitation_resolve(void) {
     s32 pad_month; /* FAKE: preserves the recovered scalar frame slot, T-25055. */
     u8 *text;
     u32 lim;
@@ -1753,7 +1753,7 @@ void func_80136724(void) {
     case 0x0:
         text_system_reset();
         actor_clear_upper();
-        func_8013D88C(0, D_8014055C, D_80140558, D_80140554);
+        phone_date_place_availability_build(0, D_8014055C, D_80140558, D_80140554);
         k_sub_reset_point_set();
         set_kanji_string(-0x80, 0x32, 0, "デートする場所を選んで下さい", 0);
         k_disp_start(check_set_k());
@@ -1775,7 +1775,7 @@ void func_80136724(void) {
     case 0x2:
         text_system_reset();
         actor_clear_upper();
-        func_8013D88C(1, D_8014055C, D_80140558, D_80140554);
+        phone_date_place_availability_build(1, D_8014055C, D_80140558, D_80140554);
         k_sub_reset_point_set();
         set_kanji_string(-0x80, 0x32, 0, "デートする場所を選んで下さい", 0);
         k_disp_start(check_set_k());
@@ -1843,7 +1843,7 @@ void func_80136724(void) {
         } else {
             total = (u32) hp;
         }
-        ent = D_80141134[g->current_girl][D_80140550];
+        ent = phone_invitation_base_adjustments[g->current_girl][D_80140550];
         if (ent != 0) {
             total = ent + total;
         } else {
@@ -1875,12 +1875,12 @@ void func_80136724(void) {
         }
         if (g->current_girl == GIRL_NOZOMI) {
             if ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U) {
-                D_801405E4 = 0xB;
+                phone_selected_target_girl = 0xB;
             } else {
-                D_801405E4 = g->current_girl;
+                phone_selected_target_girl = g->current_girl;
             }
         } else {
-            D_801405E4 = g->current_girl;
+            phone_selected_target_girl = g->current_girl;
         }
         break;
     case 0x20:
@@ -1897,8 +1897,8 @@ void func_80136724(void) {
         hud_appointment_add(sp44.word);
         hud_appointment_list_sort();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_801413C8[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_801413F8, (s32) D_80141458, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_801413C8[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_801413F8, (s32) D_80141458, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -1932,8 +1932,8 @@ void func_80136724(void) {
     case 0x24:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_80141680[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_801416B0, (s32) D_80141710, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_80141680[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_801416B0, (s32) D_80141710, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -1943,7 +1943,7 @@ void func_80136724(void) {
     case 0x26:
         k_sub_reset();
         gnsx(g->player_family_name);
-        text = D_801418D0[D_801405E4];
+        text = D_801418D0[phone_selected_target_girl];
         if (*text == 0x20) {
             g->substep = 0x2D;
         } else {
@@ -1958,7 +1958,7 @@ void func_80136724(void) {
     case 0x28:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        text = D_8014197C[D_801405E4];
+        text = D_8014197C[phone_selected_target_girl];
         if (*text == 0x20) {
             g->substep = 0x2D;
         } else {
@@ -1966,7 +1966,7 @@ void func_80136724(void) {
             k_sub_disp_start(0);
             g->substep += 1;
         }
-        talk_voice_play((s32) D_801419AC, (s32) D_80141A0C, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_801419AC, (s32) D_80141A0C, (s32) phone_selected_target_girl, (s32) g->current_girl);
         break;
     case 0x29:
         talk_text_step();
@@ -1974,7 +1974,7 @@ void func_80136724(void) {
     case 0x2A:
         k_sub_reset();
         gnsx(g->player_family_name);
-        text = D_80141AB0[D_801405E4];
+        text = D_80141AB0[phone_selected_target_girl];
         if (*text == 0x20) {
             g->substep = 0x2D;
         } else {
@@ -2026,21 +2026,21 @@ void func_80136724(void) {
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
         if ((g->current_girl == GIRL_NOZOMI) && ((u32) (get_g_zyotai_s(g->current_girl) & 0x7F) < 2U)) {
-            D_801405E4 = 0xB;
+            phone_selected_target_girl = 0xB;
         }
         if (g->current_girl == GIRL_SAKI) {
             hp = (D_80140554 + 6) / 7;
             /* FAKE: the second comparison uses * 1 to retain expression
              * operand order; no runtime instruction remains, T-25055. */
             if ((hp == 3) && (D_80140558 == g->month) && (g->month_calendar[0].day_kind[D_80140554] == 1)) {
-                D_801405E4 = 0xC;
+                phone_selected_target_girl = 0xC;
             } else if (((hp * 1) == 3) && (D_80140558 != g->month) && (g->month_calendar[1].day_kind[D_80140554] == 1)) {
-                D_801405E4 = 0xC;
+                phone_selected_target_girl = 0xC;
             }
         }
-        sndisp(D_80141D80[D_801405E4], 0, (s32) g->current_girl);
+        sndisp(D_80141D80[phone_selected_target_girl], 0, (s32) g->current_girl);
         k_sub_disp_start(0);
-        talk_voice_play((s32) D_80141DB4, (s32) D_80141E1C, (s32) D_801405E4, (s32) g->current_girl);
+        talk_voice_play((s32) D_80141DB4, (s32) D_80141E1C, (s32) phone_selected_target_girl, (s32) g->current_girl);
         g->substep += 1;
         break;
     case 0x41:
@@ -2049,7 +2049,7 @@ void func_80136724(void) {
     case 0x42:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(D_80141FE0[D_801405E4], 0, 0xF);
+        sndisp(D_80141FE0[phone_selected_target_girl], 0, 0xF);
         k_sub_disp_start(0);
         g->substep += 1;
         /* fallthrough */
@@ -2059,8 +2059,8 @@ void func_80136724(void) {
     case 0x44:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_80142254[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_80142288, (s32) D_801422F0, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_80142254[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_80142288, (s32) D_801422F0, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2070,7 +2070,7 @@ void func_80136724(void) {
     case 0x46:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(D_80142570[D_801405E4], 0, 0xF);
+        sndisp(D_80142570[phone_selected_target_girl], 0, 0xF);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2146,8 +2146,8 @@ void func_80136724(void) {
     case 0x60:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_80142798[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_801427C8, (s32) D_80142828, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_80142798[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_801427C8, (s32) D_80142828, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2157,7 +2157,7 @@ void func_80136724(void) {
     case 0x62:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(D_801429E0[D_801405E4], 0, 0xF);
+        sndisp(D_801429E0[phone_selected_target_girl], 0, 0xF);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2167,8 +2167,8 @@ void func_80136724(void) {
     case 0x64:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_80142B40[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_80142B70, (s32) D_80142BD0, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_80142B40[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_80142B70, (s32) D_80142BD0, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2176,12 +2176,12 @@ void func_80136724(void) {
         talk_text_step();
         break;
     case 0x66:
-        if (*D_80142CB0[D_801405E4] == 0x20) {
+        if (*D_80142CB0[phone_selected_target_girl] == 0x20) {
             g->substep = 0x68;
         } else {
             k_sub_reset();
             gnsx(g->player_family_name);
-            sndisp(D_80142CB0[D_801405E4], 0, 0xF);
+            sndisp(D_80142CB0[phone_selected_target_girl], 0, 0xF);
             k_sub_disp_start(0);
             g->substep += 1;
         }
@@ -2216,8 +2216,8 @@ void func_80136724(void) {
     case 0x80:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_80142E70[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_80142EA0, (s32) D_80142F00, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_80142E70[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_80142EA0, (s32) D_80142F00, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2227,7 +2227,7 @@ void func_80136724(void) {
     case 0x82:
         k_sub_reset();
         gnsx(g->player_family_name);
-        sndisp(D_8014306C[D_801405E4], 0, 0xF);
+        sndisp(D_8014306C[phone_selected_target_girl], 0, 0xF);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2237,8 +2237,8 @@ void func_80136724(void) {
     case 0x84:
         k_sub_reset();
         gnsx(girl_short_name_table[g->current_girl]);
-        sndisp(D_801431E8[D_801405E4], 0, (s32) g->current_girl);
-        talk_voice_play((s32) D_80143218, (s32) D_80143278, (s32) D_801405E4, (s32) g->current_girl);
+        sndisp(D_801431E8[phone_selected_target_girl], 0, (s32) g->current_girl);
+        talk_voice_play((s32) D_80143218, (s32) D_80143278, (s32) phone_selected_target_girl, (s32) g->current_girl);
         k_sub_disp_start(0);
         g->substep += 1;
         break;
@@ -2246,12 +2246,12 @@ void func_80136724(void) {
         talk_text_step();
         break;
     case 0x86:
-        if (*D_8014333C[D_801405E4] == 0x20) {
+        if (*D_8014333C[phone_selected_target_girl] == 0x20) {
             g->substep = 0x88;
         } else {
             k_sub_reset();
             gnsx(g->player_family_name);
-            sndisp(D_8014333C[D_801405E4], 0, 0xF);
+            sndisp(D_8014333C[phone_selected_target_girl], 0, 0xF);
             k_sub_disp_start(0);
             g->substep += 1;
         }
@@ -2302,7 +2302,7 @@ void func_80136724(void) {
     }
 }
 
-void func_801380D8(void) {
+void phone_rei_call_dialogue_and_progress_gate(void) {
     GirlRecord *girl;
     u8 state;
     u32 temp_hi;
@@ -2420,7 +2420,7 @@ void func_801380D8(void) {
     cal_base_show();
 }
 
-void func_801384F0(void) {
+void phone_rei_call_followup_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -2510,7 +2510,7 @@ void func_801384F0(void) {
     cal_base_show();
 }
 
-void func_8013883C(void) {
+void phone_rei_extended_call_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -2641,7 +2641,7 @@ void func_8013883C(void) {
     cal_base_show();
 }
 
-void func_80138D20(void) {
+void phone_rei_call_final_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -2730,7 +2730,7 @@ void func_80138D20(void) {
     cal_base_show();
 }
 
-void func_80139064(void) {
+void phone_rei_call_additional_dialogue(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -2819,7 +2819,7 @@ void func_80139064(void) {
     cal_base_show();
 }
 
-void func_801393A8(void) {
+void phone_rei_call_additional_dialogue_b(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -2908,7 +2908,7 @@ void func_801393A8(void) {
     cal_base_show();
 }
 
-void func_801396EC(void) {
+void phone_answering_machine_scene(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();

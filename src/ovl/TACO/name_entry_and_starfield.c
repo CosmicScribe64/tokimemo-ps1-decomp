@@ -30,7 +30,7 @@ void shooter_name_entry_step_init(void) {
 
     shooter_name_entry_reset();
     shooter_init_stars();
-    func_800450F4(0, 0x202);
+    audio_bgm_play_short(0, 0x202);
     game_state.clear_color_r = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;
@@ -38,7 +38,7 @@ void shooter_name_entry_step_init(void) {
     shooter_background_flags = 0;
     /* FAKE: the scalar address view and shared source line retain the two
      * score-load registers and their order. Original spelling unknown. T-9530 */
-    func_80059048(); previous = *(s32 *)&shooter_high_score_1;
+    view_model_slots_clear(); previous = *(s32 *)&shooter_high_score_1;
     if (previous < shooter_score) {
         shooter_name_entry_rank = 0;
         shooter_high_score_3 = shooter_high_score_2;
@@ -76,7 +76,7 @@ void shooter_name_entry_step_done(void) {
 }
 
 /* Draws glyph arg0 ('0'-'9', 'A'-'Z', ". - ! @ * #", other: a fallback cell) as a POLY_FT4 centred
- * on game_state.screen_center_x/unk_018[draw_buffer] plus (arg4, arg5), half sizes from arg6/arg7, clut row arg1, ordering-table
+ * on game_state.draw_origin_x/unk_018[draw_buffer] plus (arg4, arg5), half sizes from arg6/arg7, clut row arg1, ordering-table
  * slot arg2, grey level arg3; arg8 == 3 selects the wide cell, arg8 == 1 anchors the glyph at its
  * bottom edge. Called without a prototype (K&R definition, the u8 parameter is narrowed at entry).
  * Matching notes (T-25112): every vertex coordinate is its own full expression with the offset
@@ -119,21 +119,21 @@ s32 arg8;
     SetSemiTrans(p, 0);
     p->b0 = p->g0 = p->r0 = arg3;
     dx = (w * arg6) / 8192;
-    x0 = game_state.screen_center_x[draw_buffer] + (arg4 - dx);
-    x3 = game_state.screen_center_x[draw_buffer] + (arg4 + dx);
-    x1 = game_state.screen_center_x[draw_buffer] + (arg4 + dx);
-    x2 = game_state.screen_center_x[draw_buffer] + (arg4 - dx);
+    x0 = game_state.draw_origin_x[draw_buffer] + (arg4 - dx);
+    x3 = game_state.draw_origin_x[draw_buffer] + (arg4 + dx);
+    x1 = game_state.draw_origin_x[draw_buffer] + (arg4 + dx);
+    x2 = game_state.draw_origin_x[draw_buffer] + (arg4 - dx);
     if (arg8 != 1) {
         dy = (arg7 * 12) / 8192;
-        y0 = game_state.screen_center_y[draw_buffer] + (arg5 - dy);
-        y1 = game_state.screen_center_y[draw_buffer] + (arg5 - dy);
-        y2 = game_state.screen_center_y[draw_buffer] + (arg5 + dy);
-        y3 = game_state.screen_center_y[draw_buffer] + (arg5 + dy);
+        y0 = game_state.draw_origin_y[draw_buffer] + (arg5 - dy);
+        y1 = game_state.draw_origin_y[draw_buffer] + (arg5 - dy);
+        y2 = game_state.draw_origin_y[draw_buffer] + (arg5 + dy);
+        y3 = game_state.draw_origin_y[draw_buffer] + (arg5 + dy);
     } else {
-        y0 = game_state.screen_center_y[draw_buffer] + (arg5 - (arg7 * 12) / 4096);
-        y1 = game_state.screen_center_y[draw_buffer] + (arg5 - (arg7 * 12) / 4096);
-        y2 = game_state.screen_center_y[draw_buffer] + arg5;
-        y3 = game_state.screen_center_y[draw_buffer] + arg5;
+        y0 = game_state.draw_origin_y[draw_buffer] + (arg5 - (arg7 * 12) / 4096);
+        y1 = game_state.draw_origin_y[draw_buffer] + (arg5 - (arg7 * 12) / 4096);
+        y2 = game_state.draw_origin_y[draw_buffer] + arg5;
+        y3 = game_state.draw_origin_y[draw_buffer] + arg5;
     }
     p->tpage = func_8009ECB0(0, 0, 0x340, 0x180);
     p->x0 = x0;
@@ -166,7 +166,7 @@ s32 arg8;
         p->u0 = shooter_glyph_space_u + 0x80, p->v0 = shooter_glyph_space_v, p->u1 = shooter_glyph_space_u + 0x80 + w, p->v1 = shooter_glyph_space_v, p->u2 = shooter_glyph_space_u + 0x80, p->v2 = shooter_glyph_space_v + 12, p->u3 = shooter_glyph_space_u + 0x80 + w, p->v3 = shooter_glyph_space_v + 12;
     }
     p->clut = func_8009ED74(arg1 * 16, 0x1EF);
-    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg2 * 4, (s32)p);
+    AddPrim(draw_ot_tags + (draw_buffer << 10) + arg2 * 4, (s32)p);
     dtd_on_tpage(0x340, 0x180, arg2, 0, 0);
 }
 
@@ -490,19 +490,19 @@ void shooter_draw_star(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     p[4] = r;
     p[5] = g;
     p[6] = b;
-    x = (arg1 * rsin(arg0) >> 12) + game_state.screen_center_x[draw_buffer];
+    x = (arg1 * rsin(arg0) >> 12) + game_state.draw_origin_x[draw_buffer];
     if (arg3 == 0) {
-        y = (arg1 * func_800A0140(arg0) >> 12) + game_state.screen_center_y[draw_buffer] - 0x28;
+        y = (arg1 * func_800A0140(arg0) >> 12) + game_state.draw_origin_y[draw_buffer] - 0x28;
     } else {
-        y = (arg1 * func_800A0140(arg0) >> 12) + game_state.screen_center_y[draw_buffer];
+        y = (arg1 * func_800A0140(arg0) >> 12) + game_state.draw_origin_y[draw_buffer];
     }
     *(s16 *)(p + 8) = x;
     *(s16 *)(p + 0xA) = y;
     if (arg3 < 2) {
-        AddPrim((draw_buffer << 10) + 0x3F8 + D_800E8CA0, p);
+        AddPrim((draw_buffer << 10) + 0x3F8 + draw_ot_tags, p);
         return;
     }
-    AddPrim((draw_buffer << 10) + 0x40 + D_800E8CA0, p);
+    AddPrim((draw_buffer << 10) + 0x40 + draw_ot_tags, p);
 }
 
 void shooter_init_stars(void) {

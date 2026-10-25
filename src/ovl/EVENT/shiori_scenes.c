@@ -167,7 +167,7 @@ void spot_shiori_scene1_run(void) {
 
 void spot_shiori_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl39 tbl;
+    SpotShioriYuinaMioAndGameCenterStepTable tbl;
 
     tbl = spot_shiori_scene1_steps;
     idx = D_800B1AF6;
@@ -356,7 +356,7 @@ void spot_shiori_scene2_run(void) {
 
 void spot_shiori_scene2_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl22 tbl;
+    SpotShioriAndMiharuSceneStepTable tbl;
 
     tbl = spot_shiori_scene2_steps;
     idx = D_800B1AF6;
@@ -376,7 +376,7 @@ void spot_shiori_scene8_run(void) {
 
 void spot_shiori_scene8_steps_run(void) {
     u8 index;
-    EventCallbackTable47 table;
+    SpotShioriScene8StepTable table;
 
     table = spot_shiori_scene8_steps;
     index = D_800B1AF6;
@@ -716,7 +716,7 @@ void spot_talk_reset_step(void) {
 
 void spot_shiori_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl45 tbl;
+    SpotShioriAyakoMegumiAndMovieTheaterStepTable tbl;
 
     tbl = spot_shiori_scene3_steps;
     idx = D_800B1AF6;
@@ -731,7 +731,7 @@ void spot_shiori_scene3_assets_load_00(void) {
 
 void spot_shiori_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl44 tbl;
+    SpotShioriAndYumiSceneStepTable tbl;
 
     tbl = spot_shiori_scene4_steps;
     idx = D_800B1AF6;
@@ -746,7 +746,7 @@ void spot_shiori_scene4_assets_load_02(void) {
 
 void spot_shiori_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl58 tbl;
+    SpotShioriScene5StepTable tbl;
 
     tbl = spot_shiori_scene5_steps;
     idx = D_800B1AF6;
@@ -774,7 +774,7 @@ void spot_shiori_scene5_label_set_11(void) {
 
 void spot_shiori_scene6_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl45 tbl;
+    SpotShioriAyakoMegumiAndMovieTheaterStepTable tbl;
 
     tbl = spot_shiori_scene6_steps;
     idx = D_800B1AF6;

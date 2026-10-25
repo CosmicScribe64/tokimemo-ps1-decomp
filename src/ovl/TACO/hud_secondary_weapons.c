@@ -78,7 +78,7 @@ void shooter_draw_reticle(void) {
     poly->y2 = ((s16 *)pt)[5];
     poly->x3 = ((s16 *)pt)[6];
     poly->y3 = ((s16 *)pt)[7];
-    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 4, poly);
+    AddPrim(draw_ot_tags + (draw_buffer << 0xA) + 4, poly);
     if (game_state.frame_count & 8) {
         poly = GetWorkBase(0x28, draw_buffer);
         func_8009F040(poly);
@@ -98,7 +98,7 @@ void shooter_draw_reticle(void) {
         poly->y2 = ((s16 *)pt)[5];
         poly->x3 = ((s16 *)pt)[6];
         poly->y3 = ((s16 *)pt)[7];
-        AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 4, poly);
+        AddPrim(draw_ot_tags + (draw_buffer << 0xA) + 4, poly);
     }
 }
 
@@ -134,8 +134,8 @@ void shooter_draw_bomb_icon(s32 arg0, s32 arg1, s32 arg2) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + arg0;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + arg1;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] + arg0;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + arg1;
     sprite->u0 = 0xC0; sprite->v0 = arg2 * 16 - 0x30;
     palette = ((game_state.frame_count >> 1) % 14) * 16;
     if (arg2 == 3) {
@@ -143,7 +143,7 @@ void shooter_draw_bomb_icon(s32 arg0, s32 arg1, s32 arg2) {
     } else {
         sprite->clut = func_8009ED74(palette, 0x1E9);
     }
-    AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
     dtd_on_tpage(0x380, 0x100, 1, 0, 0);
 }
 
@@ -162,8 +162,8 @@ void shooter_draw_bomb_panel(void) {
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
     dy = (shooter_actors->mode & 0x40) >> 2;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + 0xC8;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + dy + 0x28;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] + 0xC8;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + dy + 0x28;
     sprite->u0 = 0xE0;
     sprite->v0 = 0;
     if (shooter_actors->stats[1] < 0x20) {
@@ -171,7 +171,7 @@ void shooter_draw_bomb_panel(void) {
     } else {
         sprite->clut = func_8009ED74(0, 0x1EF);
     }
-    AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
     sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
     sprite->w = 0x20;
@@ -180,15 +180,15 @@ void shooter_draw_bomb_panel(void) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] + 0xC8;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + 0x48;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] + 0xC8;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + 0x48;
     sprite->u0 = 0xE0; sprite->v0 = 0x20;
     if (shooter_actors->stats[1] < 0x20) {
         sprite->clut = func_8009ED74(0x10, 0x1EF);
     } else {
         sprite->clut = func_8009ED74(0, 0x1EF);
     }
-    AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
     dtd_on_tpage(0x340, 0x100, 1, 0, 0);
 }
 
@@ -211,11 +211,11 @@ void shooter_draw_shield_gauge(void) {
     sprite->r0 = 0xFF;
     sprite->g0 = 0xFF;
     sprite->b0 = 0xFF;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] - 0xC8;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + 0x28;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] - 0xC8;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + 0x28;
     sprite->u0 = 0x80; sprite->v0 = 0x40;
     sprite->clut = func_8009ED74(0x10, 0x1EF);
-    AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
     dtd_on_tpage(0x340, 0x100, 1, 0, 0);
     state = shooter_actors->stats[1];
     if (state > 0xC0) {
@@ -248,11 +248,11 @@ void shooter_draw_shield_gauge(void) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] - 0xC8;
-    sprite->y0 = ((0xFF - shooter_actors->stats[1]) >> 2) + game_state.screen_center_y[draw_buffer] + 0x18;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] - 0xC8;
+    sprite->y0 = ((0xFF - shooter_actors->stats[1]) >> 2) + game_state.draw_origin_y[draw_buffer] + 0x18;
     sprite->u0 = 0xA0; sprite->v0 = 0x60;
     sprite->clut = func_8009ED74(0x20, 0x1EF);
-    AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
     dtd_on_tpage(0x340, 0x100, 1, 0, 0);
     sprite = (SPRT *)GetWorkBase(0x14, draw_buffer);
     func_8009F0A4(sprite);
@@ -261,11 +261,11 @@ void shooter_draw_shield_gauge(void) {
     sprite->r0 = 0x80;
     sprite->g0 = 0x80;
     sprite->b0 = 0x80;
-    sprite->x0 = game_state.screen_center_x[draw_buffer] - 0xCE;
-    sprite->y0 = game_state.screen_center_y[draw_buffer] + 0x68;
+    sprite->x0 = game_state.draw_origin_x[draw_buffer] - 0xCE;
+    sprite->y0 = game_state.draw_origin_y[draw_buffer] + 0x68;
     sprite->u0 = 0xA0; sprite->v0 = 0x40;
     sprite->clut = func_8009ED74(0x20, 0x1EF);
-    AddPrim((draw_buffer << 10) + 4 + D_800E8CA0, (s32)sprite);
+    AddPrim((draw_buffer << 10) + 4 + draw_ot_tags, (s32)sprite);
     dtd_on_tpage(0x340, 0x100, 1, 0, 0);
 }
 
@@ -560,8 +560,8 @@ void shooter_draw_secondary_shot(ShooterParticle *arg0, s32 arg1) {
         rot += 0x20;
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
-            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200
+            && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             side = (rec->age >> 4) & 1;
             dist = (D_80122754 - rec->z) / 127;
             if (dist >= 0x100) {
@@ -589,7 +589,7 @@ void shooter_draw_secondary_shot(ShooterParticle *arg0, s32 arg1) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }

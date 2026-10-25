@@ -86,7 +86,7 @@ void encounter_yuko_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     strcpy(name_code_girl_short, "先生");
     talk_clear();
@@ -94,8 +94,8 @@ void encounter_yuko_scene_init_1(void) {
     encounter_scene_text_table = encounter_scene_text_section_0;
     encounter_scene_command_table = encounter_scene_command_section_0;
     encounter_scene_voice_table = encounter_scene_voice_section_0;
-    strcpy(D_800CA19C, "廊下");
-    strcpy(D_800CA1DC, "職員室");
+    strcpy(scene_place_title, "廊下");
+    strcpy(scene_place_title_2, "職員室");
     game_state.girls[8].affection += 1;
     check_para_limit();
     D_800CA368 = 0x36;

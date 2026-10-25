@@ -54,16 +54,16 @@ void shooter_exit_step_save_settings(void) {
     system_data.bits.lo = shooter_setting_bomb_button % 3;
     sprite_tables_clear();
     draw2d3d(0, 0);
-    game_state.screen_center_x[0] = 0xA0;
-    game_state.screen_center_x[1] = 0xA0;
+    game_state.draw_origin_x[0] = 0xA0;
+    game_state.draw_origin_x[1] = 0xA0;
     func_8009C674(0);
     func_8009C210(3);
     func_80097D90(0x140, 0xF0, 0, 0, 0);
-    if (func_80045288() == 0) {
+    if (cd_queue_idle() == 0) {
         cd_command_reset();
     }
-    func_8005907C();
-    func_80059048();
+    view_display_reinit();
+    view_model_slots_clear();
     shooter_hide_all_models();
     actor_clear_range(0);
     actor_draw_enable(0);
@@ -76,7 +76,7 @@ void shooter_exit_step_write_memory_card(void) {
 
     switch (gs->substep) {
     case 0:
-        if (func_80053F04() != 0) {
+        if (memory_card_check_poll() != 0) {
             /* FAKE: the first read of unk_1115 goes through a local so the three tests share a
              * register range that takes $v1 (found by tools/autotweak.py); T-19009 */
             temp = gs->memory_card_result;
@@ -94,7 +94,7 @@ void shooter_exit_step_write_memory_card(void) {
     case 1:
         memory_card_stop();
         if (gs->memory_card_result == 1) {
-            if (func_80054AF4(0) == 1) {
+            if (memory_card_file_exists(0) == 1) {
                 gs->substep += 1;
                 memory_card_start();
                 settings_save_load_layout_stash(0);
@@ -106,7 +106,7 @@ void shooter_exit_step_write_memory_card(void) {
         }
         break;
     case 2:
-        if (func_80054284() == 3) {
+        if (memory_card_system_read_poll() == 3) {
             memory_card_stop();
             gs->substep += 1;
         } else if (((u32)gs->memory_card_timer >= 0x201U) || (gs->memory_card_result == 0xF0)) {
@@ -115,7 +115,7 @@ void shooter_exit_step_write_memory_card(void) {
         }
         break;
     case 3:
-        if (func_800552DC(0) == -1) {
+        if (memory_card_system_bank_load(0) == -1) {
             settings_save_load_layout_stash(1);
             gs->substep = 0xFF;
         } else {
@@ -129,7 +129,7 @@ void shooter_exit_step_write_memory_card(void) {
         gs->substep += 1;
         break;
     case 5:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             audio_command(0x50F);
             memory_card_stop();
             gs->substep += 1;
@@ -176,16 +176,16 @@ void shooter_exit_step_return(void) {
 }
 
 void shooter_exit_step_reload_main_data_1(void) {
-    func_80059E00();
+    boot_data_load_step();
 }
 
 void shooter_exit_step_reload_main_data_2(void) {
-    func_80059BE8();
+    boot_hud_textures_load();
     mode_step_next();
 }
 
 void shooter_exit_step_reload_main_data_3(void) {
-    func_8004ADE4();
+    debug_font_load();
     mode_step_next();
 }
 
@@ -220,7 +220,7 @@ u8 shooter_exit_step_stop_sound(void) {
         }
         break;
     case 2:
-        if (D_800B3220 == 0) {
+        if (debug_hud_enabled == 0) {
             memory_card_start();
         } else {
             mode_step_next();

@@ -4,19 +4,20 @@
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 /* The two mouse port buffers share one owned pointer table. T-12010. */
-s8 *D_800E36C0[2] = { 0, 0 };
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36C8);
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36D0);
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36D8);
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36DC);
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36E0);
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36E4);
-INCLUDE_RODATA("asm/data/main/mouse.data", D_800E36E8);
+s8 *mouse_pad_buffers[2] = { 0, 0 };
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_position_x);
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_position_y);
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_x_min);
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_x_max);
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_y_min);
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_y_max);
+INCLUDE_RODATA("asm/data/main/mouse.data", mouse_sense_x);
 
+/* Fills out[4] with dx, dy, buttons and type from the port buffer, or returns -1 with zeros when the pad is not ready. */
 s32 MouseState(s32 port, s8 *out) {
     s8 **p;
     s32 result;
-    p = &D_800E36C0[port];
+    p = &mouse_pad_buffers[port];
     result = 0;
     if ((*p)[0]) {
         result = -1;
@@ -33,67 +34,71 @@ s32 MouseState(s32 port, s8 *out) {
     return result;
 }
 
+/* Stores the two pad receive buffers used for the mouse ports. */
 void InitMouse(s8 *arg0, s8 *arg1) {
-    D_800E36C0[0] = arg0;
-    D_800E36C0[1] = arg1;
+    mouse_pad_buffers[0] = arg0;
+    mouse_pad_buffers[1] = arg1;
 }
 
+/* Sets the cursor clamp rectangle, scaled by the sensitivity. */
 void RangeMouse(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
-    u32 sx = D_800E36E8;
-    u32 sy = D_800E36EA;
+    u32 sx = mouse_sense_x;
+    u32 sy = mouse_sense_y;
 
-    D_800E36D8 = arg0 * sx;
-    D_800E36DC = arg1 * sx;
-    D_800E36E0 = arg2 * sy;
-    D_800E36E4 = arg3 * sy;
+    mouse_x_min = arg0 * sx;
+    mouse_x_max = arg1 * sx;
+    mouse_y_min = arg2 * sy;
+    mouse_y_max = arg3 * sy;
 }
 
+/* Sets the x and y sensitivity multipliers. */
 void SenseMouse(u16 arg0, u16 arg1) {
-    D_800E36E8 = arg0;
-    D_800E36EA = arg1;
+    mouse_sense_x = arg0;
+    mouse_sense_y = arg1;
 }
 
+/* Sets a port's cursor position, scaled by the sensitivity. */
 void SetMouse(s32 arg0, u32 arg1, u32 arg2) {
-    D_800E36C8[arg0] = D_800E36E8 * arg1;
-    D_800E36D0[arg0] = D_800E36EA * arg2;
+    mouse_position_x[arg0] = mouse_sense_x * arg1;
+    mouse_position_y[arg0] = mouse_sense_y * arg2;
 }
 
 typedef struct MouseSample {
-    /* 0x0 */ s32 unk_0;
-    /* 0x4 */ s32 unk_4;
-    /* 0x8 */ s32 unk_8;
+    /* 0x0 */ s32 x;
+    /* 0x4 */ s32 y;
+    /* 0x8 */ s32 buttons;
 } MouseSample; /* size 0xC */
 
-void func_80059860(s32 arg0, MouseSample *arg1) {
+void mouse_read(s32 arg0, MouseSample *arg1) {
     s8 *p;
 
-    func_80059938(arg0);
-    arg1->unk_0 = (u32)D_800E36C8[arg0] / D_800E36E8;
-    arg1->unk_4 = (u32)D_800E36D0[arg0] / D_800E36EA;
-    arg1->unk_8 = -0x100;
-    p = D_800E36C0[arg0];
+    mouse_update(arg0);
+    arg1->x = (u32)mouse_position_x[arg0] / mouse_sense_x;
+    arg1->y = (u32)mouse_position_y[arg0] / mouse_sense_y;
+    arg1->buttons = -0x100;
+    p = mouse_pad_buffers[arg0];
     if ((p[0] == 0) && (p[1] == 0x12)) {
-        arg1->unk_8 = ~p[3] & 0xC;
+        arg1->buttons = ~p[3] & 0xC;
     }
 }
 
-void func_80059938(s32 port) {
+void mouse_update(s32 port) {
     s8 **slot;
     s8 *p;
-    slot = &D_800E36C0[port];
+    slot = &mouse_pad_buffers[port];
     p = *slot;
     if ((p[0] == 0) && (p[1] == 0x12)) {
-        D_800E36C8[port] += p[4];
-        D_800E36D0[port] += p[5];
-        if (D_800E36C8[port] > D_800E36DC) {
-            D_800E36C8[port] = D_800E36DC;
-        } else if (D_800E36C8[port] < D_800E36D8) {
-            D_800E36C8[port] = D_800E36D8;
+        mouse_position_x[port] += p[4];
+        mouse_position_y[port] += p[5];
+        if (mouse_position_x[port] > mouse_x_max) {
+            mouse_position_x[port] = mouse_x_max;
+        } else if (mouse_position_x[port] < mouse_x_min) {
+            mouse_position_x[port] = mouse_x_min;
         }
-        if (D_800E36D0[port] > D_800E36E4) {
-            D_800E36D0[port] = D_800E36E4;
-        } else if (D_800E36D0[port] < D_800E36E0) {
-            D_800E36D0[port] = D_800E36E0;
+        if (mouse_position_y[port] > mouse_y_max) {
+            mouse_position_y[port] = mouse_y_max;
+        } else if (mouse_position_y[port] < mouse_y_min) {
+            mouse_position_y[port] = mouse_y_min;
         }
     }
 }

@@ -5,7 +5,7 @@
 
 s32 func_8008D610();
 
-void func_8013EB10(void) {
+void annual_scene_group_callback_addresses_init(void) {
     D_801481D0 = 0x801972B8;
     D_801481D4 = 0x80197814;
     D_801481D8 = 0x80197DDC;
@@ -47,7 +47,7 @@ void func_8013EB10(void) {
     D_80148268 = 0x8019DB00;
 }
 
-void func_8013ED84(void) {
+void annual_scene_group_text_command_addresses_init(void) {
     D_8014826C = 0x801982E4;
     D_801483A4 = 0x80198320;
     D_80148270 = 0x80198780;
@@ -284,35 +284,35 @@ void func_8013ED84(void) {
     D_80148610 = 0x8019B460;
 }
 
-void func_8013FBF8(void) {
+void annual_scene_group_mode_dispatch(void) {
     func_8008E6AC();
     switch (D_800F6479) {
     case 0:
-        func_801400D0();
+        annual_ijuin_mode_step_dispatch();
         break;
     case 1:
-        func_80140780();
+        annual_result_actor_substep_dispatch();
         break;
     case 2:
-        func_80140C90();
+        annual_candidate_result_mode_step_dispatch();
         break;
     case 3:
-        func_80141944();
+        annual_result_actor_mode_step_dispatch();
         break;
     case 4:
-        func_80142D40();
+        annual_actor_animation_callback_update();
         break;
     case 5:
-        func_80143160();
+        annual_character_action_mode_step_dispatch();
         break;
     case 6:
-        func_80143D20();
+        annual_scene_effect_callback_update();
         break;
     case 7:
-        func_801447F0();
+        annual_scene_secondary_effect_update();
         break;
     case 8:
-        func_80145384();
+        annual_scene_mansion_effect_update();
         break;
     default:
         talk_voice_play();
@@ -328,7 +328,7 @@ void func_8013FBF8(void) {
     func_800530E0();
 }
 
-void func_8013FD20(void) {
+void annual_result_talk_run_current(void) {
     D_800D9234 = (u8 *)&D_80148620;
     D_800D9238 = (u8 *)&D_80148624;
     D_800D923C = D_80148614;
@@ -337,7 +337,7 @@ void func_8013FD20(void) {
     func_8008D610(D_8012E66C, 1, 0);
 }
 
-void func_8013FD9C(void) {
+void annual_result_talk_run_and_advance(void) {
     D_800D9234 = (u8 *)&D_80148620;
     D_800D9238 = (u8 *)&D_80148624;
     D_800D923C = D_80148614;
@@ -348,7 +348,7 @@ void func_8013FD9C(void) {
     }
 }
 
-void func_8013FE2C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void annual_selected_girl_portrait_sector_read(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     switch (D_800F62CF) {
     case 0:
         func_80051DD8(6, 0x80198000, 0xA2E3);
@@ -392,11 +392,11 @@ void func_8013FE2C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         talk_voice_play(arg0, arg1, arg2, arg3);
         break;
     }
-    func_8013ED84();
+    annual_scene_group_text_command_addresses_init();
     func_8004DE1C();
 }
 
-void func_8013FFD8(void) {
+void annual_result_talk_run_default(void) {
     D_800D9234 = (u8 *)&D_800D9250;
     D_800D9238 = (u8 *)&D_800D9254;
     D_800D923C = D_80148628;
@@ -405,7 +405,7 @@ void func_8013FFD8(void) {
     func_8008D610(0xFF, 1, 0);
 }
 
-void func_80140050(void) {
+void annual_result_talk_run_current_alt(void) {
     D_800D9234 = (u8 *) &D_800D9250;
     D_800D9238 = (u8 *) &D_800D9254;
     D_800D923C = D_80148628;

@@ -403,26 +403,26 @@ void tt_air_wave_c4_spawn(s32 arg0) {
     } while (i != 5);
 }
 
-void tt_air_enemy_kind45_move(TtObjectView *arg0) {
+void tt_air_enemy_kind45_move(TtObjectView *enemy) {
     s32 value;
     u8 flag;
 
-    if ((s32)(rsin(arg0->position_y.w / 3072) << 9) < 0) {
-        value = -(rsin(arg0->position_y.w / 3072) << 9);
+    if ((s32)(rsin(enemy->position_y.w / 3072) << 9) < 0) {
+        value = -(rsin(enemy->position_y.w / 3072) << 9);
     } else {
-        value = rsin(arg0->position_y.w / 3072) << 9;
+        value = rsin(enemy->position_y.w / 3072) << 9;
     }
-    arg0->position_x.w = (value + 0x100000) * (arg0->unk_50 - 2);
-    if (((TtFieldEnemyTail *)arg0->pad_5E)->unk_00 >= 0x19U) {
-        flag = ((TtFieldEnemyTail *)arg0->pad_5E)->unk_02;
+    enemy->position_x.w = (value + 0x100000) * (enemy->unk_50 - 2);
+    if (((TtFieldEnemyTail *)enemy->pad_5E)->shot_timer >= 0x19U) {
+        flag = ((TtFieldEnemyTail *)enemy->pad_5E)->shot_fired;
         if (flag == 0) {
-            ((TtFieldEnemyTail *)arg0->pad_5E)->unk_00 = 0;
-            ((TtFieldEnemyTail *)arg0->pad_5E)->unk_02 = flag + 1;
-            tt_enemy_shot_fire_aimed(arg0->x, arg0->y, 0x20, 0xA0);
+            ((TtFieldEnemyTail *)enemy->pad_5E)->shot_timer = 0;
+            ((TtFieldEnemyTail *)enemy->pad_5E)->shot_fired = flag + 1;
+            tt_enemy_shot_fire_aimed(enemy->x, enemy->y, 0x20, 0xA0);
         }
     }
-    if (arg0->unk_51 != 0) {
-        ((TtFieldEnemyTail *)arg0->pad_5E)->unk_00 += 1;
+    if (enemy->unk_51 != 0) {
+        ((TtFieldEnemyTail *)enemy->pad_5E)->shot_timer += 1;
     }
 }
 

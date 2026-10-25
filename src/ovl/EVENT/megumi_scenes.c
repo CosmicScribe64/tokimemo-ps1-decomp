@@ -120,7 +120,7 @@ void spot_megumi_scene2_run(void) {
 
 void spot_megumi_scene1_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl45 tbl;
+    SpotShioriAyakoMegumiAndMovieTheaterStepTable tbl;
 
     tbl = spot_megumi_scene1_steps;
     idx = D_800B1AF6;
@@ -179,7 +179,7 @@ void spot_megumi_scene1_still_show_11(void) {
 
 void spot_megumi_scene2_steps_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl20 tbl;
+    SpotMegumiScene2StepTable tbl;
 
     tbl = spot_megumi_scene2_steps;
     idx = D_800B1AF6;
@@ -489,7 +489,7 @@ void spot_megumi_scene6_bg_load_18(void) {
 
 void spot_megumi_scene3_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl47 tbl;
+    SpotYukoMegumiYumiAndSeaStepTable tbl;
 
     tbl = spot_megumi_scene3_steps;
     func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
@@ -505,7 +505,7 @@ void spot_megumi_scene3_assets_load_02(void) {
 
 void spot_megumi_scene4_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl63 tbl;
+    SpotMegumiScene4StepTable tbl;
 
     tbl = spot_megumi_scene4_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -546,7 +546,7 @@ void spot_megumi_scene4_se_play_23(void) {
 
 void spot_megumi_scene5_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl36 tbl;
+    SpotMegumiPlanetariumAndLibraryStepTable tbl;
 
     tbl = spot_megumi_scene5_steps;
     func_80078950("%d\n", D_800B1AF6);
@@ -562,7 +562,7 @@ void spot_megumi_scene5_assets_load_00(void) {
 
 void spot_megumi_scene6_run(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl36 tbl;
+    SpotMegumiPlanetariumAndLibraryStepTable tbl;
 
     tbl = spot_megumi_scene6_steps;
     func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);

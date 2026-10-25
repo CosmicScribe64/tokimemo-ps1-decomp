@@ -3,31 +3,31 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 
-s32 func_80137340(void) {
+s32 ending_audio_scene_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     EdFnTbl6 tbl;
 
-    tbl = D_8013CAA4;
+    tbl = ending_audio_scene_step_callbacks;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
     if (game_state.mode_step >= 3 || game_state.mode_stage >= 6) {
         return 0;
     }
-    func_80132F18();
+    ending_scroll_dialogue_text_entries();
     k_disp_inc();
-    if (tbl.f[game_state.mode_step] == func_80132D98) {
-        func_80137730();
+    if (tbl.f[game_state.mode_step] == ending_scene_dialogue_table_bind) {
+        ending_audio_level_update();
     }
     _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
     dtd_on(0xE);
-    func_80136D60();
-    func_80137AA8();
+    ending_audience_actor_blink_update();
+    ending_audio_scene_character_dispatch();
     if (game_state.frame_count % 240 == 0 && D_80122D0C == 0) {
-        func_80137574();
+        ending_audio_scene_flag_normalize();
     }
 }
 
-void func_801374BC(void) {
+void ending_audio_scene_options_exit_check(void) {
     if (game_state.options_dirty != 0) {
         game_mode_set(GAME_MODE_ETC_C2);
         return;
@@ -35,7 +35,7 @@ void func_801374BC(void) {
     mode_stage_next();
 }
 
-void func_801374F8(void) {
+void ending_audio_scene_shade_wait(void) {
     _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
     dtd_on(0xE);
     if (game_state.mode_step_timer.w++ >= 0x81U) {
@@ -43,7 +43,7 @@ void func_801374F8(void) {
     }
 }
 
-s32 func_80137574(void)
+s32 ending_audio_scene_flag_normalize(void)
 {
   u8 *byte;
   s16 promoted;
@@ -58,7 +58,7 @@ s32 func_80137574(void)
   }
 }
 
-void func_8013759C(void) {
+void ending_audio_scene_fade_out_update(void) {
     s16 i;
     s32 r;
     s32 g;
@@ -90,15 +90,15 @@ void func_8013759C(void) {
     dtd_on(0xE);
 }
 
-void func_801376FC(void) {
+void ending_audio_scene_state_reset(void) {
     D_80122CE4 = 0;
-    D_8013C364 = 0;
-    D_8013C360 = 0;
+    ending_audio_scene_text_timer = 0;
+    ending_audio_scene_tick_timer = 0;
     mode_step_next();
 }
 
 /* Falls through without a return statement on the last path (K&R), as the original does. T-16930 */
-s32 func_80137730(void) {
+s32 ending_audio_level_update(void) {
     GameState *g = &game_state;
     s16 *cnt;
     s16 i;
@@ -111,10 +111,10 @@ s32 func_80137730(void) {
     TextEntry *e;
 
     cnt = (s16 *)get_ksys();
-    if (D_8013C35C <= 0) {
+    if (ending_scene_step_index <= 0) {
         return 0;
     }
-    b = ((u8 **)D_8013C34C.unk_04)[D_8013C358][D_8013C35C - 1];
+    b = ((u8 **)ending_scene_dialogue_tables.unk_04)[ending_scene_dialogue_page_index][ending_scene_step_index - 1];
     if ((b == 0) || (b == 6)) {
         for (i = 1; i <= *cnt; i++) {
             e = (TextEntry *)get_k_work(i);
@@ -200,91 +200,91 @@ s32 func_80137730(void) {
     }
 }
 
-void func_80137AA8(void) {
+void ending_audio_scene_character_dispatch(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        func_80137BB4();
+        ending_audio_scene_update_shiori();
         return;
     case GIRL_MIO:
-        func_80137E40();
+        ending_audio_scene_update_mio();
         return;
     case GIRL_YUINA:
-        func_80137F64();
+        ending_audio_scene_update_yuina();
         return;
     case GIRL_AYAKO:
-        func_801380B0();
+        ending_audio_scene_update_ayako();
         return;
     case GIRL_SAKI:
-        func_80138278();
+        ending_audio_scene_update_saki();
         return;
     case GIRL_YUKARI:
-        func_8013855C();
+        ending_audio_scene_update_yukari();
         return;
     case GIRL_NOZOMI:
-        func_801387B0();
+        ending_audio_scene_update_nozomi();
         return;
     case GIRL_MIRA:
-        func_80138A9C();
+        ending_audio_scene_update_mira();
         return;
     case GIRL_YUKO:
-        func_80138C70();
+        ending_audio_scene_update_yuko();
         return;
     case GIRL_MEGUMI:
-        func_80138DC8();
+        ending_audio_scene_update_megumi();
         return;
     case GIRL_YUMI:
-        func_80138FC8();
+        ending_audio_scene_update_yumi();
         return;
     case GIRL_REI:
-        func_801391E4();
+        ending_audio_scene_update_rei();
         return;
     default:
-        func_80139498();
+        ending_audio_scene_update_default();
         return;
     }
 }
 
-/* FAKE: T-24104 (cf. T-22028, T-9410); s32 return without a return statement matches the implicit-int call in func_80137AA8 and keeps $v0 live at exit so as1 does not hoist `li $v0, 1` across `beqz $a0`; dead entry loads of D_8013C364 and D_8013CAA0 satisfy cvt_pass's entry condition for variable-first bne order. */
-s32 func_80137BB4(void) {
+/* FAKE: T-24104 (cf. T-22028, T-9410); s32 return without a return statement matches the implicit-int call in ending_audio_scene_character_dispatch and keeps $v0 live at exit so as1 does not hoist `li $v0, 1` across `beqz $a0`; dead entry loads of ending_audio_scene_text_timer and ending_audio_scene_branch_state satisfy cvt_pass's entry condition for variable-first bne order. */
+s32 ending_audio_scene_update_shiori(void) {
     u32 remainder;
     u32 temp;
     u8 dummy;
 
-    dummy = D_8013C364;
-    dummy = D_8013CAA0;
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    dummy = ending_audio_scene_text_timer;
+    dummy = ending_audio_scene_branch_state;
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
-            D_8013CAA0 = 0;
+            ending_audio_scene_branch_state = 0;
         }
-    } else if (D_8013C35C == 0xE) {
-        if (D_8013CAA0 == 0 && D_8013C364 == 0x32) {
-            D_8013CAA0 = 1;
-            D_8013C364 = 0;
+    } else if (ending_scene_step_index == 0xE) {
+        if (ending_audio_scene_branch_state == 0 && ending_audio_scene_text_timer == 0x32) {
+            ending_audio_scene_branch_state = 1;
+            ending_audio_scene_text_timer = 0;
         }
-        if (D_8013C364 == 1 && D_8011F4DE == 0 && D_8013CAA0 == 1) {
-            func_801396A4(1, 5);
+        if (ending_audio_scene_text_timer == 1 && D_8011F4DE == 0 && ending_audio_scene_branch_state == 1) {
+            ending_audio_scene_state_apply(1, 5);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0x11 && D_8013C360 != 0) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0x11 && ending_audio_scene_tick_timer != 0) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 8;
-            func_801396A4(2, 1);
+            ending_audio_scene_state_apply(2, 1);
             D_80122D0C = 1;
-        } else if (D_8013C360 == 0x28) {
-            func_801396A4(3, 5);
+        } else if (ending_audio_scene_tick_timer == 0x28) {
+            ending_audio_scene_state_apply(3, 5);
         } else if (D_8011F4DE == 3 && D_8011F4E0 == 5) {
-            func_801396A4(2, 1);
-        } else if (D_8013C360 == 0x78) {
-            func_801396A4(4, 5);
+            ending_audio_scene_state_apply(2, 1);
+        } else if (ending_audio_scene_tick_timer == 0x78) {
+            ending_audio_scene_state_apply(4, 5);
         } else if (D_8011F4DE == 4 && D_8011F4E0 == 7) {
-            func_801396A4(5, 1);
+            ending_audio_scene_state_apply(5, 1);
             D_80122D0C = 0;
         }
     }
-    if (D_8013C35C >= 0x12) {
+    if (ending_scene_step_index >= 0x12) {
         /* FAKE: T-22028; the dead test on a word copy selects v1, the unsigned copy keeps divu (T-9410). */
         temp = game_state.frame_count;
         if (temp) {
@@ -306,16 +306,16 @@ s32 func_80137BB4(void) {
         D_8011F4DE = 5;
         D_8011F4CA = 1;
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80137E40(void) {
+void ending_audio_scene_update_mio(void) {
     s32 off;
 
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 4;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
     } else {
@@ -324,149 +324,149 @@ void func_80137E40(void) {
         }
         off = game_state.girls[1].flags.f.b14 >= 1;
         off = off * 2;
-        if (D_8013C35C == off + 0x13) {
-            if (D_8013C360 == 1) {
+        if (ending_scene_step_index == off + 0x13) {
+            if (ending_audio_scene_tick_timer == 1) {
                 ((Actor *)actor_pool)[31].sequence_slot = 5;
-                func_801396A4(1, 1);
+                ending_audio_scene_state_apply(1, 1);
                 D_80122D0C = 1;
             }
-        } else if (D_8013C35C == off + 0x16) {
-            if (D_8013C360 == 1) {
-                func_801396A4(2, 0);
+        } else if (ending_scene_step_index == off + 0x16) {
+            if (ending_audio_scene_tick_timer == 1) {
+                ending_audio_scene_state_apply(2, 0);
                 D_80122D0C = 0;
             }
-        } else if (D_8013C35C == off + 0x17 && D_8013C360 == 1) {
-            func_801396A4(3, 5);
+        } else if (ending_scene_step_index == off + 0x17 && ending_audio_scene_tick_timer == 1) {
+            ending_audio_scene_state_apply(3, 5);
             D_80122D0C = 1;
         }
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
 /* D_8011F4D0/F4DE/F4E0/F522 are fields +0x18/+0x26/+0x28 of the 0x44-byte records 30 and 31 of the
  * actor_pool table; read through the table they compare in the original's operand order (T-9020). */
-void func_80137F64(void) {
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+void ending_audio_scene_update_yuina(void) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x17) {
-        if (D_8013C360 == 0) {
-        } else if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0x17) {
+        if (ending_audio_scene_tick_timer == 0) {
+        } else if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 6;
-            func_801396A4(1, 5);
+            ending_audio_scene_state_apply(1, 5);
             D_80122D0C = 1;
         } else if (((Actor *)actor_pool)[30].sequence_slot == 1 && ((Actor *)actor_pool)[30].unk_18 == 3) {
-            func_801396A4(2, 1);
+            ending_audio_scene_state_apply(2, 1);
         }
-    } else if (D_8013C35C == 0x18) {
-        if (D_8013C360 == 0) {
-            func_801396A4(3, 0);
+    } else if (ending_scene_step_index == 0x18) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(3, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x1B && D_8013C360 == 0) {
-        func_801396A4(4, 5);
+    } else if (ending_scene_step_index == 0x1B && ending_audio_scene_tick_timer == 0) {
+        ending_audio_scene_state_apply(4, 5);
         D_80122D0C = 1;
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_801380B0(void) {
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+void ending_audio_scene_update_ayako(void) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 4;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0xD) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0xD) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(1, 1);
+            ending_audio_scene_state_apply(1, 1);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0xE) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0xE) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 4;
-            func_801396A4(0, 0);
+            ending_audio_scene_state_apply(0, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x12) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0x12) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(1, 1);
+            ending_audio_scene_state_apply(1, 1);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0x15) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0x15) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 4;
-            func_801396A4(0, 0);
+            ending_audio_scene_state_apply(0, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x17) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 0x17) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 6;
-            func_801396A4(2, 1);
+            ending_audio_scene_state_apply(2, 1);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0x19 && D_8013C360 == 1) {
-        func_801396A4(3, 0);
+    } else if (ending_scene_step_index == 0x19 && ending_audio_scene_tick_timer == 1) {
+        ending_audio_scene_state_apply(3, 0);
         D_80122D0C = 0;
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80138278(void) {
+void ending_audio_scene_update_saki(void) {
     u32 remainder;
 
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 6;
-            func_801396A4(0, 0xFFU);
+            ending_audio_scene_state_apply(0, 0xFFU);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 8) {
-        if (D_8013C360 == 0) {
-            func_801396A4(1, 0xFFU);
+    } else if (ending_scene_step_index == 8) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(1, 0xFFU);
         }
-    } else if (D_8013C35C == 9) {
-        if (D_8013C360 == 0) {
-            func_801396A4(0, 0xFFU);
+    } else if (ending_scene_step_index == 9) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(0, 0xFFU);
         }
-    } else if (D_8013C35C == 0xA) {
-        if (D_8013C360 == 0xF0) {
+    } else if (ending_scene_step_index == 0xA) {
+        if (ending_audio_scene_tick_timer == 0xF0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(1, 0xFFU);
+            ending_audio_scene_state_apply(1, 0xFFU);
         }
-    } else if (D_8013C35C == 0xC) {
-        if (D_8013C360 == 0) {
-            func_801396A4(0, 0xFFU);
+    } else if (ending_scene_step_index == 0xC) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(0, 0xFFU);
         }
-    } else if (D_8013C35C == 0xF) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 0xF) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 6;
-            func_801396A4(1, 0xFFU);
+            ending_audio_scene_state_apply(1, 0xFFU);
         }
-    } else if (D_8013C35C == 0x11) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0x11) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 8;
-            func_801396A4(2, 1U);
+            ending_audio_scene_state_apply(2, 1U);
             D_80122D0C = 1;
         }
-        if (D_8013C360 == 0x8C) {
-            func_801396A4(4, 5U);
+        if (ending_audio_scene_tick_timer == 0x8C) {
+            ending_audio_scene_state_apply(4, 5U);
         }
-    } else if (D_8013C35C == 0x12) {
-        if (D_8013C360 == 0) {
-            func_801396A4(2, 1U);
+    } else if (ending_scene_step_index == 0x12) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(2, 1U);
             D_80122D0C = 0;
         }
     } else if ((game_state.mode_step == 2) && (game_state.mode_step_timer.w == 0)) {
-        func_801396A4(5, 5U);
+        ending_audio_scene_state_apply(5, 5U);
         D_80122D0C = 1;
     }
-    if ((D_8013C35C >= 0x12) && (D_8011F4DE < 4)) {
+    if ((ending_scene_step_index >= 0x12) && (D_8011F4DE < 4)) {
         /* FAKE: this dead test puts the dividend in v1 and removes one
          * temporary from the remainder chunk (T-9410). */
         if (game_state.frame_count) {
@@ -484,41 +484,41 @@ void func_80138278(void) {
             D_8011F4CA = 1;
         }
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
 /* The two table compares read actor_pool through the table view (T-9020), which gives the original's operand order
  * without the former FAKE local. T-16930 */
-void func_8013855C(void) {
+void ending_audio_scene_update_yukari(void) {
     u32 remainder;
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0xB) {
-        if (D_8013C360 == 0xFA) {
-            func_801396A4(1, 0xFF);
+    } else if (ending_scene_step_index == 0xB) {
+        if (ending_audio_scene_tick_timer == 0xFA) {
+            ending_audio_scene_state_apply(1, 0xFF);
         }
-    } else if (D_8013C35C == 0xD) {
-        if (D_8013C360 == 1) {
+    } else if (ending_scene_step_index == 0xD) {
+        if (ending_audio_scene_tick_timer == 1) {
             ((Actor *)actor_pool)[31].sequence_slot = 8;
-            func_801396A4(2, 5);
+            ending_audio_scene_state_apply(2, 5);
             D_80122D0C = 1;
-        } else if (D_8013C360 == 0x64) {
-            func_801396A4(3, 5);
+        } else if (ending_audio_scene_tick_timer == 0x64) {
+            ending_audio_scene_state_apply(3, 5);
         } else if (D_8011F4DE == 3 && ((Actor *)actor_pool)[30].unk_18 == 1 && ((Actor *)actor_pool)[30].unk_08 == 1) {
-            func_801396A4(4, 1);
+            ending_audio_scene_state_apply(4, 1);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x11) {
-        if (D_8013C360 == 0x172) {
-            func_801396A4(6, 5);
+    } else if (ending_scene_step_index == 0x11) {
+        if (ending_audio_scene_tick_timer == 0x172) {
+            ending_audio_scene_state_apply(6, 5);
             D_80122D0C = 1;
         }
     }
-    if (D_8013C35C >= 0xD) {
+    if (ending_scene_step_index >= 0xD) {
         /* FAKE: dead test selects v1 and removes a remainder temporary (T-9410). */
         if (game_state.frame_count) {
         }
@@ -537,8 +537,8 @@ void func_8013855C(void) {
             D_8011F4D0 = 0;
         }
     }
-    D_8013C360 += 1;
-    if (D_8013C35C == 9 && D_8013C360 != 0) {
+    ending_audio_scene_tick_timer += 1;
+    if (ending_scene_step_index == 9 && ending_audio_scene_tick_timer != 0) {
         k_speed_set(TEXT_SPEED_EVERY_FIFTEEN_FRAMES);
     }
 }
@@ -546,228 +546,228 @@ void func_8013855C(void) {
 /* FAKE: T-25148; the four N - ((flag & 1) == 1) tests are spelled differently (plain, ^ 0, * 1, << 0) so that uopt
  * shares the AND in v1 but recomputes xor/sltiu per test, as the original does; with one spelling uopt keeps the
  * boolean itself. `* 1` on D_8011F4DE/D_8011F4D0 gives the original's constant-first bne (T-25002). */
-void func_801387B0(void) {
+void ending_audio_scene_update_nozomi(void) {
     u8 flag;
     u8 c;
 
     flag = game_state.girl_cleared[6];
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
-            D_8013CAA0 = 0;
+            ending_audio_scene_branch_state = 0;
         }
-    } else if (D_8013C35C == 8) {
-        if (D_8013C360 == 0xC8) {
-            func_801396A4(1, 5);
+    } else if (ending_scene_step_index == 8) {
+        if (ending_audio_scene_tick_timer == 0xC8) {
+            ending_audio_scene_state_apply(1, 5);
             D_80122D0C = 1;
         } else if (D_8011F4DE * 1 == 1 && D_8011F4E0 == 2 && D_8011F4D0 * 1 == 1) {
-            func_801396A4(2, 0);
+            ending_audio_scene_state_apply(2, 0);
             D_80122D0C = 0;
         }
     } else {
-        if (D_8013C35C == 0xC - ((flag & 1) == 1)) {
-            if (D_8013CAA0 == 0 && D_8013C364 == 0xA) {
-                D_8013CAA0 = 1;
-                D_8013C364 = 0;
+        if (ending_scene_step_index == 0xC - ((flag & 1) == 1)) {
+            if (ending_audio_scene_branch_state == 0 && ending_audio_scene_text_timer == 0xA) {
+                ending_audio_scene_branch_state = 1;
+                ending_audio_scene_text_timer = 0;
             }
-            /* FAKE: T-25148; D_8013CAA0 read through D_8013CAA4 - 4 into a local. uopt then keeps the load first
+            /* FAKE: T-25148; ending_audio_scene_branch_state read through ending_audio_scene_step_callbacks - 4 into a local. uopt then keeps the load first
              * (`bne t0,a1`); with the plain symbol tools/cvt_pass.py's constant-first fix-up swaps it, because
-             * func_80137BB4's entry loads put D_8013CAA0 in the unit's set of rewritten globals. */
-            c = ((u8 *)&D_8013CAA4)[-4];
-            if (D_8013C364 == 0x1E && D_8011F4DE == 2 && c == 1) {
-                func_801396A4(3, 0);
+             * ending_audio_scene_update_shiori's entry loads put ending_audio_scene_branch_state in the unit's set of rewritten globals. */
+            c = ((u8 *)&ending_audio_scene_step_callbacks)[-4];
+            if (ending_audio_scene_text_timer == 0x1E && D_8011F4DE == 2 && c == 1) {
+                ending_audio_scene_state_apply(3, 0);
                 ((Actor *)actor_pool)[31].sequence_slot = 8;
             }
-        } else if (D_8013C35C == 0xE - (((flag & 1) ^ 0) == 1)) {
-            if (D_8013C360 == 0) {
-                func_801396A4(0, 0);
+        } else if (ending_scene_step_index == 0xE - (((flag & 1) ^ 0) == 1)) {
+            if (ending_audio_scene_tick_timer == 0) {
+                ending_audio_scene_state_apply(0, 0);
             }
-        } else if (D_8013C35C == 0x13 - ((flag & 1) * 1 == 1)) {
-            if (D_8013C360 == 0) {
+        } else if (ending_scene_step_index == 0x13 - ((flag & 1) * 1 == 1)) {
+            if (ending_audio_scene_tick_timer == 0) {
                 ((Actor *)actor_pool)[31].sequence_slot = 7;
             }
-        } else if (D_8013C35C == 0x16 - (((flag & 1) << 0) == 1)) {
-            if (D_8013C360 == 0) {
+        } else if (ending_scene_step_index == 0x16 - (((flag & 1) << 0) == 1)) {
+            if (ending_audio_scene_tick_timer == 0) {
                 ((Actor *)actor_pool)[31].sequence_slot = 8;
             }
-        } else if (D_8013C35C == 0x18) {
-            if (D_8013C360 == 1) {
-                func_801396A4(4, 5);
+        } else if (ending_scene_step_index == 0x18) {
+            if (ending_audio_scene_tick_timer == 1) {
+                ending_audio_scene_state_apply(4, 5);
                 D_80122D0C = 1;
             }
-        } else if (D_8013C35C == 0x1A) {
-            if (D_8013C360 == 0) {
+        } else if (ending_scene_step_index == 0x1A) {
+            if (ending_audio_scene_tick_timer == 0) {
                 ((Actor *)actor_pool)[31].sequence_slot = 7;
             }
-        } else if (D_8013C35C == 0x1C) {
-            if (D_8013C360 == 0) {
-            } else if (D_8013C360 == 1) {
-                func_801396A4(5, 5);
+        } else if (ending_scene_step_index == 0x1C) {
+            if (ending_audio_scene_tick_timer == 0) {
+            } else if (ending_audio_scene_tick_timer == 1) {
+                ending_audio_scene_state_apply(5, 5);
             } else if (D_8011F4DE == 5 && D_8011F4E0 == 4 && D_8011F4D0 == 0xD) {
-                func_801396A4(6, 1);
+                ending_audio_scene_state_apply(6, 1);
             }
         }
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80138A9C(void) {
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+void ending_audio_scene_update_mira(void) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 6) {
-        if (D_8013C360 == 1) {
-            func_801396A4(1, 5);
+    } else if (ending_scene_step_index == 6) {
+        if (ending_audio_scene_tick_timer == 1) {
+            ending_audio_scene_state_apply(1, 5);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 8) {
-        if (D_8013C360 == 1) {
-            func_801396A4(2, 5);
+    } else if (ending_scene_step_index == 8) {
+        if (ending_audio_scene_tick_timer == 1) {
+            ending_audio_scene_state_apply(2, 5);
         }
-    } else if (D_8013C35C == 9) {
-        if (D_8013C360 == 0) {
-            func_801396A4(0, 0);
+    } else if (ending_scene_step_index == 9) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(0, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x18) {
-        if (D_8013C360 == 0) {
-            func_801396A4(3, 5);
+    } else if (ending_scene_step_index == 0x18) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(3, 5);
             D_80122D0C = 1;
         } else if (((Actor *)actor_pool)[30].sequence_slot == 3 && ((Actor *)actor_pool)[30].unk_18 == 2 && ((Actor *)actor_pool)[30].unk_08 == 1) {
-            func_801396A4(4, 0);
+            ending_audio_scene_state_apply(4, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x1C) {
+    } else if (ending_scene_step_index == 0x1C) {
         ((Actor *)actor_pool)[31].sequence_slot = 8;
-        if (D_8013C360 == 0) {
-            func_801396A4(5, 0xFF);
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(5, 0xFF);
         }
-    } else if (D_8013C35C == 0x1E && D_8013C360 == 0x16D) {
-        func_801396A4(6, 5);
+    } else if (ending_scene_step_index == 0x1E && ending_audio_scene_tick_timer == 0x16D) {
+        ending_audio_scene_state_apply(6, 5);
         D_80122D0C = 1;
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80138C70(void) {
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+void ending_audio_scene_update_yuko(void) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 7) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 7) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 6;
         }
-    } else if (D_8013C35C == 9) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 9) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(1, 5);
+            ending_audio_scene_state_apply(1, 5);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0xB) {
-        if (D_8013C360 == 0) {
-            func_801396A4(2, 0);
+    } else if (ending_scene_step_index == 0xB) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(2, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0xF) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 0xF) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(3, 5);
+            ending_audio_scene_state_apply(3, 5);
             D_80122D0C = 1;
-        } else if (D_8013C360 == 0x3C) {
-            func_801396A4(4, 0);
+        } else if (ending_audio_scene_tick_timer == 0x3C) {
+            ending_audio_scene_state_apply(4, 0);
             D_80122D0C = 0;
         }
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80138DC8(void) {
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+void ending_audio_scene_update_megumi(void) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 8;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 6) {
-        if (D_8013C360 == 0) {
-            func_801396A4(1, 5);
+    } else if (ending_scene_step_index == 6) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(1, 5);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 8) {
-        if (D_8013C360 == 0) {
-            func_801396A4(0, 0);
+    } else if (ending_scene_step_index == 8) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(0, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0xB) {
-        if (D_8013C360 == 0) {
-            func_801396A4(2, 5);
+    } else if (ending_scene_step_index == 0xB) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(2, 5);
             D_80122D0C = 1;
         } else if (((Actor *)actor_pool)[30].sequence_slot == 2 && ((Actor *)actor_pool)[30].unk_18 == 2 && ((Actor *)actor_pool)[30].unk_08 == 1) {
-            func_801396A4(3, 0);
+            ending_audio_scene_state_apply(3, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0xD) {
-        if (D_8013C360 == 0) {
-            func_801396A4(4, 5);
+    } else if (ending_scene_step_index == 0xD) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(4, 5);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0xF) {
-        if (D_8013C360 == 0) {
-            func_801396A4(5, 5);
+    } else if (ending_scene_step_index == 0xF) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(5, 5);
         }
-        if (D_8013C360 == 0xD2) {
+        if (ending_audio_scene_tick_timer == 0xD2) {
             ((Actor *)actor_pool)[31].sequence_slot = 9;
-            func_801396A4(6, 0);
+            ending_audio_scene_state_apply(6, 0);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x14 && D_8013C360 == 0xC8) {
-        func_801396A4(4, 5);
+    } else if (ending_scene_step_index == 0x14 && ending_audio_scene_tick_timer == 0xC8) {
+        ending_audio_scene_state_apply(4, 5);
         D_80122D0C = 1;
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80138FC8(void) {
+void ending_audio_scene_update_yumi(void) {
     u32 remainder;
 
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 6;
-            func_801396A4(0, 0xFFU);
+            ending_audio_scene_state_apply(0, 0xFFU);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 9) {
-        if (D_8013C360 == 0xDC) {
-            func_801396A4(1, 1U);
+    } else if (ending_scene_step_index == 9) {
+        if (ending_audio_scene_tick_timer == 0xDC) {
+            ending_audio_scene_state_apply(1, 1U);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0xC) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 0xC) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(2, 1U);
+            ending_audio_scene_state_apply(2, 1U);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0x10) {
-        if (D_8013C360 == 1) {
-            func_801396A4(4, 5U);
+    } else if (ending_scene_step_index == 0x10) {
+        if (ending_audio_scene_tick_timer == 1) {
+            ending_audio_scene_state_apply(4, 5U);
             D_80122D0C = 1;
-        } else if (D_8013C360 == 0x5A) {
-            func_801396A4(2, 1U);
+        } else if (ending_audio_scene_tick_timer == 0x5A) {
+            ending_audio_scene_state_apply(2, 1U);
             D_80122D0C = 0;
         }
-    } else if ((D_8013C35C == 0x14) && (D_8013C360 == 0xC8)) {
-        func_801396A4(5, 5U);
+    } else if ((ending_scene_step_index == 0x14) && (ending_audio_scene_tick_timer == 0xC8)) {
+        ending_audio_scene_state_apply(5, 5U);
         D_80122D0C = 1;
     }
-    if (D_8013C35C >= 0xC) {
+    if (ending_scene_step_index >= 0xC) {
         /* FAKE: dead test selects v1 and removes a remainder temporary (T-9410). */
         if (game_state.frame_count) {
         }
@@ -786,49 +786,49 @@ void func_80138FC8(void) {
             D_8011F4CA = 1;
         }
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_801391E4(void) {
+void ending_audio_scene_update_rei(void) {
     u32 remainder;
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 4;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 19) {
-        if (D_8013C360 == 170) {
-            func_801396A4(1, 1);
+    } else if (ending_scene_step_index == 19) {
+        if (ending_audio_scene_tick_timer == 170) {
+            ending_audio_scene_state_apply(1, 1);
         }
-    } else if (D_8013C35C == 23) {
-        if (D_8013C360 == 0) {
-            func_801396A4(0, 0);
+    } else if (ending_scene_step_index == 23) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(0, 0);
         }
-    } else if (D_8013C35C == 32) {
-        if (D_8013C360 == 0) {
-            func_801396A4(2, 1);
+    } else if (ending_scene_step_index == 32) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(2, 1);
         }
-    } else if (D_8013C35C == 34) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 34) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
         }
-    } else if (D_8013C35C == 37) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 37) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 4;
-            func_801396A4(3, 0);
+            ending_audio_scene_state_apply(3, 0);
         }
-    } else if (D_8013C35C == 42) {
-        if (D_8013C360 == 0) {
-            func_801396A4(0, 0);
+    } else if (ending_scene_step_index == 42) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(0, 0);
         }
-    } else if (D_8013C35C == 44) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 44) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(2, 1);
+            ending_audio_scene_state_apply(2, 1);
         }
     }
-    if ((D_8013C35C >= 0x13 && D_8013C35C < 0x17) || (D_8013C35C >= 0x22 && D_8013C35C < 0x25) || D_8013C35C >= 0x2C) {
+    if ((ending_scene_step_index >= 0x13 && ending_scene_step_index < 0x17) || (ending_scene_step_index >= 0x22 && ending_scene_step_index < 0x25) || ending_scene_step_index >= 0x2C) {
         /* FAKE: dead test selects v1 and removes a remainder temporary (T-9410). */
         if (game_state.frame_count) {
         }
@@ -851,55 +851,55 @@ void func_801391E4(void) {
         D_8011F4DE = 2;
         D_8011F4CA = 1;
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_80139498(void) {
-    if (D_8013C35C == 1) {
-        if (D_8013C360 == 0) {
+void ending_audio_scene_update_default(void) {
+    if (ending_scene_step_index == 1) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 5;
-            func_801396A4(0, 0xFF);
+            ending_audio_scene_state_apply(0, 0xFF);
             D_80122D0C = 0;
-            D_8013CAA0 = 0;
+            ending_audio_scene_branch_state = 0;
         }
-    } else if (D_8013C35C == 7) {
-        if (D_8013C360 == 0) {
-            func_801396A4(1, 0);
+    } else if (ending_scene_step_index == 7) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(1, 0);
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 8) {
-        if (D_8013C360 == 0xC8) {
-            func_801396A4(0, 5);
+    } else if (ending_scene_step_index == 8) {
+        if (ending_audio_scene_tick_timer == 0xC8) {
+            ending_audio_scene_state_apply(0, 5);
             D_80122D0C = 0;
         }
-    } else if (D_8013C35C == 0xB) {
-        if (D_8013CAA0 == 0 && D_8013C364 == 0xA) {
-            D_8013CAA0 = 1;
-            D_8013C364 = 0;
+    } else if (ending_scene_step_index == 0xB) {
+        if (ending_audio_scene_branch_state == 0 && ending_audio_scene_text_timer == 0xA) {
+            ending_audio_scene_branch_state = 1;
+            ending_audio_scene_text_timer = 0;
         }
-        if (D_8013C364 == 0x1E && D_8011F4DE == 0 && D_8013CAA0 == 1) {
-            func_801396A4(2, 0);
+        if (ending_audio_scene_text_timer == 0x1E && D_8011F4DE == 0 && ending_audio_scene_branch_state == 1) {
+            ending_audio_scene_state_apply(2, 0);
             ((Actor *)actor_pool)[31].sequence_slot = 6;
             D_80122D0C = 1;
         }
-    } else if (D_8013C35C == 0xE) {
-        if (D_8013C360 == 0) {
+    } else if (ending_scene_step_index == 0xE) {
+        if (ending_audio_scene_tick_timer == 0) {
             ((Actor *)actor_pool)[31].sequence_slot = 7;
-            func_801396A4(3, 1);
-        } else if (D_8013C360 == 0x8C) {
-            func_801396A4(4, 5);
+            ending_audio_scene_state_apply(3, 1);
+        } else if (ending_audio_scene_tick_timer == 0x8C) {
+            ending_audio_scene_state_apply(4, 5);
         }
-    } else if (D_8013C35C == 0xF) {
-        if (D_8013C360 == 0) {
-            func_801396A4(3, 1);
+    } else if (ending_scene_step_index == 0xF) {
+        if (ending_audio_scene_tick_timer == 0) {
+            ending_audio_scene_state_apply(3, 1);
         }
-    } else if (D_8013C35C == 0x10 && D_8013C360 == 0) {
-        func_801396A4(4, 5);
+    } else if (ending_scene_step_index == 0x10 && ending_audio_scene_tick_timer == 0) {
+        ending_audio_scene_state_apply(4, 5);
     }
-    D_8013C360 += 1;
+    ending_audio_scene_tick_timer += 1;
 }
 
-void func_801396A4(s16 arg0, u8 arg1) {
+void ending_audio_scene_state_apply(s16 arg0, u8 arg1) {
     D_8011F4DE = arg0;
     D_8011F4E0 = 0;
     D_8011F4D0 = 0;

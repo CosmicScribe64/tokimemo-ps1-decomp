@@ -87,7 +87,7 @@ void confession_judge_stub_stage_message(void) {
     }
 }
 void confession_judge_stub_message_init(void) {
-    func_80044774(0);
+    audio_bgm_stop(0);
     cd_audio_request_set(0x3000656, 0xB000E0C, 0xF);
     audio_command(0x300);
     text_system_reset();

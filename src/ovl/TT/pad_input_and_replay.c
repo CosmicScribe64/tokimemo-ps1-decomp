@@ -15,8 +15,8 @@ void tt_pad_update(void) {
     core = tt_core;
     a = (u16 *)(sys + 0x10);
     b = (u16 *)(sys + 0x20);
-    func_80042A00();
-    x = func_80043010();
+    pad_update();
+    x = pad_raw_read();
     a[1] = a[0];
     if (sys[0x54] != 0) {
         a[0] = ((u16 *)&x)[1];

@@ -123,7 +123,7 @@ s32 encounter_yoshio_portrait_fade_out(void) {
     s32 mask;
     u8 value;
 
-    func_800853FC();
+    scene_still_fade_out();
     D_80122CF4 = 1;
     value = D_80120657;
     D_8011F513 = value;
@@ -231,14 +231,14 @@ void encounter_yoshio_ranked_girl_init(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_78;
     encounter_scene_command_table = encounter_scene_command_section_78;
     encounter_scene_voice_table = encounter_scene_voice_section_78;
-    strcpy(D_800CA19C, "教室");
+    strcpy(scene_place_title, "教室");
     D_8014755C = 0;
     D_800CA368 = 0xFF;
     mode_step_next();

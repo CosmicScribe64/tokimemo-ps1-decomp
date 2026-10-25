@@ -4,26 +4,26 @@ void portrait_layout_set();
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80137BB0(void) {
+void new_year_yuko_scene_callback_group_dispatch(void) {
     u8 sel = D_80144E14; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
     case 0:
-        func_80137C28();
+        new_year_yuko_callback_common_dispatch();
         return;
     case 1:
-        func_80137C28();
+        new_year_yuko_callback_common_dispatch();
         return;
     case 2:
-        func_80137C28();
+        new_year_yuko_callback_common_dispatch();
         return;
     default:
-        func_80137D68();
+        new_year_yuko_callback_default_dispatch();
         return;
     }
 }
 
-void func_80137C28(void) {
+void new_year_yuko_callback_common_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl24 tbl;
 
@@ -32,22 +32,22 @@ void func_80137C28(void) {
     tbl.f[idx]();
 }
 
-void func_80137C9C(void) {
+void new_year_yuko_audio_callback_500(void) {
     audio_command(0x23);
     audio_command(0x24);
     audio_command(0x500);
     mode_step_next();
 }
 
-void func_80137CD4(void) {
+void new_year_yuko_audio_callback_507(void) {
     audio_command(0x23);
     audio_command(0x24);
     audio_command(0x507);
     mode_step_next();
 }
 
-s32 func_80137D0C(void) {
-    func_80137AB4();
+s32 new_year_yuko_scene_update(void) {
+    new_year_meeting_talk_run();
     if (game_state.mode_step_timer.w++ == 1) {
         if (D_80144E0C == 3) {
             portrait_layout_set(3);
@@ -55,7 +55,7 @@ s32 func_80137D0C(void) {
     }
 }
 
-void func_80137D68(void) {
+void new_year_yuko_callback_default_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl34 tbl;
 
@@ -64,8 +64,8 @@ void func_80137D68(void) {
     tbl.f[idx]();
 }
 
-void func_80137DE4(void) {
-    func_80137AB4();
+void new_year_yuko_portrait_layout_update(void) {
+    new_year_meeting_talk_run();
     if ((D_80144E0C == 3) || (D_80144E0C == 11)) {
         /* FAKE: dead selector test retains the target promotion. T-9570 */
         if ((D_80144E0C && D_80144E0C) != 0) { }
@@ -77,7 +77,7 @@ void func_80137DE4(void) {
     D_80144E0C += 0;
 }
 
-void func_80137E54(void) {
+void new_year_yuko_scene_state_init(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -89,8 +89,8 @@ void func_80137E54(void) {
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
@@ -100,21 +100,21 @@ void func_80137E54(void) {
     if ((u8) D_80144E14 < 3U) {
         strcpy(name_code_girl_short, "女生徒");
     }
-    func_80136F90();
+    new_year_meeting_dialogue_addresses_init();
     D_80144DFC = D_80144D90;
     D_80144E00 = D_80144DB4;
     D_80144E04 = D_80144DD8;
     mode_step_next();
 }
 
-void func_80137F70(void) {
+void new_year_yuko_hallway_title_select(void) {
     D_80144E08 = D_80144E14 * 3;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     mode_step_next();
 }
 
-void func_80137FC4(void) {
+void new_year_yuko_background_read(void) {
     bg_read_sub2(0x4045);
     mode_step_next();
 }

@@ -82,14 +82,14 @@ void encounter_saki_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_61;
     encounter_scene_command_table = encounter_scene_command_section_61;
     encounter_scene_voice_table = encounter_scene_voice_section_61;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     if (game_state.scene_flags[27] >= 3U) {
         game_state.scene_flags[27] = 2;
     }
@@ -108,7 +108,7 @@ void encounter_saki_still_show_1(void) {
     load_palette(encounter_saki_pack_1_palette, 0x11, 1, 2, 0);
     scene_still_show(encounter_saki_pack_1_still_image_0, encounter_saki_pack_1_still_image_1, encounter_saki_pack_1_still_image_2, encounter_saki_pack_1_still_image_3, encounter_saki_pack_1_still_image_4, encounter_saki_pack_1_still_image_5);
     scene_anim_show(encounter_saki_pack_1_animation_input_0, encounter_saki_pack_1_animation_input_1, encounter_saki_pack_1_animation_input_2, encounter_saki_pack_1_animation_input_3);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 

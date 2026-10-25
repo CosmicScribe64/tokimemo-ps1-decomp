@@ -1,5 +1,5 @@
 /* scene_pictures_and_effects.c: src/ovl/KANGEI/80135F10.c:18-48; picture/animation resource binders, callback dispatchers, talk and effect flow; no unconfirmed narrative or folder identity is claimed. Original object 0x80135F10-0x80137B90 (config/objects/KANGEI.txt). */
-#define MAIN_API_OVERRIDE_srand /* T-22016: int-returning view for func_801362F0 */
+#define MAIN_API_OVERRIDE_srand /* T-22016: int-returning view for camp_scene_result_resource_load */
 #include "common.h"
 #include "ovl/KANGEI.h"
 
@@ -15,7 +15,7 @@ typedef struct {
 } FnTbl40; /* size 0xA0 */
 extern FnTbl40 D_80139E70;
 
-void func_80135F10(void) {
+void camp_scene_still_picture_pointer_bind(void) {
     D_80139DB0 = 0x801B4400;
     D_80139DB4 = 0x801B6400;
     D_80139DB8 = 0x801BA400;
@@ -25,7 +25,7 @@ void func_80135F10(void) {
     D_80139DC8 = 0x801CA400;
 }
 
-void func_80135F84(void) {
+void camp_scene_animation_picture_pointer_bind(void) {
     D_80139DCC = 0x801EAFC4;
     D_80139DD0 = 0x801EB144;
     D_80139DD4 = 0x801EAFF0;
@@ -37,7 +37,7 @@ void func_80135F84(void) {
     D_80139DEC = 0x801B4400;
 }
 
-void func_80136018(void) {
+void camp_scene_picture_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl40 tbl;
 
@@ -46,7 +46,7 @@ void func_80136018(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80136094(void) {
+void camp_scene_icon_parameter_reset(void) {
     s16 i;
 
     hud_icon_bar_init();
@@ -56,21 +56,21 @@ void func_80136094(void) {
     hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     D_80139AC0 = 0;
     mode_step_next();
 }
 
-void func_80136108(void) {
+void camp_talk_subindex_select(void) {
     if (D_80139AE0 == 0) {
         D_80139AE4 = 2;
     } else {
         D_80139AE4 = 0;
     }
-    func_80133EF8();
+    camp_opening_talk_run();
 }
 
-void func_8013614C(void) {
+void camp_day_event_result_update(void) {
     if ((D_80139DF4[(u8) D_80139DF0] == 0) && (game_state.date_girl != 0xFF) && game_state.girls[game_state.date_girl].flags.f.met) {
         game_state.girls[game_state.date_girl].tokimeki -= 0xA;
     } else if (D_80139DF4[(u8) D_80139DF0] == 1) {
@@ -80,7 +80,7 @@ void func_8013614C(void) {
     mode_step_next();
 }
 
-void func_801361F8(void) {
+void camp_scene_audio_transition_c(void) {
     audio_command(0x23);
     audio_command(0x24);
     audio_command(0x2E);
@@ -88,8 +88,8 @@ void func_801361F8(void) {
     mode_step_next();
 }
 
-void func_80136238(void) {
-    func_80133EF8();
+void camp_scene_talk_and_audio_tick(void) {
+    camp_opening_talk_run();
     if (game_state.mode_step_timer.w++ == 0 && D_80139AE0 == 3) {
         if (D_80139DF4[(u8)D_80139DF0] == 0 && D_80139E0C == 0) {
             audio_command(0x503);
@@ -97,13 +97,13 @@ void func_80136238(void) {
     }
 }
 
-void func_801362BC(void) {
+void camp_scene_result_index_latch(void) {
     audio_command(0x500);
     D_80139DF0 = D_80122CDC;
     mode_step_next();
 }
 
-void func_801362F0(void) {
+void camp_scene_result_resource_load(void) {
     u8 temp_v1;
 
     srand(game_state.frame_count);
@@ -141,14 +141,14 @@ void func_801362F0(void) {
     mode_step_next();
 }
 
-void func_80136494(void) {
+void camp_scene_still_picture_display(void) {
     load_palette(D_80139DB0, 0x11, 1, 2, 0);
     scene_still_show(D_80139DB4, D_80139DB8, D_80139DBC, D_80139DC0, D_80139DC4, D_80139DC8);
     scene_anim_show(0, 0, 0, 0);
     mode_step_next();
 }
 
-void func_80136520(void) {
+void camp_scene_background_fade_in(void) {
     if (game_state.mode_step_timer.w++ == 0) {
         if (D_80139DF4[(u8)D_80139DF0] == 0) {
             audio_command(0x204);
@@ -160,22 +160,22 @@ void func_80136520(void) {
         normal_date_bg_fadein();
         return;
     }
-    func_80085368();
+    scene_still_fade_in();
 }
 
-void func_801365C4(void) {
+void camp_scene_background_fade_out(void) {
     if (D_80139DF4[(u8)D_80139DF0] != 0) {
         normal_date_bg_fadeout();
         return;
     }
     if (D_80139E0C != 0) {
-        func_800853FC();
+        scene_still_fade_out();
         return;
     }
-    func_80136630();
+    camp_scene_picture_transition_animate();
 }
 
-void func_80136630(void) {
+void camp_scene_picture_transition_animate(void) {
     s16 i;
 
     if (game_state.mode_step_timer.w == 0) {
@@ -195,7 +195,7 @@ void func_80136630(void) {
             for (i = 0x3A; i < 0x40; i++) {
                 func_80084C98(i, 0);
             }
-            dec_bg_brightness = 0;
+            bg_brightness = 0;
         }
     } else {
         D_80139E00 -= 8;
@@ -210,11 +210,11 @@ void func_80136630(void) {
             mode_step_next();
         }
     }
-    func_80136810(-0xA0, -0x78, 0x140, 0xA0, D_80139E00, D_80139E04, D_80139E08, 9, 1);
+    camp_transition_quad_primitive_build(-0xA0, -0x78, 0x140, 0xA0, D_80139E00, D_80139E04, D_80139E08, 9, 1);
     dtd_on_tpage(0, 0, 9, 1, 0);
 }
 
-void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8) {
+void camp_transition_quad_primitive_build(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8) {
     s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (T-6030) */
     u8 *p;
 
@@ -224,19 +224,19 @@ void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 
     p[4] = arg4;
     p[5] = arg5;
     p[6] = arg6;
-    *(s16 *) (p + 8) = game_state.screen_center_x[draw_buffer] + arg0;
-    *(s16 *) (p + 0xA) = game_state.screen_center_y[draw_buffer] + arg1;
+    *(s16 *) (p + 8) = game_state.draw_origin_x[draw_buffer] + arg0;
+    *(s16 *) (p + 0xA) = game_state.draw_origin_y[draw_buffer] + arg1;
     *(s16 *) (p + 0xC) = arg2;
     *(s16 *) (p + 0xE) = arg3;
-    AddPrim(&D_800E8CA0[(draw_buffer << 0xA) + (arg7 * 4)], p);
+    AddPrim(&draw_ot_tags[(draw_buffer << 0xA) + (arg7 * 4)], p);
 }
 
-void func_80136900(void) {
+void camp_scene_result_frame_tick(void) {
     D_80139DFC += 1;
     normal_date_two_select();
 }
 
-void func_80136930(void) {
+void camp_choice_scene_branch(void) {
     if (D_80122CDC != 0) {
         game_state.mode_step += 0x13;
     }
@@ -244,7 +244,7 @@ void func_80136930(void) {
 }
 
 /* FAKE: shared constant and byte selector preserve compare operand order. T-10850 */
-void func_80136970(void) {
+void camp_scene_script_index_select(void) {
     u8 t;
     s32 r;
     u32 one;
@@ -263,13 +263,13 @@ void func_80136970(void) {
     mode_step_next();
 }
 
-void func_80136A24(void) {
+void camp_scene_result_progress_select(void) {
     D_80139ADC = 0xC;
     D_80139AE0 = (D_80139DFC >= 0x97U) + (D_80139DFC >= 0x12DU);
     mode_step_next();
 }
 
-void func_80136A70(void) {
+void camp_scene_result_categories_initialize(void) {
     srand(game_state.frame_count);
     game_state.current_girl = GIRL_SOTOI;
     D_80139DFC = 0;
@@ -293,13 +293,13 @@ void func_80136A70(void) {
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/scene_pictures_and_effects.rodata", D_801398E0);
 
-void func_80136BB8(void) {
+void camp_scene_background_and_label_load(void) {
     bg_read_sub2(0x42BC);
     mode_step_next();
-    strcpy(D_800CA19C, &D_801398E0);
+    strcpy(scene_place_title, &D_801398E0);
 }
 
-void func_80136BF4(void) {
+void camp_scene_result_background_select(void) {
     if (D_80139DF4[(u8)D_80139DF0] == 2) {
         bg_read_sub2(0x42B3);
     } else if (D_80139DF4[(u8)D_80139DF0] == 1) {
@@ -326,14 +326,14 @@ void func_80136BF4(void) {
     mode_step_next();
 }
 
-void func_80136CD8(void) {
+void camp_scene_picture_tiles_initialize(void) {
     place_init();
     LoadSquare(0x320, 0x100, 4, 0xC, &D_80139E10);
     LoadSquare(0x324, 0x100, 4, 0xC, &D_80139E10);
     LoadSquare(0x328, 0x100, 4, 0xC, &D_80139E10);
 }
 
-void func_80136D58(void) {
+void camp_scene_result_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl24 tbl;
 
@@ -342,7 +342,7 @@ void func_80136D58(void) {
     tbl.f[idx](0x80);
     if (game_state.mode_step >= 9U) {
         if (game_state.mode_step < 0x14U) {
-            func_801370A0();
+            camp_scene_actor_and_particle_update();
         }
     }
 }
@@ -351,7 +351,7 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/scene_pictures_and_effects.rodata", D
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/scene_pictures_and_effects.rodata", D_801398EC);
 
-void func_80136DF4(void) {
+void camp_scene_talk_render_top(void) {
     talk_render(-0x64, 0x30, 2, D_80139AD0->unk_34->unk_08, 0, &D_801398E8, &D_801398EC, 0);
     mode_step_next();
 }
@@ -360,39 +360,39 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/scene_pictures_and_effects.rodata", D
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/scene_pictures_and_effects.rodata", D_801398F4);
 
-void func_80136E54(void) {
+void camp_scene_talk_render_middle(void) {
     talk_render(-0x56, 0x40, 1, D_80139AD0->unk_34->unk_0C, 0, &D_801398F0, &D_801398F4, 0);
     mode_step_next();
 }
 
-void func_80136EB4(void) {
+void camp_scene_talk_render_bottom(void) {
     talk_render(-0x2C, 0x50, 0, ((s32 *)D_80139AD0->unk_34)[4], 0, "", "", 0);
     D_80139AE0 = 5;
     mode_step_next();
 }
 
-void func_80136F1C(void) {
+void camp_scene_talk_effect_select_two(void) {
     D_80139AE4 = 2;
     mode_step_next();
 }
 
-void func_80136F44(void) {
+void camp_scene_talk_effect_select_one(void) {
     D_80139AE4 = 1;
     mode_step_next();
 }
 
-void func_80136F6C(void) {
+void camp_scene_talk_effect_select_zero(void) {
     D_80139AE4 = 0;
     mode_step_next();
 }
 
-void func_80136F90(void) {
+void camp_scene_audio_bank_load_start(void) {
     audio_command(0xBF);
     audio_bank_load_start(1, 0xBF98, 0xBF79, 0xC982, 0xC935, 0xC91B);
     mode_step_next();
 }
 
-void func_80136FDC(void) {
+void camp_scene_audio_bank_poll_retry(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x203);
         mode_step_next();
@@ -404,14 +404,14 @@ void func_80136FDC(void) {
     }
 }
 
-void func_80137064(void) {
+void camp_scene_animation_data_sector_load(void) {
     cd_read_sectors(0x6E, 0x801B4400, 0xBBA5);
-    func_80135F84();
+    camp_scene_animation_picture_pointer_bind();
     mode_step_next();
 }
 
 /* Port of the MASTER clone func_80137BF4 (same opcodes, T-18400). */
-void func_801370A0(void) {
+void camp_scene_actor_and_particle_update(void) {
     KangeiPoint2 *temp_s0_2;
     s16 *temp_s1;
     /* FAKE: wide X local plus a narrow third argument preserves the
@@ -475,7 +475,7 @@ void func_801370A0(void) {
     }
 }
 
-void func_80137440(void) {
+void camp_scene_actor_effect_initialize(void) {
     D_80120666 = 2;
     D_80120668 = 0;
     D_80120658 = 0;
@@ -483,7 +483,7 @@ void func_80137440(void) {
     mode_step_next();
 }
 
-void func_80137484(void) {
+void camp_scene_actor_effect_fade_in(void) {
     s16 i;
     ActorFixed *sprite;
 
@@ -503,7 +503,7 @@ void func_80137484(void) {
 }
 
 /* T-9740: integer definition without an explicit return matches the original. */
-s32 func_80137544(void) {
+s32 camp_scene_actor_effect_fade_out(void) {
     s16 i;
     s32 mask;
     ActorFixed *sprite;
@@ -530,7 +530,7 @@ s32 func_80137544(void) {
 }
 
 
-s32 func_80137638(void) {
+s32 camp_club_practice_point_threshold_gate(void) {
     if (((ClubFlagBits *) &game_state.clubs[(u32) game_state.player_flags.h >> 12])->unk_25 < 3) {
         mode_stage_next();
         return 0;
@@ -539,7 +539,7 @@ s32 func_80137638(void) {
     mode_step_next();
 }
 
-void func_8013769C(void) {
+void camp_club_scene_actor_setup(void) {
     s16 var_s0;
     s32 pad; /* FAKE: unused slot above the name tables, the original puts them 8 bytes lower (sp+0x13C, sp+0x54); real source unknown. T-22016 */
     KangeiNames20 sp13C;
@@ -555,8 +555,8 @@ void func_8013769C(void) {
     D_80139AD8 = D_80139A5C[2][6];
     load_palette(D_80139DEC, 0x10, 1, 0, 0);
     load_palette(D_80139DEC, 0x11, 1, 0, 1);
-    strcpy(D_800CA25C, sp13C.name[(u16) game_state.player_flags.h >> 0xC]);
-    strcpy(&D_800CA280, sp54.name[(u16) game_state.player_flags.h >> 0xC]);
+    strcpy(name_code_a, sp13C.name[(u16) game_state.player_flags.h >> 0xC]);
+    strcpy(&name_code_m, sp54.name[(u16) game_state.player_flags.h >> 0xC]);
     actor_clear(0x60);
     ((Actor *)actor_pool)[96].unk_01 = 0xB;
     ((Actor *)actor_pool)[96].flags = 0;

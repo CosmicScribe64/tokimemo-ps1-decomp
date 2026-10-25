@@ -218,16 +218,16 @@ typedef struct TtBomb {
 } TtBomb; /* size 0x58; tt_bombs walks eight records, T-9520 */
 typedef struct TtBossView {
     /* 0x000 */ u8 pad0[6];
-    /* 0x006 */ u16 unk_06;
-    /* 0x008 */ u16 unk_08;
+    /* 0x006 */ u16 phase;
+    /* 0x008 */ u16 attack_step;
     /* 0x00A */ u8 padA[0xA];
-    /* 0x014 */ s16 unk_14;
-    /* 0x016 */ s16 unk_16;
+    /* 0x014 */ s16 x;
+    /* 0x016 */ s16 y;
     /* 0x018 */ u8 pad18[0x34E];
-    /* 0x366 */ u16 unk_366;
+    /* 0x366 */ u16 phase_timer;
     /* 0x368 */ u8 pad368[0x3C];
-    /* 0x3A4 */ u16 unk_3A4;
-    /* 0x3A6 */ s16 unk_3A6;
+    /* 0x3A4 */ u16 angle_offset;
+    /* 0x3A6 */ s16 angle_sign;
 } TtBossView; /* minimum accessed extent 0x3A8; T-9520 */
 typedef struct TtPositionView {
     /* 0x00 */ u8 pad0[0xC];
@@ -563,8 +563,8 @@ void tt_air_enemy_explode_init(u8 *arg0);
 #ifndef OVL_TT_T9940_ACTOR_TAIL
 #define OVL_TT_T9940_ACTOR_TAIL
 typedef struct TtFieldEnemyTail {
-    /* 0x00 */ u16 unk_00;
-    /* 0x02 */ u8 unk_02;
+    /* 0x00 */ u16 shot_timer;
+    /* 0x02 */ u8 shot_fired;
     /* 0x03 */ u8 pad_03[13];
 } TtFieldEnemyTail; /* size 0x10; view of TtObjectView at +0x5E */
 #endif

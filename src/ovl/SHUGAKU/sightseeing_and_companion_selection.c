@@ -7,27 +7,27 @@
 u8 get_h_tokimeki(s32 arg0);
 u8 get_h_yuukou(s32 arg0);
 
-void func_80138A60(void) {
+void trip_sightseeing_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl16 tbl;
+    TripSecondaryCallbacks tbl;
 
     tbl = D_8013C930;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_80138ADC(void) {
+void trip_group_activity_label_display(void) {
     k_disp_start(set_kanji_string(-0x80, 0x30, 2, "【団体行動中】", 0));
     mode_step_next();
 }
 
-void func_80138B20(void) {
+void trip_destination_one_mode_step_callback_dispatch(void) {
     /* FAKE: the wrapper reserves the observed extra frame extent. T-10020. */
     ShugakuCallbackLocal12C local;
     u8 state;
 
     local.callbacks = D_8013C984;
-    /* FAKE: the dead branch preserves the later func_80138DD8 comparison
+    /* FAKE: the dead branch preserves the later trip_mio_dialogue_background_flag_update comparison
      * operand order in this compilation unit; it emits no code. T-10020. */
     if (1) {}
     if (D_800CA2CC == 1) {
@@ -40,24 +40,24 @@ void func_80138B20(void) {
     local.callbacks.callback[state](0x80);
 }
 
-void func_80138BD8(void) {
-    func_801386C4();
+void trip_saki_same_club_talk_state_update(void) {
+    trip_destination_response_talk_run();
     if (game_state.current_girl == GIRL_SAKI && ((u32)game_state.girls[4].flags.b[2] >> 4) == ((u32)game_state.player_flags.h >> 0xC)) {
         *(u8 *)(*(s32 *)(D_800CA2D4 + D_800CA2DC * 4) + 3) = 0xFF;
     }
 }
 
-void func_80138C48(void) {
+void trip_saki_same_club_script_offset(void) {
     if (game_state.substep == 0) {
         if (D_8013C97C == 4 && ((u32)game_state.girls[4].flags.b[2] >> 4) == ((u32)game_state.player_flags.h >> 0xC)) {
             D_800CA2DC = 0x2E;
         }
         game_state.substep = 1;
     }
-    func_801386C4();
+    trip_destination_response_talk_run();
 }
 
-void func_80138CB8(void) {
+void trip_destination_dialogue_entry_gate(void) {
     u8 **p;
 
     p = (u8 **)D_800CA2D4;
@@ -68,7 +68,7 @@ void func_80138CB8(void) {
     normal_date_girl_out();
 }
 
-void func_80138D24(void) {
+void trip_sightseeing_route_flag_gate(void) {
     if (D_8013C974 == 1) {
         mode_step_next();
         return;
@@ -76,7 +76,7 @@ void func_80138D24(void) {
     normal_date_girl_out();
 }
 
-void func_80138D64(void) {
+void trip_destination_dialogue_exit_gate(void) {
     u8 **p;
 
     p = (u8 **)D_800CA2D4;
@@ -88,10 +88,10 @@ void func_80138D64(void) {
     normal_date_girl_in();
 }
 
-void func_80138DD8(void) {
+void trip_mio_dialogue_background_flag_update(void) {
     u8 value;
 
-    func_801386C4();
+    trip_destination_response_talk_run();
     if (game_state.current_girl == GIRL_MIO && D_800CA2E0 == 3) {
         value = D_800CA2CC;
         if (value == 1) {
@@ -102,7 +102,7 @@ void func_80138DD8(void) {
     D_80122CF4 = 1;
 }
 
-s32 func_80138E40(void) {
+s32 trip_mio_scene_background_and_girl_transition(void) {
     /* FAKE: `pad` reserves the top stack word; `(game_state.substep & 0) +` places an entry load of unk_110D before the first branch so cvt_pass strips its widenings (T-24114). */
     s32 pad;
     s32 saved_phase;
@@ -121,11 +121,11 @@ s32 func_80138E40(void) {
     }
     step = (s32) game_state.substep;
     if (game_state.substep == 0) {
-        func_801386C4();
+        trip_destination_response_talk_run();
     } else if (game_state.substep == 1) {
         normal_date_girl_in();
     } else if (game_state.substep == 2) {
-        func_801386C4();
+        trip_destination_response_talk_run();
     } else if (game_state.substep == 3) {
         normal_date_girl_out();
     } else {
@@ -142,7 +142,7 @@ s32 func_80138E40(void) {
     }
 }
 
-void func_80138FAC(void) {
+void trip_ayako_birthday_mode_stage_route(void) {
     if (game_state.current_girl != GIRL_AYAKO || D_800CA2CC != 1) {
         normal_date_girl_out();
         return;
@@ -154,28 +154,28 @@ void func_80138FAC(void) {
 
 INCLUDE_RODATA("asm/ovl/SHUGAKU/data/SHUGAKU/sightseeing_and_companion_selection.rodata", D_8013AEF0);
 
-void func_80139018(void) {
+void trip_sightseeing_hotel_lobby_background_load(void) {
     bg_read_sub2(0x4225);
-    strcpy(D_800CA19C, &D_8013AEF0);
+    strcpy(scene_place_title, &D_8013AEF0);
     mode_step_next();
 }
 
-void func_80139054(void) {
+void trip_sightseeing_place_background_and_log(void) {
     u8 n;
 
     n = D_800CA2CC;
     switch (n) {
     case 0:
         bg_read_sub2(0x425E);
-        strcpy(D_800CA19C, "社寺巡り");
+        strcpy(scene_place_title, "社寺巡り");
         break;
     case 1:
         bg_read_sub2(0x424B);
-        strcpy(D_800CA19C, "守礼門");
+        strcpy(scene_place_title, "守礼門");
         break;
     default:
         bg_read_sub2(0x4271);
-        strcpy(D_800CA19C, "時計台前");
+        strcpy(scene_place_title, "時計台前");
         break;
     }
     if (D_800CA2EC == 0) {
@@ -185,7 +185,7 @@ void func_80139054(void) {
     mode_step_next();
 }
 
-void func_80139118(void) {
+void trip_low_status_girl_select(void) {
     s16 i;
     u8 best_i;
     u8 best_s;
@@ -198,7 +198,7 @@ void func_80139118(void) {
     for (i = 0; i < 10; i++) {
         /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s6 (T-24122). */
         if (1) {}
-        if (D_800CA2B0[i] != 0) {
+        if (select_girl_menu_enabled[i] != 0) {
             s = get_g_zyotai_s(i) & 0x7F;
             if (s < best_s ||
                 (s == best_s &&
@@ -215,7 +215,7 @@ void func_80139118(void) {
         /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $s7, 0xff` (T-24122). */
         game_state.current_girl = (best_i & 0) + best_i;
         talk_names_set(game_state.current_girl);
-        func_801399F4();
+        trip_current_girl_destination_pointer_bind();
     } else {
         D_800CA2DC += 4;
         game_state.mode_step += 0x1E;
@@ -224,7 +224,7 @@ void func_80139118(void) {
     mode_step_next();
 }
 
-s32 func_801392B4(void) {
+s32 trip_response_parameter_update_alt(void) {
     /* FAKE: `six` reserves the top stack word and `(six & 0) + six` promotes the constant 6 to $v0;
      * `*(s16 *)&D_800CA2DC` keeps the first store out of the second block's scalar web (T-24104). */
     s32 six;
@@ -235,7 +235,7 @@ s32 func_801392B4(void) {
             previous_phase = game_state.mode_step;
             six = 6;
             *(s16 *)&D_800CA2DC = (six & 0) + six;
-            func_801386C4();
+            trip_destination_response_talk_run();
             if (previous_phase == game_state.mode_step) {
                 return 0;
             }
@@ -253,50 +253,50 @@ s32 func_801392B4(void) {
     mode_step_next();
 }
 
-void func_801393C4(void) {
+void trip_destination_script_offset_update(void) {
     D_800CA2DC = (D_800CA2DC - D_800CA2CC) + 2;
     mode_step_next();
 }
 
-void func_80139400(void) {
+void trip_destination_label_select(void) {
     /* FAKE: the local selector preserves v0 instead of v1. T-10020. */
     s32 selection;
     D_8013C974 = 0;
     selection = D_800CA2CC;
     switch (selection) {
     case 0:
-        strcpy(D_800CA23C, "京都");
+        strcpy(name_code_s, "京都");
         break;
     case 1:
-        strcpy(D_800CA23C, "那覇");
+        strcpy(name_code_s, "那覇");
         break;
     case 2:
-        strcpy(D_800CA23C, "札幌");
+        strcpy(name_code_s, "札幌");
         break;
     }
     mode_step_next();
 }
 
-void func_80139498(void) {
+void trip_nonzero_response_audio_select(void) {
     if (D_80122CDC != 0) {
         if (game_state.current_girl == GIRL_YUINA || game_state.current_girl == GIRL_MIRA || game_state.current_girl == GIRL_MEGUMI) {
-            func_80083418();
+            face_expression_4();
             return;
         }
-        func_800833F0();
+        face_expression_3();
         return;
     }
     mode_step_next();
 }
 
-void func_80139508(void) {
+void trip_destination_choice_step_skip(void) {
     if (D_80122CDC != 0) {
         game_state.mode_step += 0x11;
     }
     mode_step_next();
 }
 
-void func_80139548(void) {
+void trip_yoshio_dialogue_route_setup(void) {
     if (D_80122CDC != 0) {
         D_800CA2DC = 0;
         D_800CA2D0 = D_8013C450;
@@ -311,12 +311,12 @@ void func_80139548(void) {
     mode_step_next();
 }
 
-void func_801395DC(void) {
+void trip_destination_script_offset_set(void) {
     D_800CA2DC = 0xE;
     mode_step_next();
 }
 
-void func_80139604(void) {
+void trip_current_girl_status_script_offset(void) {
     s32 var_v0;
     u8 x;
     u32 t;
@@ -338,7 +338,7 @@ void func_80139604(void) {
     mode_step_next();
 }
 
-void func_80139698(void) {
+void trip_destination_script_offset_and_rewind(void) {
     D_800CA2DC = D_800CA2CC + 0x1A;
     if (D_800CA2EC != 0) {
         D_800CA2DC = D_800CA2CC + 3;
@@ -347,7 +347,7 @@ void func_80139698(void) {
     mode_step_next();
 }
 
-void func_801396F4(void) {
+void trip_yoshio_portrait_read_gate(void) {
     if (D_800CA2EC != 0) {
         portrait_read_start(0x6C32);
     } else {
@@ -357,7 +357,7 @@ void func_801396F4(void) {
     mode_step_next();
 }
 
-s32 func_80139740(void) {
+s32 trip_status_four_yoshio_detour_select(void) {
     s32 pad[2]; /* FAKE: unused locals, frame slots only (T-10310) */
     s32 state;
     u8 t; /* FAKE: narrow type shifts the temporary numbering to the original's (permuter, T-10310) */
@@ -392,7 +392,7 @@ s32 func_80139740(void) {
     }
 }
 
-void func_80139870(void) {
+void trip_yoshio_script_table_setup(void) {
     D_800CA2DC = 0;
     D_800CA2D0 = D_8013C450;
     D_800CA2D4 = D_8013C484;
@@ -400,12 +400,12 @@ void func_80139870(void) {
     game_state.mode_step = 0x33;
 }
 
-void func_801398B8(void) {
+void trip_current_girl_status_refresh(void) {
     get_g_zyotai_s(game_state.current_girl);
     mode_step_next();
 }
 
-s32 func_801398E8(void) {
+s32 trip_companion_selection_and_yoshio_route(void) {
     s32 selection;
     u8 value;
 
@@ -413,7 +413,7 @@ s32 func_801398E8(void) {
     value = game_state.current_girl;
     if (value == selection) {
         value = game_state.mode_step;
-        func_801386C4();
+        trip_destination_response_talk_run();
         if (value != game_state.mode_step) {
             D_800CA2DC -= 2;
             game_state.mode_step -= 3;
@@ -438,11 +438,11 @@ s32 func_801398E8(void) {
     }
     game_state.current_girl = value;
     talk_names_set(value);
-    func_801399F4();
+    trip_current_girl_destination_pointer_bind();
     mode_step_next();
 }
 
-void func_801399F4(void) {
+void trip_current_girl_destination_pointer_bind(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_800CA2D0 = D_8013C424;
@@ -502,9 +502,9 @@ void func_801399F4(void) {
     }
 }
 
-void func_80139C80(void) {
+void trip_sightseeing_callback_dispatch_alt(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl18 tbl;
+    TripReturnCallbacks tbl;
 
     tbl = D_8013CAA0;
     idx = game_state.mode_step;

@@ -1,8 +1,8 @@
-/* yukari_corridor_scene.c: src/ovl/SHUGAKU/801344B0.c:4-82; picture/animation resources, corridor scene callbacks, dialogue and scores. The Yukari-specific branch sets mode_stage11 in 801378B0.c:397-400; 80136380.c routes it to func_80134560. Original object 0x801344B0-0x80134880 (config/objects/SHUGAKU.txt). */
+/* yukari_corridor_scene.c: src/ovl/SHUGAKU/801344B0.c:4-82; picture/animation resources, corridor scene callbacks, dialogue and scores. The Yukari-specific branch sets mode_stage11 in 801378B0.c:397-400; 80136380.c routes it to trip_yukari_mode_step_callback_dispatch. Original object 0x801344B0-0x80134880 (config/objects/SHUGAKU.txt). */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-void func_801344B0(void) {
+void trip_yukari_scene_resource_pointer_setup(void) {
     D_8013C0C0 = (u8 *)0x801D22B8;
     D_8013C0C4 = (u8 *)0x801D22C0;
     D_8013C0C8 = (u8 *)0x801D2310;
@@ -16,35 +16,35 @@ void func_801344B0(void) {
     D_8013C0E8 = (u8 *)0x801C6000;
 }
 
-void func_80134560(void) {
+void trip_yukari_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl38 tbl;
+    TripSceneTransitionCallbacks tbl;
 
     tbl = D_8013C0EC;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_801345E8(void) {
+void trip_yukari_scene_audio_transition(void) {
     audio_command(0x24);
     audio_command(0x206);
     audio_command(0x504);
     mode_step_next();
 }
 
-void func_80134620(void) {
+void trip_yukari_scene_sector_load(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x8902);
-    func_801344B0();
+    trip_yukari_scene_resource_pointer_setup();
     mode_step_next();
 }
 
 /* FAKE: `* 0 + 8` folds to `li v1, 8` after uopt copy propagation, promoting D_80120698 to $v1 across the block (T-24104, cf. T-22021). */
-void func_80134658(void) {
-    func_801365F4();
+void trip_scene_relationship_update(void) {
+    trip_scene_script_resource_pointer_setup();
     D_8013BFFC = D_8013C57C;
     D_8013C000 = D_8013C6B8;
     D_8013C004 = D_8013C7F4;
-    func_801344B0();
+    trip_yukari_scene_resource_pointer_setup();
     load_palette(D_8013C0D0, 0x11, 1, 2, 0);
     scene_still_show(D_8013C0D4, D_8013C0D8, D_8013C0DC, D_8013C0E0, D_8013C0E4, D_8013C0E8);
     scene_anim_show(D_8013C0C4, D_8013C0C8, D_8013C0C0, D_8013C0CC);
@@ -55,22 +55,22 @@ void func_80134658(void) {
     game_state.girls[game_state.current_girl].tokimeki += 1;
     game_state.girls[game_state.current_girl].affection += 2;
     check_para_limit();
-    strcpy(D_800CA19C, "ホテル・廊下");
+    strcpy(scene_place_title, "ホテル・廊下");
     mode_step_next();
 }
 
-void func_801347C8(void) {
+void trip_yukari_background_load(void) {
     bg_read_sub2(0x4285);
     mode_step_next();
 }
 
-void func_801347F0(void) {
+void trip_yukari_background_event_log(void) {
     bg_read_sub2(0x4774);
     event_log_add(2, 0x27);
     mode_step_next();
 }
 
-void func_80134824(void) {
+void trip_yukari_scene_actor_clear(void) {
     s32 pad; /* FAKE: unused local above `unused`, puts it at sp+0x2B as in the original; real source unknown. T-4010 */
     u8 unused; /* read uninitialised: the original passes the stack byte */
 

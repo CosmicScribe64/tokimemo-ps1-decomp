@@ -135,8 +135,8 @@ s32 shooter_draw_enemy_bullet(s32 arg0) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
-            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200
+            && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - v.vz) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
@@ -211,7 +211,7 @@ s32 shooter_draw_enemy_bullet(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }
@@ -355,8 +355,8 @@ void shooter_draw_item_weapon(s32 arg0) {
         rot += 0x80;
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200
-            && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200
+            && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - v.vz) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
@@ -382,7 +382,7 @@ void shooter_draw_item_weapon(s32 arg0) {
             poly->y2 = ((s16 *)pt)[5];
             poly->x3 = ((s16 *)pt)[6];
             poly->y3 = ((s16 *)pt)[7];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }
@@ -430,7 +430,7 @@ void shooter_draw_item(s32 arg0) {
         }
     }
     if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
-        if (((s16 *)pt)[3] >= game_state.screen_center_y[draw_buffer] - 0x200 && game_state.screen_center_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
+        if (((s16 *)pt)[3] >= game_state.draw_origin_y[draw_buffer] - 0x200 && game_state.draw_origin_y[draw_buffer] + 0x200 >= ((s16 *)pt)[7]) {
             dist = (D_80122754 - pos.z) / 127;
             if (dist >= 0x100) {
                 dist = 0xFF;
@@ -467,7 +467,7 @@ void shooter_draw_item(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
             height = (rsin(particle->age * 0x10) << 7) / 4096;
             /* FAKE: half is a constant local that only steers uopt (real source unknown). It is propagated
              * into its uses (its slot stays), so the third grid's o * 0x100 becomes a later item than
@@ -500,7 +500,7 @@ void shooter_draw_item(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
             size = (func_800A0140(particle->age * 0x10) << 7) / 4096;
             v.vz = pos.z;
             for (o = 0; o < 2; o++) {
@@ -527,7 +527,7 @@ void shooter_draw_item(s32 arg0) {
             poly->y2 = ((s16 *)pt)[7];
             poly->x3 = ((s16 *)pt)[2];
             poly->y3 = ((s16 *)pt)[3];
-            AddPrim((draw_buffer << 10) + dist * 4 + D_800E8CA0, poly);
+            AddPrim((draw_buffer << 10) + dist * 4 + draw_ot_tags, poly);
         }
     }
 }

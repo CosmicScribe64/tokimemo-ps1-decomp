@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-void func_80141C00(void) {
+void sports_nozomi_scene_entry_check(void) {
     if ((girl_state_rank(6) < 2) && (((u32) (game_state.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (game_state.scene_flags[45] == 0)) {
         game_state.scene_flags[45] = 1;
         mode_stage_next();
@@ -14,10 +14,10 @@ void func_80141C00(void) {
     Default_Disp();
 }
 
-void func_80141C88(void) {
+void sports_nozomi_scene_return_update(void) {
     s32 temp_v0;
 
-    temp_v0 = func_80141CDC();
+    temp_v0 = sports_nozomi_courtyard_scene_step();
     if (temp_v0 != 0) {
         if (temp_v0 == 1) {
             game_state.mode_stage = 0;
@@ -29,7 +29,7 @@ void func_80141C88(void) {
     }
 }
 
-s32 func_80141CDC(void) {
+s32 sports_nozomi_courtyard_scene_step(void) {
     s32 i;
 
     portrait_wink_update();
@@ -46,7 +46,7 @@ s32 func_80141CDC(void) {
         message_window_set_title((s32) "中庭");
         message_window_title_show(0);
         message_window_init();
-        dec_bg_brightness = 0;
+        bg_brightness = 0;
         mode_step_next();
         break;
     case 1:
@@ -74,7 +74,7 @@ s32 func_80141CDC(void) {
         if (cd_read_sync_status() & 1) {
             text_marker_hide();
             talk_names_set(6U);
-            func_80142140();
+            sports_nozomi_talk_resource_addresses_init();
             talk_group = 0;
             talk_line = 0;
             talk_text_table = D_8014A0D0;
@@ -103,7 +103,7 @@ s32 func_80141CDC(void) {
         break;
     case 8:
         audio_command(0x60A);
-        func_80047550();
+        draw_shake_start();
         mode_step_next();
         break;
     case 11:
@@ -118,7 +118,7 @@ s32 func_80141CDC(void) {
         break;
     case 15:
         if (cd_read_sync_status() & 1) {
-            func_80145210();
+            sports_nozomi_scene_picture_resource_addresses_init();
             load_palette(D_8014A3A0, 0x11, 1, 2, 0);
             scene_still_show(D_8014A3A4, D_8014A3A8, D_8014A3AC, D_8014A3B0, D_8014A3B4, D_8014A3B8);
             scene_anim_show(D_8014A394, D_8014A398, D_8014A390, (s32) D_8014A39C);
@@ -136,14 +136,14 @@ s32 func_80141CDC(void) {
         }
         break;
     case 17:
-        func_80085368();
+        scene_still_fade_in();
         break;
     case 19:
         audio_command(0xD1);
         mode_step_next();
         break;
     case 20:
-        func_800853FC();
+        scene_still_fade_out();
         break;
     case 21:
         D_8014A0C0 = 1;

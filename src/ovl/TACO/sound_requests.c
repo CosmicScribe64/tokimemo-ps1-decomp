@@ -54,7 +54,7 @@ void shooter_play_triangle_voice(void) {
     idx = 3;
     if ((game_state.mode_stage & 1) && (game_state.mode_step == 1)) {
         if ((shooter_load_request == 0) && (game_state.pad_pressed & PAD_TRIANGLE) && (game_state.frame_count & 0xFF)) {
-            if (func_80045288() == 1) {
+            if (cd_queue_idle() == 1) {
                 if (cd_audio_state() & 2) {
                     if (shooter_actors[8].z < shooter_actors->z) {
                         idx = (rand() & 1) + 2;

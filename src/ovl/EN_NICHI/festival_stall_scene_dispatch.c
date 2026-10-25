@@ -24,11 +24,11 @@ u8 D_80139C3C[8] = { 0 };
 u8 D_80139C44[8] = { 0 };
 s16 D_80139C4C[6] = { 0 };
 u16 D_80139C58 = 0;
-/* Scene table, indexed by game_state.mode_stage in func_80136B10. Defining it here as the
+/* Scene table, indexed by game_state.mode_stage in stalls_later_year_callback_dispatch. Defining it here as the
  * original did matters for code: as1 treats every function named in this file's data as an
- * address-taken label, so the jump-table dispatch inside func_80136DEC gets an edge back to
+ * address-taken label, so the jump-table dispatch inside stalls_game_actor_setup gets an edge back to
  * that function's entry, and the resulting loop decides its delay-slot fills (T-25201). */
-FnTbl3 D_80139C5C = { { func_80136B74, func_80136DEC, func_8013735C } };
+FnTbl3 D_80139C5C = { { stalls_presentation_intro_dispatch, stalls_game_actor_setup, stalls_game_state_dispatch } };
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.data", D_80139C68);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.data", D_80139C94);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.data", D_80139CC0);
@@ -38,7 +38,7 @@ INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.dat
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.data", D_80139DA0);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.data", D_80139E20);
 
-void func_80136B10(void) {
+void stalls_later_year_callback_dispatch(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     FnTbl3 tbl;
 
@@ -46,7 +46,7 @@ void func_80136B10(void) {
     tbl.f[game_state.mode_stage]();
 }
 
-void func_80136B74(void) {
+void stalls_presentation_intro_dispatch(void) {
     s32 i;
 
     switch (game_state.mode_step) {
@@ -66,11 +66,11 @@ void func_80136B74(void) {
     case 2:
         if (cd_read_sync_status() & 1) {
             game_state.screen_brightness = 0;
-            func_80132040();
+            stalls_asset_pointer_setup();
             for (i = 0; i != 2; i++) {
                 load_palette(D_801391F4, (i + 0x10) & 0xFF, 1, 1, i);
             }
-            func_8004E44C(0, (u32 *) D_801391FC, D_801391E0);
+            layer_tileset_init(0, (u32 *) D_801391FC, D_801391E0);
             srn_init(0, (u32 *) D_801391F8, 0);
             srn_vram_set(0, 5, 0x580, 0xF0);
             Fade_In_Init();
@@ -110,7 +110,7 @@ void func_80136B74(void) {
  * (above) names this function: the inner jump-table jr then has an edge back to the entry, and
  * as1 schedules the compare chain and the case-3 head as one loop region without the case-1 and
  * case-2 heads (T-25201; history T-25109, drafts/T-25109/). */
-void func_80136DEC(void) {
+void stalls_game_actor_setup(void) {
     GameState *gs;
     s32 i;
     EnHalf22 frames;
@@ -218,7 +218,7 @@ void func_80136DEC(void) {
     }
 }
 
-void func_8013735C(void) {
+void stalls_game_state_dispatch(void) {
     s32 i;
     s32 n;
 
@@ -238,8 +238,8 @@ void func_8013735C(void) {
             ((Actor *)actor_pool + 98)[D_80139C30].unk_01 = 4;
             audio_command(0x50C);
         }
-        func_80137C58();
-        func_80138CCC();
+        stalls_target_collision_update();
+        stalls_eligible_girl_frame_select();
         if (D_80139C30 == 0 && D_80139C34[0] == 0 && D_80139C34[1] == 0 && D_80139C34[2] == 0 && D_80139C34[3] == 0 && D_80139C34[4] == 0) {
             mode_step_next();
         }
@@ -398,7 +398,7 @@ void func_8013735C(void) {
 }
 
 /* FAKE: the u8 locals `one` and `two` put the hoisted constants first in both bne compares (T-9410 idiom), T-11300 */
-void func_80137C58(void) {
+void stalls_target_collision_update(void) {
     s32 i;
     u8 *p;
     u8 *r;
@@ -412,7 +412,7 @@ void func_80137C58(void) {
     if (D_80139C58 >= 0x71) {
         D_80139C58 = 0;
     }
-    func_80137E2C();
+    stalls_progress_meter_draw();
     for (i = 0, p = D_80139C34; i < 5; i++, p++) {
         v = *p;
         if (one == v) {
@@ -420,7 +420,7 @@ void func_80137C58(void) {
             *(s16 *)(r + 0x1A22) -= D_80139C3C[i] * 8;
             *(s16 *)(r + 0x1A24) -= D_80139C3C[i] * 8;
             if (*(s16 *)(r + 0x1A22) < 0x401) {
-                if (func_80137FEC(i) != 0) {
+                if (stalls_target_collision_resolve(i) != 0) {
                     *(s16 *)(r + 0x1A20) = 0x27;
                     if ((D_80139C4C[i] < 0x10) || (D_80139C4C[i] >= 0x14)) {
                         audio_command(0x508);
@@ -448,7 +448,7 @@ void func_80137C58(void) {
 }
 
 /* FAKE: the empty do-while after the load of D_80139C58 puts the load and its uses in the original's registers (a2, v0); found with the permuter, T-9380 */
-void func_80137E2C(void) {
+void stalls_progress_meter_draw(void) {
     u8 *p;
     u16 w;
     s32 a;
@@ -473,20 +473,20 @@ void func_80137E2C(void) {
     p[0x1C] = a;
     p[0x1E] = 0xFF;
     p[0x1D] = 0x1F;
-    *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + 0x20;
-    *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + 0x50;
-    *(s16 *)(p + 0x10) = game_state.screen_center_x[draw_buffer] + w + 0x20;
-    *(s16 *)(p + 0x12) = game_state.screen_center_y[draw_buffer] + 0x50;
-    *(s16 *)(p + 0x18) = game_state.screen_center_x[draw_buffer] + 0x20;
-    *(s16 *)(p + 0x1A) = game_state.screen_center_y[draw_buffer] + 0x60;
-    *(s16 *)(p + 0x20) = game_state.screen_center_x[draw_buffer] + w + 0x20;
-    *(s16 *)(p + 0x22) = game_state.screen_center_y[draw_buffer] + 0x60;
-    AddPrim((draw_buffer << 10) + 0xC + D_800E8CA0, p, w);
+    *(s16 *)(p + 8) = game_state.draw_origin_x[draw_buffer] + 0x20;
+    *(s16 *)(p + 0xA) = game_state.draw_origin_y[draw_buffer] + 0x50;
+    *(s16 *)(p + 0x10) = game_state.draw_origin_x[draw_buffer] + w + 0x20;
+    *(s16 *)(p + 0x12) = game_state.draw_origin_y[draw_buffer] + 0x50;
+    *(s16 *)(p + 0x18) = game_state.draw_origin_x[draw_buffer] + 0x20;
+    *(s16 *)(p + 0x1A) = game_state.draw_origin_y[draw_buffer] + 0x60;
+    *(s16 *)(p + 0x20) = game_state.draw_origin_x[draw_buffer] + w + 0x20;
+    *(s16 *)(p + 0x22) = game_state.draw_origin_y[draw_buffer] + 0x60;
+    AddPrim((draw_buffer << 10) + 0xC + draw_ot_tags, p, w);
 }
 
 /* FAKE: local reuse and the callback comma expression retain the table slots
  * and post-call decrement scheduling. T-9720. */
-s32 func_80137FEC(s32 arg0) {
+s32 stalls_target_collision_resolve(s32 arg0) {
     s32 i;
     s32 value;
     s32 outside;
@@ -531,7 +531,7 @@ loop:
     goto loop;
 }
 
-s32 func_801381C8(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_00(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -566,7 +566,7 @@ s32 func_801381C8(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_801382B4(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_01(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -599,7 +599,7 @@ s32 func_801382B4(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_801383A0(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_02(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -623,7 +623,7 @@ s32 func_801383A0(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138434(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_03(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -658,7 +658,7 @@ s32 func_80138434(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138524(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_04(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -693,7 +693,7 @@ s32 func_80138524(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138614(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_05(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -728,7 +728,7 @@ s32 func_80138614(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138708(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_06(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -763,7 +763,7 @@ s32 func_80138708(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_801387FC(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_07(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -787,7 +787,7 @@ s32 func_801387FC(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138890(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_08(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -824,7 +824,7 @@ s32 func_80138890(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138980(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_09(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -848,7 +848,7 @@ s32 func_80138980(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138A18(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_10(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -872,7 +872,7 @@ s32 func_80138A18(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138AB0(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_11(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -907,7 +907,7 @@ s32 func_80138AB0(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138B9C(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_12(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -931,7 +931,7 @@ s32 func_80138B9C(s32 arg0, s32 arg1) {
     return 0;
 }
 
-s32 func_80138C34(s32 arg0, s32 arg1) {
+s32 stalls_target_pair_hit_test_13(s32 arg0, s32 arg1) {
     u8 *a;
     u8 *b;
     s16 x;
@@ -959,7 +959,7 @@ s32 func_80138C34(s32 arg0, s32 arg1) {
  * leaves the screen re-enters behind its neighbour with a frame from tbl, whose entries 32..47 are
  * the values of girls picked at random from list (girls with flag bit 1, and 11, 12 when set).
  * The neighbour is read before the new frame is stored, as in the original. T-20920 */
-void func_80138CCC(void) {
+void stalls_eligible_girl_frame_select(void) {
     s32 i;
     s32 r1;
     s32 r2;

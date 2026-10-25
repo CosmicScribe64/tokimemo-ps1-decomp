@@ -2,20 +2,20 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80133D10(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl23 tbl;
+void new_year_shrine_dialogue_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before shrine_dialogue_callbacks: its stack slot sits above shrine_dialogue_callbacks (T-3330) */
+    FnTbl23 shrine_dialogue_callbacks;
 
-    tbl = D_80143CC0;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    shrine_dialogue_callbacks = D_80143CC0;
+    mode_step_index = game_state.mode_step;
+    shrine_dialogue_callbacks.f[mode_step_index](0x80);
 }
 
 /* FAKE: the (u16) cast on the first store and `var_v0 = var_v0;` keep the redundant second store and the original's temporary numbering (t1); found with the permuter, T-9380 */
-void func_80133D98(void) {
+void new_year_shrine_dialogue_init(void) {
     s16 var_v0;
 
-    strcpy(D_800CA19C, "初詣");
+    strcpy(scene_place_title, "初詣");
     var_v0 = (D_80143B20 != 0) ? 0 : 0xF;
     if (D_80143B18 == 0) {
         var_v0 += 2;
@@ -32,23 +32,23 @@ void func_80133D98(void) {
     mode_step_next();
 }
 
-void func_80133E30(void) {
+void new_year_shrine_talk_selector_gate(void) {
     if (D_80143B20 != 0) {
-        func_801323D4();
+        new_year_talk_run_current();
         return;
     }
     mode_step_next();
 }
 
-void func_80133E6C(void) {
+void new_year_shrine_outcome_branch_action(void) {
     if (D_80122CDC != 0) {
-        func_800833F0();
+        face_expression_3();
         return;
     }
-    func_800833A0();
+    face_expression_1();
 }
 
-void func_80133EA8(void) {
+void new_year_shrine_log_and_background_load(void) {
     if ((D_80143B20 == 0) && (((u32) game_state.frame_count % 3U) == 0)) {
         if (D_80143B24 != 0) {
             event_log_add(5, 3);
@@ -60,7 +60,7 @@ void func_80133EA8(void) {
     mode_step_next();
 }
 
-void func_80133F24(void) {
+void new_year_shrine_yukari_variant_transition(void) {
     if ((game_state.current_girl != GIRL_YUKARI) || (D_80143B20 != 0) || (D_80143B18 == 0)) {
         mode_stage_next();
         return;
@@ -68,38 +68,38 @@ void func_80133F24(void) {
     mode_step_next();
 }
 
-void func_80133F88(void) {
+void new_year_shrine_conditional_step_skip(void) {
     if (D_80143B20 != 0) {
         game_state.mode_step += 4;
     }
     mode_step_next();
 }
 
-void func_80133FC8(void) {
+void new_year_shrine_talk_state_gate(void) {
     if (D_80143B18 == 0) {
         mode_step_next();
         return;
     }
-    func_801323D4();
+    new_year_talk_run_current();
 }
 
-void func_80134004(void) {
+void new_year_shrine_yukari_talk_gate(void) {
     if ((game_state.current_girl == GIRL_YUKARI) && (D_80143B18 == 0)) {
-        func_801323D4();
+        new_year_talk_run_current();
         return;
     }
     mode_step_next();
 }
 
-void func_80134058(void) {
+void new_year_shrine_talk_variant_gate(void) {
     if (D_80143B18 != 0) {
-        func_801323D4();
+        new_year_talk_run_current();
         return;
     }
     mode_step_next();
 }
 
-void func_80134094(void) {
+void new_year_shrine_outcome_parameters_apply(void) {
     if (D_80122CDC != 0) {
         game_state.girls[5].affection -= 1;
         game_state.girls[5].tokimeki -= 1;

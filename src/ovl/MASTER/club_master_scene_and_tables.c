@@ -8,17 +8,17 @@ INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C76C);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C770);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C780);
-u8 D_8013C784 = 0;
+u8 master_final_tournament_grade = 0;
 u8 D_8013C788[5] = { 0 };
-INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C790);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", master_final_tournament_companion_index);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C794);
-INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C798);
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", master_final_tournament_mode_stage_callbacks);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C7B4);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C7E8);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C804);
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/club_master_scene_and_tables.data", D_8013C820);
 
-void func_80139000(void) {
+void master_set_tournament_companion_actor_assets_1(void) {
     D_8013C760 = 0x801A42D4;
     D_8013C764 = 0x801A42E0;
     D_8013C768 = 0x801A4330;
@@ -26,7 +26,7 @@ void func_80139000(void) {
     D_8013C770 = 0x80197000;
 }
 
-void func_80139054(void) {
+void master_set_tournament_companion_actor_assets_2(void) {
     D_8013C760 = 0x801A3E3C;
     D_8013C764 = 0x801A3E48;
     D_8013C768 = 0x801A3E90;
@@ -34,7 +34,7 @@ void func_80139054(void) {
     D_8013C770 = 0x80197000;
 }
 
-void func_801390A8(void) {
+void master_set_tournament_companion_actor_assets_3(void) {
     D_8013C760 = 0x801A42E4;
     D_8013C764 = 0x801A42F0;
     D_8013C768 = 0x801A4368;
@@ -42,7 +42,7 @@ void func_801390A8(void) {
     D_8013C770 = 0x80197000;
 }
 
-void func_801390FC(void) {
+void master_set_tournament_companion_actor_assets_4(void) {
     D_8013C760 = 0x801A432C;
     D_8013C764 = 0x801A4338;
     D_8013C768 = 0x801A4394;
@@ -50,16 +50,16 @@ void func_801390FC(void) {
     D_8013C770 = 0x80197000;
 }
 
-void func_80139150(void) {
+void master_tournament_mode_stage_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl7 tbl;
 
-    tbl = D_8013C798;
+    tbl = master_final_tournament_mode_stage_callbacks;
     idx = game_state.mode_stage;
     tbl.f[idx]();
 }
 
-void func_801391E4(void) {
+void master_companion_select(void) {
     s32 sum1;
     s32 sum2;
     s32 best;
@@ -118,46 +118,46 @@ void func_801391E4(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            best = func_8008647C();
+            best = select_girl_by_scores();
             if ((u8) game_state.girls[0xC].flags.b[3] >= 0x41U) {
-                D_8013C790 = 0xC;
+                master_final_tournament_companion_index = 0xC;
             } else if (girl_state_rank(best) < 2) {
-                D_8013C790 = (u8) best;
+                master_final_tournament_companion_index = (u8) best;
                 for (i = 0; i < 0xB; i++) {
                     if ((((u16) game_state.player_flags.h >> 0xC) == ((u8) game_state.girls[i].flags.b[2] >> 4)) && (((u32) (game_state.girls[i].flags.w << 0x1E) >> 0x1F) == 1)) {
                         if (girl_state_rank(i) < 2) {
-                            D_8013C790 = (u8) i;
+                            master_final_tournament_companion_index = (u8) i;
                         }
                         if ((((u8) game_state.girls[0].flags.b[2] >> 4) == 0xA) && (((u16) game_state.player_flags.h >> 0xC) == 0xA)) {
                             if ((girl_state_rank(0) < 2) && (girl_state_rank(0xA) >= 2)) {
-                                D_8013C790 = 0;
+                                master_final_tournament_companion_index = 0;
                             } else if ((girl_state_rank(0) >= 2) && (girl_state_rank(0xA) < 2)) {
-                                D_8013C790 = 0xA;
+                                master_final_tournament_companion_index = 0xA;
                             } else if ((girl_state_rank(0) < 2) && (girl_state_rank(0xA) < 2)) {
                                 sum1 = game_state.girls[0].affection + game_state.girls[0].tokimeki;
                                 sum2 = game_state.girls[0xA].affection + game_state.girls[0xA].tokimeki;
                                 if (sum1 >= sum2) {
-                                    D_8013C790 = 0;
+                                    master_final_tournament_companion_index = 0;
                                 } else {
-                                    D_8013C790 = 0xA;
+                                    master_final_tournament_companion_index = 0xA;
                                 }
                             }
                         }
                     }
                 }
             } else if ((u8) game_state.girls[0xB].flags.b[3] >= 2U) {
-                D_8013C790 = 0xB;
+                master_final_tournament_companion_index = 0xB;
             } else {
-                D_8013C790 = 0xFF;
+                master_final_tournament_companion_index = 0xFF;
             }
-            if (D_8013C790 != 0xFF) {
-                audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B3688[D_8013C790], D_800B36C8[D_8013C790], D_800B3708[D_8013C790]);
+            if (master_final_tournament_companion_index != 0xFF) {
+                audio_bank_load_start(0, 0xBF98, 0xBF79, D_800B3688[master_final_tournament_companion_index], D_800B36C8[master_final_tournament_companion_index], D_800B3708[master_final_tournament_companion_index]);
             }
             mode_step_next();
         }
         break;
     case 3:
-        if ((audio_bank_load_poll() == 1) || (D_8013C790 == 0xFF)) {
+        if ((audio_bank_load_poll() == 1) || (master_final_tournament_companion_index == 0xFF)) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             cd_read_sectors(0xBU, 0x801E8000, 0xA9C5);
             message_window_title_show(1);
@@ -171,7 +171,7 @@ void func_801391E4(void) {
         if (cd_read_sync_status() & 1) {
             talk_names_set(0U);
             text_marker_hide();
-            func_80138FC0();
+            master_set_companion_actor_assets_d();
             talk_text_table = (s32) D_8013C750;
             talk_command_table = (s32) D_8013C754;
             talk_voice_table = (s32) D_8013C758;
@@ -214,7 +214,7 @@ void func_801391E4(void) {
     Default_Disp();
 }
 
-void func_80139810(void) {
+void master_companion_portrait_load(void) {
     s32 pad1; /* FAKE: two unused locals declared before tbl reproduce the original frame (0x68); T-8020 */
     s32 pad2;
     MasterWords13 tbl;
@@ -222,11 +222,11 @@ void func_80139810(void) {
     tbl = D_8013C7B4;
     switch (game_state.mode_step) {
     case 0:
-        if (D_8013C790 != 0xFF) {
-            portrait_read_start(tbl.v[D_8013C790]);
+        if (master_final_tournament_companion_index != 0xFF) {
+            portrait_read_start(tbl.v[master_final_tournament_companion_index]);
             mode_stage_next();
         } else {
-            D_8013C790 = 0xFF;
+            master_final_tournament_companion_index = 0xFF;
             mode_step_next();
         }
         break;
@@ -245,7 +245,7 @@ void func_80139810(void) {
 
 /* FAKE: the scalar byte view preserves the selector live range (T-13001).
  * The thirteen-halfword copy is demonstrated by the original accesses. */
-void func_80139910(void) {
+void master_companion_scene_init(void) {
     u32 temp_t9;
     MasterHalfwords13 table;
 
@@ -254,13 +254,13 @@ void func_80139910(void) {
     switch (game_state.mode_step) {
     case 0:
         if (cd_read_sync_status() & 1) {
-            talk_names_set((*(u8 *)&D_8013C790));
-            talk_group = table.v[(*(u8 *)&D_8013C790)];
+            talk_names_set((*(u8 *)&master_final_tournament_companion_index));
+            talk_group = table.v[(*(u8 *)&master_final_tournament_companion_index)];
             talk_line = 0;
             addr_init_bustup();
-            game_state.current_girl = (*(u8 *)&D_8013C790);
+            game_state.current_girl = (*(u8 *)&master_final_tournament_companion_index);
             portrait_show_checked();
-            if ((*(u8 *)&D_8013C790) == 0xC) {
+            if ((*(u8 *)&master_final_tournament_companion_index) == 0xC) {
                 portrait_layout_set(0U);
             }
             if (((u16) game_state.player_flags.h >> 0xC) != 7) {
@@ -285,9 +285,9 @@ void func_80139910(void) {
         } else {
             normal_date_move_place();
         }
-        if (((*(u8 *)&D_8013C790) == 0xB) && (game_state.mode_step == 3)) {
+        if (((*(u8 *)&master_final_tournament_companion_index) == 0xB) && (game_state.mode_step == 3)) {
             audio_command(0x500);
-            func_80047550();
+            draw_shake_start();
         }
         break;
     case 3:
@@ -304,14 +304,14 @@ void func_80139910(void) {
         normal_date_girl_in();
         break;
     case 6:
-        if ((*(u8 *)&D_8013C790) == 0xB) {
+        if ((*(u8 *)&master_final_tournament_companion_index) == 0xB) {
             if (((u32) (game_state.girls[11].flags.w << 0x14) >> 0x1D) == 0) {
                 talk_group = 0x1E;
             } else {
                 talk_group = 0x1F;
             }
             normal_date_girl_out();
-        } else if ((*(u8 *)&D_8013C790) == 0xC) {
+        } else if ((*(u8 *)&master_final_tournament_companion_index) == 0xC) {
             talk_group = 0x20;
             mode_step_next();
         } else {
@@ -320,7 +320,7 @@ void func_80139910(void) {
         }
         break;
     case 8:
-        if ((*(u8 *)&D_8013C790) == 0xB) {
+        if ((*(u8 *)&master_final_tournament_companion_index) == 0xB) {
             normal_date_bg_fadeout();
         } else {
             normal_date_bggirl_fadeout();
@@ -352,15 +352,15 @@ void func_80139910(void) {
 }
 
 
-/* FAKE: scalar byte views on D_8013C780 and D_8013C784 preserve the target live ranges,
+/* FAKE: scalar byte views on D_8013C780 and master_final_tournament_grade preserve the target live ranges,
  * and value is reused as the second shuffle index to preserve the frame layout (T-10630, T-24102). */
-void func_80139CC8(void) {
+void master_tournament_final_grade_scene(void) {
     u8 swap;
     u8 other;
-    s32 value;
+    s32 practice_point_margin;
     s32 first;
     u8 *a;
-    s32 i;
+    s32 shuffle_index;
     s32 swap_count;
 
     switch (game_state.mode_step) {
@@ -421,23 +421,23 @@ void func_80139CC8(void) {
         if (cd_read_sync_status() & 1) {
             switch ((u16) game_state.player_flags.h >> 0xC) {
             case 7:
-                func_80139054();
+                master_set_tournament_companion_actor_assets_2();
                 break;
             case 8:
-                func_801390FC();
+                master_set_tournament_companion_actor_assets_4();
                 break;
             case 9:
-                func_801390A8();
+                master_set_tournament_companion_actor_assets_3();
                 break;
             case 10:
-                func_80139000();
+                master_set_tournament_companion_actor_assets_1();
                 break;
             default:
                 game_mode_reset_to_title();
                 break;
             }
-            for (i = 0; i < 5; i++) {
-                load_palette(D_8013C770, (i + 0x10) & 0xFF, 1, 1, i);
+            for (shuffle_index = 0; shuffle_index < 5; shuffle_index++) {
+                load_palette(D_8013C770, (shuffle_index + 0x10) & 0xFF, 1, 1, shuffle_index);
             }
             mode_step_next();
         }
@@ -448,23 +448,23 @@ void func_80139CC8(void) {
         normal_date_speak();
         break;
     case 6:
-        value = (s16)(game_state.clubs[(u16)game_state.player_flags.h >> 0xC].practice_points - 350);
-        if (value < -0x1E) {
-            (*(u8 *)&D_8013C784) = 0;
-        } else if (value < -0x14) {
-            (*(u8 *)&D_8013C784) = 1;
-        } else if (value < -0xA) {
-            (*(u8 *)&D_8013C784) = 1;
-        } else if (value < 0) {
-            (*(u8 *)&D_8013C784) = 2;
-        } else if (value >= 0x1E) {
-            (*(u8 *)&D_8013C784) = 5;
-        } else if (value >= 0x14) {
-            (*(u8 *)&D_8013C784) = 4;
-        } else if (value >= 0xA) {
-            (*(u8 *)&D_8013C784) = 4;
-        } else if (value >= 0) {
-            (*(u8 *)&D_8013C784) = 3;
+        practice_point_margin = (s16)(game_state.clubs[(u16)game_state.player_flags.h >> 0xC].practice_points - 350);
+        if (practice_point_margin < -0x1E) {
+            (*(u8 *)&master_final_tournament_grade) = 0;
+        } else if (practice_point_margin < -0x14) {
+            (*(u8 *)&master_final_tournament_grade) = 1;
+        } else if (practice_point_margin < -0xA) {
+            (*(u8 *)&master_final_tournament_grade) = 1;
+        } else if (practice_point_margin < 0) {
+            (*(u8 *)&master_final_tournament_grade) = 2;
+        } else if (practice_point_margin >= 0x1E) {
+            (*(u8 *)&master_final_tournament_grade) = 5;
+        } else if (practice_point_margin >= 0x14) {
+            (*(u8 *)&master_final_tournament_grade) = 4;
+        } else if (practice_point_margin >= 0xA) {
+            (*(u8 *)&master_final_tournament_grade) = 4;
+        } else if (practice_point_margin >= 0) {
+            (*(u8 *)&master_final_tournament_grade) = 3;
         }
         mode_step_next();
         break;
@@ -472,12 +472,12 @@ void func_80139CC8(void) {
         for (a = D_8013C788; a < D_8013C788 + 5; a++) {
             *a = 0;
         }
-        for (i = 0; i < (u8)(*(u8 *)&D_8013C784); i++) {
-            D_8013C788[i] = 1;
+        for (shuffle_index = 0; shuffle_index < (u8)(*(u8 *)&master_final_tournament_grade); shuffle_index++) {
+            D_8013C788[shuffle_index] = 1;
         }
-        i = 0;
+        shuffle_index = 0;
         swap_count = rand() & 0xF;
-        if ((u8)(*(u8 *)&D_8013C784) >= 3U) {
+        if ((u8)(*(u8 *)&master_final_tournament_grade) >= 3U) {
             swap = D_8013C788[0];
             other = D_8013C788[4];
             D_8013C788[0] = other;
@@ -486,16 +486,16 @@ void func_80139CC8(void) {
         if (swap_count > 0) {
             do {
                 first = rand() & 3;
-                value = rand() & 3;
+                practice_point_margin = rand() & 3;
                 swap = D_8013C788[first];
-                i++;
-                other = D_8013C788[value];
+                shuffle_index++;
+                other = D_8013C788[practice_point_margin];
                 D_8013C788[first] = other;
-                D_8013C788[value] = swap;
-            } while (i != swap_count);
+                D_8013C788[practice_point_margin] = swap;
+            } while (shuffle_index != swap_count);
         }
         if (((u16)game_state.player_flags.h >> 0xC) == 9) {
-            if ((u8)(*(u8 *)&D_8013C784) >= 3U) {
+            if ((u8)(*(u8 *)&master_final_tournament_grade) >= 3U) {
                 D_8013C788[0] = 1;
             } else {
                 D_8013C788[0] = 0;
@@ -541,7 +541,7 @@ void func_80139CC8(void) {
         }
         break;
     case 10:
-        if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+        if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
             talk_group = 0xD;
             audio_command(0x204);
         } else {
@@ -553,28 +553,28 @@ void func_80139CC8(void) {
     case 12:
         switch ((u16) game_state.player_flags.h >> 0xC) {
         case 7:
-            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+            if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
                 talk_group = 0x17;
             } else {
                 talk_group = 0x66;
             }
             break;
         case 8:
-            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+            if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
                 talk_group = 0x18;
             } else {
                 talk_group = 0x67;
             }
             break;
         case 9:
-            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+            if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
                 talk_group = 0x19;
             } else {
                 talk_group = 0x68;
             }
             break;
         case 10:
-            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+            if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
                 talk_group = 0x1A;
             } else {
                 talk_group = 0x69;
@@ -596,16 +596,16 @@ void func_80139CC8(void) {
         break;
     case 15:
         actor_clear(0x60);
-        if (D_8013C790 == 0xFF) {
-            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+        if (master_final_tournament_companion_index == 0xFF) {
+            if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
                 game_state.girls[0].tokimeki += 0x19;
-                for (i = 1; i < 13; i++) {
-                    game_state.girls[i].tokimeki += 0x19;
+                for (shuffle_index = 1; shuffle_index < 13; shuffle_index++) {
+                    game_state.girls[shuffle_index].tokimeki += 0x19;
                 }
             } else {
                 game_state.girls[0].tokimeki += 0x12;
-                for (i = 1; i < 13; i++) {
-                    game_state.girls[i].tokimeki += 0x12;
+                for (shuffle_index = 1; shuffle_index < 13; shuffle_index++) {
+                    game_state.girls[shuffle_index].tokimeki += 0x12;
                 }
             }
             mode_stage_set(6);
@@ -617,17 +617,17 @@ void func_80139CC8(void) {
                 message_window_set_title((s32) "選手控え室");
             }
             D_80125CA0 = 0xC0;
-            game_state.girls[D_8013C790].affection += 2;
-            if ((u8) (*(u8 *)&D_8013C784) >= 3U) {
+            game_state.girls[master_final_tournament_companion_index].affection += 2;
+            if ((u8) (*(u8 *)&master_final_tournament_grade) >= 3U) {
                 game_state.girls[0].tokimeki += 0x19;
-                for (i = 1; i < 13; i++) {
-                    game_state.girls[i].tokimeki += 0x19;
+                for (shuffle_index = 1; shuffle_index < 13; shuffle_index++) {
+                    game_state.girls[shuffle_index].tokimeki += 0x19;
                 }
                 mode_stage_next();
             } else {
                 game_state.girls[0].tokimeki += 0x12;
-                for (i = 1; i < 13; i++) {
-                    game_state.girls[i].tokimeki += 0x12;
+                for (shuffle_index = 1; shuffle_index < 13; shuffle_index++) {
+                    game_state.girls[shuffle_index].tokimeki += 0x12;
                 }
                 mode_stage_set(5);
             }
@@ -643,7 +643,7 @@ void func_80139CC8(void) {
 /* FAKE: scalar byte views preserve the selector live ranges; the cached
  * girls pointer reproduces the copied-table stack offset (T-13001).
  * The sprite aggregate keeps flag loads after neighboring field stores. */
-void func_8013A784(void) {
+void master_tournament_companion_dialogue_scene_a(void) {
     GirlRecord *girls;
     u8 index;
     MasterHalfwords13 table;
@@ -653,7 +653,7 @@ void func_8013A784(void) {
     switch (game_state.mode_step) {
     case 0:
         portrait_show_checked();
-        switch ((*(u8 *)&D_8013C790)) {
+        switch ((*(u8 *)&master_final_tournament_companion_index)) {
         case 0:
             portrait_layout_set(0U);
         default:
@@ -681,8 +681,8 @@ void func_8013A784(void) {
     case 1:
         if (cd_read_sync_status() & 1) {
             girls = game_state.girls;
-            func_8013B354();
-            index = (*(u8 *)&D_8013C790);
+            master_tournament_companion_actor_setup();
+            index = (*(u8 *)&master_final_tournament_companion_index);
             if ((index == 4) && (((u16) game_state.player_flags.h >> 0xC) != ((u8) girls[4].flags.b[2] >> 4))) {
                 talk_group = 0x40;
             } else if ((index == 6) && (((u16) game_state.player_flags.h >> 0xC) != 9)) {
@@ -698,18 +698,18 @@ void func_8013A784(void) {
         }
         break;
     case 2:
-        if ((*(u8 *)&D_8013C790) == 0xB) {
+        if ((*(u8 *)&master_final_tournament_companion_index) == 0xB) {
             normal_date_bg_fadein();
         } else {
             normal_date_bggirl_fadein();
         }
-        if ((*(u8 *)&D_8013C790) == 9) {
+        if ((*(u8 *)&master_final_tournament_companion_index) == 9) {
             ((ActorFixed *)actor_pool_96)->unk_07 += 4;
             if (((ActorFixed *)actor_pool_96)->unk_07 >= 0x7DU) {
                 ((ActorFixed *)actor_pool_96)->unk_07 = 0x80;
             }
         }
-        if (((*(u8 *)&D_8013C790) != 0xB) && (game_state.mode_step == 3)) {
+        if (((*(u8 *)&master_final_tournament_companion_index) != 0xB) && (game_state.mode_step == 3)) {
             audio_bank_start(0, 0);
         }
         break;
@@ -717,7 +717,7 @@ void func_8013A784(void) {
         normal_date_speak();
         break;
     case 4:
-        switch ((*(u8 *)&D_8013C790)) {
+        switch ((*(u8 *)&master_final_tournament_companion_index)) {
         case 0:
             if (talk_group == 0x2A) {
                 portrait_layout_set(1U);
@@ -804,7 +804,7 @@ void func_8013A784(void) {
         normal_date_speak();
         break;
     case 6:
-        func_8013B448();
+        master_tournament_result_log();
         mode_stage_set(6);
         break;
     default:
@@ -818,7 +818,7 @@ void func_8013A784(void) {
 /* FAKE: scalar byte views preserve live ranges; the constant value local
  * reproduces the copied-table stack offset (T-13001).
  * The sprite aggregate keeps flag loads after neighboring field stores. */
-void func_8013ACF0(void) {
+void master_tournament_companion_dialogue_scene_b(void) {
     s32 value;
     u8 index;
     MasterHalfwords13 table;
@@ -829,7 +829,7 @@ void func_8013ACF0(void) {
     case 0:
         portrait_show_checked();
         portrait_layout_set(5U);
-        if ((*(u8 *)&D_8013C790) == 0xC) {
+        if ((*(u8 *)&master_final_tournament_companion_index) == 0xC) {
             portrait_layout_set(0U);
         }
         dec_bg_show_switch(1);
@@ -837,8 +837,8 @@ void func_8013ACF0(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_8013B354();
-            index = (*(u8 *)&D_8013C790);
+            master_tournament_companion_actor_setup();
+            index = (*(u8 *)&master_final_tournament_companion_index);
             talk_group = table.v[index];
             talk_line = 0;
             if (index == 9) {
@@ -854,19 +854,19 @@ void func_8013ACF0(void) {
         }
         break;
     case 2:
-        if ((*(u8 *)&D_8013C790) == 0xB) {
+        if ((*(u8 *)&master_final_tournament_companion_index) == 0xB) {
             normal_date_bg_fadein();
         } else {
             normal_date_bggirl_fadein();
         }
-        if (((*(u8 *)&D_8013C790) == 0xA) || ((*(u8 *)&D_8013C790) == 9)) {
+        if (((*(u8 *)&master_final_tournament_companion_index) == 0xA) || ((*(u8 *)&master_final_tournament_companion_index) == 9)) {
             if ((u8) (*(u8 *)&((ActorFixed *)actor_pool_96)->unk_07) >= 0x81U) {
                 (*(u8 *)&((ActorFixed *)actor_pool_96)->unk_07) = 0x80;
             } else {
                 (*(u8 *)&((ActorFixed *)actor_pool_96)->unk_07) += 4;
             }
         }
-        if (((*(u8 *)&D_8013C790) != 0xB) && (game_state.mode_step == 3)) {
+        if (((*(u8 *)&master_final_tournament_companion_index) != 0xB) && (game_state.mode_step == 3)) {
             audio_bank_start(0, 0);
         }
         break;
@@ -875,7 +875,7 @@ void func_8013ACF0(void) {
         normal_date_speak();
         break;
     case 4:
-        switch ((*(u8 *)&D_8013C790)) {
+        switch ((*(u8 *)&master_final_tournament_companion_index)) {
         case 0:
             if (talk_group == 0x2C) {
                 ((ActorFixed *)actor_pool_96)->sequence_slot = 1;
@@ -964,7 +964,7 @@ void func_8013ACF0(void) {
         }
         break;
     case 6:
-        func_8013B804();
+        master_log_tournament_followup_event();
         mode_stage_next();
         break;
     default:
@@ -975,7 +975,7 @@ void func_8013ACF0(void) {
 }
 
 
-s32 func_8013B20C(void) {
+s32 master_tournament_exit(void) {
     switch (game_state.mode_step) {
     case 0:
         if (D_80120657 < 4U) {
@@ -983,7 +983,7 @@ s32 func_8013B20C(void) {
         } else {
             D_80120657 -= 4;
         }
-        if (D_8013C790 == 0xB) {
+        if (master_final_tournament_companion_index == 0xB) {
             normal_date_bg_fadeout();
         } else {
             normal_date_bggirl_fadeout();
@@ -998,7 +998,7 @@ s32 func_8013B20C(void) {
         if (audio_bank_load_poll() == 1) {
             game_state.day_event_done_bits |= 0x10;
             talk_clear();
-            if (D_8013C784 >= 3U) {
+            if (master_final_tournament_grade >= 3U) {
                 ((ClubFlagBits *)&game_state.clubs[(u32)game_state.player_flags.h >> 0xC])->b30 = 1;
             }
             set_dec_bri(0);
@@ -1012,8 +1012,8 @@ s32 func_8013B20C(void) {
     Default_Disp();
 }
 
-void func_8013B354(void) {
-    func_80138F70();
+void master_tournament_companion_actor_setup(void) {
+    master_set_companion_actor_assets_c();
     actor_clear(0x60);
     D_80120651 = 3;
     D_80120688 = 0x01000000;
@@ -1034,7 +1034,7 @@ void func_8013B354(void) {
     D_80120668 = 0;
 }
 
-void func_8013B448(void) {
+void master_tournament_result_log(void) {
     GameState *g = &game_state;
 
     g->event_log[g->event_log_count].girl = g->current_girl;
@@ -1114,7 +1114,7 @@ void func_8013B448(void) {
     }
 }
 
-void func_8013B804(void) {
+void master_log_tournament_followup_event(void) {
     GameState *g = &game_state;
 
     switch ((u16) g->player_flags.h >> 0xC) {

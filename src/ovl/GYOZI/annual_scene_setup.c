@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl30; /* size 0x78 */
 extern FnTbl30 D_801471A0;
 
-void func_801388E0(void) {
+void annual_scene_setup_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl30 tbl;
 
@@ -16,27 +16,27 @@ void func_801388E0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80138954(void) {
+void annual_scene_setup_resource_pointer_init(void) {
     func_800504CC(1, 0xB290, 0xB271, 0xBB4E, 0xBB06, 0xBAF5);
     func_8004DE1C();
 }
 
-void func_80138998(void) {
+void annual_scene_setup_conditional_sound(void) {
     if (func_80050AB8() == 1) {
         func_80086AB0(0x201);
         func_8004DE1C();
     }
 }
 
-void func_801389D4(void) {
+void annual_scene_setup_resource_command(void) {
     func_80051DD8(7, 0x80197000, 0xA464);
-    func_80138510();
+    annual_scene_resource_addresses_init();
     func_8004DE1C();
 }
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/annual_scene_setup.rodata", D_801459E0);
 
-void func_80138A10(void) {
+void annual_scene_setup_state_init(void) {
     D_800F5AAE |= 0x10;
     func_8004EDE0(1, 0);
     func_80054864(1);
@@ -56,7 +56,7 @@ void func_80138A10(void) {
     func_800744A0();
     func_80074950();
     func_8008FC10();
-    func_80138510();
+    annual_scene_resource_addresses_init();
     D_8014718C = D_80147100;
     D_80147190 = D_80147134;
     D_80147194 = D_80147168;

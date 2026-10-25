@@ -16,7 +16,7 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C614);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C618);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C61C);
-INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C620);
+INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", ending_scene_asset_records);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C624);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C628);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C62C);
@@ -273,14 +273,14 @@ INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013CA18);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013CA1C);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013CA38);
-EdFnTbl9 D_8013CA3C = { {
-    func_80135ECC, func_80136EE4, func_8007C784, func_80137128, func_8007C784,
-    func_80135F4C, func_80136BE0, mode_stage_next, game_mode_reset_to_title,
+EdFnTbl9 ending_audience_scene_step_callbacks = { {
+    ending_audience_scene_state_init, ending_girl_scene_data_load_dispatch, scene_wait_cd_read, ending_audience_scene_data_load, scene_wait_cd_read,
+    ending_audience_scene_initialize, ending_audience_scene_animation_update, mode_stage_next, game_mode_reset_to_title,
 } };
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013CA60);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013CA7C);
 
-void func_80134D20(void) {
+void ending_set_default_scene_asset_table(void) {
     D_8013C5F0.unk_00 = 0x8019E458;
     D_8013C5F0.unk_04 = 0x8019E45C;
     D_8013C5F0.unk_08 = 0x8019E498;
@@ -295,323 +295,323 @@ void func_80134D20(void) {
     D_8013C5F0.unk_10[7] = 0x80196000;
 }
 
-void func_80134DE0(void) {
-    D_8013C620[0].unk_00 = 0x801E6598;
-    D_8013C620[0].unk_04 = 0x801E65AC;
-    D_8013C620[0].unk_08 = 0x801E660C;
-    D_8013C620[0].unk_0C = *(s16 *)0x801E6638;
-    D_8013C620[0].unk_10[0] = 0x801A0000;
-    D_8013C620[0].unk_10[1] = 0x801A2000;
-    D_8013C620[0].unk_10[2] = 0x801A6000;
-    D_8013C620[0].unk_10[3] = 0x801CA000;
-    D_8013C620[0].unk_10[4] = 0x801CE000;
-    D_8013C620[0].unk_10[5] = 0x801AA000;
-    D_8013C620[0].unk_10[6] = 0x801AE000;
-    D_8013C620[0].unk_10[7] = 0x801B2000;
-    D_8013C620[0].unk_10[8] = 0x801B6000;
-    D_8013C620[0].unk_10[9] = 0x801BA000;
-    D_8013C620[0].unk_10[10] = 0x801BE000;
-    D_8013C620[0].unk_10[11] = 0x801C2000;
-    D_8013C620[0].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_shiori(void) {
+    ending_scene_asset_records[0].unk_00 = 0x801E6598;
+    ending_scene_asset_records[0].unk_04 = 0x801E65AC;
+    ending_scene_asset_records[0].unk_08 = 0x801E660C;
+    ending_scene_asset_records[0].unk_0C = *(s16 *)0x801E6638;
+    ending_scene_asset_records[0].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[0].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[0].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[0].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[0].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[0].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[0].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[0].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[0].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[0].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[0].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[0].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[0].unk_10[12] = 0x801C6000;
 }
 
-void func_80134EF0(void) {
-    D_8013C620[1].unk_00 = 0x801E2390;
-    D_8013C620[1].unk_04 = 0x801E23A0;
-    D_8013C620[1].unk_08 = 0x801E23E4;
-    D_8013C620[1].unk_0C = *(s16 *)0x801E2404;
-    D_8013C620[1].unk_10[0] = 0x801A0000;
-    D_8013C620[1].unk_10[1] = 0x801A2000;
-    D_8013C620[1].unk_10[2] = 0x801A6000;
-    D_8013C620[1].unk_10[3] = 0x801CA000;
-    D_8013C620[1].unk_10[4] = 0x801CE000;
-    D_8013C620[1].unk_10[5] = 0x801AA000;
-    D_8013C620[1].unk_10[6] = 0x801AE000;
-    D_8013C620[1].unk_10[7] = 0x801B2000;
-    D_8013C620[1].unk_10[8] = 0x801B6000;
-    D_8013C620[1].unk_10[9] = 0x801BA000;
-    D_8013C620[1].unk_10[10] = 0x801BE000;
-    D_8013C620[1].unk_10[11] = 0x801C2000;
-    D_8013C620[1].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_mio_b14_clear(void) {
+    ending_scene_asset_records[1].unk_00 = 0x801E2390;
+    ending_scene_asset_records[1].unk_04 = 0x801E23A0;
+    ending_scene_asset_records[1].unk_08 = 0x801E23E4;
+    ending_scene_asset_records[1].unk_0C = *(s16 *)0x801E2404;
+    ending_scene_asset_records[1].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[1].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[1].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[1].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[1].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[1].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[1].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[1].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[1].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[1].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[1].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[1].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[1].unk_10[12] = 0x801C6000;
 }
 
-void func_80135000(void) {
-    D_8013C620[2].unk_00 = 0x801DE2F4;
-    D_8013C620[2].unk_04 = 0x801DE300;
-    D_8013C620[2].unk_08 = 0x801DE34C;
-    D_8013C620[2].unk_0C = *(s16 *)0x801DE370;
-    D_8013C620[2].unk_10[0] = 0x801A0000;
-    D_8013C620[2].unk_10[1] = 0x801A2000;
-    D_8013C620[2].unk_10[2] = 0x801A6000;
-    D_8013C620[2].unk_10[3] = 0x801CA000;
-    D_8013C620[2].unk_10[4] = 0x801CE000;
-    D_8013C620[2].unk_10[5] = 0x801AA000;
-    D_8013C620[2].unk_10[6] = 0x801AE000;
-    D_8013C620[2].unk_10[7] = 0x801B2000;
-    D_8013C620[2].unk_10[8] = 0x801B6000;
-    D_8013C620[2].unk_10[9] = 0x801BA000;
-    D_8013C620[2].unk_10[10] = 0x801BE000;
-    D_8013C620[2].unk_10[11] = 0x801C2000;
-    D_8013C620[2].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_yuina(void) {
+    ending_scene_asset_records[2].unk_00 = 0x801DE2F4;
+    ending_scene_asset_records[2].unk_04 = 0x801DE300;
+    ending_scene_asset_records[2].unk_08 = 0x801DE34C;
+    ending_scene_asset_records[2].unk_0C = *(s16 *)0x801DE370;
+    ending_scene_asset_records[2].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[2].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[2].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[2].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[2].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[2].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[2].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[2].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[2].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[2].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[2].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[2].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[2].unk_10[12] = 0x801C6000;
 }
 
-void func_80135110(void) {
-    D_8013C620[3].unk_00 = 0x801E6484;
-    D_8013C620[3].unk_04 = 0x801E6498;
-    D_8013C620[3].unk_08 = 0x801E64F4;
-    D_8013C620[3].unk_0C = *(s16 *)0x801E6518;
-    D_8013C620[3].unk_10[0] = 0x801A0000;
-    D_8013C620[3].unk_10[1] = 0x801A2000;
-    D_8013C620[3].unk_10[2] = 0x801A6000;
-    D_8013C620[3].unk_10[3] = 0x801CA000;
-    D_8013C620[3].unk_10[4] = 0x801CE000;
-    D_8013C620[3].unk_10[5] = 0x801AA000;
-    D_8013C620[3].unk_10[6] = 0x801AE000;
-    D_8013C620[3].unk_10[7] = 0x801B2000;
-    D_8013C620[3].unk_10[8] = 0x801B6000;
-    D_8013C620[3].unk_10[9] = 0x801BA000;
-    D_8013C620[3].unk_10[10] = 0x801BE000;
-    D_8013C620[3].unk_10[11] = 0x801C2000;
-    D_8013C620[3].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_ayako(void) {
+    ending_scene_asset_records[3].unk_00 = 0x801E6484;
+    ending_scene_asset_records[3].unk_04 = 0x801E6498;
+    ending_scene_asset_records[3].unk_08 = 0x801E64F4;
+    ending_scene_asset_records[3].unk_0C = *(s16 *)0x801E6518;
+    ending_scene_asset_records[3].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[3].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[3].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[3].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[3].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[3].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[3].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[3].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[3].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[3].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[3].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[3].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[3].unk_10[12] = 0x801C6000;
 }
 
-void func_80135220(void) {
-    D_8013C620[4].unk_00 = 0x801E64B4;
-    D_8013C620[4].unk_04 = 0x801E64C8;
-    D_8013C620[4].unk_08 = 0x801E6524;
-    D_8013C620[4].unk_0C = *(s16 *)0x801E6554;
-    D_8013C620[4].unk_10[0] = 0x801A0000;
-    D_8013C620[4].unk_10[1] = 0x801A2000;
-    D_8013C620[4].unk_10[2] = 0x801A6000;
-    D_8013C620[4].unk_10[3] = 0x801CA000;
-    D_8013C620[4].unk_10[4] = 0x801CE000;
-    D_8013C620[4].unk_10[5] = 0x801AA000;
-    D_8013C620[4].unk_10[6] = 0x801AE000;
-    D_8013C620[4].unk_10[7] = 0x801B2000;
-    D_8013C620[4].unk_10[8] = 0x801B6000;
-    D_8013C620[4].unk_10[9] = 0x801BA000;
-    D_8013C620[4].unk_10[10] = 0x801BE000;
-    D_8013C620[4].unk_10[11] = 0x801C2000;
-    D_8013C620[4].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_saki(void) {
+    ending_scene_asset_records[4].unk_00 = 0x801E64B4;
+    ending_scene_asset_records[4].unk_04 = 0x801E64C8;
+    ending_scene_asset_records[4].unk_08 = 0x801E6524;
+    ending_scene_asset_records[4].unk_0C = *(s16 *)0x801E6554;
+    ending_scene_asset_records[4].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[4].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[4].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[4].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[4].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[4].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[4].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[4].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[4].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[4].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[4].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[4].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[4].unk_10[12] = 0x801C6000;
 }
 
-void func_80135330(void) {
-    D_8013C620[5].unk_00 = 0x801EA7A8;
-    D_8013C620[5].unk_04 = 0x801EA7BC;
-    D_8013C620[5].unk_08 = 0x801EA81C;
-    D_8013C620[5].unk_0C = *(s16 *)0x801EA858;
-    D_8013C620[5].unk_10[0] = 0x801A0000;
-    D_8013C620[5].unk_10[1] = 0x801A2000;
-    D_8013C620[5].unk_10[2] = 0x801A6000;
-    D_8013C620[5].unk_10[3] = 0x801CA000;
-    D_8013C620[5].unk_10[4] = 0x801CE000;
-    D_8013C620[5].unk_10[5] = 0x801AA000;
-    D_8013C620[5].unk_10[6] = 0x801AE000;
-    D_8013C620[5].unk_10[7] = 0x801B2000;
-    D_8013C620[5].unk_10[8] = 0x801B6000;
-    D_8013C620[5].unk_10[9] = 0x801BA000;
-    D_8013C620[5].unk_10[10] = 0x801BE000;
-    D_8013C620[5].unk_10[11] = 0x801C2000;
-    D_8013C620[5].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_yukari(void) {
+    ending_scene_asset_records[5].unk_00 = 0x801EA7A8;
+    ending_scene_asset_records[5].unk_04 = 0x801EA7BC;
+    ending_scene_asset_records[5].unk_08 = 0x801EA81C;
+    ending_scene_asset_records[5].unk_0C = *(s16 *)0x801EA858;
+    ending_scene_asset_records[5].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[5].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[5].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[5].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[5].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[5].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[5].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[5].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[5].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[5].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[5].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[5].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[5].unk_10[12] = 0x801C6000;
 }
 
-void func_80135440(void) {
-    D_8013C620[6].unk_00 = 0x801EE6E8;
-    D_8013C620[6].unk_04 = 0x801EE704;
-    D_8013C620[6].unk_08 = 0x801EE768;
-    D_8013C620[6].unk_0C = *(s16 *)0x801EE794;
-    D_8013C620[6].unk_10[0] = 0x801A0000;
-    D_8013C620[6].unk_10[1] = 0x801A2000;
-    D_8013C620[6].unk_10[2] = 0x801A6000;
-    D_8013C620[6].unk_10[3] = 0x801CA000;
-    D_8013C620[6].unk_10[4] = 0x801CE000;
-    D_8013C620[6].unk_10[5] = 0x801AA000;
-    D_8013C620[6].unk_10[6] = 0x801AE000;
-    D_8013C620[6].unk_10[7] = 0x801B2000;
-    D_8013C620[6].unk_10[8] = 0x801B6000;
-    D_8013C620[6].unk_10[9] = 0x801BA000;
-    D_8013C620[6].unk_10[10] = 0x801BE000;
-    D_8013C620[6].unk_10[11] = 0x801C2000;
-    D_8013C620[6].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_nozomi_uncleared(void) {
+    ending_scene_asset_records[6].unk_00 = 0x801EE6E8;
+    ending_scene_asset_records[6].unk_04 = 0x801EE704;
+    ending_scene_asset_records[6].unk_08 = 0x801EE768;
+    ending_scene_asset_records[6].unk_0C = *(s16 *)0x801EE794;
+    ending_scene_asset_records[6].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[6].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[6].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[6].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[6].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[6].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[6].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[6].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[6].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[6].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[6].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[6].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[6].unk_10[12] = 0x801C6000;
 }
 
-void func_80135550(void) {
-    D_8013C620[7].unk_00 = 0x801EA624;
-    D_8013C620[7].unk_04 = 0x801EA63C;
-    D_8013C620[7].unk_08 = 0x801EA69C;
-    D_8013C620[7].unk_0C = *(s16 *)0x801EA6C8;
-    D_8013C620[7].unk_10[0] = 0x801A0000;
-    D_8013C620[7].unk_10[1] = 0x801A2000;
-    D_8013C620[7].unk_10[2] = 0x801A6000;
-    D_8013C620[7].unk_10[3] = 0x801CA000;
-    D_8013C620[7].unk_10[4] = 0x801CE000;
-    D_8013C620[7].unk_10[5] = 0x801AA000;
-    D_8013C620[7].unk_10[6] = 0x801AE000;
-    D_8013C620[7].unk_10[7] = 0x801B2000;
-    D_8013C620[7].unk_10[8] = 0x801B6000;
-    D_8013C620[7].unk_10[9] = 0x801BA000;
-    D_8013C620[7].unk_10[10] = 0x801BE000;
-    D_8013C620[7].unk_10[11] = 0x801C2000;
-    D_8013C620[7].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_mira(void) {
+    ending_scene_asset_records[7].unk_00 = 0x801EA624;
+    ending_scene_asset_records[7].unk_04 = 0x801EA63C;
+    ending_scene_asset_records[7].unk_08 = 0x801EA69C;
+    ending_scene_asset_records[7].unk_0C = *(s16 *)0x801EA6C8;
+    ending_scene_asset_records[7].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[7].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[7].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[7].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[7].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[7].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[7].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[7].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[7].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[7].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[7].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[7].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[7].unk_10[12] = 0x801C6000;
 }
 
-void func_80135660(void) {
-    D_8013C620[8].unk_00 = 0x801E65A8;
-    D_8013C620[8].unk_04 = 0x801E65BC;
-    D_8013C620[8].unk_08 = 0x801E6620;
-    D_8013C620[8].unk_0C = *(s16 *)0x801E6648;
-    D_8013C620[8].unk_10[0] = 0x801A0000;
-    D_8013C620[8].unk_10[1] = 0x801A2000;
-    D_8013C620[8].unk_10[2] = 0x801A6000;
-    D_8013C620[8].unk_10[3] = 0x801CA000;
-    D_8013C620[8].unk_10[4] = 0x801CE000;
-    D_8013C620[8].unk_10[5] = 0x801AA000;
-    D_8013C620[8].unk_10[6] = 0x801AE000;
-    D_8013C620[8].unk_10[7] = 0x801B2000;
-    D_8013C620[8].unk_10[8] = 0x801B6000;
-    D_8013C620[8].unk_10[9] = 0x801BA000;
-    D_8013C620[8].unk_10[10] = 0x801BE000;
-    D_8013C620[8].unk_10[11] = 0x801C2000;
-    D_8013C620[8].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_yuko(void) {
+    ending_scene_asset_records[8].unk_00 = 0x801E65A8;
+    ending_scene_asset_records[8].unk_04 = 0x801E65BC;
+    ending_scene_asset_records[8].unk_08 = 0x801E6620;
+    ending_scene_asset_records[8].unk_0C = *(s16 *)0x801E6648;
+    ending_scene_asset_records[8].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[8].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[8].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[8].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[8].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[8].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[8].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[8].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[8].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[8].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[8].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[8].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[8].unk_10[12] = 0x801C6000;
 }
 
-void func_80135770(void) {
-    D_8013C620[9].unk_00 = 0x801E63AC;
-    D_8013C620[9].unk_04 = 0x801E63C0;
-    D_8013C620[9].unk_08 = 0x801E6414;
-    D_8013C620[9].unk_0C = *(s16 *)0x801E6444;
-    D_8013C620[9].unk_10[0] = 0x801A0000;
-    D_8013C620[9].unk_10[1] = 0x801A2000;
-    D_8013C620[9].unk_10[2] = 0x801A6000;
-    D_8013C620[9].unk_10[3] = 0x801CA000;
-    D_8013C620[9].unk_10[4] = 0x801CE000;
-    D_8013C620[9].unk_10[5] = 0x801AA000;
-    D_8013C620[9].unk_10[6] = 0x801AE000;
-    D_8013C620[9].unk_10[7] = 0x801B2000;
-    D_8013C620[9].unk_10[8] = 0x801B6000;
-    D_8013C620[9].unk_10[9] = 0x801BA000;
-    D_8013C620[9].unk_10[10] = 0x801BE000;
-    D_8013C620[9].unk_10[11] = 0x801C2000;
-    D_8013C620[9].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_megumi(void) {
+    ending_scene_asset_records[9].unk_00 = 0x801E63AC;
+    ending_scene_asset_records[9].unk_04 = 0x801E63C0;
+    ending_scene_asset_records[9].unk_08 = 0x801E6414;
+    ending_scene_asset_records[9].unk_0C = *(s16 *)0x801E6444;
+    ending_scene_asset_records[9].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[9].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[9].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[9].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[9].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[9].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[9].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[9].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[9].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[9].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[9].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[9].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[9].unk_10[12] = 0x801C6000;
 }
 
-void func_80135880(void) {
-    D_8013C620[10].unk_00 = 0x801E6488;
-    D_8013C620[10].unk_04 = 0x801E649C;
-    D_8013C620[10].unk_08 = 0x801E64EC;
-    D_8013C620[10].unk_0C = *(s16 *)0x801E6514;
-    D_8013C620[10].unk_10[0] = 0x801A0000;
-    D_8013C620[10].unk_10[1] = 0x801A2000;
-    D_8013C620[10].unk_10[2] = 0x801A6000;
-    D_8013C620[10].unk_10[3] = 0x801CA000;
-    D_8013C620[10].unk_10[4] = 0x801CE000;
-    D_8013C620[10].unk_10[5] = 0x801AA000;
-    D_8013C620[10].unk_10[6] = 0x801AE000;
-    D_8013C620[10].unk_10[7] = 0x801B2000;
-    D_8013C620[10].unk_10[8] = 0x801B6000;
-    D_8013C620[10].unk_10[9] = 0x801BA000;
-    D_8013C620[10].unk_10[10] = 0x801BE000;
-    D_8013C620[10].unk_10[11] = 0x801C2000;
-    D_8013C620[10].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_yumi(void) {
+    ending_scene_asset_records[10].unk_00 = 0x801E6488;
+    ending_scene_asset_records[10].unk_04 = 0x801E649C;
+    ending_scene_asset_records[10].unk_08 = 0x801E64EC;
+    ending_scene_asset_records[10].unk_0C = *(s16 *)0x801E6514;
+    ending_scene_asset_records[10].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[10].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[10].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[10].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[10].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[10].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[10].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[10].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[10].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[10].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[10].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[10].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[10].unk_10[12] = 0x801C6000;
 }
 
-void func_80135990(void) {
-    D_8013C620[11].unk_00 = 0x801E6480;
-    D_8013C620[11].unk_04 = 0x801E6494;
-    D_8013C620[11].unk_08 = 0x801E64F0;
-    D_8013C620[11].unk_0C = *(s16 *)0x801E6518;
-    D_8013C620[11].unk_10[0] = 0x801A0000;
-    D_8013C620[11].unk_10[1] = 0x801A2000;
-    D_8013C620[11].unk_10[2] = 0x801A6000;
-    D_8013C620[11].unk_10[3] = 0x801CA000;
-    D_8013C620[11].unk_10[4] = 0x801CE000;
-    D_8013C620[11].unk_10[5] = 0x801AA000;
-    D_8013C620[11].unk_10[6] = 0x801AE000;
-    D_8013C620[11].unk_10[7] = 0x801B2000;
-    D_8013C620[11].unk_10[8] = 0x801B6000;
-    D_8013C620[11].unk_10[9] = 0x801BA000;
-    D_8013C620[11].unk_10[10] = 0x801BE000;
-    D_8013C620[11].unk_10[11] = 0x801C2000;
-    D_8013C620[11].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_miharu(void) {
+    ending_scene_asset_records[11].unk_00 = 0x801E6480;
+    ending_scene_asset_records[11].unk_04 = 0x801E6494;
+    ending_scene_asset_records[11].unk_08 = 0x801E64F0;
+    ending_scene_asset_records[11].unk_0C = *(s16 *)0x801E6518;
+    ending_scene_asset_records[11].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[11].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[11].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[11].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[11].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[11].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[11].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[11].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[11].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[11].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[11].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[11].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[11].unk_10[12] = 0x801C6000;
 }
 
-void func_80135AA0(void) {
-    D_8013C620[12].unk_00 = 0x801E6410;
-    D_8013C620[12].unk_04 = 0x801E6424;
-    D_8013C620[12].unk_08 = 0x801E6474;
-    D_8013C620[12].unk_0C = *(s16 *)0x801E6494;
-    D_8013C620[12].unk_10[0] = 0x801A0000;
-    D_8013C620[12].unk_10[1] = 0x801A2000;
-    D_8013C620[12].unk_10[2] = 0x801A6000;
-    D_8013C620[12].unk_10[3] = 0x801CA000;
-    D_8013C620[12].unk_10[4] = 0x801CE000;
-    D_8013C620[12].unk_10[5] = 0x801AA000;
-    D_8013C620[12].unk_10[6] = 0x801AE000;
-    D_8013C620[12].unk_10[7] = 0x801B2000;
-    D_8013C620[12].unk_10[8] = 0x801B6000;
-    D_8013C620[12].unk_10[9] = 0x801BA000;
-    D_8013C620[12].unk_10[10] = 0x801BE000;
-    D_8013C620[12].unk_10[11] = 0x801C2000;
-    D_8013C620[12].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_default(void) {
+    ending_scene_asset_records[12].unk_00 = 0x801E6410;
+    ending_scene_asset_records[12].unk_04 = 0x801E6424;
+    ending_scene_asset_records[12].unk_08 = 0x801E6474;
+    ending_scene_asset_records[12].unk_0C = *(s16 *)0x801E6494;
+    ending_scene_asset_records[12].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[12].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[12].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[12].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[12].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[12].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[12].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[12].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[12].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[12].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[12].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[12].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[12].unk_10[12] = 0x801C6000;
 }
 
-void func_80135BB0(void) {
-    D_8013C620[13].unk_00 = 0x801E6390;
-    D_8013C620[13].unk_04 = 0x801E63A4;
-    D_8013C620[13].unk_08 = 0x801E63E8;
-    D_8013C620[13].unk_0C = *(s16 *)0x801E6408;
-    D_8013C620[13].unk_10[0] = 0x801A0000;
-    D_8013C620[13].unk_10[1] = 0x801A2000;
-    D_8013C620[13].unk_10[2] = 0x801A6000;
-    D_8013C620[13].unk_10[3] = 0x801CA000;
-    D_8013C620[13].unk_10[4] = 0x801CE000;
-    D_8013C620[13].unk_10[5] = 0x801AA000;
-    D_8013C620[13].unk_10[6] = 0x801AE000;
-    D_8013C620[13].unk_10[7] = 0x801B2000;
-    D_8013C620[13].unk_10[8] = 0x801B6000;
-    D_8013C620[13].unk_10[9] = 0x801BA000;
-    D_8013C620[13].unk_10[10] = 0x801BE000;
-    D_8013C620[13].unk_10[11] = 0x801C2000;
-    D_8013C620[13].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_mio_b14_set(void) {
+    ending_scene_asset_records[13].unk_00 = 0x801E6390;
+    ending_scene_asset_records[13].unk_04 = 0x801E63A4;
+    ending_scene_asset_records[13].unk_08 = 0x801E63E8;
+    ending_scene_asset_records[13].unk_0C = *(s16 *)0x801E6408;
+    ending_scene_asset_records[13].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[13].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[13].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[13].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[13].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[13].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[13].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[13].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[13].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[13].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[13].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[13].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[13].unk_10[12] = 0x801C6000;
 }
 
-void func_80135CC0(void) {
-    D_8013C620[14].unk_00 = 0x801EE6E8;
-    D_8013C620[14].unk_04 = 0x801EE704;
-    D_8013C620[14].unk_08 = 0x801EE768;
-    D_8013C620[14].unk_0C = *(s16 *)0x801EE794;
-    D_8013C620[14].unk_10[0] = 0x801A0000;
-    D_8013C620[14].unk_10[1] = 0x801A2000;
-    D_8013C620[14].unk_10[2] = 0x801A6000;
-    D_8013C620[14].unk_10[3] = 0x801CA000;
-    D_8013C620[14].unk_10[4] = 0x801CE000;
-    D_8013C620[14].unk_10[5] = 0x801AA000;
-    D_8013C620[14].unk_10[6] = 0x801AE000;
-    D_8013C620[14].unk_10[7] = 0x801B2000;
-    D_8013C620[14].unk_10[8] = 0x801B6000;
-    D_8013C620[14].unk_10[9] = 0x801BA000;
-    D_8013C620[14].unk_10[10] = 0x801BE000;
-    D_8013C620[14].unk_10[11] = 0x801C2000;
-    D_8013C620[14].unk_10[12] = 0x801C6000;
+void ending_set_scene_assets_nozomi_cleared(void) {
+    ending_scene_asset_records[14].unk_00 = 0x801EE6E8;
+    ending_scene_asset_records[14].unk_04 = 0x801EE704;
+    ending_scene_asset_records[14].unk_08 = 0x801EE768;
+    ending_scene_asset_records[14].unk_0C = *(s16 *)0x801EE794;
+    ending_scene_asset_records[14].unk_10[0] = 0x801A0000;
+    ending_scene_asset_records[14].unk_10[1] = 0x801A2000;
+    ending_scene_asset_records[14].unk_10[2] = 0x801A6000;
+    ending_scene_asset_records[14].unk_10[3] = 0x801CA000;
+    ending_scene_asset_records[14].unk_10[4] = 0x801CE000;
+    ending_scene_asset_records[14].unk_10[5] = 0x801AA000;
+    ending_scene_asset_records[14].unk_10[6] = 0x801AE000;
+    ending_scene_asset_records[14].unk_10[7] = 0x801B2000;
+    ending_scene_asset_records[14].unk_10[8] = 0x801B6000;
+    ending_scene_asset_records[14].unk_10[9] = 0x801BA000;
+    ending_scene_asset_records[14].unk_10[10] = 0x801BE000;
+    ending_scene_asset_records[14].unk_10[11] = 0x801C2000;
+    ending_scene_asset_records[14].unk_10[12] = 0x801C6000;
 }
 
-void func_80135DD0(void) {
+void ending_audience_scene_step_dispatch(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
     EdFnTbl9 tbl;
 
-    tbl = D_8013CA3C;
+    tbl = ending_audience_scene_step_callbacks;
     tbl.f[game_state.mode_step](0x80);
     if (D_8013CA38 != 0) {
         _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
         dtd_on(0xE);
-        func_80136D60();
+        ending_audience_actor_blink_update();
     }
     if (game_state.frame_count % 240 == 0 && D_80122D0C == 0) {
-        func_80137574();
+        ending_audio_scene_flag_normalize();
     }
 }
 
-void func_80135ECC(void) {
+void ending_audience_scene_state_init(void) {
     sprite_tables_clear();
     actor_clear_range(0);
     tpage_buf_clear_all();
@@ -626,11 +626,11 @@ void func_80135ECC(void) {
     mode_step_next();
 }
 
-/* The switch's range-check load delay stays empty only because D_8013CA3C (in this file's
+/* The switch's range-check load delay stays empty only because ending_audience_scene_step_callbacks (in this file's
  * .data) names this function: as1 then gives the dispatch `jr` an edge back to the entry, and
  * the default arm's `lui`s no longer pass its delay-slot scan (wiki/as1-scheduler-rule.md,
  * T-25126). */
-void func_80135F4C(void) {
+void ending_audience_scene_initialize(void) {
     s16 i;
     u16 size;
     s32 row;
@@ -641,10 +641,10 @@ void func_80135F4C(void) {
      * constant range; the shared SpriteQuad view declares these as s16. T-24047. */
     sp7C = D_8013CA60;
     sp60 = D_8013CA7C;
-    D_8013C358 = 0;
-    D_8013C35C = 0;
+    ending_scene_dialogue_page_index = 0;
+    ending_scene_step_index = 0;
     talk_names_set(game_state.current_girl);
-    func_80134D20();
+    ending_set_default_scene_asset_table();
     tpage_buf_clear_all();
     game_state.tpage_buf[0x1C] = 1;
     game_state.tpage_buf[0x1D] = 1;
@@ -702,20 +702,20 @@ void func_80135F4C(void) {
         ((Actor *)actor_pool)[i + 96].unk_04 = 8;
         D_8013CA1C[i] = rand() % 60;
     }
-    func_80134DE0();
-    load_palette(D_8013C620->unk_10[0], 0x13, 1, 2, 0);
-    LoadSquare(0x140U, size, 0x40U, size, D_8013C620->unk_10[1]);
-    LoadSquare(0x180U, size, 0x40U, size, D_8013C620->unk_10[2]);
-    LoadSquare(0x1C0U, size, 0x40U, size, D_8013C620->unk_10[5]);
-    LoadSquare(0x200U, size, 0x40U, size, D_8013C620->unk_10[6]);
-    LoadSquare(0x240U, size, 0x40U, size, D_8013C620->unk_10[7]);
-    LoadSquare(0x280U, size, 0x40U, size, D_8013C620->unk_10[8]);
-    LoadSquare(0x140U, 0x100U, 0x40U, size, D_8013C620->unk_10[9]);
-    LoadSquare(0x180U, 0x100U, 0x40U, size, D_8013C620->unk_10[0xA]);
-    LoadSquare(0x1C0U, 0x100U, 0x40U, size, D_8013C620->unk_10[0xB]);
-    LoadSquare(0x200U, 0x100U, 0x40U, size, D_8013C620->unk_10[0xC]);
-    LoadSquare(0x240U, 0x100U, 0x40U, size, D_8013C620->unk_10[3]);
-    LoadSquare(0x280U, 0x100U, 0x40U, size, D_8013C620->unk_10[4]);
+    ending_set_scene_assets_shiori();
+    load_palette(ending_scene_asset_records->unk_10[0], 0x13, 1, 2, 0);
+    LoadSquare(0x140U, size, 0x40U, size, ending_scene_asset_records->unk_10[1]);
+    LoadSquare(0x180U, size, 0x40U, size, ending_scene_asset_records->unk_10[2]);
+    LoadSquare(0x1C0U, size, 0x40U, size, ending_scene_asset_records->unk_10[5]);
+    LoadSquare(0x200U, size, 0x40U, size, ending_scene_asset_records->unk_10[6]);
+    LoadSquare(0x240U, size, 0x40U, size, ending_scene_asset_records->unk_10[7]);
+    LoadSquare(0x280U, size, 0x40U, size, ending_scene_asset_records->unk_10[8]);
+    LoadSquare(0x140U, 0x100U, 0x40U, size, ending_scene_asset_records->unk_10[9]);
+    LoadSquare(0x180U, 0x100U, 0x40U, size, ending_scene_asset_records->unk_10[0xA]);
+    LoadSquare(0x1C0U, 0x100U, 0x40U, size, ending_scene_asset_records->unk_10[0xB]);
+    LoadSquare(0x200U, 0x100U, 0x40U, size, ending_scene_asset_records->unk_10[0xC]);
+    LoadSquare(0x240U, 0x100U, 0x40U, size, ending_scene_asset_records->unk_10[3]);
+    LoadSquare(0x280U, 0x100U, 0x40U, size, ending_scene_asset_records->unk_10[4]);
     game_state.tpage_buf[0x25] = 1;
     game_state.tpage_buf[0x26] = 1;
     game_state.tpage_buf[0x27] = 1;
@@ -750,95 +750,95 @@ void func_80135F4C(void) {
         sprite_quads[i + 4].y = ((i / 3) << 7) - 0x188;
         game_state.quad_layer[i + 4] = 0xB;
     }
-    func_80132000();
+    ending_graduation_dialogue_resource_table_init();
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
-        D_8013C34C.unk_00 = D_8013C280[0][2];
-        D_8013C34C.unk_04 = D_8013C280[1][2];
-        D_8013C34C.unk_08 = D_8013C280[2][2];
-        func_80137160(D_8013C620->unk_00, D_8013C620->unk_04, D_8013C620->unk_08, (s32) D_8013C620->unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][2];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][2];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][2];
+        ending_audience_actor_pair_setup(ending_scene_asset_records->unk_00, ending_scene_asset_records->unk_04, ending_scene_asset_records->unk_08, (s32) ending_scene_asset_records->unk_0C);
         break;
     case GIRL_MIO:
-        D_8013C34C.unk_00 = D_8013C280[0][8];
-        D_8013C34C.unk_04 = D_8013C280[1][8];
-        D_8013C34C.unk_08 = D_8013C280[2][8];
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][8];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][8];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][8];
         if (!(game_state.girls[1].flags.f.b14)) {
-            func_80137160(D_8013C620[1].unk_00, D_8013C620[1].unk_04, D_8013C620[1].unk_08, (s32) D_8013C620[1].unk_0C);
+            ending_audience_actor_pair_setup(ending_scene_asset_records[1].unk_00, ending_scene_asset_records[1].unk_04, ending_scene_asset_records[1].unk_08, (s32) ending_scene_asset_records[1].unk_0C);
         } else {
-            func_80137160(D_8013C620[0xD].unk_00, D_8013C620[0xD].unk_04, D_8013C620[0xD].unk_08, (s32) D_8013C620[0xD].unk_0C);
-            D_8013C358 = 1;
+            ending_audience_actor_pair_setup(ending_scene_asset_records[0xD].unk_00, ending_scene_asset_records[0xD].unk_04, ending_scene_asset_records[0xD].unk_08, (s32) ending_scene_asset_records[0xD].unk_0C);
+            ending_scene_dialogue_page_index = 1;
         }
         break;
     case GIRL_YUINA:
-        D_8013C34C.unk_00 = D_8013C280[0][4];
-        D_8013C34C.unk_04 = D_8013C280[1][4];
-        D_8013C34C.unk_08 = D_8013C280[2][4];
-        func_80137160(D_8013C620[2].unk_00, D_8013C620[2].unk_04, D_8013C620[2].unk_08, (s32) D_8013C620[2].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][4];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][4];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][4];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[2].unk_00, ending_scene_asset_records[2].unk_04, ending_scene_asset_records[2].unk_08, (s32) ending_scene_asset_records[2].unk_0C);
         break;
     case GIRL_AYAKO:
-        D_8013C34C.unk_00 = D_8013C280[0][6];
-        D_8013C34C.unk_04 = D_8013C280[1][6];
-        D_8013C34C.unk_08 = D_8013C280[2][6];
-        func_80137160(D_8013C620[3].unk_00, D_8013C620[3].unk_04, D_8013C620[3].unk_08, (s32) D_8013C620[3].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][6];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][6];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][6];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[3].unk_00, ending_scene_asset_records[3].unk_04, ending_scene_asset_records[3].unk_08, (s32) ending_scene_asset_records[3].unk_0C);
         break;
     case GIRL_SAKI:
-        D_8013C34C.unk_00 = D_8013C280[0][0xC];
-        D_8013C34C.unk_04 = D_8013C280[1][0xC];
-        D_8013C34C.unk_08 = D_8013C280[2][0xC];
-        func_80137160(D_8013C620[4].unk_00, D_8013C620[4].unk_04, D_8013C620[4].unk_08, (s32) D_8013C620[4].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][0xC];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][0xC];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][0xC];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[4].unk_00, ending_scene_asset_records[4].unk_04, ending_scene_asset_records[4].unk_08, (s32) ending_scene_asset_records[4].unk_0C);
         break;
     case GIRL_YUKARI:
-        D_8013C34C.unk_00 = D_8013C280[0][9];
-        D_8013C34C.unk_04 = D_8013C280[1][9];
-        D_8013C34C.unk_08 = D_8013C280[2][9];
-        func_80137160(D_8013C620[5].unk_00, D_8013C620[5].unk_04, D_8013C620[5].unk_08, (s32) D_8013C620[5].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][9];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][9];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][9];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[5].unk_00, ending_scene_asset_records[5].unk_04, ending_scene_asset_records[5].unk_08, (s32) ending_scene_asset_records[5].unk_0C);
         break;
     case GIRL_NOZOMI:
-        D_8013C34C.unk_00 = D_8013C280[0][0xA];
-        D_8013C34C.unk_04 = D_8013C280[1][0xA];
-        D_8013C34C.unk_08 = D_8013C280[2][0xA];
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][0xA];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][0xA];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][0xA];
         if (!(game_state.girl_cleared[6] & 1)) {
-            func_80137160(D_8013C620[6].unk_00, D_8013C620[6].unk_04, D_8013C620[6].unk_08, (s32) D_8013C620[6].unk_0C);
+            ending_audience_actor_pair_setup(ending_scene_asset_records[6].unk_00, ending_scene_asset_records[6].unk_04, ending_scene_asset_records[6].unk_08, (s32) ending_scene_asset_records[6].unk_0C);
         } else {
-            func_80137160(D_8013C620[0xE].unk_00, D_8013C620[0xE].unk_04, D_8013C620[0xE].unk_08, (s32) D_8013C620[0xE].unk_0C);
-            D_8013C358 = 1;
+            ending_audience_actor_pair_setup(ending_scene_asset_records[0xE].unk_00, ending_scene_asset_records[0xE].unk_04, ending_scene_asset_records[0xE].unk_08, (s32) ending_scene_asset_records[0xE].unk_0C);
+            ending_scene_dialogue_page_index = 1;
         }
         break;
     case GIRL_MIRA:
-        D_8013C34C.unk_00 = D_8013C280[0][7];
-        D_8013C34C.unk_04 = D_8013C280[1][7];
-        D_8013C34C.unk_08 = D_8013C280[2][7];
-        func_80137160(D_8013C620[7].unk_00, D_8013C620[7].unk_04, D_8013C620[7].unk_08, (s32) D_8013C620[7].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][7];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][7];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][7];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[7].unk_00, ending_scene_asset_records[7].unk_04, ending_scene_asset_records[7].unk_08, (s32) ending_scene_asset_records[7].unk_0C);
         break;
     case GIRL_YUKO:
-        D_8013C34C.unk_00 = D_8013C280[0][1];
-        D_8013C34C.unk_04 = D_8013C280[1][1];
-        D_8013C34C.unk_08 = D_8013C280[2][1];
-        func_80137160(D_8013C620[8].unk_00, D_8013C620[8].unk_04, D_8013C620[8].unk_08, (s32) D_8013C620[8].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][1];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][1];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][1];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[8].unk_00, ending_scene_asset_records[8].unk_04, ending_scene_asset_records[8].unk_08, (s32) ending_scene_asset_records[8].unk_0C);
         break;
     case GIRL_MEGUMI:
-        D_8013C34C.unk_00 = D_8013C280[0][0xB];
-        D_8013C34C.unk_04 = D_8013C280[1][0xB];
-        D_8013C34C.unk_08 = D_8013C280[2][0xB];
-        func_80137160(D_8013C620[9].unk_00, D_8013C620[9].unk_04, D_8013C620[9].unk_08, (s32) D_8013C620[9].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][0xB];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][0xB];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][0xB];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[9].unk_00, ending_scene_asset_records[9].unk_04, ending_scene_asset_records[9].unk_08, (s32) ending_scene_asset_records[9].unk_0C);
         break;
     case GIRL_YUMI:
-        D_8013C34C.unk_00 = D_8013C280[0][0xE];
-        D_8013C34C.unk_04 = D_8013C280[1][0xE];
-        D_8013C34C.unk_08 = D_8013C280[2][0xE];
-        func_80137160(D_8013C620[0xA].unk_00, D_8013C620[0xA].unk_04, D_8013C620[0xA].unk_08, (s32) D_8013C620[0xA].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][0xE];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][0xE];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][0xE];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[0xA].unk_00, ending_scene_asset_records[0xA].unk_04, ending_scene_asset_records[0xA].unk_08, (s32) ending_scene_asset_records[0xA].unk_0C);
         break;
     case GIRL_MIHARU:
-        D_8013C34C.unk_00 = D_8013C280[0][0x10];
-        D_8013C34C.unk_04 = D_8013C280[1][0x10];
-        D_8013C34C.unk_08 = D_8013C280[2][0x10];
-        func_80137160(D_8013C620[0xB].unk_00, D_8013C620[0xB].unk_04, D_8013C620[0xB].unk_08, (s32) D_8013C620[0xB].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][0x10];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][0x10];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][0x10];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[0xB].unk_00, ending_scene_asset_records[0xB].unk_04, ending_scene_asset_records[0xB].unk_08, (s32) ending_scene_asset_records[0xB].unk_0C);
         break;
     default:
-        D_8013C34C.unk_00 = D_8013C280[0][5];
-        D_8013C34C.unk_04 = D_8013C280[1][5];
-        D_8013C34C.unk_08 = D_8013C280[2][5];
-        func_80137160(D_8013C620[0xC].unk_00, D_8013C620[0xC].unk_04, D_8013C620[0xC].unk_08, (s32) D_8013C620[0xC].unk_0C);
+        ending_scene_dialogue_tables.unk_00 = ending_dialogue_resource_tables[0][5];
+        ending_scene_dialogue_tables.unk_04 = ending_dialogue_resource_tables[1][5];
+        ending_scene_dialogue_tables.unk_08 = ending_dialogue_resource_tables[2][5];
+        ending_audience_actor_pair_setup(ending_scene_asset_records[0xC].unk_00, ending_scene_asset_records[0xC].unk_04, ending_scene_asset_records[0xC].unk_08, (s32) ending_scene_asset_records[0xC].unk_0C);
         break;
     }
     D_8013CA38 = 1;
@@ -847,12 +847,12 @@ void func_80135F4C(void) {
     mode_step_next();
 }
 
-void func_80136BE0(void) {
+void ending_audience_scene_animation_update(void) {
     if (!(game_state.mode_step_timer.w & 3)) {
-        func_80136C5C(1);
+        ending_shift_main_scene_sprite_y(1);
     }
     if (!(game_state.mode_step_timer.w & 0xF)) {
-        func_80136CD0(1);
+        ending_shift_audience_actor_y(1);
     }
     game_state.mode_step_timer.w += 1;
     if ((u32) game_state.mode_step_timer.w >= 0x440U) {
@@ -860,7 +860,7 @@ void func_80136BE0(void) {
     }
 }
 
-void func_80136C5C(s16 arg0) {
+void ending_shift_main_scene_sprite_y(s16 arg0) {
     s16 i;
     u8 *p;
 
@@ -872,7 +872,7 @@ void func_80136C5C(s16 arg0) {
     ((Actor *)actor_pool)[30].y += arg0;
 }
 
-void func_80136CD0(s16 arg0) {
+void ending_shift_audience_actor_y(s16 arg0) {
     s16 i;
     u8 *p;
 
@@ -886,7 +886,7 @@ void func_80136CD0(s16 arg0) {
     }
 }
 
-void func_80136D60(void) {
+void ending_audience_actor_blink_update(void) {
     s16 i;
     s16 *p;
     u8 *e;
@@ -917,83 +917,83 @@ void func_80136D60(void) {
     }
 }
 
-void func_80136EE4(void) {
+void ending_girl_scene_data_load_dispatch(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x734C);
-        func_80134DE0();
+        ending_set_scene_assets_shiori();
         break;
     case GIRL_MIO:
         if (!game_state.girls[1].flags.f.b14) {
             cd_read_sectors(0x85U, 0x801A0000, 0x7605);
-            func_80134EF0();
+            ending_set_scene_assets_mio_b14_clear();
         } else {
             cd_read_sectors(0x8DU, 0x801A0000, 0x768A);
-            func_80135BB0();
+            ending_set_scene_assets_mio_b14_set();
         }
         break;
     case GIRL_YUINA:
         cd_read_sectors(0x7DU, 0x801A0000, 0x73D9);
-        func_80135000();
+        ending_set_scene_assets_yuina();
         break;
     case GIRL_AYAKO:
         cd_read_sectors(0x8DU, 0x801A0000, 0x74E3);
-        func_80135110();
+        ending_set_scene_assets_ayako();
         break;
     case GIRL_SAKI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7974);
-        func_80135220();
+        ending_set_scene_assets_saki();
         break;
     case GIRL_YUKARI:
         cd_read_sectors(0x96U, 0x801A0000, 0x7717);
-        func_80135330();
+        ending_set_scene_assets_yukari();
         break;
     case GIRL_NOZOMI:
         if (!(game_state.girl_cleared[6] & 1)) {
             cd_read_sectors(0x9DU, 0x801A0000, 0x77AD);
-            func_80135440();
+            ending_set_scene_assets_nozomi_uncleared();
         } else {
             cd_read_sectors(0x9DU, 0x801A0000, 0x784A);
-            func_80135CC0();
+            ending_set_scene_assets_nozomi_cleared();
         }
         break;
     case GIRL_MIRA:
         cd_read_sectors(0x95U, 0x801A0000, 0x7570);
-        func_80135550();
+        ending_set_scene_assets_mira();
         break;
     case GIRL_YUKO:
         cd_read_sectors(0x8DU, 0x801A0000, 0x72BF);
-        func_80135660();
+        ending_set_scene_assets_yuko();
         break;
     case GIRL_MEGUMI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x78E7);
-        func_80135770();
+        ending_set_scene_assets_megumi();
         break;
     case GIRL_YUMI:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7A01);
-        func_80135880();
+        ending_set_scene_assets_yumi();
         break;
     case GIRL_MIHARU:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7A8E);
-        func_80135990();
+        ending_set_scene_assets_miharu();
         break;
     default:
         cd_read_sectors(0x8DU, 0x801A0000, 0x7456);
-        func_80135AA0();
+        ending_set_scene_assets_default();
         break;
     }
     mode_step_next();
 }
 
 
-void func_80137128(void) {
+void ending_audience_scene_data_load(void) {
     cd_read_sectors(0x3D, 0x80180000, 0x7B1B);
-    func_80134D20();
+    ending_set_default_scene_asset_table();
     mode_step_next();
 }
 
 /* FAKE: p = &unk_F5F before the D_8011F522 store puts the lui for the selector first, as in the original; found with the permuter, T-9380 */
-s32 func_80137160(s32 arg0, s32 arg1, s32 arg2, s16 arg3) {
+s32 ending_audience_actor_pair_setup(s32 arg0, s32 arg1, s32 arg2, s16 arg3) {
     s16 i;
     u8 *p;
 

@@ -5,6 +5,7 @@
 #include "common.h"
 #include "game.h"
 
+/* Sets projection distance 1000, calls two setters with 100 and 0x10000 (HYPOTHESIS: near and far clip), and sets the reference view with the eye at z=1000 looking at the origin. */
 void initView(void) {
     func_8009AD30(0x3E8);
     D_80122740 = 0;
@@ -22,40 +23,42 @@ void initView(void) {
 
 /* FAKE: retain the shared scalar light views until the libgs light aggregate
  * is available in project headers. T-9550 */
+/* Sets three directional lights (white, green, red) and zero ambient; no caller in src. */
 void initLight(void) {
-    D_80122760 = 0;
+    view_light_0 = 0;
     D_80122764 = 0;
     D_80122768 = 0x64;
     D_8012276C = 0xFF;
     D_8012276D = 0xFF;
     D_8012276E = 0xFF;
-    func_8009AD70(0, (s32) &D_80122760);
-    D_80122770 = 0;
+    func_8009AD70(0, (s32) &view_light_0);
+    view_light_1 = 0;
     D_80122774 = 0x64;
     D_80122778 = 0;
     D_8012277C = 0;
     D_8012277D = 0xFF;
     D_8012277E = 0;
-    func_8009AD70(1, (s32) &D_80122770);
-    D_80122780 = 0x64;
+    func_8009AD70(1, (s32) &view_light_1);
+    view_light_2 = 0x64;
     D_80122784 = 0;
     D_80122788 = 0;
     D_8012278C = 0xFF;
     D_8012278D = 0;
     D_8012278E = 0;
-    func_8009AD70(2, (s32) &D_80122780);
+    func_8009AD70(2, (s32) &view_light_2);
     GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
 
+/* Initializes the 16 model coordinate records, each at z=-4000; no caller in src. */
 void initCoordinate(void) {
-    TaiikuBig *p;
+    GraphicsCoordinate2 *p;
 
     /* FAKE: init and loop head on one source line give the original's addiu order (as1 schedules by line, T-7020) */
-    p = D_801227A0; do {
+    p = view_coordinates; do {
         func_80099E30(0, p);
-        p->unk20 = -0xFA0;
-        p->unk0 = 0;
+        p->translate_z = -0xFA0;
+        p->flag = 0;
         p++;
     } while (p != D_80122CA0);
 }
@@ -65,6 +68,7 @@ void initCoordinate(void) {
  * data, skip the flags and object-count words. The separate `dop++` steps give
  * the original's `move s2,s3; addiu s2,s2,8`; the indexed loop gives its
  * address setup order. T-11610 */
+/* Maps model data and links its objects to the 16 model slots. */
 void initModelingData_init(s32 *arg0) {
     s32 *dop;
     s32 i;
@@ -75,23 +79,23 @@ void initModelingData_init(s32 *arg0) {
     dop++;
     dop++;
     for (i = 0; i < 16; i++) {
-        func_8009B430((s32)dop, (u8 *)&D_80122640[i * 4], 0);
-        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
-        D_80122640[i * 4] = 0x80000000;
+        func_8009B430((s32)dop, (u8 *)&model_objects[i * 4], 0);
+        model_objects[i * 4 + 1] = (u32)&view_coordinates[i];
+        model_objects[i * 4] = 0x80000000;
     }
 }
 
 /* Same TMD walk as initModelingData_init for one object slot (count clamped
- * to 15). FAKE: the slot is reached by byte offset from D_80122640 (u32[], 16
+ * to 15). FAKE: the slot is reached by byte offset from model_objects (u32[], 16
  * bytes per slot) because the record type is not declared yet; the repeated
  * slot address, not a local, gives the original's shared spill slot (as in
- * TAIIKU func_80140738), and `&D_80122640[arg1 * 4]` costs one more ugen
+ * TAIIKU func_80140738), and `&model_objects[arg1 * 4]` costs one more ugen
  * temporary. T-11610 */
-s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2) {
+s32 view_link_object(u32 *model_data_address, s32 destination_slot, u32 object_index) {
     u32 *dop;
     u32 n;
 
-    dop = arg0;
+    dop = model_data_address;
     dop++;
     func_8009B3C0((s32)dop);
     dop++;
@@ -100,24 +104,24 @@ s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2) {
         n = 15;
     }
     dop++;
-    if (arg2 < n) {
-        func_8009B430((s32)dop, (u8 *)D_80122640 + arg1 * 0x10, arg2);
-        *(u32 *)((u8 *)D_80122640 + arg1 * 0x10 + 4) = (u32)&D_801227A0[arg1];
-        *(u32 *)((u8 *)D_80122640 + arg1 * 0x10) = 0;
+    if (object_index < n) {
+        func_8009B430((s32)dop, (u8 *)model_objects + destination_slot * 0x10, object_index);
+        *(u32 *)((u8 *)model_objects + destination_slot * 0x10 + 4) = (u32)&view_coordinates[destination_slot];
+        *(u32 *)((u8 *)model_objects + destination_slot * 0x10) = 0;
         return 1;
     }
     return -1;
 }
 
-void func_80059048(void) {
+void view_model_slots_clear(void) {
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        D_80122640[i * 4] = 0x80000000;
+        model_objects[i * 4] = 0x80000000;
     }
 }
 
-void func_8005907C(void) {
+void view_display_reinit(void) {
     func_80098380();
     func_8009B560(0, 0, 0, 0xF0);
     func_80098530();
@@ -129,28 +133,28 @@ void func_8005907C(void) {
  * game_state; uopt then passes the stored registers (a0/a1) instead of folding the constants,
  * which plain field reads do (18 lines). The else arm stores unk_000/unk_002 before unk_014 so
  * their `li` lead the arm and as1 hoists them above the branch, as in the original. T-24206 */
-void func_800590CC(s32 arg0) {
+void view_display_set_narrow_or_standard(s32 arg0) {
     func_8009C674(0);
     func_8009C210(1);
     func_800AD950(0);
     func_8009C5E0(0);
     if (arg0 != 0) {
-        game_state.screen_center_x[0] = 0x80;
-        game_state.screen_center_x[1] = 0x80;
+        game_state.draw_origin_x[0] = 0x80;
+        game_state.draw_origin_x[1] = 0x80;
         game_state.video_width = 0x100;
         game_state.video_height = 0xF0;
         game_state.video_interlace = 0;
         func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
-        func_8005907C();
+        view_display_reinit();
         back_clear_switch(1);
     } else {
         game_state.video_width = 0x140;
         game_state.video_height = 0xF0;
-        game_state.screen_center_x[0] = 0xA0;
-        game_state.screen_center_x[1] = 0xA0;
+        game_state.draw_origin_x[0] = 0xA0;
+        game_state.draw_origin_x[1] = 0xA0;
         game_state.video_interlace = 0;
         func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
-        func_8005907C();
+        view_display_reinit();
         back_clear_switch(1);
     }
     func_800AD950(0);
@@ -160,29 +164,29 @@ void func_800590CC(s32 arg0) {
 /* FAKE: the call re-reads the stored halfwords through a `u16 *` view of game_state so uopt
  * forwards the stored registers into a0-a2; each arm writes unk_002 (and the else arm unk_000)
  * before the unk_014 stores so as1 hoists their li into the branch delay slots, as in
- * func_800590CC (T-24206). T-24210 */
-void func_800591D8(s32 arg0) {
-    func_80059308();
+ * view_display_set_narrow_or_standard (T-24206). T-24210 */
+void view_display_set_wide_or_standard(s32 arg0) {
+    view_frame_buffers_clear();
     func_8009C674(0);
     func_8009C210(1);
     func_8009C5E0(0);
     if ((arg0 != 0) && (game_state.video_width != 0x200)) {
         game_state.video_height = 0xF0;
-        game_state.screen_center_x[0] = 0x100;
-        game_state.screen_center_x[1] = 0x100;
+        game_state.draw_origin_x[0] = 0x100;
+        game_state.draw_origin_x[1] = 0x100;
         game_state.video_width = 0x200;
         game_state.video_interlace = 0;
         func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
-        func_8005907C();
+        view_display_reinit();
         back_clear_switch(1);
     } else if ((arg0 == 0) && (game_state.video_width != 0x140)) {
         game_state.video_width = 0x140;
         game_state.video_height = 0xF0;
-        game_state.screen_center_x[0] = 0xA0;
-        game_state.screen_center_x[1] = 0xA0;
+        game_state.draw_origin_x[0] = 0xA0;
+        game_state.draw_origin_x[1] = 0xA0;
         game_state.video_interlace = 0;
         func_80097F58(((u16 *)&game_state)[0], ((u16 *)&game_state)[1], ((u16 *)&game_state)[2], 0, 0);
-        func_8005907C();
+        view_display_reinit();
         back_clear_switch(1);
     }
     func_800AD950(0);
@@ -190,7 +194,7 @@ void func_800591D8(s32 arg0) {
 }
 
 /* FAKE: the RECT field stores sharing a source line are scheduled as a unit by as1, which gives the original's store order (h before w). T-8010 */
-void func_80059308(void) {
+void view_frame_buffers_clear(void) {
     RECT rect;
 
     rect.w = 0x100; rect.h = 0x1E0;
@@ -207,12 +211,12 @@ void func_80059308(void) {
 /* Model record of actor_pool walked two display slots (0x88 bytes) at a time. T-17017 */
 typedef struct ModelRecord {
     /* 0x00 */ u8 active;
-    /* 0x01 */ u8 flags;
+    /* 0x01 */ u8 model_flags;
     /* 0x02 */ u8 pad_02[2];
     /* 0x04 */ u8 obj[4];       /* object passed by address (GsDOBJ2-like) */
     /* 0x08 */ s32 handle;
     /* 0x0C */ u8 pad_0C[8];
-    /* 0x14 */ s32 unk_14;
+    /* 0x14 */ s32 coordinate_flag;
     /* 0x18 */ MATRIX coord;
     /* 0x38 */ u8 pad_38[0x2C];
     /* 0x64 */ SVECTOR rot;
@@ -222,13 +226,13 @@ typedef struct ModelRecord {
     /* 0x84 */ u8 pad_84[4];
 } ModelRecord; /* size 0x88 */
 
-/* 20-byte ordering-table header (GsOT-like) of the D_800E8C70 pair, indexed by draw_buffer. T-17017 */
-typedef struct OtRec20 { s32 w[5]; } OtRec20;
+/* 20-byte ordering-table header (GsOT-like) of the draw_ot_table pair, indexed by draw_buffer. T-17017 */
+typedef struct OrderingTableHeader { s32 w[5]; } OrderingTableHeader;
 
 /* The index loop (i += 2 over 0x44-byte slots) is strength-reduced to the 0x88 pointer walk of the
- * original and keeps r+4 and r+0x18 in s5/s4; the OtRec20 element address keeps &D_800E8C70 out of
+ * original and keeps r+4 and r+0x18 in s5/s4; the OrderingTableHeader element address keeps &draw_ot_table out of
  * a saved register; the scalars p, i and r declared before rot give the 0x108 frame. T-17017 */
-void func_8005938C(void) {
+void view_models_update_draw(void) {
     SVECTOR *p;
     s32 i;
     ModelRecord *r;
@@ -248,13 +252,13 @@ void func_8005938C(void) {
     }
     for (i = *(s32 *)&game_state.menu_hit[7]; i < 0xA0; i += 2) {
         r = (ModelRecord *)(actor_pool + i * 0x44);
-        if (r->active && (r->flags & 0x80)) {
+        if (r->active && (r->model_flags & 0x80)) {
             p = &rot;
             p->vz = r->rot.vz;
             p->vx = r->rot.vx;
             p->vy = r->rot.vy;
-            m = *(MATRIX *)D_80125C60;
-            sm = *(MATRIX *)D_80125C60;
+            m = *(MATRIX *)view_base_matrix;
+            sm = *(MATRIX *)view_base_matrix;
             RotMatrix(p, &m);
             if (r->scale.vx != 0) {
                 scale.vx = r->scale.vx;
@@ -273,7 +277,7 @@ void func_8005938C(void) {
             }
             ScaleMatrix(&sm, &scale);
             MulMatrix(&m, &sm);
-            if (r->flags & 0x10) {
+            if (r->model_flags & 0x10) {
                 r->pos.vx += r->vel.vx;
                 r->pos.vy += r->vel.vy;
                 r->pos.vz += r->vel.vz;
@@ -282,17 +286,17 @@ void func_8005938C(void) {
             m.t[1] = r->pos.vy;
             m.t[2] = r->pos.vz;
             r->coord = m;
-            r->unk_14 = 0;
+            r->coordinate_flag = 0;
             func_80099B10(r->handle, &lw, &ls);
             func_80099F04(&lw);
             func_8009A200(r->handle, &ls);
             func_80099ED8(&ls);
-            func_8009A4D0(r->obj, &((OtRec20 *)&D_800E8C70)[draw_buffer], 6, 0x1F800000);
+            func_8009A4D0(r->obj, &((OrderingTableHeader *)&draw_ot_table)[draw_buffer], 6, 0x1F800000);
         }
     }
 }
 
-void func_80059688(s32 arg0) {
+void view_model_record_init(s32 arg0) {
     u8 *p;
 
     p = actor_pool + arg0 * 0x44;

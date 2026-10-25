@@ -59,31 +59,31 @@ INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/computer_fortune.rodata", D_80155
 
 INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/computer_fortune.rodata", D_80155DE4);
 
-void func_80152680(void) {
+void tour_stage_fortune_telling(void) {
     GameState *g = &game_state;
     s32 i;
-    BunkakenTexts12 names;
-    BunkakenTexts11 blood_types;
-    BunkakenTexts4 player_blood_types;
+    TourFortuneNames names;
+    TourFortuneBloodLabels blood_types;
+    TourFortunePlayerLabels player_blood_types;
 
-    names = D_80156470;
-    blood_types = D_801564A0;
-    player_blood_types = D_801564CC;
+    names = tour_fortune_girl_names;
+    blood_types = tour_fortune_girl_blood_labels;
+    player_blood_types = tour_fortune_player_blood_labels;
     switch (g->mode_step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B80);
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->girls[i].flags.f.met;
+            select_girl_menu_enabled[i] = g->girls[i].flags.f.met;
         }
         mode_step_next();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80132548();
+            tour_script_fortune();
             talk_line = 0;
-            talk_text_table = (s32) D_80155E90;
-            talk_command_table = (s32) D_80155E94;
-            talk_voice_table = (s32) D_80155E98;
+            talk_text_table = (s32) tour_script_text;
+            talk_command_table = (s32) tour_script_commands;
+            talk_voice_table = (s32) tour_script_voices;
             if ((D_80122EBC == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((girl_state_rank(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((girl_state_rank(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
                 talk_group = 0;
                 mode_step_next();
@@ -123,15 +123,15 @@ void func_80152680(void) {
         } else {
             set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[D_80122EBC], 0);
         }
-        set_kanji_string(-0x48, 0x42, 0, (s32)names.text[D_80122EBC], 0);
+        set_kanji_string(-0x48, 0x42, 0, (s32)names.names[D_80122EBC], 0);
         k_disp_start(4);
-        D_801564DC = 0;
+        tour_fortune_wait_counter = 0;
         mode_step_next();
         break;
     case 9:
-        D_801564DC++;
-        if (D_801564DC >= 0x15U) {
-            D_801564DC = 0;
+        tour_fortune_wait_counter++;
+        if (tour_fortune_wait_counter >= 0x15U) {
+            tour_fortune_wait_counter = 0;
             mode_step_next();
         }
         break;
@@ -141,25 +141,25 @@ void func_80152680(void) {
         mode_step_next();
         break;
     case 11:
-        D_801564DC++;
-        if (D_801564DC >= 0x15U) {
-            D_801564DC = 0;
+        tour_fortune_wait_counter++;
+        if (tour_fortune_wait_counter >= 0x15U) {
+            tour_fortune_wait_counter = 0;
             mode_step_next();
         }
         break;
     case 12:
         if ((D_80122EBC == 0) || (D_80122EBC == 0xB)) {
-            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->girls[0].birthday.w << 0x15) >> 0x1E], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.blood_labels[(u32) (g->girls[0].birthday.w << 0x15) >> 0x1E], 0);
         } else {
-            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.text[D_80122EBC], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.blood_labels[D_80122EBC], 0);
         }
         k_disp_start(6);
         mode_step_next();
         break;
     case 13:
-        D_801564DC++;
-        if (D_801564DC >= 0x15U) {
-            D_801564DC = 0;
+        tour_fortune_wait_counter++;
+        if (tour_fortune_wait_counter >= 0x15U) {
+            tour_fortune_wait_counter = 0;
             mode_step_next();
         }
         break;
@@ -171,13 +171,13 @@ void func_80152680(void) {
         set_kanji_string(-0x80, 0x52, 0, (s32) g->player_family_name, 0);
         set_kanji_string(-0x48, 0x52, 0, (s32) g->player_given_name, 0);
         k_disp_start(8);
-        D_801564DC = 0;
+        tour_fortune_wait_counter = 0;
         mode_step_next();
         break;
     case 16:
-        D_801564DC++;
-        if (D_801564DC >= 0x15U) {
-            D_801564DC = 0;
+        tour_fortune_wait_counter++;
+        if (tour_fortune_wait_counter >= 0x15U) {
+            tour_fortune_wait_counter = 0;
             mode_step_next();
         }
         break;
@@ -187,22 +187,22 @@ void func_80152680(void) {
         mode_step_next();
         break;
     case 18:
-        D_801564DC++;
-        if (D_801564DC >= 0x15U) {
-            D_801564DC = 0;
+        tour_fortune_wait_counter++;
+        if (tour_fortune_wait_counter >= 0x15U) {
+            tour_fortune_wait_counter = 0;
             mode_step_next();
         }
         break;
     case 19:
-        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.text[(u32) (g->player_birthday << 0x15) >> 0x1E], 0);
+        set_kanji_string(0x28, 0x52, 0, (s32)player_blood_types.blood_labels[(u32) (g->player_birthday << 0x15) >> 0x1E], 0);
         k_disp_start(0xA);
         mode_step_next();
         break;
     case 20:
-        D_801564DC++;
-        if ((D_801564DC >= 0x10U) && (check_end_k() != 0)) {
+        tour_fortune_wait_counter++;
+        if ((tour_fortune_wait_counter >= 0x10U) && (check_end_k() != 0)) {
             D_8011ED5B ^= 0x80;
-            D_801564DC = 0;
+            tour_fortune_wait_counter = 0;
         }
         if ((g->pad_pressed & 0xF0) && (check_end_k() != 0)) {
             k_reset(1);
@@ -218,10 +218,10 @@ void func_80152680(void) {
         mode_step_next();
         break;
     case 23:
-        D_801564DC++;
-        if (D_801564DC >= 0x3DU) {
-            talk_group = func_80152F4C() + 3;
-            D_80122EA8 = func_80152F4C();
+        tour_fortune_wait_counter++;
+        if (tour_fortune_wait_counter >= 0x3DU) {
+            talk_group = tour_fortune_result() + 3;
+            D_80122EA8 = tour_fortune_result();
             mode_step_next();
         }
         break;
@@ -244,16 +244,16 @@ void func_80152680(void) {
 }
 
 /* FAKE: unused word fixes the table offset; expression layout retains address/value allocation. T-9550 */
-s32 func_80152F4C(void)
+s32 tour_fortune_result(void)
 {
   s32 result;
   u32 pad;
-  BunkakenGrid4 choices;
-  choices = D_801564E0;
+  TourFortuneGrid choices;
+  choices = tour_fortune_grid;
   if ((((D_80122EBC == 2) && ((game_state.girls[2].flags.b[2] >> 4) == 3)) && (girl_state_rank(2) < 4)) && (D_80122EA4 != 2))
   {
     return 3;
   }
-  result = choices.values[(game_state.girls[D_80122EBC].birthday.u << 21) >> 30][(((u32) game_state.player_birthday) << 21) >> 30];
+  result = choices.result_by_blood[(game_state.girls[D_80122EBC].birthday.u << 21) >> 30][(((u32) game_state.player_birthday) << 21) >> 30];
   return result;
 }

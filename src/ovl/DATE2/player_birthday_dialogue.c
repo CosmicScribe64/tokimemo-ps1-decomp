@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/DATE2.h"
 
-void func_80136D50(void) {
+void amusement_karaoke_pointer_setup(void) {
     D_8013A6B0 = 0x801B00DC;
     D_8013A6B4 = 0x801B02AC;
     D_8013A6B8 = 0x801B03C8;
@@ -49,7 +49,7 @@ typedef struct {
 } FnTbl8; /* size 0x20 */
 extern FnTbl8 D_8013A74C;
 
-void func_80136FC4(void) {
+void amusement_birthday_mode_stage4_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl8 tbl;
 
@@ -58,21 +58,21 @@ void func_80136FC4(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80137064(void) {
+void amusement_karaoke_dialogue_sector_load(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80136D50();
+    amusement_karaoke_pointer_setup();
     mode_step_next();
 }
 
-void func_8013709C(void) {
+void amusement_karaoke_girl_dialogue_setup(void) {
     talk_group = 1;
     talk_line = 0;
     talk_names_set(game_state.current_girl);
-    func_801370E4();
+    amusement_karaoke_girl_pointer_bind();
     mode_step_next();
 }
 
-void func_801370E4(void) {
+void amusement_karaoke_girl_pointer_bind(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         talk_text_table = D_8013A6B4;

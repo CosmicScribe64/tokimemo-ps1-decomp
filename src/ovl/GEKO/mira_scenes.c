@@ -133,14 +133,14 @@ void encounter_mira_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_30;
     encounter_scene_command_table = encounter_scene_command_section_30;
     encounter_scene_voice_table = encounter_scene_voice_section_30;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     game_state.girls[7].affection += 1;
     check_para_limit();
     D_800CA368 = 0x2E;
@@ -174,14 +174,14 @@ void encounter_mira_scene_init_2(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_36;
     encounter_scene_command_table = encounter_scene_command_section_36;
     encounter_scene_voice_table = encounter_scene_voice_section_36;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     D_800CA368 = 0x35;
     mode_step_next();
 }

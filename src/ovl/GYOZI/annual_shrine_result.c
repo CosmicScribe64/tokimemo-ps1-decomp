@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl25; /* size 0x64 */
 extern FnTbl25 D_801460E0;
 
-void func_80135CA0(void) {
+void annual_shrine_result_mode_step_dispatch(void) {
     void (**p)();
     FnTbl25 tbl;
 
@@ -24,7 +24,7 @@ void func_80135CA0(void) {
     tbl.f[D_800F647A](0x80);
 }
 
-void func_80135D64(void) {
+void annual_shrine_result_status_route(void) {
     u32 v;
     u32 sel;
 
@@ -38,11 +38,11 @@ void func_80135D64(void) {
             D_80145EB8 = 1;
         }
     }
-    func_801343A4();
+    annual_mode_scene_data_setup();
 }
 
-void func_80135DE8(void) {
-    func_801343A4();
+void annual_shrine_result_audio_gate(void) {
+    annual_mode_scene_data_setup();
     if (D_80145EB8 == 3) {
         if (D_800F6474++ == 0) {
             func_80086AB0(0x500);
@@ -50,18 +50,18 @@ void func_80135DE8(void) {
     }
 }
 
-void func_80135E3C(void) {
+void annual_shrine_selected_result_save(void) {
     D_800F5ACD = D_800F62CF;
     func_8004DE1C();
 }
 
-void func_80135E68(void) {
+void annual_shrine_result_audio_and_state_setup(void) {
     func_80090960(5, 1);
     func_8008A0D4(0x4195);
     func_8004DE1C();
 }
 
-void func_80135E9C(void) {
+void annual_shrine_result_choice_stats_apply(void) {
     D_801460C0 = D_8012E66C;
     D_80145EB4 += D_8012E66C;
     func_800BCE10(D_800D9328, D_801460C4 + D_8012E66C * 9);
@@ -77,7 +77,7 @@ void func_80135E9C(void) {
     func_8004DE1C();
 }
 
-void func_80135F74(void) {
+void annual_shrine_result_choice_score_delta_apply(void) {
     u8 sel = D_801460C0; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
@@ -93,7 +93,7 @@ void func_80135F74(void) {
     func_8004DE1C();
 }
 
-void func_80135FE8(void) {
+void annual_shrine_result_rank_score_delta_apply(void) {
     s32 temp_t6;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
@@ -112,7 +112,7 @@ void func_80135FE8(void) {
     func_8004DE1C();
 }
 
-void func_8013605C(void) {
+void annual_shrine_result_status_score_delta_apply(void) {
     switch ((u8) func_8005E0E0(D_800F62CF) & 0x7F) {
     case 0:
         D_80145EB4 += 2;
@@ -125,7 +125,7 @@ void func_8013605C(void) {
     func_8004DE1C();
 }
 
-void func_801360DC(void) {
+void annual_shrine_result_step_advance(void) {
     if (D_8012E66C != 2) {
         func_8004DE1C();
         func_8004DE1C();
@@ -134,7 +134,7 @@ void func_801360DC(void) {
     func_8004DE1C();
 }
 
-void func_80136124(void)
+void annual_shrine_result_selected_girl_stats_apply(void)
 {
     GyoziWork *work;
     work = &D_800F53A0;
@@ -149,12 +149,12 @@ void func_80136124(void)
     func_8004DE1C();
 }
 
-void func_801361A8(void) {
+void annual_shrine_result_choice_save(void) {
     D_8012E67C = D_8012E66C;
     func_8004DE1C();
 }
 
-void func_801361D4(void) {
+void annual_shrine_result_choice_restore(void) {
     u32 v;
 
     v = (D_800F62CF = D_800F5ACD);

@@ -4,62 +4,62 @@
 #include "common.h"
 #include "game.h"
 
-extern u8 D_801405E4;
+extern u8 phone_selected_target_girl;
 extern u8 *D_80140AD8[];
 extern u8 D_80140B04[];
 extern u8 D_80140B5C[];
 
-void func_80135FFC(void);
+void phone_selected_girl_report_single_line_a(void);
 
-void func_801360E4(void);
+void phone_selected_girl_report_single_line_b(void);
 extern u8 *D_80140D18[];
 extern u8 D_80140D44[];
 extern u8 D_80140D9C[];
-void func_801361CC(void);
+void phone_selected_girl_report_single_line_c(void);
 extern u8 *D_80140F0C[];
 extern u8 D_80140F38[];
 extern u8 D_80140F90[];
-void func_801362B4(void);
-void func_80132060(void);
-void func_80134BE0(void);
-void func_80132000(void);
-s32 func_8013AA30(void);
-s32 func_8013B54C(void);
-void func_8013BF50(void);
-s32 func_8013A40C(void);
-s32 func_8013AC0C(void);
-s32 func_8013A88C(void);
-s32 func_8013A820(void);
-s32 func_8013BFDC(void);
-s32 func_8013BF70(void);
-s32 func_8013C4D8(void);
-s32 func_8013C46C(void);
-s32 func_8013C9D4(void);
-s32 func_8013C968(void);
-s32 func_8013CBA0(void);
-s32 func_8013CB34(void);
-void func_8013A76C(void);
-s32 func_8013A478(void);
-void func_8013BE38(void);
-s32 func_8013A79C(void);
+void phone_selected_girl_report_single_line_d(void);
+void phone_call_step_dispatch(void);
+void phone_call_mode_dispatch(void);
+void phone_mode_handler(void);
+s32 phone_home_call_scene_init(void);
+s32 phone_missed_appointment_result_dialogue_run(void);
+void phone_return_to_day_screen(void);
+s32 phone_outgoing_call_mode_dispatch_a(void);
+s32 phone_answering_message_scene_init(void);
+s32 phone_fireworks_call_dialogue(void);
+s32 phone_outgoing_call_mode_dispatch_c(void);
+s32 phone_high_syoushin_call_response(void);
+s32 phone_high_syoushin_call_dispatch(void);
+s32 phone_b13_girl_response(void);
+s32 phone_lost_gift_response_dispatch(void);
+s32 phone_club_leave_state_apply(void);
+s32 phone_club_absence_exit_dispatch(void);
+s32 phone_culture_festival_club_notice_dialogue(void);
+s32 phone_culture_festival_club_notice_dispatch(void);
+void phone_miharu_progress_increment(void);
+s32 phone_outgoing_call_mode_dispatch_b(void);
+void phone_relationship_deltas_apply(void);
+s32 phone_special_call_mode_dispatch(void);
 
-void func_801396EC(void);
+void phone_answering_machine_scene(void);
 
 #endif /* OVL_TEL_H */
-void func_80132138(void);
-void func_80134DA0(void);
+void phone_ring_animation_step(void);
+void phone_call_target_route(void);
 
 #ifndef OVL_TEL_W9_2_TABLES_H
 #define OVL_TEL_W9_2_TABLES_H
 /* Signed halfword changes indexed by the status nibble. T-9720. */
-extern s16 D_801444A0[];
+extern s16 phone_missed_appointment_stat_delta[];
 #endif
 
 #ifndef OVL_TEL_W9_2_BYTE_TABLES_H
 #define OVL_TEL_W9_2_BYTE_TABLES_H
-/* Per-girl byte penalties read by func_8013BE38, eleven entries, T-9720. */
-extern u8 D_801444B8[11];
-extern u8 D_801444C4[11];
+/* Per-girl byte penalties read by phone_relationship_deltas_apply, eleven entries, T-9720. */
+extern u8 phone_high_syoushin_tokimeki_penalty[11];
+extern u8 phone_high_syoushin_affection_penalty[11];
 #endif
 
 
@@ -85,15 +85,15 @@ extern u32 D_80144E4C[];
 extern u32 D_80144EAC[];
 
 /* Forward declarations for the original object, T-10040. */
-void func_8013226C(void);
-void func_80132FC4(void);
-void func_80133D54(void);
-void func_801345C4(void);
-void func_80134FE4(void);
-void func_801352F0(void);
-void func_80136724(void);
+void phone_incoming_call_answer_scene(void);
+void phone_relationship_information_menu_scene(void);
+void phone_selected_girl_information_menu_scene(void);
+void phone_selected_girl_information_dialogue_scene(void);
+void phone_reply_route(void);
+void phone_selected_girl_report_opening_dialogue(void);
+void phone_date_invitation_resolve(void);
 
-/* Greeting text pointers and XA tables for func_80134FE4, T-24126. */
+/* Greeting text pointers and XA tables for phone_reply_route, T-24126. */
 extern u8 *D_801406E0[];
 extern u32 D_80140710[];
 extern u32 D_80140770[];
@@ -107,15 +107,15 @@ extern u8 *D_801410C8;
 extern u8 *D_801410CC;
 
 /* Forward calls within 80132000.c, T-10040. */
-void func_8013586C(void);
-void func_80135A44(void);
-void func_80135C4C(void);
-void func_80135E28(void);
+void phone_selected_girl_report_followup_dialogue_a(void);
+void phone_selected_girl_progress_report_dialogue(void);
+void phone_selected_girl_report_followup_dialogue_b(void);
+void phone_selected_girl_report_followup_dialogue_c(void);
 
 /* Sixteen day/month entries, 0x40-byte tables at +0x0564/+0x05A4. */
-extern s32 D_80140564[16];
-extern s32 D_801405A4[16];
-s32 func_8013655C(void);
+extern s32 phone_candidate_date_day_values[16];
+extern s32 phone_candidate_date_month_values[16];
+s32 phone_available_date_slots_build(void);
 
 /* Dialogue text pointers and XA tables, T-10040. */
 extern u32 D_8014109C[];
@@ -139,7 +139,7 @@ extern u8 *D_80144200;
 extern u8 *D_80144208;
 extern u8 *D_8014420C;
 extern u8 *D_80144204;
-void func_801384F0(void);
+void phone_rei_call_followup_dialogue(void);
 
 /* T-10040: dialogue data and object-local forward declarations. */
 extern u32 D_80144298[];
@@ -154,7 +154,7 @@ extern u8 *D_8014428C;
 extern u8 *D_80144290;
 extern u8 *D_80144294;
 extern u8 *D_8014427C;
-void func_8013883C(void);
+void phone_rei_extended_call_dialogue(void);
 
 /* T-10040: dialogue data and object-local forward declarations. */
 extern u32 D_80144350[];
@@ -165,7 +165,7 @@ extern u8 *D_80144340;
 extern u8 *D_80144348;
 extern u8 *D_8014434C;
 extern u8 *D_80144344;
-void func_80138D20(void);
+void phone_rei_call_final_dialogue(void);
 
 /* T-10040: dialogue data and object-local forward declarations. */
 extern u32 D_801443C8[];
@@ -176,7 +176,7 @@ extern u8 *D_801443B8;
 extern u8 *D_801443C0;
 extern u8 *D_801443C4;
 extern u8 *D_801443BC;
-void func_80139064(void);
+void phone_rei_call_additional_dialogue(void);
 
 /* T-10040: dialogue data and object-local forward declarations. */
 extern u32 D_80144440[];
@@ -187,13 +187,13 @@ extern u8 *D_80144430;
 extern u8 *D_80144438;
 extern u8 *D_8014443C;
 extern u8 *D_80144434;
-void func_801393A8(void);
+void phone_rei_call_additional_dialogue_b(void);
 
-/* T-10040: dialogue and XA data used by func_8013586C. */
+/* T-10040: dialogue and XA data used by phone_selected_girl_report_followup_dialogue_a. */
 extern u32 D_80141084[];
 extern u8 *D_8014107C;
 extern u8 *D_80141080;
-void func_8013639C(void);
+void phone_date_slot_menu_open(void);
 
 /* T-10040: dialogue tables for the record-counter state. */
 extern u32 D_801441A8[];
@@ -203,7 +203,7 @@ extern u8 *D_80144198;
 extern u8 *D_8014419C;
 extern u8 *D_801441A0;
 extern u8 *D_801441A4;
-void func_801380D8(void);
+void phone_rei_call_dialogue_and_progress_gate(void);
 #endif
 
 #ifndef OVL_TEL_T10630_H
@@ -226,7 +226,7 @@ typedef union TelDateEntry {
 extern s32 D_80140550;
 extern s32 D_80140560;
 /* One 21-place byte row per girl. */
-extern u8 D_80141134[][21];
+extern u8 phone_invitation_base_adjustments[][21];
 extern u8 *D_801413C8[];
 extern u32 D_801413F8[];
 extern u32 D_80141458[];
@@ -264,7 +264,7 @@ extern u32 D_80143278[];
 extern u8 *D_8014333C[];
 #endif
 
-void func_8013D88C();
+void phone_date_place_availability_build();
 
 #ifndef OVL_TEL_T10860_H
 #define OVL_TEL_T10860_H
@@ -292,8 +292,8 @@ extern u32 D_801454A0[];
 
 #ifndef OVL_TEL_T10860_ADC_H
 #define OVL_TEL_T10860_ADC_H
-s32 func_8013ADC0(void);
-s32 func_8013BDDC(void);
+s32 phone_yoshio_relationship_report_run(void);
+s32 phone_high_syoushin_girl_find(void);
 extern u8 *D_80144FB8;
 extern u8 *D_80144FBC;
 extern u8 *D_80144FC0;
@@ -322,8 +322,8 @@ extern u32 D_80146320[];
 extern u32 D_80146378[];
 extern u32 D_801465E0[];
 extern u32 D_80146638[];
-s32 func_8013C3E0(void);
-s32 func_8013C8DC(void);
+s32 phone_b12_girl_find(void);
+s32 phone_b13_girl_find(void);
 #endif
 
 #ifndef OVL_TEL_T10860_GREETING_TABLES_H
@@ -357,18 +357,18 @@ extern u32 *D_80145CAC[13];
 #ifndef OVL_TEL_T10860_A4FC_VIEW
 #define OVL_TEL_T10860_A4FC_VIEW
 /* T-10860: preceding dispatcher used the legacy integer return view. */
-s32 func_8013A4FC(void);
+s32 phone_miharu_call_dialogue(void);
 #endif
 
 #ifndef OVL_TEL_T10860_DISPATCH_DECLS
 #define OVL_TEL_T10860_DISPATCH_DECLS
-void func_80139AA4(void);
-void func_80139FEC(void);
+void phone_opening_call_dialogue_run(void);
+void phone_appointment_result_dialogue_run(void);
 #endif
 
 #ifndef OVL_TEL_RECORD_FLAGS_H
 #define OVL_TEL_RECORD_FLAGS_H
-/* T-10860: bits cleared in a GirlRecord +0x0C flag word by func_8013BE38. */
+/* T-10860: bits cleared in a GirlRecord +0x0C flag word by phone_relationship_deltas_apply. */
 typedef struct TelRecordFlags {
     /* 0x00, bits 0..11 */ u32 low : 12;
     /* 0x00, bit 12 */ u32 b12 : 1;
@@ -381,7 +381,7 @@ typedef struct TelRecordFlags {
 
 #ifndef OVL_TEL_T24045_SIGN_DAYS
 #define OVL_TEL_T24045_SIGN_DAYS
-/* Star-sign boundaries copied as sixteen words by func_8013D03C. T-24045. */
+/* Star-sign boundaries copied as sixteen words by phone_profile_details_draw. T-24045. */
 typedef struct TelSignDays {
     /* 0x00 */ u32 w[16];
 } TelSignDays; /* size 0x40 */

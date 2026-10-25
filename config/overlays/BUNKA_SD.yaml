@@ -44,6 +44,7 @@ options:
     - config/symbol_addrs_sdk.txt
     - config/labels/BUNKA_SD.txt
     - config/symbol_addrs_hypotheses.txt
+    - config/symbols_BUNKA_SD.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/BUNKA_SD_undefined_funcs_auto.txt

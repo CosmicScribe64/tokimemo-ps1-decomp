@@ -3,7 +3,7 @@
 #include "ovl/ENDING.h"
 #include "game.h"
 
-void func_8013B6A0(void) {
+void ending_set_song_scene_assets(void) {
     D_8013CBB0.unk_00 = 0x801C22CC;
     D_8013CBB0.unk_04 = 0x801C22D4;
     D_8013CBB0.unk_08 = 0x801C22F0;
@@ -18,7 +18,7 @@ void func_8013B6A0(void) {
     D_8013CBB0.unk_10[7] = 0x801BE000;
 }
 
-void func_8013B760(void) {
+void ending_song_scene_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     EdFnTbl25 tbl;
 
@@ -36,20 +36,20 @@ void func_8013B760(void) {
             message_window_show();
             message_window_title_update();
             hizuke_show();
-            func_80083A10();
+            scene_frame_update();
         }
     }
 }
 
-void func_8013B868(void) {
+void ending_set_mode_stage_6(void) {
     mode_stage_set(6);
 }
 
-void func_8013B888(void) {
+void ending_set_mode_stage_8(void) {
     mode_stage_set(8);
 }
 
-void func_8013B8A8(void) {
+void ending_wait_scene_flag_or_exit_girl(void) {
     if (game_state.scene_flags[82] != 0) {
         mode_step_next();
         return;
@@ -57,13 +57,13 @@ void func_8013B8A8(void) {
     normal_date_girl_out();
 }
 
-void func_8013B8E4(void) {
+void ending_read_yoshio_scene_data(void) {
     cd_read_sectors(0x45, 0x801A0000, 0x727A);
-    func_8013B6A0();
+    ending_set_song_scene_assets();
     mode_step_next();
 }
 
-s32 func_8013B91C(void) {
+s32 ending_start_yoshio_dialogue(void) {
     if (game_state.scene_flags[82] != 0) {
         if ((u32) game_state.mode_step_timer.w++ < 0x78U) {
             return 0;
@@ -73,10 +73,10 @@ s32 func_8013B91C(void) {
     talk_group = 0;
     talk_line = 0;
     talk_names_set(game_state.scene_flags[82]);
-    func_80132000();
-    talk_text_table = D_8013C280[0][0];
-    talk_command_table = D_8013C280[1][0];
-    talk_voice_table = D_8013C280[2][0];
+    ending_graduation_dialogue_resource_table_init();
+    talk_text_table = ending_dialogue_resource_tables[0][0];
+    talk_command_table = ending_dialogue_resource_tables[1][0];
+    talk_voice_table = ending_dialogue_resource_tables[2][0];
     if (game_state.scene_flags[82] != 0) {
         talk_group = 2;
         game_state.mode_step += 0xA;
@@ -84,7 +84,7 @@ s32 func_8013B91C(void) {
     mode_step_next();
 }
 
-void func_8013B9F0(void) {
+void ending_song_scene_initialize(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -100,9 +100,9 @@ void func_8013B9F0(void) {
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
-    func_8013B6A0();
+    bg_brightness = 0;
+    bg_fade_amount = 0;
+    ending_set_song_scene_assets();
     load_palette(D_8013CBB0.unk_10[1], 0x11, 1, 2, 0);
     load_palette(D_8013CBB0.unk_10[0], 0x12, 1, 2, 0);
     scene_still_show(D_8013CBB0.unk_10[2], D_8013CBB0.unk_10[3], D_8013CBB0.unk_10[4], D_8013CBB0.unk_10[5], D_8013CBB0.unk_10[6], D_8013CBB0.unk_10[7]);
@@ -117,7 +117,7 @@ void func_8013B9F0(void) {
     mode_step_next();
 }
 
-void func_8013BB9C(void) {
+void ending_song_title_audio_start(void) {
     s32 r;
     EdWords4 v;
 
@@ -135,7 +135,7 @@ void func_8013BB9C(void) {
     mode_step_next();
 }
 
-void func_8013BC58(void) {
+void ending_advance_song_lyrics(void) {
     EdShorts13 tbl;
     s16 i;
     s16 sel;
@@ -153,7 +153,7 @@ void func_8013BC58(void) {
     if (sel != 0xFF) {
         if (D_8013CBE0 == tbl.h[sel]) {
             k_reset(1, sel, &tbl);
-            func_8013BDD8(sel);
+            ending_draw_song_lyric(sel);
         }
     }
     if (D_8013CBE0 == 0x1536) {
@@ -162,19 +162,19 @@ void func_8013BC58(void) {
     if (cd_audio_state() & 4) {
         D_8013CBE0 += 1;
     }
-    if (func_80046094() == 9) {
+    if (cd_last_command() == 9) {
         mode_step_next();
     }
 }
 
-void func_8013BDD8(s16 arg0) {
+void ending_draw_song_lyric(s16 arg0) {
     u8 *p;
 
     p = D_8013CC48 + arg0 * 0x19;
     k_disp_start(set_kanji_string((s16) (-strlen(p) * 7 / 2), 0x50, 0, p, 0));
 }
 
-void func_8013BE64(void) {
+void ending_wait_song_visual_timeout(void) {
     if (game_state.mode_step_timer.w == 0) {
         D_80120652 = 5;
     }

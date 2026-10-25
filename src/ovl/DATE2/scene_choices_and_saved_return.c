@@ -1,11 +1,11 @@
-/* scene_choices_and_saved_return.c: src/ovl/DATE2/80137360.c:4; local script/choice flow and saved-step return, with a player-birthday test in func_80137948; no unproved girl-birthday identity is assigned. Original object 0x80137360-0x80137D50 (config/objects/DATE2.txt). */
+/* scene_choices_and_saved_return.c: src/ovl/DATE2/80137360.c:4; local script/choice flow and saved-step return, with a player-birthday test in amusement_birthday_scene_gate; no unproved girl-birthday identity is assigned. Original object 0x80137360-0x80137D50 (config/objects/DATE2.txt). */
 #define MAIN_API_OVERRIDE_portrait_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
 #include "common.h"
 #include "ovl/DATE2.h"
 
 void portrait_layout_set(s32 arg0);
 
-void func_80137360(void) {
+void amusement_karaoke_dialogue_pointer_setup(void) {
     D_8013A770 = 0x801B0478;
     D_8013A774 = 0x801B13A4;
     D_8013A778 = 0x801B2998;
@@ -52,7 +52,7 @@ typedef struct {
 } FnTbl23; /* size 0x5C */
 extern FnTbl23 D_8013A81C;
 
-void func_801375D4(void) {
+void amusement_karaoke_saved_return_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl23 tbl;
 
@@ -61,23 +61,23 @@ void func_801375D4(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013765C(void) {
+void amusement_karaoke_mode_stage_restore(void) {
     mode_stage_set(2);
     mode_step_set(game_state.saved_mode_step);
 }
 
-void func_8013768C(void) {
+void amusement_karaoke_sector_load(void) {
     cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
-    func_80137360();
+    amusement_karaoke_dialogue_pointer_setup();
     mode_step_next();
 }
 
-void func_801376C4(void) {
+void amusement_karaoke_response_save(void) {
     D_80122CDC = D_8013A818;
     mode_step_next();
 }
 
-void func_801376F0(void) {
+void amusement_karaoke_dialogue_table_bind(void) {
     D_8013A818 = D_80122CDC;
     talk_group = 0;
     talk_line = 0;
@@ -87,7 +87,7 @@ void func_801376F0(void) {
     mode_step_next();
 }
 
-void func_8013775C(void) {
+void amusement_choice_parameter_penalty(void) {
     if (D_80122CDC != 0) {
         game_state.girls[game_state.current_girl].affection -= 1;
         game_state.girls[game_state.current_girl].syoushin += 5;
@@ -99,7 +99,7 @@ void func_8013775C(void) {
     mode_step_next();
 }
 
-void func_8013780C(void) {
+void amusement_status_talk_group_select(void) {
     u32 t;
 
     t = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
@@ -116,7 +116,7 @@ void func_8013780C(void) {
     mode_step_next();
 }
 
-void func_801378A4(void) {
+void amusement_response_group_text_insert(void) {
     s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x28 as in the original; real source unknown. T-4010 */
     u8 buf[3] = "こ";
 
@@ -128,7 +128,7 @@ void func_801378A4(void) {
     mode_step_next();
 }
 
-void func_80137948(void) {
+void amusement_birthday_scene_gate(void) {
     u32 t;
 
     t = (u8)get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -140,12 +140,12 @@ void func_80137948(void) {
     mode_step_next();
 }
 
-void func_801379CC(void) {
+void amusement_karaoke_special_dialogue_setup(void) {
     talk_group = 0x1D;
     talk_text_table = D_8013A80C;
     talk_command_table = D_8013A810;
     talk_voice_table = D_8013A814;
-    func_80137A2C();
+    amusement_karaoke_indexed_text_select();
     mode_step_next();
 }
 
@@ -154,15 +154,15 @@ typedef struct {
 } DateTxt; /* size 0xCC3 */
 extern DateTxt D_8013A878;
 
-void func_80137A2C(void) {
+void amusement_karaoke_indexed_text_select(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     DateTxt tbl;
 
     tbl = D_8013A878;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + game_state.year * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
+    strcpy(name_code_a, &tbl.s[game_state.current_girl * 0x129 + game_state.year * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
 }
 
-void func_80137AF0(void) {
+void amusement_karaoke_dialogue_pointer_swap(void) {
     D_8013A80C = talk_text_table;
     D_8013A810 = talk_command_table;
     D_8013A814 = talk_voice_table;
@@ -174,7 +174,7 @@ void func_80137AF0(void) {
     mode_step_next();
 }
 
-void func_80137B94(void) {
+void amusement_response_parameter_update_alt(void) {
     portrait_layout_set(D_80122CDC + 1);
     if (D_80122CDC == 0) {
         game_state.girls[game_state.current_girl].tokimeki += 3;

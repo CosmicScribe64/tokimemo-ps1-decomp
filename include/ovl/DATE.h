@@ -1327,7 +1327,7 @@ typedef struct DateSelectionView {
 
 #ifndef OVL_DATE_MOVIE_T10830_H
 #define OVL_DATE_MOVIE_T10830_H
-/* Overlay access view at dec_bg_lba_cache. date_ride_roller_coaster resets the halfword
+/* Overlay access view at bg_lba_cache. date_ride_roller_coaster resets the halfword
  * fields and bytes 0x18..0x1A. Main 80057390 owns the word-array view
  * and confirms the later fields. EVENT shares the first 0x1C-byte layout. */
 typedef struct DateMovieWork {
@@ -1350,7 +1350,7 @@ typedef struct DateMovieWork {
     /* 0x28 */ s32 unk_28;
 } DateMovieWork; /* size 0x2C, minimum observed extent */
 
-/* First two words of the bitstream reached through D_80125C04.
+/* First two words of the bitstream reached through bg_still_bitstream.
  * date_ride_roller_coaster validates word 0 with 0xFFFF0000 and word 1 with
  * 0xFF010000; later bytes have not been recovered here. */
 typedef struct DateMovieHeader8 {

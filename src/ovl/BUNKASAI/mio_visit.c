@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-void func_80154018(void) {
+void culture_mio_visit_entry(void) {
     ((CultureFestivalDispatch *)&D_80122EB8)->unk_04 = 1;
     switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
@@ -63,7 +63,7 @@ void func_80154018(void) {
     }
 }
 
-void func_801541D8(void) {
+void culture_mio_visit_literature_exhibit(void) {
     GameState *state;
     s32 temp_v0_2;
     s32 temp_v0_3;
@@ -83,7 +83,7 @@ void func_801541D8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -137,7 +137,7 @@ void func_801541D8(void) {
                 }
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 9:
@@ -306,7 +306,7 @@ void func_801541D8(void) {
                 ((GirlFlagBits *)&game_state.girls[1].flags)->b13 = 1;
             }
         }
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -314,7 +314,7 @@ void func_801541D8(void) {
     }
 }
 
-void func_801548C8(void) {
+void culture_mio_visit_speech_contest(void) {
     u8 year;
     u32 temp_v0;
     u32 temp_v0_2;
@@ -331,7 +331,7 @@ void func_801548C8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8014338C();
+            culture_backstage_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -359,7 +359,7 @@ void func_801548C8(void) {
         portrait_read_step(0x5D41);
         break;
     case 9:
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         game_state.current_girl = GIRL_MIO;
@@ -387,7 +387,7 @@ void func_801548C8(void) {
                 talk_group = 4;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 12:
@@ -480,7 +480,7 @@ void func_801548C8(void) {
         normal_date_speak();
         break;
     case 23:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -488,7 +488,7 @@ void func_801548C8(void) {
     }
 }
 
-void func_80154D64(void) {
+void culture_mio_visit_drama_play(void) {
     GameState *state;
     s32 temp_v0_4;
     s32 temp_v0_5;
@@ -508,7 +508,7 @@ void func_80154D64(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8014338C();
+            culture_backstage_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -545,7 +545,7 @@ void func_80154D64(void) {
         break;
     case 9:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
@@ -574,7 +574,7 @@ void func_80154D64(void) {
                 talk_group = 4;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 12:
@@ -699,7 +699,7 @@ void func_80154D64(void) {
         normal_date_speak();
         break;
     case 25:
-        func_80142BC8();
+        culture_scene_end();
         break;
     case 26:
         normal_date_girl_out();
@@ -734,7 +734,7 @@ void func_80154D64(void) {
     }
 }
 
-void func_80155388(void) {
+void culture_mio_visit_experiment_show_95(void) {
     GameState *state;
     s32 temp_v0_2;
     s32 temp_v0_5;
@@ -755,7 +755,7 @@ void func_80155388(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -800,7 +800,7 @@ void func_80155388(void) {
                 talk_group = 5;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 9:
@@ -876,7 +876,7 @@ void func_80155388(void) {
         portrait_read_step(0x5D41);
         break;
     case 19:
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
@@ -904,7 +904,7 @@ void func_80155388(void) {
                 talk_group = 0x60;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 22:
@@ -1014,7 +1014,7 @@ void func_80155388(void) {
         normal_date_speak();
         break;
     case 33:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1022,7 +1022,7 @@ void func_80155388(void) {
     }
 }
 
-void func_80155B1C(void) {
+void culture_mio_visit_experiment_show_96(void) {
     GameState *state;
     s32 temp_v0_2;
     s32 temp_v0_5;
@@ -1043,7 +1043,7 @@ void func_80155B1C(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -1089,7 +1089,7 @@ void func_80155B1C(void) {
                 talk_group = 5;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 9:
@@ -1166,7 +1166,7 @@ void func_80155B1C(void) {
         portrait_read_step(0x5D41);
         break;
     case 19:
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
@@ -1199,7 +1199,7 @@ void func_80155B1C(void) {
                 talk_group = 0x76;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 22:
@@ -1297,7 +1297,7 @@ void func_80155B1C(void) {
         normal_date_speak();
         break;
     case 33:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1305,7 +1305,7 @@ void func_80155B1C(void) {
     }
 }
 
-void func_80156284(void) {
+void culture_mio_visit_experiment_show_97(void) {
     GameState *state;
     s32 temp_v0_2;
     s32 temp_v0_5;
@@ -1330,7 +1330,7 @@ void func_80156284(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -1376,7 +1376,7 @@ void func_80156284(void) {
                 talk_group = 5;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 9:
@@ -1457,7 +1457,7 @@ void func_80156284(void) {
         portrait_read_step(0x5D41);
         break;
     case 19:
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
@@ -1486,7 +1486,7 @@ void func_80156284(void) {
                 talk_group = 0x8F;
                 break;
             }
-            func_80158DD8();
+            culture_mio_visit_script_a_start();
         }
         break;
     case 22:
@@ -1576,7 +1576,7 @@ void func_80156284(void) {
         normal_date_speak();
         break;
     case 33:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1584,7 +1584,7 @@ void func_80156284(void) {
     }
 }
 
-void func_801569BC(void) {
+void culture_mio_visit_computer_fortune(void) {
     GameState *state;
     s32 temp_v0_6;
     u32 temp_v0;
@@ -1604,7 +1604,7 @@ state = &game_state;
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -1650,7 +1650,7 @@ state = &game_state;
                 talk_group = 5;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 9:
@@ -1726,7 +1726,7 @@ state = &game_state;
                 break;
             }
             talk_group += D_80122EA8;
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 18:
@@ -1834,7 +1834,7 @@ state = &game_state;
         normal_date_speak();
         break;
     case 29:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1842,7 +1842,7 @@ state = &game_state;
     }
 }
 
-void func_8015706C(void) {
+void culture_mio_visit_computer_game(void) {
     u32 temp_v0;
     u32 temp_v0_2;
     u32 temp_v0_3;
@@ -1870,7 +1870,7 @@ void func_8015706C(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_MIO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         talk_group = 0x2A;
         break;
     case 5:
@@ -1904,7 +1904,7 @@ void func_8015706C(void) {
                 talk_group = 5;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 10:
@@ -1955,19 +1955,19 @@ void func_8015706C(void) {
         game_state.saved_game_mode = game_state.game_mode;
         game_state.saved_mode_stage = game_state.mode_stage;
         game_state.saved_mode_step = game_state.mode_step + 1;
-        mode_stage_set(0xA4);
+        mode_stage_set(CULTURE_STAGE_GAME_LAUNCH);
         break;
     case 17:
         D_80122E98 = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        mode_stage_set(0xA3);
+        mode_stage_set(CULTURE_STAGE_GAME_RESUME);
         break;
     case 18:
         audio_command(0xBF);
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         message_window_init();
         hizuke_init();
@@ -2025,7 +2025,7 @@ void func_8015706C(void) {
                 talk_group = 0x4B;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 25:
@@ -2116,7 +2116,7 @@ void func_8015706C(void) {
         break;
     case 34:
         ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -2124,7 +2124,7 @@ void func_8015706C(void) {
     }
 }
 
-void func_80157860(void) {
+void culture_mio_visit_portrait_drawing(void) {
     GameState *game = &game_state;
     s32 temp_v0_3;
     s32 temp_v0_4;
@@ -2142,7 +2142,7 @@ void func_80157860(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -2188,7 +2188,7 @@ void func_80157860(void) {
                 talk_group = 5;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 9:
@@ -2325,7 +2325,7 @@ void func_80157860(void) {
         normal_date_speak();
         break;
     case 23:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -2333,7 +2333,7 @@ void func_80157860(void) {
     }
 }
 
-void func_80157DD4(void) {
+void culture_mio_visit_open_sketching(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -2347,7 +2347,7 @@ void func_80157DD4(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -2392,7 +2392,7 @@ void func_80157DD4(void) {
                 talk_group = 5;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 9:
@@ -2448,7 +2448,7 @@ void func_80157DD4(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -2456,7 +2456,7 @@ void func_80157DD4(void) {
     }
 }
 
-void func_801580EC(void) {
+void culture_mio_visit_oil_painting_exhibit(void) {
     GameState *state;
     s32 temp_v0_2;
     s32 temp_v0_3;
@@ -2476,7 +2476,7 @@ state = &game_state;
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5D41);
             mode_step_next();
@@ -2522,7 +2522,7 @@ state = &game_state;
                 talk_group = 5;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 9:
@@ -2685,7 +2685,7 @@ state = &game_state;
         normal_date_speak();
         break;
     case 26:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -2693,7 +2693,7 @@ state = &game_state;
     }
 }
 
-void func_80158764(void) {
+void culture_mio_visit_concert(void) {
     GameState *state;
     s32 choice3;
     s32 choice4;
@@ -2711,7 +2711,7 @@ void func_80158764(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8014338C();
+            culture_backstage_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -2743,7 +2743,7 @@ void func_80158764(void) {
         portrait_read_step(0x5D41);
         break;
     case 9:
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
@@ -2771,7 +2771,7 @@ void func_80158764(void) {
                 talk_group = 4;
                 break;
             }
-            func_80158E3C();
+            culture_mio_visit_script_b_start();
         }
         break;
     case 12:
@@ -2924,7 +2924,7 @@ void func_80158764(void) {
         normal_date_speak();
         break;
     case 27:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -2932,22 +2932,22 @@ void func_80158764(void) {
     }
 }
 
-void func_80158DD8(void) {
+void culture_mio_visit_script_a_start(void) {
     talk_names_set(1);
-    func_80132068();
+    culture_script_set_mio_visit_a();
     talk_line = 0;
-    talk_text_table = D_801604F0;
-    talk_command_table = D_801604F4;
-    talk_voice_table = D_801604F8;
+    talk_text_table = culture_script_text_table;
+    talk_command_table = culture_script_command_table;
+    talk_voice_table = culture_script_voice_table;
     mode_step_next();
 }
 
-void func_80158E3C(void) {
+void culture_mio_visit_script_b_start(void) {
     talk_names_set(1);
-    func_8013209C();
+    culture_script_set_mio_visit_b();
     talk_line = 0;
-    talk_text_table = D_801604F0;
-    talk_command_table = D_801604F4;
-    talk_voice_table = D_801604F8;
+    talk_text_table = culture_script_text_table;
+    talk_command_table = culture_script_command_table;
+    talk_voice_table = culture_script_voice_table;
     mode_step_next();
 }

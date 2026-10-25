@@ -28,10 +28,10 @@ void menu_vram_view_mode_handler(void) {
         if (menu_vram_view_y < 0) {
             menu_vram_view_y = 0;
         }
-        func_80042A00();
+        pad_update();
         func_80098380();
         func_80098490(menu_vram_view_x, menu_vram_view_y, menu_vram_view_x, menu_vram_view_y);
-        func_800422C8();
+        boot_frame_begin();
         func_8009C674(0);
         func_800AD950(0);
         func_8009AC20();

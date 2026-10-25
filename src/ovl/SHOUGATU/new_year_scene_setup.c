@@ -7,7 +7,7 @@
 u8 get_h_tokimeki(s32 arg0);
 u8 get_h_yuukou(s32 arg0);
 
-void func_80132550(void) {
+void new_year_scene_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl13 tbl;
 
@@ -16,7 +16,7 @@ void func_80132550(void) {
     tbl.f[idx](0x80);
 }
 
-void func_801325CC(void) {
+void new_year_audio_bank_load_start(void) {
     audio_bank_load_start(1, 0xC4E5, 0xC4C7, 0xD294, 0xD264, 0xD25E);
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
@@ -25,7 +25,7 @@ void func_801325CC(void) {
     mode_step_next();
 }
 
-void func_80132634(void) {
+void new_year_audio_load_retry(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
         mode_step_next();
@@ -37,13 +37,13 @@ void func_80132634(void) {
     }
 }
 
-void func_801326BC(void) {
+void new_year_scene_resources_load(void) {
     cd_read_sectors(0x34, 0x80197000, 0xAF48);
-    func_80132000();
+    new_year_resource_addresses_init();
     mode_step_next();
 }
 
-void func_801326F8(void) {
+void new_year_scene_init(void) {
     s16 i;
     GameState *g;
     u8 *flags;
@@ -55,19 +55,19 @@ void func_801326F8(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "正月");
+    strcpy(scene_place_title, "正月");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     day_event_today_clear(0);
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    func_80132000();
+    new_year_resource_addresses_init();
     talk_names_set(0U);
     D_80143B00 = 0;
     D_80143B04 = 0;
@@ -76,53 +76,53 @@ void func_801326F8(void) {
     D_80143B20 = 0;
     D_80143B24 = 1;
     g = &game_state;
-    flags = D_800CA2B0;
+    flags = select_girl_menu_enabled;
     for (i = 0; i < 11; i++) {
         flags[i] = g->girls[i].flags.f.met >= 1;
     }
     mode_step_next();
 }
 
-void func_80132864(void) {
+void new_year_scene_background_load(void) {
     bg_read_sub2(0x4167);
     mode_step_next();
 }
 
-void func_8013288C(void) {
-    s32 i;
-    u8 best_i;
-    u8 best_s;
-    u8 s;
+void new_year_eligible_girl_select(void) {
+    s32 girl_index;
+    u8 best_rank_girl;
+    u8 best_girl_rank;
+    u8 candidate_girl_rank;
 
-    best_i = 0xFF;
-    best_s = 4;
+    best_rank_girl = 0xFF;
+    best_girl_rank = 4;
     D_80122D40 = 0;
-    for (i = 0; i < 11; i++) {
-        /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_s to $s5 (T-24122, T-24128). */
+    for (girl_index = 0; girl_index < 11; girl_index++) {
+        /* FAKE: dead branch adjusts the loop basic-block count so uopt assigns best_girl_rank to $s5 (T-24122, T-24128). */
         if (1) {}
-        if (game_state.girls[i].flags.f.met != 0) {
-            s = get_g_zyotai_s(i) & 0x7F;
-            /* FAKE: duplicate `s == best_s` shifts uopt's live-range priority between s and best_s (T-24122). */
-            if (s < best_s ||
-                (s == best_s && s == best_s &&
-                 get_h_tokimeki(i) + get_h_yuukou(i) >
-                     get_h_tokimeki(best_i) + get_h_yuukou(best_i))) {
-                best_i = i;
-                best_s = s;
+        if (game_state.girls[girl_index].flags.f.met != 0) {
+            candidate_girl_rank = get_g_zyotai_s(girl_index) & 0x7F;
+            /* FAKE: duplicate `candidate_girl_rank == best_girl_rank` shifts uopt'candidate_girl_rank live-range priority between candidate_girl_rank and best_girl_rank (T-24122). */
+            if (candidate_girl_rank < best_girl_rank ||
+                (candidate_girl_rank == best_girl_rank && candidate_girl_rank == best_girl_rank &&
+                 get_h_tokimeki(girl_index) + get_h_yuukou(girl_index) >
+                     get_h_tokimeki(best_rank_girl) + get_h_yuukou(best_rank_girl))) {
+                best_rank_girl = girl_index;
+                best_girl_rank = candidate_girl_rank;
             }
         }
     }
-    s = get_g_zyotai_s(best_i) & 0x7F;
-    if (best_i != 0xFF && s < 2U) {
-        D_80143B1C = best_i;
-        /* FAKE: `(best_i & 0) +` keeps cfe's CVT J L narrowing so uopt emits `andi $a0, $fp, 0xff` (T-24122). */
-        game_state.current_girl = (best_i & 0) + best_i;
+    candidate_girl_rank = get_g_zyotai_s(best_rank_girl) & 0x7F;
+    if (best_rank_girl != 0xFF && candidate_girl_rank < 2U) {
+        D_80143B1C = best_rank_girl;
+        /* FAKE: `(best_rank_girl & 0) +` keeps cfe'candidate_girl_rank CVT J L narrowing so uopt emits `andi $a0, $fp, 0xff` (T-24122). */
+        game_state.current_girl = (best_rank_girl & 0) + best_rank_girl;
         talk_names_set(game_state.current_girl);
-        func_80132A34();
+        new_year_girl_dialogue_tables_select();
         D_80143B00 = 0;
         D_80143B04 = 0;
         D_80143B14 = 1;
-        D_80122D40 = best_i + 1;
+        D_80122D40 = best_rank_girl + 1;
         game_state.day_event_done_bits |= 0x80;
         mode_stage_set(1);
     } else {
@@ -131,7 +131,7 @@ void func_8013288C(void) {
     }
 }
 
-void func_80132A34(void) {
+void new_year_girl_dialogue_tables_select(void) {
     u8 state;
 
     switch (game_state.current_girl) {

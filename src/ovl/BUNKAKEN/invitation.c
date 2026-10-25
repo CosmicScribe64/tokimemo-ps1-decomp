@@ -6,20 +6,20 @@
 
 void talk_names_set();
 void portrait_layout_set();
-s32 func_8013BD84(void);
-void func_8013BFA0(void);
+s32 tour_invitation_pick_girl(void);
+void tour_script_tables_apply(void);
 
-void func_8013B510(void) {
+void tour_stage_invitation(void) {
     switch (game_state.mode_step) {
     case 0:
-        if (func_8013BD84() != 0) {
+        if (tour_invitation_pick_girl() != 0) {
             mode_step_next();
         } else {
-            mode_stage_set(1);
+            mode_stage_set(TOUR_STAGE_ASK_COMPANION);
         }
         break;
     case 1:
-        portrait_read_step(D_80155EA0[D_80122EBC]);
+        portrait_read_step(tour_portrait_lba[D_80122EBC]);
         break;
     case 2:
         addr_init_bustup();
@@ -29,7 +29,7 @@ void func_8013B510(void) {
             game_state.current_girl = D_80122EBC;
         }
         portrait_show_checked();
-        cd_read_sectors(D_80155F00[D_80122EBC], 0x801E8000, D_80155F0C[D_80122EBC]);
+        cd_read_sectors(tour_invite_script_sectors[D_80122EBC], 0x801E8000, tour_invite_script_lba[D_80122EBC]);
         break;
     case 3:
         normal_date_girl_in();
@@ -42,8 +42,8 @@ void func_8013B510(void) {
                 /* FAKE: self-store preserves the original store in the call delay slot. T-24134. */
                 talk_names_set(D_80122EBC = D_80122EBC);
             }
-            D_80155ED0[D_80122EBC]();
-            func_8013BFA0();
+            tour_invite_script_setter[D_80122EBC]();
+            tour_script_tables_apply();
             talk_group = 0;
             talk_line = 0;
             mode_step_next();
@@ -79,7 +79,7 @@ void func_8013B510(void) {
         break;
     case 8:
         if (D_80122CDC != 0) {
-            portrait_layout_set(D_80155F3C[D_80122EBC]);
+            portrait_layout_set(tour_portrait_layout[D_80122EBC]);
             portrait_face_update();
             if (D_80122EBC == 0xB) {
                 D_80122EA4 = 0;
@@ -97,7 +97,7 @@ void func_8013B510(void) {
             if ((D_80122EBC == 8) || (D_80122EBC == 9)) {
                 mode_step_set(0xE);
             } else {
-                mode_stage_set(3);
+                mode_stage_set(TOUR_STAGE_CLUB_MENU);
             }
         } else {
             mode_step_next();
@@ -110,7 +110,7 @@ void func_8013B510(void) {
         normal_date_speak();
         break;
     case 13:
-        mode_stage_set(1);
+        mode_stage_set(TOUR_STAGE_ASK_COMPANION);
         break;
     case 14:
         talk_group = 8;
@@ -120,7 +120,7 @@ void func_8013B510(void) {
         normal_date_speak();
         break;
     case 16:
-        mode_stage_set(3);
+        mode_stage_set(TOUR_STAGE_CLUB_MENU);
         break;
     case 17:
         /* The halfword conversion preserves the original temporary order. T-24134. */
@@ -169,7 +169,7 @@ void func_8013B510(void) {
     case 27:
         D_80122EB8 = (u8) game_state.girls[0].flags.b[2] >> 4;
         D_80122EBC = 0xFF;
-        mode_stage_set(4);
+        mode_stage_set(TOUR_STAGE_ROUTE_VISIT);
         break;
     case 28:
         normal_date_girl_out();
@@ -183,7 +183,7 @@ void func_8013B510(void) {
         normal_date_speak();
         break;
     case 31:
-        mode_stage_set(1);
+        mode_stage_set(TOUR_STAGE_ASK_COMPANION);
         break;
     case 32:
         switch (D_80122EBC) {
@@ -284,7 +284,7 @@ void func_8013B510(void) {
     case 42:
         D_80122EB8 = (u8) game_state.girls[D_80122EBC].flags.b[2] >> 4;
         D_80122EBC = 0xFF;
-        mode_stage_set(4);
+        mode_stage_set(TOUR_STAGE_ROUTE_VISIT);
         break;
     case 43:
         normal_date_girl_out();
@@ -298,7 +298,7 @@ void func_8013B510(void) {
         normal_date_speak();
         break;
     case 46:
-        mode_stage_set(1);
+        mode_stage_set(TOUR_STAGE_ASK_COMPANION);
         break;
     default:
         game_mode_reset_to_title();
@@ -306,58 +306,58 @@ void func_8013B510(void) {
     }
 }
 
-s32 func_8013BD84(void) {
+s32 tour_invitation_pick_girl(void) {
     s32 i;
-    s32 best;
-    s16 max;
-    s16 v;
-    u8 flags;
+    s32 best_girl;
+    s16 best_score;
+    s16 candidate_score;
+    u8 shiori_flags;
 
-    best = 0;
+    best_girl = 0;
     if ((get_h_yuukou(GIRL_SHIORI) >= 0x32U) && (get_h_yuukou(GIRL_SHIORI) >= 0x50U)) {
-        max = game_state.girls[0].affection + game_state.girls[0].tokimeki;
+        best_score = game_state.girls[0].affection + game_state.girls[0].tokimeki;
     } else {
-        max = 0;
+        best_score = 0;
     }
-    flags = game_state.girls[0].flags.b[2];
+    shiori_flags = game_state.girls[0].flags.b[2];
     if (game_state.year == 0x60) {
-        if (((flags >> 4) == 4) || ((flags >> 4) == 1)) {
-            max = 0;
+        if (((shiori_flags >> 4) == 4) || ((shiori_flags >> 4) == 1)) {
+            best_score = 0;
         }
     }
     for (i = 1; i < 11; i++) {
         if ((get_h_tokimeki(i) >= 0x32U) && (get_h_yuukou(i) >= 0x50U) && (game_state.girls[i].flags.f.met == 1)) {
-            v = game_state.girls[i].affection + game_state.girls[i].tokimeki;
+            candidate_score = game_state.girls[i].affection + game_state.girls[i].tokimeki;
             if (game_state.year == 0x60) {
                 if ((((u8) game_state.girls[i].flags.b[2] >> 4) == 4) || (((u8) game_state.girls[i].flags.b[2] >> 4) == 1)) {
-                    v = 0;
+                    candidate_score = 0;
                 }
             }
-            if (max < v) {
-                best = i;
-                max = v;
+            if (best_score < candidate_score) {
+                best_girl = i;
+                best_score = candidate_score;
             }
         }
     }
-    if ((get_h_tokimeki(best) >= 0x32U) && (get_h_yuukou(best) >= 0x50U)) {
-        flags = game_state.girls[0].flags.b[2];
-        if ((best == 0) && (game_state.year == 0x60)) {
-            if (((flags >> 4) == 4) || ((flags >> 4) == 1)) {
+    if ((get_h_tokimeki(best_girl) >= 0x32U) && (get_h_yuukou(best_girl) >= 0x50U)) {
+        shiori_flags = game_state.girls[0].flags.b[2];
+        if ((best_girl == 0) && (game_state.year == 0x60)) {
+            if (((shiori_flags >> 4) == 4) || ((shiori_flags >> 4) == 1)) {
                 return 0;
             }
         }
-        if ((best == 0) && ((flags >> 4) >= 6U)) {
-            best = 11;
+        if ((best_girl == 0) && ((shiori_flags >> 4) >= 6U)) {
+            best_girl = 11;
         }
-        D_80122EBC = best;
+        D_80122EBC = best_girl;
         return 1;
     }
     return 0;
 }
 
 
-void func_8013BFA0(void) {
-    talk_text_table = D_80155E90;
-    talk_command_table = D_80155E94;
-    talk_voice_table = D_80155E98;
+void tour_script_tables_apply(void) {
+    talk_text_table = tour_script_text;
+    talk_command_table = tour_script_commands;
+    talk_voice_table = tour_script_voices;
 }

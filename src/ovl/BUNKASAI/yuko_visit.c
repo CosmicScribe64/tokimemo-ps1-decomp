@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-void func_80138A70(void) {
+void culture_yuko_visit_entry(void) {
     CultureFestivalDispatch *dispatch = (CultureFestivalDispatch *)&D_80122EB8;
     dispatch->unk_04 = 8;
     switch (dispatch->unk_00) {
@@ -55,7 +55,7 @@ void func_80138A70(void) {
 }
 
 /* T-12220: bit-field stores preserve the original byte-load register allocation. */
-void func_80138BE4(void) {
+void culture_yuko_visit_literature_exhibit(void) {
     u32 temp_v0;
 
     switch (game_state.mode_step) {
@@ -68,7 +68,7 @@ void func_80138BE4(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             portrait_read_start(0x5012);
             mode_step_next();
@@ -123,7 +123,7 @@ void func_80138BE4(void) {
             if (game_state.year == 0x60) {
                 talk_group += 5;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -157,7 +157,7 @@ void func_80138BE4(void) {
                 game_state.girls[8].flags.f.b13 = 1;
             }
         }
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -165,7 +165,7 @@ void func_80138BE4(void) {
     }
 }
 
-void func_80138EF8(void) {
+void culture_yuko_visit_speech_contest(void) {
     u32 temp_v0;
 
     switch (game_state.mode_step) {
@@ -178,7 +178,7 @@ void func_80138EF8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8014338C();
+            culture_backstage_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -209,7 +209,7 @@ void func_80138EF8(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         cd_read_sectors(0x14U, 0x801E8000, 0x4991);
         break;
@@ -234,7 +234,7 @@ void func_80138EF8(void) {
                 talk_group = 0xE;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 12:
@@ -261,7 +261,7 @@ void func_80138EF8(void) {
         normal_date_speak();
         break;
     case 18:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -269,7 +269,7 @@ void func_80138EF8(void) {
     }
 }
 
-void func_801391B8(void) {
+void culture_yuko_visit_drama_play(void) {
     u32 temp_v0;
 
     switch (game_state.mode_step) {
@@ -282,7 +282,7 @@ void func_801391B8(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8014338C();
+            culture_backstage_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -322,7 +322,7 @@ void func_801391B8(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         cd_read_sectors(0x14U, 0x801E8000, 0x4991);
         break;
@@ -331,7 +331,7 @@ void func_801391B8(void) {
         break;
     case 11:
         if (cd_read_sync_status() & 1) {
-            func_8013B120();
+            culture_yuko_visit_script_start();
             temp_v0 = girl_state_rank(8);
             switch (temp_v0) {
             case 0:
@@ -374,7 +374,7 @@ void func_801391B8(void) {
         normal_date_speak();
         break;
     case 18:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -382,7 +382,7 @@ void func_801391B8(void) {
     }
 }
 
-void func_80139504(void) {
+void culture_yuko_visit_experiment_show(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -411,7 +411,7 @@ void func_80139504(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         talk_group = 0x29;
         break;
     case 5:
@@ -445,7 +445,7 @@ void func_80139504(void) {
                 talk_group = 0x1E;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -467,7 +467,7 @@ void func_80139504(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         cd_read_sectors(0x14U, 0x801E8000, 0x4991);
         break;
@@ -496,7 +496,7 @@ void func_80139504(void) {
                 talk_group = 0x28;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 17:
@@ -520,7 +520,7 @@ void func_80139504(void) {
         normal_date_speak();
         break;
     case 22:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -528,7 +528,7 @@ void func_80139504(void) {
     }
 }
 
-void func_80139920(void) {
+void culture_yuko_visit_computer_fortune(void) {
     u32 temp_v0;
     u32 temp_v0_2;
     u32 temp_v0_3;
@@ -554,7 +554,7 @@ void func_80139920(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         talk_group = 0x2A;
         break;
     case 5:
@@ -588,7 +588,7 @@ void func_80139920(void) {
                 talk_group = 0x2C;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -623,7 +623,7 @@ void func_80139920(void) {
         break;
     case 16:
         if (cd_read_sync_status() & 1) {
-            func_8013B120();
+            culture_yuko_visit_script_start();
             temp_v0_2 = girl_state_rank(8);
             switch (temp_v0_2) {
             case 0:
@@ -686,7 +686,7 @@ void func_80139920(void) {
         normal_date_speak();
         break;
     case 24:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -694,7 +694,7 @@ void func_80139920(void) {
     }
 }
 
-void func_80139D84(void) {
+void culture_yuko_visit_computer_game(void) {
     s32 temp_v0_2;
     u32 temp_v0;
     u32 temp_v0_3;
@@ -721,7 +721,7 @@ void func_80139D84(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         talk_group = 0x2A;
         break;
     case 5:
@@ -755,7 +755,7 @@ void func_80139D84(void) {
                 talk_group = 0x40;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -789,13 +789,13 @@ void func_80139D84(void) {
         D_80122E98 = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        mode_stage_set(0xA3);
+        mode_stage_set(CULTURE_STAGE_GAME_RESUME);
         break;
     case 17:
         audio_command(0xBF);
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         message_window_init();
         hizuke_init();
@@ -846,7 +846,7 @@ void func_80139D84(void) {
                 talk_group = 0x44;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 24:
@@ -865,19 +865,19 @@ void func_80139D84(void) {
         game_state.saved_game_mode = game_state.game_mode;
         game_state.saved_mode_stage = game_state.mode_stage;
         game_state.saved_mode_step = game_state.mode_step + 1;
-        mode_stage_set(0xA4);
+        mode_stage_set(CULTURE_STAGE_GAME_LAUNCH);
         break;
     case 27:
         D_80122E98 = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        mode_stage_set(0xA3);
+        mode_stage_set(CULTURE_STAGE_GAME_RESUME);
         break;
     case 28:
         audio_command(0xBF);
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         message_window_init();
         hizuke_init();
@@ -938,7 +938,7 @@ void func_80139D84(void) {
             if ((u8) D_800E7D4E < 4U) {
                 talk_group += 1;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 35:
@@ -981,7 +981,7 @@ void func_80139D84(void) {
         break;
     case 42:
         ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -989,7 +989,7 @@ void func_80139D84(void) {
     }
 }
 
-void func_8013A614(void) {
+void culture_yuko_visit_portrait_drawing(void) {
     s32 temp_v0_2;
     u32 temp_v0;
 
@@ -1015,7 +1015,7 @@ void func_8013A614(void) {
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
         talk_group = 0x2B;
-        func_801431D4();
+        culture_exhibit_title_show();
         break;
     case 5:
         normal_date_bg_fadein();
@@ -1048,7 +1048,7 @@ void func_8013A614(void) {
                 talk_group = 0x5F;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -1107,7 +1107,7 @@ void func_8013A614(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1115,7 +1115,7 @@ void func_8013A614(void) {
     }
 }
 
-void func_8013A95C(void) {
+void culture_yuko_visit_open_sketching(void) {
     u32 temp_v0;
 
     switch (game_state.mode_step) {
@@ -1139,7 +1139,7 @@ void func_8013A95C(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         talk_group = 0x2C;
         break;
     case 5:
@@ -1173,7 +1173,7 @@ void func_8013A95C(void) {
                 talk_group = 0x67;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -1196,7 +1196,7 @@ void func_8013A95C(void) {
         normal_date_speak();
         break;
     case 16:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1204,7 +1204,7 @@ void func_8013A95C(void) {
     }
 }
 
-void func_8013ABA0(void) {
+void culture_yuko_visit_oil_painting_exhibit(void) {
     u32 temp_v0;
 
     switch (game_state.mode_step) {
@@ -1228,7 +1228,7 @@ void func_8013ABA0(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         talk_group = 0x2D;
         break;
     case 5:
@@ -1262,7 +1262,7 @@ void func_8013ABA0(void) {
                 talk_group = 0x6C;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 10:
@@ -1289,7 +1289,7 @@ void func_8013ABA0(void) {
         normal_date_speak();
         break;
     case 16:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1297,7 +1297,7 @@ void func_8013ABA0(void) {
     }
 }
 
-void func_8013AE08(void) {
+void culture_yuko_visit_concert(void) {
     u32 temp_v0;
 
     switch (game_state.mode_step) {
@@ -1310,7 +1310,7 @@ void func_8013AE08(void) {
         break;
     case 2:
         if (cd_read_sync_status() & 1) {
-            func_8014338C();
+            culture_backstage_title_show();
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             mode_step_next();
         }
@@ -1345,7 +1345,7 @@ void func_8013AE08(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUKO;
         portrait_show_checked();
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         cd_read_sectors(0x14U, 0x801E8000, 0x4991);
         break;
@@ -1370,7 +1370,7 @@ void func_8013AE08(void) {
                 talk_group = 0x77;
                 break;
             }
-            func_8013B120();
+            culture_yuko_visit_script_start();
         }
         break;
     case 12:
@@ -1397,7 +1397,7 @@ void func_8013AE08(void) {
         normal_date_speak();
         break;
     case 18:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -1405,12 +1405,12 @@ void func_8013AE08(void) {
     }
 }
 
-void func_8013B120(void) {
+void culture_yuko_visit_script_start(void) {
     talk_names_set(8);
-    func_8013230C();
+    culture_script_set_yuko_visit();
     talk_line = 0;
-    talk_text_table = D_801604F0;
-    talk_command_table = D_801604F4;
-    talk_voice_table = D_801604F8;
+    talk_text_table = culture_script_text_table;
+    talk_command_table = culture_script_command_table;
+    talk_voice_table = culture_script_voice_table;
     mode_step_next();
 }

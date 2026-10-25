@@ -454,52 +454,52 @@ void tt_boss4_death_sequence(void) {
  * constant allocation and stack layout; original source unknown. T-9520. */
 void tt_boss4_form0_step0_aimed_fan(void) {
     u16 mode;
-    u8 *other;
-    s32 one;
+    u8 *player;
+    s32 fake_one;
     s32 angle;
     u32 period;
     TtBossView *boss;
     TtPositionView point;
 
-    one = 1;
+    fake_one = 1;
     period = 384;
-    mode = ((TtBossView *) tt_boss)->unk_08;
-    other = tt_player;
+    mode = ((TtBossView *) tt_boss)->attack_step;
+    player = tt_player;
     boss = (TtBossView *) tt_boss;
     switch (mode) {
     case 0:
-        boss->unk_366 = 0;
-        boss->unk_08 = 0x40;
+        boss->phase_timer = 0;
+        boss->attack_step = 0x40;
         break;
     case 0x40:
-        if ((u16) boss->unk_366 % period == 192U) {
-            tt_enemy_shot_fire_fan9_aimed(boss->unk_14, boss->unk_16 + 8, 0x80, 0x30, 0xAA);
+        if ((u16) boss->phase_timer % period == 192U) {
+            tt_enemy_shot_fire_fan9_aimed(boss->x, boss->y + 8, 0x80, 0x30, 0xAA);
         }
-        if ((boss->unk_366 & 7) == 7) {
-            point.x = boss->unk_14 << 16;
-            point.y = (boss->unk_16 + 8) << 16;
-            angle = tt_angle_between((s32) &point, (s32) (other + 0x14));
-            tt_enemy_shot_fire_angle(boss->unk_14, boss->unk_16 + 8, 0x18, boss->unk_3A6 * boss->unk_3A4 + angle, 0xA0);
-            boss->unk_3A4 += 0x40;
-            if ((u16) boss->unk_3A4 >= 0x301U) {
-                boss->unk_3A4 = 0;
+        if ((boss->phase_timer & 7) == 7) {
+            point.x = boss->x << 16;
+            point.y = (boss->y + 8) << 16;
+            angle = tt_angle_between((s32) &point, (s32) (player + 0x14));
+            tt_enemy_shot_fire_angle(boss->x, boss->y + 8, 0x18, boss->angle_sign * boss->angle_offset + angle, 0xA0);
+            boss->angle_offset += 0x40;
+            if ((u16) boss->angle_offset >= 0x301U) {
+                boss->angle_offset = 0;
             }
-            if ((u16) boss->unk_3A6 == one) {
-                boss->unk_3A6 = -one;
+            if ((u16) boss->angle_sign == fake_one) {
+                boss->angle_sign = -fake_one;
             } else {
-                boss->unk_3A6 = one;
+                boss->angle_sign = fake_one;
             }
         }
-        if ((u16) boss->unk_366 >= period) {
-            boss->unk_08 = 0xA0;
+        if ((u16) boss->phase_timer >= period) {
+            boss->attack_step = 0xA0;
         }
         break;
     case 0xA0:
-        boss->unk_06 = one;
-        boss->unk_08 = 0;
+        boss->phase = fake_one;
+        boss->attack_step = 0;
         break;
     }
-    boss->unk_366++;
+    boss->phase_timer++;
 }
 
 /* T-11840: matched once the 7 stored to +0x2A8[i] is u16 (it then shares v0 with the (timer & 7) == 7 test), the sums are written base + table[index] (uopt loads the table entry first), and two unused words size the frame. */
@@ -645,7 +645,7 @@ void tt_boss4_form0_step2_drone_rings(void) {
 /* T-11520/T-11550: matched once the case-0x40 tables are read as x[i]/y[i] in counted loops (i < 5, i < 4): uopt strength-reduces them to the same pointer walk; with i shared by those loops (likely a lower priority for i) the angle loop keeps 0x900 (n) in s1 and angle + i in s0 and spills i, as in the original. The stack layout needs n and i declared after the TtPositionView. */
 void tt_boss4_form1_step0_beams(void) {
     u16 mode;
-    u8 *other;
+    u8 *player;
     TtBossView *boss;
     s32 *x;
     s32 *y;
@@ -654,69 +654,69 @@ void tt_boss4_form1_step0_beams(void) {
     s32 n;
     s32 i;
 
-    mode = ((TtBossView *) tt_boss)->unk_08;
-    other = tt_player;
+    mode = ((TtBossView *) tt_boss)->attack_step;
+    player = tt_player;
     boss = (TtBossView *) tt_boss;
     switch (mode) {
     case 0:
-        boss->unk_366 = 0;
-        boss->unk_08 = 0x10;
+        boss->phase_timer = 0;
+        boss->attack_step = 0x10;
         break;
     case 0x10:
-        if (((TtBossView *) tt_boss)->unk_366 >= 0x3C) {
-            boss->unk_08 = 0x40;
+        if (((TtBossView *) tt_boss)->phase_timer >= 0x3C) {
+            boss->attack_step = 0x40;
         }
         break;
     case 0x40:
-        if (boss->unk_366 < 0x80) {
-            if (((TtBossView *) other)->unk_16 < 0x78) {
-                boss->unk_366 = 0x80;
+        if (boss->phase_timer < 0x80) {
+            if (((TtBossView *) player)->y < 0x78) {
+                boss->phase_timer = 0x80;
             }
-            if ((boss->unk_366 & 0x1F) == 0x1F) {
+            if ((boss->phase_timer & 0x1F) == 0x1F) {
                 tt_se_request(0x500);
                 if (((u8 *) boss)[0x106] == 0) {
                     x = tt_boss4_shot_x_a;
                     y = tt_boss4_shot_y_a;
                     for (i = 0; i < 5; i++) {
-                        tt_enemy_shot_fire_beam(boss->unk_14 - x[i], y[i] + boss->unk_16);
-                        tt_enemy_shot_fire_beam(x[i] + boss->unk_14, y[i] + boss->unk_16);
+                        tt_enemy_shot_fire_beam(boss->x - x[i], y[i] + boss->y);
+                        tt_enemy_shot_fire_beam(x[i] + boss->x, y[i] + boss->y);
                     }
                 } else {
                     x = tt_boss4_shot_x_b;
                     y = tt_boss4_shot_y_b;
                     for (i = 0; i < 4; i++) {
-                        tt_enemy_shot_fire_beam(boss->unk_14 - x[i], y[i] + boss->unk_16);
-                        tt_enemy_shot_fire_beam(x[i] + boss->unk_14, y[i] + boss->unk_16);
+                        tt_enemy_shot_fire_beam(boss->x - x[i], y[i] + boss->y);
+                        tt_enemy_shot_fire_beam(x[i] + boss->x, y[i] + boss->y);
                     }
                 }
             }
-        } else if (boss->unk_366 < 0x100) {
-            if ((boss->unk_366 & 1) == 1) {
-                if ((boss->unk_366 & 3) == 3) {
+        } else if (boss->phase_timer < 0x100) {
+            if ((boss->phase_timer & 1) == 1) {
+                if ((boss->phase_timer & 3) == 3) {
                     tt_se_request(0x50D);
                 }
-                tt_enemy_shot_fire_angle(boss->unk_14, boss->unk_16 + 8, 0x30, ((boss->unk_366 & 0x7F) << 6) - 0x400, 0xA1);
+                tt_enemy_shot_fire_angle(boss->x, boss->y + 8, 0x30, ((boss->phase_timer & 0x7F) << 6) - 0x400, 0xA1);
             }
-        } else if ((boss->unk_366 & 0x3F) == 0x3F) {
+        } else if ((boss->phase_timer & 0x3F) == 0x3F) {
             tt_se_request(0x50B);
-            point.x = boss->unk_14 << 16;
-            point.y = (boss->unk_16 + 8) << 16;
-            angle = tt_angle_between((s32) &point, (s32) (other + 0x14));
+            point.x = boss->x << 16;
+            point.y = (boss->y + 8) << 16;
+            angle = tt_angle_between((s32) &point, (s32) (player + 0x14));
             angle &= 0x7F;
             for (i = -0x100, n = 0x900; i != n; i += 0x80) {
-                tt_enemy_shot_fire_angle(boss->unk_14, boss->unk_16 + 8, 0x48, angle + i, 0xA0);
+                tt_enemy_shot_fire_angle(boss->x, boss->y + 8, 0x48, angle + i, 0xA0);
             }
         }
-        if (boss->unk_366 >= 0x180) {
-            boss->unk_08 = 0xA0;
+        if (boss->phase_timer >= 0x180) {
+            boss->attack_step = 0xA0;
         }
         break;
     case 0xA0:
-        boss->unk_06 = 1;
-        boss->unk_08 = 0;
+        boss->phase = 1;
+        boss->attack_step = 0;
         break;
     }
-    boss->unk_366++;
+    boss->phase_timer++;
 }
 
 /* T-11540/T-11550: matched once case 0x52 reads +0x3EC/+0x3F0 back from memory for the /0x10000 stores (the vx/vy copies took a register and spilled one more word) and pt is declared after vy, which puts it at sp+56. */
@@ -870,7 +870,7 @@ void tt_boss4_update(void) {
         tt_field_enemies_destroy();
         if (*(u16 *)(core + 4) == 0) {
             audio_command(0xB1);
-            func_800451E0(0x8019A000);
+            cd_load_destination_base_set(0x8019A000);
             audio_command(0x12);
             audio_command(0x23);
             audio_command(0x2E);

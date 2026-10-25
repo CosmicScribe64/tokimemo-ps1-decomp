@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_8013B5B0(void) {
+void new_year_girl_dialogue_setup_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl25 tbl;
 
@@ -11,7 +11,7 @@ void func_8013B5B0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013B62C(void) {
+void new_year_girl_dialogue_audio_bank_load_start(void) {
     audio_bank_load_start(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
     if (audio_bank_load_poll() == 1) {
         audio_command(0x202);
@@ -20,7 +20,7 @@ void func_8013B62C(void) {
     mode_step_next();
 }
 
-void func_8013B694(void) {
+void new_year_girl_dialogue_audio_bank_wait(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x202);
         mode_step_next();
@@ -32,13 +32,13 @@ void func_8013B694(void) {
     }
 }
 
-void func_8013B71C(void) {
+void new_year_hallway_resource_read(void) {
     cd_read_sectors(9, 0x80197000, 0xAFB3);
-    func_8013B210();
+    new_year_girl_talk_resource_addresses_init();
     mode_step_next();
 }
 
-void func_8013B758(void) {
+void new_year_hallway_scene_state_init(void) {
     s16 i;
 
     draw2d3d(1, 0);
@@ -48,20 +48,20 @@ void func_8013B758(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-9320 */
     talk_names_set(*(u8 *)&game_state.current_girl = 0xC);
-    func_8013B210();
+    new_year_girl_talk_resource_addresses_init();
     D_801459FC = D_8014596C;
     D_80145A00 = D_801459A0;
     D_80145A04 = D_801459D4;
@@ -76,33 +76,33 @@ void func_8013B758(void) {
     mode_step_next();
 }
 
-void func_8013B8CC(void) {
+void new_year_hallway_background_and_log(void) {
     event_log_add(7, 0);
     bg_read_sub2(0x4045);
     mode_step_next();
 }
 
-void func_8013B900(void) {
+void new_year_hallway_year_counter_update(void) {
     D_80145A08 += ((u8) game_state.year >= 0x61U) * 4;
     mode_step_next();
 }
 
-void func_8013B944(void) {
+void new_year_hallway_no_flag_counter_update(void) {
     if (D_80145A10 == 0) {
         D_80145A08 += 1;
     }
     mode_step_next();
 }
 
-void func_8013B984(void) {
+void new_year_hallway_dialogue_branch(void) {
     if (D_80145A10 != 0) {
         mode_step_next();
         return;
     }
-    func_8013B528();
+    new_year_girl_dialogue_run();
 }
 
-void func_8013B9C0(void) {
+void new_year_hallway_scene_exit_branch(void) {
     if (D_80145A10 != 0) {
         mode_stage_next();
         return;

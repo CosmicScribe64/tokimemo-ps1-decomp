@@ -94,7 +94,7 @@ void album_save_step_card_unformatted(void) {
         break;
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            if (func_80054108() == 1) {
+            if (memory_card_format() == 1) {
                 mode_step_set(4);
             } else {
                 mode_step_set(2);
@@ -149,7 +149,7 @@ s32 album_save_step_background(void) {
         }
         return;
     case 2:
-        func_800536AC(0x2C0, 0, 0x140, 0xF0);
+        bg_still_decode_to_vram(0x2C0, 0, 0x140, 0xF0);
         MoveSquare(0x2C0, 0x20, 0x140, 0xD0, 0x2C0, 0);
         func_8009C674(0);
         game_state.substep += 1;
@@ -209,7 +209,7 @@ void album_save_step_card_check(void) {
         memory_card_start();
         break;
     case 1:
-        if (func_80053F04() != 0) {
+        if (memory_card_check_poll() != 0) {
             if (game_state.memory_card_result == 1) {
                 memory_card_stop();
                 printf("EXIST_CARD!");
@@ -234,7 +234,7 @@ void album_save_step_card_check(void) {
         game_state.substep += 1;
         break;
     case 3:
-        if (func_80054140() == 2) {
+        if (memory_card_scan_poll() == 2) {
             game_state.substep += 1;
             memory_card_stop();
         } else if ((u32) game_state.memory_card_timer >= 0x201U) {
@@ -262,7 +262,7 @@ void album_save_step_system_file_load(void) {
         memory_card_start();
         break;
     case 1:
-        if (func_80054284() == 3) {
+        if (memory_card_system_read_poll() == 3) {
             memory_card_stop();
             printf("LOAD SYSTEM OK");
             game_state.substep += 1;
@@ -272,7 +272,7 @@ void album_save_step_system_file_load(void) {
         }
         break;
     case 2:
-        if (func_800552DC(0) == -1) {
+        if (memory_card_system_bank_load(0) == -1) {
             mode_step_set(0xFD);
         } else {
             mode_step_next();
@@ -287,7 +287,7 @@ void album_event_log_pack(void) {
     u8 value;
     s32 i;
 
-    bzero(system_data.unk_058, 0x800);
+    bzero(system_data.album_entries, 0x800);
     /* FAKE: retain this count-initializer/for source-line group for the
      * original preheader schedule. Original line layout unknown. T-24067 */
     count = 0; for (i = 0; i < 256; i++) {
@@ -298,12 +298,12 @@ void album_event_log_pack(void) {
             (game_state.current_girl & 0xF) != game_state.event_log[i].girl) {
             continue;
         }
-        ((EventLogEntry *)system_data.unk_058)[count] = game_state.event_log[i];
+        ((EventLogEntry *)system_data.album_entries)[count] = game_state.event_log[i];
         count++;
     }
-    system_data.unk_027[1] = count;
-    system_data.unk_027[0] = 1;
-    printf("ALBUM_MODE IN SAVE %d \n", system_data.unk_027[0]);
+    system_data.album_state[1] = count;
+    system_data.album_state[0] = 1;
+    printf("ALBUM_MODE IN SAVE %d \n", system_data.album_state[0]);
 }
 
 /* Retain the earlier caller's K&R implicit-int view. */
@@ -318,7 +318,7 @@ s32 album_save_step_write(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (((u32)game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
@@ -409,7 +409,7 @@ void album_save_step_no_system_file(void) {
         g->substep += 1;
         break;
     case 5:
-        if (func_80054694(0) == 1) {
+        if (memory_card_file_create(0) == 1) {
             g->substep += 1;
         } else {
             mode_step_set(0xFE);
@@ -420,11 +420,11 @@ void album_save_step_no_system_file(void) {
         *D_800E7D14 = 1;
         g->save_slot = 0;
         memory_card_start();
-        func_80054E6C();
+        memory_card_slot_summary_store();
         g->substep += 1;
         break;
     case 7:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             g->substep += 1;
         } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {
@@ -556,14 +556,14 @@ void album_save_step_system_file_broken(void) {
         }
         break;
     case 4:
-        if (func_80054704(0) == 1) {
+        if (memory_card_file_delete(0) == 1) {
             g->substep += 1;
         } else {
             mode_step_set(0xFF);
         }
         break;
     case 5:
-        if (func_80054694(0) == 1) {
+        if (memory_card_file_create(0) == 1) {
             g->substep += 1;
         } else {
             mode_step_set(0xFF);
@@ -573,11 +573,11 @@ void album_save_step_system_file_broken(void) {
         D_800E7D36 = g->save_slot;
         *D_800E7D14 = 1;
         g->save_slot = 0;
-        func_80054E6C();
+        memory_card_slot_summary_store();
         g->substep += 1;
         break;
     case 7:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             g->substep += 1;
         } else if (((u32) g->memory_card_timer >= 0x201U) || (g->memory_card_result == 0xF0)) {

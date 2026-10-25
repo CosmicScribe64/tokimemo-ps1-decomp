@@ -2,7 +2,7 @@
 #define MAIN_API_OVERRIDE_Vblnk_Timer_Init /* implicit declaration, as matched (main_api.h: void(void)) */
 #include "ovl/MASTER.h"
 
-void func_80138490(void) {
+void master_player_birthday_scene_run(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -40,7 +40,7 @@ block_8:
             audio_bank_load_start(1, 0xC043, 0xC01D, 0xCA95, 0xCA4F, 0xCA3E);
             game_state.current_girl = GIRL_SHIORI;
             talk_names_set(0U);
-            func_801336E8();
+            master_set_tournament_reaction_dialogue();
             talk_group = 0;
             talk_line = 0;
             talk_text_table = (s32) D_8013C4A0;
@@ -89,7 +89,7 @@ block_8:
         normal_date_three_select();
         break;
     case 12:
-        func_80138E58();
+        master_birthday_response_name_select();
         talk_group = 6;
         mode_step_next();
         break;
@@ -203,7 +203,7 @@ block_8:
         if (cd_read_sync_status() & 1) {
             game_state.current_girl = GIRL_SHIORI;
             talk_names_set(0U);
-            func_801337B8();
+            master_set_tournament_audience_sequence_tables();
             talk_group = 0;
             talk_line = 0;
             talk_text_table = D_8013C4D8;
@@ -242,7 +242,7 @@ block_8:
         break;
     case 35:
         if (cd_read_sync_status() & 1) {
-            func_801336E8();
+            master_set_tournament_reaction_dialogue();
             talk_group = 0xC;
             talk_line = 0;
             talk_text_table = (s32) D_8013C4A0;
@@ -317,12 +317,12 @@ block_8:
     Default_Disp();
 }
 
-void func_80138E58(void) {
+void master_birthday_response_name_select(void) {
     s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
     PtrTbl3 tbl;
 
     tbl = D_8013C700;
-    strcpy(D_800CA25C, tbl.p[D_80122CDC]);
+    strcpy(name_code_a, tbl.p[D_80122CDC]);
 }
 
 INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/shiori_birthday_scene.rodata", D_8013BFB0);

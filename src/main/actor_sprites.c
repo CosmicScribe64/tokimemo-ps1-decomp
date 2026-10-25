@@ -3,8 +3,8 @@
 #include "game.h"
 
 
-void func_80047550(void) {
-    D_801255DC = 4;
+void draw_shake_start(void) {
+    draw_shake_counter = 4;
 }
 
 void draw_shake_update(void) {
@@ -13,34 +13,34 @@ void draw_shake_update(void) {
     s32 q;
     s16 off;
 
-    if (D_801255DC != 0) {
-        for (i = 0, sum = 0; i < D_801255DC; i++) {
+    if (draw_shake_counter != 0) {
+        for (i = 0, sum = 0; i < draw_shake_counter; i++) {
             sum += i;
         }
         /* FAKE: T-25116, a u8 view of the u8 global (same value); with the plain read the conversion of
            the reloaded divisor takes the global's register */
-        q = (s16)rsin(sum * 4) / 4 / (s32)(*(u8 *)&D_801255DC + 0x100);
+        q = (s16)rsin(sum * 4) / 4 / (s32)(*(u8 *)&draw_shake_counter + 0x100);
         off = q;
-        game_state.screen_center_x[0] = (s16)q + 0xA0;
+        game_state.draw_origin_x[0] = (s16)q + 0xA0;
         /* FAKE: T-25116, dead store; redefining q stops uopt from forwarding off to its uses, so the
            narrowing is computed on the off line, before the unk_014[0] store (t0 and the original order) */
         q = 0;
-        game_state.screen_center_x[1] = off + 0xA0;
-        game_state.screen_center_y[0] = off + 0x168;
-        game_state.screen_center_y[1] = off + 0x78;
-        D_801255E0 = off + 0xA0;
-        D_801255E2 = off + 0x78;
-        D_801255DC += 4;
-        if (D_801255DC > 0x80) {
-            D_801255DC = 0;
+        game_state.draw_origin_x[1] = off + 0xA0;
+        game_state.draw_origin_y[0] = off + 0x168;
+        game_state.draw_origin_y[1] = off + 0x78;
+        draw_shake_x = off + 0xA0;
+        draw_shake_y = off + 0x78;
+        draw_shake_counter += 4;
+        if (draw_shake_counter > 0x80) {
+            draw_shake_counter = 0;
         }
     } else {
-        D_801255E0 = 0xA0;
-        D_801255E2 = 0x78;
-        game_state.screen_center_x[0] = 0xA0;
-        game_state.screen_center_x[1] = 0xA0;
-        game_state.screen_center_y[0] = 0x168;
-        game_state.screen_center_y[1] = 0x78;
+        draw_shake_x = 0xA0;
+        draw_shake_y = 0x78;
+        game_state.draw_origin_x[0] = 0xA0;
+        game_state.draw_origin_x[1] = 0xA0;
+        game_state.draw_origin_y[0] = 0x168;
+        game_state.draw_origin_y[1] = 0x78;
     }
 }
 
@@ -67,7 +67,7 @@ void actor_draw_all(void) {
     u8 col;
 
     gs = &game_state;
-    col = func_8004901C();
+    col = draw_brightness_get();
     search_tpage(0x7FFF, i, 0);
     for (i = 0; i <= *(s32 *)&gs->menu_hit[3]; i++) {
         {
@@ -285,9 +285,9 @@ void actor_draw_all(void) {
                                     tpx = 0;
                                 }
                                 if (((ActorFixed *)actor_pool)[i].unk_01 == 0) {
-                                    func_80098680(&spr, &((u8 *)&D_800E8C70)[draw_buffer * 0x14], 0);
+                                    func_80098680(&spr, &((u8 *)&draw_ot_table)[draw_buffer * 0x14], 0);
                                 } else {
-                                    func_80098680(&spr, &((u8 *)&D_800E8C70)[draw_buffer * 0x14],
+                                    func_80098680(&spr, &((u8 *)&draw_ot_table)[draw_buffer * 0x14],
                                                   (((ActorFixed *)actor_pool)[i].unk_01 - 1) & 0xFFFF);
                                 }
                             }
@@ -405,7 +405,7 @@ void _sys_default_tpage_set(void) {
         game_state.tpage_buf[i + 21] = 0x77;
         game_state.tpage_buf[i + 53] = 0x77;
     }
-    game_state.tpage_buf[60] = *(s32 *)D_800C9730;
+    game_state.tpage_buf[60] = *(s32 *)actor_default_texture_blocks;
     game_state.tpage_buf[61] = D_800C9734;
     game_state.tpage_buf[62] = D_800C9738;
     game_state.tpage_buf[63] = D_800C973C;
@@ -579,7 +579,7 @@ s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
     }
 }
 
-void func_80048CF8(void) {
+void tpage_buffer_print(void) {
     s32 i;
 
     if (game_state.pad_held & PAD_R2) {
@@ -601,7 +601,7 @@ void actor_draw_enable(s32 arg0) {
     }
 }
 
-void func_80048DD0(s32 count) {
+void actor_deactivate(s32 count) {
     s32 i;
 
     printf("%d CLASS_CLEAR \n", count);
@@ -662,8 +662,8 @@ void actor_clear(s32 arg0) {
         p[6] = 1;
         *(s16 *)(p + 8) = 0;
         *(s32 *)(p + 0xC) = (s32)sprite_frame_table;
-        *(s32 *)(p + 0x10) = (s32)D_800C9A14;
-        *(s32 *)(p + 0x34) = (s32)D_800C9730;
+        *(s32 *)(p + 0x10) = (s32)actor_default_sequence_table;
+        *(s32 *)(p + 0x34) = (s32)actor_default_texture_blocks;
         *(s16 *)(p + 0x14) = 0;
         *(s16 *)(p + 0x16) = 0;
         *(s16 *)(p + 0x18) = 0;
@@ -682,16 +682,16 @@ void actor_clear(s32 arg0) {
     }
 }
 
-u8 func_8004901C(void) {
+u8 draw_brightness_get(void) {
     return game_state.screen_brightness;
 }
 
-void func_8004902C(void) {
+void draw_brightness_reset(void) {
     game_state.screen_brightness = 0x80;
     game_state.brightness_step = 0;
 }
 
-void func_80049044(void) {
+void draw_brightness_step(void) {
     u8 *p;
     s32 v;
 
@@ -715,6 +715,6 @@ void func_80049044(void) {
     }
 }
 
-void func_800490B4(u8 arg0) {
+void draw_brightness_set_rate(u8 arg0) {
     game_state.brightness_step = arg0;
 }

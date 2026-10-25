@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_80136F90(void) {
+void new_year_meeting_dialogue_addresses_init(void) {
     D_80144D90 = 0x801976F8;
     D_80144D94 = 0x80198BF0;
     D_80144D98 = 0x8019A37C;
@@ -32,17 +32,17 @@ void func_80136F90(void) {
     D_80144DF8 = 0x8019EE04;
 }
 
-void func_80137144(void) {
+void new_year_meeting_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
     case 0:
-        func_80137664();
+        new_year_meeting_scene_init();
         break;
     case 1:
-        func_80137818();
+        new_year_meeting_audio_bank_load_retry();
         break;
     case 2:
-        func_80137A04();
+        new_year_meeting_resources_load();
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
@@ -59,34 +59,34 @@ void func_80137144(void) {
             game_mode_reset_to_title();
             break;
         case 1:
-            func_801398F0();
+            new_year_scene_callback_group_dispatch();
             break;
         case 2:
-            func_80137FF0();
+            new_year_yuina_scene_group_dispatch();
             break;
         case 3:
-            func_80138B40();
+            new_year_ayako_scene_group_dispatch();
             break;
         case 4:
-            func_8013A950();
+            new_year_saki_scene_callback_group_dispatch();
             break;
         case 5:
-            func_8013A190();
+            new_year_yukari_scene_group_dispatch();
             break;
         case 6:
-            func_8013A500();
+            new_year_nozomi_scene_group_dispatch();
             break;
         case 7:
-            func_801391D4();
+            new_year_mira_scene_mode_step_dispatch_call();
             break;
         case 8:
-            func_80137BB0();
+            new_year_yuko_scene_callback_group_dispatch();
             break;
         case 9:
             game_mode_reset_to_title();
             break;
         case 10:
-            func_8013AF10();
+            new_year_yumi_scene_mode_step_dispatch_call();
             break;
         default:
             game_mode_reset_to_title();
@@ -94,13 +94,13 @@ void func_80137144(void) {
         }
         break;
     case 5:
-        func_801377CC();
+        new_year_meeting_audio_bank_load_start();
         break;
     case 6:
-        func_80137818();
+        new_year_meeting_audio_bank_load_retry();
         break;
     case 7:
-        func_8013737C();
+        new_year_meeting_completion_state_apply();
         break;
     default:
         game_mode_reset_to_title();
@@ -112,11 +112,11 @@ void func_80137144(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
     draw_shake_update();
 }
 
-s32 func_8013737C(void) {
+s32 new_year_meeting_completion_state_apply(void) {
     GameState *g = &game_state;
     s32 pad;
 
@@ -170,12 +170,12 @@ s32 func_8013737C(void) {
     day_event_next(1);
 }
 
-void func_80137664(void) {
+void new_year_meeting_scene_init(void) {
     GameState *g = &game_state;
     s32 a1;
     s32 a2;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -209,7 +209,7 @@ void func_80137664(void) {
     mode_stage_next();
 }
 
-void func_801377CC(void) {
+void new_year_meeting_audio_bank_load_start(void) {
     audio_command(0xCF);
     hud_day_bgm_load();
     if (audio_bank_load_poll() == 1) {
@@ -218,7 +218,7 @@ void func_801377CC(void) {
     mode_stage_next();
 }
 
-void func_80137818(void) {
+void new_year_meeting_audio_bank_load_retry(void) {
     if (audio_bank_load_poll() == 1) {
         mode_stage_next();
     }
@@ -229,13 +229,13 @@ void func_80137818(void) {
     }
 }
 
-void func_80137898(void) {
+void new_year_meeting_audio_command_00cf(void) {
     audio_command(0xCF);
     mode_step_next();
 }
 
-void func_801378C0(void) {
-    D_800B3D60 = 0;
+void new_year_meeting_scene_audio_setup(void) {
+    cd_read_checked = 0;
     audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD989, 0xD949, 0xD941);
     audio_command(0x23);
     audio_command(0x24);
@@ -246,7 +246,7 @@ void func_801378C0(void) {
     mode_step_next();
 }
 
-void func_80137940(void) {
+void new_year_meeting_scene_audio_wait(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x23);
         audio_command(0x24);
@@ -260,26 +260,26 @@ void func_80137940(void) {
     }
 }
 
-void func_801379D8(void) {
+void new_year_meeting_audio_bank_start(void) {
     audio_bank_start(1, 0x200);
     mode_step_next();
 }
 
-void func_80137A04(void) {
+void new_year_meeting_resources_load(void) {
     cd_read_sectors(0x10, 0x80197000, 0xAEFD);
-    func_80136F90();
+    new_year_meeting_dialogue_addresses_init();
     D_80144E10 = game_state.day_events[game_state.day_event_index].girl;
     mode_stage_next();
 }
 
-void func_80137A5C(void) {
+void new_year_meeting_resources_load_alt(void) {
     cd_read_sectors(0x10, 0x80197000, 0xAEFD);
-    func_80136F90();
+    new_year_meeting_dialogue_addresses_init();
     D_80144E10 = game_state.day_events[game_state.day_event_index].girl;
     mode_step_next();
 }
 
-void func_80137AB4(void) {
+void new_year_meeting_talk_run(void) {
     talk_tables = &D_80144E08;
     D_800CA138 = &D_80144E0C;
     D_800CA13C = D_80144DFC;
@@ -288,7 +288,7 @@ void func_80137AB4(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80137B30(void) {
+void new_year_meeting_talk_run_with_flags(void) {
     talk_tables = (u8 *) &D_80144E08;
     D_800CA138 = (u8 *) &D_80144E0C;
     D_800CA13C = D_80144DFC;

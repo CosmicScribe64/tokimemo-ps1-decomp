@@ -6,7 +6,7 @@ typedef struct {
 } FnTbl10; /* size 0x28 */
 extern FnTbl10 D_80134630;
 
-void func_801339D0(void) {
+void valentine_return_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl10 tbl;
 
@@ -15,16 +15,16 @@ void func_801339D0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80133A4C(void) {
-    if (strcmp(D_800CA1DC, "自宅前") == 0) {
+void valentine_home_place_setup(void) {
+    if (strcmp(scene_place_title_2, "自宅前") == 0) {
         mode_step_next();
         return;
     }
-    strcpy(D_800CA1DC, "自宅前");
+    strcpy(scene_place_title_2, "自宅前");
     place_init2();
 }
 
-s32 func_80133AA8(void) {
+s32 valentine_day_event_complete(void) {
     if (game_state.substep == 0) {
         hud_day_bgm_load();
         game_state.substep += 1;
@@ -44,7 +44,7 @@ s32 func_80133AA8(void) {
     return day_event_next(1);
 }
 
-void func_80133B6C(void) {
+void valentine_candidate_result_route(void) {
     if (D_80134544 != 0) {
         game_state.girls[9].flags.f.met = 1;
     }
@@ -65,7 +65,7 @@ void func_80133B6C(void) {
     mode_step_next();
 }
 
-void func_80133C44(void) {
+void valentine_background_event_log(void) {
     bg_read_sub2(0x414C);
     mode_step_next();
 }

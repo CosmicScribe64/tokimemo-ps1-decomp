@@ -1,7 +1,7 @@
 /* sick_visit_girl_resource_addresses.c: ; src/ovl/OMIMAI/801320A0.c:3-47 initializes girl-specific resource address tables. Original object 0x801320A0-0x80132AD0 (config/objects/OMIMAI.txt). */
 #include "ovl/OMIMAI.h"
 
-void func_801320A0(void) {
+void sick_visit_mode_stage0_girl_talk_pointer_setup(void) {
     D_80134A60[0] = 0x801970EC;
     D_80134A60[1] = 0x8019727C;
     D_80134A60[2] = 0x80197434;
@@ -45,7 +45,7 @@ typedef struct {
 } FnTbl25; /* size 0x64 */
 extern FnTbl25 D_80134AF0;
 
-void func_801322E4(void) {
+void sick_visit_mode_stage0_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl25 tbl;
 
@@ -60,7 +60,7 @@ void func_801322E4(void) {
     hud_screen_frame_draw(2);
 }
 
-void func_80132398(void) {
+void sick_visit_birthday_scene_exit(void) {
     if ((game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) && (game_state.month == (game_state.player_birthday & 0xF))) {
         mode_stage_next();
         return;
@@ -68,7 +68,7 @@ void func_80132398(void) {
     mode_step_next();
 }
 
-s32 func_801323F8(void) {
+s32 sick_visit_day_event_complete(void) {
     if (game_state.substep == 0) {
         hud_day_bgm_load();
         game_state.substep += 1;
@@ -88,7 +88,7 @@ s32 func_801323F8(void) {
     return day_event_next(1);
 }
 
-void func_801324BC(void) {
+void sick_visit_date_girl_audio_load(void) {
     audio_bank_load_start(1, 0xBF98, 0xBF79, D_800B3688[game_state.date_girl], D_800B36C8[game_state.date_girl], D_800B3708[game_state.date_girl]);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -96,7 +96,7 @@ void func_801324BC(void) {
     mode_step_next();
 }
 
-void func_80132544(void) {
+void sick_visit_audio_load_retry(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -107,19 +107,19 @@ void func_80132544(void) {
     }
 }
 
-void func_801325C4(void) {
+void sick_visit_audio_transition(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_801325EC(void) {
+void sick_visit_scene_data_load(void) {
     cd_read_sectors(4, 0x80197000, 0xAF3F);
-    func_801320A0();
+    sick_visit_mode_stage0_girl_talk_pointer_setup();
     audio_command(0x603);
     mode_step_next();
 }
 
-void func_80132630(void) {
+void sick_visit_scene_text_reset(void) {
     text_system_reset();
     k_reset(1);
     addr_init_bustup();
@@ -127,7 +127,7 @@ void func_80132630(void) {
     mode_step_next();
 }
 
-void func_80132670(void) {
+void sick_visit_entry_girl_setup(void) {
     u32 x;
     u8 a;
 
@@ -138,13 +138,13 @@ void func_80132670(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "玄関");
+    strcpy(scene_place_title, "玄関");
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     hizuke_init();
     message_window_init();
     text_marker_hide();
@@ -158,30 +158,30 @@ void func_80132670(void) {
     }
     game_state.current_girl = a;
     talk_names_set(a);
-    func_8013285C();
+    sick_visit_girl_talk_pointer_select();
     mode_step_next();
 }
 
-void func_80132788(void) {
+void sick_visit_event_log_update(void) {
     bg_read_sub2(0x4144);
     event_log_add(0xF, 0);
     mode_step_next();
 }
 
-void func_801327BC(void) {
+void sick_visit_mother_scene_setup(void) {
     talk_names_set(game_state.date_girl);
     game_state.current_girl = GIRL_SOTOI;
     strcpy(name_code_girl_short, "母親");
     talk_group = (u32)game_state.date_girl > GIRL_SHIORI;
     talk_line = 0;
-    func_801320A0();
+    sick_visit_mode_stage0_girl_talk_pointer_setup();
     talk_text_table = D_80134A8C;
     talk_command_table = D_80134ABC;
     talk_voice_table = D_80134AEC;
     mode_step_next();
 }
 
-void func_8013285C(void) {
+void sick_visit_girl_talk_pointer_select(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         talk_text_table = D_80134A60[1];

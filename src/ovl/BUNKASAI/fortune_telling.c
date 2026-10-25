@@ -59,33 +59,33 @@ INCLUDE_RODATA("asm/ovl/BUNKASAI/data/BUNKASAI/fortune_telling.rodata", D_801604
 
 INCLUDE_RODATA("asm/ovl/BUNKASAI/data/BUNKASAI/fortune_telling.rodata", D_80160444);
 
-/* Clone of BUNKAKEN func_80152680 (T-18700). func_80132410 is called without a declaration, an
+/* Clone of BUNKAKEN func_80152680 (T-18700). culture_script_set_fortune is called without a declaration, an
  * implicit int function as BUNKAKEN's func_80132548: with a void prototype IDO swaps v0 and v1. */
-void func_8015AF90(void) {
+void culture_fortune_scene(void) {
     GameState *g = &game_state;
     s32 i;
-    BunkasaiTexts12 names;
-    BunkasaiTexts11 blood_types;
-    BunkasaiTexts4 player_blood_types;
+    CultureFortuneGirlNames names;
+    CultureFortuneBloodLabels blood_types;
+    CultureBloodTypeLabels player_blood_types;
 
-    names = D_80160AE0;
-    blood_types = D_80160B10;
-    player_blood_types = D_80160B3C;
+    names = culture_fortune_girl_names;
+    blood_types = culture_fortune_girl_blood_labels;
+    player_blood_types = culture_blood_type_labels;
     switch (g->mode_step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B80);
         for (i = 0; i < 11; i++) {
-            D_800CA2B0[i] = g->girls[i].flags.f.met;
+            select_girl_menu_enabled[i] = g->girls[i].flags.f.met;
         }
         mode_step_next();
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_80132410();
+            culture_script_set_fortune();
             talk_line = 0;
-            talk_text_table = D_801604F0;
-            talk_command_table = D_801604F4;
-            talk_voice_table = D_801604F8;
+            talk_text_table = culture_script_text_table;
+            talk_command_table = culture_script_command_table;
+            talk_voice_table = culture_script_voice_table;
             if ((D_80122EBC == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && (girl_state_rank(0) == 4) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && (girl_state_rank(2) == 4) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
                 talk_group = 0;
                 mode_step_next();
@@ -127,13 +127,13 @@ void func_8015AF90(void) {
         }
         set_kanji_string(-0x48, 0x42, 0, (s32)names.text[D_80122EBC], 0);
         k_disp_start(4);
-        D_80160B4C = 0;
+        culture_fortune_timer = 0;
         mode_step_next();
         break;
     case 9:
-        D_80160B4C++;
-        if (D_80160B4C >= 0x15U) {
-            D_80160B4C = 0;
+        culture_fortune_timer++;
+        if (culture_fortune_timer >= 0x15U) {
+            culture_fortune_timer = 0;
             mode_step_next();
         }
         break;
@@ -143,9 +143,9 @@ void func_8015AF90(void) {
         mode_step_next();
         break;
     case 11:
-        D_80160B4C++;
-        if (D_80160B4C >= 0x15U) {
-            D_80160B4C = 0;
+        culture_fortune_timer++;
+        if (culture_fortune_timer >= 0x15U) {
+            culture_fortune_timer = 0;
             mode_step_next();
         }
         break;
@@ -159,9 +159,9 @@ void func_8015AF90(void) {
         mode_step_next();
         break;
     case 13:
-        D_80160B4C++;
-        if (D_80160B4C >= 0x15U) {
-            D_80160B4C = 0;
+        culture_fortune_timer++;
+        if (culture_fortune_timer >= 0x15U) {
+            culture_fortune_timer = 0;
             mode_step_next();
         }
         break;
@@ -173,13 +173,13 @@ void func_8015AF90(void) {
         set_kanji_string(-0x80, 0x52, 0, (s32) g->player_family_name, 0);
         set_kanji_string(-0x48, 0x52, 0, (s32) g->player_given_name, 0);
         k_disp_start(8);
-        D_80160B4C = 0;
+        culture_fortune_timer = 0;
         mode_step_next();
         break;
     case 16:
-        D_80160B4C++;
-        if (D_80160B4C >= 0x15U) {
-            D_80160B4C = 0;
+        culture_fortune_timer++;
+        if (culture_fortune_timer >= 0x15U) {
+            culture_fortune_timer = 0;
             mode_step_next();
         }
         break;
@@ -189,9 +189,9 @@ void func_8015AF90(void) {
         mode_step_next();
         break;
     case 18:
-        D_80160B4C++;
-        if (D_80160B4C >= 0x15U) {
-            D_80160B4C = 0;
+        culture_fortune_timer++;
+        if (culture_fortune_timer >= 0x15U) {
+            culture_fortune_timer = 0;
             mode_step_next();
         }
         break;
@@ -201,10 +201,10 @@ void func_8015AF90(void) {
         mode_step_next();
         break;
     case 20:
-        D_80160B4C++;
-        if ((D_80160B4C >= 0x10U) && (check_end_k() != 0)) {
+        culture_fortune_timer++;
+        if ((culture_fortune_timer >= 0x10U) && (check_end_k() != 0)) {
             D_8011ED5B ^= 0x80;
-            D_80160B4C = 0;
+            culture_fortune_timer = 0;
         }
         if ((g->pad_pressed & 0xF0) && (check_end_k() != 0)) {
             k_reset(1);
@@ -220,10 +220,10 @@ void func_8015AF90(void) {
         mode_step_next();
         break;
     case 23:
-        D_80160B4C++;
-        if (D_80160B4C >= 0x3DU) {
-            talk_group = func_8015B828() + 3;
-            D_80122EA8 = func_8015B828();
+        culture_fortune_timer++;
+        if (culture_fortune_timer >= 0x3DU) {
+            talk_group = culture_fortune_lookup() + 3;
+            D_80122EA8 = culture_fortune_lookup();
             audio_command(0x50C);
             mode_step_next();
         }
@@ -246,18 +246,18 @@ void func_8015AF90(void) {
     }
 }
 
-s32 func_8015B828(void) {
+s32 culture_fortune_lookup(void) {
     s32 result;
     s32 index;
-    BunkasaiTable40 table;
+    CultureFortuneBloodTable table;
 
-    table = D_80160B50;
+    table = culture_fortune_blood_table;
     index = D_80122EBC;
     if (index == 2 && ((u8) game_state.girls[2].flags.b[2] >> 4) == 3) {
         if (((u16) game_state.player_flags.h >> 12) != 3) {
             return 3;
         }
     }
-    result = table.unk_00[(u32) (game_state.girls[index].birthday.w << 21) >> 30][(u32) (game_state.player_birthday << 21) >> 30];
+    result = table.result[(u32) (game_state.girls[index].birthday.w << 21) >> 30][(u32) (game_state.player_birthday << 21) >> 30];
     return result;
 }

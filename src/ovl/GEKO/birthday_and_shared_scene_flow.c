@@ -107,20 +107,20 @@ INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", enc
  * jump-table dispatch here gets an edge back to the function entries (T-25150). */
 typedef struct EncounterGirlBirthdaySteps { /* 0x00 */ void (*callbacks[73])(); } EncounterGirlBirthdaySteps; /* size 0x124 */ /* HYPOTHESIS: GEKO grouping vocabulary remains unconfirmed; T-27051; src/ovl/GEKO/80134D10.c:107; 73 callbacks defined in source; mode_step dispatch. Fixed-width declarations, offsets and all override views retained. */
 EncounterGirlBirthdaySteps encounter_girl_birthday_steps = { {
-    encounter_girl_birthday_init, encounter_girl_birthday_audio_load, encounter_girl_birthday_audio_wait, encounter_girl_birthday_scripts_load, func_8007C784,
+    encounter_girl_birthday_init, encounter_girl_birthday_audio_load, encounter_girl_birthday_audio_wait, encounter_girl_birthday_scripts_load, scene_wait_cd_read,
     encounter_girl_birthday_opening_skip, mode_step_next, mode_step_next, mode_step_next, mode_step_next,
     mode_step_next, encounter_girl_birthday_context_skip, mode_step_next, encounter_girl_birthday_choice_talk, normal_date_two_select,
     encounter_girl_birthday_first_choice_apply, encounter_girl_birthday_talk, encounter_girl_birthday_reply_script_push, encounter_girl_birthday_talk, normal_date_three_select,
     encounter_girl_birthday_reply_script_pop, encounter_girl_birthday_talk, encounter_girl_birthday_appointment_check, encounter_girl_birthday_talk, encounter_girl_birthday_phone_gate_check,
     encounter_girl_birthday_phone_talk, encounter_girl_birthday_girl_state_group_offset, encounter_girl_birthday_talk_with_audio_command, encounter_girl_birthday_scene_init, encounter_girl_birthday_location_select,
-    func_8007C784, dec_init, change_dec_bg, encounter_girl_birthday_portrait_read, func_8007C784,
-    portrait_show_checked, func_8007C8A4, place_init, encounter_girl_birthday_holiday_girl_in, encounter_girl_birthday_talk,
+    scene_wait_cd_read, dec_init, change_dec_bg, encounter_girl_birthday_portrait_read, scene_wait_cd_read,
+    portrait_show_checked, scene_bg_wipe_in, place_init, encounter_girl_birthday_holiday_girl_in, encounter_girl_birthday_talk,
     encounter_girl_birthday_reply_group_select, encounter_girl_birthday_school_girl_in, encounter_girl_birthday_school_talk, encounter_girl_birthday_talk, encounter_girl_birthday_choice_group_select,
     encounter_girl_birthday_reply_apply, encounter_girl_birthday_talk, encounter_girl_birthday_player_birthday_check, normal_date_girl_out, encounter_girl_birthday_talk,
-    encounter_girl_birthday_background_out, encounter_girl_birthday_finish, encounter_girl_birthday_visit_scripts_load, func_8007C784, func_80083338,
+    encounter_girl_birthday_background_out, encounter_girl_birthday_finish, encounter_girl_birthday_visit_scripts_load, scene_wait_cd_read, face_expression_mood,
     encounter_girl_birthday_player_birthday_script_select, encounter_girl_birthday_talk, normal_date_girl_out, encounter_girl_birthday_talk, normal_date_bg_out,
     encounter_girl_birthday_finish, encounter_girl_birthday_talk, encounter_girl_birthday_phone_gate_check, encounter_girl_birthday_phone_ring_wait, encounter_girl_birthday_phone_closing_group,
-    encounter_girl_birthday_talk, encounter_girl_birthday_finish, encounter_girl_birthday_bg_request, func_8007C784, encounter_girl_birthday_bg_decode,
+    encounter_girl_birthday_talk, encounter_girl_birthday_finish, encounter_girl_birthday_bg_request, scene_wait_cd_read, encounter_girl_birthday_bg_decode,
     encounter_girl_birthday_bg_show, encounter_girl_birthday_restart, game_mode_reset_to_title
 } };
 INCLUDE_RODATA("asm/ovl/GEKO/data/GEKO/birthday_and_shared_scene_flow.data", encounter_girl_birthday_shiori_club_portraits);
@@ -467,7 +467,7 @@ void encounter_girl_birthday_dispatch(void) {
     mode_step_callbacks.callbacks[mode_step_index](0x80);
     if ((u8) encounter_girl_birthday_scene_frame != 0) {
         hud_screen_frame_draw(2);
-        func_80083A10();
+        scene_frame_update();
         return;
     }
     hud_screen_frame_draw(1);
@@ -488,7 +488,7 @@ void encounter_girl_birthday_dispatch(void) {
 void encounter_girl_birthday_bg_request(void) {
     s32 background_read_result;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     if ((encounter_girl_birthday_background_variant != 0) || (game_state.day_event_done_bits & 0x20)) {
         if (((u8) game_state.month >= 3U) && ((u8) game_state.month < 6U)) {
             background_read_result = dec_bg_cd_read(0x3FE9, 0);
@@ -520,7 +520,7 @@ void encounter_girl_birthday_bg_request(void) {
 }
 
 s32 encounter_girl_birthday_bg_decode(void) {
-    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+    if ((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         mode_step_next();
         game_state.mode_step -= 3;
@@ -702,7 +702,7 @@ s32 encounter_girl_birthday_finish(void) {
 }
 
 void encounter_girl_birthday_audio_load(void) {
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     if (game_state.day_events[0].type == DAY_EVENT_EXAM) {
         audio_bank_start(0, 0x200);
     }
@@ -744,8 +744,8 @@ void encounter_girl_birthday_scene_init(void) {
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
@@ -802,8 +802,8 @@ s32 encounter_girl_birthday_init(void) {
     hizuke_init();
     message_window_init();
     tpage_buf_clear();
-    strcpy(D_800CA19C, "廊下");
-    strcpy(D_800CA1DC, "近所の公園");
+    strcpy(scene_place_title, "廊下");
+    strcpy(scene_place_title_2, "近所の公園");
     k_reset(1);
     talk_clear();
     text_marker_hide();
@@ -816,8 +816,8 @@ s32 encounter_girl_birthday_init(void) {
         state_data->day_event_done_bits |= 2;
     }
     state_data->screen_brightness = 0x80;
-    dec_bg_brightness = 0x80;
-    D_800B5940 = 0;
+    bg_brightness = 0x80;
+    bg_fade_amount = 0;
     addr_init_bustup();
     encounter_girl_birthday_phone_prelude_timer = 0;
     encounter_girl_birthday_phone_ring_limit = state_data->frame_count % 3 + 2;
@@ -830,7 +830,7 @@ s32 encounter_girl_birthday_init(void) {
     encounter_girl_birthday_scripts_bind();
     switch (state_data->current_girl) {
     case GIRL_SHIORI:
-        strcpy(D_800CA1DC, "自宅前");
+        strcpy(scene_place_title_2, "自宅前");
         encounter_girl_birthday_text_table = encounter_girl_birthday_text_section_1;
         encounter_girl_birthday_command_table = encounter_girl_birthday_command_section_1;
         encounter_girl_birthday_voice_table = encounter_girl_birthday_voice_section_1;
@@ -969,54 +969,54 @@ void encounter_girl_birthday_location_select(void) {
     audio_bank_start(1, 0x200);
     if (encounter_girl_birthday_holiday_context == 0) {
         if (encounter_girl_birthday_club_context == 0) {
-            strcpy(D_800CA19C, "廊下");
+            strcpy(scene_place_title, "廊下");
             bg_read_sub2(0x4045);
             event_log_add(0xA, 0x25);
         } else {
             club = game_state.player_flags.h >> 12;
             switch (club) {
             case 0:
-                strcpy(D_800CA19C, "図書室");
+                strcpy(scene_place_title, "図書室");
                 bg_read_sub2(0x40BC);
                 break;
             case 1:
-                strcpy(D_800CA19C, "演劇部");
+                strcpy(scene_place_title, "演劇部");
                 bg_read_sub2(0x40B2);
                 break;
             case 2:
-                strcpy(D_800CA19C, "実験室");
+                strcpy(scene_place_title, "実験室");
                 bg_read_sub2(0x40C6);
                 break;
             case 3:
-                strcpy(D_800CA19C, "電脳部室");
+                strcpy(scene_place_title, "電脳部室");
                 bg_read_sub2(0x40D0);
                 break;
             case 4:
-                strcpy(D_800CA19C, "美術室");
+                strcpy(scene_place_title, "美術室");
                 bg_read_sub2(0x40D9);
                 break;
             case 5:
-                strcpy(D_800CA19C, "音楽室");
+                strcpy(scene_place_title, "音楽室");
                 bg_read_sub2(0x40E2);
                 break;
             case 6:
-                strcpy(D_800CA19C, "グランド");
+                strcpy(scene_place_title, "グランド");
                 bg_read_sub2(0x4296);
                 break;
             case 7:
-                strcpy(D_800CA19C, "グランド");
+                strcpy(scene_place_title, "グランド");
                 bg_read_sub2(0x4296);
                 break;
             case 8:
-                strcpy(D_800CA19C, "グランド");
+                strcpy(scene_place_title, "グランド");
                 bg_read_sub2(0x4296);
                 break;
             case 9:
-                strcpy(D_800CA19C, "プール");
+                strcpy(scene_place_title, "プール");
                 bg_read_sub2(0x40A0);
                 break;
             default:
-                strcpy(D_800CA19C, "体育館");
+                strcpy(scene_place_title, "体育館");
                 bg_read_sub2(0x40A9);
                 break;
             }
@@ -1024,20 +1024,20 @@ void encounter_girl_birthday_location_select(void) {
         }
     } else if ((encounter_girl_birthday_background_variant != 0) || (game_state.day_event_done_bits & 0x20)) {
         if (game_state.current_girl == GIRL_SHIORI) {
-            strcpy(D_800CA19C, "自宅前");
+            strcpy(scene_place_title, "自宅前");
             bg_read_sub2(0x4156);
             event_log_add(0xA, 0x28);
         } else {
-            strcpy(D_800CA19C, "近所の公園");
+            strcpy(scene_place_title, "近所の公園");
             bg_read_sub2(0x42E2);
             event_log_add(0xA, 0x27);
         }
     } else if (game_state.current_girl == GIRL_SHIORI) {
-        strcpy(D_800CA19C, "自宅前");
+        strcpy(scene_place_title, "自宅前");
         bg_read_sub2(0x414C);
         event_log_add(0xA, 0x2F);
     } else {
-        strcpy(D_800CA19C, "近所の公園");
+        strcpy(scene_place_title, "近所の公園");
         bg_read_sub2(0x42D8);
         event_log_add(0xA, 0x26);
     }
@@ -1322,7 +1322,7 @@ void encounter_girl_birthday_reply_apply(void) {
 void encounter_girl_birthday_holiday_portrait_show(void) {
     if (encounter_girl_birthday_holiday_context == 1) {
         encounter_girl_birthday_portrait_active = 1;
-        func_8007C8A4();
+        scene_bg_wipe_in();
         return;
     }
     mode_step_next();
@@ -1334,7 +1334,7 @@ void encounter_girl_birthday_reply_name_copy(void) {
     EncounterBirthdayReplyNames reply_names;
 
     reply_names = encounter_girl_birthday_reply_names;
-    strcpy(D_800CA25C, &reply_names.names[game_state.current_girl * 0x129 + encounter_girl_birthday_school_year * 0x63 + D_80122CDC * 0x21]);
+    strcpy(name_code_a, &reply_names.names[game_state.current_girl * 0x129 + encounter_girl_birthday_school_year * 0x63 + D_80122CDC * 0x21]);
 }
 
 void encounter_girl_birthday_background_out(void) {
@@ -1644,7 +1644,7 @@ void encounter_scene_mode_handler(void) {
     message_window_title_update();
     hizuke_show();
     if (D_80122D38 == 0) {
-        func_80083A10();
+        scene_frame_update();
     }
     draw_shake_update();
     if (D_80122D38 != 0) {

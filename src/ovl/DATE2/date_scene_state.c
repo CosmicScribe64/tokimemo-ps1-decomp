@@ -1,5 +1,5 @@
 /* date_scene_state.c: src/ovl/DATE2/80132DE0.c:35: date state machine, movie and scene callbacks. Original object 0x80132DE0-0x80136D50 (config/objects/DATE2.txt). */
-#define MAIN_API_OVERRIDE_read_bustup /* implicit int view: the call's $v0 result moves the reloaded unk_110A to $v1 in func_801350A4 (definition: void, T-11880) */
+#define MAIN_API_OVERRIDE_read_bustup /* implicit int view: the call's $v0 result moves the reloaded unk_110A to $v1 in amusement_decoded_scene_sequence_c (definition: void, T-11880) */
 #include "common.h"
 #include "ovl/DATE2.h"
 
@@ -33,7 +33,7 @@ typedef struct {
 } FnTbl58; /* size 0xE8 */
 extern FnTbl58 D_8013A4C8;
 
-void func_80132DE0(void) {
+void amusement_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl58 tbl;
 
@@ -42,7 +42,7 @@ void func_80132DE0(void) {
     tbl.f[idx](0x80);
 }
 
-void func_80132E5C(void) {
+void amusement_texture_page_copy_shiori(void) {
     memcpy((void *)(0x80180000 + game_state.mode_step_timer.w * 0x1400), 0x801C0000 + game_state.mode_step_timer.w * 0x1400, 0x1400);
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step_timer.w == 0x12) {
@@ -50,7 +50,7 @@ void func_80132E5C(void) {
     }
 }
 
-void func_80132EC8(void) {
+void amusement_texture_page_copy_name_entry(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
@@ -65,7 +65,7 @@ void func_80132EC8(void) {
     }
 }
 
-void func_80132F48(void) {
+void amusement_bustup_background_setup(void) {
     s32 pad; /* FAKE: unused local that moves rect to sp+0x2C like the original (T-3330 frame rule). T-4050 */
     RECT rect;
 
@@ -76,11 +76,11 @@ void func_80132F48(void) {
     func_8009C8E0(&rect, (void *)0x80180000);
     game_state.current_girl = game_state.date_girl;
     talk_names_set(game_state.date_girl);
-    func_80133258();
+    amusement_date_girl_dialogue_pointer_bind();
     mode_step_next();
 }
 
-void func_80132FB0(void) {
+void amusement_texture_page_copy_restore_c(void) {
     memcpy((void *)(0x801C0000 + game_state.mode_step_timer.w * 0x1400), 0x80180000 + game_state.mode_step_timer.w * 0x1400, 0x1400);
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step_timer.w == 0x12) {
@@ -88,7 +88,7 @@ void func_80132FB0(void) {
     }
 }
 
-void func_8013301C(void) {
+void amusement_texture_page_copy_restore_a(void) {
     memcpy((void *)(0x801A0000 + game_state.mode_step_timer.w * 0x1400), 0x80180000 + game_state.mode_step_timer.w * 0x1400, 0x1400);
     game_state.mode_step_timer.w += 1;
     if (game_state.mode_step_timer.w == 0x12) {
@@ -96,7 +96,7 @@ void func_8013301C(void) {
     }
 }
 
-void func_80133088(void) {
+void amusement_portrait_background_restore(void) {
     RECT rect;
 
     portrait_show_checked();
@@ -107,7 +107,7 @@ void func_80133088(void) {
     func_8009C884(&rect, (void *)0x80180000);
 }
 
-void func_801330D4(void) {
+void amusement_scene_counter_girl_select(void) {
     GameState *g;
     s16 sums[10];
     s16 i;
@@ -137,12 +137,12 @@ void func_801330D4(void) {
     event_log_add(0xC, 0);
     game_state.current_girl = game_state.date_girl;
     event_log_add(0xC, 0);
-    func_80133258();
-    func_801338F8();
+    amusement_date_girl_dialogue_pointer_bind();
+    amusement_status_scene_value_adjust();
     mode_step_next();
 }
 
-void func_80133258(void) {
+void amusement_date_girl_dialogue_pointer_bind(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         D_8013A410 = D_8013A384;
@@ -199,53 +199,53 @@ void func_80133258(void) {
     }
 }
 
-void func_80133494(void) {
+void amusement_scene_background_select(void) {
     s32 temp;
     temp = D_8013A4C0;
     switch (temp) {
     case 0:
         bg_read_sub2(0x4350);
-        strcpy(D_800CA1DC, "観覧車");
+        strcpy(scene_place_title_2, "観覧車");
         break;
     case 1:
         if ((u8) game_state.year >= 0x61U) {
             bg_read_sub2(0x4359);
-            strcpy(D_800CA1DC, "絶叫マシーンビビール");
+            strcpy(scene_place_title_2, "絶叫マシーンビビール");
         } else {
             bg_read_sub2(0x433E);
-            strcpy(D_800CA1DC, "ジェットコースター");
+            strcpy(scene_place_title_2, "ジェットコースター");
         }
         break;
     case 2:
         bg_read_sub2(0x4347);
-        strcpy(D_800CA1DC, "ゴーストハウス");
+        strcpy(scene_place_title_2, "ゴーストハウス");
         break;
     }
     mode_step_next();
 }
 
-void func_8013357C(void) {
+void amusement_portrait_read_start(void) {
     portrait_read_start(0x6C8C);
     mode_step_next();
 }
 
-void func_801335A4(void) {
+void amusement_shiori_name_portrait_setup(void) {
     game_state.current_girl = GIRL_SHIORI;
     get_p_name(&name_code_player_form, 0);
     portrait_read_start(0x55DF);
     mode_step_next();
 }
 
-void func_801335E4(void) {
+void amusement_date_girl_bustup_setup(void) {
     game_state.current_girl = game_state.date_girl;
     talk_names_set(game_state.date_girl);
-    func_80133258();
+    amusement_date_girl_dialogue_pointer_bind();
     read_bustup();
 }
 
-void func_80133620(void) {
+void amusement_date_girl_portrait_read(void) {
     game_state.current_girl = game_state.date_girl;
-    func_80133258();
+    amusement_date_girl_dialogue_pointer_bind();
     talk_names_set(game_state.current_girl);
     switch (game_state.current_girl) {
     case GIRL_MIO:
@@ -279,17 +279,17 @@ void func_80133620(void) {
     mode_step_next();
 }
 
-void func_80133720(void) {
+void amusement_response_portrait_branch(void) {
     if (D_80122CDC != 0) {
-        func_80133620();
+        amusement_date_girl_portrait_read();
         D_8013A4C4 |= 1 << (s8)D_8013A4C0;
     } else {
-        func_801335A4();
+        amusement_shiori_name_portrait_setup();
     }
-    func_80133258();
+    amusement_date_girl_dialogue_pointer_bind();
 }
 
-void func_80133784(void) {
+void amusement_scene_value_setup(void) {
     s32 temp;
     temp = D_8013A4C0;
     switch (temp) {
@@ -315,11 +315,11 @@ void func_80133784(void) {
         }
         break;
     }
-    func_801338F8();
+    amusement_status_scene_value_adjust();
     mode_step_next();
 }
 
-void func_80133884(void) {
+void amusement_scene_selector_mode_stage_exit(void) {
     if (D_8013A4C0 == 2) {
         mode_stage_next();
         return;
@@ -327,13 +327,13 @@ void func_80133884(void) {
     mode_step_next();
 }
 
-void func_801338C4(void) {
+void amusement_scene_selector_advance(void) {
     D_8013A4C0 += 1;
     mode_step_set(0x1B);
 }
 
 /* FAKE: s32 fall-through keeps the original counter/result register. T-10010. */
-s32 func_801338F8(void) {
+s32 amusement_status_scene_value_adjust(void) {
     u8 previous_state;
     u8 first_state;
     first_state = get_g_zyotai_s(GIRL_SHIORI) & 0x7F;
@@ -358,7 +358,7 @@ s32 func_801338F8(void) {
     }
 }
 
-void func_801339F8(void) {
+void amusement_scene_texture_pointer_setup(void) {
     D_8013A5B0 = 0x801C6000;
     D_8013A5B4 = 0x801AE000;
     D_8013A5B8 = 0x801B2000;
@@ -368,28 +368,28 @@ void func_801339F8(void) {
     D_8013A5C8 = 0x801C2000;
 }
 
-void func_80133A6C(void) {
+void amusement_scene_selector_callback_dispatch(void) {
     u8 sel = D_8013A4C0; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
     case 0:
-        func_801348F0();
+        amusement_decoded_scene_sequence_b();
         return;
     case 1:
         if ((u8) game_state.year >= 0x61U) {
-            func_80133AF0();
+            amusement_decoded_scene_sequence_a();
             return;
         }
-        func_801350A4();
+        amusement_decoded_scene_sequence_c();
         return;
     default:
-        func_80135E50();
+        amusement_random_scene_sprite_sequence();
         return;
     }
 }
 
-/* s32: the header-error path and the scene steps outside 9..11 return 0, the dot animation falls off the end with the timer in v0 (as func_801348F0). T-11880 */
-s32 func_80133AF0(void) {
+/* s32: the header-error path and the scene steps outside 9..11 return 0, the dot animation falls off the end with the timer in v0 (as amusement_decoded_scene_sequence_b). T-11880 */
+s32 amusement_decoded_scene_sequence_a(void) {
     GameState *g;
     s16 i;
     s16 v;
@@ -404,8 +404,8 @@ s32 func_80133AF0(void) {
     u32 timer;
 
     g = &game_state;
-    movie = (DateMovieWork *)dec_bg_lba_cache;
-    D_800B3D60 = 0;
+    movie = (DateMovieWork *)bg_lba_cache;
+    cd_read_checked = 0;
     switch (g->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
@@ -423,7 +423,7 @@ s32 func_80133AF0(void) {
         hizuke_disp_switch(0);
         D_8013A5D0 = 2;
         game_state.substep = 0;
-        D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in func_801348F0) T-11880 */
+        D_8013A5CC = 0; for (i = 0; i < 2; i++) { /* FAKE: one source line keeps the as1 store order (as in amusement_decoded_scene_sequence_b) T-11880 */
             sprite_quads[i + 4].w = (i << 6) + 0x80;
             sprite_quads[i + 4].flags = 0x82000000;
             sprite_quads[i + 4].h = 0;
@@ -470,7 +470,7 @@ s32 func_80133AF0(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x140, 0x100, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x140, 0x100, 0x180, 0xA0);
             rect.x = 0x140;
             rect.y = 0x100;
             rect.w = 0x180;
@@ -485,7 +485,7 @@ s32 func_80133AF0(void) {
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x280, 0, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x280, 0, 0x180, 0xA0);
             rect.x = 0x280;
             rect.y = 0;
             rect.w = 0x180;
@@ -500,7 +500,7 @@ s32 func_80133AF0(void) {
         break;
     case 5:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x140, 0x100, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x140, 0x100, 0x180, 0xA0);
             rect.x = 0x140;
             rect.y = 0x100;
             rect.w = 0x180;
@@ -515,7 +515,7 @@ s32 func_80133AF0(void) {
         break;
     case 7:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x280, 0, 0x180, 0xA0);
+            bg_still_decode_to_vram(0x280, 0, 0x180, 0xA0);
             rect.x = 0x280;
             rect.y = 0;
             rect.w = 0x180;
@@ -606,7 +606,7 @@ s32 func_80133AF0(void) {
         g->mode_step_timer.u += 1;
         break;
     case 17:
-        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+        if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
@@ -620,7 +620,7 @@ s32 func_80133AF0(void) {
     case 18:
         audio_command(0x200);
         sp4C = g->mode_step_timer.u;
-        func_80132BB0();
+        amusement_opening_sector_load();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp4C + 1;
         break;
@@ -723,7 +723,7 @@ s32 func_80133AF0(void) {
 }
 
 /* s32: the step exits return 0 (or v0,zero,zero), the fade steps fall off the end (as in the DATE twin func_8014718C). T-11880 */
-s32 func_801348F0(void) {
+s32 amusement_decoded_scene_sequence_b(void) {
     GameState *g;
     RECT rect; /* FAKE: unused, reserves the 8 bytes above sp30 in the original 0x40 frame (as in the DATE twin func_8014718C) T-11880 */
     u32 sp30;
@@ -734,8 +734,8 @@ s32 func_801348F0(void) {
     DateMovieWork *movie;
 
     g = &game_state;
-    movie = (DateMovieWork *)dec_bg_lba_cache;
-    D_800B3D60 = 0;
+    movie = (DateMovieWork *)bg_lba_cache;
+    cd_read_checked = 0;
     switch (g->mode_step_timer.u) {
     case 0:
         D_80122D2C = 1;
@@ -771,25 +771,25 @@ s32 func_801348F0(void) {
             sprite_quads[i + 10].y = -0x96;
             game_state.quad_layer[i + 10] = 0xC;
         }
-        func_801365DC(0x43C2);
+        amusement_decoded_background_read_retry(0x43C2);
         g->mode_step_timer.u += 1;
         return 0;
     case 1:
         if (cd_read_sync_status() & 1) {
-            if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+            if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
                 printf("DEC_BS header Error \n");
                 movie->unk_04 = 0;
                 movie->unk_06 = 0;
                 g->mode_step_timer.u -= 1;
                 return 0;
             }
-            func_800536AC(0x140, 0x100, 0x140, 0xA0);
+            bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
             g->mode_step_timer.u += 1;
         }
         return 0;
     case 2:
         cd_read_sectors(0x31, 0x801AE000, 0xBCD1);
-        func_801339F8();
+        amusement_scene_texture_pointer_setup();
         g->mode_step_timer.u += 1;
         return 0;
     case 3:
@@ -864,7 +864,7 @@ s32 func_801348F0(void) {
         g->mode_step_timer.u += 1;
         return 0;
     case 12:
-        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+        if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
@@ -877,7 +877,7 @@ s32 func_801348F0(void) {
         return 0;
     case 13:
         sp30 = g->mode_step_timer.u;
-        func_80132BB0();
+        amusement_opening_sector_load();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp30;
         g->mode_step_timer.u++;
@@ -897,7 +897,7 @@ s32 func_801348F0(void) {
 }
 
 /* s32: only the header-error path returns 0 (or v0,zero,zero), as in the DATE twin func_80147958. T-11880 */
-s32 func_801350A4(void) {
+s32 amusement_decoded_scene_sequence_c(void) {
     GameState *g;
     s16 i;
     s32 sp54;
@@ -909,8 +909,8 @@ s32 func_801350A4(void) {
     u32 color;
 
     g = &game_state;
-    movie = (DateMovieWork *)dec_bg_lba_cache;
-    D_800B3D60 = 0;
+    movie = (DateMovieWork *)bg_lba_cache;
+    cd_read_checked = 0;
     switch (g->mode_step_timer.u) {
     case 0:
         audio_command(0xCF);
@@ -986,7 +986,7 @@ s32 func_801350A4(void) {
         }
         return;
     case 2:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -999,7 +999,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 5:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -1012,7 +1012,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 8:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -1025,7 +1025,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 11:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         rect.x = 0x140;
         rect.y = 0x100;
         rect.w = 0x140;
@@ -1038,7 +1038,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 14:
-        func_800536AC(0x280, 0, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x280, 0, 0x140, 0xA0);
         g->mode_step_timer.u += 1;
         return;
     case 15:
@@ -1046,7 +1046,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 17:
-        func_800536AC(0x140, 0x100, 0x140, 0xA0);
+        bg_still_decode_to_vram(0x140, 0x100, 0x140, 0xA0);
         g->mode_step_timer.u += 1;
         return;
     case 18:
@@ -1078,7 +1078,7 @@ s32 func_801350A4(void) {
     case 20:
     case 22:
     case 24:
-        func_80135DA4(8);
+        amusement_scene_quad_transition_step(8);
         if (++D_8013A5CC == 0x14) {
             g->mode_step_timer.u += 1;
             return;
@@ -1145,7 +1145,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 26:
-        func_80135DA4(8);
+        amusement_scene_quad_transition_step(8);
         if ((u16) D_8013A5CC >= 8U) {
             value = sprite_quads[4].tint_r;
             value -= 4;
@@ -1189,7 +1189,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 28:
-        func_80135DA4(8);
+        amusement_scene_quad_transition_step(8);
         value = sprite_quads[4].tint_r;
         value -= 4;
         color = (value & 0xFF);
@@ -1239,7 +1239,7 @@ s32 func_801350A4(void) {
         g->mode_step_timer.u += 1;
         return;
     case 35:
-        if (((((DateMovieHeader8 *)D_80125C04)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)D_80125C04)->unk_04 & 0xFF010000) != 0x10000)) {
+        if (((((DateMovieHeader8 *)bg_still_bitstream)->unk_00 & 0xFFFF0000) != 0x38000000) || ((((DateMovieHeader8 *)bg_still_bitstream)->unk_04 & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
             movie->unk_04 = 0;
             movie->unk_06 = 0;
@@ -1253,7 +1253,7 @@ s32 func_801350A4(void) {
     case 36:
         sp50 = g->mode_step_timer.u;
 
-        func_80132BB0();
+        amusement_opening_sector_load();
         game_state.mode_step -= 1;
         g->mode_step_timer.u = sp50;
         g->mode_step_timer.u++;
@@ -1268,7 +1268,7 @@ s32 func_801350A4(void) {
     return;
 }
 
-s32 func_80135DA4(s16 arg0) {
+s32 amusement_scene_quad_transition_step(s16 arg0) {
     sprite_quads[4].y += arg0;
     sprite_quads[5].y += arg0;
     sprite_quads[4].h -= arg0;
@@ -1281,7 +1281,7 @@ s32 func_80135DA4(s16 arg0) {
 
 /* Returns int like the DATE twin func_801489D0: only the header-error path of case 2 sets a
  * result (move v0,zero), the other paths leave v0 alone. T-18800 */
-s32 func_80135E50(void) {
+s32 amusement_random_scene_sprite_sequence(void) {
     s16 *temp_a0;
     s16 *temp_v0;
     s16 temp_a1;
@@ -1299,7 +1299,7 @@ s32 func_80135E50(void) {
         srand((*(s32 *)&game_state.frame_count));
         D_8013A5CC = 0;
         hizuke_disp_switch(0);
-        func_801365DC(0x43BA);
+        amusement_decoded_background_read_retry(0x43BA);
         D_8013A5D4[0] = -0x50;
         D_8013A5D4[1] = 0;
         D_8013A5D4[2] = 0x64;
@@ -1321,10 +1321,10 @@ s32 func_80135E50(void) {
         }
         break;
     case 2:
-        if (((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000)) {
+        if (((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000) || ((((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000)) {
             printf("DEC_BS header Error \n");
-            ((RECT *)dec_bg_lba_cache)[0].w = 0;
-            ((RECT *)dec_bg_lba_cache)[0].h = 0;
+            ((RECT *)bg_lba_cache)[0].w = 0;
+            ((RECT *)bg_lba_cache)[0].h = 0;
             game_state.mode_step_timer.u -= 2;
             return 0;
         }
@@ -1381,9 +1381,9 @@ s32 func_80135E50(void) {
             }
             var_s3++;
         } while (var_s3 < 3);
-        func_8004A814((s32) D_8013A5D4[0], (s32) D_8013A5DC[0], 0xA, 2, 2, 0x808080, 3, 1);
-        func_8004A814((s32) D_8013A5D4[1], (s32) D_8013A5DC[1], 0xA, 2, 2, 0x804040, 3, 1);
-        func_8004A814((s32) D_8013A5D4[2], (s32) D_8013A5DC[2], 0xA, 2, 2, 0x800000, 3, 1);
+        prim_glow_disc((s32) D_8013A5D4[0], (s32) D_8013A5DC[0], 0xA, 2, 2, 0x808080, 3, 1);
+        prim_glow_disc((s32) D_8013A5D4[1], (s32) D_8013A5DC[1], 0xA, 2, 2, 0x804040, 3, 1);
+        prim_glow_disc((s32) D_8013A5D4[2], (s32) D_8013A5DC[2], 0xA, 2, 2, 0x800000, 3, 1);
         /* FAKE (T-18800): an empty test (no code) ends the block before the counter test; without it
          * IDO keeps the old count in a1 and branches with bnez instead of the original's v1 and
          * xori/sltiu/beqz (the DATE twin func_801489D0 has real code there). */
@@ -1417,10 +1417,10 @@ s32 func_80135E50(void) {
     }
 }
 
-void func_801365DC(s32 arg0) {
+void amusement_decoded_background_read_retry(s32 arg0) {
     s32 v;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     v = dec_bg_cd_read(arg0, 1);
     if (v == D_800B5939) {
         printf("same\n");
@@ -1433,7 +1433,7 @@ void func_801365DC(s32 arg0) {
     }
 }
 
-void func_80136660(void) {
+void amusement_birthday_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl44 tbl;
 
@@ -1442,7 +1442,7 @@ void func_80136660(void) {
     tbl.f[idx](0x80);
 }
 
-s32 func_801366E8(void) {
+s32 amusement_shiori_birthday_gate(void) {
     s32 v;
 
     v = get_g_zyotai_s(GIRL_SHIORI);
@@ -1461,7 +1461,7 @@ s32 func_801366E8(void) {
 /* The selected girl and the game_state flag bytes are read through a state
  * pointer: uopt then keeps unk_F5F and unk_71E in registers (a1, v0), which
  * gives the `lui a1; lbu a0,lo(a1)` argument loads. T-11880 */
-s32 func_80136794(void) {
+s32 amusement_date_girl_birthday_gate(void) {
     GameState *g;
     s32 v;
 
@@ -1482,7 +1482,7 @@ s32 func_80136794(void) {
     mode_step_next();
 }
 
-s32 func_80136860(void) {
+s32 amusement_response_parameter_update(void) {
     u8 x;
     u8 count;
 
@@ -1521,10 +1521,10 @@ s32 func_80136860(void) {
     day_event_next(1);
 }
 
-void func_80136A90(void) {
+void amusement_status_random_scene_value_adjust(void) {
     D_8013A430 = 9;
     D_8013A438 = 9;
-    func_801338F8();
+    amusement_status_scene_value_adjust();
     if (((u8) get_g_zyotai_s(GIRL_SHIORI) & 0x7F) == 4 && (rand() % 2)) {
         D_8013A430 += 1;
     }
@@ -1534,12 +1534,12 @@ void func_80136A90(void) {
     mode_step_next();
 }
 
-void func_80136B7C(void) {
+void amusement_background_load(void) {
     bg_read_sub2(0x432B);
     mode_step_next();
 }
 
-void func_80136BA4(void) {
+void amusement_scene_candidate_select(void) {
     if (game_state.girls[0].affection < 0xA) {
         D_8013A428 += 2;
         game_state.current_girl = GIRL_SHIORI;
@@ -1562,12 +1562,12 @@ void func_80136BA4(void) {
     mode_step_next();
 }
 
-void func_80136CEC(void) {
+void amusement_scene_value_default_set(void) {
     D_8013A428 = 0x17;
     mode_step_next();
 }
 
-void func_80136D14(void) {
+void amusement_date_girl_scene_value_set(void) {
     talk_names_set((u8) *(s8 *)&game_state.current_girl);
     D_8013A428 = 0x15;
     mode_step_next();

@@ -3,20 +3,20 @@
 #include "ovl/BUNKAKEN.h"
 
 typedef struct {
-    void (*f[142])();
-} FnTbl142; /* size 0x238 */
-extern FnTbl142 D_80156060;
+    void (*handler[142])();
+} TourStageTable; /* size 0x238 */
+extern TourStageTable tour_stage_table;
 
-void func_80145E40(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl142 tbl;
+void tour_stage_run(void) {
+    s32 stage_index; /* declared before stage_handlers: its stack slot sits above stage_handlers (T-3330) */
+    TourStageTable stage_handlers;
 
-    tbl = D_80156060;
-    idx = game_state.mode_stage;
-    tbl.f[idx]();
+    stage_handlers = tour_stage_table;
+    stage_index = game_state.mode_stage;
+    stage_handlers.handler[stage_index]();
 }
 
-void func_80145EBC(void) {
+void tour_stage_route_visit(void) {
     GameState *g;
 
     g = &game_state;
@@ -24,69 +24,69 @@ void func_80145EBC(void) {
         switch (D_80122EB8) {
         case 0:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 0) {
-                mode_stage_set(0x20);
+                mode_stage_set(TOUR_STAGE_SHIORI_CLUB_ROUTE);
                 return;
             }
             if ((((u8) g->girls[1].flags.b[2] >> 4) == 0) && (((u32) (g->girls[1].flags.w << 0x1E) >> 0x1F) == 1)) {
-                mode_stage_set(0x2C);
+                mode_stage_set(TOUR_STAGE_MIO_CLUB_ROUTE);
                 return;
             }
-            mode_stage_set(5);
+            mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
             return;
         case 1:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 1) {
-                mode_stage_set(0x20);
+                mode_stage_set(TOUR_STAGE_SHIORI_CLUB_ROUTE);
                 return;
             }
             if ((((u8) g->girls[1].flags.b[2] >> 4) == 1) && (((u32) (g->girls[1].flags.w << 0x1E) >> 0x1F) == 1)) {
-                mode_stage_set(0x2C);
+                mode_stage_set(TOUR_STAGE_MIO_CLUB_ROUTE);
                 return;
             }
-            mode_stage_set(5);
+            mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
             return;
         case 2:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 2) {
-                mode_stage_set(0x20);
+                mode_stage_set(TOUR_STAGE_SHIORI_CLUB_ROUTE);
                 return;
             }
             if ((((u8) g->girls[2].flags.b[2] >> 4) == 2) && (((u32) (g->girls[2].flags.w << 0x1E) >> 0x1F) == 1)) {
-                mode_stage_set(0x30);
+                mode_stage_set(TOUR_STAGE_YUINA_CLUB_ROUTE);
                 return;
             }
-            mode_stage_set(9);
+            mode_stage_set(TOUR_STAGE_SOLO_SCIENCE);
             return;
         case 3:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 3) {
-                mode_stage_set(0x20);
+                mode_stage_set(TOUR_STAGE_SHIORI_CLUB_ROUTE);
                 return;
             }
             if ((((u8) g->girls[2].flags.b[2] >> 4) == 3) && (((u32) (g->girls[2].flags.w << 0x1E) >> 0x1F) == 1)) {
-                mode_stage_set(0x30);
+                mode_stage_set(TOUR_STAGE_YUINA_CLUB_ROUTE);
                 return;
             }
-            mode_stage_set(5);
+            mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
             return;
         case 4:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 4) {
-                mode_stage_set(0x20);
+                mode_stage_set(TOUR_STAGE_SHIORI_CLUB_ROUTE);
                 return;
             }
             if ((((u8) g->girls[3].flags.b[2] >> 4) == 4) && (((u32) (g->girls[3].flags.w << 0x1E) >> 0x1F) == 1)) {
-                mode_stage_set(0x35);
+                mode_stage_set(TOUR_STAGE_AYAKO_CLUB_ROUTE);
                 return;
             }
-            mode_stage_set(5);
+            mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
             return;
         case 5:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 5) {
-                mode_stage_set(0x20);
+                mode_stage_set(TOUR_STAGE_SHIORI_CLUB_ROUTE);
                 return;
             }
             if ((((u8) g->girls[3].flags.b[2] >> 4) == 5) && (((u32) (g->girls[3].flags.w << 0x1E) >> 0x1F) == 1)) {
-                mode_stage_set(0x35);
+                mode_stage_set(TOUR_STAGE_AYAKO_CLUB_ROUTE);
                 return;
             }
-            mode_stage_set(5);
+            mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
             return;
         default:
             game_mode_reset_to_title();
@@ -95,28 +95,28 @@ void func_80145EBC(void) {
     } else {
         switch (D_80122EBC) {
         case 11:
-            mode_stage_set(0x12);
+            mode_stage_set(TOUR_STAGE_SHIORI_COMPANION_ROUTE);
             return;
         case 4:
-            mode_stage_set(0x3A);
+            mode_stage_set(TOUR_STAGE_SAKI_ROUTE);
             return;
         case 5:
-            mode_stage_set(0x48);
+            mode_stage_set(TOUR_STAGE_YUKARI_ROUTE);
             return;
         case 6:
-            mode_stage_set(0x55);
+            mode_stage_set(TOUR_STAGE_NOZOMI_ROUTE);
             return;
         case 7:
-            mode_stage_set(0x62);
+            mode_stage_set(TOUR_STAGE_MIRA_ROUTE);
             return;
         case 8:
-            mode_stage_set(0x6F);
+            mode_stage_set(TOUR_STAGE_YUKO_ROUTE);
             return;
         case 9:
-            mode_stage_set(0x7A);
+            mode_stage_set(TOUR_STAGE_MEGUMI_ROUTE);
             return;
         case 10:
-            mode_stage_set(0x83);
+            mode_stage_set(TOUR_STAGE_YUMI_ROUTE);
             return;
         default:
             game_mode_reset_to_title();
@@ -125,22 +125,22 @@ void func_80145EBC(void) {
     }
 }
 
-void func_801462A0(void) {
+void tour_stage_resume(void) {
     switch (game_state.mode_step) {
     case 0:
         actor_clear_range(0);
         hud_cursor_show(0);
-        func_80041168(0xFF);
+        vram_clear_blocks(0xFF);
         mode_step_next();
         return;
     case 1:
-        func_80059E00();
+        boot_data_load_step();
         return;
     case 2:
-        func_80059BC0();
+        boot_hud_textures_step();
         return;
     case 3:
-        func_8004ADE4();
+        debug_font_load();
         mode_step_next();
         return;
     case 4:
@@ -167,7 +167,7 @@ void func_801462A0(void) {
     }
 }
 
-void func_801463E4(void) {
+void tour_stage_tt_narrator(void) {
     switch (game_state.mode_step) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B7F);
@@ -178,15 +178,15 @@ void func_801463E4(void) {
             k_reset(0);
             message_window_set_title((s32) "天の声");
             k_disp_start(1);
-            func_80132514();
+            tour_script_narrator();
             game_state.current_girl = GIRL_YUKO;
             talk_names_set(8U);
             strcpy(name_code_girl_short, "　");
             talk_group = 0;
             talk_line = 0;
-            talk_text_table = (s32) D_80155E90;
-            talk_command_table = (s32) D_80155E94;
-            talk_voice_table = (s32) D_80155E98;
+            talk_text_table = (s32) tour_script_text;
+            talk_command_table = (s32) tour_script_commands;
+            talk_voice_table = (s32) tour_script_voices;
             mode_step_next();
         }
         break;

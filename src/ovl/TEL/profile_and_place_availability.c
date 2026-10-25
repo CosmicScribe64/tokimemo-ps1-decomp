@@ -12,7 +12,7 @@
 /* The packed flag word at GameState +0xF64 of state gs, as single bits. */
 #define FLAGS_F64(gs) ((QuarterFlagBits *)(gs)->quarter_flags)
 
-void func_8013CCD0(void) {
+void phone_profile_appraisal_init(void) {
     Actor *rec;
     s32 i;
     s32 idx;
@@ -30,8 +30,8 @@ void func_8013CCD0(void) {
         rec->quad_flags = 0x40000000;
         rec->draw_flags = 0x84;
         rec->frame_table = sprite_frame_table;
-        rec->sequence_table = D_800C9A14;
-        rec->tpage_table = D_800C9730;
+        rec->sequence_table = actor_default_sequence_table;
+        rec->tpage_table = actor_default_texture_blocks;
         rec->unk_14 = D_800C9A54;
         rec->unk_04 = 8;
         rec->unk_05 = 1;
@@ -84,7 +84,7 @@ void func_8013CCD0(void) {
     D_801230D4 = set_kanji_string(-0x80, -0x62, 4, "女の子からの評価", 0);
 }
 
-void func_8013D03C(s32 arg0, s32 arg1) {
+void phone_profile_details_draw(s32 arg0, s32 arg1) {
     /* FAKE: unused 32-byte local reproduces the frame (slots above n); real use unknown. T-24045 */
     u8 pad[32];
     s32 n;
@@ -125,8 +125,8 @@ void func_8013D03C(s32 arg0, s32 arg1) {
         REC(i + 0x60).quad_flags = 0x40000000;
         REC(i + 0x60).draw_flags = 0x84;
         REC(i + 0x60).frame_table = sprite_frame_table;
-        REC(i + 0x60).sequence_table = D_800C9A14;
-        REC(i + 0x60).tpage_table = D_800C9730;
+        REC(i + 0x60).sequence_table = actor_default_sequence_table;
+        REC(i + 0x60).tpage_table = actor_default_texture_blocks;
         REC(i + 0x60).unk_14 = D_800C9A54;
         REC(i + 0x60).unk_04 = 8;
         REC(i + 0x60).unk_05 = 1;
@@ -214,7 +214,7 @@ void func_8013D03C(s32 arg0, s32 arg1) {
  * tests name game_state itself. The two spellings give uopt different base-register and
  * promotion choices, and only this split reproduces the original (measured in T-25133).
  */
-void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void phone_date_place_availability_build(s32 page, s32 year, s32 month, s32 day) {
     s32 i;
     GameState *g;
     s16 x[11];
@@ -230,7 +230,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
     /* FAKE: one source line, so as1 stores the four row-10 entries in the original order. T-25133 */
     y[10] = -0x54; avail[10] = 0x64; step[10] = 0x10; x[10] = 0;
-    if (arg0 == 0) {
+    if (page == 0) {
         set_kanji_string(-0x80, -0x52, 3, "デートスポット", 0);
         set_kanji_string(0, -0x52, 3, "次のページへ", 0);
         for (i = 0; i < 10; i++) {
@@ -246,27 +246,27 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 case 9:
                     break;
                 case 1:
-                    if (FLAGS_F64(g)->b1 == 1 && arg1 == 0x5F && arg2 == 6) {
+                    if (FLAGS_F64(g)->b1 == 1 && year == 0x5F && month == 6) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 3:
-                    if (FLAGS_F64(g)->b3 == 1 && arg1 == 0x5F && arg2 == 12) {
+                    if (FLAGS_F64(g)->b3 == 1 && year == 0x5F && month == 12) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 5:
-                    if (FLAGS_F64(g)->b5 == 1 && arg1 == 0x60 && arg2 == 6) {
+                    if (FLAGS_F64(g)->b5 == 1 && year == 0x60 && month == 6) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 6:
-                    if (FLAGS_F64(g)->b7 == 1 && arg1 == 0x60 && arg2 == 12) {
+                    if (FLAGS_F64(g)->b7 == 1 && year == 0x60 && month == 12) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 7:
-                    if (FLAGS_F64(g)->b2 == 1 && arg1 == 0x5F && arg2 == 9) {
+                    if (FLAGS_F64(g)->b2 == 1 && year == 0x5F && month == 9) {
                         avail[i] = 0x74;
                     }
                     break;
@@ -289,9 +289,9 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 } else if (i == 3) {
                     /* FAKE: the empty arm keeps the original test order and block layout; the != and && form
                      * moves the register of the 0x74 constant. T-25133 */
-                    if (arg2 == 12 || arg2 == 2 || arg2 == 0 || arg2 == 14) {
+                    if (month == 12 || month == 2 || month == 0 || month == 14) {
                     } else {
-                        if (arg2 == g->month) {
+                        if (month == g->month) {
                             if (FLAGS_F64(g)->b14 == 1) {
                                 avail[i] = 0x74;
                             }
@@ -304,7 +304,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                         }
                     }
                 } else if (i == 4) {
-                    if (arg2 == g->month) {
+                    if (month == g->month) {
                         if (FLAGS_F64(g)->b14 == 1) {
                             avail[i] = 0x74;
                         }
@@ -316,7 +316,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                         avail[i] = 0x74;
                     }
                 } else if (i == 5) {
-                    if (arg2 == g->month) {
+                    if (month == g->month) {
                         if (FLAGS_F64(g)->b14 == 1) {
                             avail[i] = 0x74;
                         }
@@ -334,22 +334,22 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 case 5:
                     break;
                 case 0:
-                    if (FLAGS_F64(&game_state)->b6 == 1 && arg1 == 0x60 && arg2 >= 9) {
+                    if (FLAGS_F64(&game_state)->b6 == 1 && year == 0x60 && month >= 9) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 1:
-                    if (FLAGS_F64(&game_state)->b8 == 1 && arg1 == 0x61 && arg2 >= 3) {
+                    if (FLAGS_F64(&game_state)->b8 == 1 && year == 0x61 && month >= 3) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 3:
-                    if (FLAGS_F64(&game_state)->b13 == 1 && g->month == 2 && arg2 == 3 && g->year == 0x60) {
+                    if (FLAGS_F64(&game_state)->b13 == 1 && g->month == 2 && month == 3 && g->year == 0x60) {
                         avail[i] = 0x74;
                     }
                     break;
                 case 4:
-                    if (FLAGS_F64(&game_state)->b13 == 1 && arg1 == 0x5F && arg2 == 6 && g->month == 5) {
+                    if (FLAGS_F64(&game_state)->b13 == 1 && year == 0x5F && month == 6 && g->month == 5) {
                         avail[i] = 0x74;
                     }
                     break;
@@ -365,10 +365,10 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
         }
         for (i = 6; i < 10; i++) {
             if (i == 6) {
-                if (hud_vacation_for_date(arg2, arg3) == 1) {
+                if (hud_vacation_for_date(month, day) == 1) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[16], 0);
                     avail[i] = 0x74;
-                } else if (hud_vacation_for_date(arg2, arg3) == 2) {
+                } else if (hud_vacation_for_date(month, day) == 2) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[19], 0);
                     avail[i] = 0x74;
                 } else {
@@ -376,10 +376,10 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 }
             }
             if (i == 7) {
-                if (hud_vacation_for_date(arg2, arg3) == 2) {
+                if (hud_vacation_for_date(month, day) == 2) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[20], 0);
                     avail[i] = 0x74;
-                } else if (hud_vacation_for_date(arg2, arg3) == 1) {
+                } else if (hud_vacation_for_date(month, day) == 1) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[17], 0);
                     avail[i] = 0x74;
                 } else {
@@ -390,7 +390,7 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                 avail[i] = 0;
             }
             if (i == 9) {
-                if (FLAGS_F64(&game_state)->b15 == 1 && arg2 == 8 && (arg3 + 6) / 7 == 1) {
+                if (FLAGS_F64(&game_state)->b15 == 1 && month == 8 && (day + 6) / 7 == 1) {
                     set_kanji_string((1 - i / 5) * -0x88, (i % 5) * 0x10 - 0x38, 3, place_name_table[18], 0);
                     avail[i] = 0x74;
                 } else {
@@ -410,8 +410,8 @@ void func_8013D88C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     REC(96).quad_flags = 0x40000000;
     REC(96).draw_flags = 0x84;
     REC(96).frame_table = sprite_frame_table;
-    REC(96).sequence_table = D_800C9A14;
-    REC(96).tpage_table = D_800C9730;
+    REC(96).sequence_table = actor_default_sequence_table;
+    REC(96).tpage_table = actor_default_texture_blocks;
     REC(96).unk_04 = 8;
     REC(96).unk_05 = 1;
     REC(96).unk_18 = 0x40;

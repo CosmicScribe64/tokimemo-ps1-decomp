@@ -21,13 +21,13 @@ s32 file_select_number_draw(u32 number, s32 screen_x, s32 screen_y) {
         p[4] = 0x80;
         p[5] = 0x80;
         p[6] = 0x80;
-        *(s16 *)(p + 8) = game_state.screen_center_x[draw_buffer] + screen_x - n;
-        *(s16 *)(p + 0xA) = game_state.screen_center_y[draw_buffer] + screen_y;
+        *(s16 *)(p + 8) = game_state.draw_origin_x[draw_buffer] + screen_x - n;
+        *(s16 *)(p + 0xA) = game_state.draw_origin_y[draw_buffer] + screen_y;
         e = file_select_digit_uv[remaining_number % 10];
         p[0xC] = e[0];
         p[0xD] = e[1];
         *(s16 *)(p + 0xE) = func_8009ED74(0, 0x1F0);
-        AddPrim(D_800E8CA0 + (draw_buffer << 10) + 0xC, p);
+        AddPrim(draw_ot_tags + (draw_buffer << 10) + 0xC, p);
         if (remaining_number < 10) {
             dtd_on_tpage(0x200, 0, 3, 0, 1);
             return 1;
@@ -313,25 +313,25 @@ void file_select_page_girl_stars_draw(void) {
     }
     if (D_800E8BEE != 0) {
         for (i = 0; i < 8; i++) {
-            if (system_record->unk_CC8[system_record->selected_slot][i] == 0) {
+            if (system_record->slot_girl_marks[system_record->selected_slot][i] == 0) {
                 ((Actor *)actor_pool)[i + 128].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 128].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 128].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                ((Actor *)actor_pool)[i + 141].unk_18 = (system_record->unk_CC8[system_record->selected_slot][i] & 7) + 0x58;
+                ((Actor *)actor_pool)[i + 141].unk_18 = (system_record->slot_girl_marks[system_record->selected_slot][i] & 7) + 0x58;
             }
         }
         for (i = 8; i < 11; i++) {
-            if (system_record->unk_CC8[system_record->selected_slot][i] == 0) {
+            if (system_record->slot_girl_marks[system_record->selected_slot][i] == 0) {
                 ((Actor *)actor_pool)[i + 129].draw_flags |= 0x80;
                 ((Actor *)actor_pool)[i + 129].unk_01 = 4;
                 ((Actor *)actor_pool)[i + 141].draw_flags &= 0x7F;
             } else {
                 ((Actor *)actor_pool)[i + 129].draw_flags &= 0x7F;
                 ((Actor *)actor_pool)[i + 141].draw_flags |= 0x80;
-                ((Actor *)actor_pool)[i + 141].unk_18 = (system_record->unk_CC8[system_record->selected_slot][i] & 7) + 0x58;
+                ((Actor *)actor_pool)[i + 141].unk_18 = (system_record->slot_girl_marks[system_record->selected_slot][i] & 7) + 0x58;
             }
         }
     } else {
@@ -593,7 +593,7 @@ void file_select_background_iris_update(void) {
             file_select_iris_y_speed = rand() & 0xF;
         }
     }
-    func_80046AC8(0x1A, 0, 0x1F7, file_select_iris_radius, file_select_iris_x, file_select_iris_y, 0x01DF7FCF, 2);
+    cd_iris_wipe_draw(0x1A, 0, 0x1F7, file_select_iris_radius, file_select_iris_x, file_select_iris_y, 0x01DF7FCF, 2);
 }
 
 void file_select_settings_restore(void) {
@@ -752,7 +752,7 @@ void file_select_init_settings(void) {
         file_select_iris_y_speed = 8;
         make_color_bar16(game_state.scratch_words, 0xDF7FCF, 0xDF7FCF, 0x10, 0);
         load_palette(game_state.scratch_words, 0x17, 1, 1, 0);
-        func_80046754(0x80180000, 0x1A, 0);
+        cd_iris_texture_build(0x80180000, 0x1A, 0);
         audio_bank_load_start(0, 0xBF98, 0xBF79, 0xCD21, 0xCCD9, 0xCCD1);
         game_state.substep++;
         break;
@@ -863,8 +863,8 @@ void file_select_init_menus(void) {
         record[i + 45].quad_flags = 0x40000000;
         record[i + 45].draw_flags = 36;
         record[i + 45].frame_table = sprite_frame_table;
-        record[i + 45].sequence_table = D_800C9A14;
-        record[i + 45].tpage_table = D_800C9730;
+        record[i + 45].sequence_table = actor_default_sequence_table;
+        record[i + 45].tpage_table = actor_default_texture_blocks;
         record[i + 45].unk_04 = 8;
         record[i + 45].unk_18 = 89;
         record[i + 45].unk_43 = 0;
@@ -894,8 +894,8 @@ void file_select_init_menus(void) {
     load_palette(0x801A2000, 0x10, 1, 1, 0);
     load_palette(0x801A2000, 0x11, 1, 1, 1);
     load_palette(0x80180000, 0x1F, 1, 1, 0);
-    func_8004A1A0((s32) addresses, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 0xA, 0xD);
-    func_8004A1A0((s32) addresses2, 1, 6, 3, 2, 0x1F0, -0xA0, -0x78, 8, 0xA);
+    prim_bg_slot_setup((s32) addresses, 0, 6, 3, 2, 0x1FF, -0xA0, -0x78, 0xA, 0xD);
+    prim_bg_slot_setup((s32) addresses2, 1, 6, 3, 2, 0x1F0, -0xA0, -0x78, 8, 0xA);
     actor_clear(0x72);
     mode_stage_next();
 }
@@ -918,7 +918,7 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_memory_card_check_text_2);
 
 void file_select_memory_card_check_begin(void) {
-    func_80056284();
+    memory_card_state_reset();
     text_system_reset();
     set_kanji_string(-0x40, 0x20, 0xF, file_select_memory_card_check_text_1, 0);
     set_kanji_string(-0x40, 0x30, 0xF, file_select_memory_card_check_text_2, 0);
@@ -930,7 +930,7 @@ void file_select_memory_card_check_poll(void) {
     u8 memory_card_result;
     GameState *file_state; /* FAKE: file_state and the u8 copy of the selector only move it to $v1 (T-11120, permuter) */
 
-    if (func_80053F04() != 0) {
+    if (memory_card_check_poll() != 0) {
         hud_cursor_show(1);
         memory_card_stop();
         file_state = &game_state;
@@ -1008,7 +1008,7 @@ void file_select_insert_memory_card_message(void) {
 
 void file_select_insert_memory_card_wait(void) {
     if (game_state.pad_pressed & PAD_CIRCLE) {
-        func_80056284();
+        memory_card_state_reset();
         mode_step_set(0);
     }
 }
@@ -1054,11 +1054,11 @@ s32 file_select_scan(void) {
         game_state.substep++;
         break;
     case 1:
-        if (func_80054140() == 2) {
+        if (memory_card_scan_poll() == 2) {
             printf("SEARCH_CARD");
             game_state.substep++;
         } else if (game_state.mode_step_timer.u >= 0x201U) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
             memory_card_stop();
         }
@@ -1097,17 +1097,17 @@ void file_select_system_file_read(void) {
         file_state->substep++;
         break;
     case 1:
-        if (func_80054284() == 3) {
+        if (memory_card_system_read_poll() == 3) {
             memory_card_stop();
             file_state->substep++;
         } else if (((u32) file_state->memory_card_timer >= 0x201U) || (file_state->memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
     case 2:
-        if (func_800552DC(0) == -1) {
+        if (memory_card_system_bank_load(0) == -1) {
             file_state->substep++;
         } else {
             text_system_reset();
@@ -1163,7 +1163,7 @@ void file_select_system_file_read(void) {
             file_state->substep++;
         } else if (file_state->pad_pressed & PAD_CROSS) {
             for (i = 0; i < 4; i++) {
-                if (func_80054704(0) == 1) {
+                if (memory_card_file_delete(0) == 1) {
                     break;
                 }
             }
@@ -1219,11 +1219,11 @@ void file_select_album_load(void) {
         game_state.substep++;
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep++;
         } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -1231,7 +1231,7 @@ void file_select_album_load(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             game_state.substep++;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -1239,14 +1239,14 @@ void file_select_album_load(void) {
         }
         break;
     case 3:
-        if (func_80055AFC(0) == 1) {
+        if (memory_card_game_bank_load(0) == 1) {
             file_select_menu_mode_unlock();
             printf("SYS0 DATA OK!");
             memory_card_stop();
             audio_command(0x501);
             memory_card_start();
             D_800E7D36 = game_state.save_slot;
-            func_80054E6C();
+            memory_card_slot_summary_store();
             game_state.substep++;
         } else {
             memory_card_result = game_state.memory_card_result;
@@ -1256,12 +1256,12 @@ void file_select_album_load(void) {
         }
         break;
     case 4:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             mode_stage_set(3);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((memory_card_result = game_state.memory_card_result) == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -1294,19 +1294,19 @@ void file_select_album_only_read(void) {
         printf("load file %d \n", file_state->save_slot);
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             file_state->substep++;
         } else if ((memory_card_result = file_state->memory_card_result) == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) file_state->memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             file_select_slot_information_show();
             mode_step_next();
         } else {
@@ -1371,10 +1371,10 @@ s32 file_select_album_only_read_chosen(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             game_state.substep += 1;
         } else if (game_state.memory_card_result == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -1382,7 +1382,7 @@ s32 file_select_album_only_read_chosen(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             file_select_slot_information_show();
             mode_step_set(0x21);
         } else {
@@ -1398,7 +1398,7 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/file_select.rodata", file_select_debug_load_failed_text);
 
 void file_select_album_only_load(void) {
-    if (func_80055AFC(0) == 1) {
+    if (memory_card_game_bank_load(0) == 1) {
         file_select_menu_mode_unlock();
         printf(file_select_debug_load_valid_text);
         memory_card_stop();
@@ -1406,7 +1406,7 @@ void file_select_album_only_load(void) {
         mode_stage_set(3);
     } else {
         printf(file_select_debug_load_failed_text);
-        func_80056284();
+        memory_card_state_reset();
         mode_stage_set(1);
     }
     file_select_slot_summary_draw();
@@ -1541,7 +1541,7 @@ s32 file_select_create_album_only(void) {
             game_state.substep += 1;
         } else if (slot_status == 1) {
             game_state.substep += 1;
-        } else if (func_80054694((s32) game_state.save_slot) == 1) {
+        } else if (memory_card_file_create((s32) game_state.save_slot) == 1) {
             game_state.substep += 1;
         } else {
             mode_stage_set(4);
@@ -1549,16 +1549,16 @@ s32 file_select_create_album_only(void) {
         break;
     case 1:
         memory_card_start();
-        func_80041878();
-        func_80042058();
+        boot_game_data_init();
+        boot_settings_defaults_set();
         game_state.substep += 1;
         break;
     case 2:
-        if (func_80054590() == 0x14) {
+        if (memory_card_save_write_poll() == 0x14) {
             game_state.substep += 1;
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -1589,17 +1589,17 @@ void file_select_create_album_and_system_file(void) {
     default:
         break;
     case 1:
-        if (func_80054694((s32) game_state.save_slot) == 1) {
+        if (memory_card_file_create((s32) game_state.save_slot) == 1) {
             game_state.substep += 1;
         } else {
             mode_stage_set(4);
         }
         break;
     case 2:
-        if (func_80054694(0) == 1) {
+        if (memory_card_file_create(0) == 1) {
             game_state.substep += 1;
         } else {
-            func_80054704((s32) game_state.save_slot);
+            memory_card_file_delete((s32) game_state.save_slot);
             mode_stage_set(4);
         }
         break;
@@ -1615,36 +1615,36 @@ void file_select_create_album_and_system_file(void) {
         *D_800E7D14 = 1;
         game_state.save_slot = 0;
         memory_card_start();
-        func_80054E6C();
+        memory_card_slot_summary_store();
         game_state.substep += 1;
         break;
     case 4:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
     case 5:
         memory_card_start();
-        func_80041878();
-        func_80042058();
-        func_80042058();
+        boot_game_data_init();
+        boot_settings_defaults_set();
+        boot_settings_defaults_set();
         game_state.save_slot = D_800E7D36;
         /* FAKE: pointer view avoids cvt_pass widening on unk_1118 so uopt keeps unk_1118 in $a1 across the switch. T-24106 */
         printf("s->file_no %x \n", *(u8 *)&game_state.save_slot);
         game_state.substep += 1;
         break;
     case 6:
-        if (func_80054590() == 0x14) {
+        if (memory_card_save_write_poll() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -1773,11 +1773,11 @@ void file_select_new_redo_load(void) {
     default:
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (game_state.memory_card_result == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -1785,7 +1785,7 @@ void file_select_new_redo_load(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -1793,7 +1793,7 @@ void file_select_new_redo_load(void) {
         }
         break;
     case 3:
-        if (func_80055AFC(0) == 1) {
+        if (memory_card_game_bank_load(0) == 1) {
             file_select_profile_retain();
             file_select_menu_mode_unlock();
             game_state.substep += 1;
@@ -1804,8 +1804,8 @@ void file_select_new_redo_load(void) {
         break;
     case 4:
         printf("%d file replay", game_state.save_slot);
-        func_80041878();
-        func_80042058();
+        boot_game_data_init();
+        boot_settings_defaults_set();
         file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
@@ -1821,11 +1821,11 @@ void file_select_new_redo_load_no_system(void) {
     default:
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (game_state.memory_card_result == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -1833,7 +1833,7 @@ void file_select_new_redo_load_no_system(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             game_state.substep += 1;
         } else {
             D_800E7D14[game_state.save_slot] = 0xFF;
@@ -1841,7 +1841,7 @@ void file_select_new_redo_load_no_system(void) {
         }
         break;
     case 3:
-        if (func_80055AFC(0) == 1) {
+        if (memory_card_game_bank_load(0) == 1) {
             file_select_profile_retain();
             file_select_menu_mode_unlock();
             game_state.substep += 1;
@@ -1852,8 +1852,8 @@ void file_select_new_redo_load_no_system(void) {
         break;
     case 4:
         printf("%d file replay", game_state.save_slot);
-        func_80041878();
-        func_80042058();
+        boot_game_data_init();
+        boot_settings_defaults_set();
         file_select_settings_restore();
         game_mode_set(GAME_MODE_NAME_ENTRY);
         break;
@@ -1878,7 +1878,7 @@ void file_select_new_create_with_system(void) {
     default:
         break;
     case 1:
-        if ((memory_card_operation = func_80054694((s32) game_state.save_slot)) == 1) {
+        if ((memory_card_operation = memory_card_file_create((s32) game_state.save_slot)) == 1) {
             game_state.substep += 1;
         } else {
             mode_stage_set(4);
@@ -1886,17 +1886,17 @@ void file_select_new_create_with_system(void) {
         break;
     case 2:
         memory_card_start();
-        func_80041878();
-        func_80042058();
+        boot_game_data_init();
+        boot_settings_defaults_set();
         game_state.substep += 1;
         break;
     case 3:
-        if ((memory_card_operation = func_80054590()) == 0x14) {
+        if ((memory_card_operation = memory_card_save_write_poll()) == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -1904,16 +1904,16 @@ void file_select_new_create_with_system(void) {
         memory_card_stop();
         memory_card_start();
         D_800E7D36 = game_state.save_slot;
-        func_80054E6C();
+        memory_card_slot_summary_store();
         game_state.substep += 1;
         break;
     case 5:
-        if ((memory_card_operation = func_80054388()) == 0x13) {
+        if ((memory_card_operation = memory_card_system_write_poll()) == 0x13) {
             memory_card_stop();
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -1942,7 +1942,7 @@ void file_select_new_create_album_only(void) {
     default:
         break;
     case 1:
-        if ((memory_card_operation = func_80054694((s32) game_state.save_slot)) == 1) {
+        if ((memory_card_operation = memory_card_file_create((s32) game_state.save_slot)) == 1) {
             game_state.substep += 1;
         } else {
             mode_stage_set(4);
@@ -1950,17 +1950,17 @@ void file_select_new_create_album_only(void) {
         break;
     case 2:
         memory_card_start();
-        func_80041878();
-        func_80042058();
+        boot_game_data_init();
+        boot_settings_defaults_set();
         game_state.substep += 1;
         break;
     case 3:
-        if ((memory_card_operation = func_80054590()) == 0x14) {
+        if ((memory_card_operation = memory_card_save_write_poll()) == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
         } else if (((u32) (*(u32 *)&game_state.memory_card_timer) >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2034,10 +2034,10 @@ s32 file_select_copy_source_load(void) {
     default:
         break;
     case 1:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             game_state.substep++;
         } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -2045,7 +2045,7 @@ s32 file_select_copy_source_load(void) {
         }
         break;
     case 2:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             file_select_slot_information_show();
             game_state.substep++;
         } else {
@@ -2054,7 +2054,7 @@ s32 file_select_copy_source_load(void) {
         }
         break;
     case 3:
-        if (func_80055AFC(0) == 1) {
+        if (memory_card_game_bank_load(0) == 1) {
             file_select_menu_mode_unlock();
             file_select_menu_mode_lock = 1;
             printf("COPY LOAD SUM !\n");
@@ -2097,7 +2097,7 @@ void file_select_copy_destination_choose(void) {
             file_state->save_slot = file_state->menu_cursor_0 + 1;
             if (D_800E7D15[slot_index] != 0) {
                 mode_step_next();
-            } else if (func_80054694(file_state->save_slot) == 1) {
+            } else if (memory_card_file_create(file_state->save_slot) == 1) {
                 audio_command(0x501);
                 mode_step_set(0xC6);
             } else {
@@ -2156,14 +2156,14 @@ s32 file_select_copy_write_with_system(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_80054590() == 0x14) {
+        if (memory_card_save_write_poll() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
             memory_card_stop();
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             printf("NO MEM CARD \n");
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2172,17 +2172,17 @@ s32 file_select_copy_write_with_system(void) {
         D_800E7D36 = game_state.save_slot;
         game_state.save_slot = 0;
         memory_card_start();
-        func_80054E6C();
+        memory_card_slot_summary_store();
         game_state.substep += 1;
         break;
     case 3:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             mode_step_set(0);
             game_state.substep = 2;
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2205,14 +2205,14 @@ s32 file_select_copy_write_album_only(void) {
         game_state.substep += 1;
         break;
     case 1:
-        if (func_80054590() == 0x14) {
+        if (memory_card_save_write_poll() == 0x14) {
             D_800E7D14[game_state.save_slot] = 1;
             game_state.substep += 1;
             memory_card_stop();
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             printf("NO MEM CARD \n");
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2293,13 +2293,13 @@ void file_select_clear_answer(void) {
 void file_select_clear_delete_with_system(void) {
     switch (game_state.substep) {
     case 0:
-        if (func_80054704((s32) game_state.save_slot) == 1) {
+        if (memory_card_file_delete((s32) game_state.save_slot) == 1) {
             printf("DELETE OK");
             D_800E7D14[game_state.save_slot] = 0;
             game_state.substep += 1;
         } else {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2310,13 +2310,13 @@ void file_select_clear_delete_with_system(void) {
         game_state.substep += 1;
         break;
     case 2:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (game_state.memory_card_result == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2325,7 +2325,7 @@ void file_select_clear_delete_with_system(void) {
 
 void file_select_clear_delete_album_only(void) {
     if (game_state.substep == 0) {
-        if (func_80054704(game_state.save_slot) == 1) {
+        if (memory_card_file_delete(game_state.save_slot) == 1) {
             printf("DELETE OK");
             D_800E7D14[game_state.save_slot] = 0;
             mode_step_set(0);
@@ -2333,7 +2333,7 @@ void file_select_clear_delete_album_only(void) {
             return;
         }
         memory_card_stop();
-        func_80056284();
+        memory_card_state_reset();
         mode_stage_set(1);
     }
 }
@@ -2523,7 +2523,7 @@ s32 file_select_mode_stage_album_broken(void) {
             mode_stage_set(2);
             mode_step_set(2);
         } else {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2554,7 +2554,7 @@ s32 file_select_mode_stage_memory_card_error(void) {
         break;
     case 3:
         memory_card_stop();
-        func_80056284();
+        memory_card_state_reset();
         mode_stage_set(1);
         break;
     }
@@ -2574,7 +2574,7 @@ void file_select_loaded_greeting(void) {
     case 0:
         dec_bg_reset();
         dec_bg_show_switch(2);
-        func_80057640(0xF0);
+        bg_capture_screen(0xF0);
         hud_cursor_show(0);
         sprite_tables_clear();
         game_state.event_log_count = hud_event_log_scan(&qualifying_girl, &final_event_girl, 1);
@@ -2694,14 +2694,14 @@ void file_select_loaded_leave(void) {
         set_dec_bri(0);
         if (game_state.year == 0x62 && game_state.month == 3 && game_state.day == 1) {
             file_select_profile_retain();
-            func_80041878();
-            func_80041F48();
+            boot_game_data_init();
+            boot_event_state_init();
             game_state.event_log_count = 0;
             game_mode_set(GAME_MODE_NAME_ENTRY);
         } else if (game_state.year == 0x5F && game_state.month == 4 && game_state.day == 4) {
             file_select_profile_retain();
-            func_80041878();
-            func_80041F48();
+            boot_game_data_init();
+            boot_event_state_init();
             game_state.event_log_count = 0;
             game_mode_set(GAME_MODE_NAME_ENTRY);
         } else {
@@ -2832,7 +2832,7 @@ void file_select_system_file_rebuild(void) {
             }
             game_state.substep++;
         } else if (game_state.pad_pressed & PAD_CROSS) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2909,11 +2909,11 @@ void file_select_system_file_rebuild(void) {
         }
         break;
     case 8:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep++;
         } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -2921,7 +2921,7 @@ void file_select_system_file_rebuild(void) {
         }
         break;
     case 9:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             game_state.substep++;
         } else {
             system_record->slot_status[game_state.save_slot] = 0xFF;
@@ -2930,8 +2930,8 @@ void file_select_system_file_rebuild(void) {
         }
         break;
     case 10:
-        if (func_80055AFC(0) == 1) {
-            func_80054E6C();
+        if (memory_card_game_bank_load(0) == 1) {
+            memory_card_slot_summary_store();
             game_state.save_slot++;
             game_state.substep = 7;
             for (i = 0; i < 16; i++) {
@@ -2951,7 +2951,7 @@ void file_select_system_file_rebuild(void) {
         game_state.substep++;
         break;
     case 33:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             mode_stage_set(2);
             mode_step_set(0);
@@ -2959,7 +2959,7 @@ void file_select_system_file_rebuild(void) {
             audio_command(0x50F);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((memory_card_result = game_state.memory_card_result) == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -2989,7 +2989,7 @@ s32 file_select_system_file_create(void) {
         if (game_state.pad_pressed & PAD_CIRCLE) {
             game_state.substep++;
         } else if (game_state.pad_pressed & PAD_CROSS) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -3028,7 +3028,7 @@ s32 file_select_system_file_create(void) {
         game_state.substep++;
         break;
     case 7:
-        if (func_80054694(0) == 1) {
+        if (memory_card_file_create(0) == 1) {
             D_800E8BEE = 1;
             game_state.substep++;
         } else {
@@ -3060,11 +3060,11 @@ s32 file_select_system_file_create(void) {
         }
         break;
     case 9:
-        if (func_8005448C() == 4) {
+        if (memory_card_save_read_poll() == 4) {
             memory_card_stop();
             game_state.substep++;
         } else if ((memory_card_result = game_state.memory_card_result) == 0xF0) {
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || (memory_card_result == 0xD0)) {
             memory_card_stop();
@@ -3072,7 +3072,7 @@ s32 file_select_system_file_create(void) {
         }
         break;
     case 10:
-        if (func_80055A38(0) == 1) {
+        if (memory_card_bank_validate(0) == 1) {
             game_state.substep++;
         } else {
             system_record->slot_status[game_state.save_slot] = 0xFF;
@@ -3081,8 +3081,8 @@ s32 file_select_system_file_create(void) {
         }
         break;
     case 11:
-        if (func_80055AFC(0) == 1) {
-            func_80054E6C();
+        if (memory_card_game_bank_load(0) == 1) {
+            memory_card_slot_summary_store();
             game_state.save_slot++;
             game_state.substep = 8;
             for (i = 0; i < 16; i++) {
@@ -3102,7 +3102,7 @@ s32 file_select_system_file_create(void) {
         game_state.substep++;
         break;
     case 33:
-        if (func_80054388() == 0x13) {
+        if (memory_card_system_write_poll() == 0x13) {
             memory_card_stop();
             mode_stage_set(2);
             mode_step_set(0);
@@ -3110,7 +3110,7 @@ s32 file_select_system_file_create(void) {
             audio_command(0x50F);
         } else if (((u32) game_state.memory_card_timer >= 0x201U) || ((memory_card_result = game_state.memory_card_result) == 0xF0)) {
             memory_card_stop();
-            func_80056284();
+            memory_card_state_reset();
             mode_stage_set(1);
         }
         break;
@@ -3159,7 +3159,7 @@ s32 file_select_format_prompt(void) {
         break;
     case 3:
         if (game_state.pad_pressed & PAD_CIRCLE) {
-            if (func_80054108() == 1) {
+            if (memory_card_format() == 1) {
                 mode_stage_set(2);
             } else {
                 mode_stage_set(1);
@@ -3250,7 +3250,7 @@ void file_select_flash_update(void) {
         D_801230D0 -= 1;
     }
     if (D_801230D0 > 0) {
-        func_8004AC18(D_801230D0);
+        prim_flash_gray(D_801230D0);
     }
 }
 

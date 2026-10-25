@@ -377,20 +377,20 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[i + 32].quad_flags = 0x40000000;
         ((Actor *)actor_pool)[i + 32].draw_flags = 0x84;
         ((Actor *)actor_pool)[i + 32].frame_table = sprite_frame_table;
-        ((Actor *)actor_pool)[i + 32].sequence_table = D_800C9A14;
-        ((Actor *)actor_pool)[i + 32].tpage_table = D_800C9730;
+        ((Actor *)actor_pool)[i + 32].sequence_table = actor_default_sequence_table;
+        ((Actor *)actor_pool)[i + 32].tpage_table = actor_default_texture_blocks;
         ((Actor *)actor_pool)[i + 32].unk_14 = D_800C9A54;
         ((Actor *)actor_pool)[i + 32].unk_04 = 8;
         ((Actor *)actor_pool)[i + 32].unk_05 = 1;
     }
     value = game_state.param_condition.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[32].unk_18 = digit + 0x44; ((Actor *)actor_pool)[32].x = -0x49;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[32].unk_18 = digit + 0x44; ((Actor *)actor_pool)[32].x = -0x49;
     ((Actor *)actor_pool)[32].y = -0x58;
     value = game_state.param_condition.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[33].unk_18 = digit + 0x44; ((Actor *)actor_pool)[33].x = -0x41;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[33].unk_18 = digit + 0x44; ((Actor *)actor_pool)[33].x = -0x41;
     ((Actor *)actor_pool)[33].y = -0x58;
     value = game_state.param_condition.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[34].unk_18 = digit + 0x44; ((Actor *)actor_pool)[34].x = -0x39;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[34].unk_18 = digit + 0x44; ((Actor *)actor_pool)[34].x = -0x39;
     ((Actor *)actor_pool)[34].y = -0x58;
     if ((*(s16 *)&game_state.progress_state[0x5A]) < game_state.param_condition.value) {
         ((Actor *)actor_pool)[32].unk_43 = ((Actor *)actor_pool)[33].unk_43 = ((Actor *)actor_pool)[34].unk_43 = 0x43;
@@ -400,13 +400,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[32].dx = ((Actor *)actor_pool)[33].dx = ((Actor *)actor_pool)[34].dx = 1;
     }
     value = game_state.param_liberal_arts.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[35].unk_18 = digit + 0x44; ((Actor *)actor_pool)[35].x = 0xF;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[35].unk_18 = digit + 0x44; ((Actor *)actor_pool)[35].x = 0xF;
     ((Actor *)actor_pool)[35].y = -0x58;
     value = game_state.param_liberal_arts.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[36].unk_18 = digit + 0x44; ((Actor *)actor_pool)[36].x = 0x17;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[36].unk_18 = digit + 0x44; ((Actor *)actor_pool)[36].x = 0x17;
     ((Actor *)actor_pool)[36].y = -0x58;
     value = game_state.param_liberal_arts.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[37].unk_18 = digit + 0x44; ((Actor *)actor_pool)[37].x = 0x1F;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[37].unk_18 = digit + 0x44; ((Actor *)actor_pool)[37].x = 0x1F;
     ((Actor *)actor_pool)[37].y = -0x58;
     if ((*(s16 *)&game_state.progress_state[0x5E]) < game_state.param_liberal_arts.value) {
         ((Actor *)actor_pool)[35].unk_43 = ((Actor *)actor_pool)[36].unk_43 = ((Actor *)actor_pool)[37].unk_43 = 0x43;
@@ -416,13 +416,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[35].dx = ((Actor *)actor_pool)[36].dx = ((Actor *)actor_pool)[37].dx = 1;
     }
     value = game_state.param_science.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[38].unk_18 = digit + 0x44; ((Actor *)actor_pool)[38].x = 0x67;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[38].unk_18 = digit + 0x44; ((Actor *)actor_pool)[38].x = 0x67;
     ((Actor *)actor_pool)[38].y = -0x58;
     value = game_state.param_science.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[39].unk_18 = digit + 0x44; ((Actor *)actor_pool)[39].x = 0x6F;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[39].unk_18 = digit + 0x44; ((Actor *)actor_pool)[39].x = 0x6F;
     ((Actor *)actor_pool)[39].y = -0x58;
     value = game_state.param_science.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[40].unk_18 = digit + 0x44; ((Actor *)actor_pool)[40].x = 0x77;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[40].unk_18 = digit + 0x44; ((Actor *)actor_pool)[40].x = 0x77;
     ((Actor *)actor_pool)[40].y = -0x58;
     if ((*(s16 *)&game_state.progress_state[0x62]) < game_state.param_science.value) {
         ((Actor *)actor_pool)[38].unk_43 = ((Actor *)actor_pool)[39].unk_43 = ((Actor *)actor_pool)[40].unk_43 = 0x43;
@@ -432,13 +432,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[38].dx = ((Actor *)actor_pool)[39].dx = ((Actor *)actor_pool)[40].dx = 1;
     }
     value = game_state.param_art.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[41].unk_18 = digit + 0x44; ((Actor *)actor_pool)[41].x = -0x49;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[41].unk_18 = digit + 0x44; ((Actor *)actor_pool)[41].x = -0x49;
     ((Actor *)actor_pool)[41].y = -0x4A;
     value = game_state.param_art.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[42].unk_18 = digit + 0x44; ((Actor *)actor_pool)[42].x = -0x41;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[42].unk_18 = digit + 0x44; ((Actor *)actor_pool)[42].x = -0x41;
     ((Actor *)actor_pool)[42].y = -0x4A;
     value = game_state.param_art.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[43].unk_18 = digit + 0x44; ((Actor *)actor_pool)[43].x = -0x39;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[43].unk_18 = digit + 0x44; ((Actor *)actor_pool)[43].x = -0x39;
     ((Actor *)actor_pool)[43].y = -0x4A;
     if ((*(s16 *)&game_state.progress_state[0x66]) < game_state.param_art.value) {
         ((Actor *)actor_pool)[41].unk_43 = ((Actor *)actor_pool)[42].unk_43 = ((Actor *)actor_pool)[43].unk_43 = 0x43;
@@ -448,13 +448,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[41].dx = ((Actor *)actor_pool)[42].dx = ((Actor *)actor_pool)[43].dx = 1;
     }
     value = game_state.param_athletics.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[44].unk_18 = digit + 0x44; ((Actor *)actor_pool)[44].x = 0xF;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[44].unk_18 = digit + 0x44; ((Actor *)actor_pool)[44].x = 0xF;
     ((Actor *)actor_pool)[44].y = -0x4A;
     value = game_state.param_athletics.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[45].unk_18 = digit + 0x44; ((Actor *)actor_pool)[45].x = 0x17;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[45].unk_18 = digit + 0x44; ((Actor *)actor_pool)[45].x = 0x17;
     ((Actor *)actor_pool)[45].y = -0x4A;
     value = game_state.param_athletics.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[46].unk_18 = digit + 0x44; ((Actor *)actor_pool)[46].x = 0x1F;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[46].unk_18 = digit + 0x44; ((Actor *)actor_pool)[46].x = 0x1F;
     ((Actor *)actor_pool)[46].y = -0x4A;
     if ((*(s16 *)&game_state.progress_state[0x6A]) < game_state.param_athletics.value) {
         ((Actor *)actor_pool)[44].unk_43 = ((Actor *)actor_pool)[45].unk_43 = ((Actor *)actor_pool)[46].unk_43 = 0x43;
@@ -464,13 +464,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[44].dx = ((Actor *)actor_pool)[45].dx = ((Actor *)actor_pool)[46].dx = 1;
     }
     value = game_state.param_trivia.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[47].unk_18 = digit + 0x44; ((Actor *)actor_pool)[47].x = 0x67;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[47].unk_18 = digit + 0x44; ((Actor *)actor_pool)[47].x = 0x67;
     ((Actor *)actor_pool)[47].y = -0x4A;
     value = game_state.param_trivia.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[48].unk_18 = digit + 0x44; ((Actor *)actor_pool)[48].x = 0x6F;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[48].unk_18 = digit + 0x44; ((Actor *)actor_pool)[48].x = 0x6F;
     ((Actor *)actor_pool)[48].y = -0x4A;
     value = game_state.param_trivia.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[49].unk_18 = digit + 0x44; ((Actor *)actor_pool)[49].x = 0x77;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[49].unk_18 = digit + 0x44; ((Actor *)actor_pool)[49].x = 0x77;
     ((Actor *)actor_pool)[49].y = -0x4A;
     if ((*(s16 *)&game_state.progress_state[0x6E]) < game_state.param_trivia.value) {
         ((Actor *)actor_pool)[47].unk_43 = ((Actor *)actor_pool)[48].unk_43 = ((Actor *)actor_pool)[49].unk_43 = 0x43;
@@ -480,13 +480,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[47].dx = ((Actor *)actor_pool)[48].dx = ((Actor *)actor_pool)[49].dx = 1;
     }
     value = game_state.param_looks.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[50].unk_18 = digit + 0x44; ((Actor *)actor_pool)[50].x = -0x49;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[50].unk_18 = digit + 0x44; ((Actor *)actor_pool)[50].x = -0x49;
     ((Actor *)actor_pool)[50].y = -0x3C;
     value = game_state.param_looks.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[51].unk_18 = digit + 0x44; ((Actor *)actor_pool)[51].x = -0x41;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[51].unk_18 = digit + 0x44; ((Actor *)actor_pool)[51].x = -0x41;
     ((Actor *)actor_pool)[51].y = -0x3C;
     value = game_state.param_looks.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[52].unk_18 = digit + 0x44; ((Actor *)actor_pool)[52].x = -0x39;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[52].unk_18 = digit + 0x44; ((Actor *)actor_pool)[52].x = -0x39;
     ((Actor *)actor_pool)[52].y = -0x3C;
     if ((*(s16 *)&game_state.progress_state[0x72]) < game_state.param_looks.value) {
         ((Actor *)actor_pool)[50].unk_43 = ((Actor *)actor_pool)[51].unk_43 = ((Actor *)actor_pool)[52].unk_43 = 0x43;
@@ -496,13 +496,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[50].dx = ((Actor *)actor_pool)[51].dx = ((Actor *)actor_pool)[52].dx = 1;
     }
     value = game_state.param_guts.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[53].unk_18 = digit + 0x44; ((Actor *)actor_pool)[53].x = 0xF;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[53].unk_18 = digit + 0x44; ((Actor *)actor_pool)[53].x = 0xF;
     ((Actor *)actor_pool)[53].y = -0x3C;
     value = game_state.param_guts.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[54].unk_18 = digit + 0x44; ((Actor *)actor_pool)[54].x = 0x17;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[54].unk_18 = digit + 0x44; ((Actor *)actor_pool)[54].x = 0x17;
     ((Actor *)actor_pool)[54].y = -0x3C;
     value = game_state.param_guts.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[55].unk_18 = digit + 0x44; ((Actor *)actor_pool)[55].x = 0x1F;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[55].unk_18 = digit + 0x44; ((Actor *)actor_pool)[55].x = 0x1F;
     ((Actor *)actor_pool)[55].y = -0x3C;
     if ((*(s16 *)&game_state.progress_state[0x76]) < game_state.param_guts.value) {
         ((Actor *)actor_pool)[53].unk_43 = ((Actor *)actor_pool)[54].unk_43 = ((Actor *)actor_pool)[55].unk_43 = 0x43;
@@ -512,13 +512,13 @@ void parameter_show_init(void) {
         ((Actor *)actor_pool)[53].dx = ((Actor *)actor_pool)[54].dx = ((Actor *)actor_pool)[55].dx = 1;
     }
     value = game_state.param_stress.value;
-    digit = func_80046590((s16)value, 3); ((Actor *)actor_pool)[56].unk_18 = digit + 0x44; ((Actor *)actor_pool)[56].x = 0x67;
+    digit = cd_decimal_digit((s16)value, 3); ((Actor *)actor_pool)[56].unk_18 = digit + 0x44; ((Actor *)actor_pool)[56].x = 0x67;
     ((Actor *)actor_pool)[56].y = -0x3C;
     value = game_state.param_stress.value;
-    digit = func_80046590((s16)value, 2); ((Actor *)actor_pool)[57].unk_18 = digit + 0x44; ((Actor *)actor_pool)[57].x = 0x6F;
+    digit = cd_decimal_digit((s16)value, 2); ((Actor *)actor_pool)[57].unk_18 = digit + 0x44; ((Actor *)actor_pool)[57].x = 0x6F;
     ((Actor *)actor_pool)[57].y = -0x3C;
     value = game_state.param_stress.value;
-    digit = func_80046590((s16)value, 1); ((Actor *)actor_pool)[58].unk_18 = digit + 0x44; ((Actor *)actor_pool)[58].x = 0x77;
+    digit = cd_decimal_digit((s16)value, 1); ((Actor *)actor_pool)[58].unk_18 = digit + 0x44; ((Actor *)actor_pool)[58].x = 0x77;
     ((Actor *)actor_pool)[58].y = -0x3C;
     if ((*(s16 *)&game_state.progress_state[0x7A]) < game_state.param_stress.value) {
         ((Actor *)actor_pool)[56].unk_43 = ((Actor *)actor_pool)[57].unk_43 = ((Actor *)actor_pool)[58].unk_43 = 0x43;
@@ -618,61 +618,61 @@ void hizuke_init(void) {
         ((Actor *)actor_pool)[i + 16].quad_flags = 0x40000000;
         ((Actor *)actor_pool)[i + 16].draw_flags = 0x84;
         ((Actor *)actor_pool)[i + 16].frame_table = sprite_frame_table;
-        ((Actor *)actor_pool)[i + 16].sequence_table = D_800C9A14;
-        ((Actor *)actor_pool)[i + 16].tpage_table = D_800C9730;
+        ((Actor *)actor_pool)[i + 16].sequence_table = actor_default_sequence_table;
+        ((Actor *)actor_pool)[i + 16].tpage_table = actor_default_texture_blocks;
         ((Actor *)actor_pool)[i + 16].unk_14 = D_800C9A54;
         ((Actor *)actor_pool)[i + 16].unk_04 = 8;
         ((Actor *)actor_pool)[i + 16].unk_05 = 1;
     }
-    ((Actor *)actor_pool)[17].unk_18 = func_80046590(game_state.year, 2) + 0x44;
+    ((Actor *)actor_pool)[17].unk_18 = cd_decimal_digit(game_state.year, 2) + 0x44;
     ((Actor *)actor_pool)[17].x = 0x8C;
     ((Actor *)actor_pool)[17].y = -0x41;
     /* FAKE: joining the digit and x stores keeps the following month address
      * load after the x store. T-24604. */
-    ((Actor *)actor_pool)[18].unk_18 = func_80046590(game_state.year, 1) + 0x44; ((Actor *)actor_pool)[18].x = 0x94;
+    ((Actor *)actor_pool)[18].unk_18 = cd_decimal_digit(game_state.year, 1) + 0x44; ((Actor *)actor_pool)[18].x = 0x94;
     ((Actor *)actor_pool)[18].y = -0x41;
 
     if (game_state.month >= 10) {
-        digit = func_80046590((s16)game_state.month, 2);
+        digit = cd_decimal_digit((s16)game_state.month, 2);
         ((Actor *)actor_pool)[19].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[19].x = 0x8C;
         ((Actor *)actor_pool)[19].y = -0x22;
 
-        digit = func_80046590((s16)game_state.month, 1);
+        digit = cd_decimal_digit((s16)game_state.month, 1);
         ((Actor *)actor_pool)[20].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[20].x = 0x94;
         ((Actor *)actor_pool)[20].y = -0x22;
     } else {
         ((Actor *)actor_pool)[19].draw_flags = 0;
-        digit = func_80046590((s16)game_state.month, 2);
+        digit = cd_decimal_digit((s16)game_state.month, 2);
         ((Actor *)actor_pool)[19].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[19].x = 0xFF;
         ((Actor *)actor_pool)[19].y = 0xFF;
 
-        digit = func_80046590((s16)game_state.month, 1);
+        digit = cd_decimal_digit((s16)game_state.month, 1);
         ((Actor *)actor_pool)[20].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[20].x = 0x90;
         ((Actor *)actor_pool)[20].y = -0x22;
     }
 
     if (game_state.day >= 10) {
-        digit = func_80046590((s16)game_state.day, 2);
+        digit = cd_decimal_digit((s16)game_state.day, 2);
         ((Actor *)actor_pool)[21].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[21].x = 0x8C;
         ((Actor *)actor_pool)[21].y = -1;
 
-        digit = func_80046590((s16)game_state.day, 1);
+        digit = cd_decimal_digit((s16)game_state.day, 1);
         ((Actor *)actor_pool)[22].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[22].x = 0x94;
         ((Actor *)actor_pool)[22].y = -1;
     } else {
         ((Actor *)actor_pool)[21].draw_flags = 0;
-        digit = func_80046590((s16)game_state.day, 2);
+        digit = cd_decimal_digit((s16)game_state.day, 2);
         ((Actor *)actor_pool)[21].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[21].x = 0xFF;
         ((Actor *)actor_pool)[21].y = 0xFF;
 
-        digit = func_80046590((s16)game_state.day, 1);
+        digit = cd_decimal_digit((s16)game_state.day, 1);
         ((Actor *)actor_pool)[22].unk_18 = digit + 0x44;
         ((Actor *)actor_pool)[22].x = 0x90;
         ((Actor *)actor_pool)[22].y = -1;
@@ -720,8 +720,8 @@ void message_window_init(void) {
     D_8011ED4C = 0x40000000;
     D_8011ED17 = 0x84;
     D_8011ED20 = sprite_frame_table;
-    D_8011ED24 = D_800C9A14;
-    D_8011ED48 = D_800C9730;
+    D_8011ED24 = actor_default_sequence_table;
+    D_8011ED48 = actor_default_texture_blocks;
     D_8011ED28 = D_800C9A54;
     D_8011ED18 = 8;
     D_8011ED19 = 1;
@@ -805,8 +805,8 @@ void hud_icon_bar_init(void) {
         ((Actor *)actor_pool)[i + 80].quad_flags = 0x40000000;
         ((Actor *)actor_pool)[i + 80].draw_flags = 0x84;
         ((Actor *)actor_pool)[i + 80].frame_table = sprite_frame_table;
-        ((Actor *)actor_pool)[i + 80].sequence_table = D_800C9A14;
-        ((Actor *)actor_pool)[i + 80].tpage_table = D_800C9730;
+        ((Actor *)actor_pool)[i + 80].sequence_table = actor_default_sequence_table;
+        ((Actor *)actor_pool)[i + 80].tpage_table = actor_default_texture_blocks;
         ((Actor *)actor_pool)[i + 80].unk_14 = D_800C9A54;
         ((Actor *)actor_pool)[i + 80].unk_04 = 8;
         ((Actor *)actor_pool)[i + 80].unk_05 = 1;
@@ -818,8 +818,8 @@ void hud_icon_bar_init(void) {
         ((Actor *)actor_pool)[i + 64].quad_flags = 0x40000000;
         ((Actor *)actor_pool)[i + 64].draw_flags = 0x84;
         ((Actor *)actor_pool)[i + 64].frame_table = sprite_frame_table;
-        ((Actor *)actor_pool)[i + 64].sequence_table = D_800C9A14;
-        ((Actor *)actor_pool)[i + 64].tpage_table = D_800C9730;
+        ((Actor *)actor_pool)[i + 64].sequence_table = actor_default_sequence_table;
+        ((Actor *)actor_pool)[i + 64].tpage_table = actor_default_texture_blocks;
         ((Actor *)actor_pool)[i + 64].unk_14 = D_800C9A54;
         ((Actor *)actor_pool)[i + 64].unk_04 = 8;
         ((Actor *)actor_pool)[i + 64].unk_05 = 1;
@@ -1151,8 +1151,8 @@ void message_window_set_title(u8 *arg0) {
         ((Actor *)actor_pool)[i + 3].quad_flags = 0x40000000;
         ((Actor *)actor_pool)[i + 3].draw_flags = 0xA4;
         ((Actor *)actor_pool)[i + 3].frame_table = sprite_frame_table;
-        ((Actor *)actor_pool)[i + 3].sequence_table = D_800C9A14;
-        ((Actor *)actor_pool)[i + 3].tpage_table = D_800C9730;
+        ((Actor *)actor_pool)[i + 3].sequence_table = actor_default_sequence_table;
+        ((Actor *)actor_pool)[i + 3].tpage_table = actor_default_texture_blocks;
         ((Actor *)actor_pool)[i + 3].unk_14 = D_800C9A54;
         ((Actor *)actor_pool)[i + 3].unk_04 = 8;
         ((Actor *)actor_pool)[i + 3].unk_05 = 1;
@@ -1418,7 +1418,7 @@ void hud_screen_frame_draw(s32 a) {
                 spr->g0 = game_state.screen_brightness;
                 spr->b0 = game_state.screen_brightness;
                 spr->clut = func_8009ED74(0xA0, 0x1E1);
-                AddPrim(D_800E8CA0 + (draw_buffer << 10) + (u8)D_800B5BD4 * 4, (s32)spr);
+                AddPrim(draw_ot_tags + (draw_buffer << 10) + (u8)D_800B5BD4 * 4, (s32)spr);
             }
         }
     }

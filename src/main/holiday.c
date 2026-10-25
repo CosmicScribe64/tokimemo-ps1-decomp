@@ -240,7 +240,7 @@ void holiday_open_init(void) {
 void holiday_open_wait_bg(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, dec_bg_decode_to_vram(0));
-        if (D_800B594C == -1) {
+        if (bg_decode_result == -1) {
             dec_bg_reset();
             dec_bg_cd_read(D_800B5960[hud_season_index()], 0);
         } else {
@@ -402,7 +402,7 @@ s32 holiday_menu_click(void) {
             confirm_hit = 1;
             cd_audio_command(9, 0, 0);
             audio_command(3);
-            if (func_8004480C() == 0) {
+            if (audio_bgm_is_playing() == 0) {
                 audio_bank_start(0, 0);
             }
         }
@@ -923,7 +923,7 @@ void holiday_activity_load(void) {
     } else if (gs->substep == 1) {
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(0, dec_bg_decode_to_vram(0));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 holiday_activity_bg_read();
             } else {
@@ -1161,7 +1161,7 @@ void holiday_magazine_show(void) {
         xa_wait();
         return;
     case 1:
-        if (D_800B3CFC != 0) {
+        if (pad_code_entered != 0) {
             game_state.substep += 1;
             return;
         }
@@ -1325,8 +1325,8 @@ void telephone_class_init(void) {
     ((Actor *)actor_pool)[96].quad_flags = 0x40000000;
     ((Actor *)actor_pool)[96].draw_flags = 0x84;
     ((Actor *)actor_pool)[96].frame_table = sprite_frame_table;
-    ((Actor *)actor_pool)[96].sequence_table = D_800C9A14;
-    ((Actor *)actor_pool)[96].tpage_table = D_800C9730;
+    ((Actor *)actor_pool)[96].sequence_table = actor_default_sequence_table;
+    ((Actor *)actor_pool)[96].tpage_table = actor_default_texture_blocks;
     ((Actor *)actor_pool)[96].unk_14 = D_800C9A54;
     ((Actor *)actor_pool)[96].unk_04 = 8;
     ((Actor *)actor_pool)[96].unk_05 = 1;

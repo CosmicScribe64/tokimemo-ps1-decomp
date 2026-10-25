@@ -2,15 +2,15 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-void func_8013A500(void) {
+void new_year_nozomi_scene_group_dispatch(void) {
     if (D_80144E14 == 0) {
-        func_8013A53C();
+        new_year_nozomi_scene_primary_mode_step_dispatch();
         return;
     }
-    func_8013A600();
+    new_year_nozomi_scene_secondary_mode_step_dispatch();
 }
 
-void func_8013A53C(void) {
+void new_year_nozomi_scene_primary_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl27 tbl;
 
@@ -19,17 +19,17 @@ void func_8013A53C(void) {
     tbl.f[idx](0x80);
 }
 
-void func_8013A5B0(void) {
+void new_year_nozomi_scene_audio_command_0502(void) {
     audio_command(0x502);
     mode_step_next();
 }
 
-void func_8013A5D8(void) {
+void new_year_nozomi_scene_audio_command_0503(void) {
     audio_command(0x503);
     mode_step_next();
 }
 
-void func_8013A600(void) {
+void new_year_nozomi_scene_secondary_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl20 tbl;
 
@@ -38,7 +38,7 @@ void func_8013A600(void) {
     tbl.f[idx]();
 }
 
-void func_8013A688(void) {
+void new_year_nozomi_scene_state_init(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -51,15 +51,15 @@ void func_8013A688(void) {
     talk_clear();
     D_80122CE8 = 0;
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     addr_init_bustup();
     hizuke_init();
     message_window_init();
     text_marker_hide();
     *(u8 *)&game_state.current_girl = 6;
     talk_names_set(*(u8 *)&game_state.current_girl);
-    func_80136F90();
+    new_year_meeting_dialogue_addresses_init();
     D_80144DFC = D_80144DA8;
     D_80144E00 = D_80144DCC;
     D_80144E04 = D_80144DF0;
@@ -67,48 +67,48 @@ void func_8013A688(void) {
     mode_step_next();
 }
 
-void func_8013A7B0(void) {
+void new_year_nozomi_scene_park_state_init(void) {
     D_80144E08 = 0;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "近所の公園");
+    strcpy(scene_place_title, "近所の公園");
     mode_step_next();
 }
 
-void func_8013A7F4(void) {
+void new_year_nozomi_scene_pool_state_init(void) {
     D_80144E08 = 6;
     D_80144E0C = 0;
-    strcpy(D_800CA19C, "プール");
+    strcpy(scene_place_title, "プール");
     mode_step_next();
 }
 
-void func_8013A83C(void) {
+void new_year_nozomi_scene_background_load_42d8(void) {
     bg_read_sub2(0x42D8);
     mode_step_next();
 }
 
-void func_8013A864(void) {
+void new_year_nozomi_scene_background_load_40a0(void) {
     bg_read_sub2(0x40A0);
     mode_step_next();
 }
 
-void func_8013A88C(void) {
+void new_year_nozomi_scene_portrait_load_6449(void) {
     portrait_read_start(0x6449);
     mode_step_next();
 }
 
-void func_8013A8B4(void) {
+void new_year_nozomi_scene_portrait_load_625a(void) {
     portrait_read_start(0x625A);
     mode_step_next();
 }
 
-void func_8013A8DC(void) {
+void new_year_nozomi_scene_player_flag_route(void) {
     if (((u32) game_state.player_flags.h >> 0xC) == 9) {
         D_80144E08 = 5;
     }
     mode_step_next();
 }
 
-void func_8013A91C(void) {
+void new_year_nozomi_scene_selector_set_three(void) {
     D_80144E08 = 3;
     mode_step_next();
 }

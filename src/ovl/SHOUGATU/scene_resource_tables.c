@@ -96,7 +96,7 @@ extern DateTxt D_801440C0;
 
 void portrait_layout_set(s32 arg0);
 
-void func_80135B90(void) {
+void new_year_scene_dialogue_addresses_init(void) {
     D_80143EB0 = 0x801B0478;
     D_80143EB4 = 0x801B13A4;
     D_80143EB8 = 0x801B2998;
@@ -138,7 +138,7 @@ void func_80135B90(void) {
     D_80143F48 = 0x801BAB90;
 }
 
-void func_80135E04(void) {
+void new_year_scene_dialogue_command_voice_addresses_init(void) {
     D_80143F4C = 0x801B00DC;
     D_80143F50 = 0x801B02AC;
     D_80143F54 = 0x801B03C8;
@@ -180,30 +180,30 @@ void func_80135E04(void) {
     D_80143FE4 = 0x801B155C;
 }
 
-void func_80136078(void) {
+void new_year_secondary_scene_step_dispatch(void) {
     void (**p)();
-    FnTbl50 tbl;
+    FnTbl50 secondary_scene_callbacks;
 
-    tbl = D_80143FF8;
+    secondary_scene_callbacks = D_80143FF8;
     if (D_80143B20 != 0) {
-        p = &tbl.f[game_state.mode_step];
-        if (*p == normal_date_girl_in || tbl.f[game_state.mode_step] == normal_date_girl_out) {
-            tbl.f[game_state.mode_step] = mode_step_next;
-            /* FAKE: empty double test, same register-choice shift as func_80134120 (T-4090); real source unknown. T-10820 */
+        p = &secondary_scene_callbacks.f[game_state.mode_step];
+        if (*p == normal_date_girl_in || secondary_scene_callbacks.f[game_state.mode_step] == normal_date_girl_out) {
+            secondary_scene_callbacks.f[game_state.mode_step] = mode_step_next;
+            /* FAKE: empty double test, same register-choice shift as new_year_shrine_actor_mode_step_dispatch (T-4090); real source unknown. T-10820 */
             if (!game_state.mode_step && !game_state.mode_step) {
             }
         }
     }
-    tbl.f[game_state.mode_step](0x80);
+    secondary_scene_callbacks.f[game_state.mode_step](0x80);
 }
 
-void func_80136148(void) {
+void new_year_scene_talk_group_select(void) {
     talk_group = 2;
     talk_line = 0;
     mode_step_next();
 }
 
-void func_80136178(void) {
+void new_year_yukari_talk_gate(void) {
     u32 temp_t8;
 
     temp_t8 = (u8)get_g_zyotai_s(GIRL_YUKARI) & 0x7F;
@@ -211,13 +211,13 @@ void func_80136178(void) {
         if (game_state.mode_step_timer.w++ == 0) {
             D_80143B00 = 0x2A;
         }
-        func_801323D4();
+        new_year_talk_run_current();
         return;
     }
     mode_step_next();
 }
 
-void func_80136204(void) {
+void new_year_birthday_gate(void) {
     s32 r;
 
     r = get_g_zyotai_s(game_state.current_girl);
@@ -227,7 +227,7 @@ void func_80136204(void) {
         (game_state.current_girl == GIRL_SHIORI)) {
         game_state.day_event_done_bits |= 1;
         game_state.mode_step += 4;
-    /* FAKE: indirect reads of unk_040 and unk_0F8 prevent cross-branch CSE of unk_040 and match the ilod evaluation order of unk_1BC[] above, and the (u8) cast on r reserves the extra temp as in func_80136770 (T-2020); real source unknown. T-24080 */
+    /* FAKE: indirect reads of unk_040 and unk_0F8 prevent cross-branch CSE of unk_040 and match the ilod evaluation order of unk_1BC[] above, and the (u8) cast on r reserves the extra temp as in new_year_player_birthday_status_gate (T-2020); real source unknown. T-24080 */
     } else if ((*(u8 *)&game_state.day == ((u32)((*(s32 *)&game_state.player_birthday) << 0x17) >> 0x1B)) &&
                (game_state.month == ((*(s32 *)&game_state.player_birthday) & 0xF)) &&
                (D_80143B20 == 0)) {
@@ -241,7 +241,7 @@ void func_80136204(void) {
     mode_step_next();
 }
 
-void func_80136340(void) {
+void new_year_dialogue_group_selector_update(void) {
     u32 girl;
     u8 status;
 
@@ -263,12 +263,12 @@ void func_80136340(void) {
     mode_step_next();
 }
 
-void func_80136424(void) {
+void new_year_scene_background_load_41ed(void) {
     bg_read_sub2(0x41ED);
     mode_step_next();
 }
 
-s32 func_8013644C(void) {
+s32 new_year_day_completion_apply(void) {
     if (game_state.substep == 0) {
         hud_day_bgm_load();
         game_state.substep++;
@@ -298,22 +298,22 @@ s32 func_8013644C(void) {
     return day_event_next(1);
 }
 
-void func_80136590(void) {
+void new_year_scene_sector_read(void) {
     cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
-    func_80135B90();
+    new_year_scene_dialogue_addresses_init();
     mode_step_next();
 }
 
-void func_801365C8(void) {
+void new_year_scene_outcome_selector_save(void) {
     D_80122CDC = D_80143FF4;
     mode_step_next();
 }
 
-void func_801365F4(void) {
+void new_year_scene_outcome_dialogue_setup(void) {
     D_80143FF4 = (u8) D_80122CDC;
     talk_group = 0;
     talk_line = 0;
-    func_80135B90();
+    new_year_scene_dialogue_addresses_init();
     talk_text_table = D_80143EB4;
     talk_command_table = D_80143EE8;
     talk_voice_table = D_80143F1C;
@@ -325,7 +325,7 @@ void func_801365F4(void) {
     mode_step_next();
 }
 
-void func_801366A4(void) {
+void new_year_scene_status_talk_group_select(void) {
     u32 t;
 
     t = (u8)get_g_zyotai_s(game_state.current_girl) & 0x7F;
@@ -342,18 +342,18 @@ void func_801366A4(void) {
     mode_step_next();
 }
 
-void func_8013673C(void) {
+void new_year_scene_outcome_talk_group_select(void) {
     talk_group = (D_80122CDC * 2) + 0xD;
     mode_step_next();
 }
 
-void func_80136770(void) {
-    s32 r;
+void new_year_player_birthday_status_gate(void) {
+    s32 current_girl_status;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    r = (u8)get_g_zyotai_s(game_state.current_girl);
+    current_girl_status = (u8)get_g_zyotai_s(game_state.current_girl);
     if (game_state.month == (game_state.player_birthday & 0xF) && game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) {
-        if ((u32)(r & 0x7F) < 2U) {
+        if ((u32)(current_girl_status & 0x7F) < 2U) {
             game_state.day_event_done_bits |= 4;
             game_state.mode_step += 5;
         } else {
@@ -365,24 +365,24 @@ void func_80136770(void) {
     }
 }
 
-void func_80136824(void) {
+void new_year_scene_special_dialogue_setup(void) {
     talk_group = 0x1D;
     talk_text_table = D_80143FE8;
     talk_command_table = D_80143FEC;
     talk_voice_table = D_80143FF0;
-    func_80136884();
+    new_year_scene_selector_text_copy();
     mode_step_next();
 }
 
-void func_80136884(void) {
+void new_year_scene_selector_text_copy(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     DateTxt tbl;
 
     tbl = D_801440C0;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + game_state.year * 0x63 + D_80122CDC * 0x21 - 0x2520]);
+    strcpy(name_code_a, &tbl.s[game_state.current_girl * 0x129 + game_state.year * 0x63 + D_80122CDC * 0x21 - 0x2520]);
 }
 
-void func_80136948(void) {
+void new_year_scene_year_dialogue_table_select(void) {
     D_80143FE8 = talk_text_table;
     D_80143FEC = talk_command_table;
     D_80143FF0 = talk_voice_table;
@@ -396,7 +396,7 @@ void func_80136948(void) {
     mode_step_next();
 }
 
-void func_801369EC(void) {
+void new_year_dialogue_choice_reward_apply(void) {
     portrait_layout_set(D_80122CDC + 1);
     if (D_80122CDC == 0) {
         game_state.girls[game_state.current_girl].tokimeki += 3;
@@ -414,13 +414,13 @@ void func_801369EC(void) {
     mode_step_next();
 }
 
-void func_80136B9C(void) {
+void new_year_scene_cd_resource_read(void) {
     cd_read_sectors(3, 0x801B0000, 0xAF43);
-    func_80135E04();
+    new_year_scene_dialogue_command_voice_addresses_init();
     mode_step_next();
 }
 
-void func_80136BD4(void) {
+void new_year_status_and_dialogue_route(void) {
     game_state.day_event_done_bits |= 8;
     if ((u32)((u8)get_g_zyotai_s(game_state.current_girl) & 0x7F) >= 2U) {
         game_state.mode_step += 8;
@@ -441,14 +441,14 @@ void func_80136BD4(void) {
     mode_step_next();
 }
 
-void func_80136CE0(void) {
+void new_year_scene_girl_dialogue_setup(void) {
     talk_group = 1;
     talk_line = 0;
-    func_80136D18();
+    new_year_scene_girl_dialogue_tables_select();
     mode_step_next();
 }
 
-void func_80136D18(void) {
+void new_year_scene_girl_dialogue_tables_select(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         talk_text_table = D_80143F50;

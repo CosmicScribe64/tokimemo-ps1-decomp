@@ -33,12 +33,12 @@ void shooter_game_start_step_init(void) {
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;
     shooter_play_se(0, 0x503);
-    func_800591D8(1);
+    view_display_set_wide_or_standard(1);
     k_reset(0);
     back_clear_switch(1);
     shooter_init_camera();
     shooter_set_white_lights();
-    func_80059048();
+    view_model_slots_clear();
     shooter_hide_all_models();
     shooter_release_all_actor_models();
     /* FAKE: shared source line schedules the loop setup (T-9780). */
@@ -57,7 +57,7 @@ void shooter_game_start_step_init(void) {
 void shooter_game_start_step_wait(void) {
     shooter_update_stars(1, 1);
     if (shooter_load_request == 0) {
-        func_800450F4(0, 0x203);
+        audio_bgm_play_short(0, 0x203);
         load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
         load_csr_tp(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
         load_csr_tp(0x80182000, 0xA, 1, 0, 0, 0x80, 0x80);

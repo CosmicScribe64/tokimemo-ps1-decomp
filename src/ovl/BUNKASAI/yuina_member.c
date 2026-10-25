@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-void func_8013B190(void) {
+void culture_yuina_member_entry(void) {
     CultureFestivalDispatch *state;
 
     state = (CultureFestivalDispatch *)&D_80122EB8;
@@ -31,7 +31,7 @@ void func_8013B190(void) {
     }
 }
 
-void func_8013B25C(void) {
+void culture_yuina_member_experiment_show(void) {
     GameState *game = &game_state;
     u32 temp_v0;
     u32 temp_v0_2;
@@ -51,7 +51,7 @@ void func_8013B25C(void) {
         break;
     case 3:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_801431D4();
+        culture_exhibit_title_show();
         addr_init_bustup();
         game->current_girl = GIRL_YUINA;
         portrait_show_checked();
@@ -79,7 +79,7 @@ void func_8013B25C(void) {
                 break;
             }
             talk_group = (talk_group + (game->year * 4)) - 0x17C;
-            func_8013C3C4();
+            culture_yuina_member_script_start();
         }
         break;
     case 6:
@@ -113,7 +113,7 @@ void func_8013B25C(void) {
         portrait_read_step(0x525B);
         break;
     case 12:
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         game->current_girl = GIRL_YUINA;
@@ -145,7 +145,7 @@ void func_8013B25C(void) {
             if (game->year == 0x5F) {
                 talk_group += 0xC;
             }
-            func_8013C3C4();
+            culture_yuina_member_script_start();
         }
         break;
     case 15:
@@ -165,7 +165,7 @@ void func_8013B25C(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -173,7 +173,7 @@ void func_8013B25C(void) {
     }
 }
 
-void func_8013B688(void) {
+void culture_yuina_member_computer_fortune(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -194,7 +194,7 @@ void func_8013B688(void) {
         break;
     case 3:
         if (cd_read_sync_status() & 1) {
-            func_801431D4();
+            culture_exhibit_title_show();
             addr_init_bustup();
             game_state.current_girl = GIRL_YUINA;
             portrait_show_checked();
@@ -220,7 +220,7 @@ void func_8013B688(void) {
                 talk_group = 0x22;
                 break;
             }
-            func_8013C3C4();
+            culture_yuina_member_script_start();
             if ((girl_state_rank(2) == 0) && !(game_state.girls[2].syoushin & 1)) {
                 talk_group = 0x34;
                 mode_step_set(0x1B);
@@ -266,7 +266,7 @@ void func_8013B688(void) {
         break;
     case 13:
         if (cd_read_sync_status() & 1) {
-            func_8013C3C4();
+            culture_yuina_member_script_start();
             temp_v0_2 = girl_state_rank(2);
             switch (temp_v0_2) {
             case 0:
@@ -321,7 +321,7 @@ void func_8013B688(void) {
         normal_date_speak();
         break;
     case 23:
-        func_80142BC8();
+        culture_scene_end();
         break;
     case 24:
         normal_date_speak();
@@ -357,7 +357,7 @@ void func_8013B688(void) {
 }
 
 /* T-12702: return flags precede state copies, as in sibling handlers. */
-void func_8013BB94(void) {
+void culture_yuina_member_computer_game(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -382,7 +382,7 @@ void func_8013BB94(void) {
         addr_init_bustup();
         game_state.current_girl = GIRL_YUINA;
         portrait_show_checked();
-        func_801431D4();
+        culture_exhibit_title_show();
         cd_read_sectors(0xAU, 0x801E8000, 0x4A2C);
         break;
     case 5:
@@ -404,7 +404,7 @@ void func_8013BB94(void) {
                 talk_group = 0x3B;
                 break;
             }
-            func_8013C3C4();
+            culture_yuina_member_script_start();
         }
         break;
     case 7:
@@ -433,19 +433,19 @@ void func_8013BB94(void) {
         game_state.saved_game_mode = game_state.game_mode;
         game_state.saved_mode_stage = game_state.mode_stage;
         game_state.saved_mode_step = game_state.mode_step + 1;
-        mode_stage_set(0xA4);
+        mode_stage_set(CULTURE_STAGE_GAME_LAUNCH);
         break;
     case 12:
         D_80122E98 = 1;
         D_80122EB0 = (s32) game_state.mode_stage;
         D_80122EB4 = game_state.mode_step + 1;
-        mode_stage_set(0xA3);
+        mode_stage_set(CULTURE_STAGE_GAME_RESUME);
         break;
     case 13:
         audio_command(0xBF);
         audio_bank_load_start(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
         scene_screen_reset(1, 0);
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         message_window_init();
         hizuke_init();
@@ -501,7 +501,7 @@ void func_8013BB94(void) {
                 talk_group = 0x44;
                 break;
             }
-            func_8013C3C4();
+            culture_yuina_member_script_start();
         }
         break;
     case 20:
@@ -523,7 +523,7 @@ void func_8013BB94(void) {
         break;
     case 24:
         ((ExtraModeFlags *)&D_800E7D4F)->b0 = 1;
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -531,7 +531,7 @@ void func_8013BB94(void) {
     }
 }
 
-void func_8013C0AC(void) {
+void culture_yuina_member_computer_experiment_show(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -550,7 +550,7 @@ void func_8013C0AC(void) {
         break;
     case 3:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_801431D4();
+        culture_exhibit_title_show();
         addr_init_bustup();
         game_state.current_girl = GIRL_YUINA;
         portrait_show_checked();
@@ -575,7 +575,7 @@ void func_8013C0AC(void) {
                 talk_group = 0x40;
                 break;
             }
-            func_8013C3C4();
+            culture_yuina_member_script_start();
         }
         break;
     case 6:
@@ -594,7 +594,7 @@ void func_8013C0AC(void) {
         portrait_read_step(0x522E);
         break;
     case 10:
-        func_801431D4();
+        culture_exhibit_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         game_state.current_girl = GIRL_YUINA;
@@ -620,7 +620,7 @@ void func_8013C0AC(void) {
                 talk_group = 0x43;
                 break;
             }
-            func_8013C3C4();
+            culture_yuina_member_script_start();
         }
         break;
     case 13:
@@ -640,7 +640,7 @@ void func_8013C0AC(void) {
         normal_date_speak();
         break;
     case 18:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -648,12 +648,12 @@ void func_8013C0AC(void) {
     }
 }
 
-void func_8013C3C4(void) {
+void culture_yuina_member_script_start(void) {
     talk_names_set(2);
-    func_80132138();
+    culture_script_set_yuina_member();
     talk_line = 0;
-    talk_text_table = D_801604F0;
-    talk_command_table = D_801604F4;
-    talk_voice_table = D_801604F8;
+    talk_text_table = culture_script_text_table;
+    talk_command_table = culture_script_command_table;
+    talk_voice_table = culture_script_voice_table;
     mode_step_next();
 }

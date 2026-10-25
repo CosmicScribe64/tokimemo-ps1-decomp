@@ -2,10 +2,10 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
-void func_80132000(void) {
+void camp_scene_entry_mode_gate(void) {
     portrait_wink_update();
     if (game_state.mode_stage == 0) {
-        func_80132214();
+        camp_mode_step_callback_dispatch();
     } else {
         game_mode_reset_to_title();
     }
@@ -15,5 +15,5 @@ void func_80132000(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
 }

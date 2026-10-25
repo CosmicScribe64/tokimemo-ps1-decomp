@@ -6,7 +6,7 @@ typedef struct {
 } FnTbl26; /* size 0x68 */
 extern FnTbl26 D_80134CD0;
 
-void func_801331B0(void) {
+void sick_visit_common_mode_girl_talk_pointer_setup(void) {
     *D_80134C30 = 0x8019709C;
     D_80134C34 = 0x801977CC;
     D_80134C38 = 0x8019816C;
@@ -48,7 +48,7 @@ void func_801331B0(void) {
     D_80134CC8 = 0x80199EE8;
 }
 
-void func_80133424(void) {
+void sick_visit_common_mode_step_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl26 tbl;
 
@@ -57,7 +57,7 @@ void func_80133424(void) {
     tbl.f[idx](0x80);
 }
 
-void func_801334AC(void) {
+void sick_visit_saki_dialogue_special_case(void) {
     if ((game_state.current_girl == GIRL_SAKI) && (talk_group == 5)) {
         normal_date_speak_1line();
         return;
@@ -65,7 +65,7 @@ void func_801334AC(void) {
     mode_step_next();
 }
 
-s32 func_80133500(void) {
+s32 sick_visit_common_day_event_complete(void) {
     if (game_state.substep == 0) {
         hud_day_bgm_load();
         game_state.substep += 1;
@@ -85,7 +85,7 @@ s32 func_80133500(void) {
     return day_event_next(1);
 }
 
-void func_801335C4(void) {
+void sick_visit_girl_audio_bank_load(void) {
     audio_bank_load_start(1, 0xBF98, 0xBF79, D_800B3688[game_state.current_girl], D_800B36C8[game_state.current_girl], D_800B3708[game_state.current_girl]);
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
@@ -93,7 +93,7 @@ void func_801335C4(void) {
     mode_step_next();
 }
 
-void func_8013364C(void) {
+void sick_visit_common_audio_bank_retry(void) {
     if (audio_bank_load_poll() == 1) {
         mode_step_next();
     }
@@ -104,18 +104,18 @@ void func_8013364C(void) {
     }
 }
 
-void func_801336CC(void) {
+void sick_visit_common_audio_transition(void) {
     audio_command(0x200);
     mode_step_next();
 }
 
-void func_801336F4(void) {
+void sick_visit_common_scene_sector_load(void) {
     cd_read_sectors(6, 0x80197000, 0xAF33);
-    func_801331B0();
+    sick_visit_common_mode_girl_talk_pointer_setup();
     mode_step_next();
 }
 
-void func_80133730(void) {
+void sick_visit_common_scene_initialize(void) {
     draw2d3d(1, 0);
     actor_draw_enable(1);
     sprite_tables_clear();
@@ -128,19 +128,19 @@ void func_80133730(void) {
     game_state.quads_enabled = 1;
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     hizuke_init();
     message_window_init();
     addr_init_bustup();
     text_marker_hide();
-    func_801337EC();
+    sick_visit_day_event_girl_setup();
     mode_step_next();
 }
 
-void func_801337EC(void) {
+void sick_visit_day_event_girl_setup(void) {
     talk_names_set(game_state.current_girl = game_state.day_events[game_state.day_event_index].girl);
-    func_801331B0();
+    sick_visit_common_mode_girl_talk_pointer_setup();
     if (game_state.current_girl == GIRL_REI) {
         talk_group = 8;
     } else {
@@ -160,7 +160,7 @@ void func_801337EC(void) {
 #define F0F4_DIV_388C (game_state.player_flags.h / (((pad = 0) * 0) + 0x1000U))
 #define F0F4_BOOST_388C ((game_state.player_flags.h - (((pad = 0) * 0) + 1)) * 0)
 
-void func_8013388C(void) {
+void sick_visit_talk_choice_select(void) {
     s32 pad; /* FAKE: 4-byte frame pad and dead-store target for SWP NO_WIDEN, T-24140 */
     u8 sp2B;
 
@@ -328,7 +328,7 @@ void func_8013388C(void) {
         break;
     }
     talk_line = 0;
-    func_801340E4();
+    sick_visit_common_girl_talk_pointer_select();
     mode_step_next();
 }
 
@@ -337,7 +337,7 @@ void func_8013388C(void) {
 #undef F0F4_DIV_388C
 #undef F0F4_BOOST_388C
 
-s32 func_80134030(void) {
+s32 sick_visit_talk_route_select(void) {
     if (game_state.current_girl == GIRL_MEGUMI) {
         if (talk_group == 2) {
             mode_step_next();
@@ -356,7 +356,7 @@ s32 func_80134030(void) {
     mode_step_next();
 }
 
-void func_801340E4(void) {
+void sick_visit_common_girl_talk_pointer_select(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         talk_text_table = D_80134C30[1];
@@ -421,14 +421,14 @@ void func_801340E4(void) {
     }
 }
 
-void func_80134384(void) {
+void sick_visit_location_scene_select(void) {
     switch (game_state.last_command.w & 0xF) {
     case 0:
-        strcpy(D_800CA19C, "図書室");
+        strcpy(scene_place_title, "図書室");
         bg_read_sub2(0x40BC);
         break;
     case 1:
-        strcpy(D_800CA19C, "教室");
+        strcpy(scene_place_title, "教室");
         if (game_state.month >= 6U && game_state.month < 10U) {
             bg_read_sub2(0x404D);
         } else {
@@ -436,64 +436,64 @@ void func_80134384(void) {
         }
         break;
     case 2:
-        strcpy(D_800CA19C, "中庭");
+        strcpy(scene_place_title, "中庭");
         bg_read_sub2(0x4071);
         break;
     case 3:
-        strcpy(D_800CA19C, "自宅前");
+        strcpy(scene_place_title, "自宅前");
         bg_read_sub2(0x414C);
         break;
     case 4:
         switch (game_state.player_flags.h >> 12) {
         case 0:
-            strcpy(D_800CA19C, "図書室");
+            strcpy(scene_place_title, "図書室");
             bg_read_sub2(0x40BC);
             break;
         case 1:
-            strcpy(D_800CA19C, "演劇部");
+            strcpy(scene_place_title, "演劇部");
             bg_read_sub2(0x40B2);
             break;
         case 2:
-            strcpy(D_800CA19C, "実験室");
+            strcpy(scene_place_title, "実験室");
             bg_read_sub2(0x40C6);
             break;
         case 3:
-            strcpy(D_800CA19C, "電脳部室");
+            strcpy(scene_place_title, "電脳部室");
             bg_read_sub2(0x40D0);
             break;
         case 4:
-            strcpy(D_800CA19C, "美術室");
+            strcpy(scene_place_title, "美術室");
             bg_read_sub2(0x40D9);
             break;
         case 5:
-            strcpy(D_800CA19C, "音楽室");
+            strcpy(scene_place_title, "音楽室");
             bg_read_sub2(0x40E2);
             break;
         case 6:
         case 7:
         case 8:
-            strcpy(D_800CA19C, "グランド");
+            strcpy(scene_place_title, "グランド");
             bg_read_sub2(0x4097);
             break;
         case 9:
-            strcpy(D_800CA19C, "プール");
+            strcpy(scene_place_title, "プール");
             bg_read_sub2(0x40A0);
             break;
         default:
-            strcpy(D_800CA19C, "体育館");
+            strcpy(scene_place_title, "体育館");
             bg_read_sub2(0x40A9);
             break;
         }
         break;
     default:
-        strcpy(D_800CA19C, "廊下");
+        strcpy(scene_place_title, "廊下");
         bg_read_sub2(0x4045);
         break;
     }
     mode_step_next();
 }
 
-void func_80134628(void) {
+void sick_visit_portrait_select(void) {
     u8 girl;
     OmimaiWords11 all;
     OmimaiWords2 first;

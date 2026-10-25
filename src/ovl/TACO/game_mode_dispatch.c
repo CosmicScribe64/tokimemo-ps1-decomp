@@ -71,9 +71,9 @@ void shooter_entry(void) {
 }
 
 void shooter_palette_reset(void) {
-    func_80058F9C(0x8018A000, 0, 0);
-    func_80058F9C(0x8018A000, 1, 0);
-    func_80058F9C(0x8018A000, 2, 0);
-    func_80058F9C(0x8018A000, 3, 0);
-    func_80058F9C(0x8018A000, 4, 0);
+    view_link_object(0x8018A000, 0, 0);
+    view_link_object(0x8018A000, 1, 0);
+    view_link_object(0x8018A000, 2, 0);
+    view_link_object(0x8018A000, 3, 0);
+    view_link_object(0x8018A000, 4, 0);
 }

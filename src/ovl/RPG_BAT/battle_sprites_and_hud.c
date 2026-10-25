@@ -165,7 +165,7 @@ void rpg_stage_sprites_setup(void) {
                 if (j < i) {
                     load_tpage_buf_lock(j + 5, ((s32 *) rpg_asset_sheet_4)[j], 1);
                 } else {
-                    func_80041168(j + 5);
+                    vram_clear_blocks(j + 5);
                 }
             }
         }

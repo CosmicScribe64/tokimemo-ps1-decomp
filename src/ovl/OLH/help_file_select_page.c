@@ -2,42 +2,42 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-void func_801364E0(void) {
+void help_file_select_topic_dispatch(void) {
     switch (game_state.mode_step) {
     case 0x0:
-        func_801365AC();
+        help_file_select_menu_draw();
         break;
     case 0x1:
-        func_801366D4();
+        help_file_select_menu_input();
         break;
     case 0x10:
-        func_80136804();
+        help_file_select_page_1_render();
         break;
     case 0x20:
-        func_80136960();
+        help_file_select_page_2_render();
         break;
     case 0x30:
-        func_80136A30();
+        help_file_select_page_3_render();
         break;
     case 0x40:
-        func_80136B00();
+        help_file_select_page_4_render();
         break;
     case 0x50:
-        func_80136BD0();
+        help_file_select_page_5_render();
         break;
     case 0x60:
-        func_80136CF4();
+        help_file_select_page_6_render();
         break;
     case 0x70:
-        func_80136E18();
+        help_file_select_page_7_render();
         break;
     }
 }
 
-void func_801365AC(void) {
+void help_file_select_menu_draw(void) {
     s32 i;
     s32 r;
-    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame; same as func_80133C4C. T-9350 */
+    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame; same as help_biorhythm_menu_draw. T-9350 */
     s16 a[8];
     s16 b[8];
     s16 c[8];
@@ -57,7 +57,7 @@ void func_801365AC(void) {
     mode_step_next();
 }
 
-void func_801366D4(void) {
+void help_file_select_menu_input(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
     menu_cursor_update(0);
@@ -96,7 +96,7 @@ void func_801366D4(void) {
     }
 }
 
-s32 func_80136804(void) {
+s32 help_file_select_page_1_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -119,7 +119,7 @@ s32 func_80136804(void) {
     }
 }
 
-s32 func_80136960(void) {
+s32 help_file_select_page_2_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -137,7 +137,7 @@ s32 func_80136960(void) {
     }
 }
 
-s32 func_80136A30(void) {
+s32 help_file_select_page_3_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -155,7 +155,7 @@ s32 func_80136A30(void) {
     }
 }
 
-s32 func_80136B00(void) {
+s32 help_file_select_page_4_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -173,7 +173,7 @@ s32 func_80136B00(void) {
     }
 }
 
-s32 func_80136BD0(void) {
+s32 help_file_select_page_5_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -194,7 +194,7 @@ s32 func_80136BD0(void) {
     }
 }
 
-s32 func_80136CF4(void) {
+s32 help_file_select_page_6_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
@@ -215,7 +215,7 @@ s32 func_80136CF4(void) {
     }
 }
 
-s32 func_80136E18(void) {
+s32 help_file_select_page_7_render(void) {
     switch (game_state.substep) {
     case 0:
         k_sub_reset();

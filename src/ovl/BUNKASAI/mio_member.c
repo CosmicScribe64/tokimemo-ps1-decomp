@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-void func_801354B0(void) {
+void culture_mio_member_entry(void) {
     CultureFestivalDispatch *work = (CultureFestivalDispatch *)&D_80122EB8;
     s32 selector = work->unk_00;
     work->unk_04 = 1;
@@ -24,7 +24,7 @@ void func_801354B0(void) {
     }
 }
 
-void func_80135554(void) {
+void culture_mio_member_literature_exhibit(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -43,7 +43,7 @@ void func_80135554(void) {
         break;
     case 3:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_801431D4();
+        culture_exhibit_title_show();
         addr_init_bustup();
         game_state.current_girl = GIRL_MIO;
         portrait_show_checked();
@@ -73,7 +73,7 @@ void func_80135554(void) {
             if (game_state.year == 0x60) {
                 talk_group += 8;
             }
-            func_80136230();
+            culture_mio_member_script_start();
         }
         break;
     case 6:
@@ -149,7 +149,7 @@ void func_80135554(void) {
         normal_date_speak();
         break;
     case 20:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -157,7 +157,7 @@ void func_80135554(void) {
     }
 }
 
-void func_80135914(void) {
+void culture_mio_member_speech_contest(void) {
     u32 temp_v0;
     u32 temp_v0_2;
 
@@ -176,7 +176,7 @@ void func_80135914(void) {
         break;
     case 3:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_8014338C();
+        culture_backstage_title_show();
         addr_init_bustup();
         game_state.current_girl = GIRL_MIO;
         portrait_show_checked();
@@ -203,7 +203,7 @@ void func_80135914(void) {
                 talk_group = 0x20;
                 break;
             }
-            func_80136230();
+            culture_mio_member_script_start();
         }
         break;
     case 6:
@@ -222,7 +222,7 @@ void func_80135914(void) {
         portrait_read_step(0x5D41);
         break;
     case 10:
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         game_state.current_girl = GIRL_MIO;
@@ -250,7 +250,7 @@ void func_80135914(void) {
                 talk_group = 0x21;
                 break;
             }
-            func_80136230();
+            culture_mio_member_script_start();
         }
         break;
     case 13:
@@ -270,7 +270,7 @@ void func_80135914(void) {
         normal_date_speak();
         break;
     case 18:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -278,7 +278,7 @@ void func_80135914(void) {
     }
 }
 
-void func_80135C4C(void) {
+void culture_mio_member_drama_play(void) {
     GameState *state;
     u32 choice;
     u32 choice2;
@@ -300,7 +300,7 @@ void func_80135C4C(void) {
         break;
     case 3:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_8014338C();
+        culture_backstage_title_show();
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
         portrait_show_checked();
@@ -347,7 +347,7 @@ void func_80135C4C(void) {
                     talk_group += 7;
                 }
             }
-            func_80136230();
+            culture_mio_member_script_start();
         }
         break;
     case 6:
@@ -389,7 +389,7 @@ void func_80135C4C(void) {
         break;
     case 13:
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-        func_8014338C();
+        culture_backstage_title_show();
         D_80125CA0 = 0xC0;
         addr_init_bustup();
         state->current_girl = GIRL_MIO;
@@ -423,7 +423,7 @@ void func_80135C4C(void) {
             if (state->year == 0x61) {
                 talk_group = talk_group + 8;
             }
-            func_80136230();
+            culture_mio_member_script_start();
         }
         break;
     case 16:
@@ -466,7 +466,7 @@ void func_80135C4C(void) {
         normal_date_speak();
         break;
     case 23:
-        func_80142BC8();
+        culture_scene_end();
         break;
     default:
         game_mode_reset_to_title();
@@ -474,12 +474,12 @@ void func_80135C4C(void) {
     }
 }
 
-void func_80136230(void) {
+void culture_mio_member_script_start(void) {
     talk_names_set(1);
-    func_801320D0();
+    culture_script_set_mio_member();
     talk_line = 0;
-    talk_text_table = D_801604F0;
-    talk_command_table = D_801604F4;
-    talk_voice_table = D_801604F8;
+    talk_text_table = culture_script_text_table;
+    talk_command_table = culture_script_command_table;
+    talk_voice_table = culture_script_voice_table;
     mode_step_next();
 }

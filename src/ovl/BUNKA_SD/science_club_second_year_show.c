@@ -5,7 +5,7 @@
 
 extern u8 D_80120656;
 
-s32 func_80135160(void) {
+s32 stage_show_science_second_show_sector_load(void) {
     if (game_state.substep == 0) {
         cd_read_sectors(0x61, 0x80180000, 0x4E4E);
         game_state.substep += 1;
@@ -14,12 +14,12 @@ s32 func_80135160(void) {
     }
 }
 
-void func_801351DC(void) {
+void stage_show_science_second_show_input_update(void) {
     s32 i;
 
     if ((game_state.mode_step >= 3) && (game_state.mode_step < 9)) {
         if (game_state.pad_held & PAD_CIRCLE) {
-            func_801352F4();
+            stage_show_science_second_show_mode_step_dispatch();
             D_80120656 = 0x82;
             D_8012069A = 0x82; for (i = 0; i < 2; i++) {
                 D_8011ED58[(i + 1) * 0x110 + 0x18BA] = 0x82;
@@ -40,34 +40,34 @@ void func_801351DC(void) {
     if ((game_state.mode_step >= 3) && (game_state.mode_step < 8) && (game_state.pad_held & PAD_CROSS)) {
         mode_step_set(7);
     }
-    func_801352F4();
+    stage_show_science_second_show_mode_step_dispatch();
 }
 
-void func_801352F4(void) {
+void stage_show_science_second_show_mode_step_dispatch(void) {
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     switch (game_state.mode_step) {
     case 0:
-        func_80134260();
+        stage_show_scene_state_reset();
         return;
     case 1:
-        func_80135160();
+        stage_show_science_second_show_sector_load();
         return;
     case 2:
-        func_8013540C();
+        stage_show_science_second_show_audio_start();
         return;
     case 3:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         return;
     case 4:
-        func_80135440();
+        stage_show_science_second_show_animation_tick();
         return;
     case 5:
-        func_801355AC();
+        stage_show_science_second_show_actor_brightness_fade();
         return;
     case 6:
-        func_801354C8();
+        stage_show_science_second_show_display_state_update();
         return;
     case 7:
         audio_command(0xC1);
@@ -75,10 +75,10 @@ void func_801352F4(void) {
         mode_step_next();
         return;
     case 8:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         return;
     case 9:
-        func_80134314();
+        stage_show_scene_finish_wait();
         return;
     default:
         game_mode_reset_to_title();
@@ -86,13 +86,13 @@ void func_801352F4(void) {
     }
 }
 
-void func_8013540C(void) {
+void stage_show_science_second_show_audio_start(void) {
     audio_bank_start(1, 0x201);
-    func_80135630();
+    stage_show_science_second_show_actor_texture_setup();
     mode_step_next();
 }
 
-void func_80135440(void) {
+void stage_show_science_second_show_animation_tick(void) {
     if (game_state.mode_step_timer.u == 0) {
         D_80120652 = 5;
     }
@@ -108,7 +108,7 @@ void func_80135440(void) {
     }
 }
 
-s32 func_801354C8(void) {
+s32 stage_show_science_second_show_display_state_update(void) {
     if (game_state.mode_step_timer.u == 0) {
         *(u8 *)&game_state.game_mode_scratch = 0x80;
         D_80120653 = 0;
@@ -131,7 +131,7 @@ s32 func_801354C8(void) {
 
 /* FAKE: byte-view promotion and *= 0 retain the original v1 zero stores;
  * plain assignment folds them to zero-register stores. T-22021/T-24053. */
-s32 func_801355AC(void) {
+s32 stage_show_science_second_show_actor_brightness_fade(void) {
     s32 i;
 
     message_window_title_update();
@@ -147,7 +147,7 @@ s32 func_801355AC(void) {
     }
 }
 
-void func_80135630(void) {
+void stage_show_science_second_show_actor_texture_setup(void) {
     s32 var_s0;
 
     var_s0 = 0;

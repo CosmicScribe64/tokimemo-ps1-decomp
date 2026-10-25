@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/BUNKA_SD.h"
 
-s32 func_80136270(void) {
+s32 stage_show_science_first_show_sector_load(void) {
     if (game_state.substep == 0) {
         cd_read_sectors(0x6F, 0x80180000, 0x4C59);
         game_state.substep += 1;
@@ -11,12 +11,12 @@ s32 func_80136270(void) {
     }
 }
 
-void func_801362EC(void) {
+void stage_show_science_first_show_input_update(void) {
     s32 i;
 
     if (game_state.mode_step >= 3 && game_state.mode_step < 7) {
         if (game_state.pad_held & PAD_CIRCLE) {
-            func_801363BC();
+            stage_show_science_first_show_mode_step_dispatch();
             for (i = 0; i < 3; i++) {
                 ((Actor *)actor_pool)[i + 96].blink_period = 0x82;
             }
@@ -29,28 +29,28 @@ void func_801362EC(void) {
     if (game_state.mode_step >= 3 && game_state.mode_step < 6 && (game_state.pad_held & PAD_CROSS)) {
         mode_step_set(5);
     }
-    func_801363BC();
+    stage_show_science_first_show_mode_step_dispatch();
 }
 
-void func_801363BC(void) {
+void stage_show_science_first_show_mode_step_dispatch(void) {
     hud_screen_frame_draw(2);
     message_window_show();
     message_window_title_update();
     switch (game_state.mode_step) {
     case 0:
-        func_80134260();
+        stage_show_scene_state_reset();
         return;
     case 1:
-        func_80136270();
+        stage_show_science_first_show_sector_load();
         return;
     case 2:
-        func_801364B4();
+        stage_show_science_first_show_audio_start();
         return;
     case 3:
-        func_80134418();
+        stage_show_actor_brightness_ramp_up();
         return;
     case 4:
-        func_801364F0();
+        stage_show_science_first_show_animation_tick();
         return;
     case 5:
         audio_command(0xC1);
@@ -58,10 +58,10 @@ void func_801363BC(void) {
         mode_step_next();
         return;
     case 6:
-        func_801344A8();
+        stage_show_actor_brightness_ramp_down();
         return;
     case 7:
-        func_80134314();
+        stage_show_scene_finish_wait();
         return;
     default:
         game_mode_reset_to_title();
@@ -69,16 +69,16 @@ void func_801363BC(void) {
     }
 }
 
-void func_801364B4(void) {
+void stage_show_science_first_show_audio_start(void) {
     audio_bank_start(1, 0x201);
-    func_80136578();
+    stage_show_science_first_show_actor_table_initialize();
     D_80120696 = 1;
     mode_step_next();
 }
 
-void func_801364F0(void) {
-    func_80136904();
-    func_801369AC();
+void stage_show_science_first_show_animation_tick(void) {
+    stage_show_science_first_show_timed_audio_commands();
+    stage_show_science_first_show_initial_frame_state();
     game_state.mode_step_timer.u += 1;
     if (D_80122EAC == 3) {
         if (game_state.mode_step_timer.u >= 0x25B) {
@@ -89,7 +89,7 @@ void func_801364F0(void) {
     }
 }
 
-void func_80136578(void) {
+void stage_show_science_first_show_actor_table_initialize(void) {
     s32 var_s0;
 
     var_s0 = 0;
@@ -157,7 +157,7 @@ void func_80136578(void) {
     load_tpage_buf_lock(0x2A, D_8013C740[11], 1);
 }
 
-void func_80136904(void) {
+void stage_show_science_first_show_timed_audio_commands(void) {
     if (D_80122EAC == 3) {
         switch (game_state.mode_step_timer.u) {
         case 0x14C:
@@ -179,7 +179,7 @@ void func_80136904(void) {
     }
 }
 
-void func_801369AC(void) {
+void stage_show_science_first_show_initial_frame_state(void) {
     if (game_state.mode_step_timer.w == 0) {
         D_80120652 = 5;
     }

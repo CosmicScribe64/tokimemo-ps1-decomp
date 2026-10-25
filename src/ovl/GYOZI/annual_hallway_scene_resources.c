@@ -2,7 +2,7 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-void func_8013DE30(void) {
+void annual_hallway_resource_addresses_init(void) {
     D_80148060 = 0x8019725C;
     D_80148064 = 0x801977B4;
     D_80148068 = 0x80197CE4;
@@ -44,14 +44,14 @@ void func_8013DE30(void) {
     D_801480F8 = 0x8019B568;
 }
 
-void func_8013E0A4(void) {
+void annual_hallway_scene_update(void) {
     func_8008E6AC();
     switch (D_800F6479) {                           /* irregular */
     case 0:
-        func_8013E1D0();
+        annual_hallway_mode_step_dispatch();
         break;
     case 1:
-        func_8013E5B0();
+        annual_character_state_mode_step_dispatch();
         break;
     default:
         talk_voice_play();
@@ -66,7 +66,7 @@ void func_8013E0A4(void) {
     func_8008E8B4();
 }
 
-void func_8013E148(void) {
+void annual_hallway_scene_load_setup(void) {
     D_800D9234 = (u8 *)&D_80148108;
     D_800D9238 = (u8 *)&D_8014810C;
     D_800D923C = D_801480FC;

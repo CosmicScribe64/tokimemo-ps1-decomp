@@ -46,8 +46,8 @@ void shooter_setup_help_text(s32 arg0) {
 s32 shooter_help_step_init(void) {
     switch (game_state.substep) {
     case 0:
-        func_800450F4(0, 0x201);
-        func_80059048();
+        audio_bgm_play_short(0, 0x201);
+        view_model_slots_clear();
         dec_bg_reset();
         cd_read_sectors(9U, 0x80162000, 0xB380);
         k_reset(0);
@@ -59,7 +59,7 @@ s32 shooter_help_step_init(void) {
         break;
     case 1:
         if (cd_read_sync_status() & 1) {
-            func_800536AC(0x2C0, 0, 0x140, 0xF0);
+            bg_still_decode_to_vram(0x2C0, 0, 0x140, 0xF0);
             shooter_clear_text_strip();
             mode_step_next();
         }

@@ -152,7 +152,7 @@ void prologue_line_run(void) {
     if (cd_audio_state() & 4) {
         prologue_voice_started = 1;
     }
-    t = func_80046284();
+    t = cd_audio_request_get();
     if ((game_state.current_girl & 0xF) != 0xF) {
         if (prologue_voice_started != 0) {
             if (cd_audio_state() & 2) {
@@ -197,7 +197,7 @@ void prologue_arrival_scene_init(void) {
         *(u8 *)&prologue_line = 0xFF;
         draw2d3d(1, 0);
         actor_draw_enable(1);
-        func_80041168(0xFE);
+        vram_clear_blocks(0xFE);
         sprite_tables_clear();
         actor_clear_upper();
         back_clear_switch(1);
@@ -231,7 +231,7 @@ void prologue_arrival_scene_init(void) {
     } else if (game_state.substep == 3) {
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0x494B, 1);
             } else {
@@ -258,7 +258,7 @@ void prologue_arrival_scene_init(void) {
         for (i = 0; i < 16; i++) {
             load_palette((u8 *)0x80184490, (i + 16) & 255, 1, 2, i);
         }
-        func_8004B590(0x80184610, (s32) game_state.scratch_words);
+        color_palette_to_gray(0x80184610, (s32) game_state.scratch_words);
         load_palette(game_state.scratch_words, 0xD, 1, 2, 0);
         mode_step_next();
     }
@@ -370,7 +370,7 @@ void prologue_board_load(void) {
             actor_clear(0x60);
             hizuke_disp_switch(0);
             prologue_petals_init();
-            func_800536AC(0x140, 0, 0x280, 0xA0);
+            bg_still_decode_to_vram(0x140, 0, 0x280, 0xA0);
             move_255_line(5, 0xE, 0xF);
             prologue_scene_counter = 0;
             mode_step_next();
@@ -423,7 +423,7 @@ void prologue_board_scroll(void) {
         prologue_scene_counter = 0x140;
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0x495D, 1);
             } else {
@@ -472,7 +472,7 @@ void prologue_names_crossfade(void) {
             dec_bg_decode_to_vram(1);
             prologue_scene_counter = 0x80;
             scene_state->substep += 1;
-            func_80057D1C(0x80);
+            bg_fade_set(0x80);
         }
         dec_bg_draw(1);
         prologue_line_run();
@@ -480,26 +480,26 @@ void prologue_names_crossfade(void) {
     case 2:
         if (prologue_scene_counter >= 0x11) {
             prologue_scene_counter -= 3;
-            func_80057D1C(prologue_scene_counter & 0xFF);
+            bg_fade_set(prologue_scene_counter & 0xFF);
         } else {
             scene_state->substep += 1;
         }
-        func_80058398(1);
+        bg_crossfade_draw(1);
         prologue_line_run();
         return;
     case 3:
         prologue_line_run();
-        func_80058398(1);
+        bg_crossfade_draw(1);
         return;
     case 4:
-        func_80058398(1);
+        bg_crossfade_draw(1);
         if (prologue_scene_counter < 0x80) {
-            func_80057D1C(prologue_scene_counter & 0xFF);
+            bg_fade_set(prologue_scene_counter & 0xFF);
             prologue_scene_counter += 4;
             return;
         }
         prologue_scene_counter = 0x80;
-        func_80057D1C(0x80);
+        bg_fade_set(0x80);
         set_dec_bri(prologue_scene_counter & 0xFF);
         cd_read_sectors(0x31U, 0x801A4000, 0xAB18);
         scene_state->substep += 1;
@@ -544,7 +544,7 @@ void prologue_names_crossfade(void) {
     case 8:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xACDD, 1);
             } else {
@@ -606,9 +606,9 @@ void prologue_background_slot_set(u32 image_address, s32 palette_row_offset) {
 
     /* FAKE: single-line loop orders the unrolled stores in as1. T-24106 */
     for (i = 0; i < 6; i++) { addr[i] = image_address + i * 0x4000; }
-    func_8004A1A0(addr, 0, 6, 3, 2, palette_row_offset + 0x1E0, -0xA0, -0x78, 8, 8);
+    prim_bg_slot_setup(addr, 0, 6, 3, 2, palette_row_offset + 0x1E0, -0xA0, -0x78, 8, 8);
     load_palette((u8 *)(image_address + 0x18000), 0xF, 1, 2, 0);
-    func_8004B590(image_address + 0x18000, (s32) game_state.scratch_words);
+    color_palette_to_gray(image_address + 0x18000, (s32) game_state.scratch_words);
     load_palette(game_state.scratch_words, 0xE, 1, 2, 0);
     game_state.bg_layer_order[0] = 0xD;
     ((BgLayer *)&bg_layers)[0].unk_00 = 0x41000000;
@@ -647,7 +647,7 @@ void prologue_line_03_run(void) {
     case 4:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xACE6, 1);
             } else {
@@ -804,7 +804,7 @@ void prologue_scene_05_transition_run(void) {
         if (cd_read_sync_status() & 1) {
             prologue_background_slot_set(0x801A4000, 0xF);
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xACD4, 1);
             } else {
@@ -1711,7 +1711,7 @@ void prologue_lines_15_and_16_run(void) {
     case 8:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xACF6, 1);
             } else {
@@ -1795,7 +1795,7 @@ void prologue_line_17_run(void) {
     case 6:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xAD05, 1);
             } else {
@@ -1849,7 +1849,7 @@ void prologue_shiori_load_run(void) {
     case 3:
         if ((cd_read_sync_status() & 1) && !(D_80120652 & 1)) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xAD0B, 1);
             } else {
@@ -2099,7 +2099,7 @@ void prologue_shiori_line_19_run(void) {
     case 6:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0xACEC, 1);
             } else {
@@ -2430,7 +2430,7 @@ void prologue_lines_20_to_31_run(void) {
     case 34:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 cd_read_sectors(0x31U, 0x801A4000, 0xAA54);
             } else {
@@ -2506,7 +2506,7 @@ void prologue_lines_32_to_36_run(void) {
     case 11:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0x496A, 1);
             } else {
@@ -2543,7 +2543,7 @@ void prologue_line_37_run(void) {
     case 3:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0x4973, 1);
             } else {

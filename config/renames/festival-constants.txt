@@ -1,0 +1,4 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+const BUNKAKEN TourStage include/ovl/BUNKAKEN.h - T-27065 reviewed stage names; legacy positive const plan
+const BUNKASAI CultureStage include/ovl/BUNKASAI.h - T-27065 reviewed stage names; legacy positive const plan

@@ -85,7 +85,7 @@ void date_scene_megumi_spring_setup(void) {
     date_scene_text = D_8015DF30;
     date_scene_command = D_8015E06C;
     date_scene_voice = D_8015E1A8;
-    strcpy(D_800CA19C, "遊園地");
+    strcpy(scene_place_title, "遊園地");
     game_state.girls[9].tokimeki += 1;
     game_state.girls[9].affection += 1;
     game_state.girls[9].syoushin -= 0x14;
@@ -96,7 +96,7 @@ void date_scene_megumi_spring_setup(void) {
     load_palette(D_801600B0, 0x11, 1, 2, 0);
     scene_still_show(D_801600B4, D_801600B8, D_801600BC, D_801600C0, D_801600C4, D_801600C8);
     scene_anim_show(D_801600A4, D_801600A8, D_801600A0, (s32) D_801600AC);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_800CA224[0] = 3;
     D_800CA224[1] = 3;
     D_800CA224[2] = 3;
@@ -118,7 +118,7 @@ void date_scene_megumi_summer_setup(void) {
     load_palette(D_801600DC, 0x11, 1, 2, 0);
     scene_still_show(D_801600E0, D_801600E4, D_801600E8, D_801600EC, D_801600F0, D_801600F4);
     scene_anim_show(D_801600D0, D_801600D4, D_801600CC, (s32) D_801600D8);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     mode_step_next();
 }
 
@@ -227,7 +227,7 @@ void date_scene_megumi_summer(void) {
     if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
          (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
          (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
-        dec_bg_brightness == 0x80 && D_80122D04 == 0) {
+        bg_brightness == 0x80 && D_80122D04 == 0) {
         hud_sprite_light_effect_draw();
     }
     step_handlers.callbacks[game->mode_step](0x80);

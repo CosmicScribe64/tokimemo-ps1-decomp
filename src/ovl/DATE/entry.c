@@ -677,8 +677,8 @@ void date_init(void) {
     tpage_buf_clear();
     talk_clear();
     game_state.screen_brightness = 0x80;
-    dec_bg_brightness = 0;
-    D_800B5940 = 0;
+    bg_brightness = 0;
+    bg_fade_amount = 0;
     game_state.tile_layer_enabled = 0;
     game_state.quads_enabled = 1;
     game_state.day_event_done_bits |= 8;
@@ -738,7 +738,7 @@ void date_mode_handler(void) {
     message_window_show();
     message_window_title_update();
     hizuke_show();
-    func_80083A10();
+    scene_frame_update();
     draw_shake_update();
 }
 
@@ -819,15 +819,15 @@ void date_mode_stage_arrival(void) {
     fake_place_copy = D_800CA2F8;
     if (game->mode_step != 0) {
         if (((game->year == 0x5F) && (game->month == 7) && (game->day == 0x17)) || ((game->year == 0x60) && (game->month == 7) && (game->day == 0x1C)) || ((game->year == 0x61) && (game->month == 7) && (game->day == 0x1B))) {
-            if (dec_bg_brightness == 0x80) {
+            if (bg_brightness == 0x80) {
                 hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             }
-        } else if ((fake_place_copy == 0x11) && (dec_bg_brightness == 0x80) && (game->mode_step != 0x14) && (game->mode_step != 0x15)) {
+        } else if ((fake_place_copy == 0x11) && (bg_brightness == 0x80) && (game->mode_step != 0x14) && (game->mode_step != 0x15)) {
             hud_sprite_light_effect_draw();
             D_80122D44 = 1;
         } else {
-            if ((fake_place_copy == 0x10) && (dec_bg_brightness == 0x80) && (game->mode_step != 0x14) && (game->mode_step != 0x15)) {
+            if ((fake_place_copy == 0x10) && (bg_brightness == 0x80) && (game->mode_step != 0x14) && (game->mode_step != 0x15)) {
                 hud_sprite_light_effect_draw();
                 D_80122D44 = 1;
             } else if ((game->mode_step == 0x14) && (game_state.appointment_place_0 == 0x11)) {
@@ -840,7 +840,7 @@ void date_mode_stage_arrival(void) {
         }
     }
     step_handlers.callbacks[game->mode_step](0x80);
-    if ((D_800CA2F8 == 0xB) && (game->mode_step >= 0x2CU) && (game->mode_step < 0x30U) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
+    if ((D_800CA2F8 == 0xB) && (game->mode_step >= 0x2CU) && (game->mode_step < 0x30U) && (pad_code_entered == 1) && (D_800CA2FC != 2)) {
         D_800CA2FC = 2;
         audio_command(0x601);
     }
@@ -976,37 +976,37 @@ void date_mode_stage_place(void) {
         }
         game->substep += 1;
     }
-    if ((((game->year == 0x5F) && (game->month == 7) && (game->day == 0x17)) || ((game->year == 0x60) && (game->month == 7) && (game->day == 0x1C)) || ((game->year == 0x61) && (game->month == 7) && (game->day == 0x1B))) && (dec_bg_brightness == (fake_comparison = 0x80)) && (*(u8 *)&date_girl_side_next != 0) && (date_ride_dispatch != active_steps[game->mode_step])) {
+    if ((((game->year == 0x5F) && (game->month == 7) && (game->day == 0x17)) || ((game->year == 0x60) && (game->month == 7) && (game->day == 0x1C)) || ((game->year == 0x61) && (game->month == 7) && (game->day == 0x1B))) && (bg_brightness == (fake_comparison = 0x80)) && (*(u8 *)&date_girl_side_next != 0) && (date_ride_dispatch != active_steps[game->mode_step])) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 1)) && (D_800CA2FC == 0) && (game->mode_step >= 0xC) && (game->mode_step < 0x15) && (game->month >= 3) && (game->month < 9) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 1)) && (D_800CA2FC == 0) && (game->mode_step >= 0xC) && (game->mode_step < 0x15) && (game->month >= 3) && (game->month < 9) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (game->mode_step >= 7) && (game->mode_step < 0x11) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == 0x14) && (game->mode_step >= 7) && (game->mode_step < 0x11) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step < 8) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step < 8) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 9) && (game->mode_step < 0x1E) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 9) && (game->mode_step < 0x1E) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x1F) && (game->mode_step < 0x2C) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x1F) && (game->mode_step < 0x2C) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x2D) && (game->mode_step < 0x31) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x2D) && (game->mode_step < 0x31) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x3E) && (game->mode_step < 0x49) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x11)) && (game->mode_step >= 0x3E) && (game->mode_step < 0x49) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step < 8) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step < 8) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step >= 9) && (game->mode_step < 0x13) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step >= 9) && (game->mode_step < 0x13) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
-    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step >= 0x14) && (game->mode_step < 0x22) && (dec_bg_brightness == (fake_comparison = 0x80))) {
+    } else if ((((u8 *)&D_800CA2E8)[0x10] == (fake_comparison = 0x10)) && (game->mode_step >= 0x14) && (game->mode_step < 0x22) && (bg_brightness == (fake_comparison = 0x80))) {
     hud_sprite_light_effect_draw();
     D_80122D44 = 1;
     }
@@ -1030,7 +1030,7 @@ void date_mode_stage_place(void) {
             date_central_park_particles_hide();
         }
     }
-    if ((((u8 *)&D_800CA2E8)[0x10] == 0xB) && (game->mode_step < 9) && (D_800B3CFC == 1) && (D_800CA2FC != 2)) {
+    if ((((u8 *)&D_800CA2E8)[0x10] == 0xB) && (game->mode_step < 9) && (pad_code_entered == 1) && (D_800CA2FC != 2)) {
         D_800CA2FC = 2;
         audio_command(0x601);
     }

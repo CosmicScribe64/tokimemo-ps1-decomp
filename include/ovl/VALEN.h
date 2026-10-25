@@ -2,20 +2,20 @@
 #define OVL_VALEN_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_normal_date_girl_out /* implicit int declaration: func_80133670 returns its result (void in main_api.h) */
+#define MAIN_API_OVERRIDE_normal_date_girl_out /* implicit int declaration: valentine_megumi_birthday_gate returns its result (void in main_api.h) */
 
 #include "common.h"
 #include "game.h"
 
 /* VALEN overlay (load address 0x80132000): externs and types. */
 
-void func_80132348();
+void valentine_talk_driver();
 extern s16 D_80134520;
-void func_80133C70();
-void func_80132000();
+void valentine_birthday_pointer_setup();
+void valentine_scene_pointer_setup();
 extern s16 D_80134498;
 extern s16 D_8013453C;
-extern volatile u8 D_80134544; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` out of the func_80132D0C `sel == 9` block into the branch delay slot (wiki/as1-scheduler-rule.md); real declaration unknown. T-24903 */
+extern volatile u8 D_80134544; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` out of the valentine_candidate_scene_select `sel == 9` block into the branch delay slot (wiki/as1-scheduler-rule.md); real declaration unknown. T-24903 */
 extern s32 D_80134400;
 extern s32 D_80134434;
 extern s32 D_80134468;
@@ -72,7 +72,7 @@ extern s32 D_80134680;
 extern s32 D_80134684;
 extern s32 D_80134688;
 extern s32 D_8013468C;
-extern volatile s32 D_80134690; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80134030 default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
+extern volatile s32 D_80134690; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the valentine_birthday_event_mark default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
 extern s32 D_80134694;
 extern s32 D_80134698;
 extern s32 D_8013469C;
@@ -85,7 +85,7 @@ extern s32 D_801346B4;
 extern s32 D_801346B8;
 extern s32 D_801346BC;
 extern s32 D_801346C0;
-extern volatile s32 D_801346C4; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80134030 default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
+extern volatile s32 D_801346C4; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the valentine_birthday_event_mark default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
 extern s32 D_801346C8;
 extern s32 D_801346CC;
 extern s32 D_801346D0;
@@ -98,14 +98,14 @@ extern s32 D_801346E8;
 extern s32 D_801346EC;
 extern s32 D_801346F0;
 extern s32 D_801346F4;
-extern volatile s32 D_801346F8; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the func_80134030 default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
-void func_80133EE4(void);
-s32 func_80133AA8(void);
-void func_801339D0(void);
-void func_8013387C(void); /* defined in 80132760.c, called by func_80132834 (T-24138) */
+extern volatile s32 D_801346F8; /* FAKE: volatile keeps as1's global scheduler from moving this load's lui out of the valentine_birthday_event_mark default arm (wiki/as1-scheduler-rule.md); real declaration unknown. T-24900 */
+void valentine_birthday_callback_dispatch(void);
+s32 valentine_day_event_complete(void);
+void valentine_return_callback_dispatch(void);
+void valentine_candidate_order_shuffle(void); /* defined in 80132760.c, called by valentine_girl_candidates_select (T-24138) */
 
 /* T-24138: parameter record at GameState +0x11C is 16 halfwords here
- * (main_api.h's ParamValue covers the shared 4-byte prefix); func_80133088
+ * (main_api.h's ParamValue covers the shared 4-byte prefix); valentine_scene_place_select
  * adjusts six halfword parameters. Accessed through ValenStateView. */
 typedef struct ValenParaRec {
     /* 0x00 */ s16 unk_00;

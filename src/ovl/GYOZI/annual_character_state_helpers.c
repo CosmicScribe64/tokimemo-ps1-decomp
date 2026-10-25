@@ -7,7 +7,7 @@ typedef struct {
 } FnTbl17; /* size 0x44 */
 extern FnTbl17 D_80148180;
 
-void func_8013E5B0(void) {
+void annual_character_state_mode_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl17 tbl;
 
@@ -20,7 +20,7 @@ void func_8013E5B0(void) {
  * the base argument to avoid a redundant stride reload. T-10850.
  * FAKE: the loop init, the empty test and the `do` share one source line (as1 schedules by line;
  * autotweak group, T-20830). T-21520 */
-void func_8013E638(void)
+void annual_character_state_deltas_apply(void)
 {
     s16 i;
     i = 0; if (i && i) { } do
@@ -39,7 +39,7 @@ void func_8013E638(void)
     func_80081D30(1);
 }
 
-void func_8013E724(void) {
+void annual_character_flag_snapshot_setup(void) {
     s16 i;
 
     D_801480FC = D_8014808C;
@@ -53,14 +53,14 @@ void func_8013E724(void) {
     func_8004DE1C();
 }
 
-void func_8013E7D8(void) {
+void annual_character_state_resource_select(void) {
     D_800F62CF = (u8) D_8012E66C;
     func_80090960(7, 0);
     func_8008F618(D_800F62CF);
     func_8004DE1C();
 }
 
-void func_8013E824(void) {
+void annual_character_state_table_select(void) {
     s32 r;
     u8 s;
 

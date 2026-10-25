@@ -144,10 +144,10 @@ s32 album_fade_quads_draw(void) {
         p1->code = 0x20;
     }
     p3->u0 = 0x20, p3->v0 = 0x13, p3->u1 = 0xA8, p3->v1 = 0x13, p3->u2 = 0x20, p3->v2 = 0xB3, p3->u3 = 0xA8, p3->v3 = 0xB3;
-    AddPrim((draw_buffer << 0xA) + 0x14 + D_800E8CA0, p0);
-    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 0x14, p1);
-    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 4, p2);
-    AddPrim(D_800E8CA0 + (draw_buffer << 0xA) + 4, p3);
+    AddPrim((draw_buffer << 0xA) + 0x14 + draw_ot_tags, p0);
+    AddPrim(draw_ot_tags + (draw_buffer << 0xA) + 0x14, p1);
+    AddPrim(draw_ot_tags + (draw_buffer << 0xA) + 4, p2);
+    AddPrim(draw_ot_tags + (draw_buffer << 0xA) + 4, p3);
     next = album_fade_shade + 2;
     album_fade_shade = next;
     if (next >= 0x81) {
@@ -1477,7 +1477,7 @@ void album_anim_images_setup(u8 *arg0, u8 *arg1, u8 *arg2, u8 *arg3, u8 *arg4, u
     buf[3] = arg3;
     buf[4] = arg4;
     buf[5] = arg5;
-    func_8004A1A0(buf, 0, 6, 3, 2, 0x1F1, -0xA0, -0x65, 0xC, 5);
+    prim_bg_slot_setup(buf, 0, 6, 3, 2, 0x1F1, -0xA0, -0x65, 0xC, 5);
 }
 
 void album_anim_00_show(void) {

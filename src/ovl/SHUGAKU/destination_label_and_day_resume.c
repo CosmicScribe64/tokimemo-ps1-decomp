@@ -2,34 +2,34 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-void func_8013AA70(void) {
+void trip_destination_exit_callback_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl25 tbl;
+    TripSceneCallbacks tbl;
 
     tbl = D_8013CC20;
     idx = game_state.mode_step;
     tbl.f[idx](0x80);
 }
 
-void func_8013AAEC(void) {
+void trip_location_outcome_update(void) {
     s32 temp;
     temp = D_800CA2CC;
     switch (temp) {
     case 0:
-        strcpy(D_800CA23C, "京都");
+        strcpy(name_code_s, "京都");
         break;
     case 1:
-        strcpy(D_800CA23C, "沖縄");
+        strcpy(name_code_s, "沖縄");
         break;
     case 2:
-        strcpy(D_800CA23C, "北海道");
+        strcpy(name_code_s, "北海道");
         break;
     }
     D_800CA2DC += D_800CA2F4 * (1 - D_800CA2EC);
     mode_step_next();
 }
 
-s32 func_8013ABAC(void) {
+s32 trip_day_event_complete(void) {
     if (game_state.substep == 0) {
         dec_bg_reset();
         hud_day_bgm_load();

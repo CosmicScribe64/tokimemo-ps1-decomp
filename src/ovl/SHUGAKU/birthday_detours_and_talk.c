@@ -1,4 +1,4 @@
-/* birthday_detours_and_talk.c: src/ovl/SHUGAKU/80132000.c:16-65,299-355; binds per-girl birthday tables, dispatches birthday callbacks, handles saved-stage returns and choice effects. Shared birthday routing/ranking is in func_8013243C; no location-table selection claim. Original object 0x80132000-0x80133430 (config/objects/SHUGAKU.txt). */
+/* birthday_detours_and_talk.c: src/ovl/SHUGAKU/80132000.c:16-65,299-355; binds per-girl birthday tables, dispatches birthday callbacks, handles saved-stage returns and choice effects. Shared birthday routing/ranking is in trip_birthday_girl_select; no location-table selection claim. Original object 0x80132000-0x80133430 (config/objects/SHUGAKU.txt). */
 #define MAIN_API_OVERRIDE_portrait_layout_set /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_get_h_tokimeki /* u8 return narrows the metric byte on return (T-24122). */
 #define MAIN_API_OVERRIDE_get_h_yuukou   /* u8 return narrows the metric byte on return (T-24122). */
@@ -11,10 +11,10 @@ u8 get_h_yuukou(s32 arg0);
 
 typedef struct {
     u8 s[0xCC3];
-} DateTxt; /* size 0xCC3 */
-extern DateTxt D_8013B1AC;
+} TripTextData; /* size 0xCC3 */
+extern TripTextData D_8013B1AC;
 
-void func_80132000(void) {
+void trip_birthday_script_pointer_table_setup(void) {
     D_8013AFD0 = 0x801B0478;
     D_8013AFD4 = 0x801B13A4;
     D_8013AFD8 = 0x801B2998;
@@ -56,35 +56,35 @@ void func_80132000(void) {
     D_8013B068 = 0x801BAB90;
 }
 
-void func_80132274(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    ShFnTbl70 tbl;
+void trip_callback_dispatch(void) {
+    s32 callback_index; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    TripModeStepCallbacks tbl;
 
     tbl = D_8013B094;
-    idx = game_state.mode_step;
-    tbl.f[idx](0x80);
+    callback_index = game_state.mode_step;
+    tbl.f[callback_index](0x80);
 }
 
-void func_801322F0(void) {
+void trip_talk_step_branch_adjust(void) {
     GameState *state;
     s32 previous;
 
     state = &game_state;
     previous = (s32) game_state.mode_step;
-    func_80139018();
-    if (((state->mode_step != (previous + 3)) || ((u8) D_800CA2F0 != 0)) && (state->mode_step == (previous + 4)) && ((u8) D_800CA2F0 == 0)) {
+    trip_sightseeing_hotel_lobby_background_load();
+    if (((state->mode_step != (previous + 3)) || ((u8) scene_trip_day_state != 0)) && (state->mode_step == (previous + 4)) && ((u8) scene_trip_day_state == 0)) {
         state->mode_step -= 1;
         dec_bg_show_switch(1);
     }
 }
 
-void func_80132364(void) {
+void trip_opening_talk_and_script_state(void) {
     s32 pad; /* FAKE: unused local reserves a stack word (frame home). T-11170 */
     s32 sp28;
 
     if (game_state.substep == 0) {
         game_state.substep += 1;
-        func_80136380();
+        trip_girl_script_pointer_table_setup();
         D_8013B06C = D_8013C424;
         D_8013B070 = D_8013C458;
         D_8013B074 = D_8013C48C;
@@ -93,50 +93,50 @@ void func_80132364(void) {
     }
     if (game_state.substep == 1) {
         sp28 = (s32) game_state.mode_step;
-        func_80132F44();
+        trip_response_talk_run();
         if (sp28 != game_state.mode_step) {
-            func_8013282C();
+            trip_girl_scene_select();
             game_state.mode_step -= 1;
             D_8013B084 = 5;
         }
     }
 }
 
-s32 func_8013243C(void) {
+s32 trip_birthday_girl_select(void) {
     s16 i;
-    u8 best_i;
-    u8 best_s;
-    u8 s;
+    u8 best_girl_index;
+    u8 best_status;
+    u8 candidate_status;
 
-    best_i = 0xFF;
-    best_s = 4;
+    best_girl_index = 0xFF;
+    best_status = 4;
     if (game_state.month != ((WordView *)&game_state.player_birthday)->date.month ||
         game_state.day != ((WordView *)&game_state.player_birthday)->date.day) {
         mode_step_next();
         return 0;
     }
     for (i = 0; i < 10; i++) {
-        if (D_800CA2B0[i] != 0) {
-            s = get_g_zyotai_s(i) & 0x7F;
-            /* FAKE: duplicate `s == best_s` shifts uopt's live-range priority between s and best_s (T-24122). */
-            if (s < best_s ||
-                (s == best_s && s == best_s &&
+        if (select_girl_menu_enabled[i] != 0) {
+            candidate_status = get_g_zyotai_s(i) & 0x7F;
+            /* FAKE: duplicate `candidate_status == best_status` shifts uopt'candidate_status live-range priority between candidate_status and best_status (T-24122). */
+            if (candidate_status < best_status ||
+                (candidate_status == best_status && candidate_status == best_status &&
                  get_h_tokimeki(i) + get_h_yuukou(i) >
-                     get_h_tokimeki(best_i) + get_h_yuukou(best_i))) {
-                best_i = i;
-                best_s = s;
+                     get_h_tokimeki(best_girl_index) + get_h_yuukou(best_girl_index))) {
+                best_girl_index = i;
+                best_status = candidate_status;
             }
         }
     }
-    s = get_g_zyotai_s(best_i) & 0x7F;
-    if (s < 2U && best_i == 0) {
+    candidate_status = get_g_zyotai_s(best_girl_index) & 0x7F;
+    if (candidate_status < 2U && best_girl_index == 0) {
         mode_step_set(0x32);
         return 0;
     }
     mode_step_next();
 }
 
-void func_801325C0(void) {
+void trip_audio_bank_load_and_step(void) {
     audio_bank_load_start(0, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
     if (audio_bank_load_poll() == 1) {
         if (game_state.mode_stage == 6) {
@@ -147,7 +147,7 @@ void func_801325C0(void) {
     mode_step_next();
 }
 
-void func_80132638(void) {
+void trip_audio_bank_poll_retry(void) {
     if (audio_bank_load_poll() == 1) {
         audio_command(0x200);
         mode_step_next();
@@ -159,14 +159,14 @@ void func_80132638(void) {
     }
 }
 
-void func_801326C0(void) {
+void trip_birthday_script_sector_load(void) {
     cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
-    func_80132000();
+    trip_birthday_script_pointer_table_setup();
     mode_step_next();
 }
 
-void func_801326F8(void) {
-    func_80133430();
+void trip_birthday_scene_pointer_bind(void) {
+    trip_scene_pointer_table_setup();
     D_8013B06C = D_8013BE74;
     D_8013B070 = D_8013BEA8;
     D_8013B074 = D_8013BEDC;
@@ -175,7 +175,7 @@ void func_801326F8(void) {
     mode_step_next();
 }
 
-void func_80132760(void) {
+void trip_birthday_event_log_and_pointer_setup(void) {
     if (game_state.saved_mode_stage != 6) {
         event_log_add(0xA, 0x29);
     } else {
@@ -191,16 +191,16 @@ void func_80132760(void) {
             break;
         }
     }
-    func_80132000();
-    func_8013282C();
-    if ((dec_bg_brightness != 0) && (D_80122CF8 != 0)) {
-        D_800CA2F0 = 1;
+    trip_birthday_script_pointer_table_setup();
+    trip_girl_scene_select();
+    if ((bg_brightness != 0) && (D_80122CF8 != 0)) {
+        scene_trip_day_state = 1;
         return;
     }
-    D_800CA2F0 = 0;
+    scene_trip_day_state = 0;
 }
 
-void func_8013282C(void) {
+void trip_girl_scene_select(void) {
     D_8013B084 = 0;
     D_8013B088 = 0;
     talk_names_set(game_state.current_girl);
@@ -274,22 +274,22 @@ void func_8013282C(void) {
     mode_step_next();
 }
 
-void func_80132B50(void) {
-    if ((u8) D_800CA2F0 == 1) {
+void trip_background_show_or_resume(void) {
+    if ((u8) scene_trip_day_state == 1) {
         normal_date_move_place();
         return;
     }
-    if ((u8) D_800CA2F0 == 2) {
+    if ((u8) scene_trip_day_state == 2) {
         mode_step_next();
         return;
     }
     if (game_state.substep++ == 0) {
         dec_bg_show_switch(1);
     }
-    func_8007C8A4();
+    scene_bg_wipe_in();
 }
 
-void func_80132BCC(void) {
+void trip_saved_mode_stage_restore(void) {
     if (game_state.saved_mode_stage != 6) {
         /* FAKE: the comma expression preserves the original argument register.
          * Original spelling unknown; found by permute.py. T-9530. */
@@ -297,10 +297,10 @@ void func_80132BCC(void) {
         mode_step_set((s32) game_state.saved_mode_step);
         return;
     }
-    func_8013ABAC(game_state.saved_mode_stage);
+    trip_day_event_complete(game_state.saved_mode_stage);
 }
 
-void func_80132C1C(void) {
+void trip_saved_mode_step_advance(void) {
     if (game_state.saved_mode_stage == 6) {
         game_state.mode_step += 6;
         return;
@@ -308,7 +308,7 @@ void func_80132C1C(void) {
     mode_step_next();
 }
 
-void func_80132C64(void) {
+void trip_response_state_update(void) {
     if (D_80122CDC != 0) {
         game_state.girls[game_state.current_girl].affection -= 1;
         game_state.girls[game_state.current_girl].syoushin += 5;
@@ -320,7 +320,7 @@ void func_80132C64(void) {
     mode_step_next();
 }
 
-void func_80132D14(void) {
+void trip_status_dialogue_offset(void) {
     u32 t;
 
     t = get_g_zyotai_s(game_state.current_girl);
@@ -338,38 +338,38 @@ void func_80132D14(void) {
     mode_step_next();
 }
 
-void func_80132DAC(void) {
+void trip_birthday_detour_date_girl_restore_current(void) {
     game_state.current_girl = game_state.date_girl;
     talk_names_set(game_state.date_girl);
     mode_step_next();
 }
 
-void func_80132DE0(void) {
+void trip_saved_mode_stage_six_gate(void) {
     if (game_state.saved_mode_stage != 6) {
-        func_801386C4();
+        trip_destination_response_talk_run();
         return;
     }
     mode_step_next();
 }
 
-void func_80132E20(void) {
+void trip_saved_script_pointer_restore(void) {
     D_8013B084 = D_8013B08C;
     D_8013B06C = D_8013B078;
     D_8013B070 = D_8013B07C;
     D_8013B074 = D_8013B080;
-    func_80132E84();
+    trip_birthday_script_text_copy();
     mode_step_next();
 }
 
-void func_80132E84(void) {
+void trip_birthday_script_text_copy(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
-    DateTxt tbl;
+    TripTextData tbl;
 
     tbl = D_8013B1AC;
-    strcpy(D_800CA25C, &tbl.s[game_state.current_girl * 0x129 + D_8013B090 * 0x63 + D_80122CDC * 0x21]);
+    strcpy(name_code_a, &tbl.s[game_state.current_girl * 0x129 + D_8013B090 * 0x63 + D_80122CDC * 0x21]);
 }
 
-void func_80132F44(void) {
+void trip_response_talk_run(void) {
     talk_tables = &D_8013B084;
     D_800CA138 = &D_8013B088;
     D_800CA13C = D_8013B06C;
@@ -378,7 +378,7 @@ void func_80132F44(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
-void func_80132FC0(void) {
+void trip_default_talk_run(void) {
     talk_tables = &D_8013B084;
     D_800CA138 = &D_8013B088;
     D_800CA13C = D_8013B06C;
@@ -387,7 +387,7 @@ void func_80132FC0(void) {
     talk_run(0xFF, 1, 0);
 }
 
-void func_80133038(void) {
+void trip_script_table_save_and_year_slot_select(void) {
     D_8013B08C = D_8013B084;
     D_8013B078 = D_8013B06C;
     D_8013B07C = D_8013B070;
@@ -402,7 +402,7 @@ void func_80133038(void) {
 }
 
 
-void func_801330E8(void) {
+void trip_response_parameter_update(void) {
     portrait_layout_set(D_80122CDC + 1);
     if (D_80122CDC == 0) {
         game_state.girls[game_state.current_girl].tokimeki += 3;
@@ -420,13 +420,13 @@ void func_801330E8(void) {
     mode_step_next();
 }
 
-void func_80133298(void) {
+void trip_choice_script_offset_and_background_state(void) {
     D_8013B084 = (D_80122CDC * 2) + 0xD;
-    D_800CA2F0 = 2;
+    scene_trip_day_state = 2;
     mode_step_next();
 }
 
-void func_801332D8(void) {
+void trip_player_birthday_mode_stage_gate(void) {
     get_g_zyotai_s(game_state.date_girl);
     if (game_state.month == (game_state.player_birthday & 0xF) && game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) {
         mode_stage_set(7);
@@ -435,13 +435,13 @@ void func_801332D8(void) {
     mode_step_next();
 }
 
-void func_80133348(void) {
+void trip_saved_route_status_gate(void) {
     u16 v;
     u8 c; /* FAKE: copy of D_800CA2CC, gives the original's bne operand order; real source unknown. T-11440 */
 
     v = get_g_zyotai_s(game_state.date_girl);
     if (game_state.saved_mode_stage == 5 && game_state.date_girl == GIRL_YUINA && (c = D_800CA2CC) == 2) {
-        dec_bg_brightness = 0;
+        bg_brightness = 0;
         mode_stage_set(8);
         return;
     }

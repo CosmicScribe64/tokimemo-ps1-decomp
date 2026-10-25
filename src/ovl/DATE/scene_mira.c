@@ -130,8 +130,8 @@ void date_scene_mira_autumn_setup(void) {
     date_scene_text = D_8015DED4;
     date_scene_command = D_8015E010;
     date_scene_voice = D_8015E14C;
-    strcpy(D_800CA19C, "遊園地");
-    strcpy(D_800CA19C, "ゴーストハウス");
+    strcpy(scene_place_title, "遊園地");
+    strcpy(scene_place_title, "ゴーストハウス");
     D_800CA21C[0] = 2;
     D_800CA21C[1] = 2;
     D_800CA21C[2] = 2;
@@ -148,7 +148,7 @@ void date_scene_mira_autumn_setup(void) {
     load_palette((s32) D_8015F1C8, 0x11, 1, 2, 0);
     scene_still_show((s32) D_8015F1CC, (s32) D_8015F1D0, (s32) D_8015F1D4, (s32) D_8015F1D8, (s32) D_8015F1DC, (s32) D_8015F1E0);
     scene_anim_show((s32) D_8015F1BC, (s32) D_8015F1C0, (s32) D_8015F1B8, (s32) D_8015F1C4);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_800CA224[0] = 3;
     D_800CA224[1] = 3;
     D_800CA224[2] = 3;
@@ -170,7 +170,7 @@ void date_scene_mira_winter_setup(void) {
     load_palette(D_8015F1F4, 0x11, 1, 2, 0);
     scene_still_show(D_8015F1F8, D_8015F1FC, D_8015F200, D_8015F204, D_8015F208, D_8015F20C);
     scene_anim_show(D_8015F1E8, D_8015F1EC, D_8015F1E4, (s32) D_8015F1F0);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     D_800CA224[0] = 3;
     D_800CA224[1] = 3;
     D_800CA224[2] = 3;
@@ -279,7 +279,7 @@ void date_scene_mira_summer(void) {
 
     step_handlers = date_scene_mira_summer_steps;
     step_index = game_state.mode_step;
-    if ((step_index >= 27 || step_index < 8) && dec_bg_brightness == 0x80) {
+    if ((step_index >= 27 || step_index < 8) && bg_brightness == 0x80) {
         hud_sprite_light_effect_draw();
     }
     step_index = game_state.mode_step;
@@ -387,7 +387,7 @@ void date_scene_mira_special(void) {
         if (((game->year == 0x5F && game->month == 7 && game->day == 0x17) ||
              (game->year == 0x60 && game->month == 7 && game->day == 0x1C) ||
              (game->year == 0x61 && game->month == 7 && game->day == 0x1B)) &&
-            dec_bg_brightness == 0x80) {
+            bg_brightness == 0x80) {
             hud_sprite_light_effect_draw();
         } else if (((DateSelectionView *)&D_800CA2F8)->place == 0x11 ||
                    ((DateSelectionView *)&D_800CA2F8)->place == 0x10) {

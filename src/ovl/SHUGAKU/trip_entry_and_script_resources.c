@@ -1,8 +1,8 @@
-/* trip_entry_and_script_resources.c: src/ovl/SHUGAKU/80136380.c:4,286; shared per-girl script resources plus func_80137490, the complete overlay mode-stage/frame dispatcher, rendering/HUD updates and girl-specific CD script routing. Original object 0x80136380-0x801378B0 (config/objects/SHUGAKU.txt). */
+/* trip_entry_and_script_resources.c: src/ovl/SHUGAKU/80136380.c:4,286; shared per-girl script resources plus trip_mode_stage_frame_dispatch, the complete overlay mode-stage/frame dispatcher, rendering/HUD updates and girl-specific CD script routing. Original object 0x80136380-0x801378B0 (config/objects/SHUGAKU.txt). */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-void func_80136380(void) {
+void trip_girl_script_pointer_table_setup(void) {
     D_8013C420 = 0x80197EDC;
     D_8013C424 = 0x80199A0C;
     D_8013C428 = 0x8019B64C;
@@ -44,7 +44,7 @@ void func_80136380(void) {
     D_8013C4B8 = 0x801AD394;
 }
 
-void func_801365F4(void) {
+void trip_scene_script_resource_pointer_setup(void) {
     D_8013C4BC = 0x80198304;
     D_8013C5F8 = 0x80198340;
     D_8013C4C0 = 0x801987BC;
@@ -284,7 +284,7 @@ void func_801365F4(void) {
     D_8013C86C = 0x8019B494;
 }
 
-void func_80137490(void) {
+void trip_mode_stage_frame_dispatch(void) {
     GameState *g = &game_state;
 
     portrait_wink_update();
@@ -293,40 +293,40 @@ void func_80137490(void) {
     }
     switch (g->mode_stage) {
     case 0:
-        func_801378F0();
+        trip_departure_mode_step_callback_dispatch();
         break;
     case 1:
-        func_80138A60();
+        trip_sightseeing_mode_step_dispatch();
         break;
     case 2:
-        func_80138B20();
+        trip_destination_one_mode_step_callback_dispatch();
         break;
     case 3:
-        func_80139C80();
+        trip_sightseeing_callback_dispatch_alt();
         break;
     case 4:
-        func_80139D40();
+        trip_destination_outing_callback_dispatch();
         break;
     case 5:
-        func_8013AA70();
+        trip_destination_exit_callback_dispatch();
         break;
     case 6:
-        func_80132274();
+        trip_callback_dispatch();
         break;
     case 7:
-        func_801336A4();
+        trip_mode_step_callback_dispatch();
         break;
     case 8:
-        func_80135480();
+        trip_yuina_callback_dispatch_and_actor_fade();
         break;
     case 9:
-        func_80133E10();
+        trip_ayako_mode_step_callback_dispatch();
         break;
     case 10:
-        func_80134930();
+        trip_saved_mode_stage_corridor_dispatch();
         break;
     case 11:
-        func_80134560();
+        trip_yukari_mode_step_callback_dispatch();
         break;
     default:
         game_mode_reset_to_title();
@@ -340,7 +340,7 @@ void func_80137490(void) {
             dec_bg_draw(0);
             parameter_show();
         } else {
-            func_80083A10();
+            scene_frame_update();
             hud_screen_frame_draw(2);
             parameter_show();
         }
@@ -360,7 +360,7 @@ void func_80137490(void) {
     draw_shake_update();
 }
 
-void func_80137700(void) {
+void trip_current_girl_script_sector_load(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
         cd_read_sectors(6U, 0x80198000, 0xAE25);
@@ -404,6 +404,6 @@ void func_80137700(void) {
         game_mode_reset_to_title();
         break;
     }
-    func_801365F4();
+    trip_scene_script_resource_pointer_setup();
     mode_step_next();
 }

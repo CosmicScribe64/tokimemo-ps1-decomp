@@ -129,27 +129,27 @@ s32 shooter_boss1_step_defeat() {
 }
 
 void shooter_boss1_set_lights(void) {
-    D_80122760 = -0x64;
+    view_light_0 = -0x64;
     D_80122764 = 0x1E;
     D_80122768 = -0x1E;
     D_8012276C = 0xE0;
     D_8012276D = 0xE0;
     D_8012276E = 0xE0;
-    func_8009AD70(0, &D_80122760);
-    D_80122770 = 0x28;
+    func_8009AD70(0, &view_light_0);
+    view_light_1 = 0x28;
     D_80122774 = 0x32;
     D_80122778 = -0x64;
     D_8012277C = 0x40;
     D_8012277D = 0x40;
     D_8012277E = 0x40;
-    func_8009AD70(1, &D_80122770);
-    D_80122780 = 0xA;
+    func_8009AD70(1, &view_light_1);
+    view_light_2 = 0xA;
     D_80122784 = -0x14;
     D_80122788 = -0x64;
     D_8012278C = 0x30;
     D_8012278D = 0x30;
     D_8012278E = 0x30;
-    func_8009AD70(2, &D_80122780);
+    func_8009AD70(2, &view_light_2);
     GsSetAmbient(0, 0, 0);
     func_8009B340(0);
 }
@@ -183,7 +183,7 @@ void shooter_boss1_update_part(s32 arg0, s32 arg1, void *arg2, void *arg3, void 
             shooter_actors[sel].stats[0] = 0;
         }
     }
-    m = *(MATRIX *)D_80125C60;
+    m = *(MATRIX *)view_base_matrix;
     shooter_rotation_matrix_x((D_80128880[0].x << 12) / 360, &m);
     shooter_rotation_matrix_z((D_80128880[0].z << 12) / 360, &m);
     shooter_rotation_matrix_y((D_80128880[0].y << 12) / 360, &m);
@@ -260,51 +260,51 @@ void shooter_boss1_update_damage_lights(void) {
 
     v = shooter_boss_damage_percent(0xB, shooter_boss1_part_hit_points);
     if (shooter_actors[20].mode < v) {
-        D_80122760 = 0;
+        view_light_0 = 0;
         D_80122764 = 0;
         D_80122768 = -0x64;
         D_8012276C = 0xFF;
         D_8012276D = 0x80;
         D_8012276E = 0x80;
-        func_8009AD70(0, &D_80122760);
-        D_80122770 = 0;
+        func_8009AD70(0, &view_light_0);
+        view_light_1 = 0;
         D_80122774 = 0;
         D_80122778 = -0x64;
         D_8012277C = 0xFF;
         D_8012277D = 0x80;
         D_8012277E = 0x80;
-        func_8009AD70(1, &D_80122770);
-        D_80122780 = 0;
+        func_8009AD70(1, &view_light_1);
+        view_light_2 = 0;
         D_80122784 = 0;
         D_80122788 = -0x64;
         D_8012278C = 0xFF;
         D_8012278D = 0x80;
         D_8012278E = 0x80;
-        func_8009AD70(2, &D_80122780);
+        func_8009AD70(2, &view_light_2);
         t = shooter_actors[20].phase;
         if (t >= 3U) {
             shooter_actors[20].mode = v;
-            D_80122760 = -0x64;
+            view_light_0 = -0x64;
             D_80122764 = 0x1E;
             D_80122768 = -0x1E;
             D_8012276C = 0xE0;
             D_8012276D = 0xE0;
             D_8012276E = 0xE0;
-            func_8009AD70(0, &D_80122760);
-            D_80122770 = 0x28;
+            func_8009AD70(0, &view_light_0);
+            view_light_1 = 0x28;
             D_80122774 = 0x32;
             D_80122778 = -0x64;
             D_8012277C = 0x40;
             D_8012277D = 0x40;
             D_8012277E = 0x40;
-            func_8009AD70(1, &D_80122770);
-            D_80122780 = 0xA;
+            func_8009AD70(1, &view_light_1);
+            view_light_2 = 0xA;
             D_80122784 = -0x14;
             D_80122788 = -0x64;
             D_8012278C = 0x30;
             D_8012278D = 0x30;
             D_8012278E = 0x30;
-            func_8009AD70(2, &D_80122780);
+            func_8009AD70(2, &view_light_2);
             shooter_actors[20].phase = 0;
         } else {
             shooter_actors[20].phase = t + 1;

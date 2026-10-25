@@ -1,5 +1,5 @@
 /* runner_actor_display.c: src/ovl/TAIIKU/801452D0.c:77,86,150; runner-scene mode-stage callback dispatch, display-record setup, animation/movement and slot updates; wiki/spec/o-taiiku.md records the body-backed actor contracts. Original object 0x801452D0-0x801488F0 (config/objects/TAIIKU.txt). */
-#define MAIN_API_OVERRIDE_scene_screen_reset /* called as an implicit int function (definition: void): the call's $v0 result keeps the loop pointer off $v0 in func_80145370, T-20600 */
+#define MAIN_API_OVERRIDE_scene_screen_reset /* called as an implicit int function (definition: void): the call's $v0 result keeps the loop pointer off $v0 in sports_controller_c_resource_setup, T-20600 */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
@@ -18,9 +18,9 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A3D
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A3D8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A3DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A3E0);
-TaiikuController D_8014A3E4 = { 0 };
-TaiikuController D_8014A400[3] = { 0 };
-TaiikuSlot1C D_8014A454[4] = { 0 };
+SportsController sports_controller_c_player_controller = { 0 };
+SportsController sports_controller_c_cpu_controllers[3] = { 0 };
+SportsRunnerDisplaySlot sports_runner_display_slots[4] = { 0 };
 
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4C4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4D4);
@@ -28,8 +28,8 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4D
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4E4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4F4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A4F8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A528);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", sports_controller_c_texture_page_buffer_ids);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", sports_controller_c_texture_page_buffer_ids_table_b);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A52C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A53C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/runner_actor_display.data", D_8014A54C);
@@ -73,43 +73,43 @@ typedef struct TkPl {
 extern Lim3 D_8014A5FC;
 extern Lim3 D_8014A608;
 extern Lim3 D_8014A614;
-extern TaiikuSlot1C D_8014A4A8; /* slot 3, the end of the first slot loop in func_80147594. T-16553 */
+extern SportsRunnerDisplaySlot D_8014A4A8; /* slot 3, the end of the first slot loop in sports_controller_c_motion_choices_update. T-16553 */
 
-void func_801452D0(void) {
-    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
-    FnTbl8 tbl;
+void sports_controller_c_mode_dispatch(void) {
+    s32 mode_stage_index; /* declared before controller_c_stage_callbacks: its stack slot sits above controller_c_stage_callbacks (T-3330) */
+    FnTbl8 controller_c_stage_callbacks;
 
-    tbl = D_8014A54C;
-    idx = game_state.mode_stage;
-    tbl.f[idx]();
+    controller_c_stage_callbacks = D_8014A54C;
+    mode_stage_index = game_state.mode_stage;
+    controller_c_stage_callbacks.f[mode_stage_index]();
 }
 
-void func_80145370(void) {
-    s32 i;
-    s32 j;
-    s32 a[1];
-    TaiWords12 b;
-    TaiWords9 c;
+void sports_controller_c_resource_setup(void) {
+    s32 resource_index;
+    s32 palette_index;
+    s32 initial_texture_page_buffer_id[1];
+    TaiWords12 texture_page_buffer_ids;
+    TaiWords9 secondary_texture_page_buffer_ids;
 
-    a[0] = D_8014A56C;
-    b = D_8014A570;
-    c = D_8014A5A0;
+    initial_texture_page_buffer_id[0] = D_8014A56C;
+    texture_page_buffer_ids = D_8014A570;
+    secondary_texture_page_buffer_ids = D_8014A5A0;
     switch (game_state.mode_step) {
     case 0:
         scene_screen_reset(1, 1);
-        for (i = 0; i < 11; i++) {
-            game_state.tpage_buf[i + 5] = 8;
+        for (resource_index = 0; resource_index < 11; resource_index++) {
+            game_state.tpage_buf[resource_index + 5] = 8;
         }
-        for (i = 0; i < 3; i++) {
-            game_state.tpage_buf[i + 0x25] = 8;
+        for (resource_index = 0; resource_index < 3; resource_index++) {
+            game_state.tpage_buf[resource_index + 0x25] = 8;
         }
-        D_8014A4F4 = a[0];
-        for (i = 0; i < 12; i++) {
-            D_8014A4F8[i] = b.v[i];
+        D_8014A4F4 = initial_texture_page_buffer_id[0];
+        for (resource_index = 0; resource_index < 12; resource_index++) {
+            sports_controller_c_texture_page_buffer_ids[resource_index] = texture_page_buffer_ids.v[resource_index];
         }
-        D_8014A528[0] = c.v[0];
-        for (i = 1; i < 9; i++) {
-            D_8014A528[i] = c.v[i];
+        sports_controller_c_texture_page_buffer_ids_table_b[0] = secondary_texture_page_buffer_ids.v[0];
+        for (resource_index = 1; resource_index < 9; resource_index++) {
+            sports_controller_c_texture_page_buffer_ids_table_b[resource_index] = secondary_texture_page_buffer_ids.v[resource_index];
         }
         actor_clear_range(0);
         hud_cursor_show(0);
@@ -129,15 +129,15 @@ void func_80145370(void) {
         break;
     case 3:
         if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
-            func_80140810();
-            func_80132B40();
+            sports_scene_actor_resource_addresses_init();
+            sports_runner_resource_addresses_init();
             search_load_tpage_buf_lock(D_8014A4F4, 1);
-            for (j = 0; j < 0x10; j++) {
-                load_palette(D_80148EF4, (j + 0x10) & 0xFF, 1, 1, j);
+            for (palette_index = 0; palette_index < 0x10; palette_index++) {
+                load_palette(D_80148EF4, (palette_index + 0x10) & 0xFF, 1, 1, palette_index);
             }
-            func_8014607C();
-            func_80145EF4();
-            func_80145F8C();
+            sports_controller_c_state_init();
+            sports_controller_c_sprite_resource_setup();
+            sports_controller_c_primary_actor_init();
             cd_read_sectors(0xB9, 0x8018F000, 0xB8B0);
             mode_stage_next();
         }
@@ -148,7 +148,7 @@ void func_80145370(void) {
     }
 }
 
-void func_80145640(void) {
+void sports_controller_c_resource_load(void) {
     s32 slot;
     s32 i;
 
@@ -156,12 +156,12 @@ void func_80145640(void) {
     case 0:
         if (cd_read_sync_status() & 1) {
             for (i = 0; i < 0xC; i++) {
-                slot = search_load_tpage_buf_lock(D_8014A4F8[i], 1);
-                D_8014A4F8[i] = game_state.tpage_buf[slot] = i + 0x80000100;
+                slot = search_load_tpage_buf_lock(sports_controller_c_texture_page_buffer_ids[i], 1);
+                sports_controller_c_texture_page_buffer_ids[i] = game_state.tpage_buf[slot] = i + 0x80000100;
             }
             for (i = 5; i < 9; i++) {
-                slot = search_load_tpage_buf_lock(D_8014A528[i], 1);
-                D_8014A528[i] = game_state.tpage_buf[slot] = i + 0x80000200;
+                slot = search_load_tpage_buf_lock(sports_controller_c_texture_page_buffer_ids_table_b[i], 1);
+                sports_controller_c_texture_page_buffer_ids_table_b[i] = game_state.tpage_buf[slot] = i + 0x80000200;
             }
             mode_step_next();
         }
@@ -230,7 +230,7 @@ void func_80145640(void) {
     case 5:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         if ((Fade_Out_Main() != 0) && (cd_read_sync_status() & 1)) {
-            func_80133C30();
+            sports_candidate_scene_layer_resource_addresses_init();
             i = 0;
             do {
                 search_load_tpage_buf_lock(D_8014A070[i], 1);
@@ -241,10 +241,10 @@ void func_80145640(void) {
         break;
     case 6:
         actor_clear(0x60);
-        func_801330D4();
+        sports_runner_scene_graphics_init();
         game_state.tpage_buf[21] = -1;
-        func_80132BD0();
-        func_80146338();
+        sports_dance_actors_init();
+        sports_controller_c_actor_display_init();
         audio_command(0x505);
         Fade_In_Init();
         mode_stage_next();
@@ -255,31 +255,31 @@ void func_80145640(void) {
     }
 }
 
-void func_80145A78(void) {
+void sports_controller_c_gameplay_mode_update(void) {
     switch (game_state.mode_step) {
     case 0:
         if (Fade_In_Main() != 0) {
             Vblnk_Timer_Init();
             mode_step_next();
         }
-        func_80133438();
+        sports_runner_scene_scroll_update();
         break;
     case 1:
         if (Vblnk_Timer() >= 0x5B) {
             audio_command(0x502);
             mode_step_next();
         }
-        func_80133438();
+        sports_runner_scene_scroll_update();
         break;
     case 2:
-        func_8014666C();
-        func_8014684C();
-        func_80146C20();
-        func_80132E20(D_8014A3DE, 4);
-        func_80147068();
-        func_80147520();
-        func_80147F10();
-        if (func_80146D18() != 0) {
+        sports_controller_c_ticks_advance();
+        sports_controller_c_player_frame_update();
+        sports_controller_c_scroll_integrate();
+        sports_dance_actors_position(D_8014A3DE, 4);
+        sports_controller_c_cpu_frame_update();
+        sports_controller_c_frame_update();
+        sports_controller_c_slot_motion_update();
+        if (sports_controller_c_finish_order_update() != 0) {
             audio_command(0x504);
             Fade_Out_Init();
             mode_step_next();
@@ -290,8 +290,8 @@ void func_80145A78(void) {
         Scroll(D_8014A3DE % 128, 0xF, 0x70, 0x80, 0x80);
         if (Fade_Out_Main() != 0) {
             audio_command(0xC2);
-            func_80148370();
-            func_80133258();
+            sports_controller_c_result_actors_init();
+            sports_runner_scene_actor_init();
             mode_stage_next();
         }
         break;
@@ -301,10 +301,10 @@ void func_80145A78(void) {
     }
 }
 
-void func_80145C28(void) {
-    s32 i;
-    s32 j; /* declared before p: the spill slot of p and the 0x48 frame depend on it (T-16553) */
-    u8 *p;
+void sports_controller_c_result_flow_update(void) {
+    s32 result_slot_index;
+    s32 girl_index; /* declared before result_status_pointer: the spill slot of result_status_pointer and the 0x48 frame depend on it (T-16553) */
+    u8 *result_status_pointer;
 
     Scroll(0, 0xF, 0, 0xF0, 0x280);
     switch (game_state.mode_step) {
@@ -324,28 +324,28 @@ void func_80145C28(void) {
         }
         break;
     case 2:
-        if (func_801485C4() != 0) {
+        if (sports_controller_c_result_actor_approach() != 0) {
             mode_step_next();
         }
         break;
     case 3:
-        if (func_80148678() != 0) {
+        if (sports_controller_c_result_sequence_shift() != 0) {
             mode_step_next();
         }
         break;
     case 4:
-        func_801487B4();
-        p = D_8014A3D8;
-        for (i = 0; i < 4; i++) {
-            if (*p == 1) {
-                func_8013384C(0xB, i & 0xFF);
+        sports_controller_c_result_actor_motion_start();
+        result_status_pointer = D_8014A3D8;
+        for (result_slot_index = 0; result_slot_index < 4; result_slot_index++) {
+            if (*result_status_pointer == 1) {
+                sports_scene_audio_sequence_request(0xB, result_slot_index & 0xFF);
             }
-            p++;
+            result_status_pointer++;
         }
         mode_step_next();
         break;
     case 5:
-        func_80148820();
+        sports_controller_c_result_sequence_advance();
         break;
     case 6:
         Vblnk_Timer_Init();
@@ -360,12 +360,12 @@ void func_80145C28(void) {
     case 8:
         if (Fade_Out_Main() != 0) {
             if (D_8014A3D8[0] == 1) {
-                for (j = 0; j < 13; j++) {
-                    game_state.girls[j].tokimeki += 5;
+                for (girl_index = 0; girl_index < 13; girl_index++) {
+                    game_state.girls[girl_index].tokimeki += 5;
                 }
             } else if (D_8014A3D8[1] == 1) {
-                for (j = 0; j < 13; j++) {
-                    game_state.girls[j].tokimeki += 3;
+                for (girl_index = 0; girl_index < 13; girl_index++) {
+                    game_state.girls[girl_index].tokimeki += 3;
                 }
             }
             mode_stage_next();
@@ -377,21 +377,21 @@ void func_80145C28(void) {
     }
 }
 
-void func_80145EF4(void) {
-    s32 i;
+void sports_controller_c_sprite_resource_setup(void) {
+    s32 tpage_buffer_index;
 
-    func_8004E44C(0, D_80148EF8, D_80148EF0);
+    layer_tileset_init(0, D_80148EF8, D_80148EF0);
     srn_init(0, D_80148EFC, 0);
     srn_vram_set(0, 5, 0x580, 0xF0);
-    for (i = 0; i < 3; i++) {
-        game_state.tpage_buf[i + 5] = 8;
+    for (tpage_buffer_index = 0; tpage_buffer_index < 3; tpage_buffer_index++) {
+        game_state.tpage_buf[tpage_buffer_index + 5] = 8;
     }
-    for (i = 0; i < 3; i++) {
-        game_state.tpage_buf[i + 0x25] = 8;
+    for (tpage_buffer_index = 0; tpage_buffer_index < 3; tpage_buffer_index++) {
+        game_state.tpage_buf[tpage_buffer_index + 0x25] = 8;
     }
 }
 
-void func_80145F8C(void) {
+void sports_controller_c_primary_actor_init(void) {
     actor_clear(0x60);
     D_80120651 = 3;
     D_80120688 = 0x01000000;
@@ -414,66 +414,66 @@ void func_80145F8C(void) {
 
 /* FAKE: T-24133. `u32 raw` with `if (raw) {}` and `raw = 0` keeps the raw flags byte in $a0 and its `& 0xF` mask in $v1
  * without a J<-L widening CVT, while reading `unk_02` through `gs` loads it directly into $v0. */
-void func_8014607C(void) {
-    GameState *gs;
-    s32 i;
-    s32 var_v0_2;
-    s32 temp_v1;
-    u32 raw;
+void sports_controller_c_state_init(void) {
+    GameState *game_state_ptr;
+    s32 controller_slot_index;
+    s32 effective_athletics_value;
+    s32 player_flag_nibble;
+    u32 player_flags_byte;
 
-    D_8014A3E4.unk_00 = 0;
-    D_8014A3E4.unk_08 = 0;
-    D_8014A3E4.unk_0C = 0;
-    D_8014A3E4.unk_04 = 0;
-    D_8014A3E4.position.h[0] = 0;
-    D_8014A3E4.unk_14 = 0;
-    D_8014A3E4.unk_01 = 0;
-    D_8014A3E4.unk_02 = 0;
-    for (i = 0; i < 3; i++) {
-        D_8014A400[i].position.h[1] = (i + 1) * 8;
-        D_8014A400[i].unk_0C = 0;
-        D_8014A400[i].unk_04 = 0;
-        D_8014A400[i].unk_00 = 0;
-        D_8014A400[i].unk_14 = 0;
-        D_8014A400[i].position.h[0] = 0;
-        D_8014A400[i].unk_01 = 0;
+    sports_controller_c_player_controller.unk_00 = 0;
+    sports_controller_c_player_controller.unk_08 = 0;
+    sports_controller_c_player_controller.unk_0C = 0;
+    sports_controller_c_player_controller.unk_04 = 0;
+    sports_controller_c_player_controller.position.h[0] = 0;
+    sports_controller_c_player_controller.unk_14 = 0;
+    sports_controller_c_player_controller.unk_01 = 0;
+    sports_controller_c_player_controller.unk_02 = 0;
+    for (controller_slot_index = 0; controller_slot_index < 3; controller_slot_index++) {
+        sports_controller_c_cpu_controllers[controller_slot_index].position.h[1] = (controller_slot_index + 1) * 8;
+        sports_controller_c_cpu_controllers[controller_slot_index].unk_0C = 0;
+        sports_controller_c_cpu_controllers[controller_slot_index].unk_04 = 0;
+        sports_controller_c_cpu_controllers[controller_slot_index].unk_00 = 0;
+        sports_controller_c_cpu_controllers[controller_slot_index].unk_14 = 0;
+        sports_controller_c_cpu_controllers[controller_slot_index].position.h[0] = 0;
+        sports_controller_c_cpu_controllers[controller_slot_index].unk_01 = 0;
     }
-    for (i = 0; i < 4; i++) {
-        D_8014A3D8[i] = 0;
-        D_8014A454[i].unk_18 = 0;
-        D_8014A454[i].unk_02 = 0x37;
-        D_8014A454[i].unk_06 = 0x19;
-        D_8014A454[i].unk_08 = 0;
-        D_8014A454[i].unk_14 = 0;
-        D_8014A454[i].unk_16 = 0;
-        D_8014A454[i].unk_0C = 0;
-        D_8014A454[i].unk_0D = 0;
-        D_8014A454[i].unk_0E = 0;
-        D_8014A454[i].unk_0F = 0;
+    for (controller_slot_index = 0; controller_slot_index < 4; controller_slot_index++) {
+        D_8014A3D8[controller_slot_index] = 0;
+        sports_runner_display_slots[controller_slot_index].unk_18 = 0;
+        sports_runner_display_slots[controller_slot_index].unk_02 = 0x37;
+        sports_runner_display_slots[controller_slot_index].unk_06 = 0x19;
+        sports_runner_display_slots[controller_slot_index].unk_08 = 0;
+        sports_runner_display_slots[controller_slot_index].unk_14 = 0;
+        sports_runner_display_slots[controller_slot_index].cooldown = 0;
+        sports_runner_display_slots[controller_slot_index].unk_0C = 0;
+        sports_runner_display_slots[controller_slot_index].motion_timer = 0;
+        sports_runner_display_slots[controller_slot_index].unk_0E = 0;
+        sports_runner_display_slots[controller_slot_index].unk_0F = 0;
     }
-    D_8014A3E4.position.h[1] = -0xA0;
+    sports_controller_c_player_controller.position.h[1] = -0xA0;
     D_8014A3E0 = 0;
     D_8014A3DC = 0;
     D_8014A3C4 = 0;
-    gs = &game_state;
-    raw = gs->player_flags.b[1];
-    if (raw) {}
-    var_v0_2 = gs->param_athletics.value;
-    temp_v1 = raw & 0xF;
-    raw = 0;
-    if ((temp_v1 & 1) || (temp_v1 & 2)) {
-        var_v0_2 = (s16) (var_v0_2 >> 1);
+    game_state_ptr = &game_state;
+    player_flags_byte = game_state_ptr->player_flags.b[1];
+    if (player_flags_byte) {}
+    effective_athletics_value = game_state_ptr->param_athletics.value;
+    player_flag_nibble = player_flags_byte & 0xF;
+    player_flags_byte = 0;
+    if ((player_flag_nibble & 1) || (player_flag_nibble & 2)) {
+        effective_athletics_value = (s16) (effective_athletics_value >> 1);
     }
-    if (var_v0_2 >= 0xA0) {
+    if (effective_athletics_value >= 0xA0) {
         D_8014A3D0 = 0x280;
         D_8014A3D4 = 0x20000;
-    } else if (var_v0_2 >= 0x7D) {
+    } else if (effective_athletics_value >= 0x7D) {
         D_8014A3D0 = 0x220;
         D_8014A3D4 = 0x1E000;
-    } else if (var_v0_2 >= 0x64) {
+    } else if (effective_athletics_value >= 0x64) {
         D_8014A3D0 = 0x1C0;
         D_8014A3D4 = 0x1C000;
-    } else if (var_v0_2 >= 0x4B) {
+    } else if (effective_athletics_value >= 0x4B) {
         D_8014A3D0 = 0x160;
         D_8014A3D4 = 0x1A000;
     } else {
@@ -483,41 +483,41 @@ void func_8014607C(void) {
     srand(game_state.timer_ticks);
 }
 
-void func_80146338(void) {
-    s32 i;
+void sports_controller_c_actor_display_init(void) {
+    s32 actor_display_index;
     TaiShorts12x a;
     TaiShorts12x b;
 
     a = D_8014A5C4;
     b = D_8014A5DC;
-    for (i = 0; i < 12; i++) {
-        actor_clear(i + 0x60);
-        DISP(96 + i).quad_flags = 0x01000000;
-        DISP(96 + i).brightness = 0x80;
-        DISP(96 + i).frame_table = (u8 *)D_80149FD4;
-        DISP(96 + i).sequence_table = (u8 *)D_8014A00C;
-        DISP(96 + i).tpage_table = (u8 *)D_8014A4F8;
-        DISP(96 + i).unk_14 = D_8014A044;
-        DISP(96 + i).unk_04 = 0;
-        DISP(96 + i).unk_05 = 0x80;
-        DISP(96 + i).scale_x = 0x1000;
-        DISP(96 + i).scale_y = 0x1000;
-        DISP(96 + i).blink_period = 2;
-        DISP(96 + i).y = a.v[i];
-        DISP(96 + i).unk_18 = b.v[i];
+    for (actor_display_index = 0; actor_display_index < 12; actor_display_index++) {
+        actor_clear(actor_display_index + 0x60);
+        DISP(96 + actor_display_index).quad_flags = 0x01000000;
+        DISP(96 + actor_display_index).brightness = 0x80;
+        DISP(96 + actor_display_index).frame_table = (u8 *)D_80149FD4;
+        DISP(96 + actor_display_index).sequence_table = (u8 *)D_8014A00C;
+        DISP(96 + actor_display_index).tpage_table = (u8 *)sports_controller_c_texture_page_buffer_ids;
+        DISP(96 + actor_display_index).unk_14 = D_8014A044;
+        DISP(96 + actor_display_index).unk_04 = 0;
+        DISP(96 + actor_display_index).unk_05 = 0x80;
+        DISP(96 + actor_display_index).scale_x = 0x1000;
+        DISP(96 + actor_display_index).scale_y = 0x1000;
+        DISP(96 + actor_display_index).blink_period = 2;
+        DISP(96 + actor_display_index).y = a.v[actor_display_index];
+        DISP(96 + actor_display_index).unk_18 = b.v[actor_display_index];
     }
-    for (i = 0; i < 4; i++) {
-        DISP(96 + i).unk_01 = i * 2 + 3;
-        DISP(96 + i).x = i * 8 - 0xA0;
-        DISP(96 + i).flags = 0x40;
-        DISP(96 + i).draw_flags = 0xA4;
+    for (actor_display_index = 0; actor_display_index < 4; actor_display_index++) {
+        DISP(96 + actor_display_index).unk_01 = actor_display_index * 2 + 3;
+        DISP(96 + actor_display_index).x = actor_display_index * 8 - 0xA0;
+        DISP(96 + actor_display_index).flags = 0x40;
+        DISP(96 + actor_display_index).draw_flags = 0xA4;
     }
-    for (i = 0; i < 4; i++) {
-        DISP(100 + i).unk_01 = i * 2 + 2;
-        DISP(100 + i).x = DISP(96 + i).x + 0x37;
-        DISP(100 + i).y = DISP(96 + i).y + 0x1C;
-        DISP(100 + i).flags = 0x40;
-        DISP(100 + i).draw_flags = 0xA4;
+    for (actor_display_index = 0; actor_display_index < 4; actor_display_index++) {
+        DISP(100 + actor_display_index).unk_01 = actor_display_index * 2 + 2;
+        DISP(100 + actor_display_index).x = DISP(96 + actor_display_index).x + 0x37;
+        DISP(100 + actor_display_index).y = DISP(96 + actor_display_index).y + 0x1C;
+        DISP(100 + actor_display_index).flags = 0x40;
+        DISP(100 + actor_display_index).draw_flags = 0xA4;
     }
     DISP(104).unk_01 = 9;
     DISP(105).unk_01 = 8;
@@ -528,11 +528,11 @@ void func_80146338(void) {
     DISP(107).draw_flags = 0xA4;
 }
 
-s32 func_8014666C(void) {
-    TaiikuController *controller;
+s32 sports_controller_c_ticks_advance(void) {
+    SportsController *controller;
     s32 i;
 
-    controller = &D_8014A3E4;
+    controller = &sports_controller_c_player_controller;
     controller->unk_0C++;
     controller->unk_08++;
     controller->unk_04++;
@@ -540,140 +540,140 @@ s32 func_8014666C(void) {
     i = 0;
     /* the pointer bound keeps the original's sltu and lui order; `i < 3` gives bne (T-16553) */
     do {
-        D_8014A400[i].unk_0C++;
-        D_8014A400[i].unk_04++;
+        sports_controller_c_cpu_controllers[i].unk_0C++;
+        sports_controller_c_cpu_controllers[i].unk_04++;
         i++;
-    } while (&D_8014A400[i] < (TaiikuController *)D_8014A454);
-    D_8014A454[0].unk_18++;
-    D_8014A454[0].unk_14++;
-    D_8014A454[0].unk_16++;
-    D_8014A454[0].unk_0D++;
-    D_8014A454[0].unk_0F++;
-    D_8014A454[1].unk_18++;
-    D_8014A454[1].unk_14++;
-    D_8014A454[1].unk_16++;
-    D_8014A454[1].unk_0D++;
-    D_8014A454[1].unk_0F++;
-    D_8014A454[2].unk_18++;
-    D_8014A454[2].unk_14++;
-    D_8014A454[2].unk_16++;
-    D_8014A454[2].unk_0D++;
-    D_8014A454[2].unk_0F++;
-    D_8014A454[3].unk_18++;
-    D_8014A454[3].unk_14++;
-    D_8014A454[3].unk_16++;
-    D_8014A454[3].unk_0D++;
-    D_8014A454[3].unk_0F++;
+    } while (&sports_controller_c_cpu_controllers[i] < (SportsController *)sports_runner_display_slots);
+    sports_runner_display_slots[0].unk_18++;
+    sports_runner_display_slots[0].unk_14++;
+    sports_runner_display_slots[0].cooldown++;
+    sports_runner_display_slots[0].motion_timer++;
+    sports_runner_display_slots[0].unk_0F++;
+    sports_runner_display_slots[1].unk_18++;
+    sports_runner_display_slots[1].unk_14++;
+    sports_runner_display_slots[1].cooldown++;
+    sports_runner_display_slots[1].motion_timer++;
+    sports_runner_display_slots[1].unk_0F++;
+    sports_runner_display_slots[2].unk_18++;
+    sports_runner_display_slots[2].unk_14++;
+    sports_runner_display_slots[2].cooldown++;
+    sports_runner_display_slots[2].motion_timer++;
+    sports_runner_display_slots[2].unk_0F++;
+    sports_runner_display_slots[3].unk_18++;
+    sports_runner_display_slots[3].unk_14++;
+    sports_runner_display_slots[3].cooldown++;
+    sports_runner_display_slots[3].motion_timer++;
+    sports_runner_display_slots[3].unk_0F++;
 }
 
-void func_8014684C(void) {
-    func_80146884();
-    func_8014692C();
-    func_80146994();
-    func_80146A60();
+void sports_controller_c_player_frame_update(void) {
+    sports_controller_c_player_velocity_input_update();
+    sports_controller_c_player_velocity_integrate();
+    sports_controller_c_player_position_clamp();
+    sports_controller_c_player_sequence_select();
 }
 
-void func_80146884(void) {
-    if (D_8014A454[0].unk_0C != 0) {
-        D_8014A3E4.unk_10 = -0x300;
+void sports_controller_c_player_velocity_input_update(void) {
+    if (sports_runner_display_slots[0].unk_0C != 0) {
+        sports_controller_c_player_controller.unk_10 = -0x300;
         return;
     }
     if (game_state.pad_pressed & PAD_CIRCLE) {
         D_8014A3C4 = 1;
         return;
     }
-    if (D_8014A3E4.unk_08 >= 0x10) {
+    if (sports_controller_c_player_controller.unk_08 >= 0x10) {
         if (D_8014A3C4 != 0) {
-            if (D_8014A3E4.unk_14 < 0) {
-                D_8014A3E4.unk_14 = 0;
+            if (sports_controller_c_player_controller.unk_14 < 0) {
+                sports_controller_c_player_controller.unk_14 = 0;
             }
-            D_8014A3E4.unk_10 = D_8014A3D0;
+            sports_controller_c_player_controller.unk_10 = D_8014A3D0;
         } else {
-            D_8014A3E4.unk_10 = -0x300;
+            sports_controller_c_player_controller.unk_10 = -0x300;
         }
-        D_8014A3E4.unk_08 = 0;
+        sports_controller_c_player_controller.unk_08 = 0;
         D_8014A3C4 = 0;
     }
 }
 
-void func_8014692C(void) {
-    if ((u32)D_8014A3E4.unk_0C >= 0xB) {
-        D_8014A3E4.unk_14 += D_8014A3E4.unk_10;
-        if (D_8014A3E4.unk_14 < -0x10000) {
-            D_8014A3E4.unk_14 = -0x10000;
+void sports_controller_c_player_velocity_integrate(void) {
+    if ((u32)sports_controller_c_player_controller.unk_0C >= 0xB) {
+        sports_controller_c_player_controller.unk_14 += sports_controller_c_player_controller.unk_10;
+        if (sports_controller_c_player_controller.unk_14 < -0x10000) {
+            sports_controller_c_player_controller.unk_14 = -0x10000;
         }
-        if (D_8014A3D4 < D_8014A3E4.unk_14) {
-            D_8014A3E4.unk_14 = D_8014A3D4;
+        if (D_8014A3D4 < sports_controller_c_player_controller.unk_14) {
+            sports_controller_c_player_controller.unk_14 = D_8014A3D4;
         }
-        D_8014A3E4.unk_0C = 0;
+        sports_controller_c_player_controller.unk_0C = 0;
     }
 }
 
-void func_80146994(void) {
-    if ((D_80120668 != 3) && ((D_8014A454[0].unk_0C == 0) || (D_8014A3E0 != 0))) {
-        if ((D_8014A3E4.unk_10 < 0) || (D_8014A3DE == 0)) {
-            D_8014A3E4.position.w -= D_8014A3E0;
+void sports_controller_c_player_position_clamp(void) {
+    if ((D_80120668 != 3) && ((sports_runner_display_slots[0].unk_0C == 0) || (D_8014A3E0 != 0))) {
+        if ((sports_controller_c_player_controller.unk_10 < 0) || (D_8014A3DE == 0)) {
+            sports_controller_c_player_controller.position.w -= D_8014A3E0;
         } else {
-            D_8014A3E4.position.w += 0x8000;
+            sports_controller_c_player_controller.position.w += 0x8000;
         }
     }
-    if (D_8014A3E4.position.h[1] >= -0x1F) {
-        D_8014A3E4.position.h[1] = -0x20;
+    if (sports_controller_c_player_controller.position.h[1] >= -0x1F) {
+        sports_controller_c_player_controller.position.h[1] = -0x20;
     }
-    if (D_8014A3E4.position.h[1] < -0x9F) {
-        D_8014A3E4.position.h[1] = -0xA0;
+    if (sports_controller_c_player_controller.position.h[1] < -0x9F) {
+        sports_controller_c_player_controller.position.h[1] = -0xA0;
     }
-    D_80120676 = D_8014A3E4.position.h[1];
+    D_80120676 = sports_controller_c_player_controller.position.h[1];
 }
 
-void func_80146A60(void) {
+void sports_controller_c_player_sequence_select(void) {
     s32 flags;
 
-    if (D_8014A454[0].unk_0C == 0) {
-        func_80146B8C();
+    if (sports_runner_display_slots[0].unk_0C == 0) {
+        sports_controller_c_player_sequence_advance();
         flags = game_state.pad_held;
         if ((flags & 0xA) && !(flags & 5)) {
-            if (D_8014A3E4.unk_02 >= 0x15 && D_8014A3E0 > 0) {
+            if (sports_controller_c_player_controller.unk_02 >= 0x15 && D_8014A3E0 > 0) {
                 audio_command(0x507);
-                D_8014A3E4.unk_02 = 0;
+                sports_controller_c_player_controller.unk_02 = 0;
             }
-            D_80120668 = D_8014A4D4[D_8014A3E4.unk_00];
+            D_80120668 = D_8014A4D4[sports_controller_c_player_controller.unk_00];
             return;
         }
         if ((flags & 5) && (flags & 0xA) == 0) {
-            if (D_8014A3E4.unk_02 >= 0x15 && D_8014A3E0 > 0) {
+            if (sports_controller_c_player_controller.unk_02 >= 0x15 && D_8014A3E0 > 0) {
                 audio_command(0x508);
-                D_8014A3E4.unk_02 = 0;
+                sports_controller_c_player_controller.unk_02 = 0;
             }
-            D_80120668 = D_8014A4E4[D_8014A3E4.unk_00];
+            D_80120668 = D_8014A4E4[sports_controller_c_player_controller.unk_00];
             return;
         }
-        D_80120668 = D_8014A4C4[D_8014A3E4.unk_00];
+        D_80120668 = D_8014A4C4[sports_controller_c_player_controller.unk_00];
     }
 }
 
-void func_80146B8C(void) {
+void sports_controller_c_player_sequence_advance(void) {
     if (D_8014A3E0 == 0) {
-        D_8014A3E4.unk_00 = 0;
+        sports_controller_c_player_controller.unk_00 = 0;
         return;
     }
-    if (((u32)D_8014A3E4.unk_04 >= 6 && D_8014A3E4.unk_10 > 0) || ((u32)D_8014A3E4.unk_04 >= 0xB && D_8014A3E4.unk_14 != 0)) {
-        if (D_8014A3E4.unk_00 >= 7) {
-            D_8014A3E4.unk_00 = 2;
-            D_8014A3E4.unk_04 = 0;
+    if (((u32)sports_controller_c_player_controller.unk_04 >= 6 && sports_controller_c_player_controller.unk_10 > 0) || ((u32)sports_controller_c_player_controller.unk_04 >= 0xB && sports_controller_c_player_controller.unk_14 != 0)) {
+        if (sports_controller_c_player_controller.unk_00 >= 7) {
+            sports_controller_c_player_controller.unk_00 = 2;
+            sports_controller_c_player_controller.unk_04 = 0;
         } else {
-            D_8014A3E4.unk_00++;
-            D_8014A3E4.unk_04 = 0;
+            sports_controller_c_player_controller.unk_00++;
+            sports_controller_c_player_controller.unk_04 = 0;
         }
     }
 }
 
-void func_80146C20(void) {
-    D_8014A3E0 += D_8014A3E4.unk_10;
+void sports_controller_c_scroll_integrate(void) {
+    D_8014A3E0 += sports_controller_c_player_controller.unk_10;
     if (D_8014A3D4 < D_8014A3E0) {
         D_8014A3E0 = D_8014A3D4;
     }
-    if (D_8014A3E0 < 0 || (D_8014A3E4.unk_10 < 0 && D_8014A3E4.position.h[1] < -0x9F)) {
+    if (D_8014A3E0 < 0 || (sports_controller_c_player_controller.unk_10 < 0 && sports_controller_c_player_controller.position.h[1] < -0x9F)) {
         D_8014A3E0 = 0;
     }
     D_8014A3DC += D_8014A3E0; /* the fixed-point high half (+2) is read as an s16 below */
@@ -681,17 +681,17 @@ void func_80146C20(void) {
     Scroll(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
 }
 
-s32 func_80146D18(void) {
-    s32 i;
-    s32 k;
-    TkS16x4 tbl;
+s32 sports_controller_c_finish_order_update(void) {
+    s32 finish_order_fill_index;
+    s32 finish_order_index;
+    TkS16x4 finish_marker_offsets;
 
-    tbl = D_8014A5F4;
+    finish_marker_offsets = D_8014A5F4;
     if (DISP(104).flags == 0 && D_8014A3DE >= 0x781) {
-        for (k = 0; k < 3; k++) {
-            DISP(104 + k).flags = 0x40;
-            DISP(104 + k).draw_flags = 0xA4;
-            if (D_8014A400[k].unk_01 == 1) {
+        for (finish_order_index = 0; finish_order_index < 3; finish_order_index++) {
+            DISP(104 + finish_order_index).flags = 0x40;
+            DISP(104 + finish_order_index).draw_flags = 0xA4;
+            if (sports_controller_c_cpu_controllers[finish_order_index].unk_01 == 1) {
                 DISP(105).draw_flags = 0;
             }
         }
@@ -699,14 +699,14 @@ s32 func_80146D18(void) {
     if (DISP(105).unk_18 == 0x4F) {
         DISP(105).draw_flags |= 0x40;
     }
-    for (k = 0; k < 3; k++) {
-        if (D_8014A400[k].unk_01 == 1 && DISP(97 + k).x >= DISP(105).x + 0x30) {
+    for (finish_order_index = 0; finish_order_index < 3; finish_order_index++) {
+        if (sports_controller_c_cpu_controllers[finish_order_index].unk_01 == 1 && DISP(97 + finish_order_index).x >= DISP(105).x + 0x30) {
             DISP(105).draw_flags = 0;
             DISP(105).flags = 0;
         }
     }
-    for (k = 0; &tbl.v[k] < &tbl.v[4]; k++) {
-        DISP(104 + k).x = tbl.v[k] - D_8014A3DE * 2 - 0xA0;
+    for (finish_order_index = 0; &finish_marker_offsets.v[finish_order_index] < &finish_marker_offsets.v[4]; finish_order_index++) {
+        DISP(104 + finish_order_index).x = finish_marker_offsets.v[finish_order_index] - D_8014A3DE * 2 - 0xA0;
     }
     if (DISP(107).x < -0xDC && DISP(107).draw_flags != 0) {
         DISP(107).draw_flags = 0;
@@ -720,111 +720,111 @@ s32 func_80146D18(void) {
             DISP(105).unk_18 = 0x4F;
             DISP(105).x = DISP(106).x + 0x20;
         }
-        k = 0;
-        while (D_8014A3D8[k] != 0) {
-            k++;
+        finish_order_index = 0;
+        while (D_8014A3D8[finish_order_index] != 0) {
+            finish_order_index++;
         }
-        D_8014A3D8[k] = 1;
-        for (i = k + 1; i < 4; i++) {
-            D_8014A3D8[i] = func_80146FA0();
+        D_8014A3D8[finish_order_index] = 1;
+        for (finish_order_fill_index = finish_order_index + 1; finish_order_fill_index < 4; finish_order_fill_index++) {
+            D_8014A3D8[finish_order_fill_index] = sports_controller_c_cpu_place_select();
         }
         return 1;
     }
     return 0;
 }
 
-/* FAKE: v[6] as in func_8013815C. T-0016 */
-s32 func_80146FA0(void) {
-    s16 v[6];
-    s32 i;
+/* FAKE: v[6] as in sports_runner_cpu_place_select. T-0016 */
+s32 sports_controller_c_cpu_place_select(void) {
+    s16 cpu_place_metric_values[6];
+    s32 cpu_runner_index;
 
-    for (i = 0; i < 3; i++) {
-        if (D_8014A400[i].unk_01 == 0) {
-            v[i] = *(s16 *)(actor_pool + i * 0x44 + 0x19EA);
+    for (cpu_runner_index = 0; cpu_runner_index < 3; cpu_runner_index++) {
+        if (sports_controller_c_cpu_controllers[cpu_runner_index].unk_01 == 0) {
+            cpu_place_metric_values[cpu_runner_index] = *(s16 *)(actor_pool + cpu_runner_index * 0x44 + 0x19EA);
         } else {
-            v[i] = -0xF00;
+            cpu_place_metric_values[cpu_runner_index] = -0xF00;
         }
     }
-    if (v[0] >= v[1] && v[0] >= v[2]) {
-        D_8014A400[0].unk_01 = 1;
+    if (cpu_place_metric_values[0] >= cpu_place_metric_values[1] && cpu_place_metric_values[0] >= cpu_place_metric_values[2]) {
+        sports_controller_c_cpu_controllers[0].unk_01 = 1;
         return 2;
     }
-    if (v[1] >= v[2]) {
-        D_8014A400[1].unk_01 = 1;
+    if (cpu_place_metric_values[1] >= cpu_place_metric_values[2]) {
+        sports_controller_c_cpu_controllers[1].unk_01 = 1;
         return 3;
     }
-    D_8014A400[2].unk_01 = 1;
+    sports_controller_c_cpu_controllers[2].unk_01 = 1;
     return 4;
 }
 
-void func_80147068(void) {
-    func_801470A0();
-    func_80147120();
-    func_80147210();
-    func_80147318();
+void sports_controller_c_cpu_frame_update(void) {
+    sports_controller_c_cpu_velocity_target_update();
+    sports_controller_c_cpu_motion_update();
+    sports_controller_c_cpu_position_integrate();
+    sports_controller_c_slot_animation_update();
 }
 
-void func_801470A0(void) {
-    s32 i;
-    Lim3 lim;
+void sports_controller_c_cpu_velocity_target_update(void) {
+    s32 cpu_runner_index;
+    Lim3 cpu_velocity_limits;
 
-    lim = D_8014A5FC;
-    for (i = 0; i < 3; i++) {
-        if (D_8014A454[i + 1].unk_0C != 0) {
-            D_8014A400[i].unk_10 = -0x4000;
+    cpu_velocity_limits = D_8014A5FC;
+    for (cpu_runner_index = 0; cpu_runner_index < 3; cpu_runner_index++) {
+        if (sports_runner_display_slots[cpu_runner_index + 1].unk_0C != 0) {
+            sports_controller_c_cpu_controllers[cpu_runner_index].unk_10 = -0x4000;
         } else {
-            D_8014A400[i].unk_10 = lim.v[i];
+            sports_controller_c_cpu_controllers[cpu_runner_index].unk_10 = cpu_velocity_limits.v[cpu_runner_index];
         }
     }
 }
 
-void func_80147120(void) {
+void sports_controller_c_cpu_motion_update(void) {
     s32 i;
-    Lim3 lim;
+    Lim3 cpu_motion_position_limits;
 
-    lim = D_8014A608;
+    cpu_motion_position_limits = D_8014A608;
     for (i = 0; i < 3; i++) {
-        if (D_8014A400[i].unk_01 == 1 && D_80120896 + 0x140 < *(s16 *)(actor_pool + i * 0x44 + 0x19EA)) {
-            D_8014A400[i].unk_14 = 0;
-        } else if (D_8014A400[i].unk_0C >= 0xB) {
-            D_8014A400[i].unk_14 += D_8014A400[i].unk_10;
-            if (D_8014A400[i].unk_14 < 0) {
-                D_8014A400[i].unk_14 = 0;
+        if (sports_controller_c_cpu_controllers[i].unk_01 == 1 && D_80120896 + 0x140 < *(s16 *)(actor_pool + i * 0x44 + 0x19EA)) {
+            sports_controller_c_cpu_controllers[i].unk_14 = 0;
+        } else if (sports_controller_c_cpu_controllers[i].unk_0C >= 0xB) {
+            sports_controller_c_cpu_controllers[i].unk_14 += sports_controller_c_cpu_controllers[i].unk_10;
+            if (sports_controller_c_cpu_controllers[i].unk_14 < 0) {
+                sports_controller_c_cpu_controllers[i].unk_14 = 0;
             }
-            if (lim.v[i] < D_8014A400[i].unk_14) {
-                D_8014A400[i].unk_14 = lim.v[i];
+            if (cpu_motion_position_limits.v[i] < sports_controller_c_cpu_controllers[i].unk_14) {
+                sports_controller_c_cpu_controllers[i].unk_14 = cpu_motion_position_limits.v[i];
             }
-            D_8014A400[i].unk_0C = 0;
+            sports_controller_c_cpu_controllers[i].unk_0C = 0;
         }
     }
 }
 
 
-void func_80147210(void) {
+void sports_controller_c_cpu_position_integrate(void) {
     s32 i;
-    s32 k;
-    TaiikuController *v;
+    s32 cpu_order_list_index;
+    SportsController *v;
     u8 *a;
-    s32 d;
-    s32 x;
+    s32 cpu_position_origin_offset;
+    s32 cpu_actor_relative_position;
 
-    for (i = 0, v = D_8014A400, a = actor_pool, d = D_8014A3DE; i < 3; i++, v++, a += 0x44) {
+    for (i = 0, v = sports_controller_c_cpu_controllers, a = actor_pool, cpu_position_origin_offset = D_8014A3DE; i < 3; i++, v++, a += 0x44) {
         v->position.w += v->unk_14;
-        x = v->position.h[1] - d;
-        *(s16 *)(a + 0x19EA) = x - 0xA0;
+        cpu_actor_relative_position = v->position.h[1] - cpu_position_origin_offset;
+        *(s16 *)(a + 0x19EA) = cpu_actor_relative_position - 0xA0;
         if (D_80120896 + (i + 1) * 8 < *(s16 *)(a + 0x19EA) + 0x40 && v->unk_01 == 0) {
             D_801208CC = 0x4F;
-            k = 0;
+            cpu_order_list_index = 0;
             if (D_8014A3D8[0] != 0) {
                 do {
-                    k += 1;
-                } while (D_8014A3D8[k] != 0);
+                    cpu_order_list_index += 1;
+                } while (D_8014A3D8[cpu_order_list_index] != 0);
             }
-            D_8014A3D8[k] = i + 2;
+            D_8014A3D8[cpu_order_list_index] = i + 2;
             v->unk_01 = 1;
-            x = v->position.h[1] - d;
+            cpu_actor_relative_position = v->position.h[1] - cpu_position_origin_offset;
         }
-        if (x >= 0x1E1 || x < -0xA0) {
+        if (cpu_actor_relative_position >= 0x1E1 || cpu_actor_relative_position < -0xA0) {
             a[0x19C7] = 0;
         } else {
             a[0x19C7] = 0xA4;
@@ -832,40 +832,40 @@ void func_80147210(void) {
     }
 }
 
-void func_80147318(void) {
+void sports_controller_c_slot_animation_update(void) {
     s32 i;
-    s32 off;
+    s32 cpu_slot_sequence_offset;
     Actor *rec;
 
     for (i = 0; i < 3; i++) {
-        switch (D_8014A454[i + 1].unk_0C) {
+        switch (sports_runner_display_slots[i + 1].unk_0C) {
         case 0:
-            if (D_8014A400[i].unk_04 >= 6) {
+            if (sports_controller_c_cpu_controllers[i].unk_04 >= 6) {
                 rec = &((Actor *)actor_pool)[i];
-                off = i * 0x13 + 0x13;
-                if (D_8014A400[i].unk_00 >= 7) {
-                    D_8014A400[i].unk_00 = 2;
-                    D_8014A400[i].unk_04 = 0;
+                cpu_slot_sequence_offset = i * 0x13 + 0x13;
+                if (sports_controller_c_cpu_controllers[i].unk_00 >= 7) {
+                    sports_controller_c_cpu_controllers[i].unk_00 = 2;
+                    sports_controller_c_cpu_controllers[i].unk_04 = 0;
                 } else {
-                    D_8014A400[i].unk_00 += 1;
-                    D_8014A400[i].unk_04 = 0;
+                    sports_controller_c_cpu_controllers[i].unk_00 += 1;
+                    sports_controller_c_cpu_controllers[i].unk_04 = 0;
                 }
-                if (D_8014A454[i + 1].unk_08 > 0) {
-                    rec[97].unk_18 = D_8014A4D4[D_8014A400[i].unk_00] + off;
-                } else if (D_8014A454[i + 1].unk_08 < 0) {
-                    rec[97].unk_18 = D_8014A4E4[D_8014A400[i].unk_00] + off;
+                if (sports_runner_display_slots[i + 1].unk_08 > 0) {
+                    rec[97].unk_18 = D_8014A4D4[sports_controller_c_cpu_controllers[i].unk_00] + cpu_slot_sequence_offset;
+                } else if (sports_runner_display_slots[i + 1].unk_08 < 0) {
+                    rec[97].unk_18 = D_8014A4E4[sports_controller_c_cpu_controllers[i].unk_00] + cpu_slot_sequence_offset;
                 } else {
-                    rec[97].unk_18 = D_8014A4C4[D_8014A400[i].unk_00] + off;
+                    rec[97].unk_18 = D_8014A4C4[sports_controller_c_cpu_controllers[i].unk_00] + cpu_slot_sequence_offset;
                 }
             }
             break;
         case 1:
-            if (D_8014A454[i + 1].unk_0D < 0x32) {
+            if (sports_runner_display_slots[i + 1].motion_timer < 0x32) {
                 ((Actor *)actor_pool)[97 + i].unk_18 = i * 2 + 0x53;
             }
             break;
         case 2:
-            if (D_8014A454[i + 1].unk_0D < 0x32) {
+            if (sports_runner_display_slots[i + 1].motion_timer < 0x32) {
                 ((Actor *)actor_pool)[97 + i].unk_18 = i * 2 + 0x54;
             }
             break;
@@ -876,55 +876,55 @@ void func_80147318(void) {
     }
 }
 
-void func_80147520(void) {
+void sports_controller_c_frame_update(void) {
     s32 var_s0;
 
-    func_8014756C();
+    sports_controller_c_motion_choice_update();
     var_s0 = 0;
     do {
-        func_80147A6C(var_s0);
-        func_80147B14(var_s0);
+        sports_controller_c_slot_position_step(var_s0);
+        sports_controller_c_slot_actor_position_update(var_s0);
         var_s0 += 1;
     } while (var_s0 != 4);
 }
 
-void func_8014756C(void) {
-    func_80147594();
-    func_80147928();
+void sports_controller_c_motion_choice_update(void) {
+    sports_controller_c_motion_choices_update();
+    sports_controller_c_player_direction_update();
 }
 
-void func_80147594(void) {
+void sports_controller_c_motion_choices_update(void) {
     s32 k;
-    s32 i; /* i, k and r are declared before thr: it sits 12 bytes below the frame top */
+    s32 i; /* i, k and r are declared before cpu_motion_adjustment_thresholds: it sits 12 bytes below the frame top */
     s32 r;
-    Lim3 thr;
+    Lim3 cpu_motion_adjustment_thresholds;
 
-    thr = D_8014A614;
+    cpu_motion_adjustment_thresholds = D_8014A614;
     i = 0;
     do {
-        if (D_8014A454[i + 1].unk_14 >= 0x65) {
+        if (sports_runner_display_slots[i + 1].unk_14 >= 0x65) {
             r = rand() & 0x1F;
             if (r < 0xA) {
-                D_8014A454[i + 1].unk_08 = -0x64;
+                sports_runner_display_slots[i + 1].unk_08 = -0x64;
             } else if (r < 0x14) {
-                D_8014A454[i + 1].unk_08 = 0x64;
+                sports_runner_display_slots[i + 1].unk_08 = 0x64;
             } else {
-                D_8014A454[i + 1].unk_08 = 0;
+                sports_runner_display_slots[i + 1].unk_08 = 0;
             }
-            D_8014A454[i + 1].unk_14 = 0;
+            sports_runner_display_slots[i + 1].unk_14 = 0;
         }
         i++;
-    } while (&D_8014A4A8 != &D_8014A454[i]); /* bounds of the loops below: the next table symbol, as in the original (T-16553) */
+    } while (&D_8014A4A8 != &sports_runner_display_slots[i]); /* bounds of the loops below: the next table symbol, as in the original (T-16553) */
     k = 0; do { /* one line: as1 schedules the move after the hoisted table addresses (T-16553) */
-        if (D_8014A454[k + 1].unk_18 >= 0xB) {
+        if (sports_runner_display_slots[k + 1].unk_18 >= 0xB) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4D8[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).x + 0x4F < DISP(101 + k).x && (rand() & 0xFF) < thr.v[k]) {
-                        D_8014A454[k + 1].unk_08 -= 0x22;
+                    if (DISP(97 + k).x + 0x4F < DISP(101 + k).x && (rand() & 0xFF) < cpu_motion_adjustment_thresholds.v[k]) {
+                        sports_runner_display_slots[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).x < DISP(97 + k).x + 0x40 && (rand() & 0xFF) < thr.v[k]) {
-                        D_8014A454[k + 1].unk_08 += 0x22;
+                    if (DISP(101 + k).x < DISP(97 + k).x + 0x40 && (rand() & 0xFF) < cpu_motion_adjustment_thresholds.v[k]) {
+                        sports_runner_display_slots[k + 1].unk_08 += 0x22;
                     }
                 }
                 i++;
@@ -932,11 +932,11 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4E8[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).x + 0x2D < DISP(101 + k).x && (rand() & 0xFF) < thr.v[k]) {
-                        D_8014A454[k + 1].unk_08 -= 0x22;
+                    if (DISP(97 + k).x + 0x2D < DISP(101 + k).x && (rand() & 0xFF) < cpu_motion_adjustment_thresholds.v[k]) {
+                        sports_runner_display_slots[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).x < DISP(97 + k).x + 0x28 && (rand() & 0xFF) < thr.v[k]) {
-                        D_8014A454[k + 1].unk_08 += 0x22;
+                    if (DISP(101 + k).x < DISP(97 + k).x + 0x28 && (rand() & 0xFF) < cpu_motion_adjustment_thresholds.v[k]) {
+                        sports_runner_display_slots[k + 1].unk_08 += 0x22;
                     }
                 }
                 i++;
@@ -944,120 +944,120 @@ void func_80147594(void) {
             i = 0;
             do {
                 if (DISP(97 + k).unk_18 == D_8014A4C4[i] + (k * 0x13 + 0x13)) {
-                    if (DISP(97 + k).x + 0x2D < DISP(101 + k).x && (rand() & 0xFF) < thr.v[k]) {
-                        D_8014A454[k + 1].unk_08 -= 0x22;
+                    if (DISP(97 + k).x + 0x2D < DISP(101 + k).x && (rand() & 0xFF) < cpu_motion_adjustment_thresholds.v[k]) {
+                        sports_runner_display_slots[k + 1].unk_08 -= 0x22;
                     }
-                    if (DISP(101 + k).x < DISP(97 + k).x + 0x28 && (rand() & 0xFF) < thr.v[k]) {
-                        D_8014A454[k + 1].unk_08 += 0x22;
+                    if (DISP(101 + k).x < DISP(97 + k).x + 0x28 && (rand() & 0xFF) < cpu_motion_adjustment_thresholds.v[k]) {
+                        sports_runner_display_slots[k + 1].unk_08 += 0x22;
                     }
                 }
                 i++;
             } while (D_8014A4D4 != &D_8014A4C4[i]);
-            D_8014A454[k + 1].unk_18 = 0;
+            sports_runner_display_slots[k + 1].unk_18 = 0;
         }
         k++;
     } while (k != 3);
 }
 
-void func_80147928(void) {
-    s32 r;
-    s32 bonus;
-    u32 chance;
+void sports_controller_c_player_direction_update(void) {
+    s32 player_direction_random_value;
+    s32 player_direction_random_bonus;
+    u32 player_direction_random_percentile;
 
-    if ((D_8014A3E4.unk_14 > 0) || (D_8014A3E0 != 0)) {
-        if (D_8014A454[0].unk_14 >= 0x65 && D_8014A454[0].unk_08 == 0) {
-            r = rand();
-            bonus = (D_8014A3E4.unk_14 == D_8014A3D4) ? 0xF : 0;
-            chance = (r % 100) & 0xFFFF;
-            if (chance < bonus + 0x19) {
-                D_8014A454[0].unk_08 = -0x64;
-                D_8014A454[0].unk_14 = 0;
-            } else if (chance < bonus + 0x32) {
-                D_8014A454[0].unk_08 = 0x64;
-                D_8014A454[0].unk_14 = 0;
+    if ((sports_controller_c_player_controller.unk_14 > 0) || (D_8014A3E0 != 0)) {
+        if (sports_runner_display_slots[0].unk_14 >= 0x65 && sports_runner_display_slots[0].unk_08 == 0) {
+            player_direction_random_value = rand();
+            player_direction_random_bonus = (sports_controller_c_player_controller.unk_14 == D_8014A3D4) ? 0xF : 0;
+            player_direction_random_percentile = (player_direction_random_value % 100) & 0xFFFF;
+            if (player_direction_random_percentile < player_direction_random_bonus + 0x19) {
+                sports_runner_display_slots[0].unk_08 = -0x64;
+                sports_runner_display_slots[0].unk_14 = 0;
+            } else if (player_direction_random_percentile < player_direction_random_bonus + 0x32) {
+                sports_runner_display_slots[0].unk_08 = 0x64;
+                sports_runner_display_slots[0].unk_14 = 0;
             }
         }
         if ((game_state.pad_held & 0xA) && !(game_state.pad_held & 5)) {
-            D_8014A454[0].unk_08 -= 0xB;
-            if (D_8014A454[0].unk_08 == 0) {
-                D_8014A454[0].unk_14 = 0;
+            sports_runner_display_slots[0].unk_08 -= 0xB;
+            if (sports_runner_display_slots[0].unk_08 == 0) {
+                sports_runner_display_slots[0].unk_14 = 0;
             }
         }
         if (game_state.pad_held & 5) {
             if ((game_state.pad_held & 0xA) == 0) {
-                D_8014A454[0].unk_08 += 0xB;
-                if (D_8014A454[0].unk_08 == 0) {
-                    D_8014A454[0].unk_14 = 0;
+                sports_runner_display_slots[0].unk_08 += 0xB;
+                if (sports_runner_display_slots[0].unk_08 == 0) {
+                    sports_runner_display_slots[0].unk_14 = 0;
                 }
             }
         }
     }
 }
 
-void func_80147A6C(s32 index) {
-    TaiikuSlot1C *slot;
+void sports_controller_c_slot_position_step(s32 index) {
+    SportsRunnerDisplaySlot *slot;
 
-    slot = &D_8014A454[index];
+    slot = &sports_runner_display_slots[index];
     /* FAKE: this empty test preserves the slot pointer's register range. T-10020. */
     if (!slot) {
     }
-    if (slot->unk_0C == 0 && (index != 0 || D_8014A3E4.unk_10 > 0 || D_8014A3E0 != 0) && slot->unk_16 >= 6) {
+    if (slot->unk_0C == 0 && (index != 0 || sports_controller_c_player_controller.unk_10 > 0 || D_8014A3E0 != 0) && slot->cooldown >= 6) {
         if (slot->unk_08 > 0) {
             slot->unk_02++;
-            slot->unk_16 = 0;
+            slot->cooldown = 0;
         }
         if (slot->unk_08 < 0) {
-            slot->unk_16 = 0;
+            slot->cooldown = 0;
             slot->unk_02--;
         }
     }
 }
 
-void func_80147B14(s32 index) {
+void sports_controller_c_slot_actor_position_update(s32 index) {
     s32 i;
-    Fix32 px;
-    Fix32 py;
-    TaiikuHalf10 t60;
-    TaiikuHalf10 t4C;
-    TaiikuHalf8 t3C;
-    TaiikuHalf8 t2C;
+    Fix32 slot_actor_fixed_x;
+    Fix32 slot_actor_fixed_y;
+    TaiikuHalf10 sequence_group_a_y_offsets;
+    TaiikuHalf10 sequence_group_a_x_offsets;
+    TaiikuHalf8 sequence_group_b_y_offsets;
+    TaiikuHalf8 sequence_group_c_y_offsets;
 
-    t60 = D_8014A620;
-    t4C = D_8014A634;
-    t3C = D_8014A648;
-    t2C = D_8014A658;
-    px.w = ((ActorFixed *)actor_pool)[index + 96].x.w;
-    px.w += *(s32 *)&D_8014A454[index].unk_00;
-    py.w = ((ActorFixed *)actor_pool)[index + 96].y.w;
-    py.w += *(s32 *)&D_8014A454[index].unk_04;
+    sequence_group_a_y_offsets = D_8014A620;
+    sequence_group_a_x_offsets = D_8014A634;
+    sequence_group_b_y_offsets = D_8014A648;
+    sequence_group_c_y_offsets = D_8014A658;
+    slot_actor_fixed_x.w = ((ActorFixed *)actor_pool)[index + 96].x.w;
+    slot_actor_fixed_x.w += *(s32 *)&sports_runner_display_slots[index].unk_00;
+    slot_actor_fixed_y.w = ((ActorFixed *)actor_pool)[index + 96].y.w;
+    slot_actor_fixed_y.w += *(s32 *)&sports_runner_display_slots[index].unk_04;
     i = 0;
     do {
         if (DISP(index + 96).unk_18 == D_8014A4C4[i] + index * 0x13) {
-            py.h[1] += t60.h[i];
-            px.h[1] += t4C.h[i];
+            slot_actor_fixed_y.h[1] += sequence_group_a_y_offsets.h[i];
+            slot_actor_fixed_x.h[1] += sequence_group_a_x_offsets.h[i];
         }
         i++;
     } while (&D_8014A4C4[i] < D_8014A4D4);
     i = 2;
     do {
         if (DISP(index + 96).unk_18 == D_8014A4D4[i] + index * 0x13) {
-            px.h[1] += 0x16;
-            py.h[1] -= 4;
-            py.h[1] += t3C.h[i];
+            slot_actor_fixed_x.h[1] += 0x16;
+            slot_actor_fixed_y.h[1] -= 4;
+            slot_actor_fixed_y.h[1] += sequence_group_b_y_offsets.h[i];
         }
         i++;
     } while (&D_8014A4D4[i] < &D_8014A4D4[8]);
     for (i = 2; i < 8; i++) {
         if (DISP(index + 96).unk_18 == D_8014A4E4[i] + index * 0x13) {
-            px.h[1] -= 0xC;
-            py.h[1] -= 4;
-            py.h[1] += t2C.h[i];
+            slot_actor_fixed_x.h[1] -= 0xC;
+            slot_actor_fixed_y.h[1] -= 4;
+            slot_actor_fixed_y.h[1] += sequence_group_c_y_offsets.h[i];
         }
     }
-    DISP(index + 100).x = px.h[1];
-    DISP(index + 100).y = py.h[1];
+    DISP(index + 100).x = slot_actor_fixed_x.h[1];
+    DISP(index + 100).y = slot_actor_fixed_y.h[1];
     for (index = 0; index < 3; index++) {
-        if (D_8014A400[index].position.h[1] - D_8014A3DE >= 0x1E1 || D_8014A400[index].position.h[1] - D_8014A3DE < -0xA0) {
+        if (sports_controller_c_cpu_controllers[index].position.h[1] - D_8014A3DE >= 0x1E1 || sports_controller_c_cpu_controllers[index].position.h[1] - D_8014A3DE < -0xA0) {
             DISP(101 + index).draw_flags = 0;
         } else {
             DISP(101 + index).draw_flags = 0xA4;
@@ -1065,31 +1065,31 @@ void func_80147B14(s32 index) {
     }
 }
 
-void func_80147F10(void) {
+void sports_controller_c_slot_motion_update(void) {
     s32 var_s0;
 
     var_s0 = 0;
     do {
-        func_80147F58(var_s0);
-        func_801482BC(var_s0);
+        sports_controller_c_slot_animation_threshold_check(var_s0);
+        sports_controller_c_slot_move_finish(var_s0);
         var_s0 += 1;
     } while (var_s0 != 4);
 }
 
-void func_80147F58(s32 arg0) {
+void sports_controller_c_slot_animation_threshold_check(s32 arg0) {
     s32 i; /* declared before tbl: the stack table sits 4 bytes below the locals area top (T-3330, T-16553) */
     TaiikuHalf8 tbl;
 
     tbl = D_8014A668;
-    if (D_8014A454[arg0].unk_0C == 0) {
+    if (sports_runner_display_slots[arg0].unk_0C == 0) {
         i = 0;
         do {
             if (DISP(arg0 + 96).unk_18 == D_8014A4C4[i] + arg0 * 0x13) {
                 if (tbl.h[i] + DISP(arg0 + 96).x + 0x46 < DISP(arg0 + 100).x) {
-                    func_80148194(arg0);
+                    sports_controller_c_slot_motion_a_start(arg0);
                 }
                 if (DISP(arg0 + 100).x < tbl.h[i] + DISP(arg0 + 96).x + 0x23) {
-                    func_80148228(arg0);
+                    sports_controller_c_slot_motion_b_start(arg0);
                 }
             }
             i++;
@@ -1098,10 +1098,10 @@ void func_80147F58(s32 arg0) {
         do {
             if (DISP(arg0 + 96).unk_18 == D_8014A4D8[i] + arg0 * 0x13) {
                 if (DISP(arg0 + 96).x + 0x5E < DISP(arg0 + 100).x) {
-                    func_80148194(arg0);
+                    sports_controller_c_slot_motion_a_start(arg0);
                 }
                 if (DISP(arg0 + 100).x < DISP(arg0 + 96).x + 0x3B) {
-                    func_80148228(arg0);
+                    sports_controller_c_slot_motion_b_start(arg0);
                 }
             }
             i++;
@@ -1110,10 +1110,10 @@ void func_80147F58(s32 arg0) {
         do {
             if (DISP(arg0 + 96).unk_18 == D_8014A4E8[i] + arg0 * 0x13) {
                 if (DISP(arg0 + 96).x + 0x3C < DISP(arg0 + 100).x) {
-                    func_80148194(arg0);
+                    sports_controller_c_slot_motion_a_start(arg0);
                 }
                 if (DISP(arg0 + 100).x < DISP(arg0 + 96).x + 0x19) {
-                    func_80148228(arg0);
+                    sports_controller_c_slot_motion_b_start(arg0);
                 }
             }
             i++;
@@ -1121,14 +1121,14 @@ void func_80147F58(s32 arg0) {
     }
 }
 
-void func_80148194(s32 arg0) {
+void sports_controller_c_slot_motion_a_start(s32 arg0) {
     u8 *temp_v0;
-    TaiikuSlot1C *temp_v1;
+    SportsRunnerDisplaySlot *temp_v1;
 
-    temp_v1 = &D_8014A454[arg0];
+    temp_v1 = &sports_runner_display_slots[arg0];
     temp_v0 = (arg0 * 0x44) + actor_pool;
     temp_v1->unk_0C = 1;
-    temp_v1->unk_0D = 0;
+    temp_v1->motion_timer = 0;
     *(s16 *)(temp_v0 + 0x1998) = (s16) ((arg0 * 2) + 0x51);
     *(s16 *)(temp_v0 + 0x1AB6) = (s16) (*(s16 *)(temp_v0 + 0x19A6) + 0x74);
     *(s16 *)(temp_v0 + 0x1ABA) = (s16) (*(s16 *)(temp_v0 + 0x19AA) + 0x32);
@@ -1139,14 +1139,14 @@ void func_80148194(s32 arg0) {
     }
 }
 
-void func_80148228(s32 arg0) {
+void sports_controller_c_slot_motion_b_start(s32 arg0) {
     u8 *temp_v0;
-    TaiikuSlot1C *temp_v1;
+    SportsRunnerDisplaySlot *temp_v1;
 
-    temp_v1 = &D_8014A454[arg0];
+    temp_v1 = &sports_runner_display_slots[arg0];
     temp_v0 = (arg0 * 0x44) + actor_pool;
     temp_v1->unk_0C = 2;
-    temp_v1->unk_0D = 0;
+    temp_v1->motion_timer = 0;
     *(s16 *)(temp_v0 + 0x1998) = (s16) ((arg0 * 2) + 0x52);
     *(s16 *)(temp_v0 + 0x1AB6) = (s16) (*(s16 *)(temp_v0 + 0x19A6) - 0x17);
     *(s16 *)(temp_v0 + 0x1ABA) = (s16) (*(s16 *)(temp_v0 + 0x19AA) + 0x32);
@@ -1157,21 +1157,21 @@ void func_80148228(s32 arg0) {
     }
 }
 
-void func_801482BC(s32 index) {
-    TaiikuController *controller;
-    TaiikuSlot1C *slot;
+void sports_controller_c_slot_move_finish(s32 index) {
+    SportsController *controller;
+    SportsRunnerDisplaySlot *slot;
 
-    slot = &D_8014A454[index];
-    if (slot->unk_0C != 0 && slot->unk_0D >= 0x65U) {
+    slot = &sports_runner_display_slots[index];
+    if (slot->unk_0C != 0 && slot->motion_timer >= 0x65U) {
         slot->unk_0C = 0;
         if (index == 0) {
-            D_8014A3E4.unk_00 = 0;
-            D_8014A3E4.unk_08 = 0;
-            D_8014A3E4.unk_0C = 0;
-            D_8014A3E4.unk_04 = 0;
-            D_8014A3E4.unk_14 = 0;
+            sports_controller_c_player_controller.unk_00 = 0;
+            sports_controller_c_player_controller.unk_08 = 0;
+            sports_controller_c_player_controller.unk_0C = 0;
+            sports_controller_c_player_controller.unk_04 = 0;
+            sports_controller_c_player_controller.unk_14 = 0;
         } else {
-            controller = &D_8014A400[index - 1];
+            controller = &sports_controller_c_cpu_controllers[index - 1];
             controller->unk_00 = 0;
             controller->unk_08 = 0;
             controller->unk_0C = 0;
@@ -1182,12 +1182,12 @@ void func_801482BC(s32 index) {
         slot->unk_06 = 0x19;
         slot->unk_08 = 0;
         slot->unk_14 = 0;
-        slot->unk_16 = 0;
-        slot->unk_0D = 0;
+        slot->cooldown = 0;
+        slot->motion_timer = 0;
     }
 }
 
-s32 func_80148370(void) {
+s32 sports_controller_c_result_actors_init(void) {
     s32 i;
 
     actor_clear_upper();
@@ -1198,7 +1198,7 @@ s32 func_80148370(void) {
         DISP(96 + i).draw_flags = 0xA4;
         DISP(96 + i).frame_table = (u8 *)D_80149FD8;
         DISP(96 + i).sequence_table = (u8 *)D_8014A010;
-        DISP(96 + i).tpage_table = (u8 *)D_8014A528;
+        DISP(96 + i).tpage_table = (u8 *)sports_controller_c_texture_page_buffer_ids_table_b;
         DISP(96 + i).unk_14 = D_8014A048;
         DISP(96 + i).unk_04 = 0;
         DISP(96 + i).unk_05 = 0x80;
@@ -1225,7 +1225,7 @@ s32 func_80148370(void) {
     DISP(104).flags = 1;
 }
 
-s32 func_801485C4(void) {
+s32 sports_controller_c_result_actor_approach(void) {
     s32 index;
     s32 chosen;
     u8 *p;
@@ -1249,7 +1249,7 @@ s32 func_801485C4(void) {
     return 1;
 }
 
-s32 func_80148678(void) {
+s32 sports_controller_c_result_sequence_shift(void) {
     s32 i;
     s32 n;
 
@@ -1272,7 +1272,7 @@ s32 func_80148678(void) {
     return 0;
 }
 
-void func_801487B4(void) {
+void sports_controller_c_result_actor_motion_start(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
@@ -1281,7 +1281,7 @@ void func_801487B4(void) {
     Vblnk_Timer_Init();
 }
 
-void func_80148820(void) {
+void sports_controller_c_result_sequence_advance(void) {
     s32 i;
     s32 n;
 

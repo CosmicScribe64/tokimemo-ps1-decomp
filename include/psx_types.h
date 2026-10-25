@@ -326,7 +326,7 @@ typedef struct DR_ENV {
 } DR_ENV; /* size 0x40 */
 
 /* PsyQ 3.x libgpu display and drawing environments (DISPENV, DRAWENV); sizes 0x14 and 0x5C as the
- * frame of func_80056BA8 shows. T-17014, T-25118 */
+ * frame of movie_play shows. T-17014, T-25118 */
 typedef struct DISPENV {
     /* 0x00 */ RECT disp;
     /* 0x08 */ RECT screen;

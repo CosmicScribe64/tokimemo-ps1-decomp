@@ -258,7 +258,7 @@ s32 career_choice_exam_room_load(void) {
     case 1:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            if (D_800B594C == -1) {
+            if (bg_decode_result == -1) {
                 dec_bg_reset();
                 dec_bg_cd_read(0x463B, 1);
             } else {

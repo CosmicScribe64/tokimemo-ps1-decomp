@@ -168,7 +168,7 @@ void encounter_yumi_scene_seven_step_dispatch(void) {
 void encounter_yumi_closing_bg_request(void) {
     s32 background_read_result;
 
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     background_read_result = dec_bg_cd_read(0x3FCE, 0);
     if (background_read_result == *dec_bg_show) {
         mode_step_next();
@@ -182,7 +182,7 @@ void encounter_yumi_closing_bg_request(void) {
 }
 
 s32 encounter_yumi_closing_bg_decode(void) {
-    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+    if ((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000) {
         dec_bg_reset();
         mode_step_next();
         game_state.mode_step -= 3;
@@ -223,7 +223,7 @@ void encounter_yumi_audio_command_2(void) {
 }
 
 void encounter_yumi_audio_load_1(void) {
-    D_800B3D60 = 0;
+    cd_read_checked = 0;
     audio_bank_load_start(1, 0xC65F, 0xC659, 0xD9E1, 0xD993, 0xD98E);
     mode_step_next();
 }
@@ -234,7 +234,7 @@ void encounter_yumi_closing_talk_portrait_update(void) {
         D_80122CE4 = 0;
         D_80122CF0 = 0;
         D_8011ED5B &= 0xFF7F;
-        D_800CA2AC = 0;
+        talk_voice_wait_frames = 0;
         D_800CA150 = (u16) D_800CA150 + 1;
         D_800CA154 = 0;
         mode_step_next();
@@ -289,15 +289,15 @@ void encounter_color_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4,
     p->r1 = (arg4 >> 16) & 0xFF; p->g1 = (arg4 >> 8) & 0xFF; p->b1 = arg4 & 0xFF;
     p->r2 = (arg4 >> 16) & 0xFF; p->g2 = (arg4 >> 8) & 0xFF; p->b2 = arg4 & 0xFF;
     p->r3 = (arg4 >> 16) & 0xFF; p->g3 = (arg4 >> 8) & 0xFF; p->b3 = arg4 & 0xFF;
-    p->x0 = gs->screen_center_x[draw_buffer] + arg0;
-    p->y0 = gs->screen_center_y[draw_buffer] + arg1;
-    p->x1 = gs->screen_center_x[draw_buffer] + arg0 + arg2;
-    p->y1 = gs->screen_center_y[draw_buffer] + arg1;
-    p->x2 = gs->screen_center_x[draw_buffer] + arg0;
-    p->y2 = gs->screen_center_y[draw_buffer] + arg1 + arg3;
-    p->x3 = gs->screen_center_x[draw_buffer] + arg0 + arg2;
-    p->y3 = gs->screen_center_y[draw_buffer] + arg1 + arg3;
-    AddPrim(D_800E8CA0 + (draw_buffer << 10) + arg5 * 4, (s32)p);
+    p->x0 = gs->draw_origin_x[draw_buffer] + arg0;
+    p->y0 = gs->draw_origin_y[draw_buffer] + arg1;
+    p->x1 = gs->draw_origin_x[draw_buffer] + arg0 + arg2;
+    p->y1 = gs->draw_origin_y[draw_buffer] + arg1;
+    p->x2 = gs->draw_origin_x[draw_buffer] + arg0;
+    p->y2 = gs->draw_origin_y[draw_buffer] + arg1 + arg3;
+    p->x3 = gs->draw_origin_x[draw_buffer] + arg0 + arg2;
+    p->y3 = gs->draw_origin_y[draw_buffer] + arg1 + arg3;
+    AddPrim(draw_ot_tags + (draw_buffer << 10) + arg5 * 4, (s32)p);
 }
 
 
@@ -306,7 +306,7 @@ void encounter_yumi_closing_actors_init(void) {
 
     D_800B5BD4 = 0xA;
     message_window_title_show(0);
-    func_80085234(1);
+    scene_still_layer_set(1);
     D_80122D04 = 1;
     D_80120657 = 0x80;
     D_8012069B = 0x80;
@@ -371,14 +371,14 @@ void encounter_yumi_scene_init_1(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
     encounter_scene_text_table = encounter_scene_text_section_67;
     encounter_scene_command_table = encounter_scene_command_section_67;
     encounter_scene_voice_table = encounter_scene_voice_section_67;
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     if (talk_work == 1) {
         game_state.girls[0xA].tokimeki += 1;
         game_state.girls[0xA].affection += 2;
@@ -409,7 +409,7 @@ void encounter_yumi_scene_init_2(void) {
     back_clear_switch(1);
     tpage_buf_clear();
     text_system_reset();
-    strcpy(D_800CA19C, "廊下");
+    strcpy(scene_place_title, "廊下");
     D_8011ED9F = 0;
     D_8011EDE3 = 0;
     D_800CA150 = 0;
@@ -419,7 +419,7 @@ void encounter_yumi_scene_init_2(void) {
     hizuke_init();
     message_window_init();
     text_marker_hide();
-    dec_bg_brightness = 0;
+    bg_brightness = 0;
     talk_names_set(game_state.current_girl);
     talk_clear();
     encounter_scene_scripts_bind();
@@ -465,7 +465,7 @@ void encounter_yumi_scene_init_3(void) {
     hud_icon_bar_update(1);
     parameter_show_init();
     parameter_show_init();
-    dec_bg_brightness = 0x80;
+    bg_brightness = 0x80;
     encounter_yumi_white_flash_enabled = 0;
     encounter_yumi_closing_actor_timer = 0;
     talk_names_set(game_state.current_girl);
@@ -473,8 +473,8 @@ void encounter_yumi_scene_init_3(void) {
     encounter_scene_text_table = encounter_scene_text_section_73;
     encounter_scene_command_table = encounter_scene_command_section_73;
     encounter_scene_voice_table = encounter_scene_voice_section_73;
-    strcpy(D_800CA19C, "玄関");
-    strcpy(D_800CA1DC, "自宅前");
+    strcpy(scene_place_title, "玄関");
+    strcpy(scene_place_title_2, "自宅前");
     game_state.girls[game_state.current_girl].affection += 2;
     check_para_limit();
     D_800CA368 = 0x49;
@@ -499,7 +499,7 @@ void encounter_yumi_closing_still_show(void) {
         game_state.quad_layer[i + 0x3A] = 0xC;
     }
     scene_anim_show(encounter_yumi_pack_2_animation_input_0, encounter_yumi_pack_2_animation_input_1, encounter_yumi_pack_2_animation_input_2, encounter_yumi_pack_2_animation_input_3);
-    D_800CA360 = 1;
+    scene_mouth_frames_reversed_saved = 1;
     ((Actor *)actor_pool_96)[1].unk_04 = 8;
     ((Actor *)actor_pool_96)->unk_04 = 8;
     ((Actor *)actor_pool_96)[1].unk_01 = 0xC;
