@@ -2080,3 +2080,7 @@ Browser inspection found the actual Godot activity clip decoded but overflowed i
 ## [2026-10-25] ticket | Add a disjoint save and audio service lane
 
 User requested more parallel port work. Started bounded save/schema and ordered audio-service implementation under [[tickets/T-29006-port-save-audio-services]], using the frozen session contracts and explicit native-audio limits. The existing text worker has a sealed revision awaiting root review and can prepare this separate packet without overlapping rules, presentation, content adapters or shared source.
+
+## [2026-10-25] build | Integrate the validated static content adapter
+
+Applied final V4 under [[tickets/T-29003-port-content-adapter]] after independent Standards and spec checks resolved the shared schema and runtime failures. Installed tests pass three Godot suites and ten Python/Draft 2020-12 cases; the test-only JSON Schema dependency is pinned and remains Docker-only. Actual external preview assets remain ignored. The first-activity table/media adapters remain separate bounded packets; full route and parent-ticket acceptance stay open.

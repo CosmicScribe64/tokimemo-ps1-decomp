@@ -41,3 +41,9 @@ image, `tools/port/run.sh test` for headless tests, and
 `tools/port/run.sh render-smoke` for the separate Xvfb/Mesa rendering check.
 Generated captures stay in `.asset-cache/port-smoke/`. Opening `project.godot`
 currently displays the project shell; gameplay is tracked by the Phase 3 tickets.
+
+Python content-contract tests use the pinned `tools/port/requirements-test.txt`.
+Install it into `/tmp` inside a disposable Docker container, then run
+`python3 -m unittest discover -s tools/port -p 'test_content.py'` with that
+directory on `PYTHONPATH`. Production pack readers do not require this test
+dependency.
