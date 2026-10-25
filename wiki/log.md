@@ -2192,3 +2192,7 @@ Opened [[tickets/T-29014-ordinary-command-content-coverage]] for commands 1 thro
 ## [2026-10-25] build | Install reviewed New Game entry flow
 
 Integrated seven reviewed source/test files for [[tickets/T-29012-native-new-game-initialization]]. Actual canonical replay passes 63 controller checks, five Python cases and eight rendered UI checks; the opening name-entry image is byte-identical to root's reviewed composition. Original kana/preset/font packs remain external, and no captured gameplay state is used. The scene stops before unimplemented prologue/service handling. Both review reports and exact installed source hashes are bound in the ignored live application receipt; ticket remains In Progress.
+
+## [2026-10-25] build | Publish installed name-entry scene capture
+
+Published only the actual installed Godot name-entry scene capture from [[tickets/T-29012-native-new-game-initialization]] to the local visual page and verified its served hash `2f752e66dd4e99f6c1ba24105029626b93fbbd2ff776bf411a53927d77931b12`. It is the reviewed development entry scene, not a native screenshot or native UI parity claim. Percentage estimates remain unchanged.
