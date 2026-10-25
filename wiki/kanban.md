@@ -61,6 +61,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-28006-sequence-music-export|T-28006 Read sequence music and preserve rendering dependencies]]
+
 
 
 
