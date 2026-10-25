@@ -2,6 +2,7 @@ extends RefCounted
 ## T-29012: boot_game_data_init and NAME_ENT profile commit, as byte stores.
 ## The result is an owned-state projection, not a command-ready game session.
 const Rng = preload("res://core/native_rng.gd")
+const ExternalPath = preload("res://services/external_content_path.gd")
 const SIZE: int = 0x1a8c
 const UNSET: int = 255
 
@@ -199,19 +200,7 @@ static func setup(previous: PackedByteArray, names: Dictionary, player: Dictiona
 const MAX_MANIFEST_BYTES: int = 65536
 
 static func _external_manifest_path_valid(path: String) -> bool:
-	# The current original-input runtime supports canonical absolute POSIX paths.
-	# Inspect every component before opening a file, including the leaf itself.
-	if not path.begins_with("/") or path.begins_with("//") or path.contains("\\") or path.contains(":") or path.simplify_path() != path: return false
-	var project: String = ProjectSettings.globalize_path("res://").trim_suffix("/")
-	if path == project or path.begins_with(project+"/"): return false
-	var root: DirAccess = DirAccess.open("/")
-	if root == null: return false
-	var current: String = ""
-	for component in path.split("/",false):
-		if component == "." or component == "..": return false
-		current += "/"+component
-		if root.is_link(current): return false
-	return FileAccess.file_exists(path)
+	return ExternalPath.is_external_file(path)
 
 static func load_tables(path: String) -> Dictionary:
 	# Payload digest pins authenticate the original values after JSON decoding.

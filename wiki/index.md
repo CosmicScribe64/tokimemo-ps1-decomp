@@ -20,6 +20,8 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 ## Port references
 
+- [[port-checkpoint]] - reviewed low-usage publication checkpoint and exact remaining integration work
+
 - [[widescreen-settings]] - reviewed original-art scaling and modern settings research; later implementation remains separate
 
 - [[spec/index]] - source-backed unit port specs, applied ledgers, evidence and explicit unknowns

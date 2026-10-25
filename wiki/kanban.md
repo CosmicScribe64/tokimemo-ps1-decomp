@@ -76,6 +76,7 @@ kanban-plugin: board
 ## In Progress
 
 
+
 - [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
 
 - [ ] [[tickets/T-29015-desktop-development-player|T-29015 Build a reproducible desktop development player]]
@@ -266,6 +267,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-28009-version-translation-overlays|T-28009 Version English translation overlays for repository backup]]
 
 - [ ] [[tickets/T-30005-widescreen-settings-feasibility|T-30005 Research widescreen art and modern settings feasibility]]
 

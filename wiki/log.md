@@ -2334,3 +2334,11 @@ Applied the reviewed two-file sparse VAB reader/test packet after root replay ma
 ## [2026-10-25] build | Integrate commands 5 and 6 content
 
 Applied the independently reviewed five-file capability packet and verified the installed clean exporter reproduces all 125 files. Fourteen Python, 90 Godot and five shared suites pass. Gameplay and other variants remain separate acceptance work. See [[tickets/T-29014-ordinary-command-content-coverage]].
+
+## [2026-10-25] decision | Freeze reviewed low-usage port checkpoint
+
+The user requested a good stopping point and push with 10% usage remaining. Directed workers to complete only current bounded operations, preserve exact checkpoints and idle. Added [[port-checkpoint]] with accepted behavior, unaccepted candidates, failed-probe limitation and next dependencies. Fresh original binary hashing passes 27/27; no full-port claim.
+
+## [2026-10-25] build | Reviewed usage checkpoint ready for publication
+
+[[tickets/T-28009-version-translation-overlays]] moved to Done after independent exact-payload/projection review; `translations/en/` preserves the user’s English returns without extracted Japanese fields. [[tickets/T-29015-desktop-development-player]] installs the reviewed shared path fix; actual macOS packed-export startup now accepts authenticated external rules and entry content. [[port-checkpoint]] records accepted work and remaining isolated drafts. Fresh matching proof remains 27/27 binaries. User authorized pushing this checkpoint; workers are idle and the emulator lease is released.

@@ -1,0 +1,13 @@
+{
+  "schema": "tokimemo.translation-backup.v1",
+  "source_units_sha256": "a2c06f02625792bd2e0807048c748bccdf60ad60662cf0eb0fc466622ae72560",
+  "main_rows": 55403,
+  "main_nonempty_targets": 54786,
+  "main_sha256": "28c2c8fbf6f31b8a56f8415328c94fc3aebed39dbe96e114096193602c4dd533",
+  "supplemental_rows": 508,
+  "supplemental_sha256": "49bbeaf94ce5cca88634fb17fb62e3b6a88b4032f86d769dc54ad4285e91e58c",
+  "supplemental_input_sha256": "9a9938f421a108aa0c5acc64943da6040946f5cfad1bed7a44b04b4243b007eb",
+  "supplemental_source_byte_coverage_verified": false,
+  "translation_quality_verified": false,
+  "image_translation_catalog_included": false
+}
