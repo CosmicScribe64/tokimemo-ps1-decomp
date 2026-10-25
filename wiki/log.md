@@ -2044,3 +2044,11 @@ Installed normal/optimized inventory CLIs, all 55,403 serialized unit fields and
 ## [2026-10-25] ingest | Export reviewed prologue NBN native cells
 
 [[tickets/T-28002-media-asset-export]] and [[tickets/T-28004-japanese-image-catalog]]: completed reviewed v4 source/output safety, native crop, test isolation and canonical identity repairs. Installed CLI/source-to-pixel/manual review/full catalog/gallery proof passes; all 1,368 nonselected assets and 3,488 prior region records persist. Static coverage becomes 371 sources / 3,512 active regions, including 24 new bounded no-text cells and separate raw bit-15 diagnostics. All 560 coherent asset tests pass without skips. Failed audit artifacts remain; JSON object-key representation was diagnosed with every inherited field/value preserved. [[assets-media]], [[asset-export]] and parent ticket updated. All asset tickets remain In Progress; matching source/build and original data unchanged.
+
+## [2026-10-25] ticket | Begin the Godot implementation tranche
+
+User authorized starting the port alongside continuing asset work. Claimed [[tickets/T-29001-godot-engine-foundation]], [[tickets/T-29002-native-runtime-and-oracle]] and [[tickets/T-29003-port-content-adapter]]; added scoped standards at port/godot/PORTING.md before implementation. [[phase3]] remains the approved plan. Matching source is protected; no playable or parity claim.
+
+## [2026-10-25] build | Verify bank-local VAB metadata while port work starts
+
+Installed V2 source and seven synthetic tests pass within 567 coherent asset tests, zero skips. Actual read-only exports cover all 63 original pairs, preserving explicit unsupported shapes and null rates; 60 banks yield 709 programs, 1,721 tones and 1,158 sample slots. [[assets-media]] records ignored outputs and rendering limits. [[tickets/T-28006-sequence-music-export]] stays In Progress. The earlier five-title text packet is held for corrected native club predicates; [[tickets/T-28001-text-script-export]] records the finding without changing coverage counts.
