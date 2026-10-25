@@ -2040,3 +2040,7 @@ Installed normal/optimized inventory CLIs, all 55,403 serialized unit fields and
 ## [2026-10-25] ticket | Complete the Godot port plan
 
 [[tickets/T-29000-plan-godot-port]] moves from In Review to Done after independent integrated Standards and spec PASS with no remaining findings. [[phase3]] is the canonical Astra-authored plan; six implementation tickets retain three Ready and three Backlog statuses. ROADMAP.md marks Phases 1 and 2 complete and Phase 3 planned. This closes planning, not an implemented or validated port. Original inputs, matching source/build and pending asset work remain unchanged.
+
+## [2026-10-25] ingest | Export reviewed prologue NBN native cells
+
+[[tickets/T-28002-media-asset-export]] and [[tickets/T-28004-japanese-image-catalog]]: completed reviewed v4 source/output safety, native crop, test isolation and canonical identity repairs. Installed CLI/source-to-pixel/manual review/full catalog/gallery proof passes; all 1,368 nonselected assets and 3,488 prior region records persist. Static coverage becomes 371 sources / 3,512 active regions, including 24 new bounded no-text cells and separate raw bit-15 diagnostics. All 560 coherent asset tests pass without skips. Failed audit artifacts remain; JSON object-key representation was diagnosed with every inherited field/value preserved. [[assets-media]], [[asset-export]] and parent ticket updated. All asset tickets remain In Progress; matching source/build and original data unchanged.
