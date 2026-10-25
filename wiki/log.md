@@ -2005,3 +2005,7 @@ Installed bank CLIs reproduce the reviewed graph and a current-catalog graph dif
 ## [2026-10-25] query | Hold NBN integration for test isolation
 
 [[tickets/T-28002-media-asset-export]]: the bounded v2 native/pixel/output repairs pass independent review, but root composition catches import-time test mutation of shared repository/cache globals, breaking an existing CDDA test. The 536-test failure is retained; no live NBN code was applied. Owner prepares separate v3 with scoped cleanup and regression coverage. Current published bank/text tooling remains at 528 passing tests; original data and game source are unchanged.
+
+## [2026-10-25] query | Hold instrument metadata for declared size validation
+
+[[tickets/T-28006-sequence-music-export]]: independent VAB reader review checks all 63 original bank pairs and identifies an omitted/unchecked declared total size. Sixty bank mappings pass independent byte/field/extent checks and three remain explicitly unsupported. Candidate v1 stays isolated; owner prepares v2 size validation and complete status inventory. Published sequence and conditional bank tooling retain 528 passing tests; no new asset/tool completion or native WAV claim.
