@@ -75,7 +75,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-30005-widescreen-settings-feasibility|T-30005 Research widescreen art and modern settings feasibility]]
 
 - [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
 
@@ -267,6 +266,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-30005-widescreen-settings-feasibility|T-30005 Research widescreen art and modern settings feasibility]]
 
 - [ ] [[tickets/T-29001-godot-engine-foundation|T-29001 Create the pinned Godot project and test toolchain]]
 

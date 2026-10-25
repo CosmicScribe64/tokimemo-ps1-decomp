@@ -2294,3 +2294,7 @@ Updated [[status]] with the accepted rest-week implementation and current scene/
 ## [2026-10-25] build | Install reviewed holiday content
 
 Applied the original holiday media packet and resolved shared project-root admission correction after independent review. All thirteen installed afterimages match the reviewed composition. Fresh original-input export reproduces all 129 files; 23 Python checks, actual Godot loader negatives, five shared suites and the current rest/study/save driver pass. See [[tickets/T-29013-native-holiday-command-loop]]. Connected Sunday gameplay is still being implemented; no full route or audio claim.
+
+## [2026-10-25] ticket | Complete widescreen and settings research
+
+Published the reviewed source-backed report in [[widescreen-settings]], linked the index and closed [[tickets/T-30005-widescreen-settings-feasibility]] with its board card. This completes research only; no modernization runtime, generated scenery or quality claim.
