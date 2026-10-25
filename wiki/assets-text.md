@@ -149,9 +149,9 @@ evidence separately. Full-file reconstruction and runtime reachability are diffe
 | Japanese text baked into images | Separate media lane owns asset/region catalog | Font IDs can be joined; this reader does not claim image/OCR completeness |
 
 Current script-root audit: 98 containers, 654 sections, 42,369 records and 30,851 text records.
-The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,877
+The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,861
 remain semantically unknown. All 437 C files parse in the AST pass with stable source inputs. The
-current full text suite has 257 passing Docker tests, including source-root integration and isolated
+current full text suite has 273 passing Docker tests, including source-root integration and isolated
 synthetic proof regressions. These counts do not clear the remaining context and runtime gates.
 There are no unprofiled SERIFU or BUNKA files. Every script string strictly decodes and re-encodes as
 Shift-JIS. Unclaimed byte counts and diagnostic candidate scans are retained as leads; zero candidates
@@ -267,6 +267,31 @@ and no added rows. Every row retains its previous readiness and null target; 31,
 review and 7,355 remain flagged. The twelve source units remain flagged with unavailable renderer
 tokenization and their existing context constraints. Original capacities remain provenance, not
 translation limits. Comprehensive coverage remains false.
+
+## Shooter label and ranking input cohort (2026-10-25)
+
+`shooter_label_renderer_contract` verifies two further TACO byte readers and their shared native
+glyph chain. Its 58 current source/header/ASM/config pins include all 53 transitive C/header
+dependencies. Four complete functions replay 569 original instruction words, 39 critical facts and
+three guarded byte-forwarding paths with five reviewed local control edges. Exact input entries are
+`shooter_draw_label` at `0x801357B0` and `shooter_draw_ranking_text` at `0x801371B4`. Call clobbers,
+unmodelled control flow, R3000 load delays and outgoing delay slots are checked. Required fact sites
+and forwarding paths are unique and complete.
+
+The exporter merges independently verified reader groups, each with its own completeness blocker.
+A failed label/ranking contract contributes no roles. Original argument formation, JAL targets and
+delay slots independently verify sixteen existing unknown extents, disjoint from the earlier twelve:
+six enter the label reader and ten enter the ranking reader. Their potential static display-input
+classification reduces unknown extents from 1,877 to 1,861. No additional classified/zero records,
+unresolved constant targets or interior pointers were introduced by this cohort.
+
+All 8,837 physical IDs and payloads, all C literal sites and all 38,701 unit rows remain. Only the
+sixteen existing source contexts change; source text, controls, null targets and every readiness
+value are preserved. Ready rows stay 31,346 and flagged rows 7,355. The exporter leaves the native
+glyph model unimplemented, so these source units retain their tokenization and context blockers.
+The original NUL/21-byte loops are provenance, not future translation layout limits. No fixed-font
+alias, glyph equivalence, runtime value, reachability, execution or actual read length is inferred.
+Comprehensive coverage remains false.
 
 ## Linked script format
 

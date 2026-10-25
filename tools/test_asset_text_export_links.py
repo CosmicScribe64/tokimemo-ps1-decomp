@@ -112,6 +112,7 @@ class LinkTests(unittest.TestCase):
                 patch("tools.assets.text_context.enrich_source_context", return_value=inventory), \
                 patch("tools.assets.text_mips.enrich_mips_context", side_effect=mips_report), \
                 patch("tools.assets.text_shooter.verify_shooter_text_contract", return_value={"verified": False}), \
+                patch("tools.assets.text_shooter_labels.verify_shooter_label_contract", return_value={"verified": False}), \
                 patch("tools.assets.text_binary._enrich_binary_text_from_reports", side_effect=binary_report), \
                 patch("tools.assets.script_mutations.enrich_script_mutations", side_effect=mutation_report):
             provenance = {"schema": "synthetic-source-witness", "source_tree_sha256": "synthetic-tree",
@@ -121,16 +122,33 @@ class LinkTests(unittest.TestCase):
             (Path(directory) / "snapshot-manifest.json").write_bytes(manifest_raw)
             catalog = export_text(directory, profiles=[], include_source=True, source_repository=directory)
             from tools.assets.text_shooter import SHOOTER_TEXT_READ_SPEC
-            expected_reads = {"TACO": {"shooter_draw_text": ({**SHOOTER_TEXT_READ_SPEC,
-                              "source_contract": "shooter_renderer_contract"},)}}
-            self.assertEqual(expected_reads["TACO"]["shooter_draw_text"][0]["callee_address"], 0x801432F0)
-            with patch("tools.assets.text_shooter.verify_shooter_text_contract", return_value={"verified": True}):
-                positive = export_text(directory, profiles=[], include_source=True, source_repository=directory)
-            self.assertEqual(positive["text_completeness"]["shooter_renderer_contract_blockers"], 0)
+            from tools.assets.text_shooter_labels import SHOOTER_LABEL_READ_SPECS
+            self.assertEqual(set(SHOOTER_LABEL_READ_SPECS), {"shooter_draw_label", "shooter_draw_ranking_text"})
+            expected_addresses = {"shooter_draw_label": 0x801357B0, "shooter_draw_ranking_text": 0x801371B4}
+            for first_ok, labels_ok in ((True, False), (False, True), (True, True)):
+                with self.subTest(first_contract=first_ok, label_contract=labels_ok):
+                    expected_reads = {"TACO": {}}
+                    if first_ok:
+                        expected_reads["TACO"]["shooter_draw_text"] = ({**SHOOTER_TEXT_READ_SPEC,
+                            "source_contract": "shooter_renderer_contract"},)
+                        self.assertEqual(expected_reads["TACO"]["shooter_draw_text"][0]["callee_address"], 0x801432F0)
+                    if labels_ok:
+                        for call, spec in SHOOTER_LABEL_READ_SPECS.items():
+                            expected_reads["TACO"][call] = ({**spec,
+                                "source_contract": "shooter_label_renderer_contract"},)
+                            self.assertEqual(spec["index"], 0)
+                            self.assertEqual(spec["callee_address"], expected_addresses[call])
+                            self.assertIsNone(spec["renderer"])
+                    with patch("tools.assets.text_shooter.verify_shooter_text_contract", return_value={"verified": first_ok}), \
+                            patch("tools.assets.text_shooter_labels.verify_shooter_label_contract", return_value={"verified": labels_ok}):
+                        positive = export_text(directory, profiles=[], include_source=True, source_repository=directory)
+                    self.assertEqual(positive["text_completeness"]["shooter_renderer_contract_blockers"], int(not first_ok))
+                    self.assertEqual(positive["text_completeness"]["shooter_label_renderer_contract_blockers"], int(not labels_ok))
         self.assertIs(catalog["source_inventory"], inventory)
         self.assertFalse(catalog["text_completeness"]["complete"])
         self.assertEqual(catalog["text_completeness"]["source_mips_blockers"], 1)
         self.assertEqual(catalog["text_completeness"]["shooter_renderer_contract_blockers"], 1)
+        self.assertEqual(catalog["text_completeness"]["shooter_label_renderer_contract_blockers"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_mips_constant_targets"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_runtime_write_candidates"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_opaque_value_dependencies"], 1)

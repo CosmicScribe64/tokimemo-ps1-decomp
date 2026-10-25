@@ -383,3 +383,31 @@ translation limits. Comprehensive coverage remains false.
 The actual complete export passes 257 text tests without skips and all byte/Unicode/token/AST/source/proof gates. Catalog SHA256 `479e41a8f1fd3a7bda4fafc866d6995aa864ac10f81c875230dd77df60077a49`, 168,642,963 bytes. Full JSONL/TSV serialization and all 125 original-input checks pass. Independent native-contract, original-call and integration reviews pass. The ignored candidate and packet preserve all prior evidence; parent alone applies the proposed tools/tests/docs. Keep T-28001 In Progress.
 
 2026-10-25 root integration: applied the exact shooter packet after independent Standards and Sol 6.1 correctness reviews. All 54 after-images verify, including both previously absent Python files. All 34,945 tracked files outside the exact eight-file application remain unchanged. The coherent suite passes 478 tests without skips; the actual live replay passes 257 text tests and native/source/full-delta/JSONL/TSV checks, preserving all 38,701 rows and their readiness, payloads, IDs and null targets. Twelve existing contexts are classified; unknown extents are now 1,877. No glyph model, runtime execution, native display lifetime or full-coverage claim follows. Keep In Progress.
+
+
+## [2026-10-25] Disjoint native label and ranking proof
+
+`shooter_label_renderer_contract` verifies two further TACO byte readers and their shared native
+glyph chain. Its 58 current source/header/ASM/config pins include all 53 transitive C/header
+dependencies. Four complete functions replay 569 original instruction words, 39 critical facts and
+three guarded byte-forwarding paths with five reviewed local control edges. Exact input entries are
+`shooter_draw_label` at `0x801357B0` and `shooter_draw_ranking_text` at `0x801371B4`. Call clobbers,
+unmodelled control flow, R3000 load delays and outgoing delay slots are checked. Required fact sites
+and forwarding paths are unique and complete.
+
+The exporter merges independently verified reader groups, each with its own completeness blocker.
+A failed label/ranking contract contributes no roles. Original argument formation, JAL targets and
+delay slots independently verify sixteen existing unknown extents, disjoint from the earlier twelve:
+six enter the label reader and ten enter the ranking reader. Their potential static display-input
+classification reduces unknown extents from 1,877 to 1,861. No additional classified/zero records,
+unresolved constant targets or interior pointers were introduced by this cohort.
+
+All 8,837 physical IDs and payloads, all C literal sites and all 38,701 unit rows remain. Only the
+sixteen existing source contexts change; source text, controls, null targets and every readiness
+value are preserved. Ready rows stay 31,346 and flagged rows 7,355. The exporter leaves the native
+glyph model unimplemented, so these source units retain their tokenization and context blockers.
+The original NUL/21-byte loops are provenance, not future translation layout limits. No fixed-font
+alias, glyph equivalence, runtime value, reachability, execution or actual read length is inferred.
+Comprehensive coverage remains false.
+
+The actual complete export passes 273 text tests without skips and all byte/Unicode/token/AST/source/proof gates. Catalog SHA256 `8f341841e33a083d9c1917b1e77ded7fa2d8a3c49e0a2c24fb61869d5fad6766`, 168,679,834 bytes. Full JSONL/TSV serialization and all 125 original-input checks pass. The candidate uses the accepted shooter after-images from `fb25ca394c37ec4c4ad37bb299534a00fba65bbc` and preserves current shared documentation. Parent alone applies the proposed tools/tests/docs; no live/shared/Git writes were made by this lane. Keep T-28001 In Progress.

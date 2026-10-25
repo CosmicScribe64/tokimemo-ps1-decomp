@@ -453,6 +453,7 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         from .text_renderer_proof import verify_renderer_source_proofs
         from .text_substitutions import verify_symbolic_substitution_contract
         from .text_shooter import verify_shooter_text_contract, SHOOTER_TEXT_READ_SPEC
+        from .text_shooter_labels import verify_shooter_label_contract, SHOOTER_LABEL_READ_SPECS
         source_repo = REPOSITORY if source_repository is None else Path(source_repository).resolve(strict=True)
         catalog["renderer_source_proofs"] = verify_renderer_source_proofs(source_repo, root)
         try:
@@ -461,9 +462,21 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
             shooter_contract = {"verified": False, "status": "source_contract_not_verified",
                                 "reason": type(exc).__name__, "renderer_model_implemented": False}
         catalog["shooter_renderer_contract"] = shooter_contract
-        additional_reads = ({"TACO": {"shooter_draw_text": ({**SHOOTER_TEXT_READ_SPEC,
-                             "source_contract": "shooter_renderer_contract"},)}}
-                            if shooter_contract["verified"] else None)
+        try:
+            label_contract = verify_shooter_label_contract(source_repo, root)
+        except (OSError, ValueError) as exc:
+            label_contract = {"verified": False, "status": "source_contract_not_verified",
+                              "reason": type(exc).__name__, "renderer_model_implemented": False}
+        catalog["shooter_label_renderer_contract"] = label_contract
+        additional_reads = {}
+        if shooter_contract["verified"]:
+            additional_reads["TACO"] = {"shooter_draw_text": ({**SHOOTER_TEXT_READ_SPEC,
+                                       "source_contract": "shooter_renderer_contract"},)}
+        if label_contract["verified"]:
+            for call, spec in SHOOTER_LABEL_READ_SPECS.items():
+                additional_reads.setdefault("TACO", {})[call] = ({**spec,
+                    "source_contract": "shooter_label_renderer_contract"},)
+        additional_reads = additional_reads or None
         try:
             catalog["symbolic_substitution_contract"] = verify_symbolic_substitution_contract(source_repo, root)
         except (OSError, ValueError) as exc:
@@ -506,6 +519,7 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         catalog["text_completeness"].update(
             renderer_alias_contract_blockers=int(not catalog["renderer_source_proofs"]["verified"]),
             shooter_renderer_contract_blockers=int(not shooter_contract["verified"]),
+            shooter_label_renderer_contract_blockers=int(not label_contract["verified"]),
             symbolic_substitution_contract_blockers=int(catalog["symbolic_substitution_contract"]["status"] !=
                                                         "verified_source_and_original_image_pins"),
             source_literal_byte_blockers=len(catalog["source_inventory"]["blocked"]),
