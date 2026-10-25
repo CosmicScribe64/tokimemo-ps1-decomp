@@ -2180,3 +2180,7 @@ For [[tickets/T-29010-native-hud-font-rendering]], root inspected the actual God
 ## [2026-10-25] build | Integrate reviewed dialogue and New Game rules
 
 Integrated eleven exact reviewed source/test files for [[tickets/T-29011-native-dialogue-player]] and [[tickets/T-29012-native-new-game-initialization]]. Canonical tests pass: dialogue nine Python checks, fresh original 12-line reparse and both Godot suites; New Game 109 Godot checks, 13 Python checks and 19 preserved native state/profile/RNG comparisons; five existing shared suites. Runtime original data remain external. Full conversation and New Game UI/prologue acceptance remain open. Archived logs and stopped four obsolete failed three-hour-old Godot test containers; active workers and the visual viewer were preserved.
+
+## [2026-10-25] decision | Hold rest app until save composition is fixed
+
+Current-composition review for [[tickets/T-29008-assemble-playable-development-app]] reproduced two save integration defects despite passing standalone rest/native tests: unresolved rest draw IDs and lost command capabilities after load. Root preserved the working canonical app and dispatched the finite correction to the save owner. The rest owner continues [[tickets/T-29009-ordinary-week-continuation]] toward the full ordinary week under a bounded serialized emulator lease. Native HUD, New Game UI and holiday content work continue independently.
