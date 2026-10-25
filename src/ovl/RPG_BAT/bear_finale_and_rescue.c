@@ -80,7 +80,7 @@ void rpg_enemy_bear_finale(void) {
         }
         if (rpg_enemy_timer_a == 0x46) {
             rpg_se_play_latched_5xx(0x50B, 1, 6);
-            rpg_player_action = 0x1000;
+            rpg_player_action = RPG_PLAYER_DOWN;
             rpg_actor_set_animation(0x30, 0xA, 1, 1);
         }
         break;

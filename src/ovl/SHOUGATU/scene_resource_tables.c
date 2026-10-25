@@ -225,17 +225,17 @@ void new_year_birthday_gate(void) {
         (game_state.month == (game_state.girls[game_state.current_girl].birthday.w & 0xF)) &&
         (D_80143B20 == 0) &&
         (game_state.current_girl == GIRL_SHIORI)) {
-        game_state.day_event_done_bits |= 1;
+        game_state.day_event_done_bits |= NEW_YEAR_GIRL_BIRTHDAY_DONE_BIT;
         game_state.mode_step += 4;
     /* FAKE: indirect reads of unk_040 and unk_0F8 prevent cross-branch CSE of unk_040 and match the ilod evaluation order of unk_1BC[] above, and the (u8) cast on r reserves the extra temp as in new_year_player_birthday_status_gate (T-2020); real source unknown. T-24080 */
     } else if ((*(u8 *)&game_state.day == ((u32)((*(s32 *)&game_state.player_birthday) << 0x17) >> 0x1B)) &&
                (game_state.month == ((*(s32 *)&game_state.player_birthday) & 0xF)) &&
                (D_80143B20 == 0)) {
         if ((u32)((u8)r & 0x7F) < 2U) {
-            game_state.day_event_done_bits |= 4;
+            game_state.day_event_done_bits |= NEW_YEAR_PLAYER_BIRTHDAY_LOW_STATUS_BIT;
             game_state.mode_step += 0x1B;
         } else {
-            game_state.day_event_done_bits |= 8;
+            game_state.day_event_done_bits |= NEW_YEAR_PLAYER_BIRTHDAY_OTHER_STATUS_BIT;
         }
     }
     mode_step_next();

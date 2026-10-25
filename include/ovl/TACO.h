@@ -665,6 +665,82 @@ void shooter_stage_exit(void);
 
 extern u16 shooter_blast_shot_frame_u;
 void shooter_draw_blast_shot(s32 arg0, s32 arg1);
+/* Only body-backed dispatch/state/score/timer roles. Stage 7 remains unresolved. Positive legacy requests have no metadata replay. */
+enum ShooterStage {
+    SHOOTER_STAGE_LOAD = 0, /* dispatch case in shooter_entry */
+    SHOOTER_STAGE_OPENING = 1, /* dispatch case in shooter_entry */
+    SHOOTER_STAGE_TITLE = 2, /* dispatch case in shooter_entry */
+    SHOOTER_STAGE_MENU = 3, /* dispatch case in shooter_entry */
+    SHOOTER_STAGE_SETTINGS = 4, /* dispatch case in shooter_entry */
+    SHOOTER_STAGE_SCORES = 5, /* ranking dispatch */
+    SHOOTER_STAGE_DEMO = 6, /* demo dispatch */
+    SHOOTER_STAGE_RESULT = 8, /* score tally dispatch */
+    SHOOTER_STAGE_NAME_ENTRY = 9, /* name-entry dispatch */
+    SHOOTER_STAGE_GAME_START = 10, /* setup dispatch */
+    SHOOTER_STAGE_STAGE1 = 11, /* stage 1 dispatch */
+    SHOOTER_STAGE_BOSS1 = 12, /* boss 1 dispatch */
+    SHOOTER_STAGE_STAGE2 = 21, /* stage 2 dispatch */
+    SHOOTER_STAGE_BOSS2 = 22, /* boss 2 dispatch */
+    SHOOTER_STAGE_STAGE3 = 31, /* stage 3 dispatch */
+    SHOOTER_STAGE_BOSS3 = 32, /* boss 3 dispatch */
+    SHOOTER_STAGE_GAME_END = 45, /* defeat, time-out or clear banner dispatch */
+    SHOOTER_STAGE_EXIT = 46 /* overlay exit dispatch */
+};
+
+/* Only body-backed dispatch/state/score/timer roles. Stage 7 remains unresolved. Positive legacy requests have no metadata replay. */
+enum ShooterLoadRequest {
+    SHOOTER_LOAD_GAME_START_BANKS = 0x10, /* load-state dispatch */
+    SHOOTER_LOAD_SOUND_BANK_STAGE1 = 0x14, /* Calls audio_bank_load_start for this stage/result request; bank contents are not identified as music. */
+    SHOOTER_LOAD_BOSS1 = 0x18, /* boss 1 asset request */
+    SHOOTER_LOAD_STAGE2 = 0x20, /* stage 2 asset request */
+    SHOOTER_LOAD_SOUND_BANK_STAGE2 = 0x24, /* Calls audio_bank_load_start for this stage/result request; bank contents are not identified as music. */
+    SHOOTER_LOAD_BOSS2 = 0x28, /* boss 2 asset request */
+    SHOOTER_LOAD_STAGE3 = 0x30, /* stage 3 asset request */
+    SHOOTER_LOAD_SOUND_BANK_STAGE3 = 0x34, /* Calls audio_bank_load_start for this stage/result request; bank contents are not identified as music. */
+    SHOOTER_LOAD_BOSS3 = 0x38, /* boss 3 asset request */
+    SHOOTER_LOAD_SOUND_BANK_RESULT = 0x44 /* Calls audio_bank_load_start for this stage/result request; bank contents are not identified as music. */
+};
+
+/* Only body-backed dispatch/state/score/timer roles. Stage 7 remains unresolved. Positive legacy requests have no metadata replay. */
+#define SHOOTER_SCORE_MAXIMUM_EXCLUSIVE 10000000 /* comparison threshold */
+#define SHOOTER_SCORE_MAXIMUM 9999999 /* clamp assignment after threshold */
+
+/* Only body-backed dispatch/state/score/timer roles. Stage 7 remains unresolved. Positive legacy requests have no metadata replay. */
+#define SHOOTER_START_TIME_FRAMES 18000 /* initial timer value, 18000 frames */
+
+/* One exact weapon caller, bank argument 1; source literal is preserved. Other callers remain unnamed; no audible identity claimed. */
+#define SHOOTER_SE_FIRE_VULCAN 0x500 /* Raw second argument in this weapon firing path; first argument is exactly 1. */
+
+/* One exact weapon caller, bank argument 1; source literal is preserved. Other callers remain unnamed; no audible identity claimed. */
+#define SHOOTER_SE_FIRE_BEAM 0x501 /* Raw second argument in this weapon firing path; first argument is exactly 1. */
+
+/* One exact weapon caller, bank argument 1; source literal is preserved. Other callers remain unnamed; no audible identity claimed. */
+#define SHOOTER_SE_FIRE_WIDE 0x502 /* Raw second argument in this weapon firing path; first argument is exactly 1. */
+
+/* One exact weapon caller, bank argument 1; source literal is preserved. Other callers remain unnamed; no audible identity claimed. */
+#define SHOOTER_SE_FIRE_SECONDARY 0x503 /* Raw second argument in this weapon firing path; first argument is exactly 1. */
+
+/* Every flags member access in this exact caller is base[i].flags with ShooterParticle *base. Wildcard is caller-bound; no actor flags are selected. Other particle consumers remain unnamed. */
+#define SHOOTER_PARTICLE_ACTIVE 0x80 /* Active particle slot is occupied; constructor scans for a clear flag before writing its shot. */
+
+/* Known item producer values at exact callee argument site; positive legacy request, no metadata replay. */
+enum ShooterItemKind {
+    SHOOTER_ITEM_WEAPON_WIDE = 0, /* item pickup sets primary weapon 0; fire paths identify 0 as wide shot */
+    SHOOTER_ITEM_WEAPON_BEAM = 1, /* item pickup sets primary weapon 1; fire paths identify 1 as beam */
+    SHOOTER_ITEM_SECONDARY_TOGGLE = 2, /* item pickup toggles the secondary-weapon field */
+    SHOOTER_ITEM_BOMB_PULSE = 3, /* item pickup fills one bomb slot; bomb kind 3 starts pulse */
+    SHOOTER_ITEM_BOMB_BLAST = 4, /* item pickup fills one bomb slot; bomb kind 4 starts blast */
+    SHOOTER_ITEM_HEAL = 5, /* item pickup adds 16 to player HP, capped at 255 */
+    SHOOTER_ITEM_BONUS = 6, /* drop mapping emits 6; collector default gives a random score bonus */
+    SHOOTER_ITEM_WEAPON_VULCAN = 7 /* item pickup selects the vulcan fallback fire path */
+};
+
+/* Player slot zero secondary dispatch only; other actor auxiliary fields excluded by exact caller. */
+enum ShooterSecondary {
+    SHOOTER_SECONDARY_HOMING = 0, /* player actor auxiliary value 0 dispatches to homing fire */
+    SHOOTER_SECONDARY_SPREAD = 1 /* player actor auxiliary value 1 dispatches to spread fire */
+};
+
 #endif
 
 /* Font UV pairs (u, v), T-16562: digits 0-9, letters A-Z, then '.', '-', ' ' and a fallback glyph. */

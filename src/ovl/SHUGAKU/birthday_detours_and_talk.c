@@ -266,7 +266,7 @@ void trip_girl_scene_select(void) {
         D_8013B074 = D_8013B068;
         break;
     }
-    if (game_state.month >= 4) {
+    if (game_state.month >= TRIP_YEAR_OFFSET_MONTH_BOUNDARY) {
         D_8013B090 = game_state.year - 0x5F;
     } else {
         D_8013B090 = game_state.year - 0x60;
@@ -302,7 +302,7 @@ void trip_saved_mode_stage_restore(void) {
 
 void trip_saved_mode_step_advance(void) {
     if (game_state.saved_mode_stage == 6) {
-        game_state.mode_step += 6;
+        game_state.mode_step += TRIP_SAVED_MODE_STEP_DELTA;
         return;
     }
     mode_step_next();

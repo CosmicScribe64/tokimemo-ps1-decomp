@@ -1998,6 +1998,13 @@ def parse_site(spec):
         if base[0] == "caller":
             raise RenameError("nested caller sites are not supported")
         return ("caller", parts[1], parts[2], base)
+    m = re.match(r"^add:\*\.(\w+)$", spec)
+    if m:
+        return ("add", "*", m.group(1))
+    m = re.match(r"^\*\.(\w+)\[(0[xX][0-9a-fA-F]+|[0-9]+)\]$", spec)
+    if m:
+        raw_index = m.group(2)
+        return ("indexed-member", "*", m.group(1), int(raw_index, 16 if raw_index.lower().startswith("0x") else 10))
     m = re.match(r"^(\w+):(\w+)\(arg(\d+)\)$", spec)
     if m:
         return ("arg", m.group(1), m.group(2), int(m.group(3)))
@@ -2028,6 +2035,11 @@ def site_matches(node, sites):
     for s in sites:
         if s[0] == "member" and isinstance(node, c_ast.StructRef) and node.field.name == s[2]:
             return True
+        if (s[0] == "indexed-member" and isinstance(node, c_ast.ArrayRef)
+                and isinstance(node.name, c_ast.StructRef) and node.name.field.name == s[2]):
+            index = literal_value(node.subscript)
+            if index and index[0] == s[3]:
+                return True
         if s[0] == "var" and isinstance(node, c_ast.ID) and node.name == s[1]:
             return True
     return False
@@ -2048,9 +2060,13 @@ def const_hits(ast, sites, ops, whole=False):
             self.generic_visit(n)
 
         def visit_Assignment(self, n):
-            if n.op == "=" or (n.op[:-1] in ops and n.op.endswith("=")):
+            if (n.op == "=" or (n.op[:-1] in ops and n.op.endswith("="))
+                    or (n.op == "+=" and any(s[0] == "add" for s in sites))):
                 lv = literal_value(n.rvalue)
-                if lv and site_matches(n.lvalue, sites):
+                selected = [s for s in sites if s[0] != "add"] if n.op != "+=" else []
+                if n.op == "+=":
+                    selected = [("member", "*", s[2]) for s in sites if s[0] == "add"]
+                if lv and site_matches(n.lvalue, selected):
                     hits.append((n.rvalue if whole else lv[1], lv[0]))
             self.generic_visit(n)
 
@@ -2646,7 +2662,23 @@ def signed_ledger_row(tree, header, enum, defines, values, sites, note):
     return Row("const", tree.header_owner(hpath), enum or "defines", hpath, SIGNED_PREFIX + payload + " " + note, key="-")
 
 
-def signed_request(row, ch):
+def site_text(site):
+    """Stable spelling for signed selector metadata, including the opt-in selector forms."""
+    if site[0] == "caller":
+        return "in:%s:%s:%s" % (site[1], site[2], site_text(site[3]))
+    if site[0] == "arg":
+        return "%s:%s(arg%d)" % (site[1], site[2], site[3])
+    if site[0] in ("member", "add"):
+        prefix = "add:" if site[0] == "add" else ""
+        return "%s%s.%s" % (prefix, site[1], site[2])
+    if site[0] == "indexed-member":
+        return "%s.%s[%d]" % (site[1], site[2], site[3])
+    if site[0] == "var":
+        return site[1]
+    raise RenameError("cannot serialize selector metadata")
+
+
+def signed_request(row, ch, tree=None):
     if row.kind != "const" or not row.note.startswith(SIGNED_PREFIX):
         return None
     try:
@@ -2659,6 +2691,46 @@ def signed_request(row, ch):
                 or any(not isinstance(v, list) or len(v) != 3 or not all(isinstance(x, str) for x in v)
                        for v in data["values"])):
             raise ValueError("unexpected request keys")
+        # These caller-bounded wildcard selectors do not record a concrete owner type. If a
+        # same-unit field rename changes their selected member spelling, refusing is safer than
+        # replaying a now-zero-hit selector or guessing which owner the original request meant.
+        for site in data["sites"]:
+            parsed = parse_site(site)
+            if parsed[0] != "caller":
+                continue
+            caller_unit, base = parsed[1], parsed[3]
+            if base[0] not in ("indexed-member", "add"):
+                continue
+            for key, (names, _rows) in ch.items():
+                if key[0] != "field" or base[2] not in names[:-1]:
+                    continue
+                owner = key[1]
+                if ":" in owner:
+                    owner_unit = owner.split(":", 1)[0]
+                    relevant = owner_unit == caller_unit or owner_unit == "main"
+                else:
+                    if tree is None:
+                        raise ValueError("cannot resolve owner unit for renamed selector member %s" % base[2])
+                    resolved = current_type_name_rows(ch, owner)
+                    definitions = find_type(tree, resolved)
+                    owner_units = {file_unit(tree, definition[0]) for definition in definitions}
+                    relevant = caller_unit in owner_units or "main" in owner_units
+                    if not owner_units:
+                        raise ValueError("cannot resolve owner unit for renamed selector member %s" % base[2])
+                if relevant:
+                    if tree is None:
+                        raise ValueError("cannot check renamed selector member %s without its source tree" % base[2])
+                    candidate = (base[0], base[1], names[-1]) + base[3:]
+                    candidate_site = site_text(("caller", parsed[1], parsed[2], candidate))
+                    planned, _report, problems = const_plan(
+                        tree.root, data["header"], data["enum"], data["defines"], data["values"],
+                        [candidate_site], data["note"], _signed=True, _existing=True)
+                    if problems:
+                        raise ValueError("cannot safely inspect renamed selector member %s: %s" %
+                                         (base[2], problems[0]))
+                    if planned.changed():
+                        raise ValueError("restored numeric literal is stale after caller-unit field rename %s -> %s"
+                                         % (base[2], names[-1]))
         for key, (names, rows) in ch.items():
             if key[0] == "header" and data["header"][len("include/"):] in names:
                 data["header"] = "include/" + names[-1]
@@ -2672,20 +2744,13 @@ def signed_request(row, ch):
                 for i, site in enumerate(data["sites"]):
                     parsed = parse_site(site)
                     wrapped = parsed[0] == "caller"
-                    if wrapped:
-                        if parsed[1] == key[1] and parsed[2] in names:
-                            parsed = ("caller", parsed[1], names[-1], parsed[3])
-                    if parsed[0] == "arg" and parsed[1] == key[1] and parsed[2] in names:
-                        parsed = ("arg", parsed[1], names[-1], parsed[3])
-                    if wrapped:
-                        base = parsed[3]
-                        if base[0] == "arg" and base[1] == key[1] and base[2] in names:
-                            base = ("arg", base[1], names[-1], base[3])
-                        base_text = ("%s:%s(arg%d)" % (base[1], base[2], base[3]) if base[0] == "arg"
-                                     else "%s.%s" % (base[1], base[2]) if base[0] == "member" else base[1])
-                        data["sites"][i] = "in:%s:%s:%s" % (parsed[1], parsed[2], base_text)
-                    elif parsed[0] == "arg":
-                        data["sites"][i] = "%s:%s(arg%d)" % (parsed[1], parsed[2], parsed[3])
+                    outer = parsed
+                    base = parsed[3] if wrapped else parsed
+                    if wrapped and outer[1] == key[1] and outer[2] in names:
+                        outer = ("caller", outer[1], names[-1], outer[3])
+                    if base[0] == "arg" and base[1] == key[1] and base[2] in names:
+                        base = ("arg", base[1], names[-1], base[3])
+                    data["sites"][i] = site_text(("caller", outer[1], outer[2], base) if wrapped else base)
         return data
     except (ValueError, TypeError, KeyError, UnicodeError) as exc:
         raise RenameError("invalid signed constant ledger metadata: %s" % row.where) from exc
@@ -2743,7 +2808,9 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
     else:
         sites = parsed_sites
     for s in sites:
-        if s[0] == "member" and s[1] != "*":
+        if s[0] in ("add", "indexed-member") and caller_filter is None:
+            problems.append("essential selectors require an exact caller wrapper")
+        if s[0] in ("member", "indexed-member", "add") and s[1] != "*":
             owners = [d for d in find_type(tree, s[1])]
             if len(owners) != 1:
                 problems.append("site %s.%s: %s has %d definitions" % (s[1], s[2], s[1], len(owners)))
@@ -2761,7 +2828,7 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
         return tree, report, problems
     if _existing:
         signed_definitions(tree, hpath, enum, defines, values)
-    words = {s[2] if s[0] in ("member", "arg") else s[1] for s in sites}
+    words = {s[2] if s[0] in ("member", "indexed-member", "add", "arg") else s[1] for s in sites}
     cands = ([u for u in users if file_unit(tree, u) == caller_filter[0]] if caller_filter else
              [u for u in users if any(w in (tree.read(u) or "") for w in words)])
     ops = CMP_OPS + (BIT_OPS if defines else ())
@@ -3289,7 +3356,11 @@ def check(root, out=sys.stdout):
                 for h in hits[:3]:
                     problems.append("%s: %s was renamed to %s (%s); run tools/rename.py replay" % (h, o, final, where))
     for row in rows:
-        signed = signed_request(row, ch)
+        try:
+            signed = signed_request(row, ch, tree)
+        except RenameError as exc:
+            problems.append("%s: %s" % (row.where, exc))
+            signed = None
         if signed:
             ctx = Context(root)
             changed = signed_const_plan(ctx, signed["header"], signed["enum"], signed["defines"],
@@ -3497,7 +3568,11 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         if need:
             plan_fields(ctx, need, use_gcc=use_gcc)
     for row in sel:
-        signed = signed_request(row, ch)
+        try:
+            signed = signed_request(row, ch, tree)
+        except RenameError as exc:
+            ctx.problems.append("%s: %s" % (row.where, exc))
+            signed = None
         if signed:
             signed_const_plan(ctx, signed["header"], signed["enum"], signed["defines"], signed["values"],
                               signed["sites"], signed["note"], existing=True)

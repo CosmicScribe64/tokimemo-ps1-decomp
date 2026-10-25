@@ -558,4 +558,13 @@ extern TripAlternateSceneCallbacks D_8013C884;
 extern TripSecondaryCallbacks D_8013C930;
 extern TripReturnCallbacks D_8013CAA0;
 extern TripSceneCallbacks D_8013CC20;
+/* T-27066: trip_girl_scene_select uses month >= 4 to choose the year offset before subtracting 0x5F or 0x60; birthday_detours_and_talk.c:269-274. */
+#define TRIP_YEAR_OFFSET_MONTH_BOUNDARY 4
+
+/* T-27075 group 4: SHUGAKU/ayako_scene_and_birthday_detours.c:82,108 compare the liberal-arts parameter value with the proven eligibility threshold 120. */
+#define TRIP_LIBERAL_ARTS_THRESHOLD 120 /* Shared >=120 eligibility threshold in the two Ayako trip callbacks. */
+
+/* T-27075 group 5: SHUGAKU/birthday_detours_and_talk.c:303-309; saved_mode_stage == 6 takes the early branch and adds 6 to mode_step. Name only the observed increment. */
+#define TRIP_SAVED_MODE_STEP_DELTA 6 /* Observed added mode_step amount when saved_mode_stage equals 6; destination or narrative meaning not inferred. */
+
 #endif

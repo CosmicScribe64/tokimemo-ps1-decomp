@@ -211,7 +211,7 @@ extern s32 encounter_invite_voice_section_12;
 
 extern s16 encounter_walk_home_group;
 
-extern u8 encounter_walk_home_topic;
+extern u8 encounter_walk_home_topic; /* EncounterWalkHomeTopic */
 
 extern s32 encounter_walk_home_text_table;
 extern s32 encounter_walk_home_command_table;
@@ -894,4 +894,33 @@ void encounter_girl_birthday_phone_closing_group(void);
 void encounter_girl_birthday_bg_request(void);
 void encounter_girl_birthday_bg_show(void);
 void encounter_girl_birthday_restart(void);
+/* HYPOTHESIS: GEKO topic grouping vocabulary remains unconfirmed; technical code-domain values and source sites are preserved. */
+enum EncounterWalkHomeTopic {
+    ENCOUNTER_TOPIC_NONE = 0,
+    ENCOUNTER_TOPIC_EXAM_MARKER = 1,
+    ENCOUNTER_TOPIC_CULTURE_FESTIVAL_MARKER = 2,
+    ENCOUNTER_TOPIC_CLUB_VARIANT_THREE = 3,
+    ENCOUNTER_TOPIC_CLUB_VARIANT_FOUR = 4,
+    ENCOUNTER_TOPIC_CLUB_VARIANT_FIVE = 5,
+    ENCOUNTER_TOPIC_SPORTS_FESTIVAL_MARKER = 6,
+    ENCOUNTER_TOPIC_SCHOOL_TRIP_LOW_STATE_OR_YUMI = 7,
+    ENCOUNTER_TOPIC_SCHOOL_TRIP_OTHER = 8,
+    ENCOUNTER_TOPIC_NEW_YEAR_PREP_MARKER = 9,
+    ENCOUNTER_TOPIC_BIRTHDAY = 10,
+    ENCOUNTER_TOPIC_NOTICE_B = 11,
+    ENCOUNTER_TOPIC_NOTICE_D = 12,
+    ENCOUNTER_TOPIC_NOTICE_F = 13,
+    ENCOUNTER_TOPIC_NOTICE_A_1996 = 14,
+    ENCOUNTER_TOPIC_NOTICE_A_1997 = 15,
+    ENCOUNTER_TOPIC_PRIORITY_MARKER = 16,
+    ENCOUNTER_TOPIC_MIRA_RANDOM = 100
+};
+
+/* HYPOTHESIS: GEKO Sunday component grouping vocabulary remains unconfirmed; technical code-domain values and source sites are preserved. */
+enum EncounterSundayComponent {
+    ENCOUNTER_SUNDAY_YEAR = 0,
+    ENCOUNTER_SUNDAY_MONTH = 1,
+    ENCOUNTER_SUNDAY_DAY = 2
+};
+
 #endif

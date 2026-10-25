@@ -25,7 +25,7 @@ void rpg_player_damage_roll(void) {
     }
     flag = rpg_enemy_action & 0x100000;
     if (flag || (rpg_enemy_action & 0x600000) || (rpg_enemy_action & 0x08000000)) {
-        if (rpg_player_action & 2) {
+        if (rpg_player_action & RPG_PLAYER_SPECIAL) {
             switch (rpg_player_club) {
             case 2:
                 if (flag) {
@@ -33,16 +33,16 @@ void rpg_player_damage_roll(void) {
                     rpg_damage_slot1 = rpg_rand2(2500, 2500) + 2500;
                     rpg_damage_slot2 = rpg_rand2(2500, 2500) + 2500;
                     if (rpg_enemy_slot == 0) {
-                        rpg_damage = 9999;
+                        rpg_damage = RPG_DAMAGE_MAXIMUM;
                     }
                     if (rpg_enemy_slot == 1) {
-                        rpg_damage_slot1 = 9999;
+                        rpg_damage_slot1 = RPG_DAMAGE_MAXIMUM;
                     }
                     if (rpg_enemy_slot == 2) {
-                        rpg_damage_slot2 = 9999;
+                        rpg_damage_slot2 = RPG_DAMAGE_MAXIMUM;
                     }
                 } else {
-                    rpg_damage = 9999;
+                    rpg_damage = RPG_DAMAGE_MAXIMUM;
                 }
                 break;
             case 5:
@@ -148,10 +148,10 @@ void rpg_player_damage_roll(void) {
                 default:
                     rpg_escalation_counter = 5;
                     if (flag) {
-                        rpg_damage = 9999;
+                        rpg_damage = RPG_DAMAGE_MAXIMUM;
                     } else {
                         rpg_enemy_hit_points -= 30000;
-                        rpg_damage = 9999;
+                        rpg_damage = RPG_DAMAGE_MAXIMUM;
                     }
                     break;
                 }
@@ -161,14 +161,14 @@ void rpg_player_damage_roll(void) {
             rpg_player_basic_damage();
         }
     }
-    if (rpg_damage >= 10000) {
-        rpg_damage = 9999;
+    if (rpg_damage >= RPG_DAMAGE_CLAMP_LIMIT) {
+        rpg_damage = RPG_DAMAGE_MAXIMUM;
     }
-    if (rpg_damage_slot1 >= 10000) {
-        rpg_damage_slot1 = 9999;
+    if (rpg_damage_slot1 >= RPG_DAMAGE_CLAMP_LIMIT) {
+        rpg_damage_slot1 = RPG_DAMAGE_MAXIMUM;
     }
-    if (rpg_damage_slot2 >= 10000) {
-        rpg_damage_slot2 = 9999;
+    if (rpg_damage_slot2 >= RPG_DAMAGE_CLAMP_LIMIT) {
+        rpg_damage_slot2 = RPG_DAMAGE_MAXIMUM;
     }
 }
 
@@ -183,7 +183,7 @@ void rpg_player_basic_damage(void) {
     base = rpg_rand2(100, 100) + lv * 9 / 2;
     r = rpg_rand(0x1000);
     if (r == 0) {
-        rpg_damage = 9999;
+        rpg_damage = RPG_DAMAGE_MAXIMUM;
     } else if (r < 0x40) {
         rpg_damage = 0;
     } else if (r < 0x10E) {
@@ -191,8 +191,8 @@ void rpg_player_basic_damage(void) {
     } else {
         rpg_damage = base;
     }
-    if (rpg_damage >= 10000) {
-        rpg_damage = 9999;
+    if (rpg_damage >= RPG_DAMAGE_CLAMP_LIMIT) {
+        rpg_damage = RPG_DAMAGE_MAXIMUM;
     }
     if ((rpg_enemy_action & 0x600000) && rpg_club_move_available == 0 && rpg_damage != 0) {
         rpg_enemy_hit_points -= 1500;

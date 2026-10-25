@@ -57,7 +57,7 @@ void rpg_init_player_state(void) {
         rpg_player_ready_timer = 0xFFFF;
     } else {
         rpg_player_ready_timer = 0;
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
     }
     if (game_state.param_condition.value == 0) {
         v = 0xA;
@@ -68,43 +68,43 @@ void rpg_init_player_state(void) {
     rpg_player_hit_points = v;
     switch (rpg_girl_id) {
     case 0:
-        rpg_girl_hit_points = 0x100;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_SHIORI;
         break;
     case 1:
-        rpg_girl_hit_points = 0x63;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_MIO;
         break;
     case 2:
-        rpg_girl_hit_points = 0x138;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_YUINA;
         break;
     case 3:
-        rpg_girl_hit_points = 0x130;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_AYAKO;
         break;
     case 4:
-        rpg_girl_hit_points = 0xBD;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_SAKI;
         break;
     case 5:
-        rpg_girl_hit_points = 0x12A;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_YUKARI;
         break;
     case 6:
-        rpg_girl_hit_points = 0x756;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_NOZOMI;
         break;
     case 7:
-        rpg_girl_hit_points = 0x115;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_MIRA;
         break;
     case 8:
-        rpg_girl_hit_points = 0x16D;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_YUKO;
         break;
     case 9:
-        rpg_girl_hit_points = 0xAD;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_MEGUMI;
         break;
     case 10:
-        rpg_girl_hit_points = 0x109;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_YUMI;
         break;
     case 13:
-        rpg_girl_hit_points = 0x23D;
+        rpg_girl_hit_points = RPG_GIRL_HIT_POINTS_YOSHIO;
         break;
     case 14:
-        rpg_girl_hit_points = 0x7FFFFFFF;
+        rpg_girl_hit_points = RPG_PARTNER_HIT_POINTS_SENTINEL;
         break;
     }
     rpg_girl_hit_points_maximum = rpg_girl_hit_points;
@@ -120,27 +120,27 @@ void rpg_init_player_state(void) {
         rpg_enemy_hit_points_maximum = 1;
         break;
     case 0x8000000:
-        rpg_enemy_hit_points = 0x1388;
-        rpg_enemy_hit_points_maximum = 0x1388;
+        rpg_enemy_hit_points = RPG_ENEMY_HIT_POINTS_ROBOT;
+        rpg_enemy_hit_points_maximum = RPG_ENEMY_HIT_POINTS_ROBOT;
         break;
     case 0x80000000:
-        rpg_enemy_hit_points = 0x7FFFFFFF;
-        rpg_enemy_hit_points_maximum = 0x7FFFFFFF;
-        rpg_enemy_damage_scale = 0x3E8;
+        rpg_enemy_hit_points = RPG_ENEMY_HIT_POINTS_SENTINEL;
+        rpg_enemy_hit_points_maximum = RPG_ENEMY_HIT_POINTS_SENTINEL;
+        rpg_enemy_damage_scale = RPG_ENEMY_DAMAGE_SCALE_BASE;
         break;
     case 0x100000:
-        rpg_enemy_hit_points = 0x10000;
-        rpg_enemy_hit_points_maximum = 0x10000;
+        rpg_enemy_hit_points = RPG_ENEMY_HIT_POINTS_DELINQUENT;
+        rpg_enemy_hit_points_maximum = RPG_ENEMY_HIT_POINTS_DELINQUENT;
         if (rpg_has_boss_event() != 0) {
-            rpg_enemy_damage_scale = 0x3E8;
-            rpg_delinquent_gauges = 0x1388;
-            rpg_delinquent_hit_points_1 = 0x1388;
-            rpg_delinquent_hit_points_2 = 0x1388;
+            rpg_enemy_damage_scale = RPG_ENEMY_DAMAGE_SCALE_BASE;
+            rpg_delinquent_gauges = RPG_DELINQUENT_HIT_POINTS_BOSS_EVENT;
+            rpg_delinquent_hit_points_1 = RPG_DELINQUENT_HIT_POINTS_BOSS_EVENT;
+            rpg_delinquent_hit_points_2 = RPG_DELINQUENT_HIT_POINTS_BOSS_EVENT;
         } else {
-            rpg_enemy_damage_scale = 0x5DC;
-            rpg_delinquent_gauges = 0x270F;
-            rpg_delinquent_hit_points_1 = 0x270F;
-            rpg_delinquent_hit_points_2 = 0x270F;
+            rpg_enemy_damage_scale = RPG_ENEMY_DAMAGE_SCALE_STANDARD_DELINQUENT;
+            rpg_delinquent_gauges = RPG_DELINQUENT_HIT_POINTS_STANDARD;
+            rpg_delinquent_hit_points_1 = RPG_DELINQUENT_HIT_POINTS_STANDARD;
+            rpg_delinquent_hit_points_2 = RPG_DELINQUENT_HIT_POINTS_STANDARD;
         }
         break;
     }
@@ -173,7 +173,7 @@ s32 rpg_pick_target(void) {
         rpg_enemy_slot = 0x12;
         break;
     case 0x100000:
-        if (rpg_player_action & 1) {
+        if (rpg_player_action & RPG_PLAYER_ATTACK) {
             switch (rpg_rand(15)) {
             case 0:
                 rpg_enemy_slot = 1;

@@ -340,7 +340,7 @@ void spot_bgm_start_step(void) {
 }
 
 void spot_scene_exit_step(void) {
-    func_80011E28(0x60);
+    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
 }
 
 INCLUDE_RODATA("asm/ovl/EVENT/data/EVENT/girl_scene_entry.rodata", spot_bios_srand);

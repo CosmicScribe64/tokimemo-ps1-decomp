@@ -90,7 +90,7 @@ extern s32 name_entry_reading_column;
 extern s32 name_entry_reading_row;
 extern s32 name_entry_cell_column;
 extern s32 name_entry_cell_row;
-extern s32 name_entry_tab_hover;
+extern s32 name_entry_tab_hover; /* NameEntryTab */
 extern s32 name_entry_tab_y[];
 extern u8 name_entry_preset_family_names[];
 extern u8 name_entry_preset_given_names[];
@@ -215,7 +215,7 @@ extern s32 name_entry_birthday_prompt_clip_start;
 extern s32 name_entry_birthday_prompt_clip_end;
 void name_entry_birthday_actors_init();
 void name_entry_birthday_text_draw();
-extern s32 name_entry_tab;
+extern s32 name_entry_tab; /* NameEntryTab */
 void name_entry_preset_chord_check();
 void name_entry_digit_sprite_draw(s32 digit_index, s32 screen_x, s32 screen_y);
 void name_entry_number_sprites_draw();
@@ -412,4 +412,35 @@ extern u8 file_select_rebuild_old_counts[16];
 /* T-17900: sprite (u, v) of each decimal digit, indexed by value % 10 in file_select_number_draw; the label
  * covers 0x64 bytes, the rest is zero. */
 extern u8 file_select_digit_uv[10][2];
+/* T-27051 tabs. */
+enum NameEntryTab {
+    NAME_ENTRY_TAB_HIRAGANA = 0,
+    NAME_ENTRY_TAB_KATAKANA = 1,
+    NAME_ENTRY_TAB_SYMBOLS = 2,
+    NAME_ENTRY_TAB_KANJI = 3,
+    NAME_ENTRY_TAB_DONE = 4
+};
+
+/* T-27051 inactive cursor. */
+#define NAME_ENTRY_INACTIVE_CURSOR 0xC
+
+/* T-27051 unset selections. */
+#define NAME_ENTRY_SELECTION_UNSET 0xFF
+
+/* T-27051 name-part args. */
+enum NameEntryNamePart {
+    NAME_ENTRY_NAME_PART_FAMILY = 0,
+    NAME_ENTRY_NAME_PART_GIVEN = 1,
+    NAME_ENTRY_NAME_PART_NICKNAME = 2
+};
+
+/* T-27051 birthday args. */
+enum NameEntryBirthdayProfile {
+    NAME_ENTRY_PROFILE_PLAYER = 0,
+    NAME_ENTRY_PROFILE_SHIORI = 1
+};
+
+/* T-27051 iris stop. */
+#define FILE_SELECT_IRIS_UPDATE_STOP 0x4001
+
 #endif

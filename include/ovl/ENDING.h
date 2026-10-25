@@ -199,4 +199,18 @@ extern EdShorts13 D_8013CDA0; /* ending_advance_song_lyrics: thresholds compared
 #ifndef OVL_ENDING_TIMER_T9780
 #define OVL_ENDING_TIMER_T9780
 s32 ending_scroll_result_text_entries(void);
+/* T-27066: ending_graduation_result_dialogue_select initializes the best result to 0 and uses 0x78 to separate high from lower parameter-result dialogue; career_and_epilogue_summary.c:314,408. */
+#define ENDING_PARAM_RESULT_INITIAL_BEST 0
+#define ENDING_PARAM_RESULT_HIGH_MIN 0x78
+
+/* T-27075 group 1: ENDING/career_and_epilogue_summary.c:326-442; bits 0-5 select ordered university/company result labels. Bits 6/7 remain indexed because broader meaning is unproven. */
+#define ENDING_CAREER_RESULT_UNIVERSITY_TIER_1_MASK 0x01 /* b[1] bit 0 selects the first university-result label in ordered source branches. */
+#define ENDING_CAREER_RESULT_UNIVERSITY_TIER_2_MASK 0x02 /* b[1] bit 1 selects the second university-result label in ordered source branches. */
+#define ENDING_CAREER_RESULT_UNIVERSITY_TIER_3_MASK 0x04 /* b[1] bit 2 selects the third university-result label in ordered source branches. */
+#define ENDING_CAREER_RESULT_COMPANY_TIER_1_MASK 0x08 /* b[1] bit 3 selects the first company-result label in ordered source branches. */
+#define ENDING_CAREER_RESULT_COMPANY_TIER_2_MASK 0x10 /* b[1] bit 4 selects the second company-result label in ordered source branches. */
+#define ENDING_CAREER_RESULT_COMPANY_TIER_3_MASK 0x20 /* b[1] bit 5 selects the third company-result label in ordered source branches. */
+#define ENDING_CAREER_RESULT_FLAG_BIT_6_MASK 0x40 /* b[1] bit 6 is tested in later career-result branches; broader meaning not inferred. */
+#define ENDING_CAREER_RESULT_FLAG_BIT_7_MASK 0x80 /* b[1] bit 7 is tested in later career-result branches; broader meaning not inferred. */
+
 #endif

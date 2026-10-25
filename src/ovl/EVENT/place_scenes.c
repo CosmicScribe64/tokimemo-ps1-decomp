@@ -134,13 +134,13 @@ s32 spot_date_event_choose(void) {
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 1) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x0] == 0) && (g->step == 0xD)) {
             D_800EECB0 = 4;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x0] = 1;
             return 0;
         }
         if ((temp_v0 == 0x10) && ((u8) g->month >= 6U) && ((u8) g->month < 9U) && (sp2B < 3U) && ((u32) temp_v0_2 < 2U) && (g->scene_flags[0x1] == 0) && (g->girls[g->current_girl].pad2E[2] != 0) && (g->stage == 1) && (g->step == 0xA)) {
             D_800EECB0 = 6;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x1] = 1;
             return 0;
         }
@@ -150,7 +150,7 @@ s32 spot_date_event_choose(void) {
                     if ((g->scene_flags[0x2] == 0) && (g->stage == 1)) {
                         if (g->step == 1) {
                             D_800EECB0 = 3;
-                            func_80011E28(0x60);
+                            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                             g->scene_flags[0x2] = 1;
                             return 0;
                         }
@@ -164,7 +164,7 @@ s32 spot_date_event_choose(void) {
         }
         if ((temp_v0 == 0xC) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (sp2B == 0) && (temp_v0_2 == 0) && (sp29 != 0) && (g->scene_flags[0x3] == 0) && (D_800EECBC == 2) && (g->stage == 1) && (g->step == 0x23)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x3] = 1;
             return 0;
         }
@@ -172,14 +172,14 @@ s32 spot_date_event_choose(void) {
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 0xC) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && ((u8) g->scene_flags[0x7] == 0) && (D_800EECBC == 0) && (D_80125304 != 0) && (g->stage == 1) && (g->step == 0x23)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             return 0;
         }
         if ((temp_v0 == 0x11) && ((u8) g->month >= 6U) && ((u8) g->month < 9U) && (g->scene_flags[0x8] == 0)) {
             if (sp2B < 2U) {
                 if ((g->stage == 1) && (g->step == 0xA)) {
                     D_800EECB0 = 3;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x8] = 1;
                     return 0;
                 }
@@ -200,7 +200,7 @@ s32 spot_date_event_choose(void) {
 block_64:
             if ((g->stage == 1) && (g->step == 0xA)) {
                 D_800EECB0 = 4;
-                func_80011E28(0x60);
+                func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                 g->scene_flags[0x9] = 1;
                 return 0;
             }
@@ -210,7 +210,7 @@ block_67:
 block_68:
         if ((temp_v0 == 0xE) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0xA] == 0) && (D_80125314 == 6) && (g->stage == 1) && (g->step == 0x11)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0xA] = 1;
             return 0;
         }
@@ -218,25 +218,25 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 4) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0xD] == 0) && ((u8) g->year >= 0x60U) && (g->stage == 1) && (g->step == 9)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0xD] = 1;
             return 0;
         }
         if ((temp_v0 == 0xA) && ((u8) g->month >= 6U) && ((u8) g->month < 9U) && (g->scene_flags[0xE] == 0) && (g->year == 0x61) && (g->stage == 1) && (g->step == 9)) {
             D_800EECB0 = 3;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0xE] = 1;
             return 0;
         }
         if ((temp_v0 == 9) && ((u8) g->month >= 9U) && ((u8) g->month < 0xCU) && (g->scene_flags[0xF] == 0) && ((u8) g->year >= 0x60U) && (D_80125300 != 0) && (D_800EECBC == 1) && (g->stage == 1) && (g->step == 0xD)) {
             D_800EECB0 = 4;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0xF] = 1;
             return 0;
         }
         if ((temp_v0 == 2) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (D_80125324 == (date_ok = 2)) && (g->stage == 1) && (g->step == 0xE)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x10] = 1;
             return 0;
         }
@@ -244,7 +244,7 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 0xB) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x13] == 0) && (g->year == 0x61) && (g->stage == 1) && (g->step == 9)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x13] = 1;
             return 0;
         }
@@ -252,7 +252,7 @@ block_68:
             if (g->scene_flags[0x14] == 0) {
                 if ((g->stage == 1) && (g->step == 0xA)) {
                     D_800EECB0 = 3;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x14] = 1;
                     return 0;
                 }
@@ -264,7 +264,7 @@ block_68:
             if ((D_801252F4 == (date_ok = 1)) && (g->stage == 1)) {
                 if (g->step == 7) {
                     D_800EECB0 = 4;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x15] = 1;
                     return 0;
                 }
@@ -274,7 +274,7 @@ block_68:
         }
         if ((temp_v0 == 6) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (sp2B < 2U) && (temp_v0_2 == 0) && (g->scene_flags[0x16] == 0) && ((u8) g->year >= 0x61U) && (g->stage == 1) && (g->step == 0xB)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x16] = 1;
             return 0;
         }
@@ -282,7 +282,7 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 1) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->scene_flags[0x19] == 0) && (g->stage == 1) && (g->step == 0xD)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x19] = 1;
             return 0;
         }
@@ -292,7 +292,7 @@ block_68:
                     if (g->scene_flags[0x1A] == 0) {
                         if ((g->stage == 1) && (g->step == 0xA)) {
                             D_800EECB0 = 3;
-                            func_80011E28(0x60);
+                            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                             g->scene_flags[0x1A] = 1;
                             return 0;
                         }
@@ -306,13 +306,13 @@ block_68:
         }
         if ((temp_v0 == 0xD) && ((u8) D_8012532C == 0) && ((u8) g->month >= 9U) && ((u8) g->month < 0xCU) && (g->scene_flags[0x1B] == 0) && ((u8) spot_place_variant < 2U) && (g->stage == 1) && (g->step == 8)) {
             D_800EECB0 = 4;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x1B] = 1;
             return 0;
         }
         if ((temp_v0 == 2) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0x1C] == 0) && (D_800EECBC == 1) && (g->stage == 1) && (g->step == 0xE)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x1C] = 1;
             return 0;
         }
@@ -320,13 +320,13 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 5) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x20] == 0) && (g->year == 0x61) && (g->stage == 1) && (g->step == 9)) {
             D_800EECB0 = 3;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x20] = 1;
             return 0;
         }
         if ((temp_v0 == 3) && ((u8) g->month >= 6U) && ((u8) g->month < 9U) && (sp2B < 3U) && ((u32) temp_v0_2 < 2U) && (g->scene_flags[0x21] == 0) && ((u8) g->year >= 0x61U) && (g->stage == 1) && (g->step == 9)) {
             D_800EECB0 = 4;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x21] = 1;
             return 0;
         }
@@ -334,7 +334,7 @@ block_68:
             if ((g->scene_flags[0x22] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0)) {
                 if ((g->stage == 1) && (g->step == 0xD)) {
                     D_800EECB0 = 5;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x22] = 1;
                     return 0;
                 }
@@ -344,7 +344,7 @@ block_68:
         }
         if ((temp_v0 == 0x14) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0x23] == 0) && (g->stage == 1) && (g->step == 0)) {
             D_800EECB0 = 6;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x23] = 1;
             return 0;
         }
@@ -352,13 +352,13 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 7) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x26] == 0) && (D_801252F8 != 0) && (g->stage == 1) && (g->step == 7)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x26] = 1;
             return 0;
         }
         if ((temp_v0 == 0x11) && ((u8) g->month >= 6U) && ((u8) g->month < 9U) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->scene_flags[0x27] == 0) && (g->athletics >= 0x64) && (g->stage == 1) && (g->step == 0xA)) {
             D_800EECB0 = 3;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x27] = 1;
             return 0;
         }
@@ -366,7 +366,7 @@ block_68:
             if (g->scene_flags[0x28] == 0) {
                 if ((g->stage == 1) && (g->step == 9)) {
                     D_800EECB0 = 4;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x28] = 1;
                     return 0;
                 }
@@ -376,7 +376,7 @@ block_68:
         }
         if ((temp_v0 == 0xA) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0x29] == 0) && (g->stage == 1) && (g->step == 9)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x29] = 1;
             return 0;
         }
@@ -384,7 +384,7 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 2) && (D_800EECBC == 0) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x2C] == 0) && (g->stage == 1) && (g->step == 0xF)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x2C] = 1;
             return 0;
         }
@@ -392,7 +392,7 @@ block_68:
             if ((u8) g->month < 9U) {
                 if ((g->stage == 1) && (g->step == 0xA)) {
                     D_800EECB0 = 3;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x2D] = 1;
                     return 0;
                 }
@@ -404,7 +404,7 @@ block_68:
             if ((g->scene_flags[0x2E] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0)) {
                 if ((g->stage == 1) && (g->step == 0x38)) {
                     D_800EECB0 = 4;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x2E] = 1;
                     return 0;
                 }
@@ -414,13 +414,13 @@ block_68:
         }
         if ((temp_v0 == 0x14) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0x2F] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->stage == 1) && (g->step == 8)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x2F] = 1;
             return 0;
         }
         if ((g->scene_flags[0x30] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->stage == 0) && (g->step == 0x29)) {
             D_800EECB0 = 6;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x30] = 1;
             return 0;
         }
@@ -428,7 +428,7 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 9) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x33] == 0) && ((D_80125300 == 0) || (D_800EECBC == 0)) && (g->stage == 1) && (g->step == 0xD)) {
             D_800EECB0 = 2;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x33] = 1;
             return 0;
         }
@@ -438,7 +438,7 @@ block_68:
                     if (g->scene_flags[0x34] == 0) {
                         if ((g->stage == 1) && (g->step == 0x3C)) {
                             D_800EECB0 = 3;
-                            func_80011E28(0x60);
+                            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                             g->scene_flags[0x34] = 1;
                             return 0;
                         }
@@ -454,7 +454,7 @@ block_68:
             if (g->scene_flags[0x35] == 0) {
                 if ((g->stage == 1) && (g->step == 0x11)) {
                     D_800EECB0 = 4;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x35] = 1;
                     return 0;
                 }
@@ -464,7 +464,7 @@ block_68:
         }
         if ((temp_v0 == 0x13) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0x36] == 0) && (g->girls[g->current_girl].pad2E[4] != 0) && (g->stage == 1) && (g->step == 8)) {
             D_800EECB0 = 5;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x36] = 1;
             return 0;
         }
@@ -476,7 +476,7 @@ block_68:
                   (g->year = date_ok = ((g->month | 0) == 12 && g->day == 7))) {
                 if ((sp2B < 3U) && g->player_flags.f.met && (g->stage == 1) && (g->step == 0)) {
                     D_800EECB0 = 6;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x37] = 1;
                     return 0;
                 }
@@ -486,7 +486,7 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 0xC) && (D_80125328 != 0) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x3A] == 0) && (g->stage == 1) && (g->step == 0x1B)) {
             D_800EECB0 = 3;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x3A] = 1;
             return 0;
         }
@@ -496,7 +496,7 @@ block_68:
                     if (g->scene_flags[0x3B] == 0) {
                         if ((g->stage == 0) && (g->step == 0x29)) {
                             D_800EECB0 = 4;
-                            func_80011E28(0x60);
+                            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                             g->scene_flags[0x3B] = 1;
                             return 0;
                         }
@@ -512,7 +512,7 @@ block_68:
             if ((g->scene_flags[0x3C] == 0) && (g->stage == 1)) {
                 if (g->step == 9) {
                     D_800EECB0 = 5;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x3C] = 1;
                     return 0;
                 }
@@ -522,7 +522,7 @@ block_68:
         }
         if ((temp_v0 == 0x13) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (g->scene_flags[0x3D] == 0) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->athletics >= 0x50) && (g->stage == 1) && (g->step == 8)) {
             D_800EECB0 = 6;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x3D] = 1;
             return 0;
         }
@@ -530,7 +530,7 @@ block_68:
         temp_v0 = (((u8 *)&spot_reaction_low_cells)[0xC]);
         if ((temp_v0 == 0xC) && ((u8) g->month >= 3U) && ((u8) g->month < 6U) && (g->scene_flags[0x41] == 0) && (g->stage == 1) && (g->step == 8)) {
             D_800EECB0 = 3;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x41] = 1;
             return 0;
         }
@@ -540,7 +540,7 @@ block_68:
                     if ((g->scene_flags[0x42] == 0) && (g->stage == 1)) {
                         if (g->step == 1) {
                             D_800EECB0 = 4;
-                            func_80011E28(0x60);
+                            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                             g->scene_flags[0x42] = 1;
                             return 0;
                         }
@@ -556,7 +556,7 @@ block_68:
             if (((u8) spot_place_variant >= 2U) && (g->stage == 1)) {
                 if (g->step == 8) {
                     D_800EECB0 = 5;
-                    func_80011E28(0x60);
+                    func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                     g->scene_flags[0x43] = 1;
                     return 0;
                 }
@@ -566,7 +566,7 @@ block_68:
         }
         if ((temp_v0 == 0x14) && ((g->month == 0xC) || (g->month == 1) || (g->month == 2)) && (sp2B == 0) && (sp29 != 0) && (temp_v0_2 == 0) && (g->scene_flags[0x44] == 0) && (g->stage == 1) && (g->step == 8)) {
             D_800EECB0 = 6;
-            func_80011E28(0x60);
+            func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
             g->scene_flags[0x44] = 1;
             return 0;
         }
@@ -586,7 +586,7 @@ block_68:
                 g->saved_mode_stage = 0;
                 g->saved_mode_step = 0xC;
                 D_800EECB4 = 0xB;
-                func_80011E28(0x60);
+                func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
                 g->scene_flags[0x48] = 1;
                 return 0;
             }
@@ -600,7 +600,7 @@ block_68:
         g->saved_mode_stage = 0;
         g->saved_mode_step = 0xC;
         D_800EECB4 = 0xB;
-        func_80011E28(0x60);
+        func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE);
         g->scene_flags[0x4A] = 1;
         return 0;
     }
@@ -1644,31 +1644,31 @@ s32 spot_amusement_ride_choose_step(void) {
     if (D_800EECBC == 0) {
         if ((D_80125308 != 0) || (D_80125304 != 0)) {
             msg = 0x42C9;
-            spot_ride = 3;
+            spot_ride = SPOT_RIDE_SCREAM_RIDE;
         } else {
             msg = 0x42AE;
-            spot_ride = 0;
+            spot_ride = SPOT_RIDE_ROLLER_COASTER;
         }
     }
     if (D_800EECBC == 1) {
         D_80094730 += 5;
         if (D_80125308 != 0) {
             msg = 0x42D2;
-            spot_ride = 4;
+            spot_ride = SPOT_RIDE_VIRTUAL_SHIP;
         } else {
             msg = 0x42B7;
-            spot_ride = 1;
+            spot_ride = SPOT_RIDE_GHOST_HOUSE;
         }
     }
     if (D_800EECBC == 2) {
         D_80094730 += 0xA;
         msg = 0x42C0;
-        spot_ride = 2;
+        spot_ride = SPOT_RIDE_FERRIS_WHEEL;
     }
     func_800469F4(msg);
     spot_ride_setup();
     spot_reaction_rows_build_step();
-    if ((D_800B1746 == 8) && ((u8)spot_ride == 3) && (D_800B0BCF != 0)) {
+    if ((D_800B1746 == 8) && ((u8)spot_ride == SPOT_RIDE_SCREAM_RIDE) && (D_800B0BCF != 0)) {
         D_800EECBC = 1;
     } else {
         D_800EECBC = 0;
@@ -1847,7 +1847,7 @@ void spot_ride_setup(void) {
 
     g = (SpotDevelopmentState *)D_800B0860;
     func_80078970(D_800947C4, "遊園地");
-    if ((u8) spot_ride == 0) {
+    if ((u8) spot_ride == SPOT_RIDE_ROLLER_COASTER) {
         func_80078970(D_80094784, "ジェットコースター");
         if (!(D_800B0A04[g->current_girl].pad28[0] & 1)) {
             spot_place_variant = 0;
@@ -1864,7 +1864,7 @@ void spot_ride_setup(void) {
         D_800EECE4 = 0x14;
         return;
     }
-    if ((u8) spot_ride == 3) {
+    if ((u8) spot_ride == SPOT_RIDE_SCREAM_RIDE) {
         func_80078970(D_80094784, "絶叫マシーンビビール");
         if (!(D_800B0A04[g->current_girl].pad28[3] & 1)) {
             spot_place_variant = 0;
@@ -1881,7 +1881,7 @@ void spot_ride_setup(void) {
         ((SpotResultCells *)&spot_face_cells)->value[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_80125264 + temp_t0 + 20);
         return;
     }
-    if ((u8) spot_ride == 1) {
+    if ((u8) spot_ride == SPOT_RIDE_GHOST_HOUSE) {
         func_80078970(D_80094784, "ゴーストハウス");
         if (!(D_800B0A04[g->current_girl].pad28[1] & 1)) {
             spot_place_variant = 0;
@@ -1898,7 +1898,7 @@ void spot_ride_setup(void) {
         ((SpotResultCells *)&spot_face_cells)->value[2] = (s16) *(g->current_girl * 0x24 + (u8 *)D_80125264 + temp_t8 + 8);
         return;
     }
-    if ((u8) spot_ride == 4) {
+    if ((u8) spot_ride == SPOT_RIDE_VIRTUAL_SHIP) {
         func_80078970(D_80094784, "バーチャルシップ");
         if (!(D_800B0A04[g->current_girl].pad28[4] & 1)) {
             spot_place_variant = 0;
@@ -2885,7 +2885,7 @@ positive_loop:
             *arg1 = 5 - i;
         } else {
             i += 1;
-            if (i < 5) {
+            if (i < SPOT_OUTCOME_TRIVIA_THRESHOLD_COUNT) {
                 goto positive_loop;
             }
         }
@@ -2902,7 +2902,7 @@ negative_loop:
         *arg1 = j + 3;
     } else {
         j += 1;
-        if (j < 5) {
+        if (j < SPOT_OUTCOME_TRIVIA_THRESHOLD_COUNT) {
             goto negative_loop;
         }
     }
@@ -2992,13 +2992,13 @@ void spot_scene_close_step(void) {
 void spot_birthday_check_step(void) {
     if ((((SpotDevelopmentState *)&D_800B0860)->month == ((SpotBirthdayBits *)&D_800B0A04[D_800B1746].pad10[0])->month) &&
         (D_800B0897 == ((SpotBirthdayBits *)&D_800B0A04[D_800B1746].pad10[0])->day)) {
-        func_80011E28(0x50);
+        func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_DATE);
         func_80011E8C(2);
         return;
     }
     if ((D_800B0896 == ((SpotBirthdayBits *)&D_800B0948)->month) &&
         (D_800B0897 == ((SpotBirthdayBits *)&D_800B0948)->day)) {
-        func_80011E28(0x50);
+        func_80011E28(SPOT_DEVELOPMENT_GAME_MODE_DATE);
         func_80011E8C(3);
         return;
     }
@@ -3100,11 +3100,11 @@ entry:;
 }
 
 void spot_place_amusement_park_special_case_44(void) {
-    if (D_800B1746 == 8 && (u32)(u8)spot_ride == 3 && D_800B0BCF != 0) {
+    if (D_800B1746 == 8 && (u32)(u8)spot_ride == SPOT_RIDE_SCREAM_RIDE && D_800B0BCF != 0) {
         D_80094734 = 2;
     }
     func_8004CF30();
-    if (D_800B1746 == 8 && (u32)(u8)spot_ride == 3) {
+    if (D_800B1746 == 8 && (u32)(u8)spot_ride == SPOT_RIDE_SCREAM_RIDE) {
         if (D_800B0BCF == 0 && D_80094734 == 3) {
             func_800201FC(1);
             D_80094730 += 1;
@@ -3122,16 +3122,16 @@ void spot_place_amusement_park_special_case_45(void) {
     v = spot_ride;
     /* FAKE: label stops cvt_pass entry strip so uopt puts 1 ($a0) first in bne; T-11110 */
 entry:;
-    if ((D_800B1746 == 1) && (spot_ride == 3)) {
+    if ((D_800B1746 == 1) && (spot_ride == SPOT_RIDE_SCREAM_RIDE)) {
         if (((u8)D_800B0E31 == 0) && ((D_800B0896 < 3) || (D_800B0896 >= 6))) {
             D_800B1AF6 += 0xD;
         }
         if ((u8)D_800B0E31 == 1) {
             D_800B1AF6 += 0xD;
         }
-    } else if ((D_800B1746 == 4) && (spot_ride == 3) && (D_800B0AFF != 0)) {
+    } else if ((D_800B1746 == 4) && (spot_ride == SPOT_RIDE_SCREAM_RIDE) && (D_800B0AFF != 0)) {
         D_800B1AF6 += 6;
-    } else if ((D_800B1746 == 7) && (spot_ride == 1)) {
+    } else if ((D_800B1746 == 7) && (spot_ride == SPOT_RIDE_GHOST_HOUSE)) {
         v = func_8002328C(7);
         v2 = func_8002336C(7);
         if ((v == 0x80) && (v2 == 0)) {
@@ -3139,7 +3139,7 @@ entry:;
         } else {
             D_800B1AF6 += 0xB;
         }
-    } else if ((D_800B1746 == 8) && (spot_ride == 2) && (D_800B0BCE != 0)) {
+    } else if ((D_800B1746 == 8) && (spot_ride == SPOT_RIDE_FERRIS_WHEEL) && (D_800B0BCE != 0)) {
         D_800B1AF6 += 6;
     }
     func_80011DFC();
@@ -3384,7 +3384,7 @@ void spot_place_bowling_alley_speak_branch_15(void) {
 void spot_place_amusement_park_speak_branch_55(void) {
     if (D_800B1746 == 0xA) {
         if (D_800EECBC == 1) {
-            if ((u8)spot_ride == 2) {
+            if ((u8)spot_ride == SPOT_RIDE_FERRIS_WHEEL) {
                 if (spot_place_variant == 1) {
                     if (D_800B1AF0++ == 0) {
                         D_80094730 = 0x37;

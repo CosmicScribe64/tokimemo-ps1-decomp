@@ -342,7 +342,7 @@ void tt_collisions_update(void) {
         if (ground_target[0] != 0 && *(u16 *)(ground_target + 4) == 0x7A
             && tt_box_overlap(player + 0x14, (u8 *)tt_hitboxes, ground_target + 0x14, (u8 *)&tt_hitboxes[4])) {
             if (*(u16 *)(ground_target + 2) == 0x6E) {
-                tt_se_request(0x60F);
+                tt_se_request(TT_SE_SMART_BOMB);
                 ground_target[0] = 0;
                 tt_smart_bomb();
             } else if (*(u16 *)(ground_target + 2) == 0x6F) {
@@ -427,7 +427,7 @@ void tt_collisions_update(void) {
                     case 0xA9:
                     case 0xAA:
                         if (tt_box_overlap(q + 0x14, (u8 *)&tt_hitbox_shot, e + 0x14, *(u8 **)(e + 0x4C))) {
-                            tt_se_request(0x509);
+                            tt_se_request(TT_SE_SHOT_CANCEL);
                             e[0] = 0;
                             *(u16 *)(q + 4) = 0x80;
                             q[0xD] = 0;

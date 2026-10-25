@@ -9,33 +9,33 @@ void culture_yumi_visit_entry(void) {
     switch (D_80122EB8) {
     case 0:
         if (game_state.year == 0x60) {
-            mode_stage_set(0x9B);
+            mode_stage_set(CULTURE_STAGE_YUMI_VISIT_LITERATURE_EXHIBIT);
             return;
         }
-        mode_stage_set(0x9C);
+        mode_stage_set(CULTURE_STAGE_YUMI_VISIT_SPEECH_CONTEST);
         return;
     case 1:
-        mode_stage_set(0x9D);
+        mode_stage_set(CULTURE_STAGE_YUMI_VISIT_DRAMA_PLAY);
         return;
     case 2:
-        mode_stage_set(0x9E);
+        mode_stage_set(CULTURE_STAGE_YUMI_VISIT_EXPERIMENT_SHOW);
         return;
     case 3:
         if (game_state.year == 0x60) {
-            mode_stage_set(0x9F);
+            mode_stage_set(CULTURE_STAGE_YUMI_VISIT_COMPUTER_GAME);
             return;
         }
-        mode_stage_set(0x9E);
+        mode_stage_set(CULTURE_STAGE_YUMI_VISIT_EXPERIMENT_SHOW);
         return;
     case 4:
         if (game_state.year == 0x60) {
-            mode_stage_set(0xA0);
+            mode_stage_set(CULTURE_STAGE_YUMI_VISIT_OPEN_SKETCHING);
             return;
         }
-        mode_stage_set(0xA1);
+        mode_stage_set(CULTURE_STAGE_YUMI_VISIT_OIL_PAINTING_EXHIBIT);
         return;
     case 5:
-        mode_stage_set(0xA2);
+        mode_stage_set(CULTURE_STAGE_YUMI_VISIT_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

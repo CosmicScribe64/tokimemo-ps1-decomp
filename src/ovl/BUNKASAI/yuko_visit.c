@@ -8,45 +8,45 @@ void culture_yuko_visit_entry(void) {
     switch (dispatch->unk_00) {
     case 0:
         if (game_state.year == 0x61) {
-            mode_stage_set(0x87);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_SPEECH_CONTEST);
             return;
         }
-        mode_stage_set(0x86);
+        mode_stage_set(CULTURE_STAGE_YUKO_VISIT_LITERATURE_EXHIBIT);
         return;
     case 1:
-        mode_stage_set(0x88);
+        mode_stage_set(CULTURE_STAGE_YUKO_VISIT_DRAMA_PLAY);
         return;
     case 2:
-        mode_stage_set(0x89);
+        mode_stage_set(CULTURE_STAGE_YUKO_VISIT_EXPERIMENT_SHOW);
         return;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x8A);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(0x8C);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(0x89);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_EXPERIMENT_SHOW);
             return;
         }
         break;
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x8D);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_PORTRAIT_DRAWING);
             return;
         case 0x60:
-            mode_stage_set(0x8E);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_OPEN_SKETCHING);
             return;
         case 0x61:
-            mode_stage_set(0x8F);
+            mode_stage_set(CULTURE_STAGE_YUKO_VISIT_OIL_PAINTING_EXHIBIT);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0x90);
+        mode_stage_set(CULTURE_STAGE_YUKO_VISIT_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

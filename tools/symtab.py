@@ -207,16 +207,30 @@ class SymbolTable:
 
     def owned_lines(self, owner):
         """Lines naming addresses of `owner` in any file of a unit that sees them as `owner`'s."""
-        out, seen = [], set()
-        for unit in self.order:
-            for l in self.unit_lines(unit):
-                if self.owner(unit, l.addr) == owner and (l.path, l.lineno) not in seen:
-                    seen.add((l.path, l.lineno))
-                    out.append(l)
-        return out
+        owned_cache = self.__dict__.setdefault("_owned_lines_snapshot", {})
+        address_cache = self.__dict__.setdefault("_lines_by_address", {})
+        if owner not in owned_cache:
+            out, seen = [], set()
+            for unit in self.order:
+                for l in self.unit_lines(unit):
+                    if self.owner(unit, l.addr) == owner and (l.path, l.lineno) not in seen:
+                        seen.add((l.path, l.lineno))
+                        out.append(l)
+            snapshot = tuple(out)
+            by_addr = {}
+            for line in snapshot:
+                by_addr.setdefault(line.addr, []).append(line)
+            owned_cache[owner] = snapshot
+            address_cache[owner] = {addr: tuple(lines) for addr, lines in by_addr.items()}
+        # Keep the historical fresh-list contract while sharing immutable SymLine objects.
+        return list(owned_cache[owner])
 
     def lines_at(self, owner, addr):
-        return [l for l in self.owned_lines(owner) if l.addr == addr]
+        owned_cache = self.__dict__.setdefault("_owned_lines_snapshot", {})
+        if owner not in owned_cache:
+            self.owned_lines(owner)
+        address_cache = self.__dict__["_lines_by_address"]
+        return list(address_cache[owner].get(addr, ()))
 
     def names_at(self, owner, addr):
         """Names given to (owner, addr) by the symbol files, in file order, without repeats."""

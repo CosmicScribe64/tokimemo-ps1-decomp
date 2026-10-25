@@ -78,8 +78,8 @@ s32 encounter_walk_home_init(void) {
     encounter_walk_home_command_table = encounter_walk_home_command_section_10;
     encounter_walk_home_voice_table = encounter_walk_home_voice_section_10;
     encounter_walk_home_topic_select();
-    if ((encounter_walk_home_topic == 0) && (game_state.current_girl == GIRL_MIRA) && !(rand() & 3)) {
-        encounter_walk_home_topic = 0x64;
+    if ((encounter_walk_home_topic == ENCOUNTER_TOPIC_NONE) && (game_state.current_girl == GIRL_MIRA) && !(rand() & 3)) {
+        encounter_walk_home_topic = ENCOUNTER_TOPIC_MIRA_RANDOM;
     }
     if (game_state.girls[game_state.current_girl].syoushin >= 0x4C) {
         encounter_walk_home_high_girl_counter = 1;
@@ -162,9 +162,9 @@ s32 encounter_walk_home_topic_offer(s16 topic) {
     EncounterGirlThresholds girl_thresholds;
 
     girl_thresholds = encounter_walk_home_topic_replace_thresholds;
-    if (encounter_walk_home_topic == 0) {
+    if (encounter_walk_home_topic == ENCOUNTER_TOPIC_NONE) {
         encounter_walk_home_topic = topic;
-    } else if (encounter_walk_home_topic == 10) {
+    } else if (encounter_walk_home_topic == ENCOUNTER_TOPIC_BIRTHDAY) {
         if ((game_state.frame_count & 7) >= (u32)girl_thresholds.by_girl[game_state.current_girl]) {
             encounter_walk_home_topic = topic;
         }
@@ -193,19 +193,19 @@ s32 encounter_walk_home_birthday_topic_check(void) {
     if (!game_state.girls[girl_id].flags.f.b6) {
         return 0;
     }
-    if ((game_state.frame_count & 7) < girl_thresholds.by_girl[girl_id] || encounter_walk_home_topic == 0) {
+    if ((game_state.frame_count & 7) < girl_thresholds.by_girl[girl_id] || encounter_walk_home_topic == ENCOUNTER_TOPIC_NONE) {
         birthday_word = game_state.girls[girl_id].birthday.w;
         month = game_state.month;
         day = game_state.day;
         if (month == (birthday_word & 0xF)) {
             if (((birthday_word << 23) >> 27) - day < 21 && ((birthday_word << 23) >> 27) - day != 0) {
-                encounter_walk_home_topic = 10;
+                encounter_walk_home_topic = ENCOUNTER_TOPIC_BIRTHDAY;
             }
         } else if (((birthday_word & 0xF) - month + 12) % 12 == 1 &&
                    /* FAKE: T-11910 the no-op `birthday_word = birthday_word` side effect makes cfe emit the
                     * day bits before the table load (the original's ugen temporary order) */
                    month_lengths.days_in_month[(month + 10) % 12] + ((birthday_word = birthday_word) << 23 >> 27) - day < 20) {
-            encounter_walk_home_topic = 10;
+            encounter_walk_home_topic = ENCOUNTER_TOPIC_BIRTHDAY;
         }
     }
     /* FAKE: T-11910 keeps girl_id live to the exit so it holds $v0 there and day takes $v1 */
@@ -228,52 +228,52 @@ s16 day_index;
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xC) {
             if (game_state.current_girl == GIRL_SHIORI) {
                 if (((u32) ((u16) game_state.player_flags.h >> 0xC) < 6U) || ((u32) (game_state.girls[0].flags.b[2] >> 4) < 6U)) {
-                    encounter_walk_home_topic_offer(2);
+                    encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CULTURE_FESTIVAL_MARKER);
                 }
             } else {
-                encounter_walk_home_topic_offer(2);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CULTURE_FESTIVAL_MARKER);
             }
         }
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 4) {
-            encounter_walk_home_topic_offer(6);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_SPORTS_FESTIVAL_MARKER);
         }
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xB) {
             if ((girl_state < 2U) || (game_state.current_girl == GIRL_YUMI)) {
-                encounter_walk_home_topic_offer(7);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_SCHOOL_TRIP_LOW_STATE_OR_YUMI);
             } else {
-                encounter_walk_home_topic_offer(8);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_SCHOOL_TRIP_OTHER);
             }
         }
         if ((game_state.year == 0x61) && (game_state.month == 9) && ((u8) game_state.day < 0xEU) && (game_state.current_girl == GIRL_YUMI)) {
-            encounter_walk_home_topic_offer(8);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_SCHOOL_TRIP_OTHER);
         }
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 6) {
-            encounter_walk_home_topic_offer(0xB);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_NOTICE_B);
         }
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xE) {
-            encounter_walk_home_topic_offer(0xC);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_NOTICE_D);
         }
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0x14) {
-            encounter_walk_home_topic_offer(0xD);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_NOTICE_F);
         }
         /* FAKE: indirect byte reads stop uopt from CSE-sharing unk_03E with the earlier 0x61 compare across calls (T-24115) */
         if ((*(u8 *)&game_state.year == 0x60) && (game_state.month_calendar[calendar_row].marker[day_index + 1] == 2)) {
-            encounter_walk_home_topic_offer(0xE);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_NOTICE_A_1996);
         }
         if ((*(u8 *)&game_state.year == 0x61) && (game_state.month_calendar[calendar_row].marker[day_index + 1] == 2)) {
-            encounter_walk_home_topic_offer(0xF);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_NOTICE_A_1997);
         }
         if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0xF) {
-            encounter_walk_home_topic_offer(9);
+            encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_NEW_YEAR_PREP_MARKER);
         }
     }
-    if ((game_state.month_calendar[calendar_row].marker[day_index + 1] == 5) && (encounter_walk_home_topic != 0x10)) {
-        encounter_walk_home_topic = 0;
-        encounter_walk_home_topic_offer(1);
+    if ((game_state.month_calendar[calendar_row].marker[day_index + 1] == 5) && (encounter_walk_home_topic != ENCOUNTER_TOPIC_PRIORITY_MARKER)) {
+        encounter_walk_home_topic = ENCOUNTER_TOPIC_NONE;
+        encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_EXAM_MARKER);
     }
     if (game_state.month_calendar[calendar_row].marker[day_index + 1] == 0x15) {
-        encounter_walk_home_topic = 0;
-        encounter_walk_home_topic_offer(0x10);
+        encounter_walk_home_topic = ENCOUNTER_TOPIC_NONE;
+        encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_PRIORITY_MARKER);
     }
 }
 
@@ -293,7 +293,7 @@ s32 encounter_walk_home_topic_select(void) {
     if (game_state.year == 0x60) {
         month_lengths.days_in_month[1] = 29;
     }
-    encounter_walk_home_topic = 0;
+    encounter_walk_home_topic = ENCOUNTER_TOPIC_NONE;
     for (i = 1; i < 20; i++) {
         days_in_month = month_lengths.days_in_month[game_state.month - 1];
         if (days_in_month >= game_state.day + i) {
@@ -413,7 +413,7 @@ void encounter_walk_home_followup_check(void) {
         audio_command(0x24);
         audio_command(0x507);
     }
-    if (((u8) encounter_walk_home_followup_allowed != 0) && ((encounter_walk_home_topic == 0) || (game_state.girls[game_state.current_girl].flags.w & 1))) {
+    if (((u8) encounter_walk_home_followup_allowed != 0) && ((encounter_walk_home_topic == ENCOUNTER_TOPIC_NONE) || (game_state.girls[game_state.current_girl].flags.w & 1))) {
         mode_step_next();
         return;
     }

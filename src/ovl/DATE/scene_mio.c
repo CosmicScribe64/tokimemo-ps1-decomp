@@ -82,7 +82,7 @@ void date_scene_mio_dispatch(void) {
 }
 
 void date_scene_mio_spring_ride_select(void) {
-    date_ride_index = 3;
+    date_ride_index = DATE_RIDE_SCREAM_MACHINE;
     date_scene_text = D_8015DEE8;
     date_scene_command = D_8015E024;
     date_scene_voice = D_8015E160;

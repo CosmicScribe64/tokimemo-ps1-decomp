@@ -80,7 +80,7 @@ s32 shooter_fire_vulcan(s32 arg0, s32 arg1) {
     }
     if (arg1 & 0x20) {
         for (i = 0; i < 16; i++) {
-            if (!(base[i].flags & 0x80)) {
+            if (!(base[i].flags & SHOOTER_PARTICLE_ACTIVE)) {
                 break;
             }
         }
@@ -88,7 +88,7 @@ s32 shooter_fire_vulcan(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            shooter_play_se(1, 0x500);
+            shooter_play_se(1, SHOOTER_SE_FIRE_VULCAN);
         }
         base[i].flags = 0x94;
         base[i].x = act->x + ((i & 1) << 7) - 0x40;
@@ -126,7 +126,7 @@ s32 shooter_fire_wide_shot(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            shooter_play_se(1, 0x502);
+            shooter_play_se(1, SHOOTER_SE_FIRE_WIDE);
         }
         base[i].flags = 0x98;
         base[i].x = act->x + ((i & 1) << 7) - 0x40;
@@ -170,7 +170,7 @@ s32 shooter_fire_beam(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            shooter_play_se(1, 0x501);
+            shooter_play_se(1, SHOOTER_SE_FIRE_BEAM);
         }
         base->flags = 0xB0;
         base->x = act->x;

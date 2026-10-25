@@ -20,7 +20,7 @@ void tt_speed_gauge_update(void) {
     tt_speed_gauge_previous_step = tt_speed_gauge_current_step;
     tt_speed_gauge_current_step = *(s32 *)run / 0x8000;
     if (tt_speed_gauge_previous_step != tt_speed_gauge_current_step) {
-        tt_se_request(0x611);
+        tt_se_request(TT_SE_SPEED_GAUGE);
     }
     if (*(s32 *)run == 0) {
         for (i = 0, p = tt_sprites + 0xC8; i < 6; i++, p += 0x64) {

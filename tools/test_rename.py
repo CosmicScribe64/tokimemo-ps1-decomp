@@ -1823,5 +1823,248 @@ class PrerequisiteTest(Fixture):
         self.assertIs(mg.agg_for([agg], "D_800E6282"), agg)
 
 
+class EssentialSelectorFormsTest(Fixture):
+    def test_indexed_member_is_opt_in_and_exact(self):
+        from pycparser import c_parser
+        ast = c_parser.CParser().parse("""
+            void f(void) {
+                if (gs->flags.b[1] & 0x10U) {}
+                if (gs->flags.b[0] & 2) {}
+                if (gs->other.b[1] & 4) {}
+            }
+        """)
+        indexed = [R.parse_site("*.b[1]")]
+        hits = R.const_hits(ast, indexed, R.CMP_OPS + R.BIT_OPS)
+        self.assertEqual([value for _node, value in hits], [16, 4])
+        old_wildcard = [R.parse_site("*.b")]
+        self.assertEqual(R.const_hits(ast, old_wildcard, R.CMP_OPS + R.BIT_OPS), [])
+        with self.assertRaises(R.RenameError):
+            R.parse_site("Flags.b[0x1]")
+
+    def test_compound_add_matches_only_plus_equals(self):
+        from pycparser import c_parser
+        ast = c_parser.CParser().parse("""
+            void f(void) {
+                gs->mode_step += 6;
+                gs->mode_step -= 6;
+                if (gs->mode_step == 6) {}
+                switch (gs->mode_step) { case 6: break; }
+            }
+        """)
+        sites = [R.parse_site("add:*.mode_step")]
+        hits = R.const_hits(ast, sites, R.CMP_OPS)
+        self.assertEqual([value for _node, value in hits], [6])
+        legacy_hits = R.const_hits(ast, [R.parse_site("*.mode_step")], R.CMP_OPS)
+        self.assertEqual([value for _node, value in legacy_hits], [6, 6])
+        values = R.parse_values("STEP_DELTA 6\n", "values")
+        _tree, _report, problems = R.const_plan(self.root, "include/game.h", "GameMode", False,
+                                                values, ["add:*.mode_step"])
+        self.assertTrue(any("exact caller wrapper" in p for p in problems), problems)
+
+    def test_wildcard_index_requires_caller_and_signed_metadata_roundtrips(self):
+        values = R.parse_values("FLAG 1\n", "values")
+        _tree, _report, problems = R.const_plan(self.root, "include/game.h", "GameMode", False,
+                                                values, ["*.b[1]"])
+        self.assertTrue(any("exact caller wrapper" in p for p in problems), problems)
+        _tree, _report, problems = R.const_plan(self.root, "include/game.h", "GameMode", False,
+                                                values, ["add:*.mode_step"])
+        self.assertTrue(any("exact caller wrapper" in p for p in problems), problems)
+        for selector in ("in:ENDING:career_result:*.b[1]", "in:SHUGAKU:saved_step:add:*.mode_step"):
+            self.assertEqual(R.site_text(R.parse_site(selector)), selector)
+
+    def test_index_selector_respects_exact_caller_and_local_alias(self):
+        game = self.read("include/game.h")
+        game = game.replace("typedef struct GameState {", "typedef struct FlagBytes { s16 b[2]; } FlagBytes;\n"
+                            "typedef struct GameState {\n    FlagBytes player_flags_upper;")
+        self.write("include/game.h", game)
+        path = "src/main/80041000.c"
+        original = self.read(path)
+        self.write(path, original + "\nvoid ending_career_result_select(void) {\n"
+                   "    GameState *gs = &D_800E6280;\n"
+                   "    if (gs->player_flags_upper.b[1] & 1) {}\n"
+                   "    if (gs->player_flags_upper.b[0] & 2) {}\n}\n"
+                   "void unrelated_result(void) { if (D_800E6280.player_flags_upper.b[1] & 1) {} }\n")
+        values = R.parse_values("CAREER_RESULT_FLAG 1\n", "values")
+        tree, _report, problems = R.const_plan(self.root, "include/game.h", None, True,
+                                               values, ["in:main:ending_career_result_select:*.b[1]"],
+                                               _signed=True)
+        self.assertEqual(problems, [])
+        changed = tree.read(path)
+        self.assertIn("b[1] & CAREER_RESULT_FLAG", changed)
+        self.assertIn("b[0] & 2", changed)
+        self.assertIn("unrelated_result(void) { if (D_800E6280.player_flags_upper.b[1] & 1)", changed)
+
+    def test_add_selector_rewrites_only_compound_rvalue_and_replays(self):
+        game = self.read("include/game.h").replace("/* 0x02 */ s16 unk_02;", "/* 0x02 */ s16 unk_02;\n"
+                                                       "    s32 mode_step; s32 saved_stage;")
+        self.write("include/game.h", game)
+        path = "src/main/80041000.c"
+        original = self.read(path)
+        body = "\nvoid trip_saved_mode_step_advance(void) {\n"
+        body += "    D_800E6280.mode_step += 6;\n    D_800E6280.mode_step -= 6;\n"
+        body += "    if (D_800E6280.mode_step == 6) {}\n"
+        body += "    switch (D_800E6280.mode_step) { case 6: break; }\n}\n"
+        self.write(path, original + body)
+        values = R.parse_values("TRIP_SAVED_MODE_STEP_DELTA 6\n", "values")
+        sites = ["in:main:trip_saved_mode_step_advance:add:*.mode_step"]
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, "include/game.h", "TripSavedModeStepDelta", False, values, sites,
+                            "T-27075", verify=False)
+        self.assertEqual(ctx.problems, [], ctx.problems)
+        changed = ctx.tree.read(path)
+        self.assertIn("mode_step += TRIP_SAVED_MODE_STEP_DELTA", changed)
+        self.assertIn("mode_step -= 6", changed)
+        self.assertIn("mode_step == 6", changed)
+        self.assertIn("case 6:", changed)
+        row = R.signed_ledger_row(ctx.tree, "include/game.h", "TripSavedModeStepDelta", False,
+                                  values, sites, "T-27075")
+        R.apply_reuse(ctx, row, "caller", io.StringIO())
+        applied = self.read(path)
+        self.write(path, original + body)
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
+        self.assertEqual(self.read(path), applied)
+
+    def test_signed_metadata_selector_serialization_tracks_function_alias(self):
+        class Owner:
+            def header_owner(self, _header):
+                return "main"
+        values = R.parse_values("ONE 1\n", "values")
+        site = "in:main:ending_career_result_select:*.b[1]"
+        row = R.signed_ledger_row(Owner(), "include/game.h", "Flag", False, values, [site], "T-27075")
+        alias = R.Row("func", "main", "ending_career_result_select", "career_result_choose",
+                      key="0x80041010")
+        change_map = {("sym", "main", "0x80041010", 0):
+                      (["ending_career_result_select", "career_result_choose"], [alias])}
+        metadata = R.signed_request(row, change_map)
+        self.assertEqual(metadata["sites"], ["in:main:career_result_choose:*.b[1]"])
+
+    def test_qualified_owner_is_refused_and_foreign_type_alias_is_ignored(self):
+        class Owner:
+            def header_owner(self, _header):
+                return "main"
+        values = R.parse_values("ONE 1\n", "values")
+        with self.assertRaises(R.RenameError):
+            R.parse_site("in:main:career_result:FlagBytes.b[1]")
+        site = "in:main:career_result:*.b[1]"
+        row = R.signed_ledger_row(Owner(), "include/game.h", "Flag", False, values, [site], "T-27075")
+        unrelated = R.Row("type", "AAA", "FlagBytes", "OtherOverlayFlags", key="-")
+        change_map = {("type", "AAA", "-", 0): (["FlagBytes", "OtherOverlayFlags"], [unrelated])}
+        metadata = R.signed_request(row, change_map)
+        self.assertEqual(metadata["sites"], [site])
+
+    def test_macro_owner_selector_refusal_leaves_all_paths_unchanged(self):
+        header_path = "include/game.h"
+        source_path = "src/main/80041000.c"
+        header = self.read(header_path)
+        header = header.replace("#endif", "typedef struct FlagBytes { int b[2]; } FlagBytes;\n"
+                                "#define OTHER_FIELDS int b[2];\n"
+                                "typedef struct OtherBytes { OTHER_FIELDS } OtherBytes;\n#endif")
+        self.write(header_path, header)
+        source = self.read(source_path) + "\nvoid rule(FlagBytes *a, OtherBytes *o) {\n"
+        source += "    if (a->b[1] & 1) {}\n    if (o->b[1] & 1) {}\n}\n"
+        self.write(source_path, source)
+        before = {header_path: self.read(header_path), source_path: self.read(source_path)}
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, header_path, None, True, R.parse_values("MASK 1\n", "values"),
+                            ["in:main:rule:FlagBytes.b[1]"], "T-27075", verify=False)
+        self.assertTrue(ctx.problems, "unsupported typed selector must fail closed")
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual({path: self.read(path) for path in before}, before)
+        self.assertFalse(os.path.exists(os.path.join(self.root, "config/renames/essential-selector.txt")))
+
+    def test_same_unit_field_rename_makes_restored_literal_stale_and_refuses(self):
+        header_path = "include/game.h"
+        source_path = "src/main/80041000.c"
+        header = self.read(header_path)
+        header = header.replace("typedef struct GameState {", "typedef struct FlagBytes { s16 b[2]; } FlagBytes;\n"
+                                "typedef struct GameState {\n    FlagBytes flags;")
+        self.write(header_path, header)
+        source = self.read(source_path) + "\nvoid caller(void) { if (D_800E6280.flags.b[1] & 1) {} }\n"
+        self.write(source_path, source)
+        values = R.parse_values("FLAG_MASK 1\n", "values")
+        sites = ["in:main:caller:*.b[1]"]
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, header_path, None, True, values, sites, "T-27075", verify=False)
+        self.assertEqual(ctx.problems, [], ctx.problems)
+        row = R.signed_ledger_row(ctx.tree, header_path, None, True, values, sites, "T-27075")
+        R.apply_reuse(ctx, row, "caller", io.StringIO())
+        self.assertIn("b[1] & FLAG_MASK", self.read(source_path))
+
+        self.ok("field main:FlagBytes b bytes\n", verify=False)
+        renamed = self.read(source_path)
+        self.assertIn("bytes[1] & FLAG_MASK", renamed)
+        self.write(source_path, renamed.replace("bytes[1] & FLAG_MASK", "bytes[1] & 1"))
+        restored = self.read(source_path)
+        header_after = self.read(header_path)
+        ledger_dir = os.path.join(self.root, "config/renames")
+        def ledger_snapshot():
+            snapshot = {}
+            for name in os.listdir(ledger_dir):
+                path = os.path.join(ledger_dir, name)
+                if os.path.isfile(path):
+                    with open(path) as ledger:
+                        snapshot[name] = ledger.read()
+            return snapshot
+        ledgers_before = ledger_snapshot()
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 1)
+        self.assertEqual(self.read(source_path), restored)
+        self.assertEqual(self.read(header_path), header_after)
+        self.assertEqual(ledger_snapshot(), ledgers_before)
+
+    def test_foreign_field_alias_does_not_block_wildcard_metadata(self):
+        class Owner:
+            def header_owner(self, _header):
+                return "main"
+        values = R.parse_values("ONE 1\n", "values")
+        site = "in:main:career_result:*.b[1]"
+        row = R.signed_ledger_row(Owner(), "include/game.h", None, True, values, [site], "T-27075")
+        foreign = R.Row("field", "AAA:FlagBytes", "b", "bytes", key="-")
+        changes = {("field", "AAA:FlagBytes", "-", 0): (["b", "bytes"], [foreign])}
+        metadata = R.signed_request(row, changes, R.Tree(self.root))
+        self.assertEqual(metadata["sites"], [site])
+
+    def test_main_field_alias_is_relevant_to_overlay_caller(self):
+        source_path = "src/ovl/AAA/80132000.c"
+        game_header = self.read("include/game.h").replace(
+            "typedef struct GameState {", "typedef struct FlagBytes { s16 b[2]; } FlagBytes;\n"
+            "typedef struct GameState {")
+        self.write("include/game.h", game_header)
+        source = '#include "game.h"\n' + self.read(source_path)
+        source += "\nvoid caller(void) { FlagBytes *flags; if (flags->b[1] & 1) {} }\n"
+        self.write(source_path, source)
+        values = R.parse_values("MASK 1\n", "values")
+        sites = ["in:AAA:caller:*.b[1]"]
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, "include/ovl/AAA.h", None, True, values, sites, "T-27075", verify=False)
+        self.assertEqual(ctx.problems, [], ctx.problems)
+        row = R.signed_ledger_row(ctx.tree, "include/ovl/AAA.h", None, True, values, sites, "T-27075")
+        R.apply_reuse(ctx, row, "caller", io.StringIO())
+        self.assertIn("flags->b[1] & MASK", self.read(source_path))
+
+        self.ok("field main:FlagBytes b bytes\n", verify=False)
+        renamed = self.read(source_path)
+        self.assertIn("flags->bytes[1] & MASK", renamed)
+        self.write(source_path, renamed.replace("flags->bytes[1] & MASK", "flags->bytes[1] & 1"))
+        restored = self.read(source_path)
+        game_after = self.read("include/game.h")
+        ledger_dir = os.path.join(self.root, "config/renames")
+        def ledger_snapshot():
+            snapshot = {}
+            for name in os.listdir(ledger_dir):
+                path = os.path.join(ledger_dir, name)
+                if os.path.isfile(path):
+                    with open(path) as ledger:
+                        snapshot[name] = ledger.read()
+            return snapshot
+        ledgers_before = ledger_snapshot()
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, out=io.StringIO()), 1)
+        self.assertEqual(self.read(source_path), restored)
+        self.assertEqual(self.read("include/game.h"), game_after)
+        self.assertEqual(ledger_snapshot(), ledgers_before)
+
+
 if __name__ == "__main__":
     unittest.main()

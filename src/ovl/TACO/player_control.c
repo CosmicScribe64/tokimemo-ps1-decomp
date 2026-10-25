@@ -377,9 +377,9 @@ void shooter_update_battle(void) {
         } else {
             shooter_fire_vulcan(0, flags);
         }
-        if (actor->auxiliary == 0) {
+        if (actor->auxiliary == SHOOTER_SECONDARY_HOMING) {
             shooter_fire_secondary_homing(0, flags);
-        } else if (actor->auxiliary == 1) {
+        } else if (actor->auxiliary == SHOOTER_SECONDARY_SPREAD) {
             shooter_fire_secondary_spread(0, flags);
         }
     }

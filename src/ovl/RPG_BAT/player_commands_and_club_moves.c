@@ -10,7 +10,7 @@ void rpg_player_update(void) {
 
     rpg_command_menu_update();
     if (rpg_player_ready_delay(0) < rpg_player_ready_timer) {
-        rpg_player_action |= 0x10000;
+        rpg_player_action |= RPG_PLAYER_READY;
         rpg_player_ready_timer = 0;
     }
     if (!(rpg_player_action & 0xFF) && !(rpg_enemy_action & 0xFF) && !(rpg_over & 0xFF) && !(rpg_girl_action & 0xFF) && ((rpg_player_action >> 0x18) != 0)) {
@@ -18,18 +18,18 @@ void rpg_player_update(void) {
         /* FAKE: u32 view through the address; a plain read takes $v0 for the lui constant where the original has $v1; source unknown. T-17117 */
         switch (*(u32 *)&rpg_player_action & 0xFF000000) {
         case 0x1000000:
-            rpg_player_action = 1;
+            rpg_player_action = RPG_PLAYER_ATTACK;
             if (rpg_encounter == 0x80000000) {
                 rpg_girl_channel.unk_00 += 0x258;
             }
             rpg_state.special_gauge += rpg_rand(0xF) + 0x1E;
             break;
         case 0x2000000:
-            rpg_player_action = 0x100;
+            rpg_player_action = RPG_PLAYER_GUARD;
             rpg_state.special_gauge += rpg_rand(0xF) + 0x14;
             break;
         case 0x4000000:
-            rpg_player_action = 2;
+            rpg_player_action = RPG_PLAYER_SPECIAL;
             rpg_special_ready = 0;
             rpg_state.special_gauge -= 0x64;
             break;

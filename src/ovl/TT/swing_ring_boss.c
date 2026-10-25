@@ -27,7 +27,7 @@ void tt_boss2_collision(void) {
             boss[i * 0x14 + 0x42] = 0;
         }
         if (boss[0x342] == 0 && tt_boss_check_hits() != 0) {
-            tt_se_request(0x503);
+            tt_se_request(TT_SE_BOSS_HIT_B);
         }
         if (boss[0x344] == 0) {
             for (i = 0; i != 8; i++) {
@@ -358,7 +358,7 @@ void tt_boss2_death_sequence(void) {
     boss = tt_boss;
     switch (k) {
     case 0:
-        tt_se_request(0x501);
+        tt_se_request(TT_SE_BOSS_EXPLOSION);
         boss[0x344] = 1;
         tt_boss_hitboxes_clear();
         *(u16 *)(boss + 0x364) = 0;
@@ -383,7 +383,7 @@ void tt_boss2_death_sequence(void) {
         t = tt_boss2_death_timeline;
         e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            tt_se_request(0x501);
+            tt_se_request(TT_SE_BOSS_EXPLOSION);
             j = t[*(u16 *)(boss + 0x3D4) + 4];
             boss[j + 0x310] = 1;
             boss[j * 0x14 + 0x40] = 0x80;

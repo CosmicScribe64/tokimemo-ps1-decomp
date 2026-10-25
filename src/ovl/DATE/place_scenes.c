@@ -349,11 +349,11 @@ void date_arrival_init(void) {
     girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     /* FAKE: T-17202, `date_arrival * 0` mentions the promoted global before `girl_state`, so its load
      * (lui a0) is scheduled before the andi of the call result; the sum keeps the original order */
-    date_arrival_group = date_arrival * 0 + ((girl_state >= 2) + (girl_state >= 3)) * ((date_arrival == 0) + 1) + date_arrival * arrival_stride_and_weekday - (date_arrival == 2) * 3;
+    date_arrival_group = date_arrival * 0 + ((girl_state >= 2) + (girl_state >= 3)) * ((date_arrival == DATE_ARRIVAL_WAIT_GREETING) + 1) + date_arrival * arrival_stride_and_weekday - (date_arrival == DATE_ARRIVAL_CORRECTED_PLACE) * 3;
     date_arrival_line = 0;
     *(s16 *)&D_800CA15C = 0;
     date_closing_line = 0;
-    date_special_day_group = 0;
+    date_special_day_group = DATE_SPECIAL_DAY_MARCH;
     date_special_day_line = 0;
     date_park_parade_group = 0;
     date_park_parade_line = 0;
@@ -1886,12 +1886,12 @@ s32 date_amusement_park_choose_ride(void) {
         if ((date_park_newest_rides != 0) || (date_park_new_rides != 0)) {
             background_resource = 0x4359;
             if (date_ride_chosen == 0) {
-                date_ride_index = 3;
+                date_ride_index = DATE_RIDE_SCREAM_MACHINE;
             }
         } else {
             background_resource = 0x433E;
             if (date_ride_chosen == 0) {
-                date_ride_index = 0;
+                date_ride_index = DATE_RIDE_ROLLER_COASTER;
             }
         }
     } else if (D_80122CDC == 1) {
@@ -1899,19 +1899,19 @@ s32 date_amusement_park_choose_ride(void) {
         if (date_park_newest_rides != 0) {
             background_resource = 0x4362;
             if (date_ride_chosen == 0) {
-                date_ride_index = 4;
+                date_ride_index = DATE_RIDE_VIRTUAL_SHIP;
             }
         } else {
             background_resource = 0x4347;
             if (date_ride_chosen == 0) {
-                date_ride_index = 1;
+                date_ride_index = DATE_RIDE_GHOST_HOUSE;
             }
         }
     } else {
         talk_group += 0xA;
         background_resource = 0x4350;
         if (date_ride_chosen == 0) {
-            date_ride_index = 2;
+            date_ride_index = DATE_RIDE_FERRIS_WHEEL;
         }
     }
     date_ride_chosen = 1;
@@ -1922,7 +1922,7 @@ s32 date_amusement_park_choose_ride(void) {
     }
     event_log_add(0, D_80122D08);
     date_choice_classes_derive();
-    if ((game_state.current_girl == GIRL_YUKO) && ((u8)date_ride_index == 3) && (game_state.girls[8].scene_counters[0x18] != 0)) {
+    if ((game_state.current_girl == GIRL_YUKO) && ((u8)date_ride_index == DATE_RIDE_SCREAM_MACHINE) && (game_state.girls[8].scene_counters[0x18] != 0)) {
         D_80122CDC = 1;
     } else {
         D_80122CDC = 0;
@@ -2219,7 +2219,7 @@ void date_amusement_park_ride_setup(void) {
     s32 wheel_choice_offset;
 
     strcpy(scene_place_title_2, "遊園地");
-    if ((u8) date_ride_index == 0) {
+    if ((u8) date_ride_index == DATE_RIDE_ROLLER_COASTER) {
         strcpy(scene_place_title, "ジェットコースター");
         if (!(game->girls[game->current_girl].scene_counters[21] & 1)) {
             D_800CA2FC = 0;
@@ -2236,7 +2236,7 @@ void date_amusement_park_ride_setup(void) {
         D_80122D08 = 0x15;
         return;
     }
-    if ((u8) date_ride_index == 3) {
+    if ((u8) date_ride_index == DATE_RIDE_SCREAM_MACHINE) {
         strcpy(scene_place_title, "絶叫マシーンビビール");
         if (!(game->girls[game->current_girl].scene_counters[24] & 1)) {
             D_800CA2FC = 0;
@@ -2253,7 +2253,7 @@ void date_amusement_park_ride_setup(void) {
         D_800CA21C[2] = (s16) *(game->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + scream_choice_offset + 20);
         return;
     }
-    if ((u8) date_ride_index == 1) {
+    if ((u8) date_ride_index == DATE_RIDE_GHOST_HOUSE) {
         strcpy(scene_place_title, "ゴーストハウス");
         if (!(game->girls[game->current_girl].scene_counters[22] & 1)) {
             D_800CA2FC = 0;
@@ -2270,7 +2270,7 @@ void date_amusement_park_ride_setup(void) {
         D_800CA21C[2] = (s16) *(game->current_girl * 0x24 + (u8 *)date_face_table_amusement_park + ghost_choice_offset + 8);
         return;
     }
-    if ((u8) date_ride_index == 4) {
+    if ((u8) date_ride_index == DATE_RIDE_VIRTUAL_SHIP) {
         strcpy(scene_place_title, "バーチャルシップ");
         if (!(game->girls[game->current_girl].scene_counters[25] & 1)) {
             D_800CA2FC = 0;
@@ -2975,7 +2975,7 @@ void date_neighborhood_park_pick_greeting(void) {
 }
 
 s32 date_arrival_late_gate(void) {
-    if ((date_arrival != 0) || (date_player_waited == 1)) {
+    if ((date_arrival != DATE_ARRIVAL_WAIT_GREETING) || (date_player_waited == 1)) {
         mode_step_next();
         mode_step_next();
         return 0;
@@ -2995,7 +2995,7 @@ s32 date_arrival_greeting_speak(void) {
     girl_state_flags = get_g_zyotai_s(game_state.current_girl);
     girl_state = girl_state_flags & 0x7F;
     /* 2U: with two plain 2 IDO shares one constant register, the original does not (T-4020) */
-    if ((date_arrival == 2U) && (date_arrival_line == 2) && (girl_state >= 2U)) {
+    if ((date_arrival == ((unsigned int)DATE_ARRIVAL_CORRECTED_PLACE)) && (date_arrival_line == 2) && (girl_state >= 2U)) {
         portrait_layout_set(3);
     }
     return talk_run(D_80122CDC, 1, 0);
@@ -3008,29 +3008,29 @@ s32 date_special_day_greeting(void) {
 
     if (game->substep++ == 0) {
         if ((game->month == 3) && (game->day == 0x15) && (game->year != 0x60)) {
-            date_special_day_group = 0;
+            date_special_day_group = DATE_SPECIAL_DAY_MARCH;
         } else if ((game->month == 3) && (game->day == 0x14) && (game->year == 0x60)) {
-            date_special_day_group = 0;
+            date_special_day_group = DATE_SPECIAL_DAY_MARCH;
         } else if ((game->year == 0x5F) && (game->month == 7) && (game->day == 0x17)) {
-            date_special_day_group = 1;
+            date_special_day_group = DATE_SPECIAL_DAY_JULY_SUNDAY;
         } else if ((game->year == 0x60) && (game->month == 7) && (game->day == 0x1C)) {
-            date_special_day_group = 1;
+            date_special_day_group = DATE_SPECIAL_DAY_JULY_SUNDAY;
         } else if ((game->year == 0x61) && (game->month == 7) && (game->day == 0x1B)) {
-            date_special_day_group = 1;
+            date_special_day_group = DATE_SPECIAL_DAY_JULY_SUNDAY;
         } else if ((game->month == 9) && (game->day == 0x17) && (game->year != 0x60)) {
             if (game->frame_count & 1) {
-                date_special_day_group = 2;
+                date_special_day_group = DATE_SPECIAL_DAY_SEPTEMBER_ODD;
             } else {
-                date_special_day_group = 3;
+                date_special_day_group = DATE_SPECIAL_DAY_SEPTEMBER_EVEN;
             }
         } else if ((game->month == 9) && (game->day == 0x16) && (game->year == 0x60)) {
             if (game->frame_count & 1) {
-                date_special_day_group = 2;
+                date_special_day_group = DATE_SPECIAL_DAY_SEPTEMBER_ODD;
             } else {
-                date_special_day_group = 3;
+                date_special_day_group = DATE_SPECIAL_DAY_SEPTEMBER_EVEN;
             }
         } else if ((game->month == 0xC) && (game->day == 0x17)) {
-            date_special_day_group = 4;
+            date_special_day_group = DATE_SPECIAL_DAY_DECEMBER_23;
         } else {
             mode_step_next();
             return 0;
@@ -4221,7 +4221,7 @@ void date_amusement_park_yumi_ride_talk(void) {
     s32 current_step;
     s32 previous_step;
 
-    if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 1) && ((u8) date_ride_index == 2) && (D_800CA2FC == 1)) {
+    if ((GIRL_YUMI == game_state.current_girl) && (D_80122CDC == 1) && ((u8) date_ride_index == DATE_RIDE_FERRIS_WHEEL) && (D_800CA2FC == 1)) {
         previous_step = game_state.mode_step;
         normal_date_speak();
         current_step = game_state.mode_step;
@@ -4470,9 +4470,9 @@ void date_place_bgm_load_wait(void) {
 void date_shopping_street_bgm(void) {
     if ((u8) game_state.mode_step >= 0x14U) {
         audio_command(0x203);
-    } else if (date_shop_index == 0) {
+    } else if (date_shop_index == DATE_SHOP_BOUTIQUE) {
         audio_command(0x200);
-    } else if (date_shop_index == 1) {
+    } else if (date_shop_index == DATE_SHOP_FANCY_SHOP) {
         audio_command(0x201);
     } else {
         audio_command(0x202);
@@ -4491,11 +4491,11 @@ s32 date_meeting_place_check(void) {
     /* FAKE: u8 view on the store and (u8) cast on the call result keep the original $v0/$a0 load and ugen t-register numbering. T-24079 */
     D_80122CD4 = *(u8 *)&game_state.current_girl;
     if (((u8)get_g_zyotai_s(game_state.current_girl) & 0x7F) == 4) {
-        date_meeting_group = 8;
+        date_meeting_group = DATE_MEETING_REFUSES;
         game_state.mode_step += 0x24;
         return;
     }
-    if (((game_state.appointment_place_1 == game_state.appointment_place_0) && (date_arrival == 1)) ||
+    if (((game_state.appointment_place_1 == game_state.appointment_place_0) && (date_arrival == DATE_ARRIVAL_DIRECT_GREETING)) ||
         (game_state.appointment_place_2 == 0xFF) ||
         ((game_state.appointment_place_2 == game_state.appointment_place_1) && (game_state.appointment_place_3 == 0xFF)) ||
         ((game_state.appointment_place_2 == game_state.appointment_place_1) && (game_state.appointment_place_3 == game_state.appointment_place_1))) {
@@ -4508,7 +4508,7 @@ s32 date_meeting_place_check(void) {
         strcpy(name_code_a, place_names.names[(s32)game_state.appointment_place_2]);
     }
     if (game_state.appointment_place_3 != 0xFF) {
-        date_meeting_group = 3;
+        date_meeting_group = DATE_MEETING_ASK_THREE;
         if (game_state.appointment_place_3 == game_state.appointment_place_0) {
             strcpy(name_code_m, place_names.names[game_state.appointment_place_1]);
         } else {
@@ -4553,9 +4553,9 @@ void date_meeting_place_resolve(void) {
         return;
     }
     date_meeting_group += D_80122CDC;
-    date_arrival = 2;
+    date_arrival = DATE_ARRIVAL_CORRECTED_PLACE;
     girl_state = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-    date_arrival_group = ((girl_state >= 2) + (girl_state >= 3)) * ((date_arrival == 0) + 1) + date_arrival * 6 - (date_arrival == 2) * 3;
+    date_arrival_group = ((girl_state >= 2) + (girl_state >= 3)) * ((date_arrival == DATE_ARRIVAL_WAIT_GREETING) + 1) + date_arrival * 6 - (date_arrival == DATE_ARRIVAL_CORRECTED_PLACE) * 3;
     if (D_80122CDC == 1) {
         if (game_state.appointment_place_2 == game_state.appointment_place_0) {
             D_800CA2F8 = game_state.appointment_place_1;
@@ -4582,7 +4582,7 @@ void date_wrong_place_outcome(void) {
     u8 *temp_v0;
 
     if (game_state.appointment_place_1 != D_800CA2F8) {
-        date_meeting_group = 7;
+        date_meeting_group = DATE_MEETING_NOT_HERE;
         game_state.mode_step += 0x14;
         return;
     }
@@ -4610,7 +4610,7 @@ void date_portrait_address_init_step(void) {
 }
 
 void date_meeting_set_not_here_group(void) {
-    date_meeting_group = 7;
+    date_meeting_group = DATE_MEETING_NOT_HERE;
     mode_step_next();
 }
 
@@ -4967,8 +4967,8 @@ s32 date_mira_late_skip(void) {
     u32 girl_state;
 
     girl_state = (u8) get_g_zyotai_s(game_state.date_girl) & 0x7F;
-    if ((game_state.date_girl == GIRL_MIRA) && (girl_state >= 3U) && (date_arrival == 2)) {
-        date_meeting_group = 8;
+    if ((game_state.date_girl == GIRL_MIRA) && (girl_state >= 3U) && (date_arrival == DATE_ARRIVAL_CORRECTED_PLACE)) {
+        date_meeting_group = DATE_MEETING_REFUSES;
         mode_step_set(0x34);
         D_800CA2F8 += 0x32;
         return 0;

@@ -6,7 +6,7 @@ void tt_field_enemies_destroy(void) {
     u8 *p;
     s32 i;
 
-    tt_se_request(0x60C);
+    tt_se_request(TT_SE_ENEMY_EXPLODE);
     p = tt_air_enemies;
     i = 0;
     do {

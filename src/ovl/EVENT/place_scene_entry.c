@@ -968,10 +968,10 @@ void spot_place_init_step(void) {
 void spot_place_scene_frame(void) {
     func_8004ACA8();
     switch (D_800B1AF5) {                           /* irregular */
-    case 0:
+    case SPOT_PLACE_STAGE_ARRIVAL:
         spot_place_arrival_run();
         break;
-    case 1:
+    case SPOT_PLACE_STAGE_SCENE:
         spot_place_scene_run();
         break;
     default:

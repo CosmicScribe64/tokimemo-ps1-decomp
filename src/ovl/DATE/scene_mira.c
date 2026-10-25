@@ -126,7 +126,7 @@ void date_scene_mira_summer_setup(void) {
 }
 
 void date_scene_mira_autumn_setup(void) {
-    date_ride_index = 1;
+    date_ride_index = DATE_RIDE_GHOST_HOUSE;
     date_scene_text = D_8015DED4;
     date_scene_command = D_8015E010;
     date_scene_voice = D_8015E14C;

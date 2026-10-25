@@ -267,7 +267,7 @@ void rpg_girl_rescue_sequence(void) {
         rpg_girl_wait_step(0x3C);
         return;
     case 23:
-        rpg_result_code = 0;
+        rpg_result_code = RPG_RESULT_GOOD;
         mode_stage_next();
         /* fallthrough */
     default:
@@ -308,7 +308,7 @@ void rpg_alien_departure(void) {
         color.word = 0xAFAF;
         break;
     }
-    rpg_player_action = 0x1000;
+    rpg_player_action = RPG_PLAYER_DOWN;
     shade = color.word;
     switch (((RpgTransitionState *)&rpg_girl_substep)->step) {
     case 0:

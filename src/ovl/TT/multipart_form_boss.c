@@ -39,7 +39,7 @@ void tt_boss3_part_hit(void *arg0, u8 *arg1, s32 arg2) {
             if (core[0x24] != 0 && !(core[0x25] & 3)) {
                 tt_enemy_shot_fire_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x20, 0xA0);
             }
-            tt_se_request(0x508);
+            tt_se_request(TT_SE_BOSS_HIT_A);
             *(u16 *)(shot + 4) = 0x80;
             *(s16 *)(shot + 10) = 0;
             *(s16 *)(shot + 8) = 0;
@@ -62,7 +62,7 @@ void tt_boss3_part_hit(void *arg0, u8 *arg1, s32 arg2) {
                 }
                 boss[j * 0x14 + 0x42] = 1;
                 if (*(s16 *)(boss + 0x2D8 + arg2 * 2) < 0) {
-                    tt_se_request(0x50A);
+                    tt_se_request(TT_SE_BOSS_PART_BREAK);
                     boss[arg2 + 0x343] = 1;
                 }
             }
@@ -166,7 +166,7 @@ void tt_boss3_collision(void) {
             tt_boss3_part3_collision();
         }
         if (tt_boss_check_hits() != 0) {
-            tt_se_request(0x508);
+            tt_se_request(TT_SE_BOSS_HIT_A);
         }
     }
 }
@@ -374,7 +374,7 @@ void tt_boss3_move_form0(void) {
         }
         break;
     case 6:
-        tt_se_request(0x50A, boss); /* FAKE: boss as an extra argument keeps it in a1, as in the original. T-11800 */
+        tt_se_request(TT_SE_BOSS_PART_BREAK, boss); /* FAKE: boss as an extra argument keeps it in a1, as in the original. T-11800 */
         *(s16 *)(boss + 0x30E) = 1;
         *(s16 *)(boss + 6) = 0;
         tt_sprite_set_9_clut = 0x3ED0;
@@ -452,7 +452,7 @@ void tt_boss3_death_sequence(void) {
         t = tt_boss3_death_timeline;
         e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            tt_se_request(0x501);
+            tt_se_request(TT_SE_BOSS_EXPLOSION);
             j = t[*(u16 *)(boss + 0x3D4) + 4];
             boss[j + 0x310] = 1;
             boss[j * 0x14 + 0x40] = 0x80;
@@ -658,7 +658,7 @@ void tt_boss3_attack_form1(void) {
     boss = tt_boss;
     player = tt_player;
     if (*(u16 *)(boss + 0x364) == 0x80 || *(u16 *)(boss + 0x364) == 0x100) {
-        tt_se_request(0x618);
+        tt_se_request(TT_SE_BOSS3_RING);
         ang = func_8014D260((*(s32 *)(player + 0x24) - *(s32 *)(boss + 0x24)) >> 16,
                             (*(s32 *)(player + 0x20) - *(s32 *)(boss + 0x20)) >> 16);
         i = 0x180;

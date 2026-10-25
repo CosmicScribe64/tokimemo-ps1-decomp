@@ -80,7 +80,7 @@ void trip_ayako_scene_sector_load(void) {
 }
 
 void trip_liberal_arts_threshold_check(void) {
-    if (game_state.param_liberal_arts.value >= 0x78) {
+    if (game_state.param_liberal_arts.value >= TRIP_LIBERAL_ARTS_THRESHOLD) {
         mode_step_next();
     }
     mode_step_next();
@@ -105,7 +105,7 @@ void trip_sotoi_speaker_setup(void) {
 }
 
 void trip_liberal_arts_counter_update(void) {
-    if (game_state.param_liberal_arts.value >= 0x78) {
+    if (game_state.param_liberal_arts.value >= TRIP_LIBERAL_ARTS_THRESHOLD) {
         D_800CA2E4 += 3;
     }
     mode_step_next();

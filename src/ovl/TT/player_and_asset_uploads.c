@@ -249,7 +249,7 @@ void tt_player_spawn_step() {
     player = tt_player;
     switch (*(u16 *)(player + 6)) {
     case 0:
-        tt_se_request(0x60E);
+        tt_se_request(TT_SE_PLAYER_SPAWN);
         player[0] = 1;
         *(s32 *)(player + 0x20) = 0;
         *(s32 *)(player + 0x24) = 0xF80000;
@@ -390,7 +390,7 @@ void tt_player_control(void) {
         for (i = 0; i < 2; i++) {
             if (player[0x55] == 0xA) {
                 if (r[0] == 0 && r[0xA8] == 0 && r[0x150] == 0) {
-                    tt_se_request(0x608);
+                    tt_se_request(TT_SE_SHOT_FIRE);
                     r[0] = 1;
                     *(u16 *)(r + 4) = 0x20;
                     r[0xD] = 0;
@@ -406,7 +406,7 @@ void tt_player_control(void) {
                     break;
                 }
             } else if (r[0] == 0) {
-                tt_se_request(0x608);
+                tt_se_request(TT_SE_SHOT_FIRE);
                 r[0] = 1;
                 *(u16 *)(r + 4) = 0x20;
                 r[0xD] = 0;
@@ -473,7 +473,7 @@ void tt_player_control(void) {
         found = 0;
         for (i = 0; i < 2; i++) {
             if (bomb_target[0] == 0 && a[0] == 0 && (player[0x5C] == 0 || player[0x5D] == 0)) {
-                tt_se_request(0x609);
+                tt_se_request(TT_SE_BOMB_THROW);
                 bomb_target[0] = 1;
                 *(u16 *)(bomb_target + 4) = 0x20;
                 bomb_target[0xD] = 0;
@@ -579,8 +579,8 @@ void tt_player_hit(void) {
     sp34 = tt_stage_script;
     player = tt_player;
     arm = tt_arms;
-    tt_se_request(0x610);
-    tt_se_request(0x607);
+    tt_se_request(TT_SE_PLAYER_DEATH);
+    tt_se_request(TT_SE_CODE_OR_HIT);
     if (*(u16 *)((u8 *)sp34 + 2) < 0x401) {
         *(s32 *)(sp38 + 4) = 0x8000;
         *(s32 *)sp38 = 0x8000;
@@ -819,11 +819,11 @@ void tt_bell_collect(u8 *arg0) {
     case 0x60:
         switch (arg0[0x58]) {
         case 0:
-            tt_se_request(0x60A);
+            tt_se_request(TT_SE_PICKUP_COLLECT);
             arg0[0] = 0;
             break;
         case 1:
-            tt_se_request(0x605);
+            tt_se_request(TT_SE_SHOT_LEVEL_PICKUP);
             tt_bell_set_popup_label(arg0, 0x28);
             player[0x55] = 9;
             tt_options[0x92] = 9;
@@ -837,7 +837,7 @@ void tt_bell_collect(u8 *arg0) {
             *(u16 *)(arg0 + 6) = *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 0xA) = 0; /* FAKE: u16 view, see above. T-11850 */
             break;
         case 2:
-            tt_se_request(0x602);
+            tt_se_request(TT_SE_SPEED_UP);
             tt_bell_set_popup_label(arg0, 0x29);
             player[0x54] += 1;
             *(s32 *)(arg0 + 0x34) = 0;
@@ -853,7 +853,7 @@ void tt_bell_collect(u8 *arg0) {
             *(s16 *)(arg0 + 0xA) = 0;
             break;
         case 3:
-            tt_se_request(0x604);
+            tt_se_request(TT_SE_FOLLOWER_PICKUP);
             if (player[0x53] == 0) {
                 tt_bell_set_popup_label(arg0, 0x2A);
                 player[0x53] = 1;
@@ -875,7 +875,7 @@ void tt_bell_collect(u8 *arg0) {
             arg0[0xD] = 0;
             break;
         case 6:
-            tt_se_request(0x603);
+            tt_se_request(TT_SE_SPEED_DOWN);
             tt_bell_set_popup_label(arg0, 0x2B);
             player[0x54] -= 1;
             if (player[0x54] == 0) {

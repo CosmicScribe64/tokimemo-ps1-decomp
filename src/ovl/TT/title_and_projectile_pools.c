@@ -195,7 +195,7 @@ void tt_title_code_check(void) {
     if ((*(u16 *)(tt_sys + 0x14) & tt_title_code_masks[core[0x21]]) == tt_title_code_masks[core[0x21]]) {
         core[0x20] = 0x10;
         if (++core[0x21] == 6) {
-            tt_se_request(0x607);
+            tt_se_request(TT_SE_CODE_OR_HIT);
             core[0x21] = 0;
             core[0x24] = 1;
             core[0x25] = 0;
@@ -233,13 +233,13 @@ void tt_title_menu_update(void) {
     }
     text_record[run[0xA] * 0x14 + 2] = 0;
     if (*(u16 *)(input + 4) & 0x1000) {
-        tt_se_request(0x613);
+        tt_se_request(TT_SE_CURSOR);
         *(s16 *)(state + 0x26) = 0;
         if (--run[0xA] == 0xFF) {
             run[0xA] = max;
         }
     } else if (*(u16 *)(input + 4) & 0x4000) {
-        tt_se_request(0x613);
+        tt_se_request(TT_SE_CURSOR);
         *(s16 *)(state + 0x26) = 0;
         if (++run[0xA] > max) {
             run[0xA] = 0;
@@ -259,7 +259,7 @@ void tt_title_menu_update(void) {
     sprite[0x3A] = 0x40;
     if ((*(u16 *)(input + 4) & 0x800) || (*(u16 *)(input + 4) & 0x20)) {
         audio_command(0xB1);
-        tt_se_request(0x612);
+        tt_se_request(TT_SE_MENU_SELECT);
         state[0x22] = 0;
         *(u16 *)(state + 2) += 1;
         *(s16 *)(state + 4) = 0;
@@ -568,7 +568,7 @@ void tt_title_ship_start_sequence(void) {
         player[0x3E] = 5;
         break;
     case 1:
-        tt_se_request(0x601);
+        tt_se_request(TT_SE_TITLE_SHIP);
         break;
     case 6:
         player[0x3E] = 6;
@@ -820,7 +820,7 @@ void tt_state_title(void) {
         *(s16 *)(y + 2) = 0x1000;
         *(s16 *)y = *(s16 *)(y + 2);
         *(u8 **)(p + 0x48) = y;
-        tt_se_request(0x614);
+        tt_se_request(TT_SE_LOGO);
         *(u16 *)(s + 2) += 1;
         break;
     case 8:

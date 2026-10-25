@@ -159,7 +159,7 @@ void spot_mio_scene1_still_show_05(void) {
 }
 
 void spot_mio_scene2_set_state_01(void) {
-    spot_ride = 3;
+    spot_ride = SPOT_RIDE_SCREAM_RIDE;
     spot_talk_text_table = D_80120334;
     spot_talk_command_table = D_80120348;
     spot_talk_voice_table = D_8012035C;

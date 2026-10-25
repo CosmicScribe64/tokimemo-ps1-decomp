@@ -710,7 +710,7 @@ void tt_air_enemy_move(u8 *arg0) {
 }
 
 void tt_air_enemy_explode_init(u8 *arg0) {
-    tt_se_request(0x60C, arg0);
+    tt_se_request(TT_SE_ENEMY_EXPLODE, arg0);
     *(s32 *)(arg0 + 0x28) = 0;
     *(s32 *)(arg0 + 0x2C) = 0;
     *(u8 **)(arg0 + 0x38) = tt_sprite_set_table;

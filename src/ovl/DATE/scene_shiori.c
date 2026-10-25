@@ -105,7 +105,7 @@ void date_scene_shiori_spring_setup(void) {
 }
 
 void date_scene_shiori_winter_setup(void) {
-    date_ride_index = 2;
+    date_ride_index = DATE_RIDE_FERRIS_WHEEL;
     date_scene_text = D_8015DE78;
     date_scene_command = D_8015DFB4;
     date_scene_voice = D_8015E0F0;

@@ -311,7 +311,7 @@ void ending_graduation_result_dialogue_select(void) {
     u8 career_result_kind;
     u8 name[27] = "M残念ながら 駄目だったが、";
 
-    best_param_result = 0;
+    best_param_result = ENDING_PARAM_RESULT_INITIAL_BEST;
     best_param_category_index = 0xFF;
     for (i = 0; i < 7; i++) {
         /* FAKE (T-23002): the seven ParamValue records at +0x100 are separate members; indexed until their aggregate is known */
@@ -323,17 +323,17 @@ void ending_graduation_result_dialogue_select(void) {
     ending_graduation_dialogue_table_init();
     talk_work = talk_render(-0x48, 0x48, 0, (*D_8013CAF0)[0], 0, "", "", 0);
     ending_result_text_entries_clear();
-    if (game_state.player_flags_upper.b[1] & 1) {
+    if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_1_MASK) {
         strcpy(name_code_m, "一流大学");
-    } else if (game_state.player_flags_upper.b[1] & 2) {
+    } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_2_MASK) {
         strcpy(name_code_m, "二流大学");
-    } else if (game_state.player_flags_upper.b[1] & 4) {
+    } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_3_MASK) {
         strcpy(name_code_m, "三流大学");
-    } else if (game_state.player_flags_upper.b[1] & 8) {
+    } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_COMPANY_TIER_1_MASK) {
         strcpy(name_code_m, "一流企業");
-    } else if (game_state.player_flags_upper.b[1] & 0x10) {
+    } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_COMPANY_TIER_2_MASK) {
         strcpy(name_code_m, "二流企業");
-    } else if (game_state.player_flags_upper.b[1] & 0x20) {
+    } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_COMPANY_TIER_3_MASK) {
         strcpy(name_code_m, "三流企業");
     } else if (((ClubFlagBits *)&game_state.clubs[0])->unk_25 >= 3) {
         strcpy(name_code_m, "小説家は");
@@ -388,7 +388,7 @@ void ending_graduation_result_dialogue_select(void) {
     ending_result_text_entries_clear();
     result_dialogue_entry_index = 0xFF;
     for (i = 0; i < 11; i++) {
-        if (((ClubFlagBits *)&game_state.clubs[i])->unk_25 >= 3 && (game_state.player_flags_upper.b[1] & 0x40) && !(game_state.player_flags_upper.b[1] & 0x80)) {
+        if (((ClubFlagBits *)&game_state.clubs[i])->unk_25 >= 3 && (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_FLAG_BIT_6_MASK) && !(game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_FLAG_BIT_7_MASK)) {
             msg = (*D_8013CAF0)[10 + i];
             career_result_kind = i;
             result_dialogue_entry_index = i;
@@ -397,8 +397,8 @@ void ending_graduation_result_dialogue_select(void) {
     }
     talk_next_row_y += 0x10;
     if (result_dialogue_entry_index == 0xFF) {
-        if (game_state.player_flags_upper.b[1] & 0x80) {
-            if (game_state.player_flags_upper.b[1] & 0x40) {
+        if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_FLAG_BIT_7_MASK) {
+            if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_FLAG_BIT_6_MASK) {
                 talk_work = talk_render(-0x48, talk_next_row_y, 0, (s32)name, 0, "", "", 0);
                 ending_result_text_entries_clear();
             } else {
@@ -406,8 +406,8 @@ void ending_graduation_result_dialogue_select(void) {
                 talk_work = talk_render(-0x48, talk_next_row_y, 0, msg, 0, "", "", 0);
                 ending_result_text_entries_clear();
             }
-            if (best_param_result < 0x78) {
-                if ((game_state.player_flags_upper.b[1] & 1) || (game_state.player_flags_upper.b[1] & 2) || (game_state.player_flags_upper.b[1] & 4)) {
+            if (best_param_result < ENDING_PARAM_RESULT_HIGH_MIN) {
+                if ((game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_1_MASK) || (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_2_MASK) || (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_3_MASK)) {
                     career_result_kind = 0xC;
                     msg = (*D_8013CAF0)[32];
                 } else {
@@ -427,19 +427,19 @@ void ending_graduation_result_dialogue_select(void) {
                 career_result_kind = 0x10;
                 msg = (*D_8013CAF0)[31];
             }
-        } else if (game_state.player_flags_upper.b[1] & 1) {
+        } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_1_MASK) {
             career_result_kind = 0x14;
             msg = (*D_8013CAF0)[21];
-        } else if (game_state.player_flags_upper.b[1] & 2) {
+        } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_2_MASK) {
             career_result_kind = 0x15;
             msg = (*D_8013CAF0)[22];
-        } else if (game_state.player_flags_upper.b[1] & 4) {
+        } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_UNIVERSITY_TIER_3_MASK) {
             career_result_kind = 0x16;
             msg = (*D_8013CAF0)[23];
-        } else if (game_state.player_flags_upper.b[1] & 8) {
+        } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_COMPANY_TIER_1_MASK) {
             career_result_kind = 0x11;
             msg = (*D_8013CAF0)[24];
-        } else if (game_state.player_flags_upper.b[1] & 0x10) {
+        } else if (game_state.player_flags_upper.b[1] & ENDING_CAREER_RESULT_COMPANY_TIER_2_MASK) {
             career_result_kind = 0x12;
             msg = (*D_8013CAF0)[25];
         } else {

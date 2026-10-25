@@ -26,9 +26,9 @@ void shooter_game_start_step_init(void) {
     shooter_stages_cleared = 0;
     shooter_score = 0;
     shooter_background_flags = 0x80;
-    shooter_time_left = 0x4650;
+    shooter_time_left = SHOOTER_START_TIME_FRAMES;
     shooter_clear_particle_tables();
-    shooter_load_request = 0x10;
+    shooter_load_request = SHOOTER_LOAD_GAME_START_BANKS;
     game_state.clear_color_r = 0;
     game_state.clear_color_g = 0;
     game_state.clear_color_b = 0;
@@ -66,7 +66,7 @@ void shooter_game_start_step_wait(void) {
 }
 
 s32 shooter_game_start_step_begin(void) {
-    shooter_time_left = 0x4650;
+    shooter_time_left = SHOOTER_START_TIME_FRAMES;
     shooter_score = 0;
     shooter_actors->stats[1] = 0xFF;
     shooter_actors[8].stats[1] = 0xFF;

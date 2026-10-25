@@ -297,7 +297,7 @@ void rpg_command_menu_update(void) {
     if (rpg_menu.unk_00 != 3 && !(game_state.menu_mode & 1)) {
         hud_cursor_update();
     }
-    if (!(rpg_player_action & 0x10000) && rpg_menu.unk_00 != 4 && rpg_menu.unk_00 != 5) {
+    if (!(rpg_player_action & RPG_PLAYER_READY) && rpg_menu.unk_00 != 4 && rpg_menu.unk_00 != 5) {
         rpg_menu.unk_00 = 6;
     }
     switch (rpg_menu.unk_00) {
@@ -348,13 +348,13 @@ void rpg_command_menu_update(void) {
             rpg_actor_set_animation(0x23, 0xFF, 1, 0);
             switch (gs->menu_cursor_0) {
             case 0:
-                rpg_player_action ^= 0x01000000;
+                rpg_player_action ^= RPG_COMMAND_ATTACK;
                 break;
             case 1:
-                rpg_player_action ^= 0x02000000;
+                rpg_player_action ^= RPG_COMMAND_GUARD;
                 break;
             case 2:
-                rpg_player_action ^= 0x04000000;
+                rpg_player_action ^= RPG_COMMAND_SPECIAL;
                 break;
             }
             rpg_message_next_state(1);

@@ -373,13 +373,13 @@ void name_entry_slot_markers_update(s32 name_part) {
     s32 pad; /* FAKE: unused; its stack home gives the original 72-byte frame. T-11650 */
 
     if (name_part == 0 && name_entry_cursor >= 3) {
-        name_entry_cursor = 0xC;
+        name_entry_cursor = NAME_ENTRY_INACTIVE_CURSOR;
     }
     if (name_part == 1 && name_entry_cursor >= 6) {
-        name_entry_cursor = 0xC;
+        name_entry_cursor = NAME_ENTRY_INACTIVE_CURSOR;
     }
     if (name_part == 2 && name_entry_cursor >= 11) {
-        name_entry_cursor = 0xC;
+        name_entry_cursor = NAME_ENTRY_INACTIVE_CURSOR;
     }
     if (game_state.pad_pressed & PAD_CIRCLE) {
         x = ((Actor *)actor_pool)[0].x;
@@ -427,7 +427,7 @@ void name_entry_mode_stage_input(void) {
             name_entry_cell_cursor_update();
         } else if (game_state.mode_step < 8) {
             name_entry_birthday_frames_draw(0);
-            name_entry_birthday_hit_test(0);
+            name_entry_birthday_hit_test(NAME_ENTRY_PROFILE_PLAYER);
         } else {
             name_entry_confirm_frames_draw(0);
             name_entry_empty_callback();
@@ -810,7 +810,7 @@ void name_entry_kanji_page_draw(s32 heading_selector) {
     if (name_entry_reading < 0 || name_entry_reading >= 0x2D) {
         name_entry_reading = 0;
     }
-    if (name_entry_tab == 2 || name_entry_reading == 0x26) {
+    if (name_entry_tab == NAME_ENTRY_TAB_SYMBOLS || name_entry_reading == 0x26) {
         name_entry_symbol_page_draw(name_entry_prompt_text);
     } else {
         text_system_reset();
@@ -882,7 +882,7 @@ void name_entry_cell_hit_test(void) {
     } else {
         name_entry_cell_row = -1;
     }
-    if ((name_entry_tab == 2) || (name_entry_tab == 3)) {
+    if ((name_entry_tab == NAME_ENTRY_TAB_SYMBOLS) || (name_entry_tab == NAME_ENTRY_TAB_KANJI)) {
         if (name_entry_cell_column == 0x10) {
             name_entry_cell_column = -1;
         }
@@ -914,7 +914,7 @@ void name_entry_tab_highlight_update(void) {
             ((Actor *)actor_pool)[i + 114].draw_flags &= 0x7F;
         }
     }
-    if (name_entry_tab_hover >= 0) {
+    if (name_entry_tab_hover >= NAME_ENTRY_TAB_HIRAGANA) {
         D_80120C96 = (name_entry_tab_hover << 5) - 0x28;
         return;
     }
@@ -998,7 +998,7 @@ void name_entry_character_put(s32 name_part) {
         break;
     }
     switch (name_entry_tab) {
-    case 0:
+    case NAME_ENTRY_TAB_HIRAGANA:
         column = *(s32 *)&name_entry_cell_column % 6;
         if ((column | 0) == 5) {
             name_buffer[name_slot * 2] = D_800B3644[0];
@@ -1017,7 +1017,7 @@ void name_entry_character_put(s32 name_part) {
             name_buffer[name_slot * 2 + 1] = ((NameEntryKanaPage *)&name_entry_hiragana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][((s32)name_entry_cell_column % 6) * 2 + 1];
         }
         break;
-    case 1:
+    case NAME_ENTRY_TAB_KATAKANA:
         column = *(s32 *)&name_entry_cell_column % 6;
         if ((column | 0) == 5) {
             name_buffer[name_slot * 2] = D_800B3644[0];
@@ -1036,7 +1036,7 @@ void name_entry_character_put(s32 name_part) {
             name_buffer[name_slot * 2 + 1] = ((NameEntryKanaPage *)&name_entry_katakana_rows)->text[(s32)name_entry_cell_column / 6 + name_entry_cell_row * 3][((s32)name_entry_cell_column % 6) * 2 + 1];
         }
         break;
-    case 2:
+    case NAME_ENTRY_TAB_SYMBOLS:
         if (name_entry_cell_column) {
         }
         if (name_entry_cell_column < 16) {
@@ -1050,7 +1050,7 @@ void name_entry_character_put(s32 name_part) {
             }
         }
         break;
-    case 3:
+    case NAME_ENTRY_TAB_KANJI:
         if (name_entry_cell_column) {
         }
         if (name_entry_cell_column < 16) {
@@ -1274,18 +1274,18 @@ void name_entry_step_init(void) {
             name_entry_given_name[6] = 0;
             name_entry_family_name[7] = 0;
             name_entry_family_name[6] = 0;
-            name_entry_player_month = 0xFF;
-            name_entry_player_day = 0xFF;
-            name_entry_player_blood = 0xFF;
-            name_entry_shiori_month = 0xFF;
-            name_entry_shiori_day = 0xFF;
-            name_entry_shiori_blood = 0xFF;
+            name_entry_player_month = NAME_ENTRY_SELECTION_UNSET;
+            name_entry_player_day = NAME_ENTRY_SELECTION_UNSET;
+            name_entry_player_blood = NAME_ENTRY_SELECTION_UNSET;
+            name_entry_shiori_month = NAME_ENTRY_SELECTION_UNSET;
+            name_entry_shiori_day = NAME_ENTRY_SELECTION_UNSET;
+            name_entry_shiori_blood = NAME_ENTRY_SELECTION_UNSET;
             name_entry_nickname_end_1 = 0;
             name_entry_preset_chord_check();
         }
     }
     name_entry_cursor = 0;
-    name_entry_tab = 0;
+    name_entry_tab = NAME_ENTRY_TAB_HIRAGANA;
     name_entry_hiragana_page_draw(name_entry_family_prompt_text);
     name_entry_reading = 0;
     name_entry_reading_column = -1;
@@ -1314,7 +1314,7 @@ void name_entry_frames_draw(s32 alternate_color) {
     prim_gradient_rect(-0x9D, 0x50, 0x1B, 0xF, 4, col, 0x83);
     prim_gradient_rect(-0x9A, -0x6A, 0x130, 0x20, 4, col, 0x83);
     prim_gradient_rect(-0x7F, -0x40, 0x11D, 0x70, 4, col, 0x83);
-    if (name_entry_tab == 3) {
+    if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
         prim_gradient_rect(-0x7A, 0x36, 0x50, 0x30, 4, col, 0x83);
         prim_gradient_rect(-0x1A, 0x36, 0x50, 0x30, 4, col, 0x83);
         prim_gradient_rect(0x46, 0x36, 0x50, 0x30, 4, col, 0x83);
@@ -1329,7 +1329,7 @@ void name_entry_frames_draw(s32 alternate_color) {
 
 /* Implicit int in the original (no return value): v0 stays live at the exit, which changes how as1 fills the delay slots. T-11650 */
 s32 name_entry_scroll_arrows_update(void) {
-    if (name_entry_tab == 2 || name_entry_tab == 3) {
+    if (name_entry_tab == NAME_ENTRY_TAB_SYMBOLS || name_entry_tab == NAME_ENTRY_TAB_KANJI) {
         ((Actor *)actor_pool)[121].unk_18 = 0x19;
         ((Actor *)actor_pool)[122].unk_18 = 0x1B;
         ((Actor *)actor_pool)[121].draw_flags = 0x80;
@@ -1372,8 +1372,8 @@ void name_entry_family_name_input(void) {
     name_entry_cell_hit_test();
     name_entry_tab_hit_test();
     name_entry_tab_highlight_update();
-    name_entry_slot_markers_update(0);
-    if (name_entry_tab == 3) {
+    name_entry_slot_markers_update(NAME_ENTRY_NAME_PART_FAMILY);
+    if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
         name_entry_reading_hit_test();
         name_entry_reading_select();
     }
@@ -1387,51 +1387,51 @@ void name_entry_family_name_input(void) {
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         if (name_entry_cursor < 3 && name_entry_cell_column >= 0 && name_entry_cell_row >= 0) {
-            name_entry_character_put(0);
+            name_entry_character_put(NAME_ENTRY_NAME_PART_FAMILY);
             name_entry_names_draw();
         }
-        if (name_entry_tab == 3) {
+        if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
             name_entry_kanji_page_draw(1);
             k_sub_reset_point_set();
             name_entry_names_draw();
-        } else if (name_entry_tab == 2) {
+        } else if (name_entry_tab == NAME_ENTRY_TAB_SYMBOLS) {
             name_entry_symbol_page_draw(name_entry_family_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 0) {
-            name_entry_tab = 0;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_HIRAGANA) {
+            name_entry_tab = NAME_ENTRY_TAB_HIRAGANA;
             name_entry_hiragana_page_draw(name_entry_family_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 1) {
-            name_entry_tab = 1;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_KATAKANA) {
+            name_entry_tab = NAME_ENTRY_TAB_KATAKANA;
             name_entry_katakana_page_draw(name_entry_family_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 2) {
-            name_entry_tab = 2;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_SYMBOLS) {
+            name_entry_tab = NAME_ENTRY_TAB_SYMBOLS;
             name_entry_symbol_page_draw(name_entry_family_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 3) {
-            name_entry_tab = 3;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_KANJI) {
+            name_entry_tab = NAME_ENTRY_TAB_KANJI;
             name_entry_kanji_page_draw(1);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 4) {
-            name_entry_tab = 4;
-            name_entry_name_finish(0);
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_DONE) {
+            name_entry_tab = NAME_ENTRY_TAB_DONE;
+            name_entry_name_finish(NAME_ENTRY_NAME_PART_FAMILY);
             name_entry_names_draw();
             audio_command(0x501);
             mode_step_next();
         }
     } else if (game_state.pad_pressed & PAD_START) {
-        name_entry_name_finish(0);
+        name_entry_name_finish(NAME_ENTRY_NAME_PART_FAMILY);
         name_entry_names_draw();
         audio_command(0x501);
         mode_step_next();
@@ -1441,20 +1441,20 @@ void name_entry_family_name_input(void) {
 void name_entry_given_name_init(void) {
 
     text_system_reset();
-    if (name_entry_tab == 4) {
-        name_entry_tab = 0;
+    if (name_entry_tab == NAME_ENTRY_TAB_DONE) {
+        name_entry_tab = NAME_ENTRY_TAB_HIRAGANA;
     }
     switch (name_entry_tab) {
-    case 0:
+    case NAME_ENTRY_TAB_HIRAGANA:
         name_entry_hiragana_page_draw((s32) name_entry_given_prompt_text);
         break;
-    case 1:
+    case NAME_ENTRY_TAB_KATAKANA:
         name_entry_katakana_page_draw((s32) name_entry_given_prompt_text);
         break;
-    case 2:
+    case NAME_ENTRY_TAB_SYMBOLS:
         name_entry_symbol_page_draw((s32) name_entry_given_prompt_text);
         break;
-    case 3:
+    case NAME_ENTRY_TAB_KANJI:
         name_entry_kanji_page_draw(1);
         break;
     }
@@ -1477,8 +1477,8 @@ void name_entry_given_name_input(void) {
     name_entry_cell_hit_test();
     name_entry_tab_hit_test();
     name_entry_tab_highlight_update();
-    name_entry_slot_markers_update(1);
-    if (name_entry_tab == 3) {
+    name_entry_slot_markers_update(NAME_ENTRY_NAME_PART_GIVEN);
+    if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
         name_entry_reading_hit_test();
         name_entry_reading_select();
     }
@@ -1495,51 +1495,51 @@ void name_entry_given_name_input(void) {
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         insertion_cursor = name_entry_cursor;
         if (insertion_cursor < 6 && name_entry_cell_column >= 0 && name_entry_cell_row >= 0) {
-            name_entry_character_put(1);
+            name_entry_character_put(NAME_ENTRY_NAME_PART_GIVEN);
             name_entry_names_draw();
         }
-        if (name_entry_tab == 3) {
+        if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
             name_entry_kanji_page_draw(2);
             k_sub_reset_point_set();
             name_entry_names_draw();
-        } else if (name_entry_tab == 2) {
+        } else if (name_entry_tab == NAME_ENTRY_TAB_SYMBOLS) {
             name_entry_symbol_page_draw(name_entry_given_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 0) {
-            name_entry_tab = 0;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_HIRAGANA) {
+            name_entry_tab = NAME_ENTRY_TAB_HIRAGANA;
             name_entry_hiragana_page_draw(name_entry_given_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 1) {
-            name_entry_tab = 1;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_KATAKANA) {
+            name_entry_tab = NAME_ENTRY_TAB_KATAKANA;
             name_entry_katakana_page_draw(name_entry_given_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 2) {
-            name_entry_tab = 2;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_SYMBOLS) {
+            name_entry_tab = NAME_ENTRY_TAB_SYMBOLS;
             name_entry_symbol_page_draw(name_entry_given_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 3) {
-            name_entry_tab = 3;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_KANJI) {
+            name_entry_tab = NAME_ENTRY_TAB_KANJI;
             name_entry_kanji_page_draw(2);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 4) {
-            name_entry_tab = 4;
-            name_entry_name_finish(1);
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_DONE) {
+            name_entry_tab = NAME_ENTRY_TAB_DONE;
+            name_entry_name_finish(NAME_ENTRY_NAME_PART_GIVEN);
             name_entry_names_draw();
             audio_command(0x501);
             mode_step_next();
         }
     } else if (game_state.pad_pressed & PAD_START) {
-        name_entry_name_finish(1);
+        name_entry_name_finish(NAME_ENTRY_NAME_PART_GIVEN);
         name_entry_names_draw();
         audio_command(0x501);
         mode_step_next();
@@ -1549,20 +1549,20 @@ void name_entry_given_name_input(void) {
 void name_entry_nickname_init(void) {
 
     text_system_reset();
-    if (name_entry_tab == 4) {
-        name_entry_tab = 0;
+    if (name_entry_tab == NAME_ENTRY_TAB_DONE) {
+        name_entry_tab = NAME_ENTRY_TAB_HIRAGANA;
     }
     switch (name_entry_tab) {
-    case 0:
+    case NAME_ENTRY_TAB_HIRAGANA:
         name_entry_hiragana_page_draw((s32) name_entry_nickname_prompt_text);
         break;
-    case 1:
+    case NAME_ENTRY_TAB_KATAKANA:
         name_entry_katakana_page_draw((s32) name_entry_nickname_prompt_text);
         break;
-    case 2:
+    case NAME_ENTRY_TAB_SYMBOLS:
         name_entry_symbol_page_draw((s32) name_entry_nickname_prompt_text);
         break;
-    case 3:
+    case NAME_ENTRY_TAB_KANJI:
         name_entry_kanji_page_draw(2);
         break;
     }
@@ -1582,8 +1582,8 @@ void name_entry_nickname_input(void) {
     name_entry_cell_hit_test();
     name_entry_tab_hit_test();
     name_entry_tab_highlight_update();
-    name_entry_slot_markers_update(2);
-    if (name_entry_tab == 3) {
+    name_entry_slot_markers_update(NAME_ENTRY_NAME_PART_NICKNAME);
+    if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
         name_entry_reading_hit_test();
         name_entry_reading_select();
     }
@@ -1597,51 +1597,51 @@ void name_entry_nickname_input(void) {
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         if (name_entry_cursor < 0xB && name_entry_cell_column >= 0 && name_entry_cell_row >= 0) {
-            name_entry_character_put(2);
+            name_entry_character_put(NAME_ENTRY_NAME_PART_NICKNAME);
             name_entry_names_draw();
         }
-        if (name_entry_tab == 3) {
+        if (name_entry_tab == NAME_ENTRY_TAB_KANJI) {
             name_entry_kanji_page_draw(3);
             k_sub_reset_point_set();
             name_entry_names_draw();
-        } else if (name_entry_tab == 2) {
+        } else if (name_entry_tab == NAME_ENTRY_TAB_SYMBOLS) {
             name_entry_symbol_page_draw(name_entry_nickname_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 0) {
-            name_entry_tab = 0;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_HIRAGANA) {
+            name_entry_tab = NAME_ENTRY_TAB_HIRAGANA;
             name_entry_hiragana_page_draw(name_entry_nickname_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 1) {
-            name_entry_tab = 1;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_KATAKANA) {
+            name_entry_tab = NAME_ENTRY_TAB_KATAKANA;
             name_entry_katakana_page_draw(name_entry_nickname_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 2) {
-            name_entry_tab = 2;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_SYMBOLS) {
+            name_entry_tab = NAME_ENTRY_TAB_SYMBOLS;
             name_entry_symbol_page_draw(name_entry_nickname_prompt_text);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 3) {
-            name_entry_tab = 3;
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_KANJI) {
+            name_entry_tab = NAME_ENTRY_TAB_KANJI;
             name_entry_kanji_page_draw(3);
             k_sub_reset_point_set();
             name_entry_names_draw();
         }
-        if (name_entry_tab_hover == 4) {
-            name_entry_tab = 4;
-            name_entry_name_finish(2);
+        if (name_entry_tab_hover == NAME_ENTRY_TAB_DONE) {
+            name_entry_tab = NAME_ENTRY_TAB_DONE;
+            name_entry_name_finish(NAME_ENTRY_NAME_PART_NICKNAME);
             name_entry_names_draw();
             audio_command(0x501);
             mode_step_next();
         }
     } else if (game_state.pad_pressed & PAD_START) {
-        name_entry_name_finish(2);
+        name_entry_name_finish(NAME_ENTRY_NAME_PART_NICKNAME);
         name_entry_names_draw();
         audio_command(0x501);
         mode_step_next();
@@ -1669,7 +1669,7 @@ void name_entry_birthday_init(void) {
     cd_audio_request_set(name_entry_birthday_prompt_clip_start, name_entry_birthday_prompt_clip_end, 0);
     audio_command(0x300);
     k_sub_reset_point_set();
-    name_entry_birthday_text_draw(0);
+    name_entry_birthday_text_draw(NAME_ENTRY_PROFILE_PLAYER);
     k_sub_disp_start(0);
     mode_step_next();
 }
@@ -1939,8 +1939,8 @@ void name_entry_birthday_input(void) {
     u8 birthday_field;
     hud_cursor_update();
     name_entry_birthday_field_marks_update();
-    name_entry_birthday_text_draw(0);
-    name_entry_birthday_buttons_update(0);
+    name_entry_birthday_text_draw(NAME_ENTRY_PROFILE_PLAYER);
+    name_entry_birthday_buttons_update(NAME_ENTRY_PROFILE_PLAYER);
     if (game_state.pad_pressed & PAD_CROSS) {
         birthday_field = name_entry_cursor;
         if (birthday_field != 0) {
@@ -1948,13 +1948,13 @@ void name_entry_birthday_input(void) {
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         name_entry_cursor += 1;
-        name_entry_birthday_text_draw(0);
+        name_entry_birthday_text_draw(NAME_ENTRY_PROFILE_PLAYER);
         if ((u8) name_entry_cursor >= 3U) {
-            name_entry_birthday_finalize(0);
+            name_entry_birthday_finalize(NAME_ENTRY_PROFILE_PLAYER);
             mode_step_next();
         }
     } else if (game_state.pad_pressed & PAD_START) {
-        name_entry_birthday_finalize(0);
+        name_entry_birthday_finalize(NAME_ENTRY_PROFILE_PLAYER);
         mode_step_next();
     }
     name_entry_day_grid_numbers_draw();
@@ -1966,13 +1966,13 @@ s32 finalize_shiori_profile;
     s32 calendar_month;
 
     if (finalize_shiori_profile != 0) {
-        if (name_entry_shiori_month == 0xFF) {
+        if (name_entry_shiori_month == NAME_ENTRY_SELECTION_UNSET) {
             name_entry_shiori_month = rand() % 12;
         }
-        if (name_entry_shiori_day == 0xFF) {
+        if (name_entry_shiori_day == NAME_ENTRY_SELECTION_UNSET) {
             name_entry_shiori_day = rand() % 31;
         }
-        if (name_entry_shiori_blood == 0xFF) {
+        if (name_entry_shiori_blood == NAME_ENTRY_SELECTION_UNSET) {
             name_entry_shiori_blood = rand() % 3;
         }
         calendar_month = name_entry_shiori_month + 1;
@@ -1992,13 +1992,13 @@ s32 finalize_shiori_profile;
             name_entry_shiori_day = 0x1D;
         }
     } else {
-        if (name_entry_player_month == 0xFF) {
+        if (name_entry_player_month == NAME_ENTRY_SELECTION_UNSET) {
             name_entry_player_month = rand() % 12;
         }
-        if (name_entry_player_day == 0xFF) {
+        if (name_entry_player_day == NAME_ENTRY_SELECTION_UNSET) {
             name_entry_player_day = rand() % 31;
         }
-        if (name_entry_player_blood == 0xFF) {
+        if (name_entry_player_blood == NAME_ENTRY_SELECTION_UNSET) {
             name_entry_player_blood = rand() % 3;
         }
         calendar_month = name_entry_player_month + 1;
@@ -2232,7 +2232,7 @@ void name_entry_mode_stage_shiori(void) {
     if (game_state.mode_step < 4) {
         if (game_state.mode_step < 2) {
             name_entry_birthday_frames_draw(1);
-            name_entry_birthday_hit_test(1);
+            name_entry_birthday_hit_test(NAME_ENTRY_PROFILE_SHIORI);
         } else {
             name_entry_confirm_frames_draw(1);
             name_entry_empty_callback();
@@ -2248,7 +2248,7 @@ void name_entry_shiori_birthday_init(void) {
     cd_audio_request_set(name_entry_shiori_prompt_clip_start, name_entry_shiori_prompt_clip_end, 0);
     audio_command(0x300);
     k_sub_reset_point_set();
-    name_entry_birthday_text_draw(1);
+    name_entry_birthday_text_draw(NAME_ENTRY_PROFILE_SHIORI);
     k_sub_disp_start(0);
     mode_step_next();
 }
@@ -2257,8 +2257,8 @@ void name_entry_shiori_birthday_input(void) {
     u8 birthday_field;
     hud_cursor_update();
     name_entry_birthday_field_marks_update();
-    name_entry_birthday_text_draw(1);
-    name_entry_birthday_buttons_update(1);
+    name_entry_birthday_text_draw(NAME_ENTRY_PROFILE_SHIORI);
+    name_entry_birthday_buttons_update(NAME_ENTRY_PROFILE_SHIORI);
     if (game_state.pad_pressed & PAD_CROSS) {
         birthday_field = name_entry_cursor;
         if (birthday_field != 0) {
@@ -2266,13 +2266,13 @@ void name_entry_shiori_birthday_input(void) {
         }
     } else if (game_state.pad_pressed & PAD_CIRCLE) {
         name_entry_cursor += 1;
-        name_entry_birthday_text_draw(1);
+        name_entry_birthday_text_draw(NAME_ENTRY_PROFILE_SHIORI);
         if ((u8) name_entry_cursor >= 3U) {
-            name_entry_birthday_finalize(1);
+            name_entry_birthday_finalize(NAME_ENTRY_PROFILE_SHIORI);
             mode_step_next();
         }
     } else if (game_state.pad_pressed & PAD_START) {
-        name_entry_birthday_finalize(1);
+        name_entry_birthday_finalize(NAME_ENTRY_PROFILE_SHIORI);
         mode_step_next();
     }
     name_entry_day_grid_numbers_draw();

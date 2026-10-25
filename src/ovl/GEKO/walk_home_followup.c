@@ -88,7 +88,7 @@ void encounter_walk_home_followup_init(void) {
     club_names = encounter_club_names;
     strcpy(&name_code_m, club_names.by_club[game_state.player_flags.h >> 12]);
     game_state.girls[game_state.current_girl].flags.f.b0 = 1;
-    if (encounter_walk_home_topic == 10) {
+    if (encounter_walk_home_topic == ENCOUNTER_TOPIC_BIRTHDAY) {
         game_state.girls[game_state.current_girl].flags.f.b6 = 1;
     }
     encounter_walk_home_group = 0x16;
@@ -96,7 +96,7 @@ void encounter_walk_home_followup_init(void) {
     /* FAKE: T-25002 reading encounter_walk_home_topic through the word local topic_girl_or_club keeps bne t8,a0 operand order */
     if ((topic_girl_or_club = encounter_walk_home_topic) == 2U) {
         topic_girl_or_club = game_state.current_girl;
-        encounter_walk_home_topic = 0;
+        encounter_walk_home_topic = ENCOUNTER_TOPIC_NONE;
         if (topic_girl_or_club == 0) {
             /* FAKE: T-11910 the volatile club view keeps this read before the record load (uopt otherwise sinks it to
              * the first compare), giving the original ugen order; also used in the 1/2/3 branch. */
@@ -104,37 +104,37 @@ void encounter_walk_home_followup_init(void) {
             girl_club = game_state.girls[topic_girl_or_club].flags.b[2] >> 4;
             topic_girl_or_club = girl_club;
             if (girl_state_or_player_club == topic_girl_or_club && (u32)girl_state_or_player_club < 6) {
-                encounter_walk_home_topic_offer(2);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CULTURE_FESTIVAL_MARKER);
             } else if (girl_state_or_player_club != topic_girl_or_club && (u32)girl_state_or_player_club < 6 && topic_girl_or_club < 6) {
-                encounter_walk_home_topic_offer(3);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_THREE);
             } else if ((u32)girl_state_or_player_club < 6 && topic_girl_or_club >= 6) {
-                encounter_walk_home_topic_offer(4);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_FOUR);
             } else {
-                encounter_walk_home_topic_offer(5);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_FIVE);
             }
         } else if (topic_girl_or_club == 1 || topic_girl_or_club * 1 == 2 || topic_girl_or_club == 3 /* FAKE: T-25002 topic_girl_or_club * 1 puts the shared constant 2 first in the beq */) {
             girl_state_or_player_club = game_state.player_flags.vh >> 12;
             topic_girl_or_club = game_state.girls[game_state.current_girl].flags.b[2] >> 4;
             if (girl_state_or_player_club == topic_girl_or_club) {
-                encounter_walk_home_topic_offer(2);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CULTURE_FESTIVAL_MARKER);
             } else if (girl_state_or_player_club != topic_girl_or_club && (u32)girl_state_or_player_club < 6) {
-                encounter_walk_home_topic_offer(3);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_THREE);
             } else {
-                encounter_walk_home_topic_offer(5);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_FIVE);
             }
         } else if (topic_girl_or_club == 4 || topic_girl_or_club == 5 || topic_girl_or_club == 10) {
             if ((game_state.player_flags.h >> 12) < 6) {
-                encounter_walk_home_topic_offer(3);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_THREE);
             } else if ((u8)(girl_state_or_player_club & 0x7F) < 2) {
-                encounter_walk_home_topic_offer(4);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_FOUR);
             } else {
-                encounter_walk_home_topic_offer(5);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_FIVE);
             }
         } else if (topic_girl_or_club == 6 || topic_girl_or_club == 7 || topic_girl_or_club == 8 || topic_girl_or_club == 9) {
             if ((game_state.player_flags.h >> 12) < 6) {
-                encounter_walk_home_topic_offer(2);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CULTURE_FESTIVAL_MARKER);
             } else {
-                encounter_walk_home_topic_offer(3);
+                encounter_walk_home_topic_offer(ENCOUNTER_TOPIC_CLUB_VARIANT_THREE);
             }
         }
     }

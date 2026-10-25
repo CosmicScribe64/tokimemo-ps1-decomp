@@ -1972,4 +1972,33 @@ extern u8 D_80122774[8]; /* counters, lbu/sb stride 1 */
 typedef s16 EvMovieShort;
 extern EvMovieShort D_800F19D0[4]; /* spot_ayako_scene2_pick_maximum_input */
 
+/* Development EVENT mode calls; distinct from the shipped GameMode enum. Positive legacy const request; no replay metadata. */
+enum SpotDevelopmentGameMode {
+    SPOT_DEVELOPMENT_GAME_MODE_DATE = 0x50, /* Birthday check returns to the development date path; separate from shipped main mode ownership. */
+    SPOT_DEVELOPMENT_GAME_MODE_GIRL_SCENE = 0x60 /* Date-event selection switches to the selected girl scene; development-only value meaning. */
+};
+
+/* Known ride IDs at direct variable/cast comparison and assignment sites only. Dereferenced cast switch and selector-nine comparison remain outside this request; enum is partial. No replay metadata. */
+enum SpotRide {
+    SPOT_RIDE_ROLLER_COASTER = 0, /* spot_ride_setup loads the roller-coaster label for selector zero. */
+    SPOT_RIDE_GHOST_HOUSE = 1, /* spot_ride_setup loads the ghost-house label for selector one. */
+    SPOT_RIDE_FERRIS_WHEEL = 2, /* Movie dispatcher selects Ferris-wheel movie for two; setup fallback loads Ferris-wheel label. */
+    SPOT_RIDE_SCREAM_RIDE = 3, /* spot_ride_setup loads the scream-machine label for selector three. */
+    SPOT_RIDE_VIRTUAL_SHIP = 4 /* spot_ride_setup loads the virtual-ship label for selector four. */
+};
+
+/* Place-only caller scope distinguishes this shared development stage byte from girl-scene uses. */
+enum SpotPlaceStage {
+    SPOT_PLACE_STAGE_ARRIVAL = 0, /* Place frame dispatches spot_place_arrival_run. */
+    SPOT_PLACE_STAGE_SCENE = 1 /* Place frame dispatches spot_place_scene_run. */
+};
+
+/* One proven girl-scene runner only; other equivalent stage sites remain untouched and no all-runner coverage is claimed. */
+enum SpotGirlStage {
+    SPOT_GIRL_STAGE_RUN = 0 /* Stage zero dispatches the Shiori scene step runner; other stage values leave through the development exit. */
+};
+
+/* Only the i/j loop-bound comparisons; factor arithmetic 5-i, j+3 and affinity adjustments remain literal. */
+#define SPOT_OUTCOME_TRIVIA_THRESHOLD_COUNT 5 /* Both sign branches scan five trivia thresholds: 100, 75, 50, 25, zero. */
+
 #endif

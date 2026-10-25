@@ -13,7 +13,7 @@ s32 stage_show_club_year_show_mode_stage_dispatch(void) {
         break;
     case 0x1:
         switch (D_80122EB8) {
-        case 2:
+        case CLUB_SCIENCE:
             switch (game_state.year) {
             case 0x5F:
                 mode_stage_set(0xF0);
@@ -26,16 +26,16 @@ s32 stage_show_club_year_show_mode_stage_dispatch(void) {
                 break;
             }
             break;
-        case 3:
+        case CLUB_COMPUTER:
             mode_stage_set(0xF3);
             break;
-        case 5:
+        case CLUB_BRASS_BAND:
             mode_stage_set(0xF4);
             break;
-        case 0:
+        case CLUB_LITERATURE:
             mode_stage_set(0xF5);
             break;
-        case 1:
+        case CLUB_DRAMA:
             switch (game_state.year) {
             case 0x5F:
                 mode_stage_set(0xF6);

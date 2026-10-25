@@ -220,7 +220,7 @@ void sports_folk_dance_entry(void) {
         }
         break;
     case 31:
-        if ((game_state.girls[D_80148EC0[2]].syoushin >= 0x4C) || (girl_state_rank(D_80148EC0[2]) == 4)) {
+        if ((game_state.girls[D_80148EC0[2]].syoushin >= SPORTS_FOLK_DANCE_HIGH_SYOUSHIN_RANK_LIMIT) || (girl_state_rank(D_80148EC0[2]) == 4)) {
             audio_command(0xBF);
             portrait_layout_set(4);
             mode_step_set(0x26);
@@ -281,7 +281,7 @@ void sports_folk_dance_log_append(void) {
         game_state_ptr->event_log[game_state_ptr->event_log_count].scene = 0x13;
         game_state_ptr->event_log[game_state_ptr->event_log_count].flag = 0;
         game_state_ptr->event_log[game_state_ptr->event_log_count].rank = get_g_zyotai_h(D_80148EC0[participant_index]);
-        if ((participant_index == 2) && (game_state_ptr->girls[D_80148EC0[participant_index]].syoushin >= 0x4C)) {
+        if ((participant_index == 2) && (game_state_ptr->girls[D_80148EC0[participant_index]].syoushin >= SPORTS_FOLK_DANCE_HIGH_SYOUSHIN_RANK_LIMIT)) {
             game_state_ptr->event_log[game_state_ptr->event_log_count].rank = 4;
         }
         game_state_ptr->event_log[game_state_ptr->event_log_count].year = game_state_ptr->year;

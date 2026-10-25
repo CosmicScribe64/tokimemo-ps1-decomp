@@ -61,7 +61,7 @@ extern s16 date_park_parade_line;
 extern s32 D_8015BDE4;
 extern s32 D_8015BE50;
 extern s32 D_8015BEBC;
-extern s16 date_meeting_group;
+extern s16 date_meeting_group; /* DateMeetingGroup */
 extern s16 date_meeting_line;
 extern s32 D_8015BD94;
 extern s32 D_8015BDA4;
@@ -550,10 +550,10 @@ void date_scene_shiori_summer_data_init(void);
 s32 portrait_layout_set(s32 arg0);
 void date_player_birthday_pick_sections(void);
 extern u8 date_game_center_medals_open;
-extern u8 date_arrival;
+extern u8 date_arrival; /* DateArrival */
 extern u8 date_player_waited;
 void date_art_museum_choice_face(void);
-extern s8 date_ride_index;
+extern s8 date_ride_index; /* DateRide */
 extern u8 date_movie_index;
 extern u8 date_movie_group;
 extern s16 date_movie_line;
@@ -1129,7 +1129,7 @@ void date_scene_miharu_summer(void);
 extern s8 D_8015EE24[];
 void date_scene_mio_winter_narration_speak(void);
 s32 date_art_museum_mira_face(void);
-extern u8 date_shop_index;
+extern u8 date_shop_index; /* DateShop */
 void date_shopping_street_bgm(void);
 void date_scene_yuko_winter(void);
 void date_scene_nozomi_winter(void);
@@ -1482,7 +1482,7 @@ typedef struct DateMovieScene50 {
     /* 0x46 */ u8 pad46[10];
 } DateMovieScene50; /* size 0x50 */
 #endif
-extern s16 date_special_day_group;
+extern s16 date_special_day_group; /* DateSpecialDay */
 extern s16 date_special_day_line;
 #ifndef OVL_DATE_T11020_H
 #define OVL_DATE_T11020_H
@@ -1780,4 +1780,44 @@ void date_place_setup_shrine(void);
 void date_place_setup_skating_rink(void);
 void date_place_setup_ski_resort(void);
 void date_scene_yumi_summer_audio_command_1(void);
+/* HYPOTHESIS: DATE arrival states; source-backed literal sites. */
+enum DateArrival {
+    DATE_ARRIVAL_WAIT_GREETING = 0,
+    DATE_ARRIVAL_DIRECT_GREETING = 1,
+    DATE_ARRIVAL_CORRECTED_PLACE = 2
+};
+
+/* T-27051 DATE ride-choice values. */
+enum DateRide {
+    DATE_RIDE_ROLLER_COASTER = 0,
+    DATE_RIDE_GHOST_HOUSE = 1,
+    DATE_RIDE_FERRIS_WHEEL = 2,
+    DATE_RIDE_SCREAM_MACHINE = 3,
+    DATE_RIDE_VIRTUAL_SHIP = 4
+};
+
+/* T-27051 DATE shop-choice values. */
+enum DateShop {
+    DATE_SHOP_BOUTIQUE = 0,
+    DATE_SHOP_FANCY_SHOP = 1,
+    DATE_SHOP_JUNK_SHOP = 2
+};
+
+/* T-27051 DATE meeting-group values. */
+enum DateMeetingGroup {
+    DATE_MEETING_ASK_TWO = 0,
+    DATE_MEETING_ASK_THREE = 3,
+    DATE_MEETING_NOT_HERE = 7,
+    DATE_MEETING_REFUSES = 8
+};
+
+/* T-27051 DATE special-day values. */
+enum DateSpecialDay {
+    DATE_SPECIAL_DAY_MARCH = 0,
+    DATE_SPECIAL_DAY_JULY_SUNDAY = 1,
+    DATE_SPECIAL_DAY_SEPTEMBER_ODD = 2,
+    DATE_SPECIAL_DAY_SEPTEMBER_EVEN = 3,
+    DATE_SPECIAL_DAY_DECEMBER_23 = 4
+};
+
 #endif

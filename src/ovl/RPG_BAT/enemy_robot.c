@@ -103,7 +103,7 @@ void rpg_victory_robot(void) {
         strcpy(rpg_text_enemy_0, "ロボ「ガギグ・・・ッ");
         rpg_message_show(rpg_text_enemy_pointers, 1, 0x5A);
         rpg_effects_select_asset_set(4);
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_se_play_latched_5xx(0x510, 1, 0);
         rpg_enemy_step_next();
         break;
@@ -249,7 +249,7 @@ void rpg_enemy_robot_attack(void) {
         rpg_enemy_wait_step(0x14);
         break;
     case 12:
-        if (rpg_player_action & 0x1000) {
+        if (rpg_player_action & RPG_PLAYER_DOWN) {
             rpg_player_action = rpg_player_action & ~0x1000;
             rpg_player_ready_timer = 0xFFFF;
         }
@@ -295,7 +295,7 @@ void rpg_robot_attack_1_motion(void) {
     case 5:
         rpg_actor_set_position(0x3A, rpg_enemy_timer_b + 0x70, 0x48);
         rpg_enemy_timer_b += 8;
-        if ((rpg_enemy_timer_b >= 0x91) && (!(rpg_player_action & 0x100))) {
+        if ((rpg_enemy_timer_b >= 0x91) && (!(rpg_player_action & RPG_PLAYER_GUARD))) {
             rpg_actor_set_animation(0x30, 0xA, 1, 1);
         }
         if (rpg_enemy_timer_b >= 0x129) {
@@ -445,7 +445,7 @@ s32 rpg_robot_attack_2_motion(void) {
         /* FAKE: p[50] walks the slot table rpg_enemy_slot through its first symbol (element 50 on); the aggregate is not recovered yet. T-17114 */
         p = &rpg_enemy_slot;
         for (i = 0; i != 0xC; i++, p++) {
-            if (p[50] == 3 && !(rpg_player_action & 0x100)) {
+            if (p[50] == 3 && !(rpg_player_action & RPG_PLAYER_GUARD)) {
                 rpg_actor_set_animation(0x30, 5, 1, 1);
             }
             if (rpg_enemy_timer_b < 0x78 && rpg_result_line_count >= 3 && p[50] == 0 && rpg_rand(5) == 0) {
@@ -543,7 +543,7 @@ s32 rpg_robot_attack_3_motion(void) {
         return;
     case 4:
         rpg_actor_set_animation(0x3A, 0x11, 5, 1);
-        if (!(rpg_player_action & 0x100)) {
+        if (!(rpg_player_action & RPG_PLAYER_GUARD)) {
             rpg_actor_set_animation(0x30, 0xA, 1, 1);
         }
         rpg_se_play_latched_5xx(0x50B, 1, 0);

@@ -32,8 +32,8 @@ void rpg_enemy_alien_attack_1(void) {
     s32 sp38;
 
     if (rpg_enemy_step < 0x50) {
-        if (rpg_player_action == 0x02000000) {
-            rpg_player_action = 0x100;
+        if (rpg_player_action == RPG_COMMAND_GUARD) {
+            rpg_player_action = RPG_PLAYER_GUARD;
         }
         rpg_player_pose_idle();
     }
@@ -41,7 +41,7 @@ void rpg_enemy_alien_attack_1(void) {
     case 0x0:
         strcpy(rpg_text_enemy_0, "宇宙人「ЮΩ▽☆§◎");
         rpg_message_show((s32) rpg_text_enemy_pointers, 1, 0x3C);
-        rpg_player_action |= 0x1000;
+        rpg_player_action |= RPG_PLAYER_DOWN;
         rpg_se_play_latched_5xx(0x514, 1, 0);
         rpg_enemy_step_next();
         return;
@@ -74,7 +74,7 @@ void rpg_enemy_alien_attack_1(void) {
     case 0x50:
         rpg_actor_set_position(0x28, 0x110, 0x58);
         rpg_actor_set_animation_alt(0x28, 5, 5, 1);
-        if (rpg_player_action != 0x100) {
+        if (rpg_player_action != RPG_PLAYER_GUARD) {
             rpg_actor_set_animation(0x30, 5, 1, 1);
         }
         rpg_se_play_latched_5xx(0x508, 1, 0);
@@ -96,7 +96,7 @@ void rpg_enemy_alien_attack_1(void) {
     case 0x53:
         rpg_apply_damage(0, 0x21, rpg_damage, 1);
         if (rpg_player_hit_points == 1) {
-            rpg_player_action = 0x1000;
+            rpg_player_action = RPG_PLAYER_DOWN;
             rpg_enemy_action &= 0xFFFF0000;
             rpg_enemy_action |= 3;
             rpg_enemy_step = 0;
@@ -123,8 +123,8 @@ void rpg_enemy_alien_attack_2(void) {
     s32 sp34;
 
     if (rpg_enemy_step < 0x50) {
-        if (rpg_player_action == 0x02000000) {
-            rpg_player_action = 0x100;
+        if (rpg_player_action == RPG_COMMAND_GUARD) {
+            rpg_player_action = RPG_PLAYER_GUARD;
         }
         rpg_player_pose_idle();
     }
@@ -135,7 +135,7 @@ void rpg_enemy_alien_attack_2(void) {
     case 0x0:
         strcpy(rpg_text_enemy_0, "宇宙人「ЛΦΘζ□Э℃¢Λ");
         rpg_message_show((s32) rpg_text_enemy_pointers, 1, 0x3C);
-        rpg_player_action |= 0x1000;
+        rpg_player_action |= RPG_PLAYER_DOWN;
         rpg_se_play_latched_5xx(0x513, 1, 0);
         rpg_enemy_step_next();
         break;
@@ -166,7 +166,7 @@ void rpg_enemy_alien_attack_2(void) {
     case 0x6:
         rpg_actor_set_animation(0x28, 4, 1, 1);
         rpg_scratch = rpg_rand(4) + 3;
-        if (rpg_player_action != 0x100) {
+        if (rpg_player_action != RPG_PLAYER_GUARD) {
             rpg_actor_set_animation(0x30, 5, 1, 1);
         }
         sp34 = rpg_rand(0x10);
@@ -203,7 +203,7 @@ void rpg_enemy_alien_attack_2(void) {
     case 0x52:
         rpg_apply_damage(0, 0x21, rpg_damage, 1);
         if (rpg_player_hit_points == 1) {
-            rpg_player_action = 0x1000;
+            rpg_player_action = RPG_PLAYER_DOWN;
             rpg_enemy_action &= 0xFFFF0000;
             rpg_enemy_action |= 3;
             rpg_enemy_step = 0;

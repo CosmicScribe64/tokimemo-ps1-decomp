@@ -8,45 +8,45 @@ void culture_yuina_visit_entry(void) {
     switch (dispatch->unk_00) {
     case 0:
         if (game_state.year == 0x61) {
-            mode_stage_set(0x30);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_SPEECH_CONTEST);
             return;
         }
-        mode_stage_set(0x2F);
+        mode_stage_set(CULTURE_STAGE_YUINA_VISIT_LITERATURE_EXHIBIT);
         return;
     case 1:
-        mode_stage_set(0x31);
+        mode_stage_set(CULTURE_STAGE_YUINA_VISIT_DRAMA_PLAY);
         return;
     case 2:
-        mode_stage_set(0x32);
+        mode_stage_set(CULTURE_STAGE_YUINA_VISIT_EXPERIMENT_SHOW);
         return;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x33);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(0x35);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(0x36);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_COMPUTER_EXPERIMENT_SHOW);
             return;
         }
         break;
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x37);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_PORTRAIT_DRAWING);
             return;
         case 0x60:
-            mode_stage_set(0x38);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_OPEN_SKETCHING);
             return;
         case 0x61:
-            mode_stage_set(0x39);
+            mode_stage_set(CULTURE_STAGE_YUINA_VISIT_OIL_PAINTING_EXHIBIT);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0x3A);
+        mode_stage_set(CULTURE_STAGE_YUINA_VISIT_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

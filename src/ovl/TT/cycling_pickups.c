@@ -82,7 +82,7 @@ void tt_bell_popup_spawn(u8 *arg0) {
     u8 *p;
 
     base = tt_bells;
-    tt_se_request(0x606);
+    tt_se_request(TT_SE_POPUP);
     p = tt_bell_find_free(base, base + 0xD80);
     *(s32 *)(p + 0x20) = *(s32 *)(arg0 + 0xC);
     *(s32 *)(p + 0x24) = *(s32 *)(arg0 + 0x10);
@@ -291,7 +291,7 @@ void tt_bell_hit_by_shot(u8 *p, s16 d) {
         p[0xE] = 0;
         p[0xD] = 0;
     case 0x40:
-        tt_se_request(0x60B);
+        tt_se_request(TT_SE_PICKUP_HIT);
         if (run[0xD] >= 0x15) {
             run[0xD] = 1;
             if (++p[0x59] >= 2) {
@@ -336,7 +336,7 @@ void tt_bell_hit_by_shot(u8 *p, s16 d) {
         *(u16 *)(p + 0x50) &= 0xFFFE;
         break;
     case 0x60:
-        tt_se_request(0x60B);
+        tt_se_request(TT_SE_PICKUP_HIT);
         if (run[0xD] >= 4) {
             *(s16 *)(p + 0x54) = 0x3C86;
             *(s32 *)(p + 0x38) = tt_animation_list_bell_fall;
@@ -357,7 +357,7 @@ void tt_bell_hit_by_shot(u8 *p, s16 d) {
         }
         break;
     case 0x70:
-        tt_se_request(0x60C);
+        tt_se_request(TT_SE_ENEMY_EXPLODE);
         p[0] = 0;
         break;
     }

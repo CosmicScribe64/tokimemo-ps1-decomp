@@ -62,7 +62,7 @@ void rpg_enemy_trip_attack(void) {
         }
         break;
     case 2:
-        if (!(rpg_player_action & 0x100)) {
+        if (!(rpg_player_action & RPG_PLAYER_GUARD)) {
             rpg_actor_set_animation(0x30, 5, 1, 1);
         }
         D_80121531 = 3;

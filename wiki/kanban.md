@@ -63,9 +63,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-27077-symbol-snapshot-index|T-27077 Index immutable symbol snapshot lookups]]
-- [ ] [[tickets/T-27076-constant-batch-transaction|T-27076 Validate a constant batch transactionally]]
-- [ ] [[tickets/T-27075-essential-constant-selectors|T-27075 Close the remaining essential constant selector gaps]]
 - [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
 
 
@@ -234,6 +231,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27075-essential-constant-selectors|T-27075 Close the remaining essential constant selector gaps]]
+- [ ] [[tickets/T-27076-constant-batch-transaction|T-27076 Validate a constant batch transactionally]]
+- [ ] [[tickets/T-27077-symbol-snapshot-index|T-27077 Index immutable symbol snapshot lookups]]
 
 - [ ] [[tickets/T-27071-anonymous-fields-kr-scope|T-27071 Preserve anonymous member and K&R parameter ownership in rename proofs]]
 - [ ] [[tickets/T-27073-constant-family-provenance|T-27073 Preserve constant provenance across independent macro families]]

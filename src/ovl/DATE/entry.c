@@ -689,12 +689,12 @@ void date_init(void) {
     D_800CA2F8 = game_state.appointment_place_0;
     *(u32 *)&D_80122CD4 = game_state.date_girl;
     talk_group = 0;
-    date_arrival = 1;
+    date_arrival = DATE_ARRIVAL_DIRECT_GREETING;
     if (!(game_state.frame_count & 3) && (game_state.date_girl != GIRL_YUINA)) {
-        date_arrival = 0;
+        date_arrival = DATE_ARRIVAL_WAIT_GREETING;
     }
     date_player_waited = 0;
-    date_meeting_group = 0;
+    date_meeting_group = DATE_MEETING_ASK_TWO;
     date_meeting_line = 0;
     D_800CA364 = 0;
     game_state.current_girl = game_state.date_girl;

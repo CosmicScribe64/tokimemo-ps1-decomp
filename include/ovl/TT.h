@@ -833,5 +833,47 @@ typedef struct TtSpriteAnimation {
 #define OVL_TT_T24086_8014D260
 /* PsyQ LIBGTE ratan_tbl (1025 s16 entries) indexed by func_8014D260 (ratan2). T-24086 */
 extern s16 D_80159B20[];
+/* Direct source commands passed unchanged by tt_se_request. Positive legacy request; no metadata replay. */
+enum TtSoundCommand {
+    TT_SE_BOSS_EXPLOSION = 0x501, /* Boss death explosion phase; audio_command wrapper forwards exact id */
+    TT_SE_BOSS_FORM_CHANGE = 0x502, /* Boss form change at stage 4 form transition */
+    TT_SE_BOSS_HIT_B = 0x503, /* Boss hit variant used by stages 2 and 4 */
+    TT_SE_BOSS_FINAL_BLOW = 0x504, /* Stage 1 boss final blow */
+    TT_SE_PART_BROKEN = 0x505, /* Boss part destroyed */
+    TT_SE_SHOT_BLOCKED = 0x506, /* Player shot hits invulnerable boss part */
+    TT_SE_BOSS_DAMAGE = 0x507, /* Shot damages boss */
+    TT_SE_BOSS_HIT_A = 0x508, /* Boss hit variant used by stages 1 and 3 */
+    TT_SE_SHOT_CANCEL = 0x509, /* Player shot cancels enemy shot */
+    TT_SE_BOSS_PART_BREAK = 0x50A, /* Boss part break sequence step */
+    TT_SE_BOSS_ATTACK_A = 0x50B, /* Boss attack sound call */
+    TT_SE_SPEED_UP = 0x602, /* Pickup effect paired with speed-up state update; generic pickup wording avoids unverified pickup identity */
+    TT_SE_SPEED_DOWN = 0x603, /* Pickup effect paired with speed-down state update; generic pickup wording avoids unverified pickup identity */
+    TT_SE_FOLLOWER_PICKUP = 0x604, /* Pickup changes follower-ship count/state; avoids the hypothesized series term. */
+    TT_SE_SHOT_LEVEL_PICKUP = 0x605, /* Pickup assigns the capped shot level; a preexisting level above nine can decrease to nine. */
+    TT_SE_POPUP = 0x606, /* Popup appears */
+    TT_SE_CODE_OR_HIT = 0x607, /* Shared effect used when title code is accepted and when player is hit; deliberately describes shared role */
+    TT_SE_SHOT_FIRE = 0x608, /* Player shot fired */
+    TT_SE_BOMB_THROW = 0x609, /* Bomb thrown */
+    TT_SE_PICKUP_COLLECT = 0x60A, /* Pickup collection sound; source calls are in pickup collection flow; avoids hypothesized bell name */
+    TT_SE_PICKUP_HIT = 0x60B, /* Pickup hit by shot; source calls are in pickup collision flow; avoids hypothesized bell name */
+    TT_SE_ENEMY_EXPLODE = 0x60C, /* Air enemy destroyed */
+    TT_SE_GROUND_EXPLODE = 0x60D, /* Ground target destroyed */
+    TT_SE_PLAYER_SPAWN = 0x60E, /* Player appears */
+    TT_SE_SMART_BOMB = 0x60F, /* Smart bomb item effect */
+    TT_SE_PLAYER_DEATH = 0x610, /* Player destroyed */
+    TT_SE_SPEED_GAUGE = 0x611, /* Speed gauge step changed */
+    TT_SE_MENU_SELECT = 0x612, /* Title menu choice */
+    TT_SE_CURSOR = 0x613, /* Title cursor move */
+    TT_SE_LOGO = 0x614, /* Title logo lands */
+    TT_SE_LETTER = 0x615, /* Name entry letter change */
+    TT_SE_NAME_CONFIRM = 0x616, /* Name entry confirmation */
+    TT_SE_NAME_MOVE = 0x617, /* Name entry move or erase */
+    TT_SE_BOSS3_RING = 0x618, /* Stage 3 boss homing ring */
+    TT_SE_CHEAT = 0x70A, /* Pause code accepted before boss fight */
+    TT_SE_PAUSE = 0x600, /* Pause menu opened */
+    TT_SE_TITLE_SHIP = 0x601, /* Title ship animation */
+    TT_SE_CHEAT_BOSS = 0x80A /* Pause code accepted during boss fight */
+};
+
 #endif
 

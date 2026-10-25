@@ -632,4 +632,56 @@ void rpg_no_club_step_6(void);
 void rpg_no_club_step_4(void);
 #endif
 
+/* Selected positive int literals bound by exact private RPG_BAT header and global site. No metadata replay. */
+#define RPG_PLAYER_ATTACK 1 /* Player action low-byte case; player_commands_and_club_moves.c:rpg_player_update cases 0x1 and assignments. */
+#define RPG_PLAYER_SPECIAL 2 /* Player action low-byte case; player_commands_and_club_moves.c:rpg_player_update case 0x2 and assignments. */
+#define RPG_PLAYER_GUARD 0x100 /* Guard action flag; player_commands_and_club_moves.c:rpg_player_update case and assignments. */
+#define RPG_PLAYER_GUARD_RECOVER 0x104 /* Guard recovery action state; player_commands_and_club_moves.c:rpg_player_update case. */
+#define RPG_PLAYER_DOWN 0x1000 /* Down action flag, set/cleared in enemy action routines; proposal associates it with player action state. */
+#define RPG_PLAYER_READY 0x10000 /* Ready flag written by player_commands_and_club_moves.c:rpg_player_update after readiness delay. */
+#define RPG_COMMAND_ATTACK 0x1000000 /* Top-byte menu request consumed in player_commands_and_club_moves.c:rpg_player_update. */
+#define RPG_COMMAND_GUARD 0x2000000 /* Top-byte menu request consumed in player_commands_and_club_moves.c:rpg_player_update. */
+#define RPG_COMMAND_SPECIAL 0x4000000 /* Top-byte menu request consumed in player_commands_and_club_moves.c:rpg_player_update. */
+
+/* Selected positive int literals bound by exact private RPG_BAT header and global site. No metadata replay. */
+enum RpgResult {
+    RPG_RESULT_GOOD = 0, /* Zero selects DATE's reward branch and SHUGAKU's alternate trip reward; RPG_BAT writes zero on standing-player paths. */
+    RPG_RESULT_BAD = 1 /* One selects DATE stress branch and SHUGAKU alternate result branch; set on delinquent/boss defeat and alien retreat. */
+};
+
+/* Partner HP constants at actual direct scalar sites only; not an invincibility claim. No metadata replay. */
+#define RPG_GIRL_HIT_POINTS_SHIORI 256 /* Initial partner HP for GIRL_SHIORI (id 0). */
+#define RPG_GIRL_HIT_POINTS_MIO 99 /* Initial partner HP for GIRL_MIO (id 1). */
+#define RPG_GIRL_HIT_POINTS_YUINA 312 /* Initial partner HP for GIRL_YUINA (id 2). */
+#define RPG_GIRL_HIT_POINTS_AYAKO 304 /* Initial partner HP for GIRL_AYAKO (id 3). */
+#define RPG_GIRL_HIT_POINTS_SAKI 189 /* Initial partner HP for GIRL_SAKI (id 4). */
+#define RPG_GIRL_HIT_POINTS_YUKARI 298 /* Initial partner HP for GIRL_YUKARI (id 5). */
+#define RPG_GIRL_HIT_POINTS_NOZOMI 1878 /* Initial partner HP for GIRL_NOZOMI (id 6). */
+#define RPG_GIRL_HIT_POINTS_MIRA 277 /* Initial partner HP for GIRL_MIRA (id 7). */
+#define RPG_GIRL_HIT_POINTS_YUKO 365 /* Initial partner HP for GIRL_YUKO (id 8). */
+#define RPG_GIRL_HIT_POINTS_MEGUMI 173 /* Initial partner HP for GIRL_MEGUMI (id 9). */
+#define RPG_GIRL_HIT_POINTS_YUMI 265 /* Initial partner HP for GIRL_YUMI (id 10). */
+#define RPG_GIRL_HIT_POINTS_YOSHIO 573 /* Initial partner HP for GIRL_YOSHIO (id 13). */
+#define RPG_PARTNER_HIT_POINTS_SENTINEL 2147483647 /* Initial partner HP sentinel for id 14; hides the partner HP display. */
+
+/* Enemy HP initialization values; exact selected sites recorded by preflight. No metadata replay. */
+#define RPG_ENEMY_HIT_POINTS_ROBOT 5000 /* Initial robot enemy HP. */
+#define RPG_ENEMY_HIT_POINTS_SENTINEL 2147483647 /* Initial alien enemy HP sentinel. */
+#define RPG_ENEMY_HIT_POINTS_DELINQUENT 65536 /* Initial shared enemy HP for the delinquent encounter. */
+
+/* Boss-event vs standard delinquent pool HP; scalar/gauge aliases retained. No metadata replay. */
+#define RPG_DELINQUENT_HIT_POINTS_BOSS_EVENT 5000 /* Initial delinquent pool HP when the boss event is active. */
+#define RPG_DELINQUENT_HIT_POINTS_STANDARD 9999 /* Initial delinquent pool HP otherwise. */
+
+/* Initializer damage-scale values, applied over a 1000 denominator. No metadata replay. */
+#define RPG_ENEMY_DAMAGE_SCALE_BASE 1000 /* 1000-denominator damage scale used for aliens and boss-event delinquents. */
+#define RPG_ENEMY_DAMAGE_SCALE_STANDARD_DELINQUENT 1500 /* Initial enemy damage scale for the standard delinquent path (1500/1000 basis). */
+
+/* Selected positive damage cap/critical literals; unchanged damage storage widths. No metadata replay. */
+#define RPG_DAMAGE_MAXIMUM 9999 /* Maximum damage including forced critical rolls. */
+#define RPG_DAMAGE_CLAMP_LIMIT 10000 /* Damage at or above this limit is clamped to the maximum. */
+
+/* T-27075 group 6: RPG_BAT/player_attack_guard.c:21 waits 151 frames before the guard-recovery action. */
+#define RPG_GUARD_RECOVERY_FRAMES 151 /* Guard recovery wait before the no-action healing branch. */
+
 #endif

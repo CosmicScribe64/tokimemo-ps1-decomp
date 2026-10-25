@@ -29,7 +29,7 @@ void shooter_boss1_step_init(void) {
     s32 i;
 
     if (shooter_load_request == 0) {
-        shooter_load_request = 0x20;
+        shooter_load_request = SHOOTER_LOAD_STAGE2;
         shooter_load_texture_page(0x80162000, 0xE);
         shooter_load_texture_page(0x80172000, 0xC);
         shooter_boss1_set_lights();

@@ -428,7 +428,7 @@ s32 shooter_fire_secondary_homing(s32 arg0, s32 arg1) {
             return -1;
         }
         if (arg0 == 0) {
-            shooter_play_se(1, 0x503);
+            shooter_play_se(1, SHOOTER_SE_FIRE_SECONDARY);
         }
         rec->flags = 0x91;
         rec->x = actor->x;

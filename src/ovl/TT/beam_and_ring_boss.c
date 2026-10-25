@@ -35,7 +35,7 @@ void tt_boss4_collision(void) {
         boss[i * 0x14 + 0x42] = 0;
     }
     if (boss[0x342] == 0 && tt_boss_check_hits() != 0) {
-        tt_se_request(0x503);
+        tt_se_request(TT_SE_BOSS_HIT_B);
     }
     for (i = 0x10; i < 0x13; i++) {
         if (boss[i + 0x310] != 0) {
@@ -336,7 +336,7 @@ void tt_boss4_form_change(void) {
     case 0x40:
         v = *(s16 *)(tt_boss + 0x28E);
         if (v >= -0x30) {
-            tt_se_request(0x502);
+            tt_se_request(TT_SE_BOSS_FORM_CHANGE);
             *(s16 *)(boss + 0x28E) = -0x30;
             *(s16 *)(boss + 0x290) = -0x30;
             *(s16 *)(boss + 6) = 0x50;
@@ -374,7 +374,7 @@ void tt_boss4_death_sequence(void) {
     boss = tt_boss;
     switch (k) {
     case 0:
-        tt_se_request(0x501);
+        tt_se_request(TT_SE_BOSS_EXPLOSION);
         *(u16 *)(boss + 0x364) = 0;
         *(u16 *)(boss + 0x3D4) = 0;
         for (i = 3; i < 9; i++) {
@@ -418,7 +418,7 @@ void tt_boss4_death_sequence(void) {
         t = tt_boss4_death_timeline;
         e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            tt_se_request(0x501);
+            tt_se_request(TT_SE_BOSS_EXPLOSION);
             j = t[*(u16 *)(boss + 0x3D4) + 4];
             boss[j + 0x310] = 1;
             boss[j * 0x14 + 0x40] = 0x80;
@@ -610,7 +610,7 @@ void tt_boss4_form0_step2_drone_rings(void) {
         }
         break;
     case 0x80:
-        tt_se_request(0x50A);
+        tt_se_request(TT_SE_BOSS_PART_BREAK);
         boss[0x343] = 1;
         for (i = 0x10; i < 0x13; i++) {
             ((TtPartAnimation *)(boss + 0x38))[i].set = 4;
@@ -698,7 +698,7 @@ void tt_boss4_form1_step0_beams(void) {
                 tt_enemy_shot_fire_angle(boss->x, boss->y + 8, 0x30, ((boss->phase_timer & 0x7F) << 6) - 0x400, 0xA1);
             }
         } else if ((boss->phase_timer & 0x3F) == 0x3F) {
-            tt_se_request(0x50B);
+            tt_se_request(TT_SE_BOSS_ATTACK_A);
             point.x = boss->x << 16;
             point.y = (boss->y + 8) << 16;
             angle = tt_angle_between((s32) &point, (s32) (player + 0x14));
@@ -788,7 +788,7 @@ void tt_boss4_form1_step2_body_throw(void) {
         *(u16 *)(boss + 0x368) += 1;
         return;
     case 0x51:
-        tt_se_request(0x60C);
+        tt_se_request(TT_SE_ENEMY_EXPLODE);
         if (*(u16 *)(sys + 8) & 3) {
             boss[0x327] = 1;
         } else {

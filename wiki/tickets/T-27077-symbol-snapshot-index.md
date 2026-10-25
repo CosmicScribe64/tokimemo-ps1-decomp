@@ -1,7 +1,7 @@
 ---
 id: T-27077
 title: Index immutable symbol snapshot lookups
-status: In Progress
+status: Done
 assignee: symbol-index
 created: 2026-10-24
 updated: 2026-10-24
@@ -20,7 +20,7 @@ mandatory naming guard practical for the remaining integration and final reviews
 - [x] Returned lists remain fresh; caches belong only to an instance, and a rebuilt snapshot observes file changes.
 - [x] Relevant synthetic tests and real-table equivalence/benchmark pass in Docker.
 - [x] Independent review approves the exact patch; integrate only after frozen producer runs no longer require the original tool hash.
-- [ ] Actual source guard passes with unchanged source/config behavior before Done.
+- [x] Actual source guard passes with unchanged source/config behavior before Done.
 
 ## Notes
 
@@ -38,4 +38,8 @@ owners using one old scan per owner before independent address grouping. A
 Root integrated the exact independently approved patch after the 370-site transaction
 completed. The combined selector/cache/rename/symbol suite passes 144 tests; result
 hashes are recorded in ignored T-27075/integrated-tools-proof.json. The final live
-source guard and matching proof follow the remaining 31-site gameplay packet.
+source guard passes12984 rows, and the completed725-site wave matches all27 binaries.
+
+## Verified completion
+
+Independent actual-source review passes; the combined725-site source proof has437 exact ABI views and no unexpected paths. Clean Docker configure/build/progress and every guard pass, independent binaries27/27,6952functions,2276920bytes; naming guard12984 rows. Evidence: ignored next-integration/constant-wave/{source-proof,clean-proof}.json and actual-source-review.md. This closes the bounded ticket, not all of phase2.

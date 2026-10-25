@@ -1,0 +1,9 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+const RPG_BAT defines include/ovl/RPG_BAT.h - Selected positive int literals bound by exact private RPG_BAT header and global site. No metadata replay.
+const RPG_BAT RpgResult include/ovl/RPG_BAT.h - Selected positive int literals bound by exact private RPG_BAT header and global site. No metadata replay.
+const RPG_BAT defines include/ovl/RPG_BAT.h - Partner HP constants at actual direct scalar sites only; not an invincibility claim. No metadata replay.
+const RPG_BAT defines include/ovl/RPG_BAT.h - Enemy HP initialization values; exact selected sites recorded by preflight. No metadata replay.
+const RPG_BAT defines include/ovl/RPG_BAT.h - Boss-event vs standard delinquent pool HP; scalar/gauge aliases retained. No metadata replay.
+const RPG_BAT defines include/ovl/RPG_BAT.h - Initializer damage-scale values, applied over a 1000 denominator. No metadata replay.
+const RPG_BAT defines include/ovl/RPG_BAT.h - Selected positive damage cap/critical literals; unchanged damage storage widths. No metadata replay.

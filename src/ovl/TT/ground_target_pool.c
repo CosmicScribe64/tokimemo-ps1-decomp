@@ -191,7 +191,7 @@ void tt_ground_targets_update(void) {
             }
             break;
         case 0x70:
-            tt_se_request(0x60D);
+            tt_se_request(TT_SE_GROUND_EXPLODE);
             core[0x25]++;
             if (core[0x24] != 0 && (core[0x25] & 1)) {
                 if (core[0x25] & 2) {

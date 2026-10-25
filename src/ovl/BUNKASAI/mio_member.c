@@ -10,13 +10,13 @@ void culture_mio_member_entry(void) {
     switch (selector) {
     case 0:
         if (game_state.year == 0x61) {
-            mode_stage_set(0x2C);
+            mode_stage_set(CULTURE_STAGE_MIO_MEMBER_SPEECH_CONTEST);
             return;
         }
-        mode_stage_set(0x2B);
+        mode_stage_set(CULTURE_STAGE_MIO_MEMBER_LITERATURE_EXHIBIT);
         return;
     case 1:
-        mode_stage_set(0x2D);
+        mode_stage_set(CULTURE_STAGE_MIO_MEMBER_DRAMA_PLAY);
         return;
     default:
         game_mode_reset_to_title();

@@ -18,8 +18,8 @@ void rpg_player_guard(void) {
     switch (rpg_player_action_words[1]) {
     case 0:
         if (!(rpg_enemy_action & 0xFF) && !(rpg_girl_action & 0xFF)) {
-            if (rpg_player_timer >= 0x97) {
-                rpg_player_action = 0x104;
+            if (rpg_player_timer >= RPG_GUARD_RECOVERY_FRAMES) {
+                rpg_player_action = RPG_PLAYER_GUARD_RECOVER;
                 /* FAKE: rpg_player_hit_points_maximum read through rpg_player_action so that as1 keeps the load after the store; the
                  * original probably had one aggregate over these words. T-16210 */
                 rpg_player_guard_heal = (&rpg_player_action)[2] / 20;
@@ -99,7 +99,7 @@ void rpg_player_attack(void) {
             rpg_scratch = 4;
         } else if (rpg_damage < 0x514) {
             rpg_scratch = 5;
-        } else if (rpg_damage == 0x270F) {
+        } else if (rpg_damage == RPG_DAMAGE_MAXIMUM) {
             rpg_scratch = 0xA;
         } else {
             rpg_scratch = 6;

@@ -50,7 +50,7 @@ void shooter_game_end_step_init(void) {
          * constants); GameState fields unk_036..unk_038. T-19030 */
         (&game_state.clear_color_r)[0] = (&game_state.clear_color_r)[1] = (&game_state.clear_color_r)[2] = 0x10;
         shooter_background_flags = 0;
-        shooter_load_request = 0x44;
+        shooter_load_request = SHOOTER_LOAD_SOUND_BANK_RESULT;
         audio_bgm_play_short(0, 0x202);
         mode_step_next();
     }

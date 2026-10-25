@@ -959,4 +959,33 @@ s32 new_year_scene_particle_effect_update(void);
 s32 new_year_scene_quad_effect_update(void);
 #endif
 
+/* T-27066: new_year_mode_handler dispatches mode_stage cases 0-6 to distinct callbacks and resets title on other values; seasonal_mode_stage_dispatch.c:53-80. */
+enum NewYearPrimaryModeStage {
+    NEW_YEAR_PRIMARY_MODE_STAGE_0 = 0,
+    NEW_YEAR_PRIMARY_MODE_STAGE_1 = 1,
+    NEW_YEAR_PRIMARY_MODE_STAGE_2 = 2,
+    NEW_YEAR_PRIMARY_MODE_STAGE_3 = 3,
+    NEW_YEAR_PRIMARY_MODE_STAGE_4 = 4,
+    NEW_YEAR_PRIMARY_MODE_STAGE_5 = 5,
+    NEW_YEAR_PRIMARY_MODE_STAGE_6 = 6
+};
+
+/* T-27066: the 0x8013D180 dispatcher routes mode_stage cases 0-8 to distinct handlers and resets title on other values; seasonal_scene_dispatch.c:289-317. */
+enum NewYearSecondaryModeStage {
+    NEW_YEAR_SECONDARY_MODE_STAGE_0 = 0,
+    NEW_YEAR_SECONDARY_MODE_STAGE_1 = 1,
+    NEW_YEAR_SECONDARY_MODE_STAGE_2 = 2,
+    NEW_YEAR_SECONDARY_MODE_STAGE_3 = 3,
+    NEW_YEAR_SECONDARY_MODE_STAGE_4 = 4,
+    NEW_YEAR_SECONDARY_MODE_STAGE_5 = 5,
+    NEW_YEAR_SECONDARY_MODE_STAGE_6 = 6,
+    NEW_YEAR_SECONDARY_MODE_STAGE_7 = 7,
+    NEW_YEAR_SECONDARY_MODE_STAGE_8 = 8
+};
+
+/* T-27066: new_year_birthday_gate writes done bits 1 for the Shiori birthday branch, 4 for matching player birthday with low status, and 8 for the other status branch; scene_resource_tables.c:228,235,238. */
+#define NEW_YEAR_GIRL_BIRTHDAY_DONE_BIT 1
+#define NEW_YEAR_PLAYER_BIRTHDAY_LOW_STATUS_BIT 4
+#define NEW_YEAR_PLAYER_BIRTHDAY_OTHER_STATUS_BIT 8
+
 #endif /* OVL_SHOUGATU_H */

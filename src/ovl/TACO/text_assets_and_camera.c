@@ -249,54 +249,54 @@ void shooter_process_load_request(void) {
     switch (shooter_load_request) {
     case 0: /* empty case of its own: the jump table starts at 0 and its entry 0 is not the default */
         break;
-    case 0x10:
+    case SHOOTER_LOAD_GAME_START_BANKS:
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB69B);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB6BB);
         cd_read_sectors_nowait(8, 0x80182000, 0xB47E);
         shooter_load_request += 1;
         break;
-    case 0x14:
+    case SHOOTER_LOAD_SOUND_BANK_STAGE1:
         audio_bank_load_start(0, 0xBF43, 0xBF26, 0xD310, 0xD2C2, 0xD29D);
         shooter_load_request += 1;
         break;
-    case 0x18:
+    case SHOOTER_LOAD_BOSS1:
         cd_read_sectors_nowait(0x12, 0x8018D000, 0xB438);
         cd_read_sectors(0xC, 0x801E0000, 0xB44A);
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB418);
         shooter_load_request += 1;
         break;
-    case 0x20:
+    case SHOOTER_LOAD_STAGE2:
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB647);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB5A0);
         shooter_load_request += 1;
         break;
-    case 0x24:
+    case SHOOTER_LOAD_SOUND_BANK_STAGE2:
         audio_bank_load_start(0, 0xBF61, 0xBF45, 0xD310, 0xD2C2, 0xD29D);
         shooter_load_request += 1;
         break;
-    case 0x28:
+    case SHOOTER_LOAD_BOSS2:
         cd_read_sectors_nowait(7, 0x80196000, 0xB45B);
         cd_read_sectors(5, 0x801E0000, 0xB462);
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB535);
         shooter_load_request += 1;
         break;
-    case 0x30:
+    case SHOOTER_LOAD_STAGE3:
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB67B);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB5C1);
         shooter_load_request += 1;
         break;
-    case 0x34:
+    case SHOOTER_LOAD_SOUND_BANK_STAGE3:
         audio_bank_load_start(0, 0xBF77, 0xBF63, 0xD310, 0xD2C2, 0xD29D);
         shooter_load_request += 1;
         break;
-    case 0x38:
+    case SHOOTER_LOAD_BOSS3:
         cd_read_sectors_nowait(0xA, 0x801A7000, 0xB515);
         cd_read_sectors(0x15, 0x801E0000, 0xB51F);
         cd_read_sectors_nowait(0x20, 0x80162000, 0xB5FC);
         cd_read_sectors_nowait(0x20, 0x80172000, 0xB61D);
         shooter_load_request += 1;
         break;
-    case 0x44:
+    case SHOOTER_LOAD_SOUND_BANK_RESULT:
         audio_bank_load_start(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
         shooter_load_request += 1;
         break;

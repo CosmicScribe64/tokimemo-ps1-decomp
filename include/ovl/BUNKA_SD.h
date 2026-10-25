@@ -210,4 +210,7 @@ extern u8 *D_8013D9AC;
 extern u8 *D_8013D9B0;
 extern s32 D_8013D9B4;
 
+/* T-27066: stage_show_computer_show_animation_tick increments local t and advances when it reaches 0x818; computer_show.c:90-100. */
+#define STAGE_SHOW_COMPUTER_ANIMATION_END_TICK 0x818
+
 #endif /* OVL_BUNKA_SD_H */

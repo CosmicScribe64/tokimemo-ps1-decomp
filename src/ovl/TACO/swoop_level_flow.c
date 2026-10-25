@@ -24,7 +24,7 @@ void shooter_stage_stage1(void) {
 }
 
 void shooter_stage1_step_init(void) {
-    shooter_load_request = 0x14;
+    shooter_load_request = SHOOTER_LOAD_SOUND_BANK_STAGE1;
     shooter_sound_bank_wait_state = 0;
     shooter_background_flags = 0x80;
     shooter_reset_enemies();
@@ -46,7 +46,7 @@ void shooter_stage1_step_run(void) {
 
 void shooter_stage1_step_end(void) {
     if (shooter_load_request == 0) {
-        shooter_load_request = 0x18;
+        shooter_load_request = SHOOTER_LOAD_BOSS1;
         audio_bgm_play_short(1, 0x200);
         mode_stage_set(0xC);
     }

@@ -936,6 +936,9 @@ extern TkS16x4 D_8014A318; /* sports_schoolyard_finish_order_update */
 extern TaiShorts12x D_8014A5C4; /* sports_controller_c_actor_display_init */
 extern TaiShorts12x D_8014A5DC; /* sports_controller_c_actor_display_init */
 extern TkS16x4 D_8014A5F4; /* sports_controller_c_finish_order_update */
+/* T-27066: folk-dance participant syoushin at or above 0x4C takes the high-rank branch at both observed checks in folk_dance_scene.c:223,284. */
+#define SPORTS_FOLK_DANCE_HIGH_SYOUSHIN_RANK_LIMIT 0x4C
+
 #endif
 
 /* Result of sports_nozomi_courtyard_scene_step: set to 1 by its last state. T-16550. */

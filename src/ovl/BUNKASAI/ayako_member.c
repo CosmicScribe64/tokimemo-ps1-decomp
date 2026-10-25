@@ -17,18 +17,18 @@ void culture_ayako_member_entry(void) {
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x51);
+            mode_stage_set(CULTURE_STAGE_AYAKO_MEMBER_PORTRAIT_DRAWING);
             return;
         case 0x60:
-            mode_stage_set(0x52);
+            mode_stage_set(CULTURE_STAGE_AYAKO_MEMBER_OPEN_SKETCHING);
             return;
         case 0x61:
-            mode_stage_set(0x53);
+            mode_stage_set(CULTURE_STAGE_AYAKO_MEMBER_OIL_PAINTING_EXHIBIT);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0x54);
+        mode_stage_set(CULTURE_STAGE_AYAKO_MEMBER_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

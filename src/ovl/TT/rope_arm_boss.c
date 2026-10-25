@@ -77,7 +77,7 @@ void tt_boss1_side_parts_shot_damage(void) {
                             tt_enemy_shot_fire_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x20, 0xA0);
                         }
                     }
-                    tt_se_request(0x507);
+                    tt_se_request(TT_SE_BOSS_DAMAGE);
                     if (boss[i + 0x353] != 0) {
                         if (j >= 6) {
                             *(s16 *)(boss + i * 2 + 0x2D8) -= 1;
@@ -87,7 +87,7 @@ void tt_boss1_side_parts_shot_damage(void) {
                             *(s16 *)(boss + i * 2 + 0x2D8) -= 2;
                         }
                         if (*(s16 *)(boss + i * 2 + 0x2D8) < 0) {
-                            tt_se_request(0x505);
+                            tt_se_request(TT_SE_PART_BROKEN);
                             boss[i + 0x353] = 0;
                             (boss + i * 0x14)[0x69] = 0;
                         }
@@ -135,7 +135,7 @@ void tt_boss1_core_shot_damage(void) {
                         }
                     }
                 }
-                tt_se_request(0x507);
+                tt_se_request(TT_SE_BOSS_DAMAGE);
                 if (i >= 6) {
                     *(s16 *)(boss + 0x30C) -= 1;
                 } else if (*(u16 *)(shot + 2) == 9) {
@@ -144,7 +144,7 @@ void tt_boss1_core_shot_damage(void) {
                     *(s16 *)(boss + 0x30C) -= 2;
                 }
             } else {
-                tt_se_request(0x506);
+                tt_se_request(TT_SE_SHOT_BLOCKED);
             }
             boss[0xBA] = 1;
             *(u16 *)(shot + 4) = 0x80;
@@ -174,7 +174,7 @@ void tt_boss1_collision(void) {
         }
         if (boss[0x342] == 0) {
             if (tt_boss_check_hits() != 0) {
-                tt_se_request(0x508);
+                tt_se_request(TT_SE_BOSS_HIT_A);
                 for (i = 0, p = tt_sprites + 0xFA0; i < 7; i++) {
                     p -= 0x64;
                     *(s16 *)(p + 0xA6) = 0x3CDF;
@@ -556,7 +556,7 @@ void tt_boss1_rope_break(void) {
         tt_boss_part_animation_step(tt_boss1_break_script, 3);
         if ((*(u16 *)(boss + 0x36C) & 7) == 7) {
             if (*(u16 *)(boss + 0x3D4) < 0xF) {
-                tt_se_request(0x50A);
+                tt_se_request(TT_SE_BOSS_PART_BREAK);
                 ((TtPartAnimation *)(boss + 0x38))[*(u16 *)(boss + 0x3D4)].flags = 0x80;
                 boss[0x310 + *(u16 *)(boss + 0x3D4)] = 1;
                 ((TtPartAnimation *)(boss + 0xD8))[*(u16 *)(boss + 0x3D4)].flags = 0x80;
@@ -675,7 +675,7 @@ void tt_boss1_expand_ring(void) {
         t = tt_boss1_expand_timeline;
         e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            tt_se_request(0x501);
+            tt_se_request(TT_SE_BOSS_EXPLOSION);
             j = t[*(u16 *)(boss + 0x3D4) + 4];
             boss[j + 0x310] = 1;
             boss[j * 0x14 + 0x40] = 0x80;
@@ -794,7 +794,7 @@ void tt_boss1_death_sequence(void) {
         t = tt_boss1_death_timeline;
         e = tt_boss;
         if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
-            tt_se_request(0x501);
+            tt_se_request(TT_SE_BOSS_EXPLOSION);
             j = t[*(u16 *)(boss + 0x3D4) + 4];
             boss[j + 0x310] = 1;
             boss[j * 0x14 + 0x40] = 0x80;
@@ -807,7 +807,7 @@ void tt_boss1_death_sequence(void) {
         switch (m) {
         case 0:
             if (*(u16 *)(boss + 0x364) == 0x78) {
-                tt_se_request(0x505);
+                tt_se_request(TT_SE_PART_BROKEN);
                 for (i = 0; i < 5; i++) {
                     *(s32 *)(boss + 0x3E4 + i * 4) = *(s16 *)(boss + 0x27C + i * 2) << 16;
                 }
@@ -893,7 +893,7 @@ void tt_boss1_phase2_attack(void) {
         fn = tt_enemy_shot_fire_fan9_aimed;
     }
     if (*(u16 *)(tt_boss + 0x366) >= 0x30) {
-        tt_se_request(0x50B);
+        tt_se_request(TT_SE_BOSS_ATTACK_A);
         switch (*(u16 *)(boss + 0x3A4)) {
         case 0:
             if (boss[0x52] == 1) {
@@ -1081,7 +1081,7 @@ void tt_boss1_update(void) {
         tt_boss1_side_part_animation();
         tt_boss1_phase2_attack();
         if (*(s16 *)(boss + 0x30C) < 0) {
-            tt_se_request(0x504);
+            tt_se_request(TT_SE_BOSS_FINAL_BLOW);
             *(u16 *)(boss + 4) = 0x80;
             *(s16 *)(boss + 0x30E) = 3;
             boss[0xB8] = 0x80;

@@ -10,18 +10,18 @@ void culture_yuina_member_entry(void) {
     game_state.girls[2].flags.f.b2 = 1;
     switch (state->unk_00) {
     case 2:
-        mode_stage_set(0x3C);
+        mode_stage_set(CULTURE_STAGE_YUINA_MEMBER_EXPERIMENT_SHOW);
         return;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x3D);
+            mode_stage_set(CULTURE_STAGE_YUINA_MEMBER_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(0x3F);
+            mode_stage_set(CULTURE_STAGE_YUINA_MEMBER_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(0x40);
+            mode_stage_set(CULTURE_STAGE_YUINA_MEMBER_COMPUTER_EXPERIMENT_SHOW);
             return;
         }
         break;

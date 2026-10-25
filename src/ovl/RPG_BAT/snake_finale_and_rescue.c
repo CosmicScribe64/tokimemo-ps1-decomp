@@ -51,7 +51,7 @@ void rpg_enemy_snake_finale(void) {
         rpg_apply_damage(0, 0x21, rpg_player_hit_points - 3, 1);
         rpg_actor_set_animation(0x38, 0xFF, 1, 0);
         rpg_actor_set_animation(0x30, 4, 1, 1);
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_enemy_step_next();
         break;
     case 8:

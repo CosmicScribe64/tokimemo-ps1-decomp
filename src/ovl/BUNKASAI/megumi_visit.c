@@ -7,33 +7,33 @@ void culture_megumi_visit_entry(void) {
     switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         if (game_state.year == 0x60) {
-            mode_stage_set(0x92);
+            mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_LITERATURE_EXHIBIT);
             return;
         }
-        mode_stage_set(0x93);
+        mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_SPEECH_CONTEST);
         return;
     case 1:
-        mode_stage_set(0x94);
+        mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_DRAMA_PLAY);
         return;
     case 2:
-        mode_stage_set(0x95);
+        mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_EXPERIMENT_SHOW);
         return;
     case 3:
         if (game_state.year == 0x60) {
-            mode_stage_set(0x96);
+            mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_COMPUTER_GAME);
             return;
         }
-        mode_stage_set(0x95);
+        mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_EXPERIMENT_SHOW);
         return;
     case 4:
         if (game_state.year == 0x60) {
-            mode_stage_set(0x97);
+            mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_OPEN_SKETCHING);
             return;
         }
-        mode_stage_set(0x98);
+        mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_OIL_PAINTING_EXHIBIT);
         return;
     case 5:
-        mode_stage_set(0x99);
+        mode_stage_set(CULTURE_STAGE_MEGUMI_VISIT_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

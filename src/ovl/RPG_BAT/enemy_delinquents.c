@@ -582,7 +582,7 @@ void rpg_enemy_delinquent_punch(void) {
         rpg_enemy_wait_msg_step(1);
         return;
     case 4:
-        if (rpg_player_action & 0x100) {
+        if (rpg_player_action & RPG_PLAYER_GUARD) {
             rpg_actor_set_animation(0x30, 3, 1, 1);
         } else {
             rpg_actor_set_animation(0x30, 5, 1, 1);
@@ -680,8 +680,8 @@ void rpg_enemy_delinquent_punch_knockdown(void) {
         return;
     case 4:
         rpg_actor_set_animation(0x30, 4, 1, 1);
-        rpg_player_action |= 0x1000;
-        if (rpg_player_action & 0x10000) {
+        rpg_player_action |= RPG_PLAYER_DOWN;
+        if (rpg_player_action & RPG_PLAYER_READY) {
             rpg_player_ready_timer = 0;
             rpg_player_action &= ~0x10000;
             rpg_menu.unk_00 = 4;
@@ -853,7 +853,7 @@ void rpg_enemy_delinquent_punch_cover(void) {
 void rpg_enemy_player_defeated(void) {
     switch (rpg_enemy_step) {
     case 0:
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_actor_set_animation(0x30, 7, 1, 1);
         audio_bank_start(1, 0x203);
         rpg_enemy_step_next();
@@ -865,7 +865,7 @@ void rpg_enemy_player_defeated(void) {
         rpg_dialog_delinquent_defeat_taunt();
         return;
     case 3:
-        rpg_result_code = 1;
+        rpg_result_code = RPG_RESULT_BAD;
         mode_stage_next();
         return;
     }
@@ -883,7 +883,7 @@ void rpg_victory_delinquents(void) {
 
     switch (rpg_finale_channel.unk_00) {
     case 0:
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_finale_step_next();
     default:
         break;
@@ -1118,7 +1118,7 @@ void rpg_victory_delinquents(void) {
             rpg_girl_action = 0;
         }
         rpg_enemy_delay_extra = 0;
-        rpg_enemy_damage_scale = 0x3E8;
+        rpg_enemy_damage_scale = RPG_ENEMY_DAMAGE_SCALE_BASE;
         rpg_state.enemy_weight_0 = 0;
         rpg_state.enemy_weight_1 = 0;
         rpg_state.enemy_weight_2 = 0;

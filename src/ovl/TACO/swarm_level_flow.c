@@ -30,7 +30,7 @@ void shooter_stage3_step_init(void) {
     shooter_reset_enemies();
     shooter_reset_ship_state();
     shooter_clear_player_shots();
-    shooter_load_request = 0x34;
+    shooter_load_request = SHOOTER_LOAD_SOUND_BANK_STAGE3;
     shooter_sound_bank_wait_state = 0;
     audio_bgm_play_short(0, 0x200);
     mode_step_next();
@@ -51,7 +51,7 @@ void shooter_stage3_step_run(void) {
 
 void shooter_stage3_step_end(void) {
     if (shooter_load_request == 0) {
-        shooter_load_request = 0x38;
+        shooter_load_request = SHOOTER_LOAD_BOSS3;
         shooter_reset_enemies();
         audio_bgm_play_short(1, 0x200);
         mode_stage_set(0x20);

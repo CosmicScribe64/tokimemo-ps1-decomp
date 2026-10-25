@@ -130,9 +130,9 @@ void tt_pause_cheat_check(void) {
         core[0x20] = 0x10;
         if (++core[0x21] == 10) {
             if (*(u16 *)core == 2 && *(u16 *)(core + 2) >= 0x50) {
-                tt_se_request(0x80A);
+                tt_se_request(TT_SE_CHEAT_BOSS);
             } else {
-                tt_se_request(0x70A);
+                tt_se_request(TT_SE_CHEAT);
             }
             core[0x21] = 0;
             tt_cheat_grant_all();
@@ -168,7 +168,7 @@ void tt_pause_update(void) {
     } else if (*(u16 *)(tt_sys + 0x14) & 0x800) {
         func_8008FD68(0);
         audio_command(0xE1);
-        tt_se_request(0x600);
+        tt_se_request(TT_SE_PAUSE);
         core[0x10] = 1;
         *(s16 *)(c + 0xA) = -0x14;
         *(s16 *)(c + 0xC) = 0x74;

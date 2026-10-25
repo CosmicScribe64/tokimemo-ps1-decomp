@@ -160,9 +160,9 @@ void encounter_invite_place_select_init(void) {
     if ((u32) month_lengths.days_in_month[*(u8 *)&game_state.month - 1] < (u32) ((*(u8 *)&game_state.day - *(u8 *)&game_state.weekday) + 6)) {
         calendar_row = 1;
     }
-    sunday_year = encounter_invite_sunday_component(0);
-    sunday_month = encounter_invite_sunday_component(1);
-    sunday_day = encounter_invite_sunday_component(2);
+    sunday_year = encounter_invite_sunday_component(ENCOUNTER_SUNDAY_YEAR);
+    sunday_month = encounter_invite_sunday_component(ENCOUNTER_SUNDAY_MONTH);
+    sunday_day = encounter_invite_sunday_component(ENCOUNTER_SUNDAY_DAY);
     *(u8 *)&game_state.current_girl = game_state.day_events[*(u8 *)&game_state.day_event_index].girl;
     draw2d3d(1, 0);
     actor_draw_enable(1);
@@ -467,9 +467,9 @@ void encounter_invite_appointment_store(void) {
         }
     } else {
         appointment_word.bits.place = topic_to_place.values[encounter_invite_topic];
-        appointment_word.bits.year = encounter_invite_sunday_component(0);
-        appointment_word.bits.month = encounter_invite_sunday_component(1);
-        appointment_word.bits.day = encounter_invite_sunday_component(2);
+        appointment_word.bits.year = encounter_invite_sunday_component(ENCOUNTER_SUNDAY_YEAR);
+        appointment_word.bits.month = encounter_invite_sunday_component(ENCOUNTER_SUNDAY_MONTH);
+        appointment_word.bits.day = encounter_invite_sunday_component(ENCOUNTER_SUNDAY_DAY);
         appointment_word.bits.unk_21 = 6;
         appointment_word.bits.unk_24 = 1;
         appointment_word.bits.girl = game_state.current_girl;
@@ -585,7 +585,7 @@ void encounter_invite_progress_place_override(void) {
             encounter_invite_topic = place_to_topic.values[0xC];
             game_state.progress_state[0xC] = 1;
         }
-        if (((encounter_invite_sunday_component(0) == 0x5F) && (encounter_invite_sunday_component(1) == 0xC) && (encounter_invite_sunday_component(2) == 0xA)) || ((encounter_invite_sunday_component(0) == 0x60) && (encounter_invite_sunday_component(1) == 0xC) && (encounter_invite_sunday_component(2) == 8)) || ((encounter_invite_sunday_component(0) == 0x61) && (encounter_invite_sunday_component(1) == 0xC) && (encounter_invite_sunday_component(2) == 7))) {
+        if (((encounter_invite_sunday_component(ENCOUNTER_SUNDAY_YEAR) == 0x5F) && (encounter_invite_sunday_component(ENCOUNTER_SUNDAY_MONTH) == 0xC) && (encounter_invite_sunday_component(ENCOUNTER_SUNDAY_DAY) == 0xA)) || ((encounter_invite_sunday_component(ENCOUNTER_SUNDAY_YEAR) == 0x60) && (encounter_invite_sunday_component(ENCOUNTER_SUNDAY_MONTH) == 0xC) && (encounter_invite_sunday_component(ENCOUNTER_SUNDAY_DAY) == 8)) || ((encounter_invite_sunday_component(ENCOUNTER_SUNDAY_YEAR) == 0x61) && (encounter_invite_sunday_component(ENCOUNTER_SUNDAY_MONTH) == 0xC) && (encounter_invite_sunday_component(ENCOUNTER_SUNDAY_DAY) == 7))) {
             encounter_invite_topic = place_to_topic.values[8];
             game_state.progress_state[8] = 1;
         }

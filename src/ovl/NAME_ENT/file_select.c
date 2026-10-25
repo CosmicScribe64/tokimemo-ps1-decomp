@@ -576,7 +576,7 @@ void file_select_slot_information_show(void) {
 }
 
 void file_select_background_iris_update(void) {
-    if ((game_state.mode_stage != 0 || game_state.mode_step != 0) && file_select_iris_radius < 0x4001) {
+    if ((game_state.mode_stage != 0 || game_state.mode_step != 0) && file_select_iris_radius < FILE_SELECT_IRIS_UPDATE_STOP) {
         file_select_iris_radius = (file_select_iris_radius * 16 + 0x70) / 15;
         file_select_iris_x += file_select_iris_x_speed;
         file_select_iris_y += file_select_iris_y_speed;

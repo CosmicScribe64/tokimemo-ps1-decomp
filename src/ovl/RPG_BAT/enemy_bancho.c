@@ -447,7 +447,7 @@ void rpg_bancho_grant_command(void) {
         rpg_enemy_wait_substep(rpg_move_timer);
         return;
     case 2:
-        rpg_player_action |= 0x10000;
+        rpg_player_action |= RPG_PLAYER_READY;
         rpg_player_ready_timer = 0;
         rpg_enemy_substep_next();
         return;
@@ -484,7 +484,7 @@ void rpg_enemy_bancho_attack(void) {
         return;
     case 4:
         if (rpg_player_action == 0) {
-            rpg_player_action |= 0x10000;
+            rpg_player_action |= RPG_PLAYER_READY;
             rpg_player_ready_timer = 0;
         }
         ((Actor *)actor_pool)[154].quad_flags = 0x51000000;
@@ -523,11 +523,11 @@ void rpg_enemy_bancho_attack(void) {
             ((Actor *)actor_pool)[154].unk_43 = 0x12;
         }
         rpg_scratch += 1;
-        if ((rpg_scratch * 4 + 0x60 < 0x200) && (rpg_player_action == 0x02000000)) {
-            rpg_player_action = 0x100;
+        if ((rpg_scratch * 4 + 0x60 < 0x200) && (rpg_player_action == RPG_COMMAND_GUARD)) {
+            rpg_player_action = RPG_PLAYER_GUARD;
         }
         if (rpg_scratch * 4 + 0x60 >= 0x281) {
-            if (rpg_player_action != 0x100) {
+            if (rpg_player_action != RPG_PLAYER_GUARD) {
                 rpg_actor_set_animation(0x30, 5, 1, 1);
             }
             rpg_enemy_step_next();
@@ -552,7 +552,7 @@ void rpg_enemy_bancho_attack(void) {
     case 10:
         rpg_apply_damage(0, 0x21, rpg_damage, 1);
         if (rpg_player_hit_points == 0) {
-            rpg_player_action = 0x1000;
+            rpg_player_action = RPG_PLAYER_DOWN;
             /* FAKE: T-17105, rpg_enemy_step written through the base symbol of rpg_enemy_action (the
                aggregate is not declared yet); as1 then keeps the rpg_enemy_action load above this store */
             (&rpg_enemy_action)[5] = 0;
@@ -668,10 +668,10 @@ void rpg_enemy_bancho_attack_powered(void) {
             ((Actor *)actor_pool)[154].unk_01 = 5;
             rpg_actor_set_animation(0x3A, 0xFF, 1, 0);
             rpg_actor_set_animation(0x3B, 8, 1, 1);
-            if (rpg_player_action == 0x02000000) {
-                rpg_player_action = 0x100;
+            if (rpg_player_action == RPG_COMMAND_GUARD) {
+                rpg_player_action = RPG_PLAYER_GUARD;
             }
-            if (rpg_player_action != 0x100) {
+            if (rpg_player_action != RPG_PLAYER_GUARD) {
                 rpg_actor_set_animation(0x30, 5, 1, 1);
             }
             rpg_enemy_step_next();
@@ -702,7 +702,7 @@ void rpg_enemy_bancho_attack_powered(void) {
     case 7:
         rpg_apply_damage(0, 0x21, rpg_damage, 1);
         if (rpg_player_hit_points == 0) {
-            rpg_player_action = 0x1000;
+            rpg_player_action = RPG_PLAYER_DOWN;
             /* FAKE: T-17105, rpg_enemy_step written through the base symbol of rpg_enemy_action (the
                aggregate is not declared yet); as1 then keeps the rpg_enemy_action load above this store */
             (&rpg_enemy_action)[5] = 0;
@@ -727,11 +727,11 @@ void rpg_enemy_bancho_attack_powered(void) {
 void rpg_enemy_player_defeated_bancho(void) {
     switch (rpg_enemy_step) {
     case 0:
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_enemy_wait_msg_step(0);
         return;
     case 1:
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_enemy_wait_msg_step(0);
         return;
     case 2:
@@ -745,7 +745,7 @@ void rpg_enemy_player_defeated_bancho(void) {
         rpg_dialog_bancho_scorn();
         return;
     case 5:
-        rpg_result_code = 1;
+        rpg_result_code = RPG_RESULT_BAD;
         mode_stage_next();
         return;
     }
@@ -756,7 +756,7 @@ void rpg_victory_bancho(void) {
 
     switch (rpg_finale_channel.unk_00) {
     case 0:
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_finale_step_next();
     default:
         break;
@@ -858,7 +858,7 @@ void rpg_victory_bancho(void) {
         rpg_finale_wait_msg_step(0);
         break;
     case 12:
-        rpg_result_code = 0;
+        rpg_result_code = RPG_RESULT_GOOD;
         mode_stage_next();
         break;
     }

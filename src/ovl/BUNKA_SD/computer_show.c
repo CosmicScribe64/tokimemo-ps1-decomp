@@ -94,7 +94,7 @@ void stage_show_computer_show_animation_tick(void) {
     stage_show_computer_show_frame_and_fade_update();
     t = game_state.mode_step_timer.u + 1;
     game_state.mode_step_timer.u = t;
-    if (t >= 0x818) {
+    if (t >= STAGE_SHOW_COMPUTER_ANIMATION_END_TICK) {
         mode_step_next();
     }
 }

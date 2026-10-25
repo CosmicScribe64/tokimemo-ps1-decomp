@@ -53,25 +53,25 @@ void new_year_resource_addresses_init(void) {
 void new_year_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
-    case 0:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_0:
         new_year_scene_step_dispatch();
         break;
-    case 1:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_1:
         new_year_result_step_dispatch();
         break;
-    case 2:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_2:
         new_year_dialogue_mode_step_dispatch();
         break;
-    case 3:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_3:
         new_year_shrine_dialogue_mode_step_dispatch();
         break;
-    case 4:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_4:
         new_year_shrine_actor_mode_step_dispatch();
         break;
-    case 5:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_5:
         new_year_omikuji_mode_step_dispatch();
         break;
-    case 6:
+    case NEW_YEAR_PRIMARY_MODE_STAGE_6:
         new_year_secondary_scene_step_dispatch();
         break;
     default:

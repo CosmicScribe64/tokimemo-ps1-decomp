@@ -142,7 +142,7 @@ void rpg_enemy_deer_finale(void) {
     case 5:
         rpg_actor_set_animation(0x30, 0xA, 1, 1);
         rpg_apply_damage(0, 0x21, rpg_player_hit_points - 3, 1);
-        rpg_player_action = 0x1000;
+        rpg_player_action = RPG_PLAYER_DOWN;
         rpg_se_play_latched_5xx(0x505, 1, 0);
         rpg_enemy_step_next();
         break;

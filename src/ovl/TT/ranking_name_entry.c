@@ -171,14 +171,14 @@ void tt_name_entry_update(void) {
         break;
     case 0x40:
         if (*(u16 *)(ctl + 4) & 0x8000) {
-            tt_se_request(0x615);
+            tt_se_request(TT_SE_LETTER);
             (*(u16 *)(run + 0x1C))--;
             if (*(s16 *)(run + 0x1C) < 0) {
                 *(s16 *)(run + 0x1C) = 0x2F;
             }
             *(s16 *)(run + 0x10) = 0;
         } else if (*(u16 *)(ctl + 4) & 0x2000) {
-            tt_se_request(0x615);
+            tt_se_request(TT_SE_LETTER);
             if (++*(u16 *)(run + 0x1C) >= 0x30) {
                 *(s16 *)(run + 0x1C) = 0;
             }
@@ -186,7 +186,7 @@ void tt_name_entry_update(void) {
         }
         if (*(u16 *)ctl & 0x8000) {
             if (++*(u16 *)(run + 0x10) >= 0x1F) {
-                tt_se_request(0x615);
+                tt_se_request(TT_SE_LETTER);
                 *(s16 *)(run + 0x10) = 0x1A;
                 (*(u16 *)(run + 0x1C))--;
                 if (*(s16 *)(run + 0x1C) < 0) {
@@ -195,7 +195,7 @@ void tt_name_entry_update(void) {
             }
         } else if (*(u16 *)ctl & 0x2000) {
             if (++*(u16 *)(run + 0x10) >= 0x1F) {
-                tt_se_request(0x615);
+                tt_se_request(TT_SE_LETTER);
                 *(s16 *)(run + 0x10) = 0x1A;
                 if (++*(u16 *)(run + 0x1C) >= 0x30) {
                     *(s16 *)(run + 0x1C) = 0;
@@ -206,7 +206,7 @@ void tt_name_entry_update(void) {
         if (k & 4) {
             v = *(u16 *)(run + 0x1A);
             if (v != 0) {
-                tt_se_request(0x617);
+                tt_se_request(TT_SE_NAME_MOVE);
                 v = --*(u16 *)(run + 0x1A);
             }
             *(s16 *)(run + 0x1C) = ((TtRankingEntry *)(sys + 0x30))[*(u16 *)(run + 0x18)].name[v];
@@ -214,14 +214,14 @@ void tt_name_entry_update(void) {
         } else if (k & 8) {
             v = *(u16 *)(run + 0x1A);
             if (v < 2) {
-                tt_se_request(0x617);
+                tt_se_request(TT_SE_NAME_MOVE);
                 v = ++*(u16 *)(run + 0x1A);
             }
             *(s16 *)(run + 0x1C) = ((TtRankingEntry *)(sys + 0x30))[*(u16 *)(run + 0x18)].name[v];
             k = *(u16 *)(ctl + 4);
         }
         if (k & 0x20) {
-            tt_se_request(0x616);
+            tt_se_request(TT_SE_NAME_CONFIRM);
             v = *(u16 *)(run + 0x1A);
             if (v < 2) {
                 *(u16 *)(run + 0x1A) = v + 1;
@@ -233,14 +233,14 @@ void tt_name_entry_update(void) {
             }
         }
         if ((k & 0x40) && *(u16 *)(run + 0x1A) != 0) {
-            tt_se_request(0x617);
+            tt_se_request(TT_SE_NAME_MOVE);
             ((TtRankingEntry *)(sys + 0x30))[*(u16 *)(run + 0x18)].name[*(u16 *)(run + 0x1A)] = 0x3F;
             (*(u16 *)(run + 0x1A))--;
             *(s16 *)(run + 0x1C) = ((TtRankingEntry *)(sys + 0x30))[*(u16 *)(run + 0x18)].name[*(u16 *)(run + 0x1A)];
             k = *(u16 *)(ctl + 4);
         }
         if (k & 0x800) {
-            tt_se_request(0x616);
+            tt_se_request(TT_SE_NAME_CONFIRM);
             core[0xA] = 1;
         }
         ((TtRankingEntry *)(sys + 0x30))[*(u16 *)(run + 0x18)].name[*(u16 *)(run + 0x1A)] = *(u16 *)(run + 0x1C);

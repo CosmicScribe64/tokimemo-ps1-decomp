@@ -37,7 +37,7 @@ void ending_graduation_candidate_select(void) {
     game_state.weekday = WEEKDAY_SUNDAY;
     girl_scores(rank, points);
     game_state.current_girl = GIRL_YOSHIO;
-    if (points[0] < 0x1F4 && game_state.girls[0xC].flags.b[3] >= 0x46 && game_state.scene_flags[0x4F] == 2) {
+    if (points[0] < 0x1F4 && game_state.girls[GIRL_REI].flags.b[3] >= 0x46 && game_state.scene_flags[0x4F] == 2) {
         game_state.current_girl = GIRL_REI;
     } else {
         best_points = 0x1F3;
@@ -53,15 +53,15 @@ void ending_graduation_candidate_select(void) {
         /* FAKE: T-25145, a second read of the flag word: IDO 5.3 then keeps the word in a register
          * (a0), as the original compiler did for its one read (wiki/original-compiler.md rule 3),
          * so ugen shifts it into v0 and copies the f9 temporary back after the sum */
-        if (game_state.girls[0xB].flags.u) {
+        if (game_state.girls[GIRL_MIHARU].flags.u) {
         }
-        miharu_chance_level = game_state.girls[0xB].flags.f.story_stage;
+        miharu_chance_level = game_state.girls[GIRL_MIHARU].flags.f.story_stage;
         miharu_chance_level += (game_state.scene_flags[0x4C] > 0) * 2;
         miharu_chance_level += (game_state.scene_flags[0x4E] > 0) * 2;
         if (miharu_chance_level >= 0x12) {
             miharu_chance_level = 0x11;
         }
-        if (game_state.girls[0xB].flags.f.story_stage != 0 && game_state.scene_flags[0x4D] == 0) {
+        if (game_state.girls[GIRL_MIHARU].flags.f.story_stage != 0 && game_state.scene_flags[0x4D] == 0) {
             if (rand() % 256 < chance.v[miharu_chance_level]) {
                 game_state.current_girl = GIRL_MIHARU;
             }

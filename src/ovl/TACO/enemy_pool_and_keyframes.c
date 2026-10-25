@@ -201,51 +201,51 @@ void shooter_update_enemies(void) {
                 position.z = *(s16 *)((u8 *)&shooter_actors[i] + 120);
                 switch (*(u8 *)((u8 *)&shooter_actors[i] + 135) & 0xF0) {
                 case 0x10:
-                    shooter_spawn_item(position, 6);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
                     break;
                 case 0x20:
-                    shooter_spawn_item(position, 7);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_VULCAN);
                     break;
                 case 0x30:
-                    shooter_spawn_item(position, 0);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_WIDE);
                     break;
                 case 0x40:
-                    shooter_spawn_item(position, 1);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_BEAM);
                     break;
                 case 0x50:
-                    shooter_spawn_item(position, 2);
+                    shooter_spawn_item(position, SHOOTER_ITEM_SECONDARY_TOGGLE);
                     break;
                 case 0x60:
-                    shooter_spawn_item(position, 3);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BOMB_PULSE);
                     break;
                 case 0x70:
-                    shooter_spawn_item(position, 4);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BOMB_BLAST);
                     break;
                 case 0x80:
-                    shooter_spawn_item(position, 5);
+                    shooter_spawn_item(position, SHOOTER_ITEM_HEAL);
                     break;
                 case 0xD0:
-                    shooter_spawn_item(position, 6);
-                    shooter_spawn_item(position, 6);
-                    shooter_spawn_item(position, 6);
-                    shooter_spawn_item(position, 6);
-                    shooter_spawn_item(position, 6);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
                     break;
                 case 0xE0:
-                    shooter_spawn_item(position, 0);
-                    shooter_spawn_item(position, 1);
-                    shooter_spawn_item(position, 7);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_WIDE);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_BEAM);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_VULCAN);
                     break;
                 case 0xF0:
-                    shooter_spawn_item(position, 6);
-                    shooter_spawn_item(position, 6);
-                    shooter_spawn_item(position, 7);
-                    shooter_spawn_item(position, 2);
-                    shooter_spawn_item(position, 0);
-                    shooter_spawn_item(position, 1);
-                    shooter_spawn_item(position, 5);
-                    shooter_spawn_item(position, 3);
-                    shooter_spawn_item(position, 4);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BONUS);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_VULCAN);
+                    shooter_spawn_item(position, SHOOTER_ITEM_SECONDARY_TOGGLE);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_WIDE);
+                    shooter_spawn_item(position, SHOOTER_ITEM_WEAPON_BEAM);
+                    shooter_spawn_item(position, SHOOTER_ITEM_HEAL);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BOMB_PULSE);
+                    shooter_spawn_item(position, SHOOTER_ITEM_BOMB_BLAST);
                     break;
                 }
             }

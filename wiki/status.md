@@ -9,44 +9,47 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Phase 2 handoff (2026-10-24, keep current)
 
-Latest matching source checkpoint: **4dab92732** adds 3,939 reviewed identifier operations
+Latest verified source wave: **725 gameplay constant substitutions**, 350 new definitions
+and eight domain comments across 84 C files and 13 headers. Independent actual-source
+review passes; all 437 raw declaration views are identical. Clean configure/build/progress
+and every guard pass, with independent 27/27 binary hashes, 6,952/6,952 functions and
+2,276,920/2,276,920 bytes. The ledger has 12,984 rows. Evidence is ignored
+next-integration/constant-wave/{source-proof,clean-proof}.json and actual-source-review.md;
+source digest d6a53cd6486d6b390218d0d3d9f69c8b2fc80550b5996a0b6b73ced3921d5386.
+T-27075/T-27076/T-27077 are Done after review and the clean proof. Final Astra remains
+pending header integration and logical path cleanup.
+
+Preceding naming checkpoint: **4dab92732** adds 3,939 reviewed identifier operations
 (including 2,807 function names), one historical callback-address alias correction, 274 proven
 festival-stage literal substitutions and 22 definition comments. All 437 game C basenames are
 logical. Independent final source review passes, both scoped ABI comparisons cover 437 units
 with zero changes, and the clean build and every guard pass. Independent binary checks are
 27/27; progress remains 6,952/6,952 functions and 2,276,920/2,276,920 bytes; the ledger has
 12,922 rows. Evidence: ignored next-integration/identifier-wave-clean-proof.json,
-next-symbols-final-source-review.md. That source checkpoint is historical while the
-additional constant integration below is active; root serializes builds and Git.
+next-symbols-final-source-review.md. That source checkpoint is historical; root
+serializes source integration, builds and Git.
 
-An additional constant wave is now in progress under a bounded Luna source-write lease:
-All 694 reviewed sites are applied: 324 complex-overlay, 204 overlay UI/date,
-25 seasonal/rule and 141 traced BUNKASAI stage sites. Producer proofs pass, and the
-transaction's final naming guard passes 12,977 ledger rows. Eight approved declaration
-comments are added. The final 31 essential sites remain; no new matching claim is made
-until the full wave passes its clean build. The independently reviewed selector/cache
-tools are integrated with 144 passing combined tests.
-The previous SOURCE-STABLE marker is historical
-baseline evidence while its status is integrating_constant_wave; header ownership/driver
-preparation continues, but final header proofs wait for the replacement ready marker and
-matching result. T-27075 closes six concrete essential rule groups using existing routes
-and two narrowly added selectors; it does not promote every unresolved literal candidate.
+The completed constant wave comprises 324 complex-overlay, 204 overlay UI/date,
+25 seasonal/rule, 141 BUNKASAI stage and 31 final essential sites. The independently
+reviewed selector/cache tools are integrated with 144 passing combined tests. The bounded
+source lease is released. Root will publish the replacement header-ready marker after
+committing this verified source; the header lane can then capture and regenerate its
+complete ordered stack. T-27075 closes six concrete essential rule groups; it does not
+promote every unresolved literal candidate.
 
 The main camera-reference alias at D_80122740 remains explicitly deferred because EVENT uses
 the same address for different storage. T-27061 owns its private declaration separation.
 Header migration remains the main integration gate. Its complete archived rehearsal now
 removes both umbrellas with zero ownership gaps; header/API checks, unchanged GameState
-layout and 299 focused tooling tests pass. Independent packet review and constant-replay
-compatibility remain open, and final regeneration/source/ASM capture waits for the active
-constant wave. This is scratch evidence, not a live-header completion claim.
-Further essential constants are being prepared in the existing overlay lanes; the 141
-BUNKASAI setter sites now have reviewed source traces and remain unapplied. T-27074 has a reviewed path packet and
+layout and 299 focused tooling tests pass. Full regeneration and source/ASM proofs against
+the latest verified source remain before live application. This is scratch evidence,
+not a live-header completion claim. T-27074 has a reviewed path packet and
 an independently approved registry-path tool fix, both awaiting the header integration.
 No final Astra review has started; these source implementation gates remain open.
 
 Reviewed tooling milestones include signed-constant correction 0b9ddbf33, ownership correction
 470f5368e, caller-scoped constant requests bc0d45ea7 and macro provenance 428690995; the current
-suite has 126 passing tests. Text checkpoint b4977bd16 adds 286 stage-show bodies, stronger
+suite now has 144 passing combined tests. Text checkpoint b4977bd16 adds 286 stage-show bodies, stronger
 renderer proofs and translation-unit export. Its reviewed production report validates 38,696
 units with null translation targets; 1,889 source extents still need semantic classification.
 Its source witness f9c679d5 is historical and does not claim current-source enrichment.

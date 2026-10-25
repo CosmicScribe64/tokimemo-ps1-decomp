@@ -1,7 +1,7 @@
 ---
 id: T-27075
 title: Close the remaining essential constant selector gaps
-status: In Progress
+status: Done
 assignee: constant-selectors
 created: 2026-10-24
 updated: 2026-10-24
@@ -19,9 +19,9 @@ the behavior of all existing selectors and never rewrite literals outside rename
 
 - [x] Indexed member and compound-add matching are exact and caller-bounded, with unchanged existing selector behavior.
 - [x] Regression coverage includes wrong caller/index/operator, suffix/sign preservation, alias resolution, replay and refusal before writes.
-- [ ] Proven existing girl/club IDs are reused; thresholds, masks and step delta have truthful names and exact site/count gates.
-- [ ] Independent tool and semantic reviews pass; source widths, FAKE expressions and unrelated literals remain unchanged.
-- [ ] Actual application, 437-unit declaration proof and matching 27/27 check pass before Done.
+- [x] Proven existing girl/club IDs are reused; thresholds, masks and step delta have truthful names and exact site/count gates.
+- [x] Independent tool and semantic reviews pass; source widths, FAKE expressions and unrelated literals remain unchanged.
+- [x] Actual application, 437-unit declaration proof and matching 27/27 check pass before Done.
 
 ## Notes
 
@@ -43,4 +43,8 @@ The seven-request final31 packet is independently approved at runner SHA-256
 b76f8ccef564cd5e22f2080b24f5dff0479d268b77a684f4e10ce5d84ed00852,
 with fresh plan1405c7d9a8ecf173963c16816a16d16e6d28a0bd6ccba127daffc0884240b5e8.
 The school-trip threshold uses the ADR-compliant TRIP prefix. Its source application,
-725-site combined proof and clean matching check remain pending.
+725-site combined proof and clean matching check now pass.
+
+## Verified completion
+
+Independent actual-source review passes; the combined725-site source proof has437 exact ABI views and no unexpected paths. Clean Docker configure/build/progress and every guard pass, independent binaries27/27,6952functions,2276920bytes; naming guard12984 rows. Evidence: ignored next-integration/constant-wave/{source-proof,clean-proof}.json and actual-source-review.md. This closes the bounded ticket, not all of phase2.

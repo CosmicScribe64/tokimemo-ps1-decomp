@@ -33,7 +33,7 @@ void shooter_stage2_step_init(void) {
     game_state.clear_color_g = 0xA8;
     game_state.clear_color_b = 0xF0;
     shooter_background_flags = 3;
-    shooter_load_request = 0x24;
+    shooter_load_request = SHOOTER_LOAD_SOUND_BANK_STAGE2;
     shooter_sound_bank_wait_state = 0;
     shooter_reset_enemies();
     mode_step_next();
@@ -55,7 +55,7 @@ void shooter_stage2_step_run(void) {
 void shooter_stage2_step_end(void) {
     if (shooter_load_request == 0) {
         shooter_reset_enemies();
-        shooter_load_request = 0x28;
+        shooter_load_request = SHOOTER_LOAD_BOSS2;
         audio_bgm_play_short(1, 0x201);
         mode_stage_set(0x16);
     }

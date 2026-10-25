@@ -7,55 +7,55 @@ void culture_mio_visit_entry(void) {
     switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         if (game_state.year == 0x61) {
-            mode_stage_set(0x1E);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_SPEECH_CONTEST);
             return;
         }
-        mode_stage_set(0x1D);
+        mode_stage_set(CULTURE_STAGE_MIO_VISIT_LITERATURE_EXHIBIT);
         return;
     case 1:
-        mode_stage_set(0x1F);
+        mode_stage_set(CULTURE_STAGE_MIO_VISIT_DRAMA_PLAY);
         return;
     case 2:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x20);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_EXPERIMENT_SHOW_95);
             return;
         case 0x60:
-            mode_stage_set(0x21);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_EXPERIMENT_SHOW_96);
             return;
         case 0x61:
-            mode_stage_set(0x22);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_EXPERIMENT_SHOW_97);
             return;
         }
         break;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x23);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(0x25);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(0x22);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_EXPERIMENT_SHOW_97);
             return;
         }
         break;
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0x26);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_PORTRAIT_DRAWING);
             return;
         case 0x60:
-            mode_stage_set(0x27);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_OPEN_SKETCHING);
             return;
         case 0x61:
-            mode_stage_set(0x28);
+            mode_stage_set(CULTURE_STAGE_MIO_VISIT_OIL_PAINTING_EXHIBIT);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0x29);
+        mode_stage_set(CULTURE_STAGE_MIO_VISIT_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

@@ -287,31 +287,31 @@ void new_year_scene_particle_actor_resource_addresses_init(void) {
 void new_year_secondary_mode_handler(void) {
     portrait_wink_update();
     switch (game_state.mode_stage) {
-    case 0:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_0:
         new_year_ijuin_entry_step_dispatch();
         break;
-    case 1:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_1:
         christmas_party_actor_update();
         break;
-    case 2:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_2:
         christmas_girl_dialogue_step_dispatch();
         break;
-    case 3:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_3:
         new_year_scene_result_callback_update();
         break;
-    case 4:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_4:
         christmas_mode_step_dispatch();
         break;
-    case 5:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_5:
         christmas_girl_scene_handler_dispatch();
         break;
-    case 6:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_6:
         new_year_scene_particle_mode_step_dispatch();
         break;
-    case 7:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_7:
         new_year_scene_effect_mode_step_dispatch();
         break;
-    case 8:
+    case NEW_YEAR_SECONDARY_MODE_STAGE_8:
         new_year_scene_effect_mode_handler();
         break;
     default:

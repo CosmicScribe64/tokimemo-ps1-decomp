@@ -158,7 +158,7 @@ void spot_shiori_scene_select(void) {
 }
 
 void spot_shiori_scene1_run(void) {
-    if (D_800B1AF5 == 0) {
+    if (D_800B1AF5 == SPOT_GIRL_STAGE_RUN) {
         spot_shiori_scene1_steps_run();
         return;
     }

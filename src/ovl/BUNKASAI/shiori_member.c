@@ -8,45 +8,45 @@ void culture_shiori_member_entry(void) {
     switch (((CultureFestivalDispatch *)&D_80122EB8)->unk_00) {
     case 0:
         if (game_state.year == 0x61) {
-            mode_stage_set(3);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_SPEECH_CONTEST);
             return;
         }
-        mode_stage_set(2);
+        mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_LITERATURE_EXHIBIT);
         return;
     case 1:
-        mode_stage_set(4);
+        mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_DRAMA_PLAY);
         return;
     case 2:
-        mode_stage_set(5);
+        mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_EXPERIMENT_SHOW);
         return;
     case 3:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(6);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_COMPUTER_FORTUNE);
             return;
         case 0x60:
-            mode_stage_set(8);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_COMPUTER_GAME);
             return;
         case 0x61:
-            mode_stage_set(9);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_COMPUTER_EXPERIMENT_SHOW);
             return;
         }
         break;
     case 4:
         switch (game_state.year) {
         case 0x5F:
-            mode_stage_set(0xA);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_PORTRAIT_DRAWING);
             return;
         case 0x60:
-            mode_stage_set(0xB);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_OPEN_SKETCHING);
             return;
         case 0x61:
-            mode_stage_set(0xC);
+            mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_OIL_PAINTING_EXHIBIT);
             return;
         }
         break;
     case 5:
-        mode_stage_set(0xD);
+        mode_stage_set(CULTURE_STAGE_SHIORI_MEMBER_CONCERT);
         return;
     default:
         game_mode_reset_to_title();

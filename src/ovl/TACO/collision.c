@@ -19,8 +19,8 @@ void shooter_run_collisions(void) {
     shooter_hit_enemies_with_shots(shooter_wingman_primary_shots, 1, 1);
     shooter_hit_enemies_with_shots(shooter_wingman_secondary_shots, 4, 1);
     shooter_score = shooter_score / 10 * 10 + 1;
-    if (shooter_score >= 0x989680) {
-        shooter_score = 0x98967F;
+    if (shooter_score >= SHOOTER_SCORE_MAXIMUM_EXCLUSIVE) {
+        shooter_score = SHOOTER_SCORE_MAXIMUM;
     }
 }
 

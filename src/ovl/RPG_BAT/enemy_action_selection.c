@@ -42,7 +42,7 @@ void rpg_enemy_damage_roll(void) {
         rpg_damage /= 150;
         rpg_damage = rpg_enemy_damage_scale * rpg_damage;
         rpg_damage /= 1000;
-        if (rpg_player_action & 0x100) {
+        if (rpg_player_action & RPG_PLAYER_GUARD) {
             rpg_enemy_damage_scale += 0x64;
             rpg_damage = rpg_damage / 2;
         }
@@ -53,13 +53,13 @@ void rpg_enemy_damage_roll(void) {
         case 2:
         default:
             rpg_damage = rpg_rand(rpg_player_hit_points_maximum * 0x19 / 100 - 0x1F4) + 0x1F4;
-            if (rpg_player_action & 0x100) {
+            if (rpg_player_action & RPG_PLAYER_GUARD) {
                 rpg_damage = rpg_damage / 3;
             }
             break;
         case 4:
             rpg_damage = rpg_rand(rpg_player_hit_points_maximum * 0x32 / 100 - 0x3E8) + 0x3E8;
-            if (rpg_player_action & 0x100) {
+            if (rpg_player_action & RPG_PLAYER_GUARD) {
                 rpg_damage = rpg_damage / 10;
             }
             break;
@@ -70,18 +70,18 @@ void rpg_enemy_damage_roll(void) {
         rpg_damage /= 1000;
     }
     if (rpg_encounter & 0xF0000) {
-        if (rpg_player_action & 0x100) {
+        if (rpg_player_action & RPG_PLAYER_GUARD) {
             rpg_damage = rpg_player_hit_points / 100;
         } else {
             rpg_damage = rpg_player_hit_points / 10;
         }
     }
     if (rpg_encounter & 0x08000000) {
-        if (rpg_player_action & 0x1000) {
+        if (rpg_player_action & RPG_PLAYER_DOWN) {
             rpg_damage = rpg_player_hit_points / 2;
             return;
         }
-        if (rpg_player_action & 0x100) {
+        if (rpg_player_action & RPG_PLAYER_GUARD) {
             rpg_damage = rpg_player_hit_points / 50;
         } else {
             rpg_damage = rpg_player_hit_points / 5;
@@ -192,13 +192,13 @@ s32 rpg_enemy_pick_delinquent(void) {
     }
     if (rpg_girl_action != 0x40000000 && rpg_rand(0x64) < 5) {
         rpg_damage = rpg_girl_hit_points / 10;
-        if (rpg_player_action & 0x100) {
+        if (rpg_player_action & RPG_PLAYER_GUARD) {
             rpg_damage = rpg_damage / 10;
         }
         rpg_delinquent_charmed_0.stat.escalation_counter += 2;
         return 6;
     }
-    if (rpg_player_action != 0x100) {
+    if (rpg_player_action != RPG_PLAYER_GUARD) {
         if (rpg_rand(0x64) < 5) {
             rpg_damage = rpg_rand2(0xA, 0xA);
             rpg_damage = rpg_delinquent_charmed_0.enemy_damage_scale * rpg_damage;
@@ -212,7 +212,7 @@ s32 rpg_enemy_pick_delinquent(void) {
     rpg_damage /= 150;
     rpg_damage = rpg_delinquent_charmed_0.enemy_damage_scale * rpg_damage;
     rpg_damage /= 1000;
-    if (rpg_player_action & 0x100) {
+    if (rpg_player_action & RPG_PLAYER_GUARD) {
         rpg_damage = rpg_damage / 10;
     }
     rpg_delinquent_charmed_0.stat.escalation_counter += 1;

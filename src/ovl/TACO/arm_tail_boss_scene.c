@@ -33,7 +33,7 @@ void shooter_boss2_step_init(void) {
     s32 *d;
 
     if (shooter_load_request == 0) {
-        shooter_load_request = 0x30;
+        shooter_load_request = SHOOTER_LOAD_STAGE3;
         shooter_load_texture_page(0x80172000, 0xE);
         shooter_load_texture_page(0x80162000, 0xC);
         shooter_set_dark_lights();
