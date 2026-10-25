@@ -2188,3 +2188,7 @@ Current-composition review for [[tickets/T-29008-assemble-playable-development-a
 ## [2026-10-25] ticket | Expand ordinary command content coverage
 
 Opened [[tickets/T-29014-ordinary-command-content-coverage]] for commands 1 through 6 so full-game progress continues alongside rest/save, Sunday, HUD and New Game work. The owner prepares isolated original-input exporter/runtime capability changes; inventory alone is not completion, and root retains shared integration and emulator scheduling.
+
+## [2026-10-25] build | Install reviewed New Game entry flow
+
+Integrated seven reviewed source/test files for [[tickets/T-29012-native-new-game-initialization]]. Actual canonical replay passes 63 controller checks, five Python cases and eight rendered UI checks; the opening name-entry image is byte-identical to root's reviewed composition. Original kana/preset/font packs remain external, and no captured gameplay state is used. The scene stops before unimplemented prologue/service handling. Both review reports and exact installed source hashes are bound in the ignored live application receipt; ticket remains In Progress.
