@@ -2330,3 +2330,7 @@ Installed the reviewed direct development launcher and built a code-only macOS e
 ## [2026-10-25] build | Read sparse original VAB banks
 
 Applied the reviewed two-file sparse VAB reader/test packet after root replay matched the original SDK/corpus proof. Installed tests pass normally and optimized. PRO_VOL and UNDOKAI inventory now succeeds; prior 118 outputs are unchanged and YUUEN remains explicitly rejected. Recorded the exact 121 paired-entry audit separately from earlier selected exports. See [[assets-media]] and [[tickets/T-28006-sequence-music-export]]. Playback/backend readiness remains open.
+
+## [2026-10-25] build | Integrate commands 5 and 6 content
+
+Applied the independently reviewed five-file capability packet and verified the installed clean exporter reproduces all 125 files. Fourteen Python, 90 Godot and five shared suites pass. Gameplay and other variants remain separate acceptance work. See [[tickets/T-29014-ordinary-command-content-coverage]].
