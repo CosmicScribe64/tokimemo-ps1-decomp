@@ -2024,3 +2024,7 @@ remains In Progress, and full text coverage remains incomplete.
 Root verifies nine tooling changes against 59 captured after-images and preserves 34,960 unrelated tracked files. Independent production/native and Standards reviews pass; the coherent isolated suite passes 550 tests without skips. Original game source, headers, configuration and matching build remain unchanged.
 
 Installed normal/optimized inventory CLIs, all 55,403 serialized unit fields and 295 text tests per mode pass; actual coherent asset suite: 550 tests, zero skips. Existing rows/readiness and the original byte evidence remain unchanged.
+
+## [2026-10-25] query | Require canonical NBN cell identities
+
+[[tickets/T-28002-media-asset-export]]: v3 resolves test isolation and passes 559 installed asset tests after the SPEAKTST integration. Actual export succeeds, but generic visual catalog construction rejects cells without distinct frame/variant identities. The three applied tooling files remain uncommitted; owner prepares v4 metadata and direct-catalog regressions. All native pixel/source evidence and previous outputs remain preserved. Published text tooling is at 55,403 export rows with 16,702 new flagged candidates; no full text/media or native rendering completion claim.
