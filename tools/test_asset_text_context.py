@@ -129,7 +129,9 @@ class SourceContextTests(unittest.TestCase):
                 "    /* 10 80041010 14100480 */ .word inner_table\n"
                 "dlabel inner_table\n"
                 "    /* 14 80041014 00200480 */ .word D_TEXT\n"
-                "    /* 18 80041018 20200480 */ .word D_OTHER\n")
+                "    /* 18 80041018 20200480 */ .word D_OTHER\n"
+                "dlabel D_TEXT\n    /* 2000 80042000 */ .asciz \"TEXT\"\n"
+                "dlabel D_OTHER\n    /* 2020 80042020 */ .asciz \"OTHER\"\n")
             self._put_main_word(repo, 0x80041010, 0x80041014)
             self._put_main_word(repo, 0x80041014, 0x80042000)
             self._put_main_word(repo, 0x80041018, 0x80042020)
@@ -141,7 +143,7 @@ class SourceContextTests(unittest.TestCase):
             for record in inventory["records"]:
                 record["source"]["sha256"] = hashlib.sha256(binary).hexdigest()
                 record["source"]["file_size"] = len(binary)
-            edges, _, _ = _table_graph(repo, inventory["records"], repo / "disc" / "files")
+            edges, _, _, _, _ = _table_graph(repo, inventory["records"], repo / "disc" / "files")
             table_uses, _ = _c_symbol_uses(repo, set(edges) | {("main", "inner_table")})
             self.assertEqual([use["selectors"] for use in table_uses if use["symbol"] == "outer_table"],
                              [[0, 0], [0, 1], [0, 1]])
@@ -181,6 +183,9 @@ class SourceContextTests(unittest.TestCase):
                 "    /* 18 80041018 00200480 */ .word D_TEXT\n"
                 "dlabel D_OTHER_TABLE\n"
                 "    /* 1c 8004101C 20200480 */ .word D_OTHER_TEXT\n")
+            with (repo / "asm" / "data" / "main" / "tables.s").open("a") as stream:
+                stream.write("dlabel D_TEXT\n    /* 2000 80042000 */ .asciz \"FIRST\"\n"
+                             "dlabel D_OTHER_TEXT\n    /* 2020 80042020 */ .asciz \"SECOND\"\n")
             for address, target in ((0x80041010, 0x80041018),
                                     (0x80041014, 0x8004101C),
                                     (0x80041018, 0x80042000),
@@ -244,6 +249,8 @@ class SourceContextTests(unittest.TestCase):
                 (repo / "asm" / "ovl" / unit / "data" / unit).mkdir(parents=True)
                 (repo / "asm" / "ovl" / unit / "data" / unit / "table.s").write_text(
                     "dlabel table\n    /* 10 80132010 20201380 */ .word D_TEXT\n")
+                (repo / "asm" / "ovl" / unit / "data" / unit / "text.s").write_text(
+                    f'dlabel D_TEXT\n    /* 20 80132020 */ .asciz "{byte}"\n')
             inventory = {"records": [
                 self._text_record(repo, "A-text", "CDROM/EXEDIR/A.EXN", 0x80132020, b"A\0", "D_TEXT"),
                 self._text_record(repo, "B-text", "CDROM/EXEDIR/B.EXN", 0x80132020, b"B\0", "D_TEXT"),
@@ -299,12 +306,245 @@ class SourceContextTests(unittest.TestCase):
             self.assertEqual(result["records"][0]["source_contexts"], [])
             self.assertIsNone(result["records"][0]["context_category"])
 
+    def test_ast_pointer_paths_report_numeric_data_label_leaves_and_distinct_chains(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "src" / "main" / "use.c").write_text(
+                "extern const char **ROOT[];\n"
+                "void render(int i) {\n"
+                "    sndi(ROOT[0][0], 0, 0);\n"
+                "    sndi(ROOT[i][1], 0, 0);\n"
+                "}\n")
+            (repo / "asm" / "data" / "main" / "tables.s").write_text(
+                "dlabel ROOT\n"
+                "    /* 10 80041010 20100480 */ .word D_TABLE\n"
+                "    /* 14 80041014 20100480 */ .word D_TABLE\n"
+                "dlabel D_TABLE\n"
+                "    /* 20 80041020 30100480 */ .word D_NUMERIC\n"
+                "    /* 24 80041024 40100480 */ .word D_OTHER\n"
+                "dlabel D_NUMERIC\n"
+                "    /* 30 80041030 41424344 */ .byte 0x41, 0x42, 0x43, 0x44\n"
+                "dlabel D_OTHER\n"
+                "    /* 40 80041040 31323334 */ .byte 0x31, 0x32, 0x33, 0x34\n")
+            for address, target in ((0x80041010, 0x80041020),
+                                    (0x80041014, 0x80041020),
+                                    (0x80041020, 0x80041030),
+                                    (0x80041024, 0x80041040)):
+                self._put_main_word(repo, address, target)
+            binary_path = repo / "disc" / "files" / "SLPM_86.053"
+            binary = bytearray(binary_path.read_bytes())
+            binary[0x830:0x834] = b"ABCD"
+            binary[0x840:0x844] = b"1234"
+            binary_path.write_bytes(binary)
+
+            result = enrich_source_context({"records": []}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            leaves = result["unresolved_data_label_leaves"]
+            self.assertEqual(len(leaves), 3)
+            static = next(leaf for leaf in leaves if leaf["terminal_data_label"]["label"] == "D_NUMERIC")
+            self.assertEqual(static["category"], None)
+            self.assertEqual(static["category_candidate"], "display")
+            self.assertEqual(static["selectors"], [0, 0])
+            self.assertEqual(static["selection_certainty"], "statically_selected_pointer_path")
+            self.assertEqual(static["terminal_data_label"]["address"], 0x80041030)
+            self.assertEqual(static["terminal_data_label"]["binary_offset"], 0x830)
+            self.assertTrue(static["terminal_data_label"]["binary_sha256"])
+            self.assertTrue(all("raw_hex" not in leaf and "source_decoded_text" not in leaf
+                                for leaf in leaves))
+            dynamic = [leaf for leaf in leaves if leaf["terminal_data_label"]["label"] == "D_OTHER"]
+            self.assertEqual(len(dynamic), 2)
+            self.assertTrue(all(leaf["selectors"] == [None, 1] and
+                                leaf["selection_certainty"] == "possible_dynamic_index"
+                                for leaf in dynamic))
+            self.assertEqual({leaf["evidence_chain"][0]["slot_index"] for leaf in dynamic}, {0, 1})
+
+    def test_mismatched_original_pointer_word_does_not_create_data_leaf(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "src" / "main" / "use.c").write_text(
+                "extern const char **ROOT[];\nvoid render(void) { sndi(ROOT[0][0], 0, 0); }\n")
+            (repo / "asm" / "data" / "main" / "tables.s").write_text(
+                "dlabel ROOT\n    /* 10 80041010 18100480 */ .word D_TABLE\n"
+                "dlabel D_TABLE\n    /* 18 80041018 30100480 */ .word D_NUMERIC\n"
+                "dlabel D_NUMERIC\n    /* 30 80041030 41424344 */ .byte 0x41,0x42,0x43,0x44\n")
+            self._put_main_word(repo, 0x80041010, 0x80041018)
+            self._put_main_word(repo, 0x80041018, 0x80042000)
+            result = enrich_source_context({"records": []}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            self.assertEqual(result["unresolved_data_label_leaves"], [])
+            self.assertIn("pointer_word_binary_mismatch",
+                          {entry["status"] for entry in result["source_context"]["blocked"]})
+
+    def test_containing_label_record_is_not_treated_as_exact_pointer_target(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "src" / "main" / "use.c").write_text(
+                "extern const char *ROOT[];\n"
+                "void render(void) { sndi(ROOT[0], 0, 0); }\n")
+            (repo / "asm" / "data" / "main" / "table.s").write_text(
+                "dlabel ROOT\n"
+                "    /* 10 80041010 20100480 */ .word D_NUMERIC\n"
+                "dlabel D_NUMERIC\n"
+                "    /* 20 80041020 41424344 */ .byte 0x41, 0x42, 0x43, 0x44\n")
+            self._put_main_word(repo, 0x80041010, 0x80041020)
+            binary_path = repo / "disc" / "files" / "SLPM_86.053"
+            binary = bytearray(binary_path.read_bytes())
+            binary[0x820:0x824] = b"ABCD"
+            binary_path.write_bytes(binary)
+            # This label association is stale: the record starts elsewhere.
+            record = self._text_record(repo, "stale-record", "SLPM_86.053",
+                                       0x80042000, b"TEXT\0", "D_NUMERIC")
+
+            result = enrich_source_context({"records": [record]}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            self.assertEqual(result["records"][0]["source_contexts"], [],
+                             repr(result["source_context"]["blocked"]))
+            self.assertEqual(len(result["unresolved_data_label_leaves"]), 1)
+            leaf = result["unresolved_data_label_leaves"][0]
+            self.assertEqual(leaf["terminal_data_label"]["address"], 0x80041020)
+            self.assertEqual(leaf["terminal_data_label"]["non_exact_containing_text_record_ids"],
+                             ["stale-record"])
+            self.assertIn("containing_label_record_is_not_exact_start",
+                          {entry["status"] for entry in result["source_context"]["blocked"]})
+
+    def test_unavailable_data_label_address_is_not_inferred_from_record(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "src" / "main" / "use.c").write_text(
+                "extern const char *ROOT[];\n"
+                "void render(void) { sndi(ROOT[0], 0, 0); }\n")
+            (repo / "asm" / "data" / "main" / "table.s").write_text(
+                "dlabel ROOT\n"
+                "    /* 10 80041010 00200480 */ .word D_UNAVAILABLE\n"
+                "dlabel D_UNAVAILABLE\n"
+                "    .align 2\n"
+                "    /* 20 80041020 41424344 */ .byte 0x41, 0x42, 0x43, 0x44\n")
+            self._put_main_word(repo, 0x80041010, 0x80042000)
+            record = self._text_record(repo, "untrusted-association", "SLPM_86.053",
+                                       0x80042000, b"TEXT\0", "D_UNAVAILABLE")
+            result = enrich_source_context({"records": [record]}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            self.assertEqual(result["unresolved_data_label_leaves"], [])
+            self.assertEqual(result["records"][0]["source_contexts"], [])
+            self.assertTrue({"target_data_label_address_unavailable", "data_label_address_unavailable"} &
+                            {entry["status"] for entry in result["source_context"]["blocked"]})
+
+    def test_unique_anchored_definition_resolves_unanchored_split_duplicate(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "src" / "main" / "use.c").write_text(
+                "extern const char *ROOT[];\nvoid render(void) { sndi(ROOT[0], 0, 0); }\n")
+            (repo / "asm" / "data" / "main" / "table.s").write_text(
+                "dlabel ROOT\n    /* 10 80041010 00200480 */ .word D_TEXT\n")
+            (repo / "asm" / "data" / "main" / "split").mkdir()
+            (repo / "asm" / "data" / "main" / "split" / "text.s").write_text(
+                "dlabel D_TEXT\n    .byte 0x54, 0x45, 0x58, 0x54, 0\n")
+            (repo / "asm" / "data" / "main" / "anchored.s").write_text(
+                'dlabel D_TEXT\n    /* 2000 80042000 */ .asciz "TEXT"\n')
+            self._put_main_word(repo, 0x80041010, 0x80042000)
+            record = self._text_record(repo, "text", "SLPM_86.053",
+                                       0x80042000, b"TEXT\0", "D_TEXT")
+            edges, _, _, _, _ = _table_graph(repo, [record], repo / "disc" / "files")
+            edge = edges[("main", "ROOT")][0]
+            result = enrich_source_context({"records": [record]}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            self.assertEqual(result["records"][0]["context_category"], "display")
+            evidence = edge["target_data_label_evidence"]
+            self.assertEqual(evidence["definition_evidence"]["anchored_definition_count"], 1)
+            self.assertEqual(evidence["definition_evidence"]["unanchored_duplicate_definition_count"], 1)
+            self.assertTrue(evidence["definition_evidence"]["all_anchored_definitions_agree"])
+
+    def test_conflicting_anchored_definitions_remain_ambiguous(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "src" / "main" / "use.c").write_text(
+                "extern const char *ROOT[];\nvoid render(void) { sndi(ROOT[0], 0, 0); }\n")
+            (repo / "asm" / "data" / "main" / "table.s").write_text(
+                "dlabel ROOT\n    /* 10 80041010 00200480 */ .word D_TEXT\n"
+                'dlabel D_TEXT\n    /* 2000 80042000 */ .asciz "TEXT"\n'
+                'dlabel D_TEXT\n    /* 2020 80042020 */ .asciz "TEXT"\n')
+            self._put_main_word(repo, 0x80041010, 0x80042000)
+            record = self._text_record(repo, "text", "SLPM_86.053",
+                                       0x80042000, b"TEXT\0", "D_TEXT")
+            result = enrich_source_context({"records": [record]}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            self.assertEqual(result["records"][0]["source_contexts"], [])
+            self.assertIn("ambiguous_data_label_addresses",
+                          {entry["status"] for entry in result["source_context"]["blocked"]})
+
+    def test_noload_bss_target_has_runtime_metadata_without_static_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "config" / "SLPM_86.053.yaml").write_text(
+                "options:\n  ld_bss_is_noload: True\n"
+                "bss_size: 0x4000\n"
+                "segments:\n  - { start: 0x2000, type: bss, name: bss, vram: 0x800E3800 }\n")
+            (repo / "asm" / "data" / "main" / "table.s").write_text(
+                "dlabel ROOT\n    /* 10 80041010 105B0E80 */ .word D_BSS\n")
+            (repo / "asm" / "data" / "main" / "bss.s").write_text(
+                "dlabel D_BSS\n    /* 0 800E5B10 */ .space 4\n")
+            self._put_main_word(repo, 0x80041010, 0x800E5B10)
+            result = enrich_source_context({"records": []}, repo,
+                                           repo / "disc" / "files")
+            self.assertEqual(result["unresolved_data_label_leaves"], [])
+            self.assertEqual(result["source_context"]["pointer_table_edges"], 1)
+            self.assertEqual(result["source_context"]["runtime_non_static_target_count"], 1)
+            target = result["source_context"]["runtime_non_static_targets"][0]
+            self.assertEqual(target["status"], "noload_bss_runtime_storage")
+            self.assertFalse(target["static_bytes_available"])
+            self.assertEqual(target["address"], 0x800E5B10)
+            self.assertEqual(target["bss_region"]["vram_start"], 0x800E3800)
+            self.assertEqual(target["bss_region"]["vram_end_exclusive"], 0x800E7800)
+            self.assertTrue(target["pointer_evidence"]["bytes_verified"])
+            self.assertEqual(target["typed_text_reachability"], "unreached_global_graph_scaffolding")
+
+    def test_overlay_pointer_path_can_reach_verified_main_data_label_leaf(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            self._repo(repo)
+            (repo / "config" / "overlays.txt").write_text("A 0x80132000 0x40\n")
+            (repo / "src" / "ovl" / "A").mkdir(parents=True)
+            (repo / "src" / "ovl" / "A" / "use.c").write_text(
+                "extern const char *ROOT[];\nvoid render(void) { sndi(ROOT[0], 0, 0); }\n")
+            main_path = repo / "asm" / "data" / "main" / "numeric.s"
+            main_path.write_text(
+                "dlabel D_MAIN_NUMERIC\n"
+                "    /* 1800 80042000 41424344 */ .byte 0x41, 0x42, 0x43, 0x44\n")
+            ovl_data = repo / "asm" / "ovl" / "A" / "data" / "A"
+            ovl_data.mkdir(parents=True)
+            (ovl_data / "root.s").write_text(
+                "dlabel ROOT\n    /* 10 80132010 00200480 */ .word D_MAIN_NUMERIC\n")
+            main = bytearray((repo / "disc" / "files" / "SLPM_86.053").read_bytes())
+            main[0x1800:0x1804] = b"ABCD"
+            (repo / "disc" / "files" / "SLPM_86.053").write_bytes(main)
+            exedir = repo / "disc" / "files" / "CDROM" / "EXEDIR"
+            exedir.mkdir(parents=True)
+            overlay = bytearray(0x40)
+            overlay[0x10:0x14] = (0x80042000).to_bytes(4, "little")
+            (exedir / "A.EXN").write_bytes(overlay)
+            result = enrich_source_context({"records": []}, repo,
+                                           repo / "disc" / "files", use_ast=True)
+            self.assertEqual(len(result["unresolved_data_label_leaves"]), 1)
+            leaf = result["unresolved_data_label_leaves"][0]
+            self.assertEqual(leaf["terminal_data_label"]["unit"], "main")
+            self.assertEqual(leaf["terminal_data_label"]["binary_path"], "SLPM_86.053")
+            self.assertEqual(leaf["evidence_chain"][0]["target_unit"], "main")
+
     def test_direct_C_text_label_call_gets_consumer_context(self):
         with tempfile.TemporaryDirectory() as temp:
             repo = Path(temp)
             self._repo(repo)
             (repo / "src" / "main" / "use.c").write_text(
                 "void render(void) { sndisp(D_TEXT, 0, 0); sndisp(0, D_TEXT, 0); }\n")
+            (repo / "asm" / "data" / "main" / "text.s").write_text(
+                'dlabel D_TEXT\n    /* 1800 80042000 */ .asciz "TEXT"\n')
             inventory = {"records": [self._text_record(repo, "direct-text", "SLPM_86.053",
                                                        0x80042000, b"TEXT\0", "D_TEXT")]}
             result = enrich_source_context(inventory, repo, repo / "disc" / "files")
@@ -324,6 +564,9 @@ class SourceContextTests(unittest.TestCase):
             self._repo(repo)
             code = "void render(void) { sndisp(D_TEXT, 0, 0); sndisp(&D_INTERIOR[1], 0, 0); }\n"
             (repo / "src" / "main" / "use.c").write_text(code)
+            (repo / "asm" / "data" / "main" / "text.s").write_text(
+                'dlabel D_TEXT\n    /* 1800 80042000 */ .asciz "TEXT"\n'
+                'dlabel D_INTERIOR\n    /* 1820 80042020 */ .asciz "TEXT"\n')
             records = [
                 self._text_record(repo, "direct", "SLPM_86.053", 0x80042000, b"TEXT\0", "D_TEXT"),
                 self._text_record(repo, "interior", "SLPM_86.053", 0x80042020, b"TEXT\0", "D_INTERIOR"),

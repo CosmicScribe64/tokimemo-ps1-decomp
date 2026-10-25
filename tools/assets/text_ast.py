@@ -15,9 +15,9 @@ from pathlib import Path
 
 from .text_renderers import (C_STRING_READ_ARGUMENTS, DIAGNOSTIC_ARGUMENT_INDEX,
                              DISPLAY_ARGUMENT_INDEX, FORMAT_ARGUMENT_INDEX,
-                             string_argument_role)
+                             known_calls, read_argument_specs, string_argument_role)
 
-KNOWN_CALLS = set(DISPLAY_ARGUMENT_INDEX) | set(FORMAT_ARGUMENT_INDEX) | set(DIAGNOSTIC_ARGUMENT_INDEX) | set(C_STRING_READ_ARGUMENTS)
+KNOWN_CALLS = known_calls()
 
 
 def _unit_candidates(mapping, source: Path) -> set[str]:
@@ -52,6 +52,15 @@ def _source_root(repository: Path) -> Path:
     if snapshots:
         return snapshots[-1].resolve()
     raise ValueError("repository/source snapshot has no src/ tree")
+
+
+def _source_unit(source: Path) -> str | None:
+    source = Path(source)
+    if source.parts[:2] == ("src", "main"):
+        return "main"
+    if source.parts[:2] == ("src", "ovl") and len(source.parts) > 2:
+        return source.parts[2]
+    return None
 
 
 def _source_inputs(root: Path) -> list[tuple[str, str]]:
@@ -151,6 +160,50 @@ def _constant(node):
         if left is not None and right is not None:
             return left + right if node.op == "+" else left - right
     return None
+
+
+def _known_nonnull(node, declarations, typedefs):
+    """Return True/False only for direct, source-visible nullness facts."""
+    from pycparser import c_ast
+    constant = _constant(node)
+    if constant is not None:
+        return constant != 0
+    if isinstance(node, c_ast.Constant) and node.type == "string":
+        return True
+    if isinstance(node, c_ast.UnaryOp) and node.op == "&":
+        return True
+    if _expression_type(node, declarations, typedefs).get("kind") == "array":
+        return True
+    return None
+
+
+def _read_condition_facts(conditions, args, declarations, typedefs):
+    """Evaluate simple callee read guards without assuming runtime state."""
+    facts = []
+    for condition in conditions:
+        index = condition["argument_index"]
+        expression = args[index] if index < len(args) else None
+        if expression is None:
+            status = "missing_argument"
+            observed = None
+        elif condition["operator"] == "nonnull":
+            observed = _known_nonnull(expression, declarations, typedefs)
+            status = "proven_true" if observed is True else "proven_false" if observed is False else "unknown"
+        else:
+            observed = _constant(expression)
+            if observed is None:
+                status = "unknown"
+            elif condition["operator"] == "==":
+                status = "proven_true" if observed == condition["value"] else "proven_false"
+            elif condition["operator"] == "!=":
+                status = "proven_true" if observed != condition["value"] else "proven_false"
+            else:
+                status = "unsupported_operator"
+        facts.append({**condition, "observed": observed, "status": status})
+    aggregate = ("proven_false" if any(fact["status"] == "proven_false" for fact in facts) else
+                 "proven_true" if facts and all(fact["status"] == "proven_true" for fact in facts) else
+                 "conditional" if facts else "unconditional")
+    return facts, aggregate
 
 
 def _brief_type(type_node, typedefs):
@@ -478,6 +531,7 @@ def _process_file(root: Path, source: Path, symbols: set[str]) -> dict:
         return {"path": rel, "status": "parse_error", "error_type": type(exc).__name__,
                 "coordinate": str(getattr(exc, "coord", ""))}
     declarations, typedefs = _declarations(ast, symbols)
+    unit = _source_unit(rel)
     calls = []
     current_function = {"name": None}
     current_locals = {"names": set()}
@@ -510,11 +564,17 @@ def _process_file(root: Path, source: Path, symbols: set[str]) -> dict:
             current_locals["names"] = previous_locals
         def visit_FuncCall(self, node):
             name = node.name.name if isinstance(node.name, c_ast.ID) else None
-            if name in KNOWN_CALLS:
+            if name in known_calls(unit) and name not in current_locals["names"]:
                 args = node.args.exprs if node.args else []
+                specs = {spec["index"]: spec for spec in read_argument_specs(name, unit)}
                 for index, expression in enumerate(args):
-                    role = string_argument_role(name, index)
-                    if role is None:
+                    spec = specs.get(index)
+                    if spec is None:
+                        continue
+                    role = spec["role"]
+                    read_conditions, condition_status = _read_condition_facts(
+                        spec["conditions"], args, declarations, typedefs)
+                    if condition_status == "proven_false":
                         continue
                     ids = _ids(expression)
                     candidates = (ids & symbols) - current_locals["names"]
@@ -554,7 +614,11 @@ def _process_file(root: Path, source: Path, symbols: set[str]) -> dict:
                     calls.append({"source_path": rel, "line": coord.line if coord else None,
                                   "column": coord.column if coord else None,
                                   "source_function": current_function["name"], "callee": name,
-                                  "argument_index": index, "argument_role": role,
+                                  "source_unit": unit, "argument_index": index, "argument_role": role,
+                                  "renderer": spec["renderer"],
+                                  "renderer_status": spec.get("renderer_status", "source_verified_call"),
+                                  "callee_read_conditions": read_conditions,
+                                  "callee_read_condition_status": condition_status,
                                   "argument_expression": _redacted_expr(expression, generator),
                                   "candidate_symbols": matches,
                                   "unresolved_candidate_symbols": unresolved,

@@ -1,8 +1,12 @@
 """Invented physical-storage and typed-table context link regressions."""
 import unittest
 import tempfile
+import hashlib
+from pathlib import Path
 from unittest.mock import patch
-from tools.assets.text_export import export_text, _attach_storage_overlap_metadata, _attach_typed_dictionary_links, _attach_source_renderer_views
+from tools.assets.text_export import (export_text, _attach_storage_overlap_metadata, _attach_typed_dictionary_links,
+                                      _attach_source_renderer_views, _attach_stage_storage_links,
+                                      _attach_symbolic_buffer_bindings)
 
 
 def record(rid, start, raw, digest="same"):
@@ -11,6 +15,43 @@ def record(rid, start, raw, digest="same"):
 
 
 class LinkTests(unittest.TestCase):
+    def test_stage_links_distinguish_control_storage_and_display_body(self):
+        full, body = b"g\x82\xa0\0", b"\x82\xa0"
+        source_full, source_body = record("full", 4, full), record("body", 5, body + b"\0")
+        wrong_hash = record("other-release", 4, full, "other")
+        item = {"id": "stage", "source_path": "TEST", "source_sha256": "same",
+                "offset": 5, "full_offset": 4, "full_raw_hex": full.hex(), "text": {"raw_hex": body.hex()}}
+        catalog = {"source_inventory": {"records": [source_full, source_body, wrong_hash]},
+                   "stage_text_banks": [{"status": "exported", "records": [item]}]}
+        _attach_stage_storage_links(catalog)
+        self.assertEqual(source_full["category"], "structured_stage_storage")
+        self.assertEqual(source_body["category"], "display")
+        self.assertEqual(wrong_hash["category"], "unknown")
+        self.assertEqual(source_full["raw_hex"], full.hex())
+        self.assertEqual(item["source_inventory_record_ids"], ["body", "full"])
+        _attach_stage_storage_links(catalog)
+        self.assertEqual(len(source_full["stage_bank_contexts"]), 1)
+        catalog["stage_text_banks"][0]["status"] = "source_evidence_not_verified"
+        _attach_stage_storage_links(catalog)
+        self.assertEqual(source_full["category"], "unknown")
+        self.assertEqual(source_body["category"], "unknown")
+        self.assertEqual(source_full["stage_bank_contexts"], [])
+        self.assertEqual(item["source_inventory_record_ids"], [])
+
+    def test_symbolic_bindings_remain_unknown_and_are_revoked_without_proof(self):
+        token = {"kind": "substitution", "code": "M", "raw_hex": "4d"}
+        catalog = {"tokens": [token], "symbolic_substitution_contract": {
+            "status": "verified_source_and_original_image_pins",
+            "buffers": [{"symbol": "BUFFER", "address": 0x1000, "initial_bytes": 4}],
+            "marker_branches": [{"marker": "M", "buffer_symbol": "BUFFER"}]}}
+        _attach_symbolic_buffer_bindings(catalog)
+        self.assertEqual(token["source_buffer_binding"]["runtime_contents"], "unknown")
+        self.assertFalse(token["source_buffer_binding"]["capacity_is_translation_limit"])
+        self.assertEqual(token["raw_hex"], "4d")
+        catalog["symbolic_substitution_contract"]["status"] = "source_contract_not_verified"
+        _attach_symbolic_buffer_bindings(catalog)
+        self.assertNotIn("source_buffer_binding", token)
+
     def test_source_export_keeps_unresolved_evidence_and_enriched_font_links(self):
         site = {"source_site": {"call": "load_string", "call_argument_index": 0}, "raw_hex": "8140"}
         runtime_token = {"kind": "glyph", "raw_hex": "8140"}
@@ -26,6 +67,7 @@ class LinkTests(unittest.TestCase):
 
         def mutation_report(data, repository, files_root):
             data["runtime_text_mutations"] = {"blocked": [], "unresolved_candidate_ids": ["invented-write"],
+                                              "source_write_inventory": {"opaque_value_dependencies": [{}]},
                                               "rules": [{"targets": [{"conditional_runtime_view": {
                                                   "text": {"tokens": [runtime_token]}}}]}]}
             data["font"] = {"id": "font:INVENTED", "source_path": "INVENTED", "source_sha256": "synthetic",
@@ -34,7 +76,6 @@ class LinkTests(unittest.TestCase):
             return data
 
         def binary_report(data, repository, files_root):
-            mips_report(data, repository, files_root)
             data["binary_text_supplement"] = {"records_added": 0, "blocked": [], "calls_considered": 2,
                 "resolutions": [{"status": "recovered_verified_label_initial_string"},
                                 {"status": "initially_zero_runtime_buffer"}]}
@@ -43,7 +84,8 @@ class LinkTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, \
                 patch("tools.assets.text_source.inventory_source_text", return_value=inventory), \
                 patch("tools.assets.text_context.enrich_source_context", return_value=inventory), \
-                patch("tools.assets.text_binary.enrich_binary_text", side_effect=binary_report), \
+                patch("tools.assets.text_mips.enrich_mips_context", side_effect=mips_report), \
+                patch("tools.assets.text_binary._enrich_binary_text_from_reports", side_effect=binary_report), \
                 patch("tools.assets.script_mutations.enrich_script_mutations", side_effect=mutation_report):
             catalog = export_text(directory, profiles=[], include_source=True, source_repository=directory)
         self.assertIs(catalog["source_inventory"], inventory)
@@ -51,6 +93,7 @@ class LinkTests(unittest.TestCase):
         self.assertEqual(catalog["text_completeness"]["source_mips_blockers"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_mips_constant_targets"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_runtime_write_candidates"], 1)
+        self.assertEqual(catalog["text_completeness"]["unresolved_opaque_value_dependencies"], 1)
         self.assertEqual(site["renderer_view"]["tokens"][0]["font_reference"]["id"], "font:INVENTED:g0000")
         self.assertEqual(runtime_token["font_reference"]["id"], "font:INVENTED:g0000")
 
@@ -87,6 +130,54 @@ class LinkTests(unittest.TestCase):
         self.assertEqual(item["source_inventory_record_ids"], ["good"])
         self.assertEqual(good["category"], "place")
         self.assertTrue(all(r["category"] == "unknown" for r in (prefix, wrong_hash, wrong_address)))
+
+    def test_date_gift_dictionary_context_is_linked_as_typed_item_name(self):
+        raw = b"\x81\x40"
+        source_record = record("date-source", 0x2B108, raw, "date-sha")
+        source_record["source"]["path"] = "CDROM/EXEDIR/DATE.EXN"
+        item = {"id": "date-gift-slot", "source_path": "CDROM/EXEDIR/DATE.EXN",
+                "offset": 0x2B108, "source_sha256": "date-sha", "table": "gift_names",
+                "index": 8, "context": {"girl_index": 0, "year_index": 2, "answer_index": 2},
+                "text": {"raw_hex": raw.hex()}}
+        catalog = {"source_inventory": {"records": [source_record]},
+                   "dictionaries": [{"profile": {"evidence": ["synthetic source evidence"]},
+                                     "records": [item]}]}
+        _attach_typed_dictionary_links(catalog)
+        self.assertEqual(source_record["category"], "item_name")
+        self.assertEqual(source_record["typed_dictionary_contexts"][0]["index_context"], item["context"])
+        self.assertEqual(item["source_inventory_record_ids"], ["date-source"])
+
+    def test_actor_resource_has_no_whole_file_absence_claim_and_custom_profiles_stay_explicit(self):
+        payload = bytes(range(16))
+        resource = {"id": "fixture-resource", "path": "CDROM/MASTER/TEAR.BIN",
+                    "sha256": hashlib.sha256(payload).hexdigest(), "size": len(payload),
+                    "load_address": 0x1000, "actor_resource_roots": [0x1000],
+                    "actor_halfword_address": 0x1004, "status": "fixture_actor_resource"}
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            master = root / "CDROM/MASTER"
+            speech = root / "CDROM/SPEAKTST"
+            master.mkdir(parents=True)
+            speech.mkdir(parents=True)
+            (master / "TEAR.BIN").write_bytes(payload)
+            (speech / "TEST.BIN").write_bytes(payload)
+            with patch("tools.assets.text_export.PROFILES", []), \
+                    patch("tools.assets.text_export.RESOURCE_PROFILES", [resource]), \
+                    patch("tools.assets.text_export.NON_TEXT_PROFILES", []), \
+                    patch("tools.assets.text_export.NAME_KAN_PROFILE", {"path": "missing"}), \
+                    patch("tools.assets.text_export.DICTIONARY_PROFILES", []), \
+                    patch("tools.assets.text_export.DATE_TABLE_PROFILE", {"path": "missing"}):
+                default_catalog = export_text(root)
+                tear = next(item for item in default_catalog["files"] if item["path"] == resource["path"])
+                self.assertEqual(tear["status"], "source_resource")
+                self.assertFalse(tear["whole_file_text_absence_proven"])
+                self.assertEqual(next(item for item in default_catalog["files"]
+                                      if item["path"] == "CDROM/SPEAKTST/TEST.BIN")["status"], "unsupported")
+                custom_catalog = export_text(root, profiles=[])
+                self.assertEqual(next(item for item in custom_catalog["files"]
+                                      if item["path"] == resource["path"])["status"], "unsupported")
+                self.assertNotIn("dictionaries", custom_catalog)
+                self.assertEqual(custom_catalog["source_resource_files"], 0)
 
 
 if __name__ == "__main__":

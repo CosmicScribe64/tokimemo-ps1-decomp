@@ -129,7 +129,8 @@ def _string_bytes(literal: str) -> bytes:
 
 
 def _category(raw: bytes, context: str = "", function: str | None = None,
-              call: str | None = None, argument_index: int | None = None) -> tuple[str, str]:
+              call: str | None = None, argument_index: int | None = None,
+              unit: str | None = None) -> tuple[str, str]:
     try:
         value = raw.decode("shift_jis", errors="strict")
     except UnicodeError:
@@ -138,7 +139,7 @@ def _category(raw: bytes, context: str = "", function: str | None = None,
         return "path", "path-shaped literal"
     if raw in (b"", b"\0"):
         return "empty_string_or_terminator", "empty string literal or terminator-only extent"
-    role = string_argument_role(call, argument_index)
+    role = string_argument_role(call, argument_index, unit)
     if role in {"format", "diagnostic"}:
         return "debug_or_format", "format/diagnostic call site"
     if function in {"get_g_name", "get_p_name"}:
@@ -578,7 +579,7 @@ def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
                 function_literal_ordinals[function_key] = function_literal_ordinals.get(function_key, 0) + 1
                 function_ordinal = function_literal_ordinals[function_key]
             context = code_mask[line_start:] if line_end < 0 else code_mask[line_start:line_end]
-            category, reason = _category(raw, context, function, call_name, call_argument_index)
+            category, reason = _category(raw, context, function, call_name, call_argument_index, unit)
             declaration_prefix = prefix_context
             brace_start = declaration_prefix.rfind("{")
             table_symbol = None
@@ -593,7 +594,9 @@ def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
                             "link_unit": unit,
                             "source_site": {"path": source_path,
                                             "line": line, "ordinal_on_file": ordinal,
-                                            "byte_offset": start,
+                                            "byte_offset": len(text[:start].encode("utf-8")),
+                                            "character_offset": start,
+                                            "byte_offset_basis": "utf8_bytes",
                                             "function_literal_ordinal": function_ordinal,
                                             "call": call_name,
                                             "call_argument_index": call_argument_index,
@@ -634,7 +637,7 @@ def _c_literals(src_root: Path) -> tuple[list[dict], list[dict], list[dict]]:
             call_name = call_info["call"] if call_info else None
             argument_index = call_info["argument_index"] if call_info else None
             function = _enclosing_function(spans, token["start"])
-            role = string_argument_role(call_name, argument_index)
+            role = string_argument_role(call_name, argument_index, unit)
             is_value = _identifier_is_value_operand(
                 call_info.get("argument_expression") if call_info else None, symbol)
             semantic = "display" if role == "display" else \
@@ -674,12 +677,37 @@ def _asm_groups(asm_root: Path):
         lines = source.splitlines()
         current = None
         pending = None
-        labels = []
+        active_label = None
         for line_no, line in enumerate(lines, 1):
             match = ASM_DIRECTIVE.search(line)
             address = ADDR_COMMENT.search(line)
             line_address = int(address.group(1), 16) if address else None
             code = re.sub(r"/\*.*?\*/", "", line).split("#", 1)[0].strip()
+
+            declaration = re.match(r"^(dlabel|nonmatching)\s+([A-Za-z_][A-Za-z_0-9]*)\b", code)
+            end_label = re.match(r"^enddlabel\s+([A-Za-z_][A-Za-z_0-9]*)\b", code)
+            if declaration or end_label:
+                if pending is not None:
+                    pending.pop("next_address", None)
+                    yield pending
+                    pending = None
+            if declaration:
+                kind, name = declaration.groups()
+                # `nonmatching` is a segment boundary hint, not an exact data
+                # label. The following dlabel supplies the usable symbol.
+                active_label = ({"label": name, "address": line_address,
+                                 "alignment_seen": False} if kind == "dlabel" else None)
+                if line_address is not None:
+                    current = line_address
+                continue
+            if end_label:
+                if active_label and active_label["label"] == end_label.group(1):
+                    active_label = None
+                continue
+            if active_label and active_label["address"] is None and line_address is not None and \
+                    code.startswith(".") and not re.match(r"^\.(?:align|balign|p2align)\b", code) and \
+                    not active_label["alignment_seen"]:
+                active_label["address"] = line_address
             if pending is not None and line_address is not None and pending.get("next_address") is not None:
                 if line_address != pending["next_address"]:
                     pending.pop("next_address", None)
@@ -689,10 +717,6 @@ def _asm_groups(asm_root: Path):
                 pending.pop("next_address", None)
                 yield pending
                 pending = None
-            if re.match(r"^(?:dlabel|nonmatching)\s+", code):
-                label = code.split()[-1]
-                if label not in labels:
-                    labels.append(label)
             if match:
                 try:
                     chunk = _string_bytes(match.group(2))
@@ -704,10 +728,21 @@ def _asm_groups(asm_root: Path):
                     chunk += b"\0"
                 if pending is None:
                     start_address = line_address if line_address is not None else current
+                    if active_label and active_label["address"] is None and line_address is not None and \
+                            not active_label["alignment_seen"]:
+                        active_label["address"] = line_address
+                    exact_labels = [active_label["label"]] if active_label and \
+                        active_label["address"] == start_address else []
+                    containing_labels = []
+                    if active_label and isinstance(active_label["address"], int) and \
+                            isinstance(start_address, int) and active_label["address"] < start_address:
+                        containing_labels = [{"label": active_label["label"],
+                                              "address": active_label["address"],
+                                              "relative_offset": start_address - active_label["address"]}]
                     pending = {"path": path, "line": line_no, "address": start_address,
-                               "chunks": [], "raw": bytearray(), "labels": list(labels),
+                               "chunks": [], "raw": bytearray(), "labels": exact_labels,
+                               "containing_labels": containing_labels,
                                "next_address": start_address}
-                    labels.clear()
                 pending["chunks"].append({"line": line_no, "directive": match.group(1)})
                 pending["raw"].extend(chunk)
                 if pending["next_address"] is not None:
@@ -718,8 +753,10 @@ def _asm_groups(asm_root: Path):
                     yield pending
                     pending = None
                 continue
-            if code and re.match(r"^\.(?:byte|word|half|short|long|float|double|space|zero|align)\b", code):
+            if code and re.match(r"^\.(?:byte|word|half|short|long|float|double|space|zero|align|balign|p2align)\b", code):
                 # The next address cannot be inferred safely through an unparsed data directive.
+                if active_label and re.match(r"^\.(?:align|balign|p2align)\b", code):
+                    active_label["alignment_seen"] = True
                 current = None
             elif line_address is not None and code:
                 current = line_address
@@ -864,7 +901,7 @@ def _c_symbol_references(src_root: Path, labels: set[str]) -> tuple[list[dict], 
                     re.escape(symbol) + r"\b", source_line)
                 if declaration or (call_name is None and function is None):
                     continue
-                role = string_argument_role(call_name, argument_index)
+                role = string_argument_role(call_name, argument_index, unit)
                 semantic_category_candidate = None
                 is_value = _identifier_is_value_operand(
                     call_info.get("argument_expression") if call_info else None, symbol)
@@ -1026,7 +1063,8 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
                                 "status": record["source_decode_status"],
                                 "reason": "binary extent does not have a strict Shift-JIS round-trip"})
         site = {"path": asm_path.relative_to(repo).as_posix(), "line": group["line"],
-                "labels": group["labels"], "chunks": group["chunks"]}
+                "labels": group["labels"], "containing_labels": group.get("containing_labels", []),
+                "chunks": group["chunks"]}
         if site not in record["assembly_sites"]:
             record["assembly_sites"].append(site)
         if status != "verified":
@@ -1061,6 +1099,7 @@ def inventory_source_text(repository=REPOSITORY, files_root=None, output_path=No
                                         "evidence": "next_original_binary_byte_is_zero"},
                          "assembly_sites": [{"path": asm_path.relative_to(repo).as_posix(),
                                              "line": group["line"], "labels": group["labels"],
+                                             "containing_labels": group.get("containing_labels", []),
                                              "kind": "canonical_nul_terminated_alias"}],
                          "reference_sites": [], "reference_status": "unreferenced"}
                 records_by_extent[alias_key] = alias

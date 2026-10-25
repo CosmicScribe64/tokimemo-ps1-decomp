@@ -59,6 +59,10 @@ class ScriptCoverageTests(unittest.TestCase):
         self.assertEqual(other["profile_count"], 21)
         self.assertEqual(other["missing_profile_roots"], 0)
         self.assertEqual(other["profile_roots_not_in_source"], 0)
+        master = result["master_literal_initializers"]
+        self.assertEqual(master["profile_count"], 8)
+        self.assertEqual(master["missing_profile_roots"], 0)
+        self.assertEqual(master["profile_roots_not_in_source"], 0)
         self.assertTrue(all(item["missing_expected_roots"] == 0
                             and item["unexpected_profile_roots"] == 0
                             for item in result["event_distribution"]))

@@ -219,9 +219,12 @@ def audit_source_roots(repo_root: Path, profiles: list[dict] | None = None) -> d
 
     simple_profiles = [p for p in profiles
                        if "/DATE_" not in p["path"] and "/EVENT_" not in p["path"]
-                       and "/BUNKA/" not in p["path"]]
+                       and "/BUNKA/" not in p["path"] and "/MASTER/" not in p["path"]]
     simple_audit = _audit_simple_source_profiles(repo_root, profiles, simple_profiles)
+    master_audit = _audit_simple_source_profiles(
+        repo_root, profiles, [p for p in profiles if "/MASTER/" in p["path"]])
     return {
+        "master_literal_initializers": master_audit,
         "date_fillers": date_results,
         "date_initialized_triad_count": sum(item["initialized_triad_count"] for item in date_results),
         "date_directly_consumed_triad_count": sum(item["directly_consumed_triad_count"] for item in date_results),

@@ -24,6 +24,34 @@ def jal(address):
 
 
 class MipsContextTests(unittest.TestCase):
+    def test_multiple_read_arguments_keep_distinct_contexts_for_shared_storage(self):
+        words = [lui(4, TEXT >> 16), ori(4, 4, TEXT & 0xFFFF), ori(5, 4, 0),
+                 ori(6, 4, 0), ori(7, 0, 3), jal(CALLEE), 0]
+        result = self.run_case(words, "x_taku_string_set")
+        contexts = result["records"][0]["mips_contexts"]
+        self.assertEqual({context["argument_index"] for context in contexts}, {0, 1, 2})
+        self.assertEqual(len(contexts), 3)
+        third = next(context for context in contexts if context["argument_index"] == 2)
+        self.assertTrue(all(guard["status"] == "proven_true" for guard in third["callee_read_conditions"]))
+        self.assertIn(BASE + 16, {word["pc"] for word in third["instruction_evidence"]})
+
+    def test_conditional_read_is_skipped_when_count_or_pointer_is_false(self):
+        for count, third_pointer in ((2, True), (3, False)):
+            with self.subTest(count=count, third_pointer=third_pointer):
+                words = [lui(4, TEXT >> 16), ori(4, 4, TEXT & 0xFFFF), ori(5, 4, 0),
+                         ori(6, 4 if third_pointer else 0, 0), ori(7, 0, count), jal(CALLEE), 0]
+                result = self.run_case(words, "x_taku_string_set")
+                self.assertEqual({context["argument_index"] for context in result["records"][0]["mips_contexts"]}, {0, 1})
+
+    def test_unknown_guard_stays_conditional_and_overlay_name_does_not_leak(self):
+        words = [lui(4, TEXT >> 16), ori(4, 4, TEXT & 0xFFFF), ori(5, 4, 0),
+                 ori(6, 4, 0), jal(CALLEE), 0]
+        result = self.run_case(words, "x_taku_string_set")
+        third = next(context for context in result["records"][0]["mips_contexts"] if context["argument_index"] == 2)
+        self.assertEqual(third["callee_read_conditions"][0]["status"], "unknown")
+        result = self.run_case([lui(6, TEXT >> 16), ori(6, 6, TEXT & 0xFFFF), jal(CALLEE), 0], "func_8013E934")
+        self.assertEqual(result["mips_context"]["contexts"], 0)
+
     def fixture(self, root, words, callee="printf", labels=None):
         for directory in ("asm/matchings/main/unit", "config", "disc/files"):
             (root / directory).mkdir(parents=True)

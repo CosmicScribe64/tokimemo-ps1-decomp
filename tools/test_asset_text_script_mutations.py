@@ -157,6 +157,169 @@ class MutationTests(unittest.TestCase):
             self.assertTrue(any(row["syntactic_guard_context"] == ["flag"] for row in report["candidates"]))
             self.assertNotIn("INVENTED", str(report))
 
+    def candidate_fixture(self, source):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / "src/main/unit.c"
+            path.parent.mkdir(parents=True)
+            path.write_text(source)
+            report = inventory_mutation_candidates(root, {"files": []}, files=["src/main/unit.c"])
+            self.assertEqual(report["blocked"], [])
+            return report
+
+    def test_array_selectors_and_member_tokens_do_not_seed_aliases(self):
+        report = self.candidate_fixture(
+            "typedef unsigned char u8; extern u8 **table; extern u8 *other;\n"
+            "extern int i,j,flag,text; struct Box {u8 *text;}; extern struct Box box;\n"
+            "void sndi(u8*,int,int);\nvoid f(void) {\n"
+            "u8 *p=table[i]; u8 *q=flag?table[i]:table[j];\n"
+            "i++; j++; flag++; text++; other[i]=3; p[0]=1; q[0]=2; box.text[0]=4;\n"
+            "sndi(table[i],0,0); sndi(box.text,0,0); }\n")
+        destinations = {row["destination_expression"] for row in report["candidates"]}
+        self.assertFalse(destinations & {"i", "j", "flag", "text", "other[i]"})
+        self.assertTrue({"p[0]", "q[0]", "box.text[0]"} <= destinations)
+
+    def test_opaque_helper_returns_and_all_copy_calls_remain_unresolved(self):
+        report = self.candidate_fixture(
+            "typedef unsigned char u8; extern u8 **table; extern int i; extern u8 *out;\n"
+            "void sndi(u8*,int,int); u8 *opaque(u8*); u8 *numeric_helper(int);\n"
+            "void strcpy(u8*,u8*);\nvoid f(void) {\n"
+            "u8 *p=table[i]; u8 *q=opaque(p); q[0]=1; i++;\n"
+            "sndi(table[i],0,0); sndi(numeric_helper(i),0,0); strcpy(out,p); }\n")
+        self.assertTrue(any(row["destination_expression"] == "q[0]" for row in report["candidates"]))
+        self.assertFalse(any(row["destination_expression"] == "i" for row in report["candidates"]))
+        self.assertTrue(any(row["callee"] == "strcpy" for row in report["candidates"]))
+        opaque = report["opaque_value_dependencies"]
+        self.assertEqual({row["role"] for row in opaque}, {"initializer_value", "display_argument"})
+        self.assertTrue(any(row["destination_expression"] == "q" for row in opaque))
+        self.assertTrue(all(row["status"] == "opaque_return_value_not_proven_alias" for row in opaque))
+
+    def test_comma_value_uses_final_operand_and_subscript_calls_are_still_visited(self):
+        report = self.candidate_fixture(
+            "typedef unsigned char u8; extern u8 *text_buffer; extern int i;\n"
+            "void sndi(u8*,int,int); void strcpy(u8*,u8*);\nvoid f(void) {\n"
+            "u8 *q=(i,text_buffer); i++; q[0]=1;\n"
+            "sndi((i,text_buffer),0,0); text_buffer[(strcpy(text_buffer,text_buffer),i)]=2; }\n")
+        self.assertFalse(any(row["destination_expression"] == "i" for row in report["candidates"]))
+        self.assertTrue(any(row["destination_expression"] == "q[0]" for row in report["candidates"]))
+        self.assertEqual(sum(row["callee"] == "strcpy" for row in report["candidates"]), 1)
+
+    def test_opaque_write_base_retained_without_aliasing_its_selector(self):
+        report = self.candidate_fixture(
+            "typedef unsigned char u8; extern u8 *text_buffer,*other; extern int i;\n"
+            "u8 *opaque(u8*); int selector(u8*); void sndi(u8*,int,int);\n"
+            "void f(void) { sndi(text_buffer,0,0); opaque(text_buffer)[0]=1;\n"
+            "opaque(text_buffer)[1]++; other[selector(text_buffer)]=2; }\n")
+        destinations = {row["destination_expression"] for row in report["candidates"]}
+        self.assertTrue({"opaque(text_buffer)[0]", "opaque(text_buffer)[1]"} <= destinations)
+        self.assertNotIn("other[selector(text_buffer)]", destinations)
+        opaque = report["opaque_value_dependencies"]
+        self.assertEqual(sum(row["role"] == "write_destination" for row in opaque), 3)
+
+    def test_text_derived_selectors_are_explicit_unresolved_address_dependencies(self):
+        report = self.candidate_fixture(
+            "typedef unsigned char u8; extern u8 *text_ptr,*other; extern int i,j;\n"
+            "void sndi(u8*,int,int); void f(void) {\n"
+            "i=(int)text_ptr; sndi(text_ptr,0,0); other[(int)text_ptr]=1;\n"
+            "other[i]=2; other[j]=3; other[i]++; }\n")
+        destinations = {row["destination_expression"] for row in report["candidates"]}
+        self.assertFalse(destinations & {"other[(int) text_ptr]", "other[i]", "other[j]"})
+        rows = report["unmodeled_address_dependencies"]
+        self.assertEqual(len(rows), 3)
+        self.assertEqual({tuple(row["text_derived_selector_symbols"]) for row in rows}, {("text_ptr",), ("i",)})
+        self.assertTrue(all(row["status"] == "unmodeled_address_dependency_not_proven_text_write" for row in rows))
+
+    def test_opaque_and_address_counts_are_exposed_in_completeness(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / "src/main/unit.c"
+            path.parent.mkdir(parents=True)
+            path.write_text("typedef unsigned char u8; extern u8 *text_ptr,*other;\n"
+                            "u8 *opaque(u8*); void sndi(u8*,int,int);\n"
+                            "void f(void) { sndi(text_ptr,0,0); sndi(opaque(text_ptr),0,0);\n"
+                            "other[(int)text_ptr]=1; }\n")
+            catalog = {"files": []}
+            result = enrich_script_mutations(catalog, root, root, specs=[], source_pins={},
+                                             candidate_files=["src/main/unit.c"])["runtime_text_mutations"]
+            self.assertEqual(result["coverage"]["opaque_value_dependencies"], 1)
+            self.assertEqual(result["coverage"]["unmodeled_address_dependencies"], 1)
+            self.assertEqual(result["completeness"]["unresolved_opaque_dependencies"], 1)
+            self.assertEqual(result["completeness"]["unresolved_address_dependencies"], 1)
+            self.assertFalse(result["completeness"]["complete"])
+
+    def selector_fixture(self, root, spec):
+        base = 0x80041000
+        code = bytes.fromhex("0800e00300000000")
+        binary = bytearray(0x820)
+        binary[0x800:0x808] = code
+        binary[0x810:0x814] = base.to_bytes(4, "little")
+        original = root / "disc/files/SLPM_86.053"
+        original.write_bytes(binary)
+        asm_path = "asm/matchings/main/minimal.s"
+        table_path = "asm/data/minimal.data.s"
+        for path, text in ((asm_path, "glabel minimal\n/* 0 80041000 0800E003 */ jr $ra\n"
+                          "/* 4 80041004 00000000 */ nop\nendlabel minimal\n"),
+                           (table_path, "dlabel table\n/* 10 80041010 00100480 */ .word minimal\nenddlabel table\n")):
+            target = root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(text)
+        spec["selection"] = "source_proved_conditional_stage2_route"
+        spec["selector_contract"] = {
+            "indices": [0], "source_pins": {}, "binary_pins": {"SLPM_86.053": hashlib.sha256(binary).hexdigest()},
+            "units": {"SLPM_86.053": {"load_address": base, "file_bias": 0x800}},
+            "assembly_pins": {asm_path: hashlib.sha256((root / asm_path).read_bytes()).hexdigest()},
+            "dispatch_source": "SLPM_86.053", "data_assembly": {
+                "path": table_path, "sha256": hashlib.sha256((root / table_path).read_bytes()).hexdigest(),
+                "label": "table", "address": base + 16, "word_count": 1,
+                "raw_sha256": hashlib.sha256(base.to_bytes(4, "little")).hexdigest(), "required_slots": {0: base}},
+            "assumptions": ["invented conditional route"], "excluded_roots": {1: "not on invented route"},
+            "root_conditions": {0: ["invented selector == 0"]}}
+
+    def test_conditional_selector_contract_includes_original_word_proofs_and_conditions(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            catalog, spec, pins, inputs = self.fixture(root)
+            self.selector_fixture(root, spec)
+            result = self.run_patch(root, catalog, spec, pins, inputs)
+            self.assertEqual(result["blocked"], [])
+            rule = result["rules"][0]
+            self.assertFalse(rule["selector_route"]["runtime_reachability_proven"])
+            self.assertEqual(rule["selector_route"]["dispatch"]["words"], [0x80041000])
+            self.assertEqual(len(rule["selector_route"]["function_instruction_evidence"][0]["instructions"]), 2)
+            self.assertIn("invented conditional route", rule["targets"][0]["conditional_runtime_view"]["conditions"])
+            self.assertIn("invented selector == 0", rule["targets"][0]["conditional_runtime_view"]["conditions"])
+
+    def test_selector_contract_rejects_changed_roots_code_dispatch_and_source(self):
+        for problem in ("roots", "binary", "instruction", "dispatch", "dispatch_digest", "dispatch_bytes", "source"):
+            with self.subTest(problem=problem), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                catalog, spec, pins, inputs = self.fixture(root)
+                self.selector_fixture(root, spec)
+                contract = spec["selector_contract"]
+                if problem == "roots":
+                    spec["indices"] = [1]
+                elif problem == "binary":
+                    contract["binary_pins"]["SLPM_86.053"] = "0" * 64
+                elif problem == "instruction":
+                    path = root / next(iter(contract["assembly_pins"]))
+                    path.write_text(path.read_text().replace("0800E003", "00000000"))
+                    contract["assembly_pins"][path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+                elif problem == "dispatch":
+                    contract["data_assembly"]["required_slots"] = {0: 0}
+                elif problem == "dispatch_digest":
+                    contract["data_assembly"]["raw_sha256"] = "0" * 64
+                elif problem == "dispatch_bytes":
+                    path = inputs / "SLPM_86.053"
+                    data = bytearray(path.read_bytes())
+                    data[0x810] ^= 1
+                    path.write_bytes(data)
+                    contract["binary_pins"]["SLPM_86.053"] = hashlib.sha256(data).hexdigest()
+                else:
+                    contract["source_pins"][spec["source"]] = "0" * 64
+                result = self.run_patch(root, catalog, spec, pins, inputs)
+                self.assertTrue(result["blocked"])
+                self.assertEqual(result["rules"][0]["targets"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

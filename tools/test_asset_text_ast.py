@@ -8,6 +8,105 @@ from tools.assets.text_ast import inventory_text_consumers, source_input_fingerp
 
 
 class TextAstTests(unittest.TestCase):
+    def test_scoped_renderer_aliases_and_callee_guard_facts(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            main = root / "src/main/ui.c"
+            rpg = root / "src/ovl/RPG_BAT/ui.c"
+            other = root / "src/ovl/OTHER/ui.c"
+            for path in (main, rpg, other):
+                path.parent.mkdir(parents=True, exist_ok=True)
+            main.write_text(
+                "typedef unsigned char u8; typedef int s32;\n"
+                "extern u8 *title; extern u8 *first; extern u8 *second; extern u8 *third;\n"
+                "extern s32 dynamic_count;\n"
+                "void func_80066104(u8 *); void x_taku_string_set(s32,s32,s32,s32);\n"
+                "void f(void) { func_80066104(title); x_taku_string_set(first,second,third,3);\n"
+                "x_taku_string_set(first,second,third,2);\n"
+                "x_taku_string_set(first,second,third,dynamic_count); }\n",
+                encoding="utf-8")
+            rpg.write_text(
+                "typedef unsigned char u8; typedef int s32; extern u8 *rpg_text;\n"
+                "void func_8013E934(s32,s32,s32);\n"
+                "void f(void) { func_8013E934(1,2,(s32)rpg_text); }\n",
+                encoding="utf-8")
+            other.write_text(
+                "typedef unsigned char u8; typedef int s32; extern u8 *other_text;\n"
+                "void func_8013E934(s32,s32,s32);\n"
+                "void f(void) { func_8013E934(1,2,(s32)other_text); }\n",
+                encoding="utf-8")
+            candidates = {
+                "main": {"title", "first", "second", "third", "dynamic_count"},
+                "RPG_BAT": {"rpg_text"},
+                "OTHER": {"other_text"},
+            }
+            result = inventory_text_consumers(
+                root, candidates,
+                ["src/main/ui.c", "src/ovl/RPG_BAT/ui.c", "src/ovl/OTHER/ui.c"])
+            main_calls, rpg_calls, other_calls = [entry["calls"] for entry in result["files"]]
+            wrapper = next(call for call in main_calls if call["callee"] == "func_80066104")
+            self.assertEqual(wrapper["source_unit"], "main")
+            self.assertEqual(wrapper["renderer"], "set_kanji_string")
+            self.assertEqual(wrapper["candidate_symbols"], ["title"])
+            conditional_calls = [call for call in main_calls
+                                 if call["callee"] == "x_taku_string_set"
+                                 and call["argument_index"] == 2]
+            self.assertEqual(len(conditional_calls), 2)
+            constant_true = next(call for call in conditional_calls
+                                 if call["callee_read_condition_status"] == "conditional"
+                                 and call["callee_read_conditions"][0]["status"] == "proven_true")
+            self.assertEqual(constant_true["candidate_symbols"], ["third"])
+            self.assertEqual(constant_true["callee_read_conditions"][1]["status"], "unknown")
+            dynamic = next(call for call in conditional_calls
+                           if call["callee_read_conditions"][0]["status"] == "unknown")
+            self.assertEqual(dynamic["candidate_symbols"], ["third"])
+            self.assertEqual(dynamic["callee_read_condition_status"], "conditional")
+            self.assertFalse(any(call["callee"] == "x_taku_string_set" and
+                                 call["argument_index"] == 2 and
+                                 call["callee_read_condition_status"] == "proven_false"
+                                 for call in main_calls))
+            self.assertEqual(len(rpg_calls), 1)
+            self.assertEqual(rpg_calls[0]["source_unit"], "RPG_BAT")
+            self.assertEqual(rpg_calls[0]["argument_role"], "display")
+            self.assertEqual(rpg_calls[0]["candidate_symbols"], ["rpg_text"])
+            self.assertEqual(other_calls, [])
+
+    def test_renderer_alias_roles_are_unit_scoped_in_ast_inventory(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            rpg = root / "src/ovl/RPG_BAT/unit.c"
+            other = root / "src/ovl/OTHER/unit.c"
+            rpg.parent.mkdir(parents=True)
+            other.parent.mkdir(parents=True)
+            source = (
+                "typedef unsigned char u8; typedef int s32; extern u8 *text;\n"
+                "void func_8013E934(s32,s32,s32); void get_p_name(s32);\n"
+                "void f(void) { func_8013E934(0,0,(s32)text); get_p_name((s32)text); }\n")
+            rpg.write_text(source, encoding="utf-8")
+            other.write_text(source, encoding="utf-8")
+            result = inventory_text_consumers(
+                root, {"RPG_BAT": {"text"}, "OTHER": {"text"}},
+                ["src/ovl/RPG_BAT/unit.c", "src/ovl/OTHER/unit.c"])
+            rpg_calls, other_calls = [file["calls"] for file in result["files"]]
+            self.assertEqual(len(rpg_calls), 1)
+            self.assertEqual(rpg_calls[0]["callee"], "func_8013E934")
+            self.assertEqual(rpg_calls[0]["candidate_symbols"], ["text"])
+            self.assertEqual(other_calls, [])
+
+    def test_local_function_pointer_does_not_inherit_global_renderer_role(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root / "src/main/local_shadow.c"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                "typedef unsigned char u8; extern u8 *text;\n"
+                "void local(void) { void (*func_80066104)(u8 *);\n"
+                "func_80066104(text); }\n",
+                encoding="utf-8")
+            result = inventory_text_consumers(
+                root, {"main": {"text"}}, ["src/main/local_shadow.c"])
+            self.assertEqual(result["files"][0]["calls"], [])
+
     def test_source_input_fingerprint_invalidates_for_source_and_header_edits(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

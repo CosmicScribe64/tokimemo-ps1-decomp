@@ -11,7 +11,8 @@ import re
 from pathlib import Path
 
 from .text_source import REPOSITORY, _read_original
-from .text_renderers import DISPLAY_ARGUMENT_INDEX, FORMAT_ARGUMENT_INDEX, DIAGNOSTIC_ARGUMENT_INDEX
+from .text_renderers import (DISPLAY_ARGUMENT_INDEX, FORMAT_ARGUMENT_INDEX, DIAGNOSTIC_ARGUMENT_INDEX,
+                             read_argument_specs)
 
 INSTRUCTION = re.compile(r"/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+([0-9A-Fa-f]{8})\s*\*/\s*([^\s]+)")
 LABEL = re.compile(r"^\s*(glabel|jlabel|dlabel|endlabel|enddlabel)\s+(\S+)|^\s*([.$A-Za-z_][\w.$]*):")
@@ -22,6 +23,43 @@ ROLES.update({name: (argument, "debug_or_format", name) for name, argument in FO
 ROLES.update({name: (argument, "debug_or_format", "ascii_literal")
               for name, argument in DIAGNOSTIC_ARGUMENT_INDEX.items()})
 CLASSIFICATION_BASIS = "potential static text-argument call site from verified original MIPS instructions"
+
+
+def _text_read_specs(call, unit=None):
+    for spec in read_argument_specs(call, unit):
+        if spec["role"] not in {"display", "format", "diagnostic"}:
+            continue
+        renderer = "ascii_literal" if spec["role"] == "diagnostic" else spec["renderer"]
+        yield {**spec, "category": "display" if spec["role"] == "display" else "debug_or_format",
+               "renderer": renderer,
+               "renderer_status": spec.get("renderer_status", "source_verified_call"),
+               "read_role": "format_string" if spec["role"] == "format" else
+                            "diagnostic_literal" if spec["role"] == "diagnostic" else "display_string"}
+
+
+def text_argument_spec(call, argument_index, unit=None):
+    return next((spec for spec in _text_read_specs(call, unit) if spec["index"] == argument_index), None)
+
+
+def role_for_argument(call, argument_index, unit=None):
+    """Return the verified read slot's legacy role tuple in its caller scope."""
+    spec = text_argument_spec(call, argument_index, unit)
+    return (spec["index"], spec["category"], spec["renderer"]) if spec is not None else None
+
+
+def _read_guards(conditions, state):
+    facts, evidence = [], {}
+    for condition in conditions:
+        index = condition["argument_index"]
+        value = state[4 + index] if 0 <= index <= 3 else None
+        actual = value[0] if value is not None else None
+        result = None if actual is None else (
+            actual == condition["value"] if condition["operator"] == "==" else actual != condition["value"])
+        facts.append({**condition, "constant_argument_value": actual,
+                      "status": "unknown" if result is None else "proven_true" if result else "proven_false"})
+        if value is not None:
+            evidence.update({item[0]: item for item in value[1]})
+    return not any(item["status"] == "proven_false" for item in facts), facts, evidence
 
 
 def _unit(path, repo):
@@ -224,7 +262,7 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                 elif word >> 26 != 0:
                     join_pcs.add((unit, (pc + 4 + (_signed(word & 0xFFFF, 16) << 2)) & 0xFFFFFFFF))
             if pending_entry:
-                if pending_entry[0] in ROLES:
+                if any(_text_read_specs(pending_entry[0], unit)):
                     entries[unit, pc] = {"name": pending_entry[0],
                                         "evidence": {"kind": "verified_glabel_entry", "unit": unit,
                                                      "assembly_path": relative, "assembly_line": pending_entry[1],
@@ -238,7 +276,7 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
     for path in sorted((repo / "config").rglob("*.txt")):
         for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             match = SYMBOL.match(line)
-            if match and match.group(1) in ROLES:
+            if match and any(_text_read_specs(match.group(1), "main")):
                 address = int(match.group(2), 16)
                 if ("main", address) in verified_pcs:
                     data, base, bias, digest, source_path = original("main")
@@ -280,11 +318,17 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                     if resolved_callee is not None:
                         callee = resolved_callee["name"]
                         calls_seen.add((unit, pending["pc"], callee))
-                        arg, category, renderer = ROLES[callee]
-                        value = state[4 + arg]
-                        if value is not None:
+                        for spec in _text_read_specs(callee, unit):
+                            arg, category, renderer = spec["index"], spec["category"], spec["renderer"]
+                            if not 0 <= arg <= 3:
+                                continue
+                            allowed, guard_facts, guard_evidence = _read_guards(spec["conditions"], state)
+                            value = state[4 + arg]
+                            if value is None or not allowed:
+                                continue
                             records = by_address.get((unit, value[0]), []) or by_address.get(("main", value[0]), [])
                             proof = {item[0]: item for item in value[1]}
+                            proof.update(guard_evidence)
                             proof.update({item[0]: item for item in pending["target_evidence"]})
                             proof[pending["evidence"][0]] = pending["evidence"]
                             proof[pc] = evidence
@@ -293,8 +337,9 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                                            "callee_evidence": resolved_callee["evidence"],
                                            "argument_register": "a" + str(arg), "argument_value": value[0],
                                            "category": category, "renderer": renderer,
-                                           "read_role": "format_string" if callee in FORMAT_ARGUMENT_INDEX else
-                                                        "diagnostic_literal" if callee in DIAGNOSTIC_ARGUMENT_INDEX else "display_string",
+                                           "renderer_status": spec["renderer_status"],
+                                           "callee_read_conditions": guard_facts,
+                                           "read_role": spec["read_role"],
                                            "caller": caller, "caller_unit": unit, "call_pc": pending["pc"],
                                            "delay_slot_pc": pc, "assembly_path": asm_path,
                                            "source_path": binary_path, "source_sha256": digest,
@@ -304,7 +349,7 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                                                                     for item in sorted(proof.values())],
                                        "proof": "verified_original_instructions_constant_text_argument"}
                             for record in records:
-                                key = (record["id"], unit, pending["pc"], callee)
+                                key = (record["id"], unit, pending["pc"], callee, arg)
                                 if key not in contexts:
                                     contexts[key] = context
                                     record["mips_contexts"].append(context)
@@ -319,14 +364,14 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                                     if source["address"] < value[0] < source["address"] + record["raw_length"]:
                                         matches.append(record)
                                 for record in matches:
-                                    key = (record["id"], unit, pending["pc"], callee, value[0])
+                                    key = (record["id"], unit, pending["pc"], callee, arg, value[0])
                                     item = {**context, "status": "verified_extent_interior_pointer",
                                             "record_id": record["id"],
                                             "relative_byte_offset": value[0] - record["source"]["address"],
                                             "category_not_promoted": True, "substring_bytes_not_decoded": True}
                                     interior_references[key] = item
                                 if not matches:
-                                    key = (unit, pending["pc"], callee, value[0])
+                                    key = (unit, pending["pc"], callee, arg, value[0])
                                     unresolved_targets[key] = {**context,
                                                               "status": "constant_text_argument_outside_exported_extents"}
                     # Callee-saved s0-s7, sp and fp alone survive an unknown call.

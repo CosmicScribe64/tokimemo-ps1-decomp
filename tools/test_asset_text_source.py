@@ -95,6 +95,59 @@ class LiteralTests(unittest.TestCase):
             self.assertEqual([bytes(group["raw"]) for group in groups], [b"A", b"A"])
             self.assertEqual([group["address"] for group in groups], [0x80041010, None])
 
+    def test_asm_groups_separate_exact_start_from_containing_labels(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            data = root / "data"
+            data.mkdir()
+            (data / "sample.s").write_text(
+                "dlabel D_CONTAINER\n"
+                "    /* 10 80041010 00000000 */ .word 0\n"
+                "    /* 14 80041014 */ .asciz \"A\"\n"
+                "enddlabel D_CONTAINER\n"
+                "dlabel D_EXACT\n"
+                "    /* 20 80041020 */ .asciz \"B\"\n"
+                "enddlabel D_EXACT\n")
+            groups = list(_asm_groups(root))
+            self.assertEqual(len(groups), 2)
+            self.assertEqual(groups[0]["labels"], [])
+            self.assertEqual(groups[0]["containing_labels"], [
+                {"label": "D_CONTAINER", "address": 0x80041010, "relative_offset": 4}])
+            self.assertEqual(groups[1]["labels"], ["D_EXACT"])
+            self.assertEqual(groups[1]["containing_labels"], [])
+
+    def test_enddlabel_and_numeric_prefix_do_not_leak_old_exact_labels(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            data = root / "data"
+            data.mkdir()
+            (data / "sample.s").write_text(
+                "dlabel D_OLD\n"
+                "    /* 10 80041010 00000000 */ .word 0\n"
+                "enddlabel D_OLD\n"
+                "nonmatching D_NEXT\n"
+                "dlabel D_NEXT\n"
+                "    /* 14 80041014 */ .asciz \"N\"\n"
+                "enddlabel D_NEXT\n")
+            groups = list(_asm_groups(root))
+            self.assertEqual(len(groups), 1)
+            self.assertEqual(groups[0]["labels"], ["D_NEXT"])
+            self.assertEqual(groups[0]["containing_labels"], [])
+
+    def test_unanchored_alignment_does_not_infer_label_start(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            data = root / "data"
+            data.mkdir()
+            (data / "sample.s").write_text(
+                "dlabel D_ALIGNED\n"
+                "    .align 2\n"
+                "    /* 20 80041020 */ .asciz \"A\"\n"
+                "enddlabel D_ALIGNED\n")
+            groups = list(_asm_groups(root))
+            self.assertEqual(groups[0]["labels"], [])
+            self.assertEqual(groups[0]["containing_labels"], [])
+
     def _ascii_inventory(self, root: Path, trailing: bytes):
         (root / "src" / "main").mkdir(parents=True)
         (root / "src" / "ovl").mkdir()
@@ -219,6 +272,22 @@ class LiteralTests(unittest.TestCase):
             self.assertEqual(len(excluded), 3)
             self.assertTrue(all(item["status"] in ("build_only_path_literal", "character_constant_excluded")
                                 for item in excluded))
+
+    def test_source_literal_offsets_distinguish_utf8_bytes_from_characters(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "src" / "main").mkdir(parents=True)
+            (root / "src" / "ovl").mkdir()
+            content = '/* テ */ void f(void) { sndisp("A", 0, 0); }\n'
+            (root / "src" / "main" / "offset.c").write_text(content, encoding="utf-8")
+            records, blocked, _ = _c_literals(root / "src")
+            self.assertFalse(blocked)
+            site = records[0]["source_site"]
+            char_offset = content.index('"A"')
+            self.assertEqual(site["character_offset"], char_offset)
+            self.assertEqual(site["byte_offset"], len(content[:char_offset].encode("utf-8")))
+            self.assertEqual(site["byte_offset_basis"], "utf8_bytes")
+            self.assertGreater(site["byte_offset"], site["character_offset"])
 
     def test_array_literal_inherits_unique_consumer_call_context(self):
         self.assertEqual(_call_containing("void f(void) { sndisp(buffer, 0, 0); }", 22), "sndisp")

@@ -8,6 +8,7 @@ address, and source-site evidence.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from pathlib import Path
 
@@ -43,7 +44,7 @@ def _unit_from_binary(path: str) -> str:
 def _unit_from_asm(path: Path, repo: Path) -> str:
     relative = path.relative_to(repo).as_posix()
     if relative.startswith("asm/data/ovl/"):
-        return relative.split("/", 3)[3]
+        return relative.split("/")[3]
     if relative.startswith("asm/data/") or relative.startswith("asm/matchings/main/"):
         return "main"
     match = re.match(r"asm/ovl/([A-Z0-9_]+)/", relative)
@@ -51,8 +52,8 @@ def _unit_from_asm(path: Path, repo: Path) -> str:
 
 
 def _role(call: str | None, function: str | None,
-          argument_index: int | None = None) -> tuple[str | None, str | None]:
-    role = string_argument_role(call, argument_index)
+          argument_index: int | None = None, unit: str | None = None) -> tuple[str | None, str | None]:
+    role = string_argument_role(call, argument_index, unit)
     if role in {"format", "diagnostic"}:
         return "debug_or_format", "known_format_or_diagnostic_consumer"
     if role == "display":
@@ -62,7 +63,7 @@ def _role(call: str | None, function: str | None,
 
 def _role_fields(use: dict, ast_gated: bool) -> dict:
     candidate, basis = _role(use.get("call"), use.get("function"),
-                             use.get("call_argument_index"))
+                             use.get("call_argument_index"), use.get("unit"))
     if ast_gated and use.get("ast_proof"):
         return {"category": candidate, "category_basis": basis,
                 "category_candidate": None, "category_candidate_basis": None}
@@ -95,11 +96,48 @@ def _source_files(repo: Path, area: str, suffix: str = "*.s"):
     return sorted(root.rglob(suffix)) if root.is_dir() else []
 
 
-def _table_graph(repo: Path, records: list[dict], files_root: Path) -> tuple[dict, list[dict], set[str]]:
+def _main_bss_regions(repo: Path) -> list[dict]:
+    """Read noload BSS bounds from the executable config, never from symbol spelling."""
+    repo = repo.resolve(strict=True)
+    path = repo / "config" / "SLPM_86.053.yaml"
+    try:
+        resolved = path.resolve(strict=True)
+        if not resolved.is_relative_to(repo) or not resolved.is_file():
+            return []
+        path = resolved
+        raw = path.read_bytes()
+        text = raw.decode("utf-8", errors="strict")
+    except (OSError, UnicodeDecodeError):
+        return []
+    if text.encode("utf-8") != raw or "\ufffd" in text:
+        return []
+    size_matches = list(re.finditer(r"(?m)^\s*bss_size:\s*(0x[0-9A-Fa-f]+|[0-9]+)\s*$", text))
+    segment_matches = list(re.finditer(
+        r"(?m)^\s*-\s*\{\s*start:\s*(0x[0-9A-Fa-f]+|[0-9]+),\s*type:\s*bss,"
+        r"\s*name:\s*([A-Za-z_][A-Za-z_0-9]*),\s*vram:\s*(0x[0-9A-Fa-f]+|[0-9]+)\s*\}", text))
+    noload = re.search(r"(?m)^\s*ld_bss_is_noload:\s*(True|true)\s*$", text) is not None
+    if not noload or len(size_matches) != 1 or len(segment_matches) != 1:
+        return []
+    size_match, segment = size_matches[0], segment_matches[0]
+    start = int(segment.group(3), 0)
+    size = int(size_match.group(1), 0)
+    return [{"unit": "main", "name": segment.group(2), "noload": True,
+             "vram_start": start, "vram_end_exclusive": start + size,
+             "file_offset_start": int(segment.group(1), 0), "size": size,
+             "config_path": path.relative_to(repo).as_posix(),
+             "config_sha256": hashlib.sha256(raw).hexdigest(),
+             "config_line": text.count("\n", 0, segment.start()) + 1,
+             "size_config_line": text.count("\n", 0, size_match.start()) + 1}]
+
+
+def _table_graph(repo: Path, records: list[dict], files_root: Path) -> tuple[dict, list[dict], set[str], dict, list[dict]]:
     asm_paths = _source_files(repo, "asm/data") + _source_files(repo, "asm/ovl")
     definitions: dict[tuple[str, str], dict] = {}
+    definition_sites: dict[tuple[str, str], list[dict]] = {}
     pending_rows = []
     blocked = []
+    runtime_targets = []
+    bss_regions = _main_bss_regions(repo)
     overlay_bases = {}
     overlays_file = repo / "config" / "overlays.txt"
     if overlays_file.is_file():
@@ -169,26 +207,46 @@ def _table_graph(repo: Path, records: list[dict], files_root: Path) -> tuple[dic
         if source.encode("utf-8") != raw or "\ufffd" in source:
             blocked.append({"path": path.relative_to(repo).as_posix(), "status": "assembly_utf8_roundtrip_failed"})
             continue
+        source_sha256 = hashlib.sha256(raw).hexdigest()
         current = None
+        current_definition = None
         for line_no, line in enumerate(source.splitlines(), 1):
             label = DLABEL.match(line)
             if label:
                 current = label.group(1)
                 addr = ADDR.search(line)
-                definitions[(unit, current)] = {"unit": unit, "label": current,
-                                                "path": path.relative_to(repo).as_posix(),
-                                                "line": line_no,
-                                                "address": int(addr.group(1), 16) if addr else None}
+                current_definition = {"unit": unit, "label": current,
+                                      "path": path.relative_to(repo).as_posix(),
+                                      "line": line_no,
+                                      "address": int(addr.group(1), 16) if addr else None,
+                                      "directive_sites": [], "source_sha256": source_sha256}
+                key = (unit, current)
+                definition_sites.setdefault(key, []).append(current_definition)
+                definitions.setdefault(key, current_definition)
                 continue
             if current is None:
                 continue
-            directive = WORD.match(re.sub(r"/\*.*?\*/", "", line).strip())
-            if not directive:
+            code_line = re.sub(r"/\*.*?\*/", "", line).split("#", 1)[0].strip()
+            directive_match = re.match(r"(\.[A-Za-z_][A-Za-z_0-9]*)\b(.*)$", code_line)
+            if not directive_match:
                 continue
             comment = ADDR.search(line)
-            if not comment:
+            directive_name = directive_match.group(1)
+            directive_address = int(comment.group(1), 16) if comment else None
+            current_definition["directive_sites"].append({"directive": directive_name,
+                                                          "path": path.relative_to(repo).as_posix(),
+                                                          "line": line_no, "address": directive_address})
+            # Alignment can move the label, so a following byte directive is
+            # only an exact label address when no alignment directive intervened.
+            if current_definition.get("address") is None and directive_address is not None and \
+                    directive_name not in {".align", ".balign", ".p2align"}:
+                previous = current_definition["directive_sites"][:-1]
+                if not any(site["directive"] in {".align", ".balign", ".p2align"} for site in previous):
+                    current_definition["address"] = directive_address
+            directive = WORD.match(code_line)
+            if not directive or comment is None:
                 continue
-            address = int(comment.group(1), 16)
+            address = directive_address
             encoded_bytes = bytes.fromhex(comment.group(2)) if comment.group(2) else None
             encoded_word = int.from_bytes(encoded_bytes, "little") if encoded_bytes else None
             expression = directive.group(1).split("/*", 1)[0].split("#", 1)[0].strip()
@@ -196,27 +254,133 @@ def _table_graph(repo: Path, records: list[dict], files_root: Path) -> tuple[dic
             if target is not None:
                 pending_rows.append({"unit": unit, "table": current, "target": target,
                                      "path": path.relative_to(repo).as_posix(), "line": line_no,
-                                     "address": address, "encoded_word": encoded_word})
+                                     "address": address, "encoded_word": encoded_word,
+                                     "assembly_sha256": source_sha256})
 
     known_symbols = set(definitions) | set(record_labels)
     for row in pending_rows:
-        table_definition = definitions.get((row["unit"], row["table"]))
+        table_key = (row["unit"], row["table"])
+        table_definition = next((definition for definition in definition_sites.get(table_key, [])
+                                 if definition["path"] == row["path"]), definitions.get(table_key))
         if table_definition is not None and table_definition["address"] is None:
             table_definition["address"] = row["address"]
+
+    def resolve_definition(key):
+        candidates = definition_sites.get(key, [])
+        if not candidates:
+            return None, "missing_data_label_definition"
+        addresses = [item.get("address") for item in candidates if isinstance(item.get("address"), int)]
+        if not addresses:
+            return None, "data_label_address_unavailable"
+        if len(set(addresses)) != 1:
+            return None, "ambiguous_data_label_addresses"
+        # Split data files can repeat the same dlabel without an address
+        # comment. A unique anchored definition supplies the candidate VMA;
+        # each incoming original pointer word must still prove that VMA below.
+        anchored = [item for item in candidates if item.get("address") == addresses[0]]
+        return min(anchored, key=lambda item: (item["path"], item["line"])), None
+    exact_record_labels: dict[tuple[str, str], list[dict]] = {}
+    for key, candidates in record_labels.items():
+        definition, error = resolve_definition(key)
+        if error or definition is None:
+            continue
+        exact_record_labels[key] = [record for record in candidates
+                                    if record.get("source", {}).get("address") == definition["address"]]
     edges: dict[tuple[str, str], list[dict]] = {}
     for row in pending_rows:
         local_key = (row["unit"], row["target"])
         main_key = ("main", row["target"])
         target_key = local_key if local_key in known_symbols else \
             main_key if row["unit"] != "main" and main_key in known_symbols else None
-        if target_key is None or row["encoded_word"] is None:
+        if target_key is None:
             continue
-        target_def = definitions.get(target_key)
-        target_records = record_labels.get(target_key, [])
+        target_def, definition_error = resolve_definition(target_key)
+        all_target_records = record_labels.get(target_key, [])
+        target_records = exact_record_labels.get(target_key, [])
+        if (target_def is None and definition_error == "data_label_address_unavailable") or target_def is not None:
+            runtime_address = target_def.get("address") if target_def is not None else row.get("encoded_word")
+            bss_region = next((region for region in bss_regions
+                               if target_key[0] == region["unit"] and
+                               isinstance(runtime_address, int) and
+                               region["vram_start"] <= runtime_address < region["vram_end_exclusive"]), None)
+            source_binary, source_base, source_bias = original_for(row["unit"])
+            source_offset = row["address"] - source_base + source_bias \
+                if source_binary is not None and isinstance(row.get("address"), int) else -1
+            source_word = runtime_address.to_bytes(4, "little") if isinstance(runtime_address, int) else b""
+            pointer_verified = source_binary is not None and len(source_word) == 4 and \
+                0 <= source_offset <= len(source_binary) - 4 and \
+                source_binary[source_offset:source_offset + 4] == source_word
+            anchored_pointer_matches = target_def is None or row.get("encoded_word") == runtime_address
+            if bss_region is not None and pointer_verified and anchored_pointer_matches:
+                target_binary_path = "SLPM_86.053"
+                if target_key[0] not in binary_hash_cache:
+                    target_binary, _, _ = original_for(target_key[0])
+                    if target_binary is not None:
+                        binary_hash_cache[target_key[0]] = hashlib.sha256(target_binary).hexdigest()
+                bss_evidence = dict(bss_region)
+                pointer_evidence = {
+                    "unit": row["unit"], "assembly_path": row["path"], "assembly_line": row["line"],
+                    "assembly_sha256": row["assembly_sha256"], "address": row["address"],
+                    "binary_path": "SLPM_86.053" if row["unit"] == "main" else
+                                   f"CDROM/EXEDIR/{row['unit']}.EXN",
+                    "binary_offset": source_offset, "source_word_hex": source_word.hex(),
+                    "binary_sha256": binary_hash_cache.get(row["unit"]),
+                    "bytes_verified": True,
+                }
+                definition_evidence = [{"path": definition["path"], "line": definition["line"],
+                                        "address": definition.get("address"),
+                                        "source_sha256": definition["source_sha256"]}
+                                       for definition in definition_sites.get(target_key, [])]
+                runtime_entry = {
+                    "unit": target_key[0], "label": target_key[1], "address": runtime_address,
+                    "status": "noload_bss_runtime_storage", "static_bytes_available": False,
+                    "binary_path": target_binary_path,
+                    "bss_region": bss_evidence,
+                    "definition_sites": definition_evidence,
+                    "pointer_evidence": pointer_evidence,
+                }
+                runtime_targets.append(runtime_entry)
+                table_definition, _ = resolve_definition((row["unit"], row["table"]))
+                table_address = table_definition.get("address") if table_definition else None
+                slot_index = None
+                if table_address is not None and row["address"] >= table_address and \
+                        (row["address"] - table_address) % 4 == 0:
+                    slot_index = (row["address"] - table_address) // 4
+                edges.setdefault((row["unit"], row["table"]), []).append({
+                    **row, "target_address": runtime_address, "target_data_label_evidence": runtime_entry,
+                    "target_unit": target_key[0], "slot_index": slot_index,
+                    "source_offset": source_offset, "source_word_hex": source_word.hex(),
+                    "target_kind": "runtime_non_static"})
+                continue
+        if definition_error and target_def is None and not target_records:
+            blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
+                            "target_unit": target_key[0], "target": target_key[1],
+                            "status": definition_error})
+            continue
         target_address = target_def.get("address") if target_def else None
-        if target_address is None and target_records:
-            target_address = target_records[0]["source"].get("address")
+        if target_address is None:
+            blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
+                            "target_unit": target_key[0], "target": target_key[1],
+                            "status": "target_data_label_address_unavailable"})
+            continue
+        # Source-inventory label associations can include a label that precedes
+        # a string extent. Only a record beginning at the label VMA is a text
+        # target; an interior/containing association stays diagnostic evidence.
+        non_exact_records = [record for record in all_target_records if record not in target_records]
+        if non_exact_records:
+            blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
+                            "target_unit": target_key[0], "target": target_key[1],
+                            "target_address": target_address,
+                            "record_ids": sorted(record["id"] for record in non_exact_records),
+                            "status": "containing_label_record_is_not_exact_start"})
+        if row["encoded_word"] is None:
+            blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
+                            "status": "pointer_word_bytes_unavailable"})
+            continue
         if target_address is None or row["encoded_word"] != target_address:
+            blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
+                            "target_unit": target_key[0], "target": target_key[1],
+                            "status": "pointer_target_address_mismatch"})
             continue
         binary, base, bias = original_for(row["unit"])
         if binary is None:
@@ -229,17 +393,55 @@ def _table_graph(repo: Path, records: list[dict], files_root: Path) -> tuple[dic
             blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
                             "address": row["address"], "status": "pointer_word_binary_mismatch"})
             continue
-        table_address = definitions.get((row["unit"], row["table"]), {}).get("address")
+        target_binary, target_base, target_bias = original_for(target_key[0])
+        target_offset = target_address - target_base + target_bias if target_binary is not None else -1
+        if target_binary is None or not 0 <= target_offset < len(target_binary):
+            blocked.append({"path": row["path"], "line": row["line"], "unit": row["unit"],
+                            "target_unit": target_key[0], "target": target_key[1],
+                            "target_address": target_address, "status": "target_data_label_out_of_bounds"})
+            continue
+        target_binary_path = "SLPM_86.053" if target_key[0] == "main" else \
+            f"CDROM/EXEDIR/{target_key[0]}.EXN"
+        if target_key[0] not in binary_hash_cache:
+            binary_hash_cache[target_key[0]] = hashlib.sha256(target_binary).hexdigest()
+        target_label_evidence = {
+            "unit": target_key[0], "label": target_key[1], "address": target_address,
+            "binary_path": target_binary_path, "binary_offset": target_offset,
+            "binary_file_size": len(target_binary),
+            "binary_sha256": binary_hash_cache[target_key[0]],
+        }
+        label_definitions = definition_sites.get(target_key, [])
+        target_label_evidence["definition_evidence"] = {
+            "anchored_definition_count": sum(isinstance(item.get("address"), int)
+                                             for item in label_definitions),
+            "unanchored_duplicate_definition_count": sum(item.get("address") is None
+                                                          for item in label_definitions),
+            "all_anchored_definitions_agree": len({item.get("address") for item in label_definitions
+                                                     if isinstance(item.get("address"), int)}) == 1,
+        }
+        if non_exact_records:
+            target_label_evidence["non_exact_containing_text_record_ids"] = sorted(
+                record["id"] for record in non_exact_records)
+        if target_def:
+            target_label_evidence.update({"assembly_path": target_def["path"],
+                                          "assembly_line": target_def["line"],
+                                          "assembly_sha256": target_def["source_sha256"],
+                                          "directive_sites": target_def["directive_sites"]})
+        elif target_records:
+            target_label_evidence["verified_text_record_ids"] = sorted(record["id"] for record in target_records)
+        table_definition, _ = resolve_definition((row["unit"], row["table"]))
+        table_address = table_definition.get("address") if table_definition else None
         slot_index = None
         if table_address is not None and row["address"] >= table_address and (row["address"] - table_address) % 4 == 0:
             slot_index = (row["address"] - table_address) // 4
         edges.setdefault((row["unit"], row["table"]), []).append({
             **row, "target_address": target_address,
+            "target_data_label_evidence": target_label_evidence,
             "target_unit": target_key[0],
             "slot_index": slot_index,
             "source_offset": offset, "source_word_hex": expected_bytes.hex(),
             "target_kind": "text_extent" if target_records else "pointer_table"})
-    return edges, blocked, verified_record_ids
+    return edges, blocked, verified_record_ids, exact_record_labels, runtime_targets
 
 
 def _c_symbol_uses(repo: Path, symbols: set[tuple[str, str]]) -> tuple[list[dict], list[dict]]:
@@ -310,7 +512,7 @@ def _c_symbol_uses(repo: Path, symbols: set[tuple[str, str]]) -> tuple[list[dict
                     re.escape(symbol) + r"\b", source_line)
                 if declaration:
                     continue
-                category, category_basis = _role(call, function, argument_index)
+                category, category_basis = _role(call, function, argument_index, unit)
                 uses.append({"unit": unit, "symbol_unit": symbol_unit, "symbol": symbol, "path": relative,
                              "line": text.count("\n", 0, position) + 1,
                              "call_line": call_line, "call_column": call_column,
@@ -347,7 +549,7 @@ def _apply_ast_facts(uses: list[dict], ast_consumers: dict) -> tuple[list[dict],
                    if use["symbol"] in fact.get("candidate_symbols", []) and
                    fact.get("column") == use.get("call_column") and
                    fact.get("argument_role") == string_argument_role(
-                       use.get("call"), use.get("call_argument_index"))]
+                       use.get("call"), use.get("call_argument_index"), use.get("unit"))]
         if len(matches) != 1:
             rejected += 1
             continue
@@ -393,7 +595,10 @@ def _apply_ast_facts(uses: list[dict], ast_consumers: dict) -> tuple[list[dict],
             if load_words and not selector_indices:
                 use["ast_unresolved_reason"] = "global_pointer_word_load_without_explicit_index"
         use["ast_argument_role"] = fact.get("argument_role")
+        use["callee_read_conditions"] = fact.get("callee_read_conditions", [])
+        use["callee_read_condition_status"] = fact.get("callee_read_condition_status")
         use["ast_value_flow_status"] = fact.get("value_flow_status")
+        use["ast_argument_expression_type"] = fact.get("argument_expression_type")
         use["ast_proof"] = "typed_pointer_value_flow_to_known_read_argument"
         accepted.append(use)
     return accepted, rejected
@@ -407,7 +612,8 @@ def enrich_source_context(inventory: dict, repository=REPOSITORY, files_root=Non
     records = inventory.get("records")
     if not isinstance(records, list):
         raise ContextError("inventory records must be a list")
-    edges, blocked_asm, verified_record_ids = _table_graph(repo, records, inputs)
+    edges, blocked_asm, verified_record_ids, exact_record_labels, runtime_targets = \
+        _table_graph(repo, records, inputs)
     symbols = set(edges)
     symbols.update((row["target_unit"], row["target"]) for rows in edges.values() for row in rows
                    if row["target_kind"] == "pointer_table")
@@ -441,17 +647,18 @@ def enrich_source_context(inventory: dict, repository=REPOSITORY, files_root=Non
             record["category_basis"] = "context-owned category reset before revalidation"
     contexts_by_record: dict[str, list[dict]] = {r["id"]: [] for r in records}
     records_by_label: dict[tuple[str, str], list[dict]] = {}
-    for record in records:
-        if record["id"] not in verified_record_ids:
-            continue
-        unit = _unit_from_binary(record["source"]["path"])
-        for asm_site in record.get("assembly_sites", []):
-            for label in asm_site.get("labels", []):
-                records_by_label.setdefault((unit, label), []).append(record)
+    for label_key, labeled_records in exact_record_labels.items():
+        for record in labeled_records:
+            records_by_label.setdefault(label_key, []).append(record)
+    unresolved_leaves_by_id = {}
+    typed_text_reached_edges = set()
+    dynamically_reached_edges = set()
     for use in uses:
         root = (use["symbol_unit"], use["symbol"])
         argument_site = {k: use[k] for k in ("path", "line", "call_line", "call_column",
                                                "function", "call", "call_argument_index")}
+        argument_site["callee_read_conditions"] = use.get("callee_read_conditions", [])
+        argument_site["callee_read_condition_status"] = use.get("callee_read_condition_status")
         role_fields = _role_fields(use, ast_consumers is not None)
         if root in records_by_label and not use.get("ast_address_of") and \
                 not use.get("ast_global_value_load_words") and \
@@ -475,9 +682,12 @@ def enrich_source_context(inventory: dict, repository=REPOSITORY, files_root=Non
         visited = set()
         while todo:
             node, chain = todo.pop()
-            if node in visited:
+            state = (node, len(chain), tuple((edge.get("path"), edge.get("line"),
+                                               edge.get("slot_index"), edge.get("target_unit"),
+                                               edge.get("target")) for edge in chain))
+            if state in visited:
                 continue
-            visited.add(node)
+            visited.add(state)
             depth = len(chain)
             if depth >= len(selectors):
                 continue
@@ -487,26 +697,63 @@ def enrich_source_context(inventory: dict, repository=REPOSITORY, files_root=Non
                     continue
                 if requested_index is not None and edge["slot_index"] != requested_index:
                     continue
+                edge_key = (edge["unit"], edge["table"], edge["path"], edge["line"])
+                if ast_consumers is not None and role_fields["category"] in {"display", "debug_or_format"}:
+                    typed_text_reached_edges.add(edge_key)
+                    if requested_index is None:
+                        dynamically_reached_edges.add(edge_key)
                 next_chain = chain + [{"table": edge["table"], "target": edge["target"],
                                        "path": edge["path"], "line": edge["line"],
                                        "address": edge["address"],
                                        "source_offset": edge["source_offset"],
                                        "source_word_hex": edge["source_word_hex"],
+                                       "assembly_sha256": edge["assembly_sha256"],
                                        "slot_index": edge["slot_index"],
                                        "requested_index": requested_index,
                                        "target_unit": edge["target_unit"],
                                        "target_address": edge["target_address"]}]
                 target_key = (edge["target_unit"], edge["target"])
-                for record in (records_by_label.get(target_key, [])
-                               if depth + 1 == len(selectors) else []):
-                    contexts_by_record[record["id"]].append({
+                path_is_terminal = depth + 1 == len(selectors)
+                target_records = records_by_label.get(target_key, [])
+                selection_certainty = "possible_dynamic_index" if None in selectors else \
+                    "statically_selected_pointer_path"
+                if path_is_terminal and target_records:
+                    for record in target_records:
+                        contexts_by_record[record["id"]].append({
+                            "source_site": argument_site,
+                            "table_symbol": use["symbol"], **role_fields,
+                            "evidence_chain": next_chain,
+                            "proof": "same_link_unit_word_pointer_targets_verified_text_label",
+                            "selection_certainty": selection_certainty})
+                elif path_is_terminal and not target_records and ast_consumers is not None and \
+                        edge["target_kind"] != "runtime_non_static" and \
+                        role_fields["category"] in {"display", "debug_or_format"} and \
+                        edge.get("target_data_label_evidence"):
+                    leaf_basis = (use["path"], use.get("call_line"), use.get("call_column"),
+                                  use.get("call_argument_index"), target_key,
+                                  tuple((item.get("path"), item.get("line"), item.get("slot_index"),
+                                         item.get("target_unit"), item.get("target")) for item in next_chain))
+                    leaf_id = "data-leaf:" + hashlib.sha256(
+                        json.dumps(leaf_basis, sort_keys=True, separators=(",", ":")).encode("utf-8")
+                    ).hexdigest()[:20]
+                    unresolved_leaves_by_id[leaf_id] = {
+                        "id": leaf_id,
+                        "status": "unclassified_data_label_reached_by_typed_text_path",
+                        "category": None,
+                        "category_candidate": role_fields["category"],
+                        "category_candidate_basis": role_fields["category_basis"],
                         "source_site": argument_site,
-                        "table_symbol": use["symbol"], **role_fields,
+                        "source_symbol": use["symbol"],
+                        "source_argument_role": use.get("ast_argument_role"),
+                        "source_argument_type": use.get("ast_argument_expression_type"),
+                        "source_value_flow_status": use.get("ast_value_flow_status"),
+                        "source_proof": use.get("ast_proof"),
+                        "selectors": selectors,
+                        "selection_certainty": selection_certainty,
+                        "terminal_data_label": edge["target_data_label_evidence"],
                         "evidence_chain": next_chain,
-                        "proof": "same_link_unit_word_pointer_targets_verified_text_label",
-                        "selection_certainty": "possible_dynamic_index" if None in selectors else
-                                               "statically_selected_pointer_path"})
-                if edge["target_kind"] == "pointer_table":
+                    }
+                if edge["target_kind"] == "pointer_table" and not path_is_terminal:
                     todo.append((target_key, next_chain))
 
     category_counts = {}
@@ -550,13 +797,30 @@ def enrich_source_context(inventory: dict, repository=REPOSITORY, files_root=Non
         if record.get("category") == "unknown" and any(bytes.fromhex(record.get("raw_hex", ""))):
             unclassified_nonempty.append(record["id"])
 
+    unresolved_data_label_leaves = sorted(unresolved_leaves_by_id.values(), key=lambda item: item["id"])
+    for runtime_target in runtime_targets:
+        pointer = runtime_target["pointer_evidence"]
+        edge_key = (pointer["unit"], None, pointer["assembly_path"], pointer["assembly_line"])
+        matched = any(key[0] == edge_key[0] and key[2:] == edge_key[2:]
+                      for key in typed_text_reached_edges)
+        runtime_target["typed_text_reachability"] = "reached_by_typed_text_use" if matched else \
+            "unreached_global_graph_scaffolding"
+    inventory["unresolved_data_label_leaves"] = unresolved_data_label_leaves
     inventory["source_context"] = {
         "schema": "tokimemo.text.source-context.v1",
         "pointer_table_edges": sum(len(rows) for rows in edges.values()),
+        "pointer_table_edges_reached_by_typed_text_uses": len(typed_text_reached_edges),
+        "pointer_table_edges_reached_dynamically": len(dynamically_reached_edges),
+        "pointer_table_edges_unreached_global_scaffolding":
+            sum(len(rows) for rows in edges.values()) - len(typed_text_reached_edges),
+        "runtime_non_static_target_count": len(runtime_targets),
+        "runtime_non_static_targets": runtime_targets,
         "pointer_table_symbols": sorted([list(key) for key in edges]),
         "C_symbol_uses": len(uses),
         "AST_value_flow_gated": ast_consumers is not None,
         "AST_rejected_C_symbol_uses": ast_rejected_uses,
+        "unresolved_data_label_leaf_count": len(unresolved_data_label_leaves),
+        "unresolved_data_label_leaves": unresolved_data_label_leaves,
         "records_with_context": sum(bool(contexts_by_record.get(r["id"])) for r in records),
         "records_without_proven_consumer_context": len(unresolved),
         "unverified_record_ids": sorted(r["id"] for r in records if r["id"] not in verified_record_ids),
@@ -565,9 +829,12 @@ def enrich_source_context(inventory: dict, repository=REPOSITORY, files_root=Non
         "category_counts_after_context": category_counts,
         "unresolved_record_ids": unresolved,
         "blocked": blocked_asm + blocked_c,
-                         "proof_rules": ["same-link-unit symbols only", "word comment VMA and little-endian target VMA agree",
+                         "proof_rules": ["same-link-unit symbols only",
+                         "word comment VMA and little-endian target VMA agree",
                          "original binary bytes at the table VMA equal the emitted pointer word",
-                         "target label resolves to a verified text extent or another pointer table",
+                         "target text extents require exact label-start address agreement",
+                         "duplicate unanchored labels require one agreed anchored VMA and pointer-byte agreement",
+                         "noload BSS targets use configured runtime bounds and carry no static text bytes",
                          "category requires a recognized direct C consumer call or typed name/system routine"],
     }
     return inventory
