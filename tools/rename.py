@@ -211,7 +211,7 @@ class Row:
         return self.scope
 
     def ledger_line(self):
-        return " ".join([self.kind, self.scope, self.old, self.new, self.key] + ([self.note] if self.note else []))
+        return " ".join([self.kind, self.scope, self.old, self.new, self.key] + ([self.note] if self.note else [])).rstrip()
 
     def __repr__(self):
         return "%s %s %s -> %s" % (self.kind, self.scope, self.old, self.new)
