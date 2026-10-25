@@ -57,6 +57,19 @@ static func _profile_signature(data: Dictionary) -> String:
 		data["progress_state"].slice(PARAMETER_SNAPSHOT_END, PROGRESS_STATE_BYTES),
 		data["player_flags"], data["player_flags_upper"], data["player_birthday"]]).sha256_text()
 
+static func increment_holiday_command_counter(state: State, command: int) -> String:
+	# holiday.c::holiday_activity_load: one proven source mutation between
+	# native snapshot sites. Validate the old guard before updating/reanchoring;
+	# do not copy or repair the mirrored tail until parameter_show_init runs.
+	var data: Dictionary = state.rule_state
+	if command != 0:
+		return "holiday command counter supports only the captured command0 branch"
+	if data.get(PROFILE_HASH_FIELD) != _profile_signature(data):
+		return "holiday command counter refused an unanchored or edited native profile"
+	data["progress_state"][0x15] = (data["progress_state"][0x15] + 1) & 255
+	data[PROFILE_HASH_FIELD] = _profile_signature(data)
+	return ""
+
 static func dispatch(state: State, result: Session.FrameResult) -> void:
 	if state.mode_stage != 0 or state.mode_step != 0:
 		result.error = "ordinary-week ending/stage branch is unimplemented"
@@ -98,6 +111,12 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 				data["icon_enabled"][icon] = 1 if icon == event[1] else 0
 			mode = 0x40
 		0xfc: mode = 0x32
+		0x10:
+			var holiday_commands: Variant=data["resources"].get("available_holiday_commands",[])
+			if not holiday_commands is Array or not holiday_commands.has(0):
+				result.error = "ordinary-week next branch requires native type0x10 at index%d (%d-%02d-%02d)" % [index,data["year"],data["month"],data["day"]]
+				return
+			mode = 0x46
 		0xff: mode = 0x34
 		_:
 			result.error = "ordinary-week next branch requires native type0x%02x at index%d (%d-%02d-%02d)" % [event[0], index, data["year"], data["month"], data["day"]]

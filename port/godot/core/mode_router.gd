@@ -4,6 +4,7 @@ extends RefCounted
 ## Registering a callback does not establish parity for its implementation.
 
 const NATIVE_HANDLERS: Dictionary = {
+	0x46: "src/main/holiday.c::holiday_mode_handler",
 	0x32: "src/main/scheduler.c::schedule_week_end_mode_handler",
 	0x30: "src/main/scheduler.c::schedule_init",
 	0x31: "src/main/scheduler.c::schedule_day_screen_handler",
