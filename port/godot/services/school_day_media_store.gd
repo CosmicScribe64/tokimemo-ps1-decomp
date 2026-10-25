@@ -19,6 +19,7 @@ const PART_KEYS := ["part_index", "source_record_offset", "x", "y", "width", "he
 const PART_PALETTE_MAPPING := "override0x10 and palette_mode2 without bit0x80 select full256-color row at x0; encoded row/column ignored"
 const SD_STP_POLICY := "source palette load mode1 leaves STP unchanged; separate bit15 mask"
 const READER_PINS := ["tools/assets/input.py:open_input", "tools/assets/image_packs_sd.py:export_sd_ui", "tools/assets/bs_cohort_profile.py:build_profile_context", "tools/assets/image_mdec.py:export_mdec"]
+const ExternalContentPath = preload("res://services/external_content_path.gd")
 
 var _root := ""
 var _components: Dictionary = {}
@@ -446,20 +447,7 @@ func _integer_metadata(value: Variant) -> Variant:
 
 
 func _safe_root(path: String) -> bool:
-	var project_root := ProjectSettings.globalize_path("res://").simplify_path().trim_suffix("/")
-	var normalized := path.simplify_path()
-	if path.begins_with("res://") or normalized == project_root or normalized.begins_with(project_root + "/"):
-		return false
-	if path.is_empty() or not path.is_absolute_path() or not DirAccess.dir_exists_absolute(path):
-		return false
-	var current := "/"
-	for part in path.trim_prefix("/").split("/", true):
-		if part.is_empty() or part == "." or part == "..":
-			return false
-		current = current.path_join(part)
-		if _is_link(current):
-			return false
-	return true
+	return ExternalContentPath.is_external_path(path) and DirAccess.dir_exists_absolute(path)
 
 func _is_link(path: String) -> bool:
 	var dir := DirAccess.open(path.get_base_dir())

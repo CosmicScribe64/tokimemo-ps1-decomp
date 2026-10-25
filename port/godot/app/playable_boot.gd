@@ -13,6 +13,9 @@ const Pad = preload("res://ui/native_pad.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
 const ActorService = preload("res://presentation/school_day_actor_service.gd")
 const MediaStore = preload("res://services/school_day_media_store.gd")
+const LiveHud = preload("res://presentation/live_hud_adapter.gd")
+const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
+var hud: LiveHud
 const BOUNDARY_SHA: String = "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5"
 const TABLES_SHA: String = "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
 
@@ -49,6 +52,7 @@ var initial_params: Array = []
 var video_frame: int = 0
 var video_capture_busy: bool = false
 var smoke_command: int = 0
+var save_controls: BoundarySaveControls = BoundarySaveControls.new()
 var continue_week: bool = true
 var checkpoints: Array[Dictionary] = []
 var staged_hud_refresh: bool = false
@@ -86,6 +90,8 @@ func _notification(what: int) -> void:
 	focus_paused = paused_now
 	_resume_input_pending = true
 	_replay_requested = false
+	if focus_paused and save_controls != null:
+		save_controls.cancel_pending("Save/load cancelled on focus loss.")
 	if pad != null:
 		pad.clear_devices()
 		# Rearm only at the first focused logical boundary, after clearing the
@@ -117,10 +123,12 @@ func _ready() -> void:
 	pad = Pad.new()
 	add_child(pad)
 	pad.set_process_input(not focus_paused and not _resume_input_pending)
-	status_label = _label(Vector2(16, 12), 20)
-	detail_label = _label(Vector2(16, 334), 15)
-	var heading: Label = _label(Vector2(16, 44), 12)
-	heading.text = "Captured-boundary development build · original imagery · HUD unavailable · muted\nArrows / D-pad: selection · Enter / A: confirm · R: replay\nCommands 0/7: captured ordinary weekdays · April 9 holiday unavailable"
+	# Native imagery occupies the full logical viewport. Keep diagnostic labels
+	# available to test/save hooks, without covering original pixels.
+	status_label = _label(Vector2(16, 12), 16)
+	detail_label = _label(Vector2(16, 334), 12)
+	status_label.hide()
+	detail_label.hide()
 	failure = _load_inputs()
 	if not failure.is_empty():
 		_stop(failure)
@@ -132,6 +140,10 @@ func _ready() -> void:
 		_stop("smoke requires an existing absolute output directory")
 		return
 	failure = _reset()
+	if not failure.is_empty():
+		_stop(failure)
+		return
+	failure = save_controls.configure(self, OS.get_user_data_dir().path_join("boundary-saves"))
 	if not failure.is_empty():
 		_stop(failure)
 		return
@@ -207,6 +219,20 @@ func _load_inputs() -> String:
 	controller.command_capabilities.assign(command_resources.keys())
 	resources = command_resources[0]
 	background = command_backgrounds[0]
+	var hud_manifest: String = OS.get_environment("TOKIMEMO_HUD_MANIFEST")
+	var require_hud: bool = OS.get_environment("TOKIMEMO_REQUIRE_HUD") == "1" \
+		or not hud_manifest.is_empty() \
+		or not OS.get_environment("TOKIMEMO_HUD_SHA").is_empty() \
+		or not OS.get_environment("TOKIMEMO_FONT_ROOT").is_empty() \
+		or not OS.get_environment("TOKIMEMO_HUD_CONTEXT").is_empty() \
+		or not OS.get_environment("TOKIMEMO_HUD_CONTEXT_SHA").is_empty()
+	if require_hud:
+		hud = LiveHud.new()
+		if not hud.open(hud_manifest, OS.get_environment("TOKIMEMO_HUD_SHA"),
+			OS.get_environment("TOKIMEMO_FONT_ROOT"), OS.get_environment("TOKIMEMO_HUD_CONTEXT"), OS.get_environment("TOKIMEMO_HUD_CONTEXT_SHA")):
+			return "mandatory HUD preflight: " + hud.error
+	else:
+		hud = null
 	return ""
 
 func _verified_external(path: String, digest: String) -> bool:
@@ -247,10 +273,21 @@ func _reset() -> String:
 	captured_effect = false
 	initial_params = state.rule_state["params"].duplicate()
 	canvas.present([])
+	if hud != null:
+		hud.reset(state.rule_state)
+		error = _present_committed()
+		if not error.is_empty():
+			return error
 	_update_labels()
+	status_label.hide()
+	detail_label.hide()
 	return ""
 
 func _input(event: InputEvent) -> void:
+	if save_controls.handle_input(self, event):
+		return
+	if not focus_paused and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F3:
+		detail_label.visible = not detail_label.visible
 	if not focus_paused and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R and stopped and not smoke:
 		_replay_requested = true
 
@@ -258,12 +295,11 @@ func _physics_process(_delta: float) -> void:
 	if focus_paused:
 		return
 	if _replay_requested:
+		save_controls.cancel_pending("Save/load cancelled by replay.")
 		_replay_requested = false
 		var error: String = _reset()
 		if not error.is_empty():
 			_stop(error)
-	if stopped:
-		return
 	var tick: int = session.clock.logic_iterations
 	if _resume_input_pending:
 		# One neutral resume boundary discards any stale held state/edge from
@@ -276,6 +312,12 @@ func _physics_process(_delta: float) -> void:
 		# Playback resumes at the same logical boundary as simulation, never
 		# from the focus-in signal before the stale session latch is cleared.
 		_set_playback_paused(false)
+	# Focus neutralization also runs while stopped; it never advances rules,
+	# RNG or clocks. F9 may then recover through the ordinary focused boundary.
+	if save_controls.process_queued(self):
+		return
+	if stopped:
+		return
 	if smoke:
 		# Original command0 recipe: step next-input belongs to native vsyncN+1.
 		var mask_key: int = KEY_ENTER
@@ -306,7 +348,9 @@ func _physics_process(_delta: float) -> void:
 			supported_stop = {"error": result.error, "before_hash": before_hash,
 				"after_hash": session.state_hash(), "committed": false, "target": [95, 4, 9, 0x10, 9]}
 			stopped = true
-			status_label.text = "April 8 complete · April 9 holiday unavailable · R: replay"
+			status_label.position = Vector2(16, 454)
+			status_label.text = "Sunday unavailable" if smoke else "Sunday unavailable · R: replay"
+			status_label.show()
 			_finish()
 			return
 		if not output_root.is_empty():
@@ -319,18 +363,18 @@ func _physics_process(_delta: float) -> void:
 		return
 	pending_services = staged_services.duplicate(true)
 	# Images and mutable renderer caches are resolved only after commit.
-	var error: String = canvas.present(staged_commands)
-	if not error.is_empty():
-		_stop(error)
-		return
 	trace.append({"iteration": tick, "state_hash": result.state_hash, "event_hash": result.event_hash,
 		"mode": state.game_mode, "stage": state.mode_stage, "step": state.mode_step,
 		"substep": state.substep, "frame_count": state.frame_count,
 		"params": state.rule_state["params"].duplicate(), "rng": session.rng.state,
 		"presentation": result.presentation, "audio": result.audio})
+	var error: String = _present_committed()
+	if not error.is_empty():
+		_stop(error)
+		return
 	_update_labels()
 	if staged_hud_refresh:
-		status_label.text += " · week-end health check · original HUD unavailable"
+		status_label.text += " · week-end health check"
 	_record_checkpoint(result)
 	if not captured_actor and not state.rule_state["actor_state"].is_empty():
 		captured_actor = true
@@ -340,7 +384,6 @@ func _physics_process(_delta: float) -> void:
 		_capture("effect")
 	if not _week_continuation_enabled() and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 1:
 		stopped = true
-		status_label.text = "First result · paused at 0x31 / index 1 · R to replay"
 		_finish()
 	elif smoke and tick >= 600:
 		_stop("scripted input smoke exceeded its bounded supported route")
@@ -423,8 +466,8 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 			if current.game_mode != 0x32 or current.rule_state["day_events"][current.rule_state["day_event_index"]][0] != 0xfc:
 				result.error = "week-end HUD refresh arrived outside its source queue record"
 				return
-			# Rules already took the source parameter snapshot. Refresh only the
-			# existing development labels after commit; original HUD remains absent.
+			# Rules already took the source parameter snapshot. The postcommit
+			# presenter consumes this intent without changing rules or event hashes.
 			prepared_hud = true
 	# Select only the source GPU slot made active by a committed resource
 	# completion/cache hit. Command frame indices overlap, so resources and
@@ -469,6 +512,17 @@ func _activity_command(current: State) -> int:
 			return -1
 	return event[1]
 
+## Save adapter post_apply hook. It rebuilds only owned presentation caches.
+func _present_committed(_restored_app: Node = null) -> String:
+	if hud == null:
+		return canvas.present(staged_commands) # Synthetic engine/focus test seam.
+	var command: Dictionary = hud.compose(state.rule_state, state.projection(), trace, staged_commands)
+	if command.is_empty():
+		return hud.error
+	# Dynamic frame IDs must not retain an unbounded texture per logical tick.
+	canvas.set("_textures", {})
+	return canvas.present([command])
+
 func _resource_request_error(current: State, intent: Dictionary) -> String:
 	var command: int = _activity_command(current)
 	if not command_resources.has(command) or not command_backgrounds.has(command):
@@ -494,7 +548,8 @@ func _bounded_audio(_state: CoreState, _rng: Rng, _result: Session.FrameResult) 
 func _update_labels() -> void:
 	var data: Dictionary = state.rule_state
 	status_label.text = "Command %d · mode 0x%02x · %d/%d/%d" % [data["menu_cursor"], state.game_mode, 1900 + data["year"], data["month"], data["day"]]
-	detail_label.text = "Native parameter words (16.16):\n%s\n%s\n%s\nQueue %d · RNG %d (%d draws) · iteration %d\nPreloaded resources · native CD/interrupt timing unverified" % [str(data["params"].slice(0, 3)), str(data["params"].slice(3, 6)), str(data["params"].slice(6, 9)), data["day_event_index"], session.rng.state, session.rng.draw_count, session.clock.logic_iterations]
+	detail_label.text = "Mode 0x%02x · iteration %d · queue %d\nParams %s\nRNG %d · %d draws" % [state.game_mode, session.clock.logic_iterations,
+		data["day_event_index"], str(data["params"]), session.rng.state, session.rng.draw_count]
 
 func _finish() -> void:
 	await _capture("result")
@@ -528,7 +583,9 @@ func _stop(message: String) -> void:
 	stopped = true
 	failure = message
 	if status_label != null:
-		status_label.text = "Stopped: " + message
+		status_label.position = Vector2(16, 454)
+		status_label.text = "Stopped · see log" if smoke else "Stopped · R: replay · see log"
+		status_label.show()
 	push_error(message)
 	if smoke:
 		if output_root.is_absolute_path() and DirAccess.dir_exists_absolute(output_root):

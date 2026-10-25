@@ -7,6 +7,7 @@ const SCHEMA := "tokimemo.weekday-56-content.v1"
 const MANIFEST_SHA := "7c67739f2dcbc5a9c644e670d0c0e5ea91869ab851d686e77cbfbf6e188105b1"
 const MAX_MANIFEST := 8 * 1024 * 1024
 const MAX_PNG := 2 * 1024 * 1024
+const ExternalContentPath = preload("res://services/external_content_path.gd")
 
 var _root := ""
 var _components: Dictionary = {}
@@ -140,13 +141,7 @@ func _big_endian(raw: PackedByteArray, offset: int) -> int:
 	return (int(raw[offset]) << 24) | (int(raw[offset + 1]) << 16) | (int(raw[offset + 2]) << 8) | int(raw[offset + 3])
 
 func _safe_root(path: String) -> bool:
-	if not path.begins_with("/") or path.begins_with("//") or path.contains("\\") or path.contains("://") or path.ends_with("/") or path != path.simplify_path():
-		return false
-	for part in path.trim_prefix("/").split("/", true):
-		if part.is_empty() or part == "." or part == "..":
-			return false
-	var project := ProjectSettings.globalize_path("res://").simplify_path().trim_suffix("/")
-	return path != project and not path.begins_with(project + "/") and not _has_symlink(path) and DirAccess.dir_exists_absolute(path)
+	return ExternalContentPath.is_external_path(path) and DirAccess.dir_exists_absolute(path)
 
 func _has_symlink(path: String) -> bool:
 	var current := "/"
