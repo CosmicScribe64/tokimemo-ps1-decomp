@@ -2136,3 +2136,7 @@ Created [[tickets/T-29012-native-new-game-initialization]] for additive native i
 ## [2026-10-25] build | Correct native font fade quantization in isolation
 
 Independent review of [[tickets/T-29010-native-hud-font-rendering]] verified all 3,418 original glyph bitmaps but found a fade rounding mismatch. Root prepared cumulative four-file `font-fix-v3` with native five-bit modulation before display expansion, retaining the accepted cache-containment correction. Godot regression tests pass; fresh independent resolution checks remain required before application. [[tickets/T-29012-native-new-game-initialization]] has begun source-backed rules and external-table integration; its first incomplete scratch is explicitly not accepted. Ticket catalog/lint reports zero broken links and status mismatches.
+
+## [2026-10-25] build | Integrate verified native font rendering and HUD records
+
+Applied six reviewed files for [[tickets/T-29010-native-hud-font-rendering]], including the resolved cache-root and native fade-quantization findings. Root's canonical tests pass five Python cases, the Godot HUD suite, all 3,418 original glyph bitmaps and 2,064 native palette/brightness images. No original font payload or captured native screen was added to source. The dynamic HUD owner now builds on these canonical files; whole-screen composition and gameplay integration remain open.
