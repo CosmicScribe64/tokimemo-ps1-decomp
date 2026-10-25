@@ -3,6 +3,8 @@ extends SceneTree
 const OPTIONAL_SUITES: Array[String] = [
     "res://tests/core/run_core_tests.gd",
     "res://tests/content/run_content_tests.gd",
+    "res://tests/rules/run_rule_tests.gd",
+    "res://tests/week/run_week_tests.gd",
 ]
 
 func _initialize() -> void:

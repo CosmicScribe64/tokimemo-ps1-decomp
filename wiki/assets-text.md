@@ -6,6 +6,34 @@ sources: ["src/main/scene_library.c", "src/main/text_system.c", "src/main/menu_s
 
 # Comprehensive text inventory and export
 
+## Translator handoff in preparation
+
+[[tickets/T-28007-complete-text-and-translator-handoff]] assigns Astra the remaining text work and a practical handoff for an external translator. The first handoff is independently reviewed and accepted: `.asset-cache/text/translator-handoff-v3/README.md`, then `ready/`. It contains 31,346 ready-for-review records and a separate 24,057-record unresolved queue, in 332 UTF-8 TSV files of at most 400 rows. These are records rather than unique dialogue lines. Stable IDs, grouped source/context and protected placeholders stay intact; edit only `translation` and `translator_note`. No original textbox or encoding capacity limits translated wording.
+
+Both independent reviews and root's actual installed-tool replay pass. All 55,403 source rows and exact compressed engineering evidence are preserved; 19 synthetic tests and validation of all 332 blank batches pass. Partial returns, long Unicode/multiline wording, note-only rows and protected-field/marker refusal were independently tested. This supports starting translation; it does not resolve the remaining runtime/context/renderer gaps. User was notified and prefers repository/worktree operation rather than a ZIP.
+
+### Translation worktrees
+
+Generated Japanese text stays ignored, so Git worktree creation does not copy it. The reviewed `tools/assets/text_handoff.py` exporter creates an independent editable queue inside a translator's worktree from the trusted export in the main checkout. Run this from that worktree, after checking out a commit containing the tooling:
+
+```sh
+docker run --rm --cpus=2 -v "$PWD":/work -w /work \
+  -v /Users/lila/Documents/Projects/tokimemo-decomp/.asset-cache/text/current-speaktst:/source:ro \
+  tokimemo-decomp-arm64 python3 -m tools.assets.text_handoff export \
+  --units /source/units/units.jsonl --catalog /source/catalog.json \
+  --output .asset-cache/text/translation --repository .
+```
+
+Start with `.asset-cache/text/translation/README.md` and `ready/`. The existing reviewed handoff directory is also available as a local reference; avoid editing that frozen review copy. The translator needs only a UTF-8 TSV editor after generation. Return complete batch files, keeping unfinished rows blank. The maintainer validates them against the trusted original units; imported wording goes into a separate overlay, preserving source targets:
+
+```sh
+python3 -m tools.assets.text_handoff import \
+  --units /source/units/units.jsonl --batch RETURNED.tsv \
+  --output .asset-cache/text/returned.jsonl --repository .
+```
+
+Run the import in Docker with the same source mount. Repeat `--batch` for additional files. Export/import refuses existing destinations. Original text, evidence and generated exports remain ignored; the tooling and workflow instructions are versioned. Full translation coverage remains false while Astra continues the engineering audit.
+
 T-28001, part of [[asset-export]], remains In Progress. The user requires comprehensive source-backed
 text coverage for a future full translation. A bounded parser or a successful file parse is not completion.
 There is no translation/import/assembler yet and no engine-specific code. Real output is only under ignored

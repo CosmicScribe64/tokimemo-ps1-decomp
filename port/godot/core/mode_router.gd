@@ -1,9 +1,12 @@
 extends RefCounted
 ## Only the first slice's original main-executable modes can be bound here.
-## Source: src/main/game_mode.c::game_mode_dispatch (0x34 and 0x40).
+## Source: src/main/game_mode.c::game_mode_dispatch (0x30,0x31,0x32,0x34,0x40).
 ## Registering a callback does not establish parity for its implementation.
 
 const NATIVE_HANDLERS: Dictionary = {
+	0x32: "src/main/scheduler.c::schedule_week_end_mode_handler",
+	0x30: "src/main/scheduler.c::schedule_init",
+	0x31: "src/main/scheduler.c::schedule_day_screen_handler",
 	0x34: "src/main/home_screens.c::settings_command_screen_mode_handler",
 	0x40: "src/main/school_day.c::week_day",
 }

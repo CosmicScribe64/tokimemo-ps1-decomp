@@ -67,6 +67,15 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-28007-complete-text-and-translator-handoff|T-28007 Complete text evidence and prepare translator handoff]]
+- [ ] [[tickets/T-29011-native-dialogue-player|T-29011 Implement source-backed dialogue control playback]]
+
+- [ ] [[tickets/T-29010-native-hud-font-rendering|T-29010 Render the native HUD and game glyphs]]
+
+- [ ] [[tickets/T-29009-ordinary-week-continuation|T-29009 Port ordinary-week day-end and weekend continuation]]
+
+- [ ] [[tickets/T-29008-assemble-playable-development-app|T-29008 Assemble the captured-boundary playable development app]]
+
 - [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
 
 - [ ] [[tickets/T-29005-native-scene-presentation|T-29005 Present original room, HUD and activity animation]]

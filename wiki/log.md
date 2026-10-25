@@ -2084,3 +2084,31 @@ User requested more parallel port work. Started bounded save/schema and ordered 
 ## [2026-10-25] build | Integrate the validated static content adapter
 
 Applied final V4 under [[tickets/T-29003-port-content-adapter]] after independent Standards and spec checks resolved the shared schema and runtime failures. Installed tests pass three Godot suites and ten Python/Draft 2020-12 cases; the test-only JSON Schema dependency is pinned and remains Docker-only. Actual external preview assets remain ignored. The first-activity table/media adapters remain separate bounded packets; full route and parent-ticket acceptance stay open.
+
+## [2026-10-25] ticket | Assemble the working slice while module reviews run
+
+Started [[tickets/T-29008-assemble-playable-development-app]] to join the already runnable rules/presentation/content packets through their fixed contracts. The user requested faster parallel port work; this disjoint lane provides a visible application without waiting for unrelated corpus coverage. Only verified route commands may be enabled, and full original HUD/audio/New Game acceptance remains open.
+
+## [2026-10-25] ticket | Fan out the next independent port modules
+
+User explicitly authorized more agents and chats. Created [[tickets/T-29009-ordinary-week-continuation]], [[tickets/T-29010-native-hud-font-rendering]] and [[tickets/T-29011-native-dialogue-player]] with disjoint source ownership and ignored-packet handoffs. Ordinary-week, glyph/HUD and dialogue work can proceed alongside the first activity app, asset adapters and save/audio lane. Root keeps canonical integration and review authority.
+
+## [2026-10-25] decision | Report full-port estimates and keep the gallery usable
+
+User requested overall percentage updates. [[phase3]] records the complete Japanese-port scope and coarse weighting; current estimates are about 5% overall and 60% first slice. [[tickets/T-29007-visual-port-progress-viewer]] shows the numeric estimate with actual captures, serves a still immediately, and excludes intermediate raw video frames from the timeline. All source media/evidence remains ignored and retained. Three additional chats now prepare ordinary-week, HUD/glyph and dialogue work in parallel.
+
+## [2026-10-25] ticket | Assign Astra text completion and translator handoff
+
+User explicitly requested an Astra agent for remaining text work and notification as soon as their translation can start. Created [[tickets/T-28007-complete-text-and-translator-handoff]]: prioritize a usable checked ready-text queue with stable IDs, protected tokens and return validation; keep unresolved evidence separate and continue source-backed coverage work. Existing ready rows can be translated while runtime context remains under investigation. No package is accepted yet. [[assets-text]].
+
+## [2026-10-25] build | Integrate the reviewed first-activity rules
+
+Applied the seven-file [[tickets/T-29004-school-day-playable-rules]] packet and two registration patches after exact before/after and independent-review checks. Four canonical Docker suites pass. Fresh canonical replay against genuine command-0/7 native checkpoints reports zero failures for queue, girl records, calendar, parameters, RNG, mode/timers and isolated first-result behavior. All 564 existing game C/header files remain unchanged. First harness invocation omitted the writable proof mount and failed; the corrected isolated proof run passes and retains the failed diagnostic. Presentation/content/app integration remains open; no full route-timing claim.
+
+## [2026-10-25] build | Integrate bounded ordinary-week continuation
+
+Applied final reviewed [[tickets/T-29009-ordinary-week-continuation]] packet with exact controller and mode32/week-test composition. Five canonical suites and all 28 fresh original-emulator checkpoint comparisons pass. Native snapshot writes update only the proven parameter slice; source-profile edits and unsupported holiday progression fail transactionally. Presentation cache/HUD integration remains open. Then applied the reviewed presentation counter correction and strict table/media adapters after resolving profile and sequence-length validation findings. All existing game C/header files remain unchanged. Actual canonical checks pass 21 route Python tests, standalone Godot presentation tests and the real-pack Godot getter/negative suite; no whole-game parity claim.
+
+## [2026-10-25] ingest | Accept the first translator handoff
+
+Both independent review axes accept [[tickets/T-28007-complete-text-and-translator-handoff]]'s initial editable queue and return validator. Root installed both exact tooling after-images, independently verified all archive IDs/counts and source evidence hashes, and passed 19 actual tests plus all 332 live return batches. All 55,403 rows are preserved: 31,346 ready for review and 24,057 unresolved. User notified immediately, then requested repository/worktree operation instead of ZIP delivery. [[assets-text]] now documents generating a separate editable ignored queue in that worktree. No translation, original-text Git payload or comprehensive coverage claim. Astra continues remaining source/native gaps.
