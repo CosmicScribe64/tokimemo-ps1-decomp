@@ -1,7 +1,7 @@
 ---
 id: T-27056
 title: Resolve final phase 2 findings with a separate Astra agent
-status: In Review
+status: Done
 assignee: phase2-astra-fixes
 created: 2026-10-24
 updated: 2026-10-25
@@ -18,7 +18,7 @@ A distinct gpt-6-astra agent consumes the final review and fixes its findings us
 - [x] Concrete evidence-backed output matching this scope.
 - [x] Independent review findings resolved and appropriate Docker proofs recorded before Done.
 - [x] No false phase2-completion claim; wiki/tracker and original game data preserved.
-- [ ] After reviewer verification and the final matching check pass, root pushes the reviewed
+- [x] After reviewer verification and the final matching check pass, root pushes the reviewed
       changes to origin and records the remote branch/commit (user request 2026-10-24).
 ## Notes
 
@@ -36,4 +36,9 @@ Trigger: near phase2 completion, not routine ongoing batches. User requested sep
 
 Reviewed source digest: `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Final clean matching proof: 27/27 binaries, 6,952 functions, 2,276,920 bytes. Independent original Astra review and separate fixer Astra review passed this exact source digest. See `.claude/orchestrator/state/T-27000/final-tracking/criterion-evidence.md`.
 Publication is still pending; this ticket remains In Review and its push criterion stays unchecked.
+
+## Final integration evidence (2026-10-25)
+
+Reviewed source digest: `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Final clean matching proof: 27/27 binaries, 6,952 functions, 2,276,920 bytes. Independent original Astra review and separate fixer Astra review passed this exact source digest. See `.claude/orchestrator/state/T-27000/final-tracking/criterion-evidence.md`.
+Publication proof records push to `origin/main` at `182af9d13d418b159973e59fbeaedf5e39f87902`.
 

@@ -139,7 +139,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-27056-final-astra-fixes|T-27056 Resolve final phase 2 findings with a separate Astra agent]]
 
 
 
@@ -213,7 +212,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 - [ ] [[tickets/T-24513-etc-matching|T-24513 Match remaining ETC functions]]
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
-- [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## Done
 
@@ -1107,6 +1105,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-27066-remaining-overlay-completion|T-27066 Complete remaining overlay semantic analysis]]
 - [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
 - [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
+- [ ] [[tickets/T-27056-final-astra-fixes|T-27056 Resolve final phase 2 findings with a separate Astra agent]]
+- [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 
 %% kanban:settings

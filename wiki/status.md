@@ -7,7 +7,7 @@ updated: 2026-10-24
 
 ## Final source closeout gate (2026-10-25; supersedes older handoff status)
 
-The supplied final proof matches all 27 binaries: 6,952 functions and 2,276,920 bytes; source digest `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Current integration record: 437 logical C basenames; topic umbrellas removed; accepted logical overlay paths retain the TT exception; 1,298 semantic operations plus one local-name repair; 14 exact original-data includes; 14,449 ledger rows; 437 mapped views/inverse proofs; 43 data islands / 2,083 pieces; 337 path-tool tests. All non-publication phase 2 criteria have passed review; T-280xx asset work is separate. Current T-27000 status is In Review. Only the authorized publication checkbox remains open.
+The supplied final proof matches all 27 binaries: 6,952 functions and 2,276,920 bytes; source digest `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Current integration record: 437 logical C basenames; topic umbrellas removed; accepted logical overlay paths retain the TT exception; 1,298 semantic operations plus one local-name repair; 14 exact original-data includes; 14,449 ledger rows; 437 mapped views/inverse proofs; 43 data islands / 2,083 pieces; 337 path-tool tests. All non-publication phase 2 criteria have passed review; T-280xx asset work is separate. Current T-27000 status is Done. Publication is recorded below.
 
 The one page for "where are we". Update it when a wave, a local or cloud session, or a contributor PR changes the numbers (`tools/docker.sh python3 tools/progress.py`). Older status and handoff pages are in `archive/` ([[completion-run-2026-10-17]], [[stopping-point-2026-10-15]]).
 
@@ -283,3 +283,7 @@ Latest user steering supersedes the earlier Luna-first experiment: use **Sol 6.1
 ### Current assignments after archive integration
 
 Two Sol 6.1 medium workers are active: the MAIN worker preserves the latest `sndi` reconstruction and briefly ranks concrete shared blockers before selecting its next implementation; the former TACO worker resumes NAME_ENT/TACO with separate file ownership. The user rejected the recent low-yield method. `sndi` corrected buffers and found-flag semantics are preserved at83439c5aa; subsequent Astra/Sol induction and stack-home improvements remain unmatched and are being checkpointed. Luna and other coordinators remain idle. Root centralizes integration and all27 checks; diagnostic archives earn no coverage.
+
+## Publication recorded (2026-10-25)
+
+Pushed reviewed source `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3` to `origin/main` at `182af9d13d418b159973e59fbeaedf5e39f87902`. All phase 2 source and publication criteria are complete; separate asset tickets remain independent. T-27000 is Done.
