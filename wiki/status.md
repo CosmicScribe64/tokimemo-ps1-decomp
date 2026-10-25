@@ -16,16 +16,31 @@ logical. Independent final source review passes, both scoped ABI comparisons cov
 with zero changes, and the clean build and every guard pass. Independent binary checks are
 27/27; progress remains 6,952/6,952 functions and 2,276,920/2,276,920 bytes; the ledger has
 12,922 rows. Evidence: ignored next-integration/identifier-wave-clean-proof.json,
-next-symbols-final-source-review.md and SOURCE-STABLE.json. The bounded worker's source lease
-is released; root again owns live source applications, builds and Git.
+next-symbols-final-source-review.md. That source checkpoint is historical while the
+additional constant integration below is active; root serializes builds and Git.
+
+An additional constant wave is now in progress under a bounded Luna source-write lease:
+All 694 reviewed sites are applied: 324 complex-overlay, 204 overlay UI/date,
+25 seasonal/rule and 141 traced BUNKASAI stage sites. Producer proofs pass, and the
+transaction's final naming guard passes 12,977 ledger rows. Eight approved declaration
+comments are added. The final 31 essential sites remain; no new matching claim is made
+until the full wave passes its clean build. The independently reviewed selector/cache
+tools are integrated with 144 passing combined tests.
+The previous SOURCE-STABLE marker is historical
+baseline evidence while its status is integrating_constant_wave; header ownership/driver
+preparation continues, but final header proofs wait for the replacement ready marker and
+matching result. T-27075 closes six concrete essential rule groups using existing routes
+and two narrowly added selectors; it does not promote every unresolved literal candidate.
 
 The main camera-reference alias at D_80122740 remains explicitly deferred because EVENT uses
 the same address for different storage. T-27061 owns its private declaration separation.
-Header migration remains the main integration gate: 467 further main declaration moves,
-SDK ownership and shared-type packets are prepared, while full umbrella closure is still
-being assembled. The header lane may now regenerate from the stable matching source and ASM.
+Header migration remains the main integration gate. Its complete archived rehearsal now
+removes both umbrellas with zero ownership gaps; header/API checks, unchanged GameState
+layout and 299 focused tooling tests pass. Independent packet review and constant-replay
+compatibility remain open, and final regeneration/source/ASM capture waits for the active
+constant wave. This is scratch evidence, not a live-header completion claim.
 Further essential constants are being prepared in the existing overlay lanes; the 141
-unproved BUNKASAI setter literals remain untouched. T-27074 has a reviewed path packet and
+BUNKASAI setter sites now have reviewed source traces and remain unapplied. T-27074 has a reviewed path packet and
 an independently approved registry-path tool fix, both awaiting the header integration.
 No final Astra review has started; these source implementation gates remain open.
 
@@ -35,11 +50,14 @@ suite has 126 passing tests. Text checkpoint b4977bd16 adds 286 stage-show bodie
 renderer proofs and translation-unit export. Its reviewed production report validates 38,696
 units with null translation targets; 1,889 source extents still need semantic classification.
 Its source witness f9c679d5 is historical and does not claim current-source enrichment.
-Media-reader checkpoint a1a0625aa adds reviewed sports, SD and battle image readers and exact
-visual-equivalence inventory. The immutable v4 snapshot has 57 source/test/doc files. The
-combined committed text/media suite now passes 367 tests with zero skipped. Newer live asset
-work is preserved, and text/media completeness remains open. The v4 gallery has 3,339 authentic-palette variants;
-1,831 remain unreviewed, and suspected text stays explicit.
+Media-reader checkpoint 141fcb8d8 adds reviewed photo, CDDA, raw Form2 and XA/STR readers,
+including the pinned FFmpeg Docker layer. Twenty exact source/test/Dockerfile blobs are
+committed from the immutable 67-file v5 snapshot. The combined suite passes 466 tests with
+zero skipped; its historical source witness is read-only and does not claim current-source
+enrichment. Verified outputs include 14,910 WAV files and 997 movie frames. The supported
+static gallery has 3,462 authentic-palette variants: 425 confirmed Japanese-text variants,
+70 suspected and zero unreviewed within that exported set. Unsupported geometry, movie
+classification and whole-game coverage remain open; one original sector stays quarantined.
 T-28005's facts-only fan-patch audit
 is Done; all 29,403 reference dialogue offsets are covered, with 633 local-only leads.
 User requests cheaper agents and scripted/batched proof work, with the final Astra review/fix

@@ -63,6 +63,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-27077-symbol-snapshot-index|T-27077 Index immutable symbol snapshot lookups]]
+- [ ] [[tickets/T-27076-constant-batch-transaction|T-27076 Validate a constant batch transactionally]]
+- [ ] [[tickets/T-27075-essential-constant-selectors|T-27075 Close the remaining essential constant selector gaps]]
 - [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
 
 

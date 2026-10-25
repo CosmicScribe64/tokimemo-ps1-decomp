@@ -35,6 +35,15 @@ remain under ignored `.asset-cache/`. OCR suggestions alone cannot establish com
 
 ## Comments
 
+2026-10-24 v5 bounded formats: source/native callback proof adds 23 backgrounds; ETC photo
+bindings add 28 sources / 100 actual-palette pages. Combined static artifacts now cover 357
+image sources / 3,462 previews, all manually classified. CUE-bound track 2 exports to WAV
+with exact source-payload parity, while all 16 XA/STR extents are preserved separately.
+Pinned Docker FFmpeg and an original-SDK-proved temporary BS v1 compatibility tag adapter
+support stream export without altering original sectors or guessing movie timing. Full-stream
+batch validation is ongoing; [[assets-media]] will record its outcome. Format and source
+completeness remain false; no engine integration or game-build changes. Keep In Progress.
+
 2026-10-24: v4 adds original SD, sports and encounter source readers. Validated combined
 cache has 306 image sources / 3,339 previews; 70 SD files yield 825 frames, four sports
 files yield five viewports, and five encounter files yield 45 page/crop views. All 875
@@ -99,3 +108,11 @@ and remaining runtime/extent gaps. Combined validated artifacts are under
 `.asset-cache/media/ui-reviewed-v3/`; the source-only freeze is
 `.asset-cache/staging/media-reviewed-20261024-v3/`. No fan-patch implementation, translation
 or replacement artwork is reused. Keep In Progress; root owns shared integration.
+
+2026-10-24 v5 stream batch completed: all 16 preserved XA/STR sources have audited exports,
+14,910 WAV groups and 997 movie frames. Independent final audit checks every output hash/
+header and exact source sector coverage; no source failures or modified raw/manifest hashes.
+One ASAHINA sector remains opaque/quarantined and 56 type-0 data sectors are explicitly
+outside media decoding. Original timing, runtime clip mapping and hardware pixel parity
+are not claimed. [[assets-media]] records cache paths and full counts. Static image corpus
+now contains 3,462 manually classified previews; ticket stays In Progress for remaining formats.

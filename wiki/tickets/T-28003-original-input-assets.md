@@ -22,6 +22,15 @@ Reuse read-only disc/image/archive readers for original inputs and deterministic
 
 ## Comments
 
+2026-10-24 v5: added separate raw-sector streaming and strict/explicit-opaque preservation.
+All 16 original XA/STR extents are preserved (256,491 sectors / 603,266,832 bytes). One
+ASAHINA sector has conflicting subheaders; it is retained verbatim with parsed fields null,
+not repaired. A canonical baseline hash, path/LBA/size, extent/runs and raw hashes bind the
+cache output. EDC is explicitly unverified. The separate CUE/CDDA reader exports original
+track 2 with a preserved pregap and byte-identical WAV program payload. Input tests pass
+14/14 and CDDA tests 13/13. Original sources remain untouched; [[assets-input]] and
+[[assets-media]] record source boundaries and remaining unsupported inputs. Keep In Progress.
+
 2026-10-24: User authorized agents for asset extraction/readers, especially translation-ready text and reusable modern exports. No direct Godot work. Root owns shared tracker/index/log and commits.
 
 2026-10-24: Dispatched parallel chat 01a16f34-9559-7a53-80cf-6152fc4b9ca6. Engine-independent tools only; default real outputs under ignored .asset-cache; root integrates source/tests/docs.
@@ -49,3 +58,10 @@ reader lazily when `read()` receives an already validated inventory entry before
 Source path, byte size and integer LBA are checked; existing sector/Form2 restrictions remain.
 Synthetic raw and ZIP cached-entry cases pass in the complete 106-test Docker suite. Independent
 review found no blocker. No additional input formats are claimed; status remains In Progress.
+
+2026-10-24 v5 final preservation/stream audit: the complete 16-source raw stream batch is
+preserved and its decoded outputs pass an independent audit. Raw/sidecar hashes remained
+unchanged. The one opaque sector is retained with both conflicting copies and no chosen
+payload; 56 data sectors remain raw-only. Track 2 retains its full source, pregap and exact
+WAV program bytes. New input tests pass 14/14; final source-only isolated validation will be
+recorded in the v5 checkpoint. No original source or matching build was modified.

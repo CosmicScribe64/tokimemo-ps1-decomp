@@ -359,3 +359,95 @@ PNG hashes and finds 139 exact-preview groups / 359 members; one conflicting pri
 classification remains blocked. Runtime equivalence and corpus-completeness flags stay
 false. Independent reviews closed SD, sports, BATTLE, publication, coverage/profile and
 equivalence findings; full remaining containers and older unreviewed previews are active work.
+
+## Published-preview review census, 2026-10-24
+
+`.asset-cache/media/corpus-reviewed-v5/` adjudicates the remaining 1,831 older previews
+through 1,679 distinct PNGs on 140 hash-mapped contact sheets. Every candidate palette
+PNG was inspected separately; only exact-byte PNG aliases shared a preview judgment.
+This adds 170 Japanese, 100 other-text, 1,538 no-text and 23 suspected classifications.
+Manual reinspection also corrected three earlier FILESEL Japanese-text classifications:
+their six-member exact-PNG group is a fully transparent 16x16 image with zero nonzero-alpha
+pixels. The earlier catalog remains immutable; `review-corrections.json` records old reviews
+and the three changes. No review was promoted by OCR, source names or palette geometry.
+
+All 3,339 currently exported previews now have a review state: 417 Japanese, 314 other-text,
+2,541 no-text, 67 suspected and zero unreviewed. Source/palette/runtime caveats remain
+independent of this preview-only adjudication. The catalog has zero orphan regions and
+the gallery has 1,600 default cards / 13,892 hash-checked links; gallery SHA-256 is
+`abea9f8c09f065b15df5e14f4efe45b33f3c10aa54560caf31e94c9471d7ddf8`.
+The final exact-alias report verifies all 3,339 PNG hashes, finds 351 groups / 844 members
+and zero conflicting review states. Its SHA-256 is
+`90c1fa6356694e2a781b9e2affeee02fe85d12e6fdf5391b4808bffa2a22dddb`.
+The corpus still has unsupported containers, unresolved source geometry and suspected marks;
+all whole-game graphics/text-completeness flags and asset tickets remain open.
+
+## Reviewed v5 formats and source proof, 2026-10-24
+
+`media_background_steps.py` adds an opt-in native callback proof to the existing background
+context census. It requires exact helper bodies/signatures, a strict unconditional table-copy
+dispatcher, one-array callback types and configured original overlay hashes/addresses. The
+native sequence must contain the literal reader followed by wait, decode and show callbacks.
+Header/call macros, pointer aliases, mutations and ambiguous layouts fail closed. Both old and
+current names for the two low-level background routines resolve to their original VMAs.
+The current report has 25 proved native uses, 117 combined streams, 46 explicit rejections
+and no unmapped/ambiguous reads. Existing unresolved/conflicting uses are retained. This adds
+23 backgrounds: 78 of 313 BS sources now have previews, with 235 geometry cases unresolved.
+The 23 additions were manually reviewed (five Japanese, two other-text, thirteen no-text,
+three suspected); hardware IDCT/color parity remains unverified.
+
+`image_packs_photos.py` binds 28 sources to original ETC data and literal staff-roll reads.
+Thirteen native per-girl LBAs use 0x21 = 33 sectors; ALL_C uses 0x31 = 49 sectors. Their
+four/six 8bpp pages use source palettes at 0x10000/0x18000 and the caller's mode-3 STP
+transformation at CLUT row 0x1FF. Fourteen STAFF2 files use 0xD = 13 sectors and three
+4bpp pages each; the independently hashed STAF2COL source at LBA 0xB2CC supplies the
+actual row-0x1F1 palette. Only the default staff-roll variant is established. Runtime stitching,
+row-120/upload-128 behavior, placement and fades remain separate. All 100 raw pages and
+their STP masks are exported; all 100 were individually reviewed (three Japanese, 26
+other-text, 71 no-text). `media_ui_export.py --include-photos` records the original overlay
+and palette dependencies, preserves cache copies and clears stale claims if dependencies
+cannot be revalidated. The reader uses immutable native ETC facts without runtime source-file reads.
+
+The combined static-image artifacts are `.asset-cache/media/static-reviewed-v5/`: 1,372
+source records, 357 exported image sources, 3,462 previews and 6,919 PNGs including masks.
+Catalog states are 425 Japanese, 342 other-text, 2,625 no-text, 70 suspected and zero
+unreviewed; zero orphan regions. The gallery has 1,623 default cards and 14,435 hash-checked
+links. HTML SHA-256 is `06fa2dab5991a41db660fd4f673f6bf17ff4ca0a5f035957c98d904e88e203f4`.
+This static catalog does not classify the separately exported movie frames.
+
+`media_cdda.py` reads an explicitly selected CUE AUDIO track from a CUE path, directory or
+ZIP. FILE BINARY samples remain little-endian, as specified by the
+[GNU CUE FILE documentation](https://www.gnu.org/software/ccd2cue/manual/html_node/FILE-_0028CUE-Command_0029.html).
+The original selected file is first preserved/hash-bound in cache; WAV and pregap are derived
+from that copy. Unsupported flags, source/output overlap, symlink escapes and out-of-bounds
+indices are rejected. Original track 2 contains 19,197 sectors; INDEX 01 starts at 150, leaving
+19,047 program sectors / 11,199,636 stereo frames at 44,100 Hz (253.96 seconds). Its WAV
+payload is byte-identical to the source program slice, SHA-256
+`1f6ded47de4b3e4f4f54bf23e7935125ec3018401573690e0712e804c42559c0`.
+The 352,800-byte pregap and full original track remain separate under
+`.asset-cache/media/cdda-track2/`. No TR02.DA logical-size or runtime-use assumption is made.
+
+The optional `tools/Dockerfile.media` reuses the existing decomp image and pins official Ubuntu
+FFmpeg `7:4.4.2-0ubuntu0.22.04.1`. Its documented stdin build uses an empty context. No host
+dependency is installed. The stream wrapper checks raw hashes, sector metadata, file/channel/
+coding groups and exact output dimensions/sample counts. Software movie decoding is a PNG
+frame sequence; original timing is not inferred from FFmpeg's demuxer time base. The original
+SDK's BS v1/v2 paths converge before absolute DC/shared AC decoding; a bounded three-frame
+gate proved identical coefficient arrays when only a temporary decoder-input version tag was
+adapted from v1 to v2. This addresses the pinned FFmpeg decoder's v1 handling. Exact offsets,
+source/derived hashes and checksum limits are recorded; staged original sectors are unchanged.
+Known audio packet counts cap FFmpeg before its PSX demuxer's normal-EOF EIO path, while
+strict decode errors and exact PCM frame-count checks remain enabled. SEQ rendering, complete
+runtime clip mapping, hardware pixel parity and whole-game media coverage remain open.
+
+The completed stream batch is `.asset-cache/media/streams-reviewed-v5/batch-summary.json`.
+All sixteen original sources completed with no failed source, and all staged raw/manifest
+hashes remained unchanged. Outputs are 14,910 XA WAV groups, 923,051,808 audio sample
+frames and 997 movie PNG frames in two video groups. Independent `final-audit.json`
+checked every output SHA/size and WAV/PNG header, exact source sector runs and raw aggregate
+provenance: 244,083 audio sectors account for 1,968,285,312 PCM bytes; 12,351 video sectors
+account for the 997 frames. Fifty-six type-0 data sectors remain explicitly unrepresented
+as media, and the single ambiguous ASAHINA sector stays quarantined. ASAHINA's valid runs
+are separate and its status is partial; all other sources export normally. These are native
+file/channel/coding groups, not a claim that every WAV is one runtime dialogue clip. The
+movie frames have not been visually classified in the static-image text catalog.

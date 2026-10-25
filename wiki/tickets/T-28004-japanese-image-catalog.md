@@ -23,6 +23,20 @@ Provide the visual localization inventory the user requested, especially the mai
 
 ## Comments
 
+2026-10-24 v5 static extension: `.asset-cache/media/static-reviewed-v5/` covers 3,462 static
+previews from 357 sources. Every static preview has manual evidence: 425 Japanese, 342
+other-text, 2,625 no-text, 70 suspected, zero unreviewed and zero orphan regions. The new
+23 backgrounds and 100 photo pages were individually reviewed. Movie frame exports remain
+separate and are not visually classified by this static catalog. Unknown runtime palettes,
+unsupported containers and whole-game text/graphics completeness remain open.
+
+2026-10-24: `.asset-cache/media/corpus-reviewed-v5/` manually classifies every currently
+published preview: 3,339 regions, 417 Japanese, 314 other-text, 2,541 no-text, 67 suspected,
+zero unreviewed/orphans. All 1,831 older pending previews were inspected via 1,679 exact-PNG
+representatives; source/runtime palette caveats remain separate. A correction audit records
+three old FILESEL false positives on fully transparent PNGs; the new exact-alias audit has
+zero state conflicts and checks all 3,339 PNG hashes. Full source coverage remains incomplete.
+
 2026-10-24: v4 manually adjudicates all 875 new SD/sports/encounter previews through 602
 distinct PNGs. Catalog totals: 250 Japanese, 214 other-text, 1,000 no-text, 44 suspected,
 1,831 unreviewed; zero orphan regions. Exact-PNG preview alias reports preserve independent
@@ -101,3 +115,10 @@ filename-based confirmation was used. A facts-only fan-patch geometry cross-chec
 59 curated numeric label boxes inside source extents and fully represented by original exported
 texels; this does not assert their language or full corpus coverage. [[assets-media]] records
 the pinned reference, original-source proof and exact artifact paths. Tickets remain In Progress.
+
+2026-10-24 final v5 static catalog: 3,462 previews / 357 image sources, with 425 Japanese,
+342 other-text, 2,625 no-text, 70 suspected and zero unreviewed/orphan regions. All current
+static images have per-preview manual evidence and source/palette scope. The separately
+exported 997 movie frames remain visually unclassified; whole-game completeness stays
+false. All three earlier transparent FILESEL false positives are corrected in the new
+catalog with retained correction history. No translation or transcription was added.
