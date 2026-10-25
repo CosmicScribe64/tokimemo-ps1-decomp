@@ -24,6 +24,31 @@ def jal(address):
 
 
 class MipsContextTests(unittest.TestCase):
+    def test_additional_roles_are_local_to_selected_unit_and_invocation(self):
+        words = [lui(4, TEXT >> 16), ori(4, 4, TEXT & 0xFFFF), jal(CALLEE), 0]
+        spec = {"index": 0, "category": "display", "renderer": None,
+                "renderer_status": "unimplemented_fixed_renderer", "conditions": (),
+                "read_role": "display_string"}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            inventory = self.fixture(root, words, "invented_native_reader")
+            enrich_mips_context(inventory, root, additional_read_specs={
+                "TACO": {"invented_native_reader": (spec,)}})
+            self.assertEqual(inventory["mips_context"]["contexts"], 0)
+            enrich_mips_context(inventory, root, additional_read_specs={
+                "main": {"invented_native_reader": ({**spec, "callee_address": CALLEE + 4},)}})
+            self.assertEqual(inventory["mips_context"]["contexts"], 0)
+            enrich_mips_context(inventory, root, additional_read_specs={
+                "main": {"invented_native_reader": ({**spec, "callee_address": CALLEE},)}})
+            record = inventory["records"][0]
+            self.assertEqual(record["category"], "display")
+            self.assertEqual(len(record["mips_contexts"]), 1)
+            self.assertIsNone(record["mips_contexts"][0]["renderer"])
+            self.assertEqual(record["mips_contexts"][0]["renderer_status"], "unimplemented_fixed_renderer")
+            enrich_mips_context(inventory, root)
+            self.assertEqual(record["category"], "unknown")
+            self.assertEqual(record["mips_contexts"], [])
+
     def test_multiple_read_arguments_keep_distinct_contexts_for_shared_storage(self):
         words = [lui(4, TEXT >> 16), ori(4, 4, TEXT & 0xFFFF), ori(5, 4, 0),
                  ori(6, 4, 0), ori(7, 0, 3), jal(CALLEE), 0]

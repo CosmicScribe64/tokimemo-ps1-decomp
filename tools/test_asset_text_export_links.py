@@ -81,10 +81,12 @@ class LinkTests(unittest.TestCase):
         runtime_token = {"kind": "glyph", "raw_hex": "8140"}
         inventory = {"c_literal_sites": [site], "records": [], "blocked": [],
                      "source_context": {"blocked": []}}
+        expected_reads = None
 
-        def mips_report(data, repository, files_root):
+        def mips_report(data, repository, files_root, *, additional_read_specs=None):
             self.assertIs(data, inventory)
             self.assertEqual(repository, files_root)
+            self.assertEqual(additional_read_specs, expected_reads)
             data["mips_context"] = {"blocked": [{"status": "invented_failed_proof"}],
                                     "unresolved_constant_targets": [{"status": "invented_target"}]}
             return data
@@ -109,6 +111,7 @@ class LinkTests(unittest.TestCase):
                 patch("tools.assets.text_source.inventory_source_text", return_value=inventory), \
                 patch("tools.assets.text_context.enrich_source_context", return_value=inventory), \
                 patch("tools.assets.text_mips.enrich_mips_context", side_effect=mips_report), \
+                patch("tools.assets.text_shooter.verify_shooter_text_contract", return_value={"verified": False}), \
                 patch("tools.assets.text_binary._enrich_binary_text_from_reports", side_effect=binary_report), \
                 patch("tools.assets.script_mutations.enrich_script_mutations", side_effect=mutation_report):
             provenance = {"schema": "synthetic-source-witness", "source_tree_sha256": "synthetic-tree",
@@ -117,9 +120,17 @@ class LinkTests(unittest.TestCase):
             manifest_raw = json.dumps(provenance).encode()
             (Path(directory) / "snapshot-manifest.json").write_bytes(manifest_raw)
             catalog = export_text(directory, profiles=[], include_source=True, source_repository=directory)
+            from tools.assets.text_shooter import SHOOTER_TEXT_READ_SPEC
+            expected_reads = {"TACO": {"shooter_draw_text": ({**SHOOTER_TEXT_READ_SPEC,
+                              "source_contract": "shooter_renderer_contract"},)}}
+            self.assertEqual(expected_reads["TACO"]["shooter_draw_text"][0]["callee_address"], 0x801432F0)
+            with patch("tools.assets.text_shooter.verify_shooter_text_contract", return_value={"verified": True}):
+                positive = export_text(directory, profiles=[], include_source=True, source_repository=directory)
+            self.assertEqual(positive["text_completeness"]["shooter_renderer_contract_blockers"], 0)
         self.assertIs(catalog["source_inventory"], inventory)
         self.assertFalse(catalog["text_completeness"]["complete"])
         self.assertEqual(catalog["text_completeness"]["source_mips_blockers"], 1)
+        self.assertEqual(catalog["text_completeness"]["shooter_renderer_contract_blockers"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_mips_constant_targets"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_runtime_write_candidates"], 1)
         self.assertEqual(catalog["text_completeness"]["unresolved_opaque_value_dependencies"], 1)

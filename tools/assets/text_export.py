@@ -452,8 +452,18 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         from .script_mutations import enrich_script_mutations
         from .text_renderer_proof import verify_renderer_source_proofs
         from .text_substitutions import verify_symbolic_substitution_contract
+        from .text_shooter import verify_shooter_text_contract, SHOOTER_TEXT_READ_SPEC
         source_repo = REPOSITORY if source_repository is None else Path(source_repository).resolve(strict=True)
         catalog["renderer_source_proofs"] = verify_renderer_source_proofs(source_repo, root)
+        try:
+            shooter_contract = verify_shooter_text_contract(source_repo, root)
+        except (OSError, ValueError) as exc:
+            shooter_contract = {"verified": False, "status": "source_contract_not_verified",
+                                "reason": type(exc).__name__, "renderer_model_implemented": False}
+        catalog["shooter_renderer_contract"] = shooter_contract
+        additional_reads = ({"TACO": {"shooter_draw_text": ({**SHOOTER_TEXT_READ_SPEC,
+                             "source_contract": "shooter_renderer_contract"},)}}
+                            if shooter_contract["verified"] else None)
         try:
             catalog["symbolic_substitution_contract"] = verify_symbolic_substitution_contract(source_repo, root)
         except (OSError, ValueError) as exc:
@@ -476,7 +486,8 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         _attach_typed_dictionary_links(catalog)
         _attach_stage_storage_links(catalog)
         _attach_initial_buffer_storage_links(catalog)
-        enrich_mips_context(catalog["source_inventory"], source_repo, root)
+        enrich_mips_context(catalog["source_inventory"], source_repo, root,
+                            additional_read_specs=additional_reads)
         # These reports were derived in this invocation; avoid a second AST pass.
         _enrich_binary_text_from_reports(catalog["source_inventory"], source_repo, root)
         enrich_script_mutations(catalog, source_repo, root)
@@ -494,6 +505,7 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
                                              for record in catalog["source_inventory"]["records"])}
         catalog["text_completeness"].update(
             renderer_alias_contract_blockers=int(not catalog["renderer_source_proofs"]["verified"]),
+            shooter_renderer_contract_blockers=int(not shooter_contract["verified"]),
             symbolic_substitution_contract_blockers=int(catalog["symbolic_substitution_contract"]["status"] !=
                                                         "verified_source_and_original_image_pins"),
             source_literal_byte_blockers=len(catalog["source_inventory"]["blocked"]),

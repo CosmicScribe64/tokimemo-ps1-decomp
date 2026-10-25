@@ -149,9 +149,9 @@ evidence separately. Full-file reconstruction and runtime reachability are diffe
 | Japanese text baked into images | Separate media lane owns asset/region catalog | Font IDs can be joined; this reader does not claim image/OCR completeness |
 
 Current script-root audit: 98 containers, 654 sections, 42,369 records and 30,851 text records.
-The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,889
+The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,877
 remain semantically unknown. All 437 C files parse in the AST pass with stable source inputs. The
-current full text suite has 245 passing Docker tests, including source-root integration and isolated
+current full text suite has 257 passing Docker tests, including source-root integration and isolated
 synthetic proof regressions. These counts do not clear the remaining context and runtime gates.
 There are no unprofiled SERIFU or BUNKA files. Every script string strictly decodes and re-encodes as
 Shift-JIS. Unclaimed byte counts and diagnostic candidate scans are retained as leads; zero candidates
@@ -244,6 +244,29 @@ and `0x800504CC`, which are interior addresses in the current `xa_wait` and `get
 Those call arguments do not establish a loader ABI. The earlier actor-resource description was not
 proved; all twelve SPEAKTST layouts remain unresolved, with original hashes/extents retained and no
 whole-file text-absence claim. No English-patch wording is used.
+
+## Shooter native display-input cohort (2026-10-25)
+
+`shooter_renderer_contract` verifies the native byte-atlas reader `shooter_draw_text` in TACO.
+Its 53 current C/header/ASM/config pins include all 51 transitive C/header dependencies. All 161
+original function instructions and six decoded byte-read facts verify: argument zero supplies the
+byte pointer, the loop advances one byte through NUL, and the function selects sprite UVs and
+submits draw primitives. The immutable read spec is bound to the verified entry `0x801432F0`.
+
+The exporter supplies this additional role only after the selected source and original-code contract
+passes in the current invocation. The role is scoped to TACO, the function and its exact entry;
+general C consumer tables remain unchanged. Original LUI/ADDIU argument setup, JAL targets and delay
+slots independently verify twelve exact source-extent addresses. Those twelve existing physical
+records gain a potential static display-input classification, reducing unknown extents from 1,889
+to 1,877. Failure to verify the contract supplies no role and retains a completeness blocker.
+
+The native glyph model remains unimplemented. There is no `set_kanji_string` alias, glyph/font
+equivalence, runtime value, reachability or execution claim. All 8,837 physical payloads and IDs and
+all C literal sites are preserved. The same 38,701 units remain, with twelve changed source contexts
+and no added rows. Every row retains its previous readiness and null target; 31,346 remain ready for
+review and 7,355 remain flagged. The twelve source units remain flagged with unavailable renderer
+tokenization and their existing context constraints. Original capacities remain provenance, not
+translation limits. Comprehensive coverage remains false.
 
 ## Linked script format
 

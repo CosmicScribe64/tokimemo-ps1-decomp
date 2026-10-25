@@ -141,15 +141,22 @@ def _control(word):
     return None
 
 
-def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None) -> dict:
+def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None,
+                        *, additional_read_specs=None) -> dict:
     """Attach potential text-call evidence using exact argument-register constants.
 
     Every target extent and contributing instruction is rechecked against the
     selected original binary. Overlay calls see their own unit and shared main
     data only. No byte searches, memory-load values, or branch paths are guessed.
+    Additional unit-scoped roles require a source/code contract verified by the
+    caller in this invocation. They do not register C consumers or glyph models.
     """
     repo = Path(repository).resolve(strict=True)
     inputs = Path(files_root or repo / "disc" / "files").resolve(strict=True)
+
+    def read_specs(call, unit):
+        yield from _text_read_specs(call, unit)
+        yield from (additional_read_specs or {}).get(unit, {}).get(call, ())
     bases = {}
     for line in (repo / "config" / "overlays.txt").read_text().splitlines():
         fields = line.split()
@@ -258,7 +265,7 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                 elif word >> 26 != 0:
                     join_pcs.add((unit, (pc + 4 + (_signed(word & 0xFFFF, 16) << 2)) & 0xFFFFFFFF))
             if pending_entry:
-                if any(_text_read_specs(pending_entry[0], unit)):
+                if any(read_specs(pending_entry[0], unit)):
                     entries[unit, pc] = {"name": pending_entry[0],
                                         "evidence": {"kind": "verified_glabel_entry", "unit": unit,
                                                      "assembly_path": relative, "assembly_line": pending_entry[1],
@@ -272,7 +279,7 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
     for path in sorted((repo / "config").rglob("*.txt")):
         for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             match = SYMBOL.match(line)
-            if match and any(_text_read_specs(match.group(1), "main")):
+            if match and any(read_specs(match.group(1), "main")):
                 address = int(match.group(2), 16)
                 if ("main", address) in verified_pcs:
                     data, base, bias, digest, source_path = original("main")
@@ -314,7 +321,9 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                     if resolved_callee is not None:
                         callee = resolved_callee["name"]
                         calls_seen.add((unit, pending["pc"], callee))
-                        for spec in _text_read_specs(callee, unit):
+                        for spec in read_specs(callee, unit):
+                            if spec.get("callee_address") is not None and target != spec["callee_address"]:
+                                continue
                             arg, category, renderer = spec["index"], spec["category"], spec["renderer"]
                             if not 0 <= arg <= 3:
                                 continue
@@ -344,6 +353,10 @@ def enrich_mips_context(inventory: dict, repository=REPOSITORY, files_root=None)
                                                                      "raw_hex": item[2], "assembly_line": item[3]}
                                                                     for item in sorted(proof.values())],
                                        "proof": "verified_original_instructions_constant_text_argument"}
+                            if spec.get("source_contract"):
+                                context.update(source_contract=spec["source_contract"],
+                                               renderer_model_implemented=False,
+                                               runtime_execution_proven=False)
                             for record in records:
                                 key = (record["id"], unit, pending["pc"], callee, arg)
                                 if key not in contexts:

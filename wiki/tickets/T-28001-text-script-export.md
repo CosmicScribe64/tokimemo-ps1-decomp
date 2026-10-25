@@ -355,3 +355,31 @@ claimed for the twelve TEST files. Both semantic reports and the new implementat
 in ignored candidates; parent alone applies source/test/docs, with live game/source files untouched.
 
 2026-10-25 root integration: the exact sealed RPG packet `ba6b7dd879efbeb7` is applied after independent Standards and Sol 6.1 correctness reviews passed. All 52 after-images match; both new Python files were absent before application. The coherent current text/media suite passes 453 tests without skips. The live replay passes 245 text tests, verifies 56 source/header pins, 604 original instruction words and 220 selected initialized bytes, and regenerates matching 38,701-row JSONL/TSV outputs with null targets. All 38,696 previous rows are preserved except five additive provenance contexts; five new views remain flagged initial-only. Ready rows stay 31,346 and unknown extents stay 1,889. All 1,072 protected game-source/header/config/build files remain unchanged; no matching rebuild was needed. Runtime values, reads, lifetime and full coverage remain unproved. Keep In Progress.
+
+
+## [2026-10-25] Bounded native shooter display-input proof
+
+`shooter_renderer_contract` verifies the native byte-atlas reader `shooter_draw_text` in TACO.
+Its 53 current C/header/ASM/config pins include all 51 transitive C/header dependencies. All 161
+original function instructions and six decoded byte-read facts verify: argument zero supplies the
+byte pointer, the loop advances one byte through NUL, and the function selects sprite UVs and
+submits draw primitives. The immutable read spec is bound to the verified entry `0x801432F0`.
+
+The exporter supplies this additional role only after the selected source and original-code contract
+passes in the current invocation. The role is scoped to TACO, the function and its exact entry;
+general C consumer tables remain unchanged. Original LUI/ADDIU argument setup, JAL targets and delay
+slots independently verify twelve exact source-extent addresses. Those twelve existing physical
+records gain a potential static display-input classification, reducing unknown extents from 1,889
+to 1,877. Failure to verify the contract supplies no role and retains a completeness blocker.
+
+The native glyph model remains unimplemented. There is no `set_kanji_string` alias, glyph/font
+equivalence, runtime value, reachability or execution claim. All 8,837 physical payloads and IDs and
+all C literal sites are preserved. The same 38,701 units remain, with twelve changed source contexts
+and no added rows. Every row retains its previous readiness and null target; 31,346 remain ready for
+review and 7,355 remain flagged. The twelve source units remain flagged with unavailable renderer
+tokenization and their existing context constraints. Original capacities remain provenance, not
+translation limits. Comprehensive coverage remains false.
+
+The actual complete export passes 257 text tests without skips and all byte/Unicode/token/AST/source/proof gates. Catalog SHA256 `479e41a8f1fd3a7bda4fafc866d6995aa864ac10f81c875230dd77df60077a49`, 168,642,963 bytes. Full JSONL/TSV serialization and all 125 original-input checks pass. Independent native-contract, original-call and integration reviews pass. The ignored candidate and packet preserve all prior evidence; parent alone applies the proposed tools/tests/docs. Keep T-28001 In Progress.
+
+2026-10-25 root integration: applied the exact shooter packet after independent Standards and Sol 6.1 correctness reviews. All 54 after-images verify, including both previously absent Python files. All 34,945 tracked files outside the exact eight-file application remain unchanged. The coherent suite passes 478 tests without skips; the actual live replay passes 257 text tests and native/source/full-delta/JSONL/TSV checks, preserving all 38,701 rows and their readiness, payloads, IDs and null targets. Twelve existing contexts are classified; unknown extents are now 1,877. No glyph model, runtime execution, native display lifetime or full-coverage claim follows. Keep In Progress.
