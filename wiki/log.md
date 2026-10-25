@@ -2124,3 +2124,15 @@ The six-file [[tickets/T-29008-assemble-playable-development-app]] focus-v2 inte
 ## [2026-10-25] build | Integrate reviewed DATE context without changing translation
 
 Applied the three exact reviewed files for [[tickets/T-28007-complete-text-and-translator-handoff]]. Fourteen installed tests and actual original-input replay pass: 3,527 native instructions, 293 sections and 5,237 existing unit IDs. [[assets-text]] records the optional context lookup and its runtime limits. Gemini's pipeline and editable translations remain untouched. Port work continues in parallel on actual week presentation, native HUD, strict command-7 content and real-session save/reload; dialogue finite findings are assigned for repair.
+
+## [2026-10-25] build | Advance full-port integration and repair font output boundary
+
+[[tickets/T-29010-native-hud-font-rendering]] review found an exporter accepting cache-root lookalikes outside the repository's ignored cache. Root prepared a separate two-file fix and five passing regression tests; independent re-review is pending. The HUD owner continues actual source/runtime reconstruction rather than substituting a captured original screen. [[tickets/T-29009-ordinary-week-continuation]] found a real mirrored progress-tail mismatch in original comparisons; a narrow source-proved correction is authorized in isolation, without dropping comparison fields. Save/reload, command-7 production media and dialogue repairs remain active parallel work toward the full [[phase3]] scope.
+
+## [2026-10-25] ticket | Start independent New Game initialization lane
+
+Created [[tickets/T-29012-native-new-game-initialization]] for additive native initialization/profile rules and original-state/RNG proof. This moves toward [[phase3]] P3.3 without replacing the first-slice integration work or treating an initializer as a complete opening. Root keeps shared app/controller/schema ownership; original tables remain external and translation work stays with Gemini.
+
+## [2026-10-25] build | Correct native font fade quantization in isolation
+
+Independent review of [[tickets/T-29010-native-hud-font-rendering]] verified all 3,418 original glyph bitmaps but found a fade rounding mismatch. Root prepared cumulative four-file `font-fix-v3` with native five-bit modulation before display expansion, retaining the accepted cache-containment correction. Godot regression tests pass; fresh independent resolution checks remain required before application. [[tickets/T-29012-native-new-game-initialization]] has begun source-backed rules and external-table integration; its first incomplete scratch is explicitly not accepted. Ticket catalog/lint reports zero broken links and status mismatches.
