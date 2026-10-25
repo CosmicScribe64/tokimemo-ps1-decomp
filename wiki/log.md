@@ -2164,3 +2164,7 @@ The frozen dialogue v2 is in fresh independent review. Its owner now prepares a 
 ## [2026-10-25] build | Accept clean production rest-command content import
 
 Resolved the [[tickets/T-29003-port-content-adapter]] CLI import hold using reviewed package-relative imports and direct-script bootstrap. Root's actual clean CLI succeeds; all 46 canonical tests and both Godot pack versions pass. Final pack manifest, 40 runtime PNGs and 40 retained reader PNGs match reviewed outputs. The expanded loader/exporter is accepted as content infrastructure; the rest-command app and native rendering proof remain pending. No matching game source, original input or Gemini translation changed.
+
+## [2026-10-25] build | Canonical stable-boundary save continuation
+
+Integrated the independently reviewed v2 save codec and playable-session adapter for [[tickets/T-29006-port-save-audio-services]]. Actual canonical replay passed 37 filesystem/codec and 50 app checks, including all 80+40+243+163 continuation hash pairs at command/result boundaries. Evidence: `.claude/orchestrator/state/T-29006/live-save-proof/`. User-facing controls and audio remain open. Updated [[status]]; game source and Gemini translation files were untouched.

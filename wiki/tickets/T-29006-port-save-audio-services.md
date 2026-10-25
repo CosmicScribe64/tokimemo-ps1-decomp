@@ -34,6 +34,8 @@ Suggested bounded owner: gpt-6-luna for save/schema/service tests, escalating na
 
 ## Comments
 
+2026-10-25: reviewed v2 save codec and playable-session adapter are integrated in the canonical project. Both independent reviews pass; actual canonical replay in `.claude/orchestrator/state/T-29006/live-save-proof/` passes 37 codec/filesystem checks and 50 app checks, including all 80+40+243+163 continuation state/event hash pairs after command/result reloads. The adapter preserves controller policy, native checkpoints, RNG, clocks, input and owned service state; rejects unsafe boundaries and validates before installation with rollback on failed resource rebinding. This proves supported-boundary continuation, not suspend-anywhere, power-loss durability or native memory-card import. User-facing save controls and ordered audio remain open; the ticket stays In Progress.
+
 2026-10-25: created from the independently reviewed Astra Phase 3 plan. No implementation or runtime validation is claimed by this ticket.
 
 2026-10-25: user explicitly requested additional parallel port work. Start bounded save container/validation and audio lifecycle code against frozen session contracts while gameplay/presentation/content workers continue. Full acceptance retains the applicable runtime/content/continuation gates; no native-card import or guessed BGM mapping. Existing external worker prepares an ignored packet; root alone integrates.
