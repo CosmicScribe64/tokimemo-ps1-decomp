@@ -1799,3 +1799,49 @@ Committed 47e315ce4 from the exact reviewed v3 frozen Python blobs: 25 changed s
 ## [2026-10-24] query | Confirm the media snapshot aggregate identity
 
 The author's aggregate format is sorted SHA-256, two ASCII spaces, relative POSIX path and newline for all 48 files. Root independently recomputed it and matched 2b32408b2dca8fffd3d6fed19be5adcf1743124c02b759af86a3ceae01a31c59. The earlier guessed-format mismatch is resolved without changing source or repeating tests. The ignored integration proof retains both calculations and their explicit formats. [[assets-media]].
+
+## [2026-10-24] ticket | Prepare the remaining module path names
+
+Created [[tickets/T-27074-overlay-module-paths]] In Progress for bounded directory/header-path preparation from the accepted ADR map, after all 437 logical C basenames are complete. The packet must retain disc identities and body-backed ownership, record unproved names/TT's contributor condition explicitly, and wait for stable naming/header providers before root's tool-only application. This closes an existing phase2 layout criterion rather than adding engine work. [[spec/file-naming-overlays]], [[spec/header-split-plan]].
+
+## [2026-10-24] build | Apply remaining identifiers and preserve the callback alias
+
+The 3,939-row batch is applied. Independent actual-source review finds exact body/operator/literal/string/type preservation across 377 changed C/header files, correct symbol ownership/HYP placement and the six intended TACO requests. Its independent scoped snapshot comparison passes all 437 units with zero changes. The post-apply check found the documented T-18000 D_80085368 callback-address alias after its main function became scene_still_fade_in. Root planned and applied the required one-row alias correction through rename.py; its old D_ spelling requires a data-kind request, while all three actual SHUGAKU callback declarations remain void(void), not data objects. The alias post-check and final proof are pending. The old alias is present in exactly those three snapshot views; TAIIKU's existing s32() override is unaffected.
+
+Root grants the local Luna caller_constants worker a temporary exclusive source/build lease for only the reviewed comment patches, 274 proven festival-stage literal sites, alias proof and the prepared clean matching run; all other lanes remain preparation-only. Root retains commits/shared tracking. The worker must stop on a failed gate, preserve asset WIP, and publish ignored SOURCE-STABLE.json before header regeneration. Full phase2 review remains gated on header completion and the final Astra pair. [[status]], [[spec/header-split-plan]], [[tickets/T-27063-hardware-main-reconciliation]], [[tickets/T-27065-festival-overlay-reconciliation]].
+
+## [2026-10-24] build | Commit the remaining matching readability wave
+
+Committed 4dab92732: 3,939 identifier requests including 2,807 function names, the separately reviewed callback-address alias, 274 festival-stage literals and 22 definition comments; 427 source/config/value/ledger files, with no assets or future proposals staged. Independent final source review and both 437-unit scoped ABI proofs pass with zero changes. Clean configure/Ninja/progress and every guard pass; two independent binary checks confirm 27/27, with 6,952 functions and 2,276,920 bytes. The rename guard has 12,922 rows. Exact stable source digest is e771b82f3662d7018d737b3aeac7dd648ec579eb1f134432a5f2fa16375b64fe. The source/build worker's bounded lease is released. T-27061 may now regenerate its complete ordered header packet against stable source and ASM; the camera-reference ownership deferral and 141 unproved BUNKASAI literal sites remain explicit. [[status]], [[spec/header-split-plan]], [[tickets/T-27063-hardware-main-reconciliation]], [[tickets/T-27065-festival-overlay-reconciliation]].
+
+## [2026-10-24] ticket | Close the anonymous-member and K&R tool gate
+
+Moved [[tickets/T-27071-anonymous-fields-kr-scope]] to Done and moved its board card. All six intended TACO requests are now applied through the reviewed tool, independently checked in the actual source, and included in the clean 27/27 matching checkpoint. Earlier scope-proof findings are resolved; the broader unit and phase2 tickets remain open. [[kanban]].
+
+## [2026-10-24] build | Commit reviewed sports, SD and battle exporters
+
+Committed a1a0625aa from immutable v4 snapshot 7dd2b954f70f0ad78c7cf0cab5ff1c02296538c65fc41a992244478fa4f0d94c: 15 changed Python source/test files, with 51 owned frozen Python inputs tested against committed text tooling and an identical retained CLI. All 57 per-file identities and canonical aggregate aa8eca2e15b3434c97792e65929d7e138dd31f18be79830b2c5d641d9999c6d8 match. Combined Docker tests pass 282 with one optional skip. A summary-printer key mismatch occurred after successful tests/report persistence; only the ignored printer key was corrected, without retesting unchanged sources. Active worktree assets/text code was not overwritten. The catalog has 3,339 palette-backed variants and 1,831 unreviewed states; corpus completeness and hardware pixel parity remain open. [[assets-media]], [[assets-input]], [[asset-export]].
+
+## [2026-10-24] decision | Approve registry path migration after counterexample fixes
+
+The initial T-27074 ignored rename-tool proposal was rejected for rewriting nested metadata and accepting malformed JSON. Its structural replacement then exposed an empty-profile bypass. All counterexamples are resolved in exact patch 57df727aa38bb491f37372669b403e1d2acf96a9282e36b561d592173b328baa: parse full JSON with duplicate-key refusal, update only top-level owner/type paths, preserve other fields/order, and reject empty existing profiles before writes. Four focused regressions and the 130-test candidate suite pass; independent review approves the hash. The patch remains unapplied while T-27061 prepares its header stack. [[tickets/T-27074-overlay-module-paths]].
+
+## [2026-10-24] decision | Refresh the continuation instructions and essential-constant lanes
+
+Refreshed the existing complete-tokimemo-phase-2 heartbeat's checkpoint hints without changing its schedule or final Astra/push gates. Removed superseded filename and unsupported-SERIFU counts in favor of current coverage reports. Reconciled the ignored integration state to committed 4dab92732/a1a0625aa, released the completed worker lease, and recorded the approved but unapplied registry migration fix. Existing T-27051, T-27064, T-27065 and T-27066 chats now prepare disjoint executable essential-constant slices from actual applied names; they remain forbidden live source/tool/ledger/Git/shared-wiki writes. Root retains integration; T-27061 full header closure is the critical path. [[status]], [[tickets/T-27074-overlay-module-paths]], [[asset-export]].
+
+## [2026-10-24] lint | Check the current checkpoint tracking
+
+Targeted checks confirm the T-27071 Done and T-27074 In Progress frontmatter each has exactly one card in the matching board column. Current status links resolve, including the existing unique archive basenames. The initial root-only path check did not implement basename resolution; rerunning with the wiki's convention resolves those two archive links without changing history. Source/header trees remain clean after 4dab92732, and future proposals/active asset work remain outside the staged code checkpoint. [[status]], [[kanban]].
+
+## [2026-10-24] build | Commit the reviewed translation-unit checkpoint
+
+Committed b4977bd16: 35 changed text-tool/test files from 48 exact frozen Python blobs. All 50 manifest files and three numeric reports validate against pinned manifest 926ad42f2e9da6d04b4f6430d2e9a240e4bd68eeb6f88b43fe42270e4ab26f4d and canonical source set b67ddd6c594125dfc9dc8108886df02f80a7c3eb517be79cb18da2a2f4457124. The coherent committed-media-plus-frozen-text run passes 367 Docker tests with zero skipped on Python 3.10.12, pycparser 3.11 and gcc 11.4.0. Its first helper invocation preserved the successful test log but missed proof serialization; metadata was revalidated/recovered without rerunning unchanged tests. Root staged exact frozen blobs without overwriting active work. The checkpoint adds 286 stage-show bodies and renderer proofs; production validation covers 38,696 units with null translation targets. Comprehensive coverage remains false and 1,889 extents need classification. Source witness f9c679d5 remains explicitly historical; rebasing full source enrichment waits for final header/path stability. [[assets-text]], [[asset-export]].
+
+## [2026-10-24] decision | Synchronize the module navigation map
+
+Updated src/main/README.md to the committed boot_paused_step name and the two explicitly hypothetical audio helper names. The ledger confirms all three address/name mappings. The public-prose check has zero strong hits; its two weak primitive/Primitives hits are established GPU terminology and remain. No C or ABI changes. [[tickets/T-27063-hardware-main-reconciliation]].
+
+## [2026-10-24] ingest | Publish the matching reviewed asset documentation
+
+Staged the seven exact frozen wiki/ticket documents from the reviewed v4 media and b67 text checkpoints, alongside current coordinator tracking. Their hashes match the immutable manifests, all ticket statuses match their board columns, and newer working files remain untouched. These pages describe the committed readers and explicit coverage limits; ongoing v5 work remains a separate unstaged layer. No extracted text, images, audio or original game inputs are staged. [[assets-input]], [[assets-media]], [[assets-text]].

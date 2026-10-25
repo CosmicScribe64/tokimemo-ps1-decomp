@@ -1,7 +1,7 @@
 ---
 type: tool
 updated: 2026-10-24
-sources: ["src/main/8007C030.c", "src/main/8004E500.c", "src/main/8004F870.c", "src/ovl/NAME_ENT/80132000.c", "tools/assets/text.py", "tools/assets/text_export.py", "tools/assets/script_profiles.py", "tools/assets/text_source.py"]
+sources: ["src/main/scene_library.c", "src/main/text_system.c", "src/main/menu_speaker_girl.c", "src/ovl/NAME_ENT/name_entry.c", "tools/assets/text.py", "tools/assets/text_export.py", "tools/assets/script_profiles.py", "tools/assets/text_source.py"]
 ---
 
 # Comprehensive text inventory and export
@@ -21,10 +21,15 @@ docker run --rm --cpus=2 -v "$PWD":/work -w /work tokimemo-decomp-arm64 \
 ```
 
 The CLI prints counts; the catalog contains UTF-8 text, exact raw bytes, commands and provenance.
-`tools.assets.text_export.export_text(input_dir, output_dir=None, profiles=None, include_source=False)`
+`tools.assets.text_export.export_text(input_dir, output_dir=None, profiles=None, *, include_source=False, source_repository=None)`
 returns a JSON-compatible catalog. The input is an extracted ISO root such as `disc/files`. Without an
 output directory it returns data without writing. Files are read-only and JSON output is deterministic.
 The compact JSON avoids repeating indentation for tens of thousands of records.
+`--source-repository` selects an explicit source-evidence tree. The reviewed runtime mutation pins
+currently target `.asset-cache/text/source-snapshot-f9c679d5d2616925`; equivalent source in the renamed
+live tree needs new reviewed pins. The reader reports that mismatch rather than weakening source checks.
+Current C paths on this page follow the original object VMAs in `config/SLPM_86.053.yaml` and overlay
+YAML files. Hash-pinned historical source references in tool profiles refer to the evidence snapshot.
 
 Profiles use paths beginning with `CDROM/`. `--profiles` accepts a JSON list matching
 `tools/assets/script_profiles.py`: `id`, `path`, optional `sha256`, `load_address`, and `sections` with
@@ -32,15 +37,66 @@ Profiles use paths beginning with `CDROM/`. `--profiles` accepts a JSON list mat
 Supplying a layout does not prove it is correct for another release. Built-in layouts are pinned to
 original-file hashes and cite loaders/initializers; checksum mismatches fail clearly.
 
+Create the compact review projection from a validated catalog:
+
+```sh
+docker run --rm --cpus=2 -v "$PWD":/work -w /work tokimemo-decomp-arm64 \
+  python3 -m tools.assets.text_units .asset-cache/text/catalog.json \
+  --output-dir .asset-cache/text/units
+```
+
+JSONL and TSV retain stable original record identities, source bytes/hashes, protected control tokens,
+inline-label text spans, source coordinates and review blockers. Every target remains null. TSV source
+text is JSON-escaped inside its CSV-quoted field, so tabs/newlines/NULs do not split rows. Empty slots,
+conditional runtime variants and unresolved storage/rendering semantics remain explicit. Original slot,
+copy, row and pixel capacities describe the original layout; they impose no future translation limit.
+The projection and its manifest stay under `.asset-cache/text/`. Script group-end records and zero-only
+padding extents are skipped with counts; a physical source extent and its C use site remain separate
+units with proven parent links where available. Review readiness is per unit and never a declaration
+of comprehensive source or runtime completeness.
+
 Readers:
 
 - `text.parse_script(data, path, profile)`: linked dialogue tables.
 - `text_fixed.tokenize_fixed_text(raw, renderer, context=None)`: direct glyph loading, `sndi`, `sndisp`, printf syntax.
 - `text_source.inventory_source_text(repository, files_root=None, output_path=None)`: executable/overlay source literal inventory and reference evidence.
+- `text_mips.enrich_mips_context(inventory, repository, files_root)`: original-instruction evidence for constant display, format and diagnostic arguments.
+- `text_binary.enrich_binary_text(inventory, repository, files_root)`: derive fresh MIPS arguments, then recover bounded initial strings emitted through numeric directives.
 - `text_tables.parse_character_lists(data, profile=None)`: external name-entry character lists.
+- `text_date_tables.parse_date_tables(data, profile=None)`: DATE place and gift slots with source coordinates.
+- `text_ui_tables.parse_ui_tables(data, profile)`, `verify_ui_source_proof(...)`: main/TEL profile UI fields, original loader/display instructions and source pins.
+- `text_overlay_tables.parse_overlay_fixed_tables(data, profile)`: seven overlays' fixed strings, including flat `DateTxt` gift objects and fortune labels.
+- `text_bunka_sd.parse_bunka_sd(data, repository, profile=None)`: source-pinned stage-show pointer tables, protected prefixes, direct text rows and voice-pair metadata.
+- `text_renderer_proof.verify_renderer_source_proofs(source_root, original_root, evidence_path=None)`: original instruction and source checks for scoped custom text readers.
+- `text_substitutions.verify_symbolic_substitution_contract(repository, files_root)`: original storage and reader proofs for symbolic name/context substitutions.
+- `text_units.export_units(catalog, output_dir=None, *, repository=..., formats=("jsonl", "tsv"))`: compact UTF-8 units with raw/control evidence, stable identities, null translation targets and explicit review flags.
 - `text_font.font_metadata(data)`, `font_reference(raw, metadata)`: original font table and bitmap references.
 - `script_validation.validate_script(data, path, profile, parsed=None)`: independent structural and semantic checks.
 - `script_coverage.audit_all(data_root, repo_root=...)`: source-root and unclaimed-region diagnostics.
+- `script_mutations.enrich_script_mutations(catalog, repository, files_root)`: pinned runtime patch slots, separate conditional views, unresolved source-write candidates.
+
+## Custom readers and stage-show evidence
+
+Reader roles include every source-proved string argument, scoped to its caller's link unit. The main
+title wrapper forwards argument zero to the fixed glyph renderer; `x_taku_string_set` reads arguments
+zero and one, and reads argument two only when argument three is three and that pointer is non-null.
+RPG_BAT's `func_8013E934` reads argument two. A same-numbered overlay symbol does not inherit that
+role. C sites retain conditional-read facts; MIPS facts retain argument-register and guard witnesses.
+Unimplemented talk-renderer fixed views retain an explicit null renderer and a review flag.
+
+Custom-reader proofs check the frozen C/ASM pins and original image bytes. Accepted MIPS witnesses
+also bind the callee to its source declaration or glabel entry, replay unique instruction PCs, require
+the call and its immediate delay slot, and retain unknown guards as conditional. A known-false guard
+does not establish a string read. Symbolic S/O/W/A/M substitutions bind to five original zero-filled
+buffers totaling 104 bytes; their runtime contents and effective read lengths remain unknown.
+
+The BUNKA_SD reader separates 214 one-byte-prefix records from 72 direct text rows. The source
+passes prefixed bodies to display before testing the prefix; a termination prefix therefore does not
+justify dropping its body. It preserves row-break prefixes, voice-pair words, source NULs and all
+uninterpreted bytes without inventing a row-to-voice assignment. Its 25 source pins and 1,453 original
+instruction words are checked on each parse. Catalog links require an exact file/hash/address and
+body or protected-storage byte match. Translation units contain body text and protected full-storage
+evidence separately. Full-file reconstruction and runtime reachability are different gates.
 
 ## Coverage matrix and remaining gates
 
@@ -48,9 +104,15 @@ Readers:
 |---|---|---|
 | `CDROM/SERIFU/DATE_*.BIN` (11) | All 293 source-initialized and consumed triads | Six omitted roots per girl were found by the source audit and added; existing IDs retained |
 | `CDROM/SERIFU/EVENT_*.BIN` (12) | All 79 source-initialized triads | 47 directly consumed and 32 without a direct assignment; both sets retained |
-| Other SERIFU dialogue (21, including P_BIRTH) | Pinned linked-table profiles | Independent initializer/root audit underway |
+| Other SERIFU dialogue (21, including P_BIRTH) | Pinned linked-table profiles | All source initializer roots match the profiles |
 | `CDROM/SERIFU/TAKU3.BIN` | 40 numeric choice-result tables | Typed numeric data, 668 padding bytes and checked-CD trailer; no missing dialogue parser |
-| `CDROM/BUNKA/*.BIN` (46) | Pinned linked-table profiles | Direct/indexed loader mapping checked; independent initializer audit underway |
+| `CDROM/BUNKA/*.BIN` (46) | Pinned linked-table profiles | 50 initializer functions yield 46 unique triads; duplicate roots retained in the audit |
+| `CDROM/MASTER/*.BIN` (9) | Eight linked-table profiles: 326 groups and 815 text records; TEAR has a separate source-backed actor descriptor | Exact original hashes and initializer roots verified; actor usage does not prove whole-file text absence |
+| `CDROM/SPEAKTST/TEST_*.BIN` (12) | File/hash inventory, unsupported linked layout | No source-backed talk roots; OPTION's audio-table load does not establish these files as dialogue |
+| DATE place/gift dictionaries | 22 place slots and 99 gift slots, all 33 bytes wide | Includes reserved place slot and six empty gifts; source-derived girl/year/answer indices, slot padding and trailing assembly bytes retained |
+| Main/TEL profile display fields | 26 main slots and 137 JOHO slots | Source pins, 1,689 loader/display instruction words and anchored main data labels verified; three whitespace-only slots preserved |
+| Other overlay fixed tables | 587 slots across seven EXNs | Includes five 99-slot gift copies and two SHOUGATU fortune tables; 30 empty slots preserved; source storage views do not invent renderer semantics |
+| BUNKA_SD stage-show strings | 286 body views in 11 source-backed tables | 214 protected-prefix records and 72 direct rows; full storage, NULs, pointer words and uninterpreted bytes retained; runtime reachability unproved |
 | Executable + 26 overlays | Source literal/label inventory and original-byte verification | Ambiguous references, inline construction and non-string directives remain explicit audit work |
 | Menus/UI, names, places, system/options/debug | Included in the source/context inventory | Context classification and fixed-renderer joining are under review |
 | `CDROM/FUKUTEST/NAME_KAN.NBN` | 45 counted lists, 5,414 glyph entries | All offsets/counts/terminators and strict Unicode/font links verified |
@@ -58,15 +120,59 @@ Readers:
 | Original font | 46 range entries, 3,418 12 x 12 glyphs | Each code unit can link to its original 18-byte bitmap extent |
 | Japanese text baked into images | Separate media lane owns asset/region catalog | Font IDs can be joined; this reader does not claim image/OCR completeness |
 
-Current script-root audit: 90 containers, 646 sections, 41,228 records and 30,036 text records.
+Current script-root audit: 98 containers, 654 sections, 42,369 records and 30,851 text records.
+The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,889
+remain semantically unknown. All 437 C files parse in the AST pass with stable source inputs. The
+current full text suite has 214 passing Docker tests, including source-root integration and isolated
+synthetic proof regressions. These counts do not clear the remaining context and runtime gates.
 There are no unprofiled SERIFU or BUNKA files. Every script string strictly decodes and re-encodes as
 Shift-JIS. Unclaimed byte counts and diagnostic candidate scans are retained as leads; zero candidates
 is never treated as proof of completeness. Final completion requires the source/root/context audits and
 independent review, including the image-text lane's separate inventory.
 
+The preceding semantic milestone was integrated by the parent in `c56f9dcd4`; its combined
+media/text suite passed 188 tests with one optional integration skip. The newer validated export
+contains 1,069 dictionary slots, one actor-resource descriptor, 12 unsupported SPEAKTST files and
+no missing inputs or structural failures. The source-root audit now
+reports MASTER's eight primary literal initializers separately from the existing 21 other SERIFU
+profiles. Its 167,927,250-byte catalog has SHA256
+`8876c0e4861976198075272e3f9ede187b6c01723ab3c9c735b30b6aa33ee855`.
+All original extents, Unicode/token round trips, dictionary slots/tails and UTF-8 C locators verify.
+The additional stage-show bank has 286 body views; its complete 196,608-byte input reconstructs
+exactly from code proofs, tables, physical strings and preserved uninterpreted ranges. Every source,
+renderer, substitution, stage-bank and mutation proof gate has zero blockers. Of 330 newly classified
+source extents, 116 are display bodies and 214 are protected stage-show storage.
+
+The wider facts-only fan-patch crosscheck now retains all 2,348 direct-string offsets and 545
+byte-patch locations from 108 metadata files at revision `50dc2b9`. Of the direct-string locations,
+the initial run matched 1,642 and identified 706 reader leads. Independently source-proved readers for
+750 further slots now cover every one of the 2,348 direct-string starts, including original empty and
+extra slots. Foreign offsets alone never establish a table profile or prove whole-source completeness.
+Of the byte-patch locations,
+306 match record starts and 239 do not; patches can also change instructions and non-string data.
+No translation wording is retained or reused. The three New Year byte patches have original lengths
+12, 16 and 20 bytes; the earlier crosscheck's 24/32/40 values counted hex characters.
+
+The 170 remaining constant references outside initialized files use only addresses `0x800E6354`,
+`0x800E635C` and `0x800E6364`. Frozen source maps these to the player family/given/nickname fields
+at `game_state + 0xD4/0xDC/0xE4`. The other 28 unrecovered references point to initialized-zero
+buffers. This distinguishes runtime values from missing nonzero static strings without closing
+the runtime-construction audit. Independent review also corrected anchored BSS classification and
+C source locators: byte offsets now count UTF-8 bytes, with character offsets preserved separately.
+Those fixes are included in the validated current catalog. The first unintegrated overlay-table draft
+used the wrong extracted revision; its pins and malformed-slot claims were discarded. The corrected
+seven profiles use only `disc/files`, with all 30 source/header/assembly pins independently checked.
+
+The compact projection contains 38,696 rows: 30,851 script records, 1,069 dictionary slots, 4,264
+nonzero source extents, 2,201 C literal sites, 286 stage-show bodies and 25 conditional variants. All IDs are unique and
+non-null; JSONL and TSV deserialize to identical values. The original-byte check covers 125 input
+files with zero mismatches. It marks 31,346 rows ready for review and 7,350 flagged. Unknown overlay
+renderer views remain flagged despite valid source Unicode, and every conditional variant remains
+conditional. Completeness is false regardless of those per-row review counts.
+
 ## Linked script format
 
-`talk_run` (`src/main/8007C030.c`, around line 2035) reads three parallel two-level tables:
+`talk_run` (`src/main/scene_library.c`, original object VMA 0x8007C030) reads three parallel two-level tables:
 `text[group][line]`, `command[group][line]`, `voice[group][line]`. They contain little-endian absolute RAM
 pointers; commands are bytes. Command `0xFF` ends a group. Its ignored text argument does not establish
 a valid corresponding string slot. Voice references are pairs of encoded 32-bit clip words; reply
@@ -86,7 +192,7 @@ does not prove every group executes, every choice is reachable or a runtime buff
 
 ## Source Unicode and rendering are separate
 
-The glyph loader (`src/main/8004E500.c`, `load_string`) consumes pairs and rejects codes below the first
+The glyph loader (`src/main/text_system.c`, `load_string`) consumes pairs and rejects codes below the first
 font range. Source/build encoding is Shift-JIS (`tools/cc.py` also uses `shift_jis`). Unicode output uses
 Python's strict mapping and requires exact re-encoding. There is no CP932 fallback; differing CP932 mappings
 are exposed as alternatives. Unknown bytes never become replacement characters. The strict source view,
@@ -98,7 +204,7 @@ advances by two and the glyph loader rejects the resulting `0x09xx` code; later 
 alignment cascade. No bytes are deleted or repaired. HI_S6's affected group is explicitly source-reachable.
 
 `file_checksum_ok` checks a byte sum separately from the ordinary checked-CD loader's trailer marker
-(`src/main/800451D0.c`). FU_S6 has an original sum mismatch with a valid marker; the reader reports both
+(`src/main/cd_queue.c`). FU_S6 has an original sum mismatch with a valid marker; the reader reports both
 facts rather than assuming ordinary loading rejects it. Nine source choice strings are empty, and one
 three-row source string uses a two-option command; these are reported separately from selectable counts.
 
@@ -116,11 +222,53 @@ separate exclusions. Adjacent C literals are concatenated, character constants a
 and unsupported escapes/encodings are reported. Generated assembly string guesses alone are not proof of
 semantic text use or exhaustive coverage of data encoded without string directives.
 
+With `--include-source`, the working exporter also rechecks MIPS instructions and constant arguments
+against the original binaries. Each potential callsite records the argument register, contributing
+instructions, delay slot, caller and callee. It promotes only exact extent starts with one known role.
+Interior pointers and constant targets outside the inventory remain separate unresolved evidence.
+The analysis covers display, format and diagnostic calls; C-string library reads are outside this
+MIPS pass. It does not propagate mutable memory, follow branch paths, prove execution, or establish
+the read length. Source context additionally requires typed AST value flow at the exact source call,
+including argument index and structural selector path. Stable source/header fingerprints reject stale
+reports. Struct members without a proved offset and unresolved expression types remain unclassified.
+Of 2,331 C literal sites, 2,330 have stable function-address/ordinal identities independent of C filenames;
+one global site retains an explicit unresolved identity. Original-binary text record IDs remain stable.
+
+The earlier unresolved-target audit found 207 potential call arguments outside the string-directive inventory:
+169 outside the initialized input and 38 inside it. Of the latter, 28 point at initially zero buffers;
+10 calls address six nonempty label starts. Four UI labels (`D_800B5E25`, `D_800B5E3E`, `D_800B5E57`,
+`D_800B5E89`) and two SDK diagnostic labels (`D_800DE2E0`, `D_800DE311`) are emitted with numeric
+assembly directives. The independently reviewed supplement recovered all six records from ten call
+references, with zero strict decoding failures. It re-derives MIPS facts from original instructions and
+accepts only exact label starts whose contiguous initialized directive bytes and terminator are verified.
+Its original MIPS-stage ledger stays intact. The scoped RPG_BAT reader adds one reference at call PC
+`0x801525CC` to the runtime player-name field `0x800E6354`; the refreshed ledger therefore has 208
+potential calls and 198 unresolved calls after the ten recovered references. This is another reason
+a string-directive scan alone is not exhaustive.
+The supplement covers exact constant MIPS arguments and complete AST-proved pointer paths to initialized
+data labels. It rechecks every original pointer word and the exact terminal label prefix. Existing
+leaf extents retain fresh semantics on repeated runs and lose them when source proof disappears.
+Inline array strides, opaque helpers and runtime read lengths still need separate closure evidence;
+recognizing a table or renderer alone does not close them.
+
+The runtime mutation pass validates four pinned source contracts across DATE, DATE2, SHUGAKU and
+SHOUGATU: 25 target views, each with separate conditional text/token evidence, including a command-byte
+change. The New Year selector is narrowed to eleven normal stage-two roots under explicit entry/state
+assumptions; 22 original function extents and 63 dispatch words verify the route evidence. This does
+not prove runtime execution. The 437-file C scan parsed 293 candidate files and explicitly skipped
+144 by its prefilter, with zero parse failures. It retains 2,141 primary unresolved write candidates,
+1,381 opaque value dependencies and 131 address dependencies; those counts may overlap and are not
+claims that every candidate mutates dialogue.
+Alias closure and syntactic guards are diagnostic; fallthrough, goto, opaque helpers and assembly writes
+remain limits. Original records, bytes and ignored storage after an inserted NUL are preserved.
+
 The original font bank lives in `SLPM_86.053`: ranges at VMA 0x800B402C and bitmap bytes at 0x800B6D50.
 Stable IDs `font:SLPM_86.053:gNNNN` identify glyphs; source SHA256, byte offset, 18-byte stride and 1bpp MSB-first
 12 x 12 geometry are in catalog metadata. The game uploads padded 16 x 12 blocks. Script/character-list
 units link to those IDs, allowing the media catalog to share exact font identities. Other baked lettering
 needs its own media asset/region evidence; a script or font match does not establish bitmap lettering.
+Font linking also covers source renderer views, inline speaker-label units and conditional runtime views
+after enrichment; raw token byte sequences remain unchanged.
 
 ## Verification
 
@@ -234,7 +382,18 @@ audit is separate from byte accounting. Original renderer defects are retained i
 | `CDROM/SERIFU/WHITE.BIN` | 13 | 109 | 251 | 0 |
 | `CDROM/SERIFU/XMAS.BIN` | 13 | 136 | 359 | 0 |
 | `CDROM/SERIFU/ZAKOSEN.BIN` | 1 | 2 | 7 | 0 |
+| `CDROM/MASTER/EN_GP.BIN` | 1 | 33 | 81 | 0 |
+| `CDROM/MASTER/G_CON.BIN` | 1 | 31 | 77 | 0 |
+| `CDROM/MASTER/KOSIEN.BIN` | 1 | 28 | 30 | 1 |
+| `CDROM/MASTER/MOKUTEN.BIN` | 1 | 31 | 77 | 0 |
+| `CDROM/MASTER/NOBEL.BIN` | 1 | 32 | 77 | 0 |
+| `CDROM/MASTER/SUI_CON.BIN` | 1 | 33 | 87 | 0 |
+| `CDROM/MASTER/TAI_MAS.BIN` | 1 | 106 | 309 | 0 |
+| `CDROM/MASTER/UEKI.BIN` | 1 | 32 | 77 | 0 |
 
 `CDROM/SERIFU/TAKU3.BIN` is the separately typed numeric choice-result file.
 `CDROM/FUKUTEST/NAME_KAN.NBN` contains the 45 external character lists.
 Main and NAME_ENT typed term dictionaries add 198 source-backed name/place/club/grid/preset records.
+DATE adds 121 slots, main/JOHO profile fields add 163, and the seven overlay readers add 587,
+for 1,069 dictionary/storage slots. MASTER/TEAR has a separate actor-resource descriptor; the twelve
+SPEAKTST inputs retain unsupported layout status. No whole-file text absence is inferred from actor use.

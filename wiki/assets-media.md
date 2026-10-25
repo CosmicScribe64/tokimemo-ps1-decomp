@@ -185,3 +185,177 @@ regeneration matched exactly and has zero remote resources. PNGs/contact sheets 
 inspected. In-app browser rendering was not verified because browser policy rejected `file://`;
 no alternate route was attempted. Existing Docker images lack ffmpeg, and no MDEC decoder or new
 dependency installation was added. No matching build, source game code, original data or engine files changed.
+
+## Reviewed source checkpoint, 2026-10-24
+
+The later source-only freeze is `.asset-cache/staging/media-reviewed-20261024-v1/`.
+Its `SHA256.json` enumerates 28 source, test and documentation files; `source/` is read-only.
+The complete isolated Docker suite passed 64 tests with only that snapshot mounted. The manifest
+SHA-256 is `df1615d5737b3322b9223a11e0f47cf1c9e4f515d31fbc6f80a64ca93d27a58f`;
+the sorted source-hash set digest is
+`396629e6e1bc7b2b7779a7cc6767ee7f298117ffc65e46b95ef78c9b8fe6b932`.
+The frozen documentation captures the earlier color-gallery milestone; this continuation note
+describes the subsequent checkpoint. Integration owns the shared CLI alignment and log entry.
+
+This freeze adds the independently reviewed `tools/assets/image_mdec.py` library and eight
+synthetic tests. It parses bounded BS v1/v2/v3 streams and renders only with explicit, evidenced
+geometry. All 313 original BS headers/coefficient streams parsed (311 v1, two v3); this is a
+format census, not complete image export or hardware pixel-parity validation. MDEC CLI dispatch,
+background context/export orchestration, coverage/UI-context reports and the new TITLE reader
+are excluded from this freeze. A background-context association bug still requires correction:
+an earlier decoder rectangle in a function was incorrectly assigned to a later raw read. The
+decoder rejected the incompatible macroblock count, so no image was published for that case.
+Tickets and all corpus-completeness flags remain In Progress/false.
+
+## Background and TITLE continuation, 2026-10-24
+
+The next reviewed source checkpoint is `.asset-cache/staging/media-reviewed-20261024-v2/`.
+It includes the bounded TITLE reader, background-context scanner/exporter, source coverage census,
+MAINROM context API, and their synthetic tests. All 106 owned media tests pass in Docker.
+The shared CLI remains the earlier media dispatcher: TITLE is a reusable library API and BS uses
+the separate `tools/assets/media_mdec_export.py` CLI. Integration owns shared CLI/text alignment.
+
+The corrected scanner associates only decoders after a read and before the next replacement read.
+Computed wrapper calls, computed raw LBAs/counts, and unknown destinations stop the association;
+known different literal raw buffers do not replace one another. This remains lexical evidence,
+not a full control-flow proof. Wrapper sector counts are read from the actual reader body.
+The final report `.asset-cache/media/background_contexts_final.json` has 480 literal calls,
+96 source streams, 36 single-shape streams and 19 single-shape streams with unresolved other uses;
+223 BS sources have no mapped literal read. The previously incorrect later `D_11_11.BS` binding
+is now unresolved. All 313 coefficient streams parse; only 55 have enough geometry evidence for
+image publication. Their manifest binds the canonical context-report hash and source-code hashes.
+Hardware IDCT/color rounding parity remains unverified.
+
+TITLE publishes six original-CLUT background pages and 12 actor frames, using actual CLUT rows
+0x1FE/0x1FF for actors and row 0x1EF for backgrounds. All 36 PNGs match the earlier visually inspected
+slice byte for byte. Five internal frame-alignment gaps totaling 10 bytes are hashed. Thirteen model
+texture pages, model palette bindings, unused actor texels and the background map's 120-versus-128
+row sampling remain unresolved. Source bodies distinguish logo frame 0, menu states 1-4 and actor
+animation frames 5-11. Current C evidence paths follow `config/renames/main-files.txt`.
+
+Combined artifacts live under `.asset-cache/media/milestone-v2/`: `manifest.json`,
+`visual_text_reviews.json`, `visual_text_manifest.json`, `coverage.json`, `main_ui_context.json`
+and `gallery/index.html`. They retain 1,372 source records, 223 exported sources, 2,194 image
+variants and 4,383 PNGs including masks. The 73 new TITLE/background previews were manually
+reviewed using six contact sheets with adjacent slot/source/PNG-hash maps. With the 37 earlier
+source-scoped MAINROM palette reviews merged, the catalog has 73 confirmed Japanese regions,
+164 confirmed no-text, 118 confirmed other-text, eight suspected and 1,831 unreviewed. Suspected
+small signs/boards are not treated as confirmed Japanese or no-text. No transcriptions are stored here.
+The coverage census has zero orphan catalog regions and keeps source, image and review counts separate.
+
+The gallery has 478 default cards and 2,194 total variants. All 9,156 linked artifact references
+were hash-verified; regeneration produced identical HTML, SHA-256
+`0e97510978c697e4cab288766f9fa918e25a494e6c1a192681c56801e96a6aea`.
+The previous browser-policy limitation still applies. Source/context APIs preserve unresolved
+MAINROM texels and CLUT applicability; their local todo report initializes reviews independently
+and does not overwrite catalog classifications. Input readers now support validated cached raw/ZIP
+entries before inventory initialization through the same bounded sector path. Independent reviews
+resolved stale oversized-export claims, unsafe baseline IDs and read-replacement boundaries.
+All three asset tickets remain In Progress; root owns shared log/board updates and commits.
+
+## Source-verified UI expansion, 2026-10-24
+
+The v3 source-only integration checkpoint is `.asset-cache/staging/media-reviewed-20261024-v3/`.
+`tools/assets/media_ui_export.py` adds a separate reusable CLI for TITLE, FILESEL, OPTION, EXAMINE
+and NAME_ENT profiles. It accepts `input --baseline-media manifest.json --output cache-path`.
+Exact whole-input SHA-256 equality allows cached inventory reuse, while each decoded file and
+paired executable is still read and hash-checked. Cached reuse covers the supplied baseline's
+records; it does not rediscover sources omitted from a filtered baseline. Unselected exports,
+unsupported source records and prior MDEC context provenance are retained. All output stays
+beneath `.asset-cache`; changed bytes at an existing output path are refused.
+
+Four additional original sources now have independent readers and synthetic tests:
+
+- FILESEL: 73 previews (12 background pages, 45 base frames and 16 selected states). Four actor
+  page pointers are 0x1A000, 0x3C000, 0x1E000 and 0x40550; actual palettes are source offsets 0,
+  0x22000 and 0x22200. Depth is 8bpp while actor cells are 16 pixels, selected by independent
+  flags; a nonzero-UV, second-page test protects this distinction. Selected palette scope is
+  proved only for frames 4-17 and 30-31. External card icons, dynamic text and unused texels remain open.
+- OPTION: 130 frames / 811 parts, including native page pointers 0x200, 0xC200, 0x13CF0 and
+  0x8200. Observed part CLUT rows 0x1F0/0x1F1 resolve to source 0x134F0/0x136F0. Mode 1 preserves
+  source STP words, and each preview has a separate mask. Frame padding is exactly two bytes
+  before the texture-pointer table, not the parsed table itself. The remaining source-byte
+  complement and additional uploaded page/palettes are explicit; runtime palette cycling is not composed.
+- EXAMINE: 32 frames / 61 parts from the three original 4bpp pages. Paired executable default
+  CLUTs and boot STP edits are required. Runtime names and score sprites remain separate from
+  these static frames; no palette is guessed when the executable is absent.
+- NAME_ENT: six 8bpp background pages plus 29 4bpp actor frames / 186 parts. The original actor
+  page starts at 0x200 and frame 1 has 65 parts. Actor override 0x10 selects row 0x1F0 while
+  preserving each 16-color column; the background uses row 0x1F8. No unproved actor override
+  0x18 variants are emitted. External candidate-name data, font/glyph rendering and MDEC background remain separate.
+
+The fan repository was used only as an inventory lead, pinned at commit
+`50dc2b9bbac66a2bf7c888c80aefad0c09753da8`: source
+`https://github.com/gothamor/tokimeki-memorial-english-patch/blob/50dc2b9bbac66a2bf7c888c80aefad0c09753da8/tools/redraw_labels.py`.
+No patch implementation, translated wording or replacement art is used by the readers or tests.
+An inert AST projection retained 59 numeric label boxes from seven sheet descriptions, plus
+five sports resource locator sets. All 59 boxes fit original source extents and all their texels
+intersect independently decoded original frames/pages. This is a geometry cross-check, not
+automatic Japanese-text confirmation or whole-patch coverage. Evidence is
+`.asset-cache/media/milestone-v3/external-rectangle-crosscheck.json`. MAINROM offsets 0x4000,
+0xE000 and 0x16000 already have source-frame coverage; these differ from the five unreferenced
+sheet diagnostics. Sports map/header/page facts are partly verified, but final viewport/CLUT
+association is still unresolved; no guessed-color sports image is published.
+
+Validated combined artifacts are `.asset-cache/media/ui-reviewed-v3/manifest.json`,
+`visual_text_reviews.json`, `visual_text_manifest.json`, `coverage.json` and `gallery/index.html`.
+They retain 1,372 source records, 227 exported image sources, 2,464 variants and 4,923 PNGs including
+masks. All 270 new previews were individually reviewed on 24 hash-mapped contact sheets. New
+classifications are 142 Japanese, 67 other-text, 58 no-text and three suspected; OPTION frames
+119-121 remain suspected after individual inspection because of tiny pictogram details. Total
+catalog states are 215 confirmed Japanese, 185 other-text, 222 no-text, 11 suspected and 1,831
+unreviewed. Assembly keys include source, frame and variant; PNG hash alone cannot identify
+aliased or identical frames. The catalog rejected duplicate review identities before publication.
+
+The deterministic gallery has 730 default cards and 10,243 hash-verified linked references;
+HTML SHA-256 is `d0a1264d1b29670b60bf6408175185404da3901fcd96a80aaeedbae59152e284`.
+Coverage preserves per-image and per-part CLUT words/addresses, source geometry, palette selection
+evidence and opaque extents. It has zero orphan catalog regions. All corpus-completeness flags
+remain false, and the existing browser-render/hardware-pixel limitations still apply. Root owns
+Git and shared wiki/log integration; these are progress checkpoints, not completed asset tickets.
+
+## SD, sports and encounter previews, 2026-10-24
+
+The v4 extension adds 70 original SD files bound by executable LBA/u16 layout tables:
+25 weekly, 13 holiday and 32 club entries plus else index 2 form 71 caller rows, with
+one identical weekly/holiday source/layout alias. The readers export 825 static frames
+and preserve 1,532 source parts, the validated sequence-pointer prefix, source CLUT
+words, STP masks and hashed opaque/partially represented extents. School-day actor
+setup proves 8bpp with 16-pixel cells and explicit row 0x1F0 override. Other runtime
+uses, unused texels and complete animation composition remain unresolved.
+
+Four sports files provide five initial 320x240 instruction viewports. Original MOD/SRN
+code reconstructs the indexed map; `Scroll` fixes the viewport and CLUT row 0x1F0.
+Source mode 1 preserves the original palette/STP words. Exact texture-pointer lists
+are checked, including rejection of an in-range redirected page. The former sports
+viewport/CLUT uncertainty is resolved for this initial view only.
+
+Five BATTLE encounter files provide one native 128x128 page and eight numeric locator
+crops each (45 previews). C establishes 8bpp, 8-pixel cells, row 0x1F0 and palette mode 4.
+The five-entry texture-pointer bound rejects index 5. Stable page/crop identities avoid
+catalog collisions. Locator crop bytes are identical across these five profiles; that
+does not establish whole-pack identity or coverage of the four other locator leads.
+
+`media_ui_export.py --include-sd` resolves dynamic SD profiles from the paired original
+executable. Path-bound sports/BATTLE profiles require their original LBA and do not
+attach an unused executable. Coverage and visual-text profiles retain decoder metadata;
+SD context requires the bound caller/path/LBA/executable metadata and never infers text.
+
+Validated artifacts are `.asset-cache/media/ui-reviewed-v4/`. The census retains 1,372
+sources, 306 exported image sources, 3,339 previews and 6,673 PNGs including masks.
+All 875 new previews received manual exported-preview-only adjudication through 602
+distinct hash-mapped PNGs. New classifications: 35 Japanese, 29 other-text, 778 no-text
+and 33 suspected. Total catalog: 250 Japanese, 214 other-text, 1,000 no-text, 44 suspected
+and 1,831 unreviewed; zero orphan regions. The 1,600 default gallery cards have 13,892
+hash-checked links; HTML SHA-256 is
+`e218e1534f86fd651b08d450bdfad9ecfb967b20ad086d543ac5dba8229f3218`.
+
+`visual_text_equivalence.py` reports source/hash/geometry groups and optional exact PNG
+aliases without changing review states. Geometry alone does not prove visible text under
+different palette contrast. Exact byte-identical PNGs may share a manual preview
+adjudication, with each member's identity/hash and runtime palette caveats retained.
+The v3-corpus report `.asset-cache/media/equivalence-exact-v2.json` validates all 2,464
+PNG hashes and finds 139 exact-preview groups / 359 members; one conflicting prior
+classification remains blocked. Runtime equivalence and corpus-completeness flags stay
+false. Independent reviews closed SD, sports, BATTLE, publication, coverage/profile and
+equivalence findings; full remaining containers and older unreviewed previews are active work.

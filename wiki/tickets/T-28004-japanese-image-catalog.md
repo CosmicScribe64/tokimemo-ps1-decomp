@@ -23,6 +23,12 @@ Provide the visual localization inventory the user requested, especially the mai
 
 ## Comments
 
+2026-10-24: v4 manually adjudicates all 875 new SD/sports/encounter previews through 602
+distinct PNGs. Catalog totals: 250 Japanese, 214 other-text, 1,000 no-text, 44 suspected,
+1,831 unreviewed; zero orphan regions. Exact-PNG preview alias reports preserve independent
+source/CLUT/runtime evidence and never propagate states automatically. One conflicting
+older alias group is blocked. Corpus-completeness flags remain false; details in [[assets-media]].
+
 2026-10-24: Assigned to existing media/input chat01a16f34-9559-7a53-80cf-6152fc4b9ca6. No direct Godot work or replacement images. User explicitly requires asset-by-asset Japanese text coverage for a comprehensive future translation.
 
 2026-10-24 checkpoint: Added `tools/assets/visual_text.py` (`tokimemo.visual-text.v1`),
@@ -71,3 +77,27 @@ quad-attribute depth and cell-size flags are independent. All findings resolved;
 tests passed. Browser policy blocked local-file preview, so gallery QA is static/hash/test plus
 direct PNG/contact-sheet inspection. Corpus completion remains blocked by unsupported containers,
 unmapped texels/CLUTs and 1,868 unreviewed variants. Keep this ticket In Progress.
+
+2026-10-24 source-only checkpoint: reviewed catalog/gallery/profile sources and synthetic tests
+are frozen with the media readers at `.asset-cache/staging/media-reviewed-20261024-v1/`.
+All 64 isolated Docker tests passed; [[assets-media]] records the exact hashes. The 37 additional
+source-scoped palette reviews remain in an ignored review file and have not yet been merged into
+the catalog totals above. No completeness claim or status change follows from this checkpoint.
+
+2026-10-24 next review milestone: merged the 37 source-scoped MAINROM palette reviews and manually
+reviewed all 55 exported backgrounds plus 18 TITLE previews. The 2,194-region catalog now has
+73 confirmed Japanese, 164 no-text, 118 other-text, eight suspected and 1,831 unreviewed regions.
+Small uncertain signs/boards remain suspected. Six contact sheets and adjacent source/slot/PNG-hash
+maps document the new review; exact artifact paths are in [[assets-media]]. Gallery has 478 default
+cards and 9,156 verified local references. MAINROM context evidence is separate from review states;
+unused texels, unresolved palettes and 258 BS sources without exported geometry remain open.
+All completeness flags remain false. Source-only v2 freeze and 106 passing Docker tests are
+documented in [[assets-media]]; keep this ticket In Progress.
+
+2026-10-24 v3: manually reviewed all 270 new FILESEL/OPTION/EXAMINE/NAME_ENT previews. Total
+catalog: 2,464 regions; 215 confirmed Japanese, 185 other-text, 222 no-text, 11 suspected and
+1,831 unreviewed. The three new suspected regions are tiny OPTION pictograms; no OCR or
+filename-based confirmation was used. A facts-only fan-patch geometry cross-check found all
+59 curated numeric label boxes inside source extents and fully represented by original exported
+texels; this does not assert their language or full corpus coverage. [[assets-media]] records
+the pinned reference, original-source proof and exact artifact paths. Tickets remain In Progress.

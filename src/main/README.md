@@ -45,7 +45,7 @@ Navigation map for the 34 readable C files in `src/main/`. Original ranges are h
 
 | ADR subsystem | Logical file(s) | Prefixes |
 |---|---|---|
-| Boot, startup and frame-loop helpers | `game_init.c`, `main_loop.c`, `boot_assets.c`; paused callback `func_80043504` in `pad_input.c` | `boot_` |
+| Boot, startup and frame-loop helpers | `game_init.c`, `main_loop.c`, `boot_assets.c`; paused callback `boot_paused_step` in `pad_input.c` | `boot_` |
 | Debug display helpers/state | Actual debug helpers in `debug_hud_palette.c` and `debug_display.c`, with shared diagnostic state | `debug_` |
 | Main loop and game mode (`80042540`) | `game_mode.c` | `game_mode_`, `mode_stage_`, `mode_step_`; O.BIN `game_main` |
 | Pad and system helpers (`80042A00`) | `pad_input.c`, `main_loop.c` system setup | `pad_`, `sys_` |
@@ -70,5 +70,5 @@ Navigation map for the 34 readable C files in `src/main/`. Original ranges are h
 | Overlay loader (`800789E0`) | `overlay_loader.c` | `ovl_` |
 | Dates, girl selection, faces, SD sprites, dialogue, scene pictures (`8007C030`) | `scene_library.c`, `select_girl_by_scores` in `scene_display.c` | `face_`, `sd_`, `talk_`, `name_code_`, `scene_`, `select_girl_`; O.BIN `normal_date_` |
 | Vsync timer, scroll, fades, finger cursor (`80085E30`) | `scene_display.c` | `vsync_`, `fade_`, `cursor_` |
-| Sound driver, bank wait/error and CD-level helpers | `frame_render_audio.c`, `sound_driver.c`; leading meter helpers in `scene_library.c`; `func_800867CC` in `scene_display.c` and `func_80059B04` in `debug_display.c` | `audio_` |
+| Sound driver, bank wait/error and CD-level helpers | `frame_render_audio.c`, `sound_driver.c`; leading meter helpers in `scene_library.c`; hypothesis names `audio_bank_wait_latch` in `scene_display.c` and `audio_debug_load_error_report` in `debug_display.c` | `audio_` |
 | Shared records and name tables | Shared headers/data, not one object | `game_state`, `system_data`, `place_` |

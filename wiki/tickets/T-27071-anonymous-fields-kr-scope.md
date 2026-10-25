@@ -1,7 +1,7 @@
 ---
 id: T-27071
 title: Preserve anonymous member and K&R parameter ownership in rename proofs
-status: In Progress
+status: Done
 assignee: constant-tooling
 created: 2026-10-24
 updated: 2026-10-24
@@ -16,10 +16,10 @@ Synthetic fixtures and diagnoses are pinned in the complex-overlay follow-up man
 
 ## Acceptance criteria
 
-- [ ] Correct declaration/member ownership; ambiguous cases fail closed.
-- [ ] Synthetic regression coverage and full rename suite pass in Docker.
-- [ ] Independent review resolves findings; root integrates the exact frozen patch.
-- [ ] Root applies the supported requests through the tool and verifies matching.
+- [x] Correct declaration/member ownership; ambiguous cases fail closed.
+- [x] Synthetic regression coverage and full rename suite pass in Docker.
+- [x] Independent review resolves findings; root integrates the exact frozen patch.
+- [x] Root applies the supported requests through the tool and verifies matching.
 
 ## Notes
 
@@ -40,3 +40,9 @@ rejects anonymous fallback when the pre-edit baseline already contains the same 
 diagnostic. Independent verification approves the fix and confirms the counterexample causes
 no source/header or ledger writes. Root integrated it and all 116 tests pass in 4.167 seconds.
 The six real requests still await root source application and matching proof.
+
+Final application: all six previously blocked TACO requests are applied in 4dab92732.
+Independent actual-source review verifies the three K&R parameters and three anonymous
+ranking-score members without declaration, type or layout changes. Both 437-unit scoped
+ABI proofs pass; clean configure/build/guards and 27/27 independent hashes pass with
+6,952 functions. The bounded tooling/application ticket is Done; wider phase 2 remains open.

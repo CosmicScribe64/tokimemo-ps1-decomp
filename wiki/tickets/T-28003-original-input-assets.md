@@ -38,3 +38,14 @@ Docker input tests: 7 passed; all owned media/input/manifest tests: 31 passed. I
 and spec review resolved malformed-sector handling, directory-only subheader fallback, framed
 directory hashes, CUE ambiguity, ISO bounds/flags and resource closure. No changes to existing
 input extractors, build, original data or raw sources. Root owns final tracker/index/log transition.
+
+2026-10-24 source-only checkpoint: input/manifest/CLI sources and synthetic tests are included in
+`.asset-cache/staging/media-reviewed-20261024-v1/`; the isolated complete suite passed 64 tests.
+The snapshot contains no original game data. [[assets-media]] records its exact hash manifest.
+Remaining unsupported input formats keep this ticket In Progress.
+
+2026-10-24 cached-entry continuation: raw-disc and ZIP readers now initialize the bounded sector
+reader lazily when `read()` receives an already validated inventory entry before `entries()`.
+Source path, byte size and integer LBA are checked; existing sector/Form2 restrictions remain.
+Synthetic raw and ZIP cached-entry cases pass in the complete 106-test Docker suite. Independent
+review found no blocker. No additional input formats are claimed; status remains In Progress.

@@ -35,6 +35,14 @@ remain under ignored `.asset-cache/`. OCR suggestions alone cannot establish com
 
 ## Comments
 
+2026-10-24: v4 adds original SD, sports and encounter source readers. Validated combined
+cache has 306 image sources / 3,339 previews; 70 SD files yield 825 frames, four sports
+files yield five viewports, and five encounter files yield 45 page/crop views. All 875
+new previews have manual hash-bound classifications. Independent review resolved page
+table bounds, duplicate crop identities, source-path LBA binding and unused EXE pairing.
+[[assets-media]] records evidence and limitations. Remains In Progress for older unreviewed
+previews and remaining containers; root integrates shared log and source-only checkpoint.
+
 2026-10-24: User authorized agents for asset extraction/readers, especially translation-ready text and reusable modern exports. No direct Godot work. Root owns shared tracker/index/log and commits.
 
 2026-10-24: Dispatched parallel chat 01a16f34-9559-7a53-80cf-6152fc4b9ca6. Engine-independent tools only; default real outputs under ignored .asset-cache; root integrates source/tests/docs.
@@ -67,3 +75,27 @@ and a static composite. Gallery has 411 default color cards, separate candidate/
 controls and explicit MDEC/title/other-container gaps. Final owned Docker suite passed 56 tests;
 independent standards/spec reviews passed. [[assets-media]] records paths, commands, review counts,
 palette policies and browser QA limitation. No guessed colors, AI colorization, new art or engine work.
+
+2026-10-24 source freeze: `.asset-cache/staging/media-reviewed-20261024-v1/` contains 28
+source/test/doc files with per-file SHA-256, no extracted game content, and a read-only source tree.
+All 64 isolated Docker tests passed. The additional eight tests cover the independently reviewed
+BS v1/v2/v3 library; hardware pixel parity remains unverified. Background orchestration and TITLE
+work are excluded pending corrections/review. [[assets-media]] records exact checkpoint hashes.
+Status remains In Progress; integration owns the shared log and any commit.
+
+2026-10-24 next milestone: reviewed TITLE, background association/export, coverage and MAINROM
+context modules now have 106 passing Docker tests. All 313 BS coefficient streams parse;
+55 backgrounds have sufficient geometry proof. TITLE adds 18 bounded previews. Combined local
+artifacts contain 223 exported sources and 2,194 variants; exact paths, remaining gaps and review
+results are in [[assets-media]]. The association bug is resolved conservatively, including computed
+replacement reads. Source-only freeze: `.asset-cache/staging/media-reviewed-20261024-v2/`.
+No shared CLI, Git, game source or raw input changes by this lane. Keep In Progress.
+
+2026-10-24 v3: independent original FILESEL, OPTION, EXAMINE and NAME_ENT readers add 270
+previews with authentic source palettes and STP masks. A standalone `media_ui_export.py` command
+publishes these profiles plus TITLE while retaining a baseline census and checking exact input,
+file and paired executable hashes. [[assets-media]] records source/table proof, review findings
+and remaining runtime/extent gaps. Combined validated artifacts are under
+`.asset-cache/media/ui-reviewed-v3/`; the source-only freeze is
+`.asset-cache/staging/media-reviewed-20261024-v3/`. No fan-patch implementation, translation
+or replacement artwork is reused. Keep In Progress; root owns shared integration.

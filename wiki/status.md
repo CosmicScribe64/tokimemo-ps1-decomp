@@ -9,32 +9,37 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Phase 2 handoff (2026-10-24, keep current)
 
-Current integration checkpoint: all 437 game C files have logical names. The latest verified
-wave applies 311 main identifier rows, the mascot correction, 4,738 qualified identifier rows,
-and 112 proven constant substitutions. Independent actual-source review passes; all 437 ABI
-views are unchanged. The clean build and every guard pass, with 27/27 independently checked
-binaries, 6,952 functions and 2,276,920 bytes; the ledger contains 8,980 rows. Evidence is in
-ignored next-integration/clean-wave-proof.json and actual-source-review.md.
+Latest matching source checkpoint: **4dab92732** adds 3,939 reviewed identifier operations
+(including 2,807 function names), one historical callback-address alias correction, 274 proven
+festival-stage literal substitutions and 22 definition comments. All 437 game C basenames are
+logical. Independent final source review passes, both scoped ABI comparisons cover 437 units
+with zero changes, and the clean build and every guard pass. Independent binary checks are
+27/27; progress remains 6,952/6,952 functions and 2,276,920/2,276,920 bytes; the ledger has
+12,922 rows. Evidence: ignored next-integration/identifier-wave-clean-proof.json,
+next-symbols-final-source-review.md and SOURCE-STABLE.json. The bounded worker's source lease
+is released; root again owns live source applications, builds and Git.
 
-The next 3,939-row packet covers remaining main/festival/seasonal names and reviewed followups,
-including 2,807 function names. Its dry plans caught two parameter collisions, lowercase naming
-violations and two proposed locals absent from their actual functions. The integration packet
-corrects the spellings/collisions and excludes those nonexistent locals; the corrected full plan
-found one remaining ownership issue: the main camera-reference alias shares an address with
-EVENT tile-pointer storage. That single alias is explicitly deferred to the header migration;
-the other 3,939 rows are applying through the compiler and ABI safeguards. Header migration
-and further proven constant families remain open; no final Astra
-review yet. The header lane has prepared 467 further main declaration moves, SDK ownership and
-shared-type packets, but full umbrella removal still needs remaining declaration disposition.
-These source implementation gates, rather than reviewer availability, delay the final review.
+The main camera-reference alias at D_80122740 remains explicitly deferred because EVENT uses
+the same address for different storage. T-27061 owns its private declaration separation.
+Header migration remains the main integration gate: 467 further main declaration moves,
+SDK ownership and shared-type packets are prepared, while full umbrella closure is still
+being assembled. The header lane may now regenerate from the stable matching source and ASM.
+Further essential constants are being prepared in the existing overlay lanes; the 141
+unproved BUNKASAI setter literals remain untouched. T-27074 has a reviewed path packet and
+an independently approved registry-path tool fix, both awaiting the header integration.
+No final Astra review has started; these source implementation gates remain open.
 
 Reviewed tooling milestones include signed-constant correction 0b9ddbf33, ownership correction
 470f5368e, caller-scoped constant requests bc0d45ea7 and macro provenance 428690995; the current
-suite has 126 passing tests. Source/runtime text-evidence checkpoint c56f9dcd4 passed 188
-combined asset tests with one optional integration skip. Media-reader checkpoint 47e315ce4
-adds reviewed UI, background-context and coverage exporters; its integration with committed
-text tooling passes 249 tests with one optional integration skip. Newer live asset work is
-preserved, and text/media completeness remains open.
+suite has 126 passing tests. Text checkpoint b4977bd16 adds 286 stage-show bodies, stronger
+renderer proofs and translation-unit export. Its reviewed production report validates 38,696
+units with null translation targets; 1,889 source extents still need semantic classification.
+Its source witness f9c679d5 is historical and does not claim current-source enrichment.
+Media-reader checkpoint a1a0625aa adds reviewed sports, SD and battle image readers and exact
+visual-equivalence inventory. The immutable v4 snapshot has 57 source/test/doc files. The
+combined committed text/media suite now passes 367 tests with zero skipped. Newer live asset
+work is preserved, and text/media completeness remains open. The v4 gallery has 3,339 authentic-palette variants;
+1,831 remain unreviewed, and suspected text stays explicit.
 T-28005's facts-only fan-patch audit
 is Done; all 29,403 reference dialogue offsets are covered, with 633 local-only leads.
 User requests cheaper agents and scripted/batched proof work, with the final Astra review/fix

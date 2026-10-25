@@ -63,9 +63,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
 
 
-- [ ] [[tickets/T-27071-anonymous-fields-kr-scope|T-27071 Preserve anonymous member and K&R parameter ownership in rename proofs]]
 
 
 
@@ -232,6 +232,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-27071-anonymous-fields-kr-scope|T-27071 Preserve anonymous member and K&R parameter ownership in rename proofs]]
 - [ ] [[tickets/T-27073-constant-family-provenance|T-27073 Preserve constant provenance across independent macro families]]
 - [ ] [[tickets/T-27072-caller-scoped-constant-sites|T-27072 Bound constant sites to their owning caller and state machine]]
 - [ ] [[tickets/T-27070-signed-constant-replacement|T-27070 Preserve whole signed expressions in constant replacement]]
