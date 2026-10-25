@@ -100,6 +100,21 @@ class Defs(unittest.TestCase):
             with patch.object(srcscan, "unit_c_files", return_value=[SimpleNamespace(src=src)]):
                 self.assertEqual(srcscan.unit_headers("AA", tmp), ("common.h", "ovl/AA.h"))
 
+    def test_legacy_registry_root_beats_lexically_first_provider_leaf(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            include = root / "include" / "ovl"
+            include.mkdir(parents=True)
+            (include / "date_spots.h").write_text("/* public EVENT root */\n")
+            (include / "event_private.h").write_text("/* provider */\n")
+            profile = {"legacy_main_imports": {"providers": [{
+                "unit": "EVENT", "provider_path": "ovl/event_private.h",
+                "root_header_path": "ovl/date_spots.h"}]}}
+            import sync_protos
+            srcscan._HEADER_UNITS.pop(tmp, None)
+            with patch.object(sync_protos, "owner_profile", return_value=(profile, [])):
+                self.assertEqual(srcscan.unit_header("EVENT", tmp), "ovl/date_spots.h")
+
 
 if __name__ == "__main__":
     unittest.main()

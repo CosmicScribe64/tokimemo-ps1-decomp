@@ -214,6 +214,20 @@ def unit_header(unit, root="."):
     exists, else the header only that overlay's C files include (renamed, T-27002)."""
     if unit == "main":
         return "game.h"
+    # Split private-import registries name both the provider leaf and its public
+    # overlay root. The latter is the unit header; lexical sorting can select the
+    # provider leaf first after a logical header rename.
+    try:
+        import sync_protos
+        profile, problems = sync_protos.owner_profile(os.path.join(root, "include"))
+        if profile is not None and not problems:
+            contract = profile.get("legacy_main_imports", {})
+            matches = [p["root_header_path"] for p in contract.get("providers", [])
+                       if p.get("unit") == unit]
+            if len(matches) == 1 and (Path(root) / "include" / matches[0]).is_file():
+                return matches[0]
+    except (ImportError, KeyError, OSError, TypeError):
+        pass
     if (Path(root) / "include/ovl" / (unit + ".h")).exists():
         return "ovl/%s.h" % unit
     own = sorted(h for h, u in header_units(root).items() if u == unit)

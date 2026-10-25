@@ -275,6 +275,13 @@ class Tree:
     def read(self, path):
         if path in self.texts:
             return self.texts[path]
+        # On case-insensitive hosts a staged case-only rename leaves the old
+        # spelling visible through the filesystem until flush. Respect its
+        # pending tombstone while planning the later hop.
+        if any(text is None and pending.casefold() == path.casefold()
+               for pending, text in self.texts.items()):
+            self.orig[path] = None
+            return None
         if path not in self.orig:
             full = os.path.join(self.root, path)
             if os.path.isfile(full):
@@ -286,6 +293,41 @@ class Tree:
 
     def exists(self, path):
         return self.read(path) is not None
+
+    def exists_exact(self, path):
+        """Whether this exact path spelling exists; os.path.exists aliases case on some hosts."""
+        if path in self.texts:
+            return self.texts[path] is not None
+        current = self.root
+        parts = path.replace("\\", "/").split("/")
+        for part in parts:
+            if not part or part == ".":
+                continue
+            if part == ".." or not os.path.isdir(current):
+                return False
+            try:
+                if part not in os.listdir(current):
+                    return False
+            except OSError:
+                return False
+            current = os.path.join(current, part)
+        return os.path.exists(current)
+
+    def has_casefold_replacement(self, path):
+        """Whether another pending live path occupies this spelling on a case-blind filesystem."""
+        key = path.casefold()
+        return any(candidate != path and text is not None and candidate.casefold() == key
+                   for candidate, text in self.texts.items())
+
+    def directory_is_pending_casefold_move(self, path):
+        """An on-disk target is free only when every file under it is pending deletion/move."""
+        full = os.path.join(self.root, path)
+        if not os.path.exists(full):
+            return False
+        deleted = {p.casefold() for p, text in self.texts.items() if text is None}
+        files = [os.path.join(directory, name) for directory, _dirs, names in os.walk(full) for name in names]
+        return bool(files) and all(os.path.relpath(p, self.root).replace(os.sep, "/").casefold() in deleted
+                                   for p in files)
 
     def write(self, path, text):
         self.read(path)
@@ -346,7 +388,7 @@ class Tree:
         for p, t in sorted(self.texts.items()):
             full = os.path.join(self.root, p)
             if t is None:
-                if os.path.exists(full):
+                if os.path.exists(full) and not self.has_casefold_replacement(p):
                     os.remove(full)
                 continue
             if t == self.orig.get(p) and os.path.exists(full):
@@ -1784,9 +1826,85 @@ def all_code_files(tree):
 
 
 def config_text_files(tree):
-    """config files with keys or comments that name files (not the yaml, not symbol files)."""
-    return [p for p in ("config/toolchains.txt", "config/migrate_globals.txt", "config/proto_known.txt")
-            if tree.exists(p)]
+    """Config files with keys/comments that name files, including the explicit owner profile."""
+    return [p for p in ("config/toolchains.txt", "config/migrate_globals.txt", "config/proto_known.txt",
+                        "config/header_owners.json") if tree.exists(p)]
+
+
+def config_reference_rewrite(tree, path, rx, repl):
+    """Rewrite validated top-level owner/type paths; preserve the rest of the JSON data."""
+    if path != "config/header_owners.json":
+        return config_line_rewrite(tree, path, rx, repl)
+    text = tree.read(path)
+    if text is None:
+        return 0
+    def unique_object(pairs):
+        value = {}
+        for key, item in pairs:
+            if key in value:
+                raise ValueError("duplicate JSON key %r" % key)
+            value[key] = item
+        return value
+
+    try:
+        profile = json.loads(text, object_pairs_hook=unique_object)
+    except (ValueError, TypeError) as err:
+        raise RenameError("%s is invalid JSON: %s" % (path, err))
+    if not isinstance(profile, dict):
+        raise RenameError("%s must be a JSON object" % path)
+    owners, required = profile.get("owners"), profile.get("required_types")
+    if not isinstance(owners, list) or not isinstance(required, list):
+        raise RenameError("%s needs top-level owners and required_types arrays" % path)
+    seen_owners, seen_types = set(), set()
+    for owner in owners:
+        if (not isinstance(owner, dict) or not isinstance(owner.get("path"), str) or
+                owner.get("role") not in ("main", "sdk")):
+            raise RenameError("%s owners entries need a string path and main/sdk role" % path)
+        if owner["path"] in seen_owners:
+            raise RenameError("%s has duplicate owner path %s" % (path, owner["path"]))
+        seen_owners.add(owner["path"])
+    for header in required:
+        if not isinstance(header, str):
+            raise RenameError("%s required_types entries must be strings" % path)
+        if header in seen_types:
+            raise RenameError("%s has duplicate required type path %s" % (path, header))
+        seen_types.add(header)
+
+    # These are the only path fields owned by the legacy provider registry.
+    legacy = profile.get("legacy_main_imports")
+    provider_paths = []
+    if "legacy_main_imports" in profile:
+        if not isinstance(legacy, dict) or not isinstance(legacy.get("providers"), list):
+            raise RenameError("%s legacy_main_imports needs a providers array" % path)
+        seen_provider_paths, seen_root_paths = set(), set()
+        for provider in legacy["providers"]:
+            if not isinstance(provider, dict):
+                raise RenameError("%s legacy providers entries must be objects" % path)
+            for field, seen in (("provider_path", seen_provider_paths),
+                                ("root_header_path", seen_root_paths)):
+                value = provider.get(field)
+                if not isinstance(value, str):
+                    raise RenameError("%s legacy providers need string %s" % (path, field))
+                if value in seen:
+                    raise RenameError("%s has duplicate legacy %s %s" % (path, field, value))
+                seen.add(value)
+                provider_paths.append((provider, field))
+
+    count = 0
+    for owner in owners:
+        owner["path"], n = rx.subn(repl, owner["path"])
+        count += n
+    for i, header in enumerate(required):
+        required[i], n = rx.subn(repl, header)
+        count += n
+    for provider, field in provider_paths:
+        provider[field], n = rx.subn(repl, provider[field])
+        count += n
+    if count:
+        # Ordered dicts preserve all field/key order and values not selected above.
+        # Whitespace is canonicalized only when a path changes.
+        tree.write(path, json.dumps(profile, ensure_ascii=False, indent=2) + "\n")
+    return count
 
 
 ISLAND_TYPES = ("c", ".rodata", ".data", ".bss")
@@ -1862,7 +1980,7 @@ def plan_file(ctx, row):
     n_com = path_rewrite(tree, path_files, word, lambda m: m.group(1) + nname, strings=False)
     n_cfg = 0
     for p in config_text_files(tree):
-        n_cfg += config_line_rewrite(tree, p, word, lambda m: m.group(1) + nname)
+        n_cfg += config_reference_rewrite(tree, p, word, lambda m: m.group(1) + nname)
     if ctx.merge and not (n_yaml or move or n_str or n_com or n_cfg):
         return                                  # renamed already
     lo, hi = object_range(tree, unit, start)
@@ -1911,7 +2029,11 @@ def plan_dir(ctx, row):
         return ctx.problem(row, why)
     others = [u for u in tree.unit_names if u != unit and any(n.split("/", 1)[0].lower() == row.new.lower()
                                                                for _v, n in tree.c_names(u))]
-    if others or (not ctx.merge and os.path.exists(os.path.join(tree.root, "src/ovl", row.new))):
+    live_dirs = {p.split("/")[2].lower() for p in tree.listdir("src/ovl/**/*.c") if p.count("/") >= 3}
+    on_disk_target = os.path.join(tree.root, "src/ovl", row.new)
+    disk_taken = (os.path.exists(on_disk_target) and
+                  not tree.directory_is_pending_casefold_move("src/ovl/%s" % row.new))
+    if others or (not ctx.merge and (row.new.lower() in live_dirs or disk_taken)):
         return ctx.problem(row, "src/ovl/%s is taken" % row.new)
     moves = []
     for src in sorted(sources):
@@ -1945,7 +2067,7 @@ def plan_dir(ctx, row):
         n_com = path_rewrite(tree, all_code_files(tree), word, lambda m: m.group(1) + row.new + "/" + m.group(2),
                              strings=False)
         for p in config_text_files(tree):
-            n_cfg += config_line_rewrite(tree, p, word, lambda m: m.group(1) + row.new + "/" + m.group(2))
+            n_cfg += config_reference_rewrite(tree, p, word, lambda m: m.group(1) + row.new + "/" + m.group(2))
     row.key = "-"
     ctx.report.append("%s: %d files moved to src/ovl/%s, %d yaml lines, %d asm path strings, %d comment mentions, "
                       "%d config keys" % (row, len(moves), row.new, n_yaml, n_str, n_com, n_cfg))
@@ -2009,7 +2131,7 @@ def plan_header(ctx, row):
         tree.write("include/" + new, text)
     word = re.compile(r"(?<![\w/])((?:include/)?)%s(?![\w])" % re.escape(old))
     n_com = path_rewrite(tree, all_code_files(tree), word, lambda m: m.group(1) + new, strings=False)
-    n_cfg = sum(config_line_rewrite(tree, p, word, lambda m: m.group(1) + new) for p in config_text_files(tree))
+    n_cfg = sum(config_reference_rewrite(tree, p, word, lambda m: m.group(1) + new) for p in config_text_files(tree))
     tools = []
     for p in sorted(glob.glob(os.path.join(tree.root, "tools", "*.py")) + glob.glob(os.path.join(tree.root, "configure.py"))):
         with open(p, encoding=ENC) as f:
@@ -3406,7 +3528,10 @@ def gcc_proof(ctx):
         s1.close()
         s2.close()
     fwd = dict(tree.moves)
-    shift = {r_new: 1 for r_new in [p for _o, p in tree.moves if p.endswith(".c")]}
+    # Individual C file renames add the provenance banner; directory moves do
+    # not change line numbers. Only compensate for the former.
+    shift = {new: 1 for old, new in tree.moves
+             if new.endswith(".c") and os.path.basename(old) != os.path.basename(new)}
 
     def norm(d, mapped):
         f, ln, _c, msg = d[0], d[1], d[2], strip_suggestion(d[3])
@@ -3855,16 +3980,18 @@ def old_name_hits(tree, ch, key, o, files, idx, table):
             oname = "%s/%s" % (folder, o)
             if any(n == oname and t in ISLAND_TYPES for _v, t, n in subs):
                 hits.append(tree.yaml_path(unit))
-            if tree.exists(tree.source_path(unit, oname)):
+            if tree.exists_exact(tree.source_path(unit, oname)):
                 hits.append(tree.source_path(unit, oname))
     elif kind == "dir":
         # a yaml line (c or island) in the old folder, or a C file there
         unit = key[1]
         if any(n.startswith(o + "/") for _v, _t, n in tree.subsegments(unit)):
             hits.append(tree.yaml_path(unit))
-        hits += tree.listdir("src/ovl/%s/*.c" % o)
+        old_dir = "src/ovl/%s" % o
+        if tree.exists_exact(old_dir):
+            hits += tree.listdir(old_dir + "/*.c")
     elif kind == "header":
-        if tree.exists("include/" + o):
+        if tree.exists_exact("include/" + o):
             hits.append("include/" + o)
         hits += sorted(f for f in files if re.search(r'^[ \t]*#[ \t]*include[ \t]*"%s"' % re.escape(o),
                                                      tree.read(f) or "", re.M))

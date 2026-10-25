@@ -249,6 +249,57 @@ class Fixture(unittest.TestCase):
 
 
 class TableTest(Fixture):
+    def test_case_only_pending_replacement_shadows_tombstone_both_directions(self):
+        tree = R.Tree(self.root)
+        for old, new in (("include/ovl/DATE.h", "include/ovl/date.h"),
+                         ("include/ovl/date.h", "include/ovl/DATE.h")):
+            tree.texts = {old: None, new: "replacement\n"}
+            self.assertTrue(tree.has_casefold_replacement(old))
+            self.assertFalse(tree.has_casefold_replacement(new))
+        tree.texts = {"include/ovl/DATE.h": None, "include/ovl/date_path_stage.h": "stage\n"}
+        self.assertFalse(tree.has_casefold_replacement("include/ovl/DATE.h"))
+
+    def test_case_only_directory_target_requires_all_files_to_be_moved(self):
+        folder = os.path.join(self.root, "src/ovl/CaseStage")
+        os.makedirs(folder)
+        source = os.path.join(folder, "object.c")
+        with open(source, "w") as f:
+            f.write("void object(void) {}\n")
+        tree = R.Tree(self.root)
+        tree.texts["src/ovl/CaseStage/object.c"] = None
+        self.assertTrue(tree.directory_is_pending_casefold_move("src/ovl/CaseStage"))
+        with open(os.path.join(folder, "README"), "w") as f:
+            f.write("unmoved\n")
+        self.assertFalse(tree.directory_is_pending_casefold_move("src/ovl/CaseStage"))
+        empty = os.path.join(self.root, "src/ovl/EmptyStage")
+        os.makedirs(empty)
+        self.assertFalse(tree.directory_is_pending_casefold_move("src/ovl/EmptyStage"))
+
+    def test_ledger_old_path_checks_use_exact_spelling_both_directions(self):
+        for old, new in (("DATE", "date"), ("date", "DATE")):
+            self.tearDown()
+            self.setUp()
+            self.write("include/ovl/%s.h" % new, "/* final */\n")
+            self.write("config/overlays/DATE.yaml", "vram: 0x800F0000\nsegments:\n"
+                       "  - [0x100, c, %s/scene]\n" % new)
+            self.write("src/ovl/%s/scene.c" % new, "void scene(void) {}\n")
+            tree = R.Tree(self.root)
+            files = R.all_code_files(tree)
+            idx = R.name_index(tree, files)
+            table = symtab.SymbolTable(self.root)
+
+            header_row = R.Row("header", "include", "ovl/%s.h" % old, "ovl/%s.h" % new)
+            header_chains = R.chains([header_row])
+            header_key = next(iter(header_chains))
+            self.assertEqual(R.old_name_hits(tree, header_chains, header_key,
+                                             header_row.old, files, idx, table), [])
+
+            dir_row = R.Row("dir", "DATE", old, new)
+            dir_chains = R.chains([dir_row])
+            dir_key = next(iter(dir_chains))
+            self.assertEqual(R.old_name_hits(tree, dir_chains, dir_key,
+                                             old, files, idx, table), [])
+
     def test_cached_closure_does_not_evaluate_fallback(self):
         tree = R.Tree(self.root)
         path = "src/main/80041000.c"
@@ -708,6 +759,43 @@ class LegacyImportRegistryTest(Fixture):
                         "original_type": "voidF(void)", "type_identity_sha256": "stable",
                         "current_name": "func_80041100", "current_type": "voidF(void)"}]}]}}
         self.write("config/header_owners.json", json.dumps(payload))
+
+    def test_header_rename_updates_both_owned_registry_paths_only(self):
+        self.profile()
+        path = "config/header_owners.json"
+        profile = json.loads(self.read(path))
+        provider = profile["legacy_main_imports"]["providers"][0]
+        provider["provider_path"] = "ovl/EVENT.h"
+        provider["root_header_path"] = "ovl/EVENT.h"
+        provider["bindings"][0]["note"] = "ovl/EVENT.h"
+        profile["extra"] = {"path": "ovl/EVENT.h"}
+        self.write(path, json.dumps(profile))
+        tree = R.Tree(self.root)
+        word = R.re.compile(r"(?<![\w/])((?:include/)?)ovl/EVENT\.h(?![\w])")
+        count = R.config_reference_rewrite(
+            tree, path, word, lambda m: m.group(1) + "ovl/date_spots.h")
+        self.assertEqual(count, 2)
+        after = json.loads(tree.read(path))
+        provider = after["legacy_main_imports"]["providers"][0]
+        self.assertEqual(provider["provider_path"], "ovl/date_spots.h")
+        self.assertEqual(provider["root_header_path"], "ovl/date_spots.h")
+        self.assertEqual(provider["bindings"][0]["note"], "ovl/EVENT.h")
+        self.assertEqual(after["extra"], {"path": "ovl/EVENT.h"})
+
+    def test_duplicate_provider_path_refuses_before_any_write(self):
+        self.profile()
+        path = "config/header_owners.json"
+        profile = json.loads(self.read(path))
+        profile["legacy_main_imports"]["providers"].append(
+            dict(profile["legacy_main_imports"]["providers"][0]))
+        self.write(path, json.dumps(profile))
+        before = self.read(path)
+        with self.assertRaisesRegex(R.RenameError, "duplicate legacy provider_path"):
+            R.config_reference_rewrite(
+                R.Tree(self.root), path,
+                R.re.compile(r"(?<![\w/])ovl/EVENT\.h(?![\w])"),
+                lambda m: "ovl/date_spots.h")
+        self.assertEqual(before, self.read(path))
 
     def test_unit_scoped_private_rename_fails_without_reviewed_alias_binding(self):
         self.profile()

@@ -363,9 +363,12 @@ class Model:
         self.legacy_import_contract = (self.profile or {}).get("legacy_main_imports")
         self.legacy_import_providers = {}
         self.legacy_imports_by_unit_name = {}
+        self.event_private_header = "ovl/EVENT.h"
         if self.legacy_import_contract:
             for provider in self.legacy_import_contract["providers"]:
                 self.legacy_import_providers[provider["provider_path"]] = provider["unit"]
+                if provider["unit"] == "EVENT":
+                    self.event_private_header = provider["root_header_path"]
                 for binding in provider["bindings"]:
                     self.legacy_imports_by_unit_name[(provider["unit"], binding["current_name"])] = binding
         self.sdk_headers = set(SDK_HEADERS)
@@ -433,7 +436,7 @@ class Model:
 
     def event_private_addr(self, name, header, typ=None):
         """Resolve a private alias only in EVENT's exact private owner header."""
-        if header != "ovl/EVENT.h" or not self.event_private_active:
+        if header != self.event_private_header or not self.event_private_active:
             return None
         if typ is not None:
             rows = [(n, t) for n, t, _raw in self.own.get(header, ()) if n == name]
@@ -1286,7 +1289,7 @@ def event_private_contract_problems(model, inc, src=None):
     if model.profile is None or "EVENT" not in model.bases:
         return []
     problems = []
-    event_name = "ovl/EVENT.h"
+    event_name = model.event_private_header
     event_path = model.headers.get(event_name)
     if not event_path:
         return ["EVENT private-view contract requires include/%s" % event_name]
@@ -1402,7 +1405,8 @@ def event_private_contract_problems(model, inc, src=None):
     leakage = set()
     ch.walk(event_path, inc, defines=leakage)
     if EVENT_PRIVATE_SELECTOR in leakage:
-        problems.append("EVENT private-view contract: %s leaks beyond include/ovl/EVENT.h" % EVENT_PRIVATE_SELECTOR)
+        problems.append("EVENT private-view contract: %s leaks beyond include/%s" %
+                        (EVENT_PRIVATE_SELECTOR, event_name))
 
     # Check actual translation-unit order only at check/write boundaries that
     # supply a source root. Header-only Model users remain bounded and cheap.
@@ -1413,11 +1417,12 @@ def event_private_contract_problems(model, inc, src=None):
         for path, info in sorted(model.sources.items()):
             rel = os.path.relpath(path, src).replace(os.sep, "/")
             parts = rel.split("/")
-            is_event_source = len(parts) >= 3 and parts[:2] == ["ovl", "EVENT"]
+            is_event_source = srcscan.unit_of_source(path) == "EVENT"
             closure_headers = closure_of_file(model, path)
             if not is_event_source:
                 if event_name in closure_headers:
-                    problems.append("EVENT private-view contract: non-EVENT source %s includes ovl/EVENT.h" % rel)
+                    problems.append("EVENT private-view contract: non-EVENT source %s includes %s" %
+                                    (rel, event_name))
                 if selector_directives(path):
                     problems.append("EVENT private-view contract: %s directive is forbidden in non-EVENT source %s" %
                                     (EVENT_PRIVATE_SELECTOR, rel))
@@ -1428,8 +1433,8 @@ def event_private_contract_problems(model, inc, src=None):
             for name, _typ, _raw in ch.declarations_text(info["text"]):
                 resolved = model.symbols.resolve("EVENT", name)
                 if resolved is not None and resolved[0] == "EVENT" and resolved[1] in EVENT_PRIVATE_VIEWS:
-                    problems.append("EVENT private-view contract: source %s declares private alias %s outside ovl/EVENT.h" %
-                                    (rel, name))
+                    problems.append("EVENT private-view contract: source %s declares private alias %s outside %s" %
+                                    (rel, name, event_name))
             for header in sorted(closure_headers):
                 if header == event_name or header in model.canonical:
                     continue
@@ -1441,7 +1446,8 @@ def event_private_contract_problems(model, inc, src=None):
             targets_used = bool(info["tokens"] & private_source_names)
             if event_name not in closure_headers:
                 if targets_used:
-                    problems.append("EVENT private-view contract: %s uses a private address but does not include ovl/EVENT.h" % rel)
+                    problems.append("EVENT private-view contract: %s uses a private address but does not include %s" %
+                                    (rel, event_name))
                 continue
             defines = set()
             rows = resolved_rows(ch.walk(path, inc, defines=defines, rel="<src>"), private_context=True)
@@ -1453,8 +1459,8 @@ def event_private_contract_problems(model, inc, src=None):
                 expected = EVENT_PRIVATE_VIEWS[addr]
                 exact = [r for r in rows if r[1] == name and r[3] == event_name]
                 if len(exact) != 1 or exact[0][2] != expected:
-                    problems.append("EVENT private-view contract: %s uses %s but does not see that exact %s spelling once from ovl/EVENT.h" %
-                                    (rel, name, expected))
+                    problems.append("EVENT private-view contract: %s uses %s but does not see that exact %s spelling once from %s" %
+                                    (rel, name, expected, event_name))
             for addr, expected in EVENT_PRIVATE_VIEWS.items():
                 visible = [r for r in rows if r[0] == addr]
                 private = [r for r in visible if r[3] == event_name]
@@ -1484,7 +1490,7 @@ def check_api(inc, src=None):
             if model.event_private_active and model.owner(h) == "EVENT":
                 resolved = model.symbols.resolve("EVENT", name)
                 if resolved is not None and resolved[0] == "EVENT" and resolved[1] in EVENT_PRIVATE_VIEWS:
-                    if h != "ovl/EVENT.h" or model.event_private_addr(name, h, typ) is None:
+                    if h != model.event_private_header or model.event_private_addr(name, h, typ) is None:
                         problems.append("EVENT private-view contract: %s in include/%s is outside the validated EVENT private block" %
                                         (name, h))
                         continue

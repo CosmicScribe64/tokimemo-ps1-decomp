@@ -62,3 +62,23 @@ Four targeted fixtures and the full rename test suite passed (130 tests);
 `git apply --check` passed without applying the patch. No live tooling files were changed. Root
 review/integration is still required before these path rows can safely update an installed owner
 profile.
+
+## Current-source integration review
+
+The current preparation is based on committed `302996710`, after the full topic-header stack.
+The original Astra reviewer approves the exact five-tool patch `f246ca735a46b9d251360823c19176eaab470d4ab13e4c52030a84af05726811`:
+controlled registry/provider path rewrites, explicit provider-root selection, EVENT unit identity
+after its directory move, directory-move diagnostic mapping and case-only transaction safety.
+The two reviewed filesystem findings are corrected; independent zero-fuzz patch application
+reproduces all five reviewed files.
+
+The isolated 56-row application exposed a further local guard problem: macOS case-insensitive
+path lookup reports the old DATE/ENDING/TT spelling as present after the case-only move.
+The live checkout has not received the path packet. A Linux-only pass cannot replace the
+required local guard; exact path-spelling checks and regression coverage must resolve this
+before root applies the operation. The revised exact-spelling fix is independently approved in
+patch `33a688df3fe19b55afa8007b788270eff6c7b9415646b84a305eb033ce6394ec`.
+Root applied its five tool files and ran the full six-module Docker suite: **337 tests pass**.
+Actual source paths remain unchanged pending the repaired macOS-bind guard and migration proof.
+Evidence remains ignored under `T-27074/` and the original reviewer's
+`T-27055/path-tool-review-in-progress.md`.
