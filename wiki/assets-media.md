@@ -469,3 +469,22 @@ The ignored `.asset-cache/media/openxa-frame-review-392-407-v1/review-packet.jso
 This is full-frame presence classification for one window within OPENXA's 829 decoded frames. It is separate from the 3,480-region static catalog and does not classify the complete 997-frame movie corpus. Software MDEC decoding has no hardware pixel-parity claim; no CLUT applies to these decoded movie images. Decoded indices and original source-frame numbers remain separate fields, and presentation timing is unproved.
 
 Future localization needs edited frame images or synchronized replacement compositing because the Japanese text is present in the decoded pixels. The packet leaves the replacement method undecided; this is an explicit follow-up, not a completed redraw plan. The immutable review packet retains original frame and raw-stream provenance; remaining movie/whole-corpus review stays open under T-28004.
+
+## Four school-day backgrounds, reviewed live export (2026-10-25)
+
+The accepted six-file BS packet has manifest SHA256 `2bbe64d472e55f61bae6c928c265ea7a5097c4d8a6a3885e960166d1bdcdc414` and patch SHA256 `9300b886dc456a64ddfc9bb56d051471b73c20f06632e3d404518da5f4d4ce69`. Independent correctness and standards reviews pass after resolving self-rehashed witness acceptance, missing table-row/file binding, a stale school-day citation and incomplete placement metadata. The committed profile verifies five exact C/assembly files, original EXE/track hashes, the four original EXE table words at offset `0x75F60`, and each source file/hash/size/ISO record/index/LBA association. A fabricated self-consistent witness or a real adjacent file substituted into the wrong table row fails closed. The exporter needs no ignored report to establish these facts.
+
+Original `C_01_27.BS` through `C_01_30.BS` produce four active 320×88 color PNGs, four 320×96 padded diagnostics and eight STP masks. Native reads request ten sectors each; the last two files have one and two sectors beyond the declared file extent. Those sector payloads are recorded as overreads and excluded from decoder input. The original mode-0 caller uploads `[704,160,320,88]` or `[320,416,320,88]`, selected by the decoder return. Two display pieces are relative to a runtime-unknown draw origin: offset `[-160,-48]`, size 192×88; offset `[32,-48]`, size 128×88. Software IDCT/RGB555 conversion remains approximate; hardware pixel parity is unproved. No CLUT applies to these YCbCr-coded images.
+
+Reproduce the bounded export in Docker:
+
+```sh
+docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
+  python3 tools/assets/media_mdec_export.py disc/track1.bin --bs-caller-cohort \
+  --baseline-media .asset-cache/media/etc-sd-published-v1/manifest.json \
+  --repository-root . --output .asset-cache/media/bs-cohort-current-v4
+```
+
+Root's live replay verifies all sixteen PNG hashes against the reviewed packet and preserves all 1,368 nonselected manifest records, including both ETC SD sources. The standard merged catalog is `.asset-cache/media/bs-cohort-current-v4/visual-catalog.json`, SHA256 `3dd34001c326ab39887528c723a1dcfbeb3b836df78ea1793ec64863a7135f37`. Its 3,484 active regions comprise 427 Japanese, 350 other-text, 2,635 no-text, 72 suspected and zero unreviewed regions; all 6,963 referenced PNG/mask files verify. Padded images and masks are diagnostics, excluded from art counts. The four new manual reviews confirm Japanese on the chalkboard/sign in C_01_28/C_01_30 and retain small book/notebook marks in C_01_27/C_01_29 as suspected. Hash-bound subregion bounds, context, confidence and later redraw requirements remain in the accepted packet's `visual-catalog.json`; no text is transcribed. The live gallery is `.asset-cache/media/bs-cohort-current-v4/gallery/index.html`.
+
+The coherent suite passes 466 Docker tests without skips; all 1,072 protected game/header/config/build files remain unchanged. There are now 82 exported BS sources of 313, leaving 231 unresolved geometries; 73 NBN sources and remaining movie/corpus classification stay open. All asset-completeness flags remain false.

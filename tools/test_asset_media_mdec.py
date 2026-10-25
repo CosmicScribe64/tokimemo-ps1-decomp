@@ -7,6 +7,7 @@ from unittest.mock import patch
 from assets import manifest
 from assets.media_mdec_export import export_mdec_source
 from tools.test_asset_image_mdec import flat
+from tools.test_asset_images import png_pixels
 
 
 class Source:
@@ -32,7 +33,7 @@ def contexts(source):
 
 
 class MdecPublicationTests(unittest.TestCase):
-    def test_publish_is_deterministic_and_preserves_original_and_masks(self):
+    def test_publish_is_deterministic_and_preserves_active_padded_and_mask_artifacts(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()
             source = Source(root / "input.bin")
@@ -42,8 +43,52 @@ class MdecPublicationTests(unittest.TestCase):
                 first = (output / "manifest.json").read_bytes()
                 record = report["assets"][0]
                 self.assertEqual(record["status"], "exported")
-                self.assertEqual(len(record["outputs"]), 2)
+                self.assertEqual(len(record["outputs"]), 4)
                 self.assertEqual((root / record["original"]["path"]).read_bytes(), source.data)
+                self.assertEqual(len(record["export"]["files"]), 4)
+                output_files = {Path(item["path"]).name: root / item["path"]
+                                for item in record["outputs"]}
+                self.assertEqual(set(output_files), set(record["export"]["files"]))
+
+                active_name = record["export"]["images"][0]["png"]
+                active_mask_name = record["export"]["images"][0]["stp_png"]
+                padded = record["export"]["metadata"]["padded_decode"]
+                self.assertEqual(record["export"]["images"][0]["width"], 320)
+                self.assertEqual(record["export"]["images"][0]["height"], 88)
+                self.assertEqual(padded["width"], 320)
+                self.assertEqual(padded["height"], 96)
+                self.assertEqual(padded["active_crop"], [0, 0, 320, 88])
+                self.assertEqual(padded["padded_rows_not_uploaded_by_caller"], 8)
+
+                padded_name = padded["png"]
+                padded_mask_name = padded["stp_png"]
+                dimensions = {}
+                for name in record["export"]["files"]:
+                    data = output_files[name].read_bytes()
+                    self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
+                    dimensions[name] = (int.from_bytes(data[16:20], "big"),
+                                        int.from_bytes(data[20:24], "big"))
+                self.assertEqual(dimensions[active_name], (320, 88))
+                self.assertEqual(dimensions[padded_name], (320, 96))
+                self.assertEqual(dimensions[active_mask_name], (320, 88))
+                self.assertEqual(dimensions[padded_mask_name], (320, 96))
+
+                active_pixels = png_pixels(output_files[active_name])
+                padded_pixels = png_pixels(output_files[padded_name])
+                active_mask = png_pixels(output_files[active_mask_name])
+                padded_mask = png_pixels(output_files[padded_mask_name])
+                active_stride = 320 * 4 + 1
+                padded_stride = 320 * 4 + 1
+                mask_active_stride = 320 + 1
+                mask_padded_stride = 320 + 1
+                for row in range(88):
+                    self.assertEqual(active_pixels[row * active_stride:(row + 1) * active_stride],
+                                     padded_pixels[row * padded_stride:(row + 1) * padded_stride])
+                    self.assertEqual(active_mask[row * mask_active_stride:(row + 1) * mask_active_stride],
+                                     padded_mask[row * mask_padded_stride:(row + 1) * mask_padded_stride])
+                self.assertTrue(all(active_mask[row * mask_active_stride + 1:(row + 1) * mask_active_stride]
+                                    == bytes([255]) * 320 for row in range(88)))
+
                 export_mdec_source(source, output, contexts(source))
                 self.assertEqual(first, (output / "manifest.json").read_bytes())
 

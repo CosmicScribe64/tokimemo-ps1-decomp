@@ -63,6 +63,17 @@ class MdecTests(unittest.TestCase):
             self.assertEqual(mask[1:321], bytes([255]) * 320)
             self.assertEqual(len(mask), (320 + 1) * 88)
             self.assertEqual(result['metadata']['padded_height'], 96)
+            padded_png = Path(temporary) / result['metadata']['padded_decode']['png']
+            padded_pixels = png_pixels(padded_png)
+            self.assertEqual(len(padded_pixels), (320 * 4 + 1) * 96)
+            active_stride = 320 * 4 + 1
+            for row in range(88):
+                self.assertEqual(pixels[row * active_stride:(row + 1) * active_stride],
+                                 padded_pixels[row * active_stride:(row + 1) * active_stride])
+            self.assertEqual(result['metadata']['padded_decode']['active_crop'], [0, 0, 320, 88])
+            self.assertEqual(result['metadata']['padded_decode']['padded_rows_not_uploaded_by_caller'], 8)
+            padded_mask = png_pixels(Path(temporary) / result['metadata']['padded_decode']['stp_png'])
+            self.assertEqual(len(padded_mask), (320 + 1) * 96)
 
     def test_rejects_truncated_ac_overflow_marker_alignment_and_unknown_version(self):
         source = flat(6)

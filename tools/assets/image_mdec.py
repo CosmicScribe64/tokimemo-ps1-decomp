@@ -246,13 +246,12 @@ def export_mdec(data: bytes, output_dir, asset_id: str, *, source_path='', conte
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,159}', asset_id):
         raise ImageFormatError('unsafe MDEC asset_id')
     rgba = bytearray(width * height * 4)
+    padded_rgba = bytearray(width * padded * 4)
     rows = padded // 16
     for index in range(metadata['macroblock_count']):
         cr, cb, *luma = [_idct(block) for block in blocks[index * 6:index * 6 + 6]]
         mx, my = index // rows * 16, index % rows * 16
         for y in range(16):
-            if my + y >= height:
-                continue
             for x in range(16):
                 c = (y // 2) * 8 + x // 2
                 luminance = luma[(y // 8) * 2 + x // 8][(y % 8) * 8 + x % 8]
@@ -260,20 +259,35 @@ def export_mdec(data: bytes, output_dir, asset_id: str, *, source_path='', conte
                           luminance - ((352 * cb[c] + 731 * cr[c]) >> 10),
                           luminance + ((1815 * cb[c]) >> 10))
                 channels = [max(0, min(255, value + 128)) >> 3 for value in colors]
-                dest = ((my + y) * width + mx + x) * 4
-                rgba[dest:dest + 4] = bytes([(v << 3) | (v >> 2) for v in channels] + [255])
+                pixel = bytes([(v << 3) | (v >> 2) for v in channels] + [255])
+                padded_dest = ((my + y) * width + mx + x) * 4
+                padded_rgba[padded_dest:padded_dest + 4] = pixel
+                if my + y < height:
+                    active_dest = ((my + y) * width + mx + x) * 4
+                    rgba[active_dest:active_dest + 4] = pixel
     png = asset_id + '.background.png'
     mask = asset_id + '.background.stp.png'
+    padded_png = asset_id + '.background.padded.png'
+    padded_mask = asset_id + '.background.padded.stp.png'
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     with (output_dir / png).open('xb') as output:
         output.write(_png(width, height, rgba, 4))
     with (output_dir / mask).open('xb') as output:
         output.write(_png(width, height, bytes([255]) * (width * height), 1))
+    with (output_dir / padded_png).open('xb') as output:
+        output.write(_png(width, padded, padded_rgba, 4))
+    with (output_dir / padded_mask).open('xb') as output:
+        output.write(_png(width, padded, bytes([255]) * (width * padded), 1))
     metadata.update(source_sha256=hashlib.sha256(data).hexdigest(), source_size=len(data),
                     source_path=source_path, width=width, height=height, padded_height=padded,
                     unrepresented_pixel_regions=([[0, height, width, padded - height]] if padded > height else []),
-                    coverage_policy='complete VLC coefficient stream validated; caller-visible rectangle exported; padding rows and post-end-marker source trailer remain outside image export',
+                    coverage_policy='complete VLC coefficient stream validated; active caller rectangle and complete padded MDEC output are both exported; source-read sectors beyond the declared file extent are recorded but never fed to this decoder',
+                    padded_decode={'png': padded_png, 'stp_png': padded_mask,
+                                   'width': width, 'height': padded,
+                                   'active_crop': [0, 0, width, height],
+                                   'active_crop_height': height,
+                                   'padded_rows_not_uploaded_by_caller': padded - height},
                     geometry_context=context, coefficient_order='column-major macroblocks; Cr,Cb,Ytop-left,Ytop-right,Ybottom-left,Ybottom-right',
                     color_policy='SDK default quantization, deterministic 13-bit integer IDCT, full-range YCbCr approximation, RGB555 expansion',
                     alpha_policy='opaque decoded background; no CLUT or source alpha',
@@ -285,7 +299,7 @@ def export_mdec(data: bytes, output_dir, asset_id: str, *, source_path='', conte
                               'asm/libpress_main.s:func_800869EC,func_800868BC',
                               'https://psx-spx.consoledev.net/cdromfileformats/',
                               'https://psx-spx.consoledev.net/macroblockdecodermdec/'])
-    return {'status': 'exported', 'format': 'sony-bs-mdec', 'files': [png, mask],
+    return {'status': 'exported', 'format': 'sony-bs-mdec', 'files': [png, mask, padded_png, padded_mask],
             'images': [{'png': png, 'stp_png': mask, 'frame_index': 0, 'variant': 'background', 'width': width,
                         'height': height, 'parts': [], 'palette_status': 'not applicable; YCbCr coded',
                         'stp_status': 'constant_one_from_game_decode_mode',
