@@ -4,6 +4,7 @@ extends RefCounted
 const Rules = preload("res://rules/new_game.gd")
 const Rng = preload("res://core/native_rng.gd")
 const CONTENT_SHA: String = "7458e8d0ee2d286c17ffe9b0d4201544ac716325273a97e02e5b12ab9fd660af"
+const TAB_DONE: int = 4
 var stage: int = 1
 var step_id: int = 0
 var cursor: int = 0
@@ -121,8 +122,12 @@ func act(action: Dictionary) -> String:
 	if stage == 1 and step_id in [0,2,4,6,8]:
 		if kind != "tick": return "entry initialization requires a logical tick"
 		if step_id == 0: cursor = 0; tab = 0
-		elif step_id == 2: cursor = 3
-		elif step_id == 4: cursor = 6
+		elif step_id == 2:
+			cursor = 3
+			if tab == TAB_DONE: tab = 0
+		elif step_id == 4:
+			cursor = 6
+			if tab == TAB_DONE: tab = 0
 		elif step_id == 6: cursor = 0
 		step_id += 1
 	elif stage == 2 and step_id in [0,2]:
@@ -143,7 +148,10 @@ func act(action: Dictionary) -> String:
 				names[active_part()][(cursor-start)*2] = glyph[0]; names[active_part()][(cursor-start)*2+1] = glyph[1]
 				cursor += 1
 		elif kind == "cross": cursor = maxi(start,(limit-1 if cursor == 12 else cursor-1))
-		elif kind in ["start","done"]: _finish_name()
+		elif kind in ["start","done"]:
+			# CIRCLE on the native DONE tab changes the tab; START does not.
+			if kind == "done": tab = TAB_DONE
+			_finish_name()
 		elif kind != "tick": return "unsupported name input action"
 	elif (stage == 1 and step_id == 7) or (stage == 2 and step_id == 1):
 		if kind == "select":

@@ -53,10 +53,12 @@ func _physics_process(_delta: float) -> void:
 		if not diagnostic.is_empty(): failure = diagnostic
 		_render()
 
-func _unhandled_key_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ENTER: _send({"kind":"start"})
-		elif event.keycode == KEY_ESCAPE: _send({"kind":"cross"})
+		if event.keycode == KEY_ENTER:
+			_send({"kind":"start"}); get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_ESCAPE:
+			_send({"kind":"cross"}); get_viewport().set_input_as_handled()
 
 func _label(text: String) -> void:
 	var label := Label.new(); label.text = text; label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; panel.add_child(label)
@@ -103,7 +105,7 @@ func _render() -> void:
 				if pair.size() == 2: button.icon = _glyph_texture(pair); button.expand_icon = true
 				else: button.disabled = true
 		var actions := HBoxContainer.new(); panel.add_child(actions)
-		_button(actions,"Back one slot",{"kind":"cross"}); _button(actions,"Done / START",{"kind":"done"})
+		_button(actions,"Back one slot",{"kind":"cross"}); _button(actions,"Done",{"kind":"done"})
 		_label("Symbols, kanji readings, preset chords and native pointer grid are pending original-route coverage.")
 	elif (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1):
 		var who: String = "Player" if controller.stage == 1 else "Shiori"

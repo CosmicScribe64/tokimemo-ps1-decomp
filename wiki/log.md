@@ -2200,3 +2200,11 @@ Published only the actual installed Godot name-entry scene capture from [[ticket
 ## [2026-10-25] build | Export reviewed code-only desktop development player
 
 For [[tickets/T-29015-desktop-development-player]], added Docker staging/export tooling and six invented-source tests. Independent review resolved a source-root symlink traversal and the pinned engine's universal texture-import requirement. Actual v3 export verifies both macOS architectures, 41 source hashes and 81 packaged resource mappings without original game payloads. Host launch and input launcher remain open; this is not desktop release acceptance.
+
+## [2026-10-25] ingest | Validate Gemini translation return
+
+For [[assets-text]] and [[tickets/T-28007-complete-text-and-translator-handoff]], read the user-reported completed translation from its separate worktree and reran the canonical importer read-only against all 332 TSV batches. All 55,403 rows pass, with 54,786 targets; returned overlay matches the independently reconstructed result byte-for-byte. Supplemental text and image coverage are being audited separately. Gemini files remain untouched; no English content/art was applied to the port.
+
+## [2026-10-25] build | Correct native DONE and START entry behavior
+
+For [[tickets/T-29012-native-new-game-initialization]], integrated four reviewed corrections distinguishing native DONE's tab reset from keyboard START's retained tab. Real focused-keyboard dispatch is tested, with canonical 85 controller and ten rendered UI checks passing. No original content, translation pipeline or matching source changed. The previous v1 desktop artifact remains an explicitly historical build.

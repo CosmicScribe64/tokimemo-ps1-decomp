@@ -74,5 +74,18 @@ func _initialize() -> void:
 	var empty := Entry.new()
 	check(not empty.begin({},invented_content(),other_rng).is_empty() and other_rng.draw_count == before,"missing rules block before RNG")
 	check(Entry.load_content("relative.json").is_empty() and Entry.load_content("res://entry.json").is_empty(),"entry pack rejects relative/resource paths")
+	# Source: family/given input's DONE versus START branches, followed by
+	# given/nickname init's conditional NAME_ENTRY_TAB_DONE reset.
+	for finish_kind in ["done","start"]:
+		var tab_rng := Rng.new(); tab_rng.configure(Rng.OPENBIOS_PROFILE,7)
+		var tab_entry := Entry.new(); tab_entry.begin(invented_tables(),invented_content(),tab_rng)
+		action(tab_entry,"tick")
+		for next_part in ["given","nickname"]:
+			check(tab_entry.act({"kind":"tab","value":1}).is_empty(),"select katakana before "+finish_kind)
+			var draws: int = tab_rng.draw_count
+			action(tab_entry,finish_kind)
+			check(tab_entry.tab == (4 if finish_kind == "done" else 1) and tab_rng.draw_count == draws+1,"DONE sets native tab4; START preserves tab; each finishes with one draw")
+			action(tab_entry,"tick")
+			check(tab_entry.active_part() == next_part and tab_entry.tab == (0 if finish_kind == "done" else 1),"next name init resets only native DONE tab")
 	print("PASS: %d New Game entry checks"%checks if not failures else "FAIL entry checks")
 	quit(1 if failures else 0)
