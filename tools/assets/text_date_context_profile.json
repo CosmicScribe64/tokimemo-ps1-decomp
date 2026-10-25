@@ -1,0 +1,2275 @@
+{
+  "binary": "CDROM/EXEDIR/DATE.EXN",
+  "binary_sha256": "35035e4e3ebdd9b3aebf8affd049554ad6745f76dc27cd697a7b646ce3438ebc",
+  "functions": [
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/place_scenes/date_fill_sections_shiori.s",
+      "name": "date_fill_sections_shiori",
+      "source": "src/ovl/date/place_scenes.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/place_scenes/date_fill_sections_mio.s",
+      "name": "date_fill_sections_mio",
+      "source": "src/ovl/date/place_scenes.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/place_scenes/date_fill_sections_yuina.s",
+      "name": "date_fill_sections_yuina",
+      "source": "src/ovl/date/place_scenes.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_ayako.s",
+      "name": "date_fill_sections_ayako",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_saki.s",
+      "name": "date_fill_sections_saki",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_yukari.s",
+      "name": "date_fill_sections_yukari",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_nozomi.s",
+      "name": "date_fill_sections_nozomi",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_mira.s",
+      "name": "date_fill_sections_mira",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_yuko.s",
+      "name": "date_fill_sections_yuko",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_megumi.s",
+      "name": "date_fill_sections_megumi",
+      "source": "src/ovl/date/entry.c"
+    },
+    {
+      "assembly": "asm/ovl/DATE/matchings/date/entry/date_fill_sections_yumi.s",
+      "name": "date_fill_sections_yumi",
+      "source": "src/ovl/date/entry.c"
+    }
+  ],
+  "schema": "tokimemo.date-section-context-profile.v1",
+  "scripts": [
+    {
+      "id": "date-fu",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_FU.BIN",
+      "sections": [
+        {
+          "command_table": 2149171688,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149171640,
+          "voice_table": 2149172048
+        },
+        {
+          "command_table": 2149200888,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149200816,
+          "voice_table": 2149201428
+        },
+        {
+          "command_table": 2149189000,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149188928,
+          "voice_table": 2149189456
+        },
+        {
+          "command_table": 2149160712,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160640,
+          "voice_table": 2149161168
+        },
+        {
+          "command_table": 2149180396,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149180348,
+          "voice_table": 2149180700
+        },
+        {
+          "command_table": 2149178012,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149177900,
+          "voice_table": 2149178516
+        },
+        {
+          "command_table": 2149156712,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156560,
+          "voice_table": 2149157628
+        },
+        {
+          "command_table": 2149190148,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149190100,
+          "voice_table": 2149190452
+        },
+        {
+          "command_table": 2149166864,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149166784,
+          "voice_table": 2149167324
+        },
+        {
+          "command_table": 2149158396,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158348,
+          "voice_table": 2149158700
+        },
+        {
+          "command_table": 2149170680,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149170632,
+          "voice_table": 2149170984
+        },
+        {
+          "command_table": 2149196928,
+          "group_count": 57,
+          "id": "section-11",
+          "text_table": 2149196472,
+          "voice_table": 2149199536
+        },
+        {
+          "command_table": 2149182904,
+          "group_count": 20,
+          "id": "section-12",
+          "text_table": 2149182744,
+          "voice_table": 2149183824
+        },
+        {
+          "command_table": 2149187396,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149187300,
+          "voice_table": 2149188032
+        },
+        {
+          "command_table": 2149174824,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149174768,
+          "voice_table": 2149175076
+        },
+        {
+          "command_table": 2149159456,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159408,
+          "voice_table": 2149159704
+        },
+        {
+          "command_table": 2149176268,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149176220,
+          "voice_table": 2149176572
+        },
+        {
+          "command_table": 2149179488,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149179440,
+          "voice_table": 2149179736
+        },
+        {
+          "command_table": 2149164980,
+          "group_count": 15,
+          "id": "section-18",
+          "text_table": 2149164860,
+          "voice_table": 2149165628
+        },
+        {
+          "command_table": 2149184588,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149184540,
+          "voice_table": 2149184892
+        },
+        {
+          "command_table": 2149185552,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149185504,
+          "voice_table": 2149185856
+        },
+        {
+          "command_table": 2149175400,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149175368,
+          "voice_table": 2149175584
+        },
+        {
+          "command_table": 2149162900,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162756,
+          "voice_table": 2149163980
+        },
+        {
+          "command_table": 2149168844,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149168728,
+          "voice_table": 2149169880
+        },
+        {
+          "command_table": 2149172444,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149172404,
+          "voice_table": 2149172744
+        },
+        {
+          "command_table": 2149173624,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149173580,
+          "voice_table": 2149174008
+        },
+        {
+          "command_table": 2149178744,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149178712,
+          "voice_table": 2149178872
+        }
+      ],
+      "sha256": "667597bc307eaa52ef3f11d83e6850048f9e94831578527b58f12cb48256c005"
+    },
+    {
+      "id": "date-ki",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_KI.BIN",
+      "sections": [
+        {
+          "command_table": 2149173256,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149173208,
+          "voice_table": 2149173616
+        },
+        {
+          "command_table": 2149201332,
+          "group_count": 15,
+          "id": "section-01",
+          "text_table": 2149201212,
+          "voice_table": 2149202232
+        },
+        {
+          "command_table": 2149189108,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149189036,
+          "voice_table": 2149189564
+        },
+        {
+          "command_table": 2149161016,
+          "group_count": 13,
+          "id": "section-03",
+          "text_table": 2149160912,
+          "voice_table": 2149161656
+        },
+        {
+          "command_table": 2149182208,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149182160,
+          "voice_table": 2149182512
+        },
+        {
+          "command_table": 2149179664,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149179552,
+          "voice_table": 2149180168
+        },
+        {
+          "command_table": 2149156704,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156552,
+          "voice_table": 2149157620
+        },
+        {
+          "command_table": 2149190272,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149190224,
+          "voice_table": 2149190576
+        },
+        {
+          "command_table": 2149168536,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149168456,
+          "voice_table": 2149168996
+        },
+        {
+          "command_table": 2149158332,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158284,
+          "voice_table": 2149158636
+        },
+        {
+          "command_table": 2149172276,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149172228,
+          "voice_table": 2149172580
+        },
+        {
+          "command_table": 2149196188,
+          "group_count": 57,
+          "id": "section-11",
+          "text_table": 2149195724,
+          "voice_table": 2149198936
+        },
+        {
+          "command_table": 2149184468,
+          "group_count": 16,
+          "id": "section-12",
+          "text_table": 2149184340,
+          "voice_table": 2149185176
+        },
+        {
+          "command_table": 2149187496,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149187400,
+          "voice_table": 2149188104
+        },
+        {
+          "command_table": 2149176588,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149176532,
+          "voice_table": 2149176840
+        },
+        {
+          "command_table": 2149159376,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159328,
+          "voice_table": 2149159624
+        },
+        {
+          "command_table": 2149178004,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149177956,
+          "voice_table": 2149178280
+        },
+        {
+          "command_table": 2149181316,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149181268,
+          "voice_table": 2149181564
+        },
+        {
+          "command_table": 2149166560,
+          "group_count": 15,
+          "id": "section-18",
+          "text_table": 2149166440,
+          "voice_table": 2149167208
+        },
+        {
+          "command_table": 2149185896,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149185848,
+          "voice_table": 2149186200
+        },
+        {
+          "command_table": 2149177172,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149177140,
+          "voice_table": 2149177356
+        },
+        {
+          "command_table": 2149163964,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149163788,
+          "voice_table": 2149165492
+        },
+        {
+          "command_table": 2149170492,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149170380,
+          "voice_table": 2149171500
+        },
+        {
+          "command_table": 2149174096,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149174052,
+          "voice_table": 2149174452
+        },
+        {
+          "command_table": 2149175400,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149175356,
+          "voice_table": 2149175812
+        },
+        {
+          "command_table": 2149180436,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149180404,
+          "voice_table": 2149180620
+        }
+      ],
+      "sha256": "221b58aa6bd996a64dbf61a0c08a5ed300b9003fe1f7f1187f9cc424649cf074"
+    },
+    {
+      "id": "date-hi",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_HI.BIN",
+      "sections": [
+        {
+          "command_table": 2149170528,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149170480,
+          "voice_table": 2149170888
+        },
+        {
+          "command_table": 2149195868,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149195796,
+          "voice_table": 2149196408
+        },
+        {
+          "command_table": 2149184728,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149184656,
+          "voice_table": 2149185184
+        },
+        {
+          "command_table": 2149160232,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160160,
+          "voice_table": 2149160688
+        },
+        {
+          "command_table": 2149178248,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149178200,
+          "voice_table": 2149178552
+        },
+        {
+          "command_table": 2149176024,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149175912,
+          "voice_table": 2149176528
+        },
+        {
+          "command_table": 2149156564,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156412,
+          "voice_table": 2149157480
+        },
+        {
+          "command_table": 2149185852,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149185804,
+          "voice_table": 2149186156
+        },
+        {
+          "command_table": 2149166532,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149166452,
+          "voice_table": 2149166992
+        },
+        {
+          "command_table": 2149158160,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158112,
+          "voice_table": 2149158464
+        },
+        {
+          "command_table": 2149169564,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149169516,
+          "voice_table": 2149169868
+        },
+        {
+          "command_table": 2149191916,
+          "group_count": 57,
+          "id": "section-11",
+          "text_table": 2149191456,
+          "voice_table": 2149194608
+        },
+        {
+          "command_table": 2149180200,
+          "group_count": 14,
+          "id": "section-12",
+          "text_table": 2149180088,
+          "voice_table": 2149180844
+        },
+        {
+          "command_table": 2149183068,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149182972,
+          "voice_table": 2149183676
+        },
+        {
+          "command_table": 2149173520,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149173464,
+          "voice_table": 2149173772
+        },
+        {
+          "command_table": 2149159076,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159028,
+          "voice_table": 2149159296
+        },
+        {
+          "command_table": 2149174712,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149174664,
+          "voice_table": 2149174988
+        },
+        {
+          "command_table": 2149177340,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149177292,
+          "voice_table": 2149177588
+        },
+        {
+          "command_table": 2149164800,
+          "group_count": 13,
+          "id": "section-18",
+          "text_table": 2149164696,
+          "voice_table": 2149165356
+        },
+        {
+          "command_table": 2149181448,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149181400,
+          "voice_table": 2149181752
+        },
+        {
+          "command_table": 2149174084,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149174052,
+          "voice_table": 2149174240
+        },
+        {
+          "command_table": 2149162616,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162460,
+          "voice_table": 2149163864
+        },
+        {
+          "command_table": 2149168076,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149167964,
+          "voice_table": 2149168916
+        },
+        {
+          "command_table": 2149171248,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149171208,
+          "voice_table": 2149171548
+        },
+        {
+          "command_table": 2149172484,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149172440,
+          "voice_table": 2149172868
+        },
+        {
+          "command_table": 2149176740,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149176708,
+          "voice_table": 2149176868
+        }
+      ],
+      "sha256": "7586d0ceb898e484a10c5e49f6b5501ec0eae55d5846ac4cd0f32c99839a5b52"
+    },
+    {
+      "id": "date-ka",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_KA.BIN",
+      "sections": [
+        {
+          "command_table": 2149171404,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149171356,
+          "voice_table": 2149171764
+        },
+        {
+          "command_table": 2149198472,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149198400,
+          "voice_table": 2149199012
+        },
+        {
+          "command_table": 2149186308,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149186236,
+          "voice_table": 2149186764
+        },
+        {
+          "command_table": 2149160340,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160268,
+          "voice_table": 2149160796
+        },
+        {
+          "command_table": 2149179716,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149179668,
+          "voice_table": 2149180020
+        },
+        {
+          "command_table": 2149177408,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149177296,
+          "voice_table": 2149177912
+        },
+        {
+          "command_table": 2149156580,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156428,
+          "voice_table": 2149157496
+        },
+        {
+          "command_table": 2149187496,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149187448,
+          "voice_table": 2149187800
+        },
+        {
+          "command_table": 2149166604,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149166524,
+          "voice_table": 2149167064
+        },
+        {
+          "command_table": 2149158188,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158140,
+          "voice_table": 2149158492
+        },
+        {
+          "command_table": 2149170404,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149170356,
+          "voice_table": 2149170708
+        },
+        {
+          "command_table": 2149194532,
+          "group_count": 57,
+          "id": "section-11",
+          "text_table": 2149194076,
+          "voice_table": 2149197140
+        },
+        {
+          "command_table": 2149181764,
+          "group_count": 14,
+          "id": "section-12",
+          "text_table": 2149181652,
+          "voice_table": 2149182408
+        },
+        {
+          "command_table": 2149184708,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149184612,
+          "voice_table": 2149185316
+        },
+        {
+          "command_table": 2149174512,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149174456,
+          "voice_table": 2149174764
+        },
+        {
+          "command_table": 2149159140,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159092,
+          "voice_table": 2149159388
+        },
+        {
+          "command_table": 2149175908,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149175860,
+          "voice_table": 2149176184
+        },
+        {
+          "command_table": 2149178852,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149178804,
+          "voice_table": 2149179072
+        },
+        {
+          "command_table": 2149164768,
+          "group_count": 15,
+          "id": "section-18",
+          "text_table": 2149164648,
+          "voice_table": 2149165416
+        },
+        {
+          "command_table": 2149183116,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149183068,
+          "voice_table": 2149183420
+        },
+        {
+          "command_table": 2149175080,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149175048,
+          "voice_table": 2149175264
+        },
+        {
+          "command_table": 2149162636,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162492,
+          "voice_table": 2149163716
+        },
+        {
+          "command_table": 2149168656,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149168540,
+          "voice_table": 2149169692
+        },
+        {
+          "command_table": 2149172188,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149172148,
+          "voice_table": 2149172488
+        },
+        {
+          "command_table": 2149173412,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149173368,
+          "voice_table": 2149173796
+        },
+        {
+          "command_table": 2149178120,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149178088,
+          "voice_table": 2149178248
+        }
+      ],
+      "sha256": "f7d3c4a7cf2d1c02c51fc981861bc7f414e1bfd41e9767a9116f9067c263540a"
+    },
+    {
+      "id": "date-ni",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_NI.BIN",
+      "sections": [
+        {
+          "command_table": 2149171348,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149171300,
+          "voice_table": 2149171708
+        },
+        {
+          "command_table": 2149198556,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149198484,
+          "voice_table": 2149199096
+        },
+        {
+          "command_table": 2149187428,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149187356,
+          "voice_table": 2149187884
+        },
+        {
+          "command_table": 2149160480,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160408,
+          "voice_table": 2149160936
+        },
+        {
+          "command_table": 2149179664,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149179616,
+          "voice_table": 2149179968
+        },
+        {
+          "command_table": 2149177296,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149177184,
+          "voice_table": 2149177800
+        },
+        {
+          "command_table": 2149156684,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156532,
+          "voice_table": 2149157600
+        },
+        {
+          "command_table": 2149188540,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149188492,
+          "voice_table": 2149188844
+        },
+        {
+          "command_table": 2149166608,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149166528,
+          "voice_table": 2149167068
+        },
+        {
+          "command_table": 2149158288,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158240,
+          "voice_table": 2149158592
+        },
+        {
+          "command_table": 2149170376,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149170328,
+          "voice_table": 2149170680
+        },
+        {
+          "command_table": 2149194620,
+          "group_count": 55,
+          "id": "section-11",
+          "text_table": 2149194180,
+          "voice_table": 2149197192
+        },
+        {
+          "command_table": 2149181804,
+          "group_count": 16,
+          "id": "section-12",
+          "text_table": 2149181676,
+          "voice_table": 2149182512
+        },
+        {
+          "command_table": 2149185760,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149185664,
+          "voice_table": 2149186368
+        },
+        {
+          "command_table": 2149174480,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149174424,
+          "voice_table": 2149174732
+        },
+        {
+          "command_table": 2149159252,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159204,
+          "voice_table": 2149159500
+        },
+        {
+          "command_table": 2149175816,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149175768,
+          "voice_table": 2149176120
+        },
+        {
+          "command_table": 2149178836,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149178788,
+          "voice_table": 2149179084
+        },
+        {
+          "command_table": 2149164764,
+          "group_count": 15,
+          "id": "section-18",
+          "text_table": 2149164644,
+          "voice_table": 2149165412
+        },
+        {
+          "command_table": 2149183192,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149183144,
+          "voice_table": 2149183496
+        },
+        {
+          "command_table": 2149184080,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149184032,
+          "voice_table": 2149184384
+        },
+        {
+          "command_table": 2149175036,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149175004,
+          "voice_table": 2149175220
+        },
+        {
+          "command_table": 2149162688,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162544,
+          "voice_table": 2149163768
+        },
+        {
+          "command_table": 2149168616,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149168496,
+          "voice_table": 2149169680
+        },
+        {
+          "command_table": 2149172124,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149172084,
+          "voice_table": 2149172424
+        },
+        {
+          "command_table": 2149173392,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149173348,
+          "voice_table": 2149173776
+        },
+        {
+          "command_table": 2149178024,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149177992,
+          "voice_table": 2149178180
+        }
+      ],
+      "sha256": "e34fc63acbbccb109b210a3027dbe65dba1da7331f24419a0271e97e23583097"
+    },
+    {
+      "id": "date-ko",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_KO.BIN",
+      "sections": [
+        {
+          "command_table": 2149171916,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149171868,
+          "voice_table": 2149172276
+        },
+        {
+          "command_table": 2149199732,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149199660,
+          "voice_table": 2149200272
+        },
+        {
+          "command_table": 2149188724,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149188652,
+          "voice_table": 2149189180
+        },
+        {
+          "command_table": 2149160384,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160312,
+          "voice_table": 2149160840
+        },
+        {
+          "command_table": 2149180624,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149180576,
+          "voice_table": 2149180928
+        },
+        {
+          "command_table": 2149177972,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149177860,
+          "voice_table": 2149178532
+        },
+        {
+          "command_table": 2149156592,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156440,
+          "voice_table": 2149157508
+        },
+        {
+          "command_table": 2149189840,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149189792,
+          "voice_table": 2149190144
+        },
+        {
+          "command_table": 2149167260,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149167180,
+          "voice_table": 2149167720
+        },
+        {
+          "command_table": 2149158220,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158172,
+          "voice_table": 2149158524
+        },
+        {
+          "command_table": 2149170940,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149170892,
+          "voice_table": 2149171244
+        },
+        {
+          "command_table": 2149195764,
+          "group_count": 55,
+          "id": "section-11",
+          "text_table": 2149195320,
+          "voice_table": 2149198364
+        },
+        {
+          "command_table": 2149182944,
+          "group_count": 16,
+          "id": "section-12",
+          "text_table": 2149182816,
+          "voice_table": 2149183680
+        },
+        {
+          "command_table": 2149187220,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149187124,
+          "voice_table": 2149187828
+        },
+        {
+          "command_table": 2149175108,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149175052,
+          "voice_table": 2149175388
+        },
+        {
+          "command_table": 2149159172,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159124,
+          "voice_table": 2149159420
+        },
+        {
+          "command_table": 2149176392,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149176344,
+          "voice_table": 2149176668
+        },
+        {
+          "command_table": 2149179652,
+          "group_count": 9,
+          "id": "section-17",
+          "text_table": 2149179580,
+          "voice_table": 2149179996
+        },
+        {
+          "command_table": 2149165416,
+          "group_count": 13,
+          "id": "section-18",
+          "text_table": 2149165312,
+          "voice_table": 2149165972
+        },
+        {
+          "command_table": 2149184372,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149184324,
+          "voice_table": 2149184676
+        },
+        {
+          "command_table": 2149185464,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149185412,
+          "voice_table": 2149185824
+        },
+        {
+          "command_table": 2149175680,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149175648,
+          "voice_table": 2149175864
+        },
+        {
+          "command_table": 2149163108,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162940,
+          "voice_table": 2149164524
+        },
+        {
+          "command_table": 2149169292,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149169180,
+          "voice_table": 2149170300
+        },
+        {
+          "command_table": 2149172724,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149172684,
+          "voice_table": 2149173024
+        },
+        {
+          "command_table": 2149174008,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149173960,
+          "voice_table": 2149174420
+        },
+        {
+          "command_table": 2149178772,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149178740,
+          "voice_table": 2149178900
+        }
+      ],
+      "sha256": "8c37969a2ce464e5467de7941f2a4350b56337bb3f7417a47cedb25a11e7c894"
+    },
+    {
+      "id": "date-ky",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_KY.BIN",
+      "sections": [
+        {
+          "command_table": 2149170628,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149170580,
+          "voice_table": 2149170988
+        },
+        {
+          "command_table": 2149195780,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149195708,
+          "voice_table": 2149196320
+        },
+        {
+          "command_table": 2149185504,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149185432,
+          "voice_table": 2149185960
+        },
+        {
+          "command_table": 2149159756,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149159684,
+          "voice_table": 2149160212
+        },
+        {
+          "command_table": 2149178352,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149178304,
+          "voice_table": 2149178656
+        },
+        {
+          "command_table": 2149176116,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149176004,
+          "voice_table": 2149176620
+        },
+        {
+          "command_table": 2149156220,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156068,
+          "voice_table": 2149157136
+        },
+        {
+          "command_table": 2149186488,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149186440,
+          "voice_table": 2149186792
+        },
+        {
+          "command_table": 2149166076,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149165996,
+          "voice_table": 2149166536
+        },
+        {
+          "command_table": 2149157756,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149157708,
+          "voice_table": 2149158060
+        },
+        {
+          "command_table": 2149169656,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149169608,
+          "voice_table": 2149169960
+        },
+        {
+          "command_table": 2149191988,
+          "group_count": 57,
+          "id": "section-11",
+          "text_table": 2149191532,
+          "voice_table": 2149194596
+        },
+        {
+          "command_table": 2149180348,
+          "group_count": 15,
+          "id": "section-12",
+          "text_table": 2149180228,
+          "voice_table": 2149181052
+        },
+        {
+          "command_table": 2149183968,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149183872,
+          "voice_table": 2149184576
+        },
+        {
+          "command_table": 2149173568,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149173512,
+          "voice_table": 2149173820
+        },
+        {
+          "command_table": 2149158620,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149158572,
+          "voice_table": 2149158868
+        },
+        {
+          "command_table": 2149174780,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149174732,
+          "voice_table": 2149175056
+        },
+        {
+          "command_table": 2149177424,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149177376,
+          "voice_table": 2149177728
+        },
+        {
+          "command_table": 2149164348,
+          "group_count": 15,
+          "id": "section-18",
+          "text_table": 2149164228,
+          "voice_table": 2149164996
+        },
+        {
+          "command_table": 2149181620,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149181572,
+          "voice_table": 2149181924
+        },
+        {
+          "command_table": 2149182508,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149182460,
+          "voice_table": 2149182812
+        },
+        {
+          "command_table": 2149174072,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149174040,
+          "voice_table": 2149174228
+        },
+        {
+          "command_table": 2149162136,
+          "group_count": 20,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149161976,
+          "voice_table": 2149163336
+        },
+        {
+          "command_table": 2149168016,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149167900,
+          "voice_table": 2149169052
+        },
+        {
+          "command_table": 2149171380,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149171340,
+          "voice_table": 2149171680
+        },
+        {
+          "command_table": 2149172532,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149172488,
+          "voice_table": 2149172916
+        },
+        {
+          "command_table": 2149176812,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149176780,
+          "voice_table": 2149176940
+        }
+      ],
+      "sha256": "24f09f4921c7a35ade1aaa9fb3a5f068a748129eefffb5f7c25bbd877259e07d"
+    },
+    {
+      "id": "date-kg",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_KG.BIN",
+      "sections": [
+        {
+          "command_table": 2149173060,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149173000,
+          "voice_table": 2149173504
+        },
+        {
+          "command_table": 2149201188,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149201116,
+          "voice_table": 2149201728
+        },
+        {
+          "command_table": 2149188820,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149188748,
+          "voice_table": 2149189304
+        },
+        {
+          "command_table": 2149160924,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160852,
+          "voice_table": 2149161380
+        },
+        {
+          "command_table": 2149180704,
+          "group_count": 8,
+          "id": "section-04",
+          "text_table": 2149180640,
+          "voice_table": 2149181072
+        },
+        {
+          "command_table": 2149179104,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149178992,
+          "voice_table": 2149179608
+        },
+        {
+          "command_table": 2149156968,
+          "group_count": 23,
+          "id": "section-06",
+          "text_table": 2149156784,
+          "voice_table": 2149158012
+        },
+        {
+          "command_table": 2149190268,
+          "group_count": 9,
+          "id": "section-07",
+          "text_table": 2149190196,
+          "voice_table": 2149190752
+        },
+        {
+          "command_table": 2149167836,
+          "group_count": 13,
+          "id": "section-08",
+          "text_table": 2149167732,
+          "voice_table": 2149168476
+        },
+        {
+          "command_table": 2149158816,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158768,
+          "voice_table": 2149159120
+        },
+        {
+          "command_table": 2149171844,
+          "group_count": 7,
+          "id": "section-10",
+          "text_table": 2149171788,
+          "voice_table": 2149172180
+        },
+        {
+          "command_table": 2149197104,
+          "group_count": 58,
+          "id": "section-11",
+          "text_table": 2149196640,
+          "voice_table": 2149199828
+        },
+        {
+          "command_table": 2149183060,
+          "group_count": 18,
+          "id": "section-12",
+          "text_table": 2149182916,
+          "voice_table": 2149183916
+        },
+        {
+          "command_table": 2149187148,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149187052,
+          "voice_table": 2149187756
+        },
+        {
+          "command_table": 2149176204,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149176148,
+          "voice_table": 2149176456
+        },
+        {
+          "command_table": 2149159724,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159676,
+          "voice_table": 2149159972
+        },
+        {
+          "command_table": 2149177640,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149177592,
+          "voice_table": 2149177916
+        },
+        {
+          "command_table": 2149179996,
+          "group_count": 1,
+          "id": "section-17",
+          "text_table": 2149179988,
+          "voice_table": 2149180028
+        },
+        {
+          "command_table": 2149165696,
+          "group_count": 15,
+          "id": "section-18",
+          "text_table": 2149165576,
+          "voice_table": 2149166372
+        },
+        {
+          "command_table": 2149184640,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149184592,
+          "voice_table": 2149184944
+        },
+        {
+          "command_table": 2149185576,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149185528,
+          "voice_table": 2149185880
+        },
+        {
+          "command_table": 2149176784,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149176752,
+          "voice_table": 2149176968
+        },
+        {
+          "command_table": 2149163388,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149163240,
+          "voice_table": 2149164608
+        },
+        {
+          "command_table": 2149170060,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149169944,
+          "voice_table": 2149171096
+        },
+        {
+          "command_table": 2149173924,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149173884,
+          "voice_table": 2149174224
+        },
+        {
+          "command_table": 2149175148,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149175104,
+          "voice_table": 2149175532
+        },
+        {
+          "command_table": 2149179808,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149179776,
+          "voice_table": 2149179936
+        }
+      ],
+      "sha256": "6ba9533d0c937edb37568646809cf986cfcf8fad3318448a99fc304c7403038e"
+    },
+    {
+      "id": "date-as",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_AS.BIN",
+      "sections": [
+        {
+          "command_table": 2149170268,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149170220,
+          "voice_table": 2149170628
+        },
+        {
+          "command_table": 2149194820,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149194748,
+          "voice_table": 2149195360
+        },
+        {
+          "command_table": 2149184632,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149184560,
+          "voice_table": 2149185088
+        },
+        {
+          "command_table": 2149159908,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149159836,
+          "voice_table": 2149160364
+        },
+        {
+          "command_table": 2149178228,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149178180,
+          "voice_table": 2149178532
+        },
+        {
+          "command_table": 2149176052,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149175940,
+          "voice_table": 2149176556
+        },
+        {
+          "command_table": 2149156320,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156168,
+          "voice_table": 2149157236
+        },
+        {
+          "command_table": 2149185476,
+          "group_count": 5,
+          "id": "section-07",
+          "text_table": 2149185436,
+          "voice_table": 2149185720
+        },
+        {
+          "command_table": 2149165664,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149165584,
+          "voice_table": 2149166124
+        },
+        {
+          "command_table": 2149157856,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149157808,
+          "voice_table": 2149158160
+        },
+        {
+          "command_table": 2149169268,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149169220,
+          "voice_table": 2149169572
+        },
+        {
+          "command_table": 2149190880,
+          "group_count": 55,
+          "id": "section-11",
+          "text_table": 2149190436,
+          "voice_table": 2149193592
+        },
+        {
+          "command_table": 2149179708,
+          "group_count": 11,
+          "id": "section-12",
+          "text_table": 2149179620,
+          "voice_table": 2149180200
+        },
+        {
+          "command_table": 2149183124,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149183028,
+          "voice_table": 2149183732
+        },
+        {
+          "command_table": 2149173344,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149173288,
+          "voice_table": 2149173596
+        },
+        {
+          "command_table": 2149158792,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149158744,
+          "voice_table": 2149159040
+        },
+        {
+          "command_table": 2149174632,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149174584,
+          "voice_table": 2149174936
+        },
+        {
+          "command_table": 2149177436,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149177388,
+          "voice_table": 2149177684
+        },
+        {
+          "command_table": 2149164000,
+          "group_count": 13,
+          "id": "section-18",
+          "text_table": 2149163896,
+          "voice_table": 2149164556
+        },
+        {
+          "command_table": 2149180808,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149180760,
+          "voice_table": 2149181112
+        },
+        {
+          "command_table": 2149181700,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149181652,
+          "voice_table": 2149182004
+        },
+        {
+          "command_table": 2149173892,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149173860,
+          "voice_table": 2149174076
+        },
+        {
+          "command_table": 2149162048,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149161904,
+          "voice_table": 2149163128
+        },
+        {
+          "command_table": 2149167624,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149167512,
+          "voice_table": 2149168660
+        },
+        {
+          "command_table": 2149171012,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149170972,
+          "voice_table": 2149171312
+        },
+        {
+          "command_table": 2149172292,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149172248,
+          "voice_table": 2149172676
+        },
+        {
+          "command_table": 2149176748,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149176716,
+          "voice_table": 2149176876
+        }
+      ],
+      "sha256": "f2d9b1339cf4bd85b0200bf6d73a086d552f7976af2b396546c605d4e0d2afd7"
+    },
+    {
+      "id": "date-mi",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_MI.BIN",
+      "sections": [
+        {
+          "command_table": 2149171660,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149171612,
+          "voice_table": 2149172020
+        },
+        {
+          "command_table": 2149197164,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149197092,
+          "voice_table": 2149197704
+        },
+        {
+          "command_table": 2149186256,
+          "group_count": 9,
+          "id": "section-02",
+          "text_table": 2149186184,
+          "voice_table": 2149186712
+        },
+        {
+          "command_table": 2149160224,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160152,
+          "voice_table": 2149160680
+        },
+        {
+          "command_table": 2149179868,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149179820,
+          "voice_table": 2149180172
+        },
+        {
+          "command_table": 2149177348,
+          "group_count": 14,
+          "id": "section-05",
+          "text_table": 2149177236,
+          "voice_table": 2149177964
+        },
+        {
+          "command_table": 2149156628,
+          "group_count": 19,
+          "id": "section-06",
+          "text_table": 2149156476,
+          "voice_table": 2149157544
+        },
+        {
+          "command_table": 2149187376,
+          "group_count": 6,
+          "id": "section-07",
+          "text_table": 2149187328,
+          "voice_table": 2149187680
+        },
+        {
+          "command_table": 2149167144,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149167064,
+          "voice_table": 2149167604
+        },
+        {
+          "command_table": 2149158176,
+          "group_count": 6,
+          "id": "section-09",
+          "text_table": 2149158128,
+          "voice_table": 2149158480
+        },
+        {
+          "command_table": 2149170700,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149170652,
+          "voice_table": 2149171004
+        },
+        {
+          "command_table": 2149193320,
+          "group_count": 56,
+          "id": "section-11",
+          "text_table": 2149192868,
+          "voice_table": 2149196008
+        },
+        {
+          "command_table": 2149181848,
+          "group_count": 16,
+          "id": "section-12",
+          "text_table": 2149181720,
+          "voice_table": 2149182556
+        },
+        {
+          "command_table": 2149184660,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149184564,
+          "voice_table": 2149185268
+        },
+        {
+          "command_table": 2149174568,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149174512,
+          "voice_table": 2149174848
+        },
+        {
+          "command_table": 2149159116,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159068,
+          "voice_table": 2149159364
+        },
+        {
+          "command_table": 2149175924,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149175876,
+          "voice_table": 2149176200
+        },
+        {
+          "command_table": 2149179008,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149178960,
+          "voice_table": 2149179256
+        },
+        {
+          "command_table": 2149165316,
+          "group_count": 16,
+          "id": "section-18",
+          "text_table": 2149165188,
+          "voice_table": 2149165996
+        },
+        {
+          "command_table": 2149183216,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149183168,
+          "voice_table": 2149183520
+        },
+        {
+          "command_table": 2149175156,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149175124,
+          "voice_table": 2149175340
+        },
+        {
+          "command_table": 2149162740,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162560,
+          "voice_table": 2149164408
+        },
+        {
+          "command_table": 2149169052,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149168936,
+          "voice_table": 2149170088
+        },
+        {
+          "command_table": 2149172420,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149172380,
+          "voice_table": 2149172720
+        },
+        {
+          "command_table": 2149173544,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149173500,
+          "voice_table": 2149173928
+        },
+        {
+          "command_table": 2149178216,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149178184,
+          "voice_table": 2149178400
+        }
+      ],
+      "sha256": "8974457edf3c29436b950aeb38d34708cfb0580184d5d7db719dc281b834040d"
+    },
+    {
+      "id": "date-sa",
+      "load_address": 2149154816,
+      "path": "CDROM/SERIFU/DATE_SA.BIN",
+      "sections": [
+        {
+          "command_table": 2149170668,
+          "group_count": 6,
+          "id": "section-00",
+          "text_table": 2149170620,
+          "voice_table": 2149171028
+        },
+        {
+          "command_table": 2149198796,
+          "group_count": 9,
+          "id": "section-01",
+          "text_table": 2149198724,
+          "voice_table": 2149199336
+        },
+        {
+          "command_table": 2149186688,
+          "group_count": 10,
+          "id": "section-02",
+          "text_table": 2149186608,
+          "voice_table": 2149187176
+        },
+        {
+          "command_table": 2149160464,
+          "group_count": 9,
+          "id": "section-03",
+          "text_table": 2149160392,
+          "voice_table": 2149160920
+        },
+        {
+          "command_table": 2149179052,
+          "group_count": 6,
+          "id": "section-04",
+          "text_table": 2149179004,
+          "voice_table": 2149179356
+        },
+        {
+          "command_table": 2149176564,
+          "group_count": 16,
+          "id": "section-05",
+          "text_table": 2149176436,
+          "voice_table": 2149177188
+        },
+        {
+          "command_table": 2149156652,
+          "group_count": 20,
+          "id": "section-06",
+          "text_table": 2149156492,
+          "voice_table": 2149157600
+        },
+        {
+          "command_table": 2149187892,
+          "group_count": 7,
+          "id": "section-07",
+          "text_table": 2149187836,
+          "voice_table": 2149188256
+        },
+        {
+          "command_table": 2149166084,
+          "group_count": 10,
+          "id": "section-08",
+          "text_table": 2149166004,
+          "voice_table": 2149166544
+        },
+        {
+          "command_table": 2149158356,
+          "group_count": 7,
+          "id": "section-09",
+          "text_table": 2149158300,
+          "voice_table": 2149158692
+        },
+        {
+          "command_table": 2149169680,
+          "group_count": 6,
+          "id": "section-10",
+          "text_table": 2149169632,
+          "voice_table": 2149169984
+        },
+        {
+          "command_table": 2149194540,
+          "group_count": 56,
+          "id": "section-11",
+          "text_table": 2149194092,
+          "voice_table": 2149197396
+        },
+        {
+          "command_table": 2149181236,
+          "group_count": 15,
+          "id": "section-12",
+          "text_table": 2149181116,
+          "voice_table": 2149181912
+        },
+        {
+          "command_table": 2149185052,
+          "group_count": 12,
+          "id": "section-13",
+          "text_table": 2149184956,
+          "voice_table": 2149185660
+        },
+        {
+          "command_table": 2149173556,
+          "group_count": 7,
+          "id": "section-14",
+          "text_table": 2149173500,
+          "voice_table": 2149173808
+        },
+        {
+          "command_table": 2149159268,
+          "group_count": 6,
+          "id": "section-15",
+          "text_table": 2149159220,
+          "voice_table": 2149159516
+        },
+        {
+          "command_table": 2149174948,
+          "group_count": 6,
+          "id": "section-16",
+          "text_table": 2149174900,
+          "voice_table": 2149175224
+        },
+        {
+          "command_table": 2149178192,
+          "group_count": 6,
+          "id": "section-17",
+          "text_table": 2149178144,
+          "voice_table": 2149178440
+        },
+        {
+          "command_table": 2149164304,
+          "group_count": 13,
+          "id": "section-18",
+          "text_table": 2149164196,
+          "voice_table": 2149164888
+        },
+        {
+          "command_table": 2149182584,
+          "group_count": 6,
+          "id": "section-19",
+          "text_table": 2149182536,
+          "voice_table": 2149182888
+        },
+        {
+          "command_table": 2149183572,
+          "group_count": 6,
+          "id": "section-20",
+          "text_table": 2149183524,
+          "voice_table": 2149183876
+        },
+        {
+          "command_table": 2149174148,
+          "group_count": 4,
+          "id": "initializer-D_8015BDE4",
+          "text_table": 2149174116,
+          "voice_table": 2149174332
+        },
+        {
+          "command_table": 2149162400,
+          "group_count": 18,
+          "id": "initializer-D_8015BE18",
+          "text_table": 2149162256,
+          "voice_table": 2149163396
+        },
+        {
+          "command_table": 2149168020,
+          "group_count": 14,
+          "id": "initializer-D_8015BE1C",
+          "text_table": 2149167904,
+          "voice_table": 2149169056
+        },
+        {
+          "command_table": 2149171456,
+          "group_count": 5,
+          "id": "initializer-D_8015BE20",
+          "text_table": 2149171416,
+          "voice_table": 2149171756
+        },
+        {
+          "command_table": 2149172548,
+          "group_count": 5,
+          "id": "initializer-D_8015BE24",
+          "text_table": 2149172504,
+          "voice_table": 2149172932
+        },
+        {
+          "command_table": 2149177428,
+          "group_count": 4,
+          "id": "initializer-D_8015BE28",
+          "text_table": 2149177396,
+          "voice_table": 2149177640
+        }
+      ],
+      "sha256": "6f0fe0aa594ea1debaa9545247ebd3b68daea9843ab952e3b74c37084929b7d3"
+    }
+  ],
+  "source_pins": {
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_ayako.s": "a660c2ffe1d0eabfa5bd415f3ff19a3a61ded916c7e18d246e14e1a4efee5be8",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_megumi.s": "0eb28e4e72a4cec5b3dd55964674ff95658c25fd14a5820f7379a375ce0429ea",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_mira.s": "4a83975b7b00cc205aec0bdf587a328f169a8d34391ce7dcd93c5b9da06c82cd",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_nozomi.s": "6995c788f1356ed331762e9555d070fce6a3f4578a7223f772aff6ffc7c751ac",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_saki.s": "9688360703d5ea22aa85e049aba22dd967e7eaa9e55eb95ad0da64b6876bfa7e",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_yukari.s": "a830723970b40495939e7a08ea7400b5818f383d0e468d8d92b64c531feb9696",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_yuko.s": "97ce27199ee5fa298b50e4c734fd326ab13090824ddfbabb2a312f03cd03e9e4",
+    "asm/ovl/DATE/matchings/date/entry/date_fill_sections_yumi.s": "59fd808ceb63058aeedff2d2bb26ff437d394d0ca0a17ca44e39fa34b562e811",
+    "asm/ovl/DATE/matchings/date/place_scenes/date_fill_sections_mio.s": "7ab1708a486502fb87e07e193c81b06ef8c49a9cce0fdcfc5acd558587a4d678",
+    "asm/ovl/DATE/matchings/date/place_scenes/date_fill_sections_shiori.s": "8ed3e1792d4cbfcc1f7712c8fbd5995ad1942ed4b4b2c47f9224a5fb4d3d6348",
+    "asm/ovl/DATE/matchings/date/place_scenes/date_fill_sections_yuina.s": "3f7eb093796a217eb9d5fcc3891cc54cd0aeacddcef3ba1b9c1fd771785dcd00",
+    "config/overlays/DATE.yaml": "9e70b87d189b744ae11e263857068029cd14741f86e837e5f0cfec70f0baa7ea",
+    "config/symbols_DATE.txt": "4a10c2e99c724884e90df6e11589cbe1059eba80ed133ee483e6f3b2d5914fe7",
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game/appointment.h": "fefe3a4c97bbb2812989d326d065d3948cb42119ed37d0e4ecce393154e3ec2a",
+    "include/game/calendar.h": "44e07c9582c54980f4f8fe8c54adc061a0b9dcd68a5fd061014241ceb01974e9",
+    "include/game/club.h": "2bfd606956b1baf60ea2e370ad1f11297fd40e721d2303b46cd7915d2b46552d",
+    "include/game/day_event.h": "efe0cdf794e1bf5f35bd5ff16feeecf3946f4695e98e066c6eca50effdf6c86d",
+    "include/game/display_records.h": "54590f2da1130d31ded81ba2f52509f1781006646c75865b2f6fb832af8bc77b",
+    "include/game/draw_records.h": "77cf6a1567a9877f55fe0238566b08af034c921da8c16f503f2c115f68efdcb2",
+    "include/game/game_state.h": "e58484d902e1c47696a3ae5086fa93626bebc107ab83cb0d8dc91cc0a3e4a6af",
+    "include/game/girl.h": "82c7a558ed145d60e82d57f3a83d331d7fee53a9b89a2edd7c56c284e5c09c58",
+    "include/game/layer.h": "b0a33122c990abad593818fd9520ebd7f43250a4f93042492d9c12d851f97c29",
+    "include/game/menu_records.h": "1849d0f486659abea223b922fe0d4397e5133387af39f98c50d83780ca9f58fa",
+    "include/game/model_records.h": "a8e261ca83f07087bb6b7a2e08e1a709d9cdbcb99ebede573c6a3fa84e92c1c0",
+    "include/game/param.h": "627d01af9cc16b4e3a2819610acf9ee1fd174af5ab768c803facf1a9ec86ba55",
+    "include/game/schedule_records.h": "c895d5dc8902d05039261caa24e3347d02ba5f4b3e1708a4ec855ae6a79311cd",
+    "include/game/system_data.h": "5754c2cbc7969b308dafd57593648ab1f96d7191e80813165b85f77325f7c48c",
+    "include/game/word_views.h": "8a21797a38272607105b2ceef422c337e928f0b0d066aff5c81dfc6ec8bb0498",
+    "include/game_enums.h": "cf35db6941db5bdae992b0228040a77336dce7a2f951d2427b7e7a71cd204987",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libapi.h": "e4c93af4e724109d86a3532e61cdd415c93bdca6d439149a393ebbf5a1a9065e",
+    "include/libgpu.h": "f0197b81d8f9b4889c0abd2dd0070c536f7cdf5da09b74c3d5fbc10090fe5f27",
+    "include/libgs.h": "466b559a2e91a91b60448325222f344d376c13d76227e6223379c3678615d10b",
+    "include/libgte.h": "368db521cf1db72d862d6e9c1d23acdf745ec16dc844c95345993706fe6c1a84",
+    "include/main/actor.h": "4377eb95590cb89931e8a0bfb8b80440bfb312d8bbd1c67e6aceb34519545dba",
+    "include/main/audio.h": "16877729ae9cc510dd3b7c609c71bb1dd97b5dda46e17f8141f318bf6e952c9d",
+    "include/main/bg.h": "bd778800b70dba2bb6b2811b79086fd3c391b2448dc2ecca808698c5100237bd",
+    "include/main/cd.h": "2175ff58a8673adbeb77cb78372f0517fa5913c77e363c277d0ecb766ced2b58",
+    "include/main/date.h": "10742c4761e1cf8c6116eb034701322ab5b05ab1f7632830e53a1c74a9140316",
+    "include/main/day_event.h": "983a52118fe5973fa6b42b356f1033a4cb3df32748c07c9f0938ca4866ac355b",
+    "include/main/draw.h": "b57934cf272e8d85f7b5c43369307702181b026e202d4a04ac56d9904bf93b99",
+    "include/main/event_log.h": "3dd48e44393b7d7a0671aad1a8eaf17b60e4e506befb8ba8a147f345fdcc8fa0",
+    "include/main/game_mode.h": "104f931cec5e4b9133baccca3eeea596d4966e46d24bf719a082a7931d6a8da5",
+    "include/main/girl.h": "e605fa35dd623771ffcbd60070b7edef7a8beb07942ed19a826be7391c77a8fd",
+    "include/main/hud.h": "dd5a7374a8469741052dc7abb8162fe98901eccbdaeb008f1aa97ecd48b84fd3",
+    "include/main/import_views/entry_ui.h": "eac3a572e784c88406acc5b4c40c019df3888aadd6df5c6061baeb09bfa49129",
+    "include/main/import_views/entry_ui_scenes.h": "f6ab201e31749a0a649a40cd51f54123fde6967a6d2bca6d0a309326ab3cfedf",
+    "include/main/import_views/entry_ui_scenes_school_events.h": "1efff14748e011b3c4980a3636735e0d90c3e4e6dd7af2597ba0beb13c454fbb",
+    "include/main/import_views/minigame_scenes_school_events.h": "0eb540cfcd85781805e3f25c11244afc6f657f11416fedf7fd0e0d080a6956c9",
+    "include/main/import_views/scenes.h": "e6e7abb06e10ecefdc007011ef75dc7e386b98344d1b6059542382812241b5ea",
+    "include/main/import_views/scenes_school_events.h": "887df254ca70274155d79a878a6f94a9f9c2e7ae32c7d2cd87f11f3f997452a4",
+    "include/main/layer.h": "2cca7cdd41d2a6ac4f8ce81adb3285241e802ea181906f4d5f086b969493eb06",
+    "include/main/message.h": "71ce494eca28a75312cd49c2ba41fdfb8e1f9df7732063f374c6ecfad1fb9c06",
+    "include/main/name_code.h": "c10233524227a0cb62a681c3cc3724a9c80068c19c9a46c1cfd778835168394b",
+    "include/main/pad.h": "66db19784afce6a71b067e93b7a50f56be2431bb5ad31ebba4fc24ceb7dcb19c",
+    "include/main/param.h": "9f58341a7b7905bfa5ac090cac1035647052704fedaf2b70422df4f1ffb2185e",
+    "include/main/portrait.h": "a47fd133b66b7e6ac079e890c456ca5e0546cc0fff1eff244146d1a5b9731486",
+    "include/main/prim.h": "a5820d7fa0051f4fe561274f5f7bc28f1df6cc87bfd76786a9c69f8a8a3ca732",
+    "include/main/scene.h": "faf86435b5c4ae9aa47d2a59c2e7c412f02e8a93cbdae2b3a04f1a507bf80049",
+    "include/main/sprite.h": "2b82233ad846ad0615e3dc667573984362a5518810b5b54ec973465f98994ffa",
+    "include/main/state.h": "aafe390c388f5b2fd36e8a2f3b491cd516364a01c03f258f940cac77b319fd01",
+    "include/main/talk.h": "ea765428db83f6fda60eb89c7e753180ddfe2893cc9de0391b66b32dc2dadc22",
+    "include/main/text.h": "3f79601270d9515b5714dc928f59196c1c84a7223f86321e4f49f23cc0ee5eb7",
+    "include/main/tpage.h": "277579106126d3d1e8b722dec269e7a7f9c8d47956ceac121253a5d54d74d4d0",
+    "include/main/view.h": "910777739861b865eea1f03d5a232ba14717dc07904aede3770a48e89d8d3198",
+    "include/main/vram.h": "cbed858bdfd1e38a6711c3a798bdc773be6dc849863a597d9ffa062fd669f2f3",
+    "include/ovl/date.h": "f803d8d3a6fce96573a5a4d8b4e4edea8fb8cb80fabe57c0eded344403371080",
+    "src/ovl/date/entry.c": "1802c5478ff2863017e5fb1365e3a8744c67f5ad2d3c62f01b01077faa05e5ce",
+    "src/ovl/date/place_scenes.c": "80813d58b7f2662ca3c307a308469dd0f99aeb9f0ce152d2af6a201caebc93d8"
+  }
+}

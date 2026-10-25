@@ -603,3 +603,9 @@ rows carry these blockers regardless of incoming readiness claims; no original
 capacity is treated as a translation limit.
 
 Root installed replay passes all 295 text tests in both normal and optimized Python, verifies all 55,403 JSONL/TSV fields, and reproduces the entire original byte inventory. The actual coherent asset suite passes 550 tests without skips. Catalog SHA256 `aed079932b74759434c1438053f328576cd8c4eef9d66b15a19f686fce057acb`; JSONL `a2c06f02625792bd2e0807048c748bccdf60ad60662cf0eb0fc466622ae72560`; TSV `1f17b6f42b2e3062338f02112267edb97bed3baee058226a295337fc6ae982e8`. The current cache is `.asset-cache/text/current-speaktst/`; exports remain ignored. Full coverage, runtime use and ownership are not inferred from layout/serialization success.
+
+## Additive DATE context for the existing translation queue
+
+The independently reviewed `tools/assets/text_date_context.py` now generates a separate lookup at `.asset-cache/text/date-context-current/`. Its 293 section records and 5,237 existing stable unit IDs are tied to 3,527 original initializer instructions, source pins and fresh script parses. Character/place hints describe native initializer/table associations; they do not prove current speakers, loader selection or runtime execution. Root's installed fourteen-test suite and actual original-input replay pass. The trusted v3 units digest remains `a2c06f02625792bd2e0807048c748bccdf60ad60662cf0eb0fc466622ae72560`.
+
+Gemini owns the translation pipeline and editable translations, including image wording/layout suggestions. This lookup is optional reference material: do not add its columns to protected batch fields or overwrite the editable translation directory. No text, IDs, targets, readiness or return contracts change. Full semantic coverage remains open.

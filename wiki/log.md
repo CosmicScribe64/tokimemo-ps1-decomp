@@ -2120,3 +2120,7 @@ The user confirmed Gemini's translation pipeline also covers image text and same
 ## [2026-10-25] build | Verify canonical development app and visual viewer
 
 The six-file [[tickets/T-29008-assemble-playable-development-app]] focus-v2 integration passes 26 focus checks, ten original-state/effect comparisons and render schedules 0/1/3. Actual rendered command 0 reaches the declared first result; native HUD, New Game, audio and week presentation remain open. Both independent reviews accept the ten-file [[tickets/T-29007-visual-port-progress-viewer]] implementation and root reran its twelve Docker tests. Explicit publication of canonical captures deduplicated all four existing images. Existing workers resumed ordinary-week presentation and native HUD work; dialogue has parallel independent reviews. Rough first-slice/full-port estimates remain 60%/5%, not measured coverage.
+
+## [2026-10-25] build | Integrate reviewed DATE context without changing translation
+
+Applied the three exact reviewed files for [[tickets/T-28007-complete-text-and-translator-handoff]]. Fourteen installed tests and actual original-input replay pass: 3,527 native instructions, 293 sections and 5,237 existing unit IDs. [[assets-text]] records the optional context lookup and its runtime limits. Gemini's pipeline and editable translations remain untouched. Port work continues in parallel on actual week presentation, native HUD, strict command-7 content and real-session save/reload; dialogue finite findings are assigned for repair.
