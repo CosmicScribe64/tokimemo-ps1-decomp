@@ -39,3 +39,9 @@ Suggested bounded owner: gpt-6-luna for save/schema/service tests, escalating na
 2026-10-25: created from the independently reviewed Astra Phase 3 plan. No implementation or runtime validation is claimed by this ticket.
 
 2026-10-25: user explicitly requested additional parallel port work. Start bounded save container/validation and audio lifecycle code against frozen session contracts while gameplay/presentation/content workers continue. Full acceptance retains the applicable runtime/content/continuation gates; no native-card import or guessed BGM mapping. Existing external worker prepares an ignored packet; root alone integrates.
+
+## Reviewed rest-command/save integration (2026-10-25)
+
+Root applied the exact five-file command7 app packet and two-file save-v4 correction after independent Standards and original Spec re-verification. Actual canonical execution passes 111 route checks, 26 focus checks, 15 native week checkpoints, 28 rest save checks, 50 existing study save checks, 37 codec checks and five shared suites. Fresh Mesa rest playback reaches iteration 163; its full trace, final state, RNG and stop boundary equal the reviewed original-backed route. Both save findings are resolved: rest draw identities restore correctly and authenticated command capabilities survive restore. Evidence: `.claude/orchestrator/state/T-29008/command7-save-live/acceptance.json`; final review `.claude/orchestrator/state/T-29006/v4/final-spec-resolution.json`.
+
+This remains a captured-boundary development app: study supports the bounded ordinary week, rest stops at its first result. New Game linkage, full rest-week progression, native HUD/audio and held save UI shortcuts remain separate open work. No game C/header/build changes or translation changes.

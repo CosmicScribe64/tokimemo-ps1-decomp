@@ -25,6 +25,12 @@ var media: MediaStore
 var actor_service: ActorService = ActorService.new()
 var resources: Dictionary = {}
 var background: Array[Dictionary] = []
+var command_resources: Dictionary = {}
+var command_backgrounds: Dictionary = {}
+const MEDIA_ROUTES: Dictionary = {
+	0: {"background_lba": 16131, "sd_set_id": 3, "sd_lba": 42541},
+	7: {"background_lba": 16283, "sd_set_id": 16, "sd_lba": 43074},
+}
 var staged_commands: Array[Dictionary] = []
 var staged_services: Array[Dictionary] = []
 var pending_services: Array[Dictionary] = []
@@ -50,7 +56,12 @@ var supported_stop: Dictionary = {}
 const HOLIDAY_STOP: String = "ordinary-week next branch requires native type0x10 at index9 (95-04-09)"
 
 func _capture_prefix() -> String:
+	if smoke_command == 7 or (state != null and state.rule_state.get("last_command") == 7):
+		return "T-29008-rest"
 	return "T-29009-week" if continue_week else "T-29008-playable"
+
+func _week_continuation_enabled() -> bool:
+	return continue_week and state.rule_state.get("last_command") != 7
 
 # Desktop adaptation: future playback providers must pause/resume their cursors
 # with this signal. There is no active audio player in this muted development app.
@@ -109,7 +120,7 @@ func _ready() -> void:
 	status_label = _label(Vector2(16, 12), 20)
 	detail_label = _label(Vector2(16, 334), 15)
 	var heading: Label = _label(Vector2(16, 44), 12)
-	heading.text = "Captured-boundary development build · original imagery · HUD unavailable · muted\nArrows / D-pad: selection · Enter / A: confirm · R: replay\nCommand 0 supported · command 7 background unavailable"
+	heading.text = "Captured-boundary development build · original imagery · HUD unavailable · muted\nArrows / D-pad: selection · Enter / A: confirm · R: replay\nCommand 0: ordinary week · command 7: first result with validated v2 media"
 	failure = _load_inputs()
 	if not failure.is_empty():
 		_stop(failure)
@@ -166,22 +177,36 @@ func _load_inputs() -> String:
 	media = MediaStore.new()
 	if not media.open_pack(media_path):
 		return "mandatory media preflight: " + media.error_message()
-	var bg: Dictionary = media.get_background()
-	background = Canvas.background_commands(bg["image_data"], bg["id"])
-	if background.is_empty():
-		return "required command-0 active background geometry unavailable"
-	var steps: Array = _integers(media.get_sequence("command_0_sd", 0))
-	var frames: Dictionary = {}
-	for step: Dictionary in steps:
-		var frame: Dictionary = media.get_frame("command_0_sd", step["frame_index"])
-		if frame.is_empty():
-			return "required command-0 frame is missing"
-		var bounds: Array = frame["bounds"]
-		var origin: Array = frame["origin"]
-		frames[str(step["frame_index"])] = {"id": frame["id"], "image": frame["image"],
-			"bounds": Rect2i(int(bounds[0]), int(bounds[1]), int(bounds[2]), int(bounds[3])),
-			"origin": Vector2i(int(origin[0]), int(origin[1]))}
-	resources = {"sequences": {"0": steps}, "frames": frames}
+	var prepared_resources: Dictionary = {}
+	var prepared_backgrounds: Dictionary = {}
+	for command: int in [0, 7]:
+		var bg: Dictionary = media.get_background("command_%d_background" % command)
+		if command == 7 and bg.is_empty():
+			continue # A validated v1 pack supports only command0.
+		var commands: Array[Dictionary] = Canvas.background_commands(bg["image_data"], bg["id"])
+		if commands.is_empty():
+			return "required command-%d active background geometry unavailable" % command
+		var key: String = "command_%d_sd" % command
+		var steps: Array = _integers(media.get_sequence(key, 0))
+		if steps.is_empty():
+			return "required command-%d sequence is missing" % command
+		var frames: Dictionary = {}
+		for step: Dictionary in steps:
+			var frame: Dictionary = media.get_frame(key, step["frame_index"])
+			if frame.is_empty():
+				return "required command-%d frame is missing" % command
+			var bounds: Array = frame["bounds"]
+			var origin: Array = frame["origin"]
+			frames[str(step["frame_index"])] = {"id": frame["id"], "image": frame["image"],
+				"bounds": Rect2i(int(bounds[0]), int(bounds[1]), int(bounds[2]), int(bounds[3])),
+				"origin": Vector2i(int(origin[0]), int(origin[1]))}
+		prepared_resources[command] = {"sequences": {"0": steps}, "frames": frames}
+		prepared_backgrounds[command] = commands
+	command_resources = prepared_resources
+	command_backgrounds = prepared_backgrounds
+	controller.command_capabilities.assign(command_resources.keys())
+	resources = command_resources[0]
+	background = command_backgrounds[0]
 	return ""
 
 func _verified_external(path: String, digest: String) -> bool:
@@ -199,6 +224,8 @@ func _reset() -> String:
 	state.rule_state = boundary["rule_state"].duplicate(true)
 	if [state.game_mode, state.mode_stage, state.mode_step] != [0x34, 1, 0] or [state.rule_state.get("year"), state.rule_state.get("month"), state.rule_state.get("day")] != [95, 4, 4]:
 		return "only the genuine initial April4 command boundary is supported"
+	# Content capabilities are immutable controller configuration; preserving the
+	# legacy record also preserves all existing command0 state/event hashes.
 	state.rule_state["resources"]["available_commands"] = [0]
 	session = Session.new()
 	if not session.rng.configure(Rng.OPENBIOS_PROFILE, boundary["rng_state"]):
@@ -275,7 +302,7 @@ func _physics_process(_delta: float) -> void:
 	var before_hash: String = session.state_hash()
 	var result: Session.FrameResult = session.step(pad.sample(tick), events)
 	if not result.committed:
-		if continue_week and result.error == HOLIDAY_STOP and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 8 and [state.rule_state["year"], state.rule_state["month"], state.rule_state["day"]] == [95, 4, 8] and session.state_hash() == before_hash:
+		if _week_continuation_enabled() and result.error == HOLIDAY_STOP and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 8 and [state.rule_state["year"], state.rule_state["month"], state.rule_state["day"]] == [95, 4, 8] and session.state_hash() == before_hash:
 			supported_stop = {"error": result.error, "before_hash": before_hash,
 				"after_hash": session.state_hash(), "committed": false, "target": [95, 4, 9, 0x10, 9]}
 			stopped = true
@@ -311,7 +338,7 @@ func _physics_process(_delta: float) -> void:
 	if not captured_effect and state.rule_state["params"] != initial_params:
 		captured_effect = true
 		_capture("effect")
-	if not continue_week and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 1:
+	if not _week_continuation_enabled() and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 1:
 		stopped = true
 		status_label.text = "First result · paused at 0x31 / index 1 · R to replay"
 		_finish()
@@ -319,7 +346,7 @@ func _physics_process(_delta: float) -> void:
 		_stop("scripted input smoke exceeded its bounded supported route")
 
 func _record_checkpoint(result: Session.FrameResult) -> void:
-	if not continue_week:
+	if not _week_continuation_enabled():
 		return
 	var phase: String = ""
 	if state.game_mode == 0x40 and state.mode_stage == 0 and state.mode_step == 0 and state.substep == 0:
@@ -360,54 +387,99 @@ func _process(_delta: float) -> void:
 
 func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> void:
 	var current: State = base as State
+	var data: Dictionary = current.rule_state
+	var prepared_commands: Array[Dictionary] = []
+	var prepared_services: Array[Dictionary] = []
+	var prepared_hud: bool = false
 	for intent: Dictionary in result.presentation:
 		if intent.get("kind") == "school_day_load":
-			if intent["command"] != 0 or intent["sd_set_id"] != 3 or intent["background_lba"] != 16131 or intent["sd_lba"] != 42541:
-				result.error = "resource request differs from validated command0 media profile"
+			result.error = _resource_request_error(current, intent)
+			if not result.error.is_empty():
 				return
-			staged_services.append({"service": "school_day.resources", "payload": {
+			prepared_services.append({"service": "school_day.resources", "payload": {
 				"request": intent["request"], "ready": true,
 				"lba": intent["background_lba"] if intent["request"] == "background" else intent["sd_lba"],
 				"decode_result": 1, "checksum_ok": true}})
 		elif intent.get("kind") == "school_day_actors":
-			var initialized: Dictionary = actor_service.initialize(intent["actors"], resources)
+			var command: int = _activity_command(current)
+			if not command_resources.has(command) or intent.get("sd_set_id") != MEDIA_ROUTES[command]["sd_set_id"] or data["scene_work"] != intent["sd_set_id"]:
+				result.error = "actor request differs from validated command media profile"
+				return
+			if command == 7 and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96 or intent["actors"][0].get("sequence_slot") != 0):
+				result.error = "rest supports only the captured actor96 sequence0"
+				return
+			var initialized: Dictionary = actor_service.initialize(intent["actors"], command_resources[command])
 			if not initialized["error"].is_empty():
 				result.error = initialized["error"]
 				return
 			current.rule_state["actor_state"] = initialized["actor_state"]
 		elif intent.get("kind") == "school_day_cached_background":
 			var slot: int = intent.get("slot", -1)
-			if slot not in [0, 1] or intent.get("lba") != controller.tables["weekday_background_lbas"][0] or current.rule_state["background_show"] != slot or current.rule_state["background_cache"][slot] != intent["lba"]:
-				result.error = "cached background differs from validated command0 slot/LBA"
+			var command: int = _activity_command(current)
+			if not command_backgrounds.has(command) or slot not in [0, 1] or intent.get("lba") != MEDIA_ROUTES[command]["background_lba"] or data["background_show"] != slot or data["background_cache"][slot] != intent["lba"]:
+				result.error = "cached background differs from validated command slot/LBA"
 				return
-			# The original two GPU slots select the same validated immutable image.
-			# Its existing texture is reused; no fabricated CD completion is queued.
 		elif intent.get("kind") == "week_end_hud_init":
 			if current.game_mode != 0x32 or current.rule_state["day_events"][current.rule_state["day_event_index"]][0] != 0xfc:
 				result.error = "week-end HUD refresh arrived outside its source queue record"
 				return
 			# Rules already took the source parameter snapshot. Refresh only the
 			# existing development labels after commit; original HUD remains absent.
-			staged_hud_refresh = true
+			prepared_hud = true
+	# Select only the source GPU slot made active by a committed resource
+	# completion/cache hit. Command frame indices overlap, so resources and
+	# immutable texture IDs stay separate throughout preparation and drawing.
+	if current.game_mode in [0x40, 0x31, 0x32]:
+		var shown_lba: int = data["background_cache"][data["background_show"]]
+		for command: int in command_backgrounds:
+			if shown_lba == MEDIA_ROUTES[command]["background_lba"]:
+				prepared_commands.append_array(command_backgrounds[command])
+	if not data["actor_state"].is_empty():
+		var command: int = _activity_command(current)
+		if not command_resources.has(command):
+			result.error = "active actor has no validated command resource set"
+			return
+		var drawn: Dictionary = actor_service.native_draw(data["actor_state"], command_resources[command],
+			session.clock.logic_iterations, Vector2i(160, 120))
+		if not drawn["error"].is_empty():
+			result.error = drawn["error"]
+			return
+		data["actor_state"] = drawn["actor_state"]
+		prepared_commands.append_array(drawn["draw_commands"])
+		prepared_services.append_array(drawn["services"])
+		for draw: Dictionary in drawn["draw_commands"]:
+			result.presentation.append({"kind": "native_actor_draw", "id": draw["id"],
+				"x": draw["position"].x, "y": draw["position"].y})
+	# GameSession rolls rule/actor state back on failure. Publish service/render
+	# staging only after this entire adapter succeeds; canvas.present is postcommit.
+	staged_commands.append_array(prepared_commands)
+	staged_services.append_array(prepared_services)
+	staged_hud_refresh = prepared_hud
+
+func _activity_command(current: State) -> int:
+	if current.game_mode != 0x40:
+		return -1
 	var data: Dictionary = current.rule_state
-	var retained_school_background: bool = current.game_mode in [0x31, 0x32] and data["background_cache"][data["background_show"]] == controller.tables["weekday_background_lbas"][0]
-	# scheduler day/week-end handlers draw the last screen mode; in this bounded
-	# route the preceding school-day dec_bg_draw(0) established that image.
-	if current.game_mode == 0x40 or retained_school_background:
-		staged_commands.append_array(background)
-	if current.rule_state["actor_state"].is_empty():
-		return
-	var drawn: Dictionary = actor_service.native_draw(current.rule_state["actor_state"], resources,
-		session.clock.logic_iterations, Vector2i(160, 120))
-	if not drawn["error"].is_empty():
-		result.error = drawn["error"]
-		return
-	current.rule_state["actor_state"] = drawn["actor_state"]
-	staged_commands.append_array(drawn["draw_commands"])
-	staged_services.append_array(drawn["services"])
-	for command: Dictionary in drawn["draw_commands"]:
-		result.presentation.append({"kind": "native_actor_draw", "id": command["id"],
-			"x": command["position"].x, "y": command["position"].y})
+	var event: Array = data["day_events"][data["day_event_index"]]
+	if event[0] != 0 or event[1] not in [0, 7]:
+		return -1
+	if event[1] == 7 and (event != [0, 7, 0, 15] or data["day_event_index"] != 0 or [data["year"], data["month"], data["day"]] != [95, 4, 5]):
+		return -1
+	return event[1]
+
+func _resource_request_error(current: State, intent: Dictionary) -> String:
+	var command: int = _activity_command(current)
+	if not command_resources.has(command) or not command_backgrounds.has(command):
+		return "resource request has no preflighted command media profile"
+	var expected: Dictionary = MEDIA_ROUTES[command]
+	if intent.size() != 8 or intent.get("request") not in ["background", "sd"] or intent.get("command") != command or intent.get("day_event_index") != current.rule_state["day_event_index"] or intent.get("sectors") != 41:
+		return "resource request identity differs from validated command media profile"
+	for key: String in ["background_lba", "sd_set_id", "sd_lba"]:
+		if intent.get(key) != expected[key]:
+			return "resource request differs from validated command media field: " + key
+	if current.mode_stage != 0 or current.substep != 1 or current.mode_step != (0 if intent["request"] == "background" else 1):
+		return "resource request arrived outside its native setup phase"
+	return ""
 
 func _bounded_cd(_state: CoreState, _rng: Rng, _result: Session.FrameResult) -> void:
 	# Validated immutable resources were read before the first simulation step.
@@ -429,15 +501,15 @@ func _finish() -> void:
 		if file == null:
 			_stop("cannot write development proof")
 			return
-		file.store_string(JSON.stringify({"schema": "tokimemo.ordinary-week-development-proof.v1" if continue_week else "tokimemo.playable-development-proof.v1",
-			"scope": "command0 bounded composed development app; no native loading/CD/interrupt timing or complete HUD/audio parity claim",
+		file.store_string(JSON.stringify({"schema": "tokimemo.ordinary-week-development-proof.v1" if _week_continuation_enabled() else "tokimemo.playable-development-proof.v1",
+			"scope": "command%d bounded composed development app; no native loading/CD/interrupt timing or complete HUD/audio parity claim" % state.rule_state["last_command"],
 			"resource_policy": "validated preloaded cache; completion next BEFORE_MODE",
 			"boundary_sha256": OS.get_environment("TOKIMEMO_BOUNDARY_SHA"),
 			"tables_sha256": OS.get_environment("TOKIMEMO_TABLES_SHA"),
 			"final_state": state.projection(), "rng": session.rng.checkpoint(), "trace": trace,
 			"checkpoints": checkpoints, "supported_stop": supported_stop}, "\t"))
 		file.close()
-	print("PASS: scripted playable command0 reached its declared supported boundary with session-owned actor sequences")
+	print("PASS: scripted playable command%d reached its declared supported boundary with session-owned actor sequences" % state.rule_state["last_command"])
 	if smoke:
 		get_tree().quit(0)
 

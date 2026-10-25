@@ -6,7 +6,8 @@ const InputFrame = preload("res://core/input_frame.gd")
 const State = preload("res://rules/school_day_state.gd")
 const Session = preload("res://core/game_session.gd")
 
-static func step(state: State, input: InputFrame, result: Session.FrameResult) -> void:
+static func step(state: State, input: InputFrame, result: Session.FrameResult,
+	validated_capabilities: Array[int] = []) -> void:
 	var data: Dictionary = state.rule_state
 	if state.mode_stage != 1 or state.mode_step != 0:
 		result.error = "command screen requires captured native stage1/step0"
@@ -44,7 +45,10 @@ static func step(state: State, input: InputFrame, result: Session.FrameResult) -
 	if selected not in [0, 7]:
 		result.error = "selected native command is not implemented: %d" % selected
 		return
-	if not data["resources"].get("available_commands", []).has(selected):
+	# Launch-time media capabilities come from the strict external pack loader.
+	# Legacy rule-only callers retain their explicit fixture capability record.
+	var capabilities: Array = data["resources"].get("available_commands", []) if validated_capabilities.is_empty() else validated_capabilities
+	if not capabilities.has(selected):
 		result.error = "required route content capability is unavailable for selected command"
 		return
 	# A visually disabled icon may still be selected: menu_disabled and

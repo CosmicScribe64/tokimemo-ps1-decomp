@@ -31,6 +31,9 @@ func capture(app: Node, checkpoint_id: String) -> Dictionary:
 		return _fail("save requires a focused, idle application boundary")
 	if session.rng.get("_failure_receiver").is_valid():
 		return _fail("save cannot run inside a session step")
+	var media: Dictionary = _trusted_media(app)
+	if not media["error"].is_empty():
+		return media
 	var host: Dictionary = {}
 	for key: String in HOST_FIELDS:
 		host[key] = app.get(key)
@@ -42,7 +45,7 @@ func capture(app: Node, checkpoint_id: String) -> Dictionary:
 		"content_version": versions.get("content_version"), "behavior_version": versions.get("behavior_version"),
 		"gameplay_state": {"schema": SCHEMA, "checkpoint_id": checkpoint_id,
 			"state": session.state.projection(), "input_latch": session.latched_input.snapshot(),
-			"session_hash": session.state_hash(), "controller_identity": _identity(app),
+			"session_hash": session.state_hash(), "controller_identity": _identity(app, media),
 			"host": host.duplicate(true), "pad": {"devices": pad.get("_devices").duplicate(true),
 				"previous": pad.get("_previous")}, "draw": draw,
 			"staged_services": app.get("staged_services").duplicate(true)},
@@ -127,7 +130,10 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 	var data: Variant = snapshot["gameplay_state"]
 	if not data is Dictionary or not _keys(data, ["schema", "checkpoint_id", "state", "input_latch", "session_hash", "controller_identity", "host", "pad", "draw", "staged_services"]) or data["schema"] != SCHEMA:
 		return _fail("playable save schema differs")
-	if not data["controller_identity"] is String or data["controller_identity"] != _identity(app):
+	var media: Dictionary = _trusted_media(app)
+	if not media["error"].is_empty():
+		return media
+	if not data["controller_identity"] is String or data["controller_identity"] != _identity(app, media):
 		return _fail("preloaded controller/content identity differs")
 	var state: State = State.new()
 	if not data["state"] is Dictionary or not _same_keys(data["state"], state.projection()):
@@ -197,6 +203,13 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 		if not key is String or not pad["devices"][key] is int or pad["devices"][key] < 0 or pad["devices"][key] > 65535:
 			return _fail("device record differs")
 	var controller: Controller = Controller.new(app.get("controller").tables)
+	# Launch capabilities come only from the live app's preflighted media maps.
+	# Saved rule resources and extra save fields cannot grant a new command.
+	if not controller.get("command_capabilities") is Array:
+		return _fail("restored controller lacks authenticated command capabilities")
+	var capabilities: Array[int] = []
+	capabilities.assign(media["capabilities"])
+	controller.set("command_capabilities", capabilities)
 	error = controller.attach(session, state)
 	if not error.is_empty():
 		return _fail(error)
@@ -209,10 +222,16 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 	session.audio_logic = old_session.audio_logic
 	if not data["session_hash"] is String or session.state_hash() != data["session_hash"]:
 		return _fail("restored complete session hash differs")
-	error = _actor_error(state.rule_state["actor_state"], app.get("resources"), clocks["logic"])
+	var actor_resources: Dictionary = {}
+	if not state.rule_state["actor_state"].is_empty():
+		var command: int = state.rule_state["day_events"][state.rule_state["day_event_index"]][1]
+		if state.game_mode != 0x40 or not media["resources"].has(command):
+			return _fail("saved actor has no active validated command resource set")
+		actor_resources = media["resources"][command]
+	error = _actor_error(state.rule_state["actor_state"], actor_resources, clocks["logic"])
 	if not error.is_empty():
 		return _fail(error)
-	var draw: Dictionary = _draw_commands(app, data["draw"])
+	var draw: Dictionary = _draw_commands(media, data["draw"])
 	if not draw["error"].is_empty():
 		return draw
 	return {"error": "", "session": session, "controller": controller, "draw": draw["commands"]}
@@ -271,14 +290,20 @@ func _actor_error(actors: Dictionary, resources: Dictionary, logic: int) -> Stri
 			return "actor sequence draw is ahead of simulation"
 	return ""
 
-func _draw_commands(app: Node, descriptors: Variant) -> Dictionary:
+func _draw_commands(media: Dictionary, descriptors: Variant) -> Dictionary:
 	if not descriptors is Array:
 		return _fail("render ID descriptors differ")
 	var images: Dictionary = {}
-	for command: Dictionary in app.get("background"):
-		images[command["id"]] = command["image"]
-	for frame: Dictionary in app.get("resources")["frames"].values():
-		images[frame["id"]] = frame["image"]
+	for command: int in media["backgrounds"]:
+		for background: Dictionary in media["backgrounds"][command]:
+			var error: String = _register_image(images, background["id"], background["image"])
+			if not error.is_empty():
+				return _fail(error)
+	for command: int in media["resources"]:
+		for frame: Dictionary in media["resources"][command]["frames"].values():
+			var error: String = _register_image(images, frame["id"], frame["image"])
+			if not error.is_empty():
+				return _fail(error)
 	var commands: Array[Dictionary] = []
 	for entry: Variant in descriptors:
 		if not entry is Dictionary or not _keys(entry, ["id", "x", "y"]) or not entry["id"] is String or not images.has(entry["id"]) or not entry["x"] is int or not entry["y"] is int:
@@ -288,21 +313,78 @@ func _draw_commands(app: Node, descriptors: Variant) -> Dictionary:
 		commands.append({"id": entry["id"], "image": images[entry["id"]], "position": Vector2i(entry["x"], entry["y"])})
 	return {"error": "", "commands": commands}
 
-func _identity(app: Node) -> String:
+func _identity(app: Node, media: Dictionary) -> String:
 	var assets: Array = []
-	for command: Dictionary in app.get("background"):
-		assets.append([command["id"], _image_hash(command["image"])])
-	for key: String in app.get("resources")["frames"]:
-		var frame: Dictionary = app.get("resources")["frames"][key]
-		assets.append([key, frame["id"], _image_hash(frame["image"]),
-			[frame["bounds"].position.x, frame["bounds"].position.y, frame["bounds"].size.x, frame["bounds"].size.y],
-			[frame["origin"].x, frame["origin"].y]])
+	var commands: Array = media["resources"].keys()
+	commands.sort()
+	for command: int in commands:
+		var resources: Dictionary = media["resources"][command]
+		var backgrounds: Array = []
+		for background: Dictionary in media["backgrounds"][command]:
+			backgrounds.append([background["id"], _image_hash(background["image"]),
+				[background["position"].x, background["position"].y]])
+		var frames: Array = []
+		for key: String in resources["frames"]:
+			var frame: Dictionary = resources["frames"][key]
+			frames.append([key, frame["id"], _image_hash(frame["image"]),
+				[frame["bounds"].position.x, frame["bounds"].position.y, frame["bounds"].size.x, frame["bounds"].size.y],
+				[frame["origin"].x, frame["origin"].y]])
+		assets.append([command, resources["sequences"], backgrounds, frames])
 	return JSON.stringify([app.get("controller").tables, app.get("boundary"),
-		app.get("resources")["sequences"], assets]).sha256_text()
+		media["capabilities"], assets]).sha256_text()
+
+func _trusted_media(app: Node) -> Dictionary:
+	var resources: Variant = app.get("command_resources")
+	var backgrounds: Variant = app.get("command_backgrounds")
+	var live_caps: Variant = app.get("controller").get("command_capabilities")
+	if not resources is Dictionary or not backgrounds is Dictionary or not live_caps is Array \
+		or resources.is_empty() or not resources.has(0) or resources.size() != backgrounds.size():
+		return _fail("preloaded command media configuration is incomplete")
+	var commands: Array = resources.keys()
+	for command: Variant in commands:
+		if not command is int or command not in [0, 7] or not backgrounds.has(command):
+			return _fail("unsupported preloaded command media key")
+	for capability: Variant in live_caps:
+		if not capability is int:
+			return _fail("launch capability is not an integer command ID")
+	commands.sort()
+	var capabilities: Array = live_caps.duplicate()
+	capabilities.sort()
+	if commands != capabilities:
+		return _fail("launch capabilities differ from validated command media")
+	for command: Variant in commands:
+		if not resources[command] is Dictionary \
+			or not resources[command].get("sequences") is Dictionary or not resources[command].get("frames") is Dictionary \
+			or not backgrounds[command] is Array:
+			return _fail("unsupported preloaded command media record")
+		for key: Variant in resources[command]["frames"]:
+			if not key is String:
+				return _fail("preloaded frame key must be a string index")
+		for frame: Variant in resources[command]["frames"].values():
+			if not frame is Dictionary or not frame.get("id") is String or not frame.get("image") is Image \
+				or not frame.get("bounds") is Rect2i or not frame.get("origin") is Vector2i:
+				return _fail("preloaded command frame is incomplete")
+		for background: Variant in backgrounds[command]:
+			if not background is Dictionary or not background.get("id") is String or not background.get("image") is Image \
+				or not background.get("position") is Vector2i:
+				return _fail("preloaded command background is incomplete")
+	return {"error": "", "resources": resources, "backgrounds": backgrounds, "capabilities": live_caps.duplicate()}
+
+func _register_image(images: Dictionary, ident: String, image: Image) -> String:
+	if ident.is_empty() or image.is_empty():
+		return "validated image identity is empty"
+	if images.has(ident):
+		var previous: Image = images[ident]
+		if previous.get_size() != image.get_size() or previous.get_format() != image.get_format() or _image_hash(previous) != _image_hash(image):
+			return "validated image identity refers to conflicting payloads"
+	images[ident] = image
+	return ""
 
 func _image_hash(image: Image) -> String:
 	var hash: HashingContext = HashingContext.new()
 	hash.start(HashingContext.HASH_SHA256)
+	hash.update(JSON.stringify([image.get_width(), image.get_height(), image.get_format(),
+		image.has_mipmaps()]).to_utf8_buffer())
 	hash.update(image.get_data())
 	return hash.finish().hex_encode()
 

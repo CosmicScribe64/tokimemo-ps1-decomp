@@ -24,6 +24,7 @@ const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": 
 
 var tables: Dictionary = {}
 var error: String = ""
+var command_capabilities: Array[int] = []
 
 func _init(validated_tables: Dictionary) -> void:
 	# The caller first validates external-pack provenance against original input.
@@ -105,7 +106,7 @@ func _command(base: CoreState, input: InputFrame, _rng: Rng, result: Session.Fra
 		result.error = Scheduler.initial_branch_error(state)
 		if not result.error.is_empty():
 			return
-	Command.step(state, input, result)
+	Command.step(state, input, result, command_capabilities)
 
 func _schedule(base: CoreState, _input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
