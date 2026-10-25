@@ -2144,3 +2144,7 @@ Applied six reviewed files for [[tickets/T-29010-native-hud-font-rendering]], in
 ## [2026-10-25] decision | Serialize native proof and preserve port acceptance scope
 
 The HUD worker released its private emulator session; root verified no live tokimemo-emu containers before granting exclusive use to [[tickets/T-29012-native-new-game-initialization]]. New Game's private function-level differential probe is now active, while HUD composition proceeds from recorded native command-selection evidence. Updated [[status]] with accepted font integration and explicitly separate pending week, HUD, media, save and dialogue work. No isolated candidate or passing synthetic suite is counted as full-playable acceptance.
+
+## [2026-10-25] build | Integrate actual ordinary-week application flow
+
+Applied reviewed [[tickets/T-29009-ordinary-week-continuation]] app-v1 after exact before/source/input/proof pins and successful launcher exit verification. Canonical five suites, 26 focus checks, 243-step headless schedules and actual rendered playback pass. All 15 original checkpoints include full progress and three timers; ten first-result checks also pass. The source-proved mirror-tail correction resolves the earlier byte mismatch without dropping comparisons. Captured 250 nested raw frames and published named actual port media; unsupported April 9 remains an unchanged-state stop. No full-week holiday or full-port completion claim.

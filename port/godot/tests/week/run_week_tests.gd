@@ -113,12 +113,13 @@ func _test_profile_snapshot_bounds() -> void:
 	for index: int in range(Ordinary.PROGRESS_STATE_BYTES):
 		state.rule_state["progress_state"][index] = (index * 7 + 13) & 255
 	var prefix: Array = state.rule_state["progress_state"].slice(0, Ordinary.PARAMETER_SNAPSHOT_START)
-	var suffix: Array = state.rule_state["progress_state"].slice(Ordinary.PARAMETER_SNAPSHOT_END)
+	var mirror_source: Array = state.rule_state["progress_state"].slice(0, Ordinary.MIRROR_SOURCE_BYTES)
 	check(Ordinary.snapshot_parameters(state).is_empty(), "profile snapshot accepts invented exact native bounds")
-	check(state.rule_state["progress_state"].slice(0, Ordinary.PARAMETER_SNAPSHOT_START) == prefix and state.rule_state["progress_state"].slice(Ordinary.PARAMETER_SNAPSHOT_END) == suffix, "only proven parameter snapshot bytes change; captured profile prefix/suffix remain untouched")
+	check(state.rule_state["progress_state"].slice(0, Ordinary.PARAMETER_SNAPSHOT_START) == prefix, "captured profile/name prefix remains untouched")
+	check(state.rule_state["progress_state"].slice(Ordinary.MIRROR_SNAPSHOT_START) == mirror_source, "source-proven first32 progress bytes refresh the native mirrored tail")
 	state.rule_state["params"][0] += 17
 	check(Ordinary.snapshot_parameters(state).is_empty(), "parameter-only updates preserve immutable-profile signature")
-	for mutation: String in ["short_progress", "long_progress", "bad_byte", "short_params", "bad_word", "changed_name", "changed_flags"]:
+	for mutation: String in ["short_progress", "long_progress", "bad_byte", "short_params", "bad_word", "changed_name", "changed_flags", "changed_mirror", "changed_mirror_source"]:
 		var damaged: State = State.new()
 		damaged.restore(state.projection())
 		match mutation:
@@ -129,11 +130,21 @@ func _test_profile_snapshot_bounds() -> void:
 			"bad_word": damaged.rule_state["params"][0] = 2147483648
 			"changed_name": damaged.rule_state["progress_state"][Ordinary.PROFILE_SNAPSHOT_START] ^= 1
 			"changed_flags": damaged.rule_state["player_flags"] ^= 1
+			"changed_mirror": damaged.rule_state["progress_state"][Ordinary.MIRROR_SNAPSHOT_START] ^= 1
+			"changed_mirror_source": damaged.rule_state["progress_state"][0] ^= 1
 		var before: Dictionary = damaged.projection()
 		check(not Ordinary.snapshot_parameters(damaged).is_empty() and damaged.projection() == before, "invalid/edited profile rejects before any snapshot write: " + mutation)
 	var restored: State = State.new()
 	restored.restore(state.projection())
 	check(restored.rule_state[Ordinary.PROFILE_HASH_FIELD] == state.rule_state[Ordinary.PROFILE_HASH_FIELD] and restored.to_words() == state.to_words(), "immutable-profile guard lives in projected/restorable/hashed rule state")
+	var session: Session = fixture()
+	var guarded: State = session.state as State
+	check(Ordinary.snapshot_parameters(guarded).is_empty(), "rollback fixture anchors valid source mirror")
+	guarded.rule_state["progress_state"][Ordinary.MIRROR_SNAPSHOT_START] ^= 1
+	guarded.reset_game_mode_fields(0x32)
+	var before_hash: String = session.state_hash()
+	var result: Session.FrameResult = session.step(InputFrame.new(0), [])
+	check(not result.committed and "immutable profile edit" in result.error and session.state_hash() == before_hash, "tampered mirror fails the native snapshot site with full transaction rollback")
 
 func _test_counter_width() -> void:
 	var session: Session = fixture()

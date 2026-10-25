@@ -43,6 +43,14 @@ var initial_params: Array = []
 var video_frame: int = 0
 var video_capture_busy: bool = false
 var smoke_command: int = 0
+var continue_week: bool = true
+var checkpoints: Array[Dictionary] = []
+var staged_hud_refresh: bool = false
+var supported_stop: Dictionary = {}
+const HOLIDAY_STOP: String = "ordinary-week next branch requires native type0x10 at index9 (95-04-09)"
+
+func _capture_prefix() -> String:
+	return "T-29009-week" if continue_week else "T-29008-playable"
 
 # Desktop adaptation: future playback providers must pause/resume their cursors
 # with this signal. There is no active audio player in this muted development app.
@@ -84,6 +92,7 @@ func _ready() -> void:
 	output_root = OS.get_environment("TOKIMEMO_PLAYABLE_OUTPUT")
 	smoke = OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE") == "1"
 	smoke_command = int(OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE_COMMAND"))
+	continue_week = OS.get_environment("TOKIMEMO_PLAYABLE_FIRST_RESULT_ONLY") != "1"
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	var backdrop := ColorRect.new()
 	backdrop.size = Vector2(640, 480)
@@ -203,6 +212,8 @@ func _reset() -> String:
 	pad.clear_devices()
 	pending_services.clear()
 	trace.clear()
+	checkpoints.clear()
+	supported_stop.clear()
 	stopped = false
 	failure = ""
 	captured_actor = false
@@ -260,9 +271,17 @@ func _physics_process(_delta: float) -> void:
 			Session.ServiceKind.COMPLETION, descriptor["service"], descriptor["payload"]))
 	staged_commands.clear()
 	staged_services.clear()
+	staged_hud_refresh = false
 	var before_hash: String = session.state_hash()
 	var result: Session.FrameResult = session.step(pad.sample(tick), events)
 	if not result.committed:
+		if continue_week and result.error == HOLIDAY_STOP and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 8 and [state.rule_state["year"], state.rule_state["month"], state.rule_state["day"]] == [95, 4, 8] and session.state_hash() == before_hash:
+			supported_stop = {"error": result.error, "before_hash": before_hash,
+				"after_hash": session.state_hash(), "committed": false, "target": [95, 4, 9, 0x10, 9]}
+			stopped = true
+			status_label.text = "April 8 complete · April 9 holiday unavailable · R: replay"
+			_finish()
+			return
 		if not output_root.is_empty():
 			var rejected := FileAccess.open(output_root.path_join("T-29008-rejected-step.json"), FileAccess.WRITE)
 			if rejected != null:
@@ -283,18 +302,42 @@ func _physics_process(_delta: float) -> void:
 		"params": state.rule_state["params"].duplicate(), "rng": session.rng.state,
 		"presentation": result.presentation, "audio": result.audio})
 	_update_labels()
+	if staged_hud_refresh:
+		status_label.text += " · week-end health check · original HUD unavailable"
+	_record_checkpoint(result)
 	if not captured_actor and not state.rule_state["actor_state"].is_empty():
 		captured_actor = true
 		_capture("activity")
 	if not captured_effect and state.rule_state["params"] != initial_params:
 		captured_effect = true
 		_capture("effect")
-	if state.game_mode == 0x31 and state.rule_state["day_event_index"] == 1:
+	if not continue_week and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 1:
 		stopped = true
 		status_label.text = "First result · paused at 0x31 / index 1 · R to replay"
 		_finish()
-	elif smoke and tick >= 300:
-		_stop("scripted input smoke did not reach its first result within 301 iterations")
+	elif smoke and tick >= 600:
+		_stop("scripted input smoke exceeded its bounded supported route")
+
+func _record_checkpoint(result: Session.FrameResult) -> void:
+	if not continue_week:
+		return
+	var phase: String = ""
+	if state.game_mode == 0x40 and state.mode_stage == 0 and state.mode_step == 0 and state.substep == 0:
+		phase = "activity_entry"
+	elif state.game_mode == 0x31 and state.rule_state["day_event_index"] in [1, 3, 5, 7]:
+		phase = "activity_return"
+	elif state.game_mode == 0x32:
+		phase = "week_end_stage_%d" % state.mode_stage
+	elif state.game_mode == 0x31 and state.rule_state["day_event_index"] == 8:
+		phase = "week_end_return"
+	for intent: Dictionary in result.presentation:
+		if intent.get("kind") == "school_day_cached_background":
+			phase = "cached_background"
+	if not phase.is_empty():
+		checkpoints.append({"phase": phase, "state": state.projection(), "rng": session.rng.checkpoint(),
+			"clock": session.clock.snapshot(), "trace_count": trace.size()})
+	if state.game_mode == 0x40 and state.mode_stage == 1 and state.mode_step_timer == 0:
+		_capture("activity-%02d" % state.rule_state["day"])
 
 func _process(_delta: float) -> void:
 	if focus_paused or OS.get_environment("TOKIMEMO_PLAYABLE_RECORD") != "1" or output_root.is_empty() or video_capture_busy:
@@ -309,7 +352,7 @@ func _process(_delta: float) -> void:
 		video_capture_busy = false
 		_stop("actual video frame directory creation failed")
 		return
-	var path: String = frame_root.path_join("T-29008-playable-frame-%04d.png" % video_frame)
+	var path: String = frame_root.path_join("%s-frame-%04d.png" % [_capture_prefix(), video_frame])
 	if get_viewport().get_texture().get_image().save_png(path) != OK:
 		_stop("actual video frame capture failed")
 	video_frame += 1
@@ -332,7 +375,25 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 				result.error = initialized["error"]
 				return
 			current.rule_state["actor_state"] = initialized["actor_state"]
-	if current.game_mode == 0x40:
+		elif intent.get("kind") == "school_day_cached_background":
+			var slot: int = intent.get("slot", -1)
+			if slot not in [0, 1] or intent.get("lba") != controller.tables["weekday_background_lbas"][0] or current.rule_state["background_show"] != slot or current.rule_state["background_cache"][slot] != intent["lba"]:
+				result.error = "cached background differs from validated command0 slot/LBA"
+				return
+			# The original two GPU slots select the same validated immutable image.
+			# Its existing texture is reused; no fabricated CD completion is queued.
+		elif intent.get("kind") == "week_end_hud_init":
+			if current.game_mode != 0x32 or current.rule_state["day_events"][current.rule_state["day_event_index"]][0] != 0xfc:
+				result.error = "week-end HUD refresh arrived outside its source queue record"
+				return
+			# Rules already took the source parameter snapshot. Refresh only the
+			# existing development labels after commit; original HUD remains absent.
+			staged_hud_refresh = true
+	var data: Dictionary = current.rule_state
+	var retained_school_background: bool = current.game_mode in [0x31, 0x32] and data["background_cache"][data["background_show"]] == controller.tables["weekday_background_lbas"][0]
+	# scheduler day/week-end handlers draw the last screen mode; in this bounded
+	# route the preceding school-day dec_bg_draw(0) established that image.
+	if current.game_mode == 0x40 or retained_school_background:
 		staged_commands.append_array(background)
 	if current.rule_state["actor_state"].is_empty():
 		return
@@ -364,18 +425,19 @@ func _update_labels() -> void:
 func _finish() -> void:
 	await _capture("result")
 	if not output_root.is_empty():
-		var file := FileAccess.open(output_root.path_join("T-29008-playable-proof.json"), FileAccess.WRITE)
+		var file := FileAccess.open(output_root.path_join(_capture_prefix() + "-proof.json"), FileAccess.WRITE)
 		if file == null:
 			_stop("cannot write development proof")
 			return
-		file.store_string(JSON.stringify({"schema": "tokimemo.playable-development-proof.v1",
-			"scope": "command0 actual composed development app; no native loading/CD/interrupt timing or complete HUD/audio parity claim",
+		file.store_string(JSON.stringify({"schema": "tokimemo.ordinary-week-development-proof.v1" if continue_week else "tokimemo.playable-development-proof.v1",
+			"scope": "command0 bounded composed development app; no native loading/CD/interrupt timing or complete HUD/audio parity claim",
 			"resource_policy": "validated preloaded cache; completion next BEFORE_MODE",
 			"boundary_sha256": OS.get_environment("TOKIMEMO_BOUNDARY_SHA"),
 			"tables_sha256": OS.get_environment("TOKIMEMO_TABLES_SHA"),
-			"final_state": state.projection(), "rng": session.rng.checkpoint(), "trace": trace}, "\t"))
+			"final_state": state.projection(), "rng": session.rng.checkpoint(), "trace": trace,
+			"checkpoints": checkpoints, "supported_stop": supported_stop}, "\t"))
 		file.close()
-	print("PASS: scripted playable command0 reached first result with real input mapping and session-owned actor sequence")
+	print("PASS: scripted playable command0 reached its declared supported boundary with session-owned actor sequences")
 	if smoke:
 		get_tree().quit(0)
 
@@ -385,7 +447,7 @@ func _capture(name_value: String) -> void:
 	for capture_frame: int in range(2):
 		await get_tree().process_frame
 		await RenderingServer.frame_post_draw
-	if get_viewport().get_texture().get_image().save_png(output_root.path_join("T-29008-playable-%s.png" % name_value)) != OK:
+	if get_viewport().get_texture().get_image().save_png(output_root.path_join("%s-%s.png" % [_capture_prefix(), name_value])) != OK:
 		_stop("actual viewport capture failed")
 
 func _stop(message: String) -> void:

@@ -37,11 +37,14 @@ docker run --rm --cpus=2 \
   -e TOKIMEMO_PLAYABLE_SMOKE="${TOKIMEMO_PLAYABLE_SMOKE:-0}" \
   -e TOKIMEMO_PLAYABLE_RECORD="${TOKIMEMO_PLAYABLE_RECORD:-0}" \
   -e TOKIMEMO_PLAYABLE_SMOKE_COMMAND="${TOKIMEMO_PLAYABLE_SMOKE_COMMAND:-0}" \
+  -e TOKIMEMO_PLAYABLE_FIRST_RESULT_ONLY="${TOKIMEMO_PLAYABLE_FIRST_RESULT_ONLY:-0}" \
   "$IMAGE" sh -ec '
     Xvfb :99 -screen 0 1280x1024x24 -nolisten tcp -ac >/tmp/xvfb.log 2>&1 &
     xvfb_pid=$!; trap "kill $xvfb_pid 2>/dev/null || true" EXIT
     sleep 1
-    if [ "$TOKIMEMO_PLAYABLE_SMOKE" = 1 ]; then runner="timeout 30s"; else runner=""; fi
+    # Four activities plus per-day PNG captures need a larger finite wall-clock
+    # budget than the earlier first-result slice. Logic still has its own bound.
+    if [ "$TOKIMEMO_PLAYABLE_SMOKE" = 1 ]; then runner="timeout 90s"; else runner=""; fi
     if [ "$TOKIMEMO_PLAYABLE_RECORD" = 1 ]; then capture_clock="--fixed-fps 60"; else capture_clock=""; fi
     DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe \
       $runner godot $capture_clock --max-fps 60 --rendering-method gl_compatibility --display-driver x11 \

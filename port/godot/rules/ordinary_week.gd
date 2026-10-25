@@ -15,6 +15,8 @@ const PARAMETER_SNAPSHOT_START: int = PROFILE_SNAPSHOT_START + 0xfc - 0xc4
 const PARAMETER_COUNT: int = 9
 const PARAMETER_WORD_BYTES: int = 4
 const PARAMETER_SNAPSHOT_END: int = PARAMETER_SNAPSHOT_START + PARAMETER_COUNT * PARAMETER_WORD_BYTES
+const MIRROR_SNAPSHOT_START: int = PROFILE_SNAPSHOT_START + 0x120 - 0xc4
+const MIRROR_SOURCE_BYTES: int = 0x20
 const PROGRESS_STATE_BYTES: int = PROFILE_SNAPSHOT_START + PROFILE_SNAPSHOT_BYTES
 const PROFILE_HASH_FIELD: String = "ordinary_week_immutable_profile_hash"
 
@@ -34,18 +36,26 @@ static func snapshot_parameters(state: State) -> String:
 		if not data.get(key) is int:
 			return "parameter profile snapshot lacks the immutable profile field: " + key
 	# This slice has no name/profile editing or non-parameter profile updates.
-	# Keep the original captured prefix/suffix; a state-owned hash rejects later
-	# edits instead of inventing an incomplete profile memcpy. No name is embedded.
-	var signature: String = JSON.stringify([data["progress_state"].slice(0, PARAMETER_SNAPSHOT_START),
-		data["progress_state"].slice(PARAMETER_SNAPSHOT_END, PROGRESS_STATE_BYTES),
-		data["player_flags"], data["player_flags_upper"], data["player_birthday"]]).sha256_text()
+	# Verify the old source and mirrored bytes before refreshing any slice;
+	# an edited mirror must never be repaired silently by the following copy.
+	var signature: String = _profile_signature(data)
 	if data.has(PROFILE_HASH_FIELD) and data[PROFILE_HASH_FIELD] != signature:
 		return "ordinary-week immutable profile edit requires the unimplemented full native profile snapshot"
-	data[PROFILE_HASH_FIELD] = signature
 	for index: int in range(PARAMETER_COUNT):
 		for byte: int in range(PARAMETER_WORD_BYTES):
 			data["progress_state"][PARAMETER_SNAPSHOT_START + index * PARAMETER_WORD_BYTES + byte] = (data["params"][index] >> (8 * byte)) & 255
+	# The final0x20 source bytes of memcpy(+0xc4,0x7c) are the first0x20
+	# progress bytes at GameState+0x120. They map to progress+0x7c..0x9b.
+	# Initial weekly command flag+0x15 consequently mirrors at+0x91.
+	for offset: int in range(MIRROR_SOURCE_BYTES):
+		data["progress_state"][MIRROR_SNAPSHOT_START + offset] = data["progress_state"][offset]
+	data[PROFILE_HASH_FIELD] = _profile_signature(data)
 	return ""
+
+static func _profile_signature(data: Dictionary) -> String:
+	return JSON.stringify([data["progress_state"].slice(0, PARAMETER_SNAPSHOT_START),
+		data["progress_state"].slice(PARAMETER_SNAPSHOT_END, PROGRESS_STATE_BYTES),
+		data["player_flags"], data["player_flags_upper"], data["player_birthday"]]).sha256_text()
 
 static func dispatch(state: State, result: Session.FrameResult) -> void:
 	if state.mode_stage != 0 or state.mode_step != 0:
