@@ -2176,3 +2176,7 @@ Reviewed the dynamic HUD candidate for [[tickets/T-29010-native-hud-font-renderi
 ## [2026-10-25] build | Publish actual dynamic HUD progress captures
 
 For [[tickets/T-29010-native-hud-font-rendering]], root inspected the actual Godot/Mesa capture path and image, published two source-composed HUD captures, and verified exact hashes through the live viewer API. Oracle screenshots and synthetic state-change proof remain excluded. The production importer and app integration are still open; no acceptance or percentage increase is implied.
+
+## [2026-10-25] build | Integrate reviewed dialogue and New Game rules
+
+Integrated eleven exact reviewed source/test files for [[tickets/T-29011-native-dialogue-player]] and [[tickets/T-29012-native-new-game-initialization]]. Canonical tests pass: dialogue nine Python checks, fresh original 12-line reparse and both Godot suites; New Game 109 Godot checks, 13 Python checks and 19 preserved native state/profile/RNG comparisons; five existing shared suites. Runtime original data remain external. Full conversation and New Game UI/prologue acceptance remain open. Archived logs and stopped four obsolete failed three-hour-old Godot test containers; active workers and the visual viewer were preserved.
