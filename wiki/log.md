@@ -2234,3 +2234,11 @@ The four-file exporter/loader/test tranche is applied after independent source r
 Only opening-week non-summer no-companion content for commands 1–3 is accepted. App/gameplay composition, commands 4–6 and other event/season variants remain open; the ticket stays In Progress. Original pixels and tables remain external under ignored `.asset-cache/port/spring-command-current-236ab3/`.
 
 See [[tickets/T-29014-ordinary-command-content-coverage]].
+
+## [2026-10-25] ticket | Track modernization and localization settings requests
+
+Added Backlog tickets [[tickets/T-30001-modern-widescreen]], [[tickets/T-30002-modern-settings]], [[tickets/T-30003-player-customization]] and [[tickets/T-30004-modern-achievements]] and linked ROADMAP.md. Includes gender-aware player references and independent translation/voice/image-text options. RetroAchievements PS1 game 19805 currently lists no base achievements; https://retroachievements.org/game/19805 checked 2026-10-25. No modernization or translation runtime changes; full Phase 3 work continues.
+
+## [2026-10-25] decision | Note optional English dub exploration
+
+Recorded the user's possible English voice-pack idea in [[tickets/T-30002-modern-settings]], including performance evaluation, original audio selection and performer permissions. This is exploration only; no audio generation or upload.

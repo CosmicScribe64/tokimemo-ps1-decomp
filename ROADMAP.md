@@ -20,7 +20,14 @@ phase after phase 1.
 
 ## 4. Modernize the port (not started)
 
-Widescreen support first. The rest is to be decided once the port runs.
+Widescreen support first, retaining an original-aspect option. Track the following after the faithful port is playable:
+
+- [Widescreen presentation](wiki/tickets/T-30001-modern-widescreen.md): scene framing and responsive HUD/dialogue layouts.
+- [Modern settings](wiki/tickets/T-30002-modern-settings.md): graphics/display, input remapping, audio/accessibility, text/UI language, translation packs and translated image-text variants. Voice language is separate and only offered when audio exists.
+- [Player customization](wiki/tickets/T-30003-player-customization.md), a stretch goal: including playing as a girl, with gendered references updated throughout dialogue, events and presentation. Art and original voice conflicts need explicit solutions.
+- [Achievements](wiki/tickets/T-30004-modern-achievements.md): route, event and minigame goals; investigate community references and native event-based tracking.
+
+These are tracked requests, not implemented features or prerequisites for Phase 3 completion.
 
 ## 5. English translation (not started)
 
