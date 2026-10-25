@@ -1,4 +1,4 @@
-"""Trust-boundary tests for the finite weekly-background source profile."""
+"""Trust-boundary tests for the finite school-day background source profiles."""
 import copy
 import hashlib
 import shutil
@@ -18,8 +18,12 @@ TRACK = REPOSITORY / "disc/track1.bin"
 
 
 def inventory_rows():
+    return inventory_rows_for(profile.ASSETS)
+
+
+def inventory_rows_for(assets):
     rows = []
-    for item in profile.ASSETS:
+    for item in assets:
         rows.append({
             "path": item["path"], "kind": "file", "size": item["size"],
             "sha256": item["sha256"],
@@ -40,6 +44,45 @@ class ProfileConstantsTests(unittest.TestCase):
         self.assertEqual([row[0]["lba"] for row in checked], list(profile.TABLE_WORDS))
         self.assertEqual(profile.EXE_TABLE_OFFSET, 0x75F60)
         self.assertEqual(profile.EXE_TABLE_RAW.hex(), "033f00000d3f0000173f0000203f0000")
+
+    def test_seasonal_selector_table_and_cohort_rows_agree(self):
+        checked = profile._validate_asset_inventory(
+            inventory_rows_for(profile.SEASONAL_ASSETS), profile.SEASONAL_ASSETS,
+            profile.SEASONAL_TABLE_WORDS, "season_index")
+        self.assertEqual([row[0]["path"] for row in checked], [
+            "CDROM/BS/C_02_02H.BS", "CDROM/BS/C_02_02N.BS",
+            "CDROM/BS/C_02_02A.BS", "CDROM/BS/C_02_02F.BS"])
+        self.assertEqual([row[0]["season_index"] for row in checked], [0, 1, 2, 3])
+        self.assertEqual([row[0]["lba"] for row in checked], list(profile.SEASONAL_TABLE_WORDS))
+        self.assertEqual(profile.SEASONAL_TABLE_OFFSET, 0x75150)
+        self.assertEqual(profile.SEASONAL_TABLE_RAW.hex(), "e93f0000f23f0000d73f0000e03f0000")
+
+    def test_seasonal_path_or_selector_substitution_fails_closed(self):
+        rows = inventory_rows_for(profile.SEASONAL_ASSETS)
+        rows[-1]["path"] = "CDROM/BS/C_02_02X.BS"
+        with self.assertRaisesRegex(ValueError, "C_02_02F"):
+            profile._validate_asset_inventory(rows, profile.SEASONAL_ASSETS,
+                                              profile.SEASONAL_TABLE_WORDS, "season_index")
+        altered = list(profile.SEASONAL_ASSETS)
+        altered[-1] = dict(altered[-1], season_index=2)
+        with self.assertRaisesRegex(ValueError, "selector indices"):
+            profile._validate_asset_inventory(inventory_rows_for(profile.SEASONAL_ASSETS),
+                                              altered, profile.SEASONAL_TABLE_WORDS, "season_index")
+
+    def test_executable_seasonal_table_is_pinned_at_its_own_offset(self):
+        exe_path = REPOSITORY / "disc/files/SLPM_86.053"
+        if not exe_path.is_file():
+            self.skipTest("original executable is unavailable")
+        data = exe_path.read_bytes()
+        self.assertEqual(profile._validate_executable_bytes(
+            data, profile.SEASONAL_TABLE_OFFSET, profile.SEASONAL_TABLE_RAW,
+            profile.SEASONAL_TABLE_WORDS), profile.SEASONAL_TABLE_RAW)
+        fake = bytearray(data)
+        fake[profile.SEASONAL_TABLE_OFFSET:profile.SEASONAL_TABLE_OFFSET + 16] = bytes(16)
+        with self.assertRaises(ValueError):
+            profile._validate_executable_bytes(bytes(fake), profile.SEASONAL_TABLE_OFFSET,
+                                               profile.SEASONAL_TABLE_RAW,
+                                               profile.SEASONAL_TABLE_WORDS)
 
     def test_substituting_c_01_31_for_the_fourth_row_fails(self):
         rows = inventory_rows()
@@ -118,6 +161,22 @@ class SourceEvidenceTests(unittest.TestCase):
         path.write_bytes(path.read_bytes().replace(b"get_weekly_bg_sector", b"fake_weekly_bg_sector"))
         with self.assertRaisesRegex(ValueError, "source evidence hash differs"):
             profile._check_source_evidence(self.root)
+
+    def test_season_index_or_season_table_source_substitution_is_rejected(self):
+        for relative, marker in (("src/main/hud_panels.c", b"hud_season_index"),
+                                 ("asm/data/data_800B5950.data.s", b"D_800B5950")):
+            with self.subTest(relative=relative):
+                for source_relative in profile.SOURCE_FILES:
+                    source = REPOSITORY / source_relative
+                    destination = self.root / source_relative
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(source, destination)
+                path = self.root / relative
+                content = path.read_bytes()
+                path.write_bytes(content.replace(marker, marker + b"_substituted", 1))
+                with self.assertRaisesRegex(ValueError, "source evidence hash differs"):
+                    profile._check_source_evidence(self.root)
+                path.write_bytes(content)
 
     def test_consistently_rehashed_report_cannot_repin_source_evidence(self):
         relative = "src/main/school_day.c"
@@ -221,6 +280,26 @@ class OriginalInputTests(unittest.TestCase):
         rows.append(replacement)
         with self.assertRaisesRegex(ValueError, "C_01_30"):
             profile._validate_asset_inventory(rows)
+
+    def test_original_track_and_current_source_build_seasonal_profile(self):
+        from tools.assets.input import open_input
+
+        with open_input(TRACK) as source:
+            entries = source.entries()
+            context = profile.build_profile_context(source, entries, REPOSITORY, "seasonal")
+        self.assertEqual(context["source_profile"]["profile_kind"], "seasonal")
+        self.assertEqual([item["path"] for item in context["assets"]],
+                         [item["path"] for item in profile.SEASONAL_ASSETS])
+        table = context["source_profile"]["executable"]
+        self.assertEqual(table["table_offset"], profile.SEASONAL_TABLE_OFFSET)
+        self.assertEqual(table["table_words"], list(profile.SEASONAL_TABLE_WORDS))
+        self.assertEqual(table["table_raw_hex"], "e93f0000f23f0000d73f0000e03f0000")
+        for record, expected in zip(context["assets"], profile.SEASONAL_ASSETS):
+            self.assertEqual(record["season_index"], expected["season_index"])
+            self.assertEqual(record["fixed_reader_extent"]["sectors_after_iso_file_extent"], 1)
+            self.assertFalse(record["fixed_reader_extent"]["post_file_sectors_claimed_consumed_by_decoder"])
+        self.assertEqual(context["geometry"]["active_pixels"], {"width": 320, "height": 88})
+        self.assertEqual(context["geometry"]["padded_pixels"], {"width": 320, "height": 96})
 
 
 if __name__ == "__main__":

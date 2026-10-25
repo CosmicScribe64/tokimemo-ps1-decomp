@@ -133,7 +133,8 @@ def export_mdec_source(source, destination, contexts=None, baseline=None, progre
         entries = sorted(source.entries(), key=lambda entry: entry["path"])
         if contexts is not None:
             raise ValueError("trusted BS profile mode does not accept an external context/report")
-        contexts = build_profile_context(source, entries, source_root)
+        profile_kind = "seasonal" if trusted_bs_profile == "seasonal" else "weekly"
+        contexts = build_profile_context(source, entries, source_root, profile_kind)
         cohort_records = {record["path"]: record for record in contexts["assets"]}
     elif not isinstance(contexts, dict):
         raise ValueError("contexts report must be an object")
@@ -298,6 +299,8 @@ def main(argv=None):
     parser.add_argument("--contexts")
     parser.add_argument("--bs-caller-cohort", action="store_true",
                         help="use the checked-in finite BS profile and verify current source plus original input")
+    parser.add_argument("--bs-seasonal-cohort", action="store_true",
+                        help="use the checked-in four-row seasonal school-day profile")
     parser.add_argument("--baseline-media")
     parser.add_argument("--only-source", action="append",
                         help="refresh only this source path and retain exact-baseline exports for other sources")
@@ -305,8 +308,9 @@ def main(argv=None):
     parser.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     try:
-        if bool(args.contexts) == bool(args.bs_caller_cohort):
-            raise ValueError("provide exactly one of --contexts or --bs-caller-cohort")
+        selected_profiles = int(args.bs_caller_cohort) + int(args.bs_seasonal_cohort)
+        if bool(args.contexts) == (selected_profiles > 0) or selected_profiles > 1:
+            raise ValueError("provide exactly one of --contexts, --bs-caller-cohort, or --bs-seasonal-cohort")
         contexts = json.loads(Path(args.contexts).read_text()) if args.contexts else None
         baseline = json.loads(Path(args.baseline_media).read_text()) if args.baseline_media else None
         with open_input(args.input) as source:
@@ -314,7 +318,8 @@ def main(argv=None):
                                         progress=lambda count: print(f"BS inspected: {count}", flush=True),
                                         only_paths=args.only_source,
                                         repository_root=args.repository_root,
-                                        trusted_bs_profile=args.bs_caller_cohort)
+                                        trusted_bs_profile=("seasonal" if args.bs_seasonal_cohort
+                                                            else args.bs_caller_cohort))
         print(json.dumps(result["coverage"], sort_keys=True))
         return 1 if result["coverage"]["status"].get("invalid") else 0
     except (OSError, ValueError, EOFError) as error:

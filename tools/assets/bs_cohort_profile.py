@@ -1,4 +1,4 @@
-"""Trusted finite source profile for the weekly school-day BS backgrounds.
+"""Trusted finite source profiles for school-day BS backgrounds.
 
 This profile is deliberately checked into source code with the exporter patch.
 It does not consume an ignored report as evidence. Its pinned source files,
@@ -18,11 +18,15 @@ EXE_SHA256 = "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 EXE_TABLE_OFFSET = 0x75F60
 EXE_TABLE_RAW = bytes.fromhex("033f00000d3f0000173f0000203f0000")
 TABLE_WORDS = (0x3F03, 0x3F0D, 0x3F17, 0x3F20)
+SEASONAL_TABLE_OFFSET = 0x75150
+SEASONAL_TABLE_RAW = bytes.fromhex("e93f0000f23f0000d73f0000e03f0000")
+SEASONAL_TABLE_WORDS = (0x3FE9, 0x3FF2, 0x3FD7, 0x3FE0)
 
 SOURCE_FILES = {
     "src/main/school_day.c": "d5f975a14823d31d03abecfc2502e71c21a1d5ec45dc79653f84dfaa390f479c",
     "src/main/background_images.c": "7eea24dfee7fd3503beedbd1b2f633c40f19102d21f992557d626cba3d036402",
     "src/main/memory_card.c": "32fd2c5f413038eee79d940c3a964e47652b472935b34f8597231c60d5979811",
+    "src/main/hud_panels.c": "b942acb5863f26326c044720768384cf23b156f4736c69f1eda0d34831016ae1",
     "asm/data/data_800B5950.data.s": "4482f3ec44d7a64fbcb1b305e015452e014382d6d819dd8759e730d3f0b2d439",
     "asm/libpress_main.s": "330179552d5f4d42a50394a2ad1907f7e6c9984dbaa84fd53603d55fee4bbd7e",
 }
@@ -50,7 +54,19 @@ SOURCE_ANCHORS = {
         "v = ((arg3 + 8) >> 4) << 7;",
         "rect.x += 0x10;",
     ),
+    "src/main/hud_panels.c": (
+        "s32 hud_season_index(void)",
+        "case 3:", "case 4:", "case 5:", "return 0;",
+        "case 6:", "case 7:", "case 8:", "return 1;",
+        "case 9:", "case 10:", "case 11:", "return 2;",
+        "case 1:", "case 2:", "case 12:", "return 3;",
+    ),
     "asm/data/data_800B5950.data.s": (
+        "dlabel D_800B5950",
+        ".word 0x00003FE9",
+        ".word 0x00003FF2",
+        ".word 0x00003FD7",
+        ".word 0x00003FE0",
         "dlabel D_800B6760",
         ".word 0x00003F03",
         ".word 0x00003F0D",
@@ -94,6 +110,25 @@ ASSETS = (
     },
 )
 
+SEASONAL_ASSETS = (
+    {"path": "CDROM/BS/C_02_02H.BS", "season_index": 0, "lba": 0x3FE9,
+     "size": 16936, "sha256": "ea4f9201486e8bfc21b03706b4427a2e3e0865f2be7a30f5057802618747ec96",
+     "record_lba": 16122, "record_offset": 1656, "record_length": 60,
+     "identifier": "C_02_02H.BS;1", "file_sectors": 9},
+    {"path": "CDROM/BS/C_02_02N.BS", "season_index": 1, "lba": 0x3FF2,
+     "size": 16940, "sha256": "9ee3e7443d9641ccabedc812c4329cbffe2581fb932e0e2936d908b1fc054a55",
+     "record_lba": 16122, "record_offset": 1716, "record_length": 60,
+     "identifier": "C_02_02N.BS;1", "file_sectors": 9},
+    {"path": "CDROM/BS/C_02_02A.BS", "season_index": 2, "lba": 0x3FD7,
+     "size": 16980, "sha256": "3d23ba6d581759dc715b85c04849ef4ec63a4846ec5afef64fcc5b3dc427d14d",
+     "record_lba": 16122, "record_offset": 1536, "record_length": 60,
+     "identifier": "C_02_02A.BS;1", "file_sectors": 9},
+    {"path": "CDROM/BS/C_02_02F.BS", "season_index": 3, "lba": 0x3FE0,
+     "size": 17028, "sha256": "3ced1fe0b5e3db373c59fff54e5f915cf2a174fa65ad2e819f90e29938aa38fe",
+     "record_lba": 16122, "record_offset": 1596, "record_length": 60,
+     "identifier": "C_02_02F.BS;1", "file_sectors": 9},
+)
+
 
 def _sha256(data):
     return hashlib.sha256(data).hexdigest()
@@ -115,14 +150,17 @@ def _check_source_evidence(repository_root):
     return checked
 
 
-def _validate_asset_inventory(entries):
-    if tuple(asset["girl_index"] for asset in ASSETS) != (0, 1, 2, 3):
+def _validate_asset_inventory(entries, expected_assets=None, expected_words=None,
+                              selector_field="girl_index"):
+    expected_assets = ASSETS if expected_assets is None else expected_assets
+    expected_words = TABLE_WORDS if expected_words is None else expected_words
+    if tuple(asset[selector_field] for asset in expected_assets) != (0, 1, 2, 3):
         raise ValueError("trusted BS profile selector indices are not the exact four rows")
-    if tuple(asset["lba"] for asset in ASSETS) != TABLE_WORDS:
+    if tuple(asset["lba"] for asset in expected_assets) != expected_words:
         raise ValueError("trusted BS profile rows do not match the executable table order")
     by_path = {entry.get("path"): entry for entry in entries}
     checked = []
-    for expected in ASSETS:
+    for expected in expected_assets:
         entry = by_path.get(expected["path"])
         location = entry.get("location", {}) if entry else {}
         if (entry is None or entry.get("kind") != "file"
@@ -138,11 +176,12 @@ def _validate_asset_inventory(entries):
     return checked
 
 
-def _validate_executable_bytes(exe_data):
+def _validate_executable_bytes(exe_data, table_offset=EXE_TABLE_OFFSET,
+                               table_raw=EXE_TABLE_RAW, table_words=TABLE_WORDS):
     if _sha256(exe_data) != EXE_SHA256:
         raise ValueError("trusted original executable hash differs")
-    actual_table = exe_data[EXE_TABLE_OFFSET:EXE_TABLE_OFFSET + len(EXE_TABLE_RAW)]
-    if actual_table != EXE_TABLE_RAW or struct.unpack("<4I", actual_table) != TABLE_WORDS:
+    actual_table = exe_data[table_offset:table_offset + len(table_raw)]
+    if actual_table != table_raw or struct.unpack("<4I", actual_table) != table_words:
         raise ValueError("trusted original executable table bytes differ")
     return actual_table
 
@@ -179,10 +218,22 @@ def _validate_iso_directory_record(source, expected):
             "sector_payload_sha256": _sha256(payload)}
 
 
-def build_profile_context(source, entries, repository_root):
+def build_profile_context(source, entries, repository_root, profile_kind="weekly"):
     """Validate the fixed source profile and return its internally made context."""
+    if profile_kind == "weekly":
+        expected_assets, table_offset, table_raw, table_words = ASSETS, EXE_TABLE_OFFSET, EXE_TABLE_RAW, TABLE_WORDS
+        selector_field = "girl_index"
+        selector_name = "schedule_girl_index"
+        table_label = "D_800B6760 weekly girl selector table"
+    elif profile_kind == "seasonal":
+        expected_assets, table_offset, table_raw, table_words = SEASONAL_ASSETS, SEASONAL_TABLE_OFFSET, SEASONAL_TABLE_RAW, SEASONAL_TABLE_WORDS
+        selector_field = "season_index"
+        selector_name = "season_index"
+        table_label = "D_800B5950 seasonal school-day selector table"
+    else:
+        raise ValueError("unknown trusted BS source profile")
     source_files = _check_source_evidence(repository_root)
-    checked_assets = _validate_asset_inventory(entries)
+    checked_assets = _validate_asset_inventory(entries, expected_assets, table_words, selector_field)
     description = source.describe()
     if (description.get("format") != "mode2-2352"
             or description.get("source_sha256") != TRACK_SHA256):
@@ -193,7 +244,7 @@ def build_profile_context(source, entries, repository_root):
     if exe_entry is None or exe_entry.get("kind") != "file":
         raise ValueError("trusted original executable is absent from the input inventory")
     exe_data = source.read(exe_entry)
-    _validate_executable_bytes(exe_data)
+    _validate_executable_bytes(exe_data, table_offset, table_raw, table_words)
 
     records = []
     for expected, entry in checked_assets:
@@ -201,10 +252,11 @@ def build_profile_context(source, entries, repository_root):
         if _sha256(file_data) != expected["sha256"]:
             raise ValueError("original BS file bytes differ from trusted profile: " + expected["path"])
         iso_record_proof = _validate_iso_directory_record(source, expected)
-        if expected["lba"] != TABLE_WORDS[expected["girl_index"]]:
+        if expected["lba"] != table_words[expected[selector_field]]:
             raise ValueError("trusted selector index and LBA do not agree")
         records.append({
-            "path": expected["path"], "schedule_girl_index": expected["girl_index"],
+            "path": expected["path"], selector_name: expected[selector_field],
+            "profile_kind": profile_kind,
             "lba_word": expected["lba"], "size_bytes": expected["size"],
             "sha256": expected["sha256"],
             "source": {"path": expected["path"], "sha256": expected["sha256"],
@@ -225,10 +277,12 @@ def build_profile_context(source, entries, repository_root):
                 "post_file_sectors_claimed_consumed_by_decoder": False,
             },
             "source_evidence": [
-                "src/main/school_day.c:get_weekly_bg_sector/school_day_background_read/school_day_screen_init",
+                ("src/main/school_day.c:get_weekly_bg_sector/school_day_background_read/school_day_screen_init"
+                 if profile_kind == "weekly" else
+                 "src/main/school_day.c:school_day_background_read seasonal branch; src/main/hud_panels.c:hud_season_index"),
                 "src/main/background_images.c:dec_bg_cd_read/dec_bg_decode_to_vram/dec_bg_draw",
                 "src/main/memory_card.c:bg_still_decode_to_vram",
-                "asm/data/data_800B5950.data.s:D_800B6760 words",
+                "asm/data/data_800B5950.data.s:" + table_label,
                 "asm/libpress_main.s:func_800868BC/func_800869EC native MIPS helpers",
             ],
         })
@@ -237,11 +291,13 @@ def build_profile_context(source, entries, repository_root):
         "schema": PROFILE_SCHEMA,
         "status": "trusted_finite_profile_validated_from_current_source_and_original_input",
         "source_profile": {
+            "profile_kind": profile_kind,
             "pinned_source_files": source_files,
             "executable": {"path": EXE_PATH, "sha256": EXE_SHA256,
-                            "table_offset": EXE_TABLE_OFFSET,
-                            "table_raw_hex": EXE_TABLE_RAW.hex(),
-                            "table_words": list(TABLE_WORDS)},
+                            "table_offset": table_offset,
+                            "table_raw_hex": table_raw.hex(),
+                            "table_words": list(table_words),
+                            "profile_kind": profile_kind},
             "assets": records,
         },
         "geometry": {"active_pixels": {"width": 320, "height": 88},
