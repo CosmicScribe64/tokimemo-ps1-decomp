@@ -29,11 +29,9 @@ Widescreen support first, retaining an original-aspect option. Track the followi
 
 These are tracked requests, not implemented features or prerequisites for Phase 3 completion.
 
-## 5. English translation (not started)
+## 5. English translation (complete, not implemented)
 
-Translate the game into English, then fix the user interface that translation breaks (text boxes, menus, fonts) and
-make the result look good in English.
+AI translation (with Gemini 4 Argon) of game text into English is complete. Ideas for translated images are tracked but not yet created. 
 
 The first translation will come from an AI, and the game and the repository will say so. Human translations are
-wanted, and they will replace the AI text where they exist. A small tool for
-submitting translations may come later. Nothing is built yet, and the format is undecided.
+wanted, and they will replace the AI text where they exist.
