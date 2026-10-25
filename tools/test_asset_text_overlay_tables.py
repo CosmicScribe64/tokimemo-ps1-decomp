@@ -1,7 +1,11 @@
+import hashlib
+import tempfile
 import unittest
+from pathlib import Path
 
 from tools.assets.text import TextFormatError
-from tools.assets.text_overlay_tables import OVERLAY_TABLE_PROFILES, parse_overlay_fixed_tables
+from tools.assets.text_overlay_tables import (OVERLAY_TABLE_PROFILES, parse_overlay_fixed_tables,
+                                              verify_profile_source_pins)
 
 
 class OverlayFixedTableTests(unittest.TestCase):
@@ -71,6 +75,34 @@ class OverlayFixedTableTests(unittest.TestCase):
         for profile in OVERLAY_TABLE_PROFILES:
             self.assertEqual(len(profile["sha256"]), 64)
             self.assertTrue(profile["source_pins"])
+
+    def test_source_pin_verifier_accepts_exact_file_and_rejects_changed_or_escaping_pin(self):
+        with tempfile.TemporaryDirectory() as temp, tempfile.TemporaryDirectory() as external:
+            root = Path(temp).resolve()
+            (root / "source.c").write_bytes(b"fixture source")
+            digest = hashlib.sha256(b"fixture source").hexdigest()
+            profile = {"id": "fixture", "source_pins": {"source.c": digest}}
+            self.assertEqual(verify_profile_source_pins(root, profile)["source_pins_verified"], 1)
+            profile["source_pins"]["source.c"] = "0" * 64
+            with self.assertRaises(TextFormatError):
+                verify_profile_source_pins(root, profile)
+            profile["source_pins"] = {"../outside.c": digest}
+            with self.assertRaises(TextFormatError):
+                verify_profile_source_pins(root, profile)
+            profile["source_pins"] = {}
+            with self.assertRaises(TextFormatError):
+                verify_profile_source_pins(root, profile)
+
+    def test_source_pin_verifier_rejects_symlink_escape(self):
+        with tempfile.TemporaryDirectory() as temp, tempfile.TemporaryDirectory() as external:
+            root = Path(temp).resolve()
+            outside = Path(external) / "source.c"
+            outside.write_bytes(b"fixture source")
+            (root / "source.c").symlink_to(outside)
+            profile = {"id": "fixture", "source_pins": {
+                "source.c": hashlib.sha256(b"fixture source").hexdigest()}}
+            with self.assertRaises(TextFormatError):
+                verify_profile_source_pins(root, profile)
 
 
 if __name__ == "__main__":

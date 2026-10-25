@@ -382,8 +382,8 @@ PROFILES = [
             in _DATE_EXTRA[suffix]
         ],
         "evidence": [
-            "src/ovl/DATE/80132000.c",
-            "src/ovl/DATE/80141EE0.c",
+            'src/ovl/date/place_scenes.c',
+            'src/ovl/date/entry.c',
         ],
     }
     for suffix, digest, sections in _DATE_FILES
@@ -555,7 +555,7 @@ PROFILES.extend(
             in _EVENT_EXTRA.get(suffix, [])
         ],
         "evidence": [
-            "src/ovl/DATE/8014B1F0.c",
+            'src/ovl/date/scene_common.c',
             "src/ovl/DATE/" + source,
         ],
     }

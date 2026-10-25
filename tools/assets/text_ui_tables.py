@@ -116,7 +116,14 @@ def parse_ui_tables(data: bytes, profile: dict) -> dict:
         raw = bytes.fromhex(record["text"]["raw_hex"])
         record["text"] = tokenize_fixed_text(raw, "set_kanji_string")
         source_text = record["text"]["source_decoded_text"]
-        record["source_slot_status"] = "empty" if not raw else "whitespace_only" if source_text.isspace() else "source_text"
+        if not raw:
+            record["source_slot_status"] = "empty"
+        elif source_text is None:
+            record["source_slot_status"] = "invalid_shift_jis"
+        elif source_text.isspace():
+            record["source_slot_status"] = "whitespace_only"
+        else:
+            record["source_slot_status"] = "source_text"
         record["original_layout"] = {"slot_stride": table["stride"],
                                      "capacity_is_translation_limit": False}
     extents = []
@@ -173,14 +180,14 @@ UI_TABLE_PROFILES = [{'id': 'main-profile-display-labels',
               'assembly_size': 224,
               'assembly_label': 'D_800B5D1C',
               'assembly_path': 'asm/data/data_800B5950.data.s'}],
-  'evidence': ['src/main/800674B0.c:948-1170',
-               'include/main_api.h:844-846',
+  'evidence': ['src/main/hud_screens.c:1209-1214',
+               'include/main/hud.h',
                'asm/data/data_800B5950.data.s:D_800B5C2C,D_800B5D0C,D_800B5D1C,D_800B5DFC'],
-  'source_pins': {'src/main/800674B0.c': '48b49218c257c41443ebbaa0617e2f2ccaa332245473b140b7ff2a0aad196f65',
-                  'include/main_api.h': 'befee8984f3ed5e43d3cb9f34302e42f5bb1e133f12e943ce539a30a3c393926',
-                  'asm/data/data_800B5950.data.s': 'dd0757de5b9482a5107423ab00b4397d3e5127e5324b3e95a1f07ebaa2f80bd9',
-                  'asm/matchings/main/800674B0/func_8006A2CC.s': '1bed8b44752642e338c24c6dd97e91e13a960cc818745641d6cdb595e7a6ed2e'},
-  'code_proofs': [{'assembly_path': 'asm/matchings/main/800674B0/func_8006A2CC.s',
+  'source_pins': {'src/main/hud_screens.c': '4572545b4566949100d038bff53ab9cdcc0dc63fb31c3de155119ff7141251b0',
+                  'include/main/hud.h': 'dd5a7374a8469741052dc7abb8162fe98901eccbdaeb008f1aa97ecd48b84fd3',
+                  'asm/data/data_800B5950.data.s': '4482f3ec44d7a64fbcb1b305e015452e014382d6d819dd8759e730d3f0b2d439',
+                  'asm/matchings/main/hud_screens/hud_magazine_page_build.s': '7a47faf0720f79d66c5aabb951f59e44f30bc1940d18fea146bcf99327b6c7de'},
+  'code_proofs': [{'assembly_path': 'asm/matchings/main/hud_screens/hud_magazine_page_build.s',
                    'source_path': 'SLPM_86.053',
                    'source_sha256': 'bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae',
                    'load_address': 0x80041000,
@@ -233,23 +240,23 @@ UI_TABLE_PROFILES = [{'id': 'main-profile-display-labels',
   'preserved_inter_table_ranges': [{'offset': 75196,
                                     'length': 56,
                                     'classification': 'uninterpreted_original_bytes'}],
-  'evidence': ['src/ovl/TEL/80132000.c:909-924',
-               'src/ovl/TEL/8013CCD0.c:89-206',
+  'evidence': ['src/ovl/telephone/call_and_invitation_flow.c:908-924',
+               'src/ovl/telephone/profile_and_place_availability.c:104-206',
                'ISO9660 CDROM/FUKUTEST/JOHO.NBN extent 0x9D5F,38 sectors'],
-  'source_pins': {'src/ovl/TEL/80132000.c': '450a9a25809648d33fb033bc4d35ccd1d9258f4ca1530daacc104328613d057f',
-                  'src/ovl/TEL/8013CCD0.c': '24f01390319ee48f34c0fc55e8865a612d710133fd9938c27c7c8558587a9e07',
-                  'include/ovl/TEL.h': '11348703e647f570f34ea5af525369189823ac6dab82302b2683b09efebbfeb6',
-                  'asm/ovl/TEL/matchings/TEL/80132000/func_801345C4.s': '7a3fc5e2324c17db2478c5cfdcfc9dfcc782a5f0620b4f561733264ee51ebfda',
-                  'asm/ovl/TEL/matchings/TEL/8013CCD0/func_8013D03C.s': '619be2ef983b68c698385aa14a31dab6a914dd274cb3cb35114bbf98dcf67c70'},
+  'source_pins': {'src/ovl/telephone/call_and_invitation_flow.c': '97b022f3af5813858a8e79062df9d2f98f33b503a0449245743f3a1ca561ee14',
+                  'src/ovl/telephone/profile_and_place_availability.c': 'e3ad7e08aa230a801c3ee55c6cc327230dd139764206788d4e1df06809fe6131',
+                  'include/ovl/telephone.h': '3ba18844eec42f93635f22c3dc24512d43346e730ac99957d6270cc6170d949e',
+                  'asm/ovl/TEL/matchings/telephone/call_and_invitation_flow/phone_selected_girl_information_dialogue_scene.s': 'c9483985f8d2ee49aba6deaabcbc7117f5a7453a761d376291f805760b16b10f',
+                  'asm/ovl/TEL/matchings/telephone/profile_and_place_availability/phone_profile_details_draw.s': 'f17a6df1ca469d46f92d2170a65c22d639cebf75bc4ab03cb3f8a548559e3f98'},
   'index_notes': ['profile_index0..10 names ordinary girls; profile_index11 uses girl state12',
                   'year_index0 belowday365,1 fromday365,2 fromday730',
                   'original fixed slot sizes are provenance, not translation layout limits'],
-  'code_proofs': [{'assembly_path': 'asm/ovl/TEL/matchings/TEL/80132000/func_801345C4.s',
+  'code_proofs': [{'assembly_path': 'asm/ovl/TEL/matchings/telephone/call_and_invitation_flow/phone_selected_girl_information_dialogue_scene.s',
                    'source_path': 'CDROM/EXEDIR/TEL.EXN',
                    'source_sha256': '25a0379724a5e364e83e5196af5e59bd3c40eccb139c0bb0e80557138fd7e0e7',
                    'load_address': 0x80132000,
                    'header_size': 0},
-                  {'assembly_path': 'asm/ovl/TEL/matchings/TEL/8013CCD0/func_8013D03C.s',
+                  {'assembly_path': 'asm/ovl/TEL/matchings/telephone/profile_and_place_availability/phone_profile_details_draw.s',
                    'source_path': 'CDROM/EXEDIR/TEL.EXN',
                    'source_sha256': '25a0379724a5e364e83e5196af5e59bd3c40eccb139c0bb0e80557138fd7e0e7',
                    'load_address': 0x80132000,

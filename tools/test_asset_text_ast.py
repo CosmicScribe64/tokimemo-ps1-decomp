@@ -20,20 +20,20 @@ class TextAstTests(unittest.TestCase):
                 "typedef unsigned char u8; typedef int s32;\n"
                 "extern u8 *title; extern u8 *first; extern u8 *second; extern u8 *third;\n"
                 "extern s32 dynamic_count;\n"
-                "void func_80066104(u8 *); void x_taku_string_set(s32,s32,s32,s32);\n"
-                "void f(void) { func_80066104(title); x_taku_string_set(first,second,third,3);\n"
+                "void message_window_set_title_hidden(u8 *); void x_taku_string_set(s32,s32,s32,s32);\n"
+                "void f(void) { message_window_set_title_hidden(title); x_taku_string_set(first,second,third,3);\n"
                 "x_taku_string_set(first,second,third,2);\n"
                 "x_taku_string_set(first,second,third,dynamic_count); }\n",
                 encoding="utf-8")
             rpg.write_text(
                 "typedef unsigned char u8; typedef int s32; extern u8 *rpg_text;\n"
-                "void func_8013E934(s32,s32,s32);\n"
-                "void f(void) { func_8013E934(1,2,(s32)rpg_text); }\n",
+                "void rpg_label_create(s32,s32,s32);\n"
+                "void f(void) { rpg_label_create(1,2,(s32)rpg_text); }\n",
                 encoding="utf-8")
             other.write_text(
                 "typedef unsigned char u8; typedef int s32; extern u8 *other_text;\n"
-                "void func_8013E934(s32,s32,s32);\n"
-                "void f(void) { func_8013E934(1,2,(s32)other_text); }\n",
+                "void rpg_label_create(s32,s32,s32);\n"
+                "void f(void) { rpg_label_create(1,2,(s32)other_text); }\n",
                 encoding="utf-8")
             candidates = {
                 "main": {"title", "first", "second", "third", "dynamic_count"},
@@ -44,7 +44,7 @@ class TextAstTests(unittest.TestCase):
                 root, candidates,
                 ["src/main/ui.c", "src/ovl/RPG_BAT/ui.c", "src/ovl/OTHER/ui.c"])
             main_calls, rpg_calls, other_calls = [entry["calls"] for entry in result["files"]]
-            wrapper = next(call for call in main_calls if call["callee"] == "func_80066104")
+            wrapper = next(call for call in main_calls if call["callee"] == "message_window_set_title_hidden")
             self.assertEqual(wrapper["source_unit"], "main")
             self.assertEqual(wrapper["renderer"], "set_kanji_string")
             self.assertEqual(wrapper["candidate_symbols"], ["title"])
@@ -74,22 +74,31 @@ class TextAstTests(unittest.TestCase):
     def test_renderer_alias_roles_are_unit_scoped_in_ast_inventory(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
-            rpg = root / "src/ovl/RPG_BAT/unit.c"
-            other = root / "src/ovl/OTHER/unit.c"
+            rpg = root / "src/ovl/rpg_battle/unit.c"
+            other = root / "src/ovl/other_topic/unit.c"
             rpg.parent.mkdir(parents=True)
             other.parent.mkdir(parents=True)
+            config_root = root / "config" / "overlays"
+            config_root.mkdir(parents=True)
+            for overlay, source_root in (("RPG_BAT", "rpg_battle"), ("OTHER", "other_topic")):
+                (config_root / f"{overlay}.yaml").write_text(
+                    f"options:\n  basename: {overlay}\n  src_path: src/ovl\n"
+                    "segments:\n  - name: overlay\n    subsegments:\n"
+                    f"      - [0x0, c, {source_root}/unit]\n",
+                    encoding="utf-8")
             source = (
                 "typedef unsigned char u8; typedef int s32; extern u8 *text;\n"
-                "void func_8013E934(s32,s32,s32); void get_p_name(s32);\n"
-                "void f(void) { func_8013E934(0,0,(s32)text); get_p_name((s32)text); }\n")
+                "void rpg_label_create(s32,s32,s32); void get_p_name(s32);\n"
+                "void f(void) { rpg_label_create(0,0,(s32)text); get_p_name((s32)text); }\n")
             rpg.write_text(source, encoding="utf-8")
             other.write_text(source, encoding="utf-8")
             result = inventory_text_consumers(
                 root, {"RPG_BAT": {"text"}, "OTHER": {"text"}},
-                ["src/ovl/RPG_BAT/unit.c", "src/ovl/OTHER/unit.c"])
+                ["src/ovl/rpg_battle/unit.c", "src/ovl/other_topic/unit.c"])
             rpg_calls, other_calls = [file["calls"] for file in result["files"]]
             self.assertEqual(len(rpg_calls), 1)
-            self.assertEqual(rpg_calls[0]["callee"], "func_8013E934")
+            self.assertEqual(rpg_calls[0]["callee"], "rpg_label_create")
+            self.assertEqual(rpg_calls[0]["source_unit"], "RPG_BAT")
             self.assertEqual(rpg_calls[0]["candidate_symbols"], ["text"])
             self.assertEqual(other_calls, [])
 
@@ -100,8 +109,8 @@ class TextAstTests(unittest.TestCase):
             source.parent.mkdir(parents=True)
             source.write_text(
                 "typedef unsigned char u8; extern u8 *text;\n"
-                "void local(void) { void (*func_80066104)(u8 *);\n"
-                "func_80066104(text); }\n",
+                "void local(void) { void (*message_window_set_title_hidden)(u8 *);\n"
+                "message_window_set_title_hidden(text); }\n",
                 encoding="utf-8")
             result = inventory_text_consumers(
                 root, {"main": {"text"}}, ["src/main/local_shadow.c"])

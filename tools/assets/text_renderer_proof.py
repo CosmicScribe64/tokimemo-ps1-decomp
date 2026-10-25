@@ -13,13 +13,13 @@ from pathlib import Path
 
 
 SOURCE_PROOFS = {
-    "func_80066104": {
-        "source": "src/main/80062CD0.c",
-        "source_sha256": "4ee59d2d558566456345d0779c199b58dd9ab05754a4cdc7d431f6990a1088bd",
-        "assembly": "asm/matchings/main/80062CD0/func_80066104.s",
-        "assembly_sha256": "475a44e691f65419b95148dd9b83a70c1c040374c2030f09f22735a9474bc59b",
-        "renderer_assembly": "asm/matchings/main/80062CD0/message_window_set_title.s",
-        "renderer_assembly_sha256": "c6a469d1da3ec55ca8b05b82ec8a8a34f0bcb90d022bc819b8fd69eb51e3e5f3",
+    "message_window_set_title_hidden": {
+        "source": "src/main/hud_panels.c",
+        "source_sha256": "b942acb5863f26326c044720768384cf23b156f4736c69f1eda0d34831016ae1",
+        "assembly": "asm/matchings/main/hud_panels/message_window_set_title_hidden.s",
+        "assembly_sha256": "e305c82716c8603c81ead32c7821503dbd92a13a8aabe252b8a0ab10e5e7abe4",
+        "renderer_assembly": "asm/matchings/main/hud_panels/message_window_set_title.s",
+        "renderer_assembly_sha256": "bf4a0429db4211b64d66b89f560dd0b30aec9eddf089cb551f57a491e4766165",
         "renderer_instruction_words": 130,
         "binary": "SLPM_86.053",
         "binary_sha256": "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae",
@@ -31,9 +31,9 @@ SOURCE_PROOFS = {
         "evidence": "wrapper forwards incoming a0 to message_window_set_title; callee sends that pointer to set_kanji_string and strlen",
     },
     "x_taku_string_set": {
-        "source": "src/main/8004F870.c",
-        "source_sha256": "10fba9db2073f4e8d156b366255ca9a3e9f528af3d9b4c15795bad274e1061d2",
-        "assembly": "asm/matchings/main/8004F870/x_taku_string_set.s",
+        "source": "src/main/menu_speaker_girl.c",
+        "source_sha256": "bac5ba1d7ea8f17e9bf69df803c9c1f1cebbf21fd5c3b3fc1e568bce20ca7185",
+        "assembly": "asm/matchings/main/menu_speaker_girl/x_taku_string_set.s",
         "assembly_sha256": "41ef1329383e8eb6c13c10d09933c6a72bcfd81ed3a9c5568c9b5c7181c55c9a",
         "binary": "SLPM_86.053",
         "binary_sha256": "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae",
@@ -51,14 +51,14 @@ SOURCE_PROOFS = {
             ]},
         ],
         "evidence": "first two label arguments are read unconditionally; third label is read only under the two encoded guards",
-        "crosscheck": ".asset-cache/text/custom-consumer-source-evidence.json: x_taku_string_set, 4 sites",
+        "crosscheck": ".asset-cache/text/current source custom-consumer crosscheck: x_taku_string_set, 4 sites",
     },
-    "func_8013E934": {
+    "rpg_label_create": {
         "unit": "RPG_BAT",
-        "source": "src/ovl/RPG_BAT/8013E4D0.c",
-        "source_sha256": "adbf70d8ae8df0aef1ff8964c681a8d29b828185764d0faf22b3ae8c08bd858b",
-        "assembly": "asm/ovl/RPG_BAT/matchings/RPG_BAT/8013E4D0/func_8013E934.s",
-        "assembly_sha256": "230cf417eda00fa6f49a8466b397b9eaaf5ca3a7c8be89319a75d87ef43c377a",
+        "source": "src/ovl/rpg_battle/actor_animation_damage_voice.c",
+        "source_sha256": "d4ec36d4c72f3b01e76fe29a6b4e1c743e5e9b32c5a89d67f180e24a6f836e39",
+        "assembly": "asm/ovl/RPG_BAT/matchings/rpg_battle/actor_animation_damage_voice/rpg_label_create.s",
+        "assembly_sha256": "aa29d828dd366d97f5cc9d0b4675ba08f462497a85382ac05e83b7c424adbb5c",
         "binary": "CDROM/EXEDIR/RPG_BAT.EXN",
         "binary_sha256": "59a6d1687e59132017eb7212fd6560b2e96bddad0a19ecac0929517b9ec4944c",
         "window_offset": 0xC934,
@@ -68,7 +68,7 @@ SOURCE_PROOFS = {
         "verified_instruction_words": 18,
         "read_arguments": [{"index": 2, "role": "display", "renderer": "set_kanji_string"}],
         "evidence": "third function argument is forwarded to set_kanji_string argument 3",
-        "crosscheck": ".asset-cache/text/custom-consumer-source-evidence.json: func_8013E934, 14 unique same-function label/byte bindings",
+        "crosscheck": ".asset-cache/text/current source custom-consumer crosscheck: rpg_label_create, 14 unique same-function label/byte bindings",
     },
 }
 
@@ -86,21 +86,21 @@ CUSTOM_REFERENCE_PROOFS = {
         "verified_instruction_words": 33,
         "read_arguments": [], "evidence": "custom consumer proof reference; not registered as a role",
     },
-    "func_8013E934": {
-        "source": SOURCE_PROOFS["func_8013E934"]["source"],
-        "source_sha256": SOURCE_PROOFS["func_8013E934"]["source_sha256"],
-        "assembly": SOURCE_PROOFS["func_8013E934"]["assembly"],
-        "assembly_sha256": SOURCE_PROOFS["func_8013E934"]["assembly_sha256"],
-        "binary": SOURCE_PROOFS["func_8013E934"]["binary"],
-        "binary_sha256": SOURCE_PROOFS["func_8013E934"]["binary_sha256"],
+    "rpg_label_create": {
+        "source": SOURCE_PROOFS["rpg_label_create"]["source"],
+        "source_sha256": SOURCE_PROOFS["rpg_label_create"]["source_sha256"],
+        "assembly": SOURCE_PROOFS["rpg_label_create"]["assembly"],
+        "assembly_sha256": SOURCE_PROOFS["rpg_label_create"]["assembly_sha256"],
+        "binary": SOURCE_PROOFS["rpg_label_create"]["binary"],
+        "binary_sha256": SOURCE_PROOFS["rpg_label_create"]["binary_sha256"],
         "verified_instruction_words": 18,
         "read_arguments": [], "evidence": "custom consumer proof reference; role is registered separately",
     },
-    "func_8014D11C": {
-        "source": "src/ovl/RPG_BAT/8014ADD0.c",
-        "source_sha256": "fa42924b2dbb8eeb6762ca4e19f33f5f304eeb75c0904a34324e2fae1825a7a6",
-        "assembly": "asm/ovl/RPG_BAT/matchings/RPG_BAT/8014ADD0/func_8014D11C.s",
-        "assembly_sha256": "3e2d9e3f68bb4a208b5bcde445b500ecf795a0837660849583fd7635aa0595ea",
+    "rpg_message_format_damage": {
+        "source": "src/ovl/rpg_battle/hud_messages_and_swimming_effect.c",
+        "source_sha256": "68c44fa0ca57953986fd8db30e04ad092ce7ab24317b1a3875a7de3e9ae8b943",
+        "assembly": "asm/ovl/RPG_BAT/matchings/rpg_battle/hud_messages_and_swimming_effect/rpg_message_format_damage.s",
+        "assembly_sha256": "8f7a648d6b25ab2adda28048ae8f98bb86adfbb8d3ca03bc0ca761ae7e289999",
         "binary": "CDROM/EXEDIR/RPG_BAT.EXN",
         "binary_sha256": "59a6d1687e59132017eb7212fd6560b2e96bddad0a19ecac0929517b9ec4944c",
         "verified_instruction_words": 153,
@@ -205,7 +205,7 @@ def _check_custom_consumer_evidence(evidence_path: Path, proofs: dict) -> dict:
     expected_summary = {
         "x_taku_string_set": {"sites": 4, "arguments": {"0": 2, "1": 2},
                               "unique_same_function_label_and_exact_bytes": 4},
-        "func_8013E934": {"sites": 14, "arguments": {"2": 14},
+        "rpg_label_create": {"sites": 14, "arguments": {"2": 14},
                           "unique_same_function_label_and_exact_bytes": 14},
     }
     checks = []

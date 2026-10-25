@@ -9,10 +9,135 @@ from pathlib import Path
 from tools.assets.text_source import (_asm_groups, _c_literals, _call_containing,
                                      _call_containing_argument, _decoded_view,
                                      _identifier_is_value_operand,
-                                     _literal_extent_candidates, _string_bytes, inventory_source_text)
+                                     _literal_extent_candidates, _string_bytes,
+                                     _matching_index, inventory_source_text,
+                                     source_link_unit)
 
 
 class LiteralTests(unittest.TestCase):
+    def test_source_link_unit_maps_logical_folder_to_executable_id(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            configs = root / "config" / "overlays"
+            configs.mkdir(parents=True)
+            (configs / "SHOUGATU.yaml").write_text(
+                "options:\n  basename: SHOUGATU\n  src_path: src/ovl\n"
+                "segments:\n  - name: SHOUGATU\n    subsegments:\n"
+                "      - [0x0, c, new_year_christmas/new_year_scene_setup]\n",
+                encoding="utf-8")
+            (root / "src" / "ovl" / "new_year_christmas").mkdir(parents=True)
+            self.assertEqual(
+                source_link_unit(root, "src/ovl/new_year_christmas/new_year_scene_setup.c"),
+                "SHOUGATU")
+            self.assertEqual(source_link_unit(root, "asm/ovl/SHOUGATU/data/unit.s"), "SHOUGATU")
+            self.assertEqual(source_link_unit(root, "CDROM/EXEDIR/SHOUGATU.EXN"), "SHOUGATU")
+            self.assertEqual(source_link_unit(root, "SLPM_86.053"), "main")
+
+    def test_source_link_unit_maps_only_configured_root_main_asm_segments(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            config = root / "config" / "SLPM_86.053.yaml"
+            config.parent.mkdir(parents=True)
+            config.write_text(
+                "options:\n  basename: SLPM_86.053\n  asm_path: asm\n"
+                "segments:\n  - [0x0, asm, configured_sdk]\n", encoding="utf-8")
+            self.assertEqual(source_link_unit(root, "asm/configured_sdk.s"), "main")
+            self.assertIsNone(source_link_unit(root, "asm/unlisted.s"))
+
+    def test_source_link_unit_rejects_ambiguous_config_but_keeps_legacy_fixture_fallback(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            configs = root / "config" / "overlays"
+            configs.mkdir(parents=True)
+            for overlay in ("ONE", "TWO"):
+                (configs / f"{overlay}.yaml").write_text(
+                    f"options:\n  basename: {overlay}\n  src_path: src/ovl\n"
+                    "segments:\n  - name: X\n    subsegments:\n"
+                    "      - [0x0, c, shared_topic/file]\n",
+                    encoding="utf-8")
+            self.assertIsNone(source_link_unit(root, "src/ovl/shared_topic/file.c"))
+            self.assertIsNone(source_link_unit(root, "src/ovl/LEGACY/file.c"))
+        with tempfile.TemporaryDirectory() as temp:
+            self.assertEqual(source_link_unit(Path(temp), "src/ovl/LEGACY/file.c"), "LEGACY")
+
+    def test_source_link_unit_cache_tracks_config_content_not_metadata(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            configs = root / "config" / "overlays"
+            configs.mkdir(parents=True)
+            config = configs / "ONE.yaml"
+            template = ("options:\n  basename: ONE\n  src_path: src/ovl\n"
+                        "segments:\n  - name: ONE\n    subsegments:\n"
+                        "      - [0x0, c, shared_topic/file]\n")
+            config.write_text(template, encoding="utf-8")
+            original = config.stat()
+            self.assertEqual(source_link_unit(root, "src/ovl/shared_topic/file.c"), "ONE")
+            config.write_text(template.replace("basename: ONE", "basename: TWO"), encoding="utf-8")
+            os.utime(config, ns=(original.st_atime_ns, original.st_mtime_ns))
+            self.assertIsNone(source_link_unit(root, "src/ovl/shared_topic/file.c"))
+            self.assertIsNone(source_link_unit(root, "src/ovl/ONE/file.c"))
+
+    def test_source_link_unit_rejects_parent_traversal(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            configs = root / "config" / "overlays"
+            configs.mkdir(parents=True)
+            (configs / "B.yaml").write_text(
+                "options:\n  basename: B\n  src_path: src/ovl\n"
+                "segments:\n  - name: B\n    subsegments:\n"
+                "      - [0x0, c, actor/entry]\n", encoding="utf-8")
+            self.assertIsNone(source_link_unit(root, "src/ovl/actor/../../main/entry.c"))
+
+    def test_source_link_unit_rejects_overlay_config_symlink_escape(self):
+        with tempfile.TemporaryDirectory() as temp, tempfile.TemporaryDirectory() as external:
+            root = Path(temp)
+            external_root = Path(external)
+            configs = root / "config" / "overlays"
+            configs.parent.mkdir(parents=True)
+            (external_root / "ONE.yaml").write_text(
+                "options:\n  basename: ONE\n  src_path: src/ovl\n"
+                "segments:\n  - name: ONE\n    subsegments:\n"
+                "      - [0x0, c, topic/file]\n", encoding="utf-8")
+            configs.symlink_to(external_root, target_is_directory=True)
+            self.assertIsNone(source_link_unit(root, "src/ovl/topic/file.c"))
+
+    def test_source_link_unit_rejects_individual_overlay_config_symlink_escape(self):
+        with tempfile.TemporaryDirectory() as temp, tempfile.TemporaryDirectory() as external:
+            root = Path(temp)
+            configs = root / "config" / "overlays"
+            configs.mkdir(parents=True)
+            outside = Path(external) / "ONE.yaml"
+            outside.write_text(
+                "options:\n  basename: ONE\n  src_path: src/ovl\n"
+                "segments:\n  - name: ONE\n    subsegments:\n"
+                "      - [0x0, c, topic/file]\n", encoding="utf-8")
+            (configs / "ONE.yaml").symlink_to(outside)
+            self.assertIsNone(source_link_unit(root, "src/ovl/topic/file.c"))
+            self.assertIsNone(source_link_unit(root, "src/ovl/ONE/file.c"))
+
+    def test_source_link_unit_rejects_nonfile_yaml_entries_without_legacy_mapping(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            configs = root / "config" / "overlays"
+            (configs / "ONE.yaml").mkdir(parents=True)
+            self.assertIsNone(source_link_unit(root, "src/ovl/ONE/file.c"))
+
+    def test_matching_index_finds_logical_overlay_folder_and_rejects_escape(self):
+        with tempfile.TemporaryDirectory() as temp, tempfile.TemporaryDirectory() as external:
+            repo = Path(temp)
+            match_root = repo / "asm" / "ovl" / "ONE" / "matchings"
+            logical = match_root / "topic" / "object"
+            logical.mkdir(parents=True)
+            (logical / "current_function.s").write_text("", encoding="utf-8")
+            outside = Path(external) / "escape"
+            outside.mkdir()
+            (outside / "external_function.s").write_text("", encoding="utf-8")
+            (match_root / "external").symlink_to(outside, target_is_directory=True)
+            index = _matching_index(repo)
+            self.assertEqual(index[("ONE", "current_function")],
+                             [(logical / "current_function.s").resolve()])
+            self.assertNotIn(("ONE", "external_function"), index)
+
     def test_inventory_json_is_hash_seed_independent(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

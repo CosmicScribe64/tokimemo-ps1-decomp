@@ -16,19 +16,25 @@ from pathlib import Path
 from .text_renderers import (C_STRING_READ_ARGUMENTS, DIAGNOSTIC_ARGUMENT_INDEX,
                              DISPLAY_ARGUMENT_INDEX, FORMAT_ARGUMENT_INDEX,
                              known_calls, read_argument_specs, string_argument_role)
+from .text_source import source_link_unit
 
 KNOWN_CALLS = known_calls()
 
 
-def _unit_candidates(mapping, source: Path) -> set[str]:
+def _unit_candidates(mapping, source: Path, repository: Path) -> set[str]:
     """Accept path-, overlay-, or link-unit-keyed candidate symbol maps."""
     rel = source.as_posix()
     parent = source.parent.as_posix()
+    unit = source_link_unit(repository, rel)
     if source.parts[:2] == ("src", "ovl") and len(source.parts) > 2:
-        overlay = source.parts[2]
-        keys = (rel, parent, overlay, f"CDROM/EXEDIR/{overlay}.EXN")
+        logical_folder = source.parts[2]
+        keys = (rel, parent)
+        if unit is not None:
+            keys += (unit, f"CDROM/EXEDIR/{unit}.EXN")
+        if unit is None or unit == logical_folder:
+            keys += (logical_folder,)
     elif source.parts[:2] == ("src", "main"):
-        keys = (rel, parent, "main", "SLPM_86.053")
+        keys = (rel, parent, unit, "main", "SLPM_86.053")
     else:
         keys = (rel, parent)
     values = set()
@@ -54,13 +60,8 @@ def _source_root(repository: Path) -> Path:
     raise ValueError("repository/source snapshot has no src/ tree")
 
 
-def _source_unit(source: Path) -> str | None:
-    source = Path(source)
-    if source.parts[:2] == ("src", "main"):
-        return "main"
-    if source.parts[:2] == ("src", "ovl") and len(source.parts) > 2:
-        return source.parts[2]
-    return None
+def _source_unit(source: Path, repository: Path) -> str | None:
+    return source_link_unit(repository, Path(source).as_posix())
 
 
 def _source_inputs(root: Path) -> list[tuple[str, str]]:
@@ -531,7 +532,7 @@ def _process_file(root: Path, source: Path, symbols: set[str]) -> dict:
         return {"path": rel, "status": "parse_error", "error_type": type(exc).__name__,
                 "coordinate": str(getattr(exc, "coord", ""))}
     declarations, typedefs = _declarations(ast, symbols)
-    unit = _source_unit(rel)
+    unit = _source_unit(rel, root)
     calls = []
     current_function = {"name": None}
     current_locals = {"names": set()}
@@ -668,7 +669,7 @@ def inventory_text_consumers(repository, candidate_symbols_by_unit, files=None) 
             results.append({"path": source.as_posix(), "status": "missing_or_outside_root"})
             continue
         rel = source.relative_to(root)
-        symbols = _unit_candidates(candidate_symbols_by_unit, rel)
+        symbols = _unit_candidates(candidate_symbols_by_unit, rel, root)
         result = _process_file(root, rel, symbols)
         result["source_sha256"] = hashlib.sha256(source.read_bytes()).hexdigest()
         results.append(result)

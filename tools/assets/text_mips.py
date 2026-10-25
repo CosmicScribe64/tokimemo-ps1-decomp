@@ -10,7 +10,7 @@ import hashlib
 import re
 from pathlib import Path
 
-from .text_source import REPOSITORY, _read_original
+from .text_source import REPOSITORY, _read_original, source_link_unit
 from .text_renderers import (DISPLAY_ARGUMENT_INDEX, FORMAT_ARGUMENT_INDEX, DIAGNOSTIC_ARGUMENT_INDEX,
                              read_argument_specs)
 
@@ -64,15 +64,11 @@ def _read_guards(conditions, state):
 
 def _unit(path, repo):
     relative = path.relative_to(repo).as_posix()
-    match = re.match(r"asm/(?:ovl|data/ovl)/([^/]+)/", relative)
-    return match.group(1) if match else "main"
+    return source_link_unit(repo, relative) or "unknown"
 
 
 def _record_unit(path):
-    if path == "SLPM_86.053":
-        return "main"
-    match = re.fullmatch(r"CDROM/EXEDIR/([A-Z0-9_]+)\.EXN", path)
-    return match.group(1) if match else None
+    return source_link_unit(REPOSITORY, path)
 
 
 def _signed(value, bits):

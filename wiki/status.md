@@ -1,6 +1,6 @@
 ---
 type: status
-updated: 2026-10-24
+updated: 2026-10-25
 ---
 
 # Status
@@ -8,6 +8,10 @@ updated: 2026-10-24
 ## Final source closeout gate (2026-10-25; supersedes older handoff status)
 
 The supplied final proof matches all 27 binaries: 6,952 functions and 2,276,920 bytes; source digest `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Current integration record: 437 logical C basenames; topic umbrellas removed; accepted logical overlay paths retain the TT exception; 1,298 semantic operations plus one local-name repair; 14 exact original-data includes; 14,449 ledger rows; 437 mapped views/inverse proofs; 43 data islands / 2,083 pieces; 337 path-tool tests. All non-publication phase 2 criteria have passed review; T-280xx asset work is separate. Current T-27000 status is Done. Publication is recorded below.
+
+## Asset continuation (2026-10-25)
+
+The text-reader rebase is applied against the finished Phase 2 source. Independent standards and correctness reviews pass; 437 canonical asset tests and the live 233-test source/serialization replay pass without skips. All 38,696 null-target units retain original payloads, control/voice semantics and verified identities. The catalog still has 1,889 semantically unresolved extents, so comprehensive translation coverage remains false. Media source-binding updates, additional exports and Japanese-text image review continue in isolated packets. Asset tickets remain In Progress. See [[assets-text]], [[assets-media]] and [[asset-export]].
 
 The one page for "where are we". Update it when a wave, a local or cloud session, or a contributor PR changes the numbers (`tools/docker.sh python3 tools/progress.py`). Older status and handoff pages are in `archive/` ([[completion-run-2026-10-17]], [[stopping-point-2026-10-15]]).
 

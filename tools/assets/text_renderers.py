@@ -27,7 +27,7 @@ FORMAT_CALLS = set(FORMAT_ARGUMENT_INDEX) | set(DIAGNOSTIC_ARGUMENT_INDEX)
 # overlay-local numeric names cannot collide. Main helpers are visible to every
 # caller unit. The RPG_BAT alias is visible only from that overlay.
 GLOBAL_ALIAS_ARGUMENTS = {
-    "func_80066104": {
+    "message_window_set_title_hidden": {
         0: {"role": "display", "renderer": "set_kanji_string", "conditions": ()},
     },
     "x_taku_string_set": {
@@ -41,7 +41,7 @@ GLOBAL_ALIAS_ARGUMENTS = {
 }
 UNIT_ALIAS_ARGUMENTS = {
     "RPG_BAT": {
-        "func_8013E934": {
+        "rpg_label_create": {
             2: {"role": "display", "renderer": "set_kanji_string", "conditions": ()},
         },
     },

@@ -9,6 +9,7 @@ strings are emitted.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -36,6 +37,108 @@ _EVENT_INITIALIZER_INDEXES = {
     "NI": set(range(61, 67)), "SA": set(range(67, 74)),
 }
 
+_C_NONCODE = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
+_DATE_ROOT_GLOBALS = {
+    base + 4 * index
+    for bases, count in [((0x8015BDC0, 0x8015BE2C, 0x8015BE98), 27),
+                         ((0x8015DE50, 0x8015DF8C, 0x8015E0C8), 79)]
+    for base in bases for index in range(count)
+} | {0x8015E208, 0x8015E20C, 0x8015E210}
+
+
+def _verify_profile_source_pins(repo_root: Path, profiles: list[dict]) -> None:
+    """Enforce reviewed hardcoded pins independently of snapshot self-lists."""
+    expected = {}
+    for profile in profiles:
+        for relative, digest in profile.get('source_pins', {}).items():
+            if relative in expected and expected[relative] != digest:
+                raise ValueError('conflicting profile source pins')
+            expected[relative] = digest
+    root = repo_root.resolve(strict=True)
+    for relative, digest in expected.items():
+        path = Path(relative)
+        if path.is_absolute() or '..' in path.parts:
+            raise ValueError('profile source pin path escapes repository')
+        try:
+            target = (root / path).resolve(strict=True)
+        except OSError as exc:
+            raise ValueError('profile source pin file missing') from exc
+        if not target.is_relative_to(root) or not target.is_file():
+            raise ValueError('profile source pin path escapes repository')
+        if hashlib.sha256(target.read_bytes()).hexdigest() != digest:
+            raise ValueError('profile source pin mismatch')
+
+
+def _current_source_path(repo_root: Path, relative: str) -> Path:
+    """Resolve an old object identity only through the explicit rename ledger."""
+    ledger = repo_root / 'config/renames/overlay-files.txt'
+    if not ledger.is_file():
+        return repo_root / relative
+    parts = relative.split('/')
+    if len(parts) != 4 or parts[:2] != ['src', 'ovl']:
+        return repo_root / relative
+    unit, filename = parts[2], parts[3]
+    directory = unit
+    for line in (repo_root / 'config/renames/t27074-paths.txt').read_text().splitlines():
+        fields = line.split()
+        if fields[:2] == ['dir', unit] and fields[2] == directory:
+            directory = fields[3]
+    stem = filename.removesuffix('.c')
+    for line in ledger.read_text().splitlines():
+        fields = line.split()
+        if fields[:3] == ['file', unit, stem]:
+            stem = fields[3]
+    return repo_root / 'src/ovl' / directory / (stem + '.c')
+
+
+def _read_source(repo_root: Path, relative: str) -> tuple[str, str]:
+    path = _current_source_path(repo_root, relative)
+    actual = path.relative_to(repo_root).as_posix()
+    raw = path.read_bytes()
+    manifest = repo_root / 'snapshot-manifest.json'
+    if manifest.is_file():
+        pins = json.loads(manifest.read_text())['files']
+        if pins.get(actual) != hashlib.sha256(raw).hexdigest():
+            raise ValueError('source-root audit current source pin mismatch')
+    source = raw.decode('utf-8', errors='strict')
+    source = _C_NONCODE.sub(lambda m: ''.join('\n' if c == '\n' else ' ' for c in m[0]), source)
+    # Exact configured data-symbol addresses preserve the audit's address-keyed
+    # assignment/consumer checks. Function names and constants are untouched.
+    if relative.startswith('src/ovl/'):
+        unit = relative.split('/')[2]
+        symbols = repo_root / ('config/symbols_' + unit + '.txt')
+        if symbols.is_file():
+            mapping = {}
+            for line in symbols.read_text().splitlines():
+                match = re.fullmatch(r'(\w+)\s*=\s*0x([0-9A-Fa-f]+);(.*)', line)
+                if (unit == 'DATE' and match and 'type:func' not in match[3]
+                        and int(match[2], 16) in _DATE_ROOT_GLOBALS):
+                    mapping[match[1]] = 'D_%08X' % int(match[2], 16)
+            shared_symbols = repo_root / 'config/symbol_addrs.txt'
+            if shared_symbols.is_file():
+                for line in shared_symbols.read_text().splitlines():
+                    match = re.fullmatch(r'(\w+)\s*=\s*0x([0-9A-Fa-f]+);(.*)', line)
+                    if match and int(match[2], 16) in (0x800CA13C, 0x800CA140, 0x800CA144):
+                        mapping[match[1]] = 'D_%08X' % int(match[2], 16)
+            source = re.sub(r'\b[A-Za-z_]\w*\b', lambda m: mapping.get(m[0], m[0]), source)
+    return actual, source
+
+
+def _source_functions(repo_root: Path, relative: str) -> list[str]:
+    """Use exact current ASM glabels belonging to this source object."""
+    path = _current_source_path(repo_root, relative)
+    unit = relative.split('/')[2]
+    paths = list((repo_root / 'asm/ovl' / unit / 'matchings').glob('*/' + path.stem + '/*.s'))
+    if paths:
+        names = []
+        for assembly in paths:
+            label = re.search(r'^glabel\s+(\w+)\s*$', assembly.read_text(), re.M)
+            if label:
+                names.append(label[1])
+        return names
+    _, source = _read_source(repo_root, relative)
+    return re.findall(r'\b(func_801[0-9A-Fa-f]+)\s*\([^;]*?\)\s*\{', source)
+
 
 def _assignments(source: str) -> dict[str, int]:
     return {name: int(value, 16) for name, value in re.findall(
@@ -46,7 +149,22 @@ def _assignments(source: str) -> dict[str, int]:
 def _function_body(repo_root: Path, evidence: str) -> tuple[str, str]:
     """Read a cited C initializer function and return (path, balanced body)."""
     source_ref, function = evidence.split("::", 1)
-    source = (repo_root / source_ref).read_text(encoding="utf-8")
+    original_ref = source_ref
+    source_ref, source = _read_source(repo_root, source_ref)
+    old = re.fullmatch(r'func_([0-9A-Fa-f]{8})', function)
+    if old and not re.search(r'\b' + re.escape(function) + r'\s*\(', source):
+        path = _current_source_path(repo_root, original_ref)
+        unit = original_ref.split('/')[2]
+        matches = []
+        for assembly in (repo_root / 'asm/ovl' / unit / 'matchings').glob('*/' + path.stem + '/*.s'):
+            text = assembly.read_text()
+            label = re.search(r'^glabel\s+(\w+)\s*$', text, re.M)
+            word = re.search(r'/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s*\*/', text)
+            if label and word and int(word[1], 16) == int(old[1], 16):
+                matches.append(label[1])
+        if len(matches) != 1:
+            raise ValueError('initializer does not have one exact current ASM entry')
+        function = matches[0]
     match = re.search(r"\b" + re.escape(function) + r"\s*\([^;]*?\)\s*\{", source)
     if not match:
         raise ValueError("missing source initializer: " + evidence)
@@ -71,7 +189,7 @@ def _audit_simple_source_profiles(repo_root: Path, profiles: list[dict],
     missing_total = extra_total = 0
     for profile in selected:
         refs = [ref for ref in profile.get("evidence", [])
-                if "::func_" in ref]
+                if "::" in ref]
         if profile["id"] == "omimai-p-birth":
             refs = ["src/ovl/OMIMAI/80132AD0.c::func_80132AD0"]
         if not refs:
@@ -99,9 +217,11 @@ def _audit_simple_source_profiles(repo_root: Path, profiles: list[dict],
 def audit_source_roots(repo_root: Path, profiles: list[dict] | None = None) -> dict:
     """Compare configured profiles with source-initialized linked-table roots."""
     profiles = PROFILES if profiles is None else profiles
+    _verify_profile_source_pins(repo_root, profiles)
     date_source_paths = (repo_root / "src/ovl/DATE/80132000.c",
                          repo_root / "src/ovl/DATE/80141EE0.c")
-    date_source = "\n".join(path.read_text(encoding="utf-8") for path in date_source_paths)
+    date_source = "\n".join(_read_source(repo_root, str(path.relative_to(repo_root)))[1]
+                            for path in date_source_paths)
     date_profiles = {p["path"].rsplit("_", 1)[-1].split(".", 1)[0]: p
                      for p in profiles if "/DATE_" in p["path"]}
     date_results = []
@@ -137,7 +257,7 @@ def audit_source_roots(repo_root: Path, profiles: list[dict] | None = None) -> d
             "initialized_roots_without_direct_consumer": len(expected - directly_consumed),
         })
 
-    event_init = (repo_root / "src/ovl/DATE/8014B1F0.c").read_text(encoding="utf-8")
+    _, event_init = _read_source(repo_root, "src/ovl/DATE/8014B1F0.c")
     event_values = _assignments(event_init)
     event_expected = set()
     for index in range(79):
@@ -176,7 +296,7 @@ def audit_source_roots(repo_root: Path, profiles: list[dict] | None = None) -> d
             "unexpected_profile_roots": len(actual - expected),
         })
         source_path = repo_root / "src/ovl/DATE" / _EVENT_CONSUMER_SOURCES[suffix]
-        source = source_path.read_text(encoding="utf-8")
+        _, source = _read_source(repo_root, str(source_path.relative_to(repo_root)))
         names_in_source = re.findall(
             r"D_8015E208\s*=\s*(D_8015\w+);\s*D_8015E20C\s*=\s*(D_8015\w+);"
             r"\s*D_8015E210\s*=\s*(D_8015\w+);", source
@@ -184,8 +304,9 @@ def audit_source_roots(repo_root: Path, profiles: list[dict] | None = None) -> d
         source_roots = {tuple(event_values[name] for name in triple)
                         for triple in names_in_source if all(name in event_values for name in triple)}
         consumed_missing_correct_profile += len(source_roots - actual)
-    event_source = "\n".join(path.read_text(encoding="utf-8")
-                               for path in (repo_root / "src/ovl/DATE").glob("*.c"))
+    event_directory = _current_source_path(repo_root, 'src/ovl/DATE/80132000.c').parent
+    event_source = "\n".join(_read_source(repo_root, 'src/ovl/DATE/' + path.name)[1]
+                               for path in event_directory.glob("*.c"))
     consumed_names = re.findall(
         r"D_8015E208\s*=\s*(D_8015\w+);\s*D_8015E20C\s*=\s*(D_8015\w+);"
         r"\s*D_8015E210\s*=\s*(D_8015\w+);", event_source
@@ -199,8 +320,7 @@ def audit_source_roots(repo_root: Path, profiles: list[dict] | None = None) -> d
                      repo_root / "src/ovl/BUNKASAI/80132000.c"]
     bunka_init_triples = []
     for path in bunka_sources:
-        source = path.read_text(encoding="utf-8")
-        for function in re.findall(r"\b(func_801[0-9A-Fa-f]+)\s*\([^;]*?\)\s*\{", source):
+        for function in _source_functions(repo_root, str(path.relative_to(repo_root))):
             _, body = _function_body(repo_root, str(path.relative_to(repo_root)) + "::" + function)
             values = [int(value, 16) for value in re.findall(
                 r"=\s*(0x80[0-9A-Fa-f]{6})\s*;", body)]

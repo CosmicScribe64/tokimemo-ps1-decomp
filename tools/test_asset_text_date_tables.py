@@ -55,7 +55,9 @@ class DateTableTests(unittest.TestCase):
         self.assertEqual(DATE_TABLE_PROFILE["tables"][0]["valid_count"], 21)
         self.assertEqual(DATE_TABLE_PROFILE["tables"][1]["dimensions"], [11, 3, 3])
         self.assertEqual([table["assembly_size"] for table in DATE_TABLE_PROFILE["tables"]], [728, 3272])
-        self.assertIn("src/ovl/DATE/80149310.c", DATE_TABLE_PROFILE["source_pins"])
+        self.assertIn("src/ovl/date/girl_birthday.c", DATE_TABLE_PROFILE["source_pins"])
+        self.assertIn("include/ovl/date.h", DATE_TABLE_PROFILE["source_pins"])
+        self.assertEqual(len(DATE_TABLE_PROFILE["source_checks"]), 6)
 
     def test_real_trailing_bytes_have_neutral_extent_metadata(self):
         data = bytes(2 * 33 + 8 * 33)

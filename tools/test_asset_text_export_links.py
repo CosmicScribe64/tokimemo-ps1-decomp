@@ -2,6 +2,7 @@
 import unittest
 import tempfile
 import hashlib
+import json
 from pathlib import Path
 from unittest.mock import patch
 from tools.assets.text_export import (export_text, _attach_storage_overlap_metadata, _attach_typed_dictionary_links,
@@ -87,6 +88,11 @@ class LinkTests(unittest.TestCase):
                 patch("tools.assets.text_mips.enrich_mips_context", side_effect=mips_report), \
                 patch("tools.assets.text_binary._enrich_binary_text_from_reports", side_effect=binary_report), \
                 patch("tools.assets.script_mutations.enrich_script_mutations", side_effect=mutation_report):
+            provenance = {"schema": "synthetic-source-witness", "source_tree_sha256": "synthetic-tree",
+                          "stable_copy_verified": True, "revision": "synthetic-revision",
+                          "build_source_digest": "synthetic-build", "matching_proof_sha256": "synthetic-proof"}
+            manifest_raw = json.dumps(provenance).encode()
+            (Path(directory) / "snapshot-manifest.json").write_bytes(manifest_raw)
             catalog = export_text(directory, profiles=[], include_source=True, source_repository=directory)
         self.assertIs(catalog["source_inventory"], inventory)
         self.assertFalse(catalog["text_completeness"]["complete"])
@@ -96,6 +102,9 @@ class LinkTests(unittest.TestCase):
         self.assertEqual(catalog["text_completeness"]["unresolved_opaque_value_dependencies"], 1)
         self.assertEqual(site["renderer_view"]["tokens"][0]["font_reference"]["id"], "font:INVENTED:g0000")
         self.assertEqual(runtime_token["font_reference"]["id"], "font:INVENTED:g0000")
+        self.assertEqual(catalog["source_evidence_snapshot"]["revision"], "synthetic-revision")
+        self.assertEqual(catalog["source_evidence_snapshot"]["build_source_digest"], "synthetic-build")
+        self.assertEqual(catalog["source_evidence_snapshot"]["manifest_sha256"], hashlib.sha256(manifest_raw).hexdigest())
 
     def test_only_actual_format_argument_gets_format_tokens(self):
         fmt = {"source_site": {"call": "sprintf", "call_argument_index": 1}, "raw_hex": b"%s".hex()}

@@ -3,14 +3,14 @@
 ``CDROM/BUNKA/BUN_PC.BIN`` is 10,240 bytes with SHA-256
 ``6af0844f3d3dce2aa304de509307d40f70d8610fec7acedd2ce85b4c395a90e9``.
 Its table triad and 83 contiguous groups are established by
-``src/ovl/BUNKAKEN/80132000.c:148-152`` and the parsed-container evidence in
+``src/ovl/culture_festival_tour/script_setters_shiori_yukari_blocks.c`` and the parsed-container evidence in
 ``wiki/spec/m-dates-b.md``. It is read from the extracted ``disc/files`` root.
 
 ``CDROM/SERIFU/P_BIRTH.BIN`` is 6,144 bytes with SHA-256
 ``76f6a93641fd9fd83aafab9be505906b6fa57905665013236a8484028d9a844e``.
 Its load address and thirteen per-girl table triads come from
-``src/ovl/OMIMAI/80132AD0.c:3-42,60-64,84-140``; the load is independently
-confirmed at ``src/ovl/BUNKASAI/80148ED0.c:235`` and the extent is identified
+``src/ovl/sick_visit/sick_visit_scene_resource_addresses.c``; the load is independently
+confirmed at ``src/ovl/culture_festival/birthday_scene.c:358`` and the extent is identified
 as ``CDROM/SERIFU/P_BIRTH.BIN`` by the ISO inventory at LBA 0xAF43. The
 contiguous group counts, in section order, are 3, 3, 1, 3, 3, 3, 3, 3, 3, 3,
 3, 1, 3, validated from all three pointer tables in Docker.
@@ -32,7 +32,7 @@ PROFILES = [
             },
         ],
         "evidence": [
-            "src/ovl/BUNKAKEN/80132000.c",
+            'src/ovl/culture_festival_tour/script_setters_shiori_yukari_blocks.c',
             "wiki/spec/m-dates-b.md",
         ],
     },
@@ -57,8 +57,8 @@ PROFILES = [
             {"id": "girl-12", "text_table": 0x801B1454, "command_table": 0x801B1470, "voice_table": 0x801B155C, "group_count": 3},
         ],
         "evidence": [
-            "src/ovl/OMIMAI/80132AD0.c",
-            "src/ovl/BUNKASAI/80148ED0.c",
+            'src/ovl/sick_visit/sick_visit_scene_resource_addresses.c',
+            'src/ovl/culture_festival/birthday_scene.c (current line 358: case 0x29 reads LBA 0xAF43 into 0x801B0000)',
             "wiki/spec/o-bunkasai.md",
         ],
     },

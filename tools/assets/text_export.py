@@ -18,12 +18,14 @@ from pathlib import Path
 from .script_profiles import PROFILES, NON_TEXT_PROFILES, RESOURCE_PROFILES
 from .script_profiles_master import verify_boundaries
 from .text import TextFormatError, parse_script, sha256, source_path
-from .text_font import attach_font_references, font_metadata
+from .text_font import attach_font_references, font_metadata, verify_font_source_proof
 from .script_validation import checked_cd_trailer, validate_script
-from .text_tables import DICTIONARY_PROFILES, NAME_KAN_PROFILE, parse_character_lists, parse_dictionary
-from .text_date_tables import DATE_TABLE_PROFILE, parse_date_tables
+from .text_tables import (DICTIONARY_PROFILES, NAME_KAN_PROFILE, parse_character_lists, parse_dictionary,
+                          verify_table_source_proof)
+from .text_date_tables import DATE_TABLE_PROFILE, parse_date_tables, verify_date_source_proof
 from .text_ui_tables import UI_TABLE_PROFILES, parse_ui_tables, verify_ui_source_proof
-from .text_overlay_tables import OVERLAY_TABLE_PROFILES, parse_overlay_fixed_tables
+from .text_overlay_tables import (OVERLAY_TABLE_PROFILES, parse_overlay_fixed_tables,
+                                  verify_profile_source_pins)
 from .text_bunka_sd import BUNKA_SD_PROFILE, parse_bunka_sd, _source_files as _bunka_source_files
 from .text_fixed import tokenize_fixed_text
 from .text_renderers import read_argument_specs
@@ -232,6 +234,8 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
     directory corresponds to disc/files, so paths start with CDROM/.
     """
     root = Path(input_dir).resolve(strict=True)
+    proof_repository = (REPOSITORY if source_repository is None else Path(source_repository).resolve(strict=True)) \
+        if include_source or source_repository is not None else None
     if not root.is_dir():
         raise TextFormatError("input must be an extracted directory")
     selected = list(PROFILES if profiles is None else profiles)
@@ -258,8 +262,12 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         resolved = _input_file(root, path)
         data = resolved.read_bytes()
         if path in character_tables:
+            parsed = parse_character_lists(data, character_tables[path])
+            parsed["source_proof"] = (verify_table_source_proof(data, character_tables[path], proof_repository, root)
+                                      if proof_repository is not None else
+                                      {"status": "pinned_profile_source_files_not_rechecked"})
             files.append({"path": path, "status": "exported_table",
-                          "character_lists": parse_character_lists(data, character_tables[path])})
+                          "character_lists": parsed})
             continue
         if path in numeric:
             files.append({"path": path, "status": "non_text", "reason": "source_typed_numeric_choice_results",
@@ -300,18 +308,32 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
                                      "reason": "source/reference classification and runtime rendering audit are required"}
     exe = root / "SLPM_86.053"
     if exe.is_file() and profiles is None:
-        catalog["font"] = font_metadata(_input_file(root, "SLPM_86.053").read_bytes())
+        font_data = _input_file(root, "SLPM_86.053").read_bytes()
+        catalog["font"] = font_metadata(font_data)
+        catalog["font"]["source_proof"] = (verify_font_source_proof(font_data, proof_repository, root)
+                                           if proof_repository is not None else
+                                           {"status": "pinned_profile_source_files_not_rechecked"})
     if profiles is None:
         catalog["dictionaries"] = []
         for dictionary_profile in DICTIONARY_PROFILES:
             path = dictionary_profile["path"]
             if (root / path).is_file():
-                catalog["dictionaries"].append(parse_dictionary(_input_file(root, path).read_bytes(), dictionary_profile))
+                data = _input_file(root, path).read_bytes()
+                parsed = parse_dictionary(data, dictionary_profile)
+                parsed["source_proof"] = (verify_table_source_proof(data, dictionary_profile, proof_repository, root)
+                                           if proof_repository is not None else
+                                           {"status": "pinned_profile_source_files_not_rechecked"})
+                catalog["dictionaries"].append(parsed)
             else:
                 catalog["dictionaries"].append({"profile": dictionary_profile, "status": "source_missing"})
         path = DATE_TABLE_PROFILE["path"]
         if (root / path).is_file():
-            catalog["dictionaries"].append(parse_date_tables(_input_file(root, path).read_bytes()))
+            data = _input_file(root, path).read_bytes()
+            parsed = parse_date_tables(data)
+            parsed["source_proof"] = (verify_date_source_proof(data, proof_repository, root)
+                                       if proof_repository is not None else
+                                       {"status": "pinned_profile_source_files_not_rechecked"})
+            catalog["dictionaries"].append(parsed)
         else:
             catalog["dictionaries"].append({"profile": DATE_TABLE_PROFILE, "status": "source_missing"})
         for profile in UI_TABLE_PROFILES:
@@ -320,8 +342,8 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
                 catalog["dictionaries"].append({"profile": profile, "status": "source_missing"})
                 continue
             data = _input_file(root, path).read_bytes()
-            proof = (verify_ui_source_proof(data, profile, source_repository, root)
-                     if source_repository is not None else
+            proof = (verify_ui_source_proof(data, profile, proof_repository, root)
+                     if proof_repository is not None else
                      {"status": "pinned_profile_source_files_not_rechecked"})
             parsed = parse_ui_tables(data, profile)
             parsed["source_proof"] = proof
@@ -329,8 +351,12 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         for profile in OVERLAY_TABLE_PROFILES:
             path = profile["path"]
             if (root / path).is_file():
-                catalog["dictionaries"].append(
-                    parse_overlay_fixed_tables(_input_file(root, path).read_bytes(), profile))
+                proof = (verify_profile_source_pins(proof_repository, profile)
+                         if proof_repository is not None else
+                         {"status": "pinned_profile_source_files_not_rechecked"})
+                parsed = parse_overlay_fixed_tables(_input_file(root, path).read_bytes(), profile)
+                parsed["source_proof"] = proof
+                catalog["dictionaries"].append(parsed)
             else:
                 catalog["dictionaries"].append({"profile": profile, "status": "source_missing"})
         catalog["stage_text_banks"] = []
@@ -353,6 +379,10 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
             catalog["stage_text_banks"].append({"profile": BUNKA_SD_PROFILE, "status": "source_missing"})
         catalog["text_completeness"]["stage_bank_blockers"] = sum(
             bank.get("status") != "exported" or bool(bank.get("issues")) for bank in catalog["stage_text_banks"])
+        if proof_repository is not None:
+            catalog["text_completeness"]["fixed_table_source_proof_blockers"] = sum(
+                not dictionary.get("source_proof", {}).get("status", "").startswith("verified_")
+                for dictionary in catalog["dictionaries"])
         if "font" in catalog:
             attach_font_references(catalog, catalog["font"])
     if include_source:
@@ -375,9 +405,14 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         enrich_source_context(catalog["source_inventory"], source_repo, root, use_ast=True)
         snapshot_manifest = source_repo / "snapshot-manifest.json"
         if snapshot_manifest.is_file():
-            metadata = json.loads(snapshot_manifest.read_text(encoding="utf-8"))
+            manifest_raw = snapshot_manifest.read_bytes()
+            metadata = json.loads(manifest_raw)
             catalog["source_evidence_snapshot"] = {key: metadata[key] for key in
                                                     ("schema", "source_tree_sha256", "stable_copy_verified")}
+            catalog["source_evidence_snapshot"]["manifest_sha256"] = sha256(manifest_raw)
+            for key in ("revision", "build_source_digest", "matching_proof_sha256"):
+                if key in metadata:
+                    catalog["source_evidence_snapshot"][key] = metadata[key]
         _attach_source_renderer_views(catalog["source_inventory"])
         _attach_typed_dictionary_links(catalog)
         _attach_stage_storage_links(catalog)

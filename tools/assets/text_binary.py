@@ -16,7 +16,8 @@ from .text_fixed import tokenize_fixed_text
 from .text_mips import (_record_unit, _unit, _reset, _ordinary, _control, enrich_mips_context,
                         INSTRUCTION, LABEL, SYMBOL, role_for_argument, text_argument_spec)
 from .text_renderers import string_argument_role
-from .text_source import ADDR_COMMENT, REPOSITORY, _decoded_view, _read_original, _string_bytes
+from .text_source import (ADDR_COMMENT, REPOSITORY, _decoded_view, _read_original,
+                          _string_bytes, source_link_unit)
 
 _LABEL = re.compile(r"^\s*(dlabel|enddlabel)\s+(\S+)\s*$")
 _DIRECTIVE = re.compile(r"^\s*\.([A-Za-z0-9_]+)\s*(.*?)\s*$")
@@ -284,9 +285,7 @@ def _enrich_binary_text_from_reports(inventory: dict, repository, files_root=Non
         try:
             site = leaf["source_site"]
             c_path = source_path(site["path"])
-            c_parts = Path(c_path).parts
-            caller_unit = "main" if c_parts[:2] == ("src", "main") else \
-                c_parts[2] if c_parts[:2] == ("src", "ovl") and len(c_parts) > 2 else None
+            caller_unit = source_link_unit(repo, c_path)
             role = role_for_argument(site["call"], site.get("call_argument_index"), caller_unit)
             spec = text_argument_spec(site["call"], site.get("call_argument_index"), caller_unit)
             selectors = leaf["selectors"]
@@ -563,9 +562,7 @@ def _enrich_binary_text_from_reports(inventory: dict, repository, files_root=Non
         leaf_resolutions.append(resolution)
         call_name = leaf.get("source_site", {}).get("call")
         site = leaf.get("source_site", {})
-        parts = Path(site.get("path", "")).parts
-        caller_unit = "main" if parts[:2] == ("src", "main") else \
-            parts[2] if parts[:2] == ("src", "ovl") and len(parts) > 2 else None
+        caller_unit = source_link_unit(repo, site.get("path", ""))
         if role_for_argument(call_name, site.get("call_argument_index"), caller_unit) is None:
             resolution["status"] = "consumer_role_not_supported"
             continue
@@ -680,9 +677,7 @@ def _enrich_binary_text_from_reports(inventory: dict, repository, files_root=Non
             record["category_basis"] = record["context_category_basis"]
         for context in fresh_contexts:
             call = context["source_site"].get("call")
-            parts = Path(context["source_site"].get("path", "")).parts
-            caller_unit = "main" if parts[:2] == ("src", "main") else \
-                parts[2] if parts[:2] == ("src", "ovl") and len(parts) > 2 else None
+            caller_unit = source_link_unit(repo, context["source_site"].get("path", ""))
             role = role_for_argument(call, context["source_site"].get("call_argument_index"), caller_unit)
             if role is None or role[1] != context["category"]:
                 continue

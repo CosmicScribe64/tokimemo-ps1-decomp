@@ -4,7 +4,7 @@ title: Export text and dialogue for translation
 status: In Progress
 assignee: asset-coordinator
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-25
 links: ["[[asset-export]]", "[[disc-layout]]", "[[tickets/T-0002-disc-extraction-and-exe-identification]]"]
 ---
 
@@ -265,3 +265,69 @@ write candidates (2,141 total) and one RPG_BAT call at 0x801525CC to the existin
 field 0x800E6354 (198 unresolved constant references total: 170 runtime-name addresses and 28 original
 zero buffers). Opaque/address dependencies remain 1,381/131 with overlap possible. Completeness
 remains false; no future layout limit or runtime execution is inferred. Source-only packet sealing follows.
+
+Corrected source-only packet: `.asset-cache/text/semantic-milestone-b67ddd6c594125df/`, 50
+source/test/docs files, source-set SHA256
+`b67ddd6c594125dfc9dc8108886df02f80a7c3eb517be79cb18da2a2f4457124`, manifest SHA256
+`926ad42f2e9da6d04b4f6430d2e9a240e4bd68eeb6f88b43fe42270e4ab26f4d`. Exact captured sources
+pass 214/214 tests in an ephemeral Docker copy with repository/packet/evidence mounted read-only;
+all captured hashes remain unchanged. Three numeric reports bind the canonical catalog and units.
+The unpublished 902d packet is superseded because its frozen wiki retained historical mutation scan
+counts; the corrected current counts are 293 parsed and 144 prefiltered files out of 437. No raw input
+or production tooling changed for that correction. Final independent packaging audit passes: exact
+55 files / 54 checksum entries, no hash/size/file-set failures, no symlinks or forbidden asset files,
+all three reports bound to the canonical catalog, and corrected scan counts independently recomputed.
+
+Next semantic work should prove RPG_BAT's writable pointer-table producer path: installation count,
+indexed display, copy/compose operations, overwrite order and conditions. The builder's destination
+is an output buffer and its installer consumes `char **`; neither is a direct single-string renderer.
+EVENT/GYOZI numeric names and equal-content ambiguous literals remain insufficient attribution.
+These are source/context closure tasks, with original bytes already retained. Parent owns shared
+log/board and Git integration; the immutable packet excludes common CLI and all extracted assets.
+
+Parent reports b67 integrated in `b4977bd16`: 35 changed Python files taken from 48 frozen Python
+blobs; all 50 source/test/docs entries and three report pins verified. The coherent archive of parent
+tools plus this text freeze passes 367 combined tests with zero skips under Python 3.10.12,
+pycparser 3.11 and gcc 11.4. Shared CLI is unchanged. This integration result does not close the
+1,889 unresolved semantic extents or comprehensive coverage.
+
+Historical hold (2026-10-24), superseded by the current-source rebase below:
+
+Fresh-clone and source-proof bootstrap conditions are now explicit in [[assets-text]]. The f9c source
+snapshot is ignored historical evidence, separately retained from Git; the current renamed C/header
+tree does not reproduce that witness or automatically satisfy its pins. Basic original-file extraction
+can run without the source audit, with missing source-dependent readers/proofs reported explicitly.
+Current-tree proof rebasing waits for T-27061 header closure and T-27074 path moves to stabilize.
+Per parent direction, no new full export, expensive audit, live C/Git/shared-wiki work or unbounded
+follow-up research is scheduled. Existing bounded RPG producer-flow leads are preserved for later;
+no English-patch translation wording is used. T-28001 remains In Progress.
+
+
+2026-10-25 current-source rebase: all work was prepared in an isolated ignored candidate; live
+tools/src/include/config/wiki and Git were left to the parent applicator. Source revision d7fb33f96,
+reviewed C/header revision 182af9d13 and accepted build-source digest 687b5ce7 are pinned by the shared
+current witness (tree 75eafb59, manifest 3fede640). The f9c witness remains unchanged historical evidence.
+
+Current paths, function/data identities, source/header pins and source-dependent table/renderer
+proofs are rebased using actual original addresses/instructions and current source semantics. Root
+and fixed-table audits preserve every parser-affecting field. The first full run exposed an old-folder
+matching-index assumption and skipped root SDK assembly; both were fixed and the full export rerun.
+Current code also rejects stale ownership caches, traversal and escaped/malformed configs. Invalid
+UI encodings retain explicit TextFormatError rejection, with a defensive status guard and regression.
+
+The corrected current-source catalog is 168,447,900 bytes, SHA256
+`ec28ff8a3280d57de9e488802ae1c2fbfee97f356435bf977b86a18a71720c0b`. All 233 tests pass in Docker
+with the current source-root audit enabled and zero skips. All original-byte, strict Unicode/token,
+slot/tail, UTF-8 locator, AST and source/code/data proof checks pass with zero blockers. All 125 input
+files verify and all 2,348 facts-only external direct-string offsets still match. No English wording
+was imported or reused. Original capacities remain provenance, not future translation limits.
+
+Compared with the prior 38,696 units and 1,889 unknown extents: counts, original payloads, stable
+physical/function identities, classifications and readiness are preserved. One pre-existing unresolved
+global locator follows the holiday C filename/line change, with identical raw bytes and Unicode;
+current source paths, evidence and symbolic-buffer display names account for other metadata changes.
+JSONL/TSV remain semantically identical with null targets. Completeness is false; T-28001 stays
+In Progress. Candidate source/test/docs and numeric reports will be supplied as a hash-pinned packet
+for parent review/application; no raw payloads or generated ASM are part of that packet.
+
+2026-10-25 root integration: the exact sealed `309b9816078ec0b8` packet is applied after independent Standards and Sol 6.1 correctness reviews passed. All 50 source/test/doc after-hashes match, preserving the pre-existing documentation work. The root integration run passes 437 canonical asset tests without skips; the live replay passes all 233 text tests, current source/table/renderer/substitution proofs and exact JSONL/TSV validation. Independent correctness replay checked 612,332 original instruction words across 27 images and all 38,696 units against 125 original inputs. The 1,072 protected C/header/config/build files are unchanged. No binary rebuild was needed for this asset-tool-only batch. The immutable Phase 2 witness remains the source reference; changing asset tests changes the broader tooling fingerprint without changing game source. Comprehensive coverage remains false with 1,889 unknown extents; ticket stays In Progress.

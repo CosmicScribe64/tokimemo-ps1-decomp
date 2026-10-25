@@ -49,7 +49,7 @@ class MipsContextTests(unittest.TestCase):
         result = self.run_case(words, "x_taku_string_set")
         third = next(context for context in result["records"][0]["mips_contexts"] if context["argument_index"] == 2)
         self.assertEqual(third["callee_read_conditions"][0]["status"], "unknown")
-        result = self.run_case([lui(6, TEXT >> 16), ori(6, 6, TEXT & 0xFFFF), jal(CALLEE), 0], "func_8013E934")
+        result = self.run_case([lui(6, TEXT >> 16), ori(6, 6, TEXT & 0xFFFF), jal(CALLEE), 0], "rpg_label_create")
         self.assertEqual(result["mips_context"]["contexts"], 0)
 
     def fixture(self, root, words, callee="printf", labels=None):

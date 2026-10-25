@@ -23,6 +23,7 @@ from .text_source import (
     _mask_c_comments,
     _mask_c_literals,
     _read_original,
+    source_link_unit,
 )
 from .text_renderers import string_argument_role
 
@@ -35,20 +36,12 @@ class ContextError(ValueError):
 
 
 def _unit_from_binary(path: str) -> str:
-    if path == "SLPM_86.053":
-        return "main"
-    match = re.fullmatch(r"CDROM/EXEDIR/([A-Z0-9_]+)\.EXN", path)
-    return match.group(1) if match else "unknown"
+    return source_link_unit(REPOSITORY, path) or "unknown"
 
 
 def _unit_from_asm(path: Path, repo: Path) -> str:
     relative = path.relative_to(repo).as_posix()
-    if relative.startswith("asm/data/ovl/"):
-        return relative.split("/")[3]
-    if relative.startswith("asm/data/") or relative.startswith("asm/matchings/main/"):
-        return "main"
-    match = re.match(r"asm/ovl/([A-Z0-9_]+)/", relative)
-    return match.group(1) if match else "unknown"
+    return source_link_unit(repo, relative) or "unknown"
 
 
 def _role(call: str | None, function: str | None,
@@ -449,7 +442,7 @@ def _c_symbol_uses(repo: Path, symbols: set[tuple[str, str]]) -> tuple[list[dict
     files = _source_files(repo, "src/main", "*.c") + _source_files(repo, "src/ovl", "*.c")
     for path in sorted(files):
         relative = path.relative_to(repo).as_posix()
-        unit = "main" if relative.startswith("src/main/") else relative.split("/")[2]
+        unit = source_link_unit(repo, relative) or "unknown"
         try:
             raw = path.read_bytes()
             text = raw.decode("utf-8", errors="strict")

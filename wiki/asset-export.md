@@ -1,6 +1,6 @@
 ---
 type: plan
-updated: 2026-10-24
+updated: 2026-10-25
 ---
 
 # Reusable asset extraction and exports
@@ -18,8 +18,10 @@ extracted game text, assets, screenshots, executable bytes or save files. Do not
 
 - [[tickets/T-28001-text-script-export]]: comprehensive structured text, original-byte/control-code fidelity, stable IDs,
   source locations, name substitutions, choices and voice links where proved. Ordinary string scanning
-  alone is not a complete dialogue parser; translation itself is deferred. The reported44unsupported SERIFU
-  files are a blocking backlog, not an accepted final export. Cover dialogue, choices, menus, labels,
+  alone is not a complete dialogue parser; translation itself is deferred. The initial 44 unsupported SERIFU
+  files were a blocking backlog. Current profiles classify all 45 SERIFU files; this closes the container-profile
+  gap, while 1,889 semantically unknown executable/overlay extents and other reader/context gaps still block
+  full translation coverage. Cover dialogue, choices, menus, labels,
   names/place tables and executable/overlay text, with source-backed decoding and context.
 - [[tickets/T-28002-media-asset-export]]: supported images to PNG with palettes/frame/placement metadata;
   supported audio to WAV with loops/banks/rates, keeping sequenced-music rendering distinct from sample decoding.
@@ -50,3 +52,9 @@ Primary upstream examples checked on 2026-10-24:
 
 The existing [[tickets/T-0002-disc-extraction-and-exe-identification]] and tools/prepare_disc.py cover build
 input extraction, not a general modern-format exporter. New implementation tickets above extend that work.
+
+## Current-source evidence continuation (2026-10-25)
+
+Phase 2 is complete and pushed at `d7fb33f960395d4c32ea238aabda82f211689973`. Its stable C/header/path layout permits the deferred asset-evidence rebase. A new ignored witness at `.asset-cache/shared/source-snapshot-phase2-687b5ce7` captures tracked `src/`, `include/` and `config/` from that commit, plus the final clean generated `asm/`. The capture verifies unchanged live build-source digest, both copies of every assembly-file hash and all 437 C files. It contains 14,697 files; manifest SHA256 `3fede6401e79c19a0982a596899744433658f749c7702b7c6c28d55dd487c0eb`, source-tree SHA256 `75eafb5958b44eef4c1ead490eea7bc06372d094e2cf939854a3ab7b67b638cd`. The historical f9c witness remains immutable. This is an evidence-capture checkpoint, not proof that existing profiles accept current source or that text/media coverage is complete.
+
+The reviewed text rebase is now applied and its current-source proofs pass: 38,696 translation units, 8,837 physical extents and 2,330 verified C identities are preserved. One previously unresolved global locator follows its renamed file; 1,889 extents remain semantically unknown. Independent review and 437 canonical asset tests pass, and the post-application text proof/serialization replay passes. This restores current-source enrichment without establishing comprehensive translation coverage. The media chat is preparing an actual source-binding patch and the next bounded geometry/movie tranche. Both prepare isolated ignored packets; root reviews and serializes live application, tests, shared wiki and commits. No game source, original data or build behavior changes are authorized through these packet-only lanes. [[assets-text]], [[assets-media]], [[tickets/T-28001-text-script-export]], [[tickets/T-28002-media-asset-export]], [[tickets/T-28004-japanese-image-catalog]].

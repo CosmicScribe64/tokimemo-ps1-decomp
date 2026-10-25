@@ -125,6 +125,12 @@ class UiTableTests(unittest.TestCase):
         self.assertEqual(parsed["records"][1]["source_slot_status"], "empty")
         self.assertEqual(parsed["coverage"]["whitespace_only_slots"], 1)
 
+    def test_malformed_shift_jis_slot_is_rejected_as_source_encoding_error(self):
+        data, profile = self.fixture()
+        data = b"\x82\0" + data[2:]
+        with self.assertRaisesRegex(TextFormatError, "unsupported source encoding"):
+            parse_ui_tables(data, profile)
+
 
 if __name__ == "__main__":
     unittest.main()

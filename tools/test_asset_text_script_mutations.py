@@ -167,6 +167,31 @@ class MutationTests(unittest.TestCase):
             self.assertEqual(report["blocked"], [])
             return report
 
+    def test_logical_overlay_folder_uses_its_configured_display_role(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            relative = "src/ovl/rpg_battle/unit.c"
+            path = root / relative
+            path.parent.mkdir(parents=True)
+            path.write_text("typedef unsigned char u8;\n"
+                            "void rpg_label_create(int, int, u8 *, int);\n"
+                            "void f(void) { u8 text[8]; text[0] = 1; rpg_label_create(0,0,text,0); }\n")
+            config = root / "config/overlays/RPG_BAT.yaml"
+            config.parent.mkdir(parents=True)
+            config.write_text("options:\n  basename: RPG_BAT\n  src_path: src/ovl\n"
+                              "segments:\n  - [0x0, c, rpg_battle/unit]\n")
+            report = inventory_mutation_candidates(root, {"files": []}, files=[relative])
+            self.assertEqual(report["blocked"], [])
+            self.assertEqual(len(report["candidates"]), 1)
+            self.assertEqual(report["candidates"][0]["operator"], "=")
+            config.unlink()
+            wrong = config.with_name("SHOUGATU.yaml")
+            wrong.write_text("options:\n  basename: SHOUGATU\n  src_path: src/ovl\n"
+                             "segments:\n  - [0x0, c, rpg_battle/unit]\n")
+            report = inventory_mutation_candidates(root, {"files": []}, files=[relative])
+            self.assertEqual(report["blocked"], [])
+            self.assertEqual(report["candidates"], [])
+
     def test_array_selectors_and_member_tokens_do_not_seed_aliases(self):
         report = self.candidate_fixture(
             "typedef unsigned char u8; extern u8 **table; extern u8 *other;\n"

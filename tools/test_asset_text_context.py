@@ -73,6 +73,29 @@ class SourceContextTests(unittest.TestCase):
         self.assertEqual(_role("get_g_name", "render", 0), (None, None))
         self.assertEqual(_role("sprintf", "render", 0), (None, None))
         self.assertEqual(_role("sprintf", "render", 1)[0], "debug_or_format")
+
+    def test_C_symbol_role_uses_configured_link_unit_for_logical_source_folder(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            config = root / "config" / "overlays"
+            config.mkdir(parents=True)
+            (config / "RPG_BAT.yaml").write_text(
+                "options:\n  basename: RPG_BAT\n  src_path: src/ovl\n"
+                "segments:\n  - name: RPG_BAT\n    subsegments:\n"
+                "      - [0x0, c, rpg_battle/label_use]\n",
+                encoding="utf-8")
+            source = root / "src" / "ovl" / "rpg_battle" / "label_use.c"
+            source.parent.mkdir(parents=True)
+            source.write_text(
+                "typedef unsigned char u8; typedef int s32; extern u8 *D_TEXT;\n"
+                "void rpg_label_create(s32, s32, s32);\n"
+                "void f(void) { rpg_label_create(0, 0, (s32)D_TEXT); }\n",
+                encoding="utf-8")
+            uses, blocked = _c_symbol_uses(root, {("RPG_BAT", "D_TEXT")})
+            self.assertEqual(blocked, [])
+            self.assertEqual(len(uses), 1)
+            self.assertEqual(uses[0]["unit"], "RPG_BAT")
+            self.assertEqual(uses[0]["category"], "display")
         self.assertEqual(_role("set_kanji_string", "render", 3)[0], "display")
         self.assertEqual(_role("set_string", "render", 0), (None, None))
 

@@ -38,8 +38,8 @@ PROFILES = [
             {"id": "table-16", "text_table": 0x801F7F98, "command_table": 0x801F7FB0, "voice_table": 0x801F8174, "group_count": 1},
         ],
         "evidence": [
-            'src/ovl/ENDING/80132000.c::func_80132000',
-            'src/ovl/ENDING/80133030.c::cd_read_sectors',
+            'src/ovl/ending/graduation_script_resources.c::ending_graduation_dialogue_resource_table_init',
+            'src/ovl/ending/graduation_candidate_selection.c::cd_read_sectors',
         ],
     },
     {
@@ -66,8 +66,8 @@ PROFILES = [
             {"id": "table-14", "text_table": 0x80184008, "command_table": 0x80184014, "voice_table": 0x801840DC, "group_count": 1},
         ],
         "evidence": [
-            'src/ovl/ENDING/801396E0.c::func_801396E0',
-            'src/ovl/ENDING/801396E0.c::cd_read_sectors',
+            'src/ovl/ending/career_and_epilogue_summary.c::ending_graduation_dialogue_table_init',
+            'src/ovl/ending/career_and_epilogue_summary.c::cd_read_sectors',
         ],
     },
     {
@@ -87,8 +87,8 @@ PROFILES = [
             {"id": "table-7", "text_table": 0x801B3370, "command_table": 0x801B3478, "voice_table": 0x801B41F4, "group_count": 23},
         ],
         "evidence": [
-            'src/ovl/KANGEI/80132E40.c::func_80132E74',
-            'src/ovl/KANGEI/80133C10.c::cd_read_sectors',
+            'src/ovl/summer_camp/day_dispatch_and_script_tables.c::camp_day_phase_dialogue_pointer_table_setup',
+            'src/ovl/summer_camp/scene_load_and_display.c::cd_read_sectors',
         ],
     },
     {
@@ -101,8 +101,8 @@ PROFILES = [
             {"id": "table-0", "text_table": 0x801C1400, "command_table": 0x801C1D6C, "voice_table": 0x801CA47C, "group_count": 195},
         ],
         "evidence": [
-            'src/ovl/KANGEI/80132E40.c::func_80132E40',
-            'src/ovl/KANGEI/80133C10.c::cd_read_sectors',
+            'src/ovl/summer_camp/day_dispatch_and_script_tables.c::camp_background_pointer_setup',
+            'src/ovl/summer_camp/scene_load_and_display.c::cd_read_sectors',
         ],
     },
     {
@@ -126,8 +126,8 @@ PROFILES = [
             {"id": "table-11", "text_table": 0x801A7F90, "command_table": 0x801A8108, "voice_table": 0x801A8C28, "group_count": 40},
         ],
         "evidence": [
-            'src/ovl/GEKO/80132000.c::func_80132000',
-            'src/ovl/GEKO/801323E0.c::cd_read_sectors',
+            'src/ovl/girl_encounters/walk_home_entry.c::encounter_walk_home_scripts_bind',
+            'src/ovl/girl_encounters/walk_home.c::cd_read_sectors',
         ],
     },
     {
@@ -150,8 +150,8 @@ PROFILES = [
             {"id": "table-10", "text_table": 0x8019EE88, "command_table": 0x8019EF4C, "voice_table": 0x8019F39C, "group_count": 24},
         ],
         "evidence": [
-            'src/ovl/DATE2/80132000.c::func_80132000',
-            'src/ovl/DATE2/801326F0.c::cd_read_sectors',
+            'src/ovl/amusement_park_date/date_entry.c::amusement_scene_script_pointer_setup',
+            'src/ovl/amusement_park_date/date_scene_steps.c::cd_read_sectors',
         ],
     },
     {
@@ -172,8 +172,8 @@ PROFILES = [
             {"id": "table-8", "text_table": 0x8019EB4C, "command_table": 0x8019EBA8, "voice_table": 0x8019EE04, "group_count": 11},
         ],
         "evidence": [
-            'src/ovl/SHOUGATU/80136F90.c::func_80136F90',
-            'src/ovl/SHOUGATU/80136F90.c::cd_read_sectors',
+            'src/ovl/new_year_christmas/meeting_girl_scene_dispatch.c::new_year_meeting_dialogue_addresses_init',
+            'src/ovl/new_year_christmas/meeting_girl_scene_dispatch.c::cd_read_sectors',
         ],
     },
     {
@@ -198,8 +198,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x801BA780, "command_table": 0x801BA818, "voice_table": 0x801BAB90, "group_count": 19},
         ],
         "evidence": [
-            'src/ovl/SHUGAKU/80132000.c::func_80132000',
-            'src/ovl/SHUGAKU/80132000.c::cd_read_sectors',
+            'src/ovl/school_trip/birthday_detours_and_talk.c::trip_birthday_script_pointer_table_setup',
+            'src/ovl/school_trip/birthday_detours_and_talk.c::cd_read_sectors',
         ],
     },
     {
@@ -224,8 +224,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x8019E5E4, "command_table": 0x8019E6B0, "voice_table": 0x8019EA5C, "group_count": 25},
         ],
         "evidence": [
-            'src/ovl/GEKO/80142760.c::func_80142760',
-            'src/ovl/GEKO/80142760.c::cd_read_sectors',
+            'src/ovl/girl_encounters/invite.c::encounter_invite_scripts_bind',
+            'src/ovl/girl_encounters/invite.c::cd_read_sectors',
         ],
     },
     {
@@ -250,8 +250,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x80199DD8, "command_table": 0x80199DF8, "voice_table": 0x80199EE8, "group_count": 4},
         ],
         "evidence": [
-            'src/ovl/OMIMAI/801331B0.c::func_801331B0',
-            'src/ovl/OMIMAI/801331B0.c::cd_read_sectors',
+            'src/ovl/sick_visit/sick_visit_scene_dialogue.c::sick_visit_common_mode_girl_talk_pointer_setup',
+            'src/ovl/sick_visit/sick_visit_scene_dialogue.c::cd_read_sectors',
         ],
     },
     {
@@ -274,8 +274,8 @@ PROFILES = [
             {"id": "table-10", "text_table": 0x801B106C, "command_table": 0x801B1084, "voice_table": 0x801B10E4, "group_count": 3},
         ],
         "evidence": [
-            'src/ovl/DATE2/80137D50.c::func_80137D50',
-            'src/ovl/DATE2/80137D50.c::cd_read_sectors',
+            'src/ovl/amusement_park_date/karaoke_scene_and_return.c::amusement_karaoke_return_pointer_setup',
+            'src/ovl/amusement_park_date/karaoke_scene_and_return.c::cd_read_sectors',
         ],
     },
     {
@@ -295,8 +295,8 @@ PROFILES = [
             {"id": "table-7", "text_table": 0x8019865C, "command_table": 0x80198668, "voice_table": 0x801986DC, "group_count": 1},
         ],
         "evidence": [
-            'src/ovl/KANGEI/80132090.c::func_80132090',
-            'src/ovl/KANGEI/80132090.c::cd_read_sectors',
+            'src/ovl/summer_camp/scene_callbacks.c::camp_scene_callback_dialogue_pointer_table_setup',
+            'src/ovl/summer_camp/scene_callbacks.c::cd_read_sectors',
         ],
     },
     {
@@ -320,8 +320,8 @@ PROFILES = [
             {"id": "table-11", "text_table": 0x801980C0, "command_table": 0x801980D8, "voice_table": 0x801981A8, "group_count": 3},
         ],
         "evidence": [
-            'src/ovl/OMIMAI/801320A0.c::func_801320A0',
-            'src/ovl/OMIMAI/801320A0.c::cd_read_sectors',
+            'src/ovl/sick_visit/sick_visit_girl_resource_addresses.c::sick_visit_mode_stage0_girl_talk_pointer_setup',
+            'src/ovl/sick_visit/sick_visit_girl_resource_addresses.c::cd_read_sectors',
         ],
     },
     {
@@ -337,8 +337,8 @@ PROFILES = [
             {"id": "table-3", "text_table": 0x80197EA4, "command_table": 0x80197EB4, "voice_table": 0x80197FEC, "group_count": 1},
         ],
         "evidence": [
-            'src/ovl/DATE/80132000.c::func_80140F40',
-            'src/ovl/DATE/80132000.c::cd_read_sectors',
+            'src/ovl/date/place_scenes.c::date_shared_sections_init',
+            'src/ovl/date/place_scenes.c::cd_read_sectors',
         ],
     },
     {
@@ -365,8 +365,8 @@ PROFILES = [
             {"id": "table-14", "text_table": 0x801B0650, "command_table": 0x801B0658, "voice_table": 0x801B0678, "group_count": 1},
         ],
         "evidence": [
-            'src/ovl/SHOUGATU/80132000.c::func_80132000',
-            'src/ovl/SHOUGATU/80132550.c::cd_read_sectors',
+            'src/ovl/new_year_christmas/seasonal_mode_stage_dispatch.c::new_year_resource_addresses_init',
+            'src/ovl/new_year_christmas/new_year_scene_setup.c::cd_read_sectors',
         ],
     },
     {
@@ -391,8 +391,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x801AC9A4, "command_table": 0x801ACA90, "voice_table": 0x801AD394, "group_count": 24},
         ],
         "evidence": [
-            'src/ovl/SHUGAKU/80136380.c::func_80136380',
-            'src/ovl/SHUGAKU/801378B0.c::cd_read_sectors',
+            'src/ovl/school_trip/trip_entry_and_script_resources.c::trip_girl_script_pointer_table_setup',
+            'src/ovl/school_trip/destination_choice_and_detour_routing.c::cd_read_sectors',
         ],
     },
     {
@@ -417,8 +417,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x8019A4F4, "command_table": 0x8019A510, "voice_table": 0x8019A618, "group_count": 3},
         ],
         "evidence": [
-            'src/ovl/VALEN/80132000.c::func_80132000',
-            'src/ovl/VALEN/801323D0.c::cd_read_sectors',
+            'src/ovl/valentine/valentine_resource_tables.c::valentine_scene_pointer_setup',
+            'src/ovl/valentine/valentine_scene_handlers.c::cd_read_sectors',
         ],
     },
     {
@@ -443,8 +443,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x8019B354, "command_table": 0x8019B3A0, "voice_table": 0x8019B610, "group_count": 9},
         ],
         "evidence": [
-            'src/ovl/SHOUGATU/8013B210.c::func_8013B210',
-            'src/ovl/SHOUGATU/8013B5B0.c::cd_read_sectors',
+            'src/ovl/new_year_christmas/girl_dialogue_dispatch.c::new_year_girl_talk_resource_addresses_init',
+            'src/ovl/new_year_christmas/girl_dialogue_setup.c::cd_read_sectors',
         ],
     },
     {
@@ -469,8 +469,8 @@ PROFILES = [
             {"id": "table-12", "text_table": 0x8019DAC0, "command_table": 0x8019DADC, "voice_table": 0x8019DBC8, "group_count": 3},
         ],
         "evidence": [
-            'src/ovl/SHOUGATU/8013C070.c::func_8013C070',
-            'src/ovl/SHOUGATU/8013D660.c::cd_read_sectors',
+            'src/ovl/new_year_christmas/seasonal_scene_dispatch.c::new_year_scene_callback_addresses_init',
+            'src/ovl/new_year_christmas/christmas_mansion_entry.c::cd_read_sectors',
         ],
     },
     {
@@ -483,8 +483,8 @@ PROFILES = [
             {"id": "table-0", "text_table": 0x801B0090, "command_table": 0x801B00A4, "voice_table": 0x801B0170, "group_count": 2},
         ],
         "evidence": [
-            'src/ovl/DATE/80132000.c::func_801324A8',
-            'src/ovl/DATE/80132000.c::cd_read_sectors',
+            'src/ovl/date/place_scenes.c::date_ambush_sections_init',
+            'src/ovl/date/place_scenes.c::cd_read_sectors',
         ],
     },
 ]
@@ -498,10 +498,10 @@ NON_TEXT_PROFILES = [
         "iso_lba": 0xAFA9,
         "kind": "numeric_choice_results",
         "evidence": [
-            "src/ovl/DATE/80132000.c::func_80132000",
-            "src/ovl/DATE/80132000.c::func_8013E9BC",
+            'src/ovl/date/place_scenes.c::date_choice_tables_init',
+            'src/ovl/date/place_scenes.c::date_load_choice_tables',
             "include/ovl/DATE.h::DateMuseumChoices15,DateRideChoices36",
-            "src/ovl/DATE/80132000.c:714-719,974-979,1106-1111",
+            'src/ovl/date/place_scenes.c (historical pre-rename source lines 714-719,974-979,1106-1111; use pinned current source)',
         ],
         # Adjacent source-initialized addresses bound each aligned table;
         # the final table repeats the paired first-half extent (0x44 bytes).

@@ -1,6 +1,48 @@
 """Invented counted glyph-list fixtures for T-28001."""
 import struct
 import unittest
+import copy
+import hashlib
+import tempfile
+from pathlib import Path
+
+from tools.assets.text_tables import verify_table_source_proof
+
+
+class CurrentTableProofTests(unittest.TestCase):
+    def test_current_source_formula_code_and_data_are_independently_checked(self):
+        data = b'A\0\0\0\0\0\0\0'
+        digest = hashlib.sha256(data).hexdigest()
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            repo, inputs = root/'source', root/'inputs'
+            repo.mkdir(); inputs.mkdir()
+            (inputs/'synthetic.bin').write_bytes(data)
+            sources = {'table.s':'dlabel table\n/* 0 00001000 41000000 */ .byte 0x41, 0, 0, 0\nenddlabel table\n',
+                       'code.s':'glabel reader\n/* 4 00001004 00000000 */ nop\n',
+                       'proof.c':'s32 stride = 4;\n'}
+            for name, text in sources.items():
+                (repo/name).write_text(text)
+            profile = {'path':'synthetic.bin','sha256':digest,'load_address':0x1000,'header_size':0,
+                       'source_pins':{n:hashlib.sha256(t.encode()).hexdigest() for n,t in sources.items()},
+                       'source_checks':[{'path':'proof.c','contains':'s32 stride = 4;'}],
+                       'code_proofs':[{'assembly_path':'code.s','source_path':'synthetic.bin',
+                           'source_sha256':digest,'load_address':0x1000,'header_size':0}],
+                       'data_proofs':[{'assembly_path':'table.s','label':'table','address':0x1000,'length':4}]}
+            result = verify_table_source_proof(data,profile,repo,inputs)
+            self.assertEqual(result['data_labels'][0]['initialized_bytes_verified'],4)
+            self.assertEqual(result['code'][0]['instruction_words_verified'],1)
+            changed = copy.deepcopy(profile)
+            changed['data_proofs'][0]['length']=5
+            with self.assertRaises(ValueError):
+                verify_table_source_proof(data,changed,repo,inputs)
+            (repo/'proof.c').write_text('s32 stride = 8;\n')
+            with self.assertRaises(ValueError):
+                verify_table_source_proof(data,profile,repo,inputs)
+            changed = copy.deepcopy(profile)
+            changed['source_pins']['proof.c']=hashlib.sha256((repo/'proof.c').read_bytes()).hexdigest()
+            with self.assertRaisesRegex(ValueError,'formula/type'):
+                verify_table_source_proof(data,changed,repo,inputs)
 from tools.assets.text import TextFormatError
 from tools.assets.text_tables import parse_character_lists
 

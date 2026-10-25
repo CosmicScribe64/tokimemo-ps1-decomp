@@ -8,8 +8,11 @@ full-width unterminated slots remain raw and explicitly unresolved as C strings.
 from __future__ import annotations
 
 import math
+import hashlib
+import re
+from pathlib import Path
 
-from .text import TextFormatError, sha256
+from .text import TextFormatError, sha256, source_path
 from .text_fixed import tokenize_fixed_text
 
 
@@ -22,12 +25,12 @@ OVERLAY_TABLE_PROFILES = [
                     "stride": 33, "dimensions": [3, 3],
                     "context": ["school_year_index", "choice_index"],
                     "trailing_assembly_bytes": 11}],
-        "evidence": ["include/ovl/BUNKAKEN.h:141-144", "src/ovl/BUNKAKEN/80148ED0.c:697-700",
+        "evidence": ["include/ovl/culture_festival_tour.h:141-144", "src/ovl/culture_festival_tour/birthday.c:697-700",
                      "asm/ovl/BUNKAKEN/data/BUNKAKEN_data.data.s:624-704"],
         "source_pins": {
-            "include/ovl/BUNKAKEN.h": "455abe59a952b2099bbff684e58211e6fd6c51cc709e53747ac347af877adab4",
-            "src/ovl/BUNKAKEN/80148ED0.c": "de43a6aa04d0f88657ed9ff5e85652e884b750864b0858e5f8840a17679a328e",
-            "asm/ovl/BUNKAKEN/data/BUNKAKEN_data.data.s": "7d37ad0c77a339a431c333e25246b00c1d69ff21adfcdb8d67671fa0da8859cf"},
+            "include/ovl/culture_festival_tour.h": 'e9b17459c69738051ce67cfdc0b7c4b85a5e207397c2cef752cc5ac335a1184c',
+            "src/ovl/culture_festival_tour/birthday.c": '0176ffb328e30078824fed736fe5ea64ea144389dd984fb569fa24f39e44bc55',
+            "asm/ovl/BUNKAKEN/data/BUNKAKEN_data.data.s": '93268198669fd78c6f40df5159cd9cf1066ba8f28b2e3e04d72909ca4dc5a32d'},
     },
     {
         "id": "bunkasai-name-grid", "path": "CDROM/EXEDIR/BUNKASAI.EXN",
@@ -37,12 +40,12 @@ OVERLAY_TABLE_PROFILES = [
                     "stride": 33, "dimensions": [3, 3],
                     "context": ["school_year_index", "choice_index"],
                     "trailing_assembly_bytes": 11}],
-        "evidence": ["include/ovl/BUNKASAI.h:21-24", "src/ovl/BUNKASAI/80146FA0.c:481-486",
+        "evidence": ["include/ovl/culture_festival.h:21-24", "src/ovl/culture_festival/birthday_scene.c:481-486",
                      "asm/ovl/BUNKASAI/data/BUNKASAI_data.data.s:365-445"],
         "source_pins": {
-            "include/ovl/BUNKASAI.h": "602e171bfda712152dd912a3be38dfc315535683c7210484b0992591c4839378",
-            "src/ovl/BUNKASAI/80146FA0.c": "5bb03625b73fca9de0b01b64dec5ad2956637ff3ac2b999da7f07473969d5b6b",
-            "asm/ovl/BUNKASAI/data/BUNKASAI_data.data.s": "cef8bd186765df95c6967bad3cb54b4b718bda2ee7daee98930ba2431ffdb202"},
+            "include/ovl/culture_festival.h": '61f27dcbe4c215c7d9a9c2b336cb3c696e222b7cb83a5dd06201befd11c83c40',
+            "src/ovl/culture_festival/birthday_scene.c": 'c1bc190efdf101e4602db21531cfb1a9192d698a0d4ef23432781044b40c4582',
+            "asm/ovl/BUNKASAI/data/BUNKASAI_data.data.s": '1080f2936d11383ae5c2669f849c7764212c3f55038764a2e984e89f6e700fb6'},
     },
     {
         "id": "date2-menu-labels", "path": "CDROM/EXEDIR/DATE2.EXN",
@@ -55,16 +58,16 @@ OVERLAY_TABLE_PROFILES = [
                           "context": ["girl_index", "year_index", "choice_index"],
                           "trailing_assembly_bytes": 5,
                           "context_basis": "current_girl*0x129 + game_state.year*0x63 + choice*0x21 - 0x24BD"}],
-        "evidence": ["include/ovl/DATE2.h:255-257", "src/ovl/DATE2/80137D50.c:288-323",
-                     "src/ovl/DATE2/80137360.c:151-161",
-                     "asm/ovl/DATE2/data/DATE2/80137D50.data.s:335-359",
+        "evidence": ["include/ovl/amusement_park_date.h:255-257", "src/ovl/amusement_park_date/karaoke_scene_and_return.c:288-323",
+                     "src/ovl/amusement_park_date/scene_choices_and_saved_return.c:151-161",
+                     "asm/ovl/DATE2/data/amusement_park_date/karaoke_scene_and_return.data.s:335-359",
                      "asm/ovl/DATE2/data/DATE2_data_8013A600.data.s:593-1414"],
         "source_pins": {
-            "include/ovl/DATE2.h": "a83c5907e9826e6580ff451b24849c7ab6076942180f77092728700b97cc82af",
-            "src/ovl/DATE2/80137D50.c": "5184b05be033f4ae9ba608b68c51433bbf903406581c4c22349f9eeaf17ec718",
-            "src/ovl/DATE2/80137360.c": "31353b53f7c439fb31bef46e1d9b5df7ffbab45de359d510273652dd6f5dd7dd",
-            "asm/ovl/DATE2/data/DATE2/80137D50.data.s": "deed180c5a8806f4b5cc3acd7afa67e97a0306f9c0200d9bd879acafd53f5dfe",
-            "asm/ovl/DATE2/data/DATE2_data_8013A600.data.s": "17a44d6faecaf08945880287f31a3d06ac3f93f41da66da4c74b0d7bfc2dfbb7"},
+            'include/ovl/amusement_park_date.h': '83dfd8ca41b79648d1de1347f79d2d38948f33e6f46ca199777af172b128e19d',
+            'src/ovl/amusement_park_date/karaoke_scene_and_return.c': '95511808b1eb8afc1a4ebfe70636d1d41afbe44013b8567bcd305c513ab17bd5',
+            'src/ovl/amusement_park_date/scene_choices_and_saved_return.c': '63949bff20a168de619c50001c75a4b2199d2cdf281b534aa514643e2f333b73',
+            'asm/ovl/DATE2/data/amusement_park_date/karaoke_scene_and_return.data.s': '1847c421c53ea972e1b2c454cb231feaa3850378165a431402177ac8378c3684',
+            "asm/ovl/DATE2/data/DATE2_data_8013A600.data.s": '4a36259f9f6f7b17873143ceaa618fb1684a5791cf1323fc8c7ee187a65a687a'},
     },
     {
         "id": "geko-place-and-encounter-names", "path": "CDROM/EXEDIR/GEKO.EXN",
@@ -83,19 +86,19 @@ OVERLAY_TABLE_PROFILES = [
              "trailing_assembly_bytes": 1,
              "context_basis": "current_girl*0x129 + source_year_index*0x63 + choice*0x21"},
         ],
-        "evidence": ["include/ovl/GEKO.h:773-777,820-834", "src/ovl/GEKO/801338F0.c:84-88",
-                     "src/ovl/GEKO/80142760.c:142-152,364", "src/ovl/GEKO/80134D10.c:372-373,906-908,1331-1336",
+        "evidence": ['include/ovl/girl_encounters.h:773-777,820-834', 'src/ovl/girl_encounters/walk_home_followup.c:84-88',
+                     'src/ovl/girl_encounters/invite.c:142-152,364', 'src/ovl/girl_encounters/birthday_and_shared_scene_flow.c:372-373,906-908,1331-1336',
                      "asm/ovl/GEKO/data/GEKO_data.data.s:394-458",
                      "asm/ovl/GEKO/data/GEKO_data_80146270.data.s:2905-3065",
-                     "asm/ovl/GEKO/data/GEKO/80134D10.data.s:730-1550"],
+                     'asm/ovl/GEKO/data/girl_encounters/birthday_and_shared_scene_flow.data.s:730-1550'],
         "source_pins": {
-            "include/ovl/GEKO.h": "4fb9e4c2d8a7680981a78548747dd2fb17d1fe8286a887233dede34dc7533518",
-            "src/ovl/GEKO/801338F0.c": "4cc0c5388fa02c2ff871c883cd961870253c7677f05638d7f19e4a56689088d6",
-            "src/ovl/GEKO/80142760.c": "52bcb794c462ebee3677782fe0df5803622403a577848b49a1b419dc155e712c",
-            "src/ovl/GEKO/80134D10.c": "6d40808acb4ea61ddad7b819344a028c85881e10866e3387093e56d55b8faf01",
-            "asm/ovl/GEKO/data/GEKO_data.data.s": "8e6a1b808743449e9a69d3ba42c3e1529e1c4b072246138d3846cbc4525dcac9",
-            "asm/ovl/GEKO/data/GEKO_data_80146270.data.s": "78bbb92da182f7da1843e8a69d21046fbb4492e86754d6a2a7b26d9a25e44415",
-            "asm/ovl/GEKO/data/GEKO/80134D10.data.s": "c72484534ff46a933ec8036ef82e9501e6b9c08379aee40067ed28f11fdf77e9"},
+            'include/ovl/girl_encounters.h': '742b6a2a671e16db7dde65bd15bdfb988a9269da766b983690f4ac669fb8e6f7',
+            'src/ovl/girl_encounters/walk_home_followup.c': 'ed78a5e1465c7089065b9b692074fbc5c20c3e7e0ce003915c7efd1586078bf9',
+            'src/ovl/girl_encounters/invite.c': 'fdaffecbe35b1cf095f43fd3b89d3483394e6527bba1519352fbc48f181394d6',
+            'src/ovl/girl_encounters/birthday_and_shared_scene_flow.c': 'df3b1a88843f3302096cdedf9987e95e23309badebae2808c1e74a57c4165a65',
+            "asm/ovl/GEKO/data/GEKO_data.data.s": '5901fee184282440784268a775d72bc319febd9d65a3628be0eebb0d5b097f66',
+            "asm/ovl/GEKO/data/GEKO_data_80146270.data.s": '9c4cf944f810f729a0ea36f6b29abfc290a73791733547bdb6d8179831b3edb6',
+            'asm/ovl/GEKO/data/girl_encounters/birthday_and_shared_scene_flow.data.s': 'd83bffd6b7b7d453ba21e1a9264e899bdb16a83f3e97a1f8799e73301da6c73c'},
     },
     {
         "id": "kangei-club-names", "path": "CDROM/EXEDIR/KANGEI.EXN",
@@ -113,14 +116,14 @@ OVERLAY_TABLE_PROFILES = [
              "context_basis": "current_girl*0x129 + year_index*0x63 + choice*0x21",
              "extent_basis": "C DateTxt size 0xCC3; the ASM dlabel continues beyond this bounded object"},
         ],
-        "evidence": ["include/ovl/KANGEI.h:201-208", "src/ovl/KANGEI/80135F10.c:544-558",
-                     "src/ovl/KANGEI/80137B90.c:10-12,210-228,640-645",
+        "evidence": ['include/ovl/summer_camp.h:201-208', 'src/ovl/summer_camp/scene_pictures_and_effects.c:544-558',
+                     'src/ovl/summer_camp/girl_script_and_choice_flow.c:10-12,210-228,640-645',
                      "asm/ovl/KANGEI/data/KANGEI_data_80139C80.data.s:446-567,1254-41869"],
         "source_pins": {
-            "include/ovl/KANGEI.h": "c9a60d7fa93128455b5136ea9965d80095091c5f87d56da52f02a6d7a7e1b6be",
-            "src/ovl/KANGEI/80135F10.c": "1ead52f8fc63c33e3d9602a3a8922089bdabbcfc6f9e38ff4211525bd231bcd3",
-            "src/ovl/KANGEI/80137B90.c": "853387092cc5bc1a92ec989ed9058cebe40556601fee2205f0acc878dc2d56ee",
-            "asm/ovl/KANGEI/data/KANGEI_data_80139C80.data.s": "c379f30c618bd1e4c6c1dea71ecba35ff5caa4aaae0cad91607c4cf27bd72280"},
+            'include/ovl/summer_camp.h': '240d9e66e213931e35b332112b5cb005887a3c41873a978ce064768b97e5b73a',
+            'src/ovl/summer_camp/scene_pictures_and_effects.c': 'f15e662b9393879c9671d1a749704eb19245ae727a281bd9219441c778d782fc',
+            'src/ovl/summer_camp/girl_script_and_choice_flow.c': 'f3cf06f7fe118d72577d3431462c3d9340e8602ae4a39804dc17a21c8a439d9b',
+            "asm/ovl/KANGEI/data/KANGEI_data_80139C80.data.s": '132a051f74631f8718a9a5834b9bc4f1b8e384cfdd80ac9dfd9bc73f90fc0851'},
     },
     {
         "id": "shougatu-name-choices", "path": "CDROM/EXEDIR/SHOUGATU.EXN",
@@ -140,18 +143,18 @@ OVERLAY_TABLE_PROFILES = [
                    {"id": "fortune_labels", "role": "fortune_label", "address": 0x80143E80,
                     "count": 7, "stride": 5, "dimensions": [7],
                     "context": ["fortune_result_index"], "trailing_assembly_bytes": 13}],
-        "evidence": ["include/ovl/SHOUGATU.h:682-686,931-936", "src/ovl/SHOUGATU/80134120.c:79-86",
-                     "src/ovl/SHOUGATU/80134890.c:176-185,306-324,362-375",
-                     "src/ovl/SHOUGATU/80135B90.c:91-94,376-382",
+        "evidence": ['include/ovl/new_year_christmas.h:682-686,931-936', 'src/ovl/new_year_christmas/shrine_actor_sequences.c:79-86',
+                     'src/ovl/new_year_christmas/omikuji_draw_scene.c:176-185,306-324,362-375',
+                     'src/ovl/new_year_christmas/scene_resource_tables.c:91-94,376-382',
                      "asm/ovl/SHOUGATU/data/SHOUGATU_data.data.s:551-564,682-711",
-                     "asm/ovl/SHOUGATU/data/SHOUGATU/80135B90.data.s:557-1380"],
+                     'asm/ovl/SHOUGATU/data/new_year_christmas/scene_resource_tables.data.s:557-1380'],
         "source_pins": {
-            "include/ovl/SHOUGATU.h": "86375fbbaf07ec10d8c84a07d10dba8758f543c98633abd9939c3a5348d4825e",
-            "src/ovl/SHOUGATU/80134120.c": "5db2bc1ef2b8a5f5147a8194d77cae08c6206a593ee4355643680ba596ea6216",
-            "src/ovl/SHOUGATU/80134890.c": "44aca46d20edcae1bcc0792a5c32bcb1a95efb0d535608ce0948471975b9f154",
-            "src/ovl/SHOUGATU/80135B90.c": "4a271839d336352011c46b2f3b6b86d863e5f27aa342bc49a80480e818083602",
-            "asm/ovl/SHOUGATU/data/SHOUGATU_data.data.s": "48c01e8db891528d26df9c53e5b5d7ffbaa443a5b753cf18a07593dfa00b414a",
-            "asm/ovl/SHOUGATU/data/SHOUGATU/80135B90.data.s": "69cc20ab32b7a80b65f9443649664ba3894c042cfe0891111484aff60487d9a4"},
+            'include/ovl/new_year_christmas.h': '1ca1ad375392e0f0bafc1270b9686b1b9e846b0674f0a18ccf8fb0b911b30814',
+            'src/ovl/new_year_christmas/shrine_actor_sequences.c': 'aab52d5d2fc9e910e695cc413e83205242d4b3e64bfd324c0f1a7e9d6491a69d',
+            'src/ovl/new_year_christmas/omikuji_draw_scene.c': '90edf735f53cccffa04c1b56de92615c46674cb9b199159a4f9cf77f5d640fed',
+            'src/ovl/new_year_christmas/scene_resource_tables.c': '2205afa7f916e2429275a50c9ed635b6366e1238d9d96dda97a64a6d1fe4621b',
+            "asm/ovl/SHOUGATU/data/SHOUGATU_data.data.s": 'b78a107230c27b1ebd9299649c499f4d8122384c61e106fdcc7ce6494301dd10',
+            'asm/ovl/SHOUGATU/data/new_year_christmas/scene_resource_tables.data.s': 'fcf36b1c7564456b5b28bf0f245ed87e3086587fd8d5908e105445b8ea89aa8e'},
     },
     {
         "id": "shugaku-gift-names", "path": "CDROM/EXEDIR/SHUGAKU.EXN",
@@ -163,13 +166,37 @@ OVERLAY_TABLE_PROFILES = [
                     "context": ["girl_index", "year_index", "choice_index"],
                     "trailing_assembly_bytes": 1,
                     "context_basis": "current_girl*0x129 + year_index*0x63 + choice*0x21"}],
-        "evidence": ["src/ovl/SHUGAKU/80132000.c:13-14,268-271,363-368",
+        "evidence": ['src/ovl/school_trip/birthday_detours_and_talk.c:13-14,268-271,363-368',
                      "asm/ovl/SHUGAKU/data/SHUGAKU_data.data.s:382-1202"],
         "source_pins": {
-            "src/ovl/SHUGAKU/80132000.c": "ece491d53bc997330ded2b721511d93ee62efc7937a2040819070bcc210b5aca",
-            "asm/ovl/SHUGAKU/data/SHUGAKU_data.data.s": "71712bad2939f9fe709295868f7678caacc524e12e6e322b95abeef93198d77b"},
+            'src/ovl/school_trip/birthday_detours_and_talk.c': 'c89cae4e6263b5a05e115595b9ef10bd767aa50c56ba7a97529c0cb2fb371515',
+            "asm/ovl/SHUGAKU/data/SHUGAKU_data.data.s": '15eb6194d92f9b985c7173e0ef6c23159a50a444550fcc89a370b8c0f5af0525'},
     },
 ]
+
+
+def verify_profile_source_pins(repository, profile: dict) -> dict:
+    """Fail closed unless every profile source pin resolves within this repository."""
+    repo = Path(repository).resolve(strict=True)
+    if not repo.is_dir() or not isinstance(profile, dict):
+        raise TextFormatError("source-pin verification requires a repository and profile")
+    pins = profile.get("source_pins")
+    if not isinstance(pins, dict) or not pins:
+        raise TextFormatError("source-pin verification requires nonempty pinned inputs")
+    verified = {}
+    for relative, expected in pins.items():
+        source_path(relative)
+        if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
+            raise TextFormatError("source pin is not a lowercase SHA-256 digest")
+        path = (repo / relative).resolve(strict=True)
+        if not path.is_relative_to(repo) or not path.is_file():
+            raise TextFormatError("source pin escapes the selected repository")
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != expected:
+            raise TextFormatError("pinned source input differs from the selected repository")
+        verified[relative] = actual
+    return {"status": "verified_profile_source_pins", "profile_id": profile.get("id"),
+            "source_pins_verified": len(verified), "source_pins": verified}
 
 
 def _validate_profile(profile: dict) -> None:

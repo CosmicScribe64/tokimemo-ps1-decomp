@@ -1,7 +1,7 @@
 ---
 type: tool
-updated: 2026-10-24
-sources: ["src/main/scene_library.c", "src/main/text_system.c", "src/main/menu_speaker_girl.c", "src/ovl/NAME_ENT/name_entry.c", "tools/assets/text.py", "tools/assets/text_export.py", "tools/assets/script_profiles.py", "tools/assets/text_source.py"]
+updated: 2026-10-25
+sources: ["src/main/scene_library.c", "src/main/text_system.c", "src/main/menu_speaker_girl.c", "src/ovl/name_entry/name_entry.c", "tools/assets/text.py", "tools/assets/text_export.py", "tools/assets/script_profiles.py", "tools/assets/text_source.py"]
 ---
 
 # Comprehensive text inventory and export
@@ -17,7 +17,7 @@ Use the existing Docker image:
 
 ```sh
 docker run --rm --cpus=2 -v "$PWD":/work -w /work tokimemo-decomp-arm64 \
-  python3 -m tools.assets.text_export disc/files --include-source --output .asset-cache/text
+  python3 -m tools.assets.text_export disc/files --output .asset-cache/text/basic
 ```
 
 The CLI prints counts; the catalog contains UTF-8 text, exact raw bytes, commands and provenance.
@@ -25,11 +25,38 @@ The CLI prints counts; the catalog contains UTF-8 text, exact raw bytes, command
 returns a JSON-compatible catalog. The input is an extracted ISO root such as `disc/files`. Without an
 output directory it returns data without writing. Files are read-only and JSON output is deterministic.
 The compact JSON avoids repeating indentation for tens of thousands of records.
-`--source-repository` selects an explicit source-evidence tree. The reviewed runtime mutation pins
-currently target `.asset-cache/text/source-snapshot-f9c679d5d2616925`; equivalent source in the renamed
-live tree needs new reviewed pins. The reader reports that mismatch rather than weakening source checks.
-Current C paths on this page follow the original object VMAs in `config/SLPM_86.053.yaml` and overlay
-YAML files. Hash-pinned historical source references in tool profiles refer to the evidence snapshot.
+`--source-repository` selects an explicit source-evidence tree. Current profiles target the stable
+Phase 2 source at `d7fb33f960395d4c32ea238aabda82f211689973` (reviewed C/header revision
+`182af9d13`, accepted build-source digest `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`).
+They retain original executable/overlay hashes and VMAs. Source, header, table and instruction pins
+are checked before accepting the corresponding source context; another source revision needs a
+reviewed rebase. Logical C folders are resolved to EXN units through configured overlay ownership.
+
+A fresh clone needs the user's PlayStation-the-Best input under `game/` and Docker. Follow
+[[build-system]] for release verification, extraction to `disc/files`, and generation of the matching
+assembly. The basic export above omits C/AST/MIPS/runtime enrichment. Without selected source
+evidence, fixed-table proofs report that source files were not rechecked; the stage reader requires
+its pinned source files. A basic export does not reproduce the full validated source census.
+Original inputs and all exported payloads remain gitignored.
+
+After generating assembly from the exact current source with the pinned Docker tools, run:
+
+```sh
+docker run --rm --cpus=2 -v "$PWD":/work -w /work tokimemo-decomp-arm64 \
+  python3 -m tools.assets.text_export disc/files --include-source \
+  --source-repository . --output .asset-cache/text/current-proof-run
+```
+
+The validated run used the read-only shared witness
+`.asset-cache/shared/source-snapshot-phase2-687b5ce7`, with source-tree SHA256
+`75eafb5958b44eef4c1ead490eea7bc06372d094e2cf939854a3ab7b67b638cd` and manifest SHA256
+`3fede6401e79c19a0982a596899744433658f749c7702b7c6c28d55dd487c0eb`. Its 14,697 files include
+437 current C files and 13,872 generated assembly files. This ignored witness and the original inputs
+are not bundled with tooling. Export metadata records its revision, build digest and manifest hash.
+The earlier f9c witness remains historical and immutable; it is no longer the target of current pins.
+The validated Docker runtime is Python 3.10.12, pycparser 3.11 and gcc 11.4; no host dependencies
+are required. The source-dependent readers recheck actual current code/data; snapshot creation alone
+is not proof that a profile or a runtime route is correct.
 
 Profiles use paths beginning with `CDROM/`. `--profiles` accepts a JSON list matching
 `tools/assets/script_profiles.py`: `id`, `path`, optional `sha256`, `load_address`, and `sections` with
@@ -123,7 +150,7 @@ evidence separately. Full-file reconstruction and runtime reachability are diffe
 Current script-root audit: 98 containers, 654 sections, 42,369 records and 30,851 text records.
 The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,889
 remain semantically unknown. All 437 C files parse in the AST pass with stable source inputs. The
-current full text suite has 214 passing Docker tests, including source-root integration and isolated
+current full text suite has 233 passing Docker tests, including source-root integration and isolated
 synthetic proof regressions. These counts do not clear the remaining context and runtime gates.
 There are no unprofiled SERIFU or BUNKA files. Every script string strictly decodes and re-encodes as
 Shift-JIS. Unclaimed byte counts and diagnostic candidate scans are retained as leads; zero candidates
@@ -135,8 +162,8 @@ media/text suite passed 188 tests with one optional integration skip. The newer 
 contains 1,069 dictionary slots, one actor-resource descriptor, 12 unsupported SPEAKTST files and
 no missing inputs or structural failures. The source-root audit now
 reports MASTER's eight primary literal initializers separately from the existing 21 other SERIFU
-profiles. Its 167,927,250-byte catalog has SHA256
-`8876c0e4861976198075272e3f9ede187b6c01723ab3c9c735b30b6aa33ee855`.
+profiles. Its 168,447,900-byte catalog has SHA256
+`ec28ff8a3280d57de9e488802ae1c2fbfee97f356435bf977b86a18a71720c0b`.
 All original extents, Unicode/token round trips, dictionary slots/tails and UTF-8 C locators verify.
 The additional stage-show bank has 286 body views; its complete 196,608-byte input reconstructs
 exactly from code proofs, tables, physical strings and preserved uninterpreted ranges. Every source,
@@ -169,6 +196,30 @@ non-null; JSONL and TSV deserialize to identical values. The original-byte check
 files with zero mismatches. It marks 31,346 rows ready for review and 7,350 flagged. Unknown overlay
 renderer views remain flagged despite valid source Unicode, and every conditional variant remains
 conditional. Completeness is false regardless of those per-row review counts.
+
+## Current-source rebase verification (2026-10-25)
+
+The current-source export preserves all 98 script profiles / 654 sections, all 8,837 physical source
+extents, all 2,330 verified C identities and all 38,696 unit rows from the historical checkpoint.
+Every original byte, source Unicode value, control-token payload, command/voice association, table
+root and readiness/category result is unchanged. All 1,889 unknown extents remain unknown; rebasing
+does not add semantic coverage. JSONL and TSV contain identical values and null translation targets.
+
+One previously unresolved global C locator moves from `src/main/80075320.c:9` to
+`src/main/holiday.c:52`; its raw bytes and Unicode are identical. It was not a stable physical/function
+identity. The comparison records this one explicit locator migration rather than inventing binary
+provenance. Other differences are current paths, source evidence, labels and display-symbol names.
+Fifty-one script-unit token dictionaries update symbolic-buffer provenance only: addresses, offsets,
+104 original zero bytes and effective-read-length limits are unchanged; physical IDs are now explicit
+VMA-based legacy labels. No translation or runtime values are generated.
+
+The rebase caught and fixed two actual discovery regressions: the matching-function index still
+expected old overlay folders, and root-level SDK assembly needed exact main-YAML ownership.
+Regression checks restore original function/diagnostic evidence, validate all configured C units,
+reject traversal and escaping configs, and invalidate cached ownership when config bytes change.
+The completed run has zero byte, Unicode, token, source/root, AST or proof blockers. Separate current
+source/code/data replay reports support the metadata comparison; comparing metadata alone is not an
+instruction proof. Comprehensive coverage and the twelve SPEAKTST layouts remain open.
 
 ## Linked script format
 

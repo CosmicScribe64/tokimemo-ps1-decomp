@@ -359,26 +359,201 @@ def _lex_c_tokens(text: str):
 
 
 def _c_unit(path: Path, src_root: Path) -> str:
-    relative = path.relative_to(src_root).as_posix()
-    if relative.startswith("main/"):
+    relative = path.relative_to(src_root.parent).as_posix()
+    return source_link_unit(src_root.parent, relative) or "unknown"
+
+
+@lru_cache(maxsize=16)
+def _overlay_source_roots(repository: str, signature: tuple[tuple[str, str], ...]) -> tuple[dict[str, frozenset[str]], frozenset[str]]:
+    """Map configured logical C source roots to their EXN link units.
+
+    Overlay YAML subsegments are the authority because source directories may
+    have logical topic names that differ from the executable ID.
+    """
+    repo = Path(repository)
+    owners: dict[str, set[str]] = {}
+    configured_units = set()
+    config_root = repo / "config" / "overlays"
+    subsegment = re.compile(r"(?m)^\s*-\s*\[[^,]+,\s*c,\s*([^\]]+)\]")
+    expected_digests = dict(signature)
+    for path in sorted(config_root.glob("*.yaml")):
+        try:
+            resolved = path.resolve(strict=True)
+            if not resolved.is_relative_to(repo) or not resolved.is_file():
+                continue
+            raw = resolved.read_bytes()
+        except OSError:
+            continue
+        if hashlib.sha256(raw).hexdigest() != expected_digests.get(path.name):
+            continue
+        text = raw.decode("utf-8", errors="strict")
+        if text.encode("utf-8") != raw or "\ufffd" in text:
+            continue
+        basename = re.search(r"(?m)^\s*basename:\s*([A-Za-z0-9_]+)\s*$", text)
+        src_path = re.search(r"(?m)^\s*src_path:\s*([^\s#]+)\s*$", text)
+        if basename is None or src_path is None or basename.group(1) != path.stem:
+            continue
+        configured_units.add(path.stem)
+        source_root = Path(src_path.group(1))
+        if source_root.parts[:2] != ("src", "ovl"):
+            continue
+        for item in subsegment.findall(text):
+            relative_source = (source_root / item.strip()).as_posix()
+            if not relative_source.endswith(".c"):
+                relative_source += ".c"
+            parts = Path(relative_source).parts
+            if len(parts) >= 4 and parts[:2] == ("src", "ovl"):
+                owners.setdefault(parts[2], set()).add(basename.group(1))
+    return {folder: frozenset(units) for folder, units in owners.items()}, frozenset(configured_units)
+
+
+@lru_cache(maxsize=8)
+def _configured_main_asm_paths(repository: str, config_sha256: str) -> frozenset[str]:
+    """Return only root ASM paths declared by the main splat config."""
+    repo = Path(repository)
+    config_path = repo / "config" / "SLPM_86.053.yaml"
+    try:
+        resolved = config_path.resolve(strict=True)
+        if not resolved.is_relative_to(repo) or not resolved.is_file():
+            return frozenset()
+        raw = resolved.read_bytes()
+    except OSError:
+        return frozenset()
+    if hashlib.sha256(raw).hexdigest() != config_sha256:
+        return frozenset()
+    text = raw.decode("utf-8", errors="strict")
+    if text.encode("utf-8") != raw or "\ufffd" in text:
+        return frozenset()
+    asm_path = re.search(r"(?m)^\s*asm_path:\s*([^\s#]+)\s*$", text)
+    if asm_path is None:
+        return frozenset()
+    base = Path(asm_path.group(1))
+    if base.is_absolute() or ".." in base.parts or not base.parts or base.parts[0] != "asm":
+        return frozenset()
+    paths = set()
+    for match in re.finditer(r"(?m)^\s*-\s*\[[^,]+,\s*asm,\s*([^\]]+)\]", text):
+        target = Path(match.group(1).strip())
+        if target.is_absolute() or ".." in target.parts:
+            continue
+        if target.suffix != ".s":
+            target = Path(str(target) + ".s")
+        paths.add((base / target).as_posix())
+    return frozenset(paths)
+
+
+def source_link_unit(repository, relative_path: str | Path) -> str | None:
+    """Resolve a project source/input path to its executable link unit.
+
+    Configured overlay YAML maps logical `src/ovl/<topic>/...` paths to the
+    EXN basename. Assembly and original-binary paths carry the EXN ID directly.
+    For synthetic C trees without overlay configs, the historical folder-name
+    unit remains available as a test-fixture fallback. Configured EXN-ID
+    folders are also accepted directly for legacy layouts; ambiguous or
+    otherwise unmapped configured roots fail closed.
+    """
+    repo = Path(repository).resolve()
+    path = Path(relative_path)
+    if path.is_absolute():
+        try:
+            path = path.resolve().relative_to(repo)
+        except (OSError, ValueError):
+            return None
+    elif "\\" in str(relative_path) or ".." in path.parts:
+        return None
+    parts = path.parts
+    if parts == ("SLPM_86.053",):
         return "main"
-    if relative.startswith("ovl/"):
-        return relative.split("/", 2)[1]
-    return "unknown"
+    if len(parts) == 3 and parts[:2] == ("CDROM", "EXEDIR") and parts[2].endswith(".EXN"):
+        unit = parts[2][:-4]
+        return unit if re.fullmatch(r"[A-Z0-9_]+", unit) else None
+    if parts[:3] == ("asm", "matchings", "main"):
+        return "main"
+    if parts[:2] == ("asm", "ovl") and len(parts) > 2:
+        return parts[2]
+    if parts[:2] == ("asm", "data"):
+        return parts[3] if len(parts) > 3 and parts[2] == "ovl" else "main"
+    if parts[:1] == ("asm",) and len(parts) == 2 and parts[1].endswith(".s"):
+        config = repo / "config" / "SLPM_86.053.yaml"
+        try:
+            resolved = config.resolve(strict=True)
+            if not resolved.is_relative_to(repo) or not resolved.is_file():
+                return None
+            config_sha256 = hashlib.sha256(resolved.read_bytes()).hexdigest()
+        except OSError:
+            return None
+        if path.as_posix() in _configured_main_asm_paths(repo.as_posix(), config_sha256):
+            return "main"
+    if parts[:2] == ("src", "main"):
+        return "main"
+    if parts[:2] != ("src", "ovl") or len(parts) < 3:
+        return None
+    config_root = repo / "config" / "overlays"
+    try:
+        resolved_config_root = config_root.resolve(strict=True)
+    except OSError:
+        resolved_config_root = config_root
+    if config_root.is_symlink() and (not resolved_config_root.is_relative_to(repo) or
+                                     not resolved_config_root.is_dir()):
+        return None
+    if config_root.exists() and (not resolved_config_root.is_relative_to(repo) or
+                                 not resolved_config_root.is_dir()):
+        return None
+    signatures = []
+    for config_path in sorted(config_root.glob("*.yaml")):
+        try:
+            resolved = config_path.resolve(strict=True)
+            if not resolved.is_relative_to(repo) or not resolved.is_file():
+                continue
+            digest = hashlib.sha256(resolved.read_bytes()).hexdigest()
+        except OSError:
+            continue
+        signatures.append((config_path.name, digest))
+    owners, configured_units = _overlay_source_roots(repo.as_posix(), tuple(signatures))
+    configured = owners.get(parts[2], frozenset())
+    if len(configured) == 1:
+        return next(iter(configured))
+    if len(configured) > 1:
+        return None
+    config_files = tuple(config_root.glob("*.yaml"))
+    if parts[2] in configured_units:
+        return parts[2]
+    # Compatibility only for deliberately minimal/synthetic trees.
+    return parts[2] if not config_files else None
 
 
 def _matching_index(repo: Path) -> dict[tuple[str, str], list[Path]]:
     index = {}
     roots = [("main", repo / "asm" / "matchings" / "main")]
-    for overlay in (repo / "asm" / "ovl").iterdir() if (repo / "asm" / "ovl").is_dir() else []:
-        match_root = overlay / "matchings" / overlay.name
-        if match_root.is_dir():
-            roots.append((overlay.name, match_root))
+    overlay_root = repo / "asm" / "ovl"
+    if overlay_root.is_dir() and not overlay_root.is_symlink():
+        resolved_overlay_root = overlay_root.resolve(strict=True)
+        if resolved_overlay_root.is_relative_to(repo.resolve()):
+            for overlay in sorted(overlay_root.iterdir()):
+                if overlay.is_symlink() or not overlay.is_dir():
+                    continue
+                try:
+                    resolved_overlay = overlay.resolve(strict=True)
+                    match_root = overlay / "matchings"
+                    resolved_match_root = match_root.resolve(strict=True)
+                except OSError:
+                    continue
+                if (not resolved_overlay.is_relative_to(resolved_overlay_root) or
+                        not resolved_match_root.is_relative_to(resolved_overlay) or
+                        not resolved_match_root.is_dir()):
+                    continue
+                roots.append((overlay.name, resolved_match_root))
     for unit, root in roots:
-        if not root.is_dir():
+        resolved_root = root.resolve()
+        if not resolved_root.is_relative_to(repo.resolve()) or not resolved_root.is_dir():
             continue
-        for path in root.rglob("*.s"):
-            index.setdefault((unit, path.stem), []).append(path)
+        for path in sorted(resolved_root.rglob("*.s")):
+            try:
+                resolved_path = path.resolve(strict=True)
+            except OSError:
+                continue
+            if not resolved_path.is_relative_to(resolved_root) or not resolved_path.is_file():
+                continue
+            index.setdefault((unit, resolved_path.stem), []).append(resolved_path)
     return index
 
 
@@ -801,13 +976,7 @@ def _asm_unit(source: str) -> str:
 def _assembly_source_unit(path: Path, repo: Path) -> str:
     """Return the link unit for a source/reference file, independent of its symbol names."""
     relative = path.relative_to(repo).as_posix()
-    overlay_data = re.match(r"asm/data/ovl/([A-Z0-9_]+)/", relative)
-    if overlay_data:
-        return overlay_data.group(1)
-    if relative.startswith(("asm/matchings/main/", "asm/data/")):
-        return "main"
-    match = re.match(r"asm/ovl/([A-Z0-9_]+)/", relative)
-    return match.group(1) if match else "unknown"
+    return source_link_unit(repo, relative) or "unknown"
 
 
 def _main_label_scope_proven(label: str, record: dict, data_labels: dict) -> bool:

@@ -29,8 +29,9 @@ class RendererRoleTests(unittest.TestCase):
         self.assertIsNone(string_argument_role("load_string_by_id", 0))
 
     def test_main_aliases_and_conditional_choice_argument(self):
-        self.assertEqual(string_argument_role("func_80066104", 0), "display")
-        self.assertIsNone(string_argument_role("func_80066104", 1))
+        self.assertEqual(string_argument_role("message_window_set_title_hidden", 0), "display")
+        self.assertIsNone(string_argument_role("message_window_set_title_hidden", 1))
+        self.assertIsNone(string_argument_role("func_80066104", 0))
         self.assertEqual(string_argument_role("x_taku_string_set", 0, "main"), "display")
         self.assertEqual(string_argument_role("x_taku_string_set", 1, "main"), "display")
         self.assertEqual(string_argument_role("x_taku_string_set", 2, "main"), "display")
@@ -44,12 +45,13 @@ class RendererRoleTests(unittest.TestCase):
         ))
 
     def test_overlay_numeric_alias_requires_exact_link_unit(self):
-        self.assertIsNone(string_argument_role("func_8013E934", 2))
-        self.assertIsNone(string_argument_role("func_8013E934", 2, "OTHER"))
-        self.assertEqual(string_argument_role("func_8013E934", 2, "RPG_BAT"), "display")
-        self.assertIsNone(string_argument_role("func_8013E934", 0, "RPG_BAT"))
-        self.assertIn("func_8013E934", known_calls("RPG_BAT"))
-        self.assertNotIn("func_8013E934", known_calls("OTHER"))
+        self.assertIsNone(string_argument_role("rpg_label_create", 2))
+        self.assertIsNone(string_argument_role("rpg_label_create", 2, "OTHER"))
+        self.assertEqual(string_argument_role("rpg_label_create", 2, "RPG_BAT"), "display")
+        self.assertIsNone(string_argument_role("rpg_label_create", 0, "RPG_BAT"))
+        self.assertIsNone(string_argument_role("func_8013E934", 2, "RPG_BAT"))
+        self.assertIn("rpg_label_create", known_calls("RPG_BAT"))
+        self.assertNotIn("rpg_label_create", known_calls("OTHER"))
 
 
 if __name__ == "__main__":
