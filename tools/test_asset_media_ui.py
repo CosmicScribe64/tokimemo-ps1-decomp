@@ -145,6 +145,53 @@ class UiPublicationTests(unittest.TestCase):
                 self.assertIn('paired original executable required', record['reason'])
                 self.assertNotIn('outputs', record)
 
+    def test_sd_profiles_dispatch_through_paired_loader_tables(self):
+        from tools.test_asset_image_sd import fixture as sd_fixture
+        data, exe, entry = sd_fixture()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            source = Source(root / 'source.bin')
+            source.data = {entry['path']: data, 'SLPM_86.053': exe}
+            entries = [dict(entry, kind='file'),
+                       {'path': 'SLPM_86.053', 'size': len(exe), 'kind': 'file',
+                        'sha256': manifest.digest(exe), 'location': {'lba': 23}}]
+            source.entries = lambda: entries
+            with patch.object(manifest, 'REPOSITORY', root), patch.object(manifest, 'CACHE', root / '.asset-cache'):
+                result = export_ui_source(source, root / '.asset-cache/run', include_sd=True)
+                record = next(a for a in result['assets'] if a['source']['path'] == entry['path'])
+                self.assertEqual(record['status'], 'exported')
+                self.assertEqual(record['format'], 'tokimemo-sd-animation')
+                self.assertEqual(len(record['export']['images']), 2)
+                self.assertEqual(len(record['outputs']), 4)
+                self.assertEqual(record['paired_source']['sha256'], manifest.digest(exe))
+                self.assertIn('bound by original', result['options']['sd_profile_status'])
+
+    def test_path_bound_profile_requires_lba_and_does_not_pair_executable(self):
+        from tools.test_asset_image_sports import fixture as sports_fixture
+        path = 'CDROM/TAIIKU/SPSETU.BIN'
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            source = Source(root / 'source.bin')
+            source.data = {path: sports_fixture(), 'SLPM_86.053': b'invented unused executable'}
+            entries = [{'path': name, 'size': len(data), 'kind': 'file',
+                        'sha256': manifest.digest(data), 'location': {}}
+                       for name, data in source.data.items()]
+            source.entries = lambda: entries
+            with patch.object(manifest, 'REPOSITORY', root), patch.object(manifest, 'CACHE', root / '.asset-cache'):
+                target = root / '.asset-cache/run'
+                record = export_ui_source(source, target)['assets'][0]
+                self.assertEqual(record['status'], 'unsupported')
+                self.assertIn('LBA differs', record['reason'])
+                self.assertEqual(source.reads, [])
+                entries[0]['location']['lba'] = 0xB969
+                target = root / '.asset-cache/valid-run'
+                record = export_ui_source(source, target)['assets'][0]
+                self.assertEqual(record['status'], 'exported')
+                self.assertEqual(source.reads, [path])
+                self.assertNotIn('paired_source', record)
+                self.assertNotIn('paired_original', record)
+                self.assertFalse((target / 'assets' / record['id'] / 'paired-executable.bin').exists())
+
 
 if __name__ == '__main__':
     unittest.main()

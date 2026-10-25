@@ -122,13 +122,13 @@ def _review_map(reviews: list[dict[str, Any]] | None,
     return result
 
 
-def _source_profile(source_path: str) -> dict[str, Any]:
+def _source_profile(source_path: str, *, media_format=None, metadata=None) -> dict[str, Any]:
     """Return evidence-backed context candidates, without asserting visible content."""
     try:
         from assets.visual_text_profiles import get_profile
     except ImportError:
         return {}
-    profile = get_profile(source_path)
+    profile = get_profile(source_path, media_format=media_format, metadata=metadata)
     return copy.deepcopy(profile) if isinstance(profile, dict) else {}
 
 
@@ -180,7 +180,8 @@ def build_catalog(media_manifest: dict, reviews: list[dict] | None = None) -> di
         image_block = metadata.get("image_block")
         variants_source = asset.get("source_dependencies",
                                     asset.get("paired_source", source.get("dependencies", [])))
-        profile = _source_profile(source_path)
+        profile = _source_profile(source_path, media_format=asset.get("format") or export.get("format"),
+                                  metadata=metadata)
         base_rect = metadata.get("region")
         if not isinstance(base_rect, dict):
             base_rect = {}

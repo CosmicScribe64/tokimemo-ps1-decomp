@@ -8,6 +8,7 @@ game-graphic coverage.
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import json
 from pathlib import Path
 import sys
@@ -22,7 +23,8 @@ _AUDIO_SUFFIXES = {".VH", ".VB", ".VAG", ".SEQ", ".XA", ".STR", ".DA"}
 _CODE_SUFFIXES = {".EXN"}
 _UI_FORMATS = {"tokimemo-main-ui", "tokimemo-calendar-ui", "tokimemo-portrait",
                "tokimemo-title-ui", "tokimemo-filesel-ui", "tokimemo-option-ui",
-               "tokimemo-exam-ui", "tokimemo-name-ui"}
+               "tokimemo-exam-ui", "tokimemo-name-ui", "tokimemo-sd-animation",
+               "tokimemo-sports-ui", "tokimemo-rpg-bat-ui"}
 _IMAGE_FORMATS = _UI_FORMATS | {"sony-bs-mdec", "psx-tim"}
 
 
@@ -81,13 +83,15 @@ def _profile(path: str, fmt: str, *, decoded: bool = False,
     return {"class": "other_or_unknown_source", "evidence": "no source-format profile"}
 
 
-def _source_evidence(path: str) -> dict | None:
+def _source_evidence(path: str, asset: dict) -> dict | None:
     """Attach existing source-backed runtime context when a specific profile exists."""
     try:
         from assets.visual_text_profiles import get_profile
     except ImportError:
         return None
-    profile = get_profile(path)
+    export = asset.get("export") or {}
+    profile = get_profile(path, media_format=asset.get("format") or export.get("format"),
+                          metadata=export.get("metadata") or {})
     if not isinstance(profile, dict) or profile.get("source_role") == "graphic_role_unresolved":
         return None
     return {key: profile[key] for key in ("priority", "source_role", "screen_context",
@@ -139,6 +143,12 @@ def _source_components(asset: dict) -> dict:
     components = {key: metadata[key] for key in keys if key in metadata}
     regions = _image_regions(asset)
     fmt = asset.get("format") or export.get("format")
+    if fmt in {"tokimemo-sd-animation", "tokimemo-sports-ui", "tokimemo-rpg-bat-ui"}:
+        # Retain the complete bounded decoder evidence, including caller tables,
+        # sequence-prefix limits, opaque extents, palette words and tile crops.
+        # None of these source records constitutes whole-pack or text coverage.
+        components["decoder_metadata"] = deepcopy(metadata)
+        components["decoded_image_regions"] = deepcopy(regions)
     if fmt == "tokimemo-main-ui":
         # Frame part rectangles are many-to-one references into these source sheets.
         # Keep exact offset/extent geometry and mark the distinction from pixel coverage.
@@ -438,7 +448,7 @@ def build_media_coverage(media_manifest: dict, source_inventory: dict | None = N
             "inventory_status": asset.get("inventory_status"),
             "coverage_status": coverage_status,
             "source_classification": source_class,
-            "source_evidence": _source_evidence(path),
+            "source_evidence": _source_evidence(path, asset),
             "reason": asset.get("reason") or asset.get("unsupported"),
             "image_variant_count": len(images),
             "visual_region_count": len(regions),

@@ -38,6 +38,37 @@ def media_fixture():
 
 
 class MediaCoverageTests(unittest.TestCase):
+    def test_new_native_formats_preserve_all_decoder_evidence_without_text_claims(self):
+        records = []
+        for index, (fmt, path) in enumerate((
+                ('tokimemo-sd-animation', 'invented/sd.NBN'),
+                ('tokimemo-sports-ui', 'CDROM/TAIIKU/SPSETU.BIN'),
+                ('tokimemo-rpg-bat-ui', 'CDROM/BATTLE/VS_HABU.BIN'))):
+            metadata = {'source_path_profile': path, 'source_lba': 123,
+                        'paired_exe_sha256': 'a' * 64,
+                        'caller_profile': {'family': 'weekly', 'source_lba': 123},
+                        'source_sequence_prefix': [{'steps': [{'frame_index': 0, 'duration': 7}]}],
+                        'uninterpreted_extents': [{'offset': 900, 'size': 20, 'sha256': 'b' * 64}],
+                        'unrepresented': ['unresolved source components'], 'coverage_policy': 'bounded slice'}
+            images = [{'frame_index': 0, 'source_region': {'x': 1, 'y': 2, 'width': 3, 'height': 4},
+                       'source_palette_words': [0, 0x801f], 'preview_palette_words': [0, 31],
+                       'parts': [{'source_record_offset': 44, 'sheet_source_offset': 80,
+                                  'u': 8, 'v': 16, 'flip_flags': 3}],
+                       'opaque_future_metadata': {'preserved': True}}]
+            records.append({'id': str(index), 'source': {'path': path, 'sha256': 'c' * 64},
+                            'format': fmt, 'status': 'exported',
+                            'export': {'metadata': metadata, 'images': images}})
+        result = build_media_coverage({'schema': 'tokimemo.media.v1', 'assets': records})
+        by_id = {source['asset_id']: source for source in result['sources']}
+        for record in records:
+            source = by_id[record['id']]
+            self.assertEqual(source['source_classification']['class'], 'decoded_graphic_container')
+            self.assertEqual(source['source_components']['decoder_metadata'], record['export']['metadata'])
+            self.assertEqual(source['source_components']['decoded_image_regions'], record['export']['images'])
+            self.assertEqual(source['visual_review_states'], {})
+        self.assertEqual(by_id['0']['source_evidence']['source_role'], 'school_day_sd_animation_pack')
+        self.assertFalse(result['graphic_source_coverage_complete'])
+
     def test_source_counts_stay_separate_from_image_regions_and_review(self):
         catalog = {"schema": "tokimemo.visual-text.v1", "regions": [
             {"region_id": "region-main", "parent_asset_id": "main", "state": "confirmed_japanese_text"},

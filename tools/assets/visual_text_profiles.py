@@ -5,6 +5,7 @@ and HUD actor setup. Japanese-text presence still requires visual review.
 No game pixels, dialogue, transcription, or replacement artwork is stored here.
 """
 from copy import deepcopy
+import re
 
 PROFILES = {
     "CDROM/FUKUTEST/MAINROM.NBN": {
@@ -104,11 +105,49 @@ PROFILES = {
 }
 
 
-def get_profile(path):
+def get_profile(path, *, media_format=None, metadata=None):
     """Return independent source evidence; never infer that Japanese text exists."""
     profile = PROFILES.get(path)
     if profile:
         return deepcopy(profile)
+    metadata = metadata if isinstance(metadata, dict) else {}
+    if media_format == "tokimemo-sd-animation":
+        caller = metadata.get("caller_profile")
+        if (isinstance(caller, dict) and caller.get("family") in {"weekly", "holiday", "club", "else"}
+                and metadata.get("source_path_profile") == path
+                and isinstance(metadata.get("source_lba"), int)
+                and not isinstance(metadata.get("source_lba"), bool)
+                and caller.get("source_lba") == metadata["source_lba"]
+                and isinstance(metadata.get("paired_exe_sha256"), str)
+                and re.fullmatch(r"[0-9a-f]{64}", metadata["paired_exe_sha256"])):
+            return {"priority": 2, "source_role": "school_day_sd_animation_pack",
+                    "screen_context": ["school_day_sd_animation"],
+                    "evidence": deepcopy(metadata.get("evidence") or [
+                        "src/main/scene_library.c:addr_init_weekly_sd,addr_init_holiday_sd,addr_init_club_sd,addr_init_else_sd",
+                        "src/main/school_day.c:school_day_sd_actors_init,school_day_vacation_sd_actors_init"]),
+                    "caller_profile": deepcopy(caller), "disc_lba": metadata["source_lba"],
+                    "runtime_load_address": 0x801E0000,
+                    "follow_up": ["review_each_static_frame", "retain_sequence_prefix_and_unused_texels_as_unresolved"]}
+    sports = {"SPSETU.BIN": "runner_actor_display.c", "KASETU.BIN": "runner_race_dispatch.c",
+              "TASETU.BIN": "candidate_girl_scene.c", "NINSETU.BIN": "schoolyard_scene_dispatch.c"}
+    if path in {"CDROM/TAIIKU/" + name for name in sports}:
+        return {"priority": 1, "source_role": "sports_instruction_viewport_pack",
+                "screen_context": ["sports_instruction_card"],
+                "evidence": ["src/ovl/TAIIKU/" + sports[path.rsplit("/", 1)[-1]],
+                             "src/main/screen_layers.c:srn_vram_set,mod_trans_vram,get_fnt",
+                             "src/main/scene_display.c:Scroll (initial320x240,CLUT0x1F0)"],
+                "runtime_load_address": 0x8018F000,
+                "follow_up": ["review_each_instruction_viewport", "retain_other_pack_content_as_unresolved"]}
+    if path in {"CDROM/BATTLE/" + name for name in (
+            "VS_HABU.BIN", "VS_SIKA.BIN", "VS_KUMA.BIN", "VS_UFO.BIN", "VS_ROBO.BIN")}:
+        return {"priority": 2, "source_role": "rpg_encounter_source_texture_page",
+                "screen_context": ["rpg_encounter_hud_source_regions"],
+                "evidence": ["src/ovl/RPG_BAT/battle_asset_pointers.c:rpg_stage_asset_addresses",
+                             "src/ovl/RPG_BAT/battle_sprites_and_hud.c:rpg_stage_sprites_setup",
+                             "src/ovl/RPG_BAT/battle_palette_loading.c:rpg_stage_palettes_load"],
+                "runtime_load_address": 0x80180000,
+                "follow_up": ["review_native_page_and_numeric_locator_crops",
+                              "retain_other_pages_and_runtime_composition_as_unresolved"]}
     if path.startswith("CDROM/BUSTUP/") and path.upper().endswith(".BIN"):
         return {"priority": 2, "source_role": "dialogue_portrait_pack",
                 "screen_context": ["dialogue_portrait"],
