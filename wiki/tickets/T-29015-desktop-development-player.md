@@ -1,0 +1,38 @@
+---
+id: T-29015
+title: Build a reproducible desktop development player
+status: In Progress
+assignee: root
+created: 2026-10-25
+updated: 2026-10-25
+links: ["[[phase3]]", "[[tickets/T-29008-assemble-playable-development-app]]"]
+---
+
+## Goal
+
+Provide a repeatable code-only desktop development build using the pinned Docker engine/templates, with original content supplied externally. This makes integrated gameplay accessible beyond automated capture runs.
+
+## Acceptance criteria
+
+- [x] Export only reviewed project source/configuration using the pinned engine; record source and artifact hashes.
+- [x] Keep original game data and development captures outside the package and Git.
+- [ ] Provide explicit external input configuration and a usable local launch path; no host toolchain install or security-setting bypass.
+- [ ] Review build/launch tooling and verify the actual exported application before claiming platform support.
+
+## Notes
+
+First target is the user's macOS desktop. Unsigned development export is separate from release signing/notarization and Windows/Linux acceptance. Preserve old exports. Root serializes application/build writes; current gameplay limitations remain explicit.
+
+## Build
+
+From the repository root:
+
+```sh
+sh tools/port/build_desktop.sh new-game .asset-cache/port/desktop-entry-new-build
+```
+
+Use `week` instead of `new-game` to select the captured-boundary development app. Each output directory must be new. The build records source hashes and stages code only, changes the main scene and universal texture-import setting only in that copy, then uses the pinned Docker engine/templates. External packs and runtime input configuration remain required; this command does not launch or install the app.
+
+## Verification
+
+2026-10-25: independent Standards and bounded correctness review pass in `.claude/orchestrator/state/T-29015/final-review.{md,json}`. Six invented-source tests pass. Actual v3 export at `.asset-cache/port/desktop-entry-90283b29d-v3/player.zip` has SHA256 `2a5670c4404bf171af842b9a10b1dec5f351748f7e2a0b5c8b3fa426fc68ee6d`; review verified 41 staged source hashes, 81 packaged resource mappings and both x86_64/arm64 Mach-O slices. Original game payloads are absent. Earlier failed v1 and successful v2 outputs are preserved. Host launch, external-input launcher and platform runtime acceptance remain unverified; the ticket stays In Progress.

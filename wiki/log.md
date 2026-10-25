@@ -2196,3 +2196,7 @@ Integrated seven reviewed source/test files for [[tickets/T-29012-native-new-gam
 ## [2026-10-25] build | Publish installed name-entry scene capture
 
 Published only the actual installed Godot name-entry scene capture from [[tickets/T-29012-native-new-game-initialization]] to the local visual page and verified its served hash `2f752e66dd4e99f6c1ba24105029626b93fbbd2ff776bf411a53927d77931b12`. It is the reviewed development entry scene, not a native screenshot or native UI parity claim. Percentage estimates remain unchanged.
+
+## [2026-10-25] build | Export reviewed code-only desktop development player
+
+For [[tickets/T-29015-desktop-development-player]], added Docker staging/export tooling and six invented-source tests. Independent review resolved a source-root symlink traversal and the pinned engine's universal texture-import requirement. Actual v3 export verifies both macOS architectures, 41 source hashes and 81 packaged resource mappings without original game payloads. Host launch and input launcher remain open; this is not desktop release acceptance.

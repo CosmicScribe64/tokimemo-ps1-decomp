@@ -67,6 +67,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-29015-desktop-development-player|T-29015 Build a reproducible desktop development player]]
+
 - [ ] [[tickets/T-29014-ordinary-command-content-coverage|T-29014 Extend original content coverage to ordinary commands 1 through 6]]
 
 - [ ] [[tickets/T-29013-native-holiday-command-loop|T-29013 Port the first ordinary holiday command loop]]
