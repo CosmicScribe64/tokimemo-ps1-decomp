@@ -461,3 +461,11 @@ as media, and the single ambiguous ASAHINA sector stays quarantined. ASAHINA's v
 are separate and its status is partial; all other sources export normally. These are native
 file/channel/coding groups, not a claim that every WAV is one runtime dialogue clip. The
 movie frames have not been visually classified in the static-image text catalog.
+
+## Bounded OPENXA Japanese-text frame review (2026-10-25)
+
+The ignored `.asset-cache/media/openxa-frame-review-392-407-v1/review-packet.json` records sixteen zero-based decoded output indices, 392–407, from `OPENXA.STR`. Each 288×192 color PNG visibly contains Japanese character overlays; an independent reviewer inspected every frame and verified its PNG hash, source frame-header fields, sector indices and original raw-track extent. The packet SHA256 is `790bdd9742e2c6c1534ae46bf521544e9289e5b390329cb217cb2b20bc4a56bd`. No text is transcribed in tracked documentation.
+
+This is full-frame presence classification for one window within OPENXA's 829 decoded frames. It is separate from the 3,480-region static catalog and does not classify the complete 997-frame movie corpus. Software MDEC decoding has no hardware pixel-parity claim; no CLUT applies to these decoded movie images. Decoded indices and original source-frame numbers remain separate fields, and presentation timing is unproved.
+
+Future localization needs edited frame images or synchronized replacement compositing because the Japanese text is present in the decoded pixels. The packet leaves the replacement method undecided; this is an explicit follow-up, not a completed redraw plan. The immutable review packet retains original frame and raw-stream provenance; remaining movie/whole-corpus review stays open under T-28004.
