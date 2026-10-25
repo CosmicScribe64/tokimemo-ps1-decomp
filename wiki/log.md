@@ -2270,3 +2270,7 @@ User requested agent research into modern resolutions/widescreen without stretch
 ## [2026-10-25] decision | Keep generated widescreen scenery a last resort
 
 Recorded the user's preference in [[tickets/T-30001-modern-widescreen]] and [[tickets/T-30005-widescreen-settings-feasibility]]. Prefer original art and framing/layout solutions; any later generated extension is optional, explicit and reviewed. No image generation performed.
+
+## [2026-10-25] decision | Keep developer prose out of game presentation
+
+Applied the user-requested deslop prose review to current authored app labels and recorded the product direction in port/godot/PORTING.md, [[tickets/T-29008-assemble-playable-development-app]] and [[tickets/T-29012-native-new-game-initialization]]. The skill scanner misclassifies GDScript syntax, so its code hits are not findings. Manual review found visible implementation disclaimers and raw state paragraphs; assigned cleanup to current HUD/New Game integration owners. Final presentation is the game, with opt-in debugging. No translated dialogue changed.

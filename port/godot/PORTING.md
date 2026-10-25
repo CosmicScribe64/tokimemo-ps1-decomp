@@ -34,6 +34,21 @@ for the port's behavior and acceptance criteria.
 The first playable target is command selection through the real scheduler to one
 school-day result. The engine foundation alone is not a playable game.
 
+## Player-facing presentation
+
+The shipped app must feel like a game. Present the original game scenes, menus,
+dialogue and transitions. Do not wrap them in developer headings, status feeds,
+implementation disclaimers, raw state values or permanent control instructions.
+Keep debugging information in logs or an explicit opt-in debug view, off by
+default. Development placeholders do not define the final layout.
+
+Use concise, actionable copy for setup, settings and errors. Preserve detailed
+diagnostics in logs. Use the user's deslop guidance for authored prose:
+https://github.com/CosmicScribe64/dotfiles/tree/main/skills/deslop
+The skill reviews text; gameplay changes still require source-backed tests and
+review. Do not rewrite original dialogue or the separate translation pipeline
+as part of UI cleanup.
+
 ## Development commands
 
 From the repository root, use `tools/port/run.sh build` to build the pinned Docker

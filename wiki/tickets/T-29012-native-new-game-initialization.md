@@ -42,3 +42,7 @@ Native Japanese name-entry limits remain the Phase 3 behavior. Later translation
 Applied the four-file prologue bank provider after independent Standards/source review PASS. The loader preserves original cache decisions, request ordering, byte-width counters, readiness/timeout predicates and ordered audio operations. Its content adapter verifies original source calls and ISO identities and exports authenticated metadata outside the project. Root installed tests pass: 24 Godot control checks and six Python checks in both normal and optimized execution. Review independently reproduced ten ISO bindings, two sequence headers and the external pack. Evidence: `.claude/orchestrator/state/T-29012/prologue-bank-provider-v1/{spec-standards-review,canonical-application}.json`.
 
 Actual CD transport, driver readiness delivery, playback, native function timing and the connected normal prologue remain open. This component does not make New Game playable; T-29012 remains In Progress.
+
+## Player-facing UI direction (2026-10-25)
+
+User wants the finished app to feel like a game, not a developer tool. Remove default diagnostic headings, raw state/RNG/indices, implementation explanations and permanent control banners as scene integration proceeds. Debug information remains available only on request or in logs. Original game menus/dialogue remain; setup/settings/errors use concise useful copy. The current placeholder layout is not the target design. HUD and New Game owners have this requirement.
