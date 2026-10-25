@@ -262,6 +262,28 @@ def _attach_initial_buffer_storage_links(catalog: dict) -> None:
     inventory["initial_runtime_buffer_storage_links"] = links
 
 
+def _attach_speaktst_layouts(catalog: dict, root: Path) -> None:
+    from .text_speaktst_inventory import collect_speaktst_layouts
+    from .text_speaktst import SPEAKTST_PROFILES
+    if not any((root / path).exists() for path in SPEAKTST_PROFILES):
+        return
+    banks = collect_speaktst_layouts(root)
+    catalog["layout_only_inventories"] = banks
+    bank_paths = {bank["source"]["path"] for bank in banks}
+    for item in catalog["files"]:
+        if item["path"] in bank_paths:
+            item.update(status="layout_only_inventory", layout_inventory_path=item["path"],
+                        reason="conditional_layout_without_proved_runtime_installation")
+    catalog["coverage"].update(
+        unsupported_files=sum(item["status"] == "unsupported" for item in catalog["files"]),
+        layout_only_files=len(banks),
+        layout_only_text_records=sum(len(bank["records"]) for bank in banks),
+        layout_only_control_records=sum(len(bank["controls"]) for bank in banks))
+    catalog["text_completeness"].update(
+        layout_only_runtime_installation_unproved=True,
+        layout_only_semantic_coverage_complete=False)
+
+
 def export_text(input_dir, output_dir=None, profiles=None, *, include_source=False, source_repository=None) -> dict:
     """Parse an extracted ISO root, optionally write catalog.json under the cache.
 
@@ -542,6 +564,10 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
             attach_font_references(catalog, catalog["font"])
     else:
         catalog["deferred"].append("source_inventory_not_requested")
+    # Conditional SPEAKTST layouts have no proved native font or buffer consumer.
+    # Add them after recursive enrichment so those bindings cannot leak in.
+    if profiles is None and (root / "CDROM/SPEAKTST").is_dir():
+        _attach_speaktst_layouts(catalog, root)
     if output_dir is not None:
         output = Path(output_dir).resolve()
         # Keep the allowed root lexical: resolving a cache-directory symlink

@@ -136,7 +136,7 @@ evidence separately. Full-file reconstruction and runtime reachability are diffe
 | `CDROM/SERIFU/TAKU3.BIN` | 40 numeric choice-result tables | Typed numeric data, 668 padding bytes and checked-CD trailer; no missing dialogue parser |
 | `CDROM/BUNKA/*.BIN` (46) | Pinned linked-table profiles | 50 initializer functions yield 46 unique triads; duplicate roots retained in the audit |
 | `CDROM/MASTER/*.BIN` (9) | Eight linked-table profiles: 326 groups and 815 text records; TEAR has a separate source-backed actor descriptor | Exact original hashes and initializer roots verified; actor usage does not prove whole-file text absence |
-| `CDROM/SPEAKTST/TEST_*.BIN` (12) | File/hash inventory, unsupported linked layout | No source-backed talk roots; OPTION's audio-table load does not establish these files as dialogue |
+| `CDROM/SPEAKTST/TEST_*.BIN` (12) | 16,702 flagged layout candidates, 12 FF controls, all 1,253,376 bytes retained | Conditional table grammar; actual loader/runtime/voice/character semantics unproved |
 | DATE place/gift dictionaries | 22 place slots and 99 gift slots, all 33 bytes wide | Includes reserved place slot and six empty gifts; source-derived girl/year/answer indices, slot padding and trailing assembly bytes retained |
 | Main/TEL profile display fields | 26 main slots and 137 JOHO slots | Source pins, 1,689 loader/display instruction words and anchored main data labels verified; three whitespace-only slots preserved |
 | Other overlay fixed tables | 587 slots across seven EXNs | Includes five 99-slot gift copies and two SHOUGATU fortune tables; 30 empty slots preserved; source storage views do not invent renderer semantics |
@@ -151,7 +151,7 @@ evidence separately. Full-file reconstruction and runtime reachability are diffe
 Current script-root audit: 98 containers, 654 sections, 42,369 records and 30,851 text records.
 The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,861
 remain semantically unknown. All 437 C files parse in the AST pass with stable source inputs. The
-current full text suite has 273 passing Docker tests, including source-root integration and isolated
+current full text suite has 295 passing Docker tests, including source-root integration and isolated
 synthetic proof regressions. These counts do not clear the remaining context and runtime gates.
 There are no unprofiled SERIFU or BUNKA files. Every script string strictly decodes and re-encodes as
 Shift-JIS. Unclaimed byte counts and diagnostic candidate scans are retained as leads; zero candidates
@@ -159,8 +159,8 @@ is never treated as proof of completeness. Final completion requires the source/
 independent review, including the image-text lane's separate inventory.
 
 The preceding semantic milestone was integrated by the parent in `c56f9dcd4`; its combined
-media/text suite passed 188 tests with one optional integration skip. The newer validated export
-contains 1,069 dictionary slots, one actor-resource descriptor, 12 unsupported SPEAKTST files and
+media/text suite passed 188 tests with one optional integration skip. That historical export
+contained 1,069 dictionary slots, one actor-resource descriptor, 12 then-unsupported SPEAKTST files and
 no missing inputs or structural failures. The source-root audit now
 reports MASTER's eight primary literal initializers separately from the existing 21 other SERIFU
 profiles. Its 168,596,252-byte catalog has SHA256
@@ -191,10 +191,10 @@ Those fixes are included in the validated current catalog. The first unintegrate
 used the wrong extracted revision; its pins and malformed-slot claims were discarded. The corrected
 seven profiles use only `disc/files`, with all 30 source/header/assembly pins independently checked.
 
-The compact projection contains 38,701 rows: 30,851 script records, 1,069 dictionary slots, 4,264
-nonzero source extents, 2,201 C literal sites, 286 stage-show bodies, five initial-only mutable-buffer views and 25 conditional variants. All IDs are unique and
+The compact projection contains 55,403 rows: 30,851 script records, 1,069 dictionary slots, 4,264
+nonzero source extents, 2,201 C literal sites, 286 stage-show bodies, five initial-only mutable-buffer views, 25 conditional variants and 16,702 flagged SPEAKTST layout candidates. All IDs are unique and
 non-null; JSONL and TSV deserialize to identical values. The original-byte check covers 125 input
-files with zero mismatches. It marks 31,346 rows ready for review and 7,355 flagged. Unknown overlay
+files with zero mismatches. It marks 31,346 rows ready for review and 24,057 flagged. Unknown overlay
 renderer views remain flagged despite valid source Unicode, and every conditional variant remains
 conditional. Completeness is false regardless of those per-row review counts.
 
@@ -220,7 +220,7 @@ Regression checks restore original function/diagnostic evidence, validate all co
 reject traversal and escaping configs, and invalidate cached ownership when config bytes change.
 The completed run has zero byte, Unicode, token, source/root, AST or proof blockers. Separate current
 source/code/data replay reports support the metadata comparison; comparing metadata alone is not an
-instruction proof. Comprehensive coverage and the twelve SPEAKTST layouts remain open.
+instruction proof. Comprehensive coverage and SPEAKTST runtime/loader semantics remain open.
 
 ## RPG original initial buffers (2026-10-25)
 
@@ -242,7 +242,7 @@ The source audit also corrects the earlier SPEAKTST interpretation. OPTION's 58-
 `0xA1AB` maps to `FUKUTEST/XA.NBN`. GYOZI references into TEST-file sectors call PCs `0x80051DD8`
 and `0x800504CC`, which are interior addresses in the current `xa_wait` and `get_near_menu` functions.
 Those call arguments do not establish a loader ABI. The earlier actor-resource description was not
-proved; all twelve SPEAKTST layouts remain unresolved, with original hashes/extents retained and no
+proved; the current twelve-bank conditional inventory leaves actual loading and execution unresolved, with original hashes/extents retained and no
 whole-file text-absence claim. No English-patch wording is used.
 
 ## Shooter native display-input cohort (2026-10-25)
@@ -519,4 +519,59 @@ audit is separate from byte accounting. Original renderer defects are retained i
 Main and NAME_ENT typed term dictionaries add 198 source-backed name/place/club/grid/preset records.
 DATE adds 121 slots, main/JOHO profile fields add 163, and the seven overlay readers add 587,
 for 1,069 dictionary/storage slots. MASTER/TEAR has a separate actor-resource descriptor; the twelve
-SPEAKTST inputs retain unsupported layout status. No whole-file text absence is inferred from actor use.
+SPEAKTST inputs now have a separate conditional layout inventory; runtime loading and semantics remain unproved. No whole-file text absence is inferred from actor use.
+
+## SPEAKTST conditional layout inventory (2026-10-25)
+
+The SPEAKTST layout reader inventories all twelve pinned TEST bank inputs using
+the reviewed conditional talk-grammar model. It retains 16,702 candidate text
+records, twelve FF control-only records, four unknown tokens, and 27,149 opaque
+ranges. Every original byte is recoverable from stored spans: 1,253,376 bytes in
+total. The fixed-stride 24-byte records and metadata bytes remain opaque; the
+reader makes no voice or character ownership links. The inherited parser leaves
+400,752 bytes uninterpreted by its conditional model; these bytes remain in the
+opaque ranges, including matching overlaps with other retained spans.
+
+`tools/assets/text_speaktst.py` provides parse, reconstruction, and validation
+APIs. Its twelve profiles ship in `tools/assets/text_speaktst_profiles.json` and
+are hash-pinned. The reader has no dependencies on ignored research or prototype
+files. Input hash, size, native checksum, pointer spans, record strides, text
+termination, encoding/token bytes, control counts, and reconstruction are checked
+with explicit errors that remain active under optimized Python.
+
+`tools/assets/text_speaktst_inventory.py` exports immutable per-bank JSON and a
+canonical manifest beneath a selected repository's `.asset-cache/text` directory.
+The default destination is `.asset-cache/text/speaktst-layout`. Validation reparses
+the original inputs and compares all persisted canonical fields before rebuilding
+the original bytes from the deserialized stored spans. Conflicting existing files,
+extra files, unsafe paths, symlinks, and hardlinked output files are rejected;
+matching reruns are idempotent. The complete write set is checked before any file
+is created.
+
+Run from the repository in the existing Docker image:
+
+```sh
+tools/docker.sh python3 -m tools.assets.text_speaktst_inventory export --input-root disc/files --repository .
+tools/docker.sh python3 -m tools.assets.text_speaktst_inventory validate --input-root disc/files --repository .
+```
+
+Default comprehensive export stores these banks in `layout_only_inventories`,
+after the existing recursive native font and buffer enrichment. Explicit custom
+profile exports keep their existing scope. If any profiled bank is present, the
+layout collector requires the complete twelve-input set. FF controls and opaque
+ranges are retained in the catalog and do not become translation units.
+
+The unit projection appends 16,702 flagged, null-target candidate rows after the
+previous 38,701 rows. Existing unit payloads, IDs, tokens, contexts, order, and
+readiness remain identical. The resulting 55,403 rows contain 31,346 ready-for-review
+rows and 24,057 flagged rows. The physical source inventory remains unchanged,
+including its 1,861 unknown extents. Fifty-six new rows contain 42 distinct byte
+payloads absent from the previous unit inventory; this comparison does not prove
+runtime use or ownership.
+
+Actual file loading, group-root installation, execution, native glyph/consumer
+bindings, voice meaning, and character metadata meaning remain unproved. All new
+rows carry these blockers regardless of incoming readiness claims; no original
+capacity is treated as a translation limit.
+
+Root installed replay passes all 295 text tests in both normal and optimized Python, verifies all 55,403 JSONL/TSV fields, and reproduces the entire original byte inventory. The actual coherent asset suite passes 550 tests without skips. Catalog SHA256 `aed079932b74759434c1438053f328576cd8c4eef9d66b15a19f686fce057acb`; JSONL `a2c06f02625792bd2e0807048c748bccdf60ad60662cf0eb0fc466622ae72560`; TSV `1f17b6f42b2e3062338f02112267edb97bed3baee058226a295337fc6ae982e8`. The current cache is `.asset-cache/text/current-speaktst/`; exports remain ignored. Full coverage, runtime use and ownership are not inferred from layout/serialization success.

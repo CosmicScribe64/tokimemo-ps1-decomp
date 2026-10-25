@@ -85,6 +85,37 @@ def _catalog():
 
 
 class TextUnitProjectionTests(unittest.TestCase):
+    def test_layout_candidates_append_without_promoting_semantics_or_controls(self):
+        from tools.assets.text_speaktst import FLAGS
+        catalog = _catalog()
+        before = list(iter_units(catalog))
+        tokens = [{"kind": "unknown", "raw_hex": "41", "offset": 0}]
+        spans = {"text_with_nul": {"raw_hex": "4100"}, "record24": {"raw_hex": "00" * 24}}
+        candidate = {"id": "layout:invented:1", "physical_text_id": "physical:invented:1",
+                     "source_path": "CDROM/SPEAKTST/TEST.fixture", "source_sha256": "d" * 64,
+                     "source_offset": 32, "raw_hex": "41", "source_text": "A", "tokens": tokens,
+                     "spans": spans, "candidate_grammar": {"command_value": 1},
+                     "readiness": {"translation_ready": True}, "target_text": "forged",
+                     "runtime_usage_proven": True}
+        catalog["layout_only_inventories"] = [{"status": "layout_only_inventory", "records": [candidate],
+                                              "controls": [{"id": "layout:invented:end"}]}]
+        after = list(iter_units(catalog))
+        self.assertEqual(after[:-1], before)
+        row = after[-1]
+        self.assertEqual(row["id"], candidate["id"])
+        self.assertEqual(row["parent_id"], candidate["physical_text_id"])
+        self.assertEqual(row["kind"], "speaktst_layout_text")
+        self.assertEqual(row["raw_hex"], "41")
+        self.assertEqual(row["tokens"], tokens)
+        self.assertEqual(row["context"]["spans"], spans)
+        self.assertIsNone(row["target_text"])
+        self.assertFalse(row["readiness"]["translation_ready"])
+        self.assertEqual(row["readiness"]["status"], "flagged")
+        self.assertTrue(set(FLAGS).issubset(row["readiness"]["blockers"]))
+        self.assertFalse(row["context"]["runtime_usage_proven"])
+        self.assertFalse(row["context"]["record24_voice_semantics_proven"])
+        self.assertFalse(row["context"]["metadata_character_semantics_proven"])
+
     def test_initial_runtime_buffer_units_are_always_flagged_and_keep_protected_storage(self):
         item = {"id": "initial-body", "source_physical_record_id": "initial-slot",
                 "source_path": "TEST", "source_sha256": "same", "offset": 4, "full_offset": 4,

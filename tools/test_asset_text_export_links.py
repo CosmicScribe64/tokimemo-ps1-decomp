@@ -79,6 +79,10 @@ class LinkTests(unittest.TestCase):
     def test_source_export_keeps_unresolved_evidence_and_enriched_font_links(self):
         site = {"source_site": {"call": "load_string", "call_argument_index": 0}, "raw_hex": "8140"}
         runtime_token = {"kind": "glyph", "raw_hex": "8140"}
+        layout_tokens = [{"kind": "glyph", "raw_hex": "8140"},
+                         {"kind": "substitution", "code": "M", "raw_hex": "4d"}]
+        layout_bank = {"status": "layout_only_inventory", "source": {"path": "CDROM/SPEAKTST/TEST_AS.BIN"},
+                       "records": [{"tokens": layout_tokens}], "controls": [{}]}
         inventory = {"c_literal_sites": [site], "records": [], "blocked": [],
                      "source_context": {"blocked": []}}
         expected_reads = None
@@ -113,6 +117,7 @@ class LinkTests(unittest.TestCase):
                 patch("tools.assets.text_mips.enrich_mips_context", side_effect=mips_report), \
                 patch("tools.assets.text_shooter.verify_shooter_text_contract", return_value={"verified": False}), \
                 patch("tools.assets.text_shooter_labels.verify_shooter_label_contract", return_value={"verified": False}), \
+                patch("tools.assets.text_speaktst_inventory.collect_speaktst_layouts", return_value=[layout_bank]) as collect, \
                 patch("tools.assets.text_binary._enrich_binary_text_from_reports", side_effect=binary_report), \
                 patch("tools.assets.script_mutations.enrich_script_mutations", side_effect=mutation_report):
             provenance = {"schema": "synthetic-source-witness", "source_tree_sha256": "synthetic-tree",
@@ -120,7 +125,11 @@ class LinkTests(unittest.TestCase):
                           "build_source_digest": "synthetic-build", "matching_proof_sha256": "synthetic-proof"}
             manifest_raw = json.dumps(provenance).encode()
             (Path(directory) / "snapshot-manifest.json").write_bytes(manifest_raw)
-            catalog = export_text(directory, profiles=[], include_source=True, source_repository=directory)
+            folder = Path(directory) / "CDROM/SPEAKTST"
+            folder.mkdir(parents=True)
+            (folder / "TEST_AS.BIN").write_bytes(b"invented")
+            catalog = export_text(directory, include_source=True, source_repository=directory)
+            collect.assert_called_once_with(Path(directory))
             from tools.assets.text_shooter import SHOOTER_TEXT_READ_SPEC
             from tools.assets.text_shooter_labels import SHOOTER_LABEL_READ_SPECS
             self.assertEqual(set(SHOOTER_LABEL_READ_SPECS), {"shooter_draw_label", "shooter_draw_ranking_text"})
@@ -144,6 +153,8 @@ class LinkTests(unittest.TestCase):
                         positive = export_text(directory, profiles=[], include_source=True, source_repository=directory)
                     self.assertEqual(positive["text_completeness"]["shooter_renderer_contract_blockers"], int(not first_ok))
                     self.assertEqual(positive["text_completeness"]["shooter_label_renderer_contract_blockers"], int(not labels_ok))
+                    self.assertNotIn("layout_only_inventories", positive)
+            collect.assert_called_once()
         self.assertIs(catalog["source_inventory"], inventory)
         self.assertFalse(catalog["text_completeness"]["complete"])
         self.assertEqual(catalog["text_completeness"]["source_mips_blockers"], 1)
@@ -154,6 +165,13 @@ class LinkTests(unittest.TestCase):
         self.assertEqual(catalog["text_completeness"]["unresolved_opaque_value_dependencies"], 1)
         self.assertEqual(site["renderer_view"]["tokens"][0]["font_reference"]["id"], "font:INVENTED:g0000")
         self.assertEqual(runtime_token["font_reference"]["id"], "font:INVENTED:g0000")
+        self.assertIs(catalog["layout_only_inventories"][0], layout_bank)
+        self.assertEqual(layout_tokens, [{"kind": "glyph", "raw_hex": "8140"},
+                                         {"kind": "substitution", "code": "M", "raw_hex": "4d"}])
+        self.assertEqual(catalog["coverage"]["layout_only_text_records"], 1)
+        self.assertEqual(catalog["coverage"]["layout_only_control_records"], 1)
+        self.assertEqual(next(item for item in catalog["files"] if item["path"].endswith("TEST_AS.BIN"))["status"],
+                         "layout_only_inventory")
         self.assertEqual(catalog["source_evidence_snapshot"]["revision"], "synthetic-revision")
         self.assertEqual(catalog["source_evidence_snapshot"]["build_source_digest"], "synthetic-build")
         self.assertEqual(catalog["source_evidence_snapshot"]["manifest_sha256"], hashlib.sha256(manifest_raw).hexdigest())

@@ -572,6 +572,32 @@ def _iter_units(catalog: dict) -> Iterator[dict]:
             )
 
 
+    # Append layout candidates after all established units, including runtime
+    # variants. FF controls and uninterpreted ranges remain only in the catalog.
+    for bank in catalog.get("layout_only_inventories", []):
+        if bank.get("status") != "layout_only_inventory":
+            continue
+        from .text_speaktst import FLAGS
+        for record in bank.get("records", []):
+            blockers = list(FLAGS) + ["layout_only_candidate_text"]
+            blockers.extend(_tokenization_blockers(record.get("tokens", [])))
+            yield _row(
+                identifier=record.get("id"), kind="speaktst_layout_text",
+                parent_id=record.get("physical_text_id"), source_path=record.get("source_path"),
+                source_sha256=record.get("source_sha256"), source_offset=record.get("source_offset"),
+                raw_hex=record.get("raw_hex"), source_text=record.get("source_text"),
+                tokens=record.get("tokens", []),
+                context={"group": record.get("group"), "line": record.get("line"),
+                         "candidate_grammar": record.get("candidate_grammar"),
+                         "spans": record.get("spans"),
+                         "unproved_field_semantics": record.get("unproved_field_semantics"),
+                         "layout_only_inventory": True, "runtime_usage_proven": False,
+                         "runtime_file_installation_proven": False,
+                         "record24_voice_semantics_proven": False,
+                         "metadata_character_semantics_proven": False},
+                blockers=blockers, eligible=False)
+
+
 def iter_units(catalog: dict) -> Iterator[dict]:
     """Yield rows while enforcing non-null, unique projection identities."""
     seen = set()

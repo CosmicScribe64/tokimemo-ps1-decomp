@@ -1,0 +1,254 @@
+[
+  {
+    "metadata_array_offset": 78496,
+    "path": "CDROM/SPEAKTST/TEST_AS.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149103920,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149102804,
+          "voice_table": 2149135004
+        }
+      ],
+      "sha256": "1c0aada1f569ce16bf657020f9a0a63c651c78bac67b986f39f65a5bde21786a"
+    },
+    "sha256": "1c0aada1f569ce16bf657020f9a0a63c651c78bac67b986f39f65a5bde21786a",
+    "size": 79872,
+    "text_records": 1110
+  },
+  {
+    "metadata_array_offset": 183348,
+    "path": "CDROM/SPEAKTST/TEST_FU.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149170048,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149167548,
+          "voice_table": 2149239856
+        }
+      ],
+      "sha256": "d37bd4f81051b4ee938967d8254a0810c1ad72b1176bc0b128888a62c3ae7e6d"
+    },
+    "sha256": "d37bd4f81051b4ee938967d8254a0810c1ad72b1176bc0b128888a62c3ae7e6d",
+    "size": 186368,
+    "text_records": 2493
+  },
+  {
+    "metadata_array_offset": 107452,
+    "path": "CDROM/SPEAKTST/TEST_HI.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149122544,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149121060,
+          "voice_table": 2149163960
+        }
+      ],
+      "sha256": "62f2e316d2e544171fb490a9d45743162f071578d1ee7c7e76c72830392bdb23"
+    },
+    "sha256": "62f2e316d2e544171fb490a9d45743162f071578d1ee7c7e76c72830392bdb23",
+    "size": 110592,
+    "text_records": 1479
+  },
+  {
+    "metadata_array_offset": 109132,
+    "path": "CDROM/SPEAKTST/TEST_KA.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149125120,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149123668,
+          "voice_table": 2149165640
+        }
+      ],
+      "sha256": "79a10e169c413000686b85ae0edd3cd58c550768d17c5d8dfd237bee218746d9"
+    },
+    "sha256": "79a10e169c413000686b85ae0edd3cd58c550768d17c5d8dfd237bee218746d9",
+    "size": 112640,
+    "text_records": 1447
+  },
+  {
+    "metadata_array_offset": 86920,
+    "path": "CDROM/SPEAKTST/TEST_KG.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149110916,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149109748,
+          "voice_table": 2149143428
+        }
+      ],
+      "sha256": "1418f8ee8993c068a7a565f58973ec73659c46d6a0ca4faec85e0e9cf6b78f64"
+    },
+    "sha256": "1418f8ee8993c068a7a565f58973ec73659c46d6a0ca4faec85e0e9cf6b78f64",
+    "size": 90112,
+    "text_records": 1161
+  },
+  {
+    "metadata_array_offset": 112224,
+    "path": "CDROM/SPEAKTST/TEST_KI.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149126980,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149125484,
+          "voice_table": 2149168732
+        }
+      ],
+      "sha256": "77b4c87c0d79db2b290e9c8f87e192b33d1ffd9d7d65350c03488889e5ac5168"
+    },
+    "sha256": "77b4c87c0d79db2b290e9c8f87e192b33d1ffd9d7d65350c03488889e5ac5168",
+    "size": 114688,
+    "text_records": 1491
+  },
+  {
+    "metadata_array_offset": 100468,
+    "path": "CDROM/SPEAKTST/TEST_KO.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149120180,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149118860,
+          "voice_table": 2149156976
+        }
+      ],
+      "sha256": "0629dcf3ff391b267416311e1e0317313469b617440fdfe3b8c45ab512cbfca5"
+    },
+    "sha256": "0629dcf3ff391b267416311e1e0317313469b617440fdfe3b8c45ab512cbfca5",
+    "size": 102400,
+    "text_records": 1314
+  },
+  {
+    "metadata_array_offset": 124212,
+    "path": "CDROM/SPEAKTST/TEST_KY.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149131072,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149129292,
+          "voice_table": 2149180720
+        }
+      ],
+      "sha256": "50e3af9d73e1aa242631e0fd913afef3c614ee9be4b7f13c4c96724c347ffc60"
+    },
+    "sha256": "50e3af9d73e1aa242631e0fd913afef3c614ee9be4b7f13c4c96724c347ffc60",
+    "size": 126976,
+    "text_records": 1773
+  },
+  {
+    "metadata_array_offset": 84040,
+    "path": "CDROM/SPEAKTST/TEST_MI.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149107224,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149106028,
+          "voice_table": 2149140548
+        }
+      ],
+      "sha256": "eba4182e0f56b93a55ae2d4ebb91d86b02f7f279e5e94d8707dd9128e1046b63"
+    },
+    "sha256": "eba4182e0f56b93a55ae2d4ebb91d86b02f7f279e5e94d8707dd9128e1046b63",
+    "size": 86016,
+    "text_records": 1190
+  },
+  {
+    "metadata_array_offset": 112460,
+    "path": "CDROM/SPEAKTST/TEST_NI.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149125956,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149124412,
+          "voice_table": 2149168968
+        }
+      ],
+      "sha256": "fab4ea3e0a9e1953c3f7f4dd2d383473f1fcf8c058266238140dbe59e3b7404e"
+    },
+    "sha256": "fab4ea3e0a9e1953c3f7f4dd2d383473f1fcf8c058266238140dbe59e3b7404e",
+    "size": 114688,
+    "text_records": 1536
+  },
+  {
+    "metadata_array_offset": 38932,
+    "path": "CDROM/SPEAKTST/TEST_OT.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149080008,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149079452,
+          "voice_table": 2149095440
+        }
+      ],
+      "sha256": "3c3958c9081c42bee314c5654956f4aea3abc895ae2dab2ab45b4a21044177a5"
+    },
+    "sha256": "3c3958c9081c42bee314c5654956f4aea3abc895ae2dab2ab45b4a21044177a5",
+    "size": 40960,
+    "text_records": 551
+  },
+  {
+    "metadata_array_offset": 85660,
+    "path": "CDROM/SPEAKTST/TEST_SA.BIN",
+    "profile": {
+      "id": "unverified-speaktst-candidate",
+      "load_address": 2149056512,
+      "sections": [
+        {
+          "command_table": 2149109768,
+          "group_count": 1,
+          "id": "candidate-only",
+          "text_table": 2149108604,
+          "voice_table": 2149142168
+        }
+      ],
+      "sha256": "bc1ea000f6168b9f81886461cd5d7e993158bbc78f5132d95cc6ac0b4d98010f"
+    },
+    "sha256": "bc1ea000f6168b9f81886461cd5d7e993158bbc78f5132d95cc6ac0b4d98010f",
+    "size": 88064,
+    "text_records": 1157
+  }
+]

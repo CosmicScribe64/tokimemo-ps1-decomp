@@ -2009,3 +2009,18 @@ Installed bank CLIs reproduce the reviewed graph and a current-catalog graph dif
 ## [2026-10-25] query | Hold instrument metadata for declared size validation
 
 [[tickets/T-28006-sequence-music-export]]: independent VAB reader review checks all 63 original bank pairs and identifies an omitted/unchecked declared total size. Sixty bank mappings pass independent byte/field/extent checks and three remain explicitly unsupported. Candidate v1 stays isolated; owner prepares v2 size validation and complete status inventory. Published sequence and conditional bank tooling retain 528 passing tests; no new asset/tool completion or native WAV claim.
+
+## [2026-10-25] ingest | Preserve SPEAKTST layout candidates without runtime claims
+
+Added the pinned twelve-bank conditional layout inventory described in
+[[assets-text]] and [[asset-export]]. The reader retains 16,702 flagged candidate
+texts, twelve FF controls, four unknown tokens, and all 1,253,376 original bytes;
+fixed-stride records and metadata remain opaque. Projection appends only flagged,
+null-target text rows while preserving the existing 38,701 rows. File installation,
+runtime execution, glyph bindings, voice and character semantics remain unproved;
+the physical unknown count remains 1,861. [[tickets/T-28001-text-script-export]]
+remains In Progress, and full text coverage remains incomplete.
+
+Root verifies nine tooling changes against 59 captured after-images and preserves 34,960 unrelated tracked files. Independent production/native and Standards reviews pass; the coherent isolated suite passes 550 tests without skips. Original game source, headers, configuration and matching build remain unchanged.
+
+Installed normal/optimized inventory CLIs, all 55,403 serialized unit fields and 295 text tests per mode pass; actual coherent asset suite: 550 tests, zero skips. Existing rows/readiness and the original byte evidence remain unchanged.
