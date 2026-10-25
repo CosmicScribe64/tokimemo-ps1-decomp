@@ -96,6 +96,7 @@ Readers:
 - `text_bunka_sd.parse_bunka_sd(data, repository, profile=None)`: source-pinned stage-show pointer tables, protected prefixes, direct text rows and voice-pair metadata.
 - `text_renderer_proof.verify_renderer_source_proofs(source_root, original_root, evidence_path=None)`: original instruction and source checks for scoped custom text readers.
 - `text_substitutions.verify_symbolic_substitution_contract(repository, files_root)`: original storage and reader proofs for symbolic name/context substitutions.
+- `text_rpg_buffers.parse_rpg_initial_buffers(data, repository, profile=None)`: five source-pinned original initial mutable slots; runtime values and reads remain unproved.
 - `text_units.export_units(catalog, output_dir=None, *, repository=..., formats=("jsonl", "tsv"))`: compact UTF-8 units with raw/control evidence, stable identities, null translation targets and explicit review flags.
 - `text_font.font_metadata(data)`, `font_reference(raw, metadata)`: original font table and bitmap references.
 - `script_validation.validate_script(data, path, profile, parsed=None)`: independent structural and semantic checks.
@@ -150,7 +151,7 @@ evidence separately. Full-file reconstruction and runtime reachability are diffe
 Current script-root audit: 98 containers, 654 sections, 42,369 records and 30,851 text records.
 The integrated executable/overlay inventory contains 8,837 original-byte-verified extents; 1,889
 remain semantically unknown. All 437 C files parse in the AST pass with stable source inputs. The
-current full text suite has 233 passing Docker tests, including source-root integration and isolated
+current full text suite has 245 passing Docker tests, including source-root integration and isolated
 synthetic proof regressions. These counts do not clear the remaining context and runtime gates.
 There are no unprofiled SERIFU or BUNKA files. Every script string strictly decodes and re-encodes as
 Shift-JIS. Unclaimed byte counts and diagnostic candidate scans are retained as leads; zero candidates
@@ -162,8 +163,8 @@ media/text suite passed 188 tests with one optional integration skip. The newer 
 contains 1,069 dictionary slots, one actor-resource descriptor, 12 unsupported SPEAKTST files and
 no missing inputs or structural failures. The source-root audit now
 reports MASTER's eight primary literal initializers separately from the existing 21 other SERIFU
-profiles. Its 168,447,900-byte catalog has SHA256
-`ec28ff8a3280d57de9e488802ae1c2fbfee97f356435bf977b86a18a71720c0b`.
+profiles. Its 168,596,252-byte catalog has SHA256
+`2352e2bb723082e4d38997a92a1b83f234818622fdd5561daf11fc27265c11c7`.
 All original extents, Unicode/token round trips, dictionary slots/tails and UTF-8 C locators verify.
 The additional stage-show bank has 286 body views; its complete 196,608-byte input reconstructs
 exactly from code proofs, tables, physical strings and preserved uninterpreted ranges. Every source,
@@ -190,10 +191,10 @@ Those fixes are included in the validated current catalog. The first unintegrate
 used the wrong extracted revision; its pins and malformed-slot claims were discarded. The corrected
 seven profiles use only `disc/files`, with all 30 source/header/assembly pins independently checked.
 
-The compact projection contains 38,696 rows: 30,851 script records, 1,069 dictionary slots, 4,264
-nonzero source extents, 2,201 C literal sites, 286 stage-show bodies and 25 conditional variants. All IDs are unique and
+The compact projection contains 38,701 rows: 30,851 script records, 1,069 dictionary slots, 4,264
+nonzero source extents, 2,201 C literal sites, 286 stage-show bodies, five initial-only mutable-buffer views and 25 conditional variants. All IDs are unique and
 non-null; JSONL and TSV deserialize to identical values. The original-byte check covers 125 input
-files with zero mismatches. It marks 31,346 rows ready for review and 7,350 flagged. Unknown overlay
+files with zero mismatches. It marks 31,346 rows ready for review and 7,355 flagged. Unknown overlay
 renderer views remain flagged despite valid source Unicode, and every conditional variant remains
 conditional. Completeness is false regardless of those per-row review counts.
 
@@ -220,6 +221,29 @@ reject traversal and escaping configs, and invalidate cached ownership when conf
 The completed run has zero byte, Unicode, token, source/root, AST or proof blockers. Separate current
 source/code/data replay reports support the metadata comparison; comparing metadata alone is not an
 instruction proof. Comprehensive coverage and the twelve SPEAKTST layouts remain open.
+
+## RPG original initial buffers (2026-10-25)
+
+`initial_runtime_buffer_banks` describes five original initialized 40-byte slots selected by five
+verified pointer words. Each actual slot contains 36 source bytes, a protected NUL and three protected
+padding bytes. The reader rechecks 56 source/header/ASM/config pins, 604 original instruction words
+and the exact initialized slot/pointer bytes. It preserves 220 selected data bytes; unclaimed ranges
+carry offsets, lengths and hashes. This is a bounded reader, not a whole-overlay codec or absence proof.
+
+These are mutable initial file views. The renderer is a tokenizer model with an explicitly potential
+source-reader association. Runtime contents, actual reads, execution and overwrite/display lifetime
+remain unproved. No text category is promoted: the five existing source extents stay unknown. Their
+exact source joins add provenance only. Five new `initial_runtime_buffer` units remain flagged even
+when their Unicode and glyph tokens are valid; every target remains null. The 38,696 preceding rows
+are preserved exactly apart from those five added provenance contexts. Original capacities and glyph
+counts are provenance, not translation limits.
+
+The source audit also corrects the earlier SPEAKTST interpretation. OPTION's 58-sector read at
+`0xA1AB` maps to `FUKUTEST/XA.NBN`. GYOZI references into TEST-file sectors call PCs `0x80051DD8`
+and `0x800504CC`, which are interior addresses in the current `xa_wait` and `get_near_menu` functions.
+Those call arguments do not establish a loader ABI. The earlier actor-resource description was not
+proved; all twelve SPEAKTST layouts remain unresolved, with original hashes/extents retained and no
+whole-file text-absence claim. No English-patch wording is used.
 
 ## Linked script format
 

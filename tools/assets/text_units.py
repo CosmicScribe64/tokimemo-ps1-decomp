@@ -391,6 +391,8 @@ def _iter_units(catalog: dict) -> Iterator[dict]:
                      "terminator": record.get("terminator"),
                      "source_contexts": record.get("source_contexts", []),
                      "stage_bank_contexts": record.get("stage_bank_contexts", []),
+                     **({"initial_runtime_buffer_contexts": record["initial_runtime_buffer_contexts"]}
+                        if record.get("initial_runtime_buffer_contexts") else {}),
                      "mips_contexts": record.get("mips_contexts", []),
                      "renderer_views": renderer_views.get(record.get("id"), [])},
             blockers=blockers,
@@ -492,6 +494,37 @@ def _iter_units(catalog: dict) -> Iterator[dict]:
                          "source_inventory_record_ids": record.get("source_inventory_record_ids", []),
                          "runtime_reachability_proven": False,
                          "renderer_limits_are_provenance_only": True},
+                blockers=blockers)
+
+    for bank in catalog.get("initial_runtime_buffer_banks", []):
+        if bank.get("status") != "exported":
+            continue
+        for record in bank.get("records", []):
+            view = record.get("text") or {}
+            source_text, decode_status = _strict_text(view)
+            blockers = ["initial_buffer_contents_only", "runtime_buffer_value_unproven"]
+            if decode_status != "ok":
+                blockers.append("source_decode_" + decode_status)
+            if bank.get("issues"):
+                blockers.append("initial_buffer_bank_has_unresolved_issues")
+            if not source_text:
+                blockers.append("empty_initial_buffer_body")
+            elif source_text.isspace():
+                blockers.append("whitespace_only_initial_buffer_body")
+            blockers.extend(_tokenization_blockers(view.get("tokens", [])))
+            yield _row(
+                identifier=record.get("id"), kind="initial_runtime_buffer",
+                parent_id=record.get("source_physical_record_id"),
+                source_path=record.get("source_path"), source_sha256=record.get("source_sha256"),
+                source_offset=record.get("offset"), raw_hex=view.get("raw_hex"),
+                source_text=source_text, tokens=view.get("tokens", []),
+                context={"initial_contents_only": True, "runtime_read_value_proven": False,
+                         "runtime_reachability_proven": False, "execution_proven": False,
+                         "source_context": record.get("context", {}),
+                         "full_offset": record.get("full_offset"), "full_raw_hex": record.get("full_raw_hex"),
+                         "full_tokens": record.get("full_tokens", []),
+                         "source_inventory_record_ids": record.get("source_inventory_record_ids", []),
+                         "original_capacities_are_translation_limits": False},
                 blockers=blockers)
 
     for rule in (catalog.get("runtime_text_mutations") or {}).get("rules", []):

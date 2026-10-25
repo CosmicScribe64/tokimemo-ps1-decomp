@@ -85,6 +85,31 @@ def _catalog():
 
 
 class TextUnitProjectionTests(unittest.TestCase):
+    def test_initial_runtime_buffer_units_are_always_flagged_and_keep_protected_storage(self):
+        item = {"id": "initial-body", "source_physical_record_id": "initial-slot",
+                "source_path": "TEST", "source_sha256": "same", "offset": 4, "full_offset": 4,
+                "text": _text("4142", "AB"), "full_raw_hex": "414200ff",
+                "full_tokens": [{"kind": "glyph", "offset": 0, "raw_hex": "4142"},
+                                {"kind": "protected_source_terminator", "offset": 2, "raw_hex": "00",
+                                 "translatable": False},
+                                {"kind": "protected_slot_padding", "offset": 3, "raw_hex": "ff",
+                                 "translatable": False}],
+                "context": {"initial_contents_only": True}, "source_inventory_record_ids": ["source-extent"]}
+        rows = list(iter_units({"schema": "tokimemo.text.catalog.v1",
+                               "initial_runtime_buffer_banks": [{"status": "exported", "records": [item]}]}))
+        self.assertEqual(len(rows), 1)
+        row = rows[0]
+        self.assertEqual(row["kind"], "initial_runtime_buffer")
+        self.assertEqual(row["raw_hex"], "4142")
+        self.assertEqual(row["parent_id"], "initial-slot")
+        self.assertIsNone(row["target_text"])
+        self.assertFalse(row["readiness"]["translation_ready"])
+        self.assertIn("runtime_buffer_value_unproven", row["readiness"]["blockers"])
+        self.assertEqual(row["context"]["full_raw_hex"], "414200ff")
+        self.assertFalse(row["context"]["runtime_read_value_proven"])
+        self.assertFalse(row["context"]["runtime_reachability_proven"])
+        self.assertFalse(row["context"]["original_capacities_are_translation_limits"])
+
     def test_projection_keeps_empty_slots_and_stable_identity(self):
         rows = list(iter_units(_catalog()))
         self.assertEqual(9, len(rows))

@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 from tools.assets.text_export import (export_text, _attach_storage_overlap_metadata, _attach_typed_dictionary_links,
                                       _attach_source_renderer_views, _attach_stage_storage_links,
-                                      _attach_symbolic_buffer_bindings)
+                                      _attach_symbolic_buffer_bindings, _attach_initial_buffer_storage_links)
 
 
 def record(rid, start, raw, digest="same"):
@@ -16,6 +16,29 @@ def record(rid, start, raw, digest="same"):
 
 
 class LinkTests(unittest.TestCase):
+    def test_initial_buffer_links_preserve_unknown_category_and_revoke_stale_links(self):
+        exact = record("initial", 4, b"AB\0")
+        other_hash = record("other", 4, b"AB\0", "other")
+        interior = record("interior", 5, b"AB\0")
+        item = {"id": "initial-body", "source_physical_record_id": "initial-slot",
+                "source_path": "TEST", "source_sha256": "same", "offset": 4,
+                "text": {"raw_hex": "4142"}, "full_raw_hex": "414200ff"}
+        bank = {"status": "exported", "records": [item]}
+        catalog = {"source_inventory": {"records": [exact, other_hash, interior]},
+                   "initial_runtime_buffer_banks": [bank]}
+        _attach_initial_buffer_storage_links(catalog)
+        self.assertEqual(item["source_inventory_record_ids"], ["initial"])
+        self.assertEqual(exact["category"], "unknown")
+        self.assertFalse(exact["initial_runtime_buffer_contexts"][0]["runtime_read_value_proven"])
+        _attach_initial_buffer_storage_links(catalog)
+        self.assertEqual(len(exact["initial_runtime_buffer_contexts"]), 1)
+        self.assertEqual(catalog["source_inventory"]["initial_runtime_buffer_storage_links"], 1)
+        bank["status"] = "source_evidence_not_verified"
+        _attach_initial_buffer_storage_links(catalog)
+        self.assertNotIn("initial_runtime_buffer_contexts", exact)
+        self.assertEqual(item["source_inventory_record_ids"], [])
+        self.assertEqual(exact["category"], "unknown")
+
     def test_stage_links_distinguish_control_storage_and_display_body(self):
         full, body = b"g\x82\xa0\0", b"\x82\xa0"
         source_full, source_body = record("full", 4, full), record("body", 5, body + b"\0")

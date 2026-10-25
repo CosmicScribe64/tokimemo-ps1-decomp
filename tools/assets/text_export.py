@@ -27,6 +27,7 @@ from .text_ui_tables import UI_TABLE_PROFILES, parse_ui_tables, verify_ui_source
 from .text_overlay_tables import (OVERLAY_TABLE_PROFILES, parse_overlay_fixed_tables,
                                   verify_profile_source_pins)
 from .text_bunka_sd import BUNKA_SD_PROFILE, parse_bunka_sd, _source_files as _bunka_source_files
+from .text_rpg_buffers import RPG_INITIAL_BUFFER_PROFILE, parse_rpg_initial_buffers
 from .text_fixed import tokenize_fixed_text
 from .text_renderers import read_argument_specs
 
@@ -227,6 +228,40 @@ def _attach_symbolic_buffer_bindings(catalog: dict) -> None:
     visit(catalog)
 
 
+def _attach_initial_buffer_storage_links(catalog: dict) -> None:
+    """Link initial bytes only; mutable storage never acquires a display category."""
+    inventory = catalog.get("source_inventory")
+    if inventory is None:
+        return
+    locations = {}
+    for source_record in inventory["records"]:
+        source_record.pop("initial_runtime_buffer_contexts", None)
+        source = source_record["source"]
+        locations.setdefault((source["path"], source["sha256"], source["offset"]), []).append(source_record)
+    links = 0
+    for bank in catalog.get("initial_runtime_buffer_banks", []):
+        for record in bank.get("records", []):
+            record["source_inventory_record_ids"] = []
+        if bank.get("status") != "exported":
+            continue
+        for record in bank["records"]:
+            body = bytes.fromhex(record["text"]["raw_hex"])
+            full = bytes.fromhex(record["full_raw_hex"])
+            key = (record["source_path"], record["source_sha256"], record["offset"])
+            for source_record in locations.get(key, []):
+                if bytes.fromhex(source_record["raw_hex"]) not in (body, body + b"\0", full):
+                    continue
+                source_record.setdefault("initial_runtime_buffer_contexts", []).append({
+                    "record_id": record["id"], "physical_id": record["source_physical_record_id"],
+                    "proof": "same_file_hash_start_and_exact_initial_body_terminator_or_slot_bytes",
+                    "initial_contents_only": True, "runtime_read_value_proven": False,
+                    "runtime_reachability_proven": False})
+                record["source_inventory_record_ids"].append(source_record["id"])
+                links += 1
+            record["source_inventory_record_ids"].sort()
+    inventory["initial_runtime_buffer_storage_links"] = links
+
+
 def export_text(input_dir, output_dir=None, profiles=None, *, include_source=False, source_repository=None) -> dict:
     """Parse an extracted ISO root, optionally write catalog.json under the cache.
 
@@ -379,6 +414,30 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
             catalog["stage_text_banks"].append({"profile": BUNKA_SD_PROFILE, "status": "source_missing"})
         catalog["text_completeness"]["stage_bank_blockers"] = sum(
             bank.get("status") != "exported" or bool(bank.get("issues")) for bank in catalog["stage_text_banks"])
+        catalog["initial_runtime_buffer_banks"] = []
+        initial_profile = RPG_INITIAL_BUFFER_PROFILE
+        initial_path = initial_profile["path"]
+        if not (root / initial_path).is_file():
+            catalog["initial_runtime_buffer_banks"].append({"profile": initial_profile, "status": "source_missing"})
+        else:
+            initial_data = _input_file(root, initial_path).read_bytes()
+            if sha256(initial_data) != initial_profile["sha256"] or len(initial_data) != initial_profile["size"]:
+                raise TextFormatError("RPG initial-buffer input differs from its reviewed original layout")
+            if proof_repository is None:
+                catalog["initial_runtime_buffer_banks"].append({"profile": initial_profile,
+                    "status": "source_evidence_not_rechecked"})
+            else:
+                try:
+                    initial_bank = parse_rpg_initial_buffers(initial_data, proof_repository)
+                except (OSError, ValueError) as exc:
+                    catalog["initial_runtime_buffer_banks"].append({"profile": initial_profile,
+                        "status": "source_evidence_not_verified", "reason": type(exc).__name__})
+                else:
+                    initial_bank["status"] = "exported"
+                    catalog["initial_runtime_buffer_banks"].append(initial_bank)
+        catalog["text_completeness"]["initial_runtime_buffer_proof_blockers"] = sum(
+            bank.get("status") != "exported" or bool(bank.get("issues"))
+            for bank in catalog["initial_runtime_buffer_banks"])
         if proof_repository is not None:
             catalog["text_completeness"]["fixed_table_source_proof_blockers"] = sum(
                 not dictionary.get("source_proof", {}).get("status", "").startswith("verified_")
@@ -416,6 +475,7 @@ def export_text(input_dir, output_dir=None, profiles=None, *, include_source=Fal
         _attach_source_renderer_views(catalog["source_inventory"])
         _attach_typed_dictionary_links(catalog)
         _attach_stage_storage_links(catalog)
+        _attach_initial_buffer_storage_links(catalog)
         enrich_mips_context(catalog["source_inventory"], source_repo, root)
         # These reports were derived in this invocation; avoid a second AST pass.
         _enrich_binary_text_from_reports(catalog["source_inventory"], source_repo, root)

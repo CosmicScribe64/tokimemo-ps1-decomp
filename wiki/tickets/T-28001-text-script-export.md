@@ -331,3 +331,27 @@ In Progress. Candidate source/test/docs and numeric reports will be supplied as 
 for parent review/application; no raw payloads or generated ASM are part of that packet.
 
 2026-10-25 root integration: the exact sealed `309b9816078ec0b8` packet is applied after independent Standards and Sol 6.1 correctness reviews passed. All 50 source/test/doc after-hashes match, preserving the pre-existing documentation work. The root integration run passes 437 canonical asset tests without skips; the live replay passes all 233 text tests, current source/table/renderer/substitution proofs and exact JSONL/TSV validation. Independent correctness replay checked 612,332 original instruction words across 27 images and all 38,696 units against 125 original inputs. The 1,072 protected C/header/config/build files are unchanged. No binary rebuild was needed for this asset-tool-only batch. The immutable Phase 2 witness remains the source reference; changing asset tests changes the broader tooling fingerprint without changing game source. Comprehensive coverage remains false with 1,889 unknown extents; ticket stays In Progress.
+
+
+2026-10-25 bounded RPG reader candidate: five original initialized mutable buffers and their five
+pointer words now have a separate `initial_runtime_buffer_banks` reader. Actual replay verifies 56
+current source/header/ASM/config pins, 604 original code words and 220 initialized data bytes. Each
+40-byte slot preserves its 36-byte body, NUL and three padding bytes; unclaimed ranges contain metadata
+only. Source-parent IDs and pointer words are exact. The renderer association is explicitly potential
+and model-only; runtime values, reads, execution and overwrite/display lifetime are not inferred.
+
+The new full source export passes with zero byte/Unicode/token/locator/AST/proof blockers. Catalog
+SHA256 `2352e2bb723082e4d38997a92a1b83f234818622fdd5561daf11fc27265c11c7`, 168,596,252 bytes.
+All 245 Docker tests pass with zero skips. All 38,696 previous units remain identical apart from five
+new source-provenance contexts. Five additional initial-only units are always flagged, yielding
+38,701 unique null-target units (31,346 ready for review, 7,355 flagged); JSONL and TSV deserialize
+identically and all 125 original inputs verify. No text category changes; 1,889 unknown extents and
+the runtime construction/lifetime audit remain open. T-28001 remains In Progress.
+
+Bounded SPEAKTST follow-up proves OPTION's A1AB extent is FUKUTEST/XA.NBN, not a TEST container.
+The two GYOZI numeric call targets lie inside current main functions and do not establish loader
+entries; the earlier actor-resource inference is withdrawn. No text reader or whole-file absence is
+claimed for the twelve TEST files. Both semantic reports and the new implementation were prepared
+in ignored candidates; parent alone applies source/test/docs, with live game/source files untouched.
+
+2026-10-25 root integration: the exact sealed RPG packet `ba6b7dd879efbeb7` is applied after independent Standards and Sol 6.1 correctness reviews passed. All 52 after-images match; both new Python files were absent before application. The coherent current text/media suite passes 453 tests without skips. The live replay passes 245 text tests, verifies 56 source/header pins, 604 original instruction words and 220 selected initialized bytes, and regenerates matching 38,701-row JSONL/TSV outputs with null targets. All 38,696 previous rows are preserved except five additive provenance contexts; five new views remain flagged initial-only. Ready rows stay 31,346 and unknown extents stay 1,889. All 1,072 protected game-source/header/config/build files remain unchanged; no matching rebuild was needed. Runtime values, reads, lifetime and full coverage remain unproved. Keep In Progress.
