@@ -84,7 +84,7 @@ void tour_stage_fortune_telling(void) {
             talk_text_table = (s32) tour_script_text;
             talk_command_table = (s32) tour_script_commands;
             talk_voice_table = (s32) tour_script_voices;
-            if ((D_80122EBC == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((girl_state_rank(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((girl_state_rank(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
+            if ((game_mode_scene_girl == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((girl_state_rank(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && ((girl_state_rank(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
                 talk_group = 0;
                 mode_step_next();
             } else {
@@ -100,7 +100,7 @@ void tour_stage_fortune_telling(void) {
         select_girl2();
         break;
     case 4:
-        D_80122EBC = D_80122CDC;
+        game_mode_scene_girl = D_80122CDC;
         talk_names_set(D_80122CDC);
         mode_step_next();
         break;
@@ -118,12 +118,12 @@ void tour_stage_fortune_telling(void) {
         mode_step_next();
         break;
     case 8:
-        if (D_80122EBC == 0xB) {
+        if (game_mode_scene_girl == 0xB) {
             set_kanji_string(-0x80, 0x42, 0, (s32) *girl_short_name_table, 0);
         } else {
-            set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[D_80122EBC], 0);
+            set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[game_mode_scene_girl], 0);
         }
-        set_kanji_string(-0x48, 0x42, 0, (s32)names.names[D_80122EBC], 0);
+        set_kanji_string(-0x48, 0x42, 0, (s32)names.names[game_mode_scene_girl], 0);
         k_disp_start(4);
         tour_fortune_wait_counter = 0;
         mode_step_next();
@@ -148,10 +148,10 @@ void tour_stage_fortune_telling(void) {
         }
         break;
     case 12:
-        if ((D_80122EBC == 0) || (D_80122EBC == 0xB)) {
+        if ((game_mode_scene_girl == 0) || (game_mode_scene_girl == 0xB)) {
             set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.blood_labels[(u32) (g->girls[0].birthday.w << 0x15) >> 0x1E], 0);
         } else {
-            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.blood_labels[D_80122EBC], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.blood_labels[game_mode_scene_girl], 0);
         }
         k_disp_start(6);
         mode_step_next();
@@ -230,9 +230,9 @@ void tour_stage_fortune_telling(void) {
         break;
     case 25:
         if (((girl_state_rank(0) == 4) || (D_80122EA4 == 0)) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) {
-            D_80122EBC = 0;
+            game_mode_scene_girl = 0;
         } else if (((girl_state_rank(2) == 4) || (D_80122EA4 == 2)) && (((u8) g->girls[2].flags.b[2] >> 4) == 3)) {
-            D_80122EBC = 2;
+            game_mode_scene_girl = 2;
         }
         mode_stage_set((s32) *(u8 *)&D_80122EB0);
         mode_step_set((s32) *(u8 *)&D_80122EB4);
@@ -250,10 +250,10 @@ s32 tour_fortune_result(void)
   u32 pad;
   TourFortuneGrid choices;
   choices = tour_fortune_grid;
-  if ((((D_80122EBC == 2) && ((game_state.girls[2].flags.b[2] >> 4) == 3)) && (girl_state_rank(2) < 4)) && (D_80122EA4 != 2))
+  if ((((game_mode_scene_girl == 2) && ((game_state.girls[2].flags.b[2] >> 4) == 3)) && (girl_state_rank(2) < 4)) && (D_80122EA4 != 2))
   {
     return 3;
   }
-  result = choices.result_by_blood[(game_state.girls[D_80122EBC].birthday.u << 21) >> 30][(((u32) game_state.player_birthday) << 21) >> 30];
+  result = choices.result_by_blood[(game_state.girls[game_mode_scene_girl].birthday.u << 21) >> 30][(((u32) game_state.player_birthday) << 21) >> 30];
   return result;
 }

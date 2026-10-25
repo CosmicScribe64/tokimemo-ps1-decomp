@@ -3,6 +3,7 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 #include "psx_types.h"
+#include "main/sprite.h"
 
 void encounter_color_quad_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u32 arg4, s32 arg5, s32 arg6);
 

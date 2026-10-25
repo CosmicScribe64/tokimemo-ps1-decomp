@@ -1,7 +1,32 @@
 /* scene_display.c: src/main/80085E30.c; T-27059: original object [0x80085E30,0x80086810); scene display reset, VBlank timer, texture scroll, 2D rotation, fades, finger cursor and display helpers, plus small portrait-read/state helpers; keep whole mixed object. Also retains best-girl selection at 0x8008647C and girl_state_rank; these are explicit non-display helpers in this mixed object. Original object 0x80085E30-0x80086810 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/select_girl.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vsync.h"
 #include "psx_types.h"
+#include "main/game_mode.h"
 
 void scene_screen_reset(s32 arg0, s32 arg1) {
     draw2d3d(1, 0);
@@ -22,16 +47,19 @@ void scene_screen_reset(s32 arg0, s32 arg1) {
     tpage_buf_clear();
 }
 
+/* Starts the VBLANK timer interval. */
 void Vblnk_Timer_Init(void) {
     vsync_timer_start = game_state.timer_ticks;
     vsync_timer_elapsed = 0;
 }
 
+/* Updates and returns elapsed ticks in the VBLANK timer interval. */
 s32 Vblnk_Timer(void) {
     vsync_timer_elapsed = game_state.timer_ticks - vsync_timer_start;
     return vsync_timer_elapsed;
 }
 
+/* Emits textured GPU quads for the scrolling background effect. */
 void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
     POLY_FT4 *p;
     s32 i;
@@ -75,6 +103,7 @@ void Scroll(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
     if ((u8)arg2) {}
 }
 
+/* Rotates a two-dimensional point using the engine sine and cosine values. */
 void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
     s32 s;
     s32 c;
@@ -85,11 +114,13 @@ void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
     *arg4 = s * *arg1 / 4096 + *arg2 * c / 4096;
 }
 
+/* Starts a new fade-out timer interval. */
 void Fade_Out_Init(void) {
     Vblnk_Timer_Init();
 }
 
 /* temp: the byte is read into a local after the timer test; with a direct compare IDO loads it into $v0 and puts the li v0,1 in the branch delay slot (T-17022, matching-notes) */
+/* Lowers screen brightness to zero and returns when the fade-out is complete. */
 s32 Fade_Out_Main(void) {
     u8 temp;
     if (Vblnk_Timer() != 0) {
@@ -105,11 +136,13 @@ s32 Fade_Out_Main(void) {
     return 0;
 }
 
+/* Starts a new fade-in timer interval. */
 void Fade_In_Init(void) {
     Vblnk_Timer_Init();
 }
 
 /* temp: same byte local as Fade_Out_Main (T-17022, matching-notes) */
+/* Raises screen brightness to 0x80 and returns when the fade-in is complete. */
 s32 Fade_In_Main(void) {
     u8 temp;
     if (Vblnk_Timer() != 0) {
@@ -125,6 +158,7 @@ s32 Fade_In_Main(void) {
     return 0;
 }
 
+/* Updates the cursor actor position from the current HUD cursor. */
 void Yubi(s32 idx) {
     u8 *p;
     hud_cursor_update();
@@ -133,6 +167,7 @@ void Yubi(s32 idx) {
     *(s16 *)(p + 0x2A) = cursor_y;
 }
 
+/* Runs the common per-frame scene and message display updates. */
 void Default_Disp(void) {
     k_disp_inc2();
     check_k_scroll();

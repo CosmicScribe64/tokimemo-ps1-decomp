@@ -3,6 +3,7 @@
 #define SHUGAKU_OVERRIDE_trip_ayako_response_talk_run
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+#include "main/scene.h"
 
 s32 trip_ayako_response_talk_run(void);
 

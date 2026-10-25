@@ -2,6 +2,8 @@
 #define MAIN_API_OVERRIDE_srand /* T-22016: int-returning view for camp_scene_result_resource_load */
 #include "common.h"
 #include "ovl/KANGEI.h"
+#include "main/sprite.h"
+#include "main/scene.h"
 
 s32 srand();
 

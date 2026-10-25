@@ -89,6 +89,60 @@ typedef static register s8 u8 s16 u16 s32 u32 size_t""".split())
 C_KEYWORDS = set("""if else while for do switch case default return break continue goto sizeof""".split())
 
 
+def canonical_owner(root, name):
+    """Existing explicit owner for a main symbol; legacy trees keep main_api.h behavior."""
+    import sync_protos
+    inc = os.path.join(root, 'include')
+    profile, problems = sync_protos.owner_profile(inc)
+    if profile is None:
+        return ('include/main_api.h', None) if os.path.isfile(os.path.join(inc, 'main_api.h')) else (None, None)
+    model = sync_protos.Model(inc, os.path.join(root, 'src'))
+    problems = problems + sync_protos.profile_integrity_problems(model, inc, os.path.join(root, 'src')) + \
+        sync_protos.canonical_problems(model)
+    if problems:
+        return None, '; '.join(problems)
+    owner = model.api_owner.get(name)
+    if owner is None:
+        return None, '%s has no existing explicit canonical owner' % name
+    return 'include/' + owner, None
+
+
+def declaration_home(root, unit, name, main_symbol, source=None):
+    """Choose an explicit canonical home without manufacturing a deleted umbrella."""
+    import sync_protos
+    profile, problems = sync_protos.owner_profile(os.path.join(root, 'include'))
+    if profile is not None:
+        model = sync_protos.Model(os.path.join(root, 'include'), os.path.join(root, 'src'))
+        problems = problems + sync_protos.profile_integrity_problems(
+            model, os.path.join(root, 'include'), os.path.join(root, 'src')) + sync_protos.canonical_problems(model)
+        if problems:
+            return None, '; '.join(problems)
+        if main_symbol:
+            owner = model.api_owner.get(name)
+            if owner is None:
+                return None, '%s has no existing explicit canonical owner' % name
+            return 'include/' + owner, None
+        if source is None:
+            return None, 'no target source closure for %s in unit %s' % (name, unit)
+        roots = header_closure(root, source, {})
+        excluded_roots = {entry['path'] for entry in profile['owners']} | set(profile['types'])
+        candidates = sorted(path for path in roots
+                            if path.startswith('include/') and path[len('include/'):] not in excluded_roots
+                            and path not in ('include/game.h', 'include/main_api.h')
+                            and model.owner(path[len('include/'):]) == unit)
+        if len(candidates) == 1:
+            return candidates[0], None
+        if candidates:
+            return None, 'ambiguous source-facing owners for %s in unit %s: %s' % (
+                name, unit, ', '.join(candidates))
+        return None, 'no existing source-facing owner for %s in unit %s' % (name, unit)
+    if main_symbol and os.path.isfile(os.path.join(root, 'include/main_api.h')):
+        return 'include/main_api.h', None
+    if unit == 'main':
+        return 'include/game.h', None
+    return 'include/ovl/%s.h' % unit, None
+
+
 class Func:
     def __init__(self, name, unit, matched, path, key, relocs, bad):
         self.name = name
@@ -482,6 +536,10 @@ def target_headers(root, tfile, tgt, cache):
     """Headers the target file sees after the copy (an overlay without a header gets one)."""
     hp = header_closure(root, tfile, cache)
     if tgt.unit != 'main' and not os.path.exists(os.path.join(root, 'include/ovl/%s.h' % tgt.unit)):
+        import sync_protos
+        profile, _problems = sync_protos.owner_profile(os.path.join(root, 'include'))
+        if profile is not None:
+            return hp
         hp = ['include/game.h'] + [h for h in header_closure(root, 'include/game.h', cache) if h != 'include/game.h']
     return hp
 
@@ -975,7 +1033,13 @@ def plan_copy(root, src, tgt, cache):
         never declared it (implicit declaration); only a function the target .c defines below needs one."""
         tover = override_reason(theads + [ttext], t)
         have, _w = effective_decl(t, ttext, theads, tover is not None)
-        ismain = is_main_symbol(root, t, tgt.unit) and os.path.exists(os.path.join(root, 'include/main_api.h'))
+        main_symbol = is_main_symbol(root, t, tgt.unit)
+        import sync_protos
+        profile, _profile_problems = sync_protos.owner_profile(os.path.join(root, 'include'))
+        ismain = main_symbol and (profile is not None or os.path.isfile(os.path.join(root, 'include/main_api.h')))
+        main_home, home_error = declaration_home(root, tgt.unit, t, main_symbol, tfile)
+        if home_error:
+            return home_error
         tdef = find_definition(ttext, t)
         if tdef and not find_decl(theads, t) and not find_decl([ttext], t, True):
             # defined in the target .c and declared nowhere: the new function calls it above its
@@ -983,7 +1047,7 @@ def plan_copy(root, src, tgt, cache):
             if want is not None and cdecl_key(tdef) != cdecl_key(want) and not (
                     cache.get('lenient') or soft_return_difference(tdef, want, used_value)):
                 return 'target declares %s differently: "%s" vs "%s"' % (t, norm(tdef), norm(want))
-            decls.append(('include/main_api.h' if ismain else ('include/game.h' if tmain else 'include/ovl/%s.h' % tgt.unit), tdef))
+            decls.append((main_home, tdef))
             return None
         if want is None:
             return None
@@ -1009,12 +1073,7 @@ def plan_copy(root, src, tgt, cache):
             # function when the typedef is the target file's own (it may stand anywhere above)
             local.append(('block' if local_types & words else 'late', want))
             return None
-        if ismain:
-            dest = 'include/main_api.h'      # T-3340: one home for main-exe symbols
-        elif tmain:
-            dest = 'include/game.h'
-        else:
-            dest = 'include/ovl/%s.h' % tgt.unit
+        dest = main_home
         decls.append((dest, want))
         return None
 
@@ -1089,12 +1148,10 @@ def plan_copy(root, src, tgt, cache):
     else:
         proto = prototype_of(text, tgt.name)
         if proto:
-            if is_main_symbol(root, tgt.name, tgt.unit) and os.path.exists(os.path.join(root, 'include/main_api.h')):
-                dest = 'include/main_api.h'
-            elif tmain:
-                dest = 'include/game.h'
-            else:
-                dest = 'include/ovl/%s.h' % tgt.unit
+            dest, home_error = declaration_home(root, tgt.unit, tgt.name,
+                                                is_main_symbol(root, tgt.name, tgt.unit), tfile)
+            if home_error:
+                return None, home_error
             decls.append((dest, proto))
     return dict(text=text, tgtfile=tfile, name=tgt.name, decls=decls, local=local, retype=retype,
                 src=src.name, src_unit=src.unit, jtbl=tgt.jtbl_home, data=tgt.data_home), None
@@ -1150,9 +1207,16 @@ def apply_plan(root, plan):
         if not os.path.exists(hp):
             guard = 'OVL_%s_H' % os.path.basename(dest)[:-2].upper()
             saved.setdefault(dest, None)
+            import sync_protos
+            profile, problems = sync_protos.owner_profile(os.path.join(root, 'include'))
+            if problems:
+                raise ValueError('; '.join(problems))
+            foundation = '#include "common.h"\n'
+            if profile is None:
+                foundation += '#include "game.h"\n'
             with open(hp, 'w') as fh:
-                fh.write('#ifndef %s\n#define %s\n\n#include "common.h"\n#include "game.h"\n\n'
-                         '/* Overlay-local externs (T-1300). */\n\n#endif\n' % (guard, guard))
+                fh.write('#ifndef %s\n#define %s\n\n%s\n'
+                         '/* Overlay-local externs (T-1300). */\n\n#endif\n' % (guard, guard, foundation))
             with open(tp) as fh:
                 t = fh.read()
             saved.setdefault(plan['tgtfile'], t)
@@ -1208,18 +1272,57 @@ def restore_include(root, snap):
                 os.remove(os.path.join(root, rel))
 
 
-def needs_header_sync(plans):
+def needs_header_sync(plans, root=None):
     """True when the plans declared a main-exe symbol in main_api.h or added an override: the other
     headers and the guards of main_api.h must follow (tools/sync_protos.py --fix does that)."""
+    if root is not None:
+        import sync_protos
+        profile, _problems = sync_protos.owner_profile(os.path.join(root, 'include'))
+        if profile is not None and any(p['decls'] or p.get('retype') for p in plans):
+            return True
     return any(d[0] == 'include/main_api.h' for p in plans for d in p['decls']) or \
         any(r[0] == 'include/main_api.h' for p in plans for r in p.get('retype', ())) or \
         any(k == 'define' for p in plans for k, _t in p.get('local', ()))
 
 
+def writer_plan_problems(root, plans):
+    """Validate every strict-profile destination before the first source or header write."""
+    import sync_protos
+    inc, src = os.path.join(root, 'include'), os.path.join(root, 'src')
+    profile, problems = sync_protos.owner_profile(inc)
+    if profile is None:
+        return []
+    model = sync_protos.Model(inc, src)
+    problems += sync_protos.profile_integrity_problems(model, inc, src) + sync_protos.canonical_problems(model)
+    if problems:
+        return problems
+    canonical = {entry['path'] for entry in profile['owners']}
+    type_leaves = set(profile['types'])
+    for plan in plans:
+        closure = set(header_closure(root, plan['tgtfile'], {}))
+        destinations = list(plan['decls']) + [(row[0], '') for row in plan.get('retype', ())]
+        for dest, _line in destinations:
+            if dest in ('include/game.h', 'include/main_api.h'):
+                problems.append('strict profile forbids declaration destination %s' % dest)
+                continue
+            if not dest.startswith('include/'):
+                problems.append('invalid declaration destination %s' % dest)
+                continue
+            rel = dest[len('include/'):]
+            if rel in canonical:
+                continue
+            if rel in type_leaves:
+                problems.append('type leaf %s cannot own declarations' % dest)
+                continue
+            if dest not in closure or model.owner(rel) != plan['unit']:
+                problems.append('no unique target-private owner for %s in %s' % (dest, plan['tgtfile']))
+    return problems
+
+
 def views_before(root, plans):
     """sync_protos snapshot of the views every file sees, taken before the plans are written (None when no
     header sync will run): the baseline for the risky-change check."""
-    if not needs_header_sync(plans):
+    if not needs_header_sync(plans, root):
         return None
     import sync_protos
     cwd = os.getcwd()
@@ -1232,7 +1335,7 @@ def views_before(root, plans):
 
 def sync_headers(root, plans, log=print, before=None):
     """Run sync_protos --fix when needed. Returns a reason when it left a risky view change or failed."""
-    if not needs_header_sync(plans):
+    if not needs_header_sync(plans, root):
         return None
     import sync_protos
     cwd = os.getcwd()
@@ -1344,6 +1447,12 @@ def apply_all(root, plans, check, verbose, log=print, describe=None):
     plan declared a main-exe symbol or an override; the whole include/ tree is restored on rejection.
     Returns the kept plans."""
     describe = describe or (lambda p: '%s <- %s (%s)' % (p['name'], p['src'], p['unit']))
+    problems = writer_plan_problems(root, plans)
+    if problems:
+        for problem in problems:
+            log('ERROR ' + problem)
+        log('apply stopped before mutation: strict owner validation failed')
+        return []
     for p in plans:
         log('PLAN ' + describe(p))
     by_unit = {}
@@ -1437,6 +1546,20 @@ def main(argv=None):
     ap.add_argument('-v', action='store_true')
     a = ap.parse_args(argv)
     root = a.root
+    import sync_protos
+    profile, profile_problems = sync_protos.owner_profile(os.path.join(root, 'include'))
+    if profile is not None and profile_problems:
+        for problem in profile_problems:
+            print('ERROR %s' % problem)
+        return 2
+    if profile is not None:
+        model = sync_protos.Model(os.path.join(root, 'include'), os.path.join(root, 'src'))
+        problems = sync_protos.profile_integrity_problems(
+            model, os.path.join(root, 'include'), os.path.join(root, 'src')) + sync_protos.canonical_problems(model)
+        if problems:
+            for problem in problems:
+                print('ERROR %s' % problem)
+            return 2
     funcs = load_funcs(root)
     cache = {'lenient': a.lenient, 'aliases': load_aliases(root)}
     plans, skipped, stats = plan_all(root, funcs, cache)
@@ -1457,6 +1580,12 @@ def main(argv=None):
             print('SKIP %s/%s: %s' % (t.unit, t.name, '; '.join(rs[:2])))
     kept = []
     if a.apply:
+        owner_stops = [(t, r) for t, rs in skipped for r in rs if 'owner' in r.lower()]
+        if profile is not None and owner_stops:
+            for t, reason in owner_stops:
+                print('ERROR %s/%s: %s' % (t.unit, t.name, reason))
+            print('apply stopped before mutation: one or more declarations have no explicit owner')
+            return 2
         # repeated rounds: a copy can make a new source for another group member
         go, _held = split_held(plans, a.check)
         kept = apply_all(root, go, a.check, a.v)

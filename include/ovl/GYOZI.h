@@ -2,8 +2,41 @@
 #define OVL_GYOZI_H
 
 #include "common.h"
-#include "main_api.h"
-#include "game.h" /* T-17600: Actor for the display records D_80129F40 */
+#include "common.h"
+#include "game/display_records.h"
+#include "game/draw_records.h"
+#include "game/girl.h"
+#include "game/menu_records.h"
+#include "game/param.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libcd.h"
+#include "libgte.h"
+#include "libpress.h"
+#include "libsnd.h"
+#include "main/holiday.h"
+#include "main/import_views/scenes.h"
+#include "main/schedule.h"
+#include "main/school_day.h"
+#include "main/talk.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/draw_records.h"
+#include "game/girl.h"
+#include "game/menu_records.h"
+#include "game/param.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libcd.h"
+#include "libgte.h"
+#include "libpress.h"
+#include "libsnd.h"
+#include "main/holiday.h"
+#include "main/import_views/scenes.h"
+#include "main/schedule.h"
+#include "main/school_day.h"
+#include "main/talk.h"
+/* T-17600: Actor for the display records D_80129F40 */
 
 /* GYOZI data. */
 extern u8 D_801474B8;
@@ -1012,6 +1045,9 @@ extern s32 D_80148EB0; /* T-17600: frame counter of the dumpling scene, next to 
  * D_8014877C follows the second. */
 extern s16 D_8014875C[8];
 extern s16 D_8014876C[8];
+
+#include "ovl/GYOZI_main_imports.h"
+
 #endif /* OVL_GYOZI_T17600_TYPES */
 
 

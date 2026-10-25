@@ -2,7 +2,44 @@
 #define OVL_SHUGAKU_H
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/color.h"
+#include "main/cursor.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/import_views/school_events.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/param.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/schedule.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 
 /* SHUGAKU overlay (load address 0x80132000): externs and types. */
 
@@ -69,7 +106,7 @@ extern s32 D_8013C004;
 
 void trip_saved_mode_stage_restore(void);
 
-extern u8 D_8013C97C;
+extern u8 trip_saved_girl;
 extern s32 D_8013BE74;
 extern s32 D_8013BEA8;
 extern s32 D_8013BEDC;

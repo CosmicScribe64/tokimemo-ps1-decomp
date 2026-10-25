@@ -1,7 +1,27 @@
 /* main_loop.c: src/main/800420D0.c; Original object 0x800420D0-0x80042540: executable entry boot_start and boot_loop perform callback/system init, repeated game startup, frame polling and per-frame dispatch. Original object 0x800420D0-0x80042540 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game_enums.h"
 #include "libapi.h"
+#include "libgpu.h"
+#include "libspu.h"
+#include "main/audio.h"
+#include "main/boot.h"
+#include "main/cd.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/resident_views.h"
+#include "main/import_views/scenes.h"
+#include "main/memory_card.h"
+#include "main/pad.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/sys.h"
+#include "main/timer.h"
+#include "main/vram.h"
+#include "libapi.h"
+#include "main/pad.h"
 
 void boot_start(void) {
     boot_previous_stack_pointer = SetSp(0x801FEFF0);

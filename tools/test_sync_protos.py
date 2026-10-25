@@ -5,12 +5,14 @@ headers and sources, no game data).
 Run: tools/docker.sh python3 tools/test_sync_protos.py
 """
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
 
 import check_headers
 import sync_protos as sp
+import symtab
 
 API = """#ifndef MAIN_API_H
 #define MAIN_API_H
@@ -65,6 +67,533 @@ class Repo(unittest.TestCase):
     def has(self, text):
         out = self.problems()
         self.assertTrue(any(text in p for p in out), out)
+
+    def event_private_fixture(self):
+        (self.root / "config" / "overlays.txt").write_text("EVENT 0x800F6000 0x100\nOPTION 0x80130000 0x100\n")
+        names = (("D_801206E8", "s32"), ("D_8012076C", "s32"),
+                 ("D_80120798", "s32"), ("D_80121884", "s32"),
+                 ("D_801220EC", "s16"), ("D_80122740", "s32"),
+                 ("D_8012277C", "u8"))
+        owners = [{"path": p, "role": "main"} for p in (
+            "main_api.h", "main/schedule.h", "main/day_event.h", "main/school_day.h",
+            "main/game_mode.h", "main/pad.h", "main/holiday.h", "main/ovl.h")]
+        (self.root / "config" / "header_owners.json").write_text(json.dumps({
+            "mode": "topic_only", "owners": owners, "required_types": ["common.h"]}))
+        (self.root / "config" / "SLPM_86.053.yaml").write_text(
+            "symbol_addrs_path:\n  - config/symbol_addrs.txt\n")
+        (self.root / "config" / "overlays").mkdir(exist_ok=True)
+        (self.root / "config" / "overlays" / "EVENT.yaml").write_text(
+            "symbol_addrs_path:\n  - config/symbols_EVENT.txt\nsegments: []\n")
+        (self.root / "config" / "overlays" / "OPTION.yaml").write_text(
+            "symbol_addrs_path:\n  - config/symbols_OPTION.txt\nsegments: []\n")
+        self.write("common.h", "#ifndef COMMON_H\n#define COMMON_H\ntypedef signed int s32;\ntypedef signed short s16;\ntypedef unsigned char u8;\n#endif\n")
+        for p in owners[1:]:
+            self.write(p["path"], '#include "common.h"\n')
+        api = ['#ifndef MAIN_API_H', '#define MAIN_API_H', '#include "common.h"']
+        for name, typ in names:
+            api += ['#ifndef SPOT_PRIVATE_DATA_VIEWS', 'extern %s %s;' % (typ, name), '#endif']
+        api += ['#endif', '']
+        self.write("main_api.h", "\n".join(api))
+        self.write("game.h", '#include "main_api.h"\n')
+        decls = "\n".join("extern %s %s;" % (typ, name) for name, typ in names)
+        self.write("ovl/EVENT.h", '#ifndef OVL_EVENT_H\n#define OVL_EVENT_H\n#include "common.h"\n'
+                   '#define SPOT_PRIVATE_DATA_VIEWS\n#include "game.h"\n'
+                   '#ifdef SPOT_PRIVATE_DATA_VIEWS\n'
+                   '/* BEGIN T-27061 EVENT private scalar views */\n' + decls + '\n'
+                   '/* END T-27061 EVENT private scalar views */\n#endif\n'
+                   '#undef SPOT_PRIVATE_DATA_VIEWS\n#endif\n')
+        self.src("ovl/EVENT/probe.c", '#include "ovl/EVENT.h"\ns32 probe(void) { return D_801206E8; }\n')
+        self.src("ovl/OPTION/probe.c", '#include "game.h"\ns32 probe_option(void) { return D_801206E8; }\n')
+
+
+class EventPrivateViewTest(Repo):
+    def tree_bytes(self):
+        out = {}
+        for label, root in (("include", self.inc), ("src", self.root / "src")):
+            for path in root.rglob("*"):
+                if path.is_file():
+                    out["%s/%s" % (label, path.relative_to(root).as_posix())] = path.read_bytes()
+        return out
+
+    def test_exact_contract_is_unit_private_and_main_option_stays_main(self):
+        self.event_private_fixture()
+        self.assertTrue(sp.Model(str(self.inc)).event_private_active)
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertEqual(sp.event_private_contract_problems(model, str(self.inc)), [])
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+        self.assertEqual(sp.candidates(model), {})
+        self.assertFalse(sp.is_main_symbol(str(self.root), "D_801206E8", "EVENT"))
+        self.assertTrue(sp.is_main_symbol(str(self.root), "D_801206E8", "OPTION"))
+
+    def test_future_event_alias_resolves_by_address(self):
+        self.event_private_fixture()
+        p = self.inc / "ovl/EVENT.h"
+        p.write_text(p.read_text().replace("D_801206E8", "spot_yuko_still_pointers_3"))
+        event_src = self.root / "src/ovl/EVENT/probe.c"
+        event_src.write_text(event_src.read_text().replace("D_801206E8", "spot_yuko_still_pointers_3"))
+        (self.root / "config" / "symbols_EVENT.txt").write_text(
+            "spot_yuko_still_pointers_3 = 0x801206E8; // type:data\n")
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertEqual(sp.event_private_contract_problems(model, str(self.inc)), [])
+        self.assertEqual(symtab.SymbolTable(str(self.root)).resolve("EVENT", "spot_yuko_still_pointers_3"),
+                         ("EVENT", 0x801206E8))
+        self.assertFalse(sp.is_main_symbol(str(self.root), "spot_yuko_still_pointers_3", "EVENT"))
+        self.assertTrue(sp.is_main_symbol(str(self.root), "D_801206E8", "OPTION"))
+
+    def test_seventh_event_spelling_survives_main_public_rename_and_fix(self):
+        self.event_private_fixture()
+        api = self.inc / "main_api.h"
+        api.write_text(api.read_text().replace("extern s32 D_80122740;", "extern s32 view_reference;"))
+        (self.root / "config" / "symbol_addrs.txt").write_text(
+            "view_reference = 0x80122740; // type:data\n")
+        (self.root / "config" / "symbols_EVENT.txt").write_text(
+            "D_80122740 = 0x80122740; // type:data\n")
+        self.src("ovl/EVENT/reference.c", '#include "ovl/EVENT.h"\n'
+                 's32 event_reference(void) { return D_80122740; }\n')
+        self.src("ovl/OPTION/reference.c", '#include "game.h"\n'
+                 's32 option_reference(void) { return view_reference; }\n')
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertEqual(model.event_private_addr("D_80122740", "ovl/EVENT.h", "s32"), 0x80122740)
+        self.assertIn("view_reference", model.api)
+        self.assertNotIn("D_80122740", model.api)
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+        self.assertFalse(sp.is_main_symbol(str(self.root), "D_80122740", "EVENT"))
+        self.assertTrue(sp.is_main_symbol(str(self.root), "view_reference", "OPTION"))
+        before_bytes = self.tree_bytes()
+        before_views = sp.snapshot(model)
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True,
+                                      log=lambda _: None), 0)
+        self.assertEqual(sp.view_changes(before_views, sp.snapshot(
+            sp.Model(str(self.inc), str(self.root / "src")))), [])
+        self.assertEqual(before_bytes, self.tree_bytes())
+
+    def test_seventh_binding_wrong_type_guard_and_eighth_address_fail_closed(self):
+        self.event_private_fixture()
+        event = self.inc / "ovl/EVENT.h"
+        original = event.read_text()
+        event.write_text(original.replace("extern s32 D_80122740;\n", ""))
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("missing private view at 0x80122740" in x for x in out), out)
+        event.write_text(original.replace("extern s32 D_80122740;", "extern u16 D_80122740;"))
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("0x80122740 requires s32" in x for x in out), out)
+        event.write_text(original.replace("extern s32 D_80122740;", "extern s32 D_80122740;\nextern s32 D_80123000;"))
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("unexpected private declaration D_80123000" in x for x in out), out)
+        api = self.inc / "main_api.h"
+        api.write_text(api.read_text().replace(
+            "#ifndef SPOT_PRIVATE_DATA_VIEWS\nextern s32 D_80122740;\n#endif",
+            "extern s32 D_80122740;"))
+        event.write_text(original)
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("canonical view at 0x80122740 is not hidden" in x for x in out), out)
+
+    def test_wrong_private_type_and_extra_address_fail_closed(self):
+        self.event_private_fixture()
+        p = self.inc / "ovl/EVENT.h"
+        p.write_text(p.read_text().replace("extern s32 D_801206E8;", "extern u16 D_801206E8;")
+                     .replace("extern u8 D_8012277C;", "extern u8 D_8012277C;\nextern s32 D_80123000;"))
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("requires s32" in x for x in out), out)
+        self.assertTrue(any("unexpected private declaration" in x for x in out), out)
+
+    def test_missing_shared_guard_and_bad_selector_order_fail_closed(self):
+        self.event_private_fixture()
+        api = self.inc / "main_api.h"
+        api.write_text(api.read_text().replace("#ifndef SPOT_PRIVATE_DATA_VIEWS\nextern s32 D_801206E8;\n#endif",
+                                              "extern s32 D_801206E8;"))
+        event = self.inc / "ovl/EVENT.h"
+        event.write_text(event.read_text().replace('#define SPOT_PRIVATE_DATA_VIEWS\n#include "game.h"',
+                                                  '#include "game.h"\n#define SPOT_PRIVATE_DATA_VIEWS'))
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("not hidden" in x for x in out), out)
+        self.assertTrue(any("selector must bracket" in x for x in out), out)
+
+    def test_selector_leakage_and_missing_private_guard_fail_closed(self):
+        self.event_private_fixture()
+        event = self.inc / "ovl/EVENT.h"
+        text = event.read_text().replace("#ifdef SPOT_PRIVATE_DATA_VIEWS\n/* BEGIN", "/* BEGIN")
+        text = text.replace("#undef SPOT_PRIVATE_DATA_VIEWS\n", "")
+        event.write_text(text)
+        out = sp.event_private_contract_problems(sp.Model(str(self.inc)), str(self.inc))
+        self.assertTrue(any("leaks beyond" in x for x in out), out)
+        self.assertTrue(any("selector must bracket" in x for x in out), out)
+
+    def test_event_translation_unit_that_includes_game_first_fails(self):
+        self.event_private_fixture()
+        source = self.root / "src/ovl/EVENT/probe.c"
+        source.write_text('#include "game.h"\n#include "ovl/EVENT.h"\ns32 probe(void) { return D_801206E8; }\n')
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("must see one private" in x for x in out), out)
+
+    def test_non_event_source_cannot_include_event_private_header(self):
+        self.event_private_fixture()
+        source = self.root / "src/ovl/OPTION/probe.c"
+        source.write_text('#include "ovl/EVENT.h"\ns32 probe_option(void) { return 0; }\n')
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("non-EVENT source" in x for x in out), out)
+
+    def test_non_event_source_cannot_define_selector_around_canonical_include(self):
+        self.event_private_fixture()
+        source = self.root / "src/ovl/OPTION/probe.c"
+        for define in ("#define SPOT_PRIVATE_DATA_VIEWS", "#define SPOT_PRIVATE_DATA_VIEWS(x)"):
+            with self.subTest(define=define):
+                source.write_text(define + '\n#include "game.h"\n#undef SPOT_PRIVATE_DATA_VIEWS\n')
+                out = sp.event_private_contract_problems(
+                    sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+                self.assertTrue(any("directive is forbidden in non-EVENT source" in x for x in out), out)
+
+    def test_event_private_alias_in_another_header_is_rejected(self):
+        self.event_private_fixture()
+        self.write("ovl/EVENT_data.h", "extern s32 D_801206E8;\n")
+        source = self.root / "src/ovl/EVENT/probe.c"
+        source.write_text('#include "ovl/EVENT_data.h"\n#include "ovl/EVENT.h"\n')
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("outside the validated EVENT private block" in x for x in out), out)
+
+    def test_future_event_alias_without_header_is_not_missed(self):
+        self.event_private_fixture()
+        (self.root / "config" / "symbols_EVENT.txt").write_text(
+            "spot_yuko_still_pointers_3 = 0x801206E8; // type:data\n")
+        source = self.root / "src/ovl/EVENT/probe.c"
+        source.write_text("s32 probe(void) { return spot_yuko_still_pointers_3; }\n")
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("uses a private address but does not include" in x for x in out), out)
+
+    def test_event_source_own_declaration_of_future_alias_is_rejected(self):
+        self.event_private_fixture()
+        (self.root / "config" / "symbols_EVENT.txt").write_text(
+            "spot_yuko_still_pointers_3 = 0x801206E8; // type:data\n")
+        source = self.root / "src/ovl/EVENT/probe.c"
+        source.write_text('#include "ovl/EVENT.h"\nextern s32 spot_yuko_still_pointers_3;\n')
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("source" in x and "declares private alias" in x for x in out), out)
+
+    def test_partially_renamed_private_spelling_must_match_event_header(self):
+        self.event_private_fixture()
+        (self.root / "config" / "symbols_EVENT.txt").write_text(
+            "spot_yuko_still_pointers_3 = 0x801206E8; // type:data\n")
+        source = self.root / "src/ovl/EVENT/probe.c"
+        source.write_text('#include "ovl/EVENT.h"\n'
+                          's32 probe(void) { return spot_yuko_still_pointers_3; }\n')
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("does not see that exact s32 spelling once" in x for x in out), out)
+
+    def test_contract_survives_topic_owner_roots_without_either_umbrella(self):
+        self.event_private_fixture()
+        names = (("D_801206E8", "s32"), ("D_8012076C", "s32"),
+                 ("D_80120798", "s32"), ("D_80121884", "s32"),
+                 ("D_801220EC", "s16"), ("D_80122740", "s32"),
+                 ("D_8012277C", "u8"))
+        owner = self.inc / "main/schedule.h"
+        owner.write_text('#include "common.h"\n' + "\n".join(
+            '#ifndef SPOT_PRIVATE_DATA_VIEWS\nextern %s %s;\n#endif' % (typ, name)
+            for name, typ in names) + "\n")
+        (self.inc / "main_api.h").unlink()
+        (self.inc / "game.h").unlink()
+        event = self.inc / "ovl/EVENT.h"
+        event.write_text(event.read_text().replace('#include "game.h"', '#include "main/schedule.h"'))
+        option = self.root / "src/ovl/OPTION/probe.c"
+        option.write_text('#include "main/schedule.h"\ns32 probe_option(void) { return D_801206E8; }\n')
+        profile = json.loads((self.root / "config/header_owners.json").read_text())
+        profile["owners"] = [e for e in profile["owners"] if e["path"] != "main_api.h"]
+        (self.root / "config/header_owners.json").write_text(json.dumps(profile))
+        out = sp.event_private_contract_problems(
+            sp.Model(str(self.inc), str(self.root / "src")), str(self.inc), str(self.root / "src"))
+        self.assertEqual(out, [])
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+
+    def test_write_fix_preserve_views_and_bytes_for_both_namespaces(self):
+        self.event_private_fixture()
+        for renamed in (False, True):
+            with self.subTest(renamed=renamed):
+                if renamed:
+                    header = self.inc / "ovl/EVENT.h"
+                    header.write_text(header.read_text().replace("D_801206E8", "spot_yuko_still_pointers_3"))
+                    source = self.root / "src/ovl/EVENT/probe.c"
+                    source.write_text(source.read_text().replace("D_801206E8", "spot_yuko_still_pointers_3"))
+                    (self.root / "config" / "symbols_EVENT.txt").write_text(
+                        "spot_yuko_still_pointers_3 = 0x801206E8; // type:data\n")
+                before_bytes = self.tree_bytes()
+                model = sp.Model(str(self.inc), str(self.root / "src"))
+                before_views = sp.snapshot(model)
+                self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True,
+                                              log=lambda _: None), 0)
+                self.assertEqual(sp.view_changes(before_views, sp.snapshot(
+                    sp.Model(str(self.inc), str(self.root / "src")))), [])
+                self.assertEqual(before_bytes, self.tree_bytes())
+
+    def test_invalid_contract_blocks_write_and_fix_without_mutation(self):
+        self.event_private_fixture()
+        event = self.inc / "ovl/EVENT.h"
+        event.write_text(event.read_text().replace("extern s32 D_80122740;", "extern s16 D_80122740;"))
+        before = self.tree_bytes()
+        for fix in (False, True):
+            with self.subTest(fix=fix):
+                self.assertNotEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=fix,
+                                                 log=lambda _: None), 0)
+                self.assertEqual(before, self.tree_bytes())
+
+class LegacyImportedMainViewsTest(Repo):
+    def setUp(self):
+        super().setUp()
+        self._original_roster_hash = sp.LEGACY_IMPORT_ROSTER_SHA256
+
+    def tearDown(self):
+        sp.LEGACY_IMPORT_ROSTER_SHA256 = self._original_roster_hash
+        super().tearDown()
+
+    def fixture(self):
+        self.event_private_fixture()
+        (self.root / "config/overlays.txt").write_text(
+            "EVENT 0x800F6000 0x100\nGYOZI 0x800F8000 0x100\nOPTION 0x80130000 0x100\n")
+        (self.root / "src/ovl/GYOZI").mkdir(parents=True, exist_ok=True)
+        api = self.inc / "main_api.h"
+        api_text = api.read_text()
+        api_end = api_text.rfind("#endif")
+        api.write_text(api_text[:api_end] + "void real_main_alias(void);\n" + api_text[api_end:])
+        (self.root / "config/symbol_addrs.txt").write_text("real_main_alias = 0x80050000; // type:func\n")
+        self.write("ovl/GYOZI.h", '#ifndef OVL_GYOZI_H\n#define OVL_GYOZI_H\n#include "common.h"\n#include "game.h"\n'
+                   '#include "ovl/GYOZI_main_imports.h"\n#endif\n')
+        event_root = self.inc / "ovl/EVENT.h"
+        event_root.write_text(event_root.read_text().replace(
+            "#undef SPOT_PRIVATE_DATA_VIEWS\n#endif\n",
+            '#undef SPOT_PRIVATE_DATA_VIEWS\n#include "ovl/EVENT_main_imports.h"\n#endif\n'))
+        units = {"EVENT": [], "GYOZI": []}
+        for unit, count in (("EVENT", 51), ("GYOZI", 35)):
+            for i in range(count):
+                address = 0x80050000 + i * 4 if unit == "EVENT" else (0x80050000 if i == 0 else 0x80070000 + i * 4)
+                name = "func_%08X" % address
+                if unit == "GYOZI" and i == 0:
+                    typ, declaration = "s32F()", "s32 %s();" % name
+                elif i == 1:
+                    typ, declaration = "voidF(void)", "void %s(void);" % name
+                else:
+                    typ, declaration = "voidF()", "void %s();" % name
+                units[unit].append({
+                    "unit": unit, "address": "0x%08X" % address,
+                    "original_name": name, "original_type": typ,
+                    "type_identity_sha256": hashlib.sha256(typ.encode()).hexdigest(),
+                    "current_name": name, "current_type": typ,
+                    "declaration_block_sha256": hashlib.sha256((declaration + "\n").encode()).hexdigest(),
+                    "declaration": declaration,
+                })
+        stable = sorted((row["unit"], row["address"], row["type_identity_sha256"])
+                        for rows in units.values() for row in rows)
+        fingerprint = hashlib.sha256(json.dumps(stable, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+        sp.LEGACY_IMPORT_ROSTER_SHA256 = fingerprint
+        for unit, rows in units.items():
+            provider = "ovl/%s_main_imports.h" % unit
+            guard = "OVL_%s_MAIN_IMPORTS_H" % unit
+            text = "#ifndef %s\n#define %s\n#include \"common.h\"\n\n%s\n#endif\n" % (
+                guard, guard, "\n".join(row["declaration"] for row in rows))
+            self.write(provider, text)
+        profile_path = self.root / "config/header_owners.json"
+        profile = json.loads(profile_path.read_text())
+        profile["legacy_main_imports"] = {
+            "version": "legacy-main-imports-v1", "roster_sha256": fingerprint,
+            "expected_counts": {"EVENT": 51, "GYOZI": 35},
+            "providers": [
+                {"unit": unit, "provider_path": "ovl/%s_main_imports.h" % unit,
+                 "root_header_path": "ovl/%s.h" % unit, "bindings": rows}
+                for unit, rows in units.items()
+            ],
+        }
+        profile_path.write_text(json.dumps(profile))
+        self.src("ovl/EVENT/import_probe.c", '#include "ovl/EVENT.h"\nvoid event_probe(void) { func_80050000(); }\n')
+        self.src("ovl/GYOZI/import_probe.c", '#include "ovl/GYOZI.h"\nint gyozi_probe(void) { func_80050000(); return 0; }\n')
+        self.src("ovl/OPTION/import_probe.c", '#include "game.h"\nvoid option_probe(void) { real_main_alias(); }\n')
+        return units
+
+    def tree_bytes(self):
+        out = {}
+        for label, root in (("include", self.inc), ("src", self.root / "src"), ("config", self.root / "config")):
+            for path in root.rglob("*"):
+                if path.is_file():
+                    out["%s/%s" % (label, path.relative_to(root).as_posix())] = path.read_bytes()
+        return out
+
+    def test_valid_finite_namespaces_keep_global_lookup_and_main_alias(self):
+        self.fixture()
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertEqual(model.profile_problems, [])
+        self.assertEqual(sp.legacy_import_contract_problems(model, str(self.inc), str(self.root / "src")), [])
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+        self.assertEqual(len(model.legacy_imports_by_unit_name), 86)
+        self.assertEqual(model.owner("ovl/EVENT_main_imports.h"), "EVENT")
+        self.assertFalse(model.is_main("func_80050000", "ovl/EVENT_main_imports.h", "voidF()"))
+        self.assertFalse(sp.is_main_symbol(str(self.root), "func_80050000", "EVENT"))
+        self.assertFalse(sp.is_main_symbol(str(self.root), "func_80050000", "GYOZI"))
+        self.assertTrue(sp.is_main_symbol(str(self.root), "func_80050000", "OPTION"))
+        self.assertTrue(sp.is_main_symbol(str(self.root), "real_main_alias", "OPTION"))
+        self.assertEqual(model.addr("func_80050000"), 0x80050000)
+        self.assertEqual(symtab.SymbolTable(str(self.root)).resolve("EVENT", "func_80050000"),
+                         ("main", 0x80050000))
+        self.assertNotIn("func_80050000", sp.candidates(model))
+        self.assertNotIn("func_80050000", sp.unit_types(model, "OPTION"))
+        self.assertIn("func_80050000", sp.unit_types(model, "EVENT"))
+
+    def test_valid_fix_is_byte_inert_and_local_override_is_checked(self):
+        self.fixture()
+        path = self.inc / "ovl/EVENT.h"
+        text = path.read_text().replace(
+            '#include "ovl/EVENT_main_imports.h"',
+            '#define MAIN_API_OVERRIDE_func_80050000 /* EVENT call-view uses signed result */\n'
+            's32 func_80050000(void);\n#include "ovl/EVENT_main_imports.h"')
+        path.write_text(text)
+        provider = self.inc / "ovl/EVENT_main_imports.h"
+        provider.write_text(provider.read_text().replace(
+            "void func_80050000();",
+            "#ifndef MAIN_API_OVERRIDE_func_80050000\nvoid func_80050000();\n#endif", 1))
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+        before_bytes = self.tree_bytes()
+        before_views = sp.snapshot(sp.Model(str(self.inc), str(self.root / "src")))
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        self.assertEqual(self.tree_bytes(), before_bytes)
+        self.assertEqual(sp.view_changes(before_views, sp.snapshot(sp.Model(str(self.inc), str(self.root / "src")))), [])
+
+    def test_missing_roster_wrong_type_and_wrong_unit_include_fail_before_write(self):
+        self.fixture()
+        profile_path = self.root / "config/header_owners.json"
+        profile = json.loads(profile_path.read_text())
+        profile["legacy_main_imports"]["providers"][0]["bindings"].pop()
+        profile_path.write_text(json.dumps(profile))
+        before = self.tree_bytes()
+        self.assertTrue(any("fingerprint" in p or "counts" in p for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+        self.assertNotEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        self.assertEqual(self.tree_bytes(), before)
+
+        self.fixture()
+        gyozi = self.inc / "ovl/GYOZI.h"
+        gyozi.write_text(gyozi.read_text().replace('#include "ovl/GYOZI_main_imports.h"',
+                                                   '#include "ovl/GYOZI_main_imports.h"\n#include "ovl/EVENT_main_imports.h"'))
+        self.assertTrue(any("leaks through include/ovl/GYOZI.h" in p for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+
+        self.fixture()
+        provider = self.inc / "ovl/EVENT_main_imports.h"
+        provider.write_text(provider.read_text().replace("void func_80050000();", "s32 func_80050000();", 1))
+        self.assertTrue(any("must declare exactly one" in p for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+
+    def test_recomputed_unreviewed_roster_and_malformed_binding_fail_closed(self):
+        self.fixture()
+        profile_path = self.root / "config/header_owners.json"
+        profile = json.loads(profile_path.read_text())
+        contract = profile["legacy_main_imports"]
+        contract["providers"][0]["bindings"][0]["address"] = "0x8004F000"
+        stable = sorted((row["unit"], row["address"], row["type_identity_sha256"])
+                        for provider in contract["providers"] for row in provider["bindings"])
+        contract["roster_sha256"] = hashlib.sha256(
+            json.dumps(stable, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+        profile_path.write_text(json.dumps(profile))
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("pinned reviewed" in p for p in model.profile_problems), model.profile_problems)
+
+        self.fixture()
+        profile = json.loads(profile_path.read_text())
+        del profile["legacy_main_imports"]["providers"][0]["bindings"][0]["current_name"]
+        profile_path.write_text(json.dumps(profile))
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("incomplete binding" in p for p in model.profile_problems), model.profile_problems)
+
+    def test_unit_symbol_aliases_resolve_without_global_alias_fallback(self):
+        self.fixture()
+        profile_path = self.root / "config/header_owners.json"
+        profile = json.loads(profile_path.read_text())
+        for unit, address in (("EVENT", "0x80050004"), ("GYOZI", "0x80070004")):
+            binding = next(row for row in profile["legacy_main_imports"]["providers"]
+                           if row["unit"] == unit)["bindings"][1]
+            old = binding["current_name"]
+            binding["current_name"] = "shared_private"
+            symbol_file = self.root / ("config/symbols_%s.txt" % unit)
+            symbol_file.write_text("shared_private = %s; // type:func\n" % address)
+            yaml = self.root / ("config/overlays/%s.yaml" % unit)
+            yaml.write_text("symbol_addrs_path:\n  - config/symbols_%s.txt\nsegments: []\n" % unit)
+            provider = self.inc / ("ovl/%s_main_imports.h" % unit)
+            provider.write_text(provider.read_text().replace(old + "(", "shared_private(", 1))
+            source = self.root / ("src/ovl/%s/import_probe.c" % unit)
+            source.write_text(source.read_text().replace(old + "(", "shared_private(", 1))
+        profile_path.write_text(json.dumps(profile))
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertEqual(model.addr("shared_private"), None)
+        self.assertEqual(model.symbols.resolve("EVENT", "shared_private")[1], 0x80050004)
+        self.assertEqual(model.symbols.resolve("GYOZI", "shared_private")[1], 0x80070004)
+        self.assertFalse(sp.is_main_symbol(str(self.root), "shared_private", "EVENT"))
+        self.assertFalse(sp.is_main_symbol(str(self.root), "shared_private", "GYOZI"))
+        problems = sp.check_api(str(self.inc), str(self.root / "src"))
+        self.assertEqual(problems, [])
+
+    def test_source_local_and_implicit_overrides_are_unit_scoped(self):
+        self.fixture()
+        event = self.root / "src/ovl/EVENT/import_probe.c"
+        event.write_text(
+            '#define MAIN_API_OVERRIDE_func_80050000 /* matched local EVENT view */\n'
+            '#include "ovl/EVENT.h"\ns32 func_80050000(void);\n'
+            's32 event_probe(void) { return func_80050000(); }\n')
+        provider = self.inc / "ovl/EVENT_main_imports.h"
+        provider.write_text(provider.read_text().replace(
+            "void func_80050000();",
+            "#ifndef MAIN_API_OVERRIDE_func_80050000\nvoid func_80050000();\n#endif", 1))
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+
+        event.write_text(
+            '#define MAIN_API_OVERRIDE_func_80050000 /* implicit call view retained by EVENT */\n'
+            '#include "ovl/EVENT.h"\nvoid event_probe(void) { func_80050000(); }\n')
+        self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+
+    def test_undocumented_or_duplicate_source_views_are_rejected(self):
+        self.fixture()
+        event = self.root / "src/ovl/EVENT/import_probe.c"
+        event.write_text('#include "ovl/EVENT.h"\ns32 func_80050000(void);\n'
+                         'void event_probe(void) { func_80050000(); }\n')
+        self.assertTrue(sp.check_api(str(self.inc), str(self.root / "src")))
+
+        self.fixture()
+        event = self.root / "src/ovl/EVENT/import_probe.c"
+        event.write_text('#define MAIN_API_OVERRIDE_func_80050000 /* local view */\n'
+                         '#include "ovl/EVENT.h"\ns32 func_80050000(void);\n'
+                         's32 func_80050000(s32);\nvoid event_probe(void) { func_80050000(); }\n')
+        provider = self.inc / "ovl/EVENT_main_imports.h"
+        provider.write_text(provider.read_text().replace(
+            "void func_80050000();",
+            "#ifndef MAIN_API_OVERRIDE_func_80050000\nvoid func_80050000();\n#endif", 1))
+        self.assertTrue(sp.check_api(str(self.inc), str(self.root / "src")))
+
+    def test_foreign_provider_leak_is_rejected_even_with_valid_own_call(self):
+        self.fixture()
+        gyozi = self.root / "src/ovl/GYOZI/import_probe.c"
+        gyozi.write_text('#include "ovl/GYOZI.h"\n#include "ovl/EVENT_main_imports.h"\n'
+                         's32 gyozi_probe(void) { return func_80050000(); }\n')
+        problems = sp.check_api(str(self.inc), str(self.root / "src"))
+        self.assertTrue(any("provider leaks into source ovl/GYOZI/import_probe.c" in p
+                            for p in problems), problems)
+
+    def test_invalid_write_and_fix_leave_all_files_unchanged(self):
+        self.fixture()
+        root = self.inc / "ovl/EVENT.h"
+        root.write_text(root.read_text().replace('#include "ovl/EVENT_main_imports.h"', ""))
+        before = self.tree_bytes()
+        self.assertNotEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=False, log=lambda _: None), 0)
+        self.assertEqual(self.tree_bytes(), before)
+        self.assertNotEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda _: None), 0)
+        self.assertEqual(self.tree_bytes(), before)
+
+    def test_absent_profile_retains_legacy_main_range_behavior(self):
+        self.fixture()
+        (self.root / "config/header_owners.json").unlink()
+        self.assertTrue(sp.is_main_symbol(str(self.root), "func_80050000", "EVENT"))
+
+    def test_import_type_chain_reads_explicit_type_rename_ledgers(self):
+        self.fixture()
+        ledger = self.root / "config/renames/topic-types.txt"
+        ledger.parent.mkdir(parents=True, exist_ok=True)
+        ledger.write_text("type main OldType NewType 0x80000000 reviewed\n")
+        self.assertEqual(sp.current_import_type(str(self.root), "OldType *"), "NewType *")
 
 
 class CheckApiTest(Repo):
@@ -810,6 +1339,10 @@ class TopicOwnerTests(Repo):
     def model(self):
         return sp.Model(str(self.inc), str(self.root / "src"))
 
+    def profile(self, owners, required_types=("common.h",)):
+        (self.root / "config" / "header_owners.json").write_text(json.dumps({
+            "mode": "topic_only", "owners": owners, "required_types": list(required_types)}))
+
     def owner_bytes(self):
         return {h: (self.inc / h).read_bytes() for h in sp.canonical_headers(str(self.inc))}
 
@@ -887,6 +1420,20 @@ class TopicOwnerTests(Repo):
         self.assertEqual(sp.view_changes(views, sp.snapshot(self.model())), [])
         self.assertFalse((self.inc / "main_api.h").exists())
         self.assertEqual(sp.check_api(str(self.inc), str(self.root / "src")), [])
+
+    def test_profile_fix_can_repair_a_missing_canonical_override_guard(self):
+        self.topics(False)
+        self.profile([{"path": "main/schedule.h", "role": "main"},
+                      {"path": "main/day_event.h", "role": "main"},
+                      {"path": "main/school_day.h", "role": "main"}])
+        self.ovl("AAA", "void func_8007259C(s32 arg0);\n", head='#include "common.h"\n')
+        self.src("ovl/AAA/a.c", '#include "ovl/AAA.h"\nvoid use(void) { func_8007259C(300); }\n')
+        self.assertTrue(any("conflict func_8007259C" in p for p in sp.check_api(
+            str(self.inc), str(self.root / "src"))))
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), fix=True,
+                                      log=lambda _: None), 0)
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_func_8007259C",
+                      (self.inc / "main/day_event.h").read_text())
 
     def test_fix_keeps_existing_benign_override_visible(self):
         self.topics(False)
@@ -996,6 +1543,103 @@ class TopicOwnerTests(Repo):
                  '#include "main/day_event.h"\nvoid func_8007259C(s32 x);\nvoid use(void) { func_8007259C(300); }\n')
         self.assertTrue(any("not guarded in include/main/day_event.h" in p
                             for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+
+    def test_explicit_profile_missing_all_owners_fails_check_write_fix_without_changes(self):
+        self.topics(False)
+        self.profile([{"path": "main_api.h", "role": "main"}])
+        before = {p: p.read_bytes() for p in self.root.rglob("*") if p.is_file()}
+        self.assertTrue(any("required main owner include/main_api.h is missing" in p
+                            for p in sp.check_api(str(self.inc), str(self.root / "src"))))
+        for fix in (False, True):
+            self.assertGreater(sp.run_write(str(self.inc), str(self.root / "src"), fix=fix,
+                                            log=lambda _: None), 0)
+            self.assertEqual(before, {p: p.read_bytes() for p in before})
+            self.assertFalse((self.inc / "main_api.h").exists())
+
+    def test_explicit_sdk_self_owner_passes_but_disjoint_equal_type_fails(self):
+        (self.inc / "main_api.h").unlink()
+        (self.inc / "game.h").unlink()
+        self.write("libgte.h", '#include "common.h"\nvoid func_8009F004(void);\n')
+        self.write("main/schedule.h", '#include "common.h"\n')
+        self.profile([{"path": "main/schedule.h", "role": "main"},
+                      {"path": "libgte.h", "role": "sdk"}])
+        self.assertEqual(sp.check_api(str(self.inc)), [])
+        self.write("main/schedule.h", '#include "common.h"\nvoid func_8009F004(void);\n')
+        self.assertTrue(any("duplicate canonical owner" in p for p in sp.check_api(str(self.inc))))
+
+    def test_explicit_sdk_owner_keeps_main_alias_type_conflicts_visible(self):
+        (self.inc / "main_api.h").unlink()
+        (self.inc / "game.h").unlink()
+        self.write("libgte.h", '#include "common.h"\ns32 func_8009F004(void);\nextern u8 SdkAlias;\n')
+        (self.root / "config" / "symbol_addrs.txt").write_text(
+            "SenseMouse = 0x800460E0; // type:func\nSdkAlias = 0x8009F004; // type:data\n")
+        self.profile([{"path": "libgte.h", "role": "sdk"}])
+        self.assertTrue(any("alias conflict at 0x8009F004" in p for p in sp.check_api(str(self.inc))),
+                        sp.check_api(str(self.inc)))
+
+    def test_legacy_sdk_paths_keep_alias_conflicts_after_owner_relocation(self):
+        for sdk in ("libgpu.h", "libapi.h", "libgte.h"):
+            with self.subTest(sdk=sdk):
+                self.topics(False)
+                for other in ("libgpu.h", "libapi.h", "libgte.h"):
+                    (self.inc / other).unlink(missing_ok=True)
+                (self.root / "config" / "symbol_addrs.txt").write_text(
+                    "SdkAlias = 0x8009F004; // type:data\n")
+                self.write("main/schedule.h", '#include "common.h"\nextern u8 SdkAlias;\n')
+                self.write(sdk, '#include "common.h"\ns32 func_8009F004(void);\n')
+                self.profile([{"path": "main/schedule.h", "role": "main"},
+                              {"path": sdk, "role": "sdk"}])
+                found = sp.alias_conflicts(self.model())
+                self.assertTrue(any(key == "alias 0x8009F004" for key, _ in found),
+                                (sdk, found))
+
+    def test_profile_rejects_symlink_escape_and_normalized_alias(self):
+        self.topics(False)
+        outside = self.root / "outside.h"
+        outside.write_text('#include "common.h"\n')
+        (self.inc / "escape.h").symlink_to(outside)
+        for path in ("escape.h", "main/./schedule.h"):
+            self.profile([{"path": path, "role": "main"}])
+            self.assertTrue(any("invalid owner path" in p for p in sp.check_api(str(self.inc))), path)
+
+    def test_profile_type_leaf_rejects_extern(self):
+        self.write("types.h", '#include "common.h"\ntypedef struct T { s32 x; } T;\nextern T D_800E0000;\n')
+        self.profile([], ("common.h", "types.h"))
+        self.assertTrue(any("type leaf include/types.h must not declare" in p
+                            for p in sp.check_api(str(self.inc))))
+
+    def test_profile_type_leaf_rejects_function_and_object_definitions(self):
+        self.profile([], ("common.h", "types.h"))
+        for content in ("s32 f(void) { return 0; }\n", "s32 values[2] = {0, 0};\n"):
+            with self.subTest(content=content):
+                self.write("types.h", content)
+                self.assertTrue(any("type leaf include/types.h must not declare" in p
+                                    for p in sp.check_api(str(self.inc))))
+
+    def test_profile_accepts_a_pure_typedef_type_leaf(self):
+        (self.inc / "main_api.h").unlink()
+        (self.inc / "game.h").unlink()
+        self.write("main/schedule.h", '#include "common.h"\n')
+        self.write("types.h", '#include "common.h"\ntypedef struct T { s32 x; } T;\n')
+        self.profile([{"path": "main/schedule.h", "role": "main"}], ("common.h", "types.h"))
+        self.assertEqual(sp.check_api(str(self.inc)), [])
+
+    def test_profile_accepts_pure_named_enum_and_rejects_instance(self):
+        (self.inc / "main_api.h").unlink()
+        (self.inc / "game.h").unlink()
+        self.write("main/schedule.h", '#include "common.h"\n')
+        self.profile([{"path": "main/schedule.h", "role": "main"}], ("common.h", "game_enums.h"))
+        self.write("game_enums.h", "enum GirlId { GIRL_SHIORI = 0, GIRL_MIO = 1 };\n")
+        self.assertEqual(sp.check_api(str(self.inc)), [])
+        self.write("game_enums.h", "enum GirlId { GIRL_SHIORI = 0, GIRL_MIO = 1 } current_girl;\n")
+        self.assertTrue(any("type leaf include/game_enums.h must not declare" in p
+                            for p in sp.check_api(str(self.inc))))
+
+    def test_no_profile_keeps_legacy_destination_and_behavior(self):
+        self.assertIsNone(sp.owner_profile(str(self.inc))[0])
+        self.src("main/new.c", '#include "game.h"\ns32 func_8007BB00(void) { return 0; }\n')
+        self.assertEqual(sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None), 0)
+        self.assertIn("func_8007BB00", (self.inc / "main_api.h").read_text())
 
 
 class StrictCompareTests(Repo):

@@ -318,7 +318,7 @@ void camp_shiori_status_script_offset_set_alt(void) {
 }
 
 void camp_player_girl_club_compare(void) {
-    D_8013A2B0 = game_state.current_girl;
+    camp_saved_girl = game_state.current_girl;
     if (((u32) game_state.player_flags.h >> 0xC) == ((u32) game_state.girls[game_state.current_girl].flags.b[2] >> 4)) {
         mode_step_next();
         mode_step_next();
@@ -332,7 +332,7 @@ void camp_player_girl_club_compare(void) {
 }
 
 void camp_saved_girl_scene_restore(void) {
-    game_state.current_girl = D_8013A2B0;
+    game_state.current_girl = camp_saved_girl;
     camp_current_girl_script_pointer_bind();
     D_80139ADC = 0;
     D_80139AE0 = 0;

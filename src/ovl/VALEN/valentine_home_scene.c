@@ -45,16 +45,16 @@ s32 valentine_day_event_complete(void) {
 }
 
 void valentine_candidate_result_route(void) {
-    if (D_80134544 != 0) {
+    if (valentine_unmet_megumi_selected != 0) {
         game_state.girls[9].flags.f.met = 1;
     }
-    if (D_8013453C >= 7) {
+    if (valentine_candidate_count >= 7) {
         D_80134498 = 0;
-    } else if (D_8013453C >= 5) {
+    } else if (valentine_candidate_count >= 5) {
         D_80134498 = 1;
-    } else if (D_8013453C >= 3) {
+    } else if (valentine_candidate_count >= 3) {
         D_80134498 = 2;
-    } else if (D_8013453C > 0) {
+    } else if (valentine_candidate_count > 0) {
         D_80134498 = 3;
     } else {
         D_80134498 = 4;

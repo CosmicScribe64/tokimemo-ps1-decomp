@@ -1,6 +1,7 @@
 /* yuina_scene_and_actor_effects.c: src/ovl/SHUGAKU/80135430.c:4-34,73-100; Yuina scene resources, callback table and actor fade/effect updates. 801378B0.c:391-394 selects mode_stage8 for Yuina; scene init sets current_girl2. Original object 0x80135430-0x80136380 (config/objects/SHUGAKU.txt). */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+#include "main/scene.h"
 
 void trip_yuina_scene_resource_pointer_setup(void) {
     D_8013C2D0 = 0x801C25B8;

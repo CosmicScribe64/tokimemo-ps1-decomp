@@ -1,6 +1,7 @@
 /* ayako_scene_and_birthday_detours.c: src/ovl/SHUGAKU/80133D60.c:4-58; Ayako scene resources/callbacks with lighting, actor-copy/fade behavior and birthday redirects. The Ayako route selects mode_stage9 in 80138A60.c:144-151. Original object 0x80133D60-0x801344B0 (config/objects/SHUGAKU.txt). */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+#include "main/scene.h"
 
 void trip_ayako_scene_resource_pointer_setup(void) {
     D_8013BFD0 = (u8 *)0x801D2384;

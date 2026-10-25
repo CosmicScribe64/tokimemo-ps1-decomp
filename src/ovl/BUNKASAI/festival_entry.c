@@ -27,7 +27,7 @@ void culture_festival_mode_handler(void) {
         hizuke_init();
         icon_disp_switch(0);
         parameter_disp_switch(0);
-        D_80122EBC = 0xFF;
+        game_mode_scene_girl = 0xFF;
         D_80122EA4 = 0xFF;
         D_80122E98 = 0;
         /* FAKE: shared D_80122E98 base retains the state load after the clear; block layout unknown (T-24030). */
@@ -152,7 +152,7 @@ s32 culture_result_apply(void) {
             g->girls[i].tokimeki += bonus;
             g->girls[i].tokimeki += val;
         }
-        amount = first.gain[D_80122EBC][g->player_flags.h >> 12];
+        amount = first.gain[game_mode_scene_girl][g->player_flags.h >> 12];
         break;
     case 1:
         for (i = 0; i < 13; i++) {
@@ -160,7 +160,7 @@ s32 culture_result_apply(void) {
             g->girls[i].tokimeki += bonus;
             g->girls[i].tokimeki += val;
         }
-        amount = second.gain[D_80122EBC][g->player_flags.h >> 12];
+        amount = second.gain[game_mode_scene_girl][g->player_flags.h >> 12];
         break;
     case 2:
         for (i = 0; i < 13; i++) {
@@ -168,14 +168,14 @@ s32 culture_result_apply(void) {
             g->girls[i].tokimeki += bonus;
             g->girls[i].tokimeki += val;
         }
-        amount = third.gain[D_80122EBC][g->player_flags.h >> 12];
+        amount = third.gain[game_mode_scene_girl][g->player_flags.h >> 12];
         break;
     }
     if (amount != 0) {
         amount--;
     }
-    g->girls[D_80122EBC].affection += 2;
-    g->girls[D_80122EBC].tokimeki += amount;
+    g->girls[game_mode_scene_girl].affection += 2;
+    g->girls[game_mode_scene_girl].tokimeki += amount;
 }
 
 void culture_exhibit_title_show(void) {
@@ -285,7 +285,7 @@ void culture_event_log_add(void) {
             ((((u8) game->girls[3].flags.b[2] >> 4) == 4) && (game->girls[3].flags.f.met == 1))) {
             sp2B = 18;
         } else {
-            if ((D_80122EBC == 10) && (girl_state_rank(10) == 4)) {
+            if ((game_mode_scene_girl == 10) && (girl_state_rank(10) == 4)) {
                 sp2B = 17;
                 return;
             }
@@ -301,10 +301,10 @@ void culture_event_log_add(void) {
         }
         break;
     }
-    game->event_log[game->event_log_count].girl = D_80122EBC;
+    game->event_log[game->event_log_count].girl = game_mode_scene_girl;
     game->event_log[game->event_log_count].scene = 20;
     game->event_log[game->event_log_count].flag = sp2B;
-    game->event_log[game->event_log_count].rank = get_g_zyotai_h(D_80122EBC);
+    game->event_log[game->event_log_count].rank = get_g_zyotai_h(game_mode_scene_girl);
     game->event_log[game->event_log_count].year = game->year;
     game->event_log[game->event_log_count].month = game->month;
     game->event_log[game->event_log_count].day = game->day;

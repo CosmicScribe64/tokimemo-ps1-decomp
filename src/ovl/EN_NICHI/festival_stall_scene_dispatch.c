@@ -22,7 +22,7 @@ INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/festival_stall_scene_dispatch.dat
 u8 D_80139C34[8] = { 0 };
 u8 D_80139C3C[8] = { 0 };
 u8 D_80139C44[8] = { 0 };
-s16 D_80139C4C[6] = { 0 };
+s16 stalls_collected_result_codes[6] = { 0 };
 u16 D_80139C58 = 0;
 /* Scene table, indexed by game_state.mode_stage in stalls_later_year_callback_dispatch. Defining it here as the
  * original did matters for code: as1 treats every function named in this file's data as an
@@ -248,8 +248,8 @@ void stalls_game_state_dispatch(void) {
         ((Actor *)actor_pool)[117].draw_flags |= 0x80;
         n = 0;
         for (i = 0; i < 5; i++) {
-            if (D_80139C4C[i] != 0xFF) {
-                ((Actor *)actor_pool)[n + 98].unk_18 = D_80139C4C[i];
+            if (stalls_collected_result_codes[i] != 0xFF) {
+                ((Actor *)actor_pool)[n + 98].unk_18 = stalls_collected_result_codes[i];
                 n++;
             }
             ((Actor *)actor_pool)[i + 98].unk_01 = 1;
@@ -268,9 +268,9 @@ void stalls_game_state_dispatch(void) {
     case 2:
         if (Vblnk_Timer() >= 0x2E) {
             if (((Actor *)actor_pool + 98)[D_80139C30].unk_18 == 0xFF || D_80139C30 >= 5) {
-                if (D_80139C4C[0] == 0x1F && D_80139C4C[1] == 0x1F && D_80139C4C[2] == 0x1F && D_80139C4C[3] == 0x1F && D_80139C4C[4] == 0x1F) {
+                if (stalls_collected_result_codes[0] == 0x1F && stalls_collected_result_codes[1] == 0x1F && stalls_collected_result_codes[2] == 0x1F && stalls_collected_result_codes[3] == 0x1F && stalls_collected_result_codes[4] == 0x1F) {
                     mode_step_set(5);
-                } else if (D_80139C4C[0] == 0x20 && D_80139C4C[1] == 0x20 && D_80139C4C[2] == 0x20 && D_80139C4C[3] == 0x20 && D_80139C4C[4] == 0x20) {
+                } else if (stalls_collected_result_codes[0] == 0x20 && stalls_collected_result_codes[1] == 0x20 && stalls_collected_result_codes[2] == 0x20 && stalls_collected_result_codes[3] == 0x20 && stalls_collected_result_codes[4] == 0x20) {
                     mode_step_set(6);
                 } else {
                     Vblnk_Timer_Init();
@@ -301,25 +301,25 @@ void stalls_game_state_dispatch(void) {
         }
         break;
     case 4:
-        if (D_80139C4C[0] < 0x10 && D_80139C4C[1] < 0x10 && D_80139C4C[2] < 0x10 && D_80139C4C[3] < 0x10 && D_80139C4C[4] < 0x10) {
-        } else if (D_80139C4C[0] == 0xFF && D_80139C4C[1] == 0xFF) {
+        if (stalls_collected_result_codes[0] < 0x10 && stalls_collected_result_codes[1] < 0x10 && stalls_collected_result_codes[2] < 0x10 && stalls_collected_result_codes[3] < 0x10 && stalls_collected_result_codes[4] < 0x10) {
+        } else if (stalls_collected_result_codes[0] == 0xFF && stalls_collected_result_codes[1] == 0xFF) {
             /* FAKE: T-25109, a loop that uopt keeps and ugen folds away; it keeps the empty arm's two
              * 0xFF tests that the original has (an empty or dead-store arm is removed whole). */
             n = 0;
             do {
             } while ((u32)n < 0);
         }
-        if (D_80139C4C[0] == 0x10 && D_80139C4C[1] == 0x10 && D_80139C4C[2] == 0x10 && D_80139C4C[3] == 0x10 && D_80139C4C[4] == 0x10 && game_state.current_girl == GIRL_YUINA) {
+        if (stalls_collected_result_codes[0] == 0x10 && stalls_collected_result_codes[1] == 0x10 && stalls_collected_result_codes[2] == 0x10 && stalls_collected_result_codes[3] == 0x10 && stalls_collected_result_codes[4] == 0x10 && game_state.current_girl == GIRL_YUINA) {
             /* FAKE: T-25109, a second use so uopt keeps unk_F5F of this test in v1 (register-cheatsheet). */
             if ((s32)game_state.current_girl) {
             }
-            D_80122E9C = 3;
-        } else if (game_state.current_girl + 0x14 == D_80139C4C[0] && game_state.current_girl + 0x14 == D_80139C4C[1] && game_state.current_girl + 0x14 == D_80139C4C[2] && game_state.current_girl + 0x14 == D_80139C4C[3] && game_state.current_girl + 0x14 == D_80139C4C[4] && game_state.current_girl != GIRL_YUINA) {
-            D_80122E9C = 3;
-        } else if (D_80139C4C[0] < 0x21 && D_80139C4C[1] < 0x21 && D_80139C4C[2] < 0x21 && D_80139C4C[3] < 0x21 && D_80139C4C[4] < 0x21) {
-            D_80122E9C = 1;
+            normal_date_minigame_result = 3;
+        } else if (game_state.current_girl + 0x14 == stalls_collected_result_codes[0] && game_state.current_girl + 0x14 == stalls_collected_result_codes[1] && game_state.current_girl + 0x14 == stalls_collected_result_codes[2] && game_state.current_girl + 0x14 == stalls_collected_result_codes[3] && game_state.current_girl + 0x14 == stalls_collected_result_codes[4] && game_state.current_girl != GIRL_YUINA) {
+            normal_date_minigame_result = 3;
+        } else if (stalls_collected_result_codes[0] < 0x21 && stalls_collected_result_codes[1] < 0x21 && stalls_collected_result_codes[2] < 0x21 && stalls_collected_result_codes[3] < 0x21 && stalls_collected_result_codes[4] < 0x21) {
+            normal_date_minigame_result = 1;
         } else {
-            D_80122E9C = 4;
+            normal_date_minigame_result = 4;
         }
         game_mode_set(game_state.saved_game_mode);
         mode_stage_set(game_state.saved_mode_stage);
@@ -422,7 +422,7 @@ void stalls_target_collision_update(void) {
             if (*(s16 *)(r + 0x1A22) < 0x401) {
                 if (stalls_target_collision_resolve(i) != 0) {
                     *(s16 *)(r + 0x1A20) = 0x27;
-                    if ((D_80139C4C[i] < 0x10) || (D_80139C4C[i] >= 0x14)) {
+                    if ((stalls_collected_result_codes[i] < 0x10) || (stalls_collected_result_codes[i] >= 0x14)) {
                         audio_command(0x508);
                     } else {
                         audio_command(0x509);
@@ -510,7 +510,7 @@ s32 stalls_target_collision_resolve(s32 arg0) {
     } while (i < 12);
     i = 11;
     if (outside != 0) {
-        D_80139C4C[arg0] = 0xFF;
+        stalls_collected_result_codes[arg0] = 0xFF;
         return 0;
     }
     record = (EnWork1C20 *)((u8 *)actor_pool + 11 * 0x44);
@@ -519,13 +519,13 @@ loop:
         value = record->unk_1C1C;
         if (!(value & 0x40000000)) {
             record->unk_1C1C = value | 0x40000000;
-            D_80139C4C[arg0] = record->unk_1BFC;
+            stalls_collected_result_codes[arg0] = record->unk_1BFC;
             return 1;
         }
     }
     record = (EnWork1C20 *)((u8 *)record - 0x44);
     if (i < 0) {
-        D_80139C4C[arg0] = 0xFF;
+        stalls_collected_result_codes[arg0] = 0xFF;
         return 0;
     }
     goto loop;

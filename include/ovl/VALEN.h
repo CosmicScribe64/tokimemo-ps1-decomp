@@ -5,17 +5,41 @@
 #define MAIN_API_OVERRIDE_normal_date_girl_out /* implicit int declaration: valentine_megumi_birthday_gate returns its result (void in main_api.h) */
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/portrait.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
 
 /* VALEN overlay (load address 0x80132000): externs and types. */
 
 void valentine_talk_driver();
-extern s16 D_80134520;
+extern s16 valentine_candidate_index;
 void valentine_birthday_pointer_setup();
 void valentine_scene_pointer_setup();
 extern s16 D_80134498;
-extern s16 D_8013453C;
-extern volatile u8 D_80134544; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` out of the valentine_candidate_scene_select `sel == 9` block into the branch delay slot (wiki/as1-scheduler-rule.md); real declaration unknown. T-24903 */
+extern s16 valentine_candidate_count;
+extern volatile u8 valentine_unmet_megumi_selected; /* FAKE: volatile keeps as1's global scheduler from moving this byte's `lui` out of the valentine_candidate_scene_select `sel == 9` block into the branch delay slot (wiki/as1-scheduler-rule.md); real declaration unknown. T-24903 */
 extern s32 D_80134400;
 extern s32 D_80134434;
 extern s32 D_80134468;
@@ -122,10 +146,18 @@ typedef struct ValenStateView {
     /* 0x11C */ ValenParaRec unk_11C;
 } ValenStateView; /* prefix size 0x12C */
 
-extern s16 D_80134524[];
+extern s16 valentine_candidate_girls[];
 
-extern u8 D_80134540[];
-extern u8 D_80134548;
+extern u8 valentine_ranked_girls[];
+extern u8 valentine_scene_place_index;
+
+/* T-27056 R4 eligibility thresholds and assigned amounts have separate names. */
+enum ValentineCandidateRule {
+    VALENTINE_UNMET_MEGUMI_TOKIMEKI_MINIMUM = 20, /* Unmet Megumi special eligibility. */
+    VALENTINE_MEGUMI_INITIAL_AFFECTION = 50, /* Assigned affection for special unmet Megumi. */
+    VALENTINE_RANK_TOKIMEKI_MINIMUM = 70, /* Tokimeki threshold for top-three ranking and Shiori ordering. */
+    VALENTINE_CANDIDATE_AFFECTION_MINIMUM = 50 /* Minimum affection for ordinary candidate inclusion. */
+};
 
 #endif /* OVL_VALEN_H */
 

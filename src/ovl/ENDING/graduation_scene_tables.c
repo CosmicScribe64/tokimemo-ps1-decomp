@@ -1,7 +1,24 @@
 /* graduation_scene_tables.c: ; src/ovl/ENDING/80134D20.c:4-10 declares scene data islands. Original object 0x80134D20-0x80137340 (config/objects/ENDING.txt). */
 #include "common.h"
 #include "ovl/ENDING.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/game_mode.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/graduation_scene_tables.data", D_8013C5F0);

@@ -41,6 +41,33 @@ void func_80132000(void);
 MAIN_API = "#ifndef MAIN_API_H\n#define MAIN_API_H\n#endif /* MAIN_API_H */\n"
 
 
+def write_event7_fixture(write):
+    rows = (("D_801206E8", "s32", "801206E8"), ("D_8012076C", "s32", "8012076C"),
+            ("D_80120798", "s32", "80120798"), ("D_80121884", "s32", "80121884"),
+            ("D_801220EC", "s16", "801220EC"), ("D_80122740", "s32", "80122740"),
+            ("D_8012277C", "u8", "8012277C"))
+    write("include/common.h", "typedef signed int s32; typedef signed short s16; typedef unsigned char u8;\n")
+    canonical = '#include "common.h"\n' + "".join(
+        "#ifndef SPOT_PRIVATE_DATA_VIEWS\nextern %s %s;\n#endif\n" % (typ, name)
+        for name, typ, _address in rows)
+    canonical += "#ifndef SPOT_PRIVATE_DATA_VIEWS\nextern s32 D_801220F0;\n#endif\n"
+    write("include/main/topic.h", canonical)
+    write("config/header_owners.json", '{"mode":"topic_only","owners":[{"path":"main/topic.h","role":"main"}],"required_types":["common.h"]}\n')
+    write("config/overlays.txt", "EVENT 0x800F6000 0x100\n")
+    write("config/overlays/EVENT.yaml", "symbol_addrs_path:\n  - config/symbols_EVENT.txt\nsegments: []\n")
+    symbols = "spot_nozomi_scene1_steps_run = 0x801040F0; // type:func\n"
+    symbols += "".join("%s = 0x%s; // type:data\n" % (name, address)
+                        for name, _typ, address in rows)
+    symbols += "D_801220F0 = 0x801220F0; // type:data\n"
+    write("config/symbols_EVENT.txt", symbols)
+    private = "".join("extern %s %s;\n" % (typ, name) for name, typ, _address in rows)
+    write("include/ovl/EVENT.h", '#ifndef OVL_EVENT_H\n#define OVL_EVENT_H\n#include "common.h"\n'
+          '#define SPOT_PRIVATE_DATA_VIEWS\n#include "main/topic.h"\n'
+          '#ifdef SPOT_PRIVATE_DATA_VIEWS\n/* BEGIN T-27061 EVENT private scalar views */\n'
+          + private + '/* END T-27061 EVENT private scalar views */\n#endif\n'
+          '#undef SPOT_PRIVATE_DATA_VIEWS\nextern struct EventView D_801220F0;\n#endif\n')
+
+
 def body(name, stmt):
     return "void %s(void) {\n    %s\n}\n" % (name, stmt)
 
@@ -290,13 +317,136 @@ class Placement(unittest.TestCase):
         self.assertEqual(B.include_asm_funcs(SRC), ["func_80132000", "func_80132100"])
 
     def test_header_home_and_insert(self):
-        self.assertEqual(B.header_home("D_800E0000", "AA"), "include/main_api.h")
-        self.assertEqual(B.header_home("func_80140000", "AA"), "include/ovl/AA.h")
-        self.assertIsNone(B.header_home("func_80140000", "main"))
-        self.assertIsNone(B.header_home("some_name", "AA"))
+        # Exercise the legacy fallback in an isolated root. The real repository
+        # may have a strict owner profile and finite EVENT/GYOZI import contract,
+        # neither of which describes this synthetic AA overlay.
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(B.header_home("D_800E0000", "AA", tmp), "include/main_api.h")
+            self.assertEqual(B.header_home("func_80140000", "AA", tmp), "include/ovl/AA.h")
+            self.assertIsNone(B.header_home("func_80140000", "main", tmp))
+            self.assertIsNone(B.header_home("some_name", "AA", tmp))
         new = B.insert_in_header(HEADER, ["extern s32 D_80140000;"])
         self.assertTrue(new.endswith("extern s32 D_80140000;\n\n#endif\n"), new)
         self.assertIn("#ifdef SOMETHING\nvoid unrelated(void);\n#endif\n", new)
+
+    def test_profile_header_home_uses_owner_union_and_unknown_owner_stops_before_compile(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "repo")
+            out = os.path.join(tmp, "out")
+            os.makedirs(os.path.join(root, "include", "main"))
+            os.makedirs(os.path.join(root, "src", "main"))
+            def write(rel, text):
+                path = os.path.join(root, rel)
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w") as fh:
+                    fh.write(text)
+            write("include/common.h", "typedef int s32;\n")
+            write("include/main/owner.h", '#include "common.h"\nvoid func_80041234(void);\n'
+                  'void audio_command(void);\n')
+            write("config/header_owners.json", '{"mode":"topic_only","owners":['
+                  '{"path":"main/owner.h","role":"main"}],"required_types":["common.h"]}\n')
+            src = "#include \"common.h\"\nINCLUDE_ASM(\"asm/main/80041000\", func_80041000);\n"
+            write("src/main/80041000.c", src)
+            os.makedirs(out)
+            self.assertEqual(B.header_home("func_80041234", "main", root), "include/main/owner.h")
+            self.assertEqual(B.header_home("audio_command", "main", root), "include/main/owner.h")
+            self.assertIsNone(B.header_home("func_80049999", "main", root))
+
+            class Backend:
+                def m2c(self, *_args, **_kwargs):
+                    return "extern s32 D_80049999;", "void func_80041000(void) { D_80049999 = 1; }"
+
+            run = B.Run(root, out, backend=Backend())
+            path = os.path.join(root, "src/main/80041000.c")
+            target = B.Target("main", "src/main/80041000.c", "func_80041000", 4)
+            with mock.patch.object(run, "_compile", side_effect=AssertionError("compiled before owner check")):
+                cand, failure = run._candidate(target, path, src, B.VARIANTS[0], {}, set())
+            self.assertIsNone(cand)
+            self.assertIn("owner required for D_80049999", failure[0])
+            with open(path) as fh:
+                self.assertEqual(fh.read(), src)
+            write("config/header_owners.json", '{"mode":"topic_only","owners":['
+                  '{"path":"main/missing.h","role":"main"}],"required_types":["common.h"]}\n')
+            problem = run._finish(target, path, src, "void func_80041000(void) { }\n", [])
+            self.assertIn("profile owner check", problem)
+            with open(path) as fh:
+                self.assertEqual(fh.read(), src)
+
+    def test_profile_overlay_home_uses_target_closure_and_rejects_ambiguity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "repo")
+            inc = os.path.join(root, "include")
+            os.makedirs(os.path.join(inc, "main"))
+            os.makedirs(os.path.join(inc, "ovl"))
+            def write(rel, text):
+                path = os.path.join(root, rel)
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w") as fh:
+                    fh.write(text)
+            write("include/common.h", "typedef int s32;\n")
+            write("include/main/topic.h", '#include "common.h"\n')
+            write("include/libapi.h", '#include "common.h"\n')
+            write("include/ovl/AA.h", '#include "common.h"\n')
+            write("include/a.h", '#include "common.h"\n')
+            write("include/b.h", '#include "common.h"\n')
+            write("config/header_owners.json", '{"mode":"topic_only","owners":['
+                  '{"path":"main/topic.h","role":"main"},{"path":"libapi.h","role":"sdk"}],'
+                  '"required_types":["common.h"]}\n')
+            source = 'src/ovl/AA.c'
+            write(source, '#include "ovl/AA.h"\n#include "libapi.h"\n')
+            self.assertEqual(B.header_home("func_80140000", "AA", root, source), "include/ovl/AA.h")
+            write(source, '#include "a.h"\n#include "b.h"\n')
+            import sync_protos
+            with mock.patch.object(sync_protos.srcscan, "header_units", return_value={"a.h": "AA", "b.h": "AA"}):
+                self.assertIsNone(B.header_home("func_80140000", "AA", root, source))
+
+    def test_profile_event_overlap_routes_to_event_source_owner(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "repo")
+            os.makedirs(os.path.join(root, "include", "main"))
+            def write(rel, text):
+                path = os.path.join(root, rel)
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w") as fh:
+                    fh.write(text)
+            write_event7_fixture(write)
+            source = "src/ovl/EVENT/probe.c"
+            write(source, '#include "ovl/EVENT.h"\n')
+            self.assertEqual(B.header_home("spot_nozomi_scene1_steps_run", "EVENT", root, source), "include/ovl/EVENT.h")
+            self.assertEqual(B.header_home("D_801220EC", "EVENT", root, source), "include/ovl/EVENT.h",
+                             "an EVENT-owned identity must beat the same-name main canonical declaration")
+            self.assertEqual(B.header_home("D_801220F0", "EVENT", root, source), "include/ovl/EVENT.h",
+                             "an overlay-local aggregate view uses an unprotected address")
+            event_header = os.path.join(root, "include/ovl/EVENT.h")
+            with open(event_header) as fh:
+                valid = fh.read()
+            with open(event_header, "w") as fh:
+                fh.write(valid.replace("extern s16 D_801220EC;", "extern s32 D_801220EC;"))
+            self.assertIsNone(B.header_home("D_801220EC", "EVENT", root, source),
+                              "wrong-width private views must not receive a destination")
+
+    def test_profile_duplicate_owner_fails_before_output_directory_creation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = os.path.join(tmp, "repo")
+            os.makedirs(os.path.join(root, "include", "main"))
+            os.makedirs(os.path.join(root, "src"))
+            def write(rel, text):
+                path = os.path.join(root, rel)
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w") as fh:
+                    fh.write(text)
+            write("include/common.h", "typedef int s32;\n")
+            write("include/main/a.h", '#include "common.h"\nvoid func_80041234(void);\n')
+            out = os.path.join(tmp, "out")
+            for other in ("void func_80041234(void);\n", "s32 func_80041234(s32 x);\n"):
+                write("include/main/b.h", '#include "common.h"\n' + other)
+                write("config/header_owners.json", '{"mode":"topic_only","owners":['
+                      '{"path":"main/a.h","role":"main"},{"path":"main/b.h","role":"main"}],'
+                      '"required_types":["common.h"]}\n')
+                lines = []
+                self.assertEqual(B.main(["--root", root, "--out", out], emit=lines.append), 2)
+                self.assertTrue(any("duplicate canonical owner for func_80041234" in line for line in lines), lines)
+                self.assertFalse(os.path.exists(out))
 
     def test_select(self):
         ts = [B.Target("AA", "a.c", "f1", 0x200), B.Target("BB", "b.c", "f2", 0x10), B.Target("AA", "a.c", "f3", 0x20)]

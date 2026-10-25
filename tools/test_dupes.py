@@ -8,6 +8,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dupes  # noqa: E402
@@ -49,6 +50,33 @@ class Repo:
 
     def close(self):
         shutil.rmtree(self.root)
+
+
+def write_event7_profile(repo):
+    """Build the valid fixed EVENT private-view contract used by routing fixtures."""
+    rows = (("D_801206E8", "s32", "801206E8"), ("D_8012076C", "s32", "8012076C"),
+            ("D_80120798", "s32", "80120798"), ("D_80121884", "s32", "80121884"),
+            ("D_801220EC", "s16", "801220EC"), ("D_80122740", "s32", "80122740"),
+            ("D_8012277C", "u8", "8012277C"))
+    repo.write("include/common.h", "typedef signed int s32; typedef signed short s16; typedef unsigned char u8;\n")
+    canonical = '#include "common.h"\n' + "".join(
+        "#ifndef SPOT_PRIVATE_DATA_VIEWS\nextern %s %s;\n#endif\n" % (typ, name)
+        for name, typ, _address in rows)
+    repo.write("include/main/topic.h", canonical)
+    repo.write("config/header_owners.json", '{"mode":"topic_only","owners":[{"path":"main/topic.h","role":"main"}],"required_types":["common.h"]}\n')
+    repo.write("config/overlays.txt", "EVENT 0x800F6000 0x100\n")
+    repo.write("config/overlays/EVENT.yaml", "symbol_addrs_path:\n  - config/symbols_EVENT.txt\nsegments: []\n")
+    symbols = "spot_nozomi_scene1_steps_run = 0x801040F0; // type:func\n"
+    symbols += "".join("%s = 0x%s; // type:data\n" % (name, address)
+                        for name, _typ, address in rows)
+    repo.write("config/symbols_EVENT.txt", symbols)
+    private = "".join("extern %s %s;\n" % (typ, name) for name, typ, _address in rows)
+    repo.write("include/ovl/EVENT.h", '#ifndef OVL_EVENT_H\n#define OVL_EVENT_H\n#include "common.h"\n'
+               '#define SPOT_PRIVATE_DATA_VIEWS\n#include "main/topic.h"\n'
+               '#ifdef SPOT_PRIVATE_DATA_VIEWS\n/* BEGIN T-27061 EVENT private scalar views */\n'
+               + private + '/* END T-27061 EVENT private scalar views */\n#endif\n'
+               '#undef SPOT_PRIVATE_DATA_VIEWS\n#endif\n')
+    repo.write("src/ovl/EVENT/probe.c", '#include "ovl/EVENT.h"\n')
 
 
 class FingerprintTests(unittest.TestCase):
@@ -892,6 +920,86 @@ class ApplyAllTests(unittest.TestCase):
                               'extern u32 D_1;\n\nvoid f(void) {\n}\n')
         self.assertEqual(dupes.add_local(out, [('define', '#define MAIN_API_OVERRIDE_D_1 /* r */'),
                                                ('block', 'extern u32 D_1;')]), out)
+
+
+class TopicOwnerRoutingTests(unittest.TestCase):
+    def test_explicit_owner_resolution_and_apply_stop_leave_tree_unchanged(self):
+        from types import SimpleNamespace
+        from unittest import mock
+        r = Repo()
+        self.addCleanup(r.close)
+        r.write('include/common.h', 'typedef int s32;\n')
+        r.write('include/main/topic.h', '#include "common.h"\nvoid func_80041234(void);\n')
+        r.write('config/header_owners.json', '{"mode":"topic_only","owners":['
+                '{"path":"main/topic.h","role":"main"}],"required_types":["common.h"]}\n')
+        self.assertEqual(dupes.canonical_owner(r.root, 'func_80041234'), ('include/main/topic.h', None))
+        home, reason = dupes.canonical_owner(r.root, 'func_80049999')
+        self.assertIsNone(home)
+        self.assertIn('no existing explicit canonical owner', reason)
+        before = {p: (Path(r.root) / p).read_bytes()
+                  for p in ('include/common.h', 'include/main/topic.h', 'config/header_owners.json')}
+        with mock.patch.object(dupes, 'load_funcs', return_value=[]), \
+                mock.patch.object(dupes, 'load_aliases', return_value={}), \
+                mock.patch.object(dupes, 'plan_all', return_value=([], [
+                    (SimpleNamespace(unit='main', name='f'), ['D_80049999 has no existing explicit canonical owner'])],
+                    {'groups': 0, 'cand': 0})), \
+                mock.patch('builtins.print'):
+            self.assertEqual(dupes.main(['--root', r.root, '--apply']), 2)
+        self.assertEqual(before, {p: (Path(r.root) / p).read_bytes() for p in before})
+        self.assertFalse(os.path.exists(os.path.join(r.root, 'include/main_api.h')))
+        self.assertFalse(os.path.exists(os.path.join(r.root, 'include/game.h')))
+
+    def test_profile_overlay_destination_uses_target_closure_and_stops_on_ambiguity(self):
+        from unittest import mock
+        r = Repo()
+        self.addCleanup(r.close)
+        r.write('include/common.h', 'typedef int s32;\n')
+        r.write('include/main/topic.h', '#include "common.h"\n')
+        r.write('include/libapi.h', '#include "common.h"\n')
+        r.write('include/ovl/AA.h', '#include "common.h"\n')
+        r.write('include/a.h', '#include "common.h"\n')
+        r.write('include/b.h', '#include "common.h"\n')
+        r.write('config/header_owners.json', '{"mode":"topic_only","owners":['
+                '{"path":"main/topic.h","role":"main"},{"path":"libapi.h","role":"sdk"}],'
+                '"required_types":["common.h"]}\n')
+        r.write('src/ovl/AA.c', '#include "ovl/AA.h"\n#include "libapi.h"\n')
+        self.assertEqual(dupes.declaration_home(r.root, 'AA', 'func_80140000', False, 'src/ovl/AA.c'),
+                         ('include/ovl/AA.h', None))
+        r.write('src/ovl/AA.c', '#include "a.h"\n#include "b.h"\n')
+        with mock.patch.object(dupes.srcscan, 'header_units', return_value={'a.h': 'AA', 'b.h': 'AA'}):
+            home, reason = dupes.declaration_home(r.root, 'AA', 'func_80140000', False, 'src/ovl/AA.c')
+        self.assertIsNone(home)
+        self.assertIn('ambiguous source-facing owners', reason)
+        write_event7_profile(r)
+        self.assertFalse(dupes.is_main_symbol(r.root, 'spot_nozomi_scene1_steps_run', 'EVENT'))
+        self.assertEqual(dupes.declaration_home(r.root, 'EVENT', 'spot_nozomi_scene1_steps_run', False,
+                                                'src/ovl/EVENT/probe.c'), ('include/ovl/EVENT.h', None))
+        event_header = Path(r.root) / 'include/ovl/EVENT.h'
+        valid_header = event_header.read_text()
+        event_header.write_text(valid_header.replace('extern s16 D_801220EC;', 'extern s32 D_801220EC;'))
+        home, reason = dupes.declaration_home(r.root, 'EVENT', 'D_801220EC', False, 'src/ovl/EVENT/probe.c')
+        self.assertIsNone(home)
+        self.assertIn('requires s16', reason)
+
+    def test_profile_equal_and_unequal_duplicate_owners_stop_before_planning(self):
+        from unittest import mock
+        r = Repo()
+        self.addCleanup(r.close)
+        os.makedirs(os.path.join(r.root, 'src', 'main'), exist_ok=True)
+        r.write('include/common.h', 'typedef int s32;\n')
+        r.write('include/main/a.h', '#include "common.h"\nvoid func_80041234(void);\n')
+        r.write('include/main/b.h', '#include "common.h"\nvoid func_80041234(void);\n')
+        r.write('config/header_owners.json', '{"mode":"topic_only","owners":['
+                '{"path":"main/a.h","role":"main"},{"path":"main/b.h","role":"main"}],'
+                '"required_types":["common.h"]}\n')
+        for decl in ('void func_80041234(void);', 's32 func_80041234(s32 x);'):
+            r.write('include/main/b.h', '#include "common.h"\n' + decl + '\n')
+            before = dupes.snapshot_include(r.root)
+            with mock.patch.object(dupes, 'load_funcs', side_effect=AssertionError('planned before owner check')):
+                self.assertEqual(dupes.main(['--root', r.root, '--apply']), 2)
+            self.assertEqual(before, dupes.snapshot_include(r.root))
+            self.assertFalse(os.path.exists(os.path.join(r.root, 'include/main_api.h')))
+            self.assertFalse(os.path.exists(os.path.join(r.root, 'include/game.h')))
 
 
 if __name__ == '__main__':

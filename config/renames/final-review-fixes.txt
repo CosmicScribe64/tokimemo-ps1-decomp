@@ -1,0 +1,50 @@
+# Rename ledger (tools/rename.py, T-27002): kind scope old new key note, appended by `rename.py apply`.
+# Do not edit by hand; `rename.py replay` applies it to any tree, `rename.py check` keeps old names out.
+data VALEN D_80134520 valentine_candidate_index 0x80134520 T-27056 R1 selection resets; scene_select indexes candidate list; index_advance increments.
+data VALEN D_80134524 valentine_candidate_girls 0x80134524 T-27056 R1 candidates_select fills girl IDs; scene_select consumes current indexed girl.
+data VALEN D_8013453C valentine_candidate_count 0x8013453C T-27056 R1 increments for eligible girls; bounds candidate loops and completion.
+data VALEN D_80134540 valentine_ranked_girls 0x80134540 T-27056 R1 top three affection-plus-tokimeki girl IDs; birthday gates consume all three; fourth padding byte retained.
+data VALEN D_80134544 valentine_unmet_megumi_selected 0x80134544 T-27056 R1 unmet girl9/tokimeki gate producer; candidate and special-scene consumers; volatile view retained.
+data VALEN D_80134548 valentine_scene_place_index 0x80134548 T-27056 R1 scene_place_select assigns and switches location index; FAKE entry store retained.
+data RENSYU D_801342C4 practice_match_result_grade 0x801342C4 T-27056 R1 result producer assigns grades0..5; result_apply selects practice and affection rewards.
+data RENSYU D_801342D0 practice_selected_girl 0x801342D0 T-27056 R1 companion selection and dialogue consume girl ID; result_apply awards that girl affection.
+data MASTER D_8013C2E0 master_selected_companion 0x8013C2E0 T-27056 R1 selector stores girl/Rei/no-girl IDs; dialogue sets current_girl; reward adds affection. SHUGAKU same-address palette pointer excluded.
+data DATE2 D_8013B5C8 amusement_karaoke_audio_frames 0x8013B5C8 T-27056 R1 reset at audio start; active audio increments; finish/cancel and lyric timing compare.
+data DATE2 D_8013B5F8 amusement_karaoke_return_talk_group 0x8013B5F8 T-27056 R1 return_talk_run passes address as talk_tables; cancel adds rank-derived group offset, Yumi sets2.
+data EN_NICHI D_80139C4C stalls_collected_result_codes 0x80139C4C T-27056 R1 five collected result codes consumed by DATE result aggregation; six-element allocation retained.
+data SHUGAKU D_8013C97C trip_saved_girl 0x8013C97C T-27056 R1 saves original girl or255 before Yoshio detour, later get_g_name uses it; ENDING same-address rodata excluded.
+data KANGEI D_8013A2B0 camp_saved_girl 0x8013A2B0 T-27056 R1 script_and_choice_flow saves current_girl and restores it after temporary scene selection.
+data ENDING D_8013C3E0 ending_saved_girl 0x8013C3E0 T-27056 R1 graduation_scene_handlers captures current_girl before Rei/Sotoi scene then restores it.
+data SHOUGATU D_80144E10 new_year_meeting_girl 0x80144E10 T-27056 R1 meeting_girl_scene_dispatch captures day-event girl and restores current_girl; scene routing uses same ID.
+data main D_80122EBC game_mode_scene_companion_girl 0x80122EBC T-27056 R1 shared main bss selected companion slot; BUNKAKEN/BUNKASAI producers and reward/name consumers; SHOUGATU has FAKE-only reads; EVENT identity excluded.
+data main D_80122E9C normal_date_minigame_result 0x80122E9C T-27056 R1 shared main bss result contract; EN_NICHI writes aggregated result; DATE initializes and consumes talk/reward branches; EVENT identity excluded.
+field KangeiStateView unk_100 param_liberal_arts_word - T-27056 R2 same GameState offset100; camp fixed-point stat addition; keep s32 view.
+field KangeiStateView unk_104 param_science_word - T-27056 R2 same GameState offset104; camp fixed-point stat addition; keep s32 view.
+field KangeiStateView unk_108 param_art_word - T-27056 R2 same GameState offset108; camp fixed-point stat addition; keep s32 view.
+field KangeiStateView unk_10C param_athletics_word - T-27056 R2 same GameState offset10C; camp fixed-point stat addition; keep s32 view.
+field KangeiStateView unk_118 param_guts_word - T-27056 R2 same GameState offset118; camp fixed-point stat addition; keep s32 view.
+field SportsRunnerA unk_18 motion_increment - T-27056 R2 speed accumulates into field, clamps to limit, adds to track_position.word; preserve fixed-point arithmetic.
+field SportsRunnerA unk_06 finish_recorded - T-27056 R2 zero initially; guards finish-order insertion then set1; also set when forcing remaining places.
+field SportsRunnerA unk_1C motion_update_frames - T-27056 R2 incremented each runner frame, gates motion update at11 then reset0.
+data TAIIKU D_801497FC sports_runner_cpu_speed_values 0x801497FC T-27056 R2 cpu_speed_config_copy copies three words into CPU runner speed.
+data TAIIKU D_80149808 sports_runner_cpu_motion_limits 0x80149808 T-27056 R2 per-CPU clamp and initial half-limit motion increment in cpu_motion_state_update.
+data TAIIKU D_80149814 sports_runner_cpu_pause_positions 0x80149814 T-27056 R2 per-CPU track-position threshold stops motion before start-sequence completion; no narrative race identity claimed.
+data TAIIKU D_801491E0 sports_runner_finish_order 0x801491E0 T-27056 R2 zero initialized; CPU IDs2..4/player1 appended or forced; rank display consumes order.
+local main:week_day_main0 sp28 daily_command - T-27056 R3 queue girl byte is overloaded command passed to parameter_up_down and club-practice test.
+param main:day_event_queue_push_birthdays arg0 queue_index - T-27056 R3 insertion-index pointer advanced after birthday entries.
+param main:day_event_queue_push_birthdays arg1 month_offset - T-27056 R3 added to game_state.month for birth_day_check_days.
+param main:day_event_queue_push_birthdays arg2 day - T-27056 R3 calendar day passed to birth_day_check_days.
+param main:schedule_meeting_select_catchup arg0 selected_girl - T-27056 R3 output girl ID consumed by queue constructor.
+param main:schedule_meeting_select_catchup arg1 scene_variant - T-27056 R3 output scene variant consumed by queue constructor.
+param main:schedule_meeting_select_normal arg0 selected_girl - T-27056 R3 output girl ID consumed by queue constructor.
+param main:schedule_meeting_select_normal arg1 scene_variant - T-27056 R3 output scene variant consumed by queue constructor.
+param main:schedule_meeting_select_club arg0 selected_girl - T-27056 R3 output girl ID consumed by queue constructor.
+param main:schedule_meeting_select_club arg1 scene_variant - T-27056 R3 output scene variant consumed by queue constructor.
+param TACO:shooter_hit_enemies_with_shots arg0 shot_pool - T-27056 R3 caller passes player/wingman primary/secondary pools; collision loop reads particles.
+param TACO:shooter_hit_enemies_with_shots arg2 wingman_shots - T-27056 R3 caller passes0 for player and1 for wingman; selects ship z and player-only hit sound; unused arg1 preserved.
+local TACO:shooter_hit_enemies_with_shots damageTable damage_table - T-27056 R3 local copied shot-damage-by-kind table; snake_case only.
+local RENSYU:practice_match_result_apply temp_t8 player_club - T-27056 R3 packed player club index used to update its match count.
+local OMIMAI:sick_visit_talk_choice_select sp2B girl_rank - T-27056 R3 receives masked get_g_zyotai_s rank and selects talk branch; FAKE pad untouched.
+local RPG_BAT:rpg_girl_damage_roll temp_t4 quarter_player_hit_points - T-27056 R3 player HP divided by4 caps extra-damage random bound.
+local ETC:career_choice_result_talk temp_v0 career_exam_grade - T-27056 R3 second exam-grade call result selects audio; repeated call preserved.
+data main game_mode_scene_companion_girl game_mode_scene_girl 0x80122EBC T-27056 original-reviewer correction: shared scene girl-index work slot also selects the blood-type fortune subject; companion is context-specific, not the storage-wide role. EVENT identity remains excluded.

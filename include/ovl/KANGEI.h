@@ -8,7 +8,42 @@
 #define MAIN_API_OVERRIDE_D_800B3708 /* matched as s32 (main_api.h: s32[]) */
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/schedule_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/minigame_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/param.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/schedule.h"
+#include "main/school_day.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 
 /* KANGEI overlay (load address 0x80132000): externs and types. */
 
@@ -67,7 +102,7 @@ void camp_script_pointer_table_bind(void);
 void camp_script_pointer_table_bind_alt(void);
 
 extern s16 D_80139AE0;
-extern u8 D_8013A2B0;
+extern u8 camp_saved_girl;
 extern s32 D_80139DB0;
 extern s32 D_80139DB4;
 extern s32 D_80139DB8;
@@ -172,13 +207,13 @@ typedef struct KangeiStateView {
     /* 0x0F4 */ u16 club_low : 12;
     /* 0x0F4 */ u16 club : 4;
     /* 0x0F6 */ u8 pad_0F6[0x00A];
-    /* 0x100 */ s32 unk_100;
-    /* 0x104 */ s32 unk_104;
-    /* 0x108 */ s32 unk_108;
-    /* 0x10C */ s32 unk_10C;
+    /* 0x100 */ s32 param_liberal_arts_word; /* 32-bit fixed-point view of GameState.param_liberal_arts. */
+    /* 0x104 */ s32 param_science_word; /* 32-bit fixed-point view of GameState.param_science. */
+    /* 0x108 */ s32 param_art_word; /* 32-bit fixed-point view of GameState.param_art. */
+    /* 0x10C */ s32 param_athletics_word; /* 32-bit fixed-point view of GameState.param_athletics. */
     /* 0x110 */ s32 unk_110;
     /* 0x114 */ s32 unk_114;
-    /* 0x118 */ s32 unk_118;
+    /* 0x118 */ s32 param_guts_word; /* 32-bit fixed-point view of GameState.param_guts. */
     /* 0x11C */ u8 pad_11C[0x550];
     /* 0x66C */ KangeiModeFlags modes[12];
 } KangeiStateView; /* size 0x69C */

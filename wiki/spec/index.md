@@ -5,8 +5,7 @@ updated: 2026-10-24
 
 # Port specs (phase 2)
 
-Specs describe the matched code for the Godot port, in our own words. Proposed names live in
-`config/renames/proposals/`; a spec and proposal table do not imply that its renames have been applied.
+Specs describe the matched code for the Godot port, in our own words. Proposal tables are historical inputs; current-name status is per page, and applied ledgers plus source take precedence.
 Parent: [[tickets/T-27000-phase-2]].
 
 - [[spec/o-taco]] - overlay TACO, the shooter mini game: stage machine (19 stages), ship, wingman, weapons, bombs, collisions and scoring, enemy scripts, three bosses, results, settings and exit
@@ -14,7 +13,7 @@ Parent: [[tickets/T-27000-phase-2]].
 - [[spec/core]] - shared core: GameState map, mode/stage/step machine, calendar and day-event queue, player and girl state, shared record types, first enums, the 100 most used main functions (T-27010).
 - [[spec/h-cdio]] - main hardware layer: CD command ring and reads, checksum, XA clip request, STR movies, MDEC backgrounds, 3D setup, mouse, boot mode (ticket [[tickets/T-27021-p2-h-cdio]])
 - [[spec/o-rpgbat]] - overlay RPG_BAT: the RPG battle scene (stages, channels, damage and AI rules, girl actions, data tables).
-- [[spec/o-tt]] - overlay TT, the TwinBee Time Attack mini game: stage, boss and ranking rules, state machine, data tables
+- [[spec/o-tt]] - overlay TT, the technical TT mini game (branded expansion unconfirmed): stage, boss and ranking rules, state machine, data tables
 - [[spec/m-dates-a]] - main sound driver (`src/main/80079B10.c`, the file the unit label calls date sequences): command words and classes, bank slots, BGM, sound effects, voice-clip (XA) timing, level meter ([[tickets/T-27014-p2-m-dates-a]])
 - [[spec/m-scheduler]] - main scheduler: the weekly cycle (schedule steps, week queue builder, encounter and meeting selection, special events, queue reader and type-to-mode table), day notice, month start, calendar day advance and the weekly health check ([[tickets/T-27011-p2-m-scheduler]])
 - [[spec/m-hud]] - main HUD unit: portrait face, parameter panel, date panel, message window and title banner, command icon bar, season and vacation helpers, calendar page with biorhythm graph, information magazine and date places, appointments, club list, save slot panel, command roll ([[tickets/T-27016-p2-m-hud]])
@@ -33,7 +32,7 @@ Parent: [[tickets/T-27000-phase-2]].
 
 ## Continuation drafts (In Progress)
 
-These pages are checkpoints with explicit open work. Their proposals have not been applied.
+These pages are checkpoints with explicit open work. Their function-name batches are applied; the individual pages distinguish applied rules from remaining data, type, state and essential-constant coverage.
 
 - [[spec/o-master-ending]] - MASTER/ENDING: partial mastery and companion selection, ending candidates and audio levels (T-27035)
 - [[spec/o-bunkasd-shugaku]] - BUNKA_SD/SHUGAKU: partial stage-show dispatch and school-trip response rules (T-27036)

@@ -1,6 +1,15 @@
 /* background_images.c: src/main/80057390.c; MDEC still-background image cache and decode/upload, brightness/draw selection and screen capture; current dec_bg_* helpers implement the picture pipeline. New filename uses English words rather than the unlisted dec abbreviation. Original object 0x80057390-0x80058D20 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libgpu.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/prim.h"
+#include "main/state.h"
 #include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */

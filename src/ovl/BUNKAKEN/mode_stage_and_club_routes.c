@@ -20,7 +20,7 @@ void tour_stage_route_visit(void) {
     GameState *g;
 
     g = &game_state;
-    if (D_80122EBC == 0xFF) {
+    if (game_mode_scene_girl == 0xFF) {
         switch (D_80122EB8) {
         case 0:
             if (((u8) g->girls[0].flags.b[2] >> 4) == 0) {
@@ -93,7 +93,7 @@ void tour_stage_route_visit(void) {
             return;
         }
     } else {
-        switch (D_80122EBC) {
+        switch (game_mode_scene_girl) {
         case 11:
             mode_stage_set(TOUR_STAGE_SHIORI_COMPANION_ROUTE);
             return;

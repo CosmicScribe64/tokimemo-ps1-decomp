@@ -2,7 +2,26 @@
 #define MAIN_API_OVERRIDE_k_sub_reset /* T-10860: legacy integer reset calls in three matched handlers. */
 #include "common.h"
 #include "ovl/TEL.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game/girl.h"
+#include "game/schedule_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/message.h"
+#include "main/speaker.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
 
 /* The legacy call view returns int; canonical k_sub_reset retains void. */
 s32 k_sub_reset();

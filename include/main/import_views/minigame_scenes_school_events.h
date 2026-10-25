@@ -1,0 +1,18 @@
+#ifndef MAIN_MINIGAME_SCENES_SCHOOL_EVENTS_H
+#define MAIN_MINIGAME_SCENES_SCHOOL_EVENTS_H
+
+#include "common.h"
+
+#ifndef MAIN_API_OVERRIDE_D_800B3688
+extern s32 D_800B3688[];
+#endif
+#ifndef MAIN_API_OVERRIDE_D_800B36C8
+extern s32 D_800B36C8[];
+#endif
+#ifndef MAIN_API_OVERRIDE_D_800B3708
+extern s32 D_800B3708[];
+#endif
+extern s32 D_800B37D4[];
+extern s32 D_800B3B9C[];
+
+#endif

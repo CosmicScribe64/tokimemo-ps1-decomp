@@ -1,5 +1,5 @@
 /* club_master_mode_stage_dispatch.c: src/ovl/MASTER/80132140.c:6-14; indexes the four-function callback table by game_state.mode_stage and owns its entry/load/talk route helpers; wiki/spec/o-master-ending.md describes the inspected flow. Original object 0x80132140-0x80133680 (config/objects/MASTER.txt). */
-#define MAIN_API_OVERRIDE_talk_names_set /* T-25130: called without a prototype, as an implicit int; master_companion_dialogue_scene_run passes the full word D_8013C2E0 (main_api.h narrows it to u8, lbu), and a void view moves its v0/v1 ranges (39 rows). */
+#define MAIN_API_OVERRIDE_talk_names_set /* T-25130: called without a prototype, as an implicit int; master_companion_dialogue_scene_run passes the full word master_selected_companion (main_api.h narrows it to u8, lbu), and a void view moves its v0/v1 ranges (39 rows). */
 #include "ovl/MASTER.h"
 
 s32 talk_names_set();
@@ -209,36 +209,36 @@ void master_companion_dialogue_scene_run(void) {
             message_window_init();
             best = select_girl_by_scores();
             if ((u8) game_state.girls[0xC].flags.b[3] >= 0x41U) {
-                D_8013C2E0 = 0xC;
+                master_selected_companion = 0xC;
             } else {
                 if (girl_state_rank(best) < 2) {
-                    D_8013C2E0 = best;
+                    master_selected_companion = best;
                     for (i = 0; i < 0xB; i++) {
                         if ((((u16) game_state.player_flags.h >> 0xC) == ((u8) game_state.girls[i].flags.b[2] >> 4)) && (((u32) (game_state.girls[i].flags.w << 0x1E) >> 0x1F) == 1)) {
                             if (girl_state_rank(i) < 2) {
-                                D_8013C2E0 = i;
+                                master_selected_companion = i;
                             }
                         }
                     }
                 } else if ((u8) game_state.girls[0xB].flags.b[3] >= 2U) {
-                    D_8013C2E0 = 0xB;
+                    master_selected_companion = 0xB;
                 } else {
-                    D_8013C2E0 = 0xFF;
+                    master_selected_companion = 0xFF;
                     mode_step_set(0xE);
                 }
             }
-            if (D_8013C2E0 != 0xFF) {
+            if (master_selected_companion != 0xFF) {
                 audio_command(0xBF);
-                audio_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[D_8013C2E0], D_800B36C8[D_8013C2E0], D_800B3708[D_8013C2E0]);
+                audio_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[master_selected_companion], D_800B36C8[master_selected_companion], D_800B3708[master_selected_companion]);
             }
             game_state.substep = game_state.substep + 1;
         } else if (audio_bank_load_poll() == 1) {
             k_reset(0);
-            if ((((u16) game_state.player_flags.h >> 0xC) == 1) && (D_8013C2E0 == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 1)) {
+            if ((((u16) game_state.player_flags.h >> 0xC) == 1) && (master_selected_companion == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 1)) {
                 message_window_set_title((s32) "近所の公園");
                 D_80125CA0 = 0xC0;
                 dec_bg_cd_read(0x42D8, 1);
-            } else if (((((u16) game_state.player_flags.h >> 0xC) == 1) && (D_8013C2E0 == 1) && (((u8) game_state.girls[1].flags.h[1] >> 4) == 1)) || (((u16) game_state.player_flags.h >> 0xC) == 5) || (((u16) game_state.player_flags.h >> 0xC) == 0)) {
+            } else if (((((u16) game_state.player_flags.h >> 0xC) == 1) && (master_selected_companion == 1) && (((u8) game_state.girls[1].flags.h[1] >> 4) == 1)) || (((u16) game_state.player_flags.h >> 0xC) == 5) || (((u16) game_state.player_flags.h >> 0xC) == 0)) {
                 message_window_set_title((s32) "舞台裏");
                 D_80125CA0 = 0xC0;
                 dec_bg_cd_read(0x40F4, 1);
@@ -253,15 +253,15 @@ void master_companion_dialogue_scene_run(void) {
     case 1:
         if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
-            talk_names_set(D_8013C2E0);
-            if ((((u16) game_state.player_flags.h >> 0xC) == 1) && (D_8013C2E0 == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 1)) {
+            talk_names_set(master_selected_companion);
+            if ((((u16) game_state.player_flags.h >> 0xC) == 1) && (master_selected_companion == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 1)) {
                 portrait_read_start(0x544A);
-            } else if ((((u16) game_state.player_flags.h >> 0xC) == 1) && (D_8013C2E0 == 1) && (((u8) game_state.girls[1].flags.h[1] >> 4) == 1)) {
+            } else if ((((u16) game_state.player_flags.h >> 0xC) == 1) && (master_selected_companion == 1) && (((u8) game_state.girls[1].flags.h[1] >> 4) == 1)) {
                 portrait_read_start(0x5D6E);
             } else if ((((u16) game_state.player_flags.h >> 0xC) == 5) || (((u16) game_state.player_flags.h >> 0xC) == 0)) {
-                portrait_read_start(sp174.v[D_8013C2E0]);
+                portrait_read_start(sp174.v[master_selected_companion]);
             } else {
-                portrait_read_start(sp1A8.v[D_8013C2E0]);
+                portrait_read_start(sp1A8.v[master_selected_companion]);
             }
             mode_step_next();
         }
@@ -272,12 +272,12 @@ void master_companion_dialogue_scene_run(void) {
     case 3:
         if (cd_read_sync_status() & 1) {
             addr_init_bustup();
-            game_state.current_girl = (u8) D_8013C2E0;
+            game_state.current_girl = (u8) master_selected_companion;
             portrait_show_checked();
             if (((u16) game_state.player_flags.h >> 0xC) == 3) {
                 cd_read_sectors(3U, 0x801E8000, 0xA9B7);
             }
-            if (D_8013C2E0 == 0xC) {
+            if (master_selected_companion == 0xC) {
                 portrait_layout_set(0U);
             }
         }
@@ -285,23 +285,23 @@ void master_companion_dialogue_scene_run(void) {
     case 4:
         switch ((u16) game_state.player_flags.h >> 0xC) {
         case 0:
-            talk_group = (s16) sp140.v[D_8013C2E0];
+            talk_group = (s16) sp140.v[master_selected_companion];
             break;
         case 1:
-            if ((D_8013C2E0 == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 1)) {
+            if ((master_selected_companion == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 1)) {
                 talk_group = 7;
                 mode_step_next();
                 KEEP_MODE_LIVE();
-            } else if ((D_8013C2E0 == 1) && (((u8) game_state.girls[1].flags.h[1] >> 4) == 1)) {
+            } else if ((master_selected_companion == 1) && (((u8) game_state.girls[1].flags.h[1] >> 4) == 1)) {
                 talk_group = 8;
                 mode_step_next();
                 KEEP_MODE_LIVE();
             } else {
-                talk_group = (s16) sp10C.v[D_8013C2E0];
+                talk_group = (s16) sp10C.v[master_selected_companion];
             }
             break;
         case 2:
-            talk_group = (s16) spD8.v[D_8013C2E0];
+            talk_group = (s16) spD8.v[master_selected_companion];
             break;
         case 3:
             if (cd_read_sync_status() & 1) {
@@ -309,8 +309,8 @@ void master_companion_dialogue_scene_run(void) {
                 talk_text_table = (s32) D_8013C2D0;
                 talk_command_table = (s32) D_8013C2D4;
                 talk_voice_table = (s32) D_8013C2D8;
-                talk_group = (s16) spA4.v[D_8013C2E0];
-                if (D_8013C2E0 == 0xB) {
+                talk_group = (s16) spA4.v[master_selected_companion];
+                if (master_selected_companion == 0xB) {
                     draw_shake_start();
                     audio_command(0x500);
                 }
@@ -320,19 +320,19 @@ void master_companion_dialogue_scene_run(void) {
             KEEP_MODE_LIVE();
             break;
         case 4:
-            talk_group = (s16) sp70.v[D_8013C2E0];
+            talk_group = (s16) sp70.v[master_selected_companion];
             break;
         case 5:
-            if ((D_8013C2E0 == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 5)) {
+            if ((master_selected_companion == 0) && (((u8) game_state.girls[0].flags.h[1] >> 4) == 5)) {
                 talk_group = 5;
                 mode_step_next();
                 KEEP_MODE_LIVE();
-            } else if ((D_8013C2E0 == 3) && (((u8) game_state.girls[3].flags.h[1] >> 4) == 5)) {
+            } else if ((master_selected_companion == 3) && (((u8) game_state.girls[3].flags.h[1] >> 4) == 5)) {
                 talk_group = 0xC;
                 mode_step_next();
                 KEEP_MODE_LIVE();
             } else {
-                talk_group = (s16) sp3C.v[D_8013C2E0];
+                talk_group = (s16) sp3C.v[master_selected_companion];
             }
             break;
         default:
@@ -346,7 +346,7 @@ void master_companion_dialogue_scene_run(void) {
          * temporaries); the original source of the join test is unknown. */
         mode = game_state.player_flags.h;
         if ((mode >> 0xC) != 3) {
-            if (D_8013C2E0 == 0xB) {
+            if (master_selected_companion == 0xB) {
                 draw_shake_start();
                 audio_command(0x500);
             }
@@ -367,17 +367,17 @@ void master_companion_dialogue_scene_run(void) {
         switch ((u16) game_state.player_flags.h >> 0xC) {
         case 0:
         case 2:
-            if (D_8013C2E0 == 0xA) {
+            if (master_selected_companion == 0xA) {
                 talk_group = 2;
                 mode_step_next();
-            } else if (D_8013C2E0 == 0xB) {
+            } else if (master_selected_companion == 0xB) {
                 if (((u32) (game_state.girls[0xB].flags.w << 0x14) >> 0x1D) == 0) {
                     talk_group = 3;
                 } else {
                     talk_group = 4;
                 }
                 mode_step_set(0xC);
-            } else if (D_8013C2E0 == 0xC) {
+            } else if (master_selected_companion == 0xC) {
                 talk_group = 5;
                 mode_step_set(0xC);
             } else {
@@ -388,14 +388,14 @@ void master_companion_dialogue_scene_run(void) {
         case 1:
         case 3:
         case 5:
-            if (D_8013C2E0 == 0xB) {
+            if (master_selected_companion == 0xB) {
                 if (((u32) (game_state.girls[0xB].flags.w << 0x14) >> 0x1D) == 0) {
                     talk_group = 2;
                 } else {
                     talk_group = 3;
                 }
                 mode_step_set(0xC);
-            } else if (D_8013C2E0 == 0xC) {
+            } else if (master_selected_companion == 0xC) {
                 talk_group = 4;
                 mode_step_set(0xC);
             } else {
@@ -404,16 +404,16 @@ void master_companion_dialogue_scene_run(void) {
             }
             break;
         case 4:
-            if (D_8013C2E0 == 0) {
+            if (master_selected_companion == 0) {
                 mode_step_set(0xA);
-            } else if (D_8013C2E0 == 0xB) {
+            } else if (master_selected_companion == 0xB) {
                 if (((u32) (game_state.girls[0xB].flags.w << 0x14) >> 0x1D) == 0) {
                     talk_group = 2;
                 } else {
                     talk_group = 3;
                 }
                 mode_step_set(0xC);
-            } else if (D_8013C2E0 == 0xC) {
+            } else if (master_selected_companion == 0xC) {
                 talk_group = 4;
                 mode_step_set(0xC);
             } else {
@@ -439,7 +439,7 @@ void master_companion_dialogue_scene_run(void) {
         normal_date_speak();
         break;
     case 14:
-        if ((D_8013C2E0 == 0xFF) && (((u16) game_state.player_flags.h >> 0xC) == 3)) {
+        if ((master_selected_companion == 0xFF) && (((u16) game_state.player_flags.h >> 0xC) == 3)) {
             mode_step_next();
         } else {
             normal_date_bg_fadeout();
@@ -463,8 +463,8 @@ void master_tournament_reward_apply(void) {
     for (i = 1; i < 0xD; i++) {
         game_state.girls[i].tokimeki += 0x14;
     }
-    if (D_8013C2E0 != 0xFF) {
-        game_state.girls[D_8013C2E0].affection += 2;
+    if (master_selected_companion != 0xFF) {
+        game_state.girls[master_selected_companion].affection += 2;
     }
     ((ClubFlagBits *)&game_state.clubs[(u32)game_state.player_flags.h >> 0xC])->b30 = 1;
     talk_clear();
@@ -485,11 +485,11 @@ void master_tournament_event_log_append(void) {
         kind = 0;
         break;
     case 1:
-        if ((((u8) game_state.girls[0].flags.b[2] >> 4) == 1) && (D_8013C2E0 == 0)) {
+        if ((((u8) game_state.girls[0].flags.b[2] >> 4) == 1) && (master_selected_companion == 0)) {
             kind = 0xB;
         } else if (((u8) game_state.girls[1].flags.b[2] >> 4) == 1) {
             kind = 1;
-            if (D_8013C2E0 == 1) {
+            if (master_selected_companion == 1) {
                 kind = 0xC;
             }
         } else {
@@ -509,10 +509,10 @@ void master_tournament_event_log_append(void) {
         kind = 5;
         break;
     }
-    game_state.event_log[game_state.event_log_count].girl = D_8013C2E0;
+    game_state.event_log[game_state.event_log_count].girl = master_selected_companion;
     game_state.event_log[game_state.event_log_count].scene = 0x15;
     game_state.event_log[game_state.event_log_count].flag = kind;
-    game_state.event_log[game_state.event_log_count].rank = get_g_zyotai_h(D_8013C2E0);
+    game_state.event_log[game_state.event_log_count].rank = get_g_zyotai_h(master_selected_companion);
     game_state.event_log[game_state.event_log_count].year = game_state.year;
     game_state.event_log[game_state.event_log_count].month = game_state.month;
     game_state.event_log[game_state.event_log_count].day = game_state.day;

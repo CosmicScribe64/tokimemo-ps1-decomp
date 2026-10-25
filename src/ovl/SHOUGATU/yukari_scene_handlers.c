@@ -61,7 +61,7 @@ void new_year_yukari_scene_state_init(void) {
     ((ShougatuFlag4 *) (&game_state.girls[5].flags.b[0]))->set = 1;
     /* FAKE: the dead triple test preserves the original argument/store scheduling.
      * IDO removes all of its reads and tests. T-9720. */
-    if ((!D_80122EBC) && (!D_80122EBC) && (!D_80122EBC)) {}
+    if ((!game_mode_scene_girl) && (!game_mode_scene_girl) && (!game_mode_scene_girl)) {}
     talk_names_set(*((u8 *) (&game_state.current_girl)) = 5);
     new_year_meeting_dialogue_addresses_init();
     D_80144DFC = D_80144DA4;

@@ -2,6 +2,7 @@
 #include "common.h"
 #include "ovl/DATE.h"
 #include "psx_types.h"
+#include "main/scene.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/scene_yuko.data", D_8015E220);

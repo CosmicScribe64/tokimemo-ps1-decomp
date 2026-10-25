@@ -1,6 +1,15 @@
 /* game_mode.c: src/main/80042540.c; Original object 0x80042540-0x80042A00: game_mode_dispatch covers mode handlers; remaining functions advance or set mode/stage/step and request overlays. Original object 0x80042540-0x80042A00 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "main/debug.h"
+#include "main/game_mode.h"
+#include "main/import_views/entry_ui.h"
+#include "main/message.h"
+#include "main/ovl.h"
+#include "main/state.h"
+#include "main/game_mode.h"
+#include "main/ovl.h"
 
 /* Byte views of both selectors: the original reads them with lbu (unk_111A is
  * s8 in GameState), and a plain unk_1108 switch keeps a copy in v1 (the

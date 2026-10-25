@@ -2,7 +2,50 @@
 #define OVL_TAIIKU_H
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libgte.h"
+#include "libspu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/boot.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/debug.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/import_views/school_events.h"
+#include "main/layer.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/pad.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/select_girl.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/view.h"
+#include "main/vram.h"
+#include "main/vsync.h"
 
 /* Overlay-local externs (T-1300). */
 void sports_runner_finish_animation_update(void);
@@ -202,7 +245,7 @@ void sports_scene_display_parameters_set(s16 *);
 void sports_candidate_background_quad_draw(void);
 extern s16 D_80149204;
 extern s32 D_801491E4;
-extern u8 D_801491E0[4];
+extern u8 sports_runner_finish_order[4]; /* Zero means empty; player is 1 and CPU runners are 2 through 4. */
 extern s32 D_8014994C;
 extern s32 D_80149950;
 typedef struct {
@@ -518,7 +561,7 @@ typedef struct SportsRunnerA {
     /* 0x03 */ u8 animation_frame; /* animation frame */
     /* 0x04 */ u8 unk_04;
     /* 0x05 */ u8 start_sequence_state; /* state of the start sequence */
-    /* 0x06 */ u8 unk_06;
+    /* 0x06 */ u8 finish_recorded; /* Set after inserting or forcing this runner in the finish order. */
     /* 0x07 */ u8 unk_07;
     /* 0x08 */ u16 unk_08;
     /* 0x0A */ u16 unk_0A;
@@ -526,8 +569,8 @@ typedef struct SportsRunnerA {
     /* 0x0E */ u16 unk_0E;
     /* 0x10 */ s32 speed; /* speed */
     /* 0x14 */ u32 unk_14;
-    /* 0x18 */ s32 unk_18;
-    /* 0x1C */ u32 unk_1C;
+    /* 0x18 */ s32 motion_increment; /* Accumulated speed added to the 16.16 track position. */
+    /* 0x1C */ u32 motion_update_frames; /* Elapsed frames since the last motion-increment update. */
     /* 0x20 */ TaiHalves track_position; /* 16.16 position */
 } SportsRunnerA; /* size 0x24 */
 /* Game B runner record (80142240.c), 0x24 bytes: a second layout for the same roles as
@@ -573,8 +616,8 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s16 v[3];
 } TaiikuH3; /* size 6 */
-extern TaiikuI3 D_80149808;
-extern TaiikuH3 D_80149814;
+extern TaiikuI3 sports_runner_cpu_motion_limits;
+extern TaiikuH3 sports_runner_cpu_pause_positions;
 #endif
 
 #ifndef OVL_TAIIKU_U16TBL_T10720
@@ -938,6 +981,11 @@ extern TaiShorts12x D_8014A5DC; /* sports_controller_c_actor_display_init */
 extern TkS16x4 D_8014A5F4; /* sports_controller_c_finish_order_update */
 /* T-27066: folk-dance participant syoushin at or above 0x4C takes the high-rank branch at both observed checks in folk_dance_scene.c:223,284. */
 #define SPORTS_FOLK_DANCE_HIGH_SYOUSHIN_RANK_LIMIT 0x4C
+
+/* T-27056 R2/R4 runner motion update interval. */
+enum SportsRunnerMotionTiming {
+    SPORTS_RUNNER_MOTION_UPDATE_FRAMES = 11 /* Elapsed update gate, then timer resets. */
+};
 
 #endif
 

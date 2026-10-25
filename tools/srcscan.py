@@ -220,6 +220,47 @@ def unit_header(unit, root="."):
     return own[0] if own else "ovl/%s.h" % unit
 
 
+def unit_headers(unit, root="."):
+    """The explicit source-facing header roots for a unit, relative to include/.
+
+    In profiled topic trees, canonical declaration owners are independent roots: callers must not
+    collapse them to game.h/main_api.h. Otherwise preserve the historical single-root behavior.
+    """
+    try:
+        import sync_protos
+        profile, problems = sync_protos.owner_profile(os.path.join(root, "include"))
+        if profile is not None:
+            if problems:
+                return ()
+            if unit == "main":
+                return tuple(entry["path"] for entry in profile["owners"])
+            include = Path(root) / "include"
+            found = set()
+            for cf in unit_c_files(unit, root):
+                if not cf.src.exists():
+                    continue
+                text = cf.src.read_text(errors="replace")
+                text = text.replace("\\\r\n", "").replace("\\\n", "")
+                text = re.sub(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\])*"',
+                              lambda m: m.group(0) if m.group(0).startswith('"') else
+                              re.sub(r'[^\n]', ' ', m.group(0)), text, flags=re.S)
+                for name in re.findall(r'^[ \t]*#[ \t]*include[ \t]*"([^"\n]+)"', text, re.M):
+                    rel = os.path.normpath(name).replace(os.sep, "/")
+                    target = os.path.realpath(include / rel)
+                    try:
+                        inside = os.path.commonpath((os.path.realpath(include), target)) == os.path.realpath(include)
+                    except ValueError:
+                        inside = False
+                    if inside and os.path.isfile(target):
+                        found.add(os.path.relpath(target, include).replace(os.sep, "/"))
+            return tuple(sorted(found))
+    except (ImportError, OSError):
+        pass
+    if unit != "main":
+        return (unit_header(unit, root),)
+    return (unit_header(unit, root),)
+
+
 def _root_of(parts):
     """The repo root of a path split into parts (the folder above its last `src`), or '.'."""
     k = len(parts) - 1 - parts[::-1].index("src")

@@ -181,3 +181,4 @@ trip_saki_low_status_birthday_route_gate = 0x8013A9E0; // type:func
 trip_destination_exit_callback_dispatch = 0x8013AA70; // type:func
 trip_location_outcome_update = 0x8013AAEC; // type:func
 trip_day_event_complete = 0x8013ABAC; // type:func
+trip_saved_girl = 0x8013C97C;

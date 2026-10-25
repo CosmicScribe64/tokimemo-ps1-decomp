@@ -2,7 +2,31 @@
 #define OVL_OMIMAI_H
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/minigame_scenes_school_events.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/portrait.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
 
 /* OMIMAI overlay (load address 0x80132000): externs and types. */
 

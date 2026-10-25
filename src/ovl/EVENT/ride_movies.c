@@ -1,6 +1,7 @@
 /* ride_movies.c: src/ovl/EVENT/8011C650.c:6: amusement park ride movies (roller coaster, ghost house, Ferris wheel, scream ride, virtual ship). Original object 0x8011C650-0x8011F530 (config/objects/EVENT.txt). */
 #define MAIN_API_OVERRIDE_func_8004AFB8 /* T-24089: O.BIN entry returns s32 in $v0, reserving r2 across call */
 #include "common.h"
+#include "libgpu.h"
 #include "ovl/EVENT.h"
 
 /* FAKE: O.BIN entry returns a status in $v0, reserving r2 across the call in spot_ride_scream_virtual_movie. T-24089 */

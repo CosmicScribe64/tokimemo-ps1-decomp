@@ -1,6 +1,22 @@
 /* brass_band_show.c: src/ovl/BUNKA_SD/801388D0.c:4; brass-band show callbacks and image/script presentation; club/year dispatch is proved by src/ovl/BUNKA_SD/80137890.c:14-51,63-89. Original object 0x801388D0-0x80139910 (config/objects/BUNKA_SD.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/debug.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 #include "ovl/BUNKA_SD.h"
 
 extern s16 D_801207BC;

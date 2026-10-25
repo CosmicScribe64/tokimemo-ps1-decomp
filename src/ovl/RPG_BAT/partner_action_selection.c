@@ -6,7 +6,7 @@
 extern s32 rpg_delinquent_charmed_0;
 
 void rpg_girl_damage_roll(void) {
-    s32 temp_t4;
+    s32 quarter_player_hit_points;
     s32 player_extra_damage_bound;
     u32 sel = rpg_girl_id; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
@@ -25,9 +25,9 @@ void rpg_girl_damage_roll(void) {
             rpg_damage_slot1 = rpg_rand2(0x258, 0x12C) + 1;
             rpg_damage_slot2 = rpg_rand2(0x258, 0x12C) + 1;
         }
-        temp_t4 = (s32) rpg_player_hit_points / 4;
-        player_extra_damage_bound = temp_t4;
-        if (temp_t4 >= 0x65) {
+        quarter_player_hit_points = (s32) rpg_player_hit_points / 4;
+        player_extra_damage_bound = quarter_player_hit_points;
+        if (quarter_player_hit_points >= 0x65) {
             player_extra_damage_bound = 0x64;
         }
         rpg_damage_to_player_extra = rpg_rand2(player_extra_damage_bound, player_extra_damage_bound);

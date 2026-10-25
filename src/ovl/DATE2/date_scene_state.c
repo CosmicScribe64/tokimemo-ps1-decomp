@@ -2,6 +2,7 @@
 #define MAIN_API_OVERRIDE_read_bustup /* implicit int view: the call's $v0 result moves the reloaded unk_110A to $v1 in amusement_decoded_scene_sequence_c (definition: void, T-11880) */
 #include "common.h"
 #include "ovl/DATE2.h"
+#include "main/sprite.h"
 
 s32 read_bustup();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in

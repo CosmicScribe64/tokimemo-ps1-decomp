@@ -297,4 +297,16 @@ enum IconMode {
 #define PLAYER_FLAG_AMUSEMENT_PARK_DONE 0x00040000 /* HYPOTHESIS: set when queue type 0x49 is scheduled (August Wednesday) */
 #define PLAYER_FLAG_PLACE_REPEAT 0x00080000 /* HYPOTHESIS: DATE sets it when the same place is chosen repeatedly */
 
+/* T-27056 R4 weekday command IDs; fixed-width storage retained. */
+enum SchoolDayCommand {
+    SCHOOL_DAY_COMMAND_LIBERAL_ARTS = 0, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_SCIENCE = 1, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_ART = 2, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_ATHLETICS = 3, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_CLUB = 4, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_TRIVIA = 5, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_LOOKS = 6, /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+    SCHOOL_DAY_COMMAND_REST = 7 /* Weekday command, queue girl byte and last_command low nibble; m-weekday contract. */
+};
+
 #endif

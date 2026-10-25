@@ -329,6 +329,38 @@ def structure_problems(inc):
     return problems
 
 
+def quoted_includes(text):
+    """Quoted include operands outside comments, including strings only on directives."""
+    text = re.sub(r"\\\r?\n", "", text)
+    def keep_string_or_blank_comment(match):
+        token = match.group(0)
+        return token if token.startswith(('"', "'")) else re.sub(r"[^\n]", " ", token)
+    clean = re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*',
+                   keep_string_or_blank_comment, text, flags=re.S)
+    for line in clean.splitlines():
+        match = re.match(r'^\s*#\s*include\s*"([^"\n]+)"', line)
+        if match:
+            yield match.group(1)
+
+
+def required_include_problems(inc, src=None):
+    """In explicit-profile mode every quoted project include must resolve."""
+    problems = []
+    files = [(name, path) for name, path in header_files(inc).items()]
+    if src:
+        for root, _dirs, names in os.walk(src):
+            files.extend((os.path.relpath(os.path.join(root, name), os.path.dirname(src)),
+                          os.path.join(root, name)) for name in names if name.endswith('.c'))
+    for name, path in sorted(files):
+        with open(path) as fh:
+            text = fh.read()
+        for target in quoted_includes(text):
+            if os.path.isfile(os.path.join(inc, target)) or os.path.isfile(os.path.join(os.path.dirname(path), target)):
+                continue
+            problems.append("%s: quoted project include %s is missing" % (name, target))
+    return problems
+
+
 def check(inc, src=None, api=True):
     drop_cache()
     structural = structure_problems(inc)
@@ -379,7 +411,10 @@ def check(inc, src=None, api=True):
                             problems.add("conflict %s: '%s' in %s vs '%s' in %s" % (name, typ, path, t2, hf))
     if api:
         import sync_protos
-        if sync_protos.canonical_headers(inc):
+        profile, _profile_problems = sync_protos.owner_profile(inc)
+        if profile is not None:
+            problems.update(sync_protos.check_api(inc, src))
+        elif sync_protos.canonical_headers(inc):
             problems.update(sync_protos.check_api(inc, src))
     return sorted(problems)
 

@@ -35,7 +35,7 @@ void culture_visitor_pick(void) {
         }
     }
     temp_v1 = sp30.girl[rand() % count];
-    D_80122EBC = temp_v1;
+    game_mode_scene_girl = temp_v1;
     switch (temp_v1) {
     case 0:
         mode_stage_set(CULTURE_STAGE_SHIORI_VISIT);

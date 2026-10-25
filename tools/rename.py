@@ -23,7 +23,9 @@ Usage (inside Docker, from the repo root):
 
 Existing-enum sites (T-27068): `expr:UNIT:function[@N]:EXPRESSION` selects a right-hand integer in a
 comparison whose left side is the exact expression; `index:UNIT:function[@N]:BASE` selects a literal
-subscript of that exact array base. Supply the source's parentheses/casts; token and typed AST matches
+subscript of that exact array base. `assign:UNIT:function[@N]:LVALUE` selects a directly literal
+right operand of a plain assignment to that exact lvalue, including pointers and indexed members.
+Compound assignments, initializers and nonliteral right operands are not selected. Supply the source's parentheses/casts; token and typed AST matches
 must agree. The function's full token stream must survive preprocessing unchanged; macro-expanded or
 conditionally removed function content is refused because literal provenance cannot be proved.
 Each site must be unique, or @N explicitly selects its 1-based occurrence among the requested
@@ -267,6 +269,7 @@ class Tree:
         self.units = symtab.read_units(root)
         self.unit_names = [u.name for u in self.units]
         self._idents = {}   # path -> (text, identifiers): the collision checks read every file per row
+        self._profile_shared = None
 
     # ------------------------------------------------------------- files
     def read(self, path):
@@ -433,15 +436,28 @@ class Tree:
 
     def private_headers(self, unit):
         idx = self.index()
-        return sorted(h for h, us in idx["users"].items() if us == {unit})
+        return sorted(h for h, us in idx["users"].items()
+                      if us == {unit} and not self.profile_shared_header(h))
 
     def unit_sources(self, unit):
         return sorted(p for p, u in self.index()["sources"].items() if u == unit)
 
     def header_owner(self, h):
         """The one unit whose C files include h, else main."""
+        if self.profile_shared_header(h):
+            return "main"
         us = self.index()["users"].get(h, set())
         return next(iter(us)) if len(us) == 1 else "main"
+
+    def profile_shared_header(self, h):
+        """Whether the explicit profile marks this header as a shared owner/type root."""
+        if self._profile_shared is None:
+            import sync_protos
+            profile, _problems = sync_protos.owner_profile(os.path.join(self.root, "include"))
+            self._profile_shared = set() if profile is None else set(profile["types"]) | {
+                entry["path"] for entry in profile["owners"]}
+        rel = h[len("include/"):] if h.startswith("include/") else h
+        return rel in self._profile_shared
 
 
 def fnmatch_to_re(pattern):
@@ -730,6 +746,41 @@ def scope_files(tree, owner, addr):
     return memo[key]
 
 
+def legacy_import_address(tree, addr):
+    """Return registered unit-private imports at addr without changing global name resolution."""
+    rel = "config/header_owners.json"
+    text = tree.read(rel)
+    if text is None:
+        return []
+    try:
+        profile = json.loads(text)
+    except (TypeError, ValueError):
+        return []  # Profile validation reports malformed metadata before a plan can be applied.
+    contract = profile.get("legacy_main_imports") if isinstance(profile, dict) else None
+    if not isinstance(contract, dict):
+        return []
+    providers = contract.get("providers")
+    if not isinstance(providers, list):
+        return []
+    found = []
+    for provider in providers:
+        if not isinstance(provider, dict):
+            continue
+        bindings = provider.get("bindings")
+        if not isinstance(bindings, list):
+            continue
+        for binding in bindings:
+            if not isinstance(binding, dict):
+                continue
+            try:
+                binding_addr = int(binding.get("address", ""), 16)
+            except (TypeError, ValueError):
+                continue
+            if binding_addr == addr:
+                found.append((provider.get("unit"), binding.get("current_name")))
+    return found
+
+
 def _scope_files(tree, owner, units, idx):
     files = [p for p, u in idx["sources"].items() if u in units]
     if owner != "main":
@@ -777,6 +828,12 @@ def plan_symbol(ctx, row):
                                 "symbols (ask the main owner: config/renames/requests.txt)" % (row.old, addr))
     if owner == "main" and not symtab.MAIN_LO <= addr < symtab.MAIN_HI:
         return ctx.problem(row, "0x%08X is not a main-exe address" % addr)
+    if row.scope == "main" and row.new != row.old:
+        private_views = legacy_import_address(ctx.tree, addr)
+        if private_views:
+            units = ", ".join(sorted({unit for unit, _ in private_views if unit}))
+            return ctx.problem(row, "main rename of 0x%08X intersects registered unit-private imports (%s); "
+                                    "an explicit reviewed shared-alias binding is required" % (addr, units))
     lines = table.lines_at(owner, addr)
     is_func = row.old.startswith("func_") or any(l.is_func for l in lines if l.name == row.old)
     if row.kind == "data" and (row.old.startswith("func_") or any(l.is_func for l in lines if l.name == row.old)):
@@ -2097,15 +2154,15 @@ def const_hits(ast, sites, ops, whole=False):
 
 
 REUSE_PREFIX = "reuse-v1:"
-REUSE_SITE_RE = re.compile(r"^(expr|index):(\w+):(\w+)(?:@([1-9]\d*))?:(.+)$", re.S)
+REUSE_SITE_RE = re.compile(r"^(expr|index|assign):(\w+):(\w+)(?:@([1-9]\d*))?:(.+)$", re.S)
 REUSE_TYPES = ("int", "unsigned int", "long int", "unsigned long int")
 
 
 def reuse_site(spec):
-    """Exact left comparison expression or array base, in one UNIT:function; @N selects an occurrence."""
+    """Exact comparison expression, array base or assignment lvalue; @N selects an occurrence."""
     m = REUSE_SITE_RE.fullmatch(spec)
     if not m:
-        raise RenameError("reuse site: expected expr:UNIT:function[@N]:EXPRESSION or index:UNIT:function[@N]:BASE")
+        raise RenameError("reuse site: expected (expr|index|assign):UNIT:function[@N]:EXPRESSION")
     return m.group(1), m.group(2), m.group(3), int(m.group(4)) if m.group(4) else None, m.group(5)
 
 
@@ -2166,7 +2223,9 @@ def reuse_raw_hits(text, expression, kind, names):
         if [t[0] for t in ts[i:i + len(pattern)]] != pattern:
             continue
         j = i + len(pattern)
-        if (kind == "expr" and ts[j][0] not in CMP_OPS) or (kind == "index" and ts[j][0] != "["):
+        if ((kind == "expr" and ts[j][0] not in CMP_OPS)
+                or (kind == "index" and ts[j][0] != "[")
+                or (kind == "assign" and ts[j][0] != "=")):
             continue
         j += 1
         if j >= len(ts):
@@ -2188,11 +2247,27 @@ def reuse_raw_hits(text, expression, kind, names):
     return out
 
 
+def preprocessed_line_offsets(text):
+    """Map cpp logical file/line coordinates to physical offsets, preserving ambiguity."""
+    offsets, filename, logical, offset = {}, None, 1, 0
+    for line in text.splitlines(True):
+        directive = re.match(r'^\s*#\s*(?:line\s+)?(\d+)\s+("(?:[^"\\]|\\.)*")', line)
+        if directive:
+            filename = os.path.normpath(json.loads(directive.group(2)))
+            logical = int(directive.group(1))
+        else:
+            if filename is not None:
+                offsets.setdefault((filename, logical), []).append(offset)
+            logical += 1
+        offset += len(line)
+    return offsets
+
+
 def const_reuse_plan(ctx, header, enum, values, sites, verify=True):
     """Reuse existing int enum members at exact function sites, with no writes on failure.
 
     Only nonnegative values <= INT_MAX and directly literal enum initializers are supported. A site
-    selects comparison right operands or array subscripts, not arbitrary same-valued literals.
+    selects comparison/assignment right operands or array subscripts, not arbitrary same-valued literals.
     A repeated semantic site requires @N; edits preserve integer suffix types by explicit casts.
     """
     from pycparser import c_ast, c_parser
@@ -2289,19 +2364,30 @@ def const_reuse_plan(ctx, header, enum, values, sites, verify=True):
                 shape = ast_shape(expected)
                 ast_hits = []
 
+                def record_hit(node, value):
+                    leaf = node.expr if isinstance(node, c_ast.Cast) else node
+                    ast_hits.append((value, leaf))
+
                 class Sites(c_ast.NodeVisitor):
+                    def visit_Assignment(self, node):
+                        if kind == "assign" and node.op == "=" and ast_shape(node.lvalue) == shape:
+                            value = reused_value(node.rvalue, names)
+                            if value and value[0] in names.values():
+                                record_hit(node.rvalue, value)
+                        self.generic_visit(node)
+
                     def visit_BinaryOp(self, node):
                         if kind == "expr" and node.op in CMP_OPS and ast_shape(node.left) == shape:
                             value = reused_value(node.right, names)
                             if value and value[0] in names.values():
-                                ast_hits.append(value)
+                                record_hit(node.right, value)
                         self.generic_visit(node)
 
                     def visit_ArrayRef(self, node):
                         if kind == "index" and ast_shape(node.name) == shape:
                             value = reused_value(node.subscript, names)
                             if value and value[0] in names.values():
-                                ast_hits.append(value)
+                                record_hit(node.subscript, value)
                         self.generic_visit(node)
                 Sites().visit(target[0].body)
                 start, stop, _kind = spans[0]
@@ -2319,13 +2405,35 @@ def const_reuse_plan(ctx, header, enum, values, sites, verify=True):
                     raise RenameError("reuse source provenance is ambiguous after preprocessing: %s" % spec)
                 pp_start, pp_stop, _pp_kind = pp_spans[0]
                 pp_function = re.sub(r"^[ \t]*#[^\n]*", "", pp_text[pp_start:pp_stop], flags=re.M)
-                raw_tokens = [t[0] for t in c_site_tokens(tree.read(path)[start:stop])]
-                pp_tokens = [t[0] for t in c_site_tokens(pp_function)]
-                if raw_tokens != pp_tokens:
+                raw_token_spans = c_site_tokens(tree.read(path)[start:stop])
+                pp_token_spans = c_site_tokens(pp_function)
+                if [t[0] for t in raw_token_spans] != [t[0] for t in pp_token_spans]:
                     raise RenameError("reuse source provenance is ambiguous after preprocessing: %s" % spec)
                 raw_hits = reuse_raw_hits(tree.read(path)[start:stop], expression, kind, names)
-                if ast_hits != [(r[2], r[3]) for r in raw_hits]:
+                if [hit[0] for hit in ast_hits] != [(r[2], r[3]) for r in raw_hits]:
                     raise RenameError("reuse exact source/AST sites disagree (macro or expression boundary): %s" % spec)
+                # Bind each selected AST leaf to its exact source token. Equal value/type lists
+                # can otherwise compensate: `obj.girl = 6; (girl) = 6` has a raw member suffix
+                # match and a different AST local match. This applies to expr/index as well.
+                line_offsets = preprocessed_line_offsets(pp_text)
+                # Keep directive bytes as spaces so physical cpp coordinates remain valid.
+                positioned_pp = re.sub(r"^[ \t]*#[^\n]*", lambda m: " " * len(m.group()),
+                                       pp_text[pp_start:pp_stop], flags=re.M)
+                positioned_tokens = c_site_tokens(positioned_pp)
+                if [t[0] for t in positioned_tokens] != [t[0] for t in raw_token_spans]:
+                    raise RenameError("reuse positioned token stream disagrees: %s" % spec)
+                token_positions = {a + pp_start: i for i, (_word, a, _b) in enumerate(positioned_tokens)}
+                for (_value, leaf), (raw_a, raw_b, _v, _t, _r) in zip(ast_hits, raw_hits):
+                    coord = leaf.coord
+                    positions = [off + coord.column - 1 for off in
+                                 line_offsets.get((os.path.normpath(coord.file), coord.line), [])
+                                 if pp_start <= off + coord.column - 1 < pp_stop]
+                    if len(positions) != 1 or positions[0] not in token_positions:
+                        raise RenameError("reuse AST leaf coordinate is ambiguous: %s" % spec)
+                    word, raw_pos, raw_end = raw_token_spans[token_positions[positions[0]]]
+                    spelling = leaf.name if isinstance(leaf, c_ast.ID) else leaf.value
+                    if word != spelling or not (raw_a <= raw_pos < raw_end <= raw_b):
+                        raise RenameError("reuse AST leaf and raw literal positions disagree: %s" % spec)
                 if occurrence is None and len(raw_hits) != 1:
                     raise RenameError("reuse site has %d matches; require a unique site or explicit @N: %s" % (len(raw_hits), spec))
                 if occurrence is not None and not (1 <= occurrence <= len(raw_hits)):
@@ -2378,7 +2486,115 @@ def reuse_ledger_row(tree, header, enum, values, sites, note):
     return Row("const", tree.header_owner(hpath), enum, hpath, REUSE_PREFIX + payload + " " + note, key="-")
 
 
-def reuse_request(row, ch=None):
+def resolve_historical_constant_header(tree, header, enum, defines, values):
+    """Resolve only a missing historical umbrella path to one exact current main owner.
+
+    The ledger path is provenance and is not rewritten.  A replacement is accepted only
+    when a registered main header contains every requested macro/value or enum/member/value.
+    """
+    if tree.exists(header):
+        return header
+    if header not in ("include/main_api.h", "include/game.h"):
+        return header
+    try:
+        profile = json.loads(tree.read("config/header_owners.json") or "{}")
+        owners = profile.get("owners", [])
+        if profile.get("mode") != "topic_only" or not isinstance(owners, list):
+            return header
+        # A historical umbrella path may be resolved only through a valid current
+        # ownership registry.  Otherwise stale or malformed metadata could redirect
+        # a signed ledger request to an accidental matching header.
+        import sync_protos
+        validated, problems = sync_protos.owner_profile(os.path.join(tree.root, "include"))
+        if problems or validated is None:
+            return header
+        # Tree may contain an unflushed, checked header-path move. Permit only the
+        # corresponding one-to-one path update in the pending profile; do not trust
+        # arbitrary staged owner additions or removals.
+        disk_main_paths = {entry["path"] for entry in validated["owners"]
+                           if entry.get("role") == "main"}
+        expected_main_paths = set(disk_main_paths)
+        for old, new in tree.moves:
+            if old.startswith("include/") and new.startswith("include/"):
+                old_rel, new_rel = old[len("include/"):], new[len("include/"):]
+                if old_rel in expected_main_paths:
+                    expected_main_paths.remove(old_rel)
+                    expected_main_paths.add(new_rel)
+        pending = json.loads(tree.read("config/header_owners.json") or "{}")
+        pending_owners = pending.get("owners") if isinstance(pending, dict) else None
+        pending_types = pending.get("required_types") if isinstance(pending, dict) else None
+        if (not isinstance(pending, dict) or pending.get("mode") != "topic_only"
+                or not isinstance(pending_owners, list)
+                or not isinstance(pending_types, list) or "common.h" not in pending_types):
+            return header
+        pending_main_paths = {entry.get("path") for entry in pending_owners
+                              if isinstance(entry, dict) and entry.get("role") == "main"}
+        if (len(pending_main_paths) != sum(1 for entry in pending_owners
+                                          if isinstance(entry, dict) and entry.get("role") == "main")
+                or pending_main_paths != expected_main_paths):
+            return header
+        valid_main_paths = pending_main_paths
+        candidates = []
+        for owner in owners:
+            if not isinstance(owner, dict) or owner.get("role") != "main":
+                continue
+            rel = owner.get("path")
+            if not isinstance(rel, str) or rel.startswith("/") or ".." in rel.split("/"):
+                continue
+            if rel not in valid_main_paths:
+                continue
+            candidate = "include/" + rel
+            text = tree.read(candidate)
+            if text is None:
+                continue
+            if constant_header_matches(text, enum, defines, values):
+                candidates.append(candidate)
+        if len(candidates) == 1:
+            return candidates[0]
+    except (ValueError, TypeError):
+        pass
+    return header
+
+
+def constant_header_matches(text, enum, defines, values):
+    """Exact member/macro name and numeric value check used only for owner disambiguation."""
+    if defines:
+        for name, value, _comment in values:
+            rows = re.findall(r"(?m)^[ \t]*#[ \t]*define[ \t]+" + re.escape(name) +
+                              r"[ \t]+([^\n]+)", text)
+            if len(rows) != 1 or blank_comments(rows[0]).strip() != value:
+                return False
+        return bool(values)
+    starts = list(re.finditer(r"\benum\s+" + re.escape(enum) + r"\s*\{", blank_comments(text)))
+    if len(starts) != 1:
+        return False
+    start = starts[0].start()
+    opening = blank_comments(text).find("{", starts[0].start())
+    clean = blank_comments(text)
+    end = match_brace(clean, opening)
+    if end < 0:
+        return False
+    try:
+        from pycparser import c_ast, c_parser
+        parsed = c_parser.CParser().parse(clean[start:end + 1] + ";")
+        body = parsed.ext[0].type
+        actual = {}
+        current = -1
+        for item in body.values.enumerators:
+            if item.value is not None:
+                number = literal_value(item.value)
+                if not number:
+                    return False
+                current = number[0]
+            else:
+                current += 1
+            actual[item.name] = current
+        return all(actual.get(name) == int(value, 0) for name, value, _comment in values)
+    except (ValueError, IndexError, AttributeError, TypeError):
+        return False
+
+
+def reuse_request(row, ch=None, tree=None):
     if row.kind != "const" or not row.note.startswith(REUSE_PREFIX):
         return None
     try:
@@ -2413,6 +2629,9 @@ def reuse_request(row, ch=None):
                     expression = rewrite_text(expression, old, names[-1], comments=False, suffixes=False)[0]
         resolved.append("%s:%s:%s%s:%s" % (kind, unit, function, "@%d" % occurrence if occurrence else "", expression))
     request["sites"] = resolved
+    if tree is not None:
+        request["header"] = resolve_historical_constant_header(
+            tree, request["header"], request["enum"], False, request["values"])
     return request
 
 
@@ -2751,6 +2970,9 @@ def signed_request(row, ch, tree=None):
                     if base[0] == "arg" and base[1] == key[1] and base[2] in names:
                         base = ("arg", base[1], names[-1], base[3])
                     data["sites"][i] = site_text(("caller", outer[1], outer[2], base) if wrapped else base)
+        if tree is not None:
+            data["header"] = resolve_historical_constant_header(
+                tree, data["header"], data["enum"], data["defines"], data["values"])
         return data
     except (ValueError, TypeError, KeyError, UnicodeError) as exc:
         raise RenameError("invalid signed constant ledger metadata: %s" % row.where) from exc
@@ -3009,8 +3231,7 @@ ALIAS_DECL_RE = re.compile(r"^[A-Za-z_]")
 
 
 def api_decl_lines(lines, name):
-    """Indices of the file-scope declaration lines of `name` in main_api.h text (column 0, the name outside
-    comments, a statement that ends in `;`)."""
+    """Indices of file-scope declaration lines of `name` (column 0, name outside comments, `;`)."""
     out = []
     for i, line in enumerate(lines):
         if not ALIAS_DECL_RE.match(line):
@@ -3023,51 +3244,76 @@ def api_decl_lines(lines, name):
 
 def merge_alias_declarations(ctx):
     """An alias row (the new name already names the address, the O.BIN alias debt of audit G2) leaves two
-    declarations of the new name in include/main_api.h, which holds one declaration per symbol (CODING_STANDARDS
-    8a). Keep the declaration the new name had (the main-exe definition's type) and drop the one that came from
-    the old name, with its `#ifndef MAIN_API_OVERRIDE_<name>` wrapper; the kept one takes the wrapper when the
-    dropped one had it. Which files need another view of the symbol is decided by the build (overrides, 8a)."""
+    declarations of the new name across canonical owners (CODING_STANDARDS 8a). Keep the declaration the new
+    name had (the main-exe definition's type) and drop the one that came from the old name, with its
+    `#ifndef MAIN_API_OVERRIDE_<name>` wrapper; the kept one takes the wrapper when the dropped one had it.
+    Which files need another view of the symbol is decided by the build (overrides, 8a)."""
     rows = [r for r in ctx.done if r.kind in ("func", "data") and getattr(r, "alias", False)]
     tree = ctx.tree
-    if not rows or not tree.exists(API_HEADER):
+    if not rows:
         return
-    old = (tree.orig.get(API_HEADER) or "").split("\n")
-    cur = (tree.read(API_HEADER) or "").split("\n")
-    if len(old) != len(cur):
-        ctx.notes.append("%s: the line count changed; alias declarations not merged" % API_HEADER)
+    import sync_protos as sp
+    profile, problems = sp.owner_profile(os.path.join(ctx.root, "include"))
+    if profile is None:
+        owners = [API_HEADER] if tree.exists(API_HEADER) else []
+    elif problems:
+        ctx.problems.extend(problems)
         return
+    else:
+        owners = [os.path.join("include", entry["path"]) for entry in profile["owners"]
+                  if tree.exists(os.path.join("include", entry["path"]))]
+    if not owners:
+        if profile is not None and rows:
+            ctx.problems.append("alias declaration merge needs an explicit canonical owner")
+        return
+    originals, current = {}, {}
+    locations = {}
+    for path in owners:
+        originals[path] = (tree.orig.get(path) or "").split("\n")
+        current[path] = (tree.read(path) or "").split("\n")
+        if len(originals[path]) != len(current[path]):
+            ctx.notes.append("%s: the line count changed; alias declarations not merged" % path)
+            return
+    for path, lines in originals.items():
+        names = {name for row in rows for name in (row.old, row.new)}
+        for name in names:
+            for index in api_decl_lines(lines, name):
+                locations.setdefault(name, []).append((path, index))
     drop, wrap = set(), []
     for r in rows:
-        dp, dn = api_decl_lines(old, r.old), api_decl_lines(old, r.new)
+        dp, dn = locations.get(r.old, []), locations.get(r.new, [])
         if len(dp) != 1 or len(dn) != 1:
             if dp and dn:
-                ctx.note(r, "%s declares %s %d times and %s %d times; merge them by hand"
-                         % (API_HEADER, r.old, len(dp), r.new, len(dn)))
+                ctx.note(r, "canonical owners declare %s %d times and %s %d times; merge them by hand"
+                         % (r.old, len(dp), r.new, len(dn)))
             continue
-        i = dp[0]
+        old_path, i = dp[0]
+        new_path, j = dn[0]
+        old = originals[old_path]
         wrapped = i > 0 and old[i - 1].strip() == "#ifndef MAIN_API_OVERRIDE_%s" % r.old \
             and i + 1 < len(old) and old[i + 1].strip() == "#endif"
-        drop.add(i)
+        drop.add((old_path, i))
         if wrapped:
-            drop |= {i - 1, i + 1}
-            j = dn[0]
-            if not (j > 0 and old[j - 1].strip() == "#ifndef MAIN_API_OVERRIDE_%s" % r.new):
-                wrap.append((j, r.new))
-        ctx.note(r, "%s: declaration of %s dropped, %s keeps its own (alias merge; the build decides the views)"
-                 % (API_HEADER, r.old, r.new))
+            drop |= {(old_path, i - 1), (old_path, i + 1)}
+            new_lines = originals[new_path]
+            if not (j > 0 and new_lines[j - 1].strip() == "#ifndef MAIN_API_OVERRIDE_%s" % r.new):
+                wrap.append((new_path, j, r.new))
+        ctx.note(r, "%s: canonical declaration of %s dropped; %s keeps its own (alias merge; the build decides the views)"
+                 % (old_path, r.old, r.new))
     if not drop:
         return
-    # a wrapper is added around the kept declaration; positions are those of the old text
-    marks = dict(wrap)
-    out = []
-    for i, line in enumerate(cur):
-        if i in drop:
-            continue
-        if i in marks:
-            out += ["#ifndef MAIN_API_OVERRIDE_%s" % marks[i], line, "#endif"]
-        else:
-            out.append(line)
-    tree.write(API_HEADER, "\n".join(out))
+    marks = {(path, i): name for path, i, name in wrap}
+    for path, lines in current.items():
+        out = []
+        for i, line in enumerate(lines):
+            if (path, i) in drop:
+                continue
+            if (path, i) in marks:
+                out += ["#ifndef MAIN_API_OVERRIDE_%s" % marks[path, i], line, "#endif"]
+            else:
+                out.append(line)
+        if out != lines:
+            tree.write(path, "\n".join(out))
 
 
 def ledger_reuse(ctx, row):
@@ -3187,14 +3433,26 @@ def gcc_proof(ctx):
 def views_proof(ctx):
     """Proof 3: tools/sync_protos.py views; no C file sees another type for a symbol (names mapped)."""
     tree = ctx.tree
-    if not os.path.exists(os.path.join(ctx.root, "include/main_api.h")):
-        return
     import sync_protos as sp
+    profile, profile_problems = sp.owner_profile(os.path.join(ctx.root, "include"))
+    if not os.path.exists(os.path.join(ctx.root, "include/main_api.h")) and profile is None:
+        return
+    if profile_problems:
+        ctx.problems.extend(profile_problems)
+        return
     s2 = Scratch(tree, config=True)
     try:
         s2.sync()
-        before = sp.snapshot(sp.Model(os.path.join(ctx.root, "include"), os.path.join(ctx.root, "src")))
-        after = sp.snapshot(sp.Model(os.path.join(s2.dir, "include"), os.path.join(s2.dir, "src")))
+        before_model = sp.Model(os.path.join(ctx.root, "include"), os.path.join(ctx.root, "src"))
+        after_model = sp.Model(os.path.join(s2.dir, "include"), os.path.join(s2.dir, "src"))
+        for model, inc, src in ((before_model, os.path.join(ctx.root, "include"), os.path.join(ctx.root, "src")),
+                                (after_model, os.path.join(s2.dir, "include"), os.path.join(s2.dir, "src"))):
+            problems = sp.profile_integrity_problems(model, inc, src) + sp.canonical_problems(model)
+            if problems:
+                ctx.problems.extend(problems)
+                return
+        before = sp.snapshot(before_model)
+        after = sp.snapshot(after_model)
     finally:
         s2.close()
     fwd = dict(tree.moves)
@@ -3227,11 +3485,20 @@ def append_ledger(root, name, rows):
     path = ledger_path(root, name)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     new = not os.path.exists(path)
+    if new:
+        old = ""
+    else:
+        with open(path, encoding=ENC) as fh:
+            old = fh.read()
+    lines = set(old.splitlines())
     with open(path, "a", encoding=ENC) as f:
         if new:
             f.write(LEDGER_HEAD)
         for r in rows:
-            f.write(r.ledger_line() + "\n")
+            line = r.ledger_line()
+            if line not in lines:
+                f.write(line + "\n")
+                lines.add(line)
     return os.path.relpath(path, root)
 
 
@@ -3246,15 +3513,156 @@ def default_ledger(ctx, rows):
     return "main"
 
 
+def stage_ledger(ctx, name):
+    """Expose pending rename rows to transactional proofs before any Tree bytes are flushed."""
+    if not ctx.done:
+        return
+    rel = LEDGER_DIR + "/" + name + ".txt"
+    text = ctx.tree.read(rel)
+    if text is None:
+        text = LEDGER_HEAD
+    lines = set(text.splitlines())
+    additions = [row.ledger_line() for row in ctx.done if row.ledger_line() not in lines]
+    if additions:
+        ctx.tree.write(rel, text + ("" if not text or text.endswith("\n") else "\n") +
+                       "\n".join(additions) + "\n")
+
+
+def update_legacy_import_registry(ctx):
+    """Stage exact import-profile rename fields in the same Tree transaction as source/header edits."""
+    if ctx.problems:
+        return
+    rel = "config/header_owners.json"
+    text = ctx.tree.read(rel)
+    if text is None:
+        return
+    try:
+        profile = json.loads(text)
+    except ValueError as err:
+        ctx.problems.append("%s: cannot update legacy import registry: %s" % (rel, err))
+        return
+    if not isinstance(profile, dict):
+        ctx.problems.append("%s: legacy import registry must be a JSON object" % rel)
+        return
+    contract = profile.get("legacy_main_imports")
+    if contract is None:
+        return
+    if not isinstance(contract, dict):
+        ctx.problems.append("%s: legacy_main_imports must be a JSON object" % rel)
+        return
+    providers = contract.get("providers", [])
+    if not isinstance(providers, list):
+        ctx.problems.append("%s: legacy_main_imports.providers must be a list" % rel)
+        return
+    for index, provider in enumerate(providers):
+        if not isinstance(provider, dict) or not isinstance(provider.get("bindings"), list):
+            ctx.problems.append("%s: legacy import provider %d must be an object with a bindings list" %
+                                (rel, index))
+            return
+        for binding_index, binding in enumerate(provider["bindings"]):
+            if not isinstance(binding, dict):
+                ctx.problems.append("%s: legacy import provider %d binding %d must be an object" %
+                                    (rel, index, binding_index))
+                return
+    changes = 0
+
+    def binding_address(binding):
+        try:
+            return int(binding.get("address", ""), 16)
+        except (AttributeError, TypeError, ValueError):
+            return None
+
+    for row in ctx.done:
+        if row.kind in ("func", "data"):
+            try:
+                address = int(row.key, 16)
+            except (TypeError, ValueError):
+                continue
+            name_candidates = [binding for provider in providers if row.scope == "main" or provider.get("unit") == row.scope
+                               for binding in provider.get("bindings", [])
+                               if binding.get("current_name") == row.old]
+            bindings = [binding for binding in name_candidates if binding_address(binding) == address]
+            if not bindings:
+                if name_candidates:
+                    ctx.problem(row, "legacy import registry address mismatch for %s" % row.old)
+                continue
+            if row.scope != "main":
+                ctx.problem(row, "unit-scoped rename of a main-owned private import needs an explicit reviewed alias binding")
+                continue
+            binding = bindings[0]
+            try:
+                registered_address = int(binding["address"], 16)
+            except (KeyError, TypeError, ValueError):
+                ctx.problem(row, "legacy import registry identity has an invalid address")
+                continue
+            if address != registered_address:
+                ctx.problem(row, "legacy import registry address mismatch: row 0x%08X, registered 0x%08X" %
+                            (address, registered_address))
+                continue
+            for provider in providers:
+                unit = provider.get("unit")
+                if not any(b.get("current_name") == row.old and binding_address(b) == address
+                           for b in provider.get("bindings", [])):
+                    continue
+                resolved = ctx.table().resolve(unit, row.old)
+                if resolved is None or resolved[1] != address:
+                    ctx.problem(row, "main rename would invalidate private %s import %s at 0x%08X; add an explicit reviewed alias binding" %
+                                (unit, row.old, address))
+                    break
+        elif row.kind == "type":
+            word = re.compile(r"(?<!\w)%s(?!\w)" % re.escape(row.old))
+            affected = [(provider, binding) for provider in providers for binding in provider.get("bindings", [])
+                        if word.search(binding.get("current_type", ""))]
+            if not affected:
+                continue
+            defs = find_type(ctx.tree, row.new)
+            if len(defs) != 1:
+                ctx.problem(row, "renamed import type %s needs one current definition, found %d" %
+                            (row.new, len(defs)))
+                continue
+            definition = defs[0][0]
+            for provider in providers:
+                root = "include/" + provider.get("root_header_path", "")
+                if definition not in ctx.tree.closure(root) and definition != root:
+                    continue
+                for binding in provider.get("bindings", []):
+                    current = binding.get("current_type", "")
+                    if not word.search(current):
+                        continue
+                    binding["current_type"] = word.sub(row.new, current)
+                    changes += 1
+        elif row.kind == "header" and row.scope == "include":
+            for provider in providers:
+                for field in ("provider_path", "root_header_path"):
+                    if provider.get(field) == row.old:
+                        if not ctx.tree.exists("include/" + row.new):
+                            ctx.problem(row, "renamed legacy import header include/%s is missing" % row.new)
+                            continue
+                        provider[field] = row.new
+                        changes += 1
+    if changes:
+        ctx.tree.write(rel, json.dumps(profile, indent=2) + "\n")
+
+
 def plan_cmd(root, table_path, ledger=None, allow_alias=False, apply=False, verify=True, build=False, out=sys.stdout):
     with open(table_path, encoding=ENC) if table_path != "-" else sys.stdin as f:
         rows = parse_rows(f.read(), table_path)
     ctx = Context(root, allow_alias=allow_alias)
+    import sync_protos as sp
+    profile, profile_problems = sp.owner_profile(os.path.join(root, "include"))
+    ctx.problems.extend(profile_problems)
+    if profile is not None:
+        model = sp.Model(os.path.join(root, "include"), os.path.join(root, "src"))
+        ctx.problems.extend(sp.profile_integrity_problems(
+            model, os.path.join(root, "include"), os.path.join(root, "src")) + sp.canonical_problems(model))
     try:
         chains(ctx.ledger)
     except RenameError as e:
         ctx.problems.append(str(e))
     run_rows(ctx, rows)
+    update_legacy_import_registry(ctx)
+    name = ledger or default_ledger(ctx, rows)
+    stage_ledger(ctx, name)
     if not ctx.problems and verify:
         gcc_proof(ctx)
         if apply:
@@ -3277,7 +3685,6 @@ def plan_cmd(root, table_path, ledger=None, allow_alias=False, apply=False, veri
     if ctx.problems:
         return 1
     if apply:
-        name = ledger or default_ledger(ctx, rows)
         ctx.tree.flush()
         path = append_ledger(root, name, ctx.done)
         out.write("applied; ledger %s\n" % path)
@@ -3368,7 +3775,7 @@ def check(root, out=sys.stdout):
             problems += ["%s: %s" % (row.where, p) for p in ctx.problems]
             if changed and not ctx.problems:
                 problems.append("%s: signed constant sites are stale; run tools/rename.py replay" % row.where)
-        request = reuse_request(row, ch)
+        request = reuse_request(row, ch, tree)
         if request:
             ctx = Context(root)
             changed = const_reuse_plan(ctx, request["header"], request["enum"], request["values"], request["sites"], verify=False)
@@ -3553,6 +3960,7 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
     order = {"func": 0, "data": 0, "type": 1, "enumerator": 1, "local": 2, "param": 2}
     others = sorted((r for r in todo if r.kind != "field"), key=lambda r: order.get(r.kind, 3))
     run_rows(ctx, others, use_gcc=use_gcc)
+    update_legacy_import_registry(ctx)
     if fields:
         need = []
         members = set()
@@ -3576,7 +3984,7 @@ def replay(root, files=None, out=sys.stdout, use_gcc=True):
         if signed:
             signed_const_plan(ctx, signed["header"], signed["enum"], signed["defines"], signed["values"],
                               signed["sites"], signed["note"], existing=True)
-        request = reuse_request(row, ch)
+        request = reuse_request(row, ch, tree)
         if request:
             const_reuse_plan(ctx, request["header"], request["enum"], request["values"], request["sites"])
     for line in ctx.report:

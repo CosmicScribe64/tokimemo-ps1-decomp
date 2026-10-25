@@ -1,6 +1,18 @@
 /* debug_hud_palette.c: src/main/8004AD60.c; T-27059: object [0x8004AD60,0x8004C3F0); debug-number overlay and level control plus color-bar and sepia palette helpers; retain the mixed original object (prior h-graphics candidate). Original object 0x8004AD60-0x8004C3F0 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/color.h"
+#include "main/debug.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/resident_views.h"
+#include "main/import_views/scenes.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/vram.h"
 #include "psx_types.h"
 
 void debug_hud_level_step(s32 arg0) {
@@ -246,6 +258,7 @@ PixelPairOut *arg1;
     }
 }
 
+/* Fills a pixel-pair buffer with eight RGB color ramps. */
 void make_color_bar(void *arg0, s32 flag) {
     /* T-25140: every gradient value comes from the pair index (k * 2, k * 2 - 1). uopt
      * strength-reduces them and the row pointer itself; separate i/j counters or a walked
@@ -321,6 +334,7 @@ void make_color_bar(void *arg0, s32 flag) {
     }
 }
 
+/* Fills a pixel-pair buffer with an interpolated RGB gradient. */
 void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
     /* T-24501: declaration order preserves the interpolation spill homes. */
     s32 i;
@@ -369,6 +383,7 @@ void make_color_bar16(void *arg0, u32 start, u32 end, s32 count, s32 flag) {
     p[0].b0 = 0;
 }
 
+/* Converts a palette to grayscale, then applies bounded RGB offsets. */
 void col2sepia(arg0, arg1, dr, dg, db)
 PixelPairIn *arg0;
 PixelPairIn *arg1;

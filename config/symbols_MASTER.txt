@@ -56,6 +56,7 @@ master_tournament_exit = 0x8013B20C; // type:func
 master_tournament_companion_actor_setup = 0x8013B354; // type:func
 master_tournament_result_log = 0x8013B448; // type:func
 master_log_tournament_followup_event = 0x8013B804; // type:func
+master_selected_companion = 0x8013C2E0;
 master_tournament_stage_index = 0x8013C570;
 master_tournament_result_grade = 0x8013C578;
 master_tournament_result_markers = 0x8013C57C;

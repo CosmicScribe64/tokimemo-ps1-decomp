@@ -54,7 +54,7 @@ void new_year_meeting_mode_handler(void) {
         }
         break;
     case 4:
-        switch (D_80144E10) {
+        switch (new_year_meeting_girl) {
         case 0:
             game_mode_reset_to_title();
             break;
@@ -121,7 +121,7 @@ s32 new_year_meeting_completion_state_apply(void) {
     s32 pad;
 
     /* FAKE: touch narrow unsigned globals at entry for cvt_pass.py (T-20610); dead-store eliminated by uopt. T-24130 */
-    pad = D_80144E10;
+    pad = new_year_meeting_girl;
     pad = D_80144E14;
     pad = game_state.month;
     if (game_state.substep == 0) {
@@ -141,17 +141,17 @@ s32 new_year_meeting_completion_state_apply(void) {
             return 0;
         }
     }
-    game_state.current_girl = D_80144E10;
-    if (D_80144E10 == 2 && (D_80144E14 == 2 || D_80144E14 == 3) &&
+    game_state.current_girl = new_year_meeting_girl;
+    if (new_year_meeting_girl == 2 && (D_80144E14 == 2 || D_80144E14 == 3) &&
         (game_state.girls[2].flags.b[2] >> 4) == 3) {
-        event_log_add(8, D_80144E10 * 10 + 6);
-    } else if (D_80144E10 == 4 && D_80144E14 == 0 &&
+        event_log_add(8, new_year_meeting_girl * 10 + 6);
+    } else if (new_year_meeting_girl == 4 && D_80144E14 == 0 &&
                game_state.month >= 6 && game_state.month < 10) {
-        event_log_add(8, D_80144E10 * 10 + 3);
+        event_log_add(8, new_year_meeting_girl * 10 + 3);
     } else {
-        event_log_add(8, D_80144E10 * 10 + D_80144E14);
+        event_log_add(8, new_year_meeting_girl * 10 + D_80144E14);
     }
-    if (D_80144E10 == 10) {
+    if (new_year_meeting_girl == 10) {
         game_state.girls[game_state.day_events[game_state.day_event_index].girl].affection = 0x28;
     } else {
         game_state.girls[game_state.day_events[game_state.day_event_index].girl].affection = 0x32;
@@ -189,7 +189,7 @@ void new_year_meeting_scene_init(void) {
     /* FAKE: g-view store keeps ILOD CSE of unk_69C[unk_71C].unk_01. T-24137 */
     g->current_girl = g->day_events[g->day_event_index].girl;
     D_80144E14 = talk_work;
-    D_80144E10 = g->current_girl;
+    new_year_meeting_girl = g->current_girl;
     if (g->day_events[g->day_event_index].girl == 2 ||
         g->day_events[g->day_event_index].girl == 6) {
         a1 = 0xC063;
@@ -268,14 +268,14 @@ void new_year_meeting_audio_bank_start(void) {
 void new_year_meeting_resources_load(void) {
     cd_read_sectors(0x10, 0x80197000, 0xAEFD);
     new_year_meeting_dialogue_addresses_init();
-    D_80144E10 = game_state.day_events[game_state.day_event_index].girl;
+    new_year_meeting_girl = game_state.day_events[game_state.day_event_index].girl;
     mode_stage_next();
 }
 
 void new_year_meeting_resources_load_alt(void) {
     cd_read_sectors(0x10, 0x80197000, 0xAEFD);
     new_year_meeting_dialogue_addresses_init();
-    D_80144E10 = game_state.day_events[game_state.day_event_index].girl;
+    new_year_meeting_girl = game_state.day_events[game_state.day_event_index].girl;
     mode_step_next();
 }
 

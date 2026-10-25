@@ -1,0 +1,2 @@
+// Names of the overlay KANGEI (tools/rename.py, T-27002): facts, with the evidence in the ledger (config/renames/).
+camp_saved_girl = 0x8013A2B0;

@@ -1,6 +1,29 @@
 /* frame_render_audio.c: src/main/80043510.c; Original object 0x80043510-0x800451D0: draw_frame/draw2d3d render 2D/3D and present frames; same object queues palette/texture uploads and loads/polls/starts sound banks from CD. Original object 0x80043510-0x800451D0 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libspu.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/pad.h"
+#include "main/prim.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/vram.h"
+#include "main/pad.h"
+#include "main/audio.h"
+#include "main/draw.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/frame_render_audio.data", draw_horizontal_blank_stamps);
@@ -142,6 +165,7 @@ u8 arg4;
     return 0;
 }
 
+/* Queues a rectangular image transfer into the VRAM upload queue. */
 s32 load_csr_ab(arg0, arg1, arg2, arg3, arg4, arg5)
 s32 arg0;
 u8 arg1;
@@ -171,6 +195,7 @@ u16 arg5;
     return 0;
 }
 
+/* Queues a texture-page image transfer into the VRAM upload queue. */
 s32 load_csr_tp(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 s32 arg0;
 u8 arg1;
@@ -201,6 +226,7 @@ u16 arg6;
     return 0;
 }
 
+/* Executes queued image transfers into VRAM and clears the queue. */
 void csr_load_vram(s32 arg0) {
     GameState *base;
     s32 var_s1;
@@ -343,6 +369,7 @@ void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     func_8009C884(&rect, arg4);
 }
 
+/* Moves a rectangular VRAM region to another location. */
 void MoveSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4, u16 arg5) {
     RECT rect;
 
@@ -353,6 +380,7 @@ void MoveSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4, u16 arg5) {
     func_8009C93C(&rect, arg4, arg5);
 }
 
+/* Reads image data from a rectangular VRAM region into memory. */
 void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     RECT rect;
 
@@ -363,6 +391,7 @@ void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     func_8009C8E0(&rect, arg4);
 }
 
+/* Empty retained hardware entry; no C caller is known and its original role is unconfirmed. */
 void func_80044434(void) {
 }
 

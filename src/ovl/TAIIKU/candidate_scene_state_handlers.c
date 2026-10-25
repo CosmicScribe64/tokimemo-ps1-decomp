@@ -1,6 +1,7 @@
 /* candidate_scene_state_handlers.c: ; src/ovl/TAIIKU/80141C00.c:4-16 dispatches state handlers for the Nozomi scene. Original object 0x80141C00-0x80142140 (config/objects/TAIIKU.txt). */
 #include "common.h"
 #include "ovl/TAIIKU.h"
+#include "main/scene.h"
 
 void sports_nozomi_scene_entry_check(void) {
     if ((girl_state_rank(6) < 2) && (((u32) (game_state.girls[6].flags.w << 0x1E) >> 0x1F) == 1) && (game_state.scene_flags[45] == 0)) {

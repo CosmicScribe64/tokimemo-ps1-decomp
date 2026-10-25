@@ -1,7 +1,24 @@
 /* profile_and_place_availability.c: src/ovl/TEL/8013CCD0.c:86: girl appraisal sprites, girl profile details and month/place availability table construction; body 101: if (arg0 == 0xB) {; 102: n = 0xC;. Original object 0x8013CCD0-0x8013E430 (config/objects/TEL.txt). */
 #include "common.h"
 #include "ovl/TEL.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/girl.h"
+#include "game/player_flags.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/girl.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/menu.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/vram.h"
 
 /* Display record n of the actor_pool pool. */
 #define REC(n) (((Actor *)actor_pool)[n])

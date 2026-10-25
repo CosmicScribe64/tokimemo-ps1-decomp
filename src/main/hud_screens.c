@@ -4,7 +4,47 @@
 #define MAIN_API_OVERRIDE_actor_pool    /* Indexed as Actor[] in hud_magazine_page_build. T-11100. */
 #define MAIN_API_OVERRIDE_strncat       /* hud_save_slot_info_show calls strncat with 2 args for club name. T-11100. */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/album.h"
+#include "game/appointment.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/player_flags.h"
+#include "game/schedule_records.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/club.h"
+#include "main/cursor.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/resident_views.h"
+#include "main/import_views/retained_views.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/memory_card.h"
+#include "main/menu.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/settings.h"
+#include "main/speaker.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/vram.h"
+#include "main/game_mode.h"
+#include "game/appointment.h"
+#include "game/word_views.h"
+#include "main/calendar.h"
+#include "main/hud.h"
 
 extern s16 D_8011F414;
 s32 prim_gradient_line(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
@@ -595,21 +635,25 @@ void calendar_view_update(void) {
     }
 }
 
+/* Draws the calendar screen background panel. */
 void cal_base_show(void) {
     prim_gradient_rect(-0xA0, -0x57, 0x11B, 0x7D, 5, 0xE0E0E0, 2);
     dtd_on(5);
 }
 
+/* Draws the appraisal screen background panel. */
 void appraisal_base_show(void) {
     prim_gradient_rect(-0xA0, -0x68, 0x11B, 0x8E, 5, 0xE0E0E0, 2);
     dtd_on(5);
 }
 
+/* Draws the magazine screen background panel. */
 void magazine_base_show(void) {
     prim_gradient_rect(-0xA0, -0x78, 0x140, 0x9E, 5, 0xE0E0E0, 2);
     dtd_on(5);
 }
 
+/* Shows or hides the four calendar sprites. */
 void cal_sprite_disp_switch(s32 arg0) {
     if (arg0 == 1) {
         sprite_quads[0].flags &= 0x7FFFFFFF;
@@ -624,6 +668,7 @@ void cal_sprite_disp_switch(s32 arg0) {
     sprite_quads[3].flags |= 0x80000000;
 }
 
+/* Initializes the calendar screen sprites and their display attributes. */
 void cal_sprite_init(void) {
     sprite_quads[2].flags = 0;
     sprite_quads[2].x = -0x88;
@@ -703,6 +748,7 @@ void cal_sprite_init(void) {
     game_state.quad_layer[1] = 0x84;
 }
 
+/* Initializes the actor used by the data save/load screen. */
 void data_save_load_class_init(void) {
     actor_clear(0x60);
     D_80120651 = 3;

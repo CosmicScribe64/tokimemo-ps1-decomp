@@ -3,6 +3,7 @@
 #define MAIN_API_OVERRIDE_scene_still_fade_out /* callers ignore the result, the original calls it as int (T-16554) */
 #include "common.h"
 #include "ovl/TAIIKU.h"
+#include "main/scene.h"
 
 s32 scene_still_fade_in();
 s32 scene_still_fade_out();

@@ -2,7 +2,23 @@
 #define MAIN_API_OVERRIDE_actor_default_texture_blocks /* matched as the s32 table it is (11 words up to sprite_frame_table); main_api.h: u8[]; T-17008 */
 #define MAIN_API_OVERRIDE_D_800C5FCC /* matched as the two-word table up to D_800C5FD4; main_api.h: s32; T-17008 */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/boot.h"
+#include "main/cd.h"
+#include "main/debug.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/resident_views.h"
+#include "main/message.h"
+#include "main/state.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/game_mode.h"
+#include "main/boot.h"
 
 extern s32 actor_default_texture_blocks[11];
 extern s32 D_800C5FCC[2];

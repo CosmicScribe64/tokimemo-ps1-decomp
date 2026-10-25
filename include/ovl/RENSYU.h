@@ -2,7 +2,33 @@
 #define OVL_RENSYU_H
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/minigame_scenes_school_events.h"
+#include "main/message.h"
+#include "main/portrait.h"
+#include "main/scene.h"
+#include "main/select_girl.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/vram.h"
+#include "main/vsync.h"
 
 /* RENSYU overlay (load address 0x80132000): externs and types. */
 
@@ -14,8 +40,8 @@ extern s32 D_801343D4;
 extern s32 D_801343D8;
 extern s16 D_801343DC;
 extern s32 D_801343E0;
-extern u8 D_801342D0;
-extern u8 D_801342C4;
+extern u8 practice_selected_girl;
+extern u8 practice_match_result_grade;
 
 /* T-19020: GameState.unk_66C[i] seen as a halfword pair; the low 4 bits of the halfword at +2 are a counter
  * (incremented as lhu, +1, andi 0xF, merged with the lbu of the same byte, sb). */

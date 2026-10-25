@@ -400,3 +400,4 @@ new_year_scene_portrait_actor_setup = 0x801433A4; // type:func
 new_year_scene_background_load_42e2 = 0x801434E0; // type:func
 new_year_scene_background_and_log_load_47c3 = 0x80143508; // type:func
 new_year_omikuji_selector = 0x80143DD8;
+new_year_meeting_girl = 0x80144E10;

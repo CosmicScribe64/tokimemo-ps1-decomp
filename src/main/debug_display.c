@@ -1,6 +1,14 @@
 /* debug_display.c: src/main/80059A20.c; Displays mode/stage/step and associated timers, timer_ticks, substep and GetSp with debug-number drawing; second helper prints diagnostic label D_800AFDF0 and marks a work-queue flag. Original object 0x80059A20-0x80059B40 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/audio.h"
+#include "main/debug.h"
+#include "main/draw.h"
+#include "main/import_views/scenes.h"
+#include "main/state.h"
+#include "main/audio.h"
 
 void debug_state_numbers_draw(void) {
     debug_print_hex(game_state.mode_step, 0x90, 0x58);

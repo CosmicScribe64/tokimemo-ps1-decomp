@@ -1,6 +1,17 @@
 /* gpu_effects.c: src/main/80049FF0.c; Original object 0x80049FF0-0x8004AD60: gradient-line drawing, background-layer setup, radial/disc effects, textured/tile circle effects and full-screen gradient fades. Original object 0x80049FF0-0x8004AD60 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game/layer.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/bg.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/tpage.h"
 #include "psx_types.h"
 
 s32 prim_gradient_line(x0, y0, x1, y1, c0, c1, flags)

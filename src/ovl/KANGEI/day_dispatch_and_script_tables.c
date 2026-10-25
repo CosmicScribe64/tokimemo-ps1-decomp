@@ -340,14 +340,14 @@ s32 camp_day_event_parameter_update(void) {
             game_state.clubs[(u16)game_state.player_flags.h >> 12].practice_points += 2;
             club = (u16)game_state.player_flags.h >> 12;
             if (club < 2U) {
-                ((KangeiStateView *)&game_state)->unk_100 += 0x18000;
+                ((KangeiStateView *)&game_state)->param_liberal_arts_word += 0x18000;
             } else if (club < 4U) {
-                ((KangeiStateView *)&game_state)->unk_104 += 0x18000;
+                ((KangeiStateView *)&game_state)->param_science_word += 0x18000;
             } else if (club < 6U) {
-                ((KangeiStateView *)&game_state)->unk_108 += 0x18000;
+                ((KangeiStateView *)&game_state)->param_art_word += 0x18000;
             } else {
-                ((KangeiStateView *)&game_state)->unk_10C += 0x18000;
-                ((KangeiStateView *)&game_state)->unk_118 += 0x18000;
+                ((KangeiStateView *)&game_state)->param_athletics_word += 0x18000;
+                ((KangeiStateView *)&game_state)->param_guts_word += 0x18000;
             }
             parameter_up_down(a, 0, b);
             parameter_show_init();

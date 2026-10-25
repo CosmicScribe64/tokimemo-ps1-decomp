@@ -8,6 +8,8 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import srcscan  # noqa: E402
@@ -73,6 +75,30 @@ class Defs(unittest.TestCase):
 
     def test_include_asm_not_a_definition(self):
         self.assertEqual(self.defined('INCLUDE_ASM("asm/x", func_1);\n'), set())
+
+    def test_profile_unit_headers_are_plural_explicit_roots(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            include = root / "include"
+            (include / "main").mkdir(parents=True)
+            (include / "ovl").mkdir()
+            (include / "common.h").write_text("typedef int s32;\n")
+            (include / "main" / "first.h").write_text('#include "common.h"\n')
+            (include / "main" / "second.h").write_text('#include "common.h"\n')
+            (include / "ovl" / "AA.h").write_text('#include "common.h"\n')
+            (root / "config").mkdir()
+            (root / "config" / "header_owners.json").write_text(
+                '{"mode":"topic_only","owners":[{"path":"main/first.h","role":"main"},'
+                '{"path":"main/second.h","role":"main"}],"required_types":["common.h"]}')
+            src = root / "src" / "ovl" / "AA.c"
+            src.parent.mkdir(parents=True)
+            (include / "main" / "comment.h").write_text("ignored\n")
+            src.write_text('/*\n#include "main/comment.h"\n*/\n'
+                           '// #include "main/comment.h"\n'
+                           '#include \\\n"ovl/AA.h"\n#include "common.h"\n')
+            self.assertEqual(srcscan.unit_headers("main", tmp), ("main/first.h", "main/second.h"))
+            with patch.object(srcscan, "unit_c_files", return_value=[SimpleNamespace(src=src)]):
+                self.assertEqual(srcscan.unit_headers("AA", tmp), ("common.h", "ovl/AA.h"))
 
 
 if __name__ == "__main__":

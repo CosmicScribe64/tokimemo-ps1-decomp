@@ -2,9 +2,36 @@
 #define MAIN_API_OVERRIDE_girl_scores /* this object calls it as void (no v0 result in the call block, schedule_miharu_scene4_ready); main_api.h has s32 */
 #define MAIN_API_OVERRIDE_message_window_set_title_hidden /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game/player_flags.h"
+#include "game/schedule_records.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/day_event.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/memory_card.h"
+#include "main/message.h"
+#include "main/schedule.h"
+#include "main/school_day.h"
+#include "main/speaker.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
 #include "main/schedule.h"
 #include "main/day_event.h"
+#include "main/game_mode.h"
+#include "game/word_views.h"
 
 void message_window_set_title_hidden();
 void girl_scores();
@@ -279,27 +306,27 @@ void schedule_club_flag0_clear(void) {
     }
 }
 
-void day_event_queue_push_birthdays(s32 *arg0, s32 arg1, s32 arg2) {
+void day_event_queue_push_birthdays(s32 *queue_index, s32 month_offset, s32 day) {
     s32 i;
 
-    if (birth_day_check_days(GIRL_SHIORI, game_state.month + arg1, arg2) == 1) {
-        game_state.day_events[*arg0].type = DAY_EVENT_GIRL_BIRTHDAY;
-        game_state.day_events[*arg0].girl = 0;
-        *arg0 += 1;
+    if (birth_day_check_days(GIRL_SHIORI, game_state.month + month_offset, day) == 1) {
+        game_state.day_events[*queue_index].type = DAY_EVENT_GIRL_BIRTHDAY;
+        game_state.day_events[*queue_index].girl = 0;
+        *queue_index += 1;
     }
     for (i = 1; i != 0xB; i++) {
         if (game_state.girls[i].flags.f.met && game_state.girls[i].flags.f.b6) {
-            if (birth_day_check_days(i, game_state.month + arg1, arg2) == 1) {
-                game_state.day_events[*arg0].type = DAY_EVENT_GIRL_BIRTHDAY;
-                game_state.day_events[*arg0].girl = i;
-                *arg0 += 1;
+            if (birth_day_check_days(i, game_state.month + month_offset, day) == 1) {
+                game_state.day_events[*queue_index].type = DAY_EVENT_GIRL_BIRTHDAY;
+                game_state.day_events[*queue_index].girl = i;
+                *queue_index += 1;
             }
         }
     }
     if ((game_state.player_flags.b[1] & 0xF) != 3) {
-        if (birth_day_check_days(GIRL_PLAYER, game_state.month + arg1, arg2) == 1) {
-            game_state.day_events[*arg0].type = DAY_EVENT_PLAYER_BIRTHDAY;
-            *arg0 += 1;
+        if (birth_day_check_days(GIRL_PLAYER, game_state.month + month_offset, day) == 1) {
+            game_state.day_events[*queue_index].type = DAY_EVENT_PLAYER_BIRTHDAY;
+            *queue_index += 1;
         }
     }
 }
@@ -724,206 +751,206 @@ s32 schedule_miharu_scene4_ready(void) {
     return 0;
 }
 
-s32 schedule_meeting_select_catchup(u8 *arg0, u8 *arg1) {
+s32 schedule_meeting_select_catchup(u8 *selected_girl, u8 *scene_variant) {
     /* The flag word's f9 field is read through a pointer: an indirect load is not a plain variable for uopt, so the
      * compares keep their constant-first order and no phantom local holds $v1 (T-17004). */
     GameState *g = &game_state;
 
-    *arg0 = 0;
-    *arg1 = 0;
+    *selected_girl = 0;
+    *scene_variant = 0;
     if ((rand() % 3) != 0) {
         return 0;
     }
-    if (!(game_state.girls[1].flags.f.met) && !((u32)game_state.last_command.w & 0xF) && (game_state.param_liberal_arts.value >= 0x37)) {
-        *arg0 = 1;
-        *arg1 = game_state.frame_count & 1;
+    if (!(game_state.girls[GIRL_MIO].flags.f.met) && !((u32)game_state.last_command.w & 0xF) && (game_state.param_liberal_arts.value >= SCHEDULE_MEETING_CATCHUP_MIO_MINIMUM)) {
+        *selected_girl = GIRL_MIO;
+        *scene_variant = game_state.frame_count & 1;
         return 1;
     }
-    if (!(game_state.girls[2].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 1) && (game_state.param_science.value >= 0x3C)) {
-        *arg0 = 2;
-        *arg1 = game_state.frame_count & 3;
+    if (!(game_state.girls[GIRL_YUINA].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_SCIENCE) && (game_state.param_science.value >= SCHEDULE_MEETING_CATCHUP_YUINA_MINIMUM)) {
+        *selected_girl = GIRL_YUINA;
+        *scene_variant = game_state.frame_count & 3;
         return 1;
     }
-    if (!(game_state.girls[3].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 2) && (game_state.param_art.value >= 0x32)) {
-        *arg0 = 3;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_AYAKO].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_ART) && (game_state.param_art.value >= SCHEDULE_MEETING_CATCHUP_AYAKO_MINIMUM)) {
+        *selected_girl = GIRL_AYAKO;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[5].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 3) && (((u8) game_state.girls[0].flags.b[2] >> 4) != 8) && (game_state.param_athletics.value >= 0x51) && (game_state.param_looks.value >= 0x51)) {
-        *arg0 = 5;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_YUKARI].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_ATHLETICS) && (((u8) game_state.girls[GIRL_SHIORI].flags.b[2] >> 4) != CLUB_TENNIS) && (game_state.param_athletics.value >= SCHEDULE_MEETING_CATCHUP_YUKARI_MINIMUM) && (game_state.param_looks.value >= SCHEDULE_MEETING_CATCHUP_YUKARI_MINIMUM)) {
+        *selected_girl = GIRL_YUKARI;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[6].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 3) && (((u8) game_state.girls[0].flags.b[2] >> 4) != 9) && (game_state.param_athletics.value >= 0x1F) && (game_state.param_guts.value >= 0x1F)) {
-        *arg0 = 6;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_NOZOMI].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_ATHLETICS) && (((u8) game_state.girls[GIRL_SHIORI].flags.b[2] >> 4) != CLUB_SWIMMING) && (game_state.param_athletics.value >= SCHEDULE_MEETING_CATCHUP_NOZOMI_MINIMUM) && (game_state.param_guts.value >= SCHEDULE_MEETING_CATCHUP_NOZOMI_MINIMUM)) {
+        *selected_girl = GIRL_NOZOMI;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[7].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 6) && (game_state.param_looks.value >= 0x65)) {
-        *arg0 = 7;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_MIRA].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_LOOKS) && (game_state.param_looks.value >= SCHEDULE_MEETING_CATCHUP_MIRA_MINIMUM)) {
+        *selected_girl = GIRL_MIRA;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[8].flags.f.met)) {
-        if ((g->girls[8].flags.f.story_stage == 0) && (game_state.param_trivia.value >= 0x24)) {
-            *arg0 = 8;
-            *arg1 = 0;
+    if (!(game_state.girls[GIRL_YUKO].flags.f.met)) {
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 0) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_0_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 0;
             return 1;
         }
-        if ((g->girls[8].flags.f.story_stage == 1) && (game_state.param_trivia.value >= 0x38)) {
-            *arg0 = 8;
-            *arg1 = 1;
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 1) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_1_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 1;
             return 1;
         }
-        if ((g->girls[8].flags.f.story_stage == 2) && (game_state.param_trivia.value >= 0x4C)) {
-            *arg0 = 8;
-            *arg1 = 2;
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 2) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_2_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 2;
             return 1;
         }
-        if ((g->girls[8].flags.f.story_stage == 3) && (((u32)game_state.last_command.w & 0xF) == 5) && (game_state.param_trivia.value >= 0x5B)) {
-            *arg0 = 8;
-            *arg1 = 3;
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 3) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_TRIVIA) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_3_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 3;
             return 1;
         }
     }
-    if (!(game_state.girls[4].flags.f.met) && (((u16) game_state.player_flags.h >> 0xC) != ((u8) game_state.girls[4].flags.b[2] >> 4)) && (game_state.param_guts.value >= 0x24)) {
-        *arg0 = 4;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_SAKI].flags.f.met) && (((u16) game_state.player_flags.h >> 0xC) != ((u8) game_state.girls[GIRL_SAKI].flags.b[2] >> 4)) && (game_state.param_guts.value >= SCHEDULE_MEETING_CATCHUP_SAKI_MINIMUM)) {
+        *selected_girl = GIRL_SAKI;
+        *scene_variant = 0;
         return 1;
     }
     return 0;
 }
 
-s32 schedule_meeting_select_normal(u8 *arg0, u8 *arg1) {
+s32 schedule_meeting_select_normal(u8 *selected_girl, u8 *scene_variant) {
     /* Read through a pointer like schedule_meeting_select_catchup (T-17004). */
     GameState *g = &game_state;
 
     if (rand() & 7) {
         return 0;
     }
-    *arg0 = 0;
-    *arg1 = 0;
-    if (!(game_state.girls[1].flags.f.met) && !((u32)game_state.last_command.w & 0xF) && (game_state.param_liberal_arts.value >= 0x4B)) {
-        *arg0 = 1;
-        *arg1 = game_state.frame_count & 1;
+    *selected_girl = 0;
+    *scene_variant = 0;
+    if (!(game_state.girls[GIRL_MIO].flags.f.met) && !((u32)game_state.last_command.w & 0xF) && (game_state.param_liberal_arts.value >= SCHEDULE_MEETING_NORMAL_MIO_MINIMUM)) {
+        *selected_girl = GIRL_MIO;
+        *scene_variant = game_state.frame_count & 1;
         return 1;
     }
-    if (!(game_state.girls[2].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 1) && (game_state.param_science.value >= 0x55)) {
-        *arg0 = 2;
-        *arg1 = game_state.frame_count & 3;
+    if (!(game_state.girls[GIRL_YUINA].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_SCIENCE) && (game_state.param_science.value >= SCHEDULE_MEETING_NORMAL_YUINA_MINIMUM)) {
+        *selected_girl = GIRL_YUINA;
+        *scene_variant = game_state.frame_count & 3;
         return 1;
     }
-    if (!(game_state.girls[3].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 2) && (game_state.param_art.value >= 0x41)) {
-        *arg0 = 3;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_AYAKO].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_ART) && (game_state.param_art.value >= SCHEDULE_MEETING_NORMAL_AYAKO_MINIMUM)) {
+        *selected_girl = GIRL_AYAKO;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[5].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 3) && (((u8) game_state.girls[0].flags.b[2] >> 4) != 8) && (game_state.param_athletics.value >= 0x54) && (game_state.param_looks.value >= 0x54)) {
-        *arg0 = 5;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_YUKARI].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_ATHLETICS) && (((u8) game_state.girls[GIRL_SHIORI].flags.b[2] >> 4) != CLUB_TENNIS) && (game_state.param_athletics.value >= SCHEDULE_MEETING_NORMAL_YUKARI_MINIMUM) && (game_state.param_looks.value >= SCHEDULE_MEETING_NORMAL_YUKARI_MINIMUM)) {
+        *selected_girl = GIRL_YUKARI;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[6].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 3) && (((u8) game_state.girls[0].flags.b[2] >> 4) != 9) && (game_state.param_athletics.value >= 0x47) && (game_state.param_guts.value >= 0x47)) {
-        *arg0 = 6;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_NOZOMI].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_ATHLETICS) && (((u8) game_state.girls[GIRL_SHIORI].flags.b[2] >> 4) != CLUB_SWIMMING) && (game_state.param_athletics.value >= SCHEDULE_MEETING_NORMAL_NOZOMI_MINIMUM) && (game_state.param_guts.value >= SCHEDULE_MEETING_NORMAL_NOZOMI_MINIMUM)) {
+        *selected_girl = GIRL_NOZOMI;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[7].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == 6) && (game_state.param_looks.value >= 0x7E)) {
-        *arg0 = 7;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_MIRA].flags.f.met) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_LOOKS) && (game_state.param_looks.value >= SCHEDULE_MEETING_NORMAL_MIRA_MINIMUM)) {
+        *selected_girl = GIRL_MIRA;
+        *scene_variant = 0;
         return 1;
     }
-    if (!(game_state.girls[8].flags.f.met)) {
-        if ((g->girls[8].flags.f.story_stage == 0) && (game_state.param_trivia.value >= 0x24)) {
-            *arg0 = 8;
-            *arg1 = 0;
+    if (!(game_state.girls[GIRL_YUKO].flags.f.met)) {
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 0) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_0_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 0;
             return 1;
         }
-        if ((g->girls[8].flags.f.story_stage == 1) && (game_state.param_trivia.value >= 0x38)) {
-            *arg0 = 8;
-            *arg1 = 1;
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 1) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_1_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 1;
             return 1;
         }
-        if ((g->girls[8].flags.f.story_stage == 2) && (game_state.param_trivia.value >= 0x4C)) {
-            *arg0 = 8;
-            *arg1 = 2;
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 2) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_2_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 2;
             return 1;
         }
-        if ((g->girls[8].flags.f.story_stage == 3) && (((u32)game_state.last_command.w & 0xF) == 5) && (game_state.param_trivia.value >= 0x5B)) {
-            *arg0 = 8;
-            *arg1 = 3;
+        if ((g->girls[GIRL_YUKO].flags.f.story_stage == 3) && (((u32)game_state.last_command.w & 0xF) == SCHOOL_DAY_COMMAND_TRIVIA) && (game_state.param_trivia.value >= SCHEDULE_MEETING_YUKO_STEP_3_TRIVIA_MINIMUM)) {
+            *selected_girl = GIRL_YUKO;
+            *scene_variant = 3;
             return 1;
         }
     }
-    if (!(game_state.girls[4].flags.f.met) && (((u16) game_state.player_flags.h >> 0xC) != ((u8) game_state.girls[4].flags.b[2] >> 4)) && (game_state.param_guts.value >= 0x60)) {
-        *arg0 = 4;
-        *arg1 = 0;
+    if (!(game_state.girls[GIRL_SAKI].flags.f.met) && (((u16) game_state.player_flags.h >> 0xC) != ((u8) game_state.girls[GIRL_SAKI].flags.b[2] >> 4)) && (game_state.param_guts.value >= SCHEDULE_MEETING_NORMAL_SAKI_MINIMUM)) {
+        *selected_girl = GIRL_SAKI;
+        *scene_variant = 0;
         return 1;
     }
     return 0;
 }
 
-s32 schedule_meeting_select_club(u8 *arg0, u8 *arg1) {
+s32 schedule_meeting_select_club(u8 *selected_girl, u8 *scene_variant) {
     GameState *g;
     s32 club;
 
     g = &game_state;
-    *arg0 = 0;
-    *arg1 = 0;
+    *selected_girl = 0;
+    *scene_variant = 0;
     club = (u16) g->player_flags.h >> 0xC;
     if ((rand() % 3) != 0) {
         return 0;
     }
-    if (!(g->girls[1].flags.f.met) && (club == ((u8) g->girls[1].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
-        ((ScheduleGirlFlagBits *)&g->girls[1].flags)->b18 = 1;
-        *arg0 = 1;
+    if (!(g->girls[GIRL_MIO].flags.f.met) && (club == ((u8) g->girls[GIRL_MIO].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
+        ((ScheduleGirlFlagBits *)&g->girls[GIRL_MIO].flags)->b18 = 1;
+        *selected_girl = GIRL_MIO;
         if (club == 0) {
-            *arg1 = (g->frame_count & 1) + 2;
+            *scene_variant = (g->frame_count & 1) + 2;
             return 1;
         }
-        *arg1 = 4;
+        *scene_variant = 4;
         return 1;
     }
-    if (!(g->girls[2].flags.f.met) && (club == ((u8) g->girls[2].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
-        ((ScheduleGirlFlagBits *)&g->girls[2].flags)->b18 = 1;
-        *arg0 = 2;
+    if (!(g->girls[GIRL_YUINA].flags.f.met) && (club == ((u8) g->girls[GIRL_YUINA].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
+        ((ScheduleGirlFlagBits *)&g->girls[GIRL_YUINA].flags)->b18 = 1;
+        *selected_girl = GIRL_YUINA;
         if (club == 2) {
-            *arg1 = 4;
+            *scene_variant = 4;
             return 1;
         }
-        *arg1 = 5;
+        *scene_variant = 5;
         return 1;
     }
-    if (!(g->girls[3].flags.f.met) && (club == ((u8) g->girls[3].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
-        ((ScheduleGirlFlagBits *)&g->girls[3].flags)->b18 = 1;
-        *arg0 = 3;
+    if (!(g->girls[GIRL_AYAKO].flags.f.met) && (club == ((u8) g->girls[GIRL_AYAKO].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
+        ((ScheduleGirlFlagBits *)&g->girls[GIRL_AYAKO].flags)->b18 = 1;
+        *selected_girl = GIRL_AYAKO;
         if (club == 4) {
-            *arg1 = 1;
+            *scene_variant = 1;
             return 1;
         }
-        *arg1 = 2;
+        *scene_variant = 2;
         return 1;
     }
-    if (!(g->girls[4].flags.f.met) && (club == ((u8) g->girls[4].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
-        ((ScheduleGirlFlagBits *)&g->girls[4].flags)->b18 = 1;
-        *arg0 = 4;
+    if (!(g->girls[GIRL_SAKI].flags.f.met) && (club == ((u8) g->girls[GIRL_SAKI].flags.b[2] >> 4)) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
+        ((ScheduleGirlFlagBits *)&g->girls[GIRL_SAKI].flags)->b18 = 1;
+        *selected_girl = GIRL_SAKI;
         if (club == 6) {
-            *arg1 = 1;
+            *scene_variant = 1;
             return 1;
         }
-        *arg1 = 2;
+        *scene_variant = 2;
         return 1;
     }
-    if (!(g->girls[5].flags.f.met) && (club == 8) && (((u8) g->girls[0].flags.b[2] >> 4) != 8) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
-        ((ScheduleGirlFlagBits *)&g->girls[5].flags)->b18 = 1;
-        *arg0 = 5;
-        *arg1 = 1;
+    if (!(g->girls[GIRL_YUKARI].flags.f.met) && (club == 8) && (((u8) g->girls[GIRL_SHIORI].flags.b[2] >> 4) != 8) && ((u16) g->clubs[club].practice_points >= 0x15U)) {
+        ((ScheduleGirlFlagBits *)&g->girls[GIRL_YUKARI].flags)->b18 = 1;
+        *selected_girl = GIRL_YUKARI;
+        *scene_variant = 1;
         return 1;
     }
-    if (!(g->girls[6].flags.f.met) && (club == 9) && (((u8) g->girls[0].flags.b[2] >> 4) != 9)) {
-        ((ScheduleGirlFlagBits *)&g->girls[6].flags)->b18 = 1;
-        *arg0 = 6;
-        *arg1 = 1;
+    if (!(g->girls[GIRL_NOZOMI].flags.f.met) && (club == 9) && (((u8) g->girls[GIRL_SHIORI].flags.b[2] >> 4) != 9)) {
+        ((ScheduleGirlFlagBits *)&g->girls[GIRL_NOZOMI].flags)->b18 = 1;
+        *selected_girl = GIRL_NOZOMI;
+        *scene_variant = 1;
         return 1;
     }
     return 0;

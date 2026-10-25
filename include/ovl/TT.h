@@ -7,7 +7,21 @@
 
 #include "common.h"
 #include "libgpu.h"
-#include "main_api.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi_legacy.h"
+#include "libcd.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "libsnd.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/import_views/minigame.h"
+#include "main/import_views/scenes.h"
+#include "main/pad.h"
+#include "main/state.h"
+#include "main/vram.h"
 extern u8 tt_cd_read_count_previous;
 extern u8 tt_cd_read_count_now;
 extern u8 tt_vram_palette_row[];

@@ -1,0 +1,1192 @@
+{
+  "mode": "topic_only",
+  "owners": [
+    {
+      "path": "libapi.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libc.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libcd.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libetc.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libgpu.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libgs.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libgte.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libpress.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libsnd.h",
+      "role": "sdk"
+    },
+    {
+      "path": "libspu.h",
+      "role": "sdk"
+    },
+    {
+      "path": "main/actor.h",
+      "role": "main"
+    },
+    {
+      "path": "main/audio.h",
+      "role": "main"
+    },
+    {
+      "path": "main/bg.h",
+      "role": "main"
+    },
+    {
+      "path": "main/boot.h",
+      "role": "main"
+    },
+    {
+      "path": "main/calendar.h",
+      "role": "main"
+    },
+    {
+      "path": "main/cd.h",
+      "role": "main"
+    },
+    {
+      "path": "main/club.h",
+      "role": "main"
+    },
+    {
+      "path": "main/color.h",
+      "role": "main"
+    },
+    {
+      "path": "main/cursor.h",
+      "role": "main"
+    },
+    {
+      "path": "main/date.h",
+      "role": "main"
+    },
+    {
+      "path": "main/day_event.h",
+      "role": "main"
+    },
+    {
+      "path": "main/debug.h",
+      "role": "main"
+    },
+    {
+      "path": "main/draw.h",
+      "role": "main"
+    },
+    {
+      "path": "main/event_log.h",
+      "role": "main"
+    },
+    {
+      "path": "main/game_mode.h",
+      "role": "main"
+    },
+    {
+      "path": "main/girl.h",
+      "role": "main"
+    },
+    {
+      "path": "main/gpu.h",
+      "role": "main"
+    },
+    {
+      "path": "main/holiday.h",
+      "role": "main"
+    },
+    {
+      "path": "main/hud.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/entry_ui.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/entry_ui_scenes.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/entry_ui_scenes_school_events.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/minigame.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/minigame_scenes_school_events.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/resident_views.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/retained_views.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/scenes.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/scenes_school_events.h",
+      "role": "main"
+    },
+    {
+      "path": "main/import_views/school_events.h",
+      "role": "main"
+    },
+    {
+      "path": "main/layer.h",
+      "role": "main"
+    },
+    {
+      "path": "main/memory_card.h",
+      "role": "main"
+    },
+    {
+      "path": "main/menu.h",
+      "role": "main"
+    },
+    {
+      "path": "main/message.h",
+      "role": "main"
+    },
+    {
+      "path": "main/mouse.h",
+      "role": "main"
+    },
+    {
+      "path": "main/movie.h",
+      "role": "main"
+    },
+    {
+      "path": "main/name_code.h",
+      "role": "main"
+    },
+    {
+      "path": "main/ovl.h",
+      "role": "main"
+    },
+    {
+      "path": "main/pad.h",
+      "role": "main"
+    },
+    {
+      "path": "main/param.h",
+      "role": "main"
+    },
+    {
+      "path": "main/portrait.h",
+      "role": "main"
+    },
+    {
+      "path": "main/prim.h",
+      "role": "main"
+    },
+    {
+      "path": "main/rumor.h",
+      "role": "main"
+    },
+    {
+      "path": "main/scene.h",
+      "role": "main"
+    },
+    {
+      "path": "main/schedule.h",
+      "role": "main"
+    },
+    {
+      "path": "main/school_day.h",
+      "role": "main"
+    },
+    {
+      "path": "main/sd.h",
+      "role": "main"
+    },
+    {
+      "path": "main/select_girl.h",
+      "role": "main"
+    },
+    {
+      "path": "main/settings.h",
+      "role": "main"
+    },
+    {
+      "path": "main/speaker.h",
+      "role": "main"
+    },
+    {
+      "path": "main/sprite.h",
+      "role": "main"
+    },
+    {
+      "path": "main/state.h",
+      "role": "main"
+    },
+    {
+      "path": "main/sys.h",
+      "role": "main"
+    },
+    {
+      "path": "main/talk.h",
+      "role": "main"
+    },
+    {
+      "path": "main/text.h",
+      "role": "main"
+    },
+    {
+      "path": "main/timer.h",
+      "role": "main"
+    },
+    {
+      "path": "main/title.h",
+      "role": "main"
+    },
+    {
+      "path": "main/tpage.h",
+      "role": "main"
+    },
+    {
+      "path": "main/view.h",
+      "role": "main"
+    },
+    {
+      "path": "main/vram.h",
+      "role": "main"
+    },
+    {
+      "path": "main/vsync.h",
+      "role": "main"
+    }
+  ],
+  "required_types": [
+    "common.h",
+    "game/album.h",
+    "game/appointment.h",
+    "game/calendar.h",
+    "game/club.h",
+    "game/culture_festival.h",
+    "game/day_event.h",
+    "game/display_records.h",
+    "game/draw_records.h",
+    "game/game_state.h",
+    "game/girl.h",
+    "game/layer.h",
+    "game/menu_records.h",
+    "game/model_records.h",
+    "game/param.h",
+    "game/player_flags.h",
+    "game/save_image.h",
+    "game/schedule_records.h",
+    "game/system_data.h",
+    "game/word_views.h",
+    "game_enums.h"
+  ],
+  "legacy_main_imports": {
+    "version": "legacy-main-imports-v1",
+    "roster_sha256": "d1cde1720f6ca5501d2837e1b1f86105f3272e1773e1e92ab15388b22ac10c08",
+    "expected_counts": {
+      "EVENT": 51,
+      "GYOZI": 35
+    },
+    "providers": [
+      {
+        "unit": "EVENT",
+        "provider_path": "ovl/EVENT_main_imports.h",
+        "root_header_path": "ovl/EVENT.h",
+        "bindings": [
+          {
+            "unit": "EVENT",
+            "address": "0x80010678",
+            "original_name": "func_80010678",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80010678",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "fd3e288a594fc0cd69b18169de25df43df2ecd014559b9a4cf8dbdb79b8eb8ad"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80012D2C",
+            "original_name": "func_80012D2C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80012D2C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "caf088895ffa48e4314efd645621397f132fed9e0998e4ad80fdb5d61cc9ab21"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80012D40",
+            "original_name": "func_80012D40",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80012D40",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "14105149909fff1f80e9a302692592d147dfb5a39bb7af9fe10dc515ddde6883"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80017E50",
+            "original_name": "func_80017E50",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80017E50",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "d19ceeb8f81b19fed678114a3fbdf54c304e4a1854d42ccfec5a8166181dfd84"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8001886C",
+            "original_name": "func_8001886C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8001886C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "3926b3472cf9d50dda724432bc97e842faf3030c48381c2cfc9b901618428377"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80018944",
+            "original_name": "func_80018944",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80018944",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "12c52b6bab59c669181fc48efd0cbd68f502c79ce200ddd65116f5b320bc2898"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8001FD50",
+            "original_name": "func_8001FD50",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8001FD50",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "49af296e1f79794c601eed53c2ee340f9ea6b6fb5dc0379d9f8df92226d7f671"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8003535C",
+            "original_name": "func_8003535C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8003535C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "330d9ef2248d786dc395f9eeb5ab78e815e118a2b8b5e7342e6ebdef9fa33a22"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8003580C",
+            "original_name": "func_8003580C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8003580C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "6f943bbcb262f23177c01311c70c99a1af96b444ca5814fe1de5212c360b9acf"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80036884",
+            "original_name": "func_80036884",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80036884",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "40ac0083e508a4d6f3398a2c81ffa8087caf14ab301f8dea4371a31cd666f0be"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80037A90",
+            "original_name": "func_80037A90",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80037A90",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "c5a6ec54cd5a657da4c3bdd32e48261bab64ba29cb6f6d7d07172afd51fee02c"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8003C2C0",
+            "original_name": "func_8003C2C0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8003C2C0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "927b1518f9d0a11fdfe3b5272169dd19faba05de3efbb1f7e2c6255c3cbf75cd"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80045B14",
+            "original_name": "func_80045B14",
+            "original_type": "voidF(void)",
+            "type_identity_sha256": "15b9706cc5f1a981d36ca87f33938c0674e163830312e9f7816c1bbab4eceec9",
+            "current_name": "func_80045B14",
+            "current_type": "voidF(void)",
+            "declaration_block_sha256": "d04cb2ac148313c4270b5c16fd3abec40a3ce0907e5d9608674cc7e028cb96b2"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80045FF4",
+            "original_name": "func_80045FF4",
+            "original_type": "s32F(void)",
+            "type_identity_sha256": "5ea1866777027619570197c72b5d1493f26068739beb7aa2f670830af446f543",
+            "current_name": "func_80045FF4",
+            "current_type": "s32F(void)",
+            "declaration_block_sha256": "d2d5724933bcd3b75fcf400fe574dfcc6eb8c1fdb655ac8bf47e55c7a56e8e57"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x800464E8",
+            "original_name": "func_800464E8",
+            "original_type": "voidF(void)",
+            "type_identity_sha256": "15b9706cc5f1a981d36ca87f33938c0674e163830312e9f7816c1bbab4eceec9",
+            "current_name": "func_800464E8",
+            "current_type": "voidF(void)",
+            "declaration_block_sha256": "bc08b68abad21edb9ff91843b77fe32f81d54727456e994fdfbb6c6d59118758"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80046600",
+            "original_name": "func_80046600",
+            "original_type": "voidF(void)",
+            "type_identity_sha256": "15b9706cc5f1a981d36ca87f33938c0674e163830312e9f7816c1bbab4eceec9",
+            "current_name": "func_80046600",
+            "current_type": "voidF(void)",
+            "declaration_block_sha256": "4b3007db57c74cc6506f327b1456ad82584604722b0edf5149757e8c25973a4c"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x800469F4",
+            "original_name": "func_800469F4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800469F4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "616e653bcbc28527e691afa5cd5190c60db02aba9772cd39401b47350ec7654a"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80046A7C",
+            "original_name": "func_80046A7C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80046A7C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "d22f196f8e7d357ec4477cd137f4cc5fb426bf9b0fa1525c74d1dbf807fb9865"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80046B88",
+            "original_name": "func_80046B88",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80046B88",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "af9729004e9bf0da24682a949bda42f1de327c4d63ff483e10ef7814c8f3127a"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80049B20",
+            "original_name": "func_80049B20",
+            "original_type": "s32F()",
+            "type_identity_sha256": "87e05c981c195d7e8851936b6219b18456a0fc55adc7afedefa06683a75d3366",
+            "current_name": "func_80049B20",
+            "current_type": "s32F()",
+            "declaration_block_sha256": "617fc5bbd5f5338c19bef972a0360616456e079fd015b2327f92bd63d8333874"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A2C4",
+            "original_name": "func_8004A2C4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A2C4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "0f6984286239ce49a5b25a212c588bf5a648dd2b02876566fd11a8ad5e355eb5"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A4D8",
+            "original_name": "func_8004A4D8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A4D8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "e708aa3ac913077e9ef34e5ece426ab9f54bcbbe2f6d2104c3744ea96058505d"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A734",
+            "original_name": "func_8004A734",
+            "original_type": "voidF(void)",
+            "type_identity_sha256": "15b9706cc5f1a981d36ca87f33938c0674e163830312e9f7816c1bbab4eceec9",
+            "current_name": "func_8004A734",
+            "current_type": "voidF(void)",
+            "declaration_block_sha256": "4a88fc23831932736daab73398e545530a6426b5076f9385c760d29b5e6f2b93"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A764",
+            "original_name": "func_8004A764",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A764",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "79f81fac0cc142ed5d548d3c2a66ed6bc7f1fe56bc08f841be2e93b5946937ff"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A7C4",
+            "original_name": "func_8004A7C4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A7C4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "790c6f603ddfe45957dcdc5c86043e879ac2029d738eaaae882e90e19ebb4890"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A7F4",
+            "original_name": "func_8004A7F4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A7F4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "c464c4cb2f177c5214dc304e7a14274154e9ae837d53892e465f599f870ee063"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A8EC",
+            "original_name": "func_8004A8EC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A8EC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "1dfaac50b5765f909d8b383cbc8a0dc0c8ec41bf7e3a0a75817d130b75b69d23"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004A9CC",
+            "original_name": "func_8004A9CC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004A9CC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "d2d245307e6a20f0d5d525f2f9eebbb79a0f1732ab8d4690df153a6f30affa7c"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004ACA8",
+            "original_name": "func_8004ACA8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004ACA8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "abecd816b3cb0aef7f948be8a6d891a62d379b02822a4488291ea8315ce63e9f"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004AEB0",
+            "original_name": "func_8004AEB0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004AEB0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "20eb62282f0b986f3a3e02be5b19a358b3c6c385adddc42602030e2ac89a3b2e"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004AFB8",
+            "original_name": "func_8004AFB8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004AFB8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "496d747d44ffd99adfc7f4a94406a7751fe5386579653673fc3da3ae239a76c7"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004BB54",
+            "original_name": "func_8004BB54",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004BB54",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "049f323735d68bc744d5a8af94679a995e721566cd5a30d4cd6cfae1489ad130"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004BC20",
+            "original_name": "func_8004BC20",
+            "original_type": "s32F(s32)",
+            "type_identity_sha256": "f3492ce3362da3657498cc269d14edc8af5f29c64822f0c207acc2997e8b3be7",
+            "current_name": "func_8004BC20",
+            "current_type": "s32F(s32)",
+            "declaration_block_sha256": "2a3f3d86b06874aa069b326f66690fcad208ca71f8fdb295297a4893dfe9dada"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C060",
+            "original_name": "func_8004C060",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C060",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "db4dad084ae09b3071830b4ae39f5ed10d2a5b8c4517a63257fefd833eb54804"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C250",
+            "original_name": "func_8004C250",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C250",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "65932f367133adf976ed08a88b6ea582bd0b62e9237e90b9194b8bb4e16e9572"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C360",
+            "original_name": "func_8004C360",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C360",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "78e5c3dd12ce1247ffda9652016e0318a122a2d2f9ed88aac560a7b094b86144"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C46C",
+            "original_name": "func_8004C46C",
+            "original_type": "voidF(s32,s32,s32,s32,s32,s32)",
+            "type_identity_sha256": "4e292d1d2a72114581f0ad6c408254b4294f7860b6fa3d9356a971ed84932b44",
+            "current_name": "func_8004C46C",
+            "current_type": "voidF(s32,s32,s32,s32,s32,s32)",
+            "declaration_block_sha256": "306399a304ed0a41fd8e8865f1f216800e38aea6f9386fc723af05f197f2c465"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C6B0",
+            "original_name": "func_8004C6B0",
+            "original_type": "voidF(s32,s32,s32,s32)",
+            "type_identity_sha256": "df70e122c6180a6a2ca82c7141feb59af108bb6f52781ad51d45e461751bd5c5",
+            "current_name": "func_8004C6B0",
+            "current_type": "voidF(s32,s32,s32,s32)",
+            "declaration_block_sha256": "8ca35f45355678b8c4581a92f13c257d14a955e532e1a4c7350dbea8938975fb"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C808",
+            "original_name": "func_8004C808",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C808",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "7971fd6ef3fb9c9922d39f0b704b3d0827c8e83488f2a7b269e084d81523e4d1"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C90C",
+            "original_name": "func_8004C90C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C90C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "23f1e036db64eabf4ace549c2407eafbf15d9b041812c1d2bd22357b4fd3066c"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004C984",
+            "original_name": "func_8004C984",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C984",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "f7bec3bfb0f23511c72088e40d2100cd757c6e0cd9c326fcbf251ca8026a1681"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004CA18",
+            "original_name": "func_8004CA18",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004CA18",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "163130f5ac691abda76df59094ca57c66febb487b49eb4f1f5e17a6616f9e6f8"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004CA48",
+            "original_name": "func_8004CA48",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004CA48",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "fc4f09449c03a8c0643db8efcf9692a0dc725095c8cc3a136d52a60b0e79d910"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004CDDC",
+            "original_name": "func_8004CDDC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004CDDC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "260f1def1f75655e6f36da359f43d642fc374468ae13681921efb9424ac08bf7"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x8004CF30",
+            "original_name": "func_8004CF30",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004CF30",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "9a44c44634c907c5370193adfa38e402af7d0bedb47ce8598eb7d0a6eefeb6d3"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x800651F8",
+            "original_name": "func_800651F8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800651F8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "8fb37ec5eba6456996d308141dff6a75c7440a24193dbfeb757c396c6b1b4eeb"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80065234",
+            "original_name": "func_80065234",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80065234",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "8d587201b3b987481ed88c9749f523baa41448e449dc384b53afaacd1780e682"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x800674F4",
+            "original_name": "func_800674F4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800674F4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "cc591b25da23994ba52a3cb626468d61fc0c9d38e6e81302109ec71cc85a533a"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x800675A8",
+            "original_name": "func_800675A8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800675A8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "8279bb6342daa04b491b58c20b89130aca618c22e8e5eacce41215466dadc62b"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80067628",
+            "original_name": "func_80067628",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80067628",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "8905576f18ddbe743fdb12f7909c1c415cceb9ad7417ef5dee01521b141aaa5e"
+          },
+          {
+            "unit": "EVENT",
+            "address": "0x80067678",
+            "original_name": "func_80067678",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80067678",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "fc4016c1ef26479b709e7d7fee30a46e9b27d0725d7680458880090704164df8"
+          }
+        ]
+      },
+      {
+        "unit": "GYOZI",
+        "provider_path": "ovl/GYOZI_main_imports.h",
+        "root_header_path": "ovl/GYOZI.h",
+        "bindings": [
+          {
+            "unit": "GYOZI",
+            "address": "0x8004C670",
+            "original_name": "func_8004C670",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C670",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "0599fbe4e10aece00a58319fe3de0bf7e820110bd5cf76c8e4d3d1b3edace7cd"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004C6A0",
+            "original_name": "func_8004C6A0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004C6A0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "3911f1bde737851e38e24234cd0a7f690a20441af0a4d5f6e79d78d8a1244a78"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004DDD8",
+            "original_name": "func_8004DDD8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004DDD8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "cdfc4d39d4fe7d4ccc89e54f7043bd77d050a7ebf89b3f85b11ca371b43bd9f9"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004DE1C",
+            "original_name": "func_8004DE1C",
+            "original_type": "voidF(void)",
+            "type_identity_sha256": "15b9706cc5f1a981d36ca87f33938c0674e163830312e9f7816c1bbab4eceec9",
+            "current_name": "func_8004DE1C",
+            "current_type": "voidF(void)",
+            "declaration_block_sha256": "65960f66145fb6f1223a1b2abfae76eb67fdbe9b3220c3186b952a3e5c8105b6"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004DEAC",
+            "original_name": "func_8004DEAC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004DEAC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "ffbea6e83068f243bb47ef1c1c54e8807d8154025f68a43faf45a47b2aa35e78"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004DEE4",
+            "original_name": "func_8004DEE4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004DEE4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "8285f11a0a0433c779cf5513fb8689b2375a5ac22cdf0016e6153cc6fbda2daa"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004EDE0",
+            "original_name": "func_8004EDE0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004EDE0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "23120a9a6b746db4c94c1ff72a0926d199ba02592dd37a5ef946538404c47443"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004EDF4",
+            "original_name": "func_8004EDF4",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004EDF4",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "ad51558bced9699234f5448785338c716039a484d211180b22267c3d755545cf"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004EE18",
+            "original_name": "func_8004EE18",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004EE18",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "d48672843200a201fbf4c51e13db8d3ab43ff2158cd1ae74e28932fcb8cb33d8"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8004F860",
+            "original_name": "func_8004F860",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8004F860",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "4ab5b501102fd0dee84bcd1353498a1a12b16deb8193dbd350410dd12eb50213"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800504CC",
+            "original_name": "func_800504CC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800504CC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "570245f22bec451d015b1931fcf466d28e29f64b437aacbb08aa06e6f8f089ba"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80050AB8",
+            "original_name": "func_80050AB8",
+            "original_type": "s32F()",
+            "type_identity_sha256": "87e05c981c195d7e8851936b6219b18456a0fc55adc7afedefa06683a75d3366",
+            "current_name": "func_80050AB8",
+            "current_type": "s32F()",
+            "declaration_block_sha256": "c890e077f694d316d141c0a2239a284f1551461db482de068d079a7fe6a895e6"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80050D60",
+            "original_name": "func_80050D60",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80050D60",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "065dce777ef31bb0e861a1eef66aba7a9450db60615702521dc7b645704da640"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80051DD8",
+            "original_name": "func_80051DD8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80051DD8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "0c3e7f6173a8a529d88d2c4f9fee25e1bc104c37cfd7fbeee37942bcd833127b"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800530E0",
+            "original_name": "func_800530E0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800530E0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "cd64b6d2c3aeaab6695b43ed2d077869b8424f4e3c16b1e4b0d1eaafc59149b6"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80053EFC",
+            "original_name": "func_80053EFC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80053EFC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "73ef3b4757abea49487bc1fd6e52767873113ea2d2e976f3b01c696bb87eb965"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80054864",
+            "original_name": "func_80054864",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80054864",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "eecb562e740ab18e6970929b483e59198c5cc82ccaa5e02bb9ae579abfe88287"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005493C",
+            "original_name": "func_8005493C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8005493C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "ad0247692839d21eff6cabc2f6911b63d38c2ca4589a7a4d22178f81903b4dfe"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800549E8",
+            "original_name": "func_800549E8",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800549E8",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "d3b06ba0ad3e9bd201f9b6cb5f27762861fc81154c287f55ac9bbabbd7696733"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80054B60",
+            "original_name": "func_80054B60",
+            "original_type": "void*F()",
+            "type_identity_sha256": "e33240a50f5b85900431833c43be4e35cd09c29db2296751a5d7c603a609f32d",
+            "current_name": "func_80054B60",
+            "current_type": "void*F()",
+            "declaration_block_sha256": "93afcb374aee743f2e21ab81dd55f3864a49688fd98b2efcac56902f3770f05c"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005ABC0",
+            "original_name": "func_8005ABC0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8005ABC0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "ea791f26c4cc0187a278b54eda642684e78821537cf667748bb5b73cc1f8b63c"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005AEFC",
+            "original_name": "func_8005AEFC",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8005AEFC",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "2a1192a28d1e9f92c818f036197a41dc3eff0601dcc7c2e2de76dc0468554f5d"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005B06C",
+            "original_name": "func_8005B06C",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8005B06C",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "24fe7e547b80f4a992f384dac112c6c9c434248dd3d1577dab5f4f25bccf72a3"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005B264",
+            "original_name": "func_8005B264",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8005B264",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "788ab60372df360384ebb5cce6bc169285a8c9be5e1e24ab3f95dbda06ae9fad"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005B28C",
+            "original_name": "func_8005B28C",
+            "original_type": "s8F()",
+            "type_identity_sha256": "9441262c37345c9eafd8fe5973f68d3535fb8ed2341caac434e6aaf3d7f23bee",
+            "current_name": "func_8005B28C",
+            "current_type": "s8F()",
+            "declaration_block_sha256": "ed7b10cef0903002b5f386716386f2563cd55c38b30574e413c97e7a31e78370"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005B32C",
+            "original_name": "func_8005B32C",
+            "original_type": "s32F()",
+            "type_identity_sha256": "87e05c981c195d7e8851936b6219b18456a0fc55adc7afedefa06683a75d3366",
+            "current_name": "func_8005B32C",
+            "current_type": "s32F()",
+            "declaration_block_sha256": "8f1d9f3f55339a3dfed934b0ca961b9bcab371bde74164f47d2a3fa3e90889ca"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005B368",
+            "original_name": "func_8005B368",
+            "original_type": "u32F()",
+            "type_identity_sha256": "454383489a8643bd5378a49edf13ba78bab2b1da211886e9dce56a35018fd816",
+            "current_name": "func_8005B368",
+            "current_type": "u32F()",
+            "declaration_block_sha256": "bfd42eaa8963258da8a194c4607b393de9237c27cfff27a1b23439d2bc053a5b"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005BD20",
+            "original_name": "func_8005BD20",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_8005BD20",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "720ded6032a04cf21b667551d93507e3d47fa604d29566fb692f999b5f4bd554"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005E0E0",
+            "original_name": "func_8005E0E0",
+            "original_type": "s32F()",
+            "type_identity_sha256": "87e05c981c195d7e8851936b6219b18456a0fc55adc7afedefa06683a75d3366",
+            "current_name": "func_8005E0E0",
+            "current_type": "s32F()",
+            "declaration_block_sha256": "cca419f8a980606cd8259f7fb60e5b399b3fb60dec01db8550c26e11cc1ff5e6"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x8005EBE0",
+            "original_name": "func_8005EBE0",
+            "original_type": "u32F(s32)",
+            "type_identity_sha256": "eaf180cb5450f5d4098d2fa54626bf22eb575d0139d266522f67386bff4c69c5",
+            "current_name": "func_8005EBE0",
+            "current_type": "u32F(s32)",
+            "declaration_block_sha256": "0cfbb2301cb30845beec2acadc80f5c4bf24975473866e3d9cdb8de5c975510d"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x80081D30",
+            "original_name": "func_80081D30",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_80081D30",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "021cd400afb54561132173c431e66b78fdc077768d52fe9377b92ecc0d9c2a25"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800BCDF0",
+            "original_name": "func_800BCDF0",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800BCDF0",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "1361e9fecce0ece771c87d7e719f604025f860c2d30c209837646b86b0c374b7"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800BCE10",
+            "original_name": "func_800BCE10",
+            "original_type": "voidF()",
+            "type_identity_sha256": "c1b4df60eb0704701ecb454a285bfda47d488f4f7eb8f37a2373b20917e820e5",
+            "current_name": "func_800BCE10",
+            "current_type": "voidF()",
+            "declaration_block_sha256": "709c9156ef1d89cc2619f7720381aa3f0bdfdd59d4fab7286ecd4430d64a7c4c"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800BCE40",
+            "original_name": "func_800BCE40",
+            "original_type": "s32F()",
+            "type_identity_sha256": "87e05c981c195d7e8851936b6219b18456a0fc55adc7afedefa06683a75d3366",
+            "current_name": "func_800BCE40",
+            "current_type": "s32F()",
+            "declaration_block_sha256": "efb6bd8e52d6f67abce8b2568ec8bdaf908d05503c985cea7b0c42c4c9d16714"
+          },
+          {
+            "unit": "GYOZI",
+            "address": "0x800BDC20",
+            "original_name": "func_800BDC20",
+            "original_type": "s32F()",
+            "type_identity_sha256": "87e05c981c195d7e8851936b6219b18456a0fc55adc7afedefa06683a75d3366",
+            "current_name": "func_800BDC20",
+            "current_type": "s32F()",
+            "declaration_block_sha256": "66e88b956964e615f234af89b22e3aa4763ae0a4551da7483e2902241cb0db7d"
+          }
+        ]
+      }
+    ]
+  }
+}

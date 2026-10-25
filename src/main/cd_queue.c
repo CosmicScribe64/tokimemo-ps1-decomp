@@ -3,7 +3,19 @@
 #define MAIN_API_OVERRIDE_func_800AD950 /* implicit int declaration (VSync returns int): a void prototype gives the
                                           * cd_command_pump wait-loop counter $v0 instead of $v1 (T-25123) */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libcd.h"
+#include "libetc.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/import_views/scenes.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "game/word_views.h"
+#include "main/cd.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/cd_queue.data", cd_read_checked);

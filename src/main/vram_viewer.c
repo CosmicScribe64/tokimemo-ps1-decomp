@@ -1,6 +1,16 @@
 /* vram_viewer.c: src/main/8004F6B0.c; T-27059: object [0x8004F6B0,0x8004F870); one mode-0xFE developer viewer scrolls display origin by 16-pixel steps from pad 2 and restores the original video area on exit (reuse reviewed m-menutext filename). Original object 0x8004F6B0-0x8004F870 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libspu.h"
+#include "main/boot.h"
+#include "main/menu.h"
+#include "main/pad.h"
+#include "main/state.h"
+#include "main/pad.h"
 
 void menu_vram_view_mode_handler(void) {
     s32 pad;

@@ -6,9 +6,41 @@
 
 #include "common.h"
 #include "libgpu.h"
-#include "main_api.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/schedule_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "libspu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 
-extern u8 D_8013C3E0;
+extern u8 ending_saved_girl;
 s32 talk_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
 extern u32 ending_audio_scene_tick_timer; /* compares take their own constant register: unsigned (T-9020) */
 extern u8 ending_audio_scene_text_timer; /* T-20930: lbu/sb only in the original (was s8) */

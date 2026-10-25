@@ -4,12 +4,12 @@
 extern s32 D_80122D48; /* main bss; SHOUGATU, DATE and main declare it the same way */
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", D_80134520);
-INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", D_80134524);
-INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", D_8013453C);
-u8 D_80134540[4] = { 0 };
-INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", D_80134544);
-INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", D_80134548);
+INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", valentine_candidate_index);
+INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", valentine_candidate_girls);
+INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", valentine_candidate_count);
+u8 valentine_ranked_girls[4] = { 0 };
+INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", valentine_unmet_megumi_selected);
+INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", valentine_scene_place_index);
 INCLUDE_RODATA("asm/ovl/VALEN/data/VALEN/valentine_girl_selection.data", D_8013454C);
 
 typedef struct {
@@ -51,70 +51,70 @@ void valentine_girl_candidates_select(void) {
     s16 count;
 
     state = &game_state;
-    D_80134520 = 0;
-    D_80134548 = 0;
-    D_8013453C = 0;
-    D_80134544 = 0;
+    valentine_candidate_index = 0;
+    valentine_scene_place_index = 0;
+    valentine_candidate_count = 0;
+    valentine_unmet_megumi_selected = 0;
     count = 0;
-    if (game_state.girls[9].flags.f.met == 0 &&
-        game_state.girls[9].tokimeki >= 20) {
-        D_80134544 = 1;
-        game_state.girls[9].affection = 50;
+    if (game_state.girls[GIRL_MEGUMI].flags.f.met == 0 &&
+        game_state.girls[GIRL_MEGUMI].tokimeki >= VALENTINE_UNMET_MEGUMI_TOKIMEKI_MINIMUM) {
+        valentine_unmet_megumi_selected = 1;
+        game_state.girls[GIRL_MEGUMI].affection = VALENTINE_MEGUMI_INITIAL_AFFECTION;
     }
-    D_80134540[0] = D_80134540[1] = D_80134540[2] = 0xFF;
+    valentine_ranked_girls[0] = valentine_ranked_girls[1] = valentine_ranked_girls[2] = 0xFF;
     rank_scores[0] = rank_scores[1] = rank_scores[2] = 0;
     for (i = 0; i < 11; i++) {
         if (state->girls[i].flags.f.met != 0 &&
-            get_h_tokimeki(i) >= 0x46U) {
+            get_h_tokimeki(i) >= ((unsigned int)VALENTINE_RANK_TOKIMEKI_MINIMUM)) {
             if (rank_scores[0] < state->girls[i].affection + state->girls[i].tokimeki) {
                 rank_scores[2] = rank_scores[1];
                 rank_scores[1] = rank_scores[0];
                 rank_scores[0] = state->girls[i].tokimeki + state->girls[i].affection;
-                D_80134540[2] = D_80134540[1];
-                D_80134540[1] = D_80134540[0];
-                D_80134540[0] = i;
+                valentine_ranked_girls[2] = valentine_ranked_girls[1];
+                valentine_ranked_girls[1] = valentine_ranked_girls[0];
+                valentine_ranked_girls[0] = i;
             } else if (rank_scores[1] < state->girls[i].affection + state->girls[i].tokimeki) {
                 rank_scores[2] = rank_scores[1];
                 rank_scores[1] = state->girls[i].tokimeki + state->girls[i].affection;
-                D_80134540[2] = D_80134540[1];
-                D_80134540[1] = i;
+                valentine_ranked_girls[2] = valentine_ranked_girls[1];
+                valentine_ranked_girls[1] = i;
             } else if (rank_scores[2] < state->girls[i].affection + state->girls[i].tokimeki) {
                 rank_scores[2] = state->girls[i].affection + state->girls[i].tokimeki;
-                D_80134540[2] = i;
+                valentine_ranked_girls[2] = i;
             }
         }
     }
     for (i = 0; i < 11; i++) {
         if ((game_state.girls[i].flags.f.met != 0 ||
-             (i == 9 && D_80134544 == 1)) &&
-            (get_h_yuukou(i) >= 0x32U || (D_80134544 == 1 && i == 9))) {
+             (i == GIRL_MEGUMI && valentine_unmet_megumi_selected == 1)) &&
+            (get_h_yuukou(i) >= ((unsigned int)VALENTINE_CANDIDATE_AFFECTION_MINIMUM) || (valentine_unmet_megumi_selected == 1 && i == GIRL_MEGUMI))) {
             candidates[count] = i;
             count += 1;
-            D_8013453C += 1;
+            valentine_candidate_count += 1;
             game_state.girls[i].flags.f.b8 = 1;
         }
     }
-    if (D_8013453C > 0) {
-        r = (u32)state->frame_count % (u32)D_8013453C;
-        for (i = 0; i < D_8013453C; i++) {
-            D_80134524[i] = candidates[(i + r) % D_8013453C];
+    if (valentine_candidate_count > 0) {
+        r = (u32)state->frame_count % (u32)valentine_candidate_count;
+        for (i = 0; i < valentine_candidate_count; i++) {
+            valentine_candidate_girls[i] = candidates[(i + r) % valentine_candidate_count];
         }
         valentine_candidate_order_shuffle();
     }
-    for (i = 0; i < D_8013453C; i++) {
-        if (D_80134524[i] == 0 && game_state.girls[0].tokimeki >= 70) {
-            D_80134524[i] = D_80134524[D_8013453C - 1];
-            D_80134524[D_8013453C - 1] = 0;
-        } else if (D_80134524[i] == 0 && D_80134544 != 0) {
-            D_80134524[i] = D_80134524[D_8013453C - 1];
-            D_80134524[D_8013453C - 1] = 0;
-        } else if (D_80134524[i] == 0) {
-            D_80134524[i] = D_80134524[0];
-            D_80134524[0] = 0;
+    for (i = 0; i < valentine_candidate_count; i++) {
+        if (valentine_candidate_girls[i] == GIRL_SHIORI && game_state.girls[GIRL_SHIORI].tokimeki >= VALENTINE_RANK_TOKIMEKI_MINIMUM) {
+            valentine_candidate_girls[i] = valentine_candidate_girls[valentine_candidate_count - 1];
+            valentine_candidate_girls[valentine_candidate_count - 1] = GIRL_SHIORI;
+        } else if (valentine_candidate_girls[i] == GIRL_SHIORI && valentine_unmet_megumi_selected != 0) {
+            valentine_candidate_girls[i] = valentine_candidate_girls[valentine_candidate_count - 1];
+            valentine_candidate_girls[valentine_candidate_count - 1] = GIRL_SHIORI;
+        } else if (valentine_candidate_girls[i] == GIRL_SHIORI) {
+            valentine_candidate_girls[i] = valentine_candidate_girls[0];
+            valentine_candidate_girls[0] = GIRL_SHIORI;
         }
-        if (D_80134524[i] == 9 && D_80134544 != 0) {
-            D_80134524[i] = D_80134524[0];
-            D_80134524[0] = 9;
+        if (valentine_candidate_girls[i] == GIRL_MEGUMI && valentine_unmet_megumi_selected != 0) {
+            valentine_candidate_girls[i] = valentine_candidate_girls[0];
+            valentine_candidate_girls[0] = GIRL_MEGUMI;
         }
     }
     mode_step_next();
@@ -131,23 +131,23 @@ s32 valentine_candidate_scene_select(void) {
 
     state = &game_state;
 
-    if (D_80134520 == D_8013453C) {
+    if (valentine_candidate_index == valentine_candidate_count) {
         mode_stage_next();
         return 0;
     }
-    state->current_girl = D_80134524[D_80134520];
+    state->current_girl = valentine_candidate_girls[valentine_candidate_index];
     talk_names_set(state->current_girl);
     D_80134498 = get_h_tokimeki(state->current_girl) >= 0x46U;
     if (state->current_girl == GIRL_SHIORI) {
         D_80134498 = state->girls[0].tokimeki >= 0x46;
     }
     if (state->current_girl == GIRL_MEGUMI) {
-        mode = D_80134544;
+        mode = valentine_unmet_megumi_selected;
         if (mode == 1) {
             D_80134498 = 3;
         }
     }
-    mode = D_80134544;
+    mode = valentine_unmet_megumi_selected;
     if ((state->current_girl == GIRL_SHIORI) && (mode == 1) && (state->girls[0].tokimeki >= 0x46)) {
         D_80134498 = 3;
     }
@@ -222,18 +222,18 @@ void valentine_scene_place_select(void) {
     /* FAKE: dead entry store (every arm below rewrites the global); it gives the promoted
      * global $v0 and the random word $v1 (without it they take $v1 and $a0), as the entry
      * stores of the GYOZI twin func_801393C8 do (T-24130). T-25117 */
-    D_80134548 = state->frame_count & 7;
+    valentine_scene_place_index = state->frame_count & 7;
     if ((state->frame_count & 7) == 0) {
-        D_80134548 = 3;
+        valentine_scene_place_index = 3;
     } else if ((state->frame_count & 7) < 4U) {
-        D_80134548 = 0;
+        valentine_scene_place_index = 0;
     } else {
-        D_80134548 = 1;
+        valentine_scene_place_index = 1;
     }
     if (state->current_girl == GIRL_SHIORI) {
-        D_80134548 = state->frame_count & 1;
+        valentine_scene_place_index = state->frame_count & 1;
     }
-    switch (D_80134548) {
+    switch (valentine_scene_place_index) {
     case 0:
         strcpy(scene_place_title_2, "廊下");
         id = 0x4045;
@@ -252,23 +252,23 @@ void valentine_scene_place_select(void) {
         break;
     }
     if (state->current_girl != GIRL_SHIORI) {
-        if (D_80134520 + 1 == D_8013453C) {
+        if (valentine_candidate_index + 1 == valentine_candidate_count) {
             strcpy(scene_place_title_2, "校門前");
             id = 0x4032;
         }
-        if ((D_80134520 + 2 == D_8013453C) && (D_80134524[D_80134520 + 1] == 0)) {
+        if ((valentine_candidate_index + 2 == valentine_candidate_count) && (valentine_candidate_girls[valentine_candidate_index + 1] == 0)) {
             strcpy(scene_place_title_2, "校門前");
             id = 0x4032;
         }
     }
-    /* FAKE: non-volatile view of D_80134544 (volatile in VALEN.h for valentine_candidate_scene_select, T-24903)
+    /* FAKE: non-volatile view of valentine_unmet_megumi_selected (volatile in VALEN.h for valentine_candidate_scene_select, T-24903)
      * so as1 may hoist its lui above the affinity test, as the original does. T-25117 */
-    if ((D_80134520 + 1 == D_8013453C) && (state->current_girl == GIRL_SHIORI) &&
-        ((state->girls[0].tokimeki >= 0x46) || (*(u8 *)&D_80134544 != 0))) {
+    if ((valentine_candidate_index + 1 == valentine_candidate_count) && (state->current_girl == GIRL_SHIORI) &&
+        ((state->girls[0].tokimeki >= 0x46) || (*(u8 *)&valentine_unmet_megumi_selected != 0))) {
         strcpy(scene_place_title_2, "自宅前");
         id = 0x414C;
     }
-    if ((state->current_girl == GIRL_MEGUMI) && (D_80134544 == 1)) {
+    if ((state->current_girl == GIRL_MEGUMI) && (valentine_unmet_megumi_selected == 1)) {
         strcpy(scene_place_title_2, "教室");
         id = 0x4055;
     }
@@ -305,7 +305,7 @@ void valentine_scene_place_select(void) {
         event_log_add(6, 2);
         break;
     }
-    if ((state->current_girl == GIRL_MEGUMI) && (D_80134544 == 1)) {
+    if ((state->current_girl == GIRL_MEGUMI) && (valentine_unmet_megumi_selected == 1)) {
         state->event_log_count -= 1;
         D_80122D48 = 1;
         event_log_add(6, 3);
@@ -327,7 +327,7 @@ void valentine_scene_place_select(void) {
 }
 
 void valentine_candidate_index_advance(void) {
-    D_80134520 += 1;
+    valentine_candidate_index += 1;
     mode_step_set(1);
 }
 
@@ -340,7 +340,7 @@ void valentine_scene_location_sync(void) {
 }
 
 void valentine_special_candidate_step(void) {
-    if ((D_80134544 == 1) && (game_state.current_girl == GIRL_MEGUMI)) {
+    if ((valentine_unmet_megumi_selected == 1) && (game_state.current_girl == GIRL_MEGUMI)) {
         game_state.mode_step += 6;
         return;
     }
@@ -370,7 +370,7 @@ s32 valentine_megumi_birthday_gate(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &game_state;
-    if ((game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) && (game_state.month == (game_state.player_birthday & 0xF)) && (get_h_tokimeki(g->current_girl) >= 0x46U) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl)) && (g->current_girl == GIRL_MEGUMI)) {
+    if ((game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) && (game_state.month == (game_state.player_birthday & 0xF)) && (get_h_tokimeki(g->current_girl) >= 0x46U) && ((valentine_ranked_girls[0] == g->current_girl) || (valentine_ranked_girls[1] == g->current_girl) || (valentine_ranked_girls[2] == g->current_girl)) && (g->current_girl == GIRL_MEGUMI)) {
         mode_step_next();
         return 0;
     }
@@ -382,7 +382,7 @@ s32 valentine_birthday_scene_gate(void) {
     GameState *g; /* the selected girl is read through a state pointer (lui v0 base for the call argument), T-19016 */
 
     g = &game_state;
-    if ((game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) && (game_state.month == (game_state.player_birthday & 0xF)) && (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != GIRL_SHIORI)) || ((game_state.girls[0].tokimeki >= 0x46) && (g->current_girl == GIRL_SHIORI))) && ((D_80134540[0] == g->current_girl) || (D_80134540[1] == g->current_girl) || (D_80134540[2] == g->current_girl))) {
+    if ((game_state.day == ((u32)(game_state.player_birthday << 0x17) >> 0x1B)) && (game_state.month == (game_state.player_birthday & 0xF)) && (((get_h_tokimeki(g->current_girl) >= 0x46U) && (g->current_girl != GIRL_SHIORI)) || ((game_state.girls[0].tokimeki >= 0x46) && (g->current_girl == GIRL_SHIORI))) && ((valentine_ranked_girls[0] == g->current_girl) || (valentine_ranked_girls[1] == g->current_girl) || (valentine_ranked_girls[2] == g->current_girl))) {
         game_state.saved_mode_stage = game_state.mode_stage;
         game_state.saved_mode_step = game_state.mode_step + 1;
         mode_stage_set(3);
@@ -405,10 +405,10 @@ void valentine_candidate_order_shuffle(void) {
     srand(game_state.frame_count);
     n = rand() % 256 + 10;
     for (i = 0; i < n; i++) {
-        j = rand() % D_8013453C;
-        k = rand() % D_8013453C;
-        t = D_80134524[j];
-        D_80134524[j] = D_80134524[k];
-        D_80134524[k] = t;
+        j = rand() % valentine_candidate_count;
+        k = rand() % valentine_candidate_count;
+        t = valentine_candidate_girls[j];
+        valentine_candidate_girls[j] = valentine_candidate_girls[k];
+        valentine_candidate_girls[k] = t;
     }
 }

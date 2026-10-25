@@ -3,7 +3,16 @@
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libcd.h"
+#include "libsnd.h"
+#include "libspu.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/ovl.h"
+#include "main/ovl.h"
+#include "main/audio.h"
 
 void audio_command_bank_transfer(u16 arg0);
 void audio_command_bank_assign(u16 arg0);

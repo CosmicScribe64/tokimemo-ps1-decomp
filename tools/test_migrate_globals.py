@@ -5,6 +5,7 @@ Run: tools/docker.sh python3 tools/test_migrate_globals.py
 """
 import contextlib
 import io
+import json
 import os
 import sys
 import tempfile
@@ -57,6 +58,7 @@ CONFIG = "aggregate D_80100000 State include/main_api.h\n"
 class MigrateTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
+        self.extra_temps = []
         self.root = self.tmp.name
         for d in ("include/ovl", "src/main", "src/ovl/A", "config"):
             os.makedirs(os.path.join(self.root, d))
@@ -65,6 +67,8 @@ class MigrateTest(unittest.TestCase):
 
     def tearDown(self):
         self.tmp.cleanup()
+        for tmp in self.extra_temps:
+            tmp.cleanup()
 
     def put(self, rel, text):
         with open(os.path.join(self.root, rel), "w") as f:
@@ -73,6 +77,205 @@ class MigrateTest(unittest.TestCase):
     def get(self, rel):
         with open(os.path.join(self.root, rel)) as f:
             return f.read()
+
+    def tree_bytes(self):
+        out = {}
+        for directory, _dirs, files in os.walk(self.root):
+            for name in files:
+                path = os.path.join(directory, name)
+                with open(path, "rb") as fh:
+                    out[os.path.relpath(path, self.root)] = fh.read()
+        return out
+
+    def profile_tree(self):
+        api = os.path.join(self.root, "include", "main_api.h")
+        if os.path.exists(api):
+            os.unlink(api)
+        os.makedirs(os.path.join(self.root, "include", "main"), exist_ok=True)
+        self.put("include/common.h", "typedef signed char s8;\ntypedef unsigned char u8;\n"
+                 "typedef signed short s16;\ntypedef unsigned short u16;\n"
+                 "typedef signed int s32;\ntypedef unsigned int u32;\n")
+        self.put("include/types.h", "typedef struct State {\n"
+                 "    /* 0x00 */ u8 unk_00;\n    /* 0x01 */ s8 unk_01;\n"
+                 "    /* 0x02 */ s16 unk_02;\n    /* 0x04 */ s32 unk_04;\n"
+                 "    /* 0x08 */ u8 unk_08[24];\n} State; /* size 0x20 */\n")
+        self.put("include/main/state.h", '#ifndef MAIN_STATE_H\n#define MAIN_STATE_H\n'
+                 '#include "common.h"\n#include "types.h"\n'
+                 '#ifndef MAIN_API_OVERRIDE_D_80100000\nextern State D_80100000;\n#endif\n#endif\n')
+        self.put("include/main/fields.h", '#ifndef MAIN_FIELDS_H\n#define MAIN_FIELDS_H\n'
+                 '#include "common.h"\n#include "types.h"\n'
+                 'extern s8 D_80100001;\nextern s16 D_80100002;\n#endif\n')
+        self.put("config/header_owners.json", json.dumps({
+            "mode": "topic_only",
+            "owners": [{"path": "main/state.h", "role": "main"},
+                       {"path": "main/fields.h", "role": "main"}],
+            "required_types": ["common.h", "types.h"]}))
+        self.put("config/migrate_globals.txt", "aggregate D_80100000 State include/types.h\n")
+
+    def test_profile_union_keeps_alias_owner_and_rejects_unregistered_keep(self):
+        self.profile_tree()
+        views = mg.Views(self.root)
+        self.assertEqual(views.main["D_80100002"], "s16")
+        self.assertEqual(views.main_owner["D_80100002"], "main/fields.h")
+        self.put("config/migrate_globals.txt", "aggregate D_80100000 State include/types.h\n"
+                 "keep src/main/80010000.c D_80100002 reason\n"
+                 "keep src/main/80010000.c D_80100003 reason\n")
+        aggs, keep = mg.load_config(self.root)
+        lines = mg.check(self.root, aggs, keep)
+        self.assertFalse(any("kept symbol D_80100002 is not declared" in line for line in lines), lines)
+        self.assertTrue(any("kept symbol D_80100003 is not declared in canonical owner(s) "
+                            "include/main/state.h, include/main/fields.h" in line for line in lines), lines)
+
+    def test_profile_canonical_include_first_does_not_hide_matched_view(self):
+        self.profile_tree()
+        self.put("include/ovl/A.h", '#define MAIN_API_OVERRIDE_D_80100002 /* matched byte view */\n'
+                 '#include "main/fields.h"\nextern u8 D_80100002;\n')
+        views = mg.Views(self.root)
+        text = '#include "main/fields.h"\n#include "ovl/A.h"\n'
+        self.assertEqual(views.view(text, "D_80100002"), "u8")
+
+    def test_profile_duplicate_owners_and_missing_path_fail_before_apply(self):
+        self.profile_tree()
+        for decl in ("extern s16 D_80100002;\n", "extern s32 D_80100002;\n"):
+            self.put("include/main/extra.h", '#include "common.h"\n' + decl)
+            self.put("config/header_owners.json", json.dumps({
+                "mode": "topic_only",
+                "owners": [{"path": "main/state.h", "role": "main"},
+                           {"path": "main/fields.h", "role": "main"},
+                           {"path": "main/extra.h", "role": "main"}],
+                "required_types": ["common.h", "types.h"]}))
+            changes, problems = mg.plan(self.root, *mg.load_config(self.root))
+            self.assertEqual(changes, {})
+            self.assertTrue(any("duplicate canonical owner for D_80100002" in p[3] for p in problems), problems)
+            before = self.tree_bytes()
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(mg.main(["--root", self.root, "--apply"]), 1)
+            self.assertEqual(before, self.tree_bytes())
+        self.put("config/header_owners.json", json.dumps({
+            "mode": "topic_only", "owners": [{"path": "main/missing.h", "role": "main"}],
+            "required_types": ["common.h", "types.h"]}))
+        changes, problems = mg.plan(self.root, *mg.load_config(self.root))
+        self.assertEqual(changes, {})
+        self.assertTrue(any("required main owner include/main/missing.h is missing" in p[3]
+                            for p in problems), problems)
+        before = self.tree_bytes()
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(mg.main(["--root", self.root, "--apply"]), 1)
+        self.assertEqual(before, self.tree_bytes())
+
+    def test_profile_kept_and_pending_aliases_remain_declared(self):
+        self.profile_tree()
+        self.put("config/migrate_globals.txt", "aggregate D_80100000 State include/types.h\n"
+                 "keep src/main/80010000.c D_80100001 selected view\n")
+        self.put("src/main/80010000.c", '#include "main/fields.h"\nextern u32 D_80100002;\n'
+                 's32 use(void) { D_80100001 = 1; return D_80100002; }\n')
+        changes, problems = mg.plan(self.root, *mg.load_config(self.root))
+        self.assertTrue(any(item[2] == "D_80100002" for item in problems), problems)
+        fields_path = os.path.join(self.root, "include/main/fields.h")
+        fields = changes.get(fields_path, self.get("include/main/fields.h"))
+        self.assertIn("extern s8 D_80100001;", fields)
+        self.assertIn("extern s16 D_80100002;", fields)
+        source_path = os.path.join(self.root, "src/main/80010000.c")
+        source = changes.get(source_path, self.get("src/main/80010000.c"))
+        self.assertIn("D_80100001 = 1;", source)
+        self.assertIn("extern u32 D_80100002;", source)
+
+    def test_profile_base_owner_cleanup_matches_legacy_c_and_overlay_views(self):
+        original_root = self.root
+        results = []
+        for profile_mode in (False, True):
+            if profile_mode:
+                tmp = tempfile.TemporaryDirectory()
+                self.extra_temps.append(tmp)
+                self.root = tmp.name
+                for directory in ("include/ovl", "src/main", "src/ovl/A", "config"):
+                    os.makedirs(os.path.join(self.root, directory))
+                self.profile_tree()
+                owner_file = "include/main/state.h"
+                source_include = "main/state.h"
+            else:
+                self.root = original_root
+                owner_file = "include/main_api.h"
+                source_include = "main_api.h"
+                api = HEADER.replace("extern State D_80100000;",
+                                     "#ifndef MAIN_API_OVERRIDE_D_80100000\n"
+                                     "extern State D_80100000;\n#endif")
+                self.put(owner_file, api)
+            self.put("src/main/a.c", '#define MAIN_API_OVERRIDE_D_80100000 /* C pointer view */\n'
+                     '#include "%s"\nextern s32 D_80100000;\nextern s8 D_80100001;\n'
+                     'void use(void) { D_80100001 = 1; consume(&D_80100000); }\n' % source_include)
+            if profile_mode:
+                self.put("include/ovl/A.h", '#define MAIN_API_OVERRIDE_D_80100000 /* overlay pointer view */\n'
+                         '#include "main/state.h"\n#include "main/fields.h"\n'
+                         'extern s32 D_80100000;\nextern s8 D_80100001;\n')
+            else:
+                self.put("include/ovl/A.h", '#define MAIN_API_OVERRIDE_D_80100000 /* overlay pointer view */\n'
+                         '#include "main_api.h"\nextern s32 D_80100000;\nextern s8 D_80100001;\n')
+            self.put("src/ovl/A/a.c", '#include "ovl/A.h"\n'
+                     'void use_overlay(void) { D_80100001 = 2; consume(&D_80100000); }\n')
+            self.assertEqual(self.apply(), 0)
+            owner_text = self.get(owner_file)
+            self.assertNotIn("#ifndef MAIN_API_OVERRIDE_D_80100000", owner_text)
+            self.assertIn("extern State D_80100000;", owner_text)
+            self.assertNotIn("MAIN_API_OVERRIDE_D_80100000", self.get("src/main/a.c"))
+            self.assertNotIn("MAIN_API_OVERRIDE_D_80100000", self.get("include/ovl/A.h"))
+            main_text = self.get("src/main/a.c").replace('#include "%s"' % source_include,
+                                                         '#include "CANONICAL"')
+            results.append((main_text, self.get("src/ovl/A/a.c")))
+        self.root = original_root
+        self.assertEqual(results[0][:2], results[1][:2])
+
+    def test_named_aggregate_base_uses_profile_owner_and_matches_legacy_cleanup(self):
+        original_root = self.root
+        results = []
+        original_addr = mg.sym_addr
+
+        def address(name):
+            return 0x80100000 if name == "game_state" else original_addr(name)
+
+        for profile_mode in (False, True):
+            if profile_mode:
+                tmp = tempfile.TemporaryDirectory()
+                self.extra_temps.append(tmp)
+                self.root = tmp.name
+                for directory in ("include/ovl", "src/main", "src/ovl/A", "config"):
+                    os.makedirs(os.path.join(self.root, directory))
+                self.profile_tree()
+                owner_file, source_include = "include/main/state.h", "main/state.h"
+                owner_text = self.get(owner_file).replace("D_80100000", "game_state")
+                self.put(owner_file, owner_text)
+            else:
+                self.root = original_root
+                owner_file, source_include = "include/main_api.h", "main_api.h"
+                owner_text = HEADER.replace("extern State D_80100000;",
+                    "#ifndef MAIN_API_OVERRIDE_game_state\nextern State game_state;\n#endif")
+                self.put(owner_file, owner_text)
+            self.put("config/migrate_globals.txt",
+                     "aggregate game_state State %s\n" % owner_file)
+            self.put("src/main/a.c", '#define MAIN_API_OVERRIDE_game_state /* C registration */\n'
+                     '#include "%s"\nvoid use(void) { }\n' % source_include)
+            if profile_mode:
+                self.put("include/ovl/A.h", '#define MAIN_API_OVERRIDE_game_state /* overlay registration */\n'
+                         '#include "main/state.h"\n')
+            else:
+                self.put("include/ovl/A.h", '#define MAIN_API_OVERRIDE_game_state /* overlay registration */\n'
+                         '#include "main_api.h"\n')
+            self.put("src/ovl/A/a.c", '#include "ovl/A.h"\nvoid use_overlay(void) { }\n')
+            views = mg.Views(self.root)
+            self.assertEqual(views.base_owner["game_state"],
+                             "main/state.h" if profile_mode else "main_api.h")
+            with mock.patch.object(mg, "sym_addr", side_effect=address):
+                self.assertEqual(self.apply(), 0)
+            owner_text = self.get(owner_file)
+            self.assertNotIn("#ifndef MAIN_API_OVERRIDE_game_state", owner_text)
+            self.assertIn("extern State game_state;", owner_text)
+            self.assertNotIn("MAIN_API_OVERRIDE_game_state", self.get("src/main/a.c"))
+            self.assertNotIn("MAIN_API_OVERRIDE_game_state", self.get("include/ovl/A.h"))
+            results.append((self.get("src/main/a.c").replace('#include "%s"' % source_include,
+                                                               '#include "CANONICAL"'),
+                            self.get("src/ovl/A/a.c")))
+        self.root = original_root
+        self.assertEqual(results[0], results[1])
 
     def apply(self):
         return mg.main(["--root", self.root, "--apply"])
@@ -84,6 +287,119 @@ class MigrateTest(unittest.TestCase):
         paths = [p for p, _t in mg.subobjects(t, 0x0F)]
         self.assertEqual(paths[-1], ".unk_08[1].c")
         self.assertEqual(mg.parse_types("typedef struct F { u32 x : 3; u32 y : 30; } F;")["F"].size, 8)
+
+    def test_quoted_type_dependency_in_source_order(self):
+        self.put("include/record.h", "typedef struct Rec { /* 0x00 */ u16 x; } Rec;\n")
+        self.put("include/main_api.h", '#include "record.h"\ntypedef struct State { Rec value[3]; } State;\n')
+        aggregate = mg.load_config(self.root)[0][0]
+        self.assertEqual((aggregate.type.size, aggregate.type.align), (6, 2))
+        self.assertEqual(aggregate.type.fields[0][2].count, 3)
+
+    def test_local_and_project_root_includes(self):
+        os.makedirs(os.path.join(self.root, "include/game"))
+        self.put("include/game/record.h", "typedef union W { u32 w; u8 b[4]; } W;\n")
+        self.put("include/game/state.h", '#include "record.h"\ntypedef struct State { W value; } State;\n')
+        self.put("include/main_api.h", '#include "game/state.h"\n')
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 4)
+
+    def test_include_expands_at_its_parent_source_position(self):
+        self.put("include/second.h", "typedef struct Second { First x; } Second;\n")
+        self.put("include/main_api.h", 'typedef struct First { u32 x; } First;\n#include "second.h"\ntypedef struct State { Second x; } State;\n')
+        text = mg.read_type_context(self.root, "include/main_api.h")
+        self.assertLess(text.index("struct First"), text.index("struct Second"))
+        self.assertLess(text.index("struct Second"), text.index("struct State"))
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 4)
+
+    def test_guarded_repeat_and_cycle(self):
+        self.put("include/a.h", '#ifndef A_H\n#define A_H\n#include "b.h"\ntypedef struct W { u32 x; } W;\n#endif\n')
+        self.put("include/b.h", '#ifndef B_H\n#define B_H\n#include "a.h"\n#endif\n')
+        self.put("include/main_api.h", '#include "a.h"\n#include "a.h"\ntypedef struct State { W x; } State;\n')
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 4)
+
+    def test_unguarded_repeat_cycle_terminates_once(self):
+        self.put("include/a.h", '#include "b.h"\ntypedef struct W { u32 x; } W;\n')
+        self.put("include/b.h", '#include "a.h"\n')
+        self.put("include/main_api.h", '#include "a.h"\n#include "b.h"\ntypedef struct State { W x; } State;\n')
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 4)
+
+    def test_missing_quoted_dependency(self):
+        self.put("include/main_api.h", '#include "missing.h"\n' + HEADER)
+        with self.assertRaisesRegex(SystemExit, r"main_api.h:1: missing quoted include missing.h"):
+            mg.load_config(self.root)
+
+    def test_commented_include_ignored_and_offset_retained(self):
+        self.put("include/main_api.h", '/*\n#include "missing.h"\n*/\n// #include "also_missing.h"\n' + HEADER)
+        aggregate = mg.load_config(self.root)[0][0]
+        self.assertEqual(aggregate.type.size, 0x20)
+        self.assertIn("/* 0x18 */", mg.read_type_context(self.root, "include/main_api.h"))
+
+    def test_duplicate_alias_has_both_origins(self):
+        self.put("include/a.h", "typedef struct W { u32 x; } W;\n")
+        self.put("include/b.h", "typedef union W { u32 y; } W;\n")
+        self.put("include/main_api.h", '#include "a.h"\n#include "b.h"\n' + HEADER)
+        with self.assertRaisesRegex(SystemExit, r"include/b.h:1: duplicate record typedef W .*include/a.h:1"):
+            mg.load_config(self.root)
+
+    def test_common_guard_context_skips_second_definition(self):
+        self.put("include/a.h", '#ifndef RECORD_H\n#define RECORD_H\ntypedef struct W { u32 x; } W;\n#endif\n')
+        self.put("include/b.h", '#ifndef RECORD_H\n#define RECORD_H\ntypedef struct W { u32 x[2]; } W;\n#endif\n')
+        self.put("include/main_api.h", '#include "a.h"\n#include "b.h"\ntypedef struct State { W x; } State;\n')
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 4)
+
+    def test_unsupported_condition_with_include_fails(self):
+        self.put("include/main_api.h", '#if MODE == 2\n#include "missing.h"\n#endif\n' + HEADER)
+        with self.assertRaisesRegex(SystemExit, "unsupported condition around include"):
+            mg.load_config(self.root)
+
+    def test_unsupported_condition_with_type_fails(self):
+        self.put("include/main_api.h", '#if 0\ntypedef\nstruct Extra { u32 x; } Extra;\n#endif\n' + HEADER)
+        with self.assertRaisesRegex(SystemExit, "unsupported condition around record definition"):
+            mg.load_config(self.root)
+
+    def test_predefined_nested_guard_does_not_add_inactive_record(self):
+        self.put("include/main_api.h", '#define MODE\n#ifndef MODE\n#define MODE\ntypedef struct W { u32 x[99]; } W;\n#endif\n' + HEADER)
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 0x20)
+
+    def test_nested_guard_under_ambiguous_condition_rejected(self):
+        prefix = '#if FEATURE\n#ifndef MODE\n#define MODE\ntypedef struct W { u32 x; } W;\n#endif\n#endif\n'
+        self.put("include/main_api.h", prefix + HEADER)
+        with self.assertRaisesRegex(SystemExit, "unsupported condition around record definition"):
+            mg.load_config(self.root)
+
+    def test_prior_conditional_define_makes_later_guard_ambiguous(self):
+        prefix = '#if FEATURE\n#define MODE\n#endif\n#ifndef MODE\n#define MODE\ntypedef struct W { u32 x; } W;\n#endif\n'
+        self.put("include/main_api.h", prefix + HEADER)
+        with self.assertRaisesRegex(SystemExit, "unsupported condition around record definition"):
+            mg.load_config(self.root)
+
+    def test_unconditional_undef_restores_known_guard(self):
+        prefix = '#define MODE\n#undef MODE\n#ifndef MODE\n#define MODE\ntypedef struct Extra { u32 x; } Extra;\n#endif\n'
+        self.put("include/main_api.h", prefix + HEADER)
+        aggregate = mg.load_config(self.root)[0][0]
+        self.assertEqual(aggregate.types["Extra"].size, 4)
+
+    def test_conditional_fields_do_not_become_unconditional_layout(self):
+        self.put("include/main_api.h", 'typedef struct State {\n#if MODE == 2\nu32 optional;\n#endif\nu32 x;\n} State;\n')
+        with self.assertRaisesRegex(SystemExit, r"main_api.h:2: unsupported directive inside record State"):
+            mg.load_config(self.root)
+
+    def test_nonconditional_directive_inside_record_rejected(self):
+        self.put("include/main_api.h", 'typedef struct State {\n#define FIELD_SIZE 4\nu32 x;\n} State;\n')
+        with self.assertRaisesRegex(SystemExit, "unsupported directive inside record State"):
+            mg.load_config(self.root)
+
+    def test_harmless_conditions_and_macro_body_ignored(self):
+        prefix = '#if PLATFORM == 2\n#define HIDDEN ' + chr(92) + '\n'
+        self.put("include/main_api.h", prefix + 'typedef struct W { u32 x[9]; } W;\n#endif\n' + HEADER)
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 0x20)
+
+    def test_dependency_offset_error_and_unneeded_error_not_hidden(self):
+        self.put("include/bad.h", "typedef struct Bad { /* 0x02 */ u8 x; } Bad;\n")
+        self.put("include/main_api.h", '#include "bad.h"\n' + HEADER)
+        self.assertEqual(mg.load_config(self.root)[0][0].type.size, 0x20)
+        self.put("include/main_api.h", '#include "bad.h"\ntypedef struct State { Bad x; } State;\n')
+        with self.assertRaises(mg.LayoutError):
+            mg.load_config(self.root)
 
     def test_bad_offset_comment(self):
         types = mg.parse_types("typedef struct B { /* 0x00 */ u8 a; /* 0x02 */ s16 b; /* 0x03 */ u8 c; } B;")

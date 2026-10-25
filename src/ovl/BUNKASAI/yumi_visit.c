@@ -3,7 +3,7 @@
 #include "ovl/BUNKASAI.h"
 
 void culture_yumi_visit_entry(void) {
-    /* FAKE: D_80122EBC reached through D_80122EB8 keeps the selector load behind this store (as1 does not
+    /* FAKE: game_mode_scene_girl reached through D_80122EB8 keeps the selector load behind this store (as1 does not
      * move a load over a store through the same symbol); the real source has one object. T-9140 */
     (&D_80122EB8)[1] = 0xA;
     switch (D_80122EB8) {

@@ -6,7 +6,39 @@
 
 #include "common.h"
 #include "psx_types.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libgte.h"
+#include "libspu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/boot.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/debug.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/minigame.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/memory_card.h"
+#include "main/message.h"
+#include "main/prim.h"
+#include "main/settings.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/view.h"
+#include "main/vram.h"
 
 void shooter_animate_enemy(s32 arg0);
 extern s16 shooter_enemy_keys_a[], shooter_enemy_keys_b[], shooter_enemy_keys_c[], shooter_enemy_keys_d[], shooter_enemy_keys_e[];
@@ -272,7 +304,7 @@ extern ShooterParticle shooter_player_primary_shots[];
 s32 shooter_hit_ships_with_bullets(void);
 s32 shooter_hit_ships_with_bodies(void);
 s32 shooter_collect_items(void);
-s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2);
+s32 shooter_hit_enemies_with_shots(ShooterParticle *shot_pool, s32 arg1, s32 wingman_shots);
 extern ShooterParticle shooter_wingman_primary_shots[];
 /* shooter_draw_item: per-kind frame count, CLUT row, U and V tables (T-25110) */
 extern u8 shooter_item_frame_count[8], shooter_item_clut_row[8], shooter_item_u[8], shooter_item_v[8];
@@ -740,6 +772,18 @@ enum ShooterSecondary {
     SHOOTER_SECONDARY_HOMING = 0, /* player actor auxiliary value 0 dispatches to homing fire */
     SHOOTER_SECONDARY_SPREAD = 1 /* player actor auxiliary value 1 dispatches to spread fire */
 };
+
+/* T-27056 R4 particle flag definitions; existing SHOOTER_PARTICLE_ACTIVE preserved verbatim. */
+#define SHOOTER_PARTICLE_INACTIVE 0x0 /* No active shot or low-kind bits. */
+#define SHOOTER_PARTICLE_PAIRED_HIT 0x20 /* Selects the every-other-frame two-shot hit path. */
+#define SHOOTER_PARTICLE_KIND_MASK 0xf /* Low four bits select shot damage kind. */
+
+/* T-27056 R4 enemy_flags; distinct particle/enemy byte interpretations; no width or expression changes. */
+#define SHOOTER_ENEMY_COLLISION_ACTIVE 0x80 /* Enemy view flag byte1 active collision bit. */
+
+/* T-27056 R4 enemy_hit_flags; distinct particle/enemy byte interpretations; no width or expression changes. */
+#define SHOOTER_ENEMY_HITTABLE 0x1 /* Enemy stats3 hittable flag. */
+#define SHOOTER_ENEMY_CLEAR_HIT_FLAGS_MASK 0xf0 /* Preserves high nibble after enemy HP reaches zero. */
 
 #endif
 

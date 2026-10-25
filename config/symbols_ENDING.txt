@@ -126,6 +126,7 @@ ending_scene_step_index = 0x8013C35C;
 ending_audio_scene_tick_timer = 0x8013C360;
 ending_audio_scene_text_timer = 0x8013C364;
 ending_miharu_chance_by_level = 0x8013C3B0;
+ending_saved_girl = 0x8013C3E0;
 ending_companion_scene_step_callbacks = 0x8013C3E4;
 ending_secondary_scene_step_callbacks = 0x8013C490;
 ending_scene_animation_asset_records = 0x8013C4C0;

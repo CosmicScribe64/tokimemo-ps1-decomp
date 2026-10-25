@@ -1495,7 +1495,7 @@ void date_place_setup_shrine(void) {
     D_800CA236 = 0;
     D_800CA2FC = 0;
     D_80122D08 = 0x22;
-    D_80122E9C = 0;
+    normal_date_minigame_result = 0;
     bg_read_sub2(0x42CF);
     event_log_add(1, D_80122D08);
     mode_step_next();
@@ -2768,18 +2768,18 @@ void date_shrine_result_face(void) {
 
     if (game_state.year == 0x5F) {
         portrait_layout_set(1);
-    } else if (D_80122E9C == 0) {
+    } else if (normal_date_minigame_result == 0) {
         portrait_layout_set(1);
-    } else if (D_80122E9C == 1) {
+    } else if (normal_date_minigame_result == 1) {
         portrait_layout_set(2);
     } else {
         result_and_yuina_id = 2;
         tokimeki_bonus_result = 3;
-        if (D_80122E9C == result_and_yuina_id) {
+        if (normal_date_minigame_result == result_and_yuina_id) {
             portrait_layout_set(3);
-        } else if ((D_80122E9C == tokimeki_bonus_result) && (game_state.current_girl != result_and_yuina_id)) {
+        } else if ((normal_date_minigame_result == tokimeki_bonus_result) && (game_state.current_girl != result_and_yuina_id)) {
             portrait_layout_set(0);
-        } else if (D_80122E9C == tokimeki_bonus_result) {
+        } else if (normal_date_minigame_result == tokimeki_bonus_result) {
             portrait_layout_set(1);
         } else {
             portrait_layout_set(3);
@@ -2848,8 +2848,8 @@ void date_shrine_return_setup(void) {
 }
 
 void date_shrine_stall_reward(void) {
-    talk_group += D_80122E9C;
-    switch (D_80122E9C) {
+    talk_group += normal_date_minigame_result;
+    switch (normal_date_minigame_result) {
     case 0:
         game_state.girls[game_state.current_girl].tokimeki += 1;
         game_state.girls[game_state.current_girl].affection += 1;

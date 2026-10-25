@@ -1,6 +1,25 @@
 /* menu_speaker_girl.c: src/main/8004F870.c; T-27059: object [0x8004F870,0x80053650); one mixed object for menu/choice navigation, speaker labels and talk-text/voice steps, girl name/score/state queries, birthday and club queries; do not split (reuse reviewed m-menutext filename). Original object 0x8004F870-0x80053650 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game/girl.h"
+#include "game/menu_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/audio.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/scenes.h"
+#include "main/menu.h"
+#include "main/prim.h"
+#include "main/speaker.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "game/menu_records.h"
 
 /* Menu palette colors, data island 0x800E3680..0x800E36BF. */
 u32 menu_bar_style[16] = {0};
@@ -96,6 +115,7 @@ s32 menu_check(checked_menu, check_pointer_x, check_pointer_y)
     return menu_check_1(checked_menu, check_pointer_x, check_pointer_y);
 }
 
+/* Hit-tests the selected menu against pointer coordinates. */
 s32 menu_check_1(hit_test_menu, hit_test_x, hit_test_y)
     s32 hit_test_menu;
     s16 hit_test_x;
@@ -128,6 +148,7 @@ s32 menu_check_1(hit_test_menu, hit_test_x, hit_test_y)
     return hit_item;
 }
 
+/* Updates menu hover state from the current cursor selection. */
 s32 menu_check_2(cursor_menu, arg1, arg2)
     s32 cursor_menu;
     s32 arg1;
@@ -344,6 +365,7 @@ s32 menu_cursor_to_edge(s32 menu, s32 reverse) {
     return -1;
 }
 
+/* Finds the nearest menu item in the requested direction. */
 s32 get_near_menu(s32 axis, s32 direction, s32 menu) {
     GameState *g;
     s32 item_count;
@@ -435,6 +457,7 @@ s32 get_near_menu(s32 axis, s32 direction, s32 menu) {
     return -1;
 }
 
+/* Encodes menu-bar ordering, color and style flags for a menu item. */
 void menu_bar_color(s32 menu_index, s32 rgb_color, s32 ordering_slot, s32 style_flags) {
     if (menu_index >= 0x10) {
         menu_bar_style[0] = 0x832F7FAF;
@@ -463,6 +486,7 @@ void menu_bar_show(menu)
     }
 }
 
+/* Configures the centered two- or three-choice menu rows. */
 void x_taku_menu_set(s32 menu, s32 count)
 {
     s32 pad; /* FAKE: unused local shifts array homes down by 8 bytes within the 0x70 frame. T-24111 */
@@ -483,6 +507,7 @@ void x_taku_menu_set(s32 menu, s32 count)
     menu_set(menu, 2, x, text_row_y, width, height);
 }
 
+/* Places up to three choice labels in the centered choice menu. */
 void x_taku_string_set(s32 first_label, s32 second_label, s32 third_label, s32 choice_count) {
     set_kanji_string(-0x78, 0x32, 0, first_label, 0);
     set_kanji_string(-0x78, 0x42, 0, second_label, 0);
@@ -663,10 +688,12 @@ void sndi(u8 *text, s32 row, s32 speaker_style) {
     }
 }
 
+/* Stores the supplied character ID in the current girl slot. */
 void set_c_girl(u8 girl_id) {
     game_state.current_girl = girl_id;
 }
 
+/* Copies the character name form selected by the supplied girl ID. */
 s32 get_g_name(u8 *name_buf, s32 girl_id) {
     if (girl_id == 0) {
         strcpy(name_buf, "詩織");
@@ -685,6 +712,7 @@ s32 get_g_name(u8 *name_buf, s32 girl_id) {
     return 1;
 }
 
+/* Builds the player-name form used by the selected character to address the player. */
 void get_p_name(u8 *name_buf, u32 girl_form) {
     switch (girl_form) {
     case 0:
@@ -858,6 +886,7 @@ s32 get_g_zyotai_h(s32 girl_id) {
     return 0;
 }
 
+/* Populates a menu with eligible heroine entries and their positions. */
 void menu_girl_taku_set(s32 menu, s32 *last_text_entry_count)
 {
     s32 i;
@@ -1323,6 +1352,7 @@ u32 get_h_yuukou(s32 girl_id) {
     return weighted_affection & 0xFF;
 }
 
+/* Fills the eleven-entry table with heroine tokimeki scores. */
 void get_h_tokimeki_table(u8 *scores_out) {
     s32 i;
 
@@ -1331,6 +1361,7 @@ void get_h_tokimeki_table(u8 *scores_out) {
     }
 }
 
+/* Fills the eleven-entry table with heroine affection scores. */
 void get_h_yuukou_table(u8 *scores_out) {
     s32 i;
 
@@ -1339,6 +1370,7 @@ void get_h_yuukou_table(u8 *scores_out) {
     }
 }
 
+/* Checks whether the current date matches the selected birthday. */
 void birth_day_check(s32 birthday_subject) {
     birth_day_check_days(birthday_subject, game_state.month, game_state.day);
 }

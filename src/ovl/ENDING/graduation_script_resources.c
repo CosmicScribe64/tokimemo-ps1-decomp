@@ -2,7 +2,18 @@
 #define MAIN_API_OVERRIDE_get_now_k /* implicit declaration, as matched (main_api.h: u8(void)) */
 #include "common.h"
 #include "ovl/ENDING.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/game_mode.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
 
 void ending_graduation_dialogue_resource_table_init(void) {
     ending_dialogue_resource_tables[0][0] = 0x801F00B8;

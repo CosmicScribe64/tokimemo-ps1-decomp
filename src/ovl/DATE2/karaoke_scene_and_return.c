@@ -41,7 +41,7 @@ INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5BC);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5C0);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5C4);
-INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5C8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", amusement_karaoke_audio_frames);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5CC);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5D0);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5D4);
@@ -52,7 +52,7 @@ s16 D_8013B5E4[4] = { 0, 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5EC);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5F0);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5F4);
-INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5F8);
+INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", amusement_karaoke_return_talk_group);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B5FC);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B600);
 INCLUDE_RODATA("asm/ovl/DATE2/data/DATE2/karaoke_scene_and_return.data", D_8013B634);
@@ -121,7 +121,7 @@ void amusement_karaoke_return_frame_update(void) {
 }
 
 void amusement_karaoke_return_talk_run(void) {
-    talk_tables = &D_8013B5F8;
+    talk_tables = &amusement_karaoke_return_talk_group;
     D_800CA138 = &D_8013B5FC;
     D_800CA13C = D_8013B5EC;
     D_800CA140 = D_8013B5F0;
@@ -247,7 +247,7 @@ void amusement_karaoke_return_dialogue_setup(void) {
         D_8013B5F4 = D_8013B5C0;
         break;
     }
-    D_8013B5F8 = 0;
+    amusement_karaoke_return_talk_group = 0;
     D_8013B5FC = 0;
     mode_step_next();
 }
@@ -397,24 +397,24 @@ s32 amusement_karaoke_cd_audio_request(void) {
         cd_audio_request_set(second.unk_00, second.unk_04, 15);
     }
     audio_command(0x300);
-    D_8013B5C8 = 0;
+    amusement_karaoke_audio_frames = 0;
     game_state.substep++;
 }
 
 void amusement_karaoke_result_update(void) {
     u8 t;
 
-    if ((cd_last_command() == 9) && (D_8013B5C8 >= 0x79)) {
+    if ((cd_last_command() == 9) && (amusement_karaoke_audio_frames >= 0x79)) {
         mode_step_next();
         D_80122CDC = 0;
         game_state.girls[game_state.current_girl].tokimeki += 2;
         game_state.girls[game_state.current_girl].affection += 1;
         check_para_limit();
-    } else if ((game_state.pad_pressed & 0x400040) && (D_8013B5C8 >= 0x79)) {
+    } else if ((game_state.pad_pressed & 0x400040) && (amusement_karaoke_audio_frames >= 0x79)) {
         t = get_g_zyotai_s(game_state.current_girl) & 0x7F;
-        D_8013B5F8 = D_8013B5F8 + (t == 2) + ((t == 3) * 2) + 1;
+        amusement_karaoke_return_talk_group = amusement_karaoke_return_talk_group + (t == 2) + ((t == 3) * 2) + 1;
         if (game_state.current_girl == GIRL_YUMI) {
-            D_8013B5F8 = 2;
+            amusement_karaoke_return_talk_group = 2;
         }
         mode_step_next();
         k_reset(1);
@@ -424,7 +424,7 @@ void amusement_karaoke_result_update(void) {
         check_para_limit();
     }
     if (cd_audio_state() & 4) {
-        D_8013B5C8 += 1;
+        amusement_karaoke_audio_frames += 1;
     }
     switch (D_8013B5C4) {
     case 2:
@@ -454,18 +454,18 @@ void amusement_karaoke_result_table_display_30(void) {
     selected = 0xFF;
     index = 0;
     do {
-        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        if (amusement_karaoke_audio_frames >= thresholds.values[index]) selected = index;
         index++;
     } while (index < 30);
-    if (D_8013B5C8 == 200) {
+    if (amusement_karaoke_audio_frames == 200) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5D4)[0], 0);
         k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5D4)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D4)[1], 0));
     }
-    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+    if (selected != 0xFF && amusement_karaoke_audio_frames == thresholds.values[selected]) {
         k_reset(1);
         amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
-    if (D_8013B5C8 == 3540) k_reset(1);
+    if (amusement_karaoke_audio_frames == 3540) k_reset(1);
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
@@ -479,19 +479,19 @@ void amusement_karaoke_result_table_display_51(void) {
     selected = 0xFF;
     index = 0;
     do {
-        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        if (amusement_karaoke_audio_frames >= thresholds.values[index]) selected = index;
         index++;
     } while (index < 51);
-    if (D_8013B5C8 == 1500) {
+    if (amusement_karaoke_audio_frames == 1500) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5D8)[0], 0);
         set_kanji_string((s16)(strlen(((u8 **)D_8013B5D8)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[1], 0);
         k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5D8)[0]) * 7 + strlen(((u8 **)D_8013B5D8)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[2], 0));
     }
-    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+    if (selected != 0xFF && amusement_karaoke_audio_frames == thresholds.values[selected]) {
         k_reset(1);
         amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
-    if (D_8013B5C8 == 6364) k_reset(1);
+    if (amusement_karaoke_audio_frames == 6364) k_reset(1);
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
@@ -505,19 +505,19 @@ void amusement_karaoke_result_table_display_39(void) {
     selected = 0xFF;
     index = 0;
     do {
-        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        if (amusement_karaoke_audio_frames >= thresholds.values[index]) selected = index;
         index++;
     } while (index < 39);
-    if (D_8013B5C8 == 1200) {
+    if (amusement_karaoke_audio_frames == 1200) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5DC)[0], 0);
         set_kanji_string((s16)(strlen(((u8 **)D_8013B5DC)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[1], 0);
         k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5DC)[0]) * 7 + strlen(((u8 **)D_8013B5DC)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[2], 0));
     }
-    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+    if (selected != 0xFF && amusement_karaoke_audio_frames == thresholds.values[selected]) {
         k_reset(1);
         amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
-    if (D_8013B5C8 == 5400) k_reset(1);
+    if (amusement_karaoke_audio_frames == 5400) k_reset(1);
 }
 
 /* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
@@ -531,19 +531,19 @@ void amusement_karaoke_result_table_display_81(void) {
     selected = 0xFF;
     index = 0;
     do {
-        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        if (amusement_karaoke_audio_frames >= thresholds.values[index]) selected = index;
         index++;
     } while (index < 81);
-    if (D_8013B5C8 == 30) {
+    if (amusement_karaoke_audio_frames == 30) {
         set_kanji_string(-116, 54, 0, (s32)((u8 **)D_8013B5E0)[0], 0);
         set_kanji_string((s16)(strlen(((u8 **)D_8013B5E0)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[1], 0);
         k_disp_start(set_kanji_string((s16)(strlen(((u8 **)D_8013B5E0)[0]) * 7 + strlen(((u8 **)D_8013B5E0)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[2], 0));
     }
-    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+    if (selected != 0xFF && amusement_karaoke_audio_frames == thresholds.values[selected]) {
         k_reset(1);
         amusement_karaoke_result_text_page_display((s16)(selected | 0));
     }
-    if (D_8013B5C8 == 4620) k_reset(1);
+    if (amusement_karaoke_audio_frames == 4620) k_reset(1);
 }
 
 /* FAKE: reuse p for the last call result to save one cfe vreg slot (-2532) so uopt places the two spill homes at sp+0x44/0x48. T-24094 */

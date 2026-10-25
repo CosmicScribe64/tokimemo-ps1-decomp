@@ -1,6 +1,26 @@
 /* memory_card.c: src/main/80053650.c; T-27059: object [0x80053650,0x80056300); BIOS memory-card events, card polling/file jobs and system/game save images dominate; first two helpers set/decode MDEC still-image buffers, so keep the complete original object (reuse m-flow candidate). Original object 0x80053650-0x80056300 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game/save_image.h"
+#include "game/system_data.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi_legacy.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libpress.h"
+#include "main/bg.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/resident_views.h"
+#include "main/memory_card.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "game/word_views.h"
+#include "main/bg.h"
+#include "main/memory_card.h"
 
 void bg_still_buffers_set(s32 arg0, s32 arg1, s32 arg2) {
     DecDCTReset(0);
@@ -47,6 +67,7 @@ u16 arg3;
     return 1;
 }
 
+/* Initializes software and hardware memory-card events and starts card services. */
 void card_ev_set(void) {
     Sw_Start();
     Hw_Start();
@@ -56,6 +77,7 @@ void card_ev_set(void) {
     _card_auto(0);
 }
 
+/* Opens and enables software memory-card event notifications. */
 void Sw_Start(void) {
     EnterCriticalSection();
     memory_card_software_event_done = OpenEvent(0xF4000001, 4, 0x2000, 0);
@@ -69,6 +91,7 @@ void Sw_Start(void) {
     ExitCriticalSection();
 }
 
+/* Opens and enables hardware memory-card event notifications. */
 void Hw_Start(void) {
     EnterCriticalSection();
     memory_card_hardware_event_done = OpenEvent(0xF0000011, 4, 0x2000, 0);
@@ -82,6 +105,7 @@ void Hw_Start(void) {
     ExitCriticalSection();
 }
 
+/* Polls software memory-card events and returns the detected result code. */
 u8 Sw_Test(void) {
     game_state.memory_card_result = 0;
     if (TestEvent(memory_card_software_event_done) != 0) {
@@ -99,6 +123,7 @@ u8 Sw_Test(void) {
     return game_state.memory_card_result;
 }
 
+/* Clears pending software memory-card event notifications. */
 void Sw_Clear(void) {
     TestEvent(memory_card_software_event_done);
     TestEvent(memory_card_software_event_error);
@@ -106,6 +131,7 @@ void Sw_Clear(void) {
     TestEvent(memory_card_software_event_new_card);
 }
 
+/* Waits for a hardware memory-card event and returns its result code. */
 u8 Hw_Test(void) {
     game_state.memory_card_result = 0;
     do {
@@ -123,6 +149,7 @@ u8 Hw_Test(void) {
     return game_state.memory_card_result;
 }
 
+/* Clears pending hardware memory-card event notifications. */
 void Hw_Clear(void) {
     TestEvent(memory_card_hardware_event_done);
     TestEvent(memory_card_hardware_event_error);
@@ -130,6 +157,7 @@ void Hw_Clear(void) {
     TestEvent(memory_card_hardware_event_new_card);
 }
 
+/* Closes the hardware memory-card event handles. */
 void Hw_Stop(void) {
     EnterCriticalSection();
     CloseEvent(memory_card_hardware_event_done);

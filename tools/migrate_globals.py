@@ -36,7 +36,7 @@ be used only inside the functions they name; `--check` lists every other use (wr
 
 The layout comes from the header itself: `typedef struct|union Name { ... } Name;` blocks with
 fields of the fixed-width types, pointers, arrays, bit-fields (packed into u32 units) and other
-typedefs of the same header. Field offsets follow the MIPS ABI alignment; a `/* 0xNN */` comment
+typedefs reached through quoted includes in source order. Field offsets follow the MIPS ABI alignment; a `/* 0xNN */` comment
 in front of a field must equal the computed offset (checked).
 
 A use of `D_X` becomes the path of the subobject at offset X - base whose type equals the old view
@@ -317,6 +317,116 @@ def parse_view(spell, types):
 
 # ------------------------------------------------------------------------------------- config
 
+def read_type_context(root, header):
+    """Read quoted project includes once in source order, preserving layout comments.
+
+    This is not a preprocessor: ordinary #ifndef/#define guards are recognized,
+    while other conditions enclosing includes or record definitions are rejected.
+    Conditions around unrelated code (such as include_asm macros) need no evaluation.
+    Angle includes provide no project typedef context. Missing quoted includes and
+    duplicate record aliases fail explicitly; visited paths terminate repeats/cycles.
+    """
+    visited, guards, uncertain, chunks = set(), set(), set(), []
+
+    def masked(text):
+        return re.sub(r"/\*.*?\*/|//[^\n]*", lambda m: re.sub(r"[^\n]", " ", m[0]), text, flags=re.S)
+
+    def fail(path, line, message):
+        raise SystemExit("migrate_globals: %s:%d: %s" % (os.path.relpath(path, root), line, message))
+
+    def visit(path):
+        path = os.path.realpath(path)
+        if path in visited:
+            return
+        visited.add(path)
+        text = read(path)
+        code = masked(text)
+        # Stripping a directive inside a record would turn a previously rejected
+        # conditional/macro field layout into a guessed unconditional layout.
+        for record in re.finditer(r"typedef\s+(struct|union)\s+(\w+)?\s*\{(.*?)\}\s*(\w+)\s*;", code, re.S):
+            directive = re.search(r"^[ \t]*#", record[3], re.M)
+            if directive:
+                line = code.count("\n", 0, record.start(3) + directive.start()) + 1
+                fail(path, line, "unsupported directive inside record " + record[4])
+        raw, clean = text.splitlines(keepends=True), code.splitlines(keepends=True)
+        stack, i = [], 0
+        while i < len(raw):
+            line, value = i + 1, clean[i]
+            original = raw[i]
+            i += 1
+            directive = re.match(r"^\s*#\s*(\w+)\b(.*)", value)
+            if not directive:
+                if not any(s[0] == "skip" for s in stack) and any(s[0] == "conditional" for s in stack) and re.search(r"\btypedef\b", value):
+                    fail(path, line, "unsupported condition around record definition")
+                if not any(s[0] == "skip" for s in stack):
+                    chunks.append((path, line, original))
+                continue
+            # A continued macro body is not C declaration context.
+            while value.rstrip().endswith("\\") and i < len(raw):
+                value = value.rstrip()[:-1] + clean[i]
+                i += 1
+            directive = re.match(r"^\s*#\s*(\w+)\b(.*)", value, re.S)
+            op, arg = directive[1], directive[2].strip()
+            if op in ("if", "ifdef", "ifndef"):
+                # Only a conventional matching define makes this an ordinary guard.
+                following = next((s.strip() for s in clean[i:] if s.strip()), "")
+                ordinary = op == "ifndef" and arg not in uncertain and re.fullmatch(r"[A-Za-z_]\w*", arg) and re.fullmatch(r"#\s*define\s+" + re.escape(arg), following)
+                state = "skip" if any(s[0] == "skip" for s in stack) or ordinary and arg in guards else "guard" if ordinary else "conditional"
+                stack.append((state, arg))
+            elif op in ("else", "elif"):
+                if not stack:
+                    fail(path, line, "unexpected #" + op)
+                stack[-1] = ("conditional", arg)
+            elif op == "endif":
+                if not stack:
+                    fail(path, line, "unexpected #endif")
+                stack.pop()
+            elif op in ("define", "undef") and not any(s[0] == "skip" for s in stack):
+                macro = re.match(r"[A-Za-z_]\w*", arg)
+                if macro:
+                    name = macro[0]
+                    if any(s[0] == "conditional" for s in stack):
+                        uncertain.add(name)
+                    else:
+                        uncertain.discard(name)
+                        if op == "define":
+                            guards.add(name)
+                        else:
+                            guards.discard(name)
+            elif op == "include" and not any(s[0] == "skip" for s in stack):
+                if re.fullmatch(r"<[^>\n]+>", arg):
+                    continue
+                if any(s[0] == "conditional" for s in stack):
+                    fail(path, line, "unsupported condition around include")
+                quoted = re.fullmatch(r'"([^"\n]+)"', arg)
+                if quoted:
+                    candidates = [os.path.join(os.path.dirname(path), quoted[1]), os.path.join(root, "include", quoted[1])]
+                    target = next((p for p in candidates if os.path.isfile(p)), None)
+                    if target is None:
+                        fail(path, line, "missing quoted include " + quoted[1])
+                    visit(target)
+                elif not re.fullmatch(r"<[^>\n]+>", arg):
+                    fail(path, line, "unsupported macro include " + arg)
+        if stack:
+            fail(path, len(raw), "unterminated header condition")
+
+    visit(os.path.join(root, header))
+    text = "".join(chunk for _, _, chunk in chunks)
+    aliases, origins, offset, origin = {}, [], 0, 0
+    for path, line, chunk in chunks:
+        origins.append((offset, path, line))
+        offset += len(chunk)
+    for match in re.finditer(r"typedef\s+(?:struct|union)\s+(?:\w+\s*)?\{.*?\}\s*(\w+)\s*;", masked(text), re.S):
+        while origin + 1 < len(origins) and origins[origin + 1][0] <= match.start():
+            origin += 1
+        _, path, line = origins[origin]
+        name = match[1]
+        if name in aliases:
+            fail(path, line, "duplicate record typedef %s (first at %s)" % (name, aliases[name]))
+        aliases[name] = "%s:%d" % (os.path.relpath(path, root), line)
+    return text
+
+
 class Aggregate:
     def __init__(self, base, tname, header, root):
         self.base, self.tname, self.header = base, tname, header
@@ -325,7 +435,7 @@ class Aggregate:
             raise SystemExit("migrate_globals: base %s must be a D_XXXXXXXX name or a name of the main "
                              "exe's symbol files" % base)
         self.addr = addr
-        text = read(os.path.join(root, header))
+        text = read_type_context(root, header)
         self.types = parse_types(strip_comments_keep_offsets(text))
         if tname not in self.types:
             raise SystemExit("migrate_globals: %s does not define %s" % (header, tname))
@@ -396,24 +506,46 @@ def includes(text):
 
 
 class Views:
-    """The declaration each file sees for a symbol (own > included header > main header)."""
+    """The declaration each file sees and explicit canonical-owner provenance."""
 
     def __init__(self, root, inc="include"):
         self.root, self.inc = root, inc
+        include_root = os.path.join(root, inc)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import sync_protos as sp
+        self.owner_model = sp.Model(include_root)
+        self.profile = self.owner_model.profile
+        self.profile_errors = []
+        if self.profile is not None:
+            self.profile_errors = sp.profile_integrity_problems(self.owner_model, include_root)
+            self.profile_errors += sp.canonical_problems(self.owner_model)
+            self.canonical = tuple(self.owner_model.canonical)
+            owner_provenance = dict(self.owner_model.api_owner)
+        else:
+            # Preserve the pre-profile behavior in legacy and pilot fixtures.
+            self.canonical = ("main_api.h",) if os.path.isfile(os.path.join(include_root, "main_api.h")) else ()
+            owner_provenance = {sym: "main_api.h" for sym, _typ, _raw
+                                in self.owner_model.own.get("main_api.h", [])}
+        self.canonical_set = set(self.canonical)
         self.headers = {}
-        for dirpath, _d, files in os.walk(os.path.join(root, inc)):
-            for f in files:
-                if f.endswith(".h"):
-                    p = os.path.join(dirpath, f)
-                    self.headers[os.path.relpath(p, os.path.join(root, inc))] = declarations(read(p))
-        self.main = dict(self.headers.get("main_api.h", {}))
+        for h, p in self.owner_model.headers.items():
+            self.headers[h] = declarations(read(p))
+        self.main, self.main_owner = {}, owner_provenance
+        self.base_owner = self.main_owner
+        self.main_declarations = {}
+        for h in self.canonical:
+            for sym, typ in self.headers.get(h, {}).items():
+                self.main_declarations.setdefault(sym, []).append((h, typ))
+                if sym not in self.main:
+                    self.main[sym] = typ
+                    self.main_owner.setdefault(sym, h)
 
     def header_view(self, h, sym, seen=None):
         seen = seen or set()
         if h in seen or h not in self.headers:
             return None
         seen.add(h)
-        if sym in self.headers[h] and h != "main_api.h":
+        if sym in self.headers[h] and h not in self.canonical_set:
             return self.headers[h][sym]
         p = os.path.join(self.root, self.inc, h)
         for i in includes(read(p)):
@@ -431,7 +563,6 @@ class Views:
             if v:
                 return v
         return self.main.get(sym)
-
 
 # ------------------------------------------------------------------------------------- mapping
 
@@ -645,6 +776,8 @@ def src_files(root, src="src"):
 def plan(root, aggs, keep):
     """{path: new text} for --apply, and the problems [(path, line, sym, msg)]."""
     views = Views(root)
+    if views.profile_errors:
+        return {}, [(CONFIG, 0, "owner-profile", problem) for problem in views.profile_errors]
     keep_all = set().union(*keep.values()) if keep else set()
     changes, problems = {}, []
     rewritten = {}
@@ -670,12 +803,15 @@ def plan(root, aggs, keep):
         if new != text:
             changes[path] = new
         problems += [(rel, ln, s, m) for ln, s, m in probs]
-    for h in sorted(views.headers, key=lambda x: (x == "main_api.h", x)):   # main_api.h last
+    owner_order = {h: i for i, h in enumerate(views.canonical)}
+    ordered_headers = sorted(views.headers, key=lambda h: (h in views.canonical_set,
+                                                           owner_order.get(h, 0) if h in views.canonical_set else h))
+    for h in ordered_headers:   # canonical owners are processed last in manifest order
         p = os.path.join(root, "include", h)
         text = read(p)
         names = absorbed_names(text, aggs, keep_all)
         bases = []
-        if h != "main_api.h":
+        if h not in views.canonical_set:
             bases = [g.base for g in aggs if re.search(r"MAIN_API_OVERRIDE_%s\b" % g.base, text)]
             if bases:
                 text2 = re.sub(r"^[ \t]*extern[^;\n]*\b(%s)\b[^;\n]*;[^\n]*\n?" % "|".join(bases), "", text, flags=re.M)
@@ -684,15 +820,19 @@ def plan(root, aggs, keep):
         else:
             text2 = text
         new = drop_declarations(text2, names, bases)
-        if h == "main_api.h":   # guards of base overrides that no file defines any more
-            for g in aggs:
-                if not any(re.search(r"#[ \t]*define[ \t]+MAIN_API_OVERRIDE_%s\b" % g.base, read(q))
-                           for q in src_files(root) + [os.path.join(root, "include", x) for x in views.headers
-                                                       if x != "main_api.h"]
-                           if q not in changes) and not any(
-                               re.search(r"#[ \t]*define[ \t]+MAIN_API_OVERRIDE_%s\b" % g.base, t)
-                               for t in changes.values()):
-                    new = re.sub(OVR_GUARD_RE % g.base, lambda m: m.group(1), new, flags=re.M)
+        for g in aggs:
+            if views.base_owner.get(g.base) != h:
+                continue
+            active_override = False
+            candidates = src_files(root) + [os.path.join(root, "include", x)
+                                            for x in views.headers if x not in views.canonical_set]
+            for q in candidates:
+                content = changes.get(q, read(q))
+                if re.search(r"#[ \t]*define[ \t]+MAIN_API_OVERRIDE_%s\b" % g.base, content):
+                    active_override = True
+                    break
+            if not active_override:
+                new = re.sub(OVR_GUARD_RE % g.base, lambda m: m.group(1), new, flags=re.M)
         if new != text:
             changes[p] = new
     return changes, problems
@@ -701,6 +841,8 @@ def plan(root, aggs, keep):
 def check(root, aggs, keep):
     """Problems as printable lines (uses of absorbed symbols with the field to use)."""
     views = Views(root)
+    if views.profile_errors:
+        return ["owner profile: " + problem for problem in views.profile_errors]
     lines = []
     for path in src_files(root):
         rel = os.path.normpath(os.path.relpath(path, root))
@@ -733,11 +875,15 @@ def check(root, aggs, keep):
         proofs = getattr(syms, "proofs", {})
         for sym in sorted(syms):
             if sym not in views.main:
-                lines.append("%s: %s: kept symbol %s is not declared in include/main_api.h" % (CONFIG, p, sym))
+                owners = ", ".join("include/" + h for h in views.canonical) or "the legacy main_api.h"
+                lines.append("%s: %s: kept symbol %s is not declared in canonical owner(s) %s" %
+                             (CONFIG, p, sym, owners))
             for proof in proofs.get(sym) or [None]:
                 ok, why = keep_evidence(root, aggs, p, sym, proof)
                 if not ok:
-                    lines.append("%s: %s: keep %s: %s" % (CONFIG, p, sym, why))
+                    owner = views.main_owner.get(sym)
+                    suffix = " (canonical owner include/%s)" % owner if owner else ""
+                    lines.append("%s: %s: keep %s: %s%s" % (CONFIG, p, sym, why, suffix))
             if proofs.get(sym) and sym not in getattr(syms, "plain", ()):
                 lines += stray_uses(root, p, sym, proofs[sym])
     return lines
@@ -879,7 +1025,8 @@ def main(argv=None):
         print("globals OK")
         return 0
     changes, problems = plan(a.root, aggs, keep)
-    for path in sorted(changes):
+    # plan() inserts sources, noncanonical headers, then canonical owners in manifest order.
+    for path in changes:
         print("%s %s" % ("would rewrite" if a.dry_run else "rewrote", os.path.relpath(path, a.root)))
         if a.apply:
             write(path, changes[path])

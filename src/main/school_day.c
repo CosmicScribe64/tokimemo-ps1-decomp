@@ -1,9 +1,37 @@
 /* school_day.c: original object text 0x800737A0-0x80075320 in config/objects/main.txt; matched C implements week_day, parameter_up_down, vacation setup and week-end exit; original object boundary unchanged. Original object 0x800737A0-0x80075320 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/day_event.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/holiday.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/school_day.h"
+#include "main/sd.h"
+#include "main/settings.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 #include "main/school_day.h"
 #include "main/schedule.h"
 #include "main/day_event.h"
+#include "main/game_mode.h"
+#include "main/holiday.h"
+#include "game/day_event.h"
 
 void week_day_main(void);
 void week_day_exit(void);
@@ -422,7 +450,7 @@ u8 school_day_sd_actors_init(void) {
 /* Play the result sound and apply command/practice effects; after animation, advance when the old result timer is >=13; force exit when the step timer reaches 601 */
 s32 week_day_main0(void) {
     s16 *state;
-    s32 sp28;
+    s32 daily_command;
 
     if (!(D_80120652 & 1)) {
         if (D_80120658 == 0) {
@@ -435,10 +463,10 @@ s32 week_day_main0(void) {
                 audio_command(0x502);
                 break;
             }
-            sp28 = game_state.day_events[game_state.day_event_index].girl;
-            parameter_up_down(sp28, 0, (s32) game_state.day_events[game_state.day_event_index].scene);
+            daily_command = game_state.day_events[game_state.day_event_index].girl;
+            parameter_up_down(daily_command, 0, (s32) game_state.day_events[game_state.day_event_index].scene);
             parameter_show_init();
-            if (sp28 == 4) {
+            if (daily_command == SCHOOL_DAY_COMMAND_CLUB) {
                 game_state.clubs[(game_state.player_flags.h >> 12) % 11].practice_points += 1;
             }
         }

@@ -1,7 +1,44 @@
 /* home_screens.c: src/main/8005A0B0.c; T-27059: original object [0x8005A0B0,0x80061710); command/calendar/card/settings screens plus club, rumor and Christmas/New Year prep; reuse prior reviewed m-sysmenu recommendation. Original object 0x8005A0B0-0x80061710 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_prim_gradient_rect /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game/system_data.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/boot.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/club.h"
+#include "main/cursor.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/minigame_scenes_school_events.h"
+#include "main/import_views/resident_views.h"
+#include "main/import_views/scenes.h"
+#include "main/memory_card.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/prim.h"
+#include "main/rumor.h"
+#include "main/settings.h"
+#include "main/speaker.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/game_mode.h"
+#include "main/settings.h"
 
 void prim_gradient_rect();
 
@@ -2496,6 +2533,7 @@ void settings_mascot_done(void) {
     game_state.menu_cursor_0 = 6;
 }
 
+/* Runs the club-joining screen steps and refreshes its HUD. */
 void join_club(void) {
     switch (game_state.mode_step) {
     case 0:
@@ -2518,6 +2556,7 @@ void join_club(void) {
     hud_cursor_update();
 }
 
+/* Initializes the club list and club-joining screen. */
 void join_club_init(void) {
     message_window_title_show(0);
     icon_disp_switch(0);
@@ -2526,6 +2565,7 @@ void join_club_init(void) {
     mode_step_next();
 }
 
+/* Handles club-list navigation and confirms the selected club. */
 s32 join_club_select(void) {
     menu_check(1, (s32) cursor_x, (s32) cursor_y);
     menu_cursor_update(1);
@@ -2551,6 +2591,7 @@ s32 join_club_select(void) {
 
 /* FAKE: scalar-byte selector view keeps the switch index in v1; s32 fall-through
  * preserves its v0 copy. T-12030. */
+/* Displays the club enrollment message and the recurring club-day notice for club IDs 6 and above. */
 s32 join_club_message(void) {
     u8 buf[0x44];
 
@@ -2594,6 +2635,7 @@ s32 join_club_message(void) {
     }
 }
 
+/* Closes the club-joining screen and returns to the schedule. */
 void join_club_exit(void) {
     actor_clear_upper();
     game_mode_set(GAME_MODE_SCHEDULE);
@@ -2667,10 +2709,12 @@ void rumor_wait_voice(void) {
         return;
     }
 }
+/* Returns from the rumor report to the day screen. */
 void uwasa_exit0(void) {
     game_mode_set(GAME_MODE_DAY_SCREEN);
 }
 
+/* Advances the rumor report through voice playback and exit. */
 s32 uwasa0(void) {
     switch (game_state.mode_step) {
     case 0:
@@ -2682,6 +2726,7 @@ s32 uwasa0(void) {
     }
 }
 
+/* Runs the rumor report setup and display stages. */
 void uwasa_main(void) {
     switch (game_state.mode_stage) {
     case 0:
@@ -2699,6 +2744,7 @@ void uwasa_main(void) {
     dec_bg_draw(0);
     hud_screen_frame_draw(1);
 }
+/* Initializes the Christmas preparation scene and its room background. */
 s32 pre_xmas_init(void) {
     switch (game_state.mode_step) {
     case 0:
@@ -2725,6 +2771,7 @@ s32 pre_xmas_init(void) {
     }
 }
 
+/* Waits for XA completion, then selects GAME_MODE_NEW_YEAR_A. */
 s32 pre_xmas(void) {
     switch (game_state.substep) {
     case 0:
@@ -2793,6 +2840,7 @@ void settings_new_year_card_scene_start(void) {
     game_mode_set(GAME_MODE_NEW_YEAR_B);
 }
 
+/* Loads or waits for the New Year preparation background. */
 void pre_syogatu_init1(void) {
     s32 t;
 
@@ -2812,6 +2860,7 @@ void pre_syogatu_init1(void) {
     bg_wipe_step();
 }
 
+/* Finishes loading and installs the New Year preparation background. */
 void pre_syogatu_init2(void) {
     if (cd_read_sync_status() & 1) {
         dec_bg_show_set(1, dec_bg_decode_to_vram(1));
@@ -2824,6 +2873,7 @@ INCLUDE_RODATA("asm/data/main/home_screens.rodata", D_800B0B64);
 
 INCLUDE_RODATA("asm/data/main/home_screens.rodata", D_800B0B6C);
 
+/* Starts the New Year preparation message and advances its stage. */
 void pre_syogatu_init3(void) {
     text_system_reset();
     message_window_set_title(D_800B0B64);
@@ -2834,6 +2884,7 @@ void pre_syogatu_init3(void) {
     mode_stage_next();
 }
 
+/* Runs the New Year preparation scene setup steps. */
 s32 pre_syogatu_init(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
@@ -2852,6 +2903,7 @@ s32 pre_syogatu_init(void) {
     }
 }
 
+/* Runs the New Year card-delivery message and background transition. */
 void pre_syogatu0(void) {
     s32 temp_v0;
 
@@ -2902,6 +2954,7 @@ void pre_syogatu0(void) {
     }
 }
 
+/* Displays the New Year card sender list and enters the next mode. */
 s32 pre_syogatu1(void) {
     s32 girl_index;
     s32 sender_count;

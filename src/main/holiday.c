@@ -1,7 +1,49 @@
 /* holiday.c: src/main/80075320.c; T-27059: original object [0x80075320,0x800789E0); mode 0x46 holiday menu, activities, phone, magazine, appointment and club flows; reuse reviewed m-holiday name. Original object 0x80075320-0x800789E0 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_girl_scores /* this object calls it as void (no v0 result in the call block, holiday_shared_birthday_scene_due); main_api.h has s32 */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/day_event.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/girl.h"
+#include "game/player_flags.h"
+#include "game/schedule_records.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/club.h"
+#include "main/cursor.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/holiday.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/pad.h"
+#include "main/schedule.h"
+#include "main/school_day.h"
+#include "main/sd.h"
+#include "main/settings.h"
+#include "main/speaker.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/game_mode.h"
+#include "main/pad.h"
+#include "main/holiday.h"
+#include "game/day_event.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 u8 holiday_dial_keys[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
@@ -1184,12 +1226,14 @@ void holiday_magazine_show(void) {
     }
 }
 
+/* Closes the holiday magazine and returns to the schedule stage. */
 void magazine_exit(void) {
     schedule_progress_state_update();
     hizuke_disp_switch(1);
     mode_stage_set(0);
 }
 
+/* Runs the holiday telephone screen and refreshes the calendar panel. */
 void holiday_tel(void) {
     game_state.mode_step_timer.w += 1;
     switch (game_state.mode_step) {
@@ -1206,6 +1250,7 @@ void holiday_tel(void) {
     cal_base_show();
 }
 
+/* Initializes the holiday telephone screen and phone book. */
 void holiday_tel_init(void) {
     text_system_reset();
     actor_clear_upper();
@@ -1219,6 +1264,7 @@ void holiday_tel_init(void) {
     mode_step_next();
 }
 
+/* Handles phone-book selection and starts the selected call. */
 void holiday_tel_call(void) {
     menu_check(0, cursor_x, cursor_y);
     menu_bar_show(0);
@@ -1246,6 +1292,7 @@ void holiday_tel_call(void) {
 }
 
 /* Implicit int: holiday_tel calls it before this definition. */
+/* Plays the selected phone number digits, then opens the matching telephone profile. */
 s32 holiday_tel_exit(void) {
     GameState *g = &game_state;
     s32 phone_digit_index;
@@ -1287,6 +1334,7 @@ s32 holiday_tel_exit(void) {
     }
 }
 
+/* Builds the telephone number labels and phone-book entries. */
 void telephone_class_init(void) {
     s32 i;
     /* FAKE: T-20940, a second local above the four row arrays puts them at sp+0xBC/0xA0/0x84/0x68 as in the
@@ -1337,6 +1385,7 @@ void telephone_class_init(void) {
     ((Actor *)actor_pool)[96].y = -0x13;
 }
 
+/* Initializes the Sunday club activity menu. */
 void holiday_club_init(void) {
     message_window_title_show(0);
     text_system_reset();
@@ -1380,6 +1429,7 @@ void holiday_club_select(void) {
     }
 }
 
+/* Closes the club activity and may enter a quarterly practice match. */
 void holiday_club_exit(void) {
     actor_clear_upper();
     if (girl_player_sports_club_check() == 1 && (u32)(game_state.day + 6) / 7 == 3 && game_state.month % 3U == 0 && game_state.weekday == WEEKDAY_SUNDAY) {
@@ -1389,6 +1439,7 @@ void holiday_club_exit(void) {
     mode_stage_set(5);
 }
 
+/* Closes the club departure scene after a confirm or cancel input. */
 void holiday_taibu_club_exit(void) {
     actor_clear_upper();
     if (game_state.pad_pressed & 0x60) {
@@ -1396,6 +1447,7 @@ void holiday_taibu_club_exit(void) {
     }
 }
 
+/* Runs the Sunday club activity and departure steps. */
 s32 holiday_club(void) {
     switch (game_state.mode_step) {
     case 0:
@@ -1413,6 +1465,7 @@ s32 holiday_club(void) {
     }
 }
 
+/* Closes the club-joining flow and returns to the holiday stage. */
 void holiday_club_join_exit(void) {
     actor_clear_upper();
     icon_disp_switch(1);

@@ -49,7 +49,7 @@ void trip_saki_same_club_talk_state_update(void) {
 
 void trip_saki_same_club_script_offset(void) {
     if (game_state.substep == 0) {
-        if (D_8013C97C == 4 && ((u32)game_state.girls[4].flags.b[2] >> 4) == ((u32)game_state.player_flags.h >> 0xC)) {
+        if (trip_saved_girl == 4 && ((u32)game_state.girls[4].flags.b[2] >> 4) == ((u32)game_state.player_flags.h >> 0xC)) {
             D_800CA2DC = 0x2E;
         }
         game_state.substep = 1;
@@ -363,9 +363,9 @@ s32 trip_status_four_yoshio_detour_select(void) {
     u8 t; /* FAKE: narrow type shifts the temporary numbering to the original's (permuter, T-10310) */
 
     t = get_g_zyotai_s(game_state.current_girl);
-    D_8013C97C = 0xFF;
+    trip_saved_girl = 0xFF;
     if ((t & 0x7F) == 4 && D_800CA2EC == 0) {
-        D_8013C97C = game_state.current_girl;
+        trip_saved_girl = game_state.current_girl;
         if (game_state.current_girl == GIRL_MIO) {
             state = game_state.mode_step;
             normal_date_girl_out();
@@ -376,7 +376,7 @@ s32 trip_status_four_yoshio_detour_select(void) {
         D_800CA2EC = 1;
         game_state.current_girl = GIRL_YOSHIO;
         talk_names_set(0xD);
-        get_g_name(girl_name_buf, D_8013C97C);
+        get_g_name(girl_name_buf, trip_saved_girl);
         mode_step_next();
     } else {
         mode_step_next();

@@ -1,6 +1,9 @@
 /* mouse.c: src/main/80059710.c; T-27059: object [0x80059710,0x80059A20); mouse-port sample buffers, state/read, sensitivity and range setup, scaled cursor movement and bounds (reuse h-cdio candidate). Original object 0x80059710-0x80059A20 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "main/mouse.h"
+#include "main/mouse.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 /* The two mouse port buffers share one owned pointer table. T-12010. */

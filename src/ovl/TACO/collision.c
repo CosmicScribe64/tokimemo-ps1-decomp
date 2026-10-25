@@ -26,7 +26,7 @@ void shooter_run_collisions(void) {
 
 /* FAKE: s32 with no return keeps v0 live at the exit, so as1 fills the first branch slot of the
  * particle loop from the latch (void moves the kind test there), as in shooter_hit_ships_with_bullets. T-25111. */
-s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2) {
+s32 shooter_hit_enemies_with_shots(ShooterParticle *shot_pool, s32 arg1, s32 wingman_shots) {
     /* The order of these scalars sets their frame homes (i third, damage tenth). T-25111. */
     s32 x;
     s32 y;
@@ -39,10 +39,10 @@ s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2) {
     s32 kind;
     u32 damage;
     s32 width;
-    ShooterShotDamage damageTable;
+    ShooterShotDamage damage_table;
     u32 scores[256];
 
-    damageTable = shooter_shot_damage_by_kind;
+    damage_table = shooter_shot_damage_by_kind;
     /* FAKE: through the byte view, tools/cvt_pass.py does not see a switch on an unsigned global
      * and leaves global copy propagation on. The y distances then fold into their compares, as in
      * the original (no `move a0,v0`), and the stage is still compared in v1. T-25111. */
@@ -61,21 +61,21 @@ s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2) {
         break;
     }
     shooter_hit_sound_played = 0;
-    if (arg0->flags & 0x20) {
+    if (shot_pool->flags & SHOOTER_PARTICLE_PAIRED_HIT) {
         for (i = 0; i != 2; i++) {
             if (game_state.frame_count & 1) {
-                x = (i + arg0)->x;
-                y = (i + arg0)->y;
-                if (arg2 == 0) z = shooter_actors[0].z;
+                x = (i + shot_pool)->x;
+                y = (i + shot_pool)->y;
+                if (wingman_shots == 0) z = shooter_actors[0].z;
                 else z = shooter_actors[8].z;
                 for (j = 16; j != 63; j++) {
-                    if (((j + shooter_actors)->flag_bytes[1] & 0x80) && ((j + shooter_actors)->stats[3] & 1) && (j + shooter_actors)->stats[1] != 0 && (j + shooter_actors)->stats[0] != 0) {
+                    if (((j + shooter_actors)->flag_bytes[1] & SHOOTER_ENEMY_COLLISION_ACTIVE) && ((j + shooter_actors)->stats[3] & SHOOTER_ENEMY_HITTABLE) && (j + shooter_actors)->stats[1] != 0 && (j + shooter_actors)->stats[0] != 0) {
                         radius = (j + shooter_actors)->stats[0] * 16;
                         xdist = abs(x - (j + shooter_actors)->x);
                         ydist = abs(y - (j + shooter_actors)->y);
                         if (xdist < radius + 0x18 && ydist < radius + 0x18) {
                             if ((j + shooter_actors)->z < z) {
-                                if (shooter_hit_sound_played == 0 && arg2 == 0) {
+                                if (shooter_hit_sound_played == 0 && wingman_shots == 0) {
                                     shooter_hit_sound_played = 1;
                                     shooter_play_se(1, 0x507);
                                 }
@@ -93,29 +93,29 @@ s32 shooter_hit_enemies_with_shots(ShooterParticle *arg0, s32 arg1, s32 arg2) {
         }
     }
     for (i = 0; i < 16; i++) {
-        if (((i + arg0)->flags & 0x80) && (kind = (i + arg0)->flags & 15) != 0) {
-            x = (i + arg0)->x;
-            y = (i + arg0)->y;
-            z = (i + arg0)->z;
-            damage = damageTable.by_kind[kind];
+        if (((i + shot_pool)->flags & SHOOTER_PARTICLE_ACTIVE) && (kind = (i + shot_pool)->flags & SHOOTER_PARTICLE_KIND_MASK) != 0) {
+            x = (i + shot_pool)->x;
+            y = (i + shot_pool)->y;
+            z = (i + shot_pool)->z;
+            damage = damage_table.by_kind[kind];
             if (kind == 8) width = 0x60;
             else width = 0x30;
             for (j = 16; j != 63; j++) {
-                if (((j + shooter_actors)->flag_bytes[1] & 0x80) && ((j + shooter_actors)->stats[3] & 1) && (j + shooter_actors)->stats[1] != 0 && (j + shooter_actors)->stats[0] != 0) {
+                if (((j + shooter_actors)->flag_bytes[1] & SHOOTER_ENEMY_COLLISION_ACTIVE) && ((j + shooter_actors)->stats[3] & SHOOTER_ENEMY_HITTABLE) && (j + shooter_actors)->stats[1] != 0 && (j + shooter_actors)->stats[0] != 0) {
                     radius = (j + shooter_actors)->stats[0] * 16;
                     if (abs(z - (j + shooter_actors)->z) < radius + 0x100) {
                         xdist = abs(x - (j + shooter_actors)->x);
                         ydist = abs(y - (j + shooter_actors)->y);
                         if (xdist < radius + width && ydist < radius + width) {
-                            if (shooter_hit_sound_played == 0 && arg2 == 0) {
+                            if (shooter_hit_sound_played == 0 && wingman_shots == 0) {
                                 shooter_hit_sound_played = 1;
                                 shooter_play_se(1, 0x507);
                             }
                             if (damage < (j + shooter_actors)->stats[1]) (j + shooter_actors)->stats[1] -= damage;
                             else (j + shooter_actors)->stats[1] = 0;
-                            if ((j + shooter_actors)->stats[1] == 0) (j + shooter_actors)->stats[3] &= 0xF0;
-                            (i + arg0)->age = 0;
-                            (i + arg0)->flags = 0;
+                            if ((j + shooter_actors)->stats[1] == 0) (j + shooter_actors)->stats[3] &= SHOOTER_ENEMY_CLEAR_HIT_FLAGS_MASK;
+                            (i + shot_pool)->age = 0;
+                            (i + shot_pool)->flags = SHOOTER_PARTICLE_INACTIVE;
                             shooter_spawn_hit_spark(((j + shooter_actors)->x + x) / 2, ((j + shooter_actors)->y + y) / 2, z - 0x200);
                             shooter_score += scores[(shooter_actors + j)->stats[2] % 17] / 10 * damage;
                             if ((j + shooter_actors)->stats[1] == 0) {

@@ -1,6 +1,14 @@
 /* reload_executable.c: src/main/80056300.c; T-27059: object [0x80056300,0x800563F0); its sole O.BIN function exit_function shuts down CD/SPU/timers/callbacks and calls LoadExec for PSX.EXE; preserve O.BIN function name. This is not STR playback; use full executable rather than prior h-cdio abbreviation reload_exe. Original object 0x80056300-0x800563F0 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi_legacy.h"
+#include "libcd.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libpress.h"
+#include "libsnd.h"
+#include "main/import_views/resident_views.h"
 
 /* Shuts down CD, SPU, timers and callbacks and reloads PSX.EXE from the disc (mode 0xFF). */
 void exit_function(void) {

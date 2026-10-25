@@ -34,7 +34,32 @@ void spot_nozomi_scene1_steps_run(void);
 #define MAIN_API_OVERRIDE_D_801206B0 /* EVENT overlay data at this address, s32 (main_api.h: volatile s16) */
 
 #include "common.h"
-#include "game.h"
+#define SPOT_PRIVATE_DATA_VIEWS
+#include "common.h"
+#include "game/display_records.h"
+#include "game/draw_records.h"
+#include "game/girl.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libsnd.h"
+#include "main/holiday.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/pad.h"
+#ifdef SPOT_PRIVATE_DATA_VIEWS
+/* BEGIN T-27061 EVENT private scalar views */
+extern s32 D_801206E8;
+extern s32 D_8012076C;
+extern s32 D_80120798;
+extern s32 D_80121884;
+extern s16 D_801220EC;
+extern u8 D_8012277C;
+extern s32 D_80122740;
+/* END T-27061 EVENT private scalar views */
+#endif
+#undef SPOT_PRIVATE_DATA_VIEWS
 
 void func_80011DFC();
 void spot_yoshio_scene1_run();
@@ -1668,8 +1693,9 @@ void spot_ride_setup(void);
 #define OVL_EVENT_STEP_TABLES_T17400
 /* Step tables (T-3330, T-17400): one handler per scene step; each handler copies its table to the stack
  * whole and calls tbl.f[D_800B1AF6]. NN is the run of code pointers in the data. The types and externs were
- * local to each .c file before; the tables of the unmatched handlers are declared here too. D_801220EC (SpotYukoYuinaAyakoMiraAndYoshioSceneStepTable)
- * and D_8012277C (SpotAyakoYukariAquariumBowlingAndKaraokeStepTable) stay main_api.h scalars read through a cast: main_api.h has no override guard for them. */
+ * local to each .c file before; the tables of the unmatched handlers are declared here too. D_801220EC and
+ * D_8012277C retain EVENT-private scalar views under SPOT_PRIVATE_DATA_VIEWS; table casts and public views
+ * in other units remain unchanged. */
 typedef struct {
     void (*f[14])();
 } SpotMiharuScene3And5StepTable; /* size 0x38 */
@@ -2000,5 +2026,7 @@ enum SpotGirlStage {
 
 /* Only the i/j loop-bound comparisons; factor arithmetic 5-i, j+3 and affinity adjustments remain literal. */
 #define SPOT_OUTCOME_TRIVIA_THRESHOLD_COUNT 5 /* Both sign branches scan five trivia thresholds: 100, 75, 50, 25, zero. */
+
+#include "ovl/EVENT_main_imports.h"
 
 #endif

@@ -1,14 +1,26 @@
 /* gpu_primitives.c: src/main/800490C0.c; Original object 0x800490C0-0x80049FF0: primitive work-area allocation, FT4 sprite and tpage/environment primitives, pulsing light triangle and Gouraud gradient-box drawing. Original object 0x800490C0-0x80049FF0 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/prim.h"
+#include "main/state.h"
 #include "psx_types.h"
 
+/* Resets a draw-buffer primitive arena to the supplied base address. */
 void SetWorkBase(s32 arg0, s32 arg1) {
     game_state.prim_arena[arg1].base = arg0;
     game_state.prim_arena[arg1].size = 0x10C00;
     game_state.prim_arena[arg1].used = 0;
 }
 
+/* Allocates aligned bytes from a draw-buffer primitive arena. */
 s32 GetWorkBase(s32 arg0, s32 arg1) {
     s32 ret;
 
@@ -17,6 +29,7 @@ s32 GetWorkBase(s32 arg0, s32 arg1) {
     return ret;
 }
 
+/* Emits a visible sprite quad as a textured GPU polygon. */
 void sprite_set_gpu_poly_ft4(SpriteQuad *arg0, s32 arg1, s32 arg2) {
     u8 *p;
 
@@ -66,6 +79,7 @@ void goto_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     safe_env(arg2);
 }
 
+/* Queues a one-pixel tile primitive at position zero in the draw ordering table. */
 void safe_env(s32 arg0) {
     u8 *p;
 
@@ -86,6 +100,7 @@ void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     safe_env(arg2);
 }
 
+/* Queues a dither-enabled draw mode and a one-pixel tile in the draw ordering table. */
 void dtd_on(s32 arg0) {
     s32 work;
 

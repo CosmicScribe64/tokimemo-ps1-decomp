@@ -519,15 +519,15 @@ void career_choice_result_code_set(void) {
 }
 
 void career_choice_result_talk(void) {
-    u32 temp_v0;
+    u32 career_exam_grade;
 
     switch (game_state.substep) {
     case 0:
         k_sub_reset();
         gnsx(game_state.player_family_name);
         sndisp(career_choice_result_line[career_choice_exam_grade()], 0, 0x1F);
-        temp_v0 = career_choice_exam_grade();
-        switch (temp_v0) {
+        career_exam_grade = career_choice_exam_grade();
+        switch (career_exam_grade) {
         case 0:
             audio_bank_start(1, 0x204);
             break;

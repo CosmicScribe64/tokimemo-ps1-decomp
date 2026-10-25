@@ -1,6 +1,15 @@
 /* text_system.c: src/main/8004E500.c; T-27059: object [0x8004E500,0x8004F6B0); text list/typewriter, glyph lookup and upload, text palette and per-frame glyph drawing; preserve complete object (reuse reviewed m-menutext filename). Original object 0x8004E500-0x8004F6B0 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/vram.h"
 #include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -125,10 +134,12 @@ u8 *get_k_work(s32 entry_index) {
     return text_list + entry_index * 8;
 }
 
+/* Returns the address of the text-system work state. */
 s16 *get_ksys(void) {
     return (u8 *)&text_state;
 }
 
+/* Copies the display fields of a text entry into the indexed work slot. */
 void set_k_work(s32 entry_index, TextEntry entry_value) {
     TextEntry *p = (TextEntry *)text_list + entry_index;
 
@@ -169,6 +180,7 @@ void k_sub_disp_start(s32 entry_offset) {
     k_disp_start(text_state.mark + entry_offset);
 }
 
+/* Advances the reveal position to the end of its current text entry. */
 s16 k_disp_goto_line_end(void) {
     s32 i;
     s32 glyph_end;
@@ -184,6 +196,7 @@ s16 k_disp_goto_line_end(void) {
     return -1;
 }
 
+/* Sets dialogue reveal speed, clamped below 0x81. */
 void k_speed_set(u8 reveal_speed) {
     text_state.speed = reveal_speed;
     if ((u32)reveal_speed >= 0x81) {
@@ -191,6 +204,7 @@ void k_speed_set(u8 reveal_speed) {
     }
 }
 
+/* Returns the current dialogue reveal speed. */
 u8 get_k_speed(void) {
     return text_state.speed;
 }
@@ -219,10 +233,12 @@ s32 check_end_k(void) {
     return 0;
 }
 
+/* Returns the current text-system state byte. */
 u8 check_set_k(void) {
     return *(u8 *)&text_state;
 }
 
+/* Finds the text entry containing the current reveal position. */
 u8 get_now_k(void) {
     s32 i;
     s32 glyph_end;
@@ -237,6 +253,7 @@ u8 get_now_k(void) {
     return 0xFF;
 }
 
+/* Draws the currently revealed glyphs from the text list. */
 void disp_string(void) {
     SPRT_8 *p;
     s32 i;
@@ -321,6 +338,7 @@ void disp_string(void) {
 /* Declaration order: IDO gives every local a stack slot once one local (start) lives in memory, and the
  * locals declared before it sit above it; these six reproduce the original frame (T-17020, T-3330). The
  * original passes the offset into the range as a second argument to vload_font (a1). */
+/* Decodes two-byte glyph codes, loads each glyph, and returns the glyph count. */
 s32 load_string(text)
 u8 *text;
 {
@@ -355,6 +373,7 @@ u8 *text;
     }
 }
 
+/* Expands a glyph and uploads it to the text font texture area. */
 void vload_font(arg0)
 s32 arg0;
 {

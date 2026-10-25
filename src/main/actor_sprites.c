@@ -1,6 +1,22 @@
 /* actor_sprites.c: src/main/80047550.c; Original object 0x80047550-0x800490C0: screen shake, actor-pool sprite drawing/clearing, texture-page buffer allocation/cache, actor reset and screen-brightness update. Original object 0x80047550-0x800490C0 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/cursor.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/resident_views.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/draw.h"
 
 
 void draw_shake_start(void) {
@@ -370,6 +386,7 @@ void actor_draw_all(void) {
     }
 }
 
+/* Resets the texture-page cache entries and reserved slots. */
 void tpage_buf_clear_all(void) {
     s32 i;
 
@@ -396,6 +413,7 @@ void tpage_buf_clear(void) {
     _sys_default_tpage_set();
 }
 
+/* Installs the default texture-page cache entries. */
 void _sys_default_tpage_set(void) {
     s32 i;
 
@@ -432,6 +450,7 @@ u8 arg2;
     }
 }
 
+/* Reserves a free texture-page slot and starts loading its texture block. */
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1) {
     GameState *var_v0;
     s32 var_v1;
@@ -453,6 +472,7 @@ s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1) {
     return -1;
 }
 
+/* Finds or allocates a texture-page slot for the supplied texture block. */
 s32 search_tpage_multi(s32 arg0, u8 arg1) {
     s32 j;
     s32 i;
@@ -485,6 +505,7 @@ s32 search_tpage_multi(s32 arg0, u8 arg1) {
     }
 }
 
+/* Finds or allocates an actor texture block using 16-pixel cell indices. */
 s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
     s32 j;
     s32 i;
@@ -532,6 +553,7 @@ s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
     }
 }
 
+/* Finds or allocates an actor texture block using 8-pixel cell indices. */
 s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
     s32 j;
     s32 i;

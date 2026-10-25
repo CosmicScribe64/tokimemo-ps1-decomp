@@ -2,6 +2,7 @@
 #define MAIN_API_OVERRIDE_talk_work /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
 #include "common.h"
 #include "ovl/GEKO.h"
+#include "main/scene.h"
 
 extern u32 talk_work;
 

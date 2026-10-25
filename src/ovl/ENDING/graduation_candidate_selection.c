@@ -1,7 +1,27 @@
 /* graduation_candidate_selection.c: src/ovl/ENDING/80133030.c:6,23; mode-step callbacks and graduation candidate ranking in ending_graduation_candidate_select; rank/points, special girl branches and strict-score comparisons. See wiki/spec/o-master-ending.md for rule details. Original object 0x80133030-0x80133540 (config/objects/ENDING.txt). */
 #include "common.h"
 #include "ovl/ENDING.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/message.h"
+#include "main/portrait.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
 
 void ending_candidate_selection_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */

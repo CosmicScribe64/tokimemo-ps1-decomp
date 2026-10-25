@@ -78,7 +78,7 @@ void culture_birthday_scene(void) {
         }
         break;
     case 0x2:
-        if (((game_state.player_birthday & 0xF) == game_state.month) && (((u32) (game_state.player_birthday << 0x17) >> 0x1B) == game_state.day) && (girl_state_rank(0) < 2) && (D_80122EBC == 0)) {
+        if (((game_state.player_birthday & 0xF) == game_state.month) && (((u32) (game_state.player_birthday << 0x17) >> 0x1B) == game_state.day) && (girl_state_rank(0) < 2) && (game_mode_scene_girl == 0)) {
             mode_step_set(0x24);
         } else {
             dec_bg_reset();

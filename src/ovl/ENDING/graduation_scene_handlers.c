@@ -1,7 +1,24 @@
 /* graduation_scene_handlers.c: ; src/ovl/ENDING/80133540.c:5-18 dispatches mode-step callbacks and updates the ending presentation. Original object 0x80133540-0x80133C10 (config/objects/ENDING.txt). */
 #include "common.h"
 #include "ovl/ENDING.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/bg.h"
+#include "main/date.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/portrait.h"
+#include "main/scene.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/vram.h"
 
 void ending_companion_scene_step_dispatch(void) {
     s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
@@ -20,7 +37,7 @@ void ending_companion_scene_step_dispatch(void) {
 }
 
 void ending_set_selected_girl_portrait_layout(void) {
-    if (D_8013C3E0 == 0xC) {
+    if (ending_saved_girl == 0xC) {
         portrait_layout_set(4);
     } else {
         portrait_layout_set(0);
@@ -103,7 +120,7 @@ s32 ending_prepare_rei_dialogue(void) {
         mode_stage_next();
         return 0;
     }
-    D_8013C3E0 = game_state.current_girl;
+    ending_saved_girl = game_state.current_girl;
     game_state.current_girl = GIRL_REI;
     game_state.date_girl = GIRL_REI;
     talk_group = 0;
@@ -133,7 +150,7 @@ void ending_set_sotoi_name_for_dialogue(void) {
 }
 
 void ending_restore_saved_girl(void) {
-    game_state.current_girl = D_8013C3E0;
+    game_state.current_girl = ending_saved_girl;
     mode_step_next();
 }
 

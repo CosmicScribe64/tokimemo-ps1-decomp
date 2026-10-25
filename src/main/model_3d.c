@@ -3,7 +3,22 @@
 #define MAIN_API_OVERRIDE_func_8009B430 /* implicit declaration: called with 3 arguments, the original leaves $a3 unset (main_api.h: 4) */
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/model_records.h"
+#include "game_enums.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libgte.h"
+#include "libspu.h"
+#include "main/actor.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/state.h"
+#include "main/view.h"
 
 /* Sets projection distance 1000, calls two setters with 100 and 0x10000 (HYPOTHESIS: near and far clip), and sets the reference view with the eye at z=1000 looking at the origin. */
 void initView(void) {

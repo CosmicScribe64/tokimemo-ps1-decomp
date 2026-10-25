@@ -1,6 +1,7 @@
 #ifndef LIBGTE_H
 #define LIBGTE_H
 
+
 #include "common.h"
 
 /* PsyQ 3.x geometry ABI, independently expressed with fixed-width types.
@@ -25,5 +26,19 @@ typedef struct MATRIX {
     /* 0x12: implicit alignment padding */
     /* 0x14 */ s32 t[3];
 } MATRIX; /* size 0x20 */
+
+void InitGeom(void);
+s32 rsin();
+s32 func_800A0140(s32 a);
+void RotMatrix();
+void MulMatrix();
+void ScaleMatrix();
+void SetRotMatrix(MATRIX *m); /* returns nothing: an implicit int view adds a $v0 range (T-19009) */
+s32 SquareRoot0(s32 a);
+void func_800AB984();
+void func_800ABA38();
+void func_800ABAB8();
+
+extern s32 D_800DE500[];
 
 #endif /* LIBGTE_H */

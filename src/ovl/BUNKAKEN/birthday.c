@@ -573,12 +573,12 @@ void tour_phase_player_birthday(void) {
         if (Vblnk_Timer() >= 0x15) {
             if (cd_read_sync_status() & 1) {
                 audio_bank_load_start(1, 0xC478, 0xC44B, 0xCA95, 0xCA4F, 0xCA3E);
-                if (D_80122EBC == 0xB) {
+                if (game_mode_scene_girl == 0xB) {
                     game_state.current_girl = GIRL_SHIORI;
                     talk_names_set(0U);
                 } else {
-                    game_state.current_girl = D_80122EBC;
-                    talk_names_set(D_80122EBC);
+                    game_state.current_girl = game_mode_scene_girl;
+                    talk_names_set(game_mode_scene_girl);
                 }
                 tour_script_birthday();
                 talk_group = 0x25;
@@ -617,16 +617,16 @@ void tour_phase_player_birthday(void) {
     case 7:
         if (cd_read_sync_status() & 1) {
             tour_birthday_tables_init();
-            if (D_80122EBC == 0xB) {
+            if (game_mode_scene_girl == 0xB) {
                 game_state.current_girl = GIRL_SHIORI;
                 talk_names_set(0U);
             } else {
-                game_state.current_girl = D_80122EBC;
-                talk_names_set(D_80122EBC);
+                game_state.current_girl = game_mode_scene_girl;
+                talk_names_set(game_mode_scene_girl);
             }
             talk_group = 1;
             talk_line = 0;
-            switch (D_80122EBC) {
+            switch (game_mode_scene_girl) {
             case 11:
                 talk_text_table = tour_birthday_script[0][1];
                 talk_command_table = tour_birthday_script[1][1];

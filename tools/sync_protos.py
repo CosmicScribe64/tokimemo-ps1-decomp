@@ -58,6 +58,8 @@ config/symbol_addrs*.txt. The EVENT overlay (0x800F6000) shares addresses with t
 at or above its load address is EVENT's own unless another header declares it as a main symbol.
 """
 import argparse
+import hashlib
+import glob
 import json
 import os
 import re
@@ -67,15 +69,28 @@ from collections import defaultdict
 
 import check_headers as ch
 import srcscan
+import symtab
 
 MAIN_LO, MAIN_HI = 0x80041000, 0x8012B538   # main exe image: text, data and bss (wiki/executable.md)
 API = "main_api.h"
 # Explicit pilot registration. An arbitrary main/*.h or SDK header is not a
 # canonical owner merely because it is present. The legacy API remains the
 # default destination for new declarations while that file exists.
-CANONICAL_HEADERS = (API, "main/schedule.h", "main/day_event.h", "main/school_day.h")
+CANONICAL_HEADERS = (API, "main/schedule.h", "main/day_event.h", "main/school_day.h", "main/game_mode.h", "main/pad.h", "main/holiday.h", "main/ovl.h")
 OVERRIDE = "MAIN_API_OVERRIDE_"
 SDK_HEADERS = ("libgpu.h", "libapi.h")       # the PsyQ SDK's own declarations, never moved
+PROFILE_SDK_HEADERS = frozenset(("libapi.h", "libcard.h", "libcd.h", "libc.h", "libetc.h", "libgpu.h",
+                                 "libgs.h", "libgte.h", "libpad.h", "libpress.h", "libspu.h", "libsnd.h"))
+OWNER_PROFILE = os.path.join("config", "header_owners.json")
+EVENT_PRIVATE_SELECTOR = "SPOT_PRIVATE_DATA_VIEWS"
+EVENT_PRIVATE_VIEWS = {
+    0x801206E8: "s32", 0x8012076C: "s32", 0x80120798: "s32",
+    0x80121884: "s32", 0x801220EC: "s16", 0x8012277C: "u8",
+    0x80122740: "s32",
+}
+LEGACY_IMPORT_VERSION = "legacy-main-imports-v1"
+LEGACY_IMPORT_COUNTS = {"EVENT": 51, "GYOZI": 35}
+LEGACY_IMPORT_ROSTER_SHA256 = "d1cde1720f6ca5501d2837e1b1f86105f3272e1773e1e92ab15388b22ac10c08"
 BUILTIN = {"void", "u8", "s8", "u16", "s16", "u32", "s32", "char", "int", "short", "long", "float",
            "double", "unsigned", "signed", "const", "volatile", "struct", "union", "enum", "F"}
 ADDR_RE = re.compile(r"^(?:func|D)_([0-9A-Fa-f]{8})$")
@@ -85,6 +100,177 @@ DEFINE_RE = re.compile(r"^\s*#\s*define\s+" + OVERRIDE + r"(\w+)\s*(?:/\*(.*?)\*
 def canonical_headers(inc):
     """Present explicitly registered owners, in deterministic preference order."""
     return tuple(h for h in CANONICAL_HEADERS if os.path.isfile(os.path.join(inc, h)))
+
+
+def owner_profile(inc):
+    """Read the optional explicit owner manifest and report its fail-closed errors.
+
+    A missing manifest deliberately preserves the legacy/pilot registration behavior.
+    Paths are repository-relative to include/ and are never inferred from directory contents.
+    """
+    root = os.path.dirname(os.path.abspath(inc))
+    path = os.path.join(root, OWNER_PROFILE)
+    if not os.path.exists(path):
+        return None, []
+    try:
+        with open(path) as fh:
+            data = json.load(fh)
+    except (OSError, ValueError) as err:
+        return {"mode": "topic_only", "owners": [], "types": []}, [
+            "%s: invalid owner profile: %s" % (OWNER_PROFILE, err)]
+    problems = []
+    if not isinstance(data, dict) or data.get("mode") != "topic_only":
+        return {"mode": "topic_only", "owners": [], "types": []}, [
+            "%s: mode must be 'topic_only'" % OWNER_PROFILE]
+    owners, types = data.get("owners"), data.get("required_types")
+    if not isinstance(owners, list) or not isinstance(types, list):
+        return {"mode": "topic_only", "owners": [], "types": []}, [
+            "%s: owners and required_types must be arrays" % OWNER_PROFILE]
+    clean_owners, clean_types = [], []
+    seen = set()
+    include_root = os.path.realpath(inc)
+
+    def safe_profile_path(rel):
+        if (os.path.isabs(rel) or ".." in rel.replace("\\", "/").split("/") or
+                "\\" in rel or ":" in rel or not rel.endswith(".h") or
+                os.path.normpath(rel).replace(os.sep, "/") != rel):
+            return False
+        target = os.path.realpath(os.path.join(inc, rel))
+        try:
+            return os.path.commonpath((include_root, target)) == include_root
+        except ValueError:
+            return False
+    for entry in owners:
+        if not isinstance(entry, dict) or entry.get("role") not in ("main", "sdk") or not isinstance(entry.get("path"), str):
+            problems.append("%s: each owner needs a path and role 'main' or 'sdk'" % OWNER_PROFILE)
+            continue
+        rel, role = entry["path"], entry["role"]
+        if rel in seen:
+            problems.append("%s: duplicate owner path %s" % (OWNER_PROFILE, rel))
+            continue
+        seen.add(rel)
+        if not safe_profile_path(rel):
+            problems.append("%s: invalid owner path %s" % (OWNER_PROFILE, rel))
+            continue
+        clean_owners.append({"path": rel, "role": role})
+        if not os.path.isfile(os.path.join(inc, rel)):
+            problems.append("required %s owner include/%s is missing" % (role, rel))
+    for rel in types:
+        if not isinstance(rel, str) or not safe_profile_path(rel):
+            problems.append("%s: invalid required type path %s" % (OWNER_PROFILE, rel))
+            continue
+        clean_types.append(rel)
+        if not os.path.isfile(os.path.join(inc, rel)):
+            problems.append("required type include/%s is missing" % rel)
+    if "common.h" not in clean_types:
+        problems.append("%s: required_types must include common.h as the fixed-width foundation" % OWNER_PROFILE)
+    overlap = set(clean_types) & {entry["path"] for entry in clean_owners}
+    if overlap:
+        problems.extend("include/%s cannot be both an owner and a type leaf" % h for h in sorted(overlap))
+    clean_profile = {"mode": "topic_only", "owners": clean_owners, "types": clean_types}
+    if "legacy_main_imports" in data:
+        contract = data["legacy_main_imports"]
+        if not isinstance(contract, dict) or contract.get("version") != LEGACY_IMPORT_VERSION:
+            problems.append("%s: legacy_main_imports must use version %s" % (OWNER_PROFILE, LEGACY_IMPORT_VERSION))
+        else:
+            providers = contract.get("providers")
+            counts = contract.get("expected_counts")
+            if counts != LEGACY_IMPORT_COUNTS or not isinstance(providers, list):
+                problems.append("%s: legacy import contract requires the fixed EVENT 51 / GYOZI 35 roster" % OWNER_PROFILE)
+                providers = providers if isinstance(providers, list) else []
+            by_unit = {}
+            identities = set()
+            current_names = set()
+            private_paths = set()
+            root_paths = set()
+            stable = []
+            for provider in providers:
+                if not isinstance(provider, dict):
+                    problems.append("%s: each legacy import provider must be an object" % OWNER_PROFILE)
+                    continue
+                unit, provider_path, root_path, bindings = (provider.get("unit"), provider.get("provider_path"),
+                                                              provider.get("root_header_path"), provider.get("bindings"))
+                if unit not in LEGACY_IMPORT_COUNTS or unit in by_unit:
+                    problems.append("%s: duplicate or unsupported legacy import unit %s" % (OWNER_PROFILE, unit))
+                    continue
+                if (not isinstance(provider_path, str) or not safe_profile_path(provider_path) or
+                        not isinstance(root_path, str) or not safe_profile_path(root_path)):
+                    problems.append("%s: invalid private provider/root header path for %s" % (OWNER_PROFILE, unit))
+                    continue
+                if provider_path in seen or root_path in seen or provider_path in clean_types or root_path in clean_types:
+                    problems.append("%s: private import paths cannot be canonical owners or type leaves (%s)" %
+                                    (OWNER_PROFILE, unit))
+                if provider_path in private_paths or root_path in root_paths or provider_path in root_paths or root_path in private_paths:
+                    problems.append("%s: legacy import provider/root paths must be unique (%s)" % (OWNER_PROFILE, unit))
+                private_paths.add(provider_path)
+                root_paths.add(root_path)
+                if not isinstance(bindings, list):
+                    problems.append("%s: bindings for %s must be an array" % (OWNER_PROFILE, unit))
+                    bindings = []
+                clean_bindings = []
+                by_unit[unit] = {"unit": unit, "provider_path": provider_path,
+                                 "root_header_path": root_path, "bindings": clean_bindings}
+                if not os.path.isfile(os.path.join(inc, provider_path)):
+                    problems.append("legacy import provider include/%s is missing" % provider_path)
+                if not os.path.isfile(os.path.join(inc, root_path)):
+                    problems.append("legacy import root include/%s is missing" % root_path)
+                if provider_path == root_path:
+                    problems.append("%s: private provider and overlay root must be distinct for %s" % (OWNER_PROFILE, unit))
+                for binding in bindings:
+                    if not isinstance(binding, dict):
+                        problems.append("%s: malformed binding for %s" % (OWNER_PROFILE, unit))
+                        continue
+                    required = ("unit", "address", "original_name", "original_type", "type_identity_sha256",
+                                "current_name", "current_type")
+                    if any(not isinstance(binding.get(key), str) or not binding.get(key) for key in required):
+                        problems.append("%s: incomplete binding for %s" % (OWNER_PROFILE, unit))
+                        continue
+                    try:
+                        address = int(binding["address"], 16)
+                    except ValueError:
+                        problems.append("%s: invalid import address %r" % (OWNER_PROFILE, binding.get("address")))
+                        continue
+                    expected_type_id = hashlib.sha256(binding["original_type"].encode()).hexdigest()
+                    identity = (unit, address, binding["type_identity_sha256"])
+                    name_key = (unit, binding["current_name"])
+                    if binding["unit"] != unit or binding["type_identity_sha256"] != expected_type_id:
+                        problems.append("%s: binding unit/type identity mismatch for %s" %
+                                        (OWNER_PROFILE, binding.get("current_name")))
+                    if identity in identities or name_key in current_names:
+                        problems.append("%s: duplicate legacy import binding %s" %
+                                        (OWNER_PROFILE, binding.get("current_name")))
+                    identities.add(identity)
+                    current_names.add(name_key)
+                    stable.append((unit, binding["address"], binding["type_identity_sha256"]))
+                    clean_bindings.append(binding)
+            if set(by_unit) != set(LEGACY_IMPORT_COUNTS):
+                problems.append("%s: legacy import providers must register exactly EVENT and GYOZI" % OWNER_PROFILE)
+            actual_counts = {unit: len(rec["bindings"]) for unit, rec in by_unit.items()}
+            if actual_counts != LEGACY_IMPORT_COUNTS:
+                problems.append("%s: legacy import binding counts %s do not match %s" %
+                                (OWNER_PROFILE, actual_counts, LEGACY_IMPORT_COUNTS))
+            stable_json = json.dumps(sorted(stable), separators=(",", ":"), ensure_ascii=True)
+            actual_fingerprint = hashlib.sha256(stable_json.encode()).hexdigest()
+            if contract.get("roster_sha256") != actual_fingerprint:
+                problems.append("%s: legacy import roster fingerprint mismatch" % OWNER_PROFILE)
+            if actual_fingerprint != LEGACY_IMPORT_ROSTER_SHA256:
+                problems.append("%s: legacy import roster is not the pinned reviewed 86-view set" % OWNER_PROFILE)
+            clean_profile["legacy_main_imports"] = {
+                "version": LEGACY_IMPORT_VERSION,
+                "roster_sha256": actual_fingerprint,
+                "expected_counts": LEGACY_IMPORT_COUNTS,
+                "providers": [by_unit[u] for u in sorted(by_unit)],
+            }
+    return clean_profile, problems
+
+
+def registered_owners(inc):
+    """Present canonical owners under either explicit-profile or legacy/pilot rules."""
+    profile, _problems = owner_profile(inc)
+    if profile is None:
+        return canonical_headers(inc)
+    return tuple(entry["path"] for entry in profile["owners"]
+                 if os.path.isfile(os.path.join(inc, entry["path"])))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -124,6 +310,8 @@ _CONFIG = {}
 def is_main_symbol(root, name, unit="main"):
     """True when `name`, used by `unit` ('main' or an overlay name), is a main-exe symbol that
     belongs in include/main_api.h (used by tools/dupes.py to pick the header of a declaration)."""
+    if registered_legacy_import(root, name, unit):
+        return False
     if root not in _CONFIG:
         _CONFIG[root] = (load_symbol_map(root), load_overlay_bases(root))
     symmap, bases = _CONFIG[root]
@@ -133,6 +321,29 @@ def is_main_symbol(root, name, unit="main"):
         return False
     base = bases.get(unit)
     return base is None or addr < base
+
+
+def registered_legacy_import(root, name, unit):
+    """Check the exact private import registration without building a Model or scanning C."""
+    if unit == "main":
+        return False
+    inc = os.path.join(root, "include")
+    profile, problems = owner_profile(inc)
+    if problems or profile is None:
+        return False
+    contract = profile.get("legacy_main_imports")
+    if not contract:
+        return False
+    symbols = symtab.SymbolTable(root)
+    resolved = symbols.resolve(unit, name)
+    address = resolved[1] if resolved is not None else None
+    for provider in contract["providers"]:
+        if provider["unit"] != unit:
+            continue
+        for binding in provider["bindings"]:
+            if binding["current_name"] == name:
+                return address == int(binding["address"], 16)
+    return False
 
 
 # ---------------------------------------------------------------------------------------------
@@ -147,9 +358,24 @@ class Model:
         self.inc = inc
         self.src = src
         self.root = os.path.dirname(os.path.abspath(inc))
+        self.symbols = symtab.SymbolTable(self.root)
+        self.profile, self.profile_problems = owner_profile(inc)
+        self.legacy_import_contract = (self.profile or {}).get("legacy_main_imports")
+        self.legacy_import_providers = {}
+        self.legacy_imports_by_unit_name = {}
+        if self.legacy_import_contract:
+            for provider in self.legacy_import_contract["providers"]:
+                self.legacy_import_providers[provider["provider_path"]] = provider["unit"]
+                for binding in provider["bindings"]:
+                    self.legacy_imports_by_unit_name[(provider["unit"], binding["current_name"])] = binding
+        self.sdk_headers = set(SDK_HEADERS)
+        if self.profile is not None:
+            self.sdk_headers.update(entry["path"] for entry in self.profile["owners"]
+                                    if entry["role"] == "sdk")
         self.headers = ch.header_files(inc)
         self.symmap = self._symbol_map()
         self.bases = self._overlay_bases()
+        self.event_private_active = False
         self.own = {}       # header -> [(name, type, raw)]
         for h, p in self.headers.items():
             self.own[h] = list(_declarations(_read(p)))
@@ -159,9 +385,9 @@ class Model:
                 for f in sorted(files):
                     if f.endswith(".c"):
                         self.sources[os.path.join(root, f)] = self._read_source(os.path.join(root, f))
-        self.canonical = canonical_headers(inc)
+        self.canonical = registered_owners(inc)
         self.api_present = bool(self.canonical)
-        self.topic_mode = any(h != API for h in self.canonical)
+        self.topic_mode = self.profile is not None or any(h != API for h in self.canonical)
         self.api, self.api_owner = {}, {}
         self.api_declarations = defaultdict(list)
         for h in self.canonical:
@@ -176,6 +402,8 @@ class Model:
         self._others = None
         self._closure = {}   # header -> headers reached by #include; file -> same (forget() after a write)
         self._lines = {}     # header -> LineIndex of its text
+        self.event_private_active = (self.profile is not None and "EVENT" in self.bases and
+                                     not event_private_contract_problems(self, self.inc))
 
     def forget(self):
         """Drop what depends on header text after a header was rewritten (the declarations read at
@@ -203,11 +431,27 @@ class Model:
             return int(m.group(1), 16)
         return self.symmap.get(name)
 
+    def event_private_addr(self, name, header, typ=None):
+        """Resolve a private alias only in EVENT's exact private owner header."""
+        if header != "ovl/EVENT.h" or not self.event_private_active:
+            return None
+        if typ is not None:
+            rows = [(n, t) for n, t, _raw in self.own.get(header, ()) if n == name]
+            if (name, typ) not in rows:
+                return None
+        resolved = self.symbols.resolve("EVENT", name)
+        if resolved is not None and resolved[0] == "EVENT" and resolved[1] in EVENT_PRIVATE_VIEWS:
+            if typ is None or typ == EVENT_PRIVATE_VIEWS[resolved[1]]:
+                return resolved[1]
+        return None
+
     def owner(self, header):
         """The overlay whose own header this is: ovl/<NAME>.h, or a header only that overlay's C files
         include (readable header names, tools/rename.py, T-27002); None for shared headers."""
         if header in self.canonical:
             return None
+        if header in self.legacy_import_providers:
+            return self.legacy_import_providers[header]
         m = re.match(r"^ovl/(\w+)\.h$", header)
         if m and (not self.bases or m.group(1) in self.bases):
             return m.group(1)
@@ -222,7 +466,7 @@ class Model:
         if self._others is None:
             self._others = defaultdict(set)
             for h, ds in self.own.items():
-                if h in SDK_HEADERS or h in self.canonical:
+                if h in self.sdk_headers or h in self.canonical or h in self.legacy_import_providers:
                     continue
                 for n, _t, _r in ds:
                     self._others[n].add(h)
@@ -232,9 +476,15 @@ class Model:
         owner = self.owner(header)
         return self.bases.get(owner) if owner else None
 
-    def is_main(self, name, header):
+    def is_main(self, name, header, typ=None):
         """True when `name`, declared in `header`, is a main-exe symbol."""
-        if not self.in_main_range(name) or header in SDK_HEADERS:
+        if not self.in_main_range(name) or header in self.sdk_headers:
+            return False
+        if self.private_import_for_unit(name, self.owner(header)) is not None:
+            return False
+        # These addresses are simultaneously main BSS views and EVENT-private
+        # scalar views. The validated EVENT contract must win in that unit only.
+        if self.event_private_addr(name, header, typ) is not None:
             return False
         base = self.base_of(header)
         if base is None or self.addr(name) < base:
@@ -248,6 +498,37 @@ class Model:
             if h != header and (b is None or self.addr(name) < b):
                 return True
         return False
+
+    def private_import_for_unit(self, name, unit, typ=None):
+        """Resolve a contract-owned call view in one unit without changing global address lookup."""
+        if unit is None:
+            return None
+        binding = self.legacy_imports_by_unit_name.get((unit, name))
+        if binding is None:
+            return None
+        resolved = self.symbols.resolve(unit, name)
+        if resolved is None or resolved[1] != int(binding["address"], 16):
+            return None
+        if typ is not None and typ != binding["current_type"]:
+            return binding
+        return binding
+
+    def private_import_home(self, name, unit):
+        binding = self.private_import_for_unit(name, unit)
+        if binding is None:
+            return None
+        for provider in self.legacy_import_contract["providers"]:
+            if provider["unit"] == unit:
+                return provider["provider_path"]
+        return None
+
+    def private_import_root(self, name, unit):
+        if self.private_import_for_unit(name, unit) is None:
+            return None
+        for provider in self.legacy_import_contract["providers"]:
+            if provider["unit"] == unit:
+                return provider["root_header_path"]
+        return None
 
     # -- overrides
     def _overrides(self):
@@ -444,10 +725,10 @@ def candidates(model):
     """{symbol: [(header, type, raw)]} for every main-exe symbol declared outside main_api.h."""
     out = defaultdict(list)
     for h, ds in model.own.items():
-        if h in model.canonical or h in SDK_HEADERS:
+        if h in model.canonical or h in model.sdk_headers or h in model.legacy_import_providers:
             continue
         for n, t, r in ds:
-            if model.is_main(n, h):
+            if model.is_main(n, h, t):
                 out[n].append((h, t, r))
     return out
 
@@ -657,7 +938,7 @@ def _check_legacy_api(inc, src=None):
             continue
         ov = model.overrides.get(h, {})
         for name, typ, raw in ds:
-            if not model.is_main(name, h) or model.needs_local_type(raw, h):
+            if not model.is_main(name, h, typ) or model.needs_local_type(raw, h):
                 continue
             if name not in api:
                 problems.append("main symbol %s is declared in include/%s: declare it in include/%s instead "
@@ -729,16 +1010,460 @@ def _check_legacy_api(inc, src=None):
 def canonical_problems(model):
     """Canonical duplicates must fail even in disjoint include closures."""
     problems = []
-    sdk = {n: h for h in SDK_HEADERS for n, _t, _r in model.own.get(h, [])}
+    sdk = {n: h for h in model.sdk_headers for n, _t, _r in model.own.get(h, [])}
     for name, entries in sorted(model.api_declarations.items()):
         if len(entries) > 1:
             listing = "; ".join("include/%s '%s'" % (h, short(t)) for h, t, _r in entries)
             problems.append("duplicate canonical owner for %s: %s; keep exactly one canonical declaration" %
                             (name, listing))
-        if name in sdk:
+        if name in sdk and model.api_owner.get(name) != sdk[name]:
             problems.append("SDK symbol %s is declared in canonical include/%s and include/%s; "
                             "keep its declaration in the SDK header" %
                             (name, model.api_owner[name], sdk[name]))
+    return problems
+
+
+def type_leaf_has_non_type_content(path):
+    """Allow preprocessor directives and typedefs, but no object/function declarations or bodies."""
+    text = _read(path)
+
+    def preserve_string_or_blank_comment(match):
+        token = match.group(0)
+        return token if token.startswith(('"', "'")) else re.sub(r"[^\n]", " ", token)
+
+    text = re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*',
+                  preserve_string_or_blank_comment, text, flags=re.S)
+    text = re.sub(r"\\\r?\n", "", text)
+    text = re.sub(r"(?m)^[ \t]*#(?:[^\n]*\\\n)*[^\n]*(?:\n|$)", " ", text)
+    pos = 0
+    while pos < len(text):
+        while pos < len(text) and text[pos].isspace():
+            pos += 1
+        if pos == len(text):
+            return False
+        kind = re.match(r"(typedef|struct|union|enum)\b", text[pos:])
+        if not kind:
+            return True
+        start = pos
+        pos += kind.end()
+        braces = 0
+        while pos < len(text):
+            char = text[pos]
+            if char == "{":
+                braces += 1
+            elif char == "}":
+                braces -= 1
+            elif char == ";" and braces == 0:
+                pos += 1
+                break
+            pos += 1
+        else:
+            return True
+        statement = text[start:pos].strip()
+        if kind.group(1) != "typedef" and not re.match(
+                r"^(?:struct|union|enum)\s+(?:[A-Za-z_]\w*\s*(?:\{.*\})?|\{.*\})\s*;$",
+                statement, flags=re.S):
+            return True
+    return False
+
+
+def profile_integrity_problems(model, inc, src=None):
+    """Nonrepairable profile errors that must fail before a writer can touch files."""
+    if model.profile is None:
+        return []
+    problems = list(model.profile_problems) + ch.required_include_problems(inc, src)
+    for entry in model.profile["owners"]:
+        if entry["role"] == "sdk" and entry["path"] not in PROFILE_SDK_HEADERS:
+            problems.append("profile SDK owner include/%s is not a recognized SDK owner path" % entry["path"])
+        if entry["role"] == "main" and entry["path"] in PROFILE_SDK_HEADERS:
+            problems.append("profile main owner include/%s is an SDK header; use role 'sdk'" % entry["path"])
+    for h in model.profile["types"]:
+        path = os.path.join(inc, h)
+        if os.path.isfile(path) and type_leaf_has_non_type_content(path):
+            problems.append("type leaf include/%s must not declare externs, functions or objects" % h)
+    problems.extend(event_private_contract_problems(model, inc, src))
+    problems.extend(legacy_import_contract_problems(model, inc, src))
+    return problems
+
+
+def legacy_import_type_aliases(root):
+    """Explicit type rename chain, used only to validate current import spelling."""
+    aliases = {}
+    for path in sorted(glob.glob(os.path.join(root, "config", "renames", "*.txt"))):
+        for line in _read(path).splitlines():
+            parts = line.split()
+            if len(parts) >= 4 and parts[0] == "type":
+                old, new = parts[2], parts[3]
+                aliases.setdefault(old, set()).add(new)
+    return aliases
+
+
+def current_import_type(root, original_type):
+    aliases = legacy_import_type_aliases(root)
+    text = original_type
+    for _ in range(len(aliases) + 1):
+        def resolve(match):
+            targets = aliases.get(match.group(), set())
+            if len(targets) > 1:
+                raise ValueError("ambiguous legacy import type rename for %s" % match.group())
+            return next(iter(targets)) if targets else match.group()
+        changed = re.sub(r"\b[A-Za-z_]\w*\b", resolve, text)
+        if changed == text:
+            return text
+        text = changed
+    raise ValueError("cyclic legacy import type rename chain")
+
+
+def legacy_import_contract_problems(model, inc, src=None):
+    """Validate the finite EVENT/GYOZI private-call-view namespace."""
+    contract = model.legacy_import_contract
+    if model.profile is None or contract is None:
+        return []
+    problems = []
+    expected_by_unit = defaultdict(set)
+    provider_by_unit = {row["unit"]: row for row in contract["providers"]}
+    binding_by_name = {}
+
+    def header_unit(header):
+        for row in contract["providers"]:
+            if header in (row["provider_path"], row["root_header_path"]):
+                return row["unit"]
+        match = re.match(r"^ovl/(\w+)\.h$", header)
+        if match and match.group(1) in model.bases:
+            return match.group(1)
+        if src is not None:
+            return model.owner(header)
+        return None
+
+    for provider in contract["providers"]:
+        unit, provider_path, root_path = provider["unit"], provider["provider_path"], provider["root_header_path"]
+        if model.owner(provider_path) != unit:
+            problems.append("legacy import provider include/%s is not privately owned by %s" % (provider_path, unit))
+        if provider_path in model.canonical or provider_path in model.profile["types"] or provider_path in model.sdk_headers:
+            problems.append("legacy import provider include/%s cannot be canonical, SDK or type-owned" % provider_path)
+        if root_path not in model.headers:
+            continue
+        if provider_path not in closure(model, root_path):
+            problems.append("legacy import root include/%s must include its private provider include/%s" %
+                            (root_path, provider_path))
+        structural_headers = set(model.canonical) | set(model.profile["types"]) | set(model.sdk_headers)
+        other_roots = {row["root_header_path"] for row in contract["providers"] if row["unit"] != unit}
+        for other_header in sorted(structural_headers | other_roots):
+            if other_header in (root_path, provider_path):
+                continue
+            if other_header in model.headers and provider_path in closure(model, other_header):
+                problems.append("legacy import provider include/%s leaks through include/%s outside its root" %
+                                (provider_path, other_header))
+        for binding in provider["bindings"]:
+            name, typ = binding["current_name"], binding["current_type"]
+            address = int(binding["address"], 16)
+            expected_by_unit[unit].add(name)
+            binding_by_name[(unit, name)] = binding
+            resolved = model.symbols.resolve(unit, name)
+            if resolved is None or resolved[1] != address:
+                problems.append("legacy import %s:%s no longer resolves to registered address 0x%08X" %
+                                (unit, name, address))
+            try:
+                expected_type = current_import_type(model.root, binding["original_type"])
+            except ValueError as err:
+                problems.append("legacy import type chain: %s" % err)
+                expected_type = binding["original_type"]
+            if typ != expected_type:
+                problems.append("legacy import %s:%s current type %s does not follow its explicit type ledger (%s)" %
+                                (unit, name, short(typ), short(expected_type)))
+            if name in model.api:
+                problems.append("legacy import %s:%s remains in a canonical owner include/%s" %
+                                (unit, name, model.api_owner[name]))
+            own = [(n, t, raw) for n, t, raw in model.own.get(provider_path, []) if n == name]
+            if len(own) != 1 or own[0][1] != typ:
+                problems.append("legacy import provider include/%s must declare exactly one %s with type %s" %
+                                (provider_path, name, short(typ)))
+            resolved = model.symbols.resolve(unit, name)
+            if resolved is None or resolved[1] != address:
+                continue
+            for other_header, declarations in model.own.items():
+                if other_header == provider_path:
+                    continue
+                # The two units may deliberately use the same public spelling at
+                # different addresses. Each provider is a separate namespace.
+                if other_header in model.legacy_import_providers:
+                    continue
+                for other_name, other_type, _raw in declarations:
+                    if other_name != name:
+                        continue
+                    other_unit = header_unit(other_header)
+                    if other_unit != unit and model.private_import_for_unit(other_name, other_unit, other_type) is not None:
+                        continue
+                    overridden = name in model.overrides.get(other_header, {})
+                    if other_unit != unit or not overridden:
+                        problems.append("legacy import %s:%s is declared outside its provider in include/%s" %
+                                        (unit, name, other_header))
+    for unit, provider in provider_by_unit.items():
+        declared = {name for name, _typ, _raw in model.own.get(provider["provider_path"], [])}
+        if declared != expected_by_unit[unit]:
+            problems.append("legacy import provider include/%s declaration roster differs from its registered bindings" %
+                            provider["provider_path"])
+
+    if src is not None:
+        all_names = set().union(*expected_by_unit.values()) if expected_by_unit else set()
+        for path, info in sorted(model.sources.items()):
+            unit = srcscan.unit_of_source(path)
+            rel = os.path.relpath(path, src).replace(os.sep, "/")
+            closure_headers = closure_of_file(model, path)
+            used = info["tokens"] & all_names
+            if any(provider["provider_path"] in closure_headers
+                   for owner, provider in provider_by_unit.items() if owner != unit):
+                problems.append("legacy import provider leaks into source %s outside its unit" % rel)
+            if not used:
+                continue
+            for name in sorted(used):
+                binding = binding_by_name.get((unit, name))
+                if binding is None:
+                    if any(current_name == name for _owner, current_name in binding_by_name):
+                        problems.append("legacy import %s is used by %s outside its registered unit" % (name, rel))
+                    continue
+                owner = binding["unit"]
+                provider = provider_by_unit[owner]
+                if unit != owner:
+                    problems.append("legacy import %s is used by %s outside registered unit %s" % (name, rel, owner))
+                    continue
+                if provider["root_header_path"] not in closure_headers or provider["provider_path"] not in closure_headers:
+                    problems.append("legacy import %s is used by %s without its registered root/provider include" % (name, rel))
+                    continue
+                visible = [row for row in ch.walk(path, inc, rel="<src>") if row[0] == name]
+                private = [row for row in visible if row[2] == provider["provider_path"]]
+                binding_type = binding["current_type"]
+                local_overrides = [row for row in visible if row[2] != provider["provider_path"] and
+                                   (row[2] == "<src>" or model.owner(row[2]) == owner)]
+                has_reason = any(name in model.overrides.get(header, {}) and model.overrides[header][name]
+                                 for header in closure_headers if header in model.headers)
+                source_reason = model.overrides.get(path, {}).get(name, "")
+                if source_reason:
+                    has_reason = True
+                provider_guarded = name in api_guards(model, provider["provider_path"])
+                if len(private) == 1 and private[0][1] == binding_type and len(visible) == 1 and not local_overrides:
+                    continue
+                if (not private and provider_guarded and source_reason.lower().startswith("implicit") and
+                        has_reason and not local_overrides and not visible):
+                    continue
+                if (not private and len(local_overrides) == 1 and provider_guarded and has_reason and
+                        local_overrides[0][1] != binding_type and len(visible) == 1):
+                    continue
+                problems.append("legacy import %s used by %s is not visible once from its exact provider or a guarded, documented local override" %
+                                (name, rel))
+        for path, info in sorted(model.sources.items()):
+            unit = srcscan.unit_of_source(path)
+            rel = os.path.relpath(path, src).replace(os.sep, "/")
+            declared = {name for name, _typ, _raw in ch.declarations_text(info["text"])} & all_names
+            for name in sorted(declared):
+                bindings = [row for (owner, current_name), row in binding_by_name.items()
+                            if current_name == name and owner == unit]
+                if not bindings:
+                    problems.append("legacy import %s is declared in source %s outside unit %s" %
+                                    (name, rel, ",".join(sorted({owner for owner, current_name in binding_by_name
+                                                                 if current_name == name}))))
+                    continue
+                reason = model.overrides.get(path, {}).get(name, "")
+                provider = provider_by_unit[unit]
+                if (not reason or name not in api_guards(model, provider["provider_path"]) or
+                        provider["root_header_path"] not in closure_of_file(model, path)):
+                    problems.append("legacy import %s source declaration in %s needs a documented local override and guarded provider" %
+                                    (name, rel))
+                visible = [row for row in ch.walk(path, inc, rel="<src>") if row[0] == name]
+                local = [row for row in visible if row[2] == "<src>"]
+                if len(local) != 1 or local[0][1] == bindings[0]["current_type"] or len(visible) != 1:
+                    problems.append("legacy import %s source override in %s must be one differing local view with provider hidden" %
+                                    (name, rel))
+    return problems
+
+
+def event_private_contract_problems(model, inc, src=None):
+    """Fail closed on the fixed EVENT scalar-view contract when EVENT is registered.
+
+    This is intentionally a fixed seven-address rule, not a general per-overlay exemption.
+    Header walks evaluate the actual selector context and include order.
+    """
+    if model.profile is None or "EVENT" not in model.bases:
+        return []
+    problems = []
+    event_name = "ovl/EVENT.h"
+    event_path = model.headers.get(event_name)
+    if not event_path:
+        return ["EVENT private-view contract requires include/%s" % event_name]
+
+    def selector_directives(path):
+        out = []
+        for seg in ch.segments(path):
+            if seg[0] == "dir" and seg[1] in ("define", "undef"):
+                macro = re.split(r"[\s(]", seg[2])[0]
+                if macro == EVENT_PRIVATE_SELECTOR:
+                    out.append((seg[1], macro))
+        return out
+
+    for header, path in model.headers.items():
+        if header != event_name and selector_directives(path):
+            problems.append("EVENT private-view contract: %s directive is forbidden in include/%s" %
+                            (EVENT_PRIVATE_SELECTOR, header))
+    if selector_directives(event_path) != [("define", EVENT_PRIVATE_SELECTOR), ("undef", EVENT_PRIVATE_SELECTOR)]:
+        problems.append("EVENT private-view contract: EVENT header must own one selector define/undef pair")
+
+    def resolved_rows(rows, private_context=False):
+        out = []
+        for name, typ, file, raw in rows:
+            addr = model.addr(name)
+            if private_context and file == event_name:
+                resolved = model.symbols.resolve("EVENT", name)
+                if resolved is not None and resolved[0] == "EVENT":
+                    addr = resolved[1]
+            if addr in EVENT_PRIVATE_VIEWS:
+                out.append((addr, name, typ, file, raw))
+        return out
+
+    # The canonical shared views must remain visible to ordinary units and
+    # disappear only when the explicit EVENT selector is active. This works
+    # both before and after the physical main_api.h umbrella is removed.
+    api_default, api_selected = [], []
+    for owner in model.canonical:
+        path = model.headers.get(owner)
+        if path is None:
+            continue
+        api_default.extend(r for r in resolved_rows(ch.walk(path, inc)) if r[3] == owner)
+        api_selected.extend(r for r in resolved_rows(ch.walk(path, inc, defines={EVENT_PRIVATE_SELECTOR}))
+                            if r[3] == owner)
+    for addr, expected in EVENT_PRIVATE_VIEWS.items():
+        plain = [r for r in api_default if r[0] == addr]
+        hidden = [r for r in api_selected if r[0] == addr]
+        if len(plain) != 1 or plain[0][2] != expected:
+            problems.append("EVENT private-view contract: canonical owners must expose exactly one %s view at 0x%08X" % (expected, addr))
+        if hidden:
+            problems.append("EVENT private-view contract: canonical view at 0x%08X is not hidden by %s" %
+                            (addr, EVENT_PRIVATE_SELECTOR))
+
+    # Require one literal selector window around EVENT's shared closure and a
+    # single private-view block. The block's declarations are parsed as ordinary
+    # C declarations and then resolved by their current symbol addresses.
+    text = _read(event_path)
+    define = "#define " + EVENT_PRIVATE_SELECTOR
+    undef = "#undef " + EVENT_PRIVATE_SELECTOR
+    begin = "/* BEGIN T-27061 EVENT private scalar views */"
+    end = "/* END T-27061 EVENT private scalar views */"
+    private_guard = text.find("#ifdef " + EVENT_PRIVATE_SELECTOR)
+    private_endif = text.find("#endif", text.find(end) + len(end)) if text.find(end) >= 0 else -1
+    define_pos = text.find(define)
+    positions = (define_pos, private_guard, text.find(begin), text.find(end), private_endif, text.find(undef))
+    canonical_include_positions = []
+    for match in re.finditer(r'^\s*#\s*include\s+"([^"]+)"', text, re.M):
+        included = match.group(1)
+        if included in model.canonical or set(closure(model, included)) & set(model.canonical):
+            canonical_include_positions.append(match.start())
+    if (any(p < 0 for p in positions) or list(positions) != sorted(positions) or
+            not canonical_include_positions or any(p <= define_pos or p >= private_guard for p in canonical_include_positions) or
+            any(text.find(token, text.find(token) + 1) >= 0 for token in (define, undef, begin, end)) or
+            text.count("#ifdef " + EVENT_PRIVATE_SELECTOR) != 1 or
+            (private_guard >= 0 and text[private_guard + len("#ifdef " + EVENT_PRIVATE_SELECTOR):positions[2]].strip()) or
+            (private_endif >= 0 and text[positions[3] + len(end):positions[4]].strip())):
+        problems.append("EVENT private-view contract: selector must bracket the game.h closure and one guarded private block, then be undefined")
+    else:
+        block = text[positions[2] + len(begin):positions[3]]
+        block_rows = list(ch.declarations_text(block))
+        mapped = []
+        for name, typ, raw in block_rows:
+            resolved = model.symbols.resolve("EVENT", name)
+            addr = resolved[1] if resolved is not None and resolved[0] == "EVENT" else model.addr(name)
+            mapped.append((addr, name, typ, raw))
+        if len(mapped) != len(EVENT_PRIVATE_VIEWS):
+            problems.append("EVENT private-view contract: private block must contain exactly seven declarations (found %d)" % len(mapped))
+        seen = set()
+        for addr, name, typ, _raw in mapped:
+            if addr not in EVENT_PRIVATE_VIEWS:
+                problems.append("EVENT private-view contract: unexpected private declaration %s" % name)
+                continue
+            if addr in seen:
+                problems.append("EVENT private-view contract: duplicate private view at 0x%08X" % addr)
+            seen.add(addr)
+            expected = EVENT_PRIVATE_VIEWS[addr]
+            if typ != expected:
+                problems.append("EVENT private-view contract: 0x%08X requires %s, found %s" % (addr, expected, short(typ)))
+            resolved = model.symbols.resolve("EVENT", name)
+            if resolved != ("EVENT", addr):
+                problems.append("EVENT private-view contract: %s resolves in EVENT as %r, expected ('EVENT', 0x%08X)" %
+                                (name, resolved, addr))
+        for addr in EVENT_PRIVATE_VIEWS:
+            if addr not in seen:
+                problems.append("EVENT private-view contract: missing private view at 0x%08X" % addr)
+
+    # ch.walk is the project preprocessor for header visibility. Check that the
+    # EVENT-owned declarations are visible and the selector does not escape.
+    event_rows = resolved_rows(ch.walk(event_path, inc), private_context=True)
+    for addr, expected in EVENT_PRIVATE_VIEWS.items():
+        own = [r for r in event_rows if r[0] == addr and r[3] == event_name]
+        if len(own) != 1 or own[0][2] != expected:
+            problems.append("EVENT private-view contract: EVENT header must expose exactly one %s view at 0x%08X" % (expected, addr))
+    leakage = set()
+    ch.walk(event_path, inc, defines=leakage)
+    if EVENT_PRIVATE_SELECTOR in leakage:
+        problems.append("EVENT private-view contract: %s leaks beyond include/ovl/EVENT.h" % EVENT_PRIVATE_SELECTOR)
+
+    # Check actual translation-unit order only at check/write boundaries that
+    # supply a source root. Header-only Model users remain bounded and cheap.
+    if src is not None and model.sources:
+        private_source_names = {"D_%08X" % addr for addr in EVENT_PRIVATE_VIEWS}
+        private_source_names.update(line.name for line in model.symbols.unit_lines("EVENT")
+                                    if line.addr in EVENT_PRIVATE_VIEWS)
+        for path, info in sorted(model.sources.items()):
+            rel = os.path.relpath(path, src).replace(os.sep, "/")
+            parts = rel.split("/")
+            is_event_source = len(parts) >= 3 and parts[:2] == ["ovl", "EVENT"]
+            closure_headers = closure_of_file(model, path)
+            if not is_event_source:
+                if event_name in closure_headers:
+                    problems.append("EVENT private-view contract: non-EVENT source %s includes ovl/EVENT.h" % rel)
+                if selector_directives(path):
+                    problems.append("EVENT private-view contract: %s directive is forbidden in non-EVENT source %s" %
+                                    (EVENT_PRIVATE_SELECTOR, rel))
+                continue
+            if selector_directives(path):
+                problems.append("EVENT private-view contract: %s directive is forbidden in source %s" %
+                                (EVENT_PRIVATE_SELECTOR, rel))
+            for name, _typ, _raw in ch.declarations_text(info["text"]):
+                resolved = model.symbols.resolve("EVENT", name)
+                if resolved is not None and resolved[0] == "EVENT" and resolved[1] in EVENT_PRIVATE_VIEWS:
+                    problems.append("EVENT private-view contract: source %s declares private alias %s outside ovl/EVENT.h" %
+                                    (rel, name))
+            for header in sorted(closure_headers):
+                if header == event_name or header in model.canonical:
+                    continue
+                for name, _typ, _raw in model.own.get(header, ()):
+                    resolved = model.symbols.resolve("EVENT", name)
+                    if resolved is not None and resolved[0] == "EVENT" and resolved[1] in EVENT_PRIVATE_VIEWS:
+                        problems.append("EVENT private-view contract: %s in include/%s is outside the validated EVENT private block" %
+                                        (name, header))
+            targets_used = bool(info["tokens"] & private_source_names)
+            if event_name not in closure_headers:
+                if targets_used:
+                    problems.append("EVENT private-view contract: %s uses a private address but does not include ovl/EVENT.h" % rel)
+                continue
+            defines = set()
+            rows = resolved_rows(ch.walk(path, inc, defines=defines, rel="<src>"), private_context=True)
+            for name in sorted(info["tokens"] & private_source_names):
+                resolved = model.symbols.resolve("EVENT", name)
+                addr = resolved[1] if resolved is not None and resolved[0] == "EVENT" else model.addr(name)
+                if addr not in EVENT_PRIVATE_VIEWS:
+                    continue
+                expected = EVENT_PRIVATE_VIEWS[addr]
+                exact = [r for r in rows if r[1] == name and r[3] == event_name]
+                if len(exact) != 1 or exact[0][2] != expected:
+                    problems.append("EVENT private-view contract: %s uses %s but does not see that exact %s spelling once from ovl/EVENT.h" %
+                                    (rel, name, expected))
+            for addr, expected in EVENT_PRIVATE_VIEWS.items():
+                visible = [r for r in rows if r[0] == addr]
+                private = [r for r in visible if r[3] == event_name]
+                shared = [r for r in visible if r[3] in model.canonical]
+                if len(private) != 1 or private[0][2] != expected or shared:
+                    problems.append("EVENT private-view contract: %s must see one private %s view and no shared view at 0x%08X" %
+                                    (rel, expected, addr))
+            if EVENT_PRIVATE_SELECTOR in defines:
+                problems.append("EVENT private-view contract: selector leaks after processing %s" % rel)
     return problems
 
 
@@ -747,23 +1472,48 @@ def check_api(inc, src=None):
     model = Model(inc, src)
     if not model.topic_mode:
         return _check_legacy_api(inc, src)
-    problems = canonical_problems(model)
+    problems = profile_integrity_problems(model, inc, src) + canonical_problems(model)
     api = model.api
     known = read_known(model.root)
     problems.extend(msg for key, msg in alias_conflicts(model) if key not in known)
     for h, ds in sorted(model.own.items()):
-        if h in model.canonical or h in SDK_HEADERS:
+        if h in model.canonical or h in model.sdk_headers or h in model.legacy_import_providers:
             continue
         ov = model.overrides.get(h, {})
         for name, typ, raw in ds:
-            if name not in api and (not model.is_main(name, h) or model.needs_local_type(raw, h)):
+            if model.event_private_active and model.owner(h) == "EVENT":
+                resolved = model.symbols.resolve("EVENT", name)
+                if resolved is not None and resolved[0] == "EVENT" and resolved[1] in EVENT_PRIVATE_VIEWS:
+                    if h != "ovl/EVENT.h" or model.event_private_addr(name, h, typ) is None:
+                        problems.append("EVENT private-view contract: %s in include/%s is outside the validated EVENT private block" %
+                                        (name, h))
+                        continue
+            if model.event_private_addr(name, h, typ) is not None:
                 continue
-            home = model.api_owner.get(name)
+            unit = model.owner(h)
+            imported = model.private_import_for_unit(name, unit)
+            if imported is not None:
+                home = model.private_import_home(name, unit)
+                canonical_type = imported["current_type"]
+                if name not in ov:
+                    if typ == canonical_type:
+                        problems.append("duplicate private import %s: include/%s declares '%s' like include/%s; delete it here" %
+                                        (name, h, short(typ), home))
+                    else:
+                        problems.append("conflict private import %s: include/%s has '%s', include/%s has '%s'. Add a documented "
+                                        "MAIN_API_OVERRIDE_%s before the provider include only for a matched local view" %
+                                        (name, h, short(typ), home, short(canonical_type), name))
+                    continue
+            else:
+                if name not in api and (not model.is_main(name, h, typ) or model.needs_local_type(raw, h)):
+                    continue
+                home = model.api_owner.get(name)
+                canonical_type = api[name][0] if name in api else None
             if home is None:
                 dest = "include/" + API if API in model.canonical else "a registered topic header"
                 problems.append("main symbol %s is declared in include/%s: declare it in %s instead" %
                                 (name, h, dest))
-            elif api[name][0] == typ:
+            elif canonical_type == typ:
                 problems.append("duplicate %s: include/%s declares '%s' like include/%s; delete it here" %
                                 (name, h, short(typ), home))
             elif name not in ov:
@@ -772,8 +1522,11 @@ def check_api(inc, src=None):
                                 "the matched view" % (name, h, short(typ), home, short(api[name][0]), OVERRIDE, name))
     for f, found in sorted(model.overrides.items()):
         where = f if f in model.headers else os.path.relpath(f, model.root)
+        unit = model.owner(f) if f in model.headers else srcscan.unit_of_source(f)
         for name, reason in sorted(found.items()):
-            home = model.api_owner.get(name)
+            imported = model.private_import_for_unit(name, unit)
+            home = model.api_owner.get(name) or (model.private_import_home(name, unit) if imported else None)
+            canonical_type = api[name][0] if name in api else (imported["current_type"] if imported else None)
             if not reason:
                 problems.append("override %s in %s has no reason: write the matched-view reason" % (name, where))
             if home is None:
@@ -781,7 +1534,7 @@ def check_api(inc, src=None):
                 continue
             if f in model.headers:
                 mine = [t for n, t, _r in model.own[f] if n == name]
-                if mine and mine[0] == api[name][0]:
+                if mine and mine[0] == canonical_type:
                     problems.append("override %s in %s is redundant: its declaration equals include/%s" %
                                     (name, where, home))
                 elif not mine and not reason.lower().startswith("implicit"):
@@ -1305,14 +2058,14 @@ def rewrite_line(line, drop):
 def fix_header(model, plan_, h, dry=False, log=print):
     """Rewrite one header: drop declarations main_api.h carries, mark the used differing ones as
     overrides, include main_api.h. Returns the number of declarations changed."""
-    if model.topic_mode and h in model.canonical:
+    if model.topic_mode and (h in model.canonical or h in model.legacy_import_providers):
         return 0
     path = model.headers[h]
     text = _read(path)
     is_home = h in ("game.h", "main_only.h")
     drop, overrides = set(), {}
     for name, typ, raw in model.own[h]:
-        if not model.is_main(name, h) or model.needs_local_type(raw, h) or name not in plan_:
+        if not model.is_main(name, h, typ) or model.needs_local_type(raw, h) or name not in plan_:
             continue
         if model.topic_mode and name in model.overrides.get(h, {}):
             # The define hides the canonical declaration. Even a "benign" local
@@ -1561,15 +2314,26 @@ def alias_conflicts(model):
     renames = load_renames(model.root)
     groups = defaultdict(set)   # (namespace, address) -> {(name, type, header)}
     for h, ds in model.own.items():
-        if h in SDK_HEADERS:
+        explicitly_owned_sdk = model.profile is not None and h in model.canonical and h in model.sdk_headers
+        if h in SDK_HEADERS and not explicitly_owned_sdk:
             continue
         for name, typ, _raw in ds:
-            a = model.addr(name)
+            a = model.event_private_addr(name, h, typ)
+            import_binding = model.private_import_for_unit(name, model.owner(h), typ)
+            if a is None and import_binding is not None:
+                a = int(import_binding["address"], 16)
+            if a is None:
+                a = model.addr(name)
             if a is None:
                 a = renames.get(name)
             if a is None:
                 continue
-            ns = "main" if model.is_main(name, h) or model.owner(h) is None else model.owner(h)
+            explicit_sdk = model.profile is not None and h in model.sdk_headers
+            private_event = model.event_private_addr(name, h, typ) is not None
+            private_import = import_binding is not None
+            ns = ("EVENT" if private_event else
+                  (import_binding["unit"] if private_import else
+                   ("main" if explicit_sdk or model.is_main(name, h, typ) or model.owner(h) is None else model.owner(h))))
             groups[(ns, a)].add((name, typ, h))
     out = []
     for (ns, a), views in sorted(groups.items(), key=lambda kv: (kv[0][1], kv[0][0])):
@@ -1814,7 +2578,7 @@ def _run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=(
         model = Model(inc, src)
         plan_ = plan(model)
         for h in sorted(model.headers):
-            if h not in model.canonical and h not in SDK_HEADERS and (not only or h in only):
+            if h not in model.canonical and h not in model.sdk_headers and (not only or h in only):
                 fix_header(model, plan_, h, log=log)
         model = Model(inc, src)
         write_api(model, plan(model))
@@ -1841,6 +2605,12 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
     cannot leave an overlay changed while its canonical owner is unguarded.
     """
     model = model or Model(inc, src)
+    if model.profile is not None:
+        problems = profile_integrity_problems(model, inc, src)
+        if problems:
+            for problem in sorted(set(problems)):
+                log("sync_protos.py: " + problem)
+            return 1
     if not model.topic_mode:
         return _run_write(inc, src, fix, model, log, before, ignore, only)
     original = {}
@@ -1920,11 +2690,16 @@ def main(argv=None):
             print("sync_protos.py: " + err)
         return 1 if err else 0
     model = Model(a.inc, a.src)
+    if model.profile is not None and model.profile_problems:
+        for problem in model.profile_problems:
+            print("sync_protos.py: " + problem)
+        return 1
     if a.check:
         problems = check_api(a.inc, a.src)
         for p in sorted(set(problems)):
             print(p)
-        print("%d main_api problem(s)" % len(set(problems)) if problems else "main_api OK")
+        print("%d owner problem(s)" % len(set(problems)) if problems else
+              ("owner profile OK" if model.profile is not None else "main_api OK"))
         return 1 if problems else 0
     if a.prune:
         if not os.path.exists("build.ninja"):

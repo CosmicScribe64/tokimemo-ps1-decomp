@@ -5,6 +5,7 @@ Run: tools/docker.sh python3 tools/test_check_headers.py
 """
 import tempfile
 import unittest
+import json
 from pathlib import Path
 
 import check_headers
@@ -98,6 +99,22 @@ class CheckHeadersTest(unittest.TestCase):
         self.topic("schedule.h", "void func_80071000(void);\n")
         self.write("ovl/A.h", "void func_80071000(void);\n")
         self.assertEqual(check_headers.check(str(self.inc), api=False), [])
+
+    def test_profile_with_zero_present_owners_still_fails_required_path_and_missing_project_include(self):
+        project = self.inc / "strict"
+        strict_inc = project / "include"
+        strict_inc.mkdir(parents=True)
+        (strict_inc / "common.h").write_text("typedef int s32;\n")
+        (strict_inc / "types.h").write_text('#include \\\n "missing_type.h"\ntypedef s32 T;\n')
+        (project / "config").mkdir()
+        profile = {"mode": "topic_only", "owners": [{"path": "main_api.h", "role": "main"}],
+                   "required_types": ["common.h", "types.h"]}
+        (project / "config" / "header_owners.json").write_text(json.dumps(profile))
+        (strict_inc / "commented.h").write_text('/* #include "not_a_real_header.h" */\n')
+        out = check_headers.check(str(strict_inc))
+        self.assertTrue(any("required main owner include/main_api.h is missing" in p for p in out), out)
+        self.assertTrue(any("quoted project include missing_type.h is missing" in p for p in out), out)
+        self.assertFalse(any("not_a_real_header.h" in p for p in out), out)
 
     def test_conflict_between_game_and_overlay(self):
         self.write("game.h", "extern s32 D_800CA160;\n")

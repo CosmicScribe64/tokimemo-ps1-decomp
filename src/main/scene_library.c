@@ -7,8 +7,51 @@
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
 #define MAIN_API_OVERRIDE_get_now_k /* implicit declaration, as matched (main_api.h: u8(void)) */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libc.h"
+#include "libgpu.h"
+#include "libsnd.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/date.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/resident_views.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/param.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/schedule.h"
+#include "main/sd.h"
+#include "main/select_girl.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/vram.h"
 #include "psx_types.h"
+#include "main/game_mode.h"
+#include "game/word_views.h"
+#include "main/talk.h"
+#include "main/sprite.h"
+#include "main/scene.h"
 s32 prim_gradient_line(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 s32 SsVabTransCompleted();
 /* FAKE: preserve the original implicit integer view of the SDK strncpy alias. T-20007. */
@@ -69,6 +112,7 @@ extern s32 talk_work[];
  * a function table (FnTbl55); moving it needs a MAIN_API_OVERRIDE there. T-11590 */
 extern s32 D_80122D48;
 
+/* Samples CD audio and updates the stereo level-meter values. */
 void SD_GetCDLevel(CdLevelMeter *arg0) {
     s32 shift;
     u32 left;
@@ -146,6 +190,7 @@ void SD_GetCDLevel(CdLevelMeter *arg0) {
     }
 }
 
+/* Finds sampled left and right CD audio peak levels. */
 void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n) {
     u16 i;
     u16 step;
@@ -178,6 +223,7 @@ void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n) {
     *r *= 2;
 }
 
+/* Calculates average absolute left and right CD audio levels. */
 void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count) {
     s32 left_sum;
     s32 right_sum;
@@ -205,6 +251,7 @@ void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count) {
     *right = ((u32)(right_sum * 2) / count) & 0xFFFF;
 }
 
+/* Returns the current averaged CD audio level when the meter is active. */
 s16 getCDlevel(void) {
     if (audio_state.state_flags & 0x400) {
         return (u32)(audio_cd_level + D_80125E62) >> 1;
@@ -212,6 +259,7 @@ s16 getCDlevel(void) {
     return 0;
 }
 
+/* Resolves the three weekday scene-data addresses for an indexed entry. */
 void addr_init_weekly_sd(s32 arg0) {
     u16 *p;
 
@@ -222,6 +270,7 @@ void addr_init_weekly_sd(s32 arg0) {
     D_80125CAC = p[2] + 0x801E0000;
 }
 
+/* Resolves the three holiday scene-data addresses for an indexed entry. */
 void addr_init_holiday_sd(s32 arg0) {
     u16 *p;
 
@@ -232,6 +281,7 @@ void addr_init_holiday_sd(s32 arg0) {
     D_80125CAC = p[2] + 0x801E0000;
 }
 
+/* Resolves the three club scene-data addresses for an indexed table entry. */
 void addr_init_club_sd(s32 arg0) {
     u16 *p;
 
@@ -242,6 +292,7 @@ void addr_init_club_sd(s32 arg0) {
     D_80125CAC = p[2] + 0x801E0000;
 }
 
+/* Resolves the three miscellaneous scene-data addresses for an indexed entry. */
 void addr_init_else_sd(s32 arg0) {
     u16 *p;
 
@@ -430,6 +481,7 @@ s32 scene_bg_wipe_in_step(void) {
     return 0;
 }
 
+/* Draws the background mosaic wipe as a grid of textured strips. */
 void set_tarao_bg(s32 arg0) {
     s16 row;
     s16 col;
@@ -481,6 +533,7 @@ void set_tarao_bg(s32 arg0) {
 }
 
 /* K&R parameters preserve promoted callers; the helper narrows them. T-10870. */
+/* Adds a textured sprite with the supplied position, UV and color. */
 void set_tarao_sprt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 s16 arg0;
 s16 arg1;
@@ -514,6 +567,7 @@ u8 arg9;
     AddPrim(draw_ot_tags + (draw_buffer << 10) + arg6 * 4, p);
 }
 
+/* Adds a colored rectangle primitive to the current draw ordering table. */
 void set_tarao_rect(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u8 arg5, u8 arg6, u8 arg7) {
     u8 *p;
 
@@ -534,6 +588,7 @@ void set_tarao_rect(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u8 arg5, u
     AddPrim(draw_ot_tags + (draw_buffer << 10) + arg4 * 4, (s32)p);
 }
 
+/* Advances the normal-date scene after the background wipe finishes. */
 void normal_date_bg_out(void) {
     if (scene_bg_wipe_out_step() == 1) {
         mode_step_next();
@@ -773,6 +828,7 @@ void normal_date_girl_in(void) {
     bg_fade_draw(1);
 }
 
+/* Initializes the fade-in for the date-partner portrait. */
 s32 normal_date_girl_in_init(void) {
     actor_pool[0x843] = 0;
     sprite_quads[0].tint_r = sprite_quads[0].tint_g = sprite_quads[0].tint_b = 0;
@@ -783,6 +839,7 @@ s32 normal_date_girl_in_init(void) {
     game_state.mode_step_timer.w += 1;
 }
 
+/* Raises portrait brightness to 0x80, then shows the face sprites and advances. */
 s32 normal_date_girl_in_main(void) {
     if (bg_fade_amount < 0x80) {
         bg_fade_amount += 8;
@@ -797,6 +854,7 @@ s32 normal_date_girl_in_main(void) {
     actor_pool[0x843] = bg_fade_amount;
 }
 
+/* Shows the date-partner portrait immediately at full brightness. */
 s32 normal_date_girl_suddenin(void) {
     D_80122CF4 = 1;
     actor_pool[0x843] = 0x80;
@@ -821,12 +879,14 @@ void normal_date_girl_out(void) {
     bg_fade_draw(1);
 }
 
+/* Initializes the fade-out for the date-partner portrait. */
 void normal_date_girl_out_init(void) {
     bg_fade_amount = 0x80;
     D_80122CF8 = 0;
     game_state.mode_step_timer.w = game_state.mode_step_timer.w + 1;
 }
 
+/* Fades out and hides the date-partner portrait. */
 s32 normal_date_girl_out_main(void) {
     if (bg_fade_amount >= 8) {
         bg_fade_amount -= 8;
@@ -846,6 +906,7 @@ s32 normal_date_girl_out_main(void) {
     actor_pool[0x843] = bg_fade_amount;
 }
 
+/* Hides the date-partner portrait immediately. */
 s32 normal_date_girl_suddenout(void) {
     actor_pool[0x83F] &= ~0x80;
     actor_pool[0x7FB] &= ~0x80;
@@ -923,6 +984,7 @@ s32 normal_date_bggirl_fadeout(void) {
     sprite_quads[1].tint_r = sprite_quads[1].tint_g = sprite_quads[1].tint_b = x;
 }
 
+/* Runs the normal-date background transition between places. */
 void normal_date_move_place(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
@@ -937,6 +999,7 @@ void normal_date_move_place(void) {
     }
 }
 
+/* Initializes the normal-date place transition and crossfade. */
 void normal_date_move_place_init(void) {
     k_reset(1);
     bg_fade_amount = 0x80;
@@ -945,6 +1008,7 @@ void normal_date_move_place_init(void) {
     bg_crossfade_draw(1);
 }
 
+/* Fades the outgoing date background and switches to the decoded destination. */
 s32 normal_date_move_place_main(void) {
     if (bg_fade_amount >= 8) {
         bg_fade_amount -= 8;
@@ -963,23 +1027,27 @@ s32 normal_date_move_place_main(void) {
     bg_crossfade_draw(1);
 }
 
+/* Clears dialogue and installs the first stored place title before advancing. */
 void place_init(void) {
     k_reset(0);
     message_window_set_title(scene_place_title);
     mode_step_next();
 }
 
+/* Clears dialogue and installs the second stored place title before advancing. */
 void place_init2(void) {
     k_reset(0);
     message_window_set_title(scene_place_title_2);
     mode_step_next();
 }
 
+/* Shows the decoded background and advances the scene step. */
 void change_dec_bg(void) {
     dec_bg_show_switch(1);
     mode_step_next();
 }
 
+/* Validates and decodes the current still-background bitstream. */
 s32 dec_init(void) {
     if ((((u32 *)bg_still_bitstream)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)bg_still_bitstream)[1] & 0xFF010000) != 0x10000) {
         bg_lba_cache[2] = 0;
@@ -1010,6 +1078,7 @@ void bg_read_sub2(s32 arg0) {
 
 /* FAKE: the chained next-index assignment keeps a0 across the call, and the
  * unsigned comparison keeps the target branch operand order. T-9720. */
+/* Scrolls active dialogue entries upward when text reaches the bottom of the window. */
 void check_k_scroll(void) {
     s32 sp38;
     TextEntry *sp48;
@@ -1059,6 +1128,7 @@ void check_k_scroll(void) {
     }
 }
 
+/* Waits the requested number of frames before advancing the mode step. */
 void wait_sub_sub(s16 wait_frames) {
     s32 elapsed_frames = game_state.mode_step_timer.w + 1;
     game_state.mode_step_timer.w = elapsed_frames;
@@ -2060,6 +2130,7 @@ u8 text_color;
     return 0;
 }
 
+/* Reorders the three encoded dialogue choices using the current choice order. */
 s32 make_three_select(source_text)
     u8 *source_text;
 {
@@ -2092,6 +2163,7 @@ s32 make_three_select(source_text)
     sprintf(source_text, "%sq%sq%s", option_text_buffer[talk_choice_order[0]], option_text_buffer[talk_choice_order[1]], option_text_buffer[talk_choice_order[2]]);
 }
 
+/* Initializes a frame-dependent ordering for three dialogue choices. */
 s32 junban_init(void) {
     talk_choice_order[0] = game_state.frame_count % 3;
     if (talk_choice_order[0] == 0) {
@@ -2106,6 +2178,7 @@ s32 junban_init(void) {
     }
 }
 
+/* Runs the three-choice date-dialogue menu. */
 void normal_date_three_select(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
@@ -2121,6 +2194,7 @@ void normal_date_three_select(void) {
 }
 
 /* s32 without a return value: the last chain value stays in v0 (the 0x10 height). T-11590 */
+/* Initializes the three-choice date-dialogue menu and its cursor state. */
 s32 normal_date_three_select_init(void) {
     s32 pad; /* FAKE: unused word above the arrays, the original frame is 8 bytes bigger (as in normal_date_two_select_init, T-9020). T-11590 */
     s16 x[3];
@@ -2140,6 +2214,7 @@ s32 normal_date_three_select_init(void) {
     game_state.mode_step_timer.w++;
 }
 
+/* Handles selection from the three-choice date-dialogue menu. */
 s32 normal_date_three_select_main(void) {
     menu_check(1, cursor_x, cursor_y);
     menu_cursor_update(1);
@@ -2163,6 +2238,7 @@ s32 normal_date_three_select_main(void) {
     }
 }
 
+/* Runs the two-choice date-dialogue menu. */
 void normal_date_two_select(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
@@ -2177,6 +2253,7 @@ void normal_date_two_select(void) {
     }
 }
 
+/* Initializes the two-choice date-dialogue menu geometry and state. */
 void normal_date_two_select_init(void) {
     s32 pad; /* FAKE: unused word above the arrays, the original frame is 8 bytes bigger (T-9020) */
     s16 x[2];
@@ -2195,6 +2272,7 @@ void normal_date_two_select_init(void) {
     game_state.mode_step_timer.w++;
 }
 
+/* Handles selection from the two-choice date-dialogue menu. */
 s32 normal_date_two_select_main(void) {
     menu_check(1, cursor_x, cursor_y);
     menu_cursor_update(1);
@@ -2365,16 +2443,19 @@ void scene_frame_update(void) {
     }
 }
 
+/* Hides the date display and advances the scene step. */
 void hizuke_hide(void) {
     hizuke_disp_switch(0);
     mode_step_next();
 }
 
+/* Shows the date display and advances the scene step. */
 void hizuke_appear(void) {
     hizuke_disp_switch(1);
     mode_step_next();
 }
 
+/* Starts loading the current character portrait, using seasonal files for heroines. */
 void read_bustup(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
@@ -2505,6 +2586,7 @@ void read_bustup(void) {
     mode_step_next();
 }
 
+/* Starts loading the current character school-uniform portrait, using seasonal variants where available. */
 void read_bustup_uniform(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
@@ -2612,6 +2694,7 @@ void read_bustup_uniform(void) {
     mode_step_next();
 }
 
+/* Starts loading the current heroine swimsuit portrait. */
 void read_bustup_swimsuit(void) {
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
@@ -2657,6 +2740,7 @@ void read_bustup_swimsuit(void) {
     mode_step_next();
 }
 
+/* Starts loading the current character portrait. */
 void bustup_return(void) {
     read_bustup();
 }
@@ -2669,6 +2753,7 @@ void return_step(void) {
     mode_step_set(game_state.saved_mode_step);
 }
 
+/* Advances dialogue text and temporarily speeds it while a fast-text input is held. */
 void k_disp_inc2(void) {
     s32 pad; /* FAKE: unused slot above sp2B, the original frame has it (real source unknown). T-8070 */
     u8 sp2B;
@@ -2684,16 +2769,19 @@ void k_disp_inc2(void) {
     }
 }
 
+/* Restarts sequence zero in sound bank zero and advances the scene step. */
 void yosi_trans(void) {
     audio_bank_start(0, 0x200);
     mode_step_next();
 }
 
+/* Selects Yoshio as the current girl slot for the scene. */
 void change_yoshio(void) {
     game_state.current_girl = GIRL_YOSHIO;
     mode_step_next();
 }
 
+/* Selects the date partner as the current girl. */
 void change_girl(void) {
     game_state.current_girl = game_state.date_girl;
     mode_step_next();
@@ -2712,6 +2800,7 @@ void talk_names_set(u8 arg0) {
     }
 }
 
+/* Runs the heroine-selection menu with the back entry available. */
 void select_girl(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
@@ -2726,6 +2815,7 @@ void select_girl(void) {
     }
 }
 
+/* Runs the heroine-selection menu without the back entry. */
 void select_girl2(void) {
     switch (game_state.mode_step_timer.u) {
     case 0:
@@ -2740,6 +2830,7 @@ void select_girl2(void) {
     }
 }
 
+/* Builds and initializes the available-heroine selection menu. */
 void select_girl_init(arg0)
 u8 arg0;
 {
@@ -2779,6 +2870,7 @@ u8 arg0;
     game_state.mode_step_timer.w++;
 }
 
+/* Handles selection of an available heroine entry. */
 s32 select_girl_main(s32 omit_back) {
     s16 girl_index;
     u32 candidate_count;
@@ -2801,6 +2893,7 @@ s32 select_girl_main(s32 omit_back) {
     }
 }
 
+/* Sets all three tint channels for one sprite quad. */
 void sprite_brightness(s16 sprite_index, u8 brightness) {
     u8 *p = (u8 *)sprite_quads + sprite_index * 36;
     p[0x16] = brightness;
@@ -2808,6 +2901,7 @@ void sprite_brightness(s16 sprite_index, u8 brightness) {
     p[0x14] = brightness;
 }
 
+/* Advances the calendar by one day and refreshes the date display. */
 void day_plus(void) {
     s32 sp28; /* FAKE: unused local, the original frame has one more word below sp2B (T-3330 slot rule); source unknown. T-6040 */
     u8 sp2B;
@@ -3032,58 +3126,68 @@ void scene_still_fade_out(void) {
     } while (var_s0 < 0x40);
 }
 
+/* Selects face animation values 2 and 0, then advances the event step. */
 void event_face0(void) {
     D_80120666 = 2;
     D_801206AA = 0;
     mode_step_next();
 }
 
+/* Selects face animation values 3 and 1, then advances the event step. */
 void event_face1(void) {
     D_80120666 = 3;
     D_801206AA = 1;
     mode_step_next();
 }
 
+/* Selects face animation values 6 and 4, then advances the event step. */
 void event_face2(void) {
     D_80120666 = 6;
     D_801206AA = 4;
     mode_step_next();
 }
 
+/* Selects face animation values 7 and 5, then advances the event step. */
 void event_face3(void) {
     D_80120666 = 7;
     D_801206AA = 5;
     mode_step_next();
 }
 
+/* Selects face animation value 2 and advances the event step. */
 void event_face_kuchi0(void) {
     D_80120666 = 2;
     mode_step_next();
 }
 
+/* Selects face animation value 3 and advances the event step. */
 void event_face_kuchi1(void) {
     D_80120666 = 3;
     mode_step_next();
 }
 
+/* Selects voice-driven event mouth animation and advances the event step. */
 void event_kuchi_ani_no(void) {
     D_80122D10 = 0;
     D_80120652 = 4;
     mode_step_next();
 }
 
+/* Selects periodic event mouth animation and advances the event step. */
 void event_kuchi_ani_yes(void) {
     D_80122D10 = 1;
     D_80120652 = 0;
     mode_step_next();
 }
 
+/* Enables actor 97 eye animation and permits periodic blink restarts. */
 void ev_me_on(void) {
     D_80122D0C = 0;
     D_80120696 = 5;
     mode_step_next();
 }
 
+/* Enables actor 97 eye animation and suppresses periodic blink restarts. */
 void ev_me_on_continue(void) {
     D_80122D0C = 1;
     D_80120696 = 5;
@@ -3095,6 +3199,7 @@ void ev_me_on_continue(void) {
  * the red byte of arg5 and is read once (the r3 store repeats the expression): it numbers that
  * uopt range first, so it takes $a0 and the blue byte of arg6 takes $a1 (p moves to $a2), and it
  * makes arg5 the first stack argument loaded. The real source is unknown. T-17001 */
+/* Draws a four-vertex shaded rectangle from two supplied colors. */
 void _sprite_set_box_shade_tarao(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u32 arg5, u32 arg6) {
     GameState *gs;
     POLY_G4 *p;
@@ -3135,11 +3240,13 @@ void talk_clear(void) {
     hud_mascot_display_switch(0);
 }
 
+/* Starts the screen-shake effect and advances the scene step. */
 void don_init2(void) {
     draw_shake_start();
     mode_step_next();
 }
 
+/* Waits through the shake interval, then resets text and advances. */
 void don_wait(void) {
     if ((u32)game_state.mode_step_timer.w++ >= 0x81U) {
         k_reset(1);
@@ -3147,6 +3254,7 @@ void don_wait(void) {
     }
 }
 
+/* Installs dialogue tables and runs one date-dialogue line. */
 void normal_date_speak_1line(void) {
     talk_tables = (u8 *)&talk_group;
     D_800CA138 = (u8 *)&talk_line;
@@ -3158,6 +3266,7 @@ void normal_date_speak_1line(void) {
     }
 }
 
+/* Installs the dialogue tables and runs the multi-line date dialogue. */
 void normal_date_speak_012(void) {
     talk_tables = &talk_group;
     D_800CA138 = &talk_line;
@@ -3177,6 +3286,7 @@ void normal_date_speak(void) {
     talk_run(D_80122CDC, 1, 0);
 }
 
+/* Resets portrait actors, frees their texture-cache slots and advances the scene step. */
 void vram_bustup_clear(void) {
     s16 i;
 

@@ -1,8 +1,22 @@
 /* screen_layers.c: src/main/8004C3F0.c; T-27059: object [0x8004C3F0,0x8004E500); screen-page rendering, SRN layer VRAM setup, MOD tile-set upload and glyph fetch; preserve all functions and original object boundary (prior h-graphics candidate). Original object 0x8004C3F0-0x8004E500 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_search_tpage_multi /* matched as u16: the original compares the raw result and keeps the narrowed copy (main_api.h: s32) */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game/layer.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/layer.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 #include "psx_types.h"
+#include "main/layer.h"
 
 /* Adds five POLY_FT4 quads to the ordering table: three 256-pixel-wide pages (at x, x + 0x100 and
  * x + 0x200, scrolled left by the low byte of arg4) and two 1-pixel-wide columns between them,
@@ -149,6 +163,7 @@ void srn_tpage_show(u8 arg0, u8 arg1, u8 arg2, RECT *arg3, s32 arg4, s32 arg5, s
  * spilled home slots, so do not add or drop one. The masked table word is written twice ((*src & 0xFFFF)
  * in the test and in the call) because any local for it changes the registers; uopt merges the two.
  * Only the error path returns a value, the normal path falls off the end (as in the original). */
+/* Uploads nonzero tiles from one screen-layer record to a VRAM page. */
 s32 srn_vram_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u32 *src;
     s32 left;
@@ -212,6 +227,7 @@ s32 srn_vram_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
+/* Copies the rightmost vertical column of each source texture page into adjacent destination columns. */
 void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
 
@@ -304,6 +320,7 @@ void mod_trans_vram(s32 idx, s32 frame, s32 page, s32 x, s32 y) {
 
 /* FAKE: the integer return type without a return preserves the original v0
  * lifetime and exit scheduling; callers discard the result. T-24601. */
+/* Extracts glyph pixels from the tiled font atlas and applies optional flips. */
 s32 get_fnt(u8 *output, u8 *source, s32 glyph, s32 divisor, s32 width, u8 flags) {
     /* FAKE: unknown original locals occupy 20 bytes above the temporary and
      * four below it, placing the 256-byte copy at sp+0x8C in a 0x1A0 frame.
@@ -348,6 +365,7 @@ s32 get_fnt(u8 *output, u8 *source, s32 glyph, s32 divisor, s32 width, u8 flags)
 }
 
 /* FAKE: taking the address of the argument forces the home-slot spill (sw a0,0(sp)); real source unknown. T-0400 */
+/* Retained layer-internal entry; only the documented argument spill remains and its original role is unknown. */
 void func_8004DAC4(s32 arg0) {
     s32 *p = &arg0;
 }
@@ -361,6 +379,7 @@ void func_8004DAC4(s32 arg0) {
  * inner latch, the row count when the inner loop ends). xpos and ypos are a register and a hoisted
  * value; their stack homes are never used, but they place p's home at sp+0x6C. */
 u16 search_tpage_multi();
+/* Draws a tile-set frame as textured GPU sprite primitives. */
 void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 padA; /* FAKE: T-25006, padA and padB put row and mode at the original stack homes */
     s32 padB;
@@ -446,6 +465,7 @@ void mod_set_gpu(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
  * the split form (mask, then shift) gives uv and clut more uses, and clut then outranks the x position
  * and col for the saved registers. The y position is written row * w + y with a signed row. */
 void func_80098B80(SpriteQuad *sp, void *ot, u16 pri);
+/* Draws a tile-set frame through the sprite renderer. */
 void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
     s32 padA[4]; /* FAKE: T-25104, padA, padB and padC put row, sp and mode at the original stack homes */
     s32 row;
@@ -533,6 +553,7 @@ void mod_set(s32 idx, s32 frame, s32 x, s32 y, s32 cx, s32 cy, s32 pri) {
 /* Matching notes (T-25006): the record fields are read through the global array (SRN_REC), not a
  * pointer, the row and column positions are written as expressions (uopt strength-reduces them into the
  * two induction variables), and cols, rows are computed before wid, hgt, left so cols wins $fp. */
+/* Draws the visible tiles from one screen-layer record. */
 s32 srn_set(s32 arg0) {
     SrnLayer *rec; /* FAKE: T-25006, unused; its stack slot keeps the frame at 0xC0 and the spill homes */
     s32 w0;
@@ -598,6 +619,7 @@ s32 srn_set(s32 arg0) {
 }
 
 
+/* Initializes one screen-layer record from its encoded descriptor. */
 void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
     u8 *p;
 

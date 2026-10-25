@@ -6,7 +6,7 @@
 extern u32 D_80122EB8;
 
 void tour_stage_mio_club_route(void) {
-    D_80122EBC = 1;
+    game_mode_scene_girl = 1;
     switch (D_80122EB8) {
     case 0:
         if (game_state.year == 0x61) {
@@ -14,7 +14,7 @@ void tour_stage_mio_club_route(void) {
             return;
         }
         if ((girl_state_rank(1) == 4) && !game_state.girls[1].flags.f.b2) {
-            D_80122EBC = 0xFF;
+            game_mode_scene_girl = 0xFF;
             mode_stage_set(TOUR_STAGE_SOLO_ROUTE);
             return;
         }

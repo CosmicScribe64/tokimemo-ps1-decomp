@@ -240,12 +240,59 @@ def drop_decl_block(text):
     return re.sub(r"^%s\n.*?^%s\n" % (re.escape(DECL_START), re.escape(DECL_END)), "", text, flags=re.M | re.S)
 
 
-def header_home(name, unit):
-    """include/ path where a declaration of `name` belongs, or None (no address in the name)."""
+def owner_profile_problems(root):
+    """Nonrepairable strict-owner issues that must fail before any source write."""
+    import sync_protos
+    inc = os.path.join(root, "include")
+    profile, problems = sync_protos.owner_profile(inc)
+    if profile is None:
+        return []
+    model = sync_protos.Model(inc, os.path.join(root, "src"))
+    return problems + sync_protos.profile_integrity_problems(model, inc, os.path.join(root, "src")) + \
+        sync_protos.canonical_problems(model)
+
+
+def header_home(name, unit, root=".", source=None):
+    """include/ path where a declaration belongs; strict profiles require an existing owner."""
+    import sync_protos
+    inc = os.path.join(root, "include")
+    profile, profile_problems = sync_protos.owner_profile(inc)
     m = re.search(r"_([0-9A-Fa-f]{8})$", name)
-    if not m:
+    addr = int(m.group(1), 16) if m else None
+    if profile is not None:
+        model = sync_protos.Model(inc, os.path.join(root, "src"))
+        problems = profile_problems + sync_protos.profile_integrity_problems(
+            model, inc, os.path.join(root, "src")) + sync_protos.canonical_problems(model)
+        if problems:
+            return None
+        main_symbol = sync_protos.is_main_symbol(root, name, unit)
+        # An address can lie in the main numeric range while belonging to an overlay view
+        # (notably EVENT). Resolve that unit's explicit source closure before consulting the
+        # main canonical union, or a same-name canonical declaration masks the overlay owner.
+        if unit != "main" and addr is not None and not main_symbol:
+            if source:
+                headers = sync_protos.closure_of_file(model, os.path.join(root, source))
+                excluded = {entry["path"] for entry in profile["owners"]} | set(profile["types"])
+                candidates = sorted(h for h in headers if h not in excluded and h not in ("game.h", "main_api.h")
+                                    and model.owner(h) == unit)
+                return "include/" + candidates[0] if len(candidates) == 1 else None
+            return None
+        owner = model.api_owner.get(name)
+        if owner:
+            return "include/" + owner
+        if main_symbol:
+            return None
+        if unit != "main":
+            if source:
+                headers = sync_protos.closure_of_file(model, os.path.join(root, source))
+                excluded = {entry["path"] for entry in profile["owners"]} | set(profile["types"])
+                candidates = sorted(h for h in headers if h not in excluded and h not in ("game.h", "main_api.h")
+                                    and model.owner(h) == unit)
+                return "include/" + candidates[0] if len(candidates) == 1 else None
+            return None
         return None
-    addr = int(m.group(1), 16)
+    if addr is None:
+        return None
     if MAIN_RANGE[0] <= addr <= MAIN_RANGE[1]:
         return "include/main_api.h"
     if addr >= OVERLAY_BASE and unit != "main":
@@ -499,9 +546,20 @@ def void_locals(body):
 
 
 def header_text(root, unit):
-    """Text of the headers a declaration for `unit` can come from (main_api.h, the overlay header)."""
+    """Header text visible to the unit, using explicit roots in topic-only trees."""
+    import sync_protos
+    profile, problems = sync_protos.owner_profile(os.path.join(root, "include"))
+    if profile is not None:
+        if problems:
+            return ""
+        import srcscan
+        rels = ["include/" + h for h in sync_protos.Model(os.path.join(root, "include")).canonical]
+        if unit != "main":
+            rels += ["include/" + h for h in srcscan.unit_headers(unit, root)]
+    else:
+        rels = ["include/main_api.h", "include/ovl/%s.h" % unit]
     out = []
-    for rel in ("include/main_api.h", "include/ovl/%s.h" % unit):
+    for rel in dict.fromkeys(rels):
         try:
             out.append(read(os.path.join(root, rel)))
         except OSError:
@@ -912,8 +970,16 @@ class Run:
         body, known, problem = cleanup(decls, body, glob)
         if problem:
             return None, (problem, body, problem)
+        profile_problems = owner_profile_problems(self.root)
+        if profile_problems:
+            reason = "profile owner check: " + first_error("; ".join(profile_problems))
+            return None, (reason, body, reason)
         decl_lines = sorted(known.values()) + forward_decls(
             original, t.func, body, header_text(self.root, t.unit), known)
+        for line in decl_lines:
+            if header_home(decl_name(line), t.unit, self.root, t.src) is None:
+                return None, ("owner required for %s" % decl_name(line), body,
+                              "no existing canonical owner for %s" % decl_name(line))
         scorer, decl_lines, body = self._compile(t, path, original, body, decl_lines, known)
         if scorer is None:
             return None, (decl_lines, body, decl_lines)
@@ -998,6 +1064,15 @@ class Run:
 
     def _finish(self, t, path, original, final, decl_lines):
         """Write the verified match (guard -> plain C, declarations -> headers); None or a reason."""
+        profile_problems = owner_profile_problems(self.root)
+        if profile_problems:
+            return "headers: profile owner check: %s" % first_error("; ".join(profile_problems))
+        homes = {}
+        for d in decl_lines:
+            home = header_home(decl_name(d), t.unit, self.root, t.src)
+            if home is None:
+                return "headers: owner required for %s" % decl_name(d)
+            homes.setdefault(home, []).append(d)
         with locked(self.lock):
             new = autotweak.rewrite_guard(read(path), t.func, final)
             if new is None:
@@ -1005,13 +1080,7 @@ class Run:
             write_atomic(path, drop_decl_block(new))
             if not decl_lines:
                 return None
-            saved, homes = {}, {}
-            for d in decl_lines:
-                home = header_home(decl_name(d), t.unit)
-                if home is None:
-                    write_atomic(path, original)
-                    return "headers: no header home for %s" % decl_name(d)
-                homes.setdefault(home, []).append(d)
+            saved = {}
             for home, lines in homes.items():
                 hp = os.path.join(self.root, home)
                 saved[hp] = read(hp)
@@ -1194,6 +1263,11 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
     root, out = os.path.abspath(args.root), os.path.abspath(args.out)
     if out == root or out.startswith(root + os.sep):
         emit("bulk_m2c.py: --out must be outside the checkout (got %s)" % args.out)
+        return 2
+    profile_problems = owner_profile_problems(root)
+    if profile_problems:
+        for problem in profile_problems:
+            emit("bulk_m2c.py: %s" % problem)
         return 2
     try:
         os.makedirs(out, exist_ok=True)

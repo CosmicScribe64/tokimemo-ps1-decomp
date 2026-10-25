@@ -348,7 +348,7 @@ void tour_stage_solo_computer_fortune(void) {
         mode_stage_set(TOUR_STAGE_FORTUNE_TELLING);
         break;
     case 7:
-        D_80122EBC = 0xFF;
+        game_mode_scene_girl = 0xFF;
         cd_read_sectors(5U, 0x801E8000, 0x49BA);
         mode_step_next();
         break;

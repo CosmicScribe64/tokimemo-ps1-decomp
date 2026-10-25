@@ -86,7 +86,7 @@ void culture_fortune_scene(void) {
             talk_text_table = culture_script_text_table;
             talk_command_table = culture_script_command_table;
             talk_voice_table = culture_script_voice_table;
-            if ((D_80122EBC == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && (girl_state_rank(0) == 4) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && (girl_state_rank(2) == 4) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
+            if ((game_mode_scene_girl == 0xFF) || ((((u16) g->player_flags.h >> 0xC) != 3) && (girl_state_rank(0) == 4) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) || ((((u16) g->player_flags.h >> 0xC) != 3) && (girl_state_rank(2) == 4) && (((u8) g->girls[2].flags.b[2] >> 4) == 3))) {
                 talk_group = 0;
                 mode_step_next();
             } else {
@@ -102,7 +102,7 @@ void culture_fortune_scene(void) {
         select_girl2();
         break;
     case 4:
-        D_80122EBC = D_80122CDC;
+        game_mode_scene_girl = D_80122CDC;
         talk_names_set(D_80122CDC);
         mode_step_next();
         break;
@@ -120,12 +120,12 @@ void culture_fortune_scene(void) {
         mode_step_next();
         break;
     case 8:
-        if (D_80122EBC == 0xB) {
+        if (game_mode_scene_girl == 0xB) {
             set_kanji_string(-0x80, 0x42, 0, (s32) *girl_short_name_table, 0);
         } else {
-            set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[D_80122EBC], 0);
+            set_kanji_string(-0x80, 0x42, 0, (s32) girl_short_name_table[game_mode_scene_girl], 0);
         }
-        set_kanji_string(-0x48, 0x42, 0, (s32)names.text[D_80122EBC], 0);
+        set_kanji_string(-0x48, 0x42, 0, (s32)names.text[game_mode_scene_girl], 0);
         k_disp_start(4);
         culture_fortune_timer = 0;
         mode_step_next();
@@ -150,10 +150,10 @@ void culture_fortune_scene(void) {
         }
         break;
     case 12:
-        if ((D_80122EBC == 0) || (D_80122EBC == 0xB)) {
+        if ((game_mode_scene_girl == 0) || (game_mode_scene_girl == 0xB)) {
             set_kanji_string(0x28, 0x42, 0, (s32)player_blood_types.text[(u32) (g->girls[0].birthday.w << 0x15) >> 0x1E], 0);
         } else {
-            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.text[D_80122EBC], 0);
+            set_kanji_string(0x28, 0x42, 0, (s32)blood_types.text[game_mode_scene_girl], 0);
         }
         k_disp_start(6);
         mode_step_next();
@@ -233,9 +233,9 @@ void culture_fortune_scene(void) {
         break;
     case 25:
         if ((girl_state_rank(0) == 4) && (((u8) g->girls[0].flags.b[2] >> 4) == 3)) {
-            D_80122EBC = 0;
+            game_mode_scene_girl = 0;
         } else if ((girl_state_rank(2) == 4) && (((u8) g->girls[2].flags.b[2] >> 4) == 3)) {
-            D_80122EBC = 2;
+            game_mode_scene_girl = 2;
         }
         mode_stage_set((s32) *(u8 *)&D_80122EB0);
         mode_step_set((s32) *(u8 *)&D_80122EB4);
@@ -252,7 +252,7 @@ s32 culture_fortune_lookup(void) {
     CultureFortuneBloodTable table;
 
     table = culture_fortune_blood_table;
-    index = D_80122EBC;
+    index = game_mode_scene_girl;
     if (index == 2 && ((u8) game_state.girls[2].flags.b[2] >> 4) == 3) {
         if (((u16) game_state.player_flags.h >> 12) != 3) {
             return 3;

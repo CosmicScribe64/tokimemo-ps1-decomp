@@ -9,15 +9,31 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Phase 2 handoff (2026-10-24, keep current)
 
-Latest verified source wave: **725 gameplay constant substitutions**, 350 new definitions
+The full topic-header and concrete Astra repair integration is **verified for a local commit**.
+Both umbrellas are removed. The 197-file structural packet preserves all 437 raw views;
+48 identifier operations, 149 constant sites, 175 definition comments and 13 domain comments
+then pass independent mapped-view and full-C token proofs. Header/selector tools pass 169
+tests. Clean configure/build/progress and all guards pass: independent 27/27 hashes,
+6,952 functions, 2,276,920 bytes and 13,085 ledger rows. The original Astra reviewer accepts
+this bounded integration for commit, not full phase2 completion or push. Evidence is ignored
+T-27056/live-integration/{final-source-proof,clean-proof}.json and
+T-27055/live-integration-acceptance.md; full build fingerprint
+2db37ce14c0def248224a28400c0a0abcb17d40ae33e8726f699ab5f606f0c3b.
+Rink correction, logical directory/header paths and broader gameplay-residue classification
+remain open. No source write lease is active; do not reapply the integrated packets.
+
+Preceding verified source wave (db1d04f3b): **725 gameplay constant substitutions**, 350 new definitions
 and eight domain comments across 84 C files and 13 headers. Independent actual-source
 review passes; all 437 raw declaration views are identical. Clean configure/build/progress
 and every guard pass, with independent 27/27 binary hashes, 6,952/6,952 functions and
 2,276,920/2,276,920 bytes. The ledger has 12,984 rows. Evidence is ignored
 next-integration/constant-wave/{source-proof,clean-proof}.json and actual-source-review.md;
 source digest d6a53cd6486d6b390218d0d3d9f69c8b2fc80550b5996a0b6b73ced3921d5386.
-T-27075/T-27076/T-27077 are Done after review and the clean proof. Final Astra remains
-pending header integration and logical path cleanup.
+T-27075/T-27076/T-27077 are Done after review and the clean proof. The full Astra review
+T-27055 has delivered six P2 readability/specification findings in parallel with final
+header integration and logical path cleanup. The distinct Astra fixer's concrete R1–R6
+examples are implemented and verified on the actual tree. Broader R1–R3 semantic inventory
+acceptance and the remaining structural gates still prevent the final phase verdict/push.
 
 Preceding naming checkpoint: **4dab92732** adds 3,939 reviewed identifier operations
 (including 2,807 function names), one historical callback-address alias correction, 274 proven
@@ -32,20 +48,22 @@ serializes source integration, builds and Git.
 The completed constant wave comprises 324 complex-overlay, 204 overlay UI/date,
 25 seasonal/rule, 141 BUNKASAI stage and 31 final essential sites. The independently
 reviewed selector/cache tools are integrated with 144 passing combined tests. The bounded
-source lease is released. Root will publish the replacement header-ready marker after
-committing this verified source; the header lane can then capture and regenerate its
-complete ordered stack. T-27075 closes six concrete essential rule groups; it does not
+source lease for that earlier wave is released. The replacement header-ready marker was
+published and the full current header stack has now been applied as described above.
+T-27075 closes six concrete essential rule groups; it does not
 promote every unresolved literal candidate.
 
 The main camera-reference alias at D_80122740 remains explicitly deferred because EVENT uses
 the same address for different storage. T-27061 owns its private declaration separation.
-Header migration remains the main integration gate. Its complete archived rehearsal now
-removes both umbrellas with zero ownership gaps; header/API checks, unchanged GameState
-layout and 299 focused tooling tests pass. Full regeneration and source/ASM proofs against
-the latest verified source remain before live application. This is scratch evidence,
-not a live-header completion claim. T-27074 has a reviewed path packet and
-an independently approved registry-path tool fix, both awaiting the header integration.
-No final Astra review has started; these source implementation gates remain open.
+The fresh r16 header packet passes its current-source proof, 504 focused tests, unchanged
+73 type blocks/layout, and zero views across 437 units. Original Astra review approves its
+exact patch; actual application matches every prepared byte and its fresh raw snapshot is
+identical. The combined build now matches all 27 binaries. The separate rink type correction and
+T-27074 logical path migration remain unapplied; their new provider/root-path fields and
+path-sensitive EVENT checker must be handled explicitly.
+The review findings cover known mutable state, fields/tables, essential locals/constants,
+O.BIN comments and obsolete living-spec claims. These findings and the structural
+integration gates remain open; no phase2 completion or push is claimed.
 
 Reviewed tooling milestones include signed-constant correction 0b9ddbf33, ownership correction
 470f5368e, caller-scoped constant requests bc0d45ea7 and macro provenance 428690995; the current

@@ -2,7 +2,38 @@
 #define OVL_BUNKAKEN_H
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/culture_festival.h"
+#include "game/game_state.h"
+#include "game/system_data.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/boot.h"
+#include "main/calendar.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/debug.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/portrait.h"
+#include "main/scene.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/vram.h"
+#include "main/vsync.h"
 
 /* BUNKAKEN overlay (load address 0x80132000): externs and types. */
 
@@ -111,7 +142,7 @@ void tour_mio_club_script_begin(void);
 #ifndef OVL_BUNKAKEN_T18500_H
 #define OVL_BUNKAKEN_T18500_H
 /* T-18500: per-heroine tables of the date loaders tour_stage_invitation and tour_stage_ask_companion, indexed by
- * D_80122EBC (12 heroines). */
+ * game_mode_scene_girl (12 heroines). */
 extern s32 tour_portrait_lba[12];           /* argument of portrait_read_step */
 extern void (*tour_invite_script_setter[12])(void); /* called once the scene data is loaded */
 extern u8 tour_invite_script_sectors[12];            /* first argument of cd_read_sectors */
@@ -125,7 +156,7 @@ typedef struct TourUnusedBytes {
 extern TourUnusedBytes tour_unused_table;
 
 /* T-18500: three byte tables copied to the stack by tour_apply_points and read at
- * [D_80122EBC][D_80122EB8]; the table is chosen by GameState.unk_03E - 0x5F. */
+ * [game_mode_scene_girl][D_80122EB8]; the table is chosen by GameState.unk_03E - 0x5F. */
 typedef struct TourPoints1995 {
     /* 0x00 */ u8 codes[9][6];
 } TourPoints1995; /* size 0x36 */

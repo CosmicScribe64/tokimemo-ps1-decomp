@@ -23,7 +23,7 @@ void tour_stage_ask_companion(void) {
 
     switch (game_state.mode_step) {
     case 0:
-        if (D_80122EBC != 0xFF) {
+        if (game_mode_scene_girl != 0xFF) {
             cd_read_sectors(5U, 0x801E8000, 0x49BA);
             mode_step_next();
         } else {
@@ -60,8 +60,8 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 6:
-        if (D_80122EBC != 0xFF) {
-            D_80122EBC = 0xFF;
+        if (game_mode_scene_girl != 0xFF) {
+            game_mode_scene_girl = 0xFF;
         }
         mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
@@ -82,9 +82,9 @@ void tour_stage_ask_companion(void) {
             mode_step_set(5);
         } else {
             if ((D_80122CDC == 0) && ((u32) ((u8) game_state.girls[0].flags.b[2] >> 4) >= 6U)) {
-                D_80122EBC = 0xB;
+                game_mode_scene_girl = 0xB;
             } else {
-                D_80122EBC = D_80122CDC;
+                game_mode_scene_girl = D_80122CDC;
             }
             talk_names_set(D_80122CDC);
             mode_step_set(0xC);
@@ -101,28 +101,28 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 13:
-        portrait_read_step(tour_portrait_lba[D_80122EBC]);
+        portrait_read_step(tour_portrait_lba[game_mode_scene_girl]);
         break;
     case 14:
         addr_init_bustup();
-        if (D_80122EBC == 0xB) {
+        if (game_mode_scene_girl == 0xB) {
             game_state.current_girl = GIRL_SHIORI;
         } else {
-            game_state.current_girl = (u8) D_80122EBC;
+            game_state.current_girl = (u8) game_mode_scene_girl;
         }
         portrait_show_checked();
-        cd_read_sectors(tour_invite_script_sectors[D_80122EBC], 0x801E8000, tour_invite_script_lba[D_80122EBC]);
+        cd_read_sectors(tour_invite_script_sectors[game_mode_scene_girl], 0x801E8000, tour_invite_script_lba[game_mode_scene_girl]);
         break;
     case 15:
         normal_date_girl_in();
         break;
     case 16:
         if (cd_read_sync_status() & 1) {
-            tour_invite_script_setter[D_80122EBC]();
+            tour_invite_script_setter[game_mode_scene_girl]();
             tour_script_tables_apply();
-            if (D_80122EBC == 0) {
+            if (game_mode_scene_girl == 0) {
                 mode_step_set(0x14);
-            } else if (D_80122EBC < 4) {
+            } else if (game_mode_scene_girl < 4) {
                 mode_step_set(0x1F);
             } else {
                 mode_step_set(0x2A);
@@ -136,7 +136,7 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 19:
-        D_80122EBC = 0xFF;
+        game_mode_scene_girl = 0xFF;
         mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 20:
@@ -232,11 +232,11 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 30:
-        D_80122EBC = 0xFF;
+        game_mode_scene_girl = 0xFF;
         mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 31:
-        girl_rank_4 = girl_state_rank(D_80122EBC);
+        girl_rank_4 = girl_state_rank(game_mode_scene_girl);
         switch (girl_rank_4) {
         case 0:
         case 1:
@@ -259,7 +259,7 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 33:
-        girl_rank_5 = girl_state_rank(D_80122EBC);
+        girl_rank_5 = girl_state_rank(game_mode_scene_girl);
         switch (girl_rank_5) {
         case 0:
         case 1:
@@ -275,7 +275,7 @@ void tour_stage_ask_companion(void) {
             talk_group = 0x1C;
             break;
         }
-        if (((D_80122EBC == 1) && (((u8) game_state.girls[1].flags.b[2] >> 4) == 1)) || ((D_80122EBC == 2) && (((u8) game_state.girls[2].flags.b[2] >> 4) == 3)) || ((D_80122EBC == 3) && (((u8) game_state.girls[3].flags.b[2] >> 4) == 5))) {
+        if (((game_mode_scene_girl == 1) && (((u8) game_state.girls[1].flags.b[2] >> 4) == 1)) || ((game_mode_scene_girl == 2) && (((u8) game_state.girls[2].flags.b[2] >> 4) == 3)) || ((game_mode_scene_girl == 3) && (((u8) game_state.girls[3].flags.b[2] >> 4) == 5))) {
             talk_group += 1;
         }
         mode_step_next();
@@ -284,31 +284,31 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 35:
-        if (girl_state_rank(D_80122EBC) == 4) {
+        if (girl_state_rank(game_mode_scene_girl) == 4) {
             talk_group = 0xE;
             mode_step_set(0x11);
         } else {
-            if ((D_80122EBC == 1) && (girl_state_rank(1) < 2)) {
+            if ((game_mode_scene_girl == 1) && (girl_state_rank(1) < 2)) {
                 talk_group = 0x12;
-            } else if (game_state.girls[D_80122EBC].flags.f.b2 == 1) {
+            } else if (game_state.girls[game_mode_scene_girl].flags.f.b2 == 1) {
                 talk_group = 0xB;
             } else {
                 talk_group = 0x14;
             }
             mode_step_next();
         }
-        game_state.girls[D_80122EBC].flags.f.b2 = 1;
+        game_state.girls[game_mode_scene_girl].flags.f.b2 = 1;
         break;
     case 36:
         normal_date_speak();
         break;
     case 37:
-        girl_rank_6 = girl_state_rank(D_80122EBC);
+        girl_rank_6 = girl_state_rank(game_mode_scene_girl);
         switch (girl_rank_6) {
         case 0:
         case 1:
             talk_group = 0xC;
-            if (((D_80122EBC == 1) && (((u8) game_state.girls[1].flags.b[2] >> 4) == 1)) || ((D_80122EBC == 2) && (((u8) game_state.girls[2].flags.b[2] >> 4) == 3)) || ((D_80122EBC == 3) && (((u8) game_state.girls[3].flags.b[2] >> 4) == 5))) {
+            if (((game_mode_scene_girl == 1) && (((u8) game_state.girls[1].flags.b[2] >> 4) == 1)) || ((game_mode_scene_girl == 2) && (((u8) game_state.girls[2].flags.b[2] >> 4) == 3)) || ((game_mode_scene_girl == 3) && (((u8) game_state.girls[3].flags.b[2] >> 4) == 5))) {
                 talk_group = 0xD;
             }
             mode_step_next();
@@ -334,16 +334,16 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 41:
-        D_80122EBC = 0xFF;
+        game_mode_scene_girl = 0xFF;
         mode_stage_set(TOUR_STAGE_YOSHIO);
         break;
     case 42:
-        if (D_80122EBC == 0xB) {
+        if (game_mode_scene_girl == 0xB) {
             var_v0 = get_g_zyotai_s(GIRL_SHIORI);
         } else {
             /* FAKE: self-store preserves the original store in the call delay slot. T-24005. */
-            D_80122EBC = D_80122EBC;
-            var_v0 = get_g_zyotai_s(D_80122EBC);
+            game_mode_scene_girl = game_mode_scene_girl;
+            var_v0 = get_g_zyotai_s(game_mode_scene_girl);
         }
         temp_t4 = var_v0 & 0x7F;
         /* FAKE: empty test keeps the mask in t4 and the switch index in t5. T-24005. */
@@ -360,7 +360,7 @@ void tour_stage_ask_companion(void) {
             talk_group = 5;
             break;
         case 4:
-            if ((D_80122EBC == 4) && (((u16) game_state.player_flags.h >> 0xC) == ((u8) game_state.girls[4].flags.b[2] >> 4))) {
+            if ((game_mode_scene_girl == 4) && (((u16) game_state.player_flags.h >> 0xC) == ((u8) game_state.girls[4].flags.b[2] >> 4))) {
                 talk_group = 8;
             } else {
                 talk_group = 6;
@@ -374,16 +374,16 @@ void tour_stage_ask_companion(void) {
         normal_date_speak();
         break;
     case 44:
-        if (D_80122EBC == 0xB) {
+        if (game_mode_scene_girl == 0xB) {
             var_v0_2 = get_g_zyotai_s(GIRL_SHIORI);
         } else {
             /* FAKE: self-store preserves the original store in the call delay slot. T-24005. */
-            D_80122EBC = D_80122EBC;
-            var_v0_2 = get_g_zyotai_s(D_80122EBC);
+            game_mode_scene_girl = game_mode_scene_girl;
+            var_v0_2 = get_g_zyotai_s(game_mode_scene_girl);
         }
         if (var_v0_2 == 4) {
             mode_step_set(0x11);
-        } else if ((D_80122EBC == 8) && (girl_state_rank(8) >= 2)) {
+        } else if ((game_mode_scene_girl == 8) && (girl_state_rank(8) >= 2)) {
             mode_step_next();
         } else {
             mode_stage_set(TOUR_STAGE_CLUB_MENU);

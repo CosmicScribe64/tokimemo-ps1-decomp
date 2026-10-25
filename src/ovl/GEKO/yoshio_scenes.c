@@ -1,6 +1,7 @@
 /* yoshio_scenes.c: src/ovl/GEKO/80141AF0.c:18,35,67,142; Yoshio callback flow, selected-girl storage and descending six-slot girl ranking. Current GEKO folder retained; no narrative meaning is inferred from callback ordinals. Original object 0x80141AF0-0x801426D0 (config/objects/GEKO.txt). */
 #include "common.h"
 #include "ovl/GEKO.h"
+#include "main/sprite.h"
 
 void encounter_yoshio_assets_bind_1(void) {
     encounter_yoshio_pack_1_animation_input_2 = 0x801CE130;

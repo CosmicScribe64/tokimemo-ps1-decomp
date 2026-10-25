@@ -4,9 +4,28 @@
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "libcd.h"
+#include "libetc.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libpress.h"
+#include "libsnd.h"
+#include "main/boot.h"
+#include "main/draw.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/movie.h"
+#include "main/pad.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/vram.h"
 #include "libcd.h"
 #include "psx_types.h"
+#include "main/pad.h"
+#include "main/movie.h"
 
 void func_8008B750(s16, s16);
 void func_8008BFB0(s32, s16, s16);

@@ -5,6 +5,7 @@ Run (Docker): python3 -m unittest discover -s tools -p test_rename.py
 The gcc oracle tests need the native gcc of the image and skip without it.
 """
 import io
+import json
 import os
 import shutil
 import sys
@@ -15,6 +16,7 @@ import unittest.mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rename as R  # noqa: E402
+import sync_protos as sp  # noqa: E402
 import srcscan  # noqa: E402
 import symtab  # noqa: E402
 
@@ -418,6 +420,112 @@ class SymbolRenameTest(Fixture):
         self.assertNotIn("func_80041000", api)
         self.assertIn("declaration of func_80041000 dropped", out)
 
+    def test_alias_merge_uses_profile_owner_without_physical_api(self):
+        os.unlink(os.path.join(self.root, "include/main_api.h"))
+        if os.path.exists(os.path.join(self.root, "include/game.h")):
+            os.unlink(os.path.join(self.root, "include/game.h"))
+        self.write("config/header_owners.json",
+                   '{"mode":"topic_only","owners":[{"path":"main/owner.h","role":"main"}],'
+                   '"required_types":["common.h"]}\n')
+        self.write("include/main/owner.h", "#include \"common.h\"\n#ifndef MAIN_API_OVERRIDE_func_80041000\n"
+                   "void func_80041000(void);\n#endif\n"
+                   "void boot_view(s32 arg0);\n")
+        row = R.Row("func", "main", "func_80041000", "boot_view", where="test")
+        row.alias = True
+        ctx = R.Context(self.root, allow_alias=True)
+        ctx.done = [row]
+        R.merge_alias_declarations(ctx)
+        owner = ctx.tree.read("include/main/owner.h")
+        self.assertNotIn("func_80041000", owner)
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_boot_view\nvoid boot_view(s32 arg0);\n#endif", owner)
+        self.assertFalse(ctx.problems)
+
+    def test_multiple_alias_rows_share_one_target_declaration(self):
+        self.write("config/header_owners.json",
+                   '{"mode":"topic_only","owners":[{"path":"main/a.h","role":"main"},'
+                   '{"path":"main/b.h","role":"main"},{"path":"main/c.h","role":"main"}],'
+                   '"required_types":["common.h"]}\n')
+        self.write("include/main/a.h", "#ifndef MAIN_API_OVERRIDE_func_80041000\n"
+                   "void func_80041000(void);\n#endif\n")
+        self.write("include/main/b.h", "#ifndef MAIN_API_OVERRIDE_func_80041100\n"
+                   "void func_80041100(void);\n#endif\n")
+        self.write("include/main/c.h", "void boot_view(s32 arg0);\n")
+        ctx = R.Context(self.root, allow_alias=True)
+        for old in ("func_80041000", "func_80041100"):
+            row = R.Row("func", "main", old, "boot_view", where="test")
+            row.alias = True
+            ctx.done.append(row)
+        R.merge_alias_declarations(ctx)
+        target = ctx.tree.read("include/main/c.h")
+        self.assertNotIn("MAIN_API_OVERRIDE_func_80041000", ctx.tree.read("include/main/a.h"))
+        self.assertNotIn("MAIN_API_OVERRIDE_func_80041100", ctx.tree.read("include/main/b.h"))
+        self.assertEqual(target.count("MAIN_API_OVERRIDE_boot_view"), 1, target)
+        self.assertEqual(target.count("void boot_view"), 1, target)
+
+    def test_alias_merge_reports_canonical_proto_conflict_and_missing_owner(self):
+        self.write("config/header_owners.json",
+                   '{"mode":"topic_only","owners":[{"path":"main/a.h","role":"main"},'
+                   '{"path":"main/b.h","role":"main"}],"required_types":["common.h"]}\n')
+        self.write("include/main/a.h", "void func_80041000(void);\n")
+        self.write("include/main/b.h", "s32 func_80041000(s32 arg0);\nvoid boot_view(s32 arg0);\n")
+        os.unlink(os.path.join(self.root, "include/main_api.h"))
+        os.unlink(os.path.join(self.root, "include/game.h"))
+        row = R.Row("func", "main", "func_80041000", "boot_view", where="test")
+        row.alias = True
+        ctx = R.Context(self.root, allow_alias=True)
+        ctx.done = [row]
+        before = {p: self.read(p) for p in ("include/main/a.h", "include/main/b.h")}
+        R.merge_alias_declarations(ctx)
+        self.assertTrue(any("canonical owners declare func_80041000 2 times" in n for n in ctx.notes), ctx.notes)
+        self.assertEqual(before, {p: ctx.tree.read(p) for p in before})
+        missing = R.Context(self.root, allow_alias=True)
+        before_disk = {p: self.read(p) for p in ("include/main/a.h", "include/main/b.h")}
+        self.write("config/header_owners.json",
+                   '{"mode":"topic_only","owners":[{"path":"main/missing.h","role":"main"}],'
+                   '"required_types":["common.h"]}\n')
+        missing.done = [row]
+        R.merge_alias_declarations(missing)
+        self.assertTrue(any("required main owner" in p for p in missing.problems), missing.problems)
+        self.assertEqual(before_disk, {p: self.read(p) for p in before_disk})
+        self.assertIsNone(self.read("include/main_api.h"))
+        self.assertIsNone(self.read("include/game.h"))
+
+    def test_profile_shared_type_leaf_is_not_assigned_to_its_only_overlay_user(self):
+        self.write("config/header_owners.json",
+                   '{"mode":"topic_only","owners":[{"path":"main/topic.h","role":"main"}],'
+                   '"required_types":["common.h","types/game_types.h"]}\n')
+        self.write("include/main/topic.h", '#include "common.h"\n')
+        self.write("include/types/game_types.h", '#include "common.h"\n'
+                   'typedef struct SharedType { s32 old_field; } SharedType;\n')
+        self.write("src/ovl/AAA/80132000.c", self.read("src/ovl/AAA/80132000.c").replace(
+            '#include "ovl/AAA.h"', '#include "ovl/AAA.h"\n#include "types/game_types.h"'))
+        tree = R.Tree(self.root)
+        self.assertEqual(tree.header_owner("include/types/game_types.h"), "main")
+        self.assertNotIn("include/types/game_types.h", tree.private_headers("AAA"))
+        ctx = R.Context(self.root)
+        field = R.Row("field", "SharedType", "old_field", "new_field", where="test")
+        R.plan_fields(ctx, [field], use_gcc=False)
+        self.assertFalse(ctx.problems, ctx.problems)
+        self.assertIn("s32 new_field;", ctx.tree.read("include/types/game_types.h"))
+        row = R.Row("type", "main", "SharedType", "SharedRecord", where="test")
+        R.plan_type(ctx, row)
+        self.assertFalse(ctx.problems, ctx.problems)
+        self.assertIn("SharedRecord", ctx.tree.read("include/types/game_types.h"))
+
+    def test_param_rename_uses_actual_topic_header_closure(self):
+        self.write("config/header_owners.json",
+                   '{"mode":"topic_only","owners":[{"path":"main/topic.h","role":"main"}],'
+                   '"required_types":["common.h"]}\n')
+        self.write("include/main/topic.h", '#include "common.h"\nvoid known_func(s32 arg0);\n')
+        self.write("src/main/80041100.c", self.read("src/main/80041100.c").replace(
+            '#include "game.h"', '#include "main/topic.h"'))
+        ctx = R.Context(self.root)
+        row = R.Row("param", "main:known_func", "arg0", "input", where="test")
+        R.plan_local(ctx, row)
+        self.assertFalse(ctx.problems, ctx.problems)
+        self.assertIn("void known_func(s32 input);", ctx.tree.read("include/main/topic.h"))
+        self.assertIn("void known_func(s32 input)", ctx.tree.read("src/main/80041100.c"))
+
 
 
 @unittest.skipUnless(HAVE_GCC, "needs the native gcc of the Docker image")
@@ -586,6 +694,213 @@ class TypeLocalTest(Fixture):
         self.assertNotIn("PROBLEM", out)
         self.assertIn("} AaaTable;\nextern AaaTable D_80132200;", self.read("include/ovl/AAA.h"))
         self.assertIn("} FnTbl;\nextern FnTbl D_800F6200;", self.read("include/ovl/EVT.h"))
+
+
+class LegacyImportRegistryTest(Fixture):
+    def profile(self):
+        payload = {
+            "mode": "topic_only", "owners": [], "required_types": ["common.h"],
+            "legacy_main_imports": {"version": "legacy-main-imports-v1", "roster_sha256": "pinned",
+                "expected_counts": {"EVENT": 51, "GYOZI": 35}, "providers": [{
+                    "unit": "EVENT", "provider_path": "ovl/EVENT_main_imports.h",
+                    "root_header_path": "ovl/EVENT.h", "bindings": [{
+                        "unit": "EVENT", "address": "0x80041100", "original_name": "func_80041100",
+                        "original_type": "voidF(void)", "type_identity_sha256": "stable",
+                        "current_name": "func_80041100", "current_type": "voidF(void)"}]}]}}
+        self.write("config/header_owners.json", json.dumps(payload))
+
+    def test_unit_scoped_private_rename_fails_without_reviewed_alias_binding(self):
+        self.profile()
+        self.write("config/overlays.txt", "EVENT 0x800F6000 0x100\n")
+        self.write("config/overlays/EVENT.yaml", "symbol_addrs_path:\n  - config/symbol_addrs.txt\n")
+        self.write("config/symbol_addrs.txt", "event_alias = 0x80041100; // type:func\n")
+        ctx = R.Context(self.root)
+        ctx.done = [R.Row("func", "EVENT", "func_80041100", "event_alias", key="0x80041100")]
+        R.update_legacy_import_registry(ctx)
+        self.assertTrue(any("needs an explicit reviewed alias binding" in p for p in ctx.problems), ctx.problems)
+        profile = json.loads(ctx.tree.read("config/header_owners.json"))
+        binding = profile["legacy_main_imports"]["providers"][0]["bindings"][0]
+        self.assertEqual(binding["current_name"], "func_80041100")
+        self.assertEqual(binding["original_name"], "func_80041100")
+        self.assertEqual(binding["address"], "0x80041100")
+        self.assertEqual(binding["type_identity_sha256"], "stable")
+
+    def test_wrong_address_rejects_registry_edit(self):
+        self.profile()
+        self.write("config/overlays.txt", "EVENT 0x800F6000 0x100\n")
+        self.write("config/overlays/EVENT.yaml", "symbol_addrs_path:\n  - config/symbol_addrs.txt\n")
+        self.write("config/symbol_addrs.txt", "event_alias = 0x80041100; // type:func\n")
+        ctx = R.Context(self.root)
+        ctx.done = [R.Row("func", "EVENT", "func_80041100", "event_alias", key="0x80041104")]
+        R.update_legacy_import_registry(ctx)
+        self.assertTrue(any("address mismatch" in p for p in ctx.problems), ctx.problems)
+        profile = json.loads(ctx.tree.read("config/header_owners.json"))
+        self.assertEqual(profile["legacy_main_imports"]["providers"][0]["bindings"][0]["current_name"],
+                         "func_80041100")
+
+    def test_main_symbol_rename_does_not_relabel_private_unit_views(self):
+        self.profile()
+        self.write("config/overlays.txt", "EVENT 0x800F6000 0x100\nGYOZI 0x800F8000 0x100\n")
+        self.write("config/overlays/EVENT.yaml", "symbol_addrs_path:\n  - config/symbol_addrs.txt\n")
+        self.write("config/overlays/GYOZI.yaml", "symbol_addrs_path:\n  - config/symbol_addrs.txt\n")
+        self.write("config/symbol_addrs.txt", "event_alias = 0x80041100; // type:func\n")
+        path = "config/header_owners.json"
+        profile = json.loads(self.read(path))
+        first = profile["legacy_main_imports"]["providers"][0]["bindings"][0]
+        second = dict(first, unit="GYOZI")
+        profile["legacy_main_imports"]["providers"].append({
+            "unit": "GYOZI", "provider_path": "ovl/GYOZI_main_imports.h",
+            "root_header_path": "ovl/GYOZI.h", "bindings": [second]})
+        self.write(path, json.dumps(profile))
+        ctx = R.Context(self.root)
+        ctx.done = [R.Row("func", "main", "func_80041100", "event_alias", key="0x80041100")]
+        R.update_legacy_import_registry(ctx)
+        profile = json.loads(ctx.tree.read(path))
+        self.assertEqual([p["bindings"][0]["current_name"] for p in profile["legacy_main_imports"]["providers"]],
+                         ["func_80041100", "func_80041100"])
+
+    def test_header_path_rename_updates_only_matching_profile_path(self):
+        self.profile()
+        self.write("include/ovl/EVENT_main_imports.h", "/* provider */\n")
+        self.write("include/ovl/EVENT.h", '#include "ovl/EVENT_main_imports.h"\n')
+        ctx = R.Context(self.root)
+        ctx.tree.move("include/ovl/EVENT_main_imports.h", "include/ovl/EVENT_calls.h")
+        ctx.done = [R.Row("header", "include", "ovl/EVENT_main_imports.h", "ovl/EVENT_calls.h")]
+        R.update_legacy_import_registry(ctx)
+        profile = json.loads(ctx.tree.read("config/header_owners.json"))
+        provider = profile["legacy_main_imports"]["providers"][0]
+        self.assertEqual(provider["provider_path"], "ovl/EVENT_calls.h")
+        self.assertEqual(provider["root_header_path"], "ovl/EVENT.h")
+
+    def test_type_rename_updates_only_current_type_fields_in_its_include_closure(self):
+        self.profile()
+        path = "config/header_owners.json"
+        profile = json.loads(self.read(path))
+        binding = profile["legacy_main_imports"]["providers"][0]["bindings"][0]
+        binding["original_type"] = "OldType *"
+        binding["current_type"] = "OldType *"
+        binding["type_identity_sha256"] = "stable-old-type"
+        self.write(path, json.dumps(profile))
+        self.write("include/main_types.h", "typedef struct NewType { int x; } NewType;\n")
+        self.write("include/ovl/EVENT.h", '#include "main_types.h"\n')
+        ctx = R.Context(self.root)
+        ctx.done = [R.Row("type", "main", "OldType", "NewType")]
+        R.update_legacy_import_registry(ctx)
+        profile = json.loads(ctx.tree.read(path))
+        binding = profile["legacy_main_imports"]["providers"][0]["bindings"][0]
+        self.assertEqual(binding["current_type"], "NewType *")
+        self.assertEqual(binding["original_type"], "OldType *")
+        self.assertEqual(binding["type_identity_sha256"], "stable-old-type")
+
+    def test_plan_apply_refuses_main_rename_of_private_import_transactionally(self):
+        old_counts, old_pin = sp.LEGACY_IMPORT_COUNTS, sp.LEGACY_IMPORT_ROSTER_SHA256
+        sp.LEGACY_IMPORT_COUNTS = {"AAA": 1, "EVT": 1}
+        try:
+            type_id = __import__("hashlib").sha256(b"voidF()").hexdigest()
+            providers = []
+            for unit, header in (("AAA", "AAA"), ("EVT", "EVT")):
+                provider_path = "ovl/%s_main_imports.h" % unit
+                text = ('#ifndef OVL_%s_MAIN_IMPORTS_H\n#define OVL_%s_MAIN_IMPORTS_H\n'
+                        '#include "common.h"\nvoid func_80050000();\n#endif\n' % (unit, unit))
+                self.write("include/" + provider_path, text)
+                root_text = self.read("include/ovl/%s.h" % header)
+                self.write("include/ovl/%s.h" % header,
+                           root_text.replace("#endif", '#include "%s"\n#endif' % provider_path))
+                source = "src/ovl/%s/%s.c" % (unit, "80132100" if unit == "AAA" else "800F6000")
+                self.write(source, self.read(source) + "\nvoid import_probe(void) { func_80050000(); }\n")
+                providers.append({
+                    "unit": unit, "provider_path": provider_path, "root_header_path": "ovl/%s.h" % header,
+                    "bindings": [{"unit": unit, "address": "0x80050000", "original_name": "func_80050000",
+                                  "original_type": "voidF()", "type_identity_sha256": type_id,
+                                  "current_name": "func_80050000", "current_type": "voidF()"}]})
+            stable = sorted((p["unit"], b["address"], b["type_identity_sha256"])
+                            for p in providers for b in p["bindings"])
+            fingerprint = __import__("hashlib").sha256(
+                __import__("json").dumps(stable, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+            sp.LEGACY_IMPORT_ROSTER_SHA256 = fingerprint
+            profile = {"mode": "topic_only", "owners": [
+                {"path": "main_api.h", "role": "main"}],
+                "required_types": ["common.h"],
+                "legacy_main_imports": {"version": "legacy-main-imports-v1", "roster_sha256": fingerprint,
+                    "expected_counts": {"AAA": 1, "EVT": 1}, "providers": providers}}
+            self.write("config/header_owners.json", __import__("json").dumps(profile, indent=2) + "\n")
+            self.write("config/symbol_addrs.txt", self.read("config/symbol_addrs.txt") +
+                       "func_80050000 = 0x80050000; // type:func\n")
+            model = sp.Model(os.path.join(self.root, "include"), os.path.join(self.root, "src"))
+            preflight = sp.profile_integrity_problems(model, model.inc, model.src) + sp.canonical_problems(model)
+            self.assertEqual(preflight, [], "fixture must be valid before the rename boundary is exercised")
+            table = self.table("func main func_80050000 imported_main_call 0x80050000 reviewed\n")
+            before = {}
+            for base, _dirs, files in os.walk(self.root):
+                for filename in files:
+                    full = os.path.join(base, filename)
+                    rel = os.path.relpath(full, self.root)
+                    with open(full, "rb") as source_file:
+                        before[rel] = source_file.read()
+            with open(table, encoding="utf-8") as table_file:
+                rc, output = self.run_plan(table_file.read(), apply=True, verify=False)
+            self.assertEqual(rc, 1, output)
+            self.assertIn("explicit reviewed shared-alias binding is required", output)
+            after = {}
+            for base, _dirs, files in os.walk(self.root):
+                for filename in files:
+                    full = os.path.join(base, filename)
+                    rel = os.path.relpath(full, self.root)
+                    with open(full, "rb") as source_file:
+                        after[rel] = source_file.read()
+            self.assertEqual(after, before, "--no-verify apply must not mutate any file on this boundary")
+        finally:
+            sp.LEGACY_IMPORT_COUNTS = old_counts
+            sp.LEGACY_IMPORT_ROSTER_SHA256 = old_pin
+
+    def test_malformed_import_contract_fails_without_plan_apply_mutation(self):
+        self.write("config/header_owners.json", json.dumps({
+            "mode": "topic_only", "owners": [], "required_types": ["common.h"],
+            "legacy_main_imports": []}))
+        table = self.table("func main known_func readable_func 0x80041100 reviewed\n")
+        before = {}
+        for base, _dirs, files in os.walk(self.root):
+            for filename in files:
+                full = os.path.join(base, filename)
+                rel = os.path.relpath(full, self.root)
+                with open(full, "rb") as source_file:
+                    before[rel] = source_file.read()
+        with open(table, encoding="utf-8") as table_file:
+            rc, output = self.run_plan(table_file.read(), apply=True, verify=False)
+        self.assertEqual(rc, 1, output)
+        self.assertIn("legacy_main_imports", output)
+        after = {}
+        for base, _dirs, files in os.walk(self.root):
+            for filename in files:
+                full = os.path.join(base, filename)
+                rel = os.path.relpath(full, self.root)
+                with open(full, "rb") as source_file:
+                    after[rel] = source_file.read()
+        self.assertEqual(after, before)
+
+    def test_replay_malformed_import_contract_fails_without_mutation(self):
+        self.write("config/header_owners.json", json.dumps({
+            "mode": "topic_only", "owners": [], "required_types": ["common.h"],
+            "legacy_main_imports": []}))
+        before = {}
+        for base, _dirs, files in os.walk(self.root):
+            for filename in files:
+                full = os.path.join(base, filename)
+                rel = os.path.relpath(full, self.root)
+                with open(full, "rb") as source_file:
+                    before[rel] = source_file.read()
+        out = io.StringIO()
+        rc = R.replay(self.root, out=out, use_gcc=False)
+        self.assertEqual(rc, 1, out.getvalue())
+        self.assertIn("legacy_main_imports must be a JSON object", out.getvalue())
+        after = {}
+        for base, _dirs, files in os.walk(self.root):
+            for filename in files:
+                full = os.path.join(base, filename)
+                rel = os.path.relpath(full, self.root)
+                with open(full, "rb") as source_file:
+                    after[rel] = source_file.read()
+        self.assertEqual(after, before)
 
 
 class EnumRenameTest(Fixture):
@@ -1160,6 +1475,69 @@ class ReplayMovesTest(Fixture):
 
 
 class ConstTest(Fixture):
+    def test_missing_historical_main_api_constant_header_resolves_unique_registered_owner(self):
+        os.remove(os.path.join(self.root, "include/main_api.h"))
+        self.write("include/common.h", "/* fixed-width foundation */\n")
+        self.write("include/main/hud.h", "#define HUD_SCALE 16\n#define HUD_NEGATIVE -32\n")
+        self.write("include/main/other.h", "#define OTHER 1\n")
+        self.write("config/header_owners.json", json.dumps({"mode": "topic_only", "required_types": ["common.h"], "owners": [
+            {"path": "main/hud.h", "role": "main"},
+            {"path": "main/other.h", "role": "main"},
+        ]}))
+        tree = R.Tree(self.root)
+        values = [["HUD_SCALE", "16", "scale"], ["HUD_NEGATIVE", "-32", "negative"]]
+        old = "include/main_api.h"
+        data = {"header": old, "enum": None, "defines": True, "values": values,
+                "sites": ["main:signed_rule(arg0)"], "note": "historic"}
+        import base64
+        payload = base64.urlsafe_b64encode(json.dumps(data, separators=(",", ":")).encode("ascii")).decode("ascii")
+        row = R.Row("const", "main", "defines", old, "signed-v1:" + payload + " historic", key="-")
+        request = R.signed_request(row, {}, tree)
+        self.assertEqual(request["header"], "include/main/hud.h")
+        self.assertEqual(row.old, "defines")
+        self.assertIn('"header":"include/main_api.h"', base64.urlsafe_b64decode(payload).decode("ascii"))
+
+    def test_missing_historical_constant_header_refuses_ambiguous_current_owners(self):
+        os.remove(os.path.join(self.root, "include/main_api.h"))
+        self.write("include/common.h", "/* fixed-width foundation */\n")
+        self.write("include/main/hud.h", "#define HUD_SCALE 16\n")
+        self.write("include/main/other.h", "#define HUD_SCALE 16\n")
+        self.write("config/header_owners.json", json.dumps({"mode": "topic_only", "required_types": ["common.h"], "owners": [
+            {"path": "main/hud.h", "role": "main"},
+            {"path": "main/other.h", "role": "main"},
+        ]}))
+        tree = R.Tree(self.root)
+        self.assertEqual(R.resolve_historical_constant_header(
+            tree, "include/main_api.h", None, True, [["HUD_SCALE", "16", "scale"]]),
+            "include/main_api.h")
+
+    def test_missing_historical_constant_header_refuses_invalid_owner_registry(self):
+        os.remove(os.path.join(self.root, "include/main_api.h"))
+        self.write("include/main/hud.h", "#define HUD_SCALE 16\n")
+        # The candidate matches, but the profile is not a valid topic-only registry:
+        # it lacks the mandatory common.h type root.
+        self.write("config/header_owners.json", json.dumps({"mode": "topic_only", "owners": [
+            {"path": "main/hud.h", "role": "main"},
+        ]}))
+        tree = R.Tree(self.root)
+        self.assertEqual(R.resolve_historical_constant_header(
+            tree, "include/main_api.h", None, True, [["HUD_SCALE", "16", "scale"]]),
+            "include/main_api.h")
+
+    def test_missing_historical_constant_header_tracks_pending_registered_header_move(self):
+        os.remove(os.path.join(self.root, "include/main_api.h"))
+        self.write("include/common.h", "/* fixed-width foundation */\n")
+        self.write("include/main/hud.h", "#define HUD_SCALE 16\n")
+        self.write("config/header_owners.json", json.dumps({"mode": "topic_only", "required_types": ["common.h"],
+            "owners": [{"path": "main/hud.h", "role": "main"}]}))
+        tree = R.Tree(self.root)
+        tree.move("include/main/hud.h", "include/main/hud_display.h")
+        tree.write("config/header_owners.json", json.dumps({"mode": "topic_only", "required_types": ["common.h"],
+            "owners": [{"path": "main/hud_display.h", "role": "main"}]}))
+        self.assertEqual(R.resolve_historical_constant_header(
+            tree, "include/main_api.h", None, True, [["HUD_SCALE", "16", "scale"]]),
+            "include/main/hud_display.h")
+
     def test_cli_positive_caller_apply_check_replay_and_repeat(self):
         import contextlib
         import io
@@ -1301,6 +1679,72 @@ class ExistingConstantSitesTest(Fixture):
         R.const_reuse_plan(ctx, header, enum, self.values if values is None else values,
                            self.sites if sites is None else sites)
         return ctx
+
+    def assignment_source(self, statement="*girl = 6U;"):
+        self.write(self.path, self.source + "\nvoid output_rule(int *girl, int *other) { "
+                   + statement + " *other = 6; }\n")
+        return ["assign:main:output_rule:*girl"]
+
+    def test_assignment_pointer_keeps_unsigned_and_unrelated(self):
+        ctx = self.plan_reuse(sites=self.assignment_source())
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("*girl = ((unsigned int)CLUB_BASEBALL)", ctx.tree.read(self.path))
+        self.assertIn("*other = 6;", ctx.tree.read(self.path))
+
+    def test_assignment_array_and_explicit_occurrence(self):
+        self.assignment_source("girl[2] = 6; girl[2] = 6U;")
+        self.assertTrue(self.plan_reuse(sites=["assign:main:output_rule:girl[2]"]).problems)
+        ctx = self.plan_reuse(sites=["assign:main:output_rule@2:girl[2]"])
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("girl[2] = 6; girl[2] = ((unsigned int)CLUB_BASEBALL)", ctx.tree.read(self.path))
+
+    def test_assignment_compound_and_nonliteral_rhs_refused(self):
+        for statement in ("*girl += 6;", "*girl = 6 + 1;", "*girl = -6;"):
+            ctx = self.plan_reuse(sites=self.assignment_source(statement))
+            self.assertTrue(ctx.problems, statement)
+            self.assertEqual(ctx.tree.changed(), [])
+
+    def test_assignment_macro_refused(self):
+        sites = self.assignment_source("OUTPUT(girl);")
+        self.write(self.path, "#define OUTPUT(p) *(p) = 6\n" + self.read(self.path))
+        ctx = self.plan_reuse(sites=sites)
+        self.assertTrue(ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+
+    def test_assignment_wrong_lvalue_refused(self):
+        self.assignment_source()
+        self.assertTrue(self.plan_reuse(sites=["assign:main:output_rule:girl"]).problems)
+
+    def test_reuse_same_value_member_suffix_cannot_compensate_for_parentheses(self):
+        cases = [
+            ("assign", "girl", "struct S { int girl; } state; int girl; state.girl = 6; (girl) = 6;"),
+            ("expr", "girl", "struct S { int girl; } state; int girl; if (state.girl == 6) {} if ((girl) == 6) {}"),
+            ("index", "girls", "struct S { int girls[7]; } state; int girls[7]; state.girls[6] = 0; (girls)[6] = 0;"),
+        ]
+        for kind, expression, body in cases:
+            self.write(self.path, self.source + "\nvoid output_rule(void) { " + body + " }\n")
+            ctx = self.plan_reuse(sites=["%s:main:output_rule:%s" % (kind, expression)])
+            self.assertTrue(any("positions disagree" in p for p in ctx.problems), ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+
+    def test_reuse_member_site_still_binds_its_own_literal(self):
+        self.write(self.path, self.source + "\nvoid output_rule(void) { struct S { int girl; } state;"
+                   " int girl; state.girl = 6; (girl) = 6; }\n")
+        ctx = self.plan_reuse(sites=["assign:main:output_rule:state.girl"])
+        self.assertEqual(ctx.problems, [])
+        self.assertIn("state.girl = CLUB_BASEBALL; (girl) = 6;", ctx.tree.read(self.path))
+
+    def test_assignment_ledger_check_and_replay(self):
+        sites = self.assignment_source()
+        source = self.read(self.path)
+        ctx = self.plan_reuse(sites=sites)
+        self.assertEqual(ctx.problems, [])
+        row = R.reuse_ledger_row(ctx.tree, "include/common.h", "Club", self.values, sites, "T-27056")
+        R.apply_reuse(ctx, row, "assign", io.StringIO())
+        self.assertEqual(R.replay(self.root, ["assign"], out=io.StringIO()), 0)
+        self.write(self.path, source)
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.assertEqual(R.replay(self.root, ["assign"], out=io.StringIO()), 0)
 
     def test_exact_comparison_and_index_leave_unselected_values(self):
         before_header = self.read("include/common.h")

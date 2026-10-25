@@ -3,9 +3,9 @@
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/practice_match_mode_stage_dispatch.data", D_801342C0);
-u8 D_801342C4 = 0;
+u8 practice_match_result_grade = 0;
 u8 D_801342C8[5] = { 0 };
-INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/practice_match_mode_stage_dispatch.data", D_801342D0);
+INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/practice_match_mode_stage_dispatch.data", practice_selected_girl);
 INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/practice_match_mode_stage_dispatch.data", D_801342D4);
 INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/practice_match_mode_stage_dispatch.data", D_801342F4);
 INCLUDE_RODATA("asm/ovl/RENSYU/data/RENSYU/practice_match_mode_stage_dispatch.data", D_80134328);
@@ -143,12 +143,12 @@ void practice_candidate_and_day_scene_select(void) {
             (game_state.year == (((u32)game_state.unk_54C[0].w << 20) >> 25)) &&
             ((game_state.month + (game_state.month * 0)) == (game_state.unk_54C[0].h[0] >> 12)) &&
             (game_state.day == (game_state.unk_54C[0].h[1] & 0x1F))) {
-            D_801342D0 = 0xFF;
+            practice_selected_girl = 0xFF;
             mode_step_set(6);
         } else if ((((((u32)game_state.girls[11].flags.w << 20) >> 29) + ((game_state.month < 1U) * 0)) >= 3U) &&
                    ((game_state.girls[11].scene_counters[0xB] + ((game_state.month < 2U) * 0)) == 0)) {
             game_state.girls[11].scene_counters[0xB] = 1;
-            D_801342D0 = 0xB;
+            practice_selected_girl = 0xB;
             if ((game_state.month >= 6U) && (game_state.month < 10U)) {
                 portrait_read_start(tbl1.v[11]);
             } else {
@@ -158,7 +158,7 @@ void practice_candidate_and_day_scene_select(void) {
         } else if (((game_state.girls[12].flags.b[3] + ((game_state.month < 3U) * 0)) >= 0x41U) &&
                    ((game_state.girls[12].scene_counters[0xC] + ((game_state.month < 4U) * 0)) == 0)) {
             game_state.girls[12].scene_counters[0xC] = 1;
-            D_801342D0 = 0xC;
+            practice_selected_girl = 0xC;
             if ((game_state.month >= 6U) && (game_state.month < 10U)) {
                 portrait_read_start(tbl1.v[12]);
             } else {
@@ -167,42 +167,42 @@ void practice_candidate_and_day_scene_select(void) {
             mode_step_next();
         } else {
             if (girl_state_rank(temp_a0) < 2) {
-                D_801342D0 = temp_a0;
+                practice_selected_girl = temp_a0;
                 for (var_s0 = 0; var_s0 < 11; var_s0++) {
                     if ((((u16)game_state.player_flags.h >> 12) == ((u8)game_state.girls[var_s0].flags.b[2] >> 4)) &&
                         ((((u32)game_state.girls[var_s0].flags.w << 30) >> 31) == 1)) {
                         if (girl_state_rank(var_s0) < 2) {
-                            D_801342D0 = var_s0;
+                            practice_selected_girl = var_s0;
                         }
                         if ((((u8)game_state.girls[0].flags.b[2] >> 4) == 10) &&
                             (((u16)game_state.player_flags.h >> 12) == 10) &&
                             ((((u32)game_state.girls[10].flags.w << 30) >> 31) == 1)) {
                             if ((girl_state_rank(0) < 2) && (girl_state_rank(10) >= 2)) {
-                                D_801342D0 = 0;
+                                practice_selected_girl = 0;
                             } else if ((girl_state_rank(0) >= 2) && (girl_state_rank(10) < 2)) {
-                                D_801342D0 = 10;
+                                practice_selected_girl = 10;
                             } else if ((girl_state_rank(0) < 2) && (girl_state_rank(10) < 2)) {
                                 sum0 = game_state.girls[0].affection + game_state.girls[0].tokimeki;
                                 sum10 = game_state.girls[10].affection + game_state.girls[10].tokimeki;
                                 if (sum0 >= sum10) {
-                                    D_801342D0 = 0;
+                                    practice_selected_girl = 0;
                                 } else {
-                                    D_801342D0 = 10;
+                                    practice_selected_girl = 10;
                                 }
                             }
                         }
                     }
                 }
-                if (((u16)game_state.player_flags.h >> 12) == ((u8)game_state.girls[D_801342D0].flags.b[2] >> 4)) {
+                if (((u16)game_state.player_flags.h >> 12) == ((u8)game_state.girls[practice_selected_girl].flags.b[2] >> 4)) {
                     practice_selected_girl_portrait_select();
                 } else if ((game_state.month >= 6U) && (game_state.month < 10U)) {
-                    portrait_read_start(tbl1.v[D_801342D0]);
+                    portrait_read_start(tbl1.v[practice_selected_girl]);
                 } else {
-                    portrait_read_start(tbl2.v[D_801342D0]);
+                    portrait_read_start(tbl2.v[practice_selected_girl]);
                 }
                 mode_step_next();
             } else {
-                D_801342D0 = 0xFF;
+                practice_selected_girl = 0xFF;
                 mode_step_set(6);
             }
         }
@@ -237,7 +237,7 @@ void practice_candidate_and_day_scene_select(void) {
             D_80125CA0 = 0xC0;
             dec_bg_show_set(1, dec_bg_decode_to_vram(1));
             audio_command(0xC1);
-            audio_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[D_801342D0], D_800B36C8[D_801342D0], D_800B3708[D_801342D0]);
+            audio_bank_load_start(1, 0xC043, 0xC01D, D_800B3688[practice_selected_girl], D_800B36C8[practice_selected_girl], D_800B3708[practice_selected_girl]);
             mode_step_next();
         }
         break;
@@ -269,10 +269,10 @@ void practice_candidate_and_day_scene_select(void) {
 }
 
 /* FAKE: T-24138. Unused `pad` and `a` place `tbl` at 0x30(sp) and `sp2F` at 0x2F(sp);
- * reading D_801342D0 before portrait_wink_update() puts it in cvt_pass's entry set; adding
+ * reading practice_selected_girl before portrait_wink_update() puts it in cvt_pass's entry set; adding
  * `(((pad + 1) + (pad + 1)) * 0)` in case 6 places a CSE into $v0 inside `* 0` (discarded
  * by ugen with zero instructions) so cvt_pass's `_constant_first` does not swap $v0 first
- * in `D_801342D0 == 6` and `D_801342D0 == 10` in case 11. */
+ * in `practice_selected_girl == 6` and `practice_selected_girl == 10` in case 11. */
 void practice_selected_girl_scene_dispatch(void) {
     s32 pad;
     s16 a;
@@ -280,7 +280,7 @@ void practice_selected_girl_scene_dispatch(void) {
     u8 sp2F;
 
     tbl = D_8013435C;
-    a = D_801342D0;
+    a = practice_selected_girl;
     portrait_wink_update();
     switch (game_state.mode_step) {
     case 0:
@@ -297,20 +297,20 @@ void practice_selected_girl_scene_dispatch(void) {
     case 1:
         if (cd_read_sync_status() & 1) {
             audio_bank_start(1, 0);
-            talk_names_set(D_801342D0);
+            talk_names_set(practice_selected_girl);
             practice_intro_talk_pointer_setup();
             talk_text_table = D_801342B0;
             talk_command_table = D_801342B4;
             talk_voice_table = D_801342B8;
-            talk_group = tbl.v[D_801342D0];
+            talk_group = tbl.v[practice_selected_girl];
             talk_line = 0;
             addr_init_bustup();
-            game_state.current_girl = D_801342D0;
+            game_state.current_girl = practice_selected_girl;
             portrait_show_checked();
-            if (D_801342D0 == 0xC) {
+            if (practice_selected_girl == 0xC) {
                 portrait_layout_set(0);
             }
-            if (D_801342D0 == 0xB) {
+            if (practice_selected_girl == 0xB) {
                 audio_command(0x500);
                 draw_shake_start();
             }
@@ -320,7 +320,7 @@ void practice_selected_girl_scene_dispatch(void) {
         normal_date_girl_in();
         break;
     case 5:
-        if (D_801342D0 == 0xB) {
+        if (practice_selected_girl == 0xB) {
             normal_date_girl_out();
             talk_group = 0x5E;
         } else {
@@ -334,14 +334,14 @@ void practice_selected_girl_scene_dispatch(void) {
         mode_step_next();
         break;
     case 7:
-        if (D_801342D0 == 0xB) {
+        if (practice_selected_girl == 0xB) {
             normal_date_speak();
         } else {
             mode_step_next();
         }
         break;
     case 8:
-        if (D_801342D0 == 0xB) {
+        if (practice_selected_girl == 0xB) {
             normal_date_bg_fadeout();
         } else {
             normal_date_bggirl_fadeout();
@@ -349,7 +349,7 @@ void practice_selected_girl_scene_dispatch(void) {
         break;
     case 9:
         audio_bank_start(0, 6);
-        if (D_801342D0 == 0xB) {
+        if (practice_selected_girl == 0xB) {
             mode_step_next();
             mode_step_next();
         } else {
@@ -359,40 +359,40 @@ void practice_selected_girl_scene_dispatch(void) {
     case 11:
         switch ((u16) game_state.player_flags.h >> 0xC) {
         case 6:
-            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 6) && (D_801342D0 == 0)) ||
-                ((((u8) game_state.girls[4].flags.b[2] >> 4) == 6) && (D_801342D0 == 4))) {
+            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 6) && (practice_selected_girl == 0)) ||
+                ((((u8) game_state.girls[4].flags.b[2] >> 4) == 6) && (practice_selected_girl == 4))) {
                 sp2F = 5;
             } else {
                 sp2F = 0;
             }
             break;
         case 7:
-            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 7) && (D_801342D0 == 0)) ||
-                ((((u8) game_state.girls[4].flags.b[2] >> 4) == 7) && (D_801342D0 == 4))) {
+            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 7) && (practice_selected_girl == 0)) ||
+                ((((u8) game_state.girls[4].flags.b[2] >> 4) == 7) && (practice_selected_girl == 4))) {
                 sp2F = 6;
             } else {
                 sp2F = 1;
             }
             break;
         case 8:
-            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 8) && (D_801342D0 == 0)) ||
-                (D_801342D0 == 5)) {
+            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 8) && (practice_selected_girl == 0)) ||
+                (practice_selected_girl == 5)) {
                 sp2F = 7;
             } else {
                 sp2F = 2;
             }
             break;
         case 9:
-            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 9) && (D_801342D0 == 0)) ||
-                (D_801342D0 == 6)) {
+            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 9) && (practice_selected_girl == 0)) ||
+                (practice_selected_girl == 6)) {
                 sp2F = 8;
             } else {
                 sp2F = 3;
             }
             break;
         case 10:
-            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 10) && (D_801342D0 == 0)) ||
-                ((((u8) game_state.girls[10].flags.b[2] >> 4) == 10) && (D_801342D0 == 10))) {
+            if (((((u8) game_state.girls[0].flags.b[2] >> 4) == 10) && (practice_selected_girl == 0)) ||
+                ((((u8) game_state.girls[10].flags.b[2] >> 4) == 10) && (practice_selected_girl == 10))) {
                 sp2F = 9;
             } else {
                 sp2F = 4;
@@ -510,7 +510,7 @@ void practice_club_scene_setup(void) {
     Default_Disp();
 }
 
-/* FAKE: scalar byte views on unk_110A and D_801342C4 preserve the target live ranges and
+/* FAKE: scalar byte views on unk_110A and practice_match_result_grade preserve the target live ranges and
  * swap_count store placement; unused local `a` and reusing `value` as the second shuffle
  * index place `tbl` at 0x40(sp) and `swap_count` at 0x64(sp) (T-19020, T-24102). */
 void practice_result_grade_calculate(void) {
@@ -528,21 +528,21 @@ void practice_result_grade_calculate(void) {
     case 0:
         value = (s16)(game_state.clubs[(u16) game_state.player_flags.h >> 0xC].practice_points - tbl.v[((RensyuClubCount *)&game_state.clubs[(u16) game_state.player_flags.h >> 0xC])->count]);
         if (value < -0x1E) {
-            (*(u8 *)&D_801342C4) = 0;
+            (*(u8 *)&practice_match_result_grade) = 0;
         } else if (value < -0x14) {
-            (*(u8 *)&D_801342C4) = 1;
+            (*(u8 *)&practice_match_result_grade) = 1;
         } else if (value < -0xA) {
-            (*(u8 *)&D_801342C4) = 1;
+            (*(u8 *)&practice_match_result_grade) = 1;
         } else if (value < 0) {
-            (*(u8 *)&D_801342C4) = 2;
+            (*(u8 *)&practice_match_result_grade) = 2;
         } else if (value >= 0x1E) {
-            (*(u8 *)&D_801342C4) = 5;
+            (*(u8 *)&practice_match_result_grade) = 5;
         } else if (value >= 0x14) {
-            (*(u8 *)&D_801342C4) = 4;
+            (*(u8 *)&practice_match_result_grade) = 4;
         } else if (value >= 0xA) {
-            (*(u8 *)&D_801342C4) = 4;
+            (*(u8 *)&practice_match_result_grade) = 4;
         } else if (value >= 0) {
-            (*(u8 *)&D_801342C4) = 3;
+            (*(u8 *)&practice_match_result_grade) = 3;
         }
         mode_step_next();
         break;
@@ -550,12 +550,12 @@ void practice_result_grade_calculate(void) {
         for (i = 0; i < 5; i++) {
             D_801342C8[i] = 0;
         }
-        for (i = 0; i < (u8)(*(u8 *)&D_801342C4); i++) {
+        for (i = 0; i < (u8)(*(u8 *)&practice_match_result_grade); i++) {
             D_801342C8[i] = 1;
         }
         i = 0;
         swap_count = rand() & 0xF;
-        if ((u8)(*(u8 *)&D_801342C4) >= 3U) {
+        if ((u8)(*(u8 *)&practice_match_result_grade) >= 3U) {
             swap = D_801342C8[0];
             other = D_801342C8[4];
             D_801342C8[4] = swap;
@@ -573,7 +573,7 @@ void practice_result_grade_calculate(void) {
             } while (i != swap_count);
         }
         if (((u16) game_state.player_flags.h >> 0xC) == 9) {
-            if ((u8)(*(u8 *)&D_801342C4) >= 3U) {
+            if ((u8)(*(u8 *)&practice_match_result_grade) >= 3U) {
                 D_801342C8[0] = 1;
             } else {
                 D_801342C8[0] = 0;
@@ -637,7 +637,7 @@ void practice_result_dialogue_select(void) {
         }
         break;
     case 1:
-        if (D_801342C4 >= 3U) {
+        if (practice_match_result_grade >= 3U) {
             audio_command(0x204);
             talk_group = 0x11;
         } else {
@@ -684,7 +684,7 @@ void practice_result_dialogue_select(void) {
         break;
     case 6:
         actor_clear(0x60);
-        if ((D_801342D0 == 0xB) || (D_801342D0 == 0xFF)) {
+        if ((practice_selected_girl == 0xB) || (practice_selected_girl == 0xFF)) {
             mode_stage_set(7);
         } else {
             mode_stage_next();
@@ -694,7 +694,7 @@ void practice_result_dialogue_select(void) {
     Default_Disp();
 }
 
-/* FAKE: T-24122. Unused `pad` and `a` place `tbl` at 0x30(sp); reading D_801342D0 before
+/* FAKE: T-24122. Unused `pad` and `a` place `tbl` at 0x30(sp); reading practice_selected_girl before
  * portrait_wink_update() puts it in cvt_pass's entry set so uopt promotes it to $a0 across the
  * switch; the empty raw-byte test on unk_1BC[4].unk_0C.b[2] retains separate live ranges
  * for the raw byte ($a1) and its high nibble ($v0), matching SHOUGATU:new_year_shrine_saki_status_talk_gate. */
@@ -704,7 +704,7 @@ void practice_result_girl_dialogue(void) {
     RensyuTbl13 tbl;
 
     tbl = D_801343A8;
-    a = D_801342D0;
+    a = practice_selected_girl;
     portrait_wink_update();
     switch (game_state.mode_step) {
     case 0:
@@ -716,9 +716,9 @@ void practice_result_girl_dialogue(void) {
         normal_date_bggirl_fadein();
         break;
     case 2:
-        if (D_801342C4 >= 3U) {
-            talk_group = tbl.v[D_801342D0] + 2;
-            if (D_801342D0 == 4) {
+        if (practice_match_result_grade >= 3U) {
+            talk_group = tbl.v[practice_selected_girl] + 2;
+            if (practice_selected_girl == 4) {
                 if (game_state.girls[4].flags.b[2]) {
                 }
                 if (((u16)game_state.player_flags.h >> 12) != ((u8)game_state.girls[4].flags.b[2] >> 4)) {
@@ -730,17 +730,17 @@ void practice_result_girl_dialogue(void) {
                     }
                 }
             }
-            if (D_801342D0 == 6) {
+            if (practice_selected_girl == 6) {
                 if (((u8)game_state.girls[6].flags.b[2] >> 4) != ((u16)game_state.player_flags.h >> 12)) {
                     talk_group += 1;
                 }
             }
         } else {
-            talk_group = tbl.v[D_801342D0] + 3;
-            if (D_801342D0 == 4) {
+            talk_group = tbl.v[practice_selected_girl] + 3;
+            if (practice_selected_girl == 4) {
                 talk_group += 2;
             }
-            if (D_801342D0 == 6) {
+            if (practice_selected_girl == 6) {
                 talk_group += 1;
             }
         }
@@ -751,8 +751,8 @@ void practice_result_girl_dialogue(void) {
         normal_date_speak();
         break;
     case 4:
-        if (D_801342C4 >= 3U) {
-            if (D_801342D0 == 0xC) {
+        if (practice_match_result_grade >= 3U) {
+            if (practice_selected_girl == 0xC) {
                 talk_group = 0x26;
             } else {
                 talk_group = 0x25;
@@ -767,14 +767,14 @@ void practice_result_girl_dialogue(void) {
         mode_step_next();
         break;
     case 5:
-        if (D_801342D0 == 0xC) {
+        if (practice_selected_girl == 0xC) {
             normal_date_girl_out();
         } else {
             mode_step_next();
         }
         break;
     case 7:
-        if (D_801342D0 == 0xC) {
+        if (practice_selected_girl == 0xC) {
             normal_date_bg_fadeout();
         } else {
             normal_date_bggirl_fadeout();
@@ -793,7 +793,7 @@ void practice_result_girl_dialogue(void) {
 
 void practice_match_result_apply(void) {
     s32 i;
-    u32 temp_t8;
+    u32 player_club;
 
     switch (game_state.mode_step) {
     case 0:
@@ -803,9 +803,9 @@ void practice_match_result_apply(void) {
         break;
     case 1:
         if (audio_bank_load_poll() == 1) {
-            if (D_801342C4 >= 3U) {
-                temp_t8 = (u16) game_state.player_flags.h >> 0xC;
-                ((RensyuClubCount *)&game_state.clubs[temp_t8])->count++;
+            if (practice_match_result_grade >= 3U) {
+                player_club = (u16) game_state.player_flags.h >> 0xC;
+                ((RensyuClubCount *)&game_state.clubs[player_club])->count++;
                 /* FAKE: T-19020. The empty test puts a basic block boundary between the counter update and the
                  * loop setup; without it the loop pointer constant is defined in the counter's block and takes
                  * v0 from the counter address (original: both in v0). The loop sits on the line of the
@@ -821,8 +821,8 @@ void practice_match_result_apply(void) {
                 game_state.param_guts.value += 0xA;
                 game_state.param_stress.value += 0xA;
             }
-            if (D_801342D0 != 0xFF) {
-                game_state.girls[D_801342D0].affection += 2;
+            if (practice_selected_girl != 0xFF) {
+                game_state.girls[practice_selected_girl].affection += 2;
             }
             talk_clear();
             set_dec_bri(0);
@@ -837,7 +837,7 @@ void practice_match_result_apply(void) {
 }
 
 void practice_selected_girl_portrait_select(void) {
-    switch (D_801342D0) {
+    switch (practice_selected_girl) {
     case 0:
         switch ((u32)game_state.girls[0].flags.b[2] >> 4) {
         case 6:

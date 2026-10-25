@@ -6,8 +6,78 @@
 
 #include "common.h"
 #include "libgpu.h"
-#include "main_api.h"
-#include "game.h"
+#include "common.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game/menu_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/pad.h"
+#include "main/param.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "common.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game/menu_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/name_code.h"
+#include "main/pad.h"
+#include "main/param.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 
 extern u8 dec_bg_show;
 void amusement_karaoke_mode_step_dispatch(void);
@@ -19,7 +89,7 @@ extern s16 D_8013A42C;
 extern u8 D_8013A4C4;
 extern s32 D_8013A80C, D_8013A810, D_8013A814;
 extern s32 D_8013B5EC, D_8013B5F0, D_8013B5F4;
-extern s16 D_8013B5F8;
+extern s16 amusement_karaoke_return_talk_group; /* Return-dialogue group advanced by cancelled-song rank response. */
 extern s16 D_8013B5FC;
 extern s32 D_8013B5D4, D_8013B5D8, D_8013B5DC, D_8013B5E0;
 
@@ -195,7 +265,7 @@ void amusement_karaoke_return_substep_dispatch(void);
 void amusement_karaoke_return_timer_dispatch(void);
 
 extern u8 D_8013B5C4;
-extern s16 D_8013B5C8;
+extern s16 amusement_karaoke_audio_frames;
 void amusement_karaoke_result_table_display_30(void);
 void amusement_karaoke_result_table_display_51(void);
 void amusement_karaoke_result_table_display_39(void);

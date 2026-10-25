@@ -1,6 +1,13 @@
 /* annual_result_resources.c: ; src/ovl/GYOZI/801418B0.c:36-68 selects result and follow-up state. Original object 0x801418B0-0x80142D00 (config/objects/GYOZI.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game_enums.h"
+#include "libcd.h"
+#include "libgte.h"
+#include "libpress.h"
+#include "libsnd.h"
+#include "main/import_views/scenes.h"
 #include "ovl/GYOZI.h"
 #include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in

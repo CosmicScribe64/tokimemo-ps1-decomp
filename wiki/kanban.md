@@ -6,9 +6,7 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-27056-final-astra-fixes|T-27056 Resolve final phase 2 findings with a separate Astra agent]]
 
-- [ ] [[tickets/T-27055-final-astra-review|T-27055 Review phase 2 with Astra]]
 
 - [ ] [[tickets/T-21000-event-goto-loops-and-seq-views|T-21000 EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views]]
 - [ ] [[tickets/T-21001-recover-wave-10-list-6-near-misses|T-21001 Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510]]
@@ -63,6 +61,8 @@ kanban-plugin: board
 
 ## In Progress
 
+
+
 - [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
 
 
@@ -83,7 +83,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-27062-main-essential-locals-constants|T-27062 Prepare essential main locals and proven constants]]
 
-- [ ] [[tickets/T-27061-next-main-topic-extraction|T-27061 Prepare next bounded main topic-header extraction packet]]
 
 
 
@@ -158,6 +157,10 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-27056-final-astra-fixes|T-27056 Resolve final phase 2 findings with a separate Astra agent]]
+
+- [ ] [[tickets/T-27055-final-astra-review|T-27055 Review phase 2 with Astra]]
+
 
 
 
@@ -231,6 +234,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27061-next-main-topic-extraction|T-27061 Prepare next bounded main topic-header extraction packet]]
 
 - [ ] [[tickets/T-27075-essential-constant-selectors|T-27075 Close the remaining essential constant selector gaps]]
 - [ ] [[tickets/T-27076-constant-batch-transaction|T-27076 Validate a constant batch transactionally]]

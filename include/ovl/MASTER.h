@@ -5,7 +5,42 @@
 void master_tournament_result_log(void);
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/girl.h"
+#include "game/schedule_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/cd.h"
+#include "main/date.h"
+#include "main/day_event.h"
+#include "main/draw.h"
+#include "main/event_log.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/minigame_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/message.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/schedule.h"
+#include "main/select_girl.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/vsync.h"
 
 /* MASTER overlay (load address 0x80132000): externs and types. */
 
@@ -89,7 +124,7 @@ extern s32 D_8013C564;
 extern s32 D_8013C568;
 extern s32 D_8013C56C;
 extern u8 master_final_tournament_companion_index;
-extern s32 D_8013C2E0;
+extern s32 master_selected_companion; /* GirlId or 0xFF; selected companion, not the tournament winner. */
 extern u8 master_final_tournament_grade;
 
 /* T-9960: called by the preceding state machine in the same object. */
@@ -170,7 +205,7 @@ typedef struct FnTbl30 {
 typedef struct PtrTbl3 {
     /* 0x00 */ void *p[3];
 } PtrTbl3; /* size 0x0C */
-/* Thirteen words indexed by D_8013C2E0 or master_final_tournament_companion_index: text ids and thresholds. */
+/* Thirteen words indexed by master_selected_companion or master_final_tournament_companion_index: text ids and thresholds. */
 typedef struct MasterWords13 {
     /* 0x00 */ s32 v[13];
 } MasterWords13; /* size 0x34 */

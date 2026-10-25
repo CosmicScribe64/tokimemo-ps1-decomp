@@ -1,8 +1,38 @@
 /* hud_panels.c: src/main/80062CD0.c; T-27059: original object [0x80062CD0,0x800674B0); portrait/bustup, parameter digits, calendar date, message window and command-icon panel implementations. Original object 0x80062CD0-0x800674B0 (config/objects/main.txt). */
 #define MAIN_API_OVERRIDE_prim_gradient_rect /* T-10890: matched full-width coordinate calls; narrow canonical prototype adds conversions. */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game/menu_records.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/draw.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/resident_views.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 #include "psx_types.h"
+#include "game/menu_records.h"
+#include "main/hud.h"
+#include "main/message.h"
+#include "main/portrait.h"
 
 void prim_gradient_rect();
 
@@ -321,6 +351,7 @@ void portrait_face_update(void) {
     sprite_quads[1].unk_0F = saved << 5;
 }
 
+/* Sets the speech portrait state when voice playback is inactive. */
 void bustup_speech(void) {
     /* GameState.voice_mode is s8; this function reads it as u8 (lbu) */
     if (*(u8 *)&game_state.voice_mode == 0 && !(D_8011F50E & 1)) {
@@ -329,6 +360,7 @@ void bustup_speech(void) {
     }
 }
 
+/* Sets the portrait wink state when no wink is already active. */
 void bustup_wink(void) {
     if (!(D_8011F4CA & 1)) {
         /* FAKE: the no-op "& 0xFF" shifts IDO's temp numbering (ori in $t8, as in the original); T-1010 */
@@ -349,6 +381,7 @@ void parameter_change(s32 parameter_id, s32 delta) {
     }
 }
 
+/* Shows or hides the parameter-panel actor group. */
 void parameter_disp_switch(s32 arg0) {
     s32 i;
 
@@ -534,6 +567,7 @@ void parameter_show_init(void) {
 }
 
 
+/* Draws the parameter panel and updates its parameter indicators. */
 void parameter_show(void) {
     s32 i;
     s32 d;
@@ -704,6 +738,7 @@ void hizuke_show(void) {
     }
 }
 
+/* Enables or disables the message-window display flag. */
 void message_disp_switch(s32 arg0) {
     if (arg0 == 1) {
         D_8011ED17 |= 0x80;
@@ -779,6 +814,7 @@ void icon_can_use_set(s32 icon_index, s32 enabled) {
     }
 }
 
+/* Returns whether the indexed command icon is enabled. */
 s32 get_icon_can_use(s32 icon_index) {
     if (D_80125C90[icon_index] == 1) {
         return 1;

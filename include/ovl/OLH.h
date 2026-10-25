@@ -2,7 +2,21 @@
 #define OVL_OLH_H
 
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game_enums.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cursor.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/prim.h"
+#include "main/state.h"
+#include "main/text.h"
 
 /* Main-exe functions used by OLH come from game.h (T-1200). */
 

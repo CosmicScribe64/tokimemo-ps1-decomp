@@ -1,7 +1,27 @@
 /* reset_iris_wipe.c: src/main/80046500.c; Original object 0x80046500-0x80047550: reset-to-title plus decimal-digit/packed-BCD helpers and 4-bit iris/radial wipe texture generation and draw setup. Original object 0x80046500-0x80047550 (config/objects/main.txt). */
 #include "common.h"
-#include "game.h"
+#include "common.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libgpu.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/boot.h"
+#include "main/cd.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/ovl.h"
+#include "main/prim.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/tpage.h"
+#include "main/vram.h"
 #include "psx_types.h"
+#include "main/game_mode.h"
+#include "main/ovl.h"
 
 s32 game_mode_reset_to_title(void) {
     ovl_load_reset();

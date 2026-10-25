@@ -3,8 +3,59 @@
 
 #include "common.h"
 #include "psx_types.h"
-#include "main_api.h"
-#include "game.h" /* Actor view of actor_pool (T-18200) */
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/layer.h"
+#include "main/message.h"
+#include "main/pad.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/settings.h"
+#include "main/state.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/vsync.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/scenes.h"
+#include "main/layer.h"
+#include "main/message.h"
+#include "main/pad.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/settings.h"
+#include "main/state.h"
+#include "main/tpage.h"
+#include "main/vram.h"
+#include "main/vsync.h"
+/* Actor view of actor_pool (T-18200) */
 
 typedef struct EnObj {
     /* 0x00 */ s32 unk_00;
@@ -114,7 +165,7 @@ extern u8 D_80139C30;
 extern u8 D_80139C34[8];
 extern u8 D_80139C3C[8];
 extern u8 D_80139C44[8];
-extern s16 D_80139C4C[6];
+extern s16 stalls_collected_result_codes[6];
 void stalls_target_collision_update(void);
 void stalls_progress_meter_draw(void);
 s32 stalls_target_collision_resolve();

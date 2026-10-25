@@ -162,10 +162,10 @@ void sick_visit_day_event_girl_setup(void) {
 
 void sick_visit_talk_choice_select(void) {
     s32 pad; /* FAKE: 4-byte frame pad and dead-store target for SWP NO_WIDEN, T-24140 */
-    u8 sp2B;
+    u8 girl_rank;
 
     pad = (game_state.year == 0);
-    sp2B = get_g_zyotai_s(game_state.current_girl) & 0x7F;
+    girl_rank = get_g_zyotai_s(game_state.current_girl) & 0x7F;
     srand(game_state.frame_count);
     switch (game_state.current_girl) {
     case GIRL_SHIORI:
@@ -239,7 +239,7 @@ void sick_visit_talk_choice_select(void) {
                 talk_group += 1;
             }
         } else if ((rand() % 2) || ((F0F4_SHR_388C == 6) && ((game_state.year == 0x62) || ((game_state.year == 0x61) && (game_state.month >= 9U)))) || (((((game_state.year == 0) * 0) + F0F4_SHR_388C) == 7) && (game_state.year == 0x62))) {
-            if (sp2B < 2U) {
+            if (girl_rank < 2U) {
                 D_80134CCC = 6;
                 talk_group = 4;
             } else {
@@ -278,7 +278,7 @@ void sick_visit_talk_choice_select(void) {
                 talk_group += 1;
             }
         }
-        if (sp2B < 2U) {
+        if (girl_rank < 2U) {
             talk_group += 2;
         }
         break;

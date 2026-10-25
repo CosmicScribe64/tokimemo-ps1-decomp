@@ -1,7 +1,23 @@
 /* ending_audio_visual_update.c: ; src/ovl/ENDING/80137340.c:5-22 dispatches ending scene callbacks and updates audio-level display. Original object 0x80137340-0x801396E0 (config/objects/ENDING.txt). */
 #include "common.h"
 #include "ovl/ENDING.h"
-#include "game.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game/game_state.h"
+#include "game_enums.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/cd.h"
+#include "main/game_mode.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/scenes.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/text.h"
+#include "main/sprite.h"
 
 s32 ending_audio_scene_step_dispatch(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
