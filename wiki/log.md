@@ -2322,3 +2322,7 @@ The user explicitly reaffirmed that port and asset chats may coordinate and aske
 ## [2026-10-25] build | Integrate reviewed first-launch infrastructure
 
 Applied seven T-29016 setup/store/test files after independent resolution of reentry, source-root overlap, preference recovery and visual layout findings. Canonical 55 workflow assertions and five shared suites pass; actual default-size rendering fits every control. Synthetic project configuration and existing content dependencies remain untouched. The packaged importer and boot connection remain open. See [[tickets/T-29016-first-launch-original-import]].
+
+## [2026-10-25] build | Establish native startup path failure
+
+Installed the reviewed direct development launcher and built a code-only macOS export from accepted New Game sources. A uniquely identified native headless process confirms an empty physical resource root, which turns the existing project-containment prefix into a rejection of all absolute paths. Shared exported-path handling is now a concrete implementation task; content checks were not bypassed. See [[tickets/T-29015-desktop-development-player]].
