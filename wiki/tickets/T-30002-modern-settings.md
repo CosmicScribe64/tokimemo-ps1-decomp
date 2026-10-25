@@ -23,6 +23,8 @@ Planned modernization; detailed graphics, input, audio and translation settings.
 
 ## Notes
 
+Reviewed T-30005 recommendations: keep settings separate from simulation/save state; provide mouse, keyboard and controller navigation with visible focus and digital slider controls. Risky display changes need explicit Keep/Revert, a preselectable longer confirmation interval, focus-loss/timeout rollback and crash recovery to the last confirmed display. Validate and atomically persist settings in user storage. Show only graphics options verified on the actual renderer/platform; engine readback alone does not prove V-sync behavior. Language, image-text packs and voice selection remain independent, with explicit missing-content fallback. These are design inputs, not implemented settings.
+
 Requested by the user on 2026-10-25. These additions do not replace full original-game port acceptance.
 
 ## Exploratory English voice pack

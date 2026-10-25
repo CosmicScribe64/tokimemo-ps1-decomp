@@ -2282,3 +2282,7 @@ Root applied the five-file reviewed packet `7a7b095dc7d28744443ea41c0d06a1e6a71c
 Holiday scene integration and native HUD/audio remain open. Original first-result behavior is retained when requested explicitly. User-requested removal of default developer text is assigned to the HUD successor; this packet preserves the old development layout.
 
 See [[tickets/T-29009-ordinary-week-continuation]].
+
+## [2026-10-25] ingest | Widescreen and settings research
+
+Integrated the independently reviewed T-30005 recommendations into [[tickets/T-30001-modern-widescreen]] and [[tickets/T-30002-modern-settings]]. Preserve original art proportions and scene apertures, separate modern UI layout, and verify wider cameras per scene. Settings need accessible navigation and safe display rollback; renderer/platform behavior must be tested. Source audit and primary references remain in the ignored research handoff. No generated art or modernization runtime changes.
