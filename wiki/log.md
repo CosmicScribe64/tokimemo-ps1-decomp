@@ -2314,3 +2314,11 @@ Applied reviewed T-29012 cleanup v2 after both review axes resolved the permanen
 ## [2026-10-25] build | Repair candidate setup control layout
 
 Actual T-29016 rendering at 640x480 exposed offscreen import/cancel controls. Root's separate candidate v3 wraps the buttons; the actual scene now keeps all five within the window and passes the 55 flow assertions with required original fixture mounted read-only. Original setup fixes and this finite layout change await independent verification. Nothing is applied to the canonical setup flow; no packaged importer exists yet. See [[tickets/T-29016-first-launch-original-import]].
+
+## [2026-10-25] decision | Standing cross-chat coordination authorization
+
+The user explicitly reaffirmed that port and asset chats may coordinate and asked them to stop requesting permission for routine coordination. Relayed the direct human authorization to all five active external owners/review coordinators. Handoffs, review requests and findings may proceed directly; root retains canonical source/wiki/Git integration ownership.
+
+## [2026-10-25] build | Integrate reviewed first-launch infrastructure
+
+Applied seven T-29016 setup/store/test files after independent resolution of reentry, source-root overlap, preference recovery and visual layout findings. Canonical 55 workflow assertions and five shared suites pass; actual default-size rendering fits every control. Synthetic project configuration and existing content dependencies remain untouched. The packaged importer and boot connection remain open. See [[tickets/T-29016-first-launch-original-import]].
