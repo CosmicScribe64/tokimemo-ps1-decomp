@@ -2140,3 +2140,7 @@ Independent review of [[tickets/T-29010-native-hud-font-rendering]] verified all
 ## [2026-10-25] build | Integrate verified native font rendering and HUD records
 
 Applied six reviewed files for [[tickets/T-29010-native-hud-font-rendering]], including the resolved cache-root and native fade-quantization findings. Root's canonical tests pass five Python cases, the Godot HUD suite, all 3,418 original glyph bitmaps and 2,064 native palette/brightness images. No original font payload or captured native screen was added to source. The dynamic HUD owner now builds on these canonical files; whole-screen composition and gameplay integration remain open.
+
+## [2026-10-25] decision | Serialize native proof and preserve port acceptance scope
+
+The HUD worker released its private emulator session; root verified no live tokimemo-emu containers before granting exclusive use to [[tickets/T-29012-native-new-game-initialization]]. New Game's private function-level differential probe is now active, while HUD composition proceeds from recorded native command-selection evidence. Updated [[status]] with accepted font integration and explicitly separate pending week, HUD, media, save and dialogue work. No isolated candidate or passing synthetic suite is counted as full-playable acceptance.
