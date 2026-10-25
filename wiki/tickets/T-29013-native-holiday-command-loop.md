@@ -27,3 +27,9 @@ Prepare additive holiday rules/controller/tests in an ignored packet. Propose pr
 ## Coordination
 
 Root verified no live emulator containers and grants the existing week owner the next exclusive private emulator lease. Report container/session and release; no concurrent shared emulator use. Gemini translation pipeline and matching game source remain untouched.
+
+## Reviewed holiday rules integrated (2026-10-25)
+
+Root committed the seven pinned GDScript files and router hook as `cf6767298` from reviewed packet `9b174d7cdf48427b618632a07d37cca394bcc65c2bcba5dc2cedb793ba5d2c0e`. Independent Standards/source reviews resolved all rule findings. Actual canonical execution passes all 185 original per-handler semantic transitions under render schedules 0/1/3, invented holiday rollback/order cases and five shared suites. Existing app checks still pass: 111 command0/7 checks, 26 focus checks and 15 native week checkpoints. Evidence: `.claude/orchestrator/state/T-29013/canonical-proof/acceptance.json`.
+
+The controller is not yet attached to the visible app. Holiday media remains held for a separate shared-loader project-path exclusion finding; HUD and continuous holiday actor/render/save/focus integration remain open. Existing routes stop transactionally without holiday capabilities. One-step native cases do not prove continuous playback or audio parity. T-29013 remains In Progress.

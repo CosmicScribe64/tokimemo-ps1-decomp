@@ -2246,3 +2246,11 @@ Recorded the user's possible English voice-pack idea in [[tickets/T-30002-modern
 ## [2026-10-25] ingest | Add SNES achievement design reference
 
 Updated [[tickets/T-30004-modern-achievements]] with the user's cross-version clarification. RetroAchievements SNES game3913/series hub lists97 achievements; single-session confession subset is a further optional reference. Our port may define its own verified gameplay goals. No achievement implementation yet.
+
+## [2026-10-25] build | Integrate original Sunday command rules
+
+Root committed the seven pinned GDScript files and router hook as `cf6767298` from reviewed packet `9b174d7cdf48427b618632a07d37cca394bcc65c2bcba5dc2cedb793ba5d2c0e`. Independent Standards/source reviews resolved all rule findings. Actual canonical execution passes all 185 original per-handler semantic transitions under render schedules 0/1/3, invented holiday rollback/order cases and five shared suites. Existing app checks still pass: 111 command0/7 checks, 26 focus checks and 15 native week checkpoints. Evidence: `.claude/orchestrator/state/T-29013/canonical-proof/acceptance.json`.
+
+The controller is not yet attached to the visible app. Holiday media remains held for a separate shared-loader project-path exclusion finding; HUD and continuous holiday actor/render/save/focus integration remain open. Existing routes stop transactionally without holiday capabilities. One-step native cases do not prove continuous playback or audio parity. T-29013 remains In Progress.
+
+See [[tickets/T-29013-native-holiday-command-loop]].
