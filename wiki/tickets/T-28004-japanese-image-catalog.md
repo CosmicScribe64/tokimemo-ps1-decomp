@@ -12,6 +12,8 @@ links: ["[[asset-export]]", "[[tickets/T-28002-media-asset-export]]", "[[tickets
 
 Provide the visual localization inventory the user requested, especially the main game screens' icons. Identify Japanese text baked into icons/buttons/banners/backgrounds and distinguish it from text rendered through fonts/strings. This is preparation, not replacement art or translation.
 
+2026-10-25 user direction: Gemini's translation pipeline also supplies image-text translations and suggestions that fit the original image dimensions, including icons. Retain asset identity and dimension/context metadata so those suggestions can guide Phase 5 replacement images. Actual translated-image creation and integration are explicitly deferred; do not edit Gemini's translations or pipeline.
+
 ## Acceptance criteria
 
 - [x] Every discovered visual asset has a stable ID/source container/frame/palette/region and extraction/review status.

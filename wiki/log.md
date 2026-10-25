@@ -2112,3 +2112,11 @@ Applied final reviewed [[tickets/T-29009-ordinary-week-continuation]] packet wit
 ## [2026-10-25] ingest | Accept the first translator handoff
 
 Both independent review axes accept [[tickets/T-28007-complete-text-and-translator-handoff]]'s initial editable queue and return validator. Root installed both exact tooling after-images, independently verified all archive IDs/counts and source evidence hashes, and passed 19 actual tests plus all 332 live return batches. All 55,403 rows are preserved: 31,346 ready for review and 24,057 unresolved. User notified immediately, then requested repository/worktree operation instead of ZIP delivery. [[assets-text]] now documents generating a separate editable ignored queue in that worktree. No translation, original-text Git payload or comprehensive coverage claim. Astra continues remaining source/native gaps.
+
+## [2026-10-25] decision | Image translation ownership and deferred artwork
+
+The user confirmed Gemini's translation pipeline also covers image text and same-size wording/layout suggestions for icons and other graphics. Recorded in [[phase3]] and [[tickets/T-28004-japanese-image-catalog]]: preserve asset identity, dimensions and rendering context for later translated-image creation; no replacement art now, and no changes to Gemini's pipeline or editable translations.
+
+## [2026-10-25] build | Verify canonical development app and visual viewer
+
+The six-file [[tickets/T-29008-assemble-playable-development-app]] focus-v2 integration passes 26 focus checks, ten original-state/effect comparisons and render schedules 0/1/3. Actual rendered command 0 reaches the declared first result; native HUD, New Game, audio and week presentation remain open. Both independent reviews accept the ten-file [[tickets/T-29007-visual-port-progress-viewer]] implementation and root reran its twelve Docker tests. Explicit publication of canonical captures deduplicated all four existing images. Existing workers resumed ordinary-week presentation and native HUD work; dialogue has parallel independent reviews. Rough first-slice/full-port estimates remain 60%/5%, not measured coverage.

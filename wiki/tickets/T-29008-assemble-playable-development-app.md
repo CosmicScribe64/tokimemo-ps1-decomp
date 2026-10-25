@@ -31,4 +31,6 @@ Join the reviewed session, first-activity rules, presentation and external conte
 
 ## Notes
 
+2026-10-25 canonical integration: applied the independently reviewed six-file focus-v2 packet. Actual installed tests pass 26 focus checks, ten original-game command-0 state/effect comparisons and identical state/event hashes with 0/1/3 rendered frames per step. The rendered app commits 80 steps and reaches the first result using eight RNG draws. Evidence is `.claude/orchestrator/state/T-29008/live-*`; captures are `.asset-cache/port-app-current-v2/` and are already present in the local visual viewer. This remains a captured-boundary development app: native HUD, command-7 content integration, week presentation, audio and New Game are not complete. Ordinary-week presentation integration is now assigned to the existing T-29009 owner.
+
 App integration runs in parallel with bounded module reviews. Exclusive paths avoid the rules, presentation and content workers. Root serializes all canonical applications and commits. All development tools and tests run in Docker.

@@ -24,6 +24,8 @@ Provide an automatically updating local browser page that shows actual port scre
 
 ## Notes
 
+2026-10-25 final bounded viewer review: both independent review axes pass the exact ten source files. Twelve Docker tests pass again at root integration. Actual Chrome verifies video decoding/playback, controls, arrow order, contained layout and the estimated numeric badge; JS checks cover refresh without playback interruption. Immutable historical captures can outlive their overwritten named source aliases; that provenance limit is recorded in the Spec report. The viewer and watcher remain running. Canonical app screenshots were explicitly published and deduplicated against existing captures, with zero redundant additions. Reports: `.claude/orchestrator/state/T-29007/final-spec-review.*` and `final-standards-review.*`.
+
 Owned paths: tools/port/progress/. Root serializes live applications, wiki/Git and server launch. A bounded Luna worker prepares an isolated candidate. The existing port and asset lanes continue in parallel.
 
 2026-10-25: user reported arrow directions reversed against the displayed thumbnail order. Swapped both visible arrow-button and keyboard ArrowLeft/ArrowRight deltas so they follow left-to-right thumbnail positions. Capture watcher now automatically imports stable port screenshots/clips from the three approved folders; actual activity renders appeared without manual publishing.
