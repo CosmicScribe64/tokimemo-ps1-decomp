@@ -2254,3 +2254,7 @@ Root committed the seven pinned GDScript files and router hook as `cf6767298` fr
 The controller is not yet attached to the visible app. Holiday media remains held for a separate shared-loader project-path exclusion finding; HUD and continuous holiday actor/render/save/focus integration remain open. Existing routes stop transactionally without holiday capabilities. One-step native cases do not prove continuous playback or audio parity. T-29013 remains In Progress.
 
 See [[tickets/T-29013-native-holiday-command-loop]].
+
+## [2026-10-25] decision | Require first-launch import and track all PS1 releases
+
+User wants the shipped game to request their original copy once and retain extracted assets thereafter. Added Ready [[tickets/T-29016-first-launch-original-import]] and Backlog [[tickets/T-29017-support-ps1-releases]], updated [[phase3]] packaging acceptance. User clarified PS1 releases only. [[versions]] provides existing five-disc evidence; new release/runtime support remains unproved. End-user tooling requirements are removed from the intended shipping flow; development tooling stays Docker-only.
