@@ -229,26 +229,34 @@ def _relative_asset_href(path: str, output_directory: Path) -> str:
 def _coverage_html(assets: list[dict]) -> str:
     rows = []
     has_bs = False
+    decoded_bs = 0
     has_portrait = False
     portrait_images = 0
     for asset in assets:
         source = asset.get("source") or {}
         path = source.get("path", "unknown source")
         suffix = Path(path).suffix.lower()
+        has_bs |= suffix == ".bs"
         is_portrait = any(word in str(path).lower() for word in ("portrait", "bustup", "bust_up"))
         has_portrait |= is_portrait
-        has_images = bool((asset.get("export") or {}).get("images"))
+        has_images = (asset.get("status") in {"exported", "partial"}
+                      and bool((asset.get("export") or {}).get("images")))
         if is_portrait and has_images:
             portrait_images += len(asset["export"]["images"])
         if has_images:
+            if suffix == ".bs" and asset.get("format") == "sony-bs-mdec":
+                decoded_bs += 1
             continue
-        has_bs |= suffix == ".bs"
         rows.append("<li><code>%s</code> — %s / %s: %s</li>" % (
             _esc(path), _esc(asset.get("status", "unknown")), _esc(asset.get("format", "unknown")),
             _esc(asset.get("reason", "not exported as an image"))))
     if not rows:
         rows.append("<li>No non-image media records were supplied; source coverage is still incomplete.</li>")
-    mdec = "MDEC background records are present but not decoded." if has_bs else "MDEC background decoding is not covered by this gallery."
+    if decoded_bs:
+        mdec = ("%d MDEC background sources have exported previews; other background sources and runtime uses remain unresolved. "
+                "Hardware pixel parity is unverified." % decoded_bs)
+    else:
+        mdec = "MDEC background records are present but not decoded." if has_bs else "MDEC background decoding is not covered by this gallery."
     if portrait_images:
         portrait = "%d portrait preview variants are shown; portrait source coverage remains incomplete." % portrait_images
     elif has_portrait:

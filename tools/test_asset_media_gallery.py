@@ -106,6 +106,28 @@ class GalleryTests(unittest.TestCase):
         with self.assertRaisesRegex(GalleryError, "review is stale"):
             build_gallery(media, visual)
 
+    def test_decoded_background_count_does_not_claim_complete_or_pixel_exact(self):
+        media, _ = fixture()
+        asset = media["assets"][0]
+        asset["source"]["path"] = "invented/DECODED.BS"
+        asset["format"] = "sony-bs-mdec"
+        page = build_gallery(media)
+        self.assertIn("1 MDEC background sources have exported previews", page)
+        self.assertIn("Hardware pixel parity is unverified", page)
+        self.assertNotIn("MDEC background records are present but not decoded.", page)
+        self.assertIn('data-category="backgrounds"', page)
+
+    def test_stale_or_unrecognized_background_images_are_not_counted_as_mdec(self):
+        for status, fmt in (("unsupported", "sony-bs-mdec"), ("exported", "unknown")):
+            with self.subTest(status=status, format=fmt):
+                media, _ = fixture()
+                asset = media["assets"][0]
+                asset["source"]["path"] = "invented/DECODED.BS"
+                asset.update(status=status, format=fmt)
+                page = build_gallery(media)
+                self.assertNotIn("1 MDEC background sources have exported previews", page)
+                self.assertIn("MDEC background records are present but not decoded", page)
+
     def test_html_escapes_source_and_profile_values(self):
         media, _ = fixture()
         asset = media["assets"][0]

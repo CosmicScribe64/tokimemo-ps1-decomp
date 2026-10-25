@@ -60,6 +60,25 @@ class InputTests(unittest.TestCase):
                 self.assertEqual(src.read(next(e for e in src.entries() if e["path"] == "FILE.BIN")), b"hello")
                 self.assertEqual(src.describe()["track_member"], "(Track 1).bin")
 
+    def test_cached_raw_entry_can_be_read_before_inventory(self):
+        cached_entry = {"path": "FILE.BIN", "size": 5, "kind": "file",
+                        "location": {"lba": 19}}
+        with tempfile.TemporaryDirectory() as td:
+            track_data = image()
+            raw = os.path.join(td, "track.bin")
+            with open(raw, "wb") as f:
+                f.write(track_data)
+            with open_input(raw) as src:
+                self.assertEqual(src.read(cached_entry), b"hello")
+                self.assertIsNone(src._entries)
+
+            archive = os.path.join(td, "track.zip")
+            with zipfile.ZipFile(archive, "w") as z:
+                z.writestr("track.bin", track_data)
+            with open_input(archive) as src:
+                self.assertEqual(src.read(cached_entry), b"hello")
+                self.assertIsNone(src._entries)
+
     def test_directory_entries_and_symlink_are_safe(self):
         with tempfile.TemporaryDirectory() as td, tempfile.TemporaryDirectory() as outside:
             with open(os.path.join(td, "a"), "wb") as f: f.write(b"x")

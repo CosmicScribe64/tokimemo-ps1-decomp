@@ -64,6 +64,8 @@ class InputSource:
     def __init__(self, path, kind, f=None, owner=None, base=None):
         self.path, self.kind, self._f, self._owner, self._base = path, kind, f, owner, base
         self._entries = None
+        self._raw = None
+        self._track_size = None
         self._description = {"format": kind, "source": os.path.abspath(path), "source_sha256": _path_hash(path), "read_only": True}
 
     def describe(self):
@@ -75,8 +77,15 @@ class InputSource:
         return [dict(e) for e in self._entries]
 
     def read(self, entry):
+        if not isinstance(entry, dict):
+            raise InputError("file entry must be an object")
         if entry.get("kind") != "file":
             raise InputError("entry is not a readable file: %s" % entry.get("unsupported", "unsupported extent"))
+        if not isinstance(entry.get("path"), str) or not entry["path"]:
+            raise InputError("file entry has no source path")
+        size = entry.get("size")
+        if not isinstance(size, int) or isinstance(size, bool) or size < 0:
+            raise InputError("file entry has an invalid byte size")
         if self.kind == "directory":
             full = os.path.realpath(os.path.join(self.path, *entry["path"].split("/")))
             if os.path.commonpath((os.path.realpath(self.path), full)) != os.path.realpath(self.path):
@@ -84,10 +93,17 @@ class InputSource:
             with open(full, "rb") as f:
                 data = f.read()
         else:
-            data, _ = self._raw.extent(entry["location"]["lba"], entry["size"])
+            if self._raw is None:
+                track_size = self._track_size if self._track_size is not None else _size(self._f)
+                self._raw = _Raw(self._f, track_size)
+            location = entry.get("location")
+            if (not isinstance(location, dict) or not isinstance(location.get("lba"), int)
+                    or isinstance(location.get("lba"), bool)):
+                raise InputError("file entry has no integer starting LBA")
+            data, _ = self._raw.extent(location["lba"], size)
             if data is None:
                 raise InputError("Form2 stream cannot be read as an ISO file")
-        if len(data) != entry["size"]:
+        if len(data) != size:
             raise EOFError("short file: %s" % entry["path"])
         return data
 
@@ -114,7 +130,9 @@ class InputSource:
         return out
 
     def _iso_entries(self):
-        self._raw = _Raw(self._f, _size(self._f))
+        if self._raw is None:
+            size = self._track_size if self._track_size is not None else _size(self._f)
+            self._raw = _Raw(self._f, size)
         pvd, form2, _fallback = self._raw.sector(16)
         if form2 or pvd[0] != 1 or pvd[1:6] != b"CD001":
             raise InputError("LBA 16 is not an ISO9660 primary volume descriptor")
@@ -321,6 +339,7 @@ def open_input(path):
             f.close(); z.close()
             raise InputError("ZIP data track is not raw MODE2/2352")
         source = InputSource(path, "zip-mode2-2352", f, z)
+        source._track_size = size
         source._description.update({"track_member": member.filename, "track_size": size, "other_members": sorted(i.filename for i in z.infolist() if not i.is_dir() and i.filename != member.filename)})
         return _Context(source)
     f = open(path, "rb")
@@ -330,4 +349,6 @@ def open_input(path):
     if head != b"\x00" + b"\xff"*10 + b"\x00":
         f.close()
         raise InputError("unsupported image: expected raw MODE2/2352 sync header")
-    return _Context(InputSource(path, "mode2-2352", f))
+    source = InputSource(path, "mode2-2352", f)
+    source._track_size = size
+    return _Context(source)
