@@ -1717,6 +1717,58 @@ hashes against committed media tooling in an ephemeral Docker copy; the combined
 passes. Live asset work and ignored original/export data were preserved. Staging the reviewed
 source-only checkpoint remains separate from comprehensive text-coverage completion.
 
+## [2026-10-24] build | Qualify overlay field ownership before integration
+
+The 4,738-row aggregate dry run caught GEKO DateTxt binding through DATE's separate alias.
+No source was written. Root preserved the reviewed inputs and explicitly qualified overlay
+field scopes in the integration aggregate; full proof is rerunning. The signed-constant fix
+is committed0b9ddbf33, and the reviewed text-evidence checkpoint is committedc56f9dcd4.
+[[status]] records which source changes still await the next matching build.
+
+## [2026-10-24] build | Apply the qualified identifier wave and close festival spec findings
+
+The full 4,738-row/232-file qualified-scope plan passes; root application is running.
+Independent review approved BUNKAKEN's 250 symbol/type/field rows and 259 locals. Corrected
+two living-spec findings: first-year companion reachability stays unproved, and the normal
+visit log's direct scene assignment is separate from birthday call sites. T-27066's bounded
+post-fix review also passes for small/BUNKA_SD/SHUGAKU packets. Created
+[[tickets/T-27071-anonymous-fields-kr-scope]] for the six reproduced TACO scope blockers.
+
+## [2026-10-24] lint | Reject an unsafe anonymous-member helper before integration
+
+Independent review of the first T-27071 scratch patch found an unrequested-owner rewrite
+hidden by normalization of a preexisting compiler error. The helper remains unapplied and
+is being corrected with the reproduced regression. K&R masking has no new finding. The
+BUNKAKEN reviewer separately confirmed both requested living-spec corrections are resolved.
+
+## [2026-10-24] build | Resolve scope review and preserve EVENT prototype visibility
+
+Corrected T-27071 patch passes independent counterexample verification and all 116 integrated
+tests. Moved EVENT's func_801040F0 prototype from the main API to its overlay owner after the
+rename application guard caught lost visibility; all 437 strict views remain unchanged and
+header checks pass. Independent review approves the move. The 4,738-row apply is retrying;
+no earlier failed attempt wrote that source wave. Created
+[[tickets/T-27072-caller-scoped-constant-sites]] to bind reviewed constants to their caller
+without merging unrelated state-machine values.
+
+## [2026-10-24] build | Verify binary output and isolate the remaining replay guard
+
+The clean source wave compiled all 27 binaries and passed every SHA1 target. Removed three
+unused EVENT override guards after their aliases became private names; all 437 views remain
+unchanged and headers pass. The final rename guard exposes T-27073: another reviewed macro
+family in the same function trips strict scale-request provenance. No binary mismatch found;
+the full build remains incomplete until that guard is fixed. T-27072's corrected CLI route
+passes independent verification and all 122 integrated tests.
+
+## [2026-10-24] build | Close the verified readability wave
+
+Applied 311 main rows, the mascot correction, 4,738 qualified identifier rows and 112 proven
+constant substitutions. Independent actual-source review passes. All 437 ABI views are
+unchanged; the clean build and every guard pass, with 27/27 independently rehashed binaries
+and 6,952 functions / 2,276,920 bytes. T-27070, T-27072 and T-27073 are Done after resolved
+reviews and 126 current tool tests. The next 3,942-row read-only plan caught two parameter
+collisions; role-preserving targets requested_end_frame and input_text are being re-proved.
+
 
 ## [2026-10-24] decision | Defer overlapping scene-effect data label
 
@@ -1726,3 +1778,24 @@ Removed `D_80122D44` from the m-flow standalone data proposals because it is `Ta
 ## [2026-10-24] decision | Close safe-subset Standards and Spec review
 
 Final independent Sol 6.1 review passes the five primary apply packets, current `src/main/README.md` prefix ownership map, and synchronized [[spec/m-flow]], [[spec/h-cdio]], [[spec/m-dates-a]], and [[spec/m-dates-b]]. `TalkWork.unk_74` remains deferred as a field label; no independent D_80122D44 row remains. Stable Docker dry-run validation awaits root's source batch completion.
+
+
+## [2026-10-24] build | Run five-unit safe apply plans
+
+One two-CPU Docker batch ran the five apply tables against the stable snapshot. m-flow, h-graphics, m-dates-a and m-dates-b plans exited 0; h-cdio found two already-named `dec_bg_*` labels. Updated the h-cdio source labels to `dec_bg_lba_cache` and `dec_bg_brightness`; targeted re-plan remains outstanding. Independent Standards/Spec review passes; root source application and matching proof remain open.
+
+## [2026-10-24] query | Explain the final-review dependency
+
+The current committed source checkpoint is a90eac1e6: independent source review, all 437 ABI views, clean guards/build, 27/27 binary hashes and 6,952 functions pass. Final Astra review has not started because remaining source naming and logical header migration are unfinished, not because a reviewer is unavailable. The corrected next packet has 3,940 rows, including 2,807 functions; two proposals for nonexistent locals are excluded and target spelling/collision corrections are recorded in its ignored manifest. Its read-only Docker plan remains active. The header lane has prepared 467 further main declaration moves plus shared-type, SDK and EVENT packets, with final regeneration and complete umbrella disposition still open. [[status]], [[spec/header-split-plan]], [[spec/phase2-completion-audit]].
+
+## [2026-10-24] decision | Defer one overlapping hardware alias to header ownership
+
+The 3,940-row dry plan found only two new compiler diagnostics, both EVENT uses of D_80122740 after main renamed its camera reference. The address belongs to distinct EVENT tile-pointer storage during that overlay. A scratch identical-type private-header split preserved all 437 views but was correctly rejected by current canonical-declaration ownership checks; it is not applied. Root retained the original packet, deferred only this main hardware-data row to T-27061, and started the remaining 3,939-row guarded apply. The executable packet still includes all 2,807 function names. Its manifest records the deferral and SHA-256 9a60e8297a868f578227b3d60ac38069a0b062415dad2e151995e8e8ed9b9af0. [[spec/header-split-plan]], [[status]].
+
+## [2026-10-24] build | Commit the reviewed media-reader checkpoint
+
+Committed 47e315ce4 from the exact reviewed v3 frozen Python blobs: 25 changed source/test files covering five UI formats, original background context, MDEC export context, media coverage and Japanese-text image inventory. The manifest and all 48 frozen per-file hashes/sizes validate; combined committed text tooling plus the 42 owned frozen Python inputs passes 249 Docker tests with one optional integration skip. The shared CLI equals HEAD and is retained. Root staged frozen blobs without overwriting newer working files. Independent format/coverage/publication reviews and their limitations remain in the frozen manifest; full media/text coverage and hardware MDEC pixel parity remain open. An independently guessed aggregate source-hash formula differs, so only the pinned manifest and verified per-file identities are claimed pending the author's formula. [[assets-media]], [[assets-input]], [[asset-export]].
+
+## [2026-10-24] query | Confirm the media snapshot aggregate identity
+
+The author's aggregate format is sorted SHA-256, two ASCII spaces, relative POSIX path and newline for all 48 files. Root independently recomputed it and matched 2b32408b2dca8fffd3d6fed19be5adcf1743124c02b759af86a3ceae01a31c59. The earlier guessed-format mismatch is resolved without changing source or repeating tests. The ignored integration proof retains both calculations and their explicit formats. [[assets-media]].

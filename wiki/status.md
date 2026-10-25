@@ -9,6 +9,38 @@ The one page for "where are we". Update it when a wave, a local or cloud session
 
 ## Phase 2 handoff (2026-10-24, keep current)
 
+Current integration checkpoint: all 437 game C files have logical names. The latest verified
+wave applies 311 main identifier rows, the mascot correction, 4,738 qualified identifier rows,
+and 112 proven constant substitutions. Independent actual-source review passes; all 437 ABI
+views are unchanged. The clean build and every guard pass, with 27/27 independently checked
+binaries, 6,952 functions and 2,276,920 bytes; the ledger contains 8,980 rows. Evidence is in
+ignored next-integration/clean-wave-proof.json and actual-source-review.md.
+
+The next 3,939-row packet covers remaining main/festival/seasonal names and reviewed followups,
+including 2,807 function names. Its dry plans caught two parameter collisions, lowercase naming
+violations and two proposed locals absent from their actual functions. The integration packet
+corrects the spellings/collisions and excludes those nonexistent locals; the corrected full plan
+found one remaining ownership issue: the main camera-reference alias shares an address with
+EVENT tile-pointer storage. That single alias is explicitly deferred to the header migration;
+the other 3,939 rows are applying through the compiler and ABI safeguards. Header migration
+and further proven constant families remain open; no final Astra
+review yet. The header lane has prepared 467 further main declaration moves, SDK ownership and
+shared-type packets, but full umbrella removal still needs remaining declaration disposition.
+These source implementation gates, rather than reviewer availability, delay the final review.
+
+Reviewed tooling milestones include signed-constant correction 0b9ddbf33, ownership correction
+470f5368e, caller-scoped constant requests bc0d45ea7 and macro provenance 428690995; the current
+suite has 126 passing tests. Source/runtime text-evidence checkpoint c56f9dcd4 passed 188
+combined asset tests with one optional integration skip. Media-reader checkpoint 47e315ce4
+adds reviewed UI, background-context and coverage exporters; its integration with committed
+text tooling passes 249 tests with one optional integration skip. Newer live asset work is
+preserved, and text/media completeness remains open.
+T-28005's facts-only fan-patch audit
+is Done; all 29,403 reference dialogue offsets are covered, with 633 local-only leads.
+User requests cheaper agents and scripted/batched proof work, with the final Astra review/fix
+pair reserved for wrap-up. After reviewer verification and final matching checks, the user
+has authorized pushing the reviewed changes to origin.
+
 Continuation checkpoint (local commits, 2026-10-24):
 
 - [[tickets/T-27041-scheduler-readable-batch]] Done: all 33 remaining scheduler placeholder functions,

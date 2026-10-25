@@ -1,7 +1,7 @@
 ---
 id: T-27072
 title: Bound constant sites to their owning caller and state machine
-status: In Progress
+status: Done
 assignee: constant-tooling
 created: 2026-10-24
 updated: 2026-10-24
@@ -16,12 +16,12 @@ dispatch helpers. Keep the existing selector forms and their default behavior in
 
 ## Acceptance criteria
 
-- [ ] A bounded caller selector filters existing call/member/local sites by exact unit and function.
-- [ ] Wrong units, missing/ambiguous functions and unproved source provenance fail closed.
-- [ ] Preserve original values, widths, signedness, preprocessing behavior and type views.
-- [ ] Synthetic regressions cover cross-caller and cross-overlay separation, macro/inactive
+- [x] A bounded caller selector filters existing call/member/local sites by exact unit and function.
+- [x] Wrong units, missing/ambiguous functions and unproved source provenance fail closed.
+- [x] Preserve original values, widths, signedness, preprocessing behavior and type views.
+- [x] Synthetic regressions cover cross-caller and cross-overlay separation, macro/inactive
       code rejection, declaration ambiguity and ledger replay where supported.
-- [ ] Independent review and Docker proofs pass before root integration/application.
+- [x] Independent review and Docker proofs pass before root integration/application.
 
 ## Notes
 
@@ -36,3 +36,7 @@ routes wrapped requests through strict planning, signed request metadata and rol
 The original stale-literal CLI counterexample now fails check and is restored by replay;
 repeat check/replay is stable. Root integrated the exact patch and all 122 tests pass in
 3.961 seconds. Unwrapped behavior is preserved; wrapper use in game inventories follows.
+
+Final bounded tool gate: independent review approves the corrected public CLI behavior.
+The current 126-test suite, full clean build and all rename/header/symbol/global guards pass.
+Actual caller-scoped inventory applications remain owned by the unit tickets, not this tool ticket.

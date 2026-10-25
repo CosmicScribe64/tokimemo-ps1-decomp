@@ -1,7 +1,7 @@
 ---
 id: T-27070
 title: Preserve whole signed expressions in constant replacement
-status: In Progress
+status: Done
 assignee: constant-tooling
 created: 2026-10-24
 updated: 2026-10-24
@@ -14,9 +14,9 @@ Fix the reproduced legacy const bug that replaces only a negative expression's p
 
 ## Acceptance criteria
 
-- [ ] Whole supported unary expressions replaced; signs and suffix types preserved, ambiguous forms fail closed.
-- [ ] Regressions cover signed/unsigned/long, parentheses, comparison/assignment/call sites, and source preprocessing provenance.
-- [ ] Independent review and full rename suite pass; root integrates then applies reviewed sites with matching proof.
+- [x] Whole supported unary expressions replaced; signs and suffix types preserved, ambiguous forms fail closed.
+- [x] Regressions cover signed/unsigned/long, parentheses, comparison/assignment/call sites, and source preprocessing provenance.
+- [x] Independent review and full rename suite pass; root integrates then applies reviewed sites with matching proof.
 
 ## Work notes
 
@@ -31,3 +31,9 @@ no findings; five targeted Docker tests independently checked value/type preserv
 parentheses, provenance, replay and rollback. Root applied the two-file patch and reran all
 111 tests successfully in 5.959 seconds. Actual three-site application and its matching
 proof remain part of the next source wave; no source-completion claim yet.
+
+Final integration: all three negative graph calls are named with the exact signed scale,
+alongside the reviewed positive families (112 literals total). The clean build, all 27
+independent hashes, 6,952-function census and 437 unchanged ABI views pass. T-27073 resolves
+the cross-family replay guard; all 126 current rename tests pass and actual-source review
+finds no issue. This bounded tooling/site task is Done; phase 2 remains open.

@@ -63,7 +63,10 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-27070-signed-constant-replacement|T-27070 Preserve whole signed expressions in constant replacement]]
+
+
+- [ ] [[tickets/T-27071-anonymous-fields-kr-scope|T-27071 Preserve anonymous member and K&R parameter ownership in rename proofs]]
+
 
 
 
@@ -228,6 +231,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-27073-constant-family-provenance|T-27073 Preserve constant provenance across independent macro families]]
+- [ ] [[tickets/T-27072-caller-scoped-constant-sites|T-27072 Bound constant sites to their owning caller and state machine]]
+- [ ] [[tickets/T-27070-signed-constant-replacement|T-27070 Preserve whole signed expressions in constant replacement]]
 
 - [ ] [[tickets/T-28005-fan-patch-crosscheck|T-28005 Cross-check text and image-text coverage against the fan patch]]
 

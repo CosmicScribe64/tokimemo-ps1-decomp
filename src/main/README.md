@@ -48,19 +48,19 @@ Navigation map for the 34 readable C files in `src/main/`. Original ranges are h
 | Boot, startup and frame-loop helpers | `game_init.c`, `main_loop.c`, `boot_assets.c`; paused callback `func_80043504` in `pad_input.c` | `boot_` |
 | Debug display helpers/state | Actual debug helpers in `debug_hud_palette.c` and `debug_display.c`, with shared diagnostic state | `debug_` |
 | Main loop and game mode (`80042540`) | `game_mode.c` | `game_mode_`, `mode_stage_`, `mode_step_`; O.BIN `game_main` |
-| Pad and system helpers (`80042A00`) | `pad_input.c` | `pad_`, `sys_` |
-| 2D drawing, palettes, VRAM loads (`80043510`) | `frame_render_audio.c` | `draw_`, `vram_` |
+| Pad and system helpers (`80042A00`) | `pad_input.c`, `main_loop.c` system setup | `pad_`, `sys_` |
+| 2D drawing, palettes, VRAM loads (`80043510`) | `frame_render_audio.c`, selected display helpers in `actor_sprites.c` | `draw_`, `vram_` |
 | CD reads (`800451D0`, `80046500`) | `cd_queue.c`, `reset_iris_wipe.c` | `cd_` |
-| Texture pages, sprites, display actors, GPU setup (`80047550`, `800490C0`) | `actor_sprites.c`, `gpu_primitives.c` | `tpage_`, `sprite_`, `actor_`, `gpu_` |
+| Texture pages, sprites, display actors, GPU setup (`80047550`, `800490C0`) | `actor_sprites.c`, `gpu_primitives.c`, actor sequence helper `actor_pair_swap_sequences` in `scene_display.c` | `tpage_`, `sprite_`, `actor_`, `gpu_` |
 | Primitives, color bars, sepia (`80049FF0`, `8004AD60`) | `gpu_effects.c`, `debug_hud_palette.c` | `prim_`, `color_` |
 | Screen layers, model transfer (`8004C3F0`) | `screen_layers.c` | `layer_`, `model_`; O.BIN `srn_`, `mod_` |
 | Kanji text (`8004E500`) | `text_system.c` | `text_`; O.BIN `k_disp_`, `set_kanji_` |
 | Menus, speaker labels, girl records and queries (`8004F6B0`, `8004F870`) | `vram_viewer.c`, `menu_speaker_girl.c` | `menu_`, `speaker_`, `girl_` |
-| Memory card, timers (`80053650`) | `memory_card.c` | `memory_card_`, `timer_` |
+| Memory card, timers (`80053650`) | `memory_card.c`, frame timer callbacks in `main_loop.c` | `memory_card_`, `timer_` |
 | STR movies (`800563F0`) | `movie_player.c` | `movie_` |
 | Executable reload (`80056300`) | `reload_executable.c` | O.BIN `exit_function` is retained; no new prefix is assigned here |
-| MDEC backgrounds (`80057390`) | `background_images.c` | `bg_`; O.BIN `dec_bg_` |
-| 3D setup, mouse (`80058D20`, `80059710`) | `model_3d.c`, `mouse.c` | `view_`, `mouse_` |
+| MDEC backgrounds (`80057390`) | `background_images.c`, two still-background decoder helpers in `memory_card.c` | `bg_`; O.BIN `dec_bg_` |
+| 3D setup, mouse (`80058D20`, `80059710`) | `model_3d.c`, `mouse.c`, mouse-to-pad conversion in `pad_input.c` | `view_`, `mouse_` |
 | System menus: settings, club joining, rumors (`8005A0B0`) | `home_screens.c` | `settings_`, `club_`, `rumor_` |
 | Title menu (`80061710`) | `title_screen.c` | `title_` |
 | HUD: portraits, parameters, calendar, message window (`80062CD0`, `800674B0`) | `hud_panels.c`, `hud_screens.c` | `hud_`, `portrait_`, `param_`, `calendar_`, `message_` |
@@ -68,7 +68,7 @@ Navigation map for the 34 readable C files in `src/main/`. Original ranges are h
 | School-day loop (`800737A0`) | `school_day.c` | `school_day_` |
 | Days off: appointments, calls, clubs (`80075320`) | `holiday.c` | `holiday_`, `appointment_` |
 | Overlay loader (`800789E0`) | `overlay_loader.c` | `ovl_` |
-| Dates, girl selection, faces, SD sprites, dialogue, scene pictures (`8007C030`) | `scene_library.c` | `face_`, `sd_`, `talk_`, `name_code_`, `scene_`, `select_girl_`; O.BIN `normal_date_` |
+| Dates, girl selection, faces, SD sprites, dialogue, scene pictures (`8007C030`) | `scene_library.c`, `select_girl_by_scores` in `scene_display.c` | `face_`, `sd_`, `talk_`, `name_code_`, `scene_`, `select_girl_`; O.BIN `normal_date_` |
 | Vsync timer, scroll, fades, finger cursor (`80085E30`) | `scene_display.c` | `vsync_`, `fade_`, `cursor_` |
-| Sound driver, bank wait/error and CD-level helpers | `frame_render_audio.c`, `sound_driver.c`; leading meter helpers in `scene_library.c`; only `func_800867CC` in `scene_display.c` and `func_80059B04` in `debug_display.c` | `audio_` |
+| Sound driver, bank wait/error and CD-level helpers | `frame_render_audio.c`, `sound_driver.c`; leading meter helpers in `scene_library.c`; `func_800867CC` in `scene_display.c` and `func_80059B04` in `debug_display.c` | `audio_` |
 | Shared records and name tables | Shared headers/data, not one object | `game_state`, `system_data`, `place_` |
