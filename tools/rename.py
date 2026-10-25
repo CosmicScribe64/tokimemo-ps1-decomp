@@ -2481,7 +2481,46 @@ def signed_definitions(tree, header, enum, defines, values):
         raise RenameError("signed enum member value mismatch")
 
 
-def signed_hits(tree, source, pp, ast, sites, ops, names, defines, caller_filter=None):
+def simple_foreign_macros(tree, source, raw, own_constants, cwd):
+    """Active, unique object macros with a single integer token; suitable only for token normalization."""
+    files = [source] + list(tree.index()["closure"].get(source, []))
+    definitions = {}
+    define_re = re.compile(r"^[ \t]*#[ \t]*define[ \t]+([A-Za-z_]\w*)(.*)$")
+    integer_re = re.compile(r"(?:0[xX][0-9a-fA-F]+|0[0-7]*|[1-9]\d*)[uUlL]*\Z")
+    for path in set(files):
+        text = blank_comments(tree.read(path) or "")
+        for line in text.splitlines():
+            match = define_re.match(line)
+            if not match:
+                continue
+            name, tail = match.groups()
+            # A `(` immediately after the macro name makes this function-like.
+            function_like = tail.startswith("(")
+            replacement = tail.strip()
+            definitions.setdefault(name, []).append(None if function_like else replacement)
+    result = subprocess.run(["gcc", "-E", "-dM", "-std=gnu89", "-DM2CTX", "-Iinclude", source],
+                            cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    if result.returncode:
+        return {}
+    active = {}
+    for line in result.stdout.decode(ENC).splitlines():
+        match = define_re.match(line)
+        if match:
+            name, tail = match.groups()
+            active[name] = tail.strip()
+    identifiers = {word for word, _a, _b in raw if IDENT_RE.match(word)}
+    macros = {}
+    for name in identifiers - set(own_constants):
+        entries = definitions.get(name, [])
+        if len(entries) != 1 or entries[0] is None:
+            continue
+        replacement = entries[0]
+        if integer_re.fullmatch(replacement) and active.get(name) == replacement:
+            macros[name] = replacement
+    return macros
+
+
+def signed_hits(tree, source, pp, ast, sites, ops, names, defines, caller_filter=None, macro_cwd=None):
     """Whole-expression edits bound to one unchanged function token stream, never to a leaf's value alone."""
     from pycparser import c_ast
     edits, unresolved = [], []
@@ -2510,11 +2549,14 @@ def signed_hits(tree, source, pp, ast, sites, ops, names, defines, caller_filter
         raw = c_site_tokens(text[start:stop])
         expanded = []
         constants = {n: v for n, v, _c in names} if defines else {}
+        foreign = simple_foreign_macros(tree, source, raw, constants, macro_cwd) if macro_cwd else {}
         for word, a, b in raw:
             if word in constants:
-                expanded += [(w, a, b) for w, _s, _e in c_site_tokens(constants[word])]
+                expanded += [(w, a, b, False) for w, _s, _e in c_site_tokens(constants[word])]
+            elif word in foreign:
+                expanded += [(w, a, b, True) for w, _s, _e in c_site_tokens(foreign[word])]
             else:
-                expanded.append((word, a, b))
+                expanded.append((word, a, b, False))
         pstart, pstop, _brace = pp_spans[0]
         clean_pp = re.sub(r"^[ \t]*#[^\n]*", "", pp[pstart:pstop], flags=re.M)
         if [t[0] for t in expanded] != [t[0] for t in c_site_tokens(clean_pp)]:
@@ -2559,6 +2601,8 @@ def signed_hits(tree, source, pp, ast, sites, ops, names, defines, caller_filter
                 if lo == 0 or expanded[lo - 1][0] != "-":
                     raise RenameError("signed unary expression has no proved source minus")
                 lo -= 1
+            if any(expanded[i][3] for i in range(lo, hi)):
+                raise RenameError("selected signed constant originates from a foreign macro: %s" % name)
             scalar = small_integer(leaf.value)
             if not scalar or scalar[1] != leaf.type:
                 raise RenameError("signed literal type/range unsupported: %s" % leaf.value)
@@ -2744,7 +2788,7 @@ def const_plan(root, header, enum, defines, values, sites, note="", ledger=None,
                         problems.append("caller source provenance is ambiguous: %s:%s" % caller_filter)
                     caller_definitions += len(active)
                 signed_edits, unknown = signed_hits(tree, u, pp, ast, sites, ops, values, defines,
-                                                   caller_filter=caller_filter)
+                                                   caller_filter=caller_filter, macro_cwd=scratch.dir)
                 unresolved += unknown
                 for path, start, end, replacement in signed_edits:
                     edits.setdefault(path, set()).add((start, end, replacement))

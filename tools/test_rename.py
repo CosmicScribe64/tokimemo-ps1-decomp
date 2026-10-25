@@ -1534,6 +1534,86 @@ class SignedConstantTest(Fixture):
         self.assertEqual(R.replay(self.root, out=io.StringIO()), 0)
         self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
 
+    def test_independent_integer_macros_normalize_but_remain_untouched(self):
+        self.write("include/common.h", self.read("include/common.h") +
+                   "\n#define OTHER_ZERO 0\n#define OTHER_THREE 3\n")
+        source = self.before.replace("return -1;", "signed_sink(OTHER_ZERO); if (1 == OTHER_THREE) {} return -1;")
+        self.write(self.path, source)
+        ctx = self.plan_signed(sites=["direction"])
+        self.assertEqual(ctx.problems, [], ctx.problems)
+        text = ctx.tree.read(self.path)
+        self.assertIn("direction = SIGNED_NEGATIVE_ONE;", text)
+        self.assertIn("signed_sink(OTHER_ZERO);", text)
+        self.assertIn("1 == OTHER_THREE", text)
+
+    def test_foreign_macro_selected_as_a_site_fails_closed(self):
+        self.write("include/common.h", self.read("include/common.h") + "\n#define OTHER_ZERO 0\n")
+        source = self.before.replace("return -1;", "signed_sink(OTHER_ZERO); return -1;")
+        self.write(self.path, source)
+        values = R.parse_values("OTHER_ZERO_NAME 0\n", "values")
+        ctx = R.Context(self.root)
+        R.signed_const_plan(ctx, "include/common.h", None, True, values,
+                            ["main:signed_sink(arg0)"], "T-27073", verify=False)
+        self.assertTrue(any("foreign macro" in problem for problem in ctx.problems), ctx.problems)
+        self.assertEqual(ctx.tree.changed(), [])
+        self.assertEqual(self.read(self.path), source)
+
+    def test_positive_macro_families_coexist_through_cli_replay(self):
+        import contextlib
+        import io
+        path = "src/main/80041000.c"
+        source = self.read(path) + "\ns32 macro_coexist(void) { s32 score_scale; s32 failure_count; " \
+                 "score_scale = 16; if (score_scale == 16) {} signed_sink(3); " \
+                 "failure_count = 0; if (failure_count == 3) {} return 0; }\n"
+        self.write(path, source)
+        self.write("scale.values", "HUD_PROBE_SCALE 3\n")
+        self.write("failure.values", "HUD_FAILURES_NONE 0\nHUD_FAILURES_ALL_THREE 3\n")
+        prefix = ["--root", self.root, "const", "--header", "include/common.h", "--defines"]
+        first = prefix + ["--values", os.path.join(self.root, "scale.values"),
+                         "--site", "in:main:macro_coexist:main:signed_sink(arg0)", "--apply"]
+        second = prefix + ["--values", os.path.join(self.root, "failure.values"),
+                          "--site", "in:main:macro_coexist:failure_count", "--apply"]
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(first), 0)
+            self.assertEqual(R.main(second), 0)
+        applied = self.read(path)
+        self.assertIn("signed_sink(HUD_PROBE_SCALE);", applied)
+        self.assertIn("failure_count = HUD_FAILURES_NONE;", applied)
+        self.assertIn("failure_count == HUD_FAILURES_ALL_THREE", applied)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(["--root", self.root, "replay"]), 0)
+        self.assertEqual(self.read(path), applied)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        self.write(path, applied.replace("failure_count == HUD_FAILURES_ALL_THREE",
+                                         "failure_count == 3", 1))
+        stale = self.read(path)
+        self.assertNotEqual(R.check(self.root, out=io.StringIO()), 0)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(["--root", self.root, "replay"]), 0)
+        self.assertEqual(self.read(path), applied)
+        self.assertIn("signed_sink(HUD_PROBE_SCALE);", self.read(path))
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(R.main(["--root", self.root, "replay"]), 0)
+        self.assertEqual(R.check(self.root, out=io.StringIO()), 0)
+
+    def test_ambiguous_or_function_like_foreign_macro_is_not_normalized(self):
+        for definitions, use in (("#define OTHER_VALUE 3\n#define OTHER_VALUE 3\n", "OTHER_VALUE"),
+                                 ("#define OTHER_VALUE(x) (x)\n", "OTHER_VALUE(3)")):
+            self.write("include/common.h", self.read("include/common.h") + "\n" + definitions)
+            source = self.before.replace("return -1;", "signed_sink(%s); return -1;" % use)
+            self.write(self.path, source)
+            values = R.parse_values("SIGNED_NEGATIVE_ONE -1\n", "values")
+            ctx = R.Context(self.root)
+            R.signed_const_plan(ctx, "include/common.h", None, True, values,
+                                ["main:signed_sink(arg0)"], "T-27073", verify=False)
+            self.assertTrue(any("provenance" in problem or "tokens changed" in problem
+                                for problem in ctx.problems), ctx.problems)
+            self.assertEqual(ctx.tree.changed(), [])
+            self.assertEqual(self.read(self.path), source)
+            self.write("include/common.h", self.read("include/common.h").replace(definitions, ""))
+
     def test_compiler_checks_value_and_suffix_type_of_replacement(self):
         import subprocess
         prefix = self.before[:self.before.index("s32 signed_rule(void)")]
