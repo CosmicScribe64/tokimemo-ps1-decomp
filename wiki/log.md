@@ -2172,3 +2172,7 @@ Integrated the independently reviewed v2 save codec and playable-session adapter
 ## [2026-10-25] decision | Production HUD boundary and dialogue fix review
 
 Reviewed the dynamic HUD candidate for [[tickets/T-29010-native-hud-font-rendering]] and returned the private-oracle-dependent exporter for production adaptation; native actor/rendering evidence remains useful. Independently checked the finite dialogue v3 path correction for [[tickets/T-29011-native-dialogue-player]], with nine normal and nine optimized Docker tests passing. Original Spec review remains pending. Granted the holiday owner a bounded second emulator capture lease after checking no emulator was running. New Game owner continues the actual profile-entry route while its initializer is independently reviewed. Gemini translation inputs remain untouched.
+
+## [2026-10-25] build | Publish actual dynamic HUD progress captures
+
+For [[tickets/T-29010-native-hud-font-rendering]], root inspected the actual Godot/Mesa capture path and image, published two source-composed HUD captures, and verified exact hashes through the live viewer API. Oracle screenshots and synthetic state-change proof remain excluded. The production importer and app integration are still open; no acceptance or percentage increase is implied.
