@@ -2226,3 +2226,11 @@ Applied the four-file prologue bank provider after independent Standards/source 
 Actual CD transport, driver readiness delivery, playback, native function timing and the connected normal prologue remain open. This component does not make New Game playable; T-29012 remains In Progress.
 
 See [[tickets/T-29012-native-new-game-initialization]].
+
+## [2026-10-25] build | Integrate original school command 1–3 media adapters
+
+The four-file exporter/loader/test tranche is applied after independent source review and re-verification of both portability and external-pack findings. Installed execution passes five invented Python tests and 25 Godot assertions. A fresh canonical original-disc export reproduces all 103 reviewed files exactly, manifest SHA256 `b26ef7e5c0301633c45d9a6a898ca4bdb7be68ee30f163825eed827e4f5c0c28`. Proof: `.claude/orchestrator/state/T-29014/canonical-acceptance.json`; resolved review `spec-resolution-v2.json` in the same directory.
+
+Only opening-week non-summer no-companion content for commands 1–3 is accepted. App/gameplay composition, commands 4–6 and other event/season variants remain open; the ticket stays In Progress. Original pixels and tables remain external under ignored `.asset-cache/port/spring-command-current-236ab3/`.
+
+See [[tickets/T-29014-ordinary-command-content-coverage]].
