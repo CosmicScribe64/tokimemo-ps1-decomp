@@ -6,11 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
 
-- [ ] [[tickets/T-29005-native-scene-presentation|T-29005 Present original room, HUD and activity animation]]
 
-- [ ] [[tickets/T-29004-school-day-playable-rules|T-29004 Port command selection and one genuine school-day action]]
 
 
 
@@ -54,11 +51,8 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-29003-port-content-adapter|T-29003 Build the validated original-game content pack adapter]]
 
-- [ ] [[tickets/T-29002-native-runtime-and-oracle|T-29002 Implement native arithmetic, clocks, input and state oracle]]
 
-- [ ] [[tickets/T-29001-godot-engine-foundation|T-29001 Create the pinned Godot project and test toolchain]]
 
 
 
@@ -72,6 +66,19 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
+
+- [ ] [[tickets/T-29005-native-scene-presentation|T-29005 Present original room, HUD and activity animation]]
+
+- [ ] [[tickets/T-29004-school-day-playable-rules|T-29004 Port command selection and one genuine school-day action]]
+
+- [ ] [[tickets/T-29007-visual-port-progress-viewer|T-29007 Show port progress through local screenshots and clips]]
+
+- [ ] [[tickets/T-29003-port-content-adapter|T-29003 Build the validated original-game content pack adapter]]
+
+- [ ] [[tickets/T-29002-native-runtime-and-oracle|T-29002 Implement native arithmetic, clocks, input and state oracle]]
+
 
 
 - [ ] [[tickets/T-28006-sequence-music-export|T-28006 Read sequence music and preserve rendering dependencies]]
@@ -163,6 +170,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-25057-name-ent-pass-investigation|T-25057 Reconstruct NAME_ENT record selector allocation]]
 - [ ] [[tickets/T-25051-taco-quad-store|T-25051 Match TACO wipe quad store schedule]]
 - [ ] [[tickets/T-25031-small-overlay-candidate-triage|T-25031 Qualify unreviewed small-overlay remaining functions]]
@@ -230,6 +238,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-29001-godot-engine-foundation|T-29001 Create the pinned Godot project and test toolchain]]
 
 - [ ] [[tickets/T-29000-plan-godot-port|T-29000 Plan the Godot port from the readable decompilation]]
 

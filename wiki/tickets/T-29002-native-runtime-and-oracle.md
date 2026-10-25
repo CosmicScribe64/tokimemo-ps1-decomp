@@ -1,8 +1,8 @@
 ---
 id: T-29002
 title: "Implement native arithmetic, clocks, input and state oracle"
-status: Ready
-assignee:
+status: In Progress
+assignee: Codex
 created: 2026-10-25
 updated: 2026-10-25
 links: ["[[phase3]]", "[[tickets/T-29000-plan-godot-port]]"]
@@ -42,3 +42,7 @@ Suggested owner: gpt-6.1-sol for the source/math/timing analysis. Ready work is 
 ## Comments
 
 2026-10-25: created from the independently reviewed Astra Phase 3 plan. No implementation or runtime validation is claimed by this ticket.
+
+2026-10-25: user authorized implementation alongside ongoing asset work. Root serializes live integration; bounded workers prepare isolated packets.
+
+2026-10-25: bounded candidate implements arithmetic, measured OpenBIOS RNG profile and ordered session contracts. Actual emulator evidence covers four RNG streams and fourteen synthetic MIPS arithmetic cases; independent review also checked 512 random arithmetic pairs. This is not Sony BIOS evidence or a captured command0/7 route. Two reproduced fail-closed session defects have a separate V2 fix under original-reviewer verification. Full ticket stays In Progress.

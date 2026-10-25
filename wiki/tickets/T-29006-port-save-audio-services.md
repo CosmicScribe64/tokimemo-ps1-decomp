@@ -1,8 +1,8 @@
 ---
 id: T-29006
 title: "Implement stable-boundary saves and ordered audio services"
-status: Backlog
-assignee:
+status: In Progress
+assignee: port-service-agent
 created: 2026-10-25
 updated: 2026-10-25
 links: ["[[phase3]]", "[[tickets/T-29000-plan-godot-port]]"]
@@ -35,3 +35,5 @@ Suggested bounded owner: gpt-6-luna for save/schema/service tests, escalating na
 ## Comments
 
 2026-10-25: created from the independently reviewed Astra Phase 3 plan. No implementation or runtime validation is claimed by this ticket.
+
+2026-10-25: user explicitly requested additional parallel port work. Start bounded save container/validation and audio lifecycle code against frozen session contracts while gameplay/presentation/content workers continue. Full acceptance retains the applicable runtime/content/continuation gates; no native-card import or guessed BGM mapping. Existing external worker prepares an ignored packet; root alone integrates.

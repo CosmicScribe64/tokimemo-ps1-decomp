@@ -6,7 +6,7 @@ links: ["[[phase2]]", "[[asset-export]]", "[[spec/index]]", "[[tickets/T-29000-p
 
 # Phase 3: Godot port
 
-Astra-authored plan, independently reviewed on 2026-10-25 under [[tickets/T-29000-plan-godot-port]]. This page defines the implementation route; no port build or runtime parity is claimed yet.
+Astra-authored plan, independently reviewed on 2026-10-25 under [[tickets/T-29000-plan-godot-port]]. This page defines the implementation route. The user authorized implementation on 2026-10-25; engine, runtime/oracle and content adapter work is In Progress alongside asset extraction. No playable route or runtime parity is claimed yet.
 
 ## Outcome and baseline
 

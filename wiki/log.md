@@ -2052,3 +2052,31 @@ User authorized starting the port alongside continuing asset work. Claimed [[tic
 ## [2026-10-25] build | Verify bank-local VAB metadata while port work starts
 
 Installed V2 source and seven synthetic tests pass within 567 coherent asset tests, zero skips. Actual read-only exports cover all 63 original pairs, preserving explicit unsupported shapes and null rates; 60 banks yield 709 programs, 1,721 tones and 1,158 sample slots. [[assets-media]] records ignored outputs and rendering limits. [[tickets/T-28006-sequence-music-export]] stays In Progress. The earlier five-title text packet is held for corrected native club predicates; [[tickets/T-28001-text-script-export]] records the finding without changing coverage counts.
+
+## [2026-10-25] decision | Preserve the concurrent roadmap edit
+
+Remote main advanced with a user-authored ROADMAP.md simplification while the reviewed instrument commit was ready. Inspected and merged only that remote change without overwriting local port work. Published asset commit ffeaf8b7f with merge ec78bd292; [[tickets/T-28006-sequence-music-export]] remains open for synthesis and runtime binding. Marked Phase 3 In Progress in the working roadmap for the user-authorized implementation.
+
+## [2026-10-25] ticket | Add a visual-only local port progress page
+
+User requested an updating web page with screenshots and audio/video clips, without written progress updates, and explicitly chose a local browser page. Created [[tickets/T-29007-visual-port-progress-viewer]]; source/tooling stays separate from ignored captures. Port/runtime/content and asset work continue in parallel.
+
+## [2026-10-25] ticket | Verify port foundation and review bounded runtime/content packets
+
+[[tickets/T-29001-godot-engine-foundation]] moves to In Review after real headless and Mesa rendering proofs; its V3 addresses both independent false-pass findings and awaits original-reviewer verification. [[tickets/T-29002-native-runtime-and-oracle]] has executable OpenBIOS/instruction witnesses with explicit route gaps; failed-session fixes are under recheck. [[tickets/T-29003-port-content-adapter]] remains held for four contract fixes. No port candidate has been applied to live source yet. The separate visual viewer [[tickets/T-29007-visual-port-progress-viewer]] is active.
+
+## [2026-10-25] ticket | Advance from foundation to the first playable slice
+
+[[tickets/T-29001-godot-engine-foundation]] is Done after both review axes and actual installed headless/rendered tests. [[tickets/T-29002-native-runtime-and-oracle]] now has a genuine ordinary command boundary with two deterministic replays, without RAM edits. User requested faster port progress; started bounded parallel implementation under [[tickets/T-29004-school-day-playable-rules]] and [[tickets/T-29005-native-scene-presentation]], keeping their full route acceptance gates. [[tickets/T-29007-visual-port-progress-viewer]] now watches only the approved port capture folders automatically; actual Godot art preview is visible and no synthetic QA footage is on the real page.
+
+## [2026-10-25] decision | Compare the playable slice against the emulator and fix gallery order
+
+User explicitly requested emulator comparisons for the port. Existing genuine command-boundary and command0/7 queue captures provide the comparison baseline under [[tickets/T-29002-native-runtime-and-oracle]] and [[tickets/T-29004-school-day-playable-rules]]; rendered checkpoint comparisons remain required by [[tickets/T-29005-native-scene-presentation]]. Fixed the left/right gallery controls to follow visible thumbnail order under [[tickets/T-29007-visual-port-progress-viewer]], including keyboard controls.
+
+## [2026-10-25] build | Fix the real progress clip layout
+
+Browser inspection found the actual Godot activity clip decoded but overflowed its player frame vertically, putting controls out of reach. Fixed contain-fit image/video layout under [[tickets/T-29007-visual-port-progress-viewer]] and rechecked the real clip rather than only synthetic media.
+
+## [2026-10-25] ticket | Add a disjoint save and audio service lane
+
+User requested more parallel port work. Started bounded save/schema and ordered audio-service implementation under [[tickets/T-29006-port-save-audio-services]], using the frozen session contracts and explicit native-audio limits. The existing text worker has a sealed revision awaiting root review and can prepare this separate packet without overlapping rules, presentation, content adapters or shared source.

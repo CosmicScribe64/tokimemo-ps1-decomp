@@ -12,7 +12,7 @@ Write C for every function so that the rebuilt executable and overlays are ident
 All 437 game C files have logical names, shared declarations are organized into topic
 headers, and essential game state, locals, constants, and behavior are documented.
 
-## 3. Godot port (planned)
+## 3. Godot port (in progress)
 
 Rebuild the game as a Godot project that runs on a modern desktop, using the readable code as the specification.
 The PS1 hardware layer (GPU, sound chip, CD streaming) has to be replaced, not translated. This is the largest

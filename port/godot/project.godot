@@ -1,0 +1,20 @@
+; Engine configuration file.
+config_version=5
+
+[application]
+config/name="Tokimeki Memorial Port Foundation"
+run/main_scene="res://shell.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[display]
+window/size/viewport_width=640
+window/size/viewport_height=480
+window/size/window_width_override=960
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
+environment/defaults/default_clear_color=Color(0.035, 0.055, 0.09, 1)

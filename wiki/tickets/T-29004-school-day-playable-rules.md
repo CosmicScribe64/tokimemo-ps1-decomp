@@ -1,8 +1,8 @@
 ---
 id: T-29004
 title: "Port command selection and one genuine school-day action"
-status: Backlog
-assignee:
+status: In Progress
+assignee: Codex
 created: 2026-10-25
 updated: 2026-10-25
 links: ["[[phase3]]", "[[tickets/T-29000-plan-godot-port]]"]
@@ -38,3 +38,5 @@ Suggested owner: gpt-6.1-sol. Full ordinary-week completion follows this slice. 
 ## Comments
 
 2026-10-25: created from the independently reviewed Astra Phase 3 plan. No implementation or runtime validation is claimed by this ticket.
+
+2026-10-25: start the first playable implementation in parallel, as the user requested faster progress. Reviewed native core V2 and real April 4, 1995 command boundary now provide fixed starting contracts; content work supplies only route-required assets. Parent runtime/content tickets retain broader open criteria, so full acceptance still waits on their applicable route gates. Workers prepare ignored disjoint packets; root alone integrates source.
