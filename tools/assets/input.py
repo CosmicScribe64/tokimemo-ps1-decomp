@@ -45,6 +45,22 @@ class _Raw:
         form2 = bool(sub[2] & 0x20)
         return self.f.read(2324 if form2 else 2048), form2, False
 
+    def raw_sector(self, lba, allow_subheader_mismatch=False):
+        """Return one validated raw sector without interpreting its payload."""
+        if not isinstance(lba, int) or isinstance(lba, bool) or lba < 0 or lba >= self.sectors:
+            raise InputError("LBA %r outside data track" % (lba,))
+        self.f.seek(lba * SECTOR)
+        raw = self.f.read(SECTOR)
+        if len(raw) != SECTOR:
+            raise EOFError("short raw sector at LBA %d" % lba)
+        if raw[:12] != b"\x00" + b"\xff" * 10 + b"\x00":
+            raise InputError("invalid raw sector sync at LBA %d" % lba)
+        if raw[15] != 2:
+            raise InputError("sector at LBA %d is not MODE2" % lba)
+        if not allow_subheader_mismatch and raw[16:20] != raw[20:24]:
+            raise InputError("invalid duplicated XA subheader at LBA %d" % lba)
+        return raw
+
     def extent(self, lba, size, directory=False):
         buf = bytearray()
         records = []
@@ -106,6 +122,116 @@ class InputSource:
         if len(data) != size:
             raise EOFError("short file: %s" % entry["path"])
         return data
+
+    def iter_raw_sectors(self, entry, expected_input_sha256, allow_invalid_subheaders=False):
+        """Yield validated original MODE2 sectors for a sector-addressed stream.
+
+        ISO byte size is used only to determine an aligned 2048-byte sector
+        count. Form2 payload length is determined independently per sector.
+        This API never changes ``read()``, which remains Form1 file extraction.
+        """
+        if self.kind not in ("mode2-2352", "zip-mode2-2352"):
+            raise InputError("raw-sector streaming requires a MODE2/2352 input")
+        if (not isinstance(expected_input_sha256, str)
+                or not re.fullmatch(r"[0-9a-f]{64}", expected_input_sha256)
+                or expected_input_sha256 != self._description["source_sha256"]):
+            raise InputError("source input SHA256 does not match the open original")
+        if not isinstance(entry, dict) or not isinstance(entry.get("path"), str):
+            raise InputError("raw stream entry must include a source path")
+        path = entry["path"]
+        if (not path or path.startswith("/") or "\\" in path or "\x00" in path
+                or any(part in ("", ".", "..") for part in path.split("/"))):
+            raise InputError("unsafe raw stream source path")
+        size = entry.get("size")
+        if (not isinstance(size, int) or isinstance(size, bool) or size <= 0
+                or size % 2048):
+            raise InputError("raw stream ISO size must be a positive 2048-byte multiple")
+        location = entry.get("location")
+        lba = location.get("lba") if isinstance(location, dict) else None
+        if not isinstance(lba, int) or isinstance(lba, bool) or lba < 0:
+            raise InputError("raw stream entry has no valid starting LBA")
+        if location.get("extent_bytes", size) != size:
+            raise InputError("raw stream extent size does not match its inventory record")
+        sector_count = size // 2048
+        if self._raw is None:
+            track_size = self._track_size if self._track_size is not None else _size(self._f)
+            self._raw = _Raw(self._f, track_size)
+        if lba + sector_count > self._raw.sectors:
+            raise InputError("raw stream extent crosses the end of the data track")
+        if location.get("sectors_outside_track", 0):
+            raise InputError("raw stream inventory records sectors outside the data track")
+        cached = location.get("sectors")
+        if cached is not None:
+            if not isinstance(cached, list) or len(cached) != sector_count:
+                raise InputError("cached raw stream sector list has the wrong bounds")
+            for i, record in enumerate(cached):
+                if (not isinstance(record, dict) or record.get("lba") != lba + i
+                        or record.get("sector_bytes") != SECTOR
+                        or record.get("byte_offset") != (lba + i) * SECTOR):
+                    raise InputError("cached raw stream sector location is inconsistent")
+        runs = location.get("sector_runs")
+        if runs is not None:
+            if not isinstance(runs, list):
+                raise InputError("cached raw stream sector runs are malformed")
+            run_total = 0
+            for run in runs:
+                if not isinstance(run, dict):
+                    raise InputError("cached raw stream sector run is malformed")
+                run_count = run.get("count")
+                first_lba = run.get("first_lba")
+                if (run.get("address_kind") != "lba"
+                        or not isinstance(run_count, int) or isinstance(run_count, bool)
+                        or run_count <= 0 or not isinstance(first_lba, int)
+                        or isinstance(first_lba, bool) or first_lba != lba + run_total):
+                    raise InputError("cached raw stream sector run is outside the extent")
+                run_total += run_count
+            if run_total != sector_count:
+                raise InputError("cached raw stream sector runs have the wrong bounds")
+        for i in range(sector_count):
+            sector_lba = lba + i
+            raw = self._raw.raw_sector(sector_lba, allow_subheader_mismatch=allow_invalid_subheaders)
+            subheader = raw[16:20]
+            duplicate = raw[20:24]
+            subheader_valid = subheader == duplicate
+            if subheader_valid:
+                form2 = bool(subheader[2] & 0x20)
+                payload = raw[24:2348] if form2 else raw[24:2072]
+                form, form_name = (2, "Form2") if form2 else (1, "Form1")
+                file_number, channel, submode, coding = subheader
+                payload_hash = hashlib.sha256(payload).hexdigest()
+            else:
+                # Preserve the raw sector as opaque evidence; neither copy is
+                # authoritative enough to select payload geometry or metadata.
+                payload = None
+                form, form_name = None, None
+                file_number = channel = submode = coding = None
+                payload_hash = None
+            yield {
+                "path": path,
+                "input_sha256": expected_input_sha256,
+                "extent_lba": lba,
+                "declared_iso_size_bytes": size,
+                "sector_count": sector_count,
+                "sector_index": i,
+                "lba": sector_lba,
+                "raw": raw,
+                "payload": payload,
+                "raw_size": len(raw),
+                "payload_size": len(payload) if payload is not None else None,
+                "raw_sha256": hashlib.sha256(raw).hexdigest(),
+                "payload_sha256": payload_hash,
+                "form": form,
+                "form_name": form_name,
+                "file_number": file_number,
+                "channel": channel,
+                "submode": submode,
+                "coding": coding,
+                "subheader_valid": subheader_valid,
+                "subheader_primary": subheader.hex(),
+                "subheader_secondary": duplicate.hex(),
+                "metadata_status": "validated" if subheader_valid else "opaque_invalid_duplicate_subheader",
+                "edc_validation": "not_performed",
+            }
 
     def _directory_entries(self):
         root = os.path.realpath(self.path)

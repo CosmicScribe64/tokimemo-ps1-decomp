@@ -15,6 +15,15 @@ BODY = "int dec_bg_decode_to_vram(int layer) { if(layer==0) {func_800536AC(0,0,3
 
 
 class BackgroundContextTests(unittest.TestCase):
+    def test_named_decoder_and_buffer_setup_keep_original_address_contract(self):
+        source = BODY.replace('func_800536AC', 'bg_still_decode_to_vram')
+        source += ('void use(void){cd_read_sectors(10,4096,100);'
+                   'bg_still_buffers_set(0,0,4096);bg_still_decode_to_vram(0,0,320,240);}')
+        report = build_background_contexts(inventory(), {'src/named.c': source})
+        self.assertTrue(report['geometry_body_proved'])
+        self.assertEqual(report['layer_geometry']['1'], {'width': 320, 'height': 160})
+        self.assertEqual(report['streams'][0]['shape_candidates'], [{'width': 320, 'height': 240}])
+
     def test_literal_calls_keep_locations_and_ignore_comments_and_strings(self):
         source = BODY + ('/* dec_bg_cd_read(200, 1); */\n'
                          'char *note = "dec_bg_cd_read(200, 1)";\n'

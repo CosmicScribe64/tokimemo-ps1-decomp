@@ -1,0 +1,11 @@
+# Optional original-media decoding tools; reuse the local decomp image layers.
+# T-28002. Build: docker build -t tokimemo-media - < tools/Dockerfile.media
+ARG BASE=tokimemo-decomp-arm64
+FROM ${BASE}
+
+ARG FFMPEG_VERSION=7:4.4.2-0ubuntu0.22.04.1
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends "ffmpeg=${FFMPEG_VERSION}" \
+    && dpkg-query -W ffmpeg libavcodec58 libavformat58 libavutil56 \
+       > /opt/tokimemo-media-runtime.txt \
+    && rm -rf /var/lib/apt/lists/*

@@ -78,7 +78,37 @@ def _read_checked(source, entry):
     return data
 
 
-def export_ui_source(source, destination, baseline=None, *, include_sd=False):
+def _photo_bindings(source, indexed):
+    """Resolve original photo dependencies before selecting any pixel source."""
+    from assets.image_packs_photos import ETC_SIZE, STAFF_PALETTE_PATH, photo_profile_rows
+    overlay = indexed.get('CDROM/EXEDIR/ETC.EXN')
+    if overlay is None or overlay['kind'] != 'file' or overlay['size'] != ETC_SIZE:
+        return {}, 'original ETC overlay required for native photo LBA tables'
+    overlay_data = _read_checked(source, overlay)
+    rows = photo_profile_rows(overlay_data, overlay_entry=overlay)
+    palette = indexed.get(STAFF_PALETTE_PATH)
+    palette_data = None
+    if palette and palette['kind'] == 'file' and palette['size'] == 2048:
+        palette_data = _read_checked(source, palette)
+    bindings = {}
+    for path, entry in indexed.items():
+        if not path.startswith(('CDROM/LASTPHOT/', 'CDROM/STAFF2/')) or path == STAFF_PALETTE_PATH:
+            continue
+        matches = [row for row in rows if row['source_lba'] == (entry.get('location') or {}).get('lba')]
+        if len(matches) != 1:
+            continue
+        row = matches[0]
+        kwargs = {'source_entry': entry, 'overlay_data': overlay_data, 'overlay_entry': overlay}
+        dependencies = [(overlay, overlay_data)]
+        if row['kind'] == 'staff2_photo':
+            kwargs.update(palette_data=palette_data, palette_entry=palette)
+            if palette_data is not None:
+                dependencies.append((palette, palette_data))
+        bindings[path] = (row, kwargs, dependencies)
+    return bindings, 'bound by original ETC native tables and literal staff-photo reads'
+
+
+def export_ui_source(source, destination, baseline=None, *, include_sd=False, include_photos=False):
     """Publish established original UI profiles, preserving the complete input census."""
     old = _baseline(baseline)
     destination = output_root(destination)
@@ -109,6 +139,12 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
     paired_entry = indexed.get('SLPM_86.053')
     paired_data = None
     profiles = dict(PROFILES)
+    photo_bindings, photo_status = {}, 'not requested'
+    if include_photos:
+        photo_bindings, photo_status = _photo_bindings(source, indexed)
+        for path, (row, _kwargs, _dependencies) in photo_bindings.items():
+            profiles[path] = ('image_packs_photos', 'photos', row['source_byte_count'],
+                              row['source_lba'], 'photo_sources')
     sd_status = 'not requested'
     if include_sd:
         if (paired_entry is None or paired_entry['kind'] != 'file'
@@ -138,12 +174,21 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
         if 'location' in record['source']:
             record['source']['location'] = _compact_location(record['source']['location'])
         records.append(record)
+        if (include_photos and record.get('format') == 'tokimemo-photo-pages'
+                and path not in photo_bindings):
+            for key in ('export', 'outputs', 'original', 'paired_original', 'paired_source', 'inspection',
+                        'source_dependencies', 'dependency_originals'):
+                record.pop(key, None)
+            record.update(status='unsupported', reason='photo dependencies could not be revalidated: ' + photo_status)
+            continue
         if path not in profiles:
             continue
         module_name, suffix, expected_size, expected_lba, pair_mode = profiles[path]
-        for key in ('export', 'outputs', 'original', 'paired_original', 'paired_source', 'inspection'):
+        for key in ('export', 'outputs', 'original', 'paired_original', 'paired_source', 'inspection',
+                    'source_dependencies', 'dependency_originals'):
             record.pop(key, None)
-        record.update(status='unsupported', format='tokimemo-' + ('sd-animation' if suffix == 'sd_ui' else suffix.replace('_', '-')))
+        profile_format = {'sd_ui': 'sd-animation', 'photos': 'photo-pages'}.get(suffix, suffix.replace('_', '-'))
+        record.update(status='unsupported', format='tokimemo-' + profile_format)
         if entry['kind'] != 'file':
             record['reason'] = entry.get('unsupported', 'original UI source entry is not a readable file')
             continue
@@ -151,13 +196,17 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
             record['reason'] = 'source size differs from the original UI profile'
             continue
         lba = (entry.get('location') or {}).get('lba')
-        if (lba is not None or pair_mode in {'source_path', 'source_entry'}) and lba != expected_lba:
+        if (lba is not None or pair_mode in {'source_path', 'source_entry', 'photo_sources'}) and lba != expected_lba:
             record['reason'] = 'source LBA differs from the original UI profile'
             continue
         usable_pair = (pair_mode in {'optional', 'required', 'source_entry'} and paired_entry is not None
                        and paired_entry['kind'] == 'file' and 0 < paired_entry['size'] <= 4 * 1024 * 1024)
         if pair_mode in {'required', 'source_entry'} and not usable_pair:
             record['reason'] = 'paired original executable required for source CLUTs'
+            continue
+        if (pair_mode == 'photo_sources' and photo_bindings[path][0]['kind'] == 'staff2_photo'
+                and photo_bindings[path][1].get('palette_data') is None):
+            record['reason'] = 'paired original STAFF2 palette required for photo previews'
             continue
         if usable_pair and paired_data is None:
             paired_data = _read_checked(source, paired_entry)
@@ -172,6 +221,8 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
             inspection = probe(data, source_path=path)
         elif pair_mode == 'source_entry':
             inspection = probe(data, exe, source_entry=entry)
+        elif pair_mode == 'photo_sources':
+            inspection = probe(data, **photo_bindings[path][1])
         else:
             inspection = probe(data, exe)
         record['inspection'] = inspection
@@ -189,6 +240,8 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
                 exported = exporter(data, exe, stage, record['id'], source_path=path)
             elif pair_mode == 'source_entry':
                 exported = exporter(data, exe, stage, record['id'], source_entry=entry)
+            elif pair_mode == 'photo_sources':
+                exported = exporter(data, None, stage, record['id'], **photo_bindings[path][1])
             else:
                 exported = exporter(data, exe, stage, record['id'])
             outputs = []
@@ -201,6 +254,13 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
         if usable_pair:
             record.update(paired_source=deepcopy(paired_entry),
                           paired_original=write_bytes(target / 'paired-executable.bin', paired_data))
+        if pair_mode == 'photo_sources':
+            record['source_dependencies'] = deepcopy(exported['metadata']['source_dependencies'])
+            record['dependency_originals'] = []
+            for index, (_dependency, dependency_data) in enumerate(photo_bindings[path][2]):
+                saved = write_bytes(target / ('dependency-%d.bin' % index), dependency_data)
+                record['outputs'].append(saved)
+                record['dependency_originals'].append({'source': record['source_dependencies'][index], 'original': saved})
         record.pop('reason', None)
         write_manifest(target / 'metadata.json', record)
     result = {'schema': SCHEMA, 'input': description, 'assets': records,
@@ -208,7 +268,8 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False):
               'options': {'reader': 'original-ui-profiles', 'baseline_exports_retained': baseline is not None,
                           'inventory_reused_by_whole_input_hash': cached,
                           'inventory_scope': 'supplied baseline source records' if cached else 'fresh original-input reader inventory',
-                          'sd_profile_status': sd_status, 'profiles': sorted(profiles)},
+                          'sd_profile_status': sd_status, 'photo_profile_status': photo_status,
+                          'profiles': sorted(profiles)},
               'limitations': sorted(set((baseline or {}).get('limitations', []) + [
                   'static previews do not reproduce runtime scene composition or blending',
                   'cached baseline inventory reuse does not rediscover omitted source records',
@@ -225,12 +286,14 @@ def main(argv=None):
     parser.add_argument('input')
     parser.add_argument('--baseline-media')
     parser.add_argument('--include-sd', action='store_true', help='resolve additional SD sources from paired executable loader tables')
+    parser.add_argument('--include-photos', action='store_true', help='resolve photo pages from original ETC and STAFF2 palette sources')
     parser.add_argument('--output', required=True)
     args = parser.parse_args(argv)
     try:
         baseline = json.loads(Path(args.baseline_media).read_text()) if args.baseline_media else None
         with open_input(args.input) as source:
-            report = export_ui_source(source, args.output, baseline, include_sd=args.include_sd)
+            report = export_ui_source(source, args.output, baseline, include_sd=args.include_sd,
+                                      include_photos=args.include_photos)
         print(json.dumps(report['coverage'], sort_keys=True))
         return 1 if report['coverage']['status'].get('invalid') else 0
     except (OSError, ValueError, EOFError) as error:

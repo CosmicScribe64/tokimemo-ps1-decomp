@@ -24,7 +24,7 @@ _CODE_SUFFIXES = {".EXN"}
 _UI_FORMATS = {"tokimemo-main-ui", "tokimemo-calendar-ui", "tokimemo-portrait",
                "tokimemo-title-ui", "tokimemo-filesel-ui", "tokimemo-option-ui",
                "tokimemo-exam-ui", "tokimemo-name-ui", "tokimemo-sd-animation",
-               "tokimemo-sports-ui", "tokimemo-rpg-bat-ui"}
+               "tokimemo-sports-ui", "tokimemo-rpg-bat-ui", "tokimemo-photo-pages"}
 _IMAGE_FORMATS = _UI_FORMATS | {"sony-bs-mdec", "psx-tim"}
 
 
@@ -143,7 +143,7 @@ def _source_components(asset: dict) -> dict:
     components = {key: metadata[key] for key in keys if key in metadata}
     regions = _image_regions(asset)
     fmt = asset.get("format") or export.get("format")
-    if fmt in {"tokimemo-sd-animation", "tokimemo-sports-ui", "tokimemo-rpg-bat-ui"}:
+    if fmt in {"tokimemo-sd-animation", "tokimemo-sports-ui", "tokimemo-rpg-bat-ui", "tokimemo-photo-pages"}:
         # Retain the complete bounded decoder evidence, including caller tables,
         # sequence-prefix limits, opaque extents, palette words and tile crops.
         # None of these source records constitutes whole-pack or text coverage.

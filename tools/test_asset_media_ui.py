@@ -192,6 +192,60 @@ class UiPublicationTests(unittest.TestCase):
                 self.assertNotIn('paired_original', record)
                 self.assertFalse((target / 'assets' / record['id'] / 'paired-executable.bin').exists())
 
+    def test_photo_dependencies_publish_and_missing_native_source_clears_stale_claims(self):
+        from tools.test_asset_image_photos import fixture as photo_fixture
+        from assets.visual_text import build_catalog
+        for kind, pages, dependencies in (('last', 4, 1), ('staff', 3, 2)):
+            data, kwargs, spec = photo_fixture(kind)
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary).resolve()
+                source = Source(root / 'source.bin')
+                entries = [dict(kwargs['source_entry'], kind='file'), dict(kwargs['overlay_entry'], kind='file')]
+                source.data = {entries[0]['path']: data, entries[1]['path']: kwargs['overlay_data']}
+                if kind == 'staff':
+                    entries.append(dict(kwargs['palette_entry'], kind='file'))
+                    source.data[entries[-1]['path']] = kwargs['palette_data']
+                source.entries = lambda: entries
+                with patch.object(manifest, 'REPOSITORY', root), patch.object(manifest, 'CACHE', root / '.asset-cache'), \
+                        patch('assets.image_packs_photos.ETC_SHA1', spec['sha1']):
+                    result = export_ui_source(source, root / '.asset-cache/run', include_photos=True)
+                    record = next(r for r in result['assets'] if r['source']['path'] == entries[0]['path'])
+                    self.assertEqual(record['status'], 'exported')
+                    self.assertEqual(record['format'], 'tokimemo-photo-pages')
+                    self.assertEqual(len(record['export']['images']), pages)
+                    self.assertEqual(len(record['source_dependencies']), dependencies)
+                    self.assertEqual(len(record['dependency_originals']), dependencies)
+                    self.assertNotIn('paired_source', record)
+                    for dependency in record['dependency_originals']:
+                        saved = dependency['original']
+                        self.assertEqual(manifest.digest((root / saved['path']).read_bytes()), dependency['source']['sha256'])
+                        self.assertIn(saved, record['outputs'])
+                    self.assertEqual(len(build_catalog(result)['regions']), pages)
+                    # Cached inventory intentionally omits the required native source.
+                    old = dict(result, assets=[r for r in result['assets'] if r['source']['path'] != entries[1]['path']])
+                    missing = export_ui_source(source, root / '.asset-cache/missing', old, include_photos=True)
+                    stale = next(r for r in missing['assets'] if r['source']['path'] == entries[0]['path'])
+                    self.assertEqual(stale['status'], 'unsupported')
+                    for key in ('export', 'outputs', 'original', 'source_dependencies', 'dependency_originals', 'inspection'):
+                        self.assertNotIn(key, stale)
+
+    def test_staff_photo_requires_original_palette_before_reading_pixels(self):
+        from tools.test_asset_image_photos import fixture as photo_fixture
+        data, kwargs, spec = photo_fixture('staff')
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            source = Source(root / 'source.bin')
+            entries = [dict(kwargs['source_entry'], kind='file'), dict(kwargs['overlay_entry'], kind='file')]
+            source.entries = lambda: entries
+            source.data = {entries[0]['path']: data, entries[1]['path']: kwargs['overlay_data']}
+            with patch.object(manifest, 'REPOSITORY', root), patch.object(manifest, 'CACHE', root / '.asset-cache'), \
+                    patch('assets.image_packs_photos.ETC_SHA1', spec['sha1']):
+                result = export_ui_source(source, root / '.asset-cache/run', include_photos=True)
+                record = next(r for r in result['assets'] if r['source']['path'] == entries[0]['path'])
+                self.assertEqual(record['status'], 'unsupported')
+                self.assertIn('STAFF2 palette required', record['reason'])
+                self.assertNotIn(entries[0]['path'], source.reads)
+
 
 if __name__ == '__main__':
     unittest.main()

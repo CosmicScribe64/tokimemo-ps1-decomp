@@ -111,6 +111,39 @@ def get_profile(path, *, media_format=None, metadata=None):
     if profile:
         return deepcopy(profile)
     metadata = metadata if isinstance(metadata, dict) else {}
+    if media_format == "tokimemo-photo-pages":
+        caller = metadata.get("caller_profile")
+        caller = caller if isinstance(caller, dict) else {}
+        overlay = caller.get("overlay_source") or {}
+        canonical = caller.get("canonical_overlay_profile") or {}
+        palette = metadata.get("palette_source") or {}
+        dependencies = metadata.get("source_dependencies")
+        kind = caller.get("kind")
+        source_hash = metadata.get("source_sha256")
+        if (isinstance(overlay, dict) and isinstance(canonical, dict) and isinstance(palette, dict)
+                and isinstance(source_hash, str) and re.fullmatch(r"[0-9a-f]{64}", source_hash)
+                and metadata.get("source_path_profile") == path
+                and overlay.get("path") == "CDROM/EXEDIR/ETC.EXN"
+                and isinstance(overlay.get("sha256"), str) and re.fullmatch(r"[0-9a-f]{64}", overlay["sha256"])
+                and canonical.get("load_base") == 0x80132000 and canonical.get("size") == 0x30000
+                and isinstance(canonical.get("sha1"), str) and re.fullmatch(r"[0-9a-f]{40}", canonical["sha1"])
+                and isinstance(dependencies, list)
+                and any(isinstance(dep, dict) and dep.get("path") == overlay["path"]
+                        and dep.get("sha256") == overlay["sha256"] for dep in dependencies)):
+            staff = kind == "staff2_photo"
+            palette_bound = (palette.get("path") == path and palette.get("sha256") == source_hash) if not staff else (
+                palette.get("path") == "CDROM/STAFF2/STAF2COL.NBN"
+                and isinstance(palette.get("sha256"), str) and re.fullmatch(r"[0-9a-f]{64}", palette["sha256"])
+                and any(isinstance(dep, dict) and dep.get("path") == palette["path"]
+                        and dep.get("sha256") == palette["sha256"] for dep in dependencies))
+            if kind in {"last_photo", "last_photo_all_clear", "staff2_photo"} and palette_bound:
+                return {"priority": 2,
+                        "source_role": "staff_roll_photo_pages" if staff else "last_photo_source_pages",
+                        "screen_context": ["staff_roll_default_variant_photo" if staff else "last_photo"],
+                        "evidence": deepcopy(metadata.get("source_evidence") or []),
+                        "caller_profile": deepcopy(caller), "palette_source": deepcopy(palette),
+                        "source_dependencies": deepcopy(dependencies),
+                        "follow_up": ["review_each_native_photo_page", "retain_opaque_extents_and_runtime_composition_as_unresolved"]}
     if media_format == "tokimemo-sd-animation":
         caller = metadata.get("caller_profile")
         if (isinstance(caller, dict) and caller.get("family") in {"weekly", "holiday", "club", "else"}

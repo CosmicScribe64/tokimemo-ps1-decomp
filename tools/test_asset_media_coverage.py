@@ -43,7 +43,8 @@ class MediaCoverageTests(unittest.TestCase):
         for index, (fmt, path) in enumerate((
                 ('tokimemo-sd-animation', 'invented/sd.NBN'),
                 ('tokimemo-sports-ui', 'CDROM/TAIIKU/SPSETU.BIN'),
-                ('tokimemo-rpg-bat-ui', 'CDROM/BATTLE/VS_HABU.BIN'))):
+                ('tokimemo-rpg-bat-ui', 'CDROM/BATTLE/VS_HABU.BIN'),
+                ('tokimemo-photo-pages', 'CDROM/LASTPHOT/LASTP_HU.NBN'))):
             metadata = {'source_path_profile': path, 'source_lba': 123,
                         'paired_exe_sha256': 'a' * 64,
                         'caller_profile': {'family': 'weekly', 'source_lba': 123},
