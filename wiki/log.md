@@ -2208,3 +2208,7 @@ For [[assets-text]] and [[tickets/T-28007-complete-text-and-translator-handoff]]
 ## [2026-10-25] build | Correct native DONE and START entry behavior
 
 For [[tickets/T-29012-native-new-game-initialization]], integrated four reviewed corrections distinguishing native DONE's tab reset from keyboard START's retained tab. Real focused-keyboard dispatch is tested, with canonical 85 controller and ten rendered UI checks passing. No original content, translation pipeline or matching source changed. The previous v1 desktop artifact remains an explicitly historical build.
+
+## [2026-10-25] ingest | Reconcile supplemental translation and image suggestions
+
+Independent read-only audit for [[assets-text]] confirms 508 unique supplemental rows: 412 populated text records with targets and 96 empty karaoke layout slots, with matching TSV/JSONL and protected markers. Source locators are in range and disjoint from main units; per-row decoded-byte provenance and complete corpus coverage remain unverified. Image suggestions match inspected source/frame entries but lack a canonical region crosswalk; they do not imply replacement images or whole-image-text completion. Twelve main-return source labels mapped to whitespace are recorded for contextual formatting review. No Gemini files changed.
