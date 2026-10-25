@@ -160,9 +160,9 @@ def export_filesel_ui(data: bytes, exe, output_dir, asset_id: str) -> dict:
                                                'status': 'direct digit sprites use overlay UV table; separate digit crops not mapped here'}],
                 'coverage_policy': '12 source background pages,45 base actor frames and16 source-proved selected variants; background map sampling, unused texels, external icons and runtime composition remain unresolved',
                 'round_trip_verified': False,
-                'evidence': ['src/ovl/NAME_ENT/file_select.c:file_select_init_assets,file_select_init_menus,file_select_slot_summary_draw',
+                'evidence': ['src/ovl/name_entry/file_select.c:file_select_init_assets,file_select_init_menus,file_select_slot_summary_draw',
                              'src/main/actor_sprites.c:actor_draw_all', 'src/main/frame_render_audio.c:palette_load_vram',
-                             'src/main/gpu_effects.c:func_8004A1A0']}
+                             'src/main/gpu_effects.c:prim_bg_slot_setup']}
     if exe is not None:
         metadata['paired_exe_sha256'] = hashlib.sha256(exe).hexdigest()
     return {'status': 'exported', 'format': 'tokimemo-filesel-ui', 'files': files, 'images': images, 'metadata': metadata}

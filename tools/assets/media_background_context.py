@@ -19,10 +19,10 @@ SCHEMA = "tokimemo.background-context.v1"
 _C_NONCODE = re.compile(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
 _NUMBER = r"(0[xX][0-9a-fA-F]+|0|[1-9][0-9]*)[uUlL]*"
 _READ = re.compile(r"\bdec_bg_cd_read\s*\(\s*" + _NUMBER + r"\s*,\s*" + _NUMBER + r"\s*\)")
-_RECT = re.compile(r"\b(?:func_800536AC|bg_still_decode_to_vram)\s*\(\s*" + _NUMBER + r"\s*,\s*" + _NUMBER
+_RECT = re.compile(r"\bbg_still_decode_to_vram\s*\(\s*" + _NUMBER + r"\s*,\s*" + _NUMBER
                    + r"\s*,\s*" + _NUMBER + r"\s*,\s*" + _NUMBER + r"\s*\)")
 _WRAPPER = re.compile(r"\bdec_bg_decode_to_vram\s*\(\s*" + _NUMBER + r"\s*\)")
-_SETUP = re.compile(r"\b(?:func_80053650|bg_still_buffers_set)\s*\(\s*" + _NUMBER + r"\s*,\s*" + _NUMBER
+_SETUP = re.compile(r"\bbg_still_buffers_set\s*\(\s*" + _NUMBER + r"\s*,\s*" + _NUMBER
                     + r"\s*,\s*" + _NUMBER + r"\s*\)")
 _RAW_READ = re.compile(r"\b(cd_read_sectors(?:_nowait)?)\s*\(\s*" + _NUMBER
                        + r"\s*,\s*" + _NUMBER + r"\s*,\s*" + _NUMBER + r"\s*\)")
@@ -166,7 +166,7 @@ def build_background_contexts(inventory, sources):
         hashes[name] = hashlib.sha256(text.encode("utf-8")).hexdigest()
         code = _code_only(text)
         functions = _functions(code) if any(symbol in code for symbol in
-            ("dec_bg_cd_read", "func_800536AC", "bg_still_decode_to_vram", "cd_read_sectors", "dec_bg_decode_to_vram")) else []
+            ("dec_bg_cd_read", "bg_still_decode_to_vram", "cd_read_sectors", "dec_bg_decode_to_vram")) else []
         parsed[name] = (code, functions)
         for function in functions:
             if function["name"] == "dec_bg_cd_read":

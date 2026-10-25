@@ -108,7 +108,8 @@ def _photo_bindings(source, indexed):
     return bindings, 'bound by original ETC native tables and literal staff-photo reads'
 
 
-def export_ui_source(source, destination, baseline=None, *, include_sd=False, include_photos=False):
+def export_ui_source(source, destination, baseline=None, *, include_sd=False, include_photos=False,
+                     only_paths=None):
     """Publish established original UI profiles, preserving the complete input census."""
     old = _baseline(baseline)
     destination = output_root(destination)
@@ -119,6 +120,12 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
     input_hash = description.get('source_sha256')
     cached = bool(old and isinstance(input_hash, str) and _SHA256.fullmatch(input_hash)
                   and (baseline.get('input') or {}).get('source_sha256') == input_hash)
+    selected_paths = set(only_paths) if only_paths is not None else None
+    if selected_paths is not None:
+        if not cached:
+            raise ValueError('source selection requires an exact matching baseline inventory')
+        if any(not isinstance(path, str) or not path for path in selected_paths):
+            raise ValueError('selected source paths must be nonempty strings')
     if cached and (baseline.get('input') or {}).get('format') == description.get('format'):
         description = dict(baseline['input'], **description)
     entries = ([deepcopy(record['source']) for record in old.values()] if cached else source.entries())
@@ -136,9 +143,12 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
         if previous and (entry.get('sha256') != previous['source'].get('sha256')
                          or entry['size'] != previous['source'].get('size')):
             raise ValueError('baseline source differs from current inventory: ' + path)
+    if selected_paths is not None and not selected_paths <= set(indexed):
+        raise ValueError('selected source path is absent from the baseline inventory')
     paired_entry = indexed.get('SLPM_86.053')
     paired_data = None
     profiles = dict(PROFILES)
+    sd_native_dependencies = {}
     photo_bindings, photo_status = {}, 'not requested'
     if include_photos:
         photo_bindings, photo_status = _photo_bindings(source, indexed)
@@ -153,7 +163,11 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
         else:
             paired_data = _read_checked(source, paired_entry)
             from assets.image_packs_sd import sd_profile_rows
-            rows = sd_profile_rows(paired_data)
+            overlay_entry = indexed.get('CDROM/EXEDIR/ETC.EXN')
+            overlay_data = None
+            if overlay_entry is not None and overlay_entry['kind'] == 'file':
+                overlay_data = _read_checked(source, overlay_entry)
+            rows = sd_profile_rows(paired_data, etc_overlay_data=overlay_data)
             for path, entry in indexed.items():
                 matches = [row for row in rows if row['source_lba'] == (entry.get('location') or {}).get('lba')]
                 layouts = {(row['tpage_table_offset'], row['frame_table_offset'], row['sequence_table_offset'],
@@ -161,7 +175,12 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
                 if matches and len(layouts) == 1:
                     profiles[path] = ('image_packs_sd', 'sd_ui', matches[0]['read_sector_count'] * 2048,
                                       matches[0]['source_lba'], 'source_entry')
-            sd_status = 'bound by original executable LBA/layout tables'
+                    if (overlay_entry is not None and overlay_data is not None
+                            and matches[0].get('lba_table_overlay_sha1')):
+                        sd_native_dependencies[path] = (overlay_entry, overlay_data)
+            sd_status = ('bound by original executable layout rows and hash-pinned ETC native LBA table'
+                         if overlay_data is not None else
+                         'bound by original executable tables; ETC ELSE LBA rows unavailable')
     destination.mkdir(parents=True, exist_ok=True)
     records = []
     for path, entry in sorted(indexed.items()):
@@ -174,6 +193,8 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
         if 'location' in record['source']:
             record['source']['location'] = _compact_location(record['source']['location'])
         records.append(record)
+        if selected_paths is not None and path not in selected_paths:
+            continue
         if (include_photos and record.get('format') == 'tokimemo-photo-pages'
                 and path not in photo_bindings):
             for key in ('export', 'outputs', 'original', 'paired_original', 'paired_source', 'inspection',
@@ -220,7 +241,8 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
         elif pair_mode == 'source_path':
             inspection = probe(data, source_path=path)
         elif pair_mode == 'source_entry':
-            inspection = probe(data, exe, source_entry=entry)
+            inspection = probe(data, exe, source_entry=entry,
+                               etc_overlay_data=sd_native_dependencies.get(path, (None, None))[1])
         elif pair_mode == 'photo_sources':
             inspection = probe(data, **photo_bindings[path][1])
         else:
@@ -239,7 +261,8 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
             elif pair_mode == 'source_path':
                 exported = exporter(data, exe, stage, record['id'], source_path=path)
             elif pair_mode == 'source_entry':
-                exported = exporter(data, exe, stage, record['id'], source_entry=entry)
+                exported = exporter(data, exe, stage, record['id'], source_entry=entry,
+                                    etc_overlay_data=sd_native_dependencies.get(path, (None, None))[1])
             elif pair_mode == 'photo_sources':
                 exported = exporter(data, None, stage, record['id'], **photo_bindings[path][1])
             else:
@@ -254,6 +277,12 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
         if usable_pair:
             record.update(paired_source=deepcopy(paired_entry),
                           paired_original=write_bytes(target / 'paired-executable.bin', paired_data))
+        if path in sd_native_dependencies:
+            dependency, dependency_data = sd_native_dependencies[path]
+            saved = write_bytes(target / 'native-lba-overlay.bin', dependency_data)
+            record['source_dependencies'] = [deepcopy(dependency)]
+            record['dependency_originals'] = [{'source': deepcopy(dependency), 'original': saved}]
+            record['outputs'].append(saved)
         if pair_mode == 'photo_sources':
             record['source_dependencies'] = deepcopy(exported['metadata']['source_dependencies'])
             record['dependency_originals'] = []
@@ -269,6 +298,7 @@ def export_ui_source(source, destination, baseline=None, *, include_sd=False, in
                           'inventory_reused_by_whole_input_hash': cached,
                           'inventory_scope': 'supplied baseline source records' if cached else 'fresh original-input reader inventory',
                           'sd_profile_status': sd_status, 'photo_profile_status': photo_status,
+                          'selected_source_paths': sorted(selected_paths) if selected_paths is not None else None,
                           'profiles': sorted(profiles)},
               'limitations': sorted(set((baseline or {}).get('limitations', []) + [
                   'static previews do not reproduce runtime scene composition or blending',
@@ -287,13 +317,14 @@ def main(argv=None):
     parser.add_argument('--baseline-media')
     parser.add_argument('--include-sd', action='store_true', help='resolve additional SD sources from paired executable loader tables')
     parser.add_argument('--include-photos', action='store_true', help='resolve photo pages from original ETC and STAFF2 palette sources')
+    parser.add_argument('--only-source', action='append', help='with an exact baseline, refresh only this source path and retain other baseline exports')
     parser.add_argument('--output', required=True)
     args = parser.parse_args(argv)
     try:
         baseline = json.loads(Path(args.baseline_media).read_text()) if args.baseline_media else None
         with open_input(args.input) as source:
             report = export_ui_source(source, args.output, baseline, include_sd=args.include_sd,
-                                      include_photos=args.include_photos)
+                                      include_photos=args.include_photos, only_paths=args.only_source)
         print(json.dumps(report['coverage'], sort_keys=True))
         return 1 if report['coverage']['status'].get('invalid') else 0
     except (OSError, ValueError, EOFError) as error:

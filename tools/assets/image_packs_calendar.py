@@ -1,6 +1,6 @@
 """Bounded CALROM calendar UI export, from the shipped loader (T-28002).
 
-src/main/800674B0.c:func_80068938 dereferences month_data_table, a pointer
+src/main/hud_screens.c:calendar_month_load dereferences month_data_table, a pointer
 variable at 0x800b3748. It points at CALROM's 36-entry pointer table, not an
 array in the executable. Each pointer names a 128x128 4bpp tile followed by
 numeric month records. cal_sprite_init supplies two distinct CLUT selections.
@@ -122,7 +122,7 @@ def export_calendar_ui(pack: bytes, exe: bytes, output_dir, asset_id: str) -> di
                 'alpha_policy': 'BGR555 word zero transparent; all other words opaque',
                 'stp_policy': 'separate grayscale mask: bit 15 set = 255; runtime GPU blending external',
                 'round_trip_verified': False,
-                'evidence': ['src/main/800674B0.c:func_80068938,cal_sprite_init',
-                             'src/main/8006CB30.c:schedule_month_data_load_step',
-                             'src/main/80059B40.c:func_80059EF0 palette initialization']}
+                'evidence': ['src/main/hud_screens.c:calendar_month_load,cal_sprite_init',
+                             'src/main/scheduler.c:schedule_month_data_load_step',
+                             'src/main/boot_assets.c:boot_hud_init palette initialization']}
     return {'status': 'exported', 'format': 'tokimemo-calendar-ui', 'files': files, 'images': images, 'metadata': metadata}

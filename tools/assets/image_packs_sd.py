@@ -18,8 +18,8 @@ TABLES = (('weekly', 25, 0x800B67AC, 0x800C9F60),
           ('club', 32, 0x800B6810, 0x800CA048))
 
 
-def sd_profile_rows(exe):
-    """Read the original source LBA/layout pairs without inventing filename rules."""
+def sd_profile_rows(exe, *, etc_overlay_data=None):
+    """Read executable layouts and optional hash-pinned ETC ELSE LBA selectors."""
     read, _ = _reader(exe)
     rows = []
     for family, count, lba_address, layout_address in TABLES:
@@ -38,17 +38,40 @@ def sd_profile_rows(exe):
                  'lba_table_exe_address': None, 'layout_table_exe_address': 0x800CA114,
                  'tpage_table_offset': layout[0], 'frame_table_offset': layout[1],
                  'sequence_table_offset': layout[2], 'read_sector_count': 9})
+    if etc_overlay_data is not None:
+        from .image_packs_photos import ETC_BASE, ETC_SHA1, ETC_SIZE
+        if (len(etc_overlay_data) != ETC_SIZE
+                or hashlib.sha1(etc_overlay_data).hexdigest() != ETC_SHA1):
+            raise ImageFormatError('ETC overlay does not match the original native ELSE LBA table')
+        lba_table_vma = 0x80150720
+        offset = lba_table_vma - ETC_BASE
+        if offset < 4 or offset + 8 > len(etc_overlay_data):
+            raise ImageFormatError('ETC native ELSE LBA table falls outside the overlay')
+        lbas = (struct.unpack_from('<I', etc_overlay_data, offset - 4)[0],
+                struct.unpack_from('<I', etc_overlay_data, offset)[0])
+        for index, lba in enumerate(lbas):
+            layout_offset = 0x800CA108 + index * 6
+            layout = struct.unpack('<3H', read(layout_offset, 6))
+            rows.append({'family': 'else', 'index': index, 'source_lba': lba,
+                         'lba_table_exe_address': None,
+                         'lba_table_overlay_vma': lba_table_vma + index * 4 - 4,
+                         'lba_table_overlay_sha1': ETC_SHA1,
+                         'layout_table_exe_address': layout_offset,
+                         'tpage_table_offset': layout[0], 'frame_table_offset': layout[1],
+                         'sequence_table_offset': layout[2], 'read_sector_count': 9,
+                         'native_index_binding': 'exam uses preceding word for summer/index0 layout; table word0 for nonsummer/index1 layout'})
     return rows
 
 
-def _parse(data, exe, source_entry):
+def _parse(data, exe, source_entry, *, etc_overlay_data=None):
     if (not isinstance(source_entry, dict) or not isinstance(source_entry.get('path'), str)
             or not isinstance(source_entry.get('location'), dict)):
         raise ImageFormatError('SD source requires original file path and LBA provenance')
     lba = source_entry['location'].get('lba')
     if not isinstance(lba, int) or isinstance(lba, bool):
         raise ImageFormatError('SD source requires an integer original LBA')
-    matches = [row for row in sd_profile_rows(exe) if row['source_lba'] == lba]
+    matches = [row for row in sd_profile_rows(exe, etc_overlay_data=etc_overlay_data)
+               if row['source_lba'] == lba]
     if not matches:
         raise ImageFormatError('SD source LBA has no caller/layout profile')
     layouts = {(row['tpage_table_offset'], row['frame_table_offset'], row['sequence_table_offset'],
@@ -136,10 +159,11 @@ def _parse(data, exe, source_entry):
     return profile, pages, frames, sequences, cursor
 
 
-def probe_sd_ui(data, exe, *, source_entry):
+def probe_sd_ui(data, exe, *, source_entry, etc_overlay_data=None):
     """Validate a caller-bound SD source without scanning for guessed frame tables."""
     try:
-        profile, pages, frames, sequences, _ = _parse(data, exe, source_entry)
+        profile, pages, frames, sequences, _ = _parse(data, exe, source_entry,
+                                                       etc_overlay_data=etc_overlay_data)
     except ImageFormatError as error:
         return {'status': 'invalid', 'format': 'tokimemo-sd-animation', 'reason': str(error)}
     return {'status': 'supported', 'format': 'tokimemo-sd-animation',
@@ -163,9 +187,10 @@ def _uninterpreted(data, known):
     return gaps
 
 
-def export_sd_ui(data, exe, output_dir, asset_id, *, source_entry):
+def export_sd_ui(data, exe, output_dir, asset_id, *, source_entry, etc_overlay_data=None):
     """Export static original-color SD frames and retain validated sequence records."""
-    profile, pages, frames, sequences, sequence_end = _parse(data, exe, source_entry)
+    profile, pages, frames, sequences, sequence_end = _parse(
+        data, exe, source_entry, etc_overlay_data=etc_overlay_data)
     if not isinstance(asset_id, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,159}', asset_id):
         raise ImageFormatError('unsafe SD asset_id')
     output_dir = Path(output_dir)

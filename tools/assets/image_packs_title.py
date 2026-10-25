@@ -170,7 +170,7 @@ def export_title_ui(data: bytes, exe, output_dir, asset_id: str) -> dict:
                                                   for row in range(1, 14)],
                 'coverage_policy': '6 background source pages and12 actor frames only; 13 model pages, unrepresented actor texels and BG map sampling remain unresolved',
                 'round_trip_verified': False,
-                'evidence': ['src/main/title_screen.c:func_80061A3C', 'src/main/gpu_effects.c:func_8004A1A0',
+                'evidence': ['src/main/title_screen.c:title_setup_stage', 'src/main/gpu_effects.c:prim_bg_slot_setup',
                              'src/main/actor_sprites.c:actor_draw_all', 'src/main/frame_render_audio.c:palette_load_vram']}
     if exe is not None:
         metadata['paired_exe_sha256'] = hashlib.sha256(exe).hexdigest()

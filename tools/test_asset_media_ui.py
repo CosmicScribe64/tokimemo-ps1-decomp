@@ -1,6 +1,8 @@
 """Synthetic source identity and confined-publication tests for original UI export."""
 from pathlib import Path
 import tempfile
+import hashlib
+import struct
 import unittest
 from unittest.mock import patch
 
@@ -54,6 +56,24 @@ class UiPublicationTests(unittest.TestCase):
                 self.assertEqual(other['status'], 'unsupported')
                 self.assertEqual(result['input']['retained_fact'], 42)
                 self.assertTrue(result['options']['inventory_reused_by_whole_input_hash'])
+
+    def test_selected_path_refresh_requires_matching_baseline_and_preserves_other_exports(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            source = Source(root / 'source.bin')
+            old = baseline(source)
+            old['assets'][1].update(status='exported', export={'sentinel': True}, outputs=[{'path': 'kept.png'}])
+            source.entries = lambda: self.fail('matching baseline should be reused')
+            with patch.object(manifest, 'REPOSITORY', root), patch.object(manifest, 'CACHE', root / '.asset-cache'):
+                result = export_ui_source(source, root / '.asset-cache/run', old,
+                                          only_paths=['CDROM/FUKUTEST/TITLE.NBN'])
+                title, other = result['assets']
+                self.assertEqual(title['status'], 'exported')
+                self.assertEqual(other['export'], {'sentinel': True})
+                self.assertEqual(other['outputs'], [{'path': 'kept.png'}])
+                self.assertEqual(result['options']['selected_source_paths'], ['CDROM/FUKUTEST/TITLE.NBN'])
+                with self.assertRaisesRegex(ValueError, 'exact matching baseline'):
+                    export_ui_source(source, root / '.asset-cache/no-baseline', only_paths=['OTHER.BIN'])
 
     def test_changed_source_fails_even_when_input_description_matches(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -165,6 +185,63 @@ class UiPublicationTests(unittest.TestCase):
                 self.assertEqual(len(record['outputs']), 4)
                 self.assertEqual(record['paired_source']['sha256'], manifest.digest(exe))
                 self.assertIn('bound by original', result['options']['sd_profile_status'])
+
+    def test_etc_else_lbas_bind_two_sources_to_distinct_exe_layout_rows(self):
+        from tools.test_asset_image_sd import LOAD_BASE
+        exe = bytearray(0x90000)
+        exe[:8] = b'PS-X EXE'
+        struct.pack_into('<II', exe, 24, 0x80041000, len(exe) - 0x800)
+        # ELSE layouts 0 and 1 are native u16 triples at 0x800CA108.
+        struct.pack_into('<3H', exe, 0x800CA108 - 0x80041000 + 0x800, 0x260, 0x264, 0x268)
+        struct.pack_into('<3H', exe, 0x800CA10E - 0x80041000 + 0x800, 0x260, 0x264, 0x268)
+        exe_data = bytes(exe)
+        data = bytearray(0x4800)
+        struct.pack_into('<256H', data, 0, 0, 31, 0x83E0, *([0] * 253))
+        struct.pack_into('<4h', data, 0x200, 1, 0, 0, 0)
+        struct.pack_into('<2h3H2h', data, 0x208, 0, 0, 0, 0xFE0, 2, 2, 1)
+        struct.pack_into('<3H', data, 0x230, 1, 0, 5)
+        struct.pack_into('<I', data, 0x260, LOAD_BASE + 0x300)
+        struct.pack_into('<I', data, 0x264, LOAD_BASE + 0x200)
+        struct.pack_into('<I', data, 0x268, LOAD_BASE + 0x230)
+        data[0x300] = 1
+        overlay = bytearray(0x30000)
+        struct.pack_into('<3I', overlay, 0x80150720 - 0x80132000 - 4, 0x7D78, 0x7D81, 0x7D8A)
+        overlay_data = bytes(overlay)
+        overlay_sha1 = hashlib.sha1(overlay_data).hexdigest()
+        records = []
+        source_data = {'SLPM_86.053': exe_data, 'CDROM/EXEDIR/ETC.EXN': overlay_data}
+        for path, lba in (('CDROM/ETC_SD/SD_P30.NBN', 0x7D78),
+                          ('CDROM/ETC_SD/SD_P30W.NBN', 0x7D81)):
+            value = bytes(data)
+            source_data[path] = value
+            records.append({'path': path, 'size': len(value), 'kind': 'file',
+                            'sha256': manifest.digest(value), 'location': {'lba': lba}})
+        records.extend([
+            {'path': 'SLPM_86.053', 'size': len(exe_data), 'kind': 'file',
+             'sha256': manifest.digest(exe_data), 'location': {}},
+            {'path': 'CDROM/EXEDIR/ETC.EXN', 'size': len(overlay_data), 'kind': 'file',
+             'sha256': manifest.digest(overlay_data), 'location': {}},
+        ])
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            source = Source(root / 'source.bin')
+            source.data = source_data
+            source.entries = lambda: records
+            with patch.object(manifest, 'REPOSITORY', root), patch.object(manifest, 'CACHE', root / '.asset-cache'), \
+                    patch('assets.image_packs_photos.ETC_SHA1', overlay_sha1):
+                result = export_ui_source(source, root / '.asset-cache/run', include_sd=True)
+            rows = [row for row in result['assets'] if row['source']['path'] in {
+                'CDROM/ETC_SD/SD_P30.NBN', 'CDROM/ETC_SD/SD_P30W.NBN'}]
+            self.assertEqual([row['source']['location']['lba'] for row in rows], [0x7D78, 0x7D81])
+            self.assertTrue(all(row['status'] == 'exported' for row in rows),
+                            [(row['source']['path'], row['status'], row.get('reason'), row.get('inspection'))
+                             for row in rows])
+            self.assertTrue(all(row['export']['metadata']['caller_profile']['index'] in (0, 1) for row in rows))
+            self.assertTrue(all(row['source_dependencies'][0]['path'] == 'CDROM/EXEDIR/ETC.EXN'
+                                for row in rows))
+            self.assertTrue(all(manifest.digest((root / row['dependency_originals'][0]['original']['path']).read_bytes())
+                                == row['source_dependencies'][0]['sha256'] for row in rows))
+            self.assertIn('ETC native LBA table', result['options']['sd_profile_status'])
 
     def test_path_bound_profile_requires_lba_and_does_not_pair_executable(self):
         from tools.test_asset_image_sports import fixture as sports_fixture

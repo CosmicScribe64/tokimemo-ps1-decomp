@@ -1,6 +1,6 @@
 ---
 type: reference
-updated: 2026-10-24
+updated: 2026-10-25
 sources: ["tools/export_assets.py", "tools/assets/images.py", "tools/assets/audio.py", "wiki/spec/h-graphics.md", "wiki/spec/h-cdio.md", "wiki/spec/m-dates-a.md"]
 ---
 
@@ -32,6 +32,16 @@ docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
 deferred. `--sample-rate` is an explicit raw-bank audition choice, not a claimed native rate.
 Directory input cannot account for streams omitted by an earlier extractor; use the original image
 or archive for the complete disc-record inventory.
+
+## Current-source rebase and ETC SD checkpoint (2026-10-25)
+
+The reviewed media rebase updates source citations to the completed Phase 2 layout while retaining original executable/overlay pins and the strict six-helper background body gate. The additional ETC SD reader uses the original ETC table's preceding word and first word with the executable's separate layout rows. It exports `CDROM/ETC_SD/SD_P30.NBN` and `SD_P30W.NBN` at original LBAs `0x7D78` and `0x7D81`: nine source-color frames each, with actual CLUT, indexed/STP, frame/sequence and dependency provenance. Static previews do not reproduce runtime blending or composition.
+
+Use `media_ui_export.py --include-sd` for the extended SD profiles. Its optional repeated `--only-source` selector requires an exact whole-input-hash-matched baseline; unselected baseline records remain intact. The bounded run is `.asset-cache/media/etc-sd-published-v1/manifest.json`; its output audit matches all hashes, and 1,370 nonselected records retain their previous values. Original EXE/ETC dependency bytes remain alongside the exported sources.
+
+The resulting static catalog `.asset-cache/media/etc-sd-visual-catalog-v1.json` has 3,480 reviewed regions from 359 exported image sources: 425 Japanese text, 350 other text/punctuation, 2,635 no text and 70 suspected. All eighteen added PNG hashes were visually reviewed: ten no-text and eight punctuation; no additional Japanese-text claim is made. The original NBN inventory now has 73 unresolved sources. Movie classifications, 235 background geometries and other corpus gaps remain open; all three catalog completeness flags are false. Older generated citations remain historical. Regenerating them with the new tools changes source-locator metadata, not the already validated pixels or their review states.
+
+Independent Standards and correctness reviews pass after finite provenance/citation fixes. The exact 22-file tool packet composes with the current text readers: 441 canonical asset tests pass with no skips; the focused native/profile suite passes 91 tests. Original raw-disc reads, native tables, all eighteen regenerated PNGs, review hashes and 1,645 current-function instruction words pass independent checks. All 1,072 protected game-source/header/config/build files are unchanged, so no matching rebuild is required. T-28002 and T-28004 remain In Progress.
 
 ## Supported slices
 
@@ -79,7 +89,7 @@ The game-side callers are described in [[spec/h-graphics]], [[spec/h-cdio]] and
 [[spec/m-dates-a]]: backgrounds go through MDEC, actor textures use uploaded blocks and runtime
 tables, sound banks have separate headers/bodies, songs use sequence commands and voices stream XA.
 
-Deferred: 313 `.BS` backgrounds (MDEC), 178 other `.NBN` files including `TITLE.NBN`, 308 other
+Initial deferred inventory (historical; use the current checkpoint above): 313 `.BS` backgrounds (MDEC), 178 other `.NBN` files including `TITLE.NBN`, 308 other
 `.BIN` files (not all proven graphical), other sprite frame/palette relocation tables, 49 `.TMD`
 models, 63 `.SEQ` files (instrument rendering), XA streams, STR movies and CDDA track/reference
 mapping. Counts are from the local extracted

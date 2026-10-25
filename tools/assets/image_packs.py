@@ -1,6 +1,6 @@
 """Source-proved MAINROM UI texture/frame export (T-28002).
 
-The boot loader in src/main/80059B40.c reads MAINROM at LBA 0x9d85 to
+The boot loader in src/main/boot_assets.c reads MAINROM at LBA 0x9d85 to
 0x80180000. Its 13 sheets are raw 128x128 4bpp; paired main-executable tables
 supply frame geometry, texture-pointer order and palettes. This is one explicit
 release profile, never a search for embedded signatures or guessed containers.
@@ -196,6 +196,6 @@ def export_main_ui(pack: bytes, exe: bytes, output_dir, asset_id: str) -> dict:
                 'alpha_policy': 'BGR555 word zero transparent; all other words opaque',
                 'stp_policy': 'separate grayscale mask: bit 15 set = 255; runtime GPU blending external',
                 'round_trip_verified': False,
-                'evidence': ['src/main/80059B40.c:func_80059E00,func_80059BE8,func_80059EF0',
-                             'src/main/80047550.c:actor_draw_all', 'src/main/80062CD0.c:parameter_show_init,hizuke_init,func_8006509C']}
+                'evidence': ['src/main/boot_assets.c:boot_data_load_step,boot_hud_textures_load,boot_hud_init',
+                             'src/main/actor_sprites.c:actor_draw_all', 'src/main/hud_panels.c:parameter_show_init,hizuke_init,hud_icon_bar_init']}
     return {'status': 'exported', 'format': 'tokimemo-main-ui', 'files': files, 'images': images, 'metadata': metadata}

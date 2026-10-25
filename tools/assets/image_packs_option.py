@@ -205,12 +205,12 @@ def export_option_ui(data: bytes, output_dir, asset_id: str) -> dict:
                        "render_policy": "source SpriteFrame parts and loader-established CLUT rows; no translation or replacement art"})
     palette_extents = [{"row": row, "offset": offset, "size": 0x200,
                         "sha256": hashlib.sha256(data[offset:offset + 0x200]).hexdigest(),
-                        "evidence": "src/ovl/OPTION/settings_sound_test_and_extras.c:load_palette"}
+                        "evidence": "src/ovl/options/settings_sound_test_and_extras.c:load_palette"}
                        for row, offset in sorted(CLUT_SOURCES.items())]
     background_page = {"source_offset": BACKGROUND_PAGE_OFFSET, "source_address": LOAD_ADDRESS + BACKGROUND_PAGE_OFFSET,
                        "source_size": GLYPH_PAGE_BYTES,
                        "source_sha256": hashlib.sha256(data[BACKGROUND_PAGE_OFFSET:BACKGROUND_PAGE_OFFSET + GLYPH_PAGE_BYTES]).hexdigest(),
-                       "evidence": "src/ovl/OPTION/settings_sound_test_and_extras.c:load_tpage_buf_lock(5)",
+                       "evidence": "src/ovl/options/settings_sound_test_and_extras.c:load_tpage_buf_lock(5)",
                        "coverage": "full uploaded 8bpp page extent; frame part usage not established"}
     known_extents = [(page["source_offset"], page["source_offset"] + page["source_size"], "actor texture page")
                      for page in pages]

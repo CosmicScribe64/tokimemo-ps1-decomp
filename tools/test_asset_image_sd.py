@@ -4,8 +4,9 @@ from pathlib import Path
 import struct
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from assets.image_packs_sd import LOAD_BASE, export_sd_ui, probe_sd_ui
+from assets.image_packs_sd import LOAD_BASE, export_sd_ui, probe_sd_ui, sd_profile_rows
 from assets.images import ImageFormatError
 from tools.test_asset_images import png_pixels
 
@@ -35,6 +36,23 @@ def fixture():
 
 
 class SdImageTests(unittest.TestCase):
+    def test_else_native_lba_rows_bind_each_original_executable_layout(self):
+        _data, exe, _entry = fixture()
+        overlay = bytearray(0x30000)
+        base, table = 0x80132000, 0x80150720
+        struct.pack_into('<3I', overlay, table - base - 4, 0x7D78, 0x7D81, 0x7D8A)
+        digest = hashlib.sha1(overlay).hexdigest()
+        with patch('assets.image_packs_photos.ETC_SHA1', digest):
+            rows = sd_profile_rows(exe, etc_overlay_data=bytes(overlay))
+        else_rows = [row for row in rows if row['family'] == 'else']
+        self.assertEqual([(row['index'], row['source_lba'], row['layout_table_exe_address'])
+                          for row in else_rows[-2:]], [(0, 0x7D78, 0x800CA108),
+                                                       (1, 0x7D81, 0x800CA10E)])
+        self.assertEqual([row['lba_table_overlay_vma'] for row in else_rows[-2:]],
+                         [0x8015071C, 0x80150720])
+        with self.assertRaises(ImageFormatError):
+            sd_profile_rows(exe, etc_overlay_data=bytes(overlay[:-1]))
+
     def test_actual_actor_grid_palette_override_sequences_and_opaque_bytes(self):
         data, exe, entry = fixture()
         info = probe_sd_ui(data, exe, source_entry=entry)

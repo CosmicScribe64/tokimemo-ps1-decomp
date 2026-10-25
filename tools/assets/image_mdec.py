@@ -281,7 +281,7 @@ def export_mdec(data: bytes, output_dir, asset_id: str, *, source_path='', conte
                     stp_policy='game DecDCT input mode2 forces output bit15=1 for every RGB555 pixel; runtime sprite blending external',
                     hardware_pixel_parity_verified=False, round_trip_verified=False,
                     limitations=['hardware IDCT/color rounding parity not verified', 'padding rows cropped only by caller-proved height'],
-                    evidence=['src/main/memory_card.c:func_800536AC', 'src/main/background_images.c:dec_bg_decode_to_vram',
+                    evidence=['src/main/memory_card.c:bg_still_decode_to_vram', 'src/main/background_images.c:dec_bg_decode_to_vram',
                               'asm/libpress_main.s:func_800869EC,func_800868BC',
                               'https://psx-spx.consoledev.net/cdromfileformats/',
                               'https://psx-spx.consoledev.net/macroblockdecodermdec/'])

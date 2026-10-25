@@ -135,7 +135,7 @@ def export_exam_ui(data, exe, output_dir, asset_id):
                 'stp_policy': 'paired executable default CLUTs with boot STP edits; separate bit15 mask; runtime blending external',
                 'coverage_policy': '32 static actor frames only; runtime score digits, player/girl names, animation and unused source texels unresolved',
                 'round_trip_verified': False,
-                'evidence': ['src/ovl/ETC/final_exam.c:func_8014790C (read, actor depth/cell mode and tables)',
+                'evidence': ['src/ovl/misc_scenes/final_exam.c:exam_results_show (read, actor depth/cell mode and tables)',
                              'src/main/actor_sprites.c:actor_draw_all,search_tpage8',
-                             'src/main/boot_assets.c:func_80059EF0 (shared default CLUTs and STP edits)']}
+                             'src/main/boot_assets.c:boot_hud_init (shared default CLUTs and STP edits)']}
     return {'status': 'exported', 'format': 'tokimemo-exam-ui', 'images': images, 'files': files, 'metadata': metadata}

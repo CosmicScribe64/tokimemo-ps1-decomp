@@ -1,6 +1,6 @@
 """Source-proved BUSTUP portrait pages and static frame preview (T-28002).
 
-The checks in src/main/8007C030.c and portrait_build in 80062CD0.c establish
+The checks in src/main/scene_library.c and portrait_build in hud_panels.c establish
 five 128x128 8bpp sheets, one source frame, and the active 256-color CLUT.
 Only this fixed layout is supported; no search, palette guesses or dynamic
 mouth/eye/rank playback reconstruction is performed.
@@ -126,7 +126,7 @@ def export_portrait(data: bytes, exe: bytes, output_dir, asset_id: str) -> dict:
                                           'status': 'opaque trailer; checksum/reconstruction not interpreted'}],
                 'source_sequences': sequences, 'round_trip_verified': False,
                 'coverage_policy': 'five uploaded texture pages plus static source frame; dynamic face selection/playback and other palette rows are not reconstructed',
-                'evidence': ['src/main/80062CD0.c:portrait_read_start,portrait_build',
-                             'src/main/8007C030.c:portrait_show_checked,func_800836A0',
-                             'src/main/80043510.c:palette_load_vram', 'src/main/80047550.c:actor_draw_all']}
+                'evidence': ['src/main/hud_panels.c:portrait_read_start,portrait_build',
+                             'src/main/scene_library.c:portrait_show_checked,face_show_checked_hidden',
+                             'src/main/frame_render_audio.c:palette_load_vram', 'src/main/actor_sprites.c:actor_draw_all']}
     return {'status': 'exported', 'format': 'tokimemo-portrait', 'files': files, 'images': images, 'metadata': metadata}

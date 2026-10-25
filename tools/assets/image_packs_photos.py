@@ -23,7 +23,7 @@ LAST_PATHS = {'CDROM/LASTPHOT/LASTP_' + suffix + '.NBN'
               for suffix in ('AS', 'HI', 'HU', 'IZ', 'KA', 'KG', 'KI', 'KO', 'KY', 'MI', 'NI', 'TA', 'YU')}
 STAFF_PATHS = {'CDROM/STAFF2/STAF2' + suffix + '.NBN'
                for suffix in ('AS', 'HI', 'HU', 'IJ', 'KG', 'KO', 'KS', 'KT', 'KY', 'MK', 'NZ', 'SA', 'TA', 'YO')}
-# Literal read destination order in staff_roll_asset_load.c (default variant).
+# Literal read destination order in src/ovl/misc_scenes/staff_roll_asset_load.c (default variant).
 STAFF_LBAS = (0xB2DA, 0xB30E, 0xB2CD, 0xB31B, 0xB342, 0xB301, 0xB328,
               0xB2F4, 0xB2BF, 0xB335, 0xB34F, 0xB35C, 0xB2E7, 0xB369)
 
@@ -204,8 +204,8 @@ def export_photos(data, exe, output_dir, asset_id, *, source_entry, overlay_data
                 'stp_policy': 'separate bit15 mask; mode1 preserves source words, mode3 sets STP on nonblack words',
                 'coverage_policy': 'all caller-established raw photo pages; other source bytes/palettes and runtime composition remain unresolved',
                 'hardware_raster_parity_verified': False, 'round_trip_verified': False,
-                'source_evidence': ['src/ovl/ETC/staff_roll_and_clear_save.c:last_photo_load_step,staff_roll_girl_textures_load,staff_roll_pictures_place',
-                                    'src/ovl/ETC/staff_roll_asset_load.c:staff_roll_load_step',
+                'source_evidence': ['src/ovl/misc_scenes/staff_roll_and_clear_save.c:last_photo_load_step,staff_roll_girl_textures_load,staff_roll_pictures_place',
+                                    'src/ovl/misc_scenes/staff_roll_asset_load.c:staff_roll_load_step',
                                     'src/main/gpu_effects.c:prim_bg_slot_setup',
                                     'src/main/frame_render_audio.c:palette_load_vram',
                                     'config/symbols_ETC.txt:last_photo_lba,last_photo_all_clear_lba']}

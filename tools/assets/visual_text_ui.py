@@ -27,11 +27,10 @@ OVERRIDE_CONTEXTS = {
     "icon-53": ["normal command-icon plate CLUT row 0x53"],
 }
 EVIDENCE = [
-    "src/main/boot_assets.c:func_80059E00,func_80059BE8 (MAINROM read and 10 immediate texture-page locks)",
-    "src/main/boot_assets.c:func_80059EF0 (palette initialization and STP edits)",
+    "src/main/boot_assets.c:boot_data_load_step,boot_hud_textures_load (MAINROM read and 10 immediate texture-page locks)",
+    "src/main/boot_assets.c:boot_hud_init (palette initialization and STP edits)",
     "src/main/actor_sprites.c:actor_draw_all (frame/sequence, texture and CLUT selection)",
-    "src/main/hud_panels.c:parameter_show_init,hizuke_init,message_window_init,func_8006509C",
-    "src/main/hud_screens.c:hud_icon_bar_init",
+    "src/main/hud_panels.c:parameter_show_init,hizuke_init,message_window_init,hud_icon_bar_init",
     "wiki/spec/h-graphics.md:Actor pool, image lookup and palette selection",
     "wiki/spec/m-hud.md:sections 5-8 (date, parameter, message and command icon actors)",
 ]

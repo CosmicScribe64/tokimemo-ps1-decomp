@@ -2,7 +2,7 @@
 import hashlib
 import unittest
 
-from assets.visual_text_ui import build_main_ui_context
+from assets.visual_text_ui import EVIDENCE, build_main_ui_context
 from assets.visual_text import _stable_region_id
 
 
@@ -59,6 +59,10 @@ def fixture():
 
 
 class MainUiContextTests(unittest.TestCase):
+    def test_source_evidence_uses_current_hud_icon_definition(self):
+        self.assertIn("src/main/hud_panels.c:parameter_show_init,hizuke_init,message_window_init,hud_icon_bar_init", EVIDENCE)
+        self.assertNotIn("src/main/hud_screens.c:hud_icon_bar_init", EVIDENCE)
+
     def test_unmapped_sheets_stay_unresolved_and_review_todo_is_complete(self):
         report = build_main_ui_context(fixture())
         sheets = {item["offset"]: item for item in report["unmapped_sheets"]}

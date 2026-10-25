@@ -11,12 +11,12 @@ def inventory():
                         "sha256": "c" * 64, "location": {"lba": 200}}}]}
 
 
-BODY = "int dec_bg_decode_to_vram(int layer) { if(layer==0) {func_800536AC(0,0,320,88);} else if(layer==1) {func_800536AC(0,0,320,160);} }\n"
+BODY = "int dec_bg_decode_to_vram(int layer) { if(layer==0) {bg_still_decode_to_vram(0,0,320,88);} else if(layer==1) {bg_still_decode_to_vram(0,0,320,160);} }\n"
 
 
 class BackgroundContextTests(unittest.TestCase):
     def test_named_decoder_and_buffer_setup_keep_original_address_contract(self):
-        source = BODY.replace('func_800536AC', 'bg_still_decode_to_vram')
+        source = BODY
         source += ('void use(void){cd_read_sectors(10,4096,100);'
                    'bg_still_buffers_set(0,0,4096);bg_still_decode_to_vram(0,0,320,240);}')
         report = build_background_contexts(inventory(), {'src/named.c': source})
@@ -51,7 +51,7 @@ class BackgroundContextTests(unittest.TestCase):
         self.assertEqual(report["counts"]["literal_calls"], 1)
 
     def test_direct_decoder_overrides_reader_layer_default(self):
-        source = BODY + 'void use(void) { dec_bg_cd_read(100,1); func_800536AC(0,0,384,160); }'
+        source = BODY + 'void use(void) { dec_bg_cd_read(100,1); bg_still_decode_to_vram(0,0,384,160); }'
         report = build_background_contexts(inventory(), {"src/invented.c": source})
         self.assertEqual(report["streams"][0]["shape_candidates"], [{"width": 384, "height": 160}])
         self.assertEqual(report["streams"][0]["contexts"][0]["geometry_binding"], "direct_decoder_in_same_function")
@@ -64,7 +64,7 @@ class BackgroundContextTests(unittest.TestCase):
 
     def test_raw_read_requires_matching_setup_buffer(self):
         source = ('void use(void) { cd_read_sectors(10,4096,100); cd_read_sectors(1,8192,200); '
-                  'func_80053650(0,0,4096); func_800536AC(0,0,320,240); }')
+                  'bg_still_buffers_set(0,0,4096); bg_still_decode_to_vram(0,0,320,240); }')
         report = build_background_contexts(inventory(), {"src/invented.c": source})
         self.assertEqual(report["counts"]["literal_calls"], 1)
         stream = report["streams"][0]
@@ -73,7 +73,7 @@ class BackgroundContextTests(unittest.TestCase):
 
     def test_earlier_rectangle_cannot_bind_later_raw_read(self):
         source = ('void use(void) { cd_read_sectors(10,4096,100); '
-                  'func_80053650(0,0,4096); func_800536AC(0,0,384,160); '
+                  'bg_still_buffers_set(0,0,4096); bg_still_decode_to_vram(0,0,384,160); '
                   'cd_read_sectors(10,4096,200); }')
         report = build_background_contexts(inventory(), {"src/invented.c": source})
         streams = {stream["parent_asset_id"]: stream for stream in report["streams"]}
@@ -127,7 +127,7 @@ class BackgroundContextTests(unittest.TestCase):
                             'cd_read_sectors(10,select_buffer(a,b),200)'):
             with self.subTest(replacement=replacement):
                 source = ('void use(void) { cd_read_sectors(10,4096,100); ' + replacement +
-                          '; func_80053650(0,0,4096); func_800536AC(0,0,320,160); }')
+                          '; bg_still_buffers_set(0,0,4096); bg_still_decode_to_vram(0,0,320,160); }')
                 report = build_background_contexts(inventory(), {"src/invented.c": source})
                 self.assertEqual(report["streams"][0]["context_status"], "shape_unresolved")
 

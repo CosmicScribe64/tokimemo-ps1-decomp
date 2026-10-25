@@ -4,7 +4,7 @@ title: Catalog every image asset containing Japanese text
 status: In Progress
 assignee: media-export-chat
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-25
 links: ["[[asset-export]]", "[[tickets/T-28002-media-asset-export]]", "[[tickets/T-28001-text-script-export]]"]
 ---
 
@@ -122,3 +122,5 @@ static images have per-preview manual evidence and source/palette scope. The sep
 exported 997 movie frames remain visually unclassified; whole-game completeness stays
 false. All three earlier transparent FILESEL false positives are corrected in the new
 catalog with retained correction history. No translation or transcription was added.
+
+2026-10-25: added hash-bound manual classifications for eighteen original ETC SD color frames (ten no-text, eight other punctuation). The combined static catalog now contains 3,480 regions: 425 Japanese, 350 other text, 2,635 no text, 70 suspected and zero unreviewed. No Japanese confirmations were added by these two assets. Independent correctness review inspected all eighteen actual frames and verified PNG/review identities. Original-source palette/runtime caveats and all corpus-completeness flags remain open. Movie frame review is a separate next tranche. Keep In Progress; [[assets-media]].

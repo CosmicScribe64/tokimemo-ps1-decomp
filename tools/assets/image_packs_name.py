@@ -171,8 +171,8 @@ def export_name_ui(data: bytes, exe, output_dir, asset_id: str) -> dict:
                                              'status': 'runtime glyph grids, names and strings not composed'}],
                 'coverage_policy': '6 original background pages plus nonempty actor frames; dynamic glyph/name/string rendering, background map sampling and unused actor texels remain unresolved',
                 'round_trip_verified': False,
-                'evidence': ['src/ovl/NAME_ENT/name_entry.c:name_entry_load_init,name_entry_background_setup,name_entry_overlay_tables_set',
-                             'src/ovl/NAME_ENT/name_entry.c:name_entry_input_actors_init,name_entry_birthday_actors_init',
+                'evidence': ['src/ovl/name_entry/name_entry.c:name_entry_load_init,name_entry_background_setup,name_entry_overlay_tables_set',
+                             'src/ovl/name_entry/name_entry.c:name_entry_input_actors_init,name_entry_birthday_actors_init',
                              'src/main/actor_sprites.c:actor_draw_all', 'src/main/frame_render_audio.c:palette_load_vram']}
     if exe is not None:
         metadata['paired_exe_sha256'] = hashlib.sha256(exe).hexdigest()

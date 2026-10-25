@@ -19,7 +19,7 @@ def fixture():
                                    'sha256': hashlib.sha256(data).hexdigest(), 'location': {'lba': 200}}}]}
     helpers = '\n'.join('%s {%s}' % (_SIGNATURES[name], body) for name, body in _EXPECTED.items())
     sources = {'src/main/protocol.c': helpers + '\nint dec_bg_decode_to_vram(int layer) {'
-               'if(layer==0){func_800536AC(0,0,320,88);}else if(layer==1){func_800536AC(0,0,320,160);}}',
+               'if(layer==0){bg_still_decode_to_vram(0,0,320,88);}else if(layer==1){bg_still_decode_to_vram(0,0,320,160);}}',
                'src/ovl/INVENTED/scene.c': 'void load(void){bg_read_sub2(101);mode_step_next();}\n'
                'void dispatch(void){s32 index; SceneSteps handlers; handlers=steps;'
                'index=game_state.mode_step;handlers.callbacks[index]();}'}

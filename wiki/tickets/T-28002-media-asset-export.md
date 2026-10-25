@@ -4,7 +4,7 @@ title: Export images and audio with format metadata
 status: In Progress
 assignee: asset-coordinator
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-25
 links: ["[[asset-export]]", "[[disc-layout]]", "[[tickets/T-0002-disc-extraction-and-exe-identification]]"]
 ---
 
@@ -116,3 +116,5 @@ One ASAHINA sector remains opaque/quarantined and 56 type-0 data sectors are exp
 outside media decoding. Original timing, runtime clip mapping and hardware pixel parity
 are not claimed. [[assets-media]] records cache paths and full counts. Static image corpus
 now contains 3,462 manually classified previews; ticket stays In Progress for remaining formats.
+
+2026-10-25 root integration: applied the reviewed v4 current-source media packet (22 tool/test files). Original table-backed ETC SD profiles export SD_P30 and SD_P30W into eighteen native-color frames with raw/indexed/STP, CLUT, sequence and EXE/ETC dependency provenance. The selector requires an exact matching baseline and preserves all 1,370 unselected records. Independent Standards/correctness reviews resolved witness tree/build-digest labeling, a stale HUD citation and an inherited test-count scalar. The focused suite passes 91 tests; the coherent current-text/media suite passes 441 tests, zero skips. All output hashes and regenerated pixels match, and game source/build files remain unchanged. Current static census: 359 image sources / 3,480 regions; 73 NBN sources, 235 background geometries, movie review and other corpus gaps remain open. Keep In Progress. [[assets-media]], [[asset-export]].
