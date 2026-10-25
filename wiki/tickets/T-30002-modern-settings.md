@@ -28,3 +28,5 @@ Requested by the user on 2026-10-25. These additions do not replace full origina
 ## Exploratory English voice pack
 
 The user raised modern voice cloning as a possibility, not an implementation request. Explore an optional English dub with independent Japanese/English voice selection after the original audio works. Assess emotional performance, scene context, pronunciation, speaker consistency, edited translation alignment and timing on a small representative sample before any full production decision. Original-performer cloning requires permission; licensed synthetic voices or newly recorded performances are alternatives. Preserve Japanese audio and explicit missing-line fallback. No voice generation, performer cloning or service upload is authorized by this note.
+
+User follow-up: follow modern game conventions with mouse/keyboard/controller navigation, clear Display/Graphics/Audio/Controls/Accessibility/Language categories, safe timed display confirmation, per-category defaults and persistent settings. Research is tracked in [[tickets/T-30005-widescreen-settings-feasibility]].

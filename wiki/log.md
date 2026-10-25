@@ -2258,3 +2258,11 @@ See [[tickets/T-29013-native-holiday-command-loop]].
 ## [2026-10-25] decision | Require first-launch import and track all PS1 releases
 
 User wants the shipped game to request their original copy once and retain extracted assets thereafter. Added Ready [[tickets/T-29016-first-launch-original-import]] and Backlog [[tickets/T-29017-support-ps1-releases]], updated [[phase3]] packaging acceptance. User clarified PS1 releases only. [[versions]] provides existing five-disc evidence; new release/runtime support remains unproved. End-user tooling requirements are removed from the intended shipping flow; development tooling stays Docker-only.
+
+## [2026-10-25] ticket | Start first-launch importer implementation
+
+Moved [[tickets/T-29016-first-launch-original-import]] Ready → In Progress. Assigned additive setup/controller and installed-content receipt work with real importer boundaries; a partial pack must not be advertised as a complete game installation. Root retains canonical integration.
+
+## [2026-10-25] ticket | Research widescreen quality and modern settings
+
+User requested agent research into modern resolutions/widescreen without stretched or poor-looking art, and reiterated conventional modern settings. Opened [[tickets/T-30005-widescreen-settings-feasibility]] as In Progress, linked [[tickets/T-30002-modern-settings]]. Research only; port implementation continues.

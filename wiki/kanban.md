@@ -58,7 +58,6 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
 
 
 
@@ -75,6 +74,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-30005-widescreen-settings-feasibility|T-30005 Research widescreen art and modern settings feasibility]]
+
+- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
 
 - [ ] [[tickets/T-29015-desktop-development-player|T-29015 Build a reproducible desktop development player]]
 

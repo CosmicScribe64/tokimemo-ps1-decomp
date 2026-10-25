@@ -1,8 +1,8 @@
 ---
 id: T-29016
 title: "Add first-launch original-game import"
-status: Ready
-assignee:
+status: In Progress
+assignee: port-integration-agent
 created: 2026-10-25
 updated: 2026-10-25
 links: ["[[phase3]]", "[[versions]]", "[[tickets/T-29003-port-content-adapter]]", "[[tickets/T-29015-desktop-development-player]]"]
