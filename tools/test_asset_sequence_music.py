@@ -93,14 +93,72 @@ class SequenceMusicTests(unittest.TestCase):
     def test_fail_closed_retains_source_for_sysEx_meta_and_unknown_controller(self):
         for body, reason in (
             (bytes.fromhex("00f00301ff2f00ff2f00"), "unsupported channel/system status f0"),
-            (bytes.fromhex("00ff5103ff2f0000ff2f00"), "unsupported meta event 51"),
-            (bytes.fromhex("00b0010100ff2f00"), "unsupported control-change number 1"),
+            (bytes.fromhex("00ff010100ff2f00"), "unsupported meta event 01"),
         ):
             raw = package(body)
             rec = inspect_seq(raw)
             with self.assertRaisesRegex(UnsupportedEvent, reason):
                 parse_events(raw, rec["sequences"][0])
             self.assertEqual(reconstruct_seq(rec, raw), raw)
+
+    def test_native_ff51_fixed_payload_to_smf_tempo_and_cc1(self):
+        body = bytes.fromhex("00ff517a120000b0012a01012a00ff2f00")
+        raw = package(body)
+        rec = inspect_seq(raw)
+        seq = rec["sequences"][0]
+        parsed = parse_events(raw, seq)
+        self.assertEqual([event["kind"] for event in parsed["events"]], ["meta_tempo", 0xB0, 0xB0])
+        self.assertEqual(parsed["events"][0]["tempo_u24"], 0x7A1200)
+        self.assertEqual(parsed["events"][0]["source_offset"], seq["offset"] + 0x0F)
+        self.assertEqual(parsed["events"][0]["raw_hex"], "00ff517a1200")
+        self.assertTrue(parsed["events"][2]["running_status"])
+        midi = export_smf(seq, parsed)
+        division, events, end_tick = __import__("tools.assets.sequence_music_validate", fromlist=["_parse_smf"])._parse_smf(midi)
+        self.assertEqual(division, 480)
+        self.assertEqual(events, [
+            (0, "meta", 0x51, (500000).to_bytes(3, "big")),
+            (0, "meta", 0x51, (0x7A1200).to_bytes(3, "big")),
+            (0, 0xB0, (1, 42)),
+            (1, 0xB0, (1, 42)),
+        ])
+        self.assertEqual(end_tick, parsed["end_tick"])
+        self.assertEqual(reconstruct_seq(rec, raw), raw)
+
+    def test_ff51_truncation_unknown_meta_and_zero_tempo_fail_closed(self):
+        for body, reason in (
+            (bytes.fromhex("00ff51"), "truncated native FF51"),
+            (bytes.fromhex("00ff517f"), "truncated native FF51"),
+            (bytes.fromhex("00ff517f7f"), "truncated native FF51"),
+            (bytes.fromhex("00ff7f"), "unsupported meta event 7f"),
+        ):
+            raw = package(body)
+            rec = inspect_seq(raw)
+            seq = dict(rec["sequences"][0], bound_end=rec["sequences"][0]["offset"] + 0x0F + len(body))
+            with self.assertRaisesRegex(ValueError, reason):
+                parse_events(raw, seq)
+            self.assertEqual(reconstruct_seq(rec, raw), raw)
+        statusless_after_meta = package(bytes.fromhex("00b0012a00ff5107a12000012a00ff2f00"))
+        statusless_rec = inspect_seq(statusless_after_meta)
+        with self.assertRaisesRegex(UnsupportedEvent, "unsupported meta event 01"):
+            parse_events(statusless_after_meta, statusless_rec["sequences"][0])
+        body = bytes.fromhex("00ff5100000000ff2f00")
+        raw = package(body)
+        rec = inspect_seq(raw)
+        parsed = parse_events(raw, rec["sequences"][0])
+        with self.assertRaisesRegex(ValueError, "tempo zero"):
+            export_smf(rec["sequences"][0], parsed)
+        self.source_file.write_bytes(raw)
+        output = self.cache / "music" / "zero-native-tempo"
+        result = export_directory(self.source, output, midi_preview_assuming_u24_is_mpqn=True)
+        self.assertEqual(result["coverage"]["midi_previews_exported"], 1)
+        self.assertEqual(result["files"][0]["sequences"][0]["midi_preview_status"], "not_exported_invalid_timing")
+        validate_directory(self.source, output)
+
+        bad_header = bytearray(package(bytes.fromhex("00c00300ff2f00")))
+        bad_header[0x5A:0x5D] = b"\0\0\0"
+        bad_record = inspect_seq(bytes(bad_header))
+        with self.assertRaisesRegex(ValueError, "timing fields are outside SMF range"):
+            export_smf(bad_record["sequences"][0], parse_events(bytes(bad_header), bad_record["sequences"][0]))
 
     def test_bad_vlq_data_status_and_table_targets_reject(self):
         for body, reason in (
@@ -261,19 +319,122 @@ class SequenceMusicTests(unittest.TestCase):
             manifest.write_bytes(path, b"changed")
         self.assertEqual(path.read_bytes(), b"fixture")
 
-    def test_event_with_unsupported_meta_only_emits_canonical_json(self):
-        raw = package(bytes.fromhex("00ff510301020300ff2f00"))
+    def test_native_ff51_is_converted_to_smf_and_retained_in_json(self):
+        raw = package(bytes.fromhex("00ff5103010200ff2f00"))
         self.source_file.write_bytes(raw)
         output = self.cache / "music" / "unsupported"
         result = export_directory(self.source, output, midi_preview_assuming_u24_is_mpqn=True)
-        self.assertEqual(result["coverage"]["unsupported_sequence_entries"], 1)
-        self.assertEqual(result["coverage"]["midi_previews_exported"], 1)  # second physical entry is supported
+        self.assertEqual(result["coverage"]["unsupported_sequence_entries"], 0)
+        self.assertEqual(result["coverage"]["midi_previews_exported"], 2)
         json_path = next((output / "packages").glob("*.json"))
         exported = json.loads(json_path.read_text())
-        unsupported = next(e for e in exported["entries"] if e["identity"]["event_status"] == "unsupported")
-        self.assertEqual(unsupported["unsupported_reason"], "unsupported meta event 51")
+        converted = next(e for e in exported["entries"] if any(event["kind"] == "meta_tempo" for event in e.get("event_parse", {}).get("events", [])))
+        tempo_event = converted["event_parse"]["events"][0]
+        self.assertEqual(tempo_event["payload_hex"], "030102")
+        self.assertEqual(tempo_event["raw_hex"], "00ff51030102")
         self.assertEqual(reconstruct_seq(exported["package"]), raw)
         validate_directory(self.source, output)
+
+    def test_native_cached_ff_supports_implicit_tempo_and_end_meta(self):
+        body = bytes.fromhex("00ff5107a1200051061a8000903c4000ff2f00")
+        raw = package(body)
+        rec = inspect_seq(raw)
+        seq = rec["sequences"][0]
+        parsed = parse_events(raw, seq)
+        self.assertEqual(len(parsed["events"]), 3)
+        first, second, note = parsed["events"]
+        self.assertEqual([first["tempo_u24"], second["tempo_u24"]], [0x07A120, 0x061A80])
+        self.assertFalse(first["implicit_status"])
+        self.assertTrue(second["implicit_status"])
+        self.assertEqual(second["raw_hex"], "0051061a80")
+        self.assertEqual((note["status"], note["data"], note["tick"]), (0x90, [0x3C, 0x40], 0))
+        midi = export_smf(seq, parsed)
+        _, events, _ = __import__("tools.assets.sequence_music_validate", fromlist=["_parse_smf"])._parse_smf(midi)
+        self.assertEqual(events[:3], [
+            (0, "meta", 0x51, (500000).to_bytes(3, "big")),
+            (0, "meta", 0x51, (0x07A120).to_bytes(3, "big")),
+            (0, "meta", 0x51, (0x061A80).to_bytes(3, "big")),
+        ])
+
+        implicit_eot_body = bytes.fromhex("00ff5107a120002f00")
+        implicit_eot = package(implicit_eot_body)
+        eot_rec = inspect_seq(implicit_eot)
+        eot_seq = dict(eot_rec["sequences"][0], bound_end=eot_rec["sequences"][0]["offset"] + 0x0F + len(implicit_eot_body))
+        eot = parse_events(implicit_eot, eot_seq)
+        self.assertEqual(eot["status"], "complete")
+        self.assertEqual(eot["end_marker_form"], "implicit_cached_ff")
+        self.assertEqual(eot["trailer_hex"], "00")  # native 2F handler does not consume this byte
+
+    def test_explicit_and_implicit_eot_never_read_past_bounded_entry(self):
+        for body, form in (
+            (bytes.fromhex("00903c4000ff2f"), "explicit_ff_type2f"),
+            (bytes.fromhex("00ff5107a120002f"), "implicit_cached_ff"),
+        ):
+            with self.subTest(form=form):
+                raw = package(body)
+                record = inspect_seq(raw)
+                seq = record["sequences"][0]
+                bound = seq["offset"] + 0x0F + len(body)
+                seq = dict(seq, bound_end=bound)
+                self.assertEqual(raw[bound], 0)  # adjacent padding must not become this entry's terminator byte
+                for bounded_data in (raw, raw[:bound]):
+                    parsed = parse_events(bounded_data, seq)
+                    self.assertEqual(parsed["status"], "complete")
+                    self.assertEqual(parsed["end_marker_form"], form)
+                    self.assertEqual(parsed["trailer_offset"], bound)
+                    self.assertEqual(parsed["trailer_size"], 0)
+                    self.assertEqual(parsed["trailer_hex"], "")
+                    self.assertGreaterEqual(parsed["trailer_offset"], 0)
+                    self.assertLessEqual(parsed["trailer_offset"], seq["bound_end"])
+
+        explicit_with_reserved = package(bytes.fromhex("00903c4000ff2f00"))
+        explicit_record = inspect_seq(explicit_with_reserved)
+        explicit_seq = explicit_record["sequences"][0]
+        explicit_bound = explicit_seq["offset"] + 0x0F + len(bytes.fromhex("00903c4000ff2f00"))
+        explicit_seq = dict(explicit_seq, bound_end=explicit_bound)
+        parsed_reserved = parse_events(explicit_with_reserved, explicit_seq)
+        self.assertEqual(parsed_reserved["end_marker_form"], "explicit_ff_type2f_reserved_zero")
+        self.assertEqual(parsed_reserved["trailer_offset"], explicit_bound)
+        self.assertEqual(parsed_reserved["trailer_size"], 0)
+
+        explicit_with_trailer_body = bytes.fromhex("00903c4000ff2fab")
+        explicit_with_trailer = package(explicit_with_trailer_body)
+        trailer_record = inspect_seq(explicit_with_trailer)
+        trailer_seq = trailer_record["sequences"][0]
+        trailer_bound = trailer_seq["offset"] + 0x0F + len(explicit_with_trailer_body)
+        trailer_seq = dict(trailer_seq, bound_end=trailer_bound)
+        self.assertEqual(explicit_with_trailer[trailer_seq["offset"] + 0x0F:trailer_bound].hex(), explicit_with_trailer_body.hex())
+        parsed_trailer = parse_events(explicit_with_trailer, trailer_seq)
+        self.assertEqual(parsed_trailer["end_marker_form"], "explicit_ff_type2f")
+        self.assertEqual(parsed_trailer["trailer_offset"], trailer_bound - 1)
+        self.assertEqual(parsed_trailer["trailer_hex"], "ab")
+
+        adjacent_body = bytes.fromhex("00903c4000ff2f")
+        adjacent = bytearray(package(adjacent_body))
+        moved_second = bytes(adjacent[0x80:])
+        adjacent[4:8] = (0x56).to_bytes(4, "little")  # second SEQp starts immediately at 0x66
+        adjacent[0x66 : 0x66 + len(moved_second)] = moved_second
+        adjacent_record = inspect_seq(bytes(adjacent))
+        adjacent_seq = adjacent_record["sequences"][0]
+        self.assertEqual(adjacent_seq["bound_end"], 0x66)
+        self.assertEqual(bytes(adjacent[0x66:0x6A]), b"pQES")
+        adjacent_eot = parse_events(bytes(adjacent), adjacent_seq)
+        self.assertEqual(adjacent_eot["end_marker_form"], "explicit_ff_type2f")
+        self.assertEqual(adjacent_eot["trailer_offset"], 0x66)
+        self.assertEqual(adjacent_eot["trailer_size"], 0)
+
+    def test_meta_cache_replaces_channel_cache_and_implicit_type_is_not_data(self):
+        raw = package(bytes.fromhex("00903c4000510300ff2f00"))
+        rec = inspect_seq(raw)
+        events = parse_events(raw, rec["sequences"][0])
+        self.assertEqual(len(events["events"]), 2)
+        self.assertEqual(events["events"][1]["data"], [0x51, 0x03])
+        self.assertNotEqual(events["events"][1]["kind"], "meta_tempo")
+
+        no_cache = package(bytes.fromhex("00510300ff2f00"))
+        no_cache_record = inspect_seq(no_cache)
+        with self.assertRaisesRegex(ValueError, "running status used before channel"):
+            parse_events(no_cache, no_cache_record["sequences"][0])
 
 
 if __name__ == "__main__":

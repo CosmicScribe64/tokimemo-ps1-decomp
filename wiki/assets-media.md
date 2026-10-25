@@ -9,7 +9,10 @@ sources: ["tools/export_assets.py", "tools/assets/images.py", "tools/assets/audi
 [[asset-export]] defines the scope; [[assets-input]] describes the read-only input API.
 `tools/export_assets.py` inventories every supplied entry and decodes the supported subset.
 No engine integration or changes to the matching build are involved. All real outputs belong in
-ignored `.asset-cache/media/`; use separate output directories for different input/options.
+ignored `.asset-cache/`; image/audio examples use `media/`, while sequence tools use `music/`.
+Use separate output directories for different input/options and tooling checkpoints. Versioned
+exports below are immutable evidence; reproduce them with their recorded tool revision or choose
+a fresh output path with later tooling.
 The CLI refuses to replace an existing output with different bytes and stages decoder writes
 under the output root before publishing them. No copyrighted assets belong in tracked tests or docs.
 
@@ -508,6 +511,8 @@ The coherent current-source suite passes 483 Docker tests without skips. The thr
 
 ## Lossless sequence packages and provisional MIDI (2026-10-25)
 
+This is the historical v5 checkpoint at `ee27829ae`; use the later v9 section for current commands.
+
 The reviewed sequence reader/exporter/validator and invented-data tests are applied under [[tickets/T-28006-sequence-music-export]]. Accepted candidate v5 has manifest SHA256 `b3bb094465b65701064199980c4c21f25c0a61fe073dbbc73d1acd9ba330a29e` and patch SHA256 `0426e9aa142356a432924ab0fb0ee6240320c6aa336214fd4e01c02ea86e4dc4`. Earlier packets remain immutable. Independent review closed three validator bypasses, delta/EOT truncation and duplicate/extra manifest-row acceptance. The parser always consumes the bounded delta before status/EOT; failed validation cannot be relabeled as an unsupported source event. Native-entry headers, stable identities, exact source sets and aggregate counts are checked against a fresh original-input parse.
 
 All 63 original SEQ files (1,277,012 bytes) export to JSON, preserving 177 physical entries and 1,008 runtime slot aliases. Package identities use source-relative path and full source hash; entry identities also include their physical offset. Offset/reverb tables, headers, gaps, complete bounded score/tail bytes and original source bytes are retained. Structured reconstruction assembles those fields and checks byte equality; retaining a raw copy alone is not the proof. Independent source/native checks verify 69 pack-index instructions, 166 `GetSeqData` instructions and 44 `ReadDeltaValue` instructions against the original EXE.
@@ -529,3 +534,27 @@ docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
 Root's installed CLI replay validates both modes and identical repeated writes. JSON-only output has 63 package JSON files plus its manifest (SHA256 `14ca55f2a2ccffa52f4f9573b8384fdff82ba58cfa52dc300b304d255424b4c2`). Preview output has 63 package JSON files, 138 MIDI files and its manifest (SHA256 `0a976c19df629cfddad4b8a13692355ae9d5c1c69b1c3aa87261285a1dc73ef4`). All original inputs remain unchanged. Raw/header/event/identity data match the reviewed exports, and every MIDI is byte-identical. Preview JSON embeds output paths, so relocating the output directory changes only those paths and dependent package checksums/sizes; the root audit verifies that exact transformation. This is distinct from a source-data change.
 
 The coherent suite passes 493 Docker tests without skips, including ten music test methods and additional independent malformed/forgery/collision probes. The four new files preserve all 34,953 existing tracked files at application. No music WAV, bank closure or whole-music completion is claimed. T-28006 and the parent asset tickets remain In Progress.
+
+## Complete current SEQ event coverage (2026-10-25)
+
+Reviewed v9 replaces the bounded v5 reader. Its manifest SHA256 is `993013f8c3f0460e071b117f419fb7dd310c67f530c89c16d3d76c2319b1bd96`, patch SHA256 `76e7cbba45cbc181c8a78cc207dd73b183a4abc0431b706f0bde26fc84fdba26`. Independent original-instruction checks prove native FF51's fixed three-byte big-endian tempo payload, CC1 modulation dispatch and cached-FF implicit meta events. Standard MIDI uses `FF 51 03` plus the payload; the native stream has no separate length byte. Explicit FF is retained as the native cached status, rather than clearing it or retaining an earlier channel status.
+
+All 177 entries across the 63 original files now decode: 337,797 events, including 235 tempo events (two implicit) and 42 CC1 controls. The previously rejected YUUEN entry has 1,760 events through tick 44,519 and 22 tempo events. Original package bytes, 1,008 aliases, source IDs and the earlier 138 supported channel-event lists remain unchanged. Declared-bound tests cover explicit/implicit EOT, physical padding/EOF and adjacent entry headers. The parser never counts an out-of-bound zero as framing, and metadata labels a reserved zero only when one is present within the entry. Unknown event types remain explicit failures outside this verified corpus.
+
+The complete native PPQN/tempo/scheduler/delta/tick-rate chain establishes MPQN units; 1,212 original instruction words and controller-table entries match. The game selects 60 Hz scheduling. Header initialization rounds BPM, while tempo events truncate it, and native delta/scheduler quantization differs from raw-MPQN MIDI. MIDI is therefore an alternate audition, without exact native timing, General MIDI instrument equivalence or playback-parity claims. Bank selection, instrument/envelope/loop rendering and WAV music remain open. The old tempo-assumption CLI name remains an alias; `--midi-audition` is the current option.
+
+```sh
+docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
+  python3 -m tools.assets.sequence_music_export disc/files/CDROM/VAB_SEQ \
+  .asset-cache/music/current-v9-json
+docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
+  python3 -m tools.assets.sequence_music_export disc/files/CDROM/VAB_SEQ \
+  .asset-cache/music/current-v9-preview --midi-audition
+docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
+  python3 -m tools.assets.sequence_music_validate disc/files/CDROM/VAB_SEQ \
+  .asset-cache/music/current-v9-preview
+```
+
+The installed CLIs validate both modes and repeat with identical bytes. Default JSON output has 63 package files plus its manifest, SHA256 `01ead6204dbbf07e1e9182abe74bea927e66f6c126f9d5c33e01b61b0a159c72`. Audition output has 63 package files, 177 MIDI files and its manifest, SHA256 `ac57d1e8fee63aeb6e3bd4d0c91e56905bdcd3bf2dd951e5f2c5d92a45464c56`. All 63 original input hashes remain unchanged. Raw/native/event/identity data and MIDI payloads match the reviewed packet; only embedded output paths and their dependent JSON checksums/sizes change when relocating outputs. No source or semantic difference is hidden by that comparison.
+
+The composed suite passes 498 Docker tests without skips, including fifteen music test methods; independent native/boundary/forgery probes also pass. All four applied files match their captured after-images, and the application preserves all 34,953 other tracked files. Current-corpus event decoding is complete; this does not close the broader media/music ticket or prove unused formats, runtime bank binding or rendered sound.

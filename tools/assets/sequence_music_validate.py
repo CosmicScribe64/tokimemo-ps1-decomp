@@ -184,13 +184,23 @@ def validate_directory(input_dir, output_dir):
             decoded_event_count += len(parsed["events"])
             midi_output = ident.get("midi_output")
             preview_requested = exported["coverage"]["midi_previews_requested"]
-            if preview_requested and midi_output is None:
-                raise ValueError("opt-in MIDI preview missing for supported entry")
             if not preview_requested and midi_output is not None:
                 raise ValueError("MIDI exists in canonical JSON-only export")
-            expected_preview_status = "provisional_tempo_assumption" if midi_output else "not_requested"
+            if not preview_requested:
+                expected_preview_status = "not_requested"
+            elif midi_output is not None:
+                expected_preview_status = "native_tempo_audition_no_playback_parity"
+            elif not (1 <= seq["header"]["quarter_note_resolution"] <= 0x7FFF
+                      and 1 <= seq["header"]["tempo_u24_be"] <= 0xFFFFFF) or any(
+                    event.get("kind") == "meta_tempo" and event["tempo_u24"] == 0
+                    for event in parsed["events"]):
+                expected_preview_status = "not_exported_invalid_timing"
+            else:
+                expected_preview_status = "not_exported_unsupported_events"
             if ident["midi_preview_status"] != expected_preview_status:
                 raise ValueError("MIDI preview status label mismatch")
+            if preview_requested and midi_output is None and expected_preview_status != "not_exported_invalid_timing":
+                raise ValueError("opt-in MIDI preview missing for exportable supported entry")
             if midi_output is not None:
                 midi_path = manifest.output_root(repository / midi_output["path"])
                 midi = midi_path.read_bytes()
@@ -199,14 +209,26 @@ def validate_directory(input_dir, output_dir):
                 if midi != export_smf(seq, parsed):
                     raise ValueError("MIDI repeat serialization mismatch")
                 division, midi_events, end_tick = _parse_smf(midi)
-                original_events = [(e["tick"], e["status"], tuple(e["data"])) for e in parsed["events"]]
-                channel_events = [e for e in midi_events if isinstance(e[1], int)]
+                original_events = []
+                for event in parsed["events"]:
+                    if event.get("kind") == "meta_tempo":
+                        original_events.append((event["tick"], "meta", 0x51, bytes.fromhex(event["payload_hex"])))
+                    else:
+                        original_events.append((event["tick"], event["status"], tuple(event["data"])))
+                ordered = [(0, -2, (0, "meta", 0x51, seq["header"]["tempo_u24_be"].to_bytes(3, "big")))]
+                for index, event in enumerate(parsed["events"]):
+                    ordered.append((event["tick"], index, original_events[index]))
+                expected_events = [row[2] for row in sorted(ordered, key=lambda row: (row[0], row[1]))]
                 tempos = [e for e in midi_events if len(e) > 1 and e[1] == "meta" and e[2] == 0x51]
                 expected_tempo = seq["header"]["tempo_u24_be"].to_bytes(3, "big")
-                if channel_events != original_events or division != seq["header"]["quarter_note_resolution"] or end_tick != parsed["end_tick"]:
+                if midi_events != expected_events or division != seq["header"]["quarter_note_resolution"] or end_tick != parsed["end_tick"]:
                     raise ValueError("MIDI semantics, event order, or ticks differ")
-                if tempos != [(0, "meta", 0x51, expected_tempo)]:
-                    raise ValueError("MIDI tempo differs from documented provisional assumption")
+                expected_tempos = [(0, "meta", 0x51, expected_tempo)] + [
+                    (event["tick"], "meta", 0x51, bytes.fromhex(event["payload_hex"]))
+                    for event in parsed["events"] if event.get("kind") == "meta_tempo"
+                ]
+                if tempos != expected_tempos:
+                    raise ValueError("MIDI header/source tempo events differ from native source")
                 midi_count += 1
     if slots != exported["coverage"]["runtime_slots"]:
         raise ValueError("runtime alias slot count mismatch")

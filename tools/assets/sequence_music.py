@@ -1,8 +1,4 @@
-"""Bounded Sony PlayStation SEQp metadata reader with byte-exact reconstruction.
-
-This intentionally preserves score data as opaque bytes: Sony's file-format
-reference documents its extent but not the event grammar used here.
-"""
+"""Bounded Sony PlayStation SEQp reader with byte-exact reconstruction."""
 
 from __future__ import annotations
 
@@ -156,7 +152,7 @@ def inspect_file(path: str | Path) -> dict[str, Any]:
 
 
 SUPPORTED_DATA_LENGTHS = {0x90: 2, 0xB0: 2, 0xC0: 1, 0xE0: 2}
-SUPPORTED_CONTROLLERS = {0, 6, 7, 10, 11, 64, 91, 98, 99, 100, 101, 121}
+SUPPORTED_CONTROLLERS = {0, 1, 6, 7, 10, 11, 64, 91, 98, 99, 100, 101, 121}
 
 
 class UnsupportedEvent(ValueError):
@@ -177,7 +173,7 @@ def _read_delta(data: bytes, pos: int, limit: int) -> tuple[int, int]:
 
 
 def parse_events(data: bytes, seq: dict[str, Any]) -> dict[str, Any]:
-    """Decode Sony-documented channel events until the explicit FF 2F 00 end.
+    """Decode proved native channel events and fixed-width FF51/FF2F meta.
 
     Sony's runtime overview specifies format-1 SMF-derived event fields, running
     status and a four-byte VLQ limit. Unsupported statuses/controllers fail
@@ -204,6 +200,7 @@ def parse_events(data: bytes, seq: dict[str, Any]) -> dict[str, Any]:
                 "events": events,
                 "loop_marker_candidates": loops,
                 "end_marker_offset": pos,
+                "end_marker_form": "explicit_ff_type2f_reserved_zero",
                 "end_tick": tick,
                 "trailer_offset": pos + 3,
                 "trailer_size": limit - (pos + 3),
@@ -212,18 +209,30 @@ def parse_events(data: bytes, seq: dict[str, Any]) -> dict[str, Any]:
         if pos >= limit:
             raise ValueError("delta VLQ has no following event")
         first = data[pos]
+        implicit_meta = first < 0x80 and running_status == 0xFF
+        meta = None
+        explicit_ff_status = False
         if first & 0x80:
             status = first
             pos += 1
             if status == 0xFF:
-                meta = data[pos] if pos < limit else None
-                raise UnsupportedEvent("unsupported meta event %s" % ("truncated" if meta is None else "%02x" % meta))
-            kind = status & 0xF0
-            if kind not in SUPPORTED_DATA_LENGTHS:
-                raise UnsupportedEvent("unsupported channel/system status %02x" % status)
-            running_status = status
-            width = SUPPORTED_DATA_LENGTHS[kind]
-            values = []
+                explicit_ff_status = True
+                running_status = 0xFF
+                if pos >= limit:
+                    raise ValueError("truncated native meta type")
+                meta = data[pos]
+                pos += 1
+            else:
+                kind = status & 0xF0
+                if kind not in SUPPORTED_DATA_LENGTHS:
+                    raise UnsupportedEvent("unsupported channel/system status %02x" % status)
+                running_status = status
+                width = SUPPORTED_DATA_LENGTHS[kind]
+                values = []
+        elif implicit_meta:
+            status = 0xFF
+            meta = first
+            pos += 1
         else:
             if running_status is None:
                 raise ValueError("running status used before channel status")
@@ -232,6 +241,49 @@ def parse_events(data: bytes, seq: dict[str, Any]) -> dict[str, Any]:
             width = SUPPORTED_DATA_LENGTHS[kind]
             values = [first]
             pos += 1
+
+        if meta is not None:
+            if meta == 0x2F:
+                # GetMetaEvent's native 2F branch does not consume a payload.
+                # Preserve the conventional explicit FF2F00 marker as one raw
+                # terminator candidate; for cached/implicit 2F, the following
+                # bytes remain an opaque trailer.
+                reserved_zero_present = explicit_ff_status and pos < limit and data[pos] == 0
+                trailer_offset = pos + int(reserved_zero_present)
+                if not (pos <= trailer_offset <= limit):
+                    raise ValueError("native EOT trailer offset escapes bounded sequence")
+                return {
+                    "status": "complete", "events": events,
+                    "loop_marker_candidates": _loop_candidates(events),
+                    "end_marker_offset": pos - (2 if not implicit_meta else 1),
+                    "end_marker_form": (
+                        "implicit_cached_ff" if implicit_meta else
+                        "explicit_ff_type2f_reserved_zero" if reserved_zero_present else
+                        "explicit_ff_type2f"
+                    ),
+                    "end_tick": tick, "trailer_offset": trailer_offset,
+                    "trailer_size": limit - trailer_offset,
+                    "trailer_hex": data[trailer_offset:limit].hex(),
+                }
+            if meta == 0x51:
+                if pos + 3 > limit:
+                    raise ValueError("truncated native FF51 tempo payload")
+                payload = data[pos : pos + 3]
+                pos += 3
+                tempo = int.from_bytes(payload, "big")
+                events.append({
+                    "tick": tick, "delta": delta, "status": 0xFF,
+                    "kind": "meta_tempo", "meta_type": 0x51,
+                    "tempo_u24": tempo, "payload_hex": payload.hex(),
+                    "channel": None, "data": [], "source_offset": event_begin,
+                    "source_end": pos, "raw_hex": data[event_begin:pos].hex(),
+                    "running_status": implicit_meta,
+                    "implicit_status": implicit_meta,
+                })
+                # Native GetMetaEvent calls ReadDeltaValue but leaves cached
+                # running status FF intact for implicit meta events.
+                continue
+            raise UnsupportedEvent("unsupported meta event %02x" % meta)
         for _ in range(width - len(values)):
             if pos >= limit:
                 raise ValueError("truncated channel event data")
@@ -304,7 +356,12 @@ def export_smf(seq: dict[str, Any], parsed: dict[str, Any]) -> bytes:
     # source event ordering stable and makes the file self-timed.
     events.append((0, -2, b"\xff\x51\x03" + tempo.to_bytes(3, "big")))
     for index, event in enumerate(parsed["events"]):
-        msg = bytes((event["status"], *event["data"]))
+        if event.get("kind") == "meta_tempo":
+            if event["tempo_u24"] == 0:
+                raise ValueError("native FF51 tempo zero cannot be serialized as a usable MIDI tempo")
+            msg = b"\xff\x51\x03" + bytes.fromhex(event["payload_hex"])
+        else:
+            msg = bytes((event["status"], *event["data"]))
         events.append((event["tick"], index, msg))
     events.sort(key=lambda item: (item[0], item[1]))
     track = bytearray()

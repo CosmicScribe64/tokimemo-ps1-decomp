@@ -74,11 +74,22 @@ def export_directory(input_dir, output_dir, midi_preview_assuming_u24_is_mpqn=Fa
             if parsed_events is not None:
                 record["event_parse"] = parsed_events
                 if midi_preview_assuming_u24_is_mpqn:
-                    midi = export_smf(seq, parsed_events)
+                    try:
+                        midi = export_smf(seq, parsed_events)
+                    except ValueError as exc:
+                        if "tempo zero" not in str(exc) and "timing fields are outside SMF range" not in str(exc):
+                            raise
+                        row["midi_preview_status"] = "not_exported_invalid_timing"
+                        midi = None
+                    if midi is None:
+                        record["event_parse"] = parsed_events
+                        entries.append(record)
+                        sequence_rows.append(row)
+                        continue
                     midi_rel = "midi/%s.mid" % entry_id
                     midi_record = manifest.write_bytes(root / midi_rel, midi)
-                    row["midi_preview_status"] = "provisional_tempo_assumption"
-                    row["midi_tempo_assumption"] = "header u24 is microseconds per quarter note; not explicit in Sony header spec"
+                    row["midi_preview_status"] = "native_tempo_audition_no_playback_parity"
+                    row["midi_tempo_contract"] = "native header and FF51 u24 use microseconds per quarter note; original scheduler math verified"
                     row["midi_output"] = midi_record
             else:
                 record["unsupported_reason"] = unsupported_reason
@@ -88,8 +99,8 @@ def export_directory(input_dir, output_dir, midi_preview_assuming_u24_is_mpqn=Fa
             sequence_rows.append(row)
 
         package_record = {
-            "schema": "tokimemo.sequence-music.v3",
-            "midi_policy": "optional provisional preview; canonical raw/JSON always; tempo unit and native playback are not claimed",
+            "schema": "tokimemo.sequence-music.v4",
+            "midi_policy": "optional MIDI audition; canonical raw/JSON always; native tempo conversion is proven, playback parity is not claimed",
             "native_midi_semantics": "PSX-specific CC99 loop markers and NRPN controls are preserved as MIDI CC; their behavior is not General MIDI playback behavior",
             "package": package,
             "entries": entries,
@@ -110,16 +121,16 @@ def export_directory(input_dir, output_dir, midi_preview_assuming_u24_is_mpqn=Fa
         "physical_sequences": sum(len(row["sequences"]) for row in manifest_files),
         "runtime_slots": sum(len(sequence["runtime_slots"]) for row in manifest_files for sequence in row["sequences"]),
         "midi_previews_requested": bool(midi_preview_assuming_u24_is_mpqn),
-        "midi_previews_exported": sum(sequence["midi_preview_status"] == "provisional_tempo_assumption" for row in manifest_files for sequence in row["sequences"]),
+        "midi_previews_exported": sum(sequence["midi_preview_status"] == "native_tempo_audition_no_playback_parity" for row in manifest_files for sequence in row["sequences"]),
         "unsupported_sequence_entries": sum(sequence["event_status"] == "unsupported" for row in manifest_files for sequence in row["sequences"]),
         "decoded_source_events": sum(sequence["event_count"] or 0 for row in manifest_files for sequence in row["sequences"]),
         "statuses": {"exported_json": len(manifest_files)},
     }
     manifest_record = {
-        "schema": "tokimemo.sequence-music-manifest.v3",
+        "schema": "tokimemo.sequence-music-manifest.v4",
         "coverage": coverage,
         "original_reconstruction_proven": True,
-        "midi_timing_claim": "provisional only when explicitly requested; header tempo unit/native timing unproved",
+        "midi_timing_claim": "native header/FF51 tempo unit and scheduler conversion are source-proven; MIDI remains an alternate audition, with no hardware playback parity claim",
         "midi_native_semantics": "PSX-specific loop and NRPN control messages are preserved; no General MIDI equivalence is claimed",
         "files": manifest_files,
     }
@@ -132,9 +143,10 @@ def main(argv=None):
     parser.add_argument("input_dir", help="original CDROM/VAB_SEQ directory")
     parser.add_argument("output_dir", help="output beneath repository .asset-cache/")
     parser.add_argument(
-        "--midi-preview-assuming-u24-is-mpqn",
+        "--midi-audition", "--midi-preview-assuming-u24-is-mpqn",
         action="store_true",
-        help="opt in to provisional MIDI; assumes the raw 24-bit header tempo is microseconds per quarter note",
+        dest="midi_preview_assuming_u24_is_mpqn",
+        help="opt in to alternate MIDI audition using the source-proven u24 microseconds-per-quarter-note tempo",
     )
     args = parser.parse_args(argv)
     result = export_directory(args.input_dir, args.output_dir, args.midi_preview_assuming_u24_is_mpqn)
