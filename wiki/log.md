@@ -2160,3 +2160,7 @@ Applied the nine exact reviewed [[tickets/T-29003-port-content-adapter]] command
 ## [2026-10-25] ticket | Coordinate rest-command app and holiday continuation
 
 The frozen dialogue v2 is in fresh independent review. Its owner now prepares a disjoint isolated command-7 app candidate under [[tickets/T-29008-assemble-playable-development-app]], preserving command-0 week behavior and proving the original rest endpoint. [[tickets/T-29013-native-holiday-command-loop]] reached the genuine holiday menu and continues native input toward the next command boundary with private cards. Protected game source and headers remain unchanged from Phase 2; only the pre-existing m-flow proposal differs under config.
+
+## [2026-10-25] build | Accept clean production rest-command content import
+
+Resolved the [[tickets/T-29003-port-content-adapter]] CLI import hold using reviewed package-relative imports and direct-script bootstrap. Root's actual clean CLI succeeds; all 46 canonical tests and both Godot pack versions pass. Final pack manifest, 40 runtime PNGs and 40 retained reader PNGs match reviewed outputs. The expanded loader/exporter is accepted as content infrastructure; the rest-command app and native rendering proof remain pending. No matching game source, original input or Gemini translation changed.

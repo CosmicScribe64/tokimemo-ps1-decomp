@@ -1,10 +1,12 @@
-"""Strict validator for tokimemo.school-day-media.v1 external packs."""
+"""Strict validator for finite school-day-media v1/v2 external packs."""
 import hashlib
 import json
 import re
 from pathlib import Path, PurePosixPath
 
 SCHEMA = "tokimemo.school-day-media.v1"
+COMMAND7_SCHEMA = "tokimemo.school-day-media.v2"
+COMMAND7_PROOF = Path(__file__).resolve().parents[2] / "port/godot/schemas/command7_background_profile.v1.json"
 MAX_MANIFEST = 8 * 1024 * 1024
 MAX_PNG = 2 * 1024 * 1024
 MAX_PIXELS = 4 * 1024 * 1024
@@ -27,6 +29,7 @@ EXPECTED_UNSUPPORTED = {
 PART_KEYS = {"part_index", "source_record_offset", "x", "y", "width", "height", "texture_id", "sheet_index", "sheet_source_offset", "u", "v", "palette_info", "flip_flags", "clut_vram", "palette_source_offset", "runtime_palette_override", "palette_mapping"}
 SOURCE_PINS = {
     "command_0_background": ("CDROM/BS/C_01_27.BS", 16131, 20032, "7543e723ea06c7db100b148350394f79c1a94ff8961aa65904d4aa1613295992"),
+    "command_7_background": ("CDROM/BS/C_01_44.BS", 16283, 17396, "951ec47906f6a19748d2f3b803cb086c0e5af3a467f3cb6819515225bb6365e0"),
     "command_0_sd": ("CDROM/MAIN_SD/SD_P01W.NBN", 42541, 83968, "6fea04f95b7eb68731816fa21395605942b1b912b0b915afcfea4d540da7eb6f"),
     "command_7_sd": ("CDROM/MAIN_SD/SD_P09W.NBN", 43074, 83968, "1ad4b906e8aefbb57fd0b9a22afea9af83a0d5109234f9621abc5f91829e7d28"),
 }
@@ -86,38 +89,47 @@ def validate_pack(pack: str):
         raise ValueError("manifest JSON must be an object")
     if set(doc) != {"schema", "version", "provenance", "route_capabilities", "unsupported", "components"}:
         raise ValueError("manifest keys differ from v1 contract")
-    if doc.get("schema") != SCHEMA or type(doc.get("version")) is not int or doc["version"] != 1:
+    extended = doc.get("schema") == COMMAND7_SCHEMA
+    if doc.get("schema") not in (SCHEMA, COMMAND7_SCHEMA) or type(doc.get("version")) is not int or doc["version"] != (2 if extended else 1):
         raise ValueError("unsupported media schema/version")
     if doc.get("provenance") != EXPECTED_PROVENANCE:
         raise ValueError("original input/reader provenance differs from reviewed source pins")
-    if doc.get("route_capabilities") != EXPECTED_CAPABILITIES:
+    if doc.get("route_capabilities") != EXPECTED_CAPABILITIES + (["command_7_static_background"] if extended else []):
         raise ValueError("route capabilities differ from bounded supported sources")
-    if doc.get("unsupported") != EXPECTED_UNSUPPORTED:
+    if doc.get("unsupported") != {k: v for k, v in EXPECTED_UNSUPPORTED.items() if not (extended and k == "command_7_background")}:
         raise ValueError("unsupported route capability declarations differ from reviewed scope")
     assets_dir = root / "assets"
     if assets_dir.is_symlink() or not assets_dir.is_dir():
         raise ValueError("assets path is missing or a symlink")
     if not isinstance(doc["components"], dict):
         raise ValueError("invalid provenance/components")
-    if set(doc["components"]) != {"command_0_background", "command_0_sd", "command_7_sd"}:
+    if set(doc["components"]) != {"command_0_background", "command_0_sd", "command_7_sd"} | ({"command_7_background"} if extended else set()):
         raise ValueError("component set differs from bounded capability contract")
-    bg = doc["components"]["command_0_background"]
-    if not isinstance(bg, dict) or set(bg) != {"kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability"}:
-        raise ValueError("background fields differ from v1 contract")
-    if (bg.get("kind") != "mdec_background" or bg.get("id") != "asset-cc9a7f7ff39dfb8c072ef6675934282792dfd7afef494b0c0b180643ea54135d"
-            or bg.get("reader") != "tools/assets/image_mdec.py:export_mdec" or bg.get("capability") != "source_profiled_static_background_preview"
-            or not _int_vector(bg.get("active_size"), 2, 1, 8192)
-            or not _int_vector(bg.get("padded_size"), 2, 1, 8192)
-            or not _int_vector(bg.get("active_crop"), 4, 0, 8192)
-            or bg["active_size"] != [320, 88] or bg["padded_size"] != [320, 96]
-            or bg["active_crop"] != [0, 0, 320, 88]):
-        raise ValueError("invalid command-0 background descriptor")
-    _validate_source("command_0_background", bg)
-    _validate_native_route(bg, 0)
-    _read_png(root, bg.get("image", {}), [320, 88])
-    _read_png(root, bg.get("stp_mask", {}), [320, 88])
-    _read_png(root, bg.get("padded_image", {}), [320, 96])
-    _read_png(root, bg.get("padded_stp_mask", {}), [320, 96])
+    for command in ([0, 7] if extended else [0]):
+        key = f"command_{command}_background"
+        expected_id = "asset-cc9a7f7ff39dfb8c072ef6675934282792dfd7afef494b0c0b180643ea54135d" if command == 0 else "asset-737fb131adbd66af423adbcc776e651450043c0e953d6b83b64412b022d286aa"
+        bg = doc["components"][key]
+        if not isinstance(bg, dict) or set(bg) != {"kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability"} | ({"native_read_extent"} if command == 7 else set()):
+            raise ValueError("background fields differ from v1 contract")
+        if (bg.get("kind") != "mdec_background" or bg.get("id") != expected_id
+                or bg.get("reader") != "tools/assets/image_mdec.py:export_mdec" or bg.get("capability") != "source_profiled_static_background_preview"
+                or not _int_vector(bg.get("active_size"), 2, 1, 8192)
+                or not _int_vector(bg.get("padded_size"), 2, 1, 8192)
+                or not _int_vector(bg.get("active_crop"), 4, 0, 8192)
+                or bg["active_size"] != [320, 88] or bg["padded_size"] != [320, 96]
+                or bg["active_crop"] != [0, 0, 320, 88]):
+            raise ValueError("invalid command background descriptor")
+        _validate_source(key, bg)
+        _validate_native_route(bg, command)
+        _read_png(root, bg.get("image", {}), [320, 88])
+        _read_png(root, bg.get("stp_mask", {}), [320, 88])
+        _read_png(root, bg.get("padded_image", {}), [320, 96])
+        _read_png(root, bg.get("padded_stp_mask", {}), [320, 96])
+        if command == 7:
+            proof = json.loads(COMMAND7_PROOF.read_text(encoding="utf-8"))
+            if (not _metadata_equal(bg.get("geometry_context"), proof["geometry_context"])
+                    or not _metadata_equal(bg.get("native_read_extent"), proof["native_read_extent"])):
+                raise ValueError("command-7 source/geometry/native extent proof differs from checked profile")
     for key, expected_index in (("command_0_sd", 3), ("command_7_sd", 16)):
         c = doc["components"][key]
         if not isinstance(c, dict) or set(c) != {"kind", "id", "source", "profile_index", "sequence_index", "native_route", "frames", "sequences", "palette", "reader", "capability"}:
@@ -216,19 +228,30 @@ def validate_pack(pack: str):
     return doc
 
 
+def _metadata_equal(actual, expected):
+    """Compare pinned metadata without Python bool/int equality weakening bounds."""
+    if type(actual) is not type(expected):
+        return False
+    if isinstance(expected, dict):
+        return actual.keys() == expected.keys() and all(_metadata_equal(actual[k], v) for k, v in expected.items())
+    if isinstance(expected, list):
+        return len(actual) == len(expected) and all(_metadata_equal(a, e) for a, e in zip(actual, expected))
+    return actual == expected
+
+
 def _validate_source(key, component):
     path, lba, size, digest = SOURCE_PINS[key]
     src = component.get("source", {})
     if not isinstance(src, dict):
         raise ValueError("source must be an object")
-    expected_keys = {"path", "lba", "size", "sha256"} if key == "command_0_background" else {"path", "lba", "size", "sha256", "exe_sha256"}
+    expected_keys = {"path", "lba", "size", "sha256"} if key.endswith("_background") else {"path", "lba", "size", "sha256", "exe_sha256"}
     if set(src) != expected_keys:
         raise ValueError("source fields differ from v1 contract")
     if (src.get("path") != path or not _exact_int(src.get("lba"), 0, 2**31-1)
             or not _exact_int(src.get("size"), 1, 2**31-1)
             or src["lba"] != lba or src["size"] != size or src.get("sha256") != digest):
         raise ValueError("component source differs from reviewed original input pin")
-    if key != "command_0_background" and src.get("exe_sha256") != EXPECTED_PROVENANCE["original_executable_sha256"]:
+    if not key.endswith("_background") and src.get("exe_sha256") != EXPECTED_PROVENANCE["original_executable_sha256"]:
         raise ValueError("SD source does not bind the reviewed executable")
 
 

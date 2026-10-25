@@ -20,6 +20,15 @@ func _initialize() -> void:
 		return
 	var total_frames := 0
 	var manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string(root.path_join("manifest.json")))
+	var extended: bool = manifest.get("schema") == "tokimemo.school-day-media.v2"
+	var rest_bg: Dictionary = store.get_background("command_7_background")
+	if extended:
+		if rest_bg.is_empty() or rest_bg["image_data"].get_size() != Vector2i(320, 88) or rest_bg["padded_image_data"].get_size() != Vector2i(320, 96):
+			_fail("command-7 background did not resolve through production getter")
+			return
+	elif not rest_bg.is_empty():
+		_fail("v1 pack exposed unadvertised command-7 background")
+		return
 	for key in ["command_0_sd", "command_7_sd"]:
 		var seq := store.get_sequence(key, 0)
 		if seq.is_empty():
@@ -48,6 +57,16 @@ func _initialize() -> void:
 		{"name": "part-width", "mutate": func(d): d["components"]["command_0_sd"]["frames"][0]["parts"][0]["width"] = 129},
 		{"name": "palette-size", "mutate": func(d): d["components"]["command_0_sd"]["frames"][0]["source_palette_words"] = [0]},
 	]
+	if extended:
+		cases.append_array([
+			{"name": "missing-command7", "mutate": func(d): d["components"].erase("command_7_background")},
+			{"name": "command7-source", "mutate": func(d): d["components"]["command_7_background"]["source"]["lba"] = 16284},
+			{"name": "command7-route", "mutate": func(d): d["components"]["command_7_background"]["native_route"]["command"] = 0},
+			{"name": "command7-overread", "mutate": func(d): d["components"]["command_7_background"]["native_read_extent"]["overread_payload_used_for_mdec"] = true},
+			{"name": "command7-table", "mutate": func(d): d["components"]["command_7_background"]["geometry_context"]["source_profile"]["executable"]["table_words"][7] = 16284},
+			{"name": "command7-iso", "mutate": func(d): d["components"]["command_7_background"]["geometry_context"]["source_profile"]["assets"][0]["iso_directory_record"]["record_payload_offset"] = 1117},
+			{"name": "command7-bool", "mutate": func(d): d["components"]["command_7_background"]["geometry_context"]["width"] = true},
+		])
 	for case in cases:
 		if not _reject_mutated_pack(root, case["name"], case["mutate"]):
 			_fail("invalid fixture was accepted or exposed partial content: " + case["name"])
@@ -63,7 +82,7 @@ func _initialize() -> void:
 	if store.open_pack(bad_root):
 		_fail("wrong schema unexpectedly opened")
 		return
-	if not store.get_background().is_empty() or not store.get_frame("command_0_sd", 0).is_empty():
+	if not store.get_background().is_empty() or not store.get_background("command_7_background").is_empty() or not store.get_frame("command_0_sd", 0).is_empty():
 		_fail("failed open exposed stale content")
 		return
 	DirAccess.remove_absolute(bad_root.path_join("manifest.json"))
@@ -101,7 +120,7 @@ func _reject_mutated_pack(source: String, label: String, mutate: Callable) -> bo
 	file.close()
 	var negative = Store.new()
 	var rejected := not negative.open_pack(target)
-	var empty := negative.get_background().is_empty() and negative.get_frame("command_0_sd", 0).is_empty()
+	var empty := negative.get_background().is_empty() and negative.get_background("command_7_background").is_empty() and negative.get_frame("command_0_sd", 0).is_empty()
 	_remove_tree(target)
 	return rejected and empty and not negative.error_message().is_empty()
 
@@ -165,7 +184,7 @@ func _reject_oversized_png(source: String) -> bool:
 	var negative = Store.new()
 	var rejected := not negative.open_pack(target)
 	var bounded_error := negative.error_message().contains("header dimensions")
-	var empty := negative.get_background().is_empty() and negative.get_frame("command_0_sd", 0).is_empty()
+	var empty := negative.get_background().is_empty() and negative.get_background("command_7_background").is_empty() and negative.get_frame("command_0_sd", 0).is_empty()
 	_remove_tree(target)
 	return rejected and bounded_error and empty
 

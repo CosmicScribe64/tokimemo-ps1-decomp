@@ -1,7 +1,9 @@
 extends RefCounted
-## Strict data-only loader for tokimemo.school-day-media.v1 external packs.
+## Strict data-only loader for finite school-day-media v1/v2 external packs.
 
 const SCHEMA := "tokimemo.school-day-media.v1"
+const COMMAND7_SCHEMA := "tokimemo.school-day-media.v2"
+const COMMAND7_PROOF_PATH := "res://schemas/command7_background_profile.v1.json"
 const TRACK_SHA := "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
 const EXE_SHA := "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 const MEDIA_SHA := "0c85bbc54be82c7b2597528ccbfc915cd1fb5f99405bd18d845452026b56be37"
@@ -38,26 +40,41 @@ func open_pack(root: String) -> bool:
 		return _fail("manifest JSON must be an object")
 	if not _exact_keys(parsed, ["schema", "version", "provenance", "route_capabilities", "unsupported", "components"]):
 		return _fail("manifest keys differ from v1 contract")
-	if parsed.get("schema") != SCHEMA or not _exact_int(parsed.get("version"), 1) or int(parsed["version"]) != 1:
+	var extended: bool = parsed.get("schema") == COMMAND7_SCHEMA
+	var version: int = 2 if extended else 1
+	if parsed.get("schema") not in [SCHEMA, COMMAND7_SCHEMA] or not _exact_int(parsed.get("version"), version) or int(parsed["version"]) != version:
 		return _fail("unsupported schema/version")
 	var provenance: Variant = parsed.get("provenance")
 	if not provenance is Dictionary or not _exact_keys(provenance, ["original_input_sha256", "original_executable_sha256", "reviewed_media_manifest_sha256", "native_profile_sha256", "readers"]) or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("reviewed_media_manifest_sha256") != MEDIA_SHA or provenance.get("native_profile_sha256") != NATIVE_SHA or not _string_array_equals(provenance.get("readers"), READER_PINS):
 		return _fail("source provenance is not the reviewed route profile")
 	var caps: Variant = parsed.get("route_capabilities")
-	if not _string_array_equals(caps, ["command_0_static_background", "command_0_sd_sequence_0", "command_7_sd_sequence_0"]):
+	var expected_caps := ["command_0_static_background", "command_0_sd_sequence_0", "command_7_sd_sequence_0"]
+	if extended:
+		expected_caps.append("command_7_static_background")
+	if not _string_array_equals(caps, expected_caps):
 		return _fail("route capability declarations differ from supported components")
 	var unsupported: Variant = parsed.get("unsupported")
-	if not unsupported is Dictionary or not _exact_keys(unsupported, ["command_7_background", "scene_composition", "full_route"]) or unsupported.get("command_7_background") != "no fresh accepted geometry profile in this tranche" or unsupported.get("scene_composition") != "runtime placement/compositing not established by this media adapter" or unsupported.get("full_route") != "not claimed":
+	var unsupported_keys := ["scene_composition", "full_route"]
+	if not extended:
+		unsupported_keys.append("command_7_background")
+	if not unsupported is Dictionary or not _exact_keys(unsupported, unsupported_keys) or (not extended and unsupported.get("command_7_background") != "no fresh accepted geometry profile in this tranche") or unsupported.get("scene_composition") != "runtime placement/compositing not established by this media adapter" or unsupported.get("full_route") != "not claimed":
 		return _fail("unsupported route capabilities must be explicit")
 	var components: Variant = parsed.get("components")
-	if not components is Dictionary or components.size() != 3 or not components.has("command_0_background") or not components.has("command_0_sd") or not components.has("command_7_sd"):
+	var component_keys := ["command_0_background", "command_0_sd", "command_7_sd"]
+	if extended:
+		component_keys.append("command_7_background")
+	if not components is Dictionary or not _exact_keys(components, component_keys):
 		return _fail("component set differs from finite preview contract")
 	_root = root
-	var bg: Variant = components["command_0_background"]
-	if not bg is Dictionary or not _exact_keys(bg, ["kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability"]):
-		return _fail("background fields differ from v1 contract")
-	if not _validate_background(bg):
-		return _fail(_error)
+	for command in ([0, 7] if extended else [0]):
+		var bg: Variant = components["command_%d_background" % command]
+		var fields := ["kind", "id", "source", "active_size", "padded_size", "active_crop", "native_route", "image", "stp_mask", "padded_image", "padded_stp_mask", "geometry_context", "reader", "capability"]
+		if command == 7:
+			fields.append("native_read_extent")
+		if not bg is Dictionary or not _exact_keys(bg, fields):
+			return _fail("background fields differ from media contract")
+		if not _validate_background(bg, command):
+			return _fail(_error)
 	for pair in [["command_0_sd", 3], ["command_7_sd", 16]]:
 		var key: String = pair[0]
 		var expected_profile: int = pair[1]
@@ -107,13 +124,18 @@ func get_background(component_key: String = "command_0_background") -> Dictionar
 func error_message() -> String:
 	return _error
 
-func _validate_background(bg: Variant) -> bool:
-	if not bg is Dictionary or bg.get("kind") != "mdec_background" or bg.get("id") != "asset-cc9a7f7ff39dfb8c072ef6675934282792dfd7afef494b0c0b180643ea54135d" or bg.get("reader") != "tools/assets/image_mdec.py:export_mdec" or bg.get("capability") != "source_profiled_static_background_preview":
-		_error = "invalid command-0 background identity"
+func _validate_background(bg: Variant, command: int) -> bool:
+	var expected_id := "asset-cc9a7f7ff39dfb8c072ef6675934282792dfd7afef494b0c0b180643ea54135d" if command == 0 else "asset-737fb131adbd66af423adbcc776e651450043c0e953d6b83b64412b022d286aa"
+	var expected_path := "CDROM/BS/C_01_27.BS" if command == 0 else "CDROM/BS/C_01_44.BS"
+	var expected_lba := 16131 if command == 0 else 16283
+	var expected_size := 20032 if command == 0 else 17396
+	var expected_sha := "7543e723ea06c7db100b148350394f79c1a94ff8961aa65904d4aa1613295992" if command == 0 else "951ec47906f6a19748d2f3b803cb086c0e5af3a467f3cb6819515225bb6365e0"
+	if not bg is Dictionary or bg.get("kind") != "mdec_background" or bg.get("id") != expected_id or bg.get("reader") != "tools/assets/image_mdec.py:export_mdec" or bg.get("capability") != "source_profiled_static_background_preview":
+		_error = "invalid command background identity"
 		return false
 	var bg_source: Variant = bg.get("source")
-	if not bg_source is Dictionary or not _exact_keys(bg_source, ["path", "lba", "size", "sha256"]) or bg_source.get("path") != "CDROM/BS/C_01_27.BS" or not _exact_int(bg_source.get("lba"), 16131) or int(bg_source["lba"]) != 16131 or not _exact_int(bg_source.get("size"), 20032) or int(bg_source["size"]) != 20032 or bg_source.get("sha256") != "7543e723ea06c7db100b148350394f79c1a94ff8961aa65904d4aa1613295992":
-		_error = "invalid command-0 source identity"
+	if not bg_source is Dictionary or not _exact_keys(bg_source, ["path", "lba", "size", "sha256"]) or bg_source.get("path") != expected_path or not _exact_int(bg_source.get("lba"), expected_lba) or int(bg_source["lba"]) != expected_lba or not _exact_int(bg_source.get("size"), expected_size) or int(bg_source["size"]) != expected_size or bg_source.get("sha256") != expected_sha:
+		_error = "invalid command background source identity"
 		return false
 	var native_route: Variant = bg.get("native_route")
 	if not native_route is Dictionary or not _exact_keys(native_route, ["command", "actual_last_command", "actors", "profile", "evidence"]):
@@ -121,7 +143,7 @@ func _validate_background(bg: Variant) -> bool:
 		return false
 	var bg_evidence: Variant = native_route.get("evidence")
 	var bg_actors: Variant = native_route.get("actors")
-	if not _exact_int(native_route.get("command"), 0) or int(native_route["command"]) != 0 or not _exact_int(native_route.get("actual_last_command"), 0) or int(native_route["actual_last_command"]) != 0 or not bg_actors is Array or bg_actors.size() != 1 or not _exact_int(bg_actors[0], 96) or int(bg_actors[0]) != 96 or native_route.get("profile") != "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a" or not _valid_evidence(bg_evidence):
+	if not _exact_int(native_route.get("command"), command) or int(native_route["command"]) != command or not _exact_int(native_route.get("actual_last_command"), command) or int(native_route["actual_last_command"]) != command or not bg_actors is Array or bg_actors.size() != 1 or not _exact_int(bg_actors[0], 96) or int(bg_actors[0]) != 96 or native_route.get("profile") != "OpenBIOS d93840921b5ad7ed515e95b0e414f1b1e2038b1a" or not _valid_evidence(bg_evidence):
 		_error = "background is not bound to reviewed native route evidence"
 		return false
 	if not _exact_int_array(bg.get("active_size"), [320, 88]) or not _exact_int_array(bg.get("padded_size"), [320, 96]) or not _exact_int_array(bg.get("active_crop"), [0, 0, 320, 88]):
@@ -129,6 +151,11 @@ func _validate_background(bg: Variant) -> bool:
 		return false
 	for item in [["image", Vector2i(320, 88)], ["stp_mask", Vector2i(320, 88)], ["padded_image", Vector2i(320, 96)], ["padded_stp_mask", Vector2i(320, 96)]]:
 		if not _validate_payload_spec(bg.get(item[0], {})):
+			return false
+	if command == 7:
+		var proof: Variant = JSON.parse_string(FileAccess.get_file_as_string(COMMAND7_PROOF_PATH))
+		if not proof is Dictionary or not _metadata_equal(bg.get("geometry_context"), proof.get("geometry_context")) or not _metadata_equal(bg.get("native_read_extent"), proof.get("native_read_extent")):
+			_error = "command-7 source/geometry/native extent proof differs from checked profile"
 			return false
 	return true
 
@@ -237,10 +264,13 @@ func _validate_payload_spec(spec: Variant) -> bool:
 	return true
 
 func _load_all_payloads(components: Dictionary) -> bool:
-	var bg: Dictionary = components["command_0_background"]
-	for item in [["image", Vector2i(320, 88)], ["stp_mask", Vector2i(320, 88)], ["padded_image", Vector2i(320, 96)], ["padded_stp_mask", Vector2i(320, 96)]]:
-		if not _load_png(bg[item[0]], item[1]):
-			return false
+	for key in ["command_0_background", "command_7_background"]:
+		if not components.has(key):
+			continue
+		var bg: Dictionary = components[key]
+		for item in [["image", Vector2i(320, 88)], ["stp_mask", Vector2i(320, 88)], ["padded_image", Vector2i(320, 96)], ["padded_stp_mask", Vector2i(320, 96)]]:
+			if not _load_png(bg[item[0]], item[1]):
+				return false
 	for key in ["command_0_sd", "command_7_sd"]:
 		var sd: Dictionary = components[key]
 		for frame in sd["frames"]:
@@ -303,6 +333,26 @@ func _validate_part(part: Variant, source_size: int) -> bool:
 		_error = "SD part texture/palette metadata is outside the selected reader profile"
 		return false
 	return true
+
+func _metadata_equal(actual: Variant, expected: Variant) -> bool:
+	if expected is Dictionary:
+		if not actual is Dictionary or not _exact_keys(actual, expected.keys()):
+			return false
+		for key in expected:
+			if not _metadata_equal(actual[key], expected[key]):
+				return false
+		return true
+	if expected is Array:
+		if not actual is Array or actual.size() != expected.size():
+			return false
+		for i in range(expected.size()):
+			if not _metadata_equal(actual[i], expected[i]):
+				return false
+		return true
+	if expected is float or expected is int:
+		return _range_int(actual, -2147483648, 4294967295) and float(actual) == float(expected)
+	return typeof(actual) == typeof(expected) and actual == expected
+
 
 func _safe_root(path: String) -> bool:
 	if path.is_empty() or not path.is_absolute_path() or not DirAccess.dir_exists_absolute(path):

@@ -16,12 +16,14 @@ import sys
 import tempfile
 
 if __package__ in (None, ""):
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from assets.image_mdec import export_mdec, probe_mdec
-from assets.input import open_input
-from assets.manifest import SCHEMA, asset_id, digest, output_root, summarize, write_bytes, write_manifest
-from assets.media_coverage import _compact_location
-from assets.bs_cohort_profile import build_profile_context
+    # Direct execution needs the same package identity as module imports.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    __package__ = "tools.assets"
+from .image_mdec import export_mdec, probe_mdec
+from .input import open_input
+from .manifest import SCHEMA, asset_id, digest, output_root, summarize, write_bytes, write_manifest
+from .media_coverage import _compact_location
+from .bs_cohort_profile import build_profile_context
 
 def _cohort_context_for(entry, cohort_record, geometry_profile):
     source_record = cohort_record.get("source", {})
@@ -133,7 +135,7 @@ def export_mdec_source(source, destination, contexts=None, baseline=None, progre
         entries = sorted(source.entries(), key=lambda entry: entry["path"])
         if contexts is not None:
             raise ValueError("trusted BS profile mode does not accept an external context/report")
-        profile_kind = "seasonal" if trusted_bs_profile == "seasonal" else "weekly"
+        profile_kind = trusted_bs_profile if isinstance(trusted_bs_profile, str) else "weekly"
         contexts = build_profile_context(source, entries, source_root, profile_kind)
         cohort_records = {record["path"]: record for record in contexts["assets"]}
     elif not isinstance(contexts, dict):
@@ -184,7 +186,7 @@ def export_mdec_source(source, destination, contexts=None, baseline=None, progre
     if cohort_mode:
         expected_paths = set(cohort_records)
         if selected_paths != expected_paths:
-            raise ValueError("BS cohort mode requires exactly its four source-bound paths")
+            raise ValueError("BS profile mode requires exactly its finite source-bound paths")
         if not expected_paths <= set(old):
             raise ValueError("BS cohort sources are missing from the exact baseline")
     entry_paths = {entry["path"] for entry in entries}
@@ -299,6 +301,7 @@ def main(argv=None):
     parser.add_argument("--contexts")
     parser.add_argument("--bs-caller-cohort", action="store_true",
                         help="use the checked-in finite BS profile and verify current source plus original input")
+    parser.add_argument("--bs-command7", action="store_true", help="use the strict command-7 weekly background profile")
     parser.add_argument("--bs-seasonal-cohort", action="store_true",
                         help="use the checked-in four-row seasonal school-day profile")
     parser.add_argument("--baseline-media")
@@ -308,9 +311,9 @@ def main(argv=None):
     parser.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     try:
-        selected_profiles = int(args.bs_caller_cohort) + int(args.bs_seasonal_cohort)
+        selected_profiles = int(args.bs_caller_cohort) + int(args.bs_seasonal_cohort) + int(args.bs_command7)
         if bool(args.contexts) == (selected_profiles > 0) or selected_profiles > 1:
-            raise ValueError("provide exactly one of --contexts, --bs-caller-cohort, or --bs-seasonal-cohort")
+            raise ValueError("provide exactly one context or built-in BS profile")
         contexts = json.loads(Path(args.contexts).read_text()) if args.contexts else None
         baseline = json.loads(Path(args.baseline_media).read_text()) if args.baseline_media else None
         with open_input(args.input) as source:
@@ -318,7 +321,7 @@ def main(argv=None):
                                         progress=lambda count: print(f"BS inspected: {count}", flush=True),
                                         only_paths=args.only_source,
                                         repository_root=args.repository_root,
-                                        trusted_bs_profile=("seasonal" if args.bs_seasonal_cohort
+                                        trusted_bs_profile=("command7" if args.bs_command7 else "seasonal" if args.bs_seasonal_cohort
                                                             else args.bs_caller_cohort))
         print(json.dumps(result["coverage"], sort_keys=True))
         return 1 if result["coverage"]["status"].get("invalid") else 0

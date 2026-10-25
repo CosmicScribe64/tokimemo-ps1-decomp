@@ -18,6 +18,8 @@ EXE_SHA256 = "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
 EXE_TABLE_OFFSET = 0x75F60
 EXE_TABLE_RAW = bytes.fromhex("033f00000d3f0000173f0000203f0000")
 TABLE_WORDS = (0x3F03, 0x3F0D, 0x3F17, 0x3F20)
+COMMAND7_TABLE_RAW = bytes.fromhex("033f00000d3f0000173f0000203f0000a43f00008c3f0000953f00009b3f0000")
+COMMAND7_TABLE_WORDS = (0x3F03, 0x3F0D, 0x3F17, 0x3F20, 0x3FA4, 0x3F8C, 0x3F95, 0x3F9B)
 SEASONAL_TABLE_OFFSET = 0x75150
 SEASONAL_TABLE_RAW = bytes.fromhex("e93f0000f23f0000d73f0000e03f0000")
 SEASONAL_TABLE_WORDS = (0x3FE9, 0x3FF2, 0x3FD7, 0x3FE0)
@@ -110,6 +112,14 @@ ASSETS = (
     },
 )
 
+# T-29003: the captured ordinary command-7 event selects weekly girl index 7.
+COMMAND7_ASSETS = (
+    {"path": "CDROM/BS/C_01_44.BS", "girl_index": 7, "lba": 0x3F9B,
+     "size": 17396, "sha256": "951ec47906f6a19748d2f3b803cb086c0e5af3a467f3cb6819515225bb6365e0",
+     "record_lba": 16122, "record_offset": 1116, "record_length": 60,
+     "identifier": "C_01_44.BS;1", "file_sectors": 9},
+)
+
 SEASONAL_ASSETS = (
     {"path": "CDROM/BS/C_02_02H.BS", "season_index": 0, "lba": 0x3FE9,
      "size": 16936, "sha256": "ea4f9201486e8bfc21b03706b4427a2e3e0865f2be7a30f5057802618747ec96",
@@ -134,29 +144,35 @@ def _sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def _check_source_evidence(repository_root):
+def _check_source_evidence(repository_root, command7=False):
     root = Path(repository_root).resolve()
     checked = {}
-    for relative, expected_hash in SOURCE_FILES.items():
+    source_files = dict(SOURCE_FILES)
+    anchors = dict(SOURCE_ANCHORS)
+    if command7:
+        source_files["include/game/day_event.h"] = "efe0cdf794e1bf5f35bd5ff16feeecf3946f4695e98e066c6eca50effdf6c86d"
+        anchors["include/game/day_event.h"] = ("u8 type;", "u8 girl;", "u8 scene;", "u8 extra;")
+        anchors["asm/data/data_800B5950.data.s"] += (".word 0x00003FA4", ".word 0x00003F8C", ".word 0x00003F95", ".word 0x00003F9B")
+    for relative, expected_hash in source_files.items():
         path = root / relative
         data = path.read_bytes()
         actual_hash = _sha256(data)
         if actual_hash != expected_hash:
             raise ValueError("trusted BS source evidence hash differs: " + relative)
         text = data.decode("utf-8")
-        if any(anchor not in text for anchor in SOURCE_ANCHORS[relative]):
+        if any(anchor not in text for anchor in anchors[relative]):
             raise ValueError("trusted BS source evidence anchor is missing: " + relative)
         checked[relative] = actual_hash
     return checked
 
 
 def _validate_asset_inventory(entries, expected_assets=None, expected_words=None,
-                              selector_field="girl_index"):
+                              selector_field="girl_index", expected_selectors=(0, 1, 2, 3)):
     expected_assets = ASSETS if expected_assets is None else expected_assets
     expected_words = TABLE_WORDS if expected_words is None else expected_words
-    if tuple(asset[selector_field] for asset in expected_assets) != (0, 1, 2, 3):
-        raise ValueError("trusted BS profile selector indices are not the exact four rows")
-    if tuple(asset["lba"] for asset in expected_assets) != expected_words:
+    if tuple(asset[selector_field] for asset in expected_assets) != expected_selectors:
+        raise ValueError("trusted BS profile selector indices differ from the finite rows")
+    if tuple(asset["lba"] for asset in expected_assets) != tuple(expected_words[i] for i in expected_selectors):
         raise ValueError("trusted BS profile rows do not match the executable table order")
     by_path = {entry.get("path"): entry for entry in entries}
     checked = []
@@ -181,7 +197,7 @@ def _validate_executable_bytes(exe_data, table_offset=EXE_TABLE_OFFSET,
     if _sha256(exe_data) != EXE_SHA256:
         raise ValueError("trusted original executable hash differs")
     actual_table = exe_data[table_offset:table_offset + len(table_raw)]
-    if actual_table != table_raw or struct.unpack("<4I", actual_table) != table_words:
+    if actual_table != table_raw or struct.unpack("<%dI" % len(table_words), actual_table) != table_words:
         raise ValueError("trusted original executable table bytes differ")
     return actual_table
 
@@ -220,10 +236,17 @@ def _validate_iso_directory_record(source, expected):
 
 def build_profile_context(source, entries, repository_root, profile_kind="weekly"):
     """Validate the fixed source profile and return its internally made context."""
+    selectors = (0, 1, 2, 3)
     if profile_kind == "weekly":
         expected_assets, table_offset, table_raw, table_words = ASSETS, EXE_TABLE_OFFSET, EXE_TABLE_RAW, TABLE_WORDS
         selector_field = "girl_index"
         selector_name = "schedule_girl_index"
+        table_label = "D_800B6760 weekly girl selector table"
+    elif profile_kind == "command7":
+        expected_assets, table_offset = COMMAND7_ASSETS, EXE_TABLE_OFFSET
+        table_raw, table_words = COMMAND7_TABLE_RAW, COMMAND7_TABLE_WORDS
+        selector_field, selector_name = "girl_index", "schedule_girl_index"
+        selectors = (7,)
         table_label = "D_800B6760 weekly girl selector table"
     elif profile_kind == "seasonal":
         expected_assets, table_offset, table_raw, table_words = SEASONAL_ASSETS, SEASONAL_TABLE_OFFSET, SEASONAL_TABLE_RAW, SEASONAL_TABLE_WORDS
@@ -232,8 +255,8 @@ def build_profile_context(source, entries, repository_root, profile_kind="weekly
         table_label = "D_800B5950 seasonal school-day selector table"
     else:
         raise ValueError("unknown trusted BS source profile")
-    source_files = _check_source_evidence(repository_root)
-    checked_assets = _validate_asset_inventory(entries, expected_assets, table_words, selector_field)
+    source_files = _check_source_evidence(repository_root, profile_kind == "command7")
+    checked_assets = _validate_asset_inventory(entries, expected_assets, table_words, selector_field, selectors)
     description = source.describe()
     if (description.get("format") != "mode2-2352"
             or description.get("source_sha256") != TRACK_SHA256):
@@ -278,7 +301,7 @@ def build_profile_context(source, entries, repository_root, profile_kind="weekly
             },
             "source_evidence": [
                 ("src/main/school_day.c:get_weekly_bg_sector/school_day_background_read/school_day_screen_init"
-                 if profile_kind == "weekly" else
+                 if profile_kind in ("weekly", "command7") else
                  "src/main/school_day.c:school_day_background_read seasonal branch; src/main/hud_panels.c:hud_season_index"),
                 "src/main/background_images.c:dec_bg_cd_read/dec_bg_decode_to_vram/dec_bg_draw",
                 "src/main/memory_card.c:bg_still_decode_to_vram",

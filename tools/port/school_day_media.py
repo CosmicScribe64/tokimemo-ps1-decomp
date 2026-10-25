@@ -15,7 +15,7 @@ import sys
 import tempfile
 from pathlib import Path, PurePosixPath
 
-SCHEMA = "tokimemo.school-day-media.v1"
+SCHEMA = "tokimemo.school-day-media.v2"
 MEDIA_SHA = "0c85bbc54be82c7b2597528ccbfc915cd1fb5f99405bd18d845452026b56be37"
 NATIVE_PROFILE_SHA = "ac246a30ed894bf5b631beaf4f053a8622324094859b11a65a4c0c03d55cb4a3"
 TRACK_SHA = "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
@@ -27,6 +27,7 @@ SELECTED = {
     "CDROM/MAIN_SD/SD_P09W.NBN": (16, 7),
 }
 BG_PATH = "CDROM/BS/C_01_27.BS"
+COMMAND7_BG_PATH = "CDROM/BS/C_01_44.BS"
 
 
 def _sha(data: bytes) -> str:
@@ -68,6 +69,18 @@ def _safe_copy(src: Path, dest: Path) -> dict:
     return {"path": dest.name, "size": len(data), "sha256": _sha(data)}
 
 
+def _validate_command7_route(route):
+    """Bind this finite profile to the reviewed ordinary first-rest event."""
+    scalar_fields = {"command": 7, "actual_last_command": 7, "sequence_slot": 0, "sd_set_id": 16}
+    if not isinstance(route, dict) or any(type(route.get(k)) is not int or route[k] != v for k, v in scalar_fields.items()):
+        raise ValueError("command-7 native event/selector differs from the reviewed ordinary route")
+    event = route.get("first_day_event")
+    actors = route.get("actors")
+    if (not isinstance(event, list) or event != [0, 7, 0, 15] or any(type(v) is not int for v in event)
+            or not isinstance(actors, list) or actors != [96] or any(type(v) is not int for v in actors)):
+        raise ValueError("command-7 native event/selector differs from the reviewed ordinary route")
+
+
 def import_pack(input_path: str, media_path: str, native_profile_path: str, output_path: str) -> dict:
     root = _root()
     sys.path.insert(0, str(root))
@@ -75,6 +88,7 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
     from tools.assets.image_packs_sd import export_sd_ui
     from tools.assets.image_mdec import export_mdec
     from tools.assets.bs_cohort_profile import build_profile_context
+    from tools.assets.media_mdec_export import _native_cd_read_extent
 
     media_file = _no_symlink_path(Path(media_path))
     native_file = _no_symlink_path(Path(native_profile_path))
@@ -98,7 +112,10 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
     if media.get("schema") != "tokimemo.media.v1" or media.get("input", {}).get("source_sha256") != TRACK_SHA:
         raise ValueError("source media manifest schema/input mismatch")
     original = {a["source"]["path"]: a for a in media.get("assets", []) if isinstance(a, dict) and isinstance(a.get("source"), dict)}
-    out = Path(output_path).absolute()
+    out = _no_symlink_path(Path(output_path))
+    if ".." in out.parts:
+        raise ValueError("output path must not contain parent-directory segments")
+    out = out.resolve()
     cache = root / ".asset-cache/port"
     if cache.is_symlink() or cache not in out.parents or out.exists():
         raise ValueError("output must be a new immutable directory beneath .asset-cache/port")
@@ -181,58 +198,67 @@ def import_pack(input_path: str, media_path: str, native_profile_path: str, outp
                     "capability": "validated_static_sd_frames_and_sequence_prefix",
                 }
 
-            # The weekly source profile freshly pins source/EXE/directory identity before geometry is used.
-            profile_context = build_profile_context(source, entries, root, "weekly")
-            bg_rec = next((x for x in profile_context["assets"] if x.get("path") == BG_PATH), None)
-            if bg_rec is None:
-                raise ValueError("command-0 background not found in freshly checked profile")
-            bg_entry = by_path.get(BG_PATH)
-            bg_data = source.read(bg_entry)
-            if _sha(bg_data) != bg_rec["sha256"] or bg_rec["source"]["location"]["lba"] != 0x3F03:
-                raise ValueError("command-0 background identity/LBA mismatch")
-            native_bg = next((a for a in native_routes[0]["assets"] if a.get("path") == BG_PATH and a.get("role") == "background"), None)
-            if (native_routes[0].get("actual_last_command") != 0 or native_routes[0].get("actors") != [96]
-                    or not native_bg or native_bg.get("lba") != 0x3F03 or native_bg.get("sha256") != _sha(bg_data)
-                    or native_bg.get("size") != len(bg_data)):
-                raise ValueError("background does not match native command-0 source profile")
-            context = {
-                "width": 320, "height": 88, "padded_height": 96,
-                "source_profile": profile_context["source_profile"],
-                "geometry": profile_context["geometry"],
-                "evidence": bg_rec["source_evidence"],
-            }
-            bg_id = original[BG_PATH]["id"]
-            bg_raw = stage / "reader" / bg_id
-            bg_result = export_mdec(bg_data, bg_raw, bg_id, source_path=BG_PATH, context=context)
-            img = bg_result["images"][0]
-            bgfiles = {f: _safe_copy(bg_raw / f, stage_assets / f) for f in bg_result["files"]}
-            components["command_0_background"] = {
-                "kind": "mdec_background", "id": bg_id,
-                "source": {"path": BG_PATH, "lba": 0x3F03, "size": len(bg_data), "sha256": _sha(bg_data)},
-                "active_size": [320, 88], "padded_size": [320, 96], "active_crop": [0, 0, 320, 88],
-                "native_route": {"command": 0, "actual_last_command": native_routes[0]["actual_last_command"],
-                                 "actors": native_routes[0]["actors"], "profile": native["profile"],
-                                 "evidence": native_routes[0].get("evidence", [])},
-                "image": bgfiles[img["png"]], "stp_mask": bgfiles[img["stp_png"]],
-                "padded_image": bgfiles[bg_result["metadata"]["padded_decode"]["png"]],
-                "padded_stp_mask": bgfiles[bg_result["metadata"]["padded_decode"]["stp_png"]],
-                "geometry_context": context, "reader": "tools/assets/image_mdec.py:export_mdec",
-                "capability": "source_profiled_static_background_preview",
-            }
+            # Each built-in profile rechecks current C/ASM, EXE/table and raw ISO records.
+            for command, bg_path, profile_kind in ((0, BG_PATH, "weekly"), (7, COMMAND7_BG_PATH, "command7")):
+                expected_lba = 0x3F03 if command == 0 else 0x3F9B
+                if command == 7:
+                    _validate_command7_route(native_routes.get(7))
+                profile_context = build_profile_context(source, entries, root, profile_kind)
+                bg_rec = next((x for x in profile_context["assets"] if x.get("path") == bg_path), None)
+                if bg_rec is None:
+                    raise ValueError("background not found in freshly checked profile")
+                bg_entry = by_path.get(bg_path)
+                bg_data = source.read(bg_entry)
+                if _sha(bg_data) != bg_rec["sha256"] or bg_rec["source"]["location"]["lba"] != expected_lba:
+                    raise ValueError("background identity/LBA mismatch")
+                native_bg = next((a for a in native_routes[command]["assets"] if a.get("path") == bg_path and a.get("role") == "background"), None)
+                if (native_routes[command].get("actual_last_command") != command or native_routes[command].get("actors") != [96]
+                        or not native_bg or native_bg.get("lba") != expected_lba or native_bg.get("sha256") != _sha(bg_data)
+                        or native_bg.get("size") != len(bg_data)):
+                    raise ValueError("background does not match native command source profile")
+                context = {
+                    "width": 320, "height": 88, "padded_height": 96,
+                    "source_profile": profile_context["source_profile"],
+                    "geometry": profile_context["geometry"],
+                    "evidence": bg_rec["source_evidence"],
+                }
+                bg_id = original[bg_path]["id"]
+                bg_raw = stage / "reader" / bg_id
+                bg_result = export_mdec(bg_data, bg_raw, bg_id, source_path=bg_path, context=context)
+                img = bg_result["images"][0]
+                bgfiles = {f: _safe_copy(bg_raw / f, stage_assets / f) for f in bg_result["files"]}
+                components[f"command_{command}_background"] = {
+                    "kind": "mdec_background", "id": bg_id,
+                    "source": {"path": bg_path, "lba": expected_lba, "size": len(bg_data), "sha256": _sha(bg_data)},
+                    "active_size": [320, 88], "padded_size": [320, 96], "active_crop": [0, 0, 320, 88],
+                    "native_route": {"command": command, "actual_last_command": native_routes[command]["actual_last_command"],
+                                     "actors": native_routes[command]["actors"], "profile": native["profile"],
+                                     "evidence": native_routes[command].get("evidence", [])},
+                    "image": bgfiles[img["png"]], "stp_mask": bgfiles[img["stp_png"]],
+                    "padded_image": bgfiles[bg_result["metadata"]["padded_decode"]["png"]],
+                    "padded_stp_mask": bgfiles[bg_result["metadata"]["padded_decode"]["stp_png"]],
+                    "geometry_context": context, "reader": "tools/assets/image_mdec.py:export_mdec",
+                    "capability": "source_profiled_static_background_preview",
+                }
+                if command == 7:
+                    # The extra native sector is proved separately and never enters export_mdec.
+                    components["command_7_background"]["native_read_extent"] = _native_cd_read_extent(
+                        source, bg_entry, TRACK_SHA, 10)
 
         manifest = {
-            "schema": SCHEMA, "version": 1,
+            "schema": SCHEMA, "version": 2,
             "provenance": {"original_input_sha256": TRACK_SHA, "original_executable_sha256": EXE_SHA,
                            "reviewed_media_manifest_sha256": MEDIA_SHA, "native_profile_sha256": NATIVE_PROFILE_SHA,
                            "readers": ["tools/assets/input.py:open_input", "tools/assets/image_packs_sd.py:export_sd_ui",
                                        "tools/assets/bs_cohort_profile.py:build_profile_context", "tools/assets/image_mdec.py:export_mdec"]},
-            "route_capabilities": ["command_0_static_background", "command_0_sd_sequence_0", "command_7_sd_sequence_0"],
-            "unsupported": {"command_7_background": "no fresh accepted geometry profile in this tranche",
-                            "scene_composition": "runtime placement/compositing not established by this media adapter",
+            "route_capabilities": ["command_0_static_background", "command_0_sd_sequence_0", "command_7_sd_sequence_0", "command_7_static_background"],
+            "unsupported": {"scene_composition": "runtime placement/compositing not established by this media adapter",
                             "full_route": "not claimed"},
             "components": components,
         }
         (stage / "manifest.json").write_text(json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+        from tools.port.validate_school_day_media import validate_pack
+        validate_pack(str(stage))
         # Publish with same-filesystem rename; never replace an existing pack.
         if out.exists():
             raise ValueError("destination appeared during import; refusing overwrite")
