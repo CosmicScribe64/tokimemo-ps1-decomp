@@ -36,3 +36,7 @@ Use `week` instead of `new-game` to select the captured-boundary development app
 ## Verification
 
 2026-10-25: independent Standards and bounded correctness review pass in `.claude/orchestrator/state/T-29015/final-review.{md,json}`. Six invented-source tests pass. Actual v3 export at `.asset-cache/port/desktop-entry-90283b29d-v3/player.zip` has SHA256 `2a5670c4404bf171af842b9a10b1dec5f351748f7e2a0b5c8b3fa426fc68ee6d`; review verified 41 staged source hashes, 81 packaged resource mappings and both x86_64/arm64 Mach-O slices. Original game payloads are absent. Earlier failed v1 and successful v2 outputs are preserved. Host launch, external-input launcher and platform runtime acceptance remain unverified; the ticket stays In Progress.
+
+## Current macOS export smoke (2026-10-25)
+
+Refreshed code-only export contains 46 source files at `.asset-cache/port/desktop-current-60b0a94e6/player.zip`, SHA256 `a47d4c255d03e4e64689769f3144ecca9ff9dba9985ff7222dc3ae709740f603`. Native macOS executable launches headlessly and initializes Apple M4 OpenGL/Metal Compatibility rendering without a host toolchain install or security bypass. A visible development window reported rejected New Game inputs; same-bundle process/window attribution is not yet established, so full usable native launch remains unproved. Passed this observation to the New Game owner for controlled reproduction and clearer diagnostics. This export predates the rest-week integration.

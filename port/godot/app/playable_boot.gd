@@ -57,11 +57,11 @@ const HOLIDAY_STOP: String = "ordinary-week next branch requires native type0x10
 
 func _capture_prefix() -> String:
 	if smoke_command == 7 or (state != null and state.rule_state.get("last_command") == 7):
-		return "T-29008-rest"
+		return "T-29009-rest-week" if continue_week else "T-29008-rest"
 	return "T-29009-week" if continue_week else "T-29008-playable"
 
 func _week_continuation_enabled() -> bool:
-	return continue_week and state.rule_state.get("last_command") != 7
+	return continue_week
 
 # Desktop adaptation: future playback providers must pause/resume their cursors
 # with this signal. There is no active audio player in this muted development app.
@@ -120,7 +120,7 @@ func _ready() -> void:
 	status_label = _label(Vector2(16, 12), 20)
 	detail_label = _label(Vector2(16, 334), 15)
 	var heading: Label = _label(Vector2(16, 44), 12)
-	heading.text = "Captured-boundary development build · original imagery · HUD unavailable · muted\nArrows / D-pad: selection · Enter / A: confirm · R: replay\nCommand 0: ordinary week · command 7: first result with validated v2 media"
+	heading.text = "Captured-boundary development build · original imagery · HUD unavailable · muted\nArrows / D-pad: selection · Enter / A: confirm · R: replay\nCommands 0/7: captured ordinary weekdays · April 9 holiday unavailable"
 	failure = _load_inputs()
 	if not failure.is_empty():
 		_stop(failure)
@@ -463,8 +463,10 @@ func _activity_command(current: State) -> int:
 	var event: Array = data["day_events"][data["day_event_index"]]
 	if event[0] != 0 or event[1] not in [0, 7]:
 		return -1
-	if event[1] == 7 and (event != [0, 7, 0, 15] or data["day_event_index"] != 0 or [data["year"], data["month"], data["day"]] != [95, 4, 5]):
-		return -1
+	if event[1] == 7:
+		var index: int = data["day_event_index"]
+		if event != [0, 7, 0, 15] or index not in [0, 2, 4, 6] or [data["year"], data["month"], data["day"]] != [95, 4, 5 + (index >> 1)] or data["vacation"] != 0 or ((data["player_flags"] >> 8) & 15) != 0:
+			return -1
 	return event[1]
 
 func _resource_request_error(current: State, intent: Dictionary) -> String:

@@ -169,6 +169,7 @@ func _negative(adapter: Adapter, command: Dictionary, result: Dictionary) -> voi
 
 func _app() -> Boot:
 	var app: Boot = Boot.new()
+	app.continue_week = false
 	app.canvas = Canvas.new()
 	app.pad = Pad.new()
 	app.status_label = Label.new()

@@ -2274,3 +2274,11 @@ Recorded the user's preference in [[tickets/T-30001-modern-widescreen]] and [[ti
 ## [2026-10-25] decision | Keep developer prose out of game presentation
 
 Applied the user-requested deslop prose review to current authored app labels and recorded the product direction in port/godot/PORTING.md, [[tickets/T-29008-assemble-playable-development-app]] and [[tickets/T-29012-native-new-game-initialization]]. The skill scanner misclassifies GDScript syntax, so its code hits are not findings. Manual review found visible implementation disclaimers and raw state paragraphs; assigned cleanup to current HUD/New Game integration owners. Final presentation is the game, with opt-in debugging. No translated dialogue changed.
+
+## [2026-10-25] build | Integrate four-day rest route
+
+Root applied the five-file reviewed packet `7a7b095dc7d28744443ea41c0d06a1e6a71cde1794df524077af52c37b801418`. Canonical rest now continues through April 8 in 335 steps. Installed checks pass: 109 ordinary-week, 111 first-result, 26 focus, 16 continuing-save, 37 codec, 50 existing-save and 28 rest-save checks, plus bank/New Game and shared suites. Fresh Mesa playback matches the headless full trace, final state, RNG and checkpoints exactly. Native comparison reproduces all 29 control segments and 150 actor rows; three original 30-poll SD waits remain one preloaded-cache poll, with clock differences explicit. Proof: `.claude/orchestrator/state/T-29009/rest-week-app-v1/canonical-proof/acceptance.json`.
+
+Holiday scene integration and native HUD/audio remain open. Original first-result behavior is retained when requested explicitly. User-requested removal of default developer text is assigned to the HUD successor; this packet preserves the old development layout.
+
+See [[tickets/T-29009-ordinary-week-continuation]].

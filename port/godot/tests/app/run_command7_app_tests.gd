@@ -56,6 +56,7 @@ func _initialize() -> void:
 		var reference: Array = []
 		for rendered: int in [0, 1, 3]:
 			var app: Boot = make_app()
+			app.continue_week = command == 0
 			var entry: Dictionary = {}
 			for tick: int in range(601):
 				device_recipe(app, command, tick)
@@ -84,7 +85,7 @@ func _initialize() -> void:
 			if command == 0:
 				check(app.checkpoints.size() == 15 and not app.supported_stop.is_empty(), "command0 keeps fifteen ordinary-week checkpoints")
 			else:
-				check(app.state.game_mode == 0x31 and app.state.rule_state["day_event_index"] == 1 and app.state.rule_state["day"] == 5, "rest always stops at first result even when week continuation was requested")
+				check(app.state.game_mode == 0x31 and app.state.rule_state["day_event_index"] == 1 and app.state.rule_state["day"] == 5, "explicit first-result mode retains the original rest boundary")
 				check(app.checkpoints.is_empty() and app.supported_stop.is_empty(), "rest claims no ordinary-week continuation")
 				var frames: Dictionary = app.get("command_resources")
 				var overlap: Array = []
