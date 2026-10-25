@@ -27,3 +27,5 @@ port/godot/dialogue/; port/godot/tests/dialogue/; tools/port/dialogue_content.py
 ## Notes
 
 User explicitly requested more agents and chats to speed up the port. This is a disjoint parallel lane. Workers prepare immutable ignored packets under .claude/orchestrator/state/T-29011/candidate; root alone writes canonical source/wiki/Git/build. No actual translation, replacement art, copied fan translation, invented palette or silent missing-event fallback. Engine/runtime/data contracts are in [[phase3]] and port/godot/PORTING.md. Full Phase 3 remains open.
+
+2026-10-25: v3 closes the residual lexical cache-root symlink publication bypass before resolving the allowed output root. Root independently inspected the two-file delta and ancestor helper and ran all nine tests normally and under Python -O in Docker. Finite Standards resolution is recorded in `.claude/orchestrator/state/T-29011/candidate-v3/root-standards-resolution.json`; original Spec reviewer resolution and canonical replay remain required. Earlier v2 artifacts are preserved. This does not establish full dialogue, voice, typewriter or route parity.

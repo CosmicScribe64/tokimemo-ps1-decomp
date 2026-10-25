@@ -2168,3 +2168,7 @@ Resolved the [[tickets/T-29003-port-content-adapter]] CLI import hold using revi
 ## [2026-10-25] build | Canonical stable-boundary save continuation
 
 Integrated the independently reviewed v2 save codec and playable-session adapter for [[tickets/T-29006-port-save-audio-services]]. Actual canonical replay passed 37 filesystem/codec and 50 app checks, including all 80+40+243+163 continuation hash pairs at command/result boundaries. Evidence: `.claude/orchestrator/state/T-29006/live-save-proof/`. User-facing controls and audio remain open. Updated [[status]]; game source and Gemini translation files were untouched.
+
+## [2026-10-25] decision | Production HUD boundary and dialogue fix review
+
+Reviewed the dynamic HUD candidate for [[tickets/T-29010-native-hud-font-rendering]] and returned the private-oracle-dependent exporter for production adaptation; native actor/rendering evidence remains useful. Independently checked the finite dialogue v3 path correction for [[tickets/T-29011-native-dialogue-player]], with nine normal and nine optimized Docker tests passing. Original Spec review remains pending. Granted the holiday owner a bounded second emulator capture lease after checking no emulator was running. New Game owner continues the actual profile-entry route while its initializer is independently reviewed. Gemini translation inputs remain untouched.
