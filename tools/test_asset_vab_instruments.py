@@ -35,6 +35,23 @@ def _fixture() -> tuple[bytes, bytes]:
 
 
 class VabInstrumentInventoryTests(unittest.TestCase):
+    def test_sparse_last_program_uses_first_packed_tone_block(self) -> None:
+        header, body = _fixture()
+        changed = bytearray(header)
+        changed[0x20 + 127 * 16:0x30 + 127 * 16] = changed[0x20:0x30]
+        changed[0x20:0x30] = bytes(16)
+        struct.pack_into("<H", changed, 0x820 + 20, 127)
+        result = inventory_vab(bytes(changed), body)
+        self.assertEqual([row["index"] for row in result["programs"]], [127])
+        self.assertEqual(result["programs"][0]["tones"][0]["offset"], 0x820)
+
+    def test_more_active_slots_than_blocks_rejected(self) -> None:
+        header, body = _fixture()
+        changed = bytearray(header)
+        changed[0x20 + 127 * 16] = 1
+        with self.assertRaisesRegex(VabInventoryError, "active program slots"):
+            inventory_vab(bytes(changed), body)
+
     def test_bank_local_tone_to_sample_and_loop_metadata(self) -> None:
         header, body = _fixture()
         result = inventory_vab(header, body, header_path="synthetic.VH", body_path="synthetic.VB")

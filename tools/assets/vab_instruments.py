@@ -81,7 +81,14 @@ def inventory_vab(header: bytes, body: bytes, *, header_path: str = "", body_pat
         )
     if len(header) < TONE_TABLE_OFFSET + programs * TONES_PER_PROGRAM * TONE_RECORD_SIZE:
         raise VabInventoryError("truncated program/tone attribute tables")
-    if sum(header[PROGRAM_TABLE_OFFSET + i * PROGRAM_RECORD_SIZE] for i in range(programs)) != int(meta["tone_count_field"]):
+    counts = [header[PROGRAM_TABLE_OFFSET + i * PROGRAM_RECORD_SIZE]
+              for i in range(PROGRAM_TABLE_ENTRIES)]
+    if any(count > TONES_PER_PROGRAM for count in counts):
+        raise VabInventoryError("program declares more than 16 tones")
+    active_slots = [index for index, count in enumerate(counts) if count]
+    if len(active_slots) > programs:
+        raise VabInventoryError("active program slots exceed stored tone blocks")
+    if sum(counts) != int(meta["tone_count_field"]):
         raise VabInventoryError("program tone counts do not sum to the VAB effective-tone count")
 
     samples: list[dict[str, Any]] = []
@@ -98,7 +105,12 @@ def inventory_vab(header: bytes, body: bytes, *, header_path: str = "", body_pat
         })
 
     program_rows: list[dict[str, Any]] = []
-    for program_index in range(programs):
+    # Shipped SDK func_8008C210 scans all 128 ProgAtr slots and assigns an
+    # ordinal only to nonempty slots (8008C3F4..8008C414). Consumers use
+    # this ordinal, not the MIDI program number, to address tone blocks.
+    packed_ordinals = {slot: ordinal for ordinal, slot in enumerate(active_slots)}
+    sparse = active_slots != list(range(len(active_slots)))
+    for program_index in active_slots if sparse else range(programs):
         offset = PROGRAM_TABLE_OFFSET + program_index * PROGRAM_RECORD_SIZE
         raw = header[offset:offset + PROGRAM_RECORD_SIZE]
         tone_count = raw[0]
@@ -117,7 +129,7 @@ def inventory_vab(header: bytes, body: bytes, *, header_path: str = "", body_pat
             "tones": [],
         }
         for tone_index in range(tone_count):
-            tone_offset = TONE_TABLE_OFFSET + (program_index * TONES_PER_PROGRAM + tone_index) * TONE_RECORD_SIZE
+            tone_offset = TONE_TABLE_OFFSET + (packed_ordinals[program_index] * TONES_PER_PROGRAM + tone_index) * TONE_RECORD_SIZE
             tone = header[tone_offset:tone_offset + TONE_RECORD_SIZE]
             owner_field, vag_index = struct.unpack_from("<HH", tone, 20)
             if owner_field != program_index:

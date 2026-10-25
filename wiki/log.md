@@ -2326,3 +2326,7 @@ Applied seven T-29016 setup/store/test files after independent resolution of ree
 ## [2026-10-25] build | Establish native startup path failure
 
 Installed the reviewed direct development launcher and built a code-only macOS export from accepted New Game sources. A uniquely identified native headless process confirms an empty physical resource root, which turns the existing project-containment prefix into a rejection of all absolute paths. Shared exported-path handling is now a concrete implementation task; content checks were not bypassed. See [[tickets/T-29015-desktop-development-player]].
+
+## [2026-10-25] build | Read sparse original VAB banks
+
+Applied the reviewed two-file sparse VAB reader/test packet after root replay matched the original SDK/corpus proof. Installed tests pass normally and optimized. PRO_VOL and UNDOKAI inventory now succeeds; prior 118 outputs are unchanged and YUUEN remains explicitly rejected. Recorded the exact 121 paired-entry audit separately from earlier selected exports. See [[assets-media]] and [[tickets/T-28006-sequence-music-export]]. Playback/backend readiness remains open.
