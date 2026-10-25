@@ -2302,3 +2302,15 @@ Published the reviewed source-backed report in [[widescreen-settings]], linked t
 ## [2026-10-25] build | Publish live HUD candidate captures
 
 Inspected and published two actual Godot-rendered command/activity images from the T-29010 app successor to the existing local visual page. Default developer text is absent; original UI and scene content remain visible. These are candidate port captures, not original-emulator screenshots or a full-frame parity claim. Independent app/source review continues before canonical integration; the full-port percentage is unchanged.
+
+## [2026-10-25] setup | Prepare repeatable native launch
+
+Prepared an isolated direct-executable wrapper for [[tickets/T-29015-desktop-development-player]] to remove Launch Services process ambiguity during native export checks. It is a development aid, not the final install flow or an accepted native launch. Canonical runtime and original assets remain unchanged.
+
+## [2026-10-25] build | Integrate minimal New Game presentation
+
+Applied reviewed T-29012 cleanup v2 after both review axes resolved the permanent control-banner finding. All beforeimages and proof pins match. Installed eight UI/diagnostic, 85 controller, five shared and 13 actual rendered checks pass. Runtime validation and source initialization are unchanged. See [[tickets/T-29012-native-new-game-initialization]].
+
+## [2026-10-25] build | Repair candidate setup control layout
+
+Actual T-29016 rendering at 640x480 exposed offscreen import/cancel controls. Root's separate candidate v3 wraps the buttons; the actual scene now keeps all five within the window and passes the 55 flow assertions with required original fixture mounted read-only. Original setup fixes and this finite layout change await independent verification. Nothing is applied to the canonical setup flow; no packaged importer exists yet. See [[tickets/T-29016-first-launch-original-import]].

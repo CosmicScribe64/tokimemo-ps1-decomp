@@ -46,3 +46,7 @@ Actual CD transport, driver readiness delivery, playback, native function timing
 ## Player-facing UI direction (2026-10-25)
 
 User wants the finished app to feel like a game, not a developer tool. Remove default diagnostic headings, raw state/RNG/indices, implementation explanations and permanent control banners as scene integration proceeds. Debug information remains available only on request or in logs. Original game menus/dialogue remain; setup/settings/errors use concise useful copy. The current placeholder layout is not the target design. HUD and New Game owners have this requirement.
+
+## Entry presentation cleanup integrated (2026-10-25)
+
+Root applied the independently approved four-file v2 packet, manifest `74757a37da862316018747f9b517063476899c29a67b6ed681c82d8638e0ba58`. Normal entry screens omit persistent instructions, raw state/RNG and development paragraphs; technical diagnostics are opt-in or logged on load failure. Profile fields use readable values. Controller, initialization and original-data validation remain unchanged. Canonical execution passes eight UI/diagnostic checks, 85 controller checks, five shared suites and 13 actual Mesa-rendered UI checks. Evidence is `entry-ui-cleanup-v2/canonical-proof/` under the ignored T-29012 state directory. This does not complete the prologue or establish native macOS startup.
