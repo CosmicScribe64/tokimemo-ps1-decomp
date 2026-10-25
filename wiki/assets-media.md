@@ -558,3 +558,22 @@ docker run --rm --cpus=2 -v "$PWD:/work" -w /work tokimemo-decomp-arm64 \
 The installed CLIs validate both modes and repeat with identical bytes. Default JSON output has 63 package files plus its manifest, SHA256 `01ead6204dbbf07e1e9182abe74bea927e66f6c126f9d5c33e01b61b0a159c72`. Audition output has 63 package files, 177 MIDI files and its manifest, SHA256 `ac57d1e8fee63aeb6e3bd4d0c91e56905bdcd3bf2dd951e5f2c5d92a45464c56`. All 63 original input hashes remain unchanged. Raw/native/event/identity data and MIDI payloads match the reviewed packet; only embedded output paths and their dependent JSON checksums/sizes change when relocating outputs. No source or semantic difference is hidden by that comparison.
 
 The composed suite passes 498 Docker tests without skips, including fifteen music test methods; independent native/boundary/forgery probes also pass. All four applied files match their captured after-images, and the application preserves all 34,953 other tracked files. Current-corpus event decoding is complete; this does not close the broader media/music ticket or prove unused formats, runtime bank binding or rendered sound.
+
+## Conditional sequence-bank provenance (2026-10-25)
+
+The reviewed conditional bank provenance exporter is applied. The exporter verifies all 63 original ISO SEQs by canonical path, size and SHA-256. It records 53 load requests across 45 paths; 18 have no candidate. Evidence covers 133 source calls (114 literal, 19 dynamic), 91 source pins, 24,373 native words, 839 SDK words, six tables, and 159 joins to 139 ISO records. The 177 physical entries retain 1,008 distinct runtime-slot aliases. Playback assignments are null pending successful read/cache, VAB construction/slot and epoch, pack, and sequence selection. Channel initial program is its channel-indexed VAB program; this does not imply General MIDI identity. UNDOKAI2 co-loading does not prove KARI/NININ playback. No WAV/SF2, hardware parity, or playback claim.
+
+Run against the validated sequence catalog; outputs stay ignored:
+
+```sh
+tools/docker.sh python3 -m tools.assets.sequence_bank_export \
+  --sequence-manifest .asset-cache/music/current-v9-json/manifest.json \
+  --output-dir .asset-cache/music/bank-provenance/current-v3
+tools/docker.sh python3 -m tools.assets.sequence_bank_validate \
+  --sequence-manifest .asset-cache/music/current-v9-json/manifest.json \
+  --output-dir .asset-cache/music/bank-provenance/current-v3
+```
+
+The bundled profile is source evidence: every current source/native/ISO fact is rechecked, without importing ignored investigation or reviewer files. All 437 unchanged C files yield the same call identities and graph when their filesystem creation order is reversed. A fresh otherwise-valid export of either a changed context-bearing or unresolved SEQ rejects against original ISO identity. Independent native correctness and Standards reviews pass; the coherent installed suite passes 528 tests without skips. Keep T-28006 In Progress.
+
+Root installed CLI export/validation and deterministic repeats pass against both the reviewed and current v9 catalogs. The reviewed-input graph reproduces SHA256 `19d33755ac398bbd5a20b7fe01d0a0802d3d1af469d3eeb85c0b065365c9a5ea` exactly. The current-catalog graph has SHA256 `05cc38d342b32503ebf1165972fc9874205a0550120e0d7e852878b2e54e18b6` and manifest `1ac1a849d009cfefb6e6c231ae6ca002753185f1e7b2939bda46ec61c22378d6`; only the selected catalog hash differs between graphs. All 63 original SEQ inputs are unchanged. Numeric evidence is ignored `T-28006/bank-v3-live-cli-proof.json`.
