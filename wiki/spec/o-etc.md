@@ -6,7 +6,9 @@ sources: ["src/ovl/ETC/", "include/ovl/ETC.h", "config/renames/proposals/o-etc.t
 
 # Overlay ETC: port spec (exams, career talks, ending tail, album)
 
-Phase 2 analysis of `src/ovl/ETC` ([[tickets/T-27029-p2-o-etc]], phase [[tickets/T-27000-phase-2]]). Rename table: `config/renames/proposals/o-etc.tsv` (779 rows: 394 func, 233 data, 114 const, 18 field, 14 file, 6 type; 5 start with HYPOTHESIS; the 651 func, data, field and type rows pass `tools/rename.py plan`, file and const rows go through their own subcommands). Sources: the matched C of all 13 files, `include/ovl/ETC.h`, the callers in `src/main`, `src/ovl/ENDING` and `src/ovl/OPTION`, the data tables of the overlay, the core, scheduler and sysmenu specs, and the emulator. Facts are as the matched C implements them; a claim of game meaning that the code does not prove is marked HYPOTHESIS. Scope (user decision 2026-10-24): game logic fully, hardware layer (GPU primitives, VRAM copies, CD reads, sound driver, 3D matrices) only at module level.
+Phase 2 analysis of `src/ovl/ETC` ([[tickets/T-27029-p2-o-etc]], phase [[tickets/T-27000-phase-2]]). `config/renames/proposals/o-etc.tsv` is an untrusted mixed-kind draft, not the executable packet. For T-27065, its supported symbol rows were separated into `config/renames/proposals/o-etc-apply.tsv`; its 114 constant candidates and 13 file rows stay out of that five-column table. No applied `config/renames/ETC.txt` ledger was present when this reconciliation began, so existing source spellings remain authoritative until a reviewed table is applied. The corrected packet has 681 rows (394 func, 270 data, 11 overlay-owned fields, 6 types); its read-only Docker plan exits 0. The ETC prefix map is now closed by the root ADR update, and independent review approved the complete symbol packet after the 14 misc-prefix corrections. The separate constant-site and file candidates remain deferred to their own review and scope decisions. Source census found 393 ANSI-style definitions plus the one K&R definition `func_8013E1DC`, covering all 394 function rows. The old draft's constant and file rows remain leads only.
+
+Sources: the matched C of all 13 files, `include/ovl/ETC.h`, the callers in `src/main`, `src/ovl/ENDING` and `src/ovl/OPTION`, the overlay data tables, the core, scheduler and sysmenu specs, and the emulator. Facts are as the matched C implements them; a claim of game meaning that the code does not prove is marked HYPOTHESIS. Scope (user decision 2026-10-24): game logic fully, hardware layer (GPU primitives, VRAM copies, CD reads, sound driver, 3D matrices) only at module level.
 
 Emulator use: `tools/emu` with a local wrapper (build/emu/poke_run.py, not committed) that pokes the overlay target mode, calendar bytes, parameters and event log into the title-menu save state, so each ETC mode could be started directly. Checked this way: exam day score arithmetic (printed values), the results ranking (printed values and the screen), staff roll (both variants), last photo and the all-clear photo, save prompt, album pages, entrance exam result byte (pass, fail and job cases), remedial week flag and calendar marker. Screenshots stayed in `build/emu/` (ignored); nothing from them is quoted here.
 
@@ -26,9 +28,9 @@ ETC is a grab bag of seven scene entries that share one overlay file (0x30000 by
 
 The core placeholders `MODE_ETC_C2`, `_C3`, `_C4` are replaced by `MODE_STAFF_ROLL`, `MODE_LAST_PHOTO`, `MODE_CLEAR_SAVE` (const rows). Evidence for the names: disc directories `STAFF2` (per-girl 13-sector art files), `LASTPHOT` (13 files of 33 sectors plus one of 49 sectors, the sizes read by `last_photo_load_step`), the on-screen result in the emulator.
 
-Naming decision (user, binding: overlay-own symbols take the overlay's prefix in English form; use the prefix the knowledge base proposes and say so): the knowledge base proposes the overlay name in lower case (`etc_`). A prefix made of an abbreviation tells nothing here because the overlay mixes unrelated scenes, so every scene gets its own English stem and `etc_` stays only for the few shared leftovers: `exam_`, `career_guidance_`, `career_choice_`, `staff_roll_`, `last_photo_`, `clear_save_`, `album_` (with `album_save_` for its card flow and `album_anim_<scene>_` for the animation packs), `etc_` (button labels, SD packs, unused skip helpers and stubs), `confession_judge_stub_`, `confession_scene_stub_`, `epilogue_stub_` for the dead stubs. Types: `Exam*`, `Album*`. Constants take the scene stem in upper case. Source folder `src/ovl/etc/` (lower-case overlay label; the file names carry the scene names, section 9).
+Naming reconciliation: the approved ETC prefixes are `exam_`, `career_`, `album_`, `system_file_`, `staff_roll_`, `last_photo_`, `clear_save_`, `confession_`, `epilogue_` and `misc_`. `confession_` and `epilogue_` are scoped to the unused developer stubs; `misc_` covers shared helpers and the unused calendar functions. Types follow the listed map as `Exam*` and `Album*`; the POLY_F4 layout candidate uses `AlbumPolyF4View` to retain the owning type stem. C-file renames are applied, while `src/ovl/misc_scenes/` remains a later, separate directory-only batch.
 
-Dead code: 25 functions in `80132000.c` (three stub scenes), 2 in `8014C2D0.c`, `func_8013F77C` and three animation table setters are never called (section 8).
+Dead code: 25 functions in `80132000.c` (three stub scenes), 2 in `calendar_skip_and_resume.c`, `func_8013F77C` and three animation table setters are never called (section 8).
 
 ## 2. How the scenes connect to the game
 
@@ -47,7 +49,7 @@ OPTION (album item) -> album (0x91) -> album save (stage 0xFF) -> title (0x12) w
 - `options_dirty` (core name of `GameState` +0x1124) is used by every ETC tail scene as "this session came through the OPTION screens, so there is no live play to save": nonzero skips the clear save and the album save and sends the player to the title (section 6.5, question 2).
 - `current_girl` is the girl of the ending that just finished (staff roll, last photo, clear save) or the album girl. A value of 13 or more means "no girl"; `last_photo_leave_to_title` and `album_save_step_write` add 0x10 to mark the album as shown.
 
-Main services the unit calls (core, h-* and m-* names): `main_step_next`, `main_step_set`, `main_stage_next`, `main_stage_set`, `main_state_set`, `day_event_next`, `message_window_set_title`, `text_system_reset`, `set_kanji_string`, `k_disp_start`, `gnsx`/`sndisp` (speaker plate and narration), `xa_wait`, `x_taku_menu_set` / `x_taku_string_set` / `menu_girl_taku_set` / `menu_check` / `menu_bar_show` (choice menus), `snd_command`, `snd_bank_load_start` / `snd_bank_load_poll` / `snd_bank_start`, `cd_read_sectors`, `cd_read_sync_status`, `xa_clip_request_set`, `dec_bg_cd_read` / `dec_bg_decode` / `dec_bg_draw`, `bustup_build`, `bustup_face_update`, `event_anim_show`, `biorhythm_value`, `girl_scores`, `calendar_advance_day`, `rand`, the card functions (`card_start`, `card_stop`, `func_80053F04`, `func_80054140` ...). Main functions used here that no proposal names yet: `func_80053F04`, `func_80054108`, `func_80054140`, `func_80054284`, `func_80054388`, `func_8005448C`, `func_80054590`, `func_80054694`, `func_80054704`, `func_80054E6C`, `func_800552DC`, `func_80055A38`, `func_800536AC` (memory card save/load steps), `func_80061710`, `func_80061790`, `func_800618B0`, `func_8004111C`, `func_8009C5E0` (display setup), `func_800A0140` (the cosine call: emu printed cos(1871 / 4096 turn) = -3946 of 4096; next to `rsin`, so it is `rcos`).
+Main services the unit calls (core, h-* and m-* names): `mode_step_next`, `mode_step_set`, `mode_stage_next`, `mode_stage_set`, `game_mode_set`, `day_event_next`, `message_window_set_title`, `text_system_reset`, `set_kanji_string`, `k_disp_start`, `gnsx`/`sndisp` (speaker plate and narration), `xa_wait`, `x_taku_menu_set` / `x_taku_string_set` / `menu_girl_taku_set` / `menu_check` / `menu_bar_show` (choice menus), `audio_command`, `audio_bank_load_start` / `audio_bank_load_poll` / `audio_bank_start`, `cd_read_sectors`, `cd_read_sync_status`, `xa_clip_request_set`, `dec_bg_cd_read` / `dec_bg_decode` / `dec_bg_draw`, `portrait_build`, `portrait_face_update`, `event_anim_show`, `biorhythm_value`, `girl_scores`, `calendar_advance_day`, `rand`, the card functions (`card_start`, `card_stop`, `func_80053F04`, `func_80054140` ...). Main functions used here that no proposal names yet: `func_80053F04`, `func_80054108`, `func_80054140`, `func_80054284`, `func_80054388`, `func_8005448C`, `func_80054590`, `func_80054694`, `func_80054704`, `func_80054E6C`, `func_800552DC`, `func_80055A38`, `func_800536AC` (memory card save/load steps), `func_80061710`, `func_80061790`, `func_800618B0`, `func_8004111C`, `func_8009C5E0` (display setup), `func_800A0140` (the cosine call: emu printed cos(1871 / 4096 turn) = -3946 of 4096; next to `rsin`, so it is `rcos`).
 
 ## 3. Final exams (mode 0x35)
 
@@ -63,18 +65,18 @@ State is kept in `exam_work` (type `ExamWork`, view of main's 0x40-byte scratch 
 |---|---|---|---|
 | 0 | 0 | `exam_setup_init_screen` | clears actors, hides icons, shows the title, starts loading the exam sound bank pair on the first exam day (Monday, or the record two back in the queue is not an exam; `queue_back2` is the `ExamQueueView` view that starts two records before `day_events`) |
 | 0 | 1-2 | `exam_setup_background_start`, `_wait` | waits for the bank and starts BGM 0x205 (later days: only if none plays), classroom background (resource 0x3FA4) from CD or cache, decode, brighten |
-| 0 | 3 | `exam_setup_scores_reset` | Monday: zero `exam_work` arrays; `main_stage_next` |
-| 1 | by weekday 0-4 | `exam_day_step_language` .. `exam_day_step_art` | steps 0 SD pack, 1 start, 2 wait, 3 comment, 4 `main_stage_next` |
+| 0 | 3 | `exam_setup_scores_reset` | Monday: zero `exam_work` arrays; `mode_stage_next` |
+| 1 | by weekday 0-4 | `exam_day_step_language` .. `exam_day_step_art` | steps 0 SD pack, 1 start, 2 wait, 3 comment, 4 `mode_stage_next` |
 | 1 | by weekday 5 | `exam_results_step` | steps 0 show, 1 react, 2 wait |
 | 2 | 0 | `exam_end_init` | panel init, clears the upper actors |
-| 2 | 1 | `exam_end_leave` | Saturday returns to the main sound bank (`snd_bank_start(0, 0)`); `day_event_next(0)` |
+| 2 | 1 | `exam_end_leave` | Saturday returns to the main sound bank (`audio_bank_start(0, 0)`); `day_event_next(0)` |
 
 An exam day (weekday 0-4):
-- step 0 `exam_day_sd_pack_load`: reads the 9-sector SD pack of the season (LBA 0x7D78 in months 6-9, else 0x7D81, both in `etc_sd_pack_lba_other` and the word before it) to 0x801E0000 and binds it (`addr_init_else_sd`).
+- step 0 `exam_day_sd_pack_load`: reads the 9-sector SD pack of the season (LBA 0x7D78 in months 6-9, else 0x7D81, both in `misc_sd_pack_lba_other` and the word before it) to 0x801E0000 and binds it (`addr_init_else_sd`).
 - step 1 `exam_day_start_<subject>`: one narration line that names the subject (day 1 language, 2 math, 3 science, 4 social studies, 5 art), then `exam_score_day()`; a grade below 2 sets the player's face to the sad frame set (`exam_player_face_set(1)`), else the happy one.
 - step 2 `exam_day_wait_anim`: at step_timer 0x20 forces the face animation flag, then plays SE 0x601 (happy) or 0x602 (sad) once and waits 0x11 frames.
 - step 3 `exam_day_comment`: one of five narration lines chosen by the day's grade (hopeless, weak, fair, good, perfect), waits for the text.
-- step 4: `main_stage_next` (stage 2, which ends the scene with `day_event_next(0)` and returns to the queue reader).
+- step 4: `mode_stage_next` (stage 2, which ends the scene with `day_event_next(0)` and returns to the queue reader).
 
 ### 3.3 The day score (`exam_score_day`)
 
@@ -132,7 +134,7 @@ The panel draws value and rank digits with `exam_number_draw` (8x12 digit sprite
 
 | rule | message | BGM | flags |
 |---|---|---|---|
-| red marks 3 or more | forced remedial week | 0x203 | `player_flags` bit 16 (`remedial_week`) and bit 17 (`exam_poor_result`) set, `month_calendar[0].marker[day + 1] = 0x17` |
+| red marks 3 or more | forced remedial week | 0x203 | `player_flags` bit 16 and bit 17 are set; core exposes these positions as bits, not overlay-owned field names, `month_calendar[0].marker[day + 1] = 0x17` |
 | `exam_rank_player` below 2 | top of the class | 0x204 | none |
 | `exam_player_in_lower_half` (row 7 or lower) | exam finished | 0x200 | bit 17 set |
 | else | exam finished | 0x201 | none |
@@ -151,7 +153,7 @@ Bit 17 is cleared every results frame before the test. Emulator: 3 red marks lef
 | `exam_ranking_order` | s32[14] | person id by position |
 | `exam_ranking_rank` | s32[14] | displayed rank number; aliases `exam_rank_friend`, `exam_rank_miharu`, `exam_rank_player` |
 | `exam_row_x`, `exam_row_y` | s16[14] | row positions; `exam_digit_u` u8[10] digit u offsets |
-| `etc_sd_pack_lba_other` | u32[2] | LBAs 0x7D81 and 0x7D8A of two 9-sector SD packs (disc dir ETC_SD); the word before it, 0x7D78, is the summer pack (index -1) |
+| `misc_sd_pack_lba_other` | u32[2] | LBAs 0x7D81 and 0x7D8A of two 9-sector SD packs (disc dir ETC_SD); the word before it, 0x7D78, is the summer pack (index -1) |
 
 ## 4. Career guidance (mode 0x36)
 
@@ -163,7 +165,7 @@ One conversation with the teacher at the start of year 97 (the first narration l
 - `career_guidance_assess_params` counts parameters 1-7 (liberal arts, science, art, athletics, trivia, looks, guts) whose value is at least 101 (`CAREER_PARAM_HIGH`) and fills four counters: `career_guidance_academic_deficit` (0-3: liberal arts, science and art below 101), `career_guidance_body_mind_deficit` (athletics below 101 adds 1, guts below 101 adds 2), `career_guidance_trivia_deficit`, `career_guidance_looks_deficit` (1 each).
 - count 7: an optimistic line, then straight to stage 2. Count 0: a pessimistic line, then only the closing remarks. Otherwise a neutral line followed by one remark per deficit (academic 1/2/3 has three wordings, body and mind 1/2/3 three, trivia one, looks one).
 - `career_guidance_closest_girl`: from `girl_scores` closeness it takes the met girl 1-10 with the highest closeness strictly above 60 (`CAREER_CLOSE_GIRL_MIN`); if one exists, `current_girl` is set to her and a remark names her (girl 0 is not considered).
-- Last line: a resolve to try hard; `main_stage_next`.
+- Last line: a resolve to try hard; `mode_stage_next`.
 
 **Stage 2** `career_guidance_question` / `career_guidance_choice_menu`: two narration lines of the player (the consultation is today; what should he do) and then a 3-choice menu (university, job, look at others). Circle on choice 0 goes to stage 4, 1 to stage 5, 2 to stage 3.
 
@@ -213,13 +215,13 @@ correct = s >= career_choice_threshold[(start + q + 1) % 12]
 
 Emulator: liberal arts, science, art 120, trivia and looks 70, tier 0 gave result 1.
 
-**Club dream**: `career_choice_mastered_club` returns the first club 0-10 whose `ClubFlagBits.award_count` is 3 or more and whose `mastered` bit is set (names are HYPOTHESIS). In the matched C the counter is raised only by MASTER (club 6), the queue builder (club 11) and DATE (club 11), so only club 6 can qualify, although the dream texts exist for all 12 (`career_club_dream_name`, `career_club_dream_line`; question 6). Choosing it prints the dream line and writes 0x40 or 0xC0 without an exam.
+**Club dream**: `career_choice_mastered_club` returns the first club 0-10 whose `ClubFlagBits.club_progress_grade` is 3 or more and whose separate `ClubFlagBits.b30` bit is set. `club_progress_grade` is the current canonical field name for the two-bit progression grade/count; interpreting `b30` as `mastered` remains a HYPOTHESIS. In the matched C the grade is raised only by MASTER (club 6), the queue builder (club 11) and DATE (club 11), so only club 6 can qualify, although the dream texts exist for all 12 (`career_club_dream_name`, `career_club_dream_line`; question 6). Choosing it prints the dream line and writes 0x40 or 0xC0 without an exam.
 
 ## 6. The ending tail (modes 0xC2, 0xC3, 0xC4)
 
 ### 6.1 Staff roll (0xC2)
 
-Stage 0 loads, stage 1 runs. `staff_roll_load_step` (22 substeps) picks the variant: `staff_roll_variant` is 1 (3D variant) when exactly one of `etc_all_girls_cleared()` and "triangle held" is true, else 0 (picture slideshow). `etc_all_girls_cleared` is true when each of girls 0-12 has a nonzero ending counter in `girl_cleared` or in `system_data.flags`. The loader reads two art sets (the 3D variant uses LBAs near 0x7BD0, the picture variant LBAs near 0xB2CC; 13 sectors per file) and palettes. If `current_girl` is 13 or more at the start it jumps to mode 0xC4 (or 0x12 when `options_dirty`).
+Stage 0 loads, stage 1 runs. `staff_roll_load_step` (22 substeps) picks the variant: `staff_roll_variant` is 1 (3D variant) when exactly one of `misc_all_girls_cleared()` and "triangle held" is true, else 0 (picture slideshow). `misc_all_girls_cleared` is true when each of girls 0-12 has a nonzero ending counter in `girl_cleared` or in `system_data.flags`. The loader reads two art sets (the 3D variant uses LBAs near 0x7BD0, the picture variant LBAs near 0xB2CC; 13 sectors per file) and palettes. If `current_girl` is 13 or more at the start it jumps to mode 0xC4 (or 0x12 when `options_dirty`).
 
 Common to both: the CD clip and BGM start (`staff_roll_music_start`), seven scrolling credit-line actors (`staff_roll_credit_lines_update`: one pixel up per frame, a line that left the top takes the next of the 0x11D table entries `staff_roll_credit_table` (frame index, x)), and the exit rule: after at least 0x259 frames and when the CD clip is done (`cd_state & 2`) the scene moves on (`staff_roll_models_leave`: fade, then mode 0x12 when `current_girl` is 13 or more, else 0xC3).
 
@@ -231,17 +233,17 @@ Variant 1 (3D): `staff_roll_models_step` shows the art of one girl per 701-frame
 
 ### 6.3 Clear save (0xC4)
 
-Stage 0: boot data and HUD textures, then "save this play?" with yes on circle and no on cross (waits 0x80 frames); yes starts the card check and enters stage 1, no enters stage 2. Stage 1 is the memory-card flow: step 0 card check and directory (result 1 ok, 0xF1 unformatted card goes to step 0xA0, 0xFF or a timeout of 0x200 frames goes to step 0xFF), step 1 builds the 14-slot menu (clone of the main save screen), step 2 selects a slot (circle on an empty slot tests that a file can be created; a new slot goes through step 0xC0), step 3 writes. `clear_save_write_step` first adds 1 (cap 99) to `girl_cleared[current_girl & 0xF]` and to `system_data.flags[...]`, then writes the slot, and the system file when the slot directory lives in system data, then stage 2 fades out and starts mode 0x11. Error steps: 0xA0 (unformatted, offer to format or use another card), 0xF0 (no free space, offer another card), 0xFF (no card recognised, press a button and retry).
+Stage 0: boot data and HUD textures, then "save this play?" with yes on circle and no on cross (waits 0x80 frames); yes starts the card check and enters stage 1, no enters stage 2. Stage 1 is the memory-card flow: step 0 card check and directory (result 1 ok, 0xF1 unformatted card goes to step 0xA0, 0xFF or a timeout of 0x200 frames goes to step 0xFF), step 1 builds the 14-slot menu (clone of the main save screen), step 2 selects a slot (circle on an empty slot tests that a file can be created; a new slot goes through step 0xC0), step 3 writes. `clear_save_write_step` first adds 1 (cap 99) to `girl_cleared[current_girl & 0xF]` and `system_data.flags[...]`, before writing the slot and, when needed, the system file. The counters are not rolled back if the write fails; they record an attempt by the save flow, not only a successful saved clear. On success stage 2 fades out and starts mode 0x11. Error steps: 0xA0 (unformatted, offer to format or use another card), 0xF0 (no free space, offer another card), 0xFF (no card recognised, press a button and retry).
 
-Settles core question 1: `girl_cleared` (`GameState` +0x53C) and `system_data.flags` are per-girl ending counters (cap 99), +1 per saved clear of that girl; the saved copy persists across new games through the system file. `girl_cleared[girl] & 1` also picks the album closing voice.
+`girl_cleared` (`GameState` +0x53C) and `system_data.flags` are per-girl ending counters (cap 99), incremented before the clear-save routine attempts the file write; the saved copy persists across new games through the system file. `girl_cleared[girl] & 1` also picks the album closing voice.
 
 ### 6.4 Memory-card prompt helpers
 
-`etc_card_confirm_label` and `etc_card_cancel_label` return the button labels shown in the yes/no lines: pad gives circle and cross, mouse gives the right or left button by `confirm_button` (opposite for cancel). `etc_card_yes_text` and `etc_card_no_text` are the two label strings.
+`misc_card_confirm_label` and `misc_card_cancel_label` return the button labels shown in the yes/no lines: pad gives circle and cross, mouse gives the right or left button by `confirm_button` (opposite for cancel). `misc_card_yes_text` and `misc_card_no_text` are the two label strings.
 
 ### 6.5 `options_dirty`
 
-ENDING (`src/ovl/ENDING/80137340.c`) jumps to mode 0xC2 when it is nonzero, OPTION sets it to 1 on entry (`func_80132BA8` case 0) and ORs option groups into it, and NAME_ENT clears it for a new game. In ETC it always means "no live play": `album_save_step_begin` leaves to the title, `staff_roll_*` and `last_photo_*` skip the save, `album_event_record_load` reads the saved copy instead of the live event log, and `album_cleared_level` returns 0.
+ENDING jumps to mode 0xC2 when it is nonzero, OPTION sets it to 1 on entry (`func_80132BA8` case 0) and ORs option groups into it, and NAME_ENT clears it for a new game. In ETC it always means "no live play": `album_save_step_begin` leaves to the title, `staff_roll_*` and `last_photo_*` skip the save, `album_event_record_load` reads the saved copy instead of the live event log, and `album_cleared_level` returns 0.
 
 ## 7. Album (mode 0x91)
 
@@ -250,8 +252,8 @@ ENDING (`src/ovl/ENDING/80137340.c`) jumps to mode 0xC2 when it is nonzero, OPTI
 A photo album of the events of one girl. The source is a list of up to 256 records: `event_log` while a play is running (`options_dirty` is 0, `current_girl` = the finished ending's girl), or the copy stored in `system_data` +0x58 (0x800 bytes) when entered from OPTION (`current_girl` is read from the first record's girl byte). A record is an 8-byte `AlbumLogEntry`: `girl`, `scene`, `category`, `mood`, `year`, `month`, `day`, `weekday` (core `EventLogEntry` uses the same `scene` and `category` names for these bytes; its `rank` byte is `mood` here). The viewer skips records of other girls and empty records (year 0).
 
 Per record `album_event_record_load` fills `album_event_*` and the season (`album_event_season`: months 3-5 spring, 6-8 summer, 9-11 autumn, 12-2 winter). `album_event_picture_select(category, scene, girl, season)` decides how it is shown:
-- a portrait file (`album_event_is_portrait` = 1): `album_portrait_start_*` read an LBA from a per-girl table (seasonal tables, school-wear tables by month, ordinal tables) and start the portrait read; the portrait is built with the record's mood (`bustup_build`);
-- an animation (category 2, or category 8 scenes 0xE and 0x46): `album_anim_<scene>_show` binds the six image buffers of the pack that was read from `album_anim_lba[scene]` / `album_anim_sectors[scene]` and starts it with `event_anim_show`; 72 packs; the `album_anim_<scene>_tables_set` functions write the pointer block (`album_anim_<scene>_ptrs`: tpage table, frame table, sequence table, frame count, palette, six image buffers) into its label block (each `_show` function calls the `tables_set` of its own pack, except `album_anim_0d_show` and `album_anim_2d_show`, which call the 0C and 2C ones, and `album_anim_4b_show`, which sets no tables and passes 0, 0, 0, 0 to `event_anim_show`);
+- a portrait file (`album_event_is_portrait` = 1): `album_portrait_start_*` read an LBA from a per-girl table (seasonal tables, school-wear tables by month, ordinal tables) and start the portrait read; the portrait is built with the record's mood (`portrait_build`);
+- an animation (category 2, or category 8 scenes 0xE and 0x46): `album_anim_<scene>_show` binds the pointer block read from `album_anim_lba[scene]` / `album_anim_sectors[scene]` and starts it with `event_anim_show`; the 72 setters have five assignment-count patterns: 59 write 11 fields, 5 write 13, 5 write 7, 2 write 18 and 1 writes 5. Three of the 13-assignment setters write contiguous Extended13 blocks; two write their own Standard11 block plus two fields in another scene block. The 7-assignment setters write a palette and six image pointers; the 5-assignment setter writes three tables, a count and a palette but no images; the 18-assignment seasonal setters write two palettes and two six-image sets. Each `_show` function calls its pack setter except `album_anim_0d_show` and `album_anim_2d_show`, which call the 0C and 2C setters, and `album_anim_4b_show`, which sets no tables and passes 0, 0, 0, 0 to `event_anim_show`;
 - the background (`album_event_background_load`): a CD read of the picture behind the girl from `album_background_lba_table[category][scene]`, with a few swaps by year and season.
 
 Where the records come from (`event_log_add(category, scene)` callers, by overlay): the album groups them by `category`, so the table below tells which scene produces which pictures.
@@ -280,7 +282,7 @@ Where the records come from (`event_log_add(category, scene)` callers, by overla
 
 | stage | step | function | what |
 |---|---|---|---|
-| 0 | 0 (14 substeps) | `album_load_step` | draw switches, banks, model and UI picture packs (0x69 sectors at LBA 0xB389), portrait strips, intro voice clip, fade in with the ALBUM title card, wait for circle, spin the model up to angle 0xC00, `main_stage_next` |
+| 0 | 0 (14 substeps) | `album_load_step` | draw switches, banks, model and UI picture packs (0x69 sectors at LBA 0xB389), portrait strips, intro voice clip, fade in with the ALBUM title card, wait for circle, spin the model up to angle 0xC00, `mode_stage_next` |
 | 1 | 0 | `album_playback_page_start` | skip to the first valid event of the page, request its resources |
 | 1 | 1-4 | `album_playback_photo`, `album_playback_photo_last` | the loaded photo is shown big, waits for circle only in secret modes 2 and 3 (modes 0 and 1 go on by themselves), then zooms into its cell (top-left, top-right, bottom-left, bottom-right) over 0x28 frames while the loader fetches the next record |
 | 1 | 5 | `album_playback_voice` | one voice clip of the girl chosen at random from her clip table (`album_voice_clips`, counts `album_voice_clip_count`: 21, 10, 9, 11, 14, 11, 8, 8, 8, 8, 10, 4, 8; never the previous clip, and a few clips excluded for girls 0, 2, 3, 4, 9); skipped for girls 11 and 12, who use `album_special_girl_voice` instead |
@@ -295,7 +297,7 @@ A page therefore holds four photos; the emulator showed them in a 2x2 grid with 
 
 ### 7.3 Secret mode
 
-`album_secret_mode` (0-3, starts at 0) is changed in `album_secret_mode_update`: in the intro (`album_phase` 0), when `etc_all_girls_cleared()` is true and pad 2 select or start is held, it becomes 1 and SE 0x50E plays; after the intro it becomes 2 (3 if it was 1) when the secret-code latch `D_800B3CFC` is set. Effects found in the code: modes 0 and 1 advance each photo by themselves, modes 2 and 3 wait for circle; modes 0 and 2 skip records of other girls (`album_event_skip_other_girls`), modes 1 and 3 do not, and read the previous record for the special girl-11 and girl-12 voices. HYPOTHESIS: bit 0 is the "show every girl's records" extra album unlocked by clearing all 13 girls, bit 1 a manual mode (question 7). Three more checks run each frame whose results are not used (`album_cleared_level`, `album_event_flag_count_check`, `album_all_met_check`).
+`album_secret_mode` (0-3, starts at 0) is changed in `album_secret_mode_update`: in the intro (`album_phase` 0), when `misc_all_girls_cleared()` is true and pad 2 select or start is held, it becomes 1 and SE 0x50E plays; after the intro it becomes 2 (3 if it was 1) when the secret-code latch `D_800B3CFC` is set. Effects found in the code: modes 0 and 1 advance each photo by themselves, modes 2 and 3 wait for circle; modes 0 and 2 skip records of other girls (`album_event_skip_other_girls`), modes 1 and 3 do not, and read the previous record for the special girl-11 and girl-12 voices. HYPOTHESIS: bit 0 is the "show every girl's records" extra album unlocked by clearing all 13 girls, bit 1 a manual mode (question 7). Three more checks run each frame whose results are not used (`album_cleared_level`, `album_event_flag_count_check`, `album_all_met_check`).
 
 ### 7.4 Album save (stage 0xFF)
 
@@ -303,43 +305,105 @@ Steps: 0 begin (to the title if `options_dirty`), 1 background (logo art, LBA 0x
 
 ## 8. Dead code
 
-- `80132000.c`: three stub scenes with the developer titles of a confession judgement flow, a confession scene flow and an epilogue flow. Each stage only sets a window title, shows the text screen and waits for pad bit 0x40 (or frame counter ends in 0x2FF); the flows end with `main_state_set(0x63)`, `(0xC1)` and `(0xC2)`. No entry or table references them (`func_80079070` has no such entry; mode 0xC1 has no handler).
-- `etc_unused_skip_week_a/b` (`8014C2D0.c`): advance the calendar six days and call `day_event_next(1)`.
+- `80132000.c`: three stub scenes with the developer titles of a confession judgement flow, a confession scene flow and an epilogue flow. Each stage only sets a window title, shows the text screen and waits for pad bit 0x40 (or frame counter ends in 0x2FF); the flows end with `game_mode_set(0x63)`, `(0xC1)` and `(0xC2)`. No entry or table references them (`func_80079070` has no such entry; mode 0xC1 has no handler).
+- `misc_unused_skip_week_a/b` (`calendar_skip_and_resume.c`): advance the calendar six days and call `day_event_next(1)`.
 - `album_debug_fill_miharu`: fills `girl_cleared` with 1 (girl 11 with 5), sets `current_girl` to 11 and writes five event records for girl 11: a fixture for testing the album.
 - `album_anim_unused_a/b/c_tables_set`: pointer blocks of animation packs that no scene plays.
 
 ## 9. Files and header
 
-| old | new | content |
-|---|---|---|
-| `src/ovl/ETC/8014ABD0.c` | `career_guidance.c` | mode 0x36 |
-| `801492C0.c` | `career_choice.c` | mode 0x37 |
-| `80146400.c` | `exam.c` | mode 0x35 |
-| `80143240.c` | `staff_roll_clear_save.c` | staff roll stages, clear save and last photo (propose splitting into three files) |
-| `80142B80.c` | `staff_roll_load.c` | staff roll loader |
-| `80140F50.c` | `album_save.c` | album save flow, card helpers, the 0xC2 entry |
-| `8013FF80.c` | `album_entry.c` | album entry and loader |
-| `8013BEF0.c` | `album_playback.c` | album stages 1 and 2 |
-| `8013B1F0.c` | `album_portrait_select.c` | portrait resource choice |
-| `8013F980.c` | `album_model.c` | model setup and number sprites |
-| `80132880.c` | `album_animations.c` | VRAM blur, fades, background loader, animation packs |
-| `80132000.c` | `unused_scene_stubs.c` | dead stubs |
-| `8014C2D0.c` | `unused_skip_week.c` | dead helpers |
-| `include/ovl/ETC.h` | `include/ovl/etc.h` | header |
+The file-only renames have been applied. C files remain in `src/ovl/ETC/`; the ADR's destination folder `misc_scenes` and header rename are later, separate batches.
 
-`include/ovl/ETC.h` holds about 800 externs for the animation pointer blocks (11 words per pack); a typed array `AlbumAnimPack packs[72]` would replace them once the unit is renamed (question 10).
+| current file | content |
+|---|---|
+| `career_guidance.c` | mode 0x36 |
+| `career_choice.c` | mode 0x37 |
+| `final_exam.c` | mode 0x35 |
+| `staff_roll_and_clear_save.c` | staff roll stages, clear save and last photo |
+| `staff_roll_asset_load.c` | staff roll loader |
+| `album_save_flow.c` | album save flow, card helpers, and the mode 0xC2 entry |
+| `album_mode_entry.c` | album entry and loader |
+| `album_playback.c` | album stages 1 and 2 |
+| `album_portrait_selection.c` | portrait resource choice |
+| `album_model_setup.c` | model setup and number sprites |
+| `album_effects_and_animations.c` | VRAM blur, fades, background loader, animation packs |
+| `confession_and_epilogue_handlers.c` | unused developer stubs |
+| `calendar_skip_and_resume.c` | unused six-day skip helpers |
+
+`include/ovl/ETC.h` holds about 800 externs for animation pointer-block members. The 72 setters have five assignment counts (5, 7, 11, 13 and 18), but that does not imply five uniform contiguous block layouts: two setters also write fields belonging to other scene groups. A single `AlbumAnimPack packs[72]` is not supported by the observed writes. A future hardware-data cleanup could use layout-specific records or retain the member labels as listed hardware residue; it must preserve the per-scene group layout and cross-block writes.
 
 ## 10. Open questions
 
 1. `girl_cleared` (`GameState` +0x53C) is settled here as a per-girl ending counter (6.3); a rename to `girl_clear_count` would say so better than the core name.
 2. `options_dirty` (core name) behaves in ETC as "came through OPTION; no live play". The name may mislead; the byte is OR-ed with option group bits by OPTION.
-3. Settled at the merge: core had named byte +1 `flag` and byte +2 `scene`, but `event_log_add` (`func_80085B3C`) stores its first argument at +2 and its second at +1, and every caller passes `(category, scene)`. `core.tsv` and [[spec/core]] now name them `scene` (+1) and `category` (+2), like `AlbumLogEntry`. The one difference left is byte +3: core says `rank` (the `get_g_zyotai_h` value), this table says `mood` (how the album uses it, modulo 6); the types are a merge candidate.
+3. The current `EventLogEntry` declaration in `include/game/day_event.h` names byte +1 `flag`, byte +2 `scene`, and byte +3 `rank`. `EtcConfig8` is an album-specific record view: its `category`/`scene` interpretation follows `event_log_add` callers, which pass `(category, scene)`. Its byte +3 view is `mood` because the album uses it modulo 6; the shared record still calls that byte `rank` (the value from `get_g_zyotai_h`). Keep the album-specific view difference explicit without treating its private labels as the shared ABI names.
 4. Exam ranking person 10 is drawn with the friend's name; girl 10's own value does not appear, yet the tokimeki bonus loop treats index 10 as girl 10. Intended or a mapping slip is unknown.
 5. `career_guidance_girl_plan_line` has 16 entries but the 12-item menu reaches 0-11: cursor 10 (girl 10) reads the friend's line, cursor 11 (rival) the rival's line; entries 14 and 15 are unreachable.
-6. The club dream path (`career_choice_club_dream`) needs `award_count` 3 and `mastered`; in the matched C only club 6 can reach 3 (MASTER), plus the no-club record. The dream texts exist for all 12 clubs. The names `award_count` and `mastered` are HYPOTHESIS.
+6. The club dream path (`career_choice_club_dream`) needs `club_progress_grade` 3 and the separate `b30` bit; in the matched C only club 6 can reach grade 3 (MASTER), plus the no-club record. The dream texts exist for all 12 clubs. The grade/count role is named; interpreting `b30` as `mastered` remains HYPOTHESIS.
 7. `album_secret_mode` and the latch `D_800B3CFC`: what sets the latch, and what modes 1-3 show to the player, was not run in the emulator.
-8. Bit 17 of `player_flags` (`exam_poor_result`) has no reader in the matched code.
+8. Bit 17 of `player_flags` is set by the exam results handler but has no reader in the matched code; keep it unexplained until the core owner proves its meaning.
 9. That the exam bonus for a finished library date means "studied together" is a guess; the category and scene ids themselves are read from DATE (see 3.3). The girl 11 case (category 0xB scene 0xF, logged by a DATE routine with the current spot id) and the girl 8 case (category 2 scene 0x3B, an animated event) were not traced to their scenes.
-10. The 72 animation packs were named by scene id; which event each pack shows was not checked (the emulator run used four fabricated records). The `.h` clutter suggests a table type.
+10. The 72 animation setter groups were named by scene id; which event each pack shows was not checked (the emulator run used four fabricated records). Their assignment counts are 5, 7, 11, 13 and 18, and two 13-assignment setters include two writes into other scene groups. Do not flatten them into one uniform type. The pointer members are hardware-facing pack wiring. All 37 career text labels now have role-based rows in `o-etc-apply.tsv`.
 11. `staff_roll_credit_table` pairs and the 701-frame segment timing depend on the CD clip length; the port may drive the scroll by time instead.
 12. Not renamed (main scope): `D_800B3CFC` (secret-code latch), `D_8011F553` (parameter panel flag bit 7 in the sprite state), `D_800E8BEE` (core: `slot_info_from_system_data`), `D_800E7D68` (first album record girl in `system_data`, read by OPTION), and the memory-card functions listed in section 2.
+
+### 10.1 Overlay data coverage and residue
+
+The Docker reference census found 950 distinct ETC-owned `D_` labels referenced by the C bodies. The initial 233 data rows covered 198 referenced labels plus 35 table-only roots. This packet adds all 37 previously unnamed career text definitions, bringing game-side named labels to 270 rows (235 referenced labels plus the same 35 roots). The remainder is classified below; it is not silently treated as complete.
+
+| residue | count | classification/evidence | handling |
+|---|---:|---|---|
+| animation pointer-block members | 714 | 72 setter groups already have named roots; members are consumed by `load_palette`, `scene_anim_show`, and image-buffer setup. The groups write 11 slots (59 groups), 13 (5), 7 (5), 18 (2), or 5 (1). | Hardware-facing resource wiring; list as module-level residue. Do not invent event names or force a uniform record type. |
+| career text labels | 0 unresolved | 37 text definitions are now named in the symbol table by their exact consumer role; no game text is quoted. | Included in the symbol-only packet. |
+| `D_80150188` | 1 | Fade quad parameter used by the album's hardware drawing path; no game-rule meaning is proved. | Hardware-layer internal; retain in the residue list. |
+
+The 72 pointer-group roots, their five assignment-count patterns, and the two cross-group setters are described in §7.1 and §9. If a later hardware refactor groups them by layout, verify each structure and every consumer. The packet does not claim those 714 individual members are semantic game identifiers.
+
+## 11. T-27065 reconciliation and essential-site inventory
+
+The body-backed port rules above remain the source of meaning. The draft's 13 file moves require their own later file-only tables; the 114 constant candidates are not symbol rows. The essential game-rule literal sites are the functions and rules tabulated in §§3.3-3.4, 4-6 and 7.1-7.4; only values whose meaning changes game behavior belong in the later `rename.py const` batch. It must use exact selectors after the symbol/type batch establishes final names. Do not turn these sites into ordinary `func` or `data` rows. `config/renames/proposals/o-etc-essential.tsv` contains only exact, supported five-column `local` and `param` rows for essential locals and parameters.
+
+Essential parameter behavior is covered at the owning functions: `exam_score_day`'s weekday and health inputs; `career_guidance_assess_params`' parameter values; `career_guidance_university_verdict`'s academic values; `career_guidance_job_verdict`'s trivia and looks; and `career_choice_exam_question`'s subject parameter, club experience and tier. `func_8013B1F0` receives category, scene, girl and season as `arg0` through `arg3`; the four parameter rows name these selectors for the album resource dispatch. In `func_80146D4C`, essential locals `main`, `bio`, `score`, `w` and `g` have exact five-column rows. `sub` is deliberately left unresolved because it first holds a secondary score then an event-log bonus factor; `ret` changes from raw score to grade; `zero` is an existing FAKE padding local and must retain its matching role. `func_80149F48` (`career_choice_exam_question`) has exact rows for `var_a1` (wrong-answer flag), `var_v0` (club bonus) and `var_v1` (adjusted subject score). The career-guidance girl-selection scan has three evidence-backed rows; two helper-array locals remain unresolved pending return-field meanings. The packet has 15 rows: 11 locals and four parameters; it is separate from the symbol-only packet. The inventory and this spec do not authorize source edits. Root owns application, proof and shared tracking.
+
+The following numeric sites are game-rule literals (all other arithmetic constants are implementation scaling or hardware parameters). `rename.py const` accepts a variable, `Type.field` or a call-argument selector; entries whose literal is held only in a local are listed explicitly as requiring a typed site or a later scoped selector, rather than being disguised as ordinary symbol rows.
+
+| proposed constant | value | exact owning C site | const-tool selector status |
+|---|---:|---|---|
+| `EXAM_GRADE_WEAK_FROM` | 0x28 (40) | `func_80146D4C`, comparison against the computed day score | exact selector `ret`; probe found 5 replacements, with 8 other literal hits unresolved |
+| `EXAM_GRADE_FAIR_FROM` | 0x3C (60) | `func_80146D4C`, comparison against the computed day score | exact selector `ret`; probe found 5 replacements, with 8 other literal hits unresolved |
+| `EXAM_GRADE_GOOD_FROM` | 0x50 (80) | `func_80146D4C`, comparison against the computed day score | exact selector `ret`; probe found 5 replacements, with 8 other literal hits unresolved |
+| `EXAM_GRADE_PERFECT_FROM` | 0x5F (95) | `func_80146D4C`, comparison against the computed day score | exact selector `ret`; probe found 5 replacements, with 8 other literal hits unresolved |
+| `EXAM_REMEDIAL_RED_MARKS` | 3 | exam results handler, red-mark count comparison | `D_801230F4`; confirm final data name after symbol batch |
+| `EXAM_REMEDIAL_MARKER` | 0x17 | exam results handler, tomorrow's calendar marker write | `GameState.month_calendar` nested marker; needs exact nested type/field selector |
+| `CAREER_PARAM_HIGH` | 101 | `career_guidance_assess_params`, seven parameter checks | parameter value reads; needs exact `Parameter.value` selector review |
+| `CAREER_CLOSE_GIRL_MIN` | 60 | `career_guidance_closest_girl`, strict closeness threshold | local maximum; needs a typed closeness site |
+| `CAREER_UNIVERSITY_PARAM_MIN` | 121 | `career_guidance_university_verdict`, three academic parameter checks | `Parameter.value`; needs exact selector review |
+| `CAREER_UNIVERSITY_EXCESS_MIN` | 201 | `career_guidance_university_verdict`, sum of academic excess | local sum; needs a typed site |
+| `CAREER_JOB_PARAM_MIN` | 61 | `career_guidance_job_verdict`, trivia and looks checks | `Parameter.value`; needs exact selector review |
+| `CAREER_CHOICE_QUESTION_COUNT` | 10 | `func_80149F48` and its question-loop caller | `D_80150E94`; confirm final data name after symbol batch |
+| `CAREER_CHOICE_CLUB_BONUS_SHIFT` | 4 | `func_80149F48`, practice-points right shift | `game_state.clubs[].practice_points`; call-site is local calculation, requires typed selector review |
+| `CAREER_CHOICE_CLUB_BONUS_MAX` | 20 (0x14) | `func_80149F48`, cap after the `0x15` boundary check | local `var_v0`; needs a typed site |
+| `CAREER_CHOICE_TIER_TWO_BONUS` | 0x26 | `func_80149F48`, first tier score offset | local `var_v1`; needs a typed site |
+| `CAREER_CHOICE_TIER_THREE_BONUS` | 0x36 | `func_80149F48`, second tier score offset | local `var_v1`; needs a typed site |
+| `CAREER_CHOICE_INTERVIEW_MIN` | 256 | `career_choice_interview_ok`, trivia-plus-looks check | local sum; needs a typed site |
+| `CAREER_CLUB_DREAM_EXP` | 0x19B (411) | `func_8014AA74` (`career_choice_club_dream`), club experience gate | direct `ClubRecord.practice_points` member comparison; syntactically supported, but check member uniqueness and every same-field hit before using the selector |
+| `ETC_CLEAR_COUNT_MAX` | 99 | clear-save writer, both per-girl counters | `GameState.girl_cleared` / system-data counter; exact array-field selectors require review |
+| `ETC_STAFF_ROLL_MIN_FRAMES` | 0x259 | staff-roll exit predicate at `staff_roll_and_clear_save.c:272` | reads `game_state.mode_step_timer.w`; `Type.w` is ambiguous across visible types and `*.w` is too broad, so a safe selector remains unresolved |
+| `ETC_STAFF_ROLL_SEGMENT_FRAMES` | 701 | staff-roll girl/model segment selection | local frame quotient; needs a typed site |
+| `ALBUM_RECORD_CAPACITY` | 256 | album log packer and viewer index | album log count; exact array/count type selector requires review |
+
+Exact `rename.py const --site` selectors probed read-only in Docker against current source:
+
+| selector | values/site meaning | probe result / limit |
+|---|---|---|
+| `ret` | `128`, `40`, `60`, `80`, `95` in `func_80146D4C`: score scaling and grade thresholds | 5 replacements in one C file; 8 additional literal hits had no value mapping. `ret` occurs only in this function, but changes from raw score to grade. |
+| `sub` | `0x27`, `0x26`, `0x1A`, `0x19` in `func_80146D4C`: two cap tests and their cap values | 6 replacements in one C file; one hit unresolved. `sub` is reused for the event-log bonus after the cap calculations. |
+| `var_v0`, `var_v1` | `0x15` and `0x14` in `func_80149F48`: practice-point cap test/value | 6 replacements in one C file. After the local batch, use their new names as the selectors. |
+| `D_80150E98` | values 0, 1, 2 in `func_80149F48`: career exam tier | 12 replacements in one C file; use the post-batch tier data name as the selector. |
+| `D_801500D8` | values 0, 1, 2, 3 in album secret-mode logic | 22 replacements in two C files; two literal hits unresolved. Use the post-batch mode data name as the selector. |
+| `D_80150040`, `D_80150044` | direct album category and scene selectors | Variable sites are supported; extract the switch values per owning handler into separate enum value files. |
+| ETC dispatcher call arguments | scene/category values passed directly to `func_8013B1F0` and the album animation dispatchers | Use `ETC:<current-callee>(argN)` only for direct literal arguments; inspect each caller and keep different domains separate. |
+
+The `const` selector probe confirms these are the exact supported selector shapes. The following rule literals cannot be safely fed to the current tool as scoped const sites: the career tier `+= 0x26/0x36` bonuses; arithmetic scaling, biorhythm coefficients and random bounds; career result bytes stored through `player_flags_upper.b[1]`; the `girl_cleared[index] < 99` array cap; the player-flag array mask; `trivia + looks > 256`; return literals in verdict helpers; and per-scene `mode_stage`/`mode_step` values (one member selector would conflate unrelated state machines). These require a future scoped-selector/tool change or must remain explicitly unresolved; do not use an unscoped variable guess. This body-site/selector inventory supersedes any broad prose-only interpretation of the old 114 constant rows.
+
+The ETC proposal is not ready to apply until its new symbol-only table passes `rename.py plan` in Docker and an independent Standards/Spec review. In particular, the proposal rows still need exact applied-ledger lookup at each address immediately before application; a later applied ledger always wins over a draft alias. The unit's code, header and overlay YAML must remain untouched in this lane.

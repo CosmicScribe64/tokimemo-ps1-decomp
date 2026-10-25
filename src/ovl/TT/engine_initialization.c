@@ -1,6 +1,6 @@
 /* engine_initialization.c: src/ovl/TT/8013E290.c:4: VSync event setup, work-state clearing, saved configuration load and video initialization; body 8: p = (s32 *)tt_video; 10: ev = OpenEvent(0xF2000003, 2, 0x1000, tt_vsync_tick);. Original object 0x8013E290-0x8013E850 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_vsync_event_init(void) {
     s32 *p;

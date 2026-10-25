@@ -5,6 +5,10 @@ updated: 2026-10-24
 
 # Phase 2: human-readable codebase
 
+## Current source acceptance (2026-10-25)
+
+Phase 2 source work has passed the original Astra review, separate Astra fixes, and reviewer verification at source digest `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. The final clean proof matches 27/27 binaries, 6,952 functions and 2,276,920 bytes. All 437 C basenames are logical; topic headers and logical overlay paths are applied. The TT directory is the documented contributor-agreement exception. Hardware/SDK residue and unknown gameplay meanings remain explicit scoped exceptions. T-27000 is In Review only pending the authorized push. Asset tickets T-280xx remain separate open work. The work order and proposal-era open points below are retained as planning history; current acceptance is tracked in [[tickets/T-27000-phase-2]] and [[spec/phase2-completion-audit]].
+
 Goal: make the matched code readable, port-first: "not 100%, just enough for the Godot port" (user scope,
 2026-10-24). The game logic is named and explained in full, the PS1 hardware layer only at module level and
 entry points. The matching decompilation stays exact: 27/27 sha1 after every change. Umbrella ticket:

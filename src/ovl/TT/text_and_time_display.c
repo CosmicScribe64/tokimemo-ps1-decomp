@@ -1,6 +1,6 @@
 /* text_and_time_display.c: src/ovl/TT/80148210.c:4: text pool, sprite-font records, time/name/countdown formatting and random drop helper; body 8: i = 0; 9: p = tt_texts;. Original object 0x80148210-0x801487D0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_texts_clear(void) {
     s32 i;

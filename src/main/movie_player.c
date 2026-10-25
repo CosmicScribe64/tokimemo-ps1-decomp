@@ -352,7 +352,7 @@ void movie_caption_bar_draw(s32 arg0, u8 arg1) {
     prim_gradient_rect(-0x90, 0x69, 0x100, 0x10, 1, 0, 1);
 }
 
-void movie_captions_update(s32 arg0) {
+void movie_captions_update(s32 movie_frame) {
     /* FAKE: unused scalar reserving the original's fourth stack slot (declared first = highest). T-17014 */
     s32 pad;
     s32 d;
@@ -361,7 +361,7 @@ void movie_captions_update(s32 arg0) {
 
     p = movie_caption_marks;
     for (i = 0; i < 22; i++) {
-        if (arg0 < (s32)(*p * 0x50 / 0xF)) {
+        if (movie_frame < (s32)(*p * 0x50 / 0xF)) {
             break;
         }
         p++;
@@ -382,7 +382,7 @@ void movie_captions_update(s32 arg0) {
         return;
     }
     if (movie_offset_x != 0) {
-        d = *p * 0x50 / 0xF - arg0;
+        d = *p * 0x50 / 0xF - movie_frame;
         if (d == 4 || d == 5) {
             movie_caption_bar_draw((movie_flags + D_800E7D35) * 0xDF7FCF + 0xFF208031, 1);
         } else {

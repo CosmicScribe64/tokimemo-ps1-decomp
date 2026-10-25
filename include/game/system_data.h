@@ -8,7 +8,7 @@
 /* T-10880: one entry of the album metrics (main album display, NAME_ENT card routines). */
 typedef struct AlbumParam {
     /* 0x00 */ u8 unk_00[2];
-    /* 0x02 */ s16 unk_02;
+    /* 0x02 */ s16 value;
 } AlbumParam; /* size 0x04 */
 
 /* T-19009: the settings bits at system_data +0x40 (TACO): the saved flag, the mode and a selector in byte 0, two
@@ -64,7 +64,7 @@ typedef struct SystemData {
 typedef struct ExtraModeFlags {
     u8 b0 : 1;
     u8 b1 : 1;
-    u8 unk_2_4 : 3;
+    u8 stage_select : 3;
     u8 unk_5_7 : 3; /* HYPOTHESIS: byte D_800E7D4F (TT unlock bit, festival return mode bits) in SystemData */
 } ExtraModeFlags; /* size 0x01 */
 

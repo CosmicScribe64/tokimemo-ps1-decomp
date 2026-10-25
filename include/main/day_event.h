@@ -6,7 +6,7 @@
 s32 day_event_queue_resync_after_master();
 void day_event_queue_build_week(void);
 void day_event_dispatch(void);
-void day_event_today_clear(u8 arg0);
-s32 day_event_next(s32 arg0);
+void day_event_today_clear(u8 reset_value);
+s32 day_event_next(s32 play_audio);
 
 #endif

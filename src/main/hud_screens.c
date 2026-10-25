@@ -101,10 +101,10 @@ void hud_mascot_display_switch(s32 visible) {
  * IDO copies it to $a1 at entry and hoists `li a0,27` into the bnez delay slot). The test emits no code. T-17002 */
 void hud_mascot_set(s32 mascot_selection) {
     if (mascot_selection == 0 || mascot_selection >= 0xE) {
-        D_80125C50 = 0x78;
-        D_80125C52 = -0x37;
-        D_80125C54 = 0xF;
-        D_80125C55 = 8;
+        mascot_anchor_x = 0x78;
+        mascot_anchor_y = -0x37;
+        mascot_length = 0xF;
+        mascot_swing = 8;
         hud_mascot_choice = 0;
         hud_mascot_display_switch(0);
         return;
@@ -154,44 +154,44 @@ void hud_mascot_update(void) {
     hud_mascot_set(hud_mascot_choice);
     if (hud_mascot_choice < 0xE) {
         if ((u32)game_state.pad_pressed >> 16) {
-            D_80125C55 = (D_80125C54 + 1) / 2;
+            mascot_swing = (mascot_length + 1) / 2;
         }
-        if ((game_state.frame_count & 0x3F) == 0x3F && D_80125C55 != 0) {
-            D_80125C55--;
+        if ((game_state.frame_count & 0x3F) == 0x3F && mascot_swing != 0) {
+            mascot_swing--;
         }
-        dx = (rsin((game_state.frame_count & 0x7F) << 5) * D_80125C55) >> 12;
+        dx = (rsin((game_state.frame_count & 0x7F) << 5) * mascot_swing) >> 12;
         D_8011F41C = ((-dx * 2) / 3) << 12;
         /* FAKE T-25406: one factor through a byte view. tools/cvt_pass.py writes no CVT for that read, so
-         * D_80125C54 stays one $a2 range with no cvt(D_80125C54) range beside it (T-0018 gap); both factors
+         * mascot_length stays one $a2 range with no cvt(mascot_length) range beside it (T-0018 gap); both factors
          * plain is 33 rows. */
-        r = SquareRoot0(*(u8 *)&D_80125C54 * D_80125C54 - dx * dx);
+        r = SquareRoot0(*(u8 *)&mascot_length * mascot_length - dx * dx);
         dy = 0xF - r;
-        /* FAKE T-25406: with a plain D_80125C50 read, cvt(D_80125C54) comes back as its own $v0 range and
+        /* FAKE T-25406: with a plain mascot_anchor_x read, cvt(mascot_length) comes back as its own $v0 range and
          * every colour after it moves (146 rows). */
-        x1 = *(s16 *)&D_80125C50 + dx;
+        x1 = *(s16 *)&mascot_anchor_x + dx;
         actor_pool[0x1B].x = x1;
-        /* FAKE T-25406: both operands through views. The byte view keeps D_80125C54 out of a cvt range; the
-         * s16 view gives cfe equal operand weights, so the sum comes out as `addu t1,a0,a2` (D_80125C52 first). */
-        y1 = *(u8 *)&D_80125C54 + *(s16 *)&D_80125C52;
+        /* FAKE T-25406: both operands through views. The byte view keeps mascot_length out of a cvt range; the
+         * s16 view gives cfe equal operand weights, so the sum comes out as `addu t1,a0,a2` (mascot_anchor_y first). */
+        y1 = *(u8 *)&mascot_length + *(s16 *)&mascot_anchor_y;
         actor_pool[0x1B].y = y1 - dy;
         actor_pool[0x1B].unk_18 = hud_mascot_choice - 1;
-        actor_pool[0x1C].x = D_80125C50;
-        actor_pool[0x1C].y = D_80125C52;
+        actor_pool[0x1C].x = mascot_anchor_x;
+        actor_pool[0x1C].y = mascot_anchor_y;
         if (game_state.pad_held & PAD_R2) {
             actor_pool[0x1C].unk_18 = 0xE;
             switch (game_state.pad_held & 0x5000) {
             case 0x1000:
-                if (D_80125C54 >= 3) {
-                    D_80125C54 -= 2;
-                    D_80125C55 = (D_80125C54 + 1) / 2;
-                    y1 = D_80125C52 + D_80125C54;
+                if (mascot_length >= 3) {
+                    mascot_length -= 2;
+                    mascot_swing = (mascot_length + 1) / 2;
+                    y1 = mascot_anchor_y + mascot_length;
                 }
                 break;
             case 0x4000:
-                if (D_80125C54 < 0xC4) {
-                    D_80125C54 += 2;
-                    D_80125C55 = (D_80125C54 + 1) / 2;
-                    y1 = D_80125C52 + D_80125C54;
+                if (mascot_length < 0xC4) {
+                    mascot_length += 2;
+                    mascot_swing = (mascot_length + 1) / 2;
+                    y1 = mascot_anchor_y + mascot_length;
                 }
                 break;
             }
@@ -200,37 +200,37 @@ void hud_mascot_update(void) {
             /* FAKE T-25103 layout, kept by T-25406: each store and sum on one line keeps as1's order (4 rows split). */
             switch (game_state.pad_held & 0x5000) {
             case 0x1000:
-                D_80125C52 -= 4; y1 = D_80125C52 + D_80125C54;
+                mascot_anchor_y -= 4; y1 = mascot_anchor_y + mascot_length;
                 break;
             case 0x4000:
-                D_80125C52 += 4; y1 = D_80125C52 + D_80125C54;
+                mascot_anchor_y += 4; y1 = mascot_anchor_y + mascot_length;
                 break;
             }
             switch (game_state.pad_held & 0xA000) {
             case 0x8000:
-                D_80125C50 -= 4;
+                mascot_anchor_x -= 4;
                 x1 -= 4;
                 break;
             case 0x2000:
-                D_80125C50 += 4;
+                mascot_anchor_x += 4;
                 x1 += 4;
                 break;
             }
         } else {
             actor_pool[0x1C].unk_18 = 0xD;
         }
-        prim_gradient_line(D_80125C50, D_80125C52, x1, y1 - dy, 0xF8B0C8, 0xF8B0C8, 1);
-        if (D_80125C50 >= 0x201) {
-            D_80125C50 = -0x200;
+        prim_gradient_line(mascot_anchor_x, mascot_anchor_y, x1, y1 - dy, 0xF8B0C8, 0xF8B0C8, 1);
+        if (mascot_anchor_x >= 0x201) {
+            mascot_anchor_x = -0x200;
         }
-        if (D_80125C50 < -0x200) {
-            D_80125C50 = 0x200;
+        if (mascot_anchor_x < -0x200) {
+            mascot_anchor_x = 0x200;
         }
-        if (D_80125C52 >= 0x201) {
-            D_80125C52 = -0x200;
+        if (mascot_anchor_y >= 0x201) {
+            mascot_anchor_y = -0x200;
         }
-        if (D_80125C52 < -0x200) {
-            D_80125C52 = 0x200;
+        if (mascot_anchor_y < -0x200) {
+            mascot_anchor_y = 0x200;
         }
     }
 }
@@ -788,7 +788,7 @@ void hud_save_slot_info_show(s32 arg0, s32 left_summary_column) {
         summary_x = -8;
     }
     k_sub_reset();
-    if ((u8) D_800E8BEE != 0) {
+    if ((u8) slot_info_from_system_data != 0) {
         cleared_girl_count = 0;
         for (i = 0; i < 13; i++) {
             if (system_data.flags[i] != 0) {
@@ -1415,7 +1415,7 @@ void hud_cursor_update(void) {
     GameState *g = &game_state;
     u8 base_speed;
     s32 movement_step;
-    u8 temp; /* FAKE: T-25003, first test through a u8 copy keeps the D_800B6708 value in $v0 */
+    u8 temp; /* FAKE: T-25003, first test through a u8 copy keeps the cursor_style value in $v0 */
 
     if ((u8)D_8011ECA4 == 0) {
         base_speed = g->cursor_speed;
@@ -1461,20 +1461,20 @@ void hud_cursor_update(void) {
             cursor_y = 0x64;
         }
         if (g->pad_pressed & PAD_SQUARE) {
-            temp = D_800B6708;
+            temp = cursor_style;
             if (temp == 0) {
-                D_800B6708 = 0x9B;
-            } else if (D_800B6708 == 0xAC) {
-                D_800B6708 = 0;
+                cursor_style = 0x9B;
+            } else if (cursor_style == 0xAC) {
+                cursor_style = 0;
             } else {
-                D_800B6708++;
+                cursor_style++;
             }
-            D_8011ECE8 = D_800B6708;
+            D_8011ECE8 = cursor_style;
         }
     }
 }
 
-/* FAKE: the empty `if ((s32)D_800B6708) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
+/* FAKE: the empty `if ((s32)cursor_style) {}` gives the byte a use in the dispatch block, so uopt promotes it and loads it
  * once into $v0 before the arg0 tests; without it each arm loads it. The test emits no code. T-17002 */
 void hud_cursor_actor_init(s32 arg0) {
     s16 sp2E;
@@ -1494,17 +1494,17 @@ void hud_cursor_actor_init(s32 arg0) {
     actor_pool[0].unk_04 = 8;
     actor_pool[0].unk_05 = 1;
     actor_pool[0].sequence_slot = 0;
-    if ((s32)D_800B6708) {
+    if ((s32)cursor_style) {
     }
     switch (arg0) {
     case 0:
     default:
-        if (D_800B6708 == 0 || (s32)D_800B6708 < 0x9B || (actor_pool[0].unk_18 = D_800B6708, (s32)D_800B6708 >= 0xAE)) {
+        if (cursor_style == 0 || (s32)cursor_style < 0x9B || (actor_pool[0].unk_18 = cursor_style, (s32)cursor_style >= 0xAE)) {
             actor_pool[0].unk_18 = 0;
         }
         break;
     case 1:
-        if (D_800B6708 == 0 || (s32)D_800B6708 < 0x9B || (actor_pool[0].unk_18 = D_800B6708, (s32)D_800B6708 >= 0xAE)) {
+        if (cursor_style == 0 || (s32)cursor_style < 0x9B || (actor_pool[0].unk_18 = cursor_style, (s32)cursor_style >= 0xAE)) {
             actor_pool[0].unk_18 = 0;
         }
         break;
@@ -1707,9 +1707,9 @@ s32 hud_biorhythm_value(s32 include_23_day_wave, s32 include_28_day_wave, s32 in
 
 s32 hud_biorhythm_birth_offset(void) {
     s32 birthday_phase_offset;
-    birthday_phase_offset = -(s32)D_800B670A[game_state.player_birthday & 0xF] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1563;
+    birthday_phase_offset = -(s32)birthday_day_table[game_state.player_birthday & 0xF] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1563;
     if ((game_state.player_birthday & 0xF) == 4 && (((u32)game_state.player_birthday << 23) >> 27) < 4U) {
-        birthday_phase_offset = -(s32)D_800B670A[3] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1582;
+        birthday_phase_offset = -(s32)birthday_day_table[3] - (((u32)game_state.player_birthday << 23) >> 27) + 0x1582;
     }
     return birthday_phase_offset;
 }

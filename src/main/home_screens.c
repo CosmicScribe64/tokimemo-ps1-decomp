@@ -873,7 +873,7 @@ s32 settings_save_load_card_check(void) {
         }
         break;
     case 3:
-        if ((u8)D_800E8BEE != 0) {
+        if ((u8)slot_info_from_system_data != 0) {
             memory_card_stop();
             memory_card_start();
             game_state.substep++;
@@ -988,19 +988,19 @@ void settings_save_load_menu(void) {
 void settings_save_load_layout_stash(s32 restore_layout) {
     if (restore_layout != 0) {
         memcpy(D_80125C10, game_state.scratch_words, 0x40);
-        D_80125C50 = game_state.scratch_words[32];
-        D_80125C52 = game_state.scratch_words[33];
+        mascot_anchor_x = game_state.scratch_words[32];
+        mascot_anchor_y = game_state.scratch_words[33];
         hud_mascot_choice = *(u8 *)&game_state.scratch_words[34]; /* the low byte of the word stored below */
-        D_80125C54 = game_state.scratch_words[35];
-        D_80125C55 = game_state.scratch_words[36];
+        mascot_length = game_state.scratch_words[35];
+        mascot_swing = game_state.scratch_words[36];
         return;
     }
     memcpy(game_state.scratch_words, D_80125C10, 0x40);
-    game_state.scratch_words[32] = D_80125C50;
-    game_state.scratch_words[33] = D_80125C52;
+    game_state.scratch_words[32] = mascot_anchor_x;
+    game_state.scratch_words[33] = mascot_anchor_y;
     game_state.scratch_words[34] = hud_mascot_choice;
-    game_state.scratch_words[35] = D_80125C54;
-    game_state.scratch_words[36] = D_80125C55;
+    game_state.scratch_words[35] = mascot_length;
+    game_state.scratch_words[36] = mascot_swing;
 }
 
 void settings_save_load_save_init(void) {
@@ -1031,7 +1031,7 @@ void settings_save_load_save_init(void) {
             break;
         }
     }
-    if ((u8) D_800E8BEE != 0) {
+    if ((u8) slot_info_from_system_data != 0) {
         game_state.menu_cursor_1 = D_800E7D36 - 1;
         game_state.save_slot = (s8) D_800E7D36;
         mode_step_set(4);
@@ -1138,7 +1138,7 @@ void settings_save_load_save_select(void) {
                 mode_step_next();
             } else {
                 game_state.save_slot = save_slot_index;
-                if ((u8) D_800E8BEE != 0) {
+                if ((u8) slot_info_from_system_data != 0) {
                     /* FAKE: T-24301 (as T-24209), the repeated view store keeps unk_1118 promoted in both arms */
                     ((u8 *)&game_state)[0x1118] = save_slot_index;
                     D_800E7D36 = game_state.save_slot;
@@ -1187,7 +1187,7 @@ s32 settings_save_load_save_write(void) {
     case 2:
         k_sub_reset();
         set_kanji_string(-0x80, 0x32, 1U, "データセーブ中です", 0);
-        if ((u8) D_800E8BEE != 0) {
+        if ((u8) slot_info_from_system_data != 0) {
             set_kanji_string(-0x80, 0x42, 1U, "アイコンの点滅が終わるまで", 0);
             set_kanji_string(-0x80, 0x52, 1U, "電源を切らないで下さい", 0);
         }
@@ -1209,7 +1209,7 @@ s32 settings_save_load_save_write(void) {
         }
         break;
     case 4:
-        if ((u8) D_800E8BEE != 0) {
+        if ((u8) slot_info_from_system_data != 0) {
             memory_card_start();
             game_state.memory_card_job = 1;
             D_800E7D36 = game_state.save_slot;
@@ -1256,7 +1256,7 @@ void settings_save_load_load_init(void) {
             break;
         }
     }
-    if ((u8) D_800E8BEE != 0) {
+    if ((u8) slot_info_from_system_data != 0) {
         game_state.menu_cursor_1 = D_800E7D36 - 1;
         mode_step_next();
         game_state.save_slot = (s8) D_800E7D36;
@@ -1343,7 +1343,7 @@ s32 settings_save_load_load_select(void) {
                 mode_step_next();
             } else {
                 game_state.save_slot = (s8) save_slot_index;
-                if ((u8) D_800E8BEE != 0) {
+                if ((u8) slot_info_from_system_data != 0) {
                     D_800E7D36 = (u8) game_state.save_slot;
                     hud_save_slot_info_show(0, 1);
                 } else {

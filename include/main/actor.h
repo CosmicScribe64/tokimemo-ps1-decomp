@@ -12,7 +12,7 @@ extern u8 actor_pool_96[];
 void actor_draw_enable(s32 arg0);
 void actor_clear_upper(void);
 void actor_clear_range(s32 arg0);
-void actor_clear(s32 arg0);
+void actor_clear(s32 actor_index);
 
 void actor_deactivate(s32 arg0);
 

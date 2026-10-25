@@ -1,13 +1,13 @@
 /* falling_sprite_pool.c: src/ovl/TT/80147380.c:4 scans free slots by stride 0x68; :59 spawns falling sprites and also initializes a pickup for kind 0x30; :85 integrates motion and disables offscreen records; :110 updates six records; :132 draws those records and scale effects. Original object 0x80147380-0x801478D0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
-u8 *tt_cloud_find_free(u8 *arg0, u8 *arg1) {
-    while (arg0 < arg1) {
-        if (*arg0 == 0) {
-            return arg0;
+u8 *tt_cloud_find_free(u8 *cursor, u8 *end) {
+    while (cursor < end) {
+        if (*cursor == 0) {
+            return cursor;
         }
-        arg0 += 0x68;
+        cursor += 0x68;
     }
     return 0;
 }
@@ -52,25 +52,25 @@ void tt_clouds_reset(void) {
     *(s16 *)(cloud - 0x128) = 5;
 }
 
-void tt_cloud_activate(u8 *arg0, u16 arg1) {
-    arg0[0] = 1;
-    *(u16 *)(arg0 + 2) = arg1;
+void tt_cloud_activate(u8 *cloud, u16 kind) {
+    cloud[0] = 1;
+    *(u16 *)(cloud + 2) = kind;
 }
 
-void tt_cloud_spawn(s16 arg0, u16 arg1, u8 arg2) {
+void tt_cloud_spawn(s16 x, u16 kind, u8 extra_fall_speed) {
     u8 *p;
 
     p = tt_cloud_find_free(tt_clouds, tt_clouds + 0x270);
     if (p != 0) {
-        *(s32 *)(p + 0x20) = arg0 << 16;
+        *(s32 *)(p + 0x20) = x << 16;
         *(s32 *)(p + 0x24) = 0xFFF00000;
         *(s32 *)(p + 0x28) = 0;
-        *(s32 *)(p + 0x2C) = (arg2 << 14) + 0x10000;
+        *(s32 *)(p + 0x2C) = (extra_fall_speed << 14) + 0x10000;
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         *(s16 *)(p + 0x52) = 0x1000;
-        tt_cloud_activate(p, arg1);
-        if (arg1 == 0x30) {
+        tt_cloud_activate(p, kind);
+        if (kind == 0x30) {
             tt_bell_spawn_in_cloud(p);
         }
         *(s16 *)(p + 4) = 0x40;
@@ -83,29 +83,29 @@ void tt_cloud_spawn(s16 arg0, u16 arg1, u8 arg2) {
     }
 }
 
-void tt_cloud_update(u8 *arg0) {
-    *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
-    *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
-    if (*(s16 *)(arg0 + 0x16) >= 0x101) {
-        arg0[0] = 0;
-        *(s16 *)(arg0 + 4) = 0;
-        arg0[0xC] = 0;
-        *(s16 *)(arg0 + 0xA) = 0;
-        *(s16 *)(arg0 + 8) = 0;
-        *(s16 *)(arg0 + 6) = 0;
-        arg0[0xF] = 0;
-        arg0[0xE] = 0;
-        arg0[0xD] = 0;
+void tt_cloud_update(u8 *cloud) {
+    *(s32 *)(cloud + 0x20) += *(s32 *)(cloud + 0x28);
+    *(s32 *)(cloud + 0x24) += *(s32 *)(cloud + 0x2C);
+    *(s16 *)(cloud + 0x14) = *(s16 *)(cloud + 0x22);
+    *(s16 *)(cloud + 0x16) = *(s16 *)(cloud + 0x26);
+    if (*(s16 *)(cloud + 0x16) >= 0x101) {
+        cloud[0] = 0;
+        *(s16 *)(cloud + 4) = 0;
+        cloud[0xC] = 0;
+        *(s16 *)(cloud + 0xA) = 0;
+        *(s16 *)(cloud + 8) = 0;
+        *(s16 *)(cloud + 6) = 0;
+        cloud[0xF] = 0;
+        cloud[0xE] = 0;
+        cloud[0xD] = 0;
         return;
     }
-    if (*(s16 *)(arg0 + 0x52) < 0xA01) {
-        arg0[0x54] = 1;
-    } else if (*(s16 *)(arg0 + 0x52) >= 0x1000) {
-        *(s8 *)(arg0 + 0x54) = -1;
+    if (*(s16 *)(cloud + 0x52) < 0xA01) {
+        cloud[0x54] = 1;
+    } else if (*(s16 *)(cloud + 0x52) >= 0x1000) {
+        *(s8 *)(cloud + 0x54) = -1;
     }
-    *(s16 *)(arg0 + 0x52) += *(s8 *)(arg0 + 0x54) * 0x30;
+    *(s16 *)(cloud + 0x52) += *(s8 *)(cloud + 0x54) * 0x30;
 }
 
 void tt_clouds_update(void) {

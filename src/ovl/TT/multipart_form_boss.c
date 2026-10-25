@@ -1,6 +1,6 @@
 /* multipart_form_boss.c: src/ovl/TT/8013A3E0.c:318: independent part collision/pose handlers, alternate movement forms, attacks and part-death animation; body 323: switch (*(u16 *)(p + 6)) {; 328: if (*(s32 *)(p + 0x3E4) >= 0x2000) {. Original object 0x8013A3E0-0x8013BD10 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 typedef struct {
     s16 x;
@@ -8,7 +8,7 @@ typedef struct {
     u8 pad4[0x1C];
 } TtXY; /* FAKE: pad4 and fake_pad below reproduce the original's frame (locals 0x30..0x54); real locals unknown. T-8060 */
 
-void tt_boss3_part_hit(void *arg0, u8 *arg1, s32 arg2) {
+void tt_boss3_part_hit(void *position, u8 *hitbox, s32 part_index) {
     u8 *player;
     u8 *core;
     u8 *boss;
@@ -19,7 +19,7 @@ void tt_boss3_part_hit(void *arg0, u8 *arg1, s32 arg2) {
     player = tt_player;
     core = tt_core;
     boss = tt_boss;
-    if (player[0x52] == 0 && player[0] != 0 && tt_box_overlap(player + 0x14, tt_hitboxes, arg0, arg1) != 0) {
+    if (player[0x52] == 0 && player[0] != 0 && tt_box_overlap(player + 0x14, tt_hitboxes, position, hitbox) != 0) {
         tt_player_hit();
         *(u16 *)(player + 4) = 0x60;
         *(s16 *)(player + 10) = 0;
@@ -34,7 +34,7 @@ void tt_boss3_part_hit(void *arg0, u8 *arg1, s32 arg2) {
         if (shot[0] == 0) {
             continue;
         }
-        if (*(u16 *)(shot + 4) == 0x40 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, arg0, arg1) != 0) {
+        if (*(u16 *)(shot + 4) == 0x40 && tt_box_overlap(shot + 0x14, &tt_hitbox_shot, position, hitbox) != 0) {
             core[0x25] = core[0x25] + 1;
             if (core[0x24] != 0 && !(core[0x25] & 3)) {
                 tt_enemy_shot_fire_aimed(*(s16 *)(shot + 0x14), *(s16 *)(shot + 0x16), 0x20, 0xA0);
@@ -47,23 +47,23 @@ void tt_boss3_part_hit(void *arg0, u8 *arg1, s32 arg2) {
             shot[15] = 0;
             shot[14] = 0;
             shot[13] = 0;
-            if (arg2 >= 0) {
+            if (part_index >= 0) {
                 if (i >= 6) {
-                    *(s16 *)(boss + 0x2D8 + arg2 * 2) -= 1;
+                    *(s16 *)(boss + 0x2D8 + part_index * 2) -= 1;
                 } else if (*(u16 *)(shot + 2) == 9) {
-                    *(s16 *)(boss + 0x2D8 + arg2 * 2) -= 4;
+                    *(s16 *)(boss + 0x2D8 + part_index * 2) -= 4;
                 } else {
-                    *(s16 *)(boss + 0x2D8 + arg2 * 2) -= 2;
+                    *(s16 *)(boss + 0x2D8 + part_index * 2) -= 2;
                 }
-                if (arg2 >= 2) {
-                    j = arg2 * 2 + 2;
+                if (part_index >= 2) {
+                    j = part_index * 2 + 2;
                 } else {
-                    j = arg2 * 2;
+                    j = part_index * 2;
                 }
                 boss[j * 0x14 + 0x42] = 1;
-                if (*(s16 *)(boss + 0x2D8 + arg2 * 2) < 0) {
+                if (*(s16 *)(boss + 0x2D8 + part_index * 2) < 0) {
                     tt_se_request(TT_SE_BOSS_PART_BREAK);
-                    boss[arg2 + 0x343] = 1;
+                    boss[part_index + 0x343] = 1;
                 }
             }
         }
@@ -78,9 +78,9 @@ void tt_boss3_part0_collision(void) {
     u32 frame;
     u32 kind;
     boss = (TtBossDrawView *)tt_boss;
-    kind = boss->unk_3E;
+    kind = boss->part0_frame;
     frame = boss->unk_3A4[0] % 3U;
-    if (boss->unk_3C == 2 && boss->unk_3E != 3) {
+    if (boss->part0_sprite == 2 && boss->part0_frame != 3) {
         kind += 3;
     }
     pos.x = boss->x + boss->xs[0];
@@ -99,9 +99,9 @@ void tt_boss3_part1_collision(void) {
     u32 frame;
     u32 kind;
     boss = (TtBossDrawView *)tt_boss;
-    kind = boss->unk_66;
+    kind = boss->part1_frame;
     frame = boss->unk_3A4[1] % 3U;
-    if (boss->unk_64 == 2 && boss->unk_66 != 3) {
+    if (boss->part1_sprite == 2 && boss->part1_frame != 3) {
         kind += 3;
     }
     pos.x = boss->x + boss->xs[2];

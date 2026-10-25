@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-extern u8 *D_800CA138;
+extern u8 *talk_active_line_ptr;
 extern u8 *D_800E8C74;
 extern u8 *D_800E8C88;
 extern u8 *D_8011ED20;

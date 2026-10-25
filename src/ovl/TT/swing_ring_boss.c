@@ -1,6 +1,6 @@
 /* swing_ring_boss.c: src/ovl/TT/80135360.c:227: boss collision, ring layout, swinging ring movement, attack and death sequence; body 234: c = tt_boss; 235: switch (*(u16 *)(c + 8)) {. Original object 0x80135360-0x801367C0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* T-11510 near miss (about 45 differing instructions; frame, spill slots 0x60/0x9C, pt and every branch target match): the first clear loop pointer is s1 in the original (v0 here), temp numbering follows from it, and the two angle sums (idx * 0x733 + 0xC000 - 0x3998 and + 0x4000 - 0xACC8) fold their constants here while the original keeps the hoisted 0xC000/0x4000 and adds the constant separately. The unused s32 locals and pad[4] only place the frame (FAKE, original source unknown). */
 void tt_boss2_collision(void) {
@@ -115,8 +115,8 @@ void tt_boss2_ring_layout(x, y, ang)
     }
 }
 
-void tt_boss2_set_face_direction(s32 arg0) {
-    tt_boss[0x3E] = ((arg0 + 0x40) & 0xFFF) / 128;
+void tt_boss2_set_face_direction(s32 angle) {
+    tt_boss[0x3E] = ((angle + 0x40) & 0xFFF) / 128;
 }
 
 void tt_boss2_init(void) {

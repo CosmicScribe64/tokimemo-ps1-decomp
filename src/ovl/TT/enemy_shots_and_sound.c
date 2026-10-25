@@ -1,7 +1,7 @@
 /* enemy_shots_and_sound.c: src/ovl/TT/80133970.c:7: sound bank loads and latched requests plus enemy shot pool, aim/fan/beam patterns and drawing; body 11: audio_command(0x7F); 12: cd_load_destination_base_set(0x80162000);. Original object 0x80133970-0x80135360 (config/objects/TT.txt). */
 #define MAIN_API_OVERRIDE_audio_command /* unprototyped call preserves u16 argument conversion */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 s32 audio_command();
 
@@ -95,9 +95,9 @@ u8 *tt_enemy_shot_find_free(u8 *cursor, u8 *end) {
 /* The caller consumes the angle left in v0 by func_8014D260.
  * Keep the fallthrough return: an explicit return through its void API
  * is unavailable, and this definition matches the original helper. T-10020. */
-s32 tt_enemy_shot_aim_angle(u8 *arg0, u8 *arg1) {
-    s32 dx = *(s32 *)(arg1 + 0x20) - *(s32 *)(arg0 + 0x20);
-    s32 dy = *(s32 *)(arg1 + 0x24) - *(s32 *)(arg0 + 0x24);
+s32 tt_enemy_shot_aim_angle(u8 *origin, u8 *target) {
+    s32 dx = *(s32 *)(target + 0x20) - *(s32 *)(origin + 0x20);
+    s32 dy = *(s32 *)(target + 0x24) - *(s32 *)(origin + 0x24);
 
     func_8014D260(dy >> 16, dx >> 16);
 }
@@ -467,24 +467,24 @@ s16 y;
     }
 }
 
-void tt_enemy_shot_move(u8 *arg0) {
+void tt_enemy_shot_move(u8 *shot) {
     s16 x;
     s16 y;
 
-    *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
-    *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
-    x = *(s16 *)(arg0 + 0x16);
-    if (x >= 0x101 || x < -0x10 || (y = *(s16 *)(arg0 + 0x14)) < -0x88 || y >= 0x89) {
-        *(s16 *)(arg0 + 4) = 0;
-        *(s16 *)(arg0 + 0xA) = 0;
-        *(s16 *)(arg0 + 8) = 0;
-        *(s16 *)(arg0 + 6) = 0;
-        arg0[0xF] = 0;
-        arg0[0xE] = 0;
-        arg0[0xD] = 0;
-        arg0[0] = 0;
+    *(s32 *)(shot + 0x20) += *(s32 *)(shot + 0x28);
+    *(s32 *)(shot + 0x24) += *(s32 *)(shot + 0x2C);
+    *(s16 *)(shot + 0x14) = *(s16 *)(shot + 0x22);
+    *(s16 *)(shot + 0x16) = *(s16 *)(shot + 0x26);
+    x = *(s16 *)(shot + 0x16);
+    if (x >= 0x101 || x < -0x10 || (y = *(s16 *)(shot + 0x14)) < -0x88 || y >= 0x89) {
+        *(s16 *)(shot + 4) = 0;
+        *(s16 *)(shot + 0xA) = 0;
+        *(s16 *)(shot + 8) = 0;
+        *(s16 *)(shot + 6) = 0;
+        shot[0xF] = 0;
+        shot[0xE] = 0;
+        shot[0xD] = 0;
+        shot[0] = 0;
     }
 }
 

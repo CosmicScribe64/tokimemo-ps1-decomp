@@ -1,0 +1,423 @@
+/* annual_result_resources.c: ; src/ovl/GYOZI/801418B0.c:36-68 selects result and follow-up state. Original object 0x801418B0-0x80142D00 (config/objects/GYOZI.txt). */
+#include "common.h"
+#include "common.h"
+#include "game/display_records.h"
+#include "game_enums.h"
+#include "libcd.h"
+#include "libgte.h"
+#include "libpress.h"
+#include "libsnd.h"
+#include "main/import_views/scenes.h"
+#include "ovl/annual_events.h"
+#include "psx_types.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_801487F0);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_801487F4);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_801487F8);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_801487FC);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148800);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148804);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148808);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_8014880C);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148810);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148814);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", annual_selected_option_index);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_8014881C);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148820);
+INCLUDE_RODATA("asm/ovl/GYOZI/data/annual_events/annual_result_resources.data", D_80148824);
+u8 annual_result_options[4] = { 0 };
+u32 D_8014882C[6][2] = {
+    { 0x00F870A0, 0x00F8A0C0 },
+    { 0x0030C050, 0x0070E090 },
+    { 0x005078F8, 0x0098C0F8 },
+    { 0x00F8A828, 0x00F8D868 },
+    { 0x00F88030, 0x00F8D078 },
+    { 0x005850B0, 0x009098E8 },
+};
+u8 D_8014885C[36] = {
+    0, 1, 2, 3, 4, 3, 2, 4, 4, 1, 0, 2,
+    1, 2, 3, 0, 1, 0, 2, 4, 1, 3, 0, 3,
+    2, 3, 0, 1, 0, 1, 4, 2, 3, 0, 5, 1,
+};
+
+void annual_result_primary_resource_addresses_init(void) {
+    D_801487F0 = (u8 *)0x801D6360;
+    D_801487F4 = (u8 *)0x801D6384;
+    D_801487F8 = (u8 *)0x801D6414;
+    D_801487FC = *(s16 *)0x801D641C;
+    D_80148800 = (u8 *)0x801B0000;
+}
+
+void annual_result_secondary_resource_addresses_init(void) {
+    D_80148804 = 0x801DDBB4;
+    D_80148808 = 0x801DDBB8;
+    D_8014880C = 0x801DDC70;
+    D_80148814 = 0x801DB000;
+}
+
+/* Return type preserves the original fall-through schedule. T-20006. */
+s32 annual_result_actor_mode_step_dispatch(void) {
+    s32 mode_step_index; /* Index precedes the copied result_mode_step_callbacks (T-3330, T-20006). */
+    GzCallbacks68 result_mode_step_callbacks;
+
+    result_mode_step_callbacks = D_80148880;
+    mode_step_index = D_800F647A;
+    result_mode_step_callbacks.callbacks[mode_step_index](0x80);
+    if (D_800F647A < 8) {
+        D_8012B8C0[0].brightness = D_801317EB;
+        if (D_8012B8C0[0].unk_18 == 0 && D_8012B8C0[0].unk_08 == 0) {
+            if (++D_8012B8C0[0].sequence_slot >= 3) {
+                D_8012B8C0[0].sequence_slot = 0;
+            }
+        }
+    }
+    if (D_800F647A >= 0xA && D_80148820 != 0) {
+        annual_result_choice_geometry_draw();
+    }
+    if (D_800F647A >= 0xA && D_80148824 != 0) {
+        annual_result_character_idle_advance();
+    }
+}
+
+void annual_result_audio_state_reset(void) {
+    func_8004C6A0(0, 0x40);
+    func_80050D60(0, 0);
+    func_80081D30(1);
+}
+
+void annual_result_actor_display_setup(void) {
+    s32 unused; /* FAKE: restore observed implicit-copy offsets. T-13202. */
+    s16 result_actor_resource_index;
+
+    D_8014881C = 0;
+    D_80148820 = 0;
+    D_80148824 = 0;
+    annual_result_primary_resource_addresses_init();
+    result_actor_resource_index = 0;
+    do {
+        func_8004EE18(D_80148800, (result_actor_resource_index + 0x10) & 0xFF, 1, 2, result_actor_resource_index);
+        result_actor_resource_index++;
+    } while (result_actor_resource_index < 9);
+    func_800549E8(0x60);
+    ((Actor *)D_80129F40)[96].unk_01 = 8;
+    ((Actor *)D_80129F40)[96].flags = 0x40;
+    ((Actor *)D_80129F40)[96].quad_flags = 0x01000000;
+    ((Actor *)D_80129F40)[96].draw_flags = 4;
+    ((Actor *)D_80129F40)[96].frame_table = D_801487F4;
+    ((Actor *)D_80129F40)[96].sequence_table = D_801487F8;
+    ((Actor *)D_80129F40)[96].tpage_table = D_801487F0;
+    ((Actor *)D_80129F40)[96].unk_14 = D_801487FC;
+    ((Actor *)D_80129F40)[96].sequence_slot = 0;
+    ((Actor *)D_80129F40)[96].unk_18 = 0;
+    ((Actor *)D_80129F40)[96].blink_period = 1;
+    ((Actor *)D_80129F40)[96].unk_43 = 0;
+    ((Actor *)D_80129F40)[96].x = 0;
+    ((Actor *)D_80129F40)[96].y = 8;
+    ((Actor *)D_80129F40)[96].brightness = 0x80;
+    ((Actor *)D_80129F40)[96].unk_05 = 0x80;
+    ((Actor *)D_80129F40)[96].unk_04 = 0;
+    ((Actor *)D_80129F40)[97] = ((Actor *)D_80129F40)[96];
+    annual_result_secondary_resource_addresses_init();
+    func_8004EE18((u8 *) D_80148814, 0x1F, 1, 2, 0);
+    ((Actor *)D_80129F40)[98] = ((Actor *)D_80129F40)[96];
+    ((Actor *)D_80129F40)[98].unk_01 = 0xB;
+    ((Actor *)D_80129F40)[98].unk_04 = 8;
+    ((Actor *)D_80129F40)[98].flags = 1;
+    ((Actor *)D_80129F40)[98].frame_table = D_80148808;
+    ((Actor *)D_80129F40)[98].sequence_table = D_8014880C;
+    ((Actor *)D_80129F40)[98].tpage_table = D_80148804;
+    ((Actor *)D_80129F40)[98].unk_14 = D_80148810;
+    ((Actor *)D_80129F40)[98].sequence_slot = (s16) (func_800BCE40() % 3);
+    ((Actor *)D_80129F40)[98].unk_18 = 0;
+    ((Actor *)D_80129F40)[98].x = -0xA0;
+    ((Actor *)D_80129F40)[98].y = -0x78;
+    ((Actor *)D_80129F40)[98].unk_43 = 0x1F;
+    ((Actor *)D_80129F40)[101] = ((Actor *)D_80129F40)[99] = ((Actor *)D_80129F40)[100] = ((Actor *)D_80129F40)[98];
+    ((Actor *)D_80129F40)[99].x += 0x48;
+    ((Actor *)D_80129F40)[99].sequence_slot = (s16) (func_800BCE40() % 3);
+    ((Actor *)D_80129F40)[99].unk_18 = 4;
+    ((Actor *)D_80129F40)[100].x += 0x90;
+    ((Actor *)D_80129F40)[100].sequence_slot = (s16) (func_800BCE40() % 3);
+    ((Actor *)D_80129F40)[100].unk_18 = 0xA;
+    ((Actor *)D_80129F40)[101].unk_01 = 0xA;
+    ((Actor *)D_80129F40)[101].flags = 0x40;
+    ((Actor *)D_80129F40)[101].sequence_slot = 0;
+    annual_result_talk_group = 0;
+    annual_result_talk_text_table = D_801481F8;
+    annual_result_talk_command_table = D_8014822C;
+    annual_result_talk_voice_table = D_80148260;
+    D_800F53A0.girl[0].unk_0A += 1;
+    D_800F53A0.girl[annual_first_result_girl].unk_0A += 1;
+    D_800F53A0.girl[annual_second_result_girl].unk_0A += 1;
+    func_8008FB00();
+    func_8004DE1C();
+}
+
+void annual_result_actor_group_hide(void) {
+    /* Signed local preserves the original compare operand order. T-20005. */
+    s32 selector = annual_result_target;
+    if (selector && selector != 7) {
+        ((Actor *)D_80129F40)[98].draw_flags |= 0x80;
+    }
+    if (selector && selector != 7) {
+        ((Actor *)D_80129F40)[99].draw_flags |= 0x80;
+    }
+    if (selector && selector != 7) {
+        ((Actor *)D_80129F40)[100].draw_flags |= 0x80;
+    }
+    ((Actor *)D_80129F40)[101].draw_flags |= 0x80;
+    D_80148824 = 1;
+    func_8004DE1C();
+}
+
+void annual_result_position_layout_init(void) {
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+
+    a[0] = -0x96;
+    a[1] = -0x48;
+    a[2] = 6;
+    a[3] = 0x54;
+    b[0] = b[1] = b[2] = b[3] = -0x40;
+    c[0] = c[1] = c[2] = c[3] = 0x40;
+    d[0] = d[1] = d[2] = d[3] = 0x40;
+    func_8005BD20(0, 4, a, b, c, d);
+    D_8012E6C0 = 1;
+    func_8004DE1C();
+}
+
+/* Fall-through s32 return preserves the early-return register ($v0 = 0). T-24137. */
+s32 annual_result_order_input_process(void) {
+    s16 result_position_candidate;
+    GyoziWork *annual_work_state;
+
+    annual_work_state = &D_800F53A0;
+    annual_result_options[0] = annual_work_state->selection_seed % 4;
+    result_position_candidate = 1;
+    while (1) {
+        annual_result_options[1] = (annual_work_state->selection_seed * 2 + result_position_candidate) % 4;
+        if (annual_result_options[0] != annual_result_options[1]) {
+            break;
+        }
+        result_position_candidate++;
+    }
+    while (1) {
+        annual_result_options[2] = (annual_work_state->selection_seed / 10 + result_position_candidate) % 4;
+        if (annual_result_options[0] != annual_result_options[2] && annual_result_options[1] != annual_result_options[2]) {
+            break;
+        }
+        result_position_candidate++;
+    }
+    while (1) {
+        annual_result_options[3] = result_position_candidate % 4;
+        if (annual_result_options[0] != annual_result_options[3] && annual_result_options[1] != annual_result_options[3] && annual_result_options[2] != annual_result_options[3]) {
+            break;
+        }
+        result_position_candidate++;
+    }
+    for (result_position_candidate = 0; result_position_candidate < 4; result_position_candidate++) {
+        if (annual_result_options[result_position_candidate] == 1) {
+            annual_result_options[result_position_candidate] = 0xB;
+        } else if (annual_result_options[result_position_candidate] == 2) {
+            annual_result_options[result_position_candidate] = annual_first_result_girl;
+        } else if (annual_result_options[result_position_candidate] == 3) {
+            annual_result_options[result_position_candidate] = annual_second_result_girl;
+        }
+    }
+    func_8005BE34(0, ((Actor *)D_80129F40)[0].x, ((Actor *)D_80129F40)[0].y, annual_result_options);
+    func_8005C1B8(0);
+    if (annual_work_state->input_bits & 0x600060) {
+        if (func_8005B32C() != 0) {
+            if (annual_work_state->menu_items[0].hover != 0) {
+                annual_selected_option_index = 0;
+            } else if (annual_work_state->menu_items[2].hover != 0) {
+                annual_selected_option_index = 1;
+            } else if (annual_work_state->menu_items[4].hover != 0) {
+                annual_selected_option_index = 2;
+            } else if (annual_work_state->menu_items[6].hover != 0) {
+                annual_selected_option_index = 3;
+            } else {
+                return 0;
+            }
+            ((Actor *)D_80129F40)[0].draw_flags &= 0xFF7F;
+            D_8012E6C0 = 0;
+            func_8005B06C(1);
+            ((Actor *)D_80129F40)[97].draw_flags |= 0x80;
+            ((Actor *)D_80129F40)[97].unk_18 =
+                annual_result_options[annual_selected_option_index]
+                + (annual_work_state->year == 0x60) * 0xB
+                + (annual_work_state->year == 0x61) * 0x17
+                - (annual_result_options[annual_selected_option_index] == 0xB && annual_work_state->year == 0x5F)
+                + 1;
+            /* FAKE: *(u8 *)& keeps annual_selected_option_index unwidened ($a2); !(!=) and * 0 keep 0x5F in $a1 without CSE. T-24137. */
+            ((Actor *)D_80129F40)[97].x = *(u8 *)&annual_selected_option_index * 0x4E - *(u8 *)&annual_selected_option_index - 0x75;
+            ((Actor *)D_80129F40)[97].y = -0x3C;
+            ((Actor *)D_80129F40)[97].scale_y = 0;
+            annual_result_talk_group += annual_result_options[annual_selected_option_index] * 3 + annual_work_state->year - 0x5F;
+            D_80148820 = 1;
+            if ((!(annual_work_state->year != 0x5F) && annual_result_options[annual_selected_option_index] == 0 && annual_work_state->unk_100.value >= 0x64)
+                || ((annual_result_options[annual_selected_option_index] == 0 & annual_work_state->year == 0x5F) && annual_work_state->unk_670 >= 0x64)
+                || ((annual_result_options[annual_selected_option_index] == 1 & (annual_work_state->year + (annual_work_state->year * 0)) == 0x5F) && annual_work_state->unk_0FA >= 0x46)
+                || ((annual_result_options[annual_selected_option_index] == 1 & annual_work_state->year == 0x61) && annual_work_state->unk_0FA >= 0x64)
+                || ((annual_result_options[annual_selected_option_index] == 2 & annual_work_state->year == 0x60) && annual_work_state->unk_0FA >= 0x64)) {
+                annual_result_talk_line = 1;
+            }
+            func_8004DE1C();
+        }
+    }
+}
+
+void annual_result_audio_command_play_4183(void) {
+    func_8008A0D4(0x4183);
+    func_8004DE1C();
+}
+
+void annual_result_actor_display_reset(void) {
+    s16 i;
+
+    for (i = 0; i < 6; i++) {
+        ((Actor *)D_80129F40)[i + 96].draw_flags = 0;
+    }
+    D_80148820 = 0;
+    D_80148824 = 0;
+    func_8004DE1C();
+}
+
+s32 annual_result_choice_route(void) {
+    D_8012E6BC = 0;
+    if (annual_result_target == 0) {
+        D_800F62CF = 0;
+        D_8012E664 = 0;
+        D_8012E660 = 7;
+        func_8004DEAC(6);
+        D_800F5902 += 1;
+        return 0;
+    }
+    if (annual_result_target == 7) {
+        D_800F62CF = 7;
+        D_8012E664 = 7;
+        D_8012E660 = 7;
+        func_8004DEAC(7);
+        D_800F592F += 1;
+        return 0;
+    }
+    if (annual_result_target == 9) {
+        D_800F62CF = 9;
+        D_8012E664 = 9;
+        D_8012E660 = 7;
+        func_8004DEAC(8);
+        D_800F593D += 1;
+        return 0;
+    }
+    func_8004DE1C();
+}
+
+void annual_result_choice_sound_play(void) {
+    if (annual_result_options[annual_selected_option_index] == 0xB) {
+        func_80086AB0(0x200);
+    } else {
+        func_80086AB0(0x201);
+    }
+    func_8004DE1C();
+}
+
+void annual_result_transition_timer_advance(void) {
+    s16 v;
+
+    v = D_8012B920 + 0x200;
+    D_8012B920 = v;
+    if (v >= 0x1000) {
+        func_8004DE1C();
+    }
+}
+
+void annual_result_scene_command_4d_issue(void) {
+    func_80051DD8(0x4D, 0x801B0000, 0xB0C5);
+    func_8004DE1C();
+}
+
+void annual_result_scene_command_0e_issue(void) {
+    func_80051DD8(0xE, 0x801D7000, 0xB112);
+    func_8004DE1C();
+}
+
+void annual_result_choice_effect_reset(void) {
+    annual_result_talk_line = 0;
+    if (annual_result_options[annual_selected_option_index] == 0xB) {
+        annual_result_talk_group = 0x27;
+    } else {
+        annual_result_talk_group = 0x26;
+    }
+    func_8004DE1C();
+}
+
+/* Return type preserves the existing caller declaration and original fall-through schedule. T-24101. */
+s32 annual_result_choice_geometry_draw(void) {
+    s32 unused; /* FAKE: unused local pads stack frame to 0x48 bytes. T-24101. */
+    s16 dy;
+    s16 dx;
+
+    dy = 0x1C - (((Actor *)D_80129F40)[97].scale_y / 512) * 4;
+    dx = 1;
+    if (((Actor *)D_80129F40)[97].scale_y == 0x1000) {
+        dy = 0;
+        dx = 0;
+    }
+    annual_result_gouraud_triangle_emit(
+        ((Actor *)D_80129F40)[97].x - dx - 0x1C,
+        ((Actor *)D_80129F40)[97].y + dy - 0x1C,
+        ((Actor *)D_80129F40)[97].x - 1,
+        ((Actor *)D_80129F40)[97].y + dy - 0x1C,
+        ((Actor *)D_80129F40)[97].x - dx - 0x1C,
+        ((Actor *)D_80129F40)[97].y - 1,
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + annual_result_options[annual_selected_option_index]]][0],
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + annual_result_options[annual_selected_option_index]]][1],
+        9, 0);
+    annual_result_gouraud_triangle_emit(
+        ((Actor *)D_80129F40)[97].x + dx + 0x1C,
+        ((Actor *)D_80129F40)[97].y - dy + 0x1C,
+        ((Actor *)D_80129F40)[97].x + dx + 0x1C,
+        ((Actor *)D_80129F40)[97].y,
+        ((Actor *)D_80129F40)[97].x,
+        ((Actor *)D_80129F40)[97].y - dy + 0x1C,
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + annual_result_options[annual_selected_option_index]]][0],
+        D_8014882C[D_8014885C[(D_800F53DE - 0x5F) * 12 + annual_result_options[annual_selected_option_index]]][1],
+        9, 0);
+    func_80054FCC(0xB);
+}
+
+/* Return type preserves the existing implicit caller ABI and original schedule. T-24019. */
+s32 annual_result_gouraud_triangle_emit(s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, u32 c0, u32 c1, s32 z, s32 trans) {
+    GyoziWork *g;
+    POLY_G3 *poly;
+
+    g = &D_800F53A0;
+    poly = func_80054B60(0x1C, D_80129F10);
+    func_800ABAB8(poly);
+    func_800ABA38(poly, trans);
+    /* setRGBn-style comma lines with masks: separate statements give other registers (T-20600, T-24019). */
+    poly->r0 = (c0 >> 16) & 0xFF, poly->g0 = (c0 >> 8) & 0xFF, poly->b0 = c0 & 0xFF;
+    poly->r1 = (c1 >> 16) & 0xFF, poly->g1 = (c1 >> 8) & 0xFF, poly->b1 = c1 & 0xFF;
+    poly->r2 = (c1 >> 16) & 0xFF, poly->g2 = (c1 >> 8) & 0xFF, poly->b2 = c1 & 0xFF;
+    poly->x0 = g->unk_014[D_80129F10] + x0;
+    poly->y0 = g->unk_018[D_80129F10] + y0;
+    poly->x1 = g->unk_014[D_80129F10] + x1;
+    poly->y1 = g->unk_018[D_80129F10] + y1;
+    poly->x2 = g->unk_014[D_80129F10] + x2;
+    poly->y2 = g->unk_018[D_80129F10] + y2;
+    func_800AB984(&D_800F7710[(D_80129F10 << 10) + z * 4], poly, poly);
+}
+
+void annual_result_character_idle_advance(void) {
+    s16 i;
+
+    for (i = 0; i < 3; i++) {
+        if (((Actor *)D_80129F40)[i + 0x62].unk_18 == 0xE
+            && ((Actor *)D_80129F40)[i + 0x62].unk_08 == 9) {
+            ((Actor *)D_80129F40)[i + 0x62].sequence_slot = func_800BCE40() % 3;
+        }
+    }
+}

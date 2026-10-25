@@ -808,15 +808,15 @@ void icon_disp_switch(s32 arg0) {
 /* Enable or disable one of the 14 command icons */
 void icon_can_use_set(s32 icon_index, s32 enabled) {
     if (enabled) {
-        D_80125C90[icon_index] = 1;
+        icon_enabled[icon_index] = 1;
     } else {
-        D_80125C90[icon_index] = 0;
+        icon_enabled[icon_index] = 0;
     }
 }
 
 /* Returns whether the indexed command icon is enabled. */
 s32 get_icon_can_use(s32 icon_index) {
-    if (D_80125C90[icon_index] == 1) {
+    if (icon_enabled[icon_index] == 1) {
         return 1;
     }
     return 0;
@@ -832,7 +832,7 @@ void hud_icon_bar_init(void) {
         g->icon_count = 0xF;
     }
     for (i = 0; i < g->icon_count; i++) {
-        D_80125C90[i] = 1;
+        icon_enabled[i] = 1;
     }
     for (i = 0; i < g->icon_count; i++) {
         actor_clear(i + 0x50);
@@ -1099,7 +1099,7 @@ void hud_icon_bar_update(s32 a) {
         visible_icon_count = 15;
     }
     for (i = 0; i < visible_icon_count; i++) {
-        if (D_80125C90[i] == 0) {
+        if (icon_enabled[i] == 0) {
             ((Actor *)actor_pool)[i + 80].flags = 0;
             ((Actor *)actor_pool)[i + 64].unk_43 = 0x51;
             ((Actor *)actor_pool)[i + 64].unk_01 = 3;

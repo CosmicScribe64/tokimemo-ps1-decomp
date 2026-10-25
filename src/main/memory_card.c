@@ -332,12 +332,12 @@ s32 memory_card_scan_poll(void) {
             g->memory_card_result = 0;
             g->save_slot = g->memory_card_step;
             if (memory_card_file_exists(g->memory_card_step) == 1) {
-                D_800E8BEE = 1;
+                slot_info_from_system_data = 1;
                 memory_card_step_next();
             } else {
                 g->memory_card_retry_count += 1;
                 if (g->memory_card_retry_count >= 3U) {
-                    D_800E8BEE = 0;
+                    slot_info_from_system_data = 0;
                     memory_card_step_next();
                 }
             }
@@ -553,12 +553,12 @@ s32 memory_card_file_read(s32 file_index) {
 }
 
 s32 memory_card_file_write(s32 file_index) {
-    /* FAKE: pad1/pad2 reproduce the 0x70-byte frame (sp47/sp46 at SP+0x47/0x46,
+    /* FAKE: pad1/pad2 reproduce the 0x70-byte frame (last_qualifying_girl/sp46 at SP+0x47/0x46,
      * idx spilled at SP+0x50); real locals unknown. T-24214. */
     u8 name[28];
     s32 idx;
     s32 pad1[2];
-    u8 sp47;
+    u8 last_qualifying_girl;
     u8 sp46;
     s32 pad2[1];
     s32 retry;
@@ -591,10 +591,10 @@ s32 memory_card_file_write(s32 file_index) {
         strncat(D_80123124, "・システム", 0xC);
     }
     bzero(D_80123164, 0x1C);
-    hud_event_log_scan(&sp47, &sp46, file_index);
+    hud_event_log_scan(&last_qualifying_girl, &sp46, file_index);
     /* FAKE: T-24214, the no-op mask on the u8 takes one ugen temporary, so
      * the later temporaries (t2..t9) land on the original's registers. */
-    idx = sp47 & 0xFF;
+    idx = last_qualifying_girl & 0xFF;
     if (idx >= 0xD) {
         idx = 0;
     }
@@ -644,10 +644,10 @@ s32 memory_card_file_exists(s32 file_index) {
 
 void memory_card_system_file_probe(void) {
     if (memory_card_file_exists(0) != 0) {
-        D_800E8BEE = 1;
+        slot_info_from_system_data = 1;
         return;
     }
-    D_800E8BEE = 0;
+    slot_info_from_system_data = 0;
 }
 
 s32 memory_card_save_files_probe(void) {
@@ -773,10 +773,10 @@ s32 memory_card_system_bank_build(s32 arg0) {
     if (game_state.options_dirty == 0) {
         if (system_data.selected_slot != 0) {
             memcpy(system_data.layout_settings, D_80125C10, 0x40);
-            memcpy(&system_data.layout_settings[0xF0], &D_80125C50, 4);
+            memcpy(&system_data.layout_settings[0xF0], &mascot_anchor_x, 4);
             system_data.layout_settings[0xF4] = hud_mascot_choice;
-            system_data.layout_settings[0xF5] = D_80125C54;
-            system_data.layout_settings[0xF6] = D_80125C55;
+            system_data.layout_settings[0xF5] = mascot_length;
+            system_data.layout_settings[0xF6] = mascot_swing;
             memcpy(bank->layout_settings, system_data.layout_settings, 0x100);
         }
     }
@@ -826,10 +826,10 @@ s32 memory_card_system_bank_load(s32 arg0) {
     memcpy(system_data.slot_girl_marks, bank->slot_girl_marks, 0x100);
     memcpy(system_data.layout_settings, bank->layout_settings, 0x100);
     memcpy(D_80125C10, system_data.layout_settings, 0x40);
-    memcpy(&D_80125C50, &system_data.layout_settings[0xF0], 4);
+    memcpy(&mascot_anchor_x, &system_data.layout_settings[0xF0], 4);
     hud_mascot_choice = system_data.layout_settings[0xF4];
-    D_80125C54 = system_data.layout_settings[0xF5];
-    D_80125C55 = system_data.layout_settings[0xF6];
+    mascot_length = system_data.layout_settings[0xF5];
+    mascot_swing = system_data.layout_settings[0xF6];
 }
 
 /* Writes a game save into bank arg0 of the card image (GameSaveImage), then stores the bank's byte sum.
@@ -868,7 +868,7 @@ s32 memory_card_game_bank_build(s32 arg0) {
         ((GameSaveImage *)&memory_card_block[0x200])[arg0].clubs[i] = ((WordView *)g->clubs)[i];
     }
     g->saved_settings[3] = get_k_speed();
-    g->saved_settings[2] = D_800B6708;
+    g->saved_settings[2] = cursor_style;
     ((GameSaveImage *)&memory_card_block[arg0 * 0xF00 + 0x200])->scene_flags = *(SceneFlagBlock *)g->scene_flags;
     for (i = 0; i < 4; i++) {
         ((GameSaveImage *)&memory_card_block[0x200])[arg0].date_place_history[i] = g->date_place_history[i];
@@ -985,7 +985,7 @@ s32 memory_card_game_bank_load(s32 arg0) {
     }
     *(SceneFlagBlock *)g->scene_flags = ((GameSaveImage *)&memory_card_block[arg0 * 0xF00 + 0x200])->scene_flags;
     k_speed_set(g->saved_settings[3]);
-    D_800B6708 = g->saved_settings[2];
+    cursor_style = g->saved_settings[2];
     for (i = 0; i < 4; i++) {
         g->date_place_history[i] = ((GameSaveImage *)&memory_card_block[0x200])[arg0].date_place_history[i];
     }
@@ -1099,5 +1099,5 @@ void memory_card_state_reset(void) {
         D_800E7D13[i * 4 + 4] = 0;
     }
     memory_card_start();
-    D_800E8BEE = 0;
+    slot_info_from_system_data = 0;
 }

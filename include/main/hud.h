@@ -80,7 +80,7 @@ extern u8 *D_8011ED8C;
 extern s32 D_8011ED90;
 extern s32 D_8011F41C;
 extern s16 D_8012059A[];
-extern u16 D_800B670A[];
+extern u16 birthday_day_table[];
 
 s32 cd_decimal_digit(s16 arg0, u8 arg1);
 void parameter_disp_switch();
@@ -104,6 +104,6 @@ extern u8 D_8011F414;
 #define HUD_BIORHYTHM_GRAPH_SCALE -32 /* T-27070 signed scale passed by hud_biorhythm_graph_draw */
 #define HUD_BIORHYTHM_ZERO_FAILURES_NONE 0 /* T-27062 no zero-return probes so far */
 #define HUD_BIORHYTHM_ZERO_FAILURES_ALL_THREE 3 /* T-27062 all three probes returned zero */
-extern u8 D_80125C90[];
+extern u8 icon_enabled[];
 
 #endif

@@ -63,7 +63,6 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
 
 
 
@@ -71,17 +70,11 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
 
-- [ ] [[tickets/T-27066-remaining-overlay-completion|T-27066 Complete remaining overlay semantic analysis]]
 
-- [ ] [[tickets/T-27065-festival-overlay-reconciliation|T-27065 Reconcile festival and miscellaneous overlay naming]]
 
-- [ ] [[tickets/T-27064-complex-overlay-reconciliation|T-27064 Reconcile EVENT TT RPG and TACO naming]]
 
-- [ ] [[tickets/T-27063-hardware-main-reconciliation|T-27063 Reconcile main flow and hardware entry points]]
 
-- [ ] [[tickets/T-27062-main-essential-locals-constants|T-27062 Prepare essential main locals and proven constants]]
 
 
 
@@ -101,29 +94,19 @@ kanban-plugin: board
 - [ ] [[tickets/T-28000-asset-export-pipeline|T-28000 Reusable asset readers and modern exports]]
 
 
-- [ ] [[tickets/T-27052-phase2-completion-audit|T-27052 Phase 2 completion and header-split design]]
-
-- [ ] [[tickets/T-27051-parallel-overlay-reconciliation|T-27051 Parallel overlay reconciliation]]
-
-
-- [ ] [[tickets/T-27037-p2-o-small|T-27037 Phase 2 analysis - Remaining small overlays]]
 
 
 
-- [ ] [[tickets/T-27036-p2-o-bunkasd-shugaku|T-27036 Phase 2 analysis - Stage shows and school trip]]
-
-- [ ] [[tickets/T-27035-p2-o-master-ending|T-27035 Phase 2 analysis - Club mastery and endings]]
-
-- [ ] [[tickets/T-27009-p2-reconcile|T-27009 Reconcile phase 2 proposal names and executable batches]]
-
-- [ ] [[tickets/T-27034-p2-o-tel-option|T-27034 Phase 2 analysis - Telephone and options]]
 
 
-- [ ] [[tickets/T-27033-p2-o-shougatu|T-27033 Phase 2 analysis - New Year and Christmas]]
 
-- [ ] [[tickets/T-27032-p2-o-geko|T-27032 Phase 2 analysis - Girl encounters]]
 
-- [ ] [[tickets/T-27031-p2-o-taiiku|T-27031 Phase 2 analysis - Sports festival]]
+
+
+
+
+
+
 
 - [ ] [[tickets/T-20500-emulator-assisted-naming|T-20500 Emulator-assisted naming and constants pass]]
 - [ ] [[tickets/T-26000-ugen-block-copy-41-rule|T-26000 Adopt IDO 4.1's block-copy state rule in tools/ugen_pass.py]]
@@ -153,13 +136,11 @@ kanban-plugin: board
 - [ ] [[tickets/T-24502-taco-completion|T-24502 Match remaining TACO functions]]
 - [ ] [[tickets/T-24501-main-tail|T-24501 Match MAIN remaining functions]]
 - [ ] [[tickets/T-24503-geko-option-completion|T-24503 Match GEKO and OPTION remaining functions]]
-- [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## In Review
 
 - [ ] [[tickets/T-27056-final-astra-fixes|T-27056 Resolve final phase 2 findings with a separate Astra agent]]
 
-- [ ] [[tickets/T-27055-final-astra-review|T-27055 Review phase 2 with Astra]]
 
 
 
@@ -232,6 +213,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-24512-ending|T-24512 Match remaining ENDING functions]]
 - [ ] [[tickets/T-24513-etc-matching|T-24513 Match remaining ETC functions]]
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
+- [ ] [[tickets/T-27000-phase-2|T-27000 Phase 2: human-readable codebase]]
 
 ## Done
 
@@ -1107,6 +1089,24 @@ kanban-plugin: board
 - [ ] [[tickets/T-27029-p2-o-etc|T-27029 Phase 2 analysis of overlay ETC (exams, career talks, ending tail, album)]]
 - [ ] [[tickets/T-27030-p2-o-nameent|T-27030 Phase 2 naming and port spec for overlay NAME_ENT (file screens, name entry, prologue, opening)]]
 - [ ] [[tickets/T-27025-p2-o-bunkasai|T-27025 Phase 2 naming and port spec for overlay BUNKASAI (culture festival, club-member variant)]]
+- [ ] [[tickets/T-27009-p2-reconcile|T-27009 Reconcile phase 2 proposal names and executable batches]]
+- [ ] [[tickets/T-27031-p2-o-taiiku|T-27031 Phase 2 analysis - Sports festival]]
+- [ ] [[tickets/T-27032-p2-o-geko|T-27032 Phase 2 analysis - Girl encounters]]
+- [ ] [[tickets/T-27033-p2-o-shougatu|T-27033 Phase 2 analysis - New Year and Christmas]]
+- [ ] [[tickets/T-27034-p2-o-tel-option|T-27034 Phase 2 analysis - Telephone and options]]
+- [ ] [[tickets/T-27035-p2-o-master-ending|T-27035 Phase 2 analysis - Club mastery and endings]]
+- [ ] [[tickets/T-27036-p2-o-bunkasd-shugaku|T-27036 Phase 2 analysis - Stage shows and school trip]]
+- [ ] [[tickets/T-27037-p2-o-small|T-27037 Phase 2 analysis - Remaining small overlays]]
+- [ ] [[tickets/T-27051-parallel-overlay-reconciliation|T-27051 Parallel overlay reconciliation]]
+- [ ] [[tickets/T-27052-phase2-completion-audit|T-27052 Phase 2 completion and header-split design]]
+- [ ] [[tickets/T-27055-final-astra-review|T-27055 Review phase 2 with Astra]]
+- [ ] [[tickets/T-27062-main-essential-locals-constants|T-27062 Prepare essential main locals and proven constants]]
+- [ ] [[tickets/T-27063-hardware-main-reconciliation|T-27063 Reconcile main flow and hardware entry points]]
+- [ ] [[tickets/T-27064-complex-overlay-reconciliation|T-27064 Reconcile EVENT TT RPG and TACO naming]]
+- [ ] [[tickets/T-27065-festival-overlay-reconciliation|T-27065 Reconcile festival and miscellaneous overlay naming]]
+- [ ] [[tickets/T-27066-remaining-overlay-completion|T-27066 Complete remaining overlay semantic analysis]]
+- [ ] [[tickets/T-27067-core-scheduler-essential-completion|T-27067 Complete shared core scheduler and school-day semantic residue]]
+- [ ] [[tickets/T-27074-overlay-module-paths|T-27074 Prepare logical overlay directory and header paths]]
 
 
 %% kanban:settings

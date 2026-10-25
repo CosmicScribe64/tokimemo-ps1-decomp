@@ -65,4 +65,5 @@ master_tournament_mode_stage_callbacks = 0x8013C5C8;
 master_tournament_grade_thresholds = 0x8013C640;
 master_final_tournament_grade = 0x8013C784;
 master_final_tournament_companion_index = 0x8013C790;
+master_saved_dialogue_variant = 0x8013C794;
 master_final_tournament_mode_stage_callbacks = 0x8013C798;

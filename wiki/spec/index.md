@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-24
+updated: 2026-10-25
 ---
 
 # Port specs (phase 2)
@@ -37,7 +37,7 @@ These pages are checkpoints with explicit open work. Their function-name batches
 - [[spec/o-master-ending]] - MASTER/ENDING: partial mastery and companion selection, ending candidates and audio levels (T-27035)
 - [[spec/o-bunkasd-shugaku]] - BUNKA_SD/SHUGAKU: partial stage-show dispatch and school-trip response rules (T-27036)
 - [[spec/o-small]] - KANGEI, DATE2, EN_NICHI, OLH, OMIMAI, RENSYU and VALEN loader/primary-rule map (T-27037)
-- [[spec/reconcile]] - Reconciliation decisions and the verified scheduler application; broader reconciliation remains open (T-27009)
+- [[spec/reconcile]] - Reconciliation decisions, applied ledgers and verified source integration (T-27009)
 
 - [[spec/o-taiiku]] - Sports festival: partial body-backed transitions, input/movement and girl-stat rewards (T-27031)
 - [[spec/o-geko]] - GEKO encounters: five mode entries, walk-home/birthday rules, invitation selection and appointments (T-27032)

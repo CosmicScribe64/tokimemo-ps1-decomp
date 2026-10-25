@@ -60,9 +60,9 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, RENSYU/practice_match_script_tables]
-      - [0x40, c, RENSYU/practice_match_mode_stage_dispatch]
-      - [0x2110, .rodata, RENSYU/practice_match_mode_stage_dispatch]
+      - [0x0, c, practice_match/practice_match_script_tables]
+      - [0x40, c, practice_match/practice_match_mode_stage_dispatch]
+      - [0x2110, .rodata, practice_match/practice_match_mode_stage_dispatch]
       - [0x22B0, data, RENSYU_data]
-      - [0x22C0, .data, RENSYU/practice_match_mode_stage_dispatch]
+      - [0x22C0, .data, practice_match/practice_match_mode_stage_dispatch]
   - [0x30000]

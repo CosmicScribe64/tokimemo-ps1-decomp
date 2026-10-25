@@ -6,7 +6,26 @@ ticket: T-27052
 
 # Topic header split: ownership, order and deletion gates
 
-Design for [[tickets/T-27052-phase2-completion-audit]], based on the current headers and tooling, not an applied refactor. [[phase2]], `docs/adr/0001-phase-2-naming.md:198` and `CODING_STANDARDS.md` section 8a remain binding. No source, tool, config or header was changed for this audit. The primary chat owns the ticket, board, index and log updates.
+Design record for [[tickets/T-27052-phase2-completion-audit]]. The inventory and recommendations below were written before the topic-only header migration; retain them as design history and use the current-state note below for implementation status. [[phase2]], `docs/adr/0001-phase-2-naming.md:198` and `CODING_STANDARDS.md` section 8a remain binding.
+
+## Current topic-header and path status (2026-10-25)
+
+The topic-only ownership migration is integrated in the working tree. `include/main_api.h` and `include/game.h`
+are absent. `config/header_owners.json` registers 70 canonical owner paths and 21 required type paths; the
+header guards pass with no umbrellas. This supersedes the older recommendation below to keep forwarding
+umbrellas until a later deletion gate. The registered owner list, not the pre-migration inventory tables,
+defines current ownership.
+
+T-27074's 56-row overlay path table has been applied to the working tree: 27 directory moves and 29 header
+path moves. The current folder and root-header map is in [[source-files]]. The EVENT root is
+`include/ovl/date_spots.h`; the GYOZI root is `include/ovl/annual_events.h`. These paths describe content and
+do not assert that either overlay is loaded or unused. TT remains `src/ovl/TT/` pending contributor agreement;
+its technical header is `include/ovl/tt.h`. GEKO, KANGEI, SHOUGATU and VALEN confirmation/HYPOTHESIS gates
+remain as recorded in the accepted map.
+
+The 2026-10-24 inventory statement that no source, tool, config or header changed applied only to that
+read-only audit snapshot. Address-based and disc-header paths in its tables remain evidence anchors for that
+snapshot; current code paths follow the map in [[source-files]] and `config/header_owners.json`.
 
 The first port slice needs explicit state records, calendar, parameters, scheduler, school-day and appointment interfaces. The human's latest priority is logical C filenames and header breakdown. Start with the bounded two-object/three-header pilot below, keeping the existing shared record closure available; full shared-record extraction follows separately. Header ownership follows the symbol's defining module or actual binary storage owner; a function's callers do not become its owner. File naming follows the original object boundary even when one object contains several topics.
 
@@ -575,5 +594,79 @@ the structural proof: require the strict comparison as well. Run owner/header/sy
 guards and root's clean 27/27/6,952 proof before Done. Keep game/main_api forwarding closures for the
 pilot. The remaining srcscan/rename/aggregate context and full owner-registration work above still
 precedes final umbrella deletion; this bounded patch does not authorize that deletion.
+
+## T-27061 next extraction: four fixed-width API topics
+
+The next executable packet is in ignored `.claude/orchestrator/state/T-27061/`:
+`01-register-topic-owners.patch`, `02-extract-main-topics.patch`, `manifest.json` and `manifest.md`.
+It is based on a stable 808-input snapshot at HEAD `c3053b47caab9689cb9fabfd898eb049bdcdb289`, with
+identical before/copy/after digest
+`930f11212a9f41ec6a79aa279e05ee2a8046cfab3f6a5993089b79197fd680c5`. Live inputs included the
+new logical main source paths. Unapplied `config/renames/proposals/` and independent `tools/assets/`
+work were excluded because header/view/symbol/aggregate proofs do not read them; all actual source,
+header and proof configuration/tool inputs remained hash guarded.
+
+| new canonical header | function declarations | initialized data | explicit BSS | provider |
+|---|---:|---:|---:|---|
+| `include/main/game_mode.h` | 6 | 0 | 0 | `src/main/game_mode.c`, object [0x80042540,0x80042A00) |
+| `include/main/pad.h` | 10 | 5 | 0 | `src/main/pad_input.c`, object [0x80042A00,0x80043510) |
+| `include/main/holiday.h` | 35 | 8 | 0 | `src/main/holiday.c`, object [0x80075320,0x800789E0) |
+| `include/main/ovl.h` | 7 | 5 | 1 | `src/main/overlay_loader.c`, object [0x800789E0,0x80079B10) |
+
+All **77 declarations** already exist in main_api. Each new header has its path-derived guard and
+includes only common.h; no typedef, enum, SDK interface or GameState layout moves in this stage.
+The one-line owner-registration patch adds these four paths to CANONICAL_HEADERS and changes no
+tool logic. It is separate because the extraction requires explicit canonical registration before
+declarations leave main_api. Registration is not inferred from paths or address ranges.
+
+The extraction moves complete declaration/override/comment blocks unchanged, adds four forwarding
+includes to main_api, and adds 28 owner-specific direct includes to **19 logical main C files** whose
+actual tokens use the moved declarations. The exact source-to-header-to-symbol evidence is in
+manifest.json. Examples: game_mode.c gets game_mode.h/ovl.h, game_init.c gets ovl.h, scheduler.c gets
+game_mode.h, and school_day.c gets game_mode.h/holiday.h. Source bodies and pre-existing include/
+override order are unchanged; the remaining state/type closure stays through game.h/main_api.
+Overlay C files are untouched, which keeps this packet independent of root's overlay filename work.
+
+The ovl_entry declaration is a specifically proven main-bss exception to the initialized-data
+selection: extern u32 at 0x80123110 in config/symbol_addrs_main.txt. game_init.c:func_80041840
+initializes it, overlay_loader.c:func_80079070/func_8007959C assign entry addresses, and game_mode's
+dispatcher invokes it. Its symbol configuration remains main-only because EVENT overlaps this
+address. No other BSS/shared-state declaration is reassigned by this packet.
+
+Preserved cases and deliberate deferrals:
+
+- Keep the previous 34 prototype omissions, plus the 18 omissions in the four new providers. Do
+  not add game_mode_dispatch/game_mode_next, holiday_mode_handler or ovl_loader_mode_handler merely
+  because their definitions are known.
+- Keep the previous six GYOZI compatibility declarations and six additional compatibility views:
+  pad's func_800433D0 retains `(s32 arg0)`; holiday's func_80075BFC, func_80076450, func_80078950,
+  func_80078970 and func_800789A0 retain their existing `()` lists. They are not assertions of current
+  standalone function boundaries. `game_mode_set()` remains unprototyped as before.
+- Keep 13 old rodata labels and func_80079800 in main_api. The latter is the mixed loader object's
+  memory-card/system-file routine, so an overlay-loader owner would be misleading. Missing current
+  owning-C references to the rodata labels do not establish unused status. The manifest lists exact
+  names, types, addresses and reasons for all deferrals.
+- Preserve attached T-20940/T-17000 evidence, signed and array views, and existing override guards.
+  The generator asserts the new leaf sets are exactly the planned 77 and old main_api is exactly
+  its previous declaration map minus those 77, without altered raw declarations.
+
+The move and subsequent --fix compare exactly zero benign/check/risky changes across 437 source
+units in the copied packet; --fix also leaves all copied source/header bytes unchanged. All seven
+selected suites pass (355 tests), as do header, symbol, rename and aggregate guards and both patches'
+`git apply --check`. Independent Sol 6.1 review has no unresolved findings; it inspected the exact
+patches, manifest, capture/proof scripts and the author's hash-validated results rather than starting
+another duplicate container. The initializer-writer evidence was corrected to include game_init's
+func_80041840. Detailed results are in proof.json/proof.log and the T-27061 ticket.
+The proof container was the sole heavy job for this chat;
+redundant parent/reviewer test containers were stopped on root's resource instruction, rather than
+repeating identical frozen-input work. No live source/header/tool edit or game build occurs here.
+
+Root integration order: verify touched-file base hashes, apply registration as its own metadata
+change, then apply extraction. Capture a fresh 437-unit snapshot at the actual integration revision
+and require `--compare <snapshot> --strict-compare`, header/symbol/rename/aggregate guards and clean
+27/27/6,952 proof. If overlay filenames changed since this packet, take that fresh snapshot using
+current YAML paths; do not compare the old copied snapshot's path keys directly. The patch changes
+no overlay source paths. Keep both umbrellas until the remaining type/owner/direct-include gates are
+met; this packet is a practical next step rather than a claim that the final split is complete.
 
 Independent Sol 6.1 review reproduced the bounded pilot in read-only Docker: all 63 declaration texts matched main_api exactly with zero missing/extra/duplicate entries; 47 function/16 object counts, 75 definitions and 27+7 shared-prototype omissions were confirmed. It also checked the width-only include requirements, six retained GYOZI call views, object intervals and the two-row rename plan. No unresolved findings remained; application and matching builds are still outstanding.

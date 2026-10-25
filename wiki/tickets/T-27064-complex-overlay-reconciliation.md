@@ -1,10 +1,10 @@
 ---
 id: T-27064
 title: Reconcile EVENT TT RPG and TACO naming
-status: In Progress
+status: Done
 assignee: parallel-chat
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-25
 links: ["[[phase2]]", "[[tickets/T-27000-phase-2]]"]
 ---
 
@@ -14,11 +14,10 @@ Prepare body-backed, independently reviewed executable symbol packets and comple
 
 ## Acceptance criteria
 
-- [ ] Resolve current ledger precedence, source ownership and collisions; inventory every in-scope definition or justified hardware exception.
-- [ ] Supported symbol-only tables plan cleanly in Docker and pass independent Standards/Spec review.
-- [ ] Complete essential local/parameter/constants site inventory, source-backed transitions and persistent effects in specs.
-- [ ] Root application, matching proof and final review before Done.
-
+- [x] Resolve current ledger precedence, source ownership and collisions; inventory every in-scope definition or justified hardware exception.
+- [x] Supported symbol-only tables plan cleanly in Docker and pass independent Standards/Spec review.
+- [x] Complete essential local/parameter/constants site inventory, source-backed transitions and persistent effects in specs.
+- [x] Root application, matching proof and final review before Done.
 ## Comments
 
 2026-10-24: User authorized parallel chats, Luna for bounded work and Sol6.1 for harder analysis/review. No direct Godot work. No source apply/build/commit in this lane.
@@ -87,3 +86,34 @@ Final residual highlights: TT has 260 unresolved local rows, 128 unresolved para
 2026-10-24 namespace clarification: root committed `a60c31bb9` after source/policy review. TT technical `tt_`/`Tt`/`TT_` is adopted solely for TT.EXN; bare `shooter_` belongs to TACO. English game/folder terminology still awaits contributor agreement and no agreement is claimed. All 944 TT executable rows already use the correct namespace; only the obsolete gate comment and living policy descriptions changed. Exact parsed row bytes before/after are identical. New primary text hash 3bb3cbf4d95ba65e49cb681e5dd161409e5e6b46123eca79db2e5523b267ca98; parsed-row SHA-256 0393f26b2344f7f7d176c429ee0a4ae5c0c11e4963a1bc63eba791fba7e09906. Fresh plan and focused delta review are queued.
 
 2026-10-24 root reference fix: RPGlabels_intro_and_wave_transition.c used nonexistentgame_state.unk_3A. Reboundtotheexistingbytefieldscreen_brightnessat0x03Awhilepreserving*(s8*)&. Independentreviewverifiedoriginalassemblybytewrite0x800E62BAandfreshRPGchecksumexact. Thiscorrectsareference,doesnotrenameafielddefinition; newpacketplansshouldusecurrentvalidbinding.
+
+
+2026-10-24 followup reconciliation: frozen primary eight files remain byte-identical to `complex-overlay-primary-manifest.json` (SHA-256 `28908a199e2d7bf47ad20a7d0170e37221a137985d1278b7000181aa121b61a6`), 3268 rows. The fresh TT namespace plan subsequently passed 944 rows/34 files; the immutable primary manifest's pending field is supplemented in the new followup manifest. Root owns live primary integration, source/tool/header changes, builds and shared wiki/log updates.
+
+Independent Sol 6.1 Standards and Spec reviews checked all 99 initial followup rows and their consumers; all reported semantic/evidence findings were resolved. Combined plan exposed six TACO tool-blocked requests (three anonymous `.set.s` score fields and three legal reused K&R parameter names). Small synthetic fixtures reproduce both binding limitations without game data. These six remain explicit inventory requests; `alignment_pad` replaces the rejected placeholder target. Both reviewers rechecked the reduced packet/spec metadata with no remaining reported actionable findings.
+
+The executable followups contain **93 rows: EVENT 47 types; TT 14 (9 fields, 2 parameters, 3 locals); RPG_BAT 11 (4 types, 7 fields); TACO 21 (7 fields, 1 data, 12 parameters, 1 local)**. A stable isolated snapshot combined the frozen primary and followups: **3361 rows, 166 files, exit 0, no PROBLEM diagnostics**. Evidence: `/tmp/t27064/complex-followup-reduced-plan.log`, `/tmp/t27064/complex-followup-reduced-plan.exit`, `/tmp/t27064/complex-followup-validation-reduced-inputs.json`. The snapshot includes root's repaired `screen_brightness` reference. It is dry-run binding/inverse/gcc error-set proof, not root application or byte matching.
+
+2026-10-24 final inventory schema check: packaging caught six five-column blocked TACO records under a six-column header. Those records now carry an explicit source-evidence column; the three overlapping parameter-evidence records are labelled `param-evidence-blocked`. Both independent reviewers checked the correction and identical start/end essential hash `e468f9e469245ad8324f3757f935fe75ea308131a763693e6a36ada7e7ee791d`, reporting no new semantic change, ambiguity or actionable finding. All executable tables and specs are unchanged. The followup manifest below pins the corrected six-column inventory; other followup inventories have five columns.
+
+New root handoff: `config/renames/proposals/complex-overlay-followup-manifest.json`, SHA-256 `56351a99938e6ddb4b1c51cb5d0e96f6ea651025bdf5b23aa124c42fac127a09`. It pins all twelve followup/spec artifacts, counts, source census, primary hash, validation inputs/tools and unresolved root actions. Six EVENT data declarations are header-blocked and excluded, with exact views (four `s32`, one `s16`, one `u8`); conditional ownership/guard design is unimplemented pending root review and header/build proof. The rink's 31-step header correction is a separate request. All four units remain partial; 128 unsafe TACO constant selectors remain withheld, TT English game/folder terminology still awaits contributor agreement, and technical TT prefixes are adopted. Ticket stays In Progress. Root must append shared log/status references; this lane edits no shared tracking or live source. No heavy process remains running in this lane.
+
+2026-10-24 essential constant continuation: root reports the primary 3268, followup 93 and six TACO requests applied through its 3939-row wave, with independent mechanical review and 437 ABI views unchanged; full matching remains root work. New authorization is source-backed game command/result/score/life/threshold constants only. Bounded Luna analyses and two independent Sol reviews prepare values/selectors under `/tmp/t27064/constant-closure/`; this lane writes no live C/header/tool/config ledger or shared wiki tracking. T-27061 owns the six private EVENT views, additional main overlap and queued rink correction. The initial constant trial has 23 requests/120 candidate values in an isolated current-source snapshot; dry-run proof and review determine which become executable. Old inventory counts are not a completion claim.
+
+
+2026-10-24 essential constant handoff: **24 requests,128 distinct constant values,324 selected int literal sites,53 unique virtual files**, in two ordered packets under `/tmp/t27064/constant-closure/`. Base22/118/297 and dependent TACO supplement2/10/27 both exit0 with no gcc error-set delta or declaration-view changes. Base module values/sites: EVENT11/74,TT38/66,RPG_BAT33/108,TACO36/49; supplement adds TACO10/27, for TACO46/76. These are dry-run binding/provenance/type/view proofs, not application or byte matching. Base dependency hashes currently differ from live in 0 paths; the operator refuses application on any mismatch.
+
+Ready/remaining original inventories: EVENT17=10 selected-site ready,4 inapplicable declaration/table extents,3 hypothesis meanings unresolved (plus1 new threshold-loop count); TT64 old sound-site rows are covered by38 values at66 current sites, while125 other candidates remain unresolved; RPG80=11 ready at selected sites,69 unresolved (plus22 additional hit-point/scale/cap values); separate TACO43=28 ready,14 unsupported menu/settings selector forms,1 stage7 hypothesis; old TACO128=17 ready at selected sites (15 with partial caller/consumer coverage),111 unresolved/unselected. Remaining TACO groups are76 pool/member/array/mask contexts,9 boss modes,20 sound contexts and6 tuning candidates. The128 values in the aggregate span all four units; they do not close all128 TACO candidates. Full disposition reasons are in `dispositions.json` and the aggregate `handoff.json`.
+
+Independent Sol Standards and Spec reviews checked all original120 value meanings, corrected118 and additional10, then final selected-site/fact records and dependency pins. All known actionable findings were resolved. Corrections preserve these rule facts: TT shot-level pickup can lower a preexisting level above9 to9; follower terminology avoids an unproved series term; RPG enemy HP1 also occurs in the hidden robot-code branch and cannot receive a broad trip-only name; damage scale1000 is a base scale used by aliens and delinquents. TACO's25 item producer calls map eight kinds to the unchanged item argument, and player-slot0 auxiliary0/1 selects homing/spread. Other item/secondary consumers retain literals. The scratch audit uses exact newline accounting for Latin-1 source bytes; selected positive legacy literals must be unsuffixed int and private-header/unit bound. No repo tool changed.
+
+Authoritative handoff: `/tmp/t27064/constant-closure/handoff.json`, SHA-256 `ac38d0bf47ff9926d5ef1d7a59e306cf98e4c016e4098e9b12123ea3ef7f0b63`; operator instructions `HANDOFF.md`. Frozen base request SHA-256 `e88adc01235a7afa8998addd3a237500ae08a1b14b542d5c4382fa546db83c80`; supplement request `6f9f787a0ba698f9ae2d4a9ae14ffa06f25090275e8abd7131997d071866ee30`; unchanged scratch operator `a9c16c131cc256429007271583dae6a3fc5e7f5aa82bbc4932651e3044513b25`. The operator defaults to virtual plan, requires explicit `--apply --review-pin` and all reviewed byte pins for root-only application, and applies base before supplement. Positive legacy rows explicitly have no metadata replay. All source facts, values and proof hashes are pinned in the two manifests.
+
+No live C/header/tool/config-ledger writes, Git changes or full build ran in this lane. T-27061 retains EVENT private-view/main-overlap/rink work. Ticket stays In Progress; root owns application, matching verification and shared index/status/board/log recording. No owned Docker validation remains running.
+
+Count clarification: the aggregate128 is the number of named constant definitions, not unique numeric integers; numeric values repeat across different semantic sets.
+
+## Final integration evidence (2026-10-25)
+
+Reviewed source digest: `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Final clean matching proof: 27/27 binaries, 6,952 functions, 2,276,920 bytes. Independent original Astra review and separate fixer Astra review passed this exact source digest. See `.claude/orchestrator/state/T-27000/final-tracking/criterion-evidence.md`.
+

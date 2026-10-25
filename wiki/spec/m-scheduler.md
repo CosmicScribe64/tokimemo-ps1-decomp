@@ -2,14 +2,14 @@
 type: spec
 unit: m-scheduler
 updated: 2026-10-24
-sources: ["src/main/8006CB30.c", "include/game.h", "include/main_api.h", "config/renames/scheduler.txt", "config/renames/core.txt", "config/renames/proposals/m-scheduler.tsv"]
+sources: ["src/main/scheduler.c", "include/game/schedule_records.h", "include/main/schedule.h", "include/main/day_event.h", "config/renames/scheduler.txt", "config/renames/core.txt", "config/renames/proposals/m-scheduler.tsv"]
 ---
 
 # Port spec: scheduler (m-scheduler)
 
-Roadmap phase 2, unit `m-scheduler` ([[tickets/T-27011-p2-m-scheduler]], parent [[tickets/T-27000-phase-2]]). The object `src/main/8006CB30.c` (0x8006CB30-0x800737A0) has 56 function definitions and implements the weekly day-event cycle. Applied shared names come from the committed ledgers and current headers. [[tickets/T-27041-scheduler-readable-batch]] applies 34 function and six data names; its evidence is in `config/renames/scheduler.txt`. Other field/constant/file suggestions remain proposals. Historical emulator observations below are inherited from the original analysis, not new runs in this continuation.
+Roadmap phase 2, unit `m-scheduler` ([[tickets/T-27011-p2-m-scheduler]], parent [[tickets/T-27000-phase-2]]). The current object path is `src/main/scheduler.c` (0x8006CB30-0x800737A0); it has 56 function definitions and implements the weekly day-event cycle. Applied shared names come from the committed ledgers and registered topic headers. [[tickets/T-27041-scheduler-readable-batch]] applies 34 function and six data names; its evidence is in `config/renames/scheduler.txt`. Other field/constant suggestions remain proposals. Historical emulator observations below are inherited from the original analysis, not new runs in this continuation.
 
-Suggested future file name: `src/main/scheduler.c`; prototypes currently remain in `include/main_api.h`. O.BIN names stay unchanged, including `schedule_init`, `_schedule_init`, `last_date_spot_timer_dec`, `restore_bgm`, `geko_judge`, `date_sasoi_judge`, `schedule_girls_gakko`, `yuukou_down`, `syoushin_up` and `schdeule_girls_param`. The non-O.BIN name `special_event_select` is now `schedule_special_scene_select`. New symbols owned by this object use `schedule_` or `day_event_`, per ADR-0001. Original analysis table: `config/renames/proposals/m-scheduler.tsv`; reconciliation decisions: [[spec/reconcile]].
+The current scheduler declarations are in registered topic owners including `include/main/schedule.h` and `include/main/day_event.h`; the canonical owner map is `config/header_owners.json`. O.BIN names stay unchanged, including `schedule_init`, `_schedule_init`, `last_date_spot_timer_dec`, `restore_bgm`, `geko_judge`, `date_sasoi_judge`, `schedule_girls_gakko`, `yuukou_down`, `syoushin_up` and `schdeule_girls_param`. The non-O.BIN name `special_event_select` is now `schedule_special_scene_select`. New symbols owned by this object use `schedule_` or `day_event_`, per ADR-0001. Original analysis table: `config/renames/proposals/m-scheduler.tsv`; reconciliation decisions: [[spec/reconcile]].
 
 ## 1. What the system does
 

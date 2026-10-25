@@ -1,0 +1,1410 @@
+#ifndef OVL_MISC_SCENES_H
+#define OVL_MISC_SCENES_H
+
+#include "common.h"
+#include "common.h"
+#include "game/day_event.h"
+#include "game/display_records.h"
+#include "game/draw_records.h"
+#include "game/game_state.h"
+#include "game/model_records.h"
+#include "game/param.h"
+#include "game/schedule_records.h"
+#include "game/system_data.h"
+#include "game/word_views.h"
+#include "game_enums.h"
+#include "libapi.h"
+#include "libgpu.h"
+#include "libgs.h"
+#include "libgte.h"
+#include "main/actor.h"
+#include "main/audio.h"
+#include "main/bg.h"
+#include "main/boot.h"
+#include "main/cd.h"
+#include "main/cursor.h"
+#include "main/day_event.h"
+#include "main/debug.h"
+#include "main/draw.h"
+#include "main/game_mode.h"
+#include "main/girl.h"
+#include "main/hud.h"
+#include "main/import_views/entry_ui.h"
+#include "main/import_views/entry_ui_scenes.h"
+#include "main/import_views/entry_ui_scenes_school_events.h"
+#include "main/import_views/minigame_scenes_school_events.h"
+#include "main/import_views/scenes.h"
+#include "main/import_views/scenes_school_events.h"
+#include "main/memory_card.h"
+#include "main/menu.h"
+#include "main/message.h"
+#include "main/pad.h"
+#include "main/portrait.h"
+#include "main/prim.h"
+#include "main/scene.h"
+#include "main/schedule.h"
+#include "main/sd.h"
+#include "main/settings.h"
+#include "main/speaker.h"
+#include "main/sprite.h"
+#include "main/state.h"
+#include "main/talk.h"
+#include "main/text.h"
+#include "main/title.h"
+#include "main/tpage.h"
+#include "main/view.h"
+#include "main/vram.h"
+#include "psx_types.h" /* GetWorkBase primitives: POLY_FT4, SPRT, POLY_F4 (T-17300) */
+
+/* Overlay-local externs (T-1300). */
+extern u8 misc_button_label_circle[];
+extern u8 misc_button_label_right[];
+extern u8 misc_button_label_left[];
+extern u8 misc_button_label_cross[];
+s32 album_load_step(void);
+void last_photo_load_step(void);
+s32 career_choice_club_dream(void);
+extern s32 career_choice_correct_count;
+extern s32 exam_rank_player;
+extern s32 exam_player_in_lower_half;
+
+/* A 15-bit color and its three masked channels (album_rgb555_split, T-2040). The channels are unsigned:
+ * album_vram_blur averages and scales them with srl, multu and divu (T-25121). */
+typedef struct Rgb555Split {
+    /* 0x00 */ u16 color;
+    /* 0x02 */ u16 pad;
+    /* 0x04 */ u32 r;
+    /* 0x08 */ u32 g;
+    /* 0x0C */ u32 b;
+} Rgb555Split; /* size 0x10 */
+
+extern s32 album_anim_active;
+extern u8 *album_portrait_tpage_table;
+extern u8 *album_portrait_frame_table;
+extern u8 *album_portrait_sequence_table;
+extern s16 album_portrait_frame_count;
+extern u8 *album_anim_36_ptrs;
+extern u8 *D_8014EA74;
+extern u8 *D_8014EA78;
+extern s16 D_8014EA7C;
+extern u8 *D_8014EA80;
+extern u8 *D_8014EA84;
+extern u8 *D_8014EA88;
+extern u8 *D_8014EA8C;
+extern u8 *D_8014EA90;
+extern u8 *D_8014EA94;
+extern u8 *D_8014EA98;
+extern u8 *album_anim_37_ptrs;
+extern u8 *D_8014EAA0;
+extern u8 *D_8014EAA4;
+extern s16 D_8014EAA8;
+extern u8 *D_8014EAAC;
+extern u8 *D_8014EAB0;
+extern u8 *D_8014EAB4;
+extern u8 *D_8014EAB8;
+extern u8 *D_8014EABC;
+extern u8 *D_8014EAC0;
+extern u8 *D_8014EAC4;
+extern u8 *album_anim_38_ptrs;
+extern u8 *D_8014EACC;
+extern u8 *D_8014EAD0;
+extern s16 D_8014EAD4;
+extern u8 *D_8014EAD8;
+extern u8 *D_8014EADC;
+extern u8 *D_8014EAE0;
+extern u8 *D_8014EAE4;
+extern u8 *D_8014EAE8;
+extern u8 *D_8014EAEC;
+extern u8 *D_8014EAF0;
+extern u8 *album_anim_39_ptrs;
+extern u8 *D_8014EAF8;
+extern u8 *D_8014EAFC;
+extern s16 D_8014EB00;
+extern u8 *D_8014EB04;
+extern u8 *D_8014EB08;
+extern u8 *D_8014EB0C;
+extern u8 *D_8014EB10;
+extern u8 *D_8014EB14;
+extern u8 *D_8014EB18;
+extern u8 *D_8014EB1C;
+extern u8 *album_anim_3a_ptrs;
+extern u8 *D_8014EB24;
+extern u8 *D_8014EB28;
+extern s16 D_8014EB2C;
+extern u8 *D_8014EB30;
+extern u8 *D_8014EB34;
+extern u8 *D_8014EB38;
+extern u8 *D_8014EB3C;
+extern u8 *D_8014EB40;
+extern u8 *D_8014EB44;
+extern u8 *D_8014EB48;
+extern u8 *album_anim_3b_ptrs;
+extern u8 *D_8014EB50;
+extern u8 *D_8014EB54;
+extern s16 D_8014EB58;
+extern u8 *D_8014EB5C;
+extern u8 *D_8014EB60;
+extern u8 *D_8014EB64;
+extern u8 *D_8014EB68;
+extern u8 *D_8014EB6C;
+extern u8 *D_8014EB70;
+extern u8 *D_8014EB74;
+extern u8 *D_8014EB8C;
+extern u8 *D_8014EBA8;
+extern u8 *album_anim_02_ptrs;
+extern u8 *D_8014EBB0;
+extern u8 *D_8014EBB4;
+extern s16 D_8014EBB8;
+extern u8 *D_8014EBBC;
+extern u8 *D_8014EBC0;
+extern u8 *D_8014EBC4;
+extern u8 *D_8014EBC8;
+extern u8 *D_8014EBCC;
+extern u8 *D_8014EBD0;
+extern u8 *D_8014EBD4;
+extern u8 *album_anim_03_ptrs;
+extern u8 *D_8014EBDC;
+extern u8 *D_8014EBE0;
+extern s16 D_8014EBE4;
+extern u8 *D_8014EBE8;
+extern u8 *D_8014EBEC;
+extern u8 *D_8014EBF0;
+extern u8 *D_8014EBF4;
+extern u8 *D_8014EBF8;
+extern u8 *D_8014EBFC;
+extern u8 *D_8014EC00;
+extern u8 *album_anim_04_ptrs;
+extern u8 *D_8014EC08;
+extern u8 *D_8014EC0C;
+extern s16 D_8014EC10;
+extern u8 *D_8014EC14;
+extern u8 *D_8014EC18;
+extern u8 *D_8014EC1C;
+extern u8 *D_8014EC20;
+extern u8 *D_8014EC24;
+extern u8 *D_8014EC28;
+extern u8 *D_8014EC2C;
+extern u8 *album_anim_05_ptrs;
+extern u8 *D_8014EC34;
+extern u8 *D_8014EC38;
+extern u8 *D_8014EC3C;
+extern u8 *D_8014EC40;
+extern u8 *D_8014EC44;
+extern u8 *D_8014EC48;
+extern u8 *album_anim_06_ptrs;
+extern u8 *D_8014EC50;
+extern u8 *D_8014EC54;
+extern s16 D_8014EC58;
+extern u8 *D_8014EC5C;
+extern u8 *D_8014EC60;
+extern u8 *D_8014EC64;
+extern u8 *D_8014EC68;
+extern u8 *D_8014EC6C;
+extern u8 *D_8014EC70;
+extern u8 *D_8014EC74;
+extern u8 *D_8014EC78;
+extern u8 *D_8014EC7C;
+extern u8 *album_anim_07_ptrs;
+extern u8 *D_8014EC84;
+extern u8 *D_8014EC88;
+extern s16 D_8014EC8C;
+extern u8 *D_8014EC90;
+extern u8 *D_8014EC94;
+extern u8 *D_8014EC98;
+extern u8 *D_8014EC9C;
+extern u8 *D_8014ECA0;
+extern u8 *D_8014ECA4;
+extern u8 *D_8014ECA8;
+extern u8 *album_anim_0e_ptrs;
+extern u8 *D_8014ECB0;
+extern u8 *D_8014ECB4;
+extern s16 D_8014ECB8;
+extern u8 *D_8014ECBC;
+extern u8 *D_8014ECC0;
+extern u8 *D_8014ECC4;
+extern u8 *D_8014ECC8;
+extern u8 *D_8014ECCC;
+extern u8 *D_8014ECD0;
+extern u8 *D_8014ECD4;
+extern u8 *album_anim_0f_ptrs;
+extern u8 *D_8014ECDC;
+extern u8 *D_8014ECE0;
+extern u8 *D_8014ECE4;
+extern u8 *D_8014ECE8;
+extern u8 *D_8014ECEC;
+extern u8 *D_8014ECF0;
+extern u8 *album_anim_10_ptrs;
+extern u8 *D_8014ECF8;
+extern u8 *D_8014ECFC;
+extern s16 D_8014ED00;
+extern u8 *D_8014ED04;
+extern u8 *D_8014ED08;
+extern u8 *D_8014ED0C;
+extern u8 *D_8014ED10;
+extern u8 *D_8014ED14;
+extern u8 *D_8014ED18;
+extern u8 *D_8014ED1C;
+extern u8 *album_anim_11_ptrs;
+extern u8 *D_8014ED24;
+extern u8 *D_8014ED28;
+extern s16 D_8014ED2C;
+extern u8 *D_8014ED30;
+extern u8 *D_8014ED34;
+extern u8 *D_8014ED38;
+extern u8 *D_8014ED3C;
+extern u8 *D_8014ED40;
+extern u8 *D_8014ED44;
+extern u8 *D_8014ED48;
+extern u8 *D_8014ED4C;
+extern u8 *D_8014ED50;
+extern u8 *album_anim_12_ptrs;
+extern u8 *D_8014ED58;
+extern u8 *D_8014ED5C;
+extern s16 D_8014ED60;
+extern u8 *D_8014ED64;
+extern u8 *D_8014ED68;
+extern u8 *D_8014ED6C;
+extern u8 *D_8014ED70;
+extern u8 *D_8014ED74;
+extern u8 *D_8014ED78;
+extern u8 *D_8014ED7C;
+extern u8 *album_anim_13_ptrs;
+extern u8 *D_8014ED84;
+extern u8 *D_8014ED88;
+extern s16 D_8014ED8C;
+extern u8 *D_8014ED90;
+extern u8 *album_anim_50_ptrs;
+extern u8 *D_8014ED98;
+extern u8 *D_8014ED9C;
+extern u8 *D_8014EDA0;
+extern u8 *D_8014EDA4;
+extern u8 *D_8014EDA8;
+extern u8 *D_8014EDAC;
+extern u8 *album_anim_15_ptrs;
+extern u8 *D_8014EDB4;
+extern u8 *D_8014EDB8;
+extern s16 D_8014EDBC;
+extern u8 *D_8014EDC0;
+extern u8 *D_8014EDC4;
+extern u8 *D_8014EDC8;
+extern u8 *D_8014EDCC;
+extern u8 *D_8014EDD0;
+extern u8 *D_8014EDD4;
+extern u8 *D_8014EDD8;
+extern u8 *album_anim_16_ptrs;
+extern u8 *D_8014EDE0;
+extern u8 *D_8014EDE4;
+extern s16 D_8014EDE8;
+extern u8 *D_8014EDEC;
+extern u8 *D_8014EDF0;
+extern u8 *D_8014EDF4;
+extern u8 *D_8014EDF8;
+extern u8 *D_8014EDFC;
+extern u8 *D_8014EE00;
+extern u8 *D_8014EE04;
+extern u8 *album_anim_17_ptrs;
+extern u8 *D_8014EE0C;
+extern u8 *D_8014EE10;
+extern s16 D_8014EE14;
+extern u8 *D_8014EE18;
+extern u8 *D_8014EE1C;
+extern u8 *D_8014EE20;
+extern u8 *D_8014EE24;
+extern u8 *D_8014EE28;
+extern u8 *D_8014EE2C;
+extern u8 *D_8014EE30;
+extern u8 *album_anim_18_ptrs;
+extern u8 *D_8014EE38;
+extern u8 *D_8014EE3C;
+extern s16 D_8014EE40;
+extern u8 *D_8014EE44;
+extern u8 *D_8014EE48;
+extern u8 *D_8014EE4C;
+extern u8 *D_8014EE50;
+extern u8 *D_8014EE54;
+extern u8 *D_8014EE58;
+extern u8 *D_8014EE5C;
+extern u8 *album_anim_19_ptrs;
+extern u8 *D_8014EE64;
+extern u8 *D_8014EE68;
+extern s16 D_8014EE6C;
+extern u8 *D_8014EE70;
+extern u8 *D_8014EE74;
+extern u8 *D_8014EE78;
+extern u8 *D_8014EE7C;
+extern u8 *D_8014EE80;
+extern u8 *D_8014EE84;
+extern u8 *D_8014EE88;
+extern u8 *album_anim_1a_ptrs;
+extern u8 *D_8014EE90;
+extern u8 *D_8014EE94;
+extern s16 D_8014EE98;
+extern u8 *D_8014EE9C;
+extern u8 *D_8014EEA0;
+extern u8 *D_8014EEA4;
+extern u8 *D_8014EEA8;
+extern u8 *D_8014EEAC;
+extern u8 *D_8014EEB0;
+extern u8 *D_8014EEB4;
+extern u8 *album_anim_2e_ptrs;
+extern u8 *D_8014EEBC;
+extern u8 *D_8014EEC0;
+extern s16 D_8014EEC4;
+extern u8 *D_8014EEC8;
+extern u8 *D_8014EECC;
+extern u8 *D_8014EED0;
+extern u8 *D_8014EED4;
+extern u8 *D_8014EED8;
+extern u8 *D_8014EEDC;
+extern u8 *D_8014EEE0;
+extern u8 *album_anim_2f_ptrs;
+extern u8 *D_8014EEE8;
+extern u8 *D_8014EEEC;
+extern s16 D_8014EEF0;
+extern u8 *D_8014EEF4;
+extern u8 *D_8014EEF8;
+extern u8 *D_8014EEFC;
+extern u8 *D_8014EF00;
+extern u8 *D_8014EF04;
+extern u8 *D_8014EF08;
+extern u8 *D_8014EF0C;
+extern u8 *album_anim_30_ptrs;
+extern u8 *D_8014EF14;
+extern u8 *D_8014EF18;
+extern s16 D_8014EF1C;
+extern u8 *D_8014EF20;
+extern u8 *D_8014EF24;
+extern u8 *D_8014EF28;
+extern u8 *D_8014EF2C;
+extern u8 *D_8014EF30;
+extern u8 *D_8014EF34;
+extern u8 *D_8014EF38;
+extern u8 *album_anim_31_ptrs;
+extern u8 *D_8014EF40;
+extern u8 *D_8014EF44;
+extern s16 D_8014EF48;
+extern u8 *D_8014EF4C;
+extern u8 *D_8014EF50;
+extern u8 *D_8014EF54;
+extern u8 *D_8014EF58;
+extern u8 *D_8014EF5C;
+extern u8 *D_8014EF60;
+extern u8 *D_8014EF64;
+extern u8 *album_anim_32_ptrs;
+extern u8 *D_8014EF6C;
+extern u8 *D_8014EF70;
+extern s16 D_8014EF74;
+extern u8 *D_8014EF78;
+extern u8 *D_8014EF7C;
+extern u8 *D_8014EF80;
+extern u8 *D_8014EF84;
+extern u8 *D_8014EF88;
+extern u8 *D_8014EF8C;
+extern u8 *D_8014EF90;
+extern u8 *album_anim_34_ptrs;
+extern u8 *D_8014EF98;
+extern u8 *D_8014EF9C;
+extern s16 D_8014EFA0;
+extern u8 *D_8014EFA4;
+extern u8 *D_8014EFA8;
+extern u8 *D_8014EFAC;
+extern u8 *D_8014EFB0;
+extern u8 *D_8014EFB4;
+extern u8 *D_8014EFB8;
+extern u8 *D_8014EFBC;
+extern u8 *album_special_anim_46_ptrs;
+extern u8 *D_8014EFC4;
+extern u8 *D_8014EFC8;
+extern s16 D_8014EFCC;
+extern u8 *D_8014EFD0;
+extern u8 *D_8014EFD4;
+extern u8 *D_8014EFD8;
+extern u8 *D_8014EFDC;
+extern u8 *D_8014EFE0;
+extern u8 *D_8014EFE4;
+extern u8 *D_8014EFE8;
+extern u8 *D_8014EFEC;
+extern u8 *D_8014EFF0;
+extern u8 *D_8014EFF4;
+extern u8 *D_8014EFF8;
+extern u8 *D_8014EFFC;
+extern u8 *D_8014F000;
+extern u8 *D_8014F004;
+extern u8 *album_anim_08_ptrs;
+extern u8 *D_8014F00C;
+extern u8 *D_8014F010;
+extern s16 D_8014F014;
+extern u8 *D_8014F018;
+extern u8 *D_8014F01C;
+extern u8 *D_8014F020;
+extern u8 *D_8014F024;
+extern u8 *D_8014F028;
+extern u8 *D_8014F02C;
+extern u8 *D_8014F030;
+extern u8 *album_anim_09_ptrs;
+extern u8 *D_8014F038;
+extern u8 *D_8014F03C;
+extern s16 D_8014F040;
+extern u8 *D_8014F044;
+extern u8 *D_8014F048;
+extern u8 *D_8014F04C;
+extern u8 *D_8014F050;
+extern u8 *D_8014F054;
+extern u8 *D_8014F058;
+extern u8 *D_8014F05C;
+extern u8 *album_anim_0a_ptrs;
+extern u8 *D_8014F064;
+extern u8 *D_8014F068;
+extern s16 D_8014F06C;
+extern u8 *D_8014F070;
+extern u8 *D_8014F074;
+extern u8 *D_8014F078;
+extern u8 *D_8014F07C;
+extern u8 *D_8014F080;
+extern u8 *D_8014F084;
+extern u8 *D_8014F088;
+extern u8 *album_anim_0b_ptrs;
+extern u8 *D_8014F090;
+extern u8 *D_8014F094;
+extern s16 D_8014F098;
+extern u8 *D_8014F09C;
+extern u8 *D_8014F0A0;
+extern u8 *D_8014F0A4;
+extern u8 *D_8014F0A8;
+extern u8 *D_8014F0AC;
+extern u8 *D_8014F0B0;
+extern u8 *D_8014F0B4;
+extern u8 *album_anim_0c_ptrs;
+extern u8 *D_8014F0BC;
+extern u8 *D_8014F0C0;
+extern s16 D_8014F0C4;
+extern u8 *D_8014F0C8;
+extern u8 *D_8014F0CC;
+extern u8 *D_8014F0D0;
+extern u8 *D_8014F0D4;
+extern u8 *D_8014F0D8;
+extern u8 *D_8014F0DC;
+extern u8 *D_8014F0E0;
+extern u8 *album_special_anim_0e_ptrs;
+extern u8 *D_8014F0E8;
+extern u8 *D_8014F0EC;
+extern s16 D_8014F0F0;
+extern u8 *D_8014F0F4;
+extern u8 *D_8014F0F8;
+extern u8 *D_8014F0FC;
+extern u8 *D_8014F100;
+extern u8 *D_8014F104;
+extern u8 *D_8014F108;
+extern u8 *D_8014F10C;
+extern u8 *D_8014F110;
+extern u8 *D_8014F114;
+extern u8 *D_8014F118;
+extern u8 *D_8014F11C;
+extern u8 *D_8014F120;
+extern u8 *D_8014F124;
+extern u8 *D_8014F128;
+extern u8 *album_anim_21_ptrs;
+extern u8 *D_8014F130;
+extern u8 *D_8014F134;
+extern s16 D_8014F138;
+extern u8 *D_8014F13C;
+extern u8 *D_8014F140;
+extern u8 *D_8014F144;
+extern u8 *D_8014F148;
+extern u8 *D_8014F14C;
+extern u8 *D_8014F150;
+extern u8 *D_8014F154;
+extern u8 *album_anim_23_ptrs;
+extern u8 *D_8014F15C;
+extern u8 *D_8014F160;
+extern s16 D_8014F164;
+extern u8 *D_8014F168;
+extern u8 *D_8014F16C;
+extern u8 *D_8014F170;
+extern u8 *D_8014F174;
+extern u8 *D_8014F178;
+extern u8 *D_8014F17C;
+extern u8 *D_8014F180;
+extern u8 *album_anim_24_ptrs;
+extern u8 *D_8014F188;
+extern u8 *D_8014F18C;
+extern s16 D_8014F190;
+extern u8 *D_8014F194;
+extern u8 *D_8014F198;
+extern u8 *D_8014F19C;
+extern u8 *D_8014F1A0;
+extern u8 *D_8014F1A4;
+extern u8 *D_8014F1A8;
+extern u8 *D_8014F1AC;
+extern u8 *album_anim_25_ptrs;
+extern u8 *D_8014F1B4;
+extern u8 *D_8014F1B8;
+extern s16 D_8014F1BC;
+extern u8 *D_8014F1C0;
+extern u8 *D_8014F1C4;
+extern u8 *D_8014F1C8;
+extern u8 *D_8014F1CC;
+extern u8 *D_8014F1D0;
+extern u8 *D_8014F1D4;
+extern u8 *D_8014F1D8;
+extern u8 *album_anim_26_ptrs;
+extern u8 *D_8014F1E0;
+extern u8 *D_8014F1E4;
+extern u8 *D_8014F1E8;
+extern u8 *D_8014F1EC;
+extern u8 *D_8014F1F0;
+extern u8 *D_8014F1F4;
+extern u8 *album_anim_27_ptrs;
+extern u8 *D_8014F1FC;
+extern u8 *D_8014F200;
+extern s16 D_8014F204;
+extern u8 *D_8014F208;
+extern u8 *D_8014F20C;
+extern u8 *D_8014F210;
+extern u8 *D_8014F214;
+extern u8 *D_8014F218;
+extern u8 *D_8014F21C;
+extern u8 *D_8014F220;
+extern u8 *album_anim_28_ptrs;
+extern u8 *D_8014F228;
+extern u8 *D_8014F22C;
+extern s16 D_8014F230;
+extern u8 *D_8014F234;
+extern u8 *D_8014F238;
+extern u8 *D_8014F23C;
+extern u8 *D_8014F240;
+extern u8 *D_8014F244;
+extern u8 *D_8014F248;
+extern u8 *D_8014F24C;
+extern u8 *album_anim_29_ptrs;
+extern u8 *D_8014F254;
+extern u8 *D_8014F258;
+extern s16 D_8014F25C;
+extern u8 *D_8014F260;
+extern u8 *D_8014F264;
+extern u8 *D_8014F268;
+extern u8 *D_8014F26C;
+extern u8 *D_8014F270;
+extern u8 *D_8014F274;
+extern u8 *D_8014F278;
+extern u8 *album_anim_2a_ptrs;
+extern u8 *D_8014F280;
+extern u8 *D_8014F284;
+extern s16 D_8014F288;
+extern u8 *D_8014F28C;
+extern u8 *D_8014F290;
+extern u8 *D_8014F294;
+extern u8 *D_8014F298;
+extern u8 *D_8014F29C;
+extern u8 *D_8014F2A0;
+extern u8 *D_8014F2A4;
+extern u8 *album_anim_2b_ptrs;
+extern u8 *D_8014F2AC;
+extern u8 *D_8014F2B0;
+extern s16 D_8014F2B4;
+extern u8 *D_8014F2B8;
+extern u8 *D_8014F2BC;
+extern u8 *D_8014F2C0;
+extern u8 *D_8014F2C4;
+extern u8 *D_8014F2C8;
+extern u8 *D_8014F2CC;
+extern u8 *D_8014F2D0;
+extern u8 *album_anim_2c_ptrs;
+extern u8 *D_8014F2D8;
+extern u8 *D_8014F2DC;
+extern s16 D_8014F2E0;
+extern u8 *D_8014F2E4;
+extern u8 *D_8014F2E8;
+extern u8 *D_8014F2EC;
+extern u8 *D_8014F2F0;
+extern u8 *D_8014F2F4;
+extern u8 *D_8014F2F8;
+extern u8 *D_8014F2FC;
+extern u8 *album_anim_3c_ptrs;
+extern u8 *D_8014F304;
+extern u8 *D_8014F308;
+extern s16 D_8014F30C;
+extern u8 *D_8014F310;
+extern u8 *D_8014F314;
+extern u8 *D_8014F318;
+extern u8 *D_8014F31C;
+extern u8 *D_8014F320;
+extern u8 *D_8014F324;
+extern u8 *D_8014F328;
+extern u8 *album_anim_3e_ptrs;
+extern u8 *D_8014F330;
+extern u8 *D_8014F334;
+extern s16 D_8014F338;
+extern u8 *D_8014F33C;
+extern u8 *D_8014F340;
+extern u8 *D_8014F344;
+extern u8 *D_8014F348;
+extern u8 *D_8014F34C;
+extern u8 *D_8014F350;
+extern u8 *D_8014F354;
+extern u8 *album_anim_3f_ptrs;
+extern u8 *D_8014F35C;
+extern u8 *D_8014F360;
+extern s16 D_8014F364;
+extern u8 *D_8014F368;
+extern u8 *D_8014F36C;
+extern u8 *D_8014F370;
+extern u8 *D_8014F374;
+extern u8 *D_8014F378;
+extern u8 *D_8014F37C;
+extern u8 *D_8014F380;
+extern u8 *album_anim_40_ptrs;
+extern u8 *D_8014F388;
+extern u8 *D_8014F38C;
+extern s16 D_8014F390;
+extern u8 *D_8014F394;
+extern u8 *D_8014F398;
+extern u8 *D_8014F39C;
+extern u8 *D_8014F3A0;
+extern u8 *D_8014F3A4;
+extern u8 *D_8014F3A8;
+extern u8 *D_8014F3AC;
+extern u8 *album_anim_41_ptrs;
+extern u8 *D_8014F3B4;
+extern u8 *D_8014F3B8;
+extern s16 D_8014F3BC;
+extern u8 *D_8014F3C0;
+extern u8 *D_8014F3C4;
+extern u8 *D_8014F3C8;
+extern u8 *D_8014F3CC;
+extern u8 *D_8014F3D0;
+extern u8 *D_8014F3D4;
+extern u8 *D_8014F3D8;
+extern u8 *album_anim_42_ptrs;
+extern u8 *D_8014F3E0;
+extern u8 *D_8014F3E4;
+extern s16 D_8014F3E8;
+extern u8 *D_8014F3EC;
+extern u8 *D_8014F3F0;
+extern u8 *D_8014F3F4;
+extern u8 *D_8014F3F8;
+extern u8 *D_8014F3FC;
+extern u8 *D_8014F400;
+extern u8 *D_8014F404;
+extern u8 *album_anim_1b_ptrs;
+extern u8 *D_8014F40C;
+extern u8 *D_8014F410;
+extern s16 D_8014F414;
+extern u8 *D_8014F418;
+extern u8 *D_8014F41C;
+extern u8 *D_8014F420;
+extern u8 *D_8014F424;
+extern u8 *D_8014F428;
+extern u8 *D_8014F42C;
+extern u8 *D_8014F430;
+extern u8 *album_anim_1c_ptrs;
+extern u8 *D_8014F438;
+extern u8 *D_8014F43C;
+extern s16 D_8014F440;
+extern u8 *D_8014F444;
+extern u8 *D_8014F448;
+extern u8 *D_8014F44C;
+extern u8 *D_8014F450;
+extern u8 *D_8014F454;
+extern u8 *D_8014F458;
+extern u8 *D_8014F45C;
+extern u8 *album_anim_1d_ptrs;
+extern u8 *D_8014F464;
+extern u8 *D_8014F468;
+extern s16 D_8014F46C;
+extern u8 *D_8014F470;
+extern u8 *D_8014F474;
+extern u8 *D_8014F478;
+extern u8 *D_8014F47C;
+extern u8 *D_8014F480;
+extern u8 *D_8014F484;
+extern u8 *D_8014F488;
+extern u8 *album_anim_1e_ptrs;
+extern u8 *D_8014F490;
+extern u8 *D_8014F494;
+extern s16 D_8014F498;
+extern u8 *D_8014F49C;
+extern u8 *D_8014F4A0;
+extern u8 *D_8014F4A4;
+extern u8 *D_8014F4A8;
+extern u8 *D_8014F4AC;
+extern u8 *D_8014F4B0;
+extern u8 *D_8014F4B4;
+extern u8 *album_anim_1f_ptrs;
+extern u8 *D_8014F4BC;
+extern u8 *D_8014F4C0;
+extern s16 D_8014F4C4;
+extern u8 *D_8014F4C8;
+extern u8 *D_8014F4CC;
+extern u8 *D_8014F4D0;
+extern u8 *D_8014F4D4;
+extern u8 *D_8014F4D8;
+extern u8 *D_8014F4DC;
+extern u8 *D_8014F4E0;
+extern u8 *album_anim_20_ptrs;
+extern u8 *D_8014F4E8;
+extern u8 *D_8014F4EC;
+extern s16 D_8014F4F0;
+extern u8 *D_8014F4F4;
+extern u8 *D_8014F4F8;
+extern u8 *D_8014F4FC;
+extern u8 *D_8014F500;
+extern u8 *D_8014F504;
+extern u8 *D_8014F508;
+extern u8 *D_8014F50C;
+extern u8 *album_anim_43_ptrs;
+extern u8 *D_8014F514;
+extern u8 *D_8014F518;
+extern s16 D_8014F51C;
+extern u8 *D_8014F520;
+extern u8 *D_8014F524;
+extern u8 *D_8014F528;
+extern u8 *D_8014F52C;
+extern u8 *D_8014F530;
+extern u8 *D_8014F534;
+extern u8 *D_8014F538;
+extern u8 *album_anim_45_ptrs;
+extern u8 *D_8014F540;
+extern u8 *D_8014F544;
+extern s16 D_8014F548;
+extern u8 *D_8014F54C;
+extern u8 *D_8014F550;
+extern u8 *D_8014F554;
+extern u8 *D_8014F558;
+extern u8 *D_8014F55C;
+extern u8 *D_8014F560;
+extern u8 *D_8014F564;
+extern u8 *album_anim_46_ptrs;
+extern u8 *D_8014F56C;
+extern u8 *D_8014F570;
+extern s16 D_8014F574;
+extern u8 *D_8014F578;
+extern u8 *D_8014F57C;
+extern u8 *D_8014F580;
+extern u8 *D_8014F584;
+extern u8 *D_8014F588;
+extern u8 *D_8014F58C;
+extern u8 *D_8014F590;
+extern u8 *album_anim_47_ptrs;
+extern u8 *D_8014F598;
+extern u8 *D_8014F59C;
+extern s16 D_8014F5A0;
+extern u8 *D_8014F5A4;
+extern u8 *D_8014F5A8;
+extern u8 *D_8014F5AC;
+extern u8 *D_8014F5B0;
+extern u8 *D_8014F5B4;
+extern u8 *D_8014F5B8;
+extern u8 *D_8014F5BC;
+extern u8 *album_anim_48_ptrs;
+extern u8 *D_8014F5C4;
+extern u8 *D_8014F5C8;
+extern s16 D_8014F5CC;
+extern u8 *D_8014F5D0;
+extern u8 *D_8014F5D4;
+extern u8 *D_8014F5D8;
+extern u8 *D_8014F5DC;
+extern u8 *D_8014F5E0;
+extern u8 *D_8014F5E4;
+extern u8 *D_8014F5E8;
+extern u8 *album_anim_49_ptrs;
+extern u8 *D_8014F5F0;
+extern u8 *D_8014F5F4;
+extern s16 D_8014F5F8;
+extern u8 *D_8014F5FC;
+extern u8 *D_8014F600;
+extern u8 *D_8014F604;
+extern u8 *D_8014F608;
+extern u8 *D_8014F60C;
+extern u8 *D_8014F610;
+extern u8 *D_8014F614;
+extern u8 *album_anim_unused_a_ptrs;
+extern u8 *D_8014F61C;
+extern u8 *D_8014F620;
+extern u8 *D_8014F624;
+extern u8 *D_8014F628;
+extern u8 *D_8014F62C;
+extern u8 *D_8014F630;
+extern u8 *album_anim_4d_ptrs;
+extern u8 *D_8014F638;
+extern u8 *D_8014F63C;
+extern s16 D_8014F640;
+extern u8 *D_8014F644;
+extern u8 *D_8014F648;
+extern u8 *D_8014F64C;
+extern u8 *D_8014F650;
+extern u8 *D_8014F654;
+extern u8 *D_8014F658;
+extern u8 *D_8014F65C;
+extern u8 *album_anim_unused_b_ptrs;
+extern u8 *D_8014F664;
+extern u8 *D_8014F668;
+extern s16 D_8014F66C;
+extern u8 *D_8014F670;
+extern u8 *D_8014F674;
+extern u8 *D_8014F678;
+extern u8 *D_8014F67C;
+extern u8 *D_8014F680;
+extern u8 *D_8014F684;
+extern u8 *D_8014F688;
+extern u8 *album_anim_unused_c_ptrs;
+extern u8 *D_8014F690;
+extern u8 *D_8014F694;
+extern s16 D_8014F698;
+extern u8 *D_8014F69C;
+extern u8 *D_8014F6A0;
+extern u8 *D_8014F6A4;
+extern u8 *D_8014F6A8;
+extern u8 *D_8014F6AC;
+extern u8 *D_8014F6B0;
+extern u8 *D_8014F6B4;
+extern u8 *album_bustup_tpage_table;
+extern u8 *album_bustup_frame_table;
+extern u8 *album_bustup_sequence_table;
+extern s16 album_bustup_frame_count;
+extern u8 *album_bustup_palette;
+extern s32 album_portrait_lba_b[];
+extern s32 album_portrait_lba_c[];
+extern s32 album_portrait_lba_d[];
+extern s32 album_portrait_lba_f[];
+extern s32 album_portrait_lba_g[];
+extern s32 album_portrait_lba_h[];
+extern s32 album_portrait_lba_i[];
+extern s32 album_portrait_lba_j[];
+extern s32 album_portrait_lba_k[];
+extern s32 album_portrait_lba_l[];
+extern s32 album_event_is_portrait;
+extern u8 *album_anim_00_ptrs;
+extern u8 *D_8014EB7C;
+extern u8 *D_8014EB80;
+extern s16 D_8014EB84;
+extern u8 *D_8014EB88;
+extern u8 *D_8014EB90;
+extern u8 *D_8014EB94;
+extern u8 *D_8014EB98;
+extern u8 *D_8014EB9C;
+extern u8 *D_8014EBA0;
+extern u8 *D_8014EBA4;
+extern s32 album_event_category;
+extern s32 album_event_scene;
+extern s32 album_event_mood;
+extern s32 album_event_girl;
+void album_anim_00_tables_set(void);
+void album_anim_images_setup(u8 *arg0, u8 *arg1, u8 *arg2, u8 *arg3, u8 *arg4, u8 *arg5);
+/* Fields of a table of 0x44-byte entries in the main exe data; the base is a guess that
+   keeps the accesses on one symbol, as the original code does (T-2040). */
+void album_anim_02_tables_set(void);
+void album_anim_03_tables_set(void);
+void album_anim_10_tables_set(void);
+void album_anim_11_tables_set(void);
+void album_anim_15_tables_set(void);
+void album_anim_18_tables_set(void);
+void album_anim_08_tables_set(void);
+void album_anim_09_tables_set(void);
+void album_anim_0a_tables_set(void);
+void album_anim_0b_tables_set(void);
+void album_anim_0c_tables_set(void);
+void album_anim_1b_tables_set(void);
+void album_anim_1c_tables_set(void);
+void album_anim_1d_tables_set(void);
+void album_anim_1e_tables_set(void);
+extern u8 exam_digit_palette;
+void album_anim_05_tables_set(void);
+void album_anim_0f_tables_set(void);
+void album_anim_26_tables_set(void);
+void album_anim_50_tables_set(void);
+extern s32 album_portrait_lba_e[][11];
+void album_anim_hide(void);
+void album_portrait_hide(void);
+s32 album_anim_show_dispatch(void);
+void album_anim_00_show(void);
+void album_anim_02_show(void);
+void album_anim_03_show(void);
+void album_anim_04_show(void);
+void album_anim_05_show(void);
+void album_anim_06_show(void);
+void album_anim_07_show(void);
+void album_anim_08_show(void);
+void album_anim_09_show(void);
+void album_anim_0a_show(void);
+void album_anim_0b_show(void);
+void album_anim_0c_show(void);
+void album_anim_0d_show(void);
+void album_anim_0e_show(void);
+void album_anim_0f_show(void);
+void album_anim_10_show(void);
+void album_anim_11_show(void);
+void album_anim_12_show(void);
+void album_anim_13_show(void);
+void album_anim_15_show(void);
+void album_anim_16_show(void);
+void album_anim_17_show(void);
+void album_anim_18_show(void);
+void album_anim_19_show(void);
+void album_anim_1a_show(void);
+void album_anim_1b_show(void);
+void album_anim_1c_show(void);
+void album_anim_1d_show(void);
+void album_anim_1e_show(void);
+void album_anim_1f_show(void);
+void album_anim_20_show(void);
+void album_anim_21_show(void);
+void album_anim_23_show(void);
+void album_anim_24_show(void);
+void album_anim_25_show(void);
+void album_anim_26_show(void);
+void album_anim_27_show(void);
+void album_anim_28_show(void);
+void album_anim_29_show(void);
+void album_anim_2a_show(void);
+void album_anim_2b_show(void);
+void album_anim_2c_show(void);
+void album_anim_2d_show(void);
+void album_anim_2e_show(void);
+void album_anim_2f_show(void);
+void album_anim_30_show(void);
+void album_anim_31_show(void);
+void album_anim_32_show(void);
+void album_anim_34_show(void);
+void album_anim_36_show(void);
+void album_anim_37_show(void);
+void album_anim_38_show(void);
+void album_anim_39_show(void);
+void album_anim_3a_show(void);
+void album_anim_3b_show(void);
+void album_anim_3c_show(void);
+void album_anim_3e_show(void);
+void album_anim_3f_show(void);
+void album_anim_40_show(void);
+void album_anim_41_show(void);
+void album_anim_42_show(void);
+void album_anim_43_show(void);
+void album_anim_45_show(void);
+void album_anim_46_show(void);
+void album_anim_47_show(void);
+void album_anim_48_show(void);
+void album_anim_49_show(void);
+void album_anim_4b_show(void);
+void album_anim_4d_show(void);
+void album_anim_50_show(void);
+void album_special_anim_0e_show(void);
+void album_special_anim_46_show(void);
+void album_tpage_slots_reset(void);
+void album_portrait_show(void);
+void album_bustup_tables_init(void);
+void album_portrait_part_positions_set(u8 *arg0);
+extern s32 album_event_year;
+extern s32 album_event_month;
+extern s32 album_event_day;
+extern s32 album_event_index;
+s32 exam_ranking_numbers_draw();
+void exam_number_draw(u32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void exam_panel_draw_big(void);
+void exam_panel_draw_header(void);
+extern s32 staff_roll_line_index;
+/* Flag set by staff_roll_load_step and checked by staff_roll_start_variant; staff_roll_girl_order is the 14-girl order
+ * that staff_roll_models_step and staff_roll_pictures_step step through 1-based with staff_roll_girl_slot (T-17300, T-24102). */
+extern s32 staff_roll_variant;
+extern s32 staff_roll_girl_order[14];
+extern s32 career_choice_tier;
+extern s32 career_guidance_girl_plan_line[];
+void staff_roll_models_init(void);
+void staff_roll_credit_lines_init(void);
+s32 staff_roll_credit_lines_update(void);
+void staff_roll_models_step(void);
+void staff_roll_pictures_step(void);
+/* T-24073: original reads incoming a0; preserve historical callers without an argument expression. */
+void staff_roll_pictures_place();
+extern s16 staff_roll_model_z;
+s32 career_guidance_university_verdict(void);
+void album_anim_36_tables_set(void);
+void album_anim_37_tables_set(void);
+void album_anim_38_tables_set(void);
+void album_anim_39_tables_set(void);
+void album_anim_3a_tables_set(void);
+void album_anim_3b_tables_set(void);
+void album_anim_04_tables_set(void);
+void album_anim_06_tables_set(void);
+void album_anim_07_tables_set(void);
+void album_anim_12_tables_set(void);
+void album_anim_17_tables_set(void);
+void album_anim_19_tables_set(void);
+void album_anim_2e_tables_set(void);
+void album_anim_30_tables_set(void);
+void album_anim_31_tables_set(void);
+void album_anim_32_tables_set(void);
+void album_anim_34_tables_set(void);
+void album_anim_21_tables_set(void);
+void album_anim_23_tables_set(void);
+void album_anim_24_tables_set(void);
+void album_anim_25_tables_set(void);
+void album_anim_27_tables_set(void);
+void album_anim_28_tables_set(void);
+void album_anim_29_tables_set(void);
+void album_anim_2a_tables_set(void);
+void album_anim_2b_tables_set(void);
+void album_anim_2c_tables_set(void);
+void album_anim_3c_tables_set(void);
+void album_anim_3e_tables_set(void);
+void album_anim_3f_tables_set(void);
+void album_anim_40_tables_set(void);
+void album_anim_41_tables_set(void);
+void album_anim_42_tables_set(void);
+void album_anim_1f_tables_set(void);
+void album_anim_43_tables_set(void);
+void album_anim_45_tables_set(void);
+void album_anim_46_tables_set(void);
+void album_anim_47_tables_set(void);
+void album_anim_48_tables_set(void);
+void album_anim_49_tables_set(void);
+void album_anim_4d_tables_set(void);
+extern s32 album_portrait_lba_spring[];
+extern s32 album_portrait_lba_summer[];
+extern s32 album_portrait_lba_autumn[];
+extern s32 album_portrait_lba_winter[];
+s32 album_cleared_level(void);
+s32 album_event_flag_count_check(void);
+s32 album_all_met_check(void);
+s32 misc_all_girls_cleared(void);
+void clear_save_card_check_step(void);
+void clear_save_slot_menu_init(void);
+void clear_save_slot_select(void);
+void clear_save_write_step(void);
+void clear_save_card_unformatted_step(void);
+void clear_save_new_slot_step(void);
+s32 clear_save_card_full_step(void);
+s32 clear_save_no_card_step(void);
+extern s32 album_portrait_lba_a[];
+extern s32 album_portrait_lba_a_girl8;
+extern s32 album_portrait_lba_summer_wear[];
+extern s32 album_portrait_lba_winter_wear[];
+extern s32 career_choice_question_no;
+
+extern s32 album_model_x;
+extern s32 album_model_y;
+extern s32 album_model_z;
+extern s32 album_model_angle;
+extern s32 album_skip_requested;
+
+void epilogue_stub_prepare_init(void);
+void exam_stage_end(void);
+void confession_judge_stub_stage_judge(void);
+void confession_judge_stub_judge_init(void);
+void confession_judge_stub_stage_butler(void);
+void confession_judge_stub_butler_init(void);
+void confession_judge_stub_stage_message(void);
+void confession_judge_stub_message_init(void);
+void confession_judge_stub_stage_letter(void);
+void confession_judge_stub_letter_init(void);
+void confession_scene_stub_stage_data_load(void);
+void confession_scene_stub_data_load_init(void);
+void confession_scene_stub_stage_silhouette(void);
+void confession_scene_stub_silhouette_init(void);
+void confession_scene_stub_stage_bustup_scroll(void);
+void confession_scene_stub_bustup_scroll_init(void);
+void confession_scene_stub_stage_scene(void);
+void confession_scene_stub_scene_init(void);
+void epilogue_stub_stage_prepare(void);
+void epilogue_stub_stage_show(void);
+void epilogue_stub_show_init(void);
+s32 career_choice_init_screen(void);
+s32 career_choice_prompt(void);
+void career_choice_exam_face_init(void);
+extern u8 misc_sd_pack_lba_other[];
+extern u8 career_choice_university_tier_prompt_text[];
+extern u8 career_choice_university_first_tier_text[];
+extern u8 career_choice_university_second_tier_text[];
+extern u8 career_choice_university_third_tier_text[];
+extern u8 *career_club_dream_line[];
+s32 clear_save_ask_init();
+void clear_save_ask_answer();
+extern u8 career_guidance_intro_text[];
+extern u8 career_guidance_ask_others_text[];
+s32 career_guidance_intro_line(void);
+void career_guidance_self_assessment(void);
+s32 career_guidance_stage_talk(void);
+s32 career_guidance_choice_menu(void);
+s32 career_guidance_stage_choice(void);
+void career_guidance_university_talk(void);
+s32 career_guidance_stage_university(void);
+void career_guidance_job_talk(void);
+s32 career_guidance_stage_job(void);
+void career_guidance_init_screen(void);
+void career_guidance_background_wait(void);
+void career_guidance_title_show(void);
+s32 career_guidance_stage_setup(void);
+s32 career_guidance_ask_others_prompt(void);
+void career_guidance_ask_others_select(void);
+s32 career_guidance_ask_others_return(void);
+s32 career_guidance_stage_ask_others(void);
+void last_photo_leave_to_clear_save(void);
+void last_photo_leave_to_album(void);
+void last_photo_leave_choose(void);
+void last_photo_leave_to_title(void);
+s32 last_photo_stage_leave(void);
+void exam_setup_background_wait(void);
+void exam_setup_init_screen(void);
+void exam_setup_scores_reset(void);
+s32 exam_stage_setup(void);
+extern s32 album_event_weekday;
+s32 album_event_is_special_portrait();
+
+s32 exam_score_day();
+extern s32 album_voice_state;
+extern s32 *album_voice_clip_table;
+void album_number_sprite_draw(s32 a, s32 b, s32 c, s32 d);
+void album_counter_backing_draw(s32 a, s32 b);
+extern s32 career_choice_threshold_start;
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s32 career_choice_job_first_tier_text;
+extern s32 career_choice_job_second_tier_text;
+extern s32 career_choice_job_third_tier_text;
+extern u8 career_choice_job_tier_prompt_text;
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void album_playback_end_check(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void career_guidance_leave(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s32 career_guidance_university_choice_text;
+extern s32 career_guidance_job_choice_text;
+extern s32 career_guidance_third_choice_text;
+extern u8 career_guidance_question_open_text;
+extern u8 career_guidance_question_followup_text;
+
+#endif /* OVL_MISC_SCENES_H */
+extern u8 career_choice_exam_room_text[];
+extern s32 career_club_dream_name[];
+extern u8 career_choice_university_first_choice_text[];
+extern u8 career_choice_university_second_choice_text[];
+extern u8 career_choice_job_first_choice_text[];
+extern u8 career_choice_job_second_choice_text[];
+extern u8 career_choice_job_prompt_text[];
+extern u8 career_choice_university_prompt_text[];
+s32 career_choice_mastered_club();
+extern u8 misc_card_yes_text[];
+extern u8 misc_card_no_text[];
+extern s16 staff_roll_model_x;
+extern s16 staff_roll_model_y;
+/* Rotation angles for RotMatrix (staff_roll_model_matrix_update); vy and vz move in staff_roll_models_step (T-17300). */
+extern SVECTOR staff_roll_model_rotation;
+#ifndef ETC_STATE_FLAGS_VIEW_DEFINED
+#define ETC_STATE_FLAGS_VIEW_DEFINED 1
+/* T-9580: the strided flag reads start at GameState +0x694, two slots
+ * before unk_69C. The complete view avoids a negative subarray index. */
+typedef struct ExamQueueView {
+    /* 0x000 */ u8 pad_000[0x694];
+    /* 0x694 */ DayEvent queue_back2[34];
+} ExamQueueView; /* size 0x71C */
+#endif /* ETC_STATE_FLAGS_VIEW_DEFINED */
+
+#ifndef OVL_ETC_EVENT_SEARCH_T9740
+#define OVL_ETC_EVENT_SEARCH_T9740
+/* Event-record search in GameState.unk_75E (T-9740). */
+s32 exam_event_log_bonus(s32 mode);
+#endif
+
+
+#ifndef OVL_ETC_W9_2_GLOBALS_H
+#define OVL_ETC_W9_2_GLOBALS_H
+/* Positive and negative values select the record fade direction. T-9720. */
+extern s32 D_80150188;
+extern s32 staff_roll_fade_dir;
+extern s32 staff_roll_palette;
+void staff_roll_pictures_init(void);
+#endif
+
+#ifndef OVL_ETC_W9_2_COORD_TABLE_H
+#define OVL_ETC_W9_2_COORD_TABLE_H
+/* Byte coordinate pairs read by staff_roll_credit_lines_init, T-9720. */
+extern u8 staff_roll_credit_table[];
+#endif
+
+
+#ifndef OVL_ETC_W9_SCALARS_24892_H
+#define OVL_ETC_W9_SCALARS_24892_H
+/* Access widths recovered from the original assembly. T-9750. */
+extern s32 album_event_season;
+extern s32 album_ui_reload_request;
+extern s32 album_load_state;
+#endif /* OVL_ETC_W9_SCALARS_24892_H */
+
+#ifndef OVL_ETC_W9_LOADTABLE90_H
+#define OVL_ETC_W9_LOADTABLE90_H
+/* Adjacent 90-word tables, 0x8014F6C0..0x8014F990. T-9750. */
+extern s32 album_anim_lba[90];
+extern s32 album_anim_sectors[90];
+/* Target caller supplies four words; argument counts vary across old-style users. */
+void album_event_picture_select();
+#endif
+
+#ifndef OVL_ETC_W9_CONFIG8_VIEW_H
+#define OVL_ETC_W9_CONFIG8_VIEW_H
+/* Eight-byte records represented by existing adjacent main BSS field labels. T-9750. */
+typedef struct AlbumLogEntry {
+    /* 0x00 */ u8 girl;
+    /* 0x01 */ u8 scene;
+    /* 0x02 */ u8 category;
+    /* 0x03 */ u8 mood;
+    /* 0x04 */ u8 year;
+    /* 0x05 */ u8 month;
+    /* 0x06 */ u8 day;
+    /* 0x07 */ u8 weekday;
+} AlbumLogEntry; /* size 0x08 */
+#endif
+
+#ifndef OVL_ETC_PARAMETER_COUNTS_T10020
+#define OVL_ETC_PARAMETER_COUNTS_T10020
+extern s32 career_guidance_academic_deficit;
+extern s32 career_guidance_body_mind_deficit;
+extern s32 career_guidance_trivia_deficit;
+extern s32 career_guidance_looks_deficit;
+extern s32 exam_correction_table[];
+extern u8 career_guidance_all_params_high_text;
+extern u8 career_guidance_mixed_params_text;
+extern u8 career_guidance_no_params_high_text;
+extern u8 career_guidance_one_academic_deficit_text;
+extern u8 career_guidance_two_academic_deficits_text;
+extern u8 career_guidance_three_academic_deficits_text;
+extern u8 career_guidance_body_mind_deficits_text;
+extern u8 career_guidance_athletics_deficit_text;
+extern u8 career_guidance_guts_deficit_text;
+extern u8 career_guidance_trivia_deficit_text;
+extern u8 career_guidance_looks_deficit_text;
+extern u8 career_guidance_assessment_close_text;
+extern u8 career_guidance_selected_girl_text;
+
+
+extern u8 *career_guidance_university_line[];
+extern u8 *career_guidance_university_voice_a[];
+extern u8 *career_guidance_university_voice_b[];
+extern u8 *career_guidance_job_line[];
+extern u8 *career_guidance_job_voice_a[];
+extern u8 *career_guidance_job_voice_b[];
+extern u8 *career_guidance_reaction_line[];
+extern u8 career_guidance_verdict_intro_text;
+extern u8 *career_choice_university_tier_line[];
+extern u8 *career_choice_job_tier_line[];
+extern u8 *career_choice_result_line[];
+extern u8 career_choice_tier_confirm_text;
+extern u8 career_choice_announce_line;
+void career_choice_panel_update(void);
+void career_choice_stage_university(void);
+void career_choice_stage_job(void);
+void career_choice_stage_club_dream(void);
+void career_choice_leave(void);
+void exam_day_step_language(void);
+void exam_day_step_math(void);
+void exam_day_step_science(void);
+void exam_day_step_social_studies(void);
+void exam_day_step_art(void);
+void exam_stage_day(void);
+u8 *misc_card_confirm_label(void);
+u8 *misc_card_cancel_label(void);
+void album_save_step_card_unformatted(void);
+void album_save_step_begin(void);
+s32 album_save_step_background(void);
+void album_save_step_ask(void);
+void album_save_step_answer(void);
+void album_save_step_card_check(void);
+void album_save_step_system_file_load(void);
+void album_save_step_no_card(void);
+void album_save_step_card_full(void);
+s32 album_save_fade_panel_draw(void);
+void album_stage_save(void);
+void album_save_step_no_system_file(void);
+void album_save_step_system_file_broken(void);
+/* T-14501: scene dispatcher globals and later-defined helpers. */
+extern s32 album_event_has_background;
+extern s32 album_prev_event_index;
+extern s32 album_secret_mode;
+void album_picture_sprites_draw(s32 arg0);
+void album_event_resources_show(void);
+void album_portrait_face_update(void);
+void album_date_counters_draw(void);
+void album_special_portrait_setup(void);
+void album_vram_copy_to_backbuffer(void);
+void album_vram_copy_other_buffer(void);
+void album_event_hide_current(void);
+void album_event_skip_other_girls(void);
+void album_fade_white_draw();
+s32 album_playback_photo(s32 reload_request, s32 arg1);
+
+/* T-17300: overlay data typed from the access patterns of the unmatched functions. */
+#ifndef OVL_ETC_TYPES_T17300
+#define OVL_ETC_TYPES_T17300
+/* Exam ranking of the 13 girls and the player (index 13): exam_ranking_build fills the three arrays,
+ * exam_results_show and exam_ranking_numbers_draw draw them. exam_rank_player above is rank[13]. The original keeps them as three
+ * symbols one after the other (a struct view makes uopt hoist one base register, T-22029). */
+extern s16 exam_ranking_value[14]; /* exam value */
+extern s32 exam_ranking_order[14]; /* girl index in rank order */
+extern s32 exam_ranking_rank[14]; /* rank */
+extern s16 exam_value_friend; /* value[10] */
+extern s16 exam_value_miharu; /* value[11] */
+extern s16 exam_value_player; /* value[13] */
+extern s32 exam_rank_friend; /* rank[10] */
+extern s32 exam_rank_miharu; /* rank[11] */
+/* Screen x and y of the 14 ranking rows (exam_results_show, exam_ranking_numbers_draw). */
+extern s16 exam_row_x[14];
+extern s16 exam_row_y[14];
+/* Per-girl base score and spread of the exam ranking (exam_ranking_build). */
+extern u8 exam_base_score[13];
+extern u8 exam_score_spread[13];
+/* Two words per girl passed to cd_audio_request_set (album_stage_finale, album_load_step). */
+extern s32 album_intro_clip[13][2];
+extern s32 album_finale_clip[26];
+/* Per-girl pointers to word pairs of the same shape (album_load_step). */
+extern s32 *album_voice_clips[13];
+/* Per-girl counts for the random pick of album_playback_voice. */
+extern u8 album_voice_clip_count[13];
+/* CD file tables per scene: dec_bg_cd_read(album_background_lba_table[scene][i]) (album_event_background_load). */
+extern s32 *album_background_lba_table[22];
+/* FAKE: volatile keeps the shade counter out of uopt's global promotion, so album_fade_quads_draw loads it once for the
+ * colour stores (no copy-propagated second load) and adds 2 in the loaded register. T-25121 */
+extern volatile s32 album_fade_shade;
+extern s32 album_last_voice_clip;
+extern s32 album_voice_clip;
+extern s32 album_phase;
+extern s32 staff_roll_girl_slot;
+extern s32 last_photo_lba;
+extern s32 last_photo_all_clear_lba;
+extern s32 career_choice_threshold;
+/* T-24038: ten (u, v) digit pairs; extent ends at the separate sign bytes below. */
+extern u8 album_digit_uv[20];
+extern u8 album_minus_u;
+extern u8 album_minus_v;
+extern u8 exam_digit_u[10];
+/* ETC view of the shared work area scene_work (0x40 bytes): the two six-word arrays are also walked by
+ * exam_entry; exam_score_day writes the day's score to unk_28[subject] and its grade to unk_10[subject],
+ * unk_28[5] is the running total. Other overlays use the first word as a scalar. T-10030, T-17300. */
+typedef struct ExamWork {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 pad_04[0xC];
+    /* 0x10 */ s32 subject_grade[6];
+    /* 0x28 */ s32 subject_score[6];
+} ExamWork; /* size 0x40 */
+#endif /* OVL_ETC_TYPES_T17300 */
+
+
+#ifndef OVL_ETC_T22026_DISPATCH
+#define OVL_ETC_T22026_DISPATCH
+/* Callees of the dispatcher album_event_picture_select (defined after it in src/ovl/misc_scenes/album_portrait_selection.c). T-22026. */
+void album_portrait_start_a(s32 girl);
+void album_portrait_start_b(s32 girl);
+void album_portrait_start_c(s32 girl);
+void album_portrait_start_d(s32 girl);
+void album_portrait_start_e(s32 girl, s32 portrait_index);
+void album_portrait_start_f(s32 girl);
+void album_portrait_start_g(s32 girl);
+void album_portrait_start_h(s32 girl);
+void album_portrait_start_i(s32 girl);
+void album_portrait_start_j(s32 girl);
+void album_portrait_start_k(s32 girl);
+void album_portrait_start_l(s32 girl);
+void album_portrait_start_school_wear(s32 girl, s32 arg1);
+void album_portrait_start_seasonal(s32 girl, s32 season);
+#endif
+
+#endif

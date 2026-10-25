@@ -1,6 +1,6 @@
 /* ranking_view.c: src/ovl/TT/80132130.c:315: ranking display scene (state 7) and its grid background; body 324: control = tt_run; 325: buttons = (TtPadView *)(scene + 0x10);. Original object 0x80132130-0x80132F10 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_ranking_heading_init(void) {
     u8 *sprite = tt_sprites;

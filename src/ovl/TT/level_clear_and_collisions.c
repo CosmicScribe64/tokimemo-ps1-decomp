@@ -1,7 +1,7 @@
 /* level_clear_and_collisions.c: src/ovl/TT/80144D70.c:6: stage-clear transition and asset requests plus smart-bomb and overlap/collision pass; body 16: scene = tt_sys; 17: g = (TtCore *)tt_core;. Original object 0x80144D70-0x80145E60 (config/objects/TT.txt). */
 #define MAIN_API_OVERRIDE_bzero /* implicit int declaration, as matched: with the void prototype the reload of ctl after the call in tt_state_stage_clear takes v0, not v1. T-11840 */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* T-11840: matched. r is the selector of both switches and holds the cd_done_count result; with pool assigned again in case 0xA0 this raises r above pool in the uopt order, so the selectors take v1 and pool a3. The head order (scene, g, ctl, pool, stream, buttons, list) sets the ugen temporary order. */
 void tt_state_stage_clear(void) {
@@ -226,9 +226,9 @@ void tt_smart_bomb(void) {
     }
 }
 
-void tt_pickup_maximum_shot(u8 *arg0) {
+void tt_pickup_maximum_shot(u8 *pickup) {
     tt_player[0x55] = 0xA;
-    tt_bell_popup_spawn(arg0 + 0x14);
+    tt_bell_popup_spawn(pickup + 0x14);
 }
 
 s32 tt_box_overlap(u8 *position_a, u8 *hitbox_a, u8 *position_b, u8 *hitbox_b) {

@@ -60,11 +60,11 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, TEL/call_and_invitation_flow]
-      - [0x77D0, c, TEL/appointment_call_scenes]
-      - [0xACD0, c, TEL/profile_and_place_availability]
-      - [0xC430, .rodata, TEL/call_and_invitation_flow]
-      - [0xD9E0, .rodata, TEL/appointment_call_scenes]
-      - [0xE450, .rodata, TEL/profile_and_place_availability]
+      - [0x0, c, telephone/call_and_invitation_flow]
+      - [0x77D0, c, telephone/appointment_call_scenes]
+      - [0xACD0, c, telephone/profile_and_place_availability]
+      - [0xC430, .rodata, telephone/call_and_invitation_flow]
+      - [0xD9E0, .rodata, telephone/appointment_call_scenes]
+      - [0xE450, .rodata, telephone/profile_and_place_availability]
       - [0xE550, data, TEL_data]
   - [0x30000]

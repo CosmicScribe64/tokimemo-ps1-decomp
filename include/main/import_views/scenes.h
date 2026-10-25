@@ -54,7 +54,7 @@ extern u8 debug_hud_enabled;
 extern s32 D_800B36AC;
 extern s32 D_800B36EC;
 extern s32 D_800B372C;
-extern u8 D_800B3C6C;
+extern u8 debug_menu_active;
 extern u8 pad_code_timer;
 extern u8 D_800B5939;
 extern u8 D_800B5A60;
@@ -62,7 +62,7 @@ extern u8 D_800B5BC8;
 /* T-20004: byte loads indexed by girl * 7 + (step >> 3). */
 extern u8 D_800C3370[];
 extern s8 D_800C51C4;
-extern u16 D_800CA154;
+extern u16 talk_secondary_line;
 #ifndef MAIN_API_OVERRIDE_D_800CA158
 extern u8 D_800CA158;
 #endif
@@ -71,9 +71,9 @@ extern u8 D_800CA15C;
  * with one chain assignment, which gives the original's shared register only for array elements. */
 extern s16 D_800CA21C[4];
 extern s16 D_800CA21E;
-extern s16 D_800CA224[4];
+extern s16 date_choice_mood_face[4];
 extern s16 D_800CA22C[4];
-extern s16 D_800CA234[4];
+extern s16 date_choice_tier[4];
 extern u8 talk_voice_waiting;
 extern u8 D_800CA2F8;
 extern u8 D_800CA2FC;
@@ -333,14 +333,14 @@ extern u8 D_8012278C;
 extern u8 D_8012278D;
 extern u8 D_8012278E;
 extern s32 D_80122CE8;
-extern s32 D_80122D08;
+extern s32 talk_date_spot;
 extern s32 D_80122D14;
-extern s32 D_80122D18;
+extern s32 talk_line_clear;
 extern s32 D_80122D34;
 extern s32 D_80122D38;
 extern u32 normal_date_minigame_result; /* DATE/EN_NICHI shared result code; storage remains a word. */
-extern s32 D_801230E0[];
-extern s32 D_801230F4;
+extern s32 exam_subject_grades[];
+extern s32 exam_failed_subject_count;
 extern s32 D_80129F10;
 extern u8 D_80129F40[];
 extern u8 talk_text_scroll_pending;
@@ -348,7 +348,7 @@ extern s16 D_800EB042;
 extern s16 D_800EB044;
 extern u8 D_800B0E72;
 extern s16 D_800B0962;
-extern u8 D_800E7D4E;
+extern u8 tt_stages_cleared;
 extern u8 *D_800B3610;
 extern u8 *D_800B361C;
 extern u8 *D_800B3628;

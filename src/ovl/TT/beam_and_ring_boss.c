@@ -1,6 +1,6 @@
 /* beam_and_ring_boss.c: src/ovl/TT/8013F040.c:645: boss form changes, aimed fan and drone-ring phase, beam phase and thrown-body attack; body 656: mode = ((TtBossView *) tt_boss)->unk_08; 657: other = tt_player;. Original object 0x8013F040-0x801410A0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 typedef struct TtBossPartFrameView {
     /* 0x00 */ u8 pad[0x12];

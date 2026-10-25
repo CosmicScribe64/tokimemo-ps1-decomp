@@ -1,6 +1,6 @@
 /* sprite_packets.c: src/ovl/TT/80141450.c:6: textured quad flip/scale/rotation and sprite packet submission; body 23: p = (POLY_FT4 *)arg0; 25: w = p->x1; h = p->y1;. Original object 0x80141450-0x80142110 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* Sets the UVs of a sprite POLY_FT4 (flip mode at +0x28, clamped to 0..255) and optionally scales (+0x2B) and
  * rotates (+0x2C) its corners with the parameters in q. T-11840 */

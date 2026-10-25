@@ -1,10 +1,10 @@
 ---
 id: T-27067
 title: Complete shared core scheduler and school-day semantic residue
-status: In Progress
+status: Done
 assignee: core-followup-agent
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-25
 links: ["[[phase2]]", "[[tickets/T-27000-phase-2]]", "[[spec/core-followup]]"]
 ---
 
@@ -14,10 +14,9 @@ Reconcile remaining shared core fields/types and essential scheduler/school-day 
 
 ## Acceptance criteria
 
-- [ ] Every original core/m-scheduler/m-weekday proposal row reconciled as applied, supported residue, evidenced exception or concrete unresolved blocker.
-- [ ] New symbol-only table plans in Docker; no fake const rows. Constants have exact source sites and type/sign evidence for `rename.py const`.
-- [ ] Independent Standards/Spec review resolved; root integration and matching proof before Done.
-
+- [x] Every original core/m-scheduler/m-weekday proposal row reconciled as applied, supported residue, evidenced exception or concrete unresolved blocker.
+- [x] New symbol-only table plans in Docker; no fake const rows. Constants have exact source sites and type/sign evidence for `rename.py const`.
+- [x] Independent Standards/Spec review resolved; root integration and matching proof before Done.
 ## Work notes
 
 2026-10-24: Started with an early source-backed slice. `src/main/scheduler.c:421` proves player club id 6 is `CLUB_BASEBALL`, selects `clubs[6]` by that same id, and uses `level` low nibble `>= 8` as the club-season tournament gate. The code proves the gate's consequence, not a general mastery formula. Queue `girl = 7` is written only to the final three tournament records; neither type-0x25 dispatch nor the MASTER overlay reads it, so its meaning remains open. See [[spec/core-followup]] and ignored `.claude/orchestrator/state/T-27067/club-sites.tsv`.
@@ -49,3 +48,7 @@ Declarations-only candidates are in ignored `new-definition-proposals.tsv`: one 
 2026-10-24: Tightened the EventFlag 61 site record in the ignored tables: although there is no literal `scene_flags[61]` expression, `scheduler.c:1281` updates the byte at `scene_flags[60] + 1` after checking index 60 at line 1280. This is a computed adjacent-byte site, not a missing-use blocker.
 
 2026-10-24 root applied reviewedcurrentdelta3647e104:15O.BINcommentsand27castsubstitutionsacross26lines, quarterwordcopyunchanged. Independentbaseline/rebaseandactual-source reviews pass; rebuiltmain/TELmatchoriginals. NoGirlFlagBitsquarterviewsremain. Sixsymbolrowsandnewconstantdeclarations/sites remainunapplied; thisbroader ticketisstillInProgress.
+
+## Final integration evidence (2026-10-25)
+
+Reviewed source digest: `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Final clean matching proof: 27/27 binaries, 6,952 functions, 2,276,920 bytes. Independent original Astra review and separate fixer Astra review passed this exact source digest. See `.claude/orchestrator/state/T-27000/final-tracking/criterion-evidence.md`.

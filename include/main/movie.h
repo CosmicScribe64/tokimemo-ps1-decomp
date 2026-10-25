@@ -32,7 +32,7 @@ void set_movie_offset(s16 arg0, s16 arg1);
 void strCallback(void);
 void strKickCD(s32 arg0);
 s32 movie_play(s32 movie_name_or_zero, s32 requested_end_frame, s32 movie_start_sector);
-void movie_captions_update(s32 arg0); /* defined after its caller movie_play */
+void movie_captions_update(s32 movie_frame); /* defined after its caller movie_play */
 
 extern s32 movie_offset_x;
 extern s32 movie_offset_y;

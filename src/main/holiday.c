@@ -185,7 +185,7 @@ void holiday_open_init(void) {
     for (i = 0; i < 7; i++) { holiday_dial_keys[i] = 0xFF; }
     hizuke_init();
     if (holiday_shared_birthday_scene_due() != 0) {
-        D_80122CD4 = 0;
+        scene_work_selector = 0;
         talk_work = 8;
         parameter_show_init();
         parameter_show_init();
@@ -376,11 +376,11 @@ s32 holiday_phone_dial_shortcut(void) {
                     if ((j == 6) && ((u32)(game_state.girls[i].flags.w << 28) >> 31)) {
                         if (i != 11) {
                             if (i == 12) {
-                                D_801230D0 = 11;
+                                scene_work = 11;
                                 game_state.current_girl = GIRL_MIHARU;
                                 game_state.menu_cursor_0 = 12;
                             } else {
-                                D_801230D0 = i;
+                                scene_work = i;
                                 game_state.current_girl = i;
                                 game_state.menu_cursor_0 = i + 1;
                             }
@@ -611,15 +611,15 @@ void appointment_start(void) {
         mode_step_next();
         return;
     } else {
-        game_state.appointment_place_0 = game_state.unk_54C_0.unk_00;
-        game_state.appointment_place_1 = game_state.unk_54C_0.unk_00;
+        game_state.appointment_place_0 = game_state.unk_54C_0.place;
+        game_state.appointment_place_1 = game_state.unk_54C_0.place;
         game_state.appointment_place_2 = 0xFF;
         game_state.appointment_place_3 = 0xFF;
         game_state.day_events[game_state.day_event_index].type = DAY_EVENT_APPOINTMENT;
         game_state.day_events[game_state.day_event_index].girl = ((AppointmentBits *)&game_state.unk_54C[0])->girl;
         game_state.day_events[game_state.day_event_index].scene = ((AppointmentBits *)&game_state.unk_54C[0])->place;
-        game_state.current_girl = game_state.unk_54C_0.unk_25;
-        game_state.date_girl = game_state.unk_54C_0.unk_25;
+        game_state.current_girl = game_state.unk_54C_0.girl;
+        game_state.date_girl = game_state.unk_54C_0.girl;
         game_state.appointment_flag = ((AppointmentBits *)&game_state.unk_54C[0])->flag;
     }
     mode_step_set(2);
@@ -767,7 +767,7 @@ void appointment_launch(void) {
     offered_places[0] = game_state.appointment_place_1;
     offered_places[1] = game_state.appointment_place_2;
     offered_places[2] = game_state.appointment_place_3;
-    game_state.appointment_place_1 = game_state.unk_54C_0.unk_00;
+    game_state.appointment_place_1 = game_state.unk_54C_0.place;
     for (i = 0, j = 2; i < 3; i++) {
         if (offered_places[i] != (g->unk_54C[0].w & 0x1F)) {
             (&game_state.appointment_place_0)[j] = offered_places[i];
@@ -775,10 +775,10 @@ void appointment_launch(void) {
         }
     }
     game_state.day_events[game_state.day_event_index].type = DAY_EVENT_APPOINTMENT;
-    game_state.day_events[game_state.day_event_index].girl = game_state.unk_54C_0.unk_25;
-    game_state.day_events[game_state.day_event_index].scene = game_state.unk_54C_0.unk_00;
-    game_state.current_girl = game_state.unk_54C_0.unk_25;
-    game_state.date_girl = game_state.unk_54C_0.unk_25;
+    game_state.day_events[game_state.day_event_index].girl = game_state.unk_54C_0.girl;
+    game_state.day_events[game_state.day_event_index].scene = game_state.unk_54C_0.place;
+    game_state.current_girl = game_state.unk_54C_0.girl;
+    game_state.date_girl = game_state.unk_54C_0.girl;
     game_state.appointment_flag = ((AppointmentBits *)&game_state.unk_54C[0])->flag;
     game_mode_set(GAME_MODE_DATE);
 }
@@ -823,23 +823,23 @@ void holiday_activity_pick_sd_set(void) {
     s32 holiday_command;
     s32 club_partner_column;
 
-    D_801230D0 = 0xFF;
+    scene_work = 0xFF;
     if (hud_in_summer_months() == 1) {
         holiday_command = game_state.day_events[game_state.day_event_index].girl;
         if (holiday_command == 4) {
-            D_801230D0 = 0xFF;
+            scene_work = 0xFF;
         } else {
-            D_801230D0 = holiday_sd_set_summer[holiday_command];
+            scene_work = holiday_sd_set_summer[holiday_command];
         }
     } else {
         holiday_command = game_state.day_events[game_state.day_event_index].girl;
         if (holiday_command == 4) {
-            D_801230D0 = 0xFF;
+            scene_work = 0xFF;
         } else {
-            D_801230D0 = holiday_sd_set_other[holiday_command];
+            scene_work = holiday_sd_set_other[holiday_command];
         }
     }
-    if (D_801230D0 == 0xFF) {
+    if (scene_work == 0xFF) {
         club_partner_column = schedule_command_girl_select(4);
         if (club_partner_column != 0) {
             club_partner_column = 1;
@@ -847,73 +847,73 @@ void holiday_activity_pick_sd_set(void) {
         if (hud_in_summer_months() == 1) {
             switch (game_state.player_flags.h >> 12) {
             case 0:
-                D_801230D0 = D_800B6890[0][club_partner_column];
+                scene_work = D_800B6890[0][club_partner_column];
                 break;
             case 1:
-                D_801230D0 = D_800B6890[1][club_partner_column];
+                scene_work = D_800B6890[1][club_partner_column];
                 break;
             case 2:
-                D_801230D0 = D_800B6890[2][club_partner_column];
+                scene_work = D_800B6890[2][club_partner_column];
                 break;
             case 3:
-                D_801230D0 = D_800B6890[3][club_partner_column];
+                scene_work = D_800B6890[3][club_partner_column];
                 break;
             case 4:
-                D_801230D0 = D_800B6890[4][club_partner_column];
+                scene_work = D_800B6890[4][club_partner_column];
                 break;
             case 5:
-                D_801230D0 = D_800B6890[5][club_partner_column];
+                scene_work = D_800B6890[5][club_partner_column];
                 break;
             case 6:
-                D_801230D0 = D_800B6890[6][club_partner_column];
+                scene_work = D_800B6890[6][club_partner_column];
                 break;
             case 7:
-                D_801230D0 = D_800B6890[7][club_partner_column];
+                scene_work = D_800B6890[7][club_partner_column];
                 break;
             case 8:
-                D_801230D0 = D_800B6890[8][club_partner_column];
+                scene_work = D_800B6890[8][club_partner_column];
                 break;
             case 9:
-                D_801230D0 = D_800B6890[9][club_partner_column];
+                scene_work = D_800B6890[9][club_partner_column];
                 break;
             case 10:
-                D_801230D0 = D_800B6890[10][club_partner_column];
+                scene_work = D_800B6890[10][club_partner_column];
                 break;
             }
         } else {
             switch (game_state.player_flags.h >> 12) {
             case 0:
-                D_801230D0 = D_800B68A8[0][club_partner_column];
+                scene_work = D_800B68A8[0][club_partner_column];
                 break;
             case 1:
-                D_801230D0 = D_800B68A8[1][club_partner_column];
+                scene_work = D_800B68A8[1][club_partner_column];
                 break;
             case 2:
-                D_801230D0 = D_800B68A8[2][club_partner_column];
+                scene_work = D_800B68A8[2][club_partner_column];
                 break;
             case 3:
-                D_801230D0 = D_800B68A8[3][club_partner_column];
+                scene_work = D_800B68A8[3][club_partner_column];
                 break;
             case 4:
-                D_801230D0 = D_800B68A8[4][club_partner_column];
+                scene_work = D_800B68A8[4][club_partner_column];
                 break;
             case 5:
-                D_801230D0 = D_800B68A8[5][club_partner_column];
+                scene_work = D_800B68A8[5][club_partner_column];
                 break;
             case 6:
-                D_801230D0 = D_800B68A8[6][club_partner_column];
+                scene_work = D_800B68A8[6][club_partner_column];
                 break;
             case 7:
-                D_801230D0 = D_800B68A8[7][club_partner_column];
+                scene_work = D_800B68A8[7][club_partner_column];
                 break;
             case 8:
-                D_801230D0 = D_800B68A8[8][club_partner_column];
+                scene_work = D_800B68A8[8][club_partner_column];
                 break;
             case 9:
-                D_801230D0 = D_800B68A8[9][club_partner_column];
+                scene_work = D_800B68A8[9][club_partner_column];
                 break;
             case 10:
-                D_801230D0 = D_800B68A8[10][club_partner_column];
+                scene_work = D_800B68A8[10][club_partner_column];
                 break;
             }
         }
@@ -978,10 +978,10 @@ void holiday_activity_load(void) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             gs->substep = 3;
         } else if (gs->day_events[gs->day_event_index].girl != 4) {
-            cd_read_sectors(0x29, 0x801E0000, holiday_sd_set_sectors[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, holiday_sd_set_sectors[scene_work]);
             gs->substep = 3;
         } else {
-            cd_read_sectors(0x29, 0x801E0000, D_800B6810[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, D_800B6810[scene_work]);
             gs->substep = 3;
         }
     } else if (gs->substep == 3) {
@@ -1003,7 +1003,7 @@ void holiday_activity_sd_setup(void) {
         addr_init_else_sd(2);
         holiday_activity_result_flag = 0;
     } else if (game_state.day_events[game_state.day_event_index].girl == 4) {
-        addr_init_club_sd(D_801230D0);
+        addr_init_club_sd(scene_work);
         if (schedule_command_girl_select(4) != 0xF) {
             ((Actor *)actor_pool)[97].unk_01 = 1;
             ((Actor *)actor_pool)[97].flags = 5;
@@ -1024,11 +1024,11 @@ void holiday_activity_sd_setup(void) {
             ((Actor *)actor_pool)[97].y = -0x40;
         }
     } else {
-        if ((D_801230D0 == 6) || (D_801230D0 == 7)) {
+        if ((scene_work == 6) || (scene_work == 7)) {
             game_state.day_events[game_state.day_event_index].scene = 0;
             holiday_activity_result_flag = 0;
         }
-        addr_init_holiday_sd(D_801230D0);
+        addr_init_holiday_sd(scene_work);
     }
     load_palette(D_80125CA4, 0x10, 1, 1, 0);
     ((Actor *)actor_pool)[96].unk_01 = 1;
@@ -1320,14 +1320,14 @@ s32 holiday_tel_exit(void) {
     } else if (g->current_girl == GIRL_MIHARU) {
         k_sub_reset();
         g->menu_cursor_0 = 12;
-        D_801230D0 = 11;
+        scene_work = 11;
         restore_bgm();
         game_mode_set(GAME_MODE_TELEPHONE_PROFILE);
         mode_stage_set(1);
     } else {
         k_sub_reset();
         g->menu_cursor_0 = g->current_girl + 1;
-        D_801230D0 = g->current_girl;
+        scene_work = g->current_girl;
         restore_bgm();
         game_mode_set(GAME_MODE_TELEPHONE_PROFILE);
         mode_stage_set(1);

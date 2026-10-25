@@ -21,7 +21,7 @@ typedef struct TalkWork {
     /* 0x04 */ s32 girl;
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 choice;
-    /* 0x10 */ s32 unk_10;
+    /* 0x10 */ s32 result_code;
     /* 0x14 */ s32 line_wait;
     /* 0x18 */ s32 unk_18;
     /* 0x1C */ s32 choice_saved;
@@ -45,12 +45,12 @@ typedef struct TalkWork {
     /* 0x64 */ s32 unk_64;
     /* 0x68 */ s32 unk_68;
     /* 0x6C */ s32 wipe_kind;
-    /* 0x70 */ s32 unk_70;
+    /* 0x70 */ s32 girl_selector_plus_one;
     /* 0x74 */ s32 unk_74;
     /* 0x78 */ s32 rank_override;
 } TalkWork; /* minimum size 0x7C */
 
-/* T-10730: pointer slots at talk_tables..D_800CA144. The cursor pointers
+/* T-10730: pointer slots at talk_tables..talk_active_voice_table. The cursor pointers
  * address signed halfwords; legacy scalar declarations remain valid views. */
 typedef struct TalkTables {
     /* 0x00 */ s16 *group;
@@ -76,7 +76,7 @@ s32 talk_render();
 #endif
 s32 talk_run();
 #ifndef MAIN_API_OVERRIDE_talk_names_set
-void talk_names_set(u8 arg0);
+void talk_names_set(u8 girl_id);
 #endif
 void talk_clear();
 

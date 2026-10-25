@@ -5,17 +5,26 @@ date: 2026-10-24
 
 # Phase 2 naming: English names backed by evidence, for symbols, files and headers
 
-Phase 1 ended with all 6,952 game functions matched, yet almost everything a reader sees is still named by
-address or size (survey in `drafts/T-25900/audit.md`):
+The following counts describe the pre-Phase-2 naming baseline surveyed in `drafts/T-25900/audit.md`; they do
+not describe the current working tree:
 
-- 6,649 functions are `func_XXXXXXXX`, and nearly all data labels are `D_XXXXXXXX`;
-- 65% of struct members are `unk_XX`, and 70% of type names describe a size or an address;
-- all 437 C files carry address names, and the overlay headers carry disc names.
+- Pre-Phase-2 baseline: 6,649 functions were `func_XXXXXXXX`, and nearly all data labels were `D_XXXXXXXX`.
+- Pre-Phase-2 baseline: 65% of struct members were `unk_XX`, and 70% of type names described a size or an address.
+- Pre-Phase-2 baseline (2026-10-24): all 437 C files carried address names and overlay headers carried disc names.
 
 Phase 2 makes the code readable for someone who has never seen the binary, so that the Godot port can be
 written from it. The user settled six questions and the scope on 2026-10-24. This record states them, the
 conventions that follow from them, and their costs. A rename never changes an output byte, and every rename
 batch ends with the 27/27 sha1 build that proves it.
+
+Current path and header status (2026-10-25): the reviewed T-27074 table has been applied to the working source
+tree. The current overlay path map is in [[source-files]]; the 26 disc unit identities and their assembly and
+build roots remain intact. All overlay folders use the accepted logical names except `src/ovl/TT/`, which
+retains the technical TT spelling pending contributor agreement. EVENT and GYOZI are named `date_spots` and
+`annual_events` from their reviewed content evidence; this does not assert that either overlay is loaded or
+unused. The `confirm` gates and HYPOTHESIS notes for GEKO, KANGEI, SHOUGATU and VALEN remain. `main_api.h` and
+`game.h` are retired; the 70 registered topic-owner paths and 21 required type paths are listed in
+`config/header_owners.json`.
 
 ## Decisions
 
@@ -27,9 +36,9 @@ batch ends with the 27/27 sha1 build that proves it.
 2. **O.BIN names.** The developer names from the O.BIN symbol table (`hizuke_init`, `k_disp_start`, `sndi`, ...)
    stay as they are. Each game-side one gets a one-line English comment saying what it does. New names are
    English.
-3. **Files, folders and headers.** `src/ovl/TAIIKU/80133C80.c` becomes `src/ovl/sports_festival/runner_race.c`,
+3. **Files, folders and headers.** The accepted path map renames `src/ovl/TAIIKU/80133C80.c` to `src/ovl/sports_festival/runner_race_dispatch.c`,
    and every other file and folder gets an English name the same way. The disc names (`TAIIKU.EXN`) stay in
-   the build config and in a map (`src/ovl/README.md` and the wiki). Headers are split by topic and named for
+   the build config; [[source-files]] is the current overlay path map. Headers are split by topic and named for
    what they declare. They replace the large `include/main_api.h` and the one header per disc file, and each C
    file includes the headers it uses. decomp.dev restarts its per-file history for renamed files; the user
    accepted that.
@@ -176,20 +185,20 @@ reviews check.
 
 ### Files and folders
 
-- A C file is named for what its original object does (`runner_race.c`, `cd_read.c`), in `snake_case`, with
+- A C file is named for what its original object does (`runner_race_dispatch.c`, `cd_read.c`), in `snake_case`, with
   no address; stems are unique without regard to case in their folder. The first comment of the file keeps
   the address range and points to `config/objects/<DISC>.txt` (`config/objects/main.txt` for the
   executable), which keeps the original object boundaries.
 - Overlay folders take the English names of the map. The splat yaml keeps the disc name in
   `name: ovl_TAIIKU`, `basename`, `target_path`, `asm_path` and `build_path`. What changes is the name of the
   object's subsegments: the `c` subsegment and the `.rodata` and `.data` subsegments that carry the same name
-  (`TAIIKU/80133C80` becomes `sports_festival/runner_race`). The `<DISC>_data_<address>` subsegments keep
+  (`TAIIKU/80133C80` becomes `sports_festival/runner_race_dispatch`). The `<DISC>_data_<address>` subsegments keep
   their names.
 - Because `src_path` is `src/ovl`, splat writes the object's asm under the new path inside the disc-named
-  root (`asm/ovl/TAIIKU/data/sports_festival/runner_race.data.s`), and the `INCLUDE_ASM` and `INCLUDE_RODATA`
+  root (`asm/ovl/TAIIKU/data/sports_festival/runner_race_dispatch.data.s`), and the `INCLUDE_ASM` and `INCLUDE_RODATA`
   path strings in the C file change with it. `tools/rename.py` makes these edits for `file` and `dir` rows.
 - A file or folder is named only from content that the code or the emulator proves. A name that claims
-  game meaning beyond that (`runner_race.c` for code whose use is unknown) is a hypothesis: the file's first
+  game meaning beyond that (`runner_race_dispatch.c` for code whose use is unknown) is a hypothesis: the file's first
   comment carries `HYPOTHESIS: <what is unproven>`, and a folder keeps the `confirm` status of the map below
   until a unit proves it.
 - A file rename is a commit of its own with nothing else in it, so git keeps the history. It comes last in
@@ -201,28 +210,25 @@ reviews check.
   files define), `include/game/<topic>.h` for shared game types (`game_state.h`), `include/ovl/<folder>.h` (or
   `include/ovl/<folder>/<topic>.h` for a large overlay) for overlay symbols. SDK headers keep their SDK names.
 - Include guards follow the path: `include/main/cd.h` uses `MAIN_CD_H`.
-- Each C file includes the headers whose symbols it uses. `include/main_api.h` and `include/game.h` stay as
-  umbrellas that include the new headers until every part has moved out. The one-declaration rule of
-  CODING_STANDARDS section 8a applies to whichever header declares the symbol.
-- The final sweep (step 8 of `wiki/phase2.md`) deletes the two umbrellas. By then every C file includes its
-  topic headers, and CODING_STANDARDS section 8a and `tools/check_headers.py` name the topic headers instead
-  of `main_api.h`.
+- Each C file includes the headers whose symbols it uses. During the transition, `include/main_api.h` and
+  `include/game.h` served as umbrellas. They have now been retired; `config/header_owners.json` records the
+  70 canonical owner paths and 21 required type paths. The one-declaration rule of CODING_STANDARDS section
+  8a applies to whichever registered header declares the symbol.
+- Current ownership checks and `tools/check_headers.py` operate with the topic headers and without either
+  umbrella. The old umbrella names in earlier phase-two evidence refer to the transition design.
 - A header split is a pure move: `tools/sync_protos.py --snapshot` before and `--compare` after show that no
   file sees a different type for any symbol.
 
 ### Disc-name map
 
-The living copy moves to `src/ovl/README.md` with the first folder rename, and the main table moves to
-`src/main/README.md` with the first main file rename. After that, rows change there. "Confirm" means the unit
-checks the contents (code and emulator) before it adopts the folder name and prefix; until then the name is a
-hypothesis.
-No loader has been found for EVENT and GYOZI, and their load addresses are inference (`wiki/overlays.md`,
-T-0200). For them, "confirm unused" means the unit looks for a loader again before it keeps `_unused` in the
-folder name.
+The current overlay source-path inventory is [[source-files]]. The main object and prefix map remains in
+`src/main/README.md`. "Confirm" means the unit checks the contents (code and emulator) before it adopts a
+folder name and prefix; until then the name is a hypothesis. Historical loader research for EVENT and GYOZI
+remains in [[overlays]] and T-0200, but the current names do not assert either unit is loaded or unused.
 
 | disc file | contents | folder | prefix | status |
 |---|---|---|---|---|
-| BUNKAKEN.EXN | culture festival variant that also visits six culture clubs | `culture_festival_tour` | `tour_` | confirm |
+| BUNKAKEN.EXN | culture festival variant that also visits six culture clubs | `culture_festival_tour` | `tour_` | |
 | BUNKASAI.EXN | culture festival: exhibits, concert, speech contest, game corner | `culture_festival` | `culture_` | |
 | BUNKA_SD.EXN | culture festival stage shows played by SD sprites | `culture_stage_shows` | `stage_show_` | |
 | DATE.EXN | dates at the 21 places, girl-specific date scenes | `date` | `date_` | |
@@ -230,9 +236,9 @@ folder name.
 | ENDING.EXN | graduation ending and the girls' futures | `ending` | `ending_` | |
 | EN_NICHI.EXN | festival stall games: goldfish scooping, shooting gallery | `festival_stalls` | `stalls_` | |
 | ETC.EXN | exams and rank list, career guidance and choice, album, staff roll, last photo, clear save, shared helpers and unused confession/epilogue stubs | `misc_scenes` | `exam_`, `career_`, `album_`, `system_file_`, `staff_roll_`, `last_photo_`, `clear_save_`, `confession_`, `epilogue_`, `misc_` | modes 0xC2-0xC4 source-confirmed; folder migration separate |
-| EVENT.EXN | an older set of date-place scenes; no code found loads it | `date_spots_unused` | `spot_` | confirm unused |
+| EVENT.EXN | an older set of date-place scenes | `date_spots` | `spot_` | |
 | GEKO.EXN | meetings outside dates: walking home, invitations, birthdays | `girl_encounters` | `encounter_` | confirm |
-| GYOZI.EXN | near copy of SHOUGATU; no code found loads it | `annual_events_unused` | `annual_` | confirm unused |
+| GYOZI.EXN | parallel seasonal-event scenes | `annual_events` | `annual_` | |
 | KANGEI.EXN | club rooms, a lodge, a test of courage; probably the summer camp | `summer_camp` | `camp_` | confirm |
 | MASTER.EXN | club tournaments and prizes after mastering a club | `club_master` | `master_` | |
 | NAME_ENT.EXN | file select screens, name, birthday and blood-type entry; the attract opening; the voiced prologue | `name_entry` | `name_entry_`, `file_select_`, `opening_`, `prologue_` | |
@@ -246,7 +252,7 @@ folder name.
 | TACO.EXN | hidden 3D shooter | `shooter_3d` | `shooter_` | |
 | TAIIKU.EXN | sports festival races and folk dance | `sports_festival` | `sports_` | |
 | TEL.EXN | phone calls and the girl profile page | `telephone` | `phone_` | |
-| TT.EXN | hidden 2D shooter; branded identification unconfirmed | agree with its contributor | `tt_` (technical disc namespace only) | technical prefix adopted; English game/folder name awaits contributor agreement |
+| TT.EXN | hidden 2D shooter; branded identification unconfirmed | `TT` (technical disc namespace only) | `tt_` (technical disc namespace only) | folder and English game name await contributor agreement |
 | VALEN.EXN | Valentine's Day (White Day probably too) | `valentine` | `valentine_` | confirm White Day |
 
 ### Main subsystem prefixes

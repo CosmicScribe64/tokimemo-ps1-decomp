@@ -1,6 +1,6 @@
 /* play_flow_and_scroll_scripts.c: src/ovl/TT/80136830.c:39 selects scroll/enemy scripts and boss callback by level selector; :75 chooses replay stream; :142 advances scroll accumulator and initializes/updates entity pools; :327 calls selected boss; :13 updates speed gauge; entry dispatch src/ovl/TT/frame_loop_and_pause.c:48. Original object 0x80136830-0x801374C0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TT/data/TT/play_flow_and_scroll_scripts.data", tt_stage1_air_script);

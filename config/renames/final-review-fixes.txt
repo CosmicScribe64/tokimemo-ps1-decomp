@@ -48,3 +48,11 @@ local OMIMAI:sick_visit_talk_choice_select sp2B girl_rank - T-27056 R3 receives 
 local RPG_BAT:rpg_girl_damage_roll temp_t4 quarter_player_hit_points - T-27056 R3 player HP divided by4 caps extra-damage random bound.
 local ETC:career_choice_result_talk temp_v0 career_exam_grade - T-27056 R3 second exam-grade call result selects audio; repeated call preserved.
 data main game_mode_scene_companion_girl game_mode_scene_girl 0x80122EBC T-27056 original-reviewer correction: shared scene girl-index work slot also selects the blood-type fortune subject; companion is context-specific, not the storage-wide role. EVENT identity remains excluded.
+data main D_80122CD4 scene_work_selector 0x80122CD4 T-27056 bounded follow-up: shared scalar selector; main/DATE/GEKO use girl selection while ENDING uses a zero/nonzero draw gate; preserve s32/word alias and separate EVENT development identity.
+data VALEN D_80134498 valentine_talk_group 0x80134498 T-27056 bounded follow-up: s16 group cursor installed as talk_tables by valentine_talk_driver; scene/year/candidate routes select groups.
+data VALEN D_8013449C valentine_talk_line 0x8013449C T-27056 bounded follow-up: s16 line cursor installed as D_800CA138 by valentine_talk_driver; scene setup resets it to zero.
+data VALEN D_8013448C valentine_talk_text_table 0x8013448C T-27056 bounded follow-up: s32 stored table address installed as D_800CA13C text table by valentine_talk_driver; keep primitive storage.
+data VALEN D_80134490 valentine_talk_command_table 0x80134490 T-27056 bounded follow-up: s32 stored table address installed as D_800CA140 command table by valentine_talk_driver; keep primitive storage.
+data VALEN D_80134494 valentine_talk_voice_table 0x80134494 T-27056 bounded follow-up: s32 stored table address installed as D_800CA144 voice table by valentine_talk_driver; keep primitive storage.
+local RENSYU:practice_intro_mode_step_dispatch temp_t4 club_index - T-27056 bounded follow-up: u32 receives player_flags high club nibble and chooses club-specific intro group; same nibble indexes game_state.clubs.
+local RENSYU:practice_candidate_and_day_scene_select temp_a0 selected_girl - T-27056 bounded follow-up: s32 result of select_girl_by_scores passed to girl_state_rank and copied to practice_selected_girl before club preference may override it.

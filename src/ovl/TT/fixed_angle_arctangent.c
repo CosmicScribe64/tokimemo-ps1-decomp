@@ -1,6 +1,6 @@
 /* fixed_angle_arctangent.c: src/ovl/TT/8014D260.c:5: lookup-table arctangent with octant and sign restoration; body 11: neg_x = 0; 12: neg_y = 0;. Original object 0x8014D260-0x8014D3F0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* PsyQ LIBGTE ratan2, built with gcc 2.7.2-psx (config/toolchains.txt, T-24086). */
 s32 func_8014D260(s32 y, s32 x) {

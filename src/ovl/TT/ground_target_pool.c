@@ -1,6 +1,6 @@
 /* ground_target_pool.c: src/ovl/TT/80132F10.c:76: ground target pool: spawn from script, update, draw; body 82: m = -1; 83: g = (u8 *)tt_stage_script;. Original object 0x80132F10-0x80133970 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 u8 *tt_ground_target_find_free(u8 *cursor, u8 *end) {
     while (cursor < end) {
@@ -123,7 +123,7 @@ void tt_ground_target_spawn_from_script(void) {
     }
 }
 
-void tt_ground_target_update(u8 *arg0) {
+void tt_ground_target_update(u8 *ground_target) {
     u8 *player;
     s16 y;
     s16 x;
@@ -131,21 +131,21 @@ void tt_ground_target_update(u8 *arg0) {
     s32 a;
 
     player = tt_player;
-    *(s32 *)(arg0 + 0x24) = *tt_stage_script - *(s32 *)(arg0 + 0x1C);
-    *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
-    *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
-    if (*(u16 *)(arg0 + 4) == 0x40) {
-        if (*(u16 *)(arg0 + 0x5E) > 0x28 && arg0[0x60] == 0) {
-            arg0[0x40] &= 0xFFBF;
+    *(s32 *)(ground_target + 0x24) = *tt_stage_script - *(s32 *)(ground_target + 0x1C);
+    *(s32 *)(ground_target + 0x20) += *(s32 *)(ground_target + 0x28);
+    *(s32 *)(ground_target + 0x24) += *(s32 *)(ground_target + 0x2C);
+    *(s16 *)(ground_target + 0x14) = *(s16 *)(ground_target + 0x22);
+    *(s16 *)(ground_target + 0x16) = *(s16 *)(ground_target + 0x26);
+    if (*(u16 *)(ground_target + 4) == 0x40) {
+        if (*(u16 *)(ground_target + 0x5E) > 0x28 && ground_target[0x60] == 0) {
+            ground_target[0x40] &= 0xFFBF;
         }
-        if (arg0[0x40] & 1) {
-            y = *(s16 *)(arg0 + 0x16);
-            arg0[0x40] = 0xC0;
-            *(u16 *)(arg0 + 0x5E) = 0;
+        if (ground_target[0x40] & 1) {
+            y = *(s16 *)(ground_target + 0x16);
+            ground_target[0x40] = 0xC0;
+            *(u16 *)(ground_target + 0x5E) = 0;
             if (y < 0xC0) {
-                x = *(s16 *)(arg0 + 0x14);
+                x = *(s16 *)(ground_target + 0x14);
                 d = *(s16 *)(player + 0x14) - x;
                 if (d < 0) {
                     a = -d;
@@ -164,12 +164,12 @@ void tt_ground_target_update(u8 *arg0) {
                     }
                 } else {
 call:
-                    arg0[0x60] += 1;
+                    ground_target[0x60] += 1;
                     tt_enemy_shot_fire_aimed(x, y, 0x20, 0xA0);
                 }
             }
         }
-        *(u16 *)(arg0 + 0x5E) += 1;
+        *(u16 *)(ground_target + 0x5E) += 1;
     }
 }
 

@@ -5,6 +5,10 @@ updated: 2026-10-24
 
 # Status
 
+## Final source closeout gate (2026-10-25; supersedes older handoff status)
+
+The supplied final proof matches all 27 binaries: 6,952 functions and 2,276,920 bytes; source digest `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Current integration record: 437 logical C basenames; topic umbrellas removed; accepted logical overlay paths retain the TT exception; 1,298 semantic operations plus one local-name repair; 14 exact original-data includes; 14,449 ledger rows; 437 mapped views/inverse proofs; 43 data islands / 2,083 pieces; 337 path-tool tests. All non-publication phase 2 criteria have passed review; T-280xx asset work is separate. Current T-27000 status is In Review. Only the authorized publication checkbox remains open.
+
 The one page for "where are we". Update it when a wave, a local or cloud session, or a contributor PR changes the numbers (`tools/docker.sh python3 tools/progress.py`). Older status and handoff pages are in `archive/` ([[completion-run-2026-10-17]], [[stopping-point-2026-10-15]]).
 
 ## Phase 2 handoff (2026-10-24, keep current)
@@ -21,6 +25,17 @@ T-27055/live-integration-acceptance.md; full build fingerprint
 2db37ce14c0def248224a28400c0a0abcb17d40ae33e8726f699ab5f606f0c3b.
 Rink correction, logical directory/header paths and broader gameplay-residue classification
 remain open. No source write lease is active; do not reapply the integrated packets.
+
+Tool checkpoint **a5be61444** adds the independently reviewed path/ownership fixes;
+all 337 Docker tests pass. The actual follow-up of eight identifiers and four existing
+VALEN threshold uses passes inverse/GCC proofs, 437 mapped views with zero changes and
+the rename guard at 13,094 rows. The separate skating-rink declaration correction is
+applied with its expected single EVENT view change. These source changes await the final
+combined matching run. The isolated path application passes its body/view/YAML/profile
+proofs and the repaired macOS-bind guard. Root completed the exact approved 56-row live
+application: actual 437 mapped views and non-path bodies are unchanged, full metadata in all
+27 YAML files is preserved, and the guard passes at 13,150 rows. Final matching and original
+Astra acceptance remain open alongside the remaining gameplay-name corrections.
 
 Preceding verified source wave (db1d04f3b): **725 gameplay constant substitutions**, 350 new definitions
 and eight domain comments across 84 C files and 13 headers. Independent actual-source
@@ -58,8 +73,8 @@ the same address for different storage. T-27061 owns its private declaration sep
 The fresh r16 header packet passes its current-source proof, 504 focused tests, unchanged
 73 type blocks/layout, and zero views across 437 units. Original Astra review approves its
 exact patch; actual application matches every prepared byte and its fresh raw snapshot is
-identical. The combined build now matches all 27 binaries. The separate rink type correction and
-T-27074 logical path migration remain unapplied; their new provider/root-path fields and
+identical. The combined build now matches all 27 binaries. The separate rink correction is applied
+but awaits final matching; T-27074 logical paths are applied and pass actual preservation proofs. Their provider/root-path fields and
 path-sensitive EVENT checker must be handled explicitly.
 The review findings cover known mutable state, fields/tables, essential locals/constants,
 O.BIN comments and obsolete living-spec claims. These findings and the structural

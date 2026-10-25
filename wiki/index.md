@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-24
+updated: 2026-10-25
 ---
 
 # Wiki index
@@ -19,19 +19,19 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 ## Port references
 
-- [[spec/index]] - unit port specs; applied batches and partial continuation drafts are distinguished
-- [[spec/o-taiiku]] - Sports festival: partial body-backed transitions, input/movement and girl-stat rewards (In Progress)
-- [[spec/o-geko]] - GEKO encounters: five mode entries, walk-home/birthday rules, invitation selection and appointments (In Progress)
-- [[spec/o-shougatu]] - New Year/Christmas and GYOZI: partial candidate, shrine, fortune and birthday rules (In Progress)
-- [[spec/o-tel-option]] - Telephone/options: partial invitation eligibility, relationship effects and sound-test flow (In Progress)
-- [[spec/o-master-ending]] - Partial mastery, companion-selection, ending-candidate and audio-level rules (In Progress)
-- [[spec/o-bunkasd-shugaku]] - Partial stage-show dispatch and school-trip response rules (In Progress)
-- [[spec/o-small]] - Seven small-overlay loader entries and partial outcome rules (In Progress)
+- [[spec/index]] - source-backed unit port specs, applied ledgers, evidence and explicit unknowns
+- [[spec/o-taiiku]] - Sports festival transitions, input/movement and girl-stat rewards
+- [[spec/o-geko]] - GEKO mode entries, walk-home/birthday rules, invitations and appointments
+- [[spec/o-shougatu]] - New Year/Christmas and annual-event rules, shrine choices and documented unknowns
+- [[spec/o-tel-option]] - Telephone/options invitation eligibility, relationship effects and sound-test flow
+- [[spec/o-master-ending]] - Mastery, companion selection, ending candidates and audio-level rules
+- [[spec/o-bunkasd-shugaku]] - Stage-show dispatch, school-trip responses and evidence limits
+- [[spec/o-small]] - Seven small-overlay loader entries, outcome rules and evidence limits
 - [[spec/reconcile]] - Applied-ledger precedence, scheduler ownership decisions and executable-batch preparation
 - [[spec/file-naming-main]] - Exhaustive main C filename mapping and integration proof
 - [[spec/file-naming-overlays]] - Exhaustive overlay C filename mapping and review gates
 - [[spec/header-split-plan]] - Declaration ownership and staged topic-header extraction
-- [[spec/phase2-completion-audit]] - Remaining completion gates and source-backed census
+- [[spec/phase2-completion-audit]] - Final source acceptance, matching proof and scoped residue
 - [[spec/core-followup]] - Applied core/daily-rule residue reconciliation and exact constant-site evidence
 
 ## Asset tooling

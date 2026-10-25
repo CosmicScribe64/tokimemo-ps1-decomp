@@ -9,7 +9,7 @@ extern s32 D_800B39C4[];
 extern u8 debug_hud_level;
 extern u8 memory_card_icon_palettes[];
 extern u8 *memory_card_icon_images;
-extern u8 D_800B6708;
+extern u8 cursor_style;
 /* T-17000: word tables walked by boot_hud_init (and hud_icon_bar_init) up to the next symbol: eight words
  * ending at D_800C6220, 32 words ending at D_800C6340. */
 extern s32 D_800C6200[8];
@@ -44,9 +44,9 @@ extern u8 D_80123180[];
 extern u8 D_801231A0[];
 extern s32 boot_global_pointer;
 extern s32 boot_previous_stack_pointer;
-extern s16 D_80125C50;
-extern s16 D_80125C52;
-extern u8 D_80125C54;
-extern u8 D_80125C55;
+extern s16 mascot_anchor_x;
+extern s16 mascot_anchor_y;
+extern u8 mascot_length;
+extern u8 mascot_swing;
 
 #endif

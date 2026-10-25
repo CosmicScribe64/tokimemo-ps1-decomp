@@ -1,6 +1,6 @@
 /* rope_joint_motion.c: src/ovl/TT/801410A0.c:7: angle and distance constraint propagation for a chain of rope joints; body 17: n = s[0x1A]; 18: dx = *(s16 *)(s + 0) - *(s16 *)(s + 4);. Original object 0x801410A0-0x80141450 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* Rope update: turn the head angle (+0x99C, s16[32]) towards the target with wrap at 0x400/0xC00, clamp the head
  * length (+0x11C, s32[32]), shift the per-segment history rows (+0x9DC s16[32][16], +0x19C s32[32][16]) and

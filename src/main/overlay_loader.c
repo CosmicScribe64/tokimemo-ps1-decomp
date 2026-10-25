@@ -338,10 +338,10 @@ void ovl_load_enter(void) {
     GameState *gs; /* FAKE: T-22002, the switch and the arg read go through gs: it keeps the selector in $v1,
                     * the arg load above the unk_1108 store, and takes frame word 0x34 */
     u8 pad; /* FAKE: T-22002, never used; holds frame byte 0x33 so the four saved bytes sit at 0x2F-0x32 */
-    u8 sp32;
-    u8 sp31;
-    u8 sp30;
-    u8 sp2F;
+    u8 saved_mode_step;
+    u8 saved_substep;
+    u8 saved_game_mode_scratch;
+    u8 saved_mode_stage_scratch;
     s32 arg; /* s32 and passed as is, so its range is precoloured $a0 (a u8 converted at the call took $v0) */
 
     gs = &game_state;
@@ -492,19 +492,19 @@ void ovl_load_enter(void) {
         break;
     }
     ovl_load_state = 0;
-    sp32 = game_state.mode_step;
-    sp31 = game_state.substep;
+    saved_mode_step = game_state.mode_step;
+    saved_substep = game_state.substep;
     /* FAKE: T-17003, unk_110B/unk_110C are s8 in GameState but the original loads them with lbu,
      * so they are read through a u8 view (through gs they compile to lb). */
-    sp2F = *(u8 *)&game_state.mode_stage_scratch;
-    sp30 = *(u8 *)&game_state.game_mode_scratch;
+    saved_mode_stage_scratch = *(u8 *)&game_state.mode_stage_scratch;
+    saved_game_mode_scratch = *(u8 *)&game_state.game_mode_scratch;
     arg = gs->mode_stage;
     game_state.game_mode = game_state.ovl_target_game_mode;
     mode_stage_set(arg);
-    mode_step_set((s32) sp32);
-    game_state.substep = sp31;
-    game_state.mode_stage_scratch = sp2F;
-    game_state.game_mode_scratch = sp30;
+    mode_step_set((s32) saved_mode_step);
+    game_state.substep = saved_substep;
+    game_state.mode_stage_scratch = saved_mode_stage_scratch;
+    game_state.game_mode_scratch = saved_game_mode_scratch;
 }
 
 s32 game_mode_is_tt_game(void) {

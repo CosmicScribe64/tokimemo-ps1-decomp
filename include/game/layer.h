@@ -76,7 +76,7 @@ typedef struct ModTileSet {
 } ModTileSet; /* size 0x14 */
 #endif
 
-/* T-25010 (moved from include/ovl/OPTION.h): the cell maps, cells and cell indexes of the two BG slots,
+/* T-25010 (moved from include/ovl/options.h): the cell maps, cells and cell indexes of the two BG slots,
  * BgLayer (game.h, GsBG layout) at bg_layers + n * 0x24, whose +0x14 points at map n. Main
  * prim_bg_slot_setup sets up slot n through these three tables; OPTION func_801328C0 fills slot 0 itself (T-20910). */
 typedef struct BgCell {

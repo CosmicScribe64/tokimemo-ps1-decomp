@@ -1,6 +1,6 @@
 /* level_asset_loading.c: src/ovl/TT/80142350.c:5: load state chooses stage-specific CD blocks and advances state; body 12: base = tt_sys; 13: s = tt_core;. Original object 0x80142350-0x80142570 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* T-11800: matched. T-11550 temp (FAKE) moves the constant 1 to a1; an empty if (buttons) {} in a default case (FAKE) keeps the TtPadView pointer live through the case dispatch, so it is coloured after the constant 1 and takes a2 as in the original. */
 void tt_state_load(void) {

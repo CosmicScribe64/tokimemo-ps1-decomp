@@ -1,6 +1,6 @@
 /* player_and_asset_uploads.c: src/ovl/TT/80142D40.c:339: VRAM/CD load helpers plus player spawn/control/movement, hit, pickup effects and draw; body 350: p = tt_player; 351: pad = tt_sys + 0x20;. Original object 0x80142D40-0x80144D70 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_vram_upload_palettes(u8 *arg0, s16 arg1, s16 arg2) {
     RECT r;
@@ -807,91 +807,91 @@ void tt_player_draw(void) {
     }
 }
 
-void tt_bell_collect(u8 *arg0) {
+void tt_bell_collect(u8 *pickup) {
     u8 *player;
     u8 *w;
     s32 i;
     u8 *follower;
 
     player = tt_player;
-    switch (*(u16 *)(arg0 + 4)) {
+    switch (*(u16 *)(pickup + 4)) {
     case 0x40:
     case 0x60:
-        switch (arg0[0x58]) {
+        switch (pickup[0x58]) {
         case 0:
             tt_se_request(TT_SE_PICKUP_COLLECT);
-            arg0[0] = 0;
+            pickup[0] = 0;
             break;
         case 1:
             tt_se_request(TT_SE_SHOT_LEVEL_PICKUP);
-            tt_bell_set_popup_label(arg0, 0x28);
+            tt_bell_set_popup_label(pickup, 0x28);
             player[0x55] = 9;
             tt_options[0x92] = 9;
-            *(s32 *)(arg0 + 0x34) = 0;
-            *(s32 *)(arg0 + 0x2C) = 0;
-            *(s32 *)(arg0 + 0x28) = 0;
-            *(s16 *)(arg0 + 0x62) = 0;
-            *(u16 *)(arg0 + 4) = 0x90;
+            *(s32 *)(pickup + 0x34) = 0;
+            *(s32 *)(pickup + 0x2C) = 0;
+            *(s32 *)(pickup + 0x28) = 0;
+            *(s16 *)(pickup + 0x62) = 0;
+            *(u16 *)(pickup + 4) = 0x90;
             /* FAKE: chained stores; the reloads keep dead ranges in v0/v1 (no code, as the function is void), so the shared 9 lands in a0 as in the original. T-11850 */
-            arg0[0xD] = arg0[0xE] = arg0[0xF] = 0;
-            *(u16 *)(arg0 + 6) = *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 0xA) = 0; /* FAKE: u16 view, see above. T-11850 */
+            pickup[0xD] = pickup[0xE] = pickup[0xF] = 0;
+            *(u16 *)(pickup + 6) = *(u16 *)(pickup + 8) = *(u16 *)(pickup + 0xA) = 0; /* FAKE: u16 view, see above. T-11850 */
             break;
         case 2:
             tt_se_request(TT_SE_SPEED_UP);
-            tt_bell_set_popup_label(arg0, 0x29);
+            tt_bell_set_popup_label(pickup, 0x29);
             player[0x54] += 1;
-            *(s32 *)(arg0 + 0x34) = 0;
-            *(s32 *)(arg0 + 0x2C) = 0;
-            *(s32 *)(arg0 + 0x28) = 0;
-            *(s16 *)(arg0 + 0x62) = 0;
-            *(u16 *)(arg0 + 4) = 0x90;
-            arg0[0xD] = 0;
-            arg0[0xE] = 0;
-            arg0[0xF] = 0;
-            *(s16 *)(arg0 + 6) = 0;
-            *(s16 *)(arg0 + 8) = 0;
-            *(s16 *)(arg0 + 0xA) = 0;
+            *(s32 *)(pickup + 0x34) = 0;
+            *(s32 *)(pickup + 0x2C) = 0;
+            *(s32 *)(pickup + 0x28) = 0;
+            *(s16 *)(pickup + 0x62) = 0;
+            *(u16 *)(pickup + 4) = 0x90;
+            pickup[0xD] = 0;
+            pickup[0xE] = 0;
+            pickup[0xF] = 0;
+            *(s16 *)(pickup + 6) = 0;
+            *(s16 *)(pickup + 8) = 0;
+            *(s16 *)(pickup + 0xA) = 0;
             break;
         case 3:
             tt_se_request(TT_SE_FOLLOWER_PICKUP);
             if (player[0x53] == 0) {
-                tt_bell_set_popup_label(arg0, 0x2A);
+                tt_bell_set_popup_label(pickup, 0x2A);
                 player[0x53] = 1;
                 follower = tt_options;
                 for (i = 0; i != 3; i++, follower += 0xA4) {
                     tt_option_activate(follower);
                 }
             }
-            *(s32 *)(arg0 + 0x34) = 0;
-            *(s32 *)(arg0 + 0x2C) = 0;
-            *(s32 *)(arg0 + 0x28) = 0;
-            *(s16 *)(arg0 + 0x62) = 0;
-            *(u16 *)(arg0 + 4) = 0x90;
-            *(s16 *)(arg0 + 0xA) = 0;
-            *(s16 *)(arg0 + 8) = 0;
-            *(s16 *)(arg0 + 6) = 0;
-            arg0[0xF] = 0;
-            arg0[0xE] = 0;
-            arg0[0xD] = 0;
+            *(s32 *)(pickup + 0x34) = 0;
+            *(s32 *)(pickup + 0x2C) = 0;
+            *(s32 *)(pickup + 0x28) = 0;
+            *(s16 *)(pickup + 0x62) = 0;
+            *(u16 *)(pickup + 4) = 0x90;
+            *(s16 *)(pickup + 0xA) = 0;
+            *(s16 *)(pickup + 8) = 0;
+            *(s16 *)(pickup + 6) = 0;
+            pickup[0xF] = 0;
+            pickup[0xE] = 0;
+            pickup[0xD] = 0;
             break;
         case 6:
             tt_se_request(TT_SE_SPEED_DOWN);
-            tt_bell_set_popup_label(arg0, 0x2B);
+            tt_bell_set_popup_label(pickup, 0x2B);
             player[0x54] -= 1;
             if (player[0x54] == 0) {
                 player[0x54] = 1;
             }
-            *(s32 *)(arg0 + 0x34) = 0;
-            *(s32 *)(arg0 + 0x2C) = 0;
-            *(s32 *)(arg0 + 0x28) = 0;
-            *(s16 *)(arg0 + 0x62) = 0;
-            *(u16 *)(arg0 + 4) = 0x90;
-            *(s16 *)(arg0 + 0xA) = 0;
-            *(s16 *)(arg0 + 8) = 0;
-            *(s16 *)(arg0 + 6) = 0;
-            arg0[0xF] = 0;
-            arg0[0xE] = 0;
-            arg0[0xD] = 0;
+            *(s32 *)(pickup + 0x34) = 0;
+            *(s32 *)(pickup + 0x2C) = 0;
+            *(s32 *)(pickup + 0x28) = 0;
+            *(s16 *)(pickup + 0x62) = 0;
+            *(u16 *)(pickup + 4) = 0x90;
+            *(s16 *)(pickup + 0xA) = 0;
+            *(s16 *)(pickup + 8) = 0;
+            *(s16 *)(pickup + 6) = 0;
+            pickup[0xF] = 0;
+            pickup[0xE] = 0;
+            pickup[0xD] = 0;
             break;
         }
         break;
@@ -912,7 +912,7 @@ void tt_bell_collect(u8 *arg0) {
             player[0xF] = 0;
             player[0xE] = 0;
             player[0xD] = 0;
-            arg0[0] = 0;
+            pickup[0] = 0;
         }
         break;
     }

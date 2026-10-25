@@ -197,9 +197,9 @@ void game_state_init(s32 arg0) {
     hud_text_marker_set(0);
     boot_game_data_init();
     memory_card_block_clear();
-    bzero(D_80122DD0, 0x100);
+    bzero(overlay_scratch, 0x100);
     bzero(&talk_work, 0x100);
-    bzero(&D_801230D0, 0x40);
+    bzero(&scene_work, 0x40);
     boot_settings_defaults_set();
 }
 

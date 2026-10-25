@@ -1,6 +1,6 @@
 /* boss_parts_and_hits.c: src/ovl/TT/80142570.c:4: field enemy destruction, boss sprite/part/hitbox clearing, hit tests and part animation/drawing; body 8: tt_se_request(0x60C); 9: p = tt_air_enemies;. Original object 0x80142570-0x80142D40 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_field_enemies_destroy(void) {
     u8 *p;
@@ -146,47 +146,47 @@ u8 tt_boss_check_hits(void) {
     return ret;
 }
 
-void tt_boss_part_animation_step(void *arg0, s32 arg1) {
+void tt_boss_part_animation_step(void *animation_script, s32 part_index) {
     u8 *boss = tt_boss;
-    TtPartAnimation *a = (TtPartAnimation *)(boss + 0x38) + arg1;
+    TtPartAnimation *a = (TtPartAnimation *)(boss + 0x38) + part_index;
     s32 k;
     s16 *s;
     s16 v;
 
     /* FAKE: the two reads of the index tables go through an s32 view of tt_boss, so uopt reloads the pointer (lw t9) instead of reusing boss. T-11860 */
-    if (boss[0] != 0 && ((u8 *)*(s32 *)&tt_boss)[arg1 + 0x310] != 0) {
+    if (boss[0] != 0 && ((u8 *)*(s32 *)&tt_boss)[part_index + 0x310] != 0) {
         if (a->flags & 0x80) {
             a->flags &= ~0x80;
-            a->frame = ((s16 *)arg0)[0];
-            a->hold = ((s16 *)arg0)[1];
-            boss[arg1 + 0x328] = 0;
+            a->frame = ((s16 *)animation_script)[0];
+            a->hold = ((s16 *)animation_script)[1];
+            boss[part_index + 0x328] = 0;
             return;
         }
         if (a->flags & 0x20) {
             a->flags &= ~0x20;
-            boss[arg1 + 0x328] = 0;
+            boss[part_index + 0x328] = 0;
             return;
         }
         if (a->hold == 0) {
-            k = ((u8 *)*(s32 *)&tt_boss)[arg1 + 0x328] + 2; /* FAKE: s32 view, see above. T-11860 */
-            s = (s16 *)((u8 *)arg0 + k * 2);
+            k = ((u8 *)*(s32 *)&tt_boss)[part_index + 0x328] + 2; /* FAKE: s32 view, see above. T-11860 */
+            s = (s16 *)((u8 *)animation_script + k * 2);
             v = *s;
             if (v == -1) {
                 a->flags |= 1;
                 a->flags |= 0x40;
                 a->frame = s[-2];
             } else if (v == -2) {
-                a->frame = ((s16 *)arg0)[0];
-                a->hold = ((s16 *)arg0)[1];
+                a->frame = ((s16 *)animation_script)[0];
+                a->hold = ((s16 *)animation_script)[1];
                 k = 0;
             } else if (v == -3) {
-                boss[arg1 + 0x310] = 0;
+                boss[part_index + 0x310] = 0;
                 a->flags |= 1;
             } else {
                 a->frame = v;
                 a->hold = s[1];
             }
-            boss[arg1 + 0x328] = k;
+            boss[part_index + 0x328] = k;
         } else {
             a->hold--;
         }

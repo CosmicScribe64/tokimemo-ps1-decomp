@@ -1,0 +1,17 @@
+/* mio_scene_picture_resources.c: ; src/ovl/TAIIKU/80140810.c:189-195 loads Mio still, animation and palette resources. Original object 0x80142180-0x80142240 (config/objects/TAIIKU.txt). */
+#include "common.h"
+#include "ovl/sports_festival.h"
+
+void sports_mio_scene_picture_resource_addresses_init(void) {
+    D_8014A0E0 = 0x801B93F0;
+    D_8014A0E4 = 0x801B9360;
+    D_8014A0E8 = 0x801B93D8;
+    D_8014A0EC = *(s16 *)0x801B93F8;
+    D_8014A0F0 = 0x80197000;
+    D_8014A0F4 = 0x80199000;
+    D_8014A0F8 = 0x8019D000;
+    D_8014A0FC = 0x801A1000;
+    D_8014A100 = 0x801A5000;
+    D_8014A104 = 0x801A9000;
+    D_8014A108 = 0x801AD000;
+}

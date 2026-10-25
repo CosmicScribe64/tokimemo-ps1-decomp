@@ -183,10 +183,10 @@ s32 mode_step_next(void) {
 }
 
 /* Switch to a mode and reset stage, step, timers, substep */
-void game_mode_set(s32 arg0) {
+void game_mode_set(s32 mode) {
     u32 t;
 
-    game_state.game_mode = arg0;
+    game_state.game_mode = mode;
     game_state.mode_stage = 0;
     game_state.mode_step = 0;
     game_state.game_mode_timer = 0;
@@ -209,11 +209,11 @@ void game_mode_set(s32 arg0) {
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 mode_stage_set(s32 arg0) {
+s32 mode_stage_set(s32 stage) {
     s32 *p;
     s32 z;
 
-    game_state.mode_stage = arg0;
+    game_state.mode_stage = stage;
     game_state.mode_step = 0;
     game_state.mode_stage_timer = 0;
     game_state.mode_step_timer.w = 0;
@@ -227,11 +227,11 @@ s32 mode_stage_set(s32 arg0) {
  * store and as1 puts that store in the jr delay slot, as the original does; no
  * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
  * return. T-11610 */
-s32 mode_step_set(s32 arg0) {
+s32 mode_step_set(s32 step) {
     s32 *p;
     s32 z;
 
-    game_state.mode_step = arg0;
+    game_state.mode_step = step;
     game_state.mode_step_timer.w = 0;
     z = 0;
     p = &z;

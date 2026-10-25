@@ -1,6 +1,6 @@
 /* bomb_pool.c: src/ovl/TT/80146BE0.c:4: bomb pool; body 8: i = 0; 9: p = tt_bombs;. Original object 0x80146BE0-0x80147380 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_bombs_clear(void) {
     s32 i;
@@ -28,54 +28,54 @@ void tt_bombs_reset(void) {
     }
 }
 
-void tt_bomb_launch_init(u8 *arg0, s32 arg1) {
+void tt_bomb_launch_init(u8 *bomb, s32 shooter_index) {
     u8 *p = tt_player;
 
-    if (arg1 < 2) {
-        if (arg0[0x3D] != 0) {
-            *(s16 *)(arg0 + 0x14) = *(s16 *)(p + 0x14) + 6;
+    if (shooter_index < 2) {
+        if (bomb[0x3D] != 0) {
+            *(s16 *)(bomb + 0x14) = *(s16 *)(p + 0x14) + 6;
         } else {
-            *(s16 *)(arg0 + 0x14) = *(s16 *)(p + 0x14) - 6;
+            *(s16 *)(bomb + 0x14) = *(s16 *)(p + 0x14) - 6;
         }
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(arg0 + 0x14) << 16;
-        *(s16 *)(arg0 + 0x16) = *(s16 *)(p + 0x16) - 0x10;
-        *(s32 *)(arg0 + 0x24) = *(s16 *)(arg0 + 0x16) << 16;
-        *(s32 *)(arg0 + 0x2C) = 0xFFFC0000;
-        arg0[0x44] = 0xA0;
-        arg0[0x45] = 0xD0;
-        *(s16 *)(arg0 + 0x10) = 3;
-        *(s16 *)(arg0 + 0x40) = 0xA;
-        *(s16 *)(arg0 + 0x42) = 0x3C81;
-        *(s16 *)(arg0 + 0x46) = 0;
+        *(s32 *)(bomb + 0x20) = *(s16 *)(bomb + 0x14) << 16;
+        *(s16 *)(bomb + 0x16) = *(s16 *)(p + 0x16) - 0x10;
+        *(s32 *)(bomb + 0x24) = *(s16 *)(bomb + 0x16) << 16;
+        *(s32 *)(bomb + 0x2C) = 0xFFFC0000;
+        bomb[0x44] = 0xA0;
+        bomb[0x45] = 0xD0;
+        *(s16 *)(bomb + 0x10) = 3;
+        *(s16 *)(bomb + 0x40) = 0xA;
+        *(s16 *)(bomb + 0x42) = 0x3C81;
+        *(s16 *)(bomb + 0x46) = 0;
         return;
     }
-    p = tt_options + (arg1 >> 1) * 0xA4 - 0xA4;
-    if (arg0[0x3D] != 0) {
-        *(s16 *)(arg0 + 0x14) = *(s16 *)(p + 0x14) + 6;
+    p = tt_options + (shooter_index >> 1) * 0xA4 - 0xA4;
+    if (bomb[0x3D] != 0) {
+        *(s16 *)(bomb + 0x14) = *(s16 *)(p + 0x14) + 6;
     } else {
-        *(s16 *)(arg0 + 0x14) = *(s16 *)(p + 0x14) - 6;
+        *(s16 *)(bomb + 0x14) = *(s16 *)(p + 0x14) - 6;
     }
-    *(s32 *)(arg0 + 0x20) = *(s16 *)(arg0 + 0x14) << 16;
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(p + 0x16) - 0x10;
-    *(s32 *)(arg0 + 0x24) = *(s16 *)(arg0 + 0x16) << 16;
-    *(s32 *)(arg0 + 0x2C) = 0xFFFC0000;
-    arg0[0x44] = 0xA0;
-    arg0[0x45] = 0xD0;
-    *(s16 *)(arg0 + 0x10) = 3;
-    *(s16 *)(arg0 + 0x40) = 0xA;
-    *(s16 *)(arg0 + 0x42) = 0x3C81;
-    *(s16 *)(arg0 + 0x46) = 0;
+    *(s32 *)(bomb + 0x20) = *(s16 *)(bomb + 0x14) << 16;
+    *(s16 *)(bomb + 0x16) = *(s16 *)(p + 0x16) - 0x10;
+    *(s32 *)(bomb + 0x24) = *(s16 *)(bomb + 0x16) << 16;
+    *(s32 *)(bomb + 0x2C) = 0xFFFC0000;
+    bomb[0x44] = 0xA0;
+    bomb[0x45] = 0xD0;
+    *(s16 *)(bomb + 0x10) = 3;
+    *(s16 *)(bomb + 0x40) = 0xA;
+    *(s16 *)(bomb + 0x42) = 0x3C81;
+    *(s16 *)(bomb + 0x46) = 0;
 }
 
-void tt_bomb_animation_step(u8 *arg0) {
-    u32 v = (u16)++*(u16 *)(arg0 + 0x46);
+void tt_bomb_animation_step(u8 *bomb) {
+    u32 v = (u16)++*(u16 *)(bomb + 0x46);
 
     if (v >= 0x15) {
-        arg0[0x44] = 0xC0;
+        bomb[0x44] = 0xC0;
     } else if (v >= 0xB) {
-        arg0[0x44] = 0xB0;
+        bomb[0x44] = 0xB0;
     } else {
-        arg0[0x44] = 0xA0;
+        bomb[0x44] = 0xA0;
     }
 }
 

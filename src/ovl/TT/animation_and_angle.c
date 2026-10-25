@@ -1,6 +1,6 @@
 /* animation_and_angle.c: src/ovl/TT/80132000.c:4: frame-list control bytes advance sprite animation; second function computes relative angle; body 9: if (arg0[8] & 0x80) {; 10: arg0[8] &= 0xFF7F;. Original object 0x80132000-0x80132130 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_animation_list_step(u8 *animation, s8 *tile_u, s8 *tile_v) {
     u8 *e;

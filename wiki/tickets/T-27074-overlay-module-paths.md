@@ -1,10 +1,10 @@
 ---
 id: T-27074
 title: Prepare logical overlay directory and header paths
-status: In Progress
+status: Done
 assignee: path-packet
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-25
 links: ["[[phase2]]", "[[spec/file-naming-overlays]]", "[[spec/header-split-plan]]"]
 ---
 
@@ -16,11 +16,10 @@ their configuration/reference map, preserving original disc identities and bound
 
 ## Acceptance criteria
 
-- [ ] Every current overlay directory/header has a reviewed target or an explicit applicable exception.
-- [ ] Targets follow the ADR/glossary and avoid claiming unproved unused status or game branding.
-- [ ] Root applies supported requests only through rename.py after naming/header providers stabilize.
-- [ ] Independent Standards/Spec review, path-mapped views and final matching proof pass before Done.
-
+- [x] Every current overlay directory/header has a reviewed target or an explicit applicable exception.
+- [x] Targets follow the ADR/glossary and avoid claiming unproved unused status or game branding.
+- [x] Root applies supported requests only through rename.py after naming/header providers stabilize.
+- [x] Independent Standards/Spec review, path-mapped views and final matching proof pass before Done.
 ## Notes
 
 Preparation occurs only in ignored scratch and this ticket. Root owns source applications,
@@ -82,3 +81,23 @@ Root applied its five tool files and ran the full six-module Docker suite: **337
 Actual source paths remain unchanged pending the repaired macOS-bind guard and migration proof.
 Evidence remains ignored under `T-27074/` and the original reviewer's
 `T-27055/path-tool-review-in-progress.md`.
+
+## Actual integration (2026-10-25)
+
+Root applied the exact approved 56-row table once through `rename.py`, with ledger
+`config/renames/t27074-paths.txt`; the actual guard passes at 13,150 rows. The actual baseline
+includes the separate skating-rink correction and the eight-identifier/four-threshold follow-up.
+Fresh comparison covers all 437 C files: zero path-mapped declaration or non-path body changes;
+404 C files have path changes, and every string-token difference matches the approved table.
+All 965 object/subsegment records and all parsed metadata in the 27 YAML files are preserved
+after exactly 728 approved path normalizations. The 26 link identities, 70 topic-owner paths,
+21 required type paths and 28 casefold-unique overlay headers pass their audits.
+
+Actual after-view snapshot SHA-256 is
+`0db2ba905a35ba50bd0282eb4585dd73cf00db4c3d6dd70de0bf28df4ca5f3c2`.
+Evidence is ignored `T-27074/live-integration/`; source writes are released. Final matching and
+the original reviewer's actual-integration acceptance remain required before Done.
+
+## Final integration evidence (2026-10-25)
+
+Reviewed source digest: `687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3`. Final clean matching proof: 27/27 binaries, 6,952 functions, 2,276,920 bytes. Independent original Astra review and separate fixer Astra review passed this exact source digest. See `.claude/orchestrator/state/T-27000/final-tracking/criterion-evidence.md`.

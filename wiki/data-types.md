@@ -1,10 +1,12 @@
 ---
 type: concept
 updated: 2026-10-17
-sources: ["include/game.h", "tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
+sources: ["include/game/game_state.h", "include/main/state.h", "config/header_owners.json", "tools/type_recovery.py", "tools/test_type_recovery.py", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
 ---
 
 # Data types recovered from access patterns (T-5000)
+
+Current header-path note (2026-10-25): the old umbrella headers `include/main_api.h` and `include/game.h` are retired. `config/header_owners.json` is the canonical topic-owner registry (`mode: topic_only`); current main/shared type and API ownership is split among its registered paths. Overlay headers use the logical names listed in [[source-files]], including `date_spots.h` for EVENT and `annual_events.h` for GYOZI. The older `main_api.h`/`game.h` citations retained below identify the evidence location in the historical type-recovery record, not a current header path.
 
 T-20006 follow-up: GYOZI's D_801317EB and GyoziRec44.unk_07 are u8. The original scene callbacks read both with lbu; declaring the record field s8 leaves an lb where the original has lbu, even with a value cast afterward. The shared unsigned types allow ordinary field assignments in the two newly matched callbacks. Their actual linked proofs and whole-overlay/shared-header checks are recorded in [[tickets/T-20006-gyozi-scene-callbacks]].
 
@@ -34,28 +36,28 @@ Limits: the pass is linear (no control flow), so a register state survives a lab
 | `GameState` (0x1A90 bytes, records `GsRec*`, unions `GsWord`/`GsHalf`, T-5100) | `D_800E6280` | `main_api.h` | 166 globals, 1459 uses rewritten by `tools/migrate_globals.py` | 7 |
 | `Rec24[]` (0x24 bytes) | `D_801217D0` | `main_api.h` | 19 globals | 2 (main) |
 | `Work80125D10` (0x50 bytes, one work area) | `D_80125D10` | `main_api.h` | 33 globals of main `80079B10`/`8007C030` | 1 |
-| `RpgRec18` (six words) | `D_8015EC58` | `include/ovl/RPG_BAT.h` | 5 globals | 1 |
+| `RpgRec18` (six words) | `D_8015EC58` | `include/ovl/rpg_battle.h` | 5 globals | 1 |
 | byte view of the 0x44-byte record table | `D_8011ECD0` | existing `u8 D_8011ECD0[]` | uses only | 6 (ENDING 2, DATE 1, RPG_BAT 2, main 1) |
-| stack tables `RpgDirTable`, `RpgStrTbl4`, `RpgWordTbl4`, `RpgWordTbl10`, `RpgHalfTbl12` | `D_8015E4F0`, `D_8015E530`..`D_8015E578`, `D_8015E720`, `D_8015EFA0`..`D_8015EFF0` | `include/ovl/RPG_BAT.h` (T-17100) | 12 undeclared tables | 0 |
-| `RpgStat` pad named (`unk_0C`..`unk_34`) | `D_8015EBFC` | `include/ovl/RPG_BAT.h` (T-17100) | pad cast in `func_801447E0` | 0 |
+| stack tables `RpgDirTable`, `RpgStrTbl4`, `RpgWordTbl4`, `RpgWordTbl10`, `RpgHalfTbl12` | `D_8015E4F0`, `D_8015E530`..`D_8015E578`, `D_8015E720`, `D_8015EFA0`..`D_8015EFF0` | `include/ovl/rpg_battle.h` (T-17100) | 12 undeclared tables | 0 |
+| `RpgStat` pad named (`unk_0C`..`unk_34`) | `D_8015EBFC` | `include/ovl/rpg_battle.h` (T-17100) | pad cast in `func_801447E0` | 0 |
 | byte view of EVENT's 0x44-byte table | `D_800EAFA0` (new) | `main_api.h` | uses only | 1 |
-| `TaiRunnersA` (`player`, `cpu[3]` of `TaiRunnerA`, 0x24) | `D_80149208` | `include/ovl/TAIIKU.h` (T-16550) | `TaiikuSlots`, `TaiSlot24` views | 0 |
-| `TaiRunnerB[4]` (0x24) | `D_8014A13C` | `include/ovl/TAIIKU.h` (T-16550) | 8 globals | 0 (FAKE byte views kept in `func_801449A0`, `func_801448D4`, `func_80144C70`) |
-| `TaiikuController` player + `D_8014A400[3]`, `TaiikuSlot1C[4]` (0x1C) | `D_8014A3E4`, `D_8014A400`, `D_8014A454` | `include/ovl/TAIIKU.h` (T-16550) | 9 globals, `Tk1C`, `TaiikuTick1C` | 0 |
-| 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/TAIIKU.h` (T-16550) | none (new declarations) | 0 |
-| `FnTblNN` step tables (35 sizes, `void (*f[NN])()`) | 68 tables `D_8015BF50`..`D_80160BD0` | `include/ovl/DATE.h` (T-17200) | 39 local typedefs and externs of 16 DATE `.c` files | 0 |
-| DATE stack-copied tables `DateBytes11x21`, `DateWords21`, `DateShorts8`, `DatePairs8`, `Tbl21` | `D_8015B7A0`, `D_8015B888`/`8DC`/`930`, `D_8015B984`, `D_8015F9B0`/`9C0`, `D_8015FB1C`/`B2C`/`B3C` | `include/ovl/DATE.h` (T-17200) | none (new declarations) | 0 |
-| ETC overlay data: the exam ranking as three arrays `D_80150668`/`D_80150684`/`D_801506BC` (was the struct `EtcExamRank`, replaced in T-22029), ranking row positions `s16[14]`, per-girl tables `u8[13]`, `s32[13][2]`, `s32 *[13]`, CD file table `s32 *[22]`, `SVECTOR`, `s32[16]`, `EtcWork40` view moved to the header | `D_80150668`, `D_80150630`/`64C`, `D_80150728`/`738`, `D_8014E0A4`, `D_8014DB90`/`BF8`, `D_8014E070`, `D_8014EA18`, `D_8015013C`, `D_8015014C`, `D_801230D0` | `include/ovl/ETC.h` (T-17300) | `D_80150150`, `D_80150188` (into `D_8015014C`); `D_8015013E`, `D_80150140` and `D_80150668`'s 18 splat labels stay data labels | 0 |
-| `FnTblNN` step tables (36 sizes, `void (*f[NN])()`) | 90 tables `D_801207B8`..`D_8012514C` | `include/ovl/EVENT.h` (T-17400) | 63 local typedefs and externs of 15 EVENT `.c` files, `Blob80` of `D_801218E8` | 0 |
-| EVENT stack-copied tables `U16x21`, `EvPairs8`, `EvShorts82`, `EvShorts10`, `EvShorts11`, `EvShorts5`; views `Ev44`, `EvTbl` | `D_80125454`..`D_801254D8`, `D_80122990`, `D_80121A34`, `D_80123B7C`/`B90`/`BA4`, `D_80125330`/`348`, `D_80125360`, `D_80120A74`, `D_80121AD8` | `include/ovl/EVENT.h` (T-17400) | local `U16x21`, `Ev44`, `EvEnt`/`EvTbl` typedefs | 0 |
-| GEKO stack-copied tables `GekoMonthDays`, `GekoNames12`, `GekoWords11`/`GekoWords2`, `GekoFnTbl42`, `GekoShorts10`, `GekoShorts6`, `GekoBytes21`/`24`/`36`/`132`/`209`, `GekoText626`; existing `GekoThresholds` for `D_80144CF8`; `s16 D_801463E0[12]`, `s16 D_80146400[16]` | `D_80144CF8`..`D_80144D8C`, `D_801451B8`..`D_801451F4`, `D_80146630`, `D_801472C4`/`D8`/`EC`, `D_8014760C`/`618`, `D_80147764`..`D_80147C6C`, `D_801463E0`, `D_80146400` | `include/ovl/GEKO.h` (T-17700) | none (new declarations) | 0 |
-| `ShFnTblNN` callback tables (8 sizes, `void (*f[NN])()`); `u8 D_8013C2E4`; `void D_80085368(void)` (main_api.h, address of `func_80085368`) | 10 tables `D_8013B094`..`D_8013CC20` | `include/ovl/SHUGAKU.h` (T-18000) | 8 local typedefs and externs of 7 SHUGAKU `.c` files; `Blk44`/`Tb44`/`Words17` copies now `DisplayActor44` | 0 |
-| GYOZI overlay data: step-callback tables `GzCallbacks68/90/BC`, dumpling arrays `s32[50]` x3 and `s16[50]`, `s16[8]` x2, `Rec24 D_8012CA40[]`, `GyoziGirl.unk_14`, `GyoziWork.unk_10B8`, `u8 D_80148828[4]`; `GYOZI.h` includes `game.h` | `D_801476F4`, `D_80147C6C`, `D_80148880`, `D_8014901C`, `D_80148BF0`/`CB8`/`D80`/`E48`, `D_8014875C`/`76C`, `D_8012CA40`, `D_800F53A0` | `include/ovl/GYOZI.h` (T-17600); `D_800F62F0` added to `main_api.h` | `D_800F6458` written as `D_800F53A0.unk_10B8` in `func_8013DC2C` only; the other users keep the scalar | 0 |
-| NAME_ENT tables: flag counters `u8 D_8014D060[16]` and `u8 D_8014D158[16]`, digit sprite (u, v) `u8 D_8014D0F4[10][2]`, name-entry buffers `D_8014CC74[8]`/`D_8014CC7C[8]` sized; main-exe records read through views in the redraft (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) | `D_8014D060`, `D_8014D158`, `D_8014D0F4`, `D_8014CC74`, `D_8014CC7C` | `include/ovl/NAME_ENT.h` (T-17900) | none (new declarations) | 0 |
-| EN_NICHI objects `EnObj D_8013984C[10]` (0x30), sprite frames `s16 D_80139A34[16][6]`, ring buffer `s16 D_80139228[10][4]`/`s32 D_80139278[10]`, stack tables `EnHalf22` x3, `EnBytes22`, `EnHalf64`, `EnHalf13`, asset pointer `s32 *D_80139204`; status and sprite bytes sized | `D_8013984C`, `D_80139A34`, `D_80139A2C`, `D_80139228`, `D_80139278`, `D_80139C68`/`C94`/`CC0`/`CEC`, `D_80139DA0`, `D_80139E20`, `D_80139200`..`D_80139218` | `include/ovl/EN_NICHI.h` (T-18200) | `u8 D_8013984C[]`, `Rec30 D_80139868[]` | 1 (`func_80132834`, peeled loop) |
-| EN_NICHI 16.16 fields: `EnObj.unk_14`/`unk_18` as `Fix32`, `unk_20` `s32`; points `EnFixPos` (two `Fix32`) for the grid `D_801392AC[15][12]` and the pop-up centres `D_80139228[10]` | `D_8013984C`, `D_801392AC`, `D_80139228` | `include/ovl/EN_NICHI.h` (T-20920) | `EnObj.unk_16`/`unk_1A` (`s16`), `EnResetSlot8`, `s16 D_80139228[10][4]` | 0 (one added, `func_80135ACC`; the guarded FAKE drafts of `func_801330D0` and `func_80136A2C` are gone) |
-| MASTER stack tables `MasterWords13` (`s32 v[13]`) x9 and `MasterHalfwords13 D_8013C6A4`; step tables `FnTbl4/7/30`, `PtrTbl3` moved into the header; second mini-event counters `u8 D_8013C788[5]`, `D_8013C780`, `s16 D_8013C794`; the local `MasterSlot` copies unified as `MasterClubBits` | `D_8013C2F4`..`D_8013C460`, `D_8013C7B4`, `D_8013C6A4`, `D_8013C2E4`, `D_8013C5C8`, `D_8013C700`, `D_8013C798`, `D_8013C788` | `include/ovl/MASTER.h` (T-18600) | `Tbl13`, two `MasterSlot` typedefs, `D_8013C78C` | 0 |
-| OPTION BG cell map `SpriteMap10 D_80122120[2]` (GsMAP layout), cells `SpriteCell8 D_80122140[2][64]` (GsCELL), cell index `SpriteIndex80 D_80122540[2]`; prototype `void func_80134210(void)` | `D_80122120`, `D_80122140`, `D_80122540` | `include/ovl/OPTION.h` (T-20910) | none (new declarations of main bss read only by OPTION) | 0 |
+| `TaiRunnersA` (`player`, `cpu[3]` of `TaiRunnerA`, 0x24) | `D_80149208` | `include/ovl/sports_festival.h` (T-16550) | `TaiikuSlots`, `TaiSlot24` views | 0 |
+| `TaiRunnerB[4]` (0x24) | `D_8014A13C` | `include/ovl/sports_festival.h` (T-16550) | 8 globals | 0 (FAKE byte views kept in `func_801449A0`, `func_801448D4`, `func_80144C70`) |
+| `TaiikuController` player + `D_8014A400[3]`, `TaiikuSlot1C[4]` (0x1C) | `D_8014A3E4`, `D_8014A400`, `D_8014A454` | `include/ovl/sports_festival.h` (T-16550) | 9 globals, `Tk1C`, `TaiikuTick1C` | 0 |
+| 28 stack-copied constant tables as one-array structs | `D_80148F28`..`D_8014A5F4` | `include/ovl/sports_festival.h` (T-16550) | none (new declarations) | 0 |
+| `FnTblNN` step tables (35 sizes, `void (*f[NN])()`) | 68 tables `D_8015BF50`..`D_80160BD0` | `include/ovl/date.h` (T-17200) | 39 local typedefs and externs of 16 DATE `.c` files | 0 |
+| DATE stack-copied tables `DateBytes11x21`, `DateWords21`, `DateShorts8`, `DatePairs8`, `Tbl21` | `D_8015B7A0`, `D_8015B888`/`8DC`/`930`, `D_8015B984`, `D_8015F9B0`/`9C0`, `D_8015FB1C`/`B2C`/`B3C` | `include/ovl/date.h` (T-17200) | none (new declarations) | 0 |
+| ETC overlay data: the exam ranking as three arrays `D_80150668`/`D_80150684`/`D_801506BC` (was the struct `EtcExamRank`, replaced in T-22029), ranking row positions `s16[14]`, per-girl tables `u8[13]`, `s32[13][2]`, `s32 *[13]`, CD file table `s32 *[22]`, `SVECTOR`, `s32[16]`, `EtcWork40` view moved to the header | `D_80150668`, `D_80150630`/`64C`, `D_80150728`/`738`, `D_8014E0A4`, `D_8014DB90`/`BF8`, `D_8014E070`, `D_8014EA18`, `D_8015013C`, `D_8015014C`, `D_801230D0` | `include/ovl/misc_scenes.h` (T-17300) | `D_80150150`, `D_80150188` (into `D_8015014C`); `D_8015013E`, `D_80150140` and `D_80150668`'s 18 splat labels stay data labels | 0 |
+| `FnTblNN` step tables (36 sizes, `void (*f[NN])()`) | 90 tables `D_801207B8`..`D_8012514C` | `include/ovl/date_spots.h` (T-17400) | 63 local typedefs and externs of 15 EVENT `.c` files, `Blob80` of `D_801218E8` | 0 |
+| EVENT stack-copied tables `U16x21`, `EvPairs8`, `EvShorts82`, `EvShorts10`, `EvShorts11`, `EvShorts5`; views `Ev44`, `EvTbl` | `D_80125454`..`D_801254D8`, `D_80122990`, `D_80121A34`, `D_80123B7C`/`B90`/`BA4`, `D_80125330`/`348`, `D_80125360`, `D_80120A74`, `D_80121AD8` | `include/ovl/date_spots.h` (T-17400) | local `U16x21`, `Ev44`, `EvEnt`/`EvTbl` typedefs | 0 |
+| GEKO stack-copied tables `GekoMonthDays`, `GekoNames12`, `GekoWords11`/`GekoWords2`, `GekoFnTbl42`, `GekoShorts10`, `GekoShorts6`, `GekoBytes21`/`24`/`36`/`132`/`209`, `GekoText626`; existing `GekoThresholds` for `D_80144CF8`; `s16 D_801463E0[12]`, `s16 D_80146400[16]` | `D_80144CF8`..`D_80144D8C`, `D_801451B8`..`D_801451F4`, `D_80146630`, `D_801472C4`/`D8`/`EC`, `D_8014760C`/`618`, `D_80147764`..`D_80147C6C`, `D_801463E0`, `D_80146400` | `include/ovl/girl_encounters.h` (T-17700) | none (new declarations) | 0 |
+| `ShFnTblNN` callback tables (8 sizes, `void (*f[NN])()`); `u8 D_8013C2E4`; `void D_80085368(void)` (main_api.h, address of `func_80085368`) | 10 tables `D_8013B094`..`D_8013CC20` | `include/ovl/school_trip.h` (T-18000) | 8 local typedefs and externs of 7 SHUGAKU `.c` files; `Blk44`/`Tb44`/`Words17` copies now `DisplayActor44` | 0 |
+| GYOZI overlay data: step-callback tables `GzCallbacks68/90/BC`, dumpling arrays `s32[50]` x3 and `s16[50]`, `s16[8]` x2, `Rec24 D_8012CA40[]`, `GyoziGirl.unk_14`, `GyoziWork.unk_10B8`, `u8 D_80148828[4]`; `GYOZI.h` includes `game.h` | `D_801476F4`, `D_80147C6C`, `D_80148880`, `D_8014901C`, `D_80148BF0`/`CB8`/`D80`/`E48`, `D_8014875C`/`76C`, `D_8012CA40`, `D_800F53A0` | `include/ovl/annual_events.h` (T-17600); `D_800F62F0` added to `main_api.h` | `D_800F6458` written as `D_800F53A0.unk_10B8` in `func_8013DC2C` only; the other users keep the scalar | 0 |
+| NAME_ENT tables: flag counters `u8 D_8014D060[16]` and `u8 D_8014D158[16]`, digit sprite (u, v) `u8 D_8014D0F4[10][2]`, name-entry buffers `D_8014CC74[8]`/`D_8014CC7C[8]` sized; main-exe records read through views in the redraft (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) | `D_8014D060`, `D_8014D158`, `D_8014D0F4`, `D_8014CC74`, `D_8014CC7C` | `include/ovl/name_entry.h` (T-17900) | none (new declarations) | 0 |
+| EN_NICHI objects `EnObj D_8013984C[10]` (0x30), sprite frames `s16 D_80139A34[16][6]`, ring buffer `s16 D_80139228[10][4]`/`s32 D_80139278[10]`, stack tables `EnHalf22` x3, `EnBytes22`, `EnHalf64`, `EnHalf13`, asset pointer `s32 *D_80139204`; status and sprite bytes sized | `D_8013984C`, `D_80139A34`, `D_80139A2C`, `D_80139228`, `D_80139278`, `D_80139C68`/`C94`/`CC0`/`CEC`, `D_80139DA0`, `D_80139E20`, `D_80139200`..`D_80139218` | `include/ovl/festival_stalls.h` (T-18200) | `u8 D_8013984C[]`, `Rec30 D_80139868[]` | 1 (`func_80132834`, peeled loop) |
+| EN_NICHI 16.16 fields: `EnObj.unk_14`/`unk_18` as `Fix32`, `unk_20` `s32`; points `EnFixPos` (two `Fix32`) for the grid `D_801392AC[15][12]` and the pop-up centres `D_80139228[10]` | `D_8013984C`, `D_801392AC`, `D_80139228` | `include/ovl/festival_stalls.h` (T-20920) | `EnObj.unk_16`/`unk_1A` (`s16`), `EnResetSlot8`, `s16 D_80139228[10][4]` | 0 (one added, `func_80135ACC`; the guarded FAKE drafts of `func_801330D0` and `func_80136A2C` are gone) |
+| MASTER stack tables `MasterWords13` (`s32 v[13]`) x9 and `MasterHalfwords13 D_8013C6A4`; step tables `FnTbl4/7/30`, `PtrTbl3` moved into the header; second mini-event counters `u8 D_8013C788[5]`, `D_8013C780`, `s16 D_8013C794`; the local `MasterSlot` copies unified as `MasterClubBits` | `D_8013C2F4`..`D_8013C460`, `D_8013C7B4`, `D_8013C6A4`, `D_8013C2E4`, `D_8013C5C8`, `D_8013C700`, `D_8013C798`, `D_8013C788` | `include/ovl/club_master.h` (T-18600) | `Tbl13`, two `MasterSlot` typedefs, `D_8013C78C` | 0 |
+| OPTION BG cell map `SpriteMap10 D_80122120[2]` (GsMAP layout), cells `SpriteCell8 D_80122140[2][64]` (GsCELL), cell index `SpriteIndex80 D_80122540[2]`; prototype `void func_80134210(void)` | `D_80122120`, `D_80122140`, `D_80122540` | `include/ovl/options.h` (T-20910) | none (new declarations of main bss read only by OPTION) | 0 |
 
 33 `FAKE` comments of the "first symbol" family are gone (117 to 84 in `src/`). The `Work80125D10` conversion is the strongest single test: 96 uses in already-matched functions moved to one symbol and none changed bytes.
 
@@ -120,7 +122,7 @@ headers. ABI facts were checked against the PsyQ Run-Time Library Reference
 and original packet/copy instructions. Packet tags occupy four bytes; MATRIX
 translations start at +0x14 and its size is 0x20. Existing private POLY_F4 and
 SPRT copies use these common types. `EnObj` moves from its
-C file to `include/ovl/EN_NICHI.h`.
+C file to `include/ovl/festival_stalls.h`.
 
 
 ### Recurring families in the eight lists
@@ -175,7 +177,7 @@ pass (T-17000)").
 
 `BsdEvent` (frame, command word) and the three scenes' event-list tables (`BsdEvent *[]`) and text tables,
 plus seven loaded picture sets typed as `s32 *` page table, two `u8 *` images and a palette word, all in
-`include/ovl/BUNKA_SD.h`. The scene control words stay separate scalars (matched code). Evidence for a
+`include/ovl/culture_stage_shows.h`. The scene control words stay separate scalars (matched code). Evidence for a
 main-exe aggregate around `D_80122EA8`: `func_80135F38` compares `D_80122EAC` with the constant first,
 which IDO gives only for a non-plain operand. Details: [[bunka-sd-family-results]].
 
@@ -202,7 +204,7 @@ of these neighbouring tables. Details: [[kangei-family-results]].
 ## ENDING targeted type pass (T-20930)
 
 A second pass over ENDING ([[tickets/T-20930-types-ending]], details and numbers in [[ending-family-results]],
-"Targeted type pass"). New types in `include/ovl/ENDING.h`, all byte-identical (27/27):
+"Targeted type pass"). New types in `include/ovl/ending.h`, all byte-identical (27/27):
 
 - message scripts `s32 D_8013C280[3][17]` and `s32 D_8013CAC0[3][15]` (row = table, column = scene; the three
   rows of one scene are copied together), the running scene's set `EdScriptSet D_8013C34C`;
@@ -348,7 +350,7 @@ The tables behind main's two BG slots: `SpriteSlot24` (game.h, GsBG layout) at `
 at the cell map `D_80122120[n]` (`SpriteMap10`, GsMAP layout), whose cells are `D_80122140[n]` (64 x
 `SpriteCell8`, GsCELL layout) and whose index is `D_80122540[n]` (`SpriteIndex80`, 64 halfwords); main
 `func_8004A1A0` (asm) sets up slot n through all four, OPTION `func_801328C0` fills slot 0. The types and the
-three externs live in `include/ovl/OPTION.h` because OPTION is the only C reader (CODING_STANDARDS 8a: a main-bss
+three externs live in `include/ovl/options.h` because OPTION is the only C reader (CODING_STANDARDS 8a: a main-bss
 symbol may stay in an overlay header only through a type of that header; `check_headers` rejects a `game.h` type
 there, and a plain `u16 [2][64]`, which is why the index is a one-array struct). When main matches
 `func_8004A1A0`, the types move to `game.h` and the externs to `main_api.h`, and `D_801220D0` (now `u32` plus

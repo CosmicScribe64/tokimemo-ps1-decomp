@@ -71,16 +71,16 @@ void text_system_reset(void) {
      * read the build loads it after the four zero stores and puts the li in t6 (tools/cvt_pass.py
      * keeps the widening CVT because the first read comes after a call). The pointer view gives the
      * original's order: lbu before the stores, li in v0. */
-    if (((TextState *)&text_state)->unk_6A != 0xE && ((TextState *)&text_state)->unk_6A != 0x10) {
-        text_state.unk_6A = 0xE;
+    if (((TextState *)&text_state)->glyph_advance != 0xE && ((TextState *)&text_state)->glyph_advance != 0x10) {
+        text_state.glyph_advance = 0xE;
     }
 }
 
 void text_set_advance(u8 glyph_advance) {
     if (glyph_advance == 0x10) {
-        text_state.unk_6A = 0x10;
+        text_state.glyph_advance = 0x10;
     } else {
-        text_state.unk_6A = 0xE;
+        text_state.glyph_advance = 0xE;
     }
 }
 
@@ -288,7 +288,7 @@ void disp_string(void) {
             p->r0 = game_state.screen_brightness;
             p->g0 = game_state.screen_brightness;
             p->b0 = game_state.screen_brightness;
-            p->x0 = ((TextEntry *)text_list)[j].x + game_state.draw_origin_x[draw_buffer] + k * text_state.unk_6A;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.draw_origin_x[draw_buffer] + k * text_state.glyph_advance;
             p->y0 = ((TextEntry *)text_list)[j].y + game_state.draw_origin_y[draw_buffer];
             /* FAKE: T-24141, same-line UV/Y stores reproduce original as1 instruction scheduling. */
             p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
@@ -302,7 +302,7 @@ void disp_string(void) {
             p->r0 = 0;
             p->g0 = 0;
             p->b0 = 0;
-            p->x0 = ((TextEntry *)text_list)[j].x + game_state.draw_origin_x[draw_buffer] + k * text_state.unk_6A + 1;
+            p->x0 = ((TextEntry *)text_list)[j].x + game_state.draw_origin_x[draw_buffer] + k * text_state.glyph_advance + 1;
             /* FAKE: T-24141, same-line Y/UV stores reproduce original as1 instruction scheduling. */
             p->y0 = ((TextEntry *)text_list)[j].y + game_state.draw_origin_y[draw_buffer] + 1; p->u0 = (i & 7) * 0x10 + 0x80; p->v0 = (i & 0x78) * 2;
             p->clut = func_8009ED74((((TextEntry *)text_list)[j].attribute & 8) * 4 + 0x110, (((TextEntry *)text_list)[j].attribute & 7) + 0x1F8);

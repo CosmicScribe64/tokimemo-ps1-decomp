@@ -21,7 +21,7 @@ typedef struct TextState {
     /* 0x6 */ u8 speed;
     /* 0x7 */ u8 pad_07;
     /* 0x8 */ s16 pos;
-    /* 0xA */ u8 unk_6A;
+    /* 0xA */ u8 glyph_advance;
     /* 0xB */ u8 pad_0B;
 } TextState; /* size 0xC */
 

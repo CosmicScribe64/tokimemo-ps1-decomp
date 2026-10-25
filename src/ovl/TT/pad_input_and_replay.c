@@ -1,6 +1,6 @@
 /* pad_input_and_replay.c: src/ovl/TT/80142110.c:4: pad poll, pressed/held state and prerecorded input stream playback; body 13: g = tt_sys; 14: s = tt_core;. Original object 0x80142110-0x80142350 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_pad_update(void) {
     u8 *core;

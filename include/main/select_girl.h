@@ -4,7 +4,7 @@
 #include "common.h"
 
 #ifndef MAIN_API_OVERRIDE_select_girl_init
-void select_girl_init(s32 arg0);
+void select_girl_init(s32 omit_back);
 #endif
 s32 select_girl_main(s32 omit_back);
 

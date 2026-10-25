@@ -1,6 +1,6 @@
 /* debug_font.c: src/ovl/TT/801487D0.c:5: glyph packet drawing and string, decimal, hex and binary printing; body 12: buffer = (TtDrawBuffer *)(tt_frames + ((TtVideoView *)tt_video)->index * 0x80B8); 13: if (ch != 0x20) {. Original object 0x801487D0-0x80148DB0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* Font glyph: sprite packet plus draw mode. The comma lines follow the libgpu set* macros (one source line each for as1). T-11860 */
 void tt_font_glyph_draw(s16 x, s16 y, u8 ch) {

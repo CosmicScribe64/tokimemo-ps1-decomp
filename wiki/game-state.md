@@ -1,12 +1,14 @@
 ---
 type: concept
 updated: 2026-10-17
-sources: ["include/main_api.h", "tools/migrate_globals.py", "config/migrate_globals.txt", "tools/type_recovery.py", "tools/aggregate_audit.py", "asm/**/*.s"]
+sources: ["include/game/game_state.h", "include/main/state.h", "tools/migrate_globals.py", "config/migrate_globals.txt", "tools/type_recovery.py", "tools/aggregate_audit.py", "asm/**/*.s"]
 ---
 
 # GameState: the main game-state struct (T-5100)
 
-`GameState D_800E6280` in `include/main_api.h` is the object of the original that holds the calendar, the player's parameters, the per-girl records, the event log and the system tables. It covers the main bss from 0x800E6280 to 0x800E7D10 (0x1A90 bytes). Almost every overlay reads it. C code reaches it only through fields (`D_800E6280.unk_F5F`, `D_800E6280.unk_1BC[i].unk_06`); the old splat names (`D_800E71DF`, ...) are rejected by ninja (`build/globals.ok`, `tools/migrate_globals.py --check`). Ticket: [[tickets/T-5100-game-state-struct]]. Method for other types: [[data-types]].
+`GameState` is defined in `include/game/game_state.h`; its canonical `extern GameState game_state` is in `include/main/state.h`. Together they describe the original object that holds the calendar, the player's parameters, the per-girl records, the event log and the system tables. It covers the main bss from 0x800E6280 to 0x800E7D10 (0x1A90 bytes). Almost every overlay reads it. Current C uses named fields such as `game_state.current_girl` and `game_state.girls[i].tokimeki`; the retired splat names (`D_800E71DF`, ...) are rejected by ninja (`build/globals.ok`, `tools/migrate_globals.py --check`). Ticket: [[tickets/T-5100-game-state-struct]]. Method for other types: [[data-types]].
+
+Current path note (2026-10-25): `main_api.h` and `game.h` have been retired; canonical declaration ownership is registered in `config/header_owners.json` (`mode: topic_only`). The GameState type is in `include/game/game_state.h`; the canonical storage declaration is in `include/main/state.h`. Older path mentions below belong to migration evidence and historical tool behavior, not current header locations. Overlay field-access evidence uses current source paths from [[source-files]].
 
 ## Where it starts and ends
 
@@ -15,7 +17,11 @@ sources: ["include/main_api.h", "tools/migrate_globals.py", "config/migrate_glob
 - **End 0x800E7D10** (high confidence for the next object, medium for the last bytes). ETC `func_80141ABC` uses `D_800E7D10` as its own base (`0x58(t3)` with t3 = `D_800E7D10 + 8i`) and main `func_800420D0` clears it with `bzero(&D_800E7D10, 0xEE0)`: another object starts there. The largest base offset seen is +0x183C (TACO, NAME_ENT); NAME_ENT stores addresses at +0x1A3C..+0x1A84.
 - **O.BIN name** (hypothesis, not applied): the developer build has `sys` (0x1A70 bytes) followed by `sys0`; ours is 0x1A90 bytes followed by the `D_800E7D10` object. Size and order fit; [[obin]] has no data alignment for this area, so the name stays a comment.
 
-## Layout
+## Historical recovered layout and field labels
+
+This offset table records the T-5100 recovery layout and its old `unk_XX` field labels as evidence. Those
+labels are not the current C API; the current semantic names live in `include/game/game_state.h` and
+`include/game/girl.h`.
 
 Offsets are from 0x800E6280. Types come from the access widths of all functions (lb/lh signed, lbu/lhu unsigned; stores give no sign), from the old C declarations, and from what the build accepted. `tools/migrate_globals.py --layout` prints the full field list, `--at D_800E71DF` the path for an address. 161 top-level fields; 6041 of 6800 bytes (88.8%) are typed fields, records or arrays, 759 bytes are unknown byte arrays (`unk_006`, `unk_120`, `unk_183C`, ...) where 164 of the 16817 accesses of the block fall (42 addresses).
 
@@ -105,7 +111,7 @@ A "symbol-direct" access (`lui %hi(D_X); lbu %lo(D_X)`) is therefore no evidence
 
 ## Bit-field views of the packed words (T-20900)
 
-One view per word family, all in `include/game.h` or `include/main_api.h` (the per-unit copies were merged, see
+One view per word family, historically all in `include/game.h` or `include/main_api.h` (the per-unit copies were merged, see
 [[data-types]] "Shared-type unification"):
 
 | member | view | bits |

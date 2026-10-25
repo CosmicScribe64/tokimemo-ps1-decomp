@@ -1,6 +1,6 @@
 /* game_over_flow.c: src/ovl/TT/8013A040.c:27: core state 5; body 36: o = 0x14; 37: g = tt_sys;. Original object 0x8013A040-0x8013A3E0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_game_over_tick(void) {
     u8 *sys = tt_sys;

@@ -1,0 +1,204 @@
+/* annual_result_handlers.c: ; src/ovl/GYOZI/80139920.c:56-125 handles result flow and event log update. Original object 0x80139920-0x8013A140 (config/objects/GYOZI.txt). */
+#include "common.h"
+#include "ovl/annual_events.h"
+
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_80147330;
+
+void annual_result_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before result_callbacks: its stack slot sits above result_callbacks (T-3330) */
+    FnTbl9 result_callbacks;
+
+    result_callbacks = D_80147330;
+    mode_step_index = D_800F647A;
+    result_callbacks.f[mode_step_index](0x80);
+}
+
+void annual_result_display_helpers_run(void) {
+    func_80050D60(0, 0);
+    func_80081D30(1);
+}
+
+/* Bit 1 of a girl flag byte: IDO loads its byte into another register than the lui (T-7010). */
+typedef struct {
+    u8 pad0 : 1;
+    u8 f : 1;
+    u8 pad1 : 6;
+} GyoziBit1;
+
+void annual_candidate_rank_dialogue_setup(void) {
+    if (annual_special_girl9_candidate != 0) {
+        ((GyoziBit1 *)&D_800F53A0.girl[9].unk_10[0])->f = 1;
+    }
+    if (annual_candidate_count >= 7) {
+        annual_scene_group_talk_group = 0;
+    } else if (annual_candidate_count >= 5) {
+        annual_scene_group_talk_group = 1;
+    } else if (annual_candidate_count >= 3) {
+        annual_scene_group_talk_group = 2;
+    } else if (annual_candidate_count > 0) {
+        annual_scene_group_talk_group = 3;
+    } else {
+        annual_scene_group_talk_group = 4;
+    }
+    annual_scene_group_talk_text_table = D_801470F4;
+    annual_scene_group_talk_command_table = D_80147128;
+    annual_scene_group_talk_voice_table = D_8014715C;
+    func_8004DE1C();
+}
+
+void annual_result_audio_command_play_40ed(void) {
+    func_8008A0D4(0x40ED);
+    func_8004DE1C();
+}
+
+void annual_result_dialogue_resource_addresses_init(void) {
+    D_801462BC = 0x801B00D0;
+    D_801462C0 = 0x801B0274;
+    D_801462C4 = 0x801B0374;
+    D_801462C8 = 0x801B0464;
+    D_801462CC = 0x801B05F4;
+    D_801462D0 = 0x801B0788;
+    D_801462D4 = 0x801B0950;
+    D_801462D8 = 0x801B0B44;
+    D_801462DC = 0x801B0CDC;
+    D_801462E0 = 0x801B0EA0;
+    D_801462E4 = 0x801B109C;
+    D_801462E8 = 0x801B1210;
+    D_801462EC = 0x801B1380;
+    D_801462F0 = 0x801B00E8;
+    D_801462F4 = 0x801B0290;
+    D_801462F8 = 0x801B037C;
+    D_801462FC = 0x801B047C;
+    D_80146300 = 0x801B060C;
+    D_80146304 = 0x801B07A0;
+    D_80146308 = 0x801B096C;
+    D_8014630C = 0x801B0B5C;
+    D_80146310 = 0x801B0CF4;
+    D_80146314 = 0x801B0EBC;
+    D_80146318 = 0x801B10B8;
+    D_8014631C = 0x801B1218;
+    D_80146320 = 0x801B139C;
+    D_80146324 = 0x801B019C;
+    D_80146328 = 0x801B0344;
+    D_8014632C = 0x801B039C;
+    D_80146330 = 0x801B0530;
+    D_80146334 = 0x801B06C0;
+    D_80146338 = 0x801B0854;
+    D_8014633C = 0x801B0A58;
+    D_80146340 = 0x801B0C10;
+    D_80146344 = 0x801B0DA8;
+    D_80146348 = 0x801B0FA8;
+    D_8014634C = 0x801B11A4;
+    D_80146350 = 0x801B1270;
+    D_80146354 = 0x801B1488;
+}
+
+typedef struct {
+    void (*f[12])();
+} FnTbl12; /* size 0x30 */
+extern FnTbl12 D_801473FC;
+
+void annual_result_followup_mode_step_dispatch(void) {
+    s32 mode_step_index; /* declared before result_followup_callbacks: its stack slot sits above result_followup_callbacks (T-3330) */
+    FnTbl12 result_followup_callbacks;
+
+    result_followup_callbacks = D_801473FC;
+    mode_step_index = D_800F647A;
+    result_followup_callbacks.f[mode_step_index](0x80);
+}
+
+void annual_shrine_result_scene_resource_command_issue(void) {
+    func_80051DD8(3, 0x801B0000, 0xA3FB);
+    annual_result_resource_addresses_init();
+    func_8004DE1C();
+}
+
+void annual_result_dialogue_default_setup(void) {
+    func_80090960(0xD, 0x26);
+    annual_scene_group_talk_text_table = D_80147100;
+    annual_scene_group_talk_command_table = D_80147134;
+    annual_scene_group_talk_voice_table = D_80147168;
+    annual_scene_group_talk_group = 9;
+    annual_scene_group_talk_line = 0;
+    func_8004DE1C();
+}
+
+/* T-24137 draft (switch-triple pattern of SHOUGATU func_8013EE30); matches since T-24900 with the
+ * default arm's three globals declared volatile in GYOZI.h (FAKE there).
+ * FAKE: the switch discriminant goes through the base of D_800F5AAE
+ * ((&D_800F5AAE)[0x821] = D_800F62CF) so the byte store stays before the load;
+ * same idiom as annual_result_status_flag_and_route_update (as1 keeps the store before a same-base load).
+ * Real source unknown. */
+void annual_result_dialogue_addresses_select(void) {
+    annual_result_resource_addresses_init();
+    D_800F5AAE &= ~8;
+    D_800F5AAE |= 4;
+    switch ((&D_800F5AAE)[0x821]) {
+    case 0:
+        annual_scene_group_talk_text_table = D_801462C0;
+        annual_scene_group_talk_command_table = D_801462F4;
+        annual_scene_group_talk_voice_table = D_80146328;
+        break;
+    case 1:
+        annual_scene_group_talk_text_table = D_801462D4;
+        annual_scene_group_talk_command_table = D_80146308;
+        annual_scene_group_talk_voice_table = D_8014633C;
+        break;
+    case 2:
+        annual_scene_group_talk_text_table = D_801462C8;
+        annual_scene_group_talk_command_table = D_801462FC;
+        annual_scene_group_talk_voice_table = D_80146330;
+        break;
+    case 3:
+        annual_scene_group_talk_text_table = D_801462CC;
+        annual_scene_group_talk_command_table = D_80146300;
+        annual_scene_group_talk_voice_table = D_80146334;
+        break;
+    case 4:
+        annual_scene_group_talk_text_table = D_801462E4;
+        annual_scene_group_talk_command_table = D_80146318;
+        annual_scene_group_talk_voice_table = D_8014634C;
+        break;
+    case 5:
+        annual_scene_group_talk_text_table = D_801462D8;
+        annual_scene_group_talk_command_table = D_8014630C;
+        annual_scene_group_talk_voice_table = D_80146340;
+        break;
+    case 6:
+        annual_scene_group_talk_text_table = D_801462DC;
+        annual_scene_group_talk_command_table = D_80146310;
+        annual_scene_group_talk_voice_table = D_80146344;
+        break;
+    case 7:
+        annual_scene_group_talk_text_table = D_801462D0;
+        annual_scene_group_talk_command_table = D_80146304;
+        annual_scene_group_talk_voice_table = D_80146338;
+        break;
+    case 8:
+        annual_scene_group_talk_text_table = D_801462BC;
+        annual_scene_group_talk_command_table = D_801462F0;
+        annual_scene_group_talk_voice_table = D_80146324;
+        break;
+    case 9:
+        annual_scene_group_talk_text_table = D_801462E0;
+        annual_scene_group_talk_command_table = D_80146314;
+        annual_scene_group_talk_voice_table = D_80146348;
+        break;
+    default:
+        annual_scene_group_talk_text_table = D_801462EC;
+        annual_scene_group_talk_command_table = D_80146320;
+        annual_scene_group_talk_voice_table = D_80146354;
+        break;
+    }
+    annual_scene_group_talk_group = 1;
+    annual_scene_group_talk_line = 0;
+    func_8004DE1C();
+}
+
+void annual_result_display_values_apply(void) {
+    func_8004DEAC(D_800F5AB1);
+    func_8004DEE4(D_800F5AB2);
+}

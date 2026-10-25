@@ -1,6 +1,6 @@
 /* air_enemies_and_sprite_drawing.c: src/ovl/TT/8014AF00.c:637: air enemy waves/script, movement/explosions and generic tile/textured/transformed sprite drawing; body 640: g = (TtStageScript *)tt_stage_script; 642: if (*(s16 *)g->cmd == -1) {. Original object 0x8014AF00-0x8014D260 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 u8 *tt_air_enemy_find_free(u8 *cursor, u8 *end) {
     while (cursor < end) {
@@ -31,45 +31,45 @@ void tt_air_enemies_reset(void) {
     }
 }
 
-void tt_air_enemy_setup(u8 *arg0, u16 arg1, s32 arg2) {
-    arg0[0] = 1;
-    arg0[0x51] = 0;
-    *(u16 *)(arg0 + 2) = arg1;
-    *(s16 *)(arg0 + 0x58) = 0xA;
-    *(s32 *)(arg0 + 0x38) = (&tt_animation_lists)[arg2];
-    arg0[0x40] = 0x80;
-    switch (arg1) {
+void tt_air_enemy_setup(u8 *enemy, u16 enemy_kind, s32 animation_index) {
+    enemy[0] = 1;
+    enemy[0x51] = 0;
+    *(u16 *)(enemy + 2) = enemy_kind;
+    *(s16 *)(enemy + 0x58) = 0xA;
+    *(s32 *)(enemy + 0x38) = (&tt_animation_lists)[animation_index];
+    enemy[0x40] = 0x80;
+    switch (enemy_kind) {
     case 0x40:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC0;
+        *(s16 *)(enemy + 0x5A) = 0x3CC0;
         return;
     case 0x41:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC1;
+        *(s16 *)(enemy + 0x5A) = 0x3CC1;
         return;
     case 0x42:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC1;
+        *(s16 *)(enemy + 0x5A) = 0x3CC1;
         return;
     case 0x43:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC2;
+        *(s16 *)(enemy + 0x5A) = 0x3CC2;
         return;
     case 0x44:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC3;
+        *(s16 *)(enemy + 0x5A) = 0x3CC3;
         return;
     case 0x45:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC5;
+        *(s16 *)(enemy + 0x5A) = 0x3CC5;
         return;
     case 0x46:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC9;
+        *(s16 *)(enemy + 0x5A) = 0x3CC9;
         return;
     case 0x47:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC6;
+        *(s16 *)(enemy + 0x5A) = 0x3CC6;
         return;
     case 0x48:
-        *(s16 *)(arg0 + 0x5A) = 0x3CC5;
+        *(s16 *)(enemy + 0x5A) = 0x3CC5;
         return;
     }
 }
 
-void tt_air_wave_c0_spawn(u8 arg0) {
+void tt_air_wave_c0_spawn(u8 right_side) {
     u32 size;
     s32 i;
     u8 *p;
@@ -84,7 +84,7 @@ void tt_air_wave_c0_spawn(u8 arg0) {
         if (p == 0) {
             return;
         }
-        if (arg0 != 0) {
+        if (right_side != 0) {
             a2 = 4;
             *(s32 *)(p + 0x20) = 0x500000;
         } else {
@@ -94,7 +94,7 @@ void tt_air_wave_c0_spawn(u8 arg0) {
         *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
         *(s32 *)(p + 0x28) = 0;
         *(s32 *)(p + 0x2C) = 0x20000;
-        p[0x63] = arg0;
+        p[0x63] = right_side;
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         tt_air_enemy_setup(p, size, a2);
@@ -112,30 +112,30 @@ void tt_air_wave_c0_spawn(u8 arg0) {
     } while (i != 6);
 }
 
-void tt_air_enemy_kind40_move(u8 *arg0) {
+void tt_air_enemy_kind40_move(u8 *enemy) {
     u8 *run;
     u8 t;
 
     run = tt_run;
-    if (arg0[0x63] != 0) {
-        *(s32 *)(arg0 + 0x28) = *(s32 *)(arg0 + 0x24) / -64;
+    if (enemy[0x63] != 0) {
+        *(s32 *)(enemy + 0x28) = *(s32 *)(enemy + 0x24) / -64;
     } else {
-        *(s32 *)(arg0 + 0x28) = *(s32 *)(arg0 + 0x24) / 64;
+        *(s32 *)(enemy + 0x28) = *(s32 *)(enemy + 0x24) / 64;
     }
-    if ((run[0xB] != 0) && (*(u16 *)(arg0 + 0x5E) >= 0x19U)) {
-        t = arg0[0x60];
+    if ((run[0xB] != 0) && (*(u16 *)(enemy + 0x5E) >= 0x19U)) {
+        t = enemy[0x60];
         if (t == 0) {
-            *(u16 *)(arg0 + 0x5E) = 0;
-            arg0[0x60] = t + 1;
-            tt_enemy_shot_fire_aimed(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+            *(u16 *)(enemy + 0x5E) = 0;
+            enemy[0x60] = t + 1;
+            tt_enemy_shot_fire_aimed(*(s16 *)(enemy + 0x14), *(s16 *)(enemy + 0x16), 0x20, 0xA0);
         }
     }
-    if (arg0[0x51] != 0) {
-        *(u16 *)(arg0 + 0x5E) = *(u16 *)(arg0 + 0x5E) + 1;
+    if (enemy[0x51] != 0) {
+        *(u16 *)(enemy + 0x5E) = *(u16 *)(enemy + 0x5E) + 1;
     }
 }
 
-void tt_air_wave_c1_spawn(u8 arg0) {
+void tt_air_wave_c1_spawn(u8 right_side) {
     s32 i;
     u8 *p;
     u8 *src;
@@ -151,7 +151,7 @@ void tt_air_wave_c1_spawn(u8 arg0) {
             return;
         }
         p[0x50] = i;
-        if (arg0 != 0) {
+        if (right_side != 0) {
             *(s32 *)(p + 0x20) = (i * 16 + 0x30) << 16;
         } else {
             *(s32 *)(p + 0x20) = (-0x30 - i * 16) << 16;
@@ -162,7 +162,7 @@ void tt_air_wave_c1_spawn(u8 arg0) {
             tt_air_enemy_setup(p, 0x42, 6);
         } else {
             tt_air_enemy_setup(p, 0x41, 5);
-            if (arg0 != 0) {
+            if (right_side != 0) {
                 ang += (i == 0) ? 0x60 : -0x60;
             } else {
                 ang -= (i == 0) ? 0x60 : -0x60;
@@ -173,7 +173,7 @@ void tt_air_wave_c1_spawn(u8 arg0) {
         i += 1;
         p += 0x78;
         *(s32 *)(p - 0x4C) = c << 5;
-        p[-0x15] = arg0;
+        p[-0x15] = right_side;
         *(s16 *)(p - 0x1A) = 0;
         p[-0x18] = 0;
         *(s16 *)(p - 0x74) = 0x40;
@@ -188,20 +188,20 @@ void tt_air_wave_c1_spawn(u8 arg0) {
     } while (i != 3);
 }
 
-void tt_air_enemy_kind41_move(u8 *arg0) {
-    if (tt_run[0xB] != 0 && (u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
-        if (arg0[0x60] == 0) {
-            *(u16 *)(arg0 + 0x5E) = 0;
-            arg0[0x60] += 1;
-            tt_enemy_shot_fire_aimed(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+void tt_air_enemy_kind41_move(u8 *enemy) {
+    if (tt_run[0xB] != 0 && (u32)*(u16 *)(enemy + 0x5E) >= 0x19) {
+        if (enemy[0x60] == 0) {
+            *(u16 *)(enemy + 0x5E) = 0;
+            enemy[0x60] += 1;
+            tt_enemy_shot_fire_aimed(*(s16 *)(enemy + 0x14), *(s16 *)(enemy + 0x16), 0x20, 0xA0);
         }
     }
-    if (arg0[0x51] != 0) {
-        *(u16 *)(arg0 + 0x5E) += 1;
+    if (enemy[0x51] != 0) {
+        *(u16 *)(enemy + 0x5E) += 1;
     }
 }
 
-void tt_air_wave_c2_spawn(u8 arg0) {
+void tt_air_wave_c2_spawn(u8 right_side) {
     u8 *p = tt_air_enemies;
     s32 i = 0;
     s32 v;
@@ -211,7 +211,7 @@ void tt_air_wave_c2_spawn(u8 arg0) {
         if (p == 0) {
             break;
         }
-        if (arg0 != 0) {
+        if (right_side != 0) {
             v = 8;
             *(s32 *)(p + 0x20) = 0x500000;
         } else {
@@ -221,7 +221,7 @@ void tt_air_wave_c2_spawn(u8 arg0) {
         *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
         *(s32 *)(p + 0x28) = 0;
         *(s32 *)(p + 0x2C) = 0x10000;
-        p[0x63] = arg0;
+        p[0x63] = right_side;
         tt_air_enemy_setup(p, 0x43, v);
         /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
         i += 1;
@@ -238,25 +238,25 @@ void tt_air_wave_c2_spawn(u8 arg0) {
     } while (i != 4);
 }
 
-void tt_air_enemy_kind43_move(u8 *arg0) {
-    if (arg0[0x63] != 0) {
-        *(s32 *)(arg0 + 0x20) = -rsin(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
+void tt_air_enemy_kind43_move(u8 *enemy) {
+    if (enemy[0x63] != 0) {
+        *(s32 *)(enemy + 0x20) = -rsin(*(s16 *)(enemy + 0x16) << 5) * 0x600;
     } else {
-        *(s32 *)(arg0 + 0x20) = rsin(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
+        *(s32 *)(enemy + 0x20) = rsin(*(s16 *)(enemy + 0x16) << 5) * 0x600;
     }
-    if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x11) {
-        if (arg0[0x60] == 0) {
-            *(u16 *)(arg0 + 0x5E) = 0;
-            arg0[0x60] += 1;
-            tt_enemy_shot_fire_aimed(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+    if ((u32)*(u16 *)(enemy + 0x5E) >= 0x11) {
+        if (enemy[0x60] == 0) {
+            *(u16 *)(enemy + 0x5E) = 0;
+            enemy[0x60] += 1;
+            tt_enemy_shot_fire_aimed(*(s16 *)(enemy + 0x14), *(s16 *)(enemy + 0x16), 0x20, 0xA0);
         }
     }
-    if (arg0[0x51] != 0) {
-        *(u16 *)(arg0 + 0x5E) += 1;
+    if (enemy[0x51] != 0) {
+        *(u16 *)(enemy + 0x5E) += 1;
     }
 }
 
-void tt_air_wave_c3_spawn(u8 arg0) {
+void tt_air_wave_c3_spawn(u8 right_side) {
     u8 *p = tt_air_enemies;
     s32 i = 0;
 
@@ -265,7 +265,7 @@ void tt_air_wave_c3_spawn(u8 arg0) {
         if (p == 0) {
             break;
         }
-        if (arg0 != 0) {
+        if (right_side != 0) {
             *(s32 *)(p + 0x20) = (i * 0x10 + 0x90) << 16;
             *(s32 *)(p + 0x28) = 0xFFFC0000;
         } else {
@@ -274,7 +274,7 @@ void tt_air_wave_c3_spawn(u8 arg0) {
         }
         *(s32 *)(p + 0x24) = 0x380000;
         *(s32 *)(p + 0x2C) = 0;
-        p[0x63] = arg0;
+        p[0x63] = right_side;
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         tt_air_enemy_setup(p, 0x44, 9);
@@ -294,80 +294,80 @@ void tt_air_wave_c3_spawn(u8 arg0) {
     } while (i != 6);
 }
 
-void tt_air_enemy_kind44_move(u8 *arg0) {
+void tt_air_enemy_kind44_move(u8 *enemy) {
     s16 idx;
     u8 *e;
 
-    switch (*(u16 *)(arg0 + 6)) {
+    switch (*(u16 *)(enemy + 6)) {
     case 0:
-        if (arg0[0x63] != 0) {
-            arg0[0x5C] = 0xD0;
-            arg0[0x5D] = 0x30;
-            arg0[0x3C] = 0;
-            if (*(s32 *)(arg0 + 0x20) < 0x80001) {
-                *(u16 *)(arg0 + 6) = 1;
-                *(u16 *)(arg0 + 0x6E) = 0x1C00;
+        if (enemy[0x63] != 0) {
+            enemy[0x5C] = 0xD0;
+            enemy[0x5D] = 0x30;
+            enemy[0x3C] = 0;
+            if (*(s32 *)(enemy + 0x20) < 0x80001) {
+                *(u16 *)(enemy + 6) = 1;
+                *(u16 *)(enemy + 0x6E) = 0x1C00;
             }
         } else {
-            arg0[0x5C] = 0xD0;
-            arg0[0x5D] = 0x30;
-            arg0[0x3C] = 2;
-            if (*(s32 *)(arg0 + 0x20) >= -0x80000) {
-                *(u16 *)(arg0 + 6) = 1;
-                *(u16 *)(arg0 + 0x6E) = 0xC00;
+            enemy[0x5C] = 0xD0;
+            enemy[0x5D] = 0x30;
+            enemy[0x3C] = 2;
+            if (*(s32 *)(enemy + 0x20) >= -0x80000) {
+                *(u16 *)(enemy + 6) = 1;
+                *(u16 *)(enemy + 0x6E) = 0xC00;
             }
         }
         break;
     case 1:
-        if (arg0[0x63] != 0) {
-            *(s32 *)(arg0 + 0x20) = func_800A0140(*(u16 *)(arg0 + 0x6E)) * 0x300;
-            *(s32 *)(arg0 + 0x24) = rsin(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
-            *(s32 *)(arg0 + 0x28) = 0;
-            if (*(u16 *)(arg0 + 0x6E) < 0xC00) {
-                *(u16 *)(arg0 + 6) = 2;
+        if (enemy[0x63] != 0) {
+            *(s32 *)(enemy + 0x20) = func_800A0140(*(u16 *)(enemy + 0x6E)) * 0x300;
+            *(s32 *)(enemy + 0x24) = rsin(*(u16 *)(enemy + 0x6E)) * 0x300 + 0x680000;
+            *(s32 *)(enemy + 0x28) = 0;
+            if (*(u16 *)(enemy + 0x6E) < 0xC00) {
+                *(u16 *)(enemy + 6) = 2;
             }
-            *(u16 *)(arg0 + 0x6E) -= 0x40;
-            idx = ((*(u16 *)(arg0 + 0x6E) + 0x100) & 0xFFF) / 512 * 3;
+            *(u16 *)(enemy + 0x6E) -= 0x40;
+            idx = ((*(u16 *)(enemy + 0x6E) + 0x100) & 0xFFF) / 512 * 3;
         } else {
-            *(s32 *)(arg0 + 0x20) = func_800A0140(*(u16 *)(arg0 + 0x6E)) * 0x300;
-            *(s32 *)(arg0 + 0x24) = rsin(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
-            *(s32 *)(arg0 + 0x28) = 0;
-            if (*(u16 *)(arg0 + 0x6E) > 0x1C00) {
-                *(u16 *)(arg0 + 6) = 2;
+            *(s32 *)(enemy + 0x20) = func_800A0140(*(u16 *)(enemy + 0x6E)) * 0x300;
+            *(s32 *)(enemy + 0x24) = rsin(*(u16 *)(enemy + 0x6E)) * 0x300 + 0x680000;
+            *(s32 *)(enemy + 0x28) = 0;
+            if (*(u16 *)(enemy + 0x6E) > 0x1C00) {
+                *(u16 *)(enemy + 6) = 2;
             }
-            *(u16 *)(arg0 + 0x6E) += 0x40;
-            idx = ((*(u16 *)(arg0 + 0x6E) + 0x900) & 0xFFF) / 512 * 3;
+            *(u16 *)(enemy + 0x6E) += 0x40;
+            idx = ((*(u16 *)(enemy + 0x6E) + 0x900) & 0xFFF) / 512 * 3;
         }
         e = tt_air_enemy_kind44_pose + idx;
-        arg0[0x5C] = e[0];
-        arg0[0x5D] = e[1];
-        arg0[0x3C] = e[2];
+        enemy[0x5C] = e[0];
+        enemy[0x5D] = e[1];
+        enemy[0x3C] = e[2];
         break;
     case 2:
-        if (arg0[0x63] != 0) {
-            *(u16 *)(arg0 + 0x6E) = 0;
-            *(s32 *)(arg0 + 0x28) = 0xFFFC0000;
-            arg0[0x5C] = 0xD0;
-            arg0[0x5D] = 0x30;
-            arg0[0x3C] = 0;
+        if (enemy[0x63] != 0) {
+            *(u16 *)(enemy + 0x6E) = 0;
+            *(s32 *)(enemy + 0x28) = 0xFFFC0000;
+            enemy[0x5C] = 0xD0;
+            enemy[0x5D] = 0x30;
+            enemy[0x3C] = 0;
         } else {
-            *(u16 *)(arg0 + 0x6E) = 0;
-            *(s32 *)(arg0 + 0x28) = 0x40000;
-            arg0[0x5C] = 0xD0;
-            arg0[0x5D] = 0x30;
-            arg0[0x3C] = 2;
+            *(u16 *)(enemy + 0x6E) = 0;
+            *(s32 *)(enemy + 0x28) = 0x40000;
+            enemy[0x5C] = 0xD0;
+            enemy[0x5D] = 0x30;
+            enemy[0x3C] = 2;
         }
         break;
     }
-    if (*(u16 *)(arg0 + 0x5E) > 0x3C) {
-        if (arg0[0x60] == 0) {
-            *(u16 *)(arg0 + 0x5E) = 0;
-            arg0[0x60] += 1;
-            tt_enemy_shot_fire_aimed(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+    if (*(u16 *)(enemy + 0x5E) > 0x3C) {
+        if (enemy[0x60] == 0) {
+            *(u16 *)(enemy + 0x5E) = 0;
+            enemy[0x60] += 1;
+            tt_enemy_shot_fire_aimed(*(s16 *)(enemy + 0x14), *(s16 *)(enemy + 0x16), 0x20, 0xA0);
         }
     }
-    if (arg0[0x51] != 0) {
-        *(u16 *)(arg0 + 0x5E) += 1;
+    if (enemy[0x51] != 0) {
+        *(u16 *)(enemy + 0x5E) += 1;
     }
 }
 
@@ -412,7 +412,7 @@ void tt_air_enemy_kind45_move(TtObjectView *enemy) {
     } else {
         value = rsin(enemy->position_y.w / 3072) << 9;
     }
-    enemy->position_x.w = (value + 0x100000) * (enemy->unk_50 - 2);
+    enemy->position_x.w = (value + 0x100000) * (enemy->formation_index - 2);
     if (((TtFieldEnemyTail *)enemy->pad_5E)->shot_timer >= 0x19U) {
         flag = ((TtFieldEnemyTail *)enemy->pad_5E)->shot_fired;
         if (flag == 0) {
@@ -421,7 +421,7 @@ void tt_air_enemy_kind45_move(TtObjectView *enemy) {
             tt_enemy_shot_fire_aimed(enemy->x, enemy->y, 0x20, 0xA0);
         }
     }
-    if (enemy->unk_51 != 0) {
+    if (enemy->in_bounds != 0) {
         ((TtFieldEnemyTail *)enemy->pad_5E)->shot_timer += 1;
     }
 }
@@ -459,23 +459,23 @@ void tt_air_wave_c5_spawn(s32 arg0) {
     } while (i != 5);
 }
 
-void tt_air_enemy_kind46_move(u8 *arg0) {
+void tt_air_enemy_kind46_move(u8 *enemy) {
     u32 t;
 
-    *(s32 *)(arg0 + 0x20) = (arg0[0x50] - 2) * (func_800A0140(*(u16 *)(arg0 + 0x6E) * 0x1E) << 9);
-    t = *(u16 *)(arg0 + 0x6E);
-    *(s32 *)(arg0 + 0x24) = (t - 0x10) << 16;
-    *(s32 *)(arg0 + 0x24) += (rsin(t * 0x1E) << 9) * (arg0[0x50] - 2);
-    *(u16 *)(arg0 + 0x6E) += 1;
-    if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
-        if (arg0[0x60] == 0) {
-            *(u16 *)(arg0 + 0x5E) = 0;
-            arg0[0x60] += 1;
-            tt_enemy_shot_fire_aimed(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+    *(s32 *)(enemy + 0x20) = (enemy[0x50] - 2) * (func_800A0140(*(u16 *)(enemy + 0x6E) * 0x1E) << 9);
+    t = *(u16 *)(enemy + 0x6E);
+    *(s32 *)(enemy + 0x24) = (t - 0x10) << 16;
+    *(s32 *)(enemy + 0x24) += (rsin(t * 0x1E) << 9) * (enemy[0x50] - 2);
+    *(u16 *)(enemy + 0x6E) += 1;
+    if ((u32)*(u16 *)(enemy + 0x5E) >= 0x19) {
+        if (enemy[0x60] == 0) {
+            *(u16 *)(enemy + 0x5E) = 0;
+            enemy[0x60] += 1;
+            tt_enemy_shot_fire_aimed(*(s16 *)(enemy + 0x14), *(s16 *)(enemy + 0x16), 0x20, 0xA0);
         }
     }
-    if (arg0[0x51] != 0) {
-        *(u16 *)(arg0 + 0x5E) += 1;
+    if (enemy[0x51] != 0) {
+        *(u16 *)(enemy + 0x5E) += 1;
     }
 }
 
@@ -512,7 +512,7 @@ void tt_air_wave_c6_spawn(s32 arg0) {
     } while (i != 5);
 }
 
-void tt_air_enemy_kind47_move(void *arg0) {
+void tt_air_enemy_kind47_move(void *enemy) {
     s32 shifted;
     s32 factor;
     s32 value;
@@ -520,49 +520,49 @@ void tt_air_enemy_kind47_move(void *arg0) {
     u16 counter;
     u8 flag;
 
-    state = *(u16 *)((u8 *)arg0 + 0x6);
+    state = *(u16 *)((u8 *)enemy + 0x6);
     switch (state) {
     case 0:
-        factor = *(u8 *)((u8 *)arg0 + 0x50) - 2;
-        value = *(s32 *)((u8 *)arg0 + 0x24);
+        factor = *(u8 *)((u8 *)enemy + 0x50) - 2;
+        value = *(s32 *)((u8 *)enemy + 0x24);
         shifted = value >> 0x10;
-        *(s32 *)((u8 *)arg0 + 0x20) = (s32) ((factor << 0x15) + (factor * shifted * shifted * 0x30));
+        *(s32 *)((u8 *)enemy + 0x20) = (s32) ((factor << 0x15) + (factor * shifted * shifted * 0x30));
         if (value < 0x540000) {
-            *(s32 *)((u8 *)arg0 + 0x2c) = 0;
-            *(u16 *)((u8 *)arg0 + 0x6) = 1U;
-            *(u16 *)((u8 *)arg0 + 0x6e) = 0x400U;
+            *(s32 *)((u8 *)enemy + 0x2c) = 0;
+            *(u16 *)((u8 *)enemy + 0x6) = 1U;
+            *(u16 *)((u8 *)enemy + 0x6e) = 0x400U;
         }
-        *(u8 *)((u8 *)arg0 + 0x3c) = 1;
+        *(u8 *)((u8 *)enemy + 0x3c) = 1;
         break;
     case 1:
-        *(s32 *)((u8 *)arg0 + 0x24) = (s32) ((func_800A0140((s32) *(u16 *)((u8 *)arg0 + 0x6e)) << 9) + 0x500000);
-        counter = *(u16 *)((u8 *)arg0 + 0x6e);
+        *(s32 *)((u8 *)enemy + 0x24) = (s32) ((func_800A0140((s32) *(u16 *)((u8 *)enemy + 0x6e)) << 9) + 0x500000);
+        counter = *(u16 *)((u8 *)enemy + 0x6e);
         if (counter >= 0xC81U) {
-            *(s32 *)((u8 *)arg0 + 0x2c) = 0x20000;
-            *(u16 *)((u8 *)arg0 + 0x6e) = 0U;
-            *(u16 *)((u8 *)arg0 + 0x6) = 2U;
-            counter = *(u16 *)((u8 *)arg0 + 0x6e);
+            *(s32 *)((u8 *)enemy + 0x2c) = 0x20000;
+            *(u16 *)((u8 *)enemy + 0x6e) = 0U;
+            *(u16 *)((u8 *)enemy + 0x6) = 2U;
+            counter = *(u16 *)((u8 *)enemy + 0x6e);
         }
-        *(u16 *)((u8 *)arg0 + 0x6e) = (u16) (counter + 0x30);
-        *(u8 *)((u8 *)arg0 + 0x3c) = 0;
+        *(u16 *)((u8 *)enemy + 0x6e) = (u16) (counter + 0x30);
+        *(u8 *)((u8 *)enemy + 0x3c) = 0;
         break;
     case 2:
-        if ((u16) *(u16 *)((u8 *)arg0 + 0x5e) >= 5U) {
-            flag = *(u8 *)((u8 *)arg0 + 0x60);
+        if ((u16) *(u16 *)((u8 *)enemy + 0x5e) >= 5U) {
+            flag = *(u8 *)((u8 *)enemy + 0x60);
             if (flag == 0) {
-                *(u16 *)((u8 *)arg0 + 0x5e) = 0U;
-                *(u8 *)((u8 *)arg0 + 0x60) = (u8) (flag + 1);
-                tt_enemy_shot_fire_aimed((s32) *(s16 *)((u8 *)arg0 + 0x14), (s32) *(s16 *)((u8 *)arg0 + 0x16), 0x20, 0xA0);
+                *(u16 *)((u8 *)enemy + 0x5e) = 0U;
+                *(u8 *)((u8 *)enemy + 0x60) = (u8) (flag + 1);
+                tt_enemy_shot_fire_aimed((s32) *(s16 *)((u8 *)enemy + 0x14), (s32) *(s16 *)((u8 *)enemy + 0x16), 0x20, 0xA0);
             }
         }
-        if (*(u8 *)((u8 *)arg0 + 0x51) != 0) {
-            *(u16 *)((u8 *)arg0 + 0x5e) = (u16) (*(u16 *)((u8 *)arg0 + 0x5e) + 1);
+        if (*(u8 *)((u8 *)enemy + 0x51) != 0) {
+            *(u16 *)((u8 *)enemy + 0x5e) = (u16) (*(u16 *)((u8 *)enemy + 0x5e) + 1);
         }
         break;
     }
 }
 
-void tt_air_wave_c7_spawn(u8 arg0) {
+void tt_air_wave_c7_spawn(u8 right_side) {
     u8 *p = tt_air_enemies;
     s32 i = 0;
 
@@ -571,7 +571,7 @@ void tt_air_wave_c7_spawn(u8 arg0) {
         if (p == 0) {
             break;
         }
-        if (arg0 != 0) {
+        if (right_side != 0) {
             *(s32 *)(p + 0x20) = 0x500000;
         } else {
             *(s32 *)(p + 0x20) = 0xFFB00000;
@@ -579,7 +579,7 @@ void tt_air_wave_c7_spawn(u8 arg0) {
         *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
         *(s32 *)(p + 0x28) = 0;
         *(s32 *)(p + 0x2C) = 0x20000;
-        p[0x63] = arg0;
+        p[0x63] = right_side;
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         tt_air_enemy_setup(p, 0x48, 0xD);
@@ -598,40 +598,40 @@ void tt_air_wave_c7_spawn(u8 arg0) {
     } while (i != 6);
 }
 
-void tt_air_enemy_kind48_move(u8 *arg0) {
-    switch (*(u16 *)(arg0 + 6)) {
+void tt_air_enemy_kind48_move(u8 *enemy) {
+    switch (*(u16 *)(enemy + 6)) {
     case 0:
-        if (*(s32 *)(arg0 + 0x24) >= *(s32 *)(tt_player + 0x24)) {
-            *(s32 *)(arg0 + 0x2C) = 0;
-            if (arg0[0x63] != 0) {
-                *(s32 *)(arg0 + 0x28) = 0xFFFE0000;
+        if (*(s32 *)(enemy + 0x24) >= *(s32 *)(tt_player + 0x24)) {
+            *(s32 *)(enemy + 0x2C) = 0;
+            if (enemy[0x63] != 0) {
+                *(s32 *)(enemy + 0x28) = 0xFFFE0000;
             } else {
-                *(s32 *)(arg0 + 0x28) = 0x20000;
+                *(s32 *)(enemy + 0x28) = 0x20000;
             }
-            *(u16 *)(arg0 + 6) = 1;
+            *(u16 *)(enemy + 6) = 1;
         }
         break;
     case 1:
-        if (arg0[0x63] != 0) {
-            if (*(s32 *)(tt_player + 0x20) >= *(s32 *)(arg0 + 0x20)) {
-                *(s32 *)(arg0 + 0x28) = 0;
-                *(s32 *)(arg0 + 0x2C) = 0xFFFE0000;
+        if (enemy[0x63] != 0) {
+            if (*(s32 *)(tt_player + 0x20) >= *(s32 *)(enemy + 0x20)) {
+                *(s32 *)(enemy + 0x28) = 0;
+                *(s32 *)(enemy + 0x2C) = 0xFFFE0000;
             }
-        } else if (*(s32 *)(arg0 + 0x20) >= *(s32 *)(tt_player + 0x20)) {
-            *(s32 *)(arg0 + 0x28) = 0;
-            *(s32 *)(arg0 + 0x2C) = 0xFFFE0000;
+        } else if (*(s32 *)(enemy + 0x20) >= *(s32 *)(tt_player + 0x20)) {
+            *(s32 *)(enemy + 0x28) = 0;
+            *(s32 *)(enemy + 0x2C) = 0xFFFE0000;
         }
         break;
     }
-    if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
-        if (arg0[0x60] == 0) {
-            *(u16 *)(arg0 + 0x5E) = 0;
-            arg0[0x60] += 1;
-            tt_enemy_shot_fire_aimed(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+    if ((u32)*(u16 *)(enemy + 0x5E) >= 0x19) {
+        if (enemy[0x60] == 0) {
+            *(u16 *)(enemy + 0x5E) = 0;
+            enemy[0x60] += 1;
+            tt_enemy_shot_fire_aimed(*(s16 *)(enemy + 0x14), *(s16 *)(enemy + 0x16), 0x20, 0xA0);
         }
     }
-    if (arg0[0x51] != 0) {
-        *(u16 *)(arg0 + 0x5E) += 1;
+    if (enemy[0x51] != 0) {
+        *(u16 *)(enemy + 0x5E) += 1;
     }
 }
 
@@ -680,54 +680,54 @@ void tt_stage_script_air_update(void) {
     }
 }
 
-void tt_air_enemy_move(u8 *arg0) {
+void tt_air_enemy_move(u8 *enemy) {
     s16 v;
 
-    *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
-    *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
-    if (arg0[0x51] != 0) {
-        if ((v = *(s16 *)(arg0 + 0x14)) < -0x90 || v >= 0x91 || (v = *(s16 *)(arg0 + 0x16)) < -0x10 || v >= 0x101) {
-            *(s16 *)(arg0 + 4) = 0x80;
-            *(s16 *)(arg0 + 0xA) = 0;
-            *(s16 *)(arg0 + 8) = 0;
-            *(s16 *)(arg0 + 6) = 0;
-            arg0[0xF] = 0;
-            arg0[0xE] = 0;
-            arg0[0xD] = 0;
-            arg0[0x51] = 0;
+    *(s32 *)(enemy + 0x20) += *(s32 *)(enemy + 0x28);
+    *(s32 *)(enemy + 0x24) += *(s32 *)(enemy + 0x2C);
+    *(s16 *)(enemy + 0x14) = *(s16 *)(enemy + 0x22);
+    *(s16 *)(enemy + 0x16) = *(s16 *)(enemy + 0x26);
+    if (enemy[0x51] != 0) {
+        if ((v = *(s16 *)(enemy + 0x14)) < -0x90 || v >= 0x91 || (v = *(s16 *)(enemy + 0x16)) < -0x10 || v >= 0x101) {
+            *(s16 *)(enemy + 4) = 0x80;
+            *(s16 *)(enemy + 0xA) = 0;
+            *(s16 *)(enemy + 8) = 0;
+            *(s16 *)(enemy + 6) = 0;
+            enemy[0xF] = 0;
+            enemy[0xE] = 0;
+            enemy[0xD] = 0;
+            enemy[0x51] = 0;
         }
     } else {
-        v = *(s16 *)(arg0 + 0x14);
+        v = *(s16 *)(enemy + 0x14);
         if (v >= -0x7F && v < 0x80) {
-            v = *(s16 *)(arg0 + 0x16);
+            v = *(s16 *)(enemy + 0x16);
             if (v > 0 && v < 0xF0) {
-                arg0[0x51] = 1;
+                enemy[0x51] = 1;
             }
         }
     }
 }
 
-void tt_air_enemy_explode_init(u8 *arg0) {
-    tt_se_request(TT_SE_ENEMY_EXPLODE, arg0);
-    *(s32 *)(arg0 + 0x28) = 0;
-    *(s32 *)(arg0 + 0x2C) = 0;
-    *(u8 **)(arg0 + 0x38) = tt_sprite_set_table;
-    arg0[0x3C] = 0;
-    arg0[0x3D] = 2;
-    arg0[0x3E] = 9;
-    arg0[0x40] = 0x20;
-    *(s16 *)(arg0 + 0x6E) = 0;
-    *(s16 *)(arg0 + 0xA) = 0;
-    *(s16 *)(arg0 + 8) = 0;
-    *(s16 *)(arg0 + 6) = 0;
-    arg0[0xF] = 0;
-    arg0[0xE] = 0;
-    arg0[0xD] = 0;
+void tt_air_enemy_explode_init(u8 *enemy) {
+    tt_se_request(TT_SE_ENEMY_EXPLODE, enemy);
+    *(s32 *)(enemy + 0x28) = 0;
+    *(s32 *)(enemy + 0x2C) = 0;
+    *(u8 **)(enemy + 0x38) = tt_sprite_set_table;
+    enemy[0x3C] = 0;
+    enemy[0x3D] = 2;
+    enemy[0x3E] = 9;
+    enemy[0x40] = 0x20;
+    *(s16 *)(enemy + 0x6E) = 0;
+    *(s16 *)(enemy + 0xA) = 0;
+    *(s16 *)(enemy + 8) = 0;
+    *(s16 *)(enemy + 6) = 0;
+    enemy[0xF] = 0;
+    enemy[0xE] = 0;
+    enemy[0xD] = 0;
 }
 
-void tt_air_enemy_explosion_spawn(u8 *arg0) {
+void tt_air_enemy_explosion_spawn(u8 *enemy) {
     u8 *p;
 
     p = (u8 *)tt_air_enemy_find_free(tt_air_enemies, tt_air_enemies + 0x1E00);
@@ -736,8 +736,8 @@ void tt_air_enemy_explosion_spawn(u8 *arg0) {
         *(s16 *)(p + 4) = 0x71;
         /* FAKE: both chains on one line; as1 then emits the 0xE/0xD byte stores (zero kept in a0) first. T-11850 */
         *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0; p[0xD] = p[0xE] = p[0xF] = 0;
-        *(s32 *)(p + 0x20) = *(s32 *)(arg0 + 0xC);
-        *(s32 *)(p + 0x24) = *(s32 *)(arg0 + 0x10);
+        *(s32 *)(p + 0x20) = *(s32 *)(enemy + 0xC);
+        *(s32 *)(p + 0x24) = *(s32 *)(enemy + 0x10);
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
         tt_air_enemy_explode_init(p);
@@ -818,7 +818,7 @@ void tt_air_enemies_update(void)
 
             case 0x80:
                 var_s0->active = 0;
-                var_s0->unk_51 = 0;
+                var_s0->in_bounds = 0;
                 break;
 
             }
@@ -1046,7 +1046,7 @@ void tt_sprite_draw_transformed(TtObjectView *arg0) {
     }
     q[0x29] = arg0->unk_4D;
     q[0x2B] = arg0->unk_4F;
-    q[0x2C] = arg0->unk_50;
+    q[0x2C] = arg0->formation_index;
     *(s16 *)(q + 0x10) = arg0->unk_3C;
     *(s16 *)(q + 0x12) = arg0->unk_3E;
     q[0xC] = arg0->unk_46;

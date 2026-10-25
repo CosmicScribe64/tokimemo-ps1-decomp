@@ -316,7 +316,7 @@
       {
         "unit": "EVENT",
         "provider_path": "ovl/EVENT_main_imports.h",
-        "root_header_path": "ovl/EVENT.h",
+        "root_header_path": "ovl/date_spots.h",
         "bindings": [
           {
             "unit": "EVENT",
@@ -833,7 +833,7 @@
       {
         "unit": "GYOZI",
         "provider_path": "ovl/GYOZI_main_imports.h",
-        "root_header_path": "ovl/GYOZI.h",
+        "root_header_path": "ovl/annual_events.h",
         "bindings": [
           {
             "unit": "GYOZI",

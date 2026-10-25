@@ -35,3 +35,4 @@ sick_visit_talk_route_select = 0x80134030; // type:func
 sick_visit_common_girl_talk_pointer_select = 0x801340E4; // type:func
 sick_visit_location_scene_select = 0x80134384; // type:func
 sick_visit_portrait_select = 0x80134628; // type:func
+sick_visit_dialogue_variant = 0x80134CCC;

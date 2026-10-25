@@ -220,12 +220,12 @@ void title_setup_stage(void) {
              * v0/v1. T-25119 */
             if (title_models_link()) {
             }
-            /* FAKE: positions 1..13 of the D_801230D0 work area, reached through its first word as in
+            /* FAKE: positions 1..13 of the scene_work work area, reached through its first word as in
              * title_photos_update (its other words are not declared as an aggregate yet); the first copy is a
              * statement of its own, the loop of 12 is unrolled by four. T-25119 */
-            (&D_801230D0)[1] = title_photo_offsets[0];
+            (&scene_work)[1] = title_photo_offsets[0];
             for (i = 1; i < 13; i++) {
-                (&D_801230D0)[i + 1] = title_photo_offsets[i];
+                (&scene_work)[i + 1] = title_photo_offsets[i];
             }
             mode_stage_next();
         }
@@ -323,7 +323,7 @@ void title_menu_setup_step(void) {
     y[0] = 0x42; x[0] = -0x30; w[0] = 0xA0; h[0] = 0x14;
     y[1] = 0x52; x[1] = -0x30; w[1] = 0xA0; h[1] = 0x14;
     menu_set(0, 2, x, y, w, h);
-    D_801230D0 = 0;
+    scene_work = 0;
     (&game_state.clear_color_r)[0] = (&game_state.clear_color_g)[0] = (&game_state.clear_color_b)[0] = 0xFF;
     sprite_tables_clear();
     (&game_state.screen_brightness)[0] = 0x80;
@@ -354,16 +354,16 @@ void title_menu_setup_step(void) {
 
 void title_menu_cursor_update(void) {
     if (game_state.input_device != INPUT_MOUSE) {
-        cursor_y = D_801230D0 * 16 + 0x46;
+        cursor_y = scene_work * 16 + 0x46;
         cursor_x = 0x40;
         switch (game_state.pad_pressed & 0x5000) {
         case 0x1000:
             game_state.mode_step_timer.w = 0;
-            D_801230D0 = 0;
+            scene_work = 0;
             break;
         case 0x4000:
             game_state.mode_step_timer.w = 0;
-            D_801230D0 = 1;
+            scene_work = 1;
             break;
         }
     } else {
@@ -372,15 +372,15 @@ void title_menu_cursor_update(void) {
         switch (game_state.menu_cursor_0) {
         case 0:
             game_state.mode_step_timer.w = 0;
-            D_801230D0 = 0;
+            scene_work = 0;
             break;
         case 1:
             game_state.mode_step_timer.w = 0;
-            D_801230D0 = 1;
+            scene_work = 1;
             break;
         }
     }
-    if (D_801230D0 != 0) {
+    if (scene_work != 0) {
         D_801206AC = 2;
         D_801206F0 = 3;
     } else {
@@ -405,7 +405,7 @@ void title_menu_select_step(void) {
 }
 
 void title_menu_highlight(void) {
-    u8 *p = actor_pool + D_801230D0 * 0x44;
+    u8 *p = actor_pool + scene_work * 0x44;
 
     p[0x19C7] |= 0x40;
 }
@@ -433,7 +433,7 @@ void title_menu_stage(void) {
 }
 void title_exit_dispatch_step(void) {
     prim_flash_gray(0xFF);
-    switch (*(u32 *)&D_801230D0) {
+    switch (*(u32 *)&scene_work) {
     case 0:
         game_mode_set(GAME_MODE_FILE_SELECT);
         break;
@@ -511,7 +511,7 @@ void title_mode_handler(void) {
 
 /* Places the 13 rotating models: model i (view_coordinates[i], a GsCOORDINATE2 record) gets a local
  * matrix from a rotation that depends on the frame counter, an identity scale and a translation
- * from position word i + 1 of the D_801230D0 work area, which then moves on by 2 or 3.
+ * from position word i + 1 of the scene_work work area, which then moves on by 2 or 3.
  * s32 because title_intro_stage calls it before this definition (implicit int). T-25119 */
 s32 title_photos_update(void) {
     s32 i;
@@ -541,11 +541,11 @@ s32 title_photos_update(void) {
         scale.vz = 0x1000;
         ScaleMatrix(&s, &scale);
         MulMatrix(&m, &s);
-        /* FAKE: D_801230D0 is a work area each module lays out its own way (main_api.h declares
+        /* FAKE: scene_work is a work area each module lays out its own way (main_api.h declares
          * only its first word); here the positions follow that word. T-25119 */
-        m.t[0] = (&D_801230D0)[i + 1];
+        m.t[0] = (&scene_work)[i + 1];
         v = rsin((game_state.frame_count & 0xFFF) * (j + 10));
-        x = (&D_801230D0)[i + 1];
+        x = (&scene_work)[i + 1];
         m.t[1] = v / 32 + -x / 2;
         /* FAKE: the unsigned negation keeps the original's second negu; a signed -x is shared
          * with the line above. T-25119 */
@@ -553,7 +553,7 @@ s32 title_photos_update(void) {
         v = abs(rsin(game_state.frame_count));
         /* FAKE: `- (0 - p)` puts (v & 1) before the reloaded position in the addu, as in the
          * original; `+ p` is ordered position first. T-25119 */
-        (&D_801230D0)[i + 1] = (v & 1) - (0 - (&D_801230D0)[i + 1]) + 2;
+        (&scene_work)[i + 1] = (v & 1) - (0 - (&scene_work)[i + 1]) + 2;
         *(MATRIX *)view_coordinates[i].unk4 = m;
         view_coordinates[i].flag = 0;
     }

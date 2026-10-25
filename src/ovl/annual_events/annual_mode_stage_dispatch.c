@@ -1,0 +1,113 @@
+/* annual_mode_stage_dispatch.c: ; src/ovl/GYOZI/80134000.c:49-85 dispatches seven annual-event stages and frame presentation. Original object 0x80134000-0x80134520 (config/objects/GYOZI.txt). */
+#include "common.h"
+#include "ovl/annual_events.h"
+
+void annual_mode_resource_addresses_init(void) {
+    D_80145E00 = 0x80197418;
+    D_80145E04 = 0x8019888C;
+    D_80145E08 = 0x8019A9A8;
+    D_80145E0C = 0x8019C860;
+    D_80145E10 = 0x8019E7E8;
+    D_80145E14 = 0x801A0820;
+    D_80145E18 = 0x801A28E8;
+    D_80145E1C = 0x801A49CC;
+    D_80145E20 = 0x801A6A00;
+    D_80145E24 = 0x801A8AA4;
+    D_80145E28 = 0x801AACD8;
+    D_80145E2C = 0x801ACF74;
+    D_80145E30 = 0x801AF1F8;
+    D_80145E34 = 0x801B02DC;
+    D_80145E38 = 0x801974D0;
+    D_80145E3C = 0x801989FC;
+    D_80145E40 = 0x8019AB48;
+    D_80145E44 = 0x8019C9C4;
+    D_80145E48 = 0x8019E964;
+    D_80145E4C = 0x801A0998;
+    D_80145E50 = 0x801A2A5C;
+    D_80145E54 = 0x801A4B50;
+    D_80145E58 = 0x801A6B74;
+    D_80145E5C = 0x801A8C1C;
+    D_80145E60 = 0x801AAE58;
+    D_80145E64 = 0x801AD0FC;
+    D_80145E68 = 0x801AF374;
+    D_80145E6C = 0x801B02E4;
+    D_80145E70 = 0x801978E4;
+    D_80145E74 = 0x801996D8;
+    D_80145E78 = 0x8019B98C;
+    D_80145E7C = 0x8019D5BC;
+    D_80145E80 = 0x8019F704;
+    D_80145E84 = 0x801A16E4;
+    D_80145E88 = 0x801A3834;
+    D_80145E8C = 0x801A5890;
+    D_80145E90 = 0x801A79A0;
+    D_80145E94 = 0x801A9A80;
+    D_80145E98 = 0x801ABCF4;
+    D_80145E9C = 0x801ADFEC;
+    D_80145EA0 = 0x801B0210;
+    D_80145EA4 = 0x801B0304;
+}
+
+void annual_mode_handler(void) {
+    func_8008E6AC();
+    switch (D_800F6479) {
+    case 0:
+        annual_new_year_mode_step_dispatch();
+        break;
+    case 1:
+        annual_text_choice_mode_step_dispatch();
+        break;
+    case 2:
+        annual_dialogue_choice_mode_step_dispatch();
+        break;
+    case 3:
+        annual_shrine_visit_mode_step_dispatch();
+        break;
+    case 4:
+        annual_shrine_result_mode_step_dispatch();
+        break;
+    case 5:
+        annual_result_actor_display_mode_step_dispatch();
+        break;
+    case 6:
+        annual_scene_callback_dispatch();
+        break;
+    default:
+        talk_voice_play();
+        break;
+    }
+    func_8008A148();
+    func_8008F54C();
+    func_80076450(2);
+    func_80074A14();
+    func_80075BFC();
+    func_800748B8();
+    func_8008E8B4();
+}
+
+/* Integer return type matches the setup callers. T-20001. */
+s32 annual_mode_scene_data_setup(void) {
+    D_800D9234 = (u8 *) &annual_new_year_talk_group;
+    D_800D9238 = (u8 *) &annual_new_year_talk_line;
+    D_800D923C = annual_new_year_talk_text_table;
+    D_800D9240 = annual_new_year_talk_command_table;
+    D_800D9244 = annual_new_year_talk_voice_table;
+    func_8008D610(D_8012E66C, 1, 0);
+}
+
+void annual_mode_scene_data_setup_default(void) {
+    D_800D9234 = (u8 *)&annual_new_year_talk_group;
+    D_800D9238 = (u8 *)&annual_new_year_talk_line;
+    D_800D923C = annual_new_year_talk_text_table;
+    D_800D9240 = annual_new_year_talk_command_table;
+    D_800D9244 = annual_new_year_talk_voice_table;
+    func_8008D610(0xFF, 1, 0);
+}
+
+void annual_mode_scene_data_setup_variant(void) {
+    D_800D9234 = (u8 *) &annual_new_year_talk_group;
+    D_800D9238 = (u8 *) &annual_new_year_talk_line;
+    D_800D923C = annual_new_year_talk_text_table;
+    D_800D9240 = annual_new_year_talk_command_table;
+    D_800D9244 = annual_new_year_talk_voice_table;
+    func_8008D610(D_8012E66C, 1, 2);
+}

@@ -6,11 +6,11 @@ sources: ["src/main/README.md", "config/SLPM_86.053.yaml", "config/objects/", "s
 
 # Source files of the game code
 
-The current source tree has **437 logical C files**: 34 in `src/main/` and 403 in the 26 disc-named folders under `src/ovl/`. The 34 main filenames and their original, half-open text ranges are listed below; the reviewed role descriptions live in [`src/main/README.md`](../src/main/README.md). Overlay filenames remain grouped by their current disc folder. The exhaustive 403-path overlay map and its review history are in [[spec/file-naming-overlays]].
+The current source tree has **437 logical C files**: 34 in `src/main/` and 403 across 26 overlay folders under `src/ovl/`. The 34 main filenames and their original, half-open text ranges are listed below; the reviewed role descriptions live in [`src/main/README.md`](../src/main/README.md). Overlay C filenames and folders use the reviewed logical names in the table below, except the TT folder, which remains `TT` pending contributor agreement. The exhaustive 403-path basename map and its review history are in [[spec/file-naming-overlays]].
 
-The verified matching reference is **4dab92732: 27/27 units, 6,952/6,952 functions** (main 830; overlays 6,122). The in-progress small-constant wave changes literals only and does not change file or function counts; this page makes no newer matching claim. The configured original-object metadata has 34 main ranges and 409 overlay `object` records. The filesystem has 403 overlay C files; DATE and TACO each have three more object records than C files in these inventories. This page does not infer a one-to-one mapping for those units.
+The last clean matching reference is **HEAD 302996710 (2026-10-24): 27/27 units, 6,952/6,952 functions, 2,276,920/2,276,920 game bytes**. The small-constant wave is applied. Final clean matching on the complete current working tree is still pending, so this page makes no newer matching claim. The configured original-object metadata has 34 main ranges and 409 overlay `object` records. The filesystem has 403 overlay C files; DATE and TACO each have three more object records than C files in these inventories. This page does not infer a one-to-one mapping for those units.
 
-The source basenames are logical names now. Earlier boundary work used address basenames; its evidence and decisions are retained under [historical boundary analysis](#historical-main-boundary-analysis-address-basename-stage). The current main YAML entries agree with `src/main/README.md` and the main object ranges in `config/objects/main.txt`.
+The source basenames and overlay folders are logical names now. Disc names remain in unit identity and build/assembly roots; the TT source folder retains the technical disc spelling. Earlier boundary work used address basenames and the pre-migration disc-named overlay folders; those dated paths remain historical evidence, while the table below and current YAML entries identify current paths. See [historical boundary analysis](#historical-main-boundary-analysis-address-basename-stage) and [[tickets/T-27074-overlay-module-paths]].
 
 ## Main executable C files
 
@@ -53,45 +53,45 @@ Ranges are original text ranges, start-inclusive and end-exclusive. Paths below 
 | `0x8007C030–0x80085E30` | `src/main/scene_library.c` |
 | `0x80085E30–0x80086810` | `src/main/scene_display.c` |
 
-## Overlay C files by current disc folder
+## Overlay C files by current logical folder
 
 The C-file counts below are a directory census; each link opens the exhaustive filename map for that overlay. Original-object record counts come from `config/objects/<UNIT>.txt` and are shown separately because they differ from C-file counts for DATE and TACO.
 
 | Current source folder | C files | Original object records | Filename map |
 |---|---:|---:|---|
-| `src/ovl/BUNKAKEN/` | 18 | 18 | [BUNKAKEN table](../config/renames/proposals/layout-BUNKAKEN-files.tsv) |
-| `src/ovl/BUNKASAI/` | 20 | 20 | [BUNKASAI table](../config/renames/proposals/layout-BUNKASAI-files.tsv) |
-| `src/ovl/BUNKA_SD/` | 11 | 11 | [BUNKA_SD table](../config/renames/proposals/layout-BUNKA_SD-files.tsv) |
-| `src/ovl/DATE/` | 19 | 22 | [DATE table](../config/renames/proposals/layout-DATE-files.tsv) |
-| `src/ovl/DATE2/` | 6 | 6 | [DATE2 table](../config/renames/proposals/layout-DATE2-files.tsv) |
-| `src/ovl/ENDING/` | 8 | 8 | [ENDING table](../config/renames/proposals/layout-ENDING-files.tsv) |
-| `src/ovl/EN_NICHI/` | 2 | 2 | [EN_NICHI table](../config/renames/proposals/layout-EN_NICHI-files.tsv) |
-| `src/ovl/ETC/` | 13 | 13 | [ETC table](../config/renames/proposals/layout-ETC-files.tsv) |
-| `src/ovl/EVENT/` | 18 | 18 | [EVENT table](../config/renames/proposals/layout-EVENT-files.tsv) |
-| `src/ovl/GEKO/` | 22 | 22 | [GEKO table](../config/renames/proposals/layout-GEKO-files.tsv) |
-| `src/ovl/GYOZI/` | 33 | 33 | [GYOZI table](../config/renames/proposals/layout-GYOZI-files.tsv) |
-| `src/ovl/KANGEI/` | 8 | 8 | [KANGEI table](../config/renames/proposals/layout-KANGEI-files.tsv) |
-| `src/ovl/MASTER/` | 9 | 9 | [MASTER table](../config/renames/proposals/layout-MASTER-files.tsv) |
-| `src/ovl/NAME_ENT/` | 4 | 4 | [NAME_ENT table](../config/renames/proposals/layout-NAME_ENT-files.tsv) |
-| `src/ovl/OLH/` | 8 | 8 | [OLH table](../config/renames/proposals/layout-OLH-files.tsv) |
-| `src/ovl/OMIMAI/` | 4 | 4 | [OMIMAI table](../config/renames/proposals/layout-OMIMAI-files.tsv) |
-| `src/ovl/OPTION/` | 3 | 3 | [OPTION table](../config/renames/proposals/layout-OPTION-files.tsv) |
-| `src/ovl/RENSYU/` | 2 | 2 | [RENSYU table](../config/renames/proposals/layout-RENSYU-files.tsv) |
-| `src/ovl/RPG_BAT/` | 61 | 61 | [RPG_BAT table](../config/renames/proposals/layout-RPG_BAT-files.tsv) |
-| `src/ovl/SHOUGATU/` | 27 | 27 | [SHOUGATU table](../config/renames/proposals/layout-SHOUGATU-files.tsv) |
-| `src/ovl/SHUGAKU/` | 11 | 11 | [SHUGAKU table](../config/renames/proposals/layout-SHUGAKU-files.tsv) |
-| `src/ovl/TACO/` | 38 | 41 | [TACO table](../config/renames/proposals/layout-TACO-files.tsv) |
-| `src/ovl/TAIIKU/` | 19 | 19 | [TAIIKU table](../config/renames/proposals/layout-TAIIKU-files.tsv) |
-| `src/ovl/TEL/` | 3 | 3 | [TEL table](../config/renames/proposals/layout-TEL-files.tsv) |
+| `src/ovl/culture_festival_tour/` | 18 | 18 | [BUNKAKEN table](../config/renames/proposals/layout-BUNKAKEN-files.tsv) |
+| `src/ovl/culture_festival/` | 20 | 20 | [BUNKASAI table](../config/renames/proposals/layout-BUNKASAI-files.tsv) |
+| `src/ovl/culture_stage_shows/` | 11 | 11 | [BUNKA_SD table](../config/renames/proposals/layout-BUNKA_SD-files.tsv) |
+| `src/ovl/date/` | 19 | 22 | [DATE table](../config/renames/proposals/layout-DATE-files.tsv) |
+| `src/ovl/amusement_park_date/` | 6 | 6 | [DATE2 table](../config/renames/proposals/layout-DATE2-files.tsv) |
+| `src/ovl/ending/` | 8 | 8 | [ENDING table](../config/renames/proposals/layout-ENDING-files.tsv) |
+| `src/ovl/festival_stalls/` | 2 | 2 | [EN_NICHI table](../config/renames/proposals/layout-EN_NICHI-files.tsv) |
+| `src/ovl/misc_scenes/` | 13 | 13 | [ETC table](../config/renames/proposals/layout-ETC-files.tsv) |
+| `src/ovl/date_spots/` | 18 | 18 | [EVENT table](../config/renames/proposals/layout-EVENT-files.tsv) |
+| `src/ovl/girl_encounters/` | 22 | 22 | [GEKO table](../config/renames/proposals/layout-GEKO-files.tsv) |
+| `src/ovl/annual_events/` | 33 | 33 | [GYOZI table](../config/renames/proposals/layout-GYOZI-files.tsv) |
+| `src/ovl/summer_camp/` | 8 | 8 | [KANGEI table](../config/renames/proposals/layout-KANGEI-files.tsv) |
+| `src/ovl/club_master/` | 9 | 9 | [MASTER table](../config/renames/proposals/layout-MASTER-files.tsv) |
+| `src/ovl/name_entry/` | 4 | 4 | [NAME_ENT table](../config/renames/proposals/layout-NAME_ENT-files.tsv) |
+| `src/ovl/help/` | 8 | 8 | [OLH table](../config/renames/proposals/layout-OLH-files.tsv) |
+| `src/ovl/sick_visit/` | 4 | 4 | [OMIMAI table](../config/renames/proposals/layout-OMIMAI-files.tsv) |
+| `src/ovl/options/` | 3 | 3 | [OPTION table](../config/renames/proposals/layout-OPTION-files.tsv) |
+| `src/ovl/practice_match/` | 2 | 2 | [RENSYU table](../config/renames/proposals/layout-RENSYU-files.tsv) |
+| `src/ovl/rpg_battle/` | 61 | 61 | [RPG_BAT table](../config/renames/proposals/layout-RPG_BAT-files.tsv) |
+| `src/ovl/new_year_christmas/` | 27 | 27 | [SHOUGATU table](../config/renames/proposals/layout-SHOUGATU-files.tsv) |
+| `src/ovl/school_trip/` | 11 | 11 | [SHUGAKU table](../config/renames/proposals/layout-SHUGAKU-files.tsv) |
+| `src/ovl/shooter_3d/` | 38 | 41 | [TACO table](../config/renames/proposals/layout-TACO-files.tsv) |
+| `src/ovl/sports_festival/` | 19 | 19 | [TAIIKU table](../config/renames/proposals/layout-TAIIKU-files.tsv) |
+| `src/ovl/telephone/` | 3 | 3 | [TEL table](../config/renames/proposals/layout-TEL-files.tsv) |
 | `src/ovl/TT/` | 31 | 31 | [TT table](../config/renames/proposals/layout-TT-files.tsv) |
-| `src/ovl/VALEN/` | 5 | 5 | [VALEN table](../config/renames/proposals/layout-VALEN-files.tsv) |
+| `src/ovl/valentine/` | 5 | 5 | [VALEN table](../config/renames/proposals/layout-VALEN-files.tsv) |
 
-The overlay folder spellings remain the disc names in the current tree. English folder/header moves are proposed separately in T-27074 and are not applied here.
+The table is the current source-path map. The `TT` row is the sole folder spelling retained from the disc namespace; its overlay unit and assembly/build roots still use the TT disc identity. English overlay headers follow the logical folder names, with EVENT and GYOZI rooted at `date_spots.h` and `annual_events.h` respectively. The 26 disc unit identities remain unchanged.
 
 ## Count and boundary sources
 
 - Current main names/ranges: `src/main/README.md`, the `main` C entries in `config/SLPM_86.053.yaml`, and text ranges in `config/objects/main.txt`.
-- Overlay folders and C-file counts: `src/ovl/<DISC>/`; the exhaustive logical basename map is [[spec/file-naming-overlays]].
+- Overlay folders and C-file counts: `src/ovl/<logical-folder>/`, with `src/ovl/TT/` retained by agreement gate; the exhaustive logical basename map is [[spec/file-naming-overlays]].
 - Original object records and boundaries: `config/objects/<UNIT>.txt`, generated by `tools/object_boundaries.py`.
 - Function census method: `tools/srcscan.py` over the configured C-source set. Current verified definition totals are 830 main and 6,122 overlays.
 

@@ -1,6 +1,6 @@
 /* sprite_animation_and_followers.c: src/ovl/TT/801478D0.c:4: part-sprite animation/drawing plus following-ship trail updates; body 13: temp_v0 = arg0->unk_08; 14: if (temp_v0 & 0x80) {. Original object 0x801478D0-0x80148210 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_sprite_animation_step(TtAnimationView *arg0) {
     TtAnimFrame *frame;
@@ -185,42 +185,42 @@ void tt_options_reset(void) {
     }
 }
 
-void tt_option_trail_step(u8 *arg0) {
+void tt_option_trail_step(u8 *option) {
     s32 i;
     u8 *player;
 
     player = tt_player;
-    if (arg0 == tt_options) {
-        *(s16 *)(arg0 + 0x62) = *(s16 *)(player + 0x14);
-        *(s16 *)(arg0 + 0x82) = *(s16 *)(player + 0x16);
+    if (option == tt_options) {
+        *(s16 *)(option + 0x62) = *(s16 *)(player + 0x14);
+        *(s16 *)(option + 0x82) = *(s16 *)(player + 0x16);
     } else {
-        *(s16 *)(arg0 + 0x62) = *(s16 *)(arg0 - 0x54);
-        *(s16 *)(arg0 + 0x82) = *(s16 *)(arg0 - 0x34);
+        *(s16 *)(option + 0x62) = *(s16 *)(option - 0x54);
+        *(s16 *)(option + 0x82) = *(s16 *)(option - 0x34);
     }
     for (i = 1; i < 10; i++) {
-        *(s16 *)(arg0 + 0x4E + i * 2) = *(s16 *)(arg0 + 0x50 + i * 2);
-        *(s16 *)(arg0 + 0x6E + i * 2) = *(s16 *)(arg0 + 0x70 + i * 2);
+        *(s16 *)(option + 0x4E + i * 2) = *(s16 *)(option + 0x50 + i * 2);
+        *(s16 *)(option + 0x6E + i * 2) = *(s16 *)(option + 0x70 + i * 2);
     }
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x50);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x70);
+    *(s16 *)(option + 0x14) = *(s16 *)(option + 0x50);
+    *(s16 *)(option + 0x16) = *(s16 *)(option + 0x70);
 }
 
 /* Three-store chains (u16 6, 8, A; bytes D, E, F) keep their zero in v1/a1 like the original; two-store chains or s16
  * give $zero stores. The loop is unrolled by IDO (T-11850). */
-void tt_option_activate(u8 *arg0) {
+void tt_option_activate(u8 *option) {
     s32 i;
     u8 *src;
 
     src = tt_player;
-    arg0[0] = 1;
-    *(s16 *)(arg0 + 4) = 0x40;
+    option[0] = 1;
+    *(s16 *)(option + 4) = 0x40;
     /* FAKE: both chains on one line give the original store order (as1 schedules by source line). T-11850 */
-    *(u16 *)(arg0 + 6) = *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 0xA) = 0; arg0[0xD] = arg0[0xE] = arg0[0xF] = 0;
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(src + 0x14);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(src + 0x16);
+    *(u16 *)(option + 6) = *(u16 *)(option + 8) = *(u16 *)(option + 0xA) = 0; option[0xD] = option[0xE] = option[0xF] = 0;
+    *(s16 *)(option + 0x14) = *(s16 *)(src + 0x14);
+    *(s16 *)(option + 0x16) = *(s16 *)(src + 0x16);
     for (i = 0; i < 10; i++) {
-        ((s16 *)(arg0 + 0x50))[i] = *(s16 *)(src + 0x14);
-        ((s16 *)(arg0 + 0x70))[i] = *(s16 *)(src + 0x16);
+        ((s16 *)(option + 0x50))[i] = *(s16 *)(src + 0x14);
+        ((s16 *)(option + 0x70))[i] = *(s16 *)(src + 0x16);
     }
 }
 

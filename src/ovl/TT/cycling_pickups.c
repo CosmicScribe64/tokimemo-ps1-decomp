@@ -1,6 +1,6 @@
 /* cycling_pickups.c: src/ovl/TT/8013BD10.c:276: pickup pool with motion, cloud spawn, shot-driven kind changes and popup labels; avoids unconfirmed bell identity; body 280: c = tt_run; 281: e = tt_player;. Original object 0x8013BD10-0x8013C6D0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 u8 *tt_bell_find_free(u8 *cursor, u8 *end) {
     while (cursor < end) {
@@ -38,56 +38,56 @@ void tt_bells_reset(void) {
     }
 }
 
-void tt_bell_setup(u8 *arg0) {
-    arg0[0] = 1;
-    *(s16 *)(arg0 + 2) = 0x20;
-    *(s16 *)(arg0 + 0x52) = 0xA;
-    *(s16 *)(arg0 + 0x54) = 0x3C84;
-    *(s32 *)(arg0 + 0x38) = tt_animation_lists;
-    arg0[0x40] = 0x80;
-    *(s16 *)(arg0 + 0x10) = 6;
+void tt_bell_setup(u8 *pickup) {
+    pickup[0] = 1;
+    *(s16 *)(pickup + 2) = 0x20;
+    *(s16 *)(pickup + 0x52) = 0xA;
+    *(s16 *)(pickup + 0x54) = 0x3C84;
+    *(s32 *)(pickup + 0x38) = tt_animation_lists;
+    pickup[0x40] = 0x80;
+    *(s16 *)(pickup + 0x10) = 6;
 }
 
-void tt_bell_set_popup_label(u8 *arg0, u16 arg1) {
-    *(s16 *)(arg0 + 2) = arg1;
-    switch (arg1) {
+void tt_bell_set_popup_label(u8 *pickup, u16 popup_kind) {
+    *(s16 *)(pickup + 2) = popup_kind;
+    switch (popup_kind) {
     case 40:
-        arg0[0x56] = 0;
-        arg0[0x57] = 0;
+        pickup[0x56] = 0;
+        pickup[0x57] = 0;
         break;
     case 41:
         /* FAKE: both stores on one source line give the original's li/sb order (as1 schedules by line, T-7020) */
-        arg0[0x56] = 0x40; arg0[0x57] = 0x10;
+        pickup[0x56] = 0x40; pickup[0x57] = 0x10;
         break;
     case 42:
-        arg0[0x56] = 0x40;
-        arg0[0x57] = 0;
+        pickup[0x56] = 0x40;
+        pickup[0x57] = 0;
         break;
     case 43:
-        arg0[0x57] = 0x20;
-        arg0[0x56] = 0;
+        pickup[0x57] = 0x20;
+        pickup[0x56] = 0;
         break;
     case 44:
-        arg0[0x57] = 0x10;
-        arg0[0x56] = 0;
+        pickup[0x57] = 0x10;
+        pickup[0x56] = 0;
         break;
     }
-    arg0[0x3C] = 0;
-    *(s16 *)(arg0 + 0x52) = 0xB;
-    *(s16 *)(arg0 + 0x54) = 0x3C81;
+    pickup[0x3C] = 0;
+    *(s16 *)(pickup + 0x52) = 0xB;
+    *(s16 *)(pickup + 0x54) = 0x3C81;
 }
 
-void tt_bell_popup_spawn(u8 *arg0) {
+void tt_bell_popup_spawn(u8 *popup_source) {
     u8 *base;
     u8 *p;
 
     base = tt_bells;
     tt_se_request(TT_SE_POPUP);
     p = tt_bell_find_free(base, base + 0xD80);
-    *(s32 *)(p + 0x20) = *(s32 *)(arg0 + 0xC);
-    *(s32 *)(p + 0x24) = *(s32 *)(arg0 + 0x10);
-    *(s16 *)(p + 0x14) = *(s16 *)arg0;
-    *(s16 *)(p + 0x16) = *(s16 *)(arg0 + 2);
+    *(s32 *)(p + 0x20) = *(s32 *)(popup_source + 0xC);
+    *(s32 *)(p + 0x24) = *(s32 *)(popup_source + 0x10);
+    *(s16 *)(p + 0x14) = *(s16 *)popup_source;
+    *(s16 *)(p + 0x16) = *(s16 *)(popup_source + 2);
     *(s32 *)(p + 0x30) = 0;
     *(s32 *)(p + 0x34) = 0;
     *(s32 *)(p + 0x2C) = 0;
@@ -99,7 +99,7 @@ void tt_bell_popup_spawn(u8 *arg0) {
     *(s16 *)(p + 0x62) = 0;
     *(s16 *)(p + 0x50) = 0;
     *(s16 *)(p + 4) = 0x90;
-    /* FAKE: TT zero-store chains (bytes first, u16 view); their reloads leave dead uopt ranges that put base in $a2 and arg0 in $a3. T-11860 */
+    /* FAKE: TT zero-store chains (bytes first, u16 view); their reloads leave dead uopt ranges that put base in $a2 and popup_source in $a3. T-11860 */
     p[0xD] = p[0xE] = p[0xF] = 0;
     *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
     tt_bell_set_popup_label(p, 0x2C);
@@ -121,14 +121,14 @@ typedef struct {
     s32 w;
 } TtCopyWord;
 
-void tt_bell_spawn_in_cloud(u8 *arg0) {
+void tt_bell_spawn_in_cloud(u8 *cloud) {
     u8 *p;
 
     p = tt_bell_find_free(tt_bells, tt_bells + 0xD80);
-    *(TtCopyWord *)(p + 0x20) = *(TtCopyWord *)(arg0 + 0x20);
-    *(TtCopyWord *)(p + 0x24) = *(TtCopyWord *)(arg0 + 0x24);
-    *(TtCopyWord *)(p + 0x28) = *(TtCopyWord *)(arg0 + 0x28);
-    *(TtCopyWord *)(p + 0x2C) = *(TtCopyWord *)(arg0 + 0x2C);
+    *(TtCopyWord *)(p + 0x20) = *(TtCopyWord *)(cloud + 0x20);
+    *(TtCopyWord *)(p + 0x24) = *(TtCopyWord *)(cloud + 0x24);
+    *(TtCopyWord *)(p + 0x28) = *(TtCopyWord *)(cloud + 0x28);
+    *(TtCopyWord *)(p + 0x2C) = *(TtCopyWord *)(cloud + 0x2C);
     *(s32 *)(p + 0x30) = 0;
     *(s32 *)(p + 0x34) = 0;
     p[0x59] = 0;

@@ -1,6 +1,6 @@
 /* title_and_projectile_pools.c: src/ovl/TT/80148DB0.c:4: title logo/menu/ship state plus bomb-target and player-shot pool operations; body 8: i = 0; 9: p = tt_bomb_targets;. Original object 0x80148DB0-0x8014AF00 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_bomb_targets_clear(void) {
     s32 i;
@@ -28,9 +28,9 @@ void tt_bomb_targets_reset(void) {
     }
 }
 
-void tt_bomb_target_init(arg0, arg1)
-u8 *arg0;
-s32 arg1;
+void tt_bomb_target_init(target, shooter_index)
+u8 *target;
+s32 shooter_index;
 {
     u8 *src;
     s32 *stage_script;
@@ -42,10 +42,10 @@ s32 arg1;
 
     stage_script = tt_stage_script;
     src = tt_player;
-    if (arg1 < 2) {
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(src + 0x14) << 16;
-        *(s32 *)(arg0 + 0x1C) = *stage_script - ((*(s16 *)(src + 0x16) - 0x60) << 16);
-        *(u16 *)(arg0 + 0x44) = 0xFFFF;
+    if (shooter_index < 2) {
+        *(s32 *)(target + 0x20) = *(s16 *)(src + 0x14) << 16;
+        *(s32 *)(target + 0x1C) = *stage_script - ((*(s16 *)(src + 0x16) - 0x60) << 16);
+        *(u16 *)(target + 0x44) = 0xFFFF;
         i = 0;
         p = tt_ground_targets;
         for (; i != 0x20; i++, p += 0x78) {
@@ -61,19 +61,19 @@ s32 arg1;
                     dx = e;
                 }
                 if (dx < 0x20) {
-                    *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                    *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
-                    *(s16 *)(arg0 + 0x44) = i;
+                    *(s32 *)(target + 0x20) = *(s32 *)(p + 0x20);
+                    *(s32 *)(target + 0x1C) = *(s32 *)(p + 0x1C);
+                    *(s16 *)(target + 0x44) = i;
                     p[0x64] = 1;
                     break;
                 }
             }
         }
     } else {
-        src = tt_options + (arg1 >> 1) * 0xA4 - 0xA4;
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(src + 0x14) << 16;
-        *(s32 *)(arg0 + 0x1C) = *stage_script - ((*(s16 *)(src + 0x16) - 0x60) << 16);
-        *(u16 *)(arg0 + 0x44) = 0xFFFF;
+        src = tt_options + (shooter_index >> 1) * 0xA4 - 0xA4;
+        *(s32 *)(target + 0x20) = *(s16 *)(src + 0x14) << 16;
+        *(s32 *)(target + 0x1C) = *stage_script - ((*(s16 *)(src + 0x16) - 0x60) << 16);
+        *(u16 *)(target + 0x44) = 0xFFFF;
         p = tt_ground_targets;
         for (i = 0; i != 0x20; i++, p += 0x78) {
             if (p[0] != 0 && p[0x64] == 0) {
@@ -86,9 +86,9 @@ s32 arg1;
                         dx = e;
                     }
                     if (dx < 0x20) {
-                        *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                        *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
-                        *(s16 *)(arg0 + 0x44) = i;
+                        *(s32 *)(target + 0x20) = *(s32 *)(p + 0x20);
+                        *(s32 *)(target + 0x1C) = *(s32 *)(p + 0x1C);
+                        *(s16 *)(target + 0x44) = i;
                         p[0x64] = 1;
                         break;
                     }
@@ -96,23 +96,23 @@ s32 arg1;
             }
         }
     }
-    *(s32 *)(arg0 + 0x28) = 0;
-    *(s32 *)(arg0 + 0x2C) = 0;
-    *(s16 *)(arg0 + 0x46) = 0;
+    *(s32 *)(target + 0x28) = 0;
+    *(s32 *)(target + 0x2C) = 0;
+    *(s16 *)(target + 0x46) = 0;
 }
 
-void tt_bomb_target_age(u8 *arg0) {
-    if ((u32)(u16)++*(u16 *)(arg0 + 0x46) >= 0x79) {
-        arg0[0] = 0;
+void tt_bomb_target_age(u8 *bomb_target) {
+    if ((u32)(u16)++*(u16 *)(bomb_target + 0x46) >= 0x79) {
+        bomb_target[0] = 0;
     }
 }
 
-void tt_bomb_target_scroll(u8 *arg0) {
-    *(s32 *)(arg0 + 0x24) = *tt_stage_script - *(s32 *)(arg0 + 0x1C);
-    *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
-    *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
+void tt_bomb_target_scroll(u8 *bomb_target) {
+    *(s32 *)(bomb_target + 0x24) = *tt_stage_script - *(s32 *)(bomb_target + 0x1C);
+    *(s32 *)(bomb_target + 0x20) += *(s32 *)(bomb_target + 0x28);
+    *(s32 *)(bomb_target + 0x24) += *(s32 *)(bomb_target + 0x2C);
+    *(s16 *)(bomb_target + 0x14) = *(s16 *)(bomb_target + 0x22);
+    *(s16 *)(bomb_target + 0x16) = *(s16 *)(bomb_target + 0x26);
 }
 
 void tt_bomb_targets_update(void) {
@@ -887,78 +887,78 @@ void tt_shots_reset(void) {
     }
 }
 
-void tt_shot_set_kind(u8 *arg0, u16 arg1) {
-    *(u16 *)(arg0 + 2) = arg1;
-    switch (arg1) {
+void tt_shot_set_kind(u8 *shot, u16 shot_level) {
+    *(u16 *)(shot + 2) = shot_level;
+    switch (shot_level) {
     case 8:
     default:
-        arg0[0x42] = 0x80;
-        arg0[0x43] = 0xC0;
+        shot[0x42] = 0x80;
+        shot[0x43] = 0xC0;
         break;
     case 9:
-        arg0[0x42] = 0x90;
-        arg0[0x43] = 0xC0;
+        shot[0x42] = 0x90;
+        shot[0x43] = 0xC0;
         break;
     case 10:
-        arg0[0x42] = 0x80;
-        arg0[0x43] = 0xD0;
+        shot[0x42] = 0x80;
+        shot[0x43] = 0xD0;
         break;
     }
 }
 
-void tt_shot_launch_init(u8 *arg0, s32 arg1) {
+void tt_shot_launch_init(u8 *shot, s32 shooter_index) {
     u8 *player;
     u8 *q;
     u8 *r;
 
     player = tt_player;
     q = tt_options;
-    if (arg1 < 6) {
-        tt_shot_set_kind(arg0, player[0x55]);
+    if (shooter_index < 6) {
+        tt_shot_set_kind(shot, player[0x55]);
     } else {
-        tt_shot_set_kind(arg0, q[0x92]);
+        tt_shot_set_kind(shot, q[0x92]);
     }
-    if (arg1 < 6) {
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(player + 0x14) << 16;
-        *(s32 *)(arg0 + 0x24) = *(s16 *)(player + 0x16) << 16;
-    } else if (arg1 < 8) {
+    if (shooter_index < 6) {
+        *(s32 *)(shot + 0x20) = *(s16 *)(player + 0x14) << 16;
+        *(s32 *)(shot + 0x24) = *(s16 *)(player + 0x16) << 16;
+    } else if (shooter_index < 8) {
         q = tt_options;
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(q + 0x50) << 16;
-        *(s32 *)(arg0 + 0x24) = *(s16 *)(q + 0x70) << 16;
-    } else if (arg1 < 10) {
+        *(s32 *)(shot + 0x20) = *(s16 *)(q + 0x50) << 16;
+        *(s32 *)(shot + 0x24) = *(s16 *)(q + 0x70) << 16;
+    } else if (shooter_index < 10) {
         q = tt_options;
         r = q + 0xA4;
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(q + 0xF4) << 16;
-        *(s32 *)(arg0 + 0x24) = *(s16 *)(r + 0x70) << 16;
+        *(s32 *)(shot + 0x20) = *(s16 *)(q + 0xF4) << 16;
+        *(s32 *)(shot + 0x24) = *(s16 *)(r + 0x70) << 16;
     } else {
         q = tt_options;
         r = q + 0x148;
-        *(s32 *)(arg0 + 0x20) = *(s16 *)(q + 0x198) << 16;
-        *(s32 *)(arg0 + 0x24) = *(s16 *)(r + 0x70) << 16;
+        *(s32 *)(shot + 0x20) = *(s16 *)(q + 0x198) << 16;
+        *(s32 *)(shot + 0x24) = *(s16 *)(r + 0x70) << 16;
     }
-    if (arg1 >= 2 && arg1 < 4) {
-        *(s32 *)(arg0 + 0x28) = 0xFFFD0000;
-    } else if (arg1 >= 4 && arg1 < 6) {
-        *(s32 *)(arg0 + 0x28) = 0x30000;
+    if (shooter_index >= 2 && shooter_index < 4) {
+        *(s32 *)(shot + 0x28) = 0xFFFD0000;
+    } else if (shooter_index >= 4 && shooter_index < 6) {
+        *(s32 *)(shot + 0x28) = 0x30000;
     } else {
-        *(s32 *)(arg0 + 0x28) = 0;
+        *(s32 *)(shot + 0x28) = 0;
     }
-    *(s32 *)(arg0 + 0x2C) = 0xFFFA0000;
+    *(s32 *)(shot + 0x2C) = 0xFFFA0000;
 }
 
-void tt_shot_move(u8 *arg0) {
-    *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);
-    *(s32 *)(arg0 + 0x24) += *(s32 *)(arg0 + 0x2C);
-    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
-    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
-    if (*(s16 *)(arg0 + 0x16) < 0) {
-        *(s16 *)(arg0 + 4) = 0xA0;
-        *(s16 *)(arg0 + 0xA) = 0;
-        *(s16 *)(arg0 + 8) = 0;
-        *(s16 *)(arg0 + 6) = 0;
-        arg0[0xF] = 0;
-        arg0[0xE] = 0;
-        arg0[0xD] = 0;
+void tt_shot_move(u8 *shot) {
+    *(s32 *)(shot + 0x20) += *(s32 *)(shot + 0x28);
+    *(s32 *)(shot + 0x24) += *(s32 *)(shot + 0x2C);
+    *(s16 *)(shot + 0x14) = *(s16 *)(shot + 0x22);
+    *(s16 *)(shot + 0x16) = *(s16 *)(shot + 0x26);
+    if (*(s16 *)(shot + 0x16) < 0) {
+        *(s16 *)(shot + 4) = 0xA0;
+        *(s16 *)(shot + 0xA) = 0;
+        *(s16 *)(shot + 8) = 0;
+        *(s16 *)(shot + 6) = 0;
+        shot[0xF] = 0;
+        shot[0xE] = 0;
+        shot[0xD] = 0;
     }
 }
 

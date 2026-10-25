@@ -68,12 +68,14 @@ INCLUDE_RODATA("asm/data/main/scene_library.data", face_frame_tables);
 INCLUDE_RODATA("asm/data/main/scene_library.data", face_sequences);
 INCLUDE_RODATA("asm/data/main/scene_library.data", face_palette);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_tables);
-INCLUDE_RODATA("asm/data/main/scene_library.data", D_800CA138);
-INCLUDE_RODATA("asm/data/main/scene_library.data", D_800CA13C);
-INCLUDE_RODATA("asm/data/main/scene_library.data", D_800CA140);
-INCLUDE_RODATA("asm/data/main/scene_library.data", D_800CA144);
+INCLUDE_RODATA("asm/data/main/scene_library.data", talk_active_line_ptr);
+INCLUDE_RODATA("asm/data/main/scene_library.data", talk_active_text_table);
+INCLUDE_RODATA("asm/data/main/scene_library.data", talk_active_command_table);
+INCLUDE_RODATA("asm/data/main/scene_library.data", talk_active_voice_table);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_group);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_line);
+INCLUDE_RODATA("asm/data/main/scene_library.data", talk_secondary_group);
+INCLUDE_RODATA("asm/data/main/scene_library.data", talk_secondary_line);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_text_table);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_command_table);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_voice_table);
@@ -84,6 +86,8 @@ INCLUDE_RODATA("asm/data/main/scene_library.data", name_code_girl_short);
 INCLUDE_RODATA("asm/data/main/scene_library.data", girl_name_buf);
 INCLUDE_RODATA("asm/data/main/scene_library.data", scene_place_title);
 INCLUDE_RODATA("asm/data/main/scene_library.data", scene_place_title_2);
+INCLUDE_RODATA("asm/data/main/scene_library.data", date_choice_mood_face);
+INCLUDE_RODATA("asm/data/main/scene_library.data", date_choice_tier);
 INCLUDE_RODATA("asm/data/main/scene_library.data", name_code_s);
 INCLUDE_RODATA("asm/data/main/scene_library.data", name_code_o);
 INCLUDE_RODATA("asm/data/main/scene_library.data", name_code_w);
@@ -97,7 +101,17 @@ INCLUDE_RODATA("asm/data/main/scene_library.data", talk_text_scroll_pending);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_next_row_y);
 INCLUDE_RODATA("asm/data/main/scene_library.data", talk_voice_cancelled);
 INCLUDE_RODATA("asm/data/main/scene_library.data", D_800CA2C8);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_destination);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_talk_text_table);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_talk_command_table);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_talk_voice_table);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_talk_group);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_talk_line);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_secondary_talk_group);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_secondary_talk_line);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_alternate_dialogue_mode);
 INCLUDE_RODATA("asm/data/main/scene_library.data", scene_trip_day_state);
+INCLUDE_RODATA("asm/data/main/scene_library.data", trip_response_branch);
 INCLUDE_RODATA("asm/data/main/scene_library.data", select_girl_menu_x);
 INCLUDE_RODATA("asm/data/main/scene_library.data", select_girl_menu_y);
 INCLUDE_RODATA("asm/data/main/scene_library.data", select_girl_menu_width);
@@ -108,9 +122,9 @@ INCLUDE_RODATA("asm/data/main/scene_library.data", talk_voice_speaker_by_girl);
 void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
 extern s32 talk_work[];
-/* Declared here, not in main_api.h: EVENT src/ovl/EVENT/nozomi_scenes.c declares the same address as
+/* Declared here, not in main_api.h: EVENT src/ovl/date_spots/nozomi_scenes.c declares the same address as
  * a function table (FnTbl55); moving it needs a MAIN_API_OVERRIDE there. T-11590 */
-extern s32 D_80122D48;
+extern s32 talk_rank_override;
 
 /* Samples CD audio and updates the stereo level-meter values. */
 void SD_GetCDLevel(CdLevelMeter *arg0) {
@@ -2210,7 +2224,7 @@ s32 normal_date_three_select_init(void) {
     h[0] = h[1] = h[2] = 0x10;
     menu_set(1, 3, x, y, w, h);
     game_state.menu_cursor_1 = 0;
-    D_80122D30 = 1;
+    talk_menu_active = 1;
     game_state.mode_step_timer.w++;
 }
 
@@ -2222,16 +2236,16 @@ s32 normal_date_three_select_main(void) {
     if (game_state.pad_pressed & 0x200020) {
         if (check_end_k() != 0) {
             if (game_state.menu_items[1].hover != 0) {
-                D_80122CDC = talk_choice_order[0];
+                talk_choice = talk_choice_order[0];
             } else if (game_state.menu_items[3].hover != 0) {
-                D_80122CDC = talk_choice_order[1];
+                talk_choice = talk_choice_order[1];
             } else if (game_state.menu_items[5].hover != 0) {
-                D_80122CDC = talk_choice_order[2];
+                talk_choice = talk_choice_order[2];
             } else {
                 return 0;
             }
             D_8011ECD3 &= 0xFF7F;
-            D_80122D30 = 0;
+            talk_menu_active = 0;
             k_reset(1);
             mode_step_next();
         }
@@ -2268,7 +2282,7 @@ void normal_date_two_select_init(void) {
     h[0] = h[1] = 0x10;
     menu_set(1, 2, x, y, w, h);
     game_state.menu_cursor_1 = 0;
-    D_80122D30 = 1;
+    talk_menu_active = 1;
     game_state.mode_step_timer.w++;
 }
 
@@ -2280,14 +2294,14 @@ s32 normal_date_two_select_main(void) {
     if (game_state.pad_pressed & 0x200020) {
         if (check_end_k() != 0) {
             if (game_state.menu_items[1].hover != 0) {
-                D_80122CDC = 0;
+                talk_choice = 0;
             } else if (game_state.menu_items[3].hover != 0) {
-                D_80122CDC = 1;
+                talk_choice = 1;
             } else {
                 return 0;
             }
             D_8011ECD3 &= 0xFF7F;
-            D_80122D30 = 0;
+            talk_menu_active = 0;
             k_reset(1);
             mode_step_next();
         }
@@ -2330,7 +2344,7 @@ void portrait_layout_set(u8 arg0) {
 }
 
 s32 portrait_show_checked(void) {
-    u8 var_v1;
+    u8 expression_variant;
 
     if ((((s32 *)face_images)[0] != 0x801820AC || ((s32 *)face_images)[1] != 0x801860AC ||
          ((s32 *)face_images)[2] != 0x8018A0AC || ((s32 *)face_images)[3] != 0x8018E0AC ||
@@ -2346,22 +2360,22 @@ s32 portrait_show_checked(void) {
         game_state.mode_step -= 3;
         return 0;
     }
-    var_v1 = get_g_zyotai_h((s32) game_state.current_girl) & 0x7F;
+    expression_variant = get_g_zyotai_h((s32) game_state.current_girl) & 0x7F;
     if ((u8) game_state.current_girl >= GIRL_REI) {
-        var_v1 = 0;
+        expression_variant = 0;
     }
-    portrait_build(face_palette, face_images, face_frame_tables, face_sequences, var_v1);
+    portrait_build(face_palette, face_images, face_frame_tables, face_sequences, expression_variant);
     mode_step_next();
 }
 
 void face_show(void) {
-    u8 var_v1;
+    u8 expression_variant;
 
-    var_v1 = get_g_zyotai_h((s32) game_state.current_girl) & 0x7F;
+    expression_variant = get_g_zyotai_h((s32) game_state.current_girl) & 0x7F;
     if ((u8) game_state.current_girl >= GIRL_REI) {
-        var_v1 = 0;
+        expression_variant = 0;
     }
-    portrait_build(face_palette, face_images, face_frame_tables, face_sequences, var_v1);
+    portrait_build(face_palette, face_images, face_frame_tables, face_sequences, expression_variant);
     mode_step_next();
 }
 
@@ -2435,7 +2449,7 @@ void scene_frame_update(void) {
     if (D_80122D04 != 0 || D_80122D2C != 0) {
         actor_pool[3] &= 0x7F;
     }
-    if (D_80122D30 == 1) {
+    if (talk_menu_active == 1) {
         actor_pool[3] |= 0x80;
     }
     if (actor_pool[3] & 0x80) {
@@ -2787,15 +2801,15 @@ void change_girl(void) {
     mode_step_next();
 }
 
-void talk_names_set(u8 arg0) {
+void talk_names_set(u8 girl_id) {
     s32 t;
 
     strcpy(name_code_family, game_state.player_family_name);
     strcpy(name_code_given, game_state.player_given_name);
-    if (arg0 < 0xE) {
-        t = arg0;
+    if (girl_id < 0xE) {
+        t = girl_id;
         get_p_name(name_code_player_form, t);
-        strcpy(name_code_girl_short, girl_short_name_table[arg0]);
+        strcpy(name_code_girl_short, girl_short_name_table[girl_id]);
         get_g_name(girl_name_buf, t);
     }
 }
@@ -2831,8 +2845,8 @@ void select_girl2(void) {
 }
 
 /* Builds and initializes the available-heroine selection menu. */
-void select_girl_init(arg0)
-u8 arg0;
+void select_girl_init(omit_back)
+u8 omit_back;
 {
     /* T-10900: promoted scalars precede the eight-byte name buffer. */
     s16 i;
@@ -2856,17 +2870,17 @@ u8 arg0;
     select_girl_menu_y[11] = 0x50;
     select_girl_menu_width[11] = 0x2A;
     select_girl_menu_height[11] = 0x10;
-    if ((u8)arg0 != 0) select_girl_menu_width[11] = 0;
-    if ((u8)arg0 == 0) result = set_kanji_string(0x40, 0x50, 0, "やめる", 0);
+    if ((u8)omit_back != 0) select_girl_menu_width[11] = 0;
+    if ((u8)omit_back == 0) result = set_kanji_string(0x40, 0x50, 0, "やめる", 0);
     k_disp_start(result);
-    menu_set(1, (0xC - (u8)arg0) & 0xFF, select_girl_menu_x, select_girl_menu_y, select_girl_menu_width, select_girl_menu_height);
+    menu_set(1, (0xC - (u8)omit_back) & 0xFF, select_girl_menu_x, select_girl_menu_y, select_girl_menu_width, select_girl_menu_height);
     for (i = 0; i < 11; i++) {
         if (select_girl_menu_width[i] != 0) {
             game_state.menu_cursor_1 = i;
             break;
         }
     }
-    D_80122D30 = 1;
+    talk_menu_active = 1;
     game_state.mode_step_timer.w++;
 }
 
@@ -2882,9 +2896,9 @@ s32 select_girl_main(s32 omit_back) {
         candidate_count = 0xC - (u8)omit_back;
         for (girl_index = 0; girl_index < candidate_count; girl_index++) {
             if (((u8 *)&game_state)[girl_index * 16 + 0xF9E] != 0 && select_girl_menu_width[girl_index] != 0) {
-                D_80122CDC = girl_index;
+                talk_choice = girl_index;
                 D_8011ECD3 &= 0xFF7F;
-                D_80122D30 = 0;
+                talk_menu_active = 0;
                 k_reset(1);
                 mode_step_next();
                 return 0;
@@ -3257,11 +3271,11 @@ void don_wait(void) {
 /* Installs dialogue tables and runs one date-dialogue line. */
 void normal_date_speak_1line(void) {
     talk_tables = (u8 *)&talk_group;
-    D_800CA138 = (u8 *)&talk_line;
-    D_800CA13C = talk_text_table;
-    D_800CA140 = talk_command_table;
-    D_800CA144 = talk_voice_table;
-    if (talk_run(D_80122CDC, 1, 0) == 1) {
+    talk_active_line_ptr = (u8 *)&talk_line;
+    talk_active_text_table = talk_text_table;
+    talk_active_command_table = talk_command_table;
+    talk_active_voice_table = talk_voice_table;
+    if (talk_run(talk_choice, 1, 0) == 1) {
         mode_step_next();
     }
 }
@@ -3269,21 +3283,21 @@ void normal_date_speak_1line(void) {
 /* Installs the dialogue tables and runs the multi-line date dialogue. */
 void normal_date_speak_012(void) {
     talk_tables = &talk_group;
-    D_800CA138 = &talk_line;
-    D_800CA13C = talk_text_table;
-    D_800CA140 = talk_command_table;
-    D_800CA144 = talk_voice_table;
+    talk_active_line_ptr = &talk_line;
+    talk_active_text_table = talk_text_table;
+    talk_active_command_table = talk_command_table;
+    talk_active_voice_table = talk_voice_table;
     talk_run(0xFF, 1, 0);
 }
 
 /* Wire the dialogue table pointers and run the talk runner for the current scene girl */
 void normal_date_speak(void) {
     talk_tables = &talk_group;
-    D_800CA138 = &talk_line;
-    D_800CA13C = talk_text_table;
-    D_800CA140 = talk_command_table;
-    D_800CA144 = talk_voice_table;
-    talk_run(D_80122CDC, 1, 0);
+    talk_active_line_ptr = &talk_line;
+    talk_active_text_table = talk_text_table;
+    talk_active_command_table = talk_command_table;
+    talk_active_voice_table = talk_voice_table;
+    talk_run(talk_choice, 1, 0);
 }
 
 /* Resets portrait actors, frees their texture-cache slots and advances the scene step. */
@@ -3305,12 +3319,12 @@ s32 event_log_add(scene_id, scene_flag)
     game_state.event_log[game_state.event_log_count].girl = game_state.current_girl;
     game_state.event_log[game_state.event_log_count].scene = scene_id;
     game_state.event_log[game_state.event_log_count].flag = scene_flag;
-    if (D_80122D48 == 0 || D_80122D48 >= 7) {
+    if (talk_rank_override == 0 || talk_rank_override >= 7) {
         game_state.event_log[game_state.event_log_count].rank = get_g_zyotai_h(game_state.current_girl);
     } else {
-        game_state.event_log[game_state.event_log_count].rank = D_80122D48 - 1;
+        game_state.event_log[game_state.event_log_count].rank = talk_rank_override - 1;
     }
-    D_80122D48 = 0;
+    talk_rank_override = 0;
     if (game_state.current_girl == GIRL_REI) {
         game_state.event_log[game_state.event_log_count].rank = 0;
     }

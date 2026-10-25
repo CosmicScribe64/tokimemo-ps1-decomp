@@ -669,11 +669,11 @@ void actor_clear_range(s32 arg0) {
     D_8011ECE8 = c;
 }
 
-void actor_clear(s32 arg0) {
+void actor_clear(s32 actor_index) {
     u8 *p;
 
-    if (arg0 < 0xA0) {
-        p = actor_pool + arg0 * 0x44;
+    if (actor_index < 0xA0) {
+        p = actor_pool + actor_index * 0x44;
         p[0] = 0;
         *(s32 *)(p + 0x38) = 0;
         p[1] = 0;

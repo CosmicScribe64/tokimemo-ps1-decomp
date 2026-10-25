@@ -1,6 +1,6 @@
 /* rope_arm_boss.c: src/ovl/TT/801374C0.c:408: boss rope contact, side/core damage, rope extension/breakage, ring expansion and attacks; body 417: c = tt_boss; 418: s = tt_boss_rope_buf;. Original object 0x801374C0-0x8013A040 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* Fields used by TT's phase update. T-9720. */
 typedef struct TtBossSpinView {
@@ -12,7 +12,7 @@ typedef struct TtBossSpinView {
 } TtBossSpinView; /* size 0x3AE */
 
 /* The zero-store chain pair on a (stores 0xA, 8, 6 and 0xF, 0xE, 0xD) gives a the reloads that rank it above &pt and tt_boss1_hitbox_rope; the one-line loop head and step fix the order of the i/q home stores. T-11860 */
-void tt_boss1_rope_contact(u8 *arg0) {
+void tt_boss1_rope_contact(u8 *rope_points) {
     u8 *player;
     u8 *shot;
     s32 j;
@@ -25,7 +25,7 @@ void tt_boss1_rope_contact(u8 *arg0) {
     u8 *q;
 
     player = tt_player;
-    i = 0; q = arg0; do { /* FAKE: one line, so as1 puts the i/q home stores after the hoisted constants. T-11860 */
+    i = 0; q = rope_points; do { /* FAKE: one line, so as1 puts the i/q home stores after the hoisted constants. T-11860 */
         pt[0] = *(s16 *)(q + 0x1E);
         pt[1] = *(s16 *)(q + 0x9E);
         if (player[0x52] == 0 && player[0] != 0 && tt_box_overlap(player + 0x14, tt_hitboxes, (u8 *)pt, tt_boss1_hitbox_rope) != 0) {

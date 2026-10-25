@@ -61,13 +61,13 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, OPTION/settings_sound_test_and_extras]
-      - [0x69A0, c, OPTION/voice_test_browser]
-      - [0x8550, c, OPTION/debug_game_data_editors]
-      - [0xA880, .rodata, OPTION/settings_sound_test_and_extras]
-      - [0xAC10, .rodata, OPTION/voice_test_browser]
-      - [0xACE0, .rodata, OPTION/debug_game_data_editors]
+      - [0x0, c, options/settings_sound_test_and_extras]
+      - [0x69A0, c, options/voice_test_browser]
+      - [0x8550, c, options/debug_game_data_editors]
+      - [0xA880, .rodata, options/settings_sound_test_and_extras]
+      - [0xAC10, .rodata, options/voice_test_browser]
+      - [0xACE0, .rodata, options/debug_game_data_editors]
       - [0xB180, data, OPTION_data]
-      - [0xB360, .data, OPTION/voice_test_browser]
+      - [0xB360, .data, options/voice_test_browser]
       - [0xC740, data, OPTION_data_8013E740]
   - [0x30000]

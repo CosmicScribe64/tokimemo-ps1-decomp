@@ -1,6 +1,6 @@
 /* ranking_name_entry.c: src/ovl/TT/80145E60.c:4: ranking insertion, name-entry display and button input state; body 10: a = tt_sys; 11: b = tt_run;. Original object 0x80145E60-0x80146BE0 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 s32 tt_ranking_try_insert(void) {
     u8 *sys;

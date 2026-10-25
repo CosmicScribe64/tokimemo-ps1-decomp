@@ -1,6 +1,6 @@
 /* exit_flow.c: src/ovl/TT/801367C0.c:4 advances private exit substep and timer, sets scene exit flag q[0x55] after timer reaches 31. Original object 0x801367C0-0x80136830 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_state_exit(void) {
     u8 *sys = tt_sys;

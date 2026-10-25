@@ -1,0 +1,57 @@
+# kind	scope	old	new	note
+dir	BUNKAKEN	BUNKAKEN	culture_festival_tour	T-27074 v2: port spec confirms the six culture-club menu and all exhibit stages visit one; tour describes the whole overlay. Original-word etymology remains HYPOTHESIS.
+file	include	ovl/BUNKAKEN.h	ovl/culture_festival_tour.h	T-27074 v2: same port-spec evidence as directory; preserve BUNKAKEN as disc/link-unit identity.
+dir	BUNKASAI	BUNKASAI	culture_festival	T-27074: accepted ADR-0001 logical overlay folder culture_festival; preserve BUNKASAI as the disc/link-unit identity.
+file	include	ovl/BUNKASAI.h	ovl/culture_festival.h	T-27074: accepted ADR-0001 logical overlay folder culture_festival; preserve BUNKASAI as the disc/link-unit identity.
+dir	BUNKA_SD	BUNKA_SD	culture_stage_shows	T-27074: accepted ADR-0001 logical overlay folder culture_stage_shows; preserve BUNKA_SD as the disc/link-unit identity.
+file	include	ovl/BUNKA_SD.h	ovl/culture_stage_shows.h	T-27074: accepted ADR-0001 logical overlay folder culture_stage_shows; preserve BUNKA_SD as the disc/link-unit identity.
+dir	DATE	DATE	date_path_stage	T-27074: neutral tool staging step for case-only path collision; final accepted target date.
+dir	DATE	date_path_stage	date	T-27074: accepted ADR-0001 logical overlay folder date; preserve DATE as the disc/link-unit identity.
+file	include	ovl/DATE.h	ovl/date_path_stage.h	T-27074: neutral tool staging step for case-only header collision; final accepted target ovl/date.h.
+file	include	ovl/date_path_stage.h	ovl/date.h	T-27074: accepted ADR-0001 logical overlay folder date; preserve DATE as the disc/link-unit identity.
+dir	DATE2	DATE2	amusement_park_date	T-27074: accepted ADR-0001 logical overlay folder amusement_park_date; preserve DATE2 as the disc/link-unit identity.
+file	include	ovl/DATE2.h	ovl/amusement_park_date.h	T-27074: accepted ADR-0001 logical overlay folder amusement_park_date; preserve DATE2 as the disc/link-unit identity.
+dir	ENDING	ENDING	ending_path_stage	T-27074: neutral tool staging step for case-only path collision; final accepted target ending.
+dir	ENDING	ending_path_stage	ending	T-27074: accepted ADR-0001 logical overlay folder ending; preserve ENDING as the disc/link-unit identity.
+file	include	ovl/ENDING.h	ovl/ending_path_stage.h	T-27074: neutral tool staging step for case-only header collision; final accepted target ovl/ending.h.
+file	include	ovl/ending_path_stage.h	ovl/ending.h	T-27074: accepted ADR-0001 logical overlay folder ending; preserve ENDING as the disc/link-unit identity.
+dir	EN_NICHI	EN_NICHI	festival_stalls	T-27074: accepted ADR-0001 logical overlay folder festival_stalls; preserve EN_NICHI as the disc/link-unit identity.
+file	include	ovl/EN_NICHI.h	ovl/festival_stalls.h	T-27074: accepted ADR-0001 logical overlay folder festival_stalls; preserve EN_NICHI as the disc/link-unit identity.
+dir	ETC	ETC	misc_scenes	T-27074: accepted ADR-0001 target misc_scenes; the map says folder migration is separate from the source-confirmed mode evidence.
+file	include	ovl/ETC.h	ovl/misc_scenes.h	T-27074: accepted ADR-0001 target misc_scenes; the map says folder migration is separate from the source-confirmed mode evidence.
+dir	EVENT	EVENT	date_spots	T-27074 v2: content label supported by EVENT port spec: 21 place dates and associated date-place scenes. Loader status is not asserted.
+file	include	ovl/EVENT.h	ovl/date_spots.h	T-27074 v2: content label supported by EVENT port spec; loader status is not asserted.
+dir	GEKO	GEKO	girl_encounters	HYPOTHESIS: accepted ADR-0001 candidate girl_encounters; the disc-name map keeps this folder at confirm status pending unit evidence.
+file	include	ovl/GEKO.h	ovl/girl_encounters.h	HYPOTHESIS: accepted ADR-0001 candidate girl_encounters; the disc-name map keeps this folder at confirm status pending unit evidence.
+dir	GYOZI	GYOZI	annual_events	T-27074 v2: content label supported by seasonal-overlay port spec; omit an unproved unused claim and retain loader uncertainty in report.
+file	include	ovl/GYOZI.h	ovl/annual_events.h	T-27074 v2: content label supported by seasonal-overlay port spec; omit an unproved unused claim.
+dir	KANGEI	KANGEI	summer_camp	HYPOTHESIS: accepted ADR-0001 candidate summer_camp; the disc-name map keeps this folder at confirm status pending unit evidence.
+file	include	ovl/KANGEI.h	ovl/summer_camp.h	HYPOTHESIS: accepted ADR-0001 candidate summer_camp; the disc-name map keeps this folder at confirm status pending unit evidence.
+dir	MASTER	MASTER	club_master	T-27074: accepted ADR-0001 logical overlay folder club_master; preserve MASTER as the disc/link-unit identity.
+file	include	ovl/MASTER.h	ovl/club_master.h	T-27074: accepted ADR-0001 logical overlay folder club_master; preserve MASTER as the disc/link-unit identity.
+dir	NAME_ENT	NAME_ENT	name_entry	T-27074: accepted ADR-0001 logical overlay folder name_entry; preserve NAME_ENT as the disc/link-unit identity.
+file	include	ovl/NAME_ENT.h	ovl/name_entry.h	T-27074: accepted ADR-0001 logical overlay folder name_entry; preserve NAME_ENT as the disc/link-unit identity.
+dir	OLH	OLH	help	T-27074: accepted ADR-0001 logical overlay folder help; preserve OLH as the disc/link-unit identity.
+file	include	ovl/OLH.h	ovl/help.h	T-27074: accepted ADR-0001 logical overlay folder help; preserve OLH as the disc/link-unit identity.
+dir	OMIMAI	OMIMAI	sick_visit	T-27074: accepted ADR-0001 logical overlay folder sick_visit; preserve OMIMAI as the disc/link-unit identity.
+file	include	ovl/OMIMAI.h	ovl/sick_visit.h	T-27074: accepted ADR-0001 logical overlay folder sick_visit; preserve OMIMAI as the disc/link-unit identity.
+dir	OPTION	OPTION	options	T-27074: accepted ADR-0001 logical overlay folder options; preserve OPTION as the disc/link-unit identity.
+file	include	ovl/OPTION.h	ovl/options.h	T-27074: accepted ADR-0001 logical overlay folder options; preserve OPTION as the disc/link-unit identity.
+dir	RENSYU	RENSYU	practice_match	T-27074: accepted ADR-0001 logical overlay folder practice_match; preserve RENSYU as the disc/link-unit identity.
+file	include	ovl/RENSYU.h	ovl/practice_match.h	T-27074: accepted ADR-0001 logical overlay folder practice_match; preserve RENSYU as the disc/link-unit identity.
+dir	RPG_BAT	RPG_BAT	rpg_battle	T-27074: accepted ADR-0001 logical overlay folder rpg_battle; preserve RPG_BAT as the disc/link-unit identity.
+file	include	ovl/RPG_BAT.h	ovl/rpg_battle.h	T-27074: accepted ADR-0001 logical overlay folder rpg_battle; preserve RPG_BAT as the disc/link-unit identity.
+dir	SHOUGATU	SHOUGATU	new_year_christmas	HYPOTHESIS: accepted ADR-0001 candidate new_year_christmas; the disc-name map keeps this folder at confirm status pending unit evidence.
+file	include	ovl/SHOUGATU.h	ovl/new_year_christmas.h	HYPOTHESIS: accepted ADR-0001 candidate new_year_christmas; the disc-name map keeps this folder at confirm status pending unit evidence.
+dir	SHUGAKU	SHUGAKU	school_trip	T-27074: accepted ADR-0001 logical overlay folder school_trip; preserve SHUGAKU as the disc/link-unit identity.
+file	include	ovl/SHUGAKU.h	ovl/school_trip.h	T-27074: accepted ADR-0001 logical overlay folder school_trip; preserve SHUGAKU as the disc/link-unit identity.
+dir	TACO	TACO	shooter_3d	T-27074: accepted ADR-0001 logical overlay folder shooter_3d; preserve TACO as the disc/link-unit identity.
+file	include	ovl/TACO.h	ovl/shooter_3d.h	T-27074: accepted ADR-0001 logical overlay folder shooter_3d; preserve TACO as the disc/link-unit identity.
+dir	TAIIKU	TAIIKU	sports_festival	T-27074: accepted ADR-0001 logical overlay folder sports_festival; preserve TAIIKU as the disc/link-unit identity.
+file	include	ovl/TAIIKU.h	ovl/sports_festival.h	T-27074: accepted ADR-0001 logical overlay folder sports_festival; preserve TAIIKU as the disc/link-unit identity.
+dir	TEL	TEL	telephone	T-27074: accepted ADR-0001 logical overlay folder telephone; preserve TEL as the disc/link-unit identity.
+file	include	ovl/TEL.h	ovl/telephone.h	T-27074: accepted ADR-0001 logical overlay folder telephone; preserve TEL as the disc/link-unit identity.
+file	include	ovl/TT.h	ovl/tt_path_stage.h	T-27074: neutral staging for case-only rename to the accepted technical namespace tt; no branded English name.
+file	include	ovl/tt_path_stage.h	ovl/tt.h	T-27074: technical TT header stem only; English folder/module name remains gated by contributor agreement.
+dir	VALEN	VALEN	valentine	HYPOTHESIS: accepted ADR-0001 candidate valentine; the disc-name map keeps this folder at confirm status pending unit evidence.
+file	include	ovl/VALEN.h	ovl/valentine.h	HYPOTHESIS: accepted ADR-0001 candidate valentine; the disc-name map keeps this folder at confirm status pending unit evidence.

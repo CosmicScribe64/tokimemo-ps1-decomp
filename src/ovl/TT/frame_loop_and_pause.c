@@ -1,6 +1,6 @@
 /* frame_loop_and_pause.c: src/ovl/TT/8013E850.c:5: overlay entry and frame loop, pause, pad-sequence checks and frame begin/end; body 11: a = tt_sys; 12: b = tt_core;. Original object 0x8013E850-0x8013F040 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 /* T-11550: matched by writing the restart/loop/reset gotos as two nested for (;;) loops (break to the reset call, goto tail out): same code, but the CFG lets as1 fill the first test's delay slot with the store's lui $at (the goto form left it in the second test's slot). The 0 is still stored through another symbol (FAKE, see the line) so uopt keeps 'lbu; or; sb' for the first |=. */
 void tt_main(void) {
@@ -95,11 +95,11 @@ tail:
     *(u8 *)&D_800E7D4C = sys[0x45];
     video = tt_video;
     if (sys[0x53] != 0 || sys[0x52] == 0) {
-        (&D_800E7D4E)[-1] = 0; /* FAKE: same byte as ((u8 *)&D_800E7D4C)[1] through another symbol, so uopt does not forward the 0 into the first |= (the original keeps lbu; or; sb). T-11520 */
+        (&tt_stages_cleared)[-1] = 0; /* FAKE: same byte as ((u8 *)&D_800E7D4C)[1] through another symbol, so uopt does not forward the 0 into the first |= (the original keeps lbu; or; sb). T-11520 */
         ((u8 *)&D_800E7D4C)[1] |= (sys[0x43] != 0) ? 1 : 0;
         ((u8 *)&D_800E7D4C)[1] |= (sys[0x49] != 0) ? 2 : 0;
     }
-    D_800E7D4E = run[0xB];
+    tt_stages_cleared = run[0xB];
     EnterCriticalSection();
     CloseEvent(*(s32 *)video);
     printf("open event %x ", *(s32 *)video);

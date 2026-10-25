@@ -25,10 +25,10 @@ extern s32 face_images;
 extern s32 face_frame_tables;
 extern s32 face_sequences;
 extern s32 face_palette;
-extern s32 D_800CA13C;
-extern s32 D_800CA140;
-extern s32 D_800CA144;
-extern s16 D_800CA150;
+extern s32 talk_active_text_table;
+extern s32 talk_active_command_table;
+extern s32 talk_active_voice_table;
+extern s16 talk_secondary_group;
 extern u8 scene_place_title[];
 extern u8 scene_place_title_2[];
 extern u8 name_code_o[]; /* text buffer (SHOUGATU func_801359FC, T-17500) */
@@ -40,7 +40,7 @@ extern u8 name_code_m[];
 extern s16 talk_voice_wait_frames;
 extern u8 select_girl_menu_enabled[];
 extern s16 talk_next_row_y;
-extern s16 D_800CA2E8;
+extern s16 trip_secondary_talk_line;
 extern s8 scene_trip_day_state;
 extern u8 D_800E7D11[];
 extern u8 D_800E7D14[];
@@ -49,8 +49,8 @@ extern u8 D_800E7D1F;
 extern u8 D_800E7D37;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
-#ifndef MAIN_API_OVERRIDE_D_800E8BEE
-extern s8 D_800E8BEE;
+#ifndef MAIN_API_OVERRIDE_slot_info_from_system_data
+extern s8 slot_info_from_system_data;
 #endif
 extern u8 D_800E8BEF;
 extern s32 draw_ot_table;
@@ -130,35 +130,36 @@ extern s32 view_light_2;
 extern s32 D_80122784;
 extern s32 D_80122788;
 extern u8 D_801227A4[];
-extern s32 D_80122CD4;
-extern s32 D_80122CDC;
-extern s32 D_80122CE0;
-extern s32 D_80122CE4;
-extern s32 D_80122CEC;
-extern s32 D_80122CF0;
+/* Shared scalar work: main/DATE/GEKO girl selection; ENDING 0/1 draw gate. Not EVENT development-image storage. */
+extern s32 scene_work_selector;
+extern s32 talk_choice;
+extern s32 talk_result_code;
+extern s32 talk_line_wait;
+extern s32 talk_choice_saved;
+extern s32 talk_voice_state;
 extern s32 D_80122CF4;
 extern s32 D_80122CF8;
 extern s32 D_80122CFC;
-extern s32 D_80122D00;
+extern s32 talk_line_auto;
 extern s32 D_80122D04;
 extern s32 D_80122D0C;
 extern s32 D_80122D10;
 extern s32 D_80122D20;
 extern s32 D_80122D2C;
-extern s32 D_80122D30;
-extern s32 D_80122D40;
+extern s32 talk_menu_active;
+extern s32 talk_girl_selector_plus_one;
 extern s32 D_80122D44;
 extern s32 D_80122D4C;
-extern u8 D_80122DD0[];
+extern u8 overlay_scratch[];
 extern s32 audio_bank_wait_done;
-extern s32 D_80122EA4;
-extern s32 D_80122EAC;
-#ifndef MAIN_API_OVERRIDE_D_80122EB8
-extern s32 D_80122EB8;
+extern s32 declined_companion_girl;
+extern s32 festival_dispatch_variant;
+#ifndef MAIN_API_OVERRIDE_culture_exhibit_club
+extern s32 culture_exhibit_club;
 #endif
 extern s32 game_mode_scene_girl; /* GirlId or 0xFF; shared main scene work used by the festival overlays; not EVENT storage. */
-extern s32 D_80122EC0;
-extern s32 D_801230D0;
+extern s32 festival_scene_phase;
+extern s32 scene_work;
 extern s32 bg_still_bitstream;
 extern u8 D_80125C10[];
 extern u8 view_base_matrix[];
@@ -167,10 +168,10 @@ extern s32 D_80125CA4;
 extern s32 D_80125CA8;
 extern s32 D_80125CAC;
 extern s32 D_80125CB0;
-extern s32 D_80122E98;
-extern s32 D_80122EA8;
-extern s32 D_80122EB0;
-extern s32 D_80122EB4;
+extern s32 culture_festival_return_gate;
+extern s32 fortune_result_index;
+extern s32 saved_return_stage;
+extern s32 saved_return_step;
 extern u8 D_8011EDE0[];
 extern u8 D_8011EEF0[];
 /* T-11190: declarations added by tools/bulk_m2c.py. */

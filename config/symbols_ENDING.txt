@@ -136,4 +136,6 @@ ending_scene_asset_records = 0x8013C620;
 ending_audience_scene_step_callbacks = 0x8013CA3C;
 ending_audio_scene_branch_state = 0x8013CAA0;
 ending_audio_scene_step_callbacks = 0x8013CAA4;
+ending_summary_text_table = 0x8013CAF0;
 ending_graduation_scene_step_callbacks = 0x8013CB74;
+ending_song_elapsed_frames = 0x8013CBE0;

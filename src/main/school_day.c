@@ -201,7 +201,7 @@ void school_day_sd_set_select(void) {
     u32 other_season_club_id;
     u8 companion_girl;
 
-    D_801230D0 = 0xFF;
+    scene_work = 0xFF;
     companion_girl = game_state.day_events[game_state.day_event_index].extra;
     if (companion_girl != 0) {
         sd_variant = 1;
@@ -218,132 +218,132 @@ void school_day_sd_set_select(void) {
     if (hud_in_summer_months() == 1) {
         switch (game_state.day_events[game_state.day_event_index].girl) {
         case 0:
-            D_801230D0 = (s32) D_800B68C0[0 + sd_variant];
+            scene_work = (s32) D_800B68C0[0 + sd_variant];
             break;
         case 1:
-            D_801230D0 = (s32) D_800B68C0[2 + sd_variant];
+            scene_work = (s32) D_800B68C0[2 + sd_variant];
             break;
         case 2:
-            D_801230D0 = (s32) D_800B68C0[4 + sd_variant];
+            scene_work = (s32) D_800B68C0[4 + sd_variant];
             break;
         case 3:
-            D_801230D0 = (s32) D_800B68C0[6 + sd_variant];
+            scene_work = (s32) D_800B68C0[6 + sd_variant];
             break;
         case 4:
-            D_801230D0 = 0xFF;
+            scene_work = 0xFF;
             break;
         case 5:
-            D_801230D0 = (s32) D_800B68C0[9 + sd_variant];
+            scene_work = (s32) D_800B68C0[9 + sd_variant];
             break;
         case 6:
-            D_801230D0 = (s32) D_800B68C0[11 + sd_variant];
+            scene_work = (s32) D_800B68C0[11 + sd_variant];
             break;
         case 7:
-            D_801230D0 = (s32) D_800B68C0[13];
+            scene_work = (s32) D_800B68C0[13];
             break;
         }
     } else {
         switch (game_state.day_events[game_state.day_event_index].girl) {
         case 0:
-            D_801230D0 = (s32) D_800B68D0[0 + sd_variant];
+            scene_work = (s32) D_800B68D0[0 + sd_variant];
             break;
         case 1:
-            D_801230D0 = (s32) D_800B68D0[2 + sd_variant];
+            scene_work = (s32) D_800B68D0[2 + sd_variant];
             break;
         case 2:
-            D_801230D0 = (s32) D_800B68D0[4 + sd_variant];
+            scene_work = (s32) D_800B68D0[4 + sd_variant];
             break;
         case 3:
-            D_801230D0 = (s32) D_800B68D0[6 + sd_variant];
+            scene_work = (s32) D_800B68D0[6 + sd_variant];
             break;
         case 4:
-            D_801230D0 = 0xFF;
+            scene_work = 0xFF;
             break;
         case 5:
-            D_801230D0 = (s32) D_800B68D0[9 + sd_variant];
+            scene_work = (s32) D_800B68D0[9 + sd_variant];
             break;
         case 6:
-            D_801230D0 = (s32) D_800B68D0[11 + sd_variant];
+            scene_work = (s32) D_800B68D0[11 + sd_variant];
             break;
         case 7:
-            D_801230D0 = (s32) D_800B68D0[13];
+            scene_work = (s32) D_800B68D0[13];
             break;
         }
     }
-    if (D_801230D0 == 0xFF) {
+    if (scene_work == 0xFF) {
         sp28 = sd_variant;
         if (hud_in_summer_months() == 1) {
             club_id = (u16) game_state.player_flags.h >> 0xC;
             switch (club_id) {
             case 0:
-                D_801230D0 = (s32) (*D_800B6890)[sd_variant];
+                scene_work = (s32) (*D_800B6890)[sd_variant];
                 break;
             case 1:
-                D_801230D0 = (s32) D_800B6890[1][sd_variant];
+                scene_work = (s32) D_800B6890[1][sd_variant];
                 break;
             case 2:
-                D_801230D0 = (s32) D_800B6890[2][sd_variant];
+                scene_work = (s32) D_800B6890[2][sd_variant];
                 break;
             case 3:
-                D_801230D0 = D_800B6890[3][sd_variant];
+                scene_work = D_800B6890[3][sd_variant];
                 break;
             case 4:
-                D_801230D0 = (s32) D_800B6890[4][sd_variant];
+                scene_work = (s32) D_800B6890[4][sd_variant];
                 break;
             case 5:
-                D_801230D0 = (s32) D_800B6890[5][sd_variant];
+                scene_work = (s32) D_800B6890[5][sd_variant];
                 break;
             case 6:
-                D_801230D0 = (s32) D_800B6890[6][sd_variant];
+                scene_work = (s32) D_800B6890[6][sd_variant];
                 break;
             case 7:
-                D_801230D0 = (s32) D_800B6890[7][sd_variant];
+                scene_work = (s32) D_800B6890[7][sd_variant];
                 break;
             case 8:
-                D_801230D0 = (s32) D_800B6890[8][sd_variant];
+                scene_work = (s32) D_800B6890[8][sd_variant];
                 break;
             case 9:
-                D_801230D0 = (s32) D_800B6890[9][sd_variant];
+                scene_work = (s32) D_800B6890[9][sd_variant];
                 break;
             case 10:
-                D_801230D0 = (s32) D_800B6890[0xA][sd_variant];
+                scene_work = (s32) D_800B6890[0xA][sd_variant];
                 break;
             }
         } else {
             other_season_club_id = (u16) game_state.player_flags.h >> 0xC;
             switch (other_season_club_id) {
             case 0:
-                D_801230D0 = D_800B68A8[0][sd_variant];
+                scene_work = D_800B68A8[0][sd_variant];
                 break;
             case 1:
-                D_801230D0 = (s32) D_800B68A8[1][sd_variant];
+                scene_work = (s32) D_800B68A8[1][sd_variant];
                 break;
             case 2:
-                D_801230D0 = (s32) D_800B68A8[2][sd_variant];
+                scene_work = (s32) D_800B68A8[2][sd_variant];
                 break;
             case 3:
-                D_801230D0 = (s32) D_800B68A8[3][sd_variant];
+                scene_work = (s32) D_800B68A8[3][sd_variant];
                 break;
             case 4:
-                D_801230D0 = (s32) D_800B68A8[4][sd_variant];
+                scene_work = (s32) D_800B68A8[4][sd_variant];
                 break;
             case 5:
-                D_801230D0 = (s32) D_800B68A8[5][sd_variant];
+                scene_work = (s32) D_800B68A8[5][sd_variant];
                 break;
             case 6:
-                D_801230D0 = (s32) D_800B68A8[6][sd_variant];
+                scene_work = (s32) D_800B68A8[6][sd_variant];
                 break;
             case 7:
-                D_801230D0 = (s32) D_800B68A8[7][sd_variant];
+                scene_work = (s32) D_800B68A8[7][sd_variant];
                 break;
             case 8:
-                D_801230D0 = (s32) D_800B68A8[8][sd_variant];
+                scene_work = (s32) D_800B68A8[8][sd_variant];
                 break;
             case 9:
-                D_801230D0 = (s32) D_800B68A8[9][sd_variant];
+                scene_work = (s32) D_800B68A8[9][sd_variant];
                 break;
             case 10:
-                D_801230D0 = D_800B68A8[10][sd_variant];
+                scene_work = D_800B68A8[10][sd_variant];
                 break;
             }
         }
@@ -357,10 +357,10 @@ u8 school_day_sd_load(void) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             game_state.substep = 1;
         } else if (game_state.day_events[game_state.day_event_index].girl != 4) {
-            cd_read_sectors(0x29, 0x801E0000, D_800B67AC[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, D_800B67AC[scene_work]);
             game_state.substep = 1;
         } else {
-            cd_read_sectors(0x29, 0x801E0000, D_800B6810[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, D_800B6810[scene_work]);
             game_state.substep = 1;
         }
     } else if (game_state.substep == 1) {
@@ -395,10 +395,10 @@ u8 school_day_sd_actors_init(void) {
         addr_init_else_sd(2);
         temp = 0;
     } else if (rec->girl == 4) {
-        addr_init_club_sd(D_801230D0);
+        addr_init_club_sd(scene_work);
     } else {
-        addr_init_weekly_sd(D_801230D0);
-        if ((D_801230D0 == 0xF) || (D_801230D0 == 0x10)) {
+        addr_init_weekly_sd(scene_work);
+        if ((scene_work == 0xF) || (scene_work == 0x10)) {
             temp = 0;
             game_state.day_events[game_state.day_event_index].scene = 0;
         }
@@ -633,10 +633,10 @@ u8 school_day_vacation_sd_load(void) {
             cd_read_sectors(9, 0x801E0000, 0x7D8A);
             game_state.substep = 1;
         } else if (game_state.day_events[game_state.day_event_index].girl != 4) {
-            cd_read_sectors(0x29, 0x801E0000, holiday_sd_set_sectors[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, holiday_sd_set_sectors[scene_work]);
             game_state.substep = 1;
         } else {
-            cd_read_sectors(0x29, 0x801E0000, D_800B6810[D_801230D0]);
+            cd_read_sectors(0x29, 0x801E0000, D_800B6810[scene_work]);
             game_state.substep = 1;
         }
     } else if ((game_state.substep == 1) && (cd_read_sync_status() & 1)) {
@@ -655,7 +655,7 @@ u8 school_day_vacation_sd_actors_init(void) {
         addr_init_else_sd(2);
         temp = 0;
     } else if (rec->girl == 4) {
-        addr_init_club_sd(D_801230D0);
+        addr_init_club_sd(scene_work);
         if (schedule_command_girl_select(4) != 0xF) {
             ((Actor *)actor_pool)[97].unk_01 = 1;
             ((Actor *)actor_pool)[97].flags = 5;
@@ -674,8 +674,8 @@ u8 school_day_vacation_sd_actors_init(void) {
             ((Actor *)actor_pool)[97].y = -0x40;
         }
     } else {
-        addr_init_holiday_sd(D_801230D0);
-        if ((D_801230D0 == 6) || (D_801230D0 == 7)) {
+        addr_init_holiday_sd(scene_work);
+        if ((scene_work == 6) || (scene_work == 7)) {
             temp = 0;
             game_state.day_events[game_state.day_event_index].scene = 0;
         }

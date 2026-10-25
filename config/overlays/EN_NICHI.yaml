@@ -60,11 +60,11 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, EN_NICHI/festival_stall_year_dispatch]
-      - [0x4B10, c, EN_NICHI/festival_stall_scene_dispatch]
-      - [0x70D0, .rodata, EN_NICHI/festival_stall_year_dispatch]
-      - [0x7170, .rodata, EN_NICHI/festival_stall_scene_dispatch]
+      - [0x0, c, festival_stalls/festival_stall_year_dispatch]
+      - [0x4B10, c, festival_stalls/festival_stall_scene_dispatch]
+      - [0x70D0, .rodata, festival_stalls/festival_stall_year_dispatch]
+      - [0x7170, .rodata, festival_stalls/festival_stall_scene_dispatch]
       - [0x71E0, data, EN_NICHI_data]
-      - [0x7200, .data, EN_NICHI/festival_stall_year_dispatch]
-      - [0x7C30, .data, EN_NICHI/festival_stall_scene_dispatch]
+      - [0x7200, .data, festival_stalls/festival_stall_year_dispatch]
+      - [0x7C30, .data, festival_stalls/festival_stall_scene_dispatch]
   - [0x30000]

@@ -1,6 +1,6 @@
 /* settings_and_background.c: src/ovl/TT/8013C6D0.c:4: settings/button configuration state plus background renderers; body 8: p[0] = 1; 9: p[1] = 0;. Original object 0x8013C6D0-0x8013E290 (config/objects/TT.txt). */
 #include "common.h"
-#include "ovl/TT.h"
+#include "ovl/tt.h"
 
 void tt_button_cursor_init(void) {
     u8 *run = tt_run;
@@ -25,27 +25,27 @@ void tt_button_cursor_update(void) {
     *(s16 *)(tt_sprites + 0x16) = tt_run[0xA] * 16 + 0x60;
 }
 
-void tt_button_code_set(u16 arg0, u16 arg1) {
+void tt_button_code_set(u16 pad_word, u16 button_slot) {
     u8 *sys = tt_sys;
     u8 v = 0;
 
-    if (arg0 != 0) {
-        if (arg0 & 0x20) {
+    if (pad_word != 0) {
+        if (pad_word & 0x20) {
             v = 5;
-        } else if (arg0 & 0x40) {
+        } else if (pad_word & 0x40) {
             v = 6;
-        } else if (arg0 & 0x10) {
+        } else if (pad_word & 0x10) {
             v = 4;
-        } else if (arg0 & 0x80) {
+        } else if (pad_word & 0x80) {
             v = 7;
-        } else if (arg0 & 4) {
+        } else if (pad_word & 4) {
             v = 2;
-        } else if (arg0 & 8) {
+        } else if (pad_word & 8) {
             v = 3;
-        } else if (!(arg0 & 1) && (arg0 & 2)) {
+        } else if (!(pad_word & 1) && (pad_word & 2)) {
             v = 1;
         }
-        if (arg1 == 0) {
+        if (button_slot == 0) {
             sys[0x44] = v;
         } else {
             sys[0x45] = v;
@@ -53,41 +53,41 @@ void tt_button_code_set(u16 arg0, u16 arg1) {
     }
 }
 
-u16 tt_button_code_label(u8 arg0, s8 *arg1) {
+u16 tt_button_code_label(u8 button_code, s8 *palette_out) {
     u16 ret;
 
-    switch (arg0) {
+    switch (button_code) {
     case 5:
         ret = 0x1E;
-        *arg1 = 0;
+        *palette_out = 0;
         break;
     case 6:
         ret = 0x1F;
-        *arg1 = 0;
+        *palette_out = 0;
         break;
     case 4:
         ret = 0x20;
-        *arg1 = 0;
+        *palette_out = 0;
         break;
     case 7:
         ret = 0x21;
-        *arg1 = 0;
+        *palette_out = 0;
         break;
     case 2:
         ret = 0x22;
-        *arg1 = 0xF;
+        *palette_out = 0xF;
         break;
     case 3:
         ret = 0x23;
-        *arg1 = 0xF;
+        *palette_out = 0xF;
         break;
     case 0:
         ret = 0x24;
-        *arg1 = 0xF;
+        *palette_out = 0xF;
         break;
     case 1:
         ret = 0x25;
-        *arg1 = 0xF;
+        *palette_out = 0xF;
         break;
     }
     return ret;
