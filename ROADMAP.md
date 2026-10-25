@@ -16,12 +16,14 @@ separate Astra fixes and reviewer verification passed, with all 27 binaries stil
 Reviewed source and completion records are pushed to the repository. Remaining asset extraction work is tracked
 separately and does not keep this phase open.
 
-## 3. Godot port (planning)
+## 3. Godot port (planned)
 
 Rebuild the game as a Godot project that runs on a modern desktop, using the readable code as the specification.
 The PS1 hardware layer (GPU, sound chip, CD streaming) has to be replaced, not translated. This is the largest
-phase after phase 1. An Astra-authored implementation plan is underway, using the completed decompilation and
-the existing original-game asset readers. Asset coverage work continues alongside port planning.
+phase after phase 1. The [reviewed Astra plan](wiki/phase3.md) uses the completed decompilation and existing
+original-game asset readers. Start with the pinned engine/test foundation, native runtime evidence and content
+pack adapter, then deliver a playable command-screen to school-day result slice. Asset work continues alongside
+the port; full extraction coverage is not a prerequisite for starting.
 
 ## 4. Modernize the port (not started)
 

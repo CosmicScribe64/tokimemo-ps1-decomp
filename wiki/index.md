@@ -14,6 +14,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[plan-remaining]] - current completion plan: 101 remaining functions on 2026-10-22; older census in [[data/remaining-2026-10-20]]
 - [[playbook]] - the matching loop and the recipes that closed matches; read before matching
 - [[phase2]] - phase 2 (readable code): work order, units, review rule; conventions in `docs/adr/0001-phase-2-naming.md`, terms in `GLOSSARY.md`
+- [[phase3]] - reviewed Astra Godot port plan, native behavior/content boundaries, playable milestones and first implementation tickets
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
 

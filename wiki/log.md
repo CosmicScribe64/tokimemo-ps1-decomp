@@ -2032,3 +2032,11 @@ Installed normal/optimized inventory CLIs, all 55,403 serialized unit fields and
 ## [2026-10-25] ticket | Plan the Godot port with Astra
 
 [[tickets/T-29000-plan-godot-port]] created In Progress for the user-requested roadmap completion update and an Astra-authored Phase 3 plan. Finished matching/readability phases are separate from ongoing [[asset-export]] work. Root retains source/wiki/Git integration ownership; original game inputs and pending asset changes remain untouched.
+
+## [2026-10-25] ingest | Integrate the reviewed Astra Godot port plan
+
+[[phase3]] records the source-backed engine/language/content/state/timing/text/audio/save decisions, first playable school-day route and later milestones. [[tickets/T-29000-plan-godot-port]] moves to In Review after independent Standards/spec PASS and the applied-name correction; six child implementation tickets are created, with foundation/oracle/content work Ready and dependent controllers/presentation/services Backlog. ROADMAP.md and [[status]] distinguish completed decompilation phases, the planned port and continuing [[asset-export]] work. No engine project, game data or runtime parity is claimed.
+
+## [2026-10-25] ticket | Complete the Godot port plan
+
+[[tickets/T-29000-plan-godot-port]] moves from In Review to Done after independent integrated Standards and spec PASS with no remaining findings. [[phase3]] is the canonical Astra-authored plan; six implementation tickets retain three Ready and three Backlog statuses. ROADMAP.md marks Phases 1 and 2 complete and Phase 3 planned. This closes planning, not an implemented or validated port. Original inputs, matching source/build and pending asset work remain unchanged.
