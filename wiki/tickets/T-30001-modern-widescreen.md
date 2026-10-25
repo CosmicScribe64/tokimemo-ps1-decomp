@@ -21,3 +21,7 @@ Planned modernization; widescreen first. Track after the faithful Phase 3 port; 
 ## Notes
 
 Requested by the user on 2026-10-25. These additions do not replace full original-game port acceptance.
+
+## Art extension preference (2026-10-25)
+
+User considers image generation/editing for wider backgrounds only as a last resort. Prefer faithful aspect-preserving scaling, layout reflow, verified existing source margins and original framing/pillarboxing. If none is satisfactory, propose optional scene-specific extension for review; do not make generated scenery the default or claim it is original game art. Preserve source assets and an original-art mode. No generation or replacement-art implementation is requested now.

@@ -2266,3 +2266,7 @@ Moved [[tickets/T-29016-first-launch-original-import]] Ready → In Progress. As
 ## [2026-10-25] ticket | Research widescreen quality and modern settings
 
 User requested agent research into modern resolutions/widescreen without stretched or poor-looking art, and reiterated conventional modern settings. Opened [[tickets/T-30005-widescreen-settings-feasibility]] as In Progress, linked [[tickets/T-30002-modern-settings]]. Research only; port implementation continues.
+
+## [2026-10-25] decision | Keep generated widescreen scenery a last resort
+
+Recorded the user's preference in [[tickets/T-30001-modern-widescreen]] and [[tickets/T-30005-widescreen-settings-feasibility]]. Prefer original art and framing/layout solutions; any later generated extension is optional, explicit and reviewed. No image generation performed.
