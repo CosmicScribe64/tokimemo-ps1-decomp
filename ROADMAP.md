@@ -3,22 +3,25 @@
 The goal is a playable, readable, English-translated version of *Tokimeki Memorial: Forever with You* that does not
 depend on the original code. It comes in five phases, in order. Later phases depend on earlier ones, and none has a date.
 
-## 1. Byte-matching decompilation (done)
+## 1. Byte-matching decompilation (complete)
 
 Write C for every function so that the rebuilt executable and overlays are identical to the originals. It was finished on
 2026-10-24. All 6,952 game functions are C, and every binary rebuilds byte for byte.
 
-## 2. Readable decompilation (in progress)
+## 2. Readable decompilation (complete)
 
-Matching C is often awkward. This phase renames symbols, replaces magic numbers with constants, names and shares
-types, and splits tangled functions where the match allows it. Some of this happens as functions are decompiled,
-but the sweep through the whole code base happens after phase 1.
+Completed on 2026-10-25. All 437 game C files have logical names, shared declarations are organized into topic
+headers, and essential game state, locals, constants and behavior are documented. The final Astra review,
+separate Astra fixes and reviewer verification passed, with all 27 binaries still matching the originals.
+Reviewed source and completion records are pushed to the repository. Remaining asset extraction work is tracked
+separately and does not keep this phase open.
 
-## 3. Godot port (not started)
+## 3. Godot port (planning)
 
 Rebuild the game as a Godot project that runs on a modern desktop, using the readable code as the specification.
 The PS1 hardware layer (GPU, sound chip, CD streaming) has to be replaced, not translated. This is the largest
-phase after phase 1, and its design is undecided.
+phase after phase 1. An Astra-authored implementation plan is underway, using the completed decompilation and
+the existing original-game asset readers. Asset coverage work continues alongside port planning.
 
 ## 4. Modernize the port (not started)
 

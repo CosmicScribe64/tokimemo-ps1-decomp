@@ -2028,3 +2028,7 @@ Installed normal/optimized inventory CLIs, all 55,403 serialized unit fields and
 ## [2026-10-25] query | Require canonical NBN cell identities
 
 [[tickets/T-28002-media-asset-export]]: v3 resolves test isolation and passes 559 installed asset tests after the SPEAKTST integration. Actual export succeeds, but generic visual catalog construction rejects cells without distinct frame/variant identities. The three applied tooling files remain uncommitted; owner prepares v4 metadata and direct-catalog regressions. All native pixel/source evidence and previous outputs remain preserved. Published text tooling is at 55,403 export rows with 16,702 new flagged candidates; no full text/media or native rendering completion claim.
+
+## [2026-10-25] ticket | Plan the Godot port with Astra
+
+[[tickets/T-29000-plan-godot-port]] created In Progress for the user-requested roadmap completion update and an Astra-authored Phase 3 plan. Finished matching/readability phases are separate from ongoing [[asset-export]] work. Root retains source/wiki/Git integration ownership; original game inputs and pending asset changes remain untouched.
