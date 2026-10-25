@@ -2242,3 +2242,7 @@ Added Backlog tickets [[tickets/T-30001-modern-widescreen]], [[tickets/T-30002-m
 ## [2026-10-25] decision | Note optional English dub exploration
 
 Recorded the user's possible English voice-pack idea in [[tickets/T-30002-modern-settings]], including performance evaluation, original audio selection and performer permissions. This is exploration only; no audio generation or upload.
+
+## [2026-10-25] ingest | Add SNES achievement design reference
+
+Updated [[tickets/T-30004-modern-achievements]] with the user's cross-version clarification. RetroAchievements SNES game3913/series hub lists97 achievements; single-session confession subset is a further optional reference. Our port may define its own verified gameplay goals. No achievement implementation yet.
