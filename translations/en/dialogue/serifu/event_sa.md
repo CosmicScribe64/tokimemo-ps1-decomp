@@ -85,7 +85,7 @@
 | `scene-03:g0005:l0002` | Scene-03 · Yumi | うん。 | Okay! |  |
 | `initializer-67:g0000:l0000` | Init 67 · Player (monologue) | さて、昼飯だ。[[T001:row]]早く学食に行かないと…。 | Okay, lunchtime.[[T001:row]]To the cafeteria, quick. |  |
 | `initializer-67:g0000:l0001` | Init 67 · Yumi | [[T001:player_form]]。[[T002:row]]こんにちはーっ。 | [[T001:player_form]]![[T002:row]]Helloooo! |  |
-| `initializer-67:g0001:l0000` | Init 67 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `initializer-67:g0001:l0000` | Init 67 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `initializer-67:g0002:l0000` | Init 67 · Yumi | お弁当作ってきたの。[[T001:row]]一緒に食べませんか？ | I made lunch![[T001:row]]Wanna eat together? |  |
 | `initializer-67:g0002:l0001` | Init 67 · Player | えっ、いいけど。[[T001:row]]好雄は、どうするの？ | Huh, sure, but[[T001:row]]what about Yoshio? |  |
 | `initializer-67:g0002:l0002` | Init 67 · Yumi | お兄ちゃんなんて、[[T001:row]]どうでもいいから。[[T002:row]]屋上に行きましょう。 | Forget about[[T001:row]]my brother.[[T002:row]]Let's go to the roof. |  |
@@ -99,7 +99,7 @@
 | `initializer-67:g0004:l0001` | Init 67 · Player | お、おいしいよ。[[T001:row]][[T002:girl_name]]。[[T003:row]]（これが、男の優しさだぜ。） | I-it's delicious,[[T001:row]][[T002:girl_name]].[[T003:row]](A man's gotta be kind.) |  |
 | `initializer-67:g0005:l0000` | Init 67 · Yumi | ホントですか？[[T001:row]]やったーっ。[[T002:row]]たくさんあるから、[[T003:row]]どんどん食べて下さいね。 | Really?[[T001:row]]Yay![[T002:row]]There's lots, so[[T003:row]]eat up, okay? |  |
 | `initializer-67:g0005:l0001` | Init 67 · Player | あ、ありがとう。[[T001:row]]でも、せっかく奇麗に作った[[T002:row]]お弁当が勿体無いね。 | Th-thanks.[[T001:row]]But it's a shame to eat[[T002:row]]such a pretty lunch. |  |
-| `initializer-67:g0005:l0002` | Init 67 · Yumi | 他の女の人のお弁当が[[T001:row]]食べれて、優美のは[[T002:row]]食べれないんですか？ | You can eat other girls'[[T001:row]]lunches, but you can't[[T002:row]]eat Yumi's? |  |
+| `initializer-67:g0005:l0002` | Init 67 · Yumi | 他の女の人のお弁当が[[T001:row]]食べれて、優美のは[[T002:row]]食べれないんですか？ | You can eat other girls'[[T001:row]]lunches, but you can't[[T002:row]]eat my? |  |
 | `initializer-67:g0005:l0003` | Init 67 · Player | そんなことないよ。[[T001:row]]ただね、こんなに…。 | It's not that.[[T001:row]]It's just, this much... |  |
 | `initializer-67:g0005:l0004` | Init 67 · Yumi | 食べれないんですか？ | You can't eat it? |  |
 | `initializer-67:g0005:l0005` | Init 67 · Player | あぁ、嬉しいなぁ。[[T001:row]]こんなにおいしいお弁当を[[T002:row]]食べれるなんて。[[T003:row]] | Ahh, I'm so happy.[[T001:row]]To get to eat[[T002:row]]such a tasty lunch.[[T003:row]] |  |
@@ -131,7 +131,7 @@
 | `initializer-68:g0000:l0001` | Init 68 · Player | あっ、[[T001:girl_name]]。[[T002:row]]どうしたの？ | Oh, [[T001:girl_name]][[T002:row]]What's up? |  |
 | `initializer-68:g0000:l0002` | Init 68 · Yumi | はい、どうぞ。[[T001:row]]修学旅行のお土産です。 | Here you go![[T001:row]]A school trip souvenir! |  |
 | `initializer-68:g0000:l0003` | Init 68 · Player | ありがとう。[[T001:row]]嬉しいよ。 | Thank you.[[T001:row]]I'm happy. |  |
-| `initializer-68:g0000:l0004` | Init 68 · Yumi | これ、優美と[[T001:row]]ペアなんですよ。 | It's a matching[[T001:row]]set with Yumi's! |  |
+| `initializer-68:g0000:l0004` | Init 68 · Yumi | これ、優美と[[T001:row]]ペアなんですよ。 | It's a matching[[T001:row]]set with my! |  |
 | `initializer-68:g0000:l0005` | Init 68 · Player | そ、そう。 | O-oh. |  |
 | `initializer-68:g0000:l0006` | Init 68 · Yumi | あっ、お兄ちゃんに[[T001:row]]見つからないうちに[[T002:row]]戻らなきゃ。 | Oh, I have to go[[T001:row]]back before my[[T002:row]]brother sees me. |  |
 | `initializer-68:g0000:l0007` | Init 68 · Player | ありがとう。[[T001:row]]大事にするよ。 | Thanks.[[T001:row]]I'll treasure it. |  |
@@ -158,7 +158,7 @@
 | `initializer-73:g0004:l0000` | Init 73 · Player | うわっ！？ | Whoa!? |  |
 | `initializer-73:g0005:l0000` | Init 73 · Yumi | あはははは、やった、[[T001:row]]やった！ | Ahahaha, got you,[[T001:row]]got you! |  |
 | `initializer-73:g0005:l0001` | Init 73 · Player | や、やったなー！ | Wh-why, you! |  |
-| `initializer-73:g0005:l0002` | Init 73 · Yumi | 優美、昔から雪合戦は[[T001:row]]得意だったんです。 | Yumi's always[[T001:row]]been good at this. |  |
+| `initializer-73:g0005:l0002` | Init 73 · Yumi | 優美、昔から雪合戦は[[T001:row]]得意だったんです。 | my always[[T001:row]]been good at this. |  |
 | `initializer-73:g0005:l0003` | Init 73 · Player | 俺だって自信はあるんだ。[[T001:row]]負けないよ。 | I'm pretty good myself.[[T001:row]]I won't lose. |  |
 | `initializer-73:g0005:l0004` | Init 73 · Yumi | 優美も[[T001:row]]手加減はしませんよ。 | Yumi won't[[T001:row]]go easy on you! |  |
 | `initializer-73:g0005:l0005` | Init 73 · Player | よし、行くぞ！ | Here I come! |  |

@@ -38,10 +38,10 @@
 | `8013ad08:1` | new_year_saki_ground_scene_select_0x0f() | グランド | Field |  |
 | `80142da0:1` | new_year_ijuin_scene_effect_setup() | 伊集院邸 | Ijuin Manor |  |
 | `801432c4:1` | new_year_scene_talk_setup_and_reward() | 近所の公園 | Neighborhood Park |  |
-| `80139d80:1` | new_year_library_scene_selector_0() | 図書室 | Library |  |
-| `80139dc4:1` | new_year_library_scene_selector_3() | 図書室 | Library |  |
-| `80139e0c:1` | new_year_library_scene_selector_6() | 図書室 | Library |  |
-| `80139e54:1` | new_year_library_target_scene_init() | 図書室 | Library |  |
+| `80139d80:1` | new_year_library_scene_selector_0() | 図書室 | School Library |  |
+| `80139dc4:1` | new_year_library_scene_selector_3() | 図書室 | School Library |  |
+| `80139e0c:1` | new_year_library_scene_selector_6() | 図書室 | School Library |  |
+| `80139e54:1` | new_year_library_target_scene_init() | 図書室 | School Library |  |
 | `80139ec8:1` | new_year_theater_scene_resource_setup() | 演劇部 | Drama Club |  |
 | `80133d98:1` | new_year_shrine_dialogue_init() | 初詣 | New Year's Shrine Visit |  |
 | `801386cc:1` | new_year_yuina_scene_classroom_state_init() | 教室 | Classroom |  |

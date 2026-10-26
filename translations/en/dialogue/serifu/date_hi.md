@@ -335,7 +335,7 @@
 | `section-18:g0003:l0000` | Shrine · Yuina | そう。[[T001:row]]ありがとう。 | I see.[[T001:row]]Thank you. |  |
 | `section-18:g0004:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしようか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0004:l0001` | Shrine · Yuina | どうせ、[[T001:row]]ろくなものとれないわよ。 | You won't win[[T001:row]]anything decent anyway. |  |
-| `section-18:g0004:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0004:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0005:l0000` | Shrine · Yuina | やるわね…[[T001:row]]問題は、実戦でどうかね。 | Not bad...[[T001:row]]But in real combat? |  |
 | `section-18:g0006:l0000` | Shrine · Yuina | なかなかやるわね。 | Not bad at all. |  |
 | `section-18:g0007:l0000` | Shrine · Yuina | だめねぇ。[[T001:row]]戦闘には向かないようね。 | Hopeless.[[T001:row]]Not cut out for combat. |  |

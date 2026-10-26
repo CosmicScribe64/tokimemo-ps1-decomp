@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `80134bc4:1` | camp_club_location_label_select() | 図書室 | Library |  |
+| `80134bc4:1` | camp_club_location_label_select() | 図書室 | School Library |  |
 | `80134bc4:2` | camp_club_location_label_select() | 演劇部 | Drama Club |  |
 | `80134bc4:3` | camp_club_location_label_select() | 実験室 | Science Lab |  |
 | `80134bc4:4` | camp_club_location_label_select() | 電脳部室 | Computer Clubroom |  |

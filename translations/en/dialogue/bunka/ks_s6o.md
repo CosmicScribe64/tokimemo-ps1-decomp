@@ -73,7 +73,7 @@
 | `main:g0024:l0000` | Main · Player | 何か、作文の心が[[T001:row]]わかった気がするよ。 | I think I get[[T001:row]]essays now. |  |
 | `main:g0025:l0000` | Main · Player | おっ、ちょうど、[[T001:row]][[T002:girl_name]]の[[T003:row]]弁論が始まるぞ。 | Oh, just in time,[[T001:row]][[T002:girl_name]][[T003:row]]is giving a speech. |  |
 | `main:g0026:l0000` | Main · Player | おっ、ちょうど、[[T001:row]]弁論が始まるみたいだぞ。 | Oh, the speeches[[T001:row]]are just starting. |  |
-| `main:g0027:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0027:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0027:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]嬉しいです…。[[T002:row]]弁論どうでしたか？ | Oh, you came.[[T001:row]]I'm so happy...[[T002:row]]How was my speech? |  |
 | `main:g0027:l0002` | Main · Player | さすがは、[[T001:girl_name]]。[[T002:row]]素晴らしい[[T003:row]]発表だったよ。 | Well done, [[T001:girl_name]]![[T002:row]]What a great[[T003:row]]speech! |  |
 | `main:g0027:l0003` | Main · Mio | 実は…、[[T001:row]]すごく緊張しちゃって、[[T002:row]]何も、覚えていないんです。 | Actually...[[T001:row]]I was so nervous,[[T002:row]]I don't remember a thing. |  |
@@ -81,7 +81,7 @@
 | `main:g0027:l0005` | Main · Mio | そ、そうですか？[[T001:row]]失敗しなかったみたいで[[T002:row]]良かった…。 | R-really?[[T001:row]]I'm glad I didn't[[T002:row]]mess up... |  |
 | `main:g0027:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0027:l0007` | Main · Mio | そうですね…。[[T001:row]]わざわざ来てくれて、[[T002:row]]ありがとうございました。 | I see...[[T001:row]]Thank you for[[T002:row]]coming all this way. |  |
-| `main:g0028:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0028:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0028:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]弁論どうでした？ | Oh, you came.[[T001:row]]How was my speech? |  |
 | `main:g0028:l0002` | Main · Player | さすがは、[[T001:girl_name]]。[[T002:row]]素晴らしい[[T003:row]]発表だったよ。 | Well done, [[T001:girl_name]]![[T002:row]]What a great[[T003:row]]speech! |  |
 | `main:g0028:l0003` | Main · Mio | あ、ありがとうございます。[[T001:row]]本当は、緊張して倒れちゃう[[T002:row]]ところだったんですよ。 | Th-thank you.[[T001:row]]Actually, I was so nervous[[T002:row]]I almost fainted. |  |
@@ -89,7 +89,7 @@
 | `main:g0028:l0005` | Main · Mio | はい。[[T001:row]]少しだけ、身体が[[T002:row]]強くなったみたいです。 | Yes.[[T001:row]]I think I've gotten[[T002:row]]a little stronger. |  |
 | `main:g0028:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0028:l0007` | Main · Mio | わざわざ見に来てくれて、[[T001:row]]ありがとうございました。 | Thank you for coming[[T001:row]]all this way to see it. |  |
-| `main:g0029:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0029:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0029:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]弁論どうでした？ | Oh, you came.[[T001:row]]How was my speech? |  |
 | `main:g0029:l0002` | Main · Player | さすがは、[[T001:girl_name]]。[[T002:row]]素晴らしい[[T003:row]]発表だったよ。 | Well done, [[T001:girl_name]]![[T002:row]]What a great[[T003:row]]speech! |  |
 | `main:g0029:l0003` | Main · Mio | 本当ですか？[[T001:row]]良かった。[[T002:row]]これで安心しました。 | Really?[[T001:row]]I'm glad.[[T002:row]]What a relief. |  |
@@ -97,7 +97,7 @@
 | `main:g0029:l0005` | Main · Mio | 来てくれて、[[T001:row]]ありがとうございました。 | Thank you[[T001:row]]for coming. |  |
 | `main:g0030:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
 | `main:g0031:l0000` | Main · Player | おっ、ちょうど、[[T001:row]]演劇が始まるぞ。 | Oh, the play[[T001:row]]is just starting. |  |
-| `main:g0032:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0032:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0032:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]嬉しい…。[[T002:row]]演劇はどうでしたか？ | Oh, you came.[[T001:row]]I'm so happy...[[T002:row]]How was the play? |  |
 | `main:g0032:l0002` | Main · Player | 良かったよ。[[T001:row]]俺、時代劇好きだし。 | It was great.[[T001:row]]I like period plays. |  |
 | `main:g0032:l0003` | Main · Mio | 本当ですか？[[T001:row]]初めての舞台だったので、[[T002:row]]もう無我夢中で…。 | Really?[[T001:row]]It was my first play,[[T002:row]]so it's all a blur... |  |
@@ -105,7 +105,7 @@
 | `main:g0032:l0005` | Main · Mio | ありがとうございます…。[[T001:row]]演劇に、自信が[[T002:row]]持てそうです。 | Thank you...[[T001:row]]Now I feel confident[[T002:row]]about acting. |  |
 | `main:g0032:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0032:l0007` | Main · Mio | そうですか…。[[T001:row]]わざわざ来てくれて、[[T002:row]]ありがとうございました。 | I see...[[T001:row]]Thank you for[[T002:row]]coming all this way. |  |
-| `main:g0033:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0033:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0033:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]どうでしたか？ | Oh, you came.[[T001:row]]How was it? |  |
 | `main:g0033:l0002` | Main · Player | なかなか面白かったよ。[[T001:row]]俺、時代劇好きだし。 | It was pretty fun.[[T001:row]]I like period plays. |  |
 | `main:g0033:l0003` | Main · Mio | 初めての舞台だったので、[[T001:row]]緊張して倒れそう[[T002:row]]だったんですよ。 | It was my first play.[[T001:row]]I was so nervous[[T002:row]]I nearly fainted. |  |
@@ -113,7 +113,7 @@
 | `main:g0033:l0005` | Main · Mio | 本当ですか？[[T001:row]]良かった。[[T002:row]]やっと安心できます。 | Really?[[T001:row]]I'm glad.[[T002:row]]Now I can relax. |  |
 | `main:g0033:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0033:l0007` | Main · Mio | わざわざ来てくれて、[[T001:row]]ありがとうございました。 | Thank you for[[T001:row]]coming all this way. |  |
-| `main:g0034:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0034:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0034:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]どうでしたか？ | Oh, you came.[[T001:row]]How was it? |  |
 | `main:g0034:l0002` | Main · Player | なかなか面白かったよ。[[T001:row]]俺、時代劇好きだし。 | It was pretty fun.[[T001:row]]I like period plays. |  |
 | `main:g0034:l0003` | Main · Mio | 良かった。[[T001:row]]初めての舞台だったので、[[T002:row]]心配してたんですけど…。 | I'm glad.[[T001:row]]It was my first play,[[T002:row]]so I was worried... |  |
@@ -122,7 +122,7 @@
 | `main:g0034:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0034:l0007` | Main · Mio | 来てくれて、[[T001:row]]ありがとうございました。 | Thank you[[T001:row]]for coming. |  |
 | `main:g0035:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
-| `main:g0036:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0036:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0036:l0001` | Main · Mio | あっ…。 | Oh... |  |
 | `main:g0036:l0002` | Main · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `main:g0036:l0003` | Main · Mio | だって…、[[T001:row]]恥ずかしくて…。 | Well...[[T001:row]]it's embarrassing... |  |
@@ -130,7 +130,7 @@
 | `main:g0036:l0005` | Main · Mio | 本当ですか…？[[T001:row]]だったらいいんです…。 | Really...?[[T001:row]]Then I'm glad... |  |
 | `main:g0036:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0036:l0007` | Main · Mio | そうですか…。[[T001:row]]わざわざ来てくれて、[[T002:row]]ありがとうございました。 | I see...[[T001:row]]Thank you for[[T002:row]]coming all this way. |  |
-| `main:g0037:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0037:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0037:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]恥ずかしかったですけど、[[T002:row]]どうでしたか？ | Oh, you came.[[T001:row]]It was embarrassing,[[T002:row]]but how was it? |  |
 | `main:g0037:l0002` | Main · Player | なかなか面白かったよ。[[T001:row]][[T002:girl_name]]、かっこ良かった[[T003:row]]じゃない。 | It was pretty fun.[[T001:row]][[T002:girl_name]], you were[[T003:row]]really cool! |  |
 | `main:g0037:l0003` | Main · Mio | 本当ですか？[[T001:row]]アクションが大変で、[[T002:row]]練習中に倒れたことも[[T003:row]]あるんですよ。 | Really?[[T001:row]]The action was hard.[[T002:row]]I even fainted[[T003:row]]in practice. |  |
@@ -138,7 +138,7 @@
 | `main:g0037:l0005` | Main · Mio | はい。[[T001:row]]おかげで、少しは体力に[[T002:row]]自信がつきました。 | Yes.[[T001:row]]I'm feeling more[[T002:row]]confident in my stamina. |  |
 | `main:g0037:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0037:l0007` | Main · Mio | わざわざ来てくれて、[[T001:row]]ありがとうございました。 | Thank you for[[T001:row]]coming all this way. |  |
-| `main:g0038:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0038:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0038:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]どうでした？ | Oh, you came.[[T001:row]]How was it? |  |
 | `main:g0038:l0002` | Main · Player | なかなか面白かったと[[T001:row]]思うよ。 | I thought it[[T001:row]]was pretty fun. |  |
 | `main:g0038:l0003` | Main · Mio | こういうの、[[T001:row]]好きなんですか？ | Do you like[[T001:row]]this sort of thing? |  |
@@ -147,13 +147,13 @@
 | `main:g0038:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0038:l0007` | Main · Mio | 来てくれて、[[T001:row]]ありがとうございました。 | Thank you[[T001:row]]for coming. |  |
 | `main:g0039:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
-| `main:g0040:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0040:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0040:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]嬉しい…。[[T002:row]]演劇はどうでしたか？ | Oh, you came.[[T001:row]]I'm so happy...[[T002:row]]How was the play? |  |
 | `main:g0040:l0002` | Main · Player | すごく良かったよ。[[T001:row]]もう、感動しまくり。 | It was great.[[T001:row]]I was so moved. |  |
 | `main:g0040:l0003` | Main · Mio | すごく嬉しいです…。[[T001:row]]私のお気に入りの、[[T002:row]]お話なので…。 | I'm so happy...[[T001:row]]It's my favorite[[T002:row]]story... |  |
 | `main:g0040:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0040:l0005` | Main · Mio | そうですか…。[[T001:row]]わざわざ来てくれて、[[T002:row]]ありがとうございました。 | I see...[[T001:row]]Thank you for[[T002:row]]coming all this way. |  |
-| `main:g0041:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0041:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0041:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]どうでしたか？ | Oh, you came.[[T001:row]]How was it? |  |
 | `main:g0041:l0002` | Main · Player | すごく良かったよ。[[T001:row]]もう、感動しまくり。 | It was great.[[T001:row]]I was so moved. |  |
 | `main:g0041:l0003` | Main · Mio | 良かった。[[T001:row]]私のお気に入りの話なので、[[T002:row]]頑張ったんです。 | I'm glad.[[T001:row]]It's my favorite story,[[T002:row]]so I worked hard. |  |
@@ -161,7 +161,7 @@
 | `main:g0041:l0005` | Main · Mio | それに今年で、[[T001:row]]最後でしたから…。 | And this is[[T001:row]]our last year... |  |
 | `main:g0041:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0041:l0007` | Main · Mio | わざわざ来てくれて、[[T001:row]]ありがとうございました。 | Thank you for[[T001:row]]coming all this way. |  |
-| `main:g0042:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0042:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0042:l0001` | Main · Mio | あっ、来てくれたんですね。[[T001:row]]どうでしたか？ | Oh, you came.[[T001:row]]How was it? |  |
 | `main:g0042:l0002` | Main · Player | すごく良かったよ。[[T001:row]]もう、感動しまくり。 | It was great.[[T001:row]]I was so moved. |  |
 | `main:g0042:l0003` | Main · Mio | 今回の劇は、[[T001:row]]特に練習に力を入れて、[[T002:row]]臨んだんです。 | For this play,[[T001:row]]we practiced[[T002:row]]extra hard. |  |

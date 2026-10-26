@@ -76,7 +76,7 @@
 | `table-0:g0013:l0003` | Scene 0 · Heroine | 失敗した原因を[[T001:row]]ちゃんと調べてみたの？ | Did you properly look[[T001:row]]into why it failed? |  |
 | `table-0:g0013:l0004` | Scene 0 · Player | そうか。[[T001:row]]失敗した原因かぁ…。 | I see.[[T001:row]]Why it failed, huh... |  |
 | `table-0:g0013:l0005` | Scene 0 · Heroine | それでも駄目なら、[[T001:row]]あなたには才能がないわ。 | If that still fails,[[T001:row]]you have no talent. |  |
-| `table-0:g0013:l0006` | Scene 0 · Player | そ、そうだね。[[T001:row]]ありがとう。[[T002:row]][[T003:girl_name]]。 | R-right.[[T001:row]]Thanks,[[T002:row]][[T003:girl_name]] |  |
+| `table-0:g0013:l0006` | Scene 0 · Player | そ、そうだね。[[T001:row]]ありがとう。[[T002:row]][[T003:girl_name]]。 | R-right.[[T001:row]]Thanks,[[T002:row]][[T003:girl_name]]. |  |
 | `table-0:g0014:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。[[T002:row]]実験が失敗ばっかりで[[T003:row]]困っちゃうよ。 | Oh, [[T001:girl_name]].[[T002:row]]My experiments keep[[T003:row]]failing. Now what? |  |
 | `table-0:g0014:l0001` | Scene 0 · Heroine | こんなつまらない実験で、[[T001:row]]よく失敗なんて[[T002:row]]できるわね。 | You failed[[T001:row]]such a simple[[T002:row]]experiment? How? |  |
 | `table-0:g0014:l0002` | Scene 0 · Player | そ、そんな事[[T001:row]]言われても…。 | Y-you don't have[[T001:row]]to say it like that... |  |
@@ -315,7 +315,7 @@
 | `table-1:g0011:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]昨日描いてた絵の事だけど、[[T003:row]]どうしたら良くなるかな？ | Oh, [[T001:girl_name]][[T002:row]]About my painting yesterday,[[T003:row]]how can I improve it? |  |
 | `table-1:g0011:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。[[T001:row]]形をうまく捉える[[T002:row]]練習でもしたら？ | .....[[T001:row]]Why not practice[[T002:row]]capturing shapes? |  |
 | `table-1:g0011:l0002` | Scene 1 · Player | そうかぁ、[[T001:row]]形をうまくかぁ…。 | I see,[[T001:row]]capturing shapes... |  |
-| `table-1:g0012:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0012:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0012:l0001` | Scene 1 · Heroine | 昨日描いてた絵ね、[[T001:row]]さっき見せてもらったわ。 | I just saw the painting[[T001:row]]you did yesterday. |  |
 | `table-1:g0012:l0002` | Scene 1 · Player | ど、どうだった？[[T001:row]]何かいいアドバイスは[[T002:row]]ないかな？ | H-how was it?[[T001:row]]Got any good[[T002:row]]advice? |  |
 | `table-1:g0012:l0003` | Scene 1 · Heroine | うーん。もう少し、[[T001:row]]陰影に気を付けて[[T002:row]]描くといいと思うわ。 | Hmm. I think you should[[T001:row]]pay a bit more attention[[T002:row]]to the shading. |  |
@@ -323,7 +323,7 @@
 | `table-1:g0012:l0005` | Scene 1 · Heroine | すごくセンスがいいから、[[T001:row]]すぐにいい絵が[[T002:row]]描けるようになるわ。 | You've got an eye[[T001:row]]for art. I bet you'll[[T002:row]]improve fast. |  |
 | `table-1:g0012:l0006` | Scene 1 · Player | そ、そう？[[T001:row]]ありがとう。 | R-really?[[T001:row]]Thanks. |  |
 | `table-1:g0012:l0007` | Scene 1 · Heroine | それじゃ、[[T001:row]]ネバーギブアップよ。[[T002:row]]頑張ってね。 | Okay then,[[T001:row]]never give up![[T002:row]]Good luck. |  |
-| `table-1:g0013:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0013:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0013:l0001` | Scene 1 · Heroine | 昨日描いてた絵ね、[[T001:row]]さっき見せてもらったわ。 | I just saw the painting[[T001:row]]you did yesterday. |  |
 | `table-1:g0013:l0002` | Scene 1 · Player | ど、どうだった？[[T001:row]]何かいいアドバイスは[[T002:row]]ないかな？ | H-how was it?[[T001:row]]Got any good[[T002:row]]advice? |  |
 | `table-1:g0013:l0003` | Scene 1 · Heroine | もう少し、[[T001:row]]陰影に気を付けて[[T002:row]]描いた方がベターね。 | Try paying more[[T001:row]]attention to[[T002:row]]shading. |  |
@@ -331,7 +331,7 @@
 | `table-1:g0013:l0005` | Scene 1 · Heroine | 私ね、それだけは[[T001:row]]自信あるのよ。[[T002:row]]良かったら参考にして。 | That's the one thing[[T001:row]]I'm confident about.[[T002:row]]Use mine as a model. |  |
 | `table-1:g0013:l0006` | Scene 1 · Player | ありがとう。[[T001:row]]参考にさせてもらうよ。 | Thanks.[[T001:row]]I'll learn from yours. |  |
 | `table-1:g0013:l0007` | Scene 1 · Heroine | それじゃ、[[T001:row]]ネバーギブアップよ。[[T002:row]]頑張ってね。 | Okay then,[[T001:row]]never give up![[T002:row]]Good luck. |  |
-| `table-1:g0014:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0014:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0014:l0001` | Scene 1 · Heroine | 昨日描いてた絵ね、[[T001:row]]さっき見せてもらったわ。 | I just saw the painting[[T001:row]]you did yesterday. |  |
 | `table-1:g0014:l0002` | Scene 1 · Player | ど、どうだった？[[T001:row]]何かいいアドバイスは[[T002:row]]ないかな？ | H-how was it?[[T001:row]]Got any good[[T002:row]]advice? |  |
 | `table-1:g0014:l0003` | Scene 1 · Heroine | もう少し、[[T001:row]]陰影に気を使ったら[[T002:row]]ベターだと思うわよ。 | Your shading[[T001:row]]could use a bit[[T002:row]]more work. |  |
@@ -340,7 +340,7 @@
 | `table-1:g0015:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]昨日描いてた絵、[[T003:row]]見てくれた？ | Oh, [[T001:girl_name]][[T002:row]]Did you see the painting[[T003:row]]I did yesterday? |  |
 | `table-1:g0015:l0001` | Scene 1 · Heroine | んー、‥‥‥‥‥。[[T001:row]]陰影に気を使って[[T002:row]]みたら？ | Hmm.....[[T001:row]]Why not take care[[T002:row]]with the shading? |  |
 | `table-1:g0015:l0002` | Scene 1 · Player | そうかぁ、[[T001:row]]陰影かぁ…。 | I see,[[T001:row]]shading... |  |
-| `table-1:g0016:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0016:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0016:l0001` | Scene 1 · Heroine | 昨日描いてた絵ね、[[T001:row]]さっき見せてもらったわ。 | I just saw the painting[[T001:row]]you did yesterday. |  |
 | `table-1:g0016:l0002` | Scene 1 · Player | ど、どうだった？[[T001:row]]何かいいアドバイスは[[T002:row]]ないかな？ | H-how was it?[[T001:row]]Got any good[[T002:row]]advice? |  |
 | `table-1:g0016:l0003` | Scene 1 · Heroine | 構図の取り方を、[[T001:row]]もう少し工夫したら[[T002:row]]ベストね。 | Try working on[[T001:row]]your composition[[T002:row]]a bit more. |  |
@@ -348,7 +348,7 @@
 | `table-1:g0016:l0005` | Scene 1 · Heroine | かなりセンスがいいから、[[T001:row]]すぐに私なんか[[T002:row]]追い越されちゃうな。 | You've got a good eye.[[T001:row]]You'll outdo me[[T002:row]]in no time. |  |
 | `table-1:g0016:l0006` | Scene 1 · Player | そんなことないって、[[T001:row]]まだまだだよ。 | No way,[[T001:row]]I've got a long way to go. |  |
 | `table-1:g0016:l0007` | Scene 1 · Heroine | それじゃ、[[T001:row]]ネバーギブアップよ。[[T002:row]]頑張ってね。 | Okay then,[[T001:row]]never give up![[T002:row]]Good luck. |  |
-| `table-1:g0017:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0017:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0017:l0001` | Scene 1 · Heroine | 昨日描いてた絵ね、[[T001:row]]さっき見せてもらったわ。 | I just saw the painting[[T001:row]]you did yesterday. |  |
 | `table-1:g0017:l0002` | Scene 1 · Player | ど、どうだった？[[T001:row]]何かいいアドバイスは[[T002:row]]ないかな？ | H-how was it?[[T001:row]]Got any good[[T002:row]]advice? |  |
 | `table-1:g0017:l0003` | Scene 1 · Heroine | 構図の取り方を[[T001:row]]もう少し工夫したら、[[T002:row]]ベターだと思うわよ。 | I think it'd be better[[T001:row]]if you worked on[[T002:row]]the composition. |  |
@@ -356,7 +356,7 @@
 | `table-1:g0017:l0005` | Scene 1 · Heroine | 色々描いてみて[[T001:row]]練習するといいよ。 | Practice by drawing[[T001:row]]all sorts of things. |  |
 | `table-1:g0017:l0006` | Scene 1 · Player | ありがとう。[[T001:row]]早速研究してみるよ。 | Thanks.[[T001:row]]I'll study it right away. |  |
 | `table-1:g0017:l0007` | Scene 1 · Heroine | それじゃ頑張ってね。 | Well, good luck. |  |
-| `table-1:g0018:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0018:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0018:l0001` | Scene 1 · Heroine | 昨日描いてた絵ね、[[T001:row]]さっき見せてもらったわ。 | I just saw the painting[[T001:row]]you did yesterday. |  |
 | `table-1:g0018:l0002` | Scene 1 · Player | ど、どうだった？[[T001:row]]何かいいアドバイスは[[T002:row]]ないかな？ | H-how was it?[[T001:row]]Got any good[[T002:row]]advice? |  |
 | `table-1:g0018:l0003` | Scene 1 · Heroine | 構図の取り方を[[T001:row]]もう少し工夫すると[[T002:row]]ベターね。 | Work on the composition[[T001:row]]a bit more and it'll[[T002:row]]be better. |  |
@@ -365,7 +365,7 @@
 | `table-1:g0019:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]昨日描いてた絵、[[T003:row]]見てくれた？ | Oh, [[T001:girl_name]][[T002:row]]Did you see the painting[[T003:row]]I did yesterday? |  |
 | `table-1:g0019:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。[[T001:row]]構図に気を使って[[T002:row]]描いてみたら？ | .....[[T001:row]]Watch your composition[[T002:row]]when you paint. |  |
 | `table-1:g0019:l0002` | Scene 1 · Player | そうかぁ、[[T001:row]]構図かぁ…。 | I see,[[T001:row]]composition... |  |
-| `table-1:g0020:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0020:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0020:l0001` | Scene 1 · Heroine | この前描いてた絵、[[T001:row]]ワンダフルね。 | That painting you did[[T001:row]]is wonderful. |  |
 | `table-1:g0020:l0002` | Scene 1 · Player | でしょう。[[T001:row]]今回の絵は、[[T002:row]]わりと自信あるんだ。 | Isn't it?[[T001:row]]I'm pretty confident[[T002:row]]about this one. |  |
 | `table-1:g0020:l0003` | Scene 1 · Heroine | このまま、自分の絵の[[T001:row]]スタイルを確立したら、[[T002:row]]まさにパーフェクトね。 | If you can establish[[T001:row]]your own style like this,[[T002:row]]it'll be perfect. |  |
@@ -373,7 +373,7 @@
 | `table-1:g0020:l0005` | Scene 1 · Heroine | ちょっと無謀だと思うけど、[[T001:row]]一度出してみるのも[[T002:row]]いいかもね。 | It's a bit reckless,[[T001:row]]but it might be[[T002:row]]worth a try. |  |
 | `table-1:g0020:l0006` | Scene 1 · Player | [[T001:girl_name]]がそう言うなら、[[T002:row]]もう少し、[[T003:row]]様子を見てからにするよ。 | Since [[T001:girl_name]][[T002:row]]says so, I'll wait[[T003:row]]and see. |  |
 | `table-1:g0020:l0007` | Scene 1 · Heroine | それがベストだと思うわ。[[T001:row]]それじゃ頑張ってね。[[T002:row]]私も、応援してるわ。 | I think that's best.[[T001:row]]Well, good luck.[[T002:row]]I'm rooting for you. |  |
-| `table-1:g0021:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0021:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0021:l0001` | Scene 1 · Heroine | この前描いてた絵、[[T001:row]]ワンダフルね。 | That painting you did[[T001:row]]is wonderful. |  |
 | `table-1:g0021:l0002` | Scene 1 · Player | でしょう。[[T001:row]]今回の絵は、[[T002:row]]わりと自信あるんだ。 | Isn't it?[[T001:row]]I'm pretty confident[[T002:row]]about this one. |  |
 | `table-1:g0021:l0003` | Scene 1 · Heroine | このまま自分の絵の[[T001:row]]スタイルを確立したら、[[T002:row]]まさにパーフェクトよ。 | If you can establish[[T001:row]]your own style like this,[[T002:row]]it'll be perfect. |  |
@@ -381,7 +381,7 @@
 | `table-1:g0021:l0005` | Scene 1 · Heroine | 展覧会は、[[T001:row]]まだ無謀だと思うわよ。 | An exhibition is still[[T001:row]]a bit reckless, I think. |  |
 | `table-1:g0021:l0006` | Scene 1 · Player | それじゃあ、[[T001:row]]もう少し、[[T002:row]]腕をあげてからにするか。 | Well then,[[T001:row]]I'll wait until[[T002:row]]I've improved. |  |
 | `table-1:g0021:l0007` | Scene 1 · Heroine | それがいいわよ。[[T001:row]]それじゃ、頑張ってね。 | That's good.[[T001:row]]Well, good luck. |  |
-| `table-1:g0022:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0022:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0022:l0001` | Scene 1 · Heroine | この前描いてた絵、[[T001:row]]ワンダフルね。 | That painting you did[[T001:row]]is wonderful. |  |
 | `table-1:g0022:l0002` | Scene 1 · Player | でしょう。[[T001:row]]今回の絵は、[[T002:row]]わりと自信あるんだ。 | Isn't it?[[T001:row]]I'm pretty confident[[T002:row]]about this one. |  |
 | `table-1:g0022:l0003` | Scene 1 · Heroine | このまま自分の絵の[[T001:row]]スタイルを確立したら、[[T002:row]]グレイトね。 | If you can establish[[T001:row]]your own style like this,[[T002:row]]it'll be great. |  |
@@ -391,7 +391,7 @@
 | `table-1:g0023:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]この前描いた絵、[[T003:row]]見てくれた？ | Oh, [[T001:girl_name]][[T002:row]]Did you see the[[T003:row]]painting I did? |  |
 | `table-1:g0023:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。[[T001:row]]自分の絵のスタイルを[[T002:row]]しっかりと持ったら？ | .....[[T001:row]]Why not find your[[T002:row]]own style? |  |
 | `table-1:g0023:l0002` | Scene 1 · Player | そうかぁ、[[T001:row]]自分の絵かぁ…。 | I see,[[T001:row]]my own style... |  |
-| `table-1:g0024:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0024:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0024:l0001` | Scene 1 · Heroine | この前描いてた絵は、[[T001:row]]完成した？ | Have you finished[[T001:row]]that painting yet? |  |
 | `table-1:g0024:l0002` | Scene 1 · Player | まだだよ。[[T001:row]]もうすぐ[[T002:row]]完成の予定だけどね。 | Not yet.[[T001:row]]I should finish it[[T002:row]]soon, though. |  |
 | `table-1:g0024:l0003` | Scene 1 · Heroine | その絵、目展に[[T001:row]]出展するのよね？ | You're entering it in[[T001:row]]the Meten exhibition, right? |  |
@@ -400,7 +400,7 @@
 | `table-1:g0024:l0006` | Scene 1 · Player | ありがとう。[[T001:row]][[T002:girl_name]]。[[T003:row]]元気出てきたよ。 | Thanks,[[T001:row]][[T002:girl_name]].[[T003:row]]I feel better. |  |
 | `table-1:g0024:l0007` | Scene 1 · Heroine | 最後まで気を抜かないで[[T001:row]]頑張ってね。 | Don't let up until[[T001:row]]the end. Good luck. |  |
 | `table-1:g0024:l0008` | Scene 1 · Player | よし、[[T001:row]]気合入れて頑張るか。 | All right,[[T001:row]]I'll give it my all. |  |
-| `table-1:g0025:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0025:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0025:l0001` | Scene 1 · Heroine | この前描いてた絵は、[[T001:row]]完成した？ | Have you finished[[T001:row]]that painting yet? |  |
 | `table-1:g0025:l0002` | Scene 1 · Player | まだだよ。[[T001:row]]もうすぐ[[T002:row]]完成の予定だけどね。 | Not yet.[[T001:row]]I should finish it[[T002:row]]soon, though. |  |
 | `table-1:g0025:l0003` | Scene 1 · Heroine | その絵、目展に[[T001:row]]出展するのよね？ | You're entering it in[[T001:row]]the Meten exhibition, right? |  |
@@ -408,7 +408,7 @@
 | `table-1:g0025:l0005` | Scene 1 · Heroine | テイクイットイージー、[[T001:row]]気楽に行こうよ。[[T002:row]]何とかなるわ。 | Take it easy.[[T001:row]]Relax a little.[[T002:row]]It'll work out. |  |
 | `table-1:g0025:l0006` | Scene 1 · Player | 結構いい加減だけど、[[T001:row]]自信が出てきたよ。 | That was vague,[[T001:row]]but I feel confident. |  |
 | `table-1:g0025:l0007` | Scene 1 · Heroine | そうそうその調子。[[T001:row]]最後まで気を抜かないで、[[T002:row]]頑張るのよ。 | That's the spirit.[[T001:row]]Don't let up until[[T002:row]]the end. |  |
-| `table-1:g0026:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0026:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0026:l0001` | Scene 1 · Heroine | この前描いてた絵は、[[T001:row]]完成した？ | Have you finished[[T001:row]]that painting yet? |  |
 | `table-1:g0026:l0002` | Scene 1 · Player | まだだよ。[[T001:row]]もうすぐ[[T002:row]]完成の予定だけどね。 | Not yet.[[T001:row]]I should finish it[[T002:row]]soon, though. |  |
 | `table-1:g0026:l0003` | Scene 1 · Heroine | その絵、目展に[[T001:row]]出展するのよね？ | You're entering it in[[T001:row]]the Meten exhibition, right? |  |
@@ -417,7 +417,7 @@
 | `table-1:g0027:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]この前描いた絵、[[T003:row]]見てくれた？ | Oh, [[T001:girl_name]][[T002:row]]Did you see the[[T003:row]]painting I did? |  |
 | `table-1:g0027:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。[[T001:row]]ふーん。[[T002:row]]目展に出展するのよね。 | .....[[T001:row]]Hmm.[[T002:row]]You're entering Meten. |  |
 | `table-1:g0027:l0002` | Scene 1 · Player | もう少し手直しでも[[T001:row]]するか…。 | Maybe I'll touch[[T001:row]]it up some more... |  |
-| `table-1:g0028:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0028:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0028:l0001` | Scene 1 · Heroine | 吹奏楽部はどう？ | How's the band? |  |
 | `table-1:g0028:l0002` | Scene 1 · Player | 吹奏楽部に入ったのは[[T001:row]]いいけど、何からやって[[T002:row]]いいのか…。 | I joined the band,[[T001:row]]but I don't know[[T002:row]]where to start... |  |
 | `table-1:g0028:l0003` | Scene 1 · Heroine | とりあえず、[[T001:row]]楽譜は読めるように[[T002:row]]なった？ | First of all,[[T001:row]]can you read[[T002:row]]music yet? |  |
@@ -425,7 +425,7 @@
 | `table-1:g0028:l0005` | Scene 1 · Heroine | あっ、別にいいわよ。[[T001:row]]でも私の教え方は、[[T002:row]]優しくないわよ。 | Oh, sure.[[T001:row]]But I won't go[[T002:row]]easy on you. |  |
 | `table-1:g0028:l0006` | Scene 1 · Player | いや、[[T001:girl_name]]に[[T002:row]]教えてもらえるだけで[[T003:row]]十分です。 | No, just having [[T001:girl_name]][[T002:row]]teach me would[[T003:row]]be enough! |  |
 | `table-1:g0028:l0007` | Scene 1 · Heroine | そう。[[T001:row]]それならいいけど。 | I see.[[T001:row]]Then all right. |  |
-| `table-1:g0029:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0029:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0029:l0001` | Scene 1 · Heroine | 吹奏楽部はどう？ | How's the band? |  |
 | `table-1:g0029:l0002` | Scene 1 · Player | 吹奏楽部に入ったのは[[T001:row]]いいけど、何からやって[[T002:row]]いいのか…。 | I joined the band,[[T001:row]]but I don't know[[T002:row]]where to start... |  |
 | `table-1:g0029:l0003` | Scene 1 · Heroine | とりあえず、[[T001:row]]楽譜は読めるように[[T002:row]]なった？ | First of all,[[T001:row]]can you read[[T002:row]]music yet? |  |
@@ -435,7 +435,7 @@
 | `table-1:g0029:l0007` | Scene 1 · Heroine | そう。[[T001:row]]女王様とお呼び…って、[[T002:row]]そんな事しないよん。 | That's right.[[T001:row]]Call me Mistress...[[T002:row]]I wouldn't! |  |
 | `table-1:g0029:l0008` | Scene 1 · Player | ま、とりあえず、[[T001:row]]優しく教えてね。 | Well, anyway,[[T001:row]]teach me gently. |  |
 | `table-1:g0029:l0009` | Scene 1 · Heroine | そうね。[[T001:row]]今迄で一番厳しく[[T002:row]]教えてあげる。 | Fine.[[T001:row]]I'll be harder on you[[T002:row]]than ever before. |  |
-| `table-1:g0030:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0030:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0030:l0001` | Scene 1 · Heroine | 吹奏楽部はどう？ | How's the band? |  |
 | `table-1:g0030:l0002` | Scene 1 · Player | 吹奏楽部に入ったのは[[T001:row]]いいけど、何からやって[[T002:row]]いいのか…。 | I joined the band,[[T001:row]]but I don't know[[T002:row]]where to start... |  |
 | `table-1:g0030:l0003` | Scene 1 · Heroine | とりあえず[[T001:row]]楽譜は読めるように[[T002:row]]なった？ | First of all,[[T001:row]]can you read[[T002:row]]music yet? |  |
@@ -465,7 +465,7 @@
 | `table-1:g0035:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]なかなか演奏が[[T003:row]]上達しなくて…。 | Oh, [[T001:girl_name]][[T002:row]]My playing isn't[[T003:row]]getting any better... |  |
 | `table-1:g0035:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。[[T001:row]]練習不足よ。 | .....[[T001:row]]You need more practice. |  |
 | `table-1:g0035:l0002` | Scene 1 · Player | そうなのかなぁ。 | Is that it? |  |
-| `table-1:g0036:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0036:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0036:l0001` | Scene 1 · Heroine | 昨日の演奏、[[T001:row]]わりとグッドだったわ。 | Your playing yesterday[[T001:row]]was pretty good. |  |
 | `table-1:g0036:l0002` | Scene 1 · Player | そう？[[T001:row]]でも、まだまだだよ。[[T002:row]]もっと練習しなくちゃ。 | Really?[[T001:row]]I'm not there yet.[[T002:row]]Need more practice. |  |
 | `table-1:g0036:l0003` | Scene 1 · Heroine | 練習も大事だけど、[[T001:row]]もっと、気楽に練習した方が[[T002:row]]いいと思うな。 | Practice matters, but[[T001:row]]I think you should[[T002:row]]relax more when you do. |  |
@@ -474,7 +474,7 @@
 | `table-1:g0036:l0006` | Scene 1 · Player | そうだね。[[T001:row]]まったくその通り。 | True.[[T001:row]]You're so right. |  |
 | `table-1:g0036:l0007` | Scene 1 · Heroine | こらこら[[T001:row]]そこで否定しなさいよ。 | Hey, hey,[[T001:row]]you're supposed to deny it. |  |
 | `table-1:g0036:l0008` | Scene 1 · Player | それじゃあ、[[T001:row]]お互いに頑張ろう。 | Well then,[[T001:row]]let's both do our best. |  |
-| `table-1:g0037:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0037:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0037:l0001` | Scene 1 · Heroine | 昨日の演奏、[[T001:row]]わりとグッドだったわよ。 | Your playing yesterday[[T001:row]]was pretty good. |  |
 | `table-1:g0037:l0002` | Scene 1 · Player | そう？[[T001:row]]でも、まだまだだよ。[[T002:row]]もっと練習しなくちゃ。 | Really?[[T001:row]]I'm not there yet.[[T002:row]]Need more practice. |  |
 | `table-1:g0037:l0003` | Scene 1 · Heroine | テイクイットイージー。[[T001:row]]もっと気楽にいこうよ。 | Take it easy.[[T001:row]]Try to relax a little. |  |
@@ -483,7 +483,7 @@
 | `table-1:g0037:l0006` | Scene 1 · Player | すぐに追い越してやるぜ。 | I'll pass you in no time. |  |
 | `table-1:g0037:l0007` | Scene 1 · Heroine | そりゃ大変。[[T001:row]]追い付かれないように[[T002:row]]頑張らなくっちゃ。 | Oh dear.[[T001:row]]I'd better work hard[[T002:row]]so you don't catch up. |  |
 | `table-1:g0037:l0008` | Scene 1 · Player | それじゃあ、[[T001:row]]お互いに頑張ろう。 | Well then,[[T001:row]]let's both do our best. |  |
-| `table-1:g0038:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0038:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0038:l0001` | Scene 1 · Heroine | 昨日の演奏、[[T001:row]]なかなかグッドよ。 | Your playing yesterday[[T001:row]]was quite good. |  |
 | `table-1:g0038:l0002` | Scene 1 · Player | そう？[[T001:row]]でも、まだまだだよ。[[T002:row]]もっと練習しなくちゃ。 | Really?[[T001:row]]I'm not there yet.[[T002:row]]Need more practice. |  |
 | `table-1:g0038:l0003` | Scene 1 · Heroine | そんなに焦って練習しても、[[T001:row]]うまくなれるとは、[[T002:row]]限らないわよ。 | Rushing your practice[[T001:row]]won't necessarily[[T002:row]]make you better. |  |
@@ -495,7 +495,7 @@
 | `table-1:g0039:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]昨日の演奏は[[T003:row]]どうだった？ | Oh, [[T001:girl_name]][[T002:row]]How was my playing[[T003:row]]yesterday? |  |
 | `table-1:g0039:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。まあまあね。 | ..... It was okay. |  |
 | `table-1:g0039:l0002` | Scene 1 · Player | そうかぁ、[[T001:row]]もう少し練習しないと[[T002:row]]駄目か…。 | I see, I need[[T001:row]]to practice[[T002:row]]some more... |  |
-| `table-1:g0040:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0040:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0040:l0001` | Scene 1 · Heroine | 昨日の演奏、[[T001:row]]グッドだったわ。 | Your playing yesterday[[T001:row]]was good. |  |
 | `table-1:g0040:l0002` | Scene 1 · Player | そう？[[T001:row]]この頃、少しは自信が[[T002:row]]出てきたんだ。 | Really?[[T001:row]]I've been feeling a bit[[T002:row]]more confident lately. |  |
 | `table-1:g0040:l0003` | Scene 1 · Heroine | もうソロパートも[[T001:row]]平気そうね。 | You can handle[[T001:row]]solos now. |  |
@@ -504,7 +504,7 @@
 | `table-1:g0040:l0006` | Scene 1 · Player | まだ、俺達の実力じゃ[[T001:row]]ちょっと無理だと思うけど、[[T002:row]]頑張れば何とかなるよ。 | We're not quite good[[T001:row]]enough yet, but if we[[T002:row]]work hard, we'll manage. |  |
 | `table-1:g0040:l0007` | Scene 1 · Heroine | それじゃ[[T001:row]]頑張らなくっちゃ。 | Then we'd better[[T001:row]]work hard. |  |
 | `table-1:g0040:l0008` | Scene 1 · Player | お互いに頑張ろう。 | Let's both do our best. |  |
-| `table-1:g0041:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0041:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0041:l0001` | Scene 1 · Heroine | 昨日の演奏[[T001:row]]グッドよグッド。 | Your playing yesterday[[T001:row]]was good, really good. |  |
 | `table-1:g0041:l0002` | Scene 1 · Player | そう？[[T001:row]]この頃、少しは自信が[[T002:row]]出てきたんだ。 | Really?[[T001:row]]I've been feeling a bit[[T002:row]]more confident lately. |  |
 | `table-1:g0041:l0003` | Scene 1 · Heroine | もうソロパートも[[T001:row]]平気ね。 | Solos are no problem[[T001:row]]now. |  |
@@ -513,7 +513,7 @@
 | `table-1:g0041:l0006` | Scene 1 · Player | 今の俺達の実力じゃ[[T001:row]]ちょっと無理だと思うけど、[[T002:row]]頑張れば何とかなるよ。 | We're not quite good[[T001:row]]enough now, but if we[[T002:row]]work hard, we'll manage. |  |
 | `table-1:g0041:l0007` | Scene 1 · Heroine | それじゃ[[T001:row]]頑張りますか。 | Then let's[[T001:row]]work hard. |  |
 | `table-1:g0041:l0008` | Scene 1 · Player | お互いにね。 | You too. |  |
-| `table-1:g0042:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0042:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0042:l0001` | Scene 1 · Heroine | 昨日の演奏、[[T001:row]]グッドだったわ。 | Your playing yesterday[[T001:row]]was good. |  |
 | `table-1:g0042:l0002` | Scene 1 · Player | そう？[[T001:row]]この頃、少しは自信が[[T002:row]]出てきたんだ。 | Really?[[T001:row]]I've been feeling a bit[[T002:row]]more confident lately. |  |
 | `table-1:g0042:l0003` | Scene 1 · Heroine | もう[[T001:row]]かなり上達したよね。 | You've gotten[[T001:row]]a lot better. |  |
@@ -523,13 +523,13 @@
 | `table-1:g0043:l0000` | Scene 1 · Player | あっ、[[T001:girl_name]]。[[T002:row]]昨日の演奏は[[T003:row]]どうだった？。 | Oh, [[T001:girl_name]][[T002:row]]How was my playing[[T003:row]]yesterday? |  |
 | `table-1:g0043:l0001` | Scene 1 · Heroine | ‥‥‥‥‥。[[T001:row]]なかなか[[T002:row]]いいんじゃない？ | .....[[T001:row]]Not bad,[[T002:row]]I guess. |  |
 | `table-1:g0043:l0002` | Scene 1 · Player | だんだんと、[[T001:row]]自信が付いてきたぞ。 | I'm slowly[[T001:row]]gaining confidence. |  |
-| `table-1:g0044:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0044:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0044:l0001` | Scene 1 · Heroine | ウィーンに留学するって話[[T001:row]]聞いたんだけど。 | I heard you might[[T001:row]]study in Vienna. |  |
 | `table-1:g0044:l0002` | Scene 1 · Player | えーっ、知らないよ俺。[[T001:row]]どこからそういう話が[[T002:row]]出てくるんだ？ | What?! That's news to me.[[T001:row]]Where'd that story[[T002:row]]come from? |  |
 | `table-1:g0044:l0003` | Scene 1 · Heroine | なんだ[[T001:row]]良かった。[[T002:row]]デマなんだ。 | Oh,[[T001:row]]what a relief.[[T002:row]]It's just a rumor. |  |
 | `table-1:g0044:l0004` | Scene 1 · Player | ほら、そんな話よりもさ、[[T001:row]]国際吹奏楽コンテストに、[[T002:row]]出場できるかもしれないん[[T003:row]]だから、練習しようよ。 | Forget that. We might[[T001:row]]make it into the Intl.[[T002:row]]Band Contest, so[[T003:row]]let's practice. |  |
 | `table-1:g0044:l0005` | Scene 1 · Heroine | そうね。[[T001:row]]頑張って出場したいわね。 | Right.[[T001:row]]Let's work hard to enter. |  |
-| `table-1:g0045:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0045:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0045:l0001` | Scene 1 · Heroine | ウィーンに留学するって話[[T001:row]]聞いたわよ。 | I heard you might[[T001:row]]study in Vienna. |  |
 | `table-1:g0045:l0002` | Scene 1 · Player | えーっ、知らないよ俺。[[T001:row]]どこからそういう話が[[T002:row]]出てくるんだ？ | What?! That's news to me.[[T001:row]]Where'd that story[[T002:row]]come from? |  |
 | `table-1:g0045:l0003` | Scene 1 · Heroine | 何だデマなの。 | Oh, just a rumor. |  |
@@ -537,7 +537,7 @@
 | `table-1:g0045:l0005` | Scene 1 · Heroine | そうね。[[T001:row]]そんなイベントも[[T002:row]]あったわね。 | Right.[[T001:row]]There's that[[T002:row]]event. |  |
 | `table-1:g0045:l0006` | Scene 1 · Player | 出場するためには、[[T001:row]]練習、練習。 | To enter,[[T001:row]]practice, practice. |  |
 | `table-1:g0045:l0007` | Scene 1 · Heroine | 少しぐらい[[T001:row]]頑張りますか。 | Guess I'll work[[T001:row]]a little hard. |  |
-| `table-1:g0046:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0046:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0046:l0001` | Scene 1 · Heroine | ウィーンに留学するって話[[T001:row]]聞いたわよ。 | I heard you might[[T001:row]]study in Vienna. |  |
 | `table-1:g0046:l0002` | Scene 1 · Player | えーっ、知らないよ俺。[[T001:row]]どこからそういう話が[[T002:row]]出てくるんだ？ | What?! That's news to me.[[T001:row]]Where'd that story[[T002:row]]come from? |  |
 | `table-1:g0046:l0003` | Scene 1 · Heroine | 何、行かないの？ | What, you're not going? |  |
@@ -588,14 +588,14 @@
 | `table-2:g0009:l0004` | Scene 2 · Player | そうかぁ、[[T001:row]]もっと本を読むことから[[T002:row]]始めるか。 | I see.[[T001:row]]I'll start by[[T002:row]]reading more. |  |
 | `table-2:g0009:l0005` | Scene 2 · Heroine | 私の持ってる本でよかったら、[[T001:row]]今度持ってきますね。 | If you like, I'll bring[[T001:row]]some of my books. |  |
 | `table-2:g0009:l0006` | Scene 2 · Player | ありがとう。[[T001:row]]助かるよ。 | Thanks.[[T001:row]]That'll help. |  |
-| `table-2:g0010:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0010:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0010:l0001` | Scene 2 · Player | 文芸部に入ったのは[[T001:row]]いいけど、文を書くのって、[[T002:row]]なかなか難しくてね。 | I joined the Lit Club,[[T001:row]]but writing is[[T002:row]]pretty hard. |  |
 | `table-2:g0010:l0002` | Scene 2 · Heroine | 本をたくさん読んで、[[T001:row]]勉強するのが[[T002:row]]いいと思いますよ。 | I think you should read[[T001:row]]lots of books and[[T002:row]]learn from them. |  |
 | `table-2:g0010:l0003` | Scene 2 · Player (monologue) | もっと本を読むことから[[T001:row]]始めるか。 | I'll start by[[T001:row]]reading lots more. |  |
 | `table-2:g0011:l0000` | Scene 2 · Player | 文を書くのって、[[T001:row]]なかなか難しいね。[[T002:row]]どうしたらいいかな？ | Writing is[[T001:row]]really hard.[[T002:row]]What should I do? |  |
 | `table-2:g0011:l0001` | Scene 2 · Heroine | ‥‥‥‥‥。[[T001:row]]それは、本を読んで[[T002:row]]勉強しないと…。 | .....[[T001:row]]You need to read[[T002:row]]and learn... |  |
 | `table-2:g0011:l0002` | Scene 2 · Player | そうかぁ、[[T001:row]]もっと本を読むことから[[T002:row]]始めるか。 | I see.[[T001:row]]I'll start by[[T002:row]]reading more. |  |
-| `table-2:g0012:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0012:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0012:l0001` | Scene 2 · Heroine | 昨日書いた短編、[[T001:row]]読ませてもらいました。 | I read the short story[[T001:row]]you wrote yesterday. |  |
 | `table-2:g0012:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]自信はないんだけど、[[T002:row]]批評してくれるかな。 | H-how was it?[[T001:row]]I'm not confident.[[T002:row]]Could you review it? |  |
 | `table-2:g0012:l0003` | Scene 2 · Heroine | 良かったのですけど…、[[T001:row]]もう少し、わかりやすい[[T002:row]]文章だと、もっと[[T003:row]]良かったと思いました。 | It was good, but...[[T001:row]]I think it would have[[T002:row]]been better if it were[[T003:row]]a little clearer. |  |
@@ -603,7 +603,7 @@
 | `table-2:g0012:l0005` | Scene 2 · Heroine | ごめんなさい。[[T001:row]]偉そうなこと言っちゃった[[T002:row]]みたいで…。 | I'm sorry.[[T001:row]]I sounded like[[T002:row]]such a know-it-all... |  |
 | `table-2:g0012:l0006` | Scene 2 · Player | とんでもない。[[T001:row]]ちゃんとした批評で[[T002:row]]ありがたいよ。 | Not at all.[[T001:row]]I appreciate[[T002:row]]the honest feedback. |  |
 | `table-2:g0012:l0007` | Scene 2 · Heroine | そ、そうですか？[[T001:row]]それでは、[[T002:row]]頑張ってくださいね。 | R-really?[[T001:row]]Then please[[T002:row]]do your best. |  |
-| `table-2:g0013:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0013:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0013:l0001` | Scene 2 · Heroine | 昨日書いた短編、[[T001:row]]読ませてもらいました。 | I read the short story[[T001:row]]you wrote yesterday. |  |
 | `table-2:g0013:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]自信はないんだけど、[[T002:row]]批評してくれるかな。 | H-how was it?[[T001:row]]I'm not confident.[[T002:row]]Could you review it? |  |
 | `table-2:g0013:l0003` | Scene 2 · Heroine | そうですね…。[[T001:row]]もう少し、わかりやすい[[T002:row]]文章だと良かったと[[T003:row]]思います。 | Let's see...[[T001:row]]I think it would[[T002:row]]be better if it were[[T003:row]]a little clearer. |  |
@@ -611,7 +611,7 @@
 | `table-2:g0013:l0005` | Scene 2 · Heroine | いいえ。[[T001:row]]こんな事ぐらいにしか[[T002:row]]お役に立ちませんから。 | Oh, no.[[T001:row]]I can't do much[[T002:row]]else to help. |  |
 | `table-2:g0013:l0006` | Scene 2 · Player | それじゃあ、[[T001:row]]わかりやすい文章って奴を[[T002:row]]研究してみるか。 | Then I guess[[T001:row]]I should work on[[T002:row]]writing more clearly. |  |
 | `table-2:g0013:l0007` | Scene 2 · Heroine | 頑張ってくださいね。 | Please do your best. |  |
-| `table-2:g0014:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0014:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0014:l0001` | Scene 2 · Heroine | 昨日書いた短編、[[T001:row]]読ませてもらいました。 | I read the short story[[T001:row]]you wrote yesterday. |  |
 | `table-2:g0014:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]自信はないんだけど、[[T002:row]]批評してくれるかな。 | H-how was it?[[T001:row]]I'm not confident.[[T002:row]]Could you review it? |  |
 | `table-2:g0014:l0003` | Scene 2 · Heroine | そうですね…。[[T001:row]]もう少しわかりやすい文章[[T002:row]]だと、いいと思いますよ。 | Let's see...[[T001:row]]I think your writing[[T002:row]]could be clearer. |  |
@@ -620,7 +620,7 @@
 | `table-2:g0015:l0000` | Scene 2 · Player | あっ、[[T001:girl_name]]。[[T002:row]]昨日書いた短編、[[T003:row]]読んでくれた？ | Oh, [[T001:girl_name]].[[T002:row]]Did you read the[[T003:row]]story I wrote? |  |
 | `table-2:g0015:l0001` | Scene 2 · Heroine | ‥‥‥‥‥。[[T001:row]]読む人の事を、[[T002:row]]考えて無いと思います。 | .....[[T001:row]]I don't think you[[T002:row]]considered the reader. |  |
 | `table-2:g0015:l0002` | Scene 2 · Player | あの文章じゃ、[[T001:row]]良くわからなかったのかな？[[T002:row]]もう少し研究してみるか。 | Was the writing[[T001:row]]hard to follow?[[T002:row]]I'll study some more. |  |
-| `table-2:g0016:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0016:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0016:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0016:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]自信はないんだけど、[[T002:row]]批評してくれるかな。 | H-how was it?[[T001:row]]I'm not confident.[[T002:row]]Could you review it? |  |
 | `table-2:g0016:l0003` | Scene 2 · Heroine | ストーリー自体は、[[T001:row]]面白いと[[T002:row]]思いましたけど…。 | The story itself[[T001:row]]was interesting,[[T002:row]]but... |  |
@@ -630,7 +630,7 @@
 | `table-2:g0016:l0007` | Scene 2 · Heroine | そうなんですか…。 | I see... |  |
 | `table-2:g0016:l0008` | Scene 2 · Player | とりあえず[[T001:row]]正義、友情、愛で[[T002:row]]書いてみるか。 | For now, I'll try[[T001:row]]justice, friendship[[T002:row]]and love. |  |
 | `table-2:g0016:l0009` | Scene 2 · Heroine | それでは、[[T001:row]]頑張ってくださいね。 | Well then,[[T001:row]]please do your best. |  |
-| `table-2:g0017:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0017:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0017:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0017:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]自信はないんだけど、[[T002:row]]批評してくれるかな。 | H-how was it?[[T001:row]]I'm not confident.[[T002:row]]Could you review it? |  |
 | `table-2:g0017:l0003` | Scene 2 · Heroine | 面白いと思いましたけど、[[T001:row]]テーマが[[T002:row]]よくわからなくて…。 | It was interesting, but[[T001:row]]I couldn't make out[[T002:row]]the theme... |  |
@@ -638,7 +638,7 @@
 | `table-2:g0017:l0005` | Scene 2 · Heroine | ごめんなさい。[[T001:row]]私だってそんなに書ける[[T002:row]]わけじゃないのに…。 | I'm sorry.[[T001:row]]It's not like I can[[T002:row]]write that well... |  |
 | `table-2:g0017:l0006` | Scene 2 · Player | いや、ありがとう。[[T001:row]]とりあえず[[T002:row]]また書いてみるよ。 | No, thanks.[[T001:row]]Anyway, I'll[[T002:row]]write another. |  |
 | `table-2:g0017:l0007` | Scene 2 · Heroine | 頑張ってくださいね。 | Please do your best. |  |
-| `table-2:g0018:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0018:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0018:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0018:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]自信はないんだけど、[[T002:row]]批評してくれるかな。 | H-how was it?[[T001:row]]I'm not confident.[[T002:row]]Could you review it? |  |
 | `table-2:g0018:l0003` | Scene 2 · Heroine | 面白いと思いましたけど、[[T001:row]]あまり、テーマが[[T002:row]]見えませんでした。 | It was interesting, but[[T001:row]]I couldn't really see[[T002:row]]the theme. |  |
@@ -647,7 +647,7 @@
 | `table-2:g0019:l0000` | Scene 2 · Player | あっ、[[T001:girl_name]]。[[T002:row]]この前書いた小説[[T003:row]]読んでくれた？ | Oh, [[T001:girl_name]].[[T002:row]]Did you read the[[T003:row]]novel I wrote? |  |
 | `table-2:g0019:l0001` | Scene 2 · Heroine | ‥‥‥‥‥。[[T001:row]]あの小説で、何を[[T002:row]]言いたかったの？ | .....[[T001:row]]What were you trying[[T002:row]]to say with it? |  |
 | `table-2:g0019:l0002` | Scene 2 · Player | 何が言いたいか…。[[T001:row]]テーマなんて[[T002:row]]なかったからなぁ…。 | What I wanted to say...[[T001:row]]There was no[[T002:row]]theme, really... |  |
-| `table-2:g0020:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0020:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0020:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0020:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]結構自信あるんだけど。 | H-how was it?[[T001:row]]I'm pretty confident. |  |
 | `table-2:g0020:l0003` | Scene 2 · Heroine | すごく面白かったです。[[T001:row]]私も、あのぐらい[[T002:row]]書いてみたいですね。 | It was really good.[[T001:row]]I wish I could write[[T002:row]]like that too. |  |
@@ -655,7 +655,7 @@
 | `table-2:g0020:l0005` | Scene 2 · Heroine | そんなことないです。[[T001:row]]次の作品も、[[T002:row]]また読ませてくださいね。 | That's not true.[[T001:row]]Please let me read[[T002:row]]your next one too. |  |
 | `table-2:g0020:l0006` | Scene 2 · Player | 当然。[[T001:row]]一番最初に読んで[[T002:row]]もらうつもりだよ。 | Of course.[[T001:row]]You'll be the[[T002:row]]first to read it. |  |
 | `table-2:g0020:l0007` | Scene 2 · Heroine | 本当ですか？[[T001:row]]とても、嬉しいです。 | Really?[[T001:row]]I'm so happy. |  |
-| `table-2:g0021:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0021:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0021:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0021:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]結構自信あるんだけど。 | H-how was it?[[T001:row]]I'm pretty confident. |  |
 | `table-2:g0021:l0003` | Scene 2 · Heroine | すごくいいですね。[[T001:row]]私も、あのぐらい[[T002:row]]書けたらいいのに…。 | It's really good.[[T001:row]]I wish I could[[T002:row]]write like that... |  |
@@ -663,7 +663,7 @@
 | `table-2:g0021:l0005` | Scene 2 · Heroine | 次の作品も、[[T001:row]]また読ませてくださいね。 | Please let me read[[T001:row]]your next one too. |  |
 | `table-2:g0021:l0006` | Scene 2 · Player | 当然。[[T001:row]]一番最初に読んで[[T002:row]]もらおうと思ってるよ。 | Of course.[[T001:row]]I want you to be[[T002:row]]the first to read it. |  |
 | `table-2:g0021:l0007` | Scene 2 · Heroine | 本当ですか？[[T001:row]]それでは、[[T002:row]]楽しみに待ってますね。 | Really?[[T001:row]]Then I'll look[[T002:row]]forward to it. |  |
-| `table-2:g0022:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0022:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0022:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0022:l0002` | Scene 2 · Player | ど、どうだった？[[T001:row]]結構自信あるんだけど。 | H-how was it?[[T001:row]]I'm pretty confident. |  |
 | `table-2:g0022:l0003` | Scene 2 · Heroine | すごく面白かったです。[[T001:row]]いい作品だと思いました。 | It was really interesting.[[T001:row]]I thought it was good. |  |
@@ -672,7 +672,7 @@
 | `table-2:g0023:l0000` | Scene 2 · Player | あっ、[[T001:girl_name]]。[[T002:row]]この前書いた小説[[T003:row]]読んでくれた？ | Oh, [[T001:girl_name]].[[T002:row]]Did you read the[[T003:row]]novel I wrote? |  |
 | `table-2:g0023:l0001` | Scene 2 · Heroine | ‥‥‥‥‥。[[T001:row]]面白かったと思いますよ。 | .....[[T001:row]]It was interesting, I think. |  |
 | `table-2:g0023:l0002` | Scene 2 · Player | そうか、良かった。[[T001:row]]その割には、つまらなそうな[[T002:row]]顔してるよな…。 | I see, good.[[T001:row]]Though she looks[[T002:row]]pretty bored... |  |
-| `table-2:g0024:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0024:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0024:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0024:l0002` | Scene 2 · Player | どうだった？[[T001:row]]結構自信あるんだけど。 | How was it?[[T001:row]]I'm pretty confident. |  |
 | `table-2:g0024:l0003` | Scene 2 · Heroine | とても素晴らしい[[T001:row]]作品でした。[[T002:row]]もう、感動しちゃって…。 | It was a wonderful[[T001:row]]story.[[T002:row]]It really moved me... |  |
@@ -682,7 +682,7 @@
 | `table-2:g0024:l0007` | Scene 2 · Heroine | そんなことないと[[T001:row]]思いますよ。 | I don't think[[T001:row]]that's true. |  |
 | `table-2:g0024:l0008` | Scene 2 · Player | それじゃあ、[[T001:row]]頑張ってみるかな。 | Well then,[[T001:row]]maybe I'll try. |  |
 | `table-2:g0024:l0009` | Scene 2 · Heroine | 頑張ってくださいね。 | Please do your best. |  |
-| `table-2:g0025:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0025:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0025:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0025:l0002` | Scene 2 · Player | どうだった？[[T001:row]]結構自信あるんだけど。 | How was it?[[T001:row]]I'm pretty confident. |  |
 | `table-2:g0025:l0003` | Scene 2 · Heroine | 素晴らしい作品でした。[[T001:row]]もう立派な文筆家ですね。 | It was wonderful.[[T001:row]]You're a real writer now. |  |
@@ -690,7 +690,7 @@
 | `table-2:g0025:l0005` | Scene 2 · Heroine | 今度の植木賞に、[[T001:row]]応募すべきだと[[T002:row]]思いますよ。 | I think you should[[T001:row]]enter it for the[[T002:row]]next Ueki Prize. |  |
 | `table-2:g0025:l0006` | Scene 2 · Player | 植木賞か…。[[T001:row]]そこまで言うなら、[[T002:row]]応募してみようかな。 | The Ueki Prize...[[T001:row]]If you say so,[[T002:row]]maybe I'll enter. |  |
 | `table-2:g0025:l0007` | Scene 2 · Heroine | 頑張ってくださいね。[[T001:row]]応援してますから。 | Please do your best.[[T001:row]]I'm rooting for you. |  |
-| `table-2:g0026:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0026:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0026:l0001` | Scene 2 · Heroine | この前書いた小説、[[T001:row]]読ませてもらいました。 | I read the novel[[T001:row]]you wrote the other day. |  |
 | `table-2:g0026:l0002` | Scene 2 · Player | どうだった？[[T001:row]]結構自信あるんだけど。 | How was it?[[T001:row]]I'm pretty confident. |  |
 | `table-2:g0026:l0003` | Scene 2 · Heroine | 素晴らしい作品ですね。[[T001:row]]とても、高校生の作品とは[[T002:row]]思えませんね。 | It's a wonderful work.[[T001:row]]You'd never think a high[[T002:row]]schooler wrote it. |  |
@@ -1019,7 +1019,7 @@
 | `table-4:g0005:l0009` | Scene 4 · Heroine | よろしくね。[[T001:row]]それじゃ、十分休んだら、[[T002:row]]練習に戻って来いよ。 | Nice to meet you.[[T001:row]]Once you've rested,[[T002:row]]come back to practice. |  |
 | `table-4:g0006:l0000` | Scene 4 · Player | ありがとう。 | Thanks. |  |
 | `table-4:g0006:l0001` | Scene 4 · Player (monologue) | やったぁ。[[T001:row]]あの有名な[[T002:girl_name]]と、[[T003:row]]話しちゃったよ。[[T004:row]]これからの部活が[[T005:row]]楽しみだぜ。 | Yes![[T001:row]]I talked to [[T002:girl_name]],[[T003:row]]the famous swimmer![[T004:row]]Now I can't wait[[T005:row]]for club practice. |  |
-| `table-4:g0007:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0007:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0007:l0001` | Scene 4 · Heroine | 練習はどうなの？ | How's practice? |  |
 | `table-4:g0007:l0002` | Scene 4 · Player | 結構きつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | It's pretty tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-4:g0007:l0003` | Scene 4 · Heroine | 最初はそうかもしれないけど、[[T001:row]]頑張らなきゃね。 | It's tough at first,[[T001:row]]but keep at it. |  |
@@ -1030,7 +1030,7 @@
 | `table-4:g0007:l0008` | Scene 4 · Player | そんなの、[[T001:row]]まだまだだよ。 | That's a long[[T001:row]]way off for me. |  |
 | `table-4:g0007:l0009` | Scene 4 · Heroine | だから、頑張ってね。 | So work hard. |  |
 | `table-4:g0007:l0010` | Scene 4 · Player | うん、ありがとう。 | Yeah, thanks. |  |
-| `table-4:g0008:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0008:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0008:l0001` | Scene 4 · Heroine | 練習はどう？ | How's practice? |  |
 | `table-4:g0008:l0002` | Scene 4 · Player | 結構きつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | It's pretty tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-4:g0008:l0003` | Scene 4 · Heroine | 最初はそうかもしれないけど、[[T001:row]]そのうち慣れるよ。 | Maybe at first, but[[T001:row]]you'll get used to it. |  |
@@ -1041,7 +1041,7 @@
 | `table-4:g0008:l0008` | Scene 4 · Player | そんなの、[[T001:row]]まだまだだよ。 | That's a long[[T001:row]]way off for me. |  |
 | `table-4:g0008:l0009` | Scene 4 · Heroine | そのつもりで、[[T001:row]]頑張れよ。 | So keep that[[T001:row]]in mind and work hard. |  |
 | `table-4:g0008:l0010` | Scene 4 · Player | うん、ありがとう。 | Yeah, thanks. |  |
-| `table-4:g0009:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0009:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0009:l0001` | Scene 4 · Heroine | 練習はどう？ | How's practice? |  |
 | `table-4:g0009:l0002` | Scene 4 · Player | 結構きつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | It's pretty tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-4:g0009:l0003` | Scene 4 · Heroine | 最初はそうだと思うよ。[[T001:row]]とりあえず、頑張れ。 | It's like that at first.[[T001:row]]Just hang in there. |  |
@@ -1072,7 +1072,7 @@
 | `table-4:g0014:l0000` | Scene 4 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近どうも、スランプ気味で[[T003:row]]調子が悪いんだ。 | Oh, [[T001:girl_name]].[[T002:row]]I've been in a slump[[T003:row]]lately. I'm off my game. |  |
 | `table-4:g0014:l0001` | Scene 4 · Heroine | ‥‥‥‥‥。[[T001:row]]基本からやりなおしたら？ | .....[[T001:row]]Try the basics again? |  |
 | `table-4:g0014:l0002` | Scene 4 · Player | 基本かぁ…。 | The basics... |  |
-| `table-4:g0015:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0015:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0015:l0001` | Scene 4 · Heroine | どう、調子は？ | So, how's it going? |  |
 | `table-4:g0015:l0002` | Scene 4 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-4:g0015:l0003` | Scene 4 · Heroine | 入部当時から比べると、[[T001:row]]かなり上達してるわ。 | Compared to when you[[T001:row]]joined, you've come far. |  |
@@ -1084,7 +1084,7 @@
 | `table-4:g0015:l0009` | Scene 4 · Heroine | そ、そんなことないけど。[[T001:row]]いつでも協力するから、[[T002:row]]言ってね。 | Th-that's not true.[[T001:row]]But I'll help anytime,[[T002:row]]so just ask. |  |
 | `table-4:g0015:l0010` | Scene 4 · Player | [[T001:girl_name]]も、[[T002:row]]特別練習があるのに、[[T003:row]]悪いよ。 | [[T001:girl_name]], you have[[T002:row]]special training.[[T003:row]]I'd feel bad. |  |
 | `table-4:g0015:l0011` | Scene 4 · Heroine | それなら、何とかなるから[[T001:row]]遠慮しないでね。[[T002:row]]それじゃ。 | Don't worry about that.[[T001:row]]Just ask if you[[T002:row]]need any help. Bye! |  |
-| `table-4:g0016:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0016:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0016:l0001` | Scene 4 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-4:g0016:l0002` | Scene 4 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-4:g0016:l0003` | Scene 4 · Heroine | 入部当時から比べると、[[T001:row]]かなり上達してるよ。 | Compared to when you[[T001:row]]joined, you've come far. |  |
@@ -1096,7 +1096,7 @@
 | `table-4:g0016:l0009` | Scene 4 · Heroine | それなら何とかなるから、[[T001:row]]遠慮しなくてもいいよ。 | Don't worry about me.[[T001:row]]I can manage. |  |
 | `table-4:g0016:l0010` | Scene 4 · Player | ありがとう。[[T001:row]][[T002:girl_name]]。 | Thanks,[[T001:row]][[T002:girl_name]]. |  |
 | `table-4:g0016:l0011` | Scene 4 · Heroine | 別にいいって。[[T001:row]]それじゃ。 | It's fine.[[T001:row]]See ya. |  |
-| `table-4:g0017:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0017:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0017:l0001` | Scene 4 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-4:g0017:l0002` | Scene 4 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-4:g0017:l0003` | Scene 4 · Heroine | 入部当時から比べると、[[T001:row]]かなり上達してるよ。 | Compared to when you[[T001:row]]joined, you've come far. |  |
@@ -1109,7 +1109,7 @@
 | `table-4:g0018:l0000` | Scene 4 · Player | あっ、[[T001:girl_name]]。[[T002:row]]上達はしてきてると[[T003:row]]思うんだけど…。 | Oh, [[T001:girl_name]].[[T002:row]]I think I'm[[T003:row]]improving... |  |
 | `table-4:g0018:l0001` | Scene 4 · Heroine | ‥‥‥‥‥。[[T001:row]]インターハイに[[T002:row]]出場できなきゃ。 | .....[[T001:row]]You'd better make[[T002:row]]the Inter-High. |  |
 | `table-4:g0018:l0002` | Scene 4 · Player | インターハイか…。 | The Inter-High... |  |
-| `table-4:g0019:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0019:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0019:l0001` | Scene 4 · Heroine | 一緒に、特別練習ね。 | Special training together! |  |
 | `table-4:g0019:l0002` | Scene 4 · Player | びっくりしたよ。[[T001:row]]俺が、特別練習のメンバーに[[T002:row]]なれるなんて。 | I was shocked.[[T001:row]]I never thought I'd make[[T002:row]]the special training team. |  |
 | `table-4:g0019:l0003` | Scene 4 · Heroine | もうかなりの実力が[[T001:row]]あるから、自信持って[[T002:row]]いいと思うな。 | You're really good now,[[T001:row]]so I think you can[[T002:row]]be confident. |  |
@@ -1118,7 +1118,7 @@
 | `table-4:g0019:l0006` | Scene 4 · Player | えっ、何か言った？ | Huh, did you say something? |  |
 | `table-4:g0019:l0007` | Scene 4 · Heroine | ほ、ほら、インターハイで、[[T001:row]]日本一を目指すんだから、[[T002:row]]練習に戻らないと。 | C-come on, we're aiming[[T001:row]]for No. 1 at the Inter-High,[[T002:row]]so back to practice. |  |
 | `table-4:g0019:l0008` | Scene 4 · Player | そうだね。[[T001:row]]お互いに頑張ろう。 | Right.[[T001:row]]Let's both do our best. |  |
-| `table-4:g0020:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0020:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0020:l0001` | Scene 4 · Heroine | 一緒に特別練習だね。 | Special training together! |  |
 | `table-4:g0020:l0002` | Scene 4 · Player | びっくりしたよ。[[T001:row]]俺が、特別練習のメンバーに[[T002:row]]なれるなんて。 | I was shocked.[[T001:row]]I never thought I'd make[[T002:row]]the special training team. |  |
 | `table-4:g0020:l0003` | Scene 4 · Heroine | それだけの実力があると[[T001:row]]評価されたんだから、[[T002:row]]期待を裏切らないように[[T003:row]]頑張らないとな。 | They think you're that[[T001:row]]good, so work hard[[T002:row]]and don't let them[[T003:row]]down. |  |
@@ -1129,7 +1129,7 @@
 | `table-4:g0020:l0008` | Scene 4 · Player | そんなに厳しいの？ | Is it that tough? |  |
 | `table-4:g0020:l0009` | Scene 4 · Heroine | もう大変だぜ。[[T001:row]]やっと仲間ができたよ。[[T002:row]]さあ、頑張ろう。 | It's brutal.[[T001:row]]Finally I've got company.[[T002:row]]Come on, let's go. |  |
 | `table-4:g0020:l0010` | Scene 4 · Player | 何かいけにえの[[T001:row]]気分だなぁ。 | Feels like I'm[[T001:row]]a sacrificial lamb... |  |
-| `table-4:g0021:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0021:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0021:l0001` | Scene 4 · Heroine | 一緒に特別練習だね。 | Special training together! |  |
 | `table-4:g0021:l0002` | Scene 4 · Player | びっくりしたよ。[[T001:row]]俺が、特別練習のメンバーに[[T002:row]]なれるなんて。 | I was shocked.[[T001:row]]I never thought I'd make[[T002:row]]the special training team. |  |
 | `table-4:g0021:l0003` | Scene 4 · Heroine | もうかなりの実力が[[T001:row]]あるから、自信持って[[T002:row]]頑張ろうよ。 | You're really good now,[[T001:row]]so be confident and[[T002:row]]let's go for it. |  |
@@ -1139,7 +1139,7 @@
 | `table-4:g0022:l0000` | Scene 4 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近、上達してきたと[[T003:row]]思わない？ | Oh, [[T001:girl_name]].[[T002:row]]I'm improving,[[T003:row]]don't you think? |  |
 | `table-4:g0022:l0001` | Scene 4 · Heroine | ‥‥‥‥‥。[[T001:row]]インターハイに[[T002:row]]行ってから言えば？ | .....[[T001:row]]Say that after[[T002:row]]the Inter-High. |  |
 | `table-4:g0022:l0002` | Scene 4 · Player | よし、頑張るぞ。 | All right, let's do this! |  |
-| `table-4:g0023:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0023:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0023:l0001` | Scene 4 · Heroine | ドーバー海峡の横断に[[T001:row]]挑戦するって、聞いたよ。 | I heard you're going to[[T001:row]]try swimming the Channel. |  |
 | `table-4:g0023:l0002` | Scene 4 · Player | はぁ？[[T001:row]]そりゃ、[[T002:row]]やってはみたいけどね。 | Huh?[[T001:row]]Well, I'd like[[T002:row]]to try it. |  |
 | `table-4:g0023:l0003` | Scene 4 · Heroine | デマなんだ。[[T001:row]]私も行こうかと[[T002:row]]思ったのに…。 | Just a rumor?[[T001:row]]I thought about[[T002:row]]going too... |  |
@@ -1148,14 +1148,14 @@
 | `table-4:g0023:l0006` | Scene 4 · Player | そ、それもいいけど、[[T001:row]][[T002:girl_name]]と一緒に日本一に[[T003:row]]なるのが先だから。 | T-that'd be nice, but[[T001:row]][[T002:girl_name]], let's become[[T003:row]]No. 1 first. |  |
 | `table-4:g0023:l0007` | Scene 4 · Heroine | そ、それもそうね。[[T001:row]]私も負けないように、[[T002:row]]頑張らなくっちゃ。 | Y-you're right.[[T001:row]]I'd better work hard[[T002:row]]so I don't lose. |  |
 | `table-4:g0023:l0008` | Scene 4 · Player | お互いに、[[T001:row]]頑張ろう。 | Let's both[[T001:row]]do our best. |  |
-| `table-4:g0024:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0024:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0024:l0001` | Scene 4 · Heroine | ドーバー海峡の横断に[[T001:row]]挑戦するんだって？ | You're trying to[[T001:row]]swim the Channel? |  |
 | `table-4:g0024:l0002` | Scene 4 · Player | はぁ？[[T001:row]]そりゃ、[[T002:row]]やってはみたいけどね。 | Huh?[[T001:row]]Well, I'd like[[T002:row]]to try it. |  |
 | `table-4:g0024:l0003` | Scene 4 · Heroine | 何だ、良かった。[[T001:row]]先越されるかと[[T002:row]]思っちゃったよ。 | Phew, what a relief.[[T001:row]]I thought you'd[[T002:row]]beat me to it. |  |
 | `table-4:g0024:l0004` | Scene 4 · Player | そんな事よりも、[[T001:row]][[T002:girl_name]]と一緒に[[T003:row]]日本一になりたいよ。 | More than that,[[T001:row]][[T002:girl_name]], I want us[[T003:row]]to be No. 1. |  |
 | `table-4:g0024:l0005` | Scene 4 · Heroine | そうだね。[[T001:row]]私も負けないように、[[T002:row]]頑張らなくっちゃ。 | Right.[[T001:row]]I'd better work hard[[T002:row]]so I don't lose. |  |
 | `table-4:g0024:l0006` | Scene 4 · Player | お互いに、[[T001:row]]頑張ろうよ。 | Let's both[[T001:row]]do our best. |  |
-| `table-4:g0025:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0025:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0025:l0001` | Scene 4 · Heroine | ドーバー海峡の横断に[[T001:row]]挑戦するんだって？ | You're trying to[[T001:row]]swim the Channel? |  |
 | `table-4:g0025:l0002` | Scene 4 · Player | はぁ？[[T001:row]]そりゃ、[[T002:row]]やってはみたいけどね。 | Huh?[[T001:row]]Well, I'd like[[T002:row]]to try it. |  |
 | `table-4:g0025:l0003` | Scene 4 · Heroine | 何だ、デマか。[[T001:row]]先越されるかと思ったよ。 | Oh, a rumor.[[T001:row]]I thought you'd beat me. |  |
@@ -1191,21 +1191,21 @@
 | `table-5:g0005:l0010` | Scene 5 · Heroine | それじゃ、[[T001:row]]ここでしばらく[[T002:row]]休んでてね。 | Then rest[[T001:row]]here for[[T002:row]]a while. |  |
 | `table-5:g0005:l0011` | Scene 5 · Player | ありがとう。 | Thanks. |  |
 | `table-5:g0006:l0000` | Scene 5 · Player (monologue) | [[T001:girl_name]]か…。[[T002:row]]あんな娘が[[T003:row]]マネージャーだったなんて[[T004:row]]知らなかったよ。[[T005:row]]今まで損したなぁ。[[T006:row]]でも、これからの部活動は[[T007:row]]もっと楽しくなるぞ。 | [[T001:girl_name]], huh...[[T002:row]]I had no idea[[T003:row]]she was our manager.[[T004:row]]I've been missing out![[T005:row]]Well, practice[[T006:row]]should be a lot more[[T007:row]]fun from now on. |  |
-| `table-5:g0007:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0007:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0007:l0001` | Scene 5 · Heroine | 野球部はどう？ | How's the baseball team? |  |
 | `table-5:g0007:l0002` | Scene 5 · Player | 練習がきつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-5:g0007:l0003` | Scene 5 · Heroine | あなたには[[T001:row]]頑張れる素質があるわ。[[T002:row]]諦めないで。 | You've got what it[[T001:row]]takes to keep going.[[T002:row]]Don't give up. |  |
 | `table-5:g0007:l0004` | Scene 5 · Player | ありがとう。[[T001:row]]頑張るよ。 | Thanks.[[T001:row]]I'll do my best. |  |
 | `table-5:g0007:l0005` | Scene 5 · Heroine | 応援してるから、[[T001:row]]頑張ってね。[[T002:row]]ファイトよ。 | I'll cheer you on.[[T001:row]]Keep it up![[T002:row]]Go for it! |  |
 | `table-5:g0007:l0006` | Scene 5 · Player | それじゃあ。 | See you. |  |
-| `table-5:g0008:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0008:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0008:l0001` | Scene 5 · Heroine | 野球部はどう？ | How's the baseball team? |  |
 | `table-5:g0008:l0002` | Scene 5 · Player | 練習がきつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-5:g0008:l0003` | Scene 5 · Heroine | 最初は大変だと思うけど、[[T001:row]]頑張れる素質があるから[[T002:row]]諦めないでね。 | It's hard at first, but[[T001:row]]you've got what it takes,[[T002:row]]so don't give up. |  |
 | `table-5:g0008:l0004` | Scene 5 · Player | ありがとう。[[T001:row]]頑張るよ。 | Thanks.[[T001:row]]I'll do my best. |  |
 | `table-5:g0008:l0005` | Scene 5 · Heroine | それじゃ、[[T001:row]]練習頑張ってね。 | Well then,[[T001:row]]good luck in practice. |  |
 | `table-5:g0008:l0006` | Scene 5 · Player | それじゃあ。 | See you. |  |
-| `table-5:g0009:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0009:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0009:l0001` | Scene 5 · Heroine | 野球部はどう？ | How's the baseball team? |  |
 | `table-5:g0009:l0002` | Scene 5 · Player | 練習がきつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-5:g0009:l0003` | Scene 5 · Heroine | 最初は大変だと思うけど、[[T001:row]]諦めないで、頑張ってね。 | It's hard at first, but[[T001:row]]don't give up. Keep at it. |  |
@@ -1235,21 +1235,21 @@
 | `table-5:g0014:l0000` | Scene 5 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近どうも、スランプぎみで[[T003:row]]調子が悪いんだ。 | Oh, [[T001:girl_name]].[[T002:row]]I've been in a slump[[T003:row]]lately. I'm off my game. |  |
 | `table-5:g0014:l0001` | Scene 5 · Heroine | ‥‥‥‥‥。[[T001:row]]そう思い込むのは、[[T002:row]]良くないと思うわ。 | .....[[T001:row]]Dwelling on it[[T002:row]]isn't good, I think. |  |
 | `table-5:g0014:l0002` | Scene 5 · Player | そりゃそうだ。[[T001:row]]ありがとう。 | That's true.[[T001:row]]Thanks. |  |
-| `table-5:g0015:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0015:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0015:l0001` | Scene 5 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-5:g0015:l0002` | Scene 5 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-5:g0015:l0003` | Scene 5 · Heroine | 自信を持って。[[T001:row]]本当に[[T002:row]]上達してると思うから。 | Be confident.[[T001:row]]I really think[[T002:row]]you're improving. |  |
 | `table-5:g0015:l0004` | Scene 5 · Player | そ、そう？[[T001:row]]ありがとう。 | R-really?[[T001:row]]Thanks. |  |
 | `table-5:g0015:l0005` | Scene 5 · Heroine | 応援してるから。[[T001:row]]甲子園目指して、[[T002:row]]頑張ってね。 | I'm rooting for you.[[T001:row]]Aim for Koshien[[T002:row]]and do your best. |  |
 | `table-5:g0015:l0006` | Scene 5 · Player | うん、頑張るよ。[[T001:row]]それじゃあ、[[T002:row]]練習に戻るか。 | Yeah, I will.[[T001:row]]Well then, back[[T002:row]]to practice. |  |
-| `table-5:g0016:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0016:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0016:l0001` | Scene 5 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-5:g0016:l0002` | Scene 5 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-5:g0016:l0003` | Scene 5 · Heroine | 頑張ってるもの、[[T001:row]]かなり[[T002:row]]上達してると思うわよ。 | You're working hard,[[T001:row]]so I think you've[[T002:row]]improved a lot. |  |
 | `table-5:g0016:l0004` | Scene 5 · Player | そ、そう？[[T001:row]]ありがとう。 | R-really?[[T001:row]]Thanks. |  |
 | `table-5:g0016:l0005` | Scene 5 · Heroine | 甲子園目指して[[T001:row]]頑張ってね。[[T002:row]]期待してるわ。 | Aim for Koshien[[T001:row]]and do your best.[[T002:row]]I'm counting on you. |  |
 | `table-5:g0016:l0006` | Scene 5 · Player | うん、頑張るよ。[[T001:row]]それじゃあ、[[T002:row]]練習に戻るか。 | Yeah, I will.[[T001:row]]Well then, back[[T002:row]]to practice. |  |
-| `table-5:g0017:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0017:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0017:l0001` | Scene 5 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-5:g0017:l0002` | Scene 5 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-5:g0017:l0003` | Scene 5 · Heroine | 頑張ってるんだから、[[T001:row]]上達してるわ。 | You're working hard,[[T001:row]]so you're improving. |  |
@@ -1259,21 +1259,21 @@
 | `table-5:g0018:l0000` | Scene 5 · Player | あっ、[[T001:girl_name]]。[[T002:row]]上達はしてると[[T003:row]]思うんだけど…。 | Oh, [[T001:girl_name]].[[T002:row]]I think I'm[[T003:row]]improving... |  |
 | `table-5:g0018:l0001` | Scene 5 · Heroine | ‥‥‥‥‥。[[T001:row]]甲子園目指して、[[T002:row]]頑張ってね。 | .....[[T001:row]]Aim for Koshien[[T002:row]]and do your best. |  |
 | `table-5:g0018:l0002` | Scene 5 · Player | 甲子園かぁ…。 | Koshien... |  |
-| `table-5:g0019:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0019:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0019:l0001` | Scene 5 · Heroine | 最近、調子いいみたいね。 | You're doing well lately. |  |
 | `table-5:g0019:l0002` | Scene 5 · Player | かなり調子いいよ。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | I'm doing great.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-5:g0019:l0003` | Scene 5 · Heroine | あなたの[[T001:row]]頑張りのおかげで、[[T002:row]]甲子園、行けそうね。 | Thanks to[[T001:row]]your hard work,[[T002:row]]we might make Koshien. |  |
 | `table-5:g0019:l0004` | Scene 5 · Player | そ、そんなことないよ。[[T001:row]]でも、甲子園は[[T002:row]]狙ってるけどね。 | N-not really.[[T001:row]]But I am aiming[[T002:row]]for Koshien. |  |
 | `table-5:g0019:l0005` | Scene 5 · Heroine | あなたには、夢を実現できる[[T001:row]]すごい意志があるから、[[T002:row]]絶対に行けると思うわ。 | You've got the will to[[T001:row]]make your dream real.[[T002:row]]I know you'll get there. |  |
 | `table-5:g0019:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]よし、甲子園目指して、[[T002:row]]もう一頑張りだ。 | Thanks.[[T001:row]]One more push[[T002:row]]toward Koshien! |  |
-| `table-5:g0020:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0020:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0020:l0001` | Scene 5 · Heroine | 最近調子いいみたいね。 | You're doing well lately. |  |
 | `table-5:g0020:l0002` | Scene 5 · Player | かなり調子いいよ。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | I'm doing great.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-5:g0020:l0003` | Scene 5 · Heroine | それなら[[T001:row]]甲子園に行けそうね。 | Then we might[[T001:row]]make Koshien. |  |
 | `table-5:g0020:l0004` | Scene 5 · Player | 何だか、行けるような[[T001:row]]気がしてるんだ。 | I kind of feel[[T001:row]]like we can. |  |
 | `table-5:g0020:l0005` | Scene 5 · Heroine | あんなに[[T001:row]]頑張ってるんだから。[[T002:row]]絶対に行けると思うわ。 | You're working[[T001:row]]so hard.[[T002:row]]I know you'll get there. |  |
 | `table-5:g0020:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]よし、甲子園目指して、[[T002:row]]もう一頑張りだ。 | Thanks.[[T001:row]]One more push[[T002:row]]toward Koshien! |  |
-| `table-5:g0021:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0021:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0021:l0001` | Scene 5 · Heroine | 最近、調子いいみたいね。 | You're doing well lately. |  |
 | `table-5:g0021:l0002` | Scene 5 · Player | かなり調子いいよ。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | I'm doing great.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-5:g0021:l0003` | Scene 5 · Heroine | 甲子園に行けるといいね。 | Hope you make Koshien. |  |
@@ -1283,21 +1283,21 @@
 | `table-5:g0022:l0000` | Scene 5 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近、上手くなってきたと[[T003:row]]思わない？ | Oh, [[T001:girl_name]].[[T002:row]]I've improved lately,[[T003:row]]haven't I? |  |
 | `table-5:g0022:l0001` | Scene 5 · Heroine | ‥‥‥‥‥。[[T001:row]]甲子園に行けるといいね。 | .....[[T001:row]]Hope you make Koshien. |  |
 | `table-5:g0022:l0002` | Scene 5 · Player | よし、頑張るぞ。 | All right, let's do this! |  |
-| `table-5:g0023:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0023:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0023:l0001` | Scene 5 · Heroine | プロの選手になるって噂、[[T001:row]]本当？ | Is it true you're[[T001:row]]going pro? |  |
 | `table-5:g0023:l0002` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0023:l0003` | Scene 5 · Heroine | それじゃ、嘘なんだ…。 | So it's not true... |  |
 | `table-5:g0023:l0004` | Scene 5 · Player | 甲子園に行けたら、[[T001:row]]考えてもみるけどね。 | If we make Koshien,[[T001:row]]I might think about it. |  |
 | `table-5:g0023:l0005` | Scene 5 · Heroine | 大丈夫。[[T001:row]]今の実力なら[[T002:row]]きっと行けるわ。 | Don't worry.[[T001:row]]At your level now,[[T002:row]]you'll make it. |  |
 | `table-5:g0023:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]それじゃあ、[[T002:row]]もう一頑張りするか。 | Thanks.[[T001:row]]Guess I'd better[[T002:row]]keep at it. |  |
-| `table-5:g0024:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0024:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0024:l0001` | Scene 5 · Heroine | プロの選手になるって噂[[T001:row]]聞いたよ。 | I heard a rumor you're[[T001:row]]going pro. |  |
 | `table-5:g0024:l0002` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0024:l0003` | Scene 5 · Heroine | 何だ嘘なんだ…。 | Oh, it's not true... |  |
 | `table-5:g0024:l0004` | Scene 5 · Player | 甲子園に行けたら、[[T001:row]]考えてもみるけどね。 | If we make Koshien,[[T001:row]]I might think about it. |  |
 | `table-5:g0024:l0005` | Scene 5 · Heroine | 今の実力なら[[T001:row]]大丈夫よ。 | At your level now,[[T001:row]]you'll be fine. |  |
 | `table-5:g0024:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]それじゃあ、[[T002:row]]もう一頑張りするか。 | Thanks.[[T001:row]]Guess I'd better[[T002:row]]keep at it. |  |
-| `table-5:g0025:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0025:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0025:l0001` | Scene 5 · Heroine | プロの選手になるって噂[[T001:row]]聞いたよ。 | I heard a rumor you're[[T001:row]]going pro. |  |
 | `table-5:g0025:l0002` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0025:l0003` | Scene 5 · Heroine | 何だデマなんだ…。 | Oh, just a rumor... |  |
@@ -1307,20 +1307,20 @@
 | `table-5:g0026:l0000` | Scene 5 · Heroine | プロになるって、[[T001:row]]話聞いたわよ。 | I heard you're[[T001:row]]going pro. |  |
 | `table-5:g0026:l0001` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0026:l0002` | Scene 5 · Heroine | 何だ、そうなの。 | Oh, is that so. |  |
-| `table-5:g0027:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0027:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0027:l0001` | Scene 5 · Player | [[T001:girl_name]]…。[[T002:row]]甲子園行けなくてごめん。 | [[T001:girl_name]]...[[T002:row]]Sorry we missed Koshien. |  |
 | `table-5:g0027:l0002` | Scene 5 · Heroine | ううん、いいの。[[T001:row]]過ぎたことは気にしないの。[[T002:row]]前向きに生きようよ。 | No, it's okay.[[T001:row]]Don't dwell on the past.[[T002:row]]Let's look forward. |  |
 | `table-5:g0027:l0003` | Scene 5 · Player | ありがとう。[[T001:row]]少しは元気が出てきたよ。 | Thanks.[[T001:row]]I feel a bit better. |  |
 | `table-5:g0027:l0004` | Scene 5 · Heroine | 良かった。[[T001:row]]元気が出て…。 | I'm glad.[[T001:row]]You feel better... |  |
 | `table-5:g0027:l0005` | Scene 5 · Player | それじゃあ、[[T001:row]]後輩の指導に行くよ。 | I'll go coach[[T001:row]]the newer members. |  |
-| `table-5:g0028:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0028:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0028:l0001` | Scene 5 · Heroine | 甲子園残念だったね。 | Too bad about Koshien. |  |
 | `table-5:g0028:l0002` | Scene 5 · Player | あぁ、残念だよ。[[T001:row]]もっと練習しとけば[[T002:row]]よかったな…。 | Yeah, it's a shame.[[T001:row]]I should've[[T002:row]]practiced more... |  |
 | `table-5:g0028:l0003` | Scene 5 · Heroine | 過ぎたことは後悔しないの。[[T001:row]]これをばねにして、[[T002:row]]前向きに生きようよ。 | Don't dwell on regret.[[T001:row]]Use this setback[[T002:row]]to move forward. |  |
 | `table-5:g0028:l0004` | Scene 5 · Player | ありがとう。[[T001:row]]少しは元気が出てきたよ。 | Thanks.[[T001:row]]I feel a bit better. |  |
 | `table-5:g0028:l0005` | Scene 5 · Heroine | 良かった。 | I'm glad. |  |
 | `table-5:g0028:l0006` | Scene 5 · Player | それじゃあ、[[T001:row]]後輩の指導に行くよ。 | I'll go coach[[T001:row]]the newer members. |  |
-| `table-5:g0029:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0029:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0029:l0001` | Scene 5 · Heroine | 甲子園残念だったね。 | Too bad about Koshien. |  |
 | `table-5:g0029:l0002` | Scene 5 · Player | あぁ、残念だよ。[[T001:row]]もっと練習しとけば[[T002:row]]よかったな…。 | Yeah, it's a shame.[[T001:row]]I should've[[T002:row]]practiced more... |  |
 | `table-5:g0029:l0003` | Scene 5 · Heroine | 元気ださなきゃ。[[T001:row]]後悔しても[[T002:row]]過ぎた時間は戻らないよ。 | Cheer up.[[T001:row]]Regret can't turn[[T002:row]]back the clock. |  |
@@ -1330,21 +1330,21 @@
 | `table-5:g0030:l0000` | Scene 5 · Player | ごめん、[[T001:girl_name]]。[[T002:row]]甲子園行けなかったよ。 | So sorry, [[T001:girl_name]][[T002:row]]We didn't make Koshien. |  |
 | `table-5:g0030:l0001` | Scene 5 · Heroine | 別に気にしてないわよ。 | I don't mind at all. |  |
 | `table-5:g0030:l0002` | Scene 5 · Player | なら、いいけど…。 | If you say so... |  |
-| `table-5:g0031:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0031:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0031:l0001` | Scene 5 · Heroine | サッカー部はどう？ | How's the soccer team? |  |
 | `table-5:g0031:l0002` | Scene 5 · Player | 練習がきつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-5:g0031:l0003` | Scene 5 · Heroine | あなたには、[[T001:row]]頑張れる素質があるわ。[[T002:row]]諦めないで。 | You've got what it[[T001:row]]takes to keep going.[[T002:row]]Don't give up. |  |
 | `table-5:g0031:l0004` | Scene 5 · Player | ありがとう。[[T001:row]]頑張るよ。 | Thanks.[[T001:row]]I'll do my best. |  |
 | `table-5:g0031:l0005` | Scene 5 · Heroine | 応援してるから、[[T001:row]]頑張ってね。[[T002:row]]ファイトよ。 | I'll cheer you on.[[T001:row]]Keep it up![[T002:row]]Go for it! |  |
 | `table-5:g0031:l0006` | Scene 5 · Player | それじゃあ。 | See you. |  |
-| `table-5:g0032:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0032:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0032:l0001` | Scene 5 · Heroine | サッカー部はどう？ | How's the soccer team? |  |
 | `table-5:g0032:l0002` | Scene 5 · Player | 練習がきつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-5:g0032:l0003` | Scene 5 · Heroine | 最初は大変だと思うけど、[[T001:row]]頑張れる素質があるから[[T002:row]]諦めないでね。 | It's hard at first, but[[T001:row]]you've got what it takes,[[T002:row]]so don't give up. |  |
 | `table-5:g0032:l0004` | Scene 5 · Player | ありがとう。[[T001:row]]頑張るよ。 | Thanks.[[T001:row]]I'll do my best. |  |
 | `table-5:g0032:l0005` | Scene 5 · Heroine | それじゃ、[[T001:row]]練習頑張ってね。 | Well then,[[T001:row]]good luck in practice. |  |
 | `table-5:g0032:l0006` | Scene 5 · Player | それじゃあ。 | See you. |  |
-| `table-5:g0033:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0033:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0033:l0001` | Scene 5 · Heroine | サッカー部はどう？ | How's the soccer team? |  |
 | `table-5:g0033:l0002` | Scene 5 · Player | 練習がきつくてね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-5:g0033:l0003` | Scene 5 · Heroine | 最初は大変だと思うけど、[[T001:row]]諦めないで、頑張ってね。 | It's hard at first, but[[T001:row]]don't give up. Keep at it. |  |
@@ -1374,21 +1374,21 @@
 | `table-5:g0038:l0000` | Scene 5 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近どうも、スランプ気味で[[T003:row]]調子が悪いんだ。 | Oh, [[T001:girl_name]].[[T002:row]]I've been in a slump[[T003:row]]lately. I'm off my game. |  |
 | `table-5:g0038:l0001` | Scene 5 · Heroine | ‥‥‥‥‥。[[T001:row]]そう思い込むのは、[[T002:row]]良くないと思うわ。 | .....[[T001:row]]Dwelling on it[[T002:row]]isn't good, I think. |  |
 | `table-5:g0038:l0002` | Scene 5 · Player | そりゃそうだ。[[T001:row]]ありがとう。 | That's true.[[T001:row]]Thanks. |  |
-| `table-5:g0039:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0039:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0039:l0001` | Scene 5 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-5:g0039:l0002` | Scene 5 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-5:g0039:l0003` | Scene 5 · Heroine | 自信を持って。[[T001:row]]本当に、[[T002:row]]上達してると思うから。 | Be confident.[[T001:row]]I really think[[T002:row]]you're improving. |  |
 | `table-5:g0039:l0004` | Scene 5 · Player | そ、そう？[[T001:row]]ありがとう。 | R-really?[[T001:row]]Thanks. |  |
 | `table-5:g0039:l0005` | Scene 5 · Heroine | 応援してるから。[[T001:row]]国立競技場目指して[[T002:row]]頑張ってね。 | I'm rooting for you.[[T001:row]]Make it to[[T002:row]]National Stadium! |  |
 | `table-5:g0039:l0006` | Scene 5 · Player | うん、頑張るよ。[[T001:row]]それじゃあ、[[T002:row]]練習に戻るか。 | Yeah, I will.[[T001:row]]Well then, back[[T002:row]]to practice. |  |
-| `table-5:g0040:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0040:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0040:l0001` | Scene 5 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-5:g0040:l0002` | Scene 5 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-5:g0040:l0003` | Scene 5 · Heroine | 頑張ってるもの、[[T001:row]]かなり、[[T002:row]]上達してると思うわよ。 | You're working hard,[[T001:row]]so I think you've[[T002:row]]improved a lot. |  |
 | `table-5:g0040:l0004` | Scene 5 · Player | そ、そう？[[T001:row]]ありがとう。 | R-really?[[T001:row]]Thanks. |  |
 | `table-5:g0040:l0005` | Scene 5 · Heroine | 国立競技場目指して、[[T001:row]]頑張ってね。[[T002:row]]期待してるわ。 | Aim for[[T001:row]]National Stadium![[T002:row]]I'm counting on you. |  |
 | `table-5:g0040:l0006` | Scene 5 · Player | うん、頑張るよ。[[T001:row]]それじゃあ、[[T002:row]]練習に戻るか。 | Yeah, I will.[[T001:row]]Well then, back[[T002:row]]to practice. |  |
-| `table-5:g0041:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0041:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0041:l0001` | Scene 5 · Heroine | 調子はどう？ | How's it going? |  |
 | `table-5:g0041:l0002` | Scene 5 · Player | とりあえず、[[T001:row]]上達はしてると[[T002:row]]思うんだけど…。 | Well, I think[[T001:row]]I'm improving,[[T002:row]]at least... |  |
 | `table-5:g0041:l0003` | Scene 5 · Heroine | 頑張ってるんだから、[[T001:row]]上達してるわ。 | You're working hard,[[T001:row]]so you're improving. |  |
@@ -1398,21 +1398,21 @@
 | `table-5:g0042:l0000` | Scene 5 · Player | あっ、[[T001:girl_name]]。[[T002:row]]上達はしてると[[T003:row]]思うんだけど…。 | Oh, [[T001:girl_name]].[[T002:row]]I think I'm[[T003:row]]improving... |  |
 | `table-5:g0042:l0001` | Scene 5 · Heroine | ‥‥‥‥‥。[[T001:row]]国立競技場目指して、[[T002:row]]頑張ってね。 | .....[[T001:row]]I hope you make it[[T002:row]]to National Stadium. |  |
 | `table-5:g0042:l0002` | Scene 5 · Player | 国立競技場かぁ…。 | National Stadium... |  |
-| `table-5:g0043:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0043:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0043:l0001` | Scene 5 · Heroine | 最近、調子いいみたいね。 | You're doing well lately. |  |
 | `table-5:g0043:l0002` | Scene 5 · Player | かなり調子いいよ。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | I'm doing great.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-5:g0043:l0003` | Scene 5 · Heroine | あなたの[[T001:row]]頑張りのおかげで、[[T002:row]]国立競技場に行けそうね。 | All your hard work[[T001:row]]might get us to[[T002:row]]National Stadium. |  |
 | `table-5:g0043:l0004` | Scene 5 · Player | そ、そんなことないよ。[[T001:row]]でも、狙ってるけどね。 | N-not really.[[T001:row]]But I am aiming for it. |  |
 | `table-5:g0043:l0005` | Scene 5 · Heroine | あなたには、夢を実現できる[[T001:row]]すごい意志があるから、[[T002:row]]絶対に行けると思うわ。 | You've got the will to[[T001:row]]make your dream real.[[T002:row]]I know you'll get there. |  |
 | `table-5:g0043:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]よし、国立競技場目指して、[[T002:row]]もう一頑張りだ。 | Thanks.[[T001:row]]One more push to[[T002:row]]National Stadium! |  |
-| `table-5:g0044:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0044:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0044:l0001` | Scene 5 · Heroine | 最近、調子いいみたいね。 | You're doing well lately. |  |
 | `table-5:g0044:l0002` | Scene 5 · Player | かなり調子いいよ。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | I'm doing great.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-5:g0044:l0003` | Scene 5 · Heroine | それなら[[T001:row]]国立競技場に行けそうね。 | We might get to[[T001:row]]National Stadium. |  |
 | `table-5:g0044:l0004` | Scene 5 · Player | 何だか行けるような[[T001:row]]気がしてるんだ。 | I kind of feel[[T001:row]]like we can. |  |
 | `table-5:g0044:l0005` | Scene 5 · Heroine | あんなに[[T001:row]]頑張ってるんだから。[[T002:row]]絶対に行けると思うわ。 | You're working[[T001:row]]so hard.[[T002:row]]I know you'll get there. |  |
 | `table-5:g0044:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]よし、国立競技場目指して、[[T002:row]]もう一頑張りだ。 | Thanks.[[T001:row]]One more push to[[T002:row]]National Stadium! |  |
-| `table-5:g0045:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0045:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0045:l0001` | Scene 5 · Heroine | 最近、調子いいみたいね。 | You're doing well lately. |  |
 | `table-5:g0045:l0002` | Scene 5 · Player | かなり調子いいよ。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | I'm doing great.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-5:g0045:l0003` | Scene 5 · Heroine | 国立競技場に[[T001:row]]行けるといいね。 | Hope you reach[[T001:row]]National Stadium |  |
@@ -1422,21 +1422,21 @@
 | `table-5:g0046:l0000` | Scene 5 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近、上手くなってきたと[[T003:row]]思わない？ | Oh, [[T001:girl_name]].[[T002:row]]I've improved lately,[[T003:row]]haven't I? |  |
 | `table-5:g0046:l0001` | Scene 5 · Heroine | ‥‥‥‥‥。[[T001:row]]国立競技場に[[T002:row]]行けるといいね。 | .....[[T001:row]]Hope you make it[[T002:row]]to National Stadium. |  |
 | `table-5:g0046:l0002` | Scene 5 · Player | よし、頑張るぞ。 | All right, let's do this! |  |
-| `table-5:g0047:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0047:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0047:l0001` | Scene 5 · Heroine | Ｊリーグに行くって噂、[[T001:row]]本当？ | You might join[[T001:row]]the J.League? |  |
 | `table-5:g0047:l0002` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0047:l0003` | Scene 5 · Heroine | それじゃ、嘘なんだ…。 | So it's not true... |  |
 | `table-5:g0047:l0004` | Scene 5 · Player | 考えてないこともないけど。[[T001:row]]とりあえず、[[T002:row]]目の前の目標をね。 | I've thought about it.[[T001:row]]But first,[[T002:row]]I've got a goal. |  |
 | `table-5:g0047:l0005` | Scene 5 · Heroine | 大丈夫。[[T001:row]]今の実力なら[[T002:row]]きっと行けるわ。 | Don't worry.[[T001:row]]At your level now,[[T002:row]]you'll make it. |  |
 | `table-5:g0047:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]それじゃあ、[[T002:row]]もう一頑張りするか。 | Thanks.[[T001:row]]Guess I'd better[[T002:row]]keep at it. |  |
-| `table-5:g0048:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0048:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0048:l0001` | Scene 5 · Heroine | Ｊリーグに行くって噂、[[T001:row]]聞いたよ。 | Heard you're joining[[T001:row]]the J.League. |  |
 | `table-5:g0048:l0002` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0048:l0003` | Scene 5 · Heroine | 何だ、嘘なんだ…。 | Oh, it's not true... |  |
 | `table-5:g0048:l0004` | Scene 5 · Player | 考えてないこともないけど。[[T001:row]]とりあえず、[[T002:row]]目の前の目標をね。 | I've thought about it.[[T001:row]]But first,[[T002:row]]I've got a goal. |  |
 | `table-5:g0048:l0005` | Scene 5 · Heroine | 今の実力なら、[[T001:row]]大丈夫よ。 | At your level now,[[T001:row]]you'll be fine. |  |
 | `table-5:g0048:l0006` | Scene 5 · Player | ありがとう。[[T001:row]]それじゃあ、[[T002:row]]もう一頑張りするか。 | Thanks.[[T001:row]]Guess I'd better[[T002:row]]keep at it. |  |
-| `table-5:g0049:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0049:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0049:l0001` | Scene 5 · Heroine | Ｊリーグに行くって噂、[[T001:row]]聞いたよ。 | Heard you're joining[[T001:row]]the J.League. |  |
 | `table-5:g0049:l0002` | Scene 5 · Player | えっ、俺そんな事[[T001:row]]言ったこと無いよ。 | Huh? I never[[T001:row]]said that. |  |
 | `table-5:g0049:l0003` | Scene 5 · Heroine | 何だ、デマなんだ…。 | Oh, just a rumor... |  |
@@ -1482,20 +1482,20 @@
 | `table-7:g0001:l0003` | Scene 7 · Player (monologue) | 危ないから、包丁を[[T001:row]]振り回さないでくれ。[[T002:row]]本当に、死んじゃいそう。 | Stop waving the knife[[T001:row]]around, it's dangerous.[[T002:row]]It could really kill me. |  |
 | `table-7:g0002:l0000` | Scene 7 · Narration | 次の日、[[T001:row]]全員が一日で奇跡的な完全復活をした。 | The next day, we all[[T001:row]]miraculously recovered. |  |
 | `table-7:g0002:l0001` | Scene 7 · Player (monologue) | さあ、練習再開だ。[[T001:row]][[T002:girl_name]]も[[T003:row]]立ち直ったみたいだし。 | Back to practice.[[T001:row]]Looks like [[T002:girl_name]][[T003:row]]has cheered up, too. |  |
-| `table-7:g0003:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0003:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0003:l0001` | Scene 7 · Heroine | こんにちは。 | Good afternoon. |  |
 | `table-7:g0003:l0002` | Scene 7 · Player | 練習がきついね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-7:g0003:l0003` | Scene 7 · Heroine | 大丈夫ですよ。[[T001:row]]優美だって、[[T002:row]]やれるんだから。 | You'll be fine.[[T001:row]]If Yumi can do it,[[T002:row]]so can you. |  |
 | `table-7:g0003:l0004` | Scene 7 · Player | そ、そう？ | R-really? |  |
 | `table-7:g0003:l0005` | Scene 7 · Heroine | 優美が応援してるんだから、[[T001:row]]頑張って下さいね。 | Yumi's rooting for you,[[T001:row]]so do your best! |  |
 | `table-7:g0003:l0006` | Scene 7 · Player | ありがとう。[[T001:row]]頑張るよ。 | Thanks.[[T001:row]]I'll do my best. |  |
-| `table-7:g0004:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0004:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0004:l0001` | Scene 7 · Player | 練習がきついね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-7:g0004:l0002` | Scene 7 · Heroine | 優美も、最初は[[T001:row]]大変だったけど、[[T002:row]]もう平気だよ。 | It was hard for Yumi[[T001:row]]at first too, but[[T002:row]]I'm fine now. |  |
 | `table-7:g0004:l0003` | Scene 7 · Player | そ、そう？[[T001:row]]じゃ、俺も大丈夫かな？ | R-really?[[T001:row]]Then maybe I'll be okay? |  |
 | `table-7:g0004:l0004` | Scene 7 · Heroine | きっと、大丈夫ですよ。[[T001:row]]練習頑張って下さいね。 | I'm sure you will.[[T001:row]]Good luck in practice! |  |
 | `table-7:g0004:l0005` | Scene 7 · Player | ありがとう。[[T001:row]]頑張るよ。 | Thanks.[[T001:row]]I'll do my best. |  |
-| `table-7:g0005:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0005:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0005:l0001` | Scene 7 · Player | 練習がきついね。[[T001:row]]ついていくのが[[T002:row]]やっとだよ。 | Practice is tough.[[T001:row]]I can barely[[T002:row]]keep up. |  |
 | `table-7:g0005:l0002` | Scene 7 · Heroine | 最初は大変ですけど、[[T001:row]]きっと、大丈夫ですよ。 | It's hard at first, but[[T001:row]]I'm sure you'll be fine. |  |
 | `table-7:g0005:l0003` | Scene 7 · Player | そ、そうかな？[[T001:row]]それじゃあ、[[T002:row]]頑張るよ。 | Y-you think?[[T001:row]]Well then,[[T002:row]]I'll do my best. |  |
@@ -1520,21 +1520,21 @@
 | `table-7:g0010:l0000` | Scene 7 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近どうも、スランプ気味で[[T003:row]]調子が悪いんだよ。 | Oh, [[T001:girl_name]].[[T002:row]]I've been in a slump[[T003:row]]lately. I'm off my game. |  |
 | `table-7:g0010:l0001` | Scene 7 · Heroine | ‥‥‥‥‥。[[T001:row]]そんなの優美のせい[[T002:row]]じゃないもん。 | .....[[T001:row]]That's not[[T002:row]]Yumi's fault. |  |
 | `table-7:g0010:l0002` | Scene 7 · Player | そりゃそうだけどさ…。 | Well, sure, but... |  |
-| `table-7:g0011:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0011:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0011:l0001` | Scene 7 · Heroine | こんにちは。[[T001:row]]調子はどうですか？ | Hello![[T001:row]]How are you doing? |  |
 | `table-7:g0011:l0002` | Scene 7 · Player | とりあえず、[[T001:row]]上達はしてると思うよ。 | Well, I think[[T001:row]]I'm improving. |  |
 | `table-7:g0011:l0003` | Scene 7 · Heroine | だったら、[[T001:row]]インターハイに[[T002:row]]行けますか？ | Then can you[[T001:row]]make the[[T002:row]]Inter-High? |  |
 | `table-7:g0011:l0004` | Scene 7 · Player | それは、どうかな。[[T001:row]]やってみないと[[T002:row]]わかんないよ。 | I don't know.[[T001:row]]I won't know till[[T002:row]]I give it a try. |  |
 | `table-7:g0011:l0005` | Scene 7 · Heroine | 優美も応援してるから、[[T001:row]]頑張って下さいね。 | Yumi's rooting for you,[[T001:row]]so do your best! |  |
 | `table-7:g0011:l0006` | Scene 7 · Player | うん、頑張るよ。[[T001:row]]それじゃあ、[[T002:row]]練習に戻るか。 | Yeah, I will.[[T001:row]]Well then, back[[T002:row]]to practice. |  |
-| `table-7:g0012:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0012:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0012:l0001` | Scene 7 · Heroine | 調子はどうです？ | How are you doing? |  |
 | `table-7:g0012:l0002` | Scene 7 · Player | とりあえず、[[T001:row]]上達はしてると思うよ。 | Well, I think[[T001:row]]I'm improving. |  |
 | `table-7:g0012:l0003` | Scene 7 · Heroine | インターハイに[[T001:row]]行けるといいですね。 | I hope you make[[T001:row]]the Inter-High. |  |
 | `table-7:g0012:l0004` | Scene 7 · Player | そうだね。[[T001:row]]行けるといいね。 | Yeah.[[T001:row]]I hope so too. |  |
 | `table-7:g0012:l0005` | Scene 7 · Heroine | それじゃ、[[T001:row]]頑張ってくださいね。 | Well then,[[T001:row]]do your best! |  |
 | `table-7:g0012:l0006` | Scene 7 · Player | ありがとう。[[T001:row]]それじゃあ、[[T002:row]]練習に戻るか。 | Thanks.[[T001:row]]Well then,[[T002:row]]back to practice. |  |
-| `table-7:g0013:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0013:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0013:l0001` | Scene 7 · Heroine | 調子はどうです？ | How are you doing? |  |
 | `table-7:g0013:l0002` | Scene 7 · Player | とりあえず、[[T001:row]]上達はしてると思うよ。 | Well, I think[[T001:row]]I'm improving. |  |
 | `table-7:g0013:l0003` | Scene 7 · Heroine | インターハイに[[T001:row]]行けるように、[[T002:row]]頑張ってくださいね。 | Do your best[[T001:row]]so you can make[[T002:row]]the Inter-High! |  |
@@ -1542,14 +1542,14 @@
 | `table-7:g0014:l0000` | Scene 7 · Player | あっ、[[T001:girl_name]]。[[T002:row]]インターハイに[[T003:row]]行きたいね。 | Oh, [[T001:girl_name]][[T002:row]]I'd love to make[[T003:row]]the Inter-High. |  |
 | `table-7:g0014:l0001` | Scene 7 · Heroine | ‥‥‥‥‥。[[T001:row]]勝手にどうぞ。 | .....[[T001:row]]Suit yourself. |  |
 | `table-7:g0014:l0002` | Scene 7 · Player | ‥‥‥‥。 | ...... |  |
-| `table-7:g0015:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0015:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0015:l0001` | Scene 7 · Heroine | 最近、すっごく[[T001:row]]調子いいみたいですね。 | You've been doing[[T001:row]]super well lately. |  |
 | `table-7:g0015:l0002` | Scene 7 · Player | そうだね。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | Yeah.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-7:g0015:l0003` | Scene 7 · Heroine | やっぱり、[[T001:row]]お兄ちゃんと違って、[[T002:row]]かっこいいなぁ。 | You're so cool,[[T001:row]]not like my[[T002:row]]older brother. |  |
 | `table-7:g0015:l0004` | Scene 7 · Player | えっ、好雄と…？[[T001:row]]そ、そう。[[T002:row]]ありがとう。 | Huh? Compared[[T001:row]]to Yoshio...?[[T002:row]]W-well, thanks. |  |
 | `table-7:g0015:l0005` | Scene 7 · Heroine | インターハイに[[T001:row]]行けるよう、[[T002:row]]頑張ってくださいね。 | Do your best[[T001:row]]so you can make[[T002:row]]the Inter-High! |  |
 | `table-7:g0015:l0006` | Scene 7 · Player | ははは、[[T001:row]]頑張るよ。 | Ha ha ha,[[T001:row]]I'll do my best. |  |
-| `table-7:g0016:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0016:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0016:l0001` | Scene 7 · Heroine | 最近、すっごく[[T001:row]]調子いいみたいですね。 | You've been doing[[T001:row]]super well lately. |  |
 | `table-7:g0016:l0002` | Scene 7 · Player | そうだね。[[T001:row]]ハードな練習も、苦に[[T002:row]]ならなくなってきたしね。 | Yeah.[[T001:row]]The hard practice doesn't[[T002:row]]even bother me now. |  |
 | `table-7:g0016:l0003` | Scene 7 · Heroine | さすが、[[T001:row]]みんなの憧れの[[T002:row]]先輩ですね。 | Everyone looks[[T001:row]]up to you,[[T002:row]]Senpai! |  |
@@ -1565,7 +1565,7 @@
 | `table-7:g0018:l0000` | Scene 7 · Player | あっ、[[T001:girl_name]]。[[T002:row]]最近、調子いいんだよ。 | Oh, [[T001:girl_name]][[T002:row]]I've been doing well lately. |  |
 | `table-7:g0018:l0001` | Scene 7 · Heroine | ‥‥‥‥‥。[[T001:row]]優美には、関係ないもん。 | .....[[T001:row]]It's not Yumi's problem! |  |
 | `table-7:g0018:l0002` | Scene 7 · Player | そりゃ、そうだけどさ…。 | Well, sure, but... |  |
-| `table-7:g0019:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0019:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0019:l0001` | Scene 7 · Heroine | アメリカに行っちゃ[[T001:row]]ヤダーッ。 | Don't go to America![[T001:row]]Noooo! |  |
 | `table-7:g0019:l0002` | Scene 7 · Player | えっ、何それ？[[T001:row]]俺、知らないよ。 | Huh, what's that?[[T001:row]]News to me. |  |
 | `table-7:g0019:l0003` | Scene 7 · Heroine | 何それって…、[[T001:row]]嘘なんですか？ | Wait, what?[[T001:row]]So it's not true? |  |
@@ -1574,7 +1574,7 @@
 | `table-7:g0019:l0006` | Scene 7 · Player | 大丈夫、安心して。[[T001:row]]アメリカになんて[[T002:row]]行かないから。 | Don't worry.[[T001:row]]I'm not going[[T002:row]]to America. |  |
 | `table-7:g0019:l0007` | Scene 7 · Heroine | うん、良かった。[[T001:row]]絶対そんな所に[[T002:row]]いったら嫌ですよ。 | Oh, good![[T001:row]]I'd hate it if[[T002:row]]you went there. |  |
 | `table-7:g0019:l0008` | Scene 7 · Player | はいはい。 | Yeah, yeah. |  |
-| `table-7:g0020:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0020:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0020:l0001` | Scene 7 · Heroine | アメリカに行くんですか？ | Are you going to America? |  |
 | `table-7:g0020:l0002` | Scene 7 · Player | えっ、何それ？[[T001:row]]俺、知らないよ。 | Huh, what's that?[[T001:row]]News to me. |  |
 | `table-7:g0020:l0003` | Scene 7 · Heroine | 何だ、嘘なんですか？[[T001:row]]かっこいいと、[[T002:row]]思ったのになぁ。 | Aw, it's not true?[[T001:row]]I thought it'd[[T002:row]]be so cool. |  |
@@ -1583,7 +1583,7 @@
 | `table-7:g0020:l0006` | Scene 7 · Player | とりあえず、[[T001:row]]その予定はないよ。 | I don't have[[T001:row]]plans for that. |  |
 | `table-7:g0020:l0007` | Scene 7 · Heroine | 何だ、つまんないの。 | Aw, how boring. |  |
 | `table-7:g0020:l0008` | Scene 7 · Player | ‥‥‥‥。 | ...... |  |
-| `table-7:g0021:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0021:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0021:l0001` | Scene 7 · Heroine | アメリカに行くんですか？ | Are you going to America? |  |
 | `table-7:g0021:l0002` | Scene 7 · Player | えっ、何それ？[[T001:row]]俺、知らないよ。 | Huh, what's that?[[T001:row]]News to me. |  |
 | `table-7:g0021:l0003` | Scene 7 · Heroine | 何だ、嘘なんですか？[[T001:row]]みんなが、留学するって[[T002:row]]噂してましたよ。 | Aw, it's not true?[[T001:row]]Everyone was saying[[T002:row]]you'd study abroad. |  |

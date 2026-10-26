@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `main:g0000:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0000:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0000:l0001` | Main · Mio | おはようございます。 | Good morning. |  |
 | `main:g0000:l0002` | Main · Player | おや、[[T001:girl_name]]。[[T002:row]]おはよう。 | Oh, [[T001:girl_name]].[[T002:row]]Morning. |  |
 | `main:g0000:l0003` | Main · Mio | あれ？[[T001:row]]御一人なんですか？ | Oh?[[T001:row]]Are you by yourself? |  |
@@ -18,7 +18,7 @@
 | `main:g0005:l0000` | Main · Player | それじゃあ、[[T001:girl_name]]との[[T002:row]]約束だし、[[T003:row]]文芸部に行こうかな。 | I promised [[T001:girl_name]],[[T002:row]]so I'll visit[[T003:row]]the Literature Club. |  |
 | `main:g0006:l0000` | Main · Player | それじゃあ、[[T001:girl_name]]との[[T002:row]]約束だし、[[T003:row]]演劇部に行こうかな。 | I promised [[T001:girl_name]],[[T002:row]]so I'll visit[[T003:row]]the Drama Club. |  |
 | `main:g0007:l0000` | Main · Player | ちょっと、[[T001:row]]冷たかったかな。 | Was I[[T001:row]]a bit too cold? |  |
-| `main:g0008:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0008:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0008:l0001` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0009:l0000` | Main · Mio | ごめんなさい…。[[T001:row]]文芸部のほうが…。[[T002:row]]誘っていただいたのに…。 | Sorry...[[T001:row]]I'm busy with Lit Club...[[T002:row]]Thanks for inviting me. |  |
 | `main:g0010:l0000` | Main · Mio | ごめんなさい…。[[T001:row]]演劇部のほうが…。[[T002:row]]誘っていただいたのに…。 | Sorry...[[T001:row]]I'm busy with Drama Club...[[T002:row]]Thanks for inviting me. |  |
@@ -26,14 +26,14 @@
 | `main:g0012:l0000` | Main · Mio | よろしかったら、[[T001:row]]文芸部のほうにも、[[T002:row]]是非来てください…。 | If you have time,[[T001:row]]please stop by[[T002:row]]the Literature Club... |  |
 | `main:g0013:l0000` | Main · Mio | よろしかったら、[[T001:row]]演劇部のほうにも、[[T002:row]]是非来てください…。 | If you have time,[[T001:row]]please stop by[[T002:row]]the Drama Club... |  |
 | `main:g0014:l0000` | Main · Player | 一人で行くか。 | I'll go alone. |  |
-| `main:g0015:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0015:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0015:l0001` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0016:l0000` | Main · Mio | あっ、今日は[[T001:row]]文芸部のほうが[[T002:row]]あるので…。 | Oh, I've got[[T001:row]]Literature Club[[T002:row]]today... |  |
 | `main:g0017:l0000` | Main · Mio | あっ、今日は[[T001:row]]演劇部のほうが[[T002:row]]あるので…。 | Oh, I've got[[T001:row]]Drama Club[[T002:row]]today... |  |
 | `main:g0018:l0000` | Main · Player | あっ、そうか。[[T001:row]]別に気にしなくても[[T002:row]]いいよ。 | Oh, right.[[T001:row]]Don't worry[[T002:row]]about it. |  |
 | `main:g0019:l0000` | Main · Mio | ごめんなさい。[[T001:row]]よろしかったら、[[T002:row]]来てくださいね。 | I'm sorry.[[T001:row]]If you like,[[T002:row]]please come. |  |
 | `main:g0020:l0000` | Main · Player (monologue) | そんな部に入ってたとは[[T001:row]]知らなかった…。 | She's in a club[[T001:row]]like that? Who knew... |  |
-| `main:g0021:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0021:l0000` | Main · Mio | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0021:l0001` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0022:l0000` | Main · Mio | ごめんなさい。[[T001:row]]文芸部のほうが[[T002:row]]ありますので。 | I'm sorry.[[T001:row]]I'm busy with[[T002:row]]Literature Club. |  |
 | `main:g0023:l0000` | Main · Mio | ごめんなさい。[[T001:row]]演劇部のほうが[[T002:row]]ありますので。 | I'm sorry.[[T001:row]]I'm busy with[[T002:row]]Drama Club. |  |

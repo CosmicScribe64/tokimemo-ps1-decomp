@@ -6,35 +6,35 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0000:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0000:l0002` | Scene 0 · Player | 詩織、[[T001:row]]これからよろしく。 | Shiori,[[T001:row]]hope we get along. |  |
 | `table-0:g0000:l0003` | Scene 0 · Heroine | こちらこそ。 | Likewise. |  |
-| `table-0:g0001:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0001:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0001:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0001:l0002` | Scene 0 · Player | 詩織、[[T001:row]]この部だったんだ。 | Shiori,[[T001:row]]so you're in this club. |  |
 | `table-0:g0001:l0003` | Scene 0 · Heroine | そうよ。[[T001:row]]これからよろしくね。 | That's right.[[T001:row]]I hope we get along. |  |
-| `table-0:g0002:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0002:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0002:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0002:l0002` | Scene 0 · Player | 詩織、[[T001:row]]これからよろしく。 | Shiori,[[T001:row]]hope we get along. |  |
 | `table-0:g0002:l0003` | Scene 0 · Heroine | こちらこそ。[[T001:row]]甲子園目指して、[[T002:row]]頑張ってね。 | You too.[[T001:row]]Do your best[[T002:row]]and make it to Koshien! |  |
-| `table-0:g0003:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0003:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0003:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0003:l0002` | Scene 0 · Player | 詩織、[[T001:row]]この部だったんだ。 | Shiori,[[T001:row]]so you're in this club. |  |
 | `table-0:g0003:l0003` | Scene 0 · Heroine | そうよ。[[T001:row]]甲子園目指して、[[T002:row]]頑張ってね。 | That's right.[[T001:row]]Do your best[[T002:row]]and make it to Koshien! |  |
-| `table-0:g0004:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0004:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0004:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0004:l0002` | Scene 0 · Player | 詩織、[[T001:row]]これからよろしく。 | Shiori,[[T001:row]]hope we get along. |  |
 | `table-0:g0004:l0003` | Scene 0 · Heroine | こちらこそ。[[T001:row]]国立競技場目指して、[[T002:row]]頑張ってね。 | You too.[[T001:row]]Aim for Nat'l Stadium![[T002:row]]Give it your all! |  |
-| `table-0:g0005:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0005:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0005:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0005:l0002` | Scene 0 · Player | 詩織、[[T001:row]]この部だったんだ。 | Shiori,[[T001:row]]so you're in this club. |  |
 | `table-0:g0005:l0003` | Scene 0 · Heroine | そうよ。[[T001:row]]国立競技場目指して、[[T002:row]]頑張ってね。 | That's right.[[T001:row]]Aim for Nat'l Stadium![[T002:row]]Give it your all! |  |
-| `table-0:g0006:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0006:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0006:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0006:l0002` | Scene 0 · Player | 詩織、[[T001:row]]これからよろしく。 | Shiori,[[T001:row]]hope we get along. |  |
 | `table-0:g0006:l0003` | Scene 0 · Heroine | こちらこそ。[[T001:row]]お互いに頑張りましょう。 | Likewise.[[T001:row]]Let's both do our best. |  |
-| `table-0:g0007:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0007:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0007:l0001` | Scene 0 · Heroine | この部に入部したの？ | You joined this club? |  |
 | `table-0:g0007:l0002` | Scene 0 · Player | 詩織、[[T001:row]]この部だったんだ。 | Shiori,[[T001:row]]so you're in this club. |  |
 | `table-0:g0007:l0003` | Scene 0 · Heroine | そうよ。[[T001:row]]お互いに頑張りましょう。 | That's right.[[T001:row]]Let's both do our best. |  |

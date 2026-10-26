@@ -45,18 +45,18 @@
 | `main:g0010:l0000` | Main · Player | 全部、俺達が書いた、[[T001:row]]作文だよ。 | All essays[[T001:row]]we wrote. |  |
 | `main:g0010:l0001` | Main · Ayako | 作文？[[T001:row]]ねぇ、ねぇ、どんなこと[[T002:row]]書いたの？ | Essays?[[T001:row]]Hey, hey, what[[T002:row]]did you write? |  |
 | `main:g0010:l0002` | Main · Player | これ、今回うちの部で作った[[T001:row]]文集なんだけど、[[T002:row]]良かったらどうぞ。 | Here's our club's[[T001:row]]anthology.[[T002:row]]Have one. |  |
-| `main:g0010:l0003` | Main · Ayako | リアリー、本当に？[[T001:row]]ありがとう。[[T002:row]]この中に載ってるのね。 | Really? Hontou ni?[[T001:row]]Thanks![[T002:row]]Your essay's in here! |  |
+| `main:g0010:l0003` | Main · Ayako | リアリー、本当に？[[T001:row]]ありがとう。[[T002:row]]この中に載ってるのね。 | Really? Truly?[[T001:row]]Thanks![[T002:row]]Your essay's in here! |  |
 | `main:g0010:l0004` | Main · Player | あまり期待してると、[[T001:row]]がっかりするかもね…。 | Don't expect much,[[T001:row]]or you'll be let down... |  |
 | `main:g0011:l0000` | Main · Player | 全部、俺達が書いた、[[T001:row]]作文だよ。 | All essays[[T001:row]]we wrote. |  |
 | `main:g0011:l0001` | Main · Ayako | 作文？[[T001:row]]ねぇ、どんなこと[[T002:row]]書いてあんの？ | Essays?[[T001:row]]Hey, what's[[T002:row]]in them? |  |
 | `main:g0011:l0002` | Main · Player | これ、今回うちの部で作った[[T001:row]]文集なんだけど、[[T002:row]]良かったらどうぞ。 | Here's our club's[[T001:row]]anthology.[[T002:row]]Have one. |  |
-| `main:g0011:l0003` | Main · Ayako | サンキュー、ありがとう。[[T001:row]]楽しみだわ。 | Thank you, arigatou.[[T001:row]]I can't wait. |  |
+| `main:g0011:l0003` | Main · Ayako | サンキュー、ありがとう。[[T001:row]]楽しみだわ。 | Thank you, thanks![[T001:row]]I can't wait. |  |
 | `main:g0011:l0004` | Main · Player | あまり期待してると、[[T001:row]]がっかりするかもね…。 | Don't expect much,[[T001:row]]or you'll be let down... |  |
 | `main:g0012:l0000` | Main · Ayako | ここに飾ってある[[T001:row]]文章って何なの？ | What's all[[T001:row]]this writing? |  |
 | `main:g0012:l0001` | Main · Player | 全部、俺達が書いた、[[T001:row]]作文だよ。 | All essays[[T001:row]]we wrote. |  |
 | `main:g0012:l0002` | Main · Ayako | 作文？[[T001:row]]へーっ、そんなもの[[T002:row]]書いたんだ。 | Essays?[[T001:row]]Huh, you wrote[[T002:row]]those? |  |
 | `main:g0012:l0003` | Main · Player | これ、今回うちの部で作った[[T001:row]]文集なんだけど、[[T002:row]]良かったらどうぞ。 | Here's our club's[[T001:row]]anthology.[[T002:row]]Have one. |  |
-| `main:g0012:l0004` | Main · Ayako | サンキュー、ありがとう。[[T001:row]]読ませてもらうわ。 | Thank you, arigatou.[[T001:row]]I'll read it. |  |
+| `main:g0012:l0004` | Main · Ayako | サンキュー、ありがとう。[[T001:row]]読ませてもらうわ。 | Thank you, thanks![[T001:row]]I'll read it. |  |
 | `main:g0012:l0005` | Main · Player | あまり期待しないでよ。[[T001:row]]がっかりするかも[[T002:row]]しれないから…。 | Don't expect much.[[T001:row]]You might be[[T002:row]]let down... |  |
 | `main:g0013:l0000` | Main · Player | これ、今回うちの部で作った[[T001:row]]文集なんだけど、[[T002:row]]良かったら読んでみない？ | Here's our club's[[T001:row]]anthology.[[T002:row]]Want to read it? |  |
 | `main:g0013:l0001` | Main · Ayako | それ、この前、友達に見せて[[T001:row]]もらったからいらない。[[T002:row]]それじゃあ…。 | A friend showed me[[T001:row]]one already. No, thanks.[[T002:row]]Bye... |  |

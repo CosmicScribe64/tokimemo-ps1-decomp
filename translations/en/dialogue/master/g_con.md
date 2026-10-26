@@ -14,59 +14,59 @@
 | `table-0:g0002:l0000` | Scene 0 · Player | おーい。[[T001:row]]（今の娘、誰だろう？） | Hey![[T001:row]](Who was that girl?) |  |
 | `table-0:g0003:l0000` | Scene 0 · Player (monologue) | あの娘、[[T001:row]]学校でもぶつかったよな…。 | That girl bumped[[T001:row]]into me at school too... |  |
 | `table-0:g0004:l0000` | Scene 0 · Player (monologue) | あいつ、なにしに来たんだ？ | What did he come here for? |  |
-| `table-0:g0005:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0006:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0005:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0006:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0006:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞[[T001:row]]おめでとう。 | Congrats on the Game[[T001:row]]Contest Grand Prize! |  |
 | `table-0:g0006:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0006:l0003` | Scene 0 · Heroine | すごいね…。夢みたい。 | Amazing... Like a dream. |  |
-| `table-0:g0007:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0008:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0007:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0008:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0008:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞、[[T001:row]]おめでとうございます。 | Congratulations on the[[T001:row]]Game Contest Grand Prize. |  |
 | `table-0:g0008:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0008:l0003` | Scene 0 · Heroine | すごいですね…[[T001:row]]信じられません。 | That's amazing...[[T001:row]]I can't believe it. |  |
-| `table-0:g0009:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0010:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0009:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0010:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0010:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞を[[T001:row]]受賞したのね。 | So you won the[[T001:row]]Game Contest prize. |  |
 | `table-0:g0010:l0002` | Scene 0 · Player | [[T001:girl_name]]のおかげだよ。 | Thanks to you, [[T001:girl_name]]. |  |
 | `table-0:g0010:l0003` | Scene 0 · Heroine | くだらないけど、[[T001:row]]他人より優れているのは[[T002:row]]いいことよ。 | It's foolish, but[[T001:row]]being better than[[T002:row]]others is good. |  |
 | `table-0:g0011:l0000` | Scene 0 · Heroine | ハーイ、[[T001:player_form]]。 | Hi there, [[T001:player_form]]. |  |
-| `table-0:g0012:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0012:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0012:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞、[[T001:row]]おめでとう。 | Congrats on the Game[[T001:row]]Contest Grand Prize! |  |
 | `table-0:g0012:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0012:l0003` | Scene 0 · Heroine | ワンダフル、[[T001:row]]あなたってすごいのね。 | Wonderful,[[T001:row]]you're amazing. |  |
-| `table-0:g0013:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0014:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0013:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0014:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0014:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞、[[T001:row]]おめでとう。[[T002:row]]すごいね。 | Congrats on the Game[[T001:row]]Contest Grand Prize.[[T002:row]]Amazing! |  |
 | `table-0:g0014:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0014:l0003` | Scene 0 · Heroine | きっと、[[T001:row]]すごく努力したのね。 | You must have[[T001:row]]worked so hard. |  |
 | `table-0:g0015:l0000` | Scene 0 · Heroine | こんにちは、[[T001:player_form]]。 | Hello, [[T001:player_form]]. |  |
-| `table-0:g0016:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0016:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0016:l0001` | Scene 0 · Heroine | この度は、なにか[[T001:row]]大きな賞を頂いたそうで、[[T002:row]]おめでとうございます。 | I heard you won[[T001:row]]a major award.[[T002:row]]Congratulations! |  |
 | `table-0:g0016:l0002` | Scene 0 · Player | ははは、[[T001:row]]ゲームコンテスト大賞だよ。 | Hahaha,[[T001:row]]the Game Contest prize. |  |
 | `table-0:g0016:l0003` | Scene 0 · Heroine | ゲーム…なんですか？ | A game? What's that? |  |
-| `table-0:g0017:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0018:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0017:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0018:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0018:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞、[[T001:row]]おめでとう。 | Congrats on the Game[[T001:row]]Contest Grand Prize! |  |
 | `table-0:g0018:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0018:l0003` | Scene 0 · Heroine | 私にはちょっと真似できないよ。[[T001:row]]すごいね。 | I could never do that.[[T001:row]]Amazing. |  |
 | `table-0:g0018:l0004` | Scene 0 · Player | ははは、[[T001:row]]俺にも[[T002:girl_name]]の真似は[[T003:row]]できないよ。 | Haha,[[T001:row]]I can't do what [[T002:girl_name]][[T003:row]]can do, either. |  |
-| `table-0:g0019:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0020:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0019:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0020:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0020:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞、[[T001:row]]おめでとう。 | Congrats on the Game[[T001:row]]Contest Grand Prize! |  |
 | `table-0:g0020:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0020:l0003` | Scene 0 · Heroine | あなたが受賞するのは、[[T001:row]]悪い気分じゃないわね。 | Seeing you win doesn't[[T001:row]]feel half bad. |  |
-| `table-0:g0021:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0022:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0021:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0022:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0022:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞って[[T001:row]]本当？ | You won the grand prize[[T001:row]]at the Game Contest? |  |
 | `table-0:g0022:l0002` | Scene 0 · Player | うん、本当だよ。 | Yeah, really. |  |
 | `table-0:g0022:l0003` | Scene 0 · Heroine | じゃあさ、[[T001:row]]今度それやらしてよ。[[T002:row]]ねっ？ | Then let me[[T001:row]]try it sometime,[[T002:row]]okay? |  |
-| `table-0:g0023:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0024:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0023:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0024:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0024:l0001` | Scene 0 · Heroine | あの…[[T001:row]]ゲームコンテスト大賞、[[T002:row]]おめでとうございます。 | Um...[[T001:row]]congratulations on the[[T002:row]]Game Contest Grand Prize. |  |
 | `table-0:g0024:l0002` | Scene 0 · Player | ありがとう、[[T001:girl_name]]。 | Thanks, [[T001:girl_name]]. |  |
 | `table-0:g0024:l0003` | Scene 0 · Heroine | は、はい…。 | Y-yes... |  |
-| `table-0:g0025:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0026:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0025:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0026:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0026:l0001` | Scene 0 · Heroine | ゲームコンテスト大賞、[[T001:row]]おめでとうございます。 | Congratulations on the[[T001:row]]Game Contest Grand Prize. |  |
 | `table-0:g0026:l0002` | Scene 0 · Player | ありがとう、優美ちゃん。 | Thanks, Yumi-chan. |  |
 | `table-0:g0026:l0003` | Scene 0 · Heroine | 今度、優美にも[[T001:row]]やらせてくださいね。 | Can Yumi play it[[T001:row]]sometime too? |  |

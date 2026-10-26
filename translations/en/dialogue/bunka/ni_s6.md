@@ -222,7 +222,7 @@
 | `main:g0070:l0004` | Main · Saki | 何だか、恥ずかしくって…。[[T001:row]]ごめんなさい。 | It's kind of embarrassing...[[T001:row]]I'm sorry. |  |
 | `main:g0071:l0000` | Main · Player | あーあ、[[T001:row]]本当に行っちゃったよ。 | Aww,[[T001:row]]she really left. |  |
 | `main:g0072:l0000` | Main · Saki | ‥‥‥‥‥。 | ... |  |
-| `main:g0072:l0001` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0072:l0001` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0073:l0000` | Main · Player | あれ、行っちゃった。[[T001:row]]恥ずかしかったのかな。 | Huh, she left.[[T001:row]]Was she embarrassed? |  |
 | `main:g0074:l0000` | Main · Saki | 遊びに来ちゃった。 | I came to visit. |  |
 | `main:g0074:l0001` | Main · Player | 良かった。[[T001:row]]ちょうど、暇だったんだ。 | Great.[[T001:row]]I'm free right now. |  |

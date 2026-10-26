@@ -29,7 +29,7 @@
 | `main:g0017:l0000` | Main · Shiori | …。[[T001:row]]用件は何？ | ...[[T001:row]]What do you want? |  |
 | `main:g0018:l0000` | Main · Shiori | あっ…。[[T001:row]]ど、どうしたの？ | Oh...[[T001:row]]Wh-what is it? |  |
 | `main:g0019:l0000` | Main · Shiori | [[T001:player_form]]。[[T002:row]]どうしたの？ | [[T001:player_form]][[T002:row]]What is it? |  |
-| `main:g0020:l0000` | Main · Shiori | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0020:l0000` | Main · Shiori | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0020:l0001` | Main · Shiori | どうしたの？ | What is it? |  |
 | `main:g0021:l0000` | Main · Shiori | …。[[T001:row]]何か御用？ | ...[[T001:row]]What is it? |  |
 | `main:g0022:l0000` | Main · Player | 忙しいのに、ごめん。 | Sorry, I know you're busy. |  |

@@ -15,7 +15,7 @@
 | `000127a8:d41128a6b1ee` | Unknown | 近所の公園 | Neighborhood Park |  |
 | `000127b4:77c66b4bc73b` | Unknown | 自宅前 | Home |  |
 | `000127bc:bc44e2021539` | Unknown | 廊下 | Hallway |  |
-| `000127c4:ddbfceeafb47` | Unknown | 図書室 | Library |  |
+| `000127c4:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
 | `000127cc:3ad700edc836` | Unknown | 演劇部 | Drama Club |  |
 | `000127d4:cb8b3ed09fe1` | Unknown | 実験室 | Science Lab |  |
 | `000127dc:cfba20b636e4` | Unknown | 電脳部室 | Computer Clubroom |  |

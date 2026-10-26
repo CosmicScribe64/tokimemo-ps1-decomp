@@ -10,7 +10,7 @@
 | `scene-00:g0000:l0001` | Scene-00 · Narration | [[T001:inline_label]]戦闘員シャウシャウ…。 | [[T001:inline_label]]Minion: Shaw-shaw... |  |
 | `scene-00:g0000:l0002` | Scene-00 · Player (monologue) | あれ？[[T001:row]]戦闘員がこっちに[[T002:row]]向かって来るぞ。 | Huh?[[T001:row]]The minions are[[T002:row]]coming this way. |  |
 | `scene-00:g0001:l0000` | Scene-00 · Megumi | きゃあーっ。 | Eeeek! |  |
-| `scene-00:g0001:l0001` | Scene-00 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `scene-00:g0001:l0001` | Scene-00 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `scene-00:g0001:l0002` | Scene-00 · Megumi | あの、放してください。[[T001:row]]お願いします。 | Um, please let me go.[[T001:row]]Please. |  |
 | `scene-00:g0001:l0003` | Scene-00 · Player | おい、放せよ。[[T001:row]]嫌がってるじゃないか。 | Hey, let her go.[[T001:row]]She doesn't like it! |  |
 | `scene-00:g0001:l0004` | Scene-00 · Narration | [[T001:inline_label]]戦闘員くそ、おぼえてやがれ。 | [[T001:inline_label]]Minion: Curses! You'll pay for this! |  |
@@ -64,7 +64,7 @@
 | `scene-01:g0015:l0004` | Scene-01 · Megumi | い、いえ…。[[T001:row]]な、何も…。 | N-no...[[T001:row]]N-nothing... |  |
 | `scene-02:g0000:l0000` | Scene-02 · Player | [[T001:girl_name]]。[[T002:row]]あっちに[[T003:row]]変な動物がいるよ。 | Look, [[T001:girl_name]][[T002:row]]there's a weird[[T003:row]]animal over there. |  |
 | `scene-02:g0001:l0000` | Scene-02 · Megumi | ‥‥‥‥。 | ...... |  |
-| `scene-02:g0001:l0001` | Scene-02 · Player | み、[[T001:girl_name]]？ | M-[[T001:girl_name]] |  |
+| `scene-02:g0001:l0001` | Scene-02 · Player | み、[[T001:girl_name]]？ | M-[[T001:girl_name]]? |  |
 | `scene-02:g0001:l0002` | Scene-02 · Player (monologue) | 駄目だ。[[T001:row]]猿に熱中してて、[[T002:row]]声が聞こえないらしい。 | No use.[[T001:row]]She's so into the monkeys[[T002:row]]she can't hear me. |  |
 | `scene-02:g0001:l0003` | Scene-02 · Megumi | ‥‥‥‥。 | ...... |  |
 | `scene-02:g0001:l0004` | Scene-02 · Player (monologue) | しょうがない、[[T001:row]]俺も猿を見るかな。 | Oh well, guess[[T001:row]]I'll watch monkeys, too. |  |
@@ -88,7 +88,7 @@
 | `scene-03:g0003:l0008` | Scene-03 · Player | み、[[T001:girl_name]]さえ[[T002:row]]良ければ…。 | So if [[T001:girl_name]][[T002:row]]is okay with it... |  |
 | `scene-03:g0003:l0009` | Scene-03 · Megumi | はい…。[[T001:row]]私、幸せです…。 | Yes...[[T001:row]]I'm so happy... |  |
 | `scene-03:g0003:l0010` | Scene-03 · Player (monologue) | 幸せ？[[T001:row]]怖いんじゃ無かったのか？ | Happy?[[T001:row]]Wasn't she scared? |  |
-| `initializer-54:g0000:l0000` | Init 54 · Player (monologue) | 急に雨が降ってきたな。[[T001:row]]傘を持ってきてよかった。[[T002:row]]あっ、[[T003:girl_name]]だ。 | It started raining.[[T001:row]]Lucky I had an umbrella.[[T002:row]]There's [[T003:girl_name]] |  |
+| `initializer-54:g0000:l0000` | Init 54 · Player (monologue) | 急に雨が降ってきたな。[[T001:row]]傘を持ってきてよかった。[[T002:row]]あっ、[[T003:girl_name]]だ。 | It started raining.[[T001:row]]Lucky I had an umbrella.[[T002:row]]There's [[T003:girl_name]]. |  |
 | `initializer-54:g0000:l0001` | Init 54 · Player | [[T001:girl_name]]。[[T002:row]]どうしたの？ | [[T001:girl_name]][[T002:row]]What is it? |  |
 | `initializer-54:g0001:l0000` | Init 54 · Megumi | あ、あの…。[[T001:row]]急に雨が…。 | U-um...[[T001:row]]The rain, so sudden... |  |
 | `initializer-54:g0001:l0001` | Init 54 · Player | 傘、持ってこなかったの？ | Didn't bring an umbrella? |  |
@@ -113,11 +113,11 @@
 | `initializer-54:g0004:l0002` | Init 54 · Megumi | で、でも…。[[T001:row]]恥ずかしいですから…。 | B-but...[[T001:row]]it's embarrassing... |  |
 | `initializer-54:g0004:l0003` | Init 54 · Player | それじゃ、[[T001:row]]この傘、貸してあげるよ。 | Then here,[[T001:row]]take my umbrella. |  |
 | `initializer-54:g0004:l0004` | Init 54 · Megumi | えっ？[[T001:row]]そんな…。[[T002:row]]悪いですから…。 | Huh?[[T001:row]]Oh, no...[[T002:row]]I couldn't... |  |
-| `initializer-54:g0004:l0005` | Init 54 · Player | それじゃ、[[T001:girl_name]]。 | Bye then, [[T001:girl_name]] |  |
+| `initializer-54:g0004:l0005` | Init 54 · Player | それじゃ、[[T001:girl_name]]。 | Bye then, [[T001:girl_name]]. |  |
 | `initializer-54:g0004:l0006` | Init 54 · Megumi | あ、あの…。 | U-um... |  |
 | `initializer-54:g0005:l0000` | Init 54 · Player (monologue) | くぅ…。[[T001:row]]俺ってかっこいい。 | Man...[[T001:row]]I'm so cool. |  |
 | `initializer-55:g0000:l0000` | Init 55 · Megumi | あの…。 | Um... |  |
-| `initializer-55:g0000:l0001` | Init 55 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `initializer-55:g0000:l0001` | Init 55 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `initializer-55:g0000:l0002` | Init 55 · Megumi | き、昨日は…[[T001:row]]ありがとうございました。[[T002:row]]と、とても、[[T003:row]]嬉しかったです…。 | Th-thank you...[[T001:row]]for yesterday.[[T002:row]]I-I was[[T003:row]]so happy... |  |
 | `initializer-55:g0000:l0003` | Init 55 · Player | 別にいいよ。[[T001:row]]大した事じゃないから。 | Don't mention it.[[T001:row]]It was no big deal. |  |
 | `initializer-55:g0000:l0004` | Init 55 · Megumi | か、身体の方は、[[T001:row]]大丈夫でしたか？ | A-are you[[T001:row]]feeling all right? |  |
@@ -129,7 +129,7 @@
 | `initializer-55:g0000:l0010` | Init 55 · Megumi | 本当に、[[T001:row]]ありがとうございました。 | Thank you[[T001:row]]so very much. |  |
 | `initializer-55:g0001:l0000` | Init 55 · Player (monologue) | 本当、[[T001:girl_name]]って、[[T002:row]]可愛らしいな。 | Really, [[T001:girl_name]][[T002:row]]is totally adorable. |  |
 | `initializer-60:g0000:l0000` | Init 60 · Megumi | あ、あの…。 | U-um... |  |
-| `initializer-60:g0001:l0000` | Init 60 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `initializer-60:g0001:l0000` | Init 60 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `initializer-60:g0001:l0001` | Init 60 · Megumi | あの…[[T001:row]]も、もし良かったら…[[T002:row]]一緒に帰りませんか？ | Um...[[T001:row]]i-if it's okay...[[T002:row]]shall we go home together? |  |
 | `initializer-60:g0001:l0002` | Init 60 · Player | うん、いいよ。[[T001:row]]もう、遅いしね。 | Sure.[[T001:row]]It's late anyway. |  |
 | `initializer-60:g0001:l0003` | Init 60 · Megumi | あ、ありがとうございます。 | Th-thank you. |  |

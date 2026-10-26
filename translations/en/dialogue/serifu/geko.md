@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `table-0:g0001:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0001:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0001:l0001` | Scene 0 · Player | [[T001:girl_name]]、[[T002:row]]どうしたの？ | [[T001:girl_name]],[[T002:row]]what's up? |  |
 | `table-0:g0001:l0002` | Scene 0 · Heroine | ね、お茶して帰らない？ | Hey, wanna stop for tea? |  |
 | `table-0:g0001:l0003` | Scene 0 · Choice | うん、いいよ。[[T001:choice_option]]寄り道は駄目だ。 | Sure, sounds good.[[T001:choice_option]]No, straight home. |  |
@@ -98,7 +98,7 @@
 | `table-0:g0038:l0003` | Scene 0 · Heroine | うっ…。[[T001:row]]さ、さぁ、今度は[[T002:row]]どこに行こうかな？ | Ugh...[[T001:row]]S-so, where should[[T002:row]]I go next? |  |
 | `table-0:g0038:l0004` | Scene 0 · Player | 何か、やばそーだな…。 | That doesn't sound good... |  |
 | `table-0:g0039:l0000` | Scene 0 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-1:g0001:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0001:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0001:l0001` | Scene 1 · Player | 詩織、どうしたの？ | Shiori, what's up? |  |
 | `table-1:g0001:l0002` | Scene 1 · Heroine | 家もお隣同士だし、[[T001:row]]たまには[[T002:row]]一緒に帰ろうと思って…。 | We live next door, so[[T001:row]]I thought we could[[T002:row]]walk home now and then... |  |
 | `table-1:g0001:l0003` | Scene 1 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |
@@ -108,7 +108,7 @@
 | `table-1:g0005:l0000` | Scene 1 · Player (monologue) | 待っててくれたのに[[T001:row]]悪い事したかなぁ…。 | She waited for me...[[T001:row]]Was I wrong to say no? |  |
 | `table-1:g0006:l0000` | Scene 1 · Player (monologue) | あっ、詩織がいるぞ。 | Shiori's here! |  |
 | `table-1:g0006:l0001` | Scene 1 · Player | おーい、詩織。 | Oh hey, Shiori! |  |
-| `table-1:g0007:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0007:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0007:l0001` | Scene 1 · Heroine | 今帰り？ | Heading home? |  |
 | `table-1:g0007:l0002` | Scene 1 · Choice | 一緒に帰らない？[[T001:choice_option]]そうだよ。じゃお先に。 | Want to walk home?[[T001:choice_option]]Yeah. See you later. |  |
 | `table-1:g0008:l0000` | Scene 1 · Heroine | そうね。[[T001:row]]お隣同士だし、[[T002:row]]一緒に帰りましょうか。 | Sure.[[T001:row]]We're neighbors, after all.[[T002:row]]Let's walk home together. |  |
@@ -117,7 +117,7 @@
 | `table-1:g0010:l0000` | Scene 1 · Heroine | さよなら。 | Goodbye. |  |
 | `table-1:g0012:l0000` | Scene 1 · Player (monologue) | あっ、詩織がいるぞ。 | Shiori's here! |  |
 | `table-1:g0012:l0001` | Scene 1 · Player | おーい、詩織。 | Oh hey, Shiori! |  |
-| `table-1:g0013:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0013:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0013:l0001` | Scene 1 · Heroine | 今帰り？ | Heading home? |  |
 | `table-1:g0013:l0002` | Scene 1 · Choice | 一緒に帰らない？[[T001:choice_option]]そうだよ。じゃお先に。 | Want to walk home?[[T001:choice_option]]Yeah. See you later. |  |
 | `table-1:g0014:l0000` | Scene 1 · Heroine | 一緒に帰って、[[T001:row]]友達に噂とかされると、[[T002:row]]恥ずかしいし…。 | If word got out[[T001:row]]we walked home,[[T002:row]]that'd be embarrassing. |  |
@@ -195,7 +195,7 @@
 | `table-1:g0038:l0002` | Scene 1 · Heroine | もう、高校生活とも[[T001:row]]お別れね。 | Soon we'll say goodbye[[T001:row]]to high school. |  |
 | `table-1:g0038:l0003` | Scene 1 · Player | そうだね。 | Yeah. |  |
 | `table-1:g0039:l0000` | Scene 1 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-2:g0001:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0001:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0001:l0001` | Scene 2 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-2:g0001:l0002` | Scene 2 · Heroine | 一緒に帰るわよ。 | You're walking home with me. |  |
 | `table-2:g0001:l0003` | Scene 2 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |
@@ -285,7 +285,7 @@
 | `table-2:g0038:l0003` | Scene 2 · Player | え、野望って？ | Huh, what ambition? |  |
 | `table-2:g0038:l0004` | Scene 2 · Heroine | 秘密よ。 | That's a secret. |  |
 | `table-2:g0039:l0000` | Scene 2 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-3:g0001:l0000` | Scene 3 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-3:g0001:l0000` | Scene 3 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-3:g0001:l0001` | Scene 3 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-3:g0001:l0002` | Scene 3 · Heroine | たまには、[[T001:row]]一緒に帰ろうと思って。 | I thought we could[[T001:row]]walk home together. |  |
 | `table-3:g0001:l0003` | Scene 3 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |
@@ -304,7 +304,7 @@
 | `table-3:g0010:l0000` | Scene 3 · Heroine | グッバイ、さよなら。 | Goodbye, sayonara. |  |
 | `table-3:g0012:l0000` | Scene 3 · Player (monologue) | あっ、[[T001:girl_name]]がいるぞ。 | [[T001:girl_name]]'s here! |  |
 | `table-3:g0012:l0001` | Scene 3 · Player | おーい、[[T001:girl_name]]。 | Oh hey, [[T001:girl_name]]! |  |
-| `table-3:g0013:l0000` | Scene 3 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-3:g0013:l0000` | Scene 3 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-3:g0013:l0001` | Scene 3 · Heroine | 今帰りなの？ | Going home now? |  |
 | `table-3:g0013:l0002` | Scene 3 · Choice | 一緒に帰らない？[[T001:choice_option]]そうだよ。じゃお先に。 | Want to walk home?[[T001:choice_option]]Yeah. See you later. |  |
 | `table-3:g0014:l0000` | Scene 3 · Heroine | 別にいいわよ。[[T001:row]]帰りましょう。 | Sure, why not.[[T001:row]]Let's go. |  |
@@ -378,7 +378,7 @@
 | `table-3:g0038:l0002` | Scene 3 · Heroine | もう高校生活とも、[[T001:row]]お別れなのね。 | Goodbye to high school,[[T001:row]]huh. |  |
 | `table-3:g0038:l0003` | Scene 3 · Player | そうだね。 | Yeah. |  |
 | `table-3:g0039:l0000` | Scene 3 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-4:g0001:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0001:l0000` | Scene 4 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0001:l0001` | Scene 4 · Player | [[T001:girl_name]]、[[T002:row]]どうしたの？ | [[T001:girl_name]],[[T002:row]]what's up? |  |
 | `table-4:g0001:l0002` | Scene 4 · Heroine | ぐ、偶然ね。[[T001:row]]一緒に帰っても[[T002:row]]よろしくてよ。 | W-what a coincidence.[[T001:row]]I'll allow you to[[T002:row]]walk home with me. |  |
 | `table-4:g0001:l0003` | Scene 4 · Choice | うん、お願いするよ。[[T001:choice_option]]いいよ。遠慮するよ。 | Sure, I'd like that.[[T001:choice_option]]No, I'll pass, thanks. |  |
@@ -472,7 +472,7 @@
 | `table-4:g0039:l0000` | Scene 4 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
 | `table-4:g0040:l0000` | Scene 4 · Heroine | それじゃ、[[T001:row]]ここでお別れしましょう。[[T002:row]]それじゃ、失礼。 | Well then,[[T001:row]]we'll part ways here.[[T002:row]]Goodbye. |  |
 | `table-4:g0041:l0000` | Scene 4 · Player | いつも、家まで送らせて[[T001:row]]くれないんだよなぁ。 | She never lets me[[T001:row]]walk her all the way home. |  |
-| `table-5:g0001:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0001:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0001:l0001` | Scene 5 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-5:g0001:l0002` | Scene 5 · Heroine | あの…。[[T001:row]]一緒に帰ろうと[[T002:row]]思いまして…。 | Um...[[T001:row]]I was hoping we could[[T002:row]]walk home together... |  |
 | `table-5:g0001:l0003` | Scene 5 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |
@@ -649,7 +649,7 @@
 | `table-6:g0038:l0000` | Scene 6 · Player | 早いよね。[[T001:row]]もう卒業だよ。 | Time flies.[[T001:row]]We're graduating. |  |
 | `table-6:g0038:l0001` | Scene 6 · Heroine | そうですねぇ。[[T001:row]]早いですねぇ。 | Yes, indeed.[[T001:row]]It went so fast. |  |
 | `table-6:g0039:l0000` | Scene 6 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-7:g0001:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0001:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0001:l0001` | Scene 7 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-7:g0001:l0002` | Scene 7 · Heroine | えっと、やっぱり…。[[T001:row]]な、何でもないの…。[[T002:row]]そ、それじゃ。 | Um, actually...[[T001:row]]I-it's nothing...[[T002:row]]S-see you. |  |
 | `table-7:g0002:l0000` | Scene 7 · Player | なんだろう？[[T001:row]]変な[[T002:girl_name]]。 | What was that?[[T001:row]]Weird [[T002:girl_name]]. |  |
@@ -734,7 +734,7 @@
 | `table-7:g0038:l0002` | Scene 7 · Heroine | もう高校生活とも[[T001:row]]お別れか。 | High school's[[T001:row]]nearly over. |  |
 | `table-7:g0038:l0003` | Scene 7 · Player | そうだね。 | Yeah. |  |
 | `table-7:g0039:l0000` | Scene 7 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-8:g0001:l0000` | Scene 8 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-8:g0001:l0000` | Scene 8 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-8:g0001:l0001` | Scene 8 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-8:g0001:l0002` | Scene 8 · Heroine | あの…、一緒に…。[[T001:row]]あの…、帰りませんか…？ | Um... could we...[[T001:row]]walk home together...? |  |
 | `table-8:g0001:l0003` | Scene 8 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |
@@ -826,7 +826,7 @@
 | `table-8:g0038:l0002` | Scene 8 · Player | そうならないと、[[T001:row]]いいんだけどね。 | I hope that[[T001:row]]doesn't happen. |  |
 | `table-8:g0038:l0003` | Scene 8 · Heroine | そ、そうですね…。 | Y-yes... |  |
 | `table-8:g0039:l0000` | Scene 8 · Player (monologue) | と、言うような事を[[T001:row]]話しながら下校した。 | We chatted about things[[T001:row]]on the way home. |  |
-| `table-9:g0001:l0000` | Scene 9 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-9:g0001:l0000` | Scene 9 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-9:g0001:l0001` | Scene 9 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-9:g0001:l0002` | Scene 9 · Heroine | たまには[[T001:row]]一緒に帰らない？ | Want to walk home[[T001:row]]together for once? |  |
 | `table-9:g0001:l0003` | Scene 9 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |
@@ -929,7 +929,7 @@
 | `table-10:g0003:l0000` | Scene 10 · Player (monologue) | かなり傷ついてたな。[[T001:row]]ずーっと、待ってて[[T002:row]]くれてたみたいなのに…。 | She looked really hurt.[[T001:row]]And she'd been waiting[[T002:row]]for me the whole time... |  |
 | `table-10:g0004:l0000` | Scene 10 · Player (monologue) | 傷つけちゃったな…。[[T001:row]]馬鹿馬鹿、俺の馬鹿。 | I hurt her feelings...[[T001:row]]Stupid, stupid me. |  |
 | `table-10:g0005:l0000` | Scene 10 · Player (monologue) | すっごく、傷ついてたぞ。[[T001:row]]俺は、[[T002:row]]人間失格[[T003:row]]だーっ！！ | She was so hurt.[[T001:row]]I'm a[[T002:row]]failure as a[[T003:row]]human being!!! |  |
-| `table-11:g0001:l0000` | Scene 11 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-11:g0001:l0000` | Scene 11 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-11:g0001:l0001` | Scene 11 · Player | [[T001:girl_name]]、どうしたの？ | [[T001:girl_name]], what's up? |  |
 | `table-11:g0001:l0002` | Scene 11 · Heroine | 優美と、一緒に帰りませんか？ | Wanna walk home with Yumi? |  |
 | `table-11:g0001:l0003` | Scene 11 · Choice | よし、一緒に帰ろう。[[T001:choice_option]]恥ずかしいから、いいよ。 | Sure, let's walk home.[[T001:choice_option]]No thanks, it's awkward. |  |

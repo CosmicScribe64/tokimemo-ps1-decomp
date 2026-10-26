@@ -79,7 +79,7 @@
 | `000081b0:e13026e229dc:skip1` | D_8013B810[9] | そちもなかなかの悪よのう。 | You're quite the villain. |  |
 | `000081cc:68bd672e7e46:skip1` | D_8013B810[10] | いえいえ、それもこれも | No, no, all of this |  |
 | `000081e4:f0b007c00d1d:skip1` | D_8013B810[11] | すべてお奉行様のおしこみで | is by your good grace, |  |
-| `00008200:110d540fbc60:skip1` | D_8013B810[12] | ございます。 | abroad, sir. |  |
+| `00008200:110d540fbc60:skip1` | D_8013B810[12] | ございます。 | my lord. |  |
 | `00008210:ab49620ed6d9:skip1` | D_8013B810[13] | つきましては、お礼の品、 | As a token of thanks, |  |
 | `0000822c:56d6e846d061:skip1` | D_8013B810[14] | 南蛮渡来のカステイラで | castella cake from |  |
 | `00008244:110d540fbc60:skip1` | D_8013B810[15] | ございます。 | abroad, sir. |  |

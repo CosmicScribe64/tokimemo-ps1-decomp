@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `main:g0000:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0000:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0000:l0001` | Main · Player | 何だ、[[T001:girl_name]]じゃないか。 | Oh, hi, [[T001:girl_name]]. |  |
 | `main:g0001:l0000` | Main · Shiori | ねぇ、いつでもいいから、[[T001:row]]文芸部に[[T002:row]]遊びに来てよ。 | Hey, come by[[T001:row]]the Literature Club[[T002:row]]anytime. |  |
 | `main:g0002:l0000` | Main · Shiori | ねぇ、いつでもいいから、[[T001:row]]演劇部に[[T002:row]]遊びに来てよ。 | Hey, come by[[T001:row]]the Drama Club[[T002:row]]anytime. |  |
@@ -23,7 +23,7 @@
 | `main:g0013:l0000` | Main · Player | それじゃあ、[[T001:girl_name]]との[[T002:row]]約束だし、[[T003:row]]美術部に行こうかな。 | I promised [[T001:girl_name]],[[T002:row]]so I'll visit[[T003:row]]the Art Club. |  |
 | `main:g0014:l0000` | Main · Player | それじゃあ、[[T001:girl_name]]との[[T002:row]]約束だし、[[T003:row]]吹奏楽部に行こうかな。 | I promised [[T001:girl_name]],[[T002:row]]so I'll go[[T003:row]]see the band. |  |
 | `main:g0015:l0000` | Main · Player | ちょっと、[[T001:row]]冷たかったかな。 | Was I[[T001:row]]a bit too cold? |  |
-| `main:g0016:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0016:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0016:l0001` | Main · Player | 一緒に、見学しないか？ | Look around with me? |  |
 | `main:g0017:l0000` | Main · Shiori | えっ…。[[T001:row]]ご、ごめんなさい。[[T002:row]]私、文芸部だから…。 | Oh...[[T001:row]]S-sorry. I'm in[[T002:row]]the Literature Club... |  |
 | `main:g0018:l0000` | Main · Shiori | えっ…。[[T001:row]]ご、ごめんなさい。[[T002:row]]私、演劇部だから…。 | Oh...[[T001:row]]S-sorry, but[[T002:row]]I'm in the Drama Club... |  |
@@ -35,7 +35,7 @@
 | `main:g0024:l0000` | Main · Player (monologue) | そんな部に入ってたとは[[T001:row]]知らなかった…。 | She's in a club[[T001:row]]like that? Who knew... |  |
 | `main:g0025:l0000` | Main · Shiori | 良かったら、[[T001:row]]遊びに来てね。[[T002:row]]それじゃあ。 | If you like,[[T001:row]]come visit.[[T002:row]]Bye. |  |
 | `main:g0026:l0000` | Main · Player | 一人で行くか。 | I'll go alone. |  |
-| `main:g0027:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0027:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0027:l0001` | Main · Player | 一緒に、見学しないか？ | Look around with me? |  |
 | `main:g0028:l0000` | Main · Shiori | ごめんなさい。[[T001:row]]私、文芸部だから…。 | Sorry, I'm in[[T001:row]]the Lit Club... |  |
 | `main:g0029:l0000` | Main · Shiori | ごめんなさい。[[T001:row]]私、演劇部だから…。 | I'm sorry.[[T001:row]]I'm in the Drama Club... |  |
@@ -45,7 +45,7 @@
 | `main:g0033:l0000` | Main · Shiori | ごめんなさい。[[T001:row]]私、吹奏楽部だから…。 | I'm sorry.[[T001:row]]I'm in the band... |  |
 | `main:g0034:l0000` | Main · Shiori | 良かったら、[[T001:row]]遊びに来てね。 | If you like,[[T001:row]]come visit. |  |
 | `main:g0035:l0000` | Main · Player (monologue) | しょうがない、[[T001:row]]一人で行くか。 | Oh well,[[T001:row]]I'll go alone. |  |
-| `main:g0036:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0036:l0000` | Main · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0036:l0001` | Main · Player | 一緒に、見学しないか？ | Look around with me? |  |
 | `main:g0037:l0000` | Main · Shiori | 私、文芸部だから、[[T001:row]]今日は見学できないの。 | I'm in the Lit Club.[[T001:row]]I can't go today. |  |
 | `main:g0038:l0000` | Main · Shiori | 私、演劇部だから、[[T001:row]]今日は見学できないの。 | I'm in the Drama Club.[[T001:row]]I can't go today. |  |

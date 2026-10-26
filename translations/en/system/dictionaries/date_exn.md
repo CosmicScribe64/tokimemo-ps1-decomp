@@ -66,7 +66,7 @@
 | `gift_names:36` | gift_names[36] | ステンレス調理セット | Steel cookware set |  |
 | `gift_names:37` | gift_names[37] | Ｔシャツ | Cool T-shirt |  |
 | `gift_names:38` | gift_names[38] | くさった卵 | Rotten egg |  |
-| `gift_names:39` | gift_names[39] | 拒人の星全集 | Star of Giants set |  |
+| `gift_names:39` | gift_names[39] | 拒人の星全集 | Star of Rejects set |  |
 | `gift_names:40` | gift_names[40] | 台所掃除セット | Kitchen cleaners |  |
 | `gift_names:41` | gift_names[41] | ストッキング | Silk stockings |  |
 | `gift_names:42` | gift_names[42] | お料理の鉄人ビデオ全４巻 | Iron Chef videos |  |
@@ -92,7 +92,7 @@
 | `gift_names:62` | gift_names[62] | メリケンサック | Brass knuckles |  |
 | `gift_names:63` | gift_names[63] | 金の髪飾り | Gold hair clip |  |
 | `gift_names:64` | gift_names[64] | 美少年写真集 | Cute boy photobook |  |
-| `gift_names:65` | gift_names[65] | 全自動ハボキ | Fully auto broom |  |
+| `gift_names:65` | gift_names[65] | 全自動ハボキ | Auto feather duster |  |
 | `gift_names:66` | gift_names[66] | 銀の指輪 | Silver ring |  |
 | `gift_names:67` | gift_names[67] | コンパクト | Makeup compact |  |
 | `gift_names:68` | gift_names[68] | 銅のやかん | Copper teakettle |  |

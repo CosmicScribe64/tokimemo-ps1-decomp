@@ -24,7 +24,7 @@
 | `table-0:g0015:l0002` | Scene 0 · Heroine | 嘘っ、私と…？[[T001:row]]うん、行く行く。[[T002:row]]ほら、早く行きましょ。 | No way, with me...?[[T001:row]]Yes, yes, I'll go![[T002:row]]Come on, let's hurry! |  |
 | `table-0:g0015:l0003` | Scene 0 · Player | ほらって…。[[T001:row]]痛てて、[[T002:row]]そんなに引っ張るなよ。 | Come on, she says...[[T001:row]]Ow, ow,[[T002:row]]don't pull so hard. |  |
 | `table-0:g0015:l0004` | Scene 0 · Heroine | あ、ごめんなさい。嬉しくて、[[T001:row]]はしゃぎすぎちゃった。 | Oh, sorry. I was so happy,[[T001:row]]I got way too excited. |  |
-| `table-0:g0018:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0018:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0018:l0001` | Scene 0 · Heroine | 何々？ | What's this? |  |
 | `table-0:g0018:l0002` | Scene 0 · Player | 今日の自由行動、[[T001:row]]一緒に行かないか？ | Wanna look around[[T001:row]]together today? |  |
 | `table-0:g0018:l0003` | Scene 0 · Heroine | 丁度よかった。[[T001:row]]私も誘おうと思ってたのよ。[[T002:row]]じゃあ、行きましょう。 | Perfect timing.[[T001:row]]I was gonna ask you too![[T002:row]]So, let's go. |  |
@@ -95,7 +95,7 @@
 | `table-0:g0043:l0000` | Scene 0 · Player | ああ、疲れた…。[[T001:row]]やっと着いたよ。[[T002:row]]修学旅行も終わりだ。 | Man, I'm beat...[[T001:row]]We're finally back.[[T002:row]]The school trip's over. |  |
 | `table-0:g0044:l0000` | Scene 0 · Player | 楽しかったけど、[[T001:row]]ちょっと、心残りが[[T002:row]]あったなぁ。 | It was fun, but[[T001:row]]I do have a few[[T002:row]]regrets. |  |
 | `table-0:g0045:l0000` | Scene 0 · Player | すごく、思い出深い[[T001:row]]修学旅行だったな。 | That school trip was[[T001:row]]really memorable. |  |
-| `table-1:g0007:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0007:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0008:l0000` | Scene 1 · Player | 何だ、[[T001:girl_name]]じゃないか。 | Oh, hi, [[T001:girl_name]]. |  |
 | `table-1:g0008:l0001` | Scene 1 · Heroine | ねえ、これから[[T001:row]]出かけるとこなの？ | Hey, are you[[T001:row]]heading out now? |  |
 | `table-1:g0008:l0002` | Scene 1 · Player | ああ、そうだよ。 | Yeah, that's right. |  |
@@ -109,18 +109,18 @@
 | `table-1:g0013:l0000` | Scene 1 · Player | さすがに、[[T001:girl_name]]を[[T002:row]]誘うことはできないな…。[[T003:row]]別の人にしよう。 | I can't ask [[T001:girl_name]][[T002:row]]to come with me...[[T003:row]]I'll ask someone else. |  |
 | `table-1:g0014:l0000` | Scene 1 · Player | あっ、丁度いい所に、[[T001:row]][[T002:girl_name]]が現れたぞ。 | Oh, perfect timing![[T001:row]][[T002:girl_name]] is here! |  |
 | `table-1:g0014:l0001` | Scene 1 · Player | [[T001:girl_name]]。 | [[T001:girl_name]]. |  |
-| `table-1:g0015:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0015:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0015:l0001` | Scene 1 · Player | 今日の自由行動、[[T001:row]]一緒に行かないか？ | Wanna look around[[T001:row]]together today? |  |
 | `table-1:g0015:l0002` | Scene 1 · Heroine | えっ…、うん。[[T001:row]]喜んで…。 | Oh... sure.[[T001:row]]I'd love to... |  |
 | `table-1:g0015:l0003` | Scene 1 · Player | じゃあ、早速行こうよ。 | Then let's get going. |  |
 | `table-1:g0015:l0004` | Scene 1 · Heroine | ちょ、ちょっと待って。[[T001:row]]今、用意してくるから。 | W-wait a second.[[T001:row]]I need to get ready. |  |
 | `table-1:g0016:l0000` | Scene 1 · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
 | `table-1:g0017:l0000` | Scene 1 · Heroine | ごめんなさいね。[[T001:row]]遅くなっちゃった。[[T002:row]]さあ、行きましょう。 | Sorry I'm late.[[T001:row]]Now, let's[[T002:row]]get going. |  |
-| `table-1:g0018:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0018:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0018:l0001` | Scene 1 · Player | 今日の自由行動、[[T001:row]]一緒に行かないか？ | Wanna look around[[T001:row]]together today? |  |
 | `table-1:g0018:l0002` | Scene 1 · Heroine | いいわよ。[[T001:row]]じゃあ、早速[[T002:row]]行きましょうか？ | Sure.[[T001:row]]Then shall we[[T002:row]]get going right away? |  |
 | `table-1:g0018:l0003` | Scene 1 · Player | ああ、行こう。 | Yeah, let's go. |  |
-| `table-1:g0021:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0021:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0021:l0001` | Scene 1 · Player | 今日の自由行動、[[T001:row]]一緒に行かないか？ | Wanna look around[[T001:row]]together today? |  |
 | `table-1:g0021:l0002` | Scene 1 · Heroine | えっ、どうしようかな？[[T001:row]]うーん、いいわよ。 | Huh, what should I do?[[T001:row]]Hmm, okay, sure. |  |
 | `table-1:g0021:l0003` | Scene 1 · Player | じゃあ、早速行こうよ。 | Then let's get going. |  |
@@ -187,7 +187,7 @@
 | `table-2:g0013:l0000` | Scene 2 · Player | さすがに、[[T001:girl_name]]を[[T002:row]]誘うことはできないな…。[[T003:row]]別の人にしよう。 | I can't ask [[T001:girl_name]][[T002:row]]to come with me...[[T003:row]]I'll ask someone else. |  |
 | `table-2:g0014:l0000` | Scene 2 · Player | あっ、丁度いい所に、[[T001:row]][[T002:girl_name]]が現れたぞ。 | Oh, perfect timing![[T001:row]][[T002:girl_name]] is here! |  |
 | `table-2:g0014:l0001` | Scene 2 · Player | [[T001:girl_name]]。 | [[T001:girl_name]]. |  |
-| `table-2:g0015:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0015:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0015:l0001` | Scene 2 · Heroine | 何か用？ | What do you want? |  |
 | `table-2:g0015:l0002` | Scene 2 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-2:g0015:l0003` | Scene 2 · Heroine | 今、研究してたんだけど、[[T001:row]]材料が足りなかったのよ。 | I was doing research, but[[T001:row]]I ran short of materials. |  |
@@ -195,7 +195,7 @@
 | `table-2:g0015:l0005` | Scene 2 · Heroine | 材料集めのついでに、[[T001:row]]一緒に行ってあげるわ。 | While I gather materials,[[T001:row]]I'll go along with you. |  |
 | `table-2:g0015:l0006` | Scene 2 · Player | 材料って、一体…。 | What materials, exactly... |  |
 | `table-2:g0015:l0007` | Scene 2 · Heroine | つべこべ言わず、[[T001:row]]さっさと行くわよ。 | Stop your whining[[T001:row]]and let's go. |  |
-| `table-2:g0018:l0000` | Scene 2 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0018:l0000` | Scene 2 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0018:l0001` | Scene 2 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-2:g0018:l0002` | Scene 2 · Heroine | 今、研究中なんだけど…。 | I'm busy with research... |  |
 | `table-2:g0018:l0003` | Scene 2 · Player | 研究って…、[[T001:row]]修学旅行にまで来て、[[T002:row]]何をやってんだろう？ | Research...?[[T001:row]]What's she doing[[T002:row]]on a school trip? |  |
@@ -207,13 +207,13 @@
 | `table-2:g0019:l0000` | Scene 2 · Player | ３２秒０５って、[[T001:row]]そんな細かいとこまで、[[T002:row]]約を付けて言わなくても。 | 32.05 seconds...[[T001:row]]If you're that precise,[[T002:row]]why say roughly? |  |
 | `table-2:g0019:l0001` | Scene 2 · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
 | `table-2:g0020:l0000` | Scene 2 · Heroine | 約束通り来たわよ。[[T001:row]]さっさと行きましょ。 | I'm here as promised.[[T001:row]]Let's get going. |  |
-| `table-2:g0021:l0000` | Scene 2 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0021:l0000` | Scene 2 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0021:l0001` | Scene 2 · Heroine | 私に、何の用？ | What do you want with me? |  |
 | `table-2:g0021:l0002` | Scene 2 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-2:g0021:l0003` | Scene 2 · Heroine | そうね、私の物になる、[[T001:row]]文化遺産とやらを見に[[T002:row]]行くのも、悪くないわね。 | I might as well see[[T001:row]]those cultural treasures[[T002:row]]that'll be mine. |  |
 | `table-2:g0021:l0004` | Scene 2 · Player | ‥‥‥。[[T001:row]]じゃあ、行こうか…。 | ......[[T001:row]]W-well, let's go... |  |
 | `table-2:g0024:l0000` | Scene 2 · Heroine | ‥‥。 | ... |  |
-| `table-2:g0024:l0001` | Scene 2 · Player | あの…、[[T001:girl_name]]。 | Um... [[T001:girl_name]] |  |
+| `table-2:g0024:l0001` | Scene 2 · Player | あの…、[[T001:girl_name]]。 | Um... [[T001:girl_name]]. |  |
 | `table-2:g0024:l0002` | Scene 2 · Heroine | うるさいわね、[[T001:row]]あっち行っててよ。 | You're annoying.[[T001:row]]Go away. |  |
 | `table-2:g0025:l0000` | Scene 2 · Player | あの…、紐緒さ…。[[T001:row]]ちょっと待って…。[[T002:row]]あぁ、行っちゃったよ。 | Um... Himoo-sa...[[T001:row]]Wait a sec...[[T002:row]]Aw, she left. |  |
 | `table-2:g0025:l0001` | Scene 2 · Player (monologue) | しょうがない、[[T001:row]]一人で行くか。 | Oh well,[[T001:row]]I'll go alone. |  |
@@ -271,7 +271,7 @@
 | `table-2:g0043:l0000` | Scene 2 · Player | ああ、疲れた…。[[T001:row]]やっと着いたよ。[[T002:row]]修学旅行も終わりだ。 | Man, I'm beat...[[T001:row]]We're finally back.[[T002:row]]The school trip's over. |  |
 | `table-2:g0044:l0000` | Scene 2 · Player | 楽しかったけど、[[T001:row]]ちょっと、心残りが[[T002:row]]あったなぁ。 | It was fun, but[[T001:row]]I do have a few[[T002:row]]regrets. |  |
 | `table-2:g0045:l0000` | Scene 2 · Player | すごく、思い出深い[[T001:row]]修学旅行だったな。 | That school trip was[[T001:row]]really memorable. |  |
-| `table-3:g0007:l0000` | Scene 3 · Heroine | グッモーニン、[[T001:row]]おはよう、[[T002:player_form]]。 | Good morning![[T001:row]]Ohayou, [[T002:player_form]]! |  |
+| `table-3:g0007:l0000` | Scene 3 · Heroine | グッモーニン、[[T001:row]]おはよう、[[T002:player_form]]。 | Good morning![[T001:row]]Morning!, [[T002:player_form]]! |  |
 | `table-3:g0008:l0000` | Scene 3 · Player | あっ、[[T001:row]][[T002:girl_name]]、おはよう。 | Oh,[[T001:row]][[T002:girl_name]], morning. |  |
 | `table-3:g0008:l0001` | Scene 3 · Heroine | ねえ[[T001:row]]もしかして一人なの？ | Hey,[[T001:row]]are you on your own? |  |
 | `table-3:g0008:l0002` | Scene 3 · Player | ああ、そうだよ。 | Yeah, that's right. |  |
@@ -291,15 +291,15 @@
 | `table-3:g0015:l0003` | Scene 3 · Heroine | ＯＫ、行くわ。[[T001:row]]ちょっと待ってて、[[T002:row]]すぐに来るから。 | OK, I'll go.[[T001:row]]Wait a sec,[[T002:row]]I'll be right back. |  |
 | `table-3:g0016:l0000` | Scene 3 · Player | なんか慌てて[[T001:row]]行っちゃったな…。 | She sure rushed[[T001:row]]off in a hurry... |  |
 | `table-3:g0016:l0001` | Scene 3 · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
-| `table-3:g0017:l0000` | Scene 3 · Heroine | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry! Gomen nasai![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
-| `table-3:g0018:l0000` | Scene 3 · Heroine | グッモーニン、おはよう[[T001:row]][[T002:player_form]]。 | Good morning! Ohayou,[[T001:row]][[T002:player_form]]! |  |
+| `table-3:g0017:l0000` | Scene 3 · Heroine | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry, I'm so sorry![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
+| `table-3:g0018:l0000` | Scene 3 · Heroine | グッモーニン、おはよう[[T001:row]][[T002:player_form]]。 | Good morning, morning!,[[T001:row]][[T002:player_form]]! |  |
 | `table-3:g0018:l0001` | Scene 3 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-3:g0018:l0002` | Scene 3 · Heroine | ＯＫいいわよ。[[T001:row]]一緒に行きましょう。 | OK, sure.[[T001:row]]Let's go together. |  |
 | `table-3:g0018:l0003` | Scene 3 · Player | じゃあ、早速行こう。 | Then let's go right away. |  |
-| `table-3:g0018:l0004` | Scene 3 · Heroine | ウエイト、ちょっと待ってて[[T001:row]]準備してくるから。 | Wait! Chotto matte.[[T001:row]]I'll get ready. |  |
+| `table-3:g0018:l0004` | Scene 3 · Heroine | ウエイト、ちょっと待ってて[[T001:row]]準備してくるから。 | Wait, hold on a sec![[T001:row]]I'll get ready. |  |
 | `table-3:g0019:l0000` | Scene 3 · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
-| `table-3:g0020:l0000` | Scene 3 · Heroine | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry! Gomen nasai![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
-| `table-3:g0021:l0000` | Scene 3 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-3:g0020:l0000` | Scene 3 · Heroine | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry, I'm so sorry![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
+| `table-3:g0021:l0000` | Scene 3 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-3:g0021:l0001` | Scene 3 · Heroine | 何？ | What? |  |
 | `table-3:g0021:l0002` | Scene 3 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-3:g0021:l0003` | Scene 3 · Heroine | ＯＫいいわよ。[[T001:row]]じゃ早速行きましょうか？ | OK, sure.[[T001:row]]Shall we go right now? |  |
@@ -307,7 +307,7 @@
 | `table-3:g0024:l0000` | Scene 3 · Heroine | ‥‥‥。何？ | ......What? |  |
 | `table-3:g0024:l0001` | Scene 3 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-3:g0024:l0002` | Scene 3 · Heroine | 誰が？ | Who? |  |
-| `table-3:g0024:l0003` | Scene 3 · Player | [[T001:girl_name]]が…。 | It's you, [[T001:girl_name]] |  |
+| `table-3:g0024:l0003` | Scene 3 · Player | [[T001:girl_name]]が…。 | You, [[T001:girl_name]]... |  |
 | `table-3:g0024:l0004` | Scene 3 · Heroine | 誰と？ | With who? |  |
 | `table-3:g0024:l0005` | Scene 3 · Player | 俺と…。 | With me... |  |
 | `table-3:g0024:l0006` | Scene 3 · Heroine | 何で？ | Why? |  |
@@ -334,7 +334,7 @@
 | `table-3:g0032:l0000` | Scene 3 · Player (monologue) | ４日目が終了した。[[T001:row]]明日は、自由行動だ。 | Day four ended.[[T001:row]]Tomorrow's a free day. |  |
 | `table-3:g0033:l0000` | Scene 3 · Player | 今日の自由行動は、[[T001:row]]この前の約束通り[[T002:row]][[T003:girl_name]]と一緒だ。 | As promised, I'm[[T001:row]]spending the day[[T002:row]]with [[T003:girl_name]]. |  |
 | `table-3:g0033:l0001` | Scene 3 · Player | 遅いなぁ、[[T001:row]]まだ来ないのかなぁ。 | She's late...[[T001:row]]Wonder where she is. |  |
-| `table-3:g0034:l0000` | Scene 3 · Heroine | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry! Gomen nasai![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
+| `table-3:g0034:l0000` | Scene 3 · Heroine | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry, I'm so sorry![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
 | `table-3:g0035:l0000` | Scene 3 · Player | あっ、土産屋だ。[[T001:row]]ちょっと見ていこうよ。 | Oh, a souvenir shop.[[T001:row]]Let's take a look. |  |
 | `table-3:g0035:l0001` | Scene 3 · Heroine | ＯＫ、いいわよ。[[T001:row]]入りましょう。[[T002:row]]あ、あれは何かしら。 | OK, sure.[[T001:row]]Let's go in.[[T002:row]]Oh, what's that? |  |
 | `table-3:g0035:l0002` | Scene 3 · Player | あっ、鹿だ。 | Whoa, a deer! |  |
@@ -362,7 +362,7 @@
 | `table-3:g0043:l0000` | Scene 3 · Player | ああ、疲れた…。[[T001:row]]やっと着いたよ。[[T002:row]]修学旅行も終わりだ。 | Man, I'm beat...[[T001:row]]We're finally back.[[T002:row]]The school trip's over. |  |
 | `table-3:g0044:l0000` | Scene 3 · Player | 楽しかったけど、[[T001:row]]ちょっと、心残りが[[T002:row]]あったなぁ。 | It was fun, but[[T001:row]]I do have a few[[T002:row]]regrets. |  |
 | `table-3:g0045:l0000` | Scene 3 · Player | すごく、思い出深い[[T001:row]]修学旅行だったな。 | That school trip was[[T001:row]]really memorable. |  |
-| `table-4:g0007:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0007:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0008:l0000` | Scene 4 · Player | あっ、[[T001:row]][[T002:girl_name]]、おはよう。 | Oh,[[T001:row]][[T002:girl_name]], morning. |  |
 | `table-4:g0008:l0001` | Scene 4 · Heroine | まだ誰と行くか決めて[[T001:row]]いないのかしら？ | Haven't you decided[[T001:row]]who to go with yet? |  |
 | `table-4:g0008:l0002` | Scene 4 · Player | うん、そう。 | Yeah, not yet. |  |
@@ -385,7 +385,7 @@
 | `table-4:g0016:l0000` | Scene 4 · Player | ‥‥‥‥‥‥‥‥‥‥‥‥。[[T001:row]]ちょっと、遅いな。 | ............[[T001:row]]She's kind of slow. |  |
 | `table-4:g0017:l0000` | Scene 4 · Heroine | ごめんなさいね、[[T001:row]]遅くなっちゃって[[T002:row]]女の子は、準備に色々と[[T003:row]]時間がかかるから。 | Sorry I'm late.[[T001:row]]Girls need[[T002:row]]plenty of time[[T003:row]]to get ready. |  |
 | `table-4:g0017:l0001` | Scene 4 · Player | じゃあ、行こうか。 | Well, shall we go? |  |
-| `table-4:g0018:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0018:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0018:l0001` | Scene 4 · Heroine | 何かしら？ | What is it? |  |
 | `table-4:g0018:l0002` | Scene 4 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-4:g0018:l0003` | Scene 4 · Heroine | そうね、一緒に行って[[T001:row]]あげてもいいわよ。 | Well, I suppose I[[T001:row]]could go with you. |  |
@@ -455,7 +455,7 @@
 | `table-4:g0043:l0000` | Scene 4 · Player | ああ、疲れた…。[[T001:row]]やっと着いたよ。[[T002:row]]修学旅行も終わりだ。 | Man, I'm beat...[[T001:row]]We're finally back.[[T002:row]]The school trip's over. |  |
 | `table-4:g0044:l0000` | Scene 4 · Player | 楽しかったけど、[[T001:row]]ちょっと、心残りが[[T002:row]]あったなぁ。 | It was fun, but[[T001:row]]I do have a few[[T002:row]]regrets. |  |
 | `table-4:g0045:l0000` | Scene 4 · Player | すごく、思い出深い[[T001:row]]修学旅行だったな。 | That school trip was[[T001:row]]really memorable. |  |
-| `table-5:g0007:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0007:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0007:l0001` | Scene 5 · Heroine | おはようございます。 | Good morning. |  |
 | `table-5:g0008:l0000` | Scene 5 · Player | おや、[[T001:girl_name]]。[[T002:row]]おはよう。 | Oh, [[T001:girl_name]].[[T002:row]]Morning. |  |
 | `table-5:g0008:l0001` | Scene 5 · Heroine | あれ？[[T001:row]]御一人なんですか？ | Oh?[[T001:row]]Are you by yourself? |  |
@@ -470,16 +470,16 @@
 | `table-5:g0013:l0000` | Scene 5 · Player | さすがに、[[T001:girl_name]]を[[T002:row]]誘うことはできないな…。[[T003:row]]別の人にしよう。 | I can't ask [[T001:girl_name]][[T002:row]]to come with me...[[T003:row]]I'll ask someone else. |  |
 | `table-5:g0014:l0000` | Scene 5 · Player | あっ、丁度いい所に、[[T001:row]][[T002:girl_name]]が現れたぞ。 | Oh, perfect timing![[T001:row]][[T002:girl_name]] is here! |  |
 | `table-5:g0014:l0001` | Scene 5 · Player | [[T001:girl_name]]。 | [[T001:girl_name]]. |  |
-| `table-5:g0015:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0015:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0015:l0001` | Scene 5 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-5:g0015:l0002` | Scene 5 · Heroine | えっ？[[T001:row]]はい。[[T002:row]]喜んで。 | Oh?[[T001:row]]Yes.[[T002:row]]I'd be glad to. |  |
 | `table-5:g0015:l0003` | Scene 5 · Player | じゃあ、早速行こうよ。 | Then let's get going. |  |
 | `table-5:g0015:l0004` | Scene 5 · Heroine | はい。 | Yes. |  |
-| `table-5:g0018:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0018:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0018:l0001` | Scene 5 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-5:g0018:l0002` | Scene 5 · Heroine | はい、いいですよ。 | Yes, of course. |  |
 | `table-5:g0018:l0003` | Scene 5 · Player | じゃあ、早速行こう。 | Then let's go right away. |  |
-| `table-5:g0021:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-5:g0021:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-5:g0021:l0001` | Scene 5 · Player | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `table-5:g0021:l0002` | Scene 5 · Heroine | えーと…。[[T001:row]]はい、いいですよ。 | Um...[[T001:row]]Yes, all right. |  |
 | `table-5:g0021:l0003` | Scene 5 · Player | じゃあ、早速行こう。 | Then let's go right away. |  |
@@ -797,7 +797,7 @@
 | `table-9:g0015:l0002` | Scene 9 · Heroine | …！？[[T001:row]]は、はい、[[T002:row]]行きます…。 | ...!?[[T001:row]]Y-yes,[[T002:row]]I'll go... |  |
 | `table-9:g0015:l0003` | Scene 9 · Player | それじゃ、[[T001:row]]今から行こうか？ | Well then,[[T001:row]]shall we go now? |  |
 | `table-9:g0015:l0004` | Scene 9 · Heroine | はい…。 | Okay... |  |
-| `table-9:g0018:l0000` | Scene 9 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-9:g0018:l0000` | Scene 9 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-9:g0018:l0001` | Scene 9 · Heroine | 何ですか？ | What is it? |  |
 | `table-9:g0018:l0002` | Scene 9 · Player | ねぇ、今日の自由行動、[[T001:row]]一緒に行かない？ | Wanna go exploring[[T001:row]]together today? |  |
 | `table-9:g0018:l0003` | Scene 9 · Heroine | はい。[[T001:row]]行きます…。 | Yes.[[T001:row]]I'll go... |  |
@@ -965,7 +965,7 @@
 | `table-11:g0004:l0000` | Scene 11 · Player | 今日は、団体行動の日だ。 | Today we tour as a group. |  |
 | `table-11:g0005:l0000` | Scene 11 · Player (monologue) | ２日目が終了した。[[T001:row]]なんかずっとバスの中に[[T002:row]]いたような気がする。 | Day two ended.[[T001:row]]Feels like I spent the[[T002:row]]whole time on the bus. |  |
 | `table-11:g0006:l0000` | Scene 11 · Player | 今日は、[[T001:context_s]]で[[T002:row]]朝から、自由行動だ。 | In [[T001:context_s]],[[T002:row]]we're free all day. |  |
-| `table-11:g0007:l0000` | Scene 11 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-11:g0007:l0000` | Scene 11 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-11:g0008:l0000` | Scene 11 · Player | 何だ、[[T001:girl_name]]じゃないか。 | Oh, hi, [[T001:girl_name]]. |  |
 | `table-11:g0008:l0001` | Scene 11 · Heroine | ねえ、これから[[T001:row]]出かけるとこなの？ | Hey, are you[[T001:row]]heading out now? |  |
 | `table-11:g0008:l0002` | Scene 11 · Player | ああ、そうだよ。 | Yeah, that's right. |  |

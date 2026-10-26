@@ -11,28 +11,28 @@
 | `main:g0002:l0000` | Main · Shiori | おはよう[[T001:row]][[T002:player_form]]。 | Good morning,[[T001:row]][[T002:player_form]]. |  |
 | `main:g0003:l0000` | Main · Player | ごめん、ごめん。[[T001:row]]遅くなっちゃって。 | Sorry, sorry.[[T001:row]]I'm late. |  |
 | `main:g0003:l0001` | Main · Shiori | もう少しで、終わるから。[[T001:row]]ゆっくりしてても[[T002:row]]よかったのに…。 | We're almost done.[[T001:row]]You could've[[T002:row]]taken your time... |  |
-| `main:g0003:l0002` | Main · Player | そういう訳にもいかないよ。[[T001:row]]後は、俺がやるから、[[T002:row]][[T003:girl_name]]は、休んでてくれよ。 | I can't leave you to it.[[T001:row]]I'll finish up.[[T002:row]]You rest, [[T003:girl_name]] |  |
+| `main:g0003:l0002` | Main · Player | そういう訳にもいかないよ。[[T001:row]]後は、俺がやるから、[[T002:row]][[T003:girl_name]]は、休んでてくれよ。 | I can't leave you to it.[[T001:row]]I'll finish up.[[T002:row]]You rest, [[T003:girl_name]]. |  |
 | `main:g0003:l0003` | Main · Shiori | いいから、[[T001:row]]一緒にやったほうが[[T002:row]]早いでしょう。 | Come on,[[T001:row]]it'll go faster[[T002:row]]if we work together. |  |
 | `main:g0003:l0004` | Main · Player | そ、そう？[[T001:row]]悪いね。 | R-really?[[T001:row]]Thanks. |  |
 | `main:g0003:l0005` | Main · Shiori | 今日は[[T001:row]]頑張りましょう。 | Let's do our[[T001:row]]best today. |  |
 | `main:g0004:l0000` | Main · Shiori | 遅いじゃない、[[T001:row]]何してたの。 | You're late.[[T001:row]]What were you doing? |  |
 | `main:g0005:l0000` | Main · Player | ごめん、ごめん。[[T001:row]]ちょっと、[[T002:row]]寝過ごしちゃって…。 | Sorry, sorry.[[T001:row]]I kind of[[T002:row]]overslept... |  |
 | `main:g0005:l0001` | Main · Shiori | もう少しで始まるから、[[T001:row]]早く準備[[T002:row]]済ませちゃいましょう。 | It starts soon,[[T001:row]]so let's hurry[[T002:row]]and get ready. |  |
-| `main:g0005:l0002` | Main · Player | 後は、俺がやるから、[[T001:row]][[T002:girl_name]]は、休んでてくれよ。 | I'll handle this.[[T001:row]]You rest, [[T002:girl_name]] |  |
+| `main:g0005:l0002` | Main · Player | 後は、俺がやるから、[[T001:row]][[T002:girl_name]]は、休んでてくれよ。 | I'll handle this.[[T001:row]]You rest, [[T002:girl_name]]. |  |
 | `main:g0005:l0003` | Main · Shiori | いいから、[[T001:row]]一緒にやったほうが[[T002:row]]早いでしょう。 | Come on,[[T001:row]]it'll go faster[[T002:row]]if we work together. |  |
 | `main:g0005:l0004` | Main · Player | そ、そう？[[T001:row]]悪いね。 | R-really?[[T001:row]]Thanks. |  |
 | `main:g0005:l0005` | Main · Shiori | 今日は、[[T001:row]]頑張りましょう。 | Let's do our[[T001:row]]best today. |  |
 | `main:g0006:l0000` | Main · Shiori | 遅いじゃない、[[T001:row]]何してたのよ。 | You're late.[[T001:row]]What were you doing? |  |
 | `main:g0007:l0000` | Main · Player | ごめん、ごめん。[[T001:row]]ちょっと、[[T002:row]]寝過ごしちゃって…。 | Sorry, sorry.[[T001:row]]I kind of[[T002:row]]overslept... |  |
 | `main:g0007:l0001` | Main · Shiori | もう少しで始まるから[[T001:row]]早く準備[[T002:row]]済ませちゃいましょう。 | It starts soon,[[T001:row]]so let's hurry[[T002:row]]and get ready. |  |
-| `main:g0007:l0002` | Main · Player | 後は、俺がやるから、[[T001:row]][[T002:girl_name]]は、休んでてくれよ。 | I'll handle this.[[T001:row]]You rest, [[T002:girl_name]] |  |
+| `main:g0007:l0002` | Main · Player | 後は、俺がやるから、[[T001:row]][[T002:girl_name]]は、休んでてくれよ。 | I'll handle this.[[T001:row]]You rest, [[T002:girl_name]]. |  |
 | `main:g0007:l0003` | Main · Shiori | そう？[[T001:row]]じゃあ私は、[[T002:row]]向こうを手伝ってくるわ。 | Okay?[[T001:row]]Then I'll go help[[T002:row]]over there. |  |
 | `main:g0007:l0004` | Main · Player | ここは、俺に任せてくれ。 | Leave this to me. |  |
 | `main:g0007:l0005` | Main · Shiori | 今日は[[T001:row]]頑張りましょう。 | Let's do our[[T001:row]]best today. |  |
 | `main:g0008:l0000` | Main · Shiori | 遅いじゃないの…。 | You're late... |  |
 | `main:g0009:l0000` | Main · Player | ごめん、ごめん。[[T001:row]]ちょっと、[[T002:row]]寝過ごしちゃって…。 | Sorry, sorry.[[T001:row]]I kind of[[T002:row]]overslept... |  |
 | `main:g0009:l0001` | Main · Shiori | あなたのせいで、[[T001:row]]まだ準備ができてないわ。 | Thanks to you,[[T001:row]]we're still not ready. |  |
-| `main:g0009:l0002` | Main · Player | ご、ごめん。[[T001:row]]後は、俺がやるから、[[T002:row]][[T003:girl_name]]は、休んでてくれよ。 | S-sorry.[[T001:row]]I'll finish up.[[T002:row]]Take a break, [[T003:girl_name]] |  |
+| `main:g0009:l0002` | Main · Player | ご、ごめん。[[T001:row]]後は、俺がやるから、[[T002:row]][[T003:girl_name]]は、休んでてくれよ。 | S-sorry.[[T001:row]]I'll finish up.[[T002:row]]Take a break, [[T003:girl_name]]. |  |
 | `main:g0009:l0003` | Main · Shiori | そうね、私は向こうを[[T001:row]]手伝ってくるから、[[T002:row]]あなた一人でやってね。 | Fine. I'll go help[[T001:row]]over there, so[[T002:row]]do it by yourself. |  |
 | `main:g0010:l0000` | Main · Shiori | すごいお客さんの数[[T001:row]]だったね。 | What a huge[[T001:row]]crowd. |  |
 | `main:g0010:l0001` | Main · Player | 本当、すごい客だったね。[[T001:row]]もう、疲れて、くたくた…。 | Yeah, what a crowd.[[T001:row]]I'm worn out... |  |

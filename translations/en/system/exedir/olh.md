@@ -18,7 +18,7 @@
 | `0000523c:603c56e2aa88` | Display | お好みのアイコンの配置でお楽しみ下さい。 | anywhere. Enjoy any layout you like. |  |
 | `00005268:0af4d0567661` | Display | マウスライク…カーソルが、方向キーの | `  Mouse-like: the cursor follows the` |  |
 | `00005290:0deaf8e3deca` | Display | 上下左右に反応して動きます。 | d-pad in all directions. |  |
-| `000052b0:ab9943922d1d` | Display | メニューＡ…メニュー選択時に方向キー | `  Menu A: during a menu choice, the` |  |
+| `000052b0:ab9943922d1d` | Display | メニューＡ…メニュー選択時に方向キー | `  Menu A: during menu selection, the` |  |
 | `000052d8:c6b32eb83b0b` | Display | を押すと、メニューアイテムの順番通りに | d-pad moves the cursor through the |  |
 | `00005300:a8a908cd7fe1` | Display | カーソルが移動します。 | that direction. |  |
 | `00005318:18cdd82b5ef1` | Display | 例えば、コマンドアイコンの場合は、 | `  For the command icons the order is:` |  |
@@ -34,14 +34,14 @@
 | `00005494:f3b68f813a6d` | Display | ウスライクと同じ動作をします。 | Mouse-like, but while L1 is |  |
 | `000054b4:98d23282016e` | Display | Ｌ１ボタンを押している間は、メニューＡ | held it works like Menu A. |  |
 | `000054dc:99f86a74d8e5` | Display | と同じ動作をします。 | just like Menu A. |  |
-| `000054f4:9b8f40198b7a` | Display | 選択肢がある場合に１Ｐコントローラの | `  When there's a choice, SELECT on` |  |
-| `0000551c:29a1bd75952b` | Display | セレクトボタンを押すと、 | controller 1 switches the |  |
-| `00005538:f11dff41366a` | Display | メニューモードを | menu mode: Menu A, |  |
-| `0000554c:b24dec57b788` | Display | 『メニューＡ』→ | Mouse-like + Menu |  |
-| `00005560:b54967687430` | Display | 『マウスライク＋メニューＡ』→ | A, Menu B, Mouse-like, in that |  |
-| `00005584:3ff177f5dc77` | Display | 『メニューＢ』→ | order. |  |
-| `00005598:4b1be5e8ff35` | Display | 『マウスライク』 | Pad B, and "Mouse-like" |  |
-| `000055ac:629df12a5c52` | Display | の順で変更できます。 | in that order. |  |
+| `000054f4:9b8f40198b7a` | Display | 選択肢がある場合に１Ｐコントローラの | `  When choices are shown, pressing` |  |
+| `0000551c:29a1bd75952b` | Display | セレクトボタンを押すと、 | SELECT on Controller 1 cycles the |  |
+| `00005538:f11dff41366a` | Display | メニューモードを | menu mode in this order: |  |
+| `0000554c:b24dec57b788` | Display | 『メニューＡ』→ | `  "Menu A" ->` |  |
+| `00005560:b54967687430` | Display | 『マウスライク＋メニューＡ』→ | `  "Mouse-like + Menu A" ->` |  |
+| `00005584:3ff177f5dc77` | Display | 『メニューＢ』→ | `  "Menu B" ->` |  |
+| `00005598:4b1be5e8ff35` | Display | 『マウスライク』 | `  "Mouse-like"` |  |
+| `000055ac:629df12a5c52` | Display | の順で変更できます。 | in that sequence. |  |
 | `000055c4:b7bb386d9f33` | Display | 画面上にクリアしたことのある女の子の | `  You can show the mascots of the` |  |
 | `000055ec:549a755a594b` | Display | マスコットを表示することができます。 | girls you've cleared on screen. |  |
 | `00005614:8b2cb3c0113a` | Display | Ｒ１ボタンを押しながら方向キー操作で | `  Hold R1 and use the d-pad to move` |  |
@@ -52,7 +52,7 @@
 | `00005890:a3d05740a038` | Display | ときめきメモリアルでは、１ブロックに | `  Tokimeki Memorial makes one album` |  |
 | `000058b8:dd2e65934b9a` | Display | 一つのアルバムを作成します。 | per block. |  |
 | `000058d8:c9e98001844a` | Display | アルバムの最大数は、１４です。 | `  You can have up to 14 albums.` |  |
-| `000058fc:b4ab2c7070cc` | Display | アルバムとは別に、システムファイルを | `  If you also make a system file, you` |  |
+| `000058fc:b4ab2c7070cc` | Display | アルバムとは別に、システムファイルを | `  If you also make a system file,` |  |
 | `00005924:04f9b81409d8` | Display | 作成すると、オプションでおまけが使用で | can use the bonus extras in Options. |  |
 | `0000594c:ab53765b0078` | Display | きるようになります。 | extras in Options. |  |
 | `00005964:c286080e3a29` | Display | システムファイルも、１ブロックを必要 | `  The system file also needs one` |  |
@@ -97,15 +97,15 @@
 | `00005dd8:51a9ff4383f0` | Display | ンドが特に失敗しやすい日になります。 | cross the black line in the middle. |  |
 | `00005e00:2839dd991e35` | Display | 黒い線からの距離が大きいとコマンドが | `  The farther from the black line, the` |  |
 | `00005e28:04f481c02c7c` | Display | 成功しやすくなります。 | better commands go. |  |
-| `00005e40:83d6c41115e2` | Display | 同じ距離ならば、黒い線の上側にある場 | `  At the same distance, above the` |  |
-| `00005e68:22f78a0e0a73` | Display | 合のほうが、コマンドが成功しやすくなり | black line is more likely to succeed. |  |
-| `00005e90:6452593728b8` | Display | ます。 | speed. |  |
+| `00005e40:83d6c41115e2` | Display | 同じ距離ならば、黒い線の上側にある場 | `  At the same distance, being` |  |
+| `00005e68:22f78a0e0a73` | Display | 合のほうが、コマンドが成功しやすくなり | above the black line is more likely to succeed. |  |
+| `00005e90:6452593728b8` | Display | ます。 | . |  |
 | `00005e98:dd8c20e7a99d` | Display | 赤は主に、身体を使うコマンドに影響し | `  Red mostly affects body commands.` |  |
-| `00005ec0:6452593728b8` | Display | ます。 | speed. |  |
-| `00005ec8:b8b855be2fc9` | Display | 青は、主に感性を必要とするコマンドに | `  Blue mostly affects commands needing` |  |
-| `00005ef0:573ade882c7e` | Display | 影響します。 | need brains. |  |
-| `00005f00:fb2a3eefe192` | Display | 緑は、主に頭脳を必要とするコマンドに | `  Green mainly affects commands that` |  |
-| `00005f28:573ade882c7e` | Display | 影響します。 | need brains. |  |
+| `00005ec0:6452593728b8` | Display | ます。 | . |  |
+| `00005ec8:b8b855be2fc9` | Display | 青は、主に感性を必要とするコマンドに | `  Blue mostly affects sensibility` |  |
+| `00005ef0:573ade882c7e` | Display | 影響します。 | commands. |  |
+| `00005f00:fb2a3eefe192` | Display | 緑は、主に頭脳を必要とするコマンドに | `  Green mainly affects intellect` |  |
+| `00005f28:573ade882c7e` | Display | 影響します。 | commands. |  |
 | `00005f38:2d0f61898575` | Display | ゲームをクリアするのに、特に必要はあ | `  It isn't really needed to clear the` |  |
 | `00005f60:da0951f32908` | Display | りません。 | game. |  |
 | `00005f6c:a6aee408c85e` | Display | 究極のパラメータを狙う場合以外必要な | `  Only useful if you aim for top` |  |
@@ -178,7 +178,7 @@
 | `000069c0:d7aad87f680c` | Display | か | Ka |  |
 | `000069c4:ea7e31e896bd` | Display | き | Ki |  |
 | `00006bb0:5af39a72ef8f` | Display | ミニ知識 | Trivia |  |
-| `00006bbc:143708f88686` | Display | Ｌ１＋Ｒ１＋セレクト＋スタートボタン | `  Hold L1 + R1 + SELECT + START for a` |  |
+| `00006bbc:143708f88686` | Display | Ｌ１＋Ｒ１＋セレクト＋スタートボタン | `  Hold L1 + R1 + SELECT + START` |  |
 | `00006be4:bb3e7cd8bd52` | Display | を少しの間押し続けることにより、ソフト | moment for a soft reset. |  |
 | `00006c0c:106e758951d8` | Display | ウェアリセットがかけられます。 | a soft reset. |  |
 | `00006c2c:66bee25702d4` | Display | ２Ｐコントローラの | `  Press controller 2's` |  |
@@ -190,8 +190,8 @@
 | `00006cf8:3413b31765ba` | Display | ２Ｐコントローラのスタートボタンを押 | `  START on controller 2 slightly` |  |
 | `00006d20:b003d25ae998` | Display | すと、通常コマンド実行のＳＤキャラの、 | speeds up the chibi animation of |  |
 | `00006d48:4c128fc29c21` | Display | アニメスピードが少し速くなります。 | normal commands. |  |
-| `00006d6c:c5ddc9564a02` | Display | もう一度押すと、通常のスピードに戻り | `  Press it again to return to normal` |  |
-| `00006d94:6452593728b8` | Display | ます。 | speed. |  |
+| `00006d6c:c5ddc9564a02` | Display | もう一度押すと、通常のスピードに戻り | `  Press it again to return to normal speed.` |  |
+| `00006d94:6452593728b8` | Display | ます。 | . |  |
 | `00006d9c:fa6e49b7ff72` | Display | デートなどで、場所を知りたいときは１ | `  To see where you are on a date, call` |  |
 | `00006dc4:d1f7f5f392d8` | Display | Ｐコントローラの△ボタンで、 | the place window with triangle |  |
 | `00006de4:a341ef51d5ce` | Display | 場所ウィンドウを呼び出すことができます。 | on controller 1. |  |
@@ -203,9 +203,9 @@
 | `00006ea8:25b696479117` | Display | 極まれに、サウンドの転送に失敗するこ | `  Very rarely the sound fails to load.` |  |
 | `00006ed0:6d6282777061` | Display | とがありますが、一旦データをセーブし、 | Save your data and restart the game, |  |
 | `00006ef8:da98a0df818c` | Display | ゲームを再立ち上げすれば、正常に復帰し | and it will work again. |  |
-| `00006f20:6452593728b8` | Display | ます。 | speed. |  |
+| `00006f20:6452593728b8` | Display | ます。 | . |  |
 | `00007110:e8c9e85ec8dc` | Display | ファイルセレクト画面 | File Select Screen |  |
-| `00007128:ca6883f25722` | Display | システムと表示されている部分をクリッ | `  Click the part labeled System to` |  |
+| `00007128:ca6883f25722` | Display | システムと表示されている部分をクリッ | `  Clicking the part labeled System` |  |
 | `00007150:87fb2b3ebb6b` | Display | クすると、システムの作成やシステムの作 | make or remake the system file. |  |
 | `00007178:e344d5700c99` | Display | り直しが出来ます。 | remake the system file. |  |
 | `0000718c:82986781f60d` | Display | データの表示がおかしい場合や、他のメ | `  If the data looks wrong, or after` |  |
@@ -218,7 +218,7 @@
 | `00007274:42c5a97d2dc0` | Display | ーグからやり直すことが出来ます。 | keeping your cleared count. |  |
 | `00007298:3cc996fe2d52` | Display | ときめきメモリアルのデータを消去する | `  You can erase Tokimeki Memorial` |  |
 | `000072c0:d8d9fc3df1ac` | Display | ことが出来ます。 | data. |  |
-| `000072d4:4f60c765cac4` | Display | システムファイルがある場合は、全ての | `  With a system file, the total` |  |
+| `000072d4:4f60c765cac4` | Display | システムファイルがある場合は、全ての | `  With a system file, the` |  |
 | `000072fc:74c27218f942` | Display | アルバムのデータの合計クリア人数が表示 | cleared count of all albums is shown. |  |
 | `00007324:b707938baf4b` | Display | されます。 | all albums is displayed. |  |
 | `00007330:10ae35641852` | Display | システムファイルがない場合は、選んだ | `  Without a system file, the cleared` |  |
@@ -231,9 +231,9 @@
 | `00007438:4dbc01798585` | Display | △ボタンを押すと、そのアルバムのパラ | `  Press triangle to show that album's` |  |
 | `00007460:c8bd2a5b974d` | Display | メータや、女の子の評価、クリア回数が表 | stats, the girls' ratings and the |  |
 | `00007488:55df26cf5f18` | Display | 示されます。 | clear count. |  |
-| `00007498:8ea72fa9de50` | Display | 青くパラメータと表示されている部分を | `  Clicking the blue word Stats also` |  |
-| `000074c0:a9515c2efc40` | Display | クリックしても、表示を変えることができ | changes the display. |  |
-| `000074e8:6452593728b8` | Display | ます。 | speed. |  |
+| `00007498:8ea72fa9de50` | Display | 青くパラメータと表示されている部分を | `  Clicking the blue word Stats` |  |
+| `000074c0:a9515c2efc40` | Display | クリックしても、表示を変えることができ | also switches the display. |  |
+| `000074e8:6452593728b8` | Display | ます。 | . |  |
 | `000076e0:c3c4e5d4c227` | Unknown | ・システム設定 | -System Setup |  |
 | `000077e0:a7c204227978` | Unknown | ・メモリーカード | -Memory Card |  |
 | `000078e0:3d9f372b0267` | Unknown | ・ファイルセレクト | -File Select |  |

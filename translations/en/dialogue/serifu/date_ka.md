@@ -151,7 +151,7 @@
 | `section-09:g0000:l0001` | Bowling Alley · Player | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `section-09:g0001:l0000` | Bowling Alley · Ayako | オーイッツソーバッド。[[T001:row]]スプリットになっちゃった。 | Oh, that's bad.[[T001:row]]I got a split. |  |
 | `section-09:g0001:l0001` | Bowling Alley · Choice | [[T001:girl_name]]なら取れるって。[[T002:choice_option]][[T003:girl_name]]には絶対取れないね。[[T004:choice_option]]何とかなるんじゃない。 | You can get it, [[T001:girl_name]][[T002:choice_option]]You can't, [[T003:girl_name]][[T004:choice_option]]You'll manage somehow. |  |
-| `section-09:g0002:l0000` | Bowling Alley · Ayako | オーッサンキュー、[[T001:row]]ありがとう。[[T002:row]]頑張ってみるわね。[[T003:reply_variant]]それって、ちょっと失礼よね。[[T004:reply_variant]]そうね。[[T005:row]]何とかなるわよね。 | Oh, thanks![[T001:row]]Arigato![[T002:row]]I'll give it a try.[[T003:reply_variant]]That's a little rude.[[T004:reply_variant]]Right.[[T005:row]]I'll manage somehow. |  |
+| `section-09:g0002:l0000` | Bowling Alley · Ayako | オーッサンキュー、[[T001:row]]ありがとう。[[T002:row]]頑張ってみるわね。[[T003:reply_variant]]それって、ちょっと失礼よね。[[T004:reply_variant]]そうね。[[T005:row]]何とかなるわよね。 | Oh, thanks![[T001:row]]Thanks so much![[T002:row]]I'll give it a try.[[T003:reply_variant]]That's a little rude.[[T004:reply_variant]]Right.[[T005:row]]I'll manage somehow. |  |
 | `section-09:g0003:l0000` | Bowling Alley · Ayako | それじゃ、中に入りましょう。 | Well then, let's go in. |  |
 | `section-09:g0003:l0001` | Bowling Alley · Player | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `section-09:g0004:l0000` | Bowling Alley · Ayako | オー、アンビリーバブル。[[T001:row]]ターキーよ。 | Oh, unbelievable![[T001:row]]A turkey! |  |
@@ -166,7 +166,7 @@
 | `section-10:g0003:l0001` | Karaoke · Player | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `section-10:g0004:l0000` | Karaoke · Ayako | じゃ、次はこれ歌うわ。[[T001:row]]ちょっとリモコン貸して。 | Next I'll sing this.[[T001:row]]Can I borrow the remote? |  |
 | `section-10:g0004:l0001` | Karaoke · Choice | 俺が入れてあげるよ。[[T001:choice_option]]えーっ？また歌うの？[[T002:choice_option]]はい。どうぞ。 | I'll enter it for you.[[T001:choice_option]]Huh? You're singing again?[[T002:choice_option]]Here you go. |  |
-| `section-10:g0005:l0000` | Karaoke · Ayako | サンキュー、ありがとう。[[T001:row]]それじゃ、この曲お願いね。[[T002:reply_variant]]そうよ。[[T003:row]]当然でしょう。[[T004:row]]歌いに来たんだから。[[T005:reply_variant]]サンクス。 | Thanks! Arigato![[T001:row]]Could you put this on?[[T002:reply_variant]]Of course![[T003:row]]I came here[[T004:row]]to sing.[[T005:reply_variant]]Thanks. |  |
+| `section-10:g0005:l0000` | Karaoke · Ayako | サンキュー、ありがとう。[[T001:row]]それじゃ、この曲お願いね。[[T002:reply_variant]]そうよ。[[T003:row]]当然でしょう。[[T004:row]]歌いに来たんだから。[[T005:reply_variant]]サンクス。 | Thank you, thanks![[T001:row]]Could you put this on?[[T002:reply_variant]]Of course![[T003:row]]I came here[[T004:row]]to sing.[[T005:reply_variant]]Thanks. |  |
 | `section-11:g0000:l0000` | Amusement Park · Ayako | それじゃ、[[T001:row]]中に入りましょう。 | Well then,[[T001:row]]let's go in. |  |
 | `section-11:g0000:l0001` | Amusement Park · Player | そうだね。 | Yeah. |  |
 | `section-11:g0001:l0000` | Amusement Park · Player (monologue) | あっ、向こうで[[T001:row]]ヒーローショーを[[T002:row]]やってるぞ。 | Oh, there's a hero[[T001:row]]show going on[[T002:row]]over that way. |  |
@@ -335,7 +335,7 @@
 | `section-18:g0005:l0000` | Shrine · Ayako | オーサンキュー、ありがとう。[[T001:row]]嬉しいわ。 | Oh, thank you, thanks.[[T001:row]]I'm so happy. |  |
 | `section-18:g0006:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしようか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0006:l0001` | Shrine · Ayako | なかなか[[T001:row]]難しいんじゃない？ | Isn't that[[T001:row]]pretty hard? |  |
-| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0007:l0000` | Shrine · Ayako | グッド！[[T001:row]]上手いじゃない。 | Good![[T001:row]]You're pretty skilled. |  |
 | `section-18:g0008:l0000` | Shrine · Ayako | 人間、取り柄はあるものねぇ。[[T001:row]]アハハハハッ、[[T002:row]]ジョークジョーク。 | Everyone's good[[T001:row]]at something, huh?[[T002:row]]Hahaha, just kidding! |  |
 | `section-18:g0009:l0000` | Shrine · Ayako | ネヴァーマインド、[[T001:row]]気にすることないわ。 | Never mind,[[T001:row]]don't let it bother you. |  |
@@ -355,7 +355,7 @@
 | `section-19:g0003:l0001` | Skating Rink · Player | そうだね。[[T001:row]]中に入ろうか？ | Sure.[[T001:row]]Let's go in. |  |
 | `section-19:g0004:l0000` | Skating Rink · Ayako | オー、氷が溶けて、[[T001:row]]ぐしょぐしょね。 | Oh, the ice is[[T001:row]]melting into slush. |  |
 | `section-19:g0004:l0001` | Skating Rink · Choice | ほら、手に掴まって。[[T001:choice_option]]絶対転んで、びしょ濡れだ。[[T002:choice_option]]転ばなければいいだけだよ。 | Here, just grab my hand.[[T001:choice_option]]You'll fall and get wet.[[T002:choice_option]]Just don't fall, then. |  |
-| `section-19:g0005:l0000` | Skating Rink · Ayako | サンキュー、ありがとう。[[T001:row]]助かるわ。[[T002:reply_variant]]アンビリーバブル。[[T003:row]]そんなプレッシャー[[T004:row]]かけないで。[[T005:reply_variant]]それは、そうなんだけど。 | Thanks! Arigato![[T001:row]]That really helps.[[T002:reply_variant]]Unbelievable.[[T003:row]]Don't pressure[[T004:row]]me like that.[[T005:reply_variant]]Well, that's true. |  |
+| `section-19:g0005:l0000` | Skating Rink · Ayako | サンキュー、ありがとう。[[T001:row]]助かるわ。[[T002:reply_variant]]アンビリーバブル。[[T003:row]]そんなプレッシャー[[T004:row]]かけないで。[[T005:reply_variant]]それは、そうなんだけど。 | Thank you, thanks![[T001:row]]That really helps.[[T002:reply_variant]]Unbelievable.[[T003:row]]Don't pressure[[T004:row]]me like that.[[T005:reply_variant]]Well, that's true. |  |
 | `initializer-D_8015BDE4:g0000:l0000` | Amusement Park Talk Unshuffled · Ayako | あっ、パレードを[[T001:row]]やってるみたいね。 | Oh, looks like there's[[T001:row]]a parade going on. |  |
 | `initializer-D_8015BDE4:g0000:l0001` | Amusement Park Talk Unshuffled · Player (monologue) | そう言えば、[[T001:row]]今日はパレードを[[T002:row]]やってるはずだ。 | Oh right, there should[[T001:row]]be a parade[[T002:row]]today. |  |
 | `initializer-D_8015BDE4:g0000:l0002` | Amusement Park Talk Unshuffled · Choice | パレードを見に誘う。[[T001:choice_option]]知らない振りして帰る。 | Ask her to see the parade.[[T001:choice_option]]Play dumb and go home. |  |
@@ -382,7 +382,7 @@
 | `initializer-D_8015BE18:g0008:l0001` | Farewell · Player | そ、そう…。 | Oh... I see... |  |
 | `initializer-D_8015BE18:g0009:l0000` | Farewell · Ayako | ミステイク、[[T001:row]]失敗だったわ。[[T002:row]]来なければよかった…。 | Big mistake.[[T001:row]]What a disaster.[[T002:row]]I shouldn't have come... |  |
 | `initializer-D_8015BE18:g0009:l0001` | Farewell · Player | ‥‥‥‥。[[T001:row]]（怒らせちゃったかな…。） | ......[[T001:row]](Did I make her mad...?) |  |
-| `initializer-D_8015BE18:g0010:l0000` | Farewell · Ayako | 今日は、[[T001:row]]付き合ってくれて、[[T002:row]]サンキュー、ありがとう。 | Thanks for spending[[T001:row]]the day with me![[T002:row]]Arigato! |  |
+| `initializer-D_8015BE18:g0010:l0000` | Farewell · Ayako | 今日は、[[T001:row]]付き合ってくれて、[[T002:row]]サンキュー、ありがとう。 | Thanks for spending[[T001:row]]the day with me![[T002:row]]Thanks so much! |  |
 | `initializer-D_8015BE18:g0010:l0001` | Farewell · Player | 俺でよかったら[[T001:row]]いつでも付き合うよ。 | I'd be happy to[[T001:row]]come along anytime. |  |
 | `initializer-D_8015BE18:g0011:l0000` | Farewell · Ayako | この前も、[[T001:row]]ここだったわよね。[[T002:row]]やっぱり飽きちゃうね。 | We were here[[T001:row]]last time too.[[T002:row]]It gets old, you know. |  |
 | `initializer-D_8015BE18:g0011:l0001` | Farewell · Player | そ、そうかな？[[T001:row]]（しまった、もうちょっと[[T002:row]]チェックしとくんだった。） | R-really?[[T001:row]](I should've checked[[T002:row]]this place out first.) |  |

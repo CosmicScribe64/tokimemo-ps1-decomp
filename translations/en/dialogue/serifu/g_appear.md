@@ -173,7 +173,7 @@
 | `table-2:g0006:l0004` | Scene 2 · Heroine | あはははは…。[[T001:row]]私、片桐彩子。[[T002:row]]あなたは？[[T003:row]] | Ahahaha...[[T001:row]]I'm Katagiri Ayako.[[T002:row]]And you?[[T003:row]] |  |
 | `table-2:g0006:l0005` | Scene 2 · Player | あ、俺、[[T001:player_full]]。 | Oh, I'm [[T001:player_full]]. |  |
 | `table-2:g0006:l0006` | Scene 2 · Heroine | 絵の事は考えておくわ。[[T001:row]]今度また、絵の話をしようよ。[[T002:row]]それじゃ。 | I'll think about it.[[T001:row]]Let's talk painting again.[[T002:row]]See you. |  |
-| `table-2:g0007:l0000` | Scene 2 · Player | あっ、逃げた。[[T001:row]]片桐彩子、侮れん奴だ。 | Ah, she slipped away![[T001:row]]Katagiri Ayako is not to be underestimated. |  |
+| `table-2:g0007:l0000` | Scene 2 · Player | あっ、逃げた。[[T001:row]]片桐彩子、侮れん奴だ。 | Ah, she got away![[T001:row]]Ayako Katagiri is no pushover. |  |
 | `table-2:g0008:l0000` | Scene 2 · Player | 絵は、心が休まるぜ。[[T001:row]]（くーっ、しびれるセリフ。） | Painting soothes the soul.[[T001:row]](Ooh, what a cool line.) |  |
 | `table-2:g0008:l0001` | Scene 2 · Heroine | ビューティフル、[[T001:row]]素敵な絵ね。 | Beautiful![[T001:row]]What a lovely painting. |  |
 | `table-2:g0009:l0000` | Scene 2 · Player | あ、ありがとう…。[[T001:row]]（えーと、この娘は誰だっけ？[[T002:row]]思い出せ、思い出すんだ。[[T003:row]][[T004:player_given]]よ！） | Th-thanks...[[T001:row]](Um, who is she again?[[T002:row]]Remember, remember,[[T003:row]][[T004:player_given]]!) |  |

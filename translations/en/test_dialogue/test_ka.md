@@ -40,7 +40,7 @@
 | `g0000:l0031` | Ayako (voice test) | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `g0000:l0032` | Ayako (voice test) | オーイッツソーバッド。[[T001:row]]スプリットになっちゃった。 | Oh, that's bad.[[T001:row]]I got a split. |  |
 | `g0000:l0033` | Ayako (voice test) | [[T001:girl_name]]なら取れるって。[[T002:choice_option]][[T003:girl_name]]には絶対取れないね。[[T004:choice_option]]何とかなるんじゃない。 | You can get it, [[T001:girl_name]][[T002:choice_option]]You can't, [[T003:girl_name]][[T004:choice_option]]You'll manage somehow. |  |
-| `g0000:l0034` | Ayako (voice test) | オーッサンキュー、[[T001:row]]ありがとう。[[T002:row]]頑張ってみるわね。[[T003:reply_variant]]それって、ちょっと失礼よね。[[T004:reply_variant]]そうね。[[T005:row]]何とかなるわよね。 | Oh, thanks![[T001:row]]Arigato![[T002:row]]I'll give it a try.[[T003:reply_variant]]That's a little rude.[[T004:reply_variant]]Right.[[T005:row]]I'll manage somehow. |  |
+| `g0000:l0034` | Ayako (voice test) | オーッサンキュー、[[T001:row]]ありがとう。[[T002:row]]頑張ってみるわね。[[T003:reply_variant]]それって、ちょっと失礼よね。[[T004:reply_variant]]そうね。[[T005:row]]何とかなるわよね。 | Oh, thanks![[T001:row]]Thanks so much![[T002:row]]I'll give it a try.[[T003:reply_variant]]That's a little rude.[[T004:reply_variant]]Right.[[T005:row]]I'll manage somehow. |  |
 | `g0000:l0035` | Ayako (voice test) | それじゃ、中に入りましょう。 | Well then, let's go in. |  |
 | `g0000:l0036` | Ayako (voice test) | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `g0000:l0037` | Ayako (voice test) | オー、アンビリーバブル。[[T001:row]]ターキーよ。 | Oh, unbelievable![[T001:row]]A turkey! |  |
@@ -89,7 +89,7 @@
 | `g0000:l0080` | Ayako (voice test) | そ、そう…。 | Oh... I see... |  |
 | `g0000:l0081` | Ayako (voice test) | ミステイク、[[T001:row]]失敗だったわ。[[T002:row]]来なければよかった…。 | Big mistake.[[T001:row]]What a disaster.[[T002:row]]I shouldn't have come... |  |
 | `g0000:l0082` | Ayako (voice test) | ‥‥‥‥。[[T001:row]]（怒らせちゃったかな…。） | ......[[T001:row]](Did I make her mad...?) |  |
-| `g0000:l0083` | Ayako (voice test) | 今日は、[[T001:row]]付き合ってくれて、[[T002:row]]サンキュー、ありがとう。 | Thanks for spending[[T001:row]]the day with me![[T002:row]]Arigato! |  |
+| `g0000:l0083` | Ayako (voice test) | 今日は、[[T001:row]]付き合ってくれて、[[T002:row]]サンキュー、ありがとう。 | Thanks for spending[[T001:row]]the day with me![[T002:row]]Thanks so much! |  |
 | `g0000:l0084` | Ayako (voice test) | 俺でよかったら[[T001:row]]いつでも付き合うよ。 | I'd be happy to[[T001:row]]come along anytime. |  |
 | `g0000:l0085` | Ayako (voice test) | この前も、[[T001:row]]ここだったわよね。[[T002:row]]やっぱり飽きちゃうね。 | We were here[[T001:row]]last time too.[[T002:row]]It gets old, you know. |  |
 | `g0000:l0086` | Ayako (voice test) | そ、そうかな？[[T001:row]]（しまった、もうちょっと[[T002:row]]チェックしとくんだった。） | R-really?[[T001:row]](I should've checked[[T002:row]]this place out first.) |  |
@@ -185,7 +185,7 @@
 | `g0000:l0176` | Ayako (voice test) | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `g0000:l0177` | Ayako (voice test) | じゃ、次はこれ歌うわ。[[T001:row]]ちょっとリモコン貸して。 | Next I'll sing this.[[T001:row]]Can I borrow the remote? |  |
 | `g0000:l0178` | Ayako (voice test) | 俺が入れてあげるよ。[[T001:choice_option]]えーっ？また歌うの？[[T002:choice_option]]はい。どうぞ。 | I'll enter it for you.[[T001:choice_option]]Huh? You're singing again?[[T002:choice_option]]Here you go. |  |
-| `g0000:l0179` | Ayako (voice test) | サンキュー、ありがとう。[[T001:row]]それじゃ、この曲お願いね。[[T002:reply_variant]]そうよ。[[T003:row]]当然でしょう。[[T004:row]]歌いに来たんだから。[[T005:reply_variant]]サンクス。 | Thanks! Arigato![[T001:row]]Could you put this on?[[T002:reply_variant]]Of course![[T003:row]]I came here[[T004:row]]to sing.[[T005:reply_variant]]Thanks. |  |
+| `g0000:l0179` | Ayako (voice test) | サンキュー、ありがとう。[[T001:row]]それじゃ、この曲お願いね。[[T002:reply_variant]]そうよ。[[T003:row]]当然でしょう。[[T004:row]]歌いに来たんだから。[[T005:reply_variant]]サンクス。 | Thank you, thanks![[T001:row]]Could you put this on?[[T002:reply_variant]]Of course![[T003:row]]I came here[[T004:row]]to sing.[[T005:reply_variant]]Thanks. |  |
 | `g0000:l0180` | Ayako (voice test) | こういう所で[[T001:row]]お話するのってわりと好きよ。 | I kind of like talking[[T001:row]]in places like this. |  |
 | `g0000:l0181` | Ayako (voice test) | 何の話をしようかな？ | What should we talk about? |  |
 | `g0000:l0182` | Ayako (voice test) | さりげなく趣味とかを聞き出す。[[T001:choice_option]]それとなく好きな場所を探る。 | Ask about her hobbies.[[T001:choice_option]]Find out her favorite spots. |  |
@@ -311,7 +311,7 @@
 | `g0000:l0302` | Ayako (voice test) | そうだね。[[T001:row]]中に入ろうか？ | Sure.[[T001:row]]Let's go in. |  |
 | `g0000:l0303` | Ayako (voice test) | オー、氷が溶けて、[[T001:row]]ぐしょぐしょね。 | Oh, the ice is[[T001:row]]melting into slush. |  |
 | `g0000:l0304` | Ayako (voice test) | ほら、手に掴まって。[[T001:choice_option]]絶対転んで、びしょ濡れだ。[[T002:choice_option]]転ばなければいいだけだよ。 | Here, just grab my hand.[[T001:choice_option]]You'll fall and get wet.[[T002:choice_option]]Just don't fall, then. |  |
-| `g0000:l0305` | Ayako (voice test) | サンキュー、ありがとう。[[T001:row]]助かるわ。[[T002:reply_variant]]アンビリーバブル。[[T003:row]]そんなプレッシャー[[T004:row]]かけないで。[[T005:reply_variant]]それは、そうなんだけど。 | Thanks! Arigato![[T001:row]]That really helps.[[T002:reply_variant]]Unbelievable.[[T003:row]]Don't pressure[[T004:row]]me like that.[[T005:reply_variant]]Well, that's true. |  |
+| `g0000:l0305` | Ayako (voice test) | サンキュー、ありがとう。[[T001:row]]助かるわ。[[T002:reply_variant]]アンビリーバブル。[[T003:row]]そんなプレッシャー[[T004:row]]かけないで。[[T005:reply_variant]]それは、そうなんだけど。 | Thank you, thanks![[T001:row]]That really helps.[[T002:reply_variant]]Unbelievable.[[T003:row]]Don't pressure[[T004:row]]me like that.[[T005:reply_variant]]Well, that's true. |  |
 | `g0000:l0306` | Ayako (voice test) | それじゃ、[[T001:row]]中に入りましょうか？ | Well then,[[T001:row]]shall we go in? |  |
 | `g0000:l0307` | Ayako (voice test) | そうだね。[[T001:row]]中に入ろうか？ | Sure.[[T001:row]]Let's go in. |  |
 | `g0000:l0308` | Ayako (voice test) | 野球を見るのと、[[T001:row]]実際にプレイするのと、[[T002:row]]どっちが好き？ | Which do you like,[[T001:row]]watching baseball[[T002:row]]or playing it? |  |
@@ -506,7 +506,7 @@
 | `g0000:l0497` | Ayako (voice test) | [[T001:player_given]]。[[T002:row]]何やってるんだよ。[[T003:row]]早くボール持って来いよ。 | [[T001:player_given]]![[T002:row]]What are you doing?[[T003:row]]Hurry up with the balls! |  |
 | `g0000:l0498` | Ayako (voice test) | ほ、ほら、[[T001:row]]呼んでるわよ。 | S-see,[[T001:row]]they're calling you. |  |
 | `g0000:l0499` | Ayako (voice test) | チェッ、先生には[[T001:row]]黙っててやるよ。[[T002:row]]感謝しなよ。 | Tch, I won't tell[[T001:row]]the teacher.[[T002:row]]You owe me one. |  |
-| `g0000:l0500` | Ayako (voice test) | サンキュー。[[T001:row]]ありがとう、[[T002:row]]感謝するわ。 | Thanks![[T001:row]]Arigato![[T002:row]]I really appreciate it. |  |
+| `g0000:l0500` | Ayako (voice test) | サンキュー。[[T001:row]]ありがとう、[[T002:row]]感謝するわ。 | Thanks![[T001:row]]Thanks so much![[T002:row]]I really appreciate it. |  |
 | `g0000:l0501` | Ayako (voice test) | ほら、[[T001:girl_name]]の[[T002:row]]番だよ。 | Look, [[T001:girl_name]][[T002:row]]it's your turn. |  |
 | `g0000:l0502` | Ayako (voice test) | 私は恥ずかしいから[[T001:row]]いいわ。 | I'm too embarrassed,[[T001:row]]I'll pass. |  |
 | `g0000:l0503` | Ayako (voice test) | どうしたの？[[T001:row]]恥ずかしがるなんて、[[T002:row]][[T003:girl_name]]らしくないよ。 | What's wrong?[[T001:row]]Being shy isn't[[T002:row]]like you, [[T003:girl_name]]. |  |
@@ -534,7 +534,7 @@
 | `g0000:l0525` | Ayako (voice test) | それなら、そうと[[T001:row]]言ってくれればいいのに。 | If that's it, you could[[T001:row]]have just told me. |  |
 | `g0000:l0526` | Ayako (voice test) | だって水が怖いなんて[[T001:row]]恥ずかしいじゃない。 | But being scared of water[[T001:row]]is embarrassing. |  |
 | `g0000:l0527` | Ayako (voice test) | そんなことないよ。[[T001:row]]誰にだって苦手なものは[[T002:row]]あるんだから。 | Not at all.[[T001:row]]Everyone's scared[[T002:row]]of something. |  |
-| `g0000:l0528` | Ayako (voice test) | サンキュー、ありがとう。[[T001:row]]でも私だって、[[T002:row]]一緒に泳ぎたいわ。 | Thanks! Arigato![[T001:row]]But I'd like to[[T002:row]]swim with you too. |  |
+| `g0000:l0528` | Ayako (voice test) | サンキュー、ありがとう。[[T001:row]]でも私だって、[[T002:row]]一緒に泳ぎたいわ。 | Thank you, thanks![[T001:row]]But I'd like to[[T002:row]]swim with you too. |  |
 | `g0000:l0529` | Ayako (voice test) | そんなに急がなくても、[[T001:row]]ゆっくり、[[T002:row]]慣れていけばいいよ。 | No need to rush.[[T001:row]]Just take it slow[[T002:row]]and get used to it. |  |
 | `g0000:l0530` | Ayako (voice test) | そうね。[[T001:row]]そうするわ。 | Yeah.[[T001:row]]I'll do that. |  |
 | `g0000:l0531` | Ayako (voice test) | ワンダフル。[[T001:row]]私この人の絵の[[T002:row]]大ファンなの。 | Wonderful![[T001:row]]I'm a huge fan[[T002:row]]of this artist. |  |
@@ -609,11 +609,11 @@
 | `g0000:l0600` | Ayako (voice test) | ハーイ、[[T001:player_form]]。 | Hi there, [[T001:player_form]]. |  |
 | `g0000:l0601` | Ayako (voice test) | 何か用？ | What do you want? |  |
 | `g0000:l0602` | Ayako (voice test) | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
-| `g0000:l0603` | Ayako (voice test) | リアリー、本当に？[[T001:row]]開けてもいいでしょ？ | Really? Hontou ni?[[T001:row]]I can open it, right? |  |
+| `g0000:l0603` | Ayako (voice test) | リアリー、本当に？[[T001:row]]開けてもいいでしょ？ | Really? Truly?[[T001:row]]I can open it, right? |  |
 | `g0000:l0604` | Ayako (voice test) | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
 | `g0000:l0605` | Ayako (voice test) | ん？[[T001:row]]何か用？ | Hm?[[T001:row]]What's up? |  |
 | `g0000:l0606` | Ayako (voice test) | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
-| `g0000:l0607` | Ayako (voice test) | サンキュー、ありがと。[[T001:row]]開けてもいいでしょ？ | Thanks! Arigato![[T001:row]]I can open it, right? |  |
+| `g0000:l0607` | Ayako (voice test) | サンキュー、ありがと。[[T001:row]]開けてもいいでしょ？ | Thank you, thanks![[T001:row]]I can open it, right? |  |
 | `g0000:l0608` | Ayako (voice test) | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
 | `g0000:l0609` | Ayako (voice test) | 何の用よ？ | What do you want? |  |
 | `g0000:l0610` | Ayako (voice test) | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
@@ -649,7 +649,7 @@
 | `g0000:l0640` | Ayako (voice test) | それなら[[T001:row]]一緒に、スケートに[[T002:row]]行かない？ | How about[[T001:row]]we go skating[[T002:row]]together? |  |
 | `g0000:l0641` | Ayako (voice test) | _(empty slot)_ | _(empty slot)_ | Empty source slot (no Japanese text). |
 | `g0000:l0642` | Ayako (voice test) | いいよ。一緒に行こう。[[T001:choice_option]]いや、遠慮しておくよ。 | Sure, let's go together.[[T001:choice_option]]No, I'll pass, thanks. |  |
-| `g0000:l0643` | Ayako (voice test) | リアリー、本当に？[[T001:row]]それじゃ、[[T002:row]]どうしようか？ | Really? Hontou ni?[[T001:row]]Then, what[[T002:row]]should we do? |  |
+| `g0000:l0643` | Ayako (voice test) | リアリー、本当に？[[T001:row]]それじゃ、[[T002:row]]どうしようか？ | Really? Truly?[[T001:row]]Then, what[[T002:row]]should we do? |  |
 | `g0000:l0644` | Ayako (voice test) | [[T001:context_m]]で[[T002:row]]待ち合わせでいい？ | Meet at [[T001:context_m]],[[T002:row]]is that okay? |  |
 | `g0000:l0645` | Ayako (voice test) | ＯＫ。[[T001:row]]それでいいわ。 | OK.[[T001:row]]That works. |  |
 | `g0000:l0646` | Ayako (voice test) | 今度の日曜日だな。[[T001:row]]忘れないように[[T002:row]]しなくっちゃ。 | So, this Sunday.[[T001:row]]I'd better not[[T002:row]]forget it. |  |
@@ -1310,7 +1310,7 @@
 | `g0000:l1301` | Ayako (voice test) | _(empty slot)_ | _(empty slot)_ | Empty source slot (no Japanese text). |
 | `g0000:l1302` | Ayako (voice test) | _(empty slot)_ | _(empty slot)_ | Empty source slot (no Japanese text). |
 | `g0000:l1303` | Ayako (voice test) | _(empty slot)_ | _(empty slot)_ | Empty source slot (no Japanese text). |
-| `g0000:l1304` | Ayako (voice test) | グッモーニン、[[T001:row]]おはよう、[[T002:player_form]]。 | Good morning![[T001:row]]Ohayou, [[T002:player_form]]! |  |
+| `g0000:l1304` | Ayako (voice test) | グッモーニン、[[T001:row]]おはよう、[[T002:player_form]]。 | Good morning![[T001:row]]Morning!, [[T002:player_form]]! |  |
 | `g0000:l1305` | Ayako (voice test) | あっ、[[T001:row]][[T002:girl_name]]、おはよう。 | Oh,[[T001:row]][[T002:girl_name]], morning. |  |
 | `g0000:l1306` | Ayako (voice test) | ねえ[[T001:row]]もしかして一人なの？ | Hey,[[T001:row]]are you on your own? |  |
 | `g0000:l1307` | Ayako (voice test) | ああ、そうだよ。 | Yeah, that's right. |  |
@@ -1330,14 +1330,14 @@
 | `g0000:l1321` | Ayako (voice test) | ＯＫ、行くわ。[[T001:row]]ちょっと待ってて、[[T002:row]]すぐに来るから。 | OK, I'll go.[[T001:row]]Wait a sec,[[T002:row]]I'll be right back. |  |
 | `g0000:l1322` | Ayako (voice test) | なんか慌てて[[T001:row]]行っちゃったな…。 | She sure rushed[[T001:row]]off in a hurry... |  |
 | `g0000:l1323` | Ayako (voice test) | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
-| `g0000:l1324` | Ayako (voice test) | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry! Gomen nasai![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
-| `g0000:l1325` | Ayako (voice test) | グッモーニン、おはよう[[T001:row]][[T002:player_form]]。 | Good morning! Ohayou,[[T001:row]][[T002:player_form]]! |  |
+| `g0000:l1324` | Ayako (voice test) | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry, I'm so sorry![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
+| `g0000:l1325` | Ayako (voice test) | グッモーニン、おはよう[[T001:row]][[T002:player_form]]。 | Good morning, morning!,[[T001:row]][[T002:player_form]]! |  |
 | `g0000:l1326` | Ayako (voice test) | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
 | `g0000:l1327` | Ayako (voice test) | ＯＫいいわよ。[[T001:row]]一緒に行きましょう。 | OK, sure.[[T001:row]]Let's go together. |  |
 | `g0000:l1328` | Ayako (voice test) | じゃあ、早速行こう。 | Then let's go right away. |  |
-| `g0000:l1329` | Ayako (voice test) | ウエイト、ちょっと待ってて[[T001:row]]準備してくるから。 | Wait! Chotto matte.[[T001:row]]I'll get ready. |  |
+| `g0000:l1329` | Ayako (voice test) | ウエイト、ちょっと待ってて[[T001:row]]準備してくるから。 | Wait, hold on a sec![[T001:row]]I'll get ready. |  |
 | `g0000:l1330` | Ayako (voice test) | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
-| `g0000:l1331` | Ayako (voice test) | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry! Gomen nasai![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
+| `g0000:l1331` | Ayako (voice test) | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry, I'm so sorry![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
 | `g0000:l1332` | Ayako (voice test) | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
 | `g0000:l1333` | Ayako (voice test) | 何？ | What? |  |
 | `g0000:l1334` | Ayako (voice test) | ねえ、今日の自由行動、[[T001:row]]一緒に行かない？ | Hey, wanna look around[[T001:row]]together today? |  |
@@ -1375,7 +1375,7 @@
 | `g0000:l1366` | Ayako (voice test) | ４日目が終了した。[[T001:row]]明日は、自由行動だ。 | Day four ended.[[T001:row]]Tomorrow's a free day. |  |
 | `g0000:l1367` | Ayako (voice test) | 今日の自由行動は、[[T001:row]]この前の約束通り[[T002:row]][[T003:girl_name]]と一緒だ。 | As promised, I'm[[T001:row]]spending the day[[T002:row]]with [[T003:girl_name]]. |  |
 | `g0000:l1368` | Ayako (voice test) | 遅いなぁ、[[T001:row]]まだ来ないのかなぁ。 | She's late...[[T001:row]]Wonder where she is. |  |
-| `g0000:l1369` | Ayako (voice test) | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry! Gomen nasai![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
+| `g0000:l1369` | Ayako (voice test) | ソーリー、ごめんなさい。[[T001:row]]準備に手間取っちゃって…。[[T002:row]]さあ行きましょう。 | Sorry, I'm so sorry![[T001:row]]I took too long...[[T002:row]]Let's go! |  |
 | `g0000:l1370` | Ayako (voice test) | あっ、土産屋だ。[[T001:row]]ちょっと見ていこうよ。 | Oh, a souvenir shop.[[T001:row]]Let's take a look. |  |
 | `g0000:l1371` | Ayako (voice test) | ＯＫ、いいわよ。[[T001:row]]入りましょう。[[T002:row]]あ、あれは何かしら。 | OK, sure.[[T001:row]]Let's go in.[[T002:row]]Oh, what's that? |  |
 | `g0000:l1372` | Ayako (voice test) | あっ、鹿だ。 | Whoa, a deer! |  |
@@ -1422,11 +1422,11 @@
 | `g0000:l1413` | Ayako (voice test) | あげてよかった。 | I'm glad I gave it to you. |  |
 | `g0000:l1414` | Ayako (voice test) | ハーイ。[[T001:row]]何か用？ | Hi![[T001:row]]What's up? |  |
 | `g0000:l1415` | Ayako (voice test) | はい、これ。[[T001:row]]バレンタインのお返し。 | Here's a White Day[[T001:row]]gift for you. |  |
-| `g0000:l1416` | Ayako (voice test) | リアリー、本当に？[[T001:row]]嬉しいわ。 | Really? Hontou ni?[[T001:row]]I'm so happy. |  |
+| `g0000:l1416` | Ayako (voice test) | リアリー、本当に？[[T001:row]]嬉しいわ。 | Really? Truly?[[T001:row]]I'm so happy. |  |
 | `g0000:l1417` | Ayako (voice test) | なんか喜んでくれた[[T001:row]]みたいだぞ。 | Looks like she[[T001:row]]was pleased. |  |
 | `g0000:l1418` | Ayako (voice test) | 何か用？ | What do you want? |  |
 | `g0000:l1419` | Ayako (voice test) | はい、これ。[[T001:row]]バレンタインのお返し。 | Here's a White Day[[T001:row]]gift for you. |  |
-| `g0000:l1420` | Ayako (voice test) | サンキュー、ありがと。 | Thanks! Arigato! |  |
+| `g0000:l1420` | Ayako (voice test) | サンキュー、ありがと。 | Thank you, thanks! |  |
 | `g0000:l1421` | Ayako (voice test) | なんか喜んでくれた[[T001:row]]みたいだぞ。 | Looks like she[[T001:row]]was pleased. |  |
 | `g0000:l1422` | Ayako (voice test) | ‥‥‥‥。[[T001:row]]何の用よ？ | ......[[T001:row]]What do you want? |  |
 | `g0000:l1423` | Ayako (voice test) | はい、これ。[[T001:row]]バレンタインのお返し。 | Here's a White Day[[T001:row]]gift for you. |  |
@@ -1435,7 +1435,7 @@
 | `g0000:l1426` | Ayako (voice test) | メリークリスマス。[[T001:row]]あなたも[[T002:row]]招待されてたのね。 | Merry Christmas![[T001:row]]So you were[[T002:row]]invited too. |  |
 | `g0000:l1427` | Ayako (voice test) | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
 | `g0000:l1428` | Ayako (voice test) | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
-| `g0000:l1429` | Ayako (voice test) | あっソーリー、ごめんなさい。[[T001:row]]お友達が待ってるの。[[T002:row]]そろそろ行くわね。 | Oh, sorry! Gomen nasai.[[T001:row]]My friends are waiting.[[T002:row]]I'd better go. |  |
+| `g0000:l1429` | Ayako (voice test) | あっソーリー、ごめんなさい。[[T001:row]]お友達が待ってるの。[[T002:row]]そろそろ行くわね。 | Oh, Sorry, I'm so sorry!.[[T001:row]]My friends are waiting.[[T002:row]]I'd better go. |  |
 | `g0000:l1430` | Ayako (voice test) | それじゃ、また。 | See you later. |  |
 | `g0000:l1431` | Ayako (voice test) | ソー、バッド。[[T001:row]]あなたも来てたの。 | Oh, so bad.[[T001:row]]You're here too? |  |
 | `g0000:l1432` | Ayako (voice test) | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |

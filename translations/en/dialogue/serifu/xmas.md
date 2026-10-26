@@ -9,7 +9,7 @@
 | `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-0:g0000:l0001` | Scene 0 · Heroine | 来てたんだ。 | You came too! |  |
 | `table-0:g0000:l0002` | Scene 0 · Player | [[T001:girl_name]]も[[T002:row]]来てたのか。 | Oh, [[T001:girl_name]],[[T002:row]]you came too? |  |
-| `table-0:g0000:l0003` | Scene 0 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-0:g0000:l0003` | Scene 0 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-0:g0000:l0004` | Scene 0 · Heroine | 友達がいるから、[[T001:row]]そろそろ行くね。 | I'm here with friends,[[T001:row]]so I'd better go. |  |
 | `table-0:g0000:l0005` | Scene 0 · Player | それじゃ、また。 | See you later. |  |
 | `table-0:g0001:l0000` | Scene 0 · Heroine | やっばーっ。[[T001:row]]はまっちゃった。 | Oh man...[[T001:row]]Now I'm stuck. |  |
@@ -30,7 +30,7 @@
 | `table-0:g0004:l0000` | Scene 0 · Player | 好雄の友達ねぇ…。 | Yoshio's friend, huh... |  |
 | `table-1:g0000:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。[[T002:row]]あなたも[[T003:row]]招待されてたのね。 | Oh, [[T001:player_form]][[T002:row]]So you were[[T003:row]]invited too. |  |
 | `table-1:g0000:l0001` | Scene 1 · Player | 詩織もいたのか。 | Shiori, you're here too? |  |
-| `table-1:g0000:l0002` | Scene 1 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-1:g0000:l0002` | Scene 1 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-1:g0001:l0000` | Scene 1 · Heroine | 友達がいるから、[[T001:row]]そろそろ行くね。 | I'm here with friends,[[T001:row]]so I'd better go. |  |
 | `table-1:g0001:l0001` | Scene 1 · Player | それじゃ、また。 | See you later. |  |
 | `table-1:g0002:l0000` | Scene 1 · Heroine | そう言えば、[[T001:row]]紹介したい[[T002:row]]友達がいるのよ。 | Oh, that reminds me.[[T001:row]]There's a friend I'd[[T002:row]]like you to meet. |  |
@@ -53,14 +53,14 @@
 | `table-2:g0000:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-2:g0000:l0001` | Scene 2 · Heroine | あなたも[[T001:row]]来てたのね。 | So you're[[T001:row]]here too. |  |
 | `table-2:g0000:l0002` | Scene 2 · Player | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
-| `table-2:g0000:l0003` | Scene 2 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-2:g0000:l0003` | Scene 2 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-2:g0000:l0004` | Scene 2 · Heroine | 研究が残ってるから[[T001:row]]そろそろ行くわ。 | I have research to finish,[[T001:row]]so I'll be going. |  |
 | `table-2:g0000:l0005` | Scene 2 · Player | それじゃ、また。 | See you later. |  |
 | `table-2:g0001:l0000` | Scene 2 · Heroine | あっ、[[T001:row]]よく来れたわね。 | Oh,[[T001:row]]you dared to show up? |  |
 | `table-2:g0001:l0001` | Scene 2 · Player | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
 | `table-2:g0001:l0002` | Scene 2 · Heroine | 研究があるから、[[T001:row]]もう行くわ。 | I have research to do,[[T001:row]]so I have to go. |  |
 | `table-2:g0002:l0000` | Scene 2 · Player | まだ、話してないよ。[[T001:row]]あっ、行っちゃった。 | We haven't even talked.[[T001:row]]Aw, she's gone. |  |
-| `table-2:g0003:l0000` | Scene 2 · Heroine | あなた[[T001:player_form]]ね。 | You must be [[T001:player_form]] |  |
+| `table-2:g0003:l0000` | Scene 2 · Heroine | あなた[[T001:player_form]]ね。 | You must be [[T001:player_form]]. |  |
 | `table-2:g0003:l0001` | Scene 2 · Heroine | クリスマスの記念に、[[T001:row]]改造する気はない？ | For Christmas, how about[[T001:row]]letting me modify you? |  |
 | `table-2:g0003:l0002` | Scene 2 · Player | はぁ、なにそれ？[[T001:row]]何で、俺の名前[[T002:row]]知ってるの？ | Huh? What's that?[[T001:row]]And how do you[[T002:row]]know my name? |  |
 | `table-2:g0003:l0003` | Scene 2 · Heroine | そんな事はどうでも[[T001:row]]いいのよ。[[T002:row]]するの、しないの？ | That doesn't[[T001:row]]matter.[[T002:row]]Yes or no? |  |
@@ -74,8 +74,8 @@
 | `table-2:g0006:l0000` | Scene 2 · Player | [[T001:girl_name]]か…。[[T002:row]]何だか怖い娘だな…。 | So that's [[T001:girl_name]][[T002:row]]She's kinda scary... |  |
 | `table-3:g0000:l0000` | Scene 3 · Heroine | メリークリスマス。[[T001:row]]あなたも[[T002:row]]招待されてたのね。 | Merry Christmas![[T001:row]]So you were[[T002:row]]invited too. |  |
 | `table-3:g0000:l0001` | Scene 3 · Player | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
-| `table-3:g0000:l0002` | Scene 3 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
-| `table-3:g0000:l0003` | Scene 3 · Heroine | あっソーリー、ごめんなさい。[[T001:row]]お友達が待ってるの。[[T002:row]]そろそろ行くわね。 | Oh, sorry! Gomen nasai.[[T001:row]]My friends are waiting.[[T002:row]]I'd better go. |  |
+| `table-3:g0000:l0002` | Scene 3 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
+| `table-3:g0000:l0003` | Scene 3 · Heroine | あっソーリー、ごめんなさい。[[T001:row]]お友達が待ってるの。[[T002:row]]そろそろ行くわね。 | Oh, Sorry, I'm so sorry!.[[T001:row]]My friends are waiting.[[T002:row]]I'd better go. |  |
 | `table-3:g0000:l0004` | Scene 3 · Player | それじゃ、また。 | See you later. |  |
 | `table-3:g0001:l0000` | Scene 3 · Heroine | ソー、バッド。[[T001:row]]あなたも来てたの。 | Oh, so bad.[[T001:row]]You're here too? |  |
 | `table-3:g0001:l0001` | Scene 3 · Player | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
@@ -95,7 +95,7 @@
 | `table-3:g0003:l0011` | Scene 3 · Player | さ、さよなら。[[T001:row]]（なんか変な娘。） | B-bye.[[T001:row]](What a weird girl.) |  |
 | `table-4:g0000:l0000` | Scene 4 · Heroine | 貴方もいらしてたのね。 | So you came as well. |  |
 | `table-4:g0000:l0001` | Scene 4 · Player | [[T001:girl_name]]も[[T002:row]]来てたのか。 | Oh, [[T001:girl_name]],[[T002:row]]you came too? |  |
-| `table-4:g0000:l0002` | Scene 4 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-4:g0000:l0002` | Scene 4 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-4:g0000:l0003` | Scene 4 · Heroine | 私、伊集院君に用が[[T001:row]]あるから…。[[T002:row]]それじゃ…。 | I need to talk[[T001:row]]to Ijuin-kun...[[T002:row]]See you... |  |
 | `table-4:g0000:l0004` | Scene 4 · Player | それじゃ、また。 | See you later. |  |
 | `table-4:g0001:l0000` | Scene 4 · Heroine | そのかっこで[[T001:row]]よく来れたわね。 | You actually came[[T001:row]]dressed like that? |  |
@@ -117,7 +117,7 @@
 | `table-5:g0000:l0000` | Scene 5 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-5:g0000:l0001` | Scene 5 · Heroine | 招待されてたんですね。 | So you were invited too. |  |
 | `table-5:g0000:l0002` | Scene 5 · Player | [[T001:girl_name]]も、[[T002:row]]来てたのか。 | Oh, [[T001:girl_name]],[[T002:row]]you came too? |  |
-| `table-5:g0000:l0003` | Scene 5 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-5:g0000:l0003` | Scene 5 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-5:g0000:l0004` | Scene 5 · Heroine | 私、挨拶したい人が[[T001:row]]いますので、[[T002:row]]ちょっと失礼します。 | There's someone[[T001:row]]I need to greet,[[T002:row]]so please excuse me. |  |
 | `table-5:g0000:l0005` | Scene 5 · Player | それじゃ、また。 | See you later. |  |
 | `table-5:g0001:l0000` | Scene 5 · Heroine | 来てたのですね…。 | So you came... |  |
@@ -134,13 +134,13 @@
 | `table-5:g0006:l0003` | Scene 5 · Heroine | ありがとうございます。[[T001:row]]私、如月未緒といいます。 | Thank you so much.[[T001:row]]My name is Kisaragi Mio. |  |
 | `table-5:g0006:l0004` | Scene 5 · Heroine | 良かったら、お名前を…。 | May I ask your name...? |  |
 | `table-5:g0006:l0005` | Scene 5 · Player | あっ、俺、[[T001:player_full]]。[[T002:row]]それじゃ、[[T003:girl_name]]。[[T004:row]]無理しちゃ駄目だよ。 | Oh, I'm [[T001:player_full]][[T002:row]]Well, [[T003:girl_name]][[T004:row]]don't push yourself. |  |
-| `table-5:g0006:l0006` | Scene 5 · Heroine | 本当に、[[T001:row]]ありがとうございました。[[T002:row]][[T003:player_form]]。 | Really,[[T001:row]]thank you so much,[[T002:row]][[T003:player_form]] |  |
+| `table-5:g0006:l0006` | Scene 5 · Heroine | 本当に、[[T001:row]]ありがとうございました。[[T002:row]][[T003:player_form]]。 | Really,[[T001:row]]thank you so much,[[T002:row]][[T003:player_form]]. |  |
 | `table-6:g0000:l0000` | Scene 6 · Heroine | [[T001:player_form]][[T002:row]]こんばんは。[[T003:row]]招待されていたのですね。 | [[T001:player_form]][[T002:row]]Good evening.[[T003:row]]So you were invited too. |  |
 | `table-6:g0000:l0001` | Scene 6 · Player | [[T001:girl_name]]も、[[T002:row]]来てたのか。 | Oh, [[T001:girl_name]],[[T002:row]]you came too? |  |
-| `table-6:g0000:l0002` | Scene 6 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-6:g0000:l0002` | Scene 6 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-6:g0000:l0003` | Scene 6 · Heroine | 申し訳ありませんが、[[T001:row]]用がありますので、[[T002:row]]少々、失礼いたします。 | I'm terribly sorry,[[T001:row]]but I have an errand,[[T002:row]]so please excuse me. |  |
 | `table-6:g0000:l0004` | Scene 6 · Player | それじゃ、また。 | See you later. |  |
-| `table-6:g0001:l0000` | Scene 6 · Player (monologue) | あっ、[[T001:girl_name]]だ。 | There's [[T001:girl_name]] |  |
+| `table-6:g0001:l0000` | Scene 6 · Player (monologue) | あっ、[[T001:girl_name]]だ。 | There's [[T001:girl_name]]. |  |
 | `table-6:g0001:l0001` | Scene 6 · Player | おーい。[[T001:row]][[T002:girl_name]]。 | Yoo-hoo![[T001:row]][[T002:girl_name]]! |  |
 | `table-6:g0001:l0002` | Scene 6 · Heroine | こんばんは。[[T001:row]]招待されて[[T002:row]]いたのですね…。 | Good evening.[[T001:row]]So you were[[T002:row]]invited too... |  |
 | `table-6:g0001:l0003` | Scene 6 · Player | [[T001:girl_name]]も[[T002:row]]招待されてたんだね。 | [[T001:girl_name]], so you[[T002:row]]got invited too. |  |
@@ -163,13 +163,13 @@
 | `table-7:g0000:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-7:g0000:l0001` | Scene 7 · Heroine | あなたも[[T001:row]]招待されてたんだ。 | So you[[T001:row]]got invited too. |  |
 | `table-7:g0000:l0002` | Scene 7 · Player | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
-| `table-7:g0000:l0003` | Scene 7 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-7:g0000:l0003` | Scene 7 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-7:g0000:l0004` | Scene 7 · Heroine | 友達がいるから、[[T001:row]]悪いけど、[[T002:row]]そろそろ行くね。 | I'm with friends,[[T001:row]]so sorry,[[T002:row]]but I'd better go. |  |
 | `table-7:g0000:l0005` | Scene 7 · Player | それじゃ、また。 | See you later. |  |
 | `table-7:g0001:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-7:g0001:l0001` | Scene 7 · Heroine | 招待されてたんだ。 | So you got invited. |  |
 | `table-7:g0001:l0002` | Scene 7 · Player | [[T001:girl_name]]もいたのか。 | You came too, [[T001:girl_name]]. |  |
-| `table-7:g0001:l0003` | Scene 7 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-7:g0001:l0003` | Scene 7 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-7:g0001:l0004` | Scene 7 · Heroine | 悪いけど、[[T001:row]]そろそろ行くよ。 | Sorry,[[T001:row]]but I gotta go. |  |
 | `table-7:g0001:l0005` | Scene 7 · Player | それじゃ、また。 | See you later. |  |
 | `table-7:g0002:l0000` | Scene 7 · Heroine | あっ、いたのか。 | Oh, you're here. |  |
@@ -197,7 +197,7 @@
 | `table-8:g0000:l0000` | Scene 8 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-8:g0000:l0001` | Scene 8 · Heroine | 招待されてたんですか…？ | You were invited...? |  |
 | `table-8:g0000:l0002` | Scene 8 · Player | [[T001:girl_name]]も、[[T002:row]]来てたのか。 | Oh, [[T001:girl_name]],[[T002:row]]you came too? |  |
-| `table-8:g0000:l0003` | Scene 8 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-8:g0000:l0003` | Scene 8 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-8:g0000:l0004` | Scene 8 · Heroine | あの…。[[T001:row]]すいません…。[[T002:row]]そろそろ…。 | Um...[[T001:row]]I'm sorry...[[T002:row]]I should go... |  |
 | `table-8:g0000:l0005` | Scene 8 · Player | あっ、そうだね。[[T001:row]]それじゃ、また。 | Oh, right.[[T001:row]]See you later. |  |
 | `table-8:g0001:l0000` | Scene 8 · Heroine | あ、あの…。[[T001:row]]失礼します。 | U-um...[[T001:row]]Excuse me. |  |
@@ -222,10 +222,10 @@
 | `table-8:g0006:l0009` | Scene 8 · Heroine | あの…。[[T001:row]]‥‥‥‥‥。[[T002:row]]失礼します…。 | Um...[[T001:row]].....[[T002:row]]Excuse me... |  |
 | `table-8:g0007:l0000` | Scene 8 · Player | あっ、[[T001:girl_name]]。[[T002:row]]もっと、お話を…。[[T003:row]]行っちゃったよ。 | Oh, [[T001:girl_name]][[T002:row]]I wanted to talk more...[[T003:row]]She's gone. |  |
 | `table-8:g0007:l0001` | Scene 8 · Player (monologue) | [[T001:girl_name]]か…。[[T002:row]]どうして、俺なんかに[[T003:row]]プレゼントくれるんだ？ | So that's [[T001:girl_name]][[T002:row]]Why would she give[[T003:row]]a guy like me a present? |  |
-| `table-9:g0000:l0000` | Scene 9 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-9:g0000:l0000` | Scene 9 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-9:g0000:l0001` | Scene 9 · Heroine | 招待されてたんだ。 | So you got invited. |  |
 | `table-9:g0000:l0002` | Scene 9 · Player | [[T001:girl_name]]も、来てたのか。 | You came too, [[T001:girl_name]]. |  |
-| `table-9:g0000:l0003` | Scene 9 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-9:g0000:l0003` | Scene 9 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-9:g0000:l0004` | Scene 9 · Heroine | クラブの友達がいるから、[[T001:row]]悪いけど、いいかな？ | I'm with my club friends,[[T001:row]]so do you mind if I go? |  |
 | `table-9:g0000:l0005` | Scene 9 · Player | いいよ気にしないで。[[T001:row]]それじゃ、また。 | Sure, don't worry.[[T001:row]]See you later. |  |
 | `table-9:g0001:l0000` | Scene 9 · Heroine | 招待されてたんだ…。 | So you got invited... |  |
@@ -359,7 +359,7 @@
 | `table-12:g0000:l0000` | Scene 12 · Heroine | あっ、[[T001:player_form]] | Oh, [[T001:player_form]]. |  |
 | `table-12:g0000:l0001` | Scene 12 · Heroine | 招待されてたんですね。 | So you were invited too. |  |
 | `table-12:g0000:l0002` | Scene 12 · Player | 優美ちゃんも、[[T001:row]]来てたのか。 | Yumi-chan, you[[T001:row]]came too? |  |
-| `table-12:g0000:l0003` | Scene 12 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]] |  |
+| `table-12:g0000:l0003` | Scene 12 · Narration | しばらく[[T001:girl_name]]と話し込んだ | Talked to [[T001:girl_name]]. |  |
 | `table-12:g0000:l0004` | Scene 12 · Heroine | 同級生のお友達と[[T001:row]]来てるから、[[T002:row]]そろそろ、行かなくちゃ。 | I came with friends[[T001:row]]from my class,[[T002:row]]so I'd better go now. |  |
 | `table-12:g0000:l0005` | Scene 12 · Player | いいよ気にしないで。[[T001:row]]それじゃ、また。 | Sure, don't worry.[[T001:row]]See you later. |  |
 | `table-12:g0001:l0000` | Scene 12 · Heroine | あっ…。 | Oh... |  |

@@ -46,8 +46,8 @@
 | `table-0:g0036:l0000` | Scene 0 · Player (monologue) | 我が部活に一片の悔いなし。 | No regrets about my team. |  |
 | `table-0:g0037:l0000` | Scene 0 · Player (monologue) | さっきの娘、[[T001:row]]応援しに来てくれてたのに、[[T002:row]]悪いことしたなぁ。 | That girl came[[T001:row]]to cheer me on.[[T002:row]]I feel bad about that. |  |
 | `table-0:g0038:l0000` | Scene 0 · Player (monologue) | こいつに言われてもなぁ… | Coming from him... |  |
-| `table-0:g0039:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0040:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0039:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0040:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0040:l0001` | Scene 0 · Heroine | とうとうここまで来たわね。 | So you've made it this far. |  |
 | `table-0:g0040:l0002` | Scene 0 · Player | うん、いよいよだよ。 | Yeah, this is it. |  |
 | `table-0:g0040:l0003` | Scene 0 · Heroine | こんなことしか[[T001:row]]言えないけど…。[[T002:row]]頑張ってね。 | This is all[[T001:row]]I can say...[[T002:row]]but good luck. |  |
@@ -68,7 +68,7 @@
 | `table-0:g0044:l0002` | Scene 0 · Heroine | だって、だって…[[T001:row]]あんなに頑張ってたのに…。 | But... but...[[T001:row]]you tried so hard... |  |
 | `table-0:g0044:l0003` | Scene 0 · Player | いいんだよ。[[T001:row]]精いっぱいやったし、[[T002:row]]悔いはないよ。 | It's okay.[[T001:row]]I gave it my all.[[T002:row]]No regrets. |  |
 | `table-0:g0044:l0004` | Scene 0 · Heroine | う、うん…。 | Y-yeah... |  |
-| `table-0:g0045:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0045:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0046:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]、[[T002:row]]来てくれたんだ。 | Oh, [[T001:girl_name]],[[T002:row]]you came! |  |
 | `table-0:g0046:l0001` | Scene 0 · Heroine | はい。本当は、黙って[[T001:row]]見てようと[[T002:row]]思っていたんですけど…。 | Yes. I meant to[[T001:row]]watch quietly,[[T002:row]]but... |  |
 | `table-0:g0046:l0002` | Scene 0 · Player | けど、何？ | But what? |  |
@@ -87,7 +87,7 @@
 | `table-0:g0049:l0000` | Scene 0 · Player (monologue) | あれ、[[T001:row]][[T002:girl_name]]泣いてるのかな？ | Huh...[[T001:row]]Is [[T002:girl_name]] crying? |  |
 | `table-0:g0049:l0001` | Scene 0 · Heroine | だめですね、私。 | I'm hopeless. |  |
 | `table-0:g0049:l0002` | Scene 0 · Heroine | きっとあなたは、[[T001:row]]私なんかより、[[T002:row]]何倍もつらいのに…。 | It must hurt you[[T001:row]]so much more[[T002:row]]than me... |  |
-| `table-0:g0050:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0050:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0051:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。[[T002:row]]来てくれたんだ。 | Oh, [[T001:girl_name]]![[T002:row]]You came! |  |
 | `table-0:g0051:l0001` | Scene 0 · Heroine | そうよ。[[T001:row]]だから、勝ちなさいよ。 | Yes.[[T001:row]]So you'd better win. |  |
 | `table-0:g0051:l0002` | Scene 0 · Player | うん、頑張るよ。 | Yeah, I will. |  |
@@ -118,16 +118,16 @@
 | `table-0:g0057:l0003` | Scene 0 · Player | ありがとう。[[T001:row]]気を遣ってくれて。 | Thanks for looking[[T001:row]]out for me. |  |
 | `table-0:g0057:l0004` | Scene 0 · Heroine | ば、馬鹿ね、[[T001:row]]我慢しないで[[T002:row]]悔しがりなさいよ。 | D-dummy![[T001:row]]Don't hold back.[[T002:row]]You can be upset. |  |
 | `table-0:g0057:l0005` | Scene 0 · Player | ありがとう、[[T001:girl_name]]。 | Thanks, [[T001:girl_name]]. |  |
-| `table-0:g0058:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0059:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0058:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0059:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0059:l0001` | Scene 0 · Heroine | いよいよ、全国大会ね。 | The nationals at last. |  |
 | `table-0:g0059:l0002` | Scene 0 · Player | そうだね。 | Yeah. |  |
 | `table-0:g0059:l0003` | Scene 0 · Heroine | 勝てば日本一よ。 | Win, and you're number one. |  |
 | `table-0:g0059:l0004` | Scene 0 · Player | 勝てればね。 | If I win. |  |
 | `table-0:g0059:l0005` | Scene 0 · Heroine | 弱気になっちゃダメよ！[[T001:row]]勝てるわ！[[T002:row]]うん、きっと勝てる！ | Don't lose heart![[T001:row]]You can win![[T002:row]]Yes, you'll win! |  |
 | `table-0:g0059:l0006` | Scene 0 · Player | うん、[[T001:row]]勝てそうな気がしてきたよ。 | Yeah,[[T001:row]]I feel like I can win. |  |
-| `table-0:g0060:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0061:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0060:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0061:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0061:l0001` | Scene 0 · Heroine | いよいよ、甲子園ね。 | Koshien at last. |  |
 | `table-0:g0061:l0002` | Scene 0 · Player | そうだね。 | Yeah. |  |
 | `table-0:g0061:l0003` | Scene 0 · Heroine | 勝てば日本一よ。 | Win, and you're number one. |  |
@@ -155,7 +155,7 @@
 | `table-0:g0066:l0001` | Scene 0 · Heroine | へ、変だよね、[[T001:row]]あんなに頑張ったのにね。 | I-it's weird, isn't it.[[T001:row]]You tried so hard. |  |
 | `table-0:g0066:l0002` | Scene 0 · Heroine | 本当に、[[T001:row]]本当に頑張ってたのに…。 | You really,[[T001:row]]really tried so hard... |  |
 | `table-0:g0067:l0000` | Scene 0 · Heroine | こんにちは、[[T001:player_form]]。 | Hello, [[T001:player_form]]. |  |
-| `table-0:g0068:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0068:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0068:l0001` | Scene 0 · Heroine | すごいですねぇ、[[T001:row]]日本一ですか。 | How amazing,[[T001:row]]the best in Japan. |  |
 | `table-0:g0068:l0002` | Scene 0 · Player | ははは、勝てればね。 | Hahaha, if I win. |  |
 | `table-0:g0068:l0003` | Scene 0 · Heroine | あら、そうなんですか？[[T001:row]]でも、きっと大丈夫ですね。 | Oh, is that so?[[T001:row]]But I'm sure you'll win. |  |
@@ -173,8 +173,8 @@
 | `table-0:g0070:l0002` | Scene 0 · Heroine | いいえ、私は、ただ、[[T001:row]]応援していただけですから… | No, I was only[[T001:row]]cheering you on... |  |
 | `table-0:g0070:l0003` | Scene 0 · Player | そ、そう。 | O-oh. |  |
 | `table-0:g0071:l0000` | Scene 0 · Heroine | それに、あなたの一生懸命な[[T001:row]]お姿は、ちゃんと、[[T002:row]]見せていただきましたよ。 | Besides, I saw how[[T001:row]]hard you tried,[[T002:row]]all of it. |  |
-| `table-0:g0072:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0073:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0072:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0073:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0073:l0001` | Scene 0 · Heroine | とうとう全国だね。 | The nationals at last. |  |
 | `table-0:g0073:l0002` | Scene 0 · Player | うん、緊張するよ。[[T001:row]]でも、[[T002:girl_name]]は[[T003:row]]慣れてるでしょう？ | I'm nervous.[[T001:row]]But [[T002:girl_name]],[[T003:row]]you're used to this? |  |
 | `table-0:g0073:l0003` | Scene 0 · Heroine | そんなことないよ、[[T001:row]]私だって緊張するよ。 | Not at all,[[T001:row]]I get nervous too. |  |
@@ -201,7 +201,7 @@
 | `table-0:g0077:l0003` | Scene 0 · Heroine | あなたのほうが[[T001:row]]悔しいってことくらい、[[T002:row]]わかるんだから。 | I know you're[[T001:row]]more upset than I am.[[T002:row]]I can tell. |  |
 | `table-0:g0078:l0000` | Scene 0 · Player | あ、あれ、[[T001:girl_name]]？ | H-huh, [[T001:girl_name]]? |  |
 | `table-0:g0078:l0001` | Scene 0 · Heroine | へ、変よね。なんか、[[T001:row]]自分が負けた時より…。 | I-it's weird. Somehow,[[T001:row]]more than when I lose... |  |
-| `table-0:g0079:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0079:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0080:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]、[[T002:row]]来てくれたんだ。 | Oh, [[T001:girl_name]],[[T002:row]]you came! |  |
 | `table-0:g0080:l0001` | Scene 0 · Heroine | 当然よ、あなたが…。[[T001:row]]な、何でもないわ。 | Of course, you're...[[T001:row]]N-never mind. |  |
 | `table-0:g0080:l0002` | Scene 0 · Player | 俺が…何？ | I'm... what? |  |
@@ -222,7 +222,7 @@
 | `table-0:g0083:l0004` | Scene 0 · Heroine | しょうがないわよね。 | It can't be helped. |  |
 | `table-0:g0083:l0005` | Scene 0 · Player (monologue) | もしかして、[[T001:row]]慰めてくれてるのかな？ | Is she trying[[T001:row]]to comfort me? |  |
 | `table-0:g0083:l0006` | Scene 0 · Heroine | 試合中のあなた、[[T001:row]]結構…見られたわよ。 | You actually looked...[[T001:row]]pretty good out there. |  |
-| `table-0:g0084:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0084:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0085:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]、[[T002:row]]来てくれたんだ。 | Oh, [[T001:girl_name]],[[T002:row]]you came! |  |
 | `table-0:g0085:l0001` | Scene 0 · Heroine | もち！[[T001:row]]今日勝てば、[[T002:row]]日本一でしょう？ | Duh![[T001:row]]Win today and[[T002:row]]you're number one, right? |  |
 | `table-0:g0085:l0002` | Scene 0 · Player | 勝てれば、ね。 | If I win. |  |
@@ -242,7 +242,7 @@
 | `table-0:g0087:l0002` | Scene 0 · Heroine | 一生懸命部活するなんて、[[T001:row]]ダサいとか思ってたけど…。 | I thought trying hard in[[T001:row]]a club was lame, but... |  |
 | `table-0:g0087:l0003` | Scene 0 · Player | うん？ | Hm? |  |
 | `table-0:g0087:l0004` | Scene 0 · Heroine | 今日は、ちょっと[[T001:row]]感動しちゃったかなって[[T002:row]]感じ。 | today... I dunno,[[T001:row]]it kinda got to me,[[T002:row]]you know? |  |
-| `table-0:g0088:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0088:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0089:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。[[T002:row]]来てくれたんだ。 | Oh, [[T001:girl_name]]![[T002:row]]You came! |  |
 | `table-0:g0089:l0001` | Scene 0 · Heroine | あ、あの…頑張って下さい。 | U-um... good luck! |  |
 | `table-0:g0089:l0002` | Scene 0 · Player | うん、頑張るよ。 | Yeah, I will. |  |
@@ -269,7 +269,7 @@
 | `table-0:g0091:l0008` | Scene 0 · Heroine | いえ…。お守り、[[T001:row]]効きませんでしたね。 | No... The charm[[T001:row]]didn't work. |  |
 | `table-0:g0091:l0009` | Scene 0 · Player | いや、おかげでほら、[[T001:row]]怪我もせずに済んだし。 | No, thanks to it,[[T001:row]]I didn't get hurt. |  |
 | `table-0:g0091:l0010` | Scene 0 · Heroine | 私、一生懸命[[T001:row]]お祈りしてたのに…。 | I prayed[[T001:row]]so hard... |  |
-| `table-0:g0092:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0092:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0093:l0000` | Scene 0 · Player | あっ、優美ちゃん。 | Oh, Yumi-chan. |  |
 | `table-0:g0093:l0001` | Scene 0 · Heroine | 頑張って下さいね。 | Do your best! |  |
 | `table-0:g0093:l0002` | Scene 0 · Player | うん、頑張るよ。 | Yeah, I will. |  |

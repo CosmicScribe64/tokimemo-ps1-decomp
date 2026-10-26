@@ -44,7 +44,7 @@
 | `80136340:2` | date_place_setup_concert_hall() | 会場内 | Inside Hall |  |
 | `801366a4:1` | date_place_setup_pool() | プール | Swimming Pool |  |
 | `801366a4:2` | date_place_setup_pool() | プール内 | Inside Pool |  |
-| `80136870:1` | date_place_setup_sea() | 海岸 | the beachfront |  |
+| `80136870:1` | date_place_setup_sea() | 海岸 | Beachfront |  |
 | `80136870:2` | date_place_setup_sea() | 浜辺 | Shore |  |
 | `80136a74:1` | date_place_setup_shrine() | 縁日 | Shrine Fair |  |
 | `80136a74:2` | date_place_setup_shrine() | 花火大会 | Fireworks Festival |  |

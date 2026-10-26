@@ -10,7 +10,7 @@
 | `main:g0001:l0000` | Main · Player (monologue) | 俺は、[[T001:girl_name]]と一緒に、[[T002:row]]展示物を見て回った。 | [[T001:girl_name]] and I looked[[T002:row]]around the exhibits. |  |
 | `main:g0002:l0000` | Main · Yumi | ここ文芸部ですよね。[[T001:row]]何やってるのかなぁ？ | Literature Club, right?[[T001:row]]What's going on? |  |
 | `main:g0002:l0001` | Main · Player | 作文の展示だね。 | An essay exhibit. |  |
-| `main:g0002:l0002` | Main · Yumi | さ、作文？[[T001:row]]優美、あんまり[[T002:row]]見たくないなぁ。 | E-essays?[[T001:row]]Yumi doesn't[[T002:row]]wanna see them. |  |
+| `main:g0002:l0002` | Main · Yumi | さ、作文？[[T001:row]]優美、あんまり[[T002:row]]見たくないなぁ。 | E-essays?[[T001:row]]I don't[[T002:row]]wanna see them. |  |
 | `main:g0002:l0003` | Main · Player | [[T001:girl_name]]、[[T002:row]]作文嫌いなの？ | [[T001:girl_name]],[[T002:row]]you don't like essays? |  |
 | `main:g0002:l0004` | Main · Yumi | だって、[[T001:row]]作文なんて面白くないもん。 | 'Cause[[T001:row]]essays aren't fun. |  |
 | `main:g0002:l0005` | Main · Player | 読んでみたら、[[T001:row]]面白いかもよ。 | If you read them,[[T001:row]]they might be fun. |  |
@@ -21,7 +21,7 @@
 | `main:g0003:l0001` | Main · Player | 作文の展示だね。 | An essay exhibit. |  |
 | `main:g0003:l0002` | Main · Yumi | さ、作文？[[T001:row]]えーと…、[[T002:row]]さぁ、帰ろうかな。 | E-essays?[[T001:row]]Umm...[[T002:row]]Well, time to go home. |  |
 | `main:g0003:l0003` | Main · Player | あっ、[[T001:girl_name]]。[[T002:row]]どこ行くの。 | Wait, [[T001:girl_name]].[[T002:row]]Where are you going? |  |
-| `main:g0003:l0004` | Main · Yumi | だって優美、[[T001:row]]作文なんて見たくないもん。 | 'Cause Yumi doesn't[[T001:row]]want to see essays! |  |
+| `main:g0003:l0004` | Main · Yumi | だって優美、[[T001:row]]作文なんて見たくないもん。 | 'Cause I don't[[T001:row]]want to see essays! |  |
 | `main:g0003:l0005` | Main · Player | 読んでみたら、[[T001:row]]面白いかもよ。 | If you read them,[[T001:row]]they might be fun. |  |
 | `main:g0003:l0006` | Main · Yumi | やだやだ。[[T001:row]]作文なんて読まないもん。 | No, no![[T001:row]]I won't read essays! |  |
 | `main:g0003:l0007` | Main · Player | わ、わかったよ。[[T001:row]]じゃあ、もう帰ろう。 | O-okay, okay.[[T001:row]]Then let's go home. |  |
@@ -76,12 +76,12 @@
 | `main:g0015:l0005` | Main · Player | それはわかるけど。[[T001:row]]そういう事は、[[T002:row]]家でゆっくりと…。 | I get that, but[[T001:row]]save that kind[[T002:row]]of thing for home... |  |
 | `main:g0015:l0006` | Main · Yumi | はーい。[[T001:row]]それじゃ、帰ろうよ。 | Okaaay.[[T001:row]]Then let's go home. |  |
 | `main:g0015:l0007` | Main · Player | そうだね。[[T001:row]]帰ろう。 | Right.[[T001:row]]Let's go. |  |
-| `main:g0016:l0000` | Main · Yumi | 今の劇、すごく[[T001:row]]面白かったね。[[T002:row]]優美、大好きだよ。 | That play was[[T001:row]]super fun![[T002:row]]Yumi loves it. |  |
+| `main:g0016:l0000` | Main · Yumi | 今の劇、すごく[[T001:row]]面白かったね。[[T002:row]]優美、大好きだよ。 | That play was[[T001:row]]super fun![[T002:row]]I love it. |  |
 | `main:g0016:l0001` | Main · Player | そう？[[T001:row]]俺も嫌いじゃないけど。 | Yeah?[[T001:row]]I don't mind it either. |  |
 | `main:g0016:l0002` | Main · Yumi | 最後の必殺技も、[[T001:row]]かっちょ良かったなぁ。 | And the last special[[T001:row]]move was so cool! |  |
 | `main:g0016:l0003` | Main · Player | それじゃあ、[[T001:row]]そろそろ帰ろうか？ | Well,[[T001:row]]shall we head home? |  |
 | `main:g0016:l0004` | Main · Yumi | うん、そうする。 | Yeah, let's. |  |
-| `main:g0017:l0000` | Main · Yumi | 優美も、早くあんな恋を[[T001:row]]してみたいなぁ。 | Yumi wants a love[[T001:row]]like that soon, too. |  |
+| `main:g0017:l0000` | Main · Yumi | 優美も、早くあんな恋を[[T001:row]]してみたいなぁ。 | I want a love[[T001:row]]like that soon, too. |  |
 | `main:g0017:l0001` | Main · Player | [[T001:girl_name]]なら、[[T002:row]]可愛いから、[[T003:row]]すぐにできるよ。 | [[T001:girl_name]],[[T002:row]]you're cute, so[[T003:row]]you'll find one soon. |  |
 | `main:g0017:l0002` | Main · Yumi | 本当？[[T001:row]]できなかったら、[[T002:row]]責任とってね。 | Really?[[T001:row]]If I don't, you'll[[T002:row]]take responsibility! |  |
 | `main:g0017:l0003` | Main · Player | えっ、責任？ | Huh, responsibility? |  |
@@ -101,7 +101,7 @@
 | `main:g0018:l0011` | Main · Player | [[T001:girl_name]]、大人ーっ。[[T002:row]]それじゃあ、帰ろうか？ | So grown-up, [[T001:girl_name]]![[T002:row]]Shall we head home? |  |
 | `main:g0018:l0012` | Main · Yumi | うん。[[T001:row]]そうする。 | Okay.[[T001:row]]I will. |  |
 | `main:g0019:l0000` | Main · Player | どうだった？[[T001:row]]今の演劇。 | How was it?[[T001:row]]The play. |  |
-| `main:g0019:l0001` | Main · Yumi | 優美はね、[[T001:row]]もっと明るくて、[[T002:row]]笑えるのが好きだなぁ。 | Yumi likes[[T001:row]]brighter ones[[T002:row]]that make her laugh. |  |
+| `main:g0019:l0001` | Main · Yumi | 優美はね、[[T001:row]]もっと明るくて、[[T002:row]]笑えるのが好きだなぁ。 | I like[[T001:row]]brighter ones[[T002:row]]that make her laugh. |  |
 | `main:g0019:l0002` | Main · Player | こうゆう劇の面白さは、[[T001:row]]もう少し大人になったら[[T002:row]]わかるよ。 | You'll appreciate[[T001:row]]plays like this[[T002:row]]when you're older. |  |
 | `main:g0019:l0003` | Main · Yumi | あーっ、[[T001:row]]優美を子供扱いしたぁ。 | You treated[[T001:row]]Yumi like a kid! |  |
 | `main:g0019:l0004` | Main · Player | だって、[[T001:row]]子供みたいなこと[[T002:row]]言うんだもん。 | Well,[[T001:row]]you say such[[T002:row]]kiddy things. |  |
@@ -133,13 +133,13 @@
 | `main:g0028:l0001` | Main · Player | あんまり、[[T001:row]]目にはよくないかもね。 | It might not be[[T001:row]]good for your eyes. |  |
 | `main:g0028:l0002` | Main · Yumi | それじゃあ、[[T001:row]]帰るね。 | Well then,[[T001:row]]I'm off. |  |
 | `main:g0028:l0003` | Main · Player | あっ、俺も帰るよ。 | Oh, I'll go too. |  |
-| `main:g0029:l0000` | Main · Yumi | 優美、[[T001:row]]これ見たことあります。 | Yumi's[[T001:row]]seen this before. |  |
+| `main:g0029:l0000` | Main · Yumi | 優美、[[T001:row]]これ見たことあります。 | my[[T001:row]]seen this before. |  |
 | `main:g0029:l0001` | Main · Player | えっ、どこで？ | Huh, where? |  |
 | `main:g0029:l0002` | Main · Yumi | この間、テレビで…。[[T001:row]]すっごく気持ち悪いのが、[[T002:row]]中から出てくるの。 | On TV the other day...[[T001:row]]Something super gross[[T002:row]]comes out of it. |  |
 | `main:g0029:l0003` | Main · Player | 何だ、映画の話か…。[[T001:row]]（最近じゃ当たり前なのかと[[T002:row]]思っちゃったよ…。） | Oh, that's a movie...[[T001:row]](I thought it was[[T002:row]]normal these days...) |  |
 | `main:g0029:l0004` | Main · Yumi | そろそろ、[[T001:row]]帰りませんか？ | Shall we[[T001:row]]go home soon? |  |
 | `main:g0029:l0005` | Main · Player | そ、そうだね。[[T001:row]]帰ろう。 | R-right.[[T001:row]]Let's go. |  |
-| `main:g0030:l0000` | Main · Yumi | 優美、今のテレビで[[T001:row]]見たことあるよ。 | Yumi's seen that[[T001:row]]on TV. |  |
+| `main:g0030:l0000` | Main · Yumi | 優美、今のテレビで[[T001:row]]見たことあるよ。 | my seen that[[T001:row]]on TV. |  |
 | `main:g0030:l0001` | Main · Player | テレビで、本当？[[T001:row]]（現代の科学は[[T002:row]]ここまで進歩したのか…。） | On TV, really?[[T001:row]](Has science come[[T002:row]]this far...?) |  |
 | `main:g0030:l0002` | Main · Yumi | 中からね、[[T001:row]]きぼぢ悪いのが出てくるの。 | Something gwoss[[T001:row]]comes out of it. |  |
 | `main:g0030:l0003` | Main · Player | そ、それは、[[T001:row]]映画の話でしょ。 | Th-that's[[T001:row]]from a movie. |  |
@@ -264,7 +264,7 @@
 | `main:g0055:l0003` | Main · Player | えっ、好雄もいるの？[[T001:row]]（あいつ美術部に[[T002:row]]何しに来てるんだろう。） | Huh, Yoshio's here?[[T001:row]](What's he doing[[T002:row]]at the Art Club?) |  |
 | `main:g0055:l0004` | Main · Yumi | ここは見ないで[[T001:row]]帰ろうよ。 | Let's skip this[[T001:row]]and go home. |  |
 | `main:g0055:l0005` | Main · Player | どうして？[[T001:row]]好雄もいるのに。 | Why?[[T001:row]]Yoshio's here too. |  |
-| `main:g0055:l0006` | Main · Yumi | だって、[[T001:row]]優美こんなの[[T002:row]]見るのやだもん。 | 'Cause[[T001:row]]Yumi doesn't want[[T002:row]]to see this. |  |
+| `main:g0055:l0006` | Main · Yumi | だって、[[T001:row]]優美こんなの[[T002:row]]見るのやだもん。 | 'Cause[[T001:row]]I don't want[[T002:row]]to see this. |  |
 | `main:g0055:l0007` | Main · Player | 見るのやだもんって…。[[T001:row]]じゃあ、ちょっと好雄に[[T002:row]]挨拶してくるよ。 | Doesn't want to...[[T001:row]]Then I'll just go[[T002:row]]say hi to Yoshio. |  |
 | `main:g0055:l0008` | Main · Yumi | 駄目ーっ。[[T001:row]]そっちに行っちゃ[[T002:row]]駄目なの。 | Noooo![[T001:row]]You can't go[[T002:row]]over there! |  |
 | `main:g0055:l0009` | Main · Player | それも駄目なの？[[T001:row]]しょうがないな…、[[T002:row]]じゃあ、帰ろうか？ | That's no good either?[[T001:row]]Oh well...[[T002:row]]Shall we go home? |  |
@@ -274,11 +274,11 @@
 | `main:g0057:l0001` | Main · Player | [[T001:girl_name]]。[[T002:row]]どうしたの？ | [[T001:girl_name]][[T002:row]]What is it? |  |
 | `main:g0057:l0002` | Main · Yumi | お兄ちゃんまでいる…。[[T001:row]]みっともなーい。 | Even my older brother...[[T001:row]]How embarrassing! |  |
 | `main:g0057:l0003` | Main · Player | えっ、好雄もいるの？[[T001:row]]（何で美術部なんかに…。[[T002:row]]みっともない…？） | Huh, Yoshio's here?[[T001:row]](Why the Art Club...?[[T002:row]]Embarrassing...?) |  |
-| `main:g0057:l0004` | Main · Yumi | あんなお兄ちゃんと[[T001:row]]一緒だと恥ずかしいから、[[T002:row]]優美、帰ります。 | Being with my older brother[[T001:row]]is so embarrassing,[[T002:row]]Yumi's going home. |  |
+| `main:g0057:l0004` | Main · Yumi | あんなお兄ちゃんと[[T001:row]]一緒だと恥ずかしいから、[[T002:row]]優美、帰ります。 | Being with my older brother[[T001:row]]is so embarrassing,[[T002:row]]my going home. |  |
 | `main:g0058:l0000` | Main · Player | あっ、[[T001:girl_name]]…。[[T002:row]]おおおおおおおおっ。 | Oh, [[T001:girl_name]]...[[T002:row]]Oooooooooh! |  |
 | `main:g0059:l0000` | Main · Yumi | よぉ、やっぱり来たな。[[T001:row]]お前も好きだからなぁ。 | Yo, knew you'd come.[[T001:row]]You like this stuff too. |  |
-| `main:g0059:l0001` | Main · Player | お、お前と一緒に[[T001:row]]するなよ。[[T002:row]]今、優美ちゃんと…。 | D-don't lump me[[T001:row]]in with you.[[T002:row]]I'm here with Yumi-chan... |  |
-| `main:g0059:l0002` | Main · Yumi | えっ、優美？[[T001:row]]優美と一緒だったのか？ | Huh, Yumi?[[T001:row]]You were with Yumi? |  |
+| `main:g0059:l0001` | Main · Player | お、お前と一緒に[[T001:row]]するなよ。[[T002:row]]今、優美ちゃんと…。 | D-don't lump me[[T001:row]]in with you.[[T002:row]]I'm here with me-chan... |  |
+| `main:g0059:l0002` | Main · Yumi | えっ、優美？[[T001:row]]優美と一緒だったのか？ | Huh, Yumi?[[T001:row]]You were with me? |  |
 | `main:g0059:l0003` | Main · Player | そ、そうだ。[[T001:row]]優美ちゃんを追わなきゃ。[[T002:row]]好雄、また後でな。 | Th-that's right.[[T001:row]]I have to catch Yumi-chan.[[T002:row]]Later, Yoshio. |  |
 | `main:g0060:l0000` | Main · Yumi | ここ美術部ですよね。[[T001:row]]何やってるのかなぁ？ | Art Club, right?[[T001:row]]What's going on? |  |
 | `main:g0060:l0001` | Main · Player | 油絵の展示だね。[[T001:row]][[T002:girl_name]]、絵は好き？ | An oil painting exhibit.[[T001:row]][[T002:girl_name]] like art? |  |
@@ -315,10 +315,10 @@
 | `main:g0067:l0001` | Main · Player | 吹奏楽部の演奏が、[[T001:row]]始まるみたいだね。 | Looks like the Band's[[T001:row]]concert is starting. |  |
 | `main:g0068:l0000` | Main · Yumi | あっ、[[T001:row]]何か始まるみたいですね。 | Oh,[[T001:row]]something's starting. |  |
 | `main:g0068:l0001` | Main · Player | 吹奏楽部の演奏が、[[T001:row]]始まるみたいだね。 | Looks like the Band's[[T001:row]]concert is starting. |  |
-| `main:g0069:l0000` | Main · Yumi | 今の曲、おかしかったです。[[T001:row]]優美、こういうの大好き。 | That tune was funny![[T001:row]]Yumi loves this stuff. |  |
+| `main:g0069:l0000` | Main · Yumi | 今の曲、おかしかったです。[[T001:row]]優美、こういうの大好き。 | That tune was funny![[T001:row]]I love this stuff. |  |
 | `main:g0069:l0001` | Main · Player | 本当、面白い曲だったよね。[[T001:row]]それじゃあ、[[T002:row]]そろそろ帰ろうか？ | Yeah, a funny piece.[[T001:row]]Well then,[[T002:row]]shall we head home? |  |
 | `main:g0069:l0002` | Main · Yumi | えっ、もう？[[T001:row]]…でも、いいや。[[T002:row]]うん、帰ります。 | Huh, already?[[T001:row]]...Oh, okay.[[T002:row]]Yeah, let's go home. |  |
-| `main:g0070:l0000` | Main · Yumi | 今みたいな、面白い曲、[[T001:row]]優美、大好き。 | Yumi loves funny[[T001:row]]tunes like that! |  |
+| `main:g0070:l0000` | Main · Yumi | 今みたいな、面白い曲、[[T001:row]]優美、大好き。 | I love funny[[T001:row]]tunes like that! |  |
 | `main:g0070:l0001` | Main · Player | 本当。[[T001:row]]面白い曲だったね。 | Yeah.[[T001:row]]Funny tune, huh? |  |
 | `main:g0070:l0002` | Main · Yumi | それじゃあ、[[T001:row]]そろそろ帰ろ？ | So then,[[T001:row]]head home? |  |
 | `main:g0070:l0003` | Main · Player | そうだね。[[T001:row]]帰ろう。 | Right.[[T001:row]]Let's go. |  |

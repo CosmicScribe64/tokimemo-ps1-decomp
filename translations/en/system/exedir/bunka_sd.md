@@ -210,8 +210,8 @@
 | `00008c78:1474ca6bf60c` | Structured Stage Storage | おお、この杯の美酒により、 | Oh, by this cup's wine, |  |
 | `00008c94:28d14d8c1d31` | Structured Stage Storage | 今こそ愛するもののもとへ | I now go to the one |  |
 | `00008cb0:984150aa1f60` | Structured Stage Storage | g旅立たん。 | I love. |  |
-| `00008cbc:1af7c283a15d` | Structured Stage Storage | g | `g        ` |  |
-| `00008cd0:aa468dba683f` | Structured Stage Storage | g | `g   ` |  |
+| `00008cbc:1af7c283a15d` | Structured Stage Storage | g | `        ` |  |
+| `00008cd0:aa468dba683f` | Structured Stage Storage | g | `   ` |  |
 | `00008cd8:3c0714255a2c` | Structured Stage Storage | gＺＺＺ・・・ＺＺＺ・・・ | ZZZ... ZZZ... |  |
 | `00008cf4:6893bd933b1c` | Structured Stage Storage | g起きてくれ、ジュリエッタ。 | Wake up, Julietta. |  |
 | `00008d10:d40bf735013d` | Display | ロメオ | Romeo |  |

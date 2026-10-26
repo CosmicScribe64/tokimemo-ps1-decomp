@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `table-0:g0000:l0000` | Scene 0 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-0:g0000:l0000` | Scene 0 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-0:g0001:l0000` | Scene 0 · Heroine | ねむくなりそう。 | I'm getting sleepy. |  |
 | `table-0:g0002:l0000` | Scene 0 · Heroine | 眠かったね。 | That was a snooze. |  |
 | `table-0:g0003:l0000` | Scene 0 · Heroine | さあ、乗ろう。 | Come on, let's ride. |  |
@@ -16,7 +16,7 @@
 | `table-0:g0007:l0000` | Scene 0 · Heroine | さあ、早く入ろう。 | Come on, let's hurry in. |  |
 | `table-0:g0008:l0000` | Scene 0 · Heroine | 楽しかったね。 | That was fun! |  |
 | `table-0:g0009:l0000` | Scene 0 · Heroine | 今日は楽しかったね。[[T001:row]]またどこかに誘ってね。 | That was fun today.[[T001:row]]Take me out again, 'kay? |  |
-| `table-0:g0010:l0000` | Scene 0 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-0:g0010:l0000` | Scene 0 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-0:g0011:l0000` | Scene 0 · Heroine | ねむくなりそう。 | I'm getting sleepy. |  |
 | `table-0:g0012:l0000` | Scene 0 · Heroine | 眠かったね。 | That was a snooze. |  |
 | `table-0:g0013:l0000` | Scene 0 · Heroine | さあ、乗ろう。 | Come on, let's ride. |  |
@@ -47,7 +47,7 @@
 | `table-0:g0038:l0000` | Scene 0 · Heroine | 一人の方がよかったな…。 | I'd rather be alone... |  |
 | `table-0:g0039:l0000` | Scene 0 · Heroine | それじゃ。 | See ya. |  |
 | `table-0:g0040:l0000` | Scene 0 · Heroine | それじゃ。 | See ya. |  |
-| `table-1:g0000:l0000` | Scene 1 · Shiori | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]] |  |
+| `table-1:g0000:l0000` | Scene 1 · Shiori | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-1:g0001:l0000` | Scene 1 · Shiori | さあ、乗りましょう。 | Come on, let's ride. |  |
 | `table-1:g0002:l0000` | Scene 1 · Shiori | いい眺めだったね。 | What a nice view. |  |
 | `table-1:g0003:l0000` | Scene 1 · Shiori | 私大好きなの。[[T001:row]]さあ、乗りましょう。 | I love those.[[T001:row]]Come on, let's ride. |  |
@@ -57,7 +57,7 @@
 | `table-1:g0007:l0000` | Scene 1 · Shiori | ちょっと怖いけど[[T001:row]]入りましょう。 | It's a bit scary,[[T001:row]]but let's go in. |  |
 | `table-1:g0008:l0000` | Scene 1 · Shiori | ちょっと、怖かったね。 | That was a bit scary. |  |
 | `table-1:g0009:l0000` | Scene 1 · Shiori | [[T001:player_form]][[T002:row]]今日は楽しかったわ。[[T003:row]]それじゃ、さようなら。 | [[T001:player_form]][[T002:row]]I had fun today.[[T003:row]]Goodbye, then. |  |
-| `table-1:g0010:l0000` | Scene 1 · Shiori | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-1:g0010:l0000` | Scene 1 · Shiori | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-1:g0011:l0000` | Scene 1 · Shiori | さあ、乗りましょう。 | Come on, let's ride. |  |
 | `table-1:g0012:l0000` | Scene 1 · Shiori | いい眺めだったね。 | What a nice view. |  |
 | `table-1:g0013:l0000` | Scene 1 · Shiori | 私大好きなの。[[T001:row]]さあ、乗りましょう。 | I love those.[[T001:row]]Come on, let's ride. |  |
@@ -88,7 +88,7 @@
 | `table-1:g0038:l0000` | Scene 1 · Shiori | まだ、一人の方が[[T001:row]]良かったな…。 | Even alone would[[T001:row]]have been better... |  |
 | `table-1:g0039:l0000` | Scene 1 · Shiori | 今日は楽しかったわ。[[T001:row]]好雄君さよなら。 | I had fun today.[[T001:row]]Goodbye, Yoshio-kun. |  |
 | `table-1:g0040:l0000` | Scene 1 · Shiori | それじゃ、さよなら。 | Well then, goodbye. |  |
-| `table-2:g0000:l0000` | Scene 2 · Heroine | 来たの？[[T001:row]][[T002:player_form]]。 | So you came,[[T001:row]][[T002:player_form]] |  |
+| `table-2:g0000:l0000` | Scene 2 · Heroine | 来たの？[[T001:row]][[T002:player_form]]。 | So you came,[[T001:row]][[T002:player_form]]? |  |
 | `table-2:g0001:l0000` | Scene 2 · Heroine | 一番くだらないわね。 | That's the dumbest one. |  |
 | `table-2:g0002:l0000` | Scene 2 · Heroine | 全然、つまらないわ。 | Utterly dull. |  |
 | `table-2:g0003:l0000` | Scene 2 · Heroine | 私の作ったものの方が[[T001:row]]きっと怖いわよ。 | Anything I built[[T001:row]]would be scarier. |  |
@@ -98,7 +98,7 @@
 | `table-2:g0007:l0000` | Scene 2 · Heroine | せっかくの科学を[[T001:row]]こんな非科学的なものに[[T002:row]]使うなんて。 | All that science[[T001:row]]wasted on something[[T002:row]]so unscientific. |  |
 | `table-2:g0008:l0000` | Scene 2 · Heroine | 全然、つまらないわ。 | Utterly dull. |  |
 | `table-2:g0009:l0000` | Scene 2 · Heroine | [[T001:player_form]][[T002:row]]いい暇潰しができたわ。[[T003:row]]それじゃ、失礼するわ。 | [[T001:player_form]][[T002:row]]That passed the time.[[T003:row]]Now, excuse me. |  |
-| `table-2:g0010:l0000` | Scene 2 · Heroine | あなたも暇ね。[[T001:row]][[T002:player_form]]。 | You have nothing[[T001:row]]better to do, [[T002:player_form]] |  |
+| `table-2:g0010:l0000` | Scene 2 · Heroine | あなたも暇ね。[[T001:row]][[T002:player_form]]。 | You have nothing[[T001:row]]better to do, [[T002:player_form]]. |  |
 | `table-2:g0011:l0000` | Scene 2 · Heroine | 一番くだらないわね。 | That's the dumbest one. |  |
 | `table-2:g0012:l0000` | Scene 2 · Heroine | 全然、つまらないわ。 | Utterly dull. |  |
 | `table-2:g0013:l0000` | Scene 2 · Heroine | 私の作ったものの方が[[T001:row]]きっと怖いわよ。 | Anything I built[[T001:row]]would be scarier. |  |
@@ -129,7 +129,7 @@
 | `table-2:g0038:l0000` | Scene 2 · Heroine | ‥‥‥‥。 | ...... |  |
 | `table-2:g0039:l0000` | Scene 2 · Heroine | いい暇潰しができたわ。[[T001:row]]好雄君、失礼するわ。 | That passed the time.[[T001:row]]Excuse me, Yoshio-kun. |  |
 | `table-2:g0040:l0000` | Scene 2 · Heroine | いい暇潰しができたわ。[[T001:row]]好雄君、失礼するわ。 | That passed the time.[[T001:row]]Excuse me, Yoshio-kun. |  |
-| `table-3:g0000:l0000` | Scene 3 · Heroine | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]] |  |
+| `table-3:g0000:l0000` | Scene 3 · Heroine | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-3:g0001:l0000` | Scene 3 · Heroine | さあ、乗りましょうよ。 | Come on, let's ride! |  |
 | `table-3:g0002:l0000` | Scene 3 · Heroine | 素晴らしい、[[T001:row]]眺めだったわね。 | What a[[T001:row]]wonderful view. |  |
 | `table-3:g0003:l0000` | Scene 3 · Heroine | カモンレッツゴー。[[T001:row]]さあ、乗りましょう。 | Come on, let's go![[T001:row]]Let's ride! |  |
@@ -139,7 +139,7 @@
 | `table-3:g0007:l0000` | Scene 3 · Heroine | カモンレッツゴー。[[T001:row]]さあ、入りましょう。 | Come on, let's go![[T001:row]]Let's go in! |  |
 | `table-3:g0008:l0000` | Scene 3 · Heroine | ちょっと、怖かったわね。 | That was a little scary. |  |
 | `table-3:g0009:l0000` | Scene 3 · Heroine | [[T001:player_form]][[T002:row]]今日は[[T003:row]]とっても楽しかったわ。[[T004:row]]グッバイ、さよなら。 | [[T001:player_form]][[T002:row]]today was[[T003:row]]so much fun.[[T004:row]]Goodbye, sayonara. |  |
-| `table-3:g0010:l0000` | Scene 3 · Heroine | ハーイ。[[T001:row]]こんにちは。[[T002:row]][[T003:player_form]]。 | Hi![[T001:row]]Hello,[[T002:row]][[T003:player_form]] |  |
+| `table-3:g0010:l0000` | Scene 3 · Heroine | ハーイ。[[T001:row]]こんにちは。[[T002:row]][[T003:player_form]]。 | Hi![[T001:row]]Hello,[[T002:row]][[T003:player_form]]. |  |
 | `table-3:g0011:l0000` | Scene 3 · Heroine | さあ、乗りましょうよ。 | Come on, let's ride! |  |
 | `table-3:g0012:l0000` | Scene 3 · Heroine | 素晴らしい、[[T001:row]]眺めだったわね。 | What a[[T001:row]]wonderful view. |  |
 | `table-3:g0013:l0000` | Scene 3 · Heroine | カモンレッツゴー。[[T001:row]]さあ、乗りましょう。 | Come on, let's go![[T001:row]]Let's ride! |  |
@@ -170,7 +170,7 @@
 | `table-3:g0038:l0000` | Scene 3 · Heroine | まだ一人の方が[[T001:row]]良かったわ…。 | Even alone would[[T001:row]]have been better... |  |
 | `table-3:g0039:l0000` | Scene 3 · Heroine | 今日は楽しかったわ。[[T001:row]]グッバイ、好雄君。 | Today was fun.[[T001:row]]Goodbye, Yoshio-kun. |  |
 | `table-3:g0040:l0000` | Scene 3 · Heroine | グッバイ、さよなら。 | Goodbye, sayonara. |  |
-| `table-4:g0000:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0000:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0000:l0001` | Scene 4 · Heroine | こんにちは。 | Good afternoon. |  |
 | `table-4:g0001:l0000` | Scene 4 · Heroine | 好きではないけど、[[T001:row]]乗ってあげるわ。 | I don't like it,[[T001:row]]but I'll ride with you. |  |
 | `table-4:g0002:l0000` | Scene 4 · Heroine | 思ったより、[[T001:row]]楽しかったわ。 | More fun than[[T001:row]]I expected. |  |
@@ -181,7 +181,7 @@
 | `table-4:g0007:l0000` | Scene 4 · Heroine | もうそんな歳でもないし…。[[T001:row]]悪いけど、一人で[[T002:row]]乗って下さるかしら。 | I'm too old for this...[[T001:row]]Sorry, but could you[[T002:row]]go on your own? |  |
 | `table-4:g0008:l0000` | Scene 4 · Heroine | 楽しかったかしら？ | Did you have fun? |  |
 | `table-4:g0009:l0000` | Scene 4 · Heroine | [[T001:player_form]]。[[T002:row]]今日は、[[T003:row]]なかなか楽しかったわ。[[T004:row]]また誘ってくれてもいいわよ。[[T005:row]]それじゃあ。 | [[T001:player_form]].[[T002:row]]I actually[[T003:row]]had a good time today.[[T004:row]]You can invite me again.[[T005:row]]See you. |  |
-| `table-4:g0010:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0010:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0010:l0001` | Scene 4 · Heroine | こんにちは。 | Good afternoon. |  |
 | `table-4:g0011:l0000` | Scene 4 · Heroine | 好きではないけど、[[T001:row]]乗ってあげるわ。 | I don't like it,[[T001:row]]but I'll ride with you. |  |
 | `table-4:g0012:l0000` | Scene 4 · Heroine | 思ったより、[[T001:row]]楽しかったわ。 | More fun than[[T001:row]]I expected. |  |
@@ -192,7 +192,7 @@
 | `table-4:g0017:l0000` | Scene 4 · Heroine | もうそんな歳でもないし…。[[T001:row]]悪いけど、一人で[[T002:row]]乗って下さるかしら。 | I'm too old for this...[[T001:row]]Sorry, but could you[[T002:row]]go on your own? |  |
 | `table-4:g0018:l0000` | Scene 4 · Heroine | 楽しかったかしら？ | Did you have fun? |  |
 | `table-4:g0019:l0000` | Scene 4 · Heroine | 今日は[[T001:row]]なかなか楽しかったわ。[[T002:row]]またね。 | I had[[T001:row]]quite a nice time.[[T002:row]]See you. |  |
-| `table-4:g0020:l0000` | Scene 4 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-4:g0020:l0000` | Scene 4 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-4:g0021:l0000` | Scene 4 · Heroine | 好きではないけど、[[T001:row]]乗ってあげるわ。 | I don't like it,[[T001:row]]but I'll ride with you. |  |
 | `table-4:g0022:l0000` | Scene 4 · Heroine | 思ったより、[[T001:row]]楽しかったわ。 | More fun than[[T001:row]]I expected. |  |
 | `table-4:g0023:l0000` | Scene 4 · Heroine | つきあってあげるわ。 | Fine, I'll go with you. |  |
@@ -213,7 +213,7 @@
 | `table-4:g0038:l0000` | Scene 4 · Heroine | ‥‥‥‥。[[T001:row]]待ったわよ。 | ......[[T001:row]]I've been waiting. |  |
 | `table-4:g0039:l0000` | Scene 4 · Heroine | 今日は[[T001:row]]まあまあ面白かったわ。[[T002:row]]それじゃ失礼するわ[[T003:row]]早乙女君。 | Today was[[T001:row]]rather amusing.[[T002:row]]I'll be going now,[[T003:row]]Saotome-kun. |  |
 | `table-4:g0040:l0000` | Scene 4 · Heroine | それじゃ失礼するわね。 | Now, excuse me. |  |
-| `table-5:g0000:l0000` | Scene 5 · Heroine | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]] |  |
+| `table-5:g0000:l0000` | Scene 5 · Heroine | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-5:g0001:l0000` | Scene 5 · Heroine | 私、大好きなんです。 | I love this one. |  |
 | `table-5:g0002:l0000` | Scene 5 · Heroine | すごく[[T001:row]]いい眺めでしたね。 | What a[[T001:row]]lovely view. |  |
 | `table-5:g0003:l0000` | Scene 5 · Heroine | 私、ちょっと[[T001:row]]苦手なんです…。 | This one makes me[[T001:row]]a bit nervous... |  |
@@ -223,7 +223,7 @@
 | `table-5:g0007:l0000` | Scene 5 · Heroine | ちょっと怖いですね。 | It's a little scary. |  |
 | `table-5:g0008:l0000` | Scene 5 · Heroine | やっぱり怖かったです。 | That was scary after all. |  |
 | `table-5:g0009:l0000` | Scene 5 · Heroine | [[T001:player_form]][[T002:row]]今日は、楽しかったですね。[[T003:row]]それでは、失礼します。 | [[T001:player_form]][[T002:row]]today was fun.[[T003:row]]Goodbye for now. |  |
-| `table-5:g0010:l0000` | Scene 5 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-5:g0010:l0000` | Scene 5 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-5:g0011:l0000` | Scene 5 · Heroine | 私、大好きなんです。 | I love this one. |  |
 | `table-5:g0012:l0000` | Scene 5 · Heroine | すごく[[T001:row]]いい眺めでしたね。 | What a[[T001:row]]lovely view. |  |
 | `table-5:g0013:l0000` | Scene 5 · Heroine | 私、ちょっと[[T001:row]]苦手なんです…。 | This one makes me[[T001:row]]a bit nervous... |  |
@@ -305,7 +305,7 @@
 | `table-7:g0007:l0000` | Scene 7 · Heroine | さあ、入ろうぜ。 | Come on, let's go in. |  |
 | `table-7:g0008:l0000` | Scene 7 · Heroine | 結構、面白かったね。 | That was pretty fun. |  |
 | `table-7:g0009:l0000` | Scene 7 · Heroine | じゃあね。 | See ya. |  |
-| `table-7:g0010:l0000` | Scene 7 · Heroine | よお、[[T001:row]][[T002:player_form]]。 | Yo,[[T001:row]][[T002:player_form]] |  |
+| `table-7:g0010:l0000` | Scene 7 · Heroine | よお、[[T001:row]][[T002:player_form]]。 | Yo,[[T001:row]][[T002:player_form]]. |  |
 | `table-7:g0011:l0000` | Scene 7 · Heroine | さあ、乗ろうぜ。 | C'mon, let's ride! |  |
 | `table-7:g0012:l0000` | Scene 7 · Heroine | いい眺めだったな。 | What a great view. |  |
 | `table-7:g0013:l0000` | Scene 7 · Heroine | ちょっと苦手なんだ。 | Not really my thing. |  |
@@ -335,7 +335,7 @@
 | `table-7:g0037:l0000` | Scene 7 · Heroine | あーぁ、つまんねぇなぁ…。 | Ugh, this is so boring... |  |
 | `table-7:g0038:l0000` | Scene 7 · Heroine | 一人だったら[[T001:row]]良かったのに。 | I'd rather have[[T001:row]]been alone. |  |
 | `table-7:g0039:l0000` | Scene 7 · Heroine | じゃあな。 | See ya. |  |
-| `table-8:g0000:l0000` | Scene 8 · Heroine | あの…。[[T001:row]]こ、こんにちは。[[T002:row]][[T003:player_form]]。 | Um...[[T001:row]]H-hello,[[T002:row]][[T003:player_form]] |  |
+| `table-8:g0000:l0000` | Scene 8 · Heroine | あの…。[[T001:row]]こ、こんにちは。[[T002:row]][[T003:player_form]]。 | Um...[[T001:row]]H-hello,[[T002:row]][[T003:player_form]]. |  |
 | `table-8:g0001:l0000` | Scene 8 · Heroine | 私、大好きなんです。 | I love this one. |  |
 | `table-8:g0002:l0000` | Scene 8 · Heroine | 二人きりで、ちょっと…。 | Just us two, um... |  |
 | `table-8:g0003:l0000` | Scene 8 · Heroine | あの…。[[T001:row]]私、ちょっと…。 | Um...[[T001:row]]I'm not really... |  |
@@ -344,9 +344,9 @@
 | `table-8:g0006:l0000` | Scene 8 · Heroine | すごく怖かったです…。 | That was so scary... |  |
 | `table-8:g0007:l0000` | Scene 8 · Heroine | ちょっと、楽しみです…。 | I'm kind of excited... |  |
 | `table-8:g0008:l0000` | Scene 8 · Heroine | 楽しかったですね。 | That was fun. |  |
-| `table-8:g0009:l0000` | Scene 8 · Heroine | あの…[[T001:player_form]] | Um... [[T001:player_form]] |  |
+| `table-8:g0009:l0000` | Scene 8 · Heroine | あの…[[T001:player_form]] | Um... [[T001:player_form]]. |  |
 | `table-8:g0009:l0001` | Scene 8 · Heroine | 今日は楽しかったです…。[[T001:row]]それじゃ…。 | Today was fun...[[T001:row]]Um, bye... |  |
-| `table-8:g0010:l0000` | Scene 8 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-8:g0010:l0000` | Scene 8 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-8:g0011:l0000` | Scene 8 · Heroine | 私、大好きなんです。 | I love this one. |  |
 | `table-8:g0012:l0000` | Scene 8 · Heroine | 二人きりで、ちょっと…。 | Just us two, um... |  |
 | `table-8:g0013:l0000` | Scene 8 · Heroine | あの…。[[T001:row]]私、ちょっと…。 | Um...[[T001:row]]I'm not really... |  |
@@ -377,7 +377,7 @@
 | `table-8:g0038:l0000` | Scene 8 · Heroine | ちょっと、苦痛でした…。 | That was... a bit rough. |  |
 | `table-8:g0039:l0000` | Scene 8 · Heroine | あの…好雄さん。[[T001:row]]楽しかったです…。[[T002:row]]それじゃ…。 | Um... Yoshio-san.[[T001:row]]It was fun...[[T002:row]]Bye... |  |
 | `table-8:g0040:l0000` | Scene 8 · Heroine | それじゃ…。 | See you... |  |
-| `table-9:g0000:l0000` | Scene 9 · Heroine | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]] |  |
+| `table-9:g0000:l0000` | Scene 9 · Heroine | こ、こんにちは。[[T001:row]][[T002:player_form]]。 | H-hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-9:g0001:l0000` | Scene 9 · Heroine | さあ、乗りましょう。 | Come on, let's ride. |  |
 | `table-9:g0002:l0000` | Scene 9 · Heroine | すごく[[T001:row]]いい眺めだったね。 | What a[[T001:row]]great view. |  |
 | `table-9:g0003:l0000` | Scene 9 · Heroine | さあ、乗りましょう。 | Come on, let's ride. |  |
@@ -387,7 +387,7 @@
 | `table-9:g0007:l0000` | Scene 9 · Heroine | さあ、入りましょう。 | Come on, let's go in. |  |
 | `table-9:g0008:l0000` | Scene 9 · Heroine | ちょっと怖かったね。 | That was a bit scary. |  |
 | `table-9:g0009:l0000` | Scene 9 · Heroine | [[T001:player_form]]。[[T002:row]]今日は楽しかったわ。[[T003:row]]それじゃ、またね。 | [[T001:player_form]][[T002:row]]I had fun today.[[T003:row]]See you. |  |
-| `table-9:g0010:l0000` | Scene 9 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]] |  |
+| `table-9:g0010:l0000` | Scene 9 · Heroine | こんにちは。[[T001:row]][[T002:player_form]]。 | Hello,[[T001:row]][[T002:player_form]]. |  |
 | `table-9:g0011:l0000` | Scene 9 · Heroine | さあ、乗りましょう。 | Come on, let's ride. |  |
 | `table-9:g0012:l0000` | Scene 9 · Heroine | すごく[[T001:row]]いい眺めだったね。 | What a[[T001:row]]great view. |  |
 | `table-9:g0013:l0000` | Scene 9 · Heroine | さあ、乗りましょう。 | Come on, let's ride. |  |
@@ -436,16 +436,16 @@
 | `table-10:g0008:l0000` | Scene 10 · Yoshio | 来て、良かっただろう？[[T001:row]]感謝しろよ。 | Glad you came, right?[[T001:row]]You owe me. |  |
 | `table-10:g0009:l0000` | Scene 10 · Yoshio | それじゃ、大観覧車に[[T001:row]]乗ろうぜ。 | Let's ride the[[T001:row]]big Ferris wheel. |  |
 | `table-10:g0010:l0000` | Scene 10 · Yoshio | お前、どっちの娘と乗る？ | Who are you riding with? |  |
-| `table-10:g0010:l0001` | Scene 10 · Choice | 詩織と乗るぜ。[[T001:choice_option]][[T002:girl_name]]と乗るぜ。 | Ride with Shiori[[T001:choice_option]]Ride with [[T002:girl_name]] |  |
+| `table-10:g0010:l0001` | Scene 10 · Choice | 詩織と乗るぜ。[[T001:choice_option]][[T002:girl_name]]と乗るぜ。 | Ride with Shiori[[T001:choice_option]]Ride with [[T002:girl_name]]. |  |
 | `table-10:g0011:l0000` | Scene 10 · Yoshio | 次は、[[T001:row]]ジェットコースターに[[T002:row]]乗ろうぜ。 | Next,[[T001:row]]let's ride the[[T002:row]]roller coaster. |  |
 | `table-10:g0012:l0000` | Scene 10 · Yoshio | お前、どっちの娘と乗る？ | Who are you riding with? |  |
-| `table-10:g0012:l0001` | Scene 10 · Choice | 詩織と乗るぜ。[[T001:choice_option]][[T002:girl_name]]と乗るぜ。 | Ride with Shiori[[T001:choice_option]]Ride with [[T002:girl_name]] |  |
+| `table-10:g0012:l0001` | Scene 10 · Choice | 詩織と乗るぜ。[[T001:choice_option]][[T002:girl_name]]と乗るぜ。 | Ride with Shiori[[T001:choice_option]]Ride with [[T002:girl_name]]. |  |
 | `table-10:g0013:l0000` | Scene 10 · Yoshio | 次は、[[T001:row]]絶叫マシンビビールに[[T002:row]]乗ろうぜ。 | Next,[[T001:row]]let's ride the[[T002:row]]Bibeer Screamer. |  |
 | `table-10:g0014:l0000` | Scene 10 · Yoshio | お前、どっちの娘と乗る？ | Who are you riding with? |  |
-| `table-10:g0014:l0001` | Scene 10 · Choice | 詩織と乗るぜ。[[T001:choice_option]][[T002:girl_name]]と乗るぜ。 | Ride with Shiori[[T001:choice_option]]Ride with [[T002:girl_name]] |  |
+| `table-10:g0014:l0001` | Scene 10 · Choice | 詩織と乗るぜ。[[T001:choice_option]][[T002:girl_name]]と乗るぜ。 | Ride with Shiori[[T001:choice_option]]Ride with [[T002:girl_name]]. |  |
 | `table-10:g0015:l0000` | Scene 10 · Yoshio | 次は、[[T001:row]]ゴーストハウスに[[T002:row]]入ろうぜ。 | Next,[[T001:row]]let's hit the[[T002:row]]Ghost House. |  |
 | `table-10:g0016:l0000` | Scene 10 · Yoshio | お前、どっちの娘と入る？ | Who are you going in with? |  |
-| `table-10:g0016:l0001` | Scene 10 · Choice | 詩織と入るぜ。[[T001:choice_option]][[T002:girl_name]]と入るぜ。 | In with Shiori[[T001:choice_option]]In with [[T002:girl_name]] |  |
+| `table-10:g0016:l0001` | Scene 10 · Choice | 詩織と入るぜ。[[T001:choice_option]][[T002:girl_name]]と入るぜ。 | In with Shiori[[T001:choice_option]]In with [[T002:girl_name]]. |  |
 | `table-10:g0017:l0000` | Scene 10 · Yoshio | もう、終わりか…？[[T001:row]]さて、帰るか。 | That's it...?[[T001:row]]Well, let's go home. |  |
 | `table-10:g0018:l0000` | Scene 10 · Yoshio | 結構傷ついてたぜ。 | She was pretty hurt. |  |
 | `table-10:g0019:l0000` | Scene 10 · Yoshio | お前に気が[[T001:row]]あるかもしれないぜ。 | She might be[[T001:row]]into you, man. |  |

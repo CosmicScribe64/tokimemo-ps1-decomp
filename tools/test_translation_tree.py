@@ -209,8 +209,8 @@ class TestTranslationTree(unittest.TestCase):
                 base_supplemental_path=os.path.join(tree_dir, "supplemental.jsonl"),
             )
 
-            expected_ret = "28c2c8fbf6f31b8a56f8415328c94fc3aebed39dbe96e114096193602c4dd533"
-            expected_sup = "49bbeaf94ce5cca88634fb17fb62e3b6a88b4032f86d769dc54ad4285e91e58c"
+            expected_ret = "ed180f9fdaab5de80648a1d508ad795675c9e3fe2b1ada0dc99c1d179b9d837e"
+            expected_sup = "5ce2c6692cf66fde9b1378ec5514493c255035055e97ba668a8c6d3b64a84802"
 
             self.assertEqual(ret_sha, expected_ret)
             self.assertEqual(sup_sha, expected_sup)

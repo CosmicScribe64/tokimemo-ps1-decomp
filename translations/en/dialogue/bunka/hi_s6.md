@@ -487,7 +487,7 @@
 | `main:g0152:l0005` | Main · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
 | `main:g0152:l0006` | Main · Player | はい、できたよ。[[T001:row]]どう？ | All done.[[T001:row]]What do you think? |  |
 | `main:g0153:l0000` | Main · Yuina | なかなかいいわ。[[T001:row]]肖像画もあなたに[[T002:row]]お願いしようかしら。 | Rather good.[[T001:row]]Perhaps you'll paint[[T002:row]]my official portrait. |  |
-| `main:g0153:l0001` | Main · Player | 肖像画…？[[T001:row]][[T002:girl_name]]の？ | A portrait...?[[T001:row]]Of you, [[T002:girl_name]] |  |
+| `main:g0153:l0001` | Main · Player | 肖像画…？[[T001:row]][[T002:girl_name]]の？ | A portrait...?[[T001:row]]Of you, [[T002:girl_name]]? |  |
 | `main:g0153:l0002` | Main · Yuina | そうよ。[[T001:row]]そのうち描いて[[T002:row]]もらうことになるわ。 | Yes.[[T001:row]]You'll be painting[[T002:row]]it someday. |  |
 | `main:g0153:l0003` | Main · Player | 別にいいけどさ…。[[T001:row]]いつごろなの？ | I don't mind...[[T001:row]]But when? |  |
 | `main:g0153:l0004` | Main · Yuina | その時が来たらわかるわ。[[T001:row]]ふふ…。[[T002:row]]それじゃ、さよなら。 | When the time comes,[[T001:row]]you'll know. Hehe...[[T002:row]]Goodbye. |  |

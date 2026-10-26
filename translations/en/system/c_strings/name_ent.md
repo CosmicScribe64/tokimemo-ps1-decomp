@@ -31,14 +31,14 @@
 | `8013c580:3` | file_select_memory_card_check_poll() | NO CARD! | NO CARD! | ASCII / format literal preserved. |
 | `8013c580:4` | file_select_memory_card_check_poll() | NO COMUNICATION! | NO COMUNICATION! | ASCII / format literal preserved. |
 | `8013c6fc:1` | file_select_play_without_memory_card_prompt() | 新たにゲームを始めますか？ | Start a new game? |  |
-| `8013c834:1` | file_select_insert_memory_card_message() | メモリーカードを | Insert a memory |  |
+| `8013c834:1` | file_select_insert_memory_card_message() | メモリーカードを | Insert a memory card |  |
 | `8013c834:2` | file_select_insert_memory_card_message() | 差し込み口１ | in slot 1 |  |
-| `8013c834:3` | file_select_insert_memory_card_message() | にセットして、 | `          and` |  |
+| `8013c834:3` | file_select_insert_memory_card_message() | にセットして、 | `         , then press` |  |
 | `8013c834:4` | file_select_insert_memory_card_message() | ボタンを押してください。 | `  to continue.` |  |
 | `8013c9f0:1` | file_select_scan() | SEARCH_CARD | SEARCH_CARD | ASCII / format literal preserved. |
 | `8013cb44:1` | file_select_system_file_read() | システムファイルは | The system file |  |
 | `8013cb44:2` | file_select_system_file_read() | 壊れています。 | is corrupted. |  |
-| `8013cb44:3` | file_select_system_file_read() | システムファイルを | the system file |  |
+| `8013cb44:3` | file_select_system_file_read() | システムファイルを | Remake the |  |
 | `8013cb44:4` | file_select_system_file_read() | 作り直しますか？ | system file? |  |
 | `8013d054:1` | file_select_album_load() | SYS0 DATA OK! | SYS0 DATA OK! | ASCII / format literal preserved. |
 | `8013d054:2` | file_select_album_load() | s->mem_stat [[T001:format_directive]] [[T002:line_feed]] | s->mem_stat [[T001:format_directive]] [[T002:line_feed]] | ASCII / format literal preserved. |
@@ -102,7 +102,7 @@
 | `80142028:2` | file_select_format_prompt() | 初期化していいですか？ | OK to format it? |  |
 | `80142028:3` | file_select_format_prompt() | 別のメモリーカードを | Insert another card |  |
 | `80142028:4` | file_select_format_prompt() | 差し込み口１ | in slot 1 |  |
-| `80142028:5` | file_select_format_prompt() | にセットして、 | `          and` |  |
+| `80142028:5` | file_select_format_prompt() | にセットして、 | `         , then press` |  |
 | `80142028:6` | file_select_format_prompt() | ボタンを押してください。 | `  to continue.` |  |
 | `80142880:1` | file_select_buttons_input() | 0 | 0 | ASCII / format literal preserved. |
 | `80142880:2` | file_select_buttons_input() | 1 | 1 | ASCII / format literal preserved. |

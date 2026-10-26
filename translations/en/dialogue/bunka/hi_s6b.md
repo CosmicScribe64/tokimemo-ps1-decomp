@@ -149,7 +149,7 @@
 | `main:g0032:l0004` | Main · Yuina | そんな、くだらないもの[[T001:row]]手伝いたくないわ。 | I won't help with[[T001:row]]such drivel. |  |
 | `main:g0033:l0000` | Main · Player | しょうがない、[[T001:row]]一人で勝手に相性を[[T002:row]]見てみるか…。 | Oh well,[[T001:row]]I'll check our[[T002:row]]match myself... |  |
 | `main:g0034:l0000` | Main · Yuina | 占いなんて、[[T001:row]]馬鹿げてるわ。 | Fortunes are[[T001:row]]absurd. |  |
-| `main:g0034:l0001` | Main · Player | あの…、[[T001:girl_name]]。 | Um... [[T001:girl_name]] |  |
+| `main:g0034:l0001` | Main · Player | あの…、[[T001:girl_name]]。 | Um... [[T001:girl_name]]. |  |
 | `main:g0034:l0002` | Main · Yuina | ‥‥‥‥。[[T001:row]]何よ？ | ......[[T001:row]]What? |  |
 | `main:g0034:l0003` | Main · Player | 相性占いなんだけど、[[T001:row]]良かったら、[[T002:row]]チェックしてくれない？ | It's a compatibility test.[[T001:row]]Care to[[T002:row]]try it? |  |
 | `main:g0034:l0004` | Main · Yuina | お断りよ。 | I refuse. |  |
@@ -209,7 +209,7 @@
 | `main:g0057:l0000` | Main · Yuina | ゲームなんて[[T001:row]]くだらないわね。[[T002:row]]あなたは、作ってきたの？ | Games are[[T001:row]]such drivel.[[T002:row]]Did you bring yours? |  |
 | `main:g0057:l0001` | Main · Player | 作ってきたけど…。[[T001:row]]自信はあまりないなぁ。 | I did, but...[[T001:row]]I'm not very confident. |  |
 | `main:g0057:l0002` | Main · Yuina | そう。 | I see. |  |
-| `main:g0057:l0003` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0057:l0003` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0057:l0004` | Main · Yuina | 何よ？ | What? |  |
 | `main:g0057:l0005` | Main · Player | 悪いけど、ちょっと[[T001:row]]評価してくれない。 | Sorry, but could[[T001:row]]you judge it? |  |
 | `main:g0057:l0006` | Main · Yuina | 本当に、悪いわよ。[[T001:row]]見てるだけならいいわよ。 | I'm no good at it.[[T001:row]]I'll just watch. |  |
@@ -218,7 +218,7 @@
 | `main:g0058:l0001` | Main · Player | そ、そう。[[T001:row]][[T002:girl_name]]にそう言われると、[[T003:row]]自信つくなぁ。 | R-really?[[T001:row]]From you, [[T002:girl_name]][[T003:row]]that's encouraging. |  |
 | `main:g0058:l0002` | Main · Yuina | ゲームって、[[T001:row]]本当にくだらない[[T002:row]]遊びねぇ。 | Games really[[T001:row]]are foolish[[T002:row]]pastimes. |  |
 | `main:g0059:l0000` | Main · Yuina | ゲームなんて、[[T001:row]]馬鹿みたい。 | Games are[[T001:row]]stupid. |  |
-| `main:g0059:l0001` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0059:l0001` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0059:l0002` | Main · Yuina | …何よ？ | ...What? |  |
 | `main:g0059:l0003` | Main · Player | 悪いけど、ちょっと[[T001:row]]評価してくれない。 | Sorry, but could[[T001:row]]you judge it? |  |
 | `main:g0059:l0004` | Main · Yuina | 嫌よ。 | No. |  |

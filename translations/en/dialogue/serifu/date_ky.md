@@ -261,7 +261,7 @@
 | `section-12:g0005:l0001` | Shopping Street · Choice | 持ってあげるよ。[[T001:choice_option]]やっぱり、女の子なんだよな。[[T002:choice_option]]ホント、たくさん買ったね。 | I'll carry them for you.[[T001:choice_option]]You're a girl after all.[[T002:choice_option]]You really bought a lot. |  |
 | `section-12:g0006:l0000` | Shopping Street · Nozomi | いいよ[[T001:row]]一人で運べるから。[[T002:row]]ありがとう、嬉しいよ。[[T003:reply_variant]]その言い方、気になるなぁ。[[T004:reply_variant]]まとめ買いだからね。 | No, it's okay.[[T001:row]]I can carry them.[[T002:row]]Thanks for offering![[T003:reply_variant]]That wording bugs me.[[T004:reply_variant]]I was stocking up. |  |
 | `section-12:g0007:l0000` | Shopping Street · Nozomi | 色んな物があるね。 | There's all kinds of stuff. |  |
-| `section-12:g0007:l0001` | Shopping Street · Choice | どれも、清川さんに似合うよ。[[T001:choice_option]]どれも、似合わないんじゃない？[[T002:choice_option]]清川さん、意外と可愛いね。 | They'd all look good on you, Kiyokawa-san.[[T001:choice_option]]None of them really suit you.[[T002:choice_option]]You're cuter than I thought, Kiyokawa-san. |  |
+| `section-12:g0007:l0001` | Shopping Street · Choice | どれも、清川さんに似合うよ。[[T001:choice_option]]どれも、似合わないんじゃない？[[T002:choice_option]]清川さん、意外と可愛いね。 | They'd all look great on you.[[T001:choice_option]]None of them really suit you.[[T002:choice_option]]You're cute, Kiyokawa-san. |  |
 | `section-12:g0008:l0000` | Shopping Street · Nozomi | お世辞をありがとう。[[T001:row]]でも、嬉しいよ。[[T002:reply_variant]]ちょっと、傷ついたぞ…。[[T003:reply_variant]]意外と、って言うのが[[T004:row]]引っ掛かるなぁ。 | Thanks for the flattery.[[T001:row]]But I'm happy.[[T002:reply_variant]]Ouch, that kinda hurt...[[T003:reply_variant]]"Than you thought"?[[T004:row]]That bugs me a little. |  |
 | `section-12:g0009:l0000` | Shopping Street · Nozomi | どんなのが似合うかな？ | What do you think suits me? |  |
 | `section-12:g0009:l0001` | Shopping Street · Choice | 銀のロザリオなんてどう？[[T001:choice_option]]ホイッスルを首にかけたら？[[T002:choice_option]]このカラフルなやつはどう？ | How about a silver rosary?[[T001:choice_option]]Try a whistle on a cord?[[T002:choice_option]]How about this colorful one? |  |
@@ -319,7 +319,7 @@
 | `section-16:g0005:l0000` | Pool · Nozomi | 私に、ついてこれるかな。[[T001:reply_variant]]だらしねぇな。[[T002:row]]シャキッとしろよ[[T003:row]]シャキッと。[[T004:reply_variant]]そうだな。[[T005:row]]いいぜ。 | Think you can keep up?[[T001:reply_variant]]You're such a slacker.[[T002:row]]Shape up,[[T003:row]]seriously.[[T004:reply_variant]]Sure.[[T005:row]]You got it. |  |
 | `section-17:g0000:l0000` | Sea · Nozomi | それじゃ、[[T001:row]]着替えてくるぜ。 | Okay,[[T001:row]]I'm gonna go change. |  |
 | `section-17:g0001:l0000` | Sea · Nozomi | さぁ、あの島まで[[T001:row]]泳ぐわよ。 | Okay, let's swim[[T001:row]]out to that island! |  |
-| `section-17:g0002:l0000` | Sea · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]] |  |
+| `section-17:g0002:l0000` | Sea · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]]. |  |
 | `section-17:g0002:l0001` | Sea · Player | 駄目だ。[[T001:row]]とてもあんなとこまでは[[T002:row]]行けない。 | No good.[[T001:row]]There's no way I can[[T002:row]]make it out there. |  |
 | `section-17:g0003:l0000` | Sea · Nozomi | どうして来なかったんだ？ | Why didn't you come? |  |
 | `section-17:g0003:l0001` | Sea · Player | あんなとこまで[[T001:row]]泳げないって…。 | I can't swim[[T001:row]]all the way out there... |  |
@@ -337,7 +337,7 @@
 | `section-18:g0005:l0000` | Shrine · Nozomi | えっ、[[T001:row]]ありがとう。 | Oh,[[T001:row]]thanks. |  |
 | `section-18:g0006:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしようか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0006:l0001` | Shrine · Nozomi | 私、苦手なんだ。[[T001:row]]やってみせてよ。 | I'm no good at it.[[T001:row]]Show me how. |  |
-| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0007:l0000` | Shrine · Nozomi | すごいな、信じられないよ。 | Wow, I can't believe it. |  |
 | `section-18:g0008:l0000` | Shrine · Nozomi | へぇ、上手いんだね。 | Huh, you're good at this. |  |
 | `section-18:g0009:l0000` | Shrine · Nozomi | アハハ、私と一緒だ。 | Ahaha, same as me. |  |

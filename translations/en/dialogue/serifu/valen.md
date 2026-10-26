@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0000:l0001` | Scene 0 · Heroine | はい、チョコレート。 | Here, chocolate! |  |
 | `table-0:g0000:l0002` | Scene 0 · Player | あ、ありがとう。[[T001:row]]でも、一個十円のだね。 | Th-thanks.[[T001:row]]But it's a ten-yen one. |  |
 | `table-0:g0000:l0003` | Scene 0 · Heroine | 私、今びんぼーなの。[[T001:row]]ごめんね。 | I'm totally broke now.[[T001:row]]Sorry. |  |
@@ -27,10 +27,10 @@
 | `table-1:g0002:l0000` | Scene 1 · Player (monologue) | まぁ、このぐらい貰えれば、[[T001:row]]いいほうかな。 | Well, getting this many[[T001:row]]isn't bad. |  |
 | `table-1:g0003:l0000` | Scene 1 · Player (monologue) | あまり貰えなかったけど、[[T001:row]]こんなもんかな。 | I didn't get many,[[T001:row]]but I guess that's okay. |  |
 | `table-1:g0004:l0000` | Scene 1 · Player (monologue) | 今日は、[[T001:row]]一個も貰えなかったよ。[[T002:row]]寂しいなぁ…。 | Today,[[T001:row]]I didn't get a single one.[[T002:row]]So lonely... |  |
-| `table-2:g0000:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0000:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0000:l0001` | Scene 2 · Heroine | はい、チョコレート。 | Here, chocolate! |  |
 | `table-2:g0000:l0002` | Scene 2 · Player | あ、ありがとう。[[T001:row]]（小さいな、[[T002:row]]これは義理かな…。） | Th-thanks.[[T001:row]](It's small.[[T002:row]]Obligatory chocolate...?) |  |
-| `table-2:g0001:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0001:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0001:l0001` | Scene 2 · Heroine | これ、形が悪いかも[[T001:row]]しれないけど…。 | This might look[[T001:row]]a little lopsided... |  |
 | `table-2:g0001:l0002` | Scene 2 · Player | あ、ありがとう。[[T001:row]]嬉しいよ。 | Th-thanks.[[T001:row]]I'm really happy. |  |
 | `table-2:g0001:l0003` | Scene 2 · Heroine | ちょっと学校では、[[T001:row]]恥ずかしくて[[T002:row]]渡せなかったの…。 | I was too[[T001:row]]embarrassed to give[[T002:row]]it to you at school... |  |
@@ -39,7 +39,7 @@
 | `table-2:g0001:l0006` | Scene 2 · Player | えっ？[[T001:row]]それって…。 | Huh?[[T001:row]]You mean... |  |
 | `table-2:g0001:l0007` | Scene 2 · Heroine | そ、それじゃ、また。 | W-well, see you. |  |
 | `table-2:g0002:l0000` | Scene 2 · Player | 特別な想いか…。 | Special feelings, huh... |  |
-| `table-2:g0003:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0003:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0003:l0001` | Scene 2 · Heroine | さっきはごめんね。[[T001:row]]友達に頼まれて…。 | Sorry about earlier.[[T001:row]]My friend asked me... |  |
 | `table-2:g0003:l0002` | Scene 2 · Player | 別にいいよ。 | That's okay. |  |
 | `table-2:g0003:l0003` | Scene 2 · Heroine | これ、形が悪いかも[[T001:row]]しれないけど…。 | This might look[[T001:row]]a little lopsided... |  |
@@ -50,7 +50,7 @@
 | `table-2:g0003:l0008` | Scene 2 · Player | えっ？[[T001:row]]それって…。 | Huh?[[T001:row]]You mean... |  |
 | `table-2:g0003:l0009` | Scene 2 · Heroine | そ、それじゃ、また。 | W-well, see you. |  |
 | `table-2:g0004:l0000` | Scene 2 · Player | 特別な想いか…。 | Special feelings, huh... |  |
-| `table-2:g0005:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-2:g0005:l0000` | Scene 2 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-2:g0005:l0001` | Scene 2 · Heroine | さっきはごめんね。[[T001:row]]はい、チョコレート。 | Sorry about earlier.[[T001:row]]Here, chocolate. |  |
 | `table-2:g0005:l0002` | Scene 2 · Player | あ、ありがとう。[[T001:row]]（小さいな、[[T002:row]]これは義理かな…。） | Th-thanks.[[T001:row]](It's small.[[T002:row]]Obligatory chocolate...?) |  |
 | `table-3:g0000:l0000` | Scene 3 · Heroine | [[T001:player_form]]。[[T002:row]]チョコレートよ。 | [[T001:player_form]].[[T002:row]]Here's chocolate. |  |
@@ -119,7 +119,7 @@
 | `table-6:g0002:l0000` | Scene 6 · Player | 慌てて、[[T001:row]]行っちゃった気がする…。[[T002:row]]（何にしても特別は良いな。） | Seems like she[[T001:row]]hurried off...[[T002:row]](Anyway, special is nice.) |  |
 | `table-7:g0000:l0000` | Scene 7 · Heroine | これ、チョコレートです。[[T001:row]]どうぞ。 | Here's some chocolate.[[T001:row]]Please, take it. |  |
 | `table-7:g0000:l0001` | Scene 7 · Player | あ、ありがとう。[[T001:row]]（これは義理かな…。） | Th-thanks.[[T001:row]](Obligatory chocolate...?) |  |
-| `table-7:g0001:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0001:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0001:l0001` | Scene 7 · Heroine | これ、受け取って[[T001:row]]ください…。 | Please[[T001:row]]accept this... |  |
 | `table-7:g0001:l0002` | Scene 7 · Player | あ、ありがとう。[[T001:row]]嬉しいよ。 | Th-thanks.[[T001:row]]I'm really happy. |  |
 | `table-7:g0001:l0003` | Scene 7 · Heroine | あの…、中に…。 | Um... inside... |  |

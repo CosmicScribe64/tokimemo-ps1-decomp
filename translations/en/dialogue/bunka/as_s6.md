@@ -471,7 +471,7 @@
 | `main:g0107:l0007` | Main · Yuko | ほかにも、[[T001:row]]たくさん回らないとね。[[T002:row]]それじゃあ。 | I've got[[T001:row]]lots more to see.[[T002:row]]See ya. |  |
 | `main:g0108:l0000` | Main · Player | [[T001:girl_name]]。[[T002:row]]来てくれたんだ。 | [[T001:girl_name]]![[T002:row]]You came. |  |
 | `main:g0108:l0001` | Main · Yuko | 油絵ばっかり…。 | All oil paintings... |  |
-| `main:g0109:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]] |  |
+| `main:g0109:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]]. |  |
 | `main:g0110:l0000` | Main · Yuko | 今の演奏見てたよ。[[T001:row]]すごく面白かったね。 | I saw you play.[[T001:row]]It was super fun! |  |
 | `main:g0110:l0001` | Main · Player | あっ、[[T001:girl_name]]。[[T002:row]]来てくれたんだ。[[T003:row]]ありがとう。 | Oh, [[T001:girl_name]]![[T002:row]]You came![[T003:row]]Thanks! |  |
 | `main:g0110:l0002` | Main · Yuko | 今の、音楽って[[T001:row]]ゲームの曲でしょう？ | That music was[[T001:row]]from a game, right? |  |

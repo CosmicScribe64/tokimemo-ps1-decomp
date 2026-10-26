@@ -136,7 +136,7 @@
 | `0000cd38:cfa62db5938b` | Display | 俺は、とりあえず[[T001:row_separator]][[T002:girl_name]]の機嫌を[[T003:row_separator]]とることにした。） | So for now, I'd try[[T001:row_separator]]to please [[T002:girl_name]][[T003:row_separator]]somehow.) |  |
 | `0000cd68:dafaf40ebb1c` | Display | ・[[T001:row_separator]]　　　　・[[T002:row_separator]]　　　　・ | `     .[[T001:row_separator]]    .[[T002:row_separator]]    .` |  |
 | `0000cd8c:6f7d11f5278a` | Display | ガチャ | Click. |  |
-| `0000cd94:251b36d7436c` | Display | 良かった。[[T001:row_separator]]何とか、[[T002:girl_name]]の機嫌も[[T003:row_separator]]直ったみたいだぞ。） | Phew.[[T001:row_separator]]Seems [[T002:girl_name]]'s[[T003:row_separator]]mood is better now.) |  |
+| `0000cd94:251b36d7436c` | Display | 良かった。[[T001:row_separator]]何とか、[[T002:girl_name]]の機嫌も[[T003:row_separator]]直ったみたいだぞ。） | (Whew...[[T001:row_separator]]Seems [[T002:girl_name]]'s[[T003:row_separator]]mood is better now.) |  |
 | `0000cdc8:651997093f61` | Display | デートする日を選んで下さい | Choose a day for the date. |  |
 | `0000cde4:ecf3ea04586c` | Display | デートする場所を選んで下さい | Choose a place for the date. |  |
 | `0000ce04:ecf3ea04586c` | Display | デートする場所を選んで下さい | Choose a place for the date. |  |
@@ -148,7 +148,7 @@
 | `0000ce50:72aa48e3fad1` | Unknown | 月 | / |  |
 | `0000ce54:02de066abbf9` | Unknown | 日 | ` ` |  |
 | `0000ce58:23d2d5689234` | Unknown | に、 | `at ` |  |
-| `0000ce60:0f383c7783a2` | Unknown | の前で 待ち合わせということで。 | ` entrance. See you!` |  |
+| `0000ce60:0f383c7783a2` | Unknown | の前で 待ち合わせということで。 | . Let's meet at the entrance. See you! |  |
 | `0000ce80:6f7d11f5278a` | Display | ガチャ | Click. |  |
 | `0000ce88:12b6ff542c09` | Unknown | やったー。 | `Awesome! ` |  |
 | `0000ce94:72aa48e3fad1` | Unknown | 月 | / |  |
@@ -296,7 +296,7 @@
 | `0000f370:ddf59dc8aac7` | Display | えっ。 は、はい…。 よろこんで…。 | Oh. Y-yes... I'd love to... |  |
 | `0000f394:efb027566e4a` | Display | うん、いいよ。 | Sure, okay. |  |
 | `0000f3a4:efb027566e4a` | Display | うん、いいよ。 | Sure, okay. |  |
-| `0000f3b4:ec05100be305` | Display | うん、いいわよ。 | Okay, come in. |  |
+| `0000f3b4:ec05100be305` | Display | うん、いいわよ。 | Sure, I don't mind. |  |
 | `0000f4b8:cd60cf952912` | Display | うん、わかったわ。 忘れないで来てね。 | Okay, got it. Don't forget to come. |  |
 | `0000f4e0:3e22d7bbc98f` | Display | ええ、わかりました。 | Yes, I understand. |  |
 | `0000f4f8:23951d092f52` | Display | 私に命令するつもり？ | Are you ordering me around? |  |
@@ -570,7 +570,7 @@
 | `000124d0:859b9d5ec7c8` | Display | 今日は、どうして 来てくれなかったの？ ずっと待ってたのに…。 | Why didn't you come today? I waited and waited... |  |
 | `00012510:0bae3d64ec27` | Display | どうして…。 どうして…、 来てくれなかったんですか？ ひどすぎます。 | Why... Why... didn't you come? That's so cruel. |  |
 | `00012554:b61c6d61b35f` | Display | 私との約束を破ったわね。 覚悟しなさい。 | You broke our promise. Prepare yourself. |  |
-| `0001257c:573f29eacb4f` | Display | どうして来なかったの？ 約束してたじゃない。 ライヤー、嘘つき。 | Why didn't you come? You promised! Liar! Usotsuki! |  |
+| `0001257c:573f29eacb4f` | Display | どうして来なかったの？ 約束してたじゃない。 ライヤー、嘘つき。 | Why didn't you come? You promised! You liar, total fibber! |  |
 | `000125bc:0f0465975311` | Display | どうして来なかったの？ 急な用事なんだろうけど、 連絡して欲しかったな…。 | Why didn't you come? Something came up, I bet, but you could've called... |  |
 | `00012608:9e33c8f462d0` | Display | 待つのはいいですけれども、 約束を破られるのは、 とても嫌です…。 | I don't mind waiting, but I really don't like broken promises... |  |
 | `0001264c:42047a121ad0` | Display | どうして来なかったの？ 連絡ぐらいくれたって、 いいじゃないか…。 | Why didn't you come? You could've at least called me... |  |
@@ -582,7 +582,7 @@
 | `00012808:5b56ef0a6d58` | Display | 今日はどうして 来なかったの。 ずっと待ってたのよ。 約束をすっぽかすなんて、 最低よ。 | Why didn't you come today? I waited so long. Standing me up like that is awful. |  |
 | `00012860:667f3ed22d9f` | Display | 今日は、どうして 来なかったんですか？ 身体に無理をさせて、 待ってたのに…。 | Why didn't you come today? I waited, even though I wasn't feeling well... |  |
 | `000128ac:0e04f7bf0daa` | Display | 私との約束を破るなんて、 度胸があるじゃないの。 脳改造でもしようかしら。 | Breaking a promise to me? You've got some nerve. Time to rewire your brain? |  |
-| `000128f8:ba63b35db1bd` | Display | アンビリーバブル。 約束を破るなんて 信じられないわ。 | Unbelievable! You broke your promise? Shinjirarenai! |  |
+| `000128f8:ba63b35db1bd` | Display | アンビリーバブル。 約束を破るなんて 信じられないわ。 | Unbelievable! You broke your promise? I just can't believe it! |  |
 | `00012930:2a6d7b708edf` | Display | どうして来なかったの？ 何か用事が出来たなら、 連絡してくれなきゃ…。 | Why didn't you come? If something came up, you should've called... |  |
 | `00012978:938ebe8f106f` | Display | 今日は、どうしたのですか？ 約束を破る事は、 悪いことだと思います。 | What happened today? I think breaking a promise is wrong. |  |
 | `000129bc:cc5b3736b89c` | Display | 何で来なかったんだよ。 もう、お前なんか 友達と思いたくないね。 | Why didn't you show? I don't even want to call you a friend now. |  |
@@ -670,7 +670,7 @@
 | `00013ce0:1f432311d276` | Display | 昨日もらった詩集、 とても素敵だったわ。 ありがとう。 | The poetry book you gave me yesterday was lovely. Thank you. |  |
 | `00013d18:81f6a7aa9c0e` | Display | あっ、如月ですけれども。 文化祭でいただいた詩集、 とても素敵でした。 ありがとうございます。 | Oh, it's Kisaragi. The poetry book from the festival was lovely. Thank you so much. |  |
 | `00013d74:f7e2f75d2a21` | Display | もしもし、紐緒よ。 昨日もらった詩集、 まあまあだったわ。 | Hello, it's Himoo. The poetry book yesterday was passable. |  |
-| `00013db0:2254ba2dcc74` | Display | もしもし、片桐です。 昨日もらった詩集よかったわよ。 サンキュー、ありがとう。 | Hi, Katagiri here. That poetry book was good. Thanks! Arigato! |  |
+| `00013db0:2254ba2dcc74` | Display | もしもし、片桐です。 昨日もらった詩集よかったわよ。 サンキュー、ありがとう。 | Hi, Katagiri here. That poetry book was good. Thank you, thanks! |  |
 | `00013e00:83ee3e604f88` | Display | もしもし、虹野です。 昨日もらった詩集、 とても素敵だったよ。 ありがとう。 | Hi, Nijino here. The poetry book you gave me was so lovely. Thanks. |  |
 | `00013e4c:911e3ffedb72` | Display | もしもし、古式ですけれども。 昨日いただいた詩集、 大変面白く 読ませていただきました。 | `Hello, this is Koshiki. The poetry book you gave me was a great pleasure to read. ` |  |
 | `00013ea4:cb1dd5a9e9e4` | Display | もしもし、清川です。 昨日もらった詩集、良かったな。 ありがとう。 | `Hi, Kiyokawa here. That poetry book was good. Thanks. ` |  |
@@ -708,7 +708,7 @@
 | `00014690:d4c146b4bf1d` | Display | 昨日もらった文集、 すごく良かったわ。 ありがとう。 | The anthology you gave me was wonderful. Thank you. |  |
 | `000146c4:83972a5497e1` | Display | 昨日もらった文集、 とても面白かったです。 ありがとうございました。 | The anthology you gave me was very interesting. Thank you so much. |  |
 | `00014708:0e49ec17d838` | Display | 昨日もらった文集、 まあまあだったわ。 | The anthology was passable. |  |
-| `00014730:dedf3f26a1c2` | Display | 昨日もらった文集、 すごく良かったわよ。 サンキュー、ありがとう。 | The anthology you gave me was great. Thanks! Arigato! |  |
+| `00014730:dedf3f26a1c2` | Display | 昨日もらった文集、 すごく良かったわよ。 サンキュー、ありがとう。 | The anthology you gave me was great. Thank you, thanks! |  |
 | `00014774:ad9b5dcf8577` | Display | 昨日もらった文集、 とても面白かったよ。 ありがとう。 | The anthology you gave me was so much fun. Thanks. |  |
 | `000147ac:caf3e447b12b` | Display | 昨日は、結構な文集を いただきまして、 ありがとうございました。 | Thank you for the fine anthology yesterday. |  |
 | `000147ec:693b8b16c2ca` | Display | 昨日もらった文集、 わりと良かったよ。 | The anthology was pretty good. |  |

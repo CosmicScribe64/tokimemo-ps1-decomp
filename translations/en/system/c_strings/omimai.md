@@ -20,5 +20,5 @@
 | `80134384:12` | sick_visit_location_scene_select() | プール | Swimming Pool |  |
 | `80134384:13` | sick_visit_location_scene_select() | 体育館 | Gym |  |
 | `80134384:14` | sick_visit_location_scene_select() | 廊下 | Hallway |  |
-| `80134384:1` | sick_visit_location_scene_select() | 図書室 | Library |  |
-| `80134384:5` | sick_visit_location_scene_select() | 図書室 | Library |  |
+| `80134384:1` | sick_visit_location_scene_select() | 図書室 | School Library |  |
+| `80134384:5` | sick_visit_location_scene_select() | 図書室 | School Library |  |

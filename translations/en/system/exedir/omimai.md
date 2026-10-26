@@ -8,11 +8,11 @@
 | :--- | :--- | :--- | :--- | :--- |
 | `000028b0:c1da70634faf` | Unknown | 玄関 | Entry |  |
 | `000028b8:03059a42f785` | Unknown | 母親 | Mom |  |
-| `00002920:ddbfceeafb47` | Unknown | 図書室 | Library |  |
+| `00002920:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
 | `00002928:8498c8f30462` | Unknown | 教室 | Classroom |  |
 | `00002930:2a8d484c02e9` | Unknown | 中庭 | Courtyard |  |
 | `00002938:77c66b4bc73b` | Unknown | 自宅前 | Home |  |
-| `00002940:ddbfceeafb47` | Unknown | 図書室 | Library |  |
+| `00002940:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
 | `00002948:3ad700edc836` | Unknown | 演劇部 | Drama Club |  |
 | `00002950:cb8b3ed09fe1` | Unknown | 実験室 | Science Lab |  |
 | `00002958:cfba20b636e4` | Unknown | 電脳部室 | Computer Clubroom |  |

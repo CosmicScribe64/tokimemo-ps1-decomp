@@ -353,7 +353,7 @@
 | `section-18:g0005:l0000` | Shrine · Mio | ありがとうございます。[[T001:row]]嬉しいです。 | Thank you very much.[[T001:row]]I'm so happy. |  |
 | `section-18:g0006:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしようか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0006:l0001` | Shrine · Mio | うまく取れるといいですね。 | I hope you win one. |  |
-| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0007:l0000` | Shrine · Mio | 上手ですね。 | You're so good. |  |
 | `section-18:g0008:l0000` | Shrine · Mio | すごいですね。 | Amazing. |  |
 | `section-18:g0009:l0000` | Shrine · Mio | 残念でしたね。 | That's too bad. |  |

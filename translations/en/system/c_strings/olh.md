@@ -14,21 +14,21 @@
 | `80133f90:2` | help_biorhythm_page_2_render() | ンドが特に失敗しやすい日になります。 | cross the black line in the middle. |  |
 | `80134060:1` | help_biorhythm_page_3_render() | 黒い線からの距離が大きいとコマンドが | `  The farther from the black line, the` |  |
 | `80134060:2` | help_biorhythm_page_3_render() | 成功しやすくなります。 | better commands go. |  |
-| `80134060:3` | help_biorhythm_page_3_render() | 同じ距離ならば、黒い線の上側にある場 | `  At the same distance, above the` |  |
+| `80134060:3` | help_biorhythm_page_3_render() | 同じ距離ならば、黒い線の上側にある場 | `  At the same distance, being` |  |
 | `80134060:4` | help_biorhythm_page_3_render() | 合のほうが、コマンドが成功しやすくなり | above the black line is more |  |
 | `80134060:5` | help_biorhythm_page_3_render() | ます。 | likely to succeed. |  |
 | `80134184:1` | help_biorhythm_page_4_render() | 赤は主に、身体を使うコマンドに影響し | `  Red mainly affects commands` |  |
 | `80134184:2` | help_biorhythm_page_4_render() | ます。 | that use your body. |  |
-| `80134254:1` | help_biorhythm_page_5_render() | 青は、主に感性を必要とするコマンドに | `  Blue mostly affects commands needing` |  |
-| `80134254:2` | help_biorhythm_page_5_render() | 影響します。 | need brains. |  |
-| `80134324:1` | help_biorhythm_page_6_render() | 緑は、主に頭脳を必要とするコマンドに | `  Green mainly affects commands that` |  |
-| `80134324:2` | help_biorhythm_page_6_render() | 影響します。 | need brains. |  |
+| `80134254:1` | help_biorhythm_page_5_render() | 青は、主に感性を必要とするコマンドに | `  Blue mostly affects sensibility` |  |
+| `80134254:2` | help_biorhythm_page_5_render() | 影響します。 | commands. |  |
+| `80134324:1` | help_biorhythm_page_6_render() | 緑は、主に頭脳を必要とするコマンドに | `  Green mainly affects intellect` |  |
+| `80134324:2` | help_biorhythm_page_6_render() | 影響します。 | commands. |  |
 | `801343f4:1` | help_biorhythm_page_7_render() | ゲームをクリアするのに、特に必要はあ | `  It isn't really needed to clear the` |  |
 | `801343f4:2` | help_biorhythm_page_7_render() | りません。 | game. |  |
 | `801343f4:3` | help_biorhythm_page_7_render() | 究極のパラメータを狙う場合以外必要な | `  Only useful if you aim for top` |  |
 | `801343f4:4` | help_biorhythm_page_7_render() | いかも…？ | stats...? |  |
 | `801365ac:1` | help_file_select_menu_draw() | ファイルセレクト画面 | File Select Screen |  |
-| `80136804:1` | help_file_select_page_1_render() | システムと表示されている部分をクリッ | `  Click the part labeled System to` |  |
+| `80136804:1` | help_file_select_page_1_render() | システムと表示されている部分をクリッ | `  Clicking the part labeled System` |  |
 | `80136804:2` | help_file_select_page_1_render() | クすると、システムの作成やシステムの作 | allows you to create or |  |
 | `80136804:3` | help_file_select_page_1_render() | り直しが出来ます。 | remake the system file. |  |
 | `80136804:4` | help_file_select_page_1_render() | データの表示がおかしい場合や、他のメ | `  If the data looks wrong, or after` |  |
@@ -41,7 +41,7 @@
 | `80136a30:2` | help_file_select_page_3_render() | ーグからやり直すことが出来ます。 | keeping your cleared count. |  |
 | `80136b00:1` | help_file_select_page_4_render() | ときめきメモリアルのデータを消去する | `  You can erase Tokimeki Memorial` |  |
 | `80136b00:2` | help_file_select_page_4_render() | ことが出来ます。 | data. |  |
-| `80136bd0:1` | help_file_select_page_5_render() | システムファイルがある場合は、全ての | `  With a system file, the total` |  |
+| `80136bd0:1` | help_file_select_page_5_render() | システムファイルがある場合は、全ての | `  With a system file, the` |  |
 | `80136bd0:2` | help_file_select_page_5_render() | アルバムのデータの合計クリア人数が表示 | total cleared count across |  |
 | `80136bd0:3` | help_file_select_page_5_render() | されます。 | all albums is displayed. |  |
 | `80136bd0:4` | help_file_select_page_5_render() | システムファイルがない場合は、選んだ | `  Without a system file, the cleared` |  |
@@ -54,7 +54,7 @@
 | `80136e18:1` | help_file_select_page_7_render() | △ボタンを押すと、そのアルバムのパラ | `  Press triangle to show that album's` |  |
 | `80136e18:2` | help_file_select_page_7_render() | メータや、女の子の評価、クリア回数が表 | stats, the girls' ratings and the |  |
 | `80136e18:3` | help_file_select_page_7_render() | 示されます。 | clear count. |  |
-| `80136e18:4` | help_file_select_page_7_render() | 青くパラメータと表示されている部分を | `  Clicking the blue word Stats also` |  |
+| `80136e18:4` | help_file_select_page_7_render() | 青くパラメータと表示されている部分を | `  Clicking the blue word Stats` |  |
 | `80136e18:5` | help_file_select_page_7_render() | クリックしても、表示を変えることができ | also switches the |  |
 | `80136e18:6` | help_file_select_page_7_render() | ます。 | displayed page. |  |
 | `801345cc:1` | help_icon_menu_draw() | アイコン | Icons |  |
@@ -89,7 +89,7 @@
 | `801332f8:1` | help_memory_card_page_1_render() | ときめきメモリアルでは、１ブロックに | `  Tokimeki Memorial makes one album` |  |
 | `801332f8:2` | help_memory_card_page_1_render() | 一つのアルバムを作成します。 | per block. |  |
 | `801332f8:3` | help_memory_card_page_1_render() | アルバムの最大数は、１４です。 | `  You can have up to 14 albums.` |  |
-| `801333e4:1` | help_memory_card_page_2_render() | アルバムとは別に、システムファイルを | `  If you also make a system file, you` |  |
+| `801333e4:1` | help_memory_card_page_2_render() | アルバムとは別に、システムファイルを | `  If you also make a system file,` |  |
 | `801333e4:2` | help_memory_card_page_2_render() | 作成すると、オプションでおまけが使用で | you can access the bonus |  |
 | `801333e4:3` | help_memory_card_page_2_render() | きるようになります。 | extras in Options. |  |
 | `801333e4:4` | help_memory_card_page_2_render() | システムファイルも、１ブロックを必要 | `  The system file also needs one` |  |
@@ -100,9 +100,9 @@
 | `80133508:4` | help_memory_card_page_3_render() | と表示されている間は、絶対にメモリーカ | card icon displays "Saving", |  |
 | `80133508:5` | help_memory_card_page_3_render() | ードの抜き差しをしないでください。 | do not remove the card. |  |
 | `8013362c:1` | help_memory_card_page_4_render() | 『カードに空きがありません』 | If the message "The card is |  |
-| `8013362c:2` | help_memory_card_page_4_render() | とのメッセージが表示された場合は、メモ | full" appears, erase other data on the |  |
-| `8013362c:3` | help_memory_card_page_4_render() | リーカードの他のデータを消去してから、 | insert a new memory card |  |
-| `8013362c:4` | help_memory_card_page_4_render() | セーブして下さい。 | first, and then save. |  |
+| `8013362c:2` | help_memory_card_page_4_render() | とのメッセージが表示された場合は、メモ | full" appears, erase other data |  |
+| `8013362c:3` | help_memory_card_page_4_render() | リーカードの他のデータを消去してから、 | on the memory card, |  |
+| `8013362c:4` | help_memory_card_page_4_render() | セーブして下さい。 | and then save. |  |
 | `8013362c:5` | help_memory_card_page_4_render() | ゲーム中は、ときめきメモリアル以外の | `  In the game, you can only erase` |  |
 | `8013362c:6` | help_memory_card_page_4_render() | データの消去はできません。 | Tokimeki Memorial data. |  |
 | `8013376c:1` | help_memory_card_page_5_render() | あ | A |  |
@@ -177,9 +177,9 @@
 | `80132744:6` | help_system_settings_page_1_render() | お好みのアイコンの配置でお楽しみ下さい。 | anywhere. Enjoy any layout you like. |  |
 | `80132884:1` | help_system_settings_page_2_render() | マウスライク…カーソルが、方向キーの | `  Mouse-like: the cursor follows the` |  |
 | `80132884:2` | help_system_settings_page_2_render() | 上下左右に反応して動きます。 | d-pad in all directions. |  |
-| `80132954:1` | help_system_settings_page_3_render() | メニューＡ…メニュー選択時に方向キー | `  Menu A: during a menu choice, the` |  |
-| `80132954:2` | help_system_settings_page_3_render() | を押すと、メニューアイテムの順番通りに | d-pad moves the cursor through the |  |
-| `80132954:3` | help_system_settings_page_3_render() | カーソルが移動します。 | that direction. |  |
+| `80132954:1` | help_system_settings_page_3_render() | メニューＡ…メニュー選択時に方向キー | `  Menu A: during menu selection, the` |  |
+| `80132954:2` | help_system_settings_page_3_render() | を押すと、メニューアイテムの順番通りに | d-pad moves the cursor in the exact |  |
+| `80132954:3` | help_system_settings_page_3_render() | カーソルが移動します。 | order of the menu items. |  |
 | `80132954:4` | help_system_settings_page_3_render() | 例えば、コマンドアイコンの場合は、 | `  For the command icons the order is:` |  |
 | `80132954:5` | help_system_settings_page_3_render() | 『文系』→『理系』→『芸術』→『運動』 | Arts, Science, Fine Arts, Sports, |  |
 | `80132954:6` | help_system_settings_page_3_render() | →『部活』→『遊び』→『おしゃれ』 | Club, Fun, Style, Rest, Phone, |  |
@@ -193,14 +193,14 @@
 | `80132bd4:2` | help_system_settings_page_5_render() | ウスライクと同じ動作をします。 | Mouse-like, but while L1 is |  |
 | `80132bd4:3` | help_system_settings_page_5_render() | Ｌ１ボタンを押している間は、メニューＡ | held down, it works |  |
 | `80132bd4:4` | help_system_settings_page_5_render() | と同じ動作をします。 | just like Menu A. |  |
-| `80132cdc:1` | help_system_settings_page_6_render() | 選択肢がある場合に１Ｐコントローラの | `  When there's a choice, SELECT on` |  |
-| `80132cdc:2` | help_system_settings_page_6_render() | セレクトボタンを押すと、 | controller 1 switches the |  |
-| `80132cdc:3` | help_system_settings_page_6_render() | メニューモードを | menu mode: Menu A, |  |
-| `80132cdc:4` | help_system_settings_page_6_render() | 『メニューＡ』→ | Mouse-like + Menu |  |
-| `80132cdc:5` | help_system_settings_page_6_render() | 『マウスライク＋メニューＡ』→ | A, Menu B, Mouse-like, in that |  |
-| `80132cdc:6` | help_system_settings_page_6_render() | 『メニューＢ』→ | cycles through Pad A, |  |
-| `80132cdc:7` | help_system_settings_page_6_render() | 『マウスライク』 | Pad B, and "Mouse-like" |  |
-| `80132cdc:8` | help_system_settings_page_6_render() | の順で変更できます。 | in that order. |  |
+| `80132cdc:1` | help_system_settings_page_6_render() | 選択肢がある場合に１Ｐコントローラの | `  When choices are shown, pressing` |  |
+| `80132cdc:2` | help_system_settings_page_6_render() | セレクトボタンを押すと、 | SELECT on Controller 1 cycles the |  |
+| `80132cdc:3` | help_system_settings_page_6_render() | メニューモードを | menu mode in this order: |  |
+| `80132cdc:4` | help_system_settings_page_6_render() | 『メニューＡ』→ | `  "Menu A" ->` |  |
+| `80132cdc:5` | help_system_settings_page_6_render() | 『マウスライク＋メニューＡ』→ | `  "Mouse-like + Menu A" ->` |  |
+| `80132cdc:6` | help_system_settings_page_6_render() | 『メニューＢ』→ | `  "Menu B" ->` |  |
+| `80132cdc:7` | help_system_settings_page_6_render() | 『マウスライク』 | `  "Mouse-like"` |  |
+| `80132cdc:8` | help_system_settings_page_6_render() | の順で変更できます。 | in that sequence. |  |
 | `80132e54:1` | help_system_settings_page_7_render() | 画面上にクリアしたことのある女の子の | `  You can show the mascots of the` |  |
 | `80132e54:2` | help_system_settings_page_7_render() | マスコットを表示することができます。 | girls you've cleared on screen. |  |
 | `80132e54:3` | help_system_settings_page_7_render() | Ｒ１ボタンを押しながら方向キー操作で | `  Hold R1 and use the d-pad to move` |  |
@@ -208,9 +208,9 @@
 | `80132e54:5` | help_system_settings_page_7_render() | Ｒ２ボタンを押しながら方向キー操作で | `  Hold R2 and use the d-pad to change` |  |
 | `80132e54:6` | help_system_settings_page_7_render() | 紐の長さの変更ができます。 | the string length. |  |
 | `80135b8c:1` | help_small_tips_menu_draw() | ミニ知識 | Trivia |  |
-| `80135dd4:1` | help_small_tips_page_1_render() | Ｌ１＋Ｒ１＋セレクト＋スタートボタン | `  Hold L1 + R1 + SELECT + START for a` |  |
-| `80135dd4:2` | help_small_tips_page_1_render() | を少しの間押し続けることにより、ソフト | at the same time to perform |  |
-| `80135dd4:3` | help_small_tips_page_1_render() | ウェアリセットがかけられます。 | a soft reset. |  |
+| `80135dd4:1` | help_small_tips_page_1_render() | Ｌ１＋Ｒ１＋セレクト＋スタートボタン | `  Hold L1 + R1 + SELECT + START` |  |
+| `80135dd4:2` | help_small_tips_page_1_render() | を少しの間押し続けることにより、ソフト | together for a short moment |  |
+| `80135dd4:3` | help_small_tips_page_1_render() | ウェアリセットがかけられます。 | to trigger a soft reset. |  |
 | `80135ec0:1` | help_small_tips_page_2_render() | ２Ｐコントローラの | `  Press controller 2's` |  |
 | `80135ec0:2` | help_small_tips_page_2_render() | ○＋×＋□＋△ | `  O + X + Square + Triangle` |  |
 | `80135ec0:3` | help_small_tips_page_2_render() | ボタンを同時に押すと、１Ｐコントローラ | buttons together, and controller 1's O |  |
@@ -220,8 +220,8 @@
 | `80136000:1` | help_small_tips_page_3_render() | ２Ｐコントローラのスタートボタンを押 | `  START on controller 2 slightly` |  |
 | `80136000:2` | help_small_tips_page_3_render() | すと、通常コマンド実行のＳＤキャラの、 | speeds up the chibi animation of |  |
 | `80136000:3` | help_small_tips_page_3_render() | アニメスピードが少し速くなります。 | normal commands. |  |
-| `80136000:4` | help_small_tips_page_3_render() | もう一度押すと、通常のスピードに戻り | `  Press it again to return to normal` |  |
-| `80136000:5` | help_small_tips_page_3_render() | ます。 | speed. |  |
+| `80136000:4` | help_small_tips_page_3_render() | もう一度押すと、通常のスピードに戻り | `  Press it again to return to normal speed.` |  |
+| `80136000:5` | help_small_tips_page_3_render() | ます。 | . |  |
 | `80136124:1` | help_small_tips_page_4_render() | デートなどで、場所を知りたいときは１ | `  To see where you are on a date, call` |  |
 | `80136124:2` | help_small_tips_page_4_render() | Ｐコントローラの△ボタンで、 | the place window with triangle |  |
 | `80136124:3` | help_small_tips_page_4_render() | 場所ウィンドウを呼び出すことができます。 | on controller 1. |  |
@@ -233,4 +233,4 @@
 | `801363cc:1` | help_small_tips_page_7_render() | 極まれに、サウンドの転送に失敗するこ | `  Very rarely the sound fails to load.` |  |
 | `801363cc:2` | help_small_tips_page_7_render() | とがありますが、一旦データをセーブし、 | Save your data and restart the game, |  |
 | `801363cc:3` | help_small_tips_page_7_render() | ゲームを再立ち上げすれば、正常に復帰し | and it will work again. |  |
-| `801363cc:4` | help_small_tips_page_7_render() | ます。 | speed. |  |
+| `801363cc:4` | help_small_tips_page_7_render() | ます。 | . |  |

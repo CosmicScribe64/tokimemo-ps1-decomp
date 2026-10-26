@@ -75,7 +75,7 @@
 | `main:g0024:l0000` | Main · Player | 何か、作文の心が[[T001:row]]わかった気がするよ。 | I think I get[[T001:row]]essays now. |  |
 | `main:g0025:l0000` | Main · Player | おっ、ちょうど、[[T001:row]][[T002:girl_name]]の弁論が始まるぞ。 | Oh, just in time for[[T001:row]][[T002:girl_name]]'s speech. |  |
 | `main:g0026:l0000` | Main · Player | おっ、ちょうど、[[T001:row]]弁論が始まるみたいだぞ。 | Oh, the speeches[[T001:row]]are just starting. |  |
-| `main:g0027:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0027:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0027:l0001` | Main · Shiori | あっ、嬉しい。[[T001:row]]来てくれたんだ。[[T002:row]]私の弁論どうだった？ | Oh, yay.[[T001:row]]You came.[[T002:row]]How was my speech? |  |
 | `main:g0027:l0002` | Main · Player | さすがは、[[T001:girl_name]]。[[T002:row]]素晴らしい[[T003:row]]発表だったよ。 | Well done, [[T001:girl_name]]![[T002:row]]What a great[[T003:row]]speech! |  |
 | `main:g0027:l0003` | Main · Shiori | 本当？[[T001:row]]良かった、[[T002:row]]すごく緊張してたの。 | Really?[[T001:row]]Phew, I was[[T002:row]]so nervous. |  |
@@ -85,7 +85,7 @@
 | `main:g0027:l0007` | Main · Shiori | ううん、何でもないの。 | No, nothing. |  |
 | `main:g0027:l0008` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0027:l0009` | Main · Shiori | そう…。[[T001:row]]ありがとう来てくれて…。[[T002:row]]それじゃあ、さよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0028:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0028:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0028:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]私の弁論どうだった？ | Oh, you came.[[T001:row]]How was my speech? |  |
 | `main:g0028:l0002` | Main · Player | さすがは、[[T001:girl_name]]。[[T002:row]]素晴らしい[[T003:row]]発表だったよ。 | Well done, [[T001:girl_name]]![[T002:row]]What a great[[T003:row]]speech! |  |
 | `main:g0028:l0003` | Main · Shiori | やだ、おだてないでよ。[[T001:row]]照れちゃうじゃない。 | Stop, don't flatter me.[[T001:row]]It's embarrassing. |  |
@@ -93,7 +93,7 @@
 | `main:g0028:l0005` | Main · Shiori | ありがとう。[[T001:row]]すごく嬉しい。 | Thanks.[[T001:row]]I'm so happy. |  |
 | `main:g0028:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0028:l0007` | Main · Shiori | 来てくれてありがとう。[[T001:row]]それじゃあ、さよなら。 | Thanks for coming.[[T001:row]]Bye, then. |  |
-| `main:g0029:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0029:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0029:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]私の弁論どうだった？ | Oh, you came.[[T001:row]]How was my speech? |  |
 | `main:g0029:l0002` | Main · Player | さすがは、[[T001:girl_name]]。[[T002:row]]素晴らしい[[T003:row]]発表だったよ。 | Well done, [[T001:girl_name]]![[T002:row]]What a great[[T003:row]]speech! |  |
 | `main:g0029:l0003` | Main · Shiori | 本当？[[T001:row]]良かった、[[T002:row]]うまくいったみたいで。 | Really?[[T001:row]]Phew, I'm glad[[T002:row]]it went well. |  |
@@ -101,7 +101,7 @@
 | `main:g0029:l0005` | Main · Shiori | 来てくれて[[T001:row]]ありがとうね。 | Thanks for[[T001:row]]coming. |  |
 | `main:g0030:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
 | `main:g0031:l0000` | Main · Player | おっ、ちょうど、[[T001:row]]演劇が始まるぞ。 | Oh, the play[[T001:row]]is just starting. |  |
-| `main:g0032:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0032:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0032:l0001` | Main · Shiori | あっ、嬉しい。[[T001:row]]来てくれたんだ。[[T002:row]]演劇どうだった？ | Oh, yay.[[T001:row]]You came.[[T002:row]]How was the play? |  |
 | `main:g0032:l0002` | Main · Player | 良かったよ。[[T001:row]]俺、時代劇好きだし。 | It was great.[[T001:row]]I like period plays. |  |
 | `main:g0032:l0003` | Main · Shiori | 本当？[[T001:row]]初めての舞台だから、[[T002:row]]緊張しちゃった。 | Really?[[T001:row]]It was my debut,[[T002:row]]so I was nervous. |  |
@@ -109,7 +109,7 @@
 | `main:g0032:l0005` | Main · Shiori | ありがとう…。[[T001:row]]良かった、見てる前で[[T002:row]]失敗しなくて…。 | Thank you...[[T001:row]]Phew, I didn't mess up[[T002:row]]in front of you... |  |
 | `main:g0032:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0032:l0007` | Main · Shiori | そう…。[[T001:row]]ありがとう来てくれて…。[[T002:row]]それじゃあさよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0033:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0033:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0033:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演劇どうだった？ | Oh, you came.[[T001:row]]How was the play? |  |
 | `main:g0033:l0002` | Main · Player | なかなか面白かったよ。[[T001:row]]俺、時代劇好きだし。 | It was pretty fun.[[T001:row]]I like period plays. |  |
 | `main:g0033:l0003` | Main · Shiori | 本当？[[T001:row]]初めての舞台で、[[T002:row]]ちょっと心配してたんだ。 | Really?[[T001:row]]It was my first show,[[T002:row]]so I was worried. |  |
@@ -117,7 +117,7 @@
 | `main:g0033:l0005` | Main · Shiori | ありがとう。[[T001:row]]すごく嬉しい。 | Thanks.[[T001:row]]I'm so happy. |  |
 | `main:g0033:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0033:l0007` | Main · Shiori | 来てくれて、ありがとう。[[T001:row]]それじゃあ、さよなら。 | Thanks for coming.[[T001:row]]Bye, then. |  |
-| `main:g0034:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0034:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0034:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演劇どうだった？ | Oh, you came.[[T001:row]]How was the play? |  |
 | `main:g0034:l0002` | Main · Player | なかなか面白かったよ。[[T001:row]]俺、時代劇好きだし。 | It was pretty fun.[[T001:row]]I like period plays. |  |
 | `main:g0034:l0003` | Main · Shiori | 本当？[[T001:row]]初めての舞台で、[[T002:row]]ちょっと心配してたんだ。 | Really?[[T001:row]]It was my first show,[[T002:row]]so I was worried. |  |
@@ -126,7 +126,7 @@
 | `main:g0034:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0034:l0007` | Main · Shiori | 来てくれて[[T001:row]]ありがとうね。 | Thanks for[[T001:row]]coming. |  |
 | `main:g0035:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
-| `main:g0036:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0036:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0036:l0001` | Main · Shiori | あっ、恥ずかしい…。 | Oh, how embarrassing... |  |
 | `main:g0036:l0002` | Main · Player | えっ、どうして？ | Huh? Why? |  |
 | `main:g0036:l0003` | Main · Shiori | だって…、あんなの[[T001:row]]見ないでしょう？ | But... you don't[[T001:row]]watch that, right? |  |
@@ -134,7 +134,7 @@
 | `main:g0036:l0005` | Main · Shiori | 本当？[[T001:row]]それなら[[T002:row]]いいんだけど…。 | Really?[[T001:row]]Then[[T002:row]]I'm glad... |  |
 | `main:g0036:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0036:l0007` | Main · Shiori | そう…。[[T001:row]]ありがとう来てくれて…。[[T002:row]]それじゃあさよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0037:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0037:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0037:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演劇どうだった？ | Oh, you came.[[T001:row]]How was the play? |  |
 | `main:g0037:l0002` | Main · Player | なかなか面白かったよ。[[T001:row]][[T002:girl_name]]、かっこ良かった[[T003:row]]じゃないか。 | It was pretty fun.[[T001:row]][[T002:girl_name]], you were[[T003:row]]so cool. |  |
 | `main:g0037:l0003` | Main · Shiori | すっごく[[T001:row]]恥ずかしかったんだから。 | It was so[[T001:row]]embarrassing. |  |
@@ -142,7 +142,7 @@
 | `main:g0037:l0005` | Main · Shiori | あーっ[[T001:row]]お願いやめて。 | Ahh![[T001:row]]Please stop. |  |
 | `main:g0037:l0006` | Main · Player | 勝った。[[T001:row]]それじゃあ、[[T002:row]]帰るとするか。 | I win.[[T001:row]]Well then,[[T002:row]]I'll be off. |  |
 | `main:g0037:l0007` | Main · Shiori | 満足そうね…。[[T001:row]]とりあえず、[[T002:row]]来てくれてありがとう。 | You look pleased...[[T001:row]]Anyway,[[T002:row]]thanks for coming. |  |
-| `main:g0038:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0038:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0038:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演劇どうだった？ | Oh, you came.[[T001:row]]How was the play? |  |
 | `main:g0038:l0002` | Main · Player | なかなか面白かったと[[T001:row]]思うよ。 | I thought it[[T001:row]]was pretty fun. |  |
 | `main:g0038:l0003` | Main · Shiori | へぇ、こういうの[[T001:row]]好きなの？ | Oh, you like[[T001:row]]this stuff? |  |
@@ -151,19 +151,19 @@
 | `main:g0038:l0006` | Main · Player | さあて、[[T001:row]]そろそろ帰ろうかなっと。 | Well,[[T001:row]]guess I'll head off. |  |
 | `main:g0038:l0007` | Main · Shiori | うふふふ。[[T001:row]]来てくれて[[T002:row]]ありがとうね。 | Hee hee.[[T001:row]]Thanks for[[T002:row]]coming. |  |
 | `main:g0039:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
-| `main:g0040:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0040:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0040:l0001` | Main · Shiori | あっ、嬉しい。[[T001:row]]来てくれたんだ。[[T002:row]]演劇どうだった？ | Oh, yay.[[T001:row]]You came.[[T002:row]]How was the play? |  |
 | `main:g0040:l0002` | Main · Player | すごく良かったよ。[[T001:row]]もう、感動しまくり。 | It was great.[[T001:row]]I was so moved. |  |
 | `main:g0040:l0003` | Main · Shiori | 今回の舞台で最後だから、[[T001:row]]すごく嬉しい…。 | It was my last play,[[T001:row]]so I'm so happy... |  |
 | `main:g0040:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0040:l0005` | Main · Shiori | そう…。[[T001:row]]ありがとう、来てくれて…。[[T002:row]]それじゃあ、さよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0041:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0041:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0041:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演劇どうだった？ | Oh, you came.[[T001:row]]How was the play? |  |
 | `main:g0041:l0002` | Main · Player | すごく良かったよ。[[T001:row]]もう、感動しまくり。 | It was great.[[T001:row]]I was so moved. |  |
 | `main:g0041:l0003` | Main · Shiori | 最後の年だもの、[[T001:row]]悔いが残らない舞台で[[T002:row]]良かった。 | It's our last year.[[T001:row]]I'm glad the play[[T002:row]]left no regrets. |  |
 | `main:g0041:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0041:l0005` | Main · Shiori | 来てくれて、ありがとう。[[T001:row]]それじゃあ、さよなら。 | Thanks for coming.[[T001:row]]Bye, then. |  |
-| `main:g0042:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0042:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0042:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演劇どうだった？ | Oh, you came.[[T001:row]]How was the play? |  |
 | `main:g0042:l0002` | Main · Player | すごく良かったよ。[[T001:row]]もう、感動しまくり。 | It was great.[[T001:row]]I was so moved. |  |
 | `main:g0042:l0003` | Main · Shiori | 今回の舞台で[[T001:row]]失敗しなくて良かった。 | I'm glad I didn't[[T001:row]]mess up this play. |  |
@@ -400,7 +400,7 @@
 | `main:g0115:l0003` | Main · Shiori | それじゃ、[[T001:row]]じっとしててね。 | Then hold[[T001:row]]still, okay? |  |
 | `main:g0115:l0004` | Main · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
 | `main:g0116:l0000` | Main · Shiori | 君に絵なんて、[[T001:row]]似合わないなぁ。 | Art hardly[[T001:row]]suits you. |  |
-| `main:g0117:l0000` | Main · Player | て、てめえ。[[T001:row]][[T002:girl_name]]。 | Wh-why you,[[T001:row]][[T002:girl_name]] |  |
+| `main:g0117:l0000` | Main · Player | て、てめえ。[[T001:row]][[T002:girl_name]]。 | Wh-why you,[[T001:row]][[T002:girl_name]]. |  |
 | `main:g0117:l0001` | Main · Shiori | 君のような野蛮人に、[[T001:row]]芸術が理解できる訳が[[T002:row]]無いだろう。 | A barbarian like[[T001:row]]you could never[[T002:row]]understand art. |  |
 | `main:g0117:l0002` | Main · Player | 何だと、お前に[[T001:row]]そんな事を言われる[[T002:row]]筋合いはない。 | What? You've got[[T001:row]]no right to[[T002:row]]say that to me. |  |
 | `main:g0117:l0003` | Main · Shiori | さあ、詩織君。[[T001:row]]高貴な僕の絵を[[T002:row]]描いてくれたまえ。 | Now, Shiori-kun.[[T001:row]]Please draw[[T002:row]]my noble self. |  |
@@ -423,7 +423,7 @@
 | `main:g0121:l0003` | Main · Shiori | それじゃ、[[T001:row]]じっとしててね。 | Then hold[[T001:row]]still, okay? |  |
 | `main:g0121:l0004` | Main · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
 | `main:g0122:l0000` | Main · Shiori | 君に絵なんて、[[T001:row]]似合わないなぁ。 | Art hardly[[T001:row]]suits you. |  |
-| `main:g0123:l0000` | Main · Player | て、てめえ。[[T001:row]][[T002:girl_name]]。 | Wh-why you,[[T001:row]][[T002:girl_name]] |  |
+| `main:g0123:l0000` | Main · Player | て、てめえ。[[T001:row]][[T002:girl_name]]。 | Wh-why you,[[T001:row]][[T002:girl_name]]. |  |
 | `main:g0123:l0001` | Main · Shiori | 君のような野蛮人に、[[T001:row]]芸術が理解できる訳が[[T002:row]]無いだろう。 | A barbarian like[[T001:row]]you could never[[T002:row]]understand art. |  |
 | `main:g0123:l0002` | Main · Player | 何だと、お前に[[T001:row]]そんな事を言われる[[T002:row]]筋合いはない。 | What? You've got[[T001:row]]no right to[[T002:row]]say that to me. |  |
 | `main:g0123:l0003` | Main · Shiori | さあ、詩織君。[[T001:row]]高貴な僕の絵を[[T002:row]]描いてくれたまえ。 | Now, Shiori-kun.[[T001:row]]Please draw[[T002:row]]my noble self. |  |
@@ -446,7 +446,7 @@
 | `main:g0127:l0003` | Main · Shiori | それじゃ、[[T001:row]]じっとしててね。 | Then hold[[T001:row]]still, okay? |  |
 | `main:g0127:l0004` | Main · Narration | ・[[T001:row]]　　　　　　　　・[[T002:row]]　　　　　　　　・ | `        .[[T001:row]]        .[[T002:row]]        .` |  |
 | `main:g0128:l0000` | Main · Shiori | 君に絵なんて、[[T001:row]]似合わないなぁ。 | Art hardly[[T001:row]]suits you. |  |
-| `main:g0129:l0000` | Main · Player | て、てめえ。[[T001:row]][[T002:girl_name]]。 | Wh-why you,[[T001:row]][[T002:girl_name]] |  |
+| `main:g0129:l0000` | Main · Player | て、てめえ。[[T001:row]][[T002:girl_name]]。 | Wh-why you,[[T001:row]][[T002:girl_name]]. |  |
 | `main:g0129:l0001` | Main · Shiori | 君のような野蛮人に、[[T001:row]]芸術が理解できる訳が[[T002:row]]無いだろう。 | A barbarian like[[T001:row]]you could never[[T002:row]]understand art. |  |
 | `main:g0129:l0002` | Main · Player | 何だと、お前に[[T001:row]]そんな事を言われる[[T002:row]]筋合いはない。 | What? You've got[[T001:row]]no right to[[T002:row]]say that to me. |  |
 | `main:g0129:l0003` | Main · Shiori | さあ、詩織君。[[T001:row]]高貴な僕の絵を[[T002:row]]描いてくれたまえ。 | Now, Shiori-kun.[[T001:row]]Please draw[[T002:row]]my noble self. |  |
@@ -542,7 +542,7 @@
 | `main:g0156:l0000` | Main · Player (monologue) | 俺は、展示物を一通り[[T001:row]]見て回った。 | I looked[[T001:row]]at all the exhibits. |  |
 | `main:g0157:l0000` | Main · Player | 結構、[[T001:row]]いい絵だったな。 | Those were[[T001:row]]nice paintings. |  |
 | `main:g0158:l0000` | Main · Player | おっ、ちょうど、[[T001:row]]演奏が始まるぞ。 | Oh, the concert[[T001:row]]is just starting. |  |
-| `main:g0159:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0159:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0159:l0001` | Main · Shiori | あっ、嬉しい。[[T001:row]]来てくれたんだ。[[T002:row]]演奏どうだった？[[T003:row]] | Oh, yay.[[T001:row]]You came.[[T002:row]]How did we sound?[[T003:row]] |  |
 | `main:g0159:l0002` | Main · Player | あれ、[[T001:row]]グラディウスでしょう？ | That was[[T001:row]]Gradius, right? |  |
 | `main:g0159:l0003` | Main · Shiori | 知ってるの？[[T001:row]]ゲーム音楽なんでしょう？ | You know it?[[T001:row]]It's game music, right? |  |
@@ -550,7 +550,7 @@
 | `main:g0159:l0005` | Main · Shiori | ありがとう…。[[T001:row]]良かった、[[T002:row]]失敗しなくて…。 | Thanks...[[T001:row]]Phew, I didn't[[T002:row]]mess up... |  |
 | `main:g0159:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0159:l0007` | Main · Shiori | そう…。[[T001:row]]ありがとう、来てくれて…。[[T002:row]]それじゃあ、さよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0160:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0160:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0160:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演奏どうだった？ | Oh, you came.[[T001:row]]How did we sound? |  |
 | `main:g0160:l0002` | Main · Player | あれ、グラディウスでしょう？ | That was Gradius, right? |  |
 | `main:g0160:l0003` | Main · Shiori | よく知ってるわね。[[T001:row]]ゲーム音楽なんだってね。 | You know your stuff.[[T001:row]]It's game music, I hear. |  |
@@ -558,7 +558,7 @@
 | `main:g0160:l0005` | Main · Shiori | ありがとう。[[T001:row]]嬉しいな。 | Thank you.[[T001:row]]I'm so happy. |  |
 | `main:g0160:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0160:l0007` | Main · Shiori | 来てくれてありがとう。[[T001:row]]それじゃあ、さよなら。 | Thanks for coming.[[T001:row]]Bye, then. |  |
-| `main:g0161:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0161:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0161:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演奏どうだった？ | Oh, you came.[[T001:row]]How did we sound? |  |
 | `main:g0161:l0002` | Main · Player | あれ、グラディウスでしょう？ | That was Gradius, right? |  |
 | `main:g0161:l0003` | Main · Shiori | へぇ、知ってるんだ。[[T001:row]]ゲーム音楽なんだってね。 | Oh, you know it?[[T001:row]]It's game music, I hear. |  |
@@ -567,32 +567,32 @@
 | `main:g0161:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0161:l0007` | Main · Shiori | 来てくれて、[[T001:row]]ありがとうね。 | Thanks for[[T001:row]]coming. |  |
 | `main:g0162:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
-| `main:g0163:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0163:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0163:l0001` | Main · Shiori | あっ、嬉しい。[[T001:row]]来てくれたんだ。[[T002:row]]演奏どうだった？ | Oh, yay.[[T001:row]]You came.[[T002:row]]How did we sound? |  |
 | `main:g0163:l0002` | Main · Player | 面白かったよ。[[T001:row]]俺、ああいう曲好きだし。 | It was fun.[[T001:row]]I like tunes like that. |  |
 | `main:g0163:l0003` | Main · Shiori | 良かった、[[T001:row]]変に思われたら[[T002:row]]嫌だったから…。 | Phew, I was afraid[[T001:row]]you'd think[[T002:row]]it was weird... |  |
 | `main:g0163:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0163:l0005` | Main · Shiori | そう…。[[T001:row]]ありがとう、来てくれて…。[[T002:row]]それじゃあ、さよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0164:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0164:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0164:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演奏どうだった？ | Oh, you came.[[T001:row]]How did we sound? |  |
 | `main:g0164:l0002` | Main · Player | 面白かったよ。[[T001:row]]俺、ああいう曲好きだし。 | It was fun.[[T001:row]]I like tunes like that. |  |
 | `main:g0164:l0003` | Main · Shiori | 良かった。[[T001:row]]馬鹿にされるかと[[T002:row]]思っちゃった。 | Phew.[[T001:row]]I thought you'd[[T002:row]]make fun of it. |  |
 | `main:g0164:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0164:l0005` | Main · Shiori | 来てくれて、ありがとう。[[T001:row]]それじゃあ、さよなら。 | Thanks for coming.[[T001:row]]Bye, then. |  |
-| `main:g0165:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0165:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0165:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演奏どうだった？ | Oh, you came.[[T001:row]]How did we sound? |  |
 | `main:g0165:l0002` | Main · Player | 面白かったよ。[[T001:row]]俺、ああいう曲好きだし。 | It was fun.[[T001:row]]I like tunes like that. |  |
 | `main:g0165:l0003` | Main · Shiori | へぇ、こういう曲、[[T001:row]]好きなんだ。 | Oh, you like[[T001:row]]that kind of song? |  |
 | `main:g0165:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0165:l0005` | Main · Shiori | 来てくれて、[[T001:row]]ありがとうね。 | Thanks for[[T001:row]]coming. |  |
 | `main:g0166:l0000` | Main · Player | あれっ、[[T001:girl_name]]がいない。[[T002:row]]どこに行ったんだろう。 | Huh, no [[T001:girl_name]][[T002:row]]Where'd she go? |  |
-| `main:g0167:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0167:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0167:l0001` | Main · Shiori | あっ、嬉しい。[[T001:row]]来てくれたんだ。[[T002:row]]演奏どうだった？ | Oh, yay.[[T001:row]]You came.[[T002:row]]How did we sound? |  |
 | `main:g0167:l0002` | Main · Player | 良かったよ。[[T001:row]]やっぱりクラシックは[[T002:row]]良いね。 | It was great.[[T001:row]]Classical music[[T002:row]]is so good. |  |
 | `main:g0167:l0003` | Main · Shiori | 良かった、[[T001:row]]嫌いな人もいるから、[[T002:row]]心配しちゃった…。 | Phew, some people[[T001:row]]hate it, so I[[T002:row]]was worried... |  |
 | `main:g0167:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0167:l0005` | Main · Shiori | そう…。[[T001:row]]ありがとう、来てくれて…。[[T002:row]]それじゃあ、さよなら。 | Oh...[[T001:row]]Thanks for coming...[[T002:row]]Bye, then. |  |
-| `main:g0168:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0168:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0168:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演奏どうだった？ | Oh, you came.[[T001:row]]How did we sound? |  |
 | `main:g0168:l0002` | Main · Player | 良かったよ。[[T001:row]]やっぱりクラシックは[[T002:row]]良いね。 | It was great.[[T001:row]]Classical music[[T002:row]]is so good. |  |
 | `main:g0168:l0003` | Main · Shiori | そんなに[[T001:row]]クラシック好きだった？ | You like classical[[T001:row]]that much? |  |
@@ -600,7 +600,7 @@
 | `main:g0168:l0005` | Main · Shiori | 本当かなぁ？ | Really? |  |
 | `main:g0168:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0168:l0007` | Main · Shiori | 来てくれて、ありがとう。[[T001:row]]それじゃあ、さよなら。 | Thanks for coming.[[T001:row]]Bye, then. |  |
-| `main:g0169:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0169:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0169:l0001` | Main · Shiori | あっ、来てくれたんだ。[[T001:row]]演奏どうだった？ | Oh, you came.[[T001:row]]How did we sound? |  |
 | `main:g0169:l0002` | Main · Player | 良かったよ。[[T001:row]]やっぱりクラシックは[[T002:row]]良いね。 | It was great.[[T001:row]]Classical music[[T002:row]]is so good. |  |
 | `main:g0169:l0003` | Main · Shiori | へぇ意外ねぇ。[[T001:row]]クラシック聴くんだ。 | Oh, who knew?[[T001:row]]You listen to classical. |  |

@@ -199,9 +199,9 @@
 | `80042540:1` | game_mode_dispatch() | LOAD FUNC EXEC | LOAD FUNC EXEC | ASCII / format literal preserved. |
 | `800755b4:4` | holiday_open_init() | 今日は、 | `Date with ` |  |
 | `800755b4:5` | holiday_open_init() | とデートだ） | ` today!)` |  |
-| `80076c7c:1` | appointment_place_confirm() | それじゃ、 | `Okay, ` |  |
-| `80076c7c:2` | appointment_place_confirm() | で、 | ` it is ` |  |
-| `80076c7c:3` | appointment_place_confirm() | を待つか。） | ` will come.)` |  |
+| `80076c7c:1` | appointment_place_confirm() | それじゃ、 | (Okay, I'll wait at  |  |
+| `80076c7c:2` | appointment_place_confirm() | で、 |  for  |  |
+| `80076c7c:3` | appointment_place_confirm() | を待つか。） | .) |  |
 | `8007866c:1` | holiday_club_select() | 部を退部した。 | ` club left.` |  |
 | `80060710:1` | join_club_message() | 部に入部した。 | ` club joined.` |  |
 | `80061498:1` | pre_syogatu1() | やった！ | `Great! ` |  |

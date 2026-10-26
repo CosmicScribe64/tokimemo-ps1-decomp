@@ -125,7 +125,7 @@
 | `801352f0:5` | phone_selected_girl_report_opening_dialogue() | 俺は、とりあえず[[T001:row_separator]][[T002:girl_name]]の機嫌を[[T003:row_separator]]とることにした。） | So for now, I'd try[[T001:row_separator]]to please [[T002:girl_name]][[T003:row_separator]]somehow.) |  |
 | `801352f0:6` | phone_selected_girl_report_opening_dialogue() | ・[[T001:row_separator]]　　　　・[[T002:row_separator]]　　　　・ | `     .[[T001:row_separator]]    .[[T002:row_separator]]    .` |  |
 | `801352f0:7` | phone_selected_girl_report_opening_dialogue() | ガチャ | Click. |  |
-| `801352f0:8` | phone_selected_girl_report_opening_dialogue() | 良かった。[[T001:row_separator]]何とか、[[T002:girl_name]]の機嫌も[[T003:row_separator]]直ったみたいだぞ。） | Phew.[[T001:row_separator]]Seems [[T002:girl_name]]'s[[T003:row_separator]]mood is better now.) |  |
+| `801352f0:8` | phone_selected_girl_report_opening_dialogue() | 良かった。[[T001:row_separator]]何とか、[[T002:girl_name]]の機嫌も[[T003:row_separator]]直ったみたいだぞ。） | (Whew...[[T001:row_separator]]Seems [[T002:girl_name]]'s[[T003:row_separator]]mood is better now.) |  |
 | `8013639c:1` | phone_date_slot_menu_open() | デートする日を選んで下さい | Choose a day for the date. |  |
 | `80136724:18` | phone_date_invitation_resolve() | 言葉うつっちゃったよ。） | I'm talking like her.) |  |
 | `80136724:19` | phone_date_invitation_resolve() | くそ、次こそ絶対[[T001:row_separator]]誘ってみせるぜ。） | Argh! Next time,[[T001:row_separator]]I'll ask her out!) |  |
@@ -164,7 +164,7 @@
 | `80133d54:11` | phone_selected_girl_information_menu_scene() | ‥‥と。 | ...hmm. |  |
 | `80136724:6` | phone_date_invitation_resolve() | へ 行かない？ | ` work for you?` |  |
 | `80136724:7` | phone_date_invitation_resolve() | それじゃ、 | `Okay, ` |  |
-| `80136724:11` | phone_date_invitation_resolve() | の前で 待ち合わせということで。 | ` entrance. See you!` |  |
+| `80136724:11` | phone_date_invitation_resolve() | の前で 待ち合わせということで。 | . Let's meet at the entrance. See you! |  |
 | `80136724:13` | phone_date_invitation_resolve() | やったー。 | `Awesome! ` |  |
 | `80136724:16` | phone_date_invitation_resolve() | が、楽しみだぜ。 | `Can't wait! ` |  |
 | `8013d03c:3` | phone_profile_details_draw() | 月 | / |  |

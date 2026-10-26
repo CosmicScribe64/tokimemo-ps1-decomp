@@ -95,7 +95,7 @@
 | `section-06:g0000:l0000` | Section · Saki | それじゃ、[[T001:row]]中に入りましょう。 | Well then,[[T001:row]]let's go in. |  |
 | `section-06:g0000:l0001` | Section · Player | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `section-06:g0001:l0000` | Section · Saki | 絵がたくさんあるね。 | So many paintings. |  |
-| `section-06:g0001:l0001` | Section · Choice | この絵、いいと思わない？[[T001:choice_option]]あの人、奇麗だな…。[[T002:choice_option]]この絵、[[T003:girl_name]]に似てるね。 | Isn't this one nice?[[T001:choice_option]]That woman's pretty...[[T002:choice_option]]Looks like you, [[T003:girl_name]] |  |
+| `section-06:g0001:l0001` | Section · Choice | この絵、いいと思わない？[[T001:choice_option]]あの人、奇麗だな…。[[T002:choice_option]]この絵、[[T003:girl_name]]に似てるね。 | Isn't this one nice?[[T001:choice_option]]That woman's pretty...[[T002:choice_option]]Looks like you, [[T003:girl_name]]? |  |
 | `section-06:g0002:l0000` | Section · Saki | 絵の事は[[T001:row]]よくわからないけど、[[T002:row]]いいと思うな。[[T003:reply_variant]]一体何を見に来たの？[[T004:reply_variant]]えっ、似てるかな？[[T005:row]]でもこんなに[[T006:row]]美人じゃないよ。 | I don't know[[T001:row]]much about art, but[[T002:row]]I think it's nice.[[T003:reply_variant]]What did we come here for?[[T004:reply_variant]]Huh, does she?[[T005:row]]But I'm not[[T006:row]]this beautiful. |  |
 | `section-06:g0003:l0000` | Section · Saki | それじゃ、[[T001:row]]中に入りましょう。 | Well then,[[T001:row]]let's go in. |  |
 | `section-06:g0003:l0001` | Section · Player | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
@@ -338,7 +338,7 @@
 | `section-18:g0005:l0000` | Shrine · Saki | ありがとう。[[T001:row]]嬉しいな。 | Thank you.[[T001:row]]I'm so happy. |  |
 | `section-18:g0006:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしょうか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0006:l0001` | Shrine · Saki | いいものが取れるように、[[T001:row]]頑張ってね。 | Good luck[[T001:row]]winning something nice. |  |
-| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0007:l0000` | Shrine · Saki | すごいわ、[[T001:row]]上手なのね。 | Amazing,[[T001:row]]you're so good. |  |
 | `section-18:g0008:l0000` | Shrine · Saki | 上手いね、[[T001:row]]感心しちゃうわ。 | You're good.[[T001:row]]I'm impressed. |  |
 | `section-18:g0009:l0000` | Shrine · Saki | 落ち込むことなんかないよ、[[T001:row]]遊びだもん。 | Don't feel bad,[[T001:row]]it's just a game. |  |

@@ -43,8 +43,8 @@
 | `scene-02:g0003:l0000` | Scene-02 · Mira | きゃーっ。 | Kyaaa! |  |
 | `scene-02:g0003:l0001` | Scene-02 · Player | び、びっくりしたぁ。 | Wh-whoa, you scared me. |  |
 | `scene-02:g0003:l0002` | Scene-02 · Mira | 私もういや。[[T001:row]]ここから出して。 | I can't take it.[[T001:row]]Get me out of here. |  |
-| `scene-02:g0003:l0003` | Scene-02 · Player | か、[[T001:girl_name]]…。 | M-[[T001:girl_name]] |  |
-| `scene-02:g0004:l0000` | Scene-02 · Player | やっぱり怖かったんだ。[[T001:row]][[T002:girl_name]]。 | So you were scared,[[T001:row]][[T002:girl_name]] |  |
+| `scene-02:g0003:l0003` | Scene-02 · Player | か、[[T001:girl_name]]…。 | M-[[T001:girl_name]]... |  |
+| `scene-02:g0004:l0000` | Scene-02 · Player | やっぱり怖かったんだ。[[T001:row]][[T002:girl_name]]。 | So you were scared,[[T001:row]][[T002:girl_name]]. |  |
 | `scene-02:g0004:l0001` | Scene-02 · Mira | ‥‥‥‥‥。 | ... |  |
 | `scene-02:g0004:l0002` | Scene-02 · Player | そんなに落ち込まなくても。[[T001:row]]誰にだって苦手なものぐらい[[T002:row]]あるんだから。 | Don't be so down.[[T001:row]]Everyone has something[[T002:row]]they're afraid of. |  |
 | `scene-02:g0004:l0003` | Scene-02 · Mira | そ、それはそうだけど…。[[T001:row]]この歳になって…[[T002:row]]お化けが怖いなんて…。 | Th-that's true, but...[[T001:row]]At my age...[[T002:row]]scared of ghosts... |  |
@@ -63,7 +63,7 @@
 | `scene-03:g0000:l0000` | Scene-03 · Player | あれ、[[T001:girl_name]][[T002:row]]どこに行ったのかな？ | Hm, [[T001:girl_name]][[T002:row]]where did she go? |  |
 | `scene-03:g0000:l0001` | Scene-03 · Mira | あ、危ない。[[T001:row]]どいて。 | L-look out![[T001:row]]Move! |  |
 | `scene-03:g0000:l0002` | Scene-03 · Player | えっ？ | Huh? |  |
-| `scene-03:g0001:l0000` | Scene-03 · Player | 痛た…。[[T001:row]][[T002:girl_name]]大丈夫？ | Ow...[[T001:row]]You okay, [[T002:girl_name]] |  |
+| `scene-03:g0001:l0000` | Scene-03 · Player | 痛た…。[[T001:row]][[T002:girl_name]]大丈夫？ | Ow...[[T001:row]]You okay, [[T002:girl_name]]? |  |
 | `scene-03:g0001:l0001` | Scene-03 · Mira | 私は大丈夫よ。[[T001:row]]貴方は？ | I'm fine.[[T001:row]]And you? |  |
 | `scene-03:g0001:l0002` | Scene-03 · Player | 俺も、大丈夫だよ。[[T001:row]]ほら、[[T002:girl_name]]手を貸すよ[[T003:row]]起きて。 | I'm fine too.[[T001:row]]Here, [[T002:girl_name]][[T003:row]]take my hand, get up. |  |
 | `scene-03:g0001:l0003` | Scene-03 · Mira | あ、ありがとう。 | Th-thanks. |  |
@@ -77,7 +77,7 @@
 | `scene-03:g0002:l0007` | Scene-03 · Player | そ、そう…。 | Oh... I see... |  |
 | `scene-03:g0002:l0008` | Scene-03 · Mira | それじゃ、[[T001:row]]滑りましょう。 | Well then,[[T001:row]]let's skate. |  |
 | `scene-03:g0002:l0009` | Scene-03 · Player | そうだね。[[T001:row]]（[[T002:girl_name]]何が[[T003:row]]言いたかったんだろう。） | Yeah.[[T001:row]](What was [[T002:girl_name]][[T003:row]]trying to say?) |  |
-| `scene-04:g0000:l0000` | Scene-04 · Player | 遅いな、[[T001:girl_name]]。 | Late... [[T001:girl_name]] |  |
+| `scene-04:g0000:l0000` | Scene-04 · Player | 遅いな、[[T001:girl_name]]。 | Late... [[T001:girl_name]]. |  |
 | `scene-04:g0001:l0000` | Scene-04 · Mira | ごめんなさい。 | I'm sorry. |  |
 | `scene-04:g0001:l0001` | Scene-04 · Player | えっ、どうしたの？[[T001:row]]いきなり…。 | Huh, what is it?[[T001:row]]So suddenly... |  |
 | `scene-04:g0001:l0002` | Scene-04 · Mira | 弟が熱を出して倒れたから、[[T001:row]]看病しないと…。 | My younger brother's sick.[[T001:row]]I need to care for him... |  |
@@ -100,7 +100,7 @@
 | `initializer-30:g0004:l0001` | Init 30 · Player | そう。[[T001:row]]そんな、[[T002:row]]念を押さなくても…。 | Okay.[[T001:row]]No need to[[T002:row]]insist so hard... |  |
 | `initializer-30:g0004:l0002` | Init 30 · Mira | だって、勘違いされたら…。[[T001:row]]いいわ。[[T002:row]]さあ、行きましょう。 | But if you got[[T001:row]]the wrong idea...[[T002:row]]Never mind. Let's go. |  |
 | `initializer-30:g0005:l0000` | Init 30 · Player (monologue) | でも、[[T001:girl_name]]って、[[T002:row]]本当にもてるよな。 | Yeah, [[T001:girl_name]][[T002:row]]is really popular. |  |
-| `initializer-36:g0000:l0000` | Init 36 · Player (monologue) | あっ、[[T001:girl_name]]だ。 | There's [[T001:girl_name]] |  |
+| `initializer-36:g0000:l0000` | Init 36 · Player (monologue) | あっ、[[T001:girl_name]]だ。 | There's [[T001:girl_name]]. |  |
 | `initializer-36:g0001:l0000` | Init 36 · Player | 鏡さ〜ん。 | Kagami-saaan! |  |
 | `initializer-36:g0001:l0001` | Init 36 · Mira | なにか御用。[[T001:row]][[T002:player_form]]。 | What do you want,[[T001:row]][[T002:player_form]]? |  |
 | `initializer-36:g0001:l0002` | Init 36 · Choice | 送っていくよ。[[T001:choice_option]]それじゃ、お先に。 | I'll see you home.[[T001:choice_option]]See you, then. |  |

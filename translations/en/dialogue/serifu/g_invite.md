@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-0:g0000:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-0:g0000:l0001` | Scene 0 · Player | [[T001:girl_name]]。[[T002:row]]どうしたの？ | [[T001:girl_name]][[T002:row]]What is it? |  |
 | `table-0:g0000:l0002` | Scene 0 · Heroine | ねぇねぇ、[[T001:row]]今度の日曜日、[[T002:row]]空いてるでしょう？ | Hey, hey,[[T001:row]]you're free[[T002:row]]this Sunday, right? |  |
 | `table-0:g0000:l0003` | Scene 0 · Choice | 空いてるけど、何？[[T001:choice_option]]残念ながら、俺様は忙しいのだ。 | I'm free. What's up?[[T001:choice_option]]Sorry, I'm a busy man. |  |
@@ -36,7 +36,7 @@
 | `table-0:g0022:l0000` | Scene 0 · Player (monologue) | 今度の日曜日だな。[[T001:row]]忘れないように[[T002:row]]しなくっちゃ。 | So, this Sunday.[[T001:row]]I'd better not[[T002:row]]forget it. |  |
 | `table-0:g0023:l0000` | Scene 0 · Heroine | えぇー、駄目ぇ。[[T001:row]]超がっかり。[[T002:row]]じゃあ、いいわよ。 | Whaaat, no?[[T001:row]]Total bummer.[[T002:row]]Fine, whatever. |  |
 | `table-0:g0024:l0000` | Scene 0 · Player (monologue) | ちょっと[[T001:row]]冷たかったかな…。 | Was I a little[[T001:row]]too cold...? |  |
-| `table-1:g0000:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0000:l0000` | Scene 1 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0000:l0001` | Scene 1 · Player | あっ、詩織。[[T001:row]]どうしたの？ | Oh, Shiori.[[T001:row]]What's up? |  |
 | `table-1:g0000:l0002` | Scene 1 · Heroine | ねぇ、[[T001:row]]今度の日曜日、[[T002:row]]空いてるかな…？ | Hey,[[T001:row]]are you free[[T002:row]]this Sunday...? |  |
 | `table-1:g0000:l0003` | Scene 1 · Choice | 空いてるけど、何？[[T001:choice_option]]残念ながら、俺様は忙しいのだ。 | I'm free. What's up?[[T001:choice_option]]Sorry, I'm a busy man. |  |
@@ -94,7 +94,7 @@
 | `table-2:g0022:l0000` | Scene 2 · Player (monologue) | 今度の日曜日だな。[[T001:row]]忘れないように[[T002:row]]しなくっちゃ。 | So, this Sunday.[[T001:row]]I'd better not[[T002:row]]forget it. |  |
 | `table-2:g0023:l0000` | Scene 2 · Heroine | 不愉快よ。[[T001:row]]失礼するわ。 | How unpleasant.[[T001:row]]Bye. |  |
 | `table-2:g0024:l0000` | Scene 2 · Heroine | 不愉快よ。[[T001:row]]失礼するわ。 | How unpleasant.[[T001:row]]Bye. |  |
-| `table-3:g0000:l0000` | Scene 3 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-3:g0000:l0000` | Scene 3 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-3:g0000:l0001` | Scene 3 · Player | あっ、[[T001:girl_name]]。[[T002:row]]どうしたの？ | Oh, [[T001:girl_name]][[T002:row]]What's up? |  |
 | `table-3:g0000:l0002` | Scene 3 · Heroine | ねぇ、[[T001:row]]今度の日曜日、[[T002:row]]空いてる？ | Hey,[[T001:row]]are you free[[T002:row]]this Sunday? |  |
 | `table-3:g0000:l0003` | Scene 3 · Choice | 空いてるけど、何？[[T001:choice_option]]残念ながら、俺様は忙しいのだ。 | I'm free. What's up?[[T001:choice_option]]Sorry, I'm a busy man. |  |
@@ -115,12 +115,12 @@
 | `table-3:g0015:l0000` | Scene 3 · Heroine | コンサートのチケットが[[T001:row]]２枚あるんだけど、[[T002:row]]一緒にどう？ | I have two[[T001:row]]concert tickets.[[T002:row]]Want to come along? |  |
 | `table-3:g0018:l0000` | Scene 3 · Heroine | それなら[[T001:row]]一緒に、スケートに[[T002:row]]行かない？ | How about[[T001:row]]we go skating[[T002:row]]together? |  |
 | `table-3:g0020:l0000` | Scene 3 · Choice | いいよ。一緒に行こう。[[T001:choice_option]]いや、遠慮しておくよ。 | Sure, let's go together.[[T001:choice_option]]No, I'll pass, thanks. |  |
-| `table-3:g0021:l0000` | Scene 3 · Heroine | リアリー、本当に？[[T001:row]]それじゃ、[[T002:row]]どうしようか？ | Really? Hontou ni?[[T001:row]]Then, what[[T002:row]]should we do? |  |
+| `table-3:g0021:l0000` | Scene 3 · Heroine | リアリー、本当に？[[T001:row]]それじゃ、[[T002:row]]どうしようか？ | Really? Truly?[[T001:row]]Then, what[[T002:row]]should we do? |  |
 | `table-3:g0021:l0001` | Scene 3 · Player | [[T001:context_m]]で[[T002:row]]待ち合わせでいい？ | Meet at [[T001:context_m]],[[T002:row]]is that okay? |  |
 | `table-3:g0021:l0002` | Scene 3 · Heroine | ＯＫ。[[T001:row]]それでいいわ。 | OK.[[T001:row]]That works. |  |
 | `table-3:g0022:l0000` | Scene 3 · Player (monologue) | 今度の日曜日だな。[[T001:row]]忘れないように[[T002:row]]しなくっちゃ。 | So, this Sunday.[[T001:row]]I'd better not[[T002:row]]forget it. |  |
 | `table-3:g0023:l0000` | Scene 3 · Heroine | そう…。[[T001:row]]ちょっぴり残念ね。[[T002:row]]それじゃ…。 | Oh...[[T001:row]]I'm a little disappointed.[[T002:row]]Well, see you... |  |
-| `table-4:g0000:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0000:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0000:l0001` | Scene 4 · Player | [[T001:girl_name]]。[[T002:row]]どうしたの？ | [[T001:girl_name]][[T002:row]]What is it? |  |
 | `table-4:g0000:l0002` | Scene 4 · Heroine | 今度の日曜日、[[T001:row]]空いてるかしら？ | Are you free[[T001:row]]this Sunday? |  |
 | `table-4:g0000:l0003` | Scene 4 · Choice | 空いてるけど、何？[[T001:choice_option]]残念ながら、俺様は忙しいのだ。 | I'm free. What's up?[[T001:choice_option]]Sorry, I'm a busy man. |  |
@@ -206,7 +206,7 @@
 | `table-6:g0022:l0000` | Scene 6 · Player (monologue) | 今度の日曜日だな。[[T001:row]]忘れないように[[T002:row]]しなくっちゃ。 | So, this Sunday.[[T001:row]]I'd better not[[T002:row]]forget it. |  |
 | `table-6:g0023:l0000` | Scene 6 · Heroine | そうですか…。[[T001:row]]それは、とても残念です。[[T002:row]]失礼いたします。 | I see...[[T001:row]]That's a shame.[[T002:row]]I'll be going, then. |  |
 | `table-6:g0024:l0000` | Scene 6 · Player (monologue) | ちょっと[[T001:row]]冷たかったかな…。 | Was I a little[[T001:row]]too cold...? |  |
-| `table-7:g0000:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0000:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0000:l0001` | Scene 7 · Player | [[T001:girl_name]]。[[T002:row]]どうしたの？ | [[T001:girl_name]][[T002:row]]What is it? |  |
 | `table-7:g0000:l0002` | Scene 7 · Heroine | 今度の日曜日、[[T001:row]]空いてるかな…？ | Are you free[[T001:row]]this Sunday...? |  |
 | `table-7:g0000:l0003` | Scene 7 · Choice | 空いてるけど、何？[[T001:choice_option]]残念ながら、俺様は忙しいのだ。 | I'm free. What's up?[[T001:choice_option]]Sorry, I'm a busy man. |  |

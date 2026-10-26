@@ -9,7 +9,7 @@
 | `scene-00:g0000:l0000` | Scene-00 · Mio | どうしても、[[T001:row]]乗らなければ[[T002:row]]駄目ですか…。 | Do we[[T001:row]]really have[[T002:row]]to ride it...? |  |
 | `scene-00:g0000:l0001` | Scene-00 · Choice | 絶対乗るの。[[T001:choice_option]]やっぱりやめよう。 | We're riding it.[[T001:choice_option]]Okay, let's not. |  |
 | `scene-00:g0001:l0000` | Scene-00 · Mio | そうですか。[[T001:row]]では、[[T002:row]]私も覚悟を決めます。[[T003:reply_variant]]良かった…。[[T004:row]]それでは、[[T005:row]]戻りましょう。[[T006:reply_variant]]だみ | I see.[[T001:row]]Then I'll[[T002:row]]steel myself too.[[T003:reply_variant]]Thank goodness...[[T004:row]]Well then,[[T005:row]]let's go back.[[T006:reply_variant]]dummy |  |
-| `scene-00:g0002:l0000` | Scene-00 · Player | ス、スリルあったね。[[T001:row]][[T002:girl_name]]。 | Wh-what a thrill,[[T001:row]]eh, [[T002:girl_name]] |  |
+| `scene-00:g0002:l0000` | Scene-00 · Player | ス、スリルあったね。[[T001:row]][[T002:girl_name]]。 | Wh-what a thrill,[[T001:row]]eh, [[T002:girl_name]]. |  |
 | `scene-00:g0002:l0001` | Scene-00 · Mio | ‥‥‥‥。 | ...... |  |
 | `scene-00:g0002:l0002` | Scene-00 · Player | [[T001:girl_name]]。[[T002:row]]どうしたの？ | [[T001:girl_name]][[T002:row]]What is it? |  |
 | `scene-00:g0003:l0000` | Scene-00 · Player | [[T001:girl_name]]、大丈夫？[[T002:row]]（やばいな。[[T003:row]]完全に気を失ってるよ。） | You okay, [[T001:girl_name]][[T002:row]](Uh-oh.[[T003:row]]She's totally passed out.) |  |
@@ -33,7 +33,7 @@
 | `scene-01:g0002:l0001` | Scene-01 · Player | いいの、いいの。[[T001:row]][[T002:girl_name]]の[[T003:row]]水着姿も見れたしね。 | It's fine, it's fine.[[T001:row]]I saw [[T002:girl_name]][[T003:row]]in a swimsuit, after all. |  |
 | `scene-01:g0002:l0002` | Scene-01 · Mio | えっ、あんまり[[T001:row]]見ないでくださいね。[[T002:row]]恥ずかしいです…。 | Oh, please don't[[T001:row]]look too much.[[T002:row]]It's embarrassing... |  |
 | `scene-01:g0002:l0003` | Scene-01 · Player (monologue) | [[T001:girl_name]]って、[[T002:row]]やっぱり可愛いぜ…。 | Gosh, [[T001:girl_name]][[T002:row]]is adorable... |  |
-| `scene-02:g0000:l0000` | Scene-02 · Player | [[T001:girl_name]]…。[[T002:row]][[T003:girl_name]]…。 | Um, [[T001:girl_name]][[T002:row]]Helloo, [[T003:girl_name]] |  |
+| `scene-02:g0000:l0000` | Scene-02 · Player | [[T001:girl_name]]…。[[T002:row]][[T003:girl_name]]…。 | Um, [[T001:girl_name]][[T002:row]]Helloo, [[T003:girl_name]]... |  |
 | `scene-02:g0000:l0001` | Scene-02 · Mio | ‥‥‥‥。 | ...... |  |
 | `scene-02:g0000:l0002` | Scene-02 · Player (monologue) | 返事がないぞ…。 | No answer... |  |
 | `scene-02:g0001:l0000` | Scene-02 · Player (monologue) | 駄目だ。[[T001:row]]本に熱中してて、[[T002:row]]声が聞こえないらしい。 | No use.[[T001:row]]She's so into her book[[T002:row]]she can't hear me. |  |

@@ -55,9 +55,9 @@
 | `table-2:g0000:l0019` | Scene 2 · Heroine | 嬉しい…。[[T001:row]]いつまでも私の事を、離さないでね…。 | I'm so happy...[[T001:row]]Please never let me go... |  |
 | `table-3:g0000:l0000` | Scene 3 · Player | ふぅー、[[T001:row]]卒業式が終わったぜ。[[T002:row]]校長の話が、[[T003:row]]長過ぎるんだよなぁ。 | Phew,[[T001:row]]graduation's over.[[T002:row]]The principal's speech[[T003:row]]went on forever. |  |
 | `table-3:g0001:l0000` | Scene 3 · Player (monologue) | 如月さんは、[[T001:row]]貧血で倒れなかったかな？ | Did Kisaragi-san[[T001:row]]faint from anemia? |  |
-| `table-4:g0000:l0000` | Scene 4 · Player | ひ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]] |  |
+| `table-4:g0000:l0000` | Scene 4 · Player | ひ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]]... |  |
 | `table-4:g0000:l0001` | Scene 4 · Heroine | 待ってた…。いえ…。[[T001:row]]ご、ごめんなさい。[[T002:row]]こんな所に呼びだして…。 | I waited... No...[[T001:row]]I-I'm sorry.[[T002:row]]For calling you here... |  |
-| `table-4:g0000:l0002` | Scene 4 · Player | ど、どうしたの？[[T001:row]][[T002:girl_name]]らしくないよ。 | Wh-what's wrong?[[T001:row]]Not like you, [[T002:girl_name]] |  |
+| `table-4:g0000:l0002` | Scene 4 · Player | ど、どうしたの？[[T001:row]][[T002:girl_name]]らしくないよ。 | Wh-what's wrong?[[T001:row]]Not like you, [[T002:girl_name]]? |  |
 | `table-4:g0000:l0003` | Scene 4 · Heroine | い、いいのよ。[[T001:row]]今日から、変わることに決めたんだから…。 | I-it's fine.[[T001:row]]I've decided to change... |  |
 | `table-4:g0000:l0004` | Scene 4 · Player | え？[[T001:row]]変わる？ | Huh?[[T001:row]]Change? |  |
 | `table-4:g0000:l0005` | Scene 4 · Heroine | そう、変わるの。 | Yes, change. |  |
@@ -108,7 +108,7 @@
 | `table-5:g0000:l0023` | Scene 5 · Heroine | いつでもみんなと一緒にいて、[[T001:row]]おしゃべりしたり、[[T002:row]]遊びに行ったりしたかった。 | I wanted to be with others,[[T001:row]]to chat with them,[[T002:row]]and to go out and have fun. |  |
 | `table-5:g0000:l0024` | Scene 5 · Heroine | バレンタインのときだって、あなたに…。 | On Valentine's, I wanted... |  |
 | `table-5:g0000:l0025` | Scene 5 · Heroine | 明日からはそうなれるけど、[[T001:row]]卒業する前に、[[T002:row]]本当の私を見て欲しかったから…。 | Tomorrow I can be myself,[[T001:row]]but before graduation,[[T002:row]]I wanted you to know me. |  |
-| `table-5:g0000:l0026` | Scene 5 · Heroine | もう伊集院家なんて、どうでもいいの。[[T001:row]]だから…[[T002:row]]好きです。 | I don't care about the Ijuin family rules anymore.[[T001:row]]So...[[T002:row]]I love you. |  |
+| `table-5:g0000:l0026` | Scene 5 · Heroine | もう伊集院家なんて、どうでもいいの。[[T001:row]]だから…[[T002:row]]好きです。 | I don't care about the family name.[[T001:row]]So...[[T002:row]]I love you. |  |
 | `table-5:g0000:l0027` | Scene 5 · Heroine | 今まで嘘をついていてごめんなさい。[[T001:row]]でも、私と付き合ってください。 | Sorry I lied all this time.[[T001:row]]But please, go out with me. |  |
 | `table-5:g0000:l0028` | Scene 5 · Player | [[T001:girl_name]]…。[[T002:row]]いや、伊集院さん…。 | [[T001:girl_name]]...[[T002:row]]I mean... Ijuin-san... |  |
 | `table-5:g0000:l0029` | Scene 5 · Heroine | 迷惑だと思うけど…。[[T001:row]]あなたの気持ちを聞かせて。[[T002:row]]それで諦めがつくなら…。 | I know it's a bother...[[T001:row]]But tell me how you feel.[[T002:row]]If it lets me give up... |  |
@@ -145,15 +145,15 @@
 | `table-6:g0000:l0016` | Scene 6 · Player | ………。 | ... |  |
 | `table-6:g0000:l0017` | Scene 6 · Heroine | アイミスユー。[[T001:row]]あなたがいないと、寂しくて…。 | I miss you.[[T001:row]]Without you, I'm lonely... |  |
 | `table-6:g0000:l0018` | Scene 6 · Heroine | だから…、だから私と…。 | So... so will you... |  |
-| `table-6:g0000:l0019` | Scene 6 · Player | さっき、好きだって[[T001:row]]言ったでしょう。[[T002:row]]それって実は、[[T003:row]][[T004:girl_name]]の事なんだ。 | Earlier I said[[T001:row]]I like them, right?[[T002:row]]Well, actually...[[T003:row]]it's you, [[T004:girl_name]] |  |
+| `table-6:g0000:l0019` | Scene 6 · Player | さっき、好きだって[[T001:row]]言ったでしょう。[[T002:row]]それって実は、[[T003:row]][[T004:girl_name]]の事なんだ。 | Earlier I said[[T001:row]]I like them, right?[[T002:row]]Well, actually...[[T003:row]]it's you, [[T004:girl_name]]. |  |
 | `table-6:g0000:l0020` | Scene 6 · Heroine | ‥‥‥‥。[[T001:row]]本当に…？ | ......[[T001:row]]Really...? |  |
 | `table-6:g0000:l0021` | Scene 6 · Player | こんな時に[[T001:row]]冗談なんて言えないよ。 | I wouldn't joke[[T001:row]]about this. |  |
 | `table-6:g0000:l0022` | Scene 6 · Heroine | アンビリーバブル。信じられない…。 | Unbelievable! No way... |  |
 | `table-6:g0000:l0023` | Scene 6 · Heroine | 生まれてから、今日が、一番幸せよ。[[T001:row]]アイネバーフォゲット。 | The happiest day of my life.[[T001:row]]I'll never forget. |  |
 | `table-6:g0000:l0024` | Scene 6 · Heroine | 私、一生忘れない。 | I'll never forget it, ever. |  |
-| `table-7:g0000:l0000` | Scene 7 · Player | か、[[T001:girl_name]]…。 | M-[[T001:girl_name]] |  |
+| `table-7:g0000:l0000` | Scene 7 · Player | か、[[T001:girl_name]]…。 | M-[[T001:girl_name]]... |  |
 | `table-7:g0000:l0001` | Scene 7 · Heroine | こんな所に呼び出したりして、[[T001:row]]ごめんなさい。 | I'm sorry for[[T001:row]]calling you out here. |  |
-| `table-7:g0000:l0002` | Scene 7 · Player | い、いきなり。[[T001:row]][[T002:girl_name]]が謝った…。 | Wh-whoa.[[T001:row]]An apology from [[T002:girl_name]] |  |
+| `table-7:g0000:l0002` | Scene 7 · Player | い、いきなり。[[T001:row]][[T002:girl_name]]が謝った…。 | Wh-whoa.[[T001:row]]An apology from [[T002:girl_name]]... |  |
 | `table-7:g0000:l0003` | Scene 7 · Heroine | あ、そんなに驚かなくても…。[[T001:row]]でもいいの。私の話を聞いて。 | Don't look so shocked...[[T001:row]]Never mind. Just listen. |  |
 | `table-7:g0000:l0004` | Scene 7 · Player | …………。 | ... |  |
 | `table-7:g0000:l0005` | Scene 7 · Heroine | 私、[[T001:row]]中学の頃、この街に引っ越してきたの。 | I moved[[T001:row]]to this town in junior high. |  |
@@ -182,7 +182,7 @@
 | `table-7:g0000:l0028` | Scene 7 · Player | でも、他の男子から、[[T001:row]]怨まれそうだね。 | But the other guys[[T001:row]]will hate me for this. |  |
 | `table-7:g0000:l0029` | Scene 7 · Heroine | 大丈夫。[[T001:row]]私が選んだ人だもの。[[T002:row]]誰も文句を言うはずがないわ。 | Don't worry.[[T001:row]]You're the one I chose.[[T002:row]]No one would dare complain. |  |
 | `table-7:g0000:l0030` | Scene 7 · Player | そうだといいんだけど。[[T001:row]]ちょっと心配…。 | I hope so.[[T001:row]]I'm a little worried... |  |
-| `table-8:g0000:l0000` | Scene 8 · Player | き、[[T001:girl_name]]…。 | M-[[T001:girl_name]] |  |
+| `table-8:g0000:l0000` | Scene 8 · Player | き、[[T001:girl_name]]…。 | M-[[T001:girl_name]]... |  |
 | `table-8:g0000:l0001` | Scene 8 · Heroine | すみません。[[T001:row]]失礼だとは思いましたけど…。 | I'm sorry.[[T001:row]]I know this is rude, but... |  |
 | `table-8:g0000:l0002` | Scene 8 · Heroine | どうしても、今日あなたに[[T001:row]]言わなければならないことがあって、[[T002:row]]こんな所に、呼びだしてしまいました。 | There's something I must[[T001:row]]tell you today, so I[[T002:row]]called you out here. |  |
 | `table-8:g0000:l0003` | Scene 8 · Player | 別にいいよ。[[T001:row]]言いたいことって、何？ | It's fine.[[T001:row]]What did you want to say? |  |
@@ -199,13 +199,13 @@
 | `table-8:g0000:l0014` | Scene 8 · Heroine | 私の、一生分の勇気を出して言います。 | This takes all my courage. |  |
 | `table-8:g0000:l0015` | Scene 8 · Heroine | 好きです。 | I love you. |  |
 | `table-8:g0000:l0016` | Scene 8 · Heroine | 恋人じゃなく、お友達でもいいんです。[[T001:row]]卒業してからも、[[T002:row]]ずっとあなたに会えるなら…。 | Even if we're just friends,[[T001:row]]I'll be happy if we can[[T002:row]]meet after graduation... |  |
-| `table-8:g0000:l0017` | Scene 8 · Player | 実を言うと…。[[T001:row]]俺も[[T002:girl_name]]の事が…。 | To tell the truth...[[T001:row]]I love you too, [[T002:girl_name]] |  |
+| `table-8:g0000:l0017` | Scene 8 · Player | 実を言うと…。[[T001:row]]俺も[[T002:girl_name]]の事が…。 | To tell the truth...[[T001:row]]I love you too, [[T002:girl_name]]... |  |
 | `table-8:g0000:l0018` | Scene 8 · Heroine | ほ、本当ですか…。 | R-really...? |  |
 | `table-8:g0000:l0019` | Scene 8 · Heroine | 本当に、こんな私でいいんですか…？ | Am I really enough...? |  |
 | `table-8:g0000:l0020` | Scene 8 · Player | もちろんだよ。[[T001:row]]好きだよ、[[T002:girl_name]]。 | Of course.[[T001:row]]I love you, [[T002:girl_name]]. |  |
 | `table-8:g0000:l0021` | Scene 8 · Heroine | 嬉しいです…。 | I'm so happy... |  |
 | `table-8:g0000:l0022` | Scene 8 · Heroine | あっ。 | Oops. |  |
-| `table-8:g0000:l0023` | Scene 8 · Player | あっ、危ない。[[T001:row]][[T002:girl_name]]。 | Look out![[T001:row]][[T002:girl_name]] |  |
+| `table-8:g0000:l0023` | Scene 8 · Player | あっ、危ない。[[T001:row]][[T002:girl_name]]。 | Look out![[T001:row]][[T002:girl_name]]. |  |
 | `table-8:g0000:l0024` | Scene 8 · Heroine | うふふふふ…[[T001:row]]身体が弱いのも、いいものですね。 | Ufufufu...[[T001:row]]Being frail has its perks. |  |
 | `table-8:g0000:l0025` | Scene 8 · Heroine | こうやって、あなたに抱き止めて[[T001:row]]貰えるんですから…。 | This way, you can catch me[[T001:row]]in your arms... |  |
 | `table-8:g0000:l0026` | Scene 8 · Heroine | しばらく、そのままでいてください…。 | Please, stay like this... |  |
@@ -228,17 +228,17 @@
 | `table-8:g0001:l0016` | Scene 8 · Heroine | 私の、一生分の勇気を出して言います。 | This takes all my courage. |  |
 | `table-8:g0001:l0017` | Scene 8 · Heroine | 好きです。 | I love you. |  |
 | `table-8:g0001:l0018` | Scene 8 · Heroine | 恋人じゃなく、お友達でもいいんです。[[T001:row]]卒業してからも、[[T002:row]]ずっとあなたに会えるなら…。 | Even if we're just friends,[[T001:row]]I'll be happy if we can[[T002:row]]meet after graduation... |  |
-| `table-8:g0001:l0019` | Scene 8 · Player | 実を言うと…。[[T001:row]]俺も[[T002:girl_name]]の事が…。 | To tell the truth...[[T001:row]]I love you too, [[T002:girl_name]] |  |
+| `table-8:g0001:l0019` | Scene 8 · Player | 実を言うと…。[[T001:row]]俺も[[T002:girl_name]]の事が…。 | To tell the truth...[[T001:row]]I love you too, [[T002:girl_name]]... |  |
 | `table-8:g0001:l0020` | Scene 8 · Heroine | ほ、本当ですか…。 | R-really...? |  |
 | `table-8:g0001:l0021` | Scene 8 · Heroine | 本当に、こんな私でいいんですか…？ | Am I really enough...? |  |
 | `table-8:g0001:l0022` | Scene 8 · Player | もちろんだよ。[[T001:row]]好きだよ、[[T002:girl_name]]。 | Of course.[[T001:row]]I love you, [[T002:girl_name]]. |  |
 | `table-8:g0001:l0023` | Scene 8 · Heroine | 嬉しいです…。 | I'm so happy... |  |
 | `table-8:g0001:l0024` | Scene 8 · Heroine | あっ。 | Oops. |  |
-| `table-8:g0001:l0025` | Scene 8 · Player | あっ、危ない。[[T001:row]][[T002:girl_name]]。 | Look out![[T001:row]][[T002:girl_name]] |  |
+| `table-8:g0001:l0025` | Scene 8 · Player | あっ、危ない。[[T001:row]][[T002:girl_name]]。 | Look out![[T001:row]][[T002:girl_name]]. |  |
 | `table-8:g0001:l0026` | Scene 8 · Heroine | うふふふふ…[[T001:row]]身体が弱いのも、いいものですね。 | Ufufufu...[[T001:row]]Being frail has its perks. |  |
 | `table-8:g0001:l0027` | Scene 8 · Heroine | こうやって、あなたに抱き止めて[[T001:row]]貰えるんですから…。 | This way, you can catch me[[T001:row]]in your arms... |  |
 | `table-8:g0001:l0028` | Scene 8 · Heroine | しばらく、そのままでいてください…。 | Please, stay like this... |  |
-| `table-9:g0000:l0000` | Scene 9 · Player | こ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]] |  |
+| `table-9:g0000:l0000` | Scene 9 · Player | こ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]]... |  |
 | `table-9:g0000:l0001` | Scene 9 · Heroine | 失礼な事と存じましたけれども、[[T001:row]]どうしても、[[T002:row]]お話したいことがございまして、[[T003:row]]お呼び出しいたしました。[[T004:row]]申し訳ございません。 | I know it's terribly rude,[[T001:row]]but there is[[T002:row]]something I must say,[[T003:row]]so I called you here.[[T004:row]]My humblest apologies. |  |
 | `table-9:g0000:l0002` | Scene 9 · Player | そんなに[[T001:row]]あらたまらなくても…。 | No need to be[[T001:row]]so formal... |  |
 | `table-9:g0000:l0003` | Scene 9 · Heroine | いいえ。[[T001:row]]そういう訳には参りません。[[T002:row]]私の一生をかけた大事な用ですから。 | No.[[T001:row]]I'm afraid I must be.[[T002:row]]My whole life rests on this. |  |
@@ -256,7 +256,7 @@
 | `table-9:g0000:l0015` | Scene 9 · Player | そ、そう。[[T001:row]]じゃあ、行くよ。 | O-okay.[[T001:row]]Then I'll come. |  |
 | `table-9:g0000:l0016` | Scene 9 · Heroine | そうですか。[[T001:row]]きっと、お父様にも[[T002:row]]気に入っていただけると思いますよ。 | Wonderful.[[T001:row]]I'm sure Father[[T002:row]]will like you too. |  |
 | `table-9:g0000:l0017` | Scene 9 · Player | そ、そう。[[T001:row]]（いきなり、お父さんか…。） | O-okay.[[T001:row]](Her father, already...) |  |
-| `table-10:g0000:l0000` | Scene 10 · Player | き、[[T001:girl_name]]…。 | M-[[T001:girl_name]] |  |
+| `table-10:g0000:l0000` | Scene 10 · Player | き、[[T001:girl_name]]…。 | M-[[T001:girl_name]]... |  |
 | `table-10:g0000:l0001` | Scene 10 · Heroine | ごめんなさい。[[T001:row]]こんな所に、呼び出したりして。 | I'm sorry.[[T001:row]]For calling you out here. |  |
 | `table-10:g0000:l0002` | Scene 10 · Player | 別に、いいよ。[[T001:row]]どうしたの？ | It's fine.[[T001:row]]What's wrong? |  |
 | `table-10:g0000:l0003` | Scene 10 · Heroine | 今日で卒業だから、[[T001:row]]あなたに、どうしても[[T002:row]]話しておきたいことがあって…。[[T003:row]]聞くだけでもいいから…。 | It's graduation today,[[T001:row]]and there's something[[T002:row]]I have to tell you...[[T003:row]]Just listen, okay... |  |
@@ -287,7 +287,7 @@
 | `table-10:g0000:l0028` | Scene 10 · Heroine | お願い。[[T001:row]]あなたの胸の中で泣かせて。 | Please.[[T001:row]]Let me cry in your arms. |  |
 | `table-10:g0000:l0029` | Scene 10 · Player | いいよ。 | Sure. |  |
 | `table-10:g0000:l0030` | Scene 10 · Heroine | 嬉しい。[[T001:row]]最高に幸せ…。 | I'm so happy.[[T001:row]]The happiest ever... |  |
-| `table-10:g0001:l0000` | Scene 10 · Player | き、[[T001:girl_name]]…。 | M-[[T001:girl_name]] |  |
+| `table-10:g0001:l0000` | Scene 10 · Player | き、[[T001:girl_name]]…。 | M-[[T001:girl_name]]... |  |
 | `table-10:g0001:l0001` | Scene 10 · Heroine | ごめんなさい。[[T001:row]]こんな所に、呼び出したりして。 | I'm sorry.[[T001:row]]For calling you out here. |  |
 | `table-10:g0001:l0002` | Scene 10 · Player | 別に、いいよ。[[T001:row]]どうしたの？ | It's fine.[[T001:row]]What's wrong? |  |
 | `table-10:g0001:l0003` | Scene 10 · Heroine | 今日で卒業だから、[[T001:row]]あなたに、[[T002:row]]どうしても話しておきたいことがあって…。[[T003:row]]聞くだけでもいいから…。 | It's graduation today,[[T001:row]]and there's something[[T002:row]]I have to tell you...[[T003:row]]Just listen, okay... |  |
@@ -318,7 +318,7 @@
 | `table-10:g0001:l0028` | Scene 10 · Heroine | お願い。[[T001:row]]あなたの胸の中で泣かせて。 | Please.[[T001:row]]Let me cry in your arms. |  |
 | `table-10:g0001:l0029` | Scene 10 · Player | いいよ。 | Sure. |  |
 | `table-10:g0001:l0030` | Scene 10 · Heroine | 嬉しい。[[T001:row]]最高に幸せ…。 | I'm so happy.[[T001:row]]The happiest ever... |  |
-| `table-11:g0000:l0000` | Scene 11 · Player | み、[[T001:girl_name]]…。 | M-[[T001:girl_name]] |  |
+| `table-11:g0000:l0000` | Scene 11 · Player | み、[[T001:girl_name]]…。 | M-[[T001:girl_name]]... |  |
 | `table-11:g0000:l0001` | Scene 11 · Heroine | あの…。[[T001:row]]ご、ごめんなさい。[[T002:row]]こんな所に、呼び出したりして…。 | Um...[[T001:row]]I-I'm sorry.[[T002:row]]For calling you out here... |  |
 | `table-11:g0000:l0002` | Scene 11 · Player | 別に、いいよ。[[T001:row]]ところで、何？ | It's fine.[[T001:row]]So, what is it? |  |
 | `table-11:g0000:l0003` | Scene 11 · Heroine | あの…。[[T001:row]]…………。 | Um...[[T001:row]]............ |  |
@@ -365,21 +365,21 @@
 | `table-14:g0000:l0000` | Scene 14 · Player | ゆ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]]... |  |
 | `table-14:g0000:l0001` | Scene 14 · Heroine | ご、ごめんなさい。[[T001:row]]こんな所に呼び出しちゃったりして…。 | S-sorry.[[T001:row]]For calling you out here... |  |
 | `table-14:g0000:l0002` | Scene 14 · Player | いや、別にいいよ。 | Nah, it's nothing. |  |
-| `table-14:g0000:l0003` | Scene 14 · Heroine | あのね。[[T001:row]]優美ね。[[T002:row]]ずっと先輩と同じ学年に[[T003:row]]なりたかったんです。 | You know,[[T001:row]]Yumi always[[T002:row]]wished she was in your[[T003:row]]year, Senpai. |  |
+| `table-14:g0000:l0003` | Scene 14 · Heroine | あのね。[[T001:row]]優美ね。[[T002:row]]ずっと先輩と同じ学年に[[T003:row]]なりたかったんです。 | You know,[[T001:row]]I always[[T002:row]]wished she was in your[[T003:row]]year, Senpai. |  |
 | `table-14:g0000:l0004` | Scene 14 · Heroine | 同じ学年だったら、[[T001:row]]高校も３年間一緒にいられたし、[[T002:row]]修学旅行だって一緒に行けたのに…。 | In the same year, we'd have[[T001:row]]had three years together,[[T002:row]]and the school trip, too... |  |
-| `table-14:g0000:l0005` | Scene 14 · Heroine | どうして、お兄ちゃんの生まれるときに[[T001:row]]優美が生まれなかったのかなって…。[[T002:row]]何度も、泣いちゃった。 | Why wasn't Yumi born[[T001:row]]when my brother was...?[[T002:row]]I cried about it so often. |  |
-| `table-14:g0000:l0006` | Scene 14 · Heroine | 優美ね。[[T001:row]]先輩の学年の女の人と比べたら、[[T002:row]]子供っぽくて、わがままだと思う。 | Yumi knows that next to[[T001:row]]the girls in Senpai's year,[[T002:row]]she's childish and selfish. |  |
+| `table-14:g0000:l0005` | Scene 14 · Heroine | どうして、お兄ちゃんの生まれるときに[[T001:row]]優美が生まれなかったのかなって…。[[T002:row]]何度も、泣いちゃった。 | Why couldn't I be born[[T001:row]]when my brother was...?[[T002:row]]I cried about it so often. |  |
+| `table-14:g0000:l0006` | Scene 14 · Heroine | 優美ね。[[T001:row]]先輩の学年の女の人と比べたら、[[T002:row]]子供っぽくて、わがままだと思う。 | I know that next to[[T001:row]]the girls in Senpai's year,[[T002:row]]she's childish and selfish. |  |
 | `table-14:g0000:l0007` | Scene 14 · Heroine | でも、子供っぽいのが嫌なら、[[T001:row]]もっと大人っぽくなるよう努力します。[[T002:row]]わがままも治します。 | But if you hate childish,[[T001:row]]I'll try to grow up more.[[T002:row]]And I'll stop being selfish. |  |
 | `table-14:g0000:l0008` | Scene 14 · Heroine | だから、[[T001:row]]お兄ちゃんの妹としてじゃなくて、[[T002:row]]一人の女の子として付き合って下さい。 | So please, not as[[T001:row]]Yoshio's younger sister,[[T002:row]]but as a girl, date me. |  |
 | `table-14:g0000:l0009` | Scene 14 · Heroine | だって、先輩が世界中の誰より大好きで、[[T001:row]]大好きでしかたがないから…。 | 'Cause I love you, Senpai,[[T001:row]]I just can't help it... |  |
-| `table-14:g0000:l0010` | Scene 14 · Player | 実はね。[[T001:row]]俺も、[[T002:girl_name]]が…。 | Actually...[[T001:row]]I love you too, [[T002:girl_name]] |  |
+| `table-14:g0000:l0010` | Scene 14 · Player | 実はね。[[T001:row]]俺も、[[T002:girl_name]]が…。 | Actually...[[T001:row]]I love you too, [[T002:girl_name]]... |  |
 | `table-14:g0000:l0011` | Scene 14 · Heroine | ホントですか？[[T001:row]]年下でもいいんですか？ | Really?[[T001:row]]Even though I'm younger? |  |
 | `table-14:g0000:l0012` | Scene 14 · Player | 当然だよ。[[T001:row]]好きだよ、[[T002:girl_name]]。 | Of course.[[T001:row]]I love you, [[T002:girl_name]]. |  |
 | `table-14:g0000:l0013` | Scene 14 · Heroine | それじゃ、制服の第二ボタンを下さい。 | Your second button, please! |  |
 | `table-14:g0000:l0014` | Scene 14 · Player | いいよ。[[T001:row]]はい。 | Sure.[[T001:row]]Here. |  |
 | `table-14:g0000:l0015` | Scene 14 · Heroine | ワーイ。[[T001:row]]これをお守りにして、[[T002:row]]あと一年頑張ります。 | Yaaay![[T001:row]]With this as my charm,[[T002:row]]I'll make it one more year. |  |
 | `table-14:g0000:l0016` | Scene 14 · Heroine | 卒業してからも、お兄ちゃんにでなく、[[T001:row]]優美に会うために[[T002:row]]家に遊びに来て下さいね。 | After graduation, come by[[T001:row]]to see Yumi, not[[T002:row]]my brother, okay? |  |
-| `table-14:g0000:l0017` | Scene 14 · Heroine | そうじゃないと、優美寂しくて[[T001:row]]泣いちゃうから。 | Or else Yumi will get[[T001:row]]lonely and cry. |  |
+| `table-14:g0000:l0017` | Scene 14 · Heroine | そうじゃないと、優美寂しくて[[T001:row]]泣いちゃうから。 | Or else I'll get[[T001:row]]lonely and cry. |  |
 | `table-14:g0000:l0018` | Scene 14 · Player | うん。[[T001:row]]必ず行くよ。 | Okay.[[T001:row]]I'll be there. |  |
 | `table-14:g0000:l0019` | Scene 14 · Heroine | 嬉しい。[[T001:row]]大好きです。[[T002:row]]先輩。 | Yay.[[T001:row]]I love you,[[T002:row]]Senpai. |  |
 | `table-14:g0000:l0020` | Scene 14 · Player (monologue) | でも、結婚したら、[[T001:row]]好雄の弟になるのか…。 | If we got married, I'd be[[T001:row]]Yoshio's brother-in-law... |  |

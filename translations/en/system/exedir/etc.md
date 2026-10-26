@@ -21,7 +21,7 @@
 | `0001abe0:ffc3d624158d` | Display | 初期化していいですか？ | OK to format it? |  |
 | `0001abf8:c4233191c37f` | Display | 別のメモリーカードを | Insert another card |  |
 | `0001ac10:18e3f3baae8a` | Display | 差し込み口１ | in slot 1 |  |
-| `0001ac20:108c0a1c502b` | Display | にセットして、 | `          and` |  |
+| `0001ac20:108c0a1c502b` | Display | にセットして、 | `         , then press` |  |
 | `0001ac3c:cb4ba8d9fb64` | Display | ボタンを押してください。 | `  to continue.` |  |
 | `0001ac58:aa385477a36b` | Debug Or Format | データセーブ | Save Data |  |
 | `0001ac68:70f43c700362` | Display | 今回のアルバムモードのデータを | Save this Album Mode data |  |
@@ -76,13 +76,13 @@
 | `0001b340:210499f8a366` | Display | 別のメモリーカードに | Save to another |  |
 | `0001b358:8652be4e67e3` | Display | セーブしますか？ | memory card? |  |
 | `0001b36c:c4233191c37f` | Display | 別のメモリーカードを | Insert another card |  |
-| `0001b384:685e61fd52c1` | Display | 差し込み口１にセットして、 | card in slot 1, then |  |
+| `0001b384:685e61fd52c1` | Display | 差し込み口１にセットして、 | in slot 1, then |  |
 | `0001b3a0:8d2ba244f8c9` | Display | ボタンを押してください。 | press a button. |  |
 | `0001b3bc:05c176c6d852` | Display | 未初期化のメモリーカードです。 | Memory card not formatted. |  |
 | `0001b3dc:ffc3d624158d` | Display | 初期化していいですか？ | OK to format it? |  |
 | `0001b3f4:c4233191c37f` | Display | 別のメモリーカードを | Insert another card |  |
 | `0001b40c:18e3f3baae8a` | Display | 差し込み口１ | in slot 1 |  |
-| `0001b41c:108c0a1c502b` | Display | にセットして、 | `          and` |  |
+| `0001b41c:108c0a1c502b` | Display | にセットして、 | `         , then press` |  |
 | `0001b438:cb4ba8d9fb64` | Display | ボタンを押してください。 | `  to continue.` |  |
 | `0001b4d0:76937c1fd7d2` | Debug Or Format | 補正 [[T001:format_directive]] | `Modifier [[T001:format_directive]] ` |  |
 | `0001b4dc:fb4c6ebf917a` | Display | 期末テスト | Finals |  |

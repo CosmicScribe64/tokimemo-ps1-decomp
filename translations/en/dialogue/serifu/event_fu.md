@@ -100,7 +100,7 @@
 | `initializer-07:g0001:l0001` | Init 07 · Shiori | おはよう。[[T001:row]]早いね、今日は。 | Morning![[T001:row]]You're up early. |  |
 | `initializer-07:g0001:l0002` | Init 07 · Player | おはよう、詩織。[[T001:row]]たまには、[[T002:row]]早起きの日もあるよ。 | Morning, Shiori.[[T001:row]]Even I'm up early[[T002:row]]sometimes. |  |
 | `initializer-07:g0002:l0000` | Init 07 · Player (monologue) | 今日は楽しく登校できた。[[T001:row]]早起きは三文の得とは、[[T002:row]]よく言ったもんだぜ。 | School was fun today.[[T001:row]]Getting up early[[T002:row]]really paid off. |  |
-| `initializer-12:g0000:l0000` | Init 12 · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `initializer-12:g0000:l0000` | Init 12 · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `initializer-12:g0001:l0000` | Init 12 · Player | あれ、[[T001:girl_name]]？[[T002:row]]どうしたの？ | Oh, [[T001:girl_name]]?[[T002:row]]What's up? |  |
 | `initializer-12:g0001:l0001` | Init 12 · Shiori | よかったら…[[T001:row]]一緒に帰らない？ | If you'd like...[[T001:row]]shall we walk home? |  |
 | `initializer-12:g0001:l0002` | Init 12 · Player | うん、送っていくよ。 | Sure, I'll walk you. |  |
@@ -129,7 +129,7 @@
 | `initializer-13:g0000:l0005` | Init 13 · Player | はい、[[T001:player_family]]ですけど。 | Hi, this is [[T001:player_family]]. |  |
 | `initializer-13:g0000:l0006` | Init 13 · Shiori | あっ、私、[[T001:row]]藤崎と[[T002:row]]申しますが…。 | Oh, um, this is[[T001:row]]Fujisaki[[T002:row]]speaking... |  |
 | `initializer-13:g0000:l0007` | Init 13 · Player | あ、[[T001:girl_name]]？どうかしたの？ | Oh, [[T001:girl_name]]? What's up? |  |
-| `initializer-13:g0000:l0008` | Init 13 · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `initializer-13:g0000:l0008` | Init 13 · Shiori | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `initializer-13:g0000:l0009` | Init 13 · Shiori | ねぇ、今、空いているかな？ | Hey, are you free now? |  |
 | `initializer-13:g0000:l0010` | Init 13 · Player | え？…空いているけど。 | Huh? ...Yeah, I'm free. |  |
 | `initializer-13:g0000:l0011` | Init 13 · Shiori | 本当？それじゃあ、[[T001:row]]一緒に誕生日の[[T002:row]]お祝いしない？ | Really? Then...[[T001:row]]want to celebrate our[[T002:row]]birthday together? |  |

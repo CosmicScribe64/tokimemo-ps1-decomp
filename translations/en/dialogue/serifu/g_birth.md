@@ -50,7 +50,7 @@
 | `table-1:g0008:l0000` | Scene 1 · Player | はい、誕生日のプレゼント。 | Here, a birthday present. |  |
 | `table-1:g0008:l0001` | Scene 1 · Heroine | ありがとう。[[T001:row]]ねぇ、開けてもいい？ | Thank you.[[T001:row]]Say, may I open it? |  |
 | `table-1:g0008:l0002` | Scene 1 · Player | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
-| `table-1:g0009:l0000` | Scene 1 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-1:g0009:l0000` | Scene 1 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-1:g0009:l0001` | Scene 1 · Heroine | どうしたの？ | What is it? |  |
 | `table-1:g0010:l0000` | Scene 1 · Player | はい、誕生日のプレゼント。 | Here, a birthday present. |  |
 | `table-1:g0010:l0001` | Scene 1 · Heroine | ありがとう。[[T001:row]]開けてもいいかな？ | Thank you.[[T001:row]]Can I open it? |  |
@@ -80,7 +80,7 @@
 | `table-1:g0023:l0004` | Scene 1 · Player | さて、先に行って[[T001:row]]待ってるか。 | Well, I'll go ahead[[T001:row]]and wait for her. |  |
 | `table-1:g0024:l0000` | Scene 1 · Heroine | 待ったぁ。[[T001:row]]ごめんね、[[T002:row]]遅くなっちゃって。 | Been waiting?[[T001:row]]Sorry[[T002:row]]I'm late. |  |
 | `table-1:g0025:l0000` | Scene 1 · Player | あのさ、ちょっとした[[T001:row]]用事があるんだけど…。[[T002:row]]俺の家の前に[[T003:row]]来れないかな？ | Hey, I need to[[T001:row]]ask you something...[[T002:row]]Could you meet me[[T003:row]]outside my house? |  |
-| `table-1:g0025:l0001` | Scene 1 · Heroine | うん、いいわよ。 | Okay, come in. |  |
+| `table-1:g0025:l0001` | Scene 1 · Heroine | うん、いいわよ。 | Sure, I don't mind. |  |
 | `table-1:g0025:l0002` | Scene 1 · Player | それじゃ。 | See ya. |  |
 | `table-1:g0025:l0003` | Scene 1 · Narration | ガチャ | Click. |  |
 | `table-1:g0025:l0004` | Scene 1 · Player | さて、先に行って[[T001:row]]待ってるか。 | Well, I'll go ahead[[T001:row]]and wait for her. |  |
@@ -204,11 +204,11 @@
 | `table-3:g0007:l0000` | Scene 3 · Heroine | ハーイ、[[T001:player_form]]。 | Hi there, [[T001:player_form]]. |  |
 | `table-3:g0007:l0001` | Scene 3 · Heroine | 何か用？ | What do you want? |  |
 | `table-3:g0008:l0000` | Scene 3 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
-| `table-3:g0008:l0001` | Scene 3 · Heroine | リアリー、本当に？[[T001:row]]開けてもいいでしょ？ | Really? Hontou ni?[[T001:row]]I can open it, right? |  |
+| `table-3:g0008:l0001` | Scene 3 · Heroine | リアリー、本当に？[[T001:row]]開けてもいいでしょ？ | Really? Truly?[[T001:row]]I can open it, right? |  |
 | `table-3:g0008:l0002` | Scene 3 · Player | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
 | `table-3:g0009:l0000` | Scene 3 · Heroine | ん？[[T001:row]]何か用？ | Hm?[[T001:row]]What's up? |  |
 | `table-3:g0010:l0000` | Scene 3 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
-| `table-3:g0010:l0001` | Scene 3 · Heroine | サンキュー、ありがと。[[T001:row]]開けてもいいでしょ？ | Thanks! Arigato![[T001:row]]I can open it, right? |  |
+| `table-3:g0010:l0001` | Scene 3 · Heroine | サンキュー、ありがと。[[T001:row]]開けてもいいでしょ？ | Thank you, thanks![[T001:row]]I can open it, right? |  |
 | `table-3:g0010:l0002` | Scene 3 · Player | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
 | `table-3:g0011:l0000` | Scene 3 · Heroine | 何の用よ？ | What do you want? |  |
 | `table-3:g0012:l0000` | Scene 3 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
@@ -231,7 +231,7 @@
 | `table-4:g0006:l0000` | Scene 4 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
 | `table-4:g0006:l0001` | Scene 4 · Heroine | 貴方が、私に…？[[T001:row]]開けてもよろしいかしら？ | You, for me...?[[T001:row]]May I open it? |  |
 | `table-4:g0006:l0002` | Scene 4 · Player | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
-| `table-4:g0007:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-4:g0007:l0000` | Scene 4 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-4:g0007:l0001` | Scene 4 · Heroine | 何か御用かしら？ | Is there something? |  |
 | `table-4:g0008:l0000` | Scene 4 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
 | `table-4:g0008:l0001` | Scene 4 · Heroine | ありがとう、いただくわ。[[T001:row]]また、私の虜が一人…。[[T002:row]]開けてもいいかしら？ | Thank you, I'll take it.[[T001:row]]One more under my spell...[[T002:row]]May I open it? |  |
@@ -293,12 +293,12 @@
 | `table-6:g0006:l0000` | Scene 6 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
 | `table-6:g0006:l0001` | Scene 6 · Heroine | そう言えば、今日は、[[T001:row]]私のお誕生日でしたね。[[T002:row]]開けてもよろしいでしょうか？ | Now that you mention it,[[T001:row]]today is my birthday.[[T002:row]]May I open it? |  |
 | `table-6:g0006:l0002` | Scene 6 · Player | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
-| `table-6:g0007:l0000` | Scene 6 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-6:g0007:l0000` | Scene 6 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-6:g0007:l0001` | Scene 6 · Heroine | 何の御用でしょう？ | What can I do for you? |  |
 | `table-6:g0008:l0000` | Scene 6 · Player | はい、誕生日のプレゼント。 | Here, a birthday present. |  |
 | `table-6:g0008:l0001` | Scene 6 · Heroine | ‥‥あっ。[[T001:row]]今日は、私のお誕生日でした。[[T002:row]]開けてもよろしいですか？ | ...Oh.[[T001:row]]It's my birthday today.[[T002:row]]May I open it? |  |
 | `table-6:g0008:l0002` | Scene 6 · Player | いいよ、開けても。[[T001:row]]どう？ | Sure, go ahead.[[T001:row]]What do you think? |  |
-| `table-6:g0009:l0000` | Scene 6 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-6:g0009:l0000` | Scene 6 · Heroine | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-6:g0009:l0001` | Scene 6 · Heroine | 何か御用でしょうか？ | Is there something you need? |  |
 | `table-6:g0010:l0000` | Scene 6 · Player | はい、誕生日のプレゼント。 | Here, a birthday present. |  |
 | `table-6:g0010:l0001` | Scene 6 · Heroine | それはどうも御丁寧に。[[T001:row]]開けても[[T002:row]]よろしいでしょうか？ | How very kind of you.[[T001:row]]May I[[T002:row]]open it? |  |
@@ -321,7 +321,7 @@
 | `table-7:g0002:l0000` | Scene 7 · Player (monologue) | 何をプレゼントしようかな？ | What should I get her? |  |
 | `table-7:g0003:l0000` | Scene 7 · Player | よし、[[T001:row]][[T002:context_a]]を、[[T003:row]]プレゼントしよう。 | I'll give her[[T001:row]][[T002:context_a]][[T003:row]]for her birthday. |  |
 | `table-7:g0004:l0000` | Scene 7 · Player | あっ、[[T001:girl_name]]！ | Oh, hi, [[T001:girl_name]]! |  |
-| `table-7:g0005:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-7:g0005:l0000` | Scene 7 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-7:g0005:l0001` | Scene 7 · Heroine | 何か御用？ | What's up? |  |
 | `table-7:g0006:l0000` | Scene 7 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
 | `table-7:g0006:l0001` | Scene 7 · Heroine | えっ、私に…。[[T001:row]]ありがとう、嬉しい…。[[T002:row]]開けてもいい？ | Huh, for me...[[T001:row]]Thanks, I'm so happy...[[T002:row]]Can I open it? |  |
@@ -399,7 +399,7 @@
 | `table-8:g0002:l0000` | Scene 8 · Player (monologue) | 何をプレゼントしようかな？ | What should I get her? |  |
 | `table-8:g0003:l0000` | Scene 8 · Player | よし、[[T001:row]][[T002:context_a]]を、[[T003:row]]プレゼントしよう。 | I'll give her[[T001:row]][[T002:context_a]][[T003:row]]for her birthday. |  |
 | `table-8:g0004:l0000` | Scene 8 · Player | あっ、[[T001:girl_name]]！ | Oh, hi, [[T001:girl_name]]! |  |
-| `table-8:g0005:l0000` | Scene 8 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `table-8:g0005:l0000` | Scene 8 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `table-8:g0005:l0001` | Scene 8 · Heroine | 何か御用？ | What's up? |  |
 | `table-8:g0006:l0000` | Scene 8 · Player | 今日、誕生日だよね。[[T001:row]]はい、プレゼント。 | Your birthday, right?[[T001:row]]Here's your gift. |  |
 | `table-8:g0006:l0001` | Scene 8 · Heroine | えっ、私に…。[[T001:row]]ありがとう、嬉しい…。[[T002:row]]開けてもいい？ | Huh, for me...[[T001:row]]Thanks, I'm so happy...[[T002:row]]Can I open it? |  |

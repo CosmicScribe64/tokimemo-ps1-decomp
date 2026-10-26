@@ -101,7 +101,7 @@
 | `section-06:g0000:l0000` | Section · Mira | それじゃ、[[T001:row]]そろそろ、中に入るわよ。 | Well then,[[T001:row]]we're going in. |  |
 | `section-06:g0000:l0001` | Section · Player | そうだね。[[T001:row]]中に入ろうか。 | Sure.[[T001:row]]Let's go in. |  |
 | `section-06:g0001:l0000` | Section · Mira | 何を見ているのかしら？ | What are you looking at? |  |
-| `section-06:g0001:l0001` | Section · Choice | この絵、奇麗だと思わない？[[T001:choice_option]]あの人、奇麗だな…。[[T002:choice_option]]この絵の人、[[T003:girl_name]]に似てない？ | Isn't this one pretty?[[T001:choice_option]]That woman's pretty...[[T002:choice_option]]Looks like you, [[T003:girl_name]] |  |
+| `section-06:g0001:l0001` | Section · Choice | この絵、奇麗だと思わない？[[T001:choice_option]]あの人、奇麗だな…。[[T002:choice_option]]この絵の人、[[T003:girl_name]]に似てない？ | Isn't this one pretty?[[T001:choice_option]]That woman's pretty...[[T002:choice_option]]Looks like you, [[T003:girl_name]]? |  |
 | `section-06:g0002:l0000` | Section · Mira | そうね。[[T001:row]]まあまあじゃない。[[T002:reply_variant]]よ、よく聞こえなかったわ。[[T003:row]]もう一度言って下さる？[[T004:reply_variant]]あら、この程度と[[T005:row]]私を比較しないで欲しいわ。 | I suppose.[[T001:row]]It's passable.[[T002:reply_variant]]I-I didn't quite hear.[[T003:row]]Would you say that again?[[T004:reply_variant]]Oh, please don't compare[[T005:row]]me to the likes of this. |  |
 | `section-06:g0003:l0000` | Section · Player | あ、い、いや。[[T001:row]]今日の[[T002:girl_name]]は[[T003:row]]一段と奇麗だなぁと…。 | Oh, n-nothing.[[T001:row]]Just that [[T002:girl_name]][[T003:row]]looks extra pretty today... |  |
 | `section-06:g0004:l0000` | Section · Mira | そう…。[[T001:row]]まあいいわ。 | I see...[[T001:row]]Well, fine. |  |
@@ -155,7 +155,7 @@
 | `section-08:g0002:l0001` | Game Center · Choice | たまには、いいんじゃない？。[[T001:choice_option]][[T002:girl_name]]って、おっとな〜。[[T003:choice_option]]俺は、好きだけど…。 | It's fine once in a while.[[T001:choice_option]]How grown-up, [[T002:girl_name]][[T003:choice_option]]I like it, though... |  |
 | `section-08:g0003:l0000` | Game Center · Mira | そうね。[[T001:row]]年に一度位ならね。[[T002:reply_variant]]私を茶化して、[[T003:row]]ただですむとお思い？[[T004:reply_variant]]そう。[[T005:row]]貴方なら、[[T006:row]]そうでしょうね。 | Perhaps.[[T001:row]]Once a year or so.[[T002:reply_variant]]Mock me, and you think[[T003:row]]you'll get away with it?[[T004:reply_variant]]I see.[[T005:row]]Someone like you[[T006:row]]would. |  |
 | `section-08:g0004:l0000` | Game Center · Mira | 私にふさわしい[[T001:row]]ゲームは、あるかしら？ | Is there a game[[T001:row]]worthy of me? |  |
-| `section-08:g0004:l0001` | Game Center · Choice | クレーンゲームなんてどう？[[T001:choice_option]]シューティングは？[[T002:choice_option]]どうかな？[[T003:girl_name]]て大人だから。 | How about the crane games?[[T001:choice_option]]What about shooting games?[[T002:choice_option]]So grown-up, [[T003:girl_name]] |  |
+| `section-08:g0004:l0001` | Game Center · Choice | クレーンゲームなんてどう？[[T001:choice_option]]シューティングは？[[T002:choice_option]]どうかな？[[T003:girl_name]]て大人だから。 | How about the crane games?[[T001:choice_option]]What about shooting games?[[T002:choice_option]]So grown-up, [[T003:girl_name]]? |  |
 | `section-08:g0005:l0000` | Game Center · Mira | ちょっと。[[T001:row]]私には似合わない様ね。[[T002:reply_variant]]ちょっと[[T003:row]]私には似合わない様ね。[[T004:row]]他には何かないの？[[T005:reply_variant]]そうね。[[T006:row]]それなら仕方ないわね。 | Hmm.[[T001:row]]It doesn't suit me.[[T002:reply_variant]]Hmm.[[T003:row]]It doesn't suit me.[[T004:row]]Is there nothing else?[[T005:reply_variant]]Yes.[[T006:row]]Then it can't be helped. |  |
 | `section-08:g0006:l0000` | Game Center · Player | そう…。 | I see... |  |
 | `section-08:g0006:l0001` | Game Center · Mira | あ、やっぱり、[[T001:row]]ひとつ取って下さる？ | Oh, on second thought,[[T001:row]]would you win me one? |  |
@@ -218,7 +218,7 @@
 | `section-11:g0014:l0001` | Amusement Park · Choice | ゴメン。おわびに何でもするよ。[[T001:choice_option]]そんなの気にするなよ。[[T002:choice_option]]すごいスピードだったもんね。 | Sorry. I'll do anything.[[T001:choice_option]]Don't mind that stuff.[[T002:choice_option]]It was going so fast, huh. |  |
 | `section-11:g0015:l0000` | Amusement Park · Mira | まあ、許してあげるわ。[[T001:row]]この位では、[[T002:row]]私の完ぺきな美しさは[[T003:row]]変わりませんもの。[[T004:reply_variant]]私の完ぺきな美しさが…。[[T005:row]]許せませんわ。[[T006:reply_variant]]そうね。[[T007:row]]仕方ありませんわね。 | Well, I'll forgive you.[[T001:row]]This much won't[[T002:row]]spoil my perfect[[T003:row]]beauty.[[T004:reply_variant]]My perfect beauty...[[T005:row]]Unforgivable.[[T006:reply_variant]]Yes.[[T007:row]]It can't be helped. |  |
 | `section-11:g0016:l0000` | Amusement Park · Mira | こんなの、[[T001:row]]子供の見るものよ。[[T002:row]]絶対に入らないわ。 | This sort of thing[[T001:row]]is for children.[[T002:row]]I won't go in. |  |
-| `section-11:g0016:l0001` | Amusement Park · Choice | じゃ、やめよう。[[T001:choice_option]]怖いんでしょう。[[T002:choice_option]][[T003:girl_name]]に任せるよ。 | Okay, let's not, then.[[T001:choice_option]]You're scared, aren't you?[[T002:choice_option]]It's up to you, [[T003:girl_name]] |  |
+| `section-11:g0016:l0001` | Amusement Park · Choice | じゃ、やめよう。[[T001:choice_option]]怖いんでしょう。[[T002:choice_option]][[T003:girl_name]]に任せるよ。 | Okay, let's not, then.[[T001:choice_option]]You're scared, aren't you?[[T002:choice_option]]It's up to you, [[T003:girl_name]]. |  |
 | `section-11:g0017:l0000` | Amusement Park · Mira | そうね。[[T001:row]]やめましょう。[[T002:reply_variant]]そんな事言っても無駄よ。[[T003:row]]入らないわ。[[T004:reply_variant]]それじゃ、やめましょう。 | Yes.[[T001:row]]Let's not.[[T002:reply_variant]]That won't work.[[T003:row]]I'm not going in.[[T004:reply_variant]]Then let's not. |  |
 | `section-11:g0018:l0000` | Amusement Park · Mira | また私を笑う気？[[T001:row]]絶対に入らないわ。 | Laughing at me again?[[T001:row]]I won't go in. |  |
 | `section-11:g0018:l0001` | Amusement Park · Player | しょうがない、[[T001:row]]あきらめるか。 | Oh well,[[T001:row]]guess I'll give up. |  |
@@ -240,7 +240,7 @@
 | `section-11:g0030:l0001` | Amusement Park · Choice | かすれた声も聞きたいな。[[T001:choice_option]]叫ばなきゃいいじゃん。[[T002:choice_option]]まだまだ、大丈夫じゃない？ | I wanna hear you go hoarse.[[T001:choice_option]]Then don't scream.[[T002:choice_option]]You can still go, right? |  |
 | `section-11:g0031:l0000` | Amusement Park · Mira | ほーほほほ。[[T001:row]]あなたには、勿体無くてよ。[[T002:reply_variant]]それ以前に、[[T003:row]]乗らなければいいのよ。[[T004:reply_variant]]そうね。[[T005:row]]でも、少し、[[T006:row]]叫び疲れたわ。 | Ohohoho.[[T001:row]]That's too good for you.[[T002:reply_variant]]Better yet,[[T003:row]]just don't ride.[[T004:reply_variant]]Yes.[[T005:row]]But I'm a bit[[T006:row]]tired from screaming. |  |
 | `section-11:g0032:l0000` | Amusement Park · Mira | こんなの、[[T001:row]]子供の見るものよ。[[T002:row]]絶対に入らないわ。 | This sort of thing[[T001:row]]is for children.[[T002:row]]I won't go in. |  |
-| `section-11:g0032:l0001` | Amusement Park · Choice | じゃ、やめよう。[[T001:choice_option]]怖いんでしょう。[[T002:choice_option]][[T003:girl_name]]に任せるよ。 | Okay, let's not, then.[[T001:choice_option]]You're scared, aren't you?[[T002:choice_option]]It's up to you, [[T003:girl_name]] |  |
+| `section-11:g0032:l0001` | Amusement Park · Choice | じゃ、やめよう。[[T001:choice_option]]怖いんでしょう。[[T002:choice_option]][[T003:girl_name]]に任せるよ。 | Okay, let's not, then.[[T001:choice_option]]You're scared, aren't you?[[T002:choice_option]]It's up to you, [[T003:girl_name]]. |  |
 | `section-11:g0033:l0000` | Amusement Park · Mira | そうね。[[T001:row]]やめましょう。[[T002:reply_variant]]そんな事言っても無駄よ。[[T003:row]]入らないわ。[[T004:reply_variant]]それじゃ、やめましょう。 | Yes.[[T001:row]]Let's not.[[T002:reply_variant]]That won't work.[[T003:row]]I'm not going in.[[T004:reply_variant]]Then let's not. |  |
 | `section-11:g0034:l0000` | Amusement Park · Mira | また私を笑う気？[[T001:row]]絶対に入らないわ。 | Laughing at me again?[[T001:row]]I won't go in. |  |
 | `section-11:g0034:l0001` | Amusement Park · Player | しょうがない、[[T001:row]]あきらめるか。 | Oh well,[[T001:row]]guess I'll give up. |  |
@@ -359,7 +359,7 @@
 | `section-18:g0005:l0000` | Shrine · Mira | そう。[[T001:row]]ありがとう。 | I see.[[T001:row]]Thank you. |  |
 | `section-18:g0006:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしょうか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0006:l0001` | Shrine · Mira | そうね。 | Yes. |  |
-| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0007:l0000` | Shrine · Mira | あら、上手じゃない。 | Oh, you're good. |  |
 | `section-18:g0008:l0000` | Shrine · Mira | おみやげにするには、[[T001:row]]あと一ついるわね。 | For souvenirs, we[[T001:row]]need one more. |  |
 | `section-18:g0008:l0001` | Shrine · Mira | な、なかなか上手いわね。 | N-not bad at all. |  |

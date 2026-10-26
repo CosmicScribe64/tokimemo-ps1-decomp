@@ -18,7 +18,7 @@
 | `main:g0003:l0003` | Main · Player | それじゃあ、[[T001:row]]どこに行こうか？ | So then,[[T001:row]]where should we go? |  |
 | `main:g0003:l0004` | Main · Yuko | どこでもいいから[[T001:row]]早く行きましょ。 | Anywhere's fine,[[T001:row]]just hurry! |  |
 | `main:g0003:l0005` | Main · Player | 早くって…。[[T001:row]]（どこに行こうかな。） | Hurry, huh...[[T001:row]](Where should we go?) |  |
-| `main:g0004:l0000` | Main · Yuko | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0004:l0000` | Main · Yuko | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0004:l0001` | Main · Yuko | 何々？ | What's this? |  |
 | `main:g0004:l0002` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0004:l0003` | Main · Yuko | バッチタイミング。[[T001:row]]私も誘おうと[[T002:row]]思ってたのよ。 | Perfect timing![[T001:row]]I was gonna[[T002:row]]ask you too. |  |

@@ -78,7 +78,7 @@
 | `scene-03:g0009:l0000` | Scene-03 · Yukari | そうなんですか？[[T001:row]]困りましたね。[[T002:row]]どうしましょう？ | Is that so?[[T001:row]]Oh dear.[[T002:row]]What shall we do? |  |
 | `scene-03:g0009:l0001` | Scene-03 · Player | 転びながら、[[T001:row]]ゆっくり[[T002:row]]降りていくしかないね。 | We'll just have to[[T001:row]]go down slowly,[[T002:row]]falling as we go. |  |
 | `scene-03:g0009:l0002` | Scene-03 · Yukari | そ、そうですか…。[[T001:row]]それでは、[[T002:row]]そういたしましょう。 | I-I see...[[T001:row]]Well then,[[T002:row]]let us do that. |  |
-| `scene-03:g0009:l0003` | Scene-03 · Player (monologue) | 大丈夫かな？[[T001:row]][[T002:girl_name]]。 | Is she okay?[[T001:row]]Oh, [[T002:girl_name]] |  |
+| `scene-03:g0009:l0003` | Scene-03 · Player (monologue) | 大丈夫かな？[[T001:row]][[T002:girl_name]]。 | Is she okay?[[T001:row]]Oh, [[T002:girl_name]]. |  |
 | `initializer-42:g0000:l0000` | Init 42 · Player (monologue) | ちょっと、熱っぽいな…。[[T001:row]]保健室に行ってみるか…。 | I feel a bit feverish...[[T001:row]]I'll go see the nurse... |  |
 | `initializer-42:g0001:l0000` | Init 42 · Player | あれ？[[T001:row]][[T002:girl_name]]。[[T003:row]]どうしたの？ | Oh?[[T001:row]][[T002:girl_name]],[[T003:row]]what happened? |  |
 | `initializer-42:g0001:l0001` | Init 42 · Yukari | [[T001:player_form]][[T002:row]]体育で、ちょっと怪我を[[T003:row]]してしまいまして。 | [[T001:player_form]][[T002:row]]I hurt myself a little[[T003:row]]in gym class. |  |

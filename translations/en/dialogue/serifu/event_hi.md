@@ -18,7 +18,7 @@
 | `scene-00:g0002:l0004` | Scene-00 · Player | ‥‥‥‥。[[T001:row]]（人の話なんか、[[T002:row]]聞いちゃいねぇ。） | ........[[T001:row]](She's not listening[[T002:row]]to a word I say.) |  |
 | `scene-01:g0000:l0000` | Scene-01 · Player | ひ、[[T001:girl_name]]。[[T002:row]]このスコアは何？ | Y-[[T001:girl_name]][[T002:row]]what is this score? |  |
 | `scene-01:g0000:l0001` | Scene-01 · Yuina | ふふん、どう？[[T001:row]]天才は[[T002:row]]何をやっても天才ね。 | Heh, how's that?[[T001:row]]A genius excels[[T002:row]]at everything. |  |
-| `scene-01:g0000:l0002` | Scene-01 · Player | あのさ、[[T001:girl_name]]…。 | Listen, [[T001:girl_name]] |  |
+| `scene-01:g0000:l0002` | Scene-01 · Player | あのさ、[[T001:girl_name]]…。 | Listen, [[T001:girl_name]]... |  |
 | `scene-01:g0000:l0003` | Scene-01 · Yuina | 何よ。 | What? |  |
 | `scene-01:g0000:l0004` | Scene-01 · Player | この点数って、[[T001:row]]全部ストライクじゃないと[[T002:row]]出ないんだよ。 | You only get this[[T001:row]]score if every single[[T002:row]]frame is a strike. |  |
 | `scene-01:g0000:l0005` | Scene-01 · Yuina | それが、どうしたの？ | And what of it? |  |
@@ -55,11 +55,11 @@
 | `scene-03:g0003:l0002` | Scene-03 · Yuina | ほら、つべこべ言わずに、[[T001:row]]ついてきなさい。 | Stop your whining[[T001:row]]and follow me. |  |
 | `scene-03:g0003:l0003` | Scene-03 · Player | はい、はい。[[T001:row]]（あぁ、もう帰りたい…。） | Yes, yes.[[T001:row]](Ugh, I wanna go home...) |  |
 | `initializer-14:g0000:l0000` | Init 14 · Player (monologue) | あぁ、[[T001:row]]屋上は気持ちいいなぁ。 | Ahh,[[T001:row]]the rooftop feels great. |  |
-| `initializer-14:g0000:l0001` | Init 14 · Player (monologue) | ん？[[T001:row]]あそこにいるのは、[[T002:row]][[T003:girl_name]]じゃないか。 | Hm?[[T001:row]]Who's that over there?[[T002:row]]Why, it's [[T003:girl_name]] |  |
+| `initializer-14:g0000:l0001` | Init 14 · Player (monologue) | ん？[[T001:row]]あそこにいるのは、[[T002:row]][[T003:girl_name]]じゃないか。 | Hm?[[T001:row]]Who's that over there?[[T002:row]]Why, it's [[T003:girl_name]]? |  |
 | `initializer-14:g0001:l0000` | Init 14 · Yuina | はぁ…。 | Sigh... |  |
 | `initializer-14:g0001:l0001` | Init 14 · Player | どうしたの[[T001:girl_name]]。[[T002:row]]ため息なんてついて。 | So, [[T001:girl_name]][[T002:row]]what's with the sigh? |  |
 | `initializer-14:g0002:l0000` | Init 14 · Yuina | あっ、[[T001:player_form]][[T002:row]]嫌なところ[[T003:row]]見られちゃったわね。 | Oh, [[T001:player_form]][[T002:row]]You caught me at[[T003:row]]a bad moment. |  |
-| `initializer-14:g0002:l0001` | Init 14 · Player | 本当に、どうしたの？[[T001:row]][[T002:girl_name]]らしくないよ。 | Really, what's wrong?[[T001:row]]So unlike [[T002:girl_name]] |  |
+| `initializer-14:g0002:l0001` | Init 14 · Player | 本当に、どうしたの？[[T001:row]][[T002:girl_name]]らしくないよ。 | Really, what's wrong?[[T001:row]]So unlike [[T002:girl_name]]? |  |
 | `initializer-14:g0002:l0002` | Init 14 · Yuina | らしくないついでだから[[T001:row]]言うけど…。[[T002:row]]実は、スランプなのよ。 | I'm not myself,[[T001:row]]so I'll admit it...[[T002:row]]I'm in a slump. |  |
 | `initializer-14:g0002:l0003` | Init 14 · Player | スランプって言うと？ | A slump? How so? |  |
 | `initializer-14:g0002:l0004` | Init 14 · Yuina | どうしても、[[T001:row]]いいアイディアが[[T002:row]]思いつかないのよ。 | No matter what,[[T001:row]]I can't come up[[T002:row]]with a good idea. |  |
@@ -70,7 +70,7 @@
 | `initializer-14:g0004:l0000` | Init 14 · Player (monologue) | [[T001:girl_name]]大丈夫かな…。[[T002:row]]向こうで、[[T003:row]]何かつぶやいてるぞ。 | Oh, [[T001:girl_name]][[T002:row]]are you okay? She's[[T003:row]]muttering something. |  |
 | `initializer-14:g0004:l0001` | Init 14 · Yuina | あぁ、究極破壊兵器の[[T001:row]]アイディアが、[[T002:row]]思いつかないわ。 | Ugh, no ideas[[T001:row]]for the ultimate[[T002:row]]doomsday weapon. |  |
 | `initializer-14:g0004:l0002` | Init 14 · Player | ‥‥‥‥。[[T001:row]]（何てものを考えてるんだ、[[T002:row]]この娘は…。） | ........[[T001:row]](What on earth is[[T002:row]]this girl thinking up...) |  |
-| `initializer-19:g0000:l0000` | Init 19 · Player | あれ、[[T001:girl_name]]だ。 | There's [[T001:girl_name]] |  |
+| `initializer-19:g0000:l0000` | Init 19 · Player | あれ、[[T001:girl_name]]だ。 | There's [[T001:girl_name]]. |  |
 | `initializer-19:g0000:l0001` | Init 19 · Yuina | 探したわよ。[[T001:player_form]]、[[T002:row]]これから調査よ。 | Found you, [[T001:player_form]].[[T002:row]]Let's investigate. |  |
 | `initializer-19:g0000:l0002` | Init 19 · Player | えっ、どこに行くの？ | Huh, where are we going? |  |
 | `initializer-19:g0000:l0003` | Init 19 · Yuina | ホテルのそばの農場に、[[T001:row]]いい研究テーマがあったのよ。 | A farm by the hotel has[[T001:row]]a fine research subject. |  |
@@ -103,4 +103,4 @@
 | `initializer-20:g0001:l0000` | Init 20 · Yuina | ま、負けたわ。[[T001:row]]私の完敗よ。 | I-I lost.[[T001:row]]You crushed me. |  |
 | `initializer-20:g0001:l0001` | Init 20 · Player | 大丈夫？[[T001:row]]怪我はなかった？ | Are you okay?[[T001:row]]Did you get hurt? |  |
 | `initializer-20:g0001:l0002` | Init 20 · Yuina | 私の取るべき道は[[T001:row]]決まったわ。[[T002:row]]それじゃ、失礼するわ。 | I now know the path[[T001:row]]I must take.[[T002:row]]Farewell, then. |  |
-| `initializer-20:g0002:l0000` | Init 20 · Player | ひ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]] |  |
+| `initializer-20:g0002:l0000` | Init 20 · Player | ひ、[[T001:girl_name]]…。 | Y-[[T001:girl_name]]... |  |

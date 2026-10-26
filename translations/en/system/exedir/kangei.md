@@ -18,7 +18,7 @@
 | `00007654:feaaad1d1f20` | Unknown | 水泳部 | Swimming Club |  |
 | `0000765c:6a60d9e54fb0` | Unknown | バスケ部 | Basketball Club |  |
 | `00007780:fad3509f12a2` | Unknown | 合宿所 | Camp |  |
-| `00007790:ddbfceeafb47` | Unknown | 図書室 | Library |  |
+| `00007790:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
 | `00007798:3ad700edc836` | Unknown | 演劇部 | Drama Club |  |
 | `000077a0:cb8b3ed09fe1` | Unknown | 実験室 | Science Lab |  |
 | `000077a8:cfba20b636e4` | Unknown | 電脳部室 | Computer Clubroom |  |

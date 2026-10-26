@@ -15,7 +15,7 @@
 | `main:g0005:l0000` | Main · Player | それじゃあ、[[T001:girl_name]]との[[T002:row]]約束だし、[[T003:row]]科学部に行こうかな。 | I promised [[T001:girl_name]].[[T002:row]]Guess I'll visit[[T003:row]]the Science Club. |  |
 | `main:g0006:l0000` | Main · Player | それじゃあ、[[T001:girl_name]]との[[T002:row]]約束だし、[[T003:row]]電脳部に行こうかな。 | I promised [[T001:girl_name]].[[T002:row]]Guess I'll visit[[T003:row]]the Computer Club. |  |
 | `main:g0007:l0000` | Main · Player | ‥‥‥。 | ... |  |
-| `main:g0008:l0000` | Main · Yuina | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0008:l0000` | Main · Yuina | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0008:l0001` | Main · Yuina | 何か用？ | What do you want? |  |
 | `main:g0008:l0002` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0009:l0000` | Main · Yuina | 私は、科学部よ。[[T001:row]]見学なんてできるとでも[[T002:row]]思ってるの？ | I'm in the Science Club.[[T001:row]]Think I can[[T002:row]]look around? |  |
@@ -24,14 +24,14 @@
 | `main:g0012:l0000` | Main · Yuina | ま、あなたが、[[T001:row]]見学に来るのは[[T002:row]]勝手だけどね。 | Well, you can[[T001:row]]come look around[[T002:row]]if you want. |  |
 | `main:g0013:l0000` | Main · Yuina | ま、あなたが、[[T001:row]]見学に来るのは[[T002:row]]勝手だけどね。 | Well, you can[[T001:row]]come look around[[T002:row]]if you want. |  |
 | `main:g0014:l0000` | Main · Player | 一人で行くか。 | I'll go alone. |  |
-| `main:g0015:l0000` | Main · Yuina | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0015:l0000` | Main · Yuina | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0015:l0001` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0016:l0000` | Main · Yuina | 私は、科学部なのよ。[[T001:row]]一緒に行けるわけ[[T002:row]]ないじゃないの。 | I'm in the Science Club.[[T001:row]]I can't just[[T002:row]]go with you. |  |
 | `main:g0017:l0000` | Main · Yuina | 私は、電脳部なのよ。[[T001:row]]一緒に行けるわけ[[T002:row]]ないじゃないの。 | I'm in the Computer Club.[[T001:row]]I can't just[[T002:row]]go with you. |  |
 | `main:g0018:l0000` | Main · Player | あっ、そうか。[[T001:row]]それじゃ、[[T002:row]]しょうがないね。 | Oh, right.[[T001:row]]Can't be helped,[[T002:row]]I guess. |  |
 | `main:g0019:l0000` | Main · Yuina | ま、あなたが、[[T001:row]]見学に来るのは[[T002:row]]勝手だけどね。 | Well, you can[[T001:row]]come look around[[T002:row]]if you want. |  |
 | `main:g0020:l0000` | Main · Player (monologue) | そんな部に入ってたとは[[T001:row]]知らなかった…。 | She's in a club[[T001:row]]like that? Who knew... |  |
-| `main:g0021:l0000` | Main · Yuina | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0021:l0000` | Main · Yuina | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0021:l0001` | Main · Yuina | 私に、何の用？ | What do you want with me? |  |
 | `main:g0021:l0002` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0022:l0000` | Main · Yuina | 私は、科学部よ。[[T001:row]]見学なんてできるとでも[[T002:row]]思ってるの？ | I'm in the Science Club.[[T001:row]]Think I can[[T002:row]]look around? |  |

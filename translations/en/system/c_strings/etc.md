@@ -11,7 +11,7 @@
 | `80141154:2` | album_save_step_card_unformatted() | 初期化していいですか？ | OK to format it? |  |
 | `80141154:3` | album_save_step_card_unformatted() | 別のメモリーカードを | Insert another card |  |
 | `80141154:4` | album_save_step_card_unformatted() | 差し込み口１ | in slot 1 |  |
-| `80141154:5` | album_save_step_card_unformatted() | にセットして、 | `          and` |  |
+| `80141154:5` | album_save_step_card_unformatted() | にセットして、 | `         , then press` |  |
 | `80141154:6` | album_save_step_card_unformatted() | ボタンを押してください。 | `  to continue.` |  |
 | `801413fc:1` | album_save_step_begin() | データセーブ | Save Data |  |
 | `801415a4:1` | album_save_step_ask() | 今回のアルバムモードのデータを | Save this Album Mode data |  |
@@ -115,13 +115,13 @@
 | `80145318:2` | clear_save_card_full_step() | 別のメモリーカードに | Save to another |  |
 | `80145318:3` | clear_save_card_full_step() | セーブしますか？ | memory card? |  |
 | `80145318:4` | clear_save_card_full_step() | 別のメモリーカードを | Insert another card |  |
-| `80145318:5` | clear_save_card_full_step() | 差し込み口１にセットして、 | card in slot 1, then |  |
+| `80145318:5` | clear_save_card_full_step() | 差し込み口１にセットして、 | in slot 1, then |  |
 | `80145318:6` | clear_save_card_full_step() | ボタンを押してください。 | press a button. |  |
 | `801455b0:1` | clear_save_card_unformatted_step() | 未初期化のメモリーカードです。 | Memory card not formatted. |  |
 | `801455b0:2` | clear_save_card_unformatted_step() | 初期化していいですか？ | OK to format it? |  |
 | `801455b0:3` | clear_save_card_unformatted_step() | 別のメモリーカードを | Insert another card |  |
 | `801455b0:4` | clear_save_card_unformatted_step() | 差し込み口１ | in slot 1 |  |
-| `801455b0:5` | clear_save_card_unformatted_step() | にセットして、 | `          and` |  |
+| `801455b0:5` | clear_save_card_unformatted_step() | にセットして、 | `         , then press` |  |
 | `801455b0:6` | clear_save_card_unformatted_step() | ボタンを押してください。 | `  to continue.` |  |
 | `80147d74:3` | exam_results_react() | 今回の試験は終了した。） | The exams are over.) |  |
 | `80147d74:4` | exam_results_react() | 今回の試験は終了した。） | The exams are over.) |  |

@@ -18,7 +18,7 @@
 | `main:g0003:l0001` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0003:l0002` | Main · Megumi | …！？[[T001:row]]は、はい、[[T002:row]]行きます…。 | ...!?[[T001:row]]Y-yes,[[T002:row]]I'll go... |  |
 | `main:g0003:l0003` | Main · Player | それじゃ、[[T001:row]]どこに行こうか？ | Well then,[[T001:row]]where to next? |  |
-| `main:g0004:l0000` | Main · Megumi | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0004:l0000` | Main · Megumi | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0004:l0001` | Main · Megumi | 何ですか？ | What is it? |  |
 | `main:g0004:l0002` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0004:l0003` | Main · Megumi | はい。[[T001:row]]行きます…。 | Yes.[[T001:row]]I'll go... |  |

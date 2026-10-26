@@ -28,7 +28,7 @@
 | `main:g0009:l0003` | Main · Player | つ、付き合いきれん。[[T001:row]]片桐さん、[[T002:row]]悪いけど俺帰るよ。 | I-I can't take this.[[T001:row]]Katagiri-san,[[T002:row]]sorry, I'm leaving. |  |
 | `main:g0010:l0000` | Main · Ayako | ごめんね。[[T001:row]]ちゃんと描いてあげないと、[[T002:row]]親衛隊がうるさくって…。 | Sorry.[[T001:row]]If I don't draw him,[[T002:row]]his fan club gets loud... |  |
 | `main:g0010:l0001` | Main · Player | 別にいいよ。[[T001:row]]次の機会に[[T002:row]]お願いするから。 | It's fine.[[T001:row]]I'll ask[[T002:row]]next time. |  |
-| `main:g0010:l0002` | Main · Ayako | ソーリー、ごめんね。 | Sorry, gomen ne. |  |
+| `main:g0010:l0002` | Main · Ayako | ソーリー、ごめんね。 | Sorry, so sorry! |  |
 | `main:g0011:l0000` | Main · Ayako | 彩子君。[[T001:row]]今度は、右上２７°から[[T002:row]]お願いするよ。 | Ayako-kun,[[T001:row]]next from 27 degrees[[T002:row]]up and right, please. |  |
 | `main:g0012:l0000` | Main · Ayako | それじゃ戻るわね。[[T001:row]]グッバイ、さよなら。 | I'll head back now.[[T001:row]]Goodbye, sayonara. |  |
 | `main:g0013:l0000` | Main · Ayako | ウェルカム。[[T001:row]]いらっしゃい。 | Welcome.[[T001:row]]Come on in. |  |
@@ -49,7 +49,7 @@
 | `main:g0018:l0003` | Main · Player | つ、付き合いきれん。[[T001:row]]片桐さん、悪いけど俺帰るよ。 | I-I can't take this.[[T001:row]]Sorry, Katagiri-san. Bye. |  |
 | `main:g0019:l0000` | Main · Ayako | ごめんね。[[T001:row]]ちゃんと描いてあげないと、[[T002:row]]親衛隊がうるさいのよ。 | Sorry.[[T001:row]]If I don't draw him,[[T002:row]]his fan club gets loud. |  |
 | `main:g0019:l0001` | Main · Player | 別にいいよ。[[T001:row]]次の機会に[[T002:row]]お願いするから。 | It's fine.[[T001:row]]I'll ask[[T002:row]]next time. |  |
-| `main:g0019:l0002` | Main · Ayako | ソーリー、ごめんね。 | Sorry, gomen ne. |  |
+| `main:g0019:l0002` | Main · Ayako | ソーリー、ごめんね。 | Sorry, so sorry! |  |
 | `main:g0020:l0000` | Main · Ayako | 彩子君。[[T001:row]]今度は、右上２７°から[[T002:row]]お願いするよ。 | Ayako-kun,[[T001:row]]next from 27 degrees[[T002:row]]up and right, please. |  |
 | `main:g0021:l0000` | Main · Ayako | それじゃ、[[T001:row]]グッバイ、さよなら。 | Well then,[[T001:row]]goodbye, sayonara. |  |
 | `main:g0022:l0000` | Main · Ayako | ウェルカム。[[T001:row]]いらっしゃい。 | Welcome.[[T001:row]]Come on in. |  |
@@ -142,7 +142,7 @@
 | `main:g0055:l0003` | Main · Player | そ、そう？[[T001:row]]そんなことないと[[T002:row]]思うけど…。 | R-really?[[T001:row]]I don't think[[T002:row]]so... |  |
 | `main:g0055:l0004` | Main · Ayako | いいのよ。[[T001:row]]別に謙遜しなくても。 | It's fine.[[T001:row]]No need to be modest. |  |
 | `main:g0055:l0005` | Main · Player | さあて、[[T001:row]]そろそろ帰ろうかな。 | Well,[[T001:row]]guess I'll go now. |  |
-| `main:g0055:l0006` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Arigatou! |  |
+| `main:g0055:l0006` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Thanks so much!u! |  |
 | `main:g0056:l0000` | Main · Ayako | あっ、[[T001:row]]いらっしゃい。 | Oh,[[T001:row]]welcome. |  |
 | `main:g0057:l0000` | Main · Player | へぇ、ここは[[T001:row]]油絵の展示なんだね。 | Oh, so this is[[T001:row]]an oil painting show. |  |
 | `main:g0057:l0001` | Main · Ayako | そうよ、[[T001:row]]じっくりと見ていってね。 | That's right,[[T001:row]]take a good look. |  |
@@ -159,25 +159,25 @@
 | `main:g0061:l0000` | Main · Player (monologue) | 俺は、展示物を一通り[[T001:row]]見て回った。 | I looked[[T001:row]]at all the exhibits. |  |
 | `main:g0062:l0000` | Main · Player | 結構、[[T001:row]]いい絵だったな。 | Those were[[T001:row]]nice paintings. |  |
 | `main:g0063:l0000` | Main · Player | おっ、ちょうど、[[T001:row]]演奏が始まるぞ。 | Oh, the concert[[T001:row]]is just starting. |  |
-| `main:g0064:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0064:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0064:l0001` | Main · Ayako | あっ、ウェルカム。[[T001:row]]良かった。[[T002:row]]来てくれたのね。 | Oh, welcome.[[T001:row]]I'm glad.[[T002:row]]You came. |  |
 | `main:g0064:l0002` | Main · Player | あれ、[[T001:row]]グラディウスでしょう？ | That was[[T001:row]]Gradius, right? |  |
 | `main:g0064:l0003` | Main · Ayako | 知ってるの？[[T001:row]]ゲーム音楽なんでしょう。 | You know it?[[T001:row]]It's game music, right? |  |
 | `main:g0064:l0004` | Main · Player | 演奏がよかったから、[[T001:row]]すぐにわかったよ。 | You played it well,[[T001:row]]so I knew right away. |  |
-| `main:g0064:l0005` | Main · Ayako | サンキュー、ありがとう。[[T001:row]]良かった、気に入って[[T002:row]]もらえたみたいで。 | Thanks! Arigatou![[T001:row]]I'm glad you[[T002:row]]seem to like it. |  |
+| `main:g0064:l0005` | Main · Ayako | サンキュー、ありがとう。[[T001:row]]良かった、気に入って[[T002:row]]もらえたみたいで。 | Thank you, thanks!u![[T001:row]]I'm glad you[[T002:row]]seem to like it. |  |
 | `main:g0064:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0064:l0007` | Main · Ayako | わざわざ来てくれて、[[T001:row]]嬉しかったわ。[[T002:row]]グッバイ、さよなら。 | I'm glad you[[T001:row]]made it here.[[T002:row]]Goodbye, sayonara. |  |
-| `main:g0065:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0065:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0065:l0001` | Main · Ayako | あっ、ウェルカム。[[T001:row]]来てくれたのね。[[T002:row]]感想は？ | Oh, welcome.[[T001:row]]You came.[[T002:row]]Thoughts? |  |
 | `main:g0065:l0002` | Main · Player | あれ、[[T001:row]]グラディウスでしょう？ | That was[[T001:row]]Gradius, right? |  |
 | `main:g0065:l0003` | Main · Ayako | へぇ、よく知ってるわね。[[T001:row]]ゲーム音楽なんでしょう。 | Wow, you know it.[[T001:row]]It's game music, right? |  |
 | `main:g0065:l0004` | Main · Player | 演奏が良かったから、[[T001:row]]すぐにわかったよ。 | You played it well,[[T001:row]]so I knew right away. |  |
-| `main:g0065:l0005` | Main · Ayako | リアリー、本当？ | Really? Hontou? |  |
+| `main:g0065:l0005` | Main · Ayako | リアリー、本当？ | Really? Truly? |  |
 | `main:g0065:l0006` | Main · Player | 本当だよ。[[T001:row]]嘘じゃないって。 | Really.[[T001:row]]I'm not lying. |  |
 | `main:g0065:l0007` | Main · Ayako | ありがとう、[[T001:row]]誉めてくれて。 | Thanks for[[T001:row]]the praise. |  |
 | `main:g0065:l0008` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
-| `main:g0065:l0009` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて、[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Arigatou! |  |
-| `main:g0066:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0065:l0009` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて、[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Thanks so much!u! |  |
+| `main:g0066:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0066:l0001` | Main · Ayako | あっ、いらっしゃい。[[T001:row]]感想は？ | Oh, welcome.[[T001:row]]Thoughts? |  |
 | `main:g0066:l0002` | Main · Player | あれ、[[T001:row]]グラディウスでしょう？ | That was[[T001:row]]Gradius, right? |  |
 | `main:g0066:l0003` | Main · Ayako | よく知ってるわね。[[T001:row]]ゲーム音楽なんでしょう。 | You know it.[[T001:row]]It's game music, right? |  |
@@ -185,7 +185,7 @@
 | `main:g0066:l0005` | Main · Ayako | そうでしょう。[[T001:row]]いい演奏だったもの。 | Right?[[T001:row]]We played well. |  |
 | `main:g0066:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0066:l0007` | Main · Ayako | 帰るの？[[T001:row]]グッバイ、さよなら。 | Leaving already?[[T001:row]]Goodbye, sayonara. |  |
-| `main:g0067:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0067:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0067:l0001` | Main · Ayako | あっ、ウェルカム。[[T001:row]]良かった。[[T002:row]]来てくれたのね。 | Oh, welcome.[[T001:row]]I'm glad.[[T002:row]]You came. |  |
 | `main:g0067:l0002` | Main · Player | 今の面白かったね。[[T001:row]]俺、ああいう曲好きだよ。 | That was fun.[[T001:row]]I like tunes like that. |  |
 | `main:g0067:l0003` | Main · Ayako | リアリー？[[T001:row]]良かった、[[T002:row]]私の作曲した曲なのよ。 | Really?[[T001:row]]I'm glad![[T002:row]]I wrote that piece. |  |
@@ -193,37 +193,37 @@
 | `main:g0067:l0005` | Main · Ayako | 別にこんな曲[[T001:row]]ばかりじゃないのよ。[[T002:row]]今回はたまたまよ。 | I don't always write[[T001:row]]tunes like that.[[T002:row]]Just this once. |  |
 | `main:g0067:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0067:l0007` | Main · Ayako | わざわざ来てくれて、[[T001:row]]嬉しかったわ。[[T002:row]]グッバイ、さよなら。 | I'm glad you[[T001:row]]made it here.[[T002:row]]Goodbye, sayonara. |  |
-| `main:g0068:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0068:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0068:l0001` | Main · Ayako | あっ、ウェルカム。[[T001:row]]来てくれたのね。[[T002:row]]感想は？ | Oh, welcome.[[T001:row]]You came.[[T002:row]]Thoughts? |  |
 | `main:g0068:l0002` | Main · Player | 面白かったよ。[[T001:row]]俺、ああいう曲好きだし。 | It was fun.[[T001:row]]I like tunes like that. |  |
 | `main:g0068:l0003` | Main · Ayako | 良かったでしょう。[[T001:row]]私が作曲したのよ。 | Good, right?[[T001:row]]I wrote it. |  |
 | `main:g0068:l0004` | Main · Player | [[T001:girl_name]]って、[[T002:row]]ああいう曲を[[T003:row]]作るのが好きなの？ | [[T001:girl_name]],[[T002:row]]like writing tunes[[T003:row]]like that? |  |
 | `main:g0068:l0005` | Main · Ayako | 好きな訳じゃないけど、[[T001:row]]今年はそういう[[T002:row]]気分だったのよ。 | Not really, but[[T001:row]]this year I was[[T002:row]]in that mood. |  |
 | `main:g0068:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
-| `main:g0068:l0007` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて、[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Arigatou! |  |
-| `main:g0069:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0068:l0007` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて、[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Thanks so much!u! |  |
+| `main:g0069:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0069:l0001` | Main · Ayako | あっ、いらっしゃい。[[T001:row]]感想は？ | Oh, welcome.[[T001:row]]Thoughts? |  |
 | `main:g0069:l0002` | Main · Player | 面白かったよ。[[T001:row]]俺、ああいう曲好きだし。 | It was fun.[[T001:row]]I like tunes like that. |  |
 | `main:g0069:l0003` | Main · Ayako | 良かったでしょう。 | Good, right? |  |
 | `main:g0069:l0004` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0069:l0005` | Main · Ayako | 帰るの？[[T001:row]]グッバイ、さよなら。 | Leaving already?[[T001:row]]Goodbye, sayonara. |  |
-| `main:g0070:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0070:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0070:l0001` | Main · Ayako | あっ、ウェルカム。[[T001:row]]良かった。[[T002:row]]来てくれたのね。 | Oh, welcome.[[T001:row]]I'm glad.[[T002:row]]You came. |  |
 | `main:g0070:l0002` | Main · Player | やっぱりクラシックは[[T001:row]]良いね。 | Classical music[[T001:row]]is really good. |  |
 | `main:g0070:l0003` | Main · Ayako | そう、良かった…。[[T001:row]]３年間の集大成だから、[[T002:row]]いい演奏にしたかったの。 | Oh, good...[[T001:row]]It's three years of work,[[T002:row]]so I wanted it great. |  |
 | `main:g0070:l0004` | Main · Player | それじゃ、[[T001:row]]予定通りだったね。 | Then it went[[T001:row]]according to plan. |  |
-| `main:g0070:l0005` | Main · Ayako | サンキュー、ありがとう。 | Thanks, arigatou! |  |
+| `main:g0070:l0005` | Main · Ayako | サンキュー、ありがとう。 | Thank you, thanks! |  |
 | `main:g0070:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
 | `main:g0070:l0007` | Main · Ayako | わざわざ来てくれて、[[T001:row]]嬉しかったわ。[[T002:row]]グッバイ、さよなら。 | I'm glad you[[T001:row]]made it here.[[T002:row]]Goodbye, sayonara. |  |
-| `main:g0071:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0071:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0071:l0001` | Main · Ayako | あっ、ウェルカム。[[T001:row]]来てくれたのね。[[T002:row]]感想は？ | Oh, welcome.[[T001:row]]You came.[[T002:row]]Thoughts? |  |
 | `main:g0071:l0002` | Main · Player | 良かったよ。[[T001:row]]やっぱりクラシックは[[T002:row]]良いね。 | It was great.[[T001:row]]Classical music[[T002:row]]is so good. |  |
 | `main:g0071:l0003` | Main · Ayako | 良かったでしょう。[[T001:row]]だてに３年間[[T002:row]]吹奏楽部にいないわよ。 | Good, right?[[T001:row]]Three years in the band[[T002:row]]weren't for nothing. |  |
 | `main:g0071:l0004` | Main · Player | さすがに、[[T001:row]]３年間やってただけの事は[[T002:row]]あったね。 | You can tell[[T001:row]]you've done it[[T002:row]]for three years. |  |
 | `main:g0071:l0005` | Main · Ayako | うまくいって、[[T001:row]]今日は気分がいいわ。 | It went well,[[T001:row]]so I'm in a great mood. |  |
 | `main:g0071:l0006` | Main · Player | あっ、何か俺って、[[T001:row]]他の人の邪魔みたい。[[T002:row]]そろそろ帰るね。 | Looks like I'm[[T001:row]]in the way here.[[T002:row]]I'll get going. |  |
-| `main:g0071:l0007` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Arigatou! |  |
-| `main:g0072:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `main:g0071:l0007` | Main · Ayako | 帰るのね。[[T001:row]]サンキュー、見に来てくれて[[T002:row]]ありがとう。 | You're going?[[T001:row]]Thanks for coming![[T002:row]]Thanks so much!u! |  |
+| `main:g0072:l0000` | Main · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `main:g0072:l0001` | Main · Ayako | あっ、いらっしゃい。[[T001:row]]感想は？ | Oh, welcome.[[T001:row]]Thoughts? |  |
 | `main:g0072:l0002` | Main · Player | 良かったよ。[[T001:row]]やっぱりクラシックは[[T002:row]]良いね。 | It was great.[[T001:row]]Classical music[[T002:row]]is so good. |  |
 | `main:g0072:l0003` | Main · Ayako | そうでしょう。 | Right? |  |

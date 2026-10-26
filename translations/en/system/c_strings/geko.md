@@ -15,7 +15,7 @@
 | `80135dc0:2` | encounter_girl_birthday_init() | 近所の公園 | Neighborhood Park |  |
 | `80135dc0:3` | encounter_girl_birthday_init() | 自宅前 | Home |  |
 | `801367ec:1` | encounter_girl_birthday_location_select() | 廊下 | Hallway |  |
-| `801367ec:2` | encounter_girl_birthday_location_select() | 図書室 | Library |  |
+| `801367ec:2` | encounter_girl_birthday_location_select() | 図書室 | School Library |  |
 | `801367ec:3` | encounter_girl_birthday_location_select() | 演劇部 | Drama Club |  |
 | `801367ec:4` | encounter_girl_birthday_location_select() | 実験室 | Science Lab |  |
 | `801367ec:5` | encounter_girl_birthday_location_select() | 電脳部室 | Computer Clubroom |  |

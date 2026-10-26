@@ -1,4 +1,4 @@
-# Supplemental Text: Karakasa Umbrella Dance (`CDROM/TARA_OBJ/KARAKASI.BIN`)
+# Supplemental Text: Karaoke Lyrics (`CDROM/TARA_OBJ/KARAKASI.BIN`)
 
 - **File Path**: `supplemental/karakasi.md`
 - **Total Lines**: 201
@@ -6,12 +6,12 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `0000` | Karaoke lyrics | キラキラと木漏 | Shining through the | Karaoke song 1 (Futari no Toki) lyric line |
-| `0010` | Karaoke lyrics | れ日の中で | sunlight filtering through the trees, | Karaoke song 1 (Futari no Toki) lyric line |
+| `0000` | Karaoke lyrics | キラキラと木漏 | Sparkling in | Karaoke song 1 (Futari no Toki) lyric line |
+| `0010` | Karaoke lyrics | れ日の中で | ` filtered sunlight,` | Karaoke song 1 (Futari no Toki) lyric line |
 | `0844` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `0848` | Karaoke lyrics | 二人 | Our | Karaoke song 1 (Futari no Toki) lyric prefix |
 | `0850` | Karaoke lyrics | の時が | ` time together` | Karaoke song 1 (Futari no Toki) lyric prefix |
-| `001c` | Karaoke lyrics | 流れてゆくわ | our time together flows gently by. | Karaoke song 1 (Futari no Toki) lyric line |
+| `001c` | Karaoke lyrics | 流れてゆくわ | ` flows gently by.` | Karaoke song 1 (Futari no Toki) lyric line |
 | `002c` | Karaoke lyrics | あんなにもあこ | Beside the smile | Karaoke song 1 (Futari no Toki) lyric line |
 | `003c` | Karaoke lyrics | がれ続けた | I longed for so dearly, | Karaoke song 1 (Futari no Toki) lyric line |
 | `0858` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
@@ -69,13 +69,13 @@
 | `023c` | Karaoke lyrics | たまたまそばにいたら | Just happening to be near you, | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
 | `08cc` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `08d0` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
-| `0254` | Karaoke lyrics | だんだん目が慣れて | little by little my eyes grew used to you, | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
+| `0254` | Karaoke lyrics | だんだん目が慣れて | I slowly grew used to you, | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
 | `08d4` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `08d8` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
-| `0268` | Karaoke lyrics | じわじわ好きになる | and slowly I'm falling for you. | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
+| `0268` | Karaoke lyrics | じわじわ好きになる | and slowly fell for you. | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
 | `08dc` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `08e0` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
-| `027c` | Karaoke lyrics | もともとタイプじゃない | You weren't my type to begin with, | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
+| `027c` | Karaoke lyrics | もともとタイプじゃない | You weren't even my type, | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
 | `08e4` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `08e8` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `0294` | Karaoke lyrics | ぜんぜん理想じゃない | not my ideal at all— | Karaoke song 2 (Koi wa Hodohodo ni) lyric line |
@@ -114,7 +114,7 @@
 | `03e4` | Karaoke lyrics | Ａｈ夢で | Ah, if I can meet you | Karaoke song 3 (Ballad of Wimpy Men) lyric line |
 | `03f0` | Karaoke lyrics | 会えるなら | in my dreams, | Karaoke song 3 (Ballad of Wimpy Men) lyric line |
 | `0980` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
-| `03fc` | Karaoke lyrics | それだけでもいい | even that alone would be enough. | Karaoke song 3 (Ballad of Wimpy Men) lyric line |
+| `03fc` | Karaoke lyrics | それだけでもいい | even that would be enough. | Karaoke song 3 (Ballad of Wimpy Men) lyric line |
 | `0984` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `0988` | Karaoke lyrics | _(empty slot)_ | ` ` | Karaoke lyric blank spacer |
 | `0410` | Karaoke lyrics | Ａｈいつも | Ah, I always want | Karaoke song 3 (Ballad of Wimpy Men) lyric line |

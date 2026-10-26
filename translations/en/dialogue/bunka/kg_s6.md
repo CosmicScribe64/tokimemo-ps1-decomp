@@ -88,7 +88,7 @@
 | `main:g0016:l0000` | Main · Mira | あらやだ。 | Oh my. |  |
 | `main:g0016:l0001` | Main · Player | [[T001:girl_name]]。[[T002:row]]来てくれたんだ。 | [[T001:girl_name]]![[T002:row]]You came. |  |
 | `main:g0016:l0002` | Main · Mira | なぜこんな所に[[T001:row]]来たのかしら。 | Why did I[[T001:row]]come here? |  |
-| `main:g0017:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]] |  |
+| `main:g0017:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]]. |  |
 | `main:g0018:l0000` | Main · Mira | お疲れみたいね。 | You look tired. |  |
 | `main:g0018:l0001` | Main · Player | あっ、[[T001:girl_name]]。[[T002:row]]来てくれたんだ。[[T003:row]]どうだった？ | Oh, [[T001:girl_name]]![[T002:row]]You came.[[T003:row]]How was it? |  |
 | `main:g0018:l0002` | Main · Mira | 私、時代劇なんて[[T001:row]]好きじゃないけど、[[T002:row]]良かったんじゃない。 | I don't like[[T001:row]]period dramas, but[[T002:row]]it was fine. |  |
@@ -347,7 +347,7 @@
 | `main:g0095:l0000` | Main · Mira | あらやだ。 | Oh my. |  |
 | `main:g0095:l0001` | Main · Player | [[T001:girl_name]]。[[T002:row]]来てくれたんだ。 | [[T001:girl_name]]![[T002:row]]You came. |  |
 | `main:g0095:l0002` | Main · Mira | なぜ、こんな所に[[T001:row]]来たのかしら。 | Why did I[[T001:row]]come here? |  |
-| `main:g0096:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]] |  |
+| `main:g0096:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]]. |  |
 | `main:g0097:l0000` | Main · Mira | お疲れみたいね。 | You look tired. |  |
 | `main:g0097:l0001` | Main · Player | あっ、[[T001:girl_name]]。[[T002:row]]来てくれたんだ。[[T003:row]]どうだった？ | Oh, [[T001:girl_name]]![[T002:row]]You came.[[T003:row]]How was it? |  |
 | `main:g0097:l0002` | Main · Mira | 何の曲かわからないけど、[[T001:row]]良かったんじゃない。 | I didn't know the tune,[[T001:row]]but it was fine. |  |
@@ -391,4 +391,4 @@
 | `main:g0106:l0000` | Main · Mira | あらやだ。 | Oh my. |  |
 | `main:g0106:l0001` | Main · Player | [[T001:girl_name]]。[[T002:row]]来てくれたんだ。 | [[T001:girl_name]]![[T002:row]]You came. |  |
 | `main:g0106:l0002` | Main · Mira | なぜ、こんな所に[[T001:row]]来たのかしら。 | Why did I[[T001:row]]come here? |  |
-| `main:g0107:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]] |  |
+| `main:g0107:l0000` | Main · Player | あっ、[[T001:girl_name]]待ってよ。 | Hey! Wait up, [[T001:girl_name]]. |  |

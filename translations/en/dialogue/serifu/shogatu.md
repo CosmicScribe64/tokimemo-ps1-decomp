@@ -352,7 +352,7 @@
 | `table-3:g0032:l0000` | Scene 3 · Player | ほら、見て。[[T001:row]][[T002:context_o]]だったよ。 | Look![[T001:row]]I got [[T002:context_o]]! |  |
 | `table-3:g0032:l0001` | Scene 3 · Heroine | 普通ね。[[T001:row]]それなら引かなくても[[T002:row]]同じよ。 | Average.[[T001:row]]You might as well[[T002:row]]not have drawn. |  |
 | `table-3:g0032:l0002` | Scene 3 · Player | そ、そうだけど…。 | W-well, sure... |  |
-| `table-3:g0033:l0000` | Scene 3 · Player | ひどいなぁ…。[[T001:row]][[T002:context_o]]だったよ。 | That's awful...[[T001:row]]Mine: [[T002:context_o]] |  |
+| `table-3:g0033:l0000` | Scene 3 · Player | ひどいなぁ…。[[T001:row]][[T002:context_o]]だったよ。 | That's awful...[[T001:row]]I got [[T002:context_o]]. |  |
 | `table-3:g0033:l0001` | Scene 3 · Heroine | 自分の運を落とすために[[T001:row]]お金を出すなんて、[[T002:row]]馬鹿みたい。 | Paying money to[[T001:row]]ruin your own luck?[[T002:row]]How stupid. |  |
 | `table-3:g0033:l0002` | Scene 3 · Player (monologue) | 更に、不幸だぜ…。 | Now I feel even worse. |  |
 | `table-3:g0034:l0000` | Scene 3 · Heroine | 今年は、[[T001:row]]いい年になりそうね。 | This year looks[[T001:row]]like a good one. |  |
@@ -446,7 +446,7 @@
 | `table-4:g0024:l0000` | Scene 4 · Heroine | わ、私だって秘密よ。[[T001:row]]あっ、ほら、[[T002:row]]おみくじ引こうよ。 | M-mine's a secret too.[[T001:row]]Oh, look,[[T002:row]]let's draw fortunes. |  |
 | `table-4:g0024:l0001` | Scene 4 · Player | あぁ、いいよ。[[T001:row]]行こうか。 | Sure.[[T001:row]]Let's go. |  |
 | `table-4:g0025:l0000` | Scene 4 · Heroine | 私は素敵な恋人が[[T001:row]]できますようにって、[[T002:row]]お願いしたわ。[[T003:row]]だから、教えなさいよ。 | I wished to find[[T001:row]]someone special.[[T002:row]]Now tell me[[T003:row]]what you wished for. |  |
-| `table-4:g0025:l0001` | Scene 4 · Player | それじゃあ、[[T001:row]]俺は[[T002:context_w]]だよ。 | Well,[[T001:row]]mine was: [[T002:context_w]] |  |
+| `table-4:g0025:l0001` | Scene 4 · Player | それじゃあ、[[T001:row]]俺は[[T002:context_w]]だよ。 | Well,[[T001:row]]I got [[T002:context_w]]. |  |
 | `table-4:g0025:l0002` | Scene 4 · Heroine | ふーん、そう。[[T001:row]]あっ、おみくじあるわよ。[[T002:row]]引きに行きましょう。 | Hmm, I see.[[T001:row]]Oh, there are fortunes.[[T002:row]]Let's go draw one. |  |
 | `table-4:g0025:l0003` | Scene 4 · Player | あぁ、いいよ。[[T001:row]]行こうか。 | Sure.[[T001:row]]Let's go. |  |
 | `table-4:g0026:l0000` | Scene 4 · Heroine | それじゃ、私も教えないわ。[[T001:row]]あっ、おみくじあるわよ。[[T002:row]]引きに行きましょう。 | Then I won't tell either.[[T001:row]]Oh, there are fortunes.[[T002:row]]Let's go draw one. |  |
@@ -822,13 +822,13 @@
 | `table-7:g0033:l0000` | Scene 7 · Player (monologue) | 新年早々、[[T001:row]]ついてないな…。 | A lousy[[T001:row]]start to the year... |  |
 | `table-7:g0034:l0000` | Scene 7 · Player | [[T001:girl_name]]、[[T002:row]]どうだった？ | [[T001:girl_name]][[T002:row]]how was yours? |  |
 | `table-7:g0034:l0001` | Scene 7 · Heroine | 私は、大吉でした。 | Mine was Best. |  |
-| `table-7:g0035:l0000` | Scene 7 · Player | 俺も[[T001:context_o]]だったよ。 | Mine: [[T001:context_o]] |  |
+| `table-7:g0035:l0000` | Scene 7 · Player | 俺も[[T001:context_o]]だったよ。 | I got [[T001:context_o]] too. |  |
 | `table-7:g0035:l0001` | Scene 7 · Heroine | 良かったですね。[[T001:row]]それでは、[[T002:row]]木に結びましょう。 | How nice.[[T001:row]]Then let's tie them[[T002:row]]to the tree. |  |
 | `table-7:g0035:l0002` | Scene 7 · Player | そ、そうだね。 | Y-yeah. |  |
-| `table-7:g0036:l0000` | Scene 7 · Player | 俺は[[T001:context_o]]だったよ。 | Mine: [[T001:context_o]] |  |
+| `table-7:g0036:l0000` | Scene 7 · Player | 俺は[[T001:context_o]]だったよ。 | I got [[T001:context_o]]. |  |
 | `table-7:g0036:l0001` | Scene 7 · Heroine | そうですか。[[T001:row]]それでは、[[T002:row]]木に結びましょう。 | I see.[[T001:row]]Then let's tie them[[T002:row]]to the tree. |  |
 | `table-7:g0036:l0002` | Scene 7 · Player | そ、そうだね。 | Y-yeah. |  |
-| `table-7:g0037:l0000` | Scene 7 · Player | 俺は[[T001:context_o]]だったよ。 | Mine: [[T001:context_o]] |  |
+| `table-7:g0037:l0000` | Scene 7 · Player | 俺は[[T001:context_o]]だったよ。 | I got [[T001:context_o]]. |  |
 | `table-7:g0037:l0001` | Scene 7 · Heroine | そうですか。[[T001:row]]それでは、木に結ばない方が[[T002:row]]いいですね。 | I see.[[T001:row]]Then perhaps you'd better[[T002:row]]not tie it to the tree. |  |
 | `table-7:g0037:l0002` | Scene 7 · Player | そ、そう…。 | Oh... I see... |  |
 | `table-7:g0038:l0000` | Scene 7 · Heroine | 今年は、元日から[[T001:row]]良い事がありましたので、[[T002:row]]いい年になりますね。 | Something good happened[[T001:row]]today. Looks like[[T002:row]]a good year ahead. |  |
@@ -1059,7 +1059,7 @@
 | `table-9:g0032:l0001` | Scene 9 · Player | そうなの？[[T001:row]]もしかしたら、[[T002:row]]大吉しかないのかもね。 | Really?[[T001:row]]Maybe they all[[T002:row]]say Best. |  |
 | `table-9:g0032:l0002` | Scene 9 · Heroine | そうかもしんないね。 | Could be. |  |
 | `table-9:g0033:l0000` | Scene 9 · Heroine | まあまあだね。 | Not bad. |  |
-| `table-9:g0033:l0001` | Scene 9 · Player | [[T001:girl_name]]のは？ | How 'bout [[T001:girl_name]] |  |
+| `table-9:g0033:l0001` | Scene 9 · Player | [[T001:girl_name]]のは？ | How 'bout [[T001:girl_name]]? |  |
 | `table-9:g0033:l0002` | Scene 9 · Heroine | えっ、私の？[[T001:row]]はい、見ていいよ。 | Huh, mine?[[T001:row]]Here, take a look. |  |
 | `table-9:g0033:l0003` | Scene 9 · Player | 大吉じゃないか。 | You got Best! |  |
 | `table-9:g0033:l0004` | Scene 9 · Heroine | もちろんそうだよ。 | Of course it is. |  |
@@ -1404,7 +1404,7 @@
 | `table-13:g0013:l0008` | Scene 13 · Narration | ガチャ | Click. |  |
 | `table-13:g0014:l0000` | Scene 13 · Heroine | 明けまして、[[T001:row]]おめでとうございます。[[T002:row]]お兄ちゃんですか？ | Happy New Year![[T001:row]]Is that you,[[T002:row]]Onii-chan? |  |
 | `table-13:g0014:l0001` | Scene 13 · Player | いや、[[T001:girl_name]]は[[T002:row]]今、暇かな？ | No, [[T001:girl_name]], are[[T002:row]]you free right now? |  |
-| `table-13:g0014:l0002` | Scene 13 · Heroine | 優美は暇ですよ。 | Yumi is free! |  |
+| `table-13:g0014:l0002` | Scene 13 · Heroine | 優美は暇ですよ。 | I'm free! |  |
 | `table-13:g0014:l0003` | Scene 13 · Player | これから初詣に[[T001:row]]行かない？ | Want to go to[[T001:row]]the shrine now? |  |
 | `table-13:g0014:l0004` | Scene 13 · Heroine | どうしようかな。[[T001:row]]うん、行きます。 | Let me think.[[T001:row]]Yeah, I'll go! |  |
 | `table-13:g0014:l0005` | Scene 13 · Player | それじゃ、[[T001:row]]神社の前で待ち合わせで[[T002:row]]いいかな？ | Let's meet[[T001:row]]in front of[[T002:row]]the shrine, okay? |  |
@@ -1412,7 +1412,7 @@
 | `table-13:g0014:l0007` | Scene 13 · Player | そう。[[T001:row]]それじゃ。 | I see.[[T001:row]]Bye. |  |
 | `table-13:g0014:l0008` | Scene 13 · Narration | ガチャ | Click. |  |
 | `table-13:g0015:l0000` | Scene 13 · Player | まだ、[[T001:girl_name]]は[[T002:row]]来てないみたいだな。 | Looks like [[T001:girl_name]][[T002:row]]isn't here yet. |  |
-| `table-13:g0016:l0000` | Scene 13 · Heroine | ごめんなさい。[[T001:row]]優美遅くなっちゃった。 | Sorry![[T001:row]]Yumi's late. |  |
+| `table-13:g0016:l0000` | Scene 13 · Heroine | ごめんなさい。[[T001:row]]優美遅くなっちゃった。 | Sorry![[T001:row]]my late. |  |
 | `table-13:g0016:l0001` | Scene 13 · Player | 別に、いいよ。 | That's okay. |  |
 | `table-13:g0017:l0000` | Scene 13 · Player | それじゃあ、[[T001:row]]早速お参りに行こうか。 | Okay, let's go[[T001:row]]say our prayers. |  |
 | `table-13:g0017:l0001` | Scene 13 · Heroine | うん。 | Okay! |  |
@@ -1444,21 +1444,21 @@
 | `table-13:g0030:l0000` | Scene 13 · Player (monologue) | 新年早々、[[T001:row]]ついてないな…。 | A lousy[[T001:row]]start to the year... |  |
 | `table-13:g0031:l0000` | Scene 13 · Heroine | どうでした？ | How was yours? |  |
 | `table-13:g0031:l0001` | Scene 13 · Player | はい、見ていいよ。 | Here, take a look. |  |
-| `table-13:g0032:l0000` | Scene 13 · Heroine | すっごーい。[[T001:row]]優美と一緒だ。 | Wowww![[T001:row]]Same as Yumi's! |  |
+| `table-13:g0032:l0000` | Scene 13 · Heroine | すっごーい。[[T001:row]]優美と一緒だ。 | Wowww![[T001:row]]Same as my! |  |
 | `table-13:g0032:l0001` | Scene 13 · Player | そうなの？[[T001:row]]もしかしたら、[[T002:row]]大吉しかないのかもね。 | Really?[[T001:row]]Maybe they all[[T002:row]]say Best. |  |
-| `table-13:g0032:l0002` | Scene 13 · Heroine | 優美はね。[[T001:row]]昔からくじ運は[[T002:row]]いいんだ。 | Yumi's always[[T001:row]]been lucky[[T002:row]]with draws. |  |
+| `table-13:g0032:l0002` | Scene 13 · Heroine | 優美はね。[[T001:row]]昔からくじ運は[[T002:row]]いいんだ。 | my always[[T001:row]]been lucky[[T002:row]]with draws. |  |
 | `table-13:g0032:l0003` | Scene 13 · Player | そ、そう…。 | Oh... I see... |  |
 | `table-13:g0033:l0000` | Scene 13 · Heroine | なーんだ。 | Aww. |  |
 | `table-13:g0033:l0001` | Scene 13 · Player | [[T001:girl_name]]のは、[[T002:row]]どうだったの？ | [[T001:girl_name]], what[[T002:row]]did you get? |  |
-| `table-13:g0033:l0002` | Scene 13 · Heroine | 優美のはね、[[T001:row]]大吉だよ。 | Yumi's is[[T001:row]]Best! |  |
+| `table-13:g0033:l0002` | Scene 13 · Heroine | 優美のはね、[[T001:row]]大吉だよ。 | my is[[T001:row]]Best! |  |
 | `table-13:g0033:l0003` | Scene 13 · Player | あっ、そう。[[T001:row]]良かったね。 | Oh, I see.[[T001:row]]Good for you. |  |
 | `table-13:g0033:l0004` | Scene 13 · Heroine | うん。[[T001:row]]昔から、くじ運は[[T002:row]]いいんだ。 | Yeah.[[T001:row]]I've always been[[T002:row]]lucky with draws. |  |
 | `table-13:g0033:l0005` | Scene 13 · Player | そ、そう…。 | Oh... I see... |  |
 | `table-13:g0034:l0000` | Scene 13 · Heroine | あーっ。 | Ahh! |  |
 | `table-13:g0034:l0001` | Scene 13 · Player | ‥‥‥‥。 | ...... |  |
-| `table-13:g0034:l0002` | Scene 13 · Heroine | いいなぁ。[[T001:row]]優美も一度これ、[[T002:row]]引いてみたいんだ。 | Lucky you.[[T001:row]]Yumi wants to draw[[T002:row]]one of those once. |  |
+| `table-13:g0034:l0002` | Scene 13 · Heroine | いいなぁ。[[T001:row]]優美も一度これ、[[T002:row]]引いてみたいんだ。 | Lucky you.[[T001:row]]I want to draw[[T002:row]]one of those once. |  |
 | `table-13:g0034:l0003` | Scene 13 · Player | ゆ、[[T001:girl_name]]。[[T002:row]]そんなに[[T003:row]]いいもんじゃないよ。 | Y-[[T001:girl_name]], it's[[T002:row]]not all that[[T003:row]]great, you know. |  |
-| `table-13:g0034:l0004` | Scene 13 · Heroine | だって、優美。[[T001:row]]一度も引いたこと[[T002:row]]無いんだもん。 | But Yumi's[[T001:row]]never drawn one[[T002:row]]before. |  |
+| `table-13:g0034:l0004` | Scene 13 · Heroine | だって、優美。[[T001:row]]一度も引いたこと[[T002:row]]無いんだもん。 | But my[[T001:row]]never drawn one[[T002:row]]before. |  |
 | `table-13:g0034:l0005` | Scene 13 · Player | さっき、引いたのは、[[T001:row]]どうだったの？ | What did you[[T001:row]]get just now? |  |
 | `table-13:g0034:l0006` | Scene 13 · Heroine | 大吉。 | Best. |  |
 | `table-13:g0034:l0007` | Scene 13 · Player | そ、それなら、[[T001:row]]いいじゃない。 | W-well, then[[T001:row]]that's fine, right? |  |
@@ -1471,7 +1471,7 @@
 | `table-13:g0035:l0004` | Scene 13 · Heroine | うん。 | Okay! |  |
 | `table-13:g0036:l0000` | Scene 13 · Heroine | もう卒業[[T001:row]]しちゃうんですね。 | You're graduating[[T001:row]]soon, huh? |  |
 | `table-13:g0036:l0001` | Scene 13 · Player | そうだねぇ、[[T001:row]]本当もうすぐだよ。 | Yeah,[[T001:row]]it's really soon. |  |
-| `table-13:g0036:l0002` | Scene 13 · Heroine | 優美も、あと一年早く[[T001:row]]生まれてたら、[[T002:row]]一緒に卒業できたのに…。 | If Yumi'd been born[[T001:row]]one year earlier, we could[[T002:row]]graduate together... |  |
+| `table-13:g0036:l0002` | Scene 13 · Heroine | 優美も、あと一年早く[[T001:row]]生まれてたら、[[T002:row]]一緒に卒業できたのに…。 | If I'd been born[[T001:row]]one year earlier, we could[[T002:row]]graduate together... |  |
 | `table-13:g0036:l0003` | Scene 13 · Player | そ、そうだね。 | Y-yeah. |  |
 | `table-13:g0036:l0004` | Scene 13 · Heroine | 卒業しちゃったら、[[T001:row]]つまんない一年間に[[T002:row]]なりそう。 | After you graduate,[[T001:row]]my year's gonna[[T002:row]]be so boring. |  |
 | `table-13:g0036:l0005` | Scene 13 · Player | 卒業しても、[[T001:row]]好雄の家には、[[T002:row]]顔を出すから。 | Even after I graduate,[[T001:row]]I'll still drop by[[T002:row]]Yoshio's place. |  |

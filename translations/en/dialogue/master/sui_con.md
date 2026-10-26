@@ -14,22 +14,22 @@
 | `table-0:g0003:l0000` | Scene 0 · Player | あの娘、[[T001:row]]学校でもぶつかるよな。 | That girl's always[[T001:row]]bumping into me at school. |  |
 | `table-0:g0004:l0000` | Scene 0 · Player | 待たないよ。 | I won't wait. |  |
 | `table-0:g0005:l0000` | Scene 0 · Heroine | …。 | ... |  |
-| `table-0:g0005:l0001` | Scene 0 · Player | [[T001:girl_name]]、どうかしたの？ | What's wrong, [[T001:girl_name]] |  |
+| `table-0:g0005:l0001` | Scene 0 · Player | [[T001:girl_name]]、どうかしたの？ | What's wrong, [[T001:girl_name]]? |  |
 | `table-0:g0005:l0002` | Scene 0 · Heroine | 私達…[[T001:row]]優勝しちゃったのよね。 | We...[[T001:row]]really won, didn't we? |  |
 | `table-0:g0005:l0003` | Scene 0 · Player | うん、優勝しちゃった。 | Yeah, we won. |  |
 | `table-0:g0005:l0004` | Scene 0 · Heroine | すごいね…。夢みたい。 | Amazing... Like a dream. |  |
-| `table-0:g0006:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0007:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0006:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0007:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0007:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとう。[[T002:row]]いい演奏だったわ。 | Congrats on winning[[T001:row]]the Band Contest.[[T002:row]]You played well. |  |
 | `table-0:g0007:l0002` | Scene 0 · Player | そう？ありがとう。 | Yeah? Thanks. |  |
 | `table-0:g0007:l0003` | Scene 0 · Heroine | すごいね…。夢みたい。 | Amazing... Like a dream. |  |
-| `table-0:g0008:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0009:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0008:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0009:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0009:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとうございます。[[T002:row]]素晴らしい演奏でした。 | Congratulations on[[T001:row]]winning the Band Contest.[[T002:row]]What a great performance. |  |
 | `table-0:g0009:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0009:l0003` | Scene 0 · Heroine | すごいですね…[[T001:row]]感動しました。 | That's amazing...[[T001:row]]I was so moved. |  |
-| `table-0:g0010:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0011:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0010:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0011:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0011:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクールで[[T001:row]]優勝したわね。 | So you won the[[T001:row]]Band Contest. |  |
 | `table-0:g0011:l0002` | Scene 0 · Player | 聞いてくれたの？[[T001:row]]どうだった？ | You listened?[[T001:row]]How was it? |  |
 | `table-0:g0011:l0003` | Scene 0 · Heroine | くだらないけど、[[T001:row]]他人より優れているのは[[T002:row]]いいことよ。 | It's foolish, but[[T001:row]]being better than[[T002:row]]others is good. |  |
@@ -40,44 +40,44 @@
 | `table-0:g0012:l0004` | Scene 0 · Heroine | 優勝したのよねぇ…。 | We won, didn't we... |  |
 | `table-0:g0012:l0005` | Scene 0 · Player | しちゃったんだよね。 | We sure did. |  |
 | `table-0:g0013:l0000` | Scene 0 · Heroine | ハーイ、[[T001:player_form]]。 | Hi there, [[T001:player_form]]. |  |
-| `table-0:g0014:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0014:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0014:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとう。[[T002:row]]聞いてたわよ。 | Congrats on winning[[T001:row]]the Band Contest.[[T002:row]]I heard you play. |  |
 | `table-0:g0014:l0002` | Scene 0 · Player | ありがとう。どうだった？ | Thanks. How was it? |  |
 | `table-0:g0014:l0003` | Scene 0 · Heroine | ワンダフル、[[T001:row]]素晴らしかったわ。 | Wonderful.[[T001:row]]It was great. |  |
-| `table-0:g0015:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0016:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0015:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0016:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0016:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとう。[[T002:row]]聞いてたよ。 | Congrats on winning[[T001:row]]the Band Contest.[[T002:row]]I heard you play. |  |
 | `table-0:g0016:l0002` | Scene 0 · Player | ありがとう。[[T001:row]]どうだった？ | Thanks.[[T001:row]]How was it? |  |
 | `table-0:g0016:l0003` | Scene 0 · Heroine | すごく良かったよ。[[T001:row]]私でも感動したから。 | It was really good.[[T001:row]]Even I was moved. |  |
-| `table-0:g0017:l0000` | Scene 0 · Heroine | こんにちは[[T001:row]][[T002:player_form]]。 | Good afternoon,[[T001:row]][[T002:player_form]] |  |
-| `table-0:g0018:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0017:l0000` | Scene 0 · Heroine | こんにちは[[T001:row]][[T002:player_form]]。 | Good afternoon,[[T001:row]][[T002:player_form]]. |  |
+| `table-0:g0018:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0018:l0001` | Scene 0 · Heroine | この度は、なにか大きな賞[[T001:row]]をいただいたそうで、[[T002:row]]おめでとうございます。 | I heard you won[[T001:row]]a major award.[[T002:row]]Congratulations! |  |
 | `table-0:g0018:l0002` | Scene 0 · Player | ははは、[[T001:row]]国際吹奏楽コンクールで[[T002:row]]優勝したんだよ。 | Hahaha,[[T001:row]]we won the International[[T002:row]]Band Contest. |  |
 | `table-0:g0018:l0003` | Scene 0 · Heroine | 国際…長いですねぇ | What a long name! |  |
 | `table-0:g0018:l0004` | Scene 0 · Player | そ、そう？ | R-really? |  |
-| `table-0:g0019:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0020:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0019:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0020:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0020:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとう。[[T002:row]]聞いてたよ。 | Congrats on winning[[T001:row]]the Band Contest.[[T002:row]]I heard you play. |  |
 | `table-0:g0020:l0002` | Scene 0 · Player | ありがとう。[[T001:row]]どうだった？ | Thanks.[[T001:row]]How was it? |  |
 | `table-0:g0020:l0003` | Scene 0 · Heroine | うまく言えないけど…[[T001:row]]すごく素敵だった。 | I can't quite explain it...[[T001:row]]It was wonderful. |  |
-| `table-0:g0021:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0022:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0021:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0022:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0022:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール、[[T001:row]]優勝おめでとう。 | Congrats on winning[[T001:row]]the Band Contest. |  |
 | `table-0:g0022:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0022:l0003` | Scene 0 · Heroine | あなたが受賞するのは、[[T001:row]]悪い気分じゃないわね。 | Seeing you win doesn't[[T001:row]]feel half bad. |  |
 | `table-0:g0022:l0004` | Scene 0 · Player | そう？ | Oh? |  |
-| `table-0:g0023:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0024:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0023:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0024:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0024:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとう。 | Congrats on winning[[T001:row]]the Band Contest. |  |
 | `table-0:g0024:l0002` | Scene 0 · Player | ありがとう。 | Thanks. |  |
 | `table-0:g0024:l0003` | Scene 0 · Heroine | これであなたも有名人だね。 | Now you're famous! |  |
-| `table-0:g0025:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0026:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0025:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0026:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0026:l0001` | Scene 0 · Heroine | あの…[[T001:row]]国際吹奏楽コンクール、[[T002:row]]優勝おめでとうございます。[[T003:row]]すごく素敵でした。 | Um...[[T001:row]]congratulations on[[T002:row]]winning the Band Contest.[[T003:row]]It was wonderful. |  |
 | `table-0:g0026:l0002` | Scene 0 · Player | ありがとう、[[T001:girl_name]]。[[T002:row]]聞いててくれたんだ。 | Thanks, [[T001:girl_name]][[T002:row]]You were listening. |  |
 | `table-0:g0026:l0003` | Scene 0 · Heroine | は、はい…。 | Y-yes... |  |
-| `table-0:g0027:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
-| `table-0:g0028:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `table-0:g0027:l0000` | Scene 0 · Heroine | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
+| `table-0:g0028:l0000` | Scene 0 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `table-0:g0028:l0001` | Scene 0 · Heroine | 国際吹奏楽コンクール優勝、[[T001:row]]おめでとうございます。 | Congratulations on[[T001:row]]winning the Band Contest! |  |
 | `table-0:g0028:l0002` | Scene 0 · Player | ありがとう、[[T001:girl_name]]。 | Thanks, [[T001:girl_name]]. |  |
 | `table-0:g0028:l0003` | Scene 0 · Heroine | 優美、[[T001:row]]友達に自慢しちゃうんだー。 | Yumi's gonna brag[[T001:row]]to her friends! |  |

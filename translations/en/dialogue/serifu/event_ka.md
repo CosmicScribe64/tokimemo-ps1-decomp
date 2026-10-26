@@ -33,7 +33,7 @@
 | `scene-01:g0003:l0000` | Scene-01 · Player | それなら、そうと[[T001:row]]言ってくれればいいのに。 | If that's it, you could[[T001:row]]have just told me. |  |
 | `scene-01:g0003:l0001` | Scene-01 · Ayako | だって水が怖いなんて[[T001:row]]恥ずかしいじゃない。 | But being scared of water[[T001:row]]is embarrassing. |  |
 | `scene-01:g0003:l0002` | Scene-01 · Player | そんなことないよ。[[T001:row]]誰にだって苦手なものは[[T002:row]]あるんだから。 | Not at all.[[T001:row]]Everyone's scared[[T002:row]]of something. |  |
-| `scene-01:g0003:l0003` | Scene-01 · Ayako | サンキュー、ありがとう。[[T001:row]]でも私だって、[[T002:row]]一緒に泳ぎたいわ。 | Thanks! Arigato![[T001:row]]But I'd like to[[T002:row]]swim with you too. |  |
+| `scene-01:g0003:l0003` | Scene-01 · Ayako | サンキュー、ありがとう。[[T001:row]]でも私だって、[[T002:row]]一緒に泳ぎたいわ。 | Thank you, thanks![[T001:row]]But I'd like to[[T002:row]]swim with you too. |  |
 | `scene-01:g0003:l0004` | Scene-01 · Player | そんなに急がなくても、[[T001:row]]ゆっくり、[[T002:row]]慣れていけばいいよ。 | No need to rush.[[T001:row]]Just take it slow[[T002:row]]and get used to it. |  |
 | `scene-01:g0004:l0000` | Scene-01 · Ayako | そうね。[[T001:row]]そうするわ。 | Yeah.[[T001:row]]I'll do that. |  |
 | `scene-02:g0000:l0000` | Scene-02 · Ayako | ワンダフル。[[T001:row]]私この人の絵の[[T002:row]]大ファンなの。 | Wonderful![[T001:row]]I'm a huge fan[[T002:row]]of this artist. |  |
@@ -49,7 +49,7 @@
 | `scene-02:g0003:l0004` | Scene-02 · Player | ‥‥‥‥。 | ...... |  |
 | `scene-03:g0000:l0000` | Scene-03 · Player | 都会じゃ[[T001:row]]こんな星空見れないね。 | You can't see stars[[T001:row]]like this in the city. |  |
 | `scene-03:g0000:l0001` | Scene-03 · Ayako | ‥‥‥‥。 | ...... |  |
-| `scene-03:g0000:l0002` | Scene-03 · Player | 無視しないでよ。[[T001:row]][[T002:girl_name]]。 | Don't ignore me,[[T001:row]][[T002:girl_name]] |  |
+| `scene-03:g0000:l0002` | Scene-03 · Player | 無視しないでよ。[[T001:row]][[T002:girl_name]]。 | Don't ignore me,[[T001:row]][[T002:girl_name]]. |  |
 | `scene-03:g0000:l0003` | Scene-03 · Ayako | ‥‥‥‥。 | ...... |  |
 | `scene-03:g0000:l0004` | Scene-03 · Player | [[T001:girl_name]]？ | [[T001:girl_name]]? |  |
 | `scene-03:g0001:l0000` | Scene-03 · Ayako | ‥‥‥‥。 | ...... |  |
@@ -84,7 +84,7 @@
 | `initializer-24:g0001:l0006` | Init 24 · Ayako | ほ、ほら。[[T001:row]]オゾン層の破壊で、[[T002:row]]直射日光は身体にね…。 | W-well, you see,[[T001:row]]with the ozone layer gone,[[T002:row]]direct sunlight is bad... |  |
 | `initializer-24:g0001:l0007` | Init 24 · Player | フーン。[[T001:row]]いつの間にそんなに[[T002:row]]病弱になったの。 | Hmm.[[T001:row]]Since when are you[[T002:row]]so delicate? |  |
 | `initializer-24:g0001:l0008` | Init 24 · Ayako | え、エート…。[[T001:row]]つ、ついこの間からよ。 | Uh, well...[[T001:row]]S-since just recently. |  |
-| `initializer-24:g0001:l0009` | Init 24 · Player | そう言えば、[[T001:row]]さっき先生が、[[T002:row]][[T003:girl_name]]を呼んでたよ。 | Oh, by the way,[[T001:row]]the teacher was just[[T002:row]]calling [[T003:girl_name]] |  |
+| `initializer-24:g0001:l0009` | Init 24 · Player | そう言えば、[[T001:row]]さっき先生が、[[T002:row]][[T003:girl_name]]を呼んでたよ。 | Oh, by the way,[[T001:row]]the teacher was just[[T002:row]]calling [[T003:girl_name]]. |  |
 | `initializer-24:g0001:l0010` | Init 24 · Ayako | えっ、嘘。[[T001:row]]Ｉｔ’ｓ　ｓｏ　[[T002:row]]ｄａｎｇｅｒｏｕｓ | What? No way![[T001:row]]It's so[[T002:row]]dangerous! |  |
 | `initializer-24:g0001:l0011` | Init 24 · Player | と言うのは冗談で、[[T001:row]]焦ったという事は、[[T002:row]]やっぱりさぼりだね。 | Just kidding.[[T001:row]]But you panicked, so[[T002:row]]you ARE skipping. |  |
 | `initializer-24:g0001:l0012` | Init 24 · Ayako | あっ…。[[T001:row]]お願い。[[T002:row]]先生には黙ってて。 | Oh...[[T001:row]]Please.[[T002:row]]Don't tell the teacher. |  |
@@ -93,7 +93,7 @@
 | `initializer-24:g0002:l0001` | Init 24 · Yoshio | [[T001:player_given]]。[[T002:row]]何やってるんだよ。[[T003:row]]早くボール持って来いよ。 | [[T001:player_given]]![[T002:row]]What are you doing?[[T003:row]]Hurry up with the balls! |  |
 | `initializer-24:g0003:l0000` | Init 24 · Ayako | ほ、ほら、[[T001:row]]呼んでるわよ。 | S-see,[[T001:row]]they're calling you. |  |
 | `initializer-24:g0003:l0001` | Init 24 · Player | チェッ、先生には[[T001:row]]黙っててやるよ。[[T002:row]]感謝しなよ。 | Tch, I won't tell[[T001:row]]the teacher.[[T002:row]]You owe me one. |  |
-| `initializer-24:g0003:l0002` | Init 24 · Ayako | サンキュー。[[T001:row]]ありがとう、[[T002:row]]感謝するわ。 | Thanks![[T001:row]]Arigato![[T002:row]]I really appreciate it. |  |
+| `initializer-24:g0003:l0002` | Init 24 · Ayako | サンキュー。[[T001:row]]ありがとう、[[T002:row]]感謝するわ。 | Thanks![[T001:row]]Thanks so much![[T002:row]]I really appreciate it. |  |
 | `initializer-29:g0000:l0000` | Init 29 · Player | ……。 | ... |  |
 | `initializer-29:g0000:l0001` | Init 29 · Ayako | どうしたの[[T001:row]][[T002:player_form]]。 | What's wrong,[[T001:row]][[T002:player_form]]? |  |
 | `initializer-29:g0000:l0002` | Init 29 · Player | どうも道に[[T001:row]]迷ったみたいなんだ。 | Looks like[[T001:row]]we got lost. |  |

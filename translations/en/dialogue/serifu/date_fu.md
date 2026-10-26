@@ -199,10 +199,10 @@
 | `section-11:g0019:l0000` | Amusement Park · Shiori | 本当の幽霊も、[[T001:row]]あんなふうに[[T002:row]]奇麗なのかしら…？[[T003:reply_variant]]えっ、怖かったの？[[T004:row]]私ですら見てたのに…。[[T005:reply_variant]]実は怖かったんでしょう。[[T006:row]]声が震えてるもの。[[T007:row]]うふふふ…。 | I wonder if real ghosts[[T001:row]]are beautiful[[T002:row]]like that...?[[T003:reply_variant]]Huh, you were scared?[[T004:row]]Even I was watching...[[T005:reply_variant]]You were scared, weren't[[T006:row]]you? Your voice is shaking.[[T007:row]]Hehehe... |  |
 | `section-11:g0020:l0000` | Amusement Park · Shiori | 結構空いてるね。[[T001:row]]さあ乗りましょう。 | It's pretty empty.[[T001:row]]Come on, let's ride. |  |
 | `section-11:g0021:l0000` | Amusement Park · Shiori | いい眺めだったね。 | What a nice view. |  |
-| `section-11:g0021:l0001` | Amusement Park · Choice | 詩織の顔ばかり見てたから…。[[T001:choice_option]]あーっ、眠かった。[[T002:choice_option]]うん、いい眺めだったね。 | I was only looking at your face, Shiori...[[T001:choice_option]]Aah, I nearly fell asleep.[[T002:choice_option]]Yeah, that was a great view. |  |
+| `section-11:g0021:l0001` | Amusement Park · Choice | 詩織の顔ばかり見てたから…。[[T001:choice_option]]あーっ、眠かった。[[T002:choice_option]]うん、いい眺めだったね。 | Just looking at you, Shiori...[[T001:choice_option]]Aah, I nearly fell asleep.[[T002:choice_option]]Yeah, that was a great view. |  |
 | `section-11:g0022:l0000` | Amusement Park · Shiori | えっ？[[T001:row]]そんな、恥ずかしい…。[[T002:row]]でも、嬉しいな…。[[T003:reply_variant]]私と一緒じゃ、[[T004:row]]つまらなかったみたいね。[[T005:reply_variant]]上から見ると、[[T006:row]]人間なんてちっぽけに[[T007:row]]見えてくるね。 | Huh?[[T001:row]]Oh, that's embarrassing...[[T002:row]]But I'm happy...[[T003:reply_variant]]Being with me[[T004:row]]must have been boring.[[T005:reply_variant]]Seen from up high,[[T006:row]]people look[[T007:row]]so tiny. |  |
 | `section-11:g0023:l0000` | Amusement Park · Shiori | 高いところで揺れるのが[[T001:row]]怖くなかった？ | Wasn't it scary, swaying[[T001:row]]up so high? |  |
-| `section-11:g0023:l0001` | Amusement Park · Choice | 詩織と一緒だから平気だったよ。[[T001:choice_option]]揺れる？全然気付かなかったよ。[[T002:choice_option]]園内で、一番怖い乗り物かもね。 | I was fine because I was with you, Shiori.[[T001:choice_option]]Swaying? I didn't even notice.[[T002:choice_option]]Might be the scariest ride in the park. |  |
+| `section-11:g0023:l0001` | Amusement Park · Choice | 詩織と一緒だから平気だったよ。[[T001:choice_option]]揺れる？全然気付かなかったよ。[[T002:choice_option]]園内で、一番怖い乗り物かもね。 | I was fine with you, Shiori.[[T001:choice_option]]Swaying? I didn't even notice.[[T002:choice_option]]Might be the scariest ride here. |  |
 | `section-11:g0024:l0000` | Amusement Park · Shiori | 本当？[[T001:row]]わ、私もそう…。[[T002:reply_variant]]もう、[[T003:row]]鈍感なんだから…。[[T004:reply_variant]]落ちたらどうしようかと[[T005:row]]思っちゃった。 | Really?[[T001:row]]M-me too...[[T002:reply_variant]]Geez,[[T003:row]]you're so oblivious...[[T004:reply_variant]]I kept wondering what[[T005:row]]we'd do if it fell. |  |
 | `section-11:g0025:l0000` | Amusement Park · Shiori | それじゃ、[[T001:row]]どこに行こうか？ | Well then,[[T001:row]]where to next? |  |
 | `section-11:g0025:l0001` | Amusement Park · Choice | 絶叫マシーン、ビビールに乗ろう。[[T001:choice_option]]ゴーストハウスに行こう。[[T002:choice_option]]観覧車に乗ろうよ。 | Let's ride the Frightmare![[T001:choice_option]]Let's go to the Ghost House.[[T002:choice_option]]Let's ride the Ferris wheel. |  |
@@ -347,7 +347,7 @@
 | `section-18:g0005:l0000` | Shrine · Shiori | ありがとう。[[T001:row]]嬉しい。 | Thank you.[[T001:row]]I'm so happy. |  |
 | `section-18:g0006:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしようか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0006:l0001` | Shrine · Shiori | いいのが取れるといいね。 | Hope you win something good. |  |
-| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0006:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0007:l0000` | Shrine · Shiori | すごいわ、[[T001:row]]上手ねぇ。 | Wow,[[T001:row]]you're good! |  |
 | `section-18:g0008:l0000` | Shrine · Shiori | へぇ、[[T001:row]]すごいじゃない。 | Hey,[[T001:row]]that's impressive. |  |
 | `section-18:g0009:l0000` | Shrine · Shiori | 残念だったね。 | Too bad. |  |

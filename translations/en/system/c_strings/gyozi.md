@@ -45,7 +45,7 @@
 | `80135988:1` | annual_shrine_visit_title_score_setup() | 初詣 | New Year's Shrine Visit |  |
 | `8013c774:1` | annual_timing_sequence_choice_sounds_dispatch() | S[[T001:line_feed]] | S[[T001:line_feed]] | ASCII / format literal preserved. |
 | `8013c774:2` | annual_timing_sequence_choice_sounds_dispatch() | T[[T001:line_feed]] | T[[T001:line_feed]] | ASCII / format literal preserved. |
-| `8013caa4:1` | annual_timing_library_title_callback() | 図書室 | Library |  |
+| `8013caa4:1` | annual_timing_library_title_callback() | 図書室 | School Library |  |
 | `8013cb18:1` | annual_timing_theater_title_setup() | 演劇部 | Drama Club |  |
 | `80138c9c:1` | annual_candidate_list_build_and_rotate() | %d | `%d ` | ASCII / format literal preserved. |
 | `80138c9c:2` | annual_candidate_list_build_and_rotate() | [[T001:line_feed]] | [[T001:line_feed]] |  |

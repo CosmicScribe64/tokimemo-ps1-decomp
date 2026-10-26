@@ -6,7 +6,7 @@
 
 | ID | Context | Japanese | Translation | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `main:g0000:l0000` | Main · Mira | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0000:l0000` | Main · Mira | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0000:l0001` | Main · Player | あっ、[[T001:row]][[T002:girl_name]]、おはよう。 | Oh,[[T001:row]][[T002:girl_name]], morning. |  |
 | `main:g0000:l0002` | Main · Mira | まだお一人？ | Still alone? |  |
 | `main:g0000:l0003` | Main · Player | うん、そう。 | Yeah, not yet. |  |
@@ -18,7 +18,7 @@
 | `main:g0003:l0001` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0003:l0002` | Main · Mira | そうねぇ…。[[T001:row]]別に、いいわよ。[[T002:row]]一緒に行ってあげる。 | Let me see...[[T001:row]]Very well.[[T002:row]]I'll go with you. |  |
 | `main:g0003:l0003` | Main · Player | それじゃあ、[[T001:row]]どこに行こうか？ | So then,[[T001:row]]where should we go? |  |
-| `main:g0004:l0000` | Main · Mira | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `main:g0004:l0000` | Main · Mira | あら、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `main:g0004:l0001` | Main · Mira | 何かしら？ | What is it? |  |
 | `main:g0004:l0002` | Main · Player | 一緒に、見学しない？ | Look around with me? |  |
 | `main:g0004:l0003` | Main · Mira | そうねぇ、一緒に行って[[T001:row]]あげてもよくてよ。[[T002:row]]ホーホホホホ。 | Well, I might[[T001:row]]go with you.[[T002:row]]Ohohohoho. |  |

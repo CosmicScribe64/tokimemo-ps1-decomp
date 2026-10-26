@@ -64,7 +64,7 @@
 | `scene-02:g0001:l0000` | Scene-02 · Saki | あっ、抜けたわ。[[T001:row]]ヒットよ。 | Oh, it got through![[T001:row]]A hit! |  |
 | `scene-02:g0001:l0001` | Scene-02 · Player | [[T001:girl_name]]。 | [[T001:girl_name]]. |  |
 | `scene-02:g0001:l0002` | Scene-02 · Saki | 頑張って。[[T001:row]]ホームランよ。 | Go for it![[T001:row]]Hit a homer! |  |
-| `scene-02:g0001:l0003` | Scene-02 · Player | あの、[[T001:girl_name]]…？ | Um, [[T001:girl_name]] |  |
+| `scene-02:g0001:l0003` | Scene-02 · Player | あの、[[T001:girl_name]]…？ | Um, [[T001:girl_name]]? |  |
 | `scene-02:g0001:l0004` | Scene-02 · Saki | あっ、途中で[[T001:row]]諦めちゃ駄目よ。 | Oh, don't give up[[T001:row]]halfway! |  |
 | `scene-02:g0001:l0005` | Scene-02 · Player (monologue) | 駄目だ。[[T001:row]]完全に野球に[[T002:row]]熱中してる。 | No use.[[T001:row]]She's totally[[T002:row]]caught up in the game. |  |
 | `scene-02:g0002:l0000` | Scene-02 · Player (monologue) | ん？[[T001:row]]こっちに気付いて[[T002:row]]くれたかな？ | Hm?[[T001:row]]Did she finally[[T002:row]]notice me? |  |
@@ -94,7 +94,7 @@
 | `scene-03:g0006:l0004` | Scene-03 · Player | い、いや。[[T001:row]]何てこと無いよ。[[T002:row]]（[[T003:girl_name]]の頼みだもん。） | N-no.[[T001:row]]It was nothing.[[T002:row]](Anything for [[T003:girl_name]]) |  |
 | `initializer-61:g0000:l0000` | Init 61 · Player (monologue) | さて、昼飯だ。[[T001:row]]早く学食に行かないと…。 | Okay, lunchtime.[[T001:row]]To the cafeteria, quick. |  |
 | `initializer-61:g0000:l0001` | Init 61 · Saki | [[T001:player_form]]。 | [[T001:player_form]]. |  |
-| `initializer-61:g0001:l0000` | Init 61 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]] |  |
+| `initializer-61:g0001:l0000` | Init 61 · Player | あっ、[[T001:girl_name]]。 | Oh, [[T001:girl_name]]. |  |
 | `initializer-61:g0002:l0000` | Init 61 · Saki | これから昼食でしょう？[[T001:row]]お弁当を持ってきたの？ | You're off to lunch, right?[[T001:row]]Did you bring a lunch? |  |
 | `initializer-61:g0002:l0001` | Init 61 · Player | いや、違うよ。[[T001:row]]これから、[[T002:row]]学食に行こうと思って。 | No, I didn't.[[T001:row]]I was just about[[T002:row]]to go to the cafeteria. |  |
 | `initializer-61:g0002:l0002` | Init 61 · Saki | それなら良かった。 | Oh, good. |  |
@@ -159,7 +159,7 @@
 | `initializer-66:g0004:l0000` | Init 66 · Player | [[T001:girl_name]]。[[T002:player_family]]だけれど。[[T003:row]]大丈夫？ | [[T001:girl_name]]? It's [[T002:player_family]].[[T003:row]]Are you okay? |  |
 | `initializer-66:g0004:l0001` | Init 66 · Player | 返事がないぞ。ま、まさか。 | No answer. Don't tell me... |  |
 | `initializer-66:g0005:l0000` | Init 66 · Player | に、[[T001:girl_name]]大丈夫？ | N-[[T001:girl_name]], okay? |  |
-| `initializer-66:g0005:l0001` | Init 66 · Saki | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]] |  |
+| `initializer-66:g0005:l0001` | Init 66 · Saki | あっ、[[T001:player_form]]。 | Oh, [[T001:player_form]]. |  |
 | `initializer-66:g0005:l0002` | Init 66 · Saki | どうしてここにいるの？ | What are you doing here? |  |
 | `initializer-66:g0005:l0003` | Init 66 · Player | [[T001:girl_name]]が、病気なのに[[T002:row]]一人でなんか行けないよ。 | [[T001:girl_name]], you're sick.[[T002:row]]I can't just leave. |  |
 | `initializer-66:g0005:l0004` | Init 66 · Saki | えっ…。 | Huh...? |  |

@@ -198,14 +198,14 @@
 | `00019824:a1b9be0f98a1` | Display | メモリーカードが | `  No memory card` |  |
 | `00019838:88486e51cff8` | Display | ありません。 | `  inserted.` |  |
 | `00019848:7e4e3a4ce66e` | Display | 新たにゲームを始めますか？ | Start a new game? |  |
-| `00019864:23ebf50cc176` | Display | メモリーカードを | Insert a memory |  |
+| `00019864:23ebf50cc176` | Display | メモリーカードを | Insert a memory card |  |
 | `00019878:18e3f3baae8a` | Display | 差し込み口１ | in slot 1 |  |
-| `00019888:108c0a1c502b` | Display | にセットして、 | `          and` |  |
+| `00019888:108c0a1c502b` | Display | にセットして、 | `         , then press` |  |
 | `000198a4:cb4ba8d9fb64` | Display | ボタンを押してください。 | `  to continue.` |  |
 | `000198c0:4dab5f3b6246` | Debug Or Format | SEARCH_CARD | SEARCH_CARD | ASCII / format literal preserved. |
 | `000198cc:4bd89626f7ab` | Display | システムファイルは | The system file |  |
 | `000198e0:8851fe256a43` | Display | 壊れています。 | is corrupted. |  |
-| `000198f0:3ede15932efe` | Display | システムファイルを | the system file |  |
+| `000198f0:3ede15932efe` | Display | システムファイルを | Remake the |  |
 | `00019904:9a5516995675` | Display | 作り直しますか？ | system file? |  |
 | `00019918:516a2f1a537a` | Debug Or Format | SYS0 DATA OK! | SYS0 DATA OK! | ASCII / format literal preserved. |
 | `00019928:6d58ebd139e8` | Debug Or Format | s->mem_stat [[T001:format_directive]] [[T002:line_feed]] | s->mem_stat [[T001:format_directive]] [[T002:line_feed]] | ASCII / format literal preserved. |
@@ -303,7 +303,7 @@
 | `0001a0d4:ffc3d624158d` | Display | 初期化していいですか？ | OK to format it? |  |
 | `0001a0ec:c4233191c37f` | Display | 別のメモリーカードを | Insert another card |  |
 | `0001a104:18e3f3baae8a` | Display | 差し込み口１ | in slot 1 |  |
-| `0001a114:108c0a1c502b` | Display | にセットして、 | `          and` |  |
+| `0001a114:108c0a1c502b` | Display | にセットして、 | `         , then press` |  |
 | `0001a130:cb4ba8d9fb64` | Display | ボタンを押してください。 | `  to continue.` |  |
 | `0001a14c:e4f60d0aa6d7` | Debug Or Format | 0 | 0 | ASCII / format literal preserved. |
 | `0001a150:e79e418e4862` | Debug Or Format | 1 | 1 | ASCII / format literal preserved. |

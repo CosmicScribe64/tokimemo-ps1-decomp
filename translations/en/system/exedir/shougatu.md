@@ -35,10 +35,10 @@
 | `000117d8:e0d7201321a3` | Unknown | 美術室 | Art Room |  |
 | `000117e0:e859b9b3cf79` | Unknown | 音楽室 | Music Room |  |
 | `000117f0:bc44e2021539` | Unknown | 廊下 | Hallway |  |
-| `00011800:ddbfceeafb47` | Unknown | 図書室 | Library |  |
-| `00011808:ddbfceeafb47` | Unknown | 図書室 | Library |  |
-| `00011810:ddbfceeafb47` | Unknown | 図書室 | Library |  |
-| `00011818:ddbfceeafb47` | Unknown | 図書室 | Library |  |
+| `00011800:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
+| `00011808:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
+| `00011810:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
+| `00011818:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
 | `00011820:3ad700edc836` | Unknown | 演劇部 | Drama Club |  |
 | `00011830:84b09b728bb3` | Unknown | グランド | Field |  |
 | `0001183c:84b09b728bb3` | Unknown | グランド | Field |  |

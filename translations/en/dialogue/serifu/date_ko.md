@@ -342,7 +342,7 @@
 | `section-18:g0003:l0000` | Shrine · Yukari | ありがとうございます。 | Thank you very much. |  |
 | `section-18:g0004:l0000` | Shrine · Player | それじゃあ、[[T001:row]]射的でもしようか？ | Well then, how about[[T001:row]]the shooting gallery? |  |
 | `section-18:g0004:l0001` | Shrine · Yukari | いいものが取れると[[T001:row]]いいですねぇ。 | I hope you win[[T001:row]]something nice. |  |
-| `section-18:g0004:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]] |  |
+| `section-18:g0004:l0002` | Shrine · Player | 取れたら[[T001:girl_name]]にあげるね。 | Yours if I win, [[T001:girl_name]]. |  |
 | `section-18:g0005:l0000` | Shrine · Yukari | 素晴らしいですねぇ。 | How wonderful. |  |
 | `section-18:g0006:l0000` | Shrine · Yukari | 上手ですねぇ。 | You're very good. |  |
 | `section-18:g0007:l0000` | Shrine · Yukari | 難しいのですねぇ。 | It's difficult, isn't it? |  |

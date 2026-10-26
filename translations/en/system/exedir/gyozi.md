@@ -50,10 +50,10 @@
 | `00011ba0:bc44e2021539` | Unknown | 廊下 | Hallway |  |
 | `00011bb0:62d334bd1556` | Unknown | S[[T001:line_feed]] | S[[T001:line_feed]] | ASCII / format literal preserved. |
 | `00011bb4:c874330917b0` | Unknown | T[[T001:line_feed]] | T[[T001:line_feed]] | ASCII / format literal preserved. |
-| `00011bb8:ddbfceeafb47` | Unknown | 図書室 | Library |  |
-| `00011bc0:ddbfceeafb47` | Unknown | 図書室 | Library |  |
-| `00011bc8:ddbfceeafb47` | Unknown | 図書室 | Library |  |
-| `00011bd0:ddbfceeafb47` | Unknown | 図書室 | Library |  |
+| `00011bb8:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
+| `00011bc0:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
+| `00011bc8:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
+| `00011bd0:ddbfceeafb47` | Unknown | 図書室 | School Library |  |
 | `00011bd8:3ad700edc836` | Unknown | 演劇部 | Drama Club |  |
 | `00011be0:84b09b728bb3` | Unknown | グランド | Field |  |
 | `00011bec:84b09b728bb3` | Unknown | グランド | Field |  |
