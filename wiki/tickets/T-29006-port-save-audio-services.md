@@ -53,3 +53,7 @@ Integrated `port/godot/app/boundary_save_controls.gd`, `port/godot/tests/service
 ## Holiday boundary save/restore reattachment integrated (2026-10-25)
 
 Extended `port/godot/services/playable_save_adapter.gd`, `port/godot/app/boundary_save_controls.gd`, and `port/godot/app/playable_boot.gd` from `.claude/orchestrator/state/T-29013/app-integration-v2/` so boundary saves and F5/F9 reloads support `normal_holiday` (`mode 0x46`, selection stage 1 and result stage 6), reattaching `holiday_controller` and refreshing `HolidayHudAdapter` (`_present_committed`) without mutating RNG or continuation hashes (verified across 1,135 checks in `run_sunday_app_integration_tests.gd`). Ordered audio service integration remains open.
+
+## Ordered AudioService and NativeVabMemory lifecycle integrated (2026-10-25)
+
+Integrated `port/godot/services/audio_service.gd`, `port/godot/services/native_vab_memory.gd`, and `port/godot/tests/run_audio_vab_lifecycle.gd` from `.claude/orchestrator/state/T-29012/prologue-stages-v1/`. `AudioService` wires `NativeVabMemory` (`0x1010` SE slot 0 and `0x11010` BGM slot 1) to authenticated `connected-opening-v2` and `native/receipt.json` SHA-256 digests, enforces deterministic phase-ordered `bank_load`, `bgm_play`, `bgm_stop`, `se_play`, and `voice_play` commands, and preserves identical state/completion traces when muted. Canonical Docker verification passes 30/30 audio VAB lifecycle assertions (`run_audio_vab_lifecycle.gd`) and 11/11 VAB memory assertions (`run_native_vab_memory.gd`).

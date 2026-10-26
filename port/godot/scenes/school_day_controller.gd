@@ -3,11 +3,14 @@ extends RefCounted
 ## Content/services remain explicit. No fallback table or animation duration.
 
 const State = preload("res://rules/school_day_state.gd")
+const RouteState = preload("res://rules/new_game_route_state.gd")
 const CoreState = preload("res://core/game_state.gd")
 const Session = preload("res://core/game_session.gd")
 const InputFrame = preload("res://core/input_frame.gd")
 const Rng = preload("res://core/native_rng.gd")
 const Math = preload("res://core/native_math.gd")
+const Arrival = preload("res://flow/prologue_arrival.gd")
+const Reload = preload("res://flow/new_game_command_reload.gd")
 const Command = preload("res://flow/command_screen.gd")
 const Scheduler = preload("res://rules/scheduler.gd")
 const Calendar = preload("res://rules/calendar.gd")
@@ -25,6 +28,7 @@ const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": 
 var tables: Dictionary = {}
 var error: String = ""
 var command_capabilities: Array[int] = []
+var opening_services: Dictionary = {}
 
 func _init(validated_tables: Dictionary) -> void:
 	# The caller first validates external-pack provenance against original input.
@@ -79,13 +83,27 @@ func attach(session: Session, state: State) -> String:
 	var failure: String = state.structural_error()
 	if not failure.is_empty():
 		return failure
-	for binding: Array in [[0x34, _command], [0x30, _schedule], [0x31, _day_screen], [0x40, _school_day], [0x32, _week_end]]:
+	for binding: Array in [[0x15, _prologue], [0x34, _command], [0x30, _schedule], [0x31, _day_screen], [0x40, _school_day], [0x32, _week_end]]:
 		failure = session.router.bind_mode(binding[0], binding[1])
 		if not failure.is_empty():
 			return failure
 	session.state = state
 	session.service_completion = service_completion
 	return ""
+
+func _prologue(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
+	var state: State = _state(base, result)
+	if state == null:
+		return
+	var route_state: RouteState = base as RouteState
+	if route_state == null or opening_services.is_empty():
+		result.error = "prologue mode requires NewGameRouteState and configured opening services"
+		return
+	var step_out: Session.FrameResult = Arrival.step(route_state, rng, input.pressed, opening_services)
+	result.error = step_out.error
+	result.audio.append_array(step_out.audio)
+	result.presentation.append_array(step_out.presentation)
+	result.transitions.append_array(step_out.transitions)
 
 func _state(base: CoreState, result: Session.FrameResult) -> State:
 	var state: State = base as State
@@ -100,6 +118,17 @@ func _state(base: CoreState, result: Session.FrameResult) -> State:
 func _command(base: CoreState, input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
 	if state == null:
+		return
+	if state.mode_stage in [0, 0xff]:
+		var route_state: RouteState = base as RouteState
+		if route_state == null or opening_services.is_empty():
+			result.error = "command screen requires captured native stage1/step0"
+			return
+		var reload_out: Session.FrameResult = Reload.step(route_state, opening_services)
+		result.error = reload_out.error
+		result.audio.append_array(reload_out.audio)
+		result.presentation.append_array(reload_out.presentation)
+		result.transitions.append_array(reload_out.transitions)
 		return
 	if input.pressed & 0x20:
 		# Reject a reachable unimplemented scheduler branch before confirmation.

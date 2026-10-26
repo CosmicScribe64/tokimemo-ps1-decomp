@@ -20,10 +20,191 @@ const HolidayController = preload("res://scenes/holiday_controller.gd")
 const HolidaySceneAdapter = preload("res://services/holiday_scene_adapter.gd")
 const HolidayHud = preload("res://presentation/holiday_hud_adapter.gd")
 const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
+const RouteState = preload("res://rules/new_game_route_state.gd")
+const Entry = preload("res://flow/new_game_entry.gd")
+const StateAdapter = preload("res://flow/new_game_state_adapter.gd")
+const Arrival = preload("res://flow/prologue_arrival.gd")
+const Reload = preload("res://flow/new_game_command_reload.gd")
+const AudioService = preload("res://services/audio_service.gd")
 var hud: LiveHud
 var holiday_controller: HolidayController
 var holiday_scene: HolidaySceneAdapter
 var holiday_hud: HolidayHud
+var audio_service: AudioService = AudioService.new()
+var new_game_boot: bool = false
+var new_game_skip_prologue: bool = false
+const MODE_PROLOGUE: int = 0x15
+const MODE_COMMAND_SCREEN: int = 0x34
+const STAGE_READY: int = 1
+const STAGE_RELOAD: int = 0xff
+const MAX_PROLOGUE_STEPS: int = 4096
+const MAX_RELOAD_STEPS: int = 64
+const PAD_START_MASK: int = 0x0800
+const AUDIO_CMD_STOP_BGM: int = 5
+const AUDIO_CMD_FADE_MASK: int = 0xf0
+const AUDIO_CMD_FADE_PREFIX: int = 0xb0
+const SE_COMMAND_MIN: int = 0x0500
+
+static func build_opening_services(audio_svc: AudioService, service_log: Array = []) -> Dictionary:
+	return {
+		"bank_load_start": func(s: RouteState, role: String, r: Session.FrameResult) -> void:
+			service_log.append(["bank_load_start", role])
+			var tick: int = int(s.frame_count)
+			var q_err: String = audio_svc.queue_bank_load(role, tick, AudioService.Phase.AUDIO)
+			if not q_err.is_empty():
+				r.error = q_err
+				return
+			var drain_out: Dictionary = audio_svc.drain_phase(tick, AudioService.Phase.AUDIO)
+			if not str(drain_out.get("error", "")).is_empty():
+				r.error = str(drain_out["error"])
+				return
+			s.opening["audio_profile"] = role
+			r.audio.append({"kind": "bank_load", "role": role}),
+		"bank_poll": func(s: RouteState, _r: Session.FrameResult) -> int:
+			service_log.append("bank_poll")
+			var role: String = str(s.opening.get("audio_profile", ""))
+			if role.is_empty():
+				role = "prologue_arrival" if s.game_mode == MODE_PROLOGUE else "normal_gameplay"
+			return 1 if bool(audio_svc.bank_ready.get(role, false)) else 0,
+		"bank_start": func(s: RouteState, bank: int, seq: int, r: Session.FrameResult) -> void:
+			service_log.append(["bank_start", bank, seq])
+			var tick: int = int(s.frame_count)
+			var q_err: String = audio_svc.queue_bgm_play(bank, seq, tick, AudioService.Phase.AUDIO)
+			if not q_err.is_empty():
+				r.error = q_err
+				return
+			var drain_out: Dictionary = audio_svc.drain_phase(tick, AudioService.Phase.AUDIO)
+			if not str(drain_out.get("error", "")).is_empty():
+				r.error = str(drain_out["error"])
+				return
+			r.audio.append({"kind": "bgm_play", "bank": bank, "sequence": seq}),
+		"audio_command": func(s: RouteState, cmd: int, r: Session.FrameResult) -> void:
+			service_log.append(["audio_command", cmd])
+			var tick: int = int(s.frame_count)
+			var q_err: String = ""
+			if cmd == AUDIO_CMD_STOP_BGM or (cmd & AUDIO_CMD_FADE_MASK) == AUDIO_CMD_FADE_PREFIX:
+				q_err = audio_svc.queue_bgm_stop(cmd, tick, AudioService.Phase.AUDIO)
+				r.audio.append({"kind": "bgm_stop", "command": cmd})
+			elif cmd >= SE_COMMAND_MIN:
+				q_err = audio_svc.queue_se_play(cmd, tick, AudioService.Phase.AUDIO)
+				r.audio.append({"kind": "se_play", "command": cmd})
+			if not q_err.is_empty():
+				r.error = q_err
+				return
+			if not audio_svc.queue.is_empty():
+				var drain_out: Dictionary = audio_svc.drain_phase(tick, AudioService.Phase.AUDIO)
+				if not str(drain_out.get("error", "")).is_empty():
+					r.error = str(drain_out["error"]),
+		"scene_reset": func(_s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("scene_reset"),
+		"background_read": func(_s: RouteState, lba: int, slot: int, _r: Session.FrameResult, retry: bool = false) -> void:
+			service_log.append(["bg_read", lba, slot, retry]),
+		"cd_sync": func(_s: RouteState, _r: Session.FrameResult) -> int:
+			service_log.append("cd_sync")
+			return 1,
+		"background_decode": func(_s: RouteState, slot: int, _r: Session.FrameResult) -> int:
+			service_log.append(["bg_decode", slot])
+			return 0,
+		"actor_read": func(_s: RouteState, count: int, dest: int, lba: int, _r: Session.FrameResult) -> void:
+			service_log.append(["actor_read", count, dest, lba]),
+		"actor_palette_setup": func(_s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("actor_palette_setup"),
+		"line_start": func(s: RouteState, line: int, r: Session.FrameResult) -> void:
+			service_log.append(["line_start", line])
+			var tick: int = int(s.frame_count)
+			var q_err: String = audio_svc.queue_voice_play(line, tick, AudioService.Phase.AUDIO)
+			if not q_err.is_empty():
+				r.error = q_err
+				return
+			var drain_out: Dictionary = audio_svc.drain_phase(tick, AudioService.Phase.AUDIO)
+			if not str(drain_out.get("error", "")).is_empty():
+				r.error = str(drain_out["error"])
+				return
+			r.audio.append({"kind": "voice_play", "voice_id": line}),
+		"line_run": func(s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("line_run")
+			s.substep += 1,
+		"arrival_draw": func(_s: RouteState, arg: int, _r: Session.FrameResult) -> void:
+			service_log.append(["arrival_draw", arg]),
+		"outer_draw": func(_s: RouteState, a: Variant = null, _b: Variant = null) -> void:
+			service_log.append(["outer_draw", a]),
+		"setup_reset": func(s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("setup_reset")
+			s.next_step(),
+		"hud_read_start": func(_s: RouteState, n: int, d: int, l: int, _r: Session.FrameResult) -> void:
+			service_log.append(["hud_read_start", n, d, l]),
+		"calendar_upload": func(_s: RouteState, y: int, m: int, b: int, _r: Session.FrameResult) -> void:
+			service_log.append(["calendar_upload", y, m, b]),
+		"mascot_set": func(_s: RouteState, n: int, on: int, _r: Session.FrameResult) -> void:
+			service_log.append(["mascot_set", n, on]),
+		"command_build": func(s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("command_build")
+			Reload.build_command_screen(s),
+		"room_finish": func(s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("room_finish")
+			Reload.finish_room_load(s),
+		"frame_draw": func(_s: RouteState, title: bool = false, _r: Variant = null) -> void:
+			service_log.append(["frame_draw", title]),
+	}
+
+static func run_new_game_opening_to_command_ready(
+	entry: Entry,
+	rng: Rng,
+	opening_pack_path: String,
+	witness_receipt_path: String,
+	skip_prologue: bool,
+	audio_svc: AudioService,
+	initial_frame_count: int = 1000,
+	initial_system_seed: int = 2000
+) -> Dictionary:
+	if not opening_pack_path.is_empty():
+		var cfg_err: String = audio_svc.configure_opening_pack(opening_pack_path, witness_receipt_path)
+		if not cfg_err.is_empty():
+			return {"error": cfg_err}
+	var initial_mascot: int = int(audio_svc.opening_pack.get("constants", {}).get("initial_mascot", 0))
+	var adapter_out: StateAdapter.Outcome = StateAdapter.from_entry(
+		entry,
+		initial_frame_count,
+		initial_system_seed,
+		{"initial_mascot": initial_mascot}
+	)
+	if not adapter_out.error.is_empty() or adapter_out.state == null:
+		return {"error": "state adapter failed: " + adapter_out.error}
+	var route_state: RouteState = adapter_out.state
+	var service_log: Array = []
+	var services: Dictionary = build_opening_services(audio_svc, service_log)
+	var visited_stages: Array[int] = []
+	var prologue_steps: int = 0
+	while route_state.game_mode == MODE_PROLOGUE and prologue_steps < MAX_PROLOGUE_STEPS:
+		if visited_stages.is_empty() or visited_stages[-1] != route_state.mode_stage:
+			visited_stages.append(route_state.mode_stage)
+		var pressed: int = 0
+		if skip_prologue and route_state.mode_stage == 0 and route_state.mode_step == 2 and route_state.substep == 2:
+			pressed = PAD_START_MASK
+		var step_res: Session.FrameResult = Arrival.step(route_state, rng, pressed, services)
+		if not step_res.error.is_empty():
+			return {"error": "prologue step failed: " + step_res.error}
+		route_state.frame_count += 1
+		prologue_steps += 1
+	if route_state.game_mode != MODE_COMMAND_SCREEN or route_state.mode_stage != STAGE_RELOAD:
+		return {"error": "prologue did not transition to command reload 0x34 stage 0xFF"}
+	var reload_steps: int = 0
+	while route_state.game_mode == MODE_COMMAND_SCREEN and route_state.mode_stage != STAGE_READY and reload_steps < MAX_RELOAD_STEPS:
+		var reload_res: Session.FrameResult = Reload.step(route_state, services)
+		if not reload_res.error.is_empty():
+			return {"error": "command reload failed: " + reload_res.error}
+		route_state.frame_count += 1
+		reload_steps += 1
+	if route_state.game_mode != MODE_COMMAND_SCREEN or route_state.mode_stage != STAGE_READY or not bool(route_state.opening.get("command_ready", false)):
+		return {"error": "command reload did not reach ready stage 1"}
+	return {
+		"error": "",
+		"state": route_state,
+		"visited_stages": visited_stages,
+		"prologue_steps": prologue_steps,
+		"reload_steps": reload_steps,
+		"service_log": service_log,
+	}
 const BOUNDARY_SHA: String = "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5"
 const TABLES_SHA: String = "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
 
@@ -123,6 +304,8 @@ func _ready() -> void:
 	smoke = OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE") == "1"
 	smoke_command = int(OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE_COMMAND"))
 	continue_week = OS.get_environment("TOKIMEMO_PLAYABLE_FIRST_RESULT_ONLY") != "1"
+	new_game_boot = OS.get_environment("TOKIMEMO_NEW_GAME_BOOT") == "1" or OS.get_environment("TOKIMEMO_BOOT_MODE") == "new_game"
+	new_game_skip_prologue = OS.get_environment("TOKIMEMO_PROLOGUE_SKIP") == "1"
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	var backdrop := ColorRect.new()
 	backdrop.size = Vector2(640, 480)
@@ -191,18 +374,19 @@ func _load_inputs() -> String:
 	var club_pack: String = OS.get_environment("T29014_CLUB_PACK")
 	if club_pack.is_empty():
 		club_pack = OS.get_environment("TOKIMEMO_CLUB_PACK")
-	if OS.get_environment("TOKIMEMO_BOUNDARY_SHA") != BOUNDARY_SHA or OS.get_environment("TOKIMEMO_TABLES_SHA") != TABLES_SHA:
-		return "unsupported development boundary/table profile; use the reviewed captured inputs"
-	if not _verified_external(state_path, OS.get_environment("TOKIMEMO_BOUNDARY_SHA")):
-		return "development boundary missing or SHA256 differs from explicit launch identity"
-	if not _verified_external(table_path, OS.get_environment("TOKIMEMO_TABLES_SHA")):
+	if not new_game_boot:
+		if OS.get_environment("TOKIMEMO_BOUNDARY_SHA") != BOUNDARY_SHA or OS.get_environment("TOKIMEMO_TABLES_SHA") != TABLES_SHA:
+			return "unsupported development boundary/table profile; use the reviewed captured inputs"
+		if not _verified_external(state_path, OS.get_environment("TOKIMEMO_BOUNDARY_SHA")):
+			return "development boundary missing or SHA256 differs from explicit launch identity"
+		var parsed: Variant = _integers(JSON.parse_string(FileAccess.get_file_as_string(state_path)))
+		if not parsed is Dictionary or parsed.get("schema") != "tokimemo.development-boundary.v1":
+			return "unsupported development-boundary schema"
+		if not parsed.get("core") is Dictionary or not parsed.get("rule_state") is Dictionary or not parsed.get("rng_state") is int:
+			return "development boundary lacks core/rules/RNG records"
+		boundary = parsed
+	if OS.get_environment("TOKIMEMO_TABLES_SHA") != TABLES_SHA or not _verified_external(table_path, OS.get_environment("TOKIMEMO_TABLES_SHA")):
 		return "original rule tables missing or SHA256 differs from explicit launch identity"
-	var parsed: Variant = _integers(JSON.parse_string(FileAccess.get_file_as_string(state_path)))
-	if not parsed is Dictionary or parsed.get("schema") != "tokimemo.development-boundary.v1":
-		return "unsupported development-boundary schema"
-	if not parsed.get("core") is Dictionary or not parsed.get("rule_state") is Dictionary or not parsed.get("rng_state") is int:
-		return "development boundary lacks core/rules/RNG records"
-	boundary = parsed
 	var table_pack: Variant = _integers(JSON.parse_string(FileAccess.get_file_as_string(table_path)))
 	if not table_pack is Dictionary or table_pack.get("schema") != "tokimemo.port-rule-tables.v1" or table_pack.get("schema_version") != 1 or not table_pack.get("tables") is Dictionary:
 		return "unsupported original rule-table schema"
@@ -272,17 +456,50 @@ func _verified_external(path: String, digest: String) -> bool:
 	return ExternalPath.is_external_file(path) and digest.length() == 64 and FileAccess.get_size(path) < 8 * 1024 * 1024 and FileAccess.get_sha256(path) == digest
 
 func _reset() -> String:
-	state = State.new()
-	var core_fields: Dictionary = CoreState.new().projection()
-	if boundary["core"].size() != core_fields.size():
-		return "development core record differs from supported field set"
-	for key: String in core_fields:
-		if not boundary["core"].has(key) or typeof(boundary["core"][key]) != typeof(core_fields[key]):
-			return "development core field has wrong type: " + key
-		state.set(key, boundary["core"][key])
-	state.rule_state = boundary["rule_state"].duplicate(true)
-	if [state.game_mode, state.mode_stage, state.mode_step] != [0x34, 1, 0] or [state.rule_state.get("year"), state.rule_state.get("month"), state.rule_state.get("day")] != [95, 4, 4]:
-		return "only the genuine initial April4 command boundary is supported"
+	session = Session.new()
+	if new_game_boot:
+		var ng_tables_path: String = OS.get_environment("TOKIMEMO_NEW_GAME_TABLES")
+		var ng_content_path: String = OS.get_environment("TOKIMEMO_NEW_GAME_CONTENT")
+		var opening_pack_path: String = OS.get_environment("TOKIMEMO_OPENING_PACK")
+		var witness_receipt_path: String = OS.get_environment("TOKIMEMO_WITNESS_RECEIPT")
+		var ng_tables: Dictionary = Entry.Rules.load_tables(ng_tables_path)
+		var ng_content: Dictionary = Entry.load_content(ng_content_path)
+		if not session.rng.configure(Rng.OPENBIOS_PROFILE, 19950404):
+			return session.rng.configuration_error()
+		var entry: Entry = Entry.new()
+		var begin_err: String = entry.begin(ng_tables, ng_content, session.rng)
+		if not begin_err.is_empty():
+			return begin_err
+		for action_kind: String in ["tick", "start", "tick", "start", "tick", "start", "tick", "start", "tick", "yes", "tick", "start", "tick", "yes", "tick"]:
+			var act_err: String = entry.act({"kind": action_kind})
+			if not act_err.is_empty():
+				return act_err
+		var opening_out: Dictionary = run_new_game_opening_to_command_ready(
+			entry,
+			session.rng,
+			opening_pack_path,
+			witness_receipt_path,
+			new_game_skip_prologue,
+			audio_service
+		)
+		if not str(opening_out.get("error", "")).is_empty():
+			return str(opening_out["error"])
+		state = opening_out["state"]
+		controller.opening_services = build_opening_services(audio_service)
+	else:
+		state = State.new()
+		var core_fields: Dictionary = CoreState.new().projection()
+		if boundary["core"].size() != core_fields.size():
+			return "development core record differs from supported field set"
+		for key: String in core_fields:
+			if not boundary["core"].has(key) or typeof(boundary["core"][key]) != typeof(core_fields[key]):
+				return "development core field has wrong type: " + key
+			state.set(key, boundary["core"][key])
+		state.rule_state = boundary["rule_state"].duplicate(true)
+		if [state.game_mode, state.mode_stage, state.mode_step] != [0x34, 1, 0] or [state.rule_state.get("year"), state.rule_state.get("month"), state.rule_state.get("day")] != [95, 4, 4]:
+			return "only the genuine initial April4 command boundary is supported"
+		if not session.rng.configure(Rng.OPENBIOS_PROFILE, boundary["rng_state"]):
+			return session.rng.configuration_error()
 	# Content capabilities are immutable controller configuration; preserving the
 	# legacy record also preserves all existing command0 state/event hashes.
 	state.rule_state["resources"]["available_commands"] = [0]
@@ -291,9 +508,6 @@ func _reset() -> String:
 			return "holiday controller requires preflighted holiday scene and HUD"
 		state.rule_state["holiday"] = holiday_scene.initial_extension()
 		state.rule_state["resources"]["available_holiday_commands"] = [0]
-	session = Session.new()
-	if not session.rng.configure(Rng.OPENBIOS_PROFILE, boundary["rng_state"]):
-		return session.rng.configuration_error()
 	var error: String = controller.attach(session, state)
 	if not error.is_empty():
 		return error
