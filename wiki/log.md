@@ -2390,3 +2390,7 @@ Integrated `port/godot/flow/prologue_arrival.gd`, `port/godot/flow/new_game_comm
 ## [2026-10-25] lint | Deslop user-facing repository and wiki documentation
 
 Applied the repository-wide documentation deslop pass from `.claude/orchestrator/state/deslop-repo-v1/candidate/` across `README.md`, `ROADMAP.md`, `GLOSSARY.md`, `src/main/README.md`, `versions/README.md`, `port/godot/PORTING.md`, [[index]], [[overview]], [[status]], [[phase2]], [[phase2-naming]], [[phase3]], [[versions]], [[build-system]], [[toolchain]], and [[widescreen-settings]], eliminating all strong `find_tells.py` hits across non-catalog prose while preserving all hashes, counts, commands, addresses, and links.
+
+## [2026-10-25] ticket | Add Context and Japanese columns, TAGS.md and remove review columns in translations/en (T-28009)
+
+Updated `tools/translation_tree.py`, `tools/test_translation_tree.py`, and `translations/en/` from `.claude/orchestrator/state/T-28009/japanese-columns-v1/`, updating [[tickets/T-28009-version-translation-overlays]]. All 184 Markdown tables now use `| ID | Context | Japanese | Translation | Notes |`, `translations/en/TAGS.md` documents all 28 `[[T...:...]]` control token families, `translations/en/graphics/image_text_catalog.md` retains `Original Japanese`, and `Status` / `Ready for review` columns are removed while `translation_tree.py build` reproduces `returned-v3.jsonl` and `supplemental.jsonl` byte-for-byte.

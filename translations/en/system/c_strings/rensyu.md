@@ -1,8 +1,10 @@
-# C code strings, Practice Matches (`RENSYU`)
+# C Code Strings: Practice Matches (`RENSYU`)
 
-File `system/c_strings/rensyu.md` contains 2 translated lines, 0 empty source slots, and 2 total records (2 ready for review, 0 unresolved).
+- **File Path**: `system/c_strings/rensyu.md`
+- **Total Lines**: 2
+- **Translated Lines**: 2
 
-| ID | Status | Translation | Notes |
-| :--- | :--- | :--- | :--- |
-| `801320e0:1` | ready | Practice Match |  |
-| `80132f10:1` | ready | Match |  |
+| ID | Context | Japanese | Translation | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| `801320e0:1` | practice_intro_mode_step_dispatch() | 練習試合 | Practice Match |  |
+| `80132f10:1` | practice_club_scene_setup() | 試合中 | Match |  |

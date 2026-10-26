@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Unit tests for translation_tree.py converter, validator, and builder."""
 
+import glob
 import hashlib
 import json
 import os
@@ -9,10 +10,21 @@ import sys
 import tempfile
 import unittest
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
+if TOOLS_DIR not in sys.path:
+    sys.path.insert(0, TOOLS_DIR)
+
+CANDIDATE_TREE_DIR = os.path.abspath(
+    os.path.join(TOOLS_DIR, "..", "translations", "en")
+)
+
 from translation_tree import (
-    CJK_PATTERN,
+    ARCHIVE_TITLES,
+    CHAR_NAMES,
+    PURE_UNKNOWN_PATTERN,
     build_tree,
+    choose_japanese_text,
+    format_context_string,
     parse_markdown_table,
     route_id,
     sha256_file,
@@ -20,29 +32,9 @@ from translation_tree import (
     validate_tree,
 )
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CANONICAL_TREE_DIR = os.path.join(REPO_ROOT, "translations", "en")
-
 
 class TestTranslationTree(unittest.TestCase):
-    """Test suite for contributor translation tree."""
-
-    def test_cjk_detection(self):
-        """Test CJK detection regex against Japanese and English text."""
-        # Japanese strings
-        self.assertTrue(bool(CJK_PATTERN.search("ときめきメモリアル")))
-        self.assertTrue(bool(CJK_PATTERN.search("藤崎詩織")))
-        self.assertTrue(bool(CJK_PATTERN.search("テスト")))
-        self.assertTrue(bool(CJK_PATTERN.search("期末試験結果発表")))
-        self.assertTrue(bool(CJK_PATTERN.search("「こんにちは」")))
-        self.assertTrue(bool(CJK_PATTERN.search("1995年4月23日")))
-
-        # English strings with numbers and tokens
-        self.assertFalse(bool(CJK_PATTERN.search("Hello world!")))
-        self.assertFalse(bool(CJK_PATTERN.search("And so, the[[T001:row]]festival was over.")))
-        self.assertFalse(bool(CJK_PATTERN.search("[[T001:sub:player_family]]")))
-        self.assertFalse(bool(CJK_PATTERN.search("Q&A Corner | Term Exam Results (112x12 box)")))
-        self.assertFalse(bool(CJK_PATTERN.search("SLPM_86.053:00072ad0:49803ec53984")))
+    """Test suite for 5-column contributor translation tree."""
 
     def test_routing(self):
         """Test ID routing to clean directory structure with canonical names."""
@@ -100,16 +92,82 @@ class TestTranslationTree(unittest.TestCase):
         self.assertEqual(fn, "supplemental/siai_tx.md")
         self.assertEqual(lid, "0000")
 
-    def test_markdown_table_parsing(self):
-        """Test parsing of table cells including empty slots and backtick whitespace."""
+    def test_japanese_selection(self):
+        """Test Japanese display string selection rules."""
+        # 1. Standard copy_template with tokens
+        res = choose_japanese_text(
+            japanese="こうして、 文化祭は、終了した。",
+            copy_template="こうして、[[T001:row]]文化祭は、終了した。",
+            target_text="And so, the[[T001:row]]festival was over.",
+        )
+        self.assertEqual(res, "こうして、[[T001:row]]文化祭は、終了した。")
+
+        # 2. Pure unknown token with readable Japanese
+        res = choose_japanese_text(
+            japanese="文芸部",
+            copy_template="[[T001:unknown_renderer_bytes]]",
+            target_text="Literature Club[[T001:unknown_renderer_bytes]]",
+        )
+        self.assertEqual(res, "文芸部 (`[[T001:unknown_renderer_bytes]]`)")
+
+        # 3. Empty copy_template fallback to japanese
+        res = choose_japanese_text(
+            japanese="近所の公園",
+            copy_template="",
+            target_text="Neighborhood Park",
+        )
+        self.assertEqual(res, "近所の公園")
+
+        # 4. Empty slot
+        res = choose_japanese_text(
+            japanese="",
+            copy_template="",
+            target_text=None,
+        )
+        self.assertEqual(res, "_(empty slot)_")
+
+    def test_context_formatting(self):
+        """Test human-readable concise context formatting."""
+        section_context = {
+            ("CDROM/SERIFU/DATE_FU.BIN", "section-00"): "Neighborhood Park",
+            ("CDROM/SERIFU/DATE_FU.BIN", "section-01"): "Central Park",
+        }
+
+        # Dialogue with location and monologue
+        ctx1 = 'CDROM/SERIFU/DATE_FU.BIN; script_record; section="section-00"; group=0; line=1; speaker={"label":"inline_or_effect","runtime_values_preserved_symbolically":true}; command=inline; next_id=...'
+        res1 = format_context_string("talk:CDROM/SERIFU/DATE_FU.BIN:section-00:g0000:l0001", ctx1, section_context)
+        self.assertEqual(res1, "Neighborhood Park · Player (monologue)")
+
+        # Dialogue with heroine line
+        ctx2 = 'CDROM/SERIFU/DATE_FU.BIN; script_record; section="section-00"; group=0; line=0; speaker={"label":"current_girl_short_name","runtime_values_preserved_symbolically":true}; command=girl; next_id=...'
+        res2 = format_context_string("talk:CDROM/SERIFU/DATE_FU.BIN:section-00:g0000:l0000", ctx2, section_context)
+        self.assertEqual(res2, "Neighborhood Park · Shiori")
+
+        # C string function
+        ctx3 = 'CDROM/EXEDIR/NAME_ENT.EXN; source_literal; category="debug_or_format"; source_function="file_select_settings_restore"; source_line=601; call="printf"; ...'
+        res3 = format_context_string("c:NAME_ENT:8013b77c:1", ctx3, section_context)
+        self.assertEqual(res3, "file_select_settings_restore()")
+
+        # Dictionary slot
+        ctx4 = 'CDROM/EXEDIR/DATE.EXN; dictionary_slot; table="place_names"; index=0; ...'
+        res4 = format_context_string("dictionary:CDROM/EXEDIR/DATE.EXN:place_names:00", ctx4, section_context)
+        self.assertEqual(res4, "place_names[0]")
+
+        # Supplemental commentary
+        ctx5 = "CDROM/SHIAI/SIAI_TX.BIN; supplemental_talk; group=0; line=0; offset=0x0"
+        res5 = format_context_string("supplemental:CDROM/SHIAI/SIAI_TX.BIN:0000", ctx5, section_context)
+        self.assertEqual(res5, "Match commentary (line 0)")
+
+    def test_markdown_table_parsing_5_col(self):
+        """Test parsing 5-column Markdown tables."""
         with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".md", delete=False) as f:
             f.write("# Test\n\n")
-            f.write("| ID | Status | Translation | Notes |\n")
-            f.write("| :--- | :--- | :--- | :--- |\n")
-            f.write("| `main:g0001:l0000` | ready | Standard text | Some note |\n")
-            f.write("| `main:g0001:l0001` | empty | _(empty slot)_ | Empty note |\n")
-            f.write("| `main:g0001:l0002` | ready | `   ` | Three spaces |\n")
-            f.write("| `main:g0001:l0003` | ready | Text with \\| pipe | Note with \\| pipe |\n")
+            f.write("| ID | Context | Japanese | Translation | Notes |\n")
+            f.write("| :--- | :--- | :--- | :--- | :--- |\n")
+            f.write("| `main:g0001:l0000` | Central Park · Shiori | こんにちは | Hello there! | Some note |\n")
+            f.write("| `main:g0001:l0001` | place_names[21] | _(empty slot)_ | _(empty slot)_ | Empty slot note |\n")
+            f.write("| `main:g0001:l0002` | Misc | `   ` | `   ` | Three spaces |\n")
+            f.write("| `main:g0001:l0003` | Dialog | A \\| B | Text with \\| pipe | Note with \\| pipe |\n")
             tmp_path = f.name
 
         try:
@@ -117,29 +175,28 @@ class TestTranslationTree(unittest.TestCase):
             self.assertEqual(len(table), 4)
 
             # Standard
-            st, target, note = table["main:g0001:l0000"]
-            self.assertEqual(st, "ready")
-            self.assertEqual(target, "Standard text")
+            target, note = table["main:g0001:l0000"]
+            self.assertEqual(target, "Hello there!")
             self.assertEqual(note, "Some note")
 
             # Empty slot
-            st, target, note = table["main:g0001:l0001"]
-            self.assertEqual(target, None)
+            target, note = table["main:g0001:l0001"]
+            self.assertIsNone(target)
 
             # Whitespace
-            st, target, note = table["main:g0001:l0002"]
+            target, note = table["main:g0001:l0002"]
             self.assertEqual(target, "   ")
 
             # Escaped pipe
-            st, target, note = table["main:g0001:l0003"]
+            target, note = table["main:g0001:l0003"]
             self.assertEqual(target, "Text with | pipe")
             self.assertEqual(note, "Note with | pipe")
         finally:
             os.remove(tmp_path)
 
     def test_lossless_roundtrip(self):
-        """Verify full 55,403 + 508 lossless byte-for-byte roundtrip directly from baseline."""
-        tree_dir = CANONICAL_TREE_DIR
+        """Verify full 55,403 + 508 lossless byte-for-byte roundtrip from 5-column tree."""
+        tree_dir = CANDIDATE_TREE_DIR
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_ret = os.path.join(tmp_dir, "returned-v3.jsonl")
             out_sup = os.path.join(tmp_dir, "supplemental.jsonl")
@@ -152,7 +209,6 @@ class TestTranslationTree(unittest.TestCase):
                 base_supplemental_path=os.path.join(tree_dir, "supplemental.jsonl"),
             )
 
-            # Assert exact canonical hashes
             expected_ret = "28c2c8fbf6f31b8a56f8415328c94fc3aebed39dbe96e114096193602c4dd533"
             expected_sup = "49bbeaf94ce5cca88634fb17fb62e3b6a88b4032f86d769dc54ad4285e91e58c"
 
@@ -160,8 +216,8 @@ class TestTranslationTree(unittest.TestCase):
             self.assertEqual(sup_sha, expected_sup)
 
     def test_edit_propagation(self):
-        """Verify human edits in markdown propagate cleanly to built output."""
-        base_tree_dir = CANONICAL_TREE_DIR
+        """Verify human edits in 5-column markdown propagate cleanly to built output."""
+        base_tree_dir = CANDIDATE_TREE_DIR
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             copied_tree = os.path.join(tmp_dir, "en")
@@ -173,11 +229,8 @@ class TestTranslationTree(unittest.TestCase):
 
             self.assertIn("I came to visit.", content)
             edited_content = content.replace(
-                "I came to visit.",
-                "I came to visit the festival!",
-            ).replace(
-                "| `main:g0001:l0000` | ready | I came to visit the festival! |  |",
-                "| `main:g0001:l0000` | ready | I came to visit the festival! | Contributor updated note |",
+                "| `main:g0001:l0000` | Main · Yuko | 遊びに来ちゃった。 | I came to visit. |  |",
+                "| `main:g0001:l0000` | Main · Yuko | 遊びに来ちゃった。 | I came to visit the festival! | Contributor updated note |",
             )
             with open(as_file, "w", encoding="utf-8") as f:
                 f.write(edited_content)
@@ -199,33 +252,56 @@ class TestTranslationTree(unittest.TestCase):
                     if d["id"] == "talk:CDROM/BUNKA/AS_S6.BIN:main:g0001:l0000":
                         self.assertEqual(d["target_text"], "I came to visit the festival!")
                         self.assertEqual(d["translator_note"], "Contributor updated note")
+                        # review_status preserved from baseline
+                        self.assertEqual(d["review_status"], "ready_for_review")
                         found = True
                         break
             self.assertTrue(found, "Edited row should be present in built JSONL")
 
     def test_validation(self):
-        """Verify that validate_tree passes on canonical tree."""
-        self.assertTrue(validate_tree(CANONICAL_TREE_DIR))
+        """Verify that validate_tree passes on candidate tree."""
+        tree_dir = CANDIDATE_TREE_DIR
+        self.assertTrue(validate_tree(tree_dir))
 
-    def test_graphics_catalog(self):
-        """Verify graphics catalog exists and has zero Japanese text."""
-        cat_md = os.path.join(CANONICAL_TREE_DIR, "graphics/image_text_catalog.md")
-        cat_jsonl = os.path.join(CANONICAL_TREE_DIR, "graphics/image_text_catalog.jsonl")
+    def test_image_catalog_japanese_preserved(self):
+        """Verify image text catalog exists and retains Original Japanese."""
+        cat_md = os.path.join(CANDIDATE_TREE_DIR, "graphics/image_text_catalog.md")
+        cat_jsonl = os.path.join(CANDIDATE_TREE_DIR, "graphics/image_text_catalog.jsonl")
 
         self.assertTrue(os.path.exists(cat_md))
         self.assertTrue(os.path.exists(cat_jsonl))
 
         with open(cat_md, "r", encoding="utf-8") as f:
             md_text = f.read()
-        self.assertFalse(bool(CJK_PATTERN.search(md_text)))
+        self.assertIn("Original Japanese", md_text)
+        self.assertIn("期末試験結果発表", md_text)
 
         with open(cat_jsonl, "r", encoding="utf-8") as f:
-            jsonl_text = f.read()
-        self.assertFalse(bool(CJK_PATTERN.search(jsonl_text)))
+            first_line = json.loads(f.readline())
+        self.assertIn("original_japanese", first_line)
+
+    def test_tags_documentation(self):
+        """Verify TAGS.md exists and documents all 28 tags."""
+        tags_file = os.path.join(CANDIDATE_TREE_DIR, "TAGS.md")
+        self.assertTrue(os.path.exists(tags_file))
+
+        with open(tags_file, "r", encoding="utf-8") as f:
+            text = f.read()
+
+        all_28_tags = [
+            "row", "choice_option", "girl_name", "reply_variant", "player_form",
+            "unknown_renderer_bytes", "line_feed", "inline_label", "format_directive",
+            "row_separator", "player_family", "player_full", "context_m", "context_a",
+            "unknown", "terminal_byte_before_nul", "player_given", "conditional_choice_zero",
+            "reply_skip_marker", "context_o", "tab", "carriage_return", "context_s",
+            "yoshio_name", "context_w", "storage_byte_1b", "storage_byte_1a", "storage_byte_0c",
+        ]
+        for t in all_28_tags:
+            self.assertIn(f"### {t}", text, f"TAGS.md should document {t}")
 
     def test_no_meta_dir(self):
         """Verify that duplicate _meta/ directory is removed."""
-        meta_dir = os.path.join(CANONICAL_TREE_DIR, "_meta")
+        meta_dir = ".claude/orchestrator/state/T-28009/japanese-columns-v1/candidate/translations/en/_meta"
         self.assertFalse(os.path.exists(meta_dir), "_meta directory should not exist")
 
 

@@ -1,9 +1,11 @@
-# C code strings, Table Tennis Minigame (`TT`)
+# C Code Strings: Table Tennis Minigame (`TT`)
 
-File `system/c_strings/tt.md` contains 3 translated lines, 0 empty source slots, and 3 total records (3 ready for review, 0 unresolved).
+- **File Path**: `system/c_strings/tt.md`
+- **Total Lines**: 3
+- **Translated Lines**: 3
 
-| ID | Status | Translation | Notes |
-| :--- | :--- | :--- | :--- |
-| `8013e290:1` | ready | v_ev=[[T001:format_directive]][[T002:line_feed]] | ASCII / format literal preserved. |
-| `8013e850:1` | ready | `open event [[T001:format_directive]] ` | ASCII / format literal preserved. |
-| `8013e850:2` | ready | return to main!![[T001:line_feed]] | ASCII / format literal preserved. |
+| ID | Context | Japanese | Translation | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| `8013e290:1` | tt_vsync_event_init() | v_ev=[[T001:format_directive]][[T002:line_feed]] | v_ev=[[T001:format_directive]][[T002:line_feed]] | ASCII / format literal preserved. |
+| `8013e850:1` | tt_main() | open event [[T001:format_directive]] | `open event [[T001:format_directive]] ` | ASCII / format literal preserved. |
+| `8013e850:2` | tt_main() | return to main!![[T001:line_feed]] | return to main!![[T001:line_feed]] | ASCII / format literal preserved. |

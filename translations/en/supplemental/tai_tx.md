@@ -1,13 +1,15 @@
-# Supplemental text, Tai Tx (`CDROM/TAIIKU/TAI_TX.BIN`)
+# Supplemental Text: Tai Tx (`CDROM/TAIIKU/TAI_TX.BIN`)
 
-File `supplemental/tai_tx.md` contains 7 translated lines, 0 empty source slots, and 7 total records (7 ready for review, 0 unresolved).
+- **File Path**: `supplemental/tai_tx.md`
+- **Total Lines**: 7
+- **Translated Lines**: 7
 
-| ID | Status | Translation | Notes |
-| :--- | :--- | :--- | :--- |
-| `0000` | ready | It's sports day.[[T001:row]]Which event should I enter? | Speaker: . |
-| `0030` | ready | Spoon relay.[[T001:choice_option]]Borrowing race[[T002:choice_option]]Other events | Speaker: . |
-| `0064` | ready | 3-leg race[[T001:choice_option]]Ball rolling[[T002:choice_option]]Other events | Speaker: . |
-| `0090` | ready | This minigame can't[[T001:row]]be played with a mouse. | Speaker: . |
-| `00c4` | ready | Please plug in[[T001:row]]a controller. | Speaker: . |
-| `00ec` | ready | Thanks.[[T001:row]]When you're ready,[[T002:row]]press any button. | Speaker: . |
-| `0128` | ready | Sports day![[T001:row]]Sick or not,[[T002:row]]I'm taking part! | Speaker: . |
+| ID | Context | Japanese | Translation | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| `0000` | Match commentary (line 0) | 今日は体育祭だ。[[T001:row]]どの競技に参加しようかな？ | It's sports day.[[T001:row]]Which event should I enter? | Speaker: . |
+| `0030` | Match commentary (line 1) | スプーンリレー[[T001:choice_option]]借りもの競争[[T002:choice_option]]別の競技に参加する | Spoon relay.[[T001:choice_option]]Borrowing race[[T002:choice_option]]Other events | Speaker: . |
+| `0064` | Match commentary (line 2) | 二人三脚[[T001:choice_option]]玉転がし[[T002:choice_option]]別の競技に参加する | 3-leg race[[T001:choice_option]]Ball rolling[[T002:choice_option]]Other events | Speaker: . |
+| `0090` | Match commentary (line 3) | このミニゲームは、[[T001:row]]マウスではプレイできないの。 | This minigame can't[[T001:row]]be played with a mouse. | Speaker: . |
+| `00c4` | Match commentary (line 4) | コントローラを[[T001:row]]つないでください。 | Please plug in[[T001:row]]a controller. | Speaker: . |
+| `00ec` | Match commentary (line 5) | ありがとう。[[T001:row]]準備ができたら、[[T002:row]]何かボタンを押してね。 | Thanks.[[T001:row]]When you're ready,[[T002:row]]press any button. | Speaker: . |
+| `0128` | Match commentary (line 6) | 今日は体育祭だ。[[T001:row]]病気なんかくそくらえだ。[[T002:row]]競技に参加するぞ。 | Sports day![[T001:row]]Sick or not,[[T002:row]]I'm taking part! | Speaker: . |

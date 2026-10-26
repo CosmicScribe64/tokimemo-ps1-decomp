@@ -1,8 +1,10 @@
-# Overlay strings, Practice Matches (`CDROM/EXEDIR/RENSYU.EXN`)
+# Overlay Strings: Practice Matches (`CDROM/EXEDIR/RENSYU.EXN`)
 
-File `system/exedir/rensyu.md` contains 2 translated lines, 0 empty source slots, and 2 total records (0 ready for review, 2 unresolved).
+- **File Path**: `system/exedir/rensyu.md`
+- **Total Lines**: 2
+- **Translated Lines**: 2
 
-| ID | Status | Translation | Notes |
-| :--- | :--- | :--- | :--- |
-| `00002110:6a9f8972272a` | unresolved | Practice Match |  |
-| `0000211c:8eea2155c359` | unresolved | Match |  |
+| ID | Context | Japanese | Translation | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| `00002110:6a9f8972272a` | Display | 練習試合 | Practice Match |  |
+| `0000211c:8eea2155c359` | Display | 試合中 | Match |  |
