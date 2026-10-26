@@ -1,10 +1,6 @@
-# Dialogue: Walking Home After School (`CDROM/SERIFU/GEKO.BIN`)
+# Dialogue, Walking Home After School (`CDROM/SERIFU/GEKO.BIN`)
 
-- **File Path**: `dialogue/serifu/geko.md`
-- **Total Lines**: 1105
-- **Translated Lines**: 1011
-- **Ready for Review**: 1011
-- **Unresolved**: 94
+File `dialogue/serifu/geko.md` contains 1011 translated lines, 94 empty source slots, and 1105 total records (1011 ready for review, 94 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Extended Date Outings (`DATE2`)
+# C code strings, Extended Date Outings (`DATE2`)
 
-- **File Path**: `system/c_strings/date2.md`
-- **Total Lines**: 17
-- **Translated Lines**: 17
-- **Ready for Review**: 6
-- **Unresolved**: 11
+File `system/c_strings/date2.md` contains 17 translated lines, 0 empty source slots, and 17 total records (6 ready for review, 11 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

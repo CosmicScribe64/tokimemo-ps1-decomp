@@ -1,10 +1,6 @@
-# Dialogue: Event Kg — Kagami Mira (`CDROM/SERIFU/EVENT_KG.BIN`)
+# Dialogue, Event Kg, Kagami Mira (`CDROM/SERIFU/EVENT_KG.BIN`)
 
-- **File Path**: `dialogue/serifu/event_kg.md`
-- **Total Lines**: 116
-- **Translated Lines**: 116
-- **Ready for Review**: 116
-- **Unresolved**: 0
+File `dialogue/serifu/event_kg.md` contains 116 translated lines, 0 empty source slots, and 116 total records (116 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

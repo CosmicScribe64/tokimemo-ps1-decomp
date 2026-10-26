@@ -1,10 +1,6 @@
-# Test Dialogue: Asahina Yuko (`CDROM/SPEAKTST/TEST_AS.BIN`)
+# Test dialogue, Asahina Yuko (`CDROM/SPEAKTST/TEST_AS.BIN`)
 
-- **File Path**: `test_dialogue/test_as.md`
-- **Total Lines**: 1110
-- **Translated Lines**: 1083
-- **Ready for Review**: 0
-- **Unresolved**: 1110
+File `test_dialogue/test_as.md` contains 1083 translated lines, 27 empty source slots, and 1110 total records (0 ready for review, 1110 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

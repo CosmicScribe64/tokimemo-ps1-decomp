@@ -1,10 +1,6 @@
-# Dialogue: Girl Birthdays (`CDROM/SERIFU/G_BIRTH.BIN`)
+# Dialogue, Girl Birthdays (`CDROM/SERIFU/G_BIRTH.BIN`)
 
-- **File Path**: `dialogue/serifu/g_birth.md`
-- **Total Lines**: 584
-- **Translated Lines**: 582
-- **Ready for Review**: 582
-- **Unresolved**: 2
+File `dialogue/serifu/g_birth.md` contains 582 translated lines, 2 empty source slots, and 584 total records (582 ready for review, 2 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

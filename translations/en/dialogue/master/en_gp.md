@@ -1,10 +1,6 @@
-# Dialogue: En Gp (`CDROM/MASTER/EN_GP.BIN`)
+# Dialogue, En Gp (`CDROM/MASTER/EN_GP.BIN`)
 
-- **File Path**: `dialogue/master/en_gp.md`
-- **Total Lines**: 81
-- **Translated Lines**: 81
-- **Ready for Review**: 81
-- **Unresolved**: 0
+File `dialogue/master/en_gp.md` contains 81 translated lines, 0 empty source slots, and 81 total records (81 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

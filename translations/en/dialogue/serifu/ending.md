@@ -1,10 +1,6 @@
-# Dialogue: Ending Sequences (`CDROM/SERIFU/ENDING.BIN`)
+# Dialogue, Ending Sequences (`CDROM/SERIFU/ENDING.BIN`)
 
-- **File Path**: `dialogue/serifu/ending.md`
-- **Total Lines**: 410
-- **Translated Lines**: 410
-- **Ready for Review**: 410
-- **Unresolved**: 0
+File `dialogue/serifu/ending.md` contains 410 translated lines, 0 empty source slots, and 410 total records (410 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

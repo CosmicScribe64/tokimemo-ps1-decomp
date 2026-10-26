@@ -1,10 +1,6 @@
-# Dialogue: Kt S63 — Katagiri Ayako (`CDROM/BUNKA/KT_S63.BIN`)
+# Dialogue, Kt S63, Katagiri Ayako (`CDROM/BUNKA/KT_S63.BIN`)
 
-- **File Path**: `dialogue/bunka/kt_s63.md`
-- **Total Lines**: 386
-- **Translated Lines**: 386
-- **Ready for Review**: 386
-- **Unresolved**: 0
+File `dialogue/bunka/kt_s63.md` contains 386 translated lines, 0 empty source slots, and 386 total records (386 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

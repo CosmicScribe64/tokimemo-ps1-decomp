@@ -1,76 +1,61 @@
-# Translation Contributing Guide
+# Translation contributing guide
 
-Thank you for contributing to the Tokimeki Memorial English translation project! This guide explains how translation files are structured, how to edit them directly on GitHub or locally, and how to maintain protected formatting tokens.
+This guide explains how the Markdown tables in `translations/en/` map to the canonical JSONL files and how to edit lines without breaking control tokens.
 
----
+## Directory layout
 
-## 1. Directory Structure
+- `dialogue/bunka/` contains Cultural Festival event scripts (`CDROM/BUNKA/*.BIN`).
+- `dialogue/serifu/` contains date, holiday, school trip, and story scripts (`CDROM/SERIFU/*.BIN`).
+- `dialogue/master/` contains master event scripts (`CDROM/MASTER/*.BIN`).
+- `test_dialogue/` contains voice and dialogue test scripts (`CDROM/SPEAKTST/*.BIN`).
+- `system/exedir/` contains overlay strings for phone calls (`tel.md`), options (`option.md`), the RPG battle minigame (`rpg_bat.md`), and name entry (`name_ent.md`).
+- `system/c_strings/` contains strings referenced from decompiled C code.
+- `system/main_exe/` contains strings from `SLPM_86.053`.
+- `system/tables/` and `system/dictionaries/` contain system names, gift lists, date locations, and profile labels.
+- `supplemental/` contains sports festival dialogue, karaoke lyrics, and ending credits.
+- `graphics/` contains the target-only catalog of UI, calendar, exam, and sprite text.
 
-The translations are organized into intuitive directories under `translations/en/`:
+Canonical distribution files (`returned-v3.jsonl`, `supplemental.jsonl`, and `manifest.json`) live at the root of `translations/en/`.
 
-- `dialogue/bunka/` — Cultural Festival event dialogues (`CDROM/BUNKA/*.BIN`)
-- `dialogue/serifu/` — Main date, holiday, school trip, and story dialogues (`CDROM/SERIFU/*.BIN`)
-- `dialogue/master/` — Master system dialogues (`CDROM/MASTER/*.BIN`)
-- `test_dialogue/` — Character test voice lines and dialogue scripts (`CDROM/SPEAKTST/*.BIN`)
-- `system/exedir/` — Phone calls (`tel.md`), options (`option.md`), battle minigame (`rpg_bat.md`), name entry (`name_ent.md`)
-- `system/c_strings/` — Decompiled C source strings and game logic messages
-- `system/main_exe/` — Executable strings from `SLPM_86.053`
-- `system/tables/` & `dictionaries/` — System names, gift lists, locations, and profile displays
-- `supplemental/` — Supplemental sports festival dialogue, karaoke lyrics, and ending credits
-- `graphics/` — Target-only catalog of UI, calendar, exam, and sprite image text
+## Editing a file
 
-Canonical distribution files (`returned-v3.jsonl`, `supplemental.jsonl`, and `manifest.json`) are preserved at the root of `translations/en/`.
+1. Open the target Markdown file (for example, [`dialogue/serifu/date_sa.md`](dialogue/serifu/date_sa.md)).
+2. Edit the `Translation` column for the row ID you want to revise.
+3. Update the `Status` column to `ready` when the line has been reviewed.
+4. Run `tools/translation_tree.py validate` and `tools/translation_tree.py build` before opening a pull request.
 
----
+## Protected tokens and table formatting
 
-## 2. How to Edit on GitHub
+The game engine uses control tokens inside double brackets for line breaks, name substitutions, and string formatting:
 
-1. Navigate to the file you want to edit (e.g. [`dialogue/serifu/date_sa.md`](dialogue/serifu/date_sa.md)).
-2. Click the **Pencil icon** (Edit this file) in the top-right corner of the file viewer.
-3. Locate the line you wish to translate or polish.
-4. Edit the **Translation** column.
-5. Set the **Status** column to `ready` or your reviewer tag.
-6. Scroll down, add a short commit description (e.g., `Polish Saki date dialogue lines`), and open a Pull Request!
-
----
-
-## 3. Formatting Rules & Protected Tokens
-
-### Protected Control Tokens
-The game engine requires specific control tokens for text rendering and formatting. These are marked with double brackets:
-
-- `[[T001:row]]` — Row line break in dialogue textboxes.
-- `[[T001:sub:player_family]]` — Runtime substitution for the player's last name.
-- `[[T001:sub:current_girl_short_name]]` — Runtime substitution for the girl's given name.
-- `[[T001:format_directive]]` / `[[T002:line_feed]]` — C sprintf format directives and newlines.
+- `[[T001:row]]` inserts a line break inside a dialogue textbox.
+- `[[T001:sub:player_family]]` substitutes the player's family name at runtime.
+- `[[T001:sub:current_girl_short_name]]` substitutes the heroine's given name at runtime.
+- `[[T001:format_directive]]` and `[[T002:line_feed]]` represent C `sprintf` directives and newlines.
 
 > [!IMPORTANT]
-> **Always preserve protected tokens** (`[[T...]]`) in your translation. You can adjust the English words before, between, or after them, but do not delete or rename the tokens!
+> Keep every `[[T...]]` token in the line. You may move words around a token, but do not delete or rename the token itself.
 
-### Pipe Characters in Tables
-Markdown tables use `|` to separate columns. If your translation text needs a pipe character, escape it as `\|`.
+### Pipe characters in tables
 
-### Empty Slots
-Unused dictionary slots are marked `_(empty slot)_`. Leave them unchanged unless providing a translation for that specific slot.
+Markdown tables use `|` as a column separator. Escape literal pipe characters inside a cell as `\|`.
 
----
+### Empty source slots
 
-## 4. Copyright Discipline
+Blank binary slots with no Japanese source text appear as `_(empty slot)_` with the note `Empty source slot (no Japanese text).` Leave them as `_(empty slot)_` so slot indices match the disc binary.
 
-In accordance with repository policies:
-- **Never paste Japanese source text** into files in `translations/en/`.
-- Only English target translations, stable IDs, notes, and layout instructions may be committed.
+## Copyright rules
 
----
+Do not commit Japanese source text to `translations/en/`. Commit only English target text, stable IDs, translator notes, and layout metadata.
 
-## 5. Building & Validating Locally
+## Local validation and build
 
-Run validation and build commands using the project Docker container:
+Run validation and rebuild commands in Docker:
 
 ```bash
-# Validate zero Japanese characters and protected tokens
+# Check for accidental Japanese characters and mismatched control tokens
 docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 tools/translation_tree.py validate
 
-# Reconstruct canonical JSONL files
+# Rebuild returned-v3.jsonl and supplemental.jsonl from Markdown edits
 docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 tools/translation_tree.py build
 ```

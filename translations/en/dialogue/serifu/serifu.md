@@ -1,10 +1,6 @@
-# Dialogue: Main Story Dialogue (`CDROM/SERIFU/SERIFU.BIN`)
+# Dialogue, Main Story Dialogue (`CDROM/SERIFU/SERIFU.BIN`)
 
-- **File Path**: `dialogue/serifu/serifu.md`
-- **Total Lines**: 48
-- **Translated Lines**: 48
-- **Ready for Review**: 48
-- **Unresolved**: 0
+File `dialogue/serifu/serifu.md` contains 48 translated lines, 0 empty source slots, and 48 total records (48 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

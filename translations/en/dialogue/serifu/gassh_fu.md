@@ -1,10 +1,6 @@
-# Dialogue: Club Training Camp (Shiori) — Fujisaki Shiori (`CDROM/SERIFU/GASSH_FU.BIN`)
+# Dialogue, Club Training Camp (Shiori), Fujisaki Shiori (`CDROM/SERIFU/GASSH_FU.BIN`)
 
-- **File Path**: `dialogue/serifu/gassh_fu.md`
-- **Total Lines**: 1207
-- **Translated Lines**: 1207
-- **Ready for Review**: 1207
-- **Unresolved**: 0
+File `dialogue/serifu/gassh_fu.md` contains 1207 translated lines, 0 empty source slots, and 1207 total records (1207 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

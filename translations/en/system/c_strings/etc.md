@@ -1,10 +1,6 @@
-# C Code Strings: General System & Menu Overlays (`ETC`)
+# C code strings, General System & Menu Overlays (`ETC`)
 
-- **File Path**: `system/c_strings/etc.md`
-- **Total Lines**: 124
-- **Translated Lines**: 124
-- **Ready for Review**: 117
-- **Unresolved**: 7
+File `system/c_strings/etc.md` contains 124 translated lines, 0 empty source slots, and 124 total records (117 ready for review, 7 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

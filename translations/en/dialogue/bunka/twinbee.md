@@ -1,10 +1,6 @@
-# Dialogue: Twinbee (`CDROM/BUNKA/TWINBEE.BIN`)
+# Dialogue, Twinbee (`CDROM/BUNKA/TWINBEE.BIN`)
 
-- **File Path**: `dialogue/bunka/twinbee.md`
-- **Total Lines**: 9
-- **Translated Lines**: 9
-- **Ready for Review**: 9
-- **Unresolved**: 0
+File `dialogue/bunka/twinbee.md` contains 9 translated lines, 0 empty source slots, and 9 total records (9 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

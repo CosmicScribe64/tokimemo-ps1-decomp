@@ -1,10 +1,6 @@
-# Overlay Strings: Cultural Festival System (`CDROM/EXEDIR/BUNKASAI.EXN`)
+# Overlay strings, Cultural Festival System (`CDROM/EXEDIR/BUNKASAI.EXN`)
 
-- **File Path**: `system/exedir/bunkasai.md`
-- **Total Lines**: 47
-- **Translated Lines**: 47
-- **Ready for Review**: 0
-- **Unresolved**: 47
+File `system/exedir/bunkasai.md` contains 47 translated lines, 0 empty source slots, and 47 total records (0 ready for review, 47 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

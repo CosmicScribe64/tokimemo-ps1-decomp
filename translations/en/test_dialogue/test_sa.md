@@ -1,10 +1,6 @@
-# Test Dialogue: Saotome Yumi (`CDROM/SPEAKTST/TEST_SA.BIN`)
+# Test dialogue, Saotome Yumi (`CDROM/SPEAKTST/TEST_SA.BIN`)
 
-- **File Path**: `test_dialogue/test_sa.md`
-- **Total Lines**: 1157
-- **Translated Lines**: 1138
-- **Ready for Review**: 0
-- **Unresolved**: 1157
+File `test_dialogue/test_sa.md` contains 1138 translated lines, 19 empty source slots, and 1157 total records (0 ready for review, 1157 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

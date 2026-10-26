@@ -1,10 +1,6 @@
-# Overlay Strings: Sick Visit (`CDROM/EXEDIR/OMIMAI.EXN`)
+# Overlay strings, Sick Visit (`CDROM/EXEDIR/OMIMAI.EXN`)
 
-- **File Path**: `system/exedir/omimai.md`
-- **Total Lines**: 16
-- **Translated Lines**: 16
-- **Ready for Review**: 0
-- **Unresolved**: 16
+File `system/exedir/omimai.md` contains 16 translated lines, 0 empty source slots, and 16 total records (0 ready for review, 16 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

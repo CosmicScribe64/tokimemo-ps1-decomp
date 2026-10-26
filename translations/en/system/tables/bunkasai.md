@@ -1,10 +1,6 @@
-# Overlay Table Data: Cultural Festival System (`CDROM/EXEDIR/BUNKASAI.EXN`)
+# Overlay table data, Cultural Festival System (`CDROM/EXEDIR/BUNKASAI.EXN`)
 
-- **File Path**: `system/tables/bunkasai.md`
-- **Total Lines**: 9
-- **Translated Lines**: 9
-- **Ready for Review**: 0
-- **Unresolved**: 9
+File `system/tables/bunkasai.md` contains 9 translated lines, 0 empty source slots, and 9 total records (0 ready for review, 9 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

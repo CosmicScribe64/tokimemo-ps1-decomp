@@ -1,10 +1,6 @@
-# Dialogue: Mi S6S — Mikihara Megumi (`CDROM/BUNKA/MI_S6S.BIN`)
+# Dialogue, Mi S6S, Mikihara Megumi (`CDROM/BUNKA/MI_S6S.BIN`)
 
-- **File Path**: `dialogue/bunka/mi_s6s.md`
-- **Total Lines**: 27
-- **Translated Lines**: 27
-- **Ready for Review**: 27
-- **Unresolved**: 0
+File `dialogue/bunka/mi_s6s.md` contains 27 translated lines, 0 empty source slots, and 27 total records (27 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

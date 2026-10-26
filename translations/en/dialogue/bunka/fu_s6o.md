@@ -1,10 +1,6 @@
-# Dialogue: Fu S6O — Fujisaki Shiori (`CDROM/BUNKA/FU_S6O.BIN`)
+# Dialogue, Fu S6O, Fujisaki Shiori (`CDROM/BUNKA/FU_S6O.BIN`)
 
-- **File Path**: `dialogue/bunka/fu_s6o.md`
-- **Total Lines**: 601
-- **Translated Lines**: 601
-- **Ready for Review**: 601
-- **Unresolved**: 0
+File `dialogue/bunka/fu_s6o.md` contains 601 translated lines, 0 empty source slots, and 601 total records (601 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: New Year Shrine Visit (`CDROM/SERIFU/SHOGATU.BIN`)
+# Dialogue, New Year Shrine Visit (`CDROM/SERIFU/SHOGATU.BIN`)
 
-- **File Path**: `dialogue/serifu/shogatu.md`
-- **Total Lines**: 1491
-- **Translated Lines**: 1483
-- **Ready for Review**: 1483
-- **Unresolved**: 8
+File `dialogue/serifu/shogatu.md` contains 1483 translated lines, 8 empty source slots, and 1491 total records (1483 ready for review, 8 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

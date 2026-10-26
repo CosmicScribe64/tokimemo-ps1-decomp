@@ -1,10 +1,6 @@
-# C Code Strings: Telephone Calls & Conversations (`TEL`)
+# C code strings, Telephone Calls & Conversations (`TEL`)
 
-- **File Path**: `system/c_strings/tel.md`
-- **Total Lines**: 222
-- **Translated Lines**: 222
-- **Ready for Review**: 146
-- **Unresolved**: 76
+File `system/c_strings/tel.md` contains 222 translated lines, 0 empty source slots, and 222 total records (146 ready for review, 76 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

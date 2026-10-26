@@ -1,10 +1,6 @@
-# Supplemental Text: Sports Matches & Commentary (`CDROM/SHIAI/SIAI_TX.BIN`)
+# Supplemental text, Sports Matches & Commentary (`CDROM/SHIAI/SIAI_TX.BIN`)
 
-- **File Path**: `supplemental/siai_tx.md`
-- **Total Lines**: 193
-- **Translated Lines**: 193
-- **Ready for Review**: 193
-- **Unresolved**: 0
+File `supplemental/siai_tx.md` contains 193 translated lines, 0 empty source slots, and 193 total records (193 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

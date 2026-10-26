@@ -1,10 +1,6 @@
-# Overlay Strings: Name & Birthday Entry (`CDROM/EXEDIR/NAME_ENT.EXN`)
+# Overlay strings, Name & Birthday Entry (`CDROM/EXEDIR/NAME_ENT.EXN`)
 
-- **File Path**: `system/exedir/name_ent.md`
-- **Total Lines**: 393
-- **Translated Lines**: 393
-- **Ready for Review**: 124
-- **Unresolved**: 269
+File `system/exedir/name_ent.md` contains 393 translated lines, 0 empty source slots, and 393 total records (124 ready for review, 269 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: G Con (`CDROM/MASTER/G_CON.BIN`)
+# Dialogue, G Con (`CDROM/MASTER/G_CON.BIN`)
 
-- **File Path**: `dialogue/master/g_con.md`
-- **Total Lines**: 77
-- **Translated Lines**: 77
-- **Ready for Review**: 77
-- **Unresolved**: 0
+File `dialogue/master/g_con.md` contains 77 translated lines, 0 empty source slots, and 77 total records (77 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

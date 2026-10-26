@@ -183,7 +183,7 @@ def route_id(id_str: str, is_supplemental: bool = False) -> Tuple[str, str, str]
 
         title_stem = stem.upper()
         desc = ARCHIVE_TITLES.get(title_stem, title_stem.replace("_", " ").title())
-        title = f"Supplemental Text: {desc} (`{path}`)"
+        title = f"Supplemental text, {desc} (`{path}`)"
         return fname, local_id, title
 
     parts = id_str.split(":")
@@ -207,9 +207,9 @@ def route_id(id_str: str, is_supplemental: bool = False) -> Tuple[str, str, str]
 
         desc = ARCHIVE_TITLES.get(archive_name, archive_name.replace("_", " ").title())
         if char_match and char_match not in desc:
-            title = f"Dialogue: {desc} — {char_match} (`{parts[1]}`)"
+            title = f"Dialogue, {desc}, {char_match} (`{parts[1]}`)"
         else:
-            title = f"Dialogue: {desc} (`{parts[1]}`)"
+            title = f"Dialogue, {desc} (`{parts[1]}`)"
         return fname, local_id, title
 
     if p0 == "speaktst-layout":
@@ -220,7 +220,7 @@ def route_id(id_str: str, is_supplemental: bool = False) -> Tuple[str, str, str]
 
         code = archive_name.replace("TEST_", "")
         cname = CHAR_NAMES.get(code, code)
-        title = f"Test Dialogue: {cname} (`{parts[1]}`)"
+        title = f"Test dialogue, {cname} (`{parts[1]}`)"
         return fname, local_id, title
 
     if p0 == "c":
@@ -228,7 +228,7 @@ def route_id(id_str: str, is_supplemental: bool = False) -> Tuple[str, str, str]
         fname = f"system/c_strings/{mod}.md"
         local_id = ":".join(parts[2:])
         desc = ARCHIVE_TITLES.get(parts[1], parts[1].replace("_", " ").title())
-        title = f"C Code Strings: {desc} (`{parts[1]}`)"
+        title = f"C code strings, {desc} (`{parts[1]}`)"
         return fname, local_id, title
 
     if p0.startswith("CDROM/EXEDIR/"):
@@ -236,13 +236,13 @@ def route_id(id_str: str, is_supplemental: bool = False) -> Tuple[str, str, str]
         fname = f"system/exedir/{stem.lower()}.md"
         local_id = ":".join(parts[1:])
         desc = ARCHIVE_TITLES.get(stem, stem.replace("_", " ").title())
-        title = f"Overlay Strings: {desc} (`{p0}`)"
+        title = f"Overlay strings, {desc} (`{p0}`)"
         return fname, local_id, title
 
     if p0 == "SLPM_86.053":
         fname = "system/main_exe/slpm_86_053.md"
         local_id = ":".join(parts[1:])
-        title = "Main Executable Strings (`SLPM_86.053`)"
+        title = "Main executable strings (`SLPM_86.053`)"
         return fname, local_id, title
 
     if p0 == "overlay-table":
@@ -250,25 +250,25 @@ def route_id(id_str: str, is_supplemental: bool = False) -> Tuple[str, str, str]
         fname = f"system/tables/{stem.lower()}.md"
         local_id = ":".join(parts[2:])
         desc = ARCHIVE_TITLES.get(stem, stem.replace("_", " ").title())
-        title = f"Overlay Table Data: {desc} (`{parts[1]}`)"
+        title = f"Overlay table data, {desc} (`{parts[1]}`)"
         return fname, local_id, title
 
     if p0 == "dictionary":
         stem = parts[1].split("/")[-1].replace(".", "_")
         fname = f"system/dictionaries/{stem.lower()}.md"
         local_id = ":".join(parts[2:])
-        title = f"Dictionary Tables: `{parts[1]}`"
+        title = f"Dictionary tables (`{parts[1]}`)"
         return fname, local_id, title
 
     if p0 == "bunka-sd-view":
         fname = "system/views/bunka_sd_view.md"
         local_id = ":".join(parts[2:])
-        title = "Cultural Festival SD Chibi View Events (`BUNKA_SD.EXN`)"
+        title = "Cultural festival SD chibi view events (`BUNKA_SD.EXN`)"
         return fname, local_id, title
 
     fname = "system/misc.md"
     local_id = id_str
-    title = "Miscellaneous Runtime & Buffer Strings"
+    title = "Miscellaneous runtime and buffer strings"
     return fname, local_id, title
 
 
@@ -363,22 +363,19 @@ def split_tree(
         fullpath = os.path.join(out_dir, relpath)
         os.makedirs(os.path.dirname(fullpath), exist_ok=True)
 
-        title = file_titles.get(relpath, "Translation File")
+        title = file_titles.get(relpath, "Translation file")
         total_rows = len(rows)
         ready_rows = sum(
             1 for r in rows if r[1] in ("ready_for_review", "supplemental_ready")
         )
         unresolved_rows = total_rows - ready_rows
         translated_rows = sum(1 for r in rows if r[2] is not None)
+        empty_slots = total_rows - translated_rows
 
         md_lines = [
             f"# {title}",
             "",
-            f"- **File Path**: `{relpath}`",
-            f"- **Total Lines**: {total_rows}",
-            f"- **Translated Lines**: {translated_rows}",
-            f"- **Ready for Review**: {ready_rows}",
-            f"- **Unresolved**: {unresolved_rows}",
+            f"File `{relpath}` contains {translated_rows} translated lines, {empty_slots} empty source slots, and {total_rows} total records ({ready_rows} ready for review, {unresolved_rows} unresolved).",
             "",
             "| ID | Status | Translation | Notes |",
             "| :--- | :--- | :--- | :--- |",
@@ -766,8 +763,8 @@ def generate_documentation(
     file_titles: Dict[str, str],
 ):
     """Generate README.md, CONTRIBUTING.md, and INDEX.md."""
-    cat_stats = defaultdict(lambda: {"total": 0, "translated": 0, "ready": 0, "files": 0})
-    char_stats = defaultdict(lambda: {"total": 0, "translated": 0, "ready": 0, "files": 0})
+    cat_stats = defaultdict(lambda: {"total": 0, "translated": 0, "empty": 0, "ready": 0, "files": 0})
+    char_stats = defaultdict(lambda: {"total": 0, "translated": 0, "empty": 0, "ready": 0, "files": 0})
 
     for relpath, rows in files_data.items():
         parts = relpath.split("/")
@@ -778,10 +775,12 @@ def generate_documentation(
 
         total = len(rows)
         translated = sum(1 for r in rows if r[2] is not None)
+        empty = total - translated
         ready = sum(1 for r in rows if r[1] in ("ready_for_review", "supplemental_ready"))
 
         cat_stats[cat]["total"] += total
         cat_stats[cat]["translated"] += translated
+        cat_stats[cat]["empty"] += empty
         cat_stats[cat]["ready"] += ready
         cat_stats[cat]["files"] += 1
 
@@ -790,158 +789,129 @@ def generate_documentation(
             if cname in title:
                 char_stats[cname]["total"] += total
                 char_stats[cname]["translated"] += translated
+                char_stats[cname]["empty"] += empty
                 char_stats[cname]["ready"] += ready
                 char_stats[cname]["files"] += 1
                 break
 
     # 1. README.md
-    readme_content = f"""# Tokimeki Memorial (PS1) — English Translation Corpus
+    readme_content = """# Tokimeki Memorial (PS1) English translation
 
-Welcome to the contributor-friendly translation workspace for the matching decompilation of **Tokimeki Memorial: Forever with You** (PlayStation 1, `SLPM-86053`).
+This directory holds the target-only English translation for *Tokimeki Memorial* (`SLPM-86053`, PlayStation the Best), split into 184 Markdown tables by disc archive, scene, and executable module.
 
-This directory contains the entire English translation split into intuitive, human-editable, GitHub-browsable Markdown files organized by game disc archive, scene, and system module.
+Every record with Japanese source text is translated (100%), covering all 54,786 translatable lines in `returned-v3.jsonl` and all 508 lines in `supplemental.jsonl`. The remaining 617 records in `returned-v3.jsonl` are empty source slots on the PS1 disc (`Empty source slot (no Japanese text).`) kept so table indices match the binary layout.
 
-- **Total Spoken & System Lines**: 55,403 lines
-- **Supplemental Disc Text**: 508 lines
-- **Target-Only Image Catalog**: Complete HUD, menus, magazines, credits & cards
-- **Format**: Clean GitHub Markdown tables with stable IDs and protected control tokens
-- **Lossless Build**: Reproduces canonical JSONL distribution byte-for-byte
+## Guides and indexes
 
----
+- [Contributing guide (CONTRIBUTING.md)](CONTRIBUTING.md) covers editing tables, control tokens (`[[T001:row]]`), and review statuses.
+- [Directory index (INDEX.md)](INDEX.md) lists all 184 Markdown files with line and empty-slot counts.
+- [Image text catalog (graphics/image_text_catalog.md)](graphics/image_text_catalog.md) lists translated UI, HUD, menu, magazine, credit, and card graphics.
 
-## Quick Links
+## Translation counts by category
 
-- [**Contributing Guide (CONTRIBUTING.md)**](CONTRIBUTING.md) — How to edit lines on GitHub or locally, control token syntax (`[[T001:row]]`), and review statuses.
-- [**Master Directory Index (INDEX.md)**](INDEX.md) — Complete clickable directory of all 184 translation files with line counts and status.
-- [**Image Text Catalog (graphics/image_text_catalog.md)**](graphics/image_text_catalog.md) — Comprehensive target-only catalog of all UI and graphic text.
+All translatable lines in every category have English text. Categories where `Total records` exceeds `Translated lines` contain blank source slots in the original binary tables (`_(empty slot)_`).
 
----
-
-## Translation Progress by Category
-
-| Category | Files | Total Lines | Translated | % Done | Ready for Review |
-| :--- | :---: | :---: | :---: | :---: | :---: |
+| Category | Files | Translatable lines | Translated lines | Empty source slots | Total records | Ready for review |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 """
     for cat in sorted(cat_stats.keys()):
         s = cat_stats[cat]
-        pct = (s["translated"] / s["total"] * 100) if s["total"] else 0
-        readme_content += f"| `{cat}` | {s['files']} | {s['total']:,} | {s['translated']:,} | {pct:.1f}% | {s['ready']:,} |\n"
+        readme_content += f"| `{cat}` | {s['files']} | {s['translated']:,} | {s['translated']:,} | {s['empty']:,} | {s['total']:,} | {s['ready']:,} |\n"
 
-    readme_content += f"""
----
+    readme_content += """
+## Character dialogue counts
 
-## Character Dialogue Breakdown
-
-| Heroine / Character | Files | Total Lines | Translated | Ready for Review |
-| :--- | :---: | :---: | :---: | :---: |
+| Character | Files | Translatable lines | Translated lines | Empty source slots | Total records | Ready for review |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 """
     for cname in sorted(char_stats.keys()):
         s = char_stats[cname]
-        readme_content += f"| **{cname}** | {s['files']} | {s['total']:,} | {s['translated']:,} | {s['ready']:,} |\n"
+        readme_content += f"| {cname} | {s['files']} | {s['translated']:,} | {s['translated']:,} | {s['empty']:,} | {s['total']:,} | {s['ready']:,} |\n"
 
     readme_content += """
----
+## Validation and build
 
-## Tooling & Verification
-
-The contributor tree is managed and verified by `tools/translation_tree.py`:
+Use `tools/translation_tree.py` inside Docker to check edits and rebuild the canonical JSONL files:
 
 ```bash
-# Validate zero Japanese source text and protected token integrity
+# Check that no Japanese source text was added and all protected tokens match
 docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 tools/translation_tree.py validate
 
-# Reconstruct canonical JSONL files from markdown edits
+# Rebuild returned-v3.jsonl and supplemental.jsonl from the Markdown tables
 docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 tools/translation_tree.py build
 ```
 
----
+## Provenance and canonical files
 
-## Provenance & Canonical JSONL Files
+- `returned-v3.jsonl` matches the validated translation return byte-for-byte: 55,403 stable IDs, 54,786 translated targets, and 617 empty source slots. It stores target text, translator notes, protected token markers, and source hashes without Japanese source text.
+- `supplemental.jsonl` stores 508 translated supplemental records with IDs, context, target text, notes, review status, and protected markers. Extracted `japanese` and `copy_template` fields are excluded. These rows still need original-byte provenance and coverage review.
+- `manifest.json` pins the SHA-256 hashes of both files and their source inputs. Keep protected control markers and stable IDs intact when editing. There is no original textbox length cap.
 
-- `returned-v3.jsonl` is byte-identical to the independently validated return: 55,403 stable IDs, 54,786 nonempty targets and 617 empty targets. It contains targets, notes, markers and source identity; no extracted Japanese source-text field.
-- `supplemental.jsonl` preserves all 508 supplemental rows' IDs, context, targets, notes, review status and markers. The extracted `japanese` and `copy_template` fields are excluded. These rows still need original-byte provenance and coverage review.
-- `manifest.json` pins both files and their original input identity. Protected control markers and stable IDs must remain intact. There is no original textbox length cap.
-
-Source worktree: `/Users/lila/Documents/Projects/tokimemo-wt/translation`. Original game data must be supplied separately. Runtime language selection and translated image creation remain later integration work.
+Source worktree: `/Users/lila/Documents/Projects/tokimemo-wt/translation`. Original game data must be supplied separately. Runtime language selection and translated image assets remain later work.
 """
     with open(os.path.join(out_dir, "README.md"), "w", encoding="utf-8") as f:
         f.write(readme_content)
 
     # 2. CONTRIBUTING.md
-    contributing_content = """# Translation Contributing Guide
+    contributing_content = """# Translation contributing guide
 
-Thank you for contributing to the Tokimeki Memorial English translation project! This guide explains how translation files are structured, how to edit them directly on GitHub or locally, and how to maintain protected formatting tokens.
+This guide explains how the Markdown tables in `translations/en/` map to the canonical JSONL files and how to edit lines without breaking control tokens.
 
----
+## Directory layout
 
-## 1. Directory Structure
+- `dialogue/bunka/` contains Cultural Festival event scripts (`CDROM/BUNKA/*.BIN`).
+- `dialogue/serifu/` contains date, holiday, school trip, and story scripts (`CDROM/SERIFU/*.BIN`).
+- `dialogue/master/` contains master event scripts (`CDROM/MASTER/*.BIN`).
+- `test_dialogue/` contains voice and dialogue test scripts (`CDROM/SPEAKTST/*.BIN`).
+- `system/exedir/` contains overlay strings for phone calls (`tel.md`), options (`option.md`), the RPG battle minigame (`rpg_bat.md`), and name entry (`name_ent.md`).
+- `system/c_strings/` contains strings referenced from decompiled C code.
+- `system/main_exe/` contains strings from `SLPM_86.053`.
+- `system/tables/` and `system/dictionaries/` contain system names, gift lists, date locations, and profile labels.
+- `supplemental/` contains sports festival dialogue, karaoke lyrics, and ending credits.
+- `graphics/` contains the target-only catalog of UI, calendar, exam, and sprite text.
 
-The translations are organized into intuitive directories under `translations/en/`:
+Canonical distribution files (`returned-v3.jsonl`, `supplemental.jsonl`, and `manifest.json`) live at the root of `translations/en/`.
 
-- `dialogue/bunka/` — Cultural Festival event dialogues (`CDROM/BUNKA/*.BIN`)
-- `dialogue/serifu/` — Main date, holiday, school trip, and story dialogues (`CDROM/SERIFU/*.BIN`)
-- `dialogue/master/` — Master system dialogues (`CDROM/MASTER/*.BIN`)
-- `test_dialogue/` — Character test voice lines and dialogue scripts (`CDROM/SPEAKTST/*.BIN`)
-- `system/exedir/` — Phone calls (`tel.md`), options (`option.md`), battle minigame (`rpg_bat.md`), name entry (`name_ent.md`)
-- `system/c_strings/` — Decompiled C source strings and game logic messages
-- `system/main_exe/` — Executable strings from `SLPM_86.053`
-- `system/tables/` & `dictionaries/` — System names, gift lists, locations, and profile displays
-- `supplemental/` — Supplemental sports festival dialogue, karaoke lyrics, and ending credits
-- `graphics/` — Target-only catalog of UI, calendar, exam, and sprite image text
+## Editing a file
 
-Canonical distribution files (`returned-v3.jsonl`, `supplemental.jsonl`, and `manifest.json`) are preserved at the root of `translations/en/`.
+1. Open the target Markdown file (for example, [`dialogue/serifu/date_sa.md`](dialogue/serifu/date_sa.md)).
+2. Edit the `Translation` column for the row ID you want to revise.
+3. Update the `Status` column to `ready` when the line has been reviewed.
+4. Run `tools/translation_tree.py validate` and `tools/translation_tree.py build` before opening a pull request.
 
----
+## Protected tokens and table formatting
 
-## 2. How to Edit on GitHub
+The game engine uses control tokens inside double brackets for line breaks, name substitutions, and string formatting:
 
-1. Navigate to the file you want to edit (e.g. [`dialogue/serifu/date_sa.md`](dialogue/serifu/date_sa.md)).
-2. Click the **Pencil icon** (Edit this file) in the top-right corner of the file viewer.
-3. Locate the line you wish to translate or polish.
-4. Edit the **Translation** column.
-5. Set the **Status** column to `ready` or your reviewer tag.
-6. Scroll down, add a short commit description (e.g., `Polish Saki date dialogue lines`), and open a Pull Request!
-
----
-
-## 3. Formatting Rules & Protected Tokens
-
-### Protected Control Tokens
-The game engine requires specific control tokens for text rendering and formatting. These are marked with double brackets:
-
-- `[[T001:row]]` — Row line break in dialogue textboxes.
-- `[[T001:sub:player_family]]` — Runtime substitution for the player's last name.
-- `[[T001:sub:current_girl_short_name]]` — Runtime substitution for the girl's given name.
-- `[[T001:format_directive]]` / `[[T002:line_feed]]` — C sprintf format directives and newlines.
+- `[[T001:row]]` inserts a line break inside a dialogue textbox.
+- `[[T001:sub:player_family]]` substitutes the player's family name at runtime.
+- `[[T001:sub:current_girl_short_name]]` substitutes the heroine's given name at runtime.
+- `[[T001:format_directive]]` and `[[T002:line_feed]]` represent C `sprintf` directives and newlines.
 
 > [!IMPORTANT]
-> **Always preserve protected tokens** (`[[T...]]`) in your translation. You can adjust the English words before, between, or after them, but do not delete or rename the tokens!
+> Keep every `[[T...]]` token in the line. You may move words around a token, but do not delete or rename the token itself.
 
-### Pipe Characters in Tables
-Markdown tables use `|` to separate columns. If your translation text needs a pipe character, escape it as `\\|`.
+### Pipe characters in tables
 
-### Empty Slots
-Unused dictionary slots are marked `_(empty slot)_`. Leave them unchanged unless providing a translation for that specific slot.
+Markdown tables use `|` as a column separator. Escape literal pipe characters inside a cell as `\\|`.
 
----
+### Empty source slots
 
-## 4. Copyright Discipline
+Blank binary slots with no Japanese source text appear as `_(empty slot)_` with the note `Empty source slot (no Japanese text).` Leave them as `_(empty slot)_` so slot indices match the disc binary.
 
-In accordance with repository policies:
-- **Never paste Japanese source text** into files in `translations/en/`.
-- Only English target translations, stable IDs, notes, and layout instructions may be committed.
+## Copyright rules
 
----
+Do not commit Japanese source text to `translations/en/`. Commit only English target text, stable IDs, translator notes, and layout metadata.
 
-## 5. Building & Validating Locally
+## Local validation and build
 
-Run validation and build commands using the project Docker container:
+Run validation and rebuild commands in Docker:
 
 ```bash
-# Validate zero Japanese characters and protected tokens
+# Check for accidental Japanese characters and mismatched control tokens
 docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 tools/translation_tree.py validate
 
-# Reconstruct canonical JSONL files
+# Rebuild returned-v3.jsonl and supplemental.jsonl from Markdown edits
 docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 tools/translation_tree.py build
 ```
 """
@@ -949,20 +919,21 @@ docker run --rm -v $(pwd):/repo -w /repo tokimemo-decomp-arm64:latest python3 to
         f.write(contributing_content)
 
     # 3. INDEX.md
-    index_content = """# Translation File Directory Index
+    index_content = """# Translation file directory index
 
-Complete clickable index of all 184 translation files in the contributor tree.
+Index of all 184 Markdown files in `translations/en/`. All translatable lines have English translations; `Empty slots` counts blank records in the original binary that have no Japanese source text.
 
-| File Path | Description | Total Lines | Translated | Ready |
-| :--- | :--- | :---: | :---: | :---: |
+| File path | Description | Translated lines | Empty slots | Total records | Ready |
+| :--- | :--- | :---: | :---: | :---: | :---: |
 """
     for relpath in sorted(files_data.keys()):
         rows = files_data[relpath]
         title = file_titles.get(relpath, relpath)
         total = len(rows)
         translated = sum(1 for r in rows if r[2] is not None)
+        empty = total - translated
         ready = sum(1 for r in rows if r[1] in ("ready_for_review", "supplemental_ready"))
-        index_content += f"| [{relpath}]({relpath}) | {title} | {total:,} | {translated:,} | {ready:,} |\n"
+        index_content += f"| [{relpath}]({relpath}) | {title} | {translated:,} | {empty:,} | {total:,} | {ready:,} |\n"
 
     with open(os.path.join(out_dir, "INDEX.md"), "w", encoding="utf-8") as f:
         f.write(index_content)

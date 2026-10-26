@@ -1,10 +1,6 @@
-# Dialogue: School Trip to Kyoto (`CDROM/SERIFU/SHUGAKU.BIN`)
+# Dialogue, School Trip to Kyoto (`CDROM/SERIFU/SHUGAKU.BIN`)
 
-- **File Path**: `dialogue/serifu/shugaku.md`
-- **Total Lines**: 1236
-- **Translated Lines**: 1111
-- **Ready for Review**: 1111
-- **Unresolved**: 125
+File `dialogue/serifu/shugaku.md` contains 1111 translated lines, 125 empty source slots, and 1236 total records (1111 ready for review, 125 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

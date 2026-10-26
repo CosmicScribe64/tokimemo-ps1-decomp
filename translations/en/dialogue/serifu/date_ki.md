@@ -1,10 +1,6 @@
-# Dialogue: Date Ki — Kisaragi Mio (`CDROM/SERIFU/DATE_KI.BIN`)
+# Dialogue, Date Ki, Kisaragi Mio (`CDROM/SERIFU/DATE_KI.BIN`)
 
-- **File Path**: `dialogue/serifu/date_ki.md`
-- **Total Lines**: 500
-- **Translated Lines**: 492
-- **Ready for Review**: 492
-- **Unresolved**: 8
+File `dialogue/serifu/date_ki.md` contains 492 translated lines, 8 empty source slots, and 500 total records (492 ready for review, 8 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

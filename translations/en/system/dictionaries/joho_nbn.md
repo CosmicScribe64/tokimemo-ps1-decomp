@@ -1,10 +1,6 @@
-# Dictionary Tables: `CDROM/FUKUTEST/JOHO.NBN`
+# Dictionary tables (`CDROM/FUKUTEST/JOHO.NBN`)
 
-- **File Path**: `system/dictionaries/joho_nbn.md`
-- **Total Lines**: 137
-- **Translated Lines**: 137
-- **Ready for Review**: 137
-- **Unresolved**: 0
+File `system/dictionaries/joho_nbn.md` contains 137 translated lines, 0 empty source slots, and 137 total records (137 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

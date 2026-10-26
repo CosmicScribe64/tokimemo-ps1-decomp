@@ -1,10 +1,6 @@
-# Supplemental Text: Folk Dance Dialogue (`CDROM/TAIIKU/F_DANCE.BIN`)
+# Supplemental text, Folk Dance Dialogue (`CDROM/TAIIKU/F_DANCE.BIN`)
 
-- **File Path**: `supplemental/f_dance.md`
-- **Total Lines**: 43
-- **Translated Lines**: 43
-- **Ready for Review**: 43
-- **Unresolved**: 0
+File `supplemental/f_dance.md` contains 43 translated lines, 0 empty source slots, and 43 total records (43 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

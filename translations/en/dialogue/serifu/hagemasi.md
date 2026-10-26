@@ -1,10 +1,6 @@
-# Dialogue: Encouragement Scenes (`CDROM/SERIFU/HAGEMASI.BIN`)
+# Dialogue, Encouragement Scenes (`CDROM/SERIFU/HAGEMASI.BIN`)
 
-- **File Path**: `dialogue/serifu/hagemasi.md`
-- **Total Lines**: 173
-- **Translated Lines**: 173
-- **Ready for Review**: 173
-- **Unresolved**: 0
+File `dialogue/serifu/hagemasi.md` contains 173 translated lines, 0 empty source slots, and 173 total records (173 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

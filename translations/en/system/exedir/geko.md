@@ -1,10 +1,6 @@
-# Overlay Strings: Walking Home After School (`CDROM/EXEDIR/GEKO.EXN`)
+# Overlay strings, Walking Home After School (`CDROM/EXEDIR/GEKO.EXN`)
 
-- **File Path**: `system/exedir/geko.md`
-- **Total Lines**: 63
-- **Translated Lines**: 63
-- **Ready for Review**: 0
-- **Unresolved**: 63
+File `system/exedir/geko.md` contains 63 translated lines, 0 empty source slots, and 63 total records (0 ready for review, 63 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

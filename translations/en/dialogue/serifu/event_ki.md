@@ -1,10 +1,6 @@
-# Dialogue: Event Ki — Kisaragi Mio (`CDROM/SERIFU/EVENT_KI.BIN`)
+# Dialogue, Event Ki, Kisaragi Mio (`CDROM/SERIFU/EVENT_KI.BIN`)
 
-- **File Path**: `dialogue/serifu/event_ki.md`
-- **Total Lines**: 75
-- **Translated Lines**: 75
-- **Ready for Review**: 75
-- **Unresolved**: 0
+File `dialogue/serifu/event_ki.md` contains 75 translated lines, 0 empty source slots, and 75 total records (75 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

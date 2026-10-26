@@ -1,10 +1,6 @@
-# Overlay Table Data: Cultural Club Activities (`CDROM/EXEDIR/BUNKAKEN.EXN`)
+# Overlay table data, Cultural Club Activities (`CDROM/EXEDIR/BUNKAKEN.EXN`)
 
-- **File Path**: `system/tables/bunkaken.md`
-- **Total Lines**: 9
-- **Translated Lines**: 9
-- **Ready for Review**: 0
-- **Unresolved**: 9
+File `system/tables/bunkaken.md` contains 9 translated lines, 0 empty source slots, and 9 total records (0 ready for review, 9 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

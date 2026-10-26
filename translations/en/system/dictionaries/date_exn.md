@@ -1,10 +1,6 @@
-# Dictionary Tables: `CDROM/EXEDIR/DATE.EXN`
+# Dictionary tables (`CDROM/EXEDIR/DATE.EXN`)
 
-- **File Path**: `system/dictionaries/date_exn.md`
-- **Total Lines**: 121
-- **Translated Lines**: 114
-- **Ready for Review**: 114
-- **Unresolved**: 7
+File `system/dictionaries/date_exn.md` contains 114 translated lines, 7 empty source slots, and 121 total records (114 ready for review, 7 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

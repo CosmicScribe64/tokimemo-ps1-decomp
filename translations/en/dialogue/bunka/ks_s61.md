@@ -1,10 +1,6 @@
-# Dialogue: Ks S61 — Kisaragi Mio (`CDROM/BUNKA/KS_S61.BIN`)
+# Dialogue, Ks S61, Kisaragi Mio (`CDROM/BUNKA/KS_S61.BIN`)
 
-- **File Path**: `dialogue/bunka/ks_s61.md`
-- **Total Lines**: 489
-- **Translated Lines**: 489
-- **Ready for Review**: 489
-- **Unresolved**: 0
+File `dialogue/bunka/ks_s61.md` contains 489 translated lines, 0 empty source slots, and 489 total records (489 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

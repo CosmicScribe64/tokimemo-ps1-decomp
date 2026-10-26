@@ -1,10 +1,6 @@
-# Supplemental Text: Tai Tx (`CDROM/TAIIKU/TAI_TX.BIN`)
+# Supplemental text, Tai Tx (`CDROM/TAIIKU/TAI_TX.BIN`)
 
-- **File Path**: `supplemental/tai_tx.md`
-- **Total Lines**: 7
-- **Translated Lines**: 7
-- **Ready for Review**: 7
-- **Unresolved**: 0
+File `supplemental/tai_tx.md` contains 7 translated lines, 0 empty source slots, and 7 total records (7 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

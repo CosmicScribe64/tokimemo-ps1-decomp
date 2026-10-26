@@ -1,10 +1,6 @@
-# Dialogue: Date Ka — Katagiri Ayako (`CDROM/SERIFU/DATE_KA.BIN`)
+# Dialogue, Date Ka, Katagiri Ayako (`CDROM/SERIFU/DATE_KA.BIN`)
 
-- **File Path**: `dialogue/serifu/date_ka.md`
-- **Total Lines**: 454
-- **Translated Lines**: 454
-- **Ready for Review**: 454
-- **Unresolved**: 0
+File `dialogue/serifu/date_ka.md` contains 454 translated lines, 0 empty source slots, and 454 total records (454 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Test Dialogue: Kisaragi Mio (`CDROM/SPEAKTST/TEST_KI.BIN`)
+# Test dialogue, Kisaragi Mio (`CDROM/SPEAKTST/TEST_KI.BIN`)
 
-- **File Path**: `test_dialogue/test_ki.md`
-- **Total Lines**: 1491
-- **Translated Lines**: 1456
-- **Ready for Review**: 0
-- **Unresolved**: 1491
+File `test_dialogue/test_ki.md` contains 1456 translated lines, 35 empty source slots, and 1491 total records (0 ready for review, 1491 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

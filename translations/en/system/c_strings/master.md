@@ -1,10 +1,6 @@
-# C Code Strings: Master System Sequences (`MASTER`)
+# C code strings, Master System Sequences (`MASTER`)
 
-- **File Path**: `system/c_strings/master.md`
-- **Total Lines**: 36
-- **Translated Lines**: 36
-- **Ready for Review**: 33
-- **Unresolved**: 3
+File `system/c_strings/master.md` contains 36 translated lines, 0 empty source slots, and 36 total records (33 ready for review, 3 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

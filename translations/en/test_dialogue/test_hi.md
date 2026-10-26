@@ -1,10 +1,6 @@
-# Test Dialogue: Himoo Yuina (`CDROM/SPEAKTST/TEST_HI.BIN`)
+# Test dialogue, Himoo Yuina (`CDROM/SPEAKTST/TEST_HI.BIN`)
 
-- **File Path**: `test_dialogue/test_hi.md`
-- **Total Lines**: 1479
-- **Translated Lines**: 1452
-- **Ready for Review**: 0
-- **Unresolved**: 1479
+File `test_dialogue/test_hi.md` contains 1452 translated lines, 27 empty source slots, and 1479 total records (0 ready for review, 1479 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

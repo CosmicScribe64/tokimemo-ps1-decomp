@@ -1,10 +1,6 @@
-# Test Dialogue: Kagami Mira (`CDROM/SPEAKTST/TEST_KG.BIN`)
+# Test dialogue, Kagami Mira (`CDROM/SPEAKTST/TEST_KG.BIN`)
 
-- **File Path**: `test_dialogue/test_kg.md`
-- **Total Lines**: 1161
-- **Translated Lines**: 1138
-- **Ready for Review**: 0
-- **Unresolved**: 1161
+File `test_dialogue/test_kg.md` contains 1138 translated lines, 23 empty source slots, and 1161 total records (0 ready for review, 1161 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

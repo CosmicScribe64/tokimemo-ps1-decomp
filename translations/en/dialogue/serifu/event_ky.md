@@ -1,10 +1,6 @@
-# Dialogue: Event Ky — Kiyokawa Nozomi (`CDROM/SERIFU/EVENT_KY.BIN`)
+# Dialogue, Event Ky, Kiyokawa Nozomi (`CDROM/SERIFU/EVENT_KY.BIN`)
 
-- **File Path**: `dialogue/serifu/event_ky.md`
-- **Total Lines**: 147
-- **Translated Lines**: 147
-- **Ready for Review**: 147
-- **Unresolved**: 0
+File `dialogue/serifu/event_ky.md` contains 147 translated lines, 0 empty source slots, and 147 total records (147 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

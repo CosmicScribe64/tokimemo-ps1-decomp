@@ -1,10 +1,6 @@
-# Overlay Strings: Audio, Screen & Control Options (`CDROM/EXEDIR/OPTION.EXN`)
+# Overlay strings, Audio, Screen & Control Options (`CDROM/EXEDIR/OPTION.EXN`)
 
-- **File Path**: `system/exedir/option.md`
-- **Total Lines**: 313
-- **Translated Lines**: 313
-- **Ready for Review**: 0
-- **Unresolved**: 313
+File `system/exedir/option.md` contains 313 translated lines, 0 empty source slots, and 313 total records (0 ready for review, 313 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

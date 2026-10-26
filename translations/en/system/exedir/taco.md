@@ -1,10 +1,6 @@
-# Overlay Strings: Octopus Minigame (`CDROM/EXEDIR/TACO.EXN`)
+# Overlay strings, Octopus Minigame (`CDROM/EXEDIR/TACO.EXN`)
 
-- **File Path**: `system/exedir/taco.md`
-- **Total Lines**: 98
-- **Translated Lines**: 98
-- **Ready for Review**: 0
-- **Unresolved**: 98
+File `system/exedir/taco.md` contains 98 translated lines, 0 empty source slots, and 98 total records (0 ready for review, 98 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

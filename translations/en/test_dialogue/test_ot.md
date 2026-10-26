@@ -1,10 +1,6 @@
-# Test Dialogue: Other Characters (`CDROM/SPEAKTST/TEST_OT.BIN`)
+# Test dialogue, Other Characters (`CDROM/SPEAKTST/TEST_OT.BIN`)
 
-- **File Path**: `test_dialogue/test_ot.md`
-- **Total Lines**: 551
-- **Translated Lines**: 549
-- **Ready for Review**: 0
-- **Unresolved**: 551
+File `test_dialogue/test_ot.md` contains 549 translated lines, 2 empty source slots, and 551 total records (0 ready for review, 551 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

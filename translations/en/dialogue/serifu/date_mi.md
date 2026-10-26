@@ -1,10 +1,6 @@
-# Dialogue: Date Mi — Mikihara Megumi (`CDROM/SERIFU/DATE_MI.BIN`)
+# Dialogue, Date Mi, Mikihara Megumi (`CDROM/SERIFU/DATE_MI.BIN`)
 
-- **File Path**: `dialogue/serifu/date_mi.md`
-- **Total Lines**: 489
-- **Translated Lines**: 481
-- **Ready for Review**: 481
-- **Unresolved**: 8
+File `dialogue/serifu/date_mi.md` contains 481 translated lines, 8 empty source slots, and 489 total records (481 ready for review, 8 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

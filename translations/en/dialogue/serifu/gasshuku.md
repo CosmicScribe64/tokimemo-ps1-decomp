@@ -1,10 +1,6 @@
-# Dialogue: Club Training Camp (`CDROM/SERIFU/GASSHUKU.BIN`)
+# Dialogue, Club Training Camp (`CDROM/SERIFU/GASSHUKU.BIN`)
 
-- **File Path**: `dialogue/serifu/gasshuku.md`
-- **Total Lines**: 1590
-- **Translated Lines**: 1588
-- **Ready for Review**: 1588
-- **Unresolved**: 2
+File `dialogue/serifu/gasshuku.md` contains 1588 translated lines, 2 empty source slots, and 1590 total records (1588 ready for review, 2 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

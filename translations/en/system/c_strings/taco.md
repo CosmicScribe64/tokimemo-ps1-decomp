@@ -1,10 +1,6 @@
-# C Code Strings: Octopus Minigame (`TACO`)
+# C code strings, Octopus Minigame (`TACO`)
 
-- **File Path**: `system/c_strings/taco.md`
-- **Total Lines**: 91
-- **Translated Lines**: 91
-- **Ready for Review**: 0
-- **Unresolved**: 91
+File `system/c_strings/taco.md` contains 91 translated lines, 0 empty source slots, and 91 total records (0 ready for review, 91 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

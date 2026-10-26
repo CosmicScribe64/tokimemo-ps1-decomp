@@ -1,10 +1,6 @@
-# Dialogue: Player Birthday (`CDROM/SERIFU/P_BIRTH.BIN`)
+# Dialogue, Player Birthday (`CDROM/SERIFU/P_BIRTH.BIN`)
 
-- **File Path**: `dialogue/serifu/p_birth.md`
-- **Total Lines**: 79
-- **Translated Lines**: 79
-- **Ready for Review**: 79
-- **Unresolved**: 0
+File `dialogue/serifu/p_birth.md` contains 79 translated lines, 0 empty source slots, and 79 total records (79 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Walking Home After School (`GEKO`)
+# C code strings, Walking Home After School (`GEKO`)
 
-- **File Path**: `system/c_strings/geko.md`
-- **Total Lines**: 63
-- **Translated Lines**: 63
-- **Ready for Review**: 4
-- **Unresolved**: 59
+File `system/c_strings/geko.md` contains 63 translated lines, 0 empty source slots, and 63 total records (4 ready for review, 59 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

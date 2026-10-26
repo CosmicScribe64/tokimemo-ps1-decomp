@@ -1,10 +1,6 @@
-# Overlay Table Data: School Trip to Kyoto (`CDROM/EXEDIR/SHUGAKU.EXN`)
+# Overlay table data, School Trip to Kyoto (`CDROM/EXEDIR/SHUGAKU.EXN`)
 
-- **File Path**: `system/tables/shugaku.md`
-- **Total Lines**: 99
-- **Translated Lines**: 93
-- **Ready for Review**: 0
-- **Unresolved**: 99
+File `system/tables/shugaku.md` contains 93 translated lines, 6 empty source slots, and 99 total records (0 ready for review, 99 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Cultural Festival Chibi Events (`BUNKA_SD`)
+# C code strings, Cultural Festival Chibi Events (`BUNKA_SD`)
 
-- **File Path**: `system/c_strings/bunka_sd.md`
-- **Total Lines**: 21
-- **Translated Lines**: 21
-- **Ready for Review**: 20
-- **Unresolved**: 1
+File `system/c_strings/bunka_sd.md` contains 21 translated lines, 0 empty source slots, and 21 total records (20 ready for review, 1 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

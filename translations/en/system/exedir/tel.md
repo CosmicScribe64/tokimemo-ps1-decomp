@@ -1,10 +1,6 @@
-# Overlay Strings: Telephone Calls & Conversations (`CDROM/EXEDIR/TEL.EXN`)
+# Overlay strings, Telephone Calls & Conversations (`CDROM/EXEDIR/TEL.EXN`)
 
-- **File Path**: `system/exedir/tel.md`
-- **Total Lines**: 738
-- **Translated Lines**: 738
-- **Ready for Review**: 0
-- **Unresolved**: 738
+File `system/exedir/tel.md` contains 738 translated lines, 0 empty source slots, and 738 total records (0 ready for review, 738 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

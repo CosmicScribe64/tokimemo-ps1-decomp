@@ -1,10 +1,6 @@
-# Supplemental Text: Staff Credits & Developer Symbols (`CDROM/EXEDIR/O.BIN`)
+# Supplemental text, Staff Credits & Developer Symbols (`CDROM/EXEDIR/O.BIN`)
 
-- **File Path**: `supplemental/o_bin.md`
-- **Total Lines**: 13
-- **Translated Lines**: 13
-- **Ready for Review**: 13
-- **Unresolved**: 0
+File `supplemental/o_bin.md` contains 13 translated lines, 0 empty source slots, and 13 total records (13 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

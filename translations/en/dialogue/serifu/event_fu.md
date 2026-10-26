@@ -1,10 +1,6 @@
-# Dialogue: Event Fu — Fujisaki Shiori (`CDROM/SERIFU/EVENT_FU.BIN`)
+# Dialogue, Event Fu, Fujisaki Shiori (`CDROM/SERIFU/EVENT_FU.BIN`)
 
-- **File Path**: `dialogue/serifu/event_fu.md`
-- **Total Lines**: 157
-- **Translated Lines**: 157
-- **Ready for Review**: 157
-- **Unresolved**: 0
+File `dialogue/serifu/event_fu.md` contains 157 translated lines, 0 empty source slots, and 157 total records (157 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

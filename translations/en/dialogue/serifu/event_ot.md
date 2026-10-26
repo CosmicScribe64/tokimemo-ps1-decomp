@@ -1,10 +1,6 @@
-# Dialogue: Event Ot — Other Characters (`CDROM/SERIFU/EVENT_OT.BIN`)
+# Dialogue, Event Ot, Other Characters (`CDROM/SERIFU/EVENT_OT.BIN`)
 
-- **File Path**: `dialogue/serifu/event_ot.md`
-- **Total Lines**: 191
-- **Translated Lines**: 190
-- **Ready for Review**: 190
-- **Unresolved**: 1
+File `dialogue/serifu/event_ot.md` contains 190 translated lines, 1 empty source slots, and 191 total records (190 ready for review, 1 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

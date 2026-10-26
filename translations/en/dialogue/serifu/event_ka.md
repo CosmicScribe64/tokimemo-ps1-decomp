@@ -1,10 +1,6 @@
-# Dialogue: Event Ka — Katagiri Ayako (`CDROM/SERIFU/EVENT_KA.BIN`)
+# Dialogue, Event Ka, Katagiri Ayako (`CDROM/SERIFU/EVENT_KA.BIN`)
 
-- **File Path**: `dialogue/serifu/event_ka.md`
-- **Total Lines**: 108
-- **Translated Lines**: 108
-- **Ready for Review**: 108
-- **Unresolved**: 0
+File `dialogue/serifu/event_ka.md` contains 108 translated lines, 0 empty source slots, and 108 total records (108 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Sick Visit (`OMIMAI`)
+# C code strings, Sick Visit (`OMIMAI`)
 
-- **File Path**: `system/c_strings/omimai.md`
-- **Total Lines**: 16
-- **Translated Lines**: 16
-- **Ready for Review**: 0
-- **Unresolved**: 16
+File `system/c_strings/omimai.md` contains 16 translated lines, 0 empty source slots, and 16 total records (0 ready for review, 16 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

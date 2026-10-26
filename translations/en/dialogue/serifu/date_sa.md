@@ -1,10 +1,6 @@
-# Dialogue: Date Sa — Saotome Yumi (`CDROM/SERIFU/DATE_SA.BIN`)
+# Dialogue, Date Sa, Saotome Yumi (`CDROM/SERIFU/DATE_SA.BIN`)
 
-- **File Path**: `dialogue/serifu/date_sa.md`
-- **Total Lines**: 482
-- **Translated Lines**: 474
-- **Ready for Review**: 474
-- **Unresolved**: 8
+File `dialogue/serifu/date_sa.md` contains 474 translated lines, 8 empty source slots, and 482 total records (474 ready for review, 8 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Bun Fu — Fujisaki Shiori (`CDROM/BUNKA/BUN_FU.BIN`)
+# Dialogue, Bun Fu, Fujisaki Shiori (`CDROM/BUNKA/BUN_FU.BIN`)
 
-- **File Path**: `dialogue/bunka/bun_fu.md`
-- **Total Lines**: 70
-- **Translated Lines**: 70
-- **Ready for Review**: 70
-- **Unresolved**: 0
+File `dialogue/bunka/bun_fu.md` contains 70 translated lines, 0 empty source slots, and 70 total records (70 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

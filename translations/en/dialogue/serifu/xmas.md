@@ -1,10 +1,6 @@
-# Dialogue: Christmas Party (`CDROM/SERIFU/XMAS.BIN`)
+# Dialogue, Christmas Party (`CDROM/SERIFU/XMAS.BIN`)
 
-- **File Path**: `dialogue/serifu/xmas.md`
-- **Total Lines**: 359
-- **Translated Lines**: 358
-- **Ready for Review**: 358
-- **Unresolved**: 1
+File `dialogue/serifu/xmas.md` contains 358 translated lines, 1 empty source slots, and 359 total records (358 ready for review, 1 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

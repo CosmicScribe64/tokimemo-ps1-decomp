@@ -295,10 +295,13 @@ func _ensure_root() -> bool:
 	if not _safe_absolute(storage_root):
 		error = "application data root must be an external canonical absolute path"
 		return false
-	var project_root := ProjectSettings.globalize_path("res://").simplify_path()
-	if storage_root == project_root or storage_root.begins_with(project_root.trim_suffix("/") + "/"):
-		error = "persistent content must live outside the application project"
-		return false
+	var raw_project := ProjectSettings.globalize_path("res://")
+	if not raw_project.is_empty():
+		var project_root := raw_project.simplify_path()
+		if project_root != "/" and DirAccess.dir_exists_absolute(project_root):
+			if storage_root == project_root or storage_root.begins_with(project_root.trim_suffix("/") + "/"):
+				error = "persistent content must live outside the application project"
+				return false
 	if DirAccess.make_dir_recursive_absolute(storage_root) != OK or _has_symlink(storage_root):
 		error = "persistent per-user content directory could not be created safely"
 		return false

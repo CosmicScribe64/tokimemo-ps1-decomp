@@ -1,10 +1,6 @@
-# Dialogue: Bun Pc (`CDROM/BUNKA/BUN_PC.BIN`)
+# Dialogue, Bun Pc (`CDROM/BUNKA/BUN_PC.BIN`)
 
-- **File Path**: `dialogue/bunka/bun_pc.md`
-- **Total Lines**: 107
-- **Translated Lines**: 107
-- **Ready for Review**: 107
-- **Unresolved**: 0
+File `dialogue/bunka/bun_pc.md` contains 107 translated lines, 0 empty source slots, and 107 total records (107 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

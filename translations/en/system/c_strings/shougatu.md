@@ -1,10 +1,6 @@
-# C Code Strings: New Year Events (`SHOUGATU`)
+# C code strings, New Year Events (`SHOUGATU`)
 
-- **File Path**: `system/c_strings/shougatu.md`
-- **Total Lines**: 53
-- **Translated Lines**: 53
-- **Ready for Review**: 6
-- **Unresolved**: 47
+File `system/c_strings/shougatu.md` contains 53 translated lines, 0 empty source slots, and 53 total records (6 ready for review, 47 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

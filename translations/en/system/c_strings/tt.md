@@ -1,10 +1,6 @@
-# C Code Strings: Table Tennis Minigame (`TT`)
+# C code strings, Table Tennis Minigame (`TT`)
 
-- **File Path**: `system/c_strings/tt.md`
-- **Total Lines**: 3
-- **Translated Lines**: 3
-- **Ready for Review**: 3
-- **Unresolved**: 0
+File `system/c_strings/tt.md` contains 3 translated lines, 0 empty source slots, and 3 total records (3 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Date System & Locations (`DATE`)
+# C code strings, Date System & Locations (`DATE`)
 
-- **File Path**: `system/c_strings/date.md`
-- **Total Lines**: 93
-- **Translated Lines**: 93
-- **Ready for Review**: 9
-- **Unresolved**: 84
+File `system/c_strings/date.md` contains 93 translated lines, 0 empty source slots, and 93 total records (9 ready for review, 84 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Event Mi — Mikihara Megumi (`CDROM/SERIFU/EVENT_MI.BIN`)
+# Dialogue, Event Mi, Mikihara Megumi (`CDROM/SERIFU/EVENT_MI.BIN`)
 
-- **File Path**: `dialogue/serifu/event_mi.md`
-- **Total Lines**: 140
-- **Translated Lines**: 140
-- **Ready for Review**: 140
-- **Unresolved**: 0
+File `dialogue/serifu/event_mi.md` contains 140 translated lines, 0 empty source slots, and 140 total records (140 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

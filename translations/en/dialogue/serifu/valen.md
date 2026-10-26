@@ -1,10 +1,6 @@
-# Dialogue: Valentine's Day (`CDROM/SERIFU/VALEN.BIN`)
+# Dialogue, Valentine's Day (`CDROM/SERIFU/VALEN.BIN`)
 
-- **File Path**: `dialogue/serifu/valen.md`
-- **Total Lines**: 188
-- **Translated Lines**: 187
-- **Ready for Review**: 187
-- **Unresolved**: 1
+File `dialogue/serifu/valen.md` contains 187 translated lines, 1 empty source slots, and 188 total records (187 ready for review, 1 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

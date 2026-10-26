@@ -1,10 +1,6 @@
-# Overlay Strings: General System & Menu Overlays (`CDROM/EXEDIR/ETC.EXN`)
+# Overlay strings, General System & Menu Overlays (`CDROM/EXEDIR/ETC.EXN`)
 
-- **File Path**: `system/exedir/etc.md`
-- **Total Lines**: 280
-- **Translated Lines**: 280
-- **Ready for Review**: 0
-- **Unresolved**: 280
+File `system/exedir/etc.md` contains 280 translated lines, 0 empty source slots, and 280 total records (0 ready for review, 280 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

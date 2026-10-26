@@ -1,10 +1,6 @@
-# Overlay Strings: Date System & Locations (`CDROM/EXEDIR/DATE.EXN`)
+# Overlay strings, Date System & Locations (`CDROM/EXEDIR/DATE.EXN`)
 
-- **File Path**: `system/exedir/date.md`
-- **Total Lines**: 93
-- **Translated Lines**: 93
-- **Ready for Review**: 0
-- **Unresolved**: 93
+File `system/exedir/date.md` contains 93 translated lines, 0 empty source slots, and 93 total records (0 ready for review, 93 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

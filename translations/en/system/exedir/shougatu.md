@@ -1,10 +1,6 @@
-# Overlay Strings: New Year Events (`CDROM/EXEDIR/SHOUGATU.EXN`)
+# Overlay strings, New Year Events (`CDROM/EXEDIR/SHOUGATU.EXN`)
 
-- **File Path**: `system/exedir/shougatu.md`
-- **Total Lines**: 53
-- **Translated Lines**: 53
-- **Ready for Review**: 0
-- **Unresolved**: 53
+File `system/exedir/shougatu.md` contains 53 translated lines, 0 empty source slots, and 53 total records (0 ready for review, 53 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

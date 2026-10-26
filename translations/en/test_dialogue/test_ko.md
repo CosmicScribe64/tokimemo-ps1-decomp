@@ -1,10 +1,6 @@
-# Test Dialogue: Koshiki Yukari (`CDROM/SPEAKTST/TEST_KO.BIN`)
+# Test dialogue, Koshiki Yukari (`CDROM/SPEAKTST/TEST_KO.BIN`)
 
-- **File Path**: `test_dialogue/test_ko.md`
-- **Total Lines**: 1314
-- **Translated Lines**: 1292
-- **Ready for Review**: 0
-- **Unresolved**: 1314
+File `test_dialogue/test_ko.md` contains 1292 translated lines, 22 empty source slots, and 1314 total records (0 ready for review, 1314 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

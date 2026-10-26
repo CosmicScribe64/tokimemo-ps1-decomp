@@ -1,10 +1,6 @@
-# Supplemental Text: Sports Festival Track & Field (`CDROM/TAIIKU/KISA23.BIN`)
+# Supplemental text, Sports Festival Track & Field (`CDROM/TAIIKU/KISA23.BIN`)
 
-- **File Path**: `supplemental/kisa23.md`
-- **Total Lines**: 25
-- **Translated Lines**: 25
-- **Ready for Review**: 25
-- **Unresolved**: 0
+File `supplemental/kisa23.md` contains 25 translated lines, 0 empty source slots, and 25 total records (25 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

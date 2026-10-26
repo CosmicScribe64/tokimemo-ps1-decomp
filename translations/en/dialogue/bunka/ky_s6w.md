@@ -1,10 +1,6 @@
-# Dialogue: Ky S6W — Kiyokawa Nozomi (`CDROM/BUNKA/KY_S6W.BIN`)
+# Dialogue, Ky S6W, Kiyokawa Nozomi (`CDROM/BUNKA/KY_S6W.BIN`)
 
-- **File Path**: `dialogue/bunka/ky_s6w.md`
-- **Total Lines**: 423
-- **Translated Lines**: 423
-- **Ready for Review**: 423
-- **Unresolved**: 0
+File `dialogue/bunka/ky_s6w.md` contains 423 translated lines, 0 empty source slots, and 423 total records (423 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

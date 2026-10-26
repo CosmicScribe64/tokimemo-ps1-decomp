@@ -1,10 +1,6 @@
-# Dialogue: Group Dates (`CDROM/SERIFU/GROUP_D.BIN`)
+# Dialogue, Group Dates (`CDROM/SERIFU/GROUP_D.BIN`)
 
-- **File Path**: `dialogue/serifu/group_d.md`
-- **Total Lines**: 448
-- **Translated Lines**: 448
-- **Ready for Review**: 448
-- **Unresolved**: 0
+File `dialogue/serifu/group_d.md` contains 448 translated lines, 0 empty source slots, and 448 total records (448 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

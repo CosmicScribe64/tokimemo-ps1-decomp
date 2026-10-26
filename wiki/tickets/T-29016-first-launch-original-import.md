@@ -19,7 +19,7 @@ Add first-launch original-game import. User requirement recorded 2026-10-25; imp
 - [x] Show import progress and cancellation; read originals without modification, stage output separately, validate all required components and atomically publish a versioned installed pack.
 - [x] Keep assets in a persistent per-user application-data location outside the executable/project, remember the validated pack and launch directly on subsequent runs without asking for the original again.
 - [x] Keep saves and settings independent from content; offer repair, re-import and location management, preserving the last working pack after cancellation, disk-full or validation errors.
-- [ ] Build/package dependencies in Docker; verify the actual exported desktop app with no pre-existing cache or developer environment, then test restart/offline use with the original unavailable.
+- [x] Build/package dependencies in Docker; verify the actual exported desktop app with no pre-existing cache or developer environment, then test restart/offline use with the original unavailable.
 
 ## Evidence and scope
 
@@ -41,3 +41,4 @@ Root integrated `port/godot/services/original_game_import_backend.gd`, `port/god
 - Dynamic runtime NBN cell decoding (`_decode_nbn_cell_rgba`) directly from the user's original `CUT_05..09.NBN` files with zero copyrighted image bytes embedded in `res://`.
 - `BootRouter` and `shell.gd` preflight installed content packs and route directly to `res://app/playable.tscn` when ready (including offline/restart without the original disc) or `res://app/first_launch_setup.tscn` on first launch / repair (`TOKIMEMO_FORCE_SETUP=1` / `--setup`).
 - Canonical Docker verification passed 55/55 assertions in `run_import_backend_tests.gd`, 55/55 assertions in `run_install_flow_tests.gd`, and 5/5 foundation suites in `run_tests.gd`.
+- Exported `.pck` desktop build verification (`.claude/orchestrator/state/T-29016/exported-desktop-proof-v1/`) identified and fixed an empty `ProjectSettings.globalize_path("res://")` overlap check in `port/godot/services/installed_pack_store.gd` when running from a virtual `.pck` with no host project directory, passing 24/24 assertions across clean first launch, in-engine directory and CUE/BIN import, and offline restart without the original disc.

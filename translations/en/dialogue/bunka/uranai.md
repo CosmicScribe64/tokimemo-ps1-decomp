@@ -1,10 +1,6 @@
-# Dialogue: Uranai (`CDROM/BUNKA/URANAI.BIN`)
+# Dialogue, Uranai (`CDROM/BUNKA/URANAI.BIN`)
 
-- **File Path**: `dialogue/bunka/uranai.md`
-- **Total Lines**: 7
-- **Translated Lines**: 7
-- **Ready for Review**: 7
-- **Unresolved**: 0
+File `dialogue/bunka/uranai.md` contains 7 translated lines, 0 empty source slots, and 7 total records (7 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Sui Con (`CDROM/MASTER/SUI_CON.BIN`)
+# Dialogue, Sui Con (`CDROM/MASTER/SUI_CON.BIN`)
 
-- **File Path**: `dialogue/master/sui_con.md`
-- **Total Lines**: 87
-- **Translated Lines**: 87
-- **Ready for Review**: 87
-- **Unresolved**: 0
+File `dialogue/master/sui_con.md` contains 87 translated lines, 0 empty source slots, and 87 total records (87 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

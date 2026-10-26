@@ -1,10 +1,6 @@
-# Dialogue: Kt S6O — Katagiri Ayako (`CDROM/BUNKA/KT_S6O.BIN`)
+# Dialogue, Kt S6O, Katagiri Ayako (`CDROM/BUNKA/KT_S6O.BIN`)
 
-- **File Path**: `dialogue/bunka/kt_s6o.md`
-- **Total Lines**: 224
-- **Translated Lines**: 224
-- **Ready for Review**: 224
-- **Unresolved**: 0
+File `dialogue/bunka/kt_s6o.md` contains 224 translated lines, 0 empty source slots, and 224 total records (224 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

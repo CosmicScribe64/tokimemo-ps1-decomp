@@ -1,10 +1,6 @@
-# Overlay Strings: RPG Battle Minigame (`CDROM/EXEDIR/RPG_BAT.EXN`)
+# Overlay strings, RPG Battle Minigame (`CDROM/EXEDIR/RPG_BAT.EXN`)
 
-- **File Path**: `system/exedir/rpg_bat.md`
-- **Total Lines**: 357
-- **Translated Lines**: 357
-- **Ready for Review**: 0
-- **Unresolved**: 357
+File `system/exedir/rpg_bat.md` contains 357 translated lines, 0 empty source slots, and 357 total records (0 ready for review, 357 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

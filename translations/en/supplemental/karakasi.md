@@ -1,10 +1,6 @@
-# Supplemental Text: Karakasa Umbrella Dance (`CDROM/TARA_OBJ/KARAKASI.BIN`)
+# Supplemental text, Karakasa Umbrella Dance (`CDROM/TARA_OBJ/KARAKASI.BIN`)
 
-- **File Path**: `supplemental/karakasi.md`
-- **Total Lines**: 201
-- **Translated Lines**: 201
-- **Ready for Review**: 201
-- **Unresolved**: 0
+File `supplemental/karakasi.md` contains 201 translated lines, 0 empty source slots, and 201 total records (201 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

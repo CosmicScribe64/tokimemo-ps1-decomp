@@ -1,10 +1,6 @@
-# Test Dialogue: Fujisaki Shiori (`CDROM/SPEAKTST/TEST_FU.BIN`)
+# Test dialogue, Fujisaki Shiori (`CDROM/SPEAKTST/TEST_FU.BIN`)
 
-- **File Path**: `test_dialogue/test_fu.md`
-- **Total Lines**: 2493
-- **Translated Lines**: 2479
-- **Ready for Review**: 0
-- **Unresolved**: 2493
+File `test_dialogue/test_fu.md` contains 2479 translated lines, 14 empty source slots, and 2493 total records (0 ready for review, 2493 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

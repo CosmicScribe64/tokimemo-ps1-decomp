@@ -1,10 +1,6 @@
-# Dialogue: Hi S6B — Himoo Yuina (`CDROM/BUNKA/HI_S6B.BIN`)
+# Dialogue, Hi S6B, Himoo Yuina (`CDROM/BUNKA/HI_S6B.BIN`)
 
-- **File Path**: `dialogue/bunka/hi_s6b.md`
-- **Total Lines**: 255
-- **Translated Lines**: 255
-- **Ready for Review**: 255
-- **Unresolved**: 0
+File `dialogue/bunka/hi_s6b.md` contains 255 translated lines, 0 empty source slots, and 255 total records (255 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

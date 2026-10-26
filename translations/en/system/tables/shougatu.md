@@ -1,10 +1,6 @@
-# Overlay Table Data: New Year Events (`CDROM/EXEDIR/SHOUGATU.EXN`)
+# Overlay table data, New Year Events (`CDROM/EXEDIR/SHOUGATU.EXN`)
 
-- **File Path**: `system/tables/shougatu.md`
-- **Total Lines**: 116
-- **Translated Lines**: 110
-- **Ready for Review**: 0
-- **Unresolved**: 116
+File `system/tables/shougatu.md` contains 110 translated lines, 6 empty source slots, and 116 total records (0 ready for review, 116 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

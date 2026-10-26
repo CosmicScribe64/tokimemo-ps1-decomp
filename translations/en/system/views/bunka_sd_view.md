@@ -1,10 +1,6 @@
-# Cultural Festival SD Chibi View Events (`BUNKA_SD.EXN`)
+# Cultural festival SD chibi view events (`BUNKA_SD.EXN`)
 
-- **File Path**: `system/views/bunka_sd_view.md`
-- **Total Lines**: 286
-- **Translated Lines**: 286
-- **Ready for Review**: 282
-- **Unresolved**: 4
+File `system/views/bunka_sd_view.md` contains 286 translated lines, 0 empty source slots, and 286 total records (282 ready for review, 4 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

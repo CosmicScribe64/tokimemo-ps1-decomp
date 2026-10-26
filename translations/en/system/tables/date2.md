@@ -1,10 +1,6 @@
-# Overlay Table Data: Extended Date Outings (`CDROM/EXEDIR/DATE2.EXN`)
+# Overlay table data, Extended Date Outings (`CDROM/EXEDIR/DATE2.EXN`)
 
-- **File Path**: `system/tables/date2.md`
-- **Total Lines**: 103
-- **Translated Lines**: 97
-- **Ready for Review**: 0
-- **Unresolved**: 103
+File `system/tables/date2.md` contains 97 translated lines, 6 empty source slots, and 103 total records (0 ready for review, 103 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

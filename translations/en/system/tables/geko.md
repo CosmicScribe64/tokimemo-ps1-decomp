@@ -1,10 +1,6 @@
-# Overlay Table Data: Walking Home After School (`CDROM/EXEDIR/GEKO.EXN`)
+# Overlay table data, Walking Home After School (`CDROM/EXEDIR/GEKO.EXN`)
 
-- **File Path**: `system/tables/geko.md`
-- **Total Lines**: 130
-- **Translated Lines**: 124
-- **Ready for Review**: 0
-- **Unresolved**: 130
+File `system/tables/geko.md` contains 124 translated lines, 6 empty source slots, and 130 total records (0 ready for review, 130 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

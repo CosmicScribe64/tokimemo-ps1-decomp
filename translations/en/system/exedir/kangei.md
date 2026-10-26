@@ -1,10 +1,6 @@
-# Overlay Strings: Welcome Party Events (`CDROM/EXEDIR/KANGEI.EXN`)
+# Overlay strings, Welcome Party Events (`CDROM/EXEDIR/KANGEI.EXN`)
 
-- **File Path**: `system/exedir/kangei.md`
-- **Total Lines**: 28
-- **Translated Lines**: 28
-- **Ready for Review**: 0
-- **Unresolved**: 28
+File `system/exedir/kangei.md` contains 28 translated lines, 0 empty source slots, and 28 total records (0 ready for review, 28 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

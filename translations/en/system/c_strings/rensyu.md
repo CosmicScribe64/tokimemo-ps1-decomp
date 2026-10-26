@@ -1,10 +1,6 @@
-# C Code Strings: Practice Matches (`RENSYU`)
+# C code strings, Practice Matches (`RENSYU`)
 
-- **File Path**: `system/c_strings/rensyu.md`
-- **Total Lines**: 2
-- **Translated Lines**: 2
-- **Ready for Review**: 2
-- **Unresolved**: 0
+File `system/c_strings/rensyu.md` contains 2 translated lines, 0 empty source slots, and 2 total records (2 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

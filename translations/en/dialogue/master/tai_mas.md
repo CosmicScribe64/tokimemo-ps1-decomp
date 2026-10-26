@@ -1,10 +1,6 @@
-# Dialogue: Tai Mas (`CDROM/MASTER/TAI_MAS.BIN`)
+# Dialogue, Tai Mas (`CDROM/MASTER/TAI_MAS.BIN`)
 
-- **File Path**: `dialogue/master/tai_mas.md`
-- **Total Lines**: 309
-- **Translated Lines**: 309
-- **Ready for Review**: 309
-- **Unresolved**: 0
+File `dialogue/master/tai_mas.md` contains 309 translated lines, 0 empty source slots, and 309 total records (309 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

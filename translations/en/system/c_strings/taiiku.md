@@ -1,10 +1,6 @@
-# C Code Strings: Sports Festival System (`TAIIKU`)
+# C code strings, Sports Festival System (`TAIIKU`)
 
-- **File Path**: `system/c_strings/taiiku.md`
-- **Total Lines**: 7
-- **Translated Lines**: 7
-- **Ready for Review**: 7
-- **Unresolved**: 0
+File `system/c_strings/taiiku.md` contains 7 translated lines, 0 empty source slots, and 7 total records (7 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Supplemental Text: Ending Sequences (`CDROM/EXEDIR/ENDING.EXN`)
+# Supplemental text, Ending Sequences (`CDROM/EXEDIR/ENDING.EXN`)
 
-- **File Path**: `supplemental/ending_exn.md`
-- **Total Lines**: 11
-- **Translated Lines**: 11
-- **Ready for Review**: 11
-- **Unresolved**: 0
+File `supplemental/ending_exn.md` contains 11 translated lines, 0 empty source slots, and 11 total records (11 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

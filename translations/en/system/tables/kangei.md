@@ -1,10 +1,6 @@
-# Overlay Table Data: Welcome Party Events (`CDROM/EXEDIR/KANGEI.EXN`)
+# Overlay table data, Welcome Party Events (`CDROM/EXEDIR/KANGEI.EXN`)
 
-- **File Path**: `system/tables/kangei.md`
-- **Total Lines**: 121
-- **Translated Lines**: 115
-- **Ready for Review**: 0
-- **Unresolved**: 121
+File `system/tables/kangei.md` contains 115 translated lines, 6 empty source slots, and 121 total records (0 ready for review, 121 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

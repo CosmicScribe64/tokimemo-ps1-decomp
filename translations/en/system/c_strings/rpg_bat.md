@@ -1,10 +1,6 @@
-# C Code Strings: RPG Battle Minigame (`RPG_BAT`)
+# C code strings, RPG Battle Minigame (`RPG_BAT`)
 
-- **File Path**: `system/c_strings/rpg_bat.md`
-- **Total Lines**: 267
-- **Translated Lines**: 267
-- **Ready for Review**: 14
-- **Unresolved**: 253
+File `system/c_strings/rpg_bat.md` contains 267 translated lines, 0 empty source slots, and 267 total records (14 ready for review, 253 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

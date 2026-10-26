@@ -1,10 +1,6 @@
-# Dialogue: Ni S6S — Nijino Saki (`CDROM/BUNKA/NI_S6S.BIN`)
+# Dialogue, Ni S6S, Nijino Saki (`CDROM/BUNKA/NI_S6S.BIN`)
 
-- **File Path**: `dialogue/bunka/ni_s6s.md`
-- **Total Lines**: 30
-- **Translated Lines**: 30
-- **Ready for Review**: 30
-- **Unresolved**: 0
+File `dialogue/bunka/ni_s6s.md` contains 30 translated lines, 0 empty source slots, and 30 total records (30 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

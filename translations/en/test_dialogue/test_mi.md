@@ -1,10 +1,6 @@
-# Test Dialogue: Mikihara Megumi (`CDROM/SPEAKTST/TEST_MI.BIN`)
+# Test dialogue, Mikihara Megumi (`CDROM/SPEAKTST/TEST_MI.BIN`)
 
-- **File Path**: `test_dialogue/test_mi.md`
-- **Total Lines**: 1190
-- **Translated Lines**: 1154
-- **Ready for Review**: 0
-- **Unresolved**: 1190
+File `test_dialogue/test_mi.md` contains 1154 translated lines, 36 empty source slots, and 1190 total records (0 ready for review, 1190 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

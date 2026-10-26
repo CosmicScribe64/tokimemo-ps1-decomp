@@ -1,10 +1,6 @@
-# Dialogue: White Day (`CDROM/SERIFU/WHITE.BIN`)
+# Dialogue, White Day (`CDROM/SERIFU/WHITE.BIN`)
 
-- **File Path**: `dialogue/serifu/white.md`
-- **Total Lines**: 251
-- **Translated Lines**: 251
-- **Ready for Review**: 251
-- **Unresolved**: 0
+File `dialogue/serifu/white.md` contains 251 translated lines, 0 empty source slots, and 251 total records (251 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

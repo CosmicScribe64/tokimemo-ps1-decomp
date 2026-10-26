@@ -1,10 +1,6 @@
-# Test Dialogue: Nijino Saki (`CDROM/SPEAKTST/TEST_NI.BIN`)
+# Test dialogue, Nijino Saki (`CDROM/SPEAKTST/TEST_NI.BIN`)
 
-- **File Path**: `test_dialogue/test_ni.md`
-- **Total Lines**: 1536
-- **Translated Lines**: 1520
-- **Ready for Review**: 0
-- **Unresolved**: 1536
+File `test_dialogue/test_ni.md` contains 1520 translated lines, 16 empty source slots, and 1536 total records (0 ready for review, 1536 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

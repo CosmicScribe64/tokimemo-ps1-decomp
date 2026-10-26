@@ -1,10 +1,6 @@
-# Dialogue: Date Ko — Koshiki Yukari (`CDROM/SERIFU/DATE_KO.BIN`)
+# Dialogue, Date Ko, Koshiki Yukari (`CDROM/SERIFU/DATE_KO.BIN`)
 
-- **File Path**: `dialogue/serifu/date_ko.md`
-- **Total Lines**: 485
-- **Translated Lines**: 485
-- **Ready for Review**: 485
-- **Unresolved**: 0
+File `dialogue/serifu/date_ko.md` contains 485 translated lines, 0 empty source slots, and 485 total records (485 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

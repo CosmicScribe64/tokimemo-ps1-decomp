@@ -1,10 +1,6 @@
-# C Code Strings: Audio, Screen & Control Options (`OPTION`)
+# C code strings, Audio, Screen & Control Options (`OPTION`)
 
-- **File Path**: `system/c_strings/option.md`
-- **Total Lines**: 44
-- **Translated Lines**: 44
-- **Ready for Review**: 36
-- **Unresolved**: 8
+File `system/c_strings/option.md` contains 44 translated lines, 0 empty source slots, and 44 total records (36 ready for review, 8 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Ko S6S — Koshiki Yukari (`CDROM/BUNKA/KO_S6S.BIN`)
+# Dialogue, Ko S6S, Koshiki Yukari (`CDROM/BUNKA/KO_S6S.BIN`)
 
-- **File Path**: `dialogue/bunka/ko_s6s.md`
-- **Total Lines**: 26
-- **Translated Lines**: 26
-- **Ready for Review**: 26
-- **Unresolved**: 0
+File `dialogue/bunka/ko_s6s.md` contains 26 translated lines, 0 empty source slots, and 26 total records (26 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

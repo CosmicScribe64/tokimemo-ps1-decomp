@@ -1,10 +1,6 @@
-# C Code Strings: Main (`main`)
+# C code strings, Main (`main`)
 
-- **File Path**: `system/c_strings/main.md`
-- **Total Lines**: 357
-- **Translated Lines**: 357
-- **Ready for Review**: 186
-- **Unresolved**: 171
+File `system/c_strings/main.md` contains 357 translated lines, 0 empty source slots, and 357 total records (186 ready for review, 171 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

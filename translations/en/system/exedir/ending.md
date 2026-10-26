@@ -1,10 +1,6 @@
-# Overlay Strings: Ending Sequences (`CDROM/EXEDIR/ENDING.EXN`)
+# Overlay strings, Ending Sequences (`CDROM/EXEDIR/ENDING.EXN`)
 
-- **File Path**: `system/exedir/ending.md`
-- **Total Lines**: 32
-- **Translated Lines**: 32
-- **Ready for Review**: 0
-- **Unresolved**: 32
+File `system/exedir/ending.md` contains 32 translated lines, 0 empty source slots, and 32 total records (0 ready for review, 32 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

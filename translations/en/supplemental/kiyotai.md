@@ -1,10 +1,6 @@
-# Supplemental Text: Sports Festival Cheerleading (`CDROM/TAIIKU/KIYOTAI.BIN`)
+# Supplemental text, Sports Festival Cheerleading (`CDROM/TAIIKU/KIYOTAI.BIN`)
 
-- **File Path**: `supplemental/kiyotai.md`
-- **Total Lines**: 14
-- **Translated Lines**: 14
-- **Ready for Review**: 14
-- **Unresolved**: 0
+File `supplemental/kiyotai.md` contains 14 translated lines, 0 empty source slots, and 14 total records (14 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Name & Birthday Entry (`NAME_ENT`)
+# C code strings, Name & Birthday Entry (`NAME_ENT`)
 
-- **File Path**: `system/c_strings/name_ent.md`
-- **Total Lines**: 172
-- **Translated Lines**: 172
-- **Ready for Review**: 134
-- **Unresolved**: 38
+File `system/c_strings/name_ent.md` contains 172 translated lines, 0 empty source slots, and 172 total records (134 ready for review, 38 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

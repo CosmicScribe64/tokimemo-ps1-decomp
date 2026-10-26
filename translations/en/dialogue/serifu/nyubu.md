@@ -1,10 +1,6 @@
-# Dialogue: Joining School Club (`CDROM/SERIFU/NYUBU.BIN`)
+# Dialogue, Joining School Club (`CDROM/SERIFU/NYUBU.BIN`)
 
-- **File Path**: `dialogue/serifu/nyubu.md`
-- **Total Lines**: 93
-- **Translated Lines**: 93
-- **Ready for Review**: 93
-- **Unresolved**: 0
+File `dialogue/serifu/nyubu.md` contains 93 translated lines, 0 empty source slots, and 93 total records (93 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Event Hi — Himoo Yuina (`CDROM/SERIFU/EVENT_HI.BIN`)
+# Dialogue, Event Hi, Himoo Yuina (`CDROM/SERIFU/EVENT_HI.BIN`)
 
-- **File Path**: `dialogue/serifu/event_hi.md`
-- **Total Lines**: 98
-- **Translated Lines**: 98
-- **Ready for Review**: 98
-- **Unresolved**: 0
+File `dialogue/serifu/event_hi.md` contains 98 translated lines, 0 empty source slots, and 98 total records (98 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Overlay Strings: Practice Matches (`CDROM/EXEDIR/RENSYU.EXN`)
+# Overlay strings, Practice Matches (`CDROM/EXEDIR/RENSYU.EXN`)
 
-- **File Path**: `system/exedir/rensyu.md`
-- **Total Lines**: 2
-- **Translated Lines**: 2
-- **Ready for Review**: 0
-- **Unresolved**: 2
+File `system/exedir/rensyu.md` contains 2 translated lines, 0 empty source slots, and 2 total records (0 ready for review, 2 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

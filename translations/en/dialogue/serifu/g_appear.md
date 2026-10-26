@@ -1,10 +1,6 @@
-# Dialogue: Girl Appearance Events (`CDROM/SERIFU/G_APPEAR.BIN`)
+# Dialogue, Girl Appearance Events (`CDROM/SERIFU/G_APPEAR.BIN`)
 
-- **File Path**: `dialogue/serifu/g_appear.md`
-- **Total Lines**: 416
-- **Translated Lines**: 416
-- **Ready for Review**: 416
-- **Unresolved**: 0
+File `dialogue/serifu/g_appear.md` contains 416 translated lines, 0 empty source slots, and 416 total records (416 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

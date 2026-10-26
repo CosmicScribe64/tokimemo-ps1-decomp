@@ -1,10 +1,6 @@
-# Dialogue: Sa S6 — Saotome Yumi (`CDROM/BUNKA/SA_S6.BIN`)
+# Dialogue, Sa S6, Saotome Yumi (`CDROM/BUNKA/SA_S6.BIN`)
 
-- **File Path**: `dialogue/bunka/sa_s6.md`
-- **Total Lines**: 505
-- **Translated Lines**: 505
-- **Ready for Review**: 505
-- **Unresolved**: 0
+File `dialogue/bunka/sa_s6.md` contains 505 translated lines, 0 empty source slots, and 505 total records (505 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

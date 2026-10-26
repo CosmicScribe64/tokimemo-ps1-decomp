@@ -1,10 +1,6 @@
-# Dialogue: As S6W — Asahina Yuko (`CDROM/BUNKA/AS_S6W.BIN`)
+# Dialogue, As S6W, Asahina Yuko (`CDROM/BUNKA/AS_S6W.BIN`)
 
-- **File Path**: `dialogue/bunka/as_s6w.md`
-- **Total Lines**: 425
-- **Translated Lines**: 425
-- **Ready for Review**: 0
-- **Unresolved**: 425
+File `dialogue/bunka/as_s6w.md` contains 425 translated lines, 0 empty source slots, and 425 total records (0 ready for review, 425 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

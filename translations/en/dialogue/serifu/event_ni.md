@@ -1,10 +1,6 @@
-# Dialogue: Event Ni — Nijino Saki (`CDROM/SERIFU/EVENT_NI.BIN`)
+# Dialogue, Event Ni, Nijino Saki (`CDROM/SERIFU/EVENT_NI.BIN`)
 
-- **File Path**: `dialogue/serifu/event_ni.md`
-- **Total Lines**: 169
-- **Translated Lines**: 169
-- **Ready for Review**: 169
-- **Unresolved**: 0
+File `dialogue/serifu/event_ni.md` contains 169 translated lines, 0 empty source slots, and 169 total records (169 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

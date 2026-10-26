@@ -1,10 +1,6 @@
-# C Code Strings: School Calendar & Events (`GYOZI`)
+# C code strings, School Calendar & Events (`GYOZI`)
 
-- **File Path**: `system/c_strings/gyozi.md`
-- **Total Lines**: 49
-- **Translated Lines**: 49
-- **Ready for Review**: 0
-- **Unresolved**: 49
+File `system/c_strings/gyozi.md` contains 49 translated lines, 0 empty source slots, and 49 total records (0 ready for review, 49 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

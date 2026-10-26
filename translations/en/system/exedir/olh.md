@@ -1,10 +1,6 @@
-# Overlay Strings: Online Help System (`CDROM/EXEDIR/OLH.EXN`)
+# Overlay strings, Online Help System (`CDROM/EXEDIR/OLH.EXN`)
 
-- **File Path**: `system/exedir/olh.md`
-- **Total Lines**: 291
-- **Translated Lines**: 291
-- **Ready for Review**: 0
-- **Unresolved**: 291
+File `system/exedir/olh.md` contains 291 translated lines, 0 empty source slots, and 291 total records (0 ready for review, 291 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

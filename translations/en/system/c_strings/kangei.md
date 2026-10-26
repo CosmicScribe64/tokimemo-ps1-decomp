@@ -1,10 +1,6 @@
-# C Code Strings: Welcome Party Events (`KANGEI`)
+# C code strings, Welcome Party Events (`KANGEI`)
 
-- **File Path**: `system/c_strings/kangei.md`
-- **Total Lines**: 25
-- **Translated Lines**: 25
-- **Ready for Review**: 0
-- **Unresolved**: 25
+File `system/c_strings/kangei.md` contains 25 translated lines, 0 empty source slots, and 25 total records (0 ready for review, 25 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Event Ko — Koshiki Yukari (`CDROM/SERIFU/EVENT_KO.BIN`)
+# Dialogue, Event Ko, Koshiki Yukari (`CDROM/SERIFU/EVENT_KO.BIN`)
 
-- **File Path**: `dialogue/serifu/event_ko.md`
-- **Total Lines**: 118
-- **Translated Lines**: 118
-- **Ready for Review**: 118
-- **Unresolved**: 0
+File `dialogue/serifu/event_ko.md` contains 118 translated lines, 0 empty source slots, and 118 total records (118 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

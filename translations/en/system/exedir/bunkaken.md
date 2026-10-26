@@ -1,10 +1,6 @@
-# Overlay Strings: Cultural Club Activities (`CDROM/EXEDIR/BUNKAKEN.EXN`)
+# Overlay strings, Cultural Club Activities (`CDROM/EXEDIR/BUNKAKEN.EXN`)
 
-- **File Path**: `system/exedir/bunkaken.md`
-- **Total Lines**: 58
-- **Translated Lines**: 58
-- **Ready for Review**: 0
-- **Unresolved**: 58
+File `system/exedir/bunkaken.md` contains 58 translated lines, 0 empty source slots, and 58 total records (0 ready for review, 58 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

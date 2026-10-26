@@ -1,10 +1,6 @@
-# Overlay Strings: Story Events Overlay (`CDROM/EXEDIR/EVENT.EXN`)
+# Overlay strings, Story Events Overlay (`CDROM/EXEDIR/EVENT.EXN`)
 
-- **File Path**: `system/exedir/event.md`
-- **Total Lines**: 188
-- **Translated Lines**: 188
-- **Ready for Review**: 0
-- **Unresolved**: 188
+File `system/exedir/event.md` contains 188 translated lines, 0 empty source slots, and 188 total records (0 ready for review, 188 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

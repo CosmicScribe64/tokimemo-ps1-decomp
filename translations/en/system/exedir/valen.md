@@ -1,10 +1,6 @@
-# Overlay Strings: Valentine's Day (`CDROM/EXEDIR/VALEN.EXN`)
+# Overlay strings, Valentine's Day (`CDROM/EXEDIR/VALEN.EXN`)
 
-- **File Path**: `system/exedir/valen.md`
-- **Total Lines**: 13
-- **Translated Lines**: 13
-- **Ready for Review**: 0
-- **Unresolved**: 13
+File `system/exedir/valen.md` contains 13 translated lines, 0 empty source slots, and 13 total records (0 ready for review, 13 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

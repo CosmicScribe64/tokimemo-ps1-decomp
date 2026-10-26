@@ -1,10 +1,6 @@
-# Dialogue: Karaoke Data (`CDROM/SERIFU/KARADATA.BIN`)
+# Dialogue, Karaoke Data (`CDROM/SERIFU/KARADATA.BIN`)
 
-- **File Path**: `dialogue/serifu/karadata.md`
-- **Total Lines**: 53
-- **Translated Lines**: 53
-- **Ready for Review**: 53
-- **Unresolved**: 0
+File `dialogue/serifu/karadata.md` contains 53 translated lines, 0 empty source slots, and 53 total records (53 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

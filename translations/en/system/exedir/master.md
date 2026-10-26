@@ -1,10 +1,6 @@
-# Overlay Strings: Master System Sequences (`CDROM/EXEDIR/MASTER.EXN`)
+# Overlay strings, Master System Sequences (`CDROM/EXEDIR/MASTER.EXN`)
 
-- **File Path**: `system/exedir/master.md`
-- **Total Lines**: 39
-- **Translated Lines**: 39
-- **Ready for Review**: 0
-- **Unresolved**: 39
+File `system/exedir/master.md` contains 39 translated lines, 0 empty source slots, and 39 total records (0 ready for review, 39 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Date Fu — Fujisaki Shiori (`CDROM/SERIFU/DATE_FU.BIN`)
+# Dialogue, Date Fu, Fujisaki Shiori (`CDROM/SERIFU/DATE_FU.BIN`)
 
-- **File Path**: `dialogue/serifu/date_fu.md`
-- **Total Lines**: 476
-- **Translated Lines**: 476
-- **Ready for Review**: 476
-- **Unresolved**: 0
+File `dialogue/serifu/date_fu.md` contains 476 translated lines, 0 empty source slots, and 476 total records (476 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Date Kg — Kagami Mira (`CDROM/SERIFU/DATE_KG.BIN`)
+# Dialogue, Date Kg, Kagami Mira (`CDROM/SERIFU/DATE_KG.BIN`)
 
-- **File Path**: `dialogue/serifu/date_kg.md`
-- **Total Lines**: 498
-- **Translated Lines**: 494
-- **Ready for Review**: 494
-- **Unresolved**: 4
+File `dialogue/serifu/date_kg.md` contains 494 translated lines, 4 empty source slots, and 498 total records (494 ready for review, 4 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

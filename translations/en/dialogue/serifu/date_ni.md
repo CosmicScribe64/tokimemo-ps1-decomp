@@ -1,10 +1,6 @@
-# Dialogue: Date Ni — Nijino Saki (`CDROM/SERIFU/DATE_NI.BIN`)
+# Dialogue, Date Ni, Nijino Saki (`CDROM/SERIFU/DATE_NI.BIN`)
 
-- **File Path**: `dialogue/serifu/date_ni.md`
-- **Total Lines**: 469
-- **Translated Lines**: 469
-- **Ready for Review**: 469
-- **Unresolved**: 0
+File `dialogue/serifu/date_ni.md` contains 469 translated lines, 0 empty source slots, and 469 total records (469 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Dialogue: Event As — Asahina Yuko (`CDROM/SERIFU/EVENT_AS.BIN`)
+# Dialogue, Event As, Asahina Yuko (`CDROM/SERIFU/EVENT_AS.BIN`)
 
-- **File Path**: `dialogue/serifu/event_as.md`
-- **Total Lines**: 89
-- **Translated Lines**: 89
-- **Ready for Review**: 89
-- **Unresolved**: 0
+File `dialogue/serifu/event_as.md` contains 89 translated lines, 0 empty source slots, and 89 total records (89 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

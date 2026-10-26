@@ -1,10 +1,6 @@
-# Dictionary Tables: `CDROM/EXEDIR/NAME_ENT.EXN`
+# Dictionary tables (`CDROM/EXEDIR/NAME_ENT.EXN`)
 
-- **File Path**: `system/dictionaries/name_ent_exn.md`
-- **Total Lines**: 124
-- **Translated Lines**: 124
-- **Ready for Review**: 124
-- **Unresolved**: 0
+File `system/dictionaries/name_ent_exn.md` contains 124 translated lines, 0 empty source slots, and 124 total records (124 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

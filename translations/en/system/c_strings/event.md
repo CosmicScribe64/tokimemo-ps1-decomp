@@ -1,10 +1,6 @@
-# C Code Strings: Story Events Overlay (`EVENT`)
+# C code strings, Story Events Overlay (`EVENT`)
 
-- **File Path**: `system/c_strings/event.md`
-- **Total Lines**: 188
-- **Translated Lines**: 188
-- **Ready for Review**: 0
-- **Unresolved**: 188
+File `system/c_strings/event.md` contains 188 translated lines, 0 empty source slots, and 188 total records (0 ready for review, 188 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Cultural Club Activities (`BUNKAKEN`)
+# C code strings, Cultural Club Activities (`BUNKAKEN`)
 
-- **File Path**: `system/c_strings/bunkaken.md`
-- **Total Lines**: 24
-- **Translated Lines**: 24
-- **Ready for Review**: 17
-- **Unresolved**: 7
+File `system/c_strings/bunkaken.md` contains 24 translated lines, 0 empty source slots, and 24 total records (17 ready for review, 7 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

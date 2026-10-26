@@ -1,10 +1,6 @@
-# C Code Strings: School Trip to Kyoto (`SHUGAKU`)
+# C code strings, School Trip to Kyoto (`SHUGAKU`)
 
-- **File Path**: `system/c_strings/shugaku.md`
-- **Total Lines**: 36
-- **Translated Lines**: 36
-- **Ready for Review**: 6
-- **Unresolved**: 30
+File `system/c_strings/shugaku.md` contains 36 translated lines, 0 empty source slots, and 36 total records (6 ready for review, 30 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# Overlay Strings: School Trip to Kyoto (`CDROM/EXEDIR/SHUGAKU.EXN`)
+# Overlay strings, School Trip to Kyoto (`CDROM/EXEDIR/SHUGAKU.EXN`)
 
-- **File Path**: `system/exedir/shugaku.md`
-- **Total Lines**: 38
-- **Translated Lines**: 38
-- **Ready for Review**: 0
-- **Unresolved**: 38
+File `system/exedir/shugaku.md` contains 38 translated lines, 0 empty source slots, and 38 total records (0 ready for review, 38 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

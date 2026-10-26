@@ -1,10 +1,6 @@
-# Dialogue: Kg S6S — Kagami Mira (`CDROM/BUNKA/KG_S6S.BIN`)
+# Dialogue, Kg S6S, Kagami Mira (`CDROM/BUNKA/KG_S6S.BIN`)
 
-- **File Path**: `dialogue/bunka/kg_s6s.md`
-- **Total Lines**: 29
-- **Translated Lines**: 29
-- **Ready for Review**: 29
-- **Unresolved**: 0
+File `dialogue/bunka/kg_s6s.md` contains 29 translated lines, 0 empty source slots, and 29 total records (29 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

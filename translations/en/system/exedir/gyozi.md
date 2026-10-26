@@ -1,10 +1,6 @@
-# Overlay Strings: School Calendar & Events (`CDROM/EXEDIR/GYOZI.EXN`)
+# Overlay strings, School Calendar & Events (`CDROM/EXEDIR/GYOZI.EXN`)
 
-- **File Path**: `system/exedir/gyozi.md`
-- **Total Lines**: 69
-- **Translated Lines**: 69
-- **Ready for Review**: 0
-- **Unresolved**: 69
+File `system/exedir/gyozi.md` contains 69 translated lines, 0 empty source slots, and 69 total records (0 ready for review, 69 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

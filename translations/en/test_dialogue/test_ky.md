@@ -1,10 +1,6 @@
-# Test Dialogue: Kiyokawa Nozomi (`CDROM/SPEAKTST/TEST_KY.BIN`)
+# Test dialogue, Kiyokawa Nozomi (`CDROM/SPEAKTST/TEST_KY.BIN`)
 
-- **File Path**: `test_dialogue/test_ky.md`
-- **Total Lines**: 1773
-- **Translated Lines**: 1736
-- **Ready for Review**: 0
-- **Unresolved**: 1773
+File `test_dialogue/test_ky.md` contains 1736 translated lines, 37 empty source slots, and 1773 total records (0 ready for review, 1773 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

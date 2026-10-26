@@ -1,10 +1,6 @@
-# Dialogue: Date Ky — Kiyokawa Nozomi (`CDROM/SERIFU/DATE_KY.BIN`)
+# Dialogue, Date Ky, Kiyokawa Nozomi (`CDROM/SERIFU/DATE_KY.BIN`)
 
-- **File Path**: `dialogue/serifu/date_ky.md`
-- **Total Lines**: 472
-- **Translated Lines**: 468
-- **Ready for Review**: 468
-- **Unresolved**: 4
+File `dialogue/serifu/date_ky.md` contains 468 translated lines, 4 empty source slots, and 472 total records (468 ready for review, 4 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

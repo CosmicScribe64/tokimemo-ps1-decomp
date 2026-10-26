@@ -1,10 +1,6 @@
-# Dialogue: Date Hi — Himoo Yuina (`CDROM/SERIFU/DATE_HI.BIN`)
+# Dialogue, Date Hi, Himoo Yuina (`CDROM/SERIFU/DATE_HI.BIN`)
 
-- **File Path**: `dialogue/serifu/date_hi.md`
-- **Total Lines**: 452
-- **Translated Lines**: 446
-- **Ready for Review**: 446
-- **Unresolved**: 6
+File `dialogue/serifu/date_hi.md` contains 446 translated lines, 6 empty source slots, and 452 total records (446 ready for review, 6 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

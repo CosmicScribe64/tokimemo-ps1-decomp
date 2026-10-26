@@ -1,10 +1,6 @@
-# Supplemental Text: Kanji Character Entry Table (`CDROM/FUKUTEST/NAME_KAN.NBN`)
+# Supplemental text, Kanji Character Entry Table (`CDROM/FUKUTEST/NAME_KAN.NBN`)
 
-- **File Path**: `supplemental/name_kan.md`
-- **Total Lines**: 1
-- **Translated Lines**: 1
-- **Ready for Review**: 1
-- **Unresolved**: 0
+File `supplemental/name_kan.md` contains 1 translated lines, 0 empty source slots, and 1 total records (1 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

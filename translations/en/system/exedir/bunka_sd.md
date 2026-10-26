@@ -1,10 +1,6 @@
-# Overlay Strings: Cultural Festival Chibi Events (`CDROM/EXEDIR/BUNKA_SD.EXN`)
+# Overlay strings, Cultural Festival Chibi Events (`CDROM/EXEDIR/BUNKA_SD.EXN`)
 
-- **File Path**: `system/exedir/bunka_sd.md`
-- **Total Lines**: 322
-- **Translated Lines**: 322
-- **Ready for Review**: 0
-- **Unresolved**: 322
+File `system/exedir/bunka_sd.md` contains 322 translated lines, 0 empty source slots, and 322 total records (0 ready for review, 322 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

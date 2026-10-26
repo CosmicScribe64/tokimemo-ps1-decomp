@@ -1,10 +1,6 @@
-# Miscellaneous Runtime & Buffer Strings
+# Miscellaneous runtime and buffer strings
 
-- **File Path**: `system/misc.md`
-- **Total Lines**: 31
-- **Translated Lines**: 31
-- **Ready for Review**: 0
-- **Unresolved**: 31
+File `system/misc.md` contains 31 translated lines, 0 empty source slots, and 31 total records (0 ready for review, 31 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

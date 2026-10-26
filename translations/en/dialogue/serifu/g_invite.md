@@ -1,10 +1,6 @@
-# Dialogue: Girl Invitation Events (`CDROM/SERIFU/G_INVITE.BIN`)
+# Dialogue, Girl Invitation Events (`CDROM/SERIFU/G_INVITE.BIN`)
 
-- **File Path**: `dialogue/serifu/g_invite.md`
-- **Total Lines**: 365
-- **Translated Lines**: 351
-- **Ready for Review**: 351
-- **Unresolved**: 14
+File `dialogue/serifu/g_invite.md` contains 351 translated lines, 14 empty source slots, and 365 total records (351 ready for review, 14 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

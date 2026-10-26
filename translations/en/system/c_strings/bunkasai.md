@@ -1,10 +1,6 @@
-# C Code Strings: Cultural Festival System (`BUNKASAI`)
+# C code strings, Cultural Festival System (`BUNKASAI`)
 
-- **File Path**: `system/c_strings/bunkasai.md`
-- **Total Lines**: 20
-- **Translated Lines**: 20
-- **Ready for Review**: 15
-- **Unresolved**: 5
+File `system/c_strings/bunkasai.md` contains 20 translated lines, 0 empty source slots, and 20 total records (15 ready for review, 5 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

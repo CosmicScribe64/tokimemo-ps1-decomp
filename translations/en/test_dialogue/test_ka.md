@@ -1,10 +1,6 @@
-# Test Dialogue: Katagiri Ayako (`CDROM/SPEAKTST/TEST_KA.BIN`)
+# Test dialogue, Katagiri Ayako (`CDROM/SPEAKTST/TEST_KA.BIN`)
 
-- **File Path**: `test_dialogue/test_ka.md`
-- **Total Lines**: 1447
-- **Translated Lines**: 1428
-- **Ready for Review**: 0
-- **Unresolved**: 1447
+File `test_dialogue/test_ka.md` contains 1428 translated lines, 19 empty source slots, and 1447 total records (0 ready for review, 1447 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

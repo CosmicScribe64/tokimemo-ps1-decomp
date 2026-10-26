@@ -1,10 +1,6 @@
-# Overlay Strings: Table Tennis Minigame (`CDROM/EXEDIR/TT.EXN`)
+# Overlay strings, Table Tennis Minigame (`CDROM/EXEDIR/TT.EXN`)
 
-- **File Path**: `system/exedir/tt.md`
-- **Total Lines**: 12
-- **Translated Lines**: 12
-- **Ready for Review**: 0
-- **Unresolved**: 12
+File `system/exedir/tt.md` contains 12 translated lines, 0 empty source slots, and 12 total records (0 ready for review, 12 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

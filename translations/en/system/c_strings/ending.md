@@ -1,10 +1,6 @@
-# C Code Strings: Ending Sequences (`ENDING`)
+# C code strings, Ending Sequences (`ENDING`)
 
-- **File Path**: `system/c_strings/ending.md`
-- **Total Lines**: 29
-- **Translated Lines**: 29
-- **Ready for Review**: 5
-- **Unresolved**: 24
+File `system/c_strings/ending.md` contains 29 translated lines, 0 empty source slots, and 29 total records (5 ready for review, 24 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

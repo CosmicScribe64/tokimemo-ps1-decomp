@@ -1,10 +1,6 @@
-# Dialogue: Event Sa — Saotome Yumi (`CDROM/SERIFU/EVENT_SA.BIN`)
+# Dialogue, Event Sa, Saotome Yumi (`CDROM/SERIFU/EVENT_SA.BIN`)
 
-- **File Path**: `dialogue/serifu/event_sa.md`
-- **Total Lines**: 161
-- **Translated Lines**: 160
-- **Ready for Review**: 160
-- **Unresolved**: 1
+File `dialogue/serifu/event_sa.md` contains 160 translated lines, 1 empty source slots, and 161 total records (160 ready for review, 1 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

@@ -1,10 +1,6 @@
-# C Code Strings: Online Help System (`OLH`)
+# C code strings, Online Help System (`OLH`)
 
-- **File Path**: `system/c_strings/olh.md`
-- **Total Lines**: 228
-- **Translated Lines**: 228
-- **Ready for Review**: 228
-- **Unresolved**: 0
+File `system/c_strings/olh.md` contains 228 translated lines, 0 empty source slots, and 228 total records (228 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

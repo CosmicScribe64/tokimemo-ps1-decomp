@@ -1,10 +1,6 @@
-# Overlay Strings: Sports Festival System (`CDROM/EXEDIR/TAIIKU.EXN`)
+# Overlay strings, Sports Festival System (`CDROM/EXEDIR/TAIIKU.EXN`)
 
-- **File Path**: `system/exedir/taiiku.md`
-- **Total Lines**: 31
-- **Translated Lines**: 31
-- **Ready for Review**: 0
-- **Unresolved**: 31
+File `system/exedir/taiiku.md` contains 31 translated lines, 0 empty source slots, and 31 total records (0 ready for review, 31 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

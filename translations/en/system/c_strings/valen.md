@@ -1,10 +1,6 @@
-# C Code Strings: Valentine's Day (`VALEN`)
+# C code strings, Valentine's Day (`VALEN`)
 
-- **File Path**: `system/c_strings/valen.md`
-- **Total Lines**: 13
-- **Translated Lines**: 13
-- **Ready for Review**: 0
-- **Unresolved**: 13
+File `system/c_strings/valen.md` contains 13 translated lines, 0 empty source slots, and 13 total records (0 ready for review, 13 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

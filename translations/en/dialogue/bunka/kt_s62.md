@@ -1,10 +1,6 @@
-# Dialogue: Kt S62 — Katagiri Ayako (`CDROM/BUNKA/KT_S62.BIN`)
+# Dialogue, Kt S62, Katagiri Ayako (`CDROM/BUNKA/KT_S62.BIN`)
 
-- **File Path**: `dialogue/bunka/kt_s62.md`
-- **Total Lines**: 623
-- **Translated Lines**: 623
-- **Ready for Review**: 623
-- **Unresolved**: 0
+File `dialogue/bunka/kt_s62.md` contains 623 translated lines, 0 empty source slots, and 623 total records (623 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

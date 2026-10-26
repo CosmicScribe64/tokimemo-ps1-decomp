@@ -1,10 +1,6 @@
-# Dialogue: Date As — Asahina Yuko (`CDROM/SERIFU/DATE_AS.BIN`)
+# Dialogue, Date As, Asahina Yuko (`CDROM/SERIFU/DATE_AS.BIN`)
 
-- **File Path**: `dialogue/serifu/date_as.md`
-- **Total Lines**: 460
-- **Translated Lines**: 460
-- **Ready for Review**: 460
-- **Unresolved**: 0
+File `dialogue/serifu/date_as.md` contains 460 translated lines, 0 empty source slots, and 460 total records (460 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

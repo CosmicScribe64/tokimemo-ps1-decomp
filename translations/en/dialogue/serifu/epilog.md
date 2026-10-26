@@ -1,10 +1,6 @@
-# Dialogue: Epilogue Sequences (`CDROM/SERIFU/EPILOG.BIN`)
+# Dialogue, Epilogue Sequences (`CDROM/SERIFU/EPILOG.BIN`)
 
-- **File Path**: `dialogue/serifu/epilog.md`
-- **Total Lines**: 134
-- **Translated Lines**: 118
-- **Ready for Review**: 118
-- **Unresolved**: 16
+File `dialogue/serifu/epilog.md` contains 118 translated lines, 16 empty source slots, and 134 total records (118 ready for review, 16 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

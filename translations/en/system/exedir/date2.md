@@ -1,10 +1,6 @@
-# Overlay Strings: Extended Date Outings (`CDROM/EXEDIR/DATE2.EXN`)
+# Overlay strings, Extended Date Outings (`CDROM/EXEDIR/DATE2.EXN`)
 
-- **File Path**: `system/exedir/date2.md`
-- **Total Lines**: 17
-- **Translated Lines**: 17
-- **Ready for Review**: 0
-- **Unresolved**: 17
+File `system/exedir/date2.md` contains 17 translated lines, 0 empty source slots, and 17 total records (0 ready for review, 17 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

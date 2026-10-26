@@ -1,10 +1,6 @@
-# Dialogue: Sick Visit (`CDROM/SERIFU/OMIMAI.BIN`)
+# Dialogue, Sick Visit (`CDROM/SERIFU/OMIMAI.BIN`)
 
-- **File Path**: `dialogue/serifu/omimai.md`
-- **Total Lines**: 79
-- **Translated Lines**: 79
-- **Ready for Review**: 79
-- **Unresolved**: 0
+File `dialogue/serifu/omimai.md` contains 79 translated lines, 0 empty source slots, and 79 total records (79 ready for review, 0 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |

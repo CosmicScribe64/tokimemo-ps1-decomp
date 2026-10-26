@@ -1,10 +1,6 @@
-# Dialogue: Kosien (`CDROM/MASTER/KOSIEN.BIN`)
+# Dialogue, Kosien (`CDROM/MASTER/KOSIEN.BIN`)
 
-- **File Path**: `dialogue/master/kosien.md`
-- **Total Lines**: 30
-- **Translated Lines**: 30
-- **Ready for Review**: 0
-- **Unresolved**: 30
+File `dialogue/master/kosien.md` contains 30 translated lines, 0 empty source slots, and 30 total records (0 ready for review, 30 unresolved).
 
 | ID | Status | Translation | Notes |
 | :--- | :--- | :--- | :--- |
