@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29004: native menu-modeA input and confirmation for commands0/7.
+## T-29004 / T-29014: native menu-modeA input and confirmation for ordinary commands.
 ## Source menu_cursor_update(0), settings_command_screen_icon_confirm.
 
 const InputFrame = preload("res://core/input_frame.gd")
@@ -55,7 +55,7 @@ static func confirm(state: State, input: InputFrame, result: Session.FrameResult
 	var selected: int = data["menu_cursor"]
 	if (input.pressed & 0x20) == 0:
 		return
-	if selected not in [0, 7]:
+	if selected not in [0, 1, 2, 3, 5, 6, 7]:
 		result.error = "selected native command is not implemented: %d" % selected
 		return
 	# Launch-time media capabilities come from the strict external pack loader.

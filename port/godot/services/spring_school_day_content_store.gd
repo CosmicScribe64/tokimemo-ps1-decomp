@@ -12,6 +12,7 @@ const READERS := ["tools/assets/input.py:open_input", "tools/assets/image_packs_
 const CAPABILITIES := ["command_1_april_school_day", "command_2_april_school_day", "command_3_april_school_day"]
 const MAX_MANIFEST := 8 * 1024 * 1024
 const MAX_PNG := 2 * 1024 * 1024
+const ExternalContentPath = preload("res://services/external_content_path.gd")
 
 var _root := ""
 var _components: Dictionary = {}
@@ -21,22 +22,20 @@ func open_pack(root: String, expected_manifest_sha256: String = MANIFEST_SHA) ->
 	_clear()
 	if expected_manifest_sha256 != MANIFEST_SHA:
 		return _fail("spring content requires the reviewed manifest identity")
-	var cache_root := ProjectSettings.globalize_path("res://../../.asset-cache/port").simplify_path()
-	if not _canonical_posix_path(cache_root) or _has_symlink(cache_root) or not DirAccess.dir_exists_absolute(cache_root):
-		return _fail("repository .asset-cache/port root is unavailable or unsafe")
 	if not _canonical_posix_path(root):
 		return _fail("spring content path must be a canonical absolute POSIX path")
-	var canonical := root
-	var cache_prefix := cache_root.trim_suffix("/") + "/"
-	if not root.begins_with(cache_prefix):
-		return _fail("spring content must remain outside res:// under repository .asset-cache/port")
-	var pack_name := root.trim_prefix(cache_prefix)
-	if pack_name.is_empty() or pack_name.contains("/") or pack_name.contains("\\"):
-		return _fail("spring content pack must be a direct child of .asset-cache/port")
+	if not ExternalContentPath.is_external_path(root):
+		var project_root := ProjectSettings.globalize_path("res://").simplify_path().trim_suffix("/")
+		if root == project_root or root.begins_with(project_root + "/"):
+			return _fail("spring content must remain outside res:// under repository .asset-cache/port")
+		if _has_symlink(root):
+			return _fail("spring content pack path contains a symlink")
+		return _fail("spring content pack path is not a safe external path")
 	if _has_symlink(root):
 		return _fail("spring content pack path contains a symlink")
 	if not DirAccess.dir_exists_absolute(root):
 		return _fail("spring content pack directory is missing")
+	var canonical := root
 	var assets_root := canonical.path_join("assets")
 	if _has_symlink(assets_root) or not DirAccess.dir_exists_absolute(assets_root):
 		return _fail("spring content assets directory is missing, linked, or unsafe")

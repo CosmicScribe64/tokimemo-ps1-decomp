@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29004: actual command0/7 school_day.c arithmetic and stage1/2 behavior.
+## T-29004 / T-29014: actual school_day.c arithmetic and stage1/2 behavior.
 
 const Math = preload("res://core/native_math.gd")
 const State = preload("res://rules/school_day_state.gd")
@@ -7,8 +7,8 @@ const Session = preload("res://core/game_session.gd")
 
 static func apply_parameters(state: State, command: int, holiday_factor: int,
 	result_divisor: int, tables: Dictionary) -> String:
-	if command != 0 and command != 7:
-		return "parameter_up_down supports only captured commands0/7"
+	if command not in [0, 1, 2, 3, 5, 6, 7]:
+		return "parameter_up_down supports only captured commands 0..3, 5..7"
 	if not tables.has("command_deltas") or tables["command_deltas"].size() != 8:
 		return "required original command_deltas table is missing"
 	var deltas: Array = tables["command_deltas"][command]

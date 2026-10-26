@@ -13,6 +13,7 @@ const Pad = preload("res://ui/native_pad.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
 const ActorService = preload("res://presentation/school_day_actor_service.gd")
 const MediaStore = preload("res://services/school_day_media_store.gd")
+const MediaAdapter = preload("res://services/ordinary_command_media_adapter.gd")
 const LiveHud = preload("res://presentation/live_hud_adapter.gd")
 const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
 var hud: LiveHud
@@ -25,15 +26,13 @@ var state: State
 var pad: Pad
 var canvas: Canvas
 var media: MediaStore
+var adapter: MediaAdapter = MediaAdapter.new()
 var actor_service: ActorService = ActorService.new()
 var resources: Dictionary = {}
 var background: Array[Dictionary] = []
 var command_resources: Dictionary = {}
 var command_backgrounds: Dictionary = {}
-const MEDIA_ROUTES: Dictionary = {
-	0: {"background_lba": 16131, "sd_set_id": 3, "sd_lba": 42541},
-	7: {"background_lba": 16283, "sd_set_id": 16, "sd_lba": 43074},
-}
+const MEDIA_ROUTES: Dictionary = MediaAdapter.MEDIA_ROUTES
 var staged_commands: Array[Dictionary] = []
 var staged_services: Array[Dictionary] = []
 var pending_services: Array[Dictionary] = []
@@ -60,9 +59,14 @@ var supported_stop: Dictionary = {}
 const HOLIDAY_STOP: String = "ordinary-week next branch requires native type0x10 at index9 (95-04-09)"
 
 func _capture_prefix() -> String:
-	if smoke_command == 7 or (state != null and state.rule_state.get("last_command") == 7):
+	var cmd: int = smoke_command
+	if cmd == 0 and state != null and state.rule_state.has("last_command"):
+		cmd = state.rule_state["last_command"] & 15
+	if cmd == 7:
 		return "T-29009-rest-week" if continue_week else "T-29008-rest"
-	return "T-29009-week" if continue_week else "T-29008-playable"
+	if cmd == 0:
+		return "T-29009-week" if continue_week else "T-29008-playable"
+	return ("T-29014-command%d-week" if continue_week else "T-29014-command%d") % cmd
 
 func _week_continuation_enabled() -> bool:
 	return continue_week
@@ -133,8 +137,8 @@ func _ready() -> void:
 	if not failure.is_empty():
 		_stop(failure)
 		return
-	if smoke_command not in [0, 7]:
-		_stop("only source command0/7 scripted input recipes are available")
+	if smoke_command not in [0, 1, 2, 3, 5, 6, 7]:
+		_stop("only source commands 0-3, 5-7 scripted input recipes are available")
 		return
 	if smoke and (not output_root.is_absolute_path() or not DirAccess.dir_exists_absolute(output_root)):
 		_stop("smoke requires an existing absolute output directory")
@@ -166,6 +170,12 @@ func _load_inputs() -> String:
 	var state_path: String = OS.get_environment("TOKIMEMO_BOUNDARY")
 	var table_path: String = OS.get_environment("TOKIMEMO_TABLES")
 	var media_path: String = OS.get_environment("TOKIMEMO_MEDIA_PACK")
+	var spring_pack: String = OS.get_environment("T29014_SPRING_PACK")
+	if spring_pack.is_empty():
+		spring_pack = OS.get_environment("TOKIMEMO_SPRING_PACK")
+	var weekday56_pack: String = OS.get_environment("T29014_WEEKDAY56_PACK")
+	if weekday56_pack.is_empty():
+		weekday56_pack = OS.get_environment("TOKIMEMO_WEEKDAY56_PACK")
 	if OS.get_environment("TOKIMEMO_BOUNDARY_SHA") != BOUNDARY_SHA or OS.get_environment("TOKIMEMO_TABLES_SHA") != TABLES_SHA:
 		return "unsupported development boundary/table profile; use the reviewed captured inputs"
 	if not _verified_external(state_path, OS.get_environment("TOKIMEMO_BOUNDARY_SHA")):
@@ -186,39 +196,15 @@ func _load_inputs() -> String:
 	controller = Controller.new(table_pack["tables"])
 	if not controller.error.is_empty():
 		return controller.error
-	media = MediaStore.new()
-	if not media.open_pack(media_path):
-		return "mandatory media preflight: " + media.error_message()
-	var prepared_resources: Dictionary = {}
-	var prepared_backgrounds: Dictionary = {}
-	for command: int in [0, 7]:
-		var bg: Dictionary = media.get_background("command_%d_background" % command)
-		if command == 7 and bg.is_empty():
-			continue # A validated v1 pack supports only command0.
-		var commands: Array[Dictionary] = Canvas.background_commands(bg["image_data"], bg["id"])
-		if commands.is_empty():
-			return "required command-%d active background geometry unavailable" % command
-		var key: String = "command_%d_sd" % command
-		var steps: Array = _integers(media.get_sequence(key, 0))
-		if steps.is_empty():
-			return "required command-%d sequence is missing" % command
-		var frames: Dictionary = {}
-		for step: Dictionary in steps:
-			var frame: Dictionary = media.get_frame(key, step["frame_index"])
-			if frame.is_empty():
-				return "required command-%d frame is missing" % command
-			var bounds: Array = frame["bounds"]
-			var origin: Array = frame["origin"]
-			frames[str(step["frame_index"])] = {"id": frame["id"], "image": frame["image"],
-				"bounds": Rect2i(int(bounds[0]), int(bounds[1]), int(bounds[2]), int(bounds[3])),
-				"origin": Vector2i(int(origin[0]), int(origin[1]))}
-		prepared_resources[command] = {"sequences": {"0": steps}, "frames": frames}
-		prepared_backgrounds[command] = commands
-	command_resources = prepared_resources
-	command_backgrounds = prepared_backgrounds
-	controller.command_capabilities.assign(command_resources.keys())
-	resources = command_resources[0]
-	background = command_backgrounds[0]
+	var adapter_err: String = adapter.open_packs(media_path, spring_pack, weekday56_pack)
+	if not adapter_err.is_empty():
+		return adapter_err
+	media = adapter.media
+	command_resources = adapter.command_resources
+	command_backgrounds = adapter.command_backgrounds
+	controller.command_capabilities.assign(adapter.get_available_commands())
+	resources = command_resources.get(0, {})
+	background = command_backgrounds.get(0, [])
 	var hud_manifest: String = OS.get_environment("TOKIMEMO_HUD_MANIFEST")
 	var require_hud: bool = OS.get_environment("TOKIMEMO_REQUIRE_HUD") == "1" \
 		or not hud_manifest.is_empty() \
@@ -323,10 +309,12 @@ func _physics_process(_delta: float) -> void:
 		var mask_key: int = KEY_ENTER
 		var pressed_tick: int = 17 if smoke_command == 0 else 97
 		var released_tick: int = 23 if smoke_command == 0 else 103
-		if smoke_command == 7 and tick < 75:
-			mask_key = KEY_RIGHT
-			pressed_tick = tick if tick % 10 == 7 else -1
-			released_tick = tick if tick % 10 == 1 else -1
+		if smoke_command > 0 and tick < 75:
+			var step_index: int = tick / 10
+			if step_index < smoke_command:
+				mask_key = KEY_RIGHT
+				pressed_tick = tick if tick % 10 == 7 else -1
+				released_tick = tick if tick % 10 == 1 else -1
 		if tick == pressed_tick or tick == released_tick:
 			var event := InputEventKey.new()
 			event.physical_keycode = mask_key
@@ -451,6 +439,9 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 			if command == 7 and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96 or intent["actors"][0].get("sequence_slot") != 0):
 				result.error = "rest supports only the captured actor96 sequence0"
 				return
+			if command in [1, 2, 3, 5, 6] and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96):
+				result.error = "opening week command %d supports only solo actor96" % command
+				return
 			var initialized: Dictionary = actor_service.initialize(intent["actors"], command_resources[command])
 			if not initialized["error"].is_empty():
 				result.error = initialized["error"]
@@ -504,11 +495,16 @@ func _activity_command(current: State) -> int:
 		return -1
 	var data: Dictionary = current.rule_state
 	var event: Array = data["day_events"][data["day_event_index"]]
-	if event[0] != 0 or event[1] not in [0, 7]:
+	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 5, 6, 7]:
 		return -1
+	var health: int = (data["player_flags"] >> 8) & 15
 	if event[1] == 7:
 		var index: int = data["day_event_index"]
-		if event != [0, 7, 0, 15] or index not in [0, 2, 4, 6] or [data["year"], data["month"], data["day"]] != [95, 4, 5 + (index >> 1)] or data["vacation"] != 0 or ((data["player_flags"] >> 8) & 15) != 0:
+		if event != [0, 7, 0, 15] or index not in [0, 2, 4, 6] or [data["year"], data["month"], data["day"]] != [95, 4, 5 + (index >> 1)] or data["vacation"] != 0 or health != 0:
+			return -1
+	elif event[1] in [1, 2, 3, 5, 6]:
+		var index: int = data["day_event_index"]
+		if event[3] != 15 or index not in [0, 2, 4, 6] or [data["year"], data["month"], data["day"]] != [95, 4, 5 + (index >> 1)] or data["vacation"] != 0 or health != 0:
 			return -1
 	return event[1]
 

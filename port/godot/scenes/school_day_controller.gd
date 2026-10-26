@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29004: bounded command→real initial scheduler→one school-day result.
+## T-29004 / T-29014: bounded command→real initial scheduler→one school-day result.
 ## Content/services remain explicit. No fallback table or animation duration.
 
 const State = preload("res://rules/school_day_state.gd")
@@ -160,14 +160,30 @@ func _week_end(base: CoreState, _input: InputFrame, rng: Rng, result: Session.Fr
 	if state != null:
 		WeekEnd.step(state, rng, result)
 
+static func _sd_table_index(command: int, extra: int) -> int:
+	var variant: int = 1 if extra != 0 else 0
+	if command == 3 and extra == 5:
+		variant = 2
+	match command:
+		0: return 0 + variant
+		1: return 2 + variant
+		2: return 4 + variant
+		3: return 6 + variant
+		5: return 9 + variant
+		6: return 11 + variant
+		7: return 13
+		_: return -1
+
 func _load_descriptor(state: State, request: String) -> Dictionary:
 	var data: Dictionary = state.rule_state
 	var event: Array = data["day_events"][data["day_event_index"]]
+	var command: int = event[1]
 	var selection: Array = tables["sd_select_non_summer"]
-	var slot: int = selection[13] if event[1] == 7 else selection[0 if event[3] == 0 else 1]
-	return {"kind": "school_day_load", "request": request, "command": event[1],
+	var table_idx: int = _sd_table_index(command, event[3])
+	var slot: int = selection[table_idx] if table_idx >= 0 and table_idx < selection.size() else -1
+	return {"kind": "school_day_load", "request": request, "command": command,
 		"day_event_index": data["day_event_index"],
-		"background_lba": tables["weekday_background_lbas"][event[1]],
+		"background_lba": tables["weekday_background_lbas"][command],
 		"sd_set_id": slot, "sd_lba": tables["weekday_sd_lbas"][slot], "sectors": 41}
 
 func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
@@ -179,8 +195,11 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 		result.error = "school-day route outside initial April5–8 ordinary week"
 		return
 	var event: Array = data["day_events"][data["day_event_index"]]
-	if event[0] != 0 or event[1] not in [0, 7]:
+	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 5, 6, 7]:
 		result.error = "unsupported activity queue record"
+		return
+	if event[1] in [1, 2, 3, 5, 6] and event[3] != 15:
+		result.error = "companion variants for command %d are not supported in this tranche" % event[1]
 		return
 	match state.mode_stage:
 		0: _setup(state, result)

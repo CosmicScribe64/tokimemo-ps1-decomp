@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29009. Bounded initial-April day_event_dispatch; retains the complete queue.
+## T-29009 / T-29014. Bounded initial-April day_event_dispatch; retains the complete queue.
 ## Event overlays and holiday mode require further modules and stop explicitly.
 
 const State = preload("res://rules/school_day_state.gd")
@@ -104,7 +104,7 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 	var mode: int
 	match event[0]:
 		0:
-			if event[1] not in [0, 7]:
+			if event[1] not in [0, 1, 2, 3, 5, 6, 7]:
 				result.error = "ordinary-week activity command is unimplemented: %d" % event[1]
 				return
 			for icon: int in range(14):

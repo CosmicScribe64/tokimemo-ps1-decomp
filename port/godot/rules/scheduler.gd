@@ -115,6 +115,18 @@ static func poor_result(state: State, command: int, days_ahead: int, tables: Dic
 	var score: int = 16
 	if command == 0:
 		score = _wave(data, day_count, [0, 0, 1], 16, tables) + Math.divmod32(State.high(data["params"][1]), 16).quotient
+	elif command == 1:
+		score = _wave(data, day_count, [0, 0, 1], 16, tables) + Math.divmod32(State.high(data["params"][2]), 16).quotient
+	elif command == 2:
+		score = _wave(data, day_count, [0, 1, 0], 16, tables) + Math.divmod32(State.high(data["params"][3]), 16).quotient
+	elif command == 3:
+		score = _wave(data, day_count, [1, 0, 0], 16, tables) + Math.divmod32(State.high(data["params"][4]), 16).quotient
+	elif command == 5:
+		score = _wave(data, day_count, [0, 1, 0], 16, tables) + Math.divmod32(State.high(data["params"][5]), 16).quotient
+	elif command == 6:
+		score = _wave(data, day_count, [0, 1, 0], 16, tables) + Math.divmod32(State.high(data["params"][6]), 16).quotient
+	elif command == 7:
+		score = 16
 	score += 6
 	var stress: int = State.high(data["params"][8])
 	var stress_factor: int = 4 if stress >= 97 else Math.divmod32(stress, 32).quotient
@@ -134,8 +146,8 @@ static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> St
 		return failure
 	var data: Dictionary = state.rule_state
 	var command: int = data["last_command"] & 15
-	if command != 0 and command != 7:
-		return "initial queue supports only commands0/7"
+	if command not in [0, 1, 2, 3, 5, 6, 7]:
+		return "initial queue supports only commands0-3, 5-7"
 	data["progress_state"][0x15 + command % 9] = Math.u8(data["progress_state"][0x15 + command % 9] + 1)
 	if data["girls"][11]["counters"][0] != 0:
 		data["girls"][11]["counters"][0] = Math.u8(data["girls"][11]["counters"][0] - 1)
