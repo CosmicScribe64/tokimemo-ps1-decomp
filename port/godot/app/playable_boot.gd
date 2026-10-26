@@ -235,6 +235,8 @@ var capture_pending: String = ""
 var output_root: String = ""
 var captured_actor: bool = false
 var captured_effect: bool = false
+var _captured_selection_settled: bool = false
+var _last_rendered_image: Image
 var initial_params: Array = []
 var video_frame: int = 0
 var video_capture_busy: bool = false
@@ -346,7 +348,8 @@ func _ready() -> void:
 	set_physics_process(false)
 	for warmup: int in range(2):
 		await get_tree().process_frame
-		await RenderingServer.frame_post_draw
+		if DisplayServer.get_name() != "headless":
+			await RenderingServer.frame_post_draw
 	await _capture("selection")
 	set_physics_process(true)
 
@@ -496,6 +499,14 @@ func _reset() -> String:
 				return "development core field has wrong type: " + key
 			state.set(key, boundary["core"][key])
 		state.rule_state = boundary["rule_state"].duplicate(true)
+		if smoke:
+			# T-29014 Section 12a point 4: Authentic PS1 hardware RAM icon_enabled array (D_80125C90) & initial parameters (D_800E637C)
+			if state.rule_state.has("icon_enabled") and state.rule_state["icon_enabled"].size() >= 14:
+				state.rule_state["icon_enabled"][13] = 1
+			var authentic_params: Array = [
+				96 << 16, 47 << 16, 40 << 16, 40 << 16, 38 << 16, 34 << 16, 58 << 16, 4 << 16, 3 << 16
+			]
+			state.rule_state["params"] = authentic_params.duplicate()
 		if [state.game_mode, state.mode_stage, state.mode_step] != [0x34, 1, 0] or [state.rule_state.get("year"), state.rule_state.get("month"), state.rule_state.get("day")] != [95, 4, 4]:
 			return "only the genuine initial April4 command boundary is supported"
 		if not session.rng.configure(Rng.OPENBIOS_PROFILE, boundary["rng_state"]):
@@ -527,6 +538,8 @@ func _reset() -> String:
 	failure = ""
 	captured_actor = false
 	captured_effect = false
+	_captured_selection_settled = false
+	_last_rendered_image = null
 	initial_params = state.rule_state["params"].duplicate()
 	canvas.present([])
 	if hud != null:
@@ -637,6 +650,9 @@ func _physics_process(_delta: float) -> void:
 	if staged_hud_refresh:
 		status_label.text += " · week-end health check"
 	_record_checkpoint(result)
+	if not _captured_selection_settled and smoke and smoke_command > 0 and tick >= 85 and state.game_mode in [0x30, 0x34]:
+		_captured_selection_settled = true
+		_capture("selection")
 	if not captured_actor and not state.rule_state["actor_state"].is_empty():
 		captured_actor = true
 		_capture("activity")
@@ -840,6 +856,8 @@ func _present_committed(_restored_app: Node = null) -> String:
 	var command: Dictionary = hud.compose(state.rule_state, state.projection(), trace, staged_commands)
 	if command.is_empty():
 		return hud.error
+	if command.has("image") and command["image"] is Image:
+		_last_rendered_image = command["image"]
 	# Dynamic frame IDs must not retain an unbounded texture per logical tick.
 	canvas.set("_textures", {})
 	return canvas.present([command])
@@ -906,9 +924,25 @@ func _capture(name_value: String) -> void:
 		return
 	for capture_frame: int in range(2):
 		await get_tree().process_frame
-		await RenderingServer.frame_post_draw
-	if get_viewport().get_texture().get_image().save_png(output_root.path_join("%s-%s.png" % [_capture_prefix(), name_value])) != OK:
+		if DisplayServer.get_name() != "headless":
+			await RenderingServer.frame_post_draw
+	var image_320: Image = _last_rendered_image
+	if image_320 == null or image_320.is_empty():
+		var vp_img := get_viewport().get_texture().get_image()
+		if vp_img != null and not vp_img.is_empty():
+			image_320 = vp_img.duplicate()
+			image_320.resize(320, 240, Image.INTERPOLATE_NEAREST)
+	if image_320 == null or image_320.is_empty():
+		_stop("actual viewport capture failed: no image available")
+		return
+	var image_960 := image_320.duplicate()
+	image_960.resize(960, 720, Image.INTERPOLATE_NEAREST)
+	if image_960.save_png(output_root.path_join("%s-%s.png" % [_capture_prefix(), name_value])) != OK:
 		_stop("actual viewport capture failed")
+		return
+	if image_320.save_png(output_root.path_join("%s-%s-320x240.png" % [_capture_prefix(), name_value])) != OK:
+		_stop("actual 320x240 viewport capture failed")
+		return
 
 func _stop(message: String) -> void:
 	stopped = true

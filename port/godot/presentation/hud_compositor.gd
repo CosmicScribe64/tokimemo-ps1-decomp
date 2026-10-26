@@ -4,11 +4,15 @@ extends RefCounted
 
 const Layout = preload("res://ui/native_hud.gd")
 const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
+## T-29014 Section 12a point 1: 32x32 spring checkerboard frame tile (hud_screen_frame_draw, OT 15)
+const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA6ElEQVR4nMWWOw7CMAyGXatDRsaOHTkGR2HkCIwcpcdg7NgjdPQRGLOBEolKUZ4Kwv+/5vF9XmwP5215Uyb7c6XleqHezKeZbrsU7zCBw7kDa+1PHxtj+gWsEjwpoAmPBLThgQACfgig4F4ACfcCSLgrvrsP1OC18+//jIQnBTThkYA2PBBAwF1GWbfsI7k/SGx5nJYiL/EjvZRhkfw+0DLPS2nZJ5jA4X82mW4BowRPCmjCIwFteCCAgB8CKLgXQMK9ABLuiu/uAzV462xhJDwpoAmPBLThgQAC7jJOZso+apnnpbTsEx+OkpOxqxlT+wAAAABJRU5ErkJggg=="
+
 var error := ""
 var descriptor: Dictionary = {}
 var last_coverage: Image
 var _images: Dictionary = {}
 var _font: RefCounted
+var _checker_tile: Image
 
 func configure(manifest: Dictionary, images: Dictionary, font: RefCounted) -> void:
 	descriptor = {"frames": manifest["frames"].duplicate(true),
@@ -121,7 +125,7 @@ func render(state: Dictionary, previous_frame: Image = null,
 			return null
 		image = previous_frame.duplicate()
 	else:
-		image.fill(Color.BLACK)
+		_draw_checkerboard(image)
 	last_coverage = Image.create(320, 240, false, Image.FORMAT_L8)
 	last_coverage.fill(Color.BLACK)
 	# dec_bg_draw(0), draw_shake_update: 160/120 + (-160,-48) => 0/72.
@@ -152,6 +156,18 @@ func render(state: Dictionary, previous_frame: Image = null,
 			_draw_actor(image, actor)
 	return null if not error.is_empty() else image
 
+func _draw_checkerboard(target: Image) -> void:
+	if _checker_tile == null:
+		_checker_tile = Image.new()
+		if _checker_tile.load_png_from_buffer(Marshalls.base64_to_raw(CHECKER_TILE_B64)) != OK:
+			target.fill(Color8(40, 200, 160))
+			return
+	var w := _checker_tile.get_width()
+	var h := _checker_tile.get_height()
+	for ty in range(0, 240, 32):
+		for tx in range(0, 320, 32):
+			target.blit_rect(_checker_tile, Rect2i(0, 0, w, h), Vector2i(tx, ty))
+
 func _draw_actor(target: Image, actor: Dictionary) -> void:
 	var key := "%d:%s" % [actor["frame"], actor["variant"]]
 	if not descriptor["frames"].has(key):
@@ -167,19 +183,24 @@ func _draw_actor(target: Image, actor: Dictionary) -> void:
 func _draw_text(target: Image) -> void:
 	for run: Dictionary in descriptor["text_runs"]:
 		var codes: PackedByteArray = str(run["hex"]).hex_decode()
+		var attribute: int = int(run.get("attribute", 0))
+		var palette_row: int = attribute & 7
+		var palette_family: int = (attribute >> 3) & 1
+		var has_shadow: bool = attribute not in [3, 4, 5, 14, 15]
 		for i: int in range(0, codes.size(), 2):
-			var glyph: Dictionary = _font.get_glyph_image(codes.slice(i, i + 2), 0)
+			var glyph: Dictionary = _font.get_glyph_image(codes.slice(i, i + 2), palette_row, palette_family)
 			if glyph.get("status") != "glyph":
 				error = "source text glyph is unavailable"
 				return
 			var foreground: Image = glyph["image"]
-			var shadow: Image = foreground.duplicate()
-			for y: int in range(12):
-				for x: int in range(12):
-					if shadow.get_pixel(x, y).a > 0:
-						shadow.set_pixel(x, y, Color.BLACK)
 			var position := Vector2i(160 + int(run["position"][0]) + (i / 2) * 14, 120 + int(run["position"][1]))
-			_blit(target, shadow, null, position + Vector2i.ONE, false)
+			if has_shadow:
+				var shadow: Image = foreground.duplicate()
+				for y: int in range(12):
+					for x: int in range(12):
+						if shadow.get_pixel(x, y).a > 0:
+							shadow.set_pixel(x, y, Color.BLACK)
+				_blit(target, shadow, null, position + Vector2i.ONE, false)
 			_blit(target, foreground, null, position, false)
 
 func _image(spec: Dictionary) -> Image:
@@ -223,4 +244,3 @@ static func _actor(index: int, layer: int, frame: int, position: Vector2i,
 
 static func _integer(value: Variant) -> bool:
 	return (value is int or (value is float and is_finite(value) and floor(value) == value)) and not value is bool
-

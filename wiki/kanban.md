@@ -73,6 +73,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-29018-complete-overlay-port-and-shared-vn-runner|T-29018 Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction]]
+
 - [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]
 
 - [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
