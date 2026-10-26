@@ -2434,6 +2434,11 @@ Audited `port/godot/` against the decompiled C (`src/main/holiday.c`, `src/main/
 
 Integrated `tools/port/release_catalog.py`, `tools/port/test_release_catalog.py`, `port/godot/services/original_game_import_backend.gd`, and `port/godot/tests/app/run_multi_release_import_tests.gd` from `.claude/orchestrator/state/T-29017/multi-release-import-v1/`, moving [[tickets/T-29017-support-ps1-releases]] to In Progress. Catalogs and identifies all 5 known Japanese PS1 releases (`best_slpm_86053`, `rev4_slps_00065_v143`, `rev2_slps_00065_v125`, `rev1_slps_00065_v110`, `shokai_slps_00064_v110`) across directory, `.cue`, `.bin`/`.img`, `.iso`, and `.zip` containers using exact executable/overlay SHA-1 tables, ISO-9660 PVD Volume Set ID disambiguation, and `SYSTEM.CNF` boot target validation while keeping PlayStation the Best (`SLPM-86053`) as the strict extraction target (`19/19` Python tests and `56/56` Godot assertions passing in Docker).
 
+## [2026-10-25] ticket | Integrate 320x240 Prologue VN visual presentation with 0/300 emulator tile hotspots and update port progress to 35% / 95% (T-29012)
+
+Integrated `port/godot/presentation/prologue_presenter.gd` and `port/godot/tests/run_prologue_visual_tests.gd` from `.claude/orchestrator/state/T-29012/prologue-visual-v1/`, updating [[tickets/T-29012-native-new-game-initialization]], [[status]], and [[phase3]]. Implements `prologue_mode_handler` (`src/ovl/name_entry/prologue.c:2808-2820`), `hud_screen_frame_draw(0)` / `hud_screen_frame_draw(2)` (`src/main/hud_panels.c:1366-1461`), `hizuke_init` / `hizuke_show` Stage 0 date pillar (`1995-04-04` Tuesday) and Stage 1 `hizuke_disp_switch(0)` hiding, `message_window_set_title("プロローグ")` (`0x71..0x73` wooden badge), `gnsx` / `sndi` speaker centering and 3-row scroll (`y = 170, 186, 202`), and `hud_text_marker_set` (`0xF0` prompt marker). Canonical Docker verification passes `160/160` checks and `tools/port/verify_tile_diff.py --threshold 15.0 --max-hotspots 0` across all 5 PS1 emulator captures (`stage0_arrival`, `stage0_arrival_with_badge`, `stage1_board`, `stage13_shiori_line18`, `stage14_shiori_line19`) with `0 / 300` hotspot tiles and `Overall MAE = 0.185..0.258`. Published all 5 Prologue VN captures and updated `.asset-cache/port-progress/progress.json` to `35%` overall / `95%` first slice.
+
+
 
 
 

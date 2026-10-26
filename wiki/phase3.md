@@ -237,7 +237,7 @@ The plan passed independent standards/actionability and source/spec reviews. Int
 
 ## Overall progress reporting
 
-The user requested percentage updates for a fully playable Japanese port. The visual page reads `.asset-cache/port-progress/progress.json`; root updates it at meaningful demonstrated milestones. The current planning estimates are about 5% overall and 60% of the bounded first-activity development slice. These are estimates, not measured function coverage or a claim that the slice is accepted end to end.
+The user requested percentage updates for a fully playable Japanese port. The visual page reads `.asset-cache/port-progress/progress.json`; root updates it at meaningful demonstrated milestones. The current estimates are about 35% overall and 95% of the bounded first-activity development slice. These are estimates, not measured function coverage or a claim that the slice is accepted end to end.
 
 Use a fixed scope budget to keep future estimates consistent: runtime/content foundation 10%; shared presentation, text, audio, and saves 20%; ordinary calendar/daily rules 15%; New Game, relationships, annual events, story, and endings 30%; interactive subgames 15%; complete-release validation, packaging, and performance 10%. Credit demonstrated behavior and recorded checks, not draft/spec presence, extracted file counts, raw screenshots, or lines of code. The completed C decompilation is an input to this work. Widescreen and translated content remain the later roadmap phases.
 
