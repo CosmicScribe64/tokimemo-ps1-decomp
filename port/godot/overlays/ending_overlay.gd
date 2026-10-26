@@ -196,14 +196,14 @@ static func compute_girl_points_others(
 		points[m] += int(g.get("syoushin", 0)) * GIRL_SYOUSHIN_WEIGHT[m]
 
 	for i: int in range(1, 11):
-		for m: int in range(1, 8):
-			var pval: int = int(param_values[m]) if m < param_values.size() else 0
-			var clamped_param: int = mini(pval, 280)
-			var bucket: int = clampi(clamped_param / 20, 0, GIRL_POINTS_PARAM_CURVE.size() - 1)
+		for m: int in range(7):
+			var param_idx: int = 7 - m
+			var pval: int = int(param_values[param_idx]) if param_idx < param_values.size() else 0
+			var bucket: int = clampi(pval / 10, 0, GIRL_POINTS_PARAM_CURVE.size() - 1)
 			if ((GIRL_POINTS_MASK_STRONG[i] >> (7 - m)) & 1) != 0:
 				points[i] += GIRL_POINTS_PARAM_CURVE[bucket]
 				points[i] += GIRL_POINTS_PARAM_CURVE[bucket] / 2
-			elif ((GIRL_POINTS_MASK_NORMAL[i] >> (7 - m)) & 1) != 0:
+			if ((GIRL_POINTS_MASK_NORMAL[i] >> (7 - m)) & 1) != 0:
 				points[i] += GIRL_POINTS_PARAM_CURVE[bucket]
 
 	for m: int in range(1, 11):

@@ -280,12 +280,13 @@ func _test_title_menu_overlay_state_machine() -> void:
 func _test_render_visual_captures_and_bounding_boxes() -> void:
 	print("[8/8] Rendering authentic 320x240 captures & verifying Section 12a bounds...")
 
+	var repo := ProjectSettings.globalize_path("res://../..").simplify_path()
 	var font_root: String = OS.get_environment("FONT_ROOT")
 	if font_root.is_empty():
-		font_root = DEFAULT_FONT_ROOT
+		font_root = repo.path_join(".asset-cache/port/fonts/native-font-v2")
 	var capture_dir: String = OS.get_environment("CAPTURE_DIR")
 	if capture_dir.is_empty():
-		capture_dir = DEFAULT_CAPTURE_DIR
+		capture_dir = repo.path_join(".claude/orchestrator/state/T-29018/shared-vn-and-system-overlays-v1/captures")
 
 	DirAccess.make_dir_recursive_absolute(capture_dir)
 
@@ -313,16 +314,16 @@ func _test_render_visual_captures_and_bounding_boxes() -> void:
 	var img_title: Image = title_menu.render(presenter)
 	renders.append({"name": "capture_title_screen.png", "image": img_title})
 
-	# 4. Checkerboard Modes Capture
+	# 4. Checkerboard Modes Capture (full 10x8 scrolling grid + message window)
 	var img_checker := Image.create(320, 240, false, Image.FORMAT_RGBA8)
-	img_checker.fill(Color.BLACK)
-	presenter.draw_checkerboard_frame(img_checker, 1, Vector2i(10, 10))
+	presenter.draw_checkerboard_frame(img_checker, 0, Vector2i(10, -5))
+	presenter.draw_message_window(img_checker)
+	presenter.draw_vn_dialogue(img_checker, "93a18de8", ["8358835e815b8367837b835e839382c5"], false, 4)
 	renders.append({"name": "capture_checkerboard_modes.png", "image": img_checker})
 
 	# 5. VN Dialogue Capture
 	var img_vn := Image.create(320, 240, false, Image.FORMAT_RGBA8)
-	img_vn.fill(Color.BLACK)
-	presenter.draw_checkerboard_frame(img_vn, 2, Vector2i(0, 0))
+	presenter.draw_checkerboard_frame(img_vn, 0, Vector2i(6, -3))
 	presenter.draw_message_window(img_vn)
 	var dialogue_lines: Array[String] = [
 		"8358835e815b8367837b835e839382c5", # スタートボタンで (8 glyphs)

@@ -76,19 +76,25 @@ func open(media: MediaStore, extension_path: String, next_room: Image) -> String
 func initial_extension() -> Dictionary:
 	return _extension.duplicate(true) if _ready else {}
 
+var enable_subscreens: bool = false
+
 func handles(state: State) -> bool:
 	var data: Dictionary = state.rule_state
-	return state.game_mode == 0x46 or ([data.get("year"), data.get("month"), data.get("day")] == [95, 4, 9] and data.get("day_event_index") in [9, 10] and state.game_mode in [0x31, 0x34])
+	return state.game_mode in [0x46, 0x50] or ([data.get("year"), data.get("month"), data.get("day")] == [95, 4, 9] and data.get("day_event_index") in [9, 10] and state.game_mode in [0x31, 0x34])
 
 func stage(state: State, tick: int, result: Session.FrameResult) -> Dictionary:
 	if not _ready:
 		return _bad("holiday media adapter is not completely preflighted")
 	if not handles(state):
 		return _bad("holiday adapter received a state outside its captured route")
-	var failure: String = Holiday.validate(state)
+	var allow_subscreens: bool = enable_subscreens or state.game_mode == 0x50 or (state.game_mode == 0x46 and state.mode_stage in [0x10, 0x20, 0x30, 0xFE])
+	var failure: String = Holiday.validate(state, allow_subscreens)
 	if not failure.is_empty():
 		return _bad(failure)
 	var data: Dictionary = state.rule_state
+	var shown: int = data["background_cache"][data["background_show"]]
+	if state.game_mode == 0x50 or (state.game_mode == 0x46 and state.mode_stage in [0x10, 0x20, 0x30, 0xFE]):
+		return {"error": "", "draw_commands": [], "services": [], "screens": [], "active_lba": shown}
 	var commands: Array[Dictionary] = []
 	var services: Array[Dictionary] = []
 	var screens: Array[Dictionary] = []
@@ -117,7 +123,6 @@ func stage(state: State, tick: int, result: Session.FrameResult) -> Dictionary:
 				if not initialized["error"].is_empty():
 					return _bad(initialized["error"])
 				data["actor_state"] = initialized["actor_state"]
-	var shown: int = data["background_cache"][data["background_show"]]
 	if shown != 0:
 		if not backgrounds.has(shown):
 			return _bad("active holiday cache slot has no validated original image")

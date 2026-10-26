@@ -4,8 +4,21 @@ extends RefCounted
 
 const Layout = preload("res://ui/native_hud.gd")
 const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
-## T-29014 Section 12a point 1: 32x32 spring checkerboard frame tile (hud_screen_frame_draw, OT 15)
-const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA6ElEQVR4nMWWOw7CMAyGXatDRsaOHTkGR2HkCIwcpcdg7NgjdPQRGLOBEolKUZ4Kwv+/5vF9XmwP5215Uyb7c6XleqHezKeZbrsU7zCBw7kDa+1PHxtj+gWsEjwpoAmPBLThgQACfgig4F4ACfcCSLgrvrsP1OC18+//jIQnBTThkYA2PBBAwF1GWbfsI7k/SGx5nJYiL/EjvZRhkfw+0DLPS2nZJ5jA4X82mW4BowRPCmjCIwFteCCAgB8CKLgXQMK9ABLuiu/uAzV462xhJDwpoAmPBLThgQAC7jJOZso+apnnpbTsEx+OkpOxqxlT+wAAAABJRU5ErkJggg=="
+## T-29014 Section 12a point 1: Canonical 32x32 spring checkerboard texture at VRAM (128..159, 128..159)
+## normalized to (D_800B5BCC & 31) == 0, (D_800B5BD0 & 31) == 0 (hud_panels.c:1449-1450, OT 15).
+const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA8ElEQVR4nM2WoRHDMAxFX3MBhoWBGaWjFHaEwo6SMQIDO0KgRyg0a1nuco6lnO2TKyrL76EvXSY/fRFqvI48Vi89EWudF6b7Ldnvsn+uVKKAc67o8xBCvoAFPClgBT8UsIRHAtbwnUAL+CbQCg7QtYRDYQ5ocK3vnMvPgRpwyMyBWvBDAUt4JGANB+gHN4hD/uNZ50V8I84/X/jgk/1e2/XaPlcFghfvif++B0pD5kzIJQUs4EkBK/ihgCU8ErCG7wRawDeBVnCAriUcCnNAg5/ZLdk5UAMOmTlQC34oYAmPBKzhAL1f3uKQts+10u6JH97tla2x++MhAAAAAElFTkSuQmCC"
+## Exact 4-season BGR555 CLUTs at D_800B5B28 (asm/data/data_800B5950.data.s:336-369, indices 6..15)
+## uploaded to VRAM (0xA0, 0x1E1) by hud_screen_frame_draw (src/main/hud_panels.c:1462-1495).
+const SEASON_CHECKER_CLUTS := [
+	# 0: Spring (months 3, 4, 5)
+	[0x73FC, 0x63D8, 0x5BD6, 0x57B5, 0x5394, 0x5325, 0x4F04, 0x4AE3, 0x3200, 0x3180],
+	# 1: Summer (months 6, 7, 8)
+	[0x7FF2, 0x7FB0, 0x7F6E, 0x7F4D, 0x7F2C, 0x7205, 0x6DE4, 0x69C3, 0x5180, 0x40A0],
+	# 2: Autumn (months 9, 10, 11)
+	[0x5BFF, 0x53BF, 0x4B7E, 0x475D, 0x433C, 0x1619, 0x11F8, 0x0DD7, 0x0D4E, 0x00B0],
+	# 3: Winter (months 12, 1, 2)
+	[0x7FDE, 0x7FBD, 0x7B7B, 0x775A, 0x7339, 0x5210, 0x4DEF, 0x49CE, 0x356A, 0x318C],
+]
 
 var error := ""
 var descriptor: Dictionary = {}
@@ -13,6 +26,55 @@ var last_coverage: Image
 var _images: Dictionary = {}
 var _font: RefCounted
 var _checker_tile: Image
+var _season_tiles: Dictionary = {}
+var _checker_uv := Vector2i.ZERO
+var _checker_season := 0
+var _checker_fade := 255
+
+func set_checker_uv(uv: Vector2i) -> void:
+	_checker_uv = uv
+
+func set_checker_season(season: int, fade: int = 255) -> void:
+	_checker_season = season & 3
+	_checker_fade = clampi(fade, 240, 255)
+
+static func hud_season_index(month: int) -> int:
+	# Exact port of hud_season_index (src/main/hud_panels.c:1279-1299)
+	match month:
+		6, 7, 8:
+			return 1
+		9, 10, 11:
+			return 2
+		1, 2, 12:
+			return 3
+		_:
+			return 0
+
+static func compute_checker_uv(frame_count: int, health_mode: int = 0) -> Vector2i:
+	var f := maxi(frame_count, 0)
+	match health_mode & 15:
+		1:
+			return Vector2i((f + 1) >> 1, -((f + 1) >> 2))
+		2:
+			return Vector2i((f + 1) >> 2, -((f + 1) >> 3))
+		3:
+			var v := 0
+			for i in range(1, f + 1):
+				if (i & 0x15) == 0x15:
+					v -= 1
+			return Vector2i((f + 1) >> 3, v)
+		_:
+			# hud_screen_frame_draw default mode 0 (src/main/hud_panels.c:1408-1409):
+			# if ((game_state.frame_count & 1) == 1) D_800B5BD0--;
+			# D_800B5BCC++;
+			return Vector2i(f, -((f + 1) >> 1))
+
+static func resolve_cursor_frame(cursor_style: int) -> int:
+	# hud_cursor_actor_init (src/main/hud_screens.c:1463-1479):
+	# cursor_style == 0 -> frame 0 (pink hollow triangle); 0x9B..0xAD -> frame cursor_style.
+	if cursor_style >= 0x9B and cursor_style < 0xAE:
+		return cursor_style
+	return 0
 
 func configure(manifest: Dictionary, images: Dictionary, font: RefCounted) -> void:
 	descriptor = {"frames": manifest["frames"].duplicate(true),
@@ -125,10 +187,16 @@ func render(state: Dictionary, previous_frame: Image = null,
 			return null
 		image = previous_frame.duplicate()
 	else:
-		_draw_checkerboard(image)
+		var uv: Vector2i = state["checker_uv"] if state.get("checker_uv") is Vector2i else _checker_uv
+		var season: int = int(state["checker_season"]) if state.has("checker_season") else (
+			hud_season_index(int(state["month"])) if state.has("month") else _checker_season
+		)
+		var fade: int = int(state.get("checker_fade", _checker_fade))
+		_draw_checkerboard(image, uv, season, fade)
 	last_coverage = Image.create(320, 240, false, Image.FORMAT_L8)
 	last_coverage.fill(Color.BLACK)
 	# dec_bg_draw(0), draw_shake_update: 160/120 + (-160,-48) => 0/72.
+	var fg_scene_commands: Array[Dictionary] = []
 	if command_room:
 		_blit(image, _image(descriptor["room"]), null, Vector2i(0, 72), false)
 	else:
@@ -136,7 +204,14 @@ func render(state: Dictionary, previous_frame: Image = null,
 			if not command.get("image") is Image or not command.get("position") is Vector2i:
 				error = "activity composition requires prevalidated native image commands"
 				return null
-			_blit(image, command["image"], null, command["position"], false)
+			var cid := str(command.get("id", ""))
+			var is_bg: bool = cid.ends_with(":left") or cid.ends_with(":right") or (
+				command["position"] in [Vector2i(0, 72), Vector2i(192, 72)] and command["image"].get_height() == 88
+			)
+			if is_bg:
+				_blit(image, command["image"], null, command["position"], false)
+			else:
+				fg_scene_commands.append(command)
 	var commands: Array[Dictionary] = actors.duplicate(true)
 	commands.append({"kind": "gradient", "id": -1, "priority": 12, "rect": Rect2i(28, 23, 264, 42)})
 	commands.append({"kind": "gradient", "id": -1, "priority": 8, "rect": Rect2i(27, 166, 266, 52)})
@@ -151,22 +226,82 @@ func render(state: Dictionary, previous_frame: Image = null,
 		else:
 			_draw_actor(image, command)
 	_draw_text(image)
+	# school_day_sd_actors_init / holiday_activity_sd_setup sets actor_pool[96..97].unk_01 = 1
+	# (OT layer 0, drawn on top of HUD panels at OT 12..2 and before cursor actor 0).
+	for command: Dictionary in fg_scene_commands:
+		_blit(image, command["image"], null, command["position"], false)
 	for actor: Dictionary in actors:
 		if actor["id"] == 0:
 			_draw_actor(image, actor)
 	return null if not error.is_empty() else image
 
-func _draw_checkerboard(target: Image) -> void:
+func _get_season_checker_tile(season: int = 0, fade: int = 255) -> Image:
 	if _checker_tile == null:
 		_checker_tile = Image.new()
 		if _checker_tile.load_png_from_buffer(Marshalls.base64_to_raw(CHECKER_TILE_B64)) != OK:
-			target.fill(Color8(40, 200, 160))
-			return
+			return null
+	var s := season & 3
+	var f := clampi(fade, 240, 255)
+	if s == 0 and f == 255:
+		return _checker_tile
+	var cache_key := "%d:%d" % [s, f]
+	if _season_tiles.has(cache_key):
+		return _season_tiles[cache_key]
+	# Build blended or target 10-entry CLUT (indices 6..15) per hud_screen_frame_draw (hud_panels.c:1469-1495)
+	var spring_clut: Array = SEASON_CHECKER_CLUTS[0]
+	var next_clut: Array = SEASON_CHECKER_CLUTS[s]
+	var prev_clut: Array = SEASON_CHECKER_CLUTS[(s + 3) & 3]
+	var color_map: Dictionary = {}
+	for idx in range(spring_clut.size()):
+		var c0: int = int(spring_clut[idx])
+		var key_rgb5 := Vector3i(c0 & 31, (c0 >> 5) & 31, (c0 >> 10) & 31)
+		var cn: int = int(next_clut[idx])
+		var r5: int = cn & 31
+		var g5: int = (cn >> 5) & 31
+		var b5: int = (cn >> 10) & 31
+		if f < 255:
+			var co: int = int(prev_clut[idx])
+			var ow: int = 255 - f
+			var nw: int = f - 239
+			r5 = (ow * (co & 31) + nw * r5) >> 4
+			g5 = (ow * ((co >> 5) & 31) + nw * g5) >> 4
+			b5 = (ow * ((co >> 10) & 31) + nw * b5) >> 4
+		color_map[key_rgb5] = Color8(r5 * 8, g5 * 8, b5 * 8, 255)
 	var w := _checker_tile.get_width()
 	var h := _checker_tile.get_height()
+	var out := Image.create(w, h, false, Image.FORMAT_RGBA8)
+	for y in range(h):
+		for x in range(w):
+			var px := _checker_tile.get_pixel(x, y)
+			var k := Vector3i(int(round(px.r * 255.0)) >> 3, int(round(px.g * 255.0)) >> 3, int(round(px.b * 255.0)) >> 3)
+			out.set_pixel(x, y, color_map.get(k, px))
+	_season_tiles[cache_key] = out
+	return out
+
+func _draw_checkerboard(target: Image, uv: Vector2i = _checker_uv, season: int = _checker_season, fade: int = _checker_fade) -> void:
+	var base_tile := _get_season_checker_tile(season, fade)
+	if base_tile == null:
+		target.fill(Color8(40, 200, 160))
+		return
+	var w := base_tile.get_width()
+	var h := base_tile.get_height()
+	var u0 := int(uv.x) & (w - 1)
+	var v0 := int(uv.y) & (h - 1)
+	var tile_to_draw: Image = base_tile
+	if u0 != 0 or v0 != 0:
+		tile_to_draw = Image.create(w, h, false, base_tile.get_format())
+		var rw := w - u0
+		var rh := h - v0
+		tile_to_draw.blit_rect(base_tile, Rect2i(u0, v0, rw, rh), Vector2i(0, 0))
+		if u0 > 0:
+			tile_to_draw.blit_rect(base_tile, Rect2i(0, v0, u0, rh), Vector2i(rw, 0))
+		if v0 > 0:
+			tile_to_draw.blit_rect(base_tile, Rect2i(u0, 0, rw, v0), Vector2i(0, rh))
+		if u0 > 0 and v0 > 0:
+			tile_to_draw.blit_rect(base_tile, Rect2i(0, 0, u0, v0), Vector2i(rw, rh))
 	for ty in range(0, 240, 32):
 		for tx in range(0, 320, 32):
-			target.blit_rect(_checker_tile, Rect2i(0, 0, w, h), Vector2i(tx, ty))
+			target.blit_rect(tile_to_draw, Rect2i(0, 0, w, h), Vector2i(tx, ty))
 
 func _draw_actor(target: Image, actor: Dictionary) -> void:
 	var key := "%d:%s" % [actor["frame"], actor["variant"]]

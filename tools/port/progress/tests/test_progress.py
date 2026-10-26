@@ -3,11 +3,13 @@ import base64
 import json
 import os
 import shutil
+import struct
 import sys
 import subprocess
 import tempfile
 import threading
 import unittest
+import zlib
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 from urllib.error import HTTPError
@@ -55,6 +57,10 @@ class ProgressTests(unittest.TestCase):
         bad.write_bytes(b"not png bytes")
         with self.assertRaises(ValueError):
             publish.inspect_capture(bad)
+        tiny_mp4 = Path(self.temp.name) / "tiny.mp4"
+        tiny_mp4.write_bytes(b"\x00\x00\x00\x18ftypisom0000")
+        with self.assertRaises(ValueError):
+            publish.inspect_capture(tiny_mp4)
         large = Path(self.temp.name) / "large.png"
         large.write_bytes(b"x" * (publish.MAX_IMAGE + 1))
         with self.assertRaises(ValueError):
@@ -63,7 +69,7 @@ class ProgressTests(unittest.TestCase):
     def test_manifest_refresh_range_mime_and_traversal(self):
         publish.publish([self.fixture], self.root)
         clip = Path(self.temp.name) / "synthetic-test-only.mp4"
-        clip.write_bytes(b"\x00\x00\x00\x18ftypisom0000")
+        clip.write_bytes(b"\x00\x00\x00\x18ftypisom0000\x00\x00\x00\x08moov\x00\x00\x10\x00mdat" + (b"\x00" * 4096))
         publish.publish([clip], self.root)
         server.ViewerHandler.media_root = self.root
         httpd = ThreadingHTTPServer(("127.0.0.1", 0), server.ViewerHandler)
@@ -299,6 +305,74 @@ class ProgressTests(unittest.TestCase):
             self.assertEqual(process.returncode, 0, (stdout, stderr))
         manifest = json.loads((self.root / "manifest.json").read_text())
         self.assertEqual(len(manifest["items"]), 2)
+
+    @staticmethod
+    def _encode_rgb_png(width: int, height: int, row_fn) -> bytes:
+        def chunk(ctype: bytes, data: bytes) -> bytes:
+            crc = zlib.crc32(ctype + data) & 0xFFFFFFFF
+            return struct.pack(">I", len(data)) + ctype + data + struct.pack(">I", crc)
+
+        raw = bytearray()
+        for y in range(height):
+            raw.append(0)
+            raw.extend(row_fn(y, width))
+        return (
+            b"\x89PNG\r\n\x1a\n"
+            + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+            + chunk(b"IDAT", zlib.compress(bytes(raw)))
+            + chunk(b"IEND", b"")
+        )
+
+    def test_reject_black_letterboxed_and_fallback_320x240_png(self):
+        black_png = Path(self.temp.name) / "black_frame.png"
+        black_png.write_bytes(self._encode_rgb_png(320, 240, lambda _y, w: bytes(w * 3)))
+        with self.assertRaisesRegex(ValueError, "mostly-black"):
+            publish.inspect_capture(black_png)
+
+        letterbox_png = Path(self.temp.name) / "letterbox_frame.png"
+        letterbox_png.write_bytes(
+            self._encode_rgb_png(
+                320,
+                240,
+                lambda y, w: bytes(w * 3)
+                if y < 16
+                else b"".join(
+                    bytes([((x + y) & 0x7F) + 64, ((x * 3 + y) & 0x7F) + 64, ((x + y * 5) & 0x7F) + 80])
+                    for x in range(w)
+                ),
+            )
+        )
+        with self.assertRaisesRegex(ValueError, "black-letterboxed"):
+            publish.inspect_capture(letterbox_png)
+
+        fallback_png = Path(self.temp.name) / "fallback_frame.png"
+        fallback_png.write_bytes(
+            self._encode_rgb_png(320, 240, lambda _y, w: bytes([18, 22, 28]) * w)
+        )
+        with self.assertRaisesRegex(ValueError, "unrendered fallback"):
+            publish.inspect_capture(fallback_png)
+
+        shell_clear_png = Path(self.temp.name) / "shell_clear_frame.png"
+        shell_clear_png.write_bytes(
+            self._encode_rgb_png(640, 480, lambda _y, w: bytes([9, 14, 23]) * w)
+        )
+        with self.assertRaisesRegex(ValueError, "unrendered fallback"):
+            publish.inspect_capture(shell_clear_png)
+
+        valid_png = Path(self.temp.name) / "valid_frame.png"
+        valid_png.write_bytes(
+            self._encode_rgb_png(
+                320,
+                240,
+                lambda y, w: b"".join(
+                    bytes([((x * 5 + y * 3) & 0x7F) + 48, ((x * 7 + y * 11) & 0x7F) + 48, ((x * 13 + y * 17) & 0x7F) + 48])
+                    for x in range(w)
+                ),
+            )
+        )
+        suffix, size, _ = publish.inspect_capture(valid_png)
+        self.assertEqual(suffix, ".png")
+        self.assertGreater(size, 100)
 
 
 if __name__ == "__main__":

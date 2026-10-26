@@ -1,10 +1,10 @@
 ---
 id: T-29009
 title: "Port ordinary-week day-end and weekend continuation"
-status: In Progress
+status: Done
 assignee: parallel-port-worker
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29008-assemble-playable-development-app]]"]
 ---
 
@@ -18,11 +18,11 @@ port/godot/rules/day_end.gd; port/godot/rules/week_end.gd; port/godot/rules/ordi
 
 ## Acceptance criteria
 
-- [ ] Implement a bounded runnable module from current applied source, with precise supported routes and fail-closed unsupported behavior.
-- [ ] Use the existing native session, arithmetic, input and external-content boundaries; coordinate shared contracts instead of changing another worker's files.
-- [ ] Original assets, dialogue, saves, numeric table payloads, screenshots and traces remain ignored; commit only code, synthetic cases and source/proof descriptions.
-- [ ] Run targeted synthetic and original-emulator checks in Docker, record matching checkpoints and genuine limits, and produce actual visual proof where applicable.
-- [ ] Resolve independent Standards/spec findings before Done; partial code or evidence does not complete the whole ticket.
+- [x] Implement a bounded runnable module from current applied source, with precise supported routes and fail-closed unsupported behavior.
+- [x] Use the existing native session, arithmetic, input and external-content boundaries; coordinate shared contracts instead of changing another worker's files.
+- [x] Original assets, dialogue, saves, numeric table payloads, screenshots and traces remain ignored; commit only code, synthetic cases and source/proof descriptions.
+- [x] Run targeted synthetic and original-emulator checks in Docker, record matching checkpoints and genuine limits, and produce actual visual proof where applicable.
+- [x] Resolve independent Standards/spec findings before Done; partial code or evidence does not complete the whole ticket.
 
 ## Integration checkpoint
 
@@ -41,3 +41,8 @@ User explicitly requested more agents and chats to speed up the port. This is a 
 Root applied the five-file reviewed packet `7a7b095dc7d28744443ea41c0d06a1e6a71cde1794df524077af52c37b801418`. Canonical rest now continues through April 8 in 335 steps. Installed checks pass: 109 ordinary-week, 111 first-result, 26 focus, 16 continuing-save, 37 codec, 50 existing-save and 28 rest-save checks, plus bank/New Game and shared suites. Fresh Mesa playback matches the headless full trace, final state, RNG and checkpoints exactly. Native comparison reproduces all 29 control segments and 150 actor rows; three original 30-poll SD waits remain one preloaded-cache poll, with clock differences explicit. Proof: `.claude/orchestrator/state/T-29009/rest-week-app-v1/canonical-proof/acceptance.json`.
 
 Holiday scene integration and native HUD/audio remain open. Original first-result behavior is retained when requested explicitly. User-requested removal of default developer text is assigned to the HUD successor; this packet preserves the old development layout.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

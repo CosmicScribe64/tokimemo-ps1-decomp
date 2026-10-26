@@ -162,8 +162,8 @@ func _test_scroll_and_text_marker() -> void:
 		"Line 19 scrolled to first_visible_row=2 shows rows 2..4 at x=88, y=170, 186, 202")
 
 	var marker_state: Dictionary = ProloguePresenter.compute_text_marker_state(true, 0x48, 0)
-	check(bool(marker_state["enabled"]) and int(marker_state["sprite_id"]) == 0xF0 and int(marker_state["y"]) == 0x49 and marker_state["screen_pos"] == Vector2i(276, 193),
-		"Text prompt marker (hud_text_marker_set / hud_text_marker_bob) uses sprite 0xF0 at x=0x74 (276) and bobs y in 0x48..0x4F")
+	check(bool(marker_state["enabled"]) and int(marker_state["sprite_id"]) == 1 and int(marker_state["y"]) == 0x49 and marker_state["screen_pos"] == Vector2i(276, 193),
+		"Text prompt marker (hud_text_marker_set / hud_text_marker_bob) uses sprite 1 (D_8011ED70 = 1) at x=0x74 (276) and bobs y in 0x48..0x4F")
 
 	var marker_wrap: Dictionary = ProloguePresenter.compute_text_marker_state(true, 0x4F, 0)
 	check(int(marker_wrap["y"]) == 0x48,

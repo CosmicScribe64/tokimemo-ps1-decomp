@@ -197,7 +197,7 @@ static func apply_walk_home_choice(
 
 	if talk_choice == 0:
 		followup_allowed = 1
-		if current_girl in [GIRL_SHIORI, GIRL_MIO, GIRL_YUINA, GIRL_SAKI, GIRL_MIRA, GIRL_MEGUMI]:
+		if current_girl in [GIRL_SHIORI, GIRL_MIO, GIRL_YUINA, GIRL_MIRA, GIRL_YUKO, GIRL_MEGUMI]:
 			if state_masked >= 3:
 				followup_allowed = 0
 				other_counter_base = 0
@@ -589,6 +589,21 @@ static func select_new_year_visitor(girls: Array, girl_states: Array) -> int:
 			best_sum = sum_score
 			best_girl = i
 	return best_girl
+
+
+static func evaluate_christmas_mansion_dress_gate(year_stage: int, looks: int, athletics: int) -> Dictionary:
+	# Mirrors christmas_mansion_entry (src/ovl/new_year/christmas_mansion_entry.c:45-90):
+	# Dress/Looks gate: looks >= stage * 30 - (stage >= 2 ? 10 : 0) + 70 -> 70 (Y1), 100 (Y2), 120 (Y3)
+	# Athletics gate: athletics >= stage * 25 + 150 -> 150 (Y1), 175 (Y2), 200 (Y3)
+	var stg: int = clampi(year_stage, 0, 2)
+	var looks_min: int = stg * 30 - (10 if stg >= 2 else 0) + 70
+	var athletics_min: int = stg * 25 + 150
+	return {
+		"looks_min": looks_min,
+		"athletics_min": athletics_min,
+		"dress_gate_passed": looks >= looks_min,
+		"athletics_gate_passed": athletics >= athletics_min,
+	}
 
 
 static func apply_christmas_party_rewards(selected_girl: int, girls: Array) -> Array:

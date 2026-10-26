@@ -223,7 +223,7 @@ func _view(state: Dictionary) -> Dictionary:
 	var month: int = rule["month"]
 	var day: int = rule["day"]
 	var month_index: int = (year - 95) * 12 + month - 4
-	if month not in [3, 4, 5] or month_index < 0 or month_index > 35 or int(rule["weekday"]) < 0 or int(rule["weekday"]) > 6 or day < 1 or day > 31 or int(rule["menu_cursor"]) < 0 or int(rule["menu_cursor"]) >= 14 or rule["memory_card_busy"] != 0:
+	if month < 1 or month > 12 or month_index < 0 or month_index > 35 or int(rule["weekday"]) < 0 or int(rule["weekday"]) > 6 or day < 1 or day > 31 or int(rule["menu_cursor"]) < 0 or int(rule["menu_cursor"]) >= 14 or rule["memory_card_busy"] != 0:
 		error = "HUD state is outside the spring TypeA/date/idle-card capability"
 		return {}
 	if not _numbers(rule["params"], 9, 0, 0x3e7ffff) or not _numbers(rule["icon_enabled"], 15, 0, 1) or not rule["calendar"] is Array or rule["calendar"].size() != 2:

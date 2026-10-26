@@ -5,11 +5,17 @@ const Rules = preload("res://rules/new_game.gd")
 const Rng = preload("res://core/native_rng.gd")
 const Diagnostics = preload("res://services/new_game_load_diagnostics.gd")
 const Glyphs = preload("res://presentation/native_glyphs.gd")
+const Canvas = preload("res://presentation/native_canvas.gd")
+const Presenter = preload("res://presentation/vn_scene_presenter.gd")
 var controller := Entry.new()
 var glyphs := Glyphs.new()
 var rng := Rng.new()
 var queue: Array[Dictionary] = []
 var panel: VBoxContainer
+var canvas: Canvas
+var presenter: Presenter
+var last_rendered_image: Image
+var profile_complete: bool = false
 var failure: String = ""
 var tick: int = 0
 var debug_visible: bool = false
@@ -28,9 +34,37 @@ func _notification(what: int) -> void:
 	focus_paused = not (_window_focused and _application_focused)
 	if focus_paused: queue.clear()
 
+func _ensure_native_presenter() -> void:
+	if canvas == null:
+		canvas = Canvas.new()
+		canvas.scale = Vector2(2, 2)
+		canvas.z_index = -10
+		add_child(canvas)
+	if presenter != null:
+		return
+	var font_path: String = OS.get_environment("TOKIMEMO_NATIVE_FONT")
+	if font_path.is_empty():
+		font_path = OS.get_environment("TOKIMEMO_FONT_ROOT")
+	if font_path.is_empty():
+		for candidate_font: String in [
+			ProjectSettings.globalize_path("res://../..").simplify_path().path_join(".asset-cache/port/fonts/native-font-v2"),
+			"/workspace/.asset-cache/port/fonts/native-font-v2",
+			"/work/.asset-cache/port/fonts/native-font-v2",
+		]:
+			if DirAccess.dir_exists_absolute(candidate_font):
+				font_path = candidate_font
+				break
+	if font_path.is_empty() or not DirAccess.dir_exists_absolute(font_path):
+		return
+	var hud_manifest: String = OS.get_environment("TOKIMEMO_HUD_MANIFEST")
+	var cand_presenter := Presenter.new()
+	if cand_presenter.init_resources(font_path, hud_manifest).is_empty():
+		presenter = cand_presenter
+
 func _ready() -> void:
 	get_window().content_scale_size = Vector2i(1024,768)
 	get_window().size = Vector2i(1024,768)
+	_ensure_native_presenter()
 	panel = VBoxContainer.new(); panel.position = Vector2(24,16); panel.size = Vector2(950,660); add_child(panel)
 	debug_visible = OS.get_environment("TOKIMEMO_ENTRY_DEBUG") == "1"
 	get_window().title = "New Game"+(" [%d]"%OS.get_process_id() if debug_visible else "")
@@ -109,10 +143,92 @@ func _name_line() -> void:
 			if data[i] == 0: break
 			var glyph := TextureRect.new(); glyph.texture = _glyph_texture(data.slice(i,i+2)); glyph.custom_minimum_size = Vector2(24,24); row.add_child(glyph)
 
+func _valid_glyph_hex(raw: PackedByteArray, max_glyphs: int = 8) -> String:
+	if presenter == null or presenter._font == null:
+		return ""
+	var out_hex: String = ""
+	var count: int = 0
+	for i: int in range(0, raw.size(), 2):
+		if i + 1 >= raw.size() or raw[i] == 0 or count >= max_glyphs:
+			break
+		var pair: PackedByteArray = raw.slice(i, i + 2)
+		if presenter._font.get_glyph_image(pair, 0, 0).get("status") == "glyph":
+			out_hex += pair.hex_encode()
+			count += 1
+	return out_hex
+
+func _render_native_canvas() -> void:
+	_ensure_native_presenter()
+	if presenter == null or canvas == null:
+		return
+	var img := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	presenter.recorded_glyphs.clear()
+	presenter.bounding_box_violations.clear()
+
+	# 1. Authentic PS1 32x32 green checkerboard background (hud_screen_frame_draw)
+	presenter.draw_checkerboard_frame(img, 0, Vector2i((tick / 2) & 31, (tick / 2) & 31), 0)
+
+	# 2. Authentic PS1 POLY_G4 case 2 gradient base panel (cal_base_show) & bottom message window
+	presenter.draw_cal_base(img, Rect2i(16, 36, 288, 120), 224)
+	presenter.draw_message_window(img)
+
+	# 3. Top-left wooden title badge (message_window_title_update)
+	var badge_hex: String = _valid_glyph_hex(controller.names.get("family", PackedByteArray()), 3)
+	if badge_hex.is_empty() and presenter._manifest.get("content", {}).get("strings", {}).has("narration_prefix"):
+		badge_hex = str(presenter._manifest["content"]["strings"]["narration_prefix"].get("raw_hex", "")).substr(0, 8)
+	presenter.draw_title_badge(img, badge_hex, Vector2i.ZERO, maxi(2, badge_hex.length() / 4))
+
+	# 4. Entered player/Shiori name glyphs on the cal_base panel
+	var x_positions: Dictionary = {"family": 28, "given": 112, "nickname": 196}
+	for part: String in ["family", "given", "nickname"]:
+		if not controller.names.has(part):
+			continue
+		var part_hex: String = _valid_glyph_hex(controller.names[part], 5)
+		if not part_hex.is_empty():
+			presenter._draw_text_hex_checked(img, part_hex, Vector2i(int(x_positions[part]), 48), 0, "name_entry")
+
+	# Draw kana grid sample or birthday/blood-type selection rows inside cal_base
+	if controller.stage == 1 and controller.step_id in [1, 3, 5]:
+		for row_idx: int in range(4):
+			var row_bytes := PackedByteArray()
+			for col_idx: int in range(8):
+				var cell_pair: PackedByteArray = controller.cell(col_idx, row_idx)
+				if cell_pair.size() == 2:
+					row_bytes.append_array(cell_pair)
+			var row_hex: String = _valid_glyph_hex(row_bytes, 8)
+			if not row_hex.is_empty():
+				presenter._draw_text_hex_checked(img, row_hex, Vector2i(28, 72 + row_idx * 18), 0, "name_grid")
+
+	# 5. Birthday/blood-type and stage prompt inside the message window
+	var prompt_hex: String = ""
+	if presenter._manifest.get("content", {}).get("strings", {}).has("ordinary_command"):
+		prompt_hex = str(presenter._manifest["content"]["strings"]["ordinary_command"].get("raw_hex", "")).substr(0, 32)
+	if not prompt_hex.is_empty():
+		presenter.draw_vn_dialogue(img, "", [prompt_hex])
+
+	# 6. Authentic PS1 hand cursor (Frame 156) at controller.cursor
+	var cursor_pos := Vector2i(36 + clampi(controller.cursor, 0, 11) * 18, 62)
+	if (controller.stage == 1 and controller.step_id == 7) or (controller.stage == 2 and controller.step_id == 1):
+		cursor_pos = Vector2i(48 + clampi(controller.cursor, 0, 2) * 80, 104)
+	elif (controller.stage == 1 and controller.step_id == 9) or (controller.stage == 2 and controller.step_id in [3, 5]):
+		cursor_pos = Vector2i(72 + clampi(controller.cursor, 0, 1) * 80, 124)
+	presenter.draw_hand_cursor(img, cursor_pos)
+
+	last_rendered_image = img
+	canvas.set("_textures", {})
+	canvas.present([{
+		"id": "new_game_entry:%d:%d:%d" % [controller.stage, controller.step_id, tick],
+		"image": img,
+		"position": Vector2i.ZERO,
+		"blend_mode": 0,
+	}])
+
 func _render() -> void:
+	profile_complete = (controller.stage == 2 and controller.step_id == 5)
 	for child in panel.get_children(): panel.remove_child(child); child.queue_free()
 	_label("New Game")
 	if not failure.is_empty(): _label(failure); return
+	_render_native_canvas()
 	if debug_visible: _label("Stage %d / step %d · RNG draws %d"%[controller.stage,controller.step_id,rng.draw_count])
 	_name_line()
 	if not failure.is_empty(): _label(failure); return

@@ -99,6 +99,11 @@ func compose(rule: Dictionary, core: Dictionary, history: Array[Dictionary],
 	error = presenter.set_animation_phase(state, steps, elapsed)
 	if not error.is_empty():
 		return {}
+	var frame_cnt: int = int(core.get("frame_count", history.size()))
+	var health_mode: int = (int(rule.get("player_flags", 0)) >> 8) & 15
+	presenter._compositor.set_checker_uv(
+		Presenter.NativeCompositor.compute_checker_uv(frame_cnt, health_mode)
+	)
 	var command: Dictionary = presenter.canvas_command(state) if mode in [0x30, 0x34] else presenter.activity_command(state, scene_commands, colors)
 	if command.is_empty():
 		error = presenter.error

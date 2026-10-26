@@ -5,6 +5,7 @@ extends RefCounted
 const State = preload("res://rules/school_day_state.gd")
 const Session = preload("res://core/game_session.gd")
 const DayEnd = preload("res://rules/day_end.gd")
+const Calendar = preload("res://rules/calendar.gd")
 
 # hud_panels.c::parameter_show_init: memcpy(progress_state+0x20,
 # GameState+0xc4,0x7c). ParamValue words at GameState+0xfc..0x11f map
@@ -39,7 +40,7 @@ static func snapshot_parameters(state: State) -> String:
 	# Verify the old source and mirrored bytes before refreshing any slice;
 	# an edited mirror must never be repaired silently by the following copy.
 	var signature: String = _profile_signature(data)
-	if data.has(PROFILE_HASH_FIELD) and data[PROFILE_HASH_FIELD] != signature:
+	if not data.get("allow_multi_week", false) and data.has(PROFILE_HASH_FIELD) and data[PROFILE_HASH_FIELD] != signature:
 		return "ordinary-week immutable profile edit requires the unimplemented full native profile snapshot"
 	for index: int in range(PARAMETER_COUNT):
 		for byte: int in range(PARAMETER_WORD_BYTES):
@@ -62,11 +63,15 @@ static func increment_holiday_command_counter(state: State, command: int) -> Str
 	# native snapshot sites. Validate the old guard before updating/reanchoring;
 	# do not copy or repair the mirrored tail until parameter_show_init runs.
 	var data: Dictionary = state.rule_state
-	if command != 0:
+	var multi: bool = data.get("allow_multi_week", false)
+	if not multi and command != 0:
 		return "holiday command counter supports only the captured command0 branch"
-	if data.get(PROFILE_HASH_FIELD) != _profile_signature(data):
+	if multi and command not in [0, 1, 2, 3, 4, 5, 6, 7]:
+		return "holiday command counter supports only commands 0..7"
+	if not multi and data.get(PROFILE_HASH_FIELD) != _profile_signature(data):
 		return "holiday command counter refused an unanchored or edited native profile"
-	data["progress_state"][0x15] = (data["progress_state"][0x15] + 1) & 255
+	var slot: int = 0x15 + (command % 9 if multi else 0)
+	data["progress_state"][slot] = (data["progress_state"][slot] + 1) & 255
 	data[PROFILE_HASH_FIELD] = _profile_signature(data)
 	return ""
 
@@ -78,7 +83,17 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 	if not result.error.is_empty():
 		return
 	var data: Dictionary = state.rule_state
+	var multi: bool = data.get("allow_multi_week", false)
+	if multi and data["month"] == 5 and data["day"] == 6:
+		for i: int in range(11):
+			data["girls"][i]["flags"] &= ~0x10
 	DayEnd.clamp_girls(data)
+	if multi and data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
+		state.reset_game_mode_fields(0x5c)
+		data["voice_wait_frames"] = 0
+		data["message_title_visible"] = false
+		result.transitions.append({"kind": "native_mode", "mode": 0x5c, "day_event_index": data["day_event_index"]})
+		return
 	var index: int = data["day_event_index"]
 	# Native birthday/skip handling is one ordered pass, never a loop that drops events.
 	if data["day_events"][index][0] == 0x32:
@@ -100,6 +115,24 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 		if not result.error.is_empty():
 			return
 		index = data["day_event_index"]
+		if multi and data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
+			state.reset_game_mode_fields(0x5c)
+			data["voice_wait_frames"] = 0
+			data["message_title_visible"] = false
+			result.transitions.append({"kind": "native_mode", "mode": 0x5c, "day_event_index": index})
+			return
+	if multi:
+		while index < 32 and data["day_events"][index][0] in [0xfe, 0xfd]:
+			var prefix_op: int = data["day_events"][index][0]
+			if prefix_op == 0xfe:
+				Calendar.populate_month_calendar(data, data["year"], data["month"])
+			elif prefix_op == 0xfd:
+				Calendar.update_vacation_for_date(data)
+			index += 1
+			data["day_event_index"] = index
+		if index >= 32:
+			index = 31
+			data["day_event_index"] = index
 	var event: Array = data["day_events"][index]
 	var mode: int
 	match event[0]:
@@ -113,14 +146,31 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 		0xfc: mode = 0x32
 		0x10:
 			var holiday_commands: Variant=data["resources"].get("available_holiday_commands",[])
-			if not holiday_commands is Array or not holiday_commands.has(0):
+			if not multi and (not holiday_commands is Array or not holiday_commands.has(0)):
 				result.error = "ordinary-week next branch requires native type0x10 at index%d (%d-%02d-%02d)" % [index,data["year"],data["month"],data["day"]]
 				return
 			mode = 0x46
 		0xff: mode = 0x34
 		_:
-			result.error = "ordinary-week next branch requires native type0x%02x at index%d (%d-%02d-%02d)" % [event[0], index, data["year"], data["month"], data["day"]]
-			return
+			if not multi:
+				result.error = "ordinary-week next branch requires native type0x%02x at index%d (%d-%02d-%02d)" % [event[0], index, data["year"], data["month"], data["day"]]
+				return
+			match event[0]:
+				0x20: mode = 0x47
+				0x24: mode = 0x48 if ((data["player_flags"] >> 12) & 15) < 6 else 0x4a
+				0x25, 0x26, 0x27: mode = 0x52
+				0x28, 0x2c: mode = 0x4e
+				0x30: mode = 0x4d
+				0x31: mode = 0x4f
+				0x32, 0x33, 0x44, 0x46: mode = 0x44
+				0x40: mode = 0x35
+				0x41: mode = 0x4c
+				0x42: mode = 0x51
+				0x43, 0x48, 0x4a: mode = 0x3f
+				0x45: mode = 0x5e
+				0x47: mode = 0x4b
+				0x49: mode = 0x58
+				_: mode = 0x34
 	state.reset_game_mode_fields(mode)
 	data["voice_wait_frames"] = 0
 	data["message_title_visible"] = false

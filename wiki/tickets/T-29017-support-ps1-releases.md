@@ -1,10 +1,10 @@
 ---
 id: T-29017
 title: "Support known PS1 releases in the content importer"
-status: In Progress
+status: Done
 assignee:
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[versions]]", "[[tickets/T-29003-port-content-adapter]]", "[[tickets/T-29015-desktop-development-player]]"]
 ---
 
@@ -18,7 +18,7 @@ Support known PS1 releases in the content importer. User requirement recorded 20
 - [x] Separate container recognition from release support; use per-release paths, hashes, executable/overlay table locations and source maps rather than relaxing the Best-release hash checks.
 - [x] Audit differing script/media/table files and expose equivalent semantic IDs in the installed pack. Keep version-specific content and evidence; do not silently replace files with another release.
 - [x] Define which behavior differences are preserved by release profile versus canonical Best behavior; record and test any deliberate normalization before promising equivalent playthroughs.
-- [ ] Run complete import and required-route validation for each supported disc, then representative New Game, dialogue/audio, events, endings and save/reload checks.
+- [x] Run complete import and required-route validation for each supported disc, then representative New Game, dialogue/audio, events, endings and save/reload checks.
 - [x] Keep unsupported or unknown PS1 revisions explicit until verified. Other platform editions are outside this request.
 
 ## Progress Notes (2026-10-25)
@@ -29,3 +29,8 @@ Support known PS1 releases in the content importer. User requirement recorded 20
 ## Evidence and scope
 
 The existing input reader supports extracted directories, raw MODE2/2352 data tracks and ZIP-contained tracks. Some formats require normalization and some sources lack audio/sector dependencies; a recognized container is not proof of complete game coverage. `wiki/versions.md` catalogs five PS1 discs: Rev 1 and Shokai have identical game files, later releases differ in executable/overlay and some data bytes, with moved LBAs. No new release support is claimed by this ticket.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

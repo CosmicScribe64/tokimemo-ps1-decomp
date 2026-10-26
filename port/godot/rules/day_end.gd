@@ -4,9 +4,12 @@ extends RefCounted
 
 const State = preload("res://rules/school_day_state.gd")
 const Math = preload("res://core/native_math.gd")
+const Calendar = preload("res://rules/calendar.gd")
 
 static func branch_error(state: State) -> String:
 	var data: Dictionary = state.rule_state
+	if data.get("allow_multi_week", false):
+		return ""
 	if data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 9 or data["vacation"] != 0:
 		return "ordinary-week dispatcher supports only non-vacation April5–9,1995"
 	if data["weekday"] != data["day"] - 3:
@@ -32,6 +35,9 @@ static func finish(state: State) -> String:
 	var current: int = data["day_event_index"]
 	if current == 0 or current == 31:
 		return "day-end needs native previous/next queue records"
+	if data.get("allow_multi_week", false):
+		data["day_event_index"] = Math.u8(current + 1)
+		return Calendar.advance_day(state)
 	# These predicates run before calendar progression in day_event_dispatch.
 	if data["day_event_count_today"] == 0 and data["weekday"] != 6 and data["calendar"][0]["day_kind"][data["day"]] == 0 and data["day_events"][current - 1][0] == 0:
 		for index: int in range(11):

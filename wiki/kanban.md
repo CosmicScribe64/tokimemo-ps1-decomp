@@ -73,42 +73,7 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-29018-complete-overlay-port-and-shared-vn-runner|T-29018 Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction]]
-
-- [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]
-
-- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
-
-- [ ] [[tickets/T-29015-desktop-development-player|T-29015 Build a reproducible desktop development player]]
-
-- [ ] [[tickets/T-29014-ordinary-command-content-coverage|T-29014 Extend original content coverage to ordinary commands 1 through 6]]
-
-- [ ] [[tickets/T-29013-native-holiday-command-loop|T-29013 Port the first ordinary holiday command loop]]
-
-- [ ] [[tickets/T-29012-native-new-game-initialization|T-29012 Port native New Game initialization and profile rules]]
-
 - [ ] [[tickets/T-28007-complete-text-and-translator-handoff|T-28007 Complete text evidence and prepare translator handoff]]
-- [ ] [[tickets/T-29011-native-dialogue-player|T-29011 Implement source-backed dialogue control playback]]
-
-- [ ] [[tickets/T-29010-native-hud-font-rendering|T-29010 Render the native HUD and game glyphs]]
-
-- [ ] [[tickets/T-29009-ordinary-week-continuation|T-29009 Port ordinary-week day-end and weekend continuation]]
-
-- [ ] [[tickets/T-29008-assemble-playable-development-app|T-29008 Assemble the captured-boundary playable development app]]
-
-- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
-
-- [ ] [[tickets/T-29005-native-scene-presentation|T-29005 Present original room, HUD and activity animation]]
-
-- [ ] [[tickets/T-29004-school-day-playable-rules|T-29004 Port command selection and one genuine school-day action]]
-
-- [ ] [[tickets/T-29007-visual-port-progress-viewer|T-29007 Show port progress through local screenshots and clips]]
-
-- [ ] [[tickets/T-29003-port-content-adapter|T-29003 Build the validated original-game content pack adapter]]
-
-- [ ] [[tickets/T-29002-native-runtime-and-oracle|T-29002 Implement native arithmetic, clocks, input and state oracle]]
-
-
 
 - [ ] [[tickets/T-28006-sequence-music-export|T-28006 Read sequence music and preserve rendering dependencies]]
 
@@ -267,6 +232,40 @@ kanban-plugin: board
 - [ ] [[tickets/T-24570-main-80054e6c-metric-record-view|T-24570 Match MAIN func_80054E6C through its metric-record word view]]
 
 ## Done
+
+- [ ] [[tickets/T-29018-complete-overlay-port-and-shared-vn-runner|T-29018 Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction]]
+
+- [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]
+
+- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
+
+- [ ] [[tickets/T-29015-desktop-development-player|T-29015 Build a reproducible desktop development player]]
+
+- [ ] [[tickets/T-29014-ordinary-command-content-coverage|T-29014 Extend original content coverage to ordinary commands 1 through 6]]
+
+- [ ] [[tickets/T-29013-native-holiday-command-loop|T-29013 Port the first ordinary holiday command loop]]
+
+- [ ] [[tickets/T-29012-native-new-game-initialization|T-29012 Port native New Game initialization and profile rules]]
+
+- [ ] [[tickets/T-29011-native-dialogue-player|T-29011 Implement source-backed dialogue control playback]]
+
+- [ ] [[tickets/T-29010-native-hud-font-rendering|T-29010 Render the native HUD and game glyphs]]
+
+- [ ] [[tickets/T-29009-ordinary-week-continuation|T-29009 Port ordinary-week day-end and weekend continuation]]
+
+- [ ] [[tickets/T-29008-assemble-playable-development-app|T-29008 Assemble the captured-boundary playable development app]]
+
+- [ ] [[tickets/T-29007-visual-port-progress-viewer|T-29007 Show port progress through local screenshots and clips]]
+
+- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
+
+- [ ] [[tickets/T-29005-native-scene-presentation|T-29005 Present original room, HUD and activity animation]]
+
+- [ ] [[tickets/T-29004-school-day-playable-rules|T-29004 Port command selection and one genuine school-day action]]
+
+- [ ] [[tickets/T-29003-port-content-adapter|T-29003 Build the validated original-game content pack adapter]]
+
+- [ ] [[tickets/T-29002-native-runtime-and-oracle|T-29002 Implement native arithmetic, clocks, input and state oracle]]
 
 - [ ] [[tickets/T-28009-version-translation-overlays|T-28009 Version English translation overlays for repository backup]]
 

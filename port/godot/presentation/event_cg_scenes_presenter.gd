@@ -28,7 +28,7 @@ const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
 # Exact CP932 byte hex encodings strictly verified via Python .encode("cp932").hex()
 const STR_HEX := {
 	"title_park": "82ab82e782df82ab9286899b8cf68980",        # きらめき中央公園
-	"title_karaoke": "834a838983498350424f58",               # カラオケBOX
+	"title_karaoke": "834a8389834983508261826e8277",         # カラオケＢＯＸ
 	"title_amusement": "97568980926e81458acf97978ed4",       # 遊園地・観覧車
 	"title_encounter": "8cf6898093fc8cfb814591988bf6",       # 公園入口・遭遇
 	"speaker_shiori": "8e8d9044",                             # 詩織
@@ -46,7 +46,10 @@ const STR_HEX := {
 	"ayako_c3": "8175898989cc82c582e082a282a281488176",     # 「演歌でもいい？」
 	"ferris_d1": "817582ed82a08141899382ad82dc82c58ca982a682e982e681498176", # 「わあ、遠くまで見えるよ！」
 	"ferris_d2": "81758a5882aa8fac82b382ad8ca982a682e982cb8176", # 「街が小さく見えるね」
-	"movie_indicator": "8dc490b692863a204c424120307834333332", # 再生中: LBA 0x4332
+	"ferris_c1": "817582b782b282ad8a7982b582a982c182bd82cb8176", # 「すごく楽しかったね」
+	"ferris_c2": "817582bf82e582c182c68368834c8368834c82b582bd82e68176", # 「ちょっとドキドキしたよ」
+	"ferris_c3": "817582e082a48fe682e982cc82cd82e282df82e682a481638176", # 「もう乗るのはやめよう…」
+	"movie_indicator": "8dc490b6928681468acf97978ed4",         # 再生中：観覧車
 	"ride_prompt": "81798acf97978ed483588367838a815b837e8393834f817a", # 【観覧車ストリーミング】
 	"miharu_d1": "817582a0814182b282df82f182c882b382a2816382c182c48176", # 「あ、ごめんなさい…って」
 	"miharu_d2": "817582e082b582a982b582c48366815b8367928681488176", # 「もしかしてデート中？」
@@ -55,9 +58,28 @@ const STR_HEX := {
 	"miharu_c3": "81758ed7968282b582c882a282c582ad82ea8176", # 「邪魔しないでくれ」
 }
 
+var default_choice: int = 0
 var _checker_tile: Image
+var _park_bg_image: Image
+var _karaoke_bg_image: Image
+var _ferris_bg_image: Image
+var _park_entrance_bg_image: Image
+var _shiori_portrait_image: Image
+var _ayako_portrait_image: Image
+var _miharu_portrait_image: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+
+static func _load_first_existing_image(rel_path: String) -> Image:
+	var candidates := [
+		"/workspace/" + rel_path,
+		"/work/" + rel_path,
+		ProjectSettings.globalize_path("res://../../" + rel_path).simplify_path(),
+	]
+	for p in candidates:
+		if FileAccess.file_exists(p):
+			return Image.load_from_file(p)
+	return null
 
 func init_resources(font_root: String, hud_manifest_path: String = "/workspace/.asset-cache/port/hud-production-v1/manifest.json") -> String:
 	recorded_glyphs.clear()
@@ -67,6 +89,15 @@ func init_resources(font_root: String, hud_manifest_path: String = "/workspace/.
 	var err: Error = _checker_tile.load_png_from_buffer(Marshalls.base64_to_raw(CHECKER_TILE_B64))
 	if err != OK:
 		return "Failed to decode checkerboard background tile"
+
+	_park_bg_image = _load_first_existing_image(".asset-cache/port/date-preview-v1/backgrounds/park_17112.background.png")
+	_karaoke_bg_image = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-95c9c3981048bc82948aa0156f9f889627102ac0dce9c450798788d2f943130e/asset-95c9c3981048bc82948aa0156f9f889627102ac0dce9c450798788d2f943130e.background.png")
+	_ferris_bg_image = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-934e76c18fc92b9885f85cfa63887b432433a926cdac676d5198e1af353c3159/asset-934e76c18fc92b9885f85cfa63887b432433a926cdac676d5198e1af353c3159.background.png")
+	_park_entrance_bg_image = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-53ac5a6ef2afadb8782efe2f2d76f029400797732b3ce813fb631967bb3c2292/asset-53ac5a6ef2afadb8782efe2f2d76f029400797732b3ce813fb631967bb3c2292.background.png")
+
+	_shiori_portrait_image = _load_first_existing_image(".asset-cache/port/date-preview-v1/portraits/shiori_hu10/shiori_hu10_21938.static-frame.png")
+	_ayako_portrait_image = _load_first_existing_image(".asset-cache/media/color-corpus/assets/asset-d2142a796276bbacf540bc1aa9fd0b4ebd82421a91951f2951e908c867c93873/asset-d2142a796276bbacf540bc1aa9fd0b4ebd82421a91951f2951e908c867c93873.static-frame.png")
+	_miharu_portrait_image = _load_first_existing_image(".asset-cache/media/color-corpus/assets/asset-6e1623b6f414f105a7f2f0d2c2adb6df9569076c3ceb84fd17ff4089fffc48ec/asset-6e1623b6f414f105a7f2f0d2c2adb6df9569076c3ceb84fd17ff4089fffc48ec.static-frame.png")
 
 	if not hud_manifest_path.is_empty() and FileAccess.file_exists(hud_manifest_path):
 		if not open_manifest(hud_manifest_path, HUD_SHA, font_root):
@@ -88,33 +119,32 @@ func init_resources(font_root: String, hud_manifest_path: String = "/workspace/.
 
 func render_shiori_cg_scene(selected_choice: int = 0) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	var choice_idx: int = clampi(selected_choice, 0, 2)
+	var choices := [STR_HEX["shiori_c1"], STR_HEX["shiori_c2"], STR_HEX["shiori_c3"]]
 
-	# 1. Outer Checkerboard Frame Mode 1
-	_draw_checkerboard_frame(target, 1)
+	# 1. Outer Checkerboard Frame Mode 2 (Spring month=4)
+	_draw_checkerboard_frame(target, 2, 4, Vector2i(14, 8))
 
-	# 2. CG Background Plate: Central Park with cherry blossoms
-	_draw_cherry_blossom_cg(target, Rect2i(24, 20, 272, 142))
+	# 2. Extracted 320x160 PS1 Background Plate + HU10 Shiori Portrait
+	_draw_cherry_blossom_cg(target, Rect2i(0, 0, 320, 160))
 
 	# 3. Top-Left Title Badge: きらめき中央公園
-	_draw_title_badge(target, STR_HEX["title_park"], Vector2i(16, 12))
+	_draw_title_badge(target, STR_HEX["title_park"], Vector2i.ZERO)
 
-	# 4. Choice selection bar overlay inside the CG area
-	var choices := [
-		STR_HEX["shiori_c1"],
-		STR_HEX["shiori_c2"],
-		STR_HEX["shiori_c3"]
-	]
-	_draw_choice_selection_box(target, choices, selected_choice, Vector2i(40, 84))
+	# 3b. Interactive Choice Selection Box + Hand Cursor
+	_draw_choice_selection_box(target, choices, choice_idx, Vector2i(52, 86))
 
-	# 5. Bottom Wooden Message Window (Frame 62)
+	# 4. Bottom Wooden Message Window (Frame 62)
 	_draw_message_window(target)
 
-	# 6. Dialogue Text (sndisp layout: y=170, 186)
+	# 5. Dialogue Text (sndisp layout: y=170, 186, 202)
+	var choice_x: int = 74 if choice_idx == 1 else 88
 	_draw_text_hex_checked(target, STR_HEX["speaker_shiori"], Vector2i(39, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["shiori_d1"], Vector2i(88, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["shiori_d2"], Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, choices[choice_idx], Vector2i(choice_x, 202), 0, "message_window")
 
-	# Wait prompt marker (Actor 2 Frame 0xF0 at 276, 192)
+	# Wait prompt marker (Actor 2 Frame 1 at 276, 192)
 	_draw_wait_marker(target, Vector2i(276, 192))
 
 	return target
@@ -125,31 +155,29 @@ func render_shiori_cg_scene(selected_choice: int = 0) -> Image:
 
 func render_ayako_karaoke_scene(selected_choice: int = 0) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	var choice_idx: int = clampi(selected_choice, 0, 2)
+	var choices := [STR_HEX["ayako_c1"], STR_HEX["ayako_c2"], STR_HEX["ayako_c3"]]
 
-	# 1. Outer Checkerboard Frame Mode 1
-	_draw_checkerboard_frame(target, 1)
+	# 1. Outer Checkerboard Frame Mode 2 (Summer month=7)
+	_draw_checkerboard_frame(target, 2, 7, Vector2i(18, 12))
 
-	# 2. CG Background Plate: Karaoke room lounge with warm lighting
-	_draw_karaoke_lounge_cg(target, Rect2i(24, 20, 272, 142))
+	# 2. Extracted 320x160 PS1 Background Plate + AS01 Ayako Portrait
+	_draw_karaoke_lounge_cg(target, Rect2i(0, 0, 320, 160))
 
 	# 3. Top-Left Title Badge: カラオケBOX
-	_draw_title_badge(target, STR_HEX["title_karaoke"], Vector2i(16, 12))
+	_draw_title_badge(target, STR_HEX["title_karaoke"], Vector2i.ZERO)
 
-	# 4. Choice selection bar overlay
-	var choices := [
-		STR_HEX["ayako_c1"],
-		STR_HEX["ayako_c2"],
-		STR_HEX["ayako_c3"]
-	]
-	_draw_choice_selection_box(target, choices, selected_choice, Vector2i(40, 84))
+	# 3b. Interactive Choice Selection Box + Hand Cursor
+	_draw_choice_selection_box(target, choices, choice_idx, Vector2i(52, 86))
 
-	# 5. Bottom Wooden Message Window
+	# 4. Bottom Wooden Message Window
 	_draw_message_window(target)
 
-	# 6. Dialogue Text
+	# 5. Dialogue Text (sndisp layout: y=170, 186, 202)
 	_draw_text_hex_checked(target, STR_HEX["speaker_ayako"], Vector2i(39, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["ayako_d1"], Vector2i(88, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["ayako_d2"], Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, choices[choice_idx], Vector2i(88, 202), 0, "message_window")
 
 	_draw_wait_marker(target, Vector2i(276, 192))
 
@@ -159,29 +187,32 @@ func render_ayako_karaoke_scene(selected_choice: int = 0) -> Image:
 # Scene 3: Amusement Park Ride Movie Scene (Ferris Wheel Viewport LBA 0x4332)
 # ==============================================================================
 
-func render_ride_movie_scene() -> Image:
+func render_ride_movie_scene(selected_choice: int = -1) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	target.fill(Color.BLACK)
+	var choice_idx: int = clampi(default_choice if selected_choice < 0 else selected_choice, 0, 2)
+	var choices := [STR_HEX["ferris_c1"], STR_HEX["ferris_c2"], STR_HEX["ferris_c3"]]
 
-	# 1. Outer Checkerboard Frame Mode 1 (Movie & Dialog perimeter)
-	_draw_checkerboard_frame(target, 1)
+	# 1. Outer Checkerboard Frame Mode 2 (Autumn month=10)
+	_draw_checkerboard_frame(target, 2, 10, Vector2i(22, 14))
 
-	# 2. Authentic PS1 MDEC Letterbox Viewport (ride_movies.c)
-	_draw_ferris_wheel_viewport(target, Rect2i(24, 20, 272, 142))
+	# 2. Extracted 320x160 PS1 Ferris Wheel Gondola Background (I_11_01.BS) + Shiori Portrait
+	_draw_ferris_wheel_viewport(target, Rect2i(0, 0, 320, 160))
 
 	# 3. Top-Left Title Badge: 遊園地・観覧車
-	_draw_title_badge(target, STR_HEX["title_amusement"], Vector2i(16, 12))
+	_draw_title_badge(target, STR_HEX["title_amusement"], Vector2i.ZERO)
 
-	# 4. MDEC Streaming LBA status banner inside viewport
-	_draw_text_hex_checked(target, STR_HEX["movie_indicator"], Vector2i(140, 26), 3, "viewport_hud")
+	# 3b. Interactive Choice Selection Box + Hand Cursor
+	_draw_choice_selection_box(target, choices, choice_idx, Vector2i(52, 86))
 
-	# 5. Bottom Wooden Message Window
+	# 4. Bottom Wooden Message Window
 	_draw_message_window(target)
 
-	# 6. Dialogue Text from Ferris Wheel
+	# 5. Dialogue Text from Ferris Wheel
 	_draw_text_hex_checked(target, STR_HEX["speaker_shiori"], Vector2i(39, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["ferris_d1"], Vector2i(88, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["ferris_d2"], Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, choices[choice_idx], Vector2i(88, 202), 0, "message_window")
 
 	_draw_wait_marker(target, Vector2i(276, 192))
 
@@ -193,31 +224,29 @@ func render_ride_movie_scene() -> Image:
 
 func render_miharu_encounter_scene(selected_choice: int = 0) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	var choice_idx: int = clampi(selected_choice, 0, 2)
+	var choices := [STR_HEX["miharu_c1"], STR_HEX["miharu_c2"], STR_HEX["miharu_c3"]]
 
-	# 1. Outer Checkerboard Frame Mode 1
-	_draw_checkerboard_frame(target, 1)
+	# 1. Outer Checkerboard Frame Mode 2 (Winter month=1)
+	_draw_checkerboard_frame(target, 2, 1, Vector2i(26, 18))
 
-	# 2. CG Background Plate: Park Entrance Corner
-	_draw_park_entrance_cg(target, Rect2i(24, 20, 272, 142))
+	# 2. Extracted 320x160 PS1 Park Entrance Background (D_24_03.BS) + TA10 Miharu Portrait
+	_draw_park_entrance_cg(target, Rect2i(0, 0, 320, 160))
 
 	# 3. Top-Left Title Badge: 公園入口・遭遇
-	_draw_title_badge(target, STR_HEX["title_encounter"], Vector2i(16, 12))
+	_draw_title_badge(target, STR_HEX["title_encounter"], Vector2i.ZERO)
 
-	# 4. Choice selection bar overlay
-	var choices := [
-		STR_HEX["miharu_c1"],
-		STR_HEX["miharu_c2"],
-		STR_HEX["miharu_c3"]
-	]
-	_draw_choice_selection_box(target, choices, selected_choice, Vector2i(40, 84))
+	# 3b. Interactive Choice Selection Box + Hand Cursor
+	_draw_choice_selection_box(target, choices, choice_idx, Vector2i(52, 86))
 
-	# 5. Bottom Wooden Message Window
+	# 4. Bottom Wooden Message Window
 	_draw_message_window(target)
 
-	# 6. Dialogue Text
+	# 5. Dialogue Text (sndisp layout: y=170, 186, 202)
 	_draw_text_hex_checked(target, STR_HEX["speaker_miharu"], Vector2i(39, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["miharu_d1"], Vector2i(88, 170), 0, "message_window")
 	_draw_text_hex_checked(target, STR_HEX["miharu_d2"], Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, choices[choice_idx], Vector2i(88, 202), 0, "message_window")
 
 	_draw_wait_marker(target, Vector2i(276, 192))
 
@@ -243,10 +272,17 @@ static func is_checker_tile_enabled(mode: int, col: int, row: int) -> bool:
 			return true
 		_: return true
 
-## Exact hud_screen_frame_draw(0/1/2) with UV scroll
-func _draw_checkerboard_frame(target: Image, mode: int) -> void:
-	if _checker_tile == null:
+## Exact hud_screen_frame_draw(0/1/2) with UV scroll and 4-season CLUT
+func _draw_checkerboard_frame(target: Image, mode: int, month: int = 4, bg_uv: Vector2i = Vector2i.ZERO) -> void:
+	var tile: Image = _checker_tile
+	if _compositor != null:
+		var season_tile: Image = _compositor._get_season_checker_tile(_compositor.hud_season_index(month), 255)
+		if season_tile != null:
+			tile = season_tile
+	if tile == null:
 		return
+	var u0: int = bg_uv.x & 31
+	var v0: int = bg_uv.y & 31
 	for row in range(8):
 		for col in range(10):
 			if not is_checker_tile_enabled(mode, col, row):
@@ -256,10 +292,12 @@ func _draw_checkerboard_frame(target: Image, mode: int) -> void:
 			for dy in range(32):
 				var py: int = base_y + dy
 				if py < 0 or py >= 240: continue
+				var vt: int = (dy + v0) & 31
 				for dx in range(32):
 					var px: int = base_x + dx
 					if px < 0 or px >= 320: continue
-					target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(dx & 31, dy & 31))
+					var ut: int = (dx + u0) & 31
+					target.set_pixelv(Vector2i(px, py), tile.get_pixel(ut, vt))
 
 ## Bottom wooden message window (Frame 62, OT 8..7)
 func _draw_message_window(target: Image) -> void:
@@ -302,7 +340,7 @@ func _draw_choice_selection_box(target: Image, choices: Array, selected_idx: int
 			_draw_menu_bar_highlight(target, choice_rect)
 			_draw_hand_cursor(target, Vector2i(origin.x - 14, y_pos + 1))
 
-		_draw_text_hex_checked(target, choices[i], Vector2i(origin.x + 8, y_pos), 0, "choice_box")
+		_draw_text_hex_checked(target, choices[i], Vector2i(origin.x + 8, y_pos), 0, "choice_box", box_rect)
 
 ## Exact menu_bar_show(0) semi-transparent highlight bar with Gouraud shading
 func _draw_menu_bar_highlight(target: Image, rect: Rect2i) -> void:
@@ -328,9 +366,9 @@ func _draw_menu_bar_highlight(target: Image, rect: Rect2i) -> void:
 func _draw_hand_cursor(target: Image, screen_pos: Vector2i) -> void:
 	_draw_actor(target, 156, Vector2i(screen_pos.x - 160, screen_pos.y - 120))
 
-## Wait prompt marker (Actor 2 Frame 0xF0)
+## Wait prompt marker (Actor 2 Frame 1: D_8011ED70 = 1)
 func _draw_wait_marker(target: Image, screen_pos: Vector2i) -> void:
-	_draw_actor(target, 0xF0, Vector2i(screen_pos.x - 160, screen_pos.y - 120))
+	_draw_actor(target, 1, Vector2i(screen_pos.x - 160, screen_pos.y - 120))
 
 ## Gouraud shaded background panel
 func _draw_gouraud_panel(target: Image, rect: Rect2i, col_top: Color, col_bot: Color) -> void:
@@ -353,139 +391,38 @@ func _draw_gouraud_panel(target: Image, rect: Rect2i, col_top: Color, col_bot: C
 # Visual Art Plates & CG Illustrations
 # ==============================================================================
 
-## Scene 1 CG: Kirameki Central Park with Cherry Blossoms
-func _draw_cherry_blossom_cg(target: Image, rect: Rect2i) -> void:
-	# Sky gradient (soft spring blue)
-	_draw_gouraud_panel(target, rect, Color8(170, 210, 245), Color8(220, 235, 250))
+## Scene 1 CG: Kirameki Central Park with Cherry Blossoms + HU10 Shiori Portrait
+func _draw_cherry_blossom_cg(target: Image, _rect: Rect2i) -> void:
+	if _park_bg_image != null:
+		target.blit_rect(_park_bg_image, Rect2i(0, 0, mini(320, _park_bg_image.get_width()), mini(160, _park_bg_image.get_height())), Vector2i(0, 0))
+	if _shiori_portrait_image != null and _compositor != null:
+		_compositor._blit(target, _shiori_portrait_image, null, Vector2i(81, 8), false)
 
-	# Distant cherry blossom canopy & park walkway
-	for y in range(rect.size.y):
-		var py: int = rect.position.y + y
-		if py < 0 or py >= 240: continue
-		var fy: float = float(y) / float(rect.size.y)
-		for x in range(rect.size.x):
-			var px: int = rect.position.x + x
-			if px < 0 or px >= 320: continue
-			# Ground pathway in lower third
-			if fy > 0.65:
-				var path_col := Color8(210, 195, 175)
-				target.set_pixelv(Vector2i(px, py), path_col)
-			# Cherry blossom clusters (pink tones)
-			elif fy < 0.55:
-				var d: int = ((px * 7 + py * 13) % 29)
-				if d < 18:
-					var petal_col := Color8(250, 205, 220) if d < 10 else Color8(240, 180, 200)
-					target.set_pixelv(Vector2i(px, py), petal_col)
+## Scene 2 CG: Karaoke Box / Concert Stage (I_28_02.BS) + AS01 Ayako Portrait
+func _draw_karaoke_lounge_cg(target: Image, _rect: Rect2i) -> void:
+	var bg: Image = _karaoke_bg_image if _karaoke_bg_image != null else _park_bg_image
+	if bg != null:
+		target.blit_rect(bg, Rect2i(0, 0, mini(320, bg.get_width()), mini(160, bg.get_height())), Vector2i(0, 0))
+	var portrait: Image = _ayako_portrait_image if _ayako_portrait_image != null else _shiori_portrait_image
+	if portrait != null and _compositor != null:
+		_compositor._blit(target, portrait, null, Vector2i(81, 8), false)
 
-	# Central portrait silhouette (Shiori with cherry blossom backdrop)
-	_draw_girl_cg_silhouette(target, Vector2i(rect.position.x + rect.size.x / 2, rect.position.y + rect.size.y - 10), Color8(210, 70, 85))
+## Scene 3 CG: Ferris Wheel Gondola Viewport (I_11_01.BS) + HU10 Shiori Portrait
+func _draw_ferris_wheel_viewport(target: Image, _rect: Rect2i) -> void:
+	var bg: Image = _ferris_bg_image if _ferris_bg_image != null else _park_bg_image
+	if bg != null:
+		target.blit_rect(bg, Rect2i(0, 0, mini(320, bg.get_width()), mini(160, bg.get_height())), Vector2i(0, 0))
+	if _shiori_portrait_image != null and _compositor != null:
+		_compositor._blit(target, _shiori_portrait_image, null, Vector2i(81, 8), false)
 
-## Scene 2 CG: Karaoke Box Lounge
-func _draw_karaoke_lounge_cg(target: Image, rect: Rect2i) -> void:
-	# Moody interior lounge with warm ambient glow
-	_draw_gouraud_panel(target, rect, Color8(60, 35, 75), Color8(30, 20, 45))
-
-	for y in range(rect.size.y):
-		var py: int = rect.position.y + y
-		if py < 0 or py >= 240: continue
-		var fy: float = float(y) / float(rect.size.y)
-		for x in range(rect.size.x):
-			var px: int = rect.position.x + x
-			if px < 0 or px >= 320: continue
-			# Table & seating lower area
-			if fy > 0.70:
-				target.set_pixelv(Vector2i(px, py), Color8(85, 45, 55))
-			# Spotlight beam
-			var fx: float = float(x) / float(rect.size.x)
-			if absf(fx - 0.5) < (0.35 * fy):
-				var curr: Color = target.get_pixel(px, py)
-				target.set_pixelv(Vector2i(px, py), Color8(mini(255, curr.r8 + 40), mini(255, curr.g8 + 30), mini(255, curr.b8 + 50)))
-
-	# Ayako silhouette holding microphone
-	_draw_girl_cg_silhouette(target, Vector2i(rect.position.x + rect.size.x / 2, rect.position.y + rect.size.y - 10), Color8(70, 140, 190))
-
-## Scene 3 CG: Ferris Wheel MDEC Viewport
-func _draw_ferris_wheel_viewport(target: Image, rect: Rect2i) -> void:
-	# Sunset sky gradient overlooking Kirameki city
-	_draw_gouraud_panel(target, rect, Color8(235, 110, 60), Color8(70, 30, 80))
-
-	# City silhouette & distant amusement park lights
-	for y in range(rect.size.y):
-		var py: int = rect.position.y + y
-		if py < 0 or py >= 240: continue
-		var fy: float = float(y) / float(rect.size.y)
-		for x in range(rect.size.x):
-			var px: int = rect.position.x + x
-			if px < 0 or px >= 320: continue
-			if fy > 0.72:
-				# City skyline
-				var b_height: int = int((sin(float(px) * 0.12) + cos(float(px) * 0.05) + 2.0) * 8.0)
-				if py > (rect.position.y + rect.size.y - b_height):
-					target.set_pixelv(Vector2i(px, py), Color8(25, 20, 35))
-
-	# Ferris wheel gondola structural frame overlay
-	for lx in range(rect.size.x):
-		var gx: int = rect.position.x + lx
-		target.set_pixelv(Vector2i(gx, rect.position.y + 16), Color8(180, 40, 40))
-		target.set_pixelv(Vector2i(gx, rect.position.y + rect.size.y - 20), Color8(180, 40, 40))
-	for ly in range(rect.size.y):
-		var gy: int = rect.position.y + ly
-		target.set_pixelv(Vector2i(rect.position.x + 36, gy), Color8(180, 40, 40))
-		target.set_pixelv(Vector2i(rect.position.x + rect.size.x - 36, gy), Color8(180, 40, 40))
-
-## Scene 4 CG: Park Entrance Bump Corner
-func _draw_park_entrance_cg(target: Image, rect: Rect2i) -> void:
-	# Sunny outdoor park entrance with brick archway
-	_draw_gouraud_panel(target, rect, Color8(160, 210, 240), Color8(210, 230, 240))
-
-	# Brick archway and pavement
-	for y in range(rect.size.y):
-		var py: int = rect.position.y + y
-		if py < 0 or py >= 240: continue
-		var fy: float = float(y) / float(rect.size.y)
-		for x in range(rect.size.x):
-			var px: int = rect.position.x + x
-			if px < 0 or px >= 320: continue
-			if fy > 0.60:
-				target.set_pixelv(Vector2i(px, py), Color8(190, 180, 160))
-			elif x < 40 or x > rect.size.x - 40:
-				target.set_pixelv(Vector2i(px, py), Color8(165, 80, 60))
-
-	# Miharu silhouette (flustered bump encounter pose)
-	_draw_girl_cg_silhouette(target, Vector2i(rect.position.x + rect.size.x / 2 + 10, rect.position.y + rect.size.y - 10), Color8(60, 170, 120))
-
-## Draws stylized anime character portrait silhouette
-func _draw_girl_cg_silhouette(target: Image, base_pos: Vector2i, hair_color: Color) -> void:
-	var head_center := Vector2i(base_pos.x, base_pos.y - 70)
-
-	# Body / clothing
-	for dy in range(60):
-		var cy: int = head_center.y + 20 + dy
-		var spread: int = 12 + dy / 2
-		for dx in range(-spread, spread + 1):
-			var cx: int = head_center.x + dx
-			if cx >= 0 and cx < 320 and cy >= 0 and cy < 240:
-				target.set_pixelv(Vector2i(cx, cy), Color8(240, 240, 245))
-
-	# Head / face
-	for dy in range(-20, 20):
-		for dx in range(-18, 19):
-			var d: float = Vector2(dx, dy).length()
-			if d <= 18.0:
-				var cx: int = head_center.x + dx
-				var cy: int = head_center.y + dy
-				if cx >= 0 and cx < 320 and cy >= 0 and cy < 240:
-					target.set_pixelv(Vector2i(cx, cy), Color8(255, 225, 210))
-
-	# Hair
-	for dy in range(-24, 15):
-		for dx in range(-22, 23):
-			var d: float = Vector2(dx, dy).length()
-			if d <= 22.0 and (dy < 4 or absi(dx) > 12):
-				var cx: int = head_center.x + dx
-				var cy: int = head_center.y + dy
-				if cx >= 0 and cx < 320 and cy >= 0 and cy < 240:
-					target.set_pixelv(Vector2i(cx, cy), hair_color)
+## Scene 4 CG: Park Entrance Bump Corner (D_24_03.BS) + TA10 Miharu Portrait
+func _draw_park_entrance_cg(target: Image, _rect: Rect2i) -> void:
+	var bg: Image = _park_entrance_bg_image if _park_entrance_bg_image != null else _park_bg_image
+	if bg != null:
+		target.blit_rect(bg, Rect2i(0, 0, mini(320, bg.get_width()), mini(160, bg.get_height())), Vector2i(0, 0))
+	var portrait: Image = _miharu_portrait_image if _miharu_portrait_image != null else _shiori_portrait_image
+	if portrait != null and _compositor != null:
+		_compositor._blit(target, portrait, null, Vector2i(81, 8), false)
 
 # ==============================================================================
 # Checked Glyph Drawing and Boundary Validation (Section 12a)
@@ -532,11 +469,11 @@ func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, pale
 						code_unit.hex_encode(), gx_pos, gy_pos
 					]
 				)
-		elif region == "title_badge" and custom_bounds.size.x > 0:
+		elif (region == "title_badge" or region == "choice_box") and custom_bounds.size.x > 0:
 			if gx_pos < custom_bounds.position.x or gx_pos + 12 > custom_bounds.position.x + custom_bounds.size.x or gy_pos < custom_bounds.position.y or gy_pos + 12 > custom_bounds.position.y + custom_bounds.size.y:
 				bounding_box_violations.append(
-					"Title badge glyph %s at (%d, %d) overflows %s" % [
-						code_unit.hex_encode(), gx_pos, gy_pos, str(custom_bounds)
+					"%s glyph %s at (%d, %d) overflows %s" % [
+						region, code_unit.hex_encode(), gx_pos, gy_pos, str(custom_bounds)
 					]
 				)
 

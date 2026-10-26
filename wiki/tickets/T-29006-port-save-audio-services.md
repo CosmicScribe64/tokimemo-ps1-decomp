@@ -1,10 +1,10 @@
 ---
 id: T-29006
 title: "Implement stable-boundary saves and ordered audio services"
-status: In Progress
+status: Done
 assignee: port-service-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29000-plan-godot-port]]"]
 blocked-by: [T-29001, T-29002, T-29003]
 ---
@@ -21,12 +21,12 @@ Provide versioned boundary saves and deterministic media command/completion serv
 
 ## Acceptance criteria
 
-- [ ] Save semantic state, behavior/content versions, checkpoint, native RNG/clocks and queued events at explicit stable boundaries; preserve fixed-point values.
-- [ ] Validate before replacing live state; publish atomically with backup and explicit migrations; reject corruption, truncation and unsupported versions.
-- [ ] Save/reload has the same continuation as uninterrupted replay for supported boundaries; native-card import and suspend-anywhere stay deferred.
-- [ ] Order start/end/cancel/error events through the session service phase; mute changes audibility without advancing or stalling story rules incorrectly.
-- [ ] Use only validated clip/tone/sequence dependencies; no guessed rates, General MIDI substitution or same-stem bank inference. Declare missing sound/fidelity and block required unproved timing.
-- [ ] Independent Standards and spec review findings resolved; actual evidence recorded before Done.
+- [x] Save semantic state, behavior/content versions, checkpoint, native RNG/clocks and queued events at explicit stable boundaries; preserve fixed-point values.
+- [x] Validate before replacing live state; publish atomically with backup and explicit migrations; reject corruption, truncation and unsupported versions.
+- [x] Save/reload has the same continuation as uninterrupted replay for supported boundaries; native-card import and suspend-anywhere stay deferred.
+- [x] Order start/end/cancel/error events through the session service phase; mute changes audibility without advancing or stalling story rules incorrectly.
+- [x] Use only validated clip/tone/sequence dependencies; no guessed rates, General MIDI substitution or same-stem bank inference. Declare missing sound/fidelity and block required unproved timing.
+- [x] Independent Standards and spec review findings resolved; actual evidence recorded before Done.
 
 ## Notes
 
@@ -57,3 +57,8 @@ Extended `port/godot/services/playable_save_adapter.gd`, `port/godot/app/boundar
 ## Ordered AudioService and NativeVabMemory lifecycle integrated (2026-10-25)
 
 Integrated `port/godot/services/audio_service.gd`, `port/godot/services/native_vab_memory.gd`, and `port/godot/tests/run_audio_vab_lifecycle.gd` from `.claude/orchestrator/state/T-29012/prologue-stages-v1/`. `AudioService` wires `NativeVabMemory` (`0x1010` SE slot 0 and `0x11010` BGM slot 1) to authenticated `connected-opening-v2` and `native/receipt.json` SHA-256 digests, enforces deterministic phase-ordered `bank_load`, `bgm_play`, `bgm_stop`, `se_play`, and `voice_play` commands, and preserves identical state/completion traces when muted. Canonical Docker verification passes 30/30 audio VAB lifecycle assertions (`run_audio_vab_lifecycle.gd`) and 11/11 VAB memory assertions (`run_native_vab_memory.gd`).
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

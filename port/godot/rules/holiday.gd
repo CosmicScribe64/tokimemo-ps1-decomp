@@ -1,22 +1,33 @@
 extends RefCounted
-## T-29013. Captured April9 normal holiday; other event/health/club routes stop.
+## T-29013. Captured April9 normal holiday + integrated sub-screens (Phone 0x10, Magazine 0x20, Calendar 0x30, Appointment 0xFE -> Date 0x50).
 
 const State = preload("res://rules/school_day_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Ordinary = preload("res://rules/ordinary_week.gd")
 const SchoolDay = preload("res://rules/school_day.gd")
 const Math = preload("res://core/native_math.gd")
+const AppointmentRules = preload("res://rules/holiday_appointment.gd")
 
-static func validate(state: State) -> String:
+const SUPPORTED_HOLIDAY_COMMANDS := [0, 8, 9, 10, 12]
+
+static func validate(state: State, allow_subscreens: bool = false) -> String:
 	var failure: String = state.structural_error()
 	if not failure.is_empty():return failure
 	var data: Dictionary = state.rule_state
-	if [data["year"],data["month"],data["day"],data["weekday"],data["vacation"]] != [95,4,9,6,0]:
+	var multi: bool = data.get("allow_multi_week", false)
+	if not multi and [data["year"],data["month"],data["day"],data["weekday"],data["vacation"]] != [95,4,9,6,0]:
 		return "holiday controller supports the captured April9,1995 normal Sunday only"
-	if ((data["player_flags"] >> 8) & 15) != 0 or (data["player_flags_upper"] & 1) != 0 or data["player_flags"] >> 12 != 11:
+	if not multi and (((data["player_flags"] >> 8) & 15) != 0 or (data["player_flags_upper"] & 1) != 0 or data["player_flags"] >> 12 != 11):
 		return "holiday health/remedial/club branch is unimplemented"
+	var capabilities: Variant=data["resources"].get("available_holiday_commands",[])
+	if not capabilities is Array:return "holiday capability list must be an integer array"
+	for value: Variant in capabilities:
+		if not value is int or (not multi and value not in SUPPORTED_HOLIDAY_COMMANDS):
+			return "holiday capability advertises an unsupported command"
+	var appointment_supported: bool = multi or allow_subscreens or capabilities.has(9)
 	for appointment: int in data["appointment_words"]:
-		if appointment != 0:return "holiday appointment branch requires its native handler"
+		if appointment != 0 and not appointment_supported:
+			return "holiday appointment branch requires its native handler"
 	if not data.get("holiday") is Dictionary:return "holiday native boundary extension is missing"
 	var holiday: Dictionary = data["holiday"]
 	for key: String in ["icon_mode","icon_count","input_device","screen_brightness","tile_layer_enabled","boot_hold","background_brightness"]:
@@ -34,16 +45,12 @@ static func validate(state: State) -> String:
 	if not holiday.get("clubs") is Array or holiday["clubs"].size() != 12:
 		return "holiday native club records are missing"
 	for club: Variant in holiday["clubs"]:
-		if not club is int or club != 0:return "holiday club history differs from the captured no-club boundary"
+		if not club is int or (not multi and club != 0):return "holiday club history differs from the captured no-club boundary"
 	if not holiday.get("dial_keys") is Array or holiday["dial_keys"].size() != 8 or not holiday.get("dial_pos") is int:
 		return "holiday native dial-ring boundary is missing"
 	if holiday["dial_pos"]<0 or holiday["dial_pos"]>6:return "holiday dial-ring index exceeds native bound"
 	for value: Variant in holiday["dial_keys"]:
 		if not value is int or value<0 or value>255:return "holiday dial-ring entries must be native bytes"
-	var capabilities: Variant=data["resources"].get("available_holiday_commands",[])
-	if not capabilities is Array:return "holiday capability list must be an integer array"
-	for value: Variant in capabilities:
-		if not value is int or value!=0:return "holiday capability advertises an unsupported command"
 	if data["resources"].has("holiday_pending"):
 		var raw_pending: Variant=data["resources"]["holiday_pending"]
 		if not raw_pending is Dictionary:return "holiday pending resource must be a primitive record"
@@ -57,14 +64,20 @@ static func validate(state: State) -> String:
 		if not value is int or value < -2147483648 or value > 2147483647:return "holiday parameter exceeds native signed32"
 	for value: Variant in data["progress_state"]:
 		if not value is int or value < 0 or value > 255:return "holiday progress snapshot needs native bytes"
-	if data["day_event_index"] not in [9,10]:return "holiday queue index is outside captured Sunday/next-command boundary"
+	if not multi and data["day_event_index"] not in [9,10]:return "holiday queue index is outside captured Sunday/next-command boundary"
 	return ""
 
-static func icons(state: State, weekday: bool) -> void:
+static func icons(state: State, weekday: bool, allow_subscreens: bool = false) -> void:
 	var data: Dictionary = state.rule_state
 	data["holiday"]["icon_count"] = 14
 	for index: int in range(14):data["icon_enabled"][index]=1
 	for index: int in ([4,8,9,10] if weekday else [9,13]):data["icon_enabled"][index]=0
+	if not weekday:
+		var avail: Variant = data["resources"].get("available_holiday_commands", [])
+		if allow_subscreens or (avail is Array and avail.has(9)):
+			var found := AppointmentRules.hud_appointment_find_today(data["year"], data["month"], data["day"], data["appointment_words"])
+			if found > 0:
+				data["icon_enabled"][9] = 1
 	data["menu_disabled"].fill(0)
 	if weekday:data["menu_cursor"]=data["last_command"] & 15
 

@@ -83,8 +83,25 @@ const STR_HEX := {
 }
 
 var _checker_tile: Image
+var _shiori_portrait_image: Image
+var _saki_portrait_image: Image
+var _sports_track_bg: Image
+var _culture_hallway_bg: Image
+var _school_trip_kyoto_bg: Image
+var _practice_baseball_bg: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+
+static func _load_first_existing_image(rel_path: String) -> Image:
+	var candidates := [
+		"/workspace/" + rel_path,
+		"/work/" + rel_path,
+		ProjectSettings.globalize_path("res://../../" + rel_path).simplify_path(),
+	]
+	for p in candidates:
+		if FileAccess.file_exists(p):
+			return Image.load_from_file(p)
+	return null
 
 ## Initializes font and HUD manifest resources
 func init_resources(font_root: String, hud_manifest_path: String = "/workspace/.asset-cache/port/hud-production-v1/manifest.json") -> String:
@@ -95,6 +112,13 @@ func init_resources(font_root: String, hud_manifest_path: String = "/workspace/.
 	var err: Error = _checker_tile.load_png_from_buffer(Marshalls.base64_to_raw(CHECKER_TILE_B64))
 	if err != OK:
 		return "Failed to decode checkerboard background tile"
+
+	_shiori_portrait_image = _load_first_existing_image(".asset-cache/port/date-preview-v1/portraits/shiori_hu10/shiori_hu10_21938.static-frame.png")
+	_saki_portrait_image = _load_first_existing_image(".asset-cache/media/color-corpus/assets/asset-a7381e4092cd55c0303a0ff5b975e606f237c63b0734d82928d3a8f0cec08d9f/asset-a7381e4092cd55c0303a0ff5b975e606f237c63b0734d82928d3a8f0cec08d9f.static-frame.png")
+	_sports_track_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-4158af293c4b912c914e8eec7c0041a5fa2d3915ca5daf59856d6bba08e5227f/asset-4158af293c4b912c914e8eec7c0041a5fa2d3915ca5daf59856d6bba08e5227f.background.png")
+	_culture_hallway_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-46a94b7f32df30001822781ffe069ae871c7ab83088fc2d1d5cfe017ed8b69d5/asset-46a94b7f32df30001822781ffe069ae871c7ab83088fc2d1d5cfe017ed8b69d5.background.png")
+	_school_trip_kyoto_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-660077ec1e7ddc9ddf814666990ba229de4d1b7e22e1fe57173f6243b78743d5/asset-660077ec1e7ddc9ddf814666990ba229de4d1b7e22e1fe57173f6243b78743d5.background.png")
+	_practice_baseball_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-7fea10a955a7b843b21ebe43c03bb2f2455fb53c4df4916ca6f5dad273708c03/asset-7fea10a955a7b843b21ebe43c03bb2f2455fb53c4df4916ca6f5dad273708c03.background.png")
 
 	if not hud_manifest_path.is_empty() and FileAccess.file_exists(hud_manifest_path):
 		if not open_manifest(hud_manifest_path, HUD_SHA, font_root):
@@ -110,74 +134,65 @@ func init_resources(font_root: String, hud_manifest_path: String = "/workspace/.
 
 	return ""
 
+func _get_girl_name_hex(girl_id: int) -> String:
+	match girl_id:
+		1: return STR_HEX["girl_mio"]
+		2: return STR_HEX["girl_yuina"]
+		3: return STR_HEX["girl_ayako"]
+		4: return STR_HEX["girl_saki"]
+		5: return STR_HEX["girl_yukari"]
+		6: return STR_HEX["girl_nozomi"]
+		7: return STR_HEX["girl_mira"]
+		8: return STR_HEX["girl_yuko"]
+		9: return STR_HEX["girl_megumi"]
+		10: return STR_HEX["girl_yumi"]
+		11: return STR_HEX["girl_miharu"]
+		12: return STR_HEX["girl_ray"]
+		_: return STR_HEX["girl_shiori"]
+
 # ==============================================================================
 # Scene 1: Sports Festival Event Selection & Race HUD (体育祭)
 # ==============================================================================
 func render_sports_festival_hud(state: Dictionary = {}) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Background: Athletic running track (sand/dirt oval with grass infield)
+	# 1. Extracted 320x160 PS1 Sports Festival Track Background (CDROM/BS/D_01_81B.BS)
 	_draw_athletic_track_background(target)
+	if _shiori_portrait_image != null and _compositor != null:
+		_compositor._blit(target, _shiori_portrait_image, null, Vector2i(81, 8), false)
 
-	# 2. Content Panel: Event Selection & Runner HUD
-	var selected_event: int = int(state.get("competition", 0))
-	var phase: String = str(state.get("phase", "entry"))
+	# 2. Top-left wooden title badge: 体育祭 (OT 2)
+	_draw_title_badge(target, STR_HEX["title_sports"], Vector2i.ZERO)
 
-	# White boundary / status panel (OT 5)
-	_draw_gouraud_panel(target, Rect2i(20, 42, 280, 116), Color8(245, 245, 235), Color8(210, 210, 195))
+	# 3. Bottom message window (Rect2i(27, 166, 266, 52), Month 10 Autumn)
+	_draw_message_window(target, 10, Vector2i(14, 8))
 
-	# 3. Top-left wooden title badge: 体育祭 (OT 2, drawn in front of content panel)
-	_draw_title_badge(target, STR_HEX["title_sports"], Vector2i(16, 12))
+	if state.has("cursor"):
+		var cur_row: int = clampi(int(state["cursor"]), 0, 2)
+		_draw_menu_bar_highlight(target, Rect2i(32, 168 + cur_row * 16, 252, 16))
 
-	if phase == "running" or phase == "finished":
-		# Live Race HUD
-		_draw_text_hex_checked(target, STR_HEX["dash_100m"], Vector2i(32, 50), 0, "content_box")
-		_draw_text_hex_checked(target, STR_HEX["label_speed"], Vector2i(32, 72), 3, "content_box")
-		_draw_text_hex_checked(target, STR_HEX["label_stamina"], Vector2i(32, 94), 3, "content_box")
-		_draw_text_hex_checked(target, STR_HEX["label_rank"], Vector2i(32, 116), 3, "content_box")
+	var place: int = int(state.get("player_place", 1))
+	var place_hex: String = STR_HEX["place_1st"]
+	if place == 2: place_hex = STR_HEX["place_2nd"]
+	elif place == 3: place_hex = STR_HEX["place_3rd"]
+	elif place >= 4: place_hex = STR_HEX["place_4th"]
 
-		# Track progression bars
-		var speed_val: int = int(state.get("player_speed", 0x1000))
-		var speed_pct: float = clampf(float(speed_val) / float(RUNNER_INPUT_SPEED_DEFAULT * 2), 0.1, 1.0)
-		_draw_progress_bar(target, Rect2i(100, 74, 120, 10), speed_pct, Color8(40, 180, 80))
+	var girl_hex: String = _get_girl_name_hex(int(state.get("girl_id", 0)))
+	var comp: int = int(state.get("competition", 0))
+	var comp_hex: String = STR_HEX["dash_100m"]
+	if comp == 1: comp_hex = STR_HEX["obstacle_race"]
+	elif comp == 2: comp_hex = STR_HEX["three_legged"]
+	elif comp == 3: comp_hex = STR_HEX["bread_eating"]
 
-		var stamina_pct: float = clampf(float(state.get("stamina", 80)) / 100.0, 0.0, 1.0)
-		_draw_progress_bar(target, Rect2i(100, 96, 120, 10), stamina_pct, Color8(220, 140, 40))
-
-		# Position badge
-		var place: int = int(state.get("player_place", 1))
-		var place_hex: String = STR_HEX["place_1st"]
-		if place == 2: place_hex = STR_HEX["place_2nd"]
-		elif place == 3: place_hex = STR_HEX["place_3rd"]
-		elif place >= 4: place_hex = STR_HEX["place_4th"]
-		_draw_text_hex_checked(target, place_hex, Vector2i(100, 116), 0, "content_box")
-
-		# Track lane visualizer inside content box
-		_draw_runner_lane_preview(target, Rect2i(230, 52, 60, 96), int(state.get("track_position", 0)))
-	else:
-		# Event Selection Menu
-		var events := [
-			{"hex": STR_HEX["dash_100m"], "y": 50},
-			{"hex": STR_HEX["obstacle_race"], "y": 72},
-			{"hex": STR_HEX["three_legged"], "y": 94},
-			{"hex": STR_HEX["bread_eating"], "y": 116},
-		]
-		for i in range(events.size()):
-			var ev: Dictionary = events[i]
-			var y_pos: int = ev["y"]
-			if i == selected_event:
-				_draw_menu_bar_highlight(target, Rect2i(28, y_pos - 2, 160, 16))
-			_draw_text_hex_checked(target, ev["hex"], Vector2i(32, y_pos), 3 if i == selected_event else 0, "content_box")
-
-		# Hand cursor pointing at active selection
-		var cur_y: int = events[selected_event]["y"] + 6
-		_draw_hand_cursor(target, Vector2i(196, cur_y))
-
-	# 4. Bottom message window (Rect2i(27, 166, 266, 52))
-	_draw_message_window(target)
-	_draw_text_hex_checked(target, STR_HEX["title_sports"], Vector2i(38, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["dash_100m"], Vector2i(88, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["prompt_go_together"], Vector2i(38, 192), 0, "message_window")
+	var comp_x: int = 112 if girl_hex.length() > 16 else 104
+	var place_x: int = maxi(192, comp_x + (comp_hex.length() / 4) * 14 + 6)
+	_draw_text_hex_checked(target, girl_hex, Vector2i(38, 170), 0, "message_window")
+	_draw_text_hex_checked(target, comp_hex, Vector2i(comp_x, 170), 0, "message_window")
+	_draw_text_hex_checked(target, place_hex, Vector2i(place_x, 170), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["label_speed"], Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["label_stamina"], Vector2i(164, 186), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["prompt_go_together"], Vector2i(88, 202), 0, "message_window")
+	_draw_actor(target, 1, Vector2i(276 - 160, 192 - 120))
 
 	return target
 
@@ -187,38 +202,26 @@ func render_sports_festival_hud(state: Dictionary = {}) -> Image:
 func render_culture_festival_booth(state: Dictionary = {}) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Background: School festival hallway / classroom with festival banners
+	# 1. Extracted 320x160 PS1 School Hallway Background (CDROM/BS/D_01_70.BS) + Shiori Portrait
 	_draw_school_hallway_background(target)
+	if _shiori_portrait_image != null and _compositor != null:
+		_compositor._blit(target, _shiori_portrait_image, null, Vector2i(81, 8), false)
 
-	# 2. Main Exhibition Booth Board (OT 5)
-	_draw_gouraud_panel(target, Rect2i(24, 42, 272, 116), Color8(250, 248, 230), Color8(215, 205, 180))
+	# 2. Top-left wooden title badge: 文化祭 (OT 2)
+	_draw_title_badge(target, STR_HEX["title_culture"], Vector2i.ZERO)
 
-	# 3. Top-left wooden title badge: 文化祭 (OT 2, drawn in front of content panel)
-	_draw_title_badge(target, STR_HEX["title_culture"], Vector2i(16, 12))
-
-	# Booth placard & club exhibition options
-	var booths := [
-		{"hex": STR_HEX["class_booth"], "y": 52},
-		{"hex": STR_HEX["exhibit_visit"], "y": 74},
-		{"hex": STR_HEX["club_brass"], "y": 96},
-		{"hex": STR_HEX["folk_dance"], "y": 118},
-	]
-	var selected_booth: int = int(state.get("selected_booth", 0))
-	for i in range(booths.size()):
-		var b: Dictionary = booths[i]
-		if i == selected_booth:
-			_draw_menu_bar_highlight(target, Rect2i(32, b["y"] - 2, 160, 16))
-		_draw_text_hex_checked(target, b["hex"], Vector2i(36, b["y"]), 3 if i == selected_booth else 0, "content_box")
-
-	# Companion mini-portrait box on right
-	_draw_portrait_placeholder(target, Rect2i(210, 48, 76, 102), "藤崎詩織")
-	_draw_hand_cursor(target, Vector2i(198, booths[selected_booth]["y"] + 6))
-
-	# 4. Bottom message window (Rect2i(27, 166, 266, 52))
-	_draw_message_window(target)
-	_draw_text_hex_checked(target, STR_HEX["girl_shiori"], Vector2i(38, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["prompt_tour"], Vector2i(100, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["response_yes"], Vector2i(38, 192), 0, "message_window")
+	# 3. Bottom message window (Rect2i(27, 166, 266, 52), Month 11 Autumn)
+	_draw_message_window(target, 11, Vector2i(16, 10))
+	var selected_booth: int = clampi(int(state.get("selected_booth", state.get("cursor", 0))), 0, 2)
+	_draw_menu_bar_highlight(target, Rect2i(32, 168 + selected_booth * 16, 252, 16))
+	var girl_hex: String = _get_girl_name_hex(int(state.get("girl_id", 0)))
+	var tour_x: int = 122 if girl_hex.length() > 16 else 114
+	_draw_text_hex_checked(target, STR_HEX["class_booth"], Vector2i(48, 170), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["exhibit_visit"], Vector2i(136, 170), 0, "message_window")
+	_draw_text_hex_checked(target, girl_hex, Vector2i(48, 186), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["prompt_tour"], Vector2i(tour_x, 186), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["response_yes"], Vector2i(48, 202), 0, "message_window")
+	_draw_hand_cursor(target, Vector2i(276, 176 + selected_booth * 16))
 
 	return target
 
@@ -228,41 +231,34 @@ func render_culture_festival_booth(state: Dictionary = {}) -> Image:
 func render_school_trip_companion(state: Dictionary = {}) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Background: Scenic travel vista (mountains / blue sky)
+	# 1. Extracted 320x160 PS1 Kyoto Temple Background (CDROM/BS/D_11_18.BS) + Saki Nijino Portrait (NI10.BIN)
 	_draw_scenic_travel_background(target)
+	var girl_id: int = int(state.get("girl_id", 4))
+	var portrait: Image = _shiori_portrait_image if girl_id == 0 else (_saki_portrait_image if _saki_portrait_image != null else _shiori_portrait_image)
+	if portrait != null and _compositor != null:
+		_compositor._blit(target, portrait, null, Vector2i(81, 8), false)
 
-	# 2. Main Trip Information Board (OT 5)
-	_draw_gouraud_panel(target, Rect2i(24, 42, 272, 116), Color8(240, 245, 250), Color8(200, 215, 230))
+	# 2. Top-left wooden title badge: 修学旅行 (OT 2)
+	_draw_title_badge(target, STR_HEX["title_trip"], Vector2i.ZERO)
 
-	# 3. Top-left wooden title badge: 修学旅行 (OT 2, drawn in front of content panel)
-	_draw_title_badge(target, STR_HEX["title_trip"], Vector2i(16, 12))
-
-	# Group activity banner: 【団体行動中】
-	_draw_text_hex_checked(target, STR_HEX["group_activity"], Vector2i(36, 50), 2, "content_box")
-
-	# Destination list: 京都, 沖縄, 北海道
-	var dest_list := [
-		{"hex": STR_HEX["dest_kyoto"], "y": 74},
-		{"hex": STR_HEX["dest_okinawa"], "y": 96},
-		{"hex": STR_HEX["dest_hokkaido"], "y": 118},
-	]
-	var chosen_dest: int = int(state.get("destination", 0))
-	for i in range(dest_list.size()):
-		var d: Dictionary = dest_list[i]
-		if i == chosen_dest:
-			_draw_menu_bar_highlight(target, Rect2i(34, d["y"] - 2, 110, 16))
-		_draw_text_hex_checked(target, d["hex"], Vector2i(40, d["y"]), 3 if i == chosen_dest else 0, "content_box")
-
-	_draw_hand_cursor(target, Vector2i(148, dest_list[chosen_dest]["y"] + 6))
-
-	# Companion prompt portrait frame
-	_draw_portrait_placeholder(target, Rect2i(200, 48, 86, 102), "虹野沙希")
-
-	# 4. Bottom message window (Rect2i(27, 166, 266, 52))
-	_draw_message_window(target)
-	_draw_text_hex_checked(target, STR_HEX["girl_saki"], Vector2i(38, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["prompt_go_together"], Vector2i(96, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["response_yes"], Vector2i(38, 192), 0, "message_window")
+	# 3. Bottom message window (Rect2i(27, 166, 266, 52), Month 9 Autumn)
+	_draw_message_window(target, 9, Vector2i(20, 12))
+	if state.has("cursor"):
+		var cur_row: int = clampi(int(state["cursor"]), 0, 2)
+		_draw_menu_bar_highlight(target, Rect2i(32, 168 + cur_row * 16, 252, 16))
+	var girl_hex: String = _get_girl_name_hex(girl_id)
+	var group_x: int = 112 if girl_hex.length() > 16 else 104
+	_draw_text_hex_checked(target, girl_hex, Vector2i(38, 170), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["group_activity"], Vector2i(group_x, 170), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["prompt_go_together"], Vector2i(88, 186), 0, "message_window")
+	if state.has("destination"):
+		var dest: int = int(state["destination"])
+		var dest_hex: String = STR_HEX["dest_kyoto"]
+		if dest == 1: dest_hex = STR_HEX["dest_okinawa"]
+		elif dest == 2: dest_hex = STR_HEX["dest_hokkaido"]
+		_draw_text_hex_checked(target, dest_hex, Vector2i(216, 186), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["response_yes"], Vector2i(88, 202), 0, "message_window")
+	_draw_actor(target, 1, Vector2i(276 - 160, 192 - 120))
 
 	return target
 
@@ -272,16 +268,14 @@ func render_school_trip_companion(state: Dictionary = {}) -> Image:
 func render_club_practice_match_camp(state: Dictionary = {}) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Background: Athletic stadium / gymnasium sports field
+	# 1. Extracted 320x160 PS1 Baseball Stadium Background (CDROM/BS/D_03_01.BS) + Shiori Portrait
 	_draw_sports_field_background(target)
+	if _shiori_portrait_image != null and _compositor != null:
+		_compositor._blit(target, _shiori_portrait_image, null, Vector2i(81, 8), false)
 
-	# 2. Scoreboard & Match Stats Panel (OT 5)
-	_draw_gouraud_panel(target, Rect2i(24, 42, 272, 116), Color8(235, 240, 245), Color8(195, 205, 215))
+	# 2. Top-left wooden title badge: 練習試合 (OT 2)
+	_draw_title_badge(target, STR_HEX["title_practice"], Vector2i.ZERO)
 
-	# 3. Top-left wooden title badge: 練習試合 (OT 2, drawn in front of content panel)
-	_draw_title_badge(target, STR_HEX["title_practice"], Vector2i(16, 12))
-
-	# Club name & match status
 	var club_hex: String = STR_HEX["club_baseball"]
 	var club_id: int = int(state.get("club_id", 6))
 	if club_id == 7: club_hex = STR_HEX["club_soccer"]
@@ -289,31 +283,22 @@ func render_club_practice_match_camp(state: Dictionary = {}) -> Image:
 	elif club_id == 9: club_hex = STR_HEX["club_swimming"]
 	elif club_id == 10: club_hex = STR_HEX["club_basketball"]
 
-	_draw_text_hex_checked(target, club_hex, Vector2i(36, 50), 0, "content_box")
-	_draw_text_hex_checked(target, STR_HEX["match_ongoing"], Vector2i(130, 50), 3, "content_box")
-
-	# Stats rows
-	_draw_text_hex_checked(target, STR_HEX["practice_result"], Vector2i(36, 74), 0, "content_box")
-	_draw_text_hex_checked(target, STR_HEX["label_score"], Vector2i(36, 96), 0, "content_box")
-
-	var points: int = int(state.get("practice_points", 90))
-	var threshold: int = int(state.get("threshold", 60))
-	var pct: float = clampf(float(points) / float(maxi(threshold * 2, 1)), 0.1, 1.0)
-	_draw_progress_bar(target, Rect2i(110, 76, 140, 10), pct, Color8(40, 150, 220))
-
-	# Match grade & outcome indicator
 	var victory: bool = bool(state.get("victory", true))
 	var outcome_hex: String = STR_HEX["match_victory"] if victory else STR_HEX["match_defeat"]
-	_draw_text_hex_checked(target, outcome_hex, Vector2i(110, 96), 0 if victory else 2, "content_box")
+	var girl_hex: String = _get_girl_name_hex(int(state.get("girl_id", 0)))
+	var club_x: int = 112 if girl_hex.length() > 16 else 104
 
-	# Attending girl support indicator
-	_draw_text_hex_checked(target, STR_HEX["girl_shiori"], Vector2i(36, 118), 3, "content_box")
-
-	# 4. Bottom message window (Rect2i(27, 166, 266, 52))
-	_draw_message_window(target)
-	_draw_text_hex_checked(target, STR_HEX["title_practice"], Vector2i(38, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["match_victory"], Vector2i(96, 174), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["practice_result"], Vector2i(38, 192), 0, "message_window")
+	# 3. Bottom message window (Rect2i(27, 166, 266, 52), Month 8 Summer)
+	_draw_message_window(target, int(state.get("month", 8)), state.get("bg_uv", Vector2i(18, 12)))
+	if state.has("cursor"):
+		var cur_row: int = clampi(int(state["cursor"]), 0, 2)
+		_draw_menu_bar_highlight(target, Rect2i(32, 168 + cur_row * 16, 252, 16))
+	_draw_text_hex_checked(target, girl_hex, Vector2i(38, 170), 0, "message_window")
+	_draw_text_hex_checked(target, club_hex, Vector2i(club_x, 170), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["practice_result"], Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, outcome_hex, Vector2i(156, 186), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["response_yes"], Vector2i(88, 202), 0, "message_window")
+	_draw_actor(target, 1, Vector2i(276 - 160, 192 - 120))
 
 	return target
 
@@ -321,9 +306,14 @@ func render_club_practice_match_camp(state: Dictionary = {}) -> Image:
 # Helper Drawing Routines
 # ==============================================================================
 
-## Draws authentic PS1 checkerboard
-func _draw_checkerboard(target: Image, bg_uv: Vector2i = Vector2i.ZERO) -> void:
-	if _checker_tile == null:
+## Draws authentic PS1 checkerboard (scrolled + seasonal CLUT)
+func _draw_checkerboard(target: Image, bg_uv: Vector2i = Vector2i.ZERO, month: int = 10) -> void:
+	var tile: Image = _checker_tile
+	if _compositor != null:
+		var season_tile: Image = _compositor._get_season_checker_tile(_compositor.hud_season_index(month), 255)
+		if season_tile != null:
+			tile = season_tile
+	if tile == null:
 		target.fill(Color8(40, 180, 140))
 		return
 	var u0: int = bg_uv.x & 31
@@ -332,101 +322,31 @@ func _draw_checkerboard(target: Image, bg_uv: Vector2i = Vector2i.ZERO) -> void:
 		var ty: int = (py + v0) & 31
 		for px in range(320):
 			var tx: int = (px + u0) & 31
-			target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(tx, ty))
+			target.set_pixelv(Vector2i(px, py), tile.get_pixel(tx, ty))
 
-## Background: Running track
+## Background: Sports Festival Running Track (CDROM/BS/D_01_81B.BS)
 func _draw_athletic_track_background(target: Image) -> void:
-	# Grass outfield (top) and clay/dirt oval track (center/bottom)
-	for y in range(240):
-		for x in range(320):
-			var c: Color
-			if y < 40:
-				# Green grass outfield
-				var g: int = 120 + ((x + y) % 5) * 4
-				c = Color8(50, g, 50)
-			elif y < 160:
-				# Reddish-brown clay track
-				var r: int = 180 + ((x * 3 + y * 2) % 7) * 4
-				c = Color8(r, 100, 70)
-			else:
-				# Track infield grass
-				var g2: int = 110 + ((x + y * 2) % 6) * 4
-				c = Color8(45, g2, 45)
-			target.set_pixelv(Vector2i(x, y), c)
+	_draw_checkerboard(target, Vector2i(14, 8), 10)
+	if _sports_track_bg != null:
+		target.blit_rect(_sports_track_bg, Rect2i(0, 0, mini(320, _sports_track_bg.get_width()), mini(160, _sports_track_bg.get_height())), Vector2i(0, 0))
 
-	# White lane markings
-	for y in [45, 75, 105, 135]:
-		for x in range(320):
-			if (x / 8) % 2 == 0:
-				target.set_pixelv(Vector2i(x, y), Color8(240, 240, 240))
-
-## Background: School hallway
+## Background: School Hallway (CDROM/BS/D_01_70.BS)
 func _draw_school_hallway_background(target: Image) -> void:
-	for y in range(240):
-		for x in range(320):
-			var c: Color
-			if y < 130:
-				# Wooden wall / chalkboard
-				var w: int = 190 + (x % 4) * 3
-				c = Color8(w, 160, 120)
-			else:
-				# Polished hallway floor
-				var f: int = 150 + ((x + y) % 8) * 3
-				c = Color8(f, 130, 95)
-			target.set_pixelv(Vector2i(x, y), c)
+	_draw_checkerboard(target, Vector2i(16, 10), 11)
+	if _culture_hallway_bg != null:
+		target.blit_rect(_culture_hallway_bg, Rect2i(0, 0, mini(320, _culture_hallway_bg.get_width()), mini(160, _culture_hallway_bg.get_height())), Vector2i(0, 0))
 
-	# Festival paper bunting flags at top
-	for x in range(0, 320, 20):
-		var flag_color := Color8(220, 60, 60) if (x / 20) % 2 == 0 else Color8(60, 120, 220)
-		for dy in range(12):
-			for dx in range(14 - dy):
-				var px := x + dx
-				var py := 6 + dy
-				if px < 320 and py < 240:
-					target.set_pixelv(Vector2i(px, py), flag_color)
-
-## Background: Scenic travel vista
+## Background: Scenic Travel Vista (CDROM/BS/D_11_18.BS Kyoto)
 func _draw_scenic_travel_background(target: Image) -> void:
-	for y in range(240):
-		var sky_factor := float(y) / 140.0
-		for x in range(320):
-			var c: Color
-			if y < 120:
-				# Gradient sky from deep cyan to pale blue
-				var b: int = int(240 - sky_factor * 80)
-				var g: int = int(180 - sky_factor * 60)
-				c = Color8(90, g, b)
-			elif y < 160:
-				# Mountain silhouettes
-				var m_h: int = int(sin(float(x) / 30.0) * 12.0) + 130
-				if y > m_h:
-					c = Color8(70, 100, 80)
-				else:
-					c = Color8(120, 160, 190)
-			else:
-				# Green field / tourist ground
-				var f: int = 120 + ((x + y) % 5) * 5
-				c = Color8(60, f, 60)
-			target.set_pixelv(Vector2i(x, y), c)
+	_draw_checkerboard(target, Vector2i(20, 12), 9)
+	if _school_trip_kyoto_bg != null:
+		target.blit_rect(_school_trip_kyoto_bg, Rect2i(0, 0, mini(320, _school_trip_kyoto_bg.get_width()), mini(160, _school_trip_kyoto_bg.get_height())), Vector2i(0, 0))
 
-## Background: Sports field
+## Background: Sports Field / Baseball Stadium (CDROM/BS/D_03_01.BS)
 func _draw_sports_field_background(target: Image) -> void:
-	for y in range(240):
-		for x in range(320):
-			var c: Color
-			if y < 80:
-				# Gym/stadium bleachers
-				var b: int = 130 + (y % 6) * 6
-				c = Color8(b, b + 10, b + 20)
-			elif y < 180:
-				# Turf grass
-				var g: int = 140 + ((x * 2 + y) % 6) * 5
-				c = Color8(40, g, 40)
-			else:
-				# Boundary track
-				var t: int = 170 + (x % 5) * 4
-				c = Color8(t, 120, 80)
-			target.set_pixelv(Vector2i(x, y), c)
+	_draw_checkerboard(target, Vector2i(18, 12), 8)
+	if _practice_baseball_bg != null:
+		target.blit_rect(_practice_baseball_bg, Rect2i(0, 0, mini(320, _practice_baseball_bg.get_width()), mini(160, _practice_baseball_bg.get_height())), Vector2i(0, 0))
 
 func _draw_actor(target: Image, frame_id: int, pos: Vector2i, variant: String = "base", semi: bool = true) -> void:
 	if _compositor == null:
@@ -446,12 +366,12 @@ func _draw_actor(target: Image, frame_id: int, pos: Vector2i, variant: String = 
 func _draw_title_badge(target: Image, title_hex: String, _origin: Vector2i = Vector2i.ZERO) -> void:
 	var n_glyphs: int = title_hex.length() / 4
 	if _compositor != null:
-		_compositor._gradient(target, Rect2i(16, 30, n_glyphs * 14 + 8, 20))
+		_compositor._gradient(target, Rect2i(16, 16, n_glyphs * 14 + 8, 20))
 		for i in range(n_glyphs + 1, -1, -1):
 			var fid: int = 113 if i == n_glyphs + 1 else (115 if i == 0 else 114)
 			var ax: int = (n_glyphs - i) * 14 - 135 + (2 if i == n_glyphs + 1 else (-2 if i == 0 else 0))
-			_draw_actor(target, fid, Vector2i(ax, -81))
-	_draw_text_hex_checked(target, title_hex, Vector2i(18, 32), 0, "title_badge")
+			_draw_actor(target, fid, Vector2i(ax, -95))
+	_draw_text_hex_checked(target, title_hex, Vector2i(18, 18), 0, "title_badge")
 
 ## Draws authentic PS1 Gouraud-shaded panel
 func _draw_gouraud_panel(target: Image, rect: Rect2i, col_top: Color, col_bottom: Color) -> void:
@@ -475,11 +395,20 @@ func _draw_gouraud_panel(target: Image, rect: Rect2i, col_top: Color, col_bottom
 				target.set_pixelv(Vector2i(px, py), c)
 
 ## Draws bottom message window (hud_screen_frame_draw(2) + Rect2i(27, 166, 266, 52) + Frame 62)
-func _draw_message_window(target: Image) -> void:
-	if _checker_tile != null:
+func _draw_message_window(target: Image, month: int = 10, bg_uv: Vector2i = Vector2i(14, 8)) -> void:
+	var tile: Image = _checker_tile
+	if _compositor != null:
+		var season_tile: Image = _compositor._get_season_checker_tile(_compositor.hud_season_index(month), 255)
+		if season_tile != null:
+			tile = season_tile
+	if tile != null:
+		var u0: int = bg_uv.x & 31
+		var v0: int = bg_uv.y & 31
 		for py in range(160, 240):
+			var ty: int = (py + v0) & 31
 			for px in range(320):
-				target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(px & 31, py & 31))
+				var tx: int = (px + u0) & 31
+				target.set_pixelv(Vector2i(px, py), tile.get_pixel(tx, ty))
 	if _compositor != null:
 		_compositor._gradient(target, Rect2i(27, 166, 266, 52))
 		_draw_actor(target, 62, Vector2i(0, 75))
@@ -529,9 +458,21 @@ func _draw_runner_lane_preview(target: Image, rect: Rect2i, track_pos: int) -> v
 		target.set_pixelv(Vector2i(rx, ly - 2), Color8(240, 40, 40) if lane == 0 else Color8(40, 40, 220))
 		target.set_pixelv(Vector2i(rx, ly - 1), Color8(240, 40, 40) if lane == 0 else Color8(40, 40, 220))
 
-## Draws a portrait box placeholder with authentic frame
+## Draws companion portrait frame using extracted HU10 portrait when available
 func _draw_portrait_placeholder(target: Image, rect: Rect2i, _girl_name: String) -> void:
 	_draw_gouraud_panel(target, rect, Color8(230, 220, 210), Color8(190, 180, 170))
+	if _shiori_portrait_image != null:
+		var sw: int = _shiori_portrait_image.get_width()
+		var sh: int = _shiori_portrait_image.get_height()
+		var inner := Rect2i(rect.position.x + 2, rect.position.y + 2, rect.size.x - 4, rect.size.y - 4)
+		for y in range(inner.size.y):
+			var sy: int = clampi((y * mini(sh, 130)) / maxi(1, inner.size.y), 0, sh - 1)
+			for x in range(inner.size.x):
+				var sx: int = clampi((x * sw) / maxi(1, inner.size.x), 0, sw - 1)
+				var pcol: Color = _shiori_portrait_image.get_pixel(sx, sy)
+				if pcol.a > 0.1:
+					target.set_pixelv(Vector2i(inner.position.x + x, inner.position.y + y), pcol)
+		return
 	var center_x := rect.position.x + rect.size.x / 2
 	var head_y := rect.position.y + 30
 	for y in range(rect.size.y - 8):

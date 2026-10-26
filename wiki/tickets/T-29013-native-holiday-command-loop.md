@@ -1,10 +1,10 @@
 ---
 id: T-29013
 title: "Port the first ordinary holiday command loop"
-status: In Progress
+status: Done
 assignee: port-week-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29009-ordinary-week-continuation]]"]
 ---
 
@@ -47,3 +47,8 @@ Integrated `port/godot/rules/holiday_appointment.gd`, `port/godot/presentation/d
 ## Calendar (0x30), Holiday Phone Book (0x10) and Holiday Magazine (0x20) screens integrated (2026-10-25)
 
 Integrated `port/godot/rules/calendar_phone_screens.gd`, `port/godot/presentation/calendar_phone_presenter.gd`, and `port/godot/tests/holiday/run_calendar_phone_tests.gd` from `.claude/orchestrator/state/T-29013/calendar-phone-screens-v1/`, matched against PS1 hardware emulator reference captures (`emu_calendar.png`, `emu_phone_book.png`, `emu_phone_shiori.png`, `emu_magazine.png`). Implements `hud_screen_frame_draw` 32x32 mint checkerboard tiling, PS1 GTE `rsin()` and `hud_biorhythm_graph_draw()` sinusoidal curves, `calendar_marks_build()`, `telephone_class_init()` 14-slot directory with `menu_bar_show(0)` highlight and DTMF dial sequence, `hud_magazine_page_build()` (`Frame 118`, `Frame 121`, `Frame 140`, `Frame 151`), `Frame 156` hand cursor, and `0x71..0x73` wooden title badges (`カレンダー`, `情報誌`) in descending OT actor order. Canonical Docker verification passes 64/64 checks with zero bounding-box violations across all 4 captures, which are published to the progress gallery.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

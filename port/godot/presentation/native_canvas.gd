@@ -21,7 +21,7 @@ func present(commands: Array[Dictionary]) -> String:
 			return "draw command requires immutable validated content ID"
 		if not _textures.has(ident):
 			_textures[ident] = ImageTexture.create_from_image(image)
-		prepared.append({"id": ident, "position": command["position"]})
+		prepared.append({"id": ident, "position": command["position"], "image": image})
 	_commands = prepared
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	queue_redraw()

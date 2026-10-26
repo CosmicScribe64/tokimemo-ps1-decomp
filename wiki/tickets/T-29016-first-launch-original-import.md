@@ -1,10 +1,10 @@
 ---
 id: T-29016
 title: "Add first-launch original-game import"
-status: In Progress
+status: Done
 assignee: port-integration-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[versions]]", "[[tickets/T-29003-port-content-adapter]]", "[[tickets/T-29015-desktop-development-player]]"]
 ---
 
@@ -42,3 +42,8 @@ Root integrated `port/godot/services/original_game_import_backend.gd`, `port/god
 - `BootRouter` and `shell.gd` preflight installed content packs and route directly to `res://app/playable.tscn` when ready (including offline/restart without the original disc) or `res://app/first_launch_setup.tscn` on first launch / repair (`TOKIMEMO_FORCE_SETUP=1` / `--setup`).
 - Canonical Docker verification passed 55/55 assertions in `run_import_backend_tests.gd`, 55/55 assertions in `run_install_flow_tests.gd`, and 5/5 foundation suites in `run_tests.gd`.
 - Exported `.pck` desktop build verification (`.claude/orchestrator/state/T-29016/exported-desktop-proof-v1/`) identified and fixed an empty `ProjectSettings.globalize_path("res://")` overlap check in `port/godot/services/installed_pack_store.gd` when running from a virtual `.pck` with no host project directory, passing 24/24 assertions across clean first launch, in-engine directory and CUE/BIN import, and offline restart without the original disc.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

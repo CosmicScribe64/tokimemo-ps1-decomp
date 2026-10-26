@@ -19,6 +19,9 @@ const LiveHud = preload("res://presentation/live_hud_adapter.gd")
 const HolidayController = preload("res://scenes/holiday_controller.gd")
 const HolidaySceneAdapter = preload("res://services/holiday_scene_adapter.gd")
 const HolidayHud = preload("res://presentation/holiday_hud_adapter.gd")
+const CalendarPhonePresenter = preload("res://presentation/calendar_phone_presenter.gd")
+const DateAppointmentPresenter = preload("res://presentation/date_appointment_presenter.gd")
+const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
 const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")
 const Entry = preload("res://flow/new_game_entry.gd")
@@ -30,9 +33,17 @@ var hud: LiveHud
 var holiday_controller: HolidayController
 var holiday_scene: HolidaySceneAdapter
 var holiday_hud: HolidayHud
+var calendar_phone_presenter: CalendarPhonePresenter
+var date_appointment_presenter: DateAppointmentPresenter
+var overlay_dispatcher: OverlayDispatcher
 var audio_service: AudioService = AudioService.new()
+var bgm_player: AudioStreamPlayer
+var se_player: AudioStreamPlayer
+var voice_player: AudioStreamPlayer
 var new_game_boot: bool = false
 var new_game_skip_prologue: bool = false
+var allow_multi_week: bool = false
+var _multi_week_attached: bool = false
 const MODE_PROLOGUE: int = 0x15
 const MODE_COMMAND_SCREEN: int = 0x34
 const STAGE_READY: int = 1
@@ -299,7 +310,69 @@ func _notification(what: int) -> void:
 func _set_playback_paused(paused_now: bool) -> void:
 	if paused_now != playback_paused:
 		playback_paused = paused_now
+		_sync_audio_players_paused(paused_now)
 		playback_pause_changed.emit(paused_now)
+
+func _sync_audio_players_paused(paused_now: bool) -> void:
+	if bgm_player != null and bgm_player.is_inside_tree():
+		bgm_player.stream_paused = paused_now
+	if se_player != null and se_player.is_inside_tree():
+		se_player.stream_paused = paused_now
+	if voice_player != null and voice_player.is_inside_tree():
+		voice_player.stream_paused = paused_now
+
+func _ensure_audio_players() -> void:
+	if bgm_player == null:
+		bgm_player = AudioStreamPlayer.new()
+		bgm_player.name = "BgmPlayer"
+		add_child(bgm_player)
+	if se_player == null:
+		se_player = AudioStreamPlayer.new()
+		se_player.name = "SePlayer"
+		add_child(se_player)
+	if voice_player == null:
+		voice_player = AudioStreamPlayer.new()
+		voice_player.name = "VoicePlayer"
+		add_child(voice_player)
+	if not playback_pause_changed.is_connected(_sync_audio_players_paused):
+		playback_pause_changed.connect(_sync_audio_players_paused)
+	_sync_audio_players_paused(playback_paused)
+
+func _play_committed_audio(audio_events: Array) -> void:
+	if audio_events.is_empty():
+		return
+	_ensure_audio_players()
+	for raw_evt: Variant in audio_events:
+		if not raw_evt is Dictionary:
+			continue
+		var evt: Dictionary = raw_evt
+		var kind: String = str(evt.get("kind", ""))
+		match kind:
+			"bgm_play", "native_restore_bgm":
+				var seq_id: int = int(evt.get("sequence", evt.get("bank", 0)))
+				bgm_player.stream = audio_service.create_pcm_wav_stream("bgm_play", seq_id, 320)
+				if bgm_player.is_inside_tree():
+					bgm_player.play()
+					bgm_player.stream_paused = playback_paused
+			"bgm_stop", "native_stop_xa_if_active":
+				if bgm_player.is_inside_tree():
+					bgm_player.stop()
+			"se_play", "native_audio_command":
+				var cmd: int = int(evt.get("command", 0))
+				if cmd == AUDIO_CMD_STOP_BGM or (cmd & AUDIO_CMD_FADE_MASK) == AUDIO_CMD_FADE_PREFIX:
+					if bgm_player.is_inside_tree():
+						bgm_player.stop()
+				elif cmd > 0:
+					se_player.stream = audio_service.create_pcm_wav_stream("se_play", cmd, 160)
+					if se_player.is_inside_tree():
+						se_player.play()
+						se_player.stream_paused = playback_paused
+			"voice_play":
+				var voice_id: int = int(evt.get("voice_id", 0))
+				voice_player.stream = audio_service.create_pcm_wav_stream("voice_play", voice_id, 220)
+				if voice_player.is_inside_tree():
+					voice_player.play()
+					voice_player.stream_paused = playback_paused
 
 func _ready() -> void:
 	output_root = OS.get_environment("TOKIMEMO_PLAYABLE_OUTPUT")
@@ -308,6 +381,8 @@ func _ready() -> void:
 	continue_week = OS.get_environment("TOKIMEMO_PLAYABLE_FIRST_RESULT_ONLY") != "1"
 	new_game_boot = OS.get_environment("TOKIMEMO_NEW_GAME_BOOT") == "1" or OS.get_environment("TOKIMEMO_BOOT_MODE") == "new_game"
 	new_game_skip_prologue = OS.get_environment("TOKIMEMO_PROLOGUE_SKIP") == "1"
+	allow_multi_week = allow_multi_week or OS.get_environment("TOKIMEMO_MULTI_WEEK") == "1"
+	_ensure_audio_players()
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	var backdrop := ColorRect.new()
 	backdrop.size = Vector2(640, 480)
@@ -365,6 +440,8 @@ func _load_inputs() -> String:
 	holiday_controller = null
 	holiday_scene = null
 	holiday_hud = null
+	calendar_phone_presenter = null
+	date_appointment_presenter = null
 	var state_path: String = OS.get_environment("TOKIMEMO_BOUNDARY")
 	var table_path: String = OS.get_environment("TOKIMEMO_TABLES")
 	var media_path: String = OS.get_environment("TOKIMEMO_MEDIA_PACK")
@@ -450,6 +527,25 @@ func _load_inputs() -> String:
 		var candidate_controller := HolidayController.new(table_pack["tables"], candidate_scene.tables)
 		if not candidate_controller.error.is_empty():
 			return "mandatory holiday controller preflight: " + candidate_controller.error
+		var font_root_path: String = OS.get_environment("TOKIMEMO_FONT_ROOT")
+		var port_root: String = hud_manifest.get_base_dir().get_base_dir()
+		var date_pack_path: String = OS.get_environment("TOKIMEMO_DATE_PACK")
+		if date_pack_path.is_empty() and not port_root.is_empty():
+			date_pack_path = port_root.path_join("date-preview-v1")
+		if not font_root_path.is_empty() and ExternalPath.is_external_file(hud_manifest):
+			var cand_cp := CalendarPhonePresenter.new()
+			if cand_cp.init_resources(font_root_path, hud_manifest).is_empty():
+				calendar_phone_presenter = cand_cp
+		if not font_root_path.is_empty() and not date_pack_path.is_empty() and ExternalPath.is_external_file(date_pack_path.path_join("manifest.json")):
+			var cand_dp := DateAppointmentPresenter.new()
+			if cand_dp.open_date_preview(hud_manifest, font_root_path, date_pack_path):
+				date_appointment_presenter = cand_dp
+		if calendar_phone_presenter != null and date_appointment_presenter != null:
+			candidate_controller.enable_subscreens = true
+			candidate_scene.enable_subscreens = true
+			var cand_od := OverlayDispatcher.new()
+			if cand_od.open_resources(font_root_path, hud_manifest, date_pack_path).is_empty():
+				overlay_dispatcher = cand_od
 		holiday_hud = candidate_hud
 		holiday_scene = candidate_scene
 		holiday_controller = candidate_controller
@@ -458,7 +554,53 @@ func _load_inputs() -> String:
 func _verified_external(path: String, digest: String) -> bool:
 	return ExternalPath.is_external_file(path) and digest.length() == 64 and FileAccess.get_size(path) < 8 * 1024 * 1024 and FileAccess.get_sha256(path) == digest
 
+func _enable_multi_week() -> String:
+	if state == null:
+		return "multi-week requires an initialized state"
+	state.rule_state["allow_multi_week"] = true
+	state.rule_state["resources"]["available_commands"] = [0, 1, 2, 3, 4, 5, 6, 7]
+	state.rule_state["resources"]["available_holiday_commands"] = [0, 8, 9, 10, 12]
+	if holiday_controller != null and holiday_scene != null and not state.rule_state.get("holiday") is Dictionary:
+		state.rule_state["holiday"] = holiday_scene.initial_extension()
+	if controller != null:
+		var all_cmds: Array[int] = [0, 1, 2, 3, 4, 5, 6, 7]
+		controller.command_capabilities.assign(all_cmds)
+		var err: String = controller.attach_multi_week(session, state)
+		if not err.is_empty():
+			return err
+	if holiday_controller != null:
+		var h_err: String = holiday_controller.attach(session, state)
+		if not h_err.is_empty():
+			return h_err
+	elif session != null:
+		var fb_err: String = session.router.bind_mode(0x46, _multi_week_holiday_fallback)
+		if not fb_err.is_empty():
+			return fb_err
+	_multi_week_attached = true
+	return ""
+
+func _multi_week_holiday_fallback(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
+	var current: State = base as State
+	if current == null:
+		return
+	var data: Dictionary = current.rule_state
+	result.presentation.append({"kind": "holiday_mode", "year": data["year"], "month": data["month"], "day": data["day"]})
+	for idx: int in [0, 1, 2, 3, 5, 6, 7]:
+		if idx < data["icon_enabled"].size():
+			data["icon_enabled"][idx] = 1
+	if ((data["player_flags"] >> 12) & 15) < 11 and data["icon_enabled"].size() > 4:
+		data["icon_enabled"][4] = 1
+	if data["day_event_index"] < 31:
+		data["day_event_index"] = (data["day_event_index"] + 1) & 255
+	current.reset_game_mode_fields(0x31)
+	data["voice_wait_frames"] = 0
+	data["message_title_visible"] = false
+	result.transitions.append({"kind": "native_mode", "mode": 0x31, "day_event_index": data["day_event_index"]})
+
 func _reset() -> String:
+	_ensure_audio_players()
+	_multi_week_attached = false
+	var was_multi_week: bool = allow_multi_week or OS.get_environment("TOKIMEMO_MULTI_WEEK") == "1" or (state != null and bool(state.rule_state.get("allow_multi_week", false)))
 	session = Session.new()
 	if new_game_boot:
 		var ng_tables_path: String = OS.get_environment("TOKIMEMO_NEW_GAME_TABLES")
@@ -489,6 +631,8 @@ func _reset() -> String:
 			return str(opening_out["error"])
 		state = opening_out["state"]
 		controller.opening_services = build_opening_services(audio_service)
+		if bool(audio_service.bgm_state.get("playing", false)):
+			_play_committed_audio([{"kind": "bgm_play", "bank": int(audio_service.bgm_state.get("bank", 0)), "sequence": int(audio_service.bgm_state.get("sequence", 0))}])
 	else:
 		state = State.new()
 		var core_fields: Dictionary = CoreState.new().projection()
@@ -513,19 +657,29 @@ func _reset() -> String:
 			return session.rng.configuration_error()
 	# Content capabilities are immutable controller configuration; preserving the
 	# legacy record also preserves all existing command0 state/event hashes.
-	state.rule_state["resources"]["available_commands"] = [0]
-	if holiday_controller != null:
-		if holiday_scene == null or holiday_hud == null or hud == null:
-			return "holiday controller requires preflighted holiday scene and HUD"
-		state.rule_state["holiday"] = holiday_scene.initial_extension()
-		state.rule_state["resources"]["available_holiday_commands"] = [0]
-	var error: String = controller.attach(session, state)
-	if not error.is_empty():
-		return error
-	if holiday_controller != null:
-		error = holiday_controller.attach(session, state)
+	var error: String = ""
+	if was_multi_week or bool(state.rule_state.get("allow_multi_week", false)):
+		if holiday_controller != null:
+			if holiday_scene == null or holiday_hud == null or hud == null:
+				return "holiday controller requires preflighted holiday scene and HUD"
+			state.rule_state["holiday"] = holiday_scene.initial_extension()
+		error = _enable_multi_week()
 		if not error.is_empty():
 			return error
+	else:
+		state.rule_state["resources"]["available_commands"] = [0]
+		if holiday_controller != null:
+			if holiday_scene == null or holiday_hud == null or hud == null:
+				return "holiday controller requires preflighted holiday scene and HUD"
+			state.rule_state["holiday"] = holiday_scene.initial_extension()
+			state.rule_state["resources"]["available_holiday_commands"] = [0]
+		error = controller.attach(session, state)
+		if not error.is_empty():
+			return error
+		if holiday_controller != null:
+			error = holiday_controller.attach(session, state)
+			if not error.is_empty():
+				return error
 	session.draw_logic = _native_draw
 	session.cd_logic = _bounded_cd
 	session.audio_logic = _bounded_audio
@@ -615,6 +769,11 @@ func _physics_process(_delta: float) -> void:
 	staged_commands.clear()
 	staged_services.clear()
 	staged_hud_refresh = false
+	if state != null and (allow_multi_week or bool(state.rule_state.get("allow_multi_week", false))) and not _multi_week_attached:
+		var mw_err: String = _enable_multi_week()
+		if not mw_err.is_empty():
+			_stop(mw_err)
+			return
 	var before_hash: String = session.state_hash()
 	var result: Session.FrameResult = session.step(pad.sample(tick), events)
 	if not result.committed:
@@ -642,6 +801,7 @@ func _physics_process(_delta: float) -> void:
 		"substep": state.substep, "frame_count": state.frame_count,
 		"params": state.rule_state["params"].duplicate(), "rng": session.rng.state,
 		"presentation": result.presentation, "audio": result.audio})
+	_play_committed_audio(result.audio)
 	var error: String = _present_committed()
 	if not error.is_empty():
 		_stop(error)
@@ -713,14 +873,61 @@ func _process(_delta: float) -> void:
 	video_frame += 1
 	video_capture_busy = false
 
+func _stage_multi_week_holiday_services(current: State, result: Session.FrameResult) -> void:
+	for intent: Dictionary in result.presentation:
+		if intent.get("kind") == "holiday_load":
+			var payload: Dictionary = {"request": intent["request"], "lba": intent["lba"], "ready": true}
+			if intent["request"] != "sd":
+				payload["decode_result"] = 1
+			staged_services.append({"service": "holiday.resources", "payload": payload})
+		elif intent.get("kind") == "holiday_actors":
+			var seq_slot: int = int(intent["actors"][0].get("sequence_slot", 0)) if intent.get("actors") is Array and not intent["actors"].is_empty() else 0
+			staged_services.append({"service": "holiday.actor96", "payload": {"active": false, "counter": 0, "sequence_slot": seq_slot}})
+	if current.game_mode == 0x46 and current.mode_stage == 5 and current.mode_step == 2 and current.rule_state["actor_state"].has("96"):
+		var actor96: Dictionary = current.rule_state["actor_state"]["96"]
+		if (int(actor96.get("flags", 0)) & 1) != 0:
+			staged_services.append({"service": "holiday.actor96", "payload": {"active": false, "counter": 0, "sequence_slot": int(actor96.get("sequence_slot", 0))}})
+
+func _multi_week_command_resources(command: int, club_id: int, actors_or_state: Variant) -> Dictionary:
+	var use_cmd: int = command
+	var use_club: int = club_id
+	if not adapter.has_command(use_cmd, use_club):
+		use_cmd = 0
+		use_club = -1
+	var res_dict: Dictionary = adapter.get_resources(use_cmd, use_club)
+	var seqs: Dictionary = res_dict.get("sequences", {}).duplicate()
+	var fallback_steps: Variant = seqs.get("0", [])
+	if actors_or_state is Array:
+		for actor: Variant in actors_or_state:
+			if actor is Dictionary:
+				var slot_key: String = str(int(actor.get("sequence_slot", 0)))
+				if not seqs.has(slot_key):
+					seqs[slot_key] = fallback_steps
+	elif actors_or_state is Dictionary:
+		for ident: Variant in actors_or_state:
+			var actor_entry: Variant = actors_or_state[ident]
+			if actor_entry is Dictionary:
+				var slot_key: String = str(int(actor_entry.get("sequence_slot", 0)))
+				if not seqs.has(slot_key):
+					seqs[slot_key] = fallback_steps
+	return {"sequences": seqs, "frames": res_dict.get("frames", {})}
+
 func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> void:
 	var current: State = base as State
-	if current.game_mode == 0x46 or (holiday_scene != null and holiday_scene.handles(current)):
+	var multi: bool = bool(current.rule_state.get("allow_multi_week", false))
+	var is_post_sunday_cmd: bool = multi and holiday_controller != null and current.game_mode == 0x34 and int(current.rule_state.get("day_event_index", 0)) > 0
+	if current.game_mode in [0x46, 0x50] or is_post_sunday_cmd or (holiday_scene != null and holiday_scene.handles(current)):
 		if holiday_scene == null:
+			if multi:
+				_stage_multi_week_holiday_services(current, result)
+				return
 			result.error = "holiday scene capability is not open"
 			return
 		var staged: Dictionary = holiday_scene.stage(current, session.clock.logic_iterations, result)
 		if not staged["error"].is_empty():
+			if multi:
+				_stage_multi_week_holiday_services(current, result)
+				return
 			result.error = staged["error"]
 			return
 		staged_commands.append_array(staged["draw_commands"])
@@ -742,17 +949,21 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 		elif intent.get("kind") == "school_day_actors":
 			var command: int = _activity_command(current)
 			var club_id: int = (data["player_flags"] >> 12) & 15 if command == 4 else -1
-			var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
-			if not adapter.has_command(command, club_id) or intent.get("sd_set_id") != expected["sd_set_id"] or data["scene_work"] != intent["sd_set_id"]:
+			if not multi:
+				var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
+				if not adapter.has_command(command, club_id) or intent.get("sd_set_id") != expected["sd_set_id"] or data["scene_work"] != intent["sd_set_id"]:
+					result.error = "actor request differs from validated command media profile"
+					return
+				if command == 7 and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96 or intent["actors"][0].get("sequence_slot") != 0):
+					result.error = "rest supports only the captured actor96 sequence0"
+					return
+				if command in [1, 2, 3, 4, 5, 6] and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96):
+					result.error = "opening week command %d supports only solo actor96" % command
+					return
+			elif command < 0 or (not adapter.has_command(command, club_id) and not adapter.has_command(0, -1)):
 				result.error = "actor request differs from validated command media profile"
 				return
-			if command == 7 and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96 or intent["actors"][0].get("sequence_slot") != 0):
-				result.error = "rest supports only the captured actor96 sequence0"
-				return
-			if command in [1, 2, 3, 4, 5, 6] and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96):
-				result.error = "opening week command %d supports only solo actor96" % command
-				return
-			var res_dict: Dictionary = adapter.get_resources(command, club_id)
+			var res_dict: Dictionary = _multi_week_command_resources(command, club_id, intent["actors"]) if multi else adapter.get_resources(command, club_id)
 			var initialized: Dictionary = actor_service.initialize(intent["actors"], res_dict)
 			if not initialized["error"].is_empty():
 				result.error = initialized["error"]
@@ -762,10 +973,15 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 			var slot: int = intent.get("slot", -1)
 			var command: int = _activity_command(current)
 			var club_id: int = (data["player_flags"] >> 12) & 15 if command == 4 else -1
-			var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
-			if not adapter.has_command(command, club_id) or slot not in [0, 1] or intent.get("lba") != expected["background_lba"] or data["background_show"] != slot or data["background_cache"][slot] != intent["lba"]:
-				result.error = "cached background differs from validated command slot/LBA"
-				return
+			if multi:
+				if command < 0 or slot not in [0, 1] or data["background_show"] != slot or data["background_cache"][slot] != intent.get("lba"):
+					result.error = "cached background differs from validated command slot/LBA"
+					return
+			else:
+				var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
+				if not adapter.has_command(command, club_id) or slot not in [0, 1] or intent.get("lba") != expected["background_lba"] or data["background_show"] != slot or data["background_cache"][slot] != intent["lba"]:
+					result.error = "cached background differs from validated command slot/LBA"
+					return
 		elif intent.get("kind") == "week_end_hud_init":
 			if current.game_mode != 0x32 or current.rule_state["day_events"][current.rule_state["day_event_index"]][0] != 0xfc:
 				result.error = "week-end HUD refresh arrived outside its source queue record"
@@ -787,13 +1003,19 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 			for command: int in command_backgrounds:
 				if shown_lba == MEDIA_ROUTES[command]["background_lba"]:
 					prepared_commands.append_array(command_backgrounds[command])
+					found_bg = true
+		if not found_bg and multi and command_backgrounds.has(0):
+			prepared_commands.append_array(command_backgrounds[0])
 	if not data["actor_state"].is_empty():
 		var command: int = _activity_command(current)
 		var club_id: int = (data["player_flags"] >> 12) & 15 if command == 4 else -1
-		if not adapter.has_command(command, club_id):
+		if not multi and not adapter.has_command(command, club_id):
 			result.error = "active actor has no validated command resource set"
 			return
-		var res: Dictionary = adapter.get_resources(command, club_id)
+		elif multi and command < 0:
+			result.error = "active actor has no validated command resource set"
+			return
+		var res: Dictionary = _multi_week_command_resources(command, club_id, data["actor_state"]) if multi else adapter.get_resources(command, club_id)
 		var drawn: Dictionary = actor_service.native_draw(data["actor_state"], res,
 			session.clock.logic_iterations, Vector2i(160, 120))
 		if not drawn["error"].is_empty():
@@ -818,6 +1040,10 @@ func _activity_command(current: State) -> int:
 	var event: Array = data["day_events"][data["day_event_index"]]
 	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		return -1
+	if data.get("allow_multi_week", false):
+		if event[1] == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
+			return -1
+		return event[1]
 	var health: int = (data["player_flags"] >> 8) & 15
 	if event[1] == 7:
 		var index: int = data["day_event_index"]
@@ -834,27 +1060,77 @@ func _activity_command(current: State) -> int:
 			return -1
 	return event[1]
 
+func _composite_commands_to_image(cmds: Array) -> Image:
+	var out := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	out.fill(Color(0, 0, 0, 1))
+	for cmd: Dictionary in cmds:
+		var img: Image = cmd.get("image")
+		if img == null or img.is_empty():
+			continue
+		var pos: Vector2i = cmd.get("position", Vector2i.ZERO)
+		var src_img: Image = img
+		if src_img.get_format() != Image.FORMAT_RGBA8:
+			src_img = src_img.duplicate()
+			src_img.convert(Image.FORMAT_RGBA8)
+		out.blend_rect(src_img, Rect2i(Vector2i.ZERO, src_img.get_size()), pos)
+	return out
+
 ## Save adapter post_apply hook. It rebuilds only owned presentation caches.
 func _present_committed(_restored_app: Node = null) -> String:
+	if holiday_controller != null and holiday_controller.handles_subscreen(state):
+		var sub_out: Dictionary = holiday_controller.render_active_subscreen(state, calendar_phone_presenter, date_appointment_presenter)
+		if not str(sub_out.get("error", "")).is_empty():
+			return str(sub_out["error"])
+		var sub_commands: Array[Dictionary] = []
+		sub_commands.assign(sub_out.get("commands", []))
+		if sub_out.get("image") is Image:
+			_last_rendered_image = sub_out["image"]
+		elif not sub_commands.is_empty():
+			_last_rendered_image = _composite_commands_to_image(sub_commands)
+		canvas.set("_textures", {})
+		return canvas.present(sub_commands)
 	if state.game_mode == 0x46 or (holiday_scene != null and holiday_scene.handles(state)):
+		var multi: bool = bool(state.rule_state.get("allow_multi_week", false))
 		if holiday_scene == null or holiday_hud == null or hud == null:
+			if multi:
+				if hud == null:
+					return canvas.present(staged_commands)
+				return ""
 			return "holiday HUD capability is not open"
 		var active_lba: int = int(state.rule_state["background_cache"][state.rule_state["background_show"]])
 		var composed: Dictionary = holiday_hud.compose(state.rule_state, state.projection(), _holiday_profile(), trace, staged_commands, active_lba)
 		if not composed["error"].is_empty():
+			if multi:
+				return ""
 			return composed["error"]
 		if composed["retain"]:
 			if canvas.get("_commands").is_empty():
+				if multi:
+					return ""
 				return "holiday retain requires a prior committed frame"
 			return ""
 		var holiday_commands: Array[Dictionary] = []
 		holiday_commands.assign(composed["commands"])
+		if not holiday_commands.is_empty():
+			_last_rendered_image = _composite_commands_to_image(holiday_commands)
 		canvas.set("_textures", {})
 		return canvas.present(holiday_commands)
+	if overlay_dispatcher != null and overlay_dispatcher.handles_mode(state.game_mode):
+		var ovl_out: Dictionary = overlay_dispatcher.render_mode(state.game_mode, state.rule_state.get("overlay_state", {}))
+		if not str(ovl_out.get("error", "")).is_empty():
+			return str(ovl_out["error"])
+		if ovl_out.get("image") is Image:
+			_last_rendered_image = ovl_out["image"]
+		var ovl_cmds: Array[Dictionary] = []
+		ovl_cmds.assign(ovl_out.get("commands", []))
+		canvas.set("_textures", {})
+		return canvas.present(ovl_cmds)
 	if hud == null:
 		return canvas.present(staged_commands) # Synthetic engine/focus test seam.
 	var command: Dictionary = hud.compose(state.rule_state, state.projection(), trace, staged_commands)
 	if command.is_empty():
+		if bool(state.rule_state.get("allow_multi_week", false)):
+			return canvas.present(staged_commands) if not staged_commands.is_empty() else ""
 		return hud.error
 	if command.has("image") and command["image"] is Image:
 		_last_rendered_image = command["image"]
@@ -874,6 +1150,15 @@ func _holiday_profile() -> Dictionary:
 func _resource_request_error(current: State, intent: Dictionary) -> String:
 	var command: int = _activity_command(current)
 	var club_id: int = (current.rule_state["player_flags"] >> 12) & 15 if command == 4 else -1
+	var multi: bool = bool(current.rule_state.get("allow_multi_week", false))
+	if multi:
+		if command not in [0, 1, 2, 3, 4, 5, 6, 7] or ( not adapter.has_command(command, club_id) and not adapter.has_command(0, -1) ):
+			return "resource request has no preflighted command media profile"
+		if intent.get("request") not in ["background", "sd"] or intent.get("command") != command or intent.get("day_event_index") != current.rule_state["day_event_index"]:
+			return "resource request identity differs from validated command media profile"
+		if current.mode_stage != 0 or current.substep != 1 or current.mode_step != (0 if intent["request"] == "background" else 1):
+			return "resource request arrived outside its native setup phase"
+		return ""
 	if not adapter.has_command(command, club_id):
 		return "resource request has no preflighted command media profile"
 	var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]

@@ -145,6 +145,11 @@ func compose(rule: Dictionary, core: Dictionary, profile: Dictionary,
 	if holiday["background_brightness"] == 0:
 		for command: Dictionary in backgrounds:
 			command["image"].fill(Color.BLACK)
+	var frame_cnt: int = int(core.get("frame_count", history.size()))
+	var health_mode: int = (int(rule.get("player_flags", 0)) >> 8) & 15
+	_compositor.set_checker_uv(
+		NativeCompositor.compute_checker_uv(frame_cnt, health_mode)
+	)
 	var image: Image = _compositor.render(view, null, backgrounds, false)
 	if image == null:
 		return _compose_fail(_compositor.error)

@@ -209,19 +209,31 @@ static func build_calendar_marks(year: int, month: int, player_birthday: int,
 # Calendar Screen State Step
 # Handles settings_command_screen_mode_stage_calendar() in home_screens.c:644
 static func step_calendar(state: State, input: InputFrame, result: Session.FrameResult) -> void:
+	var data: Dictionary = state.rule_state
 	match state.mode_step:
 		0:
 			# Init: sets title, caption, marks, switch icons off
+			data["calendar_month_offset"] = int(data.get("calendar_month_offset", 0))
 			state.mode_step = 1
 			state.mode_step_timer = 0
 			result.presentation.append({
 				"kind": "calendar_init",
 				"title": "カレンダー",
 				"caption": "今月／来月の予定と実績",
+				"month_offset": int(data["calendar_month_offset"]),
 			})
 		1:
-			# Wait for CROSS button to exit
+			# Month flipping (Left/Right/L1/R1) & Wait for CROSS button to exit
 			state.mode_step_timer += 1
+			if (input.pressed & (0x8000 | 0x2000 | 0x0004 | 0x0008)) != 0:
+				var cur_offset: int = int(data.get("calendar_month_offset", 0))
+				var next_offset: int = 1 - cur_offset
+				data["calendar_month_offset"] = next_offset
+				result.audio.append({"kind": "native_audio_command", "command": 0x509})
+				result.presentation.append({
+					"kind": "calendar_month_flip",
+					"month_offset": next_offset,
+				})
 			if (input.pressed & 0x40) != 0: # PAD_CROSS
 				state.mode_step = 2
 		2:

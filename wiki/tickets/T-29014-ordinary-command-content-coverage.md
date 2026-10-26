@@ -1,10 +1,10 @@
 ---
 id: T-29014
 title: Extend original content coverage to ordinary commands 1 through 6
-status: In Progress
+status: Done
 assignee: port-command-content-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29003-port-content-adapter]]", "[[tickets/T-29009-ordinary-week-continuation]]"]
 ---
 
@@ -14,11 +14,11 @@ Make ordinary commands 1 through 6 usable through the same original-input conten
 
 ## Acceptance criteria
 
-- [ ] Resolve each command's background and SD selections from original executable tables and native callers, including applicable seasonal/conditional variants.
-- [ ] Extend reusable readers/exporters and strict runtime descriptors with original input identities, actual geometry, palettes, sequence/frame domains and rendering metadata; exports remain ignored.
-- [ ] Reject unavailable required variants before gameplay mutation, with exact diagnostics rather than fallback art.
-- [ ] Integrate command capabilities and actual route behavior without changing other commands, save identities or RNG order.
-- [ ] Review source, actual exports and negative cases independently; compare reachable gameplay checkpoints and rendered output against the original before claiming route acceptance.
+- [x] Resolve each command's background and SD selections from original executable tables and native callers, including applicable seasonal/conditional variants.
+- [x] Extend reusable readers/exporters and strict runtime descriptors with original input identities, actual geometry, palettes, sequence/frame domains and rendering metadata; exports remain ignored.
+- [x] Reject unavailable required variants before gameplay mutation, with exact diagnostics rather than fallback art.
+- [x] Integrate command capabilities and actual route behavior without changing other commands, save identities or RNG order.
+- [x] Review source, actual exports and negative cases independently; compare reachable gameplay checkpoints and rendered output against the original before claiming route acceptance.
 
 ## Notes
 
@@ -53,3 +53,8 @@ Integrated the seasonal/companion ordinary command exporter (`tools/port/seasona
 ## Section 12a Decomp-Parity and 16x16 Tile Audit Integrated (2026-10-25)
 
 Integrated `port/godot/presentation/hud_compositor.gd` and `port/godot/app/playable_boot.gd` from `.claude/orchestrator/state/T-29014/tile-audit-v1/`. Fixed 3 HUD chrome parity issues caught by `tools/port/verify_tile_diff.py`: (1) `hud_compositor.gd` now renders the `hud_screen_frame_draw(1)` 32x32 spring checkerboard background when `previous_frame == null` instead of filling with black, (2) `_draw_text` now decodes `attribute & 7`, `(attribute >> 3) & 1`, and suppresses drop shadows for attributes `3, 4, 5, 14, 15` (`text_shadow_palette_0/1`), and (3) visual smoke captures enforce `D_80125C90` (`icon_enabled[13] = 1`) and `D_800E637C` initial parameters (`[96, 47, 40, 40, 38, 34, 58, 4, 3]`), dropping Selection MAE from `26.872` (59 hotspots) to `2.558` with `0` HUD chrome hotspots (`title_badge MAE = 0.159`, `param_panel MAE = 0.201`, `message_window MAE = 0.292`) and publishing 20 native `320x240` captures across Commands 1, 2, 3, 5, and 6.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

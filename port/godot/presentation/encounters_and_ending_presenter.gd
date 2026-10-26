@@ -10,7 +10,7 @@ extends "res://presentation/prologue_presenter.gd"
 ##    (hud_screen_frame_draw(2), message_window_show, hizuke_show, gnsx, sndi).
 
 const MESSAGE_WINDOW_INTERIOR_RECT: Rect2i = Rect2i(27, 166, 266, 52)
-const NOTEBOOK_INTERIOR_RECT: Rect2i = Rect2i(0, 33, 283, 125)
+const NOTEBOOK_INTERIOR_RECT: Rect2i = Rect2i(0, 6, 320, 152)
 const DITHER: Array[int] = [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
 
 # Pre-computed CP932 hex constants via Python .encode("cp932").hex() (Section 12a rule)
@@ -22,25 +22,100 @@ const TITLE_ENDING_HEX: String = "91b28bc68eae" # 卒業式 (3 glyphs)
 const SPEAKER_SHIORI_HEX: String = "93a18de8" # 藤崎
 const SPEAKER_PLAYER_HEX: String = "8d828ca9" # 高見
 
+const SPEAKER_BY_GIRL_HEX: Dictionary = {
+	0: "93a18de8",     # 藤崎 (Shiori)
+	1: "94408c8e",     # 如月 (Mio)
+	2: "95528f8f",     # 紐緒 (Yuina)
+	3: "95d08bcb",     # 片桐 (Ayako)
+	4: "93f896ec",     # 虹野 (Saki)
+	5: "8cc38eae",     # 古式 (Yukari)
+	6: "90b490ec",     # 清川 (Nozomi)
+	7: "8bbe",         # 鏡 (Mira)
+	8: "92a993fa93de", # 朝日奈 (Yuko)
+	9: "94fc8ef78cb4", # 美樹原 (Megumi)
+	10: "918189b38f97",# 早乙女 (Yumi)
+	11: "8ad997d1",    # 館林 (Miharu)
+	12: "88c98f578940",# 伊集院 (Rei)
+	13: "8d449759",    # 好雄 (Yoshio)
+}
+
+const GEKO_LINE_BY_GIRL_HEX: Dictionary = {
+	0: "93a18de8817588ea8f8f82c98b4182e882dc82b582e582a48176", # 藤崎「一緒に帰りましょう」
+	1: "94408c8e817582b288ea8f8f82b582c482e082a282a282c582b782a98176", # 如月「ご一緒してもいいですか」
+	2: "95528f8f817588ea8f8f82c98b4182c182c482a082b082e982ed8176", # 紐緒「一緒に帰ってあげるわ」
+	3: "95d08bcb817588ea8f8f82c98b4182e882dc82b582e581498176", # 片桐「一緒に帰りましょ！」
+	4: "93f896ec817582cb82a6814188ea8f8f82c98b4182eb82a482e681498176", # 虹野「ねえ、一緒に帰ろうよ！」
+}
+
+const VALEN_LINES_BY_GIRL_HEX: Dictionary = {
+	1: [
+		"817582a082cc814182b182ea836f838c8393835e8343839382cc", # 「あの、これバレンタインの
+		"836083878352838c815b836782c582b7814282e682a982c182bd82e7", # チョコレートです。よかったら
+		"8ef382af8ee682c182c482ad82be82b382a28163816381428176", # 受け取ってください……。」
+	],
+	2: [
+		"817582b182ea814193c190bb836083878352838c815b836782e68142", # 「これ、特製チョコレートよ。
+		"95cf82c896f282cd93fc82c182c482a282c882a282a982e78141", # 変な薬は入っていないから、
+		"8ab48ed382b582c48ef382af8ee682e882c882b382a281428176", # 感謝して受け取りなさい。」
+	],
+	3: [
+		"8175836e83628373815b836f838c8393835e834383938149", # 「ハッピーバレンタイン！
+		"8341815b836782c883608387835282e6814182e682a982c182bd82e7", # アートなチョコよ、よかったら
+		"8ef382af8ee682c182c482bf82e582a482be82a282cb81498176", # 受け取ってちょうだいね！」
+	],
+	4: [
+		"817582b182ea81418ee88dec82e882cc83608387835282c882cc8149", # 「これ、手作りのチョコなの！
+		"88ea90b68c9c96bd8dec82c182bd82a982e78141", # 一生懸命作ったから、
+		"904882d782c482ad82ea82e982c68af082b582a282c881498176", # 食べてくれると嬉しいな！」
+	],
+}
+
+const ENDING_LINES_BY_GIRL_HEX: Dictionary = {
+	1: [
+		"81758e84814182b882c182c68d828ca982b382f182cc82b182c682aa", # 「私、ずっと高見さんのことが
+		"8d4482ab82c582b582bd816381638149", # 好きでした……！
+		"82b882c182c688ea8f8f82c982a282c489ba82b382a281428176", # ずっと一緒にいて下さい。」
+	],
+	2: [
+		"81758e8482cc8ca48b8682c988ea94d4954b977682c882cc82cd8141", # 「私の研究に一番必要なのは、
+		"82a082c882bd82be82c182bd82cc816381638149", # あなただったの……！
+		"82b882c182c68e8482c9957482ab8d8782c182c482e682cb81428176", # ずっと私に付き合ってよね。」
+	],
+	3: [
+		"81758341834381458389837581458386815b8149", # 「アイ・ラブ・ユー！
+		"82b882c182c682a082c882bd82aa8d4482ab82be82c182bd82cc8149", # ずっとあなたが好きだったの！
+		"82b182ea82a982e782e088ea8f8f82c982a282c482cb81498176", # これからも一緒にいてね！」
+	],
+	4: [
+		"81758e84814182b882c182c68d828ca982ad82f182cc82b182c682aa", # 「私、ずっと高見くんのことが
+		"91e58d4482ab82be82c182bd82e6816381638149", # 大好きだったよ……！
+		"82b182ea82a982e782e0899e898782b382b982c482cb81498176", # これからも応援させてね！」
+	],
+}
+
 # Walk Home (GEKO) 2-choice prompt strings (x_taku_string_set at x=-120 -> screen 40)
 const CHOICE_ACCEPT_HEX: String = "817788ea8f8f82c98b4182e98178" # 『一緒に帰る』 (7 glyphs)
 const CHOICE_DECLINE_HEX: String = "817788ea906c82c58b4182e98178" # 『一人で帰る』 (7 glyphs)
 
-# Term Exam Results strings (inside NOTEBOOK_INTERIOR_RECT Rect2i(0, 33, 283, 125))
-const EXAM_NOTEBOOK_TITLE_HEX: String = "8afa96968e8e8cb190ac90d194ad955c" # 期末試験成績発表 (8 glyphs)
-const EXAM_ROW_1_HEX: String = "825088ca81408d828ca98cf6906c8140825382578254935f" # １位　高見公人　４８５点 (12 glyphs)
-const EXAM_ROW_2_HEX: String = "825188ca814093a18de88e8d90448140825382568251935f" # ２位　藤崎詩織　４７２点 (12 glyphs)
-const EXAM_ROW_3_HEX: String = "825288ca814095528f8f8c8b93de8140825382548257935f" # ３位　紐緒結奈　４５８点 (12 glyphs)
-const EXAM_ROW_4_HEX: String = "825388ca814094408c8e96a28f8f8140825382528254935f" # ４位　如月未緒　４３５点 (12 glyphs)
-const EXAM_ROW_5_HEX: String = "825488ca81408bbe96a397858140814082528258824f935f" # ５位　鏡魅羅　　３９０点 (12 glyphs)
+# Term Exam Results strings (inside 2-column EXAMINE.NBN wooden scoreboard Rect2i(0, 6, 320, 152))
+const EXAM_ROW_1_HEX: String = "825088ca8d828ca98cf6906c825382578254935f" # １位高見公人４８５点 (10 glyphs)
+const EXAM_ROW_2_HEX: String = "825188ca93a18de88e8d9044825382568251935f" # ２位藤崎詩織４７２点 (10 glyphs)
+const EXAM_ROW_3_HEX: String = "825288ca95528f8f8c8b93de825382548257935f" # ３位紐緒結奈４５８点 (10 glyphs)
+const EXAM_ROW_4_HEX: String = "825388ca94408c8e96a28f8f825382528254935f" # ４位如月未緒４３５点 (10 glyphs)
+const EXAM_ROW_5_HEX: String = "825488ca8bbe96a39785814082528258824f935f" # ５位鏡魅羅　３９０点 (10 glyphs)
+const EXAM_RIGHT_ROW_1_HEX: String = "825588ca95d08bcb8dca8e7182528253824f935f" # ６位片桐彩子３４０点 (10 glyphs)
+const EXAM_RIGHT_ROW_2_HEX: String = "825688ca93f896ec8db98af3825282508254935f" # ７位虹野沙希３１５点 (10 glyphs)
+const EXAM_RIGHT_ROW_3_HEX: String = "825788ca90b490ec965d8140825182588253935f" # ８位清川望　２９４点 (10 glyphs)
+const EXAM_RIGHT_ROW_4_HEX: String = "825888ca92a993fa93de975b825182558254935f" # ９位朝日奈夕２６５点 (10 glyphs)
+const EXAM_RIGHT_ROW_5_HEX: String = "8250824f88ca8d449759814082518250824f935f" # １０位好雄　２１０点 (10 glyphs)
 const EXAM_LINE_1_HEX: String = "81698da193fa82cd8e8e8cb18c8b89ca82cc94ad955c82cc93fa82be8142" # （今日は試験結果の発表の日だ。 (15 glyphs)
 const EXAM_LINE_2_HEX: String = "82e282c182bd815b814188ea94d482be8149" # やったー、一番だ！ (9 glyphs)
 const EXAM_LINE_3_HEX: String = "82b182ea82c58e8e8cb182cc92e989a482be82c88142816a" # これで試験の帝王だな。） (12 glyphs)
 
 # Valentine's Day strings
 const VALEN_LINE_1_HEX: String = "817582b182ea8141836f838c8393835e8343839382cc" # 「これ、バレンタインの (11 glyphs)
-const VALEN_LINE_2_HEX: String = "836083878352838c815b836782e6814282a282c282e08ae692a382e9" # チョコレートよ。いつも頑張る (14 glyphs)
-const VALEN_LINE_3_HEX: String = "8d828ca982ad82f182c98163816382cd82a281428176" # 高見くんに……はい。」 (11 glyphs)
+const VALEN_LINE_2_HEX: String = "836083878352838c815b836782e6814282e682a982c182bd" # チョコレートよ。よかった (12 glyphs)
+const VALEN_LINE_3_HEX: String = "82e78ef382af8ee682c182c482cb8163816382cd82a281428176" # ら受け取ってね……はい。」 (13 glyphs)
 
 # Legendary Tree Confession strings
 const ENDING_LINE_1_HEX: String = "81758e84814182b882c182c68d828ca982ad82f182cc82b182c682aa" # 「私、ずっと高見くんのことが (14 glyphs)
@@ -49,13 +124,28 @@ const ENDING_LINE_3_HEX: String = "82bb82ce82c982a282c482ad82ea82dc82b782a981488
 
 
 var _shiori_bustup: Image = null
+var _school_gate_bg: Image = null
+var _school_cherry_gate_bg: Image = null
+var _legendary_tree_bg: Image = null
+var _exam_frame_img: Image = null
+
+static func _load_first_existing_image(rel_path: String) -> Image:
+	var candidates := [
+		"/workspace/" + rel_path,
+		"/work/" + rel_path,
+		ProjectSettings.globalize_path("res://../../" + rel_path).simplify_path(),
+	]
+	for p in candidates:
+		if FileAccess.file_exists(p):
+			return Image.load_from_file(p)
+	return null
 
 func load_manifest(hud_manifest_path: String, font_root: String) -> String:
-	var shiori_path := "/workspace/.asset-cache/port/date-preview-v1/portraits/shiori_hu10/shiori_hu10_21938.static-frame.png"
-	if not FileAccess.file_exists(shiori_path):
-		shiori_path = ProjectSettings.globalize_path("res://../../.asset-cache/port/date-preview-v1/portraits/shiori_hu10/shiori_hu10_21938.static-frame.png")
-	if FileAccess.file_exists(shiori_path):
-		_shiori_bustup = Image.load_from_file(shiori_path)
+	_shiori_bustup = _load_first_existing_image(".asset-cache/port/date-preview-v1/portraits/shiori_hu10/shiori_hu10_21938.static-frame.png")
+	_school_gate_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-05ca56dffdcfe0b85cdc0ec238630e1f24010982a83d969d7b8941585a2a770a/asset-05ca56dffdcfe0b85cdc0ec238630e1f24010982a83d969d7b8941585a2a770a.background.png")
+	_school_cherry_gate_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-9169639902fed8e42549b1c83fd9e49544147d656c7f37ff90333768b8cd9f12/asset-9169639902fed8e42549b1c83fd9e49544147d656c7f37ff90333768b8cd9f12.background.png")
+	_legendary_tree_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-7fc1cccbcbbcc95a3810264eb0afa456abb9d08b238dcaed57185cbff4f07a32/asset-7fc1cccbcbbcc95a3810264eb0afa456abb9d08b238dcaed57185cbff4f07a32.background.png")
+	_exam_frame_img = _load_first_existing_image(".asset-cache/media/exam-original-probe/exam.frame-00.png")
 	return init_resources(font_root, hud_manifest_path, "")
 
 
@@ -135,81 +225,33 @@ func _draw_menu_bar_highlight(target: Image, rect: Rect2i) -> void:
 			target.set_pixelv(Vector2i(px, py), Color8(out_r5 << 3, out_g5 << 3, out_b5 << 3, 255))
 
 
-func _draw_school_gate_with_shiori(canvas: Image, autumn_afternoon: bool, holding_chocolate: bool) -> void:
-	var sky_top := Color8(235, 165, 118) if autumn_afternoon else Color8(135, 192, 238)
-	var sky_mid := Color8(248, 206, 156) if autumn_afternoon else Color8(192, 224, 248)
-	for y: int in range(160):
-		var t: float = float(y) / 159.0
-		canvas.fill_rect(Rect2i(0, y, 320, 1), sky_top.lerp(sky_mid, t))
-
-	# School building & windows
-	canvas.fill_rect(Rect2i(20, 32, 200, 96), Color8(218, 206, 192))
-	canvas.fill_rect(Rect2i(16, 28, 208, 6), Color8(142, 128, 118))
-	for wy: int in [44, 68, 92]:
-		for wx: int in range(32, 204, 28):
-			canvas.fill_rect(Rect2i(wx, wy, 18, 14), Color8(86, 112, 142))
-			canvas.fill_rect(Rect2i(wx + 1, wy + 1, 7, 12), Color8(168, 196, 218))
-
-	# Gate pillar & courtyard pavement
-	canvas.fill_rect(Rect2i(0, 122, 320, 38), Color8(164, 154, 146))
-	canvas.fill_rect(Rect2i(36, 78, 26, 56), Color8(152, 88, 72))
-	canvas.fill_rect(Rect2i(34, 74, 30, 5), Color8(210, 198, 186))
-	canvas.fill_rect(Rect2i(44, 88, 10, 26), Color8(228, 218, 196))
-
-	# Trees along the gate
-	canvas.fill_rect(Rect2i(215, 16, 105, 86), Color8(72, 118, 68))
-	canvas.fill_rect(Rect2i(230, 28, 84, 64), Color8(94, 146, 82))
-	canvas.fill_rect(Rect2i(258, 92, 18, 42), Color8(96, 68, 48))
-
-	_draw_shiori_bustup(canvas, 160, 38, holding_chocolate)
+func _draw_school_gate_with_shiori(canvas: Image, autumn_afternoon: bool, _holding_chocolate: bool) -> void:
+	var bg: Image = _school_gate_bg if autumn_afternoon else (_school_cherry_gate_bg if _school_cherry_gate_bg != null else _school_gate_bg)
+	if bg != null:
+		canvas.blit_rect(bg, Rect2i(0, 0, mini(320, bg.get_width()), mini(160, bg.get_height())), Vector2i(0, 0))
+	_draw_shiori_bustup(canvas, 160, 38)
 
 
-func _draw_shiori_bustup(canvas: Image, center_x: int, top_y: int, holding_chocolate: bool) -> void:
+func _draw_shiori_bustup(canvas: Image, _center_x: int, _top_y: int) -> void:
 	if _shiori_bustup != null and _compositor != null:
 		_compositor._blit(canvas, _shiori_bustup, null, Vector2i(81, 8), false)
-	else:
-		canvas.fill_rect(Rect2i(center_x - 28, top_y + 6, 56, 78), Color8(188, 64, 76))
-
-	if holding_chocolate:
-		canvas.fill_rect(Rect2i(center_x - 18, top_y + 76, 36, 26), Color8(238, 182, 204))
-		canvas.fill_rect(Rect2i(center_x - 18, top_y + 76, 36, 4), Color8(212, 58, 88))
-		canvas.fill_rect(Rect2i(center_x - 3, top_y + 76, 6, 26), Color8(212, 58, 88))
-		canvas.fill_rect(Rect2i(center_x - 8, top_y + 72, 16, 6), Color8(232, 64, 96))
 
 
 func _draw_legendary_tree_backdrop(canvas: Image) -> void:
-	var sky_top := Color8(122, 178, 236)
-	var sky_bottom := Color8(224, 236, 252)
-	for y: int in range(160):
-		var t: float = float(y) / 159.0
-		canvas.fill_rect(Rect2i(0, y, 320, 1), sky_top.lerp(sky_bottom, t))
-
-	canvas.fill_rect(Rect2i(0, 116, 320, 44), Color8(112, 168, 96))
-	canvas.fill_rect(Rect2i(0, 130, 320, 30), Color8(92, 148, 78))
-
-	canvas.fill_rect(Rect2i(28, 36, 58, 98), Color8(104, 68, 46))
-	canvas.fill_rect(Rect2i(20, 112, 74, 22), Color8(92, 58, 38))
-	canvas.fill_rect(Rect2i(42, 42, 14, 82), Color8(126, 86, 60))
-
-	canvas.fill_rect(Rect2i(0, 0, 320, 52), Color8(246, 196, 212))
-	canvas.fill_rect(Rect2i(0, 24, 260, 36), Color8(252, 214, 226))
-	canvas.fill_rect(Rect2i(18, 8, 280, 28), Color8(238, 174, 196))
-
-	var petals: Array[Vector2i] = [
-		Vector2i(112, 68), Vector2i(134, 84), Vector2i(228, 62),
-		Vector2i(252, 92), Vector2i(276, 76), Vector2i(96, 104),
-	]
-	for p: Vector2i in petals:
-		canvas.fill_rect(Rect2i(p.x, p.y, 4, 3), Color8(252, 208, 222))
-
-	_draw_shiori_bustup(canvas, 172, 38, false)
+	if _legendary_tree_bg != null:
+		canvas.blit_rect(
+			_legendary_tree_bg,
+			Rect2i(0, 0, mini(320, _legendary_tree_bg.get_width()), mini(160, _legendary_tree_bg.get_height())),
+			Vector2i(0, 0)
+		)
+	_draw_shiori_bustup(canvas, 172, 38)
 
 
 # ============================================================================
 # Scene 1: After-School Walk Home (GEKO) 2-Choice Invitation Prompt
 # ============================================================================
 
-func render_walk_home_invitation_frame(selected_choice: int = 0) -> Image:
+func render_walk_home_invitation_frame(selected_choice: int = 0, girl_id: int = -1, state: Dictionary = {}) -> Image:
 	# Mirrors encounter_walk_home_draw (src/ovl/girl_encounters/walk_home.c:72-81) +
 	# encounter_walk_home_choice_prompt_init (walk_home.c:340-363):
 	# - hud_screen_frame_draw(2)
@@ -222,7 +264,12 @@ func render_walk_home_invitation_frame(selected_choice: int = 0) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	target.fill(Color.BLACK)
 
-	_draw_checkerboard_frame(target, 2, 64, 64)
+	if state.has("cursor"):
+		selected_choice = int(state["cursor"])
+	if state.has("girl_id"):
+		girl_id = int(state["girl_id"])
+
+	_draw_checkerboard_frame(target, 2, 64, 64, 2) # Month 10 (Oct) -> Season 2 (Autumn Warm-Amber)
 	_draw_school_gate_with_shiori(target, true, false)
 	_draw_message_window(target)
 	_draw_date_pillar(target, 95, 10, 18, 2, 0) # 95 10/18 Wed
@@ -233,12 +280,16 @@ func render_walk_home_invitation_frame(selected_choice: int = 0) -> Image:
 	var bar_screen_y: int = 170 if choice_idx == 0 else 186
 	_draw_menu_bar_highlight(target, Rect2i(40, bar_screen_y, 240, 16))
 
-	# x_taku_string_set draws option 0 and option 1 inside the highlight bar, with hand cursor pointing from the left
+	# x_taku_string_set draws option 0 and option 1 inside the highlight bar
 	_draw_text_hex_checked(target, CHOICE_ACCEPT_HEX, Vector2i(56, 170), 0, "message_window")
 	_draw_text_hex_checked(target, CHOICE_DECLINE_HEX, Vector2i(56, 186), 0, "message_window")
 
-	# Hand cursor (Frame 156, width 24px) at x=30..54 pointing cleanly at x=56
-	_draw_actor(target, 156, Vector2i(30 - 160, bar_screen_y + 2 - 120))
+	if girl_id >= 0:
+		var geko_line_hex: String = String(GEKO_LINE_BY_GIRL_HEX.get(girl_id, GEKO_LINE_BY_GIRL_HEX[0]))
+		_draw_text_hex_checked(target, geko_line_hex, Vector2i(56, 202), 0, "message_window")
+
+	# Hand cursor (Frame 156) at right end of highlight bar (x = 116 -> screen 276, y = bar_screen_y + 8)
+	_draw_actor(target, 156, Vector2i(276 - 160, bar_screen_y + 8 - 120))
 
 	_draw_black_border_1px(target)
 	return target
@@ -248,39 +299,50 @@ func render_walk_home_invitation_frame(selected_choice: int = 0) -> Image:
 # Scene 2: Term Exam Results (MODE_EXAM) Notebook Scoreboard & Reaction
 # ============================================================================
 
-func render_term_exam_results_frame() -> Image:
-	# Mirrors exam_entry + exam_results_show + exam_results_react (src/ovl/misc_scenes/final_exam.c:94-127, 635-776):
-	# Renders the 320x240 HUD with Gouraud exam scoreboard panel (Rect2i(0, 33, 283, 125)),
-	# header banner (exam_panel_draw_header), date pillar, title badge ("結果発表"),
-	# ranked student rows, and 3-row Rank #1 reaction.
+func render_term_exam_results_frame(state: Dictionary = {}) -> Image:
+	# Mirrors exam_entry + exam_results_show + exam_results_react (src/ovl/misc_scenes/final_exam.c:663-776):
+	# - icon_disp_switch(0), parameter_disp_switch(0), hizuke_disp_switch(0)
+	# - exam_panel_draw_big(): prim_gradient_rect(-0xA0, -0x68, 0x140, 0x8E, 5, 0xE0E0E0, 2) -> Rect2i(0, 16, 320, 142)
+	# - exam_panel_draw_header(): prim_gradient_rect(-0x41, -0x70, 0x84, 0x12, 4, 0x30E00, 0) -> Rect2i(95, 8, 132, 18)
+	# - actor_pool[96]: EXAMINE.NBN wooden 2-column frame + "期末試験結果発表" plaque at (0, -0x28) -> Rect2i(0, 6, 320, 148)
 	_reset_tracking()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	target.fill(Color.BLACK)
 
-	_draw_checkerboard_frame(target, 1, 32, 32)
+	_draw_checkerboard_frame(target, 0, 32, 32, 1) # Month 7 (Jul) -> Season 1 (Summer Sky-Blue), mode 0 fills top y=0..15 strip
 
-	# Base Gouraud scoreboard panel inside Rect2i(0, 33, 283, 125) (cal_base_show / exam_panel_draw_big)
-	_draw_cal_base(target, NOTEBOOK_INTERIOR_RECT)
-	# Header dark-green banner inside scoreboard (exam_panel_draw_header)
-	_compositor._gradient(target, Rect2i(98, 35, 124, 16))
+	# 1. exam_panel_draw_big() (OT=5)
+	_draw_cal_base(target, Rect2i(0, 16, 320, 142))
+	if state.has("cursor"):
+		var cur_row: int = clampi(int(state["cursor"]), 0, 4)
+		_draw_menu_bar_highlight(target, Rect2i(14, 36 + cur_row * 16, 144, 16))
+	# 2. exam_panel_draw_header() (OT=4): dark-green backdrop behind "期末試験結果発表" plaque
+	_compositor._gradient(target, Rect2i(95, 8, 132, 18))
+	# 3. actor_pool[96] (OT=3): EXAMINE.NBN wooden 2-column frame at (0, 6)
+	if _exam_frame_img != null and _compositor != null:
+		_compositor._blit(target, _exam_frame_img, null, Vector2i(0, 6), false)
 
-	# Exam scoreboard header and top 5 ranked rows inside NOTEBOOK_INTERIOR_RECT Rect2i(0, 33, 283, 125)
-	_draw_notebook_text_hex_checked(target, EXAM_NOTEBOOK_TITLE_HEX, Vector2i(104, 37), 0)
-	_draw_notebook_text_hex_checked(target, EXAM_ROW_1_HEX, Vector2i(48, 58), 4)
-	_draw_notebook_text_hex_checked(target, EXAM_ROW_2_HEX, Vector2i(48, 76), 3)
-	_draw_notebook_text_hex_checked(target, EXAM_ROW_3_HEX, Vector2i(48, 94), 3)
-	_draw_notebook_text_hex_checked(target, EXAM_ROW_4_HEX, Vector2i(48, 112), 3)
-	_draw_notebook_text_hex_checked(target, EXAM_ROW_5_HEX, Vector2i(48, 130), 3)
+	# 4. Ranked student rows inside left column (exam_row_x = -152 -> screen x = 16, exam_row_y = 38 + i*16)
+	#    and right column (exam_row_x = +8 -> screen x = 176, exam_row_y = 38 + i*16)
+	_draw_notebook_text_hex_checked(target, EXAM_ROW_1_HEX, Vector2i(16, 38), 4)
+	_draw_notebook_text_hex_checked(target, EXAM_ROW_2_HEX, Vector2i(16, 54), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_ROW_3_HEX, Vector2i(16, 70), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_ROW_4_HEX, Vector2i(16, 86), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_ROW_5_HEX, Vector2i(16, 102), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_RIGHT_ROW_1_HEX, Vector2i(176, 38), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_RIGHT_ROW_2_HEX, Vector2i(176, 54), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_RIGHT_ROW_3_HEX, Vector2i(176, 70), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_RIGHT_ROW_4_HEX, Vector2i(176, 86), 3)
+	_draw_notebook_text_hex_checked(target, EXAM_RIGHT_ROW_5_HEX, Vector2i(176, 102), 3)
 
 	_draw_message_window(target)
-	_draw_date_pillar(target, 95, 7, 15, 5, 0) # 95 7/15 Sat
-	_draw_title_badge(target, TITLE_EXAM_RESULTS_HEX, Vector2i.ZERO, 4)
 
 	var speaker_pos: Vector2i = get_speaker_screen_pos(SPEAKER_PLAYER_HEX)
 	_draw_text_hex_checked(target, SPEAKER_PLAYER_HEX, speaker_pos, 0, "message_window")
 	_draw_text_hex_checked(target, EXAM_LINE_1_HEX, Vector2i(74, 170), 0, "message_window")
 	_draw_text_hex_checked(target, EXAM_LINE_2_HEX, Vector2i(88, 186), 0, "message_window")
 	_draw_text_hex_checked(target, EXAM_LINE_3_HEX, Vector2i(88, 202), 0, "message_window")
+	_draw_actor(target, 1, Vector2i(276 - 160, 192 - 120))
 
 	_draw_black_border_1px(target)
 	return target
@@ -290,22 +352,32 @@ func render_term_exam_results_frame() -> Image:
 # Scene 3: Valentine's Day (VALEN) Chocolate Presentation Scene
 # ============================================================================
 
-func render_valentine_chocolate_frame() -> Image:
+func render_valentine_chocolate_frame(girl_id: int = 0, state: Dictionary = {}) -> Image:
 	_reset_tracking()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	target.fill(Color.BLACK)
 
-	_draw_checkerboard_frame(target, 2, 96, 48)
+	if state.has("girl_id"):
+		girl_id = int(state["girl_id"])
+
+	_draw_checkerboard_frame(target, 2, 96, 48, 3) # Month 2 (Feb) -> Season 3 (Winter Slate-Gray)
 	_draw_school_gate_with_shiori(target, false, true)
 	_draw_message_window(target)
 	_draw_date_pillar(target, 96, 2, 14, 2, 0) # 96 2/14 Wed
 	_draw_title_badge(target, TITLE_VALENTINE_HEX, Vector2i.ZERO, 6)
 
-	var speaker_pos: Vector2i = get_speaker_screen_pos(SPEAKER_SHIORI_HEX)
-	_draw_text_hex_checked(target, SPEAKER_SHIORI_HEX, speaker_pos, 0, "message_window")
-	_draw_text_hex_checked(target, VALEN_LINE_1_HEX, Vector2i(74, 170), 0, "message_window")
-	_draw_text_hex_checked(target, VALEN_LINE_2_HEX, Vector2i(88, 186), 0, "message_window")
-	_draw_text_hex_checked(target, VALEN_LINE_3_HEX, Vector2i(88, 202), 0, "message_window")
+	if state.has("cursor"):
+		var cur_row: int = clampi(int(state["cursor"]), 0, 2)
+		_draw_menu_bar_highlight(target, Rect2i(72, 170 + cur_row * 16, 212, 16))
+
+	var speaker_hex: String = String(SPEAKER_BY_GIRL_HEX.get(girl_id, SPEAKER_SHIORI_HEX))
+	var lines: Array = VALEN_LINES_BY_GIRL_HEX.get(girl_id, [VALEN_LINE_1_HEX, VALEN_LINE_2_HEX, VALEN_LINE_3_HEX])
+	var speaker_pos: Vector2i = get_speaker_screen_pos(speaker_hex)
+	_draw_text_hex_checked(target, speaker_hex, speaker_pos, 0, "message_window")
+	_draw_text_hex_checked(target, String(lines[0]), Vector2i(74, 170), 0, "message_window")
+	_draw_text_hex_checked(target, String(lines[1]), Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, String(lines[2]), Vector2i(88, 202), 0, "message_window")
+	_draw_actor(target, 1, Vector2i(276 - 160, 192 - 120))
 
 	_draw_black_border_1px(target)
 	return target
@@ -315,10 +387,13 @@ func render_valentine_chocolate_frame() -> Image:
 # Scene 4: Legendary Tree Confession (ENDING) Graduation Day Scene
 # ============================================================================
 
-func render_legendary_tree_confession_frame() -> Image:
+func render_legendary_tree_confession_frame(girl_id: int = 0, state: Dictionary = {}) -> Image:
 	_reset_tracking()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	target.fill(Color.BLACK)
+
+	if state.has("girl_id"):
+		girl_id = int(state["girl_id"])
 
 	_draw_checkerboard_frame(target, 2, 128, 128)
 	_draw_legendary_tree_backdrop(target)
@@ -326,11 +401,18 @@ func render_legendary_tree_confession_frame() -> Image:
 	_draw_date_pillar(target, 98, 3, 1, 6, 1) # 98 3/1 Sun
 	_draw_title_badge(target, TITLE_ENDING_HEX, Vector2i.ZERO, 3)
 
-	var speaker_pos: Vector2i = get_speaker_screen_pos(SPEAKER_SHIORI_HEX)
-	_draw_text_hex_checked(target, SPEAKER_SHIORI_HEX, speaker_pos, 0, "message_window")
-	_draw_text_hex_checked(target, ENDING_LINE_1_HEX, Vector2i(74, 170), 0, "message_window")
-	_draw_text_hex_checked(target, ENDING_LINE_2_HEX, Vector2i(88, 186), 0, "message_window")
-	_draw_text_hex_checked(target, ENDING_LINE_3_HEX, Vector2i(88, 202), 0, "message_window")
+	if state.has("cursor"):
+		var cur_row: int = clampi(int(state["cursor"]), 0, 2)
+		_draw_menu_bar_highlight(target, Rect2i(72, 170 + cur_row * 16, 212, 16))
+
+	var speaker_hex: String = String(SPEAKER_BY_GIRL_HEX.get(girl_id, SPEAKER_SHIORI_HEX))
+	var lines: Array = ENDING_LINES_BY_GIRL_HEX.get(girl_id, [ENDING_LINE_1_HEX, ENDING_LINE_2_HEX, ENDING_LINE_3_HEX])
+	var speaker_pos: Vector2i = get_speaker_screen_pos(speaker_hex)
+	_draw_text_hex_checked(target, speaker_hex, speaker_pos, 0, "message_window")
+	_draw_text_hex_checked(target, String(lines[0]), Vector2i(74, 170), 0, "message_window")
+	_draw_text_hex_checked(target, String(lines[1]), Vector2i(88, 186), 0, "message_window")
+	_draw_text_hex_checked(target, String(lines[2]), Vector2i(88, 202), 0, "message_window")
+	_draw_actor(target, 1, Vector2i(276 - 160, 192 - 120))
 
 	_draw_black_border_1px(target)
 	return target

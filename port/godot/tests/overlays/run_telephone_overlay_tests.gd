@@ -268,7 +268,7 @@ func _test_rendering_and_captures() -> void:
 	_check(save_err1 == OK, "Saved captures/tel_01_notebook_profile.png")
 
 	# 2. Render Telephone Date Place Selection Menu
-	var avail := [0x74, 0x74, 0x74, 0x74, 0x74, 0, 0, 0, 0, 0, 0x64]
+	var avail := [0x74, 0x74, 0x74, 0x74, 0x74, 0x74, 0x74, 0x74, 0x74, 0x74, 0x64]
 	var img_place := presenter.render_date_place_menu_screen(0, 0, avail)
 	_check(img_place.get_size() == Vector2i(320, 240), "Date place menu rendered 320x240")
 	var save_err2 := img_place.save_png(captures_dir.path_join("tel_02_date_place_menu.png"))
@@ -276,9 +276,10 @@ func _test_rendering_and_captures() -> void:
 
 	# 3. Render Telephone Date Day Selection Menu
 	var candidate_slots: Array[Dictionary] = [
-		{"month": 4, "day": 9, "month_offset": 0},
 		{"month": 4, "day": 16, "month_offset": 0},
 		{"month": 4, "day": 23, "month_offset": 0},
+		{"month": 4, "day": 29, "month_offset": 0},
+		{"month": 4, "day": 30, "month_offset": 0},
 		{"month": 5, "day": 7, "month_offset": 1}
 	]
 	var img_day := presenter.render_date_day_menu_screen(candidate_slots, 0)

@@ -245,7 +245,7 @@ static func compute_text_marker_state(enabled: bool, current_y: int = 0x48, fram
 	return {
 		"actor_index": 2,
 		"enabled": enabled,
-		"sprite_id": 0xF0,
+		"sprite_id": 1,
 		"x": 0x74, # 116 -> screen 276
 		"y": next_y, # 72..79 -> screen 192..199
 		"screen_pos": Vector2i(160 + 0x74, 120 + next_y),
@@ -315,10 +315,10 @@ func render_prologue_frame(config: Dictionary) -> Image:
 	for row_dict: Dictionary in visible_rows:
 		_draw_text_hex_checked(target, str(row_dict["hex"]), row_dict["pos"], 0, "message_window")
 
-	# 7. Optional text advance marker (Actor 2, hud_text_marker_set)
+	# 7. Optional text advance marker (Actor 2, hud_text_marker_set: D_8011ED70 = 1)
 	if bool(config.get("show_text_marker", false)):
 		var marker_y: int = int(config.get("text_marker_y", 0x48))
-		_draw_actor(target, 0xF0, Vector2i(0x74, marker_y))
+		_draw_actor(target, 1, Vector2i(0x74, marker_y))
 
 	# 8. 1px hardware border mask (border_black_draw: x=0 and y=0)
 	_draw_black_border_1px(target)
@@ -418,8 +418,9 @@ func render_stage14_shiori_line19(checker_x: int = 79, checker_y: int = 216, fir
 # Low-Level Primitive Drawing Routines
 # ==============================================================================
 
-func _draw_checkerboard_frame(target: Image, frame_arg: int, checker_x: int, checker_y: int) -> void:
-	if _checker_tile == null:
+func _draw_checkerboard_frame(target: Image, frame_arg: int, checker_x: int, checker_y: int, season: int = 0) -> void:
+	var tile: Image = _checker_tile if (season == 0 and _checker_tile != null) else (_compositor._get_season_checker_tile(season, 255) if _compositor != null else _checker_tile)
+	if tile == null:
 		return
 	var u0: int = checker_x & 31
 	var v0: int = checker_y & 31
@@ -439,7 +440,7 @@ func _draw_checkerboard_frame(target: Image, frame_arg: int, checker_x: int, che
 					if px < 0 or px >= 320:
 						continue
 					var ut: int = (u0 + dx) & 31
-					target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(ut, vt))
+					target.set_pixelv(Vector2i(px, py), tile.get_pixel(ut, vt))
 
 func _blit_opaque_region(target: Image, source: Image, dst_origin: Vector2i, src_rect: Rect2i) -> void:
 	if source == null:

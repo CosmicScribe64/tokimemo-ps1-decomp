@@ -10,10 +10,11 @@ var _failed := 0
 
 func _init() -> void:
 	var args := OS.get_cmdline_user_args()
-	var hud_manifest := "/workspace/.asset-cache/port/hud-production-v1/manifest.json"
-	var font_root := "/workspace/.asset-cache/port/fonts/native-font-v2"
-	var date_pack_root := "/workspace/.asset-cache/port/date-preview-v1"
-	var capture_dir := "/workspace/.claude/orchestrator/state/T-29018/date-overlays-v1/captures"
+	var repo := ProjectSettings.globalize_path("res://../..").simplify_path()
+	var hud_manifest := repo.path_join(".asset-cache/port/hud-production-v1/manifest.json")
+	var font_root := repo.path_join(".asset-cache/port/fonts/native-font-v2")
+	var date_pack_root := repo.path_join(".asset-cache/port/date-preview-v1")
+	var capture_dir := repo.path_join(".claude/orchestrator/state/T-29018/date-overlays-v1/captures")
 
 	var i := 0
 	while i < args.size():
@@ -294,7 +295,7 @@ func _run_presenter_and_capture_tests(
 
 	# 2. Capture 02: Date 3-Choice Prompt (Aquarium Indoor)
 	DateOverlayRules.setup_date_spot(state, DateOverlayRules.SPOT_AQUARIUM)
-	var cap2 := presenter.render_date_three_choice_prompt(state, 0)
+	var cap2 := presenter.render_overlay_three_choice_prompt(state, 0)
 	_verify_and_save_capture(cap2, capture_dir.path_join("02_date_three_choice_prompt.png"))
 
 	# 3. Capture 03: Date Spot Reaction (Tier 0 Best)

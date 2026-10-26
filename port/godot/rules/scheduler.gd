@@ -10,6 +10,13 @@ const Session = preload("res://core/game_session.gd")
 
 static func initial_branch_error(state: State) -> String:
 	var data: Dictionary = state.rule_state
+	if data.get("allow_multi_week", false):
+		var cmd: int = data["last_command"] & 15
+		if cmd not in [0, 1, 2, 3, 4, 5, 6, 7]:
+			return "initial queue supports only commands0-7"
+		if cmd == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
+			return "initial queue club command requires valid club_id 0..10"
+		return ""
 	if [data["year"], data["month"], data["day"], data["weekday"], data["day_count"]] != [95, 4, 4, 1, 0]:
 		return "scheduler supports the captured April4 initial boundary only"
 	var club_id: int = (data["player_flags"] >> 12) & 15
@@ -161,10 +168,7 @@ static func poor_result(state: State, command: int, days_ahead: int, tables: Dic
 		score = Math.divmod32(score, 4).quotient
 	return 0 if score >= 4 else 1
 
-static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> String:
-	var failure: String = initial_branch_error(state)
-	if not failure.is_empty():
-		return failure
+static func build_week(state: State, tables: Dictionary, rng: Rng) -> String:
 	var data: Dictionary = state.rule_state
 	var command: int = data["last_command"] & 15
 	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
@@ -174,6 +178,136 @@ static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> St
 	data["progress_state"][0x15 + command % 9] = Math.u8(data["progress_state"][0x15 + command % 9] + 1)
 	if data["girls"][11]["counters"][0] != 0:
 		data["girls"][11]["counters"][0] = Math.u8(data["girls"][11]["counters"][0] - 1)
+	if data.get("allow_multi_week", false):
+		for i: int in range(11):
+			if data["girl_last_date_spot_timer"][i] != 0:
+				data["girl_last_date_spot_timer"][i] = Math.u8(data["girl_last_date_spot_timer"][i] - 1)
+	var companion: int = 15
+	if command == 0 and _closeness(data, 0, tables) > tables["command0_rank_threshold"][0]:
+		companion = 0
+	data["last_picked_girl"] = -1
+	var recovery: int = (data["player_flags_upper"] >> 5) & 7
+	if recovery != 0:
+		data["player_flags_upper"] = (data["player_flags_upper"] & ~0xe0) | ((recovery - 1) << 5)
+
+	var day: int = data["day"]
+	var month: int = data["month"]
+	var month_off: int = 0
+	var month_days: int = data["calendar"][0]["day_kind"][0]
+	if month_days <= 0:
+		month_days = Calendar.days_in_month(data["year"], month)
+		Calendar.populate_month_calendar(data, data["year"], month)
+	var wd: int = (data["weekday"] + 1) % 7
+	var queue: Array = []
+	if day >= month_days:
+		queue.append([0xfe, 0, 0, 0])
+		day = 0
+		month_off = 1
+	day += 1
+
+	var first_marker: int = data["calendar"][month_off]["marker"][mini(day, 31)]
+	if first_marker == 0x0b:
+		queue.append([0x41, 0, 0, 0])
+		queue.append([0x10, 0, 0, 0])
+		while queue.size() < 32:
+			queue.append([0xff, 0, 0, 0])
+		data["day_events"] = queue
+		data["day_event_index"] = 0
+		state.next_step()
+		return ""
+	if first_marker == 8 and ((data["player_flags"] >> 12) & 15) != 11 and command == 4:
+		for j: int in range(6):
+			var camp_poor: int = poor_result(state, command, wd + j, tables, rng)
+			queue.append([0x42, 4, camp_poor, companion])
+		queue.append([0x10, 0, 0, 0])
+		while queue.size() < 32:
+			queue.append([0xff, 0, 0, 0])
+		data["day_events"] = queue
+		data["day_event_index"] = 0
+		state.next_step()
+		return ""
+
+	var random_count: int = 0
+	while wd < 7:
+		if day > month_days:
+			queue.append([0xfe, 0, 0, 0])
+			day = 1
+			month_off = 1
+		var cal: Dictionary = data["calendar"][mini(month_off, 1)]
+		var marker: int = cal["marker"][mini(day, 31)]
+		var kind: int = cal["day_kind"][mini(day, 31)]
+		if marker in [2, 6, 0x0a, 0x0e, 0x10, 0x14]:
+			queue.append([0xfd, 0, 0, 0])
+		if marker == 4:
+			queue.append([0x20, 0, 0, 0])
+		elif marker == 0x0c:
+			queue.append([0x24, 0, 0, 0])
+		elif marker == 0x0d:
+			queue.append([0x28, 0, 0, 0])
+		elif marker == 0x0f:
+			queue.append([0x2c, 0, 0, 0])
+		elif marker == 0x11:
+			queue.append([0x31, 0, 0, 0])
+		elif marker == 0x13:
+			queue.append([0x30, 0, 0, 0])
+		elif marker == 2 and data["year"] == 96:
+			queue.append([0x48, 10, 0, 0])
+		elif marker == 2 and data["year"] == 97:
+			queue.append([0x43, 0, 0, 0])
+		elif kind in [1, 2]:
+			queue.append([0x10, 0, 0, 0])
+		elif marker == 0x12 and data["year"] == 98:
+			queue.append([0x4a, 0, 0, 0])
+		elif marker == 5 or (not queue.is_empty() and queue[0][0] == 0x40):
+			queue.append([0x40, 0, 0, 0])
+		else:
+			var poor: int = poor_result(state, command, wd, tables, rng)
+			queue.append([0, command, 0 if command == 7 else poor, companion])
+			if kind == 0 and random_count < 2 and (rng.next("src/main/scheduler.c::day_event_queue_build_week/encounter") & 3) == 3:
+				random_count += 1
+				queue.append([0x44, 0, 0, 0])
+		var eff_month: int = month + month_off
+		if Calendar.birthday_matches(data["girls"][0]["birthday"], eff_month, day):
+			queue.append([0x32, 0, 0, 0])
+		for g_idx: int in range(1, 11):
+			if (data["girls"][g_idx]["flags"] & 0x42) == 0x42 and Calendar.birthday_matches(data["girls"][g_idx]["birthday"], eff_month, day):
+				queue.append([0x32, g_idx, 0, 0])
+		if ((data["player_flags"] >> 8) & 15) != 3 and Calendar.birthday_matches(data["player_birthday"], eff_month, day):
+			queue.append([0x33, 0, 0, 0])
+		if wd == 5:
+			queue.append([0xfc, 0, 0, 0])
+		if wd != 6:
+			queue.append([0xfb, 0, 0, 0])
+		wd += 1
+		day += 1
+	if queue.size() > 32:
+		queue.resize(32)
+	while queue.size() < 32:
+		queue.append([0xff, 0, 0, 0])
+	data["day_events"] = queue
+	data["day_event_index"] = 0
+	state.next_step()
+	return ""
+
+static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> String:
+	var data: Dictionary = state.rule_state
+	if data.get("allow_multi_week", false) and [data["year"], data["month"], data["day"], data["weekday"], data["day_count"]] != [95, 4, 4, 1, 0]:
+		return build_week(state, tables, rng)
+	var failure: String = initial_branch_error(state)
+	if not failure.is_empty():
+		return failure
+	var command: int = data["last_command"] & 15
+	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
+		return "initial queue supports only commands0-7"
+	if command == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
+		return "initial queue club command requires valid club_id 0..10"
+	data["progress_state"][0x15 + command % 9] = Math.u8(data["progress_state"][0x15 + command % 9] + 1)
+	if data["girls"][11]["counters"][0] != 0:
+		data["girls"][11]["counters"][0] = Math.u8(data["girls"][11]["counters"][0] - 1)
+	if data.get("allow_multi_week", false):
+		for i: int in range(11):
+			if data["girl_last_date_spot_timer"][i] != 0:
+				data["girl_last_date_spot_timer"][i] = Math.u8(data["girl_last_date_spot_timer"][i] - 1)
 	var companion: int = 15
 	if command == 0 and _closeness(data, 0, tables) > tables["command0_rank_threshold"][0]:
 		companion = 0
@@ -251,6 +385,9 @@ static func resolve_initial_encounters(state: State, tables: Dictionary, rng: Rn
 
 static func weekly_girl_update(state: State, tables: Dictionary) -> void:
 	var data: Dictionary = state.rule_state
+	if data.get("vacation", 0) != 0:
+		state.next_step()
+		return
 	for index: int in range(11):
 		var girl: Dictionary = data["girls"][index]
 		if (girl["flags"] & 2) == 0:

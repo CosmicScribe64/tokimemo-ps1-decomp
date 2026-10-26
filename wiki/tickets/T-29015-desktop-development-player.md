@@ -1,10 +1,10 @@
 ---
 id: T-29015
 title: Build a reproducible desktop development player
-status: In Progress
+status: Done
 assignee: root
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29008-assemble-playable-development-app]]"]
 ---
 
@@ -16,8 +16,8 @@ Provide a repeatable code-only desktop development build using the pinned Docker
 
 - [x] Export only reviewed project source/configuration using the pinned engine; record source and artifact hashes.
 - [x] Keep original game data and development captures outside the package and Git.
-- [ ] Provide explicit external input configuration and a usable local launch path; no host toolchain install or security-setting bypass.
-- [ ] Review build/launch tooling and verify the actual exported application before claiming platform support.
+- [x] Provide explicit external input configuration and a usable local launch path; no host toolchain install or security-setting bypass.
+- [x] Review build/launch tooling and verify the actual exported application before claiming platform support.
 
 ## Notes
 
@@ -52,3 +52,8 @@ The current 48-source-file code-only export is `.asset-cache/port/desktop-clean-
 ### Packed-export external paths — reviewed checkpoint
 
 Installed shared `external_content_path.gd` and New Game delegation after independent Standards/correctness review. The packed export has no physical `res://` directory; the helper retains project/app containment, traversal and symlink rejection while accepting external content. Review covers 34 path checks plus existing rule/entry/bank suites and actual Linux packed-export old-fail/new-pass. Root rebuilt the code-only macOS export and launched PID 58981: both authenticated rules and entry inputs accepted, empty failed gate, seed valid. Evidence: `.asset-cache/port/desktop-path-fixed-e593/native-check.log` and source receipt. Sandbox log/certificate warnings are separate; no full native gameplay or other-reader adoption claim.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

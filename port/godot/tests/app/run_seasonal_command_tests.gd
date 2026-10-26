@@ -119,6 +119,8 @@ func _test_seasonal_content_store() -> void:
 	if seasonal_path.is_empty():
 		seasonal_path = ProjectSettings.globalize_path("res://.asset-cache/port/seasonal-command-v1")
 	if not DirAccess.dir_exists_absolute(seasonal_path):
+		seasonal_path = "/workspace/.asset-cache/port/seasonal-command-v1"
+	if not DirAccess.dir_exists_absolute(seasonal_path):
 		seasonal_path = "/work/.asset-cache/port/seasonal-command-v1"
 
 	var store: SeasonalStore = SeasonalStore.new()

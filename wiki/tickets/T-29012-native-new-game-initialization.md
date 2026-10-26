@@ -1,10 +1,10 @@
 ---
 id: T-29012
 title: "Port native New Game initialization and profile rules"
-status: In Progress
+status: Done
 assignee: port-new-game-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29002-native-runtime-and-oracle]]"]
 ---
 
@@ -63,3 +63,8 @@ Integrated the full 22-stage (`0..21`) prologue state machine (`port/godot/flow/
 ## Authentic 320x240 Prologue VN visual presentation and 16x16 tile verification integrated (2026-10-25)
 
 Integrated `port/godot/presentation/prologue_presenter.gd` and `port/godot/tests/run_prologue_visual_tests.gd` from `.claude/orchestrator/state/T-29012/prologue-visual-v1/`. Matches `prologue_mode_handler` (`src/ovl/name_entry/prologue.c:2808-2820`), `hud_screen_frame_draw(0)` / `hud_screen_frame_draw(2)` (`src/main/hud_panels.c:1366-1461`), `hizuke_init` / `hizuke_show` Stage 0 date pillar (`1995-04-04` Tuesday) and Stage 1 `hizuke_disp_switch(0)` hiding, `message_window_set_title("プロローグ")` (`0x71..0x73` wooden badge), `gnsx` / `sndi` speaker centering and 3-row scroll (`y = 170, 186, 202`), and `hud_text_marker_set` (`0xF0` prompt marker). Canonical Docker verification passes `160/160` visual checks and `tools/port/verify_tile_diff.py --threshold 15.0 --max-hotspots 0` across all 5 PS1 emulator captures (`stage0_arrival`, `stage0_arrival_with_badge`, `stage1_board`, `stage13_shiori_line18`, `stage14_shiori_line19`) with `0 / 300` hotspot tiles and `Overall MAE = 0.185..0.258`.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

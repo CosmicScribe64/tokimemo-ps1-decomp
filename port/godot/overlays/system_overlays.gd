@@ -24,8 +24,10 @@ const PAD_SQUARE   := 0x0080
 
 # Exact CP932 hex byte encodings for system typography
 const STR_HEX := {
-	# Options Overlay
+	# Options Overlay & In-Game System Settings (home_screens.c:1462-1703 & settings_sound_test_and_extras.c)
 	"title_options": "83498376835683878393", # オプション
+	"title_system_settings": "835683588365838090dd92e889e696ca", # システム設定画面
+	"prompt_change_settings": "835683588365838090dd92e882f095cf8d5882b582dc82b7", # システム設定を変更します
 	"opt_speed": "95b68e9a955c8ea691ac9378", # 文字表示速度
 	"opt_icon": "83418343835283938382815b8368", # アイコンモード
 	"opt_mouse": "837d8345835890dd92e8", # マウス設定
@@ -33,7 +35,9 @@ const STR_HEX := {
 	"opt_cursor": "834a815b835c838b91ac9378", # カーソル速度
 	"opt_voice": "89b990ba8382815b8368", # 音声モード
 	"opt_extras": "82a882dc82af", # おまけ
+	"opt_mascot": "837d8358835283628367", # マスコット
 	"opt_exit": "834983768356838783938f4997b9", # オプション終了
+	"opt_settings_exit": "90dd92e88f4997b9", # 設定終了
 
 	# Values
 	"val_fast": "82cd82e282a2", # はやい
@@ -86,6 +90,7 @@ class OptionsOverlay extends RefCounted:
 	var window_style: int = 0       # 0=Type A (Blue), 1=Type B (Green), 2=Type C (Purple)
 	var cursor_speed: int = 1       # 0=Slow, 1=Normal, 2=Fast
 	var voice_mode: int = 1         # 0=Off, 1=Voiced, 2=All
+	var mascot_unlocked: bool = false # settings_unlocked_mascot_count() != 0 (home_screens.c:1659)
 	var sound_mode: int = 0         # 0=Stereo, 1=Mono
 	var checker_scroll_pattern: int = 0 # 0..5 (player_flags.b[1] & 15)
 	var button_confirm: int = 0     # 0=Circle, 1=Cross
@@ -95,16 +100,16 @@ class OptionsOverlay extends RefCounted:
 	var cursor: int = 0             # 0..7
 	var exited: bool = false
 	var frame_count: int = 0
-	var scroll_u: int = 0
-	var scroll_v: int = 0
+	var scroll_u: int = 30
+	var scroll_v: int = 17
 
 	func _init() -> void:
 		mode_stage = STAGE_SELECT
 		cursor = 0
 		exited = false
 		frame_count = 0
-		scroll_u = 0
-		scroll_v = 0
+		scroll_u = 30
+		scroll_v = 17
 
 	## Advance checkerboard scroll offsets according to player_flags.b[1] & 15 formula
 	## (src/main/hud_panels.c:1385-1411).
@@ -208,41 +213,54 @@ class OptionsOverlay extends RefCounted:
 	func render(presenter: VnPresenter) -> Image:
 		var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-		# 1. Background checkerboard frame (Mode 0, full screen)
+		# 1. Background checkerboard frame (hud_screen_frame_draw(1), outer border frame)
 		presenter.draw_checkerboard_frame(target, 0, Vector2i(scroll_u, scroll_v))
 
-		# 2. Base Gouraud panel (cal_base_show in hud_screens.c:640: Rect2i(20, 20, 280, 200))
-		presenter.draw_cal_base(target, Rect2i(20, 20, 280, 200))
+		# 2. Top wooden parameter panel (parameter_show in home_screens.c:1567)
+		var stats: Array[int] = [97, 43, 40, 40, 38, 33, 59, 4, 3]
+		presenter.draw_parameter_panel(target, stats)
 
-		# 3. Title badge: オプション (OT 2)
-		presenter.draw_title_badge(target, STR_HEX["title_options"], Vector2i(0, -14), 5)
+		# 3. Bottom message window & prompt: システム設定を変更します (home_screens.c:1566, 1596)
+		presenter.draw_message_window(target)
+		presenter._draw_text_hex_checked(target, STR_HEX["prompt_change_settings"], Vector2i(32, 170), 0, "message_window")
 
-		# 4. 8 Option items
+		# 4. Base Gouraud panel (cal_base_show in hud_screens.c:640: Rect2i(0, 33, 283, 125), OT 5)
+		presenter.draw_cal_base(target, Rect2i(0, 33, 283, 125))
+
+		# 5. Date pillar (hizuke_show in home_screens.c:1568, OT 5..4)
+		presenter.draw_date_pillar(target, 95, 4, 9, 6, 1)
+
+		# 6. Menu bar highlight for active item (menu_bar_show(0) at OT 3)
+		var start_y: int = 56
+		presenter.draw_menu_bar_highlight(target, Rect2i(36, start_y + cursor * 12, 96, 12), window_style)
+
+		# 7. Notebook ring-binder & vertical divider (data_save_load_class_init in hud_screens.c:752-767:
+		#    Actor 96, Frame 0x43 = 67 at (-16, -19), unk_01 = 3 -> OT 2)
+		presenter._draw_actor(target, 67, Vector2i(-16, -19))
+
+		# 8. 8 Setting items (settings_root_init / settings_labels_draw in home_screens.c:1584-1663, disp_string at OT 1 HEAD:
+		#    x[i] = -0x7C -> 36, y[i] = -0x40 + i * 0xC -> 56 + i * 12, w[i] = 0x60 -> 96, h[i] = 0xC -> 12)
 		var item_keys := [
 			"opt_speed", "opt_icon", "opt_mouse", "opt_window",
-			"opt_cursor", "opt_voice", "opt_extras", "opt_exit"
+			"opt_cursor", "opt_voice", "opt_mascot", "opt_settings_exit"
 		]
 
-		var start_y: int = 56
 		for i in range(8):
-			var sy: int = start_y + i * 18
-			var sx: int = 40
+			if i == 6 and not mascot_unlocked:
+				continue
+			var sy: int = start_y + i * 12
+			var sx: int = 36
 
-			# Menu bar highlight for active item
-			if i == cursor:
-				presenter.draw_menu_bar_highlight(target, Rect2i(sx - 4, sy - 2, 248, 16), window_style)
+			# Label (colour[i] = 3 normal)
+			presenter._draw_text_hex_checked(target, STR_HEX[item_keys[i]], Vector2i(sx, sy), 3, "options_menu")
 
-			# Label
-			presenter._draw_text_hex_checked(target, STR_HEX[item_keys[i]], Vector2i(sx, sy), 0, "options_menu")
+		# 9. Title badge: システム設定画面 (message_window_set_title("システム設定画面") in home_screens.c:1581:
+		#    green fill at OT 2, badge frame + drop shadow at OT 1 TAIL drawn after disp_string)
+		presenter.draw_title_badge(target, STR_HEX["title_system_settings"], Vector2i.ZERO, 8)
 
-			# Value indicator
-			var val_hex: String = _get_value_hex(i)
-			if not val_hex.is_empty():
-				presenter._draw_text_hex_checked(target, val_hex, Vector2i(190, sy), 0, "options_menu")
-
-		# 5. Hand cursor pointing at active option slot
-		var cur_y: int = start_y + cursor * 18 + 8
-		presenter.draw_hand_cursor(target, Vector2i(14, cur_y))
+		# 10. Hand cursor pointing at active option slot (menu_cursor_update(0), Actor 0 at OT 0: item.x + item.w - 4, item.y + 8)
+		var cur_y: int = start_y + cursor * 12 + 8
+		presenter.draw_hand_cursor(target, Vector2i(36 + 96 - 4, cur_y))
 
 		return target
 
@@ -335,43 +353,43 @@ class HelpOverlay extends RefCounted:
 	func render(presenter: VnPresenter) -> Image:
 		var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-		# 1. Background checkerboard frame (Mode 0, full screen)
-		presenter.draw_checkerboard_frame(target, 0, Vector2i.ZERO)
+		# 1. Clear framebuffer to 0xA0A0A0 (back_clear_switch(1) with clear_color_r=g=b=0xA0 in help_category_menu_draw:57-58)
+		target.fill(Color8(0xA0, 0xA0, 0xA0, 255))
 
-		# 2. Cal base panel (Rect2i(24, 32, 272, 128))
-		presenter.draw_cal_base(target, Rect2i(24, 32, 272, 128))
+		# 2. Help background gradient rect (help_background_gradient_draw: prim_gradient_rect(-0x90, -0x58, 0x120, 0xC4, 4, 0xA0A0A0, 2); dtd_on(4);)
+		presenter.draw_cal_base(target, Rect2i(16, 32, 288, 196), 0xA0)
 
-		# 3. Title badge: Ｑ＆Ａコーナー
-		presenter.draw_title_badge(target, STR_HEX["title_olh"], Vector2i(0, -14), 7)
+		# 3. Title badge: Ｑ＆Ａコーナー at settled origin (0, 0) -> (16, 30) (message_window_set_title("Ｑ＆Ａコーナー") in help_category_menu_draw:59)
+		presenter.draw_title_badge(target, STR_HEX["title_olh"], Vector2i.ZERO, 7)
 
-		# 4. Message window at bottom (Frame 62, OT 8..7)
-		presenter.draw_message_window(target)
-
-		# 5. Bottom prompt: スタートボタンでゲームに戻れます
-		presenter._draw_text_hex_checked(target, STR_HEX["prompt_start_return"], Vector2i(40, 184), 0, "message_window")
+		# 4. Bottom prompt: スタートボタンでゲームに戻れます at (-0x68, 0x5C) -> (56, 212), attribute 2 (help_category_menu_draw:60)
+		presenter._draw_text_hex_checked(target, STR_HEX["prompt_start_return"], Vector2i(56, 212), 2, "help_screen")
 
 		if mode_stage == STAGE_MENU_INPUT or mode_stage == STAGE_MENU_INIT:
+			# Top-right prompt: 項目を選んでください at (-0x10, -0x50) -> (144, 40), attribute 0xF (help_category_menu_draw:70)
+			presenter._draw_text_hex_checked(target, STR_HEX["prompt_select_item"], Vector2i(144, 40), 15, "help_menu")
+
 			# Category Menu View
 			var cat_keys := [
 				"olh_cat_system", "olh_cat_memcard", "olh_cat_filesel", "olh_cat_biorhythm",
 				"olh_cat_icons", "olh_cat_subgame", "olh_cat_tips", "olh_cat_return"
 			]
 
-			# 8 categories matching help_category_menu_draw coordinates (a[i]=-0x60 -> 64, b[i]=60+i*16)
+			# 8 categories matching help_category_menu_draw:62-68 (a[i]=-0x60->64, b[i]=i*0x10-0x3C->60+i*16, c[i]=0x80->128, d[i]=0x10->16, attr=0xF)
 			for i in range(8):
 				var sx: int = 64
-				var sy: int = 40 + i * 14
+				var sy: int = 60 + i * 16
 
 				if i == cursor:
-					presenter.draw_menu_bar_highlight(target, Rect2i(sx - 4, sy - 1, 140, 13), 0)
+					presenter.draw_menu_bar_highlight(target, Rect2i(sx, sy, 128, 16), 0)
 
-				presenter._draw_text_hex_checked(target, STR_HEX[cat_keys[i]], Vector2i(sx, sy), 0, "help_menu")
+				presenter._draw_text_hex_checked(target, STR_HEX[cat_keys[i]], Vector2i(sx, sy), 15, "help_menu")
 
-			# Hand cursor pointing at active category
-			var cur_sy: int = 40 + cursor * 14 + 6
-			presenter.draw_hand_cursor(target, Vector2i(38, cur_sy))
+			# Hand cursor pointing at active category (menu_cursor_update(0): a[cursor]+c[cursor]-4 = 188, b[cursor]+8 = 68+cursor*16)
+			var cur_sy: int = 60 + cursor * 16 + 8
+			presenter.draw_hand_cursor(target, Vector2i(64 + 128 - 4, cur_sy))
 		else:
-			# Topic Detail View
+			# Topic Detail View (help_system_settings_menu_draw:47-55: header at (-0x50, -0x40) -> (80, 56), attr 0xF)
 			var topic_title_key := "olh_cat_system"
 			match mode_stage:
 				STAGE_MEMCARD: topic_title_key = "olh_cat_memcard"
@@ -381,8 +399,8 @@ class HelpOverlay extends RefCounted:
 				STAGE_SUBGAME: topic_title_key = "olh_cat_subgame"
 				STAGE_TIPS: topic_title_key = "olh_cat_tips"
 
-			presenter._draw_text_hex_checked(target, STR_HEX[topic_title_key], Vector2i(40, 48), 0, "help_topic")
-			presenter._draw_text_hex_checked(target, STR_HEX["prompt_select_item"], Vector2i(40, 72), 0, "help_topic")
+			presenter._draw_text_hex_checked(target, STR_HEX[topic_title_key], Vector2i(80, 56), 15, "help_topic")
+			presenter._draw_text_hex_checked(target, STR_HEX["prompt_select_item"], Vector2i(64, 70), 15, "help_topic")
 
 		return target
 
@@ -437,36 +455,71 @@ class TitleMenuOverlay extends RefCounted:
 
 		return {"action": "none", "cursor": cursor, "stage": stage}
 
+	static func _load_first_existing_image(rel_path: String) -> Image:
+		var candidates := [
+			"/workspace/" + rel_path,
+			"/work/" + rel_path,
+			ProjectSettings.globalize_path("res://../../" + rel_path).simplify_path(),
+		]
+		for p in candidates:
+			if FileAccess.file_exists(p):
+				return Image.load_from_file(p)
+		return null
+
+	static func _blit_alpha(dst: Image, src: Image, pos: Vector2i) -> void:
+		if dst == null or src == null:
+			return
+		var sw: int = src.get_width()
+		var sh: int = src.get_height()
+		for sy in range(sh):
+			var dy: int = pos.y + sy
+			if dy < 0 or dy >= 240:
+				continue
+			for sx in range(sw):
+				var dx: int = pos.x + sx
+				if dx < 0 or dx >= 320:
+					continue
+				var c: Color = src.get_pixel(sx, sy)
+				if c.a > 0.05:
+					dst.set_pixel(dx, dy, Color8(c.r8, c.g8, c.b8, 255))
+
 	func render(presenter: VnPresenter) -> Image:
 		var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-		# 1. Background checkerboard frame (Mode 1, outer border)
-		presenter.draw_checkerboard_frame(target, 1, Vector2i.ZERO)
+		# 1. Title Menu White Clear Color (title_menu_setup_step in src/main/title_screen.c:327:
+		#    clear_color_r = clear_color_g = clear_color_b = 0xFF)
+		target.fill(Color8(255, 255, 255, 255))
 
-		# 2. Base Gouraud panel for center display
-		presenter.draw_cal_base(target, Rect2i(32, 28, 256, 184))
+		# 2. Extracted TITLE.NBN sprites (title_menu_setup_step in src/main/title_screen.c:333-351
+		#    + .asset-cache/media/title-reviewed-final/metadata.json):
+		#    actor_pool[96]: frame 0 (288x146 logo + copyright, bbox=(16,28)) at (x=-0xA0, y=-0x78) -> (16, 28)
+		#    actor_pool[97]: frame 1 (144x16, bbox_x=112) / frame 2 (112x16, bbox_x=120) at x=-0xAA (-10) -> (102/110, 180)
+		#    actor_pool[98]: frame 3 (144x16, bbox_x=112) / frame 4 (80x16, bbox_x=120) at x=-0xAA (-10), y=-0x78 (0) -> (102/110, 200)
+		var logo_img := _load_first_existing_image(".asset-cache/media/title-reviewed-final/title-slice.frame-00.png")
+		var start_img := _load_first_existing_image(
+			".asset-cache/media/title-reviewed-final/title-slice.frame-01.png" if cursor == 0 else ".asset-cache/media/title-reviewed-final/title-slice.frame-02.png"
+		)
+		var opt_img := _load_first_existing_image(
+			".asset-cache/media/title-reviewed-final/title-slice.frame-03.png" if cursor == 1 else ".asset-cache/media/title-reviewed-final/title-slice.frame-04.png"
+		)
+		if logo_img != null and start_img != null and opt_img != null:
+			_blit_alpha(target, logo_img, Vector2i(16, 28))
+			_blit_alpha(target, start_img, Vector2i(102 if cursor == 0 else 110, 180))
+			_blit_alpha(target, opt_img, Vector2i(102 if cursor == 1 else 110, 200))
+		else:
+			presenter._draw_text_hex_checked(target, STR_HEX["title_logo"], Vector2i(76, 52), 4, "title_screen")
+			var menu_y := [180, 200]
+			for i in range(2):
+				var my: int = menu_y[i]
+				var mx: int = 110
+				if i == cursor:
+					presenter.draw_menu_bar_highlight(target, Rect2i(mx, my, 160, 20), 0)
+				var text_key := "menu_new_game" if i == 0 else "menu_option"
+				presenter._draw_text_hex_checked(target, STR_HEX[text_key], Vector2i(mx, my), 3, "title_screen")
 
-		# 3. Title logo / headline: ときめきメモリアル
-		presenter._draw_text_hex_checked(target, STR_HEX["title_logo"], Vector2i(76, 52), 0, "title_screen")
-
-		# 4. Menu options: はじめから (Start/Continue) and オプション (Option)
-		# Coordinates matching title_menu_setup_step: y[0]=0x42 (186), y[1]=0x52 (202)
-		var menu_y := [120, 150]
-
-		for i in range(2):
-			var my: int = menu_y[i]
-			var mx: int = 112
-
-			if i == cursor:
-				# Highlight active choice bar
-				presenter.draw_menu_bar_highlight(target, Rect2i(mx - 8, my - 2, 112, 18), 0)
-
-			var text_key := "menu_new_game" if i == 0 else "menu_option"
-			presenter._draw_text_hex_checked(target, STR_HEX[text_key], Vector2i(mx, my), 0, "title_screen")
-
-		# 5. Hand cursor pointing at active item
-		var cur_y: int = menu_y[cursor] + 6
-		presenter.draw_hand_cursor(target, Vector2i(90, cur_y))
+		# 3. Hand cursor pointing at active item (title_menu_cursor_update in title_screen.c:357-358: cursor_x=0x40->224)
+		var cur_y: int = 184 + cursor * 20
+		presenter.draw_hand_cursor(target, Vector2i(224, cur_y))
 
 		return target
 

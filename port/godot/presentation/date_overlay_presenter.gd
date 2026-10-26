@@ -8,6 +8,62 @@ extends "res://presentation/date_appointment_presenter.gd"
 const DateOverlayRules = preload("res://overlays/date_overlay.gd")
 const MESSAGE_WINDOW_INNER_RECT := Rect2i(27, 166, 266, 52)
 
+var bounding_box_violations: Array[Dictionary] = []
+
+const HEROINE_SPEAKER_HEX := {
+	0: "93a18de8",     # 藤崎 (Shiori)
+	1: "94408c8e",     # 如月 (Mio)
+	2: "95528f8f",     # 紐緒 (Yuina)
+	3: "95d08bcb",     # 片桐 (Ayako)
+	4: "93f896ec",     # 虹野 (Saki)
+	5: "8cc38eae",     # 古式 (Yukari)
+	6: "90b490ec",     # 清川 (Nozomi)
+	7: "8bbe",         # 鏡 (Mira)
+	8: "92a993fa93de", # 朝日奈 (Yuko)
+	9: "94fc8ef78cb4", # 美樹原 (Megumi)
+	10: "918189b38f97",# 早乙女 (Yumi)
+	11: "8ad997d1",    # 館林 (Miharu)
+	12: "88c98f578940",# 伊集院 (Rei)
+}
+
+const HEROINE_ARRIVAL_GREETING := {
+	1: {
+		"hex": "82a0814182b782dd82dc82b982f181422082a891d282bd82b982b582dc82b582bd82a98148",
+		"text": "あ、すみません。 お待たせしましたか？",
+	},
+	2: {
+		"hex": "82d382f181418e9e8ad492ca82e882cb8142208ab4905382b782e982ed8142",
+		"text": "ふん、時間通りね。 感心するわ。",
+	},
+	3: {
+		"hex": "836e838d815b8149208da193fa82e0834f8362836882c893fa82cb8149",
+		"text": "ハロー！ 今日もグッドな日ね！",
+	},
+	4: {
+		"hex": "82a891d282bd82b98149208da193fa82e092a382e890d882c182c482a282b182a48149",
+		"text": "お待たせ！ 今日も張り切っていこう！",
+	},
+}
+
+const HEROINE_REACTION_LINE := {
+	1: {
+		"hex": "82a682a6814182c682c482e09166934782c582b782cb8142",
+		"text": "ええ、とても素敵ですね。",
+	},
+	2: {
+		"hex": "82c882a982c882a98bbb96a1905b82a28366815b835e82cb8142",
+		"text": "なかなか興味深いデータね。",
+	},
+	3: {
+		"hex": "838f8393835f8374838b81498dc58d8282cc8341815b836782cb8149",
+		"text": "ワンダフル！最高のアートね！",
+	},
+	4: {
+		"hex": "82a482f1814182b782b282ad8a7982b582a282cb8149",
+		"text": "うん、すごく楽しいね！",
+	},
+}
+
 
 ## Scene 1: Date Arrival & Greeting (hud_screen_frame_draw(2), hizuke_draw(0, -38),
 ## top-left place title banner, girl bustup at (81, 8), speaker + arrival greeting).
@@ -19,12 +75,16 @@ func render_date_arrival_greeting(state: Dictionary) -> Dictionary:
 	var place_hex := String(state.get("place_title_hex", DateOverlayRules.DATE_PLACE_NAMES_HEX[spot_id]))
 	_draw_place_title_banner(image, place_hex)
 
-	var speaker_hex := DateOverlayRules.SPEAKER_SHIORI_HEX
+	var girl_id := int(state.get("girl_id", 0))
+	var speaker_hex := String(HEROINE_SPEAKER_HEX.get(girl_id, DateOverlayRules.SPEAKER_SHIORI_HEX))
 	var greeting_hex := DateOverlayRules.ARRIVAL_DIRECT_SHIORI_L1_HEX
 	var greeting_text := "ううん。 私も、 今来たところだから…。"
 	if bool(state.get("looks_rejected", false)):
 		greeting_hex = DateOverlayRules.ARRIVAL_BAD_LOOKS_SHIORI_HEX
 		greeting_text = "‥‥‥‥‥‥‥‥‥‥。"
+	elif HEROINE_ARRIVAL_GREETING.has(girl_id):
+		greeting_hex = String(HEROINE_ARRIVAL_GREETING[girl_id]["hex"])
+		greeting_text = String(HEROINE_ARRIVAL_GREETING[girl_id]["text"])
 	elif int(state.get("date_arrival", DateOverlayRules.DATE_ARRIVAL_DIRECT_GREETING)) == DateOverlayRules.DATE_ARRIVAL_WAIT_GREETING:
 		greeting_hex = DateOverlayRules.ARRIVAL_WAIT_SHIORI_L0_HEX
 		greeting_text = "ごめんね。 準備に時間が かかっちゃって…。"
@@ -54,7 +114,9 @@ func render_date_arrival_greeting(state: Dictionary) -> Dictionary:
 
 	_compositor.set_text_runs(runs)
 	_compositor._draw_text(image)
+	_draw_vn_wait_marker(image, int(state.get("frame_count", 0)))
 	var bbox_check := verify_text_runs_fit(runs, place_hex)
+	bounding_box_violations.assign(bbox_check.get("violations", []))
 
 	return {
 		"id": "01_date_arrival_greeting",
@@ -66,7 +128,7 @@ func render_date_arrival_greeting(state: Dictionary) -> Dictionary:
 
 
 ## Scene 2: Date 3-Choice Prompt (make_three_select + normal_date_three_select_init + menu_bar_show(1) + hand cursor).
-func render_date_three_choice_prompt(state: Dictionary, selected_row: int = 0, choices_hex: Array = []) -> Dictionary:
+func render_overlay_three_choice_prompt(state: Dictionary, selected_row: int = 0, choices_hex: Array = []) -> Dictionary:
 	var spot_id := int(state.get("talk_date_spot", DateOverlayRules.SPOT_AQUARIUM))
 	var bg_image := _select_bg_for_spot(spot_id)
 	var image := _render_date_base_frame(state, bg_image, true)
@@ -98,11 +160,13 @@ func render_date_three_choice_prompt(state: Dictionary, selected_row: int = 0, c
 	_compositor.set_text_runs(runs)
 	_compositor._draw_text(image)
 
-	# Hand cursor (Frame 156 / sprite 0x9C, actor 0) positioned on hovered row
-	var cursor_actor: Dictionary = _compositor._actor(0, 1, 0x9C, Vector2i(104, 0x30 + row_clamped * 0x10 + 8))
+	# Cursor actor 0 resolved via hud_cursor_actor_init(0) positioned on hovered row
+	var cursor_frame := NativeCompositor.resolve_cursor_frame(int(state.get("cursor_style", 0x9C)))
+	var cursor_actor: Dictionary = _compositor._actor(0, 1, cursor_frame, Vector2i(104, 0x30 + row_clamped * 0x10 + 8))
 	_compositor._draw_actor(image, cursor_actor)
 
 	var bbox_check := verify_text_runs_fit(runs, banner_hex)
+	bounding_box_violations.assign(bbox_check.get("violations", []))
 	return {
 		"id": "02_date_three_choice_prompt",
 		"image": image,
@@ -125,16 +189,21 @@ func render_date_spot_reaction(state: Dictionary, chosen_index: int = 0) -> Dict
 	_draw_place_title_banner(image, banner_hex)
 
 	var idx := clampi(chosen_index, 0, 2)
+	var girl_id := int(state.get("girl_id", 0))
 	var reply_hex: String = DateOverlayRules.AQUARIUM_REPLIES_SHIORI_HEX[idx]
 	var reply_texts := [
 		"素敵、ロマンティックね。",
 		"どうして そんな事しか 考えられないの？",
 		"あっちにも 奇麗な魚がいるよ。",
 	]
-	var speaker_hex := DateOverlayRules.SPEAKER_SHIORI_HEX
+	var reply_text: String = reply_texts[idx]
+	if idx == 0 and HEROINE_REACTION_LINE.has(girl_id):
+		reply_hex = String(HEROINE_REACTION_LINE[girl_id]["hex"])
+		reply_text = String(HEROINE_REACTION_LINE[girl_id]["text"])
+	var speaker_hex := String(HEROINE_SPEAKER_HEX.get(girl_id, DateOverlayRules.SPEAKER_SHIORI_HEX))
 	var sndisp := HolidayAppointmentRules.sndisp_lines(
 		reply_hex,
-		reply_texts[idx],
+		reply_text,
 		0,
 		HolidayAppointmentRules.SPEAKER_STYLE_GIRL
 	)
@@ -154,7 +223,9 @@ func render_date_spot_reaction(state: Dictionary, chosen_index: int = 0) -> Dict
 
 	_compositor.set_text_runs(runs)
 	_compositor._draw_text(image)
+	_draw_vn_wait_marker(image, int(state.get("frame_count", 0)))
 	var bbox_check := verify_text_runs_fit(runs, banner_hex)
+	bounding_box_violations.assign(bbox_check.get("violations", []))
 
 	return {
 		"id": "03_date_spot_reaction",
@@ -211,6 +282,7 @@ func render_amusement_or_karaoke_subscene(
 		)
 		_compositor._draw_actor(image, cursor_actor)
 		var bbox_check := verify_text_runs_fit(runs, banner_hex)
+		bounding_box_violations.assign(bbox_check.get("violations", []))
 		return {
 			"id": "04_amusement_or_karaoke_subscene",
 			"subscene_kind": subscene_kind,
@@ -225,7 +297,7 @@ func render_amusement_or_karaoke_subscene(
 	# Default: Amusement Park Roller Coaster sub-scene ("ジェットコースター")
 	DateOverlayRules.setup_date_spot(state, DateOverlayRules.SPOT_AMUSEMENT_PARK)
 	DateOverlayRules.select_amusement_park_ride(state, DateOverlayRules.RIDE_ROLLER_COASTER)
-	var res := render_date_three_choice_prompt(
+	var res := render_overlay_three_choice_prompt(
 		state,
 		selected_row,
 		DateOverlayRules.AMUSEMENT_COASTER_CHOICES_HEX
@@ -242,7 +314,9 @@ func render_amusement_or_karaoke_subscene(
 ## 4. hizuke_draw(0, -38) shifted calendar pillar + message window (actor 1 at (0, 75) + gradient Rect2i(27, 166, 266, 52))
 func _render_date_base_frame(state: Dictionary, bg_image: Image, show_portrait: bool) -> Image:
 	var image := Image.create(320, 240, false, Image.FORMAT_RGBA8)
-	_draw_checkerboard(image)
+	var uv := NativeCompositor.compute_checker_uv(int(state.get("frame_count", 0)), (int(state.get("player_flags", 0)) >> 8) & 15)
+	var season := NativeCompositor.hud_season_index(int(state.get("month", 7)))
+	_draw_checkerboard(image, uv, season)
 	_compositor.last_coverage = Image.create(320, 240, false, Image.FORMAT_L8)
 	_compositor.last_coverage.fill(Color.BLACK)
 	_compositor.set_text_runs([])
@@ -288,9 +362,41 @@ func _render_date_base_frame(state: Dictionary, bg_image: Image, show_portrait: 
 	return image
 
 
+const EXTRA_SPOT_BG_PATHS := {
+	DateOverlayRules.SPOT_AMUSEMENT_PARK: ".asset-cache/media/background-native-v5/assets/asset-3f34efde6f5f8d6dd0d6546ac5d4f61d4f037e45f1f13f34a148fb5aa0707339/asset-3f34efde6f5f8d6dd0d6546ac5d4f61d4f037e45f1f13f34a148fb5aa0707339.background.png",
+	DateOverlayRules.SPOT_ART_MUSEUM: ".asset-cache/media/background-native-v5/assets/asset-ff8d795493c11da8c896fb76d34f37cd6644a8673d4fb3bfcd941022a4294384/asset-ff8d795493c11da8c896fb76d34f37cd6644a8673d4fb3bfcd941022a4294384.background.png",
+	DateOverlayRules.SPOT_LIBRARY: ".asset-cache/media/background-native-v5/assets/asset-d843e277ae1b2f189dbfad4daa90de01bfb93db56e98061268e52f156b623a79/asset-d843e277ae1b2f189dbfad4daa90de01bfb93db56e98061268e52f156b623a79.background.png",
+	DateOverlayRules.SPOT_SKATING_RINK: ".asset-cache/media/background-native-v5/assets/asset-ac7d476930c6d5f7dc725b96ea40f4c80423487b6a3142a1556d507902d507ba/asset-ac7d476930c6d5f7dc725b96ea40f4c80423487b6a3142a1556d507902d507ba.background.png",
+	DateOverlayRules.SPOT_ZOO: ".asset-cache/media/background-native-v5/assets/asset-c5bc496ca33699efbfd303bec27c29b837059b54e96b591b4e1782af64a8e8a9/asset-c5bc496ca33699efbfd303bec27c29b837059b54e96b591b4e1782af64a8e8a9.background.png",
+	DateOverlayRules.SPOT_BOTANICAL_GARDEN: ".asset-cache/media/background-native-v5/assets/asset-53ac5a6ef2afadb8782efe2f2d76f029400797732b3ce813fb631967bb3c2292/asset-53ac5a6ef2afadb8782efe2f2d76f029400797732b3ce813fb631967bb3c2292.background.png",
+	DateOverlayRules.SPOT_BOWLING_ALLEY: ".asset-cache/media/background-native-v5/assets/asset-e6201558ccd3a61f1b8f91bafc89ddb217fed0c03ffaa760c28904c55406c338/asset-e6201558ccd3a61f1b8f91bafc89ddb217fed0c03ffaa760c28904c55406c338.background.png",
+	DateOverlayRules.SPOT_KARAOKE: ".asset-cache/media/background-native-v5/assets/asset-95c9c3981048bc82948aa0156f9f889627102ac0dce9c450798788d2f943130e/asset-95c9c3981048bc82948aa0156f9f889627102ac0dce9c450798788d2f943130e.background.png",
+	DateOverlayRules.SPOT_CONCERT_HALL: ".asset-cache/media/background-native-v5/assets/asset-95c9c3981048bc82948aa0156f9f889627102ac0dce9c450798788d2f943130e/asset-95c9c3981048bc82948aa0156f9f889627102ac0dce9c450798788d2f943130e.background.png",
+}
+
+static func _load_first_existing_bg(rel_path: String) -> Image:
+	var candidates := [
+		"/workspace/" + rel_path,
+		"/work/" + rel_path,
+		ProjectSettings.globalize_path("res://../../" + rel_path).simplify_path(),
+	]
+	for p in candidates:
+		if FileAccess.file_exists(p):
+			var img := Image.load_from_file(p)
+			if img != null:
+				img.convert(Image.FORMAT_RGBA8)
+				return img
+	return null
+
+
 func _select_bg_for_spot(spot_id: int) -> Image:
 	if _date_bg_images.has(spot_id):
 		return _date_bg_images[spot_id]
+	if EXTRA_SPOT_BG_PATHS.has(spot_id):
+		var extra_img := _load_first_existing_bg(String(EXTRA_SPOT_BG_PATHS[spot_id]))
+		if extra_img != null:
+			_date_bg_images[spot_id] = extra_img
+			return extra_img
 	# Indoor/water/hall venues use aquarium_17809 (place_id 3), outdoor/park venues use park_17112 (place_id 0)
 	if spot_id in [
 		DateOverlayRules.SPOT_AQUARIUM,

@@ -182,11 +182,13 @@ func _test_multi_appointment_2_and_3_place_permutations() -> void:
 
 
 func _test_render_and_save_captures() -> void:
-	var repo_root := ProjectSettings.globalize_path("res://").simplify_path().get_base_dir().get_base_dir()
+	var repo_root := OS.get_environment("TOKIMEMO_REPO_ROOT")
+	if repo_root.is_empty():
+		repo_root = ProjectSettings.globalize_path("res://").simplify_path().get_base_dir().get_base_dir()
 	var hud_manifest := repo_root.path_join(".asset-cache/port/hud-production-v1/manifest.json")
 	var font_root := repo_root.path_join(".asset-cache/port/fonts/native-font-v2")
 	var date_pack := repo_root.path_join(".asset-cache/port/date-preview-v1")
-	var captures_dir := repo_root.path_join(".claude/orchestrator/state/T-29013/date-appointment-slice-v1/captures")
+	var captures_dir := repo_root.path_join(".claude/orchestrator/state/T-29013/holiday-live-loop-v2/captures")
 	DirAccess.make_dir_recursive_absolute(captures_dir)
 
 	var presenter := DateAppointmentPresenter.new()
@@ -248,12 +250,13 @@ func _test_render_and_save_captures() -> void:
 	if FileAccess.file_exists(emu_settled_path):
 		var emu := Image.new()
 		if emu.load(emu_settled_path) == OK:
-			for pair in [["01-notice", img1], ["02-choice", img2], ["03-confirm", img3]]:
+			for pair in [["01-notice", img1], ["02-choice", img2], ["03-confirm", img3], ["04-arrival", img4]]:
 				var label := String(pair[0])
 				var cap: Image = pair[1]
-				var param_hot := _count_16x16_hotspots(emu, cap, Rect2i(28, 23, 264, 42), 5.0)
+				if label != "04-arrival":
+					var param_hot := _count_16x16_hotspots(emu, cap, Rect2i(28, 23, 264, 42), 5.0)
+					_check(param_hot == 0, "%s 16x16 tile pass: Parameter Panel has 0 tiles > 5.0 MAE vs emu (got %d)" % [label, param_hot])
 				var pillar_hot := _count_16x16_hotspots(emu, cap, Rect2i(294, 45, 20, 114), 5.0)
-				_check(param_hot == 0, "%s 16x16 tile pass: Parameter Panel has 0 tiles > 5.0 MAE vs emu (got %d)" % [label, param_hot])
 				_check(pillar_hot == 0, "%s 16x16 tile pass: Date Pillar has 0 tiles > 5.0 MAE vs emu (got %d)" % [label, pillar_hot])
 
 

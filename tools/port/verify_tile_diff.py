@@ -5,11 +5,179 @@ from __future__ import annotations
 
 import argparse
 import json
+import struct
 import sys
+import zlib
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
+try:
+    from PIL import Image  # type: ignore[import-not-found]
+except ImportError:
+
+    class _PixelAccess:
+        def __init__(self, buf: bytearray, width: int) -> None:
+            self._buf = buf
+            self._w = width
+
+        def __getitem__(self, xy: tuple[int, int]) -> tuple[int, int, int]:
+            idx = (xy[1] * self._w + xy[0]) * 3
+            return (self._buf[idx], self._buf[idx + 1], self._buf[idx + 2])
+
+        def __setitem__(self, xy: tuple[int, int], val: tuple[int, int, int]) -> None:
+            idx = (xy[1] * self._w + xy[0]) * 3
+            self._buf[idx] = val[0] & 0xFF
+            self._buf[idx + 1] = val[1] & 0xFF
+            self._buf[idx + 2] = val[2] & 0xFF
+
+    class _PureImage:
+        class Resampling:
+            NEAREST = 0
+
+        def __init__(self, width: int, height: int, buf: bytearray) -> None:
+            self.size = (width, height)
+            self._buf = buf
+
+        @classmethod
+        def new(
+            cls,
+            _mode: str,
+            size: tuple[int, int],
+            color: tuple[int, int, int] = (0, 0, 0),
+        ) -> _PureImage:
+            w, h = size
+            pixel = bytes((color[0] & 0xFF, color[1] & 0xFF, color[2] & 0xFF))
+            return cls(w, h, bytearray(pixel * (w * h)))
+
+        @classmethod
+        def open(cls, path: Path | str) -> _PureImage:
+            raw = Path(path).read_bytes()
+            if raw[:8] != b"\x89PNG\r\n\x1a\n":
+                raise ValueError(f"Not a PNG file: {path}")
+            pos = 8
+            width = height = bit_depth = color_type = 0
+            plte = b""
+            idat_parts: list[bytes] = []
+            while pos + 8 <= len(raw):
+                length, ctype = struct.unpack(">I4s", raw[pos : pos + 8])
+                chunk = raw[pos + 8 : pos + 8 + length]
+                pos += 12 + length
+                if ctype == b"IHDR":
+                    width, height, bit_depth, color_type = struct.unpack(">IIBB", chunk[:10])
+                elif ctype == b"PLTE":
+                    plte = chunk
+                elif ctype == b"IDAT":
+                    idat_parts.append(chunk)
+                elif ctype == b"IEND":
+                    break
+            if bit_depth != 8 or color_type not in (0, 2, 3, 4, 6):
+                raise ValueError(f"Unsupported PNG format (depth={bit_depth}, color={color_type})")
+            bpp = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}[color_type]
+            stride = width * bpp
+            decompressed = zlib.decompress(b"".join(idat_parts))
+            prev = bytearray(stride)
+            cur = bytearray(stride)
+            out = bytearray(width * height * 3)
+            src_pos = 0
+            dst_pos = 0
+            for _y in range(height):
+                ftype = decompressed[src_pos]
+                row = decompressed[src_pos + 1 : src_pos + 1 + stride]
+                src_pos += 1 + stride
+                if ftype == 0:
+                    cur[:] = row
+                elif ftype == 1:
+                    for i in range(stride):
+                        a = cur[i - bpp] if i >= bpp else 0
+                        cur[i] = (row[i] + a) & 0xFF
+                elif ftype == 2:
+                    for i in range(stride):
+                        cur[i] = (row[i] + prev[i]) & 0xFF
+                elif ftype == 3:
+                    for i in range(stride):
+                        a = cur[i - bpp] if i >= bpp else 0
+                        b = prev[i]
+                        cur[i] = (row[i] + ((a + b) >> 1)) & 0xFF
+                elif ftype == 4:
+                    for i in range(stride):
+                        a = cur[i - bpp] if i >= bpp else 0
+                        b = prev[i]
+                        c = prev[i - bpp] if i >= bpp else 0
+                        p = a + b - c
+                        pa = abs(p - a)
+                        pb = abs(p - b)
+                        pc = abs(p - c)
+                        pr = a if (pa <= pb and pa <= pc) else (b if pb <= pc else c)
+                        cur[i] = (row[i] + pr) & 0xFF
+                prev[:] = cur
+                if color_type == 2:
+                    out[dst_pos : dst_pos + width * 3] = cur
+                    dst_pos += width * 3
+                elif color_type == 6:
+                    for x in range(0, stride, 4):
+                        out[dst_pos : dst_pos + 3] = cur[x : x + 3]
+                        dst_pos += 3
+                elif color_type == 3:
+                    for idx in cur:
+                        p = idx * 3
+                        if p + 3 <= len(plte):
+                            out[dst_pos : dst_pos + 3] = plte[p : p + 3]
+                        dst_pos += 3
+                elif color_type in (0, 4):
+                    for x in range(0, stride, bpp):
+                        v = cur[x]
+                        out[dst_pos] = v
+                        out[dst_pos + 1] = v
+                        out[dst_pos + 2] = v
+                        dst_pos += 3
+            return cls(width, height, out)
+
+        def convert(self, _mode: str) -> _PureImage:
+            return self
+
+        def copy(self) -> _PureImage:
+            return _PureImage(self.size[0], self.size[1], bytearray(self._buf))
+
+        def load(self) -> _PixelAccess:
+            return _PixelAccess(self._buf, self.size[0])
+
+        def getpixel(self, xy: tuple[int, int]) -> tuple[int, int, int]:
+            return self.load()[xy]
+
+        def putpixel(self, xy: tuple[int, int], val: tuple[int, int, int]) -> None:
+            self.load()[xy] = val
+
+        def resize(self, new_size: tuple[int, int], _resample: int = 0) -> _PureImage:
+            nw, nh = new_size
+            ow, oh = self.size
+            out = _PureImage.new("RGB", (nw, nh))
+            src = self.load()
+            dst = out.load()
+            for y in range(nh):
+                sy = min(oh - 1, (y * oh) // nh)
+                for x in range(nw):
+                    sx = min(ow - 1, (x * ow) // nw)
+                    dst[x, y] = src[sx, sy]
+            return out
+
+        def save(self, path: Path | str) -> None:
+            w, h = self.size
+            raw_rows = bytearray()
+            stride = w * 3
+            for y in range(h):
+                raw_rows.append(0)
+                raw_rows.extend(self._buf[y * stride : (y + 1) * stride])
+
+            def _chunk(ctype: bytes, payload: bytes) -> bytes:
+                crc = zlib.crc32(ctype + payload) & 0xFFFFFFFF
+                return struct.pack(">I4s", len(payload), ctype) + payload + struct.pack(">I", crc)
+
+            ihdr = struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0)
+            idat = zlib.compress(bytes(raw_rows), 6)
+            png = b"\x89PNG\r\n\x1a\n" + _chunk(b"IHDR", ihdr) + _chunk(b"IDAT", idat) + _chunk(b"IEND", b"")
+            Path(path).write_bytes(png)
+
+    Image = _PureImage  # type: ignore[misc,assignment]
 
 TILE_SIZE = 16
 SCREEN_W = 320

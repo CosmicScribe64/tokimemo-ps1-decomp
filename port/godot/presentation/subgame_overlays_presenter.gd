@@ -50,6 +50,36 @@ const STR_HEX := {
 	"fw_na": "826d81448260", # Ｎ．Ａ
 	"fw_mi": "826c81448268", # Ｍ．Ｉ
 	"fw_twin": "827382768268826d", # ＴＷＩＮ
+	"rpg_victory": "959f8cb4924282cd8f9f979882b582bd8149", # 福原達は勝利した！
+	"rpg_defeat": "959f8cb4924282cd9473966b82b582bd8163", # 福原達は敗北した…
+	"rpg_attack_msg": "959f8cb482cc8d558c828149", # 福原の攻撃！
+	"rpg_guard_msg": "959f8cb482cc91cc97cd82aa8254819389f1959c82b582bd", # 福原の体力が５％回復した
+	"enemy_deer": "8ead8145834f838c815b8367", # 鹿・グレート
+	"guest_monk": "8b9596b3916d", # 虚無僧
+	"enemy_bear": "834c8389815b8371834f837d", # キラーヒグマ
+	"guest_hunter": "837d835e834d", # マタギ
+	"enemy_robot": "905e814590a28a4590aa959e838d837b", # 真・世界征服ロボ
+	"enemy_aliens": "89469288906c", # 宇宙人
+	"taco_stage2": "8272827382608266826481408251", # ＳＴＡＧＥ　２
+	"taco_stage3": "8272827382608266826481408252", # ＳＴＡＧＥ　３
+	"taco_boss": "8261826e82728272", # ＢＯＳＳ
+	"taco_result": "8271826482728274826b8273", # ＲＥＳＵＬＴ
+	"taco_total": "8273826e82738260826b", # ＴＯＴＡＬ
+}
+
+const GIRL_PALETTE := {
+	0: Color8(216, 72, 92),    # Shiori
+	1: Color8(64, 88, 176),    # Mio
+	2: Color8(240, 200, 72),   # Yuina
+	3: Color8(216, 112, 56),   # Ayako
+	4: Color8(152, 92, 60),    # Saki
+	5: Color8(224, 140, 184),  # Yukari
+	6: Color8(48, 112, 144),   # Nozomi
+	7: Color8(156, 84, 204),   # Mira
+	8: Color8(236, 184, 68),   # Yuko
+	9: Color8(168, 96, 76),    # Megumi
+	10: Color8(240, 108, 128), # Yumi
+	13: Color8(112, 84, 56),   # Yoshio
 }
 
 # Fullwidth digits ０..９ (0x824F..0x8258)
@@ -59,12 +89,58 @@ const FW_DIGIT_HEX := [
 ]
 
 var _font := Glyphs.new()
+var _rpg_arena_bg: Image
+var _rpg_hero_sd: Image
+var _rpg_shiori_sd: Image
+var _rpg_enemy_sds: Array[Image] = []
+var _taco_bg: Image
+var _taco_bg_1: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+
+static func _load_first_existing_image(rel_path: String) -> Image:
+	var candidates := [
+		"/workspace/" + rel_path,
+		"/work/" + rel_path,
+		ProjectSettings.globalize_path("res://../../" + rel_path).simplify_path(),
+	]
+	for p in candidates:
+		if FileAccess.file_exists(p):
+			return Image.load_from_file(p)
+	return null
+
+static func _blit_alpha_centered(dst: Image, src: Image, center: Vector2i, flip_h: bool = false) -> void:
+	if dst == null or src == null:
+		return
+	var sw: int = src.get_width()
+	var sh: int = src.get_height()
+	var ox: int = center.x - sw / 2
+	var oy: int = center.y - sh / 2
+	for sy in range(sh):
+		var dy: int = oy + sy
+		if dy < 0 or dy >= 240:
+			continue
+		for sx in range(sw):
+			var dx: int = ox + (sw - 1 - sx if flip_h else sx)
+			if dx < 0 or dx >= 320:
+				continue
+			var c: Color = src.get_pixel(sx, sy)
+			if c.a > 0.05:
+				dst.set_pixel(dx, dy, Color8(c.r8, c.g8, c.b8, 255))
 
 func init_resources(font_root: String) -> String:
 	recorded_glyphs.clear()
 	bounding_box_violations.clear()
+	_rpg_arena_bg = _load_first_existing_image(".asset-cache/media/background-native-v5/assets/asset-9b79cd6fd2a3ee9acc3f85d1fcd53b5c86c3e8c70a055cf6134bea7eb908a80a/asset-9b79cd6fd2a3ee9acc3f85d1fcd53b5c86c3e8c70a055cf6134bea7eb908a80a.background.png")
+	_rpg_hero_sd = _load_first_existing_image(".asset-cache/media/ui-reviewed-v4/assets/asset-b4e86a4b600c95a2dd59f4adcee1df16884430d06860ed317759142fca3da9f4/asset-b4e86a4b600c95a2dd59f4adcee1df16884430d06860ed317759142fca3da9f4.frame-000.png")
+	_rpg_shiori_sd = _load_first_existing_image(".asset-cache/media/ui-reviewed-v4/assets/asset-a72e5e886738abdd8d5e982bd4bd40e90c2872584f8ee9522245b1981f58de52/asset-a72e5e886738abdd8d5e982bd4bd40e90c2872584f8ee9522245b1981f58de52.frame-008.png")
+	_rpg_enemy_sds = [
+		_load_first_existing_image(".asset-cache/media/ui-reviewed-v4/assets/asset-3a09f78e6cf4bb23870282feb35a3e9ed0ee3957c90251fe88bf7504716915c0/asset-3a09f78e6cf4bb23870282feb35a3e9ed0ee3957c90251fe88bf7504716915c0.frame-000.png"),
+		_load_first_existing_image(".asset-cache/media/ui-reviewed-v4/assets/asset-3a09f78e6cf4bb23870282feb35a3e9ed0ee3957c90251fe88bf7504716915c0/asset-3a09f78e6cf4bb23870282feb35a3e9ed0ee3957c90251fe88bf7504716915c0.frame-002.png"),
+		_load_first_existing_image(".asset-cache/media/ui-reviewed-v4/assets/asset-3a09f78e6cf4bb23870282feb35a3e9ed0ee3957c90251fe88bf7504716915c0/asset-3a09f78e6cf4bb23870282feb35a3e9ed0ee3957c90251fe88bf7504716915c0.frame-001.png"),
+	]
+	_taco_bg = _load_first_existing_image(".asset-cache/media/mdec-v3-taco-0/taco-0.background.png")
+	_taco_bg_1 = _load_first_existing_image(".asset-cache/media/mdec-v3-taco-1/taco-1.background.png")
 	var err: String = _font.open_external_font(font_root)
 	if not err.is_empty():
 		return "Failed to open native font: " + err
@@ -76,29 +152,33 @@ func init_resources(font_root: String) -> String:
 func render_rpg_battle(state: Dictionary) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Battle arena sky & school courtyard ground (y: 0..168)
-	for y in range(168):
-		var col: Color
-		if y < 92:
-			var t: float = float(y) / 92.0
-			col = Color8(int(18 + t * 38), int(26 + t * 52), int(64 + t * 76), 255)
-		elif y < 104:
-			# Courtyard wall & hedge silhouette
-			var hedge: int = 28 + ((y * 7) % 14)
-			col = Color8(hedge, hedge + 24, hedge + 12, 255)
-		else:
-			var gt: float = float(y - 104) / 64.0
-			var d: int = DITHER[(y & 3) * 4]
-			col = Color8(clampi(int(76 + gt * 36) + d, 0, 255), clampi(int(68 + gt * 30) + d, 0, 255), clampi(int(58 + gt * 24) + d, 0, 255), 255)
-		for x in range(320):
-			target.set_pixel(x, y, col)
+	# 1. Battle arena sky & school courtyard ground (CDROM/BS/I_01_82.BS, y: 0..168)
+	if _rpg_arena_bg != null:
+		target.blit_rect(_rpg_arena_bg, Rect2i(0, 0, mini(320, _rpg_arena_bg.get_width()), mini(160, _rpg_arena_bg.get_height())), Vector2i(0, 0))
+		for y in range(160, 168):
+			for x in range(320):
+				target.set_pixel(x, y, _rpg_arena_bg.get_pixel(mini(x, _rpg_arena_bg.get_width() - 1), _rpg_arena_bg.get_height() - 1))
+	else:
+		for y in range(168):
+			var col := Color8(36, 48, 84, 255)
+			for x in range(320):
+				target.set_pixel(x, y, col)
 
 	# 2. Top message window (rpg_message_update: text at (-0x7E, -0x66) => screen (34, 18))
-	var msg_box := Rect2i(24, 12, 272, 28)
-	_draw_ps1_window(target, msg_box, Color8(16, 28, 76), Color8(8, 14, 42))
 	var msg_hex_list: Array = state.get("message_lines_hex", [])
-	var top_hex: String = str(msg_hex_list[0]) if not msg_hex_list.is_empty() else STR_HEX["assist_shiori_1"]
-	_draw_text_hex_checked(target, top_hex, Vector2i(34, 18), 0, "rpg_top_message", msg_box)
+	var is_victory: bool = bool(state.get("victory", false)) or int(state.get("stage", 9)) == 10
+	var is_defeat: bool = bool(state.get("defeat", false)) or int(state.get("stage", 9)) == 12
+	if msg_hex_list.size() >= 2:
+		var msg_box_2 := Rect2i(20, 8, 280, 42)
+		_draw_ps1_window(target, msg_box_2, Color8(16, 28, 76), Color8(8, 14, 42))
+		_draw_text_hex_checked(target, str(msg_hex_list[0]), Vector2i(28, 12), 0, "rpg_top_message", msg_box_2)
+		_draw_text_hex_checked(target, str(msg_hex_list[1]), Vector2i(28, 28), 0, "rpg_top_message", msg_box_2)
+	else:
+		var msg_box := Rect2i(24, 12, 272, 28)
+		_draw_ps1_window(target, msg_box, Color8(16, 28, 76), Color8(8, 14, 42))
+		var top_hex: String = str(msg_hex_list[0]) if not msg_hex_list.is_empty() else STR_HEX["assist_shiori_1"]
+		var top_x: int = 28 if (top_hex.length() / 4) >= 18 else 34
+		_draw_text_hex_checked(target, top_hex, Vector2i(top_x, 18), 0, "rpg_top_message", msg_box)
 
 	# 3. Left side: 3 Delinquent enemies (不良達) at slots 0, 1, 2
 	var enemy_positions := [Vector2i(40, 108), Vector2i(76, 98), Vector2i(108, 114)]
@@ -108,9 +188,45 @@ func render_rpg_battle(state: Dictionary) -> Image:
 			_draw_rpg_delinquent_sprite(target, enemy_positions[i], i)
 
 	# 4. Right side: Hero (福原) and Partner Girl (詩織) sprites
-	_draw_rpg_hero_sprite(target, Vector2i(226, 104), (int(state.get("player_action", 0)) & Overlays.RPG_PLAYER_GUARD) != 0)
-	if int(state.get("girl_id", 0)) != 14:
-		_draw_rpg_partner_sprite(target, Vector2i(268, 100), int(state.get("girl_id", 0)))
+	var p_action: int = int(state.get("player_action", 0))
+	var is_guarding: bool = (p_action & Overlays.RPG_PLAYER_GUARD) != 0
+	var is_attacking: bool = (p_action & Overlays.RPG_PLAYER_ATTACK) != 0
+	var is_special: bool = (p_action & Overlays.RPG_PLAYER_SPECIAL) != 0
+	var hero_pos := Vector2i(208, 104) if is_attacking else Vector2i(226, 104)
+	_draw_rpg_hero_sprite(target, hero_pos, is_guarding)
+	var gid: int = int(state.get("girl_id", 0))
+	if gid != 14:
+		_draw_rpg_partner_sprite(target, Vector2i(268, 100), gid)
+
+	# 4b. Club Special Move visual effect & Damage Popups
+	if is_special and not is_victory and not is_defeat:
+		_draw_rpg_club_special_effect(target, int(state.get("player_club", 0)))
+	var last_dmg: int = int(state.get("last_damage", 0))
+	if last_dmg > 0 and not is_victory and not is_defeat:
+		_draw_ascii_digits(target, "%d" % last_dmg, Vector2i(62, 82), Color8(255, 232, 64))
+
+	# 4c. Partner Assist Cut-In Banner & Effect (drama_move_and_partner_assists.c)
+	var assist: Dictionary = state.get("last_assist", {})
+	if bool(assist.get("supported", false)) and not is_victory and not is_defeat:
+		var assist_lines: Array = assist.get("lines_hex", [])
+		if not assist_lines.is_empty():
+			var box_h: int = 38 if assist_lines.size() >= 2 else 26
+			var assist_box := Rect2i(20, 42, 280, box_h)
+			_draw_ps1_window(target, assist_box, Color8(48, 20, 76), Color8(24, 10, 40))
+			_draw_text_hex_checked(target, str(assist_lines[0]), Vector2i(28, 46), 0, "rpg_assist_cutin", assist_box)
+			if assist_lines.size() >= 2:
+				_draw_text_hex_checked(target, str(assist_lines[1]), Vector2i(28, 62), 0, "rpg_assist_cutin", assist_box)
+			_draw_rpg_assist_effect(target, str(assist.get("effect", "effect_a")))
+
+	# 4d. Victory (stage=10) or Defeat (stage=12) Banner
+	if is_victory:
+		var vic_box := Rect2i(44, 52, 232, 28)
+		_draw_ps1_window(target, vic_box, Color8(24, 68, 112), Color8(12, 36, 64))
+		_draw_text_hex_checked(target, STR_HEX["rpg_victory"], Vector2i(58, 58), 0, "rpg_victory_banner", vic_box)
+	elif is_defeat:
+		var def_box := Rect2i(44, 52, 232, 28)
+		_draw_ps1_window(target, def_box, Color8(88, 20, 32), Color8(44, 10, 18))
+		_draw_text_hex_checked(target, STR_HEX["rpg_defeat"], Vector2i(58, 58), 0, "rpg_defeat_banner", def_box)
 
 	# 5. Center Command Menu Window (たたかう / ぼうぎょ / わざ)
 	var cmd_box := Rect2i(124, 96, 84, 62)
@@ -165,18 +281,16 @@ func render_rpg_battle(state: Dictionary) -> Image:
 func render_taco_shooter(state: Dictionary) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. 15-band Gouraud Sky Gradient (shooter_draw_sky_gradient in opening_and_sky_gradient.c:121-151)
+	# 1. 15-band Gouraud Sky + 3D Perspective Ground (stage_terrain_and_horizon.c) with extracted PS1 TACO Force Gear (CDROM/TACO/3D_1.BS) composited on top
 	var horizon_y: int = 144
 	for y in range(horizon_y):
 		var t: float = float(y) / float(horizon_y)
-		var r: int = clampi(int(8.0 + pow(t, 1.8) * 180.0), 0, 255)
-		var g: int = clampi(int(16.0 + pow(t, 1.3) * 195.0), 0, 255)
-		var b: int = clampi(int(64.0 + t * 185.0), 0, 255)
+		var r: int = clampi(int(20.0 + pow(t, 1.8) * 170.0), 0, 255)
+		var g: int = clampi(int(28.0 + pow(t, 1.3) * 185.0), 0, 255)
+		var b: int = clampi(int(72.0 + t * 175.0), 0, 255)
 		var col := Color8(r, g, b, 255)
 		for x in range(320):
 			target.set_pixel(x, y, col)
-
-	# 2. 3D Perspective Checkerboard Ground Plane (y: 144..240)
 	for y in range(horizon_y, 240):
 		var dy: int = maxi(1, y - horizon_y)
 		var z_depth: int = 2400 / dy
@@ -187,30 +301,84 @@ func render_taco_shooter(state: Dictionary) -> Image:
 			if world_x < 0:
 				x_band ^= 1
 			var checker: int = z_band ^ x_band
-			var shade: float = clampf(float(dy) / 96.0, 0.25, 1.0)
+			var shade: float = clampf(float(dy) / 96.0, 0.35, 1.0)
 			var col: Color
 			if checker == 0:
 				col = Color8(int(36 * shade), int(148 * shade), int(92 * shade), 255)
 			else:
-				col = Color8(int(20 * shade), int(96 * shade), int(64 * shade), 255)
+				col = Color8(int(24 * shade), int(104 * shade), int(68 * shade), 255)
 			target.set_pixel(x, y, col)
+	var bg_choice: Image = _taco_bg_1 if _taco_bg_1 != null else _taco_bg
+	if bg_choice != null:
+		var bw := mini(320, bg_choice.get_width())
+		var bh := mini(240, bg_choice.get_height())
+		for y in range(bh):
+			var space_b: int = 38 + (y * 24) / 240
+			var space_col := Color8(18, 22, space_b, 255)
+			for x in range(bw):
+				var c := bg_choice.get_pixel(x, y)
+				if c.r8 <= 12 and c.g8 <= 12 and c.b8 <= 12:
+					target.set_pixel(x, y, Color8(maxi(18, c.r8 + 16), maxi(22, c.g8 + 20), maxi(space_b, c.b8 + 32), 255))
+				else:
+					target.set_pixel(x, y, c)
 
-	# 3. 3D Enemies & Morph Core (projected via shooter_project_3d)
+	# 3. 3D Projected Enemies & Active Shots
 	for enemy: Dictionary in state.get("enemies", []):
-		if int(enemy.get("hp", 0)) <= 0:
-			continue
-		var p2d: Vector2i = Overlays.shooter_project_3d(int(enemy["x"]), int(enemy["y"]), int(enemy["z"]))
-		var scale_px: int = clampi((0x200 * 28) / maxi(0x200, int(enemy["z"])), 8, 28)
-		_draw_taco_enemy_3d(target, p2d, scale_px, str(enemy.get("kind", "taco_fighter")))
+		var e_pos := Overlays.shooter_project_3d(int(enemy.get("x", 0)), int(enemy.get("y", -0x300)), int(enemy.get("z", 0x1800)))
+		var e_hp: int = int(enemy.get("hp", 6))
+		var e_rad: int = clampi((int(enemy.get("radius", 0x180)) * 0x200) / maxi(0x400, int(enemy.get("z", 0x1800))), 6, 18)
+		if e_hp > 0:
+			_draw_taco_enemy_3d(target, e_pos, e_rad, str(enemy.get("kind", "taco_fighter")))
+		else:
+			_draw_circle_filled(target, e_pos, e_rad + 2, Color8(255, 168, 48))
+			_draw_circle_filled(target, e_pos, maxi(3, e_rad - 3), Color8(255, 244, 160))
 
-	# 4. Player Reticle, Twin Laser Beams, Wingman & Player Ship
+	# 4. Player Reticle, Weapon Fire & Barrel Roll
 	var p: Dictionary = state.get("player", {})
-	var ship_draw_pos := Vector2i(160, 176)
+	var ship_draw_pos := Vector2i(160 + int(p.get("x", 0)) / 64, 176)
 	var reticle_pos := Vector2i(160 + int(p.get("x", 0)) / 32, 92 + int(p.get("y", -0x200)) / 48)
-	_draw_taco_laser_beams(target, ship_draw_pos + Vector2i(0, -4), reticle_pos)
+	var weapon_kind: int = int(p.get("weapon", Overlays.SHOOTER_PRIMARY_WIDE))
+	_draw_taco_laser_beams(target, ship_draw_pos + Vector2i(0, -4), reticle_pos, weapon_kind)
+	for shot: Dictionary in state.get("shots", []):
+		var s_pos := Overlays.shooter_project_3d(int(shot.get("x", 0)), int(shot.get("y", -0x200)), int(shot.get("z", 0x900)))
+		var s_col: Color = Color8(112, 248, 255) if weapon_kind == Overlays.SHOOTER_PRIMARY_WIDE else (Color8(255, 128, 240) if weapon_kind == Overlays.SHOOTER_PRIMARY_BEAM else Color8(255, 232, 80))
+		_draw_circle_filled(target, s_pos, 4, s_col)
+	var p_mode: int = int(p.get("mode", 1))
+	if (p_mode & 0x80) != 0:
+		var roll_col: Color = Color8(96, 232, 255) if p_mode == 0x81 else Color8(255, 192, 96)
+		for ang_i in range(8):
+			var rx: int = ship_draw_pos.x + int(cos(float(ang_i) * PI / 4.0) * 22.0)
+			var ry: int = ship_draw_pos.y + int(sin(float(ang_i) * PI / 4.0) * 12.0)
+			_draw_circle_filled(target, Vector2i(rx, ry), 2, roll_col)
 	_draw_taco_reticle(target, reticle_pos)
-	_draw_taco_wingman(target, Vector2i(104, 182))
-	_draw_taco_player_ship(target, ship_draw_pos)
+	if bg_choice == null:
+		_draw_taco_wingman(target, Vector2i(104, 182))
+		_draw_taco_player_ship(target, ship_draw_pos)
+
+	# 4b. Optional Result Tally / Score Rankings Overlay (result_screen.c & score_rankings.c)
+	var stg: int = int(state.get("stage", Overlays.SHOOTER_STAGE_STAGE1))
+	if stg == Overlays.SHOOTER_STAGE_RESULT or state.has("result_tally"):
+		var tally: Dictionary = state.get("result_tally", Overlays.shooter_compute_result_tally(state))
+		var res_box := Rect2i(48, 44, 224, 96)
+		_draw_ps1_window(target, res_box, Color8(16, 32, 76), Color8(8, 16, 40))
+		_draw_text_hex_checked(target, STR_HEX["taco_result"], Vector2i(60, 50), 0, "taco_result_hud", res_box)
+		_draw_ascii_digits(target, "%07d" % int(tally.get("stage_bonus", 0)), Vector2i(164, 68), Color8(180, 240, 255))
+		_draw_ascii_digits(target, "%07d" % int(tally.get("shield_bonus", 0)), Vector2i(164, 82), Color8(120, 248, 168))
+		_draw_ascii_digits(target, "%07d" % int(tally.get("time_bonus", 0)), Vector2i(164, 96), Color8(248, 220, 120))
+		_draw_ascii_digits(target, "%07d" % int(tally.get("bomb_stock_bonus", 0)), Vector2i(164, 110), Color8(255, 160, 120))
+		_draw_text_hex_checked(target, STR_HEX["taco_total"], Vector2i(60, 122), 0, "taco_result_hud", res_box)
+		_draw_ascii_digits(target, "%07d" % int(tally.get("total_score", 0)), Vector2i(164, 124), Color8(255, 248, 96))
+	elif stg == Overlays.SHOOTER_STAGE_SCORES or bool(state.get("show_rankings", false)):
+		var r_box := Rect2i(52, 44, 216, 96)
+		_draw_ps1_window(target, r_box, Color8(16, 28, 72), Color8(8, 14, 38))
+		_draw_text_hex_checked(target, STR_HEX["fw_ranking"], Vector2i(64, 50), 0, "taco_ranking_hud", r_box)
+		var t_ranks: Array = state.get("rankings", [])
+		for ri in range(mini(5, t_ranks.size())):
+			var re: Dictionary = t_ranks[ri]
+			var ry: int = 68 + ri * 13
+			_draw_ascii_digits(target, "%d" % (ri + 1), Vector2i(68, ry), Color8(255, 216, 80))
+			_draw_ascii_digits(target, "%07d" % int(re.get("score", 0)), Vector2i(104, ry), Color8(232, 248, 255))
+			_draw_ascii_digits(target, "%d" % int(re.get("stage", 1)), Vector2i(196, ry), Color8(160, 240, 180))
 
 	# 5. Top HUD Bar (shooter_draw_hud in hud_secondary_weapons.c:5-35)
 	var top_hud_box := Rect2i(8, 6, 304, 22)
@@ -253,15 +421,19 @@ func render_tt_twinbee(state: Dictionary) -> Image:
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	# Outer frame black pillars: x in [0, 32), [288, 320), y in [0, 8) (tt_video_init in engine_initialization.c:129-146)
 	target.fill(Color.BLACK)
+	_fill_rect(target, Rect2i(14, 0, 18, 240), Color8(24, 36, 72))
+	_fill_rect(target, Rect2i(288, 0, 18, 240), Color8(24, 36, 72))
 
 	var playfield := Rect2i(32, 8, 256, 232)
 
 	# 1. Scrolling Sky & Island Ground Tilemap inside 256x232 playfield
+	var scroll_off: int = (int(state.get("elapsed_frames", 4250)) - 4250) / 4
+	var stg_idx: int = clampi(int(state.get("stage_index", 0)), 0, 3)
 	for y in range(playfield.position.y, playfield.end.y):
 		for x in range(playfield.position.x, playfield.end.x):
 			var tx: int = (x - 32) / 16
-			var ty: int = (y + 24) / 16
-			var is_island: bool = ((tx * 5 + ty * 3) % 11) < 3
+			var ty: int = (y + 24 + scroll_off) / 16
+			var is_island: bool = (posmod(tx * 5 + ty * 3 + stg_idx * 2, 11)) < 3
 			var col: Color
 			if is_island:
 				col = Color8(56, 168, 84) if ((x + y) & 4) == 0 else Color8(44, 144, 72)
@@ -273,25 +445,26 @@ func render_tt_twinbee(state: Dictionary) -> Image:
 	_draw_tt_cloud(target, Vector2i(76, 84))
 	_draw_tt_cloud(target, Vector2i(232, 148))
 
-	# 2. Stage 1 Rope-Arm Boss (tt_boss1_update in rope_arm_boss.c)
+	# 2. Stage Boss (0: Rope-Arm, 1: Swing-Ring, 2: Multipart, 3: Beam/Ring)
 	var boss: Dictionary = state.get("boss", {})
 	if int(boss.get("active", 1)) != 0:
 		var bx: int = 160 + int(boss.get("x", 0))
 		var by: int = int(boss.get("y", 54))
-		_draw_tt_boss1(target, Vector2i(bx, by))
+		var bid: int = int(boss.get("boss_id", stg_idx))
+		_draw_tt_boss(target, Vector2i(bx, by), bid)
 
 	# 3. Cycling Bell Powerups (tt_bells_draw in cycling_pickups.c:224-275)
 	for bell: Dictionary in state.get("bells", []):
 		if int(bell.get("active", 0)) == 0:
 			continue
 		var bpos := Vector2i(160 + int(bell["x"]), int(bell["y"]))
-		_draw_tt_bell(target, bpos, int(bell.get("kind", 0)))
+		_draw_tt_bell(target, bpos, int(bell.get("kind", 0)), int(bell.get("state", 0x40)))
 
 	# 4. Air Enemies & Enemy Shots
 	for enemy: Dictionary in state.get("air_enemies", []):
 		if int(enemy.get("active", 0)) == 0:
 			continue
-		_draw_tt_air_enemy(target, Vector2i(160 + int(enemy["x"]), int(enemy["y"])))
+		_draw_tt_air_enemy(target, Vector2i(160 + int(enemy["x"]), int(enemy["y"])), int(enemy.get("state", 0x40)))
 	for eshot: Dictionary in state.get("enemy_shots", []):
 		if int(eshot.get("active", 0)) == 0:
 			continue
@@ -304,8 +477,13 @@ func render_tt_twinbee(state: Dictionary) -> Image:
 		_draw_tt_option(target, ppos + Vector2i(-24, 12))
 		_draw_tt_option(target, ppos + Vector2i(24, 12))
 		_draw_tt_option(target, ppos + Vector2i(0, 22))
-	_draw_tt_twin_shots(target, ppos + Vector2i(-10, -28))
-	_draw_tt_twin_shots(target, ppos + Vector2i(10, -56))
+	var shot_kind: int = int(p.get("shot_kind", 9))
+	if shot_kind == 8:
+		_fill_rect(target, Rect2i(ppos.x - 2, ppos.y - 32, 4, 8), Color8(255, 240, 120))
+		_fill_rect(target, Rect2i(ppos.x - 2, ppos.y - 60, 4, 8), Color8(255, 240, 120))
+	else:
+		_draw_tt_twin_shots(target, ppos + Vector2i(-10, -28))
+		_draw_tt_twin_shots(target, ppos + Vector2i(10, -56))
 	_draw_tt_player(target, ppos)
 
 	# 6. Top-left Time HUD & Life Icons (tt_state_stage in play_flow_and_scroll_scripts.c:226-274)
@@ -321,7 +499,9 @@ func render_tt_twinbee(state: Dictionary) -> Image:
 		_draw_tt_life_icon(target, Vector2i(44 + i * 16, 36))
 
 	# 6-segment Speed Gauge at bottom-left (x = -0x78 => screen 40, y = 0xD8 - i*8)
-	var speed_step: int = clampi(int(state.get("scroll_speed", 0x18000)) / 0x8000, 1, 6)
+	var base_speed_step: int = int(state.get("scroll_speed", 0x18000)) / 0x8000
+	var p_spd_lvl: int = int(p.get("speed_level", 4))
+	var speed_step: int = clampi(base_speed_step + (p_spd_lvl - 4), 1, 6)
 	for i in range(6):
 		var gy: int = 216 - i * 8
 		var seg_col: Color = Color8(255, 220, 48) if (i + 1) <= speed_step else Color8(48, 64, 96)
@@ -331,12 +511,14 @@ func render_tt_twinbee(state: Dictionary) -> Image:
 	var rank_box := Rect2i(192, 184, 92, 48)
 	_draw_ps1_window(target, rank_box, Color8(16, 28, 72), Color8(8, 14, 38))
 	var rankings: Array = state.get("rankings", [])
+	var hi_slot: int = int(state.get("ranking_slot", -1))
 	for i in range(mini(3, rankings.size())):
 		var r_entry: Dictionary = rankings[i]
 		var r_time: Dictionary = Overlays.tt_format_time(int(r_entry["time"]))
 		var ry: int = 188 + i * 14
+		var row_col: Color = Color8(120, 255, 160) if i == hi_slot else Color8(224, 248, 255)
 		_draw_ascii_digits(target, "%d." % (i + 1), Vector2i(196, ry), Color8(255, 200, 80))
-		_draw_ascii_digits(target, str(r_time["text"]), Vector2i(212, ry), Color8(224, 248, 255))
+		_draw_ascii_digits(target, str(r_time["text"]), Vector2i(212, ry), row_col)
 
 	return target
 
@@ -472,6 +654,9 @@ func _draw_cursor_arrow(target: Image, pos: Vector2i) -> void:
 				target.set_pixel(px, py, Color8(255, 232, 96))
 
 func _draw_rpg_delinquent_sprite(target: Image, pos: Vector2i, variant: int) -> void:
+	if variant >= 0 and variant < _rpg_enemy_sds.size() and _rpg_enemy_sds[variant] != null:
+		_blit_alpha_centered(target, _rpg_enemy_sds[variant], pos, true)
+		return
 	var coat_col: Color = Color8(64, 48, 96) if variant == 0 else (Color8(48, 64, 88) if variant == 1 else Color8(88, 48, 64))
 	# Pompadour hair + head + gakuran jacket + legs
 	_fill_rect(target, Rect2i(pos.x - 8, pos.y - 28, 14, 6), Color8(32, 24, 20))
@@ -481,6 +666,13 @@ func _draw_rpg_delinquent_sprite(target: Image, pos: Vector2i, variant: int) -> 
 	_fill_rect(target, Rect2i(pos.x + 2, pos.y + 10, 6, 14), Color8(36, 36, 56))
 
 func _draw_rpg_hero_sprite(target: Image, pos: Vector2i, guarding: bool) -> void:
+	if _rpg_hero_sd != null:
+		_blit_alpha_centered(target, _rpg_hero_sd, pos, false)
+		if guarding:
+			_fill_rect(target, Rect2i(pos.x - 16, pos.y - 22, 3, 44), Color8(96, 224, 255))
+			_fill_rect(target, Rect2i(pos.x - 13, pos.y - 24, 26, 2), Color8(160, 244, 255))
+			_fill_rect(target, Rect2i(pos.x - 13, pos.y + 20, 26, 2), Color8(160, 244, 255))
+		return
 	var jacket: Color = Color8(56, 112, 208) if not guarding else Color8(96, 168, 248)
 	_fill_rect(target, Rect2i(pos.x - 6, pos.y - 26, 12, 6), Color8(40, 32, 28))
 	_fill_rect(target, Rect2i(pos.x - 6, pos.y - 20, 12, 10), Color8(248, 204, 168))
@@ -488,15 +680,78 @@ func _draw_rpg_hero_sprite(target: Image, pos: Vector2i, guarding: bool) -> void
 	_fill_rect(target, Rect2i(pos.x - 7, pos.y + 10, 6, 14), Color8(40, 48, 72))
 	_fill_rect(target, Rect2i(pos.x + 1, pos.y + 10, 6, 14), Color8(40, 48, 72))
 
-func _draw_rpg_partner_sprite(target: Image, pos: Vector2i, _girl_id: int) -> void:
-	# Shiori / Partner heroine school uniform & ribbon
-	_fill_rect(target, Rect2i(pos.x - 7, pos.y - 26, 14, 14), Color8(184, 72, 88))
+func _draw_rpg_partner_sprite(target: Image, pos: Vector2i, girl_id: int) -> void:
+	var g_col: Color = GIRL_PALETTE.get(girl_id, Color8(216, 72, 92))
+	if _rpg_shiori_sd != null:
+		_blit_alpha_centered(target, _rpg_shiori_sd, pos, false)
+		if girl_id != 0:
+			# Distinct hair crest & ribbon badge per partner heroine (0..10, 13)
+			_fill_rect(target, Rect2i(pos.x - 8, pos.y - 24, 16, 5), g_col)
+			_draw_circle_filled(target, Vector2i(pos.x + 10, pos.y - 18), 4, g_col)
+		return
+	# Partner heroine school uniform & ribbon
+	_fill_rect(target, Rect2i(pos.x - 7, pos.y - 26, 14, 14), g_col)
 	_fill_rect(target, Rect2i(pos.x - 5, pos.y - 20, 10, 10), Color8(252, 212, 180))
 	_fill_rect(target, Rect2i(pos.x - 8, pos.y - 10, 16, 14), Color8(236, 240, 248))
-	_fill_rect(target, Rect2i(pos.x - 4, pos.y - 8, 8, 5), Color8(224, 64, 80))
+	_fill_rect(target, Rect2i(pos.x - 4, pos.y - 8, 8, 5), g_col)
 	_fill_rect(target, Rect2i(pos.x - 9, pos.y + 4, 18, 10), Color8(44, 68, 124))
 	_fill_rect(target, Rect2i(pos.x - 6, pos.y + 14, 4, 10), Color8(240, 240, 248))
 	_fill_rect(target, Rect2i(pos.x + 2, pos.y + 14, 4, 10), Color8(240, 240, 248))
+
+func _draw_rpg_club_special_effect(target: Image, club_id: int) -> void:
+	var c_primary := Color8(255, 224, 80)
+	var c_secondary := Color8(96, 216, 255)
+	match club_id:
+		0: # Literature (メガトン辞書)
+			_fill_rect(target, Rect2i(58, 72, 28, 22), Color8(168, 48, 56))
+			_fill_rect(target, Rect2i(62, 76, 20, 14), Color8(248, 240, 216))
+		1: # Drama (脱力漫才)
+			_draw_circle_filled(target, Vector2i(84, 92), 14, Color8(255, 232, 120))
+		2: # Science (世界征服ロボ)
+			_draw_line_solid(target, Vector2i(204, 88), Vector2i(56, 104), Color8(255, 72, 224))
+			_draw_circle_filled(target, Vector2i(56, 104), 10, Color8(255, 192, 248))
+		3: # Computer (サイバーファング)
+			for i in range(4):
+				_fill_rect(target, Rect2i(48 + i * 16, 84 + (i & 1) * 10, 12, 8), Color8(64, 248, 192))
+		4: # Art (色素分解)
+			_draw_circle_filled(target, Vector2i(64, 92), 8, Color8(255, 80, 96))
+			_draw_circle_filled(target, Vector2i(80, 88), 8, Color8(80, 240, 120))
+			_draw_circle_filled(target, Vector2i(96, 94), 8, Color8(80, 160, 255))
+		5: # Brass Band (ハーメルンのホラ吹き)
+			for i in range(3):
+				_draw_circle_filled(target, Vector2i(60 + i * 22, 86 - i * 4), 5, c_primary)
+		6: # Baseball (超球百裂弾)
+			for i in range(4):
+				_draw_circle_filled(target, Vector2i(52 + i * 18, 90 + (i & 1) * 12), 5, Color8(248, 248, 248))
+		7: # Soccer (レッドカード乱舞)
+			_fill_rect(target, Rect2i(68, 78, 14, 20), Color8(248, 48, 48))
+		8: # Tennis (火の鳥サーブ)
+			_draw_line_solid(target, Vector2i(210, 92), Vector2i(60, 102), Color8(255, 128, 40))
+			_draw_circle_filled(target, Vector2i(60, 102), 8, Color8(255, 216, 64))
+		9: # Swimming (水竜破)
+			for i in range(5):
+				_draw_circle_filled(target, Vector2i(50 + i * 14, 104 - i * 4), 7, c_secondary)
+		10: # Basketball (ナイアガラダンク)
+			_draw_circle_filled(target, Vector2i(76, 82), 9, Color8(240, 120, 40))
+		_: # No-Club (気分最高)
+			_draw_circle_filled(target, Vector2i(226, 74), 6, c_primary)
+
+func _draw_rpg_assist_effect(target: Image, effect_kind: String) -> void:
+	match effect_kind:
+		"effect_a":
+			_draw_circle_filled(target, Vector2i(76, 102), 11, Color8(255, 196, 64))
+			_draw_circle_filled(target, Vector2i(76, 102), 5, Color8(255, 255, 224))
+		"effect_b":
+			_draw_line_solid(target, Vector2i(54, 88), Vector2i(98, 118), Color8(120, 232, 255))
+			_draw_line_solid(target, Vector2i(98, 88), Vector2i(54, 118), Color8(120, 232, 255))
+		"yuina_flash_x5":
+			for i in range(5):
+				_draw_circle_filled(target, Vector2i(44 + i * 16, 96 + (i & 1) * 10), 6, Color8(255, 240, 128))
+		"sweatdrop":
+			_fill_rect(target, Rect2i(280, 84, 5, 10), Color8(112, 208, 255))
+		"laugh":
+			_draw_circle_filled(target, Vector2i(252, 84), 4, Color8(255, 160, 216))
+			_draw_circle_filled(target, Vector2i(282, 82), 4, Color8(255, 216, 96))
 
 func _draw_taco_enemy_3d(target: Image, pos: Vector2i, radius: int, kind: String) -> void:
 	if kind == "morph_core":
@@ -519,9 +774,15 @@ func _draw_taco_reticle(target: Image, pos: Vector2i) -> void:
 	_fill_rect(target, Rect2i(pos.x - 12, pos.y + 11, 5, 2), c)
 	_fill_rect(target, Rect2i(pos.x + 8, pos.y + 11, 5, 2), c)
 
-func _draw_taco_laser_beams(target: Image, ship_pos: Vector2i, reticle_pos: Vector2i) -> void:
-	_draw_line_solid(target, ship_pos + Vector2i(-14, 0), reticle_pos + Vector2i(-4, 0), Color8(112, 248, 255))
-	_draw_line_solid(target, ship_pos + Vector2i(14, 0), reticle_pos + Vector2i(4, 0), Color8(112, 248, 255))
+func _draw_taco_laser_beams(target: Image, ship_pos: Vector2i, reticle_pos: Vector2i, weapon_kind: int = 0) -> void:
+	var col: Color = Color8(112, 248, 255)
+	if weapon_kind == Overlays.SHOOTER_PRIMARY_BEAM:
+		col = Color8(255, 120, 232)
+		_draw_line_solid(target, ship_pos, reticle_pos, Color8(255, 240, 160))
+	elif weapon_kind == Overlays.SHOOTER_PRIMARY_VULCAN:
+		col = Color8(255, 224, 72)
+	_draw_line_solid(target, ship_pos + Vector2i(-14, 0), reticle_pos + Vector2i(-4, 0), col)
+	_draw_line_solid(target, ship_pos + Vector2i(14, 0), reticle_pos + Vector2i(4, 0), col)
 
 func _draw_taco_player_ship(target: Image, pos: Vector2i) -> void:
 	# Futuristic 3D fighter fuselage & wings
@@ -551,6 +812,27 @@ func _draw_tt_cloud(target: Image, pos: Vector2i) -> void:
 	_draw_circle_filled(target, pos + Vector2i(-10, 4), 10, Color8(220, 232, 248))
 	_draw_circle_filled(target, pos + Vector2i(10, 4), 10, Color8(220, 232, 248))
 
+func _draw_tt_boss(target: Image, pos: Vector2i, boss_id: int = 0) -> void:
+	match boss_id:
+		1: # Swing-Ring Boss (swing_ring_boss.c)
+			for i in range(8):
+				var ang: float = float(i) * PI / 4.0
+				var rpos := pos + Vector2i(int(cos(ang) * 26.0), int(sin(ang) * 18.0))
+				_draw_circle_filled(target, rpos, 5, Color8(96, 216, 248))
+			_draw_circle_filled(target, pos, 13, Color8(72, 112, 216))
+			_draw_circle_filled(target, pos, 6, Color8(255, 224, 80))
+		2: # Multipart Form Boss (multipart_form_boss.c)
+			_fill_rect(target, Rect2i(pos.x - 34, pos.y - 14, 68, 28), Color8(96, 136, 168))
+			_fill_rect(target, Rect2i(pos.x - 26, pos.y - 8, 16, 16), Color8(232, 168, 64))
+			_fill_rect(target, Rect2i(pos.x + 10, pos.y - 8, 16, 16), Color8(232, 168, 64))
+			_draw_circle_filled(target, pos, 9, Color8(248, 80, 96))
+		3: # Beam & Ring Boss (beam_and_ring_boss.c)
+			_fill_rect(target, Rect2i(pos.x - 6, pos.y + 12, 12, 40), Color8(144, 240, 255))
+			_draw_circle_filled(target, pos, 16, Color8(168, 80, 216))
+			_draw_circle_filled(target, pos, 8, Color8(255, 240, 128))
+		_: # Stage 1 Rope-Arm Boss (rope_arm_boss.c)
+			_draw_tt_boss1(target, pos)
+
 func _draw_tt_boss1(target: Image, pos: Vector2i) -> void:
 	# Rope-Arm Boss (rope_arm_boss.c): central armored core + 4 side pods + jointed rope arms
 	for i in range(6):
@@ -562,9 +844,16 @@ func _draw_tt_boss1(target: Image, pos: Vector2i) -> void:
 	_draw_circle_filled(target, pos, 12, Color8(255, 216, 72))
 	_draw_circle_filled(target, pos, 6, Color8(248, 64, 64))
 
-func _draw_tt_bell(target: Image, pos: Vector2i, kind: int) -> void:
+func _draw_tt_bell(target: Image, pos: Vector2i, kind: int, bstate: int = 0x40) -> void:
+	if bstate == 0x90:
+		# Power-up collected popup sparkle
+		_draw_circle_filled(target, pos, 8, Color8(255, 248, 160))
+		_draw_circle_filled(target, pos, 4, Color8(120, 248, 255))
+		return
 	var c: Color = Color8(255, 224, 48) # 0: Yellow
-	if kind == 1:
+	if bstate == 0x60 or bstate == 0x70:
+		c = Color8(248, 72, 72) # Over-cycled hazard bell
+	elif kind == 1:
 		c = Color8(72, 176, 255) # 1: Blue (Twin Shot)
 	elif kind == 2:
 		c = Color8(80, 240, 120) # 2: Green (Speed Up)
@@ -576,7 +865,12 @@ func _draw_tt_bell(target: Image, pos: Vector2i, kind: int) -> void:
 	_fill_rect(target, Rect2i(pos.x - 6, pos.y + 1, 13, 5), c)
 	_fill_rect(target, Rect2i(pos.x - 2, pos.y + 6, 5, 2), Color8(248, 128, 64))
 
-func _draw_tt_air_enemy(target: Image, pos: Vector2i) -> void:
+func _draw_tt_air_enemy(target: Image, pos: Vector2i, estate: int = 0x40) -> void:
+	if estate == 0x70:
+		# Exploding air enemy (smart bomb or shot hit)
+		_draw_circle_filled(target, pos, 9, Color8(255, 160, 48))
+		_draw_circle_filled(target, pos, 5, Color8(255, 244, 144))
+		return
 	_draw_circle_filled(target, pos, 7, Color8(240, 88, 72))
 	_draw_circle_filled(target, pos + Vector2i(0, -2), 3, Color8(255, 232, 160))
 

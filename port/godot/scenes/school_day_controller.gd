@@ -17,6 +17,7 @@ const Calendar = preload("res://rules/calendar.gd")
 const OrdinaryWeek = preload("res://rules/ordinary_week.gd")
 const WeekEnd = preload("res://rules/week_end.gd")
 const SchoolDay = preload("res://rules/school_day.gd")
+const EndingOverlay = preload("res://overlays/ending_overlay.gd")
 
 const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": [13],
 	"sine_quarter": [1025], "tokimeki_weights": [13], "bonus_param_masks": [13],
@@ -91,6 +92,78 @@ func attach(session: Session, state: State) -> String:
 	session.service_completion = service_completion
 	return ""
 
+func attach_multi_week(session: Session, state: State) -> String:
+	var failure: String = attach(session, state)
+	if not failure.is_empty():
+		return failure
+	state.rule_state["allow_multi_week"] = true
+	for ovl_mode: int in [0x01, 0x35, 0x36, 0x37, 0x3d, 0x3e, 0x3f, 0x44, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, 0x50, 0x51, 0x52, 0x53, 0x57, 0x58, 0x59, 0x5a, 0x5c, 0x5e]:
+		failure = session.router.bind_overlay_mode(ovl_mode, _overlay_mode)
+		if not failure.is_empty():
+			return failure
+	return ""
+
+func _overlay_mode(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
+	var state: State = _state(base, result)
+	if state == null:
+		return
+	var data: Dictionary = state.rule_state
+	var mode: int = state.game_mode
+	state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
+	result.presentation.append({"kind": "overlay_mode", "mode": mode, "year": data["year"], "month": data["month"], "day": data["day"]})
+	if mode == 0x5c:
+		# Graduation Day Legendary Tree Confession & Ending (src/ovl/ending/graduation_candidate_selection.c)
+		var param_vals: Array[int] = []
+		for p_word: int in data["params"]:
+			param_vals.append(State.high(p_word))
+		var eval_girls: Array = []
+		for g_idx: int in range(mini(13, data["girls"].size())):
+			var g_rec: Dictionary = data["girls"][g_idx]
+			eval_girls.append({
+				"tokimeki": State.high(g_rec["tokimeki_word"]),
+				"affection": State.high(g_rec["affection_word"]),
+				"syoushin": State.high(g_rec["syoushin_word"]),
+				"met": 1 if (g_rec["flags"] & 2) != 0 else 0,
+				"flags": g_rec["flags"],
+				"scene_counters": g_rec["counters"],
+				"story_stage": int(g_rec.get("story_stage", 0)),
+				"rei_subcount": int(g_rec.get("rei_subcount", 0)),
+			})
+		var health_nibble: int = (data["player_flags"] >> 8) & 0xF
+		var scores: Dictionary = EndingOverlay.compute_girl_scores(
+			eval_girls, param_vals, param_vals[8] if param_vals.size() > 8 else 0, health_nibble
+		)
+		var sel: Dictionary = EndingOverlay.select_graduation_candidate(
+			eval_girls, scores["points_by_girl"], data["scene_flags"], 0
+		)
+		var gate: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(int(sel["current_girl"]), eval_girls)
+		var best_girl: int = int(gate["redirected_girl"])
+		if best_girl == EndingOverlay.GIRL_YOSHIO:
+			var best_aff: int = 79
+			for g_idx: int in range(11):
+				var aff: int = State.high(data["girls"][g_idx]["affection_word"])
+				if (data["girls"][g_idx]["flags"] & 2) != 0 and aff > best_aff:
+					best_aff = aff
+					best_girl = g_idx
+		data["ending_completed"] = 1
+		data["confessed_girl"] = best_girl
+		state.set_stage(0xff)
+		return
+	if mode == 0x4c:
+		# School Trip (SHUGAKU) spans 6 days (Mon..Sat -> Sun)
+		for _trip_day: int in range(6):
+			Calendar.advance_day(state)
+	elif mode == 0x51:
+		# Club Camp (RENSYU) advances 1 calendar day per camp record
+		Calendar.advance_day(state)
+	# Advance queue record after overlay event completes
+	if data["day_event_index"] < 31:
+		data["day_event_index"] = Math.u8(data["day_event_index"] + 1)
+	state.reset_game_mode_fields(0x31)
+	data["voice_wait_frames"] = 0
+	data["message_title_visible"] = false
+	result.transitions.append({"kind": "native_mode", "mode": 0x31, "day_event_index": data["day_event_index"]})
+
 func _prologue(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
 	if state == null:
@@ -122,14 +195,18 @@ func _command(base: CoreState, input: InputFrame, _rng: Rng, result: Session.Fra
 	if state.mode_stage in [0, 0xff]:
 		var route_state: RouteState = base as RouteState
 		if route_state == null or opening_services.is_empty():
-			result.error = "command screen requires captured native stage1/step0"
+			if state.rule_state.get("allow_multi_week", false) and state.mode_stage == 0:
+				state.next_stage()
+			else:
+				result.error = "command screen requires captured native stage1/step0"
+				return
+		else:
+			var reload_out: Session.FrameResult = Reload.step(route_state, opening_services)
+			result.error = reload_out.error
+			result.audio.append_array(reload_out.audio)
+			result.presentation.append_array(reload_out.presentation)
+			result.transitions.append_array(reload_out.transitions)
 			return
-		var reload_out: Session.FrameResult = Reload.step(route_state, opening_services)
-		result.error = reload_out.error
-		result.audio.append_array(reload_out.audio)
-		result.presentation.append_array(reload_out.presentation)
-		result.transitions.append_array(reload_out.transitions)
-		return
 	if input.pressed & 0x20:
 		# Reject a reachable unimplemented scheduler branch before confirmation.
 		result.error = Scheduler.initial_branch_error(state)
@@ -227,6 +304,19 @@ func _load_descriptor(state: State, request: String) -> Dictionary:
 	var sd_lba: int = resolved.get("sd_lba", -1)
 	var sectors: int = resolved.get("sectors", 41)
 
+	if vacation_kind == 0 and condition_bucket == 0 and command != 4:
+		var bg_table: Array = tables.get("weekday_background_lbas", [])
+		if command >= 0 and command < bg_table.size():
+			bg_lba = int(bg_table[command])
+		var sd_index: int = _sd_table_index(command, int(event[3]))
+		var sd_select_key: String = "sd_select_summer" if is_summer else "sd_select_non_summer"
+		var sd_select_table: Array = tables.get(sd_select_key, [])
+		if sd_index >= 0 and sd_index < sd_select_table.size():
+			slot = int(sd_select_table[sd_index])
+		var sd_lba_table: Array = tables.get("weekday_sd_lbas", [])
+		if slot >= 0 and slot < sd_lba_table.size():
+			sd_lba = int(sd_lba_table[slot])
+
 	return {"kind": "school_day_load", "request": request, "command": command,
 		"day_event_index": data["day_event_index"],
 		"background_lba": bg_lba,
@@ -237,7 +327,7 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 	if state == null:
 		return
 	var data: Dictionary = state.rule_state
-	var seasonal_allowed: bool = tables.get("allow_seasonal_variants", false) or data.get("allow_seasonal_variants", false)
+	var seasonal_allowed: bool = tables.get("allow_seasonal_variants", false) or data.get("allow_seasonal_variants", false) or data.get("allow_multi_week", false)
 	if not seasonal_allowed:
 		if data["vacation"] != 0 or data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 8:
 			result.error = "school-day route outside initial April5–8 ordinary week"

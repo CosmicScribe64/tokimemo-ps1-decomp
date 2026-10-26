@@ -7,9 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from PIL import Image
-
-from tools.port.verify_tile_diff import compare_16x16_tiles, normalize_320x240
+from tools.port.verify_tile_diff import Image, compare_16x16_tiles, normalize_320x240
 
 
 class VerifyTileDiffTests(unittest.TestCase):

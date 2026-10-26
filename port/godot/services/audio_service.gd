@@ -314,6 +314,94 @@ func register_pcm_clip(descriptor: Dictionary, approved_pack_root: String) -> Di
 	return {"error": "", "clip_id": clip_id, "capability": "validated_pcm_wav"}
 
 
+static func create_pcm_wav_stream(kind: String, id_or_seq: int, duration_ms: int = 180) -> AudioStreamWAV:
+	var sample_rate: int = 22050
+	var clamped_ms: int = maxi(20, duration_ms)
+	var sample_count: int = maxi(1, int((sample_rate * clamped_ms) / 1000))
+	var pcm_bytes: PackedByteArray = PackedByteArray()
+	pcm_bytes.resize(sample_count * BYTES_PER_SAMPLE_16)
+
+	var triads: Array = [
+		[261.63, 329.63, 392.00, 523.25], # C4 major triad + C5
+		[349.23, 440.00, 523.25, 698.46], # F4 major triad + F5
+		[392.00, 493.88, 587.33, 783.99], # G4 major triad + G5
+		[293.66, 369.99, 440.00, 587.33], # D4 major triad + D5
+	]
+	var vowels: Array = [
+		[730.0, 1090.0], # /a/
+		[270.0, 2290.0], # /i/
+		[300.0, 870.0],  # /u/
+		[530.0, 1840.0], # /e/
+		[570.0, 840.0],  # /o/
+	]
+
+	for i: int in range(sample_count):
+		var t: float = float(i) / float(sample_rate)
+		var norm: float = float(i) / float(sample_count)
+		var env: float = 1.0
+		if norm < 0.05:
+			env = norm / 0.05
+		elif norm > 0.85:
+			env = (1.0 - norm) / 0.15
+		var sample_val: float = 0.0
+
+		match kind:
+			"bgm_play", "native_restore_bgm":
+				var chord: Array = triads[absi(id_or_seq) % triads.size()]
+				var note_idx: int = mini(int(norm * 4.0), 3)
+				var lead_freq: float = float(chord[note_idx])
+				var root_freq: float = float(chord[0])
+				var third_freq: float = float(chord[1])
+				var fifth_freq: float = float(chord[2])
+				sample_val = (
+					0.40 * sin(TAU * lead_freq * t)
+					+ 0.22 * sin(TAU * root_freq * t)
+					+ 0.18 * sin(TAU * third_freq * t)
+					+ 0.18 * sin(TAU * fifth_freq * t)
+				) * env * 0.45
+			"se_play", "native_audio_command":
+				var step_semitone: int = absi(id_or_seq) & 7
+				var base_freq: float = 880.0 + float(step_semitone) * 55.0
+				var chime_freq: float = base_freq * (1.5 if norm >= 0.35 else 1.0)
+				var decay: float = exp(-5.5 * norm)
+				sample_val = (
+					0.70 * sin(TAU * chime_freq * t)
+					+ 0.30 * sin(TAU * (chime_freq * 2.0) * t)
+				) * decay * env * 0.55
+			"voice_play":
+				var formants: Array = vowels[absi(id_or_seq) % vowels.size()]
+				var f0: float = 220.0 + float(absi(id_or_seq) % 7) * 8.0 + 4.0 * sin(TAU * 5.5 * t)
+				var f1: float = float(formants[0])
+				var f2: float = float(formants[1])
+				var syll_env: float = sin(PI * norm)
+				sample_val = (
+					0.45 * sin(TAU * f0 * t)
+					+ 0.35 * sin(TAU * f1 * t)
+					+ 0.20 * sin(TAU * f2 * t)
+				) * syll_env * env * 0.50
+			_:
+				sample_val = sin(TAU * 440.0 * t) * env * 0.35
+
+		var pcm16: int = clampi(int(round(sample_val * 32767.0)), -32768, 32767)
+		var unsigned16: int = pcm16 & 0xFFFF
+		pcm_bytes[i * 2] = unsigned16 & 0xFF
+		pcm_bytes[i * 2 + 1] = (unsigned16 >> 8) & 0xFF
+
+	var wav: AudioStreamWAV = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = sample_rate
+	wav.stereo = false
+	if kind in ["bgm_play", "native_restore_bgm"]:
+		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		wav.loop_begin = 0
+		wav.loop_end = sample_count
+	else:
+		wav.loop_mode = AudioStreamWAV.LOOP_DISABLED
+	wav.data = pcm_bytes
+	return wav
+
+
+
 func attach_player(player: AudioStreamPlayer, base_volume_db: float = 0.0) -> String:
 	if player == null:
 		return "audio player is required"

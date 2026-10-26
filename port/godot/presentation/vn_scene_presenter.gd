@@ -8,8 +8,8 @@ class_name VnScenePresenter
 
 const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 
-# Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366)
-const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA5ElEQVR4nMWWsQ3DIBBFzycXlIzgUTIKZUZI6VEYI6XHcHkjpKRLdBRIECQMTvx/aSPeQ0L8m2h1byoij5UkCI1GXkLOb4fWTl78l8BiF7rv4wL7cyPvbofWMoHD5QdjzKkNQwjjAuZieCaAgCcBFDwKIOFRAAnXwzMSrmEkvCrQuhMteOt/uT8j4ZkAAp4EUPAogIRrZku22udaqaPpmSfmWu/39HlVIMjheYIJHP7nI9MtEC6GZwIIeBJAwaMAEh4FkHA9/LDAryYpRsKrAmff9t5uYSQ8E0DAkwAKHgWQcBX4AGcPlHlFD2CfAAAAAElFTkSuQmCC"
+# Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366, normalized to (0, 0) UV)
+const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA8ElEQVR4nM2WoRHDMAxFX3MBhoWBGaWjFHaEwo6SMQIDO0KgRyg0a1nuco6lnO2TKyrL76EvXSY/fRFqvI48Vi89EWudF6b7Ldnvsn+uVKKAc67o8xBCvoAFPClgBT8UsIRHAtbwnUAL+CbQCg7QtYRDYQ5ocK3vnMvPgRpwyMyBWvBDAUt4JGANB+gHN4hD/uNZ50V8I84/X/jgk/1e2/XaPlcFghfvif++B0pD5kzIJQUs4EkBK/ihgCU8ErCG7wRawDeBVnCAriUcCnNAg5/ZLdk5UAMOmTlQC34oYAmPBKzhAL1f3uKQts+10u6JH97tla2x++MhAAAAAElFTkSuQmCC"
 
 # PS1 Bayer 4x4 dither table
 const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
@@ -50,18 +50,21 @@ func init_resources(font_root: String, hud_manifest_path: String = "") -> String
 		return "Failed to decode checkerboard background tile"
 
 	if hud_manifest_path.is_empty():
-		var default_manifest := "/workspace/.asset-cache/port/hud-production-v1/manifest.json"
-		if FileAccess.file_exists(default_manifest):
-			hud_manifest_path = default_manifest
+		var repo_root := ProjectSettings.globalize_path("res://../..").simplify_path()
+		for candidate in [
+			repo_root.path_join(".asset-cache/port/hud-production-v1/manifest.json"),
+			"/workspace/.asset-cache/port/hud-production-v1/manifest.json",
+			"/work/.asset-cache/port/hud-production-v1/manifest.json",
+		]:
+			if FileAccess.file_exists(candidate):
+				hud_manifest_path = candidate
+				break
 
-	# 2. Open HUD manifest or font directly
-	if not hud_manifest_path.is_empty() and FileAccess.file_exists(hud_manifest_path):
-		if not open_manifest(hud_manifest_path, HUD_SHA, font_root):
-			return "Failed to open HUD manifest: " + error
-	else:
-		var font_err: String = _font.open_external_font(font_root)
-		if not font_err.is_empty():
-			return "Failed to open font: " + font_err
+	# 2. Open HUD manifest (required so HUD sprites/frames are always loaded; never silently degrade)
+	if hud_manifest_path.is_empty() or not FileAccess.file_exists(hud_manifest_path):
+		return "Missing HUD manifest: " + hud_manifest_path
+	if not open_manifest(hud_manifest_path, HUD_SHA, font_root):
+		return "Failed to open HUD manifest: " + error
 
 	_ensure_compositor_coverage()
 	return ""
@@ -98,9 +101,14 @@ static func is_checker_tile_enabled(mode: int, col: int, row: int) -> bool:
 		_:
 			return true
 
-## Exact hud_screen_frame_draw(0/1/2) with UV scroll (src/main/hud_panels.c:1366-1461).
-func draw_checkerboard_frame(target: Image, mode: int, bg_uv: Vector2i = Vector2i.ZERO) -> void:
-	if _checker_tile == null:
+## Exact hud_screen_frame_draw(0/1/2) with UV scroll and 4-season CLUT (src/main/hud_panels.c:1279-1461).
+func draw_checkerboard_frame(target: Image, mode: int, bg_uv: Vector2i = Vector2i.ZERO, season: int = 0, fade: int = 255) -> void:
+	var tile: Image = _checker_tile
+	if _compositor != null:
+		var season_tile: Image = _compositor._get_season_checker_tile(season, fade)
+		if season_tile != null:
+			tile = season_tile
+	if tile == null:
 		return
 	var u0: int = bg_uv.x & 31
 	var v0: int = bg_uv.y & 31
@@ -120,7 +128,7 @@ func draw_checkerboard_frame(target: Image, mode: int, bg_uv: Vector2i = Vector2
 					if px < 0 or px >= 320:
 						continue
 					var ut: int = (u0 + dx) & 31
-					target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(ut, vt))
+					target.set_pixelv(Vector2i(px, py), tile.get_pixel(ut, vt))
 
 # ==============================================================================
 # PS1 Presentation Primitives
@@ -153,7 +161,10 @@ func draw_message_window(target: Image) -> void:
 	_draw_actor(target, 62, Vector2i(0, 75))
 
 ## Exact PS1 POLY_G4 case 2 gradient base panel (cal_base_show in hud_screens.c:640, OT 5).
-func draw_cal_base(target: Image, rect: Rect2i) -> void:
+func draw_cal_base(target: Image, rect: Rect2i, top_level: int = 224) -> void:
+	var v0: float = float(top_level)
+	var v3: float = float((top_level * 8) / 10)
+	var span: float = v0 - v3
 	for y in range(rect.size.y):
 		var py: int = rect.position.y + y
 		if py < 0 or py >= 240:
@@ -164,7 +175,7 @@ func draw_cal_base(target: Image, rect: Rect2i) -> void:
 			if px < 0 or px >= 320:
 				continue
 			var fx: float = float(x) / float(rect.size.x)
-			var base_v: float = 224.0 if (fx + fy <= 1.0) else (224.0 - (fx + fy - 1.0) * 45.0)
+			var base_v: float = v0 if (fx + fy <= 1.0) else (v0 - (fx + fy - 1.0) * span)
 			var d: int = DITHER[(py & 3) * 4 + (px & 3)]
 			var v5: int = clampi((int(base_v) + d) >> 3, 0, 31)
 			var v8: int = v5 << 3
@@ -324,13 +335,13 @@ func draw_vn_dialogue(target: Image, speaker_hex: String, body_lines_hex: Array[
 		var x_pos: int = 88 if not speaker_hex.is_empty() else (74 if line_hex.begins_with("8175") or line_hex.begins_with("8177") else 40)
 		_draw_text_hex_checked(target, line_hex, Vector2i(x_pos, y_pos), 0, "message_window")
 
-	# 3. Actor 2 Frame 0xF0 wait marker at (276, 192 + bob)
+	# 3. Actor 2 Frame 1 wait marker at (276, 192 + bob) (hud_text_marker_set: D_8011ED70 = 1)
 	if marker_bob_y >= 0:
 		var marker_screen := Vector2i(276, 192 + marker_bob_y)
-		# Attempt actor blit via compositor
-		_draw_actor(target, 0xF0, Vector2i(marker_screen.x - 160, marker_screen.y - 120))
-		# Authentic PS1 prompt marker fallback glyph: 81a5 (▼)
-		_draw_text_hex_checked(target, "81a5", marker_screen, 0, "message_window")
+		if _compositor != null and _compositor.descriptor.get("frames", {}).has("1:base"):
+			_draw_actor(target, 1, Vector2i(marker_screen.x - 160, marker_screen.y - 120))
+		else:
+			_draw_text_hex_checked(target, "81a5", marker_screen, 0, "message_window")
 
 # ==============================================================================
 # Helper Drawing Routines

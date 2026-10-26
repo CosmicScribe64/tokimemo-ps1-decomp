@@ -1,10 +1,10 @@
 ---
 id: T-29010
 title: "Render the native HUD and game glyphs"
-status: In Progress
+status: Done
 assignee: parallel-port-worker
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29008-assemble-playable-development-app]]"]
 ---
 
@@ -18,11 +18,11 @@ port/godot/presentation/native_glyphs.gd; port/godot/ui/native_hud.gd; port/godo
 
 ## Acceptance criteria
 
-- [ ] Implement a bounded runnable module from current applied source, with precise supported routes and fail-closed unsupported behavior.
-- [ ] Use the existing native session, arithmetic, input and external-content boundaries; coordinate shared contracts instead of changing another worker's files.
-- [ ] Original assets, dialogue, saves, numeric table payloads, screenshots and traces remain ignored; commit only code, synthetic cases and source/proof descriptions.
-- [ ] Run targeted synthetic and original-emulator checks in Docker, record matching checkpoints and genuine limits, and produce actual visual proof where applicable.
-- [ ] Resolve independent Standards/spec findings before Done; partial code or evidence does not complete the whole ticket.
+- [x] Implement a bounded runnable module from current applied source, with precise supported routes and fail-closed unsupported behavior.
+- [x] Use the existing native session, arithmetic, input and external-content boundaries; coordinate shared contracts instead of changing another worker's files.
+- [x] Original assets, dialogue, saves, numeric table payloads, screenshots and traces remain ignored; commit only code, synthetic cases and source/proof descriptions.
+- [x] Run targeted synthetic and original-emulator checks in Docker, record matching checkpoints and genuine limits, and produce actual visual proof where applicable.
+- [x] Resolve independent Standards/spec findings before Done; partial code or evidence does not complete the whole ticket.
 
 ## Notes
 
@@ -41,3 +41,8 @@ User explicitly requested more agents and chats to speed up the port. This is a 
 2026-10-25: integrated the reviewed composed HUD app successor (`command_hud_presenter.gd`, `hud_compositor.gd`, `live_hud_adapter.gd`, `tools/port/hud_content.py`, `tools/port/test_hud_content.py`), the POSIX `//` alias fix via `ExternalContentPath.is_external_path` (also adopted in `school_day_media_store.gd` and `weekday_56_content_store.gd`), and `playable_boot.gd` composition with `boundary_save_controls.gd` from `.claude/orchestrator/state/T-29010/composed-app-v2/`. Canonical Docker verification passes 8/8 Python HUD exporter tests, 9/9 slash alias checks, 10/10 external path checks, 50/50 live HUD app checks (across render schedules 0/1/3 and save/restore rebinding), and 243/335-step live Mesa HUD captures with clean default viewport. Published 4 new live HUD captures to the local progress gallery. Sunday holiday HUD integration remains tracked with [[tickets/T-29013-native-holiday-command-loop]].
 
 2026-10-25: integrated `port/godot/presentation/holiday_hud_adapter.gd`, `tools/port/holiday_hud_content.py`, `port/godot/tests/hud/checkpoint_smoke.gd`, and `playable_boot.gd` Sunday holiday HUD composition from `.claude/orchestrator/state/T-29013/app-integration-v2/`. Also generated and published 7 live HUD captures for ordinary commands 1, 2, 3, 5, and 6 (`.claude/orchestrator/state/T-29014/live-captures-v1/`) and 3 live Sunday HUD captures (`.claude/orchestrator/state/T-29013/app-integration-v2/proof/`) to the local progress gallery.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).

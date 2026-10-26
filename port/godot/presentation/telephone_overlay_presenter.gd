@@ -13,8 +13,12 @@ extends "res://presentation/date_appointment_presenter.gd"
 ## - Bounding box checks: Rect2i(0, 33, 283, 125) for notebook, Rect2i(27, 166, 266, 52) for message window
 
 const OverlayRules = preload("res://overlays/telephone_overlay.gd")
+const CalendarPhoneRules = preload("res://rules/calendar_phone_screens.gd")
 
-# Exact CP932 byte hex encodings verified via python3 .encode("cp932").hex()
+# Authentic 64x64 Shiori notebook photo (REC(0x68) decoded from CD sector 0x9D5F 0x801A0000/0x801B0000/0x801B0200)
+const SHIORI_PHOTO_B64 := "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"
+
+# Exact CP932 byte hex encodings verified from CD sector 0x9D5F and SLPM_861.58
 const STR_HEX := {
 	"title_appraisal": "8f9782cc8e7182a982e782cc955d89bf", # 女の子からの評価
 	"title_phone": "9364986294d48d86", # 電話番号
@@ -35,14 +39,30 @@ const STR_HEX := {
 	"prompt_choose_day": "8366815b836782b782e993fa82f0914982f182c589ba82b382a2", # デートする日を選んで下さい
 
 	"speaker_shiori": "93a18de8", # 藤崎
+	"speaker_mio": "94408c8e", # 如月
+	"speaker_yuina": "95528f8f", # 紐緒
+	"speaker_ayako": "95d08bcb", # 片桐
+	"speaker_saki": "93f896ec", # 虹野
+	"speaker_yukari": "8cc38eae", # 古式
+	"speaker_nozomi": "90b490ec", # 清川
+	"speaker_mira": "8bbe", # 鏡
+	"speaker_yuko": "92a993fa93de", # 朝日奈
+	"speaker_megumi": "94fc8ef78cb4", # 美樹原
+	"speaker_yumi": "918189b38f97", # 早乙女
+	"speaker_rei": "88c98f578940", # 伊集院
 	"speaker_yoshio": "8d449759", # 好雄
 	"call_accept": "82a282a282ed82e68142208d7382ab82dc82b582e582a48142", # いいわよ。 行きましょう。
+	"call_accept_mio": "82cd82a281418aec82f182c58142208a7982b582dd82c982b582c482dc82b78142", # はい、喜んで。 楽しみにしてます。
+	"call_accept_yuina": "82a282a282ed82e6814220957482ab8d8782c182c482a082b082e98142", # いいわよ。 付き合ってあげる。
+	"call_accept_ayako": "826e826a81492088ea8f8f82c98d7382ab82dc82b582e582a48149", # ＯＫ！ 一緒に行きましょう！
+	"call_accept_saki": "82a482f1814182a282a282e68149208a7982b582dd82be82cb8149", # うん、いいよ！ 楽しみだね！
 	"call_refuse": "82b282df82f182c882b382a281412082bb82cc93fa82cd93738d8782aa88ab82a282cc8142", # ごめんなさい、 その日は都合が悪いの。
 	"answering_machine1": "82a0816082a0814197af8ee782dd82bd82a282be82c88142", # あ〜あ、留守みたいだな。
 	"answering_machine2": "8da193fa82cd82a082ab82e782df82e982a9816381638142816a", # 今日はあきらめるか……。）
 	"yoshio_found1": "82a082c182bd82a082c182bd8142", # あったあった。
 	"yoshio_found2": "8ea882a982c182db82b682c182c4", # 耳かっぽじって
 	"yoshio_found3": "82e682ad95b782af82e68142", # よく聞けよ。
+	"yoshio_profile_done": "817582c182c4814182c682b182be82c88142", # 「って、とこだな。
 
 	"name_shiori": "93a18de88e8d9044", # 藤崎詩織
 	"name_mio": "94408c8e96a28f8f", # 如月未緒
@@ -80,15 +100,43 @@ const STR_HEX := {
 	"place_19": "83588350815b83678fea", # スケート場
 	"place_20": "8358834c815b8fea", # スキー場
 
-	"sign_gemini": "82d382bd82b28dc0", # ふたご座
-	"blood_a": "82608c5e", # Ａ型
-	"club_bungei": "95b68c7c9594", # 文芸部
-	"shiori_notes_1": "97658e70925b97ed814190ac90d197448f4782c8", # 容姿端麗、成績優秀な
-	"shiori_notes_2": "8370815b83748346834e836782c8976382c882b682dd8142", # パーフェクトな幼なじみ。
-	"shiori_bwh": "82578252814582548255814582578253", # ８３・５６・８４
-	"shiori_birthday": "82548c8e8251825693fa", # ５月２７日
+	"sign_cancer": "8a498dc0", # 蟹座 (CD sector 0x9D5F 0x801B22BC + 6 * 10)
+	"sign_gemini": "916f8e718dc0", # 双子座 (CD sector 0x9D5F 0x801B22BC + 5 * 10)
+	"sign_aquarius": "908595728dc0", # 水瓶座
+	"sign_libra": "935694898dc0", # 天秤座
+	"sign_capricorn": "8e5297728dc0", # 山羊座
+	"blood_o": "826e8c5e", # Ｏ型 (0x801B229C + 0 * 8)
+	"blood_a": "82608c5e", # Ａ型 (0x801B229C + 1 * 8)
+	"blood_b": "82618c5e", # Ｂ型 (0x801B229C + 2 * 8)
+	"blood_ab": "826082618c5e", # ＡＢ型 (0x801B229C + 3 * 8)
+	"club_bungei": "95b68c7c9594", # 文芸部 (0x801B2200 + 0 * 12)
+	"club_drama": "89898c809594", # 演劇部
+	"club_science": "89c88a779594", # 科学部
+	"club_art": "94fc8f709594", # 美術部
+	"club_baseball": "96ec8b859594", # 野球部 (0x801B2200 + 6 * 12)
+	"shiori_notes_1": "8eef96a182cd89b98a798ad38fdc814193c182c9834e838983568362834e", # 趣味は音楽鑑賞、特にクラシック (0x801B25F4)
+	"shiori_notes_2": "90ac90d197448f4781418358837c815b8363969c945c", # 成績優秀、スポーツ万能 (0x801B2614)
+	"shiori_bwh": "82578252814582548255814582578253", # ８３・５６・８４ (0x801B2334)
+	"shiori_birthday": "82568c8e8140825693fa", # ７月　７日
+	"mio_birthday": "82518c8e8140825293fa", # ２月　３日
+	"yuina_birthday": "82568c8e8140825693fa", # ７月　７日
+	"ayako_birthday": "82588c8e8251825893fa", # ９月２９日
+	"saki_birthday": "82508c8e8250825293fa", # １月１３日
+	"mio_bwh": "8257824f814582548258814582578251", # ８０・５９・８２
+	"yuina_bwh": "82578253814582548257814582578253", # ８４・５８・８４
+	"ayako_bwh": "82578255814582548258814582578256", # ８６・５９・８７
+	"saki_bwh": "82578251814582548256814582578252", # ８２・５７・８３
+	"mio_notes_1": "93c78f9182aa91e58d4482ab82c582a882c682c882b582a2", # 読書が大好きでおとなしい
+	"mio_notes_2": "8fad82b595618ee382c895b68c7c959482cc8f9782cc8e71", # 少し病弱な文芸部の女の子
+	"yuina_notes_1": "90a28a4590aa959e82f08ae982de93568dcb89c88a778fad8f97", # 世界征服を企む天才科学少女
+	"yuina_notes_2": "8ec08cb182c694ad96be82aa90b682ab82aa82a2", # 実験と発明が生きがい
+	"ayako_notes_1": "89708cea8cf082b682e882c5986282b78c7c8f7089c694a7", # 英語交じりで話す芸術家肌
+	"ayako_notes_2": "914f89718341815b836782c689cc82aa91e58d4482ab", # 前衛アートと歌が大好き
+	"saki_notes_1": "8daa90ab88ea94d482cc8ae692a382e889ae", # 根性一番の頑張り屋
+	"saki_notes_2": "97bf979d82aa93be88d382c8837d836c815b83578383815b", # 料理が得意なマネージャー
 }
 
+var _shiori_notebook_photo: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
 
@@ -96,11 +144,18 @@ var bounding_box_violations: Array[String] = []
 func open_telephone_preview(hud_manifest_path: String, font_root: String, date_pack_root: String, hud_sha: String = HUD_SHA) -> bool:
 	recorded_glyphs.clear()
 	bounding_box_violations.clear()
+	_shiori_notebook_photo = Image.new()
+	if _shiori_notebook_photo.load_png_from_buffer(Marshalls.base64_to_raw(SHIORI_PHOTO_B64)) != OK:
+		error = "failed to decode Shiori notebook photo"
+		return false
 	var ok := open_date_preview(hud_manifest_path, font_root, date_pack_root, hud_sha)
 	_ensure_compositor_coverage()
 	return ok
 
 func _ensure_compositor_coverage() -> void:
+	if _shiori_notebook_photo == null:
+		_shiori_notebook_photo = Image.new()
+		_shiori_notebook_photo.load_png_from_buffer(Marshalls.base64_to_raw(SHIORI_PHOTO_B64))
 	if _compositor != null and _compositor.last_coverage == null:
 		_compositor.last_coverage = Image.create(320, 240, false, Image.FORMAT_L8)
 		_compositor.last_coverage.fill(Color.BLACK)
@@ -114,26 +169,56 @@ func render_girl_profile_notebook_screen(girl_id: int = OverlayRules.GIRL_SHIORI
 		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
 		year: int = 95, month: int = 4, day: int = 9,
 		weekday: int = 6, day_kind: int = 1,
-		bg_uv: Vector2i = Vector2i(20, 14)) -> Image:
+		bg_uv: Vector2i = Vector2i(1, 0)) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Authentic PS1 checkerboard background
-	_draw_checkerboard(target, bg_uv)
+	# 1. Authentic PS1 checkerboard background (scrolled + seasonal CLUT)
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
 
-	# 2. Wooden parameter panel (Frame 61)
+	# 2. Wooden parameter panel (Frame 61, OT 12..11)
 	_draw_parameter_panel(target, stats)
 
-	# 3. Base Gouraud appraisal panel (appraisal_base_show in hud_screens.c:645: Rect2i(0, 16, 283, 142))
+	# 3. Bottom message window (Frame 62, OT 8..7, Rect2i(27, 166, 266, 52))
+	_draw_message_window(target)
+
+	# 4. Base Gouraud appraisal panel (appraisal_base_show in hud_screens.c:645: Rect2i(0, 16, 283, 142), OT 5)
 	_draw_cal_base(target, Rect2i(0, 16, 283, 142))
 
-	# 4. Notebook spiral rings & divider (Actor 0x67 Frame 0x41 = 65 at (-16, -27) in phone_profile_details_draw)
+	# 5. Girl 64x64 notebook photo (REC(0x68) at (0x40, -0x28) -> Rect2i(192, 48, 64, 64), OT 3 HEAD)
+	if _shiori_notebook_photo != null:
+		_blit_simple(target, _shiori_notebook_photo, Vector2i(192, 48))
+
+	# 6. Notebook spiral rings, divider, colons & photo corners (REC(0x67) Frame 0x41 = 65 at (-16, -27), OT 3 after REC(0x68))
 	_draw_actor(target, 65, Vector2i(-16, -27))
 
-	# 5. Date pillar (Actor 16 Frame 60)
+	# 7. Phone symbols at y = -0x5A (REC(0x60..0x66) in OT 3 after REC(0x67))
+	# Exact girl_phone_digits[13][7] table from asm/data/data.data.s:1024-1095 (0=○, 1=×, 2=▲ -> frames 78, 79, 80)
+	const GIRL_PHONE_DIGITS := [
+		[0, 1, 2, 1, 0, 2, 0], # 0: Shiori
+		[1, 1, 2, 0, 2, 0, 1], # 1: Mio
+		[2, 2, 2, 0, 0, 1, 0], # 2: Yuina
+		[2, 1, 0, 1, 0, 1, 0], # 3: Ayako
+		[2, 1, 0, 2, 2, 1, 1], # 4: Saki
+		[0, 0, 0, 1, 2, 2, 1], # 5: Yukari
+		[2, 1, 1, 0, 1, 2, 1], # 6: Nozomi
+		[2, 2, 1, 0, 1, 1, 2], # 7: Mira
+		[0, 2, 0, 1, 2, 0, 2], # 8: Yuko
+		[0, 1, 2, 2, 1, 0, 0], # 9: Megumi
+		[0, 0, 0, 2, 2, 1, 0], # 10: Yoshio
+		[0, 2, 1, 0, 2, 1, 0], # 11: Yumi
+		[0, 2, 1, 0, 2, 1, 0], # 12: Rei
+	]
+	var row_idx: int = clampi(girl_id, 0, GIRL_PHONE_DIGITS.size() - 1)
+	var phone_digits: Array = GIRL_PHONE_DIGITS[row_idx]
+	var phone_x := [0x27, 0x31, 0x3B, 0x4C, 0x56, 0x60, 0x6A]
+	for d_idx in range(7):
+		_draw_actor(target, int(phone_digits[d_idx]) + 0x4E, Vector2i(phone_x[d_idx], -0x5A))
+
+	# 8. Date pillar (Actor 16 Frame 60, OT 3 TAIL)
 	_draw_date_pillar(target, year, month, day, weekday, day_kind)
 
-	# 6. Profile Title / Full Name at screen (32, 22) (x: -0x80, y: -0x62 in C)
+	# 9. Profile Title / Full Name at screen (32, 22) (x: -0x80, y: -0x62 in C) and Phone header at (128, 22)
 	var name_key := "name_shiori"
 	if girl_id == OverlayRules.GIRL_MIO: name_key = "name_mio"
 	elif girl_id == OverlayRules.GIRL_YUINA: name_key = "name_yuina"
@@ -147,49 +232,80 @@ func render_girl_profile_notebook_screen(girl_id: int = OverlayRules.GIRL_SHIORI
 	elif girl_id == OverlayRules.GIRL_YUMI: name_key = "name_yumi"
 	elif girl_id == OverlayRules.GIRL_REI: name_key = "name_ray"
 	_draw_text_hex_checked(target, STR_HEX[name_key], Vector2i(32, 22), 3)
-
-	# 7. Phone header at screen (128, 22) (x: -0x20, y: -0x62) + 7 phone number digits at y = -0x5A
 	_draw_text_hex_checked(target, STR_HEX["title_phone"], Vector2i(128, 22), 5)
-	var phone_digits := [6, 3, 2, 5, 7, 3, 1]
-	var phone_x := [0x27, 0x31, 0x3B, 0x4C, 0x56, 0x60, 0x6A]
-	for d_idx in range(7):
-		_draw_actor(target, phone_digits[d_idx] + 0x44, Vector2i(phone_x[d_idx], -0x5A))
 
-	# 8. Profile detail field labels and values (inside Rect2i(0, 33, 283, 125))
+	# 10. Profile detail field labels and values (inside Rect2i(0, 33, 283, 125))
+	var bday_key := "shiori_birthday"
+	var sign_key := "sign_cancer"
+	var blood_key := "blood_ab"
+	var bwh_key := "shiori_bwh"
+	var club_key := "club_baseball"
+	var notes1_key := "shiori_notes_1"
+	var notes2_key := "shiori_notes_2"
+	if girl_id == OverlayRules.GIRL_MIO:
+		bday_key = "mio_birthday"
+		sign_key = "sign_aquarius"
+		blood_key = "blood_a"
+		bwh_key = "mio_bwh"
+		club_key = "club_bungei"
+		notes1_key = "mio_notes_1"
+		notes2_key = "mio_notes_2"
+	elif girl_id == OverlayRules.GIRL_YUINA:
+		bday_key = "yuina_birthday"
+		sign_key = "sign_cancer"
+		blood_key = "blood_b"
+		bwh_key = "yuina_bwh"
+		club_key = "club_science"
+		notes1_key = "yuina_notes_1"
+		notes2_key = "yuina_notes_2"
+	elif girl_id == OverlayRules.GIRL_AYAKO:
+		bday_key = "ayako_birthday"
+		sign_key = "sign_libra"
+		blood_key = "blood_b"
+		bwh_key = "ayako_bwh"
+		club_key = "club_art"
+		notes1_key = "ayako_notes_1"
+		notes2_key = "ayako_notes_2"
+	elif girl_id == OverlayRules.GIRL_SAKI:
+		bday_key = "saki_birthday"
+		sign_key = "sign_capricorn"
+		blood_key = "blood_a"
+		bwh_key = "saki_bwh"
+		club_key = "club_baseball"
+		notes1_key = "saki_notes_1"
+		notes2_key = "saki_notes_2"
+
 	# - Birthday (誕生日) at (22, 42), value at (72, 42)
 	_draw_text_hex_checked(target, STR_HEX["label_birthday"], Vector2i(22, 42), 4, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["shiori_birthday"], Vector2i(72, 42), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[bday_key], Vector2i(72, 42), 3, "notebook")
 
 	# - Zodiac (星座) at (22, 58), value at (72, 58)
 	_draw_text_hex_checked(target, STR_HEX["label_zodiac"], Vector2i(22, 58), 4, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["sign_gemini"], Vector2i(72, 58), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[sign_key], Vector2i(72, 58), 3, "notebook")
 
 	# - Blood type (血液型) at (22, 74), value at (72, 74)
 	_draw_text_hex_checked(target, STR_HEX["label_blood"], Vector2i(22, 74), 4, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["blood_a"], Vector2i(72, 74), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[blood_key], Vector2i(72, 74), 3, "notebook")
 
 	# - BWH (ＢＷＨ) at (22, 90), value at (72, 90)
 	_draw_text_hex_checked(target, STR_HEX["label_bwh"], Vector2i(22, 90), 4, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["shiori_bwh"], Vector2i(72, 90), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[bwh_key], Vector2i(72, 90), 3, "notebook")
 
 	# - Club (クラブ) at (22, 106), value at (72, 106)
 	_draw_text_hex_checked(target, STR_HEX["label_club"], Vector2i(22, 106), 4, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["club_bungei"], Vector2i(72, 106), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[club_key], Vector2i(72, 106), 3, "notebook")
 
 	# - Notes (備考) at (22, 122), lines 1 & 2 at (72, 122) and (72, 138)
 	_draw_text_hex_checked(target, STR_HEX["label_notes"], Vector2i(22, 122), 4, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["shiori_notes_1"], Vector2i(72, 122), 3, "notebook")
-	_draw_text_hex_checked(target, STR_HEX["shiori_notes_2"], Vector2i(72, 138), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[notes1_key], Vector2i(72, 122), 3, "notebook")
+	_draw_text_hex_checked(target, STR_HEX[notes2_key], Vector2i(72, 138), 3, "notebook")
 
-	# 9. Bottom message window (Frame 62, Rect2i(27, 166, 266, 52))
-	_draw_message_window(target)
+	# 11. Dialogue text in bottom message window (call_and_invitation_flow.c:935-938: 好雄 「って、とこだな。)
 	_draw_text_hex_checked(target, STR_HEX["speaker_yoshio"], Vector2i(39, 170), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["yoshio_found1"], Vector2i(88, 170), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["yoshio_found2"], Vector2i(88, 186), 0, "message_window")
-	_draw_text_hex_checked(target, STR_HEX["yoshio_found3"], Vector2i(88, 202), 0, "message_window")
+	_draw_text_hex_checked(target, STR_HEX["yoshio_profile_done"], Vector2i(74, 170), 0, "message_window")
 
-	# 10. Hand cursor
-	_draw_hand_cursor(target, Vector2i(270, 198))
+	# 12. Hand cursor (Actor 0 Frame 156 at OT 0 TAIL)
+	_draw_hand_cursor(target, Vector2i(128, 64))
 
 	return target
 
@@ -203,14 +319,27 @@ func render_date_place_menu_screen(page: int = 0, selected_idx: int = 0,
 		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
 		year: int = 95, month: int = 4, day: int = 9,
 		weekday: int = 6, day_kind: int = 1,
-		bg_uv: Vector2i = Vector2i(20, 14)) -> Image:
+		bg_uv: Vector2i = Vector2i(22, 21)) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	_draw_checkerboard(target, bg_uv)
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
 	_draw_parameter_panel(target, stats)
+	_draw_message_window(target)
 	_draw_cal_base(target, Rect2i(0, 33, 283, 125))
-	_draw_actor(target, 67, Vector2i(-16, -19))
+
+	# Highlight active cursor slot (OT 3 HEAD before Actor 96 Frame 64)
+	if selected_idx == 10:
+		_draw_menu_bar_highlight(target, Rect2i(160, 36, 100, 16))
+	elif selected_idx >= 0 and selected_idx < 10:
+		var h_col: int = selected_idx / 5
+		var h_row: int = selected_idx % 5
+		var h_sx: int = 24 if h_col == 0 else 160
+		var h_sy: int = 64 + h_row * 16
+		_draw_menu_bar_highlight(target, Rect2i(h_sx, h_sy, 116, 16))
+
+	# Notebook spiral rings & divider (REC(96).unk_18 = 0x40 = 64 at (-16, -19) in phone_date_place_availability_build:434)
+	_draw_actor(target, 64, Vector2i(-16, -19))
 	_draw_date_pillar(target, year, month, day, weekday, day_kind)
 
 	# Title: デートスポット at (32, 38)
@@ -232,27 +361,22 @@ func render_date_place_menu_screen(page: int = 0, selected_idx: int = 0,
 		if not avail_table.is_empty() and i < avail_table.size():
 			is_available = (avail_table[i] != 0)
 
-		# Highlight active cursor slot
-		if i == selected_idx:
-			_draw_menu_bar_highlight(target, Rect2i(sx, sy, 72, 14))
-
 		if is_available and spot_id < 21:
 			var place_key := "place_%d" % spot_id
 			if STR_HEX.has(place_key):
 				_draw_text_hex_checked(target, STR_HEX[place_key], Vector2i(sx, sy), 3, "notebook")
 
-	# Bottom message window & prompt: デートする場所を選んで下さい
-	_draw_message_window(target)
+	# Bottom prompt: デートする場所を選んで下さい
 	_draw_text_hex_checked(target, STR_HEX["prompt_choose_place"], Vector2i(32, 170), 0, "message_window")
 
-	# Hand cursor at active selection
+	# Hand cursor at active selection (menu_cursor_update(0): item.x + item.w - 4, item.y + 8)
 	var cur_col: int = selected_idx / 5
 	var cur_row: int = selected_idx % 5
-	var cur_sx: int = (24 if cur_col == 0 else 160) + 72
+	var cur_sx: int = (24 if cur_col == 0 else 160) + 112
 	var cur_sy: int = 64 + cur_row * 16 + 8
-	if selected_idx == 10: # Page flip button
-		cur_sx = 160 + 72
-		cur_sy = 38 + 8
+	if selected_idx == 10: # Page flip button (x=160, y=36, w=100, h=16)
+		cur_sx = 160 + 96
+		cur_sy = 36 + 8
 	_draw_hand_cursor(target, Vector2i(cur_sx, cur_sy))
 
 	return target
@@ -267,42 +391,51 @@ func render_date_day_menu_screen(candidate_slots: Array[Dictionary] = [],
 		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
 		year: int = 95, month: int = 4, day: int = 9,
 		weekday: int = 6, day_kind: int = 1,
-		bg_uv: Vector2i = Vector2i(20, 14)) -> Image:
+		bg_uv: Vector2i = Vector2i(9, 12),
+		day_count: int = 5, player_birthday: int = 0x19B,
+		frame_count: int = 6145) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	_draw_checkerboard(target, bg_uv)
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
 	_draw_parameter_panel(target, stats)
+	_draw_message_window(target)
+
+	# OT 5 TAIL: Base Gouraud calendar panel (cal_base_show in hud_screens.c:640)
 	_draw_cal_base(target, Rect2i(0, 33, 283, 125))
-	_draw_actor(target, 67, Vector2i(-16, -19))
-	_draw_date_pillar(target, year, month, day, weekday, day_kind)
 
-	# 2-Month Calendar grids (assets from HUD pack)
-	_blit_hud_asset(target, "assets/calendar.month-00.calendar-grid.png", Vector2i(24, 32))
-	_blit_hud_asset(target, "assets/calendar.month-00.month-label.png", Vector2i(72, 32))
-	_blit_hud_asset(target, "assets/calendar.month-01.calendar-grid.png", Vector2i(160, 32))
-	_blit_hud_asset(target, "assets/calendar.month-01.month-label.png", Vector2i(208, 32))
-
-	# Highlight candidate date slots
+	# OT 5 HEAD: Opaque green highlight bar (menu_bar_color(1, 0x2F7FAF, 5, 0) in call_and_invitation_flow.c:1662)
+	var cursor_pos := Vector2i(36, 112)
 	for idx in range(candidate_slots.size()):
 		var slot: Dictionary = candidate_slots[idx]
 		var s_day: int = int(slot.get("day", 1))
 		var s_offset: int = int(slot.get("month_offset", 0))
 
-		# Position on calendar: 7 cols (Sun..Sat)
-		var base_x: int = 24 if s_offset == 0 else 160
-		var cell_col: int = (s_day - 1) % 7
-		var cell_row: int = (s_day - 1) / 7
-		var cell_x: int = base_x + 8 + cell_col * 16
-		var cell_y: int = 48 + cell_row * 14
+		# Exact calendar_cell_x/y - 0x10 (April 1995 first_weekday=5 -> Saturday col 6; May 1995 first_weekday=0 -> Monday col 1)
+		var first_v: int = 5 if s_offset == 0 else 0
+		var cell_col: int = (first_v + s_day) % 7
+		var cell_row: int = (first_v + s_day) / 7
+		var cell_x: int = 24 + s_offset * 136 + cell_col * 16
+		var cell_y: int = 56 + cell_row * 16
 
 		if idx == selected_slot_idx:
-			_draw_menu_bar_highlight(target, Rect2i(cell_x - 2, cell_y - 2, 16, 14))
-			_draw_hand_cursor(target, Vector2i(cell_x + 14, cell_y + 6))
+			_draw_menu_bar_highlight(target, Rect2i(cell_x, cell_y, 16, 16), true)
+			cursor_pos = Vector2i(cell_x + 12, cell_y + 8)
 
-	# Bottom message window & prompt: デートする日を選んで下さい
-	_draw_message_window(target)
+	# OT 3: Notebook spiral rings & divider (Actor 96 Frame 67) + Date pillar + 2-Month Calendar grids
+	_draw_actor(target, 67, Vector2i(-16, -19))
+	_draw_date_pillar(target, year, month, day, weekday, day_kind)
+	_blit_hud_asset(target, "assets/calendar.month-00.calendar-grid.png", Vector2i(24, 32))
+	_blit_hud_asset(target, "assets/calendar.month-00.month-label.png", Vector2i(72, 32))
+	_blit_hud_asset(target, "assets/calendar.month-01.calendar-grid.png", Vector2i(160, 32))
+	_blit_hud_asset(target, "assets/calendar.month-01.month-label.png", Vector2i(208, 32))
+
+	# OT 1: Sinusoidal Biorhythm curves (calendar_view_update -> hud_biorhythm_graph_draw in call_and_invitation_flow.c:1687)
+	_draw_biorhythm_graph(target, day_count, player_birthday, frame_count)
+
+	# OT 0: Bottom prompt: デートする日を選んで下さい + Hand cursor
 	_draw_text_hex_checked(target, STR_HEX["prompt_choose_day"], Vector2i(32, 170), 0, "message_window")
+	_draw_hand_cursor(target, cursor_pos)
 
 	return target
 
@@ -321,7 +454,7 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
 	# 1. Background: Checkerboard + Holiday room background
-	_draw_checkerboard(target, bg_uv)
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
 	if _holiday_room_image != null:
 		_compositor._blit(target, _holiday_room_image, null, Vector2i(0, 72), false)
 
@@ -337,15 +470,45 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 	_draw_message_window(target)
 
 	# 5. Dialogue text
-	var speaker_hex := STR_HEX["speaker_shiori"]
-	var line_hex := STR_HEX["call_accept"]
+	var speaker_key := "speaker_shiori"
+	var accept_key := "call_accept"
+	if girl_id == OverlayRules.GIRL_MIO:
+		speaker_key = "speaker_mio"
+		accept_key = "call_accept_mio"
+	elif girl_id == OverlayRules.GIRL_YUINA:
+		speaker_key = "speaker_yuina"
+		accept_key = "call_accept_yuina"
+	elif girl_id == OverlayRules.GIRL_AYAKO:
+		speaker_key = "speaker_ayako"
+		accept_key = "call_accept_ayako"
+	elif girl_id == OverlayRules.GIRL_SAKI:
+		speaker_key = "speaker_saki"
+		accept_key = "call_accept_saki"
+	elif girl_id == OverlayRules.GIRL_YUKARI:
+		speaker_key = "speaker_yukari"
+	elif girl_id == OverlayRules.GIRL_NOZOMI:
+		speaker_key = "speaker_nozomi"
+	elif girl_id == OverlayRules.GIRL_MIRA:
+		speaker_key = "speaker_mira"
+	elif girl_id == OverlayRules.GIRL_YUKO:
+		speaker_key = "speaker_yuko"
+	elif girl_id == OverlayRules.GIRL_MEGUMI:
+		speaker_key = "speaker_megumi"
+	elif girl_id == OverlayRules.GIRL_YUMI:
+		speaker_key = "speaker_yumi"
+	elif girl_id == OverlayRules.GIRL_REI:
+		speaker_key = "speaker_rei"
+
+	var speaker_hex := String(STR_HEX[speaker_key])
+	var line_hex := String(STR_HEX[accept_key])
 	if response_kind.begins_with("refuse"):
 		line_hex = STR_HEX["call_refuse"]
 	elif response_kind == "answering_machine":
 		speaker_hex = STR_HEX["speaker_yoshio"]
 		line_hex = STR_HEX["answering_machine1"]
 
-	_draw_text_hex_checked(target, speaker_hex, Vector2i(39, 170), 0, "message_window")
+	var speaker_x: int = 160 + speaker_x_for_hex(speaker_hex)
+	_draw_text_hex_checked(target, speaker_hex, Vector2i(speaker_x, 170), 0, "message_window")
 	_draw_text_hex_checked(target, line_hex, Vector2i(88, 170), 0, "message_window")
 
 	# Hand cursor / prompt indicator
@@ -357,18 +520,6 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 # ==============================================================================
 # Internal Drawing Helpers
 # ==============================================================================
-
-func _draw_checkerboard(target: Image, bg_uv: Vector2i = Vector2i.ZERO) -> void:
-	if _checker_tile == null:
-		target.fill(Color8(40, 200, 160))
-		return
-	var u0: int = bg_uv.x & 31
-	var v0: int = bg_uv.y & 31
-	for py in range(240):
-		var ty: int = (py + v0) & 31
-		for px in range(320):
-			var tx: int = (px + u0) & 31
-			target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(tx, ty))
 
 func _draw_cal_base(target: Image, rect: Rect2i) -> void:
 	# Exact PS1 POLY_G4 case 2 (prim_gradient_rect with arg5=0xE0E0E0, arg6=2 in gpu_primitives.c:225-230):
@@ -451,8 +602,8 @@ func _draw_hand_cursor(target: Image, screen_pos: Vector2i) -> void:
 	# Frame 156 (hand cursor) bounds=[0, 0, 24, 16], origin=[0, 3]
 	_draw_actor(target, 156, Vector2i(screen_pos.x - 160, screen_pos.y - 120))
 
-func _draw_menu_bar_highlight(target: Image, rect: Rect2i) -> void:
-	# PS1 POLY_G4 menu bar highlight (0x832F7FAF, w=72, h=14)
+func _draw_menu_bar_highlight(target: Image, rect: Rect2i, opaque: bool = false) -> void:
+	# PS1 POLY_G4 menu bar highlight (0x832F7FAF semi-transparent when opaque=false, or 0x002F7FAF opaque when opaque=true)
 	for y in range(rect.size.y):
 		var py: int = rect.position.y + y
 		if py < 0 or py >= 240: continue
@@ -472,10 +623,73 @@ func _draw_menu_bar_highlight(target: Image, rect: Rect2i) -> void:
 				fr_rb = 188.0 + u * (26.0 - 188.0) + v * (120.0 - 188.0)
 				fr_g = 252.0 + u * (250.0 - 252.0) + v * (248.0 - 252.0)
 			var d: int = DITHER[(py & 3) * 4 + (px & 3)]
-			var r5: int = clampi((int(fr_rb) + d) >> 3, 0, 31)
-			var g5: int = clampi((int(fr_g) + d) >> 3, 0, 31)
-			var b5: int = clampi((int(fr_rb) + d) >> 3, 0, 31)
-			target.set_pixelv(Vector2i(px, py), Color8(r5 << 3, g5 << 3, b5 << 3, 255))
+			var f_rb5: int = clampi((int(fr_rb) + d) >> 3, 0, 31)
+			var f_g5: int = clampi((int(fr_g) + d) >> 3, 0, 31)
+			if opaque:
+				target.set_pixelv(Vector2i(px, py), Color8(f_rb5 << 3, f_g5 << 3, f_rb5 << 3, 255))
+			else:
+				var back: Color = target.get_pixel(px, py)
+				var out_r5: int = clampi((back.r8 >> 4) + (f_rb5 >> 1), 0, 31)
+				var out_g5: int = clampi((back.g8 >> 4) + (f_g5 >> 1), 0, 31)
+				var out_b5: int = clampi((back.b8 >> 4) + (f_rb5 >> 1), 0, 31)
+				target.set_pixelv(Vector2i(px, py), Color8(out_r5 << 3, out_g5 << 3, out_b5 << 3, 255))
+
+func _draw_biorhythm_graph(target: Image, day_count: int, player_birthday: int, frame_count: int) -> void:
+	# Exact PS1 hud_biorhythm_graph_draw (src/main/hud_screens.c:570-606) + dtd_on_tpage(0, 0, 1, 2, 0)
+	var phase: int = frame_count
+	var half: int = ((0x7F - (frame_count & 0x7F)) / 2) if (frame_count & 0x80) != 0 else ((frame_count & 0x7F) / 2)
+	_draw_subtractive_line(target, Vector2i(32, 108), Vector2i(284, 108), Vector3i(half, half, half))
+
+	var start_day: int = day_count - 8
+	var phys_pts: Array[Vector2i] = []
+	var emot_pts: Array[Vector2i] = []
+	var intel_pts: Array[Vector2i] = []
+
+	for i in range(16):
+		var d: int = start_day + i
+		var val_p: int = CalendarPhoneRules.biorhythm_value(d, player_birthday, true, false, false, -32)
+		var val_e: int = CalendarPhoneRules.biorhythm_value(d, player_birthday, false, true, false, -32)
+		var val_i: int = CalendarPhoneRules.biorhythm_value(d, player_birthday, false, false, true, -32)
+
+		var sx: int = 160 + (i * 16 - 128)
+		phys_pts.append(Vector2i(sx, 108 + val_p))
+		emot_pts.append(Vector2i(sx, 108 + val_e))
+		intel_pts.append(Vector2i(sx, 108 + val_i))
+
+	for i in range(1, 16):
+		var v: int = ((i + phase) & 0xF) * 4 + half
+		_draw_subtractive_line(target, phys_pts[i - 1], phys_pts[i], Vector3i(0, v, v))
+		_draw_subtractive_line(target, emot_pts[i - 1], emot_pts[i], Vector3i(v + 15, v + 15, 0))
+		_draw_subtractive_line(target, intel_pts[i - 1], intel_pts[i], Vector3i(v, 0, v))
+
+func _draw_subtractive_line(target: Image, p0: Vector2i, p1: Vector2i, sub_rgb: Vector3i) -> void:
+	var dx: int = abs(p1.x - p0.x)
+	var dy: int = -abs(p1.y - p0.y)
+	var sx: int = 1 if p0.x < p1.x else -1
+	var sy: int = 1 if p0.y < p1.y else -1
+	var err: int = dx + dy
+	var x: int = p0.x
+	var y: int = p0.y
+	var sr5: int = clampi(sub_rgb.x >> 3, 0, 31)
+	var sg5: int = clampi(sub_rgb.y >> 3, 0, 31)
+	var sb5: int = clampi(sub_rgb.z >> 3, 0, 31)
+
+	while true:
+		if x >= 0 and x < 320 and y >= 0 and y < 240:
+			var back: Color = target.get_pixel(x, y)
+			var r5: int = maxi((back.r8 >> 3) - sr5, 0)
+			var g5: int = maxi((back.g8 >> 3) - sg5, 0)
+			var b5: int = maxi((back.b8 >> 3) - sb5, 0)
+			target.set_pixelv(Vector2i(x, y), Color8(r5 << 3, g5 << 3, b5 << 3, 255))
+		if x == p1.x and y == p1.y:
+			break
+		var e2: int = 2 * err
+		if e2 >= dy:
+			err += dy
+			x += sx
+		if e2 <= dx:
+			err += dx
+			y += sy
 
 func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, palette_row: int = 0, region: String = "") -> void:
 	var codes: PackedByteArray = hex_code.hex_decode()

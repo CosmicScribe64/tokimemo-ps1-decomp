@@ -189,15 +189,45 @@ func _test_command_preservation_and_coverage() -> void:
 	dispose(test_app)
 
 	# Verify first-result mode specifically for commands 1, 2, 3, 5, 6
+	var capture_dir: String = ProjectSettings.globalize_path("res://../..").simplify_path().path_join(".claude/orchestrator/state/T-29014/ordinary-commands-1-6-v1/captures")
+	DirAccess.make_dir_recursive_absolute(capture_dir)
 	for cmd: int in [1, 2, 3, 5, 6]:
 		var first_app: Boot = make_app()
 		first_app.continue_week = false
+		var prev_border_px := Color.BLACK
+		var border_moved_frames := 0
+		var have_prev := false
+		var saved_bubble := false
 		for tick: int in range(601):
 			device_recipe(first_app, cmd, tick)
 			first_app._physics_process(1.0 / 60.0)
+			if first_app._last_rendered_image != null and not first_app._last_rendered_image.is_empty():
+				var img: Image = first_app._last_rendered_image
+				var cur_px := img.get_pixel(8, 8)
+				if have_prev and cur_px != prev_border_px:
+					border_moved_frames += 1
+				prev_border_px = cur_px
+				have_prev = true
+				# Capture activity mid-animation when actor 96/97 pop-up bubble overlaps the top parameter bar (y <= 64)
+				if first_app.state.game_mode == 0x40 and not saved_bubble and first_app.staged_commands.size() >= 3:
+					for sc: Dictionary in first_app.staged_commands:
+						var pos: Vector2i = sc.get("position", Vector2i(0, 72))
+						if not str(sc.get("id", "")).ends_with(":left") and not str(sc.get("id", "")).ends_with(":right") and pos.y < 63:
+							img.save_png(capture_dir.path_join("weekday_cmd%d_bubble_over_topbar.png" % cmd))
+							if cmd == 3 and first_app.hud != null and not first_app.hud.profile.is_empty():
+								var saved_style: int = int(first_app.hud.profile["cursor_style"])
+								first_app.hud.profile["cursor_style"] = 0
+								first_app._present_committed()
+								first_app._last_rendered_image.save_png(capture_dir.path_join("weekday_cmd3_grooming_pink_triangle_cursor.png"))
+								first_app.hud.profile["cursor_style"] = saved_style
+								first_app._present_committed()
+							saved_bubble = true
+							break
 			if first_app.stopped:
 				break
 		check(first_app.stopped and first_app.failure.is_empty(), "command %d first-result stopped cleanly" % cmd)
+		if first_app.hud != null:
+			check(border_moved_frames > 10, "command %d checkerboard border scrolled across consecutive frames (%d moves)" % [cmd, border_moved_frames])
 		check(first_app.state.game_mode == 0x31 and first_app.state.rule_state["day_event_index"] == 1 and first_app.state.rule_state["day"] == 5,
 			"command %d pauses at 0x31 / index 1 on April 5" % cmd)
 		check(first_app.captured_actor, "command %d captured actor during school day" % cmd)

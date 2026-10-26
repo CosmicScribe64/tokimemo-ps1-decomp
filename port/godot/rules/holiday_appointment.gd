@@ -4,11 +4,21 @@ extends RefCounted
 const NativeRng = preload("res://core/native_rng.gd")
 
 const PAD_CONFIRM := 0x20
+const PAD_CANCEL := 0x40
+const PAD_UP := 0x1000
+const PAD_RIGHT := 0x2000
+const PAD_DOWN := 0x4000
+const PAD_LEFT := 0x8000
 
 class HolidayState:
 	var year := 95
 	var month := 4
 	var day := 9
+	var weekday := 6
+	var day_kind := 1
+	var parameters: Array[int] = [97, 43, 40, 40, 38, 33, 59, 4, 3]
+	var frame_count := 0
+	var game_mode := 0x46
 	var icon_enabled: Array[int] = [1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0]
 	var menu_cursor := 0
 	var last_command := 0
@@ -21,6 +31,17 @@ class HolidayState:
 	var appointment_place_1 := 0xFF
 	var appointment_place_2 := 0xFF
 	var appointment_place_3 := 0xFF
+	var date_stage := 0
+	var date_step := 0
+	var date_substep := 0
+	var date_choice_cursor := 0
+	var date_chosen_option := -1
+	var date_score := 0
+	var date_score_class := 0
+	var date_choice_order: Array[int] = [0, 1, 2]
+	var date_line_wait := 1
+	var cursor_style := 156
+	var player_flags := 0
 
 
 class StepResult:
@@ -33,12 +54,18 @@ class StepResult:
 static func holiday_icons_set_available(state: HolidayState) -> void:
 	state.icon_enabled = [1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0]
 
+const GAME_MODE_HOLIDAY := 0x46
 const GAME_MODE_DATE := 0x50
 const DAY_EVENT_APPOINTMENT := 0x80
 const MODE_STAGE_APPOINTMENT := 0xFE
 
 const SPEAKER_STYLE_PLAYER_THOUGHT := 0x1F
 const SPEAKER_STYLE_GIRL := 0x00
+
+const TALK_CMD_GIRL := 0x01
+const TALK_CMD_GIRL_REPLY := 0x02
+const TALK_CMD_THREE_SELECT := 0x03
+const TALK_CMD_PLAYER_PAREN := 0x04
 
 const MENU_SLOT_APPOINTMENT := 1
 const MENU_BAR_STYLE_APPOINTMENT := 0x822F7F2F
@@ -48,6 +75,34 @@ const MENU_CHOICE_STEP_Y := 16
 const MENU_CHOICE_W := 240
 const MENU_CHOICE_H := 16
 
+# VN Scene Text Layout constants (talk_speak_part + talk_render, src/main/scene_library.c:1185, 1340-1346, 1681-2052)
+const VN_ROW_Y0 := 48
+const VN_ROW_STEP_Y := 16
+const VN_QUOTE_X := -86
+const VN_BODY_X := -72
+
+# VN Scene Blinking/Bobbing Wait Marker (hud_text_marker_set + hud_text_marker_bob, src/main/hud_screens.c:1740-1768)
+const VN_WAIT_MARKER_ACTOR_ID := 2
+const VN_WAIT_MARKER_PRIORITY := 2
+const VN_WAIT_MARKER_FRAME_ID := 1
+const VN_WAIT_MARKER_SEQUENCE_SLOT := 1
+const VN_WAIT_MARKER_X := 116
+const VN_WAIT_MARKER_Y0 := 72
+const VN_WAIT_MARKER_Y_MAX := 78
+
+# 3-Choice Date Menu constants (normal_date_three_select, src/main/scene_library.c:1583-1593, 2196-2253)
+const DATE_THREE_SELECT_SLOT := 1
+const DATE_THREE_SELECT_STYLE := 0x822F7F2F
+const DATE_THREE_SELECT_X := -128
+const DATE_THREE_SELECT_TEXT_X := -114
+const DATE_THREE_SELECT_Y0 := 48
+const DATE_THREE_SELECT_STEP_Y := 16
+const DATE_THREE_SELECT_W := 252
+const DATE_THREE_SELECT_H := 16
+const DATE_THREE_SELECT_CURSOR_FRAME := 156
+const DATE_THREE_SELECT_CURSOR_X := 120
+const DATE_THREE_SELECT_CURSOR_Y0 := 56
+
 const TEXT_TODAY_PREFIX := "今日は、"
 const TEXT_TODAY_PREFIX_HEX := "8da193fa82cd8141"
 const TEXT_TODAY_SUFFIX := "とデートだ）"
@@ -55,6 +110,8 @@ const TEXT_TODAY_SUFFIX_HEX := "82c68366815b836782be816a"
 
 const TEXT_CHOICE_PREFIX := "『"
 const TEXT_CHOICE_PREFIX_HEX := "8177"
+const TEXT_CHOICE_CLOSE := "』"
+const TEXT_CHOICE_CLOSE_HEX := "8178"
 const TEXT_CHOICE_SUFFIX := "で、待ち合わせ』"
 const TEXT_CHOICE_SUFFIX_HEX := "82c5814191d282bf8d8782ed82b98178"
 
@@ -67,6 +124,8 @@ const TEXT_CONFIRM_SUFFIX_HEX := "82f091d282c282a98142816a"
 
 const TEXT_FULLWIDTH_OPEN_PAREN := "（"
 const TEXT_FULLWIDTH_OPEN_PAREN_HEX := "8169"
+const TEXT_FULLWIDTH_CLOSE_PAREN := "）"
+const TEXT_FULLWIDTH_CLOSE_PAREN_HEX := "816a"
 const TEXT_FULLWIDTH_OPEN_QUOTE := "「"
 const TEXT_FULLWIDTH_OPEN_QUOTE_HEX := "8175"
 
@@ -120,6 +179,139 @@ const GIRL_SHORT_NAME_TABLE := [
 	{"id": 11, "short_text": "館林", "short_hex": "8ad997d1", "called_text": "館林さん", "called_hex": "8ad997d182b382f1"},
 	{"id": 12, "short_text": "伊集院", "short_hex": "88c98f578940", "called_text": "伊集院", "called_hex": "88c98f578940"},
 ]
+
+# Exact date 3-choice script records from CDROM/SERIFU/DATE_FU.BIN (LBA 44329, src/ovl/date/place_scenes.c)
+const DATE_THREE_CHOICE_SCRIPTS := {
+	0: {
+		"place_id": 0,
+		"table_vram": "0x801A33B0",
+		"question_vram": "0x801A341C",
+		"question_text": "こういう道を 散歩するのって、 気持ちがいいね。",
+		"question_bytes_hex": "82b182a482a282a493b982f0208e5595e082b782e982cc82c182c48141208b438e9d82bf82aa82a282a282cb8142",
+		"park_opening_vram": "0x8019C1C8",
+		"park_opening_text": "こういう所で、 お話するのって、 いいね。",
+		"park_opening_bytes_hex": "82b182a482a48f8a82c581412082a8986282b782e982cc82c182c481412082a282a282cb8142",
+		"choice_vram": "0x801A344C",
+		"choice_raw_bytes_hex": "97f688a48fac90e082cc88ea8fea96ca82dd82bd82a282be82cb8142718e5595e082cd814182a895a082aa82b782a282c482ad82e982cb814271967b939681418b438e9d82bf82a282a282cb8142",
+		"score_classes": [0, 4, 1],
+		"tiers": [0, 2, 0],
+		"options": [
+			{
+				"choice_id": 0,
+				"text": "恋愛小説の一場面みたいだね。",
+				"bytes_hex": "97f688a48fac90e082cc88ea8fea96ca82dd82bd82a282be82cb8142",
+				"score_class": 0,
+				"tier": 0,
+				"score_delta": 10,
+				"reply_vram": "0x801A34D0",
+				"reply_text": "私も、そう思ってたの。 こういうのに、 ちょっと憧れてたんだ…。",
+				"reply_bytes_hex": "8e8482e0814182bb82a48e7682c182c482bd82cc81422082b182a482a282a482cc82c981412082bf82e582c182c693b282ea82c482bd82f182be81638142",
+			},
+			{
+				"choice_id": 1,
+				"text": "散歩は、お腹がすいてくるね。",
+				"bytes_hex": "8e5595e082cd814182a895a082aa82b782a282c482ad82e982cb8142",
+				"score_class": 4,
+				"tier": 2,
+				"score_delta": -6,
+				"reply_vram": "0x801A351C",
+				"reply_text": "そ、そう。 せっかく、 いい気分だったのに…。",
+				"reply_bytes_hex": "82bb814182bb82a481422082b982c182a982ad81412082a282a28b4395aa82be82c182bd82cc82c981638142",
+			},
+			{
+				"choice_id": 2,
+				"text": "本当、気持ちいいね。",
+				"bytes_hex": "967b939681418b438e9d82bf82a282a282cb8142",
+				"score_class": 1,
+				"tier": 0,
+				"score_delta": 8,
+				"reply_vram": "0x801A3550",
+				"reply_text": "日頃の疲れが 取れていくみたい。",
+				"reply_bytes_hex": "93fa8da082cc94e682ea82aa208ee682ea82c482a282ad82dd82bd82a28142",
+			},
+		],
+	},
+	3: {
+		"place_id": 3,
+		"table_vram": "0x801A0540",
+		"question_vram": "0x801A059C",
+		"question_text": "奇麗なお魚が、 たくさんいるね。",
+		"question_bytes_hex": "8aef97ed82c882a88b9b82aa81412082bd82ad82b382f182a282e982cb8142",
+		"choice_vram": "0x801A05C8",
+		"choice_raw_bytes_hex": "908582cc928682cc8341815b836782be82cb81427182b782b282ad82a882a282b582bb82a482be82cb814271967b939681418aef97ed82be82cb8142",
+		"score_classes": [0, 4, 1],
+		"tiers": [0, 2, 0],
+		"options": [
+			{
+				"choice_id": 0,
+				"text": "水の中のアートだね。",
+				"bytes_hex": "908582cc928682cc8341815b836782be82cb8142",
+				"score_class": 0,
+				"tier": 0,
+				"score_delta": 10,
+				"reply_vram": "0x801A0634",
+				"reply_text": "素敵、ロマンティックね。",
+				"reply_bytes_hex": "916693478141838d837d8393836583428362834e82cb8142",
+			},
+			{
+				"choice_id": 1,
+				"text": "すごくおいしそうだね。",
+				"bytes_hex": "82b782b282ad82a882a282b582bb82a482be82cb8142",
+				"score_class": 4,
+				"tier": 2,
+				"score_delta": -6,
+				"reply_vram": "0x801A0658",
+				"reply_text": "どうして そんな事しか 考えられないの？",
+				"reply_bytes_hex": "82c782a482b582c42082bb82f182c88e9682b582a9208d6c82a682e782ea82c882a282cc8148",
+			},
+			{
+				"choice_id": 2,
+				"text": "本当、奇麗だね。",
+				"bytes_hex": "967b939681418aef97ed82be82cb8142",
+				"score_class": 1,
+				"tier": 0,
+				"score_delta": 8,
+				"reply_vram": "0x801A0688",
+				"reply_text": "あっちにも 奇麗な魚がいるよ。",
+				"reply_bytes_hex": "82a082c182bf82c982e0208aef97ed82c88b9b82aa82a282e982e68142",
+			},
+		],
+	},
+}
+
+# Player date choice impression table (date_choice_reaction_text_table at 0x80197B04, src/ovl/date/place_scenes.c:3525-3554)
+const DATE_CHOICE_REACTION_TABLE := {
+	0: {
+		"score_class": 0,
+		"vram": "0x80197CC0",
+		"text": "バッチリ、良い印象を 与えたみたいだぞ。",
+		"bytes_hex": "836f83628360838a814197c782a288f38fdb82f020975e82a682bd82dd82bd82a282be82bc8142",
+	},
+	1: {
+		"score_class": 1,
+		"vram": "0x80197CEC",
+		"text": "わりと良い印象を 与えたみたいだぞ。",
+		"bytes_hex": "82ed82e882c697c782a288f38fdb82f020975e82a682bd82dd82bd82a282be82bc8142",
+	},
+	2: {
+		"score_class": 2,
+		"vram": "0x80197D18",
+		"text": "まぁ、こんなもんだろう。",
+		"bytes_hex": "82dc829f814182b182f182c882e082f182be82eb82a48142",
+	},
+	3: {
+		"score_class": 3,
+		"vram": "0x80197D38",
+		"text": "あまり良い印象を 持たれなかったかな。",
+		"bytes_hex": "82a082dc82e897c782a288f38fdb82f0208e9d82bd82ea82c882a982c182bd82a982c88142",
+	},
+	4: {
+		"score_class": 4,
+		"vram": "0x80197D64",
+		"text": "悪い印象を 与えちゃったかな。",
+		"bytes_hex": "88ab82a288f38fdb82f020975e82a682bf82e182c182bd82a982c88142",
+	},
+}
 
 
 static func pack_appointment_word(entry: Dictionary) -> int:
@@ -256,6 +448,345 @@ static func sndisp_lines(text_hex: String, text_utf8: String, first_row: int, sp
 		})
 		row += 1
 	return lines
+
+
+static func talk_speaker_x_for_hex(speaker_hex: String) -> int:
+	# Exact port of talk_speak_part speaker x formula: -0x68 - (strlen(speaker) * 4)
+	# (src/main/scene_library.c:1342, 1579, 1645). For 4-byte "藤崎"/"詩織", x = -120.
+	var byte_len := speaker_hex.length() / 2
+	return -0x68 - (byte_len * 4)
+
+
+static func talk_render_lines(text_hex: String, text_utf8: String, first_row: int = 0, suffix_hex: String = "", suffix_text: String = "") -> Array[Dictionary]:
+	# Exact port of talk_render(-0x48, temp_s1, text_color, line_buffer, 0, suffix, 0, 1)
+	# (src/main/scene_library.c:1185, 1340-1346, 1681-2052):
+	# Splits on even-byte ' ' (0x20) or 'q' (0x71). Every body line is drawn at x = -72 (-0x48),
+	# y = 48 + row * 16 (48, 64, 80 -> screen y = 168, 184, 200).
+	var raw_bytes := text_hex.hex_decode()
+	var segments_bytes: Array[PackedByteArray] = []
+	var current := PackedByteArray()
+	var i := 0
+	while i < raw_bytes.size():
+		if raw_bytes[i] == 0x20 or raw_bytes[i] == 0x71:
+			segments_bytes.append(current)
+			current = PackedByteArray()
+			i += 1
+		else:
+			current.append(raw_bytes[i])
+			if i + 1 < raw_bytes.size():
+				current.append(raw_bytes[i + 1])
+			i += 2
+	segments_bytes.append(current)
+
+	var normalized_utf8 := text_utf8.replace("q", " ")
+	var utf8_parts := normalized_utf8.split(" ", true)
+	var lines: Array[Dictionary] = []
+	var row := first_row
+	var last_idx := mini(segments_bytes.size(), 3 - first_row) - 1
+	for seg_idx in range(segments_bytes.size()):
+		if row > 2:
+			break
+		var seg_hex := segments_bytes[seg_idx].hex_encode()
+		var seg_text := utf8_parts[seg_idx] if seg_idx < utf8_parts.size() else ""
+		if seg_idx == last_idx and not suffix_hex.is_empty():
+			seg_hex += suffix_hex
+			seg_text += suffix_text
+		var x := VN_BODY_X
+		var y := VN_ROW_Y0 + row * VN_ROW_STEP_Y
+		lines.append({
+			"row": row,
+			"x": x,
+			"y": y,
+			"screen_x": 160 + x,
+			"screen_y": 120 + y,
+			"bytes_hex": seg_hex,
+			"text": seg_text,
+		})
+		row += 1
+	return lines
+
+
+static func talk_speak_runs(text_hex: String, text_utf8: String, speaker_hex: String = "93a18de8", speaker_text: String = "藤崎", cmd_kind: int = TALK_CMD_GIRL, first_row: int = 0) -> Dictionary:
+	# Exact port of talk_speak_part + talk_render (src/main/scene_library.c:1185, 1340-1346, 1579-1580, 1645-1648):
+	# - Speaker at x = -0x68 - (strlen(speaker) * 4) (-120 for 4-byte "藤崎"/"詩織"), y = 48 + first_row * 16
+	# - Opening quote "「" (8175) or "（" (8169) at x = -86 (-0x56), y = 48 + first_row * 16
+	# - Body lines at x = -72 (-0x48), y = 48 + row * 16 (48, 64, 80)
+	var temp_s1 := VN_ROW_Y0 + first_row * VN_ROW_STEP_Y
+	var speaker_x := talk_speaker_x_for_hex(speaker_hex)
+	var open_hex := TEXT_FULLWIDTH_OPEN_PAREN_HEX if cmd_kind == TALK_CMD_PLAYER_PAREN else TEXT_FULLWIDTH_OPEN_QUOTE_HEX
+	var open_text := TEXT_FULLWIDTH_OPEN_PAREN if cmd_kind == TALK_CMD_PLAYER_PAREN else TEXT_FULLWIDTH_OPEN_QUOTE
+	var suffix_hex := TEXT_FULLWIDTH_CLOSE_PAREN_HEX if cmd_kind == TALK_CMD_PLAYER_PAREN else ""
+	var suffix_text := TEXT_FULLWIDTH_CLOSE_PAREN if cmd_kind == TALK_CMD_PLAYER_PAREN else ""
+
+	var body_lines := talk_render_lines(text_hex, text_utf8, first_row, suffix_hex, suffix_text)
+	var runs: Array[Dictionary] = [
+		{
+			"hex": speaker_hex,
+			"position": [speaker_x, temp_s1],
+			"attribute": 0,
+			"role": "speaker",
+		},
+		{
+			"hex": open_hex,
+			"position": [VN_QUOTE_X, temp_s1],
+			"attribute": 0,
+			"role": "open_quote",
+		},
+	]
+	for line: Dictionary in body_lines:
+		runs.append({
+			"hex": String(line["bytes_hex"]),
+			"position": [int(line["x"]), int(line["y"])],
+			"attribute": 0,
+			"role": "body",
+		})
+	return {
+		"speaker_text": speaker_text,
+		"speaker_hex": speaker_hex,
+		"speaker_x": speaker_x,
+		"speaker_y": temp_s1,
+		"open_quote_text": open_text,
+		"open_quote_hex": open_hex,
+		"open_quote_x": VN_QUOTE_X,
+		"open_quote_y": temp_s1,
+		"lines": body_lines,
+		"text_runs": runs,
+	}
+
+
+static func hud_text_marker_bob_y(frame_count: int) -> int:
+	# Exact port of hud_text_marker_set + hud_text_marker_bob (src/main/hud_screens.c:1740-1768):
+	# Starts at y = 0x48 (72), increments by +1 every 4 frames while < 0x4F (79), then resets to 0x48 (72).
+	return VN_WAIT_MARKER_Y0 + ((maxi(frame_count, 0) >> 2) % 7)
+
+
+static func hud_text_marker_actor_spec(frame_count: int = 0, visible: bool = true) -> Dictionary:
+	# Exact port of actor_pool[2] configured by hud_text_marker_set (src/main/hud_screens.c:1740-1758)
+	# and updated by talk_run (src/main/scene_library.c:2111-2114).
+	var marker_y := hud_text_marker_bob_y(frame_count)
+	return {
+		"actor_index": VN_WAIT_MARKER_ACTOR_ID,
+		"priority": VN_WAIT_MARKER_PRIORITY,
+		"frame": VN_WAIT_MARKER_FRAME_ID,
+		"frame_id": VN_WAIT_MARKER_FRAME_ID,
+		"sequence_slot": VN_WAIT_MARKER_SEQUENCE_SLOT,
+		"x": VN_WAIT_MARKER_X,
+		"y": marker_y,
+		"native_x": VN_WAIT_MARKER_X,
+		"native_y": marker_y,
+		"screen_x": 160 + VN_WAIT_MARKER_X,
+		"screen_y": 120 + marker_y,
+		"visible": visible,
+	}
+
+
+static func junban_init(mode: int = 0, _rng: NativeRng = null) -> Array[int]:
+	# Exact port of junban_init (src/main/scene_library.c:2168-2193):
+	# For mode == 0 (command 0x03 normal_date_three_select), talk_choice_order = [0, 1, 2].
+	var order: Array[int] = [0, 1, 2]
+	if mode == 0:
+		return order
+	return order
+
+
+static func build_date_three_choice_prompt(place_id: int = 0, order: Array = [0, 1, 2]) -> Dictionary:
+	# Exact port of talk_speak_part case 0x3 (src/main/scene_library.c:1583-1593) +
+	# normal_date_three_select_init (src/main/scene_library.c:2196-2222):
+	# - talk_render(-0x72, 0x30, text_color, line_buffer, 0, "』", "『", 1):
+	#   prefix "『" (8177) at x = -0x80 (-128, screen x = 32), y = 48 + row * 16
+	#   option text + "』" (8178) at x = -0x72 (-114, screen x = 46), y = 48 + row * 16
+	# - menu_set(1, 3, x=-128, y=48+row*16, w=252, h=16)
+	# - menu_bar_show(1): style 0x822F7F2F at Rect2i(32, 168 + row * 16, 252, 16)
+	# - menu_cursor_update(1): 0x9C (Frame 156) hand cursor at (120, 56 + row * 16)
+	var script_key := 3 if place_id == 3 else 0
+	var script: Dictionary = DATE_THREE_CHOICE_SCRIPTS[script_key]
+	var options: Array = script["options"]
+	var rows: Array[Dictionary] = []
+	var runs: Array[Dictionary] = []
+
+	for row_idx in range(3):
+		var choice_id := int(order[row_idx]) if row_idx < order.size() else row_idx
+		var opt: Dictionary = options[clampi(choice_id, 0, 2)]
+		var y := DATE_THREE_SELECT_Y0 + row_idx * DATE_THREE_SELECT_STEP_Y
+		var opt_hex := String(opt["bytes_hex"])
+		var opt_text := String(opt["text"])
+		var body_plus_close_hex := opt_hex + TEXT_CHOICE_CLOSE_HEX
+		var body_plus_close_text := opt_text + TEXT_CHOICE_CLOSE
+		var full_hex := TEXT_CHOICE_PREFIX_HEX + body_plus_close_hex
+		var full_text := TEXT_CHOICE_PREFIX + body_plus_close_text
+
+		var row_dict := {
+			"row": row_idx,
+			"index": row_idx,
+			"choice_id": choice_id,
+			"score_class": int(opt["score_class"]),
+			"tier": int(opt["tier"]),
+			"score_delta": int(opt["score_delta"]),
+			"prefix_text": TEXT_CHOICE_PREFIX,
+			"prefix_hex": TEXT_CHOICE_PREFIX_HEX,
+			"prefix_x": DATE_THREE_SELECT_X,
+			"option_text": opt_text,
+			"option_bytes_hex": opt_hex,
+			"body_plus_close_text": body_plus_close_text,
+			"body_plus_close_hex": body_plus_close_hex,
+			"text_x": DATE_THREE_SELECT_TEXT_X,
+			"text": full_text,
+			"bytes_hex": full_hex,
+			"x": DATE_THREE_SELECT_X,
+			"y": y,
+			"w": DATE_THREE_SELECT_W,
+			"h": DATE_THREE_SELECT_H,
+			"screen_x": 160 + DATE_THREE_SELECT_X,
+			"screen_y": 120 + y,
+			"bar_rect": [160 + DATE_THREE_SELECT_X, 120 + y, DATE_THREE_SELECT_W, DATE_THREE_SELECT_H],
+			"cursor_x": DATE_THREE_SELECT_CURSOR_X,
+			"cursor_y": DATE_THREE_SELECT_CURSOR_Y0 + row_idx * DATE_THREE_SELECT_STEP_Y,
+			"cursor_screen_x": 160 + DATE_THREE_SELECT_CURSOR_X,
+			"cursor_screen_y": 120 + DATE_THREE_SELECT_CURSOR_Y0 + row_idx * DATE_THREE_SELECT_STEP_Y,
+		}
+		rows.append(row_dict)
+		runs.append({
+			"hex": TEXT_CHOICE_PREFIX_HEX,
+			"position": [DATE_THREE_SELECT_X, y],
+			"attribute": 0,
+			"role": "choice_prefix",
+		})
+		runs.append({
+			"hex": body_plus_close_hex,
+			"position": [DATE_THREE_SELECT_TEXT_X, y],
+			"attribute": 0,
+			"role": "choice_body",
+		})
+
+	return {
+		"place_id": place_id,
+		"table_vram": String(script["table_vram"]),
+		"choice_vram": String(script["choice_vram"]),
+		"question_text": String(script["question_text"]),
+		"question_bytes_hex": String(script["question_bytes_hex"]),
+		"count": 3,
+		"order": order.duplicate(),
+		"menu_slot": DATE_THREE_SELECT_SLOT,
+		"menu_bar_style": DATE_THREE_SELECT_STYLE,
+		"rows": rows,
+		"text_runs": runs,
+	}
+
+
+static func build_date_choice_response(place_id: int = 0, choice_id: int = 0, speaker_text: String = "藤崎", speaker_hex: String = "93a18de8", player_lastname_text: String = "藤崎", player_lastname_hex: String = "93a18de8") -> Dictionary:
+	# Exact port of talk_speak_part case 0x2 (src/main/scene_library.c:1604-1658) +
+	# date_choice_score & date_choice_reaction_speak (src/ovl/date/place_scenes.c:3416-3554):
+	var script_key := 3 if place_id == 3 else 0
+	var script: Dictionary = DATE_THREE_CHOICE_SCRIPTS[script_key]
+	var options: Array = script["options"]
+	var opt: Dictionary = options[clampi(choice_id, 0, 2)]
+	var score_class := int(opt["score_class"])
+	var reply_hex := String(opt["reply_bytes_hex"])
+	var reply_text := String(opt["reply_text"])
+	var speak_payload := talk_speak_runs(reply_hex, reply_text, speaker_hex, speaker_text, TALK_CMD_GIRL_REPLY, 0)
+
+	var reaction: Dictionary = DATE_CHOICE_REACTION_TABLE[clampi(score_class, 0, 4)]
+	var reaction_payload := talk_speak_runs(
+		String(reaction["bytes_hex"]),
+		String(reaction["text"]),
+		player_lastname_hex,
+		player_lastname_text,
+		TALK_CMD_PLAYER_PAREN,
+		0
+	)
+
+	return {
+		"place_id": place_id,
+		"choice_id": choice_id,
+		"score_class": score_class,
+		"tier": int(opt["tier"]),
+		"score_delta": int(opt["score_delta"]),
+		"reply_vram": String(opt["reply_vram"]),
+		"reply_text": reply_text,
+		"reply_bytes_hex": reply_hex,
+		"speaker_text": speaker_text,
+		"speaker_hex": speaker_hex,
+		"speaker_x": int(speak_payload["speaker_x"]),
+		"speaker_y": int(speak_payload["speaker_y"]),
+		"open_quote_x": int(speak_payload["open_quote_x"]),
+		"open_quote_y": int(speak_payload["open_quote_y"]),
+		"reply_lines": speak_payload["lines"],
+		"text_runs": speak_payload["text_runs"],
+		"reaction": {
+			"score_class": score_class,
+			"vram": String(reaction["vram"]),
+			"text": String(reaction["text"]),
+			"bytes_hex": String(reaction["bytes_hex"]),
+			"lines": reaction_payload["lines"],
+			"text_runs": reaction_payload["text_runs"],
+		},
+	}
+
+
+static func step_date_three_choice(state: HolidayState, pressed: int, result: StepResult, explicit_choice_row: int = -1) -> Dictionary:
+	# Exact port of normal_date_three_select_init + normal_date_three_select_main
+	# (src/main/scene_library.c:2196-2253) and menu_check(1) (src/main/menu_speaker_girl.c:76-265).
+	var place_id := state.chosen_place if state.chosen_place != 0xFF else 0
+	var prompt := build_date_three_choice_prompt(place_id, state.date_choice_order)
+	var cursor := clampi(state.date_choice_cursor, 0, 2)
+
+	if (pressed & PAD_UP) != 0:
+		cursor = (cursor + 2) % 3
+		state.date_choice_cursor = cursor
+		result.emit("audio_command", {"code": 0x509})
+		result.emit("menu_cursor_update", {"slot": DATE_THREE_SELECT_SLOT, "cursor": cursor})
+	elif (pressed & PAD_DOWN) != 0:
+		cursor = (cursor + 1) % 3
+		state.date_choice_cursor = cursor
+		result.emit("audio_command", {"code": 0x509})
+		result.emit("menu_cursor_update", {"slot": DATE_THREE_SELECT_SLOT, "cursor": cursor})
+
+	result.emit("menu_bar_show", {
+		"slot": DATE_THREE_SELECT_SLOT,
+		"style": DATE_THREE_SELECT_STYLE,
+		"cursor": cursor,
+		"rect": Rect2i(32, 168 + cursor * 16, 252, 16),
+		"cursor_pos": Vector2i(DATE_THREE_SELECT_CURSOR_X, DATE_THREE_SELECT_CURSOR_Y0 + cursor * DATE_THREE_SELECT_STEP_Y),
+	})
+
+	var summary := {
+		"cursor": cursor,
+		"confirmed": false,
+		"prompt": prompt,
+	}
+
+	var chosen_row := explicit_choice_row
+	if chosen_row < 0 and (pressed & PAD_CONFIRM) != 0:
+		chosen_row = cursor
+
+	if chosen_row >= 0:
+		chosen_row = clampi(chosen_row, 0, 2)
+		state.date_choice_cursor = chosen_row
+		var choice_id := int(state.date_choice_order[chosen_row]) if chosen_row < state.date_choice_order.size() else chosen_row
+		state.date_chosen_option = choice_id
+		var response := build_date_choice_response(place_id, choice_id)
+		state.date_score_class = int(response["score_class"])
+		state.date_score += int(response["score_delta"])
+		state.date_step += 1
+		state.date_substep = 0
+		state.date_line_wait = 1
+		result.emit("audio_command", {"code": 0x50A})
+		result.emit("menu_bar_hide", {"slot": DATE_THREE_SELECT_SLOT})
+		result.emit("date_choice_confirmed", {
+			"selected_row": chosen_row,
+			"choice_id": choice_id,
+			"score_class": state.date_score_class,
+			"date_score": state.date_score,
+			"response": response,
+		})
+		summary["confirmed"] = true
+		summary["selected_row"] = chosen_row
+		summary["choice_id"] = choice_id
+		summary["score_class"] = state.date_score_class
+		summary["date_score"] = state.date_score
+		summary["response"] = response
+
+	return summary
 
 
 static func holiday_open_init_appointment_notice(state: HolidayState, appointment_words: Array, player_lastname_text: String = "藤崎", player_lastname_hex: String = "93a18de8") -> Dictionary:
@@ -528,6 +1059,15 @@ static func appointment_launch(state: HolidayState, appointment_words: Array, re
 		if active != 0 and place_id == state.chosen_place:
 			chosen_girl = (w >> 25) & 0xF
 			chosen_flag = (w >> 24) & 0x1
+
+	state.game_mode = GAME_MODE_DATE
+	state.date_stage = 0
+	state.date_step = 0
+	state.date_substep = 0
+	state.date_choice_cursor = 0
+	state.date_chosen_option = -1
+	state.date_choice_order = junban_init(0)
+	state.date_line_wait = 1
 
 	var day_event := [DAY_EVENT_APPOINTMENT, chosen_girl, state.chosen_place, 0]
 	var launch_payload := {

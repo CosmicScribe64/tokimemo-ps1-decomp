@@ -1,10 +1,10 @@
 ---
 id: T-29008
 title: "Assemble the captured-boundary playable development app"
-status: In Progress
+status: Done
 assignee: port-app-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[phase3]]", "[[tickets/T-29004-school-day-playable-rules]]", "[[tickets/T-29005-native-scene-presentation]]", "[[tickets/T-29003-port-content-adapter]]"]
 ---
 
@@ -21,13 +21,13 @@ Join the reviewed session, first-activity rules, presentation and external conte
 
 ## Acceptance criteria
 
-- [ ] Use the existing rule/controller/renderer modules and actual external route packs; no copied rules, ignored production dependencies or source asset payload in res:// or Git.
-- [ ] Load a validated external development boundary, tables and mandatory media; do not manufacture an ordinary state or silently substitute missing resources.
-- [ ] Real keyboard/controller inputs use the native command mapping and the fixed-step input/service phases.
-- [ ] Enable only commands whose mandatory assets are verified; missing command-7 background must stop before mutation until supplied.
-- [ ] Resource and actor completion events advance through committed session steps; render frequency, Image objects and host I/O do not change the deterministic state/event hashes.
-- [ ] Reach the first supported result and stop at the declared boundary before unsupported continuation. Capture actual screenshots/clips in a watched port folder.
-- [ ] Record original-state/effect and rendered-comparison evidence, source/profile limits and both independent review axes before Done. Missing original HUD/audio/New Game stay explicit.
+- [x] Use the existing rule/controller/renderer modules and actual external route packs; no copied rules, ignored production dependencies or source asset payload in res:// or Git.
+- [x] Load a validated external development boundary, tables and mandatory media; do not manufacture an ordinary state or silently substitute missing resources.
+- [x] Real keyboard/controller inputs use the native command mapping and the fixed-step input/service phases.
+- [x] Enable only commands whose mandatory assets are verified; missing command-7 background must stop before mutation until supplied.
+- [x] Resource and actor completion events advance through committed session steps; render frequency, Image objects and host I/O do not change the deterministic state/event hashes.
+- [x] Reach the first supported result and stop at the declared boundary before unsupported continuation. Capture actual screenshots/clips in a watched port folder.
+- [x] Record original-state/effect and rendered-comparison evidence, source/profile limits and both independent review axes before Done. Missing original HUD/audio/New Game stay explicit.
 
 ## Notes
 
@@ -48,3 +48,8 @@ This remains a captured-boundary development app: study supports the bounded ord
 ## Player-facing UI direction (2026-10-25)
 
 User wants the finished app to feel like a game, not a developer tool. Remove default diagnostic headings, raw state/RNG/indices, implementation explanations and permanent control banners as scene integration proceeds. Debug information remains available only on request or in logs. Original game menus/dialogue remain; setup/settings/errors use concise useful copy. The current placeholder layout is not the target design. HUD and New Game owners have this requirement.
+
+## Final Phase 3 Completion & Standards Review (2026-10-26)
+
+- Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
+- Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).
