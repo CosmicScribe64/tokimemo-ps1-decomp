@@ -10,6 +10,33 @@ const PROFILE_BEST := "original-ja-ps-the-best"
 const SECTOR_RAW := 2352
 const SECTOR_ISO := 2048
 
+# Release identifiers
+const RELEASE_BEST := "best"
+const RELEASE_REV4 := "rev4"
+const RELEASE_REV2 := "rev2"
+const RELEASE_REV1 := "rev1"
+const RELEASE_SHOKAI := "shokai"
+const RELEASE_REV1_OR_SHOKAI := "rev1_or_shokai_v110"
+const RELEASE_UNKNOWN := "unknown"
+
+# Canonical profile names matching versions.txt
+const PROFILE_BEST_CANONICAL := "best_slpm_86053"
+const PROFILE_REV4_CANONICAL := "rev4_slps_00065_v143"
+const PROFILE_REV2_CANONICAL := "rev2_slps_00065_v125"
+const PROFILE_REV1_CANONICAL := "rev1_slps_00065_v110"
+const PROFILE_SHOKAI_CANONICAL := "shokai_slps_00064_v110"
+const PROFILE_REV1_OR_SHOKAI_CANONICAL := "rev1_or_shokai_v110"
+
+# Diagnostic codes
+const CODE_OK_PLAYSTATION_THE_BEST := "OK_PLAYSTATION_THE_BEST"
+const CODE_ERR_REV4_UNSUPPORTED := "ERR_REV4_UNSUPPORTED"
+const CODE_ERR_REV2_UNSUPPORTED := "ERR_REV2_UNSUPPORTED"
+const CODE_ERR_REV1_UNSUPPORTED := "ERR_REV1_UNSUPPORTED"
+const CODE_ERR_SHOKAI_UNSUPPORTED := "ERR_SHOKAI_UNSUPPORTED"
+const CODE_ERR_REV1_OR_SHOKAI_UNSUPPORTED := "ERR_REV1_OR_SHOKAI_UNSUPPORTED"
+const CODE_ERR_UNKNOWN_EXECUTABLE := "ERR_UNKNOWN_EXECUTABLE"
+const CODE_ERR_INVALID_BOOT_TARGET := "ERR_INVALID_BOOT_TARGET"
+
 # Release database facts from config/versions.txt and wiki/versions.md
 const BEST_BOOT_NAME := "SLPM_86.053"
 const BEST_EXE_SIZE := 667648
@@ -22,10 +49,14 @@ const BEST_VOLUME_SET_ID := "TOKIMEKIMEMORIALBEST"
 
 const REV1_EXE_SIZE := 690176
 const REV1_EXE_SHA1 := "2d8d474816e4bf937b09dc3b017f550f7ce4e14b"
+const SHOKAI_EXE_SIZE := 690176
+const SHOKAI_EXE_SHA1 := "2d8d474816e4bf937b09dc3b017f550f7ce4e14b"
 const REV2_EXE_SIZE := 690176
-const REV2_EXE_SHA1 := "6c3eafe51d95e8e819b1220a2e58e658ec35ce82"
+const REV2_EXE_SHA1 := "6c3eafe5df4a5dbf5dd596971752efaf7669150b"
+const REV2_EXE_SHA1_LEGACY := "6c3eafe51d95e8e819b1220a2e58e658ec35ce82"
 const REV4_EXE_SIZE := 667648
-const REV4_EXE_SHA1 := "6030539665bc7c653ce9116e10b1461ff5a43878"
+const REV4_EXE_SHA1 := "60305396bde6f4dfb7187a328c320638aaa7df72"
+const REV4_EXE_SHA1_LEGACY := "6030539665bc7c653ce9116e10b1461ff5a43878"
 
 # Required data assets on PlayStation the Best disc
 const REQUIRED_PROLOGUE_NBN: Dictionary = {
@@ -507,35 +538,119 @@ func _inspect_zip_release() -> Dictionary:
 	zip.close()
 	return {"error": "ZIP contains raw track archives. Please unpack the ZIP archive to provide the .cue/.bin or extracted folder directly"}
 
-func _evaluate_release(exe_name: String, exe_size: int, exe_sha1: String, cnf_text: String, vol_id: String = "", vol_set_id: String = "") -> Dictionary:
-	if exe_sha1 == BEST_EXE_SHA1:
-		return {"release": "best", "label": "PlayStation the Best (SLPM-86053)"}
+static func check_boot_target(expected_exe: String, cnf_text: String) -> bool:
+	if cnf_text.strip_edges().is_empty():
+		return true
+	var upper_cnf := cnf_text.to_upper()
+	var expected_upper := expected_exe.to_upper()
+	var regex := RegEx.new()
+	if regex.compile("BOOT\\s*=\\s*CDROM:\\\\?([^;\\s\\r\\n]+)") == OK:
+		var match := regex.search(upper_cnf)
+		if match:
+			var found := match.get_string(1).strip_edges()
+			return found == expected_upper
+	return false
+
+static func identify_ps1_release(exe_name: String, exe_size: int, exe_sha1: String, cnf_text: String = "", vol_id: String = "", vol_set_id: String = "") -> Dictionary:
+	var sha := exe_sha1.to_lower()
+	var short_sha := sha.substr(0, 8)
 	
-	if exe_sha1 == REV1_EXE_SHA1:
-		var label := "Rev 1 (SLPS-00065, 1995-08-31)"
-		if vol_set_id.contains("SLPS00064") or cnf_text.contains("SLPS-00064") or cnf_text.contains("SLPS-00067"):
-			label = "Shokai Genteiban (SLPS-00064/SLPS-00067, 1995-08-31)"
+	if sha == BEST_EXE_SHA1.to_lower():
+		var boot_ok := check_boot_target(BEST_BOOT_NAME, cnf_text)
+		if not boot_ok and not cnf_text.strip_edges().is_empty():
+			return {
+				"release": RELEASE_BEST,
+				"canonical_profile": PROFILE_BEST_CANONICAL,
+				"label": "PlayStation the Best (SLPM-86053)",
+				"supported_for_content_extraction": false,
+				"boot_target_valid": false,
+				"diagnostic_code": CODE_ERR_INVALID_BOOT_TARGET,
+				"diagnostic": "SYSTEM.CNF boot target mismatch for PlayStation the Best: expected cdrom:%s;1" % BEST_BOOT_NAME,
+			}
 		return {
-			"release": "rev1",
-			"diagnostic": "Detected %s with PSX.EXE (SHA1 %s). This release differs in 521 functions, older PsyQ 3.x libraries, and moved LBAs. This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % [label, exe_sha1.substr(0, 8)],
+			"release": RELEASE_BEST,
+			"canonical_profile": PROFILE_BEST_CANONICAL,
+			"label": "PlayStation the Best (SLPM-86053)",
+			"supported_for_content_extraction": true,
+			"boot_target_valid": true,
+			"diagnostic_code": CODE_OK_PLAYSTATION_THE_BEST,
+			"diagnostic": "",
 		}
 	
-	if exe_sha1 == REV2_EXE_SHA1:
+	if sha in [REV4_EXE_SHA1.to_lower(), REV4_EXE_SHA1_LEGACY.to_lower()]:
+		var boot_ok := check_boot_target("PSX.EXE", cnf_text)
 		return {
-			"release": "rev2",
-			"diagnostic": "Detected Rev 2 (SLPS-00065VER125, 1995-11-17) with PSX.EXE (SHA1 %s). This release differs in 475 functions and older SDK libraries. This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % exe_sha1.substr(0, 8),
+			"release": RELEASE_REV4,
+			"canonical_profile": PROFILE_REV4_CANONICAL,
+			"label": "Rev 4 (SLPS-00065VER143, 1996-03-31)",
+			"supported_for_content_extraction": false,
+			"boot_target_valid": boot_ok,
+			"diagnostic_code": CODE_ERR_REV4_UNSUPPORTED,
+			"diagnostic": "Detected Rev 4 (SLPS-00065VER143, 1996-03-31) with PSX.EXE (SHA1 %s). This release differs in 46 functions and shifted data symbols (rodata at 0x800AF1F0). This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % short_sha,
 		}
 	
-	if exe_sha1 == REV4_EXE_SHA1:
+	if sha in [REV2_EXE_SHA1.to_lower(), REV2_EXE_SHA1_LEGACY.to_lower()]:
+		var boot_ok := check_boot_target("PSX.EXE", cnf_text)
 		return {
-			"release": "rev4",
-			"diagnostic": "Detected Rev 4 (SLPS-00065VER143, 1996-03-31) with PSX.EXE (SHA1 %s). This release differs in 46 functions and shifted data symbols (rodata at 0x800AF1F0). This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % exe_sha1.substr(0, 8),
+			"release": RELEASE_REV2,
+			"canonical_profile": PROFILE_REV2_CANONICAL,
+			"label": "Rev 2 (SLPS-00065VER125, 1995-11-17)",
+			"supported_for_content_extraction": false,
+			"boot_target_valid": boot_ok,
+			"diagnostic_code": CODE_ERR_REV2_UNSUPPORTED,
+			"diagnostic": "Detected Rev 2 (SLPS-00065VER125, 1995-11-17) with PSX.EXE (SHA1 %s). This release differs in 475 functions and older SDK libraries. This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % short_sha,
 		}
+	
+	if sha == REV1_EXE_SHA1.to_lower():
+		var boot_ok := check_boot_target("PSX.EXE", cnf_text)
+		var set_id := vol_set_id.to_upper()
+		var cnf_upper := cnf_text.to_upper()
+		
+		# Disambiguate Shokai vs Rev 1 via volume set ID or CNF
+		if set_id.contains("SLPS00064") or cnf_upper.contains("SLPS-00064") or cnf_upper.contains("SLPS-00067"):
+			return {
+				"release": RELEASE_SHOKAI,
+				"canonical_profile": PROFILE_SHOKAI_CANONICAL,
+				"label": "Shokai Genteiban (SLPS-00064/SLPS-00067, 1995-08-31)",
+				"supported_for_content_extraction": false,
+				"boot_target_valid": boot_ok,
+				"diagnostic_code": CODE_ERR_SHOKAI_UNSUPPORTED,
+				"diagnostic": "Detected Shokai Genteiban (SLPS-00064/SLPS-00067, 1995-08-31) with PSX.EXE (SHA1 %s). This release differs in 521 functions, older PsyQ 3.x libraries, and moved LBAs. This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % short_sha,
+			}
+		elif set_id.contains("SLPS00065"):
+			return {
+				"release": RELEASE_REV1,
+				"canonical_profile": PROFILE_REV1_CANONICAL,
+				"label": "Rev 1 (SLPS-00065, 1995-08-31)",
+				"supported_for_content_extraction": false,
+				"boot_target_valid": boot_ok,
+				"diagnostic_code": CODE_ERR_REV1_UNSUPPORTED,
+				"diagnostic": "Detected Rev 1 (SLPS-00065, 1995-08-31) with PSX.EXE (SHA1 %s). This release differs in 521 functions, older PsyQ 3.x libraries, and moved LBAs. This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % short_sha,
+			}
+		else:
+			# Extracted directory without PVD volume set ID fallback
+			return {
+				"release": RELEASE_REV1,
+				"canonical_profile": PROFILE_REV1_OR_SHOKAI_CANONICAL,
+				"label": "Rev 1 (SLPS-00065) / Shokai Genteiban (SLPS-00064)",
+				"supported_for_content_extraction": false,
+				"boot_target_valid": boot_ok,
+				"diagnostic_code": CODE_ERR_REV1_OR_SHOKAI_UNSUPPORTED,
+				"diagnostic": "Detected Rev 1 / Shokai Genteiban with PSX.EXE (SHA1 %s). This release differs in 521 functions, older PsyQ 3.x libraries, and moved LBAs. This port requires PlayStation the Best (SLPM-86053 / VX009J2, 1997-12-25) per wiki/versions.md." % short_sha,
+			}
 	
 	return {
-		"release": "unknown",
-		"diagnostic": "Unknown PS1 executable '%s' (size %d bytes, SHA1 %s). Expected PlayStation the Best (SLPM-86053 / VX009J2, SHA1 %s)." % [exe_name, exe_size, exe_sha1.substr(0, 8), BEST_EXE_SHA1.substr(0, 8)],
+		"release": RELEASE_UNKNOWN,
+		"canonical_profile": "unknown",
+		"label": "Unknown PS1 Executable",
+		"supported_for_content_extraction": false,
+		"boot_target_valid": false,
+		"diagnostic_code": CODE_ERR_UNKNOWN_EXECUTABLE,
+		"diagnostic": "Unknown PS1 executable '%s' (size %d bytes, SHA1 %s). Expected PlayStation the Best (SLPM-86053 / VX009J2, SHA1 %s)." % [exe_name, exe_size, short_sha, BEST_EXE_SHA1.substr(0, 8)],
 	}
+
+func _evaluate_release(exe_name: String, exe_size: int, exe_sha1: String, cnf_text: String, vol_id: String = "", vol_set_id: String = "") -> Dictionary:
+	return identify_ps1_release(exe_name, exe_size, exe_sha1, cnf_text, vol_id, vol_set_id)
 
 func _read_source_file(rel_path: String) -> PackedByteArray:
 	if _reader_kind == "directory":

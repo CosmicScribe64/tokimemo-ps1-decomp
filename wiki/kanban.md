@@ -6,8 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]
-
 - [ ] [[tickets/T-30001-modern-widescreen|T-30001 Add widescreen presentation]]
 - [ ] [[tickets/T-30002-modern-settings|T-30002 Provide comprehensive modern settings]]
 - [ ] [[tickets/T-30003-player-customization|T-30003 Explore gender-aware player customization]]
@@ -75,7 +73,7 @@ kanban-plugin: board
 
 ## In Progress
 
-
+- [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]
 
 - [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
 

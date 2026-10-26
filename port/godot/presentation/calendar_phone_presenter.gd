@@ -13,7 +13,7 @@ const Rules = preload("res://rules/calendar_phone_screens.gd")
 const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 
 # Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366)
-const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA/UlEQVR4nMWWvQ2DMBBGj1MKlxmBURjFZcqUlIzCCCkpXaZMSekRXLojshNZwUQYzM/3FQidjd9DQtwV1MiBoui6IW015UYbTbJVi/YWrW4nAuW1pFufL9B3ilpZLdrLBA7HBSHEpgOttfkC4mT4SAABDwIouBdAwr0AEu5enpFwF0bC/wqkvokUPLUen89I+EgAAQ8CKLgXQMJdCiIalFHZ/ZzUa1K6VxUZa/y9rOXs4xd3iXv/mn7+MB/Qbxy8+9afibmCCRw+8iezWsCeDB8JIOBBAAUPAij4ZoE9hhlGwl2yBPYc43hu8Wj4ROBs+EgAAQ8CKHgQQMEd9w2udJiVow0PSQAAAABJRU5ErkJggg=="
+const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA5ElEQVR4nMWWsQ3DIBBFzycXlIzgUTIKZUZI6VEYI6XHcHkjpKRLdBRIECQMTvx/aSPeQ0L8m2h1byoij5UkCI1GXkLOb4fWTl78l8BiF7rv4wL7cyPvbofWMoHD5QdjzKkNQwjjAuZieCaAgCcBFDwKIOFRAAnXwzMSrmEkvCrQuhMteOt/uT8j4ZkAAp4EUPAogIRrZku22udaqaPpmSfmWu/39HlVIMjheYIJHP7nI9MtEC6GZwIIeBJAwaMAEh4FkHA9/LDAryYpRsKrAmff9t5uYSQ8E0DAkwAKHgWQcBX4AGcPlHlFD2CfAAAAAElFTkSuQmCC"
 
 # PS1 Bayer 4x4 dither table
 const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
@@ -93,76 +93,86 @@ func _ensure_compositor_coverage() -> void:
 
 # Renders the Calendar Screen (icon 12) matching emu_calendar.png
 func render_calendar_screen(day_count: int = 5, player_birthday: int = 0x19B,
-		frame_count: int = 0) -> Image:
+		frame_count: int = 40, title_origin: Vector2i = Vector2i(-28, -28)) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
 	# 1. Authentic PS1 checkerboard background
 	_draw_checkerboard(target)
 
-	# 2. Top wooden parameter panel (Frame 61) drawn behind notebook (OT 12)
+	# 2. Top wooden parameter panel (Frame 61, OT 12..11)
 	var stats: Array[int] = [97, 43, 40, 40, 38, 33, 59, 4, 3] # Condition, Lit, Sci, Art, Ath, Triv, Look, Guts, Stress
 	_draw_parameter_panel(target, stats)
 
-	# 3. Base Gouraud panel (cal_base_show in hud_screens.c:640: Rect2i(0, 33, 283, 125))
+	# 3. Bottom message window (Frame 62, OT 8..7) & prompt: 今月／来月の予定と実績
+	_draw_message_window(target)
+	_draw_text_hex_checked(target, STR_HEX["caption_calendar"], Vector2i(32, 170), 0, "message_window")
+
+	# 4. Base Gouraud panel (cal_base_show in hud_screens.c:640: Rect2i(0, 33, 283, 125), OT 5)
 	_draw_cal_base(target, Rect2i(0, 33, 283, 125))
 
-	# 4. Notebook spiral rings and borders (Actor 96 Frame 63 at (-16, -19))
-	_draw_actor(target, 63, Vector2i(-16, -19))
+	# 5. Calendar notebook spiral rings and center double-line divider (Actor 96 Frame 0x43 = 67 at (-16, -19), OT 4)
+	_draw_actor(target, 67, Vector2i(-16, -19))
 
-	# 5. Month 0 (April 1995) and Month 1 (May 1995) grids and labels
-	var base_dir: String = _root
+	# 6. Date pillar (Actor 16 Frame 60, OT 5..4, drawn after Actor 96 in head-linked OT[4])
+	_draw_date_pillar(target, 95, 4, 9, 6, 1)
+
+	# 7. Month 0 (April 1995) and Month 1 (May 1995) grids and labels (cal_sprite_init in hud_screens.c:672-740, OT 3)
 	_blit_hud_asset(target, "assets/calendar.month-00.calendar-grid.png", Vector2i(24, 32))
 	_blit_hud_asset(target, "assets/calendar.month-00.month-label.png", Vector2i(72, 32))
 	_blit_hud_asset(target, "assets/calendar.month-01.calendar-grid.png", Vector2i(160, 32))
 	_blit_hud_asset(target, "assets/calendar.month-01.month-label.png", Vector2i(208, 32))
 
-	# Notebook center vertical divider line
-	for y in range(33, 158):
-		target.set_pixelv(Vector2i(148, y), Color8(100, 100, 120))
-		target.set_pixelv(Vector2i(149, y), Color8(160, 160, 180))
+	# 8. Top-left wooden title badge: カレンダー (message_window_title_update in hud_panels.c:1238-1251, OT 2)
+	_draw_title_badge(target, STR_HEX["title_calendar"], title_origin, 5)
 
-	# 6. Sinusoidal Biorhythm curves (hud_biorhythm_graph_draw)
+	# 9. Sinusoidal Biorhythm curves (hud_biorhythm_graph_draw in hud_screens.c:570-606, OT 1)
 	_draw_biorhythm_graph(target, day_count, player_birthday, frame_count)
 
-	# 7. Hand cursor (Frame 156 pointing at April 30)
-	_draw_hand_cursor(target, Vector2i(52, 148))
-
-	# 8. Date pillar (Frame 60) on right side
-	_draw_date_pillar(target, 95, 4, 9, 6, 1)
-
-	# 9. Top-left wooden title badge: カレンダー (settled state at (16, 30))
-	_draw_title_badge(target, STR_HEX["title_calendar"], Vector2i.ZERO, 5)
-
-	# 10. Bottom message window (Frame 62) & prompt: 今月／来月の予定と実績
-	_draw_message_window(target)
-	_draw_text_hex_checked(target, STR_HEX["caption_calendar"], Vector2i(32, 170), 0, "message_window")
+	# 10. Hand cursor (Actor 0 Frame 156, OT 0 frontmost)
+	_draw_hand_cursor(target, Vector2i(52, 149))
 
 	return target
 
 # Renders the Holiday Phone Book Screen (icon 8) matching emu_phone_book.png or emu_phone_shiori.png
 func render_holiday_phone_screen(cursor: int = 0, dialed_digits: Array[int] = [],
-		substep: int = 0, player_name: String = "福原") -> Image:
+		substep: int = 0, player_name: String = "福原",
+		bg_uv: Vector2i = Vector2i(-1, -1)) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	# 1. Authentic PS1 checkerboard background
-	_draw_checkerboard(target)
+	# 1. Authentic PS1 checkerboard background (hud_screen_frame_draw UV scroll in hud_panels.c:1449-1450)
+	var uv: Vector2i = bg_uv if bg_uv.x >= 0 else (Vector2i(30, 9) if cursor == 0 else Vector2i(20, 14))
+	_draw_checkerboard(target, uv)
 
-	# 2. Top wooden parameter panel (Frame 61) drawn behind notebook (OT 12)
+	# 2. Top wooden parameter panel (Frame 61, OT 12..11)
 	var stats: Array[int] = [97, 43, 40, 40, 38, 33, 59, 4, 3]
 	_draw_parameter_panel(target, stats)
 
-	# 3. Base Gouraud panel (cal_base_show: Rect2i(0, 33, 283, 125))
+	# 3. Bottom message window (Frame 62, OT 8..7)
+	_draw_message_window(target)
+	if dialed_digits.is_empty() and substep == 0:
+		# Directory prompt: 福原 （誰に電話かけようかな？）
+		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
+		_draw_text_hex_checked(target, STR_HEX["bracket_open"], Vector2i(74, 170), 0, "message_window")
+		_draw_text_hex_checked(target, STR_HEX["prompt_phone_body"], Vector2i(88, 170), 0, "message_window")
+	else:
+		# Dialing sequence feedback (holiday_tel_exit in holiday.c:1303 clears window and draws 'Ｔ' at (-88, 50))
+		_draw_t_cursor_marker(target, Vector2i(76, 171))
+
+	# 4. Base Gouraud panel (cal_base_show: Rect2i(0, 33, 283, 125), OT 5)
 	_draw_cal_base(target, Rect2i(0, 33, 283, 125))
 
-	# 4. Notebook spiral rings, rules and dividers (Actor 96 Frame 63 at (-16, -19))
+	# 5. Notebook spiral rings, rules and dividers (Actor 96 Frame 63 at (-16, -19), OT 4)
 	_draw_actor(target, 63, Vector2i(-16, -19))
 
-	# 5. Header label 電話番号 (telephone_class_init in holiday.c:1348: set_kanji_string(-0x80, -0x54, 3, "電話番号", 0))
+	# 6. Date pillar (Actor 16 Frame 60, OT 5..4)
+	_draw_date_pillar(target, 95, 4, 9, 6, 1)
+
+	# 7. Header label 電話番号 (telephone_class_init in holiday.c:1348: set_kanji_string(-0x80, -0x54, 3, "電話番号", 0))
 	_draw_text_hex_checked(target, STR_HEX["title_phone"], Vector2i(32, 36), 3, "notebook")
 
-	# 6. 14 Directory slots (holiday.c:1350)
+	# 8. 14 Directory slots (holiday.c:1350)
 	var contact_hex_keys := [
 		"name_yoshio", "name_shiori", "name_mio", "name_yuina", "name_ayako",
 		"name_saki", "name_yukari", "name_nozomi", "name_mira", "name_yuko",
@@ -188,51 +198,52 @@ func render_holiday_phone_screen(cursor: int = 0, dialed_digits: Array[int] = []
 		if available:
 			_draw_text_hex_checked(target, STR_HEX[contact_hex_keys[i]], Vector2i(sx, sy), 3, "notebook")
 
-	# 7. Hand cursor pointing at active slot (x[i] + w[i] - 4, y[i] + 8)
+	# 9. Hand cursor pointing at active slot (Actor 0 Frame 156, OT 0 frontmost)
 	var cur_col: int = cursor / 5
 	var cur_row: int = cursor % 5
 	var cur_sx: int = 24 + cur_col * 88
 	var cur_sy: int = 64 + cur_row * 16 + (16 if cursor == 13 else 0)
 	_draw_hand_cursor(target, Vector2i(cur_sx + 72 - 4, cur_sy + 8))
 
-	# 8. Date pillar (Frame 60) on right side
-	_draw_date_pillar(target, 95, 4, 9, 6, 1)
-
-	# 9. Bottom message window (Frame 62)
-	_draw_message_window(target)
-
-	if dialed_digits.is_empty():
-		# Directory prompt: 福原 （誰に電話かけようかな？）
-		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
-		_draw_text_hex_checked(target, STR_HEX["bracket_open"], Vector2i(74, 170), 0, "message_window")
-		_draw_text_hex_checked(target, STR_HEX["prompt_phone_body"], Vector2i(88, 170), 0, "message_window")
-	else:
-		# Dialing sequence feedback
-		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
-		_draw_t_cursor_marker(target, Vector2i(76, 171))
-
 	return target
 
 # Renders the Holiday Magazine Screen (icon 10) matching emu_magazine.png
-func render_holiday_magazine_screen(substep: int = 0) -> Image:
+func render_holiday_magazine_screen(substep: int = 0, scroll_y: int = -6,
+		bg_uv: Vector2i = Vector2i(31, 0)) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
 	# 1. Authentic PS1 checkerboard background
-	_draw_checkerboard(target)
+	_draw_checkerboard(target, bg_uv)
 
-	# 2. Magazine Base Panel: magazine_base_show in hud_screens.c:652 (Rect2i(0, 0, 320, 159))
+	# 2. Bottom message window (Frame 62, OT 8..7)
+	_draw_message_window(target)
+
+	# 3. Scrolled monologue in 3-row window (matching emu_magazine.png)
+	# Speaker 福原 pinned at (39, 170)
+	_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
+
+	if substep < 2:
+		# Lines 0 & 1 scrolled off; Row 1: Line 2 (そうそう、カレンダーで), Row 2: Line 3 (自分のバイオリズムが、)
+		_draw_text_hex_checked(target, STR_HEX["mag_mono3"], Vector2i(88, 186 + scroll_y), 0, "message_window")
+		_draw_text_hex_checked(target, STR_HEX["mag_mono4"], Vector2i(88, 202 + scroll_y), 0, "message_window")
+	else:
+		# Magazine Hint 0 (holiday_magazine_hint_biorhythm_legend)
+		_draw_text_hex_checked(target, STR_HEX["mag_hint1"], Vector2i(88, 170), 0, "message_window")
+		_draw_text_hex_checked(target, STR_HEX["mag_hint2"], Vector2i(88, 186), 0, "message_window")
+
+	# 4. Magazine Base Panel: magazine_base_show in hud_screens.c:652 (Rect2i(0, 0, 320, 159), OT 5)
 	_draw_cal_base(target, Rect2i(0, 0, 320, 159))
 
-	# 3. Magazine screen layout (Frame 118 at (0, -40))
+	# 5. Magazine screen layout (Frame 118 at (0, -40), OT 4)
 	_draw_actor(target, 118, Vector2i(0, -40))
 
-	# 4. Issue badges: 創刊 (Frame 121), Suikoden ad (Frame 151), クラシック (Frame 140)
+	# 6. Issue badges: 創刊 (Frame 121), Suikoden ad (Frame 151), クラシック (Frame 140)
 	_draw_actor(target, 121, Vector2i(0, -40))
 	_draw_actor(target, 151, Vector2i(0, -40))
 	_draw_actor(target, 140, Vector2i(0, -40))
 
-	# 5. Magazine typography (hud_magazine_page_build, src/main/hud_screens.c:1050-1225)
+	# 7. Magazine typography (hud_magazine_page_build, src/main/hud_screens.c:1050-1225)
 	# MOVIE box: 休館 at (192, 26) (attribute 7)
 	_draw_text_hex_checked(target, STR_HEX["movie_closed"], Vector2i(192, 26), 7)
 	# Subtitle: ＫＮＭ交響楽団 at (192, 58) (attribute 8)
@@ -245,27 +256,11 @@ func render_holiday_magazine_screen(substep: int = 0) -> Image:
 	_draw_text_hex_checked(target, STR_HEX["mag_art2"], Vector2i(17, 122), 6)
 	_draw_text_hex_checked(target, STR_HEX["mag_art3"], Vector2i(17, 138), 6)
 
-	# 6. Hand cursor pointing at event article at (76, 133)
-	_draw_hand_cursor(target, Vector2i(76, 133))
-
-	# 7. Top-left wooden title badge: 情報誌 (settled state at (16, 30))
+	# 8. Top-left wooden title badge: 情報誌 (settled state at (16, 30), OT 2)
 	_draw_title_badge(target, STR_HEX["title_magazine"], Vector2i.ZERO, 3)
 
-	# 8. Bottom message window (Frame 62)
-	_draw_message_window(target)
-
-	# 9. Scrolled monologue in 3-row window (matching emu_magazine.png)
-	# Speaker 福原 pinned at (39, 170)
-	_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
-
-	if substep < 2:
-		# Lines 0 & 1 scrolled off; Row 1: Line 2 (そうそう、カレンダーで), Row 2: Line 3 (自分のバイオリズムが、)
-		_draw_text_hex_checked(target, STR_HEX["mag_mono3"], Vector2i(88, 186), 0, "message_window")
-		_draw_text_hex_checked(target, STR_HEX["mag_mono4"], Vector2i(88, 202), 0, "message_window")
-	else:
-		# Magazine Hint 0 (holiday_magazine_hint_biorhythm_legend)
-		_draw_text_hex_checked(target, STR_HEX["mag_hint1"], Vector2i(88, 170), 0, "message_window")
-		_draw_text_hex_checked(target, STR_HEX["mag_hint2"], Vector2i(88, 186), 0, "message_window")
+	# 9. Hand cursor pointing at event article at (76, 133) (OT 0 frontmost)
+	_draw_hand_cursor(target, Vector2i(76, 133))
 
 	return target
 
@@ -273,13 +268,17 @@ func render_holiday_magazine_screen(substep: int = 0) -> Image:
 # Helper Drawing Routines
 # ==============================================================================
 
-func _draw_checkerboard(target: Image) -> void:
+func _draw_checkerboard(target: Image, bg_uv: Vector2i = Vector2i.ZERO) -> void:
 	if _checker_tile == null:
 		target.fill(Color8(40, 200, 160))
 		return
-	for ty in range(0, 240, 32):
-		for tx in range(0, 320, 32):
-			_blit_simple(target, _checker_tile, Vector2i(tx, ty))
+	var u0: int = bg_uv.x & 31
+	var v0: int = bg_uv.y & 31
+	for py in range(240):
+		var ty: int = (py + v0) & 31
+		for px in range(320):
+			var tx: int = (px + u0) & 31
+			target.set_pixelv(Vector2i(px, py), _checker_tile.get_pixel(tx, ty))
 
 func _draw_cal_base(target: Image, rect: Rect2i) -> void:
 	# Exact PS1 POLY_G4 case 2 (prim_gradient_rect with arg5=0xE0E0E0, arg6=2 in gpu_primitives.c:225-230):
@@ -425,8 +424,11 @@ func _draw_t_cursor_marker(target: Image, pos: Vector2i) -> void:
 		target.set_pixelv(pos + Vector2i(3, dy), Color8(160, 200, 200))
 
 func _draw_biorhythm_graph(target: Image, day_count: int, player_birthday: int, frame_count: int) -> void:
-	# Pulsing grey zero line
-	_draw_line(target, Vector2i(32, 108), Vector2i(284, 108), Color8(180, 180, 180, 220))
+	# Exact PS1 hud_biorhythm_graph_draw (src/main/hud_screens.c:570-606) + dtd_on_tpage(0, 0, 1, 2, 0)
+	# (abr=2 subtractive semi-transparency Back - Front at OT slot 1):
+	var phase: int = frame_count
+	var half: int = ((0x7F - (frame_count & 0x7F)) / 2) if (frame_count & 0x80) != 0 else ((frame_count & 0x7F) / 2)
+	_draw_subtractive_line(target, Vector2i(32, 108), Vector2i(284, 108), Vector3i(half, half, half))
 
 	var start_day: int = day_count - 8
 	var phys_pts: Array[Vector2i] = []
@@ -445,9 +447,13 @@ func _draw_biorhythm_graph(target: Image, day_count: int, player_birthday: int, 
 		intel_pts.append(Vector2i(sx, 108 + val_i))
 
 	for i in range(1, 16):
-		_draw_line(target, phys_pts[i - 1], phys_pts[i], Color8(235, 45, 55, 230))
-		_draw_line(target, emot_pts[i - 1], emot_pts[i], Color8(55, 115, 235, 230))
-		_draw_line(target, intel_pts[i - 1], intel_pts[i], Color8(45, 205, 75, 230))
+		var v: int = ((i + phase) & 0xF) * 4 + half
+		# Wave 0 (23-day physical): subtracts (0, v, v) -> red curve
+		_draw_subtractive_line(target, phys_pts[i - 1], phys_pts[i], Vector3i(0, v, v))
+		# Wave 1 (28-day emotional): subtracts (v + 15, v + 15, 0) -> blue curve
+		_draw_subtractive_line(target, emot_pts[i - 1], emot_pts[i], Vector3i(v + 15, v + 15, 0))
+		# Wave 2 (33-day intellectual): subtracts (v, 0, v) -> green curve
+		_draw_subtractive_line(target, intel_pts[i - 1], intel_pts[i], Vector3i(v, 0, v))
 
 func _draw_actor(target: Image, frame_id: int, pos: Vector2i, variant: String = "base", semi: bool = true) -> void:
 	var actor := {
@@ -525,7 +531,7 @@ func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, pale
 
 		x_offset += 14
 
-func _draw_line(target: Image, p0: Vector2i, p1: Vector2i, col: Color) -> void:
+func _draw_subtractive_line(target: Image, p0: Vector2i, p1: Vector2i, sub_rgb: Vector3i) -> void:
 	var dx: int = abs(p1.x - p0.x)
 	var dy: int = -abs(p1.y - p0.y)
 	var sx: int = 1 if p0.x < p1.x else -1
@@ -533,10 +539,17 @@ func _draw_line(target: Image, p0: Vector2i, p1: Vector2i, col: Color) -> void:
 	var err: int = dx + dy
 	var x: int = p0.x
 	var y: int = p0.y
+	var sr5: int = clampi(sub_rgb.x >> 3, 0, 31)
+	var sg5: int = clampi(sub_rgb.y >> 3, 0, 31)
+	var sb5: int = clampi(sub_rgb.z >> 3, 0, 31)
 
 	while true:
 		if x >= 0 and x < 320 and y >= 0 and y < 240:
-			target.set_pixelv(Vector2i(x, y), col)
+			var back: Color = target.get_pixel(x, y)
+			var r5: int = maxi((back.r8 >> 3) - sr5, 0)
+			var g5: int = maxi((back.g8 >> 3) - sg5, 0)
+			var b5: int = maxi((back.b8 >> 3) - sb5, 0)
+			target.set_pixelv(Vector2i(x, y), Color8(r5 << 3, g5 << 3, b5 << 3, 255))
 		if x == p1.x and y == p1.y:
 			break
 		var e2: int = 2 * err

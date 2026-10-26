@@ -114,17 +114,17 @@ func _test_existing_contract_invariants() -> void:
 func _test_substitution_resolution() -> void:
 	# 1. Full context covering all standard substitution keys
 	var context := {
-		"player_form": "826a826b",    # ＡＢ
-		"player_family": "93a18d8e",  # 藤崎
-		"player_given": "8e6d8fd1",   # 詩織
-		"player_full": "93a18d8e8e6d8fd1", # 藤崎詩織
-		"girl_name": "8dca89d4",      # 虹野
-		"yoshio_name": "8da59399",    # 好雄
-		"context_s": "8272",          # ｓ
-		"context_o": "826e",          # ｏ
-		"context_w": "8276",          # ｗ
-		"context_a": "8260",          # ａ
-		"context_m": "826c",          # ｍ
+		"player_form": "826a826b",    # ＫＬ
+		"player_family": "93a18de8",  # 藤崎
+		"player_given": "8e8d9044",   # 詩織
+		"player_full": "93a18de88e8d9044", # 藤崎詩織
+		"girl_name": "93f896ec",      # 虹野
+		"yoshio_name": "8d449759",    # 好雄
+		"context_s": "8272",          # Ｓ
+		"context_o": "826e",          # Ｏ
+		"context_w": "8276",          # Ｗ
+		"context_a": "8260",          # Ａ
+		"context_m": "826c",          # Ｍ
 	}
 
 	var raw_tokens := [
@@ -153,24 +153,24 @@ func _test_substitution_resolution() -> void:
 	assert(res["tokens"][1]["raw_hex"] == "826b")
 	assert(res["tokens"][2]["raw_hex"] == "8141")
 	assert(res["tokens"][3]["raw_hex"] == "93a1")
-	assert(res["tokens"][4]["raw_hex"] == "8d8e")
+	assert(res["tokens"][4]["raw_hex"] == "8de8")
 
 	# Check immutability of raw_tokens
 	assert(raw_tokens == original_snapshot)
 
 	# 2. Player full synthesized from family + given
 	var context_no_full := {
-		"player_family": "93a18d8e",
-		"player_given": "8e6d8fd1",
+		"player_family": "93a18de8",
+		"player_given": "8e8d9044",
 	}
 	var f_tokens := [{"kind": "substitution", "code": "F", "name": "player_full", "raw_hex": "46"}]
 	var f_res: Dictionary = Tokens.resolve_tokens(f_tokens, context_no_full)
 	assert(f_res["error"].is_empty())
 	assert(f_res["tokens"].size() == 4)
 	assert(f_res["tokens"][0]["raw_hex"] == "93a1")
-	assert(f_res["tokens"][1]["raw_hex"] == "8d8e")
-	assert(f_res["tokens"][2]["raw_hex"] == "8e6d")
-	assert(f_res["tokens"][3]["raw_hex"] == "8fd1")
+	assert(f_res["tokens"][1]["raw_hex"] == "8de8")
+	assert(f_res["tokens"][2]["raw_hex"] == "8e8d")
+	assert(f_res["tokens"][3]["raw_hex"] == "9044")
 
 	# 3. Fail closed on missing required context key
 	var empty_context := {}
@@ -195,19 +195,19 @@ func _test_substitution_resolution() -> void:
 	assert(empty_res["error"].contains("must be non-empty 2-byte Shift-JIS hex"))
 
 	# 5. PackedByteArray context value support
-	var bytes_context := {"player_family": PackedByteArray([0x93, 0xa1, 0x8d, 0x8e])}
+	var bytes_context := {"player_family": PackedByteArray([0x93, 0xa1, 0x8d, 0xe8])}
 	var bytes_res: Dictionary = Tokens.resolve_tokens([{"kind": "substitution", "code": "p", "name": "player_family"}], bytes_context)
 	assert(bytes_res["error"].is_empty())
 	assert(bytes_res["tokens"].size() == 2)
 	assert(bytes_res["tokens"][0]["raw_hex"] == "93a1")
-	assert(bytes_res["tokens"][1]["raw_hex"] == "8d8e")
+	assert(bytes_res["tokens"][1]["raw_hex"] == "8de8")
 
 	print("  [PASS] Token substitutions and fail-closed validation verified")
 
 func _test_inline_label_extraction() -> void:
 	# Inline speaker label with '<' marker (monologue with inline speaker)
 	var paren_tokens := [
-		{"kind": "inline_label", "marker": "<", "label_raw_hex": "8da59399", "raw_hex": "3c8da59399"},
+		{"kind": "inline_label", "marker": "<", "label_raw_hex": "8d449759", "raw_hex": "3c8d449759"},
 		{"kind": "glyph", "raw_hex": "8140"},
 		{"kind": "glyph", "raw_hex": "8142"},
 	]
@@ -215,20 +215,20 @@ func _test_inline_label_extraction() -> void:
 	assert(paren_res["error"].is_empty())
 	assert(paren_res["inline_label"] != null)
 	assert(paren_res["wrapper"] == "parenthesis")
-	assert(paren_res["speaker_id"] == "8da59399")
+	assert(paren_res["speaker_id"] == "8d449759")
 	assert(paren_res["tokens"].size() == 2) # inline_label excluded from body tokens
 	assert(paren_res["tokens"][0]["raw_hex"] == "8140")
 
 	# Inline speaker label with '>' marker (bracket quote)
 	var quote_tokens := [
-		{"kind": "inline_label", "marker": ">", "label_raw_hex": "93a18d8e", "raw_hex": "3e93a18d8e"},
+		{"kind": "inline_label", "marker": ">", "label_raw_hex": "93a18de8", "raw_hex": "3e93a18de8"},
 		{"kind": "glyph", "raw_hex": "8140"},
 	]
 	var quote_res: Dictionary = Tokens.resolve_tokens(quote_tokens, {})
 	assert(quote_res["error"].is_empty())
 	assert(quote_res["inline_label"] != null)
 	assert(quote_res["wrapper"] == "bracket")
-	assert(quote_res["speaker_id"] == "93a18d8e")
+	assert(quote_res["speaker_id"] == "93a18de8")
 	assert(quote_res["tokens"].size() == 1)
 
 	print("  [PASS] Inline speaker label extraction verified")
@@ -367,11 +367,11 @@ func _test_textbox_presentation_and_captures() -> void:
 
 	# 3. Render line with speaker label and substitutions expanded
 	var sub_context := {
-		"player_family": "93a18d8e",  # 藤崎
-		"player_given": "8e6d8fd1",   # 詩織
-		"player_full": "93a18d8e8e6d8fd1",
-		"girl_name": "8dca89d4",      # 虹野
-		"yoshio_name": "8da59399",    # 好雄
+		"player_family": "93a18de8",  # 藤崎
+		"player_given": "8e8d9044",   # 詩織
+		"player_full": "93a18de88e8d9044",
+		"girl_name": "93f896ec",      # 虹野
+		"yoshio_name": "8d449759",    # 好雄
 	}
 	var voiced_sub_content: Dictionary = _make_content(11) # Shiori speech
 	voiced_sub_content["groups"][0]["records"][0]["text"]["tokens"] = [

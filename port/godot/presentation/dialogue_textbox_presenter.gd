@@ -94,11 +94,11 @@ func render_dialogue_line(target: Image, line_view: Dictionary, visible_glyph_co
 	# Render speaker label if available
 	var speaker_glyphs_drawn: int = 0
 	if speaker_id == "shiori":
-		var shiori_bytes: PackedByteArray = "93a18d8e".hex_decode() # 藤崎
+		var shiori_bytes: PackedByteArray = "93a18de8".hex_decode() # 藤崎
 		speaker_glyphs_drawn = _draw_glyph_sequence(target, shiori_bytes, Vector2i(current_x, current_y), 0)
 		current_x += speaker_glyphs_drawn * GLYPH_ADVANCE_X + 4
 	elif speaker_id == "yoshio":
-		var yoshio_bytes: PackedByteArray = "8da59399".hex_decode() # 好雄
+		var yoshio_bytes: PackedByteArray = "8d449759".hex_decode() # 好雄
 		speaker_glyphs_drawn = _draw_glyph_sequence(target, yoshio_bytes, Vector2i(current_x, current_y), 0)
 		current_x += speaker_glyphs_drawn * GLYPH_ADVANCE_X + 4
 	elif not speaker_id.is_empty() and speaker_id not in ["player_family", "runtime_current_girl", "inline_or_effect"]:

@@ -159,7 +159,7 @@ func _test_phone_dialing_flow() -> void:
 
 	var girls: Array = []
 	for i in range(11):
-		girls.append({"flags": 0x08 if i == 0 else 0})
+		girls.append({"flags": 0x08 if i in [0, 10] else 0})
 	state.rule_state["girls"] = girls
 
 	var tel_state := {}
@@ -186,7 +186,7 @@ func _test_phone_dialing_flow() -> void:
 	result = Session.FrameResult.new()
 	Rules.step_holiday_tel(state, input, result, tel_state)
 	_check(state.mode_step == 2, "Confirming contact advances to step 2 (dialing)")
-	_check(tel_state["target_girl"] == 10, "Target girl for Yoshio is index 10")
+	_check(tel_state["target_girl"] == 13, "Target girl for Yoshio is GIRL_YOSHIO (13)")
 	var has_select_sound: bool = false
 	for a in result.audio:
 		if a.get("command") == 0x50A:
@@ -209,6 +209,30 @@ func _test_phone_dialing_flow() -> void:
 	result = Session.FrameResult.new()
 	Rules.step_holiday_tel(state, input, result, tel_state)
 	_check(state.game_mode == 0x3E, "Call connected transitions to GAME_MODE_TELEPHONE_PROFILE (0x3E)")
+
+	# Verify Slot 11 (Yumi Saotome, GIRL_YUMI = 10) does not collide with Yoshio
+	state.game_mode = 0x46
+	state.mode_stage = 0x1E
+	state.mode_step = 1
+	tel_state["cursor"] = 11
+	input = InputFrame.new(5, 0x20, 0)
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, input, result, tel_state)
+	_check(tel_state["target_girl"] == 10, "Slot 11 selects GIRL_YUMI (10)")
+	tel_state["substep"] = 11
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(6, 0, 0), result, tel_state)
+	_check(state.game_mode == 0x3E and state.mode_stage == 1,
+		"Yumi call connects to GAME_MODE_TELEPHONE_PROFILE (0x3E) stage 1, not Yoshio stage 0")
+
+	# Verify Slot 12 (Miharu Tatebayashi, GIRL_MIHARU = 11)
+	state.game_mode = 0x46
+	state.mode_stage = 0x1E
+	state.mode_step = 1
+	tel_state["cursor"] = 12
+	result = Session.FrameResult.new()
+	Rules.step_holiday_tel(state, InputFrame.new(7, 0x20, 0), result, tel_state)
+	_check(tel_state["target_girl"] == 11, "Slot 12 selects GIRL_MIHARU (11)")
 
 func _test_magazine_rules_and_flow() -> void:
 	print("\n--- Testing Holiday Magazine Rules and Reading Status ---")
@@ -265,8 +289,8 @@ func _test_visual_rendering_and_captures() -> void:
 	var init_err: String = presenter.init_resources(font_root, hud_manifest)
 	_check(init_err.is_empty(), "Presenter initialized with authentic font and HUD manifest: " + init_err)
 
-	# 1. Render Calendar Screen matching emu_calendar.png
-	var cal_img: Image = presenter.render_calendar_screen(5, 0x19B, 0)
+	# 1. Render Calendar Screen matching emu_calendar.png (phase=40, title settled at -28,-28)
+	var cal_img: Image = presenter.render_calendar_screen(5, 0x19B, 40)
 	_check(cal_img != null and cal_img.get_width() == 320 and cal_img.get_height() == 240,
 		"Calendar screen rendered at exact 320x240 dimensions")
 
@@ -275,8 +299,8 @@ func _test_visual_rendering_and_captures() -> void:
 	_check(phone_yoshio_img != null and phone_yoshio_img.get_width() == 320 and phone_yoshio_img.get_height() == 240,
 		"Holiday phone book screen (Yoshio) rendered at exact 320x240 dimensions")
 
-	# 3. Render Holiday Phone Book Screen (Shiori) matching emu_phone_shiori.png
-	var phone_shiori_img: Image = presenter.render_holiday_phone_screen(1, [], 0, "福原")
+	# 3. Render Holiday Phone Book Screen (Shiori dialing substep 1) matching emu_phone_shiori.png
+	var phone_shiori_img: Image = presenter.render_holiday_phone_screen(1, [], 1, "福原")
 	_check(phone_shiori_img != null and phone_shiori_img.get_width() == 320 and phone_shiori_img.get_height() == 240,
 		"Holiday phone book screen (Shiori) rendered at exact 320x240 dimensions")
 
@@ -321,20 +345,32 @@ func _test_visual_rendering_and_captures() -> void:
 	_check(phone_shiori_img.save_png(phone_shiori_path) == OK, "Saved phone book (Shiori) capture to: " + phone_shiori_path)
 	_check(mag_img.save_png(mag_cap_path) == OK, "Saved magazine capture to: " + mag_cap_path)
 
-	# 6. 16x16 tile hotspot verification against PS1 emulator reference captures
+	# 6. Full-frame 16x16 tile hotspot verification against PS1 emulator reference captures
 	var emu_dir := "/workspace/.claude/orchestrator/state/T-29013/calendar-phone-screens-v1/emu-reference"
 	var emu_mag_path := emu_dir.path_join("emu_magazine.png")
 	if FileAccess.file_exists(emu_mag_path):
 		var emu_mag := Image.new()
 		if emu_mag.load(emu_mag_path) == OK:
-			var upper_hotspots := _count_16x16_hotspots(emu_mag, mag_img, Rect2i(0, 0, 320, 160), 20.0)
-			_check(upper_hotspots == 0, "16x16 tile pass: Magazine upper layout (y=0..160) has 0 tiles > 20 MAE vs emu_magazine.png (got %d)" % upper_hotspots)
+			var mag_hotspots := _count_16x16_hotspots(emu_mag, mag_img, Rect2i(0, 0, 320, 240), 20.0)
+			_check(mag_hotspots == 0, "16x16 tile pass: Magazine full frame (320x240) has 0 tiles > 20 MAE vs emu_magazine.png (got %d)" % mag_hotspots)
 	var emu_pb_path := emu_dir.path_join("emu_phone_book.png")
 	if FileAccess.file_exists(emu_pb_path):
 		var emu_pb := Image.new()
 		if emu_pb.load(emu_pb_path) == OK:
-			var nb_hotspots := _count_16x16_hotspots(emu_pb, phone_yoshio_img, Rect2i(16, 32, 272, 128), 20.0)
-			_check(nb_hotspots == 0, "16x16 tile pass: Phone Book notebook region has 0 tiles > 20 MAE vs emu_phone_book.png (got %d)" % nb_hotspots)
+			var nb_hotspots := _count_16x16_hotspots(emu_pb, phone_yoshio_img, Rect2i(0, 0, 320, 240), 20.0)
+			_check(nb_hotspots == 0, "16x16 tile pass: Phone Book (Yoshio) full frame (320x240) has 0 tiles > 20 MAE vs emu_phone_book.png (got %d)" % nb_hotspots)
+	var emu_shiori_path := emu_dir.path_join("emu_phone_shiori.png")
+	if FileAccess.file_exists(emu_shiori_path):
+		var emu_shiori := Image.new()
+		if emu_shiori.load(emu_shiori_path) == OK:
+			var shiori_hotspots := _count_16x16_hotspots(emu_shiori, phone_shiori_img, Rect2i(0, 0, 320, 240), 20.0)
+			_check(shiori_hotspots == 0, "16x16 tile pass: Phone Book (Shiori) full frame (320x240) has 0 tiles > 20 MAE vs emu_phone_shiori.png (got %d)" % shiori_hotspots)
+	var emu_cal_path := emu_dir.path_join("emu_calendar.png")
+	if FileAccess.file_exists(emu_cal_path):
+		var emu_cal := Image.new()
+		if emu_cal.load(emu_cal_path) == OK:
+			var cal_hotspots := _count_16x16_hotspots(emu_cal, cal_img, Rect2i(0, 0, 320, 240), 20.0)
+			_check(cal_hotspots == 0, "16x16 tile pass: Calendar full frame (320x240) has 0 tiles > 20 MAE vs emu_calendar.png (got %d)" % cal_hotspots)
 
 
 func _count_16x16_hotspots(emu: Image, gd: Image, region: Rect2i, threshold: float) -> int:

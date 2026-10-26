@@ -288,13 +288,13 @@ static func step_holiday_tel(state: State, input: InputFrame, result: Session.Fr
 					state.mode_step = 0
 					result.transitions.append({"kind": "holiday_menu_return"})
 					return
-				# Valid contact selected
+				# Valid contact selected (src/main/holiday.c:1282-1290)
 				result.audio.append({"kind": "native_audio_command", "command": 0x50A})
 				var target_girl: int
 				if cursor == 0:
-					target_girl = 10 # Yoshio Saotome
+					target_girl = 13 # GIRL_YOSHIO = 13 (holiday.c:1284)
 				elif cursor == 12:
-					target_girl = 12 # Ray Ijuin
+					target_girl = 11 # GIRL_MIHARU = 11 (holiday.c:1286)
 				else:
 					target_girl = cursor - 1
 				phone_state["target_girl"] = target_girl
@@ -302,7 +302,7 @@ static func step_holiday_tel(state: State, input: InputFrame, result: Session.Fr
 				state.mode_step = 2
 				state.mode_step_timer = 0
 		2:
-			# Exit / Dialing sequence (holiday_tel_exit in holiday.c:1296)
+			# Exit / Dialing sequence (holiday_tel_exit in holiday.c:1296-1335)
 			state.mode_step_timer += 1
 			var substep: int = int(phone_state.get("substep", 0))
 			if substep < 11:
@@ -311,17 +311,18 @@ static func step_holiday_tel(state: State, input: InputFrame, result: Session.Fr
 						result.audio.append({"kind": "native_audio_command", "command": 0x504}) # Dial tone
 					elif substep >= 4:
 						var digit_idx: int = substep - 4
-						var g_id: int = int(phone_state.get("target_girl", 10))
-						var digit: int = GIRL_PHONE_DIGITS[g_id][digit_idx]
+						var g_id: int = int(phone_state.get("target_girl", 13))
+						var digit_row: int = 10 if g_id == 13 else g_id # holiday.c:1306-1310
+						var digit: int = GIRL_PHONE_DIGITS[digit_row][digit_idx]
 						result.audio.append({"kind": "native_audio_command", "command": 0x505 + digit})
 					substep += 1
 					phone_state["substep"] = substep
 			else:
 				# Reached substep 11: transition to GAME_MODE_TELEPHONE_PROFILE (0x3E)
 				result.audio.append({"kind": "native_restore_bgm", "bank": 0, "sequence": 0})
-				var target_girl: int = int(phone_state.get("target_girl", 10))
+				var target_girl: int = int(phone_state.get("target_girl", 13))
 				state.reset_game_mode_fields(0x3E)
-				state.mode_stage = 0 if target_girl == 10 else 1
+				state.mode_stage = 0 if target_girl == 13 else 1
 				result.transitions.append({
 					"kind": "native_mode",
 					"mode": 0x3E,
