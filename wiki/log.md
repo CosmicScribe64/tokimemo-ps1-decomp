@@ -2407,5 +2407,10 @@ Applied the full translation remediation pass across 93 Markdown tables in `tran
 
 Integrated `port/godot/rules/holiday_appointment.gd`, `port/godot/presentation/date_appointment_presenter.gd`, `port/godot/tests/holiday/run_date_appointment_tests.gd`, and `tools/port/date_scene_preview_content.py` from `.claude/orchestrator/state/T-29013/date-appointment-slice-v1/`, updating [[tickets/T-29013-native-holiday-command-loop]]. Implements `hud_appointment_find_today`, `holiday_open_init` appointment notice, Command 9 (`mode_stage = 0xFE`) place selection/confirmation, and `appointment_launch` (`GAME_MODE_DATE = 0x50`) with authentic `0x71..0x73` (`message_window_set_title`) wooden title badge sprites and authenticated `D_09_02.BS`, `HU10.BIN`, and `DATE_FU.BIN` assets. Canonical Docker verification passes `run_date_appointment_tests.gd` and publishes 4 verified captures to the progress gallery.
 
+## [2026-10-25] ticket | Integrate Calendar (0x30), Phone Book (0x10) and Magazine (0x20) screens matched against PS1 emulator captures (T-29013)
+
+Integrated `port/godot/rules/calendar_phone_screens.gd`, `port/godot/presentation/calendar_phone_presenter.gd`, and `port/godot/tests/holiday/run_calendar_phone_tests.gd` from `.claude/orchestrator/state/T-29013/calendar-phone-screens-v1/`, updating [[tickets/T-29013-native-holiday-command-loop]]. Matched presentation against ground-truth PS1 emulator captures (`emu_calendar.png`, `emu_phone_book.png`, `emu_phone_shiori.png`, `emu_magazine.png`) with `hud_screen_frame_draw` 32x32 mint checkerboard tiling, PS1 OT layering (parameter box behind `cal_base_show` and `Frame 63`), `hud_biorhythm_graph_draw` sinusoidal curves, `Frame 156` hand cursor, `Frame 118/121/140/151` magazine sprites, and `0x71..0x73` wooden title badges. Canonical Docker verification passes 64/64 checks with zero bounding-box violations and publishes 4 verified captures to the progress gallery.
+
+
 
 
