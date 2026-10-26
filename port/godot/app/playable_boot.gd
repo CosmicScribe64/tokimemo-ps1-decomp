@@ -14,9 +14,16 @@ const Canvas = preload("res://presentation/native_canvas.gd")
 const ActorService = preload("res://presentation/school_day_actor_service.gd")
 const MediaStore = preload("res://services/school_day_media_store.gd")
 const MediaAdapter = preload("res://services/ordinary_command_media_adapter.gd")
+const ExternalPath = preload("res://services/external_content_path.gd")
 const LiveHud = preload("res://presentation/live_hud_adapter.gd")
+const HolidayController = preload("res://scenes/holiday_controller.gd")
+const HolidaySceneAdapter = preload("res://services/holiday_scene_adapter.gd")
+const HolidayHud = preload("res://presentation/holiday_hud_adapter.gd")
 const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
 var hud: LiveHud
+var holiday_controller: HolidayController
+var holiday_scene: HolidaySceneAdapter
+var holiday_hud: HolidayHud
 const BOUNDARY_SHA: String = "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5"
 const TABLES_SHA: String = "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
 
@@ -59,6 +66,8 @@ var supported_stop: Dictionary = {}
 const HOLIDAY_STOP: String = "ordinary-week next branch requires native type0x10 at index9 (95-04-09)"
 
 func _capture_prefix() -> String:
+	if holiday_controller != null:
+		return "T-29013-sunday"
 	var cmd: int = smoke_command
 	if cmd == 0 and state != null and state.rule_state.has("last_command"):
 		cmd = state.rule_state["last_command"] & 15
@@ -167,6 +176,9 @@ func _label(position_value: Vector2, size: int) -> Label:
 	return label
 
 func _load_inputs() -> String:
+	holiday_controller = null
+	holiday_scene = null
+	holiday_hud = null
 	var state_path: String = OS.get_environment("TOKIMEMO_BOUNDARY")
 	var table_path: String = OS.get_environment("TOKIMEMO_TABLES")
 	var media_path: String = OS.get_environment("TOKIMEMO_MEDIA_PACK")
@@ -219,10 +231,42 @@ func _load_inputs() -> String:
 			return "mandatory HUD preflight: " + hud.error
 	else:
 		hud = null
+	var holiday_extension: String = OS.get_environment("TOKIMEMO_HOLIDAY_EXTENSION")
+	var holiday_text: String = OS.get_environment("TOKIMEMO_HOLIDAY_TEXT")
+	var holiday_text_sha: String = OS.get_environment("TOKIMEMO_HOLIDAY_TEXT_SHA")
+	var require_holiday: bool = OS.get_environment("TOKIMEMO_REQUIRE_HOLIDAY") == "1" \
+		or not holiday_extension.is_empty() \
+		or not holiday_text.is_empty() \
+		or not holiday_text_sha.is_empty()
+	if require_holiday:
+		if hud == null:
+			return "mandatory holiday preflight: complete native HUD capability is required"
+		var media_manifest_path: String = media_path.path_join("manifest.json")
+		var media_manifest_sha: String = FileAccess.get_sha256(media_manifest_path) if ExternalPath.is_external_file(media_manifest_path) else ""
+		var expected_text_sha: String = HolidayHud.TEXT_SHA if holiday_text_sha.is_empty() else holiday_text_sha
+		var candidate_hud := HolidayHud.new()
+		if not candidate_hud.open(hud_manifest, OS.get_environment("TOKIMEMO_HUD_SHA"),
+			OS.get_environment("TOKIMEMO_FONT_ROOT"), media_path, media_manifest_sha,
+			holiday_text, expected_text_sha):
+			return "mandatory holiday HUD preflight: " + candidate_hud.error
+		var profile_error: String = candidate_hud.validate_profile(_holiday_profile())
+		if not profile_error.is_empty():
+			return "mandatory holiday HUD profile preflight: " + profile_error
+		var next_room: Dictionary = candidate_hud.get_background("next_command", HolidaySceneAdapter.ROUTE["next_command"])
+		var candidate_scene := HolidaySceneAdapter.new()
+		var scene_error: String = candidate_scene.open(media, holiday_extension, next_room.get("image_data"))
+		if not scene_error.is_empty():
+			return "mandatory holiday scene preflight: " + scene_error
+		var candidate_controller := HolidayController.new(table_pack["tables"], candidate_scene.tables)
+		if not candidate_controller.error.is_empty():
+			return "mandatory holiday controller preflight: " + candidate_controller.error
+		holiday_hud = candidate_hud
+		holiday_scene = candidate_scene
+		holiday_controller = candidate_controller
 	return ""
 
 func _verified_external(path: String, digest: String) -> bool:
-	return path.is_absolute_path() and not path.begins_with("res://") and digest.length() == 64 and FileAccess.file_exists(path) and FileAccess.get_size(path) < 8 * 1024 * 1024 and FileAccess.get_sha256(path) == digest
+	return ExternalPath.is_external_file(path) and digest.length() == 64 and FileAccess.get_size(path) < 8 * 1024 * 1024 and FileAccess.get_sha256(path) == digest
 
 func _reset() -> String:
 	state = State.new()
@@ -239,12 +283,21 @@ func _reset() -> String:
 	# Content capabilities are immutable controller configuration; preserving the
 	# legacy record also preserves all existing command0 state/event hashes.
 	state.rule_state["resources"]["available_commands"] = [0]
+	if holiday_controller != null:
+		if holiday_scene == null or holiday_hud == null or hud == null:
+			return "holiday controller requires preflighted holiday scene and HUD"
+		state.rule_state["holiday"] = holiday_scene.initial_extension()
+		state.rule_state["resources"]["available_holiday_commands"] = [0]
 	session = Session.new()
 	if not session.rng.configure(Rng.OPENBIOS_PROFILE, boundary["rng_state"]):
 		return session.rng.configuration_error()
 	var error: String = controller.attach(session, state)
 	if not error.is_empty():
 		return error
+	if holiday_controller != null:
+		error = holiday_controller.attach(session, state)
+		if not error.is_empty():
+			return error
 	session.draw_logic = _native_draw
 	session.cd_logic = _bounded_cd
 	session.audio_logic = _bounded_audio
@@ -315,6 +368,9 @@ func _physics_process(_delta: float) -> void:
 				mask_key = KEY_RIGHT
 				pressed_tick = tick if tick % 10 == 7 else -1
 				released_tick = tick if tick % 10 == 1 else -1
+		elif holiday_controller != null and smoke_command == 0 and tick >= 246:
+			pressed_tick = 278
+			released_tick = 284
 		if tick == pressed_tick or tick == released_tick:
 			var event := InputEventKey.new()
 			event.physical_keycode = mask_key
@@ -370,7 +426,15 @@ func _physics_process(_delta: float) -> void:
 	if not captured_effect and state.rule_state["params"] != initial_params:
 		captured_effect = true
 		_capture("effect")
+	if holiday_controller != null:
+		if [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and tick == 245:
+			_capture("holiday-selection")
+		elif [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 5, 2] and tick == 284:
+			_capture("holiday-activity")
 	if not _week_continuation_enabled() and state.game_mode == 0x31 and state.rule_state["day_event_index"] == 1:
+		stopped = true
+		_finish()
+	elif smoke and holiday_controller != null and [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0] and state.rule_state.get("day_event_index") == 10:
 		stopped = true
 		_finish()
 	elif smoke and tick >= 600:
@@ -418,6 +482,17 @@ func _process(_delta: float) -> void:
 
 func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> void:
 	var current: State = base as State
+	if current.game_mode == 0x46 or (holiday_scene != null and holiday_scene.handles(current)):
+		if holiday_scene == null:
+			result.error = "holiday scene capability is not open"
+			return
+		var staged: Dictionary = holiday_scene.stage(current, session.clock.logic_iterations, result)
+		if not staged["error"].is_empty():
+			result.error = staged["error"]
+			return
+		staged_commands.append_array(staged["draw_commands"])
+		staged_services.append_array(staged["services"])
+		return
 	var data: Dictionary = current.rule_state
 	var prepared_commands: Array[Dictionary] = []
 	var prepared_services: Array[Dictionary] = []
@@ -510,6 +585,21 @@ func _activity_command(current: State) -> int:
 
 ## Save adapter post_apply hook. It rebuilds only owned presentation caches.
 func _present_committed(_restored_app: Node = null) -> String:
+	if state.game_mode == 0x46 or (holiday_scene != null and holiday_scene.handles(state)):
+		if holiday_scene == null or holiday_hud == null or hud == null:
+			return "holiday HUD capability is not open"
+		var active_lba: int = int(state.rule_state["background_cache"][state.rule_state["background_show"]])
+		var composed: Dictionary = holiday_hud.compose(state.rule_state, state.projection(), _holiday_profile(), trace, staged_commands, active_lba)
+		if not composed["error"].is_empty():
+			return composed["error"]
+		if composed["retain"]:
+			if canvas.get("_commands").is_empty():
+				return "holiday retain requires a prior committed frame"
+			return ""
+		var holiday_commands: Array[Dictionary] = []
+		holiday_commands.assign(composed["commands"])
+		canvas.set("_textures", {})
+		return canvas.present(holiday_commands)
 	if hud == null:
 		return canvas.present(staged_commands) # Synthetic engine/focus test seam.
 	var command: Dictionary = hud.compose(state.rule_state, state.projection(), trace, staged_commands)
@@ -518,6 +608,15 @@ func _present_committed(_restored_app: Node = null) -> String:
 	# Dynamic frame IDs must not retain an unbounded texture per logical tick.
 	canvas.set("_textures", {})
 	return canvas.present([command])
+
+func _holiday_profile() -> Dictionary:
+	if hud == null:
+		return {}
+	var result: Dictionary = {}
+	for key: String in ["family_name_hex", "icon_mode", "icon_count", "cursor_style"]:
+		if hud.profile.has(key):
+			result[key] = hud.profile[key]
+	return result
 
 func _resource_request_error(current: State, intent: Dictionary) -> String:
 	var command: int = _activity_command(current)

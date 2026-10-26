@@ -6,11 +6,14 @@ extends RefCounted
 const Session = preload("res://core/game_session.gd")
 const State = preload("res://rules/school_day_state.gd")
 const Controller = preload("res://scenes/school_day_controller.gd")
+const HolidayController = preload("res://scenes/holiday_controller.gd")
+const HolidayRules = preload("res://rules/holiday.gd")
 const InputFrame = preload("res://core/input_frame.gd")
 const Rng = preload("res://core/native_rng.gd")
 const Sequence = preload("res://presentation/native_sequence.gd")
 const Save = preload("res://services/save_service.gd")
 const SCHEMA: String = "tokimemo.playable-boundary.v1"
+const HOLIDAY_LBAS: Array[int] = [16131, 16283, 16318, 16379, 16361]
 const HOST_FIELDS: Array[String] = ["initial_params", "stopped", "failure", "captured_actor",
 	"captured_effect", "trace", "focus_paused", "playback_paused", "_window_focused",
 	"_application_focused", "_resume_input_pending", "_replay_requested", "smoke", "smoke_command",
@@ -24,16 +27,16 @@ func capture(app: Node, checkpoint_id: String) -> Dictionary:
 	var session: Session = app.get("session")
 	if session == null:
 		return _fail("preloaded playable session is required")
-	var boundary_error: String = _boundary_error(session.state, checkpoint_id)
+	var media: Dictionary = _trusted_media(app)
+	if not media["error"].is_empty():
+		return media
+	var boundary_error: String = _boundary_error(session.state, checkpoint_id, media.get("holiday_enabled", false))
 	if not boundary_error.is_empty():
 		return _fail(boundary_error)
 	if app.get("focus_paused") or app.get("_resume_input_pending") or app.get("video_capture_busy"):
 		return _fail("save requires a focused, idle application boundary")
 	if session.rng.get("_failure_receiver").is_valid():
 		return _fail("save cannot run inside a session step")
-	var media: Dictionary = _trusted_media(app)
-	if not media["error"].is_empty():
-		return media
 	var host: Dictionary = {}
 	for key: String in HOST_FIELDS:
 		host[key] = app.get(key)
@@ -73,8 +76,9 @@ func restore(app: Node, snapshot: Dictionary, post_apply: Callable = Callable())
 	if not prepared["error"].is_empty():
 		return prepared["error"]
 	var old: Dictionary = {"session": app.get("session"), "state": app.get("state"),
-		"controller": app.get("controller"), "pending_services": app.get("pending_services"),
-		"staged_services": app.get("staged_services"), "staged_commands": app.get("staged_commands")}
+		"controller": app.get("controller"), "holiday_controller": app.get("holiday_controller"),
+		"pending_services": app.get("pending_services"), "staged_services": app.get("staged_services"),
+		"staged_commands": app.get("staged_commands")}
 	var old_host: Dictionary = {}
 	for key: String in HOST_FIELDS:
 		old_host[key] = app.get(key)
@@ -87,6 +91,7 @@ func restore(app: Node, snapshot: Dictionary, post_apply: Callable = Callable())
 	app.set("session", prepared["session"])
 	app.set("state", prepared["session"].state)
 	app.set("controller", prepared["controller"])
+	app.set("holiday_controller", prepared.get("holiday_controller"))
 	app.set("pending_services", _records(snapshot["queued_service_events"]))
 	app.set("staged_services", _records(data["staged_services"]))
 	app.set("staged_commands", prepared["draw"])
@@ -150,9 +155,33 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 	var error: String = state.structural_error()
 	if not error.is_empty():
 		return _fail(error)
-	error = _boundary_error(state, data["checkpoint_id"])
+	error = _boundary_error(state, data["checkpoint_id"], media.get("holiday_enabled", false))
 	if not error.is_empty():
 		return _fail(error)
+	if media.get("holiday_enabled", false):
+		if state.rule_state.get("resources", {}).get("available_holiday_commands") != [0]:
+			return _fail("holiday command capabilities differ from validated media")
+		if state.game_mode == 0x46 or int(state.rule_state.get("day_event_index", 0)) >= 9:
+			error = HolidayRules.validate(state)
+			if not error.is_empty():
+				return _fail(error)
+		elif state.rule_state.get("holiday") != media["holiday_extension"]:
+			return _fail("holiday boundary extension differs from validated media")
+		if state.game_mode == 0x46:
+			if state.rule_state.get("background_show") != 1 or state.rule_state.get("background_cache", [0, 0]).slice(0, 2) != [16131, 16318] \
+				or not state.rule_state.get("actor_state", {}).is_empty() \
+				or not _matches_background_draw(data["draw"], media["holiday_backgrounds"][16318]):
+				return _fail("holiday command boundary lacks validated room background draw")
+		elif state.game_mode == 0x34 and state.rule_state.get("day_event_index") == 10:
+			if state.rule_state.get("background_show") != 1 or state.rule_state.get("background_cache", [0, 0]).slice(0, 2) != [16379, 16361] \
+				or not state.rule_state.get("actor_state", {}).is_empty() \
+				or not _matches_background_draw(data["draw"], media["holiday_backgrounds"][16361]):
+				return _fail("post-holiday command boundary lacks validated returned-room background draw")
+	else:
+		if state.game_mode == 0x46 or state.rule_state.has("holiday") \
+			or state.rule_state.get("resources", {}).has("available_holiday_commands") \
+			or int(state.rule_state.get("day_event_index", 0)) >= 9:
+			return _fail("holiday state requires preflighted holiday controller")
 	var session: Session = Session.new()
 	var clocks: Variant = snapshot["native_clocks"]
 	if not clocks is Dictionary or not _same_keys(clocks, session.clock.snapshot()):
@@ -213,6 +242,14 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 	error = controller.attach(session, state)
 	if not error.is_empty():
 		return _fail(error)
+	var holiday_controller: HolidayController = null
+	if media.get("holiday_enabled", false):
+		holiday_controller = HolidayController.new(app.get("controller").tables, media["holiday_tables"])
+		if not holiday_controller.error.is_empty():
+			return _fail(holiday_controller.error)
+		error = holiday_controller.attach(session, state)
+		if not error.is_empty():
+			return _fail(error)
 	session.clock.restore(clocks)
 	session.rng.restore(rng)
 	session.latched_input = input
@@ -234,16 +271,29 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 	var draw: Dictionary = _draw_commands(media, data["draw"])
 	if not draw["error"].is_empty():
 		return draw
-	return {"error": "", "session": session, "controller": controller, "draw": draw["commands"]}
+	return {"error": "", "session": session, "controller": controller, "holiday_controller": holiday_controller, "draw": draw["commands"]}
 
-func _boundary_error(state: State, checkpoint_id: Variant) -> String:
+func _boundary_error(state: State, checkpoint_id: Variant, holiday_enabled: bool = false) -> String:
 	if state.paused or state.restart_request:
 		return "paused/restart simulation is outside supported save boundaries"
+	var index: Variant = state.rule_state.get("day_event_index")
 	if checkpoint_id == "command":
 		if [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0]:
+			if index == 0 or (holiday_enabled and index == 10):
+				return ""
+		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and index == 9:
+			return ""
+	elif checkpoint_id == "holiday_command":
+		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and index == 9:
+			return ""
+	elif checkpoint_id == "next_command":
+		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0] and index == 10:
 			return ""
 	elif checkpoint_id == "first_result":
-		if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and state.rule_state.get("day_event_index") == 1:
+		if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and index == 1:
+			return ""
+	elif checkpoint_id == "mid_week":
+		if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and index in [2, 3, 4, 5, 6, 7, 8]:
 			return ""
 	return "checkpoint is outside the command/first-result save boundaries"
 
@@ -304,6 +354,16 @@ func _draw_commands(media: Dictionary, descriptors: Variant) -> Dictionary:
 			var error: String = _register_image(images, frame["id"], frame["image"])
 			if not error.is_empty():
 				return _fail(error)
+	if media.get("holiday_enabled", false):
+		for lba: int in media["holiday_backgrounds"]:
+			for background: Dictionary in media["holiday_backgrounds"][lba]:
+				var error: String = _register_image(images, background["id"], background["image"])
+				if not error.is_empty():
+					return _fail(error)
+		for frame: Dictionary in media["holiday_resources"]["frames"].values():
+			var error: String = _register_image(images, frame["id"], frame["image"])
+			if not error.is_empty():
+				return _fail(error)
 	var commands: Array[Dictionary] = []
 	for entry: Variant in descriptors:
 		if not entry is Dictionary or not _keys(entry, ["id", "x", "y"]) or not entry["id"] is String or not images.has(entry["id"]) or not entry["x"] is int or not entry["y"] is int:
@@ -312,6 +372,17 @@ func _draw_commands(media: Dictionary, descriptors: Variant) -> Dictionary:
 			return _fail("saved render identity/position is unavailable")
 		commands.append({"id": entry["id"], "image": images[entry["id"]], "position": Vector2i(entry["x"], entry["y"])})
 	return {"error": "", "commands": commands}
+
+func _matches_background_draw(descriptors: Variant, expected: Array) -> bool:
+	if not descriptors is Array or descriptors.size() != expected.size():
+		return false
+	for index: int in range(expected.size()):
+		var entry: Variant = descriptors[index]
+		var target: Dictionary = expected[index]
+		if not entry is Dictionary or not _keys(entry, ["id", "x", "y"]) \
+			or entry["id"] != target["id"] or entry["x"] != target["position"].x or entry["y"] != target["position"].y:
+			return false
+	return true
 
 func _identity(app: Node, media: Dictionary) -> String:
 	var assets: Array = []
@@ -330,8 +401,27 @@ func _identity(app: Node, media: Dictionary) -> String:
 				[frame["bounds"].position.x, frame["bounds"].position.y, frame["bounds"].size.x, frame["bounds"].size.y],
 				[frame["origin"].x, frame["origin"].y]])
 		assets.append([command, resources["sequences"], backgrounds, frames])
+	if not media.get("holiday_enabled", false):
+		return JSON.stringify([app.get("controller").tables, app.get("boundary"),
+			media["capabilities"], assets]).sha256_text()
+	var holiday_backgrounds: Array = []
+	for lba: int in HOLIDAY_LBAS:
+		var pieces: Array = []
+		for background: Dictionary in media["holiday_backgrounds"][lba]:
+			pieces.append([background["id"], _image_hash(background["image"]),
+				[background["position"].x, background["position"].y]])
+		holiday_backgrounds.append([lba, pieces])
+	var holiday_frames: Array = []
+	var frame_keys: Array = media["holiday_resources"]["frames"].keys()
+	frame_keys.sort()
+	for key: String in frame_keys:
+		var frame: Dictionary = media["holiday_resources"]["frames"][key]
+		holiday_frames.append([key, frame["id"], _image_hash(frame["image"]),
+			[frame["bounds"].position.x, frame["bounds"].position.y, frame["bounds"].size.x, frame["bounds"].size.y],
+			[frame["origin"].x, frame["origin"].y]])
 	return JSON.stringify([app.get("controller").tables, app.get("boundary"),
-		media["capabilities"], assets]).sha256_text()
+		media["capabilities"], assets, "holiday", media["holiday_tables"], media["holiday_extension"],
+		media["holiday_resources"]["sequences"], holiday_backgrounds, holiday_frames]).sha256_text()
 
 func _trusted_media(app: Node) -> Dictionary:
 	var resources: Variant = app.get("command_resources")
@@ -342,7 +432,7 @@ func _trusted_media(app: Node) -> Dictionary:
 		return _fail("preloaded command media configuration is incomplete")
 	var commands: Array = resources.keys()
 	for command: Variant in commands:
-		if not command is int or command not in [0, 7] or not backgrounds.has(command):
+		if not command is int or command not in [0, 1, 2, 3, 5, 6, 7] or not backgrounds.has(command):
 			return _fail("unsupported preloaded command media key")
 	for capability: Variant in live_caps:
 		if not capability is int:
@@ -368,7 +458,46 @@ func _trusted_media(app: Node) -> Dictionary:
 			if not background is Dictionary or not background.get("id") is String or not background.get("image") is Image \
 				or not background.get("position") is Vector2i:
 				return _fail("preloaded command background is incomplete")
-	return {"error": "", "resources": resources, "backgrounds": backgrounds, "capabilities": live_caps.duplicate()}
+	var holiday_controller: Variant = app.get("holiday_controller")
+	var holiday_scene: Variant = app.get("holiday_scene")
+	var holiday_hud: Variant = app.get("holiday_hud")
+	if holiday_controller == null and holiday_scene == null and holiday_hud == null:
+		return {"error": "", "resources": resources, "backgrounds": backgrounds,
+			"capabilities": live_caps.duplicate(), "holiday_enabled": false}
+	if not holiday_controller is HolidayController or not holiday_controller.error.is_empty() \
+		or holiday_controller.common != app.get("controller").tables or holiday_scene == null \
+		or not holiday_scene.get("_ready") is bool or not holiday_scene.get("_ready") \
+		or not holiday_scene.get("tables") is Dictionary or holiday_controller.tables != holiday_scene.get("tables") \
+		or holiday_hud == null or not holiday_hud.get("_opened") is bool or not holiday_hud.get("_opened") \
+		or app.get("hud") == null:
+		return _fail("preloaded holiday controller/media configuration is incomplete")
+	var holiday_extension: Variant = holiday_scene.call("initial_extension") if holiday_scene.has_method("initial_extension") else {}
+	var holiday_resources: Variant = holiday_scene.get("resources")
+	var holiday_backgrounds: Variant = holiday_scene.get("backgrounds")
+	if not holiday_extension is Dictionary or holiday_extension.get("icon_count") != 14 \
+		or not holiday_resources is Dictionary or not holiday_resources.get("sequences") is Dictionary \
+		or not holiday_resources["sequences"].get("0") is Array or holiday_resources["sequences"]["0"].is_empty() \
+		or not holiday_resources.get("frames") is Dictionary or holiday_resources["frames"].is_empty() \
+		or not holiday_backgrounds is Dictionary or holiday_backgrounds.size() != HOLIDAY_LBAS.size():
+		return _fail("preloaded holiday media configuration is incomplete")
+	for key: Variant in holiday_resources["frames"]:
+		if not key is String:
+			return _fail("preloaded holiday frame key must be a string index")
+	for frame: Variant in holiday_resources["frames"].values():
+		if not frame is Dictionary or not frame.get("id") is String or not frame.get("image") is Image \
+			or not frame.get("bounds") is Rect2i or not frame.get("origin") is Vector2i:
+			return _fail("preloaded holiday frame is incomplete")
+	for lba: int in HOLIDAY_LBAS:
+		if not holiday_backgrounds.get(lba) is Array or holiday_backgrounds[lba].is_empty():
+			return _fail("preloaded holiday background is incomplete")
+		for background: Variant in holiday_backgrounds[lba]:
+			if not background is Dictionary or not background.get("id") is String or not background.get("image") is Image \
+				or not background.get("position") is Vector2i:
+				return _fail("preloaded holiday background is incomplete")
+	return {"error": "", "resources": resources, "backgrounds": backgrounds, "capabilities": live_caps.duplicate(),
+		"holiday_enabled": true, "holiday_tables": holiday_controller.tables,
+		"holiday_extension": holiday_extension, "holiday_resources": holiday_resources,
+		"holiday_backgrounds": holiday_backgrounds}
 
 func _register_image(images: Dictionary, ident: String, image: Image) -> String:
 	if ident.is_empty() or image.is_empty():

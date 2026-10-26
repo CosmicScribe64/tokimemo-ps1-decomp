@@ -96,7 +96,7 @@ func process_queued(app: Node) -> bool:
 			return true
 		completed_requests += 1
 		last_error = ""
-		_message("Saved command selection." if last_checkpoint == "command" else "Saved the first result.")
+		_message("Saved command selection." if last_checkpoint in ["command", "holiday_command", "next_command"] else "Saved the first result.")
 	else:
 		storage_calls += 1
 		var loaded: Dictionary = storage.load_slot(SLOT)
@@ -113,12 +113,15 @@ func process_queued(app: Node) -> bool:
 		last_checkpoint = loaded["snapshot"]["gameplay_state"]["checkpoint_id"]
 		completed_requests += 1
 		last_error = ""
-		_message("Loaded command selection." if last_checkpoint == "command" else "Loaded the first result.")
+		_message("Loaded command selection." if last_checkpoint in ["command", "holiday_command", "next_command"] else "Loaded the first result.")
 	return true
 
 func _checkpoint(app: Node) -> String:
 	var state: State = app.get("state")
 	if [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0]:
+		if state.rule_state.get("day_event_index") == 0 or (state.rule_state.get("day_event_index") == 10 and app.get("holiday_controller") != null):
+			return "command"
+	if [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and state.rule_state.get("day_event_index") == 9 and app.get("holiday_controller") != null:
 		return "command"
 	if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and state.rule_state.get("day_event_index") == 1:
 		return "first_result"
