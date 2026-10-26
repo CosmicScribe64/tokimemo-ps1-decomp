@@ -164,6 +164,19 @@ While `include/main_api.h` is split into topic headers (section 5), read `main_a
 - Do not mix refactors with matches. Do not commit build output or game data.
 - Agent commits end with the `Co-Authored-By` line from the project attribution rules.
 
+## 12a. Phase 3 port (`port/godot/`): decomp parity & 16x16 tile verification
+
+Every Phase 3 Godot port slice (`port/godot/`) must be verified against both the decompiled C code (`src/main/`, `src/ovl/`) and ground-truth PS1 hardware emulator captures (`tools/emu/run.sh`) before merge or web-gallery publication:
+
+1. **Outer frame loop parity**: A presenter or screen controller must include the outer mode dispatcher's per-frame calls, not only the local stage init (`hud_screen_frame_draw(0/1/2)` for the 32x32 seasonal checkerboard background, `message_window_title_update()`, `cal_base_show()` / `magazine_base_show()`, `menu_bar_show()`, `menu_cursor_update()`).
+2. **Call-site argument & palette audit**: Every `set_kanji_string(x, y, color_index, str, flag)` and `prim_gradient_rect(x, y, w, h, ot, rgb, style)` call in GDScript must match the exact C call-site coordinates, CP932 byte string, `color_index` (`0..7` in `text_palette_0`, `8..15` in `text_palette_1`), shadow suppression (`0x0000` in `text_shadow_palette_0/1` for attributes `3, 4, 5, 14, 15`), and `POLY_G4` vertex color math (`case 0..6` in `src/main/gpu_primitives.c`).
+3. **Ordering Table (OT) & actor traversal order**: PS1 `AddPrim` head-inserts into the OT (`OT[15]` drawn first, `OT[0]` drawn last), and `actor_draw_all` queues actors `0..N` so higher actor indices are drawn before lower actor indices (`N` down to `0`) while sprite parts within an actor are queued `count - 1` down to `0` (drawn `0..count - 1`). Never reverse actor or OT draw order.
+4. **No placeholder HUD view dictionaries**: Presenters and capture harnesses must not hardcode placeholder state (`weekday: 0`, `cursor_frame: 0`, or dummy parameter arrays). Derive `weekday` from the date/calendar rules or live `GameState`, keep the active hand cursor (`Frame 156` / `0x9C` via `hud_cursor_actor_init`) unless the C code explicitly calls `holiday_cursor_Sprt_hide()`, and use the actual save-state / RAM parameter values.
+5. **Stateful per-frame engine ticks**: Text and HUD presenters must model per-frame state progression (`check_k_scroll()` 3-row dialogue windowing at `y = 170, 186, 202`, `k_disp_inc()` typewriter reveal, `D_80125CA0` title badge slide, icon animation steps).
+6. **16x16 tile hotspot & bounding-box gate**:
+   - Run `tools/port/verify_tile_diff.py` against a PS1 emulator reference capture (`300` `16x16` tiles across `320x240`, plus `title_badge`, `param_panel`, `date_pillar`, `center_scene`, and `message_window` sub-regions). Do not rely on whole-screen MAE alone.
+   - Assert in automated Godot tests that zero glyph or shadow pixels overflow their container bounds (`Rect2i(27, 166, 266, 52)` for the message window; `Rect2i(0, 33, 283, 125)` for the notebook).
+
 ## 13. Review gate
 
 A code review checks each change against this file before a ticket moves to Done. Unresolved findings block Done. Record the result in the ticket's Comments.
@@ -185,5 +198,6 @@ Reviewer checklist:
 - [ ] Non-obvious tricks explained; no dead code or stray debug.
 - [ ] No copyrighted game data or assets staged; no game text in names, comments or rename notes (section 10).
 - [ ] Scripts are Python 3, Docker-run, no host installs.
+- [ ] Phase 3 port changes (`port/godot/`) pass the section 12a decomp-parity checklist (outer frame loop calls, exact `set_kanji_string` / `prim_gradient_rect` arguments and shadow palettes, PS1 OT/actor order, no placeholder HUD dicts, 3-row `check_k_scroll` bounds) and `tools/port/verify_tile_diff.py` 16x16 tile verification against PS1 emulator captures.
 - [ ] Commits small, ticket id in message, only intended files staged.
 - [ ] Wiki updated: ticket status/kanban match, `wiki/log.md` entry appended, index updated if pages were added.
