@@ -92,17 +92,17 @@ const PLACE_NAME_TABLE := [
 	{"id": 7, "text": "美術館", "bytes_hex": "94fc8f708ad9", "symbol": "place_name_07_art_museum"},
 	{"id": 8, "text": "図書館", "bytes_hex": "907d8f918ad9", "symbol": "place_name_08_library"},
 	{"id": 9, "text": "ゲームセンター", "bytes_hex": "8351815b8380835a8393835e815b", "symbol": "place_name_09_arcade"},
-	{"id": 10, "text": "ボーリング場", "bytes_hex": "837b815b838a8393834f8fef", "symbol": "place_name_10_bowling"},
+	{"id": 10, "text": "ボーリング場", "bytes_hex": "837b815b838a8393834f8fea", "symbol": "place_name_10_bowling"},
 	{"id": 11, "text": "カラオケ屋", "bytes_hex": "834a83898349835089ae", "symbol": "place_name_11_karaoke"},
 	{"id": 12, "text": "遊園地", "bytes_hex": "97568980926e", "symbol": "place_name_12_amusement_park"},
 	{"id": 13, "text": "スタジアム", "bytes_hex": "8358835e835783418380", "symbol": "place_name_13_stadium"},
 	{"id": 14, "text": "映画館", "bytes_hex": "896689e68ad9", "symbol": "place_name_14_cinema"},
-	{"id": 15, "text": "コンサート会場", "bytes_hex": "835283938354815b836789ef8fef", "symbol": "place_name_15_concert_hall"},
+	{"id": 15, "text": "コンサート会場", "bytes_hex": "835283938354815b836789ef8fea", "symbol": "place_name_15_concert_hall"},
 	{"id": 16, "text": "プール", "bytes_hex": "8376815b838b", "symbol": "place_name_16_pool"},
 	{"id": 17, "text": "海", "bytes_hex": "8a43", "symbol": "place_name_17_beach"},
 	{"id": 18, "text": "神社", "bytes_hex": "905f8ed0", "symbol": "place_name_18_shrine"},
-	{"id": 19, "text": "スケート場", "bytes_hex": "83588350815b83678fef", "symbol": "place_name_19_skating_rink"},
-	{"id": 20, "text": "スキー場", "bytes_hex": "8358834c815b8fef", "symbol": "place_name_20_ski_resort"},
+	{"id": 19, "text": "スケート場", "bytes_hex": "83588350815b83678fea", "symbol": "place_name_19_skating_rink"},
+	{"id": 20, "text": "スキー場", "bytes_hex": "8358834c815b8fea", "symbol": "place_name_20_ski_resort"},
 ]
 
 const GIRL_SHORT_NAME_TABLE := [
