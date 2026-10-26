@@ -5,17 +5,24 @@ const HolidayAppointmentRules = preload("res://rules/holiday_appointment.gd")
 const Layout = preload("res://ui/native_hud.gd")
 
 const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
+const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA/UlEQVR4nMWWvQ2DMBBGj1MKlxmBURjFZcqUlIzCCCkpXaZMSekRXLojshNZwUQYzM/3FQidjd9DQtwV1MiBoui6IW015UYbTbJVi/YWrW4nAuW1pFufL9B3ilpZLdrLBA7HBSHEpgOttfkC4mT4SAABDwIouBdAwr0AEu5enpFwF0bC/wqkvokUPLUen89I+EgAAQ8CKLgXQMJdCiIalFHZ/ZzUa1K6VxUZa/y9rOXs4xd3iXv/mn7+MB/Qbxy8+9afibmCCRw+8iezWsCeDB8JIOBBAAUPAij4ZoE9hhlGwl2yBPYc43hu8Wj4ROBs+EgAAQ8CKHgQQMEd9w2udJiVow0PSQAAAABJRU5ErkJggg=="
+const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
 
 var _date_pack_root := ""
 var _date_manifest: Dictionary = {}
 var _holiday_room_image: Image
 var _date_bg_images: Dictionary = {}
 var _shiori_portrait_image: Image
+var _checker_tile: Image
 var _opened_date_pack := false
 
 
 func open_date_preview(hud_manifest_path: String, font_root: String, date_pack_root: String, hud_sha: String = HUD_SHA) -> bool:
 	_opened_date_pack = false
+	_checker_tile = Image.new()
+	if _checker_tile.load_png_from_buffer(Marshalls.base64_to_raw(CHECKER_TILE_B64)) != OK:
+		error = "failed to decode checkerboard background tile"
+		return false
 	if not super.open_manifest(hud_manifest_path, hud_sha, font_root):
 		return false
 
@@ -83,12 +90,12 @@ static func default_hud_view(state: HolidayAppointmentRules.HolidayState) -> Dic
 		"year": state.year,
 		"month": state.month,
 		"day": state.day,
-		"weekday": 0,
+		"weekday": 6,
 		"day_kind": 1,
-		"parameters": [64, 61, 59, 60, 58, 63, 62, 55, 10],
+		"parameters": [97, 43, 40, 40, 38, 33, 59, 4, 3],
 		"selected": clampi(state.menu_cursor, 0, 13),
 		"icon_enabled": state.icon_enabled.slice(0, 14),
-		"cursor_frame": 0,
+		"cursor_frame": 156,
 		"icon_steps": icon_steps,
 		"icon_elapsed": icon_elapsed,
 	}
@@ -111,10 +118,12 @@ func render_holiday_appointment_notice(state: HolidayAppointmentRules.HolidaySta
 			"attribute": 0,
 		})
 	_compositor.set_text_runs(runs)
+	var base := Image.create(320, 240, false, Image.FORMAT_RGBA8)
+	_draw_checkerboard(base)
 	var backgrounds: Array[Dictionary] = [
 		{"image": _holiday_room_image, "position": Vector2i(0, 72)},
 	]
-	var image: Image = _compositor.render(view, null, backgrounds, false)
+	var image: Image = _compositor.render(view, base, backgrounds, false)
 	return {
 		"id": "holiday_appointment_notice",
 		"image": image,
@@ -173,7 +182,8 @@ func render_date_arrival_scene(state: HolidayAppointmentRules.HolidayState, laun
 	var place_id := int(launch_payload.get("chosen_place", 0))
 	var bg_image: Image = _date_bg_images.get(place_id, _date_bg_images.get(0))
 	var image := Image.create(320, 240, false, Image.FORMAT_RGBA8)
-	image.fill(Color.BLACK)
+	# hud_screen_frame_draw(2) in src/ovl/date/entry.c:736 tiles checkerboard behind bottom message window
+	_draw_checkerboard(image)
 
 	# 1. Date spot 320x160 background at (0, 0) (dec_bg_draw(1) in place_init)
 	_compositor._blit(image, bg_image, null, Vector2i(0, 0), false)
@@ -189,7 +199,7 @@ func render_date_arrival_scene(state: HolidayAppointmentRules.HolidayState, laun
 		"year": state.year,
 		"month": state.month,
 		"day": state.day,
-		"weekday": 0,
+		"weekday": 6,
 		"day_kind": 1,
 	}
 	var cal: Dictionary = Layout.build_calendar(date_info)
@@ -257,7 +267,7 @@ func render_date_arrival_scene(state: HolidayAppointmentRules.HolidayState, laun
 func _render_holiday_without_command_icons(view: Dictionary, show_menu_bar: bool, selected_row: int) -> Image:
 	var all_actors: Array[Dictionary] = _compositor.build_actors(view)
 	var image := Image.create(320, 240, false, Image.FORMAT_RGBA8)
-	image.fill(Color.BLACK)
+	_draw_checkerboard(image)
 	_compositor.last_coverage = Image.create(320, 240, false, Image.FORMAT_L8)
 	_compositor.last_coverage.fill(Color.BLACK)
 
@@ -293,19 +303,48 @@ func _render_holiday_without_command_icons(view: Dictionary, show_menu_bar: bool
 	return image
 
 
-func _draw_semi_bar(target: Image, rect: Rect2i, rgb5: Vector3i) -> void:
+func _draw_checkerboard(target: Image) -> void:
+	if _checker_tile == null:
+		target.fill(Color8(40, 200, 160))
+		return
+	var w := _checker_tile.get_width()
+	var h := _checker_tile.get_height()
+	for ty in range(0, 240, 32):
+		for tx in range(0, 320, 32):
+			target.blit_rect(_checker_tile, Rect2i(0, 0, w, h), Vector2i(tx, ty))
+
+
+func _draw_semi_bar(target: Image, rect: Rect2i, _rgb5: Vector3i) -> void:
+	# Exact PS1 POLY_G4 case 0 for menu_bar_style[1] = 0x822F7F2F (menu_speaker_girl.c:464, gpu_primitives.c:231-237):
+	# v0=(214,246,214), v1=(120,248,120), v2=(26,250,26), v3=(188,252,188)
 	for y in range(rect.size.y):
+		var py: int = rect.position.y + y
+		if py < 0 or py >= 240:
+			continue
+		var fy: float = float(y) / float(rect.size.y)
 		for x in range(rect.size.x):
-			var p := rect.position + Vector2i(x, y)
-			if p.x < 0 or p.y < 0 or p.x >= 320 or p.y >= 240:
+			var px: int = rect.position.x + x
+			if px < 0 or px >= 320:
 				continue
-			var back := target.get_pixelv(p)
-			var blended := Vector3i(
-				clampi((back.r8 >> 4) + (rgb5.x >> 1), 0, 31),
-				clampi((back.g8 >> 4) + (rgb5.y >> 1), 0, 31),
-				clampi((back.b8 >> 4) + (rgb5.z >> 1), 0, 31)
-			)
-			target.set_pixelv(p, Color8(blended.x << 3, blended.y << 3, blended.z << 3))
+			var fx: float = float(x) / float(rect.size.x)
+			var fr_rb: float
+			var fr_g: float
+			if fx + fy <= 1.0:
+				fr_rb = 214.0 + fx * (120.0 - 214.0) + fy * (26.0 - 214.0)
+				fr_g = 246.0 + fx * (248.0 - 246.0) + fy * (250.0 - 246.0)
+			else:
+				var u: float = 1.0 - fx
+				var v: float = 1.0 - fy
+				fr_rb = 188.0 + u * (26.0 - 188.0) + v * (120.0 - 188.0)
+				fr_g = 252.0 + u * (250.0 - 252.0) + v * (248.0 - 252.0)
+			var d: int = DITHER[(py & 3) * 4 + (px & 3)]
+			var f_rb5: int = clampi((int(fr_rb) + d) >> 3, 0, 31)
+			var f_g5: int = clampi((int(fr_g) + d) >> 3, 0, 31)
+			var back := target.get_pixel(px, py)
+			var out_r5: int = clampi((back.r8 >> 4) + (f_rb5 >> 1), 0, 31)
+			var out_g5: int = clampi((back.g8 >> 4) + (f_g5 >> 1), 0, 31)
+			var out_b5: int = clampi((back.b8 >> 4) + (f_rb5 >> 1), 0, 31)
+			target.set_pixelv(Vector2i(px, py), Color8(out_r5 << 3, out_g5 << 3, out_b5 << 3, 255))
 
 
 func _draw_place_title_banner(target: Image, place_hex: String) -> void:

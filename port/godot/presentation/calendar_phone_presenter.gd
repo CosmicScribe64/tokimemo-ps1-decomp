@@ -101,7 +101,7 @@ func render_calendar_screen(day_count: int = 5, player_birthday: int = 0x19B,
 	_draw_checkerboard(target)
 
 	# 2. Top wooden parameter panel (Frame 61) drawn behind notebook (OT 12)
-	var stats: Array[int] = [97, 43, 40, 16, 40, 7, 55, 15, 18] # Condition, Lit, Sci, Art, Ath, Triv, Look, Guts, Stress
+	var stats: Array[int] = [97, 43, 40, 40, 38, 33, 59, 4, 3] # Condition, Lit, Sci, Art, Ath, Triv, Look, Guts, Stress
 	_draw_parameter_panel(target, stats)
 
 	# 3. Base Gouraud panel (cal_base_show in hud_screens.c:640: Rect2i(0, 33, 283, 125))
@@ -150,7 +150,7 @@ func render_holiday_phone_screen(cursor: int = 0, dialed_digits: Array[int] = []
 	_draw_checkerboard(target)
 
 	# 2. Top wooden parameter panel (Frame 61) drawn behind notebook (OT 12)
-	var stats: Array[int] = [97, 43, 40, 16, 40, 7, 55, 15, 18]
+	var stats: Array[int] = [97, 43, 40, 40, 38, 33, 59, 4, 3]
 	_draw_parameter_panel(target, stats)
 
 	# 3. Base Gouraud panel (cal_base_show: Rect2i(0, 33, 283, 125))

@@ -320,3 +320,36 @@ func _test_visual_rendering_and_captures() -> void:
 	_check(phone_yoshio_img.save_png(phone_yoshio_path) == OK, "Saved phone book (Yoshio) capture to: " + phone_yoshio_path)
 	_check(phone_shiori_img.save_png(phone_shiori_path) == OK, "Saved phone book (Shiori) capture to: " + phone_shiori_path)
 	_check(mag_img.save_png(mag_cap_path) == OK, "Saved magazine capture to: " + mag_cap_path)
+
+	# 6. 16x16 tile hotspot verification against PS1 emulator reference captures
+	var emu_dir := "/workspace/.claude/orchestrator/state/T-29013/calendar-phone-screens-v1/emu-reference"
+	var emu_mag_path := emu_dir.path_join("emu_magazine.png")
+	if FileAccess.file_exists(emu_mag_path):
+		var emu_mag := Image.new()
+		if emu_mag.load(emu_mag_path) == OK:
+			var upper_hotspots := _count_16x16_hotspots(emu_mag, mag_img, Rect2i(0, 0, 320, 160), 20.0)
+			_check(upper_hotspots == 0, "16x16 tile pass: Magazine upper layout (y=0..160) has 0 tiles > 20 MAE vs emu_magazine.png (got %d)" % upper_hotspots)
+	var emu_pb_path := emu_dir.path_join("emu_phone_book.png")
+	if FileAccess.file_exists(emu_pb_path):
+		var emu_pb := Image.new()
+		if emu_pb.load(emu_pb_path) == OK:
+			var nb_hotspots := _count_16x16_hotspots(emu_pb, phone_yoshio_img, Rect2i(16, 32, 272, 128), 20.0)
+			_check(nb_hotspots == 0, "16x16 tile pass: Phone Book notebook region has 0 tiles > 20 MAE vs emu_phone_book.png (got %d)" % nb_hotspots)
+
+
+func _count_16x16_hotspots(emu: Image, gd: Image, region: Rect2i, threshold: float) -> int:
+	var hot := 0
+	for ty in range(region.position.y, region.position.y + region.size.y, 16):
+		for tx in range(region.position.x, region.position.x + region.size.x, 16):
+			var err := 0.0
+			var cnt := 0
+			for y in range(maxi(1, ty), mini(ty + 16, region.position.y + region.size.y)):
+				for x in range(maxi(1, tx), mini(tx + 16, region.position.x + region.size.x)):
+					var pe := emu.get_pixel(x, y)
+					var pg := gd.get_pixel(x, y)
+					err += (absf(pe.r8 - pg.r8) + absf(pe.g8 - pg.g8) + absf(pe.b8 - pg.b8)) / 3.0
+					cnt += 1
+			if cnt > 0 and (err / float(cnt)) > threshold:
+				hot += 1
+	return hot
+

@@ -243,6 +243,36 @@ func _test_render_and_save_captures() -> void:
 	var path4 := captures_dir.path_join("04-date-arrival-scene.png")
 	_check(img4.save_png(path4) == OK, "saved 04-date-arrival-scene.png")
 
+	# 5. 16x16 tile verification of HUD panels (Parameter Panel & Date Pillar) against menu-settled PS1 emulator capture
+	var emu_settled_path := repo_root.path_join(".claude/orchestrator/state/T-29013/evidence/menu-settled/shot_final.png")
+	if FileAccess.file_exists(emu_settled_path):
+		var emu := Image.new()
+		if emu.load(emu_settled_path) == OK:
+			for pair in [["01-notice", img1], ["02-choice", img2], ["03-confirm", img3]]:
+				var label := String(pair[0])
+				var cap: Image = pair[1]
+				var param_hot := _count_16x16_hotspots(emu, cap, Rect2i(28, 23, 264, 42), 5.0)
+				var pillar_hot := _count_16x16_hotspots(emu, cap, Rect2i(294, 45, 20, 114), 5.0)
+				_check(param_hot == 0, "%s 16x16 tile pass: Parameter Panel has 0 tiles > 5.0 MAE vs emu (got %d)" % [label, param_hot])
+				_check(pillar_hot == 0, "%s 16x16 tile pass: Date Pillar has 0 tiles > 5.0 MAE vs emu (got %d)" % [label, pillar_hot])
+
+
+func _count_16x16_hotspots(emu: Image, gd: Image, region: Rect2i, threshold: float) -> int:
+	var hot := 0
+	for ty in range(region.position.y, region.position.y + region.size.y, 16):
+		for tx in range(region.position.x, region.position.x + region.size.x, 16):
+			var err := 0.0
+			var cnt := 0
+			for y in range(ty, mini(ty + 16, region.position.y + region.size.y)):
+				for x in range(tx, mini(tx + 16, region.position.x + region.size.x)):
+					var pe := emu.get_pixel(x, y)
+					var pg := gd.get_pixel(x, y)
+					err += (absf(pe.r8 - pg.r8) + absf(pe.g8 - pg.g8) + absf(pe.b8 - pg.b8)) / 3.0
+					cnt += 1
+			if cnt > 0 and (err / float(cnt)) > threshold:
+				hot += 1
+	return hot
+
 
 func _assert_text_runs_in_message_box(runs: Array, label: String) -> void:
 	# Message window inner gradient is Rect2i(27, 166, 266, 52) -> x in [27..293], y in [166..218].
