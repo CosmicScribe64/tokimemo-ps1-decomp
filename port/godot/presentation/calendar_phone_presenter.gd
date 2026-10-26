@@ -232,18 +232,18 @@ func render_holiday_magazine_screen(substep: int = 0) -> Image:
 	_draw_actor(target, 151, Vector2i(0, -40))
 	_draw_actor(target, 140, Vector2i(0, -40))
 
-	# 5. Magazine typography
-	# MOVIE box: 休館 at (192, 26) (D_800B5D1C[0] padded with spaces)
-	_draw_text_hex_checked(target, STR_HEX["movie_closed"], Vector2i(192, 26), 0)
-	# Subtitle: ＫＮＭ交響楽団 at (192, 58)
-	_draw_text_hex_checked(target, STR_HEX["subtitle_knm"], Vector2i(192, 58), 0)
-	# Notice lines
-	_draw_text_hex_checked(target, STR_HEX["mag_notice1"], Vector2i(2, 60), 0)
-	_draw_text_hex_checked(target, STR_HEX["mag_notice2"], Vector2i(2, 76), 0)
-	# Event article lines inside purple EVENT box
-	_draw_text_hex_checked(target, STR_HEX["mag_art1"], Vector2i(17, 106), 0)
-	_draw_text_hex_checked(target, STR_HEX["mag_art2"], Vector2i(17, 122), 0)
-	_draw_text_hex_checked(target, STR_HEX["mag_art3"], Vector2i(17, 138), 0)
+	# 5. Magazine typography (hud_magazine_page_build, src/main/hud_screens.c:1050-1225)
+	# MOVIE box: 休館 at (192, 26) (attribute 7)
+	_draw_text_hex_checked(target, STR_HEX["movie_closed"], Vector2i(192, 26), 7)
+	# Subtitle: ＫＮＭ交響楽団 at (192, 58) (attribute 8)
+	_draw_text_hex_checked(target, STR_HEX["subtitle_knm"], Vector2i(192, 58), 8)
+	# Notice lines (attribute 3: slate-grey 0xD210 with 0x0000 transparent shadow)
+	_draw_text_hex_checked(target, STR_HEX["mag_notice1"], Vector2i(2, 60), 3)
+	_draw_text_hex_checked(target, STR_HEX["mag_notice2"], Vector2i(2, 76), 3)
+	# Event article lines inside purple EVENT box (attribute 6)
+	_draw_text_hex_checked(target, STR_HEX["mag_art1"], Vector2i(17, 106), 6)
+	_draw_text_hex_checked(target, STR_HEX["mag_art2"], Vector2i(17, 122), 6)
+	_draw_text_hex_checked(target, STR_HEX["mag_art3"], Vector2i(17, 138), 6)
 
 	# 6. Hand cursor pointing at event article at (76, 134)
 	_draw_hand_cursor(target, Vector2i(76, 134))
@@ -466,7 +466,7 @@ func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, pale
 	for i in range(0, codes.size(), 2):
 		if i + 1 >= codes.size(): break
 		var code_unit := codes.slice(i, i + 2)
-		var glyph_res: Dictionary = _font.get_glyph_image(code_unit, palette_row)
+		var glyph_res: Dictionary = _font.get_glyph_image(code_unit, palette_row & 7, (palette_row >> 3) & 1)
 		var gx_pos: int = pos.x + x_offset
 		var gy_pos: int = pos.y
 
@@ -483,15 +483,26 @@ func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, pale
 
 		if glyph_res.get("status") == "glyph":
 			var g_img: Image = glyph_res["image"]
+			# In text_shadow_palette_0/1 (asm/data/main/text_system.data), attributes 3, 4, 5, 14, 15
+			# have CLUT entry 0x0000 (transparent), so PS1 hardware draws no drop shadow for them.
+			var has_shadow: bool = not (palette_row in [3, 4, 5, 14, 15])
+			if has_shadow:
+				for gy in range(12):
+					var py: int = gy_pos + gy + 1
+					if py < 0 or py >= 240: continue
+					for gx in range(12):
+						var px: int = gx_pos + gx + 1
+						if px < 0 or px >= 320: continue
+						if g_img.get_pixel(gx, gy).a > 0:
+							target.set_pixelv(Vector2i(px, py), Color8(0, 0, 0, 255))
 			for gy in range(12):
 				var py: int = gy_pos + gy
+				if py < 0 or py >= 240: continue
 				for gx in range(12):
 					var px: int = gx_pos + gx
+					if px < 0 or px >= 320: continue
 					if g_img.get_pixel(gx, gy).a > 0:
-						if px + 1 >= 0 and px + 1 < 320 and py + 1 >= 0 and py + 1 < 240:
-							target.set_pixelv(Vector2i(px + 1, py + 1), Color8(0, 0, 0, 220))
-						if px >= 0 and px < 320 and py >= 0 and py < 240:
-							target.set_pixelv(Vector2i(px, py), g_img.get_pixel(gx, gy))
+						target.set_pixelv(Vector2i(px, py), g_img.get_pixel(gx, gy))
 
 		x_offset += 14
 
