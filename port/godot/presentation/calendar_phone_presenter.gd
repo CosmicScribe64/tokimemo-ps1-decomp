@@ -92,7 +92,7 @@ func _ensure_compositor_coverage() -> void:
 		_compositor.last_coverage.fill(Color.BLACK)
 
 # Renders the Calendar Screen (icon 12) matching emu_calendar.png
-func render_calendar_screen(day_count: int = 9, player_birthday: int = (4 | (4 << 4)),
+func render_calendar_screen(day_count: int = 5, player_birthday: int = 0x19B,
 		frame_count: int = 0) -> Image:
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
@@ -159,8 +159,8 @@ func render_holiday_phone_screen(cursor: int = 0, dialed_digits: Array[int] = []
 	# 4. Notebook spiral rings, rules and dividers (Actor 96 Frame 63 at (-16, -19))
 	_draw_actor(target, 63, Vector2i(-16, -19))
 
-	# 5. Header label 《電話番号》 (telephone_class_init in holiday.c:1348)
-	_draw_text_hex_checked(target, STR_HEX["title_phone_brackets"], Vector2i(24, 38), 1, "notebook")
+	# 5. Header label 電話番号 (telephone_class_init in holiday.c:1348: set_kanji_string(-0x80, -0x54, 3, "電話番号", 0))
+	_draw_text_hex_checked(target, STR_HEX["title_phone"], Vector2i(32, 36), 3, "notebook")
 
 	# 6. 14 Directory slots (holiday.c:1350)
 	var contact_hex_keys := [
@@ -186,7 +186,7 @@ func render_holiday_phone_screen(cursor: int = 0, dialed_digits: Array[int] = []
 
 		var available: bool = (i in [0, 1, 12, 13])
 		if available:
-			_draw_text_hex_checked(target, STR_HEX[contact_hex_keys[i]], Vector2i(sx, sy), 0, "notebook")
+			_draw_text_hex_checked(target, STR_HEX[contact_hex_keys[i]], Vector2i(sx, sy), 3, "notebook")
 
 	# 7. Hand cursor pointing at active slot (x[i] + w[i] - 4, y[i] + 8)
 	var cur_col: int = cursor / 5
@@ -203,12 +203,12 @@ func render_holiday_phone_screen(cursor: int = 0, dialed_digits: Array[int] = []
 
 	if dialed_digits.is_empty():
 		# Directory prompt: 福原 （誰に電話かけようかな？）
-		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(38, 170), 0, "message_window")
+		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
 		_draw_text_hex_checked(target, STR_HEX["bracket_open"], Vector2i(74, 170), 0, "message_window")
 		_draw_text_hex_checked(target, STR_HEX["prompt_phone_body"], Vector2i(88, 170), 0, "message_window")
 	else:
 		# Dialing sequence feedback
-		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(38, 170), 0, "message_window")
+		_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
 		_draw_t_cursor_marker(target, Vector2i(76, 171))
 
 	return target
@@ -245,8 +245,8 @@ func render_holiday_magazine_screen(substep: int = 0) -> Image:
 	_draw_text_hex_checked(target, STR_HEX["mag_art2"], Vector2i(17, 122), 6)
 	_draw_text_hex_checked(target, STR_HEX["mag_art3"], Vector2i(17, 138), 6)
 
-	# 6. Hand cursor pointing at event article at (76, 134)
-	_draw_hand_cursor(target, Vector2i(76, 134))
+	# 6. Hand cursor pointing at event article at (76, 133)
+	_draw_hand_cursor(target, Vector2i(76, 133))
 
 	# 7. Top-left wooden title badge: 情報誌 (settled state at (16, 30))
 	_draw_title_badge(target, STR_HEX["title_magazine"], Vector2i.ZERO, 3)
@@ -255,8 +255,8 @@ func render_holiday_magazine_screen(substep: int = 0) -> Image:
 	_draw_message_window(target)
 
 	# 9. Scrolled monologue in 3-row window (matching emu_magazine.png)
-	# Speaker 福原 pinned at (38, 170)
-	_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(38, 170), 0, "message_window")
+	# Speaker 福原 pinned at (39, 170)
+	_draw_text_hex_checked(target, STR_HEX["speaker_fukuhara"], Vector2i(39, 170), 0, "message_window")
 
 	if substep < 2:
 		# Lines 0 & 1 scrolled off; Row 1: Line 2 (そうそう、カレンダーで), Row 2: Line 3 (自分のバイオリズムが、)
@@ -282,6 +282,8 @@ func _draw_checkerboard(target: Image) -> void:
 			_blit_simple(target, _checker_tile, Vector2i(tx, ty))
 
 func _draw_cal_base(target: Image, rect: Rect2i) -> void:
+	# Exact PS1 POLY_G4 case 2 (prim_gradient_rect with arg5=0xE0E0E0, arg6=2 in gpu_primitives.c:225-230):
+	# v0 = v1 = v2 = 224, v3 = 179 (224 * 8 / 10).
 	for y in range(rect.size.y):
 		var py: int = rect.position.y + y
 		if py < 0 or py >= 240: continue
@@ -290,10 +292,11 @@ func _draw_cal_base(target: Image, rect: Rect2i) -> void:
 			var px: int = rect.position.x + x
 			if px < 0 or px >= 320: continue
 			var fx: float = float(x) / float(rect.size.x)
-			var mult: float = 1.0 - 0.15 * (fx * 0.5 + fy * 0.5)
+			var base_v: float = 224.0 if (fx + fy <= 1.0) else (224.0 - (fx + fy - 1.0) * 45.0)
 			var d: int = DITHER[(py & 3) * 4 + (px & 3)]
-			var v: int = clampi(int(220.0 * mult + d), 0, 255)
-			target.set_pixelv(Vector2i(px, py), Color8(v, v, v, 255))
+			var v5: int = clampi((int(base_v) + d) >> 3, 0, 31)
+			var v8: int = v5 << 3
+			target.set_pixelv(Vector2i(px, py), Color8(v8, v8, v8, 255))
 
 func _draw_parameter_panel(target: Image, stats: Array[int]) -> void:
 	# Gradient box: Rect2i(28, 23, 264, 42)
@@ -380,23 +383,39 @@ func _draw_title_badge(target: Image, title_hex: String, origin: Vector2i = Vect
 
 func _draw_hand_cursor(target: Image, screen_pos: Vector2i) -> void:
 	# Authentic PS1 hand cursor: Frame 156 (0x9C) bounds=[0, 0, 24, 16], origin=[0, 3]
-	# Placing finger tip (origin [0, 3]) at screen_pos:
-	_draw_actor(target, 156, Vector2i(screen_pos.x - 160, screen_pos.y - 120 + 3))
+	# _draw_actor already subtracts record["origin"] ([0, 3]) in hud_compositor.gd:164:
+	_draw_actor(target, 156, Vector2i(screen_pos.x - 160, screen_pos.y - 120))
 
 func _draw_menu_bar_highlight(target: Image, rect: Rect2i) -> void:
-	# Semi-transparent green bar matching menu_bar_show(0) in menu_speaker_girl.c:484 (0x832F7FAF)
+	# Exact PS1 POLY_G4 case 0 for menu_bar_style[0] = 0x832F7FAF (menu_speaker_girl.c:463, gpu_primitives.c:231-237):
+	# r=0x2F(47), g=0x7F(127), b=0xAF(175) wrapped mod 256 at *10 (v0), *8 (v1), *6 (v2), *4 (v3):
+	# v0=(214,246,214), v1=(120,248,120), v2=(26,250,26), v3=(188,252,188)
 	for y in range(rect.size.y):
 		var py: int = rect.position.y + y
 		if py < 0 or py >= 240: continue
+		var fy: float = float(y) / float(rect.size.y)
 		for x in range(rect.size.x):
 			var px: int = rect.position.x + x
 			if px < 0 or px >= 320: continue
+			var fx: float = float(x) / float(rect.size.x)
+			var fr_rb: float
+			var fr_g: float
+			if fx + fy <= 1.0:
+				fr_rb = 214.0 + fx * (120.0 - 214.0) + fy * (26.0 - 214.0)
+				fr_g = 246.0 + fx * (248.0 - 246.0) + fy * (250.0 - 246.0)
+			else:
+				var u: float = 1.0 - fx
+				var v: float = 1.0 - fy
+				fr_rb = 188.0 + u * (26.0 - 188.0) + v * (120.0 - 188.0)
+				fr_g = 252.0 + u * (250.0 - 252.0) + v * (248.0 - 252.0)
+			var d: int = DITHER[(py & 3) * 4 + (px & 3)]
+			var f_rb5: int = clampi((int(fr_rb) + d) >> 3, 0, 31)
+			var f_g5: int = clampi((int(fr_g) + d) >> 3, 0, 31)
 			var back: Color = target.get_pixel(px, py)
-			# Blend with green tint (r * 0.5 + 40, g * 0.5 + 110, b * 0.5 + 40)
-			var r: float = back.r * 0.5 + 0.15
-			var g: float = back.g * 0.5 + 0.45
-			var b: float = back.b * 0.5 + 0.15
-			target.set_pixelv(Vector2i(px, py), Color(r, g, b, 1.0))
+			var out_r5: int = clampi((back.r8 >> 4) + (f_rb5 >> 1), 0, 31)
+			var out_g5: int = clampi((back.g8 >> 4) + (f_g5 >> 1), 0, 31)
+			var out_b5: int = clampi((back.b8 >> 4) + (f_rb5 >> 1), 0, 31)
+			target.set_pixelv(Vector2i(px, py), Color8(out_r5 << 3, out_g5 << 3, out_b5 << 3, 255))
 
 func _draw_t_cursor_marker(target: Image, pos: Vector2i) -> void:
 	# Letter 'T' marker matching emu_phone_shiori.png at (76, 171)

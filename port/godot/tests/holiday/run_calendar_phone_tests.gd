@@ -266,7 +266,7 @@ func _test_visual_rendering_and_captures() -> void:
 	_check(init_err.is_empty(), "Presenter initialized with authentic font and HUD manifest: " + init_err)
 
 	# 1. Render Calendar Screen matching emu_calendar.png
-	var cal_img: Image = presenter.render_calendar_screen(9, (4 | (4 << 4)), 0)
+	var cal_img: Image = presenter.render_calendar_screen(5, 0x19B, 0)
 	_check(cal_img != null and cal_img.get_width() == 320 and cal_img.get_height() == 240,
 		"Calendar screen rendered at exact 320x240 dimensions")
 
