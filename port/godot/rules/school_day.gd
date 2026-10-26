@@ -1,5 +1,5 @@
 extends RefCounted
-## T-29004 / T-29014: actual school_day.c arithmetic and stage1/2 behavior (including Command 4 Club).
+## T-29004 / T-29014: actual school_day.c arithmetic and stage1/2 behavior (including Command 4 Club and Seasonal/Condition variants).
 
 const Math = preload("res://core/native_math.gd")
 const State = preload("res://rules/school_day_state.gd")
@@ -18,6 +18,100 @@ const CLUB_ACTIVITY_DELTAS: Array = [
 	[-31,  -1,  -1,   0,  15,   0,  -2,  11,   3], # 9: Swimming (水泳)
 	[-29,  -1,  -1,  -1,  14,   1,  -3,  10,   7], # 10: Basketball (バスケ)
 ]
+
+const WEEKDAY_BG_LBAS: Array[int] = [16131, 16141, 16151, 16160, 16292, 16268, 16277, 16283]
+const CLUB_BG_LBAS: Array[int] = [16215, 16224, 16234, 16244, 16252, 16260, 16168, 16177, 16206, 16197, 16187]
+const WEEKDAY_SICK_BG_LBAS: Array[int] = [16361, 16370, 16343, 16352]
+const VACATION_SICK_BG_LBAS: Array[int] = [16318, 16326, 16301, 16310]
+const HOLIDAY_ACTIVITY_BG_LBAS: Array[int] = [16379, 16379, 16379, 16387, 16292, 16396, 16277, 16283]
+
+const SUMMER_WEEKDAY_SOLO_SD_SETS: Dictionary = {0: 2, 1: 6, 2: 10, 3: 13, 5: 23, 6: 19, 7: 15}
+const NON_SUMMER_WEEKDAY_SOLO_SD_SETS: Dictionary = {0: 3, 1: 7, 2: 11, 3: 13, 5: 24, 6: 20, 7: 16}
+const SUMMER_CLUB_SOLO_SD_SETS: Array[int] = [2, 31, 6, 10, 28, 24, 13, 15, 21, 19, 17]
+const NON_SUMMER_CLUB_SOLO_SD_SETS: Array[int] = [3, 31, 7, 11, 29, 25, 13, 15, 21, 19, 17]
+const HOLIDAY_SD_SET_SUMMER: Array[int] = [0, 2, 4, 12, 12, 10, 8, 6]
+const HOLIDAY_SD_SET_OTHER: Array[int] = [1, 3, 5, 12, 12, 11, 9, 7]
+const HOLIDAY_SD_SECTORS_TABLE: Array[int] = [41446, 41487, 41528, 41569, 41610, 41651, 41692, 41733, 41774, 41815, 41856, 41897, 42910]
+
+const SICK_REST_SD_LBA: int = 32138
+const SICK_REST_SD_SECTORS: int = 9
+
+## Native source resolution matching src/main/school_day.c and src/main/holiday.c
+static func resolve_bg_and_sd(command: int, club_id: int = 0, is_summer: bool = false,
+	condition_bucket: int = 0, vacation_kind: int = 0, season_index: int = 0, companion_slot: int = 0) -> Dictionary:
+	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
+		return {"error": "unsupported command %d, expected 0..7" % command}
+	if command == 4 and (club_id < 0 or club_id > 10):
+		return {"error": "unsupported club_id %d, expected 0..10" % club_id}
+	if condition_bucket not in [0, 1]:
+		return {"error": "condition_bucket must be 0 or 1, got %d" % condition_bucket}
+	if vacation_kind < 0 or vacation_kind > 3:
+		return {"error": "vacation_kind must be 0..3, got %d" % vacation_kind}
+	if season_index < 0 or season_index > 3:
+		return {"error": "season_index must be 0..3, got %d" % season_index}
+	if companion_slot != 0:
+		return {"error": "companion variants for command %d are not supported in this tranche" % command}
+
+	var bg_lba: int = -1
+	var sd_set_id: int = -1
+	var sd_lba: int = -1
+	var sd_sectors: int = 41
+
+	# Background resolution
+	if condition_bucket == 1 and command == 7:
+		if vacation_kind != 0:
+			bg_lba = VACATION_SICK_BG_LBAS[season_index]
+		else:
+			bg_lba = WEEKDAY_SICK_BG_LBAS[season_index]
+	elif vacation_kind != 0:
+		if command == 4:
+			bg_lba = CLUB_BG_LBAS[club_id]
+		else:
+			bg_lba = HOLIDAY_ACTIVITY_BG_LBAS[command]
+	else:
+		if command == 4:
+			bg_lba = CLUB_BG_LBAS[club_id]
+		else:
+			bg_lba = WEEKDAY_BG_LBAS[command]
+
+	# SD resolution
+	if condition_bucket == 1 and command == 7:
+		sd_set_id = -1
+		sd_lba = SICK_REST_SD_LBA
+		sd_sectors = SICK_REST_SD_SECTORS
+	elif vacation_kind != 0:
+		if command == 4:
+			sd_set_id = SUMMER_CLUB_SOLO_SD_SETS[club_id] if is_summer else NON_SUMMER_CLUB_SOLO_SD_SETS[club_id]
+			sd_lba = 27834 + 41 * sd_set_id
+			sd_sectors = 41
+		else:
+			sd_set_id = HOLIDAY_SD_SET_SUMMER[command] if is_summer else HOLIDAY_SD_SET_OTHER[command]
+			sd_lba = HOLIDAY_SD_SECTORS_TABLE[sd_set_id]
+			sd_sectors = 41
+	else:
+		if command == 4:
+			sd_set_id = SUMMER_CLUB_SOLO_SD_SETS[club_id] if is_summer else NON_SUMMER_CLUB_SOLO_SD_SETS[club_id]
+			sd_lba = 27834 + 41 * sd_set_id
+			sd_sectors = 41
+		else:
+			var table: Dictionary = SUMMER_WEEKDAY_SOLO_SD_SETS if is_summer else NON_SUMMER_WEEKDAY_SOLO_SD_SETS
+			sd_set_id = table[command]
+			sd_lba = 42418 + 41 * sd_set_id
+			sd_sectors = 41
+
+	return {
+		"command": command,
+		"club_id": club_id,
+		"is_summer": is_summer,
+		"condition_bucket": condition_bucket,
+		"vacation_kind": vacation_kind,
+		"season_index": season_index,
+		"companion_slot": companion_slot,
+		"background_lba": bg_lba,
+		"sd_set_id": sd_set_id,
+		"sd_lba": sd_lba,
+		"sectors": sd_sectors,
+	}
 
 static func apply_parameters(state: State, command: int, holiday_factor: int,
 	result_divisor: int, tables: Dictionary) -> String:

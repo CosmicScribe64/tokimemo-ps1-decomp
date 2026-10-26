@@ -1,12 +1,13 @@
 extends RefCounted
-## T-29014: Unified media adapter for ordinary commands 0–7 (including Command 4 Club).
+## T-29014: Unified media adapter for ordinary commands 0–7 (including Command 4 Club and Seasonal/Condition Variants).
 ## Connects canonical MediaStore (commands 0, 7), SpringSchoolDayContentStore (1–3),
-## Weekday56ContentStore (5, 6), and ClubCommandContentStore (4, clubs 0..10).
+## Weekday56ContentStore (5, 6), ClubCommandContentStore (4, clubs 0..10), and SeasonalCommandContentStore (variants).
 
 const MediaStore = preload("res://services/school_day_media_store.gd")
 const SpringStore = preload("res://services/spring_school_day_content_store.gd")
 const Weekday56Store = preload("res://services/weekday_56_content_store.gd")
 const ClubStore = preload("res://services/club_command_content_store.gd")
+const SeasonalStore = preload("res://services/seasonal_command_content_store.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
 
 const MEDIA_ROUTES: Dictionary = {
@@ -37,6 +38,7 @@ var media: MediaStore
 var spring_store: SpringStore
 var weekday56_store: Weekday56Store
 var club_store: ClubStore
+var seasonal_store: SeasonalStore
 
 var command_resources: Dictionary = {}
 var command_backgrounds: Dictionary = {}
@@ -44,7 +46,7 @@ var club_resources: Dictionary = {}
 var club_backgrounds: Dictionary = {}
 var error: String = ""
 
-func open_packs(media_path: String, spring_path: String = "", weekday56_path: String = "", club_path: String = "") -> String:
+func open_packs(media_path: String, spring_path: String = "", weekday56_path: String = "", club_path: String = "", seasonal_path: String = "") -> String:
 	_clear()
 	if media_path.is_empty():
 		return _fail("mandatory canonical media pack path is required")
@@ -80,6 +82,11 @@ func open_packs(media_path: String, spring_path: String = "", weekday56_path: St
 		if not err.is_empty():
 			return _fail(err)
 
+	if not seasonal_path.is_empty():
+		seasonal_store = SeasonalStore.new()
+		if not seasonal_store.open_pack(seasonal_path):
+			return _fail("seasonal content preflight: " + seasonal_store.error_message())
+
 	return ""
 
 func get_available_commands() -> Array[int]:
@@ -96,6 +103,9 @@ func has_command(command: int, club_id: int = -1) -> bool:
 		return club_resources.has(club_id) and club_backgrounds.has(club_id)
 	return command_resources.has(command) and command_backgrounds.has(command)
 
+func has_seasonal_pack() -> bool:
+	return seasonal_store != null
+
 func get_resources(command: int, club_id: int = -1) -> Dictionary:
 	if command == 4:
 		return club_resources.get(club_id, {}).duplicate(true)
@@ -108,9 +118,43 @@ func get_background_commands(command: int, club_id: int = -1) -> Array[Dictionar
 		commands.append(cmd_dict.duplicate(true))
 	return commands
 
+func get_variant_resources(command: int, club_id: int = 0, is_summer: bool = false, condition_bucket: int = 0, vacation_kind: int = 0, season_index: int = 0) -> Dictionary:
+	if seasonal_store != null:
+		var comp: Dictionary = seasonal_store.get_variant_component(command, club_id, is_summer, condition_bucket, vacation_kind, season_index)
+		if not comp.is_empty() and comp.has("sd_id"):
+			return seasonal_store.get_sd_resources(comp["sd_id"])
+	return get_resources(command, club_id if command == 4 else -1)
+
+func get_variant_background_commands(command: int, club_id: int = 0, is_summer: bool = false, condition_bucket: int = 0, vacation_kind: int = 0, season_index: int = 0) -> Array[Dictionary]:
+	if seasonal_store != null:
+		var comp: Dictionary = seasonal_store.get_variant_component(command, club_id, is_summer, condition_bucket, vacation_kind, season_index)
+		if not comp.is_empty() and comp.has("background_id"):
+			var bg_img: Image = seasonal_store.get_background(comp["background_id"])
+			if bg_img != null:
+				return Canvas.background_commands(bg_img, comp["background_id"])
+	return get_background_commands(command, club_id if command == 4 else -1)
+
 func validate_variant(command: int, club_id: int = 11, month: int = 4, extra: int = 15, vacation: int = 0, health: int = 0) -> String:
 	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		return "unsupported ordinary command: %d" % command
+	if command in [1, 2, 3, 4, 5, 6] and extra != 15:
+		return "companion variants for command %d are not supported in this tranche" % command
+
+	var is_summer: bool = month in [6, 7, 8, 9]
+	var condition_bucket: int = 1 if health == 3 else 0
+	var season_index: int = 1 if is_summer else (0 if month in [3, 4, 5] else (2 if month in [9, 10, 11] else 3))
+	var cid: int = club_id if command == 4 else 0
+
+	# When seasonal pack is loaded, check if variant exists in the seasonal store
+	if seasonal_store != null:
+		if is_summer or vacation != 0 or condition_bucket != 0:
+			if command == 4 and (club_id < 0 or club_id > 10):
+				return "unsupported club command with no active club (club_id %d)" % club_id
+			if seasonal_store.has_variant(command, cid, is_summer, condition_bucket, vacation, season_index):
+				return ""
+			return "required route content capability is unavailable for command %d seasonal variant" % command
+
+	# Baseline checks for spring non-summer normal-health non-vacation
 	if command == 4:
 		if club_id < 0 or club_id > 10:
 			return "unsupported club command with no active club (club_id %d)" % club_id
@@ -119,14 +163,13 @@ func validate_variant(command: int, club_id: int = 11, month: int = 4, extra: in
 	else:
 		if not has_command(command):
 			return "required route content capability is unavailable for command %d" % command
+
 	if month not in [3, 4, 5]:
 		return "seasonal variant outside spring months 3-5 is not supported"
 	if vacation != 0:
 		return "vacation content is unavailable"
 	if health != 0:
 		return "sick/rest variants are not supported in this tranche"
-	if command in [1, 2, 3, 4, 5, 6] and extra != 15:
-		return "companion variants for command %d are not supported in this tranche" % command
 	return ""
 
 func _load_canonical_media() -> String:
@@ -279,6 +322,7 @@ func _clear() -> void:
 	spring_store = null
 	weekday56_store = null
 	club_store = null
+	seasonal_store = null
 	command_resources.clear()
 	command_backgrounds.clear()
 	club_resources.clear()

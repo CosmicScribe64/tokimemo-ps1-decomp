@@ -213,37 +213,35 @@ func _load_descriptor(state: State, request: String) -> Dictionary:
 	var data: Dictionary = state.rule_state
 	var event: Array = data["day_events"][data["day_event_index"]]
 	var command: int = event[1]
-	var bg_lba: int = -1
-	var slot: int = -1
-	var sd_lba: int = -1
-	if command == 4:
-		var club_id: int = (data["player_flags"] >> 12) & 15
-		var variant: int = 1 if event[3] != 0 else 0
-		if club_id < 11:
-			var bg_table: Array = tables.get("club_background_lbas", CLUB_BACKGROUND_LBAS)
-			var sd_sel: Array = tables.get("club_sd_select_non_summer", CLUB_SD_SELECT_NON_SUMMER)
-			bg_lba = bg_table[club_id]
-			slot = sd_sel[club_id][variant]
-			sd_lba = 27834 + 41 * slot
-	else:
-		var selection: Array = tables["sd_select_non_summer"]
-		var table_idx: int = _sd_table_index(command, event[3])
-		slot = selection[table_idx] if table_idx >= 0 and table_idx < selection.size() else -1
-		bg_lba = tables["weekday_background_lbas"][command]
-		sd_lba = tables["weekday_sd_lbas"][slot] if slot >= 0 and slot < tables["weekday_sd_lbas"].size() else -1
+	var month: int = data.get("month", 4)
+	var is_summer: bool = month in [6, 7, 8, 9]
+	var vacation_kind: int = data.get("vacation", 0)
+	var health: int = (data.get("player_flags", 0) >> 8) & 15
+	var condition_bucket: int = 1 if health == 3 else 0
+	var season_index: int = 1 if is_summer else (0 if month in [3, 4, 5] else (2 if month in [9, 10, 11] else 3))
+	var club_id: int = (data.get("player_flags", 0) >> 12) & 15 if command == 4 else 0
+
+	var resolved: Dictionary = SchoolDay.resolve_bg_and_sd(command, club_id, is_summer, condition_bucket, vacation_kind, season_index, 0)
+	var bg_lba: int = resolved.get("background_lba", -1)
+	var slot: int = resolved.get("sd_set_id", -1)
+	var sd_lba: int = resolved.get("sd_lba", -1)
+	var sectors: int = resolved.get("sectors", 41)
+
 	return {"kind": "school_day_load", "request": request, "command": command,
 		"day_event_index": data["day_event_index"],
 		"background_lba": bg_lba,
-		"sd_set_id": slot, "sd_lba": sd_lba, "sectors": 41}
+		"sd_set_id": slot, "sd_lba": sd_lba, "sectors": sectors}
 
 func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
 	if state == null:
 		return
 	var data: Dictionary = state.rule_state
-	if data["vacation"] != 0 or data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 8:
-		result.error = "school-day route outside initial April5–8 ordinary week"
-		return
+	var seasonal_allowed: bool = tables.get("allow_seasonal_variants", false) or data.get("allow_seasonal_variants", false)
+	if not seasonal_allowed:
+		if data["vacation"] != 0 or data["year"] != 95 or data["month"] != 4 or data["day"] < 5 or data["day"] > 8:
+			result.error = "school-day route outside initial April5–8 ordinary week"
+			return
 	var event: Array = data["day_events"][data["day_event_index"]]
 	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		result.error = "unsupported activity queue record"

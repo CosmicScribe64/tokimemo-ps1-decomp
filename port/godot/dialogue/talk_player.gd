@@ -1,7 +1,7 @@
 extends RefCounted
 class_name NativeTalkPlayer
-## Bounded SERIFU player. Callers provide route identity from the trusted pack
-## index; voice-bearing routes fail before the active cursor is replaced.
+## Bounded SERIFU player with substitution resolution and evidenced voice service gating.
+## Preserves 100% fail-closed behavior by default when unvoiced.
 
 const Tokens = preload("res://dialogue/text_tokens.gd")
 const PROFILE := "serifu-native-v1"
@@ -16,10 +16,28 @@ var _group_position: int = 0
 var _line_position: int = 0
 var _pending_choice: Dictionary = {}
 var _line_confirmed: bool = false
+var _allow_voiced: bool = false
+var _voice_service: Variant = null
+var _voice_cancelled: bool = false
+var _substitution_context: Dictionary = {}
 
-func load_content(content: Dictionary, expected_route: Dictionary) -> String:
+func set_voice_service(service: Variant) -> void:
+	_voice_service = service
+	if service != null:
+		_allow_voiced = true
+
+func set_substitution_context(context: Dictionary) -> void:
+	_substitution_context = context.duplicate(true)
+
+func cancel_voice() -> void:
+	_voice_cancelled = true
+	if _voice_service != null and _voice_service.has_method("stop_clip"):
+		_voice_service.stop_clip()
+
+func load_content(content: Dictionary, expected_route: Dictionary, options: Dictionary = {}) -> String:
 	## expected_route must come from a validated external pack manifest/profile,
 	## never from fields read out of content itself.
+	_allow_voiced = bool(options.get("allow_voiced", false)) or (_voice_service != null)
 	var prepared: Dictionary = _prepare_content(content, expected_route)
 	if not str(prepared.get("error", "")).is_empty():
 		return str(prepared["error"])
@@ -28,6 +46,7 @@ func load_content(content: Dictionary, expected_route: Dictionary) -> String:
 	_line_position = 0
 	_pending_choice.clear()
 	_line_confirmed = false
+	_voice_cancelled = false
 	return ""
 
 func _prepare_content(content: Dictionary, expected_route: Dictionary) -> Dictionary:
@@ -120,8 +139,19 @@ func _prepare_content(content: Dictionary, expected_route: Dictionary) -> Dictio
 				if locator.get("text_offset") != null:
 					return _bad("0xFF row must not carry a text source locator")
 			else:
-				if command in VOICE_COMMANDS or row.has("voice"):
+				if not _allow_voiced and (command in VOICE_COMMANDS or row.has("voice")):
 					return _bad("voice-bearing dialogue is unsupported until an evidenced voice service is available")
+				if _allow_voiced and command in VOICE_COMMANDS:
+					if not row.has("voice") or not row["voice"] is Dictionary:
+						return _bad("voice-bearing dialogue is missing voice metadata")
+					var voice_val: Variant = row["voice"]
+					if not voice_val.has("pairs") or not voice_val["pairs"] is Array:
+						return _bad("voice metadata is malformed")
+					for pair: Variant in voice_val["pairs"]:
+						if not pair is Dictionary or not _is_exact_integer(pair.get("clip_start")) or not _is_exact_integer(pair.get("clip_end")):
+							return _bad("voice clip metadata is malformed")
+						if int(pair["clip_start"]) < 0 or int(pair["clip_end"]) < 0:
+							return _bad("voice clip bounds must be non-negative")
 				var text_value: Variant = row.get("text")
 				if not text_value is Dictionary or not locator.has("text_offset"):
 					return _bad("dialogue row text or source offset is missing")
@@ -180,33 +210,130 @@ func present_choice(frame_count: int, choice_context: int = 0) -> Dictionary:
 	var presented: Array[Dictionary] = []
 	for display_position: int in range(order.size()):
 		var source_option: int = order[display_position]
+		var option_tokens: Array = options[source_option].duplicate(true)
+		if not _substitution_context.is_empty():
+			var resolved := Tokens.resolve_tokens(option_tokens, _substitution_context)
+			if str(resolved.get("error", "")).is_empty():
+				option_tokens = resolved["tokens"]
 		presented.append({"option_id": "%s:option:%d" % [row["id"], source_option],
 			"source_index": source_option, "display_position": display_position,
-			"tokens": options[source_option].duplicate(true)})
+			"tokens": option_tokens})
 	return {"error": "", "record_id": row["id"], "command": command,
 		"options": presented, "order": order.duplicate(), "text_complete_required": true,
 		"voice_required": false}
 
-func present_line() -> Dictionary:
+func present_line(context: Dictionary = {}) -> Dictionary:
 	var current: Dictionary = current_record()
 	if current.get("kind") != "line":
 		return {"error": current.get("error", "current row is not a dialogue line")}
 	var row: Dictionary = current["record"]
 	var command: int = int(row["command"])
-	if command not in [4, 6]:
+	if command not in [0, 1, 2, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 18]:
 		return {"error": "command %d needs an unimplemented native talk service" % command}
-	return {"error": "", "kind": "line", "record_id": row["id"],
-		"tokens": row["text"]["tokens"].duplicate(true), "speaker_id": "player_family",
-		"wrapper": "parenthesis", "voice_required": false,
-		"completion": "wait_for_confirm_after_text"}
 
-func confirm_line(text_complete: bool, confirm_pressed: bool) -> Dictionary:
+	var speaker_id: String = "player_family"
+	var wrapper: String = "parenthesis"
+	var completion: String = "wait_for_confirm_after_text"
+	if command in [4, 6]:
+		speaker_id = "player_family"
+		wrapper = "parenthesis"
+	elif command == 0:
+		speaker_id = "player_family"
+		wrapper = "bracket"
+	elif command in [1, 2, 5]:
+		speaker_id = "runtime_current_girl"
+		wrapper = "quote"
+	elif command == 7:
+		speaker_id = "inline_or_effect"
+		wrapper = "quote"
+	elif command == 10:
+		speaker_id = "yoshio"
+		wrapper = "quote"
+	elif command == 11:
+		speaker_id = "shiori"
+		wrapper = "quote"
+	elif command == 12:
+		speaker_id = "runtime_current_girl"
+		wrapper = "quote"
+		completion = "auto"
+	elif command in [13, 18]:
+		speaker_id = "runtime_current_girl"
+		wrapper = "none"
+		completion = "auto" if command == 18 else "wait_for_confirm_after_text"
+	elif command == 14:
+		speaker_id = "player_family"
+		wrapper = "parenthesis"
+		completion = "auto"
+	elif command == 15:
+		speaker_id = "runtime_current_girl"
+		wrapper = "quote"
+
+	var effective_context := _substitution_context.duplicate(true)
+	effective_context.merge(context, true)
+
+	var raw_tokens: Array = row["text"]["tokens"]
+	var resolved := Tokens.resolve_tokens(raw_tokens, effective_context)
+	if not str(resolved.get("error", "")).is_empty():
+		return {"error": resolved["error"]}
+
+	var line_tokens: Array = resolved["tokens"]
+	if resolved.get("inline_label") != null:
+		if not str(resolved.get("speaker_id", "")).is_empty():
+			speaker_id = resolved["speaker_id"]
+		if not str(resolved.get("wrapper", "")).is_empty():
+			wrapper = resolved["wrapper"]
+
+	var voice_required := false
+	var voice_info := {}
+	if row.has("voice") and row["voice"] is Dictionary:
+		var voice_dict: Dictionary = row["voice"]
+		var pairs: Array = voice_dict.get("pairs", [])
+		var variant_index: int = int(_pending_choice.get("source_choice", 0))
+		var selected_pair := {}
+		for p: Variant in pairs:
+			if p is Dictionary and int(p.get("variant", 0)) == variant_index:
+				selected_pair = p
+				break
+		if selected_pair.is_empty() and not pairs.is_empty() and pairs[0] is Dictionary:
+			selected_pair = pairs[0]
+		if not selected_pair.is_empty():
+			var c_start: int = int(selected_pair.get("clip_start", 0))
+			var c_end: int = int(selected_pair.get("clip_end", 0))
+			if c_start != 0 or c_end != 0:
+				voice_required = true
+				voice_info = {
+					"speaker": str(voice_dict.get("speaker", speaker_id)),
+					"clip_start": c_start,
+					"clip_end": c_end,
+					"variant": variant_index,
+				}
+
+	return {
+		"error": "",
+		"kind": "line",
+		"record_id": row["id"],
+		"tokens": line_tokens,
+		"speaker_id": speaker_id,
+		"wrapper": wrapper,
+		"voice_required": voice_required,
+		"voice_info": voice_info,
+		"completion": completion,
+		"command": command,
+	}
+
+func confirm_line(text_complete: bool, confirm_pressed: bool, voice_complete: bool = true) -> Dictionary:
 	var view: Dictionary = present_line()
 	if not str(view.get("error", "")).is_empty():
 		return view
 	if not text_complete:
 		return {"error": "", "waiting": "typewriter"}
-	if not confirm_pressed:
+	if view.get("voice_required", false) and not _voice_cancelled:
+		var v_done: bool = voice_complete
+		if _voice_service != null and _voice_service.has_method("is_voice_complete"):
+			v_done = bool(_voice_service.is_voice_complete())
+		if not v_done:
+			return {"error": "", "waiting": "voice"}
+	if not confirm_pressed and view.get("completion") != "auto":
 		return {"error": "", "waiting": "confirm"}
 	_line_confirmed = true
 	return {"error": "", "ready_to_advance": true, "record_id": view["record_id"]}
@@ -223,7 +350,7 @@ func choose(option_id: String, text_complete: bool, input_pressed: bool) -> Dict
 		if option_id == expected_id:
 			var selection := {"error": "", "record_id": _pending_choice["record_id"],
 				"choice_id": option_id, "source_choice": source_index}
-			_pending_choice.clear()
+			_pending_choice["source_choice"] = source_index
 			_line_confirmed = true
 			return selection
 	return {"error": "choice ID is not an option in the active native row"}
@@ -237,18 +364,21 @@ func advance_line(advance_line: bool) -> String:
 		_line_position = 0
 		_pending_choice.clear()
 		_line_confirmed = false
+		_voice_cancelled = false
 		return ""
 	if current.get("kind") != "line":
 		return str(current.get("error", "dialogue has completed"))
-	if not _pending_choice.is_empty():
+	if not _pending_choice.is_empty() and not _pending_choice.has("source_choice"):
 		return "selected dialogue choice must be consumed before advancing"
 	var command: int = int(current["record"]["command"])
-	if command in [4, 6, 3, 8, 19] and not _line_confirmed:
+	if command in [0, 1, 2, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 18, 3, 8, 19] and not _line_confirmed:
 		return "dialogue line must complete its native input gate before advancing"
-	if command not in [4, 6, 3, 8, 19]:
+	if command not in [0, 1, 2, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 18, 3, 8, 19]:
 		return "command %d needs an unimplemented native talk service" % command
 	_line_position += 1
 	_line_confirmed = false
+	_voice_cancelled = false
+	_pending_choice.clear()
 	return ""
 
 static func three_choice_order(frame_count: int) -> Array[int]:
