@@ -1,7 +1,10 @@
 extends Control
 ## Additive import screen; the launcher supplies its packaged backend and capability needs.
+## Defaults to OriginalGameImportBackend when running standalone.
 
 const FlowScript = preload("res://app/first_launch_import_flow.gd")
+const BackendScript = preload("res://services/original_game_import_backend.gd")
+const DEFAULT_CAPABILITIES: Array[String] = ["prologue.nbn_native_cells.static_preview"]
 
 signal gameplay_ready(pack_root: String, manifest_sha256: String)
 
@@ -24,6 +27,10 @@ var _choose_location_button: Button
 
 func _ready() -> void:
 	_build_ui()
+	if importer_backend == null:
+		importer_backend = BackendScript.new()
+	if required_launch_capabilities.is_empty():
+		required_launch_capabilities = DEFAULT_CAPABILITIES.duplicate()
 	_flow = FlowScript.new(null, importer_backend)
 	var installed: Dictionary = _flow.check_existing(required_launch_capabilities)
 	_show_result(installed)
@@ -155,7 +162,9 @@ func _process(_delta: float) -> void:
 	if _flow.state in ["ready", "installed_incomplete", "cancelled", "failed", "importer_unavailable"]:
 		set_process(false)
 		if _flow.state == "ready":
-			gameplay_ready.emit(str(_flow.latest_result.get("pack_root", "")), str(_flow.latest_result.get("manifest_sha256", "")))
+			var pack_root := str(_flow.latest_result.get("pack_root", ""))
+			var manifest_sha := str(_flow.latest_result.get("manifest_sha256", ""))
+			gameplay_ready.emit(pack_root, manifest_sha)
 
 func _update_controls() -> void:
 	var active: bool = _flow != null and _flow.state in ["verifying", "importing", "cancelling", "validating", "publishing"]

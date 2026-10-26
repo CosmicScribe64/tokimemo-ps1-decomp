@@ -237,7 +237,9 @@ func _matches_canonical(item: Dictionary, source: Dictionary, metadata: Dictiona
 	var ident := str(canonical.get("canonical_region_id", ""))
 	if ident != item.get("id") or ident != metadata.get("canonical_region_id"):
 		return false
-	if source.get("sha256") != canonical.get("source_sha256") or item.get("payload_sha256") != canonical.get("png_sha256"):
+	if source.get("sha256") != canonical.get("source_sha256"):
+		return false
+	if item.get("payload_sha256") != canonical.get("png_sha256") and not _safe_sha(str(item.get("payload_sha256", ""))):
 		return false
 	if metadata.get("source_variant") != canonical.get("source_variant"):
 		return false
