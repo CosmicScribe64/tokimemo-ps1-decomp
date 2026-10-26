@@ -16,7 +16,7 @@ queued girl scenes and invitations that create appointments. The overall `girl_e
 and this analysis performed no emulator run. Technical callback numbers do not establish a scene's story.
 
 Read with [[phase2]], [[families/geko-family-results]], [[game-state]], `GLOSSARY.md`,
-`docs/adr/0001-phase-2-naming.md` and `CODING_STANDARDS.md` sections 4, 5, 8 and 10.
+`wiki/phase2-naming.md` and `CODING_STANDARDS.md` sections 4, 5, 8 and 10.
 The shared core names in this page follow the current canonical topic owners in `config/header_owners.json`.
 The `include/main_api.h` and `include/game.h` paths in earlier migration notes are historical; both umbrellas
 have been retired.

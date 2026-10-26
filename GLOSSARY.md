@@ -1,7 +1,7 @@
 # Glossary
 
 The game's terms and the identifier stems the code uses for them. Names in `src/` and `include/` take their
-stems from here (CODING_STANDARDS section 4, `docs/adr/0001-phase-2-naming.md`). Terms are romanized; the
+stems from here (CODING_STANDARDS section 4, `wiki/phase2-naming.md`). Terms are romanized; the
 glossary holds proper names and short terms only, never game text.
 
 Columns: **term** (the game's word, romanized, or an English term where the game has none), **meaning**,

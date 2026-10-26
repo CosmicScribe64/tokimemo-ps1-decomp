@@ -38,7 +38,7 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 
 ## 4. Naming
 
-Phase 2 names the game logic in full and the PS1 hardware layer at module level and entry points (scope table in the ADR). Decisions and the prefix maps: `docs/adr/0001-phase-2-naming.md`. Terms and stems: `GLOSSARY.md`.
+Phase 2 names the game logic in full and the PS1 hardware layer at module level and entry points (scope table in the ADR). Decisions and the prefix maps: `wiki/phase2-naming.md`. Terms and stems: `GLOSSARY.md`.
 
 - Renames: once `tools/rename.py` (T-27002) has merged, it is the only way to rename a function, global, field, type, file or header, and any constant, local or parameter (user decision, 2026-10-24). The steps are a table, `plan`, `apply`, then the clean 27/27 build. Never rename by editing C, headers or symbol files by hand, and never by search-and-replace. Until the tool has merged, no rename lands.
 - Placeholders (`func_XXXXXXXX`, `D_XXXXXXXX`, `jtbl_XXXXXXXX`, `LXXXXXXXX`, 8 hex digits of the original address) stay only until the symbol is named. Hardware-layer internals, SDK functions and fields whose use shows nothing may keep them (scope in the ADR).

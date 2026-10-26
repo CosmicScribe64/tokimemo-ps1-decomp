@@ -14,7 +14,7 @@ Goal: make the matched code readable, port-first: "not 100%, just enough for the
 entry points. The matching decompilation stays exact: 27/27 sha1 after every change. Umbrella ticket:
 [[tickets/T-27000-phase-2]]. The rules are fixed elsewhere:
 
-- Decisions, conventions, the disc-name map and the prefix maps: `docs/adr/0001-phase-2-naming.md`.
+- Decisions, conventions, the disc-name map and the prefix maps: `wiki/phase2-naming.md` ([[phase2-naming]]).
 - Checkable rules for review: `CODING_STANDARDS.md` sections 4, 5 and 8.
 - Terms and identifier stems: `GLOSSARY.md`.
 - Survey with counts, the rename tool design and the risks: `drafts/T-25900/audit.md` (T-25900).

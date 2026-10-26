@@ -6,7 +6,7 @@ ticket: T-27052
 
 # Topic header split: ownership, order and deletion gates
 
-Design record for [[tickets/T-27052-phase2-completion-audit]]. The inventory and recommendations below were written before the topic-only header migration; retain them as design history and use the current-state note below for implementation status. [[phase2]], `docs/adr/0001-phase-2-naming.md:198` and `CODING_STANDARDS.md` section 8a remain binding.
+Design record for [[tickets/T-27052-phase2-completion-audit]]. The inventory and recommendations below were written before the topic-only header migration; retain them as design history and use the current-state note below for implementation status. [[phase2]], `wiki/phase2-naming.md:198` and `CODING_STANDARDS.md` section 8a remain binding.
 
 ## Current topic-header and path status (2026-10-25)
 

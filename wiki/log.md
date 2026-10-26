@@ -2370,3 +2370,7 @@ Integrated `port/godot/services/original_game_import_backend.gd`, `port/godot/ap
 ## [2026-10-25] build | T-29016 exported desktop .pck proof and translation README deslop
 
 Applied `port/godot/services/installed_pack_store.gd` fix from `.claude/orchestrator/state/T-29016/exported-desktop-proof-v1/` for [[tickets/T-29016-first-launch-original-import]] so virtual `res://` in exported `.pck` builds does not falsely match `/` during storage-root overlap validation (24/24 exported `.pck` assertions + 55/55 install flow + 55/55 import backend assertions in Docker). Also deslopped `translations/en/README.md`, `translations/en/CONTRIBUTING.md`, `translations/en/INDEX.md`, and `tools/translation_tree.py` for [[tickets/T-28007-complete-text-and-translator-handoff]] (`find_tells.py` 0 hits) and separated the 617 empty binary source slots (`Empty source slot (no Japanese text).`) from the 54,786 translatable lines (100% translated).
+
+## [2026-10-25] decision | Consolidate docs/adr/0001-phase-2-naming.md into wiki/phase2-naming.md
+
+Moved `docs/adr/0001-phase-2-naming.md` to [[phase2-naming]] (`wiki/phase2-naming.md`), removed the redundant top-level `docs/` directory so all project knowledge base pages live under `wiki/`, and updated references in `CODING_STANDARDS.md`, `GLOSSARY.md`, `src/main/README.md`, [[index]], [[phase2]], [[phase3]], and [[status]].

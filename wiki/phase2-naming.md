@@ -257,7 +257,7 @@ remains in [[overlays]] and T-0200, but the current names do not assert either u
 
 ### Main subsystem prefixes
 
-The living main object and prefix map is now [`src/main/README.md`](../../src/main/README.md),
+The living main object and prefix map is now [`src/main/README.md`](../src/main/README.md),
 following the logical C filename migration. It retains the grouped prefix ownership and shared-data
 entries from this decision. Body-backed object attribution separates the sound driver at
 `80079B10` from the scene library at `8007C030`, and executable reload from STR playback. These

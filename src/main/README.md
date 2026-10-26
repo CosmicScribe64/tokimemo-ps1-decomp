@@ -1,6 +1,6 @@
 # Main executable objects
 
-Navigation map for the 34 readable C files in `src/main/`. Original ranges are half-open text ranges from [`config/objects/main.txt`](../../config/objects/main.txt). Roles follow the reviewed [main filename map](../../wiki/spec/file-naming-main.md). This is the living main prefix map required by [ADR 0001](../../docs/adr/0001-phase-2-naming.md); grouped identifier ownership is listed below. O.BIN identifiers retain their original names.
+Navigation map for the 34 readable C files in `src/main/`. Original ranges are half-open text ranges from [`config/objects/main.txt`](../../config/objects/main.txt). Roles follow the reviewed [main filename map](../../wiki/spec/file-naming-main.md). This is the living main prefix map required by [Phase 2 naming](../../wiki/phase2-naming.md); grouped identifier ownership is listed below. O.BIN identifiers retain their original names.
 
 ## Original objects
 

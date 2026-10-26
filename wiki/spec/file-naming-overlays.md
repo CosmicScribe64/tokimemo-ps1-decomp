@@ -2,7 +2,7 @@
 type: spec
 updated: 2026-10-24
 ticket: T-27060
-sources: ["src/ovl", "config/overlays", "config/objects", "docs/adr/0001-phase-2-naming.md", "CODING_STANDARDS.md"]
+sources: ["src/ovl", "config/overlays", "config/objects", "wiki/phase2-naming.md", "CODING_STANDARDS.md"]
 ---
 
 # Overlay C filenames
@@ -72,7 +72,7 @@ the primary applicator's live-state checks; TT's 31 reviewed rows are a separate
 ## TT and folder gates
 
 TT is a separate candidate, not a claim of contributor agreement. ADR-0001's disc-name map at
-`docs/adr/0001-phase-2-naming.md:249` puts **"agree with its contributor"** in TT's English-folder
+`wiki/phase2-naming.md:249` puts **"agree with its contributor"** in TT's English-folder
 column, leaves its prefix blank and marks **confirm**; `GLOSSARY.md:269` reserves the TT module
 stem for agreement with the contributor. Neither passage explicitly prohibits technical C basenames
 inside the existing `TT` folder. These 31 rows assign no English folder, module prefix or confirmed

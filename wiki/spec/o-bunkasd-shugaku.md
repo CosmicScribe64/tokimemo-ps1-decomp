@@ -6,7 +6,7 @@ sources: ["src/ovl/BUNKA_SD/brass_band_show.c", "src/ovl/BUNKA_SD/club_year_show
 
 # BUNKA_SD stage shows and SHUGAKU school trip
 
-This is a body-backed port specification for the two overlays. The definition census and proposal rows describe that analysis pass. Current names and paths follow applied ledgers and source; proposal rows absent from those ledgers remain candidates. Prefixes are recorded in `docs/adr/0001-phase-2-naming.md`: BUNKA_SD `stage_show_`; SHUGAKU `trip_`. O.BIN names remain unchanged. Narrative and outcome semantics remain hypotheses unless the C bodies directly establish them.
+This is a body-backed port specification for the two overlays. The definition census and proposal rows describe that analysis pass. Current names and paths follow applied ledgers and source; proposal rows absent from those ledgers remain candidates. Prefixes are recorded in `wiki/phase2-naming.md`: BUNKA_SD `stage_show_`; SHUGAKU `trip_`. O.BIN names remain unchanged. Narrative and outcome semantics remain hypotheses unless the C bodies directly establish them.
 
 ## BUNKA_SD: stage-show state flow
 

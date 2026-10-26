@@ -178,7 +178,7 @@ Continuation checkpoint (local commits, 2026-10-24):
   collisions. [[tickets/T-27009-p2-reconcile]] is Ready and records batching requirements; partial
   tables must not be passed directly to apply. Existing core names and the applied ledgers win.
 
-Scope: port-first readable code for the Godot port while the matching decomp stays exact (27/27 after every change); decisions in docs/adr/0001-phase-2-naming.md, plan in [[phase2]], umbrella [[tickets/T-27000-phase-2]].
+Scope: port-first readable code for the Godot port while the matching decomp stays exact (27/27 after every change); decisions in [[phase2-naming]], plan in [[phase2]], umbrella [[tickets/T-27000-phase-2]].
 
 - Done: step 0 (conventions T-27001, GLOSSARY.md, `tools/rename.py` T-27002, [[rename-tool]]); emulator ([[emulator]]); analysis tables and port specs merged for the units listed in wiki/spec/index.md (`config/renames/proposals/<unit>.tsv`, `wiki/spec/<unit>.md`).
 - Applied and merged (27/27): the O.BIN/SDK-name pilot T-27003 (128 ledger rows, `config/renames/obin.txt`, `sdk.txt`) and the shared-core apply T-27004 (724 ledger rows: GameState fields, core types, top functions; game mode machine is `game_mode_*`/`mode_stage_*`/`mode_step_*`, `portrait_*`, `memory_card_*`, `audio_*`, `talk_*`). The remaining enum namespace/NAME_ENT-role correction is now applied by T-27043 as `GameMode`/`GAME_MODE_*`.
@@ -194,7 +194,7 @@ Scope: port-first readable code for the Godot port while the matching decomp sta
 
 Every game function is C: **6,952/6,952 functions, 2,276,920/2,276,920 bytes (100.0%)**, 27/27 sha1, merged at dbc017d86. The last ones: SHOUGATU func_8013EA98 and TAIIKU func_80137784 (stubborn-function attack, [[tickets/T-25500-stubborn-functions]]), main func_800476C0, func_80067870, NAME_ENT func_80143580 and main func_8006B0C8 (finish gate and its fresh-start runs, [[tickets/T-25600-finish-gate]]). func_8006B0C8 needed a narrowed block-copy rule in `tools/ugen_pass.py`; an IDO 4.1 check found the rule 4.1 itself follows, which [[tickets/T-26000-ugen-block-copy-41-rule]] is adopting. Lessons from the last ~100 matches: [[notes/wins-2026-10]] and [[playbook]].
 
-Next: roadmap phase 2, readable code, port-first (game logic named and explained in full, PS1 hardware layer at module level and entry points; the matching build stays 27/27). Plan and work order: [[phase2]]; conventions: `docs/adr/0001-phase-2-naming.md`, `CODING_STANDARDS.md` sections 4-5, `GLOSSARY.md` ([[tickets/T-27000-phase-2]]).
+Next: roadmap phase 2, readable code, port-first (game logic named and explained in full, PS1 hardware layer at module level and entry points; the matching build stays 27/27). Plan and work order: [[phase2]]; conventions: `wiki/phase2-naming.md`, `CODING_STANDARDS.md` sections 4-5, `GLOSSARY.md` ([[tickets/T-27000-phase-2]]).
 
 ## Latest verified integration (2026-10-23, historical)
 

@@ -2,7 +2,7 @@
 type: audit
 updated: 2026-10-24
 ticket: T-27052
-sources: ["wiki/phase2.md", "wiki/tickets/T-27000-phase-2.md", "docs/adr/0001-phase-2-naming.md", "CODING_STANDARDS.md", "config/renames", "config/renames/proposals", "src", "include"]
+sources: ["wiki/phase2.md", "wiki/tickets/T-27000-phase-2.md", "wiki/phase2-naming.md", "CODING_STANDARDS.md", "config/renames", "config/renames/proposals", "src", "include"]
 ---
 
 # Phase 2 acceptance audit and closeout order
