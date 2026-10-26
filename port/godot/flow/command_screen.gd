@@ -55,9 +55,14 @@ static func confirm(state: State, input: InputFrame, result: Session.FrameResult
 	var selected: int = data["menu_cursor"]
 	if (input.pressed & 0x20) == 0:
 		return
-	if selected not in [0, 1, 2, 3, 5, 6, 7]:
+	if selected not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		result.error = "selected native command is not implemented: %d" % selected
 		return
+	if selected == 4:
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		if club_id >= 11:
+			result.error = "selected club command has no active club (club_id 11)"
+			return
 	# Launch-time media capabilities come from the strict external pack loader.
 	# Legacy rule-only callers retain their explicit fixture capability record.
 	var capabilities: Array = data["resources"].get("available_commands", []) if validated_capabilities.is_empty() else validated_capabilities

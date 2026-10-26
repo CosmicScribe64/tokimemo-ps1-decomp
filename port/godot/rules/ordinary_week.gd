@@ -104,7 +104,7 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 	var mode: int
 	match event[0]:
 		0:
-			if event[1] not in [0, 1, 2, 3, 5, 6, 7]:
+			if event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
 				result.error = "ordinary-week activity command is unimplemented: %d" % event[1]
 				return
 			for icon: int in range(14):

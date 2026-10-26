@@ -146,8 +146,8 @@ func _ready() -> void:
 	if not failure.is_empty():
 		_stop(failure)
 		return
-	if smoke_command not in [0, 1, 2, 3, 5, 6, 7]:
-		_stop("only source commands 0-3, 5-7 scripted input recipes are available")
+	if smoke_command not in [0, 1, 2, 3, 4, 5, 6, 7]:
+		_stop("only source commands 0-7 scripted input recipes are available")
 		return
 	if smoke and (not output_root.is_absolute_path() or not DirAccess.dir_exists_absolute(output_root)):
 		_stop("smoke requires an existing absolute output directory")
@@ -188,6 +188,9 @@ func _load_inputs() -> String:
 	var weekday56_pack: String = OS.get_environment("T29014_WEEKDAY56_PACK")
 	if weekday56_pack.is_empty():
 		weekday56_pack = OS.get_environment("TOKIMEMO_WEEKDAY56_PACK")
+	var club_pack: String = OS.get_environment("T29014_CLUB_PACK")
+	if club_pack.is_empty():
+		club_pack = OS.get_environment("TOKIMEMO_CLUB_PACK")
 	if OS.get_environment("TOKIMEMO_BOUNDARY_SHA") != BOUNDARY_SHA or OS.get_environment("TOKIMEMO_TABLES_SHA") != TABLES_SHA:
 		return "unsupported development boundary/table profile; use the reviewed captured inputs"
 	if not _verified_external(state_path, OS.get_environment("TOKIMEMO_BOUNDARY_SHA")):
@@ -208,7 +211,7 @@ func _load_inputs() -> String:
 	controller = Controller.new(table_pack["tables"])
 	if not controller.error.is_empty():
 		return controller.error
-	var adapter_err: String = adapter.open_packs(media_path, spring_pack, weekday56_pack)
+	var adapter_err: String = adapter.open_packs(media_path, spring_pack, weekday56_pack, club_pack)
 	if not adapter_err.is_empty():
 		return adapter_err
 	media = adapter.media
@@ -508,16 +511,19 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 				"decode_result": 1, "checksum_ok": true}})
 		elif intent.get("kind") == "school_day_actors":
 			var command: int = _activity_command(current)
-			if not command_resources.has(command) or intent.get("sd_set_id") != MEDIA_ROUTES[command]["sd_set_id"] or data["scene_work"] != intent["sd_set_id"]:
+			var club_id: int = (data["player_flags"] >> 12) & 15 if command == 4 else -1
+			var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
+			if not adapter.has_command(command, club_id) or intent.get("sd_set_id") != expected["sd_set_id"] or data["scene_work"] != intent["sd_set_id"]:
 				result.error = "actor request differs from validated command media profile"
 				return
 			if command == 7 and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96 or intent["actors"][0].get("sequence_slot") != 0):
 				result.error = "rest supports only the captured actor96 sequence0"
 				return
-			if command in [1, 2, 3, 5, 6] and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96):
+			if command in [1, 2, 3, 4, 5, 6] and (intent["actors"].size() != 1 or intent["actors"][0].get("id") != 96):
 				result.error = "opening week command %d supports only solo actor96" % command
 				return
-			var initialized: Dictionary = actor_service.initialize(intent["actors"], command_resources[command])
+			var res_dict: Dictionary = adapter.get_resources(command, club_id)
+			var initialized: Dictionary = actor_service.initialize(intent["actors"], res_dict)
 			if not initialized["error"].is_empty():
 				result.error = initialized["error"]
 				return
@@ -525,7 +531,9 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 		elif intent.get("kind") == "school_day_cached_background":
 			var slot: int = intent.get("slot", -1)
 			var command: int = _activity_command(current)
-			if not command_backgrounds.has(command) or slot not in [0, 1] or intent.get("lba") != MEDIA_ROUTES[command]["background_lba"] or data["background_show"] != slot or data["background_cache"][slot] != intent["lba"]:
+			var club_id: int = (data["player_flags"] >> 12) & 15 if command == 4 else -1
+			var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
+			if not adapter.has_command(command, club_id) or slot not in [0, 1] or intent.get("lba") != expected["background_lba"] or data["background_show"] != slot or data["background_cache"][slot] != intent["lba"]:
 				result.error = "cached background differs from validated command slot/LBA"
 				return
 		elif intent.get("kind") == "week_end_hud_init":
@@ -540,15 +548,23 @@ func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> vo
 	# immutable texture IDs stay separate throughout preparation and drawing.
 	if current.game_mode in [0x40, 0x31, 0x32]:
 		var shown_lba: int = data["background_cache"][data["background_show"]]
-		for command: int in command_backgrounds:
-			if shown_lba == MEDIA_ROUTES[command]["background_lba"]:
-				prepared_commands.append_array(command_backgrounds[command])
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		var found_bg: bool = false
+		if MediaAdapter.CLUB_ROUTES.has(club_id) and shown_lba == MediaAdapter.CLUB_ROUTES[club_id]["background_lba"]:
+			prepared_commands.append_array(adapter.get_background_commands(4, club_id))
+			found_bg = true
+		if not found_bg:
+			for command: int in command_backgrounds:
+				if shown_lba == MEDIA_ROUTES[command]["background_lba"]:
+					prepared_commands.append_array(command_backgrounds[command])
 	if not data["actor_state"].is_empty():
 		var command: int = _activity_command(current)
-		if not command_resources.has(command):
+		var club_id: int = (data["player_flags"] >> 12) & 15 if command == 4 else -1
+		if not adapter.has_command(command, club_id):
 			result.error = "active actor has no validated command resource set"
 			return
-		var drawn: Dictionary = actor_service.native_draw(data["actor_state"], command_resources[command],
+		var res: Dictionary = adapter.get_resources(command, club_id)
+		var drawn: Dictionary = actor_service.native_draw(data["actor_state"], res,
 			session.clock.logic_iterations, Vector2i(160, 120))
 		if not drawn["error"].is_empty():
 			result.error = drawn["error"]
@@ -570,7 +586,7 @@ func _activity_command(current: State) -> int:
 		return -1
 	var data: Dictionary = current.rule_state
 	var event: Array = data["day_events"][data["day_event_index"]]
-	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 5, 6, 7]:
+	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		return -1
 	var health: int = (data["player_flags"] >> 8) & 15
 	if event[1] == 7:
@@ -580,6 +596,11 @@ func _activity_command(current: State) -> int:
 	elif event[1] in [1, 2, 3, 5, 6]:
 		var index: int = data["day_event_index"]
 		if event[3] != 15 or index not in [0, 2, 4, 6] or [data["year"], data["month"], data["day"]] != [95, 4, 5 + (index >> 1)] or data["vacation"] != 0 or health != 0:
+			return -1
+	elif event[1] == 4:
+		var index: int = data["day_event_index"]
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		if club_id >= 11 or event[3] != 15 or index not in [0, 2, 4, 6] or [data["year"], data["month"], data["day"]] != [95, 4, 5 + (index >> 1)] or data["vacation"] != 0 or health != 0:
 			return -1
 	return event[1]
 
@@ -620,9 +641,10 @@ func _holiday_profile() -> Dictionary:
 
 func _resource_request_error(current: State, intent: Dictionary) -> String:
 	var command: int = _activity_command(current)
-	if not command_resources.has(command) or not command_backgrounds.has(command):
+	var club_id: int = (current.rule_state["player_flags"] >> 12) & 15 if command == 4 else -1
+	if not adapter.has_command(command, club_id):
 		return "resource request has no preflighted command media profile"
-	var expected: Dictionary = MEDIA_ROUTES[command]
+	var expected: Dictionary = MediaAdapter.CLUB_ROUTES[club_id] if command == 4 else MEDIA_ROUTES[command]
 	if intent.size() != 8 or intent.get("request") not in ["background", "sd"] or intent.get("command") != command or intent.get("day_event_index") != current.rule_state["day_event_index"] or intent.get("sectors") != 41:
 		return "resource request identity differs from validated command media profile"
 	for key: String in ["background_lba", "sd_set_id", "sd_lba"]:

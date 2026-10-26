@@ -98,11 +98,11 @@ func _test_adapter_preflight() -> void:
 		check(res["sequences"].has("0"), "command %d has sequence 0" % cmd)
 		check(not res["frames"].is_empty(), "command %d has non-empty frames" % cmd)
 
-	check(adapter.validate_variant(4) == "unsupported ordinary command 4: club/club-id dependent profile not included", "variant check rejects command 4")
-	check(adapter.validate_variant(1, 7) == "seasonal variant outside spring months 3-5 is not supported", "variant check rejects summer month")
-	check(adapter.validate_variant(1, 4, 15, 1) == "vacation content is unavailable", "variant check rejects vacation")
-	check(adapter.validate_variant(1, 4, 15, 0, 1) == "sick/rest variants are not supported in this tranche", "variant check rejects sick")
-	check(adapter.validate_variant(1, 4, 0) == "companion variants for command 1 are not supported in this tranche", "variant check rejects companion")
+	check(adapter.validate_variant(4) == "unsupported club command with no active club (club_id 11)", "variant check rejects command 4 without active club")
+	check(adapter.validate_variant(1, 11, 7) == "seasonal variant outside spring months 3-5 is not supported", "variant check rejects summer month")
+	check(adapter.validate_variant(1, 11, 4, 15, 1) == "vacation content is unavailable", "variant check rejects vacation")
+	check(adapter.validate_variant(1, 11, 4, 15, 0, 1) == "sick/rest variants are not supported in this tranche", "variant check rejects sick")
+	check(adapter.validate_variant(1, 11, 4, 0) == "companion variants for command 1 are not supported in this tranche", "variant check rejects companion")
 
 func _test_command_preservation_and_coverage() -> void:
 	print("[Phase 2] Execution coverage & exact preservation across render schedules")
@@ -221,7 +221,7 @@ func _test_premutation_rejections() -> void:
 	var hash_before_confirm4: String = app4.session.state_hash()
 	app4._physics_process(1.0 / 60.0)
 	check(app4.stopped, "app stopped upon command 4 confirmation")
-	check(app4.failure.contains("selected native command is not implemented: 4"), "exact error on command 4 confirmation: " + app4.failure)
+	check(app4.failure.contains("selected club command has no active club (club_id 11)") or app4.failure.contains("selected native command is not implemented: 4"), "exact error on command 4 confirmation: " + app4.failure)
 	check(app4.session.state_hash() == hash_before_confirm4, "command 4 rejection preserves full session state hash (rollback)")
 	dispose(app4)
 

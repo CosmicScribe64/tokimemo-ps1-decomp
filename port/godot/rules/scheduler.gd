@@ -12,7 +12,8 @@ static func initial_branch_error(state: State) -> String:
 	var data: Dictionary = state.rule_state
 	if [data["year"], data["month"], data["day"], data["weekday"], data["day_count"]] != [95, 4, 4, 1, 0]:
 		return "scheduler supports the captured April4 initial boundary only"
-	if data["vacation"] != 0 or ((data["player_flags"] >> 8) & 15) != 0 or (data["player_flags"] >> 12) != 11 or (data["player_flags_upper"] & 1) != 0:
+	var club_id: int = (data["player_flags"] >> 12) & 15
+	if data["vacation"] != 0 or ((data["player_flags"] >> 8) & 15) != 0 or club_id > 11 or (data["player_flags_upper"] & 1) != 0:
 		return "initial scheduler health/club/term branch differs from captured route"
 	if data["memory_card_job"] != 0:
 		return "memory-card save polling outside captured unsaved route"
@@ -121,6 +122,26 @@ static func poor_result(state: State, command: int, days_ahead: int, tables: Dic
 		score = _wave(data, day_count, [0, 1, 0], 16, tables) + Math.divmod32(State.high(data["params"][3]), 16).quotient
 	elif command == 3:
 		score = _wave(data, day_count, [1, 0, 0], 16, tables) + Math.divmod32(State.high(data["params"][4]), 16).quotient
+	elif command == 4:
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		var wave_kind: Array
+		match club_id:
+			0, 2, 3: wave_kind = [0, 0, 1]
+			1, 4, 5: wave_kind = [0, 1, 0]
+			6, 7, 8, 9, 10: wave_kind = [1, 0, 0]
+			_: wave_kind = []
+		if wave_kind.is_empty():
+			score = 0
+		else:
+			score = _wave(data, day_count, wave_kind, 16, tables)
+		var practice_points: int = 0
+		if data.has("clubs") and data["clubs"] is Array and club_id < data["clubs"].size():
+			var entry: Variant = data["clubs"][club_id]
+			if entry is int:
+				practice_points = entry
+			elif entry is Dictionary and entry.has("practice_points"):
+				practice_points = int(entry["practice_points"])
+		score += Math.divmod32(practice_points, 16).quotient
 	elif command == 5:
 		score = _wave(data, day_count, [0, 1, 0], 16, tables) + Math.divmod32(State.high(data["params"][5]), 16).quotient
 	elif command == 6:
@@ -146,8 +167,10 @@ static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> St
 		return failure
 	var data: Dictionary = state.rule_state
 	var command: int = data["last_command"] & 15
-	if command not in [0, 1, 2, 3, 5, 6, 7]:
-		return "initial queue supports only commands0-3, 5-7"
+	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
+		return "initial queue supports only commands0-7"
+	if command == 4 and ((data["player_flags"] >> 12) & 15) >= 11:
+		return "initial queue club command requires valid club_id 0..10"
 	data["progress_state"][0x15 + command % 9] = Math.u8(data["progress_state"][0x15 + command % 9] + 1)
 	if data["girls"][11]["counters"][0] != 0:
 		data["girls"][11]["counters"][0] = Math.u8(data["girls"][11]["counters"][0] - 1)

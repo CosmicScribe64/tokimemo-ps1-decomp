@@ -174,17 +174,38 @@ static func _sd_table_index(command: int, extra: int) -> int:
 		7: return 13
 		_: return -1
 
+const CLUB_BACKGROUND_LBAS: Array[int] = [16215, 16224, 16234, 16244, 16252, 16260, 16168, 16177, 16206, 16197, 16187]
+const CLUB_SD_SELECT_NON_SUMMER: Array = [
+	[1, 3], [30, 31], [5, 7], [9, 11], [27, 29], [23, 25],
+	[12, 13], [14, 15], [20, 21], [18, 19], [16, 17]
+]
+
 func _load_descriptor(state: State, request: String) -> Dictionary:
 	var data: Dictionary = state.rule_state
 	var event: Array = data["day_events"][data["day_event_index"]]
 	var command: int = event[1]
-	var selection: Array = tables["sd_select_non_summer"]
-	var table_idx: int = _sd_table_index(command, event[3])
-	var slot: int = selection[table_idx] if table_idx >= 0 and table_idx < selection.size() else -1
+	var bg_lba: int = -1
+	var slot: int = -1
+	var sd_lba: int = -1
+	if command == 4:
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		var variant: int = 1 if event[3] != 0 else 0
+		if club_id < 11:
+			var bg_table: Array = tables.get("club_background_lbas", CLUB_BACKGROUND_LBAS)
+			var sd_sel: Array = tables.get("club_sd_select_non_summer", CLUB_SD_SELECT_NON_SUMMER)
+			bg_lba = bg_table[club_id]
+			slot = sd_sel[club_id][variant]
+			sd_lba = 27834 + 41 * slot
+	else:
+		var selection: Array = tables["sd_select_non_summer"]
+		var table_idx: int = _sd_table_index(command, event[3])
+		slot = selection[table_idx] if table_idx >= 0 and table_idx < selection.size() else -1
+		bg_lba = tables["weekday_background_lbas"][command]
+		sd_lba = tables["weekday_sd_lbas"][slot] if slot >= 0 and slot < tables["weekday_sd_lbas"].size() else -1
 	return {"kind": "school_day_load", "request": request, "command": command,
 		"day_event_index": data["day_event_index"],
-		"background_lba": tables["weekday_background_lbas"][command],
-		"sd_set_id": slot, "sd_lba": tables["weekday_sd_lbas"][slot], "sectors": 41}
+		"background_lba": bg_lba,
+		"sd_set_id": slot, "sd_lba": sd_lba, "sectors": 41}
 
 func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
@@ -195,12 +216,17 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 		result.error = "school-day route outside initial April5–8 ordinary week"
 		return
 	var event: Array = data["day_events"][data["day_event_index"]]
-	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 5, 6, 7]:
+	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		result.error = "unsupported activity queue record"
 		return
-	if event[1] in [1, 2, 3, 5, 6] and event[3] != 15:
+	if event[1] in [1, 2, 3, 4, 5, 6] and event[3] != 15:
 		result.error = "companion variants for command %d are not supported in this tranche" % event[1]
 		return
+	if event[1] == 4:
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		if club_id >= 11:
+			result.error = "unsupported club command with no active club (club_id 11)"
+			return
 	match state.mode_stage:
 		0: _setup(state, result)
 		1:

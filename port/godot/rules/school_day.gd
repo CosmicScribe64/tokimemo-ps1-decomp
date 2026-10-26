@@ -1,20 +1,42 @@
 extends RefCounted
-## T-29004 / T-29014: actual school_day.c arithmetic and stage1/2 behavior.
+## T-29004 / T-29014: actual school_day.c arithmetic and stage1/2 behavior (including Command 4 Club).
 
 const Math = preload("res://core/native_math.gd")
 const State = preload("res://rules/school_day_state.gd")
 const Session = preload("res://core/game_session.gd")
 
+const CLUB_ACTIVITY_DELTAS: Array = [
+	[-12,  12,   4,   2,   0,   1,  -4,  -1,  18], # 0: Literature (文芸)
+	[-14,  14,   0,   6,   2,   1,  -2,   1,  17], # 1: Drama (演劇)
+	[-13,   1,  15,   4,   0,   1,  -4,   4,  22], # 2: Science (科学)
+	[-13,   1,  14,   6,   0,   4,  -6,   4,  26], # 3: Computer (電脳)
+	[-14,   2,   0,  15,   1,   1,  -1,  -2,  15], # 4: Art (美術)
+	[-14,   1,   1,  14,   3,   2,  -3,   1,  14], # 5: Brass Band (吹奏楽)
+	[-30,  -1,  -1,  -1,  14,   1,  -4,  12,   3], # 6: Baseball (野球)
+	[-30,  -1,  -1,  -1,  15,   2,  -3,  11,   4], # 7: Soccer (サッカー)
+	[-25,  -1,  -1,   0,  13,   2,  -1,   9,   8], # 8: Tennis (テニス)
+	[-31,  -1,  -1,   0,  15,   0,  -2,  11,   3], # 9: Swimming (水泳)
+	[-29,  -1,  -1,  -1,  14,   1,  -3,  10,   7], # 10: Basketball (バスケ)
+]
+
 static func apply_parameters(state: State, command: int, holiday_factor: int,
 	result_divisor: int, tables: Dictionary) -> String:
-	if command not in [0, 1, 2, 3, 5, 6, 7]:
-		return "parameter_up_down supports only captured commands 0..3, 5..7"
-	if not tables.has("command_deltas") or tables["command_deltas"].size() != 8:
-		return "required original command_deltas table is missing"
-	var deltas: Array = tables["command_deltas"][command]
+	if command not in [0, 1, 2, 3, 4, 5, 6, 7]:
+		return "parameter_up_down supports only captured commands 0..7"
+	var data: Dictionary = state.rule_state
+	var deltas: Array
+	if command == 4:
+		var club_id: int = (data["player_flags"] >> 12) & 15
+		if club_id >= 11:
+			return "club command requires valid club_id 0..10"
+		deltas = tables.get("club_activity_deltas", CLUB_ACTIVITY_DELTAS)[club_id]
+	else:
+		if not tables.has("command_deltas") or tables["command_deltas"].size() != 8:
+			return "required original command_deltas table is missing"
+		deltas = tables["command_deltas"][command]
 	if deltas.size() != 9:
 		return "command delta row must contain nine signed bytes"
-	var data: Dictionary = state.rule_state
+
 	var health: int = (data["player_flags"] >> 8) & 15
 	var sickness: int = 2 if health == 3 else 1
 	var restriction: int = 2 if health in [1, 2] and command not in [5, 6, 7] else 1
@@ -35,6 +57,15 @@ static func apply_parameters(state: State, command: int, holiday_factor: int,
 		data["params"][index] = Math.parameter_change_word(data["params"][index], change)
 	return ""
 
+static func increment_practice_points(data: Dictionary, club_id: int) -> void:
+	if not data.has("clubs") or not data["clubs"] is Array or data["clubs"].size() != 12:
+		data["clubs"] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	var entry: Variant = data["clubs"][club_id]
+	if entry is int:
+		data["clubs"][club_id] = (entry + 1) & 65535
+	elif entry is Dictionary:
+		entry["practice_points"] = (int(entry.get("practice_points", 0)) + 1) & 65535
+
 static func main_step(state: State, tables: Dictionary, result: Session.FrameResult) -> void:
 	# week_day_main increments this before calling week_day_main0.
 	state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
@@ -53,6 +84,9 @@ static func main_step(state: State, tables: Dictionary, result: Session.FrameRes
 			result.error = apply_parameters(state, event[1], 0, event[2], tables)
 			if not result.error.is_empty():
 				return
+			if event[1] == 4:
+				var club_id: int = (data["player_flags"] >> 12) & 15
+				increment_practice_points(data, club_id)
 			result.audio.append({"kind": "native_audio_command", "command": 0x501 if (actor["sequence_slot"] & 1) == 0 else 0x502})
 			result.presentation.append({"kind": "parameter_snapshot", "words": data["params"].duplicate()})
 		actor["sequence"]["counter"] = Math.s16(old_counter + 1)
