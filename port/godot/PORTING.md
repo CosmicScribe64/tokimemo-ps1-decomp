@@ -16,7 +16,7 @@ for the port's behavior and acceptance criteria.
   Rendering frequency and signal delivery must not decide game state.
 - Keep resource acquisition and validation separate from gameplay rules. Stop a
   route on a missing required capability with a precise diagnostic and no partial
-  progression. Never silently skip unsupported content.
+  progression. Never skip unsupported content without reporting an error.
 - Original text, images, fonts, audio, tables and executable data stay outside
   `res://` and Git. Load validated external packs from ignored `.asset-cache/port/`
   roots. Never execute scripts or deserialize engine objects from a pack.
@@ -55,7 +55,7 @@ From the repository root, use `tools/port/run.sh build` to build the pinned Dock
 image, `tools/port/run.sh test` for headless tests, and
 `tools/port/run.sh render-smoke` for the separate Xvfb/Mesa rendering check.
 Generated captures stay in `.asset-cache/port-smoke/`. Opening `project.godot`
-currently displays the project shell; gameplay is tracked by the Phase 3 tickets.
+currently displays the project shell; Phase 3 tickets track gameplay.
 
 Python content-contract tests use the pinned `tools/port/requirements-test.txt`.
 Install it into `/tmp` inside a disposable Docker container, then run

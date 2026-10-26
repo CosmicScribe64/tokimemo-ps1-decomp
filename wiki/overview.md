@@ -5,7 +5,7 @@ updated: 2026-10-09
 
 # Overview
 
-Goal: a byte-matching decompilation of the PS1 executable(s) of Tokimeki Memorial - Forever with You (Japan, PlayStation the Best). Rebuilding the original binary(ies) exactly from C and assembly source.
+Goal: a byte-matching decompilation of the PS1 executable(s) of Tokimeki Memorial, Forever with You (Japan, PlayStation the Best), rebuilding the original binaries from C and assembly source.
 
 ## Stack
 

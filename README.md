@@ -25,7 +25,7 @@ port.
 Everything runs in Docker, so Docker is the only thing you install. The image builds on first use.
 
 1. Put your copy of the game in the `game/` folder (gitignored). BIN+CUE, CHD, ISO, or a `.zip` or `.7z` of those all
-   work, in any subfolder. The build expects the PlayStation the Best release: executable SHA-1
+   work, in any subfolder. The build expects the PlayStation the Best release, with executable SHA-1
    `e823bd844a8f8fa4d05483b59c66bc54b8393b26` and a matching set of overlays. Other releases are recognised and
    refused with a message.
 2. Configure and build. The build finds the disc, checks the release, and unpacks it into `disc/` for you:
@@ -49,7 +49,7 @@ The project's notes, tickets and research live in [`wiki/`](wiki/index.md), whic
 [wiki/index.md](wiki/index.md); [wiki/decompile-workflow.md](wiki/decompile-workflow.md) explains how to decompile a
 function.
 
-## Matching Decompilation
+## Matching decompilation
 
 A function counts as decompiled only when its compiled code is byte-identical to the original. CI checks that on
 every push, along with the SHA-1 of every binary.

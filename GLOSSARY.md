@@ -17,7 +17,7 @@ Sources:
 - *code*: what the code does (tables, values, callers).
 - *sound*: the bank ids of the sound test.
 
-A row whose meaning comes only from a name or a guess says so; code built on such a row marks the name as a
+A row whose meaning comes only from a name or a guess says so; code built on such a row labels the name as a
 HYPOTHESIS.
 
 The overlay and module prefixes are listed in the maps of the ADR. A prefix is a stem in a table below, an
@@ -93,10 +93,10 @@ The nine parameters are words at GameState 0x0FC-0x11C, in the order of the name
 | stress | stress, parameter 8 | `stress` | T | strings |
 | yuukou | a girl's affection score (girl record +6) | `affection` | T | O.BIN (`yuukou_down`, `get_h_yuukou`), code |
 | tokimeki | a girl's heart-throb score (girl record +2); the tokimeki meter | `tokimeki` | K | O.BIN (`get_h_tokimeki`), code |
-| zyotai | a girl's state: a rank 0-4 computed from affection and tokimeki | `girl_state` | T | O.BIN (`get_g_zyotai_h`), code |
+| zyotai | a girl's state, a rank 0-4 computed from affection and tokimeki | `girl_state` | T | O.BIN (`get_g_zyotai_h`), code |
 | syoushin | a per-girl counter (record +0xA) that rises by 5 a day while affection is under 10; meaning unknown | none yet | | O.BIN (`syoushin_up`), code |
-| closeness | the first value `girl_scores` computes per girl: a lookup of her tokimeki and affection scores in a 20 x 20 grid; the scheduler's encounter and invitation tests, ETC's best-girl pick and the command screen's rank bars read it. The game has no word for it; the guess is only the English word | `closeness` | T | code (HYPOTHESIS: the word) |
-| points | the second value `girl_scores` computes per girl: closeness, syoushin, parameters and event counters combined; the scheduler and ENDING compare it with 500 (0x1F4). The ending-candidate reading is a guess; the number itself is plain | `points` | T | code (HYPOTHESIS: the ending-candidate reading) |
+| closeness | the first value `girl_scores` computes per girl, a lookup of her tokimeki and affection scores in a 20 x 20 grid; the scheduler's encounter and invitation tests, ETC's best-girl pick and the command screen's rank bars read it. The game has no word for it; the guess is only the English word | `closeness` | T | code (HYPOTHESIS: the word) |
+| points | the second value `girl_scores` computes per girl, combining closeness, syoushin, parameters and event counters; the scheduler and ENDING compare it with 500 (0x1F4). The ending-candidate reading is a guess; the number itself is plain | `points` | T | code (HYPOTHESIS: the ending-candidate reading) |
 | blood type | the player's blood type, entered at the start | `blood_type` | T | strings |
 
 ## Calendar and days
@@ -111,7 +111,7 @@ The nine parameters are words at GameState 0x0FC-0x11C, in the order of the name
 | haru, natsu, fuyu yasumi | spring, summer and winter break | `spring_break`, `summer_break`, `winter_break`; `vacation` for any | T | strings, O.BIN (`vacation_day_init`), sound |
 | kyousei hoshuu | the forced remedial week | `remedial_week` | T | strings |
 | schedule | the schedule screen (game mode 0x30) and the code that plans each day | `schedule` | T | O.BIN (`schedule_init`) |
-| yakusoku | an appointment for a date: place, month, day, girl and an active bit; 8 slots at GameState 0x54C | `appointment` | T | patch, code |
+| yakusoku | an appointment for a date (place, month, day, girl and an active bit); 8 slots at GameState 0x54C | `appointment` | T | patch, code |
 | day event | a record of the day-event queue (type, girl, scene, flags) that picks the day's scene | `day_event` | T | code (queue at GameState 0x69C) |
 | event log | 256 records of 8 bytes at GameState 0x75E, with a count | `event_log` | T | code |
 | tanjoubi | birthday; the player's is a word at GameState 0x0F8 (month in bits 0-3, day in bits 4-8) | `birthday` | T | code, O.BIN (`birth_day_check`) |
@@ -180,7 +180,7 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | taiiku-sai | the sports festival | `sports_festival` | T | strings, disc (`TAIIKU/`), sound (`UNDOKAI`) |
 | folk dance | the folk dance at the sports festival | `folk_dance` | T | disc (`TAIIKU/F_DANCE`) |
 | bunka-sai | the culture festival | `culture_festival` | T | strings, sound (`SCLFEST`) |
-| exhibit | what the player's club presents at the culture festival: one per club and year (literature exhibit, speech contest, drama play, experiment show, computer fortune telling, computer game, portrait drawing, open sketching, oil painting exhibit, concert) | `exhibit`, and the names in brackets as snake_case | T | banner titles (strings), BUNKASAI code |
+| exhibit | what the player's club presents at the culture festival, one per club and year (literature exhibit, speech contest, drama play, experiment show, computer fortune telling, computer game, portrait drawing, open sketching, oil painting exhibit, concert) | `exhibit`, and the names in brackets as snake_case | T | banner titles (strings), BUNKASAI code |
 | club mate | a girl whose club field equals the player's club; the BUNKASAI member blocks play a scene with her | `member` | T | code (BUNKASAI stage 0 and the member block entries) |
 | visitor | a met girl picked at random who joins the exhibit scene in BUNKASAI | `visitor` | T | code (`culture_visitor_pick`) |
 | fortune telling | the computer club's 1995 exhibit, a printout that compares two blood types; not the omikuji (the shrine slip) | `fortune` | T | banner title, BUNKASAI and BUNKAKEN code |
@@ -210,9 +210,9 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | deeto | a date with a girl | `date` | T | O.BIN (`normal_date_*`), disc (`DATE.EXN`) |
 | sasoi | an invitation, from a girl or to her | `invite` | T | O.BIN (`date_sasoi_judge`), disc (`G_INVITE`) |
 | geko | walking home from school; a meeting on the way is an encounter (next row) | `walk_home` | T | O.BIN (`geko_judge`), disc (`GEKO.BIN`) |
-| encounter | a meeting with a girl outside a date: on the way home, an invitation, a birthday; the GEKO overlay (folder `girl_encounters`, prefix `encounter_`) plays them | `encounter` | T | disc (`GEKO.EXN`); the grouping is a guess until GEKO is confirmed |
+| encounter | a meeting with a girl outside a date (on the way home, an invitation, or a birthday); the GEKO overlay (folder `girl_encounters`, prefix `encounter_`) plays them | `encounter` | T | disc (`GEKO.EXN`); the grouping is a guess until GEKO is confirmed |
 | denwa | a phone call with a girl; the TEL overlay (folder `telephone`, prefix `phone_`), which also shows the girl profile page | `phone` | T | disc (`TEL.EXN`) |
-| kaiwa | a talk with a girl: the script sections, lines and choices that the talk runner steps through | `talk` | T | patch (the talk runner `func_80082764`) |
+| kaiwa | a talk with a girl, covering the script sections, lines and choices that the talk runner steps through | `talk` | T | patch (the talk runner `func_80082764`) |
 | gyouji | a yearly school event; the GYOZI overlay's word, a near copy of SHOUGATU | `annual_event`, prefix `annual_` | T | disc (`GYOZI.EXN`); the meaning is a guess from the name |
 | bunkaken | the BUNKAKEN overlay's word; it plays a culture-festival tour that visits six culture clubs | `culture_festival_tour`, prefix `tour_` | T | disc (`BUNKAKEN.EXN`), code; a guess until BUNKAKEN is confirmed |
 | uwasa | a rumor report | `rumor` | T | O.BIN (`uwasa_main`) |
@@ -226,9 +226,9 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | term | meaning | stem | K/T | source |
 |---|---|---|---|---|
 | main state | the game mode byte (GameState 0x1108) that selects the screen or overlay; the patch name `main_state_set` is now `game_mode_set` | `game_mode` | T | patch (`main_state_set`), code |
-| game state | the GameState record at `D_800E6280`: calendar, names, parameters, girl records, day-event queue, mode and input words | `game_state` | T | code (`wiki/game-state.md`) |
+| game state | the GameState record at `D_800E6280` (calendar, names, parameters, girl records, day-event queue, mode and input words) | `game_state` | T | code (`wiki/game-state.md`) |
 | system data | the SystemData record right after GameState (saved settings, random seed) | `system_data` | T | code |
-| actor | one of the 160 display objects (type `Actor`) that the draw pass turns into sprite quads; actors 0, 2, 3.. and 96-159 are reused by scenes | `actor` | T | code (`actor_pool`) |
+| actor | one of the 160 display objects (type `Actor`) that the draw pass turns into sprite quads; scenes reuse actors 0, 2, 3.. and 96-159 | `actor` | T | code (`actor_pool`) |
 | sound driver | the SPU sound driver with its command queue, bank loads and work area; the driver's own names are not SDK names | `audio` | T | code, sound |
 | stage, step | the two bytes after the game mode that a mode's code steps through | `mode_stage`, `mode_step` | T | code |
 | overlay | an `.EXN` file loaded into the shared code slot | `ovl` | T | O.BIN, patch (`ovl_load_*`) |
@@ -245,10 +245,10 @@ Ids 0-11 are the order of `club_name_table` (`D_800B3908`).
 | kanji | the typewriter text system | `text`; O.BIN `k_disp_*` | T | O.BIN (`set_kanji_string`) |
 | speaker label | the name shown above a line | `speaker` | T | O.BIN (`gnsx`, `sndisp`) |
 | name codes | placeholders in text for the player's and girls' names | `name_code` | T | patch |
-| hud | the panels of the day screen: parameters, calendar date, portrait | `hud` | T | code |
+| hud | the panels of the day screen (parameters, calendar date, portrait) | `hud` | T | code |
 | save, load | the memory-card save and load | `save`, `load`, `memory_card` | T | O.BIN (`card_ev_set`) |
 | name entry | the entry of the player's name, birthday and blood type at the start; the NAME_ENT overlay | `name_entry` | T | disc (`NAME_ENT.EXN`), patch (kana grid) |
-| prologue | the voiced scene of the first school day that NAME_ENT plays after name entry (mode 0x15: 22 stages, 43 text lines); the attract run plays the separate `opening`, not this | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500), T-27030 |
+| prologue | the voiced scene of the first school day that NAME_ENT plays after name entry (mode 0x15, 22 stages, 43 text lines); the attract run plays the separate `opening`, not this | `prologue` | T | patch (`prologue_line_start`), emulator run (T-20500), T-27030 |
 | sound test | the OPTION screen that plays music and sound effects by bank id | `sound_test` | T | sound, strings |
 | debug menu | a developer menu whose text is in OPTION | `debug_menu` | T | patch (OPTION text offsets) |
 | staff roll | ETC credits sequence, with scrolling credit lines and picture/model variants (mode 0xC2) | `staff_roll` | T | ETC entry 0x80142974; wiki/spec/o-etc |
@@ -279,9 +279,9 @@ Developer abbreviations not resolved yet (`srn`, `mod`, `csr`, `dtd`, `don`, `ta
 
 ## Module words
 
-Prefix words that are neither a stem nor an abbreviation: plain English words for a module's subject, and short
-forms of stems. The ADR maps use them as prefixes. An overlay's word is a word of its folder's English name
-or of a stem for one of its scenes.
+This table lists prefix words that are neither a stem nor an abbreviation, including plain English words for a
+module's subject and short forms of stems. The ADR maps use them as prefixes. An overlay's word is a word of its
+folder's English name or of a stem for one of its scenes.
 
 | word | meaning | module | form |
 |---|---|---|---|
@@ -294,8 +294,8 @@ or of a stem for one of its scenes.
 | `career` | career guidance and choice | ETC | short form of `career_guidance`, `career_choice` |
 | `annual` | the yearly school events | GYOZI | short form of `annual_event` |
 | `camp` | the summer camp | KANGEI | short form of `summer_camp` |
-| `file_select` | the file screens behind the title item "game start": memory-card check, 14 album slots, create, copy, clear | NAME_ENT | plain words |
-| `opening` | the attract opening: a narrated picture story, then the opening movie | NAME_ENT | plain word |
+| `file_select` | the file screens behind the title item "game start" (memory-card check, 14 album slots, create, copy, clear) | NAME_ENT | plain words |
+| `opening` | the attract opening (a narrated picture story, then the opening movie) | NAME_ENT | plain word |
 | `help` | the help pages | OLH | plain word |
 | `options` | the options screen | OPTION | plain word |
 | `practice` | the club practice match | RENSYU | short form of `practice_match` |
@@ -340,7 +340,7 @@ the first name that uses it.
 | `gpu` | the graphics processor | SDK (`libgpu`) |
 | `hud` | the panels of the day screen | code |
 | `init` | initialize | O.BIN (`hizuke_init`) |
-| `lba` | logical block address: a sector number on the disc | patch (`ovl_load_lba`) |
+| `lba` | logical block address, a sector number on the disc | patch (`ovl_load_lba`) |
 | `misc` | miscellaneous (the ETC overlay's folder `misc_scenes`) | disc (`ETC.EXN`) |
 | `tt` | unexpanded technical identifier of TT.EXN; no English game title is adopted | disc identifier; technical namespace decision |
 | `ot` | ordering table | SDK |

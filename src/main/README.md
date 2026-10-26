@@ -61,12 +61,12 @@ Navigation map for the 34 readable C files in `src/main/`. Original ranges are h
 | Executable reload (`80056300`) | `reload_executable.c` | O.BIN `exit_function` is retained; no new prefix is assigned here |
 | MDEC backgrounds (`80057390`) | `background_images.c`, two still-background decoder helpers in `memory_card.c` | `bg_`; O.BIN `dec_bg_` |
 | 3D setup, mouse (`80058D20`, `80059710`) | `model_3d.c`, `mouse.c`, mouse-to-pad conversion in `pad_input.c` | `view_`, `mouse_` |
-| System menus: settings, club joining, rumors (`8005A0B0`) | `home_screens.c` | `settings_`, `club_`, `rumor_` |
+| System menus (settings, club joining, rumors; `8005A0B0`) | `home_screens.c` | `settings_`, `club_`, `rumor_` |
 | Title menu (`80061710`) | `title_screen.c` | `title_` |
-| HUD: portraits, parameters, calendar, message window (`80062CD0`, `800674B0`) | `hud_panels.c`, `hud_screens.c` | `hud_`, `portrait_`, `param_`, `calendar_`, `message_` |
+| HUD (portraits, parameters, calendar, message window; `80062CD0`, `800674B0`) | `hud_panels.c`, `hud_screens.c` | `hud_`, `portrait_`, `param_`, `calendar_`, `message_` |
 | Scheduler and day events (`8006CB30`) | `scheduler.c` | `schedule_`, `day_event_` |
 | School-day loop (`800737A0`) | `school_day.c` | `school_day_` |
-| Days off: appointments, calls, clubs (`80075320`) | `holiday.c` | `holiday_`, `appointment_` |
+| Days off (appointments, calls, clubs; `80075320`) | `holiday.c` | `holiday_`, `appointment_` |
 | Overlay loader (`800789E0`) | `overlay_loader.c` | `ovl_` |
 | Dates, girl selection, faces, SD sprites, dialogue, scene pictures (`8007C030`) | `scene_library.c`, `select_girl_by_scores` in `scene_display.c` | `face_`, `sd_`, `talk_`, `name_code_`, `scene_`, `select_girl_`; O.BIN `normal_date_` |
 | Vsync timer, scroll, fades, finger cursor (`80085E30`) | `scene_display.c` | `vsync_`, `fade_`, `cursor_` |
