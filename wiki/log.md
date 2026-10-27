@@ -1586,3 +1586,11 @@ Removed the remaining11 obsolete Codex/tmp worktrees; only main and the complete
 Archived the old matching scratch directory and obsolete T245 temp checkouts, then compared184,789 files and12 links against originals (2,626,666,626 file bytes). Only after verification were those temp paths removed; the compressed recovery archive is approximately992MiB. Kept current port temp evidence, original assets, translations, image decisions and both local pages. Both pages returned HTTP200; all agents and automation remain paused. Earlier DBZLog2 image removal and Docker's official reclaim-space helper reduced physical Docker.raw use to about12GiB without resetting the VM.
 
 Final filesystem check reports37GiB available. Wiki lint and scoped Git publication complete the cleanup documentation checkpoint; T-29033 remains In Review with the preservation exception open, not Done.
+
+## [2026-10-26] decision | Finish plan for one manager and one implementer
+
+Reviewed current session/route/boot code, the independent readiness and architecture findings, known June/preflight failures, first-visible/board and warm-audio pause checkpoints, subgame/cursor/image-review limits and the cleanup preservation error. Wrote [[port-finish-plan]] with ordered fresh-start, first-quarter, reachable-family, earned-route and package gates; wrote [[port-manager-handoff]] with the first bounded assignment, retained candidate paths, test discovery, protected data and both local pages. Updated entry-point links. This is a planning assessment, not a new gameplay audit or acceptance run.
+
+Moved [[tickets/T-29034-plan-single-worker-port-completion]] from In Progress to In Review and synchronized the board. The incoming manager reviews the plan independently; no agents, automation, gameplay tests or implementation resumed. The one-worker sequence replaces old parallel orchestration. Preserve the existing mandatory coverage rather than reducing it for speed; reuse actual earned saves and unchanged component evidence to avoid redundant work.
+
+Planning validation: Docker wiki lint reports0 broken links and0 status mismatches (two existing large-page notices); Git whitespace checks pass. Checked referenced current candidate/checkpoint and server-tool paths. No gameplay readiness claim is added; the incoming manager's independent review remains outstanding.

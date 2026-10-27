@@ -6,6 +6,8 @@ links: ["[[phase2]]", "[[asset-export]]", "[[spec/index]]", "[[tickets/T-29000-p
 
 # Phase 3 Godot port
 
+Current execution plan: [[port-finish-plan]], with the new-manager instructions in [[port-manager-handoff]]. The user now requests one manager/reviewer and one implementer, replacing the former parallel-agent workflow. Preserve this page's baseline scope and the acceptance gates in [[port-testing]].
+
 **Readiness correction, 2026-10-26:** Independent review found live overlay, ending, audio and subgame blockers. Prior full-completion claims below are superseded by [[port-readiness-review]]. Repairs and actual-player-route verification are In Progress; modernization expansion is held pending readiness.
 
 This Astra-authored plan was independently reviewed on 2026-10-25 under [[tickets/T-29000-plan-godot-port]] and defines the implementation route. The user authorized implementation on 2026-10-25; engine, runtime/oracle, and content adapter work is In Progress alongside asset extraction. No playable route or runtime parity is claimed yet.

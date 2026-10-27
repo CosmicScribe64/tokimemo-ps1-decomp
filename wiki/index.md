@@ -22,6 +22,8 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 
 ## Port references
 
+- [[port-finish-plan]] - current finish sequence, failure lessons and one-manager/one-implementer workflow
+- [[port-manager-handoff]] - next manager's first assignment, retained candidates and local-page operations
 - [[port-readiness-review]] - independent baseline blockers and actual-route acceptance requirements
 - [[port-testing]] - testing layers, required route coverage and reviewed evidence gate
 - [[archive/port-status-claims-2026-10-26]] - superseded port completion claims and historical checkpoints; not acceptance evidence

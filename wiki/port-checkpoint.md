@@ -5,6 +5,8 @@ updated: 2026-10-26
 
 # Port checkpoint — readiness repairs in progress
 
+For the next session, follow [[port-manager-handoff]] and [[port-finish-plan]]. They replace the old parallel orchestration instructions, not the evidence requirements. Planning is complete as a draft; development has not resumed.
+
 Phase 3 is incomplete. Current authority is [[status]], [[port-readiness-review]] and [[port-testing]]. Root has verified fresh keyboard entry through the first revealed prologue line with recorded original music; subsequent actor/HUD/board transitions remain in development. Captured-save gameplay reaches May28, while real June1 continuation remains unverified. The reviewed June controller is integrated; shared warm-audio acceptance covers its finite component, not a full gameplay route. Phases1/2 remain complete and matching.
 
 ## Paused at user request

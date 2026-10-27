@@ -5,6 +5,8 @@ updated: 2026-10-26
 
 # Status
 
+**Next-session plan, 2026-10-26:** [[port-finish-plan]] defines ordered playable milestones with one manager/reviewer and one implementer. [[port-manager-handoff]] gives the first assignment and preserved web-server setup. This planning pass did not resume agents or gameplay development; the incoming manager reviews the plan before closing T-29034.
+
 **Paused at user request, 2026-10-26:** All worker agents are stopped and automation remains paused. Reviewed canonical opening music and June controller changes are checkpointed; unreviewed scene/native compositions remain isolated. Cleanup increased free space from1.7GiB to about37GiB. Only main and the translation worktree remain registered; originals, completed text translation, current image review and active port evidence remain. An old research worktree's exact dirty wiki bookkeeping was not captured; its research files survive in committed historical drafts. See [[tickets/T-29033-reclaim-inactive-workspace-storage]] for the preservation exception. Both local pages remain running. Resume from [[port-checkpoint]]; the port is not complete.
 
 **Readiness correction, 2026-10-26:** Independent review found live overlay, ending, audio and subgame blockers. Prior full-completion claims below are superseded by [[port-readiness-review]]. Repairs and actual-player-route verification are In Progress; modernization expansion is held pending readiness.
