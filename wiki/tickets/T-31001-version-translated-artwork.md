@@ -17,9 +17,11 @@ Publish the user-requested translated PNG assets and their review history in Git
 - [x] Snapshot published translated revisions with source/output identities and current-revision selection.
 - [x] Preserve review decisions without promoting drafts to accepted runtime assets.
 - [x] Verify copied bytes/dimensions and exclude original extracts/previews.
-- [ ] Commit only this scope, push and verify the remote tip.
+- [x] Commit only this scope, push and verify the remote tip.
 - [ ] Independent review before Done; publication itself is not visual/runtime acceptance.
 
 ## Snapshot
 
 `translations/en/graphics/artwork/` contains59 current assets,97 PNGs across9 published batch-manifest revisions, and71 unchanged user review events. Every PNG's SHA256 and dimensions were checked against its published manifest and original dimensions; every recorded review output is present. Original extracts, comparisons and raw palette/table dumps are excluded. Live gallery files and ongoing port changes remain untouched. This is a versioned backup, not a new technical or visual acceptance claim.
+
+Published artwork commit `5f1dff4468510e05fc9c9354cb86a2a940f9eb4c` to origin/main and verified with ls-remote. The earlier planning-only commit was included; no uncommitted gameplay work was staged. Docker wiki lint found0 broken links/status mismatches; scoped whitespace checks passed. Independent review remains open.
