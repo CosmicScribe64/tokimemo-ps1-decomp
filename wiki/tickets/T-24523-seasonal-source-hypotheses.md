@@ -1,10 +1,10 @@
 ---
 id: T-24523
 title: Match seasonal overlay tails using new source hypotheses
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: []
 ---
 
@@ -140,3 +140,5 @@ SHOUGATU3E50C has a precise source error: original reads D_800E7378, GameState+0
 ### SHOUGATU random-field correction probe
 
 After preserving the audit separately, compiled a fresh full-unit baseline and one source change only: func_8013E50C unk_0F8 to unk_10F8. Both cost152; fresh object diffs prove the load changes from address0x800E6378 (field offset248) to target0x800E7378 (offset4344). The changed instruction already differs in registers, so unchanged aligned edit count is not evidence against the correction. No stale object or failed compile scored. Remaining broad differences include local table homes+0x48/+0x38 versus target+0x40/+0x30 and zero/ring lifetimes. Corrected source saved under drafts/T-24523/SHOUGATU/func_8013E50C, with inherited FAKE helper-address comment retained. No coverage, prototype/header or further variant. Archive and broad-guard handling await parent review.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

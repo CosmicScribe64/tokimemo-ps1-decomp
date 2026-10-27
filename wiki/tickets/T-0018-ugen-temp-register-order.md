@@ -1,10 +1,10 @@
 ---
 id: T-0018
 title: ugen temporary register order differs from the original
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-10
+updated: 2026-10-26
 links: ["[[matching-notes]]", "[[tickets/T-0016-frame-layout-emulation-pass]]"]
 ---
 
@@ -29,3 +29,5 @@ Scope extended 2026-10-09: the T-0750 compare-chain `switch` on a `u8` global (`
 2026-10-09 (T-1321): the global-promotion part is solved for unsigned globals by `tools/cvt_pass.py` (IDO's `CVT J<-L` on unsigned loads and its copy propagation of switch temporaries were the cause; see [[matching-notes]]). `LoadSquare`/`StoreSquare`/`MoveSquare` and the `regorder` rows are not covered (now matched or open in [[tickets/T-3002-remaining-promotion-shapes]]).
 
 2026-10-10 (T-5010): the `$v0`/`$v1` selector split is explained by an entry rule (compiler: a global first touched after a call or branch is not promoted) and a source property (unit-private data is not promoted); `tools/cvt_pass.py` is now in the build with the entry and compare rules. Remaining: R/V promotions of globals first read after a call or branch (no C shape found), `LoadSquare`/`StoreSquare`/`MoveSquare`, the `regorder` rows. See [[tickets/T-5010-t0018-register-order-second-attempt]].
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

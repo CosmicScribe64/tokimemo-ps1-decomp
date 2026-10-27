@@ -53,11 +53,7 @@ func attach(session: Session, state: State) -> String:
 	_legacy_completion=session.service_completion
 	var failure: String=session.router.bind_mode(0x46,_holiday)
 	if not failure.is_empty():return failure
-	if session.router.NATIVE_HANDLERS.has(0x50):
-		failure=session.router.bind_mode(0x50,_date_mode)
-		if not failure.is_empty():return failure
-	else:
-		session.router._handlers[0x50]=_date_mode
+	# Appointment/date previews do not register a native DATE capability.
 	failure=session.router.bind_mode(0x34,_command)
 	if not failure.is_empty():return failure
 	failure=session.router.bind_mode(0x31,_day_screen)
@@ -91,7 +87,7 @@ func _holiday(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 	var state: State=_state(base,result)
 	if state==null:return
 	var data: Dictionary=state.rule_state
-	if data["day_event_index"]!=9 or data["day_events"][9][0] not in [0x10, 0x80]:
+	if data["day_events"][data["day_event_index"]][0] not in [0x10, 0x80]:
 		result.error="holiday mode requires the actual Sunday queue record"
 		return
 	if not data["resources"].get("available_holiday_commands",[]).has(0):

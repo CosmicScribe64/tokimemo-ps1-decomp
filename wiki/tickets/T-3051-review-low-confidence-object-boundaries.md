@@ -1,10 +1,10 @@
 ---
 id: T-3051
 title: Review the low-confidence object boundaries and the orphan rodata chunks
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[tickets/T-0500-per-file-game-rodata-data-bss-split]]", "[[source-files]]"]
 ---
 
@@ -22,3 +22,5 @@ links: ["[[tickets/T-0500-per-file-game-rodata-data-bss-split]]", "[[source-file
 The build cannot check a `choice/N` cut: every candidate links the same bytes, and only functions without rodata sit between the users. A wrong cut only matters for static scope and for which file a function is written in.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-21009
 title: "Draft archive hygiene: target-instruction rows in comparison.txt and untested one-shot repair tools"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-15100-unaligned-draft-repairs]]"]
 ---
 
@@ -22,3 +22,5 @@ Draft archive hygiene: target-instruction rows in comparison.txt and untested on
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-15100-unaligned-draft-repairs|T-15100]]. Overlapping drafts-archive followups: [[tickets/T-21010-drafts-archive-scrub-instruction-rows|T-21010]], [[tickets/T-21011-drafts-listings-and-t16100-tools|T-21011]]; decide the policy once and apply it to all three.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

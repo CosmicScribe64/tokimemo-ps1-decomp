@@ -1,10 +1,10 @@
 ---
 id: T-24600
 title: Finish remaining game-code matching
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[status]]", "[[playbook]]"]
 ---
 
@@ -36,3 +36,5 @@ Starting census: Docker progress reports 6,816/6,952 functions and 2,091,568/2,2
 - 2026-10-20: T-24606 OPTION func_8013A7EC is Done: +1,092 verified bytes. Minimized typed calendar reconstruction, full build, fresh27 hashes, declarations and both independent reviews pass. Removed unnecessary multiplication; shared storage, entry read, selector view and integer fallthrough carry FAKE reasons. Six functions /5,480 bytes completed in this continuation;130 remain. Four lanes continue.
 
 - 2026-10-20 handoff: User requested wrapping up and committing/pushing current work. T-24607 adds1,036 verified default-C bytes; total seven functions /6,516 bytes this continuation,129 remain. All lanes stopped after preserving findings in [[matching-notes]]. The full matching goal is incomplete; this ticket remains In Progress rather than falsely Done.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

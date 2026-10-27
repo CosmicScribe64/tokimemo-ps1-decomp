@@ -1,10 +1,10 @@
 ---
 id: T-0100
 title: Run an older MIPS ucode compiler to reproduce the +16 stack frame
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[matching-notes]]", "[[toolchain]]", "[[tickets/T-0014-find-exact-ucode-compiler]]"]
 ---
 
@@ -26,3 +26,5 @@ Ranked candidates and the diagnostic ucode experiment: [[matching-notes]]. decom
 - 2026-10-09 (T-3110): IDO 5.2 and 4.1 tested ([[ido-52-evaluation]]). 5.2 has IDO 5.3's frames. 4.1's ugen makes the +16 frames natively and matches the frame pass in all 2564 matched functions, but it breaks 80 of them through register allocation. So neither replaces the pass; the pass stays. This ticket's remaining question (an exact 3.18 compiler with the old frame layout) has no available candidate.
 - 2026-10-09 (T-0016): the frame difference is now reproduced by `tools/frame_pass.py` ([[tickets/T-0016-frame-layout-emulation-pass]], [[toolchain]]), so framed functions are matchable. This ticket stays open: a copy of the real compiler would replace the pass without changing any C, and would also settle the other differences listed in [[matching-notes]] (constant hoisting in loops, ugen temporary order). The four named functions are no longer the test: use the evidence table in [[matching-notes]].
 - 2026-10-09 (T-3100): the O.BIN version stamps (a.out and symbolic header both 0x0312 = 3.18) point at the release SGI shipped as IDO 5.2 (C 3.18, IRIX 5.2, March 1994), linked to ECOFF on a big-endian host ([[original-compiler]]). decompals/ido-static-recomp ships only 5.3 and 7.1. decomp.me runs IDO 5.2 and 4.1 under qemu-irix. Under the user's licensing rule, testing them needs the user's explicit decision. Test set: the frame canaries above and the `promo` rows of [[data/t0018-cases]].
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

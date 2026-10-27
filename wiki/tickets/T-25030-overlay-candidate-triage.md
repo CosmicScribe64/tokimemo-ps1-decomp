@@ -1,10 +1,10 @@
 ---
 id: T-25030
 title: Qualify older large overlay reconstructions without source sweeps
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[plan-remaining]]", "[[tickets/T-25028-read-only-candidate-triage]]"]
 ---
 
@@ -31,3 +31,5 @@ Bounded direct-call-count check for first eight bodies versus target has identic
 ## Checks
 
 Read-only Docker source membership and bounded direct-call audit completed; no compiler invoked. Wiki lint zero broken links/status mismatches, one existing large-page warning. `git diff --check` passes; production/header/tools/config differences empty. T-25030 remains In Review.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

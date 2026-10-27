@@ -6,7 +6,11 @@ links: ["[[phase2]]", "[[asset-export]]", "[[spec/index]]", "[[tickets/T-29000-p
 
 # Phase 3 Godot port
 
+**Readiness correction, 2026-10-26:** Independent review found live overlay, ending, audio and subgame blockers. Prior full-completion claims below are superseded by [[port-readiness-review]]. Repairs and actual-player-route verification are In Progress; modernization expansion is held pending readiness.
+
 This Astra-authored plan was independently reviewed on 2026-10-25 under [[tickets/T-29000-plan-godot-port]] and defines the implementation route. The user authorized implementation on 2026-10-25; engine, runtime/oracle, and content adapter work is In Progress alongside asset extraction. No playable route or runtime parity is claimed yet.
+
+Current execution correction (2026-10-26): [[tickets/T-29032-plan-port-by-reachable-boundaries]] orders work by connected player milestones and explicit source branches. Prioritize shared audio qualification, New Game integration and the known quarterly calendar gap; run short source-backed boundary cases before long repeated ordinary-week runs. Image translation remains a separate lane and cannot satisfy baseline gameplay acceptance. Review and apply bounded completed work while dependent lanes proceed; do not wait for a full subsystem rewrite to review an isolated fix. Upcoming unsupported stops must be reported as known implementation gaps, not newly discovered regressions.
 
 ## Outcome and baseline
 

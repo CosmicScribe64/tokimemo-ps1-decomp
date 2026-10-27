@@ -18,6 +18,7 @@ const OrdinaryWeek = preload("res://rules/ordinary_week.gd")
 const WeekEnd = preload("res://rules/week_end.gd")
 const SchoolDay = preload("res://rules/school_day.gd")
 const EndingOverlay = preload("res://overlays/ending_overlay.gd")
+const MonthStart = preload("res://scenes/month_start_controller.gd")
 
 const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": [13],
 	"sine_quarter": [1025], "tokimeki_weights": [13], "bonus_param_masks": [13],
@@ -30,6 +31,7 @@ var tables: Dictionary = {}
 var error: String = ""
 var command_capabilities: Array[int] = []
 var opening_services: Dictionary = {}
+var month_start: MonthStart = MonthStart.new()
 
 func _init(validated_tables: Dictionary) -> void:
 	# The caller first validates external-pack provenance against original input.
@@ -84,7 +86,7 @@ func attach(session: Session, state: State) -> String:
 	var failure: String = state.structural_error()
 	if not failure.is_empty():
 		return failure
-	for binding: Array in [[0x15, _prologue], [0x34, _command], [0x30, _schedule], [0x31, _day_screen], [0x40, _school_day], [0x32, _week_end]]:
+	for binding: Array in [[0x15, _prologue], [0x34, _command], [0x30, _schedule], [0x31, _day_screen], [0x40, _school_day], [0x32, _week_end], [0x38, month_start.step]]:
 		failure = session.router.bind_mode(binding[0], binding[1])
 		if not failure.is_empty():
 			return failure
@@ -97,10 +99,8 @@ func attach_multi_week(session: Session, state: State) -> String:
 	if not failure.is_empty():
 		return failure
 	state.rule_state["allow_multi_week"] = true
-	for ovl_mode: int in [0x01, 0x35, 0x36, 0x37, 0x3d, 0x3e, 0x3f, 0x44, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, 0x50, 0x51, 0x52, 0x53, 0x57, 0x58, 0x59, 0x5a, 0x5c, 0x5e]:
-		failure = session.router.bind_overlay_mode(ovl_mode, _overlay_mode)
-		if not failure.is_empty():
-			return failure
+	# Preview overlays are not production callbacks. Missing native events
+	# stop transactionally; reviewed replacements must be composed explicitly.
 	return ""
 
 func _overlay_mode(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
@@ -437,6 +437,9 @@ func _actor(ident: int, slot: int, x: int, fast: int) -> Dictionary:
 		"blink_period": 0x82 if fast != 0 else 1, "unk_01": 1, "unk_05": 2, "unk_43": 0x10}
 
 func service_completion(event: Session.ServiceEvent, base: CoreState, _rng: Rng, result: Session.FrameResult) -> void:
+	if event.service == MonthStart.SERVICE:
+		month_start.service_completion(event, base, _rng, result)
+		return
 	var state: State = _state(base, result)
 	if state == null:
 		return

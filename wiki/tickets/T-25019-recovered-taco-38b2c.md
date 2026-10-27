@@ -1,10 +1,10 @@
 ---
 id: T-25019
 title: Recovered queue provenance and TACO func_80138B2C baseline
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25016-candidate-reconstruction]]"]
 ---
 
@@ -33,3 +33,5 @@ Compared recovered body once after only mechanical compatibility adaptations: ma
 Private diagnostics and adapted source remain under build/t25019-* and /private/tmp/t25019-taco-*.txt. No game data or objects added to version control. Next reconstruction target is main func_8005215C in src/main/8004F870.c: Tier 2 recovered body fails at void-pointer field access, while matched xa_wait supplies the same prefix with signed 16-bit fields at buffer +2. Follow T-12050's wide F61+2 warning and check original call ABI before repairing k_disp_inc arguments.
 
 Work is ready for independent review against CODING_STANDARDS.md. No match or coverage claim; register tail registered without another permutation search.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

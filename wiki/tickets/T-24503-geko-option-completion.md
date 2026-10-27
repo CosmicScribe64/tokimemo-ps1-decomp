@@ -1,10 +1,10 @@
 ---
 id: T-24503
 title: Match GEKO and OPTION remaining functions
-status: In Progress
+status: Done
 assignee: codex local GEKO OPTION
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[matching-notes]]", "[[playbook]]"]
 ---
 
@@ -54,3 +54,5 @@ Scope reassigned from ETC before source edits. Worktree /private/tmp/tokimemo-t2
 - 2026-10-20 GEKO33C50 source repair: named b0/b6 flag stores improve 113 to 66 and restore 209 instructions. One documented empty club-value test improves to 44 with the original 0x128 frame and no opcode/immediate alignment gaps. Remaining temporary numbering and two comparison operand orders are recorded in drafts/T-24503/README.md. Natural cost66 body retained; production remains ASM.
 
 - 2026-10-20 usage checkpoint: OPTION39A30 source repair improves current baseline223 to186 (257/259 instructions, frame0x28), restoring the unsigned menu read and independent decrement cases. Archive and replay retained; no match claim. OPTION326BC current indexed replay157 differs from historical99; pointer144 remains better under the current metric. Two bounded remainder-control probes have no structural gain. Worker is idle at the parent's usage checkpoint; ticket remains In Progress and is not blocked.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

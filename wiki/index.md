@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-25
+updated: 2026-10-26
 ---
 
 # Wiki index
@@ -15,11 +15,16 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[playbook]] - the matching loop and the recipes that closed matches; read before matching
 - [[phase2]] - phase 2 (readable code) work order, units, and review rule; conventions in [[phase2-naming]], terms in `GLOSSARY.md`
 - [[phase2-naming]] - phase 2 naming decisions, scope table, disc-name map and prefix maps
-- [[phase3]] - reviewed Astra Godot port plan, native behavior/content boundaries, playable milestones and first implementation tickets
+- [[phase3]] - Godot 4.7.2 Japanese desktop port plan; readiness repairs and verification remain in progress
+- [[phase4]] - Phase 4 modernization plan (widescreen presentation, modern settings & translation-pack selector, native achievements, player customization)
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
 
 ## Port references
+
+- [[port-readiness-review]] - independent baseline blockers and actual-route acceptance requirements
+- [[port-testing]] - testing layers, required route coverage and reviewed evidence gate
+- [[archive/port-status-claims-2026-10-26]] - superseded port completion claims and historical checkpoints; not acceptance evidence
 
 - [[port-checkpoint]] - reviewed low-usage publication checkpoint and exact remaining integration work
 
@@ -108,6 +113,6 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[log]] - append-only log of the last week; older weeks in `log/` (`tools/wiki.py rotate-log`)
 - [[SCHEMA]] - wiki layout and rules
 - `tools/wiki.py` - `rotate-log`, `rotate-notes`, `catalog` (ticket catalog, notes sections, function index), `lint` (broken links, kanban mismatches, large pages)
-- [[tickets/T-25011-class-a-closers-as1-levers|T-25011]] Class A closers covering eight guarded near misses (10 rows or fewer) with the as1 scheduler levers, one Sonnet 5.5 subagent (In Progress).
-- [[tickets/T-25012-class-c-d-reconstruction|T-25012]] Class C/D reconstruction (missing drafts, class C, class D smallest first), one Sonnet 5.5 subagent (In Progress).
-- [[tickets/T-25013-compiler-level-levers|T-25013]] NEXT STEP for the project, covering compiler-level levers (uopt/ugen/as1 rules, one uniform build rule at a time) to unblock the last ~119 functions; see [[status]] (Ready).
+- [[tickets/T-30001-modern-widescreen|T-30001]] Phase 4 (`P4.1`) widescreen presentation (`16:9` / `16:10` / `21:9` safe-frame apertures and responsive HUD/dialogue reflow) (Ready).
+- [[tickets/T-30002-modern-settings|T-30002]] Phase 4 (`P4.2`) comprehensive modern settings, input remapping, 5-bus audio, and translation/voice pack selector (Ready).
+- [[tickets/T-30004-modern-achievements|T-30004]] Phase 4 (`P4.3`) deterministic native achievement system and spoiler-aware gallery (Ready); see [[phase4]] and [[status]].

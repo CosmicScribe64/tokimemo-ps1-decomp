@@ -1,10 +1,10 @@
 ---
 id: T-21010
 title: "Remove original instruction rows from the drafts/ archive and fix its one-off scripts"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-14600-date-draft-repairs]]", "[[tickets/T-15700-taco-taiiku-draft-repairs]]", "[[tickets/T-16000-main-draft-compilation]]", "[[tickets/T-14500-exhaustive-drafts]]"]
 ---
 
@@ -22,3 +22,5 @@ Remove original instruction rows from the drafts/ archive and fix its one-off sc
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-14600-date-draft-repairs|T-14600]], [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]], [[tickets/T-16000-main-draft-compilation|T-16000]], [[tickets/T-14500-exhaustive-drafts|T-14500]]. Overlapping drafts-archive followups: [[tickets/T-21009-draft-archive-hygiene-comparison-rows|T-21009]], [[tickets/T-21011-drafts-listings-and-t16100-tools|T-21011]]; decide the policy once and apply it to all three.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-25057
 title: Reconstruct NAME_ENT record selector allocation
-status: In Review
+status: Done
 assignee: Codex Astra
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[playbook]]", "[[tickets/T-24515-name-ent]]"]
 ---
 
@@ -43,3 +43,5 @@ Docker-only existing tokimemo-decomp-arm64 image, read-only disc. No shared head
 2026-10-22 direct coordinator standards/spec review of final production diff: no findings. Ordinary13-record loop preserves intent; fixed-width C89; tile use dominated by computed assignment; extra initialization is nonvolatile and dead; unsigned subtraction defined; i0..12 row bounded; all four levers annotated and tested; no header/compiler/other-function edits. Review remains contingent on final gates, then ticket goes In Review for root acceptance.
 
 2026-10-22 final verification: default-build literal linked MATCH, 492 bytes / 123 words; full ninja -j2 succeeds; independently rehashed all 27 configured binaries; headers/globals OK and prototype branch check 0 new / 15 known. Hash evidence is in drafts/T-25057/gate-results.json. Coordinator review has no outstanding findings. Moved to In Review for root integration and acceptance. The next owned-file candidate moves to reserved T-25062 after this clean pin.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

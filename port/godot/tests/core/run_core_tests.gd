@@ -208,6 +208,52 @@ func _test_service_validation() -> void:
 		Session.ServiceEvent.new(1, Session.Phase.BEFORE_MODE, Session.ServiceKind.TIMER_INTERRUPT)]
 	result = session.step(InputFrame.new(1), events)
 	_check(not result.error.is_empty() and session.state_hash() == before, "unordered external schedule fails before mutation")
+	_test_stale_and_future_service_ticks()
+
+func _test_stale_and_future_service_ticks() -> void:
+	var session: Session = _synthetic_session()
+	session.router.bind_mode(0x34, func(_state: State, _input: InputFrame, _rng: Rng, _result: Session.FrameResult) -> void:
+		pass)
+	var callbacks: Array[String] = []
+	var readiness: Dictionary = {"ready": false}
+	session.service_completion = func(event: Session.ServiceEvent, state: State, _rng: Rng, result: Session.FrameResult) -> void:
+		callbacks.append(event.service)
+		readiness["ready"] = true
+		state.mode_stage_scratch = 1
+		result.presentation.append({"kind": "synthetic_ready", "service": event.service})
+	var current_tick: int = session.clock.logic_iterations
+	var accepted := session.step(InputFrame.new(current_tick), [
+		Session.ServiceEvent.new(current_tick, Session.Phase.CD, Session.ServiceKind.COMPLETION,
+			"current-tick-control")])
+	_check(accepted.committed and accepted.error.is_empty() and callbacks == ["current-tick-control"],
+		"current-tick service completion remains accepted")
+	_check(readiness["ready"] and session.state.mode_stage_scratch == 1 and accepted.presentation.size() == 1,
+		"accepted current-tick control reaches callback and publishes its ready intent")
+	# Clear only the synthetic readiness marker to test whether a stale/future
+	# event can promote it. Session-owned state remains the rollback baseline.
+	readiness["ready"] = false
+	session.state.mode_stage_scratch = 0
+	var tick: int = session.clock.logic_iterations
+	var variants: Array[Dictionary] = [
+		{"name": "stale", "tick": tick - 1},
+		{"name": "future", "tick": tick + 1},
+	]
+	for variant: Dictionary in variants:
+		var before: Dictionary = {"state": session.state.projection(), "rng": session.rng.checkpoint(),
+			"clock": session.clock.snapshot(), "input": session.latched_input.snapshot(), "hash": session.state_hash()}
+		var result: Session.FrameResult = session.step(InputFrame.new(tick), [
+			Session.ServiceEvent.new(int(variant["tick"]), Session.Phase.CD,
+				Session.ServiceKind.COMPLETION, "invalid-%s-tick" % variant["name"])])
+		var after: Dictionary = {"state": session.state.projection(), "rng": session.rng.checkpoint(),
+			"clock": session.clock.snapshot(), "input": session.latched_input.snapshot(), "hash": session.state_hash()}
+		_check(not result.committed and result.error == "service tick does not match logic iteration",
+			"%s service tick is rejected before commit" % variant["name"])
+		_check(after == before and not readiness["ready"] and session.state.mode_stage_scratch == 0,
+			"%s service tick leaves state/readiness/RNG/clock/input/hash unchanged" % variant["name"])
+		_check(callbacks == ["current-tick-control"] and result.presentation.is_empty()
+			and result.audio.is_empty() and result.transitions.is_empty() and result.trace.is_empty()
+			and result.event_hash.is_empty() and result.service_events_consumed == 0,
+			"%s service tick invokes no callback or output/readiness promotion" % variant["name"])
 
 func _transaction_action(label: String, fail_at: String, calls: Array[String],
 	state: State, rng: Rng, result: Session.FrameResult) -> void:

@@ -1,10 +1,10 @@
 ---
 id: T-0601
 title: Review medium and low confidence O.BIN mappings
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[obin]]", "[[tickets/T-0201-obin-format-and-symbols]]"]
 ---
 
@@ -21,3 +21,5 @@ links: ["[[obin]]", "[[tickets/T-0201-obin-format-and-symbols]]"]
 Medium class calibrated at 84% on PsyQ anchors, low at 46%; do not apply either without a second piece of evidence.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

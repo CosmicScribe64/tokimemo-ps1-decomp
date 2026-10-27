@@ -72,6 +72,8 @@ static func icons(state: State, weekday: bool, allow_subscreens: bool = false) -
 	data["holiday"]["icon_count"] = 14
 	for index: int in range(14):data["icon_enabled"][index]=1
 	for index: int in ([4,8,9,10] if weekday else [9,13]):data["icon_enabled"][index]=0
+	if not weekday and not club_icon_available(data):
+		data["icon_enabled"][4] = 0
 	if not weekday:
 		var avail: Variant = data["resources"].get("available_holiday_commands", [])
 		if allow_subscreens or (avail is Array and avail.has(9)):
@@ -80,6 +82,17 @@ static func icons(state: State, weekday: bool, allow_subscreens: bool = false) -
 				data["icon_enabled"][9] = 1
 	data["menu_disabled"].fill(0)
 	if weekday:data["menu_cursor"]=data["last_command"] & 15
+
+## holiday.c::holiday_icons_set_available, before remedial/illness overrides.
+## Health bits do not belong to the club nibble or quit-club record flags.
+static func club_icon_available(data: Dictionary) -> bool:
+	if data["weekday"] != 6:
+		return ((data["player_flags"] >> 12) & 15) != 11
+	var quit_clubs: int = 0
+	for index: int in range(11):
+		if (data["holiday"]["clubs"][index] & 1) != 0:
+			quit_clubs += 1
+	return quit_clubs < 11
 
 static func actor(state: State) -> Dictionary:
 	var data: Dictionary = state.rule_state

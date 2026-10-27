@@ -1,10 +1,10 @@
 ---
 id: T-25042
 title: Match KANGEI default-arm dispatch scheduling
-status: In Progress
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: [[[tickets/T-24201-cloud-packet-kangei-80134724]], [[tickets/T-25011-class-a-closers-as1-levers]], [[tickets/T-25041-kangei-preload-schedule]]]
 ---
 
@@ -28,3 +28,5 @@ Exclusive source src/ovl/KANGEI/80134120.c. Released80137B90 after pin c0249b80c
 2026-10-22: The source has advanced beyond the old two-position scheduling miss: T-25011's u16 default-arm cast fixes the slot but shifts its temporary chain by one. First step is to reproduce this current result and compare the actual expression emission with the uncast control before proposing a distinct store-promotion or temporary-elimination form.
 
 2026-10-22 phase finding: cast default shift t1 fails the mover path test while uncast t0 passes; both blocks have weight4. Named conversion locals restore t0 but their empty boundary disappears before the mover and earlier allocations change. New source and trace negatives are preserved in drafts/T-25042/README.md. Production guard remains unchanged. Continue investigating a source edge that survives through global scheduling but disappears in later branch cleanup; no match or external blocker claimed.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

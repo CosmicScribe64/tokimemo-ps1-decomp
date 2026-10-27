@@ -1,10 +1,10 @@
 ---
 id: T-24024
 title: Recover MAIN schedule dispatcher
-status: Ready
+status: Done
 assignee: Astra hard-function lane
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-24020-astra-hard-functions]]", "[[tickets/T-23003-w5-big-p03]]"]
 ---
 
@@ -27,3 +27,5 @@ T-23003 hand draft has 976 of 1073 instructions, 166 structural differences. Ori
 ### Initial reload probes
 
 Measured current baseline: 998 original text instructions, 975 draft, aligned cost 1013. Earlier 1073 count was not text instruction count. Scalar date views improve cost to 892 (984 instructions); offset views give the same output, alternating views cost 1008. Pause before pointer-shape work at the user's request to close existing near matches first. Evidence in `drafts/T-24024/probe.py`.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

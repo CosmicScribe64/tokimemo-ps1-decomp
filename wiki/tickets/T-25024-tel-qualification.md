@@ -1,10 +1,10 @@
 ---
 id: T-25024
 title: Qualify TEL 80136724 in src/ovl/TEL/80132000.c
-status: In Review
+status: Done
 assignee: Sol 6.1 medium
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[plan-remaining]]", "[[matching-notes]]"]
 ---
 
@@ -46,3 +46,5 @@ Rerun: `migrate_globals.py --check` passes; `sync_protos.py --check-branch` repo
 ### Coordinator archive review (2026-10-22)
 
 Reviewed committed checkpoint e43de7fb9722a7dd95c700cecd5e881583948ee9 against base883760224 and the assigned qualification scope. Source/header/config/tools production diff is empty. Archive contains two narrow function bodies, compact result/context hashes and a full-TU replay driver; no raw corpus, bulk assembly, binary/ucode, generated objects or complete TU/header snapshots. C89 declarations and existing types/marked historical padding are retained. Metric conventions, unproven semantics and fallback checksum limits are explicit. Replay diagnostic declaration strings were checked in Docker and contain actual newlines; no compiler rerun or new experiment was needed for coordinator review. No new archive/standards findings. Keep In Review for root acceptance; zero new C bytes, no justified next source control or independent compiler-defect claim. Root owns reassignment or a narrowly framed consultation.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

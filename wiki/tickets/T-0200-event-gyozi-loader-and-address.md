@@ -1,10 +1,10 @@
 ---
 id: T-0200
 title: Find how EVENT.EXN and GYOZI.EXN are loaded and confirm their load addresses
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[overlays]]", "[[tickets/T-0008-overlay-load-address-and-split]]"]
 ---
 
@@ -23,3 +23,5 @@ links: ["[[overlays]]", "[[tickets/T-0008-overlay-load-address-and-split]]"]
 Evidence so far: EVENT jal targets land on function starts 329/400 at 0x800F6000, 0/0 at 0x80132000; GYOZI 117/153 at 0x80134000, 5/153 at 0x80132000. Both split and rebuild byte-identical regardless, since the load address only changes symbol names.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-25021
 title: Typed reconstruction of main func_8005215C from recovered candidate
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25019-recovered-taco-38b2c]]", "[[tickets/T-12050-codex-cx5]]"]
 ---
 
@@ -39,3 +39,5 @@ Saved typed baseline and final source at drafts/T-25021/main/func_8005215C/. Res
 The matched xa_wait prefix directly supplies signed16 buffer+2 access and wide index arithmetic; this is a useful family-local reconstruction bed. The recovered m2c body still requires call-ABI verification and source read-boundary repair, so compiling a salvaged fragment alone is not sufficient proof. A targeted reconstruction lane can save complete source and whole-TU counters without a full census; packet canonical scores cannot select the near-match lane by themselves.
 
 Ready for independent standards/spec review. No production code changes remain; private objects and raw diff traces remain ignored under build/t25021-*.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

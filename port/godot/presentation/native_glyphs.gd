@@ -19,11 +19,13 @@ const PALETTE_LABELS := ["text_palette_0", "text_palette_1",
 const PALETTE_ADDRESSES := [0x800B3FAC, 0x800B3FCC, 0x800B3FEC, 0x800B400C]
 const PROOF_ASSEMBLY := "asm/data/main/text_system.data.s"
 
+var _validated_snapshot := false
 var _metadata: Dictionary = {}
 var _glyph_bank := PackedByteArray()
 var _palettes: Array = []
 
 func open_external_font(root_path: String) -> String:
+	_validated_snapshot = false
 	_metadata.clear()
 	_glyph_bank.clear()
 	_palettes.clear()
@@ -78,15 +80,16 @@ func open_external_font(root_path: String) -> String:
 	_metadata = metadata.duplicate(true)
 	_glyph_bank = bank
 	_palettes = parsed["palettes"].duplicate(true)
+	_validated_snapshot = true
 	return ""
 
 func get_glyph(code_unit: PackedByteArray) -> Dictionary:
-	if _metadata.is_empty():
+	if not _validated_snapshot:
 		return {"status": "unsupported", "diagnostic": "external font pack is not open"}
-	return resolve(code_unit, _metadata, _glyph_bank)
+	return _resolve_validated(code_unit, _metadata, _glyph_bank)
 
 func get_glyph_image(code_unit: PackedByteArray, palette_row: int,
-		palette_family: int = 0, brightness: int = 0x80) -> Dictionary:
+		palette_family: int = 0, brightness: int = 0x80, shadow: bool = false) -> Dictionary:
 	if palette_row < 0 or palette_row >= 8 or palette_family < 0 or palette_family > 1:
 		return {"status": "unsupported", "diagnostic": "text palette selector is outside native table bounds"}
 	if brightness < 0 or brightness > 0x80:
@@ -94,7 +97,8 @@ func get_glyph_image(code_unit: PackedByteArray, palette_row: int,
 	var glyph: Dictionary = get_glyph(code_unit)
 	if glyph.get("status") != "glyph":
 		return glyph
-	var palette: Dictionary = _palettes[palette_family]
+	# disp_string selects the corresponding shadow table at family + 2.
+	var palette: Dictionary = _palettes[palette_family + (2 if shadow else 0)]
 	var words: Array = palette["words"]
 	var foreground_word: int = int(words[palette_row * 2 + 1])
 	var color: Color = _bgr555_color(foreground_word, brightness)
@@ -113,6 +117,12 @@ static func resolve(code_unit: PackedByteArray, metadata: Dictionary,
 	var error: String = _validate(metadata, glyph_bank)
 	if not error.is_empty():
 		return {"status": "unsupported", "diagnostic": error}
+	return _resolve_validated(code_unit, metadata, glyph_bank)
+
+static func _resolve_validated(code_unit: PackedByteArray, metadata: Dictionary,
+		glyph_bank: PackedByteArray) -> Dictionary:
+	# Instance snapshots passed complete source/format/range/bank validation at
+	# open. The public static resolver above still validates arbitrary inputs.
 	if code_unit.size() == 1:
 		return {"status": "terminal_byte_before_nul", "raw_hex": code_unit.hex_encode()}
 	if code_unit.size() != 2:

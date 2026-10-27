@@ -1,10 +1,10 @@
 ---
 id: T-21015
 title: "Several data ranges per object in config/objects, and a durable range for the InitMouse island"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-12050-codex-cx5]]", "[[tickets/T-12010-codex-cx1]]"]
 ---
 
@@ -22,3 +22,5 @@ Several data ranges per object in config/objects, and a durable range for the In
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-12050-codex-cx5|T-12050]], [[tickets/T-12010-codex-cx1|T-12010]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

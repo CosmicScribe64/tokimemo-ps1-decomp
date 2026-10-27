@@ -287,11 +287,12 @@ func _test_rendering_and_captures() -> void:
 	var save_err3 := img_day.save_png(captures_dir.path_join("tel_03_date_day_menu.png"))
 	_check(save_err3 == OK, "Saved captures/tel_03_date_day_menu.png")
 
-	# 4. Render Girl Phone Call Response VN Scene
+	# No actual committed dialogue phase is supplied by this historical preview
+	# fixture. Require explicit unsupported status; never fabricate readiness or
+	# save a gallery image that implies a genuine continuation prompt.
 	var img_call := presenter.render_girl_phone_call_vn_scene(OverlayRules.GIRL_SHIORI, "accepted")
-	_check(img_call.get_size() == Vector2i(320, 240), "Girl call VN scene rendered 320x240")
-	var save_err4 := img_call.save_png(captures_dir.path_join("tel_04_call_vn_scene.png"))
-	_check(save_err4 == OK, "Saved captures/tel_04_call_vn_scene.png")
+	_check(img_call == null and presenter.error == "phone prompt requires explicit committed native phase/text/voice/marker state",
+		"Call response without live phase is unsupported and emits no gallery image")
 
 	# 5. Verify Zero Bounding Box Violations
 	_check(presenter.bounding_box_violations.is_empty(), "Zero glyph bounding-box violations in notebook or message window")

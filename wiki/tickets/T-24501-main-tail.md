@@ -1,10 +1,10 @@
 ---
 id: T-24501
 title: Match MAIN remaining functions
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[playbook]]", "[[matching-notes]]"]
 ---
 
@@ -111,3 +111,5 @@ TILE adopted real abs_y local reaches94/257 with every stack home/saved role exa
 Font upload single-row226/196 adopted; faithful allocator comparison confirms cell splits in both controls, outer colouring differs with redundant copy use. Target has no omitted fourth use. Frozen source-only packet retains232/reduced controls; production unchanged. See [[matching-notes]].
 
 get_fnt1036B reconstructed343->23/258words(target259). Actual256B raster, byte cursor, correct vertical rowcount and natural compiler-unrolled fixed8B mirror recovered. Counterownership controls archived; no dead slots. Narrow frame/late-expression packet ready for consultation. Production unchanged; see [[matching-notes]].
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

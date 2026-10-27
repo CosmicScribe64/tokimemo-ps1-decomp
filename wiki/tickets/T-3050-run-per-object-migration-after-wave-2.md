@@ -1,10 +1,10 @@
 ---
 id: T-3050
 title: Run the per-object migration on the whole tree after wave 2
-status: Ready
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[tickets/T-0500-per-file-game-rodata-data-bss-split]]", "[[build-system]]", "[[source-files]]"]
 ---
 
@@ -24,3 +24,5 @@ Move every remaining overlay and every `src/main` file to one C file per origina
 A trial on a copy of the T-0500 branch (all 27 units, before wave 2) built 27 of 27 OK and was idempotent. If the script stops with "not a union of objects", a file boundary in the yaml disagrees with `config/objects/<UNIT>.txt`; if it stops on a file-scope definition used by two objects, move the definition by hand (or make it an extern in the header) and re-run. New C written after the migration goes into the per-object files directly.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

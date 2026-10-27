@@ -16,6 +16,8 @@ import zlib
 from datetime import datetime, timezone
 from pathlib import Path
 
+import admission
+
 MAX_IMAGE = 32 * 1024 * 1024
 MAX_VIDEO = 512 * 1024 * 1024
 MIN_VIDEO = 4096
@@ -186,7 +188,7 @@ def load_manifest(root: Path) -> dict[str, object]:
     return data
 
 
-def _publish_locked(paths: list[Path], root: Path) -> int:
+def _publish_locked(paths: list[Path], root: Path, evidence_root: Path | None = None) -> int:
     """Atomically add explicit validated media while the cross-process lock is held."""
     root.mkdir(parents=True, exist_ok=True)
     if root.is_symlink() or not root.is_dir():
@@ -194,8 +196,21 @@ def _publish_locked(paths: list[Path], root: Path) -> int:
     manifest = load_manifest(root)
     items = {item["file"]: item for item in manifest["items"] if isinstance(item, dict) and isinstance(item.get("file"), str)}
     added = 0
+    gate = admission.Admission(evidence_root)
+    prepared = []
     for source in paths:
         suffix, size, digest = inspect_capture(source)
+        proof = gate.authorize(digest, suffix, size)
+        prepared.append((source, suffix, size, digest, proof))
+    # A denied member cannot partially install the other files in its batch.
+    for item in items.values():
+        expected = item.get('sha256')
+        suffix = Path(item['file']).suffix.lower()
+        admission.require(isinstance(expected, str) and item.get('id') == expected[:16] and
+                          item['file'] == expected[:16] + suffix and type(item.get('bytes')) is int,
+                          'existing gallery identity differs')
+        gate.authorize(expected, suffix, item['bytes'])
+    for source, suffix, size, digest, proof in prepared:
         item_id = digest[:16]
         if not ID_RE.fullmatch(item_id):
             raise ValueError("generated unsafe media id")
@@ -211,6 +226,13 @@ def _publish_locked(paths: list[Path], root: Path) -> int:
                     shutil.copyfileobj(original, target, length=1024 * 1024)
                     target.flush()
                     os.fsync(target.fileno())
+                # Direct callers get the same exact-byte protection as watcher copies.
+                copied_hash = hashlib.sha256()
+                with open(temporary, 'rb') as copied:
+                    for chunk in iter(lambda: copied.read(1024 * 1024), b''):
+                        copied_hash.update(chunk)
+                if Path(temporary).stat().st_size != size or copied_hash.hexdigest() != digest:
+                    raise ValueError('capture changed between inspection and publication')
                 try:
                     os.link(temporary, destination)
                 except FileExistsError:
@@ -221,7 +243,7 @@ def _publish_locked(paths: list[Path], root: Path) -> int:
                     os.unlink(temporary)
         if name not in items:
             items[name] = {"id": item_id, "file": name, "sha256": digest, "bytes": size,
-                           "created": datetime.now(timezone.utc).isoformat()}
+                           "created": datetime.now(timezone.utc).isoformat(), "admission": proof}
             added += 1
     manifest_data = {"version": 1, "items": sorted(items.values(), key=lambda item: str(item.get("created", "")), reverse=True)}
     fd, temporary = tempfile.mkstemp(prefix=".manifest-", dir=root)
@@ -238,7 +260,7 @@ def _publish_locked(paths: list[Path], root: Path) -> int:
     return added
 
 
-def publish(paths: list[Path], root: Path) -> int:
+def publish(paths: list[Path], root: Path, *, evidence_root: Path | None = None) -> int:
     """Serialize publishers so concurrent writers cannot lose manifest entries."""
     root.mkdir(parents=True, exist_ok=True)
     if root.is_symlink() or not root.is_dir():
@@ -248,7 +270,7 @@ def publish(paths: list[Path], root: Path) -> int:
     with os.fdopen(fd, "a+b") as lock_file:
         fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
         try:
-            return _publish_locked(paths, root)
+            return _publish_locked(paths, root, evidence_root)
         finally:
             fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
@@ -256,9 +278,14 @@ def publish(paths: list[Path], root: Path) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--media-root", default="/media")
+    parser.add_argument("--evidence-root", type=Path, default=Path(os.environ.get('PORT_PROGRESS_EVIDENCE_ROOT', '/evidence')))
     parser.add_argument("captures", nargs="+", type=Path)
     args = parser.parse_args()
-    print(f"Published {publish(args.captures, Path(args.media_root))} new capture(s)")
+    try:
+        added = publish(args.captures, Path(args.media_root), evidence_root=args.evidence_root)
+    except (OSError, ValueError) as error:
+        parser.exit(2, f'Not published: {error}\n')
+    print(f"Published {added} new capture(s)")
 
 
 if __name__ == "__main__":

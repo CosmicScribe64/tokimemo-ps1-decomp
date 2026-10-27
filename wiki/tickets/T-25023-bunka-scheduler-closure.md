@@ -1,10 +1,10 @@
 ---
 id: T-25023
 title: Close BUNKA_SD scheduler residue in src/ovl/BUNKA_SD/801388D0.c
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25020-bunka-sd-trace-closure]]", "[[tickets/T-24927-func-80139290-801388D0]]", "[[plan-remaining]]"]
 ---
 
@@ -35,3 +35,5 @@ Revisit only with uopt-output/ugen evidence for separating constant emission fro
 ## Verification
 
 Single-object baseline rebuild and whole-TU resolved C measurement completed in Docker. Print-only trace fidelity checked on all four relevant sections. Wiki lint: 0 broken links, 0 status mismatches; one existing large-page warning (data/t0018-cases). `git diff --check` clean. No full build or repeated declaration checks for this documentation-only result; root performs central integration checks.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

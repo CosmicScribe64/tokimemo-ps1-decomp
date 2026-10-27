@@ -1,10 +1,10 @@
 ---
 id: T-0300
 title: Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[psyq-sdk]]", "[[tickets/T-0010-sdk-lib-object-boundaries]]"]
 ---
 
@@ -23,3 +23,5 @@ links: ["[[psyq-sdk]]", "[[tickets/T-0010-sdk-lib-object-boundaries]]"]
 The signature sets in `tools/psyq_sigs/` (lab313ru/psx_psyq_signatures) match libgte/libetc/libc/libapi exactly but only a few objects of these libs, so the exe's builds of them are not in any set. Needs the real .LIB/.OBJ of PsyQ 3.3-3.6 (user-supplied, not committed) or call-graph clustering. See [[psyq-sdk]] for anchors and brackets.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

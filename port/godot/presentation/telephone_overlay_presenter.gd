@@ -449,7 +449,15 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
 		year: int = 95, month: int = 4, day: int = 9,
 		weekday: int = 6, day_kind: int = 1,
-		bg_uv: Vector2i = Vector2i(20, 14)) -> Image:
+		bg_uv: Vector2i = Vector2i(20, 14), native_prompt: Dictionary = {}) -> Image:
+	var prompt: Dictionary = phone_wait_marker_command(native_prompt)
+	if not str(prompt.get("error", "")).is_empty():
+		error = str(prompt["error"])
+		return null
+	if prompt["visible"] and (_compositor == null or not _compositor.descriptor.get("frames", {}).has("1:base")):
+		error = "native phone wait marker requires original actor2/frame1 resources"
+		return null
+	error = ""
 	_ensure_compositor_coverage()
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
@@ -511,10 +519,35 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 	_draw_text_hex_checked(target, speaker_hex, Vector2i(speaker_x, 170), 0, "message_window")
 	_draw_text_hex_checked(target, line_hex, Vector2i(88, 170), 0, "message_window")
 
-	# Hand cursor / prompt indicator
-	_draw_hand_cursor(target, Vector2i(270, 198))
+	# Continuation is actor2/frame1, independent of actor0 cursor preference.
+	# Read the committed source bob position; presentation never advances it.
+	if prompt["visible"]:
+		_draw_actor(target, 1, prompt["position"] - Vector2i(160, 120))
 
 	return target
+
+
+static func phone_wait_marker_command(view: Dictionary) -> Dictionary:
+	var fields: Array[String] = ["schema", "source_function", "waiting_for_input", "k_disp_inc_result",
+		"voice_mode", "speaker_voice_state", "marker_visible", "marker_native_y"]
+	if view.size() != fields.size() or not view.has_all(fields):
+		return {"error": "phone prompt requires explicit committed native phase/text/voice/marker state"}
+	for key: String in ["schema", "source_function"]:
+		if not view[key] is String:
+			return {"error": "phone prompt source identity must be a string"}
+	if view["schema"] != "tokimemo.phone-wait-marker-view.v1" or view["source_function"] != "talk_text_step":
+		return {"error": "unsupported phone wait-marker source contract"}
+	for key: String in ["waiting_for_input", "marker_visible"]:
+		if not view[key] is bool:
+			return {"error": "phone prompt flags require exact native projection booleans"}
+	for key: String in ["k_disp_inc_result", "voice_mode", "speaker_voice_state", "marker_native_y"]:
+		if not view[key] is int:
+			return {"error": "phone prompt fields require exact native integers"}
+	if view["k_disp_inc_result"] not in [0, 1] or view["voice_mode"] not in [0, 1, 2] or view["speaker_voice_state"] not in [0, 1, 2] or view["marker_native_y"] < 0x48 or view["marker_native_y"] > 0x4f:
+		return {"error": "phone prompt projection is outside the native source ranges"}
+	var ready: bool = view["waiting_for_input"] and view["k_disp_inc_result"] == 1 and (view["speaker_voice_state"] == 2 or view["voice_mode"] == 0)
+	return {"error": "", "visible": ready and view["marker_visible"], "frame": 1,
+		"position": Vector2i(276, 120 + view["marker_native_y"])}
 
 
 # ==============================================================================

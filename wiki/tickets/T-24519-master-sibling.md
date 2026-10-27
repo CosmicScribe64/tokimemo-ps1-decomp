@@ -1,10 +1,10 @@
 ---
 id: T-24519
 title: Transfer recovered MASTER animation sibling lifetimes
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-24517-master-flow]]", "[[families/master-family-results]]"]
 ---
 
@@ -34,3 +34,5 @@ Fresh MASTER baseline checksum passes. T24048 selected source reproduces428 alig
 Corrected-mask replay confirms728 positions,289 exact diagnostic prefix,171 register-only rows/0 other rows. Clone spill34 and point30/speed34 now match all corresponding store/reloads. First residual at289 is the existing aligned-copy end relation target t5/source t3 versus candidate t6/source t3; no duplicate copy-end experiment. Existing-word map finds one stable bijection throughout later430..727 across calls and matching byte-counter v1 ranges, so no independent later issue is established.
 
 `drafts/T-24519/` retains only narrow C, replay and concise source/map README. Fresh MASTER SHA1 and headers pass; production src/include/tools/config diff is empty. No full27 archive-only rebuild, no new C match and no backend-impossibility claim. Standards/spec self-review finds no invalid C, new FAKE workaround, raw ASM/binary/ucode or generated full context. Ready for coordinator review.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

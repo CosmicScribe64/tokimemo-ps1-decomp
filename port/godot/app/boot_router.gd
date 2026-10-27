@@ -6,10 +6,12 @@ extends RefCounted
 
 const StoreScript = preload("res://services/installed_pack_store.gd")
 const BackendScript = preload("res://services/original_game_import_backend.gd")
+const LaunchProfile = preload("res://services/installed_launch_profile.gd")
+const Launch = preload("res://app/installed_launch.gd")
 
 const SETUP_SCENE_PATH := "res://app/first_launch_setup.tscn"
-const DEFAULT_PLAYABLE_SCENE_PATH := "res://app/playable.tscn"
-const DEFAULT_CAPABILITIES: Array[String] = ["prologue.nbn_native_cells.static_preview"]
+const DEFAULT_PLAYABLE_SCENE_PATH := "res://app/new_game_entry.tscn"
+const DEFAULT_CAPABILITIES: Array[String] = [LaunchProfile.ENTRY_CAP,LaunchProfile.OPENING_RESOURCES_CAP]
 const ENV_FORCE_SETUP := "TOKIMEMO_FORCE_SETUP"
 const ENV_PLAYABLE_SCENE := "TOKIMEMO_PLAYABLE_SCENE"
 
@@ -39,16 +41,21 @@ func check_boot_state(caps_override: Array = []) -> Dictionary:
 	var force_setup := is_setup_forced()
 	var state := str(installed.get("state", "failed"))
 	var launch_ready: bool = bool(installed.get("launch_ready", false))
+	var profile: Dictionary = installed.get("launch_profile", {})
+	if launch_ready and not profile.get("available_capabilities", []).has(LaunchProfile.ENTRY_CAP):
+		launch_ready = false
+		state = "installed_incomplete"
 	
 	if state == "ready" and launch_ready and not force_setup:
 		return {
 			"action": "playable",
 			"launch_ready": true,
 			"target": _determine_playable_target(""),
-			"reason": "Validated installed pack remembered and passed preflight.",
+			"reason": "Validated original name-entry data is installed. Gameplay remains unavailable.",
 			"installed": installed,
 			"pack_root": str(installed.get("pack_root", "")),
 			"manifest_sha256": str(installed.get("manifest_sha256", "")),
+			"launch_profile": installed.get("launch_profile", {}).duplicate(true),
 		}
 	
 	var reason := "No valid pack installed."
@@ -77,13 +84,13 @@ func route(host_node: Node = null, playable_scene_path: String = "") -> Dictiona
 		decision["target"] = target_scene
 	
 	if host_node != null and host_node.is_inside_tree():
-		if decision["action"] == "setup":
-			# If transitioning to setup, verify scene file exists before change_scene
-			if ResourceLoader.exists(SETUP_SCENE_PATH):
-				host_node.get_tree().change_scene_to_file(SETUP_SCENE_PATH)
-		elif decision["action"] == "playable":
-			if ResourceLoader.exists(target_scene):
-				host_node.get_tree().change_scene_to_file(target_scene)
+		var launch_error: String = Launch.change_scene(host_node, target_scene, decision.get("launch_profile", {}))
+		if not launch_error.is_empty():
+			decision["action"] = "setup"
+			decision["launch_ready"] = false
+			decision["target"] = SETUP_SCENE_PATH
+			decision["reason"] = launch_error
+			Launch.show_repair(host_node, launch_error)
 	
 	return decision
 

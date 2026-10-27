@@ -1,10 +1,10 @@
 ---
 id: T-25026
 title: Reconcile func_8006D7EC in src/main/8006CB30.c
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-23003-w5-big-p03]]", "[[tickets/T-24600-finish-matching]]", "[[tickets/T-25013-compiler-level-levers]]", "[[tickets/T-25016-candidate-reconstruction]]"]
 ---
 
@@ -39,3 +39,5 @@ Root authorized one consultation after checking for an identical predecessor. T-
 ## Checks
 
 Single-object baseline refresh, whole-TU resolved measurement, pre/post-uopt capture and stock initial-as1 capture completed in Docker. Four-section trace fidelity passes. Wiki lint: zero broken links/status mismatches, one pre-existing large-page warning. `git diff --check` passes; production/header/tool/config diffs empty. No full integration build for the documentation-only checkpoint.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

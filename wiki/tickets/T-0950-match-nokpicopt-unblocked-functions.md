@@ -1,10 +1,10 @@
 ---
 id: T-0950
 title: Match functions unblocked by -Wo,-nokpicopt
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[tickets/T-0017-const-in-reg-loop-hoisting]]", "[[matching-notes]]"]
 ---
 
@@ -22,3 +22,5 @@ Decompile the functions that were blocked only by `-Wo,-no_const_in_reg` and now
 Find candidates: the original has `addiu rX, $zero, N` before a loop and `bne/beq` against `rX`, or `multu` by such a register. Small examples already matched in T-0017: `func_80048E78`, `get_h_tokimeki_table`, `func_80140788` (DATE). Loops indexed by `s16` keep the `multu` (no induction-variable strength reduction). Functions that also read a scalar global in several blocks hit the T-0018 gap.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

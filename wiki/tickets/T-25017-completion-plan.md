@@ -1,10 +1,10 @@
 ---
 id: T-25017
 title: Reconcile the census and execute the evidence-driven completion plan
-status: In Progress
+status: Done
 assignee: orchestrator
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: [[[plan-remaining]], [[status]], [[tickets/T-25016-candidate-reconstruction]]]
 ---
 
@@ -35,3 +35,5 @@ Reviewed the guarded BUNKA delta (explicit FAKE, retained fallback) and source-o
 ### Scheduler lane rotation
 
 2026-10-22: T-25023 Sol baseline reproduces four changed positions/379 words and tracer control matches stock relevant sections. Bounded Astra consultation found no justified new source test; packet being pinned. After preservation, that chat releases BUNKA and owns only src/ovl/GYOZI/80140C90.c under T-25025, tracing zero-carrier reaching definitions for func_80140E0C. T-24907 grids remain closed; no automatic second Astra consultation. MAIN and TEL ownership unchanged.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

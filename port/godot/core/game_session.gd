@@ -57,6 +57,9 @@ var draw_logic: Callable
 var cd_logic: Callable
 var audio_logic: Callable
 var service_completion: Callable
+# Optional pure final validation, after all rule/service callbacks and before
+# commit. Physical publication follows synchronously through the owner.
+var final_precommit: Callable
 
 func step(next_input: InputFrame, events: Array[ServiceEvent]) -> FrameResult:
 	var result: FrameResult = FrameResult.new()
@@ -106,6 +109,10 @@ func step(next_input: InputFrame, events: Array[ServiceEvent]) -> FrameResult:
 	if result.service_events_consumed != events.size():
 		result.error = "source restart skipped scheduled service phases; inspect retained trace"
 		return _rollback(checkpoint, result)
+	if final_precommit.is_valid():
+		final_precommit.call(state,rng,result)
+		if _failed(result):
+			return _rollback(checkpoint,result)
 	clock.logic_iterations += 1
 	result.committed = true
 	result.state_hash = state_hash()

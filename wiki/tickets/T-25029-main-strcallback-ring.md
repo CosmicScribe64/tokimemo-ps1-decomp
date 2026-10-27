@@ -1,10 +1,10 @@
 ---
 id: T-25029
 title: MAIN src/main/800563F0.c strCallback copy-ring diagnosis
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25001-class-c-main-sndisp-strcallback]]", "[[tickets/T-25010-class-cd-main-80065964-8004a1a0-strcallback]]"]
 ---
 
@@ -32,3 +32,5 @@ No faithful new source hypothesis follows; zero source controls executed. No cas
 ## Consultation closure
 
 Prior exact callback Astra result only covered sentinel bypass; read and reused, not confused with this mechanism. Root-authorized read-only Astra follow-up reviewed the exact reused-slot packet while Sol idled. Required predecessor branches precede the call/scalar operations; next required branch follows Umov. Reference f_jump predicate-before-emitter ordering supplies no justified pre-copy small-value branch-helper route preserving the existing CFG. Zero new source probes recommended or run. Findings and record ordering preserved in the draft README. Selective candidate-writer caveat retained; no universal impossibility claim. Production unchanged, ticket remains In Progress for root review/reassignment.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

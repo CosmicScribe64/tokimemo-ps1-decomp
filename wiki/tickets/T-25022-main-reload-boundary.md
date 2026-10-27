@@ -1,10 +1,10 @@
 ---
 id: T-25022
 title: MAIN src/main/8004F870.c reload-boundary closure
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25021-main-5215c-reconstruction]]", "[[plan-remaining]]"]
 ---
 
@@ -32,3 +32,5 @@ Prepared at most three bounded consultation questions in the draft README. Still
 ## Bounded consultation follow-up
 
 One read-only Astra consultation, Sol idle, identified distinct raw signed/unsigned-byte/signed-word conversion webs and the signed diagnostic's target-like final reload topology. Sol tested its two justified probes: explicit signed-word zero-extended zero tests315/309words,198aligned/198printed; word-mask representation315/317words,262/262, with incorrect lb+andi remaining. Neither recovers eager unsigned read placement. Both source controls and consultation findings preserved in the draft packet. No justified third probe; no generic tuning followed. Semantic body.c remains310words,179/179; lower-score partial source remains diagnostic only. Ticket still In Progress, no match claimed.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

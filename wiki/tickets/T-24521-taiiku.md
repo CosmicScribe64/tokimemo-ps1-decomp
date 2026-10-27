@@ -1,10 +1,10 @@
 ---
 id: T-24521
 title: Match remaining TAIIKU functions
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[playbook]]", "[[families/taiiku-family-results]]"]
 ---
 
@@ -159,3 +159,5 @@ Before one further compile, mapped the real def-use boundaries. First contact po
 This reduces sixteen source declarations to eight. Predicted removal of eight word homes was 32 bytes, with no promise of exact target frame; the one compile gives exactly 120→88 bytes, 391 diagnostic rows and 295 instructions versus original 304. Contact1 allocation also moves to original v1 and one instruction disappears, but original frame remains 56 and the first shared-multu-stride mismatch persists. No stride/view/no-op grid or second compile. Saved `phase-cursors.c` beside the prior body and restored production/header. Ticket remains In Progress under coordinator instruction; this source-only follow-up awaits parent review.
 
 Coordinator requested checkpoint-only idle and central validation to save usage. The restoration verification already launched before that instruction had finished: private checksum, both literal matches, 27 hashes and guards pass, zero new/twelve known prototype disagreements. No further build, compiler or review pass. Local proof: `/private/tmp/t24521-37784-phase-restored-proof.log`; source-only status and coverage unchanged.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

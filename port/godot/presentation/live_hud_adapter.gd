@@ -49,7 +49,7 @@ func compose(rule: Dictionary, core: Dictionary, history: Array[Dictionary],
 		error = "live HUD capability is not open"
 		return {}
 	var mode: int = core["game_mode"]
-	if mode not in [0x30, 0x34, 0x40, 0x31, 0x32]:
+	if mode not in [0x30, 0x34, 0x40, 0x31, 0x32, 0x38]:
 		error = "live HUD has no source presentation for mode 0x%02x" % mode
 		return {}
 	var context: Dictionary = {"game_mode": mode, "mode_stage": core["mode_stage"],
@@ -85,7 +85,7 @@ func compose(rule: Dictionary, core: Dictionary, history: Array[Dictionary],
 			if before != after:
 				colors[stat] = 0x43 if after > before else 0x44
 		previous_params = row["params"]
-		if row_mode in [0x30, 0x34, 0x40, 0x31, 0x32]:
+		if row_mode in [0x30, 0x34, 0x40, 0x31, 0x32, 0x38]:
 			for icon: int in range(14):
 				if flags[icon] != 1:
 					continue

@@ -1,10 +1,10 @@
 ---
 id: T-21007
 title: "bulk_m2c header banner clutter and header recovery"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-11190-bulk-m2c-pipeline]]", "[[tickets/T-11210-bulk-m2c-draft-failure-classes]]"]
 ---
 
@@ -22,3 +22,5 @@ bulk_m2c header banner clutter and header recovery. include/ holds 71 copies of 
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-11190-bulk-m2c-pipeline|T-11190]], [[tickets/T-11210-bulk-m2c-draft-failure-classes|T-11210]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

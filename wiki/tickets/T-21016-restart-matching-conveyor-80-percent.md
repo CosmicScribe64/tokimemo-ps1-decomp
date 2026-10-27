@@ -1,10 +1,10 @@
 ---
 id: T-21016
 title: "Restart the matching conveyor toward 80 percent game-code coverage"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-12600-byte-coverage-families]]"]
 ---
 
@@ -22,3 +22,5 @@ Restart the matching conveyor toward 80 percent game-code coverage. T-16990 paus
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-12600-byte-coverage-families|T-12600]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

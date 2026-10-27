@@ -1,10 +1,10 @@
 ---
 id: T-24570
 title: Match MAIN func_80054E6C through its metric-record word view
-status: In Review
+status: Done
 assignee: Codex Luna high
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[families/main-family-results]]", "[[matching-notes]]"]
 ---
 
@@ -26,3 +26,5 @@ The existing T-24123 proposal records a focused prior attempt at slot-relative p
 ## Comments
 
 Baseline and trial each produced 84 printable difference rows in Docker full-TU `funcdiff --resolve --version c --unit main`; both remained DIFF. Expected frame is 0x80 and the current C proposal remains 0x40. The explicit word-view union changed allocator choices but did not reduce the row count. The temporary source edit was reverted. No production source or shared-header change remains.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

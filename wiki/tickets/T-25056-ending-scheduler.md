@@ -1,10 +1,10 @@
 ---
 id: T-25056
 title: Resolve ENDING A2E8 scheduler residue
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[families/ending-family-results]]", "[[as1-scheduler-rule]]"]
 ---
 
@@ -37,3 +37,5 @@ Applied local code-review skill's standards/spec axes directly, per coordinator 
 
 - Follow-up: conditional equivalent first-call pointer controls score692/691. Cached original IDO5.2 as1 has the same100/10 selection and dynamically reproduces all1164 stock5.3 candidate instructions, zero differences, on the identical captured input. Original binary hash and exact replay command archived. This rejects a simple5.2-to5.3 historical change. Raised-budget diagnostic preserves all15 sibling instruction bodies; trailing padding differs after A2E8 shrinks8bytes, while final sibling B640 independently MATCHes96bytes. No production change or new C match.
 - Research decision prepared: no current source mechanism explains address-half separation without allocation or runtime changes. The archive now gives a staged original-assembler/candidate-trace/whole-corpus investigation for coordinator review, with no request to adopt the scratch threshold. Documentation now calls bit0x40 a control-transfer barrier rather than implying that the ENDING path contains an indirect jump. Direct standards/spec review of this follow-up preserves all scope and promotion restrictions; task remains In Progress.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

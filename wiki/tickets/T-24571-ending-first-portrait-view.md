@@ -1,10 +1,10 @@
 ---
 id: T-24571
 title: Test the first ENDING portrait16 alias view
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-24512-ending]]", "[[tickets/T-24560-ending-slot]]", "[[families/ending-family-results]]"]
 ---
 
@@ -29,3 +29,5 @@ One fresh Docker full-TU baseline (typed portrait16/18/08 fields in the first co
 The target frame is exactly 0x28 (`asm/ovl/ENDING/nonmatchings/ENDING/80137340/func_801387B0.s`, stack adjustment at 0x801387B8); the compiled baseline/trial also use 0x28 (`build/t24571/typed-baseline/guarded.o`, function offset 0x1478). Frame size is already aligned. Remaining evidence is a broad register/control-flow mismatch: the first guard uses target `li v1,1; bne v0,v1` while the candidate uses `li a1,1; bne v0,a1`, with downstream branch targets displaced by two instructions. Keep the function unmatched; no fallback assembly claim.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

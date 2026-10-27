@@ -1,10 +1,10 @@
 ---
 id: T-24522
 title: Match remaining RPG_BAT functions
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[families/rpg-bat-family-results]]"]
 ---
 
@@ -186,3 +186,5 @@ Preserved only pointer_update/body.c as drafts/T-24522/RPG_BAT/func_8015528C/poi
 Coordinator authorized one causal source-line grouping follow-up on preferred pointer-update-41.c. Read the ordinary41 residual first: phase-address work follows the initial progress mflo/subu/store rather than filling multiply latency, with save/restore order and one nop also remaining. Grouped all three pointer initialization/compound-advance pairs onto individual source lines; correction-arm pair also shares its line with the following progress assignment, specifically to permit independent address work within that line's scheduling region. Expressions and control flow unchanged.
 
 Result41 literal/39 aligned, complete diagnostic byte-identical to archive41.diff (cmp passed). The line grouping changes no scheduling or residual. Rejected with no permutation grid or further compiles. Candidate remains ignored in build/T-24522/p547_pointer_line_group.c; preferred ordinary41 and best4 archives unchanged, no production changes or coverage.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -30,4 +30,5 @@ for source in "$@"; do
 done
 exec docker run --rm --network none --cpus=2 --entrypoint python3 \
   -v "$TOOL_DIR:/app:ro" -v "$MEDIA_DIR:/media" "${docker_args[@]}" \
-  "$IMAGE" /app/publish.py --media-root /media "${container_args[@]}"
+  -v "$ROOT/.claude/orchestrator/state:/evidence/.claude/orchestrator/state:ro" \
+  "$IMAGE" /app/publish.py --media-root /media --evidence-root /evidence "${container_args[@]}"

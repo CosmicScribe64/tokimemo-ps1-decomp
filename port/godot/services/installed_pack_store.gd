@@ -2,6 +2,7 @@ extends RefCounted
 ## Per-user receipt and immutable content-pack publication.
 
 const ContentStoreScript = preload("res://services/content_store.gd")
+const LaunchProfile = preload("res://services/installed_launch_profile.gd")
 const RECEIPT_SCHEMA := "tokimemo.installed-content.v1"
 const LOCATION_SCHEMA := "tokimemo.content-location.v1"
 const CONTENT_SCHEMA := "tokimemo.port-content.v1"
@@ -156,7 +157,11 @@ func validate_pack(pack_root: String, required_capabilities: Array = []) -> Dict
 		return _failure("pack manifest size is outside bounds")
 	var manifest_sha := FileAccess.get_sha256(manifest_path)
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
-	if not parsed is Dictionary or parsed.get("schema") != CONTENT_SCHEMA or parsed.get("schema_version") != 1:
+	if not parsed is Dictionary:
+		return _failure("installed manifest is not a dictionary")
+	if parsed.get("schema") == LaunchProfile.SCHEMA:
+		return _validate_runtime(pack_root, parsed, manifest_sha, required_capabilities)
+	if parsed.get("schema") != CONTENT_SCHEMA or parsed.get("schema_version") != 1:
 		return _failure("unsupported installed content schema")
 	if parsed.get("release_profile") != RELEASE_PROFILE:
 		return _failure("this build does not support the content release profile")
@@ -168,6 +173,8 @@ func validate_pack(pack_root: String, required_capabilities: Array = []) -> Dict
 		return _failure(validation.get("message", "content validation failed"))
 	var available: Array = capabilities["available"]
 	var unavailable: Array = capabilities["unavailable"]
+	if available.has(LaunchProfile.ENTRY_CAP) or available.has(LaunchProfile.GAMEPLAY_CAP):
+		return _failure("a legacy static-preview pack cannot authorize New Game")
 	var required := _clean_capabilities(required_capabilities)
 	if required.is_empty() and not required_capabilities.is_empty():
 		return _failure("required launch capability list is malformed")
@@ -179,6 +186,22 @@ func validate_pack(pack_root: String, required_capabilities: Array = []) -> Dict
 		"missing_capabilities": missing, "available_capabilities": available.duplicate(),
 		"unavailable_capabilities": unavailable.duplicate(), "manifest_sha256": manifest_sha,
 		"release_profile": RELEASE_PROFILE, "message": ""}
+
+func _validate_runtime(pack_root: String, manifest: Dictionary, manifest_sha: String, required_capabilities: Array) -> Dictionary:
+	var profile: Dictionary = LaunchProfile.read_pack(pack_root, manifest)
+	if not profile.get("valid", false):
+		return _failure(str(profile.get("message", "installed runtime validation failed")))
+	var required := _clean_capabilities(required_capabilities)
+	if required.is_empty() and not required_capabilities.is_empty():
+		return _failure("required launch capability list is malformed")
+	var missing: Array[String] = []
+	for capability: String in required:
+		if capability not in profile.available_capabilities:
+			missing.append(capability)
+	return {"valid": true, "launch_ready": not required.is_empty() and missing.is_empty(),
+		"missing_capabilities": missing, "available_capabilities": profile.available_capabilities.duplicate(),
+		"unavailable_capabilities": profile.unavailable_capabilities.duplicate(), "manifest_sha256": manifest_sha,
+		"release_profile": RELEASE_PROFILE, "message": "", "launch_profile": profile}
 
 func publish_stage(stage_path: String, expected_manifest_sha256: String,
 		release_profile: String, required_capabilities: Array = []) -> Dictionary:
@@ -212,6 +235,11 @@ func publish_stage(stage_path: String, expected_manifest_sha256: String,
 			return _failure("versioned pack destination is occupied or linked")
 		if DirAccess.rename_absolute(stage_path, destination) != OK:
 			return _failure("validated pack could not be atomically published")
+	# Absolute launch locators must point at the immutable published location,
+	# never the staging directory that was just renamed.
+	checked = validate_pack(destination, required_capabilities)
+	if not checked.get("valid", false) or checked.get("manifest_sha256") != expected_manifest_sha256:
+		return _failure("published content changed before receipt commit")
 	checked["pack_id"] = pack_id
 	checked["pack_root"] = destination
 	var previous := check_installed(required_capabilities)
@@ -337,10 +365,14 @@ func _remove_tree(path: String) -> bool:
 	if _has_symlink(path):
 		return DirAccess.remove_absolute(path) == OK
 	if DirAccess.dir_exists_absolute(path):
-		for name: String in DirAccess.get_files_at(path):
+		var directory := DirAccess.open(path)
+		if directory == null:
+			return false
+		directory.include_hidden = true
+		for name: String in directory.get_files():
 			if DirAccess.remove_absolute(path.path_join(name)) != OK:
 				return false
-		for name: String in DirAccess.get_directories_at(path):
+		for name: String in directory.get_directories():
 			if not _remove_tree(path.path_join(name)):
 				return false
 		return DirAccess.remove_absolute(path) == OK

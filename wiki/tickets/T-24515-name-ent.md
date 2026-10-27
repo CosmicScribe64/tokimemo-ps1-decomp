@@ -1,10 +1,10 @@
 ---
 id: T-24515
 title: Investigate remaining NAME_ENT functions
-status: In Review
+status: Done
 assignee: Codex Sol 6.1 medium
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-24132-name-ent-final-4]]", "[[families/name-ent-family-results]]"]
 ---
 
@@ -41,3 +41,5 @@ Applied .claude/skills/code-review/SKILL.md against base `eaf7c6e709cb85435c313a
 ### Closing review
 
 Reviewed the non-empty committed diff `eaf7c6e70...00bfc328d` against the ticket and CODING_STANDARDS.md. No unresolved standards/spec findings. All 32 archived records replay exactly; annotated source snapshots reproduce104/173 rows. Staged prose check has0 strong findings; retained weak hits are required FAKE prefixes, generated C strings and concise technical labels. Production source/header/config/tools are identical to base. This bounded investigation is In Review pending root acceptance; all four NAME_ENT matching targets remain unresolved.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

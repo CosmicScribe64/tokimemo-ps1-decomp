@@ -1,10 +1,10 @@
 ---
 id: T-25016
 title: "Candidate reconstruction for the fragment functions: extractor v2, canonical census, then per-function matching"
-status: In Review
+status: Done
 assignee: octa
 created: 2026-10-21
-updated: 2026-10-22
+updated: 2026-10-26
 links: [[[status]], [[matching-notes]], [[build-step-gaps]], [[tickets/T-25015-lever-expansion-tooling]], [[tickets/T-25014-allocator-source-shape-automation]]]
 ---
 
@@ -288,3 +288,5 @@ Remaining bulk value is per-function reconstruction against the
 Tier 1 distances and Tier 2 blockers, plus the near set in
 Tier 0. The generic salvage has converged: two consecutive
 passes over pristine drafts converted zero new functions.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

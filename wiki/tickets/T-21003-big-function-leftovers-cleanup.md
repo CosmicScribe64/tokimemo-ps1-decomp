@@ -1,10 +1,10 @@
 ---
 id: T-21003
 title: "Remove leftovers from merged big-function work"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-11060-big-functions-gemini-29]]", "[[tickets/T-11080-big-functions-opus-31]]"]
 ---
 
@@ -22,3 +22,5 @@ Remove leftovers from merged big-function work. (1) include/ovl/DATE.h line 69 s
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-11060-big-functions-gemini-29|T-11060]], [[tickets/T-11080-big-functions-opus-31|T-11080]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

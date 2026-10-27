@@ -1,10 +1,10 @@
 ---
 id: T-24714
 title: Completion fan-out T-24714: ETC func_8013CCE4 byte-view switch
-status: In Review
+status: Done
 assignee: worker
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[status]]", "[[playbook]]", "[[T-24700-completion-fanout]]"]
 ---
 
@@ -29,3 +29,5 @@ selector stays. Secondary: ETC func_8014790C (57 rows).
 
 - 2026-10-20: closed to In Review under the T-24900 plan. No promotion; guarded
   row-count improvements and evidence are recorded (see [[matching-notes]] and [[as1-scheduler-rule]]).
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

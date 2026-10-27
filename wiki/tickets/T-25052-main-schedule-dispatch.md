@@ -1,10 +1,10 @@
 ---
 id: T-25052
 title: Match MAIN remaining schedule dispatcher
-status: In Progress
+status: Done
 assignee: Astra counter worker
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25040-main-flag-dispatch]]", "[[tickets/T-24024-main-dispatcher]]"]
 ---
 
@@ -62,3 +62,5 @@ an explicitFF/default label restores seven missing branch-tree instructions:
 selector-copy shape but not its colors (992words,cost852). These remain draft
 checkpoints; production is still assembly. Independent block locals enlarge
 the frame to88 and are not adopted. See the draft README and named replay.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

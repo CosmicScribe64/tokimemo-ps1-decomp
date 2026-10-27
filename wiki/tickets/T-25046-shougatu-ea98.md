@@ -1,10 +1,10 @@
 ---
 id: T-25046
 title: Match SHOUGATU func_8013EA98
-status: In Progress
+status: Done
 assignee: Astra implementation, Codex coordinator
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-24523-seasonal-source-hypotheses]]", "[[tickets/T-25038-shougatu-selection-loop]]"]
 ---
 
@@ -49,3 +49,5 @@ Retry-latch diagnosis: putting i++ in a for-loop latch restores previous-choice 
 Best improves38 to36 (230/230 words, exact frame/tables) by reusing u32 status for the retry counter with explicit s16 normalization; target random-sum operand order is restored. Preserved `build/t25046/unsigned-status-retry/body.c`. A faithful for-latch trace (`trace-for-narrow`, SHA17d1361f810c48bf1c8b954ea3c7e563b5f9cd19924fc9cbc33dc562cc615462) leaves ADD/CVTL/CVT together at optimized records140–145; only as1 moves ADD early. Thus earlier descriptions of partial hoisting refer to final instruction scheduling, not uopt code motion. Unsigned for-latch176/232, u16 index/signed reads259/239, shared flag/result union86/230, redundant latch normalization169/233 and selector-zero latch addition91/237 are rejected. Exact last-flag byte indexing is identical36. Next causal control asks whether an explicit shared rejection label produces a retained CFG block before register-load insertion.
 
 Further loop-boundary controls: explicit shared rejection label86/230, separate continue/break72/232, final short-circuit late-zero104/234 and identity106/236 do not retain the target reload at the latch. Mandatory volatile-read diagnostic82/234 retains a real common block but loads zero through the G base, so it is not promoted. Existing event-copy status argument78/234 and first threshold >8 (identical36) do not solve the range boundary. Review invalidated the old fresh-selector negative: its scratch generator also changed the forced-choice global store to a local store. Corrected first-local286/240, comparison-only276/234, full-word RHS251/235/frame0x60 and reuse of existing result RHS269/235 remain negative; these correct controls preserve the forced store. Existing local-byte home298/244 also regresses. Target first rejection bypasses t4 initialization, while current first comparison consumes raw-global RLOD and store-forwards into t4; this is the exact availability difference now being investigated. Production is unchanged.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

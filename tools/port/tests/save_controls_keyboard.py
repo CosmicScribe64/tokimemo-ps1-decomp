@@ -25,7 +25,11 @@ def main():
     parser.add_argument('--display', default=':97')
     parser.add_argument('--status', required=True, type=pathlib.Path)
     parser.add_argument('--timeout', default=45.0, type=float)
+    parser.add_argument('--entry', action='store_true', help='drive installed name entry with seven explicit Enter actions')
+    parser.add_argument('--hold-final-entry', action='store_true', help='retain the final Enter press across the real entry handoff')
     args = parser.parse_args()
+    if args.hold_final_entry and not args.entry:
+        parser.error('--hold-final-entry requires --entry')
     x = c.CDLL('libX11.so.6')
     x.XOpenDisplay.argtypes = [c.c_char_p]
     x.XOpenDisplay.restype = c.c_void_p
@@ -56,6 +60,8 @@ def main():
     if not display: raise RuntimeError('isolated Xvfb display did not become available')
     root = x.XDefaultRootWindow(display)
     window = None
+    window_title = ''
+    observed_titles = set()
     while window is None and time.monotonic() < deadline:
         root_result, parent, count = c.c_ulong(), c.c_ulong(), c.c_uint()
         children = c.POINTER(c.c_ulong)()
@@ -64,12 +70,15 @@ def main():
                 name = c.c_char_p()
                 if x.XFetchName(display, children[index], c.byref(name)) and name.value:
                     title = name.value.decode('utf-8', errors='replace')
-                    if 'Tokimeki' in title or 'Godot' in title: window = int(children[index])
+                    observed_titles.add(title[:120])
+                    if 'Tokimeki' in title or 'Godot' in title or (args.entry and title.startswith('New Game')):
+                        window = int(children[index])
+                        window_title = title
                     x.XFree(name)
                     if window is not None: break
             if children: x.XFree(children)
         if window is None: time.sleep(0.05)
-    if window is None: raise RuntimeError('isolated Godot window did not become available')
+    if window is None: raise RuntimeError('isolated Godot window did not become available; titles=' + repr(sorted(observed_titles)))
     x.XMapRaised(display, window)
     x.XSync(display, 0)
     x.XRaiseWindow(display, window)
@@ -90,6 +99,10 @@ def main():
                'right_down': [('Right', True)], 'right_up': [('Right', False)],
                'enter_down': [('Return', True)], 'f9_held': [('F9', True), ('F9', False)],
                'enter_up': [('Return', False)], 'f9_released': [('F9', True), ('F9', False)]}
+    if args.entry:
+        actions = {'entry_%d' % index: [('Return', True), ('Return', False)] for index in range(7)}
+        if args.hold_final_entry:
+            actions['entry_6'] = [('Return', True)]
     dispatched = set()
     try:
         while time.monotonic() < deadline:
@@ -100,7 +113,7 @@ def main():
             phase = status.get('phase')
             if phase == 'failed' or status.get('failed'): raise RuntimeError('Godot keyboard test reported a failed assertion')
             if phase == 'passed':
-                print(json.dumps({'status': 'PASS', 'dispatch': 'XSendEvent/libX11', 'key_phases': len(dispatched)}))
+                print(json.dumps({'status': 'PASS', 'dispatch': 'XSendEvent/libX11', 'key_phases': len(dispatched), 'window_title': window_title}))
                 return
             if phase in actions and phase not in dispatched:
                 for name, pressed in actions[phase]: send(name, pressed)
@@ -108,6 +121,8 @@ def main():
             time.sleep(0.03)
         raise TimeoutError('keyboard test did not complete; phases=' + ','.join(sorted(dispatched)))
     finally:
+        if args.hold_final_entry:
+            send('Return', False)
         x.XCloseDisplay(display)
 
 if __name__ == '__main__':

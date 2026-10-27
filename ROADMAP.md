@@ -12,22 +12,18 @@ Write C for every function so that the rebuilt executable and overlays are ident
 All 437 game C files have logical names, shared declarations are organized into topic
 headers, and essential game state, locals, constants, and behavior are documented.
 
-## 3. Godot port (in progress)
+## 3. Godot port (in progress: readiness repairs)
 
-Rebuild the game as a Godot project that runs on a modern desktop, using the readable code as the specification.
-The PS1 hardware layer (GPU, sound chip, CD streaming) has to be replaced, not translated. This is the largest
-phase after phase 1.
+Independent review found that several live scenes skip interaction, original audio is replaced by generated tones, and ending/subgame flows remain incomplete. Existing unit tests and static image comparisons do not establish a fully playable port. See [the readiness review](wiki/port-readiness-review.md) for findings and the actual-route verification gate. Phase 4/5 expansion is held while these baseline issues are repaired.
 
-## 4. Modernize the port (not started)
+## 4. Modernize the port (in progress)
 
-Widescreen support first, retaining an original-aspect option. Track the following after the faithful port is playable:
+Widescreen support, modern desktop settings, and native achievements are planned in [wiki/phase4.md](wiki/phase4.md) (`T-30000`) and ready for implementation while retaining an original `4:3` (`320x240`) option:
 
-- [Widescreen presentation](wiki/tickets/T-30001-modern-widescreen.md) covers scene framing and responsive HUD/dialogue layouts.
-- [Modern settings](wiki/tickets/T-30002-modern-settings.md) covers graphics/display, input remapping, audio/accessibility, text/UI language, translation packs, and translated image-text variants. Voice language is separate and only offered when audio exists.
-- [Player customization](wiki/tickets/T-30003-player-customization.md) is a stretch goal covering playing as a girl, with gendered references updated throughout dialogue, events, and presentation. Art and original voice conflicts need explicit solutions.
-- [Achievements](wiki/tickets/T-30004-modern-achievements.md) covers route, event, and minigame goals, investigating community references and native event-based tracking.
-
-These are tracked requests, not implemented features or prerequisites for Phase 3 completion.
+- [Widescreen presentation](wiki/tickets/T-30001-modern-widescreen.md) (`P4.1`, Ready) covers `16:9` (`426x240`), `16:10`, and `21:9` aspect-preserved scene framing (`320x88`, `320x160`, and `320x240` safe-frame apertures), integer/linear scaling filters, and responsive HUD/dialogue layouts.
+- [Modern settings](wiki/tickets/T-30002-modern-settings.md) (`P4.2`, Ready) covers graphics/display (with 15s/60s revert confirmation and crash-recovery sentinel), input remapping with dynamic button glyphs, 5-bus audio and accessibility controls, and independent text/translation-pack and voice-pack selectors.
+- [Achievements](wiki/tickets/T-30004-modern-achievements.md) (`P4.3`, Ready) covers 40+ deterministic, spoiler-aware route, confession, club/parameter, and minigame achievements with persistent unlock tracking and toast/gallery UI.
+- [Player customization](wiki/tickets/T-30003-player-customization.md) (`P4.4`, Backlog stretch goal) covers playing as a girl, with gendered references updated throughout dialogue, events, and presentation and explicit art/voice fallback policies.
 
 ## 5. English translation (complete, not implemented)
 

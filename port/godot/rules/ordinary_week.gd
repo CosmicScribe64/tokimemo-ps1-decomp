@@ -6,6 +6,7 @@ const State = preload("res://rules/school_day_state.gd")
 const Session = preload("res://core/game_session.gd")
 const DayEnd = preload("res://rules/day_end.gd")
 const Calendar = preload("res://rules/calendar.gd")
+const EventModes = preload("res://rules/day_event_modes.gd")
 
 # hud_panels.c::parameter_show_init: memcpy(progress_state+0x20,
 # GameState+0xc4,0x7c). ParamValue words at GameState+0xfc..0x11f map
@@ -89,10 +90,8 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 			data["girls"][i]["flags"] &= ~0x10
 	DayEnd.clamp_girls(data)
 	if multi and data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
-		state.reset_game_mode_fields(0x5c)
-		data["voice_wait_frames"] = 0
-		data["message_title_visible"] = false
-		result.transitions.append({"kind": "native_mode", "mode": 0x5c, "day_event_index": data["day_event_index"]})
+		state.next_step()
+		result.transitions.append({"kind": "native_step", "mode": state.game_mode, "step": state.mode_step})
 		return
 	var index: int = data["day_event_index"]
 	# Native birthday/skip handling is one ordered pass, never a loop that drops events.
@@ -116,23 +115,9 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 			return
 		index = data["day_event_index"]
 		if multi and data["year"] >= 98 and data["month"] >= 3 and data["day"] != 0:
-			state.reset_game_mode_fields(0x5c)
-			data["voice_wait_frames"] = 0
-			data["message_title_visible"] = false
-			result.transitions.append({"kind": "native_mode", "mode": 0x5c, "day_event_index": index})
+			state.next_step()
+			result.transitions.append({"kind": "native_step", "mode": state.game_mode, "step": state.mode_step})
 			return
-	if multi:
-		while index < 32 and data["day_events"][index][0] in [0xfe, 0xfd]:
-			var prefix_op: int = data["day_events"][index][0]
-			if prefix_op == 0xfe:
-				Calendar.populate_month_calendar(data, data["year"], data["month"])
-			elif prefix_op == 0xfd:
-				Calendar.update_vacation_for_date(data)
-			index += 1
-			data["day_event_index"] = index
-		if index >= 32:
-			index = 31
-			data["day_event_index"] = index
 	var event: Array = data["day_events"][index]
 	var mode: int
 	match event[0]:
@@ -155,23 +140,51 @@ static func dispatch(state: State, result: Session.FrameResult) -> void:
 			if not multi:
 				result.error = "ordinary-week next branch requires native type0x%02x at index%d (%d-%02d-%02d)" % [event[0], index, data["year"], data["month"], data["day"]]
 				return
-			match event[0]:
-				0x20: mode = 0x47
-				0x24: mode = 0x48 if ((data["player_flags"] >> 12) & 15) < 6 else 0x4a
-				0x25, 0x26, 0x27: mode = 0x52
-				0x28, 0x2c: mode = 0x4e
-				0x30: mode = 0x4d
-				0x31: mode = 0x4f
-				0x32, 0x33, 0x44, 0x46: mode = 0x44
-				0x40: mode = 0x35
-				0x41: mode = 0x4c
-				0x42: mode = 0x51
-				0x43, 0x48, 0x4a: mode = 0x3f
-				0x45: mode = 0x5e
-				0x47: mode = 0x4b
-				0x49: mode = 0x58
-				_: mode = 0x34
+			mode = EventModes.mode_for(event[0], (data["player_flags"] >> 12) & 15)
+			# These records clear the met-on-day bit before their scene starts.
+			if event[0] in [0xfd, 0x20, 0x24, 0x28, 0x2c, 0x40, 0x41, 0x43]:
+				for girl_index: int in range(11):
+					data["girls"][girl_index]["flags"] &= ~1
+			if event[0] in [0x20, 0x24]:
+				var scratch: Array[int] = []
+				scratch.resize(0x100)
+				scratch.fill(0)
+				data["overlay_scratch"] = scratch
+			if event[0] in [0x44, 0x46, 0x47]:
+				data["day_event_count_today"] = (data["day_event_count_today"] + 1) & 255
+			if event[0] == 0x44:
+				if event[1] < 0 or event[1] >= data["girls"].size():
+					result.error = "walk-home queue girl is outside native records"
+					return
+				# Native queues place this after an activity, never at index zero.
+				if index == 0:
+					result.error = "walk-home queue lacks its preceding record"
+					return
+				if ((data["player_flags"] >> 8) & 15) == 3 or data["day_events"][index - 1][0] in [0x28, 0x47] or (data["girls"][event[1]]["flags"] & 2) == 0:
+					_skip_queue_event(state, result)
+					return
+			if event[0] == 0x46 and ((data["appointment_words"][0] >> 29) & 1) != 0:
+				_skip_queue_event(state, result)
+				return
+			if event[0] == 0x45:
+				data["scene_work"] = event[1]
+				data["talk_work"] = event[2]
+			if event[0] == 0x48:
+				if event[1] < 0 or event[1] >= data["girls"].size():
+					result.error = "meeting queue girl is outside native records"
+					return
+				data["current_girl"] = event[1]
+				var girl: Dictionary = data["girls"][event[1]]
+				girl["affection_word"] = State.with_high(girl["affection_word"], 50)
+				girl["syoushin_word"] = State.with_high(girl["syoushin_word"], 0)
+				data["talk_work"] = event[2]
 	state.reset_game_mode_fields(mode)
 	data["voice_wait_frames"] = 0
 	data["message_title_visible"] = false
 	result.transitions.append({"kind": "native_mode", "mode": mode, "day_event_index": index})
+
+static func _skip_queue_event(state: State, result: Session.FrameResult) -> void:
+	# scheduler.c::day_event_next(0), normal (non-debug) gameplay.
+	state.rule_state["day_event_index"] = (state.rule_state["day_event_index"] + 1) & 255
+	state.reset_game_mode_fields(0x31)
+	result.transitions.append({"kind": "native_mode", "mode": 0x31, "day_event_index": state.rule_state["day_event_index"]})

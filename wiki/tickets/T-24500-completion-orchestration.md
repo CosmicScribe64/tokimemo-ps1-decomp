@@ -1,10 +1,10 @@
 ---
 id: T-24500
 title: Orchestrate the remaining matching functions
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 ---
 
 User resumed the 100% game-code matching goal with multiple GPT-6.1 Sol medium workers. Reserve Astra for concrete blockers after the documented recipes fail.
@@ -86,3 +86,5 @@ Former TACO worker owns NAME_ENT: bounded38C1C input-read and398EC indexed post-
 ## User-directed usage conservation
 
 Keep MAIN and NAME_ENT as the only two active Sol6.1 medium matching workers. GEKO/OPTION and both other coordinators received checkpoint-and-idle instructions; no new experiments after their currently running probe. Astra idle unless a narrow blocker warrants it. User permits Luna high for simple mechanical tasks. Centralize full27 checks at root, retain worker literal/affected-unit proofs, avoid duplicate builds and repeated polling. This reduces concurrency without pausing or redefining the100% goal.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-3002
 title: Register shapes left after the unsigned-load conversion pass
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[tickets/T-1321-register-promotion-build-step]]", "[[matching-notes]]", "[[data/t0018-cases]]"]
 ---
 
@@ -27,3 +27,5 @@ From the T-1321 sample (cases under `build/t1321`, scratch):
 
 ## Comments
 - 2026-10-10 (T-9000): the `if (D++ == K)` shape (`xori; sltiu; beqz`) is an `s32` function without a return value; SHUGAKU `func_80134024`, GEKO `func_8013E56C`, `func_80140EBC`, SHOUGATU `func_80138158` match that way. The other shapes are covered by the T-9000 cluster verdicts in [[matching-notes]].
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

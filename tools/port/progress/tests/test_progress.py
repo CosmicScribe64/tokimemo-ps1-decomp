@@ -10,6 +10,7 @@ import tempfile
 import threading
 import unittest
 import zlib
+import hashlib
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 from urllib.error import HTTPError
@@ -19,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import publish
 import server
 import watcher
+from evidence_fixture import approve
 
 PNG_FIXTURE = base64.b64decode(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pE8AAAAASUVORK5CYII="
@@ -32,8 +34,25 @@ class ProgressTests(unittest.TestCase):
         self.root.mkdir()
         self.fixture = Path(self.temp.name) / "actual capture.png"
         self.fixture.write_bytes(PNG_FIXTURE)
+        # The full runner copies the tool bundle to a temporary directory first.
+        self.authority = Path(publish.__file__).with_name('reviewed_routes.json')
+        if self.authority.parent != Path(os.environ.get('PORT_PROGRESS_TEST_COPY', '')):
+            raise RuntimeError('Run tests/run_tests.py; never replace live trust configuration in a test')
+        self.saved_authority = self.authority.read_bytes()
+        self.saved_evidence_env = os.environ.get('PORT_PROGRESS_EVIDENCE_ROOT')
+        self.evidence = Path(self.temp.name) / 'evidence'
+        os.environ['PORT_PROGRESS_EVIDENCE_ROOT'] = str(self.evidence)
+        alternate = PNG_FIXTURE[:-1] + bytes([PNG_FIXTURE[-1] ^ 1])
+        replacement = bytearray(PNG_FIXTURE)
+        replacement[-5] ^= 1
+        approve(self.authority.parent, self.evidence, [PNG_FIXTURE, alternate, bytes(replacement)])
 
     def tearDown(self):
+        self.authority.write_bytes(self.saved_authority)
+        if self.saved_evidence_env is None:
+            os.environ.pop('PORT_PROGRESS_EVIDENCE_ROOT', None)
+        else:
+            os.environ['PORT_PROGRESS_EVIDENCE_ROOT'] = self.saved_evidence_env
         self.temp.cleanup()
 
     def test_publish_manifest_and_duplicate_no_overwrite(self):
@@ -70,7 +89,14 @@ class ProgressTests(unittest.TestCase):
         publish.publish([self.fixture], self.root)
         clip = Path(self.temp.name) / "synthetic-test-only.mp4"
         clip.write_bytes(b"\x00\x00\x00\x18ftypisom0000\x00\x00\x00\x08moov\x00\x00\x10\x00mdat" + (b"\x00" * 4096))
-        publish.publish([clip], self.root)
+        # HTTP/range behavior uses a server fixture; no actual-video admission is claimed.
+        video_hash = hashlib.sha256(clip.read_bytes()).hexdigest()
+        video_name = video_hash[:16] + '.mp4'
+        shutil.copyfile(clip, self.root / video_name)
+        fixture_manifest = json.loads((self.root / 'manifest.json').read_text())
+        fixture_manifest['items'].append({'id': video_hash[:16], 'file': video_name,
+                                          'sha256': video_hash, 'bytes': clip.stat().st_size, 'created': 'fixture'})
+        (self.root / 'manifest.json').write_text(json.dumps(fixture_manifest))
         server.ViewerHandler.media_root = self.root
         httpd = ThreadingHTTPServer(("127.0.0.1", 0), server.ViewerHandler)
         thread = threading.Thread(target=httpd.serve_forever, daemon=True)
@@ -105,7 +131,15 @@ class ProgressTests(unittest.TestCase):
             self.assertEqual(caught.exception.code, 404)
             second = Path(self.temp.name) / "second.png"
             second.write_bytes(PNG_FIXTURE[:-1] + bytes([PNG_FIXTURE[-1] ^ 1]))
+            # Remove the protocol-only video fixture before invoking real admission.
+            fixture_manifest = json.loads((self.root / 'manifest.json').read_text())
+            fixture_manifest['items'] = [item for item in fixture_manifest['items'] if item['file'] != video_name]
+            (self.root / 'manifest.json').write_text(json.dumps(fixture_manifest))
             publish.publish([second], self.root)
+            fixture_manifest = json.loads((self.root / 'manifest.json').read_text())
+            fixture_manifest['items'].append({'id': video_hash[:16], 'file': video_name,
+                                              'sha256': video_hash, 'bytes': clip.stat().st_size, 'created': 'fixture'})
+            (self.root / 'manifest.json').write_text(json.dumps(fixture_manifest))
             with urlopen(base + "/api/manifest.json") as response:
                 updated = json.loads(response.read())
             self.assertEqual(len(updated["items"]), 3)

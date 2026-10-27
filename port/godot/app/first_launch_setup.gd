@@ -4,7 +4,9 @@ extends Control
 
 const FlowScript = preload("res://app/first_launch_import_flow.gd")
 const BackendScript = preload("res://services/original_game_import_backend.gd")
-const DEFAULT_CAPABILITIES: Array[String] = ["prologue.nbn_native_cells.static_preview"]
+const Router = preload("res://app/boot_router.gd")
+const Launch = preload("res://app/installed_launch.gd")
+const DEFAULT_CAPABILITIES: Array[String] = Router.DEFAULT_CAPABILITIES
 
 signal gameplay_ready(pack_root: String, manifest_sha256: String)
 
@@ -24,6 +26,7 @@ var _selected_source := ""
 var _choose_file_button: Button
 var _choose_folder_button: Button
 var _choose_location_button: Button
+var _play: Button
 
 func _ready() -> void:
 	_build_ui()
@@ -31,10 +34,25 @@ func _ready() -> void:
 		importer_backend = BackendScript.new()
 	if required_launch_capabilities.is_empty():
 		required_launch_capabilities = DEFAULT_CAPABILITIES.duplicate()
+	if required_launch_capabilities == DEFAULT_CAPABILITIES:
+		gameplay_ready.connect(_continue_installed.call_deferred)
 	_flow = FlowScript.new(null, importer_backend)
 	var installed: Dictionary = _flow.check_existing(required_launch_capabilities)
 	_show_result(installed)
+	if get_tree().has_meta("installed_launch_failure"):
+		_status.text = str(get_tree().get_meta("installed_launch_failure"))
+		get_tree().remove_meta("installed_launch_failure")
 	set_process(false)
+
+func _continue_installed(_pack_root: String, _manifest_sha: String) -> void:
+	# Revalidate the remembered receipt before entering the interactive profile.
+	var checked: Dictionary = _flow.store.check_installed(DEFAULT_CAPABILITIES)
+	if checked.get("state") != "ready":
+		_status.text = "Game data could not be verified. Import your original game again."
+		return
+	var launch_error: String = Launch.change_scene(self, Launch.ENTRY_SCENE, checked.get("launch_profile", {}))
+	if not launch_error.is_empty():
+		_status.text = launch_error
 
 func configure_importer(backend: Object, capabilities: Array[String]) -> void:
 	importer_backend = backend
@@ -99,6 +117,11 @@ func _build_ui() -> void:
 	_cancel.disabled = true
 	_cancel.pressed.connect(_cancel_import)
 	buttons.add_child(_cancel)
+	_play = Button.new()
+	_play.text = "Open name entry"
+	_play.disabled = true
+	_play.pressed.connect(_continue_installed.bind("", ""))
+	buttons.add_child(_play)
 	_file_dialog = FileDialog.new()
 	_file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	_file_dialog.access = FileDialog.ACCESS_FILESYSTEM
@@ -173,12 +196,12 @@ func _update_controls() -> void:
 	_choose_file_button.disabled = active
 	_choose_folder_button.disabled = active
 	_choose_location_button.disabled = active
+	_play.disabled = active or _flow == null or _flow.state != "ready"
 
 func _show_result(result: Dictionary) -> void:
 	_status.text = _friendly_state(str(result.get("state", "failed")))
 	_progress.value = 1.0 if result.get("state") == "ready" else 0.0
-	if result.get("state") == "ready":
-		gameplay_ready.emit(str(result.get("pack_root", "")), str(result.get("manifest_sha256", "")))
+	_update_controls()
 
 func _friendly_message() -> String:
 	if _flow.state == "failed" and _flow.error.begins_with("selected source overlaps the content location"):
@@ -200,7 +223,7 @@ func _friendly_state(flow_state: String) -> String:
 		"validating", "publishing":
 			return "Checking imported data before saving…"
 		"ready":
-			return "Game data is ready."
+			return "Original name-entry data is ready. The playable opening is not available in this build yet."
 		"installed_incomplete":
 			return "More game data is needed before this build can start. Choose your original game files again."
 		"cancelled":

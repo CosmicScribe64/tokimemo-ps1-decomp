@@ -1,10 +1,10 @@
 ---
 id: T-28003
 title: Read original game inputs and inventory assets
-status: In Progress
+status: Done
 assignee: asset-coordinator
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-26
 links: ["[[asset-export]]", "[[disc-layout]]", "[[tickets/T-0002-disc-extraction-and-exe-identification]]"]
 ---
 
@@ -65,3 +65,5 @@ unchanged. The one opaque sector is retained with both conflicting copies and no
 payload; 56 data sectors remain raw-only. Track 2 retains its full source, pregap and exact
 WAV program bytes. New input tests pass 14/14; final source-only isolated validation will be
 recorded in the v5 checkpoint. No original source or matching build was modified.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

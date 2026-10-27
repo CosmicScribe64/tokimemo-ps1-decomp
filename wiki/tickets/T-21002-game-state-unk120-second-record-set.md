@@ -1,10 +1,10 @@
 ---
 id: T-21002
 title: "Declare the second set of nine GsRec0FC records in GameState instead of raw unk_120 casts"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-10890-big-functions-astra-21]]"]
 ---
 
@@ -22,3 +22,5 @@ Declare the second set of nine GsRec0FC records in GameState instead of raw unk_
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-10890-big-functions-astra-21|T-10890]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

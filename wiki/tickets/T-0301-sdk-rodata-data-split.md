@@ -1,10 +1,10 @@
 ---
 id: T-0301
 title: Split SDK rodata and data per library and object
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[psyq-sdk]]", "[[tickets/T-0010-sdk-lib-object-boundaries]]"]
 ---
 
@@ -23,3 +23,5 @@ The `rodata` and `data` segments still mix game and SDK data. Split off the SDK 
 Starting evidence is in [[psyq-sdk]]: libpress strings 0x800B23B0-0x800B2460, libcd 0x800B2480-0x800B2924, libsnd from 0x800B2930, libgpu RCS ids 0x800B2E50/0x800B3170, data refs 0x800CA4xx (libpress), 0x800DC4F0-0x800DC9A0 (libcd), 0x800DCBD0 up (libspu).
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

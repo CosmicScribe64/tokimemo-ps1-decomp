@@ -1,10 +1,10 @@
 ---
 id: T-24520
 title: Coordinate TAIIKU RPG_BAT and seasonal matching lanes
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[status]]", "[[playbook]]"]
 ---
 
@@ -57,3 +57,5 @@ Root-requested fresh-donor comparisons produced no additional matches. All18 TAI
 Private branch codex/t24520-consolidated starts at main4c5cd6524 and merges coordinator5090e769f, TAIIKUbb1abd853, RPG_BAT2781edac6 and seasonaldcc4dc9aa as ancestors. Wiki conflicts preserve main's progress, all unrelated board cards and all prior log entries; only owned ticket cards are normalized. The only production-source delta from that main snapshot removes the proven-wrong VALEN32834 NON_MATCHING body while keeping its original default INCLUDE_ASM. Worker checksum/prototype/header/global evidence is retained; root explicitly owns the final full27/defaultVALEN gate, so no redundant coordinator rebuild is claimed.
 
 Root explicitly directs retaining published archive history despite title-only lint and using T-prefixes for future commits. No history is renamed for that earlier formatting observation; this resolves the title-only handoff concern under the user's current instruction.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

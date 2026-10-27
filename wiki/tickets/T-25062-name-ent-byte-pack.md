@@ -1,10 +1,10 @@
 ---
 id: T-25062
 title: Match NAME_ENT byte pack and zero loop
-status: In Progress
+status: Done
 assignee: Codex Astra
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[playbook]]", "[[tickets/T-25057-name-ent-pass-investigation]]", "[[tickets/T-24132-name-ent-final-4]]"]
 ---
 
@@ -25,3 +25,5 @@ Existing tokimemo-decomp-arm64 image only; disc read-only. Historical guard has 
 ## Comments
 
 2026-10-22: Ticket created before investigation. T-25057 is independently pinned and remains In Review for root integration.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

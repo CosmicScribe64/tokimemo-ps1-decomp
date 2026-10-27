@@ -1,10 +1,10 @@
 ---
 id: T-21004
 title: "Clean up m2c leftovers and unmarked tricks in matched C (review findings of T-10900, T-11070, T-11270)"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-11270-exact-rescore-autotweak-bulk-m2c]]", "[[tickets/T-10900-big-functions-astra-22]]", "[[tickets/T-11070-small-functions-gemini-30]]"]
 ---
 
@@ -22,3 +22,5 @@ Clean up m2c leftovers and unmarked tricks in matched C (review findings of T-10
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270]], [[tickets/T-10900-big-functions-astra-22|T-10900]], [[tickets/T-11070-small-functions-gemini-30|T-11070]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

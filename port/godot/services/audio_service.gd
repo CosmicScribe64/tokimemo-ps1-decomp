@@ -73,6 +73,239 @@ var _sequence: int = 0
 var _current_tick: int = -1
 var _player: AudioStreamPlayer
 var _base_volume_db: float = 0.0
+var original_xa_clips: Array[Dictionary] = []
+var original_opening_lines: Dictionary = {}
+var prepared_bank_roles: Dictionary = {}
+# Optional first-arrival integration owns one source context/backend through
+# this service. Native typed scripts are loaded only after platform gating.
+var native_audio_context: Dictionary = {}
+var original_bgm_service: RefCounted
+
+
+func configure_original_opening_audio_pack(pack_root: String, manifest_sha256: String) -> String:
+	var path: String = pack_root.path_join("opening-audio.json")
+	if not pack_root.is_absolute_path() or pack_root.contains("..") or _has_symlink_component(path):
+		return "original opening audio pack path is invalid"
+	var bytes: PackedByteArray = FileAccess.get_file_as_bytes(path)
+	if bytes.size() > 1024 * 1024 or not _matches(HASH_PATTERN, manifest_sha256) or _sha256(bytes) != manifest_sha256:
+		return "original opening audio manifest size/hash mismatch"
+	var parsed: Variant = JSON.parse_string(bytes.get_string_from_utf8())
+	if not parsed is Dictionary or parsed.get("schema") != "tokimemo.original-opening-audio-map.v1" or not parsed.get("lines") is Array:
+		return "unsupported original opening audio manifest"
+	var saved_pcm: Dictionary = registered_pcm.duplicate()
+	var saved_clips: Array[Dictionary] = original_xa_clips.duplicate()
+	var pending_lines: Dictionary = {}
+	var load_error: String = ""
+	for raw_line: Variant in parsed["lines"]:
+		if not raw_line is Dictionary or not raw_line.get("requests") is Array or not raw_line.has("line"):
+			load_error = "malformed original opening line"
+			break
+		var line: int = int(raw_line["line"])
+		if line < 0 or line > 42 or pending_lines.has(line):
+			load_error = "invalid or duplicate original opening line identity"
+			break
+		var requests: Array[Dictionary] = []
+		for raw_clip: Variant in raw_line["requests"]:
+			if not raw_clip is Dictionary or not _safe_relative_path(str(raw_clip.get("pack_directory", ""))):
+				load_error = "invalid original opening clip directory"
+				break
+			load_error = configure_original_xa_pack(pack_root.path_join(str(raw_clip["pack_directory"])), str(raw_clip.get("manifest_sha256", "")))
+			if not load_error.is_empty():
+				break
+			requests.append(original_xa_clips[-1]["request"].duplicate(true))
+		if not load_error.is_empty():
+			break
+		pending_lines[line] = {"kind": "voice_play" if not requests.is_empty() else "voice_silent",
+			"voice_id": line, "speaker": int(raw_line.get("speaker", -1)), "xa_requests": requests}
+	if load_error.is_empty() and pending_lines.size() != 43:
+		load_error = "original opening audio manifest must cover all 43 native lines"
+	if not load_error.is_empty():
+		registered_pcm = saved_pcm
+		original_xa_clips = saved_clips
+		return load_error
+	original_opening_lines = pending_lines
+	return ""
+
+
+func original_opening_line_event(line: int) -> Dictionary:
+	# Source prologue_lines_20_to_31_run cases 12/16 show player text only.
+	if line in [100, 101]:
+		return {"kind": "voice_silent", "voice_id": line, "speaker": 15, "xa_requests": []}
+	if not original_opening_lines.has(line):
+		return _failure("original opening audio is unavailable for native line %d" % line)
+	return original_opening_lines[line].duplicate(true)
+
+
+func prepare_original_line(line: int) -> Dictionary:
+	var original: Dictionary = original_opening_line_event(line)
+	if not str(original.get("error", "")).is_empty():
+		return original
+	var clips: Array[Dictionary] = []
+	for request: Dictionary in original.get("xa_requests", []):
+		var resolved: Dictionary = _resolve_original_xa_request(request)
+		if not str(resolved.get("error", "")).is_empty():
+			return resolved
+		clips.append({"kind": "voice_play", "voice_id": line, "speaker": original["speaker"],
+			"xa_request": request.duplicate(true), "request_key": str(resolved["clip_id"])})
+	return {"error": "", "line_id": line, "clips": clips}
+
+
+func preflight_original_event(event: Dictionary) -> String:
+	var kind: String = str(event.get("kind", ""))
+	if kind == "original_bgm_start":
+		return original_bgm_service.preflight_event(event) if original_bgm_service != null else "original BGM service is unavailable"
+	if kind == "bank_load":
+		return "" if prepared_bank_roles.has(str(event.get("role", ""))) else "opening bank resources were not prepared before the transaction"
+	if kind == "bgm_stop":
+		return "" if int(event.get("command", -1)) == 0x71 else "native BGM fade rendering is unsupported"
+	if kind == "native_audio_control":
+		return "" if int(event.get("command", -1)) == 5 else "native audio control rendering is unsupported"
+	if kind in ["native_stop_xa_if_active", "voice_silent"]:
+		return ""
+	var resolved: Dictionary = resolve_original_audio_event(event)
+	if not str(resolved.get("error", "")).is_empty():
+		return str(resolved["error"])
+	if not event.has("xa_request") or event.get("request_key") != resolved.get("clip_id"):
+		return "original voice requires one exact preflighted native request per transaction intent"
+	for key: String in ["epoch", "line_id", "clip_index"]:
+		if not event.get(key) is int:
+			return "original voice intent lacks exact transactional integer: " + key
+	if event["epoch"] < 1 or event["line_id"] < 0 or event["line_id"] > 42 or event["clip_index"] < 0 or event["clip_index"] > 1:
+		return "original voice intent has out-of-range transactional ownership"
+	var prepared: Dictionary = prepare_original_line(event["line_id"])
+	if not str(prepared.get("error", "")).is_empty() or event.get("voice_id") != event["line_id"] or event["clip_index"] >= prepared.get("clips", []).size():
+		return "original voice intent differs from its sourced line identity"
+	var expected: Dictionary = prepared["clips"][event["clip_index"]]
+	if event["request_key"] != expected["request_key"] or event["xa_request"] != expected["xa_request"]:
+		return "original voice intent differs from its sourced clip identity"
+	return ""
+
+
+func reset_session_observations() -> void:
+	# Assets/capability registries remain prepared; no prior session owns a bank.
+	queue.clear()
+	active.clear()
+	active_bank_role = ""
+	bank_ready.clear()
+	bgm_state = {"playing": false, "role": "", "bank": -1, "sequence": -1}
+	se_log.clear()
+	voice_log.clear()
+	event_history.clear()
+	_sequence = 0
+	_current_tick = -1
+	vab_memory = VabMemory.new()
+
+
+func prepare_opening_bank_resources() -> String:
+	# Explicit pre-transaction I/O. Runtime callbacks may only read this cache.
+	var before: Dictionary = checkpoint()
+	var prepared: Dictionary = {}
+	for role: String in opening_pack.get("bank_roles", {}):
+		var installed: Dictionary = install_bank_role(role)
+		if not str(installed.get("error", "")).is_empty():
+			restore(before)
+			return str(installed["error"])
+		prepared[role] = {"memory": vab_memory.checkpoint(), "metadata": installed.duplicate(true)}
+	var restore_error: String = restore(before)
+	if not restore_error.is_empty():
+		return restore_error
+	prepared_bank_roles = prepared
+	return ""
+
+
+func publish_prepared_bank(role: String) -> String:
+	if not prepared_bank_roles.has(role):
+		return "opening bank resources are unavailable"
+	var error: String = vab_memory.restore(prepared_bank_roles[role]["memory"])
+	if not error.is_empty():
+		return error
+	active_bank_role = role
+	bank_ready[role] = true
+	return ""
+
+
+func record_committed_original_event(event: Dictionary, logical_tick: int) -> void:
+	# Called by the bridge only after FrameResult.committed, never by rules.
+	var record: Dictionary = event.duplicate(true)
+	record["tick"] = logical_tick
+	event_history.append(record)
+	if event.get("kind") == "voice_play":
+		voice_log.append(record)
+
+
+func configure_original_xa_pack(pack_root: String, manifest_sha256: String) -> String:
+	if not pack_root.is_absolute_path() or pack_root.contains(".."):
+		return "original XA pack requires a normalized absolute path"
+	if not _matches(HASH_PATTERN, manifest_sha256):
+		return "original XA pack requires an approved manifest SHA256"
+	var manifest_path: String = pack_root.path_join("original-audio.json")
+	if _has_symlink_component(manifest_path) or not FileAccess.file_exists(manifest_path):
+		return "original XA manifest is unavailable or contains a symbolic link"
+	var bytes: PackedByteArray = FileAccess.get_file_as_bytes(manifest_path)
+	if bytes.size() > 1024 * 1024 or _sha256(bytes) != manifest_sha256:
+		return "original XA manifest size/hash mismatch"
+	var parsed: Variant = JSON.parse_string(bytes.get_string_from_utf8())
+	if not parsed is Dictionary:
+		return "original XA manifest must be an object"
+	var record: Dictionary = parsed
+	if record.get("schema") != "tokimemo.original-xa-pcm.v1" or record.get("capability") != "original_xa_software_pcm":
+		return "unsupported original XA manifest capability"
+	if not record.get("request") is Dictionary or not record.get("descriptor") is Dictionary:
+		return "original XA manifest lacks native request/PCM descriptor"
+	var request: Dictionary = record["request"]
+	if not _matches(HASH_PATTERN, request.get("source_sha256")) or str(request.get("native_evidence", "")).is_empty():
+		return "original XA request lacks source identity/native evidence"
+	for field: String in ["start_lba", "end_lba", "file_number", "channel"]:
+		var value: Variant = request.get(field)
+		if not (value is int or value is float) or float(value) != floor(float(value)):
+			return "original XA request has an invalid integer: " + field
+	if int(request["start_lba"]) < 0 or int(request["end_lba"]) <= int(request["start_lba"]):
+		return "original XA request has invalid sector bounds"
+	var descriptor: Dictionary = record["descriptor"].duplicate(true)
+	for field: String in ["byte_size", "sample_rate", "channels"]:
+		var value: Variant = descriptor.get(field)
+		if not (value is int or value is float) or float(value) != floor(float(value)):
+			return "original XA descriptor has an invalid integer: " + field
+		descriptor[field] = int(value)
+	var registered: Dictionary = register_pcm_clip(descriptor, pack_root)
+	if not str(registered.get("error", "")).is_empty():
+		return str(registered["error"])
+	original_xa_clips.append({"request": request.duplicate(true), "clip_id": str(registered["clip_id"])})
+	return ""
+
+
+func resolve_original_audio_event(event: Dictionary) -> Dictionary:
+	var kind: String = str(event.get("kind", ""))
+	if kind != "voice_play" and kind != "xa_play":
+		return _failure("original audio unavailable for " + kind + ": native VAB/SEQ rendering is unsupported")
+	if event.get("xa_requests") is Array:
+		var streams: Array[AudioStreamWAV] = []
+		for raw_request: Variant in event["xa_requests"]:
+			if not raw_request is Dictionary:
+				return _failure("malformed native XA request list")
+			var resolved: Dictionary = _resolve_original_xa_request(raw_request)
+			if not str(resolved.get("error", "")).is_empty():
+				return resolved
+			streams.append(resolved["stream"])
+		if streams.is_empty():
+			return _failure("voiced event has no native XA requests")
+		return {"error": "", "stream": streams[0], "streams": streams, "capability": "original_xa_software_pcm"}
+	if not event.get("xa_request") is Dictionary:
+		return _failure("original voice unavailable: line ID is not a native XA request")
+	return _resolve_original_xa_request(event["xa_request"])
+
+
+func _resolve_original_xa_request(request: Dictionary) -> Dictionary:
+	for clip: Dictionary in original_xa_clips:
+		var matches: bool = true
+		for field: String in ["source_sha256", "start_lba", "end_lba", "file_number", "channel"]:
+			if not request.has(field) or request[field] != clip["request"][field]:
+				matches = false
+		if matches:
+			var clip_id: String = clip["clip_id"]
+			return {"error": "", "stream": registered_pcm[clip_id]["stream"], "clip_id": clip_id,
+				"capability": "original_xa_software_pcm"}
+	return _failure("original voice unavailable: no verified PCM for this exact native XA request")
 
 
 func checkpoint() -> Dictionary:
@@ -312,93 +545,6 @@ func register_pcm_clip(descriptor: Dictionary, approved_pack_root: String) -> Di
 	var clip_id: String = descriptor["clip_id"]
 	registered_pcm[clip_id] = {"stream": stream, "descriptor": descriptor.duplicate(true)}
 	return {"error": "", "clip_id": clip_id, "capability": "validated_pcm_wav"}
-
-
-static func create_pcm_wav_stream(kind: String, id_or_seq: int, duration_ms: int = 180) -> AudioStreamWAV:
-	var sample_rate: int = 22050
-	var clamped_ms: int = maxi(20, duration_ms)
-	var sample_count: int = maxi(1, int((sample_rate * clamped_ms) / 1000))
-	var pcm_bytes: PackedByteArray = PackedByteArray()
-	pcm_bytes.resize(sample_count * BYTES_PER_SAMPLE_16)
-
-	var triads: Array = [
-		[261.63, 329.63, 392.00, 523.25], # C4 major triad + C5
-		[349.23, 440.00, 523.25, 698.46], # F4 major triad + F5
-		[392.00, 493.88, 587.33, 783.99], # G4 major triad + G5
-		[293.66, 369.99, 440.00, 587.33], # D4 major triad + D5
-	]
-	var vowels: Array = [
-		[730.0, 1090.0], # /a/
-		[270.0, 2290.0], # /i/
-		[300.0, 870.0],  # /u/
-		[530.0, 1840.0], # /e/
-		[570.0, 840.0],  # /o/
-	]
-
-	for i: int in range(sample_count):
-		var t: float = float(i) / float(sample_rate)
-		var norm: float = float(i) / float(sample_count)
-		var env: float = 1.0
-		if norm < 0.05:
-			env = norm / 0.05
-		elif norm > 0.85:
-			env = (1.0 - norm) / 0.15
-		var sample_val: float = 0.0
-
-		match kind:
-			"bgm_play", "native_restore_bgm":
-				var chord: Array = triads[absi(id_or_seq) % triads.size()]
-				var note_idx: int = mini(int(norm * 4.0), 3)
-				var lead_freq: float = float(chord[note_idx])
-				var root_freq: float = float(chord[0])
-				var third_freq: float = float(chord[1])
-				var fifth_freq: float = float(chord[2])
-				sample_val = (
-					0.40 * sin(TAU * lead_freq * t)
-					+ 0.22 * sin(TAU * root_freq * t)
-					+ 0.18 * sin(TAU * third_freq * t)
-					+ 0.18 * sin(TAU * fifth_freq * t)
-				) * env * 0.45
-			"se_play", "native_audio_command":
-				var step_semitone: int = absi(id_or_seq) & 7
-				var base_freq: float = 880.0 + float(step_semitone) * 55.0
-				var chime_freq: float = base_freq * (1.5 if norm >= 0.35 else 1.0)
-				var decay: float = exp(-5.5 * norm)
-				sample_val = (
-					0.70 * sin(TAU * chime_freq * t)
-					+ 0.30 * sin(TAU * (chime_freq * 2.0) * t)
-				) * decay * env * 0.55
-			"voice_play":
-				var formants: Array = vowels[absi(id_or_seq) % vowels.size()]
-				var f0: float = 220.0 + float(absi(id_or_seq) % 7) * 8.0 + 4.0 * sin(TAU * 5.5 * t)
-				var f1: float = float(formants[0])
-				var f2: float = float(formants[1])
-				var syll_env: float = sin(PI * norm)
-				sample_val = (
-					0.45 * sin(TAU * f0 * t)
-					+ 0.35 * sin(TAU * f1 * t)
-					+ 0.20 * sin(TAU * f2 * t)
-				) * syll_env * env * 0.50
-			_:
-				sample_val = sin(TAU * 440.0 * t) * env * 0.35
-
-		var pcm16: int = clampi(int(round(sample_val * 32767.0)), -32768, 32767)
-		var unsigned16: int = pcm16 & 0xFFFF
-		pcm_bytes[i * 2] = unsigned16 & 0xFF
-		pcm_bytes[i * 2 + 1] = (unsigned16 >> 8) & 0xFF
-
-	var wav: AudioStreamWAV = AudioStreamWAV.new()
-	wav.format = AudioStreamWAV.FORMAT_16_BITS
-	wav.mix_rate = sample_rate
-	wav.stereo = false
-	if kind in ["bgm_play", "native_restore_bgm"]:
-		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
-		wav.loop_begin = 0
-		wav.loop_end = sample_count
-	else:
-		wav.loop_mode = AudioStreamWAV.LOOP_DISABLED
-	wav.data = pcm_bytes
-	return wav
 
 
 

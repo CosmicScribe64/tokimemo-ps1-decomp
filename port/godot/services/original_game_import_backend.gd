@@ -6,9 +6,15 @@ extends RefCounted
 ## reports monotonic progress, supports safe cancellation, and stages validated content.
 
 const ContentStoreScript = preload("res://services/content_store.gd")
+const NativeNewGame = preload("res://services/native_new_game_import.gd")
+const LaunchProfile = preload("res://services/installed_launch_profile.gd")
 const PROFILE_BEST := "original-ja-ps-the-best"
 const SECTOR_RAW := 2352
 const SECTOR_ISO := 2048
+const MAX_SOURCE_FILE_BYTES := 16 * 1024 * 1024
+const MAX_ISO_DIRECTORY_BYTES := 2 * 1024 * 1024
+const MAX_ISO_INDEX_BYTES := 32 * 1024 * 1024
+const MAX_SOURCE_ENTRIES := 20000
 
 # Release identifiers
 const RELEASE_BEST := "best"
@@ -81,6 +87,8 @@ var _identified_release := ""
 var _iso_file_map: Dictionary = {}
 var _source_file_access: FileAccess
 var _staged_components: Array = []
+var _runtime_roles: Dictionary = {}
+var _zip_sizes: Dictionary = {}
 
 func begin_import(source: String, stage_path: String) -> String:
 	if _is_active:
@@ -100,6 +108,8 @@ func begin_import(source: String, stage_path: String) -> String:
 	_manifest_sha256 = ""
 	_identified_release = ""
 	_iso_file_map.clear()
+	_runtime_roles.clear()
+	_zip_sizes.clear()
 	_close_source()
 	return ""
 
@@ -141,7 +151,7 @@ func _step_inspect_source() -> Dictionary:
 	var ext := _source_path.get_extension().to_lower()
 	if ext == "cue":
 		_reader_kind = "cue"
-		var cue_content := FileAccess.get_file_as_string(_source_path)
+		var cue_content := _bounded_file(_source_path).get_string_from_ascii()
 		var track_file := _parse_cue_track(cue_content)
 		if track_file.is_empty():
 			_cleanup()
@@ -166,6 +176,10 @@ func _step_inspect_source() -> Dictionary:
 	
 	elif ext == "zip":
 		_reader_kind = "zip"
+		_zip_sizes = _zip_size_index()
+		if _zip_sizes.is_empty():
+			_cleanup()
+			return {"status": "failed", "message": "ZIP directory is unsupported or exceeds safe import bounds; unpack it before import"}
 		var zip := ZIPReader.new()
 		var err := zip.open(_source_path)
 		if err != OK:
@@ -187,7 +201,7 @@ func _step_identify_release() -> Dictionary:
 		return {"status": "failed", "message": info["error"]}
 	
 	_identified_release = info.get("release", "unknown")
-	if _identified_release != "best":
+	if _identified_release != "best" or not info.get("supported_for_content_extraction", false):
 		var diagnostic: String = info.get("diagnostic", "unsupported PS1 release")
 		_cleanup()
 		return {"status": "failed", "message": diagnostic}
@@ -238,9 +252,9 @@ func _step_stage_payloads() -> Dictionary:
 	
 	for req_path: String in REQUIRED_PROLOGUE_NBN:
 		var nbn_data := _read_source_file(req_path)
-		if nbn_data.is_empty():
+		if nbn_data.size() != REQUIRED_PROLOGUE_NBN[req_path]["size"] or compute_sha256(nbn_data) != REQUIRED_PROLOGUE_NBN[req_path]["sha256"]:
 			_cleanup()
-			return {"status": "failed", "message": "Could not read original NBN: " + req_path}
+			return {"status": "failed", "message": "Original NBN changed before staging: " + req_path}
 		
 		for cell_index in range(6):
 			if _cancel_requested:
@@ -315,14 +329,19 @@ func _step_stage_payloads() -> Dictionary:
 	
 	_step = 4
 	_last_progress = 0.75
-	return _progress("import", _last_progress, "Decoded and staged 24 prologue preview cells from original NBN data")
+	var runtime: Dictionary = NativeNewGame.new().stage(_read_source_file(BEST_BOOT_NAME), _read_source_file("CDROM/EXEDIR/NAME_ENT.EXN"), _stage_path)
+	if not str(runtime.get("error", "")).is_empty():
+		_cleanup()
+		return {"status": "failed", "message": "Original New Game import failed: " + str(runtime.error)}
+	_runtime_roles = runtime.get("roles", {}).duplicate(true)
+	return _progress("import", _last_progress, "Imported original name-entry data, font and prologue preview cells")
 
 func _step_stage_manifest() -> Dictionary:
 	if _staged_components.size() != 24:
 		_cleanup()
 		return {"status": "failed", "message": "Expected 24 staged components, got %d" % _staged_components.size()}
 	
-	var manifest := {
+	var preview_manifest := {
 		"schema": "tokimemo.port-content.v1",
 		"schema_version": 1,
 		"release_profile": PROFILE_BEST,
@@ -355,6 +374,17 @@ func _step_stage_manifest() -> Dictionary:
 		}
 	}
 	
+	# The old preview is retained as data, but cannot authorize a gameplay launch.
+	if not _write_json(_stage_path.path_join("preview.json"), preview_manifest):
+		_cleanup()
+		return {"status": "failed", "message": "Could not write staged preview metadata"}
+	var inventory: Dictionary = {}
+	if not _inventory(_stage_path, "", inventory):
+		_cleanup()
+		return {"status": "failed", "message": "Staged runtime inventory is unavailable or linked"}
+	var manifest := {"schema": LaunchProfile.SCHEMA, "version": 1, "release_profile": PROFILE_BEST,
+		"source": {"executable_sha256": BEST_EXE_SHA256}, "files": inventory, "roles": _runtime_roles,
+		"coverage": {"name_entry": "original native profile and font", "gameplay": "not imported by the packaged backend yet", "prologue": "static cells only"}}
 	var manifest_path := _stage_path.path_join("manifest.json")
 	var mf := FileAccess.open(manifest_path, FileAccess.WRITE)
 	if mf == null:
@@ -364,16 +394,41 @@ func _step_stage_manifest() -> Dictionary:
 	mf.flush()
 	mf.close()
 	
-	# Preflight with ContentStore
-	var validator = ContentStoreScript.new()
-	if not validator.open_pack(_stage_path):
+	var validated: Dictionary = LaunchProfile.read_pack(_stage_path, manifest)
+	if not validated.get("valid", false):
 		_cleanup()
-		return {"status": "failed", "message": "Staged pack preflight failed: " + validator.error_message()}
+		return {"status": "failed", "message": "Staged runtime preflight failed: " + str(validated.get("message", ""))}
 	
 	_manifest_sha256 = FileAccess.get_sha256(manifest_path)
 	_step = 5
 	_last_progress = 0.95
-	return _progress("import", _last_progress, "Validated staged content pack with ContentStore")
+	return _progress("import", _last_progress, "Validated original New Game inputs and recorded remaining gameplay inputs")
+
+func _write_json(path: String, value: Dictionary) -> bool:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		return false
+	file.store_string(JSON.stringify(value, "\t") + "\n")
+	file.flush()
+	var success: bool = file.get_error() == OK
+	file.close()
+	return success
+
+func _inventory(root: String, prefix: String, inventory: Dictionary) -> bool:
+	var directory := DirAccess.open(root.path_join(prefix))
+	if directory == null:
+		return false
+	directory.include_hidden = true
+	for name: String in directory.get_files():
+		if directory.is_link(name):
+			return false
+		var relative: String = name if prefix.is_empty() else prefix.path_join(name)
+		var path: String = root.path_join(relative)
+		inventory[relative] = {"size": FileAccess.get_size(path), "sha256": FileAccess.get_sha256(path)}
+	for name: String in directory.get_directories():
+		if directory.is_link(name) or not _inventory(root, name if prefix.is_empty() else prefix.path_join(name), inventory):
+			return false
+	return true
 
 func _step_complete() -> Dictionary:
 	_cleanup()
@@ -414,7 +469,9 @@ func _inspect_directory_release() -> Dictionary:
 	for name in ["SYSTEM.CNF", "system.cnf"]:
 		var p := _source_path.path_join(name)
 		if FileAccess.file_exists(p):
-			cnf_text = FileAccess.get_file_as_string(p)
+			cnf_text = _bounded_file(p).get_string_from_ascii()
+			if cnf_text.is_empty() and FileAccess.get_size(p) > 0:
+				return {"error": "SYSTEM.CNF could not be read within safe import bounds"}
 			break
 	
 	# Look for boot exe
@@ -430,7 +487,7 @@ func _inspect_directory_release() -> Dictionary:
 		return {"error": "No boot executable (SLPM_86.053 or PSX.EXE) found in selected directory"}
 	
 	var exe_path := _source_path.path_join(exe_name)
-	var exe_bytes := FileAccess.get_file_as_bytes(exe_path)
+	var exe_bytes := _bounded_file(exe_path)
 	var exe_sha1 := compute_sha1(exe_bytes)
 	return _evaluate_release(exe_name, exe_bytes.size(), exe_sha1, cnf_text)
 
@@ -473,6 +530,8 @@ func _inspect_image_release() -> Dictionary:
 	if _iso_file_map.has("SYSTEM.CNF"):
 		var cnf_info: Dictionary = _iso_file_map["SYSTEM.CNF"]
 		var cnf_bytes := _read_iso_extent(_source_file_access, cnf_info["lba"], cnf_info["size"], sector_size)
+		if cnf_bytes.is_empty() and cnf_info["size"] > 0:
+			return {"error": "SYSTEM.CNF image extent could not be read within safe import bounds"}
 		cnf_text = cnf_bytes.get_string_from_ascii()
 	
 	var exe_name := ""
@@ -498,10 +557,13 @@ func _inspect_zip_release() -> Dictionary:
 	# Check if ZIP contains extracted files directly
 	if zip.file_exists(BEST_BOOT_NAME) or zip.file_exists("PSX.EXE") or zip.file_exists("psx.exe"):
 		var exe_name := BEST_BOOT_NAME if zip.file_exists(BEST_BOOT_NAME) else "PSX.EXE"
-		var exe_bytes := zip.read_file(exe_name)
+		var exe_bytes := _bounded_zip_read(zip, exe_name)
 		var cnf_text := ""
 		if zip.file_exists("SYSTEM.CNF"):
-			cnf_text = zip.read_file("SYSTEM.CNF").get_string_from_ascii()
+			cnf_text = _bounded_zip_read(zip, "SYSTEM.CNF").get_string_from_ascii()
+			if cnf_text.is_empty() and int(_zip_sizes.get("SYSTEM.CNF", -1)) != 0:
+				zip.close()
+				return {"error": "SYSTEM.CNF archive entry could not be read within safe import bounds"}
 		zip.close()
 		return _evaluate_release(exe_name, exe_bytes.size(), compute_sha1(exe_bytes), cnf_text)
 	
@@ -517,7 +579,7 @@ func _inspect_zip_release() -> Dictionary:
 				track_bin = f
 	
 	if not cue_file.is_empty():
-		var cue_text := zip.read_file(cue_file).get_string_from_ascii()
+		var cue_text := _bounded_zip_read(zip, cue_file).get_string_from_ascii()
 		zip.close()
 		# Inspect cue text for version heuristics
 		if cue_text.contains("Rev 1") or cue_text.contains("SLPS-00064") or cue_text.contains("SLPS-00065"):
@@ -654,14 +716,7 @@ func _evaluate_release(exe_name: String, exe_size: int, exe_sha1: String, cnf_te
 
 func _read_source_file(rel_path: String) -> PackedByteArray:
 	if _reader_kind == "directory":
-		var full := _source_path.path_join(rel_path)
-		if FileAccess.file_exists(full):
-			return FileAccess.get_file_as_bytes(full)
-		# Fallback case-insensitive
-		for f in _list_all_files_recursive(_source_path):
-			if f.to_upper() == rel_path.to_upper():
-				return FileAccess.get_file_as_bytes(_source_path.path_join(f))
-		return PackedByteArray()
+		return _read_directory_file(rel_path)
 	
 	elif _reader_kind in ["cue", "image"]:
 		var key := rel_path.to_upper()
@@ -677,36 +732,52 @@ func _read_source_file(rel_path: String) -> PackedByteArray:
 			return PackedByteArray()
 		var res := PackedByteArray()
 		if zip.file_exists(rel_path):
-			res = zip.read_file(rel_path)
+			res = _bounded_zip_read(zip, rel_path)
 		else:
 			for f in zip.get_files():
 				if f.to_upper() == rel_path.to_upper():
-					res = zip.read_file(f)
+					res = _bounded_zip_read(zip, f)
 					break
 		zip.close()
 		return res
 	
 	return PackedByteArray()
 
-func _list_all_files_recursive(dir_path: String, prefix: String = "") -> Array[String]:
-	var result: Array[String] = []
-	var dir := DirAccess.open(dir_path)
-	if dir == null:
-		return result
-	for f in dir.get_files():
-		result.append((prefix + "/" + f).trim_prefix("/"))
-	for d in dir.get_directories():
-		var sub := (prefix + "/" + d).trim_prefix("/")
-		result.append_array(_list_all_files_recursive(dir_path.path_join(d), sub))
-	return result
+func _read_directory_file(relative: String) -> PackedByteArray:
+	# Resolve only the requested finite path. Do not recursively crawl an
+	# untrusted directory tree to find a case-insensitive filename.
+	if not LaunchProfile.safe_relative(relative) or relative.count("/") > 8:
+		return PackedByteArray()
+	var current: String = _source_path
+	for component: String in relative.split("/"):
+		var directory := DirAccess.open(current)
+		if directory == null:
+			return PackedByteArray()
+		var matches: Array[String] = []
+		for name: String in directory.get_files() + directory.get_directories():
+			if name.to_upper() == component.to_upper():
+				if directory.is_link(name):
+					return PackedByteArray()
+				matches.append(name)
+		if matches.size() != 1:
+			return PackedByteArray()
+		current = current.path_join(matches[0])
+	return _bounded_file(current)
 
 func _index_iso_directory(file: FileAccess, root_lba: int, root_size: int, sector_size: int) -> Dictionary:
 	var file_map: Dictionary = {}
 	var queue := [{"prefix": "", "lba": root_lba, "size": root_size, "depth": 0}]
+	var visited: Dictionary = {}
+	var directory_bytes := 0
 	while not queue.is_empty():
 		var item: Dictionary = queue.pop_front()
-		if item.depth > 8:
-			continue
+		var identity: String = "%d:%d" % [item.lba, item.size]
+		if item.depth > 8 or visited.has(identity) or item.size <= 0 or item.size > MAX_ISO_DIRECTORY_BYTES:
+			return {}
+		visited[identity] = true
+		directory_bytes += int(item.size)
+		if directory_bytes > MAX_ISO_INDEX_BYTES or queue.size() + file_map.size() > MAX_SOURCE_ENTRIES:
+			return {}
 		var dir_buf := _read_iso_extent(file, item.lba, item.size, sector_size)
 		var pos := 0
 		while pos < dir_buf.size():
@@ -750,11 +821,77 @@ func _read_sector_data(file: FileAccess, lba: int, sector_size: int) -> PackedBy
 	return file.get_buffer(2048)
 
 func _read_iso_extent(file: FileAccess, lba: int, size: int, sector_size: int) -> PackedByteArray:
+	if lba < 0 or size < 0 or size > MAX_SOURCE_FILE_BYTES:
+		return PackedByteArray()
 	var total_sectors := int((size + 2047) / 2048)
+	if (lba + total_sectors) * sector_size > file.get_length():
+		return PackedByteArray()
 	var output := PackedByteArray()
 	for i in range(total_sectors):
 		output.append_array(_read_sector_data(file, lba + i, sector_size))
 	return output.slice(0, size)
+
+func _bounded_file(path: String) -> PackedByteArray:
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return PackedByteArray()
+	var length: int = file.get_length()
+	if length <= 0 or length > MAX_SOURCE_FILE_BYTES:
+		file.close()
+		return PackedByteArray()
+	var raw: PackedByteArray = file.get_buffer(length)
+	var complete: bool = raw.size() == length and file.get_length() == length
+	file.close()
+	return raw if complete else PackedByteArray()
+
+func _bounded_zip_read(zip: ZIPReader, name: String) -> PackedByteArray:
+	var size: int = int(_zip_sizes.get(name.to_upper(), -1))
+	if size < 0 or size > MAX_SOURCE_FILE_BYTES:
+		return PackedByteArray()
+	var raw: PackedByteArray = zip.read_file(name)
+	return raw if raw.size() == size else PackedByteArray()
+
+func _zip_size_index() -> Dictionary:
+	# Inspect ZIP32 central-directory lengths before invoking decompression.
+	# ZIP64/multipart archives can be unpacked by the user instead.
+	var file := FileAccess.open(_source_path, FileAccess.READ)
+	if file == null or file.get_length() < 22:
+		return {}
+	var length: int = file.get_length()
+	var tail_size: int = mini(length, 65557)
+	file.seek(length - tail_size)
+	var tail: PackedByteArray = file.get_buffer(tail_size)
+	var end := -1
+	for offset in range(tail.size() - 22, -1, -1):
+		if tail.decode_u32(offset) == 0x06054b50 and offset + 22 + tail.decode_u16(offset + 20) == tail.size():
+			end = offset
+			break
+	if end < 0 or tail.decode_u16(end + 4) != 0 or tail.decode_u16(end + 6) != 0:
+		return {}
+	var count: int = tail.decode_u16(end + 10)
+	var central_size: int = tail.decode_u32(end + 12)
+	var central_offset: int = tail.decode_u32(end + 16)
+	if count <= 0 or count > MAX_SOURCE_ENTRIES or tail.decode_u16(end + 8) != count or central_size > MAX_SOURCE_FILE_BYTES or central_offset + central_size > length - tail_size + end:
+		return {}
+	file.seek(central_offset)
+	var central: PackedByteArray = file.get_buffer(central_size)
+	file.close()
+	var result: Dictionary = {}
+	var cursor := 0
+	for index in range(count):
+		if cursor + 46 > central.size() or central.decode_u32(cursor) != 0x02014b50:
+			return {}
+		var raw_size: int = central.decode_u32(cursor + 24)
+		var name_size: int = central.decode_u16(cursor + 28)
+		var record_size: int = 46 + name_size + central.decode_u16(cursor + 30) + central.decode_u16(cursor + 32)
+		if cursor + record_size > central.size() or name_size == 0 or raw_size == 0xffffffff:
+			return {}
+		var name: String = central.slice(cursor + 46, cursor + 46 + name_size).get_string_from_utf8().to_upper()
+		if result.has(name):
+			return {}
+		result[name] = raw_size
+		cursor += record_size
+	return result if cursor == central.size() else {}
 
 func _parse_cue_track(text: String) -> String:
 	for line in text.split("\n"):

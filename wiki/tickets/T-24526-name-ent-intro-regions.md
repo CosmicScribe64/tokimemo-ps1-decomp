@@ -1,10 +1,10 @@
 ---
 id: T-24526
 title: Reconstruct NAME_ENT introduction state-machine regions
-status: In Progress
+status: Done
 assignee: Codex Sol 6.1 medium
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-20008-large-name-introduction]]", "[[tickets/T-24515-name-ent]]"]
 ---
 
@@ -34,3 +34,5 @@ History T-20008/T-24515 and full canonical source audited before implementation.
 Source-only body/declarations/NOTES/full-TU replay under drafts/T-24526/NAME_ENT/func_80143580. Isolated step7 old-byte local1074/883 does not fix color allocation; unsigned state/counter split1075/956 and direct global state flow1070/1003 both rejected. Current trace identifies separate selector conversion/index webs but does not explain original coalescing; no further width/global-state grid. Regional opcode/type/control findings and remaining gaps are recorded in packet NOTES. Root requested freeze then idle; this larger matching investigation remains open, with no production changes or new coverage.
 
 - 2026-10-20 correction: re-audited original X decrement and restored s16 in the active private reconstruction. Historical1075-word metrics include the incorrect full-word control and are not semantic validation.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

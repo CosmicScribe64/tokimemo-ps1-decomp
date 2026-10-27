@@ -1,10 +1,10 @@
 ---
 id: T-24514
 title: Reconstruct remaining MASTER functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[families/master-family-results]]"]
 ---
 
@@ -54,3 +54,5 @@ Spec: bounded function-by-function causal hypotheses with measured negative cont
 - replay.py passes Docker py_compile. `git diff --check` passes; src/include/tools/config diff is empty. Prose review read README fully and removed two weak colon-title patterns.
 
 - Root clarification: T-24092 ugen_pass is enabled and already fixes the historical unaligned-copy F/B direction state. Current aligned68-byte copy t2/t3 register setup is a distinct, unproven residual. README now states the distinction; no old fix or backend audit repeated.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

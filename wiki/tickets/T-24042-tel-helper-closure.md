@@ -1,10 +1,10 @@
 ---
 id: T-24042
 title: Close TEL dialogue helper register allocation
-status: Ready
+status: Done
 assignee: Astra hard-function lane
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-24020-astra-hard-functions]]", "[[tickets/T-23001-w5-big-p01]]"]
 ---
 
@@ -25,3 +25,5 @@ Use existing declarations, pointer views and value lifetimes before considering 
 ### Paused by user scope (2026-10-17)
 
 User requires `dialogue_speak_part` specifically before stopping; TEL work pauses. Six range probes: baseline 140, byte selector view 124, pointer/signed-argument/reused-local forms 140. Trace: the index range loses v1 to record address. `set_c_girl` has no shared declaration despite a void u8 definition; its implicit s32 return may reserve v0 for the record range. This remains an untested lead, not a result.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-25032
 title: Bounded read-only MAIN candidate qualification
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[plan-remaining]]"]
 ---
 
@@ -27,3 +27,5 @@ Source-only previous checkpoint37bf807db preserved separately. Root owns integra
 Current main rechecked44a495b88. Five focused candidates confirmed remaining and compared to newest useful ledger/body: palette_load_vram,make_color_bar,mod_trans_vram,mod_set,func_80046AC8. Two raw prefixes476C0/61A3C read only for provenance, not qualified; audit stops below12functions.
 
 Nominated func_80046AC8: newest T-24501 draft still declares s16 extent, computes tile extent then branches on narrowed sign. Target80047308..314 and80047398..3A4 branch on full word with SH only in delay slot; same pattern later arms. T-24501 already flags but retains this inherited narrowing. Exact semantic counterexample, current callers and one-type proving experiment documented at drafts/T-25032/README.md. Check for an existing private corrected variant before compiling; preserve corrected source regardless score. No builds/source tests or coverage claim. Root reviews candidate and chooses implementation ownership.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-25028
 title: Prioritize unclaimed remaining functions from current evidence
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[plan-remaining]]", "[[tickets/T-25016-candidate-reconstruction]]"]
 ---
 
@@ -33,3 +33,5 @@ Strongest unanswered upstream question: locate the exact extra expression/ring e
 ## Checks
 
 Docker read-only authoritative progress plus source membership scan; no compiler invoked. Wiki lint: zero broken links/status mismatches, one existing large-page warning. `git diff --check` clean; source/include/tools/config unchanged. Draft body pointers checked for existence. Root owns review and next assignment.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

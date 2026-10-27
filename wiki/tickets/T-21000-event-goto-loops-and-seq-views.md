@@ -1,10 +1,10 @@
 ---
 id: T-21000
 title: "EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4 views"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-9940-wave-10-list-4]]", "[[tickets/T-9920-wave-10-list-2]]"]
 ---
 
@@ -22,3 +22,5 @@ EVENT: mark or remove the goto loops in func_80118DAC and type the func_8010A6E4
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-9940-wave-10-list-4|T-9940]], [[tickets/T-9920-wave-10-list-2|T-9920]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

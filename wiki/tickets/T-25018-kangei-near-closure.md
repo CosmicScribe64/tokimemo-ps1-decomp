@@ -1,10 +1,10 @@
 ---
 id: T-25018
 title: Close or pin KANGEI func_8013852C local schedule
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: [[[tickets/T-25016-candidate-reconstruction]], [[as1-scheduler-rule]], [[build-step-gaps]]]
 ---
 
@@ -45,3 +45,5 @@ Awaiting root review against CODING_STANDARDS.md; no Done claim.
 - `migrate_globals.py --check`: globals OK.
 - `sync_protos.py --check-branch`: 0 new disagreements, 15 known; branch check OK.
 - `git diff --check`: clean.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

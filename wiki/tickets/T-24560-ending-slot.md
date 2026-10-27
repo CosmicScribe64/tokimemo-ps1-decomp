@@ -1,10 +1,10 @@
 ---
 id: T-24560
 title: Reconstruct ENDING level halfword slot
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-24512-ending]]", "[[families/ending-family-results]]"]
 ---
 
@@ -38,3 +38,5 @@ Box80 changes exactly the two sh/lh immediates56->54 from scalar84. First84 diag
 ## Untested handoff lead and stop
 
 Resource-conservation steering ends this worker's probes here; no387B0 source, build or new target was started. Read-only comparison found a possible matched-sibling alias distinction: verified adjacent3855C reads portrait16 through canonical D_8011F4DE and portrait18/08 through DisplayActor44[30], while T24512's387B0 repair uses table views for all three despite another later387B0 condition retaining D_8011F4DE. Testing only the first portrait16 compare through the same canonical scalar could join that range. This is untested, may overlap older blanket-view negatives, and is not a match claim. Preserve4a90979c7; root continues the overall goal with other workers.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

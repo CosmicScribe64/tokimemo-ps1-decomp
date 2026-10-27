@@ -1,10 +1,10 @@
 ---
 id: T-28007
 title: Complete text evidence and prepare translator handoff
-status: In Progress
+status: Done
 assignee: Astra text completion agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[assets-text]]", "[[tickets/T-28001-text-script-export]]"]
 ---
 
@@ -37,3 +37,5 @@ Root serializes canonical writes and publication; Astra prepares finite ignored 
 2026-10-25: user reports Gemini completed all nonempty handed-off rows, 508 supplemental disc strings and image-text/layout proposals. Root located the translation worktree and independently validated all 332 batches against immutable main units: 55,403 returns, 54,786 targets; supplied and rebuilt overlay hashes both `28c2c8fbf6f31b8a56f8415328c94fc3aebed39dbe96e114096193602c4dd533`. Source/ID/control-marker contracts pass. Supplement and image reconciliation remain in independent audit; structural acceptance does not promote unresolved source contexts or prove linguistic/whole-corpus coverage. No translation files were edited or applied to the port.
 
 2026-10-25 contributor-tree formatting: integrated `tools/translation_tree.py` and `tools/test_translation_tree.py` to split `translations/en/returned-v3.jsonl` (55,403 rows) and `translations/en/supplemental.jsonl` (508 rows) into 184 GitHub-browsable Markdown table files grouped by disc archive and category (`dialogue/`, `test_dialogue/`, `system/`, `supplemental/`), alongside `translations/en/CONTRIBUTING.md`, `translations/en/INDEX.md` and the target-only image catalog backup `translations/en/graphics/image_text_catalog.md` / `image_text_catalog.jsonl`. Canonical character prefixes follow [[spec/o-event]] (`HI` Himoo Yuina, `KO` Koshiki Yukari, `KA`/`KT` Katagiri Ayako, `KI`/`KS` Kisaragi Mio). Docker verification passes 8/8 unit tests, verifies zero Japanese characters across all 192 files in `translations/en/` and proves byte-for-byte round-trip reconstruction of `returned-v3.jsonl` and `supplemental.jsonl` without a duplicate metadata directory.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

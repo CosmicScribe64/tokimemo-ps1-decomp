@@ -3,6 +3,7 @@ extends RefCounted
 
 const Glyphs = preload("res://presentation/native_glyphs.gd")
 const NativeCompositor = preload("res://presentation/hud_compositor.gd")
+const HudSeason = preload("res://services/native_hud_season.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
 const SCHEMA := "tokimemo.native-command-hud.v1"
 const PROFILE := "spring_type_a_ordinary.v1"
@@ -156,7 +157,7 @@ func activity_command(state: Dictionary, scene_commands: Array[Dictionary], para
 	var view := _view(state)
 	if view.is_empty():
 		return {}
-	if state["context"]["game_mode"] not in [0x40, 0x31, 0x32]:
+	if state["context"]["game_mode"] not in [0x40, 0x31, 0x32, 0x38]:
 		error = "activity HUD requires the bounded school-day/dispatcher/week-end mode"
 		return {}
 	if parameter_colors.size() != 9 or not parameter_colors.all(func(value: Variant) -> bool: return value is int and value in [0, 0x43, 0x44]):
@@ -207,7 +208,7 @@ func _view(state: Dictionary) -> Dictionary:
 			return {}
 	var style: int = context["cursor_style"]
 	var command_screen: bool = (context["game_mode"] == 0x34 and context["mode_stage"] == 1 and context["mode_step"] == 0) or context["game_mode"] == 0x30
-	var activity: bool = (context["game_mode"] == 0x40 and context["mode_stage"] in [0, 1, 2] and context["mode_step"] in [0, 1, 2]) or (context["game_mode"] == 0x31 and context["mode_stage"] == 0 and context["mode_step"] == 0) or (context["game_mode"] == 0x32 and context["mode_stage"] in [0, 1, 0xff] and context["mode_step"] == 0)
+	var activity: bool = (context["game_mode"] == 0x40 and context["mode_stage"] in [0, 1, 2] and context["mode_step"] in [0, 1, 2]) or (context["game_mode"] == 0x31 and context["mode_stage"] == 0 and context["mode_step"] == 0) or (context["game_mode"] == 0x32 and context["mode_stage"] in [0, 1, 0xff] and context["mode_step"] == 0) or (context["game_mode"] == 0x38 and context["mode_stage"] in [0, 1] and context["mode_step"] == 0)
 	if not (command_screen or activity) or context["icon_mode"] != 0 or context["icon_count"] != 14 or context["hover_ticks"] != 32 or not (style == 0 or (style >= 0x9b and style < 0xae)):
 		error = "HUD supports bounded TypeA command/school-day modes and settled hover only"
 		return {}
@@ -262,10 +263,15 @@ func _view(state: Dictionary) -> Dictionary:
 	var parameters: Array[int] = []
 	for word: Variant in rule["params"]:
 		parameters.append(int(word) >> 16)
+	var season: Dictionary = HudSeason.view(rule)
+	if not season["error"].is_empty():
+		error = season["error"]
+		return {}
 	return {"year": year, "month": month, "day": day, "weekday": int(rule["weekday"]),
 		"day_kind": int(calendar_bytes[day]), "parameters": parameters, "selected": int(rule["menu_cursor"]),
 		"icon_enabled": rule["icon_enabled"].slice(0, 14), "cursor_frame": style,
-		"icon_steps": state["icon_steps"].duplicate(), "icon_elapsed": state["icon_elapsed"].duplicate()}
+		"icon_steps": state["icon_steps"].duplicate(), "icon_elapsed": state["icon_elapsed"].duplicate(),
+		"checker_season": season["checker_season"], "checker_fade": season["checker_fade"]}
 
 func _validate_manifest(value: Variant) -> bool:
 	if not _keys(value, ["schema", "version", "profile", "provenance", "tables", "frames", "content"]) or value["schema"] != SCHEMA or not _integer(value["version"]) or int(value["version"]) != 1:

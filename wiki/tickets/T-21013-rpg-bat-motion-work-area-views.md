@@ -1,10 +1,10 @@
 ---
 id: T-21013
 title: "RPG_BAT motion work area D_8015EC28..EC6F: declare the overlapping views once or mark the casts"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-14900-rpg-near-matches]]", "[[tickets/T-12040-codex-cx4]]"]
 ---
 
@@ -22,3 +22,5 @@ RPG_BAT motion work area D_8015EC28..EC6F: declare the overlapping views once or
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-14900-rpg-near-matches|T-14900]], [[tickets/T-12040-codex-cx4|T-12040]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

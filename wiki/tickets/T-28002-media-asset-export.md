@@ -1,10 +1,10 @@
 ---
 id: T-28002
 title: Export images and audio with format metadata
-status: In Progress
+status: Done
 assignee: asset-coordinator
 created: 2026-10-24
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[asset-export]]", "[[disc-layout]]", "[[tickets/T-0002-disc-extraction-and-exe-identification]]"]
 ---
 
@@ -138,3 +138,5 @@ now contains 3,462 manually classified previews; ticket stays In Progress for re
 2026-10-25 NBN v3 catalog hold: the import/global isolation finding is resolved (22 focused tests, 537 isolated coherent tests, then 559 installed tests alongside SPEAKTST). Three new tooling files are applied but uncommitted. Actual four-source CLI export passes, but direct generic visual catalog construction rejects duplicate region identities: cell descriptors lack a canonical frame/variant. The owner is preparing separate v4 with explicit native cell variants and direct catalog regression coverage; no private derived-manifest workaround will replace that fix. Native/PNG/source evidence remains valid, all v3 outputs are preserved, and no NBN corpus count is published before complete catalog/gallery verification. Review: ignored T-28002/nbn-v3-catalog-identity-review.md. Keep In Progress.
 
 2026-10-25 accepted NBN v4: source-safe output, native UV mapping, scoped test globals and canonical cell variants are independently reviewed and applied. Actual installed replay verifies four originals, 48 PNG/masks, all 1,368 nonselected media records and all 3,488 inherited review/context records. The full gallery/catalog contains 3,512 active regions from 371 sources; the 24 new previews are reviewed no-text, while 24 bit-15 masks are diagnostics. All 560 coherent tests pass without skips; generic NBN backlog is 69 and BS geometry backlog remains 227. Full scene/palette/STP/timing/corpus parity is unproved. Existing failed audit artifacts are preserved; the corrected comparison uses persisted JSON object keys and retains every field/value. Exact artifacts and hashes are in [[assets-media]]. Keep In Progress.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

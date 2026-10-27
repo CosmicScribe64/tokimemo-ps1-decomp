@@ -1,10 +1,10 @@
 ---
 id: T-24517
 title: Reconstruct MASTER animation flow and pointer lifetimes
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-24514-master]]", "[[families/master-family-results]]"]
 ---
 
@@ -68,3 +68,5 @@ The immediately preceding fade callee's s32 view closes the six remaining regist
 Default linked bytes:1084 equal, MASTER SHA1 pass, full27 checksum pass. Header/global checks pass; prototype branch guard0 new disagreements/15 known. The fullunit checksum audits all matched neighbours under the override. Evidence: build/t24517-later/literal35.log, checksums27.log, headers.log, globals.log, protos.log. Existing scalar probability FAKE views are marked with reason and tickets; no new allocation-only dummy value or compiler patch.
 
 Standards self-review: C89, shared extern/override rules, literal default C, attribution/commit format, no raw game data or generated context, focused source/wiki scope. Spec self-review: original flow/conditions remain byte-identical; closest-sibling source recipe is causally measured; unsolved326B4/363F4 research is labelled nonmatching and no backend impossibility is claimed. Coordinator review resolved only comment wording and active-ticket provenance. Ready for root integration review.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

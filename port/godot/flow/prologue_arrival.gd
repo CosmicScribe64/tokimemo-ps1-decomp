@@ -24,12 +24,12 @@ const CLOSING_HOLD_FRAMES: int = 0x3d
 const SHORT_HOLD_FRAMES: int = 0x20
 const SHIORI_WAIT_FRAMES: int = 0x41
 const PETAL_COUNT: int = 8
-const PETAL_WRAP_Y: int = 0x78
+const PETAL_WRAP_Y: int = 41
 const ACTOR_DEST_PRIMARY: int = 0x80180000
 const ACTOR_DEST_SECONDARY: int = 0x8018c800
 const BLINK_MASK_7F: int = 0x7f
 const BLINK_MASK_FF: int = 0xff
-const AUDIO_CMD_STOP_BGM: int = 5
+const AUDIO_CMD_SYSTEM_FLAG: int = 5
 const AUDIO_CMD_FADE_B1: int = 0xb1
 const AUDIO_CMD_FADE_C1: int = 0xc1
 const AUDIO_CMD_FADE_D1: int = 0xd1
@@ -71,8 +71,6 @@ static func step(state: State, rng: Rng, pressed: int, services: Dictionary) -> 
 
 	var before: Dictionary = state.projection()
 	var random_before: Dictionary = rng.checkpoint()
-	var start_can_skip: bool = (state.mode_step != 0 or state.mode_stage != STAGE_ARRIVAL) and state.mode_stage != STAGE_FINISH
-
 	match state.mode_stage:
 		0:
 			_stage_00_arrival(state, rng, services, out)
@@ -119,13 +117,9 @@ static func step(state: State, rng: Rng, pressed: int, services: Dictionary) -> 
 		21:
 			_stage_21_finish(state, services, out)
 
-	if out.error.is_empty() and state.game_mode == MODE_PROLOGUE and state.mode_stage != STAGE_FINISH:
-		if start_can_skip and (pressed & PAD_START_MASK) != 0:
-			_emit_audio_command(state, AUDIO_CMD_STOP_BGM, services, out)
+	if out.error.is_empty():
+		if (state.mode_step != 0 or state.mode_stage != STAGE_ARRIVAL) and (pressed & PAD_START_MASK) != 0:
 			state.set_stage(STAGE_FINISH)
-			state.mode_step = 0
-			state.substep = 0
-			state.mode_step_timer = 0
 
 	if not out.error.is_empty():
 		state.restore(before)
@@ -184,38 +178,49 @@ static func _decode_bg_and_check(state: State, slot: int, lba: int, services: Di
 static func _petals_init(state: State, rng: Rng) -> void:
 	var petals: Array = []
 	for index: int in range(PETAL_COUNT):
+		var raw_unk_18: int = rng.next("prologue_petals_init:unk_18:" + str(index))
 		var raw_x: int = rng.next("prologue_petals_init:x:" + str(index))
 		var raw_y: int = rng.next("prologue_petals_init:y:" + str(index))
-		var raw_seq: int = rng.next("prologue_petals_init:seq:" + str(index))
-		var raw_vx: int = rng.next("prologue_petals_init:vx:" + str(index))
+		var raw_following_brightness: int = rng.next("prologue_petals_init:following_brightness:" + str(index))
 		petals.append({
-			"x": (raw_x % 0x190) - 0xa0,
-			"y": -0x88 - (raw_y & 0x7f),
-			"seq": raw_seq & 3,
-			"vx": -1 if (raw_vx & 1) == 0 else 0,
+			"unk_18": raw_unk_18 & 7,
+			"unk_07": 0,
+			"x_word": ((raw_x % 440) - 0xa0) << 16,
+			"y_word": (-0x78 - (raw_y % 120)) << 16,
+			"brightness": Math.u8(raw_following_brightness),
+			"draw_flags": 0xa4,
 		})
 	state.opening["prologue_petals"] = petals
 
 
-static func _petals_update(state: State, rng: Rng, allow_wrap: int) -> void:
+static func _petals_update(state: State, rng: Rng, allow_wrap: int, services: Dictionary, out: Session.FrameResult) -> void:
+	var sine_callback: Variant = services.get("prologue_sine")
+	if not sine_callback is Callable or not sine_callback.is_valid():
+		out.error = "prologue petal update needs source-backed prologue_sine service"
+		return
 	var petals: Array = state.opening.get("prologue_petals", [])
 	if petals.size() != PETAL_COUNT:
 		return
 	for index: int in range(PETAL_COUNT):
 		var petal: Dictionary = petals[index]
-		var next_x: int = int(petal["x"]) + int(petal["vx"])
-		var next_y: int = int(petal["y"]) + 1
-		if next_y > PETAL_WRAP_Y and allow_wrap == 0:
+		petal["unk_07"] = Math.u8(int(petal["unk_07"]) + 1)
+		var sine_value: Variant = sine_callback.call(int(petal["unk_07"]) << 5)
+		if typeof(sine_value) != TYPE_INT:
+			out.error = "prologue sine service returned an unknown value"
+			return
+		var next_x_word: int = Math.add32(int(petal["x_word"]), int(sine_value) * 8)
+		if allow_wrap == 0:
+			next_x_word = Math.sub32(next_x_word, 0x10000)
+		var next_y_word: int = Math.add32(int(petal["y_word"]), 0x10000)
+		if Math.s16(Math.u32(next_y_word) >> 16) >= PETAL_WRAP_Y:
 			var raw_x: int = rng.next("prologue_petals_update:x:" + str(index))
 			var raw_y: int = rng.next("prologue_petals_update:y:" + str(index))
-			var raw_seq: int = rng.next("prologue_petals_update:seq:" + str(index))
-			var raw_vx: int = rng.next("prologue_petals_update:vx:" + str(index))
-			next_x = (raw_x % 0x190) - 0xa0
-			next_y = -0x88 - (raw_y & 0x3f)
-			petal["seq"] = raw_seq & 3
-			petal["vx"] = -1 if (raw_vx & 1) == 0 else 0
-		petal["x"] = next_x
-		petal["y"] = next_y
+			next_x_word = (Math.s16((raw_x % 320) - 160) << 16) | (next_x_word & 0xffff)
+			next_y_word = (Math.s16(-120 - (raw_y % 48)) << 16) | (next_y_word & 0xffff)
+			if allow_wrap == 1 and index >= 4:
+				petal["draw_flags"] = 0
+		petal["x_word"] = next_x_word
+		petal["y_word"] = next_y_word
 		petals[index] = petal
 	state.opening["prologue_petals"] = petals
 
@@ -302,7 +307,7 @@ static func _stage_01_board(state: State, rng: Rng, services: Dictionary, out: S
 				_:
 					out.error = "prologue stage 1 step 0 substep outside source dispatch"
 		1:
-			_petals_update(state, rng, 0)
+			_petals_update(state, rng, 0, services, out)
 			var counter: int = int(state.opening.get("prologue_scene_counter", 0))
 			if (state.frame_count & 1) != 0 and counter < BOARD_SCROLL_LIMIT:
 				counter += 1
@@ -327,7 +332,7 @@ static func _stage_01_board(state: State, rng: Rng, services: Dictionary, out: S
 
 
 static func _stage_02_names(state: State, rng: Rng, services: Dictionary, out: Session.FrameResult) -> void:
-	_petals_update(state, rng, 1)
+	_petals_update(state, rng, 1, services, out)
 	var counter: int = int(state.opening.get("prologue_scene_counter", FULL_BRIGHTNESS))
 	if not _run_line_pair(state, 2, 3, services, out):
 		match state.substep:
@@ -528,7 +533,7 @@ static func _stage_07_line_11(state: State, services: Dictionary, out: Session.F
 			3:
 				if _decode_bg_and_check(state, 0, 0xad00, services, out, "stage 7 bg"):
 					services["bank_load_start"].call(state, "prologue_rei", out)
-					_emit_audio_command(state, AUDIO_CMD_STOP_BGM, services, out)
+					_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
 					_emit_audio_command(state, AUDIO_CMD_FADE_B1, services, out)
 					state.substep += 1
 			4:
@@ -634,7 +639,7 @@ static func _stage_10_lines_15_16(state: State, services: Dictionary, out: Sessi
 			state.substep += 1
 	elif state.substep == 7:
 		if _decode_bg_and_check(state, 1, 0xacf6, services, out, "stage 10 bg"):
-			_emit_audio_command(state, AUDIO_CMD_STOP_BGM, services, out)
+			_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
 			_emit_audio_command(state, AUDIO_CMD_FADE_C1, services, out)
 			services["bank_load_start"].call(state, "prologue_shiori", out)
 			state.next_stage()
@@ -942,7 +947,7 @@ static func _stage_20_closing(state: State, services: Dictionary, out: Session.F
 			counter += 1
 			state.opening["prologue_scene_counter"] = counter
 			if counter >= CLOSING_HOLD_FRAMES:
-				_emit_audio_command(state, AUDIO_CMD_STOP_BGM, services, out)
+				_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
 				_emit_audio_command(state, AUDIO_CMD_FADE_D1, services, out)
 				state.next_stage()
 		else:
@@ -954,20 +959,35 @@ static func _stage_20_closing(state: State, services: Dictionary, out: Session.F
 static func _stage_21_finish(state: State, services: Dictionary, out: Session.FrameResult) -> void:
 	match state.substep:
 		0:
+			if not _call_required_finish_service("finish_cd_reset", state, services, out):
+				return
+			state.opening["D_800B5BD4"] = 0x0f
 			state.opening["screen_brightness"] = FULL_BRIGHTNESS
-			_emit_audio_command(state, AUDIO_CMD_STOP_BGM, services, out)
+			if not _call_required_finish_service("finish_bank_reset", state, services, out):
+				return
+			_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
 			_emit_audio_command(state, AUDIO_CMD_FADE_D1, services, out)
-			services["bank_load_start"].call(state, "normal_gameplay", out)
-			state.substep += 1
+			if out.error.is_empty():
+				services["bank_load_start"].call(state, "normal_gameplay", out)
+			if out.error.is_empty():
+				state.substep += 1
 		1:
-			state.game_mode = MODE_COMMAND_SCREEN
-			state.set_stage(STAGE_COMMAND_RELOAD)
-			state.mode_step = 0
-			state.substep = 0
-			state.mode_step_timer = 0
+			state.opening["D_800B3DB0"] = 0
+			state.opening["text_speed"] = 3
 			state.rule_state["menu_mode"] = 1
+			state.reset_game_mode_fields(MODE_COMMAND_SCREEN)
+			state.set_stage(STAGE_COMMAND_RELOAD)
 		_:
 			out.error = "prologue finish substep outside source dispatch"
 
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
+
+
+static func _call_required_finish_service(name: String, state: State, services: Dictionary, out: Session.FrameResult) -> bool:
+	var callback: Variant = services.get(name)
+	if not callback is Callable or not callback.is_valid():
+		out.error = "prologue finish needs service: " + name
+		return false
+	callback.call(state, out)
+	return out.error.is_empty()

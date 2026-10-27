@@ -1,10 +1,10 @@
 ---
 id: T-24513
 title: Match remaining ETC functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[playbook]]", "[[notes/functions]]"]
 ---
 
@@ -36,3 +36,5 @@ Own src/ovl/ETC and include/ovl/ETC.h. Existing T-24078 renderer experiments are
 - Exact unchanged audit: `git diff 23e1a20fb -- src include config tools` is empty. All target production INCLUDE_ASM paths remain unchanged. No shared-root/integration/contributor changes or push.
 - Fresh Docker `ninja -j2`: all 27 binary checksum targets pass. Early aggregate guard ran before TACO splitting and reported missing TACO proof assembly; final guard is rerun after the completed full build.
 - Final verification: all eight replay cases reproduce expected metrics through actual C and explicit-object DIFF. Headers OK; globals OK; prototype branch check OK (0 new, 15 known). Independent hashes of all 27 built binary paths match configured digests. Direct sha1sum -c overlay invocation initially used the wrong working directory and was replaced by explicit built-path hashing; no build failure. Replay's initial helper rejected expected DIFF exit1 and is corrected to require a real verdict while accepting that status. Re-reviewed fixes, no findings.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

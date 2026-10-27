@@ -49,17 +49,18 @@ func open(hud_manifest: String, hud_sha: String, font_root: String,
 	if _sha(room.get_data()) != NEXT_ROOM_RGBA_SHA or not _add_background(16361,
 		"native-next-command-room:C_02_02H:" + NEXT_ROOM_RGBA_SHA, room):
 		return _holiday_fail("returned command room pixels differ from original C_02_02H")
-	var sequence: Array = _media.get_sequence("holiday_command_0_sd", 0)
-	if sequence.is_empty():
-		return _holiday_fail("holiday actor96 source sequence0 is missing")
-	for step: Dictionary in sequence:
-		var frame: Dictionary = _media.get_frame("holiday_command_0_sd", int(step["frame_index"]))
-		if frame.is_empty():
-			return _holiday_fail("holiday actor96 source frame is missing")
-		var bounds: Array = frame["bounds"]
-		var origin: Array = frame["origin"]
-		var position := Vector2i(80, 56) + Vector2i(bounds[0], bounds[1]) - Vector2i(origin[0], origin[1])
-		_actor_specs[frame["id"]] = _command_spec(frame["id"], frame["image"], position)
+	for slot: int in [0, 1]:
+		var sequence: Array = _media.get_sequence("holiday_command_0_sd", slot)
+		if sequence.is_empty():
+			return _holiday_fail("holiday source sequence is missing: %d" % slot)
+		for step: Dictionary in sequence:
+			var frame: Dictionary = _media.get_frame("holiday_command_0_sd", int(step["frame_index"]))
+			if frame.is_empty():
+				return _holiday_fail("holiday actor96 source frame is missing")
+			var bounds: Array = frame["bounds"]
+			var origin: Array = frame["origin"]
+			var position := Vector2i(80, 56) + Vector2i(bounds[0], bounds[1]) - Vector2i(origin[0], origin[1])
+			_actor_specs[frame["id"]] = _command_spec(frame["id"], frame["image"], position)
 	_opened = true
 	error = ""
 	return true
@@ -104,7 +105,12 @@ func compose(rule: Dictionary, core: Dictionary, profile: Dictionary,
 	var step: int = core["mode_step"]
 	if not ((mode == 0x46 and ((stage == 0 and step in [0, 1]) or (stage == 1 and step == 0) or (stage == 5 and step in [0, 1, 2]))) or (mode == 0x31 and stage == 0 and step == 0) or (mode == 0x34 and stage in [0, 1] and step in [0, 1, 2, 3])):
 		return _compose_fail("holiday HUD mode/stage/step is outside the bounded source route")
-	if (mode == 0x46 and rule["day_event_index"] != 9) or (mode in [0x31, 0x34] and rule["day_event_index"] != 10) or rule["day_events"][9].slice(0, 3) != [0x10, 0, 0] or rule["day_events"][10][0] != 0xff:
+	var index: int = rule["day_event_index"]
+	var sunday_index: int = index if mode == 0x46 else index - 1
+	if sunday_index < 0 or sunday_index >= rule["day_events"].size():
+		return _compose_fail("holiday HUD has no current/prior Sunday queue record")
+	var sunday: Array = rule["day_events"][sunday_index]
+	if sunday[0] != 0x10 or sunday[1] != 0 or sunday[2] not in [0, 1] or (mode != 0x46 and rule["day_events"][index][0] != 0xff):
 		return _compose_fail("holiday HUD queue/command differs from the actual Sunday route")
 	var holiday: Dictionary = rule["holiday"]
 	if holiday["tile_layer_enabled"] != 0 or holiday["boot_hold"] != 0 or holiday["screen_brightness"] != 128 or holiday["background_brightness"] not in [0, 128]:
@@ -126,6 +132,11 @@ func compose(rule: Dictionary, core: Dictionary, profile: Dictionary,
 		"parameters": [], "selected": rule["menu_cursor"], "icon_enabled": replay["flags"],
 		"cursor_frame": profile["cursor_style"], "icon_steps": replay["steps"],
 		"icon_elapsed": replay["elapsed"], "parameter_colors": replay["colors"]}
+	var season: Dictionary = HudSeason.view(rule)
+	if not season["error"].is_empty():
+		return _compose_fail(season["error"])
+	view["checker_season"] = season["checker_season"]
+	view["checker_fade"] = season["checker_fade"]
 	for word: int in rule["params"]:
 		var value: int = word >> 16
 		if value < 0 or value > 999:
@@ -221,6 +232,11 @@ func _replay(history: Array[Dictionary], core: Dictionary, rule: Dictionary) -> 
 		if not _numbers(row.get("params"), 9, 0, 0x3e7ffff) or not row.get("presentation") is Array or (previous_frame >= 0 and row["frame_count"] != previous_frame + 1):
 			return {"error": "holiday history parameter/event/frame order differs"}
 		previous_frame = row["frame_count"]
+		if row["mode"] in [0x30, 0x40, 0x32]:
+			# The following ordinary week owns its committed canvas. A later
+			# Sunday must retain that frame until its own screen init occurs.
+			screen = ""
+			text = ""
 		for intent: Variant in row["presentation"]:
 			if not intent is Dictionary:
 				return {"error": "holiday history contains a non-record presentation intent"}
@@ -232,6 +248,8 @@ func _replay(history: Array[Dictionary], core: Dictionary, rule: Dictionary) -> 
 				flags = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 				for icon: int in ([9, 13] if screen == "holiday" else [4, 8, 9, 10]):
 					flags[icon] = 0
+				if screen == "holiday" and not HolidayRules.club_icon_available(rule):
+					flags[4] = 0
 				steps.fill(0)
 				elapsed.fill(0)
 				colors.fill(0)

@@ -1,7 +1,7 @@
 ---
 id: T-29008
 title: "Assemble the captured-boundary playable development app"
-status: Done
+status: In Progress
 assignee: port-app-agent
 created: 2026-10-25
 updated: 2026-10-26
@@ -53,3 +53,7 @@ User wants the finished app to feel like a game, not a developer tool. Remove de
 
 - Reviewed against `CODING_STANDARDS.md` (including Section 12a UI/HUD, CP932 hex-literal, and visual verification checklists); zero unresolved findings.
 - Verified in Docker via `./tools/port/run.sh test` (5/5 core suites PASS), `./tools/port/progress/run.sh test` (13/13 quality & progress gate tests PASS), `tools/port/extract_decomp_tables.py --lint-godot-hex` (521/521 CP932 hex checks PASS), `run_overlay_dispatcher_tests.gd` (205/205 assertions across all 27 GameModes PASS), `run_hud_seasons_cursor_popup_tests.gd` (78/78 checks + 120 video frames PASS), `run_full_three_year_route_tests.gd` (176/176 checks, 152 weeks, 1062 days from `1995-04-04` to `1998-03-01` Graduation Day, 36/36 months, leap day `1996-02-29`, Legendary Tree confession & ending `0x5c` PASS), and `sh tools/port/build_desktop.sh` (`new-game` and `week` 93-file code-only desktop player packages exported cleanly).
+
+## Reopened after actual-player regression (2026-10-26)
+
+Current multi-week boot advertises commands absent from authenticated media, causing real F5/F9 failures; it also contains silent activity/holiday substitutions. T-29026 repairs these paths, followed by independent T-29023 actual-app reruns. Earlier bounded captured-route proofs remain historical; the generic full-Phase-3 completion section above is superseded by [[port-readiness-review]]. Keep this ticket open until current production behavior is verified.

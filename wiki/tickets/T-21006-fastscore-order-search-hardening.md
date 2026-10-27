@@ -1,10 +1,10 @@
 ---
 id: T-21006
 title: "fastscore and order_search hardening nits"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-11250-faster-candidate-scoring]]", "[[tickets/T-11260-fast-scoring-order-search-permute]]"]
 ---
 
@@ -22,3 +22,5 @@ fastscore and order_search hardening nits. Small fixes from the T-11250 and T-11
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-11250-faster-candidate-scoring|T-11250]], [[tickets/T-11260-fast-scoring-order-search-permute|T-11260]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

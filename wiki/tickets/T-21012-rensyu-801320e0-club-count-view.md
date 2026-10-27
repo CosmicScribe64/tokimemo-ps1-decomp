@@ -1,10 +1,10 @@
 ---
 id: T-21012
 title: "RENSYU func_801320E0 case 5: use the RensyuClubCount view instead of a raw u16 cast"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-15600-fresh-near-matches]]"]
 ---
 
@@ -22,3 +22,5 @@ RENSYU func_801320E0 case 5: use the RensyuClubCount view instead of a raw u16 c
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-15600-fresh-near-matches|T-15600]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

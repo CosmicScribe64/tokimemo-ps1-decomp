@@ -1,10 +1,10 @@
 ---
 id: T-25031
 title: Qualify unreviewed small-overlay remaining functions
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[plan-remaining]]", "[[tickets/T-25028-read-only-candidate-triage]]", "[[tickets/T-25030-overlay-candidate-triage]]"]
 ---
 
@@ -33,3 +33,5 @@ Nominate one proving variant: preserve corrected unk_10F8 body and replace only 
 ## Checks
 
 Read-only current membership and matched-callee/target inspection; no compiler invoked. Wiki lint zero broken links/status mismatches, one existing large-page warning. Diff check clean; production/header/tools/config unchanged. Root authorizes the subsequent T-25033 single canonical-call control separately.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

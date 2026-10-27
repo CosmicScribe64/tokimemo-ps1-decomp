@@ -1,10 +1,10 @@
 ---
 id: T-25034
 title: MAIN src/main/80046500.c full-width tile extent recovery
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-25032-main-candidate-audit]]"]
 ---
 
@@ -123,3 +123,5 @@ Faithful raw ugen corrects regdiff's bit210 constant0x80120000 guess: records639
 ### Standard UV ordering improves to116; user-requested wrap-up
 
 Standard forward u0,v0,u1,v1,u2,v2,u3,v3 assignments in one comma expression per quad exchange the overlapping range priorities: base-row CVT40/v1, reverse-radius36.67/a0, endpoint ADD30/a1. Prior base-copy priority30 reflected denominator4 versus endpoint3 from later base-byte consumers. Endpoint allocation now agrees with target; final reversed store scheduling and u0 branch delays also agree, and the spurious a1=0 hoist disappears. Immutable astra-uv-standard-macro gives674/674 padded words, aligned116/printed156; archived as drafts/T-25034/main/func_80046AC8/uv-standard.c. No production changes. The user's latest instruction requests wrap-up, commit and push; experiments stopped and remaining mismatch is explicitly preserved rather than marked Done.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

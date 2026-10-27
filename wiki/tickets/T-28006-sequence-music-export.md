@@ -1,10 +1,10 @@
 ---
 id: T-28006
 title: Read sequence music and preserve rendering dependencies
-status: In Progress
+status: Done
 assignee: sequence-asset-agent
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[asset-export]]", "[[assets-media]]", "[[tickets/T-28002-media-asset-export]]"]
 ---
 
@@ -42,3 +42,5 @@ The existing media checkpoint lists 63 SEQ files; this count is a starting inven
 2026-10-25: applied the independently reviewed V2 bank-local instrument reader; declared full VH+VB size is retained and checked. Actual installed exports validate all 63 pairs, with 60 supported banks / 709 programs / 1,721 tones / 1,158 nonzero-ID sample slots / 8,038,016 bytes and three explicit unsupported shapes. The coherent suite passes 567 tests without skips. Rates, runtime bank selection, synthesis/loop playback and WAV rendering remain unproved. No original input changed; exports remain ignored. [[assets-media]].
 
 2026-10-25: integrated source-backed sparse VAB slot support required by the normal prologue. Actual SDK uses active-slot ordinals for packed tone blocks. Independent review/root replay: 80 original words match; 121 paired-entry audit retains 118 accepted inventories, adds PRO_VOL/UNDOKAI and retains YUUEN's invalid VAG255 rejection. Nine normal/optimized installed tests pass. No playback/readiness or refreshed selected-corpus aggregate claim. Details in [[assets-media]] and ignored T-29012/sparse-vab-v1 evidence.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

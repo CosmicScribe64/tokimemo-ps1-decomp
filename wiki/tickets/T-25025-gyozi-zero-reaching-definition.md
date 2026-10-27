@@ -1,10 +1,10 @@
 ---
 id: T-25025
 title: Trace zero reaching definition in src/ovl/GYOZI/80140C90.c
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[tickets/T-24907-func-80140e0c-80140C90]]", "[[plan-remaining]]"]
 ---
 
@@ -33,3 +33,5 @@ No new source mechanism justified; no grids, new variants or Astra. Precise rema
 ## Checks
 
 Docker single-object refresh, whole-TU baseline, v6 pre/post-uopt and initial-as1 captures completed. Four-section stock/trace fidelity passes. Wiki lint: zero broken links/status mismatches, one existing large-page warning. `git diff --check` clean; no source/include/tools/config changes. No full integration build for this documentation-only result.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-21017
 title: "Retry TcActor field access in TACO func_8015C2CC and func_8015C718"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-12070-codex-cx7]]"]
 ---
 
@@ -22,3 +22,5 @@ Retry TcActor field access in TACO func_8015C2CC and func_8015C718. These two fu
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-12070-codex-cx7|T-12070]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

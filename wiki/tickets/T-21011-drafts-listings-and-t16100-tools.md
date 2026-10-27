@@ -1,10 +1,10 @@
 ---
 id: T-21011
 title: "Keep game-derived instruction listings out of committed drafts/ and test or retire the one-shot T-16100 tools"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-16100-flagged-draft-pass]]"]
 ---
 
@@ -22,3 +22,5 @@ Keep game-derived instruction listings out of committed drafts/ and test or reti
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-16100-flagged-draft-pass|T-16100]]. Overlapping drafts-archive followups: [[tickets/T-21009-draft-archive-hygiene-comparison-rows|T-21009]], [[tickets/T-21010-drafts-archive-scrub-instruction-rows|T-21010]]; decide the policy once and apply it to all three.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -1,10 +1,10 @@
 ---
 id: T-28001
 title: Export text and dialogue for translation
-status: In Progress
+status: Done
 assignee: asset-coordinator
 created: 2026-10-24
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[asset-export]]", "[[disc-layout]]", "[[tickets/T-0002-disc-extraction-and-exe-identification]]"]
 ---
 
@@ -415,3 +415,5 @@ The actual complete export passes 273 text tests without skips and all byte/Unic
 2026-10-25: applied independently reviewed SPEAKTST production layout inventory. All 38,701 prior units remain an identical ordered prefix; 16,702 new null-target rows stay flagged, for 55,403 total / 31,346 ready / 24,057 flagged. Twelve FF controls do not become translation rows; four unknown tokens and all 1,253,376 source bytes, including 400,752 uninterpreted bytes, remain recoverable. All 59 captured after-images match; nine tooling changes preserve 34,960 unrelated tracked files. Independent production/native/Standards reviews and the isolated 550-test coherent suite pass without skips. Actual installed replay passes 295 normal and 295 optimized tests, all 55,403 serialized fields, byte reconstruction and both inventory CLI modes. Runtime loading/use, glyph/consumer/voice/character ownership and comprehensive translation coverage stay unproved. No reader depends on ignored research/prototype files. [[assets-text]].
 
 2026-10-25: five proposed title contexts are held after independent native review proved two festival predicates should select club 3, rather than the packet's club 0, in year 0x61. The owner is preparing an immutable corrected packet with table/branch checks and wrong-club/year negatives. Nothing is applied and the current 1,861 unresolved usage contexts stay unchanged. These entries are already extracted text, not missing dialogue.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

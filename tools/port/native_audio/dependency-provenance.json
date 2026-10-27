@@ -1,0 +1,23 @@
+{
+  "godot_cpp_commit": "e83fd0904c13356ed1d4c3d09f8bb9132bdc6b77",
+  "binding_API": "4.5 forward-compatible with installed4.7.2; actual load tested separately",
+  "SCons_version": "4.9.1",
+  "TLS": "Docker proxy CA unavailable; transport certificate not verified; content pinned by commit and recorded SHA256",
+  "downloads": [
+    {
+      "url": "https://codeload.github.com/godotengine/godot-cpp/tar.gz/e83fd0904c13356ed1d4c3d09f8bb9132bdc6b77",
+      "sha256": "d4c03daf46c8bef4544614182b0762c3e32789151c7f8f44e8eb2053d5cddeba",
+      "bytes": 756222
+    },
+    {
+      "url": "https://pypi.org/pypi/SCons/4.9.1/json",
+      "sha256": "a2df710e528aa8baaf8c02a7455f539aa763c7c42fe677cbb7417d08a773e808",
+      "bytes": 11237
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/45/92/50b739021983b131dcacd57aa8b04d31c5acc2e7e0eb4ed4a362f438c6b7/scons-4.9.1-py3-none-any.whl",
+      "sha256": "d2db1a22eb6039e97cbbb0106f18f435af033d0aad190299c9688378e2810a5e",
+      "bytes": 4131331
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 id: T-21500
 title: Stop configure from re-splitting asm on every checkout or merge
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: [[build-system]], [[tickets/T-16990-wave-3-conveyor]]
 ---
 
@@ -31,3 +31,5 @@ all of `asm/`; every object then rebuilds. Under load this made each merge take 
 - [ ] Clean build 27/27 unchanged; tests for the new stamp logic
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

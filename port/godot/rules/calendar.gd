@@ -4,6 +4,7 @@ extends RefCounted
 
 const Math = preload("res://core/native_math.gd")
 const State = preload("res://rules/school_day_state.gd")
+const CalendarSource = preload("res://services/native_calendar_source.gd")
 
 static func birthday_matches(word: int, month: int, day: int) -> bool:
 	if month > 12:
@@ -131,15 +132,17 @@ static func advance_day(state: State) -> String:
 		if data["month"] >= 13:
 			data["year"] = Math.u8(data["year"] + 1)
 			data["month"] = 1
-		populate_month_calendar(data, data["year"], data["month"])
+		# T-29028: the source FE mode rotates the original current/next records
+		# only after its CD wait. Preserve them until that validated load completes.
+		if data["resources"].get("native_calendar_source") != CalendarSource.SOURCE_SHA:
+			populate_month_calendar(data, data["year"], data["month"])
 		if data["month"] % 3 == 0:
 			for i: int in range(11):
 				data["girl_last_date_spot_timer"][i] = 0
 			# Mirrors schedule_quarter_flags_rotate (src/main/scheduler.c:1981-2002): b14 = b13; b13 = 0
 			var b13: int = (data["player_flags_upper"] >> 13) & 1
 			data["player_flags_upper"] = (data["player_flags_upper"] & ~(3 << 13)) | (b13 << 14)
-		if data["month"] == 9:
-			data["player_flags_upper"] &= ~4
+		# Amusement reset belongs to its scheduler callers, including FE upload.
 	data["day_count"] = Math.u16(data["day_count"] + 1)
 	update_vacation_for_date(data)
 	data["day_event_done_bits"] = 0

@@ -1,10 +1,10 @@
 ---
 id: T-25058
 title: Match MAIN screen-offset easing
-status: Ready
+status: Done
 assignee: codex/t25044-parameter
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[matching-notes]]", "[[tickets/T-25050-main-ring-input]]"]
 ---
 
@@ -32,3 +32,5 @@ Recover `func_80047560` (352 bytes) in `src/main/80047550.c` using canonical dec
 - 2026-10-22: Ticket created before any compile or source experiment. Worktree `/private/tmp/tokimemo-t25044`, branch `codex/t25044-parameter`; no root checkout edits.
 - 2026-10-22: Parent relayed the user's request to commit and push all work, with no T-25058 source experiments. Qualification is preserved and the ticket returns to Ready. No source edits, compiler probes, header changes or new match claims were made. Ownership must be reconfirmed when implementation resumes.
 - 2026-10-23: `func_80047560` matched in T-25116 (default C, 352 bytes); the divisor now uses a same-type `u8` view, which resolves the semantic audit above. See [[matching-notes]] (T-25116).
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

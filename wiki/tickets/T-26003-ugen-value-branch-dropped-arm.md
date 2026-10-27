@@ -1,10 +1,10 @@
 ---
 id: T-26003
 title: Model IDO 4.1's value-branch F and dropped-arm stores in tools/ugen_pass.py
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-26
 links: [[[tickets/T-26000-ugen-block-copy-41-rule]], [[tickets/T-26002-fake-sweep-41-rule]], [[toolchain]]]
 ---
 
@@ -22,3 +22,5 @@ The T-26000 rule leaves two measured differences from IDO 4.1's ugen: 4.1 sets F
 Low priority: the build is already byte-identical; this only removes four FAKEs.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

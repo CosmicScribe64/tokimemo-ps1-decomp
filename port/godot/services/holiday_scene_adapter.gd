@@ -8,6 +8,7 @@ const Session = preload("res://core/game_session.gd")
 const Holiday = preload("res://rules/holiday.gd")
 const ActorService = preload("res://presentation/school_day_actor_service.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
+const ExactMedia = preload("res://services/native_activity_media.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
 const EXTENSION_SHA: String = "c960d279b9ff2cfeddc96afd4f2de43fa5365db6129155759085813e1ed2bf64"
 const SOURCE_RAM_SHA: String = "7623f081b5907864709a2a8957eff40ac9c8a3524883a397e6be23db6ebb0ee6"
@@ -53,21 +54,11 @@ func open(media: MediaStore, extension_path: String, next_room: Image) -> String
 		prepared_backgrounds[pair[1]] = commands
 	prepared_backgrounds[ROUTE["next_command"]] = Canvas.background_commands(next_room,
 		"native-next-command-room:C_02_02H:" + NEXT_ROOM_RGBA_SHA)
-	var steps: Array = _integers(media.get_sequence("holiday_command_0_sd", 0))
-	if steps.is_empty():
-		return _fail("holiday SD profile1 sequence0 is unavailable")
-	var frames: Dictionary = {}
-	for step: Dictionary in steps:
-		var frame: Dictionary = media.get_frame("holiday_command_0_sd", step["frame_index"])
-		if frame.is_empty():
-			return _fail("required holiday source frame is unavailable")
-		var bounds: Array = frame["bounds"]
-		var origin: Array = frame["origin"]
-		frames[str(step["frame_index"])] = {"id": frame["id"], "image": frame["image"],
-			"bounds": Rect2i(int(bounds[0]), int(bounds[1]), int(bounds[2]), int(bounds[3])),
-			"origin": Vector2i(int(origin[0]), int(origin[1]))}
+	var prepared_resources: Dictionary = ExactMedia.from_media(media, "holiday_command_0_sd")
+	if prepared_resources.is_empty():
+		return _fail("original holiday SD profile1 sequences/frames are unavailable")
 	tables = prepared_tables.duplicate(true)
-	resources = {"sequences": {"0": steps}, "frames": frames}
+	resources = prepared_resources
 	backgrounds = prepared_backgrounds
 	_extension = extension["holiday"].duplicate(true)
 	_ready = true
@@ -80,7 +71,9 @@ var enable_subscreens: bool = false
 
 func handles(state: State) -> bool:
 	var data: Dictionary = state.rule_state
-	return state.game_mode in [0x46, 0x50] or ([data.get("year"), data.get("month"), data.get("day")] == [95, 4, 9] and data.get("day_event_index") in [9, 10] and state.game_mode in [0x31, 0x34])
+	var index: int = data.get("day_event_index", 0)
+	var after_sunday: bool = index > 0 and data["day_events"][index][0] == 0xff and data["day_events"][index - 1][0] in [0x10, 0x80]
+	return state.game_mode in [0x46, 0x50] or (after_sunday and state.game_mode in [0x31, 0x34])
 
 func stage(state: State, tick: int, result: Session.FrameResult) -> Dictionary:
 	if not _ready:
@@ -92,6 +85,8 @@ func stage(state: State, tick: int, result: Session.FrameResult) -> Dictionary:
 	if not failure.is_empty():
 		return _bad(failure)
 	var data: Dictionary = state.rule_state
+	if data["month"] not in [3, 4, 5] or data["vacation"] != 0 or ((data["player_flags"] >> 8) & 15) != 0 or data["player_flags"] >> 12 != 11:
+		return _bad("holiday media supports healthy spring no-club command0 only")
 	var shown: int = data["background_cache"][data["background_show"]]
 	if state.game_mode == 0x50 or (state.game_mode == 0x46 and state.mode_stage in [0x10, 0x20, 0x30, 0xFE]):
 		return {"error": "", "draw_commands": [], "services": [], "screens": [], "active_lba": shown}
@@ -152,7 +147,7 @@ func _load_error(state: State, intent: Dictionary) -> String:
 
 static func _matches_actor(value: Variant, state: State) -> bool:
 	var expected: Dictionary = Holiday.actor(state)
-	if not value is Dictionary or value.size() != expected.size() or expected["sequence_slot"] != 0:
+	if not value is Dictionary or value.size() != expected.size() or expected["sequence_slot"] not in [0, 1]:
 		return false
 	for key: String in expected:
 		if not value.get(key) is int or value[key] != expected[key]:

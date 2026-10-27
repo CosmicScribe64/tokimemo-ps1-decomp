@@ -1,5 +1,11 @@
 extends Control
 ## Separate development entry scene. Does not replace the captured school-day app.
+const ContextOwner = preload("res://flow/entry_runtime_context.gd")
+const CoreState = preload("res://core/game_state.gd")
+const Clock = preload("res://core/native_clock.gd")
+const EntryPad = preload("res://ui/entry_pad.gd")
+const TextStore = preload("res://services/prologue_text_store.gd")
+const InputFrame = preload("res://core/input_frame.gd")
 const Entry = preload("res://flow/new_game_entry.gd")
 const Rules = preload("res://rules/new_game.gd")
 const Rng = preload("res://core/native_rng.gd")
@@ -7,6 +13,21 @@ const Diagnostics = preload("res://services/new_game_load_diagnostics.gd")
 const Glyphs = preload("res://presentation/native_glyphs.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
 const Presenter = preload("res://presentation/vn_scene_presenter.gd")
+const LaunchProfile = preload("res://services/installed_launch_profile.gd")
+const Launch = preload("res://app/installed_launch.gd")
+signal profile_finished(entry: RefCounted, native_rng: RefCounted, launch_profile: Dictionary, live_context: Dictionary)
+# Injected by the installed launch owner after original resource authentication.
+var profile_text_store: TextStore
+var entry_clock_policy: Dictionary = {}
+var _entry_runtime := ContextOwner.new()
+var _entry_model := CoreState.new()
+var _entry_clock := Clock.new()
+var _entry_pad: EntryPad
+var _entry_residency: Dictionary = {}
+var _entry_ui_brightness: int = -1
+var installed_launch_profile: Dictionary = {}
+var profile_handoff: Dictionary = {}
+var _completion_emitted := false
 var controller := Entry.new()
 var glyphs := Glyphs.new()
 var rng := Rng.new()
@@ -32,7 +53,9 @@ func _notification(what: int) -> void:
 		NOTIFICATION_APPLICATION_FOCUS_IN: _application_focused = true
 		_: return
 	focus_paused = not (_window_focused and _application_focused)
-	if focus_paused: queue.clear()
+	if focus_paused:
+		queue.clear()
+		if is_instance_valid(_entry_pad): _entry_pad.clear_devices()
 
 func _ensure_native_presenter() -> void:
 	if canvas == null:
@@ -42,10 +65,12 @@ func _ensure_native_presenter() -> void:
 		add_child(canvas)
 	if presenter != null:
 		return
-	var font_path: String = OS.get_environment("TOKIMEMO_NATIVE_FONT")
-	if font_path.is_empty():
+	var font_path: String = str(installed_launch_profile.get("paths", {}).get("font_root", ""))
+	if font_path.is_empty() and installed_launch_profile.is_empty():
+		font_path = OS.get_environment("TOKIMEMO_NATIVE_FONT")
+	if font_path.is_empty() and installed_launch_profile.is_empty():
 		font_path = OS.get_environment("TOKIMEMO_FONT_ROOT")
-	if font_path.is_empty():
+	if font_path.is_empty() and installed_launch_profile.is_empty():
 		for candidate_font: String in [
 			ProjectSettings.globalize_path("res://../..").simplify_path().path_join(".asset-cache/port/fonts/native-font-v2"),
 			"/workspace/.asset-cache/port/fonts/native-font-v2",
@@ -56,12 +81,26 @@ func _ensure_native_presenter() -> void:
 				break
 	if font_path.is_empty() or not DirAccess.dir_exists_absolute(font_path):
 		return
-	var hud_manifest: String = OS.get_environment("TOKIMEMO_HUD_MANIFEST")
+	var hud_manifest: String = str(installed_launch_profile.get("paths", {}).get("hud_manifest", ""))
+	if hud_manifest.is_empty() and installed_launch_profile.is_empty():
+		hud_manifest = OS.get_environment("TOKIMEMO_HUD_MANIFEST")
+	if not installed_launch_profile.is_empty() and hud_manifest.is_empty():
+		return
 	var cand_presenter := Presenter.new()
 	if cand_presenter.init_resources(font_path, hud_manifest).is_empty():
 		presenter = cand_presenter
 
 func _ready() -> void:
+	_entry_pad = EntryPad.new()
+	add_child(_entry_pad)
+	# Fresh desktop entry origin; earlier native boot/title duration is unmeasured.
+	# These are source initialization operations, never derived from startup RNG.
+	_entry_model.frame_count = 0 # game_state_init; desktop origin recorded below.
+	_entry_model.system_seed = 0 # sys_init bzero before timer callbacks.
+	_entry_model.timer_ticks = 0
+	_entry_ui_brightness = 128 # draw_brightness_reset; current entry renderer is full-bright.
+	var context_error: String = _entry_runtime.bind(_entry_model, _entry_clock, _entry_pad, entry_clock_policy)
+	if not context_error.is_empty(): failure = context_error
 	get_window().content_scale_size = Vector2i(1024,768)
 	get_window().size = Vector2i(1024,768)
 	_ensure_native_presenter()
@@ -70,11 +109,22 @@ func _ready() -> void:
 	get_window().title = "New Game"+(" [%d]"%OS.get_process_id() if debug_visible else "")
 	var rules_path: String = OS.get_environment("TOKIMEMO_NEW_GAME_RULES")
 	var entry_path: String = OS.get_environment("TOKIMEMO_NEW_GAME_ENTRY")
+	var font_path: String = OS.get_environment("TOKIMEMO_NATIVE_FONT")
+	if not installed_launch_profile.is_empty():
+		var paths: Dictionary = installed_launch_profile.get("paths", {})
+		rules_path = str(paths.get("name_entry_rules", ""))
+		entry_path = str(paths.get("name_entry_content", ""))
+		font_path = str(paths.get("font_root", ""))
 	var tables: Dictionary = Rules.load_tables(rules_path)
 	var content: Dictionary = Entry.load_content(entry_path)
 	var seed: String = OS.get_environment("TOKIMEMO_NEW_GAME_SEED")
+	if not installed_launch_profile.is_empty():
+		# The desktop startup clock supplies the initial BIOS LCG state. Record it
+		# once; the same live RNG object is retained throughout profile entry.
+		seed = str(Time.get_ticks_usec() & 0xffffffff)
 	load_diagnostics = {"build":"entry-ui-cleanup-v1","pid":OS.get_process_id(),"executable":OS.get_executable_path(),
 		"rules":Diagnostics.inspect(rules_path,Rules._content_valid(tables)),"entry":Diagnostics.inspect(entry_path,Entry.content_valid(content)),"seed_valid":not seed.is_empty() and seed.is_valid_int(),"failed_gate":""}
+	load_diagnostics["startup_seed"] = int(seed) if seed.is_valid_int() else -1
 	if not Rules._content_valid(tables):
 		failure = "Game data could not be loaded. Check the rule pack."; load_diagnostics.failed_gate="rule_pack"
 	elif not Entry.content_valid(content):
@@ -84,7 +134,7 @@ func _ready() -> void:
 	elif not load_diagnostics.seed_valid:
 		failure = "A startup seed is required."; load_diagnostics.failed_gate="startup_seed"
 	if failure.is_empty():
-		var font_error: String = glyphs.open_external_font(OS.get_environment("TOKIMEMO_NATIVE_FONT"))
+		var font_error: String = glyphs.open_external_font(font_path)
 		if not font_error.is_empty():
 			failure="The game font could not be loaded. Check the font pack.";load_diagnostics.failed_gate="font_pack";load_diagnostics.font_error=font_error
 	if failure.is_empty():
@@ -93,14 +143,16 @@ func _ready() -> void:
 		else:
 			var entry_error: String=controller.begin(tables,content,rng)
 			if not entry_error.is_empty(): failure="New Game could not start.";load_diagnostics.failed_gate="entry_begin";load_diagnostics.entry_error=entry_error
-	if debug_visible or not failure.is_empty(): print("T29012_ENTRY_LOAD_DIAGNOSTIC "+JSON.stringify(load_diagnostics))
+			else:
+				_entry_residency = {"lba":0x95ea,"source_sha256":ContextOwner.NAME_ENT_SHA,"content_sha256":Entry.CONTENT_SHA,"ready":true}
+	if debug_visible: print("T29012_ENTRY_LOAD_DIAGNOSTIC "+JSON.stringify(load_diagnostics))
 	_render()
 
 func _send(action: Dictionary) -> void:
 	if not focus_paused: queue.append(action.duplicate(true))
 
 func _physics_process(_delta: float) -> void:
-	if not failure.is_empty() or focus_paused: return
+	if not failure.is_empty() or focus_paused or _completion_emitted: return
 	tick += 1
 	var automatic: bool = (controller.stage == 1 and controller.step_id in [0,2,4,6,8]) or (controller.stage == 2 and controller.step_id in [0,2,4])
 	if automatic:
@@ -110,6 +162,21 @@ func _physics_process(_delta: float) -> void:
 		var diagnostic: String = controller.act(action)
 		if not diagnostic.is_empty(): failure = diagnostic
 		_render()
+	# Snapshot the device owner after the completed entry dispatch/render.
+	var current_pad: InputFrame = _entry_pad.sample(_entry_clock.logic_iterations)
+	var context_error: String = _entry_runtime.record_completed_iteration(current_pad, _entry_ui_brightness, _entry_residency)
+	if not context_error.is_empty():
+		failure = context_error
+		return
+	if profile_complete and not _completion_emitted and not installed_launch_profile.is_empty():
+		var live: Dictionary = _entry_runtime.export_profile(controller, rng, profile_text_store)
+		if not str(live.get("error", "")).is_empty():
+			failure = str(live.error)
+			return
+		_completion_emitted = true
+		profile_handoff = live
+		profile_handoff["launch_profile"] = installed_launch_profile.duplicate(true)
+		profile_finished.emit(controller, rng, installed_launch_profile.duplicate(true), live)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -227,11 +294,17 @@ func _render() -> void:
 	profile_complete = (controller.stage == 2 and controller.step_id == 5)
 	for child in panel.get_children(): panel.remove_child(child); child.queue_free()
 	_label("New Game")
-	if not failure.is_empty(): _label(failure); return
+	if not failure.is_empty():
+		_label(failure)
+		_recovery_actions()
+		return
 	_render_native_canvas()
 	if debug_visible: _label("Stage %d / step %d · RNG draws %d"%[controller.stage,controller.step_id,rng.draw_count])
 	_name_line()
-	if not failure.is_empty(): _label(failure); return
+	if not failure.is_empty():
+		_label(failure)
+		_recovery_actions()
+		return
 	if controller.stage == 1 and controller.step_id in [1,3,5]:
 		_label("Enter your "+{"family":"family name","given":"given name","nickname":"nickname"}[controller.active_part()])
 		var tabs := HBoxContainer.new(); panel.add_child(tabs)
@@ -262,10 +335,18 @@ func _render() -> void:
 		_button(actions,"Confirm",{"kind":"yes"}); _button(actions,"Edit",{"kind":"no"})
 	elif controller.stage == 2 and controller.step_id == 5:
 		_label("Profile complete.")
-		_label("The prologue is not available yet.")
+		_label("The playable opening is not available in this build yet.")
+		_recovery_actions()
 		if debug_visible:
 			_label(controller.blocked)
 			_label("3,823 initialized bytes; 2,973 unowned bytes remain unknown. No command boundary is ready.")
+
+func _recovery_actions() -> void:
+	var actions := HBoxContainer.new(); panel.add_child(actions)
+	var setup := Button.new(); setup.text = "Return to setup"; actions.add_child(setup)
+	setup.pressed.connect(func() -> void: Launch.change_scene(self, Launch.SETUP_SCENE, {}))
+	var exit := Button.new(); exit.text = "Exit"; actions.add_child(exit)
+	exit.pressed.connect(func() -> void: get_tree().quit())
 
 static func profile_text(profile: Dictionary) -> String:
 	var month: String = "Not set" if profile.month == 255 else str(int(profile.month)+1)

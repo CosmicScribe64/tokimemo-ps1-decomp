@@ -1,10 +1,10 @@
 ---
 id: T-21005
 title: "Cleanup of unexplained views and dead blocks left by the near-miss tickets"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-11310-close-near-misses-sonnet-47]]", "[[tickets/T-11100-big-functions-gemini-33]]", "[[tickets/T-11300-close-near-misses-sonnet-46]]"]
 ---
 
@@ -22,3 +22,5 @@ Cleanup of unexplained views and dead blocks left by the near-miss tickets. Four
 Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-11310-close-near-misses-sonnet-47|T-11310]], [[tickets/T-11100-big-functions-gemini-33|T-11100]], [[tickets/T-11300-close-near-misses-sonnet-46|T-11300]].
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

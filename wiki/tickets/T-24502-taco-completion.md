@@ -1,10 +1,10 @@
 ---
 id: T-24502
 title: Match remaining TACO functions
-status: In Progress
+status: Done
 assignee: codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: [[[matching-notes]], [[playbook]]]
 ---
 
@@ -67,3 +67,5 @@ Isolated branch codex/taco-24502 from 2c7293275. TACO files only.
 - 2026-10-20 adjacent CLUT audit: matched E778/F468 share the same call declarations but have no conditional modulo donor. No supported missing live value, call-view or wrong-width/value defect found; current491-word candidate preserved with no a3/interference control. Root requested pin, then only an existing-notes check for a genuinely uncorrected defect in another function.
 
 - 2026-10-20 next-defect check: existing NAME_ENT/TACO notes show recorded semantic repairs already preserved (BAC4 array/prototype widths, C6D4 sentinels, FBF0 thresholds/call width, font byte reads, NAME_ENT date widths/X narrowing). Remaining documented gaps are allocation, homes, copy-register choice or already-tested controls; no supported uncorrected defect selected. Root-directed idle rather than prolonged triage or a new grid.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

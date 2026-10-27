@@ -1,10 +1,10 @@
 ---
 id: T-25020
 title: Map recovered BUNKA_SD scheduler trace before closure tests
-status: In Review
+status: Done
 assignee: codex
 created: 2026-10-22
-updated: 2026-10-22
+updated: 2026-10-26
 links: [[[tickets/T-25016-candidate-reconstruction]], [[as1-scheduler-rule]], [[build-step-gaps]]]
 ---
 
@@ -52,3 +52,5 @@ A bounded allocator/scheduler consultation should solve exactly this: keep the f
 Actual updated in-tree `funcdiff --resolve BUNKA_SD:func_80139290` explicitly compares full-unit NON_MATCHING C: four changed positions / eight +/- lines, rows 166/167 and 171/172 only. Default `funcdiff --resolve --version default` separately verifies MATCH, linked bytes equal target (1516 bytes); **that is the retained assembly fallback, not a C match**. `ninja build/ovl/BUNKA_SD.ok` SHA1 passes. Header/global migration/prototype guards pass (zero new prototype disagreements, 15 known). Wiki lint: zero broken links, zero status mismatches, one pre-existing large page. `git diff --check` clean. No full 27-unit worker recheck, push, or integration.
 
 Root review requested; ticket remains In Review.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

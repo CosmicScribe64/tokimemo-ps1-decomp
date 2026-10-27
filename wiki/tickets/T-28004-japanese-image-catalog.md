@@ -1,10 +1,10 @@
 ---
 id: T-28004
 title: Catalog every image asset containing Japanese text
-status: In Progress
+status: Done
 assignee: media-export-chat
 created: 2026-10-24
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[asset-export]]", "[[tickets/T-28002-media-asset-export]]", "[[tickets/T-28001-text-script-export]]"]
 ---
 
@@ -134,3 +134,5 @@ catalog with retained correction history. No translation or transcription was ad
 2026-10-25 seasonal review: four additional active backgrounds have independent manual pixel/hash review and source/subregion/context/confidence/localization records. All four retain suspected status at confidence 0.55; no characters are transcribed or confirmed by OCR. The merged catalog contains 3,488 active regions: 427 Japanese, 350 other text, 2,635 no text, 76 suspected, zero unreviewed. All 6,971 PNG/mask references verify. Twelve additional padded/mask diagnostics are excluded from art totals. The updated gallery and exact replay/profile hashes are in [[assets-media]]; movie and whole-game coverage remain open.
 
 2026-10-25: all 24 prologue cells have manual source/cell/palette/region/context/confidence/evidence/redraw records bound to canonical variants and exact PNG hashes. All are no-text within these specific previews; no full-page/composed-scene absence claim follows. The inherited 3,488 region records remain unchanged, yielding 3,512 total: 427 Japanese, 350 other-text, 2,659 no-text, 76 suspected, zero unreviewed. Raw bit-15 masks are diagnostic-only. Whole-game image-text coverage remains open. [[assets-media]].
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

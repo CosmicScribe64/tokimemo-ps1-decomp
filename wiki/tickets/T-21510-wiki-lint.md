@@ -1,10 +1,10 @@
 ---
 id: T-21510
 title: Wiki lint for tickets, kanban, index and log
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: [[SCHEMA]], [[kanban]]
 ---
 
@@ -31,3 +31,5 @@ inserted mid-file, doubled blank lines and stale index lines by hand.
 - [ ] Documented in [[SCHEMA]]
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

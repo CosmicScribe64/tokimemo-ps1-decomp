@@ -1,10 +1,10 @@
 ---
 id: T-24516
 title: Recover remaining BUNKA_SD EN_NICHI KANGEI functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[playbook]]", "[[notes/functions]]"]
 ---
 
@@ -37,3 +37,5 @@ Fresh worktree /private/tmp/tokimemo-t24516, branch codex/t24516-overlay-family,
 - Exact audit: `git diff eaf7c6e709cb85435c313ac2fbfde5c7db14cd93 -- src include config tools` is empty.
 - Fresh full633-step Docker ninja-j2 completes all27 checksum targets. Independent built-binary hashes pass27/27. Header/global guards pass; prototype branch0 new/15 known. README deslop weak technical-word hit reviewed and retained.
 - Final retained-body replay: all five compile as actual default full-TU C and validate explicit-object DIFF with exact README metrics; production unchanged. No compiler failure or missing verdict is counted as a result.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

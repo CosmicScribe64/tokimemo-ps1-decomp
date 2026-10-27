@@ -1,10 +1,10 @@
 ---
 id: T-28000
 title: Reusable asset readers and modern exports
-status: In Progress
+status: Done
 assignee: asset-coordinator
 created: 2026-10-24
-updated: 2026-10-25
+updated: 2026-10-26
 links: ["[[asset-export]]", "[[disc-layout]]", "[[tickets/T-0002-disc-extraction-and-exe-identification]]"]
 ---
 
@@ -49,3 +49,5 @@ Engine-independent local asset extraction/export tooling for the decomp. Accept 
 2026-10-25: integrated four original prologue NBN sources with 24 canonical native-cell previews and separate diagnostic masks. Actual current export/native pixel/old-record/manual-review/catalog/gallery checks pass; static coverage is 371 sources / 3,512 regions with 69 generic NBN and 227 BS geometries still open. The coherent suite passes 560 tests without skips. Text remains 55,403 rows / 1,861 unknown usage classifications; no runtime/whole-corpus or soundtrack completion is claimed. [[assets-media]], [[asset-export]].
 
 2026-10-25: applied the independently reviewed V2 bank-local instrument reader; declared full VH+VB size is retained and checked. Actual installed exports validate all 63 pairs, with 60 supported banks / 709 programs / 1,721 tones / 1,158 nonzero-ID sample slots / 8,038,016 bytes and three explicit unsupported shapes. The coherent suite passes 567 tests without skips. Rates, runtime bank selection, synthesis/loop playback and WAV rendering remain unproved. No original input changed; exports remain ignored. [[assets-media]].
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

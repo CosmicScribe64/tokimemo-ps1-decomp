@@ -150,8 +150,6 @@ func get_frame(component_key: String, frame_index: int) -> Dictionary:
 	return {}
 
 func get_sequence(component_key: String, sequence_index: int = 0) -> Array:
-	if sequence_index != 0:
-		return []
 	var sd: Dictionary = _components.get(component_key, {})
 	for seq in sd.get("sequences", []):
 		if seq.get("sequence_index") == sequence_index:

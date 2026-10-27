@@ -1,10 +1,10 @@
 ---
 id: T-21001
 title: "Recover the wave-10 list 6 near misses: BUNKAKEN func_80143DD0 and RPG_BAT func_80139510"
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-26
 links: ["[[tickets/T-9960-wave-10-list-6]]"]
 ---
 
@@ -24,3 +24,5 @@ Opened from the 2026-10-17 ticket cleanup review of [[tickets/T-9960-wave-10-lis
 ## Comments
 
 2026-10-17: RPG_BAT half recovered by T-24013: func_80139510 matches 2,424 default linked bytes and RPG_BAT checksum passes. Paired RECT comma-expression stores, direct counters, existing implicit-int callee view, and marked eight-byte frame padding close the historical near miss. Independent review/integration is tracked in [[tickets/T-24013-complete-rpg-bat]]. BUNKAKEN half remains this ticket's open scope.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

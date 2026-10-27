@@ -3,6 +3,7 @@ config_version=5
 
 [application]
 config/name="Tokimeki Memorial Port Foundation"
+run/max_fps=60
 run/main_scene="res://shell.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 

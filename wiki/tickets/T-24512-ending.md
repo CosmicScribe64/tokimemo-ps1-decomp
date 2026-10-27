@@ -1,10 +1,10 @@
 ---
 id: T-24512
 title: Match remaining ENDING functions
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[families/ending-family-results]]"]
 ---
 
@@ -47,3 +47,5 @@ Spec: bounded function-by-function causal hypotheses, current typed draft contro
 - Archive follow-up self-review: generated34270 context.c merely copied the existing translation-unit siblings; none of the reproduction scripts reads it. Removed that unnecessary full context and empty declarations.h. Retained the compiling nonmatching body and score/provenance JSON only; no original ASM dump is present. Ticket stays In Review pending root acceptance.
 
 - Retained-body Docker compile review after context removal:330E4 candidate84;34270 retained body504. The redraft command's reported typed890 is its initial scorer result; the retained finish body is a different postprocessed candidate. Both compile, neither matches. Stale context_hash fields removed in result/catalog and replaced with exact baseline/source-path references.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -8,6 +8,7 @@ const State = preload("res://rules/school_day_state.gd")
 const Controller = preload("res://scenes/school_day_controller.gd")
 const HolidayController = preload("res://scenes/holiday_controller.gd")
 const HolidayRules = preload("res://rules/holiday.gd")
+const Calendar = preload("res://rules/calendar.gd")
 const InputFrame = preload("res://core/input_frame.gd")
 const Rng = preload("res://core/native_rng.gd")
 const Sequence = preload("res://presentation/native_sequence.gd")
@@ -155,32 +156,37 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 	var error: String = state.structural_error()
 	if not error.is_empty():
 		return _fail(error)
+	var calendar_identity: String = app.get("controller").month_start.identity()
+	var saved_calendar: Variant = state.rule_state["resources"].get(Controller.MonthStart.SOURCE_KEY)
+	if (not calendar_identity.is_empty() and saved_calendar != calendar_identity) or (calendar_identity.is_empty() and saved_calendar != null):
+		return _fail("saved calendar source identity differs from trusted live preflight")
 	error = _boundary_error(state, data["checkpoint_id"], media.get("holiday_enabled", false))
 	if not error.is_empty():
 		return _fail(error)
 	if media.get("holiday_enabled", false):
 		if state.rule_state.get("resources", {}).get("available_holiday_commands") != [0]:
 			return _fail("holiday command capabilities differ from validated media")
-		if state.game_mode == 0x46 or int(state.rule_state.get("day_event_index", 0)) >= 9:
+		if state.game_mode == 0x46 or _is_sunday_queue_position(state, int(state.rule_state.get("day_event_index", -1))):
 			error = HolidayRules.validate(state)
 			if not error.is_empty():
 				return _fail(error)
 		elif state.rule_state.get("holiday") != media["holiday_extension"]:
 			return _fail("holiday boundary extension differs from validated media")
 		if state.game_mode == 0x46:
-			if state.rule_state.get("background_show") != 1 or state.rule_state.get("background_cache", [0, 0]).slice(0, 2) != [16131, 16318] \
+			if not _matches_background_pair(state, 16131, 16318) \
 				or not state.rule_state.get("actor_state", {}).is_empty() \
 				or not _matches_background_draw(data["draw"], media["holiday_backgrounds"][16318]):
 				return _fail("holiday command boundary lacks validated room background draw")
-		elif state.game_mode == 0x34 and state.rule_state.get("day_event_index") == 10:
-			if state.rule_state.get("background_show") != 1 or state.rule_state.get("background_cache", [0, 0]).slice(0, 2) != [16379, 16361] \
+		elif state.game_mode == 0x34 and _sunday_command_index(state) >= 0 \
+			and state.rule_state.get("day_event_index") == _sunday_command_index(state) + 1:
+			if not _matches_background_pair(state, 16379, 16361) \
 				or not state.rule_state.get("actor_state", {}).is_empty() \
 				or not _matches_background_draw(data["draw"], media["holiday_backgrounds"][16361]):
 				return _fail("post-holiday command boundary lacks validated returned-room background draw")
 	else:
 		if state.game_mode == 0x46 or state.rule_state.has("holiday") \
 			or state.rule_state.get("resources", {}).has("available_holiday_commands") \
-			or int(state.rule_state.get("day_event_index", 0)) >= 9:
+			or _is_sunday_queue_position(state, int(state.rule_state.get("day_event_index", -1))):
 			return _fail("holiday state requires preflighted holiday controller")
 	var session: Session = Session.new()
 	var clocks: Variant = snapshot["native_clocks"]
@@ -232,6 +238,9 @@ func _prepare(app: Node, snapshot: Dictionary) -> Dictionary:
 		if not key is String or not pad["devices"][key] is int or pad["devices"][key] < 0 or pad["devices"][key] > 65535:
 			return _fail("device record differs")
 	var controller: Controller = Controller.new(app.get("controller").tables)
+	# State-free immutable source store is retained from the live preflight;
+	# resource metadata in a save cannot grant or reopen an original file.
+	controller.month_start = app.get("controller").month_start
 	# Launch capabilities come only from the live app's preflighted media maps.
 	# Saved rule resources and extra save fields cannot grant a new command.
 	if not controller.get("command_capabilities") is Array:
@@ -277,17 +286,18 @@ func _boundary_error(state: State, checkpoint_id: Variant, holiday_enabled: bool
 	if state.paused or state.restart_request:
 		return "paused/restart simulation is outside supported save boundaries"
 	var index: Variant = state.rule_state.get("day_event_index")
+	var sunday_index: int = _sunday_command_index(state)
 	if checkpoint_id == "command":
 		if [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0]:
-			if index == 0 or (holiday_enabled and index == 10):
+			if index == 0 or (holiday_enabled and sunday_index >= 0 and index == sunday_index + 1):
 				return ""
-		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and index == 9:
+		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and sunday_index >= 0 and index == sunday_index:
 			return ""
 	elif checkpoint_id == "holiday_command":
-		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and index == 9:
+		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and sunday_index >= 0 and index == sunday_index:
 			return ""
 	elif checkpoint_id == "next_command":
-		if holiday_enabled and [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0] and index == 10:
+		if holiday_enabled and sunday_index >= 0 and [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0] and index == sunday_index + 1:
 			return ""
 	elif checkpoint_id == "first_result":
 		if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and index == 1:
@@ -296,6 +306,39 @@ func _boundary_error(state: State, checkpoint_id: Variant, holiday_enabled: bool
 		if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and index in [2, 3, 4, 5, 6, 7, 8]:
 			return ""
 	return "checkpoint is outside the command/first-result save boundaries"
+
+## Queue length varies with native events. The supported Sunday menu boundary
+## is opcode 0x10; after returning, the boundary is its following 0xff record.
+func _sunday_command_index(state: State) -> int:
+	var data: Dictionary = state.rule_state
+	for key: String in ["year", "month", "day", "weekday", "day_event_index"]:
+		if not data.get(key) is int:
+			return -1
+	if data["weekday"] != 6 or data["year"] < 95 or data["year"] > 255 or data["month"] < 1 or data["month"] > 12 \
+		or data["day"] < 1 or data["day"] > Calendar.days_in_month(data["year"], data["month"]) \
+		or not data.get("day_events") is Array or data["day_events"].size() != 32:
+		return -1
+	if Calendar.weekday_for_date(data["year"], data["month"], data["day"]) != 6:
+		return -1
+	var index: int = data["day_event_index"]
+	if index < 1 or index >= data["day_events"].size():
+		return -1
+	for event: Variant in data["day_events"]:
+		if not event is Array or event.size() != 4:
+			return -1
+		for value: Variant in event:
+			if not value is int or value < 0 or value > 255:
+				return -1
+	for i: int in range(1, data["day_events"].size()):
+		if data["day_events"][i][0] == 0x10 and i == index:
+			return i
+		if data["day_events"][i - 1][0] == 0x10 and data["day_events"][i][0] == 0xff and i == index:
+			return i - 1
+	return -1
+
+func _is_sunday_queue_position(state: State, index: int) -> bool:
+	var sunday_index: int = _sunday_command_index(state)
+	return sunday_index >= 0 and (index == sunday_index or index == sunday_index + 1)
 
 func _rng_error(value: Variant) -> String:
 	if not value is Dictionary or not _keys(value, ["profile", "state", "draw_count", "trace", "error", "step_error"]):
@@ -373,6 +416,13 @@ func _draw_commands(media: Dictionary, descriptors: Variant) -> Dictionary:
 		commands.append({"id": entry["id"], "image": images[entry["id"]], "position": Vector2i(entry["x"], entry["y"])})
 	return {"error": "", "commands": commands}
 
+func _matches_background_pair(state: State, retained_lba: int, shown_lba: int) -> bool:
+	# Native dec_bg_cd_read/show_set accept either physical buffer. Preserve
+	# the bounded source pair and unique visible ownership, independent of parity.
+	var shown: int = state.rule_state["background_show"]
+	var cache: Array = state.rule_state["background_cache"]
+	return shown in [0, 1] and cache[shown] == shown_lba and cache[1 - shown] == retained_lba
+
 func _matches_background_draw(descriptors: Variant, expected: Array) -> bool:
 	if not descriptors is Array or descriptors.size() != expected.size():
 		return false
@@ -385,6 +435,11 @@ func _matches_background_draw(descriptors: Variant, expected: Array) -> bool:
 	return true
 
 func _identity(app: Node, media: Dictionary) -> String:
+	var base_identity: String = _base_identity(app, media)
+	var calendar_identity: String = app.get("controller").month_start.identity()
+	return base_identity if calendar_identity.is_empty() else JSON.stringify([base_identity, "native-calendar", calendar_identity]).sha256_text()
+
+func _base_identity(app: Node, media: Dictionary) -> String:
 	var assets: Array = []
 	var commands: Array = media["resources"].keys()
 	commands.sort()

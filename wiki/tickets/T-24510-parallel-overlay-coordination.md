@@ -1,10 +1,10 @@
 ---
 id: T-24510
 title: Coordinate isolated TEL ENDING ETC matching lanes
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-22
+updated: 2026-10-26
 links: ["[[status]]", "[[playbook]]"]
 ---
 
@@ -99,3 +99,5 @@ Coordinator final review: all scoped source/wiki evidence reviewed, exact base a
 Parent explicitly resumes work toward100%, requesting deeper original-flow reconstruction until a real match or concrete isolated backend blocker, not stopping after tiny causal sets. Two existing Sol6.1 medium workers restart in NEW isolated trees: MASTER363F4 T-24517 and ETC3FFAC T-24518. MASTER chosen for exact frame/first213instructions with real clone pointer-compare/lifetime mismatch; ETC chosen for corrected six-entry semantics but original retained-table-loop/unroll and buffer/lifetime differences. Each reconstructs original flow region-by-region, no grids or production compiler patches, no fallback coverage claims. Existing T-24047 read-only diagnostic tracer location supplied to ETC for a specific loop/type question; no instrumentation rebuild authorized.
 
 Consolidation now includes reviewed MASTERdfec4bf72/8b76c1b46, NAME_ENT00bfc328d/30b4f5716 and family1b212b6f7 via individual cherry-picks with original commit references. Kept exact worker log/matching-note append suffixes, regenerated combined catalogs, and retained existing coordinator history; no parent production ancestry imported. ROOT requested one pin for archive integration. Coordinator returns to In Progress for two deep workers; prior matching targets remain unresolved.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 
 import publish
+import admission
 
 WATCH_FOLDER_NAMES = ("port-smoke", "port-preview-output", "port-captures")
 MEDIA_SUFFIXES = {".png", ".mp4", ".webm"}
@@ -94,15 +95,25 @@ def copy_stable(source: Path, expected: tuple[int, int, int, int, int]) -> Path 
 
 class CaptureWatcher:
     """Publish new stable media while avoiding repeated hashes for unchanged files."""
-    def __init__(self, roots: list[Path], media_root: Path, stable_polls: int = 2):
+    def __init__(self, roots: list[Path], media_root: Path, stable_polls: int = 2,
+                 *, evidence_root: Path | None = None):
         self.roots = roots
         self.media_root = media_root
         self.stable_polls = stable_polls
+        self.evidence_root = evidence_root
+        self.registry_revision: str | None = None
         self.observed: dict[Path, tuple[tuple[int, int, int, int, int], int]] = {}
         self.published: dict[Path, tuple[int, int, int, int, int]] = {}
 
     def poll_once(self) -> int:
         """Process one observation pass; return newly-added content count."""
+        try:
+            revision = admission.registry_revision()
+        except (OSError, ValueError):
+            revision = None
+        if revision != self.registry_revision:
+            self.published.clear()
+            self.registry_revision = revision
         current: dict[Path, tuple[int, int, int, int, int]] = {}
         added = 0
         for root in self.roots:
@@ -138,7 +149,7 @@ class CaptureWatcher:
                     copied = copy_stable(source, signature)
                     if copied is None:
                         continue
-                    added += publish.publish([copied], self.media_root)
+                    added += publish.publish([copied], self.media_root, evidence_root=self.evidence_root)
                     self.published[source] = signature
                 except (OSError, ValueError):
                     # A stable malformed/incomplete output is retried only if its stat changes.
@@ -162,13 +173,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--capture-root", default="/watch")
     parser.add_argument("--media-root", default="/media")
+    parser.add_argument("--evidence-root", type=Path, default=Path(os.environ.get('PORT_PROGRESS_EVIDENCE_ROOT', '/evidence')))
     parser.add_argument("--interval", type=float, default=2.0)
     args = parser.parse_args()
     if args.interval < 0.5 or args.interval > 60:
         parser.error("poll interval must be from 0.5 to 60 seconds")
     capture_root = Path(args.capture_root)
     roots = [capture_root / name for name in WATCH_FOLDER_NAMES]
-    CaptureWatcher(roots, Path(args.media_root)).run(args.interval)
+    CaptureWatcher(roots, Path(args.media_root), evidence_root=args.evidence_root).run(args.interval)
 
 
 if __name__ == "__main__":

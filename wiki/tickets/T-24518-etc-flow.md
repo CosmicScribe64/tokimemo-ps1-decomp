@@ -1,10 +1,10 @@
 ---
 id: T-24518
 title: Reconstruct ETC initializer flow and live values
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-26
 links: ["[[tickets/T-24513-etc-matching]]", "[[playbook]]"]
 ---
 
@@ -48,3 +48,5 @@ Fresh worktree /private/tmp/tokimemo-t24518, branch codex/t24518-etc-flow, exact
 - New first-table reconstruction succeeds: both tables as natural shared-index loops let strength reduction create first addressV0/boundA0 independently of second indexA0. Exact resolved words162..171 (function+288..2AC) all identical, verified after FAKE scalar-home annotation. Candidate527/336,516 normalized positions. Current helper names from obin_renames restore actual prototypes; name repair alone is not the loop cause. Independent address scratch reused for shade/alpha still expands firstloop(537/398), rejected.
 - Second-table explicit peel from T22019 scene folds away target runtime induction(522/373); unsigned index changes original firstSLT toSLTU(527/400); unsigned second-stride expression is neutral336. No index-width grid follows. True remaining count gaps are case8ANDI and case13flag-load NOP/LUI; second table has scheduling/register differences, not missing opcodes.
 - Specific MASTER callee-view transfer: call-site cast emitsJALR, rejected. Direct s32func40AE4 view preserves its matched56words/0cost but not callerhoist (528/341, extra case8NOP). T24207 call-block boundary is neutral352. Global-alpha preincrement under own int/no-return trades duplicatedANDI for unwantedV0copy(529/392). No production prototype edit. Checkpoint standards/spec review confirms all views/home tricks marked and no match claim;48 replay sources remain exact and production src/include/tools/config unchanged.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

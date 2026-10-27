@@ -1,10 +1,10 @@
 ---
 id: T-0302
 title: Resolve mixed SDK vintages (libcd, libsnd, libpress newer than libgte/libc)
-status: Backlog
+status: Done
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-26
 links: ["[[psyq-sdk]]", "[[tickets/T-0010-sdk-lib-object-boundaries]]"]
 ---
 
@@ -22,3 +22,5 @@ links: ["[[psyq-sdk]]", "[[tickets/T-0010-sdk-lib-object-boundaries]]"]
 Only decided from `tools/psyq_sigmatch.py` output. Do not download SDK binaries into the repo.
 
 ## Comments
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

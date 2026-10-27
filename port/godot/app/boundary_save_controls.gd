@@ -10,12 +10,13 @@ const InputFrame = preload("res://core/input_frame.gd")
 const SOURCE_PROFILE: String = "687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3"
 const BEHAVIOR_PROFILE: String = "rest-week-7a7b095d-f5f9-v2"
 const SLOT: String = "quick"
-const HELP: String = "F5 Save | F9 Load | Command or first result only"
 enum Request { NONE, SAVE, LOAD }
 var pending: Request = Request.NONE
 var storage: SaveService
 var adapter: SaveAdapter
 var notice: Label
+var notice_timer: Timer
+var transient_notice: bool = false
 var last_error: String = ""
 var last_action: String = ""
 var last_checkpoint: String = ""
@@ -46,6 +47,12 @@ func configure(app: Node, user_root: String) -> String:
 	notice.text = ""
 	notice.hide()
 	app.add_child(notice)
+	notice_timer = Timer.new()
+	notice_timer.one_shot = true
+	notice_timer.wait_time = 1.8
+	notice_timer.process_mode = Node.PROCESS_MODE_ALWAYS
+	notice_timer.timeout.connect(_expire_notice)
+	app.add_child(notice_timer)
 	return ""
 
 func handle_input(app: Node, event: InputEvent) -> bool:
@@ -62,7 +69,7 @@ func handle_input(app: Node, event: InputEvent) -> bool:
 		return true
 	pending = Request.SAVE if event.physical_keycode == KEY_F5 else Request.LOAD
 	last_error = ""
-	_message("Save queued." if pending == Request.SAVE else "Load queued.")
+	_message("Save queued." if pending == Request.SAVE else "Load queued.", true)
 	return true
 
 ## Returns true when a queued user action consumes this host frame. Returning
@@ -96,7 +103,7 @@ func process_queued(app: Node) -> bool:
 			return true
 		completed_requests += 1
 		last_error = ""
-		_message("Saved command selection." if last_checkpoint in ["command", "holiday_command", "next_command"] else "Saved the first result.")
+		_message("Saved command selection." if last_checkpoint in ["command", "holiday_command", "next_command"] else "Saved the first result.", true)
 	else:
 		storage_calls += 1
 		var loaded: Dictionary = storage.load_slot(SLOT)
@@ -113,15 +120,16 @@ func process_queued(app: Node) -> bool:
 		last_checkpoint = loaded["snapshot"]["gameplay_state"]["checkpoint_id"]
 		completed_requests += 1
 		last_error = ""
-		_message("Loaded command selection." if last_checkpoint in ["command", "holiday_command", "next_command"] else "Loaded the first result.")
+		_message("Loaded command selection." if last_checkpoint in ["command", "holiday_command", "next_command"] else "Loaded the first result.", true)
 	return true
 
 func _checkpoint(app: Node) -> String:
 	var state: State = app.get("state")
+	var sunday_index: int = adapter._sunday_command_index(state) if adapter != null else -1
 	if [state.game_mode, state.mode_stage, state.mode_step] == [0x34, 1, 0]:
-		if state.rule_state.get("day_event_index") == 0 or (state.rule_state.get("day_event_index") == 10 and app.get("holiday_controller") != null):
+		if state.rule_state.get("day_event_index") == 0 or (sunday_index >= 0 and state.rule_state.get("day_event_index") == sunday_index + 1 and app.get("holiday_controller") != null):
 			return "command"
-	if [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and state.rule_state.get("day_event_index") == 9 and app.get("holiday_controller") != null:
+	if [state.game_mode, state.mode_stage, state.mode_step] == [0x46, 1, 0] and sunday_index >= 0 and state.rule_state.get("day_event_index") == sunday_index and app.get("holiday_controller") != null:
 		return "command"
 	if [state.game_mode, state.mode_stage, state.mode_step] == [0x31, 0, 0] and state.rule_state.get("day_event_index") == 1:
 		return "first_result"
@@ -154,14 +162,27 @@ func cancel_pending(reason: String) -> void:
 		pending = Request.NONE
 		_error(reason)
 
-func _message(text: String) -> void:
+func _message(text: String, transient: bool = false) -> void:
 	if is_instance_valid(notice):
+		transient_notice = transient
 		if text.is_empty():
 			notice.text = ""
 			notice.hide()
+			if is_instance_valid(notice_timer):
+				notice_timer.stop()
 		else:
-			notice.text = text + "\n" + HELP if text != HELP else HELP
+			notice.text = text
 			notice.show()
+			if is_instance_valid(notice_timer):
+				notice_timer.stop()
+				if transient and notice_timer.is_inside_tree():
+					notice_timer.start()
+
+func _expire_notice() -> void:
+	if transient_notice and is_instance_valid(notice):
+		transient_notice = false
+		notice.text = ""
+		notice.hide()
 
 func _error(text: String) -> void:
 	last_error = text

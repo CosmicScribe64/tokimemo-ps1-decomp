@@ -33,15 +33,16 @@ case "$MODE" in
       -v "$ROOT/.asset-cache/port-smoke:/watch/port-smoke:ro" \
       -v "$ROOT/.asset-cache/port-preview-output:/watch/port-preview-output:ro" \
       -v "$ROOT/.asset-cache/port-captures:/watch/port-captures:ro" \
+      -v "$ROOT/.claude/orchestrator/state:/evidence/.claude/orchestrator/state:ro" \
       -v "$MEDIA_DIR:/media" --entrypoint python3 "$IMAGE" \
-      /app/watcher.py --capture-root /watch --media-root /media --interval 2
+      /app/watcher.py --capture-root /watch --media-root /media --evidence-root /evidence --interval 2
     ;;
   check-root)
     "$TOOL_DIR/cache_root.sh" "$ROOT" >/dev/null
     ;;
   test)
     exec docker run --rm --network none --cpus=2 --entrypoint python3 \
-      -v "$TOOL_DIR:/app:ro" "$IMAGE" -m unittest discover -s /app/tests -v
+      -v "$TOOL_DIR:/app:ro" "$IMAGE" /app/tests/run_tests.py
     ;;
   *) echo "usage: $0 [serve|publish CAPTURE...|capture|watch|check-root|test]" >&2; exit 2 ;;
 esac

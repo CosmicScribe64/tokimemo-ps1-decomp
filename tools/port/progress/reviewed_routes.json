@@ -1,0 +1,362 @@
+{
+  "schema": "tokimemo.progress-admission.v1",
+  "purpose": "actual_gameplay_progress",
+  "authority": "Coordinator-reviewed tool configuration. Producer metadata, CLI labels and adjacent sidecars cannot add approval. Root must review registry changes.",
+  "routes": [
+    {
+      "id": "checkpoint-resume-v1b-may28",
+      "directory": ".claude/orchestrator/state/T-29023/runs/checkpoint-resume-v1b-may28",
+      "producer_sha256": "e36a21471b94d95f95c29c5ba18fa49f31457b15c0f9869a6a03b80aa662ac19",
+      "route_sha256": "61f6a5a3df9dbb494fa94e956ea326b171a41e5fd9a1779b2df386d8b432585b",
+      "artifacts_sha256": "1dda74329d0c9f198c14957a9c408f8be415fe839962a2861cf2358495b1d092",
+      "reviews": [
+        {
+          "path": ".claude/orchestrator/state/T-29023/checkpoint-resume-independent-review/report.md",
+          "sha256": "06205f4b7799168825b678977639dc625ccff7e91b5b4840b3658a9fcfdd33a8"
+        },
+        {
+          "path": ".claude/orchestrator/state/T-29023/checkpoint-resume-v1/handoff.json",
+          "sha256": "3637b883da86250c9f223c2217e2614269540b5ceba9571b3ba3edc11845ea3e"
+        }
+      ],
+      "scope": "Root-reviewed clean visible May28 Sunday menu from external F9 captured-save continuation on frozen runtime9afe1ec1e604f572d3f910365bf679971076c061dcca71e2e65a449021ab2e0e only. External F9 and overlap to May21 reviewed; May28 save/load, fresh New Game and newer e7 runtime remain unproved.",
+      "captures": [
+        {
+          "capture_id": "terminal-verified_captured_save_bounded_continuation",
+          "image": "images/04-terminal-verified_captured_save_bounded_continuation.png",
+          "sha256": "01bdee55931649e67a2cc457401d89e4a6243ec44d1a37ce5d741b52993ff62d",
+          "bytes": 62767,
+          "receipt_sha256": "04e940e2fd4c4696bb32f87882443d3c86b3377947ace6021528d9156f4f6a76"
+        }
+      ]
+    },
+    {
+      "id": "may-third-week-v20b",
+      "directory": ".claude/orchestrator/state/T-29023/runs/may-third-week-v20b",
+      "producer_sha256": "6fad9e7c50ba39e0ad6b36527e19efaa1cf60e6e1af51164cd4f6df783cdb1ee",
+      "route_sha256": "a003ae4c6dedc890b5238006a14b73e1f4a2f9d0de2e32e0d3028b53c8425b7e",
+      "artifacts_sha256": "3b61a3821c9d36135976f7bc4e1eb9eef74b0505d13e64d5865f67bb10676cbc",
+      "reviews": [
+        {
+          "path": ".claude/orchestrator/state/T-29023/month-v20b-independent-review/report.md",
+          "sha256": "acba6f1e454bce5dd23d535550d6be602548abb6de54ef9fa2b69874544c76b4"
+        },
+        {
+          "path": ".claude/orchestrator/state/T-29023/month-v20b/handoff.json",
+          "sha256": "882bd33e36b5397d68b1a4c5f2873a612daf3a3ed96ee4fc1edd57320ffa7a24"
+        }
+      ],
+      "scope": "Root-approved clean May21 captured-start actual-input screenshot on frozen runtime9afe1ec1e604f572d3f910365bf679971076c061dcca71e2e65a449021ab2e0e only. May14 F5/F9 reviewed; May21 save/load, fresh New Game and newer e7 runtime remain unproved.",
+      "captures": [
+        {
+          "capture_id": "may-day-21",
+          "image": "images/109-may-day-21.png",
+          "sha256": "94c6989fb732636193c8293b2f3a620cf58f411981c4cc42000f331b5147a2bb",
+          "bytes": 68953,
+          "receipt_sha256": "ea265b9a43727c8d49a8b27f8d99796bf346308779f35be4c360f3e14c2aedc6"
+        }
+      ]
+    },
+    {
+      "id": "may-second-week-v19",
+      "directory": ".claude/orchestrator/state/T-29023/runs/may-second-week-v19",
+      "producer_sha256": "8af473894d6a8c3869816a4c759233c6189c602cab9994150cfe90810835d839",
+      "route_sha256": "ab4419e3daed5c3eb43d5e6c63afd51eeea4e4ff7ee32bc8bee4b04d0088f523",
+      "artifacts_sha256": "3d7da26531520944be9ef58de71101fcf7ab3b8818ce2d67f4dea34baad87507",
+      "reviews": [
+        {
+          "path": ".claude/orchestrator/state/T-29023/month-v19-spec-review/report.md",
+          "sha256": "6ecfbb49686688824f267c637c5530c4a6a1fbe657186b3300ddf674dfca6560"
+        },
+        {
+          "path": ".claude/orchestrator/state/T-29023/month-v19/handoff.json",
+          "sha256": "2cb41f31ca7458b8e29a623c6c70638b9b5234cba2ba8da344f2d0f5d7fdce23"
+        }
+      ],
+      "scope": "Root-approved bounded captured-start actual-input evidence only; historical v5 admitted for its two preserved gallery captures, not a full-route acceptance transfer.",
+      "captures": [
+        {
+          "capture_id": "may14-sunday-menu",
+          "image": "images/84-may14-sunday-menu.png",
+          "sha256": "98f6d1015805ad13273d1b9e42736f1c9382d0e743510276233dece931e82fb1",
+          "bytes": 62745,
+          "receipt_sha256": "5ad8b2f54c5eea06a00b4a35278a090656e2007c510c0724c3f2417b8b1919c2"
+        }
+      ]
+    },
+    {
+      "id": "may-first-week-v18",
+      "directory": ".claude/orchestrator/state/T-29023/runs/may-first-week-v18",
+      "producer_sha256": "755ecf814b6600708595d26787631ae273b5fa691b7332e50d07f0a1407f0def",
+      "route_sha256": "cb46256a799c5fcfb5370e74b71a99753bb2623e6b49e949f00b7e3109cf8b33",
+      "artifacts_sha256": "a3e647ce457f796dc1f73244caff41cf882ed68f2a8dc7dbcba96e381d6ab878",
+      "reviews": [
+        {
+          "path": ".claude/orchestrator/state/T-29023/month-v18-spec-review/report.md",
+          "sha256": "c02fd1afa5bed49afeea0910bb9bf725b158f40d52b53e637fc207e6318018a7"
+        },
+        {
+          "path": ".claude/orchestrator/state/T-29023/month-v18/handoff.json",
+          "sha256": "ca9ad6c70cffab2486e746adcc9592b77433525e5b12c6327c6c16b17e79d866"
+        }
+      ],
+      "scope": "Root-approved bounded captured-start actual-input evidence only; historical v5 admitted for its two preserved gallery captures, not a full-route acceptance transfer.",
+      "captures": [
+        {
+          "capture_id": "may7-after-load",
+          "image": "images/58-may7-after-load.png",
+          "sha256": "2709a24c9ec8a9ef67950087ac71382fccc88ec143009ae61642ea474bb0439a",
+          "bytes": 71119,
+          "receipt_sha256": "87f45c1cd35dd50cfcbdaa16ce738515866ce500ea76ed0805e6727836c3a634"
+        },
+        {
+          "capture_id": "may7-sunday-menu",
+          "image": "images/57-may7-sunday-menu.png",
+          "sha256": "170d74e9949c36bb8495fde4643c8c71d38a69559481896175d07ea9f9183348",
+          "bytes": 62674,
+          "receipt_sha256": "0649e389335c0b4b0b4c1d1b8b3294003a5f56f4a37c656f1e8bc3d2849d01ad"
+        },
+        {
+          "capture_id": "may-day-05-actor-active",
+          "image": "images/50-may-day-05-actor-active.png",
+          "sha256": "83e3f9cafedf265f585c157f3a3402c66cd962fbc18e5e44901a3f121f4d02de",
+          "bytes": 61217,
+          "receipt_sha256": "50ceabf32b2d3b1d51acf459eecf799b2929f451550a5860b7bacba683f877b4"
+        },
+        {
+          "capture_id": "may1-queue-exit",
+          "image": "images/30-may1-queue-exit.png",
+          "sha256": "616b1a96f11831862c1dcaf1c714238cc561b171cfae2e3d133bbe30ab42153b",
+          "bytes": 61678,
+          "receipt_sha256": "5cd091590c81d023882fb851131aa92e277466cc85094e3aae1daeb017c6b15d"
+        },
+        {
+          "capture_id": "initial-command",
+          "image": "images/00-initial-command.png",
+          "sha256": "59f6abc6cdf74e6826a44b25aa833b0962ecc04eccd8aa4f8a7543809868de5e",
+          "bytes": 63087,
+          "receipt_sha256": "7dc9a685affd08a4bb5c2334cd61a3e1ce9768a9109b7d1341c0e6cccccc338f"
+        }
+      ]
+    },
+    {
+      "id": "applied-two-weeks-v5",
+      "directory": ".claude/orchestrator/state/T-29023/runs/applied-two-weeks-v5",
+      "producer_sha256": "1648b865a8cc3315a96e7a84c55a37b1806601e5caf2bd7442b612b42d93f5e2",
+      "route_sha256": "3a8b875d5873a9a431dbc492eb8eb0135c7b6c22a83547e4c6583b2d187f4044",
+      "artifacts_sha256": "d4fb043be8d64484a217a7996c43c305920100ef08eaf4a620c328fc273b9994",
+      "reviews": [
+        {
+          "path": ".claude/orchestrator/state/T-29023/gallery-provenance-v1/audit.json",
+          "sha256": "247ae91e8fd34379a928f7a08ea301878f8d7be5d637ee1a4d5e10ce9f2d6c5a"
+        },
+        {
+          "path": ".claude/orchestrator/state/T-29023/gallery-provenance-v1/handoff.json",
+          "sha256": "6d9b733bbc6a9323a47aa33d367fc8c6e2d00bc2b3be1a7cf35d37dfb9ed7f09"
+        }
+      ],
+      "scope": "Root-approved bounded captured-start actual-input evidence only; historical v5 admitted for its two preserved gallery captures, not a full-route acceptance transfer.",
+      "captures": [
+        {
+          "capture_id": "second-sunday-menu",
+          "image": "images/12-second-sunday-menu.png",
+          "sha256": "eda43d7b94f8bfa7e0eb21175523fea0abae934f827e04852260cb16bea57f59",
+          "bytes": 83007,
+          "receipt_sha256": "97631d465a4de6cceef59b91573e52056fbcded39a1c511745445ca8356da64b"
+        },
+        {
+          "capture_id": "friday-result1",
+          "image": "images/11-friday-result1.png",
+          "sha256": "4b512fb0cc520232a775db8fbfb4f4332b8e8b17e7b046b75abe4cbcc8b126cd",
+          "bytes": 88948,
+          "receipt_sha256": "946785b8e826e5513f33282e4b8ba7400eb2c1f0651b40f418fa53ee682a798f"
+        }
+      ]
+    }
+  ],
+  "denied": [
+    {
+      "sha256": "e7226e411af7ee5569801bf64b94a6aa47c1f9e2ad024e86d2e58aa45ecbcbd6",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "26624ff70bad5025acd1a1c918df3b5e4d3bf250cc473f058da3ee4a03ed049d",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "28d12699b674003c6eb5bd77d036c966030fd1237736f4d6001619b0b2827dbb",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "361c975f51d3eac7d7c5dd76adc130b0053a7d12dae1de3b315e8e0cdb782e72",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "80d4a3e5cc4ae4233495671cef38f7242dcf984b492552b46c92d361eab997d8",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "1357b554f051d04dda24832c7ddc470764ce40de981d4106efd5c1d75784a811",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "93893652ae5ff5ec2eb77144fdd4de190893a8fef0ebb35278513102aa48eb37",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "106de86cf0d4819e12402f91402f910d5412e88eaf10634b5974f9fd5095d22c",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "50e623e98d78dc2b17a2cd97e53bffa593677fcdbb01057f8d5003a80a39ca64",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "d1971f7866bea79a2ba5680e0ced15591299ac3b02fa35f1fe73baa44dc8415f",
+      "reason": "unresolved"
+    },
+    {
+      "sha256": "78c8353e9bdfde45680d5d9efa68e52907f91ec61287c398e8948c2607dd316c",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "cf05299412b71f9cd004ecc9ca55fee5ebf8c4084b626681520dd5eb6454bdd1",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "dcb7c9c08a61fa095a9074198ecb8d60a428509e71db23d469c23bae6066cdb5",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "93419c72c27d7f66d3cb9b27429465d89ae326e1a03f7be8743e627a3fdd5948",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "ce106f62fd774c208c42eebfd9170e46e6aa5e98d15a834bf72bfaa2f34172cb",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "62cf7a07284c05cbd96c62d571ac295e19487fce939b7d63205b15733c33ffb3",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "9731ba9dad039fd858a36dc43c49359ae28b23d836ef7df166dcfa881fe3d0ff",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "403c18d986e0fc1bdd9fbfa5c39e91c1a152cd3bd451029acf398073c248a478",
+      "reason": "unresolved"
+    },
+    {
+      "sha256": "4396304cbc56e0021acd69e091e42128006177a39f0bd54c7968e1cb3d2f9d39",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "9ab4133e269a02342bfdce1347ab2400af7a8188f8ffeace3a67df44eba9e64d",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "6946508a65b56423fd1a09d87ac34f8650e4711451628c8848efc41113536eb1",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "a95c457d4948b03d949e12ae3190603c5d744f4e0cd550698ac488bf57f9358b",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "6c4ac0d7e3b3048693c380534f4737150befe7ec50e7e14a05c649d97839c19b",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "9be1a47e8c2908293b0a9050b2ae89e2c2080d8a8ea2badab758c31779f13d3f",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "101e86f4e360b33c1ffb465dc014548b3a8b7f583f51f44c35ef710eca84bab0",
+      "reason": "unresolved"
+    },
+    {
+      "sha256": "ed49739e5d42ad0e60964c6655f93dc842baeeff75c516d1c4fe3b1f289f08fd",
+      "reason": "unresolved"
+    },
+    {
+      "sha256": "e3a3c13f38a830e883d0ed75ea3ef7d94bb78f33c4f4d38ee5e1f1af4f4a3da9",
+      "reason": "unresolved"
+    },
+    {
+      "sha256": "c964710112648fbbda269bda5c3c7fc93a177432b38972dd13c9dd1c3cdfb05d",
+      "reason": "unresolved"
+    },
+    {
+      "sha256": "6d45640cb420397797c9259fb08ddc0cfd1a8548089d6ee7767c21f26e440519",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "abb9f2aad9a1af63a620f1f96a4d3d03bb7c6589e06498346f0a1c7ae947d996",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "810a248cce7fabc50a99b4a1b6250707df14571f1d5e0898ae4cac03fe150e25",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "7225efa6cb40ee90b48806e62e0e95afffeebed76df3df113155aa09fce05e6b",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "83ef7bb56a41891ae309140db82e2e51ab3ab46f473775a9378aaa8ee04d33c0",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "3c4990ad8ac21197e3981ae3e783392bdd42c8cb47091ba00b513d7768ca14ff",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "fbd51fca45259d913a67c2a06aae7a4a5be3b9798dab1c7c06365d6d8d1cb740",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "056fb57300e64abf5ac8ff15bc245fe407ca5b0f1cc0b333b42a65bed97fcbe0",
+      "reason": "syntheticrendererfixture"
+    },
+    {
+      "sha256": "8e7b2ec7da20b5f80ed83e337b4e31a7ce65f1e43c46ab66092571b26e73b201",
+      "reason": "syntheticrendererfixture"
+    }
+  ],
+  "observer_captures": [
+    {
+      "id": "root-first-arrival-line0-gui-v1",
+      "type": "first_arrival_observer_v1",
+      "directory": ".claude/orchestrator/state/T-29025/root-bgm-integration",
+      "application_sha256": "3d9e63697f69d74f2356b6755aca4e1b7eaa54505dd0adc1997d48cadcdd80bc",
+      "producer_sha256": "9d912f5954a2fbfbf19b505e71b3e1d8aeeeb0a73b70f37d1843e1c8eaef58cd",
+      "packet_manifest_sha256": "71f8116dc2b4331db8dc9189f781151cc9e7e47a9ac2a8301260e5a9c36a5473",
+      "status_sha256": "4908298f8cc928b81c2767315de81c10b8c3a37ee9e9119386b380f7b4da384a",
+      "screenshot_sha256": "52ddbd8818295ef01a4b71c71a74a438cce741c4928b93de093581906d750aaf",
+      "audio_sha256": "edfb5b480bc4a731983b512cd8f21f6359098c1dcc525bb567a7c69924aed602",
+      "scope": "Root-produced actual desktop first-arrival observation through line zero. This does not certify a full route or game completion.",
+      "screenshot": {
+        "path": "gui-v1/first-scene.png",
+        "sha256": "52ddbd8818295ef01a4b71c71a74a438cce741c4928b93de093581906d750aaf",
+        "bytes": 99899,
+        "dimensions": [
+          1024,
+          768
+        ]
+      },
+      "audio": {
+        "path": "gui-v1/first-scene-mix.wav",
+        "sha256": "edfb5b480bc4a731983b512cd8f21f6359098c1dcc525bb567a7c69924aed602",
+        "bytes": 917548,
+        "format": "pcm_s16le",
+        "channels": 2,
+        "sample_rate": 44100,
+        "pcm_bytes": 917504,
+        "pcm_sha256": "d9ff0be15d43b7ebac382c7a056088c97a0652f49829754c3890c0da7c8a38cd",
+        "gallery_media": false
+      },
+      "captured_production_tree_sha256": "c5e0e476d4ceaa4ac3fbbf15bec004902ed8bb20059bc430e9d646398f2394fa"
+    }
+  ]
+}

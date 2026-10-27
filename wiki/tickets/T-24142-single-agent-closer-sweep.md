@@ -1,11 +1,11 @@
 ---
 id: T-24142
 title: Single-agent closer sweep (post-quota restart, consolidates T-24132 and T-24136..T-24141)
-status: Backlog
+status: Done
 priority: high
 type: code
 created: 2026-10-19
-updated: 2026-10-20
+updated: 2026-10-26
 depends_on:
   - T-24141
 ---
@@ -25,3 +25,5 @@ First promoted match: `OPTION:func_80139F8C` (132 B, `src/ovl/OPTION/801389A0.c`
 ## Comments
 
 - closing (2026-10-20): paused by the user on 2026-10-19 and not resumed. Left: the remaining wave-3 functions listed in the Summary (those still INCLUDE_ASM in src/); first promoted match OPTION func_80139F8C is on main. Backlog.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).

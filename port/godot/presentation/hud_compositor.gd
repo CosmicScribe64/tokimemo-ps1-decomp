@@ -36,7 +36,7 @@ func set_checker_uv(uv: Vector2i) -> void:
 
 func set_checker_season(season: int, fade: int = 255) -> void:
 	_checker_season = season & 3
-	_checker_fade = clampi(fade, 240, 255)
+	_checker_fade = clampi(fade, 239, 255)
 
 static func hud_season_index(month: int) -> int:
 	# Exact port of hud_season_index (src/main/hud_panels.c:1279-1299)
@@ -241,7 +241,7 @@ func _get_season_checker_tile(season: int = 0, fade: int = 255) -> Image:
 		if _checker_tile.load_png_from_buffer(Marshalls.base64_to_raw(CHECKER_TILE_B64)) != OK:
 			return null
 	var s := season & 3
-	var f := clampi(fade, 240, 255)
+	var f := clampi(fade, 239, 255)
 	if s == 0 and f == 255:
 		return _checker_tile
 	var cache_key := "%d:%d" % [s, f]

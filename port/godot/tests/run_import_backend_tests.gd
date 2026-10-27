@@ -12,7 +12,8 @@ const BootRouterScript = preload("res://app/boot_router.gd")
 const ContentStoreScript = preload("res://services/content_store.gd")
 const SetupScene = preload("res://app/first_launch_setup.tscn")
 
-const REQUIRED_CAP := "prologue.nbn_native_cells.static_preview"
+const REQUIRED_CAP := "new_game.entry"
+const LEGACY_CAP := "prologue.nbn_native_cells.static_preview"
 
 var checks := 0
 var failures: Array[String] = []
@@ -75,6 +76,7 @@ func _remove_tree(path: String) -> void:
 	if DirAccess.dir_exists_absolute(path):
 		var dir := DirAccess.open(path)
 		if dir != null:
+			dir.include_hidden = true
 			for f in dir.get_files():
 				DirAccess.remove_absolute(path.path_join(f))
 			for d in dir.get_directories():
@@ -205,15 +207,15 @@ func _test_boot_router_forced_setup_repair() -> void:
 	var mf := FileAccess.open(stage.path_join("manifest.json"), FileAccess.WRITE)
 	mf.store_string(JSON.stringify({"schema": "tokimemo.port-content.v1", "schema_version": 1,
 		"release_profile": "original-ja-ps-the-best", "synthetic_test_only": true,
-		"route_capabilities": {"available": [REQUIRED_CAP], "unavailable": []}}))
+		"route_capabilities": {"available": [LEGACY_CAP], "unavailable": []}}))
 	mf.close()
 	var sha := FileAccess.get_sha256(stage.path_join("manifest.json"))
-	store.publish_stage(stage, sha, "original-ja-ps-the-best", [REQUIRED_CAP])
+	store.publish_stage(stage, sha, "original-ja-ps-the-best", [LEGACY_CAP])
 	
 	# Normal preflight should pass
 	var router = BootRouterScript.new(store)
 	var normal_state: Dictionary = router.check_boot_state([REQUIRED_CAP])
-	_check(normal_state.get("action") == "playable", "normal preflight with installed pack reaches playable")
+	_check(normal_state.get("action") == "setup", "legacy preview cannot authorize interactive New Game")
 	
 	# Now set TOKIMEMO_FORCE_SETUP = "1"
 	OS.set_environment(BootRouterScript.ENV_FORCE_SETUP, "1")
@@ -306,16 +308,16 @@ func _test_actual_disc_files_import_and_restart_offline() -> void:
 	_check(receipt.get("release_profile") == "original-ja-ps-the-best", "receipt records release_profile original-ja-ps-the-best")
 	_check(str(receipt.get("pack_id", "")).begins_with("original-ja-ps-the-best-"), "receipt records versioned pack_id")
 	
-	# Validate published pack directly with production ContentStore
+	# Validate the native runtime pack with its production installed reader.
 	var pack_root: String = str(store.storage_root).path_join("packs").path_join(str(receipt.get("pack_id", "")))
 	_check(DirAccess.dir_exists_absolute(pack_root), "published pack directory exists")
 	_check(FileAccess.file_exists(pack_root.path_join("manifest.json")), "manifest.json exists in published pack")
 	_check(DirAccess.dir_exists_absolute(pack_root.path_join("payloads")), "payloads directory exists in published pack")
 	
-	var content_store = ContentStoreScript.new()
-	var store_valid := content_store.open_pack(pack_root)
-	_check(store_valid, "production ContentStore validates published pack: " + content_store.error_message())
-	_check(content_store.has_capability(REQUIRED_CAP), "published pack provides prologue.nbn_native_cells.static_preview")
+	var validated: Dictionary = store.validate_pack(pack_root, [REQUIRED_CAP])
+	_check(validated.get("valid", false), "production runtime reader validates published pack")
+	_check(validated.get("available_capabilities", []).has(REQUIRED_CAP), "published pack provides authenticated native entry")
+	_check(not validated.get("available_capabilities", []).has("new_game.gameplay"), "profile readiness does not claim playable opening")
 	
 	# Verify original source was NOT modified
 	var source_exe_hash_after := FileAccess.get_sha256(original_exe_path)
@@ -330,6 +332,7 @@ func _test_actual_disc_files_import_and_restart_offline() -> void:
 	var restart_decision := restart_router.check_boot_state()
 	
 	_check(restart_decision.get("action") == "playable", "restart preflight routes directly to playable without asking for disc")
+	_check(restart_decision.get("target") == "res://app/new_game_entry.tscn", "restart opens interactive entry")
 	_check(restart_decision.get("launch_ready") == true, "restart launch_ready is true")
 	_check(restart_decision.get("pack_root") == pack_root, "restart remembers persistent pack_root")
 	_check(restart_decision.get("manifest_sha256") == receipt.get("manifest_sha256"), "restart validates persistent manifest_sha256")

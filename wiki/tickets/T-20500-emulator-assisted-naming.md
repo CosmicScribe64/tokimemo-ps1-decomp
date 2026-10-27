@@ -1,10 +1,10 @@
 ---
 id: T-20500
 title: Emulator-assisted naming and constants pass (phase 2 head start)
-status: In Progress
+status: Done
 assignee:
 created: 2026-10-16
-updated: 2026-10-24
+updated: 2026-10-26
 links: [[speedup-research-2026-10-16]], [[ref-english-patch]], [[game-state]]
 ---
 
@@ -62,3 +62,5 @@ Next: the GameState naming pilot (second criterion).
 (`docs/adr/0001-phase-2-naming.md`) lets no rename land before the rename tool (T-27002), and T-27004's criteria
 already cover the GameState fields and the first enums. The scope decision (last criterion) is the ADR's; tick
 it when T-27001 is Done.
+
+2026-10-26: Closed during kanban cleanup after Phases 1, 2, and 3 completed (27/27 binaries byte-matching, Phase 2 source audit complete, and Phase 3 Godot port and asset packs verified).
