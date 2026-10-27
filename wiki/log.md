@@ -1578,3 +1578,11 @@ Final checkpoint validation:27/27 built binaries still match original SHA1 value
 ## [2026-10-26] lint | Additional paused storage cleanup
 
 At the user's follow-up request, removed the remaining unused Docker build cache; Docker reported5.661GB reclaimed and its physically allocated Docker.raw footprint fell from17GiB to14GiB. Its228GiB apparent file size is not physical usage. Removed six more expanded completed-Phase2 working copies (T27056 base/work and four T27074 copies;1,109,608,009 logical bytes), retaining patches/reports/final proofs and active port evidence. Inventory: T-29033/phase2-copy-removal.json. macOS free space now29GiB. Tagged current runtime images, originals, translations and both web services remain. Development and agents stay paused.
+
+## [2026-10-26] lint | Remaining old worktrees and matching temp cleanup
+
+Removed the remaining11 obsolete Codex/tmp worktrees; only main and the completed translation checkout remain registered. Branch tips remain reachable and both detached tips now have local archive refs. A backup-loop error skipped fresh preservation for this batch: the old external-research tree's three research files already survive in committed drafts, but its exact dirty wiki index/board/log changes were not captured and removed-file equality cannot be certified. Main, translation and current port work were untouched. See [[tickets/T-29033-reclaim-inactive-workspace-storage]] and its local incident note.
+
+Archived the old matching scratch directory and obsolete T245 temp checkouts, then compared184,789 files and12 links against originals (2,626,666,626 file bytes). Only after verification were those temp paths removed; the compressed recovery archive is approximately992MiB. Kept current port temp evidence, original assets, translations, image decisions and both local pages. Both pages returned HTTP200; all agents and automation remain paused. Earlier DBZLog2 image removal and Docker's official reclaim-space helper reduced physical Docker.raw use to about12GiB without resetting the VM.
+
+Final filesystem check reports37GiB available. Wiki lint and scoped Git publication complete the cleanup documentation checkpoint; T-29033 remains In Review with the preservation exception open, not Done.
