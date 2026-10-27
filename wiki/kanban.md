@@ -59,6 +59,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-31001-version-translated-artwork|T-31001 Version and publish translated artwork and review history]]
 - [ ] [[tickets/T-29034-plan-single-worker-port-completion|T-29034 Plan port completion with one implementer and one manager]]
 - [ ] [[tickets/T-29033-reclaim-inactive-workspace-storage|T-29033 Reclaim inactive workspace storage]]
 

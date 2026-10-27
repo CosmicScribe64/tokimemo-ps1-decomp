@@ -1594,3 +1594,9 @@ Reviewed current session/route/boot code, the independent readiness and architec
 Moved [[tickets/T-29034-plan-single-worker-port-completion]] from In Progress to In Review and synchronized the board. The incoming manager reviews the plan independently; no agents, automation, gameplay tests or implementation resumed. The one-worker sequence replaces old parallel orchestration. Preserve the existing mandatory coverage rather than reducing it for speed; reuse actual earned saves and unchanged component evidence to avoid redundant work.
 
 Planning validation: Docker wiki lint reports0 broken links and0 status mismatches (two existing large-page notices); Git whitespace checks pass. Checked referenced current candidate/checkpoint and server-tool paths. No gameplay readiness claim is added; the incoming manager's independent review remains outstanding.
+
+## [2026-10-27] ingest | Publish translated artwork and review history
+
+The user explicitly requested publication of translated artwork, superseding its former local-only treatment. Saved59 current assets and97 PNGs including prior published revisions, with71 unchanged user review events, under translations/en/graphics/artwork/. Verified output/source hashes, native dimensions, copied bytes and coverage of all review output identities. Original Japanese extracts, comparisons and raw source palette/table payloads remain ignored. Live gallery paths and decisions are unchanged. This backup does not approve pending drafts or integrate art into the runtime.
+
+Created [[tickets/T-31001-version-translated-artwork]] and moved it to In Review; independent acceptance remains open. Scoped publication excludes the other agent's ongoing port changes. The previously local finish-plan commit is also on the publication branch.

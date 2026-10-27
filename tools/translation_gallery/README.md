@@ -53,3 +53,7 @@ docker run --rm --network none --cpus=2 \
 ```
 
 Synthetic tiny PNGs only; tests never record real user decisions or modify actual art. Browser checking remains separate from this backend suite.
+
+## Versioned translated-art backup
+
+At the user's request, `translations/en/graphics/artwork/` now preserves published translated PNG revisions, curated source/layout metadata and a snapshot of review decisions. Original extracts and side-by-side previews stay ignored. The live gallery continues using the local cache; subsequent decisions need a new explicit snapshot. See that directory's README for recovery limits.
