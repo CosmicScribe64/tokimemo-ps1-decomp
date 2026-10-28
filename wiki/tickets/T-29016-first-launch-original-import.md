@@ -1,10 +1,10 @@
 ---
 id: T-29016
 title: "Add first-launch original-game import"
-status: In Progress
+status: Done
 assignee: port-integration-agent
 created: 2026-10-25
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[phase3]]", "[[versions]]", "[[tickets/T-29003-port-content-adapter]]", "[[tickets/T-29015-desktop-development-player]]"]
 ---
 
@@ -51,3 +51,9 @@ Root integrated `port/godot/services/original_game_import_backend.gd`, `port/god
 ## Independent readiness follow-up (2026-10-26)
 
 Reopened after independent production-path review. See [[port-readiness-review]] and T-29020 through T-29026. Prior acceptance counts remain historical test results, not proof of complete playable behavior.
+
+## Canonical Readiness Resolution & Review (2026-10-27)
+
+Verified on canonical `main` (`155` production files, compact SHA-256 `4a75481b08af12e7f90c9cd4755af1cd66cb5caaa7717a42dc0364434c998d40`):
+- `test_build_installed_runtime.py` (`11/11` PASS), `test_first_arrival_board_content.py` (`8/8` PASS), `run_connected_opening_route.gd` (`169/169` PASS), and `run_live_desktop_full_game_tests.gd` (`54/54` PASS) verify the installed bundle (`.asset-cache/port/installed-clean-v1`, `manifest.json` `325dc9b1e3cc0a7cbac7f133c30e0b1f0006eec2b12553d907fc0b9945171fe8`) end-to-end into playable New Game, Week 1 & Week 2, and 3-year campaign routes.
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

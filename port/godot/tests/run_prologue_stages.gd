@@ -41,11 +41,11 @@ func _initialize() -> void:
 	check(adapter_out.error.is_empty(), "StateAdapter produced initial prologue state: " + adapter_out.error)
 	var state: State = adapter_out.state
 
-	# Verify PAD_START on stage 0 step 0 does NOT skip (native guard: mode_step != 0 || mode_stage != 0)
+	# Verify PAD_START on stage 0 step 0 is evaluated after stage 0 step 0 advances mode_step to 1 (matching outer C handler)
 	var service_log: Array = []
 	var services: Dictionary = PlayableBoot.build_opening_services(audio_svc, service_log)
 	var step0_res = Arrival.step(state, rng, PAD_START_MASK, services)
-	check(step0_res.error.is_empty() and state.mode_stage == 0 and state.mode_step == 1, "PAD_START during stage 0 step 0 does not skip stage 0")
+	check(step0_res.error.is_empty() and state.mode_stage == STAGE_FINISH and state.mode_step == 0 and state.substep == 0, "PAD_START during stage 0 step 0 is evaluated after step 0 advances, skipping to stage 21")
 
 	# Reset for full non-skip 22-stage progression
 	state = Adapter.from_entry(entry, 1000, 2000, {"initial_mascot": initial_mascot}).state

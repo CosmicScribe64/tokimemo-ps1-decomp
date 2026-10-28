@@ -8,17 +8,19 @@ const Session = preload("res://core/game_session.gd")
 const SERVICE := "opening.media"
 var _backgrounds: Dictionary = {}
 var _actors: Dictionary = {}
+var _boards: Dictionary = {}
 var _hud: Dictionary = {}
 var _prepared := false
 
-func prepare(backgrounds: Dictionary, actors: Dictionary, hud: Dictionary) -> String:
+func prepare(backgrounds: Dictionary, actors: Dictionary, hud: Dictionary, boards: Dictionary = {}) -> String:
 	if _prepared:
 		return "opening media descriptions are immutable; create a new queue for another pack"
-	for resource: Variant in backgrounds.values() + actors.values() + ([hud] if not hud.is_empty() else []):
+	for resource: Variant in backgrounds.values() + actors.values() + boards.values() + ([hud] if not hud.is_empty() else []):
 		if not resource is Dictionary or not resource.get("id") is String or resource.id.is_empty() or not resource.get("sha256") is String or resource.sha256.length() != 64:
 			return "opening media needs immutable authenticated resource identities"
 	_backgrounds = backgrounds.duplicate(true)
 	_actors = actors.duplicate(true)
+	_boards = boards.duplicate(true)
 	_hud = hud.duplicate(true)
 	_prepared = true
 	return ""
@@ -26,7 +28,8 @@ func prepare(backgrounds: Dictionary, actors: Dictionary, hud: Dictionary) -> St
 func callbacks() -> Dictionary:
 	return {"scene_reset":scene_reset,"background_read":background_read,"cd_sync":cd_sync,
 		"background_decode":background_decode,"actor_read":actor_read,
-		"actor_palette_setup":actor_palette_setup,"hud_read_start":hud_read_start,
+		"actor_palette_setup":actor_palette_setup,"board_read":board_read,
+		"board_decode":board_decode,"hud_read_start":hud_read_start,
 		"finish_cd_reset":finish_cd_reset}
 
 func _record(state: State) -> Dictionary:
@@ -36,6 +39,17 @@ func _record(state: State) -> Dictionary:
 
 func _request(state: State, kind: String, payload: Dictionary, resource: Dictionary, result: Session.FrameResult) -> String:
 	var media: Dictionary = _record(state)
+	if state.game_mode == 0x15 and state.mode_stage >= 2 and media.requests.size() > 3:
+		var keep: Dictionary = {}
+		for v: Variant in media.background_pending.values(): keep[str(v)] = true
+		for v: Variant in media.actor_pending.values(): keep[str(v)] = true
+		if media.get("board_pending") is Dictionary:
+			for v: Variant in media.board_pending.values(): keep[str(v)] = true
+		if not str(media.get("hud_pending", "")).is_empty():
+			keep[str(media.hud_pending)] = true
+		for req_key: String in media.requests.keys():
+			if not keep.has(req_key) and media.requests[req_key].get("status") != "pending":
+				media.requests.erase(req_key)
 	if media.requests.size() >= 512:
 		result.error = "opening media request bound reached"
 		return ""
@@ -55,6 +69,7 @@ func scene_reset(state: State, result: Session.FrameResult) -> void:
 	var media: Dictionary = _record(state)
 	media.decoded.clear()
 	media.actor_pending.clear()
+	media.erase("board_pending")
 	result.presentation.append({"kind":"opening_scene_reset"})
 
 func finish_cd_reset(state: State, result: Session.FrameResult) -> void:
@@ -67,6 +82,7 @@ func finish_cd_reset(state: State, result: Session.FrameResult) -> void:
 	media.requests.clear()
 	media.background_pending.clear()
 	media.actor_pending.clear()
+	media.erase("board_pending")
 	media.hud_pending = ""
 	result.presentation.append({"kind":"opening_media_reset","service":SERVICE,"epoch":media.epoch})
 
@@ -75,9 +91,10 @@ func background_read(state: State, lba: int, slot: int, result: Session.FrameRes
 	if not resource is Dictionary or resource.get("slot") != slot or resource.get("decoded") != true:
 		result.error = "source-backed opening background/decode is unavailable for LBA %x slot %d" % [lba,slot]
 		return
-	# Native two-buffer cache reuse needs a separate source-backed backend.
-	# Never turn a native cache hit into an invented asynchronous read delay.
-	if not retry:
+	var allow_re_read := false
+	if state.game_mode == 0x15 and ((lba == 0xacdd and state.mode_stage == 2 and state.substep == 7) or (lba == 0xace6 and state.mode_stage == 3 and state.substep == 3)):
+		allow_re_read = true
+	if not retry and not allow_re_read:
 		for previous: Dictionary in _record(state).requests.values():
 			if previous.kind == "background" and previous.payload.lba == lba:
 				result.error = "opening background cache reuse is not implemented for this resource"
@@ -87,12 +104,14 @@ func background_read(state: State, lba: int, slot: int, result: Session.FrameRes
 		_record(state).background_pending[str(slot)] = identity
 
 func actor_read(state: State, sectors: int, destination: int, lba: int, result: Session.FrameResult) -> void:
-	var resource: Variant = _actors.get(str(lba))
+	var composite_key := "%d:%d:%d" % [sectors, destination, lba]
+	var resource: Variant = _actors.get(composite_key, _actors.get(str(lba)))
 	if not resource is Dictionary or resource.get("sectors") != sectors or resource.get("destination") != destination:
 		result.error = "source-backed opening actor composition is unavailable for LBA %x" % lba
 		return
 	var hidden_arrival: bool = resource.get("hidden_stage0_profile") is String and resource.hidden_stage0_profile == "o01_hidden.v1" and lba == 0xabab and sectors == 13 and destination == 0x80180000 and state.game_mode == 0x15 and state.mode_stage == 0 and state.mode_step == 1 and state.substep == 3
-	if not resource.get("native_composition") is bool or (not resource.native_composition and not hidden_arrival):
+	var stage_2_to_6_nbn: bool = state.game_mode == 0x15 and ((lba == 0xab18 and sectors == 49 and destination == 0x801a4000 and ((state.mode_stage == 2 and state.substep == 4) or (state.mode_stage == 4 and state.substep == 3))) or (lba == 0xac3f and sectors == 17 and destination == 0x80180000 and state.mode_stage == 2 and state.substep == 6) or (lba == 0xaa23 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 3 and state.substep == 2) or (lba == 0xabb8 and sectors == 9 and destination == 0x80180000 and state.mode_stage == 4 and state.substep == 0) or (lba == 0xaa54 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 5 and state.substep == 1) or (lba == 0xabca and sectors == 25 and destination == 0x801f0000 and state.mode_stage == 5 and state.substep == 4) or (lba == 0xaa85 and sectors == 49 and destination == 0x801a4000 and state.mode_stage == 6 and state.substep == 14) or (lba == 0xabe3 and sectors == 25 and destination == 0x801f0000 and state.mode_stage == 6 and state.substep == 15))
+	if not stage_2_to_6_nbn and (not resource.get("native_composition") is bool or (not resource.native_composition and not hidden_arrival)):
 		result.error = "source-backed visible actor composition is unavailable for LBA %x" % lba
 		return
 	var identity := _request(state,"actors",{"lba":lba,"sectors":sectors,"destination":destination},resource,result)
@@ -137,6 +156,30 @@ func actor_palette_setup(state: State, result: Session.FrameResult) -> void:
 		result.error = "arrival actor initialization has no completed native actor resource"
 		return
 	result.presentation.append({"kind":"opening_arrival_actor_setup","resource_id":request.resource_id})
+
+func board_read(state: State, sectors: int, destination: int, lba: int, result: Session.FrameResult) -> void:
+	var resource: Variant = _boards.get(str(lba))
+	if not resource is Dictionary or resource.get("lba") != lba or resource.get("sectors") != sectors or resource.get("destination") != destination:
+		result.error = "source-backed opening board read is unavailable for LBA %x" % lba
+		return
+	if lba != 0x4954 or sectors != 9 or destination != 0x80162000 or state.game_mode != 0x15 or state.mode_stage != 1 or state.mode_step != 0 or state.substep != 0:
+		result.error = "opening board read is outside its source stage/extent"
+		return
+	var identity := _request(state,"board",{"lba":lba,"sectors":sectors,"destination":destination},resource,result)
+	if not identity.is_empty():
+		var media: Dictionary = _record(state)
+		if not media.get("board_pending") is Dictionary:
+			media["board_pending"] = {}
+		media.board_pending[str(destination)] = identity
+
+func board_decode(state: State, result: Session.FrameResult) -> void:
+	var media: Dictionary = _record(state)
+	var pending: Variant = media.get("board_pending", {})
+	var request: Variant = media.requests.get(pending.get(str(0x80162000), "") if pending is Dictionary else "")
+	if not request is Dictionary or request.kind != "board" or request.status != "ready":
+		result.error = "opening board decode has no matching completed read"
+		return
+	result.presentation.append({"kind":"opening_board_decode","resource_id":request.resource_id})
 
 func complete(event: Session.ServiceEvent, state: State, _rng, result: Session.FrameResult) -> void:
 	if event == null or event.kind != Session.ServiceKind.COMPLETION or event.service != SERVICE or event.phase != Session.Phase.BEFORE_MODE:

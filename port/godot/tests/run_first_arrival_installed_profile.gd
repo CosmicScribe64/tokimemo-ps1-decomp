@@ -15,7 +15,7 @@ func _initialize() -> void:
 	var root := OS.get_environment("FIRST_ARRIVAL_PROFILE_ROOT")
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(root.path_join("manifest.json")))
 	var profile := Profile.read_pack(root,manifest)
-	check(profile.get("valid",false) and profile.available_capabilities.has(Profile.OPENING_RESOURCES_CAP),"actual304-file original pack validates inventoried opening roles")
+	check(profile.get("valid",false) and profile.available_capabilities.has(Profile.OPENING_RESOURCES_CAP),"actual350-file original pack validates inventoried opening roles")
 	if failures != 0:
 		quit(1)
 		return

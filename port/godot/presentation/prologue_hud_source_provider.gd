@@ -45,6 +45,9 @@ var _checker_palettes := PackedByteArray()
 var _snapshot_building := false
 var _snapshot_enabled := false
 var _asset_snapshot: Dictionary = {}
+var _gradient_cache: Dictionary = {}
+var _checker_tile_cache: Dictionary = {}
+var _snapshot_frame_cache: Dictionary = {}
 
 func snapshot_runtime_assets() -> String:
 	if not _open or _snapshot_enabled: return "HUD snapshot requires a freshly opened original profile"
@@ -265,14 +268,85 @@ func scene_reset(state: Dictionary, result: Dictionary) -> String:
 		"brightness_owner":"opening.screen_brightness", "brightness_mutated":false}
 	return ""
 
-func advance_outer(state: Dictionary, rng: Object, result: Dictionary) -> String:
+static func source_frame_argument(state: Dictionary) -> int:
+	if typeof(state.get("game_mode")) != TYPE_INT or state.game_mode != 21 or typeof(state.get("mode_stage")) != TYPE_INT: return -1
+	if state.mode_stage == 0: return 0
+	if state.mode_stage not in [1, 2, 3, 4, 5, 6, 7] or typeof(state.get("mode_step")) != TYPE_INT or typeof(state.get("substep")) != TYPE_INT: return -1
+	var opening: Variant = state.get("opening")
+	if not opening is Dictionary or typeof(opening.get("actor96_draw_flags")) != TYPE_INT or typeof(opening.get("prologue_line")) != TYPE_INT or opening.prologue_line not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]: return -1
+	var media: Variant = opening.get("arrival_media")
+	var work: Variant = opening.get("prologue_text_work")
+	if not media is Dictionary or not media.get("actor_initialized") is bool or not media.actor_initialized or not media.get("upload_batch_key") is String or media.upload_batch_key.is_empty(): return -1
+	if not work is Dictionary or typeof(work.get("line_id")) != TYPE_INT or work.line_id != opening.prologue_line or typeof(work.get("pos")) != TYPE_INT or typeof(work.get("total")) != TYPE_INT or work.total < 1 or work.pos < 0 or work.pos > work.total: return -1
+	if opening.prologue_line == 0 and work.pos != work.total: return -1
+	if state.mode_stage == 1 and state.mode_step == 0 and state.substep == 0:
+		return 2 if opening.prologue_line == 0 and opening.actor96_draw_flags == 0xa4 else -1
+	var live: Variant = opening.get("prologue_hud_live")
+	var board_media: Variant = opening.get("board_media")
+	if typeof(opening.get("D_800B3DB0")) != TYPE_INT or opening.D_800B3DB0 != 1 or not live is Dictionary or not board_media is Dictionary or board_media.get("read_requested") != true:
+		return -1
+	if state.mode_stage == 1:
+		if state.mode_step == 0 and state.substep == 1:
+			return 2 if opening.prologue_line == 0 and opening.actor96_draw_flags == 0xa4 and live.get("date_visible") == true and board_media.get("decoded") == false else -1
+		if state.mode_step == 1 and state.substep == 0:
+			return 2 if opening.prologue_line == 0 and opening.actor96_draw_flags == 0 and not opening.has("actor96") and live.get("date_visible") == false and typeof(opening.get("prologue_scene_counter")) == TYPE_INT and opening.prologue_scene_counter == 0 and opening.get("prologue_petals") is Array and opening.prologue_petals.size() == 8 and board_media.get("decoded") == true and board_media.get("upload_batch_key") is String and not board_media.upload_batch_key.is_empty() else -1
+		if state.mode_step == 1 and state.substep in [1, 2, 3, 4, 5]:
+			var counter: Variant = opening.get("prologue_scene_counter")
+			var scroll_valid: bool = typeof(counter) == TYPE_INT and counter >= 0 and counter <= 320 and (state.substep not in [3, 4, 5] or counter == 320) and (state.substep == 1 or work.pos == work.total)
+			return 2 if opening.prologue_line == 1 and scroll_valid and opening.actor96_draw_flags == 0 and not opening.has("actor96") and live.get("date_visible") == false and opening.get("prologue_petals") is Array and opening.prologue_petals.size() == 8 and board_media.get("decoded") == true and board_media.get("upload_batch_key") is String and not board_media.upload_batch_key.is_empty() and board_media.get("scroll_x") == counter else -1
+		return -1
+	if state.mode_stage == 2:
+		if state.mode_step == 0 and state.substep in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+			var names_media: Variant = opening.get("names_media")
+			var common_ok: bool = opening.actor96_draw_flags == 0 and not opening.has("actor96") and live.get("date_visible") == false and opening.get("prologue_petals") is Array and opening.prologue_petals.size() == 8 and board_media.get("decoded") == true and board_media.get("upload_batch_key") is String and not board_media.upload_batch_key.is_empty() and names_media is Dictionary and names_media.get("bg_show_1") in [0, 1] and names_media.get("buffer_0") is Dictionary
+			if not common_ok: return -1
+			if state.substep == 0 and names_media.get("active_draw") == "board_scroll_transition":
+				return 2 if opening.prologue_line == 1 and work.pos == work.total and opening.get("prologue_scene_counter") == 320 and board_media.get("scroll_x") == 320 and names_media.get("bg_show_1") == 0 else -1
+			var c2: Variant = opening.get("prologue_scene_counter")
+			var names_valid: bool = opening.prologue_line == 2 and typeof(c2) == TYPE_INT and c2 >= 0 and c2 <= 130 and (state.substep not in [4, 5, 6, 7, 8] or work.pos == work.total) and names_media.get("active_draw") in ["dec_bg_draw", "bg_crossfade_draw"]
+			return 2 if names_valid else -1
+		return -1
+	if state.mode_step != 0: return -1
+	var nm35: Variant = opening.get("names_media")
+	if not nm35 is Dictionary or nm35.get("bg_show_1") not in [0, 1] or nm35.get("active_draw") != "dec_bg_draw" or live.get("date_visible") != false:
+		return -1
+	if state.mode_stage == 3 and state.substep == 0 and not opening.has("bg_layer_0"):
+		return 2 if opening.prologue_line == 2 and work.pos == work.total and opening.actor96_draw_flags == 0 and opening.get("prologue_petals") is Array else -1
+	var layer0: Variant = opening.get("bg_layer_0")
+	if not layer0 is Dictionary or layer0.get("enabled") != 1 or opening.has("prologue_petals"):
+		return -1
+	if state.mode_stage == 3:
+		return 2 if state.substep in [0, 1, 2, 3, 4] and opening.prologue_line == 3 and opening.actor96_draw_flags == 0xa4 and (state.substep not in [2, 3, 4] or work.pos == work.total) else -1
+	if state.mode_stage == 4:
+		if state.substep == 0 and opening.prologue_line == 3:
+			return 2 if work.pos == work.total and opening.actor96_draw_flags in [0, 0xa4] else -1
+		if state.substep in [0, 1] and not opening.has("actor96"):
+			return 2 if opening.prologue_line in [3, 4] and opening.actor96_draw_flags == 0 else -1
+		return 2 if state.substep in [1, 2, 3, 4] and opening.prologue_line == 4 and opening.actor96_draw_flags == 0xa4 and (state.substep not in [3, 4] or work.pos == work.total) else -1
+	if state.mode_stage == 5:
+		return 2 if state.substep in [0, 1, 2, 3, 4, 5] and opening.prologue_line == 4 and work.pos == work.total and opening.actor96_draw_flags == 0xa4 and opening.get("actor97_draw_flags") == 0xa4 and opening.get("prologue_text_cleared") == true and live.get("message_visible") == true else -1
+	if state.mode_stage == 6:
+		if state.substep == 0:
+			return 2 if opening.prologue_line == 4 and work.pos == work.total and opening.actor96_draw_flags == 0xa4 and opening.get("actor99_draw_flags") == 0xa4 and not opening.has("actor97") and opening.get("prologue_text_cleared") == true and live.get("message_visible") == true else -1
+		if state.substep in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]:
+			return 2 if opening.prologue_line in [5, 6, 7, 8, 9, 10] and opening.actor96_draw_flags == 0xa4 and opening.get("actor99_draw_flags") == 0xa4 and (state.substep not in [13, 14, 15, 16] or (opening.prologue_line == 10 and work.pos == work.total)) and live.get("message_visible") == true else -1
+		return -1
+	if state.mode_stage == 7:
+		if state.substep == 0:
+			return 2 if opening.prologue_line == 10 and work.pos == work.total and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and live.get("message_visible") == true else -1
+		if state.substep in [1, 2, 3]:
+			return 2 if opening.prologue_line == 11 and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and (state.substep != 3 or work.pos == work.total) and live.get("message_visible") == true else -1
+		return -1
+	return -1
+
+func advance_outer(state: Dictionary, rng: Object, result: Dictionary, screen_frame_argument: int = 0) -> String:
 	if not _open:
 		return "provider is not open"
 	var live := _live_hud(state)
 	if live.is_empty():
 		return "transaction lacks initialized prologue HUD state"
-	if not _int_field(state, "game_mode", 21) or not _int_field(state, "mode_stage", 0):
-		return "outer HUD update is limited to prologue mode stage 0"
+	if source_frame_argument(state) != screen_frame_argument or screen_frame_argument not in [0,2]:
+		return "outer HUD argument differs from its supported actual source stage"
 	if typeof(state.get("frame_count")) != TYPE_INT or _brightness(state) < 0:
 		return "outer HUD update requires live frame and Arrival brightness owner"
 	if state.has("pad_held_triangle") and typeof(state["pad_held_triangle"]) != TYPE_BOOL:
@@ -320,6 +394,7 @@ func advance_outer(state: Dictionary, rng: Object, result: Dictionary) -> String
 	next["checker_scroll_u"] = u
 	next["checker_scroll_v"] = v
 	next["checker_scroll_phase"] = "after_hud_screen_frame_draw_scroll_update"
+	next["screen_frame_argument"] = screen_frame_argument
 	var brightness: int = _brightness(state)
 	next["screen_brightness"] = brightness
 	var title: Dictionary = Presenter.compute_title_badge_state(int(next.get("title_timer", -64)),
@@ -340,7 +415,7 @@ func advance_outer(state: Dictionary, rng: Object, result: Dictionary) -> String
 	next["checker_season"] = season
 	state["opening"]["prologue_hud_live"] = next
 	result["prologue_hud"] = {"callback": "advance_outer", "frame_count": frame,
-		"mode": int(flags[1]) & 15, "rng_draws": draws,
+		"mode": int(flags[1]) & 15, "rng_draws": draws, "screen_frame_argument":screen_frame_argument,
 		"scroll": [u, v], "screen_brightness": brightness, "title_timer": next["title_timer"],
 		"checker_season": season, "checker_fade": fade}
 	return ""
@@ -352,6 +427,13 @@ func draw_checker(target: Image, state: Dictionary) -> String:
 	var live := _live_hud(state)
 	if live.is_empty() or live.get("checker_scroll_phase") != "after_hud_screen_frame_draw_scroll_update":
 		return "checker draw requires committed post-update HUD state"
+	var raw_argument: Variant = live.get("screen_frame_argument",0)
+	if typeof(raw_argument) != TYPE_INT or raw_argument not in [0,2]: return "checker draw has no supported source frame argument"
+	var argument: int = raw_argument
+	if state.has("game_mode") or state.has("mode_stage"):
+		if source_frame_argument(state) != argument: return "checker draw lost its actual source frame argument"
+	elif argument != 0:
+		return "argument2 checker draw requires the actual source stage"
 	var season: int = _season_for_month(live["month"])
 	var brightness: int = _brightness(state)
 	if season < 0 or brightness < 0:
@@ -363,30 +445,37 @@ func draw_checker(target: Image, state: Dictionary) -> String:
 		return "checker CLUT fade outside source transition"
 	var u: int = live["checker_scroll_u"] & 31
 	var v: int = live["checker_scroll_v"] & 31
-	var tile := Image.create(32,32,false,Image.FORMAT_RGBA8)
-	tile.fill(Color.TRANSPARENT)
-	for y in range(32):
-		for x in range(32):
-			# Each SPRT restarts at UV(128+scroll,128+scroll). Do not wrap
-			# the source pixel at 32; its uploaded indexed region is 128x128.
-			var index: int = _checker_indices[((y & 31) + v) * 128 + (x & 31) + u]
-			var word: int = _checker_palettes.decode_u16(season * 32 + index * 2)
-			var rgb := _word_rgb5(word)
-			if fade <= 254:
-				var old_rgb := _word_rgb5(_checker_palettes.decode_u16(((season + 3) & 3) * 32 + index * 2))
-				rgb = Vector3i(((255 - fade) * old_rgb.x + (fade - 239) * rgb.x) >> 4,
-					((255 - fade) * old_rgb.y + (fade - 239) * rgb.y) >> 4,
-					((255 - fade) * old_rgb.z + (fade - 239) * rgb.z) >> 4)
-			# PS1 texture modulation quantizes back to RGB555; black texels
-			# are transparent before modulation, while brightness zero draws black.
-			if rgb == Vector3i.ZERO and (word & 0x8000) == 0: continue
-			rgb = Vector3i((rgb.x * brightness) >> 7, (rgb.y * brightness) >> 7, (rgb.z * brightness) >> 7)
-			tile.set_pixel(x, y, Color8(rgb.x << 3, rgb.y << 3, rgb.z << 3, 255))
+	var tile_key := "%d:%d:%d:%d:%d" % [season, brightness, fade, u, v]
+	var tile: Image = _checker_tile_cache.get(tile_key)
+	if tile == null:
+		tile = Image.create(32,32,false,Image.FORMAT_RGBA8)
+		tile.fill(Color.TRANSPARENT)
+		for y in range(32):
+			for x in range(32):
+				# Each SPRT restarts at UV(128+scroll,128+scroll). Do not wrap
+				# the source pixel at 32; its uploaded indexed region is 128x128.
+				var index: int = _checker_indices[((y & 31) + v) * 128 + (x & 31) + u]
+				var word: int = _checker_palettes.decode_u16(season * 32 + index * 2)
+				var rgb := _word_rgb5(word)
+				if fade <= 254:
+					var old_rgb := _word_rgb5(_checker_palettes.decode_u16(((season + 3) & 3) * 32 + index * 2))
+					rgb = Vector3i(((255 - fade) * old_rgb.x + (fade - 239) * rgb.x) >> 4,
+						((255 - fade) * old_rgb.y + (fade - 239) * rgb.y) >> 4,
+						((255 - fade) * old_rgb.z + (fade - 239) * rgb.z) >> 4)
+				# PS1 texture modulation quantizes back to RGB555; black texels
+				# are transparent before modulation, while brightness zero draws black.
+				if rgb == Vector3i.ZERO and (word & 0x8000) == 0: continue
+				rgb = Vector3i((rgb.x * brightness) >> 7, (rgb.y * brightness) >> 7, (rgb.z * brightness) >> 7)
+				tile.set_pixel(x, y, Color8(rgb.x << 3, rgb.y << 3, rgb.z << 3, 255))
+		_checker_tile_cache[tile_key] = tile
 	# Each native SPRT uses the same32x32 source UV pattern. Compose it once;
 	# alpha0 texels preserve the target exactly as the source skip above did.
 	# The final tile row clips to16 pixels in the240-line framebuffer.
 	for tile_y in range(0,240,32):
 		for tile_x in range(0,320,32):
+			# hud_screen_frame_draw(2): rows0..5 are disabled except
+			# the left/right edge sprites of row5. Rows6/7 remain on.
+			if argument == 2 and tile_y < 192 and not (tile_y == 160 and tile_x in [0,288]): continue
 			target.blend_rect(tile,Rect2i(0,0,32,mini(32,240-tile_y)),Vector2i(tile_x,tile_y))
 	return ""
 
@@ -502,12 +591,35 @@ func _live_hud(state: Dictionary) -> Dictionary:
 func _int_field(state: Dictionary, key: String, wanted: int) -> bool:
 	return typeof(state.get(key, null)) == TYPE_INT and int(state[key]) == wanted
 
+func _internal_frame_parts(frame_id: int, variant: String = "base") -> Dictionary:
+	var key := "%d:%s" % [frame_id, variant]
+	if _snapshot_enabled and _snapshot_frame_cache.has(key):
+		return _snapshot_frame_cache[key]
+	var fp := frame_parts(frame_id, variant)
+	if fp.get("status") == "frame_parts" and _snapshot_enabled:
+		for part: Dictionary in fp["parts"]:
+			var img: Image = part["color"]["image"]
+			var msk: Image = part["stp_mask"]["image"]
+			var has_stp := false
+			var quant := Image.create(img.get_width(), img.get_height(), false, Image.FORMAT_RGBA8)
+			for y in range(img.get_height()):
+				for x in range(img.get_width()):
+					if msk.get_pixel(x, y).r8 != 0:
+						has_stp = true
+					var c: Color = img.get_pixel(x, y)
+					if c.a != 0:
+						quant.set_pixel(x, y, Color8((c.r8 >> 3) << 3, (c.g8 >> 3) << 3, (c.b8 >> 3) << 3, 255))
+			part["has_stp"] = has_stp
+			part["quantized_image"] = quant
+		_snapshot_frame_cache[key] = fp
+	return fp
+
 func _draw_frame(target: Image, frame_id: int, actor_position: Vector2i) -> String:
-	return _draw_parts(target, frame_parts(frame_id), actor_position)
+	return _draw_parts(target, _internal_frame_parts(frame_id), actor_position)
 
 func _draw_digit(target: Image, digit: int, actor_position: Vector2i) -> String:
 	if digit < 0 or digit > 9: return "date digit is outside source glyph table"
-	return _draw_parts(target, frame_parts(0x44 + digit, "base"), actor_position)
+	return _draw_parts(target, _internal_frame_parts(0x44 + digit, "base"), actor_position)
 
 func _draw_parts(target: Image, frame: Dictionary, actor_position: Vector2i) -> String:
 	if frame.get("status") != "frame_parts": return str(frame.get("diagnostic", "frame unavailable"))
@@ -516,6 +628,10 @@ func _draw_parts(target: Image, frame: Dictionary, actor_position: Vector2i) -> 
 		var image: Image = part["color"]["image"]
 		var mask: Image = part["stp_mask"]["image"]
 		var pos: Vector2i = actor_position + Vector2i(part["source_xy"][0], part["source_xy"][1]) - origin
+		if part.get("has_stp") == false and part.get("quantized_image") is Image:
+			var q_img: Image = part["quantized_image"]
+			target.blend_rect(q_img, Rect2i(0, 0, q_img.get_width(), q_img.get_height()), pos)
+			continue
 		for y in range(image.get_height()):
 			for x in range(image.get_width()):
 				var p: Vector2i = pos + Vector2i(x, y)
@@ -531,6 +647,23 @@ func _draw_parts(target: Image, frame: Dictionary, actor_position: Vector2i) -> 
 
 func _draw_gradient(target: Image, rect: Rect2i) -> void:
 	const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
+	if rect.position.x >= 0 and rect.position.y >= 0 and rect.position.x + rect.size.x <= target.get_width() and rect.position.y + rect.size.y <= target.get_height():
+		var grad_key := "%d:%d:%d:%d" % [rect.position.x, rect.position.y, rect.size.x, rect.size.y]
+		var cached_grad: Image = _gradient_cache.get(grad_key)
+		if cached_grad == null:
+			cached_grad = Image.create(rect.size.x, rect.size.y, false, Image.FORMAT_RGBA8)
+			for y in range(rect.size.y):
+				for x in range(rect.size.x):
+					var px: int = rect.position.x + x
+					var py: int = rect.position.y + y
+					var factor: float = 10.0 - 2.0 * x / rect.size.x - 4.0 * y / rect.size.y
+					var d: int = DITHER[(py & 3) * 4 + (px & 3)]
+					var red: int = clampi((int(3 * factor) + d) >> 3, 0, 31)
+					var green: int = clampi((int(14 * factor) + d) >> 3, 0, 31)
+					cached_grad.set_pixel(x, y, Color8(red << 3, green << 3, 0, 255))
+			_gradient_cache[grad_key] = cached_grad
+		target.blit_rect(cached_grad, Rect2i(Vector2i.ZERO, rect.size), rect.position)
+		return
 	for y in range(rect.size.y):
 		for x in range(rect.size.x):
 			var px: int = rect.position.x + x
@@ -900,6 +1033,9 @@ func _close() -> void:
 	_snapshot_building = false
 	_snapshot_enabled = false
 	_asset_snapshot.clear()
+	_gradient_cache.clear()
+	_checker_tile_cache.clear()
+	_snapshot_frame_cache.clear()
 	_repo_root = ""
 	_profile.clear()
 	_hud_assets.clear()

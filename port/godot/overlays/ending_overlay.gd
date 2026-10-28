@@ -159,11 +159,12 @@ static func compute_girl_points_shiori(
 		var pval: int = int(param_values[i]) if i < param_values.size() else 0
 		if pval < GIRL_SHIORI_PARAM_MINIMUM_TAIL[i - 1]:
 			return 0
-	var counters: Array = shiori_girl.get("scene_counters", [])
+	var counters: Array = shiori_girl.get("scene_counters", shiori_girl.get("counters", []))
 	var scene_count: int = 0
 	for i: int in range(1, 36):
 		if i < counters.size():
 			scene_count += int(counters[i])
+	scene_count = maxi(scene_count, int(shiori_girl.get("date_count", 0)))
 	if scene_count < SHIORI_DATE_COUNT_MIN:
 		return 0
 	if int(shiori_girl.get("syoushin", 0)) >= SHIORI_SYOUSHIN_MAX_EXCLUSIVE:
@@ -209,11 +210,12 @@ static func compute_girl_points_others(
 	for m: int in range(1, 11):
 		if m >= girls.size():
 			continue
-		var counters: Array = girls[m].get("scene_counters", [])
+		var counters: Array = girls[m].get("scene_counters", girls[m].get("counters", []))
 		var scene_count: int = 0
 		for j: int in range(1, 36):
 			if j < counters.size():
 				scene_count += int(counters[j])
+		scene_count = maxi(scene_count, int(girls[m].get("date_count", 0)))
 		if scene_count >= OTHER_HEROINE_DATE_COUNT_MIN:
 			points[m] += scene_count * 10
 		else:
@@ -402,6 +404,203 @@ static func step_ending_stage_flow(mode_stage: int, current_girl: int) -> Dictio
 			return {"stage": 6, "name": "epilogue_text_scroll", "next_stage": 7, "next_game_mode": GAME_MODE_ENDING}
 		_:
 			return {"stage": 7, "name": "handoff_to_credits", "next_stage": 7, "next_game_mode": GAME_MODE_ETC_C2}
+
+
+static func normalize_rule_state_for_ending(rule_state: Dictionary) -> Dictionary:
+	var param_values: Array[int] = []
+	if rule_state.get("param_values") is Array and not (rule_state["param_values"] as Array).is_empty():
+		for v: Variant in rule_state["param_values"]:
+			param_values.append(int(v))
+	elif rule_state.get("params") is Array:
+		for p_word: Variant in rule_state["params"]:
+			var pw: int = int(p_word)
+			param_values.append((pw >> 16) if absi(pw) >= 65536 else pw)
+	while param_values.size() < 9:
+		param_values.append(0)
+
+	var eval_girls: Array = []
+	var src_girls: Array = rule_state.get("girls", []) if rule_state.get("girls") is Array else []
+	for g_idx: int in range(13):
+		var g_rec: Dictionary = src_girls[g_idx] if g_idx < src_girls.size() and src_girls[g_idx] is Dictionary else {}
+		var toki: int = int(g_rec.get("tokimeki", 0))
+		if not g_rec.has("tokimeki") and g_rec.has("tokimeki_word"):
+			var tw: int = int(g_rec["tokimeki_word"])
+			toki = (tw >> 16) if absi(tw) >= 65536 else tw
+		var aff: int = int(g_rec.get("affection", 0))
+		if not g_rec.has("affection") and g_rec.has("affection_word"):
+			var aw: int = int(g_rec["affection_word"])
+			aff = (aw >> 16) if absi(aw) >= 65536 else aw
+		var syou: int = int(g_rec.get("syoushin", 0))
+		if not g_rec.has("syoushin") and g_rec.has("syoushin_word"):
+			var sw: int = int(g_rec["syoushin_word"])
+			syou = (sw >> 16) if absi(sw) >= 65536 else sw
+		var flags_val: int = int(g_rec.get("flags", 0))
+		var met_val: int = int(g_rec.get("met", 1 if (flags_val & 2) != 0 else 0))
+		var counters_arr: Array = []
+		if g_rec.get("scene_counters") is Array:
+			counters_arr = (g_rec["scene_counters"] as Array).duplicate()
+		elif g_rec.get("counters") is Array:
+			counters_arr = (g_rec["counters"] as Array).duplicate()
+		else:
+			counters_arr.resize(36)
+			counters_arr.fill(0)
+		eval_girls.append({
+			"tokimeki": toki,
+			"affection": aff,
+			"syoushin": syou,
+			"met": met_val,
+			"flags": flags_val,
+			"scene_counters": counters_arr,
+			"date_count": int(g_rec.get("date_count", 0)),
+			"story_stage": int(g_rec.get("story_stage", (flags_val >> 9) & 0xF)),
+			"rei_subcount": int(g_rec.get("rei_subcount", (flags_val >> 24) & 0xFF)),
+		})
+
+	var stress_val: int = int(rule_state.get("stress", param_values[8] if param_values.size() > 8 else 0))
+	var health_nibble: int = int(rule_state.get("health_low_nibble", (int(rule_state.get("player_flags", 0)) >> 8) & 0xF))
+	var scene_flags: Array = rule_state.get("scene_flags", []) if rule_state.get("scene_flags") is Array else []
+	return {
+		"girls": eval_girls,
+		"param_values": param_values,
+		"stress_value": stress_val,
+		"health_low_nibble": health_nibble,
+		"scene_flags": scene_flags,
+	}
+
+
+static func evaluate_confession_candidates(
+	state_or_girls: Variant,
+	param_values: Array = [],
+	stress_value: int = 0,
+	health_low_nibble: int = 0,
+	scene_flags: Array = [],
+	rand_mod_256: int = 0
+) -> Dictionary:
+	# Pure PS1 graduation eligibility evaluation (src/ovl/ending/graduation_candidate_selection.c).
+	# Never fabricates affection; returns GIRL_YOSHIO (13) when no heroine qualifies.
+	var eval_girls: Array = []
+	var eff_params: Array = param_values
+	var eff_stress: int = stress_value
+	var eff_health: int = health_low_nibble
+	var eff_scene_flags: Array = scene_flags
+
+	if state_or_girls is Dictionary:
+		var norm: Dictionary = normalize_rule_state_for_ending(state_or_girls)
+		eval_girls = norm["girls"]
+		if eff_params.is_empty():
+			eff_params = norm["param_values"]
+		if eff_stress == 0:
+			eff_stress = int(norm["stress_value"])
+		if eff_health == 0:
+			eff_health = int(norm["health_low_nibble"])
+		if eff_scene_flags.is_empty():
+			eff_scene_flags = norm["scene_flags"]
+	elif state_or_girls is Array:
+		eval_girls = state_or_girls
+
+	var scores: Dictionary = compute_girl_scores(eval_girls, eff_params, eff_stress, eff_health)
+	var sel: Dictionary = select_graduation_candidate(
+		eval_girls, scores["points_by_girl"], eff_scene_flags, rand_mod_256
+	)
+	var candidate_girl: int = int(sel["current_girl"])
+	var gate: Dictionary = evaluate_candidate_flag_gate(candidate_girl, eval_girls)
+	var final_girl: int = int(gate["redirected_girl"])
+	var eligible: bool = final_girl >= 0 and final_girl < GIRL_YOSHIO
+	var phases: Array = (
+		["confession", "staff_roll", "last_photo", "clear_save"]
+		if eligible
+		else ["yoshio_bad_ending", "staff_roll", "clear_save"]
+	)
+
+	return {
+		"eligible": eligible,
+		"current_girl": final_girl,
+		"candidate_before_gate": candidate_girl,
+		"passed_flag_gate": bool(gate["passed_gate"]),
+		"best_points": int(sel["best_points"]),
+		"points_by_girl": scores["points_by_girl"],
+		"closeness_by_girl": scores["closeness_by_girl"],
+		"ending_type": "confession" if eligible else "yoshio_bad_ending",
+		"phases": phases,
+	}
+
+
+static func create_graduation_sequence(state_or_girls: Variant, rand_mod_256: int = 0) -> Dictionary:
+	var eval_res: Dictionary = evaluate_confession_candidates(state_or_girls, [], 0, 0, [], rand_mod_256)
+	var eligible: bool = bool(eval_res["eligible"])
+	var current_girl: int = int(eval_res["current_girl"])
+	var phases: Array = eval_res["phases"].duplicate()
+	var first_phase: String = String(phases[0])
+	return {
+		"eligible": eligible,
+		"current_girl": current_girl,
+		"girl_id": current_girl,
+		"confessed_girl": current_girl,
+		"best_points": int(eval_res["best_points"]),
+		"ending_type": String(eval_res["ending_type"]),
+		"phases": phases,
+		"phase_index": 0,
+		"phase": first_phase,
+		"history": [first_phase],
+		"stage": 0,
+		"choice_cursor": 0,
+		"clear_save_completed": false,
+		"clear_name_slot": not eligible,
+		"album_clear_mask": (1 << current_girl) if eligible else 0,
+		"completed": false,
+		"action": "continue",
+	}
+
+
+static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}) -> Dictionary:
+	var s: Dictionary = seq_state.duplicate(true)
+	if not s.has("phases") or not (s["phases"] is Array) or (s["phases"] as Array).is_empty():
+		var init_seq: Dictionary = create_graduation_sequence(rule_state if not rule_state.is_empty() else s)
+		for k: String in init_seq.keys():
+			if not s.has(k):
+				s[k] = init_seq[k]
+
+	if pad_pressed == 0:
+		s["completed"] = false
+		s["action"] = "wait_input"
+		return s
+
+	# Directional input toggles choice cursor during confession/bad-ending dialogue
+	if (pad_pressed & 0x1000) != 0 or (pad_pressed & 0x4000) != 0:
+		s["choice_cursor"] = 1 - int(s.get("choice_cursor", 0))
+		s["completed"] = false
+		s["action"] = "cursor_move"
+		return s
+
+	# Confirm (PAD_CIRCLE=0x20 or PAD_START=0x0800) advances through sequence phases
+	if (pad_pressed & 0x20) != 0 or (pad_pressed & 0x0800) != 0:
+		var phases: Array = s["phases"]
+		var idx: int = int(s.get("phase_index", 0))
+		if idx + 1 < phases.size():
+			idx += 1
+			var next_phase: String = String(phases[idx])
+			s["phase_index"] = idx
+			s["phase"] = next_phase
+			s["stage"] = mini(idx * 2, 7)
+			var hist: Array = s.get("history", []) if s.get("history") is Array else []
+			if hist.is_empty() or String(hist[hist.size() - 1]) != next_phase:
+				hist.append(next_phase)
+			s["history"] = hist
+			if next_phase == "staff_roll":
+				s["next_mode"] = GAME_MODE_ETC_C2
+			elif next_phase == "clear_save":
+				s["clear_save_completed"] = true
+			s["completed"] = false
+			s["action"] = "phase_advance"
+		else:
+			s["clear_save_completed"] = true
+			s["completed"] = true
+			s["ending_completed"] = 1
+			s["action"] = "ending_complete"
+		return s
+
+	s["completed"] = false
+	return s
 
 
 # ============================================================================

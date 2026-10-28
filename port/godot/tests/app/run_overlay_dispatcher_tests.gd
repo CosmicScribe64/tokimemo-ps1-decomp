@@ -41,7 +41,16 @@ func _initialize() -> void:
 func _run() -> void:
 	var repo: String = OS.get_environment("TOKIMEMO_REPO_ROOT")
 	if repo.is_empty():
-		repo = ProjectSettings.globalize_path("res://../..").simplify_path()
+		for candidate: String in [
+			ProjectSettings.globalize_path("res://../..").simplify_path(),
+			ProjectSettings.globalize_path("res://../../../../..").simplify_path(),
+			"/workspace",
+		]:
+			if DirAccess.dir_exists_absolute(candidate.path_join(".asset-cache/port")):
+				repo = candidate
+				break
+		if repo.is_empty():
+			repo = "/workspace"
 	var font_root: String = repo.path_join(".asset-cache/port/fonts/native-font-v2")
 	var hud_manifest: String = repo.path_join(".asset-cache/port/hud-production-v1/manifest.json")
 	var date_pack: String = repo.path_join(".asset-cache/port/date-preview-v1")
@@ -292,21 +301,76 @@ func _verify_school_events_flow(dispatcher: OverlayDispatcher, capture_dir: Stri
 
 
 func _verify_subgames_flow(dispatcher: OverlayDispatcher, _capture_dir: String) -> void:
-	# RPG_BATTLE (0x2D): cursor movement + rpg_execute_command
-	var rpg_st: Dictionary = {"cursor": 0, "enemy_hp": 120}
-	rpg_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_RPG_BATTLE, rpg_st, OverlayDispatcher.PAD_CIRCLE)
-	_ok(int(rpg_st.get("enemy_hp", 120)) < 120, "RPG_BATTLE PAD_CIRCLE executes attack reducing enemy_hp")
+	# 1. RPG_BATTLE (0x57): interactive cursor movement + multi-round combat -> victory -> return_to_game
+	var rpg_st: Dictionary = {"cursor": 0, "enemy_hp": 600}
 	rpg_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_RPG_BATTLE, rpg_st, OverlayDispatcher.PAD_DOWN)
 	_eq(int(rpg_st.get("cursor", -1)), 1, "RPG_BATTLE PAD_DOWN moves command cursor 0 -> 1")
+	rpg_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_RPG_BATTLE, rpg_st, OverlayDispatcher.PAD_UP)
+	_eq(int(rpg_st.get("cursor", -1)), 0, "RPG_BATTLE PAD_UP moves command cursor 1 -> 0")
+	rpg_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_RPG_BATTLE, rpg_st, OverlayDispatcher.PAD_CIRCLE)
+	_ok(int(rpg_st.get("enemy_hp", 600)) < 600 and int(rpg_st.get("enemy_hp", 0)) > 0, "RPG_BATTLE PAD_CIRCLE executes attack reducing enemy_hp")
+	_ok(String(rpg_st.get("action", "")) != "return_to_game", "RPG_BATTLE stays active while enemy_hp > 0")
+	var rpg_guard: int = 0
+	while not bool(rpg_st.get("victory", false)) and rpg_guard < 8:
+		rpg_guard += 1
+		rpg_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_RPG_BATTLE, rpg_st, OverlayDispatcher.PAD_CIRCLE)
+	_ok(bool(rpg_st.get("victory", false)), "RPG_BATTLE reaches victory when enemy_hp hits 0")
+	rpg_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_RPG_BATTLE, rpg_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(String(rpg_st.get("action", "")), "return_to_game", "RPG_BATTLE confirm after victory returns to game")
+	_eq(int(rpg_st.get("return_payload", {}).get("talk_result_code", -1)), 0, "RPG_BATTLE return_payload records talk_result_code=0")
 
-	# TACO (0x2C): shooter_step_frame
-	var taco_st: Dictionary = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, {}, OverlayDispatcher.PAD_CIRCLE)
-	_eq(int(taco_st.get("frame", 0)), 1, "TACO PAD_CIRCLE advances shooter frame")
-	_ok(int(taco_st.get("bullet_count", 0)) > 0, "TACO PAD_CIRCLE spawns player bullet")
+	# 2. TACO (0x59): shooter_step_interactive does NOT exit on 2nd fire press; steps waves -> boss -> result -> scores -> exit
+	var taco_st: Dictionary = {"waves_per_stage": 1, "target_stages": 1}
+	taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(int(taco_st.get("frame", 0)), 1, "TACO 1st PAD_CIRCLE advances shooter frame to 1")
+	_ok(int(taco_st.get("bullet_count", 0)) > 0, "TACO 1st PAD_CIRCLE spawns player bullet")
+	taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(int(taco_st.get("frame", 0)), 2, "TACO 2nd PAD_CIRCLE advances shooter frame to 2")
+	_ok(String(taco_st.get("action", "")) != "return_to_game" and not bool(taco_st.get("completed", false)),
+		"TACO does NOT exit on second fire press")
+	# Use bombs to clear wave 0 -> spawn Boss 1 (stage 12), then defeat Boss 1 -> GAME_END (45) -> RESULT (8) -> SCORES (5) -> EXIT (46)
+	for _b: int in range(2):
+		taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_SQUARE)
+	_eq(int(taco_st.get("stage", -1)), 12, "TACO clearing wave 0 advances to Boss 1 (stage 12)")
+	taco_st["boss"]["hp"] = 2
+	taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_CROSS) # secondary missile hits boss
+	_eq(int(taco_st.get("stage", -1)), 45, "TACO defeating target boss transitions to SHOOTER_STAGE_GAME_END (45)")
+	taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(int(taco_st.get("stage", -1)), 8, "TACO confirm on GAME_END transitions to SHOOTER_STAGE_RESULT (8)")
+	taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(int(taco_st.get("stage", -1)), 5, "TACO confirm on RESULT transitions to SHOOTER_STAGE_SCORES (5)")
+	taco_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TACO, taco_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(String(taco_st.get("action", "")), "return_to_game", "TACO confirm on SCORES exits to game with return_payload")
+	_eq(int(taco_st.get("return_payload", {}).get("stages_cleared", 0)), 1, "TACO return_payload records stages_cleared=1")
 
-	# TT (0x2A): tt_bell_hit_by_shot + tt_bell_collect
-	var tt_st: Dictionary = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, {}, OverlayDispatcher.PAD_CIRCLE)
-	_eq(int(tt_st.get("bell_hits", 0)), 1, "TT PAD_CIRCLE increments bell_hits via tt_bell_hit_by_shot")
+	# 3. TT (0x5A): tt_step_interactive does NOT collect bells on PAD_UP or exit after 3 confirms
+	var tt_st: Dictionary = {"target_stages": 1, "boss_hp": 16}
 	tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, OverlayDispatcher.PAD_UP)
-	_ok(int(tt_st.get("score", 0)) > 0, "TT PAD_UP collects bell and awards score via tt_bell_collect")
+	_ok(int(tt_st.get("player", {}).get("y", 192)) < 192, "TT PAD_UP moves TwinBee ship upward")
+	_eq(int(tt_st.get("score", -1)), 0, "TT PAD_UP does NOT arbitrarily collect a bell without AABB overlap")
+	for _c: int in range(3):
+		tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, OverlayDispatcher.PAD_CIRCLE)
+	_ok(String(tt_st.get("action", "")) != "return_to_game" and not bool(tt_st.get("completed", false)),
+		"TT does NOT exit after 3 PAD_CIRCLE confirms")
+	# Align player with bell[1] at x=42, y=136 so fired shot (y = 136 - 8 - 12 = 116) overlaps bell hitbox at y=116
+	tt_st["player"]["x"] = 42
+	tt_st["player"]["y"] = 136
+	tt_st["bells"][1]["x"] = 42
+	tt_st["bells"][1]["y"] = 116
+	tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, OverlayDispatcher.PAD_CIRCLE)
+	_ok(int(tt_st.get("bell_hits", 0)) >= 1, "TT shot overlapping bell hitbox increments bell_hits via tt_bell_hit_by_shot")
+	# Move player onto bell[1] hitbox to collect it via tt_box_overlap
+	tt_st["player"]["x"] = int(tt_st["bells"][1]["x"])
+	tt_st["player"]["y"] = int(tt_st["bells"][1]["y"])
+	tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, 0)
+	_ok(int(tt_st.get("score", 0)) > 0, "TT player hitbox overlap collects bell and awards score")
+	# Fire ground bomb (PAD_SQUARE) to defeat boss (hp=16) -> TT_STATE_STAGE_CLEAR (3) -> TT_STATE_RANKING_VIEW (7) -> TT_STATE_EXIT (9)
+	tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, OverlayDispatcher.PAD_SQUARE)
+	_eq(int(tt_st.get("tt_state", -1)), 3, "TT defeating stage boss transitions to TT_STATE_STAGE_CLEAR (3)")
+	tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(int(tt_st.get("tt_state", -1)), 7, "TT stage clear transitions to TT_STATE_RANKING_VIEW (7)")
+	tt_st = dispatcher.step_mode(OverlayDispatcher.GAME_MODE_TT, tt_st, OverlayDispatcher.PAD_CIRCLE)
+	_eq(String(tt_st.get("action", "")), "return_to_game", "TT confirm on rankings exits to game")
+	_eq(int(tt_st.get("return_payload", {}).get("tt_stages_cleared", 0)), 1, "TT return_payload records tt_stages_cleared=1")
+
 

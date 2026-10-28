@@ -36,6 +36,10 @@ func _initialize() -> void:
 		check(cfg_err.is_empty(), "AudioService configured opening pack and witness receipt: " + cfg_err)
 
 	# 1. Reject bgm_play and se_play before any bank is loaded
+	check(svc.decode_bgm_sequence_stream(0, 0) == null, "decode_bgm_sequence_stream returns null before bank_load")
+	check(svc.decode_se_command_stream(0x0605) == null, "decode_se_command_stream returns null before bank_load")
+	check(svc.create_pcm_wav_stream("bgm_play", 0, 320, false) == null, "create_pcm_wav_stream(bgm_play, fallback=false) returns null before bank_load")
+	check(svc.create_pcm_wav_stream("se_play", 0x0605, 160, false) == null, "create_pcm_wav_stream(se_play, fallback=false) returns null before bank_load")
 	check(svc.queue_bgm_play(0, 0, 0, AudioService.Phase.AUDIO).is_empty(), "bgm_play event can be queued")
 	var unready_drain: Dictionary = svc.drain_phase(0, AudioService.Phase.AUDIO)
 	check(not str(unready_drain.get("error", "")).is_empty(), "bgm_play fails drain when no bank is installed")
@@ -57,15 +61,24 @@ func _initialize() -> void:
 		check(svc.vab_memory.banks[1]["sample_bytes"] == PROLOGUE_MUSIC_SAMPLE_BYTES, "Prologue music bank (PRO_VOL) sample bytes == 0x22ee0")
 		check(svc.vab_memory.banks[0]["header_sha256"] == EXPECTED_PROLOGUE_SE_HEADER_SHA, "Prologue SE mutated VAB header matches PS1 hardware witness SHA-256")
 		check(svc.vab_memory.banks[1]["header_sha256"] == EXPECTED_PROLOGUE_MUSIC_HEADER_SHA, "Prologue music mutated VAB header matches PS1 hardware witness SHA-256")
+		var vag1: Dictionary = svc.decode_vab_sample_pcm(0, 1)
+		var vag6: Dictionary = svc.decode_vab_sample_pcm(0, 6)
+		check(str(vag1.get("sha256", "")) == "71382403dd22709a67045ee7ac43235654bd89a2a1436728abad510eaefb3d23", "Prologue SE VAG 1 SPU ADPCM decode matches exact reference s16 SHA-256")
+		check(str(vag6.get("sha256", "")) == "ffa8578fa633404e4ba2dfb6e0add53e4bba9446fcfcc96516e436511208a723", "Prologue SE VAG 6 (0x605) SPU ADPCM decode matches exact reference s16 SHA-256")
 
 	var audio_drain_10: Dictionary = svc.drain_phase(10, AudioService.Phase.AUDIO)
 	check(str(audio_drain_10.get("error", "")).is_empty() and svc.bgm_state["playing"] == true and svc.bgm_state["role"] == "prologue_arrival", "Drained prologue bgm_play (0, 0)")
+	var prologue_bgm_sha: String = str(svc.bgm_state.get("pcm_sha256", ""))
+	if not pack_path.is_empty():
+		check(int(svc.bgm_state.get("decoded_pcm_bytes", 0)) > 0 and svc.bgm_state.get("source") == "spu_adpcm_vab_seq", "Prologue bgm_play decoded real SPU ADPCM + SEQ PCM stream")
 
 	var audio_drain_11: Dictionary = svc.drain_phase(11, AudioService.Phase.AUDIO)
 	check(str(audio_drain_11.get("error", "")).is_empty() and svc.voice_log.size() == 1 and svc.voice_log[0]["voice_id"] == 0, "Drained prologue voice_play (line 0)")
 
 	var audio_drain_12: Dictionary = svc.drain_phase(12, AudioService.Phase.AUDIO)
 	check(str(audio_drain_12.get("error", "")).is_empty() and svc.se_log.size() == 1 and svc.se_log[0]["command"] == 0x0605, "Drained prologue se_play (0x605)")
+	if not pack_path.is_empty():
+		check(int(svc.se_log[0].get("decoded_pcm_bytes", 0)) > 0 and svc.se_log[0].get("source") == "spu_adpcm_vab", "Prologue se_play (0x605) decoded real SPU ADPCM SE stream")
 
 	var audio_drain_13: Dictionary = svc.drain_phase(13, AudioService.Phase.AUDIO)
 	check(str(audio_drain_13.get("error", "")).is_empty() and svc.bgm_state["playing"] == false and svc.bgm_state.get("last_stop_command") == 5, "Drained prologue bgm_stop (command 5)")
@@ -88,6 +101,8 @@ func _initialize() -> void:
 
 	var normal_audio_drain: Dictionary = svc.drain_phase(20, AudioService.Phase.AUDIO)
 	check(str(normal_audio_drain.get("error", "")).is_empty() and svc.bgm_state["playing"] == true and svc.bgm_state["role"] == "normal_gameplay", "Drained normal_gameplay bgm_play (0, 0)")
+	if not pack_path.is_empty():
+		check(int(svc.bgm_state.get("decoded_pcm_bytes", 0)) > 0 and str(svc.bgm_state.get("pcm_sha256", "")) != prologue_bgm_sha, "Normal gameplay bgm_play (SPRING) produces distinct SPU ADPCM + SEQ waveform from prologue_arrival (PRO_VOL)")
 
 	# 4. Restore checkpoint and verify sound RAM and service state roll back to prologue_arrival
 	var restore_err: String = svc.restore(snap)

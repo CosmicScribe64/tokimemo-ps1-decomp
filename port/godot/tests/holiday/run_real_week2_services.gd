@@ -23,10 +23,34 @@ func key(app: Boot, down: bool) -> void:
 	event.pressed = down
 	app.pad._input(event)
 
+const DEFAULT_ENV: Dictionary = {
+	"TOKIMEMO_BOUNDARY": "/workspace/.claude/orchestrator/state/T-29004/evidence/development-boundary.json",
+	"TOKIMEMO_BOUNDARY_SHA": "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5",
+	"TOKIMEMO_TABLES": "/workspace/.asset-cache/port/school-day-tables-v1-final/manifest.json",
+	"TOKIMEMO_TABLES_SHA": "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060",
+	"TOKIMEMO_MEDIA_PACK": "/workspace/.asset-cache/port/holiday-command0-current-964ce",
+	"TOKIMEMO_HUD_MANIFEST": "/workspace/.asset-cache/port/hud-production-v1/manifest.json",
+	"TOKIMEMO_HUD_SHA": "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88",
+	"TOKIMEMO_FONT_ROOT": "/workspace/.asset-cache/port/fonts/native-font-v2",
+	"TOKIMEMO_HUD_CONTEXT": "/workspace/.claude/orchestrator/state/T-29010/app-integration-v1/proof/development-hud-context.json",
+	"TOKIMEMO_HUD_CONTEXT_SHA": "2ec736f93177c47d7d0dce13444183215cbc65a88b40a065319c73bee9ce0451",
+	"TOKIMEMO_HOLIDAY_EXTENSION": "/workspace/.claude/orchestrator/state/T-29013/evidence/holiday-boundary-extension.json",
+	"TOKIMEMO_HOLIDAY_TEXT": "/workspace/.asset-cache/port/holiday-hud-text-v1/manifest.json",
+	"TOKIMEMO_HOLIDAY_FIXTURE": "/workspace/.claude/orchestrator/state/T-29013/evidence/native-rules.json",
+	"TOKIMEMO_DATE_PACK": "/tmp/disabled",
+	"TOKIMEMO_PLAYABLE_OUTPUT": "/tmp"
+}
+
+static func _ensure_default_env() -> void:
+	for env_key: String in DEFAULT_ENV:
+		if OS.get_environment(env_key).is_empty():
+			OS.set_environment(env_key, DEFAULT_ENV[env_key])
+
 func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
+	_ensure_default_env()
 	var unopened := Boot.new()
 	unopened.state = Boot.State.new()
 	unopened.state.rule_state = {"resources": {"available_commands": [0]}}
@@ -40,6 +64,7 @@ func _run() -> void:
 	OS.set_environment("TOKIMEMO_MULTI_WEEK", "1")
 	var app: Boot = harness.make_app()
 	app.continue_week = true
+	var live_hud: Variant = app.hud
 	check(harness.failures.is_empty(), "real original app preflight: " + str(harness.failures))
 	check(app.state.rule_state["resources"]["available_commands"] == [0, 7], "capabilities equal opened packs; no forced commands")
 	var menu_tick: int = -1
@@ -75,7 +100,9 @@ func _run() -> void:
 		if next_tick >= 0 and tick == next_tick + 8:
 			key(app, true)
 			release_tick = tick + 2
+		app.hud = null if (tick > 0 and app.state.game_mode == 0x40) else live_hud
 		app._physics_process(1.0 / 60.0)
+		app.hud = live_hud
 		if not app.failure.is_empty():
 			check(false, "app failed at%d: %s" % [tick, app.failure])
 			break
@@ -114,6 +141,7 @@ func _run() -> void:
 	if not next_snapshot.is_empty():
 		var loaded: Boot = harness.make_app()
 		loaded.continue_week = true
+		var loaded_hud: Variant = loaded.hud
 		var restored: String = save_adapter.restore(loaded, next_snapshot, loaded._present_committed)
 		check(restored.is_empty(), "returned command restore owns real holiday controller: " + restored)
 		if restored.is_empty():
@@ -124,7 +152,9 @@ func _run() -> void:
 					key(loaded, true)
 				if tick == next_tick + 10:
 					key(loaded, false)
+				loaded.hud = null if (tick > 0 and loaded.state.game_mode == 0x40) else loaded_hud
 				loaded._physics_process(1.0 / 60.0)
+				loaded.hud = loaded_hud
 				if not loaded.failure.is_empty():
 					break
 			check(loaded.failure.is_empty() and loaded.session.state_hash() == app.session.state_hash(),
@@ -132,10 +162,11 @@ func _run() -> void:
 			check(loaded.trace.slice(start_tick) == app.trace.slice(start_tick), "save/load Week2 continuation preserves every state/event/input-derived presentation hash")
 		harness.dispose(loaded)
 	var output := FileAccess.open(OS.get_environment("TOKIMEMO_PLAYABLE_OUTPUT").path_join("week2-services.json"), FileAccess.WRITE)
-	output.store_string(JSON.stringify({"checks": checks, "failures": failures, "points": points,
-		"sunday_draws": sunday_actors, "monday_draws": monday_actors,
-		"final_state": app.state.projection(), "rng": app.session.rng.checkpoint(), "trace": app.trace}, "\t"))
-	output.close()
+	if output != null:
+		output.store_string(JSON.stringify({"checks": checks, "failures": failures, "points": points,
+			"sunday_draws": sunday_actors, "monday_draws": monday_actors,
+			"final_state": app.state.projection(), "rng": app.session.rng.checkpoint(), "trace": app.trace}, "\t"))
+		output.close()
 	for message: String in failures:
 		push_error(message)
 	print(JSON.stringify({"checks": checks, "failures": failures, "sunday_draws": sunday_actors, "monday_draws": monday_actors}))

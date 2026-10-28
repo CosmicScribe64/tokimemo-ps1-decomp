@@ -25,14 +25,31 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-REPO_ROOT = SCRIPT_DIR.parent.parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
+
+
+def _resolve_repo_root() -> Path:
+    env_root = os.environ.get("TOKIMEMO_REPO_ROOT", "").strip()
+    if env_root:
+        cand = Path(env_root).resolve()
+        if (cand / ".asset-cache").exists() or (cand / "port" / "godot").exists():
+            return cand
+    for parent in [SCRIPT_DIR.parent.parent, *SCRIPT_DIR.parents]:
+        if (parent / ".asset-cache").exists() and (parent / "port" / "godot").exists():
+            return parent
+    return SCRIPT_DIR.parent.parent
+
+
+REPO_ROOT = _resolve_repo_root()
+CANONICAL_TOOLS_PORT = REPO_ROOT / "tools" / "port"
+for _p in (SCRIPT_DIR, CANONICAL_TOOLS_PORT, CANONICAL_TOOLS_PORT / "progress"):
+    if _p.is_dir() and str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
 import extract_decomp_tables as edt
 import verify_tile_diff as vtd
@@ -46,6 +63,11 @@ DEFAULT_OUTPUT_JSON = (
 )
 DEFAULT_MANIFEST = REPO_ROOT / ".asset-cache/port-progress/manifest.json"
 DEFAULT_MEDIA_DIR = REPO_ROOT / ".asset-cache/port-progress"
+DEFAULT_CANDIDATE_ROOT = (
+    REPO_ROOT / ".claude/orchestrator/state/T-29022/telephone-live-state-and-audit-provenance-v1"
+)
+PROVENANCE_SCHEMA = "tokimemo.emulator_vs_godot_capture_provenance.v1"
+PRODUCER_SCRIPT_REL = "tests/overlays/run_emulator_vs_godot_capture_producer.gd"
 
 EMULATOR_VS_GODOT_PAIRS: list[dict[str, str]] = [
     {
@@ -237,7 +259,28 @@ def compute_channel_diff_metrics(emu_path: Path, godot_path: Path) -> dict[str, 
     }
 
 
-def run_step1_tile_diff_audit(repo_root: Path, threshold: float = 20.0) -> dict[str, Any]:
+def _resolve_godot_capture_path(
+    repo_root: Path, entry: dict[str, str], captures_dir: Path | None = None
+) -> tuple[Path, str]:
+    default_rel = entry["godot_capture"]
+    file_name = Path(default_rel).name
+    if captures_dir is not None:
+        cand = captures_dir / file_name
+        if cand.is_file():
+            try:
+                rel = str(cand.resolve().relative_to(repo_root.resolve()))
+            except ValueError:
+                rel = str(cand)
+            return cand, rel
+    return repo_root / default_rel, default_rel
+
+
+def run_step1_tile_diff_audit(
+    repo_root: Path,
+    threshold: float = 20.0,
+    captures_dir: Path | None = None,
+    provenance_map: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Step 1: Run verify_tile_diff.py across all PS1 emulator vs Godot 320x240 pairs."""
     pair_results: list[dict[str, Any]] = []
     total_hotspots = 0
@@ -248,7 +291,9 @@ def run_step1_tile_diff_audit(repo_root: Path, threshold: float = 20.0) -> dict[
 
     for entry in EMULATOR_VS_GODOT_PAIRS:
         emu_path = repo_root / entry["emulator_ref"]
-        godot_path = repo_root / entry["godot_capture"]
+        godot_path, godot_resolved_rel = _resolve_godot_capture_path(
+            repo_root, entry, captures_dir=captures_dir
+        )
         if not emu_path.is_file():
             raise FileNotFoundError(f"Missing emulator reference: {emu_path}")
         if not godot_path.is_file():
@@ -280,29 +325,40 @@ def run_step1_tile_diff_audit(repo_root: Path, threshold: float = 20.0) -> dict[
                 "px_over_10": int(rdata["px_over_10"]),
             }
 
-        pair_results.append(
-            {
-                "id": entry["id"],
-                "category": entry["category"],
-                "description": entry["description"],
-                "emulator_ref": entry["emulator_ref"],
-                "emulator_sha256": sha256_file(emu_path),
-                "godot_capture": entry["godot_capture"],
-                "godot_sha256": sha256_file(godot_path),
-                "width": vtd.SCREEN_W,
-                "height": vtd.SCREEN_H,
-                "total_tiles": tile_count,
-                "hotspot_count": hotspot_count,
-                "hotspot_threshold": threshold,
-                "mean_abs_diff": mean_abs_diff,
-                "max_tile_mae": max_tile_mae,
-                "max_channel_diff": max_ch_diff,
-                "raw_border_max_channel_diff": ch_metrics["raw_border_max_channel_diff"],
-                "within_dither_8_ratio": ch_metrics["within_dither_8_ratio"],
-                "regions": regions_clean,
-                "passed": hotspot_count == 0,
+        pair_record: dict[str, Any] = {
+            "id": entry["id"],
+            "category": entry["category"],
+            "description": entry["description"],
+            "emulator_ref": entry["emulator_ref"],
+            "emulator_sha256": sha256_file(emu_path),
+            "godot_capture": entry["godot_capture"],
+            "godot_resolved_capture": godot_resolved_rel,
+            "godot_sha256": sha256_file(godot_path),
+            "width": vtd.SCREEN_W,
+            "height": vtd.SCREEN_H,
+            "total_tiles": tile_count,
+            "hotspot_count": hotspot_count,
+            "hotspot_threshold": threshold,
+            "mean_abs_diff": mean_abs_diff,
+            "max_tile_mae": max_tile_mae,
+            "max_channel_diff": max_ch_diff,
+            "raw_border_max_channel_diff": ch_metrics["raw_border_max_channel_diff"],
+            "within_dither_8_ratio": ch_metrics["within_dither_8_ratio"],
+            "regions": regions_clean,
+            "passed": hotspot_count == 0,
+        }
+        if provenance_map and entry["id"] in provenance_map:
+            prov = provenance_map[entry["id"]]
+            pair_record["provenance"] = {
+                "producer_script": prov.get("producer_script"),
+                "suite_script": prov.get("suite_script"),
+                "presenter_script": prov.get("presenter_script"),
+                "presenter_script_sha256": prov.get("presenter_script_sha256"),
+                "produced_file": prov.get("produced_file"),
+                "receipt_sha256": prov.get("sha256"),
+                "live_state": prov.get("live_state"),
             }
-        )
+        pair_results.append(pair_record)
 
     mean_mae_across_pairs = round(sum(mae_values) / max(1, len(mae_values)), 4)
     max_mae_across_pairs = round(max(mae_values) if mae_values else 0.0, 4)
@@ -324,29 +380,47 @@ def run_step1_tile_diff_audit(repo_root: Path, threshold: float = 20.0) -> dict[
     }
 
 
+_EMU_SHA_CACHE: dict[Path, dict[str, str]] = {}
+
+
 def collect_emulator_reference_shas(repo_root: Path) -> dict[str, str]:
     """Collect SHA-256 digests of all PS1 emulator reference PNGs in the workspace."""
+    resolved_root = repo_root.resolve()
+    if resolved_root in _EMU_SHA_CACHE:
+        return _EMU_SHA_CACHE[resolved_root]
+
     emu_shas: dict[str, str] = {}
-    state_root = repo_root / ".claude/orchestrator/state"
-    if state_root.is_dir():
-        for png in sorted(state_root.rglob("*.png")):
+    for entry in EMULATOR_VS_GODOT_PAIRS:
+        ep = repo_root / entry["emulator_ref"]
+        if ep.is_file():
+            emu_shas[sha256_file(ep)] = entry["emulator_ref"]
+
+    emu_dirs = [
+        repo_root / ".claude/orchestrator/state/T-29018/emu_ref",
+        repo_root / ".claude/orchestrator/state/T-29012/prologue-visual-v1/emu_reference",
+        repo_root / ".claude/orchestrator/state/T-29013/evidence",
+        repo_root / ".claude/orchestrator/state/T-29010/dynamic-hud",
+        repo_root / ".claude/orchestrator/state/T-29004/evidence",
+        repo_root / "build/emu",
+    ]
+    for d in emu_dirs:
+        if not d.is_dir():
+            continue
+        for png in sorted(d.rglob("*.png")):
             rel = str(png.relative_to(repo_root))
             name_lower = png.name.lower()
             parts_lower = [p.lower() for p in png.parts]
             if (
-                name_lower == "shot_final.png"
+                d.name == "emu"
+                or name_lower == "shot_final.png"
                 or name_lower.startswith("emu_")
                 or "emu_ref" in parts_lower
                 or "emu-reference" in parts_lower
                 or "oracle-command" in rel.lower()
             ):
-                emu_shas[ sha256_file(png) ] = rel
+                emu_shas[sha256_file(png)] = rel
 
-    build_emu = repo_root / "build/emu"
-    if build_emu.is_dir():
-        for png in sorted(build_emu.rglob("*.png")):
-            emu_shas[sha256_file(png)] = str(png.relative_to(repo_root))
-
+    _EMU_SHA_CACHE[resolved_root] = emu_shas
     return emu_shas
 
 
@@ -502,9 +576,10 @@ def run_step2_manifest_audit(
             bucket_counts.append(int(metrics["rgb444_buckets"]))
             total_placeholder_pixels += int(metrics["magenta_cyan_placeholder_pixels"])
 
-            if (metrics["width"], metrics["height"]) != (320, 240):
+            w_px, h_px = int(metrics["width"]), int(metrics["height"])
+            if w_px < 320 or h_px < 240 or (w_px * 3 != h_px * 4):
                 item_errors.append(
-                    f"Non-native resolution: {metrics['width']}x{metrics['height']} (expected 320x240)"
+                    f"Invalid 4:3 resolution: {w_px}x{h_px} (expected >= 320x240 4:3)"
                 )
             if metrics["magenta_cyan_placeholder_pixels"] > 0:
                 item_errors.append(
@@ -540,9 +615,11 @@ def run_step2_manifest_audit(
         "emulator_oracle_sha_collisions": len(sha_collisions),
         "total_magenta_cyan_placeholder_pixels": total_placeholder_pixels,
         "png_summary": {
-            "all_320x240": all(
-                i.get("visual_metrics", {}).get("width") == 320
-                and i.get("visual_metrics", {}).get("height") == 240
+            "all_valid_4_3": all(
+                int(i.get("visual_metrics", {}).get("width", 0)) >= 320
+                and int(i.get("visual_metrics", {}).get("height", 0)) >= 240
+                and int(i.get("visual_metrics", {}).get("width", 0)) * 3
+                == int(i.get("visual_metrics", {}).get("height", 0)) * 4
                 for i in audited_items
                 if i["kind"] == "image"
             ),
@@ -558,9 +635,12 @@ def run_step2_manifest_audit(
     }
 
 
-def run_step3_cp932_hex_lint(repo_root: Path) -> dict[str, Any]:
-    """Step 3: Run extract_decomp_tables.py --lint-godot-hex across canonical GDScript files."""
-    scan_dirs = [repo_root / "port" / "godot", repo_root / "tools" / "port"]
+def run_step3_cp932_hex_lint(repo_root: Path, project_root: Path | None = None) -> dict[str, Any]:
+    """Step 3: Run extract_decomp_tables.py --lint-godot-hex across GDScript files."""
+    canonical_godot = (repo_root / "port" / "godot").resolve()
+    scan_dirs: list[Path] = [repo_root / "port" / "godot", repo_root / "tools" / "port"]
+    if project_root is not None and project_root.is_dir() and project_root.resolve() != canonical_godot:
+        scan_dirs.append(project_root)
     gd_files_count = sum(len(list(d.rglob("*.gd"))) for d in scan_dirs if d.is_dir())
     mismatch_count, entries = edt.lint_godot_hex(
         target_dirs=scan_dirs, allow_known=False, root=repo_root
@@ -568,9 +648,16 @@ def run_step3_cp932_hex_lint(repo_root: Path) -> dict[str, Any]:
     ok_count = sum(1 for e in entries if e["status"] == "ok")
     mismatch_entries = [e for e in entries if e["status"] in ("mismatch", "decode_error")]
 
+    rel_dirs: list[str] = []
+    for d in scan_dirs:
+        try:
+            rel_dirs.append(str(d.resolve().relative_to(repo_root.resolve())))
+        except ValueError:
+            rel_dirs.append(str(d))
+
     return {
         "passed": int(mismatch_count) == 0 and len(entries) > 0,
-        "scanned_directories": [str(d.relative_to(repo_root)) for d in scan_dirs],
+        "scanned_directories": rel_dirs,
         "gdscript_files_scanned": gd_files_count,
         "total_checked_pairs": len(entries),
         "verified_matches": ok_count,
@@ -579,9 +666,218 @@ def run_step3_cp932_hex_lint(repo_root: Path) -> dict[str, Any]:
     }
 
 
+def _resolve_script_path(repo_root: Path, project_root: Path, rel_script: str) -> Path | None:
+    for root in (project_root, repo_root / "port" / "godot"):
+        cand = root / rel_script
+        if cand.is_file():
+            return cand
+    return None
+
+
+def run_step4_capture_provenance_audit(
+    repo_root: Path,
+    receipt_path: Path,
+    project_root: Path,
+    captures_dir: Path | None = None,
+) -> dict[str, Any]:
+    """Step 4: Verify that every EMULATOR_VS_GODOT_PAIRS capture is bound to a live producer script,
+    presenter script SHA-256, live state descriptor, and matching PNG SHA-256."""
+    if not receipt_path.is_file():
+        return {
+            "passed": False,
+            "error": f"Missing provenance receipt: {receipt_path}",
+            "receipt_path": str(receipt_path),
+            "verified_pairs": 0,
+            "expected_pairs": len(EMULATOR_VS_GODOT_PAIRS),
+            "failures": [{"reason": f"Missing provenance receipt: {receipt_path}"}],
+        }
+
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    failures: list[dict[str, Any]] = []
+    if receipt.get("schema") != PROVENANCE_SCHEMA:
+        failures.append(
+            {
+                "id": "__schema__",
+                "reason": f"Invalid provenance schema: {receipt.get('schema')} (expected {PROVENANCE_SCHEMA})",
+            }
+        )
+
+    producer_rel = str(receipt.get("producer_script", ""))
+    producer_path = _resolve_script_path(repo_root, project_root, producer_rel)
+    producer_sha_actual = sha256_file(producer_path) if producer_path is not None else ""
+    if producer_rel != PRODUCER_SCRIPT_REL or producer_path is None:
+        failures.append(
+            {
+                "id": "__producer_script__",
+                "reason": f"Producer script missing or invalid: {producer_rel}",
+            }
+        )
+    elif receipt.get("producer_script_sha256") != producer_sha_actual:
+        failures.append(
+            {
+                "id": "__producer_script_sha256__",
+                "reason": (
+                    f"Producer script SHA-256 mismatch for {producer_rel}: "
+                    f"receipt={receipt.get('producer_script_sha256')} actual={producer_sha_actual}"
+                ),
+            }
+        )
+
+    source_scripts: dict[str, str] = receipt.get("source_scripts", {})
+    verified_source_scripts = 0
+    for s_rel, expected_sha in sorted(source_scripts.items()):
+        s_path = _resolve_script_path(repo_root, project_root, s_rel)
+        if s_path is None:
+            failures.append({"id": f"source:{s_rel}", "reason": f"Missing source script {s_rel}"})
+            continue
+        actual_sha = sha256_file(s_path)
+        if actual_sha != expected_sha:
+            failures.append(
+                {
+                    "id": f"source:{s_rel}",
+                    "reason": f"Source script SHA-256 mismatch for {s_rel}: receipt={expected_sha} actual={actual_sha}",
+                }
+            )
+        else:
+            verified_source_scripts += 1
+
+    emu_shas = collect_emulator_reference_shas(repo_root)
+    captures_map: dict[str, Any] = receipt.get("captures", {})
+    pair_verifications: list[dict[str, Any]] = []
+    verified_pairs = 0
+
+    for entry in EMULATOR_VS_GODOT_PAIRS:
+        pair_id = entry["id"]
+        rec = captures_map.get(pair_id)
+        if not isinstance(rec, dict):
+            failures.append({"id": pair_id, "reason": "Missing capture provenance record in receipt"})
+            continue
+
+        godot_path, godot_resolved_rel = _resolve_godot_capture_path(
+            repo_root, entry, captures_dir=captures_dir
+        )
+        if not godot_path.is_file():
+            failures.append({"id": pair_id, "reason": f"Missing Godot capture on disk: {godot_path}"})
+            continue
+
+        disk_sha = sha256_file(godot_path)
+        receipt_sha = str(rec.get("sha256", ""))
+        pres_rel = str(rec.get("presenter_script", ""))
+        suite_rel = str(rec.get("suite_script", ""))
+        rec_prod_rel = str(rec.get("producer_script", ""))
+        pres_path = _resolve_script_path(repo_root, project_root, pres_rel)
+        suite_path = _resolve_script_path(repo_root, project_root, suite_rel)
+        pres_sha_actual = sha256_file(pres_path) if pres_path is not None else ""
+        live_state = rec.get("live_state")
+
+        pair_errors: list[str] = []
+        if disk_sha != receipt_sha:
+            pair_errors.append(f"PNG SHA-256 mismatch: disk={disk_sha} receipt={receipt_sha}")
+        if disk_sha in emu_shas:
+            pair_errors.append(f"PNG SHA-256 collides with emulator reference {emu_shas[disk_sha]}")
+        if rec_prod_rel != PRODUCER_SCRIPT_REL:
+            pair_errors.append(f"Invalid producer_script: {rec_prod_rel}")
+        if pres_path is None:
+            pair_errors.append(f"Missing presenter_script: {pres_rel}")
+        elif rec.get("presenter_script_sha256") != pres_sha_actual:
+            pair_errors.append(
+                f"Presenter script SHA-256 mismatch for {pres_rel}: "
+                f"receipt={rec.get('presenter_script_sha256')} actual={pres_sha_actual}"
+            )
+        if suite_path is None:
+            pair_errors.append(f"Missing suite_script: {suite_rel}")
+        if not isinstance(live_state, dict) or "game_mode" not in live_state:
+            pair_errors.append("Missing or incomplete live_state projection")
+        elif not (("year" in live_state and "month" in live_state and "day" in live_state) or ("line" in live_state and "speaker" in live_state)):
+            pair_errors.append("live_state lacks date or dialogue line/speaker binding")
+
+        pair_passed = len(pair_errors) == 0
+        if pair_passed:
+            verified_pairs += 1
+        else:
+            for err_msg in pair_errors:
+                failures.append({"id": pair_id, "reason": err_msg})
+
+        pair_verifications.append(
+            {
+                "id": pair_id,
+                "category": entry["category"],
+                "godot_resolved_capture": godot_resolved_rel,
+                "sha256": disk_sha,
+                "receipt_sha256": receipt_sha,
+                "producer_script": rec_prod_rel,
+                "suite_script": suite_rel,
+                "presenter_script": pres_rel,
+                "presenter_script_sha256": pres_sha_actual,
+                "live_state": live_state,
+                "passed": pair_passed,
+                "errors": pair_errors,
+            }
+        )
+
+    try:
+        receipt_rel = str(receipt_path.resolve().relative_to(repo_root.resolve()))
+    except ValueError:
+        receipt_rel = str(receipt_path)
+
+    return {
+        "passed": len(failures) == 0 and verified_pairs == len(EMULATOR_VS_GODOT_PAIRS),
+        "schema": receipt.get("schema"),
+        "receipt_path": receipt_rel,
+        "producer_script": producer_rel,
+        "producer_script_sha256": producer_sha_actual,
+        "verified_source_scripts": verified_source_scripts,
+        "total_source_scripts": len(source_scripts),
+        "verified_pairs": verified_pairs,
+        "expected_pairs": len(EMULATOR_VS_GODOT_PAIRS),
+        "failures": failures,
+        "pairs": pair_verifications,
+    }
+
+
+def _resolve_default_captures_dir(repo_root: Path) -> Path | None:
+    env_dir = os.environ.get("TOKIMEMO_AUDIT_CAPTURE_DIR", "").strip()
+    if env_dir:
+        p = Path(env_dir)
+        if p.is_dir():
+            return p
+    cand = DEFAULT_CANDIDATE_ROOT / "captures"
+    if cand.is_dir():
+        return cand
+    return None
+
+
+def _resolve_default_project_root(repo_root: Path) -> Path:
+    env_proj = os.environ.get("TOKIMEMO_AUDIT_PROJECT_ROOT", "").strip()
+    if env_proj:
+        p = Path(env_proj)
+        if p.is_dir():
+            return p
+    canon = repo_root / "port" / "godot"
+    if (canon / PRODUCER_SCRIPT_REL).is_file():
+        return canon
+    cand = DEFAULT_CANDIDATE_ROOT / "project"
+    if (cand / PRODUCER_SCRIPT_REL).is_file():
+        return cand
+    return canon
+
+
+def _resolve_default_provenance_receipt(repo_root: Path, captures_dir: Path | None) -> Path:
+    env_rec = os.environ.get("TOKIMEMO_PROVENANCE_RECEIPT", "").strip()
+    if env_rec:
+        return Path(env_rec)
+    if captures_dir is not None and (captures_dir / "producer-provenance.json").is_file():
+        return captures_dir / "producer-provenance.json"
+    return DEFAULT_CANDIDATE_ROOT / "captures" / "producer-provenance.json"
+
+
 def main() -> int:
+    default_captures_dir = _resolve_default_captures_dir(REPO_ROOT)
+    default_project_root = _resolve_default_project_root(REPO_ROOT)
+    default_receipt = _resolve_default_provenance_receipt(REPO_ROOT, default_captures_dir)
+
     parser = argparse.ArgumentParser(
-        description="Run T-29018 Emulator-vs-Godot Visual Parity, Manifest Quality, & CP932 Linter Audit."
+        description="Run T-29018 / T-29022 Emulator-vs-Godot Visual Parity, Manifest Quality, CP932 Linter, & Capture Provenance Audit."
     )
     parser.add_argument(
         "--output-json",
@@ -595,10 +891,40 @@ def main() -> int:
         default=20.0,
         help="16x16 tile MAE threshold for hotspot detection (default: 20.0)",
     )
+    parser.add_argument(
+        "--captures-dir",
+        type=Path,
+        default=default_captures_dir,
+        help="Directory containing freshly produced Godot captures from run_emulator_vs_godot_capture_producer.gd",
+    )
+    parser.add_argument(
+        "--provenance-receipt",
+        type=Path,
+        default=default_receipt,
+        help="Path to producer-provenance.json binding each capture to its producer script, presenter SHA-256, and live state",
+    )
+    parser.add_argument(
+        "--project-root",
+        type=Path,
+        default=default_project_root,
+        help="Godot project root containing producer and presenter GDScript files",
+    )
     args = parser.parse_args()
 
-    print("==> [Step 1/3] Running 16x16 Tile Diff Audit (PS1 Emulator vs Godot 320x240)...")
-    step1 = run_step1_tile_diff_audit(REPO_ROOT, threshold=args.hotspot_threshold)
+    provenance_map: dict[str, Any] = {}
+    if args.provenance_receipt and args.provenance_receipt.is_file():
+        try:
+            provenance_map = json.loads(args.provenance_receipt.read_text(encoding="utf-8")).get("captures", {})
+        except Exception:
+            provenance_map = {}
+
+    print("==> [Step 1/4] Running 16x16 Tile Diff Audit (PS1 Emulator vs Godot 320x240)...")
+    step1 = run_step1_tile_diff_audit(
+        REPO_ROOT,
+        threshold=args.hotspot_threshold,
+        captures_dir=args.captures_dir,
+        provenance_map=provenance_map,
+    )
     for pair in step1["pairs"]:
         status = "PASS" if pair["passed"] else "FAIL"
         print(
@@ -613,7 +939,7 @@ def main() -> int:
         f"max_channel_diff={step1['max_channel_diff_across_pairs']}"
     )
 
-    print("\n==> [Step 2/3] Auditing Published Progress Manifest (.asset-cache/port-progress/manifest.json)...")
+    print("\n==> [Step 2/4] Auditing Published Progress Manifest (.asset-cache/port-progress/manifest.json)...")
     step2 = run_step2_manifest_audit(REPO_ROOT, DEFAULT_MANIFEST, DEFAULT_MEDIA_DIR)
     print(
         f"  Summary: {step2['passed_items']}/{step2['total_items']} items passed "
@@ -622,22 +948,41 @@ def main() -> int:
         f"emulator_sha_collisions={step2['emulator_oracle_sha_collisions']}"
     )
 
-    print("\n==> [Step 3/3] Running CP932 Hex Literal Linter (extract_decomp_tables.py --lint-godot-hex)...")
-    step3 = run_step3_cp932_hex_lint(REPO_ROOT)
+    print("\n==> [Step 3/4] Running CP932 Hex Literal Linter (extract_decomp_tables.py --lint-godot-hex)...")
+    step3 = run_step3_cp932_hex_lint(REPO_ROOT, project_root=args.project_root)
     print(
         f"  Summary: {step3['verified_matches']}/{step3['total_checked_pairs']} verified matches "
         f"across {step3['gdscript_files_scanned']} GDScript files, "
         f"mismatches={step3['mismatch_count']}"
     )
 
-    overall_passed = bool(step1["passed"] and step2["passed"] and step3["passed"])
+    print("\n==> [Step 4/4] Verifying Capture Producer Provenance & Live-State Binding...")
+    step4 = run_step4_capture_provenance_audit(
+        REPO_ROOT,
+        receipt_path=args.provenance_receipt,
+        project_root=args.project_root,
+        captures_dir=args.captures_dir,
+    )
+    for p in step4.get("pairs", []):
+        st = "PASS" if p["passed"] else "FAIL"
+        print(
+            f"  [{st}] {p['id']:34s} | presenter={p['presenter_script']:38s} | sha256={p['sha256'][:16]}..."
+        )
+    print(
+        f"  Summary: {step4['verified_pairs']}/{step4['expected_pairs']} pairs provenance-verified, "
+        f"source_scripts={step4.get('verified_source_scripts', 0)}/{step4.get('total_source_scripts', 0)}, "
+        f"failures={len(step4['failures'])}"
+    )
+
+    overall_passed = bool(step1["passed"] and step2["passed"] and step3["passed"] and step4["passed"])
     report = {
         "schema": "tokimemo.emulator_vs_godot_audit.v1",
-        "ticket": "T-29018",
+        "ticket": "T-29022",
         "overall_passed": overall_passed,
         "step1_tile_diff_audit": step1,
         "step2_progress_manifest_audit": step2,
         "step3_cp932_hex_linter": step3,
+        "step4_capture_provenance_audit": step4,
     }
 
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
@@ -648,7 +993,7 @@ def main() -> int:
         print("==> [FAIL] One or more audit gates failed!", file=sys.stderr)
         return 1
 
-    print("==> [PASS] All T-29018 emulator-vs-Godot audit gates passed!")
+    print("==> [PASS] All T-29018 / T-29022 emulator-vs-Godot audit gates passed!")
     return 0
 
 

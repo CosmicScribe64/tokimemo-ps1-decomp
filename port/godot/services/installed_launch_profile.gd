@@ -12,10 +12,11 @@ const ENTRY_CAP := "new_game.entry"
 const OPENING_RESOURCES_CAP := "new_game.opening_resources"
 const GAMEPLAY_CAP := "new_game.gameplay"
 const FILE_ROLES := ["name_entry_rules", "name_entry_content", "rule_tables", "hud_manifest", "hud_context", "holiday_scene", "holiday_text"]
-const DIR_ROLES := ["font_root", "school_day_media", "spring_media", "weekday56_media", "club_media", "date_preview", "opening_pack", "geko_dialogue", "prologue_text", "first_arrival_media", "prologue_hud", "opening_audio", "original_first_arrival_bgm"]
+const DIR_ROLES := ["font_root", "school_day_media", "spring_media", "weekday56_media", "club_media", "date_preview", "opening_pack", "geko_dialogue", "prologue_text", "first_arrival_media", "first_arrival_board", "prologue_hud", "opening_audio", "original_first_arrival_bgm"]
 const ENTRY_ROLES := ["name_entry_rules", "name_entry_content", "font_root"]
 const OPENING_RESOURCE_ROLES := ["prologue_text", "first_arrival_media", "prologue_hud", "opening_pack"]
 const ROLE_MANIFESTS := {"prologue_text":"manifest.json","first_arrival_media":"manifest.json",
+	"first_arrival_board":"manifest.json",
 	"prologue_hud":"manifest.json","opening_audio":"opening-audio.json","opening_pack":"opening.json",
 	"original_first_arrival_bgm":"source.json"}
 const GAMEPLAY_ROLES := ["rule_tables", "school_day_media", "spring_media", "weekday56_media", "club_media", "hud_manifest", "hud_context", "holiday_scene", "holiday_text", "date_preview", "opening_pack"]

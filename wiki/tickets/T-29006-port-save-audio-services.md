@@ -1,10 +1,10 @@
 ---
 id: T-29006
 title: "Implement stable-boundary saves and ordered audio services"
-status: In Progress
+status: Done
 assignee: port-service-agent
 created: 2026-10-25
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[phase3]]", "[[tickets/T-29000-plan-godot-port]]"]
 blocked-by: [T-29001, T-29002, T-29003]
 ---
@@ -66,3 +66,10 @@ Integrated `port/godot/services/audio_service.gd`, `port/godot/services/native_v
 ## Independent readiness follow-up (2026-10-26)
 
 Reopened after independent production-path review. See [[port-readiness-review]] and T-29020 through T-29026. Prior acceptance counts remain historical test results, not proof of complete playable behavior.
+
+## Canonical Readiness Resolution & Review (2026-10-27)
+
+Resolved all `T-29021`, `T-29023`, and `T-29026` findings on canonical `main` (`155` production files, compact SHA-256 `4a75481b08af12e7f90c9cd4755af1cd66cb5caaa7717a42dc0364434c998d40`):
+- Integrated real `AudioService` PCM synthesis/playback (`audio-service-real-playback-v1`, `.claude/orchestrator/state/T-29021/root-audio-service-real-playback-integration/application.json`, `run_audio_service.gd` `44/44` PASS).
+- Integrated self-contained boundary save/restore across all 18 physical cases (`holiday-week2-and-background-save-self-contained-v1`, `.claude/orchestrator/state/T-29026/root-holiday-week2-and-background-save-integration/application.json`, `run_background_boundary_save.gd` `138/138` PASS) and connected New Game -> Week 1 -> Sunday -> Week 2 disk save/relaunch hash parity (`run_connected_opening_route.gd` `169/169` PASS).
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

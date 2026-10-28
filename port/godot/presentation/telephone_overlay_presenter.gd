@@ -15,8 +15,10 @@ extends "res://presentation/date_appointment_presenter.gd"
 const OverlayRules = preload("res://overlays/telephone_overlay.gd")
 const CalendarPhoneRules = preload("res://rules/calendar_phone_screens.gd")
 
-# Authentic 64x64 Shiori notebook photo (REC(0x68) decoded from CD sector 0x9D5F 0x801A0000/0x801B0000/0x801B0200)
-const SHIORI_PHOTO_B64 := "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"
+const JOHO_SOURCE_PATH := "CDROM/FUKUTEST/JOHO.NBN"
+const JOHO_SOURCE_SHA256 := "a67acfd5c81f369ba92434f73aa45f17348d44ac4ee8a737af08c09df30989e2"
+const JOHO_PHOTO_SHA256 := "8d1b1e8a1fee64ff941f534f848f41e4073ed7ca514021ba3d754f702d950bb6"
+const JOHO_SCHEMA := "tokimemo.joho-shiori-preview.v1"
 
 # Exact CP932 byte hex encodings verified from CD sector 0x9D5F and SLPM_861.58
 const STR_HEX := {
@@ -139,23 +141,122 @@ const STR_HEX := {
 var _shiori_notebook_photo: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+var live_context: Dictionary = {}
 
 
-func open_telephone_preview(hud_manifest_path: String, font_root: String, date_pack_root: String, hud_sha: String = HUD_SHA) -> bool:
+func set_live_context(ctx: Dictionary) -> void:
+	live_context = ctx.duplicate(true)
+
+
+func _resolve_stats(stats: Array) -> Array:
+	if not stats.is_empty():
+		return stats
+	if live_context.get("stats") is Array and not (live_context["stats"] as Array).is_empty():
+		return live_context["stats"]
+	if live_context.get("params") is Array and not (live_context["params"] as Array).is_empty():
+		var out: Array = []
+		for p_word: Variant in live_context["params"]:
+			var pw: int = int(p_word)
+			out.append((pw >> 16) if absi(pw) >= 65536 else pw)
+		return out
+	var zeros: Array = []
+	zeros.resize(9)
+	zeros.fill(0)
+	return zeros
+
+
+func _resolve_date_field(val: int, key: String, fallback: int) -> int:
+	if val >= 0:
+		return val
+	if live_context.has(key):
+		return int(live_context[key])
+	return fallback
+
+
+func _load_external_notebook_photo(date_pack_root: String, explicit_photo_root: String = "") -> Image:
+	var candidates: Array[String] = []
+	if not explicit_photo_root.is_empty():
+		candidates.append(explicit_photo_root)
+	var env_root: String = OS.get_environment("TOKIMEMO_JOHO_PHOTO_PACK")
+	if not env_root.is_empty():
+		candidates.append(env_root)
+	if not date_pack_root.is_empty():
+		candidates.append(date_pack_root.get_base_dir().path_join("joho-shiori-preview-v1"))
+		candidates.append(date_pack_root.path_join("joho-shiori-preview-v1"))
+		candidates.append(date_pack_root.get_base_dir().path_join("installed-clean-v1/packs/joho_shiori"))
+	candidates.append("/workspace/.asset-cache/port/joho-shiori-preview-v1")
+	candidates.append("/workspace/.claude/orchestrator/state/T-29022/candidate-v1/files/project/tests/fixtures/joho-shiori")
+
+	for root: String in candidates:
+		if root.is_empty():
+			continue
+		var manifest_path: String = root.path_join("manifest.json")
+		if not FileAccess.file_exists(manifest_path):
+			continue
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
+		if not parsed is Dictionary or parsed.get("schema") != JOHO_SCHEMA:
+			if not explicit_photo_root.is_empty():
+				error = "JOHO photo pack schema is invalid"
+				return null
+			continue
+		var source: Variant = parsed.get("source")
+		if not source is Dictionary or source.get("path") != JOHO_SOURCE_PATH or source.get("sha256") != JOHO_SOURCE_SHA256:
+			if not explicit_photo_root.is_empty():
+				error = "JOHO photo pack does not identify the reviewed original source"
+				return null
+			continue
+		var image_name: String = str(parsed.get("asset", ""))
+		var image_path: String = root.path_join(image_name)
+		if image_name != "shiori-notebook.png" or not FileAccess.file_exists(image_path):
+			if not explicit_photo_root.is_empty():
+				error = "JOHO photo PNG is missing"
+				return null
+			continue
+		if FileAccess.get_sha256(image_path) != JOHO_PHOTO_SHA256 or parsed.get("asset_sha256") != JOHO_PHOTO_SHA256:
+			if not explicit_photo_root.is_empty():
+				error = "JOHO photo PNG SHA-256 mismatch"
+				return null
+			continue
+		var img := Image.new()
+		if img.load(image_path) == OK and img.get_size() == Vector2i(64, 64):
+			img.convert(Image.FORMAT_RGBA8)
+			return img
+
+	if not explicit_photo_root.is_empty():
+		error = "JOHO photo pack manifest is missing or invalid"
+		return null
+
+	if _shiori_portrait_image != null and _shiori_portrait_image.get_width() >= 64 and _shiori_portrait_image.get_height() >= 64:
+		var region_rect := Rect2i(
+			clampi((_shiori_portrait_image.get_width() - 64) / 2, 0, _shiori_portrait_image.get_width() - 64),
+			clampi(8, 0, _shiori_portrait_image.get_height() - 64),
+			64,
+			64
+		)
+		var cropped: Image = _shiori_portrait_image.get_region(region_rect)
+		cropped.convert(Image.FORMAT_RGBA8)
+		return cropped
+	return null
+
+
+func open_date_preview(hud_manifest_path: String, font_root: String, date_pack_root: String, hud_sha: String = HUD_SHA) -> bool:
+	return open_telephone_preview(hud_manifest_path, font_root, date_pack_root, hud_sha, "")
+
+func open_telephone_preview(hud_manifest_path: String, font_root: String, date_pack_root: String, hud_sha: String = HUD_SHA, joho_photo_pack_root: String = "") -> bool:
 	recorded_glyphs.clear()
 	bounding_box_violations.clear()
-	_shiori_notebook_photo = Image.new()
-	if _shiori_notebook_photo.load_png_from_buffer(Marshalls.base64_to_raw(SHIORI_PHOTO_B64)) != OK:
-		error = "failed to decode Shiori notebook photo"
+	var ok := super.open_date_preview(hud_manifest_path, font_root, date_pack_root, hud_sha)
+	if not ok:
 		return false
-	var ok := open_date_preview(hud_manifest_path, font_root, date_pack_root, hud_sha)
+	_shiori_notebook_photo = _load_external_notebook_photo(date_pack_root, joho_photo_pack_root)
+	if _shiori_notebook_photo == null:
+		if error.is_empty():
+			error = "failed to load external Shiori notebook photo"
+		return false
 	_ensure_compositor_coverage()
-	return ok
+	return true
 
 func _ensure_compositor_coverage() -> void:
-	if _shiori_notebook_photo == null:
-		_shiori_notebook_photo = Image.new()
-		_shiori_notebook_photo.load_png_from_buffer(Marshalls.base64_to_raw(SHIORI_PHOTO_B64))
 	if _compositor != null and _compositor.last_coverage == null:
 		_compositor.last_coverage = Image.create(320, 240, false, Image.FORMAT_L8)
 		_compositor.last_coverage.fill(Color.BLACK)
@@ -166,18 +267,24 @@ func _ensure_compositor_coverage() -> void:
 # ==============================================================================
 
 func render_girl_profile_notebook_screen(girl_id: int = OverlayRules.GIRL_SHIORI,
-		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
-		year: int = 95, month: int = 4, day: int = 9,
-		weekday: int = 6, day_kind: int = 1,
+		stats: Array = [],
+		year: int = -1, month: int = -1, day: int = -1,
+		weekday: int = -1, day_kind: int = -1,
 		bg_uv: Vector2i = Vector2i(1, 0)) -> Image:
 	_ensure_compositor_coverage()
+	var eff_stats: Array = _resolve_stats(stats)
+	var eff_year: int = _resolve_date_field(year, "year", 0)
+	var eff_month: int = clampi(_resolve_date_field(month, "month", 1), 1, 12)
+	var eff_day: int = clampi(_resolve_date_field(day, "day", 1), 1, 31)
+	var eff_weekday: int = clampi(_resolve_date_field(weekday, "weekday", 0), 0, 6)
+	var eff_day_kind: int = _resolve_date_field(day_kind, "day_kind", 0)
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
 	# 1. Authentic PS1 checkerboard background (scrolled + seasonal CLUT)
-	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(eff_month))
 
 	# 2. Wooden parameter panel (Frame 61, OT 12..11)
-	_draw_parameter_panel(target, stats)
+	_draw_parameter_panel(target, eff_stats)
 
 	# 3. Bottom message window (Frame 62, OT 8..7, Rect2i(27, 166, 266, 52))
 	_draw_message_window(target)
@@ -216,7 +323,7 @@ func render_girl_profile_notebook_screen(girl_id: int = OverlayRules.GIRL_SHIORI
 		_draw_actor(target, int(phone_digits[d_idx]) + 0x4E, Vector2i(phone_x[d_idx], -0x5A))
 
 	# 8. Date pillar (Actor 16 Frame 60, OT 3 TAIL)
-	_draw_date_pillar(target, year, month, day, weekday, day_kind)
+	_draw_date_pillar(target, eff_year, eff_month, eff_day, eff_weekday, eff_day_kind)
 
 	# 9. Profile Title / Full Name at screen (32, 22) (x: -0x80, y: -0x62 in C) and Phone header at (128, 22)
 	var name_key := "name_shiori"
@@ -316,15 +423,21 @@ func render_girl_profile_notebook_screen(girl_id: int = OverlayRules.GIRL_SHIORI
 
 func render_date_place_menu_screen(page: int = 0, selected_idx: int = 0,
 		avail_table: Array = [],
-		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
-		year: int = 95, month: int = 4, day: int = 9,
-		weekday: int = 6, day_kind: int = 1,
+		stats: Array = [],
+		year: int = -1, month: int = -1, day: int = -1,
+		weekday: int = -1, day_kind: int = -1,
 		bg_uv: Vector2i = Vector2i(22, 21)) -> Image:
 	_ensure_compositor_coverage()
+	var eff_stats: Array = _resolve_stats(stats)
+	var eff_year: int = _resolve_date_field(year, "year", 0)
+	var eff_month: int = clampi(_resolve_date_field(month, "month", 1), 1, 12)
+	var eff_day: int = clampi(_resolve_date_field(day, "day", 1), 1, 31)
+	var eff_weekday: int = clampi(_resolve_date_field(weekday, "weekday", 0), 0, 6)
+	var eff_day_kind: int = _resolve_date_field(day_kind, "day_kind", 0)
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
-	_draw_parameter_panel(target, stats)
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(eff_month))
+	_draw_parameter_panel(target, eff_stats)
 	_draw_message_window(target)
 	_draw_cal_base(target, Rect2i(0, 33, 283, 125))
 
@@ -340,7 +453,7 @@ func render_date_place_menu_screen(page: int = 0, selected_idx: int = 0,
 
 	# Notebook spiral rings & divider (REC(96).unk_18 = 0x40 = 64 at (-16, -19) in phone_date_place_availability_build:434)
 	_draw_actor(target, 64, Vector2i(-16, -19))
-	_draw_date_pillar(target, year, month, day, weekday, day_kind)
+	_draw_date_pillar(target, eff_year, eff_month, eff_day, eff_weekday, eff_day_kind)
 
 	# Title: デートスポット at (32, 38)
 	_draw_text_hex_checked(target, STR_HEX["title_datespot"], Vector2i(32, 38), 3, "notebook")
@@ -388,17 +501,25 @@ func render_date_place_menu_screen(page: int = 0, selected_idx: int = 0,
 
 func render_date_day_menu_screen(candidate_slots: Array[Dictionary] = [],
 		selected_slot_idx: int = 0,
-		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
-		year: int = 95, month: int = 4, day: int = 9,
-		weekday: int = 6, day_kind: int = 1,
+		stats: Array = [],
+		year: int = -1, month: int = -1, day: int = -1,
+		weekday: int = -1, day_kind: int = -1,
 		bg_uv: Vector2i = Vector2i(9, 12),
-		day_count: int = 5, player_birthday: int = 0x19B,
+		day_count: int = -1, player_birthday: int = -1,
 		frame_count: int = 6145) -> Image:
 	_ensure_compositor_coverage()
+	var eff_stats: Array = _resolve_stats(stats)
+	var eff_year: int = _resolve_date_field(year, "year", 0)
+	var eff_month: int = clampi(_resolve_date_field(month, "month", 1), 1, 12)
+	var eff_day: int = clampi(_resolve_date_field(day, "day", 1), 1, 31)
+	var eff_weekday: int = clampi(_resolve_date_field(weekday, "weekday", 0), 0, 6)
+	var eff_day_kind: int = _resolve_date_field(day_kind, "day_kind", 0)
+	var eff_day_count: int = _resolve_date_field(day_count, "day_count", 0)
+	var eff_birthday: int = _resolve_date_field(player_birthday, "player_birthday", 0)
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
-	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
-	_draw_parameter_panel(target, stats)
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(eff_month))
+	_draw_parameter_panel(target, eff_stats)
 	_draw_message_window(target)
 
 	# OT 5 TAIL: Base Gouraud calendar panel (cal_base_show in hud_screens.c:640)
@@ -411,8 +532,7 @@ func render_date_day_menu_screen(candidate_slots: Array[Dictionary] = [],
 		var s_day: int = int(slot.get("day", 1))
 		var s_offset: int = int(slot.get("month_offset", 0))
 
-		# Exact calendar_cell_x/y - 0x10 (April 1995 first_weekday=5 -> Saturday col 6; May 1995 first_weekday=0 -> Monday col 1)
-		var first_v: int = 5 if s_offset == 0 else 0
+		var first_v: int = int(slot.get("first_weekday", 5 if s_offset == 0 else 0))
 		var cell_col: int = (first_v + s_day) % 7
 		var cell_row: int = (first_v + s_day) / 7
 		var cell_x: int = 24 + s_offset * 136 + cell_col * 16
@@ -424,14 +544,14 @@ func render_date_day_menu_screen(candidate_slots: Array[Dictionary] = [],
 
 	# OT 3: Notebook spiral rings & divider (Actor 96 Frame 67) + Date pillar + 2-Month Calendar grids
 	_draw_actor(target, 67, Vector2i(-16, -19))
-	_draw_date_pillar(target, year, month, day, weekday, day_kind)
+	_draw_date_pillar(target, eff_year, eff_month, eff_day, eff_weekday, eff_day_kind)
 	_blit_hud_asset(target, "assets/calendar.month-00.calendar-grid.png", Vector2i(24, 32))
 	_blit_hud_asset(target, "assets/calendar.month-00.month-label.png", Vector2i(72, 32))
 	_blit_hud_asset(target, "assets/calendar.month-01.calendar-grid.png", Vector2i(160, 32))
 	_blit_hud_asset(target, "assets/calendar.month-01.month-label.png", Vector2i(208, 32))
 
 	# OT 1: Sinusoidal Biorhythm curves (calendar_view_update -> hud_biorhythm_graph_draw in call_and_invitation_flow.c:1687)
-	_draw_biorhythm_graph(target, day_count, player_birthday, frame_count)
+	_draw_biorhythm_graph(target, eff_day_count, eff_birthday, frame_count)
 
 	# OT 0: Bottom prompt: デートする日を選んで下さい + Hand cursor
 	_draw_text_hex_checked(target, STR_HEX["prompt_choose_day"], Vector2i(32, 170), 0, "message_window")
@@ -446,9 +566,9 @@ func render_date_day_menu_screen(candidate_slots: Array[Dictionary] = [],
 
 func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 		response_kind: String = "accepted",
-		stats: Array = [97, 43, 40, 40, 38, 33, 59, 4, 3],
-		year: int = 95, month: int = 4, day: int = 9,
-		weekday: int = 6, day_kind: int = 1,
+		stats: Array = [],
+		year: int = -1, month: int = -1, day: int = -1,
+		weekday: int = -1, day_kind: int = -1,
 		bg_uv: Vector2i = Vector2i(20, 14), native_prompt: Dictionary = {}) -> Image:
 	var prompt: Dictionary = phone_wait_marker_command(native_prompt)
 	if not str(prompt.get("error", "")).is_empty():
@@ -459,10 +579,16 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 		return null
 	error = ""
 	_ensure_compositor_coverage()
+	var eff_stats: Array = _resolve_stats(stats)
+	var eff_year: int = _resolve_date_field(year, "year", 0)
+	var eff_month: int = clampi(_resolve_date_field(month, "month", 1), 1, 12)
+	var eff_day: int = clampi(_resolve_date_field(day, "day", 1), 1, 31)
+	var eff_weekday: int = clampi(_resolve_date_field(weekday, "weekday", 0), 0, 6)
+	var eff_day_kind: int = _resolve_date_field(day_kind, "day_kind", 0)
 	var target := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 
 	# 1. Background: Checkerboard + Holiday room background
-	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(month))
+	_draw_checkerboard(target, bg_uv, _compositor.hud_season_index(eff_month))
 	if _holiday_room_image != null:
 		_compositor._blit(target, _holiday_room_image, null, Vector2i(0, 72), false)
 
@@ -471,8 +597,8 @@ func render_girl_phone_call_vn_scene(girl_id: int = OverlayRules.GIRL_SHIORI,
 		_compositor._blit(target, _shiori_portrait_image, null, Vector2i(81, 8), false)
 
 	# 3. Wooden parameter panel & date pillar
-	_draw_parameter_panel(target, stats)
-	_draw_date_pillar(target, year, month, day, weekday, day_kind)
+	_draw_parameter_panel(target, eff_stats)
+	_draw_date_pillar(target, eff_year, eff_month, eff_day, eff_weekday, eff_day_kind)
 
 	# 4. Bottom message window
 	_draw_message_window(target)

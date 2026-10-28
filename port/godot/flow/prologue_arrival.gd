@@ -184,7 +184,8 @@ static func _petals_init(state: State, rng: Rng) -> void:
 		var raw_following_brightness: int = rng.next("prologue_petals_init:following_brightness:" + str(index))
 		petals.append({
 			"unk_18": raw_unk_18 & 7,
-			"unk_07": 0,
+			"unk_07": Math.u8(raw_following_brightness),
+			"unk_08": 0,
 			"x_word": ((raw_x % 440) - 0xa0) << 16,
 			"y_word": (-0x78 - (raw_y % 120)) << 16,
 			"brightness": Math.u8(raw_following_brightness),
@@ -203,8 +204,11 @@ static func _petals_update(state: State, rng: Rng, allow_wrap: int, services: Di
 		return
 	for index: int in range(PETAL_COUNT):
 		var petal: Dictionary = petals[index]
-		petal["unk_07"] = Math.u8(int(petal["unk_07"]) + 1)
-		var sine_value: Variant = sine_callback.call(int(petal["unk_07"]) << 5)
+		var next_unk_07: int = Math.u8(int(petal["unk_07"]) + 1)
+		petal["unk_07"] = next_unk_07
+		if petal.has("brightness"):
+			petal["brightness"] = next_unk_07
+		var sine_value: Variant = sine_callback.call(next_unk_07 << 5)
 		if typeof(sine_value) != TYPE_INT:
 			out.error = "prologue sine service returned an unknown value"
 			return
@@ -297,34 +301,71 @@ static func _stage_01_board(state: State, rng: Rng, services: Dictionary, out: S
 		0:
 			match state.substep:
 				0:
-					services["actor_read"].call(state, 9, ACTOR_DEST_PRIMARY, 0x4954, out)
-					state.substep += 1
+					state.opening["D_800B3DB0"] = 1
+					if state.opening.get("prologue_hud_live") is Dictionary:
+						state.opening["prologue_hud_live"]["date_visible"] = true
+					if services.has("board_read"):
+						services["board_read"].call(state, 9, 0x80162000, 0x4954, out)
+					else:
+						services["actor_read"].call(state, 9, 0x80162000, 0x4954, out)
+					if out.error.is_empty():
+						state.substep += 1
 				1:
 					if _poll_cd_ready(state, services, out, "board load"):
+						state.opening.erase("actor96")
+						state.opening["actor96_draw_flags"] = 0
+						state.opening.erase("actor96_source_draw")
+						if state.opening.get("prologue_hud_live") is Dictionary:
+							state.opening["prologue_hud_live"]["date_visible"] = false
 						_petals_init(state, rng)
-						state.opening["prologue_scene_counter"] = 0
-						state.next_step()
+						if services.has("board_decode"):
+							services["board_decode"].call(state, out)
+						if out.error.is_empty():
+							state.opening["prologue_scene_counter"] = 0
+							state.next_step()
+					elif out.error.is_empty():
+						if state.opening.get("prologue_hud_live") is Dictionary:
+							state.opening["prologue_hud_live"]["date_visible"] = true
 				_:
 					out.error = "prologue stage 1 step 0 substep outside source dispatch"
+			if out.error.is_empty():
+				services["arrival_draw"].call(state, 1, out)
 		1:
-			_petals_update(state, rng, 0, services, out)
 			var counter: int = int(state.opening.get("prologue_scene_counter", 0))
-			if (state.frame_count & 1) != 0 and counter < BOARD_SCROLL_LIMIT:
-				counter += 1
+			if (state.frame_count & 1) != 0:
+				counter = Math.s16(counter + 1)
 				state.opening["prologue_scene_counter"] = counter
 			if not _run_line_pair(state, 1, 0, services, out):
 				match state.substep:
 					2:
-						if counter >= BOARD_SCROLL_LIMIT:
+						if counter >= 0x141:
+							counter = BOARD_SCROLL_LIMIT
+							state.opening["prologue_scene_counter"] = counter
 							state.substep += 1
 					3:
-						services["background_read"].call(state, 0x495d, 0, out)
+						counter = BOARD_SCROLL_LIMIT
+						state.opening["prologue_scene_counter"] = counter
+						state.mode_step_timer = 0
+						services["background_read"].call(state, 0x495d, 1, out)
 						state.substep += 1
 					4:
-						if _decode_bg_and_check(state, 0, 0x495d, services, out, "stage 1 bg"):
+						counter = BOARD_SCROLL_LIMIT
+						state.opening["prologue_scene_counter"] = counter
+						var old_timer: int = state.mode_step_timer
+						state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
+						if Math.u32(old_timer) >= 0x79:
+							state.substep += 1
+					5:
+						counter = BOARD_SCROLL_LIMIT
+						state.opening["prologue_scene_counter"] = counter
+						if _decode_bg_and_check(state, 1, 0x495d, services, out, "stage 1 bg"):
 							state.next_stage()
 					_:
 						out.error = "prologue stage 1 step 1 substep outside source dispatch"
+			if out.error.is_empty() and services.has("board_scroll_draw"):
+				services["board_scroll_draw"].call(state, counter, out)
+			if out.error.is_empty():
+				_petals_update(state, rng, 1 if counter == BOARD_SCROLL_LIMIT else 0, services, out)
 		_:
 			out.error = "prologue stage 1 step outside source dispatch"
 	if out.error.is_empty():
@@ -333,226 +374,538 @@ static func _stage_01_board(state: State, rng: Rng, services: Dictionary, out: S
 
 static func _stage_02_names(state: State, rng: Rng, services: Dictionary, out: Session.FrameResult) -> void:
 	_petals_update(state, rng, 1, services, out)
-	var counter: int = int(state.opening.get("prologue_scene_counter", FULL_BRIGHTNESS))
-	if not _run_line_pair(state, 2, 3, services, out):
+	if not out.error.is_empty():
+		return
+	if state.mode_step == 0:
+		var counter: int = int(state.opening.get("prologue_scene_counter", 0))
 		match state.substep:
 			0:
 				services["background_read"].call(state, 0x4966, 1, out)
-				state.substep += 1
+				state.opening["prologue_line"] = 2
+				state.opening["prologue_scene_counter"] = 0
+				if out.error.is_empty():
+					services["line_start"].call(state, 2, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					state.substep += 1
 			1:
-				if _decode_bg_and_check(state, 1, 0x4966, services, out, "stage 2 bg"):
-					state.opening["prologue_scene_counter"] = FULL_BRIGHTNESS
-					state.substep += 1
+				if _poll_cd_ready(state, services, out, "stage 2 bg"):
+					var decoded: Variant = services["background_decode"].call(state, 1, out)
+					if out.error.is_empty() and typeof(decoded) != TYPE_INT:
+						out.error = "stage 2 bg background decode result is unknown"
+					elif out.error.is_empty():
+						state.opening["prologue_scene_counter"] = FULL_BRIGHTNESS
+						state.substep += 1
+						state.opening["bg_fade_amount"] = FULL_BRIGHTNESS
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					services["line_run"].call(state, out)
 			2:
-				counter -= 2
-				state.opening["prologue_scene_counter"] = counter
-				if counter < 0x11:
+				if counter >= 0x11:
+					counter = Math.s16(counter - 3)
+					state.opening["prologue_scene_counter"] = counter
+					state.opening["bg_fade_amount"] = counter & 0xff
+				else:
 					state.substep += 1
+				if out.error.is_empty() and services.has("crossfade_draw"):
+					services["crossfade_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					services["line_run"].call(state, out)
+			3:
+				services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("crossfade_draw"):
+					services["crossfade_draw"].call(state, 1, out)
+			4:
+				if out.error.is_empty() and services.has("crossfade_draw"):
+					services["crossfade_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					if counter < FULL_BRIGHTNESS:
+						state.opening["bg_fade_amount"] = counter & 0xff
+						counter = Math.s16(counter + 4)
+						state.opening["prologue_scene_counter"] = counter
+					else:
+						counter = FULL_BRIGHTNESS
+						state.opening["prologue_scene_counter"] = counter
+						state.opening["bg_fade_amount"] = FULL_BRIGHTNESS
+						state.opening["bg_brightness"] = FULL_BRIGHTNESS
+						services["actor_read"].call(state, 0x31, 0x801a4000, 0xab18, out)
+						state.substep += 1
 			5:
-				counter += 2
-				if counter >= FULL_BRIGHTNESS:
-					counter = FULL_BRIGHTNESS
+				if counter >= 3:
+					counter = Math.s16(counter - 1)
+					state.opening["prologue_scene_counter"] = counter
+					state.opening["bg_brightness"] = counter & 0xff
+				else:
 					state.substep += 1
-				state.opening["prologue_scene_counter"] = counter
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
 			6:
-				services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xab18, out)
-				state.substep += 1
-			7:
 				if _poll_cd_ready(state, services, out, "stage 2 actor 0"):
-					services["actor_read"].call(state, 9, ACTOR_DEST_SECONDARY, 0xac3f, out)
-					state.substep += 1
-			8:
+					if services.has("prologue_palette_adjust"):
+						services["prologue_palette_adjust"].call(state, out)
+					if out.error.is_empty():
+						services["actor_read"].call(state, 0x11, ACTOR_DEST_PRIMARY, 0xac3f, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			7:
 				if _poll_cd_ready(state, services, out, "stage 2 actor 1"):
-					services["background_read"].call(state, 0xacdd, 0, out)
 					state.substep += 1
-			9:
-				if _decode_bg_and_check(state, 0, 0xacdd, services, out, "stage 2 bg 2"):
-					state.substep += 1
-			10:
-				counter -= 2
-				state.opening["prologue_scene_counter"] = counter
-				if counter < 2:
-					state.next_stage()
+					services["background_read"].call(state, 0xacdd, 1, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			8:
+				if _decode_bg_and_check(state, 1, 0xacdd, services, out, "stage 2 bg 2"):
+					if services.has("o12_backup"):
+						services["o12_backup"].call(state, out)
+					if out.error.is_empty():
+						state.next_stage()
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
 			_:
 				out.error = "prologue stage 2 substep outside source dispatch"
+	else:
+		out.error = "prologue stage 2 step outside source dispatch"
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 
 
 static func _stage_03_line_03(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
-	match state.substep:
-		0:
-			state.opening["prologue_scene_counter"] = 0
-			state.opening["prologue_line"] = 3
-			services["line_start"].call(state, 3, out)
-			state.substep += 1
-		1:
-			if counter < FULL_BRIGHTNESS:
-				state.opening["prologue_scene_counter"] = counter + 2
-			services["line_run"].call(state, out)
-		2:
-			services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaa23, out)
-			state.substep += 1
-		3:
-			if _poll_cd_ready(state, services, out, "stage 3 actor"):
-				services["background_read"].call(state, 0xace6, 1, out)
-				state.substep += 1
-		4:
-			if _decode_bg_and_check(state, 1, 0xace6, services, out, "stage 3 bg"):
-				state.next_stage()
-		_:
-			out.error = "prologue stage 3 substep outside source dispatch"
+	if state.mode_step == 0:
+		match state.substep:
+			0:
+				state.opening["prologue_line"] = 3
+				state.opening["prologue_scene_counter"] = 0
+				if services.has("stage_03_setup"):
+					services["stage_03_setup"].call(state, out)
+				else:
+					state.opening["D_801220E0"] = 0
+					state.opening["D_801220E1"] = 0
+					state.opening["D_801220E2"] = 0
+					state.opening["bg_brightness"] = 0
+				if out.error.is_empty():
+					services["line_start"].call(state, 3, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					state.substep += 1
+			1:
+				var d0: int = int(state.opening.get("D_801220E0", 0))
+				if d0 < 0x81:
+					var next_d: int = Math.u8(d0 + 4)
+					state.opening["D_801220E0"] = next_d
+					state.opening["D_801220E1"] = next_d
+					state.opening["D_801220E2"] = next_d
+					state.opening["bg_brightness"] = Math.u8(int(state.opening.get("bg_brightness", 0)) + 4)
+				services["arrival_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					services["line_run"].call(state, out)
+			2:
+				services["actor_read"].call(state, 0x31, 0x801a4000, 0xaa23, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			3:
+				if _poll_cd_ready(state, services, out, "stage 3 actor"):
+					services["background_read"].call(state, 0xace6, 1, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			4:
+				var ready: bool = _poll_cd_ready(state, services, out, "stage 3 bg")
+				var decoded: int = -1
+				if ready and out.error.is_empty():
+					var dec_res: Variant = services["background_decode"].call(state, 1, out)
+					if out.error.is_empty() and typeof(dec_res) != TYPE_INT:
+						out.error = "stage 3 bg background decode result is unknown"
+					elif out.error.is_empty():
+						decoded = int(dec_res)
+				if ready and out.error.is_empty():
+					if decoded == -1:
+						services["background_read"].call(state, 0xace6, 1, out, true)
+					else:
+						state.next_stage()
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			_:
+				out.error = "prologue stage 3 substep outside source dispatch"
+	else:
+		out.error = "prologue stage 3 step outside source dispatch"
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 
 
 static func _stage_04_line_04(state: State, rng: Rng, services: Dictionary, out: Session.FrameResult) -> void:
-	match state.substep:
-		0:
-			services["actor_read"].call(state, 9, ACTOR_DEST_SECONDARY, 0xabb8, out)
-			state.substep += 1
-		1:
-			if _poll_cd_ready(state, services, out, "stage 4 actor 0"):
-				state.substep += 1
-		2:
-			state.opening["prologue_line"] = 4
-			services["line_start"].call(state, 4, out)
-			state.substep += 1
-		3:
-			var blink_draw: int = rng.next("prologue_stage4:blink")
-			if (blink_draw & BLINK_MASK_7F) == BLINK_MASK_7F:
-				state.opening["prologue_blink"] = 1
-			services["line_run"].call(state, out)
-		4:
-			services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xab18, out)
-			state.substep += 1
-		5:
-			if _poll_cd_ready(state, services, out, "stage 4 actor 1"):
-				services["background_read"].call(state, 0xacdd, 0, out)
-				state.substep += 1
-		6:
-			if _decode_bg_and_check(state, 0, 0xacdd, services, out, "stage 4 bg"):
-				state.next_stage()
-		_:
-			out.error = "prologue stage 4 substep outside source dispatch"
+	if state.mode_step == 0:
+		match state.substep:
+			0:
+				services["actor_read"].call(state, 9, ACTOR_DEST_PRIMARY, 0xabb8, out)
+				if out.error.is_empty():
+					state.opening["prologue_line"] = 4
+					state.opening["prologue_scene_counter"] = 0
+					if services.has("prologue_palette_adjust"):
+						services["prologue_palette_adjust"].call(state, out)
+					if out.error.is_empty() and services.has("stage_03_to_04_setup"):
+						services["stage_03_to_04_setup"].call(state, 0, out)
+					if out.error.is_empty():
+						services["line_start"].call(state, 4, out)
+					if out.error.is_empty():
+						state.substep += 1
+					if out.error.is_empty():
+						services["arrival_draw"].call(state, 1, out)
+			1:
+				if _poll_cd_ready(state, services, out, "stage 4 actor 0"):
+					if services.has("stage_04_setup"):
+						services["stage_04_setup"].call(state, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			2:
+				if services.has("stage_04_blink_check"):
+					services["stage_04_blink_check"].call(state, rng, out)
+				else:
+					var blink_draw: int = rng.next("prologue_stage4:blink")
+					if (blink_draw & BLINK_MASK_7F) == BLINK_MASK_7F:
+						state.opening["prologue_blink"] = 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+				if out.error.is_empty():
+					services["line_run"].call(state, out)
+			3:
+				services["actor_read"].call(state, 0x31, 0x801a4000, 0xab18, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			4:
+				if _poll_cd_ready(state, services, out, "stage 4 actor 1"):
+					if services.has("prologue_palette_adjust"):
+						services["prologue_palette_adjust"].call(state, out)
+					if out.error.is_empty():
+						if services.has("stage_04_to_05_setup"):
+							services["stage_04_to_05_setup"].call(state, out)
+					if out.error.is_empty():
+						state.next_stage()
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			_:
+				out.error = "prologue stage 4 substep outside source dispatch"
+	else:
+		out.error = "prologue stage 4 step outside source dispatch"
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 
 
 static func _stage_05_transition(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
-	match state.substep:
-		0:
-			state.opening["prologue_scene_counter"] = 0
-			state.substep += 1
-		1:
-			counter += 2
-			state.opening["prologue_scene_counter"] = counter
-			if counter >= FULL_BRIGHTNESS:
-				_emit_audio_command(state, AUDIO_CMD_SE_605, services, out)
-				services["background_read"].call(state, 0xacf6, 1, out)
-				state.substep += 1
-		2:
-			if _decode_bg_and_check(state, 1, 0xacf6, services, out, "stage 5 bg 0"):
-				services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaa54, out)
-				state.substep += 1
-		3:
-			if _poll_cd_ready(state, services, out, "stage 5 actor 0"):
-				state.opening["prologue_scene_counter"] = 0x58
-				state.substep += 1
-		4:
-			counter -= 2
-			state.opening["prologue_scene_counter"] = counter
-			if counter < -0x20:
-				services["background_read"].call(state, 0xacd4, 0, out)
-				state.substep += 1
-		5:
-			if _decode_bg_and_check(state, 0, 0xacd4, services, out, "stage 5 bg 1"):
-				services["actor_read"].call(state, 13, ACTOR_DEST_SECONDARY, 0xabca, out)
-				state.substep += 1
-		6:
-			if _poll_cd_ready(state, services, out, "stage 5 actor 1"):
-				state.next_stage()
-		_:
-			out.error = "prologue stage 5 substep outside source dispatch"
+	if state.mode_step == 0:
+		var counter: int = int(state.opening.get("prologue_scene_counter", 0))
+		match state.substep:
+			0:
+				if counter < 0x40:
+					counter = Math.s16(counter + 1)
+				var old_counter: int = counter
+				counter = Math.s16(counter + 1)
+				state.opening["prologue_scene_counter"] = counter
+				if old_counter < 0x80:
+					if state.opening.get("actor97") is Dictionary:
+						state.opening.actor97["x"] = -0x20 - counter
+					if out.error.is_empty():
+						services["arrival_draw"].call(state, 1, out)
+				else:
+					_emit_audio_command(state, AUDIO_CMD_SE_605, services, out)
+					if out.error.is_empty() and services.has("stage_05_arm_enter"):
+						services["stage_05_arm_enter"].call(state, out)
+					if out.error.is_empty():
+						services["background_read"].call(state, 0xacf6, 1, out)
+					if out.error.is_empty():
+						state.substep += 1
+					if out.error.is_empty():
+						services["arrival_draw"].call(state, 1, out)
+			1:
+				var a97: Variant = state.opening.get("actor97")
+				var step_97: int = int(a97.get("seq_step", 0)) if a97 is Dictionary else -1
+				var unk08_97: int = int(a97.get("sequence_counter", -1)) if a97 is Dictionary else -1
+				if step_97 == 3 and unk08_97 == 0:
+					_emit_audio_command(state, AUDIO_CMD_SE_605, services, out)
+				var flags_97: int = int(a97.get("flags", 0)) if a97 is Dictionary else 0
+				if out.error.is_empty() and (flags_97 & 1) == 0:
+					if _poll_cd_ready(state, services, out, "stage 5 bg 0"):
+						state.opening["prologue_scene_counter"] = 0x80
+						var dec_0: Variant = services["background_decode"].call(state, 1, out)
+						if out.error.is_empty() and typeof(dec_0) != TYPE_INT:
+							out.error = "stage 5 bg 0 background decode result is unknown"
+						elif out.error.is_empty():
+							if services.has("stage_05_color_burst"):
+								services["stage_05_color_burst"].call(state, int(dec_0), out)
+							if out.error.is_empty():
+								services["actor_read"].call(state, 0x31, 0x801a4000, 0xaa54, out)
+							if out.error.is_empty():
+								state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			2:
+				if counter < -0x20:
+					state.substep += 1
+				else:
+					counter = Math.s16(counter - 3)
+					state.opening["prologue_scene_counter"] = counter
+					if state.opening.get("actor97") is Dictionary:
+						state.opening.actor97["x"] = -0x20 - counter
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			3:
+				if _poll_cd_ready(state, services, out, "stage 5 actor 0"):
+					services["background_read"].call(state, 0xacd4, 1, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			4:
+				if _poll_cd_ready(state, services, out, "stage 5 bg 1"):
+					services["actor_read"].call(state, 0x19, 0x801f0000, 0xabca, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			5:
+				var ready: bool = _poll_cd_ready(state, services, out, "stage 5 actor 1")
+				if ready and out.error.is_empty():
+					if services.has("stage_05_cut06_setup"):
+						services["stage_05_cut06_setup"].call(state, out)
+					var decoded: int = -1
+					if out.error.is_empty():
+						var dec_res: Variant = services["background_decode"].call(state, 1, out)
+						if out.error.is_empty() and typeof(dec_res) != TYPE_INT:
+							out.error = "stage 5 bg 1 background decode result is unknown"
+						elif out.error.is_empty():
+							decoded = int(dec_res)
+					if out.error.is_empty():
+						if decoded == -1:
+							services["background_read"].call(state, 0xacd4, 1, out, true)
+						else:
+							if services.has("stage_05_to_06_setup"):
+								services["stage_05_to_06_setup"].call(state, decoded, out)
+							if out.error.is_empty():
+								state.next_stage()
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			_:
+				out.error = "prologue stage 5 substep outside source dispatch"
+	else:
+		out.error = "prologue stage 5 step outside source dispatch"
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 
 
 static func _stage_06_yoshio_greeting(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	if state.substep == 0:
-		state.opening["prologue_scene_counter"] = 0
-	if _run_line_pair(state, 5, 0, services, out):
-		pass
-	elif _run_line_pair(state, 6, 2, services, out):
-		pass
-	elif _run_line_pair(state, 7, 4, services, out):
-		pass
-	elif state.substep == 6:
+	if state.mode_step == 0:
 		state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
-		if Math.u32(state.mode_step_timer) >= SHORT_HOLD_FRAMES:
-			state.substep += 1
-	elif _run_line_pair(state, 8, 7, services, out):
-		pass
-	elif state.substep == 9:
-		_emit_audio_command(state, AUDIO_CMD_SE_503, services, out)
-		state.opening["prologue_line"] = 9
-		services["line_start"].call(state, 9, out)
-		state.substep += 1
-	elif state.substep == 10:
-		services["line_run"].call(state, out)
-	elif _run_line_pair(state, 10, 11, services, out):
-		pass
-	elif state.substep == 13:
-		services["background_read"].call(state, 0xacec, 1, out)
-		state.substep += 1
-	elif state.substep == 14:
-		if _decode_bg_and_check(state, 1, 0xacec, services, out, "stage 6 bg"):
-			services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaa85, out)
-			state.substep += 1
-	elif state.substep == 15:
-		if _poll_cd_ready(state, services, out, "stage 6 actor 0"):
-			services["actor_read"].call(state, 13, ACTOR_DEST_SECONDARY, 0xabe3, out)
-			state.substep += 1
-	elif state.substep == 16:
-		if _poll_cd_ready(state, services, out, "stage 6 actor 1"):
-			state.next_stage()
+		var s6_timer: int = Math.add32(int(state.opening.get("stage_06_timer", 0)), 1)
+		state.opening["stage_06_timer"] = s6_timer
+		match state.substep:
+			0:
+				state.opening["prologue_line"] = 5
+				services["line_start"].call(state, 5, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			1:
+				if services.has("stage_06_cd_wait"):
+					services["stage_06_cd_wait"].call(state, out)
+				else:
+					state.substep += 1
+					state.mode_step_timer = 0
+					state.opening["stage_06_timer"] = 0
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			2:
+				if services.has("stage_06_actor98_step"):
+					services["stage_06_actor98_step"].call(state, out)
+				if out.error.is_empty() and s6_timer == 4 and services.has("stage_06_actor102_set"):
+					services["stage_06_actor102_set"].call(state, out)
+				if out.error.is_empty():
+					services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("stage_06_lip_sync_yoshio"):
+					services["stage_06_lip_sync_yoshio"].call(state, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			3:
+				state.opening["prologue_line"] = 6
+				services["line_start"].call(state, 6, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			4:
+				services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("stage_06_lip_sync_yoshio"):
+					services["stage_06_lip_sync_yoshio"].call(state, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			5:
+				state.opening["prologue_line"] = 7
+				services["line_start"].call(state, 7, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			6:
+				services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("stage_06_lip_sync_yoshio"):
+					services["stage_06_lip_sync_yoshio"].call(state, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			7:
+				state.opening["prologue_line"] = 8
+				services["line_start"].call(state, 8, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			8:
+				services["line_run"].call(state, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			9:
+				state.opening["prologue_line"] = 9
+				services["line_start"].call(state, 9, out)
+				if out.error.is_empty():
+					state.substep += 1
+					if services.has("stage_06_actor99_turn"):
+						services["stage_06_actor99_turn"].call(state, out)
+					if out.error.is_empty():
+						_emit_audio_command(state, AUDIO_CMD_SE_503, services, out)
+					if out.error.is_empty():
+						services["arrival_draw"].call(state, 1, out)
+			10:
+				services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("stage_06_mouth_girl_a"):
+					services["stage_06_mouth_girl_a"].call(state, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			11:
+				state.opening["prologue_line"] = 10
+				services["line_start"].call(state, 10, out)
+				if out.error.is_empty():
+					state.substep += 1
+					if services.has("stage_06_actor103_set"):
+						services["stage_06_actor103_set"].call(state, out)
+					if out.error.is_empty():
+						services["arrival_draw"].call(state, 1, out)
+			12:
+				services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("stage_06_mouth_girl_b"):
+					services["stage_06_mouth_girl_b"].call(state, out)
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			13:
+				services["background_read"].call(state, 0xacec, 1, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			14:
+				if _poll_cd_ready(state, services, out, "stage 6 bg"):
+					services["actor_read"].call(state, 0x31, 0x801a4000, 0xaa85, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			15:
+				if _poll_cd_ready(state, services, out, "stage 6 actor 0"):
+					services["actor_read"].call(state, 0x19, 0x801f0000, 0xabe3, out)
+					if out.error.is_empty():
+						state.substep += 1
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			16:
+				var ready: bool = _poll_cd_ready(state, services, out, "stage 6 actor 1")
+				if ready and out.error.is_empty():
+					var decoded: int = -1
+					var dec_res: Variant = services["background_decode"].call(state, 1, out)
+					if out.error.is_empty() and typeof(dec_res) != TYPE_INT:
+						out.error = "stage 6 bg background decode result is unknown"
+					elif out.error.is_empty():
+						decoded = int(dec_res)
+					if out.error.is_empty():
+						if decoded == -1:
+							services["background_read"].call(state, 0xacec, 1, out, true)
+						else:
+							if services.has("stage_06_to_07_setup"):
+								services["stage_06_to_07_setup"].call(state, decoded, out)
+							if out.error.is_empty():
+								state.next_stage()
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
+			_:
+				out.error = "prologue stage 6 substep outside source dispatch"
 	else:
-		out.error = "prologue stage 6 substep outside source dispatch"
+		out.error = "prologue stage 6 step outside source dispatch"
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 
 
 static func _stage_07_line_11(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	if not _run_line_pair(state, 11, 0, services, out):
+	if state.mode_step == 0:
 		match state.substep:
+			0:
+				state.opening["prologue_line"] = 11
+				services["line_start"].call(state, 11, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			1:
+				if services.has("stage_07_cd_wait"):
+					services["stage_07_cd_wait"].call(state, out)
+				else:
+					state.substep += 1
+				if out.error.is_empty():
+					if state.opening.get("actor96") is Dictionary and int(state.opening.actor96.get("x", -160)) < -160:
+						state.opening.actor96["x"] = int(state.opening.actor96["x"]) + 1
+					services["arrival_draw"].call(state, 1, out)
 			2:
-				services["background_read"].call(state, 0xad00, 0, out)
-				state.substep += 1
+				services["line_run"].call(state, out)
+				if out.error.is_empty() and services.has("stage_07_lip_sync_line_11"):
+					services["stage_07_lip_sync_line_11"].call(state, out)
+				if out.error.is_empty() and state.opening.get("actor96") is Dictionary and int(state.opening.actor96.get("x", -160)) < -160:
+					var next_x: int = int(state.opening.actor96["x"]) + 1
+					state.opening.actor96["x"] = next_x
+					if state.opening.get("actor97") is Dictionary:
+						state.opening.actor97["x"] = next_x
+					if state.opening.get("actor98") is Dictionary:
+						state.opening.actor98["x"] = next_x
+				if out.error.is_empty():
+					services["arrival_draw"].call(state, 1, out)
 			3:
-				if _decode_bg_and_check(state, 0, 0xad00, services, out, "stage 7 bg"):
+				services["background_read"].call(state, 0xad00, 1, out)
+				if out.error.is_empty():
+					state.substep += 1
+					services["arrival_draw"].call(state, 1, out)
+			4:
+				if _decode_bg_and_check(state, 1, 0xad00, services, out, "stage 7 bg"):
 					services["bank_load_start"].call(state, "prologue_rei", out)
 					_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
 					_emit_audio_command(state, AUDIO_CMD_FADE_B1, services, out)
 					state.substep += 1
-			4:
+			5:
 				var status: Variant = services["bank_poll"].call(state, out)
 				if out.error.is_empty() and typeof(status) != TYPE_INT:
 					out.error = "stage 7 bank poll status is unknown"
 				elif out.error.is_empty() and int(status) == 1:
-					services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaab6, out)
-					state.substep += 1
-			5:
-				if _poll_cd_ready(state, services, out, "stage 7 actor 0"):
-					services["actor_read"].call(state, 5, ACTOR_DEST_SECONDARY, 0xabfc, out)
+					services["actor_read"].call(state, 0x31, 0x801a4000, 0xaab6, out)
 					state.substep += 1
 			6:
+				if _poll_cd_ready(state, services, out, "stage 7 actor 0"):
+					services["actor_read"].call(state, 9, ACTOR_DEST_PRIMARY, 0xabfc, out)
+					state.substep += 1
+			7:
 				if _poll_cd_ready(state, services, out, "stage 7 actor 1"):
 					services["bank_start"].call(state, 1, 0, out)
 					state.next_stage()
 			_:
 				out.error = "prologue stage 7 substep outside source dispatch"
+	else:
+		out.error = "prologue stage 7 step outside source dispatch"
 	if out.error.is_empty():
 		services["outer_draw"].call(state, 2, out)
 

@@ -206,11 +206,21 @@ class TelephoneSessionState:
 	var menu_cursor_0: int = 0
 	var menu_cursor_1: int = 0
 
+	# Live caller context from SchoolDayController state
+	var live_year: int = -1
+	var live_month: int = -1
+	var live_day: int = -1
+	var live_weekday: int = -1
+	var live_day_kind: int = -1
+	var live_day_count: int = 0
+	var live_player_birthday: int = 0
+	var live_stats: Array[int] = []
+
 	# Date invitation selections
 	var invitation_place: int = PLACE_NEARBY_PARK
-	var invitation_year: int = 95
-	var invitation_month: int = 4
-	var invitation_day: int = 9
+	var invitation_year: int = -1
+	var invitation_month: int = -1
+	var invitation_day: int = -1
 	var invitation_result: String = "" # "accepted", "refused_soft", "refused_med", "refused_hard", "answering_machine"
 
 	# Girl appraisal cached state (for Yoshio's notebook)
@@ -222,6 +232,106 @@ class TelephoneSessionState:
 	# Dialogue lines
 	var dialogue_speaker: String = ""
 	var dialogue_lines: Array[String] = []
+
+
+static func extract_live_context(rule_state: Dictionary) -> Dictionary:
+	var year: int = int(rule_state.get("year", 0))
+	var month: int = int(rule_state.get("month", 0))
+	var day: int = int(rule_state.get("day", 0))
+	var weekday: int = int(rule_state.get("weekday", 0))
+	var day_count: int = int(rule_state.get("day_count", 0))
+	var player_birthday: int = int(rule_state.get("player_birthday", 0))
+	var day_kind: int = int(rule_state.get("day_kind", 0))
+	if not rule_state.has("day_kind") and rule_state.get("calendar") is Array:
+		var cal_arr: Array = rule_state["calendar"]
+		if not cal_arr.is_empty() and cal_arr[0] is Dictionary:
+			var dk_arr: Variant = cal_arr[0].get("day_kind", [])
+			if dk_arr is Array and day >= 0 and day < dk_arr.size():
+				day_kind = int(dk_arr[day])
+
+	var stats: Array[int] = []
+	if rule_state.get("stats") is Array and not (rule_state["stats"] as Array).is_empty():
+		for v: Variant in rule_state["stats"]:
+			stats.append(int(v))
+	elif rule_state.get("params") is Array:
+		for p_word: Variant in rule_state["params"]:
+			var pw: int = int(p_word)
+			var val: int = (pw >> 16) if absi(pw) >= 65536 else pw
+			stats.append(val)
+
+	var cal0: Dictionary = {}
+	var cal1: Dictionary = {}
+	if rule_state.get("calendar") is Array:
+		var cals: Array = rule_state["calendar"]
+		if cals.size() > 0 and cals[0] is Dictionary:
+			cal0 = cals[0].duplicate(true)
+			if not cal0.has("days") and cal0.get("day_kind") is Array and not (cal0["day_kind"] as Array).is_empty():
+				cal0["days"] = int(cal0["day_kind"][0])
+		if cals.size() > 1 and cals[1] is Dictionary:
+			cal1 = cals[1].duplicate(true)
+			if not cal1.has("days") and cal1.get("day_kind") is Array and not (cal1["day_kind"] as Array).is_empty():
+				cal1["days"] = int(cal1["day_kind"][0])
+
+	var progress: Array = []
+	if rule_state.get("progress_state") is Array:
+		progress = (rule_state["progress_state"] as Array).duplicate()
+
+	var appointments: Array = [0, 0, 0, 0, 0, 0, 0, 0]
+	if rule_state.get("appointment_words") is Array and (rule_state["appointment_words"] as Array).size() >= 8:
+		appointments = (rule_state["appointment_words"] as Array).duplicate()
+
+	return {
+		"year": year,
+		"month": month,
+		"day": day,
+		"weekday": weekday,
+		"day_kind": day_kind,
+		"day_count": day_count,
+		"player_birthday": player_birthday,
+		"stats": stats,
+		"cal0": cal0,
+		"cal1": cal1,
+		"progress_state": progress,
+		"quarter_flags": rule_state.get("quarter_flags", {}),
+		"appointment_words": appointments,
+		"girls": rule_state.get("girls", []),
+	}
+
+
+static func create_session_from_live_state(rule_state: Dictionary, girl_id: int = GIRL_SHIORI) -> TelephoneSessionState:
+	var ctx: Dictionary = extract_live_context(rule_state)
+	var session := TelephoneSessionState.new()
+	session.current_girl = girl_id
+	session.selected_target_girl = girl_id
+	session.live_year = int(ctx["year"])
+	session.live_month = int(ctx["month"])
+	session.live_day = int(ctx["day"])
+	session.live_weekday = int(ctx["weekday"])
+	session.live_day_kind = int(ctx["day_kind"])
+	session.live_day_count = int(ctx["day_count"])
+	session.live_player_birthday = int(ctx["player_birthday"])
+	session.live_stats = ctx["stats"]
+	session.invitation_year = session.live_year
+	session.invitation_month = session.live_month
+	session.invitation_day = session.live_day
+	var progress: Array = ctx["progress_state"]
+	if progress.size() < 21:
+		progress.resize(21)
+		progress.fill(1)
+	var qflags: Dictionary = ctx["quarter_flags"] if ctx["quarter_flags"] is Dictionary else {}
+	session.available_places_page0 = build_date_place_availability(
+		0, session.live_year, session.live_month, session.live_day, progress, qflags, session.live_month
+	)
+	session.available_places_page1 = build_date_place_availability(
+		1, session.live_year, session.live_month, session.live_day, progress, qflags, session.live_month
+	)
+	var cal0: Dictionary = ctx["cal0"]
+	var cal1: Dictionary = ctx["cal1"]
+	if not cal0.is_empty() and not cal1.is_empty():
+		session.available_date_slots = build_available_date_slots(
+			session.live_year, session.live_month, session.live_day, cal0, cal1, ctx["appointment_words"]
+		)
+	return session
 
 
 # ---------------------------------------------------------------------------

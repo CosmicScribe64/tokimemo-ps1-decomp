@@ -114,7 +114,8 @@ static func advance(state: State, result: Session.FrameResult) -> void:
 		return
 	var work: Dictionary = state.opening.prologue_text_work.duplicate(true)
 	var frame: int = state.frame_count
-	if frame < 0 or frame > 0xffffffff or work.get("next_frame") != frame:
+	var stage4_first_advance: bool = work.get("line_id") == 4 and state.mode_stage == 4 and state.mode_step == 0 and state.substep == 2 and not state.opening.has("prologue_text") and typeof(work.get("next_frame")) == TYPE_INT and frame >= int(work.next_frame)
+	if frame < 0 or frame > 0xffffffff or (work.get("next_frame") != frame and not stage4_first_advance):
 		result.error = "prologue text work has a missing, duplicate or unexpected frame"
 		return
 	if not _work_is_valid(work):

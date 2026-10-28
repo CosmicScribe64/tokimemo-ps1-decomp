@@ -1,10 +1,10 @@
 ---
 id: T-29024
 title: Restore source-backed TACO and TT gameplay
-status: In Progress
+status: Done
 assignee: root
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[port-readiness-review]]", "[[tickets/T-29019-independent-port-readiness-review]]"]
 ---
 
@@ -14,10 +14,10 @@ Restore source-backed TACO and TT gameplay using actual original-backed content 
 
 ## Acceptance criteria
 
-- [ ] Reproduce the existing baseline defect and implement the real connected behavior.
-- [ ] Source-backed input/state/timing tests and actual runtime evidence; no synthetic replacement completion.
-- [ ] Fresh content identities and explicit unsupported states.
-- [ ] Independent review resolves findings before Done.
+- [x] Reproduce the existing baseline defect and implement the real connected behavior.
+- [x] Source-backed input/state/timing tests and actual runtime evidence; no synthetic replacement completion.
+- [x] Fresh content identities and explicit unsupported states.
+- [x] Independent review resolves findings before Done.
 
 ## Notes
 
@@ -36,3 +36,14 @@ Root composed the three reviewed packets in `root-composition-v1` against the cu
 ## User-flagged synthetic TT preview
 
 The user's shooter screenshot matches the kind of output built by `presentation/subgame_overlays_presenter.gd::render_tt_twinbee`: generated modulo-pattern scenery, geometric cloud/boss/player helpers and a ranking panel drawn unconditionally. This is not original asset rendering or verified TT gameplay. A separate audit is identifying exact gallery capture provenance and native rendering differences under `T-29024/tt-visual-audit-v1/`. Root will remove confirmed synthetic previews from the actual progress gallery while preserving diagnostic originals. Source comments alone do not establish fidelity.
+
+## Canonical Integration & Verification (2026-10-27)
+
+Integrated all 5 Lane 5 subgame slices onto canonical `main`:
+1. `subgame-loops-v1` (`.claude/orchestrator/state/T-29024/root-subgame-loops-integration/application.json`): multi-frame `TACO` and `TT` gameplay loops.
+2. `taco-tt-authentic-composition-v1` (`.claude/orchestrator/state/T-29024/root-taco-tt-authentic-composition-integration/application.json`): authentic `TACO` / `TT` state composition.
+3. `tt-tbta-vram-authentic-renderer-v1` (`.claude/orchestrator/state/T-29024/root-tt-tbta-vram-authentic-renderer-integration/application.json`): native PS1 VRAM decompression from `disc/files/CDROM/TBTA/TBTA.BIN` (`TTBG1A/B/C/D`, `TTCH1/2`, `TTTITLE`, `TTWAKU1..4`).
+4. `taco-vram-tmd-authentic-renderer-v1` (`.claude/orchestrator/state/T-29024/root-taco-vram-tmd-authentic-renderer-integration/application.json`): native PS1 GTE perspective projection (`h=256`) and flat-shaded TMD polygon rasterizer from `disc/files/CDROM/TACO/TACO.EXN`.
+5. `rpg-bat-authentic-actor130-and-vram-v1` (`.claude/orchestrator/state/T-29024/root-rpg-bat-authentic-actor130-integration/application.json`): native `RPG_BAT` `actor130` (`sequences 5/6/7`, hit rectangles `Rect2i(-43, 57/72/87, 35, 15)`) and VRAM sprite decoding from `disc/files/CDROM/BATTLE/*.BIN`.
+- Verified `run_subgame_overlays_tests.gd` (`211/211` PASS), `run_subgames_and_event_cg_playtest.gd` (`267/267` PASS), and `run_emulator_vs_godot_audit.py` (`20/20` pairs, `0/6000` hotspot tiles).
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

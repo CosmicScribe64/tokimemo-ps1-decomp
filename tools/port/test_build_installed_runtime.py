@@ -119,6 +119,19 @@ class InstalledRuntimeBundleTests(unittest.TestCase):
             {"font_root": ".asset-cache/port/fonts/native-font-v2"}, {})
         self.assertEqual(document["roles"]["font_root"], ".asset-cache/port/fonts/native-font-v2")
 
+    def test_first_arrival_board_role_is_directory(self):
+        board = self.bundle / "packs/first_arrival_board"
+        board.mkdir(parents=True)
+        (board / "manifest.json").write_text('{"schema":"tokimemo.first-arrival-board.v1"}\n')
+        (board / "board.bs").write_bytes(b"synthetic")
+        document = runtime._manifest(
+            self.bundle, self.exe, None,
+            {"first_arrival_board": "packs/first_arrival_board"}, {})
+        self.assertEqual(runtime.ROLE_KINDS["first_arrival_board"], "dir")
+        self.assertEqual(document["roles"]["first_arrival_board"], "packs/first_arrival_board")
+        self.assertIn("packs/first_arrival_board/manifest.json", document["files"])
+        self.assertIn("packs/first_arrival_board/board.bs", document["files"])
+
 
 if __name__ == "__main__":
     unittest.main()

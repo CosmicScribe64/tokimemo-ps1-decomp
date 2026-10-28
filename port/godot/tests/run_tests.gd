@@ -7,10 +7,25 @@ const OPTIONAL_SUITES: Array[String] = [
     "res://tests/week/run_week_tests.gd",
 ]
 
+static func _ensure_default_env() -> void:
+    if OS.get_environment("TOKIMEMO_CONTENT_PACK").is_empty():
+        var roots: Array[String] = []
+        var env_root: String = OS.get_environment("TOKIMEMO_ROOT")
+        if not env_root.is_empty():
+            roots.append(env_root)
+        roots.append("/repo")
+        roots.append("/workspace")
+        for root_dir: String in roots:
+            var candidate: String = root_dir.path_join(".asset-cache/port/prologue-nbn-preview-v4-schema")
+            if FileAccess.file_exists(candidate.path_join("manifest.json")):
+                OS.set_environment("TOKIMEMO_CONTENT_PACK", candidate)
+                break
+
 func _initialize() -> void:
     call_deferred("_run")
 
 func _run() -> void:
+    _ensure_default_env()
     var failures: Array[String] = []
     var suite_count: int = 0
     var project_file: FileAccess = FileAccess.open("res://project.godot", FileAccess.READ)

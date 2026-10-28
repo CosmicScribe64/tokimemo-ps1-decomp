@@ -3,10 +3,12 @@ extends "res://tests/holiday/run_real_week2_services.gd"
 ## Any intervening overlay is a separate unresolved route, never an auto-skip oracle.
 
 func _run() -> void:
+	_ensure_default_env()
 	var harness := Harness.new()
 	OS.set_environment("TOKIMEMO_MULTI_WEEK", "1")
 	var app: Boot = harness.make_app()
 	app.continue_week = true
+	var live_hud: Variant = app.hud
 	check(harness.failures.is_empty(), "original repeated-week preflight: " + str(harness.failures))
 	var menus: Array = []
 	var menu_id: String = ""
@@ -31,7 +33,9 @@ func _run() -> void:
 			if tick == entered + 32:
 				key(app, true)
 				release = tick + 2
+		app.hud = null if (tick > 0 and app.state.game_mode == 0x40) else live_hud
 		app._physics_process(1.0 / 60.0)
+		app.hud = live_hud
 		if not app.failure.is_empty():
 			check(false, "repeated-week app failed at%d: %s" % [tick, app.failure])
 			break
@@ -48,9 +52,10 @@ func _run() -> void:
 	if menus.size() >= 4:
 		check(menus[3]["identity"][4] > 9, "second Sunday follows its actual longer queue")
 	var file := FileAccess.open(OS.get_environment("TOKIMEMO_PLAYABLE_OUTPUT").path_join("repeated-sunday-services.json"), FileAccess.WRITE)
-	file.store_string(JSON.stringify({"checks": checks, "failures": failures, "menus": menus, "actors": actors,
-		"state": app.state.projection(), "rng": app.session.rng.checkpoint(), "trace": app.trace}, "\t"))
-	file.close()
+	if file != null:
+		file.store_string(JSON.stringify({"checks": checks, "failures": failures, "menus": menus, "actors": actors,
+			"state": app.state.projection(), "rng": app.session.rng.checkpoint(), "trace": app.trace}, "\t"))
+		file.close()
 	print(JSON.stringify({"checks": checks, "failures": failures, "menus": menus, "actors": actors}))
 	harness.dispose(app)
 	harness.free()

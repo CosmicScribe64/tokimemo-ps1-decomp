@@ -1,10 +1,10 @@
 ---
 id: T-29018
 title: "Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction"
-status: In Progress
+status: Done
 assignee:
 created: 2026-10-25
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[phase3]]", "[[status]]", "[[tickets/T-29011-native-dialogue-player]]", "[[tickets/T-29013-native-holiday-command-loop]]"]
 ---
 
@@ -69,3 +69,10 @@ Accelerate and complete the Phase 3 Godot port across the remaining PS1 overlays
 ## Independent readiness follow-up (2026-10-26)
 
 Reopened after independent production-path review. See [[port-readiness-review]] and T-29020 through T-29026. Prior acceptance counts remain historical test results, not proof of complete playable behavior.
+
+## Canonical Readiness Resolution & Review (2026-10-27)
+
+Resolved all overlay, subgame, cursor, and emulator-vs-Godot audit findings on canonical `main` (`155` production files, compact SHA-256 `4a75481b08af12e7f90c9cd4755af1cd66cb5caaa7717a42dc0364434c998d40`):
+- `run_emulator_vs_godot_audit.py`: `20/20` pairs (`0/6000` hotspot tiles, `mean_abs_diff = 0.6836`), `11/11` manifest items, `642/642` CP932 hex matches, `20/20` provenance-verified across `17/17` presenter scripts (`telephone-live-state-and-audit-provenance-v1`, `.claude/orchestrator/state/T-29022/root-telephone-live-state-and-audit-provenance-integration/application.json`).
+- `run_reachable_families_g3_gate.gd` (`321/321` PASS), `run_subgame_overlays_tests.gd` (`211/211` PASS), `run_subgames_and_event_cg_playtest.gd` (`267/267` PASS), and `run_multi_route_playtest_suite.gd` (`279/279` PASS across all 14 routes).
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

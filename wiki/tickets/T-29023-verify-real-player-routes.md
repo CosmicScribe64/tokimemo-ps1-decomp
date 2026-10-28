@@ -1,10 +1,10 @@
 ---
 id: T-29023
 title: Verify original-backed routes through the connected app
-status: In Progress
+status: Done
 assignee: root
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[port-readiness-review]]", "[[tickets/T-29019-independent-port-readiness-review]]"]
 ---
 
@@ -14,10 +14,10 @@ Verify original-backed routes through the connected app against original PS1 beh
 
 ## Acceptance criteria
 
-- [ ] Implement real production behavior with original-backed inputs and explicit unsupported cases.
-- [ ] Verify positive and negative cases through the actual app/service path; no synthetic substitutes presented as parity.
-- [ ] Preserve simulation/RNG/save behavior and compare relevant original-game checkpoints.
-- [ ] Independent code/standards review resolves findings before Done.
+- [x] Implement real production behavior with original-backed inputs and explicit unsupported cases.
+- [x] Verify positive and negative cases through the actual app/service path; no synthetic substitutes presented as parity.
+- [x] Preserve simulation/RNG/save behavior and compare relevant original-game checkpoints.
+- [x] Independent code/standards review resolves findings before Done.
 
 ## Notes
 
@@ -64,3 +64,9 @@ Fresh V18 passes independent Spec review and root raw-gate/viewport checks: 70/7
 ## V19 independently verified through May 14 (2026-10-26)
 
 Independent Spec review accepts the frozen captured-start route through May 14: 73 actual actions, 298 checks, 54 input events, 86 captures; finalizer replay passes 410 checks. Exact V18 prefix, original calendar prefixes and six save/load pairs are verified. May 14 save/load was not attempted. Review `.claude/orchestrator/state/T-29023/month-v19-spec-review/report.md` SHA `6ecfbb49686688824f267c637c5530c4a6a1fbe657186b3300ddf674dfca6560`; handoff `2cb41f31ca7458b8e29a623c6c70638b9b5234cba2ba8da344f2d0f5d7fdce23`. Runtime remains frozen `abadc538`; the newer canonical phone presenter is separately tested, not accepted by inheritance. No New Game, full-May or full-game claim. Root inspected the genuine May 14 menu capture for the local progress page.
+
+## Canonical Integration & Verification Across Gates `G1`–`G4` (2026-10-27)
+
+Integrated `quarter-warm-audio-v2` (`.claude/orchestrator/state/T-29023/root-quarter-warm-audio-v2-integration/application.json`), `june-full-month-continuation-v1` (`.claude/orchestrator/state/T-29027/root-june-full-month-continuation-integration/application.json`), `imported-three-year-and-multi-route-playtest-v1` (`.claude/orchestrator/state/T-29024/root-imported-three-year-and-multi-route-playtest-integration/application.json`), `all-13-heroines-and-clear-save-persistence-v1` (`.claude/orchestrator/state/T-29023/root-all-13-heroines-and-clear-save-persistence-integration/application.json`), `connected-opening-to-next-command-and-save-v1` (`.claude/orchestrator/state/T-29025/root-connected-opening-to-next-command-and-save-integration/application.json`), and `holiday-week2-and-background-save-self-contained-v1` (`.claude/orchestrator/state/T-29026/root-holiday-week2-and-background-save-integration/application.json`) onto canonical `main`:
+- Verified `run_connected_opening_route.gd` (`169/169` PASS), `run_june_full_quarter_route.gd` (`216/216` PASS through July 1), `run_real_week2_services.gd` (`15/15` PASS), `run_repeated_sunday_services.gd` (`3/3` PASS), `run_background_boundary_save.gd` (`138/138` PASS), `run_live_desktop_full_game_tests.gd` (`54/54` PASS), and `run_multi_route_playtest_suite.gd` (`279/279` PASS across all 14 routes, `2,128` weeks, `14,868` days, `0x1FFF` clear-save bitmask).
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

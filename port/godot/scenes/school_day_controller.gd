@@ -18,6 +18,8 @@ const OrdinaryWeek = preload("res://rules/ordinary_week.gd")
 const WeekEnd = preload("res://rules/week_end.gd")
 const SchoolDay = preload("res://rules/school_day.gd")
 const EndingOverlay = preload("res://overlays/ending_overlay.gd")
+const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
+const DayEventModes = preload("res://rules/day_event_modes.gd")
 const MonthStart = preload("res://scenes/month_start_controller.gd")
 
 const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": [13],
@@ -32,6 +34,7 @@ var error: String = ""
 var command_capabilities: Array[int] = []
 var opening_services: Dictionary = {}
 var month_start: MonthStart = MonthStart.new()
+var overlay_dispatcher: OverlayDispatcher = OverlayDispatcher.new()
 
 func _init(validated_tables: Dictionary) -> void:
 	# The caller first validates external-pack provenance against original input.
@@ -90,6 +93,9 @@ func attach(session: Session, state: State) -> String:
 		failure = session.router.bind_mode(binding[0], binding[1])
 		if not failure.is_empty():
 			return failure
+	for ovl_mode: int in DayEventModes.all_overlay_native_modes():
+		if not session.router._handlers.has(ovl_mode):
+			session.router._handlers[ovl_mode] = _overlay_mode
 	session.state = state
 	session.service_completion = service_completion
 	return ""
@@ -99,64 +105,149 @@ func attach_multi_week(session: Session, state: State) -> String:
 	if not failure.is_empty():
 		return failure
 	state.rule_state["allow_multi_week"] = true
-	# Preview overlays are not production callbacks. Missing native events
-	# stop transactionally; reviewed replacements must be composed explicitly.
+	for ovl_mode: int in DayEventModes.all_overlay_native_modes():
+		if not session.router._handlers.has(ovl_mode):
+			session.router._handlers[ovl_mode] = _overlay_mode
 	return ""
 
-func _overlay_mode(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
+func start_overlay(state: State, mode: int, initial_overlay_state: Dictionary = {}, event: Array = []) -> Dictionary:
+	var data: Dictionary = state.rule_state
+	var ovl: Dictionary = overlay_dispatcher.init_overlay(mode, data, event)
+	for k: String in initial_overlay_state.keys():
+		ovl[k] = initial_overlay_state[k]
+	data["overlay_state"] = ovl
+	if state.game_mode != mode:
+		state.reset_game_mode_fields(mode)
+	return ovl
+
+func _apply_overlay_deltas(state: State, deltas: Dictionary) -> void:
+	if deltas.is_empty():
+		return
+	var data: Dictionary = state.rule_state
+	var girl_id: int = int(deltas.get("girl_id", 0))
+	if data.get("girls") is Array and girl_id >= 0 and girl_id < (data["girls"] as Array).size():
+		var g_rec: Dictionary = data["girls"][girl_id]
+		if deltas.has("affection_delta"):
+			var cur_aff: int = State.high(int(g_rec.get("affection_word", 0)))
+			var next_aff: int = clampi(cur_aff + int(deltas["affection_delta"]), 0, 255)
+			g_rec["affection_word"] = State.with_high(int(g_rec.get("affection_word", 0)), next_aff)
+			if g_rec.has("affection"):
+				g_rec["affection"] = next_aff
+		if deltas.has("tokimeki_delta"):
+			var cur_tok: int = State.high(int(g_rec.get("tokimeki_word", 0)))
+			var next_tok: int = clampi(cur_tok + int(deltas["tokimeki_delta"]), 0, 255)
+			g_rec["tokimeki_word"] = State.with_high(int(g_rec.get("tokimeki_word", 0)), next_tok)
+			if g_rec.has("tokimeki"):
+				g_rec["tokimeki"] = next_tok
+		if deltas.has("syoushin_delta"):
+			var cur_syou: int = State.high(int(g_rec.get("syoushin_word", 0)))
+			var next_syou: int = clampi(cur_syou + int(deltas["syoushin_delta"]), 0, 255)
+			g_rec["syoushin_word"] = State.with_high(int(g_rec.get("syoushin_word", 0)), next_syou)
+			if g_rec.has("syoushin"):
+				g_rec["syoushin"] = next_syou
+		if deltas.has("date_count_delta"):
+			var dc_add: int = int(deltas["date_count_delta"])
+			if g_rec.get("counters") is Array and (g_rec["counters"] as Array).size() > 1:
+				g_rec["counters"][1] = int(g_rec["counters"][1]) + dc_add
+			if g_rec.get("scene_counters") is Array and (g_rec["scene_counters"] as Array).size() > 1:
+				g_rec["scene_counters"][1] = int(g_rec["scene_counters"][1]) + dc_add
+			if g_rec.has("date_count"):
+				g_rec["date_count"] = int(g_rec["date_count"]) + dc_add
+
+	if deltas.get("param_deltas") is Dictionary and data.get("params") is Array:
+		var p_deltas: Dictionary = deltas["param_deltas"]
+		var params_arr: Array = data["params"]
+		for p_idx_var: Variant in p_deltas.keys():
+			var p_idx: int = int(p_idx_var)
+			if p_idx >= 0 and p_idx < params_arr.size():
+				var cur_p: int = State.high(int(params_arr[p_idx]))
+				var next_p: int = clampi(cur_p + int(p_deltas[p_idx_var]), 0, 999)
+				params_arr[p_idx] = State.with_high(int(params_arr[p_idx]), next_p)
+
+	if deltas.get("appointment_words") is Array:
+		data["appointment_words"] = (deltas["appointment_words"] as Array).duplicate()
+
+	for k: String in [
+		"ending_completed", "confessed_girl", "ending_type", "ending_phases", "clear_save_completed", "album_clear_mask", "clear_name_slot",
+		"talk_result_code", "rpg_result_code", "loot_rewards",
+		"high_scores", "high_score_names", "stages_cleared", "score", "total_score", "menu_hit_3", "system_data_flag",
+		"tt_stages_cleared", "tt_last_time_frames", "tt_rankings",
+	]:
+		if deltas.has(k):
+			data[k] = deltas[k]
+	if deltas.has("return_payload") and deltas["return_payload"] is Dictionary:
+		data["subgame_return_payload"] = (deltas["return_payload"] as Dictionary).duplicate(true)
+
+func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
 	if state == null:
 		return
 	var data: Dictionary = state.rule_state
-	var mode: int = state.game_mode
+	var ovl_state: Dictionary = data.get("overlay_state", {}) if data.get("overlay_state") is Dictionary else {}
+	var mode: int = int(ovl_state.get("mode", state.game_mode))
+	var idx: int = clampi(int(data.get("day_event_index", 0)), 0, 31)
+	var event: Array = data["day_events"][idx] if data.get("day_events") is Array and idx < (data["day_events"] as Array).size() else [0xff, 0, 0, 0]
+
 	state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
-	result.presentation.append({"kind": "overlay_mode", "mode": mode, "year": data["year"], "month": data["month"], "day": data["day"]})
-	if mode == 0x5c:
-		# Graduation Day Legendary Tree Confession & Ending (src/ovl/ending/graduation_candidate_selection.c)
-		var param_vals: Array[int] = []
-		for p_word: int in data["params"]:
-			param_vals.append(State.high(p_word))
-		var eval_girls: Array = []
-		for g_idx: int in range(mini(13, data["girls"].size())):
-			var g_rec: Dictionary = data["girls"][g_idx]
-			eval_girls.append({
-				"tokimeki": State.high(g_rec["tokimeki_word"]),
-				"affection": State.high(g_rec["affection_word"]),
-				"syoushin": State.high(g_rec["syoushin_word"]),
-				"met": 1 if (g_rec["flags"] & 2) != 0 else 0,
-				"flags": g_rec["flags"],
-				"scene_counters": g_rec["counters"],
-				"story_stage": int(g_rec.get("story_stage", 0)),
-				"rei_subcount": int(g_rec.get("rei_subcount", 0)),
+
+	if ovl_state.is_empty() or int(ovl_state.get("mode", -1)) != mode:
+		ovl_state = overlay_dispatcher.init_overlay(mode, data, event, rng)
+		data["overlay_state"] = ovl_state
+		if input.pressed == 0:
+			result.presentation.append({
+				"kind": "overlay_mode",
+				"mode": mode,
+				"dispatcher_mode": ovl_state.get("dispatcher_mode", mode),
+				"year": data["year"],
+				"month": data["month"],
+				"day": data["day"],
+				"overlay_state": ovl_state.duplicate(true),
+				"completed": false,
 			})
-		var health_nibble: int = (data["player_flags"] >> 8) & 0xF
-		var scores: Dictionary = EndingOverlay.compute_girl_scores(
-			eval_girls, param_vals, param_vals[8] if param_vals.size() > 8 else 0, health_nibble
-		)
-		var sel: Dictionary = EndingOverlay.select_graduation_candidate(
-			eval_girls, scores["points_by_girl"], data["scene_flags"], 0
-		)
-		var gate: Dictionary = EndingOverlay.evaluate_candidate_flag_gate(int(sel["current_girl"]), eval_girls)
-		var best_girl: int = int(gate["redirected_girl"])
-		if best_girl == EndingOverlay.GIRL_YOSHIO:
-			var best_aff: int = 79
-			for g_idx: int in range(11):
-				var aff: int = State.high(data["girls"][g_idx]["affection_word"])
-				if (data["girls"][g_idx]["flags"] & 2) != 0 and aff > best_aff:
-					best_aff = aff
-					best_girl = g_idx
+			return
+
+	var step_out: Dictionary = overlay_dispatcher.step_overlay(mode, ovl_state, input.pressed, data, rng)
+	var updated_ovl: Dictionary = step_out.get("state", ovl_state)
+	data["overlay_state"] = updated_ovl
+	var is_completed: bool = bool(step_out.get("completed", false))
+
+	result.presentation.append({
+		"kind": "overlay_mode",
+		"mode": mode,
+		"dispatcher_mode": step_out.get("dispatcher_mode", mode),
+		"year": data["year"],
+		"month": data["month"],
+		"day": data["day"],
+		"overlay_state": updated_ovl.duplicate(true),
+		"completed": is_completed,
+	})
+
+	if not is_completed:
+		return
+
+	_apply_overlay_deltas(state, step_out.get("deltas", {}))
+	data["last_completed_overlay"] = updated_ovl.duplicate(true)
+	data.erase("overlay_state")
+
+	if mode == 0x5c or mode == 0x63 or int(step_out.get("dispatcher_mode", -1)) == OverlayDispatcher.GAME_MODE_ENDING:
 		data["ending_completed"] = 1
-		data["confessed_girl"] = best_girl
+		data["confessed_girl"] = int(updated_ovl.get("confessed_girl", EndingOverlay.GIRL_YOSHIO))
+		data["ending_type"] = String(updated_ovl.get("ending_type", "yoshio_bad_ending"))
+		data["ending_phases"] = updated_ovl.get("history", []).duplicate()
+		data["clear_save_completed"] = bool(updated_ovl.get("clear_save_completed", true))
 		state.set_stage(0xff)
 		return
-	if mode == 0x4c:
-		# School Trip (SHUGAKU) spans 6 days (Mon..Sat -> Sun)
+
+	var completed_disp_mode: int = int(step_out.get("dispatcher_mode", mode))
+	if completed_disp_mode == OverlayDispatcher.GAME_MODE_SHUGAKU:
+		# School Trip (SHUGAKU, native 0x51 / dispatcher 0x4C) spans 6 days (Mon..Sat -> Sun)
 		for _trip_day: int in range(6):
 			Calendar.advance_day(state)
-	elif mode == 0x51:
-		# Club Camp (RENSYU) advances 1 calendar day per camp record
+	elif completed_disp_mode == OverlayDispatcher.GAME_MODE_RENSYU:
+		# Club Camp (RENSYU, native 0x5F / dispatcher 0x51) advances 1 calendar day per camp record
 		Calendar.advance_day(state)
-	# Advance queue record after overlay event completes
+
+	# Advance queue record only after interactive overlay completes
 	if data["day_event_index"] < 31:
 		data["day_event_index"] = Math.u8(data["day_event_index"] + 1)
 	state.reset_game_mode_fields(0x31)
@@ -256,10 +347,24 @@ func _schedule(base: CoreState, _input: InputFrame, rng: Rng, result: Session.Fr
 			result.transitions.append({"kind": "native_mode", "mode": 0x31})
 		_: result.error = "unsupported initial scheduler step: %d" % state.mode_step
 
-func _day_screen(base: CoreState, _input: InputFrame, _rng: Rng, result: Session.FrameResult) -> void:
+func _day_screen(base: CoreState, input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
-	if state != null:
-		OrdinaryWeek.dispatch(state, result)
+	if state == null:
+		return
+	var data: Dictionary = state.rule_state
+	if data.get("overlay_state") is Dictionary and not (data["overlay_state"] as Dictionary).is_empty():
+		_overlay_mode(base, input, rng, result)
+		return
+	if state.mode_step == 1 and data.get("allow_multi_week", false) and int(data.get("year", 95)) >= 98 and int(data.get("month", 4)) >= 3 and int(data.get("day", 1)) != 0:
+		state.reset_game_mode_fields(0x5c)
+		data["overlay_state"] = overlay_dispatcher.init_overlay(0x5c, data, [0x21, 0, 0, 0], rng)
+		result.transitions.append({"kind": "native_mode", "mode": 0x5c})
+		return
+	OrdinaryWeek.dispatch(state, result)
+	if result.error.is_empty() and state.game_mode not in [0x30, 0x31, 0x32, 0x34, 0x38, 0x40, 0x46]:
+		var idx: int = clampi(int(data.get("day_event_index", 0)), 0, 31)
+		var ev: Array = data["day_events"][idx] if data.get("day_events") is Array and idx < (data["day_events"] as Array).size() else [0xff, 0, 0, 0]
+		data["overlay_state"] = overlay_dispatcher.init_overlay(state.game_mode, data, ev, rng)
 
 func _week_end(base: CoreState, _input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)

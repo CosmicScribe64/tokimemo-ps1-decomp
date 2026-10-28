@@ -16,6 +16,43 @@ var initial_rng: RefCounted
 var original_scene: WeakRef
 var pack_manifest_sha := ""
 var observed_first_line := false
+var observed_second_line := false
+var observed_third_line := false
+var observed_fourth_line := false
+var observed_fifth_line := false
+var observed_sixth_line := false
+var observed_seventh_line := false
+var observed_eighth_line := false
+var observed_ninth_line := false
+var observed_tenth_line := false
+var observed_eleventh_line := false
+var observed_twelfth_line := false
+var observed_board_read_substep := false
+var observed_board_decode_complete := false
+var observed_board_scroll_mid := false
+var observed_board_scroll_complete := false
+var observed_names_495d_decoded := false
+var observed_names_crossfade_peak := false
+var observed_names_crossfade_end := false
+var observed_stage2_fade_out := false
+var observed_line_03_yoshio_gray := false
+var observed_line_04_rei := false
+var observed_scene_05_color_burst := false
+var observed_scene_06_yoshio_ready := false
+var observed_scene_06_yoshio_greeting := false
+var observed_line_11_yoshio := false
+var observer_bound := false
+var board_complete_bgm: Dictionary = {}
+var board_scroll_complete_bgm: Dictionary = {}
+var names_crossfade_peak_bgm: Dictionary = {}
+var names_crossfade_end_bgm: Dictionary = {}
+var stage2_fade_out_bgm: Dictionary = {}
+var line_03_yoshio_gray_bgm: Dictionary = {}
+var line_04_rei_bgm: Dictionary = {}
+var scene_05_color_burst_bgm: Dictionary = {}
+var scene_06_yoshio_ready_bgm: Dictionary = {}
+var scene_06_yoshio_greeting_bgm: Dictionary = {}
+var line_11_yoshio_bgm: Dictionary = {}
 
 func check(value: bool, message: String) -> void:
 	checks += 1
@@ -48,6 +85,13 @@ func _process(_delta: float) -> bool:
 		return false
 	var app := current_scene as App
 	if app == null: return false
+	if app._active and Engine.physics_ticks_per_second != 180:
+		Engine.max_fps = 30
+		Engine.physics_ticks_per_second = 180
+		Engine.max_physics_steps_per_frame = 16
+	if not observer_bound:
+		app.frame_published.connect(_frame_published.bind(app))
+		observer_bound = true
 	if not app.failure.is_empty():
 		finishing = true
 		_finish_boundary.call_deferred(app)
@@ -57,6 +101,28 @@ func _process(_delta: float) -> bool:
 		var work: Variant = app.consumer.opening.state.opening.get("prologue_text_work")
 		if work is Dictionary and work.get("line_id") == 0 and work.get("pos",0) >= work.get("total",1):
 			observed_first_line = true
+		if work is Dictionary and work.get("line_id") == 1 and work.get("pos",0) >= work.get("total",1):
+			observed_second_line = true
+		if work is Dictionary and work.get("line_id") == 2 and work.get("pos",0) >= work.get("total",1):
+			observed_third_line = true
+		if work is Dictionary and work.get("line_id") == 3 and work.get("pos",0) >= work.get("total",1):
+			observed_fourth_line = true
+		if work is Dictionary and work.get("line_id") == 4 and work.get("pos",0) >= work.get("total",1):
+			observed_fifth_line = true
+		if work is Dictionary and work.get("line_id") == 5 and work.get("pos",0) >= work.get("total",1):
+			observed_sixth_line = true
+		if work is Dictionary and work.get("line_id") == 6 and work.get("pos",0) >= work.get("total",1):
+			observed_seventh_line = true
+		if work is Dictionary and work.get("line_id") == 7 and work.get("pos",0) >= work.get("total",1):
+			observed_eighth_line = true
+		if work is Dictionary and work.get("line_id") == 8 and work.get("pos",0) >= work.get("total",1):
+			observed_ninth_line = true
+		if work is Dictionary and work.get("line_id") == 9 and work.get("pos",0) >= work.get("total",1):
+			observed_tenth_line = true
+		if work is Dictionary and work.get("line_id") == 10 and work.get("pos",0) >= work.get("total",1):
+			observed_eleventh_line = true
+		if work is Dictionary and work.get("line_id") == 11 and work.get("pos",0) >= work.get("total",1):
+			observed_twelfth_line = true
 
 	if is_instance_valid(app._entry):
 		var scene = app._entry
@@ -70,16 +136,148 @@ func _process(_delta: float) -> bool:
 			phase += 1
 	return false
 
+func _frame_published(_tick: int, app: App) -> void:
+	if finishing or app.consumer == null or app.consumer.opening.state == null: return
+	var state = app.consumer.opening.state
+	if state.mode_stage == 1 and state.mode_step == 0 and state.substep == 1 and state.opening.get("D_800B3DB0") == 1 and state.opening.get("board_media",{}).get("read_requested") == true and state.opening.get("board_media",{}).get("decoded") == false:
+		observed_board_read_substep = true
+	if state.mode_stage == 1 and state.mode_step == 1 and state.substep == 0 and state.opening.get("board_media",{}).get("decoded") == true and not observed_board_decode_complete:
+		observed_board_decode_complete = true
+		board_complete_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/board-load-complete.png")
+	if state.mode_stage == 1 and state.mode_step == 1 and state.substep in [1, 2] and state.opening.get("prologue_scene_counter") == 128 and not observed_board_scroll_mid:
+		observed_board_scroll_mid = true
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/board-scroll-mid.png")
+	if state.mode_stage == 1 and state.mode_step == 1 and state.substep == 3 and state.opening.get("prologue_scene_counter") == 320 and not observed_board_scroll_complete:
+		observed_board_scroll_complete = true
+		board_scroll_complete_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/board-scroll-complete.png")
+	if state.mode_stage == 2 and state.mode_step == 0 and state.substep in [1, 2] and state.opening.get("names_media",{}).get("active_draw") == "dec_bg_draw" and not observed_names_495d_decoded:
+		observed_names_495d_decoded = true
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/names-495d-decoded.png")
+	if state.mode_stage == 2 and state.mode_step == 0 and state.substep == 3 and state.opening.get("names_media",{}).get("drawn_fade_amount") == 14 and state.opening.get("prologue_text_work",{}).get("line_id") == 2 and state.opening.get("prologue_text_work",{}).get("pos",0) >= state.opening.get("prologue_text_work",{}).get("total",1) and not observed_names_crossfade_peak:
+		observed_names_crossfade_peak = true
+		names_crossfade_peak_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/names-crossfade-peak.png")
+	if state.mode_stage == 2 and state.mode_step == 0 and state.substep == 4 and state.opening.get("prologue_scene_counter") == 130 and not observed_names_crossfade_end:
+		observed_names_crossfade_end = true
+		names_crossfade_end_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/names-crossfade-end.png")
+	if state.mode_stage == 2 and state.mode_step == 0 and state.substep == 5 and state.opening.get("prologue_scene_counter") == 64 and not observed_stage2_fade_out:
+		observed_stage2_fade_out = true
+		stage2_fade_out_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/stage2-fade-out.png")
+	if state.mode_stage == 3 and state.mode_step == 0 and state.substep == 1 and state.opening.get("D_801220E0") == 132 and state.opening.get("prologue_text_work",{}).get("line_id") == 3 and state.opening.get("prologue_text_work",{}).get("pos",0) >= state.opening.get("prologue_text_work",{}).get("total",1) and not observed_line_03_yoshio_gray:
+		observed_line_03_yoshio_gray = true
+		line_03_yoshio_gray_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/line-03-yoshio-gray.png")
+	if state.mode_stage == 4 and state.mode_step == 0 and state.substep == 2 and state.opening.get("prologue_text_work",{}).get("line_id") == 4 and state.opening.get("prologue_text_work",{}).get("pos",0) >= state.opening.get("prologue_text_work",{}).get("total",1) and not observed_line_04_rei:
+		observed_line_04_rei = true
+		line_04_rei_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/line-04-rei.png")
+	if state.mode_stage == 5 and state.mode_step == 0 and state.substep == 2 and state.opening.get("prologue_scene_counter") == 128 and not observed_scene_05_color_burst:
+		observed_scene_05_color_burst = true
+		scene_05_color_burst_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/scene-05-color-burst.png")
+	if state.mode_stage == 6 and state.mode_step == 0 and state.substep in [0, 1] and not observed_scene_06_yoshio_ready:
+		observed_scene_06_yoshio_ready = true
+		scene_06_yoshio_ready_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/scene-06-yoshio-ready.png")
+	if state.mode_stage == 6 and state.mode_step == 0 and state.substep == 12 and state.opening.has("actor103") and state.opening.get("prologue_text_work",{}).get("line_id") == 10 and state.opening.get("prologue_text_work",{}).get("pos",0) >= state.opening.get("prologue_text_work",{}).get("total",1) and not observed_scene_06_yoshio_greeting:
+		observed_scene_06_yoshio_greeting = true
+		scene_06_yoshio_greeting_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/scene-06-yoshio-greeting.png")
+	if state.mode_stage == 7 and state.mode_step == 0 and state.substep == 2 and state.opening.get("actor96",{}).get("x") == -160 and state.opening.get("prologue_text_work",{}).get("line_id") == 11 and state.opening.get("prologue_text_work",{}).get("pos",0) >= state.opening.get("prologue_text_work",{}).get("total",1) and not observed_line_11_yoshio:
+		observed_line_11_yoshio = true
+		line_11_yoshio_bgm = app.bgm.diagnostics()
+		app.set_physics_process(false)
+		_capture_and_resume.call_deferred(app,"/out/line-11-yoshio.png")
+
+func _capture_and_resume(app: App, path: String) -> void:
+	if is_instance_valid(app) and app.consumer != null:
+		app.bgm.pump(app.consumer.opening.state)
+	await RenderingServer.frame_post_draw
+	if is_instance_valid(app) and app.consumer != null:
+		app.bgm.pump(app.consumer.opening.state)
+	var image := root.get_texture().get_image()
+	if is_instance_valid(app) and app.consumer != null:
+		app.bgm.pump(app.consumer.opening.state)
+	if image != null:
+		image.save_png(path)
+	if is_instance_valid(app) and app.consumer != null:
+		app.bgm.pump(app.consumer.opening.state)
+	if is_instance_valid(app) and not finishing:
+		app.set_physics_process(true)
+
 func _finish_boundary(app: App) -> void:
 	var session = app.consumer.opening.session
 	var state = session.state
 	check(observed_first_line,"source did not reveal original first line before next boundary")
 	check(phase == 7 and app.consumer.entry == initial_entry and session.rng == initial_rng,"actual owned entry context changed")
-	check(app.failure_gate == "source_transaction" and state.mode_stage == 0,"next unsupported scene escaped its source transaction")
+	var has_board: bool = app.installed_launch_profile.get("paths",{}).has("first_arrival_board")
+	var has_opening_audio: bool = app.installed_launch_profile.get("paths",{}).has("opening_audio")
+	if has_board and has_opening_audio:
+		check(observed_board_read_substep and observed_board_decode_complete and observed_second_line and observed_board_scroll_mid and observed_board_scroll_complete and observed_names_495d_decoded and observed_third_line and observed_names_crossfade_peak and observed_names_crossfade_end and observed_stage2_fade_out and observed_fourth_line and observed_line_03_yoshio_gray and observed_fifth_line and observed_line_04_rei and observed_scene_05_color_burst and observed_scene_06_yoshio_ready and observed_sixth_line and observed_seventh_line and observed_eighth_line and observed_ninth_line and observed_tenth_line and observed_eleventh_line and observed_scene_06_yoshio_greeting and observed_twelfth_line and observed_line_11_yoshio,"source did not publish prologue stages 1..7 substeps through prologue_line_11_run")
+		check(board_complete_bgm.get("active_skips",-1) == 0 and board_scroll_complete_bgm.get("active_skips",-1) == 0 and names_crossfade_peak_bgm.get("active_skips",-1) == 0 and names_crossfade_end_bgm.get("active_skips",-1) == 0 and stage2_fade_out_bgm.get("active_skips",-1) == 0 and line_03_yoshio_gray_bgm.get("active_skips",-1) == 0 and line_04_rei_bgm.get("active_skips",-1) == 0 and scene_05_color_burst_bgm.get("active_skips",-1) == 0 and scene_06_yoshio_ready_bgm.get("active_skips",-1) == 0 and scene_06_yoshio_greeting_bgm.get("active_skips",-1) == 0 and line_11_yoshio_bgm.get("active_skips",-1) == 0,"active BGM skips occurred during prologue stages 1..7")
+		check(app.failure_gate == "source_transaction" and app.failure == "source-backed opening background/decode is unavailable for LBA ad00 slot 1" and state.mode_stage == 7 and state.mode_step == 0 and state.substep == 3 and state.opening.get("actor96_draw_flags") == 0xa4 and state.opening.get("actor96",{}).get("profile") == "o07_yoshio_body" and state.opening.get("actor96",{}).get("x") == -160 and state.opening.get("D_800B3DB0") == 1 and state.opening.get("prologue_line") == 11 and state.opening.get("names_media",{}).get("bg_show_1") == 0 and state.opening.get("bg_layer_0",{}).get("clut_row") == 495 and state.opening.get("bg_layer_0",{}).get("resource_id") == "prologue.cut_07.0xaa85" and state.opening.get("stage_05_se_605_count") == 2 and state.opening.get("stage_06_se_503_count") == 1,"next unsupported scene escaped its source transaction after prologue_line_11_run (gate=%s failure=%s stage=%s step=%s substep=%s)" % [app.failure_gate, app.failure, str(state.mode_stage), str(state.mode_step), str(state.substep)])
+	elif has_board:
+		check(observed_board_read_substep and observed_board_decode_complete and observed_second_line and observed_board_scroll_mid and observed_board_scroll_complete and observed_names_495d_decoded and observed_third_line and observed_names_crossfade_peak and observed_names_crossfade_end and observed_stage2_fade_out and observed_fourth_line and observed_line_03_yoshio_gray and observed_fifth_line and observed_line_04_rei and observed_scene_05_color_burst and observed_scene_06_yoshio_ready,"source did not publish prologue_board_load, prologue_board_scroll, prologue_names_crossfade, prologue_line_03_run, prologue_line_04_run, and prologue_scene_05_transition_run substeps")
+		check(board_complete_bgm.get("active_skips",-1) == 0 and board_scroll_complete_bgm.get("active_skips",-1) == 0 and names_crossfade_peak_bgm.get("active_skips",-1) == 0 and names_crossfade_end_bgm.get("active_skips",-1) == 0 and stage2_fade_out_bgm.get("active_skips",-1) == 0 and line_03_yoshio_gray_bgm.get("active_skips",-1) == 0 and line_04_rei_bgm.get("active_skips",-1) == 0 and scene_05_color_burst_bgm.get("active_skips",-1) == 0 and scene_06_yoshio_ready_bgm.get("active_skips",-1) == 0,"active BGM skips occurred during prologue stages 1..6")
+		check(app.failure_gate == "source_transaction" and app.failure == "original prologue line is unavailable" and state.mode_stage == 6 and state.mode_step == 0 and state.substep == 0 and state.opening.get("actor96_draw_flags") == 0xa4 and state.opening.get("actor99_draw_flags") == 0xa4 and not state.opening.has("actor97") and state.opening.get("actor96",{}).get("profile") == "o06_yoshio_body" and state.opening.get("actor99",{}).get("profile") == "o06_crowd_girls" and state.opening.get("D_800B3DB0") == 1 and state.opening.get("prologue_line") == 4 and state.opening.get("prologue_text_cleared") == true and state.opening.get("names_media",{}).get("bg_show_1") == 1 and state.opening.get("bg_layer_0",{}).get("clut_row") == 495 and state.opening.get("bg_layer_0",{}).get("resource_id") == "prologue.cut_06.0xaa54" and state.opening.get("stage_05_se_605_count") == 2,"next unsupported scene escaped its source transaction after scene_05_transition (gate=%s failure=%s stage=%s step=%s substep=%s)" % [app.failure_gate, app.failure, str(state.mode_stage), str(state.mode_step), str(state.substep)])
+	else:
+		check(app.failure_gate == "source_transaction" and state.mode_stage == 1 and state.mode_step == 0 and state.substep == 0 and state.opening.get("actor96_draw_flags") == 0xa4,"next unsupported scene escaped its source transaction")
 	check(not app.resources.audio.bgm_state.playing and app.bgm.diagnostics().private_ticket == 0 and app.bgm.diagnostics().engine.is_empty(),"terminal boundary did not dispose original BGM")
 	if failed: return
 	_status({"phase":"passed","checks":checks,"actual_desktop_entry":true,"first_line_revealed":true,
-		"normal_progression_no_new_START_edge":true,"next_blocker":app.failure,"failure_gate":app.failure_gate,
+		"second_line_revealed":observed_second_line,
+		"third_line_revealed":observed_third_line,
+		"fourth_line_revealed":observed_fourth_line,
+		"fifth_line_revealed":observed_fifth_line,
+		"sixth_line_revealed":observed_sixth_line,
+		"seventh_line_revealed":observed_seventh_line,
+		"eighth_line_revealed":observed_eighth_line,
+		"ninth_line_revealed":observed_ninth_line,
+		"tenth_line_revealed":observed_tenth_line,
+		"eleventh_line_revealed":observed_eleventh_line,
+		"twelfth_line_revealed":observed_twelfth_line,
+		"normal_progression_no_new_START_edge":true,"observed_board_read_substep":observed_board_read_substep,
+		"observed_board_decode_complete":observed_board_decode_complete,
+		"observed_board_scroll_mid":observed_board_scroll_mid,
+		"observed_board_scroll_complete":observed_board_scroll_complete,
+		"observed_names_495d_decoded":observed_names_495d_decoded,
+		"observed_names_crossfade_peak":observed_names_crossfade_peak,
+		"observed_names_crossfade_end":observed_names_crossfade_end,
+		"observed_stage2_fade_out":observed_stage2_fade_out,
+		"observed_line_03_yoshio_gray":observed_line_03_yoshio_gray,
+		"observed_line_04_rei":observed_line_04_rei,
+		"observed_scene_05_color_burst":observed_scene_05_color_burst,
+		"observed_scene_06_yoshio_ready":observed_scene_06_yoshio_ready,
+		"observed_scene_06_yoshio_greeting":observed_scene_06_yoshio_greeting,
+		"observed_line_11_yoshio":observed_line_11_yoshio,
+		"board_complete_bgm":board_complete_bgm,
+		"board_scroll_complete_bgm":board_scroll_complete_bgm,
+		"names_crossfade_peak_bgm":names_crossfade_peak_bgm,
+		"names_crossfade_end_bgm":names_crossfade_end_bgm,
+		"stage2_fade_out_bgm":stage2_fade_out_bgm,
+		"line_03_yoshio_gray_bgm":line_03_yoshio_gray_bgm,
+		"line_04_rei_bgm":line_04_rei_bgm,
+		"scene_05_color_burst_bgm":scene_05_color_burst_bgm,
+		"scene_06_yoshio_ready_bgm":scene_06_yoshio_ready_bgm,
+		"scene_06_yoshio_greeting_bgm":scene_06_yoshio_greeting_bgm,
+		"line_11_yoshio_bgm":line_11_yoshio_bgm,
+		"next_blocker":app.failure,"failure_gate":app.failure_gate,
 		"opening_iterations":session.clock.logic_iterations,"mode":state.game_mode,"stage":state.mode_stage,
 		"step":state.mode_step,"substep":state.substep,"timer":state.mode_step_timer,
 		"failure_audio_diagnostics":app.failure_audio_diagnostics,"first_scene_only":true,"whole_new_game_accepted":false})
@@ -101,4 +299,7 @@ func _failed(message: String) -> void:
 	failed = true
 	_status({"phase":"failed","message":message})
 	printerr(message)
+	if is_instance_valid(current_scene): current_scene.queue_free()
+	initial_entry = null
+	initial_rng = null
 	quit(1)

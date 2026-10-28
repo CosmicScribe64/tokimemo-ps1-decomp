@@ -31,6 +31,7 @@ ROLE_KINDS = {
     "holiday_scene": "file", "holiday_text": "file",
     "date_preview": "dir", "opening_pack": "dir",
     "prologue_text": "dir", "first_arrival_media": "dir",
+    "first_arrival_board": "dir",
     "prologue_hud": "dir", "opening_audio": "dir",
     "original_first_arrival_bgm": "dir",
 }
@@ -272,7 +273,8 @@ def build(input_path: Path, executable: Path, output: Path,
     work_dirs = {key: cache / (".runtime-" + token + "-" + key)
                  for key in ("rules", "entry_rules", "entry", "weekday", "club",
                              "date", "holiday", "opening", "prologue_text",
-                             "first_arrival_media", "prologue_hud", "opening_audio")}
+                             "first_arrival_media", "first_arrival_board",
+                             "prologue_hud", "opening_audio")}
     if any(p.exists() or p.is_symlink() for p in work_dirs.values()):
         raise BundleError("fresh exporter work path already exists")
     stage = Path(tempfile.mkdtemp(prefix=".runtime-bundle-", dir=cache))
@@ -304,9 +306,11 @@ def build(input_path: Path, executable: Path, output: Path,
                                             "--repository", str(ROOT), "--output", str(work_dirs["prologue_text"])]),
         ("first_arrival_media", "first_arrival_media", [py, "tools/port/first_arrival_content.py", "--input", str(track or input_path),
                                                         "--source-root", str(ROOT), "--output", str(work_dirs["first_arrival_media"])]),
+        ("first_arrival_board", "first_arrival_board", [py, "tools/port/first_arrival_board_content.py", "--input", str(track or input_path),
+                                                        "--source-root", str(ROOT), "--output", str(work_dirs["first_arrival_board"])]),
     ]
     if opening_only:
-        needed = {"entry_rules", "entry", "opening", "prologue_text", "first_arrival_media"}
+        needed = {"entry_rules", "entry", "opening", "prologue_text", "first_arrival_media", "first_arrival_board"}
         for key, role, _command in commands:
             if key not in needed:
                 gaps[role] = "outside the requested first-arrival resource scope"

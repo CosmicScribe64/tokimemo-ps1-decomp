@@ -10,7 +10,7 @@ const HudProvider = preload("res://presentation/prologue_hud_source_provider.gd"
 const HudProfileSha := "c930a17327e5ad0bdf3b26ab8c20287775b7fc795df240b5f071ed28c4f25f23"
 # Integrated successor: accepted V3 plus the separately reviewed installed
 # resource reader. The sealed checker2 packet retains its exact V3 binding.
-const HudProviderSha := "5c117f2ae624305a82cc128166844827f7afd9c089b5de5b128b2b0544efd499"
+const HudProviderSha := "bb60c26cb033d8f9a51927a6f9faaa2b118ba54c3bc15d1b8e8690931ca858c7"
 
 class CheckerProvider extends Provider:
 	var checker: RefCounted

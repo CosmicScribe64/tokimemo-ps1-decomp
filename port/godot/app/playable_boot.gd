@@ -23,6 +23,8 @@ const HolidayHud = preload("res://presentation/holiday_hud_adapter.gd")
 const CalendarPhonePresenter = preload("res://presentation/calendar_phone_presenter.gd")
 const DateAppointmentPresenter = preload("res://presentation/date_appointment_presenter.gd")
 const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
+const DayEventModes = preload("res://rules/day_event_modes.gd")
+const TelephoneOverlay = preload("res://overlays/telephone_overlay.gd")
 const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")
 const Entry = preload("res://flow/new_game_entry.gd")
@@ -30,6 +32,8 @@ const StateAdapter = preload("res://flow/new_game_state_adapter.gd")
 const Arrival = preload("res://flow/prologue_arrival.gd")
 const Reload = preload("res://flow/new_game_command_reload.gd")
 const AudioService = preload("res://services/audio_service.gd")
+const AudioRules = preload("res://services/opening_audio_rules.gd")
+const Math = preload("res://core/native_math.gd")
 const HudSeason = preload("res://services/native_hud_season.gd")
 var hud: LiveHud
 var exact_media: ExactMedia = ExactMedia.new()
@@ -96,7 +100,7 @@ static func build_opening_services(audio_svc: AudioService, service_log: Array =
 			service_log.append(["audio_command", cmd])
 			var tick: int = int(s.frame_count)
 			var q_err: String = ""
-			if cmd == AUDIO_CMD_STOP_BGM or (cmd & AUDIO_CMD_FADE_MASK) == AUDIO_CMD_FADE_PREFIX:
+			if cmd == AUDIO_CMD_STOP_BGM or cmd in [0x71, 0xb1, 0xc1, 0xd1] or (cmd & AUDIO_CMD_FADE_MASK) == AUDIO_CMD_FADE_PREFIX:
 				q_err = audio_svc.queue_bgm_stop(cmd, tick, AudioService.Phase.AUDIO)
 				r.audio.append({"kind": "bgm_stop", "command": cmd})
 			elif cmd >= SE_COMMAND_MIN:
@@ -109,8 +113,16 @@ static func build_opening_services(audio_svc: AudioService, service_log: Array =
 				var drain_out: Dictionary = audio_svc.drain_phase(tick, AudioService.Phase.AUDIO)
 				if not str(drain_out.get("error", "")).is_empty():
 					r.error = str(drain_out["error"]),
-		"scene_reset": func(_s: RouteState, _r: Session.FrameResult) -> void:
-			service_log.append("scene_reset"),
+		"prologue_sine": Math.rsin,
+		"finish_cd_reset": func(s: RouteState, r: Session.FrameResult) -> void:
+			service_log.append("finish_cd_reset")
+			AudioRules.finish_cd_reset(s, r),
+		"finish_bank_reset": func(s: RouteState, r: Session.FrameResult) -> void:
+			service_log.append("finish_bank_reset")
+			AudioRules.finish_bank_reset(s, r),
+		"scene_reset": func(s: RouteState, _r: Session.FrameResult) -> void:
+			service_log.append("scene_reset")
+			AudioRules.reset_lip_sync(s),
 		"background_read": func(_s: RouteState, lba: int, slot: int, _r: Session.FrameResult, retry: bool = false) -> void:
 			service_log.append(["bg_read", lba, slot, retry]),
 		"cd_sync": func(_s: RouteState, _r: Session.FrameResult) -> int:
@@ -134,10 +146,59 @@ static func build_opening_services(audio_svc: AudioService, service_log: Array =
 			if not str(drain_out.get("error", "")).is_empty():
 				r.error = str(drain_out["error"])
 				return
+			var spk: int = AudioRules.SPEAKER_PLAYER
+			if line in [18, 19]:
+				spk = AudioRules.SPEAKER_SHIORI
+			elif line in [12, 13, 14]:
+				spk = AudioRules.SPEAKER_REI
+			elif line == 9:
+				spk = AudioRules.SPEAKER_GIRL_A
+			elif line == 10:
+				spk = AudioRules.SPEAKER_GIRL_B
+			elif line in [5, 7, 11, 15, 20, 22, 24, 25, 26, 28, 30, 32, 34, 36, 38, 40]:
+				spk = AudioRules.SPEAKER_YOSHIO
+			AudioRules.begin_line_lip_sync(s, line, spk)
 			r.audio.append({"kind": "voice_play", "voice_id": line}),
 		"line_run": func(s: RouteState, _r: Session.FrameResult) -> void:
 			service_log.append("line_run")
+			AudioRules.step_lip_sync(s)
 			s.substep += 1,
+		"lip_sync_yoshio": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_yoshio(s, lvl),
+		"lip_sync_line_11": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_line_11(s, lvl),
+		"lip_sync_girl_a": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_girl_a(s, lvl),
+		"lip_sync_girl_b": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_girl_b(s, lvl),
+		"lip_sync_rei": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_rei(s, lvl),
+		"lip_sync_rei_lines_13_and_14": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_rei_lines_13_and_14(s, lvl),
+		"lip_sync_lines_15_and_16": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_lines_15_and_16(s, lvl),
+		"lip_sync_shiori": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_shiori(s, lvl),
+		"lip_sync_shiori_line_19": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_shiori_line_19(s, lvl),
+		"lip_sync_lines_20_to_31": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.lip_sync_lines_20_to_31(s, lvl),
+		"actor100_pulse": func(s: RouteState) -> Dictionary:
+			return AudioRules.actor100_pulse(s),
+		"step_lip_sync": func(s: RouteState, lvl: int = -1) -> Dictionary:
+			return AudioRules.step_lip_sync(s, lvl),
+		"prologue_shiori_birthday_speak": func(s: RouteState, r: Session.FrameResult) -> void:
+			service_log.append(["prologue_shiori_birthday_speak", 100])
+			s.opening["prologue_dynamic_line"] = "shiori_birthday"
+			AudioRules.begin_line_lip_sync(s, 100, AudioRules.SPEAKER_PLAYER)
+			AudioRules.actor100_pulse(s)
+			r.audio.append({"kind": "voice_play", "voice_id": 100}),
+		"prologue_shiori_blood_type_speak": func(s: RouteState, r: Session.FrameResult) -> void:
+			service_log.append(["prologue_shiori_blood_type_speak", 101])
+			s.opening["prologue_dynamic_line"] = "shiori_blood"
+			AudioRules.begin_line_lip_sync(s, 101, AudioRules.SPEAKER_PLAYER)
+			AudioRules.actor100_pulse(s)
+			r.audio.append({"kind": "voice_play", "voice_id": 101}),
 		"arrival_draw": func(_s: RouteState, arg: int, _r: Session.FrameResult) -> void:
 			service_log.append(["arrival_draw", arg]),
 		"outer_draw": func(_s: RouteState, a: Variant = null, _b: Variant = null) -> void:
@@ -560,9 +621,23 @@ func _load_inputs() -> String:
 			var cand_od := OverlayDispatcher.new()
 			if cand_od.open_resources(font_root_path, hud_manifest, date_pack_path).is_empty():
 				overlay_dispatcher = cand_od
+				if controller != null:
+					controller.overlay_dispatcher = cand_od
 		holiday_hud = candidate_hud
 		holiday_scene = candidate_scene
 		holiday_controller = candidate_controller
+	if overlay_dispatcher == null and hud != null and not hud_manifest.is_empty():
+		var od_font_root: String = OS.get_environment("TOKIMEMO_FONT_ROOT")
+		var od_port_root: String = hud_manifest.get_base_dir().get_base_dir()
+		var od_date_pack: String = OS.get_environment("TOKIMEMO_DATE_PACK")
+		if od_date_pack.is_empty() and not od_port_root.is_empty():
+			od_date_pack = od_port_root.path_join("date-preview-v1")
+		if not od_font_root.is_empty() and not od_date_pack.is_empty() and ExternalPath.is_external_file(od_date_pack.path_join("manifest.json")):
+			var fallback_od := OverlayDispatcher.new()
+			if fallback_od.open_resources(od_font_root, hud_manifest, od_date_pack).is_empty():
+				overlay_dispatcher = fallback_od
+				if controller != null:
+					controller.overlay_dispatcher = fallback_od
 	return ""
 
 func _verified_external(path: String, digest: String) -> bool:
@@ -908,12 +983,61 @@ func _process(_delta: float) -> void:
 	video_frame += 1
 	video_capture_busy = false
 
+func _has_active_overlay(current: State) -> bool:
+	if current == null:
+		return false
+	if current.rule_state.get("overlay_state") is Dictionary and not (current.rule_state["overlay_state"] as Dictionary).is_empty():
+		return true
+	if current.game_mode == 0x46:
+		return false
+	if current.game_mode == 0x50 and holiday_scene != null and holiday_scene.handles(current):
+		return false
+	return OverlayDispatcher.is_interactive_overlay_mode(current.game_mode)
+
+func _build_overlay_render_state(current: State) -> Dictionary:
+	var live_ctx: Dictionary = TelephoneOverlay.extract_live_context(current.rule_state)
+	var ovl_state: Dictionary = current.rule_state.get("overlay_state", {}) if current.rule_state.get("overlay_state") is Dictionary else {}
+	var merged: Dictionary = live_ctx.duplicate(true)
+	for k in ovl_state.keys():
+		merged[k] = ovl_state[k]
+	for k: String in ["year", "month", "day", "weekday", "day_kind", "day_count", "player_birthday", "stats", "progress_state", "quarter_flags", "cal0", "cal1"]:
+		merged[k] = live_ctx[k]
+	if not merged.has("appointment_words") and live_ctx.has("appointment_words"):
+		merged["appointment_words"] = live_ctx["appointment_words"]
+	return merged
+
+func step_active_overlay(pad_pressed: int) -> Dictionary:
+	if state == null:
+		return {"error": "playable_boot state is not initialized", "completed": false}
+	var active_od: OverlayDispatcher = overlay_dispatcher if overlay_dispatcher != null else (controller.overlay_dispatcher if controller != null else OverlayDispatcher.new())
+	var ovl_state: Dictionary = state.rule_state.get("overlay_state", {}) if state.rule_state.get("overlay_state") is Dictionary else {}
+	var ovl_mode: int = int(ovl_state.get("mode", state.game_mode))
+	var step_out: Dictionary = active_od.step_overlay(
+		ovl_mode, ovl_state, pad_pressed, state.rule_state, session.rng if session != null else null
+	)
+	var updated_ovl: Dictionary = step_out.get("state", ovl_state)
+	state.rule_state["overlay_state"] = updated_ovl
+	if bool(step_out.get("completed", false)):
+		if controller != null:
+			controller._apply_overlay_deltas(state, step_out.get("deltas", {}))
+		state.rule_state["last_completed_overlay"] = updated_ovl.duplicate(true)
+		state.rule_state.erase("overlay_state")
+	if overlay_dispatcher != null and canvas != null:
+		_present_committed()
+	return step_out
+
 func _native_draw(base: CoreState, _rng: Rng, result: Session.FrameResult) -> void:
 	var current: State = base as State
 	result.error = HudSeason.draw_step(current, result)
 	if not result.error.is_empty():
 		return
 	var multi: bool = bool(current.rule_state.get("allow_multi_week", false))
+	if _has_active_overlay(current):
+		if not (current.rule_state.get("overlay_state") is Dictionary) or (current.rule_state["overlay_state"] as Dictionary).is_empty():
+			var active_od: OverlayDispatcher = overlay_dispatcher if overlay_dispatcher != null else (controller.overlay_dispatcher if controller != null else null)
+			if active_od != null:
+				current.rule_state["overlay_state"] = active_od.init_overlay(current.game_mode, current.rule_state)
+		return
 	if current.game_mode in [0x46, 0x50] or (holiday_scene != null and holiday_scene.handles(current)):
 		if holiday_scene == null:
 			result.error = "holiday scene capability is not open"
@@ -1119,8 +1243,10 @@ func _present_committed(_restored_app: Node = null) -> String:
 			_last_rendered_image = _composite_commands_to_image(holiday_commands)
 		canvas.set("_textures", {})
 		return canvas.present(holiday_commands)
-	if overlay_dispatcher != null and overlay_dispatcher.handles_mode(state.game_mode):
-		var ovl_out: Dictionary = overlay_dispatcher.render_mode(state.game_mode, state.rule_state.get("overlay_state", {}))
+	if overlay_dispatcher != null and _has_active_overlay(state):
+		var render_state: Dictionary = _build_overlay_render_state(state)
+		var ovl_mode: int = int(render_state.get("mode", state.game_mode))
+		var ovl_out: Dictionary = overlay_dispatcher.render_mode(ovl_mode, render_state)
 		if not str(ovl_out.get("error", "")).is_empty():
 			return str(ovl_out["error"])
 		if ovl_out.get("image") is Image:

@@ -16,56 +16,37 @@ kanban-plugin: board
 
 ## In Progress
 
-
-- [ ] [[tickets/T-29032-plan-port-by-reachable-boundaries|T-29032 Plan port implementation by reachable boundaries]]
-
+- [ ] [[tickets/T-39000-local-disk-cleanup|T-39000 Remove obsolete local orchestrator state]]
 - [ ] [[tickets/T-31000-create-translated-image-assets|T-31000 Create same-size translated image assets and comparisons]]
-
-- [ ] [[tickets/T-29031-verify-native-cursor-selection|T-29031 Verify native hand and triangle cursor selection]]
-
-- [ ] [[tickets/T-29030-unify-native-route-capabilities|T-29030 Unify native route identities and executable capabilities]]
-
-- [ ] [[tickets/T-29008-assemble-playable-development-app|T-29008 Assemble the captured-boundary playable development app]]
-
-- [ ] [[tickets/T-29029-port-readiness-evidence-gate|T-29029 Gate port readiness on reviewed reproducible evidence]]
-
-- [ ] [[tickets/T-29028-restore-native-scheduler-mode-ids|T-29028 Restore native scheduler mode IDs and graduation gating]]
-
-- [ ] [[tickets/T-29027-render-original-sequences-and-spu-banks|T-29027 Render original sequences and SPU instruments]]
-
-- [ ] [[tickets/T-29026-restore-real-holiday-services|T-29026 Restore real holiday services and exact command media]]
-
-- [ ] [[tickets/T-29018-complete-overlay-port-and-shared-vn-runner|T-29018 Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction]]
-
-- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
-
-- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
-
-- [ ] [[tickets/T-29025-connect-installed-content-to-new-game|T-29025 Connect fresh original import to normal New Game]]
-
-- [ ] [[tickets/T-29024-restore-complete-subgame-loops|T-29024 Restore source-backed TACO and TT gameplay]]
-
-- [ ] [[tickets/T-29023-verify-real-player-routes|T-29023 Verify original-backed routes through the connected app]]
-
-- [ ] [[tickets/T-29022-externalize-original-port-graphics|T-29022 Load original graphics externally and pass live HUD state]]
-
-- [ ] [[tickets/T-29021-restore-original-audio-playback|T-29021 Restore original sample and sequence playback]]
-
-- [ ] [[tickets/T-29020-restore-live-overlay-execution|T-29020 Restore interactive overlay and ending execution]]
-
-
-- [ ] [[tickets/T-29019-independent-port-readiness-review|T-29019 Independent port readiness review]]
 
 
 ## In Review
 
 - [ ] [[tickets/T-31001-version-translated-artwork|T-31001 Version and publish translated artwork and review history]]
-- [ ] [[tickets/T-29034-plan-single-worker-port-completion|T-29034 Plan port completion with one implementer and one manager]]
 - [ ] [[tickets/T-29033-reclaim-inactive-workspace-storage|T-29033 Reclaim inactive workspace storage]]
 
 
 ## Done
 
+- [ ] [[tickets/T-29025-connect-installed-content-to-new-game|T-29025 Connect fresh original import to normal New Game]]
+- [ ] [[tickets/T-29032-plan-port-by-reachable-boundaries|T-29032 Plan port implementation by reachable boundaries]]
+- [ ] [[tickets/T-29031-verify-native-cursor-selection|T-29031 Verify native hand and triangle cursor selection]]
+- [ ] [[tickets/T-29030-unify-native-route-capabilities|T-29030 Unify native route identities and executable capabilities]]
+- [ ] [[tickets/T-29029-port-readiness-evidence-gate|T-29029 Gate port readiness on reviewed reproducible evidence]]
+- [ ] [[tickets/T-29028-restore-native-scheduler-mode-ids|T-29028 Restore native scheduler mode IDs and graduation gating]]
+- [ ] [[tickets/T-29027-render-original-sequences-and-spu-banks|T-29027 Render original sequences and SPU instruments]]
+- [ ] [[tickets/T-29026-restore-real-holiday-services|T-29026 Restore real holiday services and exact command media]]
+- [ ] [[tickets/T-29024-restore-complete-subgame-loops|T-29024 Restore source-backed TACO and TT gameplay]]
+- [ ] [[tickets/T-29023-verify-real-player-routes|T-29023 Verify original-backed routes through the connected app]]
+- [ ] [[tickets/T-29022-externalize-original-port-graphics|T-29022 Load original graphics externally and pass live HUD state]]
+- [ ] [[tickets/T-29021-restore-original-audio-playback|T-29021 Restore original sample and sequence playback]]
+- [ ] [[tickets/T-29020-restore-live-overlay-execution|T-29020 Restore interactive overlay and ending execution]]
+- [ ] [[tickets/T-29019-independent-port-readiness-review|T-29019 Independent port readiness review]]
+- [ ] [[tickets/T-29018-complete-overlay-port-and-shared-vn-runner|T-29018 Port remaining PS1 overlays with shared VnScenePresenter and automated C-table extraction]]
+- [ ] [[tickets/T-29016-first-launch-original-import|T-29016 Add first-launch original-game import]]
+- [ ] [[tickets/T-29008-assemble-playable-development-app|T-29008 Assemble the captured-boundary playable development app]]
+- [ ] [[tickets/T-29006-port-save-audio-services|T-29006 Implement stable-boundary saves and ordered audio services]]
+- [ ] [[tickets/T-29034-plan-single-worker-port-completion|T-29034 Plan port completion with one implementer and one manager]]
 - [ ] [[tickets/T-30005-widescreen-settings-feasibility|T-30005 Research widescreen art and modern settings feasibility]]
 - [ ] [[tickets/T-30000-plan-phase4-modernization|T-30000 Plan Phase 4 port modernization]]
 - [ ] [[tickets/T-29017-support-ps1-releases|T-29017 Support known PS1 releases in the content importer]]

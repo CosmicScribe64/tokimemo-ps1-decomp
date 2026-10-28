@@ -25,6 +25,133 @@ const SOURCE_EVIDENCE := ["src/main/home_screens.c", "src/main/hud_panels.c", "s
 	"asm/data/main/home_screens.rodata.s", "asm/data/main/menu_speaker_girl.rodata.s"]
 const RULE_KEYS := ["year", "month", "day", "weekday", "params", "calendar", "menu_cursor", "icon_enabled", "player_flags", "player_flags_upper", "memory_card_busy"]
 const CONTEXT_KEYS := ["game_mode", "mode_stage", "mode_step", "icon_mode", "icon_count", "cursor_style", "hover_ticks", "family_name_hex"]
+const DEFAULT_CURSOR_STYLE := 0x9C
+const PAD_SQUARE := 0x80
+const SELECTABLE_CURSOR_FRAMES := [0, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173]
+
+static var _outer_frame_guard: Dictionary = {}
+
+static func is_valid_cursor_style(cursor_style: int) -> bool:
+	return cursor_style == 0 or (cursor_style >= 0x9B and cursor_style < 0xAE)
+
+static func resolve_cursor_actor_frame(cursor_style: int) -> int:
+	# hud_cursor_actor_init (src/main/hud_screens.c:1479-1512):
+	# cursor_style == 0 or outside 0x9b..0xad -> frame 0 (pink/green hollow triangle);
+	# 0x9b..0xad (155..173) -> stored frame cursor_style.
+	return NativeCompositor.resolve_cursor_frame(cursor_style & 0xFF)
+
+static func hud_cursor_actor_init(cursor_style: int, arg0: int = 0, existing_pos: Vector2i = Vector2i.ZERO) -> Dictionary:
+	var style_u8: int = cursor_style & 0xFF
+	var frame: int = resolve_cursor_actor_frame(style_u8)
+	return {
+		"actor_index": 0,
+		"unk_01": 1,
+		"flags": 0x40,
+		"quad_flags": 0,
+		"draw_flags": 0x84,
+		"unk_04": 8,
+		"unk_05": 1,
+		"sequence_slot": 0,
+		"arg0": arg0,
+		"cursor_style": style_u8,
+		"frame": frame,
+		"x": existing_pos.x,
+		"y": existing_pos.y,
+	}
+
+static func next_cursor_style_on_square(cursor_style: int) -> int:
+	# hud_cursor_update Square cycle (src/main/hud_screens.c:1463-1473):
+	# 0 -> 0x9b -> ... -> 0xac -> 0.
+	var temp: int = cursor_style & 0xFF
+	if temp == 0:
+		return 0x9B
+	elif temp == 0xAC:
+		return 0
+	else:
+		return (temp + 1) & 0xFF
+
+static func step_cursor_style_square(state_or_rule: Dictionary, pad_pressed: int, outer_frame: int = -1) -> int:
+	var style: int = DEFAULT_CURSOR_STYLE
+	var is_hud_state: bool = _keys(state_or_rule, ["rule", "context", "icon_steps", "icon_elapsed"])
+	if is_hud_state and state_or_rule.get("context") is Dictionary and state_or_rule["context"].has("cursor_style"):
+		style = int(state_or_rule["context"]["cursor_style"]) & 0xFF
+	elif state_or_rule.has("cursor_style"):
+		style = int(state_or_rule["cursor_style"]) & 0xFF
+	elif state_or_rule.get("saved_settings") is Array and (state_or_rule["saved_settings"] as Array).size() >= 3:
+		style = int(state_or_rule["saved_settings"][2]) & 0xFF
+
+	# D_8011ECA4 once-per-outer-frame guard (src/main/hud_screens.c:1420-1422, main_loop.c:88)
+	if outer_frame >= 0:
+		if is_hud_state:
+			var inst_key: int = hash(state_or_rule["context"])
+			if int(_outer_frame_guard.get(inst_key, -1)) == outer_frame:
+				return style
+			_outer_frame_guard[inst_key] = outer_frame
+		else:
+			if int(state_or_rule.get("_cursor_update_outer_frame", -1)) == outer_frame:
+				return style
+			state_or_rule["_cursor_update_outer_frame"] = outer_frame
+
+	if (pad_pressed & PAD_SQUARE) != 0:
+		style = next_cursor_style_on_square(style)
+
+	if is_hud_state:
+		state_or_rule["context"]["cursor_style"] = style
+	else:
+		state_or_rule["cursor_style"] = style
+		if state_or_rule.get("saved_settings") is Array and (state_or_rule["saved_settings"] as Array).size() >= 3:
+			state_or_rule["saved_settings"][2] = style
+	return style
+
+static func step_cursor_style_cycle(state_or_rule: Dictionary, pad_pressed: int, outer_frame: int = -1) -> int:
+	return step_cursor_style_square(state_or_rule, pad_pressed, outer_frame)
+
+static func save_cursor_style_to_settings(rule_or_settings: Variant, cursor_style: int) -> Array:
+	# memory_card_game_bank_build (src/main/memory_card.c:871): g->saved_settings[2] = cursor_style;
+	var style_u8: int = cursor_style & 0xFF
+	if rule_or_settings is Dictionary:
+		var arr: Array = rule_or_settings.get("saved_settings", [0, 0, DEFAULT_CURSOR_STYLE, 0])
+		while arr.size() < 4:
+			arr.append(0)
+		arr[2] = style_u8
+		rule_or_settings["saved_settings"] = arr
+		return arr
+	elif rule_or_settings is Array:
+		while rule_or_settings.size() < 4:
+			rule_or_settings.append(0)
+		rule_or_settings[2] = style_u8
+		return rule_or_settings
+	return [0, 0, style_u8, 0]
+
+static func load_cursor_style_from_settings(rule_or_settings: Variant) -> int:
+	# memory_card_game_bank_load (src/main/memory_card.c:988): cursor_style = g->saved_settings[2];
+	var style_u8: int = DEFAULT_CURSOR_STYLE
+	if rule_or_settings is Dictionary:
+		if rule_or_settings.get("saved_settings") is Array and (rule_or_settings["saved_settings"] as Array).size() >= 3:
+			style_u8 = int(rule_or_settings["saved_settings"][2]) & 0xFF
+		elif rule_or_settings.get("rule") is Dictionary and rule_or_settings["rule"].get("saved_settings") is Array and (rule_or_settings["rule"]["saved_settings"] as Array).size() >= 3:
+			style_u8 = int(rule_or_settings["rule"]["saved_settings"][2]) & 0xFF
+		elif rule_or_settings.has("cursor_style"):
+			style_u8 = int(rule_or_settings["cursor_style"]) & 0xFF
+		if _keys(rule_or_settings, ["rule", "context", "icon_steps", "icon_elapsed"]):
+			rule_or_settings["context"]["cursor_style"] = style_u8
+		else:
+			rule_or_settings["cursor_style"] = style_u8
+	elif rule_or_settings is Array and rule_or_settings.size() >= 3:
+		style_u8 = int(rule_or_settings[2]) & 0xFF
+	return style_u8
+
+func cursor_frame_metadata(cursor_style: int) -> Dictionary:
+	if _manifest.is_empty():
+		return {}
+	var frame_idx: int = resolve_cursor_actor_frame(cursor_style)
+	var key := "%d:base" % frame_idx
+	if not _manifest.get("frames", {}).has(key):
+		return {}
+	var rec: Dictionary = _manifest["frames"][key].duplicate(true)
+	rec["cursor_style"] = cursor_style & 0xFF
+	rec["resolved_frame"] = frame_idx
+	return rec
 
 var error := ""
 var last_coverage: Image
@@ -32,6 +159,7 @@ var _manifest: Dictionary = {}
 var _root := ""
 var _images: Dictionary = {}
 var _specs: Dictionary = {}
+var _last_resources: Dictionary = {}
 var _font = Glyphs.new()
 var _compositor = NativeCompositor.new()
 
@@ -71,6 +199,18 @@ func open_manifest(path: String, expected_sha256: String, font_root: String) -> 
 
 func create_state(rule: Dictionary, context: Dictionary) -> Dictionary:
 	var state := {"rule": {}, "context": context.duplicate(true), "icon_steps": [], "icon_elapsed": []}
+	if rule.has("resources"):
+		if not rule["resources"] is Dictionary:
+			error = "native season view lacks primitive resources"
+			return {}
+		_last_resources = rule["resources"].duplicate(true)
+	else:
+		_last_resources = {}
+	if not state["context"].has("cursor_style"):
+		if rule.has("cursor_style") and _integer(rule["cursor_style"]):
+			state["context"]["cursor_style"] = int(rule["cursor_style"])
+		elif rule.get("saved_settings") is Array and (rule["saved_settings"] as Array).size() >= 3 and _integer(rule["saved_settings"][2]):
+			state["context"]["cursor_style"] = int(rule["saved_settings"][2])
 	for key: String in RULE_KEYS:
 		if not rule.has(key):
 			error = "live rule state is missing " + key
@@ -85,14 +225,25 @@ func create_state(rule: Dictionary, context: Dictionary) -> Dictionary:
 
 func sync_rule_state(state: Dictionary, rule: Dictionary, context: Dictionary = {}) -> String:
 	var candidate: Dictionary = state.duplicate(true)
+	var prev_resources: Dictionary = _last_resources.duplicate(true)
+	if rule.has("resources"):
+		if not rule["resources"] is Dictionary:
+			return "native season view lacks primitive resources"
+		_last_resources = rule["resources"].duplicate(true)
+	else:
+		_last_resources = {}
 	if not context.is_empty():
 		candidate["context"] = context.duplicate(true)
+	elif rule.has("cursor_style") and _integer(rule["cursor_style"]) and candidate.get("context") is Dictionary:
+		candidate["context"]["cursor_style"] = int(rule["cursor_style"])
 	candidate["rule"] = {}
 	for key: String in RULE_KEYS:
 		if not rule.has(key):
+			_last_resources = prev_resources
 			return "live rule state is missing " + key
 		candidate["rule"][key] = rule[key]
 	if _view(candidate).is_empty():
+		_last_resources = prev_resources
 		return error
 	state.clear()
 	state.merge(candidate.duplicate(true))
@@ -263,13 +414,20 @@ func _view(state: Dictionary) -> Dictionary:
 	var parameters: Array[int] = []
 	for word: Variant in rule["params"]:
 		parameters.append(int(word) >> 16)
-	var season: Dictionary = HudSeason.view(rule)
+	var season_rule: Dictionary = rule if rule.has("resources") else {
+		"year": year,
+		"month": month,
+		"day": day,
+		"calendar": rule["calendar"],
+		"resources": _last_resources,
+	}
+	var season: Dictionary = HudSeason.view(season_rule)
 	if not season["error"].is_empty():
 		error = season["error"]
 		return {}
 	return {"year": year, "month": month, "day": day, "weekday": int(rule["weekday"]),
 		"day_kind": int(calendar_bytes[day]), "parameters": parameters, "selected": int(rule["menu_cursor"]),
-		"icon_enabled": rule["icon_enabled"].slice(0, 14), "cursor_frame": style,
+		"icon_enabled": rule["icon_enabled"].slice(0, 14), "cursor_frame": resolve_cursor_actor_frame(style),
 		"icon_steps": state["icon_steps"].duplicate(), "icon_elapsed": state["icon_elapsed"].duplicate(),
 		"checker_season": season["checker_season"], "checker_fade": season["checker_fade"]}
 
@@ -384,6 +542,7 @@ func _reset() -> void:
 	_root = ""
 	_images.clear()
 	_specs.clear()
+	_last_resources.clear()
 	last_coverage = null
 	_font = Glyphs.new()
 	_compositor = NativeCompositor.new()

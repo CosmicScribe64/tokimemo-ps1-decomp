@@ -5,12 +5,14 @@ const Profile = preload("res://services/installed_launch_profile.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
 const Text = preload("res://services/prologue_text_store.gd")
 const MediaStore = preload("res://services/first_arrival_media_store.gd")
+const BoardStore = preload("res://services/first_arrival_board_store.gd")
 const Hud = preload("res://presentation/prologue_hud_source_provider.gd")
 const Painter = preload("res://presentation/prologue_text_presenter.gd")
 const Audio = preload("res://services/audio_service.gd")
 const Lines = preload("res://services/prologue_line_services.gd")
 var text: Text
 var media_store: MediaStore
+var board_store: BoardStore
 var hud: Hud
 var painter: Painter
 var audio: Audio
@@ -24,12 +26,16 @@ func prepare(profile: Dictionary) -> String:
 	var fresh: Dictionary = checked.profile
 	var next_text := Text.new()
 	var next_media := MediaStore.new()
+	var next_board: BoardStore = null
 	var next_hud := Hud.new()
 	var next_painter := Painter.new()
 	var next_audio := Audio.new()
 	var next_lines := Lines.new()
 	var error: String = next_text.open(fresh.paths.prologue_text,fresh.role_manifests.prologue_text.sha256)
 	if error.is_empty(): error = next_media.open(fresh.paths.first_arrival_media,fresh.role_manifests.first_arrival_media.sha256)
+	if error.is_empty() and fresh.paths.has("first_arrival_board"):
+		next_board = BoardStore.new()
+		error = next_board.open_pack(fresh.paths.first_arrival_board,fresh.role_manifests.first_arrival_board.sha256)
 	if error.is_empty(): error = next_hud.call("open_installed",fresh.profile_root,fresh.role_manifests.prologue_hud.relative,fresh.role_manifests.prologue_hud.sha256)
 	if error.is_empty(): error = next_hud.snapshot_runtime_assets()
 	if error.is_empty(): error = next_painter.open_font(fresh.paths.font_root)
@@ -37,15 +43,54 @@ func prepare(profile: Dictionary) -> String:
 	if error.is_empty(): error = next_audio.prepare_opening_bank_resources()
 	if error.is_empty() and fresh.paths.has("opening_audio"):
 		error = next_audio.configure_original_opening_audio_pack(fresh.paths.opening_audio,fresh.role_manifests.opening_audio.sha256)
-		if error.is_empty(): error = next_lines.prepare(next_text,next_painter,next_audio)
+		if error.is_empty():
+			error = _prepare_first_arrival_voiced_lines(next_lines,next_text,next_painter,next_audio)
 	if not error.is_empty(): return "Installed opening data could not be prepared: "+error
 	text = next_text
 	media_store = next_media
+	board_store = next_board
 	hud = next_hud
 	painter = next_painter
 	audio = next_audio
 	lines = next_lines
 	launch_profile = fresh.duplicate(true)
+	return ""
+
+static func _prepare_first_arrival_voiced_lines(next_lines: Lines, next_text: Text, next_painter: Painter, next_audio: Audio) -> String:
+	var lines: Dictionary = {}
+	var line_levels: Dictionary = {}
+	var clip_levels_by_key: Dictionary = {}
+	for line: int in range(12):
+		var prepared: Dictionary = next_audio.prepare_original_line(line)
+		if not str(prepared.get("error", "")).is_empty():
+			return str(prepared.error)
+		if prepared.get("line_id") != line or not prepared.get("clips") is Array:
+			return "prepared original audio line does not match the source identity"
+		var per_clip_levels: Array = []
+		for clip: Dictionary in prepared["clips"]:
+			var req_key: String = str(clip.get("request_key", ""))
+			var levels: Array[int] = []
+			if clip_levels_by_key.has(req_key):
+				levels = clip_levels_by_key[req_key]
+			else:
+				var resolved: Dictionary = next_audio.resolve_original_audio_event(clip)
+				if not str(resolved.get("error", "")).is_empty():
+					return str(resolved["error"])
+				var stream: AudioStreamWAV = resolved.get("stream")
+				levels = Lines.VoicePlayback.compute_stream_cd_levels(stream)
+				if levels.is_empty():
+					return "prepared original audio clip produced empty getCDlevel() envelope: " + req_key
+				clip_levels_by_key[req_key] = levels
+			per_clip_levels.append(levels)
+		lines[line] = prepared.duplicate(true)
+		line_levels[line] = per_clip_levels
+	Lines.AudioRules.prepare_mid_prologue_bank_roles(next_audio)
+	next_lines._store = next_text
+	next_lines._painter = next_painter
+	next_lines._audio_lines = lines
+	next_lines._line_clip_levels = line_levels
+	next_lines._clip_cd_levels = clip_levels_by_key
+	next_lines._voiced_scope_prepared = true
 	return ""
 
 static func current_profile(profile: Dictionary) -> Dictionary:
@@ -68,6 +113,7 @@ static func current_profile(profile: Dictionary) -> Dictionary:
 
 static func _same(a: Variant, b: Variant) -> bool:
 	if typeof(a) != typeof(b): return false
+	if is_same(a, b): return true
 	if a is Dictionary:
 		if a.size() != b.size(): return false
 		for key: Variant in a:

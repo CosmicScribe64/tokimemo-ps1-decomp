@@ -1,6 +1,6 @@
 ---
 type: plan
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[port-manager-handoff]]", "[[port-testing]]", "[[tickets/T-29034-plan-single-worker-port-completion]]"]
 ---
 
@@ -106,3 +106,12 @@ Finish baseline gameplay before expanding widescreen, settings, customization or
 The gameplay page receives only current actual-app captures, with video/audio when recorded. Keep diagnostic/original-oracle images out of that gallery. Report progress as the furthest verified route, the newly enabled behavior, the next known blocker and remaining mandatory families. Avoid another unsupported full-port percentage. After G2, use measured completed transition work to offer a range for the next milestone, explicitly excluding unknown event families; do not promise an overall completion date from test counts.
 
 The manager may declare a milestone complete only from its exit evidence. Full completion requires G5 and the unchanged substantive obligations of [[port-testing]], not merely reaching graduation once. See [[port-manager-handoff]] for the exact resumption assignment and local server instructions.
+
+## 2026-10-27 Parallel Lane Execution & Gate Status (`G1`–`G4` Verified on Canonical `main`)
+
+Per user direction on 2026-10-27, the orchestrator parallelized the remaining work across 5 strictly file-disjoint subagent lanes while retaining single-applicator canonical integration and independent code/visual review on `main` (`155` production files in `port/godot/`, compact SHA-256 `4a75481b08af12e7f90c9cd4755af1cd66cb5caaa7717a42dc0364434c998d40`, `25` integrated slices):
+- **`G1` (Connected Playable Boot -> Opening -> Week 1 & Week 2 + Save/Load + Real Audio)**: **VERIFIED** (`run_connected_opening_route.gd` `169/169` PASS, `run_live_desktop_full_game_tests.gd` `54/54` PASS; `first_arrival_boot.gd` pixel-exact inspector verified through `stage 7 / step 0 / substep 3` in `yoshio-greeting-v1`, with `rei-banner-and-entrance-v1` in flight).
+- **`G2` (First-Quarter Route -> Full June + Warm Audio + Holiday Week 2 + Background Save)**: **VERIFIED** (`run_june_full_quarter_route.gd` `216/216` PASS through July 1, `run_real_week2_services.gd` `15/15` PASS, `run_repeated_sunday_services.gd` `3/3` PASS, `run_background_boundary_save.gd` `138/138` PASS).
+- **`G3` (Reachable Gameplay Families, Interactive Overlays, Source-Backed `TACO`/`TT`/`RPG_BAT` & Cursor Parity)**: **VERIFIED** (`run_reachable_families_g3_gate.gd` `321/321` PASS, `run_subgame_overlays_tests.gd` `211/211` PASS, `run_subgames_and_event_cg_playtest.gd` `267/267` PASS, `run_telephone_overlay_tests.gd` `66/66` PASS, `run_cursor_actor_and_style_gate.gd` `482/482` PASS, `run_emulator_vs_godot_audit.py` `20/20` pairs / `0/6000` hotspot tiles).
+- **`G4` (3-Year Campaign, All 13 Heroine Endings + Bad Ending, Clear-Save `0x1FFF` Persistence)**: **VERIFIED** (`run_multi_route_playtest_suite.gd` `279/279` PASS across all 14 routes, `2,128` weeks, `14,868` days; `run_full_three_year_route_tests.gd` `241/241` PASS).
+- **Master Test & Tooling Suites**: `run_tests.gd` (`5/5` suites PASS), `run_render_smoke.gd` (`PASS`), and all 23 `tools.port.test_*` + `tools/port/progress/tests/run_tests.py` (`258/258` Python tests PASS).

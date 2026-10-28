@@ -7,15 +7,23 @@ const ORIGIN := Vector2i(160,120)
 const ADVANCE := 14
 var _font := Glyphs.new()
 var _open := false
+# Bounded immutable-source raster plans; never cache mutable game/text state.
+var _verified_views: Dictionary = {}
+var _glyph_plans: Dictionary = {}
+const MAX_VERIFIED_VIEWS := 64
+const MAX_GLYPH_PLANS := 256
 
 func open_font(root: String) -> String:
+	_verified_views.clear()
+	_glyph_plans.clear()
 	_open = false
 	var failure: String = _font.open_external_font(root)
 	_open = failure.is_empty()
 	return failure
 
 func preflight(view: Dictionary) -> String:
-	if not _open or not view.get("error", "unprepared").is_empty():
+	var view_error: Variant = view.get("error")
+	if not _open or not view_error is String or not view_error.is_empty():
 		return "prologue text needs an open original font and resolved line view"
 	if not view.get("speaker_raw") is PackedByteArray or not view.get("rows") is Array:
 		return "prologue text view lacks source speaker/row bytes"
@@ -24,12 +32,19 @@ func preflight(view: Dictionary) -> String:
 		if not row is Dictionary or not row.get("raw") is PackedByteArray:
 			return "prologue source row is malformed"
 		arrays.append(row.raw)
+	var view_key := ""
 	for raw: PackedByteArray in arrays:
 		if raw.is_empty() or raw.size() % 2 != 0:
 			return "prologue source row is empty or incomplete"
+		view_key += ":"+raw.hex_encode()
+	if _verified_views.has(view_key): return ""
+	for raw: PackedByteArray in arrays:
 		for offset in range(0,raw.size(),2):
 			if _font.get_glyph(raw.slice(offset,offset+2)).get("status") != "glyph":
 				return "prologue source code unit is unavailable in the original font"
+	if _verified_views.size() >= MAX_VERIFIED_VIEWS: _verified_views.clear()
+	_verified_views[view_key] = true
+
 	return ""
 
 func render_into(target: Image, view: Dictionary, work: Dictionary, brightness: int) -> Dictionary:
@@ -80,6 +95,9 @@ func render_into(target: Image, view: Dictionary, work: Dictionary, brightness: 
 	return {"error":"","glyphs":glyphs,"pixels":pixels,"bounding_box_violations":0}
 
 func _glyph_plan(pair: PackedByteArray, position: Vector2i, brightness: int) -> Dictionary:
+	var key := pair.hex_encode()+":"+str(position.x)+":"+str(position.y)+":"+str(brightness)
+	if _glyph_plans.has(key): return _glyph_plans[key].duplicate(true)
+
 	var foreground: Dictionary = _font.get_glyph_image(pair,0,0,brightness)
 	if foreground.get("status") != "glyph":
 		return {"error":"prepared prologue glyph disappeared"}
@@ -104,4 +122,7 @@ func _glyph_plan(pair: PackedByteArray, position: Vector2i, brightness: int) -> 
 			var color: Color = image.get_pixel(x,y)
 			if color.a != 0:
 				pixels.append({"position":position+Vector2i(x,y),"color":color})
-	return {"error":"","pixels":pixels}
+	var result := {"error":"","pixels":pixels}
+	if _glyph_plans.size() >= MAX_GLYPH_PLANS: _glyph_plans.clear()
+	_glyph_plans[key] = result.duplicate(true)
+	return result

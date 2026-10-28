@@ -19,6 +19,7 @@ const SubgameOverlays = preload("res://overlays/subgame_overlays.gd")
 const SubgamePresenter = preload("res://presentation/subgame_overlays_presenter.gd")
 const EventCgOverlay = preload("res://overlays/event_cg_scenes_overlay.gd")
 const EventCgPresenter = preload("res://presentation/event_cg_scenes_presenter.gd")
+const DayEventModes = preload("res://rules/day_event_modes.gd")
 
 # PS1 GameMode Table (src/main/scheduler.c & include/common.h)
 const GAME_MODE_OPENING             := 0x01
@@ -106,7 +107,7 @@ func open_resources(font_root: String, hud_manifest_path: String, date_pack_path
 		return error
 
 	telephone_presenter = TelephonePresenter.new()
-	if not telephone_presenter.open_date_preview(hud_manifest_path, font_root, date_pack_path):
+	if not telephone_presenter.open_telephone_preview(hud_manifest_path, font_root, date_pack_path):
 		error = "telephone_presenter init failed: " + telephone_presenter.error
 		return error
 
@@ -156,11 +157,19 @@ static func supported_modes() -> Array[int]:
 
 
 func handles_mode(mode: int) -> bool:
-	return OVERLAY_CATALOG.has(mode)
+	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode)
+	return OVERLAY_CATALOG.has(mode) or OVERLAY_CATALOG.has(disp_mode)
+
+
+static func is_interactive_overlay_mode(mode: int) -> bool:
+	return OVERLAY_CATALOG.has(mode) or DayEventModes.NATIVE_TO_DISPATCHER_MODE.has(mode)
 
 
 func describe_mode(mode: int) -> Dictionary:
-	return OVERLAY_CATALOG.get(mode, {})
+	if OVERLAY_CATALOG.has(mode):
+		return OVERLAY_CATALOG[mode]
+	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode)
+	return OVERLAY_CATALOG.get(disp_mode, {})
 
 
 # PS1 Controller Button Constants (common.h / pad.h)
@@ -213,6 +222,7 @@ static func _step_cursor(cursor: int, option_count: int, pad_pressed: int) -> in
 
 
 func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
+	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode) if not OVERLAY_CATALOG.has(mode) else mode
 	var next_state: Dictionary
 	if state.has("state") and state["state"] is Dictionary:
 		next_state = (state["state"] as Dictionary).duplicate(true)
@@ -228,7 +238,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 	var girl_id: int = int(next_state.get("girl_id", 0))
 	var action: String = "stepped"
 
-	match mode:
+	match disp_mode:
 		GAME_MODE_OPTION:
 			if state.has("cursor"):
 				options_overlay.cursor = clampi(cursor, 0, 7)
@@ -275,10 +285,17 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 			elif sub == "place_select":
 				stage = 0
 
+			var live_ctx: Dictionary = TelephoneOverlay.extract_live_context(next_state)
+			var eff_year: int = int(live_ctx["year"]) if int(live_ctx["year"]) > 0 else int(next_state.get("year", 0))
+			var eff_month: int = int(live_ctx["month"]) if int(live_ctx["month"]) > 0 else int(next_state.get("month", 1))
+			var eff_day: int = int(live_ctx["day"]) if int(live_ctx["day"]) > 0 else int(next_state.get("day", 1))
+			var progress: Array = live_ctx["progress_state"] if not (live_ctx["progress_state"] as Array).is_empty() else [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+			var qflags: Dictionary = live_ctx["quarter_flags"] if live_ctx["quarter_flags"] is Dictionary else {}
+
 			if stage == 0:
 				var page: int = int(next_state.get("page", 0))
 				var avail: Array[int] = TelephoneOverlay.build_date_place_availability(
-					page, 95, 4, 9, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], {}, 4
+					page, eff_year, eff_month, eff_day, progress, qflags, eff_month
 				)
 				next_state["avail_table"] = avail
 				cursor = _step_cursor(cursor, 11, pad_pressed)
@@ -290,7 +307,14 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 					else:
 						next_state["place_id"] = page * 10 + cursor
 						next_state["selected_place"] = page * 10 + cursor
-						next_state["candidate_slots"] = _default_tel_candidate_slots()
+						var cal0: Dictionary = live_ctx.get("cal0", {})
+						var cal1: Dictionary = live_ctx.get("cal1", {})
+						var live_slots: Array = []
+						if not cal0.is_empty() and not cal1.is_empty():
+							live_slots = TelephoneOverlay.build_available_date_slots(
+								eff_year, eff_month, eff_day, cal0, cal1, live_ctx.get("appointment_words", [0, 0, 0, 0, 0, 0, 0, 0])
+							)
+						next_state["candidate_slots"] = live_slots if not live_slots.is_empty() else _default_tel_candidate_slots()
 						stage = 1
 						cursor = 0
 						next_state["subscreen"] = "day_select"
@@ -303,12 +327,28 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 				cursor = _step_cursor(cursor, slot_count, pad_pressed)
 				next_state["subscreen"] = "day_select"
 				if (pad_pressed & PAD_CIRCLE) != 0:
-					var chosen_slot: Dictionary = slots[cursor] if cursor < slots.size() else {"year": 95, "month": 4, "day": 16}
+					var chosen_slot: Dictionary = slots[cursor] if cursor < slots.size() else {"year": eff_year, "month": eff_month, "day": eff_day}
 					next_state["chosen_slot"] = chosen_slot
 					var place_id: int = int(next_state.get("place_id", TelephoneOverlay.PLACE_AQUARIUM))
-					var eval_res: Dictionary = TelephoneOverlay.evaluate_invitation(girl_id, place_id, 120, 80, 80)
+					var stats_arr: Array = live_ctx.get("stats", [])
+					var trivia_val: int = int(stats_arr[5]) if stats_arr.size() > 5 else int(next_state.get("trivia", 120))
+					var looks_val: int = int(stats_arr[6]) if stats_arr.size() > 6 else int(next_state.get("looks", 80))
+					var closeness_val: int = int(next_state.get("closeness", 80))
+					var eval_res: Dictionary = TelephoneOverlay.evaluate_invitation(girl_id, place_id, trivia_val, closeness_val, looks_val)
 					next_state["invitation_evaluation"] = eval_res
-					next_state["response_kind"] = String(next_state.get("response_kind", "accepted"))
+					var default_resp: String = "accepted" if bool(eval_res.get("accepted", true)) else String(eval_res.get("outcome", "refused_soft"))
+					next_state["response_kind"] = String(next_state.get("response_kind", default_resp))
+					if bool(eval_res.get("accepted", false)) and next_state.get("appointment_words") is Array:
+						var appt_words: Array = (next_state["appointment_words"] as Array).duplicate()
+						TelephoneOverlay.book_appointment(
+							appt_words,
+							girl_id,
+							place_id,
+							int(chosen_slot.get("year", eff_year)),
+							int(chosen_slot.get("month", eff_month)),
+							int(chosen_slot.get("day", eff_day))
+						)
+						next_state["appointment_words"] = appt_words
 					stage = 2
 					cursor = 0
 					next_state["subscreen"] = "call_response"
@@ -328,7 +368,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 			var roster: Array[Dictionary] = _default_girls_roster()
 			next_state["appraisal_list"] = TelephoneOverlay.build_full_appraisal_list(roster)
 			cursor = _step_cursor(cursor, 11, pad_pressed)
-			if (pad_pressed & (PAD_UP | PAD_DOWN | PAD_LEFT | PAD_RIGHT)) != 0 and not state.has("girl_id"):
+			if (pad_pressed & (PAD_UP | PAD_DOWN | PAD_LEFT | PAD_RIGHT)) != 0:
 				girl_id = cursor
 				next_state["girl_id"] = girl_id
 			var prof: Dictionary = TelephoneOverlay.GIRL_PROFILES.get(girl_id, TelephoneOverlay.GIRL_PROFILES[0])
@@ -662,58 +702,71 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 				action = "return_to_game"
 
 		GAME_MODE_RPG_BATTLE:
-			var custom_enemy_hp: int = int(next_state.get("enemy_hp", -1))
 			if not next_state.has("player_hp"):
-				var init_rpg: Dictionary = SubgameOverlays.rpg_create_state(next_state)
+				var rpg_cfg: Dictionary = next_state.duplicate(true)
+				if int(rpg_cfg.get("stage", 0)) == 0:
+					rpg_cfg.erase("stage")
+				if rpg_cfg.has("enemy_hp") and not rpg_cfg.has("enemy_slot_gauges") and int(rpg_cfg["enemy_hp"]) > 0:
+					rpg_cfg["enemy_slot_gauges"] = [int(rpg_cfg["enemy_hp"]), 0, 0]
+				if state.has("cursor") and not rpg_cfg.has("command_cursor"):
+					rpg_cfg["command_cursor"] = cursor
+				var init_rpg: Dictionary = SubgameOverlays.rpg_create_state(rpg_cfg)
 				for k in init_rpg.keys():
-					if not next_state.has(k):
+					if k == "stage" or k == "enemy_slot_gauges" or not next_state.has(k):
 						next_state[k] = init_rpg[k]
-			cursor = _step_cursor(int(next_state.get("command_cursor", cursor)), 3, pad_pressed)
-			next_state["command_cursor"] = cursor
-			if (pad_pressed & PAD_CIRCLE) != 0:
-				SubgameOverlays.rpg_execute_command(
-					next_state, cursor, int(next_state.get("target_slot", 0)), int(next_state.get("rand_seed", 512))
-				)
-				if custom_enemy_hp > 0 and int(next_state.get("last_damage", 0)) > 0:
-					next_state["enemy_hp"] = maxi(0, custom_enemy_hp - int(next_state.get("last_damage", 0)))
-				if bool(next_state.get("victory", false)) or bool(next_state.get("defeat", false)) or stage >= 1:
-					stage += 1
-					action = "return_to_game"
-				else:
-					stage = 1
-					action = "advance"
-			elif (pad_pressed & PAD_CROSS) != 0:
+			elif state.has("cursor") and not state.has("command_cursor"):
+				next_state["command_cursor"] = cursor
+			if not next_state.has("enable_bancho_escalation_override"):
+				next_state["enable_bancho_escalation_override"] = bool(next_state.get("enable_bancho_escalation", false))
+			SubgameOverlays.rpg_step_interactive(
+				next_state, pad_pressed, int(next_state.get("rand_seed", 512))
+			)
+			cursor = int(next_state.get("command_cursor", cursor))
+			stage = int(next_state.get("stage", stage))
+			action = String(next_state.get("action", "stepped"))
+			if bool(next_state.get("completed", false)):
+				if not next_state.has("return_payload"):
+					next_state["return_payload"] = SubgameOverlays.rpg_build_return_payload(next_state)
 				action = "return_to_game"
 
 		GAME_MODE_TACO:
 			if not next_state.has("player"):
-				var init_taco: Dictionary = SubgameOverlays.shooter_create_state(next_state)
+				var taco_cfg: Dictionary = next_state.duplicate(true)
+				if int(taco_cfg.get("stage", 0)) < SubgameOverlays.SHOOTER_STAGE_RESULT:
+					taco_cfg.erase("stage")
+				var init_taco: Dictionary = SubgameOverlays.shooter_create_state(taco_cfg)
 				for k in init_taco.keys():
-					if not next_state.has(k):
+					if k == "stage" or not next_state.has(k):
 						next_state[k] = init_taco[k]
-			cursor = _step_cursor(cursor, 3, pad_pressed)
-			var move_dx: int = -1 if (pad_pressed & PAD_LEFT) != 0 else (1 if (pad_pressed & PAD_RIGHT) != 0 else 0)
-			var move_dy: int = -1 if (pad_pressed & PAD_UP) != 0 else (1 if (pad_pressed & PAD_DOWN) != 0 else 0)
-			var fire_primary: bool = (pad_pressed & PAD_CIRCLE) != 0
-			var fire_bomb: bool = (pad_pressed & PAD_SQUARE) != 0
-			SubgameOverlays.shooter_step_frame(
-				next_state, move_dx, move_dy, (pad_pressed & PAD_TRIANGLE) != 0, fire_primary, fire_bomb
+			if next_state.get("shots") is Array:
+				for shot_item: Variant in next_state["shots"]:
+					if shot_item is Dictionary and not shot_item.has("target_screen") and shot_item.has("target_screen_x"):
+						shot_item["target_screen"] = Vector2i(int(shot_item["target_screen_x"]), int(shot_item["target_screen_y"]))
+			SubgameOverlays.shooter_step_interactive(
+				next_state, pad_pressed, int(next_state.get("pad_held", pad_pressed))
 			)
-			next_state["frame"] = int(next_state.get("frame", 0)) + 1
+			if next_state.get("shots") is Array:
+				for shot_item: Variant in next_state["shots"]:
+					if shot_item is Dictionary and shot_item.get("target_screen") is Vector2i:
+						var ts: Vector2i = shot_item["target_screen"]
+						shot_item["target_screen_x"] = int(ts.x)
+						shot_item["target_screen_y"] = int(ts.y)
+						shot_item.erase("target_screen")
+			next_state["frame"] = int(next_state.get("frame_count", 0))
 			next_state["bullet_count"] = (next_state.get("shots", []) as Array).size()
-			if (pad_pressed & PAD_CIRCLE) != 0:
-				if stage == 0:
-					stage = 1
-					action = "advance"
-				else:
-					next_state["result_tally"] = SubgameOverlays.shooter_compute_result_tally(next_state)
-					stage = 2
-					action = "return_to_game"
-			elif (pad_pressed & PAD_CROSS) != 0:
-				next_state["result_tally"] = SubgameOverlays.shooter_compute_result_tally(next_state)
+			stage = int(next_state.get("stage", SubgameOverlays.SHOOTER_STAGE_STAGE1))
+			action = String(next_state.get("action", "stepped"))
+			if bool(next_state.get("completed", false)):
+				if not next_state.has("return_payload"):
+					next_state["return_payload"] = SubgameOverlays.shooter_build_return_payload(next_state)
 				action = "return_to_game"
 
 		GAME_MODE_TT:
+			if next_state.has("state") and not (next_state["state"] is int):
+				if next_state.has("tt_state") and next_state["tt_state"] is int:
+					next_state["state"] = int(next_state["tt_state"])
+				else:
+					next_state.erase("state")
 			if not next_state.has("player"):
 				var tt_cfg: Dictionary = next_state.duplicate(true)
 				if tt_cfg.has("state") and not (tt_cfg["state"] is int):
@@ -721,38 +774,21 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 				var init_tt: Dictionary = SubgameOverlays.tt_create_state(tt_cfg)
 				for k in init_tt.keys():
 					if k == "state":
+						next_state["state"] = init_tt[k]
 						next_state["tt_state"] = init_tt[k]
 					elif not next_state.has(k):
 						next_state[k] = init_tt[k]
-			cursor = _step_cursor(cursor, 3, pad_pressed)
-			var tt_player: Dictionary = next_state["player"]
-			if (pad_pressed & PAD_LEFT) != 0:
-				tt_player["x"] = clampi(int(tt_player["x"]) - 8, -120, 120)
-			elif (pad_pressed & PAD_RIGHT) != 0:
-				tt_player["x"] = clampi(int(tt_player["x"]) + 8, -120, 120)
-			if (pad_pressed & PAD_UP) != 0:
-				tt_player["y"] = clampi(int(tt_player["y"]) - 8, 56, 224)
-				next_state["last_bell_collected"] = SubgameOverlays.tt_bell_collect(next_state, cursor % 3)
-				next_state["score"] = int(next_state.get("score", 0)) + 500
-			elif (pad_pressed & PAD_DOWN) != 0:
-				tt_player["y"] = clampi(int(tt_player["y"]) + 8, 56, 224)
-			next_state["elapsed_frames"] = int(next_state.get("elapsed_frames", 4250)) + 1
-			if (pad_pressed & PAD_CIRCLE) != 0:
-				if stage == 0:
-					next_state["last_bell_hit"] = SubgameOverlays.tt_bell_hit_by_shot(next_state, cursor % 3, 0)
-					next_state["bell_hits"] = int(next_state.get("bell_hit_counter", 0))
-					stage = 1
-					action = "advance"
-				elif stage == 1:
-					next_state["last_bell_collected"] = SubgameOverlays.tt_bell_collect(next_state, cursor % 3)
-					next_state["score"] = int(next_state.get("score", 0)) + 500
-					stage = 2
-					action = "advance"
-				else:
-					stage = 3
-					action = "return_to_game"
-			elif (pad_pressed & PAD_CROSS) != 0:
-				SubgameOverlays.tt_trigger_smart_bomb(next_state)
+			SubgameOverlays.tt_step_interactive(
+				next_state, pad_pressed, int(next_state.get("pad_held", pad_pressed))
+			)
+			var cur_tt_state: int = int(next_state.get("state", SubgameOverlays.TT_STATE_STAGE))
+			next_state["tt_state"] = cur_tt_state
+			next_state["bell_hits"] = int(next_state.get("bell_hit_counter", 0))
+			stage = cur_tt_state
+			action = String(next_state.get("action", "stepped"))
+			if bool(next_state.get("completed", false)):
+				if not next_state.has("return_payload"):
+					next_state["return_payload"] = SubgameOverlays.tt_build_return_payload(next_state)
 				action = "return_to_game"
 
 		GAME_MODE_EVENT_CG:
@@ -798,19 +834,225 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 	return out
 
 
+func init_overlay(mode: int, rule_state: Dictionary = {}, event: Array = [], _rng: Variant = null) -> Dictionary:
+	var event_opcode: int = int(event[0]) if not event.is_empty() else -1
+	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode, event_opcode)
+	if disp_mode == GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ENDING:
+		var seq: Dictionary = EndingOverlay.create_graduation_sequence(rule_state)
+		seq["mode"] = mode
+		seq["dispatcher_mode"] = GAME_MODE_ENDING
+		seq["event_opcode"] = event_opcode
+		return seq
+
+	var live_ctx: Dictionary = TelephoneOverlay.extract_live_context(rule_state)
+	var girl_id: int = int(rule_state.get("current_girl", 0))
+	if event.size() > 1 and int(event[1]) >= 0 and int(event[1]) < 13:
+		girl_id = int(event[1])
+	var club_id: int = (int(rule_state.get("player_flags", 0)) >> 12) & 0xF
+	return {
+		"mode": mode,
+		"dispatcher_mode": disp_mode,
+		"event_opcode": event_opcode,
+		"girl_id": girl_id,
+		"club_id": club_id,
+		"stage": 0,
+		"cursor": 0,
+		"page": 0,
+		"subscreen": "place_select" if disp_mode == GAME_MODE_TEL else "",
+		"year": int(live_ctx["year"]),
+		"month": int(live_ctx["month"]),
+		"day": int(live_ctx["day"]),
+		"weekday": int(live_ctx["weekday"]),
+		"day_kind": int(live_ctx["day_kind"]),
+		"day_count": int(live_ctx["day_count"]),
+		"player_birthday": int(live_ctx["player_birthday"]),
+		"stats": live_ctx["stats"],
+		"progress_state": live_ctx["progress_state"],
+		"quarter_flags": live_ctx["quarter_flags"],
+		"cal0": live_ctx["cal0"],
+		"cal1": live_ctx["cal1"],
+		"appointment_words": live_ctx["appointment_words"],
+		"completed": false,
+		"deltas": {},
+	}
+
+
+func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}, rng: Variant = null) -> Dictionary:
+	var disp_mode: int = int(overlay_state.get("dispatcher_mode", DayEventModes.dispatcher_mode_for(mode)))
+	var current_state: Dictionary = overlay_state.duplicate(true)
+	if current_state.is_empty():
+		current_state = init_overlay(mode, rule_state, [], rng)
+		disp_mode = int(current_state.get("dispatcher_mode", disp_mode))
+
+	# Interactive menu/VN overlays wait for explicit player input; real-time action subgames (TACO, TT) step frames without auto-completing.
+	if pad_pressed == 0 and disp_mode not in [GAME_MODE_TACO, GAME_MODE_TT]:
+		current_state["completed"] = false
+		current_state["action"] = "wait_input"
+		return {
+			"completed": false,
+			"action": "wait_input",
+			"mode": mode,
+			"dispatcher_mode": disp_mode,
+			"state": current_state,
+			"deltas": {},
+		}
+
+	if disp_mode == GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ETC_C2:
+		var next_seq: Dictionary = EndingOverlay.step_graduation_sequence(current_state, pad_pressed, rule_state)
+		var done: bool = bool(next_seq.get("completed", false))
+		var ending_deltas: Dictionary = {}
+		if done:
+			ending_deltas = {
+				"ending_completed": 1,
+				"confessed_girl": int(next_seq.get("confessed_girl", EndingOverlay.GIRL_YOSHIO)),
+				"ending_type": String(next_seq.get("ending_type", "yoshio_bad_ending")),
+				"ending_phases": next_seq.get("history", []).duplicate(),
+				"clear_save_completed": bool(next_seq.get("clear_save_completed", true)),
+				"album_clear_mask": int(next_seq.get("album_clear_mask", 0)),
+				"clear_name_slot": bool(next_seq.get("clear_name_slot", false)),
+			}
+		next_seq["deltas"] = ending_deltas
+		return {
+			"completed": done,
+			"action": String(next_seq.get("action", "stepped")),
+			"mode": mode,
+			"dispatcher_mode": GAME_MODE_ENDING,
+			"state": next_seq,
+			"deltas": ending_deltas,
+		}
+
+	if not rule_state.is_empty():
+		var live_ctx: Dictionary = TelephoneOverlay.extract_live_context(rule_state)
+		for k: String in ["year", "month", "day", "weekday", "day_kind", "day_count", "player_birthday", "stats", "progress_state", "quarter_flags", "cal0", "cal1"]:
+			if not current_state.has(k) or (current_state[k] is int and int(current_state[k]) <= 0):
+				current_state[k] = live_ctx[k]
+		if not current_state.has("appointment_words") and live_ctx.has("appointment_words"):
+			current_state["appointment_words"] = live_ctx["appointment_words"]
+
+	var step_res: Dictionary = step_mode(disp_mode, current_state, pad_pressed)
+	var next_state: Dictionary = step_res.get("state", step_res).duplicate(true)
+	var act: String = String(step_res.get("action", "stepped"))
+	var completed: bool = (act == "return_to_game" or bool(next_state.get("completed", false)))
+	var deltas: Dictionary = _extract_overlay_deltas(disp_mode, next_state, rule_state) if completed else {}
+
+	next_state["completed"] = completed
+	next_state["action"] = act
+	next_state["deltas"] = deltas
+	return {
+		"completed": completed,
+		"action": act,
+		"mode": mode,
+		"dispatcher_mode": disp_mode,
+		"cursor": int(next_state.get("cursor", 0)),
+		"stage": int(next_state.get("stage", 0)),
+		"state": next_state,
+		"deltas": deltas,
+	}
+
+
+func _extract_overlay_deltas(disp_mode: int, next_state: Dictionary, rule_state: Dictionary = {}) -> Dictionary:
+	var deltas: Dictionary = {}
+	var girl_id: int = int(next_state.get("girl_id", 0))
+	deltas["girl_id"] = girl_id
+	match disp_mode:
+		GAME_MODE_TEL:
+			if next_state.has("appointment_words"):
+				deltas["appointment_words"] = (next_state["appointment_words"] as Array).duplicate()
+			var inv_eval: Dictionary = next_state.get("invitation_evaluation", {}) if next_state.get("invitation_evaluation") is Dictionary else {}
+			if bool(inv_eval.get("accepted", false)):
+				deltas["affection_delta"] = 2
+				deltas["tokimeki_delta"] = 2
+		GAME_MODE_TEL_ACTION:
+			deltas["affection_delta"] = 1
+		GAME_MODE_DATE, GAME_MODE_AMUSEMENT_PARK_DATE:
+			var eval_d: Dictionary = next_state.get("choice_evaluation", {}) if next_state.get("choice_evaluation") is Dictionary else {}
+			deltas["affection_delta"] = int(eval_d.get("affection_delta", 4))
+			deltas["tokimeki_delta"] = int(eval_d.get("tokimeki_delta", 5))
+			deltas["syoushin_delta"] = int(eval_d.get("syoushin_delta", -2))
+			deltas["date_count_delta"] = 1
+		GAME_MODE_GEKO:
+			var choice_cur: int = int(next_state.get("cursor", 0))
+			if choice_cur == 0:
+				deltas["affection_delta"] = 2
+				deltas["tokimeki_delta"] = 2
+			else:
+				deltas["syoushin_delta"] = 5
+		GAME_MODE_EXAM:
+			deltas["tokimeki_delta"] = 4
+			deltas["param_deltas"] = {"1": 2, "2": 2, "5": 2}
+		GAME_MODE_TAIIKU:
+			deltas["affection_delta"] = 3
+			deltas["tokimeki_delta"] = 3
+			deltas["param_deltas"] = {"4": 4, "7": 2}
+		GAME_MODE_BUNKASAI, GAME_MODE_BUNKA_SD, GAME_MODE_BUNKAKEN:
+			deltas["affection_delta"] = 3
+			deltas["tokimeki_delta"] = 3
+			deltas["param_deltas"] = {"3": 3, "6": 2}
+		GAME_MODE_SHUGAKU:
+			deltas["affection_delta"] = 5
+			deltas["tokimeki_delta"] = 6
+			deltas["date_count_delta"] = 1
+		GAME_MODE_KANGEI, GAME_MODE_RENSYU:
+			deltas["affection_delta"] = 2
+			deltas["param_deltas"] = {"4": 3, "7": 3}
+		GAME_MODE_VALEN, GAME_MODE_SHOUGATU, GAME_MODE_OMIMAI:
+			deltas["affection_delta"] = 3
+			deltas["tokimeki_delta"] = 4
+		GAME_MODE_MASTER:
+			deltas["tokimeki_delta"] = 10
+			deltas["param_deltas"] = {"7": 5}
+		GAME_MODE_RPG_BATTLE:
+			var rpg_payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else SubgameOverlays.rpg_build_return_payload(next_state)
+			var is_win: bool = bool(rpg_payload.get("victory", next_state.get("victory", false)))
+			var talk_code: int = int(rpg_payload.get("talk_result_code", SubgameOverlays.RPG_RESULT_GOOD if is_win else SubgameOverlays.RPG_RESULT_BAD))
+			deltas["talk_result_code"] = talk_code
+			deltas["rpg_result_code"] = talk_code
+			deltas["victory"] = is_win
+			deltas["loot_rewards"] = (rpg_payload.get("loot_rewards", []) as Array).duplicate(true)
+			deltas["affection_delta"] = 4 if is_win else -1
+			deltas["tokimeki_delta"] = 4 if is_win else 0
+			deltas["return_payload"] = rpg_payload
+		GAME_MODE_TACO:
+			var taco_payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else SubgameOverlays.shooter_build_return_payload(next_state)
+			var cleared_taco: int = int(taco_payload.get("stages_cleared", next_state.get("stages_cleared", 0)))
+			deltas["high_scores"] = (taco_payload.get("high_scores", []) as Array).duplicate(true)
+			deltas["high_score_names"] = (taco_payload.get("high_score_names", []) as Array).duplicate(true)
+			deltas["stages_cleared"] = cleared_taco
+			deltas["score"] = int(taco_payload.get("score", next_state.get("score", 0)))
+			deltas["total_score"] = int(taco_payload.get("total_score", deltas["score"]))
+			deltas["menu_hit_3"] = int(taco_payload.get("menu_hit_3", 0x9F))
+			deltas["system_data_flag"] = int(taco_payload.get("system_data_flag", 1))
+			deltas["affection_delta"] = 3 if cleared_taco > 0 else 1
+			deltas["return_payload"] = taco_payload
+		GAME_MODE_TT:
+			var tt_payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else SubgameOverlays.tt_build_return_payload(next_state)
+			if not rule_state.is_empty():
+				SubgameOverlays.tt_apply_writeback_to_rule_state(next_state, rule_state)
+			var cleared_tt: int = int(tt_payload.get("tt_stages_cleared", next_state.get("tt_stages_cleared", 0)))
+			deltas["tt_stages_cleared"] = cleared_tt
+			deltas["tt_last_time_frames"] = int(tt_payload.get("elapsed_frames", next_state.get("elapsed_frames", 4250)))
+			deltas["tt_rankings"] = (tt_payload.get("rankings", []) as Array).duplicate(true)
+			deltas["affection_delta"] = 3 if cleared_tt > 0 else 1
+			deltas["return_payload"] = tt_payload
+		_:
+			deltas["affection_delta"] = 1
+	return deltas
+
+
 func render_mode(mode: int, state: Dictionary = {}) -> Dictionary:
 	if not _ready:
 		return {"error": "OverlayDispatcher is not initialized", "mode": mode}
-	if not OVERLAY_CATALOG.has(mode):
+	var disp_mode: int = DayEventModes.dispatcher_mode_for(mode) if not OVERLAY_CATALOG.has(mode) else mode
+	if not OVERLAY_CATALOG.has(disp_mode):
 		return {"error": "Unsupported overlay mode: 0x%02X" % mode, "mode": mode}
 
 	var image: Image = null
-	var id_prefix: String = String(OVERLAY_CATALOG[mode]["overlay"]).to_lower()
+	var id_prefix: String = String(OVERLAY_CATALOG[disp_mode]["overlay"]).to_lower()
 	var girl_id: int = int(state.get("girl_id", 0))
 	var cursor: int = int(state.get("cursor", 0))
 	var stage: int = int(state.get("stage", 0))
 
-	match mode:
+	match disp_mode:
 		GAME_MODE_OPTION:
 			if state.has("cursor"):
 				options_overlay.cursor = clampi(cursor, 0, 7)
@@ -830,6 +1072,7 @@ func render_mode(mode: int, state: Dictionary = {}) -> Dictionary:
 				title_overlay.stage = stage
 			image = title_overlay.render(vn_presenter)
 		GAME_MODE_TEL:
+			telephone_presenter.set_live_context(TelephoneOverlay.extract_live_context(state))
 			var sub := String(state.get("subscreen", ""))
 			if sub.is_empty():
 				sub = "day_select" if stage == 1 else ("call_response" if stage >= 2 else "place_select")
@@ -841,16 +1084,33 @@ func render_mode(mode: int, state: Dictionary = {}) -> Dictionary:
 						slots.append(s)
 				image = telephone_presenter.render_date_day_menu_screen(slots, cursor)
 			elif sub == "call_response":
+				var prompt_dict: Dictionary = state.get("native_prompt", {
+					"schema": "tokimemo.phone-wait-marker-view.v1",
+					"source_function": "talk_text_step",
+					"waiting_for_input": true,
+					"k_disp_inc_result": 1,
+					"voice_mode": 0,
+					"speaker_voice_state": 0,
+					"marker_visible": false,
+					"marker_native_y": 0x48,
+				})
 				image = telephone_presenter.render_girl_phone_call_vn_scene(
 					girl_id,
-					String(state.get("response_kind", "accepted"))
+					String(state.get("response_kind", "accepted")),
+					[],
+					-1, -1, -1, -1, -1,
+					Vector2i(20, 14),
+					prompt_dict
 				)
 			else:
+				var avail_arr: Array = state.get("avail_table", []) if state.get("avail_table") is Array else []
 				image = telephone_presenter.render_date_place_menu_screen(
 					int(state.get("page", 0)),
-					cursor
+					cursor,
+					avail_arr
 				)
 		GAME_MODE_TEL_ACTION:
+			telephone_presenter.set_live_context(TelephoneOverlay.extract_live_context(state))
 			image = telephone_presenter.render_girl_profile_notebook_screen(girl_id)
 		GAME_MODE_DATE:
 			var date_state: Dictionary = DateOverlay.create_default_state(state)
@@ -917,8 +1177,10 @@ func render_mode(mode: int, state: Dictionary = {}) -> Dictionary:
 			image = subgame_presenter.render_taco_shooter(taco_state)
 		GAME_MODE_TT:
 			var tt_state: Dictionary = state.duplicate(true)
+			if tt_state.has("state") and not (tt_state["state"] is int):
+				tt_state["state"] = int(tt_state.get("tt_state", SubgameOverlays.TT_STATE_STAGE))
 			if not tt_state.has("player"):
-				var base_tt: Dictionary = SubgameOverlays.tt_create_state(state)
+				var base_tt: Dictionary = SubgameOverlays.tt_create_state(tt_state)
 				for k in tt_state.keys():
 					base_tt[k] = tt_state[k]
 				tt_state = base_tt
@@ -949,7 +1211,7 @@ func render_mode(mode: int, state: Dictionary = {}) -> Dictionary:
 		"error": "",
 		"id": cmd_id,
 		"mode": mode,
-		"overlay": OVERLAY_CATALOG[mode]["overlay"],
+		"overlay": OVERLAY_CATALOG[disp_mode]["overlay"],
 		"image": image,
 		"commands": [{
 			"id": cmd_id,

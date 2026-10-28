@@ -1,10 +1,13 @@
 extends RefCounted
-## T-29021: external effects publish only after commit; signals enqueue observations.
+## T-29021 / T-29025: external effects publish only after commit; signals enqueue observations.
 ## The next BEFORE_MODE delivery, not a player getter, decides logical progression.
+## Preserves first-arrival BGM guards and supports mid-prologue bank transitions
+## (prologue_rei, prologue_shiori, normal_gameplay) from src/ovl/name_entry/prologue.c.
 
 const Session = preload("res://core/game_session.gd")
 const AudioService = preload("res://services/audio_service.gd")
 const VoicePlayback = preload("res://services/original_voice_playback.gd")
+const AudioRules = preload("res://services/opening_audio_rules.gd")
 
 var audio: AudioService
 var voice: VoicePlayback = VoicePlayback.new()
@@ -13,12 +16,15 @@ var _bgm_player: AudioStreamPlayer
 var _pending: Array[Dictionary] = []
 var _active_request: Dictionary = {}
 var _completion_index: int = 0
+var _mid_prologue_bgm_state: Dictionary = {}
 
 const INTENT_FIELDS: Dictionary = {
 	"original_bgm_start": ["kind", "role", "bank_epoch", "request_serial", "session_generation"],
 	"voice_play": ["kind", "voice_id", "speaker", "xa_request", "request_key", "epoch", "line_id", "clip_index"],
 	"bank_load": ["kind", "role", "bank_epoch"],
+	"bgm_play": ["kind", "bank", "sequence", "role", "bank_epoch"],
 	"bgm_stop": ["kind", "command"],
+	"se_play": ["kind", "command"],
 	"native_audio_control": ["kind", "command"],
 	"native_stop_xa_if_active": ["kind", "epoch"],
 }
@@ -30,7 +36,7 @@ func _schema(event: Dictionary) -> String:
 	var fields: Array = INTENT_FIELDS[event["kind"]]
 	if event.size() != fields.size() or not event.has_all(fields):
 		return "opening audio intent fields differ from its supported schema"
-	for key: String in ["voice_id", "speaker", "epoch", "line_id", "clip_index", "command", "bank_epoch", "request_serial", "session_generation"]:
+	for key: String in ["voice_id", "speaker", "epoch", "line_id", "clip_index", "command", "bank", "sequence", "bank_epoch", "request_serial", "session_generation"]:
 		if event.has(key) and not event[key] is int:
 			return "opening audio field requires an exact integer: " + key
 	for key: String in ["request_key", "role"]:
@@ -68,6 +74,8 @@ func bind(service: AudioService, voice_player: AudioStreamPlayer, bgm_player: Au
 	audio = service
 	_voice_player = voice_player
 	_bgm_player = bgm_player
+	if audio != null:
+		AudioRules.prepare_mid_prologue_bank_roles(audio)
 	voice.attach(voice_player)
 	if not voice_player.finished.is_connected(_finished):
 		voice_player.finished.connect(_finished)
@@ -83,11 +91,38 @@ func reset_session() -> void:
 		_bgm_player.stop()
 	_pending.clear()
 	_active_request.clear()
+	_mid_prologue_bgm_state.clear()
 	_completion_index = 0
 	_voice_player = null
 	_bgm_player = null
 	if audio != null:
 		audio.reset_session_observations()
+
+
+func mid_prologue_bgm_diagnostics() -> Dictionary:
+	return _mid_prologue_bgm_state.duplicate(true)
+
+
+func _preflight_service_event(raw: Dictionary) -> String:
+	var kind: String = str(raw.get("kind", ""))
+	if kind == "bank_load" and str(raw.get("role", "")) in ["prologue_rei", "prologue_shiori"]:
+		AudioRules.prepare_mid_prologue_bank_roles(audio)
+	if kind == "bgm_stop" and int(raw.get("command", -1)) in [5, 0xb1, 0xc1, 0xd1]:
+		return ""
+	if kind == "bgm_play":
+		var bank_idx: int = int(raw.get("bank", -1))
+		var seq_idx: int = int(raw.get("sequence", -1))
+		var role: String = str(raw.get("role", ""))
+		if bank_idx < 0 or bank_idx > 1 or seq_idx < 0 or seq_idx > 3:
+			return "mid-prologue BGM play bank or sequence is out of range"
+		if role in ["prologue_rei", "prologue_shiori"]:
+			AudioRules.prepare_mid_prologue_bank_roles(audio)
+		if not audio.prepared_bank_roles.has(role):
+			return "opening bank resources were not prepared before the transaction"
+		return ""
+	if kind == "se_play":
+		return "" if int(raw.get("command", -1)) in [0x503, 0x604, 0x605] else "unsupported prologue SE command"
+	return audio.preflight_original_event(raw)
 
 
 func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
@@ -105,7 +140,7 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 			return error
 		if state == null:
 			return "opening audio preflight requires current transactional state"
-		error = audio.preflight_original_event(raw)
+		error = _preflight_service_event(raw)
 		if not error.is_empty():
 			return error
 		match raw["kind"]:
@@ -123,6 +158,22 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 				error = probe.restore(prepared["memory"])
 				if not error.is_empty():
 					return error
+			"bgm_play":
+				var bank: Dictionary = state.opening.get("audio_bank", {})
+				if raw["bank_epoch"] != bank.get("epoch") or raw["role"] != bank.get("role") or bank.get("ready") != true:
+					return "mid-prologue BGM start differs from ready transactional bank ownership"
+				var bgm_state: Dictionary = state.opening.get("prologue_bgm_state", {})
+				if bgm_state.get("playing") != true or bgm_state.get("bank") != raw["bank"] or bgm_state.get("sequence") != raw["sequence"]:
+					return "mid-prologue BGM start differs from transactional BGM state"
+			"bgm_stop":
+				if raw["command"] in [5, 0xb1, 0xc1, 0xd1]:
+					var bgm_state: Dictionary = state.opening.get("prologue_bgm_state", {})
+					if bgm_state.get("playing") != false or bgm_state.get("last_stop_command") != raw["command"]:
+						return "BGM fade/stop command differs from transactional BGM state"
+			"se_play":
+				var bank: Dictionary = state.opening.get("audio_bank", {})
+				if bank.get("ready") != true:
+					return "SE play requires a ready transactional sound bank"
 			"native_stop_xa_if_active":
 				var owner: Dictionary = state.opening.get("audio", {})
 				if raw["epoch"] != owner.get("epoch") or owner.get("status") != "cancelled" or owner.get("clips") != []:
@@ -198,7 +249,7 @@ func publish(result: Session.FrameResult, logical_tick: int) -> String:
 		error = _schema(raw)
 		if not error.is_empty():
 			return error
-		error = audio.preflight_original_event(raw)
+		error = _preflight_service_event(raw)
 		if not error.is_empty():
 			return error
 	# Failed steps retain these exact observations for a deterministic retry.
@@ -223,17 +274,43 @@ func publish(result: Session.FrameResult, logical_tick: int) -> String:
 					return error
 				_observe("started")
 			"bank_load":
-				error = audio.publish_prepared_bank(str(event["role"]))
+				var role_name: String = str(event["role"])
+				error = audio.publish_prepared_bank(role_name)
 				if not error.is_empty():
 					return error
-				if audio.original_bgm_service != null:
-					error = audio.original_bgm_service.bank_published(event["role"],event["bank_epoch"])
+				if audio.original_bgm_service != null and role_name == "prologue_arrival":
+					error = audio.original_bgm_service.bank_published(role_name, event["bank_epoch"])
 					if not error.is_empty(): return error
+				_mid_prologue_bgm_state["published_role"] = role_name
+				_mid_prologue_bgm_state["published_bank_epoch"] = int(event["bank_epoch"])
+				_mid_prologue_bgm_state["contract"] = AudioRules.bank_transition_contract(role_name)
 				_pending.append({"service": "opening.audio.bank", "payload": {
-					"bank_epoch": event["bank_epoch"], "role": event["role"], "ready": true}})
+					"bank_epoch": event["bank_epoch"], "role": role_name, "ready": true}})
+			"bgm_play":
+				audio.bgm_state = {
+					"playing": true,
+					"role": str(event["role"]),
+					"bank": int(event["bank"]),
+					"sequence": int(event["sequence"]),
+				}
+				_mid_prologue_bgm_state["playing"] = true
+				_mid_prologue_bgm_state["role"] = str(event["role"])
+				_mid_prologue_bgm_state["bank"] = int(event["bank"])
+				_mid_prologue_bgm_state["sequence"] = int(event["sequence"])
+				_mid_prologue_bgm_state["bank_epoch"] = int(event["bank_epoch"])
 			"bgm_stop":
+				audio.bgm_state["playing"] = false
+				audio.bgm_state["last_stop_command"] = int(event["command"])
+				_mid_prologue_bgm_state["playing"] = false
+				_mid_prologue_bgm_state["last_stop_command"] = int(event["command"])
 				if _bgm_player != null:
 					_bgm_player.stop()
+			"se_play":
+				audio.se_log.append({
+					"tick": logical_tick,
+					"role": audio.active_bank_role,
+					"command": int(event["command"]),
+				})
 			"native_stop_xa_if_active":
 				voice.stop_clip()
 				_active_request.clear()

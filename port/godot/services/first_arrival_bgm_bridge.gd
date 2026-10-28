@@ -6,7 +6,7 @@ const State = preload("res://rules/new_game_route_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Same = preload("res://services/first_arrival_launch_resources.gd")
 const LIBRARY := "res://bin/liboriginal_audio.linux.template_release.arm64.so"
-const LIBRARY_SHA := "2efc08a3e860b06419b4885d57c8cce300f2b50a9c22147942b2acd65deed7a8"
+const LIBRARY_SHA := "f1eecf80c1c6538a33f6bee9c7d10a79553b1745d520688f556bbe60fb1687b9"
 const DESCRIPTOR := "res://original_audio.gdextension"
 const DESCRIPTOR_SHA := "9bf0cf85a0154defa2d1e440cb314be441e5ebe57889b2a2b57c86cf16003a72"
 var _audio: WeakRef
@@ -200,10 +200,9 @@ func pump(state: State) -> String:
 	if _committed_after.is_empty(): return ""
 	var audio = _audio.get_ref()
 	if audio == null or not Same._same(audio.native_audio_context,_committed_after) or not Same._same(state.opening.get("native_audio_context"),_committed_after): return "active original BGM source after-context changed"
-	var derived := _derive(state,_committed_after)
-	var expected := _owner.duplicate(true)
-	expected.state_flags = _committed_after.state_flags
-	if not derived.error.is_empty() or not Same._same(derived.get("owner"),expected): return "active original BGM actual bank changed"
+	var bank: Variant = state.opening.get("audio_bank")
+	if not bank is Dictionary or bank.get("epoch") != _owner.get("epoch") or bank.get("role") != _owner.get("role") or bank.get("ready") != true or audio.active_bank_role != _owner.get("role") or audio.bank_ready.get(_owner.get("role")) != true:
+		return "active original BGM actual bank changed"
 	var now := Time.get_ticks_usec()
 	if now-_last_pump_us > _max_pump_gap_us:
 		_max_pump_gap_us = now-_last_pump_us

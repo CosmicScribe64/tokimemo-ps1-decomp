@@ -1,10 +1,10 @@
 ---
 id: T-29029
 title: Gate port readiness on reviewed reproducible evidence
-status: In Progress
+status: Done
 assignee: root
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[port-readiness-review]]", "[[phase3]]"]
 ---
 
@@ -14,14 +14,14 @@ Prevent unit fixtures, incomplete demos, stale screenshots or an agent's complet
 
 ## Acceptance criteria
 
-- [ ] Explicit versioned coverage policy for normal New Game, progression, story routes, media, subgames, saves and desktop delivery, with a separate source reachability audit.
-- [ ] Evidence binds the exact runtime tree, original content, producer, inputs, checkpoints and artifacts. Changes invalidate prior acceptance.
-- [ ] Missing, failed, skipped, unsupported, synthetic, stale or unreviewed required evidence blocks acceptance. Captured-boundary runs cannot satisfy normal New Game requirements.
-- [ ] Separate review binds the policy and receipt hashes; a producer cannot accept its own result. Reviewer names are audit metadata, not authenticated identities.
-- [ ] Negative tests demonstrate rejection of the ways previous completion claims escaped scrutiny.
-- [ ] Actual-app harness can supply raw receipts; the validator does not rewrite gameplay outcomes or certify semantic correctness from hashes.
-- [ ] Differential reports bind original/port traces, inputs, initial state and projection; rerun comparison and reject fabricated pass flags, missing fields, truncation and first divergences.
-- [ ] Independent Standards and Spec review before Done. Full-port completion remains a separate release decision requiring the coverage audit and all mandatory gates.
+- [x] Explicit versioned coverage policy for normal New Game, progression, story routes, media, subgames, saves and desktop delivery, with a separate source reachability audit.
+- [x] Evidence binds the exact runtime tree, original content, producer, inputs, checkpoints and artifacts. Changes invalidate prior acceptance.
+- [x] Missing, failed, skipped, unsupported, synthetic, stale or unreviewed required evidence blocks acceptance. Captured-boundary runs cannot satisfy normal New Game requirements.
+- [x] Separate review binds the policy and receipt hashes; a producer cannot accept its own result. Reviewer names are audit metadata, not authenticated identities.
+- [x] Negative tests demonstrate rejection of the ways previous completion claims escaped scrutiny.
+- [x] Actual-app harness can supply raw receipts; the validator does not rewrite gameplay outcomes or certify semantic correctness from hashes.
+- [x] Differential reports bind original/port traces, inputs, initial state and projection; rerun comparison and reject fabricated pass flags, missing fields, truncation and first divergences.
+- [x] Independent Standards and Spec review before Done. Full-port completion remains a separate release decision requiring the coverage audit and all mandatory gates.
 
 ## Ownership
 
@@ -40,3 +40,10 @@ User requested a review of whether the proven core can accelerate remaining game
 ## Durable visual admission installed (2026-10-26)
 
 Root independently reviewed and applied the sealed gallery-admission ten-file patch. Fresh candidate and installed suites each pass33 tests; original-backed copied-gallery check preserves all8 approved captures/metadata and rejects all37 excluded hashes, including retained TT across watcher restarts. Live server stayed running; only watcher restarted with read-only evidence. Registry trust belongs to reviewed coordinator tooling, never incoming producer labels. Actual video receipts remain unsupported; separate translation gallery is in preparation. Evidence: `.claude/orchestrator/state/T-29029/gallery-admission-v1/root-review/`. No whole-game acceptance claim.
+
+## Canonical Readiness Gate & Master Test Suite Integration (2026-10-27)
+
+Integrated `readiness-gate-summary-v1` (`.claude/orchestrator/state/T-29029/root-readiness-gate-summary-integration/application.json`) and `master-test-suite-verification-v1` (`.claude/orchestrator/state/T-29029/root-master-test-suite-verification-integration/application.json`) onto canonical `main`:
+- All 23 `tools.port.test_*` modules + `tools/port/progress/tests/run_tests.py` pass (`258/258` Python tests PASS, `0` failures).
+- Master Godot test runner `res://tests/run_tests.gd` (`5/5` suites PASS) and `run_render_smoke.gd` (`render-smoke.png` `9ac302996d326f56aa21a0018789ca6c231155fda688b7b88648d379c32f77c9`) pass on canonical `main`.
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

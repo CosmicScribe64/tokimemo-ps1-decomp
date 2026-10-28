@@ -87,6 +87,7 @@ func activate_validated(ticket: int) -> String:
 	_active.stream_paused = false
 	if is_instance_valid(previous):
 		previous.stop()
+		previous.stream = null
 		previous.queue_free()
 	return ""
 
@@ -103,6 +104,13 @@ func discard(ticket: int) -> void:
 
 func can_push() -> bool:
 	return is_instance_valid(_active) and _active.playing and not _active.stream_paused and _playback != null and _playback.get_frames_available() >= BLOCK_FRAMES and queued_frames() + BLOCK_FRAMES <= MAX_QUEUED_FRAMES
+
+func validate_active(expected_generation: int) -> String:
+	if generation != expected_generation or not is_instance_valid(host) or host.is_queued_for_deletion() or not host.is_inside_tree():
+		return "active sink host/generation changed"
+	if not is_instance_valid(_active) or _active.is_queued_for_deletion() or not _active.is_inside_tree() or not _active.playing or _active.stream_paused or _active.get_stream_playback() != _playback:
+		return "active sink player/playback changed"
+	return ""
 
 func push(pcm: PackedVector2Array) -> String:
 	if pcm.size() != BLOCK_FRAMES or not can_push():
@@ -138,6 +146,7 @@ func reset() -> void:
 		discard(int(raw_ticket))
 	if is_instance_valid(_active):
 		_active.stop()
+		_active.stream = null
 		_active.queue_free()
 	_active = null
 	_playback = null

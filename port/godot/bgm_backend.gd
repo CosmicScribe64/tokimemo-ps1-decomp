@@ -20,6 +20,53 @@ var render_times_us: Array[float] = []
 var push_times_us: Array[int] = []
 var error: String = ""
 
+func bind_month_context(flags: int, mode: int) -> String:
+	if _engine == null or not _prepared.is_empty() or not error.is_empty():
+		return "genuine committed first-arrival owner required"
+	var validation: String = sink.validate_active(_active_sink_generation)
+	if not validation.is_empty():
+		return validation
+	return _engine.bind_source_context(flags, mode)
+
+func month_start_context() -> Dictionary:
+	if _engine == null or not error.is_empty():
+		return {"error": "genuine native audio owner required"}
+	var validation: String = sink.validate_active(_active_sink_generation)
+	if not validation.is_empty():
+		return {"error": validation}
+	var context: Dictionary = _engine.month_start_context()
+	context["sink_generation"] = sink.generation
+	context["backend_generation"] = generation
+	return context
+
+func prepare_month(files: Array, poll: bool) -> Dictionary:
+	var before: Dictionary = month_start_context()
+	if not before["error"].is_empty():
+		return before
+	var reply: Dictionary = _engine.prepare_month(files, poll)
+	if reply["error"].is_empty():
+		reply["sink_generation"] = sink.generation
+		reply["backend_generation"] = generation
+	return reply
+
+func validate_month(stage: Dictionary) -> String:
+	if _engine == null or stage.get("backend_generation") != generation or stage.get("sink_generation") != _active_sink_generation:
+		return "native bank/session/sink ownership changed"
+	var validation: String = sink.validate_active(_active_sink_generation)
+	if not validation.is_empty():
+		return validation
+	return _engine.validate_month(stage["ticket"], stage["before"], stage["expected_after"])
+
+func publish_month(stage: Dictionary) -> Dictionary:
+	var validation: String = validate_month(stage)
+	if not validation.is_empty():
+		return {"error": validation}
+	return _engine.publish_month(stage["ticket"], stage["before"], stage["expected_after"])
+
+func discard_month(ticket: int) -> void:
+	if _engine != null:
+		_engine.discard_month(ticket)
+
 func _init(output: Sink) -> void:
 	sink = output
 

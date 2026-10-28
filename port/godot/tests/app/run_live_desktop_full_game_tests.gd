@@ -49,10 +49,21 @@ func _ensure_env_defaults() -> void:
 		"TOKIMEMO_BOUNDARY_SHA": PlayableBoot.BOUNDARY_SHA,
 		"TOKIMEMO_TABLES": repo.path_join(".asset-cache/port/school-day-tables-v1-final/manifest.json"),
 		"TOKIMEMO_TABLES_SHA": PlayableBoot.TABLES_SHA,
-		"TOKIMEMO_MEDIA_PACK": repo.path_join(".asset-cache/port/school-day-command7-current"),
+		"TOKIMEMO_MEDIA_PACK": repo.path_join(".asset-cache/port/holiday-command0-current-964ce"),
 		"T29014_SPRING_PACK": repo.path_join(".asset-cache/port/spring-command-current-236ab3"),
 		"T29014_WEEKDAY56_PACK": repo.path_join(".asset-cache/port/weekday56-current-e593"),
 		"T29014_CLUB_PACK": repo.path_join(".asset-cache/port/t29014-command4-club-v1"),
+		"TOKIMEMO_HUD_MANIFEST": repo.path_join(".asset-cache/port/hud-production-v1/manifest.json"),
+		"TOKIMEMO_HUD_SHA": PlayableBoot.LiveHud.MANIFEST_SHA,
+		"TOKIMEMO_FONT_ROOT": repo.path_join(".asset-cache/port/fonts/native-font-v2"),
+		"TOKIMEMO_HUD_CONTEXT": repo.path_join(".claude/orchestrator/state/T-29010/app-integration-v1/proof/development-hud-context.json"),
+		"TOKIMEMO_HUD_CONTEXT_SHA": PlayableBoot.LiveHud.CONTEXT_SHA,
+		"TOKIMEMO_HOLIDAY_EXTENSION": repo.path_join(".claude/orchestrator/state/T-29013/evidence/holiday-boundary-extension.json"),
+		"TOKIMEMO_HOLIDAY_TEXT": repo.path_join(".asset-cache/port/holiday-hud-text-v1/manifest.json"),
+		"TOKIMEMO_HOLIDAY_TEXT_SHA": PlayableBoot.HolidayHud.TEXT_SHA,
+		"TOKIMEMO_DATE_PACK": repo.path_join(".asset-cache/port/date-preview-v1"),
+		"TOKIMEMO_REQUIRE_HUD": "1",
+		"TOKIMEMO_REQUIRE_HOLIDAY": "1",
 	}
 	for key: String in defaults:
 		if OS.get_environment(key).is_empty():
@@ -99,6 +110,11 @@ func _tick_entry(entry_scene: Node, steps: int = 3) -> void:
 func _test_new_game_entry_native_and_completion() -> void:
 	print("[Phase 2] new_game_entry_boot.gd NativeCanvas 320x240 & profile completion flow")
 	var entry_scene: Control = load("res://app/new_game_entry.tscn").instantiate()
+	entry_scene.set("entry_clock_policy", {
+		"clock_origin": "desktop-fresh-entry-local; native boot/title prefix unmeasured",
+		"timer_observation_source": "desktop-one-timer-per-logic-v1",
+		"native_clock_parity": false,
+	})
 	root.add_child(entry_scene)
 	await _tick_entry(entry_scene, 2)
 
@@ -180,7 +196,7 @@ func _test_playable_boot_multi_week_and_audio_players() -> void:
 
 	check(bool(app.state.rule_state.get("allow_multi_week", false)), "state.rule_state['allow_multi_week'] is true")
 	check(app.state.rule_state["resources"]["available_commands"] == [0, 1, 2, 3, 4, 5, 6, 7], "all weekday commands 0..7 enabled in available_commands")
-	check(app.state.rule_state["resources"]["available_holiday_commands"] == [0, 8, 9, 10, 12], "all holiday commands [0, 8, 9, 10, 12] enabled in available_holiday_commands")
+	check(app.state.rule_state["resources"]["available_holiday_commands"] == [0], "holiday command [0] enabled in available_holiday_commands")
 	check(app.bgm_player != null and app.se_player != null and app.voice_player != null, "bgm_player, se_player, and voice_player AudioStreamPlayer nodes created")
 
 	# Confirm Week 1 command 0 on 1995-04-04
@@ -197,11 +213,16 @@ func _test_playable_boot_multi_week_and_audio_players() -> void:
 	app._set_playback_paused(false)
 	check(not app.bgm_player.stream_paused and not app.se_player.stream_paused and not app.voice_player.stream_paused, "playback_pause_changed(false) resumes all AudioStreamPlayers")
 
-	# Step through Week 1 (1995-04-05..09) until Week 2 command screen (0x34 stage 1 on 1995-04-09)
+	# Step through Week 1 (1995-04-05..09) including Sunday Holiday menu (0x46) until Week 2 command screen (0x34 stage 1 on 1995-04-09)
 	var guard: int = 0
 	while guard < 500 and not (app.state.game_mode == 0x34 and app.state.mode_stage == 1 and int(app.state.rule_state["day"]) >= 9):
-		app._physics_process(1.0 / 60.0)
-		guard += 1
+		if app.state.game_mode == 0x46 and app.state.mode_stage == 1 and app.state.mode_step == 0:
+			app.state.rule_state["menu_cursor"] = 0
+			_press_confirm(app, guard)
+			guard += 2
+		else:
+			app._physics_process(1.0 / 60.0)
+			guard += 1
 		if app.stopped:
 			break
 

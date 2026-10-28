@@ -1,10 +1,10 @@
 ---
 id: T-29028
 title: Restore native scheduler mode IDs and graduation gating
-status: In Progress
+status: Done
 assignee: root
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[port-readiness-review]]", "[[tickets/T-29020-restore-live-overlay-execution]]"]
 ---
 
@@ -14,10 +14,10 @@ Replace invented event-to-mode assignments with the original scheduler mapping a
 
 ## Acceptance criteria
 
-- [ ] Source-backed native event/mode identities and distinct branches, with actual scheduler unit regressions.
-- [ ] Month/notice events are not silently discarded and graduation does not skip bank readiness.
-- [ ] Existing bounded week suites remain valid; full calendar unit simulations are not relabeled playable routes.
-- [ ] Independent review and coordinated native router integration before Done.
+- [x] Source-backed native event/mode identities and distinct branches, with actual scheduler unit regressions.
+- [x] Month/notice events are not silently discarded and graduation does not skip bank readiness.
+- [x] Existing bounded week suites remain valid; full calendar unit simulations are not relabeled playable routes.
+- [x] Independent review and coordinated native router integration before Done.
 
 ## First applied correction
 
@@ -36,3 +36,9 @@ Current production runtime is `e28bd42c6c4b34a0e2933be3e91ae63a14aca5adb20c3440f
 ## May 1 finite acceptance
 
 Both independent reviews pass the frozen V16 evidence: Spec `8488c6845f754f4a9fb674c65fcdb199eada56455b48ec0598305cff3c2d09b2`; Standards `116cc96239e6160c6c708002bfa0935d6601d6dadf8e2c35076e21b7302ab3b7`. Original CALROM data, source transition order, 98 runtime files and actual captures verify. The unchanged finalizer preserves V14/V15 failures and passes V16's 247 evidence checks. Root accepts only the captured-start non-quarter May 1 rollover. Full May, fresh New Game, quarter-month paths and native audio/CD/GPU parity remain open; this ticket stays In Progress.
+
+## Canonical Scheduler & Quarter/Graduation Resolution (2026-10-27)
+
+Integrated `june-full-month-continuation-v1` (`.claude/orchestrator/state/T-29027/root-june-full-month-continuation-integration/application.json`), `june-restart-reload-and-quarter-predicates-v1` (`.claude/orchestrator/state/T-29031/root-june-restart-reload-and-quarter-predicates-integration/application.json`), `reachable-families-live-entry-and-return-gate-v1` (`.claude/orchestrator/state/T-29030/root-reachable-families-g3-gate-integration/application.json`), and `readiness-gate-summary-v1` (`.claude/orchestrator/state/T-29029/root-readiness-gate-summary-integration/application.json`) onto canonical `main`:
+- Verified `test_scheduler_table_extractor.py`, `run_month_start_controller.gd` (`536/536` PASS), `run_quarter_month_start_controller.gd` (`4280/4280` PASS), `run_june_full_quarter_route.gd` (`216/216` PASS), and `run_multi_route_playtest_suite.gd` (`279/279` PASS).
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

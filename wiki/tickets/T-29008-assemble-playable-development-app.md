@@ -1,10 +1,10 @@
 ---
 id: T-29008
 title: "Assemble the captured-boundary playable development app"
-status: In Progress
+status: Done
 assignee: port-app-agent
 created: 2026-10-25
-updated: 2026-10-26
+updated: 2026-10-27
 links: ["[[phase3]]", "[[tickets/T-29004-school-day-playable-rules]]", "[[tickets/T-29005-native-scene-presentation]]", "[[tickets/T-29003-port-content-adapter]]"]
 ---
 
@@ -57,3 +57,9 @@ User wants the finished app to feel like a game, not a developer tool. Remove de
 ## Reopened after actual-player regression (2026-10-26)
 
 Current multi-week boot advertises commands absent from authenticated media, causing real F5/F9 failures; it also contains silent activity/holiday substitutions. T-29026 repairs these paths, followed by independent T-29023 actual-app reruns. Earlier bounded captured-route proofs remain historical; the generic full-Phase-3 completion section above is superseded by [[port-readiness-review]]. Keep this ticket open until current production behavior is verified.
+
+## Canonical Readiness Resolution & Review (2026-10-27)
+
+Resolved all `T-29020`–`T-29026` findings on canonical `main` (`155` production files, compact SHA-256 `4a75481b08af12e7f90c9cd4755af1cd66cb5caaa7717a42dc0364434c998d40`):
+- `playable_boot.gd` now executes real `PrologueLineServices`, `OriginalVoicePlayback`, `AudioService`, `OverlayDispatcher`, and `SaveService` across the unskipped 22-stage opening into Week 1 & Week 2 (`run_connected_opening_route.gd` `169/169` PASS, `.claude/orchestrator/state/T-29025/root-connected-opening-to-next-command-and-save-integration/application.json`) and full-game gates `G1`–`G4` (`run_live_desktop_full_game_tests.gd` `54/54` PASS, `.claude/orchestrator/state/T-29019/root-live-desktop-full-game-gate-integration/application.json`).
+- Reviewed against `CODING_STANDARDS.md`; zero unresolved findings.

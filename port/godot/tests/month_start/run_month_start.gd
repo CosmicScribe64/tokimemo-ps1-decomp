@@ -190,7 +190,9 @@ func _test_phase_and_source_rejections() -> void:
 	_reject(_harness(state), "mismatched source metadata")
 	_reject(_harness(_state(), false), "unopened immutable source")
 	for quarter: int in [6, 9, 12]:
-		_reject(_harness(_state(95, quarter)), "quarter%d explicitly needs native BGM/text services" % quarter)
+		var quarter_harness: Dictionary = _harness(_state(95, quarter))
+		_request(quarter_harness)
+		_reject(quarter_harness, "quarter%d upload explicitly needs native BGM/text services" % quarter, [_event(quarter_harness, _payload(quarter_harness))])
 	for field: String in ["day", "queue", "stage", "step", "substep", "actor"]:
 		state = _state()
 		match field:

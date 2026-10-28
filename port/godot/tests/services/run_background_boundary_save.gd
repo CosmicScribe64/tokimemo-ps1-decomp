@@ -16,6 +16,33 @@ var cases: Array[Dictionary] = []
 var diagnostics: Dictionary = {}
 var app: Boot
 
+const DEFAULT_ENV: Dictionary = {
+	"TOKIMEMO_SAVE_RAW_ROUTE": "/workspace/.claude/orchestrator/state/T-29023/runs/may-first-week-v17/proof/route.json",
+	"TOKIMEMO_BACKGROUND_BEFORE": "/workspace/.claude/orchestrator/state/T-29023/may7-save-v1/beforeimage/playable_save_adapter.gd",
+	"TOKIMEMO_CALENDAR_SOURCE": "/workspace/disc/files/CDROM/FUKUTEST/CALROM.NBN",
+	"TOKIMEMO_BOUNDARY": "/workspace/.claude/orchestrator/state/T-29004/evidence/development-boundary.json",
+	"TOKIMEMO_BOUNDARY_SHA": "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5",
+	"TOKIMEMO_TABLES": "/workspace/.asset-cache/port/school-day-tables-v1-final/manifest.json",
+	"TOKIMEMO_TABLES_SHA": "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060",
+	"TOKIMEMO_MEDIA_PACK": "/workspace/.asset-cache/port/holiday-command0-current-964ce",
+	"TOKIMEMO_HUD_MANIFEST": "/workspace/.asset-cache/port/hud-production-v1/manifest.json",
+	"TOKIMEMO_HUD_SHA": "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88",
+	"TOKIMEMO_FONT_ROOT": "/workspace/.asset-cache/port/fonts/native-font-v2",
+	"TOKIMEMO_HUD_CONTEXT": "/workspace/.claude/orchestrator/state/T-29010/app-integration-v1/proof/development-hud-context.json",
+	"TOKIMEMO_HUD_CONTEXT_SHA": "2ec736f93177c47d7d0dce13444183215cbc65a88b40a065319c73bee9ce0451",
+	"TOKIMEMO_HOLIDAY_EXTENSION": "/workspace/.claude/orchestrator/state/T-29013/evidence/holiday-boundary-extension.json",
+	"TOKIMEMO_HOLIDAY_TEXT": "/workspace/.asset-cache/port/holiday-hud-text-v1/manifest.json",
+	"TOKIMEMO_HOLIDAY_FIXTURE": "/workspace/.claude/orchestrator/state/T-29013/evidence/native-rules.json",
+	"TOKIMEMO_DATE_PACK": "/tmp/disabled",
+	"TOKIMEMO_PLAYABLE_OUTPUT": "/tmp",
+	"TOKIMEMO_SAVE_OUTPUT": "/tmp"
+}
+
+static func _ensure_default_env() -> void:
+	for env_key: String in DEFAULT_ENV:
+		if OS.get_environment(env_key).is_empty():
+			OS.set_environment(env_key, DEFAULT_ENV[env_key])
+
 func _initialize() -> void:
 	call_deferred("_run")
 
@@ -55,6 +82,7 @@ func fingerprint() -> Dictionary:
 		"texture_pixels": pixels}
 
 func _run() -> void:
+	_ensure_default_env()
 	app = Boot.new()
 	app.canvas = Boot.Canvas.new()
 	app.pad = Boot.Pad.new()
