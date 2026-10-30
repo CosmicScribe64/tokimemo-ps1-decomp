@@ -367,12 +367,13 @@
   "mainrom-0060": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "the month-name form (\"95 / Apr / 4\") is not published",
     "integrate part-wise only: the captions change frame-60 parts 3, 4 and 5; the other ten parts stay the original (kind frame_part rows, never a MAINROM sheet patch: parts 4 and 5 share texels with weekday frames 82 and 88)"
    ],
-   "reason": "captions draft \"95 YR / 4 MO / 4 DAY\" in every palette variant; port-made caps5 lettering; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "captions draft \"95 YR / 4 MO / 4 DAY\" in every palette variant; port-made caps5 lettering; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0061": {
    "notes": [
@@ -385,67 +386,74 @@
   "mainrom-0082": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack",
     "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [60]"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0083": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0084": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0085": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0086": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0087": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0088": {
    "notes": [
     "decision record: translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1/ledger.json (ticket T-39004)",
-    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only, the art is not human-approved",
+    "user style decision 2026-10-30 (chat): date panel reads \"95 YR / 4 MO / 4 DAY\" with two-letter weekdays (set A); style only",
+    "user art approval 2026-10-30 (chat): \"Final approved\", after the production-path render; exact-hash approve events in style-decisions.jsonl for the T39004-date-panel-v1 assets only; not runtime acceptance",
     "older drafts of this frame (T39004-pass2, T39004-pass3) are superseded; the reviewed three-letter variants keep their approval and are replaced only in the development pack",
     "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [60]"
    ],
-   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; unreviewed, human_approved false",
-   "status": "candidate-only"
+   "reason": "two-letter weekday drafts (set A) for every palette variant; port-made lettering inside the bracket; human-approved 2026-10-30 (chat, \"Final approved\"), each image bound to its exact hash",
+   "status": "english-reviewed"
   },
   "mainrom-0118": {
    "notes": [

@@ -60,11 +60,18 @@ class InventoryTests(unittest.TestCase):
         for candidate in self.built['candidate_records']:
             path = subject.ROOT / 'translations/en/graphics/artwork/checkpoints' / candidate['ledger'].split('checkpoints/')[1].rsplit('/', 1)[0] / candidate['path']
             self.assertEqual(digest(path.read_bytes()), candidate['output_sha256'], candidate['id'])
-            self.assertFalse(candidate['human_approved'])
+            # Human approval exists only for the date panel art, each with its own exact approve event.
+            if candidate['human_approved']:
+                self.assertIn('T39004-date-panel-v1', candidate['ledger'], candidate['id'])
+                self.assertEqual(candidate['status'], 'english-reviewed')
+                self.assertTrue(candidate['human_review_event'])
+            else:
+                self.assertEqual(candidate['status'], 'candidate-only')
 
     def test_agent_review_is_never_human_approval(self):
-        reviewed = [c for c in self.built['candidate_records'] if c['review_level'] != 'none']
+        reviewed = [c for c in self.built['candidate_records'] if c['review_level'] == 'agent-bounded-in-game']
         self.assertEqual(len(reviewed), 9)
+        self.assertFalse([c for c in reviewed if c['human_approved']])
         for item in self.built['artwork_items']:
             if item['agent_review']:
                 self.assertNotEqual(item['status'], 'english-reviewed')
@@ -99,10 +106,10 @@ class PinnedCountTests(unittest.TestCase):
         summary = subject.build()['summary']
         self.assertEqual(summary['artwork_items']['total'], 271)
         self.assertEqual(summary['artwork_items']['by_status'], {
-            'english-reviewed': 44, 'candidate-only': 174, 'missing': 24, 'unmapped': 0, 'deliberately-untranslated': 29})
+            'english-reviewed': 52, 'candidate-only': 166, 'missing': 24, 'unmapped': 0, 'deliberately-untranslated': 29})
         self.assertEqual(summary['historical_assets']['by_status']['english-reviewed'], 56)
         self.assertEqual(summary['historical_assets']['by_status']['unmapped'], 3)
-        self.assertEqual(summary['candidate_records'], {'total': 329, 'distinct_assets': 320, 'agent_reviewed_revisions': 9, 'human_approved': 0})
+        self.assertEqual(summary['candidate_records'], {'total': 329, 'distinct_assets': 320, 'agent_reviewed_revisions': 9, 'human_approved': 53})
         self.assertEqual(summary['superseded_records'], 23)
         self.assertEqual(summary['text_records']['total'], 55911)
         self.assertEqual(summary['text_records']['by_class'], {
@@ -120,10 +127,30 @@ class PinnedCountTests(unittest.TestCase):
     def test_review_needs_every_source_variant(self):
         built = subject.build()
         weekday = {i['id']: i for i in built['artwork_items'] if i['id'] in ['mainrom-%04d' % n for n in range(82, 89)]}
+        hist = {h['id']: h for h in built['historical_assets']}
         for item in weekday.values():
-            self.assertNotEqual(item['status'], 'english-reviewed', item['id'])
-            self.assertIn('english-reviewed', item['variant_status'].values())
-            self.assertTrue(set(item['variant_status'].values()) - {'english-reviewed'}, item['id'])
+            # The older reviewed assets cover only some variants; review needs the approved
+            # two-letter cells of every variant.
+            covered = {hist[h]['source_png_sha256'] for h in item['english']['historical_assets']}
+            self.assertTrue(set(item['source_png_sha256'].values()) - covered, item['id'])
+            self.assertEqual(item['status'], 'english-reviewed', item['id'])
+            self.assertEqual(set(item['variant_status'].values()), {'english-reviewed'}, item['id'])
+            self.assertEqual(len(item['english']['approved_candidates']), 5, item['id'])
+
+    def test_ledger_approval_needs_an_exact_approve_event(self):
+        date_panel = next(p for p in subject.LEDGERS if 'date-panel' in str(p))
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            (base / 'date-panel-drafts-v1').symlink_to(date_panel.parent / 'date-panel-drafts-v1')
+            ledger = json.loads(date_panel.read_text())
+            ledger['assets'][0]['human_approval_event'] = '0' * 32
+            (base / 'ledger.json').write_text(json.dumps(ledger))
+            with self.assertRaisesRegex(ValueError, 'without an exact approve event'):
+                subject.load_ledgers([base / 'ledger.json'])
+            ledger['assets'][0]['status'] = 'draft'
+            (base / 'ledger.json').write_text(json.dumps(ledger))
+            with self.assertRaisesRegex(ValueError, 'claims or omits human approval'):
+                subject.load_ledgers([base / 'ledger.json'])
 
     def test_reviewed_without_source_identity_is_rejected(self):
         broken = copy.deepcopy(subject.build())
@@ -175,10 +202,15 @@ class PinnedCountTests(unittest.TestCase):
         date_panel = next(p for p in subject.LEDGERS if 'date-panel' in str(p))
         ledger = json.loads(date_panel.read_text())
         self.assertIn('style only', ledger['style_decision']['scope'])
-        self.assertTrue(all(a['human_approved'] is False and a['status'] == 'draft' and a['port_made'] for a in ledger['assets']))
+        approval = ledger['art_approval']
+        self.assertEqual((approval['approver'], approval['date'], approval['source'], approval['words']),
+                         ('user (project owner)', '2026-10-30', 'chat', 'Final approved'))
+        self.assertEqual(approval['events'], 53)
+        self.assertTrue(all(a['human_approved'] is True and a['status'] == 'approved' and a['port_made'] for a in ledger['assets']))
         frame60 = items['mainrom-0060']
-        self.assertEqual(frame60['status'], 'candidate-only')
-        self.assertEqual(set(frame60['variant_status'].values()), {'candidate-only'})
+        self.assertEqual(frame60['status'], 'english-reviewed')
+        self.assertEqual(set(frame60['variant_status'].values()), {'english-reviewed'})
+        self.assertEqual(len(frame60['english']['approved_candidates']), 18)
         self.assertTrue(all(c['id'].startswith('mainrom-alt-0060-captions-part') for c in frame60['english']['candidates']))
         self.assertEqual(len(frame60['english']['candidates']), 18)
         for frame in range(82, 89):
@@ -351,7 +383,9 @@ class PinnedCountTests(unittest.TestCase):
         for a, b in zip(built['text_groups'], reverted['text_groups']):
             self.assertEqual(a.get('context_reasons'), b.get('context_reasons'))
         self.assertEqual(sum(sum(g.get('context_reasons', {}).values()) for g in built['text_groups']), 23337)
-        self.assertTrue(all(c['human_approved'] is False for c in built['candidate_records']))
+        approved = [c for c in built['candidate_records'] if c['human_approved'] is not False]
+        self.assertEqual(len(approved), 53)
+        self.assertTrue(all('T39004-date-panel-v1' in c['ledger'] for c in approved))
 
     def test_known_nonblank_whitespace_targets_are_not_deliberate(self):
         built = subject.build()

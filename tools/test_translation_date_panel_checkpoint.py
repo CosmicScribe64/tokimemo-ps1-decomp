@@ -29,21 +29,29 @@ class PublishedCheckpointTests(unittest.TestCase):
         cls.ledger = json.loads((CHECKPOINT / 'ledger.json').read_text())
         cls.manifest_bytes = (CHECKPOINT / subject.REVISION / 'manifest.json').read_bytes()
 
-    def test_style_decision_is_recorded_without_art_approval(self):
+    def test_style_decision_and_exact_art_approval_are_recorded(self):
         decision = self.ledger['style_decision']
         self.assertEqual(decision['date'], '2026-10-30')
         self.assertIn('95 YR / 4 MO / 4 DAY', decision['decision'])
         self.assertIn('two-letter', decision['decision'])
         self.assertTrue(decision['scope'].startswith('style only'))
+        # The user approved the art on 2026-10-30 ("Final approved"); each image has its own
+        # approve event in style-decisions.jsonl bound to its exact hash.
+        approval = self.ledger['art_approval']
+        self.assertEqual((approval['approver'], approval['date'], approval['source'], approval['words']),
+                         ('user (project owner)', '2026-10-30', 'chat', 'Final approved'))
+        history = [json.loads(l) for l in (subject.CHECKPOINTS.parent / 'style-decisions.jsonl').read_text().splitlines() if l]
+        events = {e['event_id']: e for e in history}
         for asset in self.ledger['assets']:
-            self.assertIs(asset['human_approved'], False, asset['id'])
-            self.assertEqual(asset['status'], 'draft')
+            self.assertIs(asset['human_approved'], True, asset['id'])
+            self.assertEqual(asset['status'], 'approved')
             self.assertTrue(asset['port_made'])
-        # The authorisation repeats the style-only scope; it is not a release approval.
-        authorization = self.ledger['publication_authorization']
-        self.assertIn('style only', authorization)
-        self.assertIn('no art approval', authorization)
-        self.assertNotIn('ship', authorization.lower())
+            event = events[asset['human_approval_event']]
+            self.assertEqual((event['decision'], event['output_sha256'], event['asset_id']),
+                             ('approve', asset['output_sha256'], 'checkpoint:T39004-date-panel-v1/' + asset['id']))
+            self.assertEqual(event['approval']['words'], 'Final approved')
+        self.assertEqual(approval['events'], len(self.ledger['assets']))
+        self.assertNotIn('ship', self.ledger['publication_authorization'].lower())
 
     def test_assets_are_the_chosen_forms_only(self):
         ids = [a['id'] for a in self.ledger['assets']]

@@ -4,7 +4,7 @@ title: Complete and verify English translation assets in game
 status: In Progress
 assignee: translation_assets
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-10-30
 links: ["[[assets-media]]", "[[assets-text]]", "[[tickets/T-31000-create-translated-image-assets]]", "[[tickets/T-31001-version-translated-artwork]]"]
 ---
 
@@ -224,3 +224,13 @@ Four review findings were checked again. Three were fixed and one was partly rej
   - Godot: `run_frame_part_tests` (synthetic, and real HUD + pack + state + hover texels), `run_image_store_tests`, `run_image_store_v2_tests` (×2), `run_language_bundle`, `run_language_bundle_built`, `run_english_bundle_open`, `hud/run_hover_pulse_golden` (12 checks) and `run_tests.gd` all pass.
   - Python: all 20 `tools/test_translation_*.py` modules ran with data (220 tests), including the reproduction and preview checks. The only errors are the 2 existing `test_translation_tree` errors caused by the missing `slpm_86_053.md`. `test_build_english_bundle` passes 15 tests, and `translation_inventory.py check` passes.
   - Nothing has been committed.
+
+## Date panel art approval (2026-10-30)
+
+After seeing the production-path render (`.asset-cache/date-panel-ship/date-panel-final.png`), the user (project owner) wrote in chat: "Final approved". This approves the art of `T39004-date-panel-v1` only: the 18 frame-60 caption parts (parts 3-5 in 6 palette variants) and the 35 two-letter weekday cells. No other draft or revision is covered, and it is not runtime acceptance on real hardware.
+
+- **Record.** `translations/en/graphics/artwork/style-decisions.jsonl` gains 53 approve events, one per ledger asset (`asset_id` `checkpoint:T39004-date-panel-v1/<id>`). Each is bound to the asset's exact `output_sha256` and carries approver "user (project owner)", date 2026-10-30, source "chat" and the words "Final approved". The snapshot `manifest.json` now pins the new history hash (124 events).
+- **Ledger.** Every asset is `status: approved`, `human_approved: true` and names its `human_approval_event`. A top-level `art_approval` block records the words, scope and evidence. The `date-panel-drafts-v1/manifest.json` build record is unchanged; it shows the state at build time.
+- **Tools.** `tools/translation_inventory.py` accepts an `approved` ledger asset only when its event is a standing approve event for its exact hash. Such a candidate counts as english-reviewed evidence, and the item needs every source variant covered as before. `tools/translation_draft_pack.py` `hud_checkpoint_rows` applies the same check and emits `style: approve` rows. Those rows still go into the development draft pack: moving them into the release image pack is open.
+- **Inventory.** Artwork items went from 44 to 52 english-reviewed and from 174 to 166 candidate-only. `mainrom-0060` and `mainrom-0082`-`0088` are english-reviewed with every variant covered. Candidate records: 53 human-approved.
+- **Tests.** The pinned counts and the date-panel draft assertions in `tools/test_translation_inventory.py` and `tools/test_translation_date_panel_checkpoint.py` now match the approval. A new test checks that an approved ledger asset without an exact event is rejected.

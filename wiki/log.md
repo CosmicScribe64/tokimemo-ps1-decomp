@@ -2568,3 +2568,14 @@ Verification:
 - 220 translation tests (2 pre-existing tree errors), English bundle 15 tests, core 6 suites, inventory check OK.
 
 An actual-game X11 capture with draft art enabled is still open. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-30] decision | Date panel art human-approved
+
+After the production-path render (`.asset-cache/date-panel-ship/date-panel-final.png`), the user (project owner) wrote in chat: "Final approved". This approves the art of checkpoint `translations/en/graphics/artwork/checkpoints/T39004-date-panel-v1` only: 18 frame-60 caption parts and 35 two-letter weekday cells.
+
+- 53 exact-hash approve events were appended to `translations/en/graphics/artwork/style-decisions.jsonl`. The ledger assets are `approved` / `human_approved: true` with an `art_approval` block.
+- `tools/translation_inventory.py` and `tools/translation_draft_pack.py` now accept ledger approval only through a standing approve event for the exact hash.
+- Inventory: artwork english-reviewed went from 44 to 52 (mainrom-0060, 0082-0088, every variant covered) and candidate-only from 174 to 166.
+- Approved HUD rows stay in the development draft pack; moving them to release is open.
+
+See [[tickets/T-39004-english-asset-completion]].

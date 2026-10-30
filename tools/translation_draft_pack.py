@@ -16,7 +16,10 @@ frame is committed on its own (ledger `part_index`; the checkpoint tool cuts it
 with `split_frame`, so no unedited part is committed) and becomes one
 kind-`frame_part` row; the frame's other parts stay the original. Each row
 repeats the hashes of all the frame's part PNGs, so the runtime binds it only
-to that exact frame.
+to that exact frame. A checkpoint asset may be `approved` (`human_approved:
+true`) only with an exact approve event for its output hash (latest per hash)
+in the snapshot's style-decisions.jsonl; its row then carries `style: approve`
+and stays in the development pack.
 """
 import argparse
 import io
@@ -107,6 +110,20 @@ def split_frame(draft, parts, size, edited_parts):
     return images
 
 
+def approved_hashes(history_path):
+    """{output_sha256: approve event ids since that hash's last other style decision}."""
+    standing = {}
+    for line in history_path.read_bytes().splitlines():
+        if line:
+            event = json.loads(line)
+            if event.get('category') == 'style' and isinstance(event.get('output_sha256'), str):
+                if event.get('decision') == 'approve':
+                    standing.setdefault(event['output_sha256'], set()).add(event.get('event_id'))
+                else:
+                    standing.pop(event['output_sha256'], None)
+    return standing
+
+
 def hud_checkpoint_rows(checkpoint, hud_manifest):
     """Development-pack rows for a checkpoint whose ledger sets `runtime_hud`.
 
@@ -128,9 +145,17 @@ def hud_checkpoint_rows(checkpoint, hud_manifest):
     container = hud['provenance']['inputs']['mainrom']['sha256']
     rows, files, skipped = [], [], []
     bound_parts = set()
+    approvals = None
     for asset in ledger['assets']:
-        if asset.get('human_approved') is not False or asset.get('status') != 'draft':
-            raise ValueError('HUD checkpoint asset is not an unapproved draft: ' + asset['id'])
+        approved = asset.get('status') == 'approved'
+        if asset.get('human_approved') is not approved or asset.get('status') not in ('draft', 'approved'):
+            raise ValueError('HUD checkpoint asset is neither an unapproved draft nor approved: ' + asset['id'])
+        if approved:
+            # Human approval counts only through an exact approve event (latest per hash) in the snapshot history.
+            if approvals is None:
+                approvals = approved_hashes(checkpoint.parent.parent / 'style-decisions.jsonl')
+            if asset.get('human_approval_event') not in approvals.get(asset['output_sha256'], ()):
+                raise ValueError('approved HUD checkpoint asset has no exact approve event: ' + asset['id'])
         if asset['source_container_sha256'] != container:
             raise ValueError('HUD checkpoint asset is bound to another MAINROM: ' + asset['id'])
         path = inside(checkpoint, asset['path'])
@@ -145,7 +170,7 @@ def hud_checkpoint_rows(checkpoint, hud_manifest):
             # Ledger ids end in their palette group's first palette; a row names its own.
             base = {'id': asset['id'].rsplit('.', 1)[0] + '.' + palette, 'source_container': MAINROM,
                     'source_container_sha256': container, 'frame': asset['frame'], 'palette': palette,
-                    'style': 'unreviewed', 'human_approved': False, 'port_made': bool(asset.get('port_made')),
+                    'style': 'approve' if approved else 'unreviewed', 'human_approved': approved, 'port_made': bool(asset.get('port_made')),
                     'checkpoint_ledger_sha256': digest(ledger_bytes), 'checkpoint_output_sha256': asset['output_sha256']}
             if asset.get('supersedes_output_sha256', {}).get(palette):
                 base['supersedes_output_sha256'] = asset['supersedes_output_sha256'][palette]

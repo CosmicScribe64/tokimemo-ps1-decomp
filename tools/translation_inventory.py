@@ -6,7 +6,10 @@ and the published candidate ledgers; it is not a parallel system. It expands the
 153 grouped catalog rows to frame-level items, binds every item to a source
 identity and to the English counterpart, and gives every item exactly one status:
 
-  english-reviewed           exact human style approval of a mapped historical asset
+  english-reviewed           exact human style approval of a mapped historical asset, or of a
+                             checkpoint candidate whose ledger entry is `approved` and whose
+                             output hash has an exact approve event (latest per hash) in
+                             style-decisions.jsonl
   candidate-only             English draft exists; no human approval (agent review is separate metadata)
   missing                    required and not yet produced
   unmapped                   asset or text exists but its exact source cannot be bound yet
@@ -61,7 +64,7 @@ DEFAULT_REASON = {'english-reviewed': 'exact human style approval of every known
 TAIIKU_LINES = {'kasetu': 123, 'ninsetu': 124, 'spsetu': 125, 'tasetu': 126}
 # Groups whose original files cannot be hashed locally (stated in inventory_decisions.json).
 NO_CONTAINER_HASH = ('catalog-152', 'catalog-153')
-LEDGER_STATUSES = ('draft', 'agent-reviewed-in-game')
+LEDGER_STATUSES = ('draft', 'agent-reviewed-in-game', 'approved')
 # Weekday drafts name their day; frame 0x52 + weekday (Monday first) is the HUD weekday frame.
 WEEKDAYS = ('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun')
 WEEKDAY_FRAME0 = 82
@@ -210,15 +213,40 @@ def whole_file_records(asset, ledger_path):
             for page, r in sorted(pages.items())]
 
 
-def load_ledgers(ledgers=None):
+def approve_events(snapshot=SNAPSHOT):
+    """{output_sha256: approve event ids since that hash's last other style decision}.
+
+    Several identical images (one per palette) share a hash; each keeps its own event.
+    """
+    standing = {}
+    for line in (snapshot / 'style-decisions.jsonl').read_bytes().splitlines():
+        if line:
+            event = json.loads(line)
+            if event.get('category') == 'style' and isinstance(event.get('output_sha256'), str):
+                if event.get('decision') == 'approve':
+                    standing.setdefault(event['output_sha256'], set()).add(event.get('event_id'))
+                else:
+                    standing.pop(event['output_sha256'], None)
+    return standing
+
+
+def load_ledgers(ledgers=None, snapshot=SNAPSHOT):
     entries = []
+    approvals = None
     for path in (LEDGERS if ledgers is None else ledgers):
         if not path.exists():
             continue
         ledger = load_json(path)
         for asset in ledger['assets']:
-            if asset.get('human_approved') is not False:
+            approved = asset.get('status') == 'approved'
+            if asset.get('human_approved') is not approved:
                 raise ValueError('ledger %s claims or omits human approval state: %s' % (path.name, asset.get('id')))
+            if approved:
+                if approvals is None:
+                    approvals = approve_events(snapshot)
+                if 'catalog_item' in asset or asset.get('human_approval_event') not in approvals.get(asset.get('output_sha256'), ()) \
+                        or digest((path.parent / asset['path']).read_bytes()) != asset['output_sha256']:
+                    raise ValueError('ledger %s: approved asset without an exact approve event: %s' % (path.name, asset.get('id')))
             if asset.get('status') not in LEDGER_STATUSES:
                 raise ValueError('ledger %s has unknown status %r: %s' % (path.name, asset.get('status'), asset.get('id')))
             records = whole_file_records(asset, path) if 'catalog_item' in asset else [asset]
@@ -286,7 +314,7 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
     rows = [json.loads(l) for l in catalog.read_bytes().splitlines() if l]
     report = audit(snapshot)
     hist = historical(report)
-    all_entries = load_ledgers(ledgers)
+    all_entries = load_ledgers(ledgers, snapshot)
     ledger, superseded = split_superseded(all_entries, ledgers)
     atoms = {}
     order = []
@@ -339,7 +367,9 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
             frame_hashes = {c['id']: c['source_png_sha256'] for c in atom['candidates']}
         # English evidence is matched to source images by source hash, never by palette name.
         evidence = [(a['id'], a['source_png_sha256'], 'english-reviewed') for a in mapped]
-        evidence += [(c['id'], c['source_png_sha256'], 'candidate-only') for c in atom['candidates']]
+        approved = [c for c in atom['candidates'] if c['human_approved'] is True]
+        evidence += [(c['id'], c['source_png_sha256'], 'english-reviewed' if c['human_approved'] is True else 'candidate-only')
+                     for c in atom['candidates']]
         groups = {}
         for name, sha in frame_hashes.items():
             groups.setdefault(sha, []).append(name)
@@ -404,9 +434,10 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
                 'legacy_unmapped_assets': sorted(a['id'] for a in legacy),
                 'candidates': sorted(({'id': c['id'], 'revision': c['revision'],
                                        'path': c['path'], 'output_sha256': c['output_sha256']}
-                                      for c in atom['candidates']), key=lambda c: (c['revision'], c['id']))},
+                                      for c in atom['candidates']), key=lambda c: (c['revision'], c['id'])),
+                'approved_candidates': sorted(c['id'] for c in approved)},
             'variant_status': {('default' if k is None else str(k)): v for k, v in sorted(variants.items(), key=lambda kv: str(kv[0]))},
-            'human_review': 'approved-exact' if mapped else None,
+            'human_review': 'approved-exact' if mapped or approved else None,
             'agent_review': 'bounded-in-game' if any(c['status'] == 'agent-reviewed-in-game' for c in atom['candidates']) else None,
             'runtime': 'none',
             'required_by_source': 'catalog',
@@ -442,9 +473,10 @@ def build(catalog=CATALOG, decisions_path=DECISIONS, sources_path=SOURCES, snaps
                            'ledger': entry['ledger'], 'output_sha256': entry['output_sha256'],
                            'source_png_sha256': entry['source_png_sha256'], 'palette': entry.get('palette_id'),
                            'source_container_sha256': entry['source_container_sha256'],
-                           'status': 'candidate-only', 'atom': atom_id,
-                           'review_level': 'agent-bounded-in-game' if entry['status'] == 'agent-reviewed-in-game' else 'none',
-                           'human_approved': entry['human_approved']})
+                           'status': 'english-reviewed' if entry['human_approved'] is True else 'candidate-only', 'atom': atom_id,
+                           'review_level': {'agent-reviewed-in-game': 'agent-bounded-in-game', 'approved': 'human-approved-exact'}.get(entry['status'], 'none'),
+                           'human_approved': entry['human_approved'],
+                           **({'human_review_event': entry['human_approval_event']} if entry['human_approved'] is True else {})})
     sup_items = [{'id': entry['id'], 'revision': entry['revision'], 'path': entry['path'], 'ledger': entry['ledger'],
                   'output_sha256': entry['output_sha256'], 'source_png_sha256': entry['source_png_sha256'],
                   'palette': entry.get('palette_id'), 'atom': candidate_key(entry)[0], 'status': 'superseded',
@@ -551,8 +583,8 @@ def summarize(items, hist, cands, text):
     return {'artwork_items': {'total': len(items), 'by_status': count(items)},
             'historical_assets': {'total': len(hist), 'by_status': count(hist)},
             'candidate_records': {'total': len(cands),
-                                  'distinct_assets': len({c['id'] + '|' + c['source_png_sha256'] for c in cands if c['review_level'] == 'none'}),
-                                  'agent_reviewed_revisions': sum(c['review_level'] != 'none' for c in cands),
+                                  'distinct_assets': len({c['id'] + '|' + c['source_png_sha256'] for c in cands if c['review_level'] != 'agent-bounded-in-game'}),
+                                  'agent_reviewed_revisions': sum(c['review_level'] == 'agent-bounded-in-game' for c in cands),
                                   'human_approved': sum(c['human_approved'] for c in cands)},
             'text_records': {'total': sum(g['records'] for g in text['groups']), 'by_class': text_counts,
                              'context_status': context_counts, 'groups': len(text['groups'])}}
@@ -647,7 +679,8 @@ def validate_artwork(item):
     if needs_source and not item['source_png_sha256']:
         problems.append('artwork item %s has no source image hash' % name)
     english = item['english']
-    if status == 'english-reviewed' and not (english['historical_assets'] and item['human_review'] == 'approved-exact'):
+    if status == 'english-reviewed' and not ((english['historical_assets'] or english['approved_candidates'])
+                                             and item['human_review'] == 'approved-exact'):
         problems.append('artwork item %s claims review without an exact human approval' % name)
     if status == 'candidate-only' and not english['candidates'] and not english['historical_assets']:
         problems.append('artwork item %s claims candidate without a file' % name)
@@ -672,8 +705,11 @@ def validate(inventory):
                 continue
             if section == 'artwork_items':
                 problems.extend(validate_artwork(item))
-            if section == 'candidate_records' and (item.get('human_approved') or status != 'candidate-only'):
-                problems.append('candidate %s claims approval' % item['id'])
+            if section == 'candidate_records':
+                approved = item.get('human_approved') is True
+                if status != ('english-reviewed' if approved else 'candidate-only') \
+                        or approved != bool(item.get('human_review_event')):
+                    problems.append('candidate %s claims approval' % item['id'])
             if section == 'historical_assets' and status == 'unmapped' and not item.get('resolution'):
                 problems.append('unmapped asset %s has no recorded resolution' % item['id'])
     for item in inventory.get('superseded_records', []):
