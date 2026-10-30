@@ -2541,3 +2541,7 @@ Committed as 2a0f784ba on `port/opening-to-gameplay`; working tree clean. The ne
 ## [2026-10-30] build | Weekday art redrawn to clear the date panel brackets
 
 The user saw the English weekday letters clipping the date panel parentheses. The clear interior measures 10 px (9 ink columns plus shadow). Set A (two-letter Mo-Su) fits with no bracket contact in all 20 in-place renders, uses the source shadow rule, and covers every shown palette including the plain Monday. Set B (narrow three-letter) can only fit Fri legibly; the other six words abut, so it is labelled not recommended. Draft tool `tools/translation_weekday_drafts.py` has 18 tests. Patch is `.asset-cache/weekday-fix/weekday.v2.patch`; the sheet was sent to the user. The date column style (month name versus YR/MO/DAY captions) is still the user's call; both need port changes (13-part frame-60 swap, month-name calendar draw). See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-30] decision | English date panel: captions and two-letter weekdays
+
+The user chose the captions date style ("95 YR / 4 MO / 4 DAY") with two-letter weekdays (Mo Tu We Th Fr Sa Su, set A). The month-name style and the three-letter set are dropped. Implementation needs the frame-60 captions draft and port support for multi-part MAINROM frame replacement (frame 60 has 13 parts). The calendar month-name draw change is no longer needed. See [[tickets/T-39004-english-asset-completion]].
