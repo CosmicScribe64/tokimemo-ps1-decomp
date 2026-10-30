@@ -2545,3 +2545,11 @@ The user saw the English weekday letters clipping the date panel parentheses. Th
 ## [2026-10-30] decision | English date panel: captions and two-letter weekdays
 
 The user chose the captions date style ("95 YR / 4 MO / 4 DAY") with two-letter weekdays (Mo Tu We Th Fr Sa Su, set A). The month-name style and the three-letter set are dropped. Implementation needs the frame-60 captions draft and port support for multi-part MAINROM frame replacement (frame 60 has 13 parts). The calendar month-name draw change is no longer needed. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-30] build | Fast mode proven equivalent but no faster; performance pass started
+
+The fast route mode (`.asset-cache/fast-route/fast-route.v2.patch`, review fixes applied) is logic-identical to real time: frames, native PNGs, states and substep tables match. FAST-vs-FAST audio is identical. Real-time audio depends on host speed, so audio is only reported. Neither mode is faster: both run at about 13 fps because each logic frame costs about 70 ms of GDScript CPU (per-frame session event_hash JSON, bridge publish, render). That is also a real gameplay performance risk. A performance and checkpoint workflow started:
+- profile and optimise per-frame cost, keeping frame timing and equivalence identical and every guard intact;
+- dev-only exact save/resume checkpoints that acceptance and Parity gates refuse.
+
+See [[tickets/T-39018-playtest-differential-harness]].
