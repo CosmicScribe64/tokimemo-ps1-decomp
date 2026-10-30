@@ -26,9 +26,11 @@ const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
 const DayEventModes = preload("res://rules/day_event_modes.gd")
 const TelephoneOverlay = preload("res://overlays/telephone_overlay.gd")
 const BoundarySaveControls = preload("res://app/boundary_save_controls.gd")
+const ClearSave = preload("res://services/clear_save_transaction.gd")
 const RouteState = preload("res://rules/new_game_route_state.gd")
 const Entry = preload("res://flow/new_game_entry.gd")
 const StateAdapter = preload("res://flow/new_game_state_adapter.gd")
+const FreshHandoff = preload("res://flow/fresh_gameplay_handoff.gd")
 const Arrival = preload("res://flow/prologue_arrival.gd")
 const Reload = preload("res://flow/new_game_command_reload.gd")
 const AudioService = preload("res://services/audio_service.gd")
@@ -212,9 +214,9 @@ static func build_opening_services(audio_svc: AudioService, service_log: Array =
 			service_log.append(["calendar_upload", y, m, b]),
 		"mascot_set": func(_s: RouteState, n: int, on: int, _r: Session.FrameResult) -> void:
 			service_log.append(["mascot_set", n, on]),
-		"command_build": func(s: RouteState, _r: Session.FrameResult) -> void:
+		"command_build": func(s: RouteState, r: Session.FrameResult) -> void:
 			service_log.append("command_build")
-			Reload.build_command_screen(s),
+			r.error = Reload.build_command_screen(s),
 		"room_finish": func(s: RouteState, _r: Session.FrameResult) -> void:
 			service_log.append("room_finish")
 			Reload.finish_room_load(s),
@@ -281,7 +283,8 @@ static func run_new_game_opening_to_command_ready(
 		"service_log": service_log,
 	}
 const BOUNDARY_SHA: String = "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5"
-const TABLES_SHA: String = "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const TABLES_SHA: String = ContentIdentity.RULE_TABLES_SHA
 
 var session: Session
 var controller: Controller
@@ -317,6 +320,10 @@ var video_frame: int = 0
 var video_capture_busy: bool = false
 var smoke_command: int = 0
 var save_controls: BoundarySaveControls = BoundarySaveControls.new()
+var clear_save_host: ClearSave
+## T-39007: set by the title Continue owner before this node enters the tree:
+## {"slot": String, "checksum_sha256": String} of the save the player chose.
+var continue_request: Dictionary = {}
 var continue_week: bool = true
 var checkpoints: Array[Dictionary] = []
 var staged_hud_refresh: bool = false
@@ -447,7 +454,8 @@ func _ready() -> void:
 	smoke = OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE") == "1"
 	smoke_command = int(OS.get_environment("TOKIMEMO_PLAYABLE_SMOKE_COMMAND"))
 	continue_week = OS.get_environment("TOKIMEMO_PLAYABLE_FIRST_RESULT_ONLY") != "1"
-	new_game_boot = OS.get_environment("TOKIMEMO_NEW_GAME_BOOT") == "1" or OS.get_environment("TOKIMEMO_BOOT_MODE") == "new_game"
+	# Continue restores a saved session; it never runs the new-game entry.
+	new_game_boot = continue_request.is_empty() and (OS.get_environment("TOKIMEMO_NEW_GAME_BOOT") == "1" or OS.get_environment("TOKIMEMO_BOOT_MODE") == "new_game")
 	new_game_skip_prologue = OS.get_environment("TOKIMEMO_PROLOGUE_SKIP") == "1"
 	allow_multi_week = allow_multi_week or OS.get_environment("TOKIMEMO_MULTI_WEEK") == "1"
 	_ensure_audio_players()
@@ -488,6 +496,12 @@ func _ready() -> void:
 	if not failure.is_empty():
 		_stop(failure)
 		return
+	clear_save_host = ClearSave.new(OS.get_user_data_dir().path_join("boundary-saves"))
+	if not continue_request.is_empty():
+		failure = save_controls.continue_from(self, continue_request)
+		if not failure.is_empty():
+			_stop("Continue failed: " + failure)
+			return
 	set_physics_process(false)
 	for warmup: int in range(2):
 		await get_tree().process_frame
@@ -522,6 +536,14 @@ func _load_inputs() -> String:
 	var club_pack: String = OS.get_environment("T29014_CLUB_PACK")
 	if club_pack.is_empty():
 		club_pack = OS.get_environment("TOKIMEMO_CLUB_PACK")
+	if new_game_boot:
+		# A fresh New Game never reads the captured development boundary or
+		# captured HUD context (flow/fresh_gameplay_handoff.gd). The boundary
+		# SHA is not refused: save_controls.configure reads it as the save
+		# content identity below.
+		var captured_error: String = FreshHandoff.launch_input_error()
+		if not captured_error.is_empty():
+			return captured_error
 	if not new_game_boot:
 		if OS.get_environment("TOKIMEMO_BOUNDARY_SHA") != BOUNDARY_SHA or OS.get_environment("TOKIMEMO_TABLES_SHA") != TABLES_SHA:
 			return "unsupported development boundary/table profile; use the reviewed captured inputs"
@@ -626,6 +648,7 @@ func _load_inputs() -> String:
 			if cand_od.open_resources(font_root_path, hud_manifest, date_pack_path).is_empty():
 				overlay_dispatcher = cand_od
 				if controller != null:
+					cand_od.rule_tables = controller.tables
 					controller.overlay_dispatcher = cand_od
 		holiday_hud = candidate_hud
 		holiday_scene = candidate_scene
@@ -641,11 +664,12 @@ func _load_inputs() -> String:
 			if fallback_od.open_resources(od_font_root, hud_manifest, od_date_pack).is_empty():
 				overlay_dispatcher = fallback_od
 				if controller != null:
+					fallback_od.rule_tables = controller.tables
 					controller.overlay_dispatcher = fallback_od
 	return ""
 
 func _verified_external(path: String, digest: String) -> bool:
-	return ExternalPath.is_external_file(path) and digest.length() == 64 and FileAccess.get_size(path) < 8 * 1024 * 1024 and FileAccess.get_sha256(path) == digest
+	return BoundarySaveControls.verified_external(path, digest)
 
 func _enable_multi_week() -> String:
 	if state == null:
@@ -783,6 +807,7 @@ func _reset() -> String:
 		var modern_settings := get_node_or_null("/root/ModernSettings")
 		if modern_settings != null:
 			hud.presenter.set_translated_images(modern_settings.translated_images)
+			hud.presenter.set_translated_text(modern_settings.translated_text)
 			if not modern_settings.preferences_changed.is_connected(_refresh_translation_images):
 				modern_settings.preferences_changed.connect(_refresh_translation_images)
 		error = _present_committed()
@@ -798,6 +823,7 @@ func _refresh_translation_images(_preferences: Dictionary) -> void:
 	if hud == null or modern_settings == null:
 		return
 	hud.presenter.set_translated_images(modern_settings.translated_images)
+	hud.presenter.set_translated_text(modern_settings.translated_text)
 	var presentation_error := _present_committed()
 	if not presentation_error.is_empty():
 		_stop(presentation_error)
@@ -884,6 +910,12 @@ func _physics_process(_delta: float) -> void:
 	for descriptor: Dictionary in pending_services:
 		events.append(Session.ServiceEvent.new(tick, Session.Phase.BEFORE_MODE,
 			Session.ServiceKind.COMPLETION, descriptor["service"], descriptor["payload"]))
+	# T-39007: storage runs here, between committed steps; the session sees
+	# only the completion with its read-back receipt or failure reason.
+	var clear_save: Dictionary = _clear_save_service()
+	if not clear_save.is_empty():
+		events.append(Session.ServiceEvent.new(tick, Session.Phase.BEFORE_MODE,
+			Session.ServiceKind.COMPLETION, clear_save["service"], clear_save["payload"]))
 	staged_commands.clear()
 	staged_services.clear()
 	staged_hud_refresh = false
@@ -1027,11 +1059,20 @@ func _build_overlay_render_state(current: State) -> Dictionary:
 		merged["appointment_words"] = live_ctx["appointment_words"]
 	return merged
 
+func _clear_save_service() -> Dictionary:
+	if clear_save_host == null or state == null or not state.rule_state.get("overlay_state") is Dictionary:
+		return {}
+	return clear_save_host.service_request(state.rule_state["overlay_state"])
+
 func step_active_overlay(pad_pressed: int) -> Dictionary:
 	if state == null:
 		return {"error": "playable_boot state is not initialized", "completed": false}
 	var active_od: OverlayDispatcher = overlay_dispatcher if overlay_dispatcher != null else (controller.overlay_dispatcher if controller != null else OverlayDispatcher.new())
 	var ovl_state: Dictionary = state.rule_state.get("overlay_state", {}) if state.rule_state.get("overlay_state") is Dictionary else {}
+	# T-39007: a pending clear save is delivered only by _physics_process as a
+	# session completion; this direct step never runs storage or applies it.
+	if ovl_state.get("clear_save_status") == "requested":
+		return {"error": "clear save is waiting for its storage completion", "completed": false}
 	var ovl_mode: int = int(ovl_state.get("mode", state.game_mode))
 	var step_out: Dictionary = active_od.step_overlay(
 		ovl_mode, ovl_state, pad_pressed, state.rule_state, session.rng if session != null else null

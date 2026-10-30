@@ -54,7 +54,7 @@ struct Cpu {
             if(hook) {
                 // Device hooks are only entry points; commit any pending load
                 // before the host interface, matching the reviewed CPU model.
-                if(pc==0x80095b70 || pc==0x80097948) {
+                if(pc==0x80095b70 || pc==0x80097948 || pc==0x800949b0) {
                     if(load>=0)r[load]=load_value;
                     load=-1;
                     if(hook(pc,r)){pc=r[31];next=pc+4;continue;}
@@ -196,6 +196,19 @@ struct Engine {
     uint32_t maximum_voices=0;int peak=0,wet_peak=0;bool stopped=false,initialized=false;
     bool rei_loaded=false,rei_started=false,fade_active=false,fade_master=false;
     int current_gain=0,full_gain=0,attenuation=0,fade_accumulator=0,fade_ticks=0;
+    // sound_driver.c::audio_bgm_fade_start rate/decrement pair; per_pump means
+    // the fade advances once per render pump (audio_bgm_update), not per event.
+    int fade_rate=0,fade_step=0;bool fade_per_pump=false;
+    // T-39002 stage10/substep8 prologue_shiori bank load. Three nowait CD reads
+    // land sector by sector over the live Rei score/header (measured schedule).
+    struct Landing{uint32_t pump;unsigned region;unsigned count;};
+    static constexpr uint32_t shiori_target[3]={0x8002e800,0x801b8000,0x80016000};
+    static constexpr unsigned shiori_sectors[3]={0x25,0x50,6};
+    std::array<std::vector<uint8_t>,3> shiori_data;std::array<unsigned,3> shiori_landed{};
+    std::vector<Landing> shiori_schedule;size_t shiori_next=0;
+    bool shiori_active=false,shiori_finish_pending=false,shiori_started=false;
+    uint32_t shiori_pump=0,shiori_finish_pump=0,fade_finish_pump=0;
+    std::vector<std::array<uint32_t,4>> kon_log;std::vector<std::array<int32_t,3>> pump_log;
     void copy(uint32_t target,const std::vector<uint8_t>& data){auto p=cpu.region(target,unsigned(data.size()));std::copy(data.begin(),data.end(),p);}
     void initialize(const std::array<std::vector<uint8_t>,6>& data,int gain) {
         if(gain!=93 && gain!=69)throw std::runtime_error("unsupported gain");
@@ -208,6 +221,13 @@ struct Engine {
         std::copy_n(cpu.ram.data()+0xdc9a0,32,cpu.regs.data()+0x180);
         cpu.hook=[&](uint32_t pc,std::array<uint32_t,32>& r){
             if(pc==0x80097948){r[2]=0;for(auto s:occupied)if(r[4]>=s.first && r[4]<s.second)r[2]=1;return true;}
+            // SpuClearReverbWorkArea(3) (audio_voices_kill): the libspu DMA zero fill of
+            // the mode-3 work area, _spu_rev_startaddr[3] 0xF6F8 (x8) to the end of SPU RAM.
+            // Only reached by native-bank0 audio_bgm_start; other modes are refused.
+            if(pc==0x800949b0){
+                if(r[4]!=3 || cpu.read(0x1f801da2,2)!=0xf6f8)throw std::runtime_error("reverb work-area clear outside mode 3");
+                std::fill(sound.begin()+0x7b7c0,sound.end(),uint8_t(0));r[2]=0;return true;
+            }
             if(pc!=0x80095b70)return false;
             uint32_t dest=cpu.read(0x800dcbd4,2)*8,count=r[5],source=r[4]&0x1fffffff;
             if(count>sound.size() || dest>sound.size()-count)throw std::runtime_error("SPU transfer extent");
@@ -241,17 +261,29 @@ struct Engine {
         for(unsigned i=0;i<=half(0x16);++i){uint32_t bytes=half(table+i*2)*8;if(bytes){if(address+bytes>0x39010+data[1].size())throw std::runtime_error("Rei VAG extent");samples.emplace_back(address,address+bytes);}address+=bytes;}
         rei_loaded=true;
     }
+    void begin_fade(int rate,int step,bool per_pump) {
+        if(!initialized || stopped || fade_active)throw std::runtime_error("BGM fade requires an active sequence without an outstanding fade");
+        // audio_bgm_fade_start: B1 0x100/10, C1 0xC0/1, D1 0x80/1. Nothing else.
+        if(!((rate==0x100 && step==10) || (rate==0xc0 && step==1) || (rate==0x80 && step==1)))throw std::runtime_error("fade rate/decrement outside audio_bgm_fade_start");
+        fade_active=true;fade_master=true;fade_accumulator=0;fade_ticks=0;fade_rate=rate;fade_step=step;fade_per_pump=per_pump;fade_sequence_volume=false;
+    }
     void begin_rei_fade() {
         if(!initialized || stopped || rei_started || fade_active)throw std::runtime_error("Rei fade requires active arrival sequence");
         // audio_command5 + B1: fade accumulator0, rate256, decrement10.
-        fade_active=true;fade_master=true;fade_accumulator=0;fade_ticks=0;
+        begin_fade(0x100,10,false);
     }
     void tick_rei_fade(bool xa_active) {
+        if(fade_per_pump && fade_active)throw std::runtime_error("per-pump fade cannot take event ticks");
+        tick_fade(xa_active);
+    }
+    void tick_fade(bool xa_active) {
         if(!fade_active || stopped)return;
-        fade_accumulator+=256;
+        // audio_bgm_update: accumulator += rate; on carry gain -= step.
+        fade_accumulator+=fade_rate;
         if(!(fade_accumulator&0xff00))return;
-        fade_accumulator&=255;current_gain-=10;++fade_ticks;fade_master=!xa_active;
-        if(current_gain<0){if(fade_master){cpu.call(0x8008fd68,{0});cpu.call(0x8008b750,{0,0});}stop();fade_active=false;return;}
+        fade_accumulator&=255;current_gain-=fade_step;++fade_ticks;fade_master=!xa_active && !fade_sequence_volume;
+        // audio_bgm_fade_finish: SsSetMVol(0,0) then audio_bgm_control(0x71).
+        if(current_gain<0){if(fade_master){cpu.call(0x8008fd68,{0});cpu.call(0x8008b750,{0,0});}stop();fade_active=false;fade_per_pump=false;fade_finish_pump=shiori_pump;bank0_fade_finished();return;}
         int master=full_gain==0?0:(current_gain*127)/full_gain;
         if(fade_master)cpu.call(0x8008b750,{uint32_t(master),uint32_t(master)});
         else cpu.call(0x8008c720,{0,uint32_t(current_gain),uint32_t(current_gain)});
@@ -279,7 +311,10 @@ struct Engine {
         cpu.writes.clear();cpu.call(0x8008e1d0);
         for(auto command:cpu.writes)for(int ch=0;ch<24;++ch)if(command.second&(1u<<ch)){
             auto& v=voices[ch];if(!command.first){if(v.live)v.env.release();continue;}
-            uint32_t addr=cpu.read(0x1f801c06+ch*16,2)*8;auto s=std::find_if(samples.begin(),samples.end(),[&](auto row){return row.first==addr;});
+            uint32_t addr=cpu.read(0x1f801c06+ch*16,2)*8;
+            if(kon_log.size()<4096)kon_log.push_back({uint32_t(frames/735),shiori_active?shiori_pump:0u,uint32_t(ch),addr});
+            if(bank0_log_pumps && bank0_kon_log.size()<16384)bank0_kon_log.push_back({int64_t(pumps),int64_t(ch),int64_t(addr),0});
+            auto s=std::find_if(samples.begin(),samples.end(),[&](auto row){return row.first==addr;});
             if(s==samples.end())throw std::runtime_error("key-on outside original sample inventory");
             if(v.live){++replacements;if(v.env.level>0)++busy_replacements;}
             v=Voice{};v.live=true;v.begin=v.cursor=v.next_cursor=v.loop=s->first;v.end=s->second;v.env.a=cpu.read(0x1f801c08+ch*16,2);v.env.b=cpu.read(0x1f801c0a+ch*16,2);v.history[3]=v.next_sample(sound);
@@ -288,12 +323,274 @@ struct Engine {
     }
     std::array<int16_t,1470> render(bool wet_enabled=true) {
         if(!initialized)throw std::runtime_error("engine not initialized");
-        flush();if(!stopped)cpu.call(0x80092500,{0,0});
+        ++pumps;
+        if(shiori_active){++shiori_pump;land_shiori();}
+        if(bank0_loading){++bank0_load_pump;land_bank0();}
+        flush();if(!stopped){if(seq_tick_skip)--seq_tick_skip;else cpu.call(0x80092500,{0,0});}
         std::array<int16_t,1470> pcm{};uint32_t mask=cpu.read(0x1f801d98)&0xffffff;
         if(cpu.read(0x1f801d90)&0xfffffe || cpu.read(0x1f801d94))throw std::runtime_error("noise/pitch modulation unsupported");
         for(int i=0;i<735;++i){int l=0,r=0,sl=0,sr=0;uint32_t count=0;for(int ch=0;ch<24;++ch){auto& v=voices[ch];if(!v.live)continue;++count;auto p=v.tick(sound);l+=p.first;r+=p.second;if(mask&(1u<<ch)){sl+=p.first;sr+=p.second;}}maximum_voices=std::max(maximum_voices,count);auto wet=wet_enabled?reverb.tick(sl,sr,cpu,sound):std::pair<int,int>{0,0};wet_peak=std::max({wet_peak,std::abs(wet.first),std::abs(wet.second)});l+=wet.first;r+=wet.second;l=master_sample(l,cpu.read(0x1f801d80,2));r=master_sample(r,cpu.read(0x1f801d82,2));peak=std::max({peak,std::abs(l),std::abs(r)});pcm[2*i]=int16_t(clamp16(l));pcm[2*i+1]=int16_t(clamp16(r));if(l || r)++nonzero;++frames;}
+        if(shiori_active && pump_log.size()<4096)pump_log.push_back({int32_t(shiori_pump),int32_t(cpu.read(0x1f801d80,2)),current_gain});
+        // Mix-time state (before this pump's commands), the instant of an emulator timeline row.
+        if(bank0_log_pumps && bank0_pump_log.size()<8192)bank0_pump_log.push_back({int64_t(pumps),int64_t(cpu.read(0x1f801d80,2)),current_gain,int64_t(fade_active)});
+        // audio_command_pump runs after this pump's SPU tick: the queued poll
+        // commands (0x15, 0x23/0x24/0x2E/0x200), then audio_pending_update with
+        // the slot2 transfer and audio_bgm_update, whose C1/D1 fade advances
+        // once per audio pump. Their effect is visible from the next pump.
+        if(shiori_finish_pending)finish_shiori_now();
+        bank0_pump_commands();
+        if(fade_per_pump && fade_active)tick_fade(false);
         return pcm;
     }
+    void begin_shiori_load(const std::array<std::vector<uint8_t>,3>& data,const std::vector<Landing>& schedule) {
+        if(!initialized || !rei_started || stopped || shiori_active || shiori_started)throw std::runtime_error("Shiori bank load requires the playing Rei sequence");
+        if(!fade_active || !fade_per_pump || fade_rate!=0xc0 || fade_step!=1 || fade_ticks!=0 || fade_accumulator!=0)throw std::runtime_error("Shiori bank load requires the just-started source C1 fade");
+        for(int r=0;r<3;++r)if(data[r].size()!=size_t(shiori_sectors[r])*2048)throw std::runtime_error("Shiori CD read extent differs");
+        // Validate the measured landing table: per region strictly increasing
+        // cumulative sectors, regions complete in issue order (CBA5,CBAA,CBD4).
+        std::array<unsigned,3> count{};uint32_t last=0;int region=0;
+        for(auto& row:schedule){
+            if(row.region>2 || row.pump==0 || row.pump<last || int(row.region)<region || row.count<=count[row.region] || row.count>shiori_sectors[row.region])throw std::runtime_error("Shiori landing schedule is malformed");
+            if(int(row.region)>region){for(int r=region;r<int(row.region);++r)if(count[r]!=shiori_sectors[r])throw std::runtime_error("Shiori landing schedule is out of read order");region=int(row.region);if(row.pump==last)throw std::runtime_error("Shiori landing schedule overlaps reads");}
+            count[row.region]=row.count;last=row.pump;
+        }
+        for(int r=0;r<3;++r)if(count[r]!=shiori_sectors[r])throw std::runtime_error("Shiori landing schedule is incomplete");
+        shiori_data=data;shiori_schedule=schedule;shiori_next=0;shiori_landed={};shiori_pump=0;shiori_active=true;
+    }
+    void land_shiori() {
+        // Sector-granular nowait reads. Bytes are resident before this pump's
+        // SPU flush and SsSeqCalledTbyT read them, as the measurement shows.
+        while(shiori_next<shiori_schedule.size() && shiori_schedule[shiori_next].pump<=shiori_pump){
+            auto row=shiori_schedule[shiori_next++];
+            if(row.pump!=shiori_pump)throw std::runtime_error("Shiori landing pump was skipped");
+            auto first=size_t(shiori_landed[row.region])*2048,end=size_t(row.count)*2048;
+            std::copy(shiori_data[row.region].begin()+first,shiori_data[row.region].begin()+end,cpu.region(shiori_target[row.region]+uint32_t(first),unsigned(end-first)));
+            shiori_landed[row.region]=row.count;
+        }
+    }
+    void finish_shiori() {
+        // audio_bank_load_poll at stage11/substep2: queue 0x15, then
+        // audio_bank_start(1,0) queues 0x23/0x24/0x2E/0x200 for the next pump.
+        if(!shiori_active || shiori_finish_pending || shiori_started)throw std::runtime_error("Shiori bank poll has no in-flight load");
+        for(int r=0;r<3;++r)if(shiori_landed[r]!=shiori_sectors[r])throw std::runtime_error("Shiori CD reads are incomplete at the bank poll");
+        if(!stopped || fade_active)throw std::runtime_error("Shiori dispose before the C1 fade finished is outside the measured path");
+        shiori_finish_pending=true;
+    }
+    void finish_shiori_now() {
+        shiori_finish_pending=false;shiori_finish_pump=shiori_pump;
+        // 0x15 audio_bank_dispose(2): the sequence already stopped at fade
+        // finish (state_flags&0x100 clear), so only SsVabClose(2) remains.
+        cpu.call(0x80090e60,{2});
+        occupied.erase(std::remove_if(occupied.begin(),occupied.end(),[](auto row){return row.first>=0x39010 && row.first<0x39010+0x28000;}),occupied.end());
+        samples.erase(std::remove_if(samples.begin(),samples.end(),[](auto row){return row.first>=0x39010 && row.first<0x39010+0x28000;}),samples.end());
+        // 0x200 with request bit1 still set by C1: audio_bgm_fade_finish under
+        // state_flags 0x100000 (no XA) = SsSetSerialAttr-off + SsSetMVol(0,0);
+        // the start is deferred until audio_pending_update transfers slot2.
+        cpu.call(0x8008fd68,{0});cpu.call(0x8008b750,{0,0});
+        if(cpu.call(0x8008c1b0,{0x80016000,2,0x39010})!=2 || cpu.read(0x801293b2,1)!=2)throw std::runtime_error("Shiori VAB open failed");
+        if(cpu.call(0x8008c620,{0x801b8000,2})!=2 || cpu.read(0x801293b2,1)!=1)throw std::runtime_error("Shiori VAB transfer failed");
+        const auto& header=shiori_data[2];auto half=[&](size_t p){if(p+2>header.size())throw std::runtime_error("Shiori VAB table");return uint32_t(header[p])|(uint32_t(header[p+1])<<8);};
+        size_t table=0x820+half(0x12)*512;uint32_t address=0x39010;
+        for(unsigned i=0;i<=half(0x16);++i){uint32_t bytes=half(table+i*2)*8;if(bytes){if(address+bytes>0x39010+shiori_data[1].size())throw std::runtime_error("Shiori VAG extent");samples.emplace_back(address,address+bytes);}address+=bytes;}
+        // 0x2E audio_sequence_pack_index(0x8002E800,1) + audio_bgm_start.
+        uint32_t offset=cpu.read(0x8002e800),depth=cpu.read(0x8002e840,1);
+        if(offset!=0x40 || depth!=shiori_data[0][0x40])throw std::runtime_error("Shiori sequence index/reverb differs");
+        cpu.call(0x8008ff5c,{depth,depth});
+        if(cpu.call(0x800900a0,{0x8002e800+offset+0x10,2})!=0)throw std::runtime_error("Shiori sequence open failed");
+        current_gain=full_gain=int(cpu.read(0x80016018,1))-25-attenuation;
+        cpu.call(0x8008b750,{127,127});cpu.call(0x8008c720,{0,uint32_t(current_gain),uint32_t(current_gain)});cpu.call(0x80090350,{0,1,1});
+        stopped=false;shiori_started=true;fade_active=false;fade_master=false;fade_per_pump=false;
+    }
+    // ---- native-bank0: the bank0 sequence pack (0x8001C000) after the Shiori start.
+    // stage16 audio_bank_start(0,1), stage20/21 audio_command(5)+(0xD1), the stage21
+    // audio_bank_load_start(0,0xBF98,0xBF79,0xD3D5,0xD387,0xD37D) landing, the mode 0x34
+    // stage 0xFF audio_command(0x11) transfer and audio_bank_start(0,0). Sources:
+    // frame_render_audio.c (audio_bank_start/load_start/load_poll/transfer_start) and
+    // sound_driver.c (audio_command_pump, audio_control_dispatch, audio_command_bank_*,
+    // audio_command_bgm, audio_bgm_update/fade_start/fade_finish/control/start,
+    // audio_voices_kill, audio_bank_dispose/request_transfer/transfer_schedule/transfer).
+    // Commands are queued by the logic frame and run in the next pump after its SPU
+    // tick, in submission order, followed by audio_pending_update.
+    bool system_flag=false;          // state_flags 0x100000 (audio_command 5); cleared by audio_bgm_start
+    bool fade_sequence_volume=false; // a queued-command fade whose steps use SsSeqSetVol (0x100000 clear)
+    bool bank0_log_pumps=false,bgm_start_requested=false,pack0_indexed=false,bank0_loading=false,bank0_loaded=false;
+    unsigned bgm_slot=1;             // D_80125D4C; 0x22 -> 1 (audio_state_init also 1)
+    // MEASURED (M3, not source-defined): SsSeqCalledTbyT ticks lost because audio_bgm_start
+    // (its SpuClearReverbWorkArea DMA wait) ran past the next vsync tick. Stage16: 1, spring: 0.
+    unsigned seq_tick_skip=0,start_tick_skip=0;
+    int bgm_sequence=-1,bgm_next=-1;   // bgm_sequence_id / bgm_next_sequence_id of a bank0 start
+    std::vector<uint16_t> command_queue;
+    std::array<uint32_t,16> pack0_address{};std::array<uint32_t,16> pack0_depth{};
+    uint64_t pumps=0;uint32_t bank0_load_pump=0,transfer_requests=0;
+    static constexpr uint32_t bank0_target[5]={0x80010000,0x801b8000,0x8001c000,0x801c8000,0x80012000};
+    static constexpr unsigned bank0_sectors[5]={3,0x20,0x25,0x50,6};
+    std::array<std::vector<uint8_t>,5> bank0_data;std::array<unsigned,5> bank0_landed{};
+    std::vector<Landing> bank0_schedule;size_t bank0_next_row=0;
+    // [pump, kind, a, b]: 1 commands(count,last) 2 fade_start(rate,step) 3 fade_finish(gain,master)
+    // 4 bgm_start(sequence,gain) 5 voices_kill(released) 6 dispose(slot) 7 transfer(slot,bytes)
+    // 8 fade_ignored(command) 9 bank0_load 10 landing_complete(region)
+    std::vector<std::array<int64_t,4>> bank0_log,bank0_pump_log,bank0_kon_log;
+    void note(int kind,int64_t a=0,int64_t b=0){if(bank0_log.size()<4096)bank0_log.push_back({int64_t(pumps),int64_t(kind),a,b});}
+    static bool bank0_command(unsigned command){return command==5 || command==0xd1 || command==0x11 || command==0x21 || command==0x22 || command==0x2f || (command>=0x200 && command<=0x20f);}
+    void submit(unsigned command) {
+        if(!initialized)throw std::runtime_error("audio command requires an initialized engine");
+        if(!bank0_command(command))throw std::runtime_error("audio command outside the modelled bank0 set");
+        if(shiori_finish_pending || (shiori_active && !shiori_started))throw std::runtime_error("bank0 command during the in-flight Shiori load");
+        if(command_queue.size()>=32)throw std::runtime_error("audio command queue overflow");
+        command_queue.push_back(uint16_t(command));bank0_log_pumps=true;
+    }
+    // audio_bank_start(0,n): reads the pack index word at call time; -1 queues nothing.
+    int bank0_start(unsigned sequence,unsigned tick_skip) {
+        if(!initialized)throw std::runtime_error("bank0 start requires an initialized engine");
+        if(sequence>15)throw std::runtime_error("bank0 sequence outside the pack index");
+        if(tick_skip>1)throw std::runtime_error("bank0 start tick skip outside the measured values");
+        if((cpu.read(0x8001c000)&0xffff)!=0x40)return -1;
+        submit(0x22);submit(0x21);submit(0x2f);submit(0x200|sequence);start_tick_skip=tick_skip;
+        return 1;
+    }
+    void begin_bank0_load(const std::array<std::vector<uint8_t>,5>& data,const std::vector<Landing>& schedule) {
+        if(!initialized || bank0_loading || bank0_loaded)throw std::runtime_error("bank0 load is single-use and needs an initialized engine");
+        if(!shiori_started)throw std::runtime_error("bank0 load is modelled only after the Shiori start");
+        for(int r=0;r<5;++r)if(data[r].size()!=size_t(bank0_sectors[r])*2048)throw std::runtime_error("bank0 CD read extent differs");
+        // Issue order b,c,f,e,d: regions complete in order, counts strictly increase.
+        std::array<unsigned,5> count{};uint32_t last=0;int region=0;
+        for(auto& row:schedule){
+            if(row.region>4 || row.pump==0 || row.pump<last || int(row.region)<region || row.count<=count[row.region] || row.count>bank0_sectors[row.region])throw std::runtime_error("bank0 landing schedule is malformed");
+            if(int(row.region)>region){for(int r=region;r<int(row.region);++r)if(count[r]!=bank0_sectors[r])throw std::runtime_error("bank0 landing schedule is out of read order");region=int(row.region);if(row.pump==last)throw std::runtime_error("bank0 landing schedule overlaps reads");}
+            count[row.region]=row.count;last=row.pump;
+        }
+        for(int r=0;r<5;++r)if(count[r]!=bank0_sectors[r])throw std::runtime_error("bank0 landing schedule is incomplete");
+        bank0_data=data;bank0_schedule=schedule;bank0_next_row=0;bank0_landed={};bank0_load_pump=0;bank0_loading=true;bank0_log_pumps=true;note(9);
+    }
+    void land_bank0() {
+        while(bank0_next_row<bank0_schedule.size() && bank0_schedule[bank0_next_row].pump<=bank0_load_pump){
+            auto row=bank0_schedule[bank0_next_row++];
+            if(row.pump!=bank0_load_pump)throw std::runtime_error("bank0 landing pump was skipped");
+            auto first=size_t(bank0_landed[row.region])*2048,end=size_t(row.count)*2048;
+            std::copy(bank0_data[row.region].begin()+first,bank0_data[row.region].begin()+end,cpu.region(bank0_target[row.region]+uint32_t(first),unsigned(end-first)));
+            bank0_landed[row.region]=row.count;
+            if(row.count==bank0_sectors[row.region])note(10,row.region);
+        }
+    }
+    bool bank0_complete() const {for(int r=0;r<5;++r)if(bank0_landed[r]!=bank0_sectors[r])return false;return bank0_loading;}
+    void forget_slot(uint32_t begin,uint32_t end) {
+        occupied.erase(std::remove_if(occupied.begin(),occupied.end(),[&](auto row){return row.first>=begin && row.first<end;}),occupied.end());
+        samples.erase(std::remove_if(samples.begin(),samples.end(),[&](auto row){return row.first>=begin && row.first<end;}),samples.end());
+    }
+    // audio_voices_kill (not a TT game): SDK all-key-off and reverb reset calls.
+    void voices_kill() {
+        cpu.writes.clear();
+        cpu.call(0x80090db0);cpu.call(0x8008fd68,{0});cpu.call(0x8008fed0);cpu.call(0x800949b0,{3});cpu.call(0x8008feb0);
+        int released=0;
+        for(auto command:cpu.writes)for(int ch=0;ch<24;++ch)if(command.second&(1u<<ch)){
+            if(command.first)throw std::runtime_error("audio_voices_kill wrote a key-on");
+            if(voices[ch].live){voices[ch].env.release();++released;}
+        }
+        cpu.writes.clear();
+        if(cpu.read(0x1f801da2,2)*8!=reverb.base)reverb.reset(cpu.read(0x1f801da2,2)*8);
+        note(5,released);
+    }
+    // audio_command_bank_assign 0x2F: audio_sequence_pack_index(0x8001C000, 0).
+    void index_pack0() {
+        for(int i=0;i<16;++i){uint32_t off=cpu.read(0x8001c000+i*4);if(off==0)off=cpu.read(0x8001c000);pack0_address[i]=0x8001c000+off+0x10;pack0_depth[i]=cpu.read(0x8001c040+i,1);}
+        pack0_indexed=true;
+    }
+    // audio_bgm_start with D_80125D4C == 1 and D_80125D4A == 0.
+    void bgm_start_bank0() {
+        if(bgm_slot!=1 || !pack0_indexed || bgm_sequence<0)throw std::runtime_error("bank0 start lacks its slot/pack/sequence assignment");
+        voices_kill();
+        cpu.call(0x8008ff5c,{pack0_depth[bgm_sequence],pack0_depth[bgm_sequence]});
+        if(cpu.call(0x800900a0,{pack0_address[bgm_sequence],1})!=0)throw std::runtime_error("bank0 sequence open failed (source error-report path is not modelled)");
+        current_gain=full_gain=int(cpu.read(0x80012018,1))-25-attenuation;
+        cpu.call(0x8008b750,{127,127});cpu.call(0x8008c720,{0,uint32_t(current_gain),uint32_t(current_gain)});cpu.call(0x80090350,{0,1,1});
+        seq_tick_skip=start_tick_skip;start_tick_skip=0;
+        stopped=false;system_flag=false;fade_active=false;fade_master=false;fade_per_pump=false;fade_sequence_volume=false;bgm_start_requested=false;
+        note(4,bgm_sequence,current_gain);
+    }
+    void request_start() {
+        if(transfer_requests&(1u<<bgm_slot)){bgm_start_requested=true;return;}
+        bgm_start_bank0();
+    }
+    // audio_bgm_control(0x71): stop the sequence handle if state 0x100, then promote next.
+    void control_71() {
+        if(!stopped){cpu.call(0x8008c720,{0,0,0});cpu.call(0x80090580,{0});cpu.call(0x800907e0,{0});stopped=true;}
+        bgm_sequence=bgm_next;bgm_next=-1;fade_active=false;fade_per_pump=false;fade_sequence_volume=false;
+    }
+    // audio_bgm_fade_finish outside a fade step (0x200 during a fade, 0x11 on the BGM slot).
+    void fade_finish_source() {
+        bool master=system_flag;  // && !(state_flags & 0x400): XA is refused by the owner.
+        if(master){cpu.call(0x8008fd68,{0});cpu.call(0x8008b750,{0,0});}
+        note(3,current_gain,master);
+        control_71();
+        if(bgm_sequence!=-1)request_start();
+    }
+    // Tail of tick_fade's finish (audio_bgm_fade_finish after the step underflow).
+    void bank0_fade_finished() {
+        note(3,current_gain,fade_master);
+        bgm_sequence=bgm_next;bgm_next=-1;fade_sequence_volume=false;
+        if(bgm_sequence!=-1)request_start();
+    }
+    void fade_command(int rate,int step) {
+        // audio_bgm_fade_start: ignored while request bit 1 is set.
+        if(fade_active){note(8,rate);return;}
+        if(stopped)throw std::runtime_error("bank0 fade without a playing sequence is not modelled");
+        fade_active=true;fade_accumulator=0;fade_ticks=0;fade_rate=rate;fade_step=step;fade_per_pump=true;fade_sequence_volume=!system_flag;fade_master=system_flag;
+        note(2,rate,step);
+    }
+    void dispose(unsigned slot) {
+        // audio_bank_dispose: the BGM slot stops/closes the score (state 0x100 stays set);
+        // the SE slot clears serial attributes; then SsVabClose.
+        if(slot==bgm_slot){if(!stopped){cpu.call(0x80090580,{0});cpu.call(0x800907e0,{0});}bgm_sequence=-1;bgm_next=-1;}
+        else if(slot==0)cpu.call(0x8008fd68,{0});
+        cpu.call(0x80090e60,{slot});
+        if(slot==0)forget_slot(0x1010,0x11010);else forget_slot(0x11010,0x39010);
+        note(6,slot);
+    }
+    void request_transfer(unsigned slot) {
+        if(slot==bgm_slot && !stopped)fade_finish_source();
+        transfer_requests|=1u<<slot;
+    }
+    void dispatch(unsigned command) {
+        if(command==5){system_flag=true;if(fade_active)fade_sequence_volume=false;return;}
+        if(command==0xd1){fade_command(0x80,1);return;}
+        if(command==0x22){bgm_slot=1;return;}
+        if(command==0x21)return;  // SE slots 0/3: no native SE playback is modelled.
+        if(command==0x2f){index_pack0();return;}
+        if(command==0x11){
+            if(!bank0_complete())throw std::runtime_error("0x11 transfer before the five bank0 reads landed");
+            // audio_bank_body_address_set(17): slot0 0x801B8000, slot1 0x801C8000.
+            dispose(0);request_transfer(0);dispose(1);request_transfer(1);bank0_loaded=true;return;
+        }
+        // 0x200|n, audio_command_bgm case 0.
+        int sequence=int(command&0xff);
+        if(fade_active){bgm_next=sequence;fade_finish_source();}
+        else if(!stopped){bgm_next=sequence;fade_command(0x100,10);}
+        else{bgm_sequence=sequence;bgm_next=-1;request_start();}
+    }
+    void transfer_slot(unsigned slot) {
+        if(slot>1)throw std::runtime_error("only bank0 slots 0/1 are modelled");
+        uint32_t hp=slot?0x80012000:0x80010000,bp=slot?0x801c8000:0x801b8000,spu=slot?0x11010:0x1010,limit=slot?0x28000:0x10000;
+        const auto& header=bank0_data[slot?4:0];
+        if(cpu.call(0x8008c1b0,{hp,slot,spu})!=slot || cpu.read(0x801293b0+slot,1)!=2)throw std::runtime_error("bank0 VAB open failed");
+        if(cpu.call(0x8008c620,{bp,slot})!=slot || cpu.read(0x801293b0+slot,1)!=1)throw std::runtime_error("bank0 VAB transfer failed");
+        // VAG size table of the landed original header bytes (not the SDK-mutated RAM copy).
+        auto half=[&](size_t p){if(p+2>header.size())throw std::runtime_error("bank0 VAB table");return uint32_t(header[p])|(uint32_t(header[p+1])<<8);};
+        size_t table=0x820+half(0x12)*512;uint32_t address=spu,bytes_total=0;
+        for(unsigned i=0;i<=half(0x16);++i){uint32_t bytes=half(table+i*2)*8;if(bytes){if(address+bytes>spu+limit)throw std::runtime_error("bank0 VAG extent");samples.emplace_back(address,address+bytes);}address+=bytes;bytes_total+=bytes;}
+        note(7,slot,bytes_total);
+    }
+    void bank0_pump_commands() {
+        if(!command_queue.empty()){
+            auto queue=std::move(command_queue);command_queue.clear();
+            note(1,int64_t(queue.size()),queue.back());
+            for(auto command:queue)dispatch(command);
+        }
+        // audio_pending_update: one requested slot per pump (audio_bank_transfer_schedule),
+        // then audio_bgm_update's deferred start; its fade step follows in render().
+        for(unsigned slot=0;slot<4;++slot)if(transfer_requests&(1u<<slot)){transfer_requests&=~(1u<<slot);transfer_slot(slot);break;}
+        if(bgm_start_requested && !(transfer_requests&(1u<<bgm_slot)))bgm_start_bank0();
+    }
+    bool bank0_transfer_done() const {return bank0_loaded && transfer_requests==0;}
     void stop(){if(!initialized || stopped)return;cpu.call(0x8008c720,{0,0,0});cpu.call(0x80090580,{0});cpu.call(0x800907e0,{0});stopped=true;}
 };
 }

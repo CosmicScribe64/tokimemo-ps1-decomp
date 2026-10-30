@@ -6,6 +6,7 @@ const Store = preload("res://services/first_arrival_media_store.gd")
 const BoardStore = preload("res://services/first_arrival_board_store.gd")
 const Producer = preload("res://presentation/prologue_actor_upload_provider.gd")
 const Pump = preload("res://services/prologue_native_gpu_pump.gd")
+const ShioriActors = preload("res://services/shiori_actor_model.gd")
 const Session = preload("res://core/game_session.gd")
 const State = preload("res://rules/new_game_route_state.gd")
 const APPROVAL_META := &"first_arrival_upload_preflight_v1"
@@ -98,7 +99,7 @@ func publish(result: Session.FrameResult, tick: int) -> String:
 		var next: Dictionary = _owned.duplicate(true)
 		if preview.has("names_bg_batch_key"):
 			next["names_bg_runtime_bytes"] = preview.names_bg_bytes.duplicate()
-			var pumped_bg := _pump.execute_names_bg(_board_store,preview.names_bg_resource_id,preview.names_bg_batch_key,next)
+			var pumped_bg := _pump.execute_names_bg(_board_store,preview.names_bg_resource_id,preview.names_bg_batch_key,next,preview.names_bg_buffer)
 			if not pumped_bg.error.is_empty(): return pumped_bg.error
 		if preview.has("cut_batch_key"):
 			var pumped_cut := _pump.execute_cut_vram(_board_store,preview.cut_resource_id,preview.cut_batch_key,next,preview.get("cut_white_palette",false))
@@ -192,6 +193,10 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 	var o06_copy_seen := false
 	var o07_copy_seen := false
 	var o08_copy_seen := false
+	var o11_copy_seen := false
+	var o13_copy_seen := false
+	var shiori_copy_id := ""
+	var e8_copy_seen := false
 	for effect: Dictionary in result.presentation:
 		if effect.get("kind") == "first_arrival_native_upload": uploads.append(effect)
 		elif effect.get("kind") == "first_arrival_board_upload": board_uploads.append(effect)
@@ -202,6 +207,10 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 		elif effect.get("kind") == "first_arrival_o06_copy": o06_copy_seen = true
 		elif effect.get("kind") == "first_arrival_o07_copy": o07_copy_seen = true
 		elif effect.get("kind") == "first_arrival_o08_copy": o08_copy_seen = true
+		elif effect.get("kind") == "first_arrival_o11_copy": o11_copy_seen = true
+		elif effect.get("kind") == "first_arrival_o13_copy": o13_copy_seen = true
+		elif effect.get("kind") == "first_arrival_shiori_copy": shiori_copy_id = str(effect.get("resource_id",""))
+		elif effect.get("kind") == "first_arrival_e8_copy": e8_copy_seen = true
 	var stage_vram: int = 1 if (not names_uploads.is_empty() or not cut_uploads.is_empty() or not stage_actor_uploads.is_empty()) else 0
 	var batch_types := (1 if not uploads.is_empty() else 0) + (1 if not board_uploads.is_empty() else 0) + stage_vram
 	if batch_types > 1:
@@ -230,11 +239,12 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 			var bg_transfer := _media.completed_names_bg_buffer(state,resource_id)
 			if not bg_transfer.error.is_empty(): return bg_transfer
 			cs_next["names_bg_runtime_bytes"] = bg_transfer.bytes.duplicate()
-			var bg_validation := temp_pump.execute_names_bg(_board_store,resource_id,names_batch_key,cs_next)
+			var bg_validation := temp_pump.execute_names_bg(_board_store,resource_id,names_batch_key,cs_next,int(bg_item.get("buffer",-1)))
 			if not bg_validation.error.is_empty(): return bg_validation
 			out_preview["names_bg_bytes"] = bg_transfer.bytes
 			out_preview["names_bg_resource_id"] = resource_id
 			out_preview["names_bg_batch_key"] = names_batch_key
+			out_preview["names_bg_buffer"] = int(bg_item.get("buffer",-1))
 		if not cut_uploads.is_empty():
 			if cut_uploads.size() != 1: return {"error":"actual cut upload requires one atomic batch"}
 			var cut_item: Dictionary = cut_uploads[0]
@@ -265,7 +275,11 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 				if _stage_actor_batch_keys.has(sa_key):
 					return {"error":"first-arrival stage actor upload batch has already executed"}
 				var owner_ok := false
-				if sa_id == BoardStore.O_06_ID:
+				# Stage14's commit frame (15/0) is drawn by stage14's actor_draw_all
+				# (ShioriActors.visible_scene); its pages belong to _shiori_owner.
+				if sa_id in [BoardStore.O_16_ID, BoardStore.O_06_ID] and state.game_mode == 0x15 and state.mode_stage in [15, 16] and not ShioriActors.visible_scene(state):
+					owner_ok = _stages_15_17_owner(state,sa_id,sa_slot,sa_off,sa_key)
+				elif sa_id == BoardStore.O_06_ID:
 					if sa_slot == 5:
 						var a96_5: Variant = state.opening.get("actor96")
 						owner_ok = a96_5 is Dictionary and a96_5.get("upload_batch_key") == sa_key
@@ -288,12 +302,27 @@ func _preview(result: Session.FrameResult, state: State) -> Dictionary:
 					owner_ok = sa_slot == 5 and a96_o08 is Dictionary and a96_o08.get("upload_batch_key") == sa_key
 				elif sa_id == BoardStore.O_09_ID:
 					owner_ok = _rei_entrance_owner(state,sa_slot,sa_off,sa_key) or _rei_crowd_owner(state,sa_slot,sa_off,sa_key)
+				elif sa_id == BoardStore.O_13_ID and Media.line17_exit_frame(state):
+					# Stage11 case6 exit frame; stage12 pages are _shiori_owner's, stage19's _closing_o13_owner's.
+					owner_ok = _rei_line17_exit_owner(state,sa_slot,sa_off,sa_key) and BoardStore.line17_tpage_slots("o13_rei_line17_exit",_board_store.stage_transfer(BoardStore.O_13_ID).get("bytes",PackedByteArray()),int(state.opening.actor96.frame_index)).get(sa_off) == sa_slot
+				elif sa_id == BoardStore.O_11_ID:
+					owner_ok = _rei_lines15_owner(state,sa_slot,sa_off,sa_key) and BoardStore.o11_tpage_slots(_board_store.stage_transfer(BoardStore.O_11_ID).get("bytes",PackedByteArray()),BoardStore.o11_drawn_frames(state.opening)).get(sa_off) == sa_slot
+				elif BoardStore.SHIORI_TPAGE_TABLES.has(sa_id) and ShioriActors.visible_scene(state):
+					owner_ok = _shiori_owner(state,sa_id,sa_slot,sa_off,sa_key)
+				elif sa_id == BoardStore.O_13_ID:
+					owner_ok = _closing_o13_owner(state,sa_slot,sa_off,sa_key) and BoardStore.o13_tpage_slots(_board_store.stage_transfer(BoardStore.O_13_ID).get("bytes",PackedByteArray()),int(state.opening.o13_draw.frame)).get(sa_off) == sa_slot
 				else:
 					var actor_dict: Variant = state.opening.get("actor96" if sa_slot == 5 else "actor97")
 					owner_ok = actor_dict is Dictionary and actor_dict.get("upload_batch_key") == sa_key
 				if not owner_ok:
 					return {"error":"actual stage actor upload batch has no logical owner"}
-				var sa_transfer := _media.completed_stage_actor_buffer(state,sa_id,o12_restore_seen or o06_copy_seen or o07_copy_seen or o08_copy_seen)
+				var sa_transfer: Dictionary
+				if BoardStore.SHIORI_TPAGE_TABLES.has(sa_id) and ShioriActors.visible_scene(state):
+					# O_13 (stage12)/O_14/O_15/O_16 pages: the memcpy prefix at 0x80180000
+					# (or, on the copy frame, its completed source read).
+					sa_transfer = _media.completed_shiori_page(state,sa_id,sa_off,shiori_copy_id == sa_id)
+				else:
+					sa_transfer = _media.completed_stage_actor_buffer(state,sa_id,o12_restore_seen or o06_copy_seen or o07_copy_seen or o08_copy_seen or o11_copy_seen or e8_copy_seen or o13_copy_seen)
 				if not sa_transfer.error.is_empty(): return sa_transfer
 				var sa_val := temp_pump.execute_stage_actor_vram(_board_store,sa_id,sa_slot,sa_off,sa_key,cs_next)
 				if not sa_val.error.is_empty(): return sa_val
@@ -380,7 +409,56 @@ static func _rei_entrance_owner(state: State, slot: int, offset: int, key: Strin
 	var actor: Variant = state.opening.get("actor96")
 	if state.game_mode != 0x15 or state.mode_stage != 9 or state.mode_step != 0 or state.substep != 0 or not actor is Dictionary or actor.get("profile") != "o09_rei_entrance" or actor.get("resource_id") != BoardStore.O_09_ID:
 		return false
-	return (slot == 5 and offset == 0x42c0 and actor.get("upload_batch_key") == key) or (slot == 6 and offset == 0x82c0 and actor.get("upload_batch_key_2") == key)
+	return (slot == 5 and offset == 0x82c0 and actor.get("upload_batch_key") == key) or (slot == 6 and offset == 0x42c0 and actor.get("upload_batch_key_2") == key)
+
+static func _rei_lines15_owner(state: State, slot: int, offset: int, key: String) -> bool:
+	# A stage10 O11 page upload is owned only when this frame's source
+	# search_tpage allocation (recomputed from the drawn frames) puts that page
+	# in that slot and the slot's resident record names this upload key. New
+	# residency arises on the case11 setup frame and on case2 lip-sync frames.
+	var actor: Variant = state.opening.get("actor96")
+	var tpages: Variant = state.opening.get("o11_tpages")
+	if state.game_mode != 0x15 or state.mode_stage != 10 or state.mode_step != 0 or state.substep not in [0,2,3] or not actor is Dictionary or actor.get("profile") != "o11_rei_lines15" or actor.get("resource_id") != BoardStore.O_11_ID or actor.get("source_sha256") != BoardStore.O_11_SHA or actor.get("tpage_table") != 0x80180140 or not tpages is Dictionary:
+		return false
+	return tpages.get("slots",{}).get(str(offset)) == slot and Store._same(tpages.get("resident",{}).get(str(slot)),{"offset":offset,"key":key})
+
+static func _rei_line17_exit_owner(state: State, slot: int, offset: int, key: String) -> bool:
+	# prologue_line_17_run case6: O_13 pages are owned only on the case6 frame
+	# (drawn as stage12/substep0) by the actor96 resident record for the slot.
+	var actor: Variant = state.opening.get("actor96")
+	if not Media.line17_exit_frame(state) or actor.get("resource_id") != BoardStore.O_13_ID or actor.get("source_sha256") != BoardStore.O_13_SHA or actor.get("tpage_table") != 0x801801e4 or actor.get("seq_step") != 0 or not actor.get("tpages") is Dictionary:
+		return false
+	return Store._same(actor.tpages.get(str(slot)),{"offset":offset,"key":key})
+static func _shiori_owner(state: State, resource_id: String, slot: int, offset: int, key: String) -> bool:
+	# A stages 12-14 page upload is owned only by this frame's actor_draw_all
+	# allocation: search_tpage put that page in that slot, and the slot's
+	# resident record names this resource (the newest memcpy layer) and key.
+	var tpages: Variant = state.opening.get("shiori_tpages")
+	if not ShioriActors.visible_scene(state) or not tpages is Dictionary or tpages.get("frame_count") != state.frame_count or not tpages.get("slots") is Dictionary:
+		return false
+	var page := 0x80180000 + offset
+	return tpages.slots.get("0x%x" % page) == slot and Store._same(tpages.get("resident",{}).get(str(slot)),{"page":page,"resource_id":resource_id,"key":key})
+static func _stages_15_17_owner(state: State, resource_id: String, slot: int, offset: int, key: String) -> bool:
+	# A stage15 O_16 or stage16 O_07 page upload is owned only by this frame's
+	# actor_draw record: search_tpage put that page in that slot and the
+	# slot's resident record names this upload key (opening_stages_15_17.gd).
+	if state.mode_step != 0: return false
+	var expected_stage: int = 15 if resource_id == BoardStore.O_16_ID else 16
+	var tpages: Variant = state.opening.get("o16_tpages" if resource_id == BoardStore.O_16_ID else "o07_tpages")
+	var actor: Variant = state.opening.get("actor96")
+	if state.mode_stage != expected_stage or not tpages is Dictionary or tpages.get("frame_count") != state.frame_count or not actor is Dictionary or actor.get("resource_id") != resource_id:
+		return false
+	return tpages.get("slots",{}).get(str(offset)) == slot and Store._same(tpages.get("resident",{}).get(str(slot)),{"offset":offset,"resource_id":resource_id,"key":key})
+static func _closing_o13_owner(state: State, slot: int, offset: int, key: String) -> bool:
+	# A stage19 O_13 page upload is owned only by this frame's actor_draw_all
+	# of the visible actor96 (substeps 1-2 after the case0 setup) when its
+	# search_tpage slot and the slot's resident record name this upload key.
+	var actor: Variant = state.opening.get("actor96")
+	var drawn: Variant = state.opening.get("o13_draw")
+	var tpages: Variant = state.opening.get("o13_tpages")
+	if state.game_mode != 0x15 or state.mode_stage != 19 or state.mode_step != 0 or state.substep not in [1,2] or not actor is Dictionary or actor.get("profile") != "o13_flash" or actor.get("resource_id") != BoardStore.O_13_ID or actor.get("source_sha256") != BoardStore.O_13_SHA or actor.get("draw_flags") != 0xa4 or not drawn is Dictionary or not drawn.get("frame") is int or not tpages is Dictionary:
+		return false
+	return drawn.get("slots",{}).get(str(offset)) == slot and tpages.get("slots",{}).get(str(offset)) == slot and Store._same(tpages.get("resident",{}).get(str(slot)),{"offset":offset,"key":key})
 
 static func _rei_crowd_owner(state: State, slot: int, offset: int, key: String) -> bool:
 	if state.game_mode != 0x15 or state.mode_stage != 9 or state.mode_step != 0 or state.substep != 3 or slot != 7 or offset != 0x150:

@@ -322,6 +322,11 @@ func _run() -> void:
 		var comp_res := Session.FrameResult.new()
 		AudioRules.bank_complete(pending[0], bgm_state, comp_res)
 		comp_res.trace.append({"kind": Session.ServiceKind.COMPLETION, "service": pending[0].service, "payload": pending[0].payload})
+		if AudioRules.BANK_READ_SECTORS.has(role_name):
+			var ready_frame: int = int(bgm_state.opening.audio_bank.ready_frame)
+			bgm_state.frame_count = ready_frame - 1
+			check(comp_res.error.is_empty() and AudioRules.bank_poll(bgm_state) == 0, "%s bank_poll stays 0 before its CD read + transfer frames elapse" % role_name)
+			bgm_state.frame_count = ready_frame
 		check(comp_res.error.is_empty() and AudioRules.bank_poll(bgm_state) == 1, "%s bank completion sets bank_poll == 1" % role_name)
 		AudioRules.bank_start(bgm_state, start_bank, start_seq, comp_res)
 		check(comp_res.error.is_empty(), "%s bank_start(%d, %d) staged cleanly" % [role_name, start_bank, start_seq])

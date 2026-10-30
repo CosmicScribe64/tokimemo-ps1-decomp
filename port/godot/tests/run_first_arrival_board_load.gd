@@ -518,7 +518,7 @@ func _initialize() -> void:
 	tick_idx += 1
 	state.opening["cd_audio_state_override"] = 4
 	var s6_sub1_ready := tick(true)
-	check(s6_sub1_ready.committed and state.mode_stage == 6 and state.substep == 2 and state.opening.get("stage_06_timer") == 0 and media.publish(s6_sub1_ready,tick_idx).is_empty() and upload.publish(s6_sub1_ready,tick_idx).is_empty(),"stage 6 substep 1 advances to substep 2 when cd_audio_state() & 4 == 4: "+s6_sub1_ready.error)
+	check(s6_sub1_ready.committed and state.mode_stage == 6 and state.substep == 2 and state.mode_step_timer == 0 and media.publish(s6_sub1_ready,tick_idx).is_empty() and upload.publish(s6_sub1_ready,tick_idx).is_empty(),"stage 6 substep 1 advances to substep 2 when cd_audio_state() & 4 == 4: "+s6_sub1_ready.error)
 	tick_idx += 1
 	var saw_actor102 := false
 	var saw_collar_10 := false
@@ -530,7 +530,7 @@ func _initialize() -> void:
 		tick_idx += 1
 		if state.opening.has("actor102") and not saw_actor102:
 			saw_actor102 = true
-			check(state.opening.get("stage_06_timer") == 4 and state.opening.actor102.get("profile") == "o06_yoshio_blink" and state.opening.get("actor97",{}).get("profile") == "o06_yoshio_mouth" and state.opening.get("actor98",{}).get("frame_index") == 8,"stage 6 substep 2 timer==4 initializes actor102 blink while actor97 mouth and actor98 collar (frame 8) are active")
+			check(state.mode_step_timer == 4 and state.opening.actor102.get("profile") == "o06_yoshio_blink" and state.opening.get("actor98",{}).get("frame_index") == 10,"stage 6 substep 2 initializes actor102 blink on the fourth FINISH_HOLD frame (mode_step_timer == 4 after line_run, prologue.c), with actor98 at collar frame 10")
 		if state.opening.get("actor98",{}).get("frame_index") == 10 and not saw_collar_10:
 			saw_collar_10 = true
 	check(saw_actor102 and saw_collar_10 and state.substep == 3 and state.opening.get("actor102",{}).get("flags") == 0 and state.opening.get("actor102",{}).get("frame_index") == 1,"stage 6 substep 2 completes line 5, steps actor98 collar 8->10, and finishes actor102 blink at frame 1")

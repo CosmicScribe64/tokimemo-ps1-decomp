@@ -12,9 +12,22 @@ const ExactMedia = preload("res://services/native_activity_media.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
 const EXTENSION_SHA: String = "c960d279b9ff2cfeddc96afd4f2de43fa5365db6129155759085813e1ed2bf64"
 const SOURCE_RAM_SHA: String = "7623f081b5907864709a2a8957eff40ac9c8a3524883a397e6be23db6ebb0ee6"
-const NEXT_ROOM_RGBA_SHA: String = "8ea14e666785f6d7e9db056c6e96d4a6a11011e544e9fc59a1786584b84315f2"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const NEXT_ROOM_RGBA_SHA: String = ContentIdentity.NEXT_COMMAND_ROOM_RGBA_SHA
 const ROUTE: Dictionary = {"room": 16318, "activity": 16379, "sd": 41487, "next_command": 16361}
 const PROMPTS: Dictionary = {"holiday": "holiday_open_init/default", "next_command": "settings_command_screen_build/default"}
+## T-39014: fresh source profile from tools/port/holiday_scene_content.py. It
+## carries only the state holiday_open_init fixes; the other boundary fields
+## belong to the live session and are never defaulted here.
+const FRESH_SCHEMA: String = "tokimemo.holiday-scene-source.v1"
+const FRESH_PROFILE_SHA: String = "f6a695efc026d9ebfe8896fc5d5d73c7d7a0ef6627e163b10693584912eb3cb5"
+const FRESH_TRACK_SHA: String = "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
+const FRESH_EXE_SHA: String = "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
+const SCENE_FIELDS: Array[String] = ["background_brightness", "dial_keys", "dial_pos", "icon_count"]
+const SESSION_FIELDS: Array[String] = ["boot_hold", "clubs", "icon_mode", "input_device", "screen_brightness", "tile_layer_enabled"]
+const SESSION_BOUNDS: Dictionary = {"boot_hold": [-128, 127], "clubs": [0, 65535], "icon_mode": [0, 255],
+	"input_device": [0, 255], "screen_brightness": [0, 255], "tile_layer_enabled": [-128, 127]}
+const CLUB_RECORDS: int = 12
 
 var error: String = ""
 var tables: Dictionary = {}
@@ -25,19 +38,90 @@ var _actor: ActorService = ActorService.new()
 var _ready: bool = false
 
 func open(media: MediaStore, extension_path: String, next_room: Image) -> String:
-	_ready = false
-	tables.clear()
-	resources.clear()
-	backgrounds.clear()
-	_extension.clear()
-	error = ""
-	if next_room == null or next_room.is_empty() or next_room.get_size() != Vector2i(320, 88) or _image_sha(next_room) != NEXT_ROOM_RGBA_SHA:
+	_reset()
+	if _safe_file(extension_path) and FileAccess.get_size(extension_path) <= 65536 and FileAccess.get_sha256(extension_path) == FRESH_PROFILE_SHA:
+		return _fail("fresh holiday scene profile lacks the live-session boundary fields " + ",".join(SESSION_FIELDS) + "; fresh-session initialization is unavailable")
+	if not _next_room_valid(next_room):
 		return _fail("next-command room differs from the reviewed C_02_02H pixels")
 	if not _safe_file(extension_path) or FileAccess.get_size(extension_path) > 65536 or FileAccess.get_sha256(extension_path) != EXTENSION_SHA:
 		return _fail("genuine April4 holiday extension path/hash is unavailable")
 	var extension: Variant = _integers(JSON.parse_string(FileAccess.get_file_as_string(extension_path)))
 	if not extension is Dictionary or extension.get("schema") != "tokimemo.native-holiday-boundary-extension.v1" or extension.get("source_sha256") != SOURCE_RAM_SHA or extension.get("date") != [95, 4, 4, 1] or not extension.get("holiday") is Dictionary:
 		return _fail("holiday extension is not bound to the genuine April4 source")
+	return _open_media(media, next_room, extension["holiday"])
+
+## Opens the fresh source profile. `session` must hold every session-owned
+## field from the caller's own live state; nothing is defaulted. Each gate
+## returns its own error, and all of them pass before any media is opened.
+func open_fresh(media: MediaStore, profile_path: String, next_room: Image, session: Dictionary) -> String:
+	_reset()
+	var loaded: Dictionary = load_fresh_profile(profile_path)
+	if not loaded["error"].is_empty():
+		return _fail(loaded["error"])
+	var holiday: Dictionary = compose_fresh(loaded["scene"], session)
+	if holiday.is_empty():
+		return _fail("live-session holiday fields must be exactly " + ",".join(SESSION_FIELDS) + " within their native game_state bounds")
+	if not _next_room_valid(next_room):
+		return _fail("next-command room differs from the reviewed C_02_02H pixels")
+	return _open_media(media, next_room, holiday)
+
+## Authenticates the fresh profile bytes and returns only its scene-owned values.
+static func load_fresh_profile(path: String) -> Dictionary:
+	if not _safe_file(path) or FileAccess.get_size(path) > 65536 or FileAccess.get_sha256(path) != FRESH_PROFILE_SHA:
+		return {"error": "fresh holiday scene profile path/hash is unavailable", "scene": {}}
+	var profile: Variant = _integers(JSON.parse_string(FileAccess.get_file_as_string(path)))
+	if not profile is Dictionary or profile.get("schema") != FRESH_SCHEMA or profile.get("version") != 1 \
+		or not profile.get("provenance") is Dictionary or profile["provenance"].get("original_input_sha256") != FRESH_TRACK_SHA \
+		or not profile["provenance"].get("iso_entry") is Dictionary or profile["provenance"]["iso_entry"].get("sha256") != FRESH_EXE_SHA \
+		or not profile.get("scene_owned") is Dictionary or not profile.get("session_owned_fields") is Dictionary:
+		return {"error": "fresh holiday scene profile is not bound to the original track/executable", "scene": {}}
+	var scene: Dictionary = profile["scene_owned"]
+	var owned: Array = scene.keys()
+	owned.sort()
+	var session_keys: Array = profile["session_owned_fields"].keys()
+	session_keys.sort()
+	if owned != SCENE_FIELDS or session_keys != SESSION_FIELDS:
+		return {"error": "fresh holiday scene profile field ownership differs", "scene": {}}
+	return {"error": "", "scene": scene.duplicate(true)}
+
+## Merges scene-owned values with exactly the session-owned fields; {} on any
+## missing, extra, non-integer or out-of-range session field. Ranges follow
+## include/game/game_state.h: icon_mode, input_device and screen_brightness
+## are u8; tile_layer_enabled and boot_hold are s8; clubs is ClubRecord[12],
+## which the port holds as one u16 per record (rules/school_day.gd wraps it at
+## 65535). Route limits such as icon_mode 0 stay in rules/holiday.gd.
+static func compose_fresh(scene: Dictionary, session: Dictionary) -> Dictionary:
+	if session.size() != SESSION_FIELDS.size():
+		return {}
+	var holiday: Dictionary = scene.duplicate(true)
+	for key: String in SESSION_FIELDS:
+		if not session.has(key):
+			return {}
+		var value: Variant = _integers(session[key])
+		var bounds: Array = SESSION_BOUNDS[key]
+		if key == "clubs":
+			if not value is Array or value.size() != CLUB_RECORDS:
+				return {}
+			for club: Variant in value:
+				if not club is int or club < bounds[0] or club > bounds[1]:
+					return {}
+		elif not value is int or value < bounds[0] or value > bounds[1]:
+			return {}
+		holiday[key] = value
+	return holiday
+
+func _reset() -> void:
+	_ready = false
+	tables.clear()
+	resources.clear()
+	backgrounds.clear()
+	_extension.clear()
+	error = ""
+
+static func _next_room_valid(next_room: Image) -> bool:
+	return next_room != null and not next_room.is_empty() and next_room.get_size() == Vector2i(320, 88) and _image_sha(next_room) == NEXT_ROOM_RGBA_SHA
+
+func _open_media(media: MediaStore, next_room: Image, holiday: Dictionary) -> String:
 	var prepared_tables: Dictionary = _integers(media.get_route_tables())
 	if prepared_tables.size() != 6:
 		return _fail("complete validated holiday media v3 route tables are required")
@@ -60,7 +144,7 @@ func open(media: MediaStore, extension_path: String, next_room: Image) -> String
 	tables = prepared_tables.duplicate(true)
 	resources = prepared_resources
 	backgrounds = prepared_backgrounds
-	_extension = extension["holiday"].duplicate(true)
+	_extension = holiday.duplicate(true)
 	_ready = true
 	return ""
 

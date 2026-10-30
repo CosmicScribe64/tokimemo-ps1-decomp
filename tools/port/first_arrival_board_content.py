@@ -55,6 +55,64 @@ CUT_08_SOURCE='CDROM/PROLODIR/CUT_09.NBN'
 CUT_08_SHA='9c4a73089b11368c754de62a546344668182fb2b37ba9862e5bed0263d9cbd0b'
 O_08_SOURCE='CDROM/PROLODIR/O_09.NBN'
 O_08_SHA='6dcde1bbf652c9cf5ca77c9c68547afe723ce08b56bfe6c08bf3048fa85ac331'
+# Stage11 prologue_line_17_run (prologue.c:1756): case4 dec_bg_cd_read(0xAD05,1)
+# (P_01_08) and case5 cd_read_sectors(0x41,0x801D8000,0xAC50) (O_13), copied
+# 0x20800 to 0x80180000 by case6. O_13 is read from more than one place (the
+# stage17 read targets 0x80180000), so its manifest record names only the disc
+# extent; each read's destination lives in the BoardStore per-read composite.
+NAMES_AD05_SOURCE='CDROM/PROLODIR/P_01_08.BS'
+NAMES_AD05_SOURCE_SHA='d9b717964b37f3dcb0ef57856170269e79c10185281958bde7a8a69b94052cf2'
+NAMES_AD05_TRANSFER_SHA='a7d9ab6fecca526d79333041a23a462e64b999a824a50e70fdf8c207901a5925'
+# Stages 11-20 (wiki/spec/opening-stages-12-14.md, -15-17.md, -18-20.md). Ids
+# follow the disc file names. Every extent is the exact native sector transfer
+# of one prologue.c checked read and ends in its 0x1012 trailer word:
+#   0xAC50 O_13.NBN    65  stage11 case5 to 0x801D8000 (0x20800 copy) and
+#                          stage17 case3 to 0x80180000 (stage19 actor96)
+#   0xAB49 CUT_14.NBN  49 -> 0x801A4000  stage12 case0
+#   0xAC91 O_14.NBN     9 -> 0x801F0000  stage12 case1 (0x4800 copy)
+#   0xAC9A O_15.NBN    33 -> 0x801E8000  stage13 case3 (0x10800 copy)
+#   0xAB7A CUT_16.NBN  49 -> 0x801A4000  stage14 case4
+#   0xACBB O_16.NBN    25 -> 0x801E8000  stage14 case5 (0xC800 copy)
+#   0xAD0B P_01_09.BS  10 -> 0x80162000  stage12 case2, decoded at case3
+# O_13 is read to two destinations, so its record names none; each read is a
+# per-read composite key in the board store's actor_descriptions().
+O_13_SOURCE='CDROM/PROLODIR/O_13.NBN'
+O_13_SHA='38c0149c0fb6bd9b6b812b06a5c170a2529e7a0271b0cb3ffc812e6ce6b4236f'
+CUT_16_SOURCE='CDROM/PROLODIR/CUT_16.NBN'
+CUT_16_SHA='de1f091899464b4c04916815f71d6da40221da0cf3ab30c6336765e7ba279b17'
+O_16_SOURCE='CDROM/PROLODIR/O_16.NBN'
+O_16_SHA='0bde8b1c5285bf6f1509adbfab894a983c0f5cd5c5238979643f7bbd84abe03f'
+AD0B_SOURCE='CDROM/PROLODIR/P_01_09.BS'
+AD0B_SOURCE_SHA='78c2813b109d87b5692783bbfc1bfd69ce5c89d015ed2b070cc5c8f5c7082098'
+AD0B_TRANSFER_SHA='c0327b980bbef7daeb31a20bdb3de992d36ec34d606fde2809e37dcb948e52b3'
+# Stages 16-17 slot-1 backgrounds (wiki/spec/opening-stages-15-17.md). Each
+# dec_bg_cd_read moves 10 sectors; the 18432-byte file is 9, so the extent
+# carries the first sector of the next file (P_01_12, then X_01_13). The
+# decode buffer follows dec_bg_show[1] at runtime; the record names the one
+# the uninterrupted source path selects (16/11 after 15/34 showed buffer 0).
+STAGES_16_17_BS=[
+ ('names_496a','CDROM/BS/P_01_10.BS',0x496a,18432,'c064b04b84daa381117a3b37e1c68b6e0a754b5f559dfc26aa579042e2f16762','56bbdab9a66a99bb3e2bb526a16a78107b66dd03767b2330548d3c3ff3157c9a',1,[320,256,320,160],'prologue_lines_32_to_36_run'),
+ ('names_4973','CDROM/BS/P_01_12.BS',0x4973,18432,'e5c33edfb057565c49dd9b9366781c825dae153929757632294931e8598aff08','c7dbbf759146d38b1b50f2c18373186b6523c25e71b06fb7d3eaf02ab4875f11',0,[704,0,320,160],'prologue_line_37_run'),
+]
+# Stage11 prologue_line_17_run (prologue.c:1756-1822): case4
+# dec_bg_cd_read(0xAD05,1) (P_01_08, 11788 bytes; the 10-sector extent carries
+# the following sectors), case6 dec_bg_show_set(1,dec_bg_decode_to_vram(1))
+# and the dec_bg_reset retry. Stage10 showed ACF6 in buffer 1, so the
+# uninterrupted path decodes P_01_08 into buffer 0; stages 12-14 show it.
+LINE17_BS=[
+ ('names_ad05','CDROM/PROLODIR/P_01_08.BS',0xad05,11788,'d9b717964b37f3dcb0ef57856170269e79c10185281958bde7a8a69b94052cf2','a7d9ab6fecca526d79333041a23a462e64b999a824a50e70fdf8c207901a5925',0,[704,0,320,160],'prologue_line_17_run'),
+]
+# Every slot-1 background exported by the generic extent/decode path.
+SLOT1_EXTRA_BS=LINE17_BS+STAGES_16_17_BS
+# (file name, ISO path, LBA, file bytes, sha256, sectors, destination or None, copy bytes, checked-read trailer)
+STAGES_11_17_NBN=[
+ ('o_13.nbn',O_13_SOURCE,0xac50,133120,O_13_SHA,65,None,0x20800,0x1012be83),
+ ('cut_14.nbn','CDROM/PROLODIR/CUT_14.NBN',0xab49,100352,'8059ef80df31cb4662db9c8b816b258066e1730251b7454e14d3426b42c2fefe',49,0x801a4000,0,0x1012053a),
+ ('o_14.nbn','CDROM/PROLODIR/O_14.NBN',0xac91,18432,'f81f398f969215f0ca65f04ac6624fca8f733568f21bf719fec023c7eb30bee5',9,0x801f0000,0x4800,0x1012da54),
+ ('o_15.nbn','CDROM/PROLODIR/O_15.NBN',0xac9a,67584,'9d6aea8ea1356ee666fba64e1f76d22db106fac4ad08b4e99de87ffb9326a0db',33,0x801e8000,0x10800,0x1012f97a),
+ ('cut_16.nbn',CUT_16_SOURCE,0xab7a,100352,CUT_16_SHA,49,0x801a4000,0,0x10129557),
+ ('o_16.nbn',O_16_SOURCE,0xacbb,51200,O_16_SHA,25,0x801e8000,0xc800,0x10124d0d),
+]
 TRACK_SHA='28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72'
 PINS={
  'src/ovl/name_entry/prologue.c':'cce3a4abaf102b745e0b116fcd1331ec63b35234d45b5bab4cbd9c39fc10470e',
@@ -133,6 +191,37 @@ def names_context(repo,data_495d,data_4966,data_acdd,data_ace6,data_acf6,data_ac
  for d,src,ctx in [(data_495d,NAMES_495D_SOURCE,ctx_495d),(data_4966,NAMES_4966_SOURCE,ctx_4966),(data_acdd,NAMES_ACDD_SOURCE,ctx_acdd),(data_ace6,NAMES_ACE6_SOURCE,ctx_ace6),(data_acf6,NAMES_ACF6_SOURCE,ctx_acf6),(data_acd4,NAMES_ACD4_SOURCE,ctx_acd4),(data_acec,NAMES_ACEC_SOURCE,ctx_acec)]:
   probe=image_mdec.probe_mdec(d,src,ctx);require(probe['status']=='supported'and probe['metadata']['macroblock_count']==200,'names VLC or macroblock extent rejected: '+src)
  return (ctx_495d,u_495d[0]),(ctx_4966,u_4966[0]),(ctx_acdd,u_acdd[0]),(ctx_ace6,u_ace6[0]),(ctx_acf6,u_acf6[0]),(ctx_acd4,u_acd4[0]),(ctx_acec,u_acec[0])
+def stages_11_17_source_checks(repo):
+ # prologue.c is hash-pinned by source_context; these are the read/copy calls
+ # whose extents and destinations the stage transfers below pin.
+ source=(repo/'src/ovl/name_entry/prologue.c').read_text()
+ def body(name,end):return source.split('void '+name+'(void) {',1)[1].split('void '+end,1)[0]
+ line17=body('prologue_line_17_run','prologue_mode_stage_line_17')
+ load=body('prologue_shiori_load_run','prologue_mode_stage_shiori_load')
+ line18=body('prologue_shiori_line_18_run','prologue_mode_stage_shiori_line_18')
+ line19=body('prologue_shiori_line_19_run','prologue_mode_stage_shiori_line_19')
+ line37=body('prologue_line_37_run','prologue_mode_stage_line_37')
+ for text,call in [(line17,'cd_read_sectors(0x41U, 0x801D8000, 0xAC50);'),(line17,'memcpy((void *)0x80180000, 0x801D8000, 0x20800);'),
+   (load,'cd_read_sectors(0x31U, 0x801A4000, 0xAB49);'),(load,'cd_read_sectors(9U, 0x801F0000, 0xAC91);'),(load,'dec_bg_cd_read(0xAD0B, 1);'),
+   (load,'dec_bg_show_set(1, dec_bg_decode_to_vram(1));'),(load,'memcpy((void *)0x80180000, 0x801F0000, 0x4800);'),
+   (line18,'cd_read_sectors(0x21U, 0x801E8000, 0xAC9A);'),(line18,'memcpy((void *)0x80180000, 0x801E8000, 0x10800);'),
+   (line19,'dec_bg_cd_read(0xACEC, 1);'),(line19,'cd_read_sectors(0x31U, 0x801A4000, 0xAB7A);'),(line19,'cd_read_sectors(0x19U, 0x801E8000, 0xACBB);'),
+   (line19,'memcpy((void *)0x80180000, 0x801E8000, 0xC800);'),(line37,'cd_read_sectors(0x41, 0x80180000, 0xAC50);'),
+   (line37,'dec_bg_cd_read(0x4973, 1);'),(line37,'dec_bg_show_set(1, dec_bg_decode_to_vram(1));')]:
+  require(call in text,'stage 11-17 source call differs: '+call)
+ return {'width':320,'height':160,'evidence':['src/ovl/name_entry/prologue.c:prologue_shiori_load_run dec_bg_cd_read(0xAD0B,1) at substep2, dec_bg_show_set(1,dec_bg_decode_to_vram(1)) at substep3','src/main/background_images.c:dec_bg_decode_to_vram hidden slot-1 buffer 320x160']}
+def stages_16_17_source_checks(repo):
+ # prologue.c is hash-pinned by source_context; the read, retry and decode
+ # calls of 16/10-11 and 17/2-3 must stay as the extents above assume.
+ source=(repo/'src/ovl/name_entry/prologue.c').read_text()
+ def body(name,end):return source.split('void '+name+'(void) {',1)[1].split('void '+end,1)[0]
+ for name,path,lba,size,digest,xdigest,buf,rect,fn in SLOT1_EXTRA_BS:
+  text=body(fn,'prologue_mode_stage_'+fn[len('prologue_'):-len('_run')])
+  call='dec_bg_cd_read(0x%X, 1);'%lba
+  require(text.count(call)==2 and text.count('dec_bg_show_set(1, dec_bg_decode_to_vram(1));')==1 and 'dec_bg_reset();' in text,'slot-1 background calls differ: '+fn)
+ ctx_16_17={'width':320,'height':160,'evidence':['src/ovl/name_entry/prologue.c:prologue_lines_32_to_36_run dec_bg_cd_read(0x496A,1) at 10 and the 11 retry; prologue_line_37_run dec_bg_cd_read(0x4973,1) at 2 and the 3 retry','src/main/background_images.c:dec_bg_decode_to_vram hidden slot-1 buffer 320x160']}
+ ctx_ad05={'width':320,'height':160,'evidence':['src/ovl/name_entry/prologue.c:prologue_line_17_run dec_bg_cd_read(0xAD05,1) at 4 and the 6 retry, dec_bg_show_set(1,dec_bg_decode_to_vram(1)) at 6','src/main/background_images.c:dec_bg_decode_to_vram hidden slot-1 buffer 0 (704,0,320,160) after stage10 showed ACF6 in buffer 1']}
+ return {name:(ctx_ad05 if name=='names_ad05' else ctx_16_17) for name,*_ in SLOT1_EXTRA_BS}
 def _pack_words(png_bytes,expected_size):
  from tools.assets.visual_text_equivalence import _decode_png
  width,height,rgba=_decode_png(png_bytes)
@@ -158,6 +247,23 @@ def line11_background_context(repo,data):
  context={'width':320,'height':160,'evidence':['src/ovl/name_entry/prologue.c:prologue_line_11_run reads 0xAD00 at substep3, decodes at substep7','src/main/background_images.c:dec_bg_decode_to_vram alternate buffer 320,256,320,160']}
  probe=image_mdec.probe_mdec(data,NAMES_AD00_SOURCE,context)
  require(probe['status']=='supported' and probe['metadata']['macroblock_count']==200,'line11 background VLC/geometry differs')
+ return context,uses[0]
+
+def line17_background_context(repo,data):
+ # prologue_line_17_run reads 0xAD05 at case4 (and again after a failed
+ # decode); case6 decodes it into the slot1 alternate buffer.
+ from tools.assets import media_background_context as contexts,image_mdec
+ inventory={'schema':'tokimemo.media.v1','input':{'source_sha256':TRACK_SHA,'format':'mode2-2352'},'assets':[
+  {'id':'names_ad05','source':{'path':NAMES_AD05_SOURCE,'size':len(data),'sha256':sha(data),'location':{'lba':0xad05}}}]}
+ report=contexts.build_background_contexts(inventory,{rel:(repo/rel).read_text()for rel in ['src/ovl/name_entry/prologue.c','src/main/background_images.c']})
+ uses=[u for stream in report['streams'] for u in stream['contexts'] if u['function']=='prologue_line_17_run']
+ require(len(uses)>=1 and all([u[key] for key in ['lba','layer','read_sector_count','physical_read_bytes']]==[0xad05,1,10,20480] for u in uses),'line17 background source read differs')
+ source=(repo/'src/ovl/name_entry/prologue.c').read_text()
+ function=source.split('void prologue_line_17_run(void) {',1)[1].split('void prologue_mode_stage_line_17',1)[0]
+ require('dec_bg_cd_read(0xAD05, 1);' in function.split('case 4:',1)[1].split('case 5:',1)[0] and 'dec_bg_show_set(1, dec_bg_decode_to_vram(1));' in function.split('case 6:',1)[1],'line17 read/decode/show call differs')
+ context={'width':320,'height':160,'evidence':['src/ovl/name_entry/prologue.c:prologue_line_17_run reads 0xAD05 at substep4, decodes at substep6','src/main/background_images.c:dec_bg_decode_to_vram hidden buffer 0 (704,0,320,160) after stage10 showed ACF6 in buffer 1']}
+ probe=image_mdec.probe_mdec(data,NAMES_AD05_SOURCE,context)
+ require(probe['status']=='supported' and probe['metadata']['macroblock_count']==200,'line17 background VLC/geometry differs')
  return context,uses[0]
 
 def build(repo,input_path,output):
@@ -239,10 +345,39 @@ def build(repo,input_path,output):
   e_o11=_file_entry(entries,O_11_SOURCE,0xac1e,67584,O_11_SHA)
   xfer_o11,transport_o11=_native_extent(original,e_o11,TRACK_SHA,33,0xac1e)
   require(len(xfer_o11)==0x10800 and sha(xfer_o11)==O_11_SHA,'Rei next-scene backup transfer differs')
+  # Stages 11-17 checked reads (O_13, CUT_14, O_14, O_15, CUT_16, O_16).
+  stages_11_17={}
+  for name,path,lba,size,digest,sectors,dest,copy,tail in STAGES_11_17_NBN:
+   entry=_file_entry(entries,path,lba,size,digest)
+   xfer,transport_x=_native_extent(original,entry,TRACK_SHA,sectors,lba)
+   require(len(xfer)==size==sectors*2048 and sha(xfer)==digest,path+' transfer differs from the exact file')
+   require(int.from_bytes(xfer[-4:],'little')==tail and tail>>16==0x1012,path+' lacks its checked-read 0x1012 trailer')
+   stages_11_17[name]=(xfer,transport_x)
+  e_ad0b=_file_entry(entries,AD0B_SOURCE,0xad0b,15988,AD0B_SOURCE_SHA)
+  raw_ad0b=original.read(e_ad0b)
+  xfer_ad0b,transport_ad0b=_native_extent(original,e_ad0b,TRACK_SHA,10,0xad0b)
+  require(len(raw_ad0b)==15988 and sha(raw_ad0b)==AD0B_SOURCE_SHA and len(xfer_ad0b)==20480 and sha(xfer_ad0b)==AD0B_TRANSFER_SHA and xfer_ad0b[:15988]==raw_ad0b,'0xad0b logical or 10-sector transfer differs')
+  stages_16_17={}
+  for name,path,lba,size,digest,xdigest,_buf,_rect,_fn in SLOT1_EXTRA_BS:
+   entry=_file_entry(entries,path,lba,size,digest)
+   raw=original.read(entry)
+   xfer,transport_x=_native_extent(original,entry,TRACK_SHA,10,lba)
+   require(len(raw)==size and sha(raw)==digest and len(xfer)==20480 and sha(xfer)==xdigest and xfer[:size]==raw,hex(lba)+' logical or 10-sector transfer differs')
+   stages_16_17[name]=(raw,xfer,transport_x)
  context,use=source_context(repo,data)
  ctx_ad00,use_ad00=line11_background_context(repo,raw_ad00)
+ # Stage11 source-use check (main T-39002): the generic export below uses the
+ # SLOT1_EXTRA_BS context; this keeps prologue_line_17_run's read/decode check.
+ line17_background_context(repo,stages_16_17['names_ad05'][0])
  (ctx_495d,use_495d),(ctx_4966,use_4966),(ctx_acdd,use_acdd),(ctx_ace6,use_ace6),(ctx_acf6,use_acf6),(ctx_acd4,use_acd4),(ctx_acec,use_acec)=names_context(repo,raw_495d,raw_4966,raw_acdd,raw_ace6,raw_acf6,raw_acd4,raw_acec)
+ ctx_ad0b=stages_11_17_source_checks(repo)
  from tools.assets import image_mdec
+ probe_ad0b=image_mdec.probe_mdec(raw_ad0b,AD0B_SOURCE,ctx_ad0b)
+ require(probe_ad0b['status']=='supported' and probe_ad0b['metadata']['macroblock_count']==200,'0xad0b VLC/geometry differs')
+ ctx_16_17=stages_16_17_source_checks(repo)
+ for name,path,lba,*_ in SLOT1_EXTRA_BS:
+  probe=image_mdec.probe_mdec(stages_16_17[name][0],path,ctx_16_17[name])
+  require(probe['status']=='supported' and probe['metadata']['macroblock_count']==200,hex(lba)+' VLC/geometry differs')
  target.parent.mkdir(parents=True,exist_ok=True)
  stage=Path(tempfile.mkdtemp(prefix='.board-',dir=target.parent))
  try:
@@ -294,6 +429,18 @@ def build(repo,input_path,output):
   (stage/'cut_09.nbn').write_bytes(xfer_cut09)
   (stage/'o_09.nbn').write_bytes(xfer_o09)
   (stage/'o_11.nbn').write_bytes(xfer_o11)
+  for name,(xfer,_) in stages_11_17.items():(stage/name).write_bytes(xfer)
+  (stage/'names_ad0b.bs').write_bytes(raw_ad0b)
+  (stage/'names_ad0b.transfer.bin').write_bytes(xfer_ad0b)
+  dec_ad0b=image_mdec.export_mdec(raw_ad0b,stage,'names_ad0b',source_path=AD0B_SOURCE,context=ctx_ad0b)
+  (stage/'names_ad0b.rgb555.bin').write_bytes(_pack_words((stage/'names_ad0b.background.png').read_bytes(),(320,160)))
+  dec_16_17={}
+  for name,path,*_ in SLOT1_EXTRA_BS:
+   raw,xfer,_=stages_16_17[name]
+   (stage/(name+'.bs')).write_bytes(raw)
+   (stage/(name+'.transfer.bin')).write_bytes(xfer)
+   dec_16_17[name]=image_mdec.export_mdec(raw,stage,name,source_path=path,context=ctx_16_17[name])
+   (stage/(name+'.rgb555.bin')).write_bytes(_pack_words((stage/(name+'.background.png')).read_bytes(),(320,160)))
   files={p.name:{'sha256':sha(p.read_bytes()),'bytes':p.stat().st_size}for p in stage.iterdir()}
   names_backgrounds={
    '0x495d':{'source':{'path':NAMES_495D_SOURCE,'sha256':NAMES_495D_SOURCE_SHA,'bytes':16392},'read':{'lba':0x495d,'sectors':10,'destination':0x80162000,'transfer_sha256':NAMES_495D_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_495d,'source_use':use_495d,'decode':{'slot':1,'buffer':0,'destination':[704,0,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_495d,'hardware_pixel_parity_verified':False}},
@@ -318,6 +465,16 @@ def build(repo,input_path,output):
    '0xabca':{'file':'o_06.nbn','source':{'path':O_06_SOURCE,'sha256':O_06_SHA,'bytes':51200},'read':{'lba':0xabca,'sectors':25,'destination':0x801f0000,'transfer_sha256':O_06_SHA,'transfer_bytes':51200},'transport':transport_o06},
    '0xaa85':{'file':'cut_07.nbn','source':{'path':CUT_07_SOURCE,'sha256':CUT_07_SHA,'bytes':100352},'read':{'lba':0xaa85,'sectors':49,'destination':0x801a4000,'transfer_sha256':CUT_07_SHA,'transfer_bytes':100352},'transport':transport_cut07},
    '0xabe3':{'file':'o_07.nbn','source':{'path':O_07_SOURCE,'sha256':O_07_SHA,'bytes':51200},'read':{'lba':0xabe3,'sectors':25,'destination':0x801f0000,'transfer_sha256':O_07_SHA,'transfer_bytes':51200},'transport':transport_o07}}
+  # Stages 11-17: one record per resource; O_13 (two destinations) names none.
+  for name,path,lba,size,digest,sectors,dest,copy,tail in STAGES_11_17_NBN:
+   read={'lba':lba,'sectors':sectors,'transfer_sha256':digest,'transfer_bytes':size}
+   if dest is not None:read['destination']=dest
+   stage_02_04_transfers[hex(lba)]={'file':name,'source':{'path':path,'sha256':digest,'bytes':size},'read':read,'actor_area_copy_bytes':copy,'checked_trailer':tail,'transport':stages_11_17[name][1]}
+  names_backgrounds['0xad0b']={'source':{'path':AD0B_SOURCE,'sha256':AD0B_SOURCE_SHA,'bytes':15988},'read':{'lba':0xad0b,'sectors':10,'destination':0x80162000,'transfer_sha256':AD0B_TRANSFER_SHA,'transfer_bytes':20480},'transport':transport_ad0b,
+   'decode':{'slot':1,'buffer':1,'destination':[320,256,320,160],'format':'rgb555-stp1','clut':None,'software_preview':dec_ad0b,'hardware_pixel_parity_verified':False}}
+  for name,path,lba,size,digest,xdigest,buf,rect,_fn in SLOT1_EXTRA_BS:
+   names_backgrounds[hex(lba)]={'source':{'path':path,'sha256':digest,'bytes':size},'read':{'lba':lba,'sectors':10,'destination':0x80162000,'transfer_sha256':xdigest,'transfer_bytes':20480},'transport':stages_16_17[name][2],
+    'decode':{'slot':1,'buffer':buf,'destination':rect,'format':'rgb555-stp1','clut':None,'software_preview':dec_16_17[name],'hardware_pixel_parity_verified':False}}
   manifest={'schema':SCHEMA,'release':'original-ja-ps-the-best','source':{'path':SOURCE,'sha256':SOURCE_SHA,'bytes':18432},'source_pins':PINS,'read':{'lba':0x4954,'sectors':9,'destination':0x80162000},'transport':transport,'source_use':use,'decode':{'destination':[320,0,640,160],'format':'rgb555-stp1','clut':None,'software_preview':decoded,'hardware_pixel_parity_verified':False},'following_move':{'call':[5,14,15],'source_height':255,'newly_decoded_height':160,'requires_prior_owned_vram':True},'names_backgrounds':names_backgrounds,'stage_02_04_transfers':stage_02_04_transfers,'files':files,'service_readiness_granted':False,'scene_execution_verified':False}
   (stage/'manifest.json').write_text(json.dumps(manifest,sort_keys=True,indent=2)+'\n');require(not target.exists(),'output appeared during preparation');stage.rename(target);return manifest
  except BaseException:

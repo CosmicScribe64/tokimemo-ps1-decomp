@@ -69,7 +69,9 @@ func begin(entry: Entry, rng: Rng, context: Dictionary, constants: Dictionary,
 	for publisher: Callable in publishers:
 		if not publisher.is_valid():
 			return "opening publisher is unavailable"
-	var prepared: Adapter.Outcome = Adapter.from_entry(entry, context.frame_count, context.system_seed, constants)
+	# scene_work is present only when the boot path (title/file select) ran.
+	var boot_context: Dictionary = {"scene_work": context.scene_work} if context.has("scene_work") else {}
+	var prepared: Adapter.Outcome = Adapter.from_entry(entry, context.frame_count, context.system_seed, constants, boot_context)
 	if not prepared.error.is_empty():
 		return prepared.error
 	prepared.state.timer_ticks = Math.s32(context.timer_ticks)
@@ -119,8 +121,11 @@ func begin(entry: Entry, rng: Rng, context: Dictionary, constants: Dictionary,
 
 func step(input: InputFrame, completions: Array[Session.ServiceEvent]) -> Session.FrameResult:
 	var failed := Session.FrameResult.new()
-	if session == null or _in_step or command_ready or not publish_error.is_empty():
-		failed.error = "opening cannot step before preparation, reentrantly, or after handoff/failure"
+	# After take_command_handoff the same session keeps stepping under the
+	# gameplay controller that rebound its mode handlers (boot_loop never
+	# changes owner at command select); before that, command select is the end.
+	if session == null or _in_step or (command_ready and not _handed_off) or not publish_error.is_empty():
+		failed.error = "opening cannot step before preparation, reentrantly, or at command select before the gameplay handoff, or after failure"
 		return failed
 	var checkpoints: Array[Dictionary] = []
 	for participant: RefCounted in _participants:

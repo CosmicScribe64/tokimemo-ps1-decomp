@@ -37,7 +37,8 @@ const DayEventModes = preload("res://rules/day_event_modes.gd")
 const EXPECTED_LIB_SHA: String = "f1eecf80c1c6538a33f6bee9c7d10a79553b1745d520688f556bbe60fb1687b9"
 const EXPECTED_MAY28_HASH: String = "ad782763f6f6cccc6fcd504ce06cb60f44d4f5f104d07d867621dd92d39aae45"
 const EXPECTED_JUNE1_SCHEDULE_RNG: int = 2966941936
-const EXPECTED_HUD_SHA: String = "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const EXPECTED_HUD_SHA: String = ContentIdentity.HUD_MANIFEST_SHA
 const PAD_CONFIRM: int = 0x20
 
 class PredicateAudioOwner extends AudioService:

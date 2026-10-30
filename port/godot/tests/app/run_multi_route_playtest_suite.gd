@@ -36,11 +36,13 @@ const Rng = preload("res://core/native_rng.gd")
 const NewGameRules = preload("res://rules/new_game.gd")
 const Entry = preload("res://flow/new_game_entry.gd")
 const StateAdapter = preload("res://flow/new_game_state_adapter.gd")
+const FreshHandoff = preload("res://flow/fresh_gameplay_handoff.gd")
 const InstalledProfile = preload("res://services/installed_launch_profile.gd")
 const SaveService = preload("res://services/save_service.gd")
 const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
 const EndingOverlay = preload("res://overlays/ending_overlay.gd")
 const SystemOverlays = preload("res://overlays/system_overlays.gd")
+const ClearSave = preload("res://services/clear_save_transaction.gd")
 
 const INSTALLED_ROOT := "/workspace/.asset-cache/port/installed-clean-v1"
 const TABLES_PATH := "/workspace/.asset-cache/port/school-day-tables-v1-final/manifest.json"
@@ -53,6 +55,9 @@ const SAVES_DIR := "/workspace/.claude/orchestrator/state/T-29023/all-13-heroine
 var checks: Array[String] = []
 var failures: Array[String] = []
 var _base_entry_projection: Dictionary = {}
+## T-39007: the ending's clear save completes only through the host storage
+## transaction, as in playable_boot.
+var clear_save_host: ClearSave
 
 
 class InGameEtcOverlay extends SystemOverlays.TitleMenuOverlay:
@@ -439,6 +444,14 @@ func _step_one_week(
 				elif int(act96["sequence"]["counter"]) >= 1 and int(act96["sequence"]["counter"]) < 13:
 					act96["sequence"]["counter"] = 13
 
+		if clear_save_host != null and state.rule_state.get("overlay_state") is Dictionary:
+			var clear_service: Dictionary = clear_save_host.service_request(state.rule_state["overlay_state"])
+			if not clear_service.is_empty():
+				events.append(Session.ServiceEvent.new(
+					session.clock.logic_iterations, Session.Phase.BEFORE_MODE, Session.ServiceKind.COMPLETION,
+					clear_service["service"], clear_service["payload"]
+				))
+
 		var is_active_ovl: bool = (
 			(state.rule_state.get("overlay_state") is Dictionary and not (state.rule_state["overlay_state"] as Dictionary).is_empty())
 			or state.game_mode not in [0x30, 0x31, 0x32, 0x34, 0x38, 0x40, 0x46]
@@ -495,6 +508,10 @@ func _execute_single_route(
 	state.reset_game_mode_fields(0x34)
 	state.set_stage(1)
 	state.rule_state["allow_multi_week"] = true
+	# The harness skips the opening. prologue_finish_run substep 1 stores
+	# menu_mode = MENU_MODE_A before the 0x34 switch (flow/fresh_gameplay_handoff.gd);
+	# StateAdapter.from_entry leaves the file-select value 0.
+	state.rule_state["menu_mode"] = FreshHandoff.MENU_MODE_A
 	state.rule_state["player_flags"] = (int(state.rule_state["player_flags"]) & ~0xF000) | ((club_id & 15) << 12)
 	state.rule_state["clubs"] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	state.rule_state["resources"]["available_commands"] = [0, 1, 2, 3, 4, 5, 6, 7]
@@ -716,6 +733,7 @@ func _run() -> void:
 	var tables: Dictionary = _load_imported_tables()
 	_prepare_base_entry_projection()
 	var save_service := SaveService.new(SAVES_DIR)
+	clear_save_host = ClearSave.new("/tmp/t39007-multi-route-" + str(Time.get_ticks_usec()))
 
 	var route_specs: Array[Dictionary] = [
 		{

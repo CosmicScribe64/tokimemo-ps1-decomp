@@ -29,7 +29,6 @@ extends "res://presentation/command_hud_presenter.gd"
 ##    - Block row 0 bracket prefix (`『` for `0x0F`, `（` for `0x1F`, none for `0x2F`, `「` otherwise) at `x = 74`
 ##    - Subsequent block rows at `x = 88`, 3 visible rows at `y = 170, 186, 202`, glyph advance `14` (`0x0E`).
 
-const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 
 # Canonical unshadowed 32x32 spring checkerboard texture at VRAM (128..159, 128..159)
 # normalized to (D_800B5BCC & 31) == 0, (D_800B5BD0 & 31) == 0 (hud_panels.c:1449-1450).

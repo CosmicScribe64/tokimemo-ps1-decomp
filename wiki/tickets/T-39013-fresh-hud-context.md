@@ -1,0 +1,124 @@
+---
+id: T-39013
+title: Implement source-owned fresh HUD context
+status: In Progress
+assignee: Claude (fan-out worker)
+created: 2026-10-29
+updated: 2026-10-30
+links: ["[[port-pause-2026-10-29]]", "[[port-adversarial-review]]"]
+---
+
+## Goal
+
+Replace the captured-boundary HUD context with source-owned fresh-session initialization (separating immutable HUD assets from mutable session context, preserving the 32-tick hover pulse and live cursor state), and clear the hud_context producer gap only with real evidence.
+
+## Acceptance criteria
+
+- [ ] Implementation follows original source with explicit rejection where unsupported; no synthetic readiness, injected state or fabricated fields.
+- [ ] Docker tests pass, including negative cases; evidence limits stated.
+- [ ] Independent adversarial review against CODING_STANDARDS.md with all findings resolved.
+
+## Notes
+
+Started in the 2026-10-29 fan-out; worked in an isolated worktree, integrated by root after review.
+
+### 2026-10-29 (hud-fresh worktree)
+
+Implemented, not yet reviewed:
+
+- New `port/godot/presentation/hud_session_context.gd` holds the mutable HUD session state, separate from the immutable HUD manifest. It starts as the executable image: `cursor_style` 0x9C (0x800B6708), `D_800B5A9C` 0xFF, `D_800B5AA0` 0 (`asm/data/data_800B5950.data.s`), with the cursor actor and game_state bss at zero. It changes only through mirrors of these source functions: `game_state_init` (pad and settings defaults; `actor_clear_range` and `hud_cursor_actor_init` keep the cursor x/y), `boot_frame_begin` (guard), `menu_set`, `hud_icon_bar_init`/`hud_icon_layout_apply` (TypeA table from the manifest), the ordinary branch of `settings_command_screen_build`, `hud_cursor_update`, `hud_icon_bar_update(a)` (menu control mode 1: `menu_check_2` plus `menu_cursor_update` case 1), the icon sequence advance and the 0x34/1/0 boundary. It has no constructor from dictionaries.
+- Source facts encoded:
+  - The countdown compare reads the cursor with `lbu` and `D_800B5A9C` with `lb` (`hud_icon_bar_update.s` 0x80065D24..30), so a 0xFF cursor restarts the countdown every frame.
+  - The restart comes one frame after a d-pad move.
+  - `menu_check_2` sets `hover` before the cursor moves.
+  - The pulse scale is `rsin((32 - countdown) << 6) + 0x1000`: unit scale at countdown 32 and at 0.
+  - In mode 1 the cursor sits at item x + w - 4, y + 8. This equals the legacy icon + (6, -2) placement. A held d-pad then moves it by `cursor_speed`.
+- These cases are rejected explicitly, with no state change: menu control modes other than 1, the fifteen-icon/TypeB/free layouts, non-ordinary build branches, `hud_icon_bar_init` before `game_state_init`, and cursor updates on an empty menu.
+- `live_hud_adapter.open_fresh` (superseded in v2: it now reads the installed root itself) and a `HudSession` at command select. It rejects captured boundary dictionaries, the old synthetic command-ready record and sessions before the boundary. The stale pin `55336d7e...` is removed. Every failed open, fresh or captured, clears profile, session and presenter. Fresh `compose` renders only 0x34/1/0 from the session phase and rejects other modes.
+- `command_hud_presenter._view` accepts `hover_ticks` 0..32 and an optional session record (`hover_index`, `cursor_x`, `cursor_y`). A scaled pulse phase is withheld with an explicit error, because scaled quads (`func_80098680`) are not rasterized. Legacy contexts render byte-identically: a digest of 24 legacy renders is equal before and after.
+- `installed_launch_profile.read_pack` exposes `file_identities` for file roles. `build_installed_runtime.py` still reports `hud_context` as unavailable (with updated text); nothing marks it available.
+
+Tests (Docker, `tokimemo-port`, Godot 4.7.2):
+
+- `tests/hud/run_fresh_session_context_tests.gd`: 39/39.
+- `tests/hud/run_fresh_content_tests.gd`: 22/22 against `installed-runtime-v12`.
+- `tests/run_tests.gd`: 5 suites pass.
+- `tools/port/test_build_installed_runtime.py`: 12 OK.
+- `run_live_capability_tests`, `run_app_hud_tests`, `run_hud_seasons_cursor_popup_tests`, `run_cursor_actor_and_style_gate` and `run_installed_launch_tests` fail here in the same way on the unchanged baseline, because the legacy fixtures are absent.
+
+Still required: there is no production caller. The opening route (`interactive_prologue` via `first_arrival_boot`, owned elsewhere) must:
+
+- create the session at boot;
+- forward every source call in order, including other screens' `menu_set` and the title/name-entry cursor writes;
+- call `command_screen_frame` from the 0x34 `frame_draw` service;
+- call `enter_command_select` at the handoff.
+
+Until that actual opening-to-room run exists, `hud_context` stays unavailable.
+
+### 2026-10-29 (hud-fresh v2, review findings)
+
+The first adversarial review raised seven findings. All seven were re-checked against the code and the source, and all seven are fixed:
+
+1. Injected state. Every session field is now a read-only getter over private storage `_s`. Assigning a field is refused and breaks the session. Each mirror call seals `_s` with a per-instance digest. `at_command_select`, `hud_context` and every mirror check the seal. `at_command_select` also checks the trace order (process_image -> game_state_init -> command_screen_build -> enter_command_select, with no menu registration after the build). The review probe (`_command_select = true`, `icon_mode = 0`, `icon_count = 14`) now fails, and so does a direct write to `_s`. Limit: GDScript has no access control, so code that deliberately recomputes the private seal is not stopped. The tests reach the 0xFF cursor through Select followed by L2 frames, and cursor style 0xAC through Square presses. The fifteen-icon case was dropped: no modeled call writes `icon_count`, so 14 is the only reachable value, and the dead check is gone.
+2. Foreign `menu_set`. The public `menu_set` now clears the command build, the boundary and the icon bar menu. The icon bar uses an internal `_menu_set_rects`. A standalone `hud_icon_bar_init` also requires a new build. A test checks that `enter_command_select` and the icon bar update are rejected after a foreign menu.
+3. Test strength. The content test now renders the d-pad lag frame (menu_cursor 1, hover 0, cursor moved by the held right). It checks that the cursor actor sits at the session cursor, that `icon-52` sits on icon 0, and that the canvas id differs from the rule-cursor render. The empty-menu restore is reached through mirror calls: after a build, `game_state_init(1)` bzeroes menu 0 while the icon bar stays, then a left press drives the cursor to -1. The test asserts that the countdown, hover, cursor and items are restored. Six mutants were each caught (Docker): the compositor cursor override, hover_index, the restore, the foreign-menu clear, the legacy hover gate and the s16 disabled product.
+4. Manifest identity. `open_fresh(installed_root, rule, core, session)` now runs `Profile.read_pack` on the installed root and takes the HUD manifest path, sha256 and font root from that result. The caller supplies no path or hash. A runtime copy with a reserialized HUD manifest still validates, but that file is not the one listed in the inventory, and it is rejected.
+5. Legacy hover gate. `hover_ticks` 0..31 is accepted only with the session keys. A legacy context still needs 32, and a test rejects 0 and 16.
+6. `menu_set` disabled. The disabled flag is computed from the s16 product (`menu_speaker_girl.c:74`) before w/h are stored as u8. Values outside s16 are rejected. A count of 17 or more now mirrors the source: w/h/disabled of all sixteen records are cleared, the count is left as it was, and -1 is returned as an error.
+7. Cursor writers. New mirrors: `title_menu_cursor_update` pad branch (`title_screen.c:355-358`; mouse branch rejected), `pad_state_clear` (`pad_input.c:95-97`) and `name_entry_cursor_hold` (D_8011ECA4 = 1, `file_select.c:2675, 2713`). The position that `game_state_init` keeps is overwritten by `menu_cursor_update` case 1 on the first command frame, before the boundary, so the 0x34/1/0 render does not depend on it.
+
+Tests (Docker, `tokimemo-port`, Godot 4.7.2): `run_fresh_session_context_tests` 66/66; `run_fresh_content_tests` 33/33 against `installed-runtime-v12`; `run_tests.gd` 5 suites. `run_live_capability_tests`, `run_app_hud_tests` and `run_hud_seasons_cursor_popup_tests` give the same output with and without this change (missing legacy fixtures).
+
+### 2026-10-29 (fresh gameplay handoff worktree)
+
+Gameplay side of the New Game handoff, not yet reviewed. Status unchanged.
+
+- New `port/godot/flow/fresh_gameplay_handoff.gd` drives this HUD session through the 0x34 stage 0xFF reload in source order:
+  - `open` checks, on the frame after stage 21 substep 1, that the trace starts process_image -> game_state_init(1), has no build yet, holds menu_mode 1 (stage 21's store has no mirror) and the TypeA 14-icon layout of the state.
+  - `reload_frame` runs `boot_frame_begin`, the production `Reload.step`, then the stage tail `command_screen_frame` (home_screens.c:93-96). It calls `command_screen_build` inside step 2 once the reload build matches `settings_command_screen_build`, and calls `enter_command_select` when stage 1 is committed.
+  - `attach(session, state)` is the controller interface that `flow/opening_command_handoff.gd` (T-39002 v2 patch) expects. It hands the same state, session and RNG to `scenes/school_day_controller.gd`.
+- Any frame the HUD session cannot mirror is refused. The state is restored and the handoff ends, because the HUD session cannot be rolled back. One example is a foreign menu 0 left by a forwarded file-select or title `menu_set`.
+- `hud_context` stays unavailable in the builder. No production route reaches the reload yet: the installed opening stops at the stage 21 bank transfer. The test reaches command select only with recording service doubles (`tests/opening/run_fresh_gameplay_handoff.gd`). The opening owner still has to forward the title, file-select and NAME_ENT menu calls. If the new-game path registers a foreign menu 0 (file_select.c:827), the pre-build frames are refused, as the source subset requires.
+
+### 2026-10-29 (fresh handoff v2, review fixes, uncommitted)
+
+The golden comparison (`.asset-cache/emu/newgame-golden-v1`, sets A and B) and the review found HUD defects. Status unchanged.
+
+- The reload now runs inside `GameSession.step`. `FreshHandoff.bind(session, services)` binds `mode_handler` as the 0x34 handler, so `game_mode_timer` and `frame_count` advance after the handler as in `game_mode_dispatch`. `open` requires `game_mode_timer` 1 at the switch (golden a4/a5), and `ovl_target_game_mode` 0x15. It accepts both fresh origins (adapter and interactive opening).
+- `hud_cursor_actor_init` (hud_screens.c:1479-1510) is mirrored: `game_state_init` (game_init.c:194) and `command_screen_build` (home_screens.c:326) store `cursor_style` in D_8011ECE8 when it is in 0x9B..0xAD, else 0. Golden: 0x9C at a1-a8.
+- The 0x34 handler tail `hud_screen_frame_draw(0)` advances D_800B5BC8 on the pre-increment frame_count (hud_panels.c:1462-1466). At attach the value continues as `resources.hud_season_fade`. Golden: 0 at a6-a8. The port now reaches 0 on the same frame count.
+- The HUD session has `checkpoint`/`restore` for refused frames. The handoff also refuses a frame when the session rolled back the previous one after the handler ran.
+- `school_day_controller.hud_session`: after attach every 0x34 stage 1 frame runs `begin_outer_frame` and `command_screen_frame` before the confirm (home_screens.c:526-535). The frame is refused when the HUD cursor and `rule_state.menu_cursor` differ.
+- The test now drives stage 21, the reload and 180 command frames through the session. The reload doubles complete on the golden frames: 131 bank polls, 73 CD syncs, 18 room polls, 225 frames. After every reload frame it checks `menu_current`, the hover, `cursor_guard`, the cursor position and `hover_countdown`. A held-right run catches a missing `boot_frame_begin`. Seven mutations each fail the test, among them the two from the review.
+- Golden values at a6-a8 that this route now matches: `game_mode_timer` 226 and 406, `hover_countdown` 0, D_8011ECE8 0x9C, D_800B5BC8 0, cursor -132/-43, `icon_enabled` [1,1,1,1,0,1,1,1,0,0,0,1,1,0,0], `menu_mode` 1, D_800B5BD4 15, brightness 0x80. These are route- and time-specific evidence, not defaults. The port has no representation of these golden values on this route: `input_device` 1, `tile_layer_enabled` 0, `boot_hold` 0, `current_girl` 15, `voice_mode` 2, `double_click_interval` 32, `menu_count_1` 4 / `menu_cursor_1` -1, `memory_card_result` 20, `save_slot` 1, `memory_card_step` 2, `text_lines_total` 3 / `text_first_line` 2 / `text_scroll_state` 0x80.
+- New finding, not fixed: the source command menu items have `disabled` 0 for all fourteen icons (golden a6-a8). `icon_can_use_set` writes only `icon_enabled`, so the source cursor stops on disabled icons. The port's `Reload.build_command_screen` writes `menu_disabled` 1 for icons 4, 8, 9, 10 and 13, and `Command.select_cursor` skips them. With the HUD session attached, such a move is refused as a cursor mismatch.
+- Known placement difference: the port runs `boot_frame_begin` at the start of the handler. Between frames `cursor_guard` is therefore 1, while the golden a6/a8 dispatch reads 0.
+
+2026-10-30 core integration: `handoff.v2.patch` merged into the main working tree (not committed). Main's copies of all 13 patched files equalled the patch base `refs/snapshots/main-handoff-2026-10-29`, so each three-way merge takes the handoff side unchanged. With the opening stages 12-21 merged in the same tree, `prologue_finish_run` case0 now also calls `finish_bank_load` (audio_bank_load_start with the five COM_MIX/SPRING reads), so `_stage21_services` in `tests/opening/run_fresh_gameplay_handoff.gd` records every `Arrival.FINISH_SERVICES` call. Result (Docker tokimemo-port, `TOKIMEMO_INSTALLED_ROOT` = installed-runtime-v13 and v14): PASS 514 checks, the same as main + handoff alone (`.asset-cache/core-integration-2026-10-30/suites/handoff-only`). Before the test fix the merged tree failed 62 of 223 ("prologue finish needs service: finish_bank_load").
+
+### 2026-10-30 (gameplay pins, round 2 worktree, not committed)
+
+- Cause: the HUD manifest and the rule-table manifest each record the sha256 of their source-evidence files. Some of those files are splat listings under the ignored `asm/` tree. The recovery rebuilt those listings, so the old pins (HUD `0a884e91...`, tables `a1f30e57...`) cannot be reproduced. Replaying the history confirms the method. The committed evidence at `93f913a37` plus the current `asm/` reproduce `e9b83b8d...` exactly, and the current tree reproduces `55336d7e...`. No committed source state reproduces the old pins, which leaves the lost `asm/` text as the difference. Two producer changes: `school_day_tables.py` added `command_rank_bars` (T-39006; `e9b83b8d...` -> `be99ef4a...`), and `hud_content.py --fresh-room-track` decodes the room from `C_02_02H.BS` (`55336d7e...` -> `c19f4306...`, which changes only `assets/spring-room.png`).
+- Independent checks, in Docker against `disc/files/SLPM_86.053`:
+  - Rule tables: all 16 match the executable bytes and their `raw_sha256`. All 16 also match the splat data listings.
+  - HUD: 1,229 assets match their hashes and decode. Both strings, all 72 calendar palettes and all 16 animation sequences match the executable.
+  - Room picture vs the golden a8 frame (unoccluded pixels, 5-bit): the regenerated picture matches 72.4% exactly; the legacy picture matches 17.6%.
+- Re-pin: `services/gameplay_content_identity.gd` owns `HUD_MANIFEST_SHA`, `RULE_TABLES_SHA` and `SPRING_MEDIA_SHA` (the installed spring pack records the tables identity).
+  - `command_hud_presenter.HUD_SHA` derives from it, and the presenter subclasses inherit it.
+  - `live_hud_adapter`, `dialogue_textbox_presenter`, `playable_boot.TABLES_SHA`, the spring store, the tests and `run_save_relaunch_tests.sh` all read the same constants.
+  - The legacy spring import keeps its recorded `LEGACY_TABLES_SHA`.
+- Suites: the pin failures are gone.
+  - The three-year and multi-route harnesses now apply the stage 21 `menu_mode = MENU_MODE_A` store (the adapter leaves 0). Both then stop at week 2 on the T-39006 production refusals (SHOUGATU, GEKO). That is a porting gap, not a data problem.
+  - G3 passes 460/460 after creating its output directory.
+  - The graduation gate passes 96/98. Missing are the `joho-shiori-preview-v1` pack, which has no committed producer, and the photo that depends on it.
+  - Holiday and month-start suites need lost `.claude/orchestrator/state` captures or env packs.
+  - The opening frame-timing route passes at pads 2 and 3.
+- Review fix (holiday room pin): the holiday HUD and holiday scene adapters still pinned the legacy room pixels (RGBA8 `8ea14e66...`). With HUD_SHA at `c19f4306...` the only accepted room is the fresh decode, RGBA8 `efe36d89...` (measured in Godot from `hud-production-v1/assets/spring-room.png`), so `HolidayHud.open` always failed on "returned command room pixels differ". `gameplay_content_identity.NEXT_COMMAND_ROOM_RGBA_SHA` now holds `efe36d89...`. Both `holiday_hud_adapter.NEXT_ROOM_RGBA_SHA` and `holiday_scene_adapter.NEXT_ROOM_RGBA_SHA` read it, and the `native-next-command-room:C_02_02H:<sha>` background id follows the constant. Probe (Docker tokimemo-port): production room hash equals the pin, and `_next_room_valid` is true for the production room and false for the legacy one. `open_fresh` passes the room gate and then stops at "holiday media v3 route tables". `HolidayHud.open` stops first at the media identity, because the `holiday-command0-current-964ce` pack (`d9e38432...`) is still missing. `run_holiday_scene_profile_tests` PASS 61.
+
+## Comments
+
+2026-10-30 actual installed route: the installed New Game now reaches the stage 21 switch (committed 0x34/0xFF/0/0, golden a4) and stops at the first reload frame with `COMMAND_RELOAD_UNSUPPORTED` (app/first_arrival_boot.gd). Handoff-side changes (not committed): `Reload.build_command_screen` follows the source ordinary branch and writes `menu_disabled` = `menu_items[0..13].disabled` = 0 (the finding above; `Command.select_cursor` now stops on disabled icons like the source), refusing the other branches; `FreshHandoff.open` takes bg_lba_cache [0, 0, buffer_0.lba, buffer_1.lba] and dec_bg_show[0] 0 from the opening's names_media and drops them from `unsourced`. The prologue HUD now steps D_800B5BC8 (0 at a1-a4, as golden). Still needed for the installed reload: a HudSession driven from the app's boot, real hud_read_start/cd_sync (no installed role holds the 0x9B94 x 0x95 read), calendar_upload/mascot_set, the room read/decode (D_800B5950[season] 0x3FE9) and a renderer for the 225 reload frames. Evidence: `.asset-cache/command-route-2026-10-30/r10`, `tests/opening/run_command_route_seams.gd` PASS 52, `run_fresh_gameplay_handoff` PASS 514.
+
+2026-10-30 review fixes (handoff side, not committed): `Reload.build_command_screen` no longer half-models ICON_MODE_FREE. hud_icon_bar_init (hud_panels.c:831-836) sets icon_count 0xF in icon mode 2 (fifteen icons and menu records), so the build now refuses mode 2 with `ICON_MODE_FREE_UNSUPPORTED` and refuses a kept icon_count other than 14 for TypeA/TypeB, before writing anything (`icon_layout_error`); the dead `icons[0xE] = 0` line is gone. `run_command_route_seams.gd` checks the refusal leaves icon_enabled/menu_disabled/menu_cursor/step unchanged, that TypeB with 14 builds like TypeA, and that a kept 15 is refused. `new_game_state_adapter.gd` now names scene_work's writers in its unsourced reason: mode 0x13 file select (file_select_init_settings 0xFF at file_select.c:745, file_select_flash_update -1 per frame at :3250; 0xFF - 1279 = -1024), which the port's entry does not run (decision pending). `compare_newgame_golden.py` reports the opening media owner's bg_lba_cache as an uncounted "diagnostic" row and notes that a1-a4 icon_enabled/menu_disabled are boot state; r10 re-scored: a1 119/124, a2 119/124, a4 120/124 (was 120/125, 120/125, 121/125). Build parity still waits on an actual a7 state. Evidence: `.asset-cache/review-fixes-2026-10-30`.
+
+2026-10-30 round 3 (main working tree, not committed; details in [[tickets/T-39002-restore-port-runtime]]): with the reload, title-filesel, club-determinism, stage15-xa and gameplay-pins round-2 patches merged, the actual installed route reaches the committed 0x34/1/0 command select with the boot-driven HUD session (`.asset-cache/core-round3-2026-10-30/r12`, bundle installed-runtime-v18 ff047c01…). Golden set A a7: 122/124 state fields, including icon_enabled, menu_items[0..13].disabled, menu cursor and bg_lba_cache [0,0x3FE9,0x4973,0x496A] from the reload's own build and room read; left are girls[2].flags (NAME_ENT club draw) and scene_work (mode 0x13 not run on the installed route). The app now hands the session to the school-day controller through `opening_command_handoff.connect_gameplay` on that frame; with the HUD session attached the controller keeps the per-frame HUD mirrors (30 idle frames in p01 commit and render). Two stops found by `tests/opening/run_installed_command_playtest.gd`: confirm -> no `command_capabilities` (no installed ordinary-command media opened by the app), and a cursor move -> the built command HUD refuses the hover pulse scale 0x1191 (func_80098680 scaled quad not rasterized). Gameplay suites under `suites/gameplay2` (run_suites with `/workspace/.asset-cache` mounted, 240 s limit) all fail on their own inputs, not on the merge: three-year and multi-route cannot begin an entry from `installed-clean-v1`'s name-entry packs, G3 refuses the HUD manifest capability (no reviewed caller env), background_boundary_save lacks the development boundary, HUD seasons stops at "school-day sequence slot is unproved", holiday/month-start/cursor-style hang on missing inputs. The gameplay-pins worktree's environment for these was not recorded, so they were not reproduced here.

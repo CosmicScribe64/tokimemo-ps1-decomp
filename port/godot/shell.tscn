@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://shell.gd" id="1_shell"]
 
-[node name="PortFoundation" type="Control"]
+[node name="PortFoundation" type="Control" unique_id=1644297561]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_shell")
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=520699160]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

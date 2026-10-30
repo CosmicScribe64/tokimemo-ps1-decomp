@@ -4,7 +4,6 @@ class_name VnScenePresenter
 ## Used by TEL, DATE, DATE2, GEKO, EVENT, OMIMAI, VALEN, SHOUGATU, ENDING,
 ## OPTION, OLH and ETC presenters. Each scene still needs fidelity verification.
 
-const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 
 # Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366, normalized to (0, 0) UV)
 const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA8ElEQVR4nM2WoRHDMAxFX3MBhoWBGaWjFHaEwo6SMQIDO0KgRyg0a1nuco6lnO2TKyrL76EvXSY/fRFqvI48Vi89EWudF6b7Ldnvsn+uVKKAc67o8xBCvoAFPClgBT8UsIRHAtbwnUAL+CbQCg7QtYRDYQ5ocK3vnMvPgRpwyMyBWvBDAUt4JGANB+gHN4hD/uNZ50V8I84/X/jgk/1e2/XaPlcFghfvif++B0pD5kzIJQUs4EkBK/ihgCU8ErCG7wRawDeBVnCAriUcCnNAg5/ZLdk5UAMOmTlQC34oYAmPBKzhAL1f3uKQts+10u6JH97tla2x++MhAAAAAElFTkSuQmCC"

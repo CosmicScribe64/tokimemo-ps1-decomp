@@ -98,12 +98,23 @@ func _initialize() -> void:
 	peer.fail_draw = false
 	var retried = controller.step(InputFrame.new(71, 0), [])
 	check(retried.committed and controller.state.mode_step == 1 and peer.calls.has("bank_request"), "sameinputtick retriesonebankrequest afterrollback")
+	# T-39002 step gate at command select: the committed command-ready frame
+	# ends the opening until take_command_handoff; after it the same session
+	# keeps stepping under the gameplay controller's handlers. command_ready is
+	# set directly here: the gate, not the route to 0x34/1/0, is under test.
+	var before_ready: Dictionary = controller.state.projection()
+	var ready_clock: Dictionary = controller.session.clock.snapshot()
+	controller.command_ready = true
+	check(not controller.step(InputFrame.new(72, 0), []).committed and controller.state.projection() == before_ready and controller.session.clock.snapshot() == ready_clock, "command select before the gameplay handoff does not step")
+	check(controller.take_command_handoff().get("error") == "" and controller.take_command_handoff().get("error") != "", "command handoff is taken once")
+	var handed = controller.step(InputFrame.new(72, 0), [])
+	check(handed.committed and controller.session.clock.logic_iterations == 73, "the handed-off session keeps stepping")
 	var before_bad: Dictionary = controller.state.projection()
-	var event := Session.ServiceEvent.new(72, Session.Phase.BEFORE_MODE, Session.ServiceKind.COMPLETION, "unprepared.service")
-	check(not controller.step(InputFrame.new(72, 0), [event]).committed and controller.state.projection() == before_bad, "unknowncompletionrollsback beforeadvancingnativeframe")
+	var event := Session.ServiceEvent.new(73, Session.Phase.BEFORE_MODE, Session.ServiceKind.COMPLETION, "unprepared.service")
+	check(not controller.step(InputFrame.new(73, 0), [event]).committed and controller.state.projection() == before_bad, "unknowncompletionrollsback beforeadvancingnativeframe")
 	peer.fail_publish = true
-	var committed = controller.step(InputFrame.new(72, 0), [])
+	var committed = controller.step(InputFrame.new(73, 0), [])
 	check(committed.committed and not controller.publish_error.is_empty(), "postcommithostfailure stayscommitted andterminal")
-	check(not controller.step(InputFrame.new(73, 0), []).committed, "terminalpublisherfailure cannotreplaythealreadycommittedrequest")
+	check(not controller.step(InputFrame.new(74, 0), []).committed, "terminalpublisherfailure cannotreplaythealreadycommittedrequest")
 	print("PASS: %d interactive opening transaction checks" % checks if failures == 0 else "FAIL: %d/%d interactive opening checks" % [failures, checks])
 	quit(0 if failures == 0 else 1)

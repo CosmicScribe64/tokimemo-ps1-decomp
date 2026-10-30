@@ -38,16 +38,22 @@ def encode(value):
 
 
 def native_request(speaker, pair, offsets):
-    """sound_driver.c audio_command_xa; fresh boot's D_80125D5D is zero."""
+    """sound_driver.c audio_command_xa case 0.
+
+    D_80125D5D is audio_state.xa_params[5] (audio_state = 0x80125D10, xa_params at
+    +0x48), which the same case stores from the start word's top byte just before
+    the scaling, so the XA channel is added to both sector bounds.
+    """
     index = speaker & 15
     if index == 15:
         raise ValueError('silent player line has no XA request')
     start, end = pair
+    channel = (start >> 24) & 255
     # The source is the entire raw track, whose first sector is absolute LBA 0.
     return {'source_sha256': TRACK_SHA, 'source_lba': 0,
-            'start_lba': (start & 0xffffff) * 32 + offsets[index] - 16,
-            'end_lba': (end & 0xffffff) * 32 + offsets[index] + 16,
-            'file_number': (end >> 24) & 255, 'channel': (start >> 24) & 255,
+            'start_lba': (start & 0xffffff) * 32 + channel + offsets[index] - 16,
+            'end_lba': (end & 0xffffff) * 32 + channel + offsets[index] + 16,
+            'file_number': (end >> 24) & 255, 'channel': channel,
             'native_evidence': 'src/main/cd_queue.c:cd_audio_request_set; src/main/sound_driver.c:audio_command_xa/audio_xa_play'}
 
 

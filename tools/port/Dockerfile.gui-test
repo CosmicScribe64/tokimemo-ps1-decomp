@@ -1,3 +1,5 @@
 # T-39002: native X11 input tests reuse the verified engine image.
-FROM tokimemo-port
+# BASE is the engine image; tools/port/run.sh build-gui-test passes GODOT_PORT_IMAGE.
+ARG BASE=tokimemo-port
+FROM ${BASE}
 RUN apt-get update && apt-get install -y --no-install-recommends python3 xdotool pulseaudio && rm -rf /var/lib/apt/lists/*

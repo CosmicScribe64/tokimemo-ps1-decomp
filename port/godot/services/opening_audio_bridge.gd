@@ -1,6 +1,8 @@
 extends RefCounted
-## T-29021 / T-29025: external effects publish only after commit; signals enqueue observations.
-## The next BEFORE_MODE delivery, not a player getter, decides logical progression.
+## T-29021 / T-29025: external effects publish only after commit.
+## Voice progression is scheduled on logic frames (OpeningAudioRules.xa_tick);
+## the player's start/finish signals only release the physical clip and never
+## reach the Session. Bank completions still use BEFORE_MODE observations.
 ## Preserves first-arrival BGM guards and supports mid-prologue bank transitions
 ## (prologue_rei, prologue_shiori, normal_gameplay) from src/ovl/name_entry/prologue.c.
 
@@ -15,7 +17,6 @@ var _voice_player: AudioStreamPlayer
 var _bgm_player: AudioStreamPlayer
 var _pending: Array[Dictionary] = []
 var _active_request: Dictionary = {}
-var _completion_index: int = 0
 var _mid_prologue_bgm_state: Dictionary = {}
 
 const INTENT_FIELDS: Dictionary = {
@@ -29,6 +30,10 @@ const INTENT_FIELDS: Dictionary = {
 	"native_bgm_fade": ["kind", "command"],
 	"native_bgm_fade_tick": ["kind", "xa_active", "tick", "gain"],
 	"native_stop_xa_if_active": ["kind", "epoch"],
+	# native-bank0 (first_arrival_bgm_bridge.gd owns and publishes them).
+	"native_bank0_start": ["kind", "sequence", "tick_skip"],
+	"native_bank0_load": ["kind"],
+	"native_audio_command": ["kind", "command"],
 }
 
 
@@ -95,7 +100,6 @@ func reset_session() -> void:
 	_pending.clear()
 	_active_request.clear()
 	_mid_prologue_bgm_state.clear()
-	_completion_index = 0
 	_voice_player = null
 	_bgm_player = null
 	if audio != null:
@@ -110,6 +114,8 @@ func _preflight_service_event(raw: Dictionary) -> String:
 	var kind: String = str(raw.get("kind", ""))
 	if kind in ["native_bgm_fade","native_bgm_fade_tick"]:
 		return "" if audio.original_bgm_service != null else "Native fade has no original engine owner"
+	if kind in ["native_bank0_start","native_bank0_load","native_audio_command"]:
+		return "" if audio.original_bgm_service != null else "Native bank0 operation has no original engine owner"
 	if kind == "bank_load" and str(raw.get("role", "")) in ["prologue_rei", "prologue_shiori"]:
 		var preparation := AudioRules.prepare_mid_prologue_bank_roles(audio)
 		if not preparation.is_empty(): return preparation
@@ -188,7 +194,10 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 				if raw["command"] != 5 or (int(state.opening.get("audio_state_flags", 0)) & 0x100000) == 0:
 					return "audio control differs from transactional native flags"
 			"native_bgm_fade":
-				if raw.command != 0xb1 or not state.opening.get("bgm_fade") is Dictionary: return "Native fade lacks source command ownership"
+				var bank0_d1: bool = raw.command == 0xd1 and state.opening.get("bank0_audio") is Dictionary
+				if not (raw.command in [0xb1, 0xc1] or bank0_d1) or not state.opening.get("bgm_fade") is Dictionary: return "Native fade lacks source command ownership"
+			"native_bank0_start", "native_bank0_load", "native_audio_command":
+				if not state.opening.get("bank0_audio") is Dictionary: return "Native bank0 operation lacks its source bank0 record"
 			"native_bgm_fade_tick":
 				if raw.xa_active != ((AudioRules.check_cd(state)&4)!=0): return "Native fade XA flag differs from source playback"
 		if raw.get("kind") == "voice_play":
@@ -199,8 +208,9 @@ func preflight(result: Session.FrameResult, state: RefCounted = null) -> String:
 				if raw.get(key) != owner.get(key):
 					return "voice intent differs from transactional ownership: " + key
 			var clips: Array = owner.get("clips", [])
-			if owner.get("status") != "requested" or raw["clip_index"] >= clips.size() or clips[raw["clip_index"]].get("request_key") != raw.get("request_key"):
-				return "voice intent has no matching requested transactional clip"
+			# xa_tick publishes the clip on the logic frame its playback starts.
+			if owner.get("status") != "playing" or owner.get("xa_started_frame") != state.frame_count or raw["clip_index"] >= clips.size() or clips[raw["clip_index"]].get("request_key") != raw.get("request_key"):
+				return "voice intent has no matching scheduled transactional clip start"
 			if raw["speaker"] != clips[raw["clip_index"]].get("speaker"):
 				return "voice speaker differs from transactional clip"
 			voices += 1
@@ -228,20 +238,8 @@ func pending_events(logical_tick: int) -> Array[Session.ServiceEvent]:
 	return events
 
 
-func _observe(status: String) -> void:
-	_completion_index += 1
-	var payload: Dictionary = {}
-	for key: String in ["epoch", "line_id", "clip_index", "request_key"]:
-		payload[key] = _active_request[key]
-	payload["status"] = status
-	payload["completion_index"] = _completion_index
-	_pending.append({"service": "opening.audio", "payload": payload})
-
-
 func _finished() -> void:
-	if _active_request.is_empty():
-		return
-	_observe("finished")
+	# Physical only: the logic already owns this clip's finish frame.
 	_active_request.clear()
 
 
@@ -282,7 +280,6 @@ func publish(result: Session.FrameResult, logical_tick: int) -> String:
 				error = voice.play_event(audio, event)
 				if not error.is_empty():
 					return error
-				_observe("started")
 			"bank_load":
 				var role_name: String = str(event["role"])
 				error = audio.publish_prepared_bank(role_name)
@@ -325,7 +322,7 @@ func publish(result: Session.FrameResult, logical_tick: int) -> String:
 				voice.stop_clip()
 				_active_request.clear()
 				_pending = _pending.filter(func(value: Dictionary) -> bool: return value["service"] != "opening.audio")
-			"native_audio_control", "native_bgm_fade", "native_bgm_fade_tick":
+			"native_audio_control", "native_bgm_fade", "native_bgm_fade_tick", "native_bank0_start", "native_bank0_load", "native_audio_command":
 				pass
 			_:
 				return "unsupported opening audio publication kind"

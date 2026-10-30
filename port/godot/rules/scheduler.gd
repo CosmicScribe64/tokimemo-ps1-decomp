@@ -74,6 +74,128 @@ static func _closeness(data: Dictionary, index: int, tables: Dictionary) -> int:
 	var tokimeki: int = Math.divmodu32(_weighted_tokimeki(data, index, tables), 5).quotient
 	return tables["closeness_grid"][mini(tokimeki, 19)][mini(affection, 19)]
 
+## girl_state_rank / get_g_zyotai_s & 0x7F (src/main/menu_speaker_girl.c,
+## wiki/spec/core.md): the 0..4 mood rank scenes switch on.
+static func girl_state_rank(data: Dictionary, index: int, tables: Dictionary) -> int:
+	var affection: int = _weighted_affection(data["girls"][index], index, tables)
+	var tokimeki: int = _weighted_tokimeki(data, index, tables)
+	if affection < 0xA:
+		return 4
+	if affection < 0x1E:
+		return 3
+	if affection < 0x32:
+		return 3 if tokimeki < 0x32 else 1
+	if affection < 0x50:
+		return 2 if tokimeki < 0x32 else 1
+	return 2 if tokimeki < 0x32 else 0
+
+## get_g_zyotai_h (src/main/menu_speaker_girl.c): the rank event_log_add stores.
+static func girl_log_rank(data: Dictionary, index: int, tables: Dictionary) -> int:
+	var affection: int = _weighted_affection(data["girls"][index], index, tables)
+	var tokimeki: int = _weighted_tokimeki(data, index, tables)
+	if affection < 0xA:
+		return 4
+	if affection < 0x32:
+		return 3
+	if tokimeki < 0x32:
+		return 2
+	if tokimeki < 0x50:
+		return 1
+	return 0
+
+# Rank bars in address order 0x800B6748..0x800B6758 (config/symbol_addrs.txt,
+# include/main/schedule.h); command0_rank_threshold is the first word.
+const RANK_BAR_LIBERAL_ARTS_ATHLETICS := 0
+const RANK_BAR_ART := 1
+const RANK_BAR_TRIVIA := 2
+const RANK_BAR_SHIORI_ATHLETICS := 3
+const RANK_BAR_SCIENCE_LOOKS := 4
+const CLUB_RANK_BAR := 0xB
+# schedule_command_girl_select command 4: player club -> heroine it tests.
+const CLUB_COMMAND_GIRL: Dictionary = {0: 1, 1: 1, 2: 2, 3: 2, 4: 3, 5: 3, 6: 4, 7: 4, 8: 5, 9: 6, 10: 10}
+
+static func _rank_bar(tables: Dictionary, which: int) -> Variant:
+	if tables.get("command_rank_bars") is Array and (tables["command_rank_bars"] as Array).size() == 5:
+		return int(tables["command_rank_bars"][which])
+	if which == RANK_BAR_LIBERAL_ARTS_ATHLETICS and tables.get("command0_rank_threshold") is Array:
+		return int(tables["command0_rank_threshold"][0])
+	return null
+
+static func _girl_flag(data: Dictionary, girl: int, mask: int) -> bool:
+	return (int(data["girls"][girl]["flags"]) & mask) != 0
+
+static func _girl_club(data: Dictionary, girl: int) -> int:
+	return (Math.u32(int(data["girls"][girl]["flags"])) >> 20) & 15
+
+## src/main/scheduler.c::schedule_command_girl_select. Reads saved heroine
+## met (bit 1), b2 (bit 2) and club (bits 20-23) plus girl_scores closeness.
+## Returns the week's companion 0..10 or 0xF. A missing rank bar fails closed
+## instead of substituting "nobody".
+static func command_girl_select(data: Dictionary, command: int, tables: Dictionary) -> Dictionary:
+	var kind: int = command % 9
+	var needed: Array[int] = []
+	match kind:
+		0: needed = [RANK_BAR_LIBERAL_ARTS_ATHLETICS]
+		1, 6: needed = [RANK_BAR_SCIENCE_LOOKS]
+		2: needed = [RANK_BAR_ART]
+		3: needed = [RANK_BAR_LIBERAL_ARTS_ATHLETICS, RANK_BAR_SHIORI_ATHLETICS]
+		5: needed = [RANK_BAR_TRIVIA]
+	for which: int in needed:
+		if _rank_bar(tables, which) == null:
+			return {"companion": -1, "error": "schedule_command_girl_select command %d needs original rank bar %d; table pack lacks command_rank_bars" % [command, which]}
+	var rank: Array[int] = []
+	for girl: int in range(11):
+		rank.append(_closeness(data, girl, tables))
+	var first_girl: int = 0
+	var first_score: int = 0
+	var second_girl: int = 0
+	var second_score: int = 0
+	var self_score: int = 0
+	var candidates: Dictionary = {0: 1, 1: 2, 2: 3, 5: 8, 6: 7}
+	if candidates.has(kind):
+		var bar: int = _rank_bar(tables, needed[0])
+		var girl: int = candidates[kind]
+		if _girl_flag(data, girl, 2):
+			first_girl = girl
+			first_score = rank[girl] - bar
+		self_score = rank[0] - bar
+	elif kind == 3:
+		var bar: int = _rank_bar(tables, RANK_BAR_LIBERAL_ARTS_ATHLETICS)
+		if _girl_flag(data, 5, 2):
+			first_girl = 5
+			first_score = rank[5] - bar
+		if _girl_flag(data, 6, 2):
+			second_girl = 6
+			second_score = rank[6] - bar
+		self_score = rank[0] - int(_rank_bar(tables, RANK_BAR_SHIORI_ATHLETICS))
+	elif kind == 4:
+		var club: int = (int(data["player_flags"]) >> 12) & 15
+		if club == _girl_club(data, 0):
+			self_score = rank[0] - CLUB_RANK_BAR
+			if not _girl_flag(data, 0, 4):
+				self_score = 0
+			if club == 10 and _girl_flag(data, 10, 2) and _girl_flag(data, 10, 4) and _girl_club(data, 10) == 10:
+				first_girl = 10
+				first_score = rank[10] - CLUB_RANK_BAR
+		elif CLUB_COMMAND_GIRL.has(club):
+			var mate: int = CLUB_COMMAND_GIRL[club]
+			if _girl_flag(data, mate, 2) and _girl_flag(data, mate, 4) and _girl_club(data, mate) == club:
+				# Clubs 8 and 9 also require Shiori outside the club; always true in this else branch.
+				first_girl = mate
+				first_score = rank[mate] - CLUB_RANK_BAR
+	if first_girl != 0 and second_girl != 0:
+		if second_score < first_score:
+			if self_score < first_score and first_score > 0:
+				return {"companion": first_girl, "error": ""}
+		elif self_score < second_score and second_score > 0:
+			return {"companion": second_girl, "error": ""}
+	elif first_girl != 0:
+		if self_score < first_score and first_score > 0:
+			return {"companion": first_girl, "error": ""}
+	elif second_girl != 0 and self_score < second_score and second_score > 0:
+		return {"companion": second_girl, "error": ""}
+	return {"companion": 0 if self_score > 0 else 15, "error": ""}
+
 static func _sine(angle: int, tables: Dictionary) -> int:
 	var signed_angle: int = Math.s32(angle)
 	var negative: bool = signed_angle < 0
@@ -182,9 +304,10 @@ static func build_week(state: State, tables: Dictionary, rng: Rng) -> String:
 		for i: int in range(11):
 			if data["girl_last_date_spot_timer"][i] != 0:
 				data["girl_last_date_spot_timer"][i] = Math.u8(data["girl_last_date_spot_timer"][i] - 1)
-	var companion: int = 15
-	if command == 0 and _closeness(data, 0, tables) > tables["command0_rank_threshold"][0]:
-		companion = 0
+	var selection: Dictionary = command_girl_select(data, command, tables)
+	if not String(selection["error"]).is_empty():
+		return selection["error"]
+	var companion: int = int(selection["companion"]) & 15
 	data["last_picked_girl"] = -1
 	var recovery: int = (data["player_flags_upper"] >> 5) & 7
 	if recovery != 0:
@@ -308,9 +431,10 @@ static func build_initial_week(state: State, tables: Dictionary, rng: Rng) -> St
 		for i: int in range(11):
 			if data["girl_last_date_spot_timer"][i] != 0:
 				data["girl_last_date_spot_timer"][i] = Math.u8(data["girl_last_date_spot_timer"][i] - 1)
-	var companion: int = 15
-	if command == 0 and _closeness(data, 0, tables) > tables["command0_rank_threshold"][0]:
-		companion = 0
+	var selection: Dictionary = command_girl_select(data, command, tables)
+	if not String(selection["error"]).is_empty():
+		return selection["error"]
+	var companion: int = int(selection["companion"]) & 15
 	data["last_picked_girl"] = -1
 	var recovery: int = (data["player_flags_upper"] >> 5) & 7
 	if recovery != 0:

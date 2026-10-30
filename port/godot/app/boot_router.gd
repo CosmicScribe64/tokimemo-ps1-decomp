@@ -8,6 +8,7 @@ const StoreScript = preload("res://services/installed_pack_store.gd")
 const BackendScript = preload("res://services/original_game_import_backend.gd")
 const LaunchProfile = preload("res://services/installed_launch_profile.gd")
 const Launch = preload("res://app/installed_launch.gd")
+const TitleContinue = preload("res://app/title_continue.gd")
 
 const SETUP_SCENE_PATH := "res://app/first_launch_setup.tscn"
 const DEFAULT_PLAYABLE_SCENE_PATH := "res://app/new_game_entry.tscn"
@@ -47,11 +48,18 @@ func check_boot_state(caps_override: Array = []) -> Dictionary:
 		state = "installed_incomplete"
 	
 	if state == "ready" and launch_ready and not force_setup:
+		var ready_target: String = _determine_playable_target("")
+		var ready_reason: String = "Validated original name-entry data is installed. Gameplay remains unavailable."
+		# T-39007 (review R10): with save files present, normal launch opens the
+		# title Continue owner instead of starting another new game.
+		if ready_target == DEFAULT_PLAYABLE_SCENE_PATH and TitleContinue.has_save_files(TitleContinue.default_root()):
+			ready_target = Launch.TITLE_SCENE
+			ready_reason = "Save files exist; the title offers Continue, recovery and New Game."
 		return {
 			"action": "playable",
 			"launch_ready": true,
-			"target": _determine_playable_target(""),
-			"reason": "Validated original name-entry data is installed. Gameplay remains unavailable.",
+			"target": ready_target,
+			"reason": ready_reason,
 			"installed": installed,
 			"pack_root": str(installed.get("pack_root", "")),
 			"manifest_sha256": str(installed.get("manifest_sha256", "")),

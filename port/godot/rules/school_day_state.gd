@@ -21,6 +21,15 @@ func to_words() -> Array[int]:
 		words.append(byte)
 	return words
 
+## Refusal for a consumer of a rule field that the route stored without a
+## sourced value (resources.unsourced, written by flow/fresh_gameplay_handoff.gd
+## from the state adapter's list). Empty when the field is sourced.
+static func unsourced_error(data: Dictionary, field: String) -> String:
+	var resources: Variant = data.get("resources")
+	if resources is Dictionary and resources.get("unsourced") is Dictionary and resources["unsourced"].has(field):
+		return "%s is not sourced on this route (%s); refusing to read it" % [field, str(resources["unsourced"][field])]
+	return ""
+
 func structural_error() -> String:
 	if not _plain_record(rule_state, 0):
 		return "rule state must contain bounded primitive records, never engine objects"

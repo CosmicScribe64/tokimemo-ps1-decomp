@@ -15,6 +15,7 @@ const EndingOverlay = preload("res://overlays/ending_overlay.gd")
 const Calendar = preload("res://rules/calendar.gd")
 const PlayableBoot = preload("res://app/playable_boot.gd")
 const Canvas = preload("res://presentation/native_canvas.gd")
+const ClearSave = preload("res://services/clear_save_transaction.gd")
 
 var _checks: int = 0
 var _failures: Array[String] = []
@@ -42,6 +43,42 @@ func _step_pad(session: Session, pad_mask: int) -> Session.FrameResult:
 	return session.step(InputFrame.new(session.clock.logic_iterations, 0), [])
 
 
+
+## T-39006: TEL, GEKO, DATE, RPG_BAT and TEL_ACTION have no source-backed
+## production handler, so OverlayDispatcher refuses them when saved state is
+## present. Each input must fail the frame with the dispatcher's reason, keep
+## the mode and leave saved state (overlay included) unchanged.
+func _assert_refused(session: Session, state: State, modes: Array, label: String, reason: String, pads: Array) -> void:
+	var before: Dictionary = state.rule_state.duplicate(true)
+	for pad: int in pads:
+		var res: Session.FrameResult = _step_pad(session, pad)
+		_check(res.error.contains("refused with saved state") and res.error.contains(reason),
+			"%s refuses saved-state input 0x%04X in production (%s)" % [label, pad, res.error])
+		_check(state.game_mode in modes and state.rule_state == before,
+			"%s refusal keeps the mode and leaves saved state unchanged (pad 0x%04X)" % [label, pad])
+
+
+func _preview_rng() -> Rng:
+	var rng := Rng.new()
+	rng.configure(Rng.OPENBIOS_PROFILE, 42)
+	return rng
+
+
+## Preview stepping (no saved state) exercises the overlay's input handling for
+## rendering. It never writes saved state and its exit carries no deltas.
+func _preview_step(controller: Controller, mode: int, overlay_state: Dictionary, pad: int) -> Dictionary:
+	return controller.overlay_dispatcher.step_overlay(mode, overlay_state, pad, {}, _preview_rng())
+
+
+## A refused family has no production exit. The gate drops its overlay, puts
+## the harness back on the day screen (0x31) and points the queue at the next
+## event, as the G3 gate does.
+func _leave_refused_family(state: State, next_index: int = -1) -> void:
+	state.rule_state.erase("overlay_state")
+	if next_index >= 0:
+		state.rule_state["day_event_index"] = next_index
+	state.reset_game_mode_fields(0x31)
+
 func _resolve_repo_root() -> String:
 	var candidates := [
 		"/workspace",
@@ -58,7 +95,7 @@ func _run() -> void:
 	print("=== Suite 1: External Portrait Asset & Live Caller Date/Stats Context ===")
 	_test_external_portrait_and_live_context()
 
-	print("=== Suite 2: Interactive Live Overlay Input Dispatch & Delta Writeback ===")
+	print("=== Suite 2: Interactive Live Overlay Dispatch, Production Refusals & Preview Stepping ===")
 	_test_live_interactive_overlay_dispatch()
 
 	print("=== Suite 3: Authentic PS1 Graduation Sequences (Confession vs Bad Ending) ===")
@@ -177,70 +214,69 @@ func _test_live_interactive_overlay_dispatch() -> void:
 		_check(rn.error.is_empty() and state.game_mode in [0x3D, 0x5A] and int(state.rule_state["day_event_index"]) == 0,
 			"Neutral input frame does not auto-skip TEL overlay")
 
-	# Step 3: Directional input (PAD_DOWN) moves place cursor 0 -> 1
-	var r_down: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_DOWN)
-	_check(r_down.error.is_empty() and int(state.rule_state["overlay_state"].get("cursor", -1)) == 1,
-		"PAD_DOWN routed through OverlayDispatcher moves TEL place cursor 0 -> 1")
-	_check(int(state.rule_state["day_event_index"]) == 0 and state.game_mode in [0x3D, 0x5A],
-		"TEL overlay stays active on place_select after cursor move")
-
-	# Step 4: First confirm (PAD_CIRCLE) advances place_select -> day_select (does NOT complete overlay!)
-	var r_place: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(r_place.error.is_empty() and String(state.rule_state["overlay_state"].get("subscreen", "")) == "day_select",
-		"First PAD_CIRCLE advances TEL place_select -> day_select without completing overlay")
-	_check(int(state.rule_state["day_event_index"]) == 0 and state.game_mode in [0x3D, 0x5A],
-		"day_event_index remains 0 during TEL day_select")
-
-	# Step 5: Cancel (PAD_CROSS) backs out day_select -> place_select
-	var r_back: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CROSS)
-	_check(r_back.error.is_empty() and String(state.rule_state["overlay_state"].get("subscreen", "")) == "place_select",
-		"PAD_CROSS backs out TEL day_select -> place_select")
-
-	# Step 6: Re-confirm place -> confirm day -> confirm call_response to complete TEL
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	var r_day: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(r_day.error.is_empty() and String(state.rule_state["overlay_state"].get("subscreen", "")) == "call_response",
-		"Second PAD_CIRCLE advances TEL day_select -> call_response")
-	_check(int(state.rule_state["day_event_index"]) == 0 and state.game_mode in [0x3D, 0x5A],
-		"TEL overlay remains active on call_response until final confirm")
-
+	# Step 3 (T-39006): with saved state TEL is refused. phone_date_invitation_resolve
+	# writes and the appointment flag are not ported, so no input may book an
+	# appointment or write affection.
 	var aff_before_tel: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
-	var r_tel_done: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(r_tel_done.error.is_empty() and state.game_mode == 0x31 and int(state.rule_state["day_event_index"]) == 1,
-		"Final PAD_CIRCLE completes TEL overlay, advances day_event_index 0 -> 1, and returns to 0x31")
-	_check(not state.rule_state.has("overlay_state"), "Active overlay_state cleared after TEL completion")
-	_check(int(state.rule_state["appointment_words"][0]) != 0,
-		"Accepted TEL invitation booked appointment into live state.rule_state['appointment_words']")
-	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) > aff_before_tel,
-		"Completed TEL overlay wrote back affection delta to live SchoolDayController state")
+	var appt_before_tel: Array = (state.rule_state.get("appointment_words", []) as Array).duplicate()
+	_assert_refused(session, state, [0x3D, 0x5A], "TEL", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_TEL],
+		[OverlayDispatcher.PAD_DOWN, OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CROSS])
+	_check(int(state.rule_state["day_event_index"]) == 0 and state.rule_state.has("overlay_state"),
+		"Refused TEL stays on event 0 with its overlay")
+	_check((state.rule_state.get("appointment_words", []) as Array) == appt_before_tel
+		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before_tel,
+		"Refused TEL books no appointment and writes no affection")
 
-	# Step 7: Advance into event[1] (0x44 -> native mode 0x59 / dispatcher mode 0x44 GEKO walk-home)
+	# Preview TEL (no saved state): place cursor, place/day/call_response subscreens and an exit without deltas.
+	var tel_mode: int = state.game_mode
+	var tel: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	var p: Dictionary = _preview_step(controller, tel_mode, tel, OverlayDispatcher.PAD_DOWN)
+	_check(int(p["state"].get("cursor", -1)) == 1 and not bool(p.get("completed", true)),
+		"TEL preview PAD_DOWN moves the place cursor 0 -> 1")
+	p = _preview_step(controller, tel_mode, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(String(p["state"].get("subscreen", "")) == "day_select" and not bool(p.get("completed", true)),
+		"TEL preview first PAD_CIRCLE advances place_select -> day_select")
+	p = _preview_step(controller, tel_mode, p["state"], OverlayDispatcher.PAD_CROSS)
+	_check(String(p["state"].get("subscreen", "")) == "place_select",
+		"TEL preview PAD_CROSS backs out day_select -> place_select")
+	p = _preview_step(controller, tel_mode, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	p = _preview_step(controller, tel_mode, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(String(p["state"].get("subscreen", "")) == "call_response" and not bool(p.get("completed", true)),
+		"TEL preview second PAD_CIRCLE advances day_select -> call_response")
+	p = _preview_step(controller, tel_mode, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(bool(p.get("completed", false)) and (p.get("deltas", {}) as Dictionary).is_empty(),
+		"TEL preview final PAD_CIRCLE exits with no deltas")
+	_leave_refused_family(state, 1)
+
+	# Step 4: event[1] (0x44 -> native mode 0x59 / dispatcher mode 0x44 GEKO walk-home), refused with saved state.
 	var r_geko_enter: Session.FrameResult = _step_pad(session, 0)
 	_check(r_geko_enter.error.is_empty() and state.game_mode in [0x44, 0x59] and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x44, "Dispatched queue event 0x44 into mode 0x44 (GEKO)")
-	var aff_before_geko: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
-	var r_geko_stage1: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(r_geko_stage1.error.is_empty() and state.game_mode in [0x44, 0x59] and int(state.rule_state["day_event_index"]) == 1,
-		"First PAD_CIRCLE in GEKO advances to stage 1 without auto-skipping")
-	var r_geko_done: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(r_geko_done.error.is_empty() and state.game_mode == 0x31 and int(state.rule_state["day_event_index"]) == 2,
-		"Second PAD_CIRCLE completes GEKO and advances day_event_index 1 -> 2")
-	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before_geko + 2,
-		"Completed GEKO walk-home wrote +2 affection delta to live state")
+	_assert_refused(session, state, [0x44, 0x59], "GEKO", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_GEKO],
+		[OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CIRCLE])
+	var geko_mode: int = state.game_mode
+	p = _preview_step(controller, geko_mode, state.rule_state["overlay_state"].duplicate(true), OverlayDispatcher.PAD_CIRCLE)
+	_check(not bool(p.get("completed", true)), "GEKO preview first PAD_CIRCLE advances without completing")
+	p = _preview_step(controller, geko_mode, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(bool(p.get("completed", false)) and (p.get("deltas", {}) as Dictionary).is_empty(),
+		"GEKO preview second PAD_CIRCLE exits with no deltas")
+	_leave_refused_family(state, 2)
 
-	# Step 8: Advance into event[2] (0x80 -> mode 0x50 DATE)
+	# Step 5: event[2] (0x80 -> mode 0x50 DATE), refused with saved state.
 	var r_date_enter: Session.FrameResult = _step_pad(session, 0)
 	_check(r_date_enter.error.is_empty() and state.game_mode == 0x50, "Dispatched queue event 0x80 into mode 0x50 (DATE)")
 	var dates_before: int = int(state.rule_state["girls"][0]["counters"][1])
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # stage 0 -> 1
-	_step_pad(session, OverlayDispatcher.PAD_DOWN)   # choice cursor 0 -> 1
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # stage 1 -> 2
-	_check(state.game_mode == 0x50 and int(state.rule_state["day_event_index"]) == 2,
-		"DATE overlay remains active at stage 2 reaction before final confirm")
-	var r_date_done: Session.FrameResult = _step_pad(session, OverlayDispatcher.PAD_CIRCLE)
-	_check(r_date_done.error.is_empty() and state.game_mode == 0x31 and int(state.rule_state["day_event_index"]) == 3,
-		"Final PAD_CIRCLE completes DATE overlay and advances day_event_index 2 -> 3")
-	_check(int(state.rule_state["girls"][0]["counters"][1]) == dates_before + 1,
-		"Completed DATE overlay incremented live date counter in state.rule_state['girls'][0]['counters'][1]")
+	_assert_refused(session, state, [0x50], "DATE", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_DATE],
+		[OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_DOWN, OverlayDispatcher.PAD_CIRCLE])
+	_check(int(state.rule_state["girls"][0]["counters"][1]) == dates_before,
+		"Refused DATE leaves the date counter unchanged")
+	p = _preview_step(controller, 0x50, state.rule_state["overlay_state"].duplicate(true), OverlayDispatcher.PAD_CIRCLE)
+	p = _preview_step(controller, 0x50, p["state"], OverlayDispatcher.PAD_DOWN)
+	p = _preview_step(controller, 0x50, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(not bool(p.get("completed", true)), "DATE preview stays active at the stage 2 reaction")
+	p = _preview_step(controller, 0x50, p["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(bool(p.get("completed", false)) and (p.get("deltas", {}) as Dictionary).is_empty(),
+		"DATE preview final PAD_CIRCLE exits with no deltas")
+	_leave_refused_family(state, 3)
 
 
 func _test_graduation_confession_and_bad_ending() -> void:
@@ -308,8 +344,32 @@ func _test_graduation_confession_and_bad_ending() -> void:
 	_check(int(state_ok.rule_state.get("ending_completed", 0)) == 0,
 		"Graduation is not marked completed before clear_save confirm")
 	_step_pad(session_ok, OverlayDispatcher.PAD_CIRCLE)
+	# T-39007: Confirm 4 answers "yes" to the clear-save prompt. The ending waits
+	# for the host's storage completion; a forged saved state does not finish it.
+	_check(int(state_ok.rule_state.get("ending_completed", 0)) == 0
+		and state_ok.rule_state["overlay_state"].get("clear_save_status") == "requested",
+		"Confirm 4 requests the clear save and waits for storage")
+	var forged: Dictionary = state_ok.rule_state["overlay_state"].duplicate(true)
+	state_ok.rule_state["overlay_state"]["clear_save_status"] = "saved"
+	state_ok.rule_state["overlay_state"]["clear_save_completed"] = true
+	state_ok.rule_state["overlay_state"]["clear_save_receipt"] = {"service": "ending.clear_save", "girl": 0, "counter": 1,
+		"album_clear_mask": 0x1FFF, "checksum_sha256": "7c3a".repeat(16)}
+	for forged_pad: int in [0, 0x0800, 0x1000]:
+		_step_pad(session_ok, forged_pad)
+		_check(int(state_ok.rule_state.get("ending_completed", 0)) == 0
+			and not bool(state_ok.rule_state.get("clear_save_completed", false)),
+			"Forged saved status with a well-formed receipt does not complete the clear save (pad 0x%04x)" % forged_pad)
+	state_ok.rule_state["overlay_state"] = forged
+	var save_root: String = "/tmp/t39007-graduation-" + str(Time.get_ticks_usec())
+	var host: ClearSave = ClearSave.new(save_root)
+	var service: Dictionary = host.service_request(state_ok.rule_state["overlay_state"])
+	_check(service.get("payload", {}).get("ok") == true, "Host clear-save transaction published the system record")
+	_check(host.service_request(state_ok.rule_state["overlay_state"]).is_empty(), "One request attempt is written once")
+	var tick: int = session_ok.clock.logic_iterations
+	session_ok.step(InputFrame.new(tick, 0), [Session.ServiceEvent.new(tick, Session.Phase.BEFORE_MODE,
+		Session.ServiceKind.COMPLETION, service["service"], service["payload"])])
 	_check(int(state_ok.rule_state.get("ending_completed", 0)) == 1,
-		"Confirm 4 completes clear_save and marks ending_completed = 1")
+		"Clear-save completion with a read-back receipt completes the ending")
 	_check(int(state_ok.rule_state.get("confessed_girl", -1)) == EndingOverlay.GIRL_SHIORI,
 		"Completed confession ending records confessed_girl = 0 (Shiori)")
 	_check(String(state_ok.rule_state.get("ending_type", "")) == "confession",
@@ -318,6 +378,9 @@ func _test_graduation_confession_and_bad_ending() -> void:
 		"Completed confession ending recorded full phase history [confession, staff_roll, last_photo, clear_save]")
 	_check(bool(state_ok.rule_state.get("clear_save_completed", false)),
 		"Completed confession ending recorded clear_save_completed = true")
+	_check(int(state_ok.rule_state.get("album_clear_mask", 0)) == 1
+		and ClearSave.new(save_root).record["girl_clear_counters"][0] == 1,
+		"Album clear mask comes from the stored per-girl clear counter")
 
 	# 2. Ineligible Route -> Authentic PS1 Yoshio Bad Ending (NO fabricated affection fallback)
 	var state_bad: State = fixtures.synthetic_state()
@@ -361,9 +424,10 @@ func _test_graduation_confession_and_bad_ending() -> void:
 	_step_pad(session_bad, OverlayDispatcher.PAD_CIRCLE)
 	_check(String(state_bad.rule_state["overlay_state"].get("phase", "")) == "clear_save",
 		"Confirm 2 advances staff_roll -> clear_save (skipping last_photo)")
-	_step_pad(session_bad, OverlayDispatcher.PAD_CIRCLE)
-	_check(int(state_bad.rule_state.get("ending_completed", 0)) == 1,
-		"Confirm 3 completes clear_save on bad ending route")
+	_step_pad(session_bad, EndingOverlay.PAD_CROSS)
+	_check(int(state_bad.rule_state.get("ending_completed", 0)) == 1
+		and not bool(state_bad.rule_state.get("clear_save_completed", true)),
+		"Cross declines the clear save and completes the bad ending unsaved")
 	_check(int(state_bad.rule_state.get("confessed_girl", -1)) == EndingOverlay.GIRL_YOSHIO,
 		"Ineligible graduation records confessed_girl = 13 (GIRL_YOSHIO) with no fabricated heroine")
 	_check(String(state_bad.rule_state.get("ending_type", "")) == "yoshio_bad_ending",
@@ -392,14 +456,19 @@ func _test_subgames_and_playable_boot_live_overlay() -> void:
 	session.cd_logic = _empty
 	session.audio_logic = _empty
 
-	# 1. RPG_BAT (0x57) live session loop & talk_result_code writeback
+	# 1. RPG_BAT (0x57), T-39006: refused with saved state (fixed rand_seed instead of native rand()).
 	controller.start_overlay(state, 0x57, {"enemy_hp": 180})
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # Defeats enemy (180 HP) -> victory stage 10
-	_check(state.game_mode == 0x57 and bool(state.rule_state["overlay_state"].get("victory", false)),
-		"RPG_BAT (0x57) reaches victory stage 10 and waits for player confirm")
-	_step_pad(session, OverlayDispatcher.PAD_CIRCLE) # Exits victory screen -> 0x31
-	_check(state.game_mode == 0x31 and int(state.rule_state.get("talk_result_code", -1)) == 0,
-		"Completed RPG_BAT wrote back talk_result_code=0 to state.rule_state")
+	var talk_before: Variant = state.rule_state.get("talk_result_code")
+	_assert_refused(session, state, [0x57], "RPG_BAT", OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_RPG_BATTLE],
+		[OverlayDispatcher.PAD_CIRCLE, OverlayDispatcher.PAD_CIRCLE])
+	_check(state.rule_state.get("talk_result_code") == talk_before, "Refused RPG_BAT writes no talk_result_code")
+	var rpg: Dictionary = _preview_step(controller, 0x57, state.rule_state["overlay_state"].duplicate(true), OverlayDispatcher.PAD_CIRCLE)
+	_check(bool(rpg["state"].get("victory", false)) and not bool(rpg.get("completed", true)),
+		"RPG_BAT preview reaches victory stage 10 and waits for confirm")
+	rpg = _preview_step(controller, 0x57, rpg["state"], OverlayDispatcher.PAD_CIRCLE)
+	_check(bool(rpg.get("completed", false)) and (rpg.get("deltas", {}) as Dictionary).is_empty(),
+		"RPG_BAT preview exits with no deltas")
+	_leave_refused_family(state)
 
 	# 2. TACO (0x59) live session loop: does NOT exit on 2nd fire press; writes back high_scores & stages_cleared
 	controller.start_overlay(state, 0x59, {"waves_per_stage": 1, "target_stages": 1})
@@ -462,9 +531,12 @@ func _test_subgames_and_playable_boot_live_overlay() -> void:
 	var present_err: String = boot._present_committed()
 	_check(present_err.is_empty() and boot._last_rendered_image != null and boot._last_rendered_image.get_size() == Vector2i(320, 240),
 		"PlayableBoot._present_committed renders 320x240 frame for active overlay with live state context")
+	# T-39006: TEL_ACTION reads the invented preview roster, so saved-state input is refused.
 	var step_res: Dictionary = boot.step_active_overlay(OverlayDispatcher.PAD_DOWN)
-	_check(not bool(step_res.get("completed", true)) and int(state.rule_state["overlay_state"].get("girl_id", -1)) == 1,
-		"PlayableBoot.step_active_overlay steps TEL_ACTION notebook girl_id 0 -> 1 via OverlayDispatcher")
+	_check(String(step_res.get("error", "")).contains(OverlayDispatcher.PRODUCTION_REJECTIONS[OverlayDispatcher.GAME_MODE_TEL_ACTION])
+		and not bool(step_res.get("completed", true)) and (step_res.get("deltas", {}) as Dictionary).is_empty()
+		and int(state.rule_state["overlay_state"].get("girl_id", -1)) == 0,
+		"PlayableBoot.step_active_overlay refuses saved-state TEL_ACTION input and keeps girl_id 0")
 	boot.canvas.set("_textures", {})
 	boot.canvas.set("_commands", [])
 	boot.canvas.free()

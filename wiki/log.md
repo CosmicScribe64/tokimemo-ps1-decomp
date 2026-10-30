@@ -2068,3 +2068,255 @@ User requested all work be pushed, including translated assets, followed by a pa
 ## [2026-10-29] setup | Publish full WIP pause checkpoint
 
 Committed and pushed0abd364b4b1b1acbc61bdaa5b62822890696e7d5 to origin/main:698 files, including136 translated PNGs, source/tests/tooling, tickets and [[port-pause-2026-10-29]]. Push succeeded and local HEAD matched origin/main; working tree was clean. All workers are stopped and no task containers remain. The user-requested goal pause follows publication; completion remains explicitly unclaimed.
+
+## [2026-10-29] build | Resume: revalidate checkpoint and rerun stage9 O11 read
+
+Resumed from [[port-pause-2026-10-29]] at c1c2a7aa5 (clean tree). Revalidated: core runner 5/5 suites, original track1 SHA 28c3c501… matches, Docker images tokimemo-port, -port-gui-test, -recovery, -recovery-splat, -emu present, no running containers. Actual installed route `.asset-cache/port/rei-dialogue-v3` (v12 bundle, isolated native candidate d937156a…, real X11 entry, REI_DIALOGUE=1) confirms the saved O11 AC1E/33-sector read fix: it passed stage9/substep10 and stopped at 9/0/11 on the deliberate `next_scene` rejection in `port/godot/services/first_arrival_media_bridge.gd`. The source has ~23 opening mode stages, so the opening remains incomplete. Delegated O11 copy/stage10 continuation ([[tickets/T-39002-restore-port-runtime]]) and translation inventory ([[tickets/T-39004-english-asset-completion]]) to file-disjoint workers; root reviews.
+
+## [2026-10-29] ticket | Translation inventory pass returned for review
+
+Translation worker added `tools/translation_inventory.py` (extends `tools/translation_assets.py`), generated `translations/en/graphics/translation_inventory.json` with decisions/source-identity files, and 3 draft MAINROM base candidates under `translations/en/graphics/artwork/checkpoints/T39004-pass2/`. Root reran 18 tests (OK) and `translation_inventory.py check` (exit 0). Counts: 271 artwork items (50 english-reviewed, 128 candidate-only, 72 missing, 21 deliberately-untranslated); historical 59 (56 reviewed, 3 unmapped with recorded resolution); 139 ledger records, 0 human-approved; 55,911 text records (23,286 blocked on context, 534 empty). Blocked: battle Miss font fit, FILESEL buttons/slot labels (background reconstruction), ~34 MAINROM magazine/HUD frames, several backgrounds. Independent adversarial review running; nothing accepted yet. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] lint | Translation inventory passes two adversarial review rounds
+
+Round 1 (21 agents) confirmed ~15 defects (blank text counted missing, weekday frames reviewed without source identity, unenforced approval guard, weak tests, partial multi-container binding); round 2 (4 agents) found blank classification still trusting a per-file hash identical across all 55,403 records, variant coverage enforced only for MAINROM, and a test failing without `.asset-cache`. All fixed by the worker. Root reran: 32 tests OK with cache; 32 OK (2 explained skips needing original MAINROM export) in a clean tools/+translations copy; `translation_inventory.py check` passes in both. Final counts: artwork 271 = 44 english-reviewed, 125 candidate-only, 78 missing, 24 deliberately-untranslated; text 55,911 = 31,757 ready, 23,337 blocked, 817 deliberately-untranslated (each with recorded per-record evidence), 0 missing; 0 human-approved candidates. Weekday frames require all six known palette variants (stricter reading; user may relax in `inventory_decisions.json`). Inventory tooling accepted as reviewed; artwork completion stays open. Design workflow for the 78 missing items started. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] build | Stage9/sub11 O11 copy and stage10 reach actual route
+
+Opening worker implemented source stage9/substep11 (O11 0x10800 copy, actor96 setup, CUT08 cut) and replaced the synthetic stage10 with the source lines 15/16 flow. Root confirmed receipts: `.asset-cache/port/rei-lines15-v1` passed 26 checks through every stage8/9 substep to stage10; `.asset-cache/port/rei-lines16-v2` observed stage10 substeps 0-8 and stopped at 10/0/8 because the isolated native candidate d937156a supports only the `prologue_rei` bank, not `prologue_shiori` (CBD4/CBAA/CBA5). Route recipe checked in as `tools/port/run_installed_route.sh`. Reported pre-existing failures (`run_line11_background.gd`, stale `run_first_arrival_board_store.gd`) under independent check. A hung test container from the worker remains; the worker lacked permission to stop it, and root left it for the user. Adversarial source review running. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] decision | User approves all text translations; focus on artwork
+
+User instruction in chat: "Work on the artwork. Assume all the text as approved." Recorded as an explicit human (project-owner) approval of the wording of all 55,911 text records, implemented as one decision entry in the inventory decisions, not by editing returned records. Runtime draw-site/context proof stays a separate open flag for the 23,337 previously blocked records; approval does not prove where text is drawn. Artwork statuses unaffected. Work priority moves to producing the 78 missing artwork items (design workflow results pending). See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] ticket | Artwork production pass and opening review fixes
+
+Design workflow (15 agents) judged plans for the 78 missing artwork items: MAINROM ~28 producible, battle Miss 10, FILESEL 4 buttons now plus pages after a region map, BS backgrounds ~5 plus a splice tool, OPENXA name pills deferred until the movie player is ported. Opened [[tickets/T-39009-mainrom-indexed-drafts]], [[tickets/T-39010-battle-miss-drafts]], [[tickets/T-39011-filesel-indexed-drafts]], [[tickets/T-39012-bs-background-drafts]] (In Progress). Root defaults replace open wording/scope decisions and are recorded as revisable; full BS backgrounds are not committed (only lettering crops and manifests). Production workflow runs produce, review, fix, integrate; shared inventory files are touched only by the integrator. Opening review (16 agents) confirmed stage10 source fidelity and tests (77/19 pass, Rei regressions pass); two medium defects (post-switch blink rejected on a false premise, invented O11 page slot 37) and test/cleanup items returned to the opening worker, followed by `prologue_shiori` native bank support and the stage11 source port. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] decision | User approves the 61 whitespace-English text records
+
+User answered "Approve them" for the 61 text records whose English is whitespace (8 over non-blank source, including six 日 date-format records; 53 over unproven source). Added to the existing text approval decision as a dated addendum; context and blank-evidence labels unchanged. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] build | Stage10 review fixes land; shiori bank and stage11 workflow started
+
+Opening worker fixed all review findings: post-switch blink now models the source (actor98 set to O10 tables over O11 bytes, skipped by the draw loop), and O11 tpage slots are derived from source free order (case11 background slot set locks 8-10/40-42, so page3 lands in 37; the reviewer's slot-8 claim was rejected with source evidence and is under independent check). Tests: lines15 setup 96, source 19, Rei regressions, core 5/5. Actual `.asset-cache/port/rei-lines16-v3` again stops at 10/0/8 on the `prologue_shiori` bank; receipt now records candidate library/bridge/bundle hashes. Sequential workflow started: verify fixes (including a possible stage9 O10 page-order defect), native `prologue_shiori` bank support in a new isolated candidate, then the stage11 source port, each with adversarial review. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] ticket | Fan out port work into parallel tracks
+
+User asked to fan out and speed up. Opened [[tickets/T-39013-fresh-hud-context]], [[tickets/T-39014-holiday-scene-producer]], [[tickets/T-39015-desktop-packaging]], [[tickets/T-39016-generic-text-layer]], [[tickets/T-39017-opening-stage-specs]] (In Progress) and moved [[tickets/T-39006-production-route-state-parity]] and [[tickets/T-39007-player-save-relaunch-recovery]] to In Progress. Fan-out workflow runs seven implementation tracks (HUD fresh context, holiday producer, saves/Continue, route-state parity, desktop packaging, generic text layer, opening emulator captures for [[tickets/T-39008-synchronized-differential-captures]]) in isolated worktrees with per-track review and fix, saving patches under `.asset-cache/fanout-patches/` for root integration, plus four parallel source-spec writers for the remaining opening stages. Runs alongside the opening (shiori bank, stage11) and artwork production workflows. Wiki lint: 0 broken links, 0 status mismatches.
+
+## [2026-10-29] build | Artwork drafts integrated; stage9 slot fix; shiori bank blocked on CD timing
+
+Artwork production (13 agents) integrated: 271 items = 44 english-reviewed, 173 candidate-only, 25 missing, 29 deliberately-untranslated; 299 candidate records, none human-approved. New drafts: 31 MAINROM, 10 battle Miss, 5 FILESEL, 2 BS (plus splice tooling). Root reran the translation suite: inventory check passes; 2 errors in `tools/test_translation_tree.py` come from `translations/en/system/dictionaries/slpm_86_053.md`, never tracked (pre-existing). Open human decisions are listed in `translations/en/graphics/decisions/*.json` (e.g. the 3-wide M in MISS, FILESEL region map). Opening workflow: verification found the stage9 O10 entrance page slots reversed relative to source search_tpage (0x82c0 belongs in slot 5); fixed and rerun, `.asset-cache/port/rei-entrance-slots-v1` passes 26 checks to stage10. `prologue_shiori` (stage10/8) is now an explicit pinned rejection: audio_command 0xC1 is a fade, and the three nowait bank reads overwrite the Rei score/VAB header while the looping Rei sequence still plays, with landing times set by CD timing the source does not define. Stage11 ported with bounded tests (79 checks) but unreachable on the actual route. Also found: `opening_audio_rules.gd` models 0xC1/0xD1 as an immediate stop rather than source fades. User decision requested. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-29] decision | Shiori bank: measure, then decide
+
+User chose "Measure, then decide" for the stage10/8 `prologue_shiori` bank race: measure the three CD read landings, fade level and sequencer key-ons in the emulator; reproduce the original glitch if audible, otherwise use a documented clean switch at the measured frame. Workflow runs two independent emulator measurements, a decision judge, implementation (including source fades for 0xC1/0xD1), adversarial review, then continues the opening stage by stage. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Fan-out tracks reviewed; integration started
+
+Fan-out workflow (25 agents) finished. Every track had an independent review and fix round (3-7 confirmed findings each). Results, each bounded by its stated evidence limits:
+- [[tickets/T-39013-fresh-hud-context]]: sealed source-ordered fresh HUD session context, 66 checks. Not yet called by the game; `hud_context` stays unavailable.
+- [[tickets/T-39014-holiday-scene-producer]]: authenticated `holiday_scene_source` producer. `holiday_scene` stays unavailable until session-owned boundary fields have a fresh supplier.
+- [[tickets/T-39007-player-save-relaunch-recovery]]: Continue, backup recovery and ending clear-save completion. 48 checks and a 7-phase relaunch suite pass. Production Continue is still blocked by the captured development boundary.
+- [[tickets/T-39006-production-route-state-parity]]: handlers read saved state, with a 16-mutation check. Rule-level only.
+- [[tickets/T-39015-desktop-packaging]]: reproducible Linux export with a native audio gate. macOS remains code-only, without native audio.
+- [[tickets/T-39016-generic-text-layer]]: source-keyed text pack builder and lookup, rejecting single-byte renderer controls; wired into the command HUD.
+- [[tickets/T-39008-synchronized-differential-captures]]: stage 8-10 capture pairing tool with guard tests. Synchronization remains unverified.
+
+Opening specs for stages 12-22 are in [[spec/opening-stages-12-14]], [[spec/opening-stages-15-17]], [[spec/opening-stages-18-20]] and [[spec/opening-stages-21-end]]. Stage 21 hands off to mode 0x34. They found that `port/godot/flow/prologue_arrival.gd` stages 11-17 are synthetic and need replacement, and that [[spec/o-nameent]] names the wrong CUT files. Patches are under `.asset-cache/fanout-patches/`. The integration workflow applies them in order, resolves shared-file overlaps, and defers packaging's `first_arrival_bgm_bridge.gd` hunk until the concurrent Shiori work lands.
+
+## [2026-10-29] decision | Shiori race emulation; parallel opening stages 12-21
+
+Two independent emulator measurements agree: the Shiori bank reads complete at +29/+75/+91 frames after the stage10/8 request (repeatable across 13 runs), the 0xC1 fade finishes at +112, the 0x15 dispose at +182, and the looping Rei sequence keys 36 voices from the overwritten score at normal mix volume. Verdict: audible glitch, so under the user's rule the port reproduces the race (race emulation). Shiori workflow resumed without its sequential "continue opening" step. Opening stages 12-14, 15-17, 18-20 and 21-plus-handoff are now ported in parallel worktrees from snapshot ref `refs/snapshots/opening-base-2026-10-29` (all current uncommitted work; HEAD and branch unchanged), each reviewed and fixed, as patches under `.asset-cache/opening-stage-patches/`. Root integrates after the Shiori and fan-out integrations land, then runs the actual route from entry to the mode 0x34 handoff in stage order. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39017-opening-stage-specs]].
+
+## [2026-10-29] build | Shiori race passes on the actual route; timing gap found
+
+Race emulation implemented: native candidate 67211ee6… (`.asset-cache/port/native-audio-shiori-v2`), bridge 89220048…, bundle `installed-runtime-v13` (v12 plus the three Shiori reads). Review found the native race clock was tied to sink render pumps; fixed so the bridge renders exactly one native block per logic frame. Routes v4/v5 pass stage10/8 with `shiori_pump` 183 equal to logic frames, all three reads landed and the fade finished. They stop at 11/0/2 because stage11 visible composition (CUT12, LBA AB18) is missing. Tests: shiori rejection 176 checks, native race 79 (36 voices on the measured frames), line17 79. Volume-sweep (SPU bit 15) phases are still explicitly refused. Route receipts now pin git HEAD, a working-tree diff hash and key source hashes. New defect: from Rei start to the C1 request the port takes about 1,280 frames against the original's 1,949, and varies by about 6 frames between identical runs. A diagnosis workflow is running alongside the stage11 composition work. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Fan-out tracks integrated into the main checkout
+
+The integration workflow merged all seven reviewed fan-out patches into the working tree, uncommitted. Each file was merged three ways against c1c2a7aa5. Manual resolutions:
+- `school_day_controller.gd`: kept the saves clear-save step and added the route-parity fail-closed check.
+- `build_installed_runtime.py`: kept holiday's UNSUPPLIED_ROLES structure and moved the hud-fresh wording into it.
+
+Integration review found four real problems, all fixed:
+- T-39016 had lost its review-fix notes.
+- The live overlay graduation gate went from 4 to 23 failures. It is re-scoped for the route-parity refusals: now 4/98, the same 4 HUD-asset failures as at HEAD.
+- The text-layer HUD test was validated against pre-review pack v2.
+- A non-reproducible Python command.
+
+Root reran the core runner: PASS, 6 suites. Still open:
+- Packaging's `first_arrival_bgm_bridge.gd` hunk is deferred to `.asset-cache/fanout-patches/packaging.deferred-bgm-bridge.patch` until the opening work releases that file; the desktop verify NativeAudioGate fails until it lands.
+- `text_layer_store` lacks a pack version gate.
+- `step_active_overlay` stores refused overlay state.
+- The three-year and multi-route suites need missing caches.
+
+Added [[port-text-layer]] to [[index]]. See [[tickets/T-39006-production-route-state-parity]], [[tickets/T-39007-player-save-relaunch-recovery]], [[tickets/T-39013-fresh-hud-context]], [[tickets/T-39014-holiday-scene-producer]], [[tickets/T-39015-desktop-packaging]], [[tickets/T-39016-generic-text-layer]] and [[tickets/T-39008-synchronized-differential-captures]].
+
+## [2026-10-29] build | Stage11 reaches stage12 on the actual route; timing causes found
+
+The stage11 visible composition is implemented. Review found an O_13 manifest destination conflict; it is fixed (the destination now lives only in per-read composite keys), with a new board pack `opening-line17-board-v3` and bundle `opening-line17-runtime-v3`. Actual route `.asset-cache/port/rei-line17-route-v3` passed 42 checks to 12/0/0 at frame 5140. Tests: line17 256 checks, plus the other Rei suites. The stage 12-21 worktree patches must drop their O_13 destination when merged.
+
+Timing diagnosis: the original takes 1,949 vsyncs from Rei start to C1, the port 1,283 logic frames.
+- About 185 frames: the port completes CD reads instantly.
+- About 482 frames: voiced lines 12-15 end on wall-clock `AudioStreamPlayer.finished`, without the source XA start latency or end read-past. XA-model share about -144, wall-clock share about -340.
+- The roughly ±6-frame run variance comes from the same wall-clock finish.
+- Text and counter spans match exactly.
+
+The timing-fix workflow models CD latency and XA end on logic frames and checks determinism and the 1,949 span. It also merges packaging's deferred bridge hunk. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Opening stages 12-21 logic ported in parallel; rendering and late audio next
+
+Four parallel worktree groups ported the stage logic from source with bounded tests. Each group had an independent review and fix round (2-6 findings).
+- Stages 12-14: 182 checks.
+- Stages 15-17: 248 checks.
+- Stages 18-20: 1,001 checks.
+- Stage 21 handoff: passing.
+
+Patches are in `.asset-cache/opening-stage-patches/*.v2.patch`. Explicit refusals remain: arrival drawing for stages 12-20 (SHIORI_DRAW_UNSUPPORTED, DRAW_UNSUPPORTED, CLOSING_RENDER_UNSUPPORTED), dec_bg_reset on decode -1, stage16 audio_bank_start(0,1), stage20 0xD1 fade on that BGM, and stage21 finish-bank load/transfer (COM_MIX, SPRING; FINISH_BANK_TRANSFER_UNSUPPORTED). The O_13 descriptor is duplicated across groups.
+
+A new workflow combines the four patches into snapshot `refs/snapshots/opening-stages-combined-2026-10-29` with one combined board pack. It then implements rendering for stages 12-14, 15-17 and 18-20 and native bank-0 audio in parallel worktrees, each with review. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39017-opening-stage-specs]].
+
+## [2026-10-29] build | Gameplay handoff started in parallel
+
+User asked to speed up the path to gameplay. Snapshot ref `refs/snapshots/main-handoff-2026-10-29` captures the main working tree (fan-out integration, stage11); HEAD is unchanged. The gameplay-handoff workflow runs three tracks in parallel:
+- An emulator golden capture of the full GameState and session globals from stage21 to command-select, for two input sets.
+- Regeneration of missing gameplay test caches (school-day tables, HUD production, date preview, native font) so the three-year, multi-route and G3 suites can run.
+- A worktree implementation of source-faithful fresh new-game initialization and the HUD session mirrors, handing off into gameplay without the captured boundary.
+
+The new-game result is then compared field by field against the golden, reviewed, and fixed. This runs alongside the opening rendering/audio and timing workflows. See [[tickets/T-39013-fresh-hud-context]] and [[tickets/T-39006-production-route-state-parity]].
+
+## [2026-10-29] build | Opening timing now matches the original within a few frames
+
+Timing workflow: CD read latency floor(14 + 0.4 × sectors) per sequential read reproduces every measured landing. XA voice end now runs on logic frames. Review found and fixed two more causes:
+- Stage 6 ran a per-frame `mode_step_timer` increment that the source lacks, halving the 0x3d post-line hold.
+- Bank polls completed in one frame; they now take the measured 132 (arrival) and 91 (Rei).
+
+Packaging's deferred `first_arrival_bgm_bridge.gd` gate is merged; a new candidate bridge 25e44749… gates `prepare_pending` on `bank_poll`. Timing results:
+
+| Span | Port | Original |
+|---|---|---|
+| 0/0/0 to 12/0/0 | 6,745 and 6,732 | 6,736-6,740 (was 6,331) |
+| Rei span | 1,948 | 1,949 |
+| Stage 6 lines 5-7 | exact | exact |
+| Line 8 (6/0/8) | 180-186 | 168 |
+
+Line 8 depends on text phase. Routes `rei-hold-bank-route-v3/v4` pass 42 checks to 12/0/0; the new schedule test has 56 checks. The runs still differ by 13 frames, so a determinism workflow is hunting the remaining nondeterminism, the line 8 surplus, and the stage-entry offsets (net about -34). See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39015-desktop-packaging]].
+
+## [2026-10-29] build | Stages 12-21 combined; rendering and bank-0 audio implemented
+
+The four stage patches are combined into snapshot `refs/snapshots/opening-stages-combined-2026-10-29` (5e8150afd), with one destination-free O_13 record and board pack `first-arrival-board-stages-12-21-v1` (manifest 8714a4cc…). Group suites pass: 182, 248, 1,001 and 128 checks, plus the Rei and core suites.
+
+Rendering tracks for stages 12-14, 15-17 and 18-20 each had review and a fix round; 15-17's fix also caught an off-by-one. Native bank-0 audio covers the stage16 BGM start, the stage20 0xD1 fade and the stage21 COM_MIX/SPRING load and transfer. Candidate library ab2d3cbc…, emulator-measured landings; the bridge test has 64 checks. Patches are in `.asset-cache/opening-render-patches/`.
+
+Remaining gaps before a full route:
+- P_01_08, P_01_10 and P_01_12 background decode.
+- The stage14 decode emits no ACEC buffer-1 upload.
+- The message-area composition for actor100 (rows >= 160).
+- Nothing yet compared against emulator pixels.
+
+A gap-closing worktree workflow stacks the four patches and fixes these. Merge into main waits for the determinism workflow. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | Opening timing deterministic and frame-exact to stage12
+
+Determinism workflow (with review and fixes):
+- Four timed route runs on the final tree are byte-identical. Every one of the 104 substeps from 0/0/0 to 12/0/0 matches the phase-matched emulator run exactly, with an empty tolerance list: 6,709 game frames at entry pad 2 and 6,708 at pad 3.
+- The original also drops 30 vsyncs (6,739 vsyncs). Dropped vsyncs are documented per substep in `.asset-cache/emu/opening-timing-v4/vsync_drops.txt` and deliberately not simulated, so wall time is about 0.5 s shorter.
+- New tracked route test `port/godot/tests/opening/run_opening_frame_timing_route.gd`, with table `tests/fixtures/opening_frame_timing.json` and runner `tools/port/run_opening_frame_timing.sh`. It passes at pads 2 and 3 and fails on a mutated table. It needs local original-derived bundles, so it cannot run in CI.
+- New and untracked test files are marked intent-to-add, not committed.
+
+The main checkout's opening files are free again for integration of the stages 12-21 work. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-29] build | New-game golden captured; fresh handoff implemented; gameplay data pins stale
+
+Emulator golden `.asset-cache/emu/newgame-golden-v1/` covers two input sets from stage21 to command-select: full GameState, 342 named globals, VRAM at two save states, screenshots and an A/B variance analysis. Input-derived fields: names, birthday, and girls[0] tokimeki/affection/syoushin via blood compatibility. Constant fields: date 95/4/4 and the parameters 100/40/40/40/40/32/60/5/0. Stage 0xFF reload takes 227 frames.
+
+Fresh handoff patch `.asset-cache/handoff-patches/handoff.v2.patch` (worktree from `refs/snapshots/main-handoff-2026-10-29`) fixes 12 golden mismatches and 2 review findings; `run_fresh_gameplay_handoff.gd` has 514 checks and 7 mutations caught. Still open:
+- The reload uses service doubles on golden-observed frames.
+- The BIOS rand state is not modelled, so girls[1] club is wrong.
+- bg_lba_cache, dec_bg_show and scene_work are unsourced.
+- menu_disabled differs from source.
+
+Gameplay caches were regenerated from disc into new paths, but presenters pin a historical HUD manifest 0a884e91… and TABLES_SHA a1f30e57… that no producer reproduces (regenerated c19f4306…/be99ef4a…). As a result, the three-year (23 failures), multi-route (175) and G3 (41) suites fail on the pin. Integration with the stage 12-21 work comes next. See [[tickets/T-39013-fresh-hud-context]] and [[tickets/T-39006-production-route-state-parity]].
+
+## [2026-10-29] decision | User away: finish the core port, then modernization
+
+The user is away and gave these instructions:
+- Finish the core port (opening through gameplay) as already in progress.
+- Then start the next roadmap phases, focusing on widescreen, a modern settings menu, and English play with English assets.
+- Do visual inspections and rigorous differential testing and playtesting for a smooth experience aimed at a modern English-speaking audience.
+
+Root continues to integrate the opening and handoff into main and run the actual route to the first command screen. A read-only phase 4 design workflow (widescreen, settings, English play, playtesting) runs in parallel so implementation can start once the core lands. No commits without the user. See [[phase4]], [[tickets/T-30001-modern-widescreen]] and [[tickets/T-30002-modern-settings]].
+
+## [2026-10-29] ticket | Phase 4 design judged; wave 1 started
+
+The phase 4 design workflow (12 agents: two proposals and a judge per area) produced [[phase4-design-2026-10-29]] with 45 work packages across widescreen, settings, English play and playtesting. Key decisions:
+- Widescreen is presentation-only. The native 320x240 Image stays byte-identical, wings are black by default, Class A gets source-derived checker wings, and there is an opt-in window-space modern text box.
+- A single display-frame owner.
+- Root alone edits the boot files.
+- Defaults chosen while the user is away are revisable.
+
+The judge verified several code claims:
+- The aspect preference is inert in the opening boots.
+- [[phase4]] places Class A at the wrong rows: the real range is y=72..159.
+
+Opened [[tickets/T-39018-playtest-differential-harness]] and moved [[tickets/T-30001-modern-widescreen]] to In Progress. Wave 1 runs eight file-disjoint worktree groups from snapshot `refs/snapshots/phase4-base-2026-10-29`: wide-core, settings-core, settings-ui, english-text, english-assets, english-names, playtest-diff and playtest-qa. Each group gets review and a fix round; patches go to `.asset-cache/phase4-patches/`. The core opening gap work is still running.
+
+## [2026-10-30] build | Opening stages 12-21 complete in worktree; core integration into main started
+
+Gap-closing workflow stacked the render and bank-0 patches onto the combined snapshot. Combined board pack `first-arrival-board-opening-full-v1` (manifest f1f65db9…). It closed:
+- the P_01_08/P_01_10/P_01_12 background chain;
+- stage 14's buffer-1 upload;
+- message-area layering (an OT model with the checker under the window);
+- a real frame-stamp off-by-one in stages 12-14.
+
+Review found that stage 11's failed-decode retry skipped dec_bg_reset; it is now modelled from source (`prologue.c:1797-1800`, `background_images.c:37-48`). The patch is `.asset-cache/opening-render-patches/opening-full.v2.patch`. Suite outcomes are identical before and after the change, and run_rei_line17 grew from 79 to 92 checks.
+
+Root took safety snapshot `refs/snapshots/main-pre-core-integration-2026-10-30` and started the core integration workflow. It three-way merges stages 12-21 and the handoff into main, builds one native candidate (Shiori race plus bank 0), one board pack and one bundle, then drives the actual route to the first command-select frame with BIOS rand, real reload services, and a golden comparison. Review and a fix round follow. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39013-fresh-hud-context]].
+
+## [2026-10-30] build | Phase 4 wave 1 implemented and reviewed in worktrees
+
+All eight groups finished. Each had independent review and a fix round with 4-9 confirmed findings per group. Patches are in `.asset-cache/phase4-patches/*.v2.patch`.
+
+| Group | Delivered | Notable review fix or open item |
+|---|---|---|
+| wide-core | NativeFrameLayout, aperture policy and wide composer (black and Class A checker wings), modern window-space dialogue box, NativeDisplayHost | The modern box was dropping exactly the lines the native glyphs cannot draw |
+| settings-core | Preferences v2 with migration and presets, language bundle service, input glyphs, accessibility and pacing services | WP9 presenter wiring is still open |
+| settings-ui | Page-module settings menu, Welcome step, pause menu | 66 controls reachable by keyboard, controller and mouse |
+| english-text | Shared native text flow, corpus fit runner, dialogue hooks | |
+| english-assets | Image store v2 PAGE/BS kinds, English bundle builder, MDEC draft tooling | WP-L acceptance needs a root decision |
+| english-names | Latin name entry (206 checks), date/phone/subgame hooks | WP-I has no source-verified binding rows yet |
+| playtest-diff | Checkpoint catalog, receipts v2, colour-domain report, differential runner, opening trace differential, shared input scripts | 126 tests |
+| playtest-qa | Pacing receipt, English lint, save/relaunch-by-preferences matrix, contact sheets and review queue, offline CI runner | 310 tests; nothing pushed or enabled remotely |
+
+Agents proposed tickets T-39201, T-39207 and T-39045 (settings newer-version file loss); root will file them at merge. A combine workflow merges all eight in one worktree, binds settings-ui to the real settings-core, builds an English bundle from approved data, and runs all suites with review. Boot wiring waits until the core integration lands in main. See [[phase4-design-2026-10-29]] and [[tickets/T-39018-playtest-differential-harness]].
+
+## [2026-10-30] build | Phase 4 wave 1 combined into one reviewed patch
+
+The combine workflow applied all eight v2 patches in one worktree. It bound settings-ui to the real settings-core APIs, built an English bundle from approved data into `.asset-cache/port/english-bundle-v1`, and ran all suites. Review confirmed 5 findings and all are fixed:
+- WP9 pacing returned -1 for unproved lines.
+- The AI-translation disclosure and label were never shown. The UI now says "English (AI translation)" with a disclosure.
+- The draft-image toggle needs runtime re-request wiring.
+- Reduce-shake has no consumer, so it is tagged "not wired yet".
+- A root hook named a wrong function.
+
+The result is `.asset-cache/phase4-patches/phase4-wave1-combined.v2.patch` (201 files, base `refs/snapshots/phase4-base-2026-10-29`). The ordered root boot-wiring hooks are in `.asset-cache/phase4-patches/root-hooks.md`. The merge into main waits for the core integration workflow. See [[phase4-design-2026-10-29]].
+
+## [2026-10-30] build | Whole opening runs on the actual route to the gameplay switch
+
+The core integration merged stages 12-21 and the gameplay handoff into main by three-way merge, with one board pack (f1f65db9…), one native candidate (ab2d3cbc…, Shiori race plus bank 0), and bundles installed-runtime-v14 through v16. v16 is built with no emulator captures (manifest 5e1140aa…). Results:
+- Opening suites all pass; the 12-21 suites pass on the merged tree.
+- The frame-timing route test passes at pads 2 and 3 with 0 mismatches.
+- The handoff test passes 514 checks.
+
+The actual route `.asset-cache/review-fixes-2026-10-30/r11` runs from physical entry through all 21 opening stages and publishes the committed 0x34/0xFF/0/0 mode-switch frame (golden a4). Golden match is 120/124 at a4. Review found 4 issues, all fixed; the most serious was that the builder depended on developer-only emulator captures.
+
+Blockers to command-select:
+- The mode 0x34 reload (225 frames) is not wired in the installed app; it stops with COMMAND_RELOAD_UNSUPPORTED.
+- NAME_ENT rand state, scene_work, frame_count and seed come from title/file-select history the port's entry skips. Root default while the user is away: model the real title to file-select path (revisable).
+- Club draws differ between runs with the same inputs (nondeterminism).
+- Stage 15 line 0x16 runs 66 frames long.
+- Historical HUD/TABLES pins block the gameplay suites.
+
+A round-2 workflow runs these in parallel worktrees from `refs/snapshots/main-core-integrated-2026-10-30`. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39013-fresh-hud-context]].

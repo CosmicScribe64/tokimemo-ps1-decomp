@@ -93,6 +93,40 @@ var school_events_presenter: SchoolEventsPresenter
 var subgame_presenter: SubgamePresenter
 var event_cg_presenter: EventCgPresenter
 
+## T-39006: with saved state (production), only these step_mode branches run.
+## System menus carry no event outcome. TACO/TT return only their own subgame
+## payload fields. BUNKASAI runs CultureFestival instead of step_mode. The
+## ending keeps its separate path. Every other event mode reads invented
+## rosters, parameters or fixed rewards in step_mode and is rejected.
+const PRODUCTION_MENU_MODES: Array[int] = [GAME_MODE_OPENING, GAME_MODE_ETC, GAME_MODE_OPTION, GAME_MODE_OLH]
+const PRODUCTION_PAYLOAD_MODES: Array[int] = [GAME_MODE_TACO, GAME_MODE_TT]
+const PRODUCTION_REJECTIONS: Dictionary = {
+	GAME_MODE_TEL: "phone_date_invitation_resolve stress/guts/affection/syoushin writes, girl_scores closeness and appointment flag D_80140560 are not ported; step_mode swaps looks/closeness and defaults closeness to 80",
+	GAME_MODE_TEL_ACTION: "profile/call branch reads the invented preview roster",
+	GAME_MODE_DATE: "date spot state comes from DateOverlay.create_default_state, not saved state",
+	GAME_MODE_AMUSEMENT_PARK_DATE: "date state comes from DateOverlay.create_default_state, not saved state",
+	GAME_MODE_GEKO: "walk-home topic inputs are fixed and the roster is invented",
+	GAME_MODE_EXAM: "exam ranking defaults player total 485, zero flags and the invented roster",
+	GAME_MODE_OMIMAI: "sick-visit dialogue inputs are fixed",
+	GAME_MODE_SHOUGATU: "New Year/Christmas use the invented roster and a fixed eligibility list",
+	GAME_MODE_VALEN: "Valentine candidates use fixed affection lists and the invented roster",
+	GAME_MODE_MASTER: "club master defaults practice points to 385 and fixed companion lists",
+	GAME_MODE_TAIIKU: "sports rewards use the invented roster and default athletics 80",
+	GAME_MODE_BUNKA_SD: "stage show evaluation uses fixed inputs; BUNKA_SD is entered from BUNKASAI scenes",
+	GAME_MODE_BUNKAKEN: "culture tour visitor list and invite inputs are fixed",
+	GAME_MODE_SHUGAKU: "school trip deltas are fixed",
+	GAME_MODE_KANGEI: "camp day uses fixed parameters",
+	GAME_MODE_RENSYU: "practice match defaults practice points and match count",
+	GAME_MODE_EN_NICHI: "stall game inputs are fixed",
+	GAME_MODE_RPG_BATTLE: "battle uses a fixed rand_seed instead of native rand()",
+	GAME_MODE_EVENT_CG: "date-spot special scene defaults spot, month and year",
+}
+const CultureFestival = preload("res://rules/culture_festival.gd")
+const NativeRng = preload("res://core/native_rng.gd")
+
+## Validated original rule tables (school-day table pack); set by the controller.
+var rule_tables: Dictionary = {}
+
 var options_overlay: SystemOverlays.OptionsOverlay
 var help_overlay: SystemOverlays.HelpOverlay
 var title_overlay: SystemOverlays.TitleMenuOverlay
@@ -195,7 +229,9 @@ static func _default_tel_candidate_slots() -> Array[Dictionary]:
 	]
 
 
-static func _default_girls_roster() -> Array[Dictionary]:
+## Invented roster for step_mode previews only. step_overlay with saved state
+## never reaches a step_mode branch that reads it (see PRODUCTION_* below).
+static func _preview_girls_roster() -> Array[Dictionary]:
 	var girls: Array[Dictionary] = []
 	for i in range(13):
 		girls.append({
@@ -366,7 +402,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 					action = "return_to_game"
 
 		GAME_MODE_TEL_ACTION:
-			var roster: Array[Dictionary] = _default_girls_roster()
+			var roster: Array[Dictionary] = _preview_girls_roster()
 			next_state["appraisal_list"] = TelephoneOverlay.build_full_appraisal_list(roster)
 			cursor = _step_cursor(cursor, 11, pad_pressed)
 			if (pad_pressed & (PAD_UP | PAD_DOWN | PAD_LEFT | PAD_RIGHT)) != 0:
@@ -444,7 +480,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 
 		GAME_MODE_GEKO:
 			cursor = _step_cursor(cursor, 2, pad_pressed)
-			var girls_list: Array[Dictionary] = _default_girls_roster()
+			var girls_list: Array[Dictionary] = _preview_girls_roster()
 			if (pad_pressed & PAD_CIRCLE) != 0:
 				if stage == 0:
 					var topic: Dictionary = EncountersOverlay.select_walk_home_topic(girl_id, 1, 0, 10, 18, 0, 1, 0)
@@ -470,7 +506,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 					empty_flags.resize(0xD8)
 					empty_flags.fill(0)
 					var ranking: Dictionary = EncountersOverlay.build_exam_ranking(
-						int(next_state.get("player_total", 485)), _default_girls_roster(), empty_flags
+						int(next_state.get("player_total", 485)), _preview_girls_roster(), empty_flags
 					)
 					next_state["exam_ranking"] = ranking
 					stage = 1
@@ -498,7 +534,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 
 		GAME_MODE_SHOUGATU:
 			cursor = _step_cursor(cursor, 3, pad_pressed)
-			var girls_list: Array[Dictionary] = _default_girls_roster()
+			var girls_list: Array[Dictionary] = _preview_girls_roster()
 			if (pad_pressed & PAD_CIRCLE) != 0:
 				if stage == 0:
 					var visitor: int = EncountersOverlay.select_new_year_visitor(girls_list, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
@@ -514,7 +550,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 
 		GAME_MODE_VALEN:
 			cursor = _step_cursor(cursor, 2, pad_pressed)
-			var girls_list: Array[Dictionary] = _default_girls_roster()
+			var girls_list: Array[Dictionary] = _preview_girls_roster()
 			if (pad_pressed & PAD_CIRCLE) != 0:
 				if stage == 0:
 					next_state["valentine_candidates"] = EncountersOverlay.select_valentine_candidates(
@@ -536,7 +572,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 						int(next_state.get("practice_points", 385))
 					)
 					next_state["master_companion"] = EndingOverlay.select_master_companion(
-						int(next_state.get("club_id", 3)), _default_girls_roster(), [80, 75, 70, 85, 80, 70, 65, 60, 60, 60, 60]
+						int(next_state.get("club_id", 3)), _preview_girls_roster(), [80, 75, 70, 85, 80, 70, 65, 60, 60, 60, 60]
 					)
 					stage = 1
 					action = "advance"
@@ -594,7 +630,7 @@ func step_mode(mode: int, state: Dictionary, pad_pressed: int) -> Dictionary:
 					stage = 2
 					next_state["phase"] = "finished"
 					next_state["ranking_rewards"] = SchoolEventsOverlay.sports_calculate_ranking_rewards(
-						int(next_state.get("player_place", 1)), girl_id, _default_girls_roster()
+						int(next_state.get("player_place", 1)), girl_id, _preview_girls_roster()
 					)
 					action = "advance"
 				else:
@@ -878,6 +914,40 @@ func init_overlay(mode: int, rule_state: Dictionary = {}, event: Array = [], _rn
 	}
 
 
+static func _ending_step_out(mode: int, next_seq: Dictionary) -> Dictionary:
+	var done: bool = bool(next_seq.get("completed", false))
+	var ending_deltas: Dictionary = {}
+	if done:
+		ending_deltas = {
+			"ending_completed": 1,
+			"confessed_girl": int(next_seq.get("confessed_girl", EndingOverlay.GIRL_YOSHIO)),
+			"ending_type": String(next_seq.get("ending_type", "yoshio_bad_ending")),
+			"ending_phases": next_seq.get("history", []).duplicate(),
+			"clear_save_completed": bool(next_seq.get("clear_save_completed", false)),
+			"album_clear_mask": int(next_seq.get("album_clear_mask", 0)),
+			"clear_name_slot": bool(next_seq.get("clear_name_slot", false)),
+		}
+	next_seq["deltas"] = ending_deltas
+	return {
+		"completed": done,
+		"action": String(next_seq.get("action", "stepped")),
+		"mode": mode,
+		"dispatcher_mode": GAME_MODE_ENDING,
+		"state": next_seq,
+		"deltas": ending_deltas,
+	}
+
+## T-39007: the ending step that delivers a host clear-save completion. It
+## replaces the input step of the frame the completion arrives in, so a
+## successful save finishes the ending without a stored "saved" state.
+static func clear_save_step_out(mode: int, overlay_state: Dictionary, payload: Dictionary) -> Dictionary:
+	var applied: Dictionary = EndingOverlay.apply_clear_save_completion(overlay_state, payload)
+	if not applied["error"].is_empty():
+		return {"error": applied["error"]}
+	var out: Dictionary = _ending_step_out(mode, applied["state"])
+	out["error"] = ""
+	return out
+
 func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}, rng: Variant = null) -> Dictionary:
 	var disp_mode: int = int(overlay_state.get("dispatcher_mode", DayEventModes.dispatcher_mode_for(mode)))
 	var current_state: Dictionary = overlay_state.duplicate(true)
@@ -899,30 +969,14 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 		}
 
 	if disp_mode == GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ENDING or mode == EndingOverlay.GAME_MODE_ETC_C2:
-		var next_seq: Dictionary = EndingOverlay.step_graduation_sequence(current_state, pad_pressed, rule_state)
-		var done: bool = bool(next_seq.get("completed", false))
-		var ending_deltas: Dictionary = {}
-		if done:
-			ending_deltas = {
-				"ending_completed": 1,
-				"confessed_girl": int(next_seq.get("confessed_girl", EndingOverlay.GIRL_YOSHIO)),
-				"ending_type": String(next_seq.get("ending_type", "yoshio_bad_ending")),
-				"ending_phases": next_seq.get("history", []).duplicate(),
-				"clear_save_completed": bool(next_seq.get("clear_save_completed", true)),
-				"album_clear_mask": int(next_seq.get("album_clear_mask", 0)),
-				"clear_name_slot": bool(next_seq.get("clear_name_slot", false)),
-			}
-		next_seq["deltas"] = ending_deltas
-		return {
-			"completed": done,
-			"action": String(next_seq.get("action", "stepped")),
-			"mode": mode,
-			"dispatcher_mode": GAME_MODE_ENDING,
-			"state": next_seq,
-			"deltas": ending_deltas,
-		}
+		return _ending_step_out(mode, EndingOverlay.step_graduation_sequence(current_state, pad_pressed, rule_state))
 
 	if not rule_state.is_empty():
+		if disp_mode == GAME_MODE_BUNKASAI:
+			return _step_culture_festival(mode, current_state, pad_pressed, rule_state, rng)
+		if disp_mode not in PRODUCTION_MENU_MODES and disp_mode not in PRODUCTION_PAYLOAD_MODES:
+			return _production_rejection(mode, disp_mode, current_state,
+				String(PRODUCTION_REJECTIONS.get(disp_mode, "no source-backed production handler")))
 		var live_ctx: Dictionary = TelephoneOverlay.extract_live_context(rule_state)
 		for k: String in ["year", "month", "day", "weekday", "day_kind", "day_count", "player_birthday", "stats", "progress_state", "quarter_flags", "cal0", "cal1"]:
 			if not current_state.has(k) or (current_state[k] is int and int(current_state[k]) <= 0):
@@ -934,7 +988,8 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 	var next_state: Dictionary = step_res.get("state", step_res).duplicate(true)
 	var act: String = String(step_res.get("action", "stepped"))
 	var completed: bool = (act == "return_to_game" or bool(next_state.get("completed", false)))
-	var deltas: Dictionary = _extract_overlay_deltas(disp_mode, next_state, rule_state) if completed else {}
+	# Without saved state this is a preview: it exits but writes nothing.
+	var deltas: Dictionary = _payload_outcome(disp_mode, next_state, rule_state) if completed and not rule_state.is_empty() else {}
 
 	next_state["completed"] = completed
 	next_state["action"] = act
@@ -951,92 +1006,90 @@ func step_overlay(mode: int, overlay_state: Dictionary, pad_pressed: int, rule_s
 	}
 
 
-func _extract_overlay_deltas(disp_mode: int, next_state: Dictionary, rule_state: Dictionary = {}) -> Dictionary:
-	var deltas: Dictionary = {}
-	var girl_id: int = int(next_state.get("girl_id", 0))
-	deltas["girl_id"] = girl_id
-	match disp_mode:
-		GAME_MODE_TEL:
-			if next_state.has("appointment_words"):
-				deltas["appointment_words"] = (next_state["appointment_words"] as Array).duplicate()
-			var inv_eval: Dictionary = next_state.get("invitation_evaluation", {}) if next_state.get("invitation_evaluation") is Dictionary else {}
-			if bool(inv_eval.get("accepted", false)):
-				deltas["affection_delta"] = 2
-				deltas["tokimeki_delta"] = 2
-		GAME_MODE_TEL_ACTION:
-			deltas["affection_delta"] = 1
-		GAME_MODE_DATE, GAME_MODE_AMUSEMENT_PARK_DATE:
-			var eval_d: Dictionary = next_state.get("choice_evaluation", {}) if next_state.get("choice_evaluation") is Dictionary else {}
-			deltas["affection_delta"] = int(eval_d.get("affection_delta", 4))
-			deltas["tokimeki_delta"] = int(eval_d.get("tokimeki_delta", 5))
-			deltas["syoushin_delta"] = int(eval_d.get("syoushin_delta", -2))
-			deltas["date_count_delta"] = 1
-		GAME_MODE_GEKO:
-			var choice_cur: int = int(next_state.get("cursor", 0))
-			if choice_cur == 0:
-				deltas["affection_delta"] = 2
-				deltas["tokimeki_delta"] = 2
-			else:
-				deltas["syoushin_delta"] = 5
-		GAME_MODE_EXAM:
-			deltas["tokimeki_delta"] = 4
-			deltas["param_deltas"] = {"1": 2, "2": 2, "5": 2}
-		GAME_MODE_TAIIKU:
-			deltas["affection_delta"] = 3
-			deltas["tokimeki_delta"] = 3
-			deltas["param_deltas"] = {"4": 4, "7": 2}
-		GAME_MODE_BUNKASAI, GAME_MODE_BUNKA_SD, GAME_MODE_BUNKAKEN:
-			deltas["affection_delta"] = 3
-			deltas["tokimeki_delta"] = 3
-			deltas["param_deltas"] = {"3": 3, "6": 2}
-		GAME_MODE_SHUGAKU:
-			deltas["affection_delta"] = 5
-			deltas["tokimeki_delta"] = 6
-			deltas["date_count_delta"] = 1
-		GAME_MODE_KANGEI, GAME_MODE_RENSYU:
-			deltas["affection_delta"] = 2
-			deltas["param_deltas"] = {"4": 3, "7": 3}
-		GAME_MODE_VALEN, GAME_MODE_SHOUGATU, GAME_MODE_OMIMAI:
-			deltas["affection_delta"] = 3
-			deltas["tokimeki_delta"] = 4
-		GAME_MODE_MASTER:
-			deltas["tokimeki_delta"] = 10
-			deltas["param_deltas"] = {"7": 5}
-		GAME_MODE_RPG_BATTLE:
-			var rpg_payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else SubgameOverlays.rpg_build_return_payload(next_state)
-			var is_win: bool = bool(rpg_payload.get("victory", next_state.get("victory", false)))
-			var talk_code: int = int(rpg_payload.get("talk_result_code", SubgameOverlays.RPG_RESULT_GOOD if is_win else SubgameOverlays.RPG_RESULT_BAD))
-			deltas["talk_result_code"] = talk_code
-			deltas["rpg_result_code"] = talk_code
-			deltas["victory"] = is_win
-			deltas["loot_rewards"] = (rpg_payload.get("loot_rewards", []) as Array).duplicate(true)
-			deltas["affection_delta"] = 4 if is_win else -1
-			deltas["tokimeki_delta"] = 4 if is_win else 0
-			deltas["return_payload"] = rpg_payload
-		GAME_MODE_TACO:
-			var taco_payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else SubgameOverlays.shooter_build_return_payload(next_state)
-			var cleared_taco: int = int(taco_payload.get("stages_cleared", next_state.get("stages_cleared", 0)))
-			deltas["high_scores"] = (taco_payload.get("high_scores", []) as Array).duplicate(true)
-			deltas["high_score_names"] = (taco_payload.get("high_score_names", []) as Array).duplicate(true)
-			deltas["stages_cleared"] = cleared_taco
-			deltas["score"] = int(taco_payload.get("score", next_state.get("score", 0)))
-			deltas["total_score"] = int(taco_payload.get("total_score", deltas["score"]))
-			deltas["menu_hit_3"] = int(taco_payload.get("menu_hit_3", 0x9F))
-			deltas["system_data_flag"] = int(taco_payload.get("system_data_flag", 1))
-			deltas["affection_delta"] = 3 if cleared_taco > 0 else 1
-			deltas["return_payload"] = taco_payload
-		GAME_MODE_TT:
-			var tt_payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else SubgameOverlays.tt_build_return_payload(next_state)
-			if not rule_state.is_empty():
-				SubgameOverlays.tt_apply_writeback_to_rule_state(next_state, rule_state)
-			var cleared_tt: int = int(tt_payload.get("tt_stages_cleared", next_state.get("tt_stages_cleared", 0)))
-			deltas["tt_stages_cleared"] = cleared_tt
-			deltas["tt_last_time_frames"] = int(tt_payload.get("elapsed_frames", next_state.get("elapsed_frames", 4250)))
-			deltas["tt_rankings"] = (tt_payload.get("rankings", []) as Array).duplicate(true)
-			deltas["affection_delta"] = 3 if cleared_tt > 0 else 1
-			deltas["return_payload"] = tt_payload
-		_:
-			deltas["affection_delta"] = 1
+func _production_rejection(mode: int, disp_mode: int, current_state: Dictionary, reason: String) -> Dictionary:
+	var message: String = "overlay 0x%02X (dispatcher 0x%02X) refused with saved state: %s" % [mode, disp_mode, reason]
+	current_state["completed"] = false
+	current_state["action"] = "rejected"
+	return {
+		"completed": false,
+		"action": "rejected",
+		"error": message,
+		"mode": mode,
+		"dispatcher_mode": disp_mode,
+		"state": current_state,
+		"deltas": {},
+	}
+
+
+## BUNKASAI with saved state: CIRCLE runs the source phase 0..7 selection
+## (CultureFestival.plan), the next CIRCLE applies the phase 8 writes. The
+## festival has no cancel exit in source, so CROSS is refused without effect.
+func _step_culture_festival(mode: int, current_state: Dictionary, pad_pressed: int, rule_state: Dictionary, rng: Variant) -> Dictionary:
+	var stage: int = int(current_state.get("stage", 0))
+	var out: Dictionary = {"completed": false, "mode": mode, "dispatcher_mode": GAME_MODE_BUNKASAI, "deltas": {}}
+	if (pad_pressed & PAD_CIRCLE) == 0:
+		out["action"] = "cancel_rejected" if (pad_pressed & PAD_CROSS) != 0 else "wait_input"
+		current_state["action"] = out["action"]
+		out["state"] = current_state
+		return out
+	if rule_tables.is_empty():
+		return _production_rejection(mode, GAME_MODE_BUNKASAI, current_state, "validated rule tables are not attached")
+	var native_rng: NativeRng = rng as NativeRng
+	if stage == 0:
+		var festival_plan: Dictionary = CultureFestival.plan(rule_state, rule_tables, native_rng)
+		if not String(festival_plan["error"]).is_empty():
+			return _production_rejection(mode, GAME_MODE_BUNKASAI, current_state, festival_plan["error"])
+		current_state["culture_plan"] = festival_plan
+		current_state["girl_id"] = festival_plan["girl"]
+		current_state["stage"] = 1
+		current_state["action"] = "advance"
+		out["action"] = "advance"
+		out["stage"] = 1
+		out["state"] = current_state
+		return out
+	if not current_state.get("culture_plan") is Dictionary:
+		return _production_rejection(mode, GAME_MODE_BUNKASAI, current_state, "phase 8 reached without a phase 0..7 plan")
+	var written: Dictionary = {}
+	for key: String in ["girls", "event_log", "event_log_count", "params", "clubs", "player_flags", "year", "month", "day", "weekday", "day_event_done_bits"]:
+		if rule_state.has(key):
+			written[key] = rule_state[key].duplicate(true) if rule_state[key] is Array else rule_state[key]
+	var applied: Dictionary = CultureFestival.apply(written, current_state["culture_plan"], rule_tables)
+	var deltas: Dictionary = {
+		"source": "src/ovl/culture_festival/festival_entry.c::culture_result_apply,culture_event_log_add",
+		"writes": applied["writes"],
+		"state_writes": {"girls": written["girls"], "event_log": written["event_log"], "event_log_count": written["event_log_count"]},
+	}
+	current_state["stage"] = 2
+	current_state["completed"] = true
+	current_state["action"] = "return_to_game"
+	current_state["deltas"] = deltas
+	out["completed"] = true
+	out["action"] = "return_to_game"
+	out["stage"] = 2
+	out["state"] = current_state
+	out["deltas"] = deltas
+	return out
+
+
+## Production completion fields: subgame payload values only, no invented
+## affection/tokimeki and no defaults for absent payload fields.
+func _payload_outcome(disp_mode: int, next_state: Dictionary, rule_state: Dictionary) -> Dictionary:
+	if disp_mode not in PRODUCTION_PAYLOAD_MODES:
+		return {}
+	var payload: Dictionary = next_state.get("return_payload", {}) if next_state.get("return_payload") is Dictionary else {}
+	var deltas: Dictionary = {"source": "subgame return payload"}
+	# delta key -> payload key
+	var keys: Dictionary = {"high_scores": "high_scores", "high_score_names": "high_score_names",
+		"stages_cleared": "stages_cleared", "score": "score", "total_score": "total_score",
+		"menu_hit_3": "menu_hit_3", "system_data_flag": "system_data_flag"}
+	if disp_mode == GAME_MODE_TT:
+		SubgameOverlays.tt_apply_writeback_to_rule_state(next_state, rule_state)
+		keys = {"tt_stages_cleared": "tt_stages_cleared", "tt_rankings": "rankings", "tt_last_time_frames": "elapsed_frames"}
+	for key: String in keys:
+		var source_key: String = keys[key]
+		if payload.has(source_key):
+			deltas[key] = payload[source_key].duplicate(true) if payload[source_key] is Array else payload[source_key]
+	deltas["return_payload"] = payload.duplicate(true)
 	return deltas
 
 

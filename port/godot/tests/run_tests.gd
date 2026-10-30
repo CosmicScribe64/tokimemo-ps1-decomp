@@ -5,6 +5,7 @@ const OPTIONAL_SUITES: Array[String] = [
     "res://tests/content/run_content_tests.gd",
     "res://tests/rules/run_rule_tests.gd",
     "res://tests/week/run_week_tests.gd",
+    "res://tests/rules/run_route_state_parity_tests.gd",
 ]
 
 static func _ensure_default_env() -> void:

@@ -1,0 +1,885 @@
+{
+ "group": "bs-backgrounds",
+ "ticket": "T-39012",
+ "decisions": [
+  {
+   "item_id": "catalog-127",
+   "status": "candidate-only",
+   "reason": "ALL_C banner draft through the caller-bound photo-page profile; existing palette indices only, bytes outside the strip and palette unchanged; agent-reviewed draft, not human-approved",
+   "evidence": {
+    "checkpoint": "translations/en/graphics/artwork/checkpoints/T39004-bs-v1",
+    "english_container_sha256": "c201bc72424a9b4bef659fbab886dd64f39ecb59ca74d5adfdaed3ad36d11bf8",
+    "crops": [
+     "fafb20e889ee53f5602620e7217a284b5851f79f33eed8956ce58fadf744531c",
+     "1675532fb585f12cea3ee4b58f3a2d4fab0ae5844e9b6716f5c9c8dac3268c09",
+     "4287e66a8218a2466c7eb8ad33447ad63676aebc5be12abd926ae5f96fe0f3ef"
+    ],
+    "agent_review": "translations/en/graphics/artwork/checkpoints/T39004-bs-v1/T39004-bs-v1.agent.json"
+   },
+   "defaults_applied": [
+    "D-5: only edit-region crops committed; full pages rebuild into .asset-cache"
+   ]
+  },
+  {
+   "item_id": "catalog-130",
+   "status": "missing",
+   "reason": "P_01_02 (q12, caller read exactly 9 sectors = 18432 bytes; stream 17410 bytes, then 1022 trailing bytes: 1018 zero bytes followed by 4 non-zero bytes 69 71 12 10 at file offset 18428) can grow by up to 1018 bytes. A reproducible sweep (tools/translation_bs_drafts.py sweep, plan P01_02_SWEEP: headers become 1-A/1-B/1-C, lambda 8/12/16/24/32/50 x ring weight 50/200/1000) fits every run (17356-17532 stream bytes, at most 17532 of 18428), but every run fails the strict +-1 ring gate (ring max 6-7) and the float-IDCT cross-check (31 steps: the fixed-point decode wraps near the saturated white paper). Size is not the blocker; ring error and the white-paper wrap are. Earlier wording (1022 non-zero trailing bytes, stream cannot grow) was wrong",
+   "evidence": {
+    "file": "CDROM/BS/P_01_02.BS",
+    "sha256": "61b0cd543a73c64ff9ad6d1e77d48217c02dbfbe7dab4941e90451b76f20f398",
+    "census_shape": [
+     640,
+     160
+    ],
+    "geometry": "caller-proved",
+    "census_words_sha256": "1e77c3bb1fc5e715f051bd60bf6dc97a5dc2a8581a2c36cbeb360b844fcecdc5",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      182,
+      0,
+      16,
+      58
+     ],
+     [
+      372,
+      13,
+      17,
+      72
+     ],
+     [
+      532,
+      40,
+      16,
+      65
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+    "observed_text": "three vertical class headers; the Latin class letters A/B/C are already painted",
+    "sweep": {
+     "command": "docker run --rm -v \"$PWD:/work\" -w /work/tools -e PYTHONPATH=/work/tools tokimemo-recovery-splat python translation_bs_drafts.py sweep",
+     "plan": "P01_02_SWEEP in tools/translation_bs_drafts.py (threshold 20; 26 edited macroblocks)",
+     "result": "18 of 18 runs fit the zero run; 0 pass gates; ring max 6-7; float-IDCT max 31; lettering mean abs 3.3-4.1 RGB555",
+     "runtime": "about 4.5 minutes"
+    },
+    "trailing_bytes": {
+     "size": 1022,
+     "leading_zero_bytes": 1018,
+     "nonzero_tail_hex": "69711210",
+     "stream_byte_limit": 18428
+    }
+   },
+   "defaults_applied": [
+    "D-1: no disc patch; trailing bytes preserved",
+    "D-4: strict +-1 ring tolerance"
+   ]
+  },
+  {
+   "item_id": "catalog-131",
+   "status": "deliberately-untranslated",
+   "reason": "P_01_03/P_01_03B brush-calligraphy name scrolls fill most of the frame; replacing them is new art, not lettering",
+   "evidence": {
+    "file": "CDROM/BS/P_01_03.BS",
+    "sha256": "aa2e82335720f7091a54ccc26e7e0a94be3a75fa1513d6bc1d5e1f3e36e5b230",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "caller-proved",
+    "census_words_sha256": "4e2bb6e1c6f443109f7586e08e7b4af8f122bd414fbb103ef2f93f3096b91a31",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "second_file": {
+     "file": "CDROM/BS/P_01_03B.BS",
+     "sha256": "090ad2700ac094805298eabeb90560308e89ad7cca098c27146a24b8181b5c92",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "caller-proved",
+     "census_words_sha256": "750b5a144a2f4f59d1f267211e84bd99428fcae727fda3377909c7e87200910c",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    }
+   },
+   "defaults_applied": [
+    "D-3: calligraphy scrolls stay untranslated; revisable"
+   ]
+  },
+  {
+   "item_id": "catalog-133",
+   "status": "missing",
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "file": "CDROM/BS/D_01_47.BS",
+    "sha256": "190e627d195bf36dbbdd8c4698a67c06e771287c1af9527c039080e542cf6179",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "cbcce28c8cc7b08173f2ec214e98fb1b1b37ff234ca105cf18333c1ad565b079",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      15,
+      17,
+      48,
+      118
+     ],
+     [
+      240,
+      72,
+      50,
+      35
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+    "observed_text": "standing festival sign and gate-pillar school plate confirmed"
+   },
+   "defaults_applied": []
+  },
+  {
+   "item_id": "catalog-134",
+   "status": "missing",
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "file": "CDROM/BS/D_01_48.BS",
+    "sha256": "edea5fabcbf03ad14f10b79a89cc44e3dc9903ea82f4fbf49b069f189c4bfd9b",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "ab7af3a64c0bce7ec376cbfb8f61ef4242950f2762411edeb6c52e5e6783d537",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      15,
+      17,
+      48,
+      118
+     ],
+     [
+      240,
+      72,
+      50,
+      35
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+    "observed_text": "standing festival sign and gate-pillar school plate confirmed"
+   },
+   "defaults_applied": []
+  },
+  {
+   "item_id": "catalog-135",
+   "status": "deliberately-untranslated",
+   "reason": "the catalog row text (science-club door plaque) is not in D_01_67 (only illegible exhibition panels); it is in D_01_69, where it is a clearly legible three-kanji plaque of about 80x20 px, not a tiny sign. Root default D-3 names the science-club plaque, so it stays untranslated for now, but D-3 was framed when the catalog bound the plaque to D_01_67 and should be revisited by a human now that the plaque is known to be legible; revisable",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/D_01_67.BS",
+     "sha256": "f23480b621e99b32f5083712e6092fbf1b677b11d12355940b76add1ef3800b2",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "83a8eed533a00270cb06704cabd72f85a5b292e6a910cf54fbc763abd03bbb84",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/D_01_69.BS",
+     "sha256": "a00808c2f12a976a6a4d20646878095b4d825d639986469cf268ead020ade227",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "1925431dbef62adf13bacde670f776949fd5cb5fa9222cc8672adcc2f8098896",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       232,
+       13,
+       80,
+       20
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "science-club plaque"
+    }
+   },
+   "defaults_applied": [
+    "D-3 (applied by name; revisit: the plaque is legible, ~80x20)",
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-136",
+   "status": "missing",
+   "reason": "the catalog row text (computer-club banner) is not in D_01_69; it is in D_01_70. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/D_01_69.BS",
+     "sha256": "a00808c2f12a976a6a4d20646878095b4d825d639986469cf268ead020ade227",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "1925431dbef62adf13bacde670f776949fd5cb5fa9222cc8672adcc2f8098896",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/D_01_70.BS",
+     "sha256": "ef4d2103ba6d0e61afbf132c39e4de08be0f8cb586186b3ebcd05f1f002848db",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "f3fab1959053c0dfdcce8e911a82624e31e019297f50f69fd8966e700665b050",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       102,
+       5,
+       116,
+       43
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "computer-club banner on the blackboard"
+    }
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-137",
+   "status": "deliberately-untranslated",
+   "reason": "status unchanged, reason corrected: D_01_70 is not an art-club easel scene; it holds the computer-club banner, which catalog-136 now tracks",
+   "evidence": {
+    "file": "CDROM/BS/D_01_70.BS",
+    "sha256": "ef4d2103ba6d0e61afbf132c39e4de08be0f8cb586186b3ebcd05f1f002848db",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "f3fab1959053c0dfdcce8e911a82624e31e019297f50f69fd8966e700665b050",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      102,
+      5,
+      116,
+      43
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)"
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-138",
+   "status": "deliberately-untranslated",
+   "reason": "three single-kanji ivy plaques on the stadium wall. root default D-3: tiny sign kept in Japanese as an authentic detail; revisable",
+   "evidence": {
+    "file": "CDROM/BS/D_03_06.BS",
+    "sha256": "b14d5fe6f311c72b802453101baa54cabb0fc9b4c3a8bb0ad72495691611c534",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "fe9ea3027f0d78c34bdeba865f7afddc807430bc9a4bb6320be578d1e5d597d7",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      37,
+      63,
+      32,
+      36
+     ],
+     [
+      137,
+      47,
+      27,
+      27
+     ],
+     [
+      240,
+      67,
+      29,
+      35
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)"
+   },
+   "defaults_applied": [
+    "D-3 tiny sign"
+   ]
+  },
+  {
+   "item_id": "catalog-139",
+   "status": "missing",
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "file": "CDROM/BS/D_03_08.BS",
+    "sha256": "5428f1a19108c55145533e553fa58205d72390e5f2bdf2608354834c1ad95734",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "fc777b9e7b9dbb3e93aed11188a6e22a92a5a69297bc4b6572e3231aa6f54c94",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      210,
+      54,
+      38,
+      18
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+    "observed_text": "school placard carried by the marcher"
+   },
+   "defaults_applied": []
+  },
+  {
+   "item_id": "catalog-140",
+   "status": "deliberately-untranslated",
+   "reason": "infirmary door plate about 28x10. root default D-3: tiny sign kept in Japanese as an authentic detail; revisable",
+   "evidence": {
+    "file": "CDROM/BS/D_03_09.BS",
+    "sha256": "f318ae25a5697ddf9ea2642a96b7c32448fca6ada80a0d44e9d4339ce281277d",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "f6b4e7dc53265225a9b908a585ed27f09dc3f450e98867850a654d8bf3b55903",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      235,
+      22,
+      28,
+      10
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)"
+   },
+   "defaults_applied": [
+    "D-3 tiny sign"
+   ]
+  },
+  {
+   "item_id": "catalog-141",
+   "status": "missing",
+   "reason": "catalog binds the brass-band concert banner to D_11_11; the banner is in D_29_09. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/D_11_11.BS",
+     "sha256": "dd47a536363dfcea2aa6bd7ea54b844fda0d77c4366b74d1058b8cb5f6eae971",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "e49d4a9267a7ade34c86e97343fca30ac5efc5082d748bbf5ba66df42ef2e8b8",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/D_29_09.BS",
+     "sha256": "471904a09a1f32709a8010763dd103a6305d4639db03efef40a56776550426b3",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "63984f799c766183faf9f78dcdd4e5719273772919cb8f6148760ac56d33fd9d",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       5,
+       1,
+       303,
+       39
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "stage banner across the top"
+    }
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-142",
+   "status": "missing",
+   "reason": "catalog binds the ride sign to D_15_03; the ride with its starburst sign is D_11_11 (only a partial katakana word is visible at the frame edge). no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/D_15_03.BS",
+     "sha256": "510f0d40af0fe8e86dffcb1a8431e64bb873dd620263b0d8467dca4b3fc44cf1",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "d068eab4b0f67e73e04d0b38b71507a688bd4a85fa34984f9e5597ad4165b87e",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/D_11_11.BS",
+     "sha256": "dd47a536363dfcea2aa6bd7ea54b844fda0d77c4366b74d1058b8cb5f6eae971",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "e49d4a9267a7ade34c86e97343fca30ac5efc5082d748bbf5ba66df42ef2e8b8",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       238,
+       0,
+       82,
+       56
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "starburst ride sign, cut by the right edge"
+    }
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-143",
+   "status": "missing",
+   "reason": "catalog binds the museum monument to D_19_02; it is in D_15_03. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/D_19_02.BS",
+     "sha256": "cfa259023e4a4b896e8b78781274fcf126bfc9f7032e23c13599da5ec5b4ff8d",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "a5689835adcc01c602bfb62d9de38505a5c06f0d7d8c2378cd1808180bcaeaa0",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/D_15_03.BS",
+     "sha256": "510f0d40af0fe8e86dffcb1a8431e64bb873dd620263b0d8467dca4b3fc44cf1",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "d068eab4b0f67e73e04d0b38b71507a688bd4a85fa34984f9e5597ad4165b87e",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       222,
+       123,
+       66,
+       37
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "stone monument, two lines"
+    }
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-144",
+   "status": "missing",
+   "reason": "catalog binds the entrance sign and MAIKO board to D_29_09; both are in D_19_02. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/D_29_09.BS",
+     "sha256": "471904a09a1f32709a8010763dd103a6305d4639db03efef40a56776550426b3",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "63984f799c766183faf9f78dcdd4e5719273772919cb8f6148760ac56d33fd9d",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/D_19_02.BS",
+     "sha256": "cfa259023e4a4b896e8b78781274fcf126bfc9f7032e23c13599da5ec5b4ff8d",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "a5689835adcc01c602bfb62d9de38505a5c06f0d7d8c2378cd1808180bcaeaa0",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       22,
+       68,
+       43,
+       14
+      ],
+      [
+       134,
+       36,
+       47,
+       23
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "entrance arrow sign; shop board with Latin MAIKO"
+    }
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-145",
+   "status": "missing",
+   "reason": "the ticket booth sign next to GREEN GARDEN is not in I_17_01 (library aisle sign) and not legible in D_11_10 (ticket booth without readable text at census decode); source file unlocated",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/I_17_01.BS",
+     "sha256": "cb25511a5c6d7dbb72db8016a255d79a260598d621ebc18679fb314bfb7e6f6e",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "90321b84767f1544c911624d160c3765be79ff5cfc33d9f169ab8581592da499",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "searched": [
+     {
+      "file": "CDROM/BS/D_11_10.BS",
+      "sha256": "2a808ad2c12c630962e0a25de8ea83e208dcff0952540b897ae594c524e3fa58",
+      "census_shape": [
+       320,
+       160
+      ],
+      "geometry": "unresolved (census shape only)",
+      "census_words_sha256": "c9a5b017a5fbd66a8d3fda0769e4bddeba24764c3a44d9bc4bc0ec84195da9ae",
+      "decoder_model": "tokimemo-mdec-fixed-point-v1",
+      "identity_splice_exact": true
+     },
+     {
+      "file": "CDROM/BS/D_11_12.BS",
+      "sha256": "368d67630bb52da4431c05a15105a8c19feebb61248b8f23bc2a9a738fd9c08d",
+      "census_shape": [
+       320,
+       160
+      ],
+      "geometry": "unresolved (census shape only)",
+      "census_words_sha256": "6c11b9329c141314143e3bb99fcac92019c3d474f6253000047db93425feae29",
+      "decoder_model": "tokimemo-mdec-fixed-point-v1",
+      "identity_splice_exact": true
+     }
+    ]
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  },
+  {
+   "item_id": "catalog-146",
+   "status": "missing",
+   "reason": "binding confirmed (neon counter sign). no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "file": "CDROM/BS/I_28_02.BS",
+    "sha256": "56f448b9d7045f452c718e9b0799a1821abeab2a3bfeb3b715f3ac2efcc50d40",
+    "census_shape": [
+     320,
+     160
+    ],
+    "geometry": "unresolved (census shape only)",
+    "census_words_sha256": "8756d459bda025bcbb3dec359af68504f6d71d1c7aa61a2a6bb136edd7d42747",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      65,
+      32,
+      80,
+      12
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)"
+   },
+   "defaults_applied": []
+  },
+  {
+   "item_id": "catalog-147",
+   "status": "candidate-only",
+   "reason": "C_01_28 chalkboard draft covers the exam heading only (FINAL / EXAMS): spliced BS v1 stream parses with the project reader, outside the 48x32 edited macroblocks bit-identical, ring max 1, float cross-check 1, 19298 bytes within the 10-sector caller read (the file grows 566 bytes past its original 18732-byte extent, recorded as file_extent_grew). The catalog row also lists the month/day/weekday placeholder column at x 304-314, which is still Japanese. candidate-only covers the heading only (the inventory has no partial status; D-7 records the gap). Agent-reviewed draft, not human-approved",
+   "evidence": {
+    "checkpoint": "translations/en/graphics/artwork/checkpoints/T39004-bs-v1",
+    "spliced_bs_sha256": "e010e1b1ab3f80cb22818e94f8ae72b516a678fe9f89f62209836282b58be071",
+    "english_words_sha256": "8f3d22fdef749be3fc952aa04852c301e1354c2cc600d7b60787b2400562a0b8",
+    "source_words_sha256": "e5a1141d08d42c3e0d4fddaa9c06ac112c860ab9ed216c617fe0371fc0ffe7c3",
+    "crop_sha256": "5de94686d6d700cff5e1a141c67501bf2d99f8fbb33c9e9f79fd801e7b829c79",
+    "agent_review": "translations/en/graphics/artwork/checkpoints/T39004-bs-v1/T39004-bs-v1.agent.json",
+    "file": "CDROM/BS/C_01_28.BS",
+    "sha256": "d7748c6a565f3f3bf8c7c0e39a90a701da9caf4fbaef8f93ad214db313d2daed",
+    "census_shape": [
+     320,
+     88
+    ],
+    "geometry": "caller-proved",
+    "census_words_sha256": "e5a1141d08d42c3e0d4fddaa9c06ac112c860ab9ed216c617fe0371fc0ffe7c3",
+    "decoder_model": "tokimemo-mdec-fixed-point-v1",
+    "identity_splice_exact": true,
+    "approx_text_rects": [
+     [
+      272,
+      2,
+      22,
+      29
+     ]
+    ],
+    "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+    "observed_text": "two-word exam heading; separate month/day column at x 304-314 untouched",
+    "untranslated_parts": [
+     "month/day/weekday placeholder column at x 304-314 (catalog row: + Month/Day)"
+    ]
+   },
+   "defaults_applied": [
+    "D-1 port-side decoded replacement plus spliced BS in .asset-cache",
+    "D-4 strict +-1 ring",
+    "D-5 crops only",
+    "D-7: the C_01_28 month/day placeholder column stays in Japanese in this draft; revisable"
+   ],
+   "coverage": "partial: exam heading drafted; month/day/weekday placeholder column still Japanese"
+  },
+  {
+   "item_id": "catalog-149",
+   "status": "missing",
+   "reason": "catalog binds the library aisle sign to I_11_15, which has no text (night horror scene); the sign is in I_17_01. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "evidence": {
+    "catalog_file": {
+     "file": "CDROM/BS/I_11_15.BS",
+     "sha256": "33b9750995dc95e10ea36377779bda51a71f4f574935376d3681d16619c3ce82",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "be218a68a933105d52d26910643f98aa85af4d6185518dfa9d8e60aa68b556f6",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true
+    },
+    "actual_file": {
+     "file": "CDROM/BS/I_17_01.BS",
+     "sha256": "cb25511a5c6d7dbb72db8016a255d79a260598d621ebc18679fb314bfb7e6f6e",
+     "census_shape": [
+      320,
+      160
+     ],
+     "geometry": "unresolved (census shape only)",
+     "census_words_sha256": "90321b84767f1544c911624d160c3765be79ff5cfc33d9f169ab8581592da499",
+     "decoder_model": "tokimemo-mdec-fixed-point-v1",
+     "identity_splice_exact": true,
+     "approx_text_rects": [
+      [
+       107,
+       40,
+       38,
+       13
+      ]
+     ],
+     "rect_note": "agent-measured on the census decode, approximate (+-4 px)",
+     "observed_text": "hanging library aisle sign"
+    }
+   },
+   "defaults_applied": [
+    "D-6 census re-binding"
+   ]
+  }
+ ],
+ "catalog_corrections": [
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-135",
+   "from": "CDROM/BS/D_01_67.BS",
+   "to": "CDROM/BS/D_01_69.BS",
+   "to_sha256": "a00808c2f12a976a6a4d20646878095b4d825d639986469cf268ead020ade227"
+  },
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-136",
+   "from": "CDROM/BS/D_01_69.BS",
+   "to": "CDROM/BS/D_01_70.BS",
+   "to_sha256": "ef4d2103ba6d0e61afbf132c39e4de08be0f8cb586186b3ebcd05f1f002848db"
+  },
+  {
+   "kind": "reason",
+   "catalog_item": "catalog-137",
+   "note": "D_01_70 content claim is wrong (see catalog-136)"
+  },
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-141",
+   "from": "CDROM/BS/D_11_11.BS",
+   "to": "CDROM/BS/D_29_09.BS",
+   "to_sha256": "471904a09a1f32709a8010763dd103a6305d4639db03efef40a56776550426b3"
+  },
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-142",
+   "from": "CDROM/BS/D_15_03.BS",
+   "to": "CDROM/BS/D_11_11.BS",
+   "to_sha256": "dd47a536363dfcea2aa6bd7ea54b844fda0d77c4366b74d1058b8cb5f6eae971"
+  },
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-143",
+   "from": "CDROM/BS/D_19_02.BS",
+   "to": "CDROM/BS/D_15_03.BS",
+   "to_sha256": "510f0d40af0fe8e86dffcb1a8431e64bb873dd620263b0d8467dca4b3fc44cf1"
+  },
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-144",
+   "from": "CDROM/BS/D_29_09.BS",
+   "to": "CDROM/BS/D_19_02.BS",
+   "to_sha256": "cfa259023e4a4b896e8b78781274fcf126bfc9f7032e23c13599da5ec5b4ff8d"
+  },
+  {
+   "kind": "rebind",
+   "catalog_item": "catalog-149",
+   "from": "CDROM/BS/I_11_15.BS",
+   "to": "CDROM/BS/I_17_01.BS",
+   "to_sha256": "cb25511a5c6d7dbb72db8016a255d79a260598d621ebc18679fb314bfb7e6f6e"
+  },
+  {
+   "kind": "no-text",
+   "file": "CDROM/BS/I_11_15.BS",
+   "sha256": "33b9750995dc95e10ea36377779bda51a71f4f574935376d3681d16619c3ce82"
+  },
+  {
+   "kind": "no-text",
+   "file": "CDROM/BS/D_01_67.BS",
+   "sha256": "f23480b621e99b32f5083712e6092fbf1b677b11d12355940b76add1ef3800b2",
+   "note": "exhibition panels with illegible scribbles only"
+  },
+  {
+   "kind": "no-text",
+   "file": "CDROM/BS/D_11_12.BS",
+   "sha256": "368d67630bb52da4431c05a15105a8c19feebb61248b8f23bc2a9a738fd9c08d",
+   "note": "ride platform scene; corrects the design proposal, which placed a banner here"
+  },
+  {
+   "kind": "unlocated",
+   "catalog_item": "catalog-145",
+   "note": "ticket booth sign not found in I_17_01, D_11_10 or D_11_12"
+  },
+  {
+   "kind": "add",
+   "file": "CDROM/BS/D_29_08.BS",
+   "sha256": "44e2c1ff951c6b8ca38c4f32a79e201eab2500f4310fa4717e59516cd680f307",
+   "proposed_status": "missing",
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "observed_text": "art-exhibition grand-prize congratulation banner across the top",
+   "approx_text_rects": [
+    [
+     5,
+     6,
+     310,
+     35
+    ]
+   ],
+   "census_words_sha256": "2dc3d60b0b192c5b2e8b58bd22a0f75df666f012a7edd42991564da466d97ece",
+   "note": "corrects the design proposal, which placed a ski-resort advert here"
+  }
+ ],
+ "root_defaults": [
+  {
+   "id": "D-1",
+   "decision": "deliverable is a port-side decoded replacement plus a valid spliced BS stream kept in .asset-cache; no disc patch",
+   "revisable": true
+  },
+  {
+   "id": "D-2",
+   "decision": "replacement payload = fixed-point decode of the spliced stream; declared edit region = the edited 16x16 macroblocks, outside which pixels are bit-identical",
+   "revisable": true
+  },
+  {
+   "id": "D-3",
+   "decision": "tiny signs (science-club plaque, infirmary door plate, stadium kanji plaques) and the P_01_03/P_01_03B calligraphy scrolls stay untranslated",
+   "revisable": true
+  },
+  {
+   "id": "D-4",
+   "decision": "strict +-1 RGB555 ring tolerance; float-IDCT cross-check within +-2",
+   "revisable": true
+  },
+  {
+   "id": "D-5",
+   "decision": "commit only edit-region crops, manifests and splice metadata; full decoded images and spliced BS rebuild into .asset-cache",
+   "revisable": true
+  },
+  {
+   "id": "D-6",
+   "decision": "census bindings recorded as hash-bound decisions; raw catalog rows untouched; human confirmation still required",
+   "revisable": true
+  },
+  {
+   "id": "D-7",
+   "decision": "C_01_28: the month/day/weekday placeholder column is left in Japanese; catalog-147 stays candidate-only for the exam heading only, with coverage marked partial (the inventory has no partial status)",
+   "revisable": true
+  }
+ ],
+ "published_checkpoint": {
+  "path": "translations/en/graphics/artwork/checkpoints/T39004-bs-v1",
+  "ledger": "ledger.json",
+  "manifest": "bs-v1/manifest.json",
+  "agent_review": "T39004-bs-v1.agent.json",
+  "human_approved": false
+ },
+ "tests": {
+  "command": "docker run --rm -v \"$PWD:/work\" -w /work/tools -e PYTHONPATH=/work/tools tokimemo-recovery-splat python -m unittest test_translation_bs_drafts",
+  "result": "24 tests OK (synthetic splice, gate and indexed-check negatives, original-data rebuild/publication/tamper); combined with test_translation_inventory test_translation_assets test_translation_legacy_remap: 58 tests OK",
+  "inventory_check": "python translation_inventory.py check exit 0 (inputs unchanged)",
+  "p01_02_sweep": "docker run --rm -v \"$PWD:/work\" -w /work/tools -e PYTHONPATH=/work/tools tokimemo-recovery-splat python translation_bs_drafts.py sweep"
+ }
+}

@@ -552,10 +552,22 @@ func _test_live_state_hud_and_dispatcher_mutations() -> void:
 		_check(_region_diff_bytes(od_pl_a["image"], od_pl_c["image"], DATE_PILLAR_RECT) > 0,
 			"OverlayDispatcher GAME_MODE_TEL (place_select) updates HUD date pillar when rule_state date changes")
 
+	# T-39006: GAME_MODE_TEL has no source-backed production handler, so a step with saved
+	# rule_state is refused: no completion, no deltas, saved state and overlay unchanged.
+	var tel_saved_before: Dictionary = base_rule_state.duplicate(true)
+	var tel_refused: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_a, OverlayDispatcher.PAD_CIRCLE, base_rule_state, _make_rng(100))
+	_check(String(tel_refused.get("error", "")).contains("refused with saved state") and not bool(tel_refused.get("completed", true))
+		and (tel_refused.get("deltas", {}) as Dictionary).is_empty() and base_rule_state == tel_saved_before
+		and int(tel_refused["state"].get("stage", -1)) == int(tel_state_a.get("stage", 0)),
+		"OverlayDispatcher GAME_MODE_TEL with saved rule_state is refused without deltas or writes")
+
+	# The screens below are stepped in preview (no rule_state); each init state keeps its own HUD context.
 	# Step into day_select (press Circle = 0x20)
-	var step_day_a: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_a, OverlayDispatcher.PAD_CIRCLE, base_rule_state)
-	var step_day_b: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_b, OverlayDispatcher.PAD_CIRCLE, mut_stats_state)
-	var step_day_c: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_c, OverlayDispatcher.PAD_CIRCLE, mut_date_state)
+	var step_day_a: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_a, OverlayDispatcher.PAD_CIRCLE)
+	var step_day_b: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_b, OverlayDispatcher.PAD_CIRCLE)
+	var step_day_c: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, tel_state_c, OverlayDispatcher.PAD_CIRCLE)
+	_check(String(step_day_a["state"].get("subscreen", "")) == "day_select" and (step_day_a.get("deltas", {}) as Dictionary).is_empty(),
+		"OverlayDispatcher GAME_MODE_TEL preview steps into day_select without deltas")
 	var od_dy_a: Dictionary = dispatcher.render_mode(OverlayDispatcher.GAME_MODE_TEL, step_day_a["state"])
 	var od_dy_b: Dictionary = dispatcher.render_mode(OverlayDispatcher.GAME_MODE_TEL, step_day_b["state"])
 	var od_dy_c: Dictionary = dispatcher.render_mode(OverlayDispatcher.GAME_MODE_TEL, step_day_c["state"])
@@ -566,9 +578,11 @@ func _test_live_state_hud_and_dispatcher_mutations() -> void:
 			"OverlayDispatcher GAME_MODE_TEL (day_select) updates HUD date pillar when rule_state date changes")
 
 	# Step into call_response (press Circle = 0x20)
-	var step_call_a: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, step_day_a["state"], OverlayDispatcher.PAD_CIRCLE, base_rule_state, _make_rng(100))
-	var step_call_b: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, step_day_b["state"], OverlayDispatcher.PAD_CIRCLE, mut_stats_state, _make_rng(100))
-	var step_call_c: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, step_day_c["state"], OverlayDispatcher.PAD_CIRCLE, mut_date_state, _make_rng(100))
+	var step_call_a: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, step_day_a["state"], OverlayDispatcher.PAD_CIRCLE, {}, _make_rng(100))
+	var step_call_b: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, step_day_b["state"], OverlayDispatcher.PAD_CIRCLE, {}, _make_rng(100))
+	var step_call_c: Dictionary = dispatcher.step_overlay(OverlayDispatcher.GAME_MODE_TEL, step_day_c["state"], OverlayDispatcher.PAD_CIRCLE, {}, _make_rng(100))
+	_check(String(step_call_a["state"].get("subscreen", "")) == "call_response" and (step_call_a.get("deltas", {}) as Dictionary).is_empty(),
+		"OverlayDispatcher GAME_MODE_TEL preview steps into call_response without deltas")
 	var od_vn_a: Dictionary = dispatcher.render_mode(OverlayDispatcher.GAME_MODE_TEL, step_call_a["state"])
 	var od_vn_b: Dictionary = dispatcher.render_mode(OverlayDispatcher.GAME_MODE_TEL, step_call_b["state"])
 	var od_vn_c: Dictionary = dispatcher.render_mode(OverlayDispatcher.GAME_MODE_TEL, step_call_c["state"])

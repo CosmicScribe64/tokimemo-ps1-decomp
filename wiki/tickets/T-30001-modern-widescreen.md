@@ -1,10 +1,10 @@
 ---
 id: T-30001
 title: Add widescreen presentation
-status: Ready
+status: In Progress
 assignee: root
 created: 2026-10-25
-updated: 2026-10-26
+updated: 2026-10-29
 links: ["[[phase4]]", "[[phase3]]", "[[widescreen-settings]]", "[[tickets/T-30000-plan-phase4-modernization]]", "[[tickets/T-30005-widescreen-settings-feasibility]]"]
 ---
 

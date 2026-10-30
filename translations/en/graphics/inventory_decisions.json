@@ -1,0 +1,991 @@
+{
+ "atom_overrides": {
+  "battle-habu-miss-0": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-habu-miss-1": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-kuma-miss-0": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-kuma-miss-1": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-robo-miss-0": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-robo-miss-1": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-sika-miss-0": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-sika-miss-1": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-ufo-miss-0": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "battle-ufo-miss-1": {
+   "blockers": [
+    "Readability of the 3-wide M: accept MISS as drawn, keep the Japanese deliberately untranslated, or source a different M."
+   ],
+   "notes": [
+    "decision record: translations/en/graphics/decisions/battle-miss.json (ticket T-39010); revisable agent defaults, no human approval"
+   ],
+   "reason": "Draft candidate MISS from original MAINROM compact capitals (unreviewed, human_approved false); readability of the 3-wide M, uppercase, pure diagonal shadow and in-game use remain human decisions. Blocked from any status beyond candidate-only until a human decides the M readability (see blocking_human_decisions).",
+   "status": "candidate-only"
+  },
+  "catalog-127": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "ALL_C banner draft through the caller-bound photo-page profile; existing palette indices only, bytes outside the strip and palette unchanged; agent-reviewed draft, not human-approved",
+   "status": "candidate-only"
+  },
+  "catalog-128": {
+   "reason": "Title splash BS shares the retained logo art of TITLE frame 0 (catalog: keep iconic logo); optional pairing is a style decision.",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-129": {
+   "reason": "Catalog offers keep-as-authentic-kanji or optional vertical English; the gate pillar plate is retained and the arch already carries English. Retention is a style decision, not required work.",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-130": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "P_01_02 (q12, caller read exactly 9 sectors = 18432 bytes; stream 17410 bytes, then 1022 trailing bytes: 1018 zero bytes followed by 4 non-zero bytes 69 71 12 10 at file offset 18428) can grow by up to 1018 bytes. A reproducible sweep (tools/translation_bs_drafts.py sweep, plan P01_02_SWEEP: headers become 1-A/1-B/1-C, lambda 8/12/16/24/32/50 x ring weight 50/200/1000) fits every run (17356-17532 stream bytes, at most 17532 of 18428), but every run fails the strict +-1 ring gate (ring max 6-7) and the float-IDCT cross-check (31 steps: the fixed-point decode wraps near the saturated white paper). Size is not the blocker; ring error and the white-paper wrap are. Earlier wording (1022 non-zero trailing bytes, stream cannot grow) was wrong",
+   "status": "missing"
+  },
+  "catalog-131": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "P_01_03/P_01_03B brush-calligraphy name scrolls fill most of the frame; replacing them is new art, not lettering",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-133": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-134": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-135": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "the catalog row text (science-club door plaque) is not in D_01_67 (only illegible exhibition panels); it is in D_01_69, where it is a clearly legible three-kanji plaque of about 80x20 px, not a tiny sign. Root default D-3 names the science-club plaque, so it stays untranslated for now, but D-3 was framed when the catalog bound the plaque to D_01_67 and should be revisited by a human now that the plaque is known to be legible; revisable",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-136": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "the catalog row text (computer-club banner) is not in D_01_69; it is in D_01_70. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-137": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "status unchanged, reason corrected: D_01_70 is not an art-club easel scene; it holds the computer-club banner, which catalog-136 now tracks",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-138": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "three single-kanji ivy plaques on the stadium wall. root default D-3: tiny sign kept in Japanese as an authentic detail; revisable",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-139": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-140": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "infirmary door plate about 28x10. root default D-3: tiny sign kept in Japanese as an authentic detail; revisable",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-141": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "catalog binds the brass-band concert banner to D_11_11; the banner is in D_29_09. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-142": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "catalog binds the ride sign to D_15_03; the ride with its starburst sign is D_11_11 (only a partial katakana word is visible at the frame edge). no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-143": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "catalog binds the museum monument to D_19_02; it is in D_15_03. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-144": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "catalog binds the entrance sign and MAIKO board to D_29_09; both are in D_19_02. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-145": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "the ticket booth sign next to GREEN GARDEN is not in I_17_01 (library aisle sign) and not legible in D_11_10 (ticket booth without readable text at census decode); source file unlocated",
+   "status": "missing"
+  },
+  "catalog-146": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "binding confirmed (neon counter sign). no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-147": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval",
+    "coverage partial: exam heading drafted; month/day/weekday placeholder column still Japanese"
+   ],
+   "reason": "C_01_28 chalkboard draft covers the exam heading only (FINAL / EXAMS): spliced BS v1 stream parses with the project reader, outside the 48x32 edited macroblocks bit-identical, ring max 1, float cross-check 1, 19298 bytes within the 10-sector caller read (the file grows 566 bytes past its original 18732-byte extent, recorded as file_extent_grew). The catalog row also lists the month/day/weekday placeholder column at x 304-314, which is still Japanese. candidate-only covers the heading only (the inventory has no partial status; D-7 records the gap). Agent-reviewed draft, not human-approved",
+   "status": "candidate-only"
+  },
+  "catalog-148": {
+   "reason": "Catalog offers keeping the authentic street sign or an optional vertical replacement; retention chosen as default, a style decision, not required work.",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-149": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/bs-backgrounds.json (ticket T-39012); revisable agent defaults, no human approval"
+   ],
+   "reason": "catalog binds the library aisle sign to I_11_15, which has no text (night horror scene); the sign is in I_17_01. no caller-proved width/height for this file (only P_01_02, P_01_03, P_01_03B and C_01_28 have caller proof); draft blocked until a caller binds its geometry",
+   "status": "missing"
+  },
+  "catalog-150": {
+   "reason": "Catalog recommends keeping the festival-fan kanji as an authentic cultural motif; optional replacement is a style decision, not required work.",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-152": {
+   "reason": "Catalog: no Japanese text present; wildcard group of SD sprite files not enumerated, so no per-file hash. Catalog also notes comic marks and Latin K may need a decision.",
+   "status": "deliberately-untranslated"
+  },
+  "catalog-153": {
+   "reason": "Catalog requires temporal replacement of the opening movie name pills; no authentic replacement workflow or finite inventory exists. CDROM/OPENXA.STR is not in the local file extraction (stream sectors), so no hash is recorded.",
+   "status": "missing"
+  },
+  "filesel-0000": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "Index-space draft \"Copy\": source lettering removed inside the 40x16 bevel interior, 87 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "status": "candidate-only"
+  },
+  "filesel-0001": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "Index-space draft \"New\": source lettering removed inside the 40x16 bevel interior, 66 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "status": "candidate-only"
+  },
+  "filesel-0002": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "Index-space draft \"Clear\": source lettering removed inside the 40x16 bevel interior, 88 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "status": "candidate-only"
+  },
+  "filesel-0003": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "Index-space draft \"Load\": source lettering removed inside the 40x16 bevel interior, 90 former-stroke texels reconstructed from the source index ramp, NativeLatin 12-row core 177 with dil8 outline 178. Unreviewed; not runtime integrated.",
+   "status": "candidate-only"
+  },
+  "filesel-page-information-0": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "Partial draft only: name, nickname edited from exact native-glyph cells; club, clear-count-label, system-tab, button-panel stay Japanese (no exact glyph match). Page-scope replacement has no runtime key in translated_image_store.gd. The partial page build is kept out of the published checkpoint (ledger unpublished_partial_builds).",
+   "status": "missing"
+  },
+  "filesel-page-information-1": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "Partial draft only: date-month-suffix, date-year-suffix, name, nickname edited from exact native-glyph cells; club, clear-count-label stay Japanese (no exact glyph match). Page-scope replacement has no runtime key in translated_image_store.gd. The partial page build is kept out of the published checkpoint (ledger unpublished_partial_builds).",
+   "status": "missing"
+  },
+  "filesel-page-information-2": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/filesel.json (ticket T-39011); revisable agent defaults, no human approval"
+   ],
+   "reason": "All Japanese on this page sits in exact native-glyph cells (clear-count-suffix, date-day-suffix, date-month-suffix); edited to \"/\" and blanks. Unreviewed; page-scope runtime key missing, so not runtime integrated.",
+   "status": "candidate-only"
+  },
+  "filesel-page-information-3": {
+   "reason": "Rendered inspection shows the slot list grid and gauge only, no Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-information-4": {
+   "reason": "Rendered inspection shows the slot list grid only, no Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-information-5": {
+   "reason": "Rendered inspection shows the slot list grid only, no Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-primary-0": {
+   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-primary-1": {
+   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-primary-2": {
+   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-primary-3": {
+   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-primary-4": {
+   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "filesel-page-primary-5": {
+   "reason": "Rendered inspection shows textured background without Japanese text. Not machine verified.",
+   "status": "deliberately-untranslated"
+  },
+  "mainrom-0057": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate \"Save\" in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0058": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate \"Save\" in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0059": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate \"Save\" in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0060": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "date suffix panel 年/月/日/(): English date order and suffix form are an open translation/layout decision; 13-part panel overlaps kanji cells. Not drafted.",
+   "status": "missing"
+  },
+  "mainrom-0061": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: 116 overlay texels have no sheet source"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0082": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [60]"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0083": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0084": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0085": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0086": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0087": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0088": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [60]"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0118": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Hand-drawn メモリアルスポット masthead kept; its Latin MEMORIAL SPOT subtitle and MOVIE/CONCERT/EVENT headers are already English; no established face can replace the logo without inventing art.",
+   "status": "deliberately-untranslated"
+  },
+  "mainrom-0121": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0122": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0123": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0124": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0125": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0126": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0127": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0128": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0129": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0130": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0131": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0132": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0133": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0134": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Comedy: panel7 lacks m, d, y; the 12-row native font cannot fit the 8-row tag; new glyphs not allowed (Battle Miss precedent).",
+   "status": "missing"
+  },
+  "mainrom-0135": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Romance: panel7 lacks R, m; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  "mainrom-0136": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [135, 137, 139, 140, 141, 142, 143]"
+   ],
+   "reason": "draft candidate in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0137": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [135, 136]"
+   ],
+   "reason": "draft candidate in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0138": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Horror: panel7 has no H-o-r-r-o-r problem glyph-wise but the width (27px) exceeds the 24px tag; no scaling allowed.",
+   "status": "missing"
+  },
+  "mainrom-0139": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Anime: panel7 lacks m; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  "mainrom-0140": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval",
+    "integrate as a whole-frame replacement only, never as a MAINROM sheet patch: edited texels are also drawn, unedited, by frames [135, 136, 138, 142, 143]"
+   ],
+   "reason": "draft candidate in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0141": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Idol: panel7 lacks I, d; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  "mainrom-0142": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Rock: panel7 lacks R; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  "mainrom-0143": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "New Music: panel7 lacks N, w, M; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  "mainrom-0144": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Pro Wrestling: native font (Wrestling 48px) does not fit 32px and cannot set two lines in 16 rows; panel7 lacks P, W, g.",
+   "status": "missing"
+  },
+  "mainrom-0145": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "Baseball: native font (41px) does not fit 32px; panel7 lacks B, b.",
+   "status": "missing"
+  },
+  "mainrom-0151": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0152": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0153": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-0154": {
+   "notes": [
+    "decision record: translations/en/graphics/decisions/mainrom.json (ticket T-39009); revisable agent defaults, no human approval"
+   ],
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  "mainrom-sheet-02000": {
+   "reason": "Catalog: unused prototype profile labels in VRAM, safe to leave. Not independently confirmed unused beyond the catalog statement.",
+   "status": "deliberately-untranslated"
+  },
+  "name_ent-0016": {
+   "notes": [
+    "src/ovl/name_entry/name_entry.c (no INCLUDE_ASM) assigns tab actors 109..113 only frames 15,17,19,21,23; the overlay sequence table at NAME_ENT.NBN+0x1afd0 holds only sequence 0 (frames 10,11,12); hover uses frame 9. No source path selects this frame, so it is generated but not required."
+   ],
+   "required_by_source": "unreferenced-by-source"
+  },
+  "name_ent-0018": {
+   "notes": [
+    "src/ovl/name_entry/name_entry.c (no INCLUDE_ASM) assigns tab actors 109..113 only frames 15,17,19,21,23; the overlay sequence table at NAME_ENT.NBN+0x1afd0 holds only sequence 0 (frames 10,11,12); hover uses frame 9. No source path selects this frame, so it is generated but not required."
+   ],
+   "required_by_source": "unreferenced-by-source"
+  },
+  "name_ent-0020": {
+   "notes": [
+    "src/ovl/name_entry/name_entry.c (no INCLUDE_ASM) assigns tab actors 109..113 only frames 15,17,19,21,23; the overlay sequence table at NAME_ENT.NBN+0x1afd0 holds only sequence 0 (frames 10,11,12); hover uses frame 9. No source path selects this frame, so it is generated but not required."
+   ],
+   "required_by_source": "unreferenced-by-source"
+  },
+  "name_ent-0022": {
+   "notes": [
+    "src/ovl/name_entry/name_entry.c (no INCLUDE_ASM) assigns tab actors 109..113 only frames 15,17,19,21,23; the overlay sequence table at NAME_ENT.NBN+0x1afd0 holds only sequence 0 (frames 10,11,12); hover uses frame 9. No source path selects this frame, so it is generated but not required."
+   ],
+   "required_by_source": "unreferenced-by-source"
+  },
+  "name_ent-0024": {
+   "notes": [
+    "src/ovl/name_entry/name_entry.c (no INCLUDE_ASM) assigns tab actors 109..113 only frames 15,17,19,21,23; the overlay sequence table at NAME_ENT.NBN+0x1afd0 holds only sequence 0 (frames 10,11,12); hover uses frame 9. No source path selects this frame, so it is generated but not required."
+   ],
+   "required_by_source": "unreferenced-by-source"
+  },
+  "title-0000": {
+   "reason": "Title logo art is retained per catalog guidance (keep the heart-emblem logo); optional ribbon lettering is a style decision, not required.",
+   "status": "deliberately-untranslated"
+  }
+ },
+ "extra_atoms": [
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-information-0",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-information-1",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-information-2",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-information-3",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-information-4",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-information-5",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-primary-0",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-primary-1",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-primary-2",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-primary-3",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-primary-4",
+   "scope": "page"
+  },
+  {
+   "container_key": "FILESEL",
+   "frame": null,
+   "id": "filesel-page-primary-5",
+   "scope": "page"
+  }
+ ],
+ "legacy_resolution": {
+  "central-park-guide-136x24": {
+   "classification": "frame-and-palette-identified; legacy source image not reproducible",
+   "container": "CDROM/FUKUTEST/MAINROM.NBN",
+   "evidence": [
+    "lettering colours 0,164,0 and 0,230,164 equal current base palette colours 0,165,0 and 0,231,165 within one RGB step; hud-43, hud-44, icon-52 and icon-53 variants of frame 126 are byte-identical single-colour images, icon-51 another single colour",
+    "whole frame is the edit region"
+   ],
+   "frame": 126,
+   "palette": "base",
+   "rebind_candidate": "legacy-rebind-central-park-guide-136x24",
+   "why_not_exact": "Legacy source sha256 85b9dfc1... is not produced by the current exporter; approval cannot be transferred."
+  },
+  "day-monday-16x16": {
+   "classification": "frame-and-palette-identified; legacy source image not reproducible",
+   "container": "CDROM/FUKUTEST/MAINROM.NBN",
+   "evidence": [
+    "both lettering colours equal the current base palette within one RGB step per channel (legacy exporter rounded RGB555 differently): 41,41,41 exact, 164,205,205 vs 165,206,206",
+    "icon-52 of frame 82 is byte-identical to base (same sha256 048d3d9d...), so the frame-82 palette identity is base/icon-52; hud-43, hud-44, icon-51 and icon-53 share no lettering colour",
+    "the current exporter reproduces batch-002 Monday hud-44 source sha256 b6647598..., so the exporter is anchored",
+    "whole frame is the edit region, so no outside pixels exist to compare"
+   ],
+   "frame": 82,
+   "palette": "base",
+   "rebind_candidate": "legacy-rebind-day-monday-16x16",
+   "why_not_exact": "Legacy source sha256 379899f9... is not produced by the current exporter; approval cannot be transferred."
+  },
+  "parameters-panel-296x67": {
+   "classification": "frame-and-palette-identified; legacy source image not reproducible",
+   "container": "CDROM/FUKUTEST/MAINROM.NBN",
+   "evidence": [
+    "pixels outside the declared edit regions equal the current base export in 14186 of 15872 positions (89.4%); hud-43 and hud-44 equal 7826, icon-51 9601, icon-52 7988, icon-53 7835 positions",
+    "of the 1686 differing positions 1524 lie in rows y 49..55 (bottom frame/shadow strip: 76 in y49, 48 in y50, 280 in each of y51..55) and 162 are scattered over rows y 1..47: y1 24, y2 16, y6 28, y13 3, y14 9, y15 6, y27 3, y28 9, y29 6, y41 3, y42 9, y43 14, y44 8, y45 8, y46 8, y47 8 (small clusters near the column dividers and bullets)",
+    "the differences are composition differences of the legacy export, not lettering; legacy source sha256 256c209e... is not produced by the current composed-source exporter",
+    "the rebind candidate takes the current source pixels outside the lettering regions, so its bullets and right-hand shadow differ from the approved batch-001 art; the old approval says nothing about those pixels"
+   ],
+   "frame": 61,
+   "palette": "base",
+   "rebind_candidate": "legacy-rebind-parameters-panel-296x67",
+   "why_not_exact": "The approval is bound to the legacy source hash. The runtime pack requires the current exact source hash, so the old approval cannot be copied; a new candidate on the current identity needs its own review."
+  }
+ },
+ "limitations": [
+  "Frame-level items cover the 153 catalog rows plus items discovered from restored sources; other original image containers are not enumerated here.",
+  "A status describes artwork or text existence and review, not runtime integration; the runtime field is separate.",
+  "Catalog statements that no change is required were taken from the catalog and not re-derived from pixels.",
+  "Text groups count records, not unique lines; candidate text has no verified translation quality.",
+  "Palette variant relevance for MAINROM weekday frames is not established; a frame is english-reviewed when every known variant is.",
+  "Nothing here is human approval except the historical exact review events.",
+  "Weekday HUD frames are english-reviewed only when every source palette variant in source_identities has an approved English image; otherwise the weakest variant decides.",
+  "Group decision records in translations/en/graphics/decisions/*.json are kept as provenance (evidence, defaults, catalog corrections); the inventory reads only their folded status, reason and notes from atom_overrides here, and candidate status still comes from the hash-bound ledgers."
+ ],
+ "name_header_prompts": [
+  {
+   "address": "0x8014CCE4",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x1ace4",
+   "key": "family",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "src/ovl/name_entry/name_entry.c name_entry_family_prompt_text assigned at name_entry_prompt_text sites; drawn by set_kanji_string(-0x98,-0x68,...)",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:0001ace4:287beba8bd18",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified, renderer_tokenization_unavailable"
+  },
+  {
+   "address": "0x8014CD04",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x1ad04",
+   "key": "given",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "name_entry_given_prompt_text, same sites",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:0001ad04:f23fe121b0e1",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified, renderer_tokenization_unavailable"
+  },
+  {
+   "address": "0x8014CD10",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x1ad10",
+   "key": "nickname",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "name_entry_nickname_prompt_text, same sites",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:0001ad10:9d66734c53ee",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified, renderer_tokenization_unavailable"
+  },
+  {
+   "address": "0x8014B4C0",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x194c0",
+   "key": "birthday",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "literal heading drawn by set_kanji_string(-0x98,-0x68,0xA,...) in name_entry_birthday_init",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:000194c0:ebf8beac54b5",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified"
+  },
+  {
+   "address": "0x8014B534",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x19534",
+   "key": "shiori_birthday",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "literal heading drawn by set_kanji_string(-0x98,-0x68,0xA,...) in name_entry_shiori_birthday_init",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:00019534:2a3266f778da",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified"
+  },
+  {
+   "address": "0x8014B510",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x19510",
+   "key": "confirm",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "draw site not individually verified in this pass",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:00019510:d01bb59d28d9",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified"
+  },
+  {
+   "address": "0x8014B56C",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x1956c",
+   "key": "shiori_family",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "draw site not individually verified in this pass",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:0001956c:b6fdcebec5a5",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified"
+  },
+  {
+   "address": "0x8014B574",
+   "blockers": [
+    "English runtime text substitution for the NAME overlay is not connected",
+    "record status predates the draw-site proof recorded here; translator return left unchanged"
+   ],
+   "english_candidate_present": true,
+   "file_offset": "0x19574",
+   "key": "shiori_given",
+   "kind": "text-rendered-by-native-font (not artwork)",
+   "overlay_file": "CDROM/EXEDIR/NAME_ENT.EXN",
+   "source_draw_site": "draw site not individually verified in this pass",
+   "status": "candidate-only",
+   "text_record_id": "CDROM/EXEDIR/NAME_ENT.EXN:00019574:459fab7eee10",
+   "text_record_status": "unresolved: consumer_context_not_source_proven, consumer_context_unclassified"
+  }
+ ],
+ "runtime": {
+  "name_observed": {
+   "atoms": [
+    "name_ent-0000",
+    "name_ent-0001",
+    "name_ent-0002",
+    "name_ent-0014",
+    "name_ent-0015",
+    "name_ent-0017",
+    "name_ent-0019",
+    "name_ent-0021",
+    "name_ent-0023"
+   ],
+   "note": "Actual installed NAME route observed native/English/native by an agent; not human acceptance and not PS1 parity.",
+   "state": "in-game-observed-agent"
+  },
+  "weekday_hook": {
+   "atoms": [
+    "mainrom-0082",
+    "mainrom-0083",
+    "mainrom-0084",
+    "mainrom-0085",
+    "mainrom-0086",
+    "mainrom-0087",
+    "mainrom-0088"
+   ],
+   "note": "Twelve approved weekday variants replace native HUD images in the isolated presenter hook (loader/presenter tests); no actual-game visual acceptance.",
+   "state": "presenter-hook-tested"
+  }
+ },
+ "schema": "tokimemo.translation-inventory-decisions.v1",
+ "text_approval": {
+  "addenda": [
+   {
+    "date": "2026-10-29",
+    "instruction": "Approve them",
+    "scope": "the 61 text records whose English is whitespace over a non-blank (8) or unproven (53) source; their context status and blank-evidence labels stay unchanged",
+    "source": "chat instruction"
+   }
+  ],
+  "approver": "user (project owner)",
+  "date": "2026-10-29",
+  "instruction": "Assume all the text as approved.",
+  "not_covered": [
+   "runtime draw-site or consumer-context proof",
+   "artwork of any kind"
+  ],
+  "scope": "translation wording of every produced English text record in translations/en/returned-v3.jsonl and translations/en/supplemental.jsonl (55,911 records at this date)",
+  "source": "chat instruction"
+ }
+}

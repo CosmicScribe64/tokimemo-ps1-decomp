@@ -30,11 +30,14 @@ ROLE_KINDS = {
     "geko_dialogue": "dir",
     "hud_manifest": "file", "hud_context": "file",
     "holiday_scene": "file", "holiday_text": "file",
+    "holiday_scene_source": "file",
     "date_preview": "dir", "opening_pack": "dir",
     "prologue_text": "dir", "first_arrival_media": "dir",
     "first_arrival_board": "dir",
     "prologue_hud": "dir", "opening_audio": "dir",
     "original_first_arrival_bgm": "dir",
+    "first_arrival_finish_bank": "dir",
+    "first_arrival_command_reload": "dir",
 }
 
 
@@ -141,6 +144,62 @@ def _copy_pack(source: Path, destination: Path) -> None:
         raise BundleError("duplicate role destination")
     shutil.copytree(source, destination, symlinks=False)
     _safe_tree(destination)
+
+
+BASE_LIMITATIONS = (
+    "rule and route packs are finite source-backed profiles",
+    "opening_pack contains source-bound bank/sequence bytes, but playback and presentation are unproven",
+    "capabilities must be computed by the receiving GDScript validator",
+    "this bundle does not establish complete runtime or dialogue coverage",
+)
+# Gameplay roles whose consumers need live-session state that no fresh-session
+# supplier provides yet. They stay unavailable whatever the exporters produce.
+UNSUPPLIED_ROLES = {
+    "hud_context": "live HUD still requires a captured-boundary context; the fresh HUD session model has no "
+                   "source-owned opening-to-command-select producer yet",
+    "holiday_scene": "session-owned boundary fields (icon_mode,input_device,screen_brightness,"
+                     "tile_layer_enabled,boot_hold,clubs) have no fresh-session supplier",
+}
+
+
+def _coverage(roles: dict[str, str], gaps: dict[str, str]) -> dict:
+    """Record unsupplied roles as gaps; refuse a bundle that claims one."""
+    claimed = sorted(set(roles) & set(UNSUPPLIED_ROLES))
+    if claimed:
+        raise BundleError("role has no fresh-session supplier: " + ", ".join(claimed))
+    unavailable = dict(gaps)
+    unavailable.update(UNSUPPLIED_ROLES)
+    limitations = list(BASE_LIMITATIONS)
+    if "holiday_scene_source" in roles:
+        limitations.append(
+            "holiday_scene_source holds only scene-owned holiday_open_init state; it is not the "
+            "holiday_scene gameplay role, which stays unavailable until a live session supplies its fields")
+    return {"available_roles": sorted(roles), "unavailable_roles": unavailable, "limitations": limitations}
+
+
+SHIORI_GAP = "opening_shiori_reads"
+SHIORI_FIELDS = ("sequence_pack", "music_body", "music_header")
+
+
+def _merge_opening_shiori_reads(stage: Path, shiori_work: Path, outcome: tuple[bool, str]) -> str:
+    """Add the three prologue_shiori reads to packs/opening_pack, or return a gap reason.
+
+    A failed export leaves opening_pack in place without the reads; the
+    returned reason is recorded as the opening_shiori_reads gap.
+    """
+    ok, reason = outcome
+    reads = [shiori_work / "reads" / ("prologue_shiori-" + field + ".bin") for field in SHIORI_FIELDS]
+    if not ok:
+        return reason or SHIORI_GAP + ": exporter failed"
+    if not all(r.is_file() and not r.is_symlink() for r in reads):
+        return SHIORI_GAP + ": prologue_shiori sector reads missing from exporter output"
+    for read in reads:
+        destination = stage / "packs" / "opening_pack" / "reads" / read.name
+        if destination.exists():
+            raise BundleError("duplicate opening Shiori read")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(read, destination)
+    return ""
 
 
 def _discard_partial_role(stage: Path, role_path: str) -> None:
@@ -276,9 +335,10 @@ def build(input_path: Path, executable: Path, output: Path,
     token = hashlib.sha256((str(output) + _sha(executable)).encode()).hexdigest()[:12]
     work_dirs = {key: cache / (".runtime-" + token + "-" + key)
                  for key in ("rules", "entry_rules", "entry", "weekday", "club", "spring", "hud",
-                             "date", "holiday", "opening", "prologue_text",
+                             "date", "holiday", "holiday_scene", "opening", "prologue_text",
                              "first_arrival_media", "first_arrival_board",
-                             "prologue_hud", "opening_audio", "name_entry_media")}
+                             "prologue_hud", "opening_audio", "name_entry_media", "opening_shiori",
+                             "finish_bank", "command_reload")}
     # HUD's immutable-directory contract requires an alphanumeric first byte.
     work_dirs["hud"] = cache / ("runtime-" + token + "-hud")
     if any(p.exists() or p.is_symlink() for p in work_dirs.values()):
@@ -317,6 +377,11 @@ def build(input_path: Path, executable: Path, output: Path,
                                    "--exe", str(executable), "--output", str(work_dirs["date"])]),
         ("holiday", "holiday_text", [py, "tools/port/holiday_hud_content.py", "--repository", str(ROOT),
                                        "--executable", str(executable), "--output", str(work_dirs["holiday"])]),
+        # T-39014: scene-owned holiday state decoded from the pinned track's
+        # executable; session-owned boundary fields stay with the live session,
+        # so this is a source role and not the holiday_scene gameplay role.
+        ("holiday_scene", "holiday_scene_source", [py, "tools/port/holiday_scene_content.py", "--input", str(track or input_path),
+                                            "--source-root", str(ROOT), "--output", str(work_dirs["holiday_scene"])]),
         ("opening", "opening_pack", [py, "tools/port/opening_runtime_content.py", "--input", src,
                                         "--output", str(work_dirs["opening"])]),
         ("prologue_text", "prologue_text", [py, "tools/port/prologue_runtime_content.py", "--input", src,
@@ -417,8 +482,6 @@ def build(input_path: Path, executable: Path, output: Path,
             else:
                 _discard_partial_role(stage, "packs/school_day_media")
                 gaps["school_day_media"] = reason or "fresh source-checked school media export failed"
-        gaps["hud_context"] = "live HUD still requires a captured-boundary context; fresh-session initialization is unavailable"
-        gaps["holiday_scene"] = "no separate holiday-scene pack producer is available"
 
         for role, source_dir in successes.items():
             if role in ("hud_manifest", "name_entry_media"):
@@ -427,7 +490,7 @@ def build(input_path: Path, executable: Path, output: Path,
                 roles[role] = "packs/" + role + "/manifest.json"
                 continue
             # Rules are a manifest file; other products remain pack directories.
-            if role in ("rule_tables", "name_entry_rules", "name_entry_content", "holiday_text"):
+            if role in ("rule_tables", "name_entry_rules", "name_entry_content", "holiday_text", "holiday_scene_source"):
                 filename = "entry.json" if role == "name_entry_content" else "manifest.json"
                 payload = source_dir / filename
                 if not payload.is_file():
@@ -443,14 +506,54 @@ def build(input_path: Path, executable: Path, output: Path,
                 _copy_pack(source_dir, stage / role_path)
                 roles[role] = role_path
 
-        coverage = {"available_roles": sorted(roles),
-                    "unavailable_roles": gaps,
-                    "limitations": [
-                        "rule and route packs are finite source-backed profiles",
-                        "opening_pack contains source-bound bank/sequence bytes, but playback and presentation are unproven",
-                        "capabilities must be computed by the receiving GDScript validator",
-                        "this bundle does not establish complete runtime or dialogue coverage",
-                    ]}
+        # T-39002 stage10/substep8: prologue_line_17's audio_bank_load_start
+        # (1,0,0,0xCBD4,0xCBAA,0xCBA5) needs the three exact whole-sector reads
+        # in the opening pack. The opening exporter has no Shiori producer, so
+        # the pinned sector exporter writes them and they join packs/opening_pack.
+        # A Shiori failure is a gap of its own: the rest of the opening pack
+        # stays, and the opening refuses at stage 10 substep 8 when the reads
+        # are absent ("Shiori original inputs are missing").
+        if roles.get("opening_pack") == "packs/opening_pack":
+            shiori_work = work_dirs["opening_shiori"]
+            gap = _merge_opening_shiori_reads(stage, shiori_work, _run(
+                [py, "tools/port/native_audio/export_shiori_bank.py",
+                 "--output", str(shiori_work.relative_to(ROOT)),
+                 "--track", str(track or input_path)], SHIORI_GAP))
+            if gap:
+                gaps[SHIORI_GAP] = gap
+
+        # T-39002 stage 21: prologue_finish_run case 0's audio_bank_load_start
+        # (0, 0xBF98, 0xBF79, 0xD3D5, 0xD387, 0xD37D) reads COM_MIX/SPRING as
+        # five whole-sector reads; the pinned exporter writes them with their
+        # ISO identities and they form the first_arrival_finish_bank role.
+        if roles.get("opening_pack") == "packs/opening_pack":
+            finish_work = work_dirs["finish_bank"]
+            ok, reason = _run([py, "tools/port/prologue_finish_bank_export.py",
+                               "--track", str(track or input_path),
+                               "--output", str(finish_work)], "first_arrival_finish_bank")
+            if ok and (finish_work / "finish_bank.json").is_file():
+                _copy_pack(finish_work, stage / "packs" / "first_arrival_finish_bank")
+                roles["first_arrival_finish_bank"] = "packs/first_arrival_finish_bank"
+            else:
+                _discard_partial_role(stage, "packs/first_arrival_finish_bank")
+                gaps["first_arrival_finish_bank"] = reason or "first_arrival_finish_bank: stage 21 sector reads missing"
+
+            # T-39002 mode 0x34 command reload: the CALROM read
+            # (cd_read_sectors(0x95, 0x801A0000, 0x9B94)) and the spring room
+            # read (dec_bg_cd_read(D_800B5950[0], 0)) form the
+            # first_arrival_command_reload role.
+            reload_work = work_dirs["command_reload"]
+            ok, reason = _run([py, "tools/port/command_reload_export.py",
+                               "--track", str(track or input_path),
+                               "--output", str(reload_work)], "first_arrival_command_reload")
+            if ok and (reload_work / "command_reload.json").is_file():
+                _copy_pack(reload_work, stage / "packs" / "first_arrival_command_reload")
+                roles["first_arrival_command_reload"] = "packs/first_arrival_command_reload"
+            else:
+                _discard_partial_role(stage, "packs/first_arrival_command_reload")
+                gaps["first_arrival_command_reload"] = reason or "first_arrival_command_reload: command reload sector reads missing"
+
+        coverage = _coverage(roles, gaps)
         manifest = _manifest(stage, executable, track, roles, coverage)
         (stage / "manifest.json").write_text(json.dumps(manifest, sort_keys=True,
                                        ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

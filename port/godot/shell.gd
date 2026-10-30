@@ -15,6 +15,22 @@ func _ready() -> void:
 	_boot.call_deferred()
 
 func _boot() -> void:
+	if OS.get_environment("TOKIMEMO_ENTRY_DEBUG") == "1":
+		# Lets tools/port/desktop_verify/verify_player.py check the BGM bridge's
+		# native-component gate in an exported player without driving the opening.
+		var bridge: Script = load("res://services/first_arrival_bgm_bridge.gd")
+		# The bridge gains library_path()/native_component_error() with the
+		# deferred packaging hunk; report their absence instead of a script error.
+		var methods: Array = []
+		if bridge != null:
+			for method: Dictionary in bridge.get_script_method_list():
+				methods.append(method.get("name", ""))
+		if "library_path" in methods and "native_component_error" in methods:
+			print("NativeAudioGate: ", JSON.stringify({"library_path": bridge.call("library_path"),
+				"error": bridge.call("native_component_error")}))
+		else:
+			print("NativeAudioGate: ", JSON.stringify({"library_path": "",
+				"error": "BGM bridge has no native component gate (deferred packaging hunk not applied)"}))
 	_router = BootRouterScript.new()
 	var decision: Dictionary = _router.route(self)
 	print("BootRouter: ", decision.get("action", "unknown"), " -> ", decision.get("target", "none"), " (", decision.get("reason", ""), ")")

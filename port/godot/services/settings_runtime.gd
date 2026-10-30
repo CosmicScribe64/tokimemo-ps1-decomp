@@ -18,6 +18,8 @@ var pacing := Pacing.new()
 var accessibility := Accessibility.new()
 var packs := Packs.new()
 var translated_images: RefCounted = null
+## T-39016: active source-keyed text layer, or null for original text.
+var translated_text: RefCounted = null
 var mono_effect := AudioEffectStereoEnhance.new()
 var preferences := Preferences.new()
 var remaps := Remaps.new()
@@ -83,6 +85,11 @@ func apply_preferences(value: Dictionary) -> void:
 	if value.language.text_manifest != packs.manifest or value.language.text_sha256 != packs.digest:
 		if not packs.select_images(value.language.text_manifest, value.language.text_sha256): packs.select_images("", "")
 		translated_images = packs.images
+	var active_layer: String = "" if packs.text_layer == null else packs.text_layer.manifest
+	var active_layer_sha: String = "" if packs.text_layer == null else packs.text_layer.digest
+	if value.language.ui_text_manifest != active_layer or value.language.ui_text_sha256 != active_layer_sha:
+		if not packs.select_text_layer(value.language.ui_text_manifest, value.language.ui_text_sha256): packs.select_text_layer("", "")
+		translated_text = packs.text_layer
 	if value.language.voice_manifest != voice_pack.manifest or value.language.voice_sha256 != voice_pack.digest:
 		var candidate := VoicePack.new()
 		if value.language.voice_manifest.is_empty() or candidate.open_pack(value.language.voice_manifest, value.language.voice_sha256): voice_pack = candidate
@@ -111,6 +118,21 @@ func select_image_pack(path: String) -> String:
 		return preferences.error
 	apply_preferences(preferences.effective_settings())
 	return ""
+
+## T-39016: select the source-keyed text layer built by
+## tools/port/build_text_pack.py; an empty path restores original text.
+func select_ui_text_pack(path: String) -> String:
+	var digest := "" if path.is_empty() else FileAccess.get_sha256(path)
+	var candidate := Packs.new()
+	if not candidate.select_text_layer(path, digest): return candidate.text_layer_error
+	var before: Dictionary = preferences.settings.language.duplicate(true)
+	preferences.settings.language.ui_text_manifest = path
+	preferences.settings.language.ui_text_sha256 = digest
+	if not preferences.save(): preferences.settings.language = before; return preferences.error
+	# Reuse the validated layer instead of parsing the pack a second time.
+	packs.text_layer = candidate.text_layer
+	translated_text = packs.text_layer
+	apply_preferences(preferences.effective_settings()); return ""
 
 func select_voice_pack(path: String) -> String:
 	var candidate := VoicePack.new()

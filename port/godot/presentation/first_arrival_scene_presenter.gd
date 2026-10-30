@@ -3,8 +3,10 @@ extends RefCounted
 ## No capture plate, fallback HUD, source advancement or upload-ready assertion.
 const State = preload("res://rules/new_game_route_state.gd")
 const Media = preload("res://services/first_arrival_media_bridge.gd")
+const ReiRenderer = preload("res://presentation/rei_actor_renderer.gd")
 const Store = preload("res://services/prologue_text_store.gd")
 const TextPainter = preload("res://presentation/prologue_text_presenter.gd")
+const AdditiveFlash = preload("res://presentation/additive_flash.gd")
 var _media: Media
 var _text: Store
 var _painter: TextPainter
@@ -26,7 +28,7 @@ func prepare(media: Media, text: Store, painter: TextPainter, initial_state: Sta
 	if _media != null: return "first-arrival presenter already owns its prepared resources"
 	if media == null or media.resource_identity().is_empty() or text == null or text.initial_constants().is_empty() or painter == null or initial_state == null:
 		return "first-arrival presenter needs original media, text, font and live owned profile"
-	for line_idx in range(15):
+	for line_idx in range(18) + [37, 38, 39, 40, 41, 42]:
 		var resolved_line := text.resolve(line_idx,initial_state.rule_state)
 		var error: String = painter.preflight(resolved_line)
 		if not error.is_empty(): return error
@@ -97,13 +99,21 @@ func render(state: State, checker: Callable, front: Callable, uploads_ready: Cal
 	else:
 		if previous_frame == null or previous_frame.get_size() != Vector2i(320,240): return {"error":"first-arrival needs the prior committed framebuffer when clearing is disabled"}
 		image = previous_frame.duplicate()
-	var error := _draw(checker,image,view_state,snapshot)
+	# Stages 18-20 and the 20->21 frame: paint_background composes P_01_12,
+	# the boxes and actor96.
+	var closing: bool = Media.closing_frame(view_state)
+	var actors_drawn: bool = not closing and (view_state.opening.get("actor96_draw_flags") in [0x84,0xa4] or view_state.opening.get("actor97_draw_flags") == 0xa4 or view_state.opening.get("actor99_draw_flags") == 0xa4 or view_state.opening.get("prologue_petals") is Array)
+	var error := ""
+	# Message-area actor rows at or behind the checker's OT (stages 15-17,
+	# D_800B5BD4) draw before the checker frame covers them.
+	if actors_drawn and _actor != null and _actor.has_method("paint_under_checker"): error = _actor.paint_under_checker(image,view_state)
+	if error.is_empty(): error = _draw(checker,image,view_state,snapshot)
 	if error.is_empty(): error = _media.paint_background(image,view_state,_actor)
-	if error.is_empty() and (view_state.opening.get("actor96_draw_flags") in [0x84,0xa4] or view_state.opening.get("actor97_draw_flags") == 0xa4 or view_state.opening.get("actor99_draw_flags") == 0xa4 or view_state.opening.get("prologue_petals") is Array):
+	if error.is_empty() and actors_drawn:
 		if _actor == null or not _actor.has_method("paint"): error = "visible arrival has no prepared original actor painter"
 		else: error = _actor.paint(image,view_state,Vector2i(160,120))
-	if error.is_empty(): error = _paint_rei_flash(image,view_state)
-	if error.is_empty() and view_state.mode_stage == 9:
+	if error.is_empty() and not closing: error = _paint_rei_flash(image,view_state)
+	if error.is_empty() and (view_state.mode_stage in [9, 10] or ReiRenderer.line17_scope(view_state)):
 		if _actor == null or not _actor.has_method("paint_rei_front"): error = "Rei front actor layer is unavailable"
 		else: error = _actor.paint_rei_front(image,view_state)
 	var backdrop: float = _accessibility.get("backdrop", 1.0)
@@ -125,8 +135,19 @@ func render(state: State, checker: Callable, front: Callable, uploads_ready: Cal
 		var valid_line5_10: bool = line_id in [5, 6, 7, 8, 9, 10] and (view_state.mode_stage == 6 or (view_state.mode_stage == 7 and view_state.substep == 0))
 		var valid_line11: bool = line_id == 11 and view_state.mode_stage in [7,8]
 		var valid_line12: bool = line_id == 12 and (view_state.mode_stage == 8 or (view_state.mode_stage == 9 and view_state.substep == 0))
-		var valid_rei_dialogue: bool = view_state.mode_stage == 9 and ((line_id == 13 and view_state.substep in [1,2,3,4,5,6,7]) or (line_id == 14 and view_state.substep in [8,9,10,11]))
-		if not line_id is int or (line_id != 0 and not valid_line1 and not valid_line2 and not valid_line3 and not valid_line4 and not valid_line5_10 and not valid_line11 and not valid_line12 and not valid_rei_dialogue): return {"error":"first-arrival presenter line is outside its original scene lifetime"}
+		var valid_rei_dialogue: bool = view_state.mode_stage == 9 and ((line_id == 13 and view_state.substep in [1,2,3,4,5,6,7]) or (line_id == 14 and view_state.substep in [8,9,10,11])) or (view_state.mode_stage == 10 and ((line_id == 14 and view_state.substep == 0) or (line_id == 15 and view_state.substep in [1,2,3]) or (line_id == 16 and view_state.substep in [4,5,6,7,8]))) or (view_state.mode_stage == 11 and ((line_id == 16 and view_state.substep == 0) or (line_id == 17 and view_state.substep in [1,2,3,4,5,6]))) or (line_id == 17 and ReiRenderer.line17_scope(view_state) and view_state.mode_stage == 12)
+		# Stages 12-14: line17 stays up through stage12 (no line); lines 18/19
+		# start at 13/0 and 14/0 and stay up to the next stage's commit frame.
+		var valid_shiori: bool = (line_id == 17 and (view_state.mode_stage == 12 or (view_state.mode_stage == 13 and view_state.substep == 0))) or (line_id == 18 and ((view_state.mode_stage == 13 and view_state.substep in [1,2,3,4]) or (view_state.mode_stage == 14 and view_state.substep == 0))) or (line_id == 19 and ((view_state.mode_stage == 14 and view_state.substep in [1,2,3,4,5,6]) or (view_state.mode_stage == 15 and view_state.substep == 0)))
+		# Stages 15-17 (lines 0x14-0x25, built answers 100/101): a line's text
+		# stays up across the frame that switches to the next stage.
+		var valid_lines_20_37: bool = (view_state.mode_stage == 15 and line_id in [0x14,0x15,0x16,0x17,0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f,100,101]) or (view_state.mode_stage == 16 and line_id is int and line_id >= 0x1f and line_id <= 0x24) or (view_state.mode_stage == 17 and line_id in [0x24,0x25])
+		# Stage17's line 37 is still shown on the 17->18 frame; line 41 stays
+		# through stage19 until stage20 case0 starts line 42, which is still
+		# shown on the 20->21 frame and through prologue_finish_run (stage 21
+		# and its 0x34/0xFF/0/0 switch; golden a1-a5 still show it).
+		var valid_closing: bool = (line_id == 37 and view_state.mode_stage == 18 and view_state.substep == 0) or (line_id in [38, 39, 40, 41] and view_state.mode_stage == 18 and view_state.substep > 0) or (line_id == 41 and (view_state.mode_stage == 19 or (view_state.mode_stage == 20 and view_state.substep == 0))) or (line_id == 42 and ((view_state.mode_stage == 20 and view_state.substep > 0) or Media.closing_exit_frame(view_state) or Media.finish_frame(view_state)))
+		if not line_id is int or (line_id != 0 and not valid_closing and not valid_line1 and not valid_line2 and not valid_line3 and not valid_line4 and not valid_line5_10 and not valid_line11 and not valid_line12 and not valid_rei_dialogue and not valid_shiori and not valid_lines_20_37): return {"error":"first-arrival presenter line is outside its original scene lifetime"}
 		var text_view := _text.resolve(int(line_id),view_state.rule_state)
 		if _accessibility.get("text_speed", "normal") == "slow" and presentation_visible_count >= 0:
 			work.pos = mini(work.total, presentation_visible_count)
@@ -182,13 +203,4 @@ static func _paint_rei_flash(target: Image, state: State) -> String:
 	# prologue_flash_boxes_draw queues two flat G4s at OT11, then a dither
 	# tpage with ABR1. actor96 is later head-inserted at OT11, so it draws
 	# before the additive flash; the HUD remains in front at smaller slots.
-	const DITHER := [-4,0,-3,1,2,-2,3,-1,-3,1,-4,0,3,-1,2,-2]
-	for y: int in 160:
-		for x: int in 320:
-			var foreground := clampi((int(effect.level)+DITHER[(y&3)*4+(x&3)])>>3,0,31)
-			var old := target.get_pixel(x,y)
-			var red := mini(31,(old.r8>>3)+foreground)
-			var green := mini(31,(old.g8>>3)+foreground)
-			var blue := mini(31,(old.b8>>3)+foreground)
-			target.set_pixel(x,y,Color8((red<<3)|(red>>2),(green<<3)|(green>>2),(blue<<3)|(blue>>2)))
-	return ""
+	return AdditiveFlash.paint(target,int(effect.level))

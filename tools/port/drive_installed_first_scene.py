@@ -12,8 +12,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--boundary', action='store_true', help='Observe the next unsupported source boundary')
     parser.add_argument('--settings', action='store_true', help='Verify opt-in reading holds in the actual installed opening')
-    parser.add_argument('--rei', action='store_true', help='Observe source stage7 to stage9 Rei transition')
+    parser.add_argument('--rei', action='store_true', help='Observe the Rei route from stage8 up to REI_TARGET_STAGE (default 9, or 10 with REI_DIALOGUE=1)')
     parser.add_argument('--handoff-layout', action='store_true', help='Capture resized native entry/opening handoff')
+    parser.add_argument('--deadline', type=float, default=float(os.environ.get('TOKIMEMO_ROUTE_DEADLINE', 180)),
+                        help='Seconds before the observer is stopped (default 180, or TOKIMEMO_ROUTE_DEADLINE)')
     parser.add_argument('--entry-key', choices=['Return', 'g'], default='Return', help='Physical Start key; g exercises a saved custom binding in the settings observer')
     args = parser.parse_args()
     observer = 'run_installed_next_arrival_boundary.gd' if args.boundary else 'run_installed_first_scene.gd'
@@ -33,7 +35,7 @@ def main():
             'res://tests/' + observer,
         ], stdout=log, stderr=subprocess.STDOUT, env=env)
         seen = set()
-        deadline = time.monotonic() + 180
+        deadline = time.monotonic() + args.deadline
         try:
             while process.poll() is None and time.monotonic() < deadline:
                 status = output / 'entry-keyboard-status.json'
@@ -57,7 +59,7 @@ def main():
                     print('physical keyboard:', phase, flush=True)
                 time.sleep(0.05)
             if process.poll() is None:
-                raise TimeoutError('Installed opening exceeded 180 seconds; see godot.log')
+                raise TimeoutError(f'Installed opening exceeded {args.deadline:g} seconds; see godot.log')
             receipt = json.loads((output / 'entry-keyboard-status.json').read_text())
             if process.returncode or receipt.get('phase') != 'passed':
                 raise RuntimeError('Installed opening failed; see godot.log and receipt')

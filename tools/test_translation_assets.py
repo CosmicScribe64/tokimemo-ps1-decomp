@@ -11,6 +11,7 @@ import translation_assets as subject
 class ArtworkTests(unittest.TestCase):
     def setUp(self):
         self.snapshot = subject.ROOT / 'translations/en/graphics/artwork'
+        (subject.ROOT / '.asset-cache').mkdir(exist_ok=True)
 
     def test_retained_reviews_are_exact(self):
         report = subject.audit(self.snapshot)

@@ -138,7 +138,7 @@ func build_actors(state: Dictionary) -> Array[Dictionary]:
 			return []
 		var position := Vector2i(descriptor["icon_positions"][i][0], descriptor["icon_positions"][i][1])
 		var enabled: bool = state["icon_enabled"][i] == 1
-		var hovering: bool = enabled and i == selected
+		var hovering: bool = enabled and i == int(state.get("hover_index", selected))
 		var variant := "icon-52" if hovering else ("icon-53" if enabled else "icon-51")
 		actors.append(_actor(64 + i, 3 if not enabled or hovering else 4, 2, position, variant))
 		var sequence: Array = descriptor["sequences"][i]["steps"]
@@ -147,8 +147,12 @@ func build_actors(state: Dictionary) -> Array[Dictionary]:
 			error = "icon sequence step is outside the original sequence"
 			return []
 		actors.append(_actor(80 + i, 2 if hovering else 3, sequence[step]["frame_index"], position))
+	# Menu mode 1 places cursor_x/y at item x + w - 4, y + 8 (icon + (6, -2));
+	# a live HUD session supplies the retained actor_pool[0] position instead.
 	var cursor_position := Vector2i(descriptor["icon_positions"][selected][0] + 6,
 		descriptor["icon_positions"][selected][1] - 2)
+	if state.get("cursor_position") is Vector2i:
+		cursor_position = state["cursor_position"]
 	actors.append(_actor(0, 1, state["cursor_frame"], cursor_position, "base", false))
 	return actors
 
@@ -322,13 +326,20 @@ func _draw_text(target: Image) -> void:
 		var palette_row: int = attribute & 7
 		var palette_family: int = (attribute >> 3) & 1
 		var has_shadow: bool = attribute not in [3, 4, 5, 14, 15]
+		# T-39016: translated runs carry per-glyph offsets; original runs use
+		# the native 14-pixel advance.
+		var glyph_x: Variant = run.get("glyph_x")
+		if glyph_x != null and (not glyph_x is PackedInt32Array or glyph_x.size() * 2 != codes.size()):
+			error = "translated text offsets do not match the run"
+			return
 		for i: int in range(0, codes.size(), 2):
 			var glyph: Dictionary = _font.get_glyph_image(codes.slice(i, i + 2), palette_row, palette_family)
 			if glyph.get("status") != "glyph":
 				error = "source text glyph is unavailable"
 				return
 			var foreground: Image = glyph["image"]
-			var position := Vector2i(160 + int(run["position"][0]) + (i / 2) * 14, 120 + int(run["position"][1]))
+			var column: int = (i / 2) * 14 if glyph_x == null else int(glyph_x[i / 2])
+			var position := Vector2i(160 + int(run["position"][0]) + column, 120 + int(run["position"][1]))
 			if has_shadow:
 				var shadow: Image = foreground.duplicate()
 				for y: int in range(12):

@@ -147,6 +147,11 @@ func _holiday(base: Core, input: InputFrame, rng: Rng, result: Session.FrameResu
 
 func _restore_holiday_hud(state: State, result: Session.FrameResult) -> void:
 	var data: Dictionary = state.rule_state
+	for field: String in ["background_cache", "background_show"]:
+		var unsourced: String = State.unsourced_error(data, field)
+		if not unsourced.is_empty():
+			result.error = unsourced
+			return
 	Rules.icons(state, false, enable_subscreens)
 	data["actor_state"].clear()
 	var room_lba: int = int(tables["seasonal_room_background_lbas"][0])
@@ -537,6 +542,11 @@ func _load(state: State, result: Session.FrameResult) -> void:
 
 func _background(state: State, request: String, lba: int, result: Session.FrameResult) -> bool:
 	var data: Dictionary=state.rule_state
+	for field: String in ["background_cache", "background_show"]:
+		var unsourced: String = State.unsourced_error(data, field)
+		if not unsourced.is_empty():
+			result.error = unsourced
+			return false
 	var slot: int=data["background_cache"].slice(0,2).find(lba)
 	if slot>=0:
 		data["background_show"]=slot

@@ -11,7 +11,8 @@ const DialoguePresenter = preload("res://presentation/dialogue_textbox_presenter
 const HudPresenter = preload("res://presentation/command_hud_presenter.gd")
 
 const HUD_MANIFEST := "/workspace/.asset-cache/port/hud-production-v1/manifest.json"
-const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const HUD_SHA := ContentIdentity.HUD_MANIFEST_SHA
 const FONT_ROOT := "/workspace/.asset-cache/port/fonts/native-font-v2"
 const SOURCE_EVIDENCE_PATH := "/workspace/.claude/orchestrator/state/T-29031/cursor-audit-v1/source-evidence.json"
 

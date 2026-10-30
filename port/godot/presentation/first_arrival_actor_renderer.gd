@@ -6,7 +6,14 @@ const State = preload("res://rules/new_game_route_state.gd")
 const Session = preload("res://core/game_session.gd")
 const Upload = preload("res://services/first_arrival_upload_bridge.gd")
 const ReiRenderer = preload("res://presentation/rei_actor_renderer.gd")
+const ShioriScene = preload("res://presentation/shiori_scene_renderer.gd")
+const ShioriActors = preload("res://services/shiori_actor_model.gd")
+const Stages15To17Renderer = preload("res://presentation/opening_stages_15_17_renderer.gd")
 var _rei := ReiRenderer.new()
+var _shiori := ShioriScene.new()
+var _stages_15_17 := Stages15To17Renderer.new()
+const ClosingRenderer = preload("res://presentation/closing_scene_renderer.gd")
+var _closing := ClosingRenderer.new()
 const VRAM_BYTES := 1024*512*2
 const DRAW_KEY := "actor96_source_draw"
 const PETALS_DRAW_KEY := "petals_source_draw"
@@ -76,11 +83,63 @@ func prepare(store: Store, upload_owner: Upload, board_store = null) -> String:
 	if board_store != null:
 		var rei_transfer: Dictionary = board_store.stage_transfer("prologue.o_09.0xac05")
 		if not rei_transfer.get("bytes") is PackedByteArray: return "Rei renderer has no original O10 resource"
-		return _rei.source.prepare(rei_transfer.bytes)
+		var rei_error := _rei.source.prepare(rei_transfer.bytes)
+		if not rei_error.is_empty(): return rei_error
+		var lines15_transfer: Dictionary = board_store.stage_transfer("prologue.o_11.0xac1e")
+		if not lines15_transfer.get("bytes") is PackedByteArray: return "Rei renderer has no original O11 resource"
+		var lines15_error := _rei.source.prepare_lines15(lines15_transfer.bytes)
+		if not lines15_error.is_empty(): return lines15_error
+		var o12_transfer: Dictionary = board_store.stage_transfer("prologue.o_12.0xac3f")
+		var o13_transfer: Dictionary = board_store.stage_transfer("prologue.o_13.0xac50")
+		if not o12_transfer.get("bytes") is PackedByteArray or not o13_transfer.get("bytes") is PackedByteArray: return "Rei renderer has no original O12/O_13 resource"
+		var line17_error: String = _rei.source.prepare_line17(o12_transfer.bytes,o13_transfer.bytes)
+		if not line17_error.is_empty(): return line17_error
+		var shiori_error: String = _shiori.prepare(board_store)
+		if not shiori_error.is_empty(): return shiori_error
+		var stages_error: String = _stages_15_17.prepare(board_store)
+		if not stages_error.is_empty(): return stages_error
+		return _closing.prepare(board_store.stage_transfer("prologue.o_13.0xac50").get("bytes"))
 	return ""
+
+## Stages 18-20 and the committed 21/0 frame of prologue_closing_run case2
+## (prologue_line 42), as FirstArrivalMedia.closing_frame.
+static func _closing_scope(state: State) -> bool:
+	return state != null and state.game_mode == 0x15 and state.mode_step == 0 and (state.mode_stage in [18, 19, 20] or (state.mode_stage == 21 and state.substep == 0 and state.opening.get("prologue_line") == 42))
+
+## Stage 21 body frames after the exit frame (prologue_finish_run case0/1).
+## The committed 0x34/0xFF/0/0 frame is case1's mode switch, drawn by the
+## same draw_frame with nothing visible.
+static func _finish_scope(state: State) -> bool:
+	if state != null and state.game_mode == 0x34 and state.mode_stage == 0xFF and state.mode_step == 0 and state.substep == 0: return true
+	return state != null and state.game_mode == 0x15 and state.mode_stage == 21 and state.mode_step == 0 and not _closing_scope(state)
+
+static func _stages_15_17_scope(state: State) -> bool:
+	return state != null and state.game_mode == 0x15 and state.mode_stage in [15, 16, 17]
+
+func paint_under_checker(target: Image, state: State) -> String:
+	# Stages 15-17 message-area actor rows the checker frame covers (OT >=
+	# D_800B5BD4); the presenter draws them before the HUD checker layer.
+	if target == null or target.get_size() != Vector2i(320,240): return "O_01 target/origin is unsupported"
+	if not _stages_15_17_scope(state) or ShioriActors.visible_scene(state): return ""
+	var owned := _visible_runtime_error()
+	return owned if not owned.is_empty() else _stages_15_17.paint_actors(target,state,_runtime,_upload,Stages15To17Renderer.UNDER_CHECKER)
 
 func paint_rei_front(target: Image, state: State) -> String:
 	return _rei.paint(target,state,_runtime,_upload,true)
+
+# Stages 12-14 (wiki/spec/opening-stages-12-14.md): the whole scene below the
+# HUD is one ShioriScene pass, called from the media bridge's dec_bg_draw.
+func preflight_shiori(state: State) -> String:
+	if _upload == null: return "Shiori scene renderer lost its upload owner"
+	return _shiori.scene_error(state,true)
+
+func paint_shiori_scene(target: Image, state: State) -> String:
+	if _upload == null: return "Shiori scene renderer lost its upload owner"
+	return _shiori.paint(target,state,_runtime,_upload)
+
+func paint_closing(target: Image, state: State) -> String:
+	# Stages 18-20 (closing_scene_renderer.gd) on this owner's VRAM.
+	return _closing.paint(target,state,_runtime,_upload)
 
 static func _runtime_error(runtime: Dictionary) -> String:
 	if not runtime.get("vram_owner") is String or runtime.vram_owner.is_empty() or not runtime.get("vram_words") is PackedByteArray or runtime.vram_words.size() != VRAM_BYTES: return "O_01 requires explicitly owned VRAM"
@@ -131,7 +190,7 @@ func _petals_error(state: State) -> String:
 	return ""
 
 func _stage35_error(state: State, require_uploaded: bool = false) -> String:
-	if state != null and state.mode_stage == 9:
+	if state != null and (state.mode_stage in [9, 10] or ReiRenderer.line17_scope(state)):
 		return _rei.preflight(state,_upload if require_uploaded else null)
 	if _source.is_empty() or state == null or state.game_mode != 0x15 or state.mode_stage not in [3, 4, 5, 6, 7, 8, 9] or state.mode_step != 0:
 		return "stage 3..7 renderer is outside its prepared source mode"
@@ -225,7 +284,14 @@ static func _s16(value: int) -> int:
 func preflight_visible(state: State) -> String:
 	# Pure source/owner validation for the mode callback before draw_frame.
 	# The actual sequence counter changes only in logical_draw below.
-	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
+	if ShioriActors.visible_scene(state,true):
+		# Stage14's commit frame (15/0) draws as stage14 (ShioriScene).
+		return preflight_shiori(state)
+	if _stages_15_17_scope(state):
+		var owned := _visible_runtime_error()
+		# dec_bg_draw(1) runs in the body, before this frame's actor_draw.
+		return owned if not owned.is_empty() else _stages_15_17.preflight(state,null,true)
+	if state != null and (state.mode_stage in [3, 4, 5, 6, 7, 8, 9, 10, 11] or ReiRenderer.line17_scope(state)) and state.opening.get("bg_layer_0") is Dictionary:
 		return _stage35_error(state)
 	if not state.opening.has("actor96"):
 		var petal_failure := _petals_error(state)
@@ -240,8 +306,30 @@ func preflight_visible(state: State) -> String:
 	return _visible_error(state)
 
 func logical_draw(state: State, _rng, result: Session.FrameResult) -> void:
-	if state != null and state.mode_stage == 9:
+	if ShioriActors.visible_scene(state):
+		# The stage body already ran actor_draw_all (shiori_effect "actor_draw").
+		result.error = _shiori.logical_error(state)
+		return
+	if _stages_15_17_scope(state):
+		# The actor_draw effect already ran actor_draw_all for this frame.
+		result.error = _visible_runtime_error()
+		if result.error.is_empty(): result.error = _stages_15_17.preflight(state)
+		return
+	if state != null and (state.mode_stage in [9, 10] or ReiRenderer.line17_scope(state)):
 		result.error = _rei.logical_draw(state)
+		return
+	if _closing_scope(state):
+		# Stages 18-20 and the 20->21 exit frame: the stage body's closing
+		# effect "actor_draw" already ran actor_draw_all for actor96 (O_13).
+		result.error = _visible_runtime_error()
+		return
+	if _finish_scope(state):
+		# prologue_finish_run (stage 21) draws no background and no actor:
+		# actor96 stays hidden since stage19 case2 (draw_flags 0), and
+		# actor_draw_all neither draws nor steps a hidden actor.
+		var hidden: Variant = state.opening.get("actor96")
+		if not hidden is Dictionary or hidden.get("draw_flags") != 0 or state.opening.get("actor96_draw_flags") != 0 or state.opening.has("o13_draw"):
+			result.error = "stage21 draw_frame requires actor96 hidden by the closing stages"
 		return
 	# draw_frame runs after game_mode_dispatch's frame_count increment.
 	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
@@ -425,6 +513,16 @@ func logical_draw(state: State, _rng, result: Session.FrameResult) -> void:
 		actor.sequence_counter = 0
 		actor.frame_index = (actor.frame_index+1)%5
 
+func _visible_runtime_error() -> String:
+	# The VRAM this renderer samples must be the upload owner's own runtime.
+	if _upload == null or _store == null: return "O_01 lost its upload owner"
+	var context := _upload.actor_render_context(_store)
+	if not context.get("error") is String or not context.error.is_empty() or not context.get("runtime") is Dictionary or not is_same(context.runtime,_runtime): return "O_01 sampled runtime is foreign to its upload owner"
+	var error := _runtime_error(_runtime)
+	if not error.is_empty(): return error
+	if not _runtime.get("vram_known_mask") is PackedByteArray: return "O_01 texture/CLUT have not been uploaded"
+	return ""
+
 func _visible_error(state: State, require_uploaded: bool = true) -> String:
 	if _upload == null or _store == null: return "O_01 lost its upload owner"
 	var context := _upload.actor_render_context(_store)
@@ -444,7 +542,13 @@ func paint(target: Image, state: State, normalized_draw_origin: Vector2i) -> Str
 	# Caller owns the draw-buffer offset normalization. Source initializes native
 	# origins (160,360)/(160,120); normalized viewport origin is (160,120).
 	if target == null or target.get_size() != Vector2i(320,240) or normalized_draw_origin != Vector2i(160,120): return "O_01 target/origin is unsupported"
-	if state != null and state.mode_stage == 9: return _rei.paint(target,state,_runtime,_upload,false)
+	if ShioriActors.visible_scene(state):
+		# Drawn with the scene by paint_shiori_scene (OT order below the HUD).
+		return "" if _shiori.painted_this_frame(target,state) else "Shiori actors need this frame's scene draw"
+	if _stages_15_17_scope(state):
+		var owned := _visible_runtime_error()
+		return owned if not owned.is_empty() else _stages_15_17.paint_actors(target,state,_runtime,_upload)
+	if state != null and (state.mode_stage in [9, 10] or ReiRenderer.line17_scope(state)): return _rei.paint(target,state,_runtime,_upload,false)
 	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
 		var err35 := _stage35_error(state, true)
 		if not err35.is_empty(): return err35
@@ -928,7 +1032,10 @@ func paint_board_scroll(target: Image, state: State, board_preview: Image) -> St
 func paint_names_background(target: Image, state: State) -> String:
 	if target == null or target.get_size() != Vector2i(320,240):
 		return "O_01 names background target is unsupported"
-	if state != null and state.mode_stage in [3, 4, 5, 6, 7, 8, 9] and state.opening.get("bg_layer_0") is Dictionary:
+	if _stages_15_17_scope(state):
+		var owned := _visible_runtime_error()
+		return owned if not owned.is_empty() else _stages_15_17.paint_background(target,state,_runtime,_upload)
+	if state != null and (state.mode_stage in [3, 4, 5, 6, 7, 8, 9, 10, 11] or ReiRenderer.line17_scope(state)) and state.opening.get("bg_layer_0") is Dictionary:
 		var err35 := _stage35_error(state, true)
 		if not err35.is_empty(): return err35
 		var nm35: Variant = state.opening.get("names_media")

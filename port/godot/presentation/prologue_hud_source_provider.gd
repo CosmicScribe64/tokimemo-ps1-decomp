@@ -269,11 +269,13 @@ func scene_reset(state: Dictionary, result: Dictionary) -> String:
 	return ""
 
 static func source_frame_argument(state: Dictionary) -> int:
+	if state.get("game_mode") == 0x34: return _finish_switch_argument(state)
 	if typeof(state.get("game_mode")) != TYPE_INT or state.game_mode != 21 or typeof(state.get("mode_stage")) != TYPE_INT: return -1
 	if state.mode_stage == 0: return 0
-	if state.mode_stage not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or typeof(state.get("mode_step")) != TYPE_INT or typeof(state.get("substep")) != TYPE_INT: return -1
+	if state.mode_stage in range(12,22) and not _line17_exit(state): return _shiori_to_finish_argument(state)
+	if (state.mode_stage not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] and not _line17_exit(state)) or typeof(state.get("mode_step")) != TYPE_INT or typeof(state.get("substep")) != TYPE_INT: return -1
 	var opening: Variant = state.get("opening")
-	if not opening is Dictionary or typeof(opening.get("actor96_draw_flags")) != TYPE_INT or typeof(opening.get("prologue_line")) != TYPE_INT or opening.prologue_line not in range(15): return -1
+	if not opening is Dictionary or typeof(opening.get("actor96_draw_flags")) != TYPE_INT or typeof(opening.get("prologue_line")) != TYPE_INT or opening.prologue_line not in range(18): return -1
 	var media: Variant = opening.get("arrival_media")
 	var work: Variant = opening.get("prologue_text_work")
 	if not media is Dictionary or not media.get("actor_initialized") is bool or not media.actor_initialized or not media.get("upload_batch_key") is String or media.upload_batch_key.is_empty(): return -1
@@ -313,7 +315,7 @@ static func source_frame_argument(state: Dictionary) -> int:
 	if state.mode_stage == 3 and state.substep == 0 and not opening.has("bg_layer_0"):
 		return 2 if opening.prologue_line == 2 and work.pos == work.total and opening.actor96_draw_flags == 0 and opening.get("prologue_petals") is Array else -1
 	var layer0: Variant = opening.get("bg_layer_0")
-	if not layer0 is Dictionary or (layer0.get("enabled") != 1 and not (((state.mode_stage == 8 and state.substep == 7) or (state.mode_stage == 9 and state.substep in [0,1,2])) and layer0.get("enabled") == 0)) or opening.has("prologue_petals"):
+	if not layer0 is Dictionary or (layer0.get("enabled") != 1 and not (((state.mode_stage == 8 and state.substep == 7) or (state.mode_stage == 9 and state.substep in [0,1,2]) or _line17_exit(state)) and layer0.get("enabled") == 0)) or opening.has("prologue_petals"):
 		return -1
 	if state.mode_stage == 3:
 		return 2 if state.substep in [0, 1, 2, 3, 4] and opening.prologue_line == 3 and opening.actor96_draw_flags == 0xa4 and (state.substep not in [2, 3, 4] or work.pos == work.total) else -1
@@ -336,6 +338,26 @@ static func source_frame_argument(state: Dictionary) -> int:
 			return 2 if opening.prologue_line == 10 and work.pos == work.total and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and live.get("message_visible") == true else -1
 		if state.substep in [1, 2, 3, 4, 5, 6, 7]:
 			return 2 if opening.prologue_line == 11 and opening.actor96_draw_flags == 0xa4 and not opening.has("actor99") and (state.substep < 3 or work.pos == work.total) and live.get("message_visible") == true else -1
+		return -1
+	if state.mode_stage == 12:
+		# prologue_line_17_run case6 frame (drawn after mode_stage_next): the
+		# completed line17 window over AD05 and the O_13 actor.
+		return 2 if _line17_exit(state) and layer0.get("enabled") == 0 and opening.actor96_draw_flags == 0xa4 and opening.prologue_line == 17 and work.pos == work.total else -1
+	if state.mode_stage == 11:
+		# prologue_line_17_run: case8 handoff frame, line17 run, then the
+		# completed line through cases 2..6.
+		if opening.actor96_draw_flags != 0xa4 or opening.get("actor96",{}).get("profile") != "o12_rei_line17": return -1
+		if state.substep == 0: return 2 if opening.prologue_line == 16 and work.pos == work.total else -1
+		if state.substep == 1: return 2 if opening.prologue_line == 17 else -1
+		if state.substep in [2,3,4,5,6]: return 2 if opening.prologue_line == 17 and work.pos == work.total else -1
+		return -1
+	if state.mode_stage == 10:
+		if opening.actor96_draw_flags != 0xa4 or opening.get("actor96",{}).get("profile") != "o11_rei_lines15": return -1
+		if state.substep == 0: return 2 if opening.prologue_line == 14 and work.pos == work.total else -1
+		if state.substep in [1,2]: return 2 if opening.prologue_line == 15 else -1
+		if state.substep == 3: return 2 if opening.prologue_line == 15 and work.pos == work.total else -1
+		if state.substep == 4: return 2 if opening.prologue_line == 16 else -1
+		if state.substep in [5,6,7,8]: return 2 if opening.prologue_line == 16 and work.pos == work.total else -1
 		return -1
 	if state.mode_stage == 9:
 		if opening.actor96_draw_flags != 0xa4 or opening.get("actor96",{}).get("profile") != "o09_rei_entrance": return -1
@@ -1068,3 +1090,41 @@ static func _is_sha256(value: String) -> bool:
 		if not ((c >= 48 and c <= 57) or (c >= 97 and c <= 102)):
 			return false
 	return true
+
+## Stages 12-21 (prologue_shiori_load_run .. prologue_finish_run): the
+## prologue_mode_handler tail calls hud_screen_frame_draw(2) for every stage
+## but 0 (prologue.c:2812-2817); each stage body only ever runs at mode_step 0
+## (prologue_mode_stage_* guards). The HUD state it advances must already be
+## the live one the board stage started (D_800B3DB0 = 1, read requested).
+static func _shiori_to_finish_argument(state: Dictionary) -> int:
+	var opening: Variant = state.get("opening")
+	if state.get("mode_step") != 0 or typeof(state.get("substep")) != TYPE_INT or not opening is Dictionary: return -1
+	if opening.get("D_800B3DB0") != 1 or not opening.get("prologue_hud_live") is Dictionary: return -1
+	if not opening.get("board_media") is Dictionary or opening.board_media.get("read_requested") != true: return -1
+	return 2
+
+## prologue_finish_run case1 switches to mode 0x34 stage 0xFF inside the
+## prologue handler, whose tail still calls hud_screen_frame_draw(2)
+## (prologue.c:2734-2741, 2812-2817). Only that frame, committed as
+## 0x34/0xFF/0/0, belongs to the prologue HUD; the first reload frame always
+## leaves step 0 (settings_command_screen_setup_reset's mode_step_next).
+## The reload frames after it (settings_command_screen_mode_handler,
+## home_screens.c:46-73) end with hud_screen_frame_draw(0): stage 0xFF steps
+## 1-3 once settings_command_screen_setup_reset ran (opening.command_reload),
+## and the frame whose room decode commits stage 1 step 0. The checker globals
+## D_800B5BCC/D_800B5BD0 continue from the prologue HUD state.
+static func _finish_switch_argument(state: Dictionary) -> int:
+	var opening: Variant = state.get("opening")
+	if opening is Dictionary and opening.get("command_reload") is Dictionary and opening.get("prologue_hud_live") is Dictionary:
+		if (state.get("mode_stage") == 0xFF and state.get("mode_step") in [1, 2, 3]) \
+				or (state.get("mode_stage") == 1 and state.get("mode_step") == 0 and opening.get("command_ready") == true):
+			return 0
+		return -1
+	if state.get("mode_stage") != 0xFF or state.get("mode_step") != 0 or state.get("substep") != 0 or not opening is Dictionary: return -1
+	if opening.get("D_800B3DB0") != 0 or opening.get("D_800B5BD4") != 0x0F or not opening.get("prologue_hud_live") is Dictionary: return -1
+	if not opening.get("board_media") is Dictionary or opening.board_media.get("read_requested") != true: return -1
+	return 2
+
+static func _line17_exit(state: Dictionary) -> bool:
+	var opening: Variant = state.get("opening")
+	return state.get("mode_stage") == 12 and state.get("mode_step") == 0 and state.get("substep") == 0 and opening is Dictionary and opening.get("actor96") is Dictionary and opening.actor96.get("profile") == "o13_rei_line17_exit"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 [ext_resource type="Script" path="res://app/new_game_entry_boot.gd" id="1"]
-[node name="NewGameEntryDevelopment" type="Control"]
+[node name="NewGameEntryDevelopment" type="Control" unique_id=1475249779]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

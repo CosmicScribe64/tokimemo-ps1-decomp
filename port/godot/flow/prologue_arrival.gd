@@ -16,13 +16,11 @@ const STAGE_FINISH: int = 21
 const STAGE_COMMAND_RELOAD: int = 0xff
 const PAD_START_MASK: int = 0x0800
 const FULL_BRIGHTNESS: int = 128
-const FLASH_MAX: int = 0x0100
 const BOARD_SCROLL_LIMIT: int = 0x0140
 const ARRIVAL_TIMER_LIMIT: int = 17
 const ARRIVAL_LINE_HOLD_FRAMES: int = 61
 const CLOSING_HOLD_FRAMES: int = 0x3d
 const SHORT_HOLD_FRAMES: int = 0x20
-const SHIORI_WAIT_FRAMES: int = 0x41
 const PETAL_COUNT: int = 8
 const PETAL_WRAP_Y: int = 41
 const ACTOR_DEST_PRIMARY: int = 0x80180000
@@ -36,6 +34,14 @@ const AUDIO_CMD_FADE_D1: int = 0xd1
 const AUDIO_CMD_SE_503: int = 0x0503
 const AUDIO_CMD_SE_604: int = 0x0604
 const AUDIO_CMD_SE_605: int = 0x0605
+const TEXT_SPEED_SLOW: int = 3
+const MENU_MODE_A: int = 1
+## audio_bank_load_start(0, 0xBF98, 0xBF79, 0xD3D5, 0xD387, 0xD37D): COM_MIX
+## sound effects and the spring day-music set, prologue_finish_run case 0.
+const FINISH_BANK_ARGS: Array[int] = [0, 0xbf98, 0xbf79, 0xd3d5, 0xd387, 0xd37d]
+const FINISH_SERVICES: Array[String] = ["finish_cd_reset", "finish_bank_reset", "finish_bank_load", "audio_command"]
+const FINISH_DISPATCH_ERROR := "prologue finish is outside source dispatch"
+const FINISH_SWITCH_START_ERROR := "START on the stage21 mode-switch frame would set command-screen stage 0x15, a source soft-lock; unsupported"
 
 const REQUIRED: Array[String] = [
 	"bank_load_start",
@@ -57,6 +63,7 @@ const REQUIRED: Array[String] = [
 static func step(state: State, rng: Rng, pressed: int, services: Dictionary) -> Session.FrameResult:
 	var out: Session.FrameResult = Session.FrameResult.new()
 	state.opening.erase("rei_banner_primitive")
+	state.opening.erase("prologue_closing_draws")
 	if state.game_mode != MODE_PROLOGUE or state.mode_stage < STAGE_ARRIVAL or state.mode_stage > STAGE_FINISH or not rng.configuration_error().is_empty():
 		out.error = "prologue requires native mode 0x15 stage 0..21 and configured RNG"
 		return out
@@ -120,7 +127,13 @@ static func step(state: State, rng: Rng, pressed: int, services: Dictionary) -> 
 
 	if out.error.is_empty():
 		if (state.mode_step != 0 or state.mode_stage != STAGE_ARRIVAL) and (pressed & PAD_START_MASK) != 0:
-			state.set_stage(STAGE_FINISH)
+			if state.game_mode != MODE_PROLOGUE:
+				# Stage 21 substep 1 already switched to mode 0x34 stage 0xFF; the
+				# source tail would set command-screen stage 0x15, which
+				# settings_command_screen_mode_handler has no case for (soft-lock).
+				out.error = FINISH_SWITCH_START_ERROR
+			else:
+				state.set_stage(STAGE_FINISH)
 
 	if not out.error.is_empty():
 		state.restore(before)
@@ -703,10 +716,9 @@ static func _stage_05_transition(state: State, services: Dictionary, out: Sessio
 
 
 static func _stage_06_yoshio_greeting(state: State, services: Dictionary, out: Session.FrameResult) -> void:
+	# prologue_yoshio_greeting_run (prologue.c) has no per-frame timer of its
+	# own: mode_step_timer is only the line_run FINISH_HOLD counter.
 	if state.mode_step == 0:
-		state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
-		var s6_timer: int = Math.add32(int(state.opening.get("stage_06_timer", 0)), 1)
-		state.opening["stage_06_timer"] = s6_timer
 		match state.substep:
 			0:
 				state.opening["prologue_line"] = 5
@@ -719,19 +731,19 @@ static func _stage_06_yoshio_greeting(state: State, services: Dictionary, out: S
 					services["stage_06_cd_wait"].call(state, out)
 				else:
 					state.substep += 1
-					state.mode_step_timer = 0
-					state.opening["stage_06_timer"] = 0
 				if out.error.is_empty():
 					services["arrival_draw"].call(state, 1, out)
 			2:
 				if services.has("stage_06_actor98_step"):
 					services["stage_06_actor98_step"].call(state, out)
-				if out.error.is_empty() and s6_timer == 4 and services.has("stage_06_actor102_set"):
-					services["stage_06_actor102_set"].call(state, out)
 				if out.error.is_empty():
 					services["line_run"].call(state, out)
 				if out.error.is_empty() and services.has("stage_06_lip_sync_yoshio"):
 					services["stage_06_lip_sync_yoshio"].call(state, out)
+				# Source tests the hold counter after line_run: the fourth frame
+				# after line 5's voice finished with its text complete.
+				if out.error.is_empty() and state.mode_step_timer == 4 and services.has("stage_06_actor102_set"):
+					services["stage_06_actor102_set"].call(state, out)
 				if out.error.is_empty():
 					services["arrival_draw"].call(state, 1, out)
 			3:
@@ -1092,372 +1104,581 @@ static func _stage_09_rei_lines(state: State, rng: Rng, services: Dictionary, ou
 
 
 static func _stage_10_lines_15_16(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	if _run_line_pair(state, 15, 0, services, out):
-		pass
-	elif _run_line_pair(state, 16, 2, services, out):
-		pass
-	elif state.substep == 4:
-		services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xab18, out)
-		state.substep += 1
-	elif state.substep == 5:
-		if _poll_cd_ready(state, services, out, "stage 10 actor 0"):
-			services["actor_read"].call(state, 9, ACTOR_DEST_SECONDARY, 0xac3f, out)
-			state.substep += 1
-	elif state.substep == 6:
-		if _poll_cd_ready(state, services, out, "stage 10 actor 1"):
-			services["background_read"].call(state, 0xacf6, 1, out)
-			state.substep += 1
-	elif state.substep == 7:
-		if _decode_bg_and_check(state, 1, 0xacf6, services, out, "stage 10 bg"):
-			_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
-			_emit_audio_command(state, AUDIO_CMD_FADE_C1, services, out)
-			services["bank_load_start"].call(state, "prologue_shiori", out)
-			state.next_stage()
-	else:
-		out.error = "prologue stage 10 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+	# prologue_lines_15_and_16_run: nine source substeps on the O11 body.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 8:
+		out.error = "prologue stage10 is outside source dispatch"; return
+	if not services.get("rei_lines15_effect") is Callable:
+		out.error = "source Rei line15 actor services are unavailable"; return
+	var effect: Callable = services.rei_lines15_effect
+	match state.substep:
+		0, 3:
+			var line := 15 if state.substep == 0 else 16
+			state.opening["prologue_line"] = line
+			services.line_start.call(state,line,out)
+			if out.error.is_empty(): state.substep += 1
+		1:
+			effect.call(state,"wait_voice",0,out)
+			if not out.error.is_empty(): return
+			if not services.get("cd_audio_state") is Callable:
+				out.error = "Rei line15 requires original CD playback state"; return
+			var status: Variant = services.cd_audio_state.call(state)
+			if not status is int:
+				out.error = "Rei line15 CD state is not an integer"; return
+			if (status & 4) != 0: state.substep += 1
+		2:
+			effect.call(state,"lip_sync",0,out)
+			if out.error.is_empty(): services.line_run.call(state,out)
+		4:
+			services.line_run.call(state,out)
+		5:
+			services.actor_read.call(state,0x31,0x801a4000,0xab18,out)
+			if out.error.is_empty(): state.substep += 1
+		6:
+			if _poll_cd_ready(state,services,out,"stage10 CUT12"):
+				effect.call(state,"palette_adjust",0,out)
+				if out.error.is_empty(): services.actor_read.call(state,0x11,0x801f0000,0xac3f,out)
+				if out.error.is_empty(): state.substep += 1
+		7:
+			if _poll_cd_ready(state,services,out,"stage10 O12"):
+				services.background_read.call(state,0xacf6,1,out)
+				if out.error.is_empty(): state.substep += 1
+		8:
+			if _decode_bg_and_check(state,1,0xacf6,services,out,"stage10 ACF6"):
+				effect.call(state,"next_scene",0,out)
+				if out.error.is_empty(): _emit_audio_command(state,AUDIO_CMD_SYSTEM_FLAG,services,out)
+				if out.error.is_empty(): _emit_audio_command(state,AUDIO_CMD_FADE_C1,services,out)
+				if out.error.is_empty(): services.bank_load_start.call(state,"prologue_shiori",out)
+				if out.error.is_empty(): state.next_stage()
+	if not out.error.is_empty(): return
+	# Source tests the post-switch substep; next_stage resets it to0.
+	if state.substep >= 2: effect.call(state,"advance_x",0,out)
+	if out.error.is_empty(): services.arrival_draw.call(state,1,out)
+	if out.error.is_empty(): services.outer_draw.call(state,2,out)
 
 
 static func _stage_11_line_17(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
-	if not _run_line_pair(state, 17, 0, services, out):
-		match state.substep:
-			2:
-				var status: Variant = services["bank_poll"].call(state, out)
-				if out.error.is_empty() and typeof(status) != TYPE_INT:
-					out.error = "stage 11 bank poll status is unknown"
-				elif out.error.is_empty() and int(status) == 1:
-					services["bank_start"].call(state, 1, 0, out)
-					services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xab18, out)
-					state.substep += 1
-			3:
-				if _poll_cd_ready(state, services, out, "stage 11 actor 0"):
-					_emit_audio_command(state, AUDIO_CMD_SE_604, services, out)
-					services["background_read"].call(state, 0xad05, 0, out)
-					state.substep += 1
-			4:
-				if _decode_bg_and_check(state, 0, 0xad05, services, out, "stage 11 bg"):
-					services["actor_read"].call(state, 33, ACTOR_DEST_SECONDARY, 0xac50, out)
-					state.substep += 1
-			5:
-				if _poll_cd_ready(state, services, out, "stage 11 actor 1"):
-					state.opening["prologue_scene_counter"] = 0
-					state.substep += 1
-			6:
-				counter += 1
-				state.opening["prologue_scene_counter"] = counter
-				if counter >= SHIORI_WAIT_FRAMES:
-					state.next_stage()
-			_:
-				out.error = "prologue stage 11 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+	# prologue_line_17_run (prologue.c:1756): seven source substeps on the
+	# O12 actor set up by stage10 case8. Substep2 polls the prologue_shiori
+	# bank load; production services reject it and every later actor effect.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 6:
+		out.error = "prologue stage11 is outside source dispatch"; return
+	if not services.get("rei_line17_effect") is Callable:
+		out.error = "source Rei line17 actor services are unavailable"; return
+	var effect: Callable = services.rei_line17_effect
+	match state.substep:
+		0:
+			state.opening["prologue_line"] = 17
+			services.line_start.call(state,17,out)
+			if out.error.is_empty(): state.substep += 1
+		1:
+			services.line_run.call(state,out)
+		2:
+			var status: Variant = services.bank_poll.call(state,out)
+			if not out.error.is_empty(): return
+			if not status is int:
+				out.error = "stage11 bank poll status is unknown"; return
+			if (status & 1) != 0:
+				services.bank_start.call(state,1,0,out)
+				if out.error.is_empty(): services.actor_read.call(state,0x31,0x801a4000,0xab18,out)
+				if not out.error.is_empty(): return
+				state.substep += 1
+				effect.call(state,"sequence_start",5,out)
+		3:
+			var done: Variant = effect.call(state,"sequence_done",0,out)
+			if not out.error.is_empty(): return
+			if not done is bool:
+				out.error = "Rei line17 requires actual actor96 sequence completion"; return
+			if done:
+				_emit_audio_command(state,AUDIO_CMD_SE_604,services,out)
+				if out.error.is_empty(): state.substep += 1
+		4:
+			if _poll_cd_ready(state,services,out,"stage11 CUT12"):
+				effect.call(state,"palette_adjust",0,out)
+				if out.error.is_empty(): services.background_read.call(state,0xad05,1,out)
+				if out.error.is_empty(): state.substep += 1
+		5:
+			if _poll_cd_ready(state,services,out,"stage11 AD05"):
+				services.actor_read.call(state,0x41,0x801d8000,0xac50,out)
+				if out.error.is_empty(): state.substep += 1
+		6:
+			# prologue.c:1797-1800: a failed decode resets the cache and show
+			# flags (dec_bg_reset) before the reread, as at stages 12 and 14.
+			if _poll_cd_ready(state,services,out,"stage11 AD05") and _decode_bg_or_reset(state,0xad05,services,out,"stage11 AD05","rei_line17_effect"):
+				effect.call(state,"next_scene",0,out)
+				if out.error.is_empty(): state.next_stage()
+	if not out.error.is_empty(): return
+	services.arrival_draw.call(state,1,out)
+	if out.error.is_empty(): services.outer_draw.call(state,2,out)
+
+
+static func _decode_bg_or_reset(state: State, lba: int, services: Dictionary, out: Session.FrameResult, label: String, reset_effect: String = "shiori_effect") -> bool:
+	# dec_bg_show_set(1, dec_bg_decode_to_vram(1)); on bg_decode_result == -1
+	# the source calls dec_bg_reset() (all four cache LBAs, the show flags,
+	# last screen mode, brightness 0x80), then dec_bg_cd_read(lba, 1), which
+	# now misses and reads again; the substep stays (prologue.c:1798, :1858,
+	# :2104). reset_effect names the stage's effect service that owns it.
+	var decoded: Variant = services.background_decode.call(state,1,out)
+	if not out.error.is_empty(): return false
+	if typeof(decoded) != TYPE_INT:
+		out.error = label + " background decode result is unknown"; return false
+	if int(decoded) == -1:
+		services[reset_effect].call(state,"dec_bg_reset",0,out)
+		if out.error.is_empty(): services.background_read.call(state,lba,1,out,true)
+		return false
+	return true
+
+
+static func _shiori_frame_tail(state: State, rng: Rng, blink: String, services: Dictionary, out: Session.FrameResult) -> void:
+	# After the switch, on every frame including the mode_stage_next one:
+	# one rand(); on (rand() & 0xFF) == 0xFF and !(actor98.flags & 1) the blink
+	# start (the effect tests the flag); then dec_bg_draw(1). Stage12 passes
+	# no blink and draws no RNG.
+	if not blink.is_empty():
+		var draw := rng.next("prologue_stage%d:blink" % (13 if blink == "blink_line18" else 14))
+		if (draw & BLINK_MASK_FF) == BLINK_MASK_FF:
+			services.shiori_effect.call(state,blink,0,out)
+			if not out.error.is_empty(): return
+	services.arrival_draw.call(state,1,out)
+	if out.error.is_empty(): services.outer_draw.call(state,2,out)
+	# draw_frame's actor_draw_all follows the mode handler in the same frame.
+	if out.error.is_empty(): services.shiori_effect.call(state,"actor_draw",0,out)
 
 
 static func _stage_12_shiori_load(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", FULL_BRIGHTNESS))
+	# prologue_shiori_load_run (prologue.c:1831): four substeps, no line, no
+	# RNG. Case3 also waits for stage11's actor96 O_13 sequence (flags 5).
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 3:
+		out.error = "prologue stage12 is outside source dispatch"; return
+	if not services.get("shiori_effect") is Callable:
+		out.error = "source Shiori actor services are unavailable"; return
+	var effect: Callable = services.shiori_effect
 	match state.substep:
 		0:
-			services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xab49, out)
-			state.substep += 1
+			services.actor_read.call(state,0x31,0x801a4000,0xab49,out)
+			if out.error.is_empty(): state.substep += 1
 		1:
-			if _poll_cd_ready(state, services, out, "stage 12 actor 0"):
-				services["actor_read"].call(state, 5, ACTOR_DEST_SECONDARY, 0xac91, out)
-				state.substep += 1
+			if _poll_cd_ready(state,services,out,"stage12 CUT_14"):
+				services.actor_read.call(state,9,0x801f0000,0xac91,out)
+				if out.error.is_empty(): state.substep += 1
 		2:
-			if _poll_cd_ready(state, services, out, "stage 12 actor 1"):
-				services["background_read"].call(state, 0xad0b, 1, out)
-				state.substep += 1
+			if _poll_cd_ready(state,services,out,"stage12 O_14"):
+				services.background_read.call(state,0xad0b,1,out)
+				if out.error.is_empty(): state.substep += 1
 		3:
-			if _decode_bg_and_check(state, 1, 0xad0b, services, out, "stage 12 bg"):
-				state.opening["prologue_scene_counter"] = FULL_BRIGHTNESS
-				state.substep += 1
-		4:
-			counter -= 2
-			state.opening["prologue_scene_counter"] = counter
-			if counter < 0:
-				state.next_stage()
-		_:
-			out.error = "prologue stage 12 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+			if _poll_cd_ready(state,services,out,"stage12 AD0B"):
+				var gate: Variant = effect.call(state,"load_gate",0,out)
+				if not out.error.is_empty(): return
+				if not gate is bool:
+					out.error = "stage12 requires actual actor96 sequence state"; return
+				if gate and _decode_bg_or_reset(state,0xad0b,services,out,"stage12 AD0B"):
+					effect.call(state,"load_setup",0,out)
+					if out.error.is_empty(): state.next_stage()
+	if not out.error.is_empty(): return
+	_shiori_frame_tail(state,null,"",services,out)
 
 
 static func _stage_13_shiori_line_18(state: State, rng: Rng, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
+	# prologue_shiori_line_18_run (prologue.c:1939).
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 4:
+		out.error = "prologue stage13 is outside source dispatch"; return
+	if not services.get("shiori_effect") is Callable:
+		out.error = "source Shiori actor services are unavailable"; return
+	var effect: Callable = services.shiori_effect
 	match state.substep:
 		0:
-			state.opening["prologue_scene_counter"] = 0
-			state.substep += 1
-		1:
-			counter += 2
-			state.opening["prologue_scene_counter"] = counter
-			if counter >= FULL_BRIGHTNESS:
-				state.substep += 1
-		2:
 			state.opening["prologue_line"] = 18
-			services["line_start"].call(state, 18, out)
-			state.substep += 1
+			services.line_start.call(state,18,out)
+			if out.error.is_empty(): state.substep += 1
+		1:
+			effect.call(state,"wait_voice",0,out)
+			if not out.error.is_empty(): return
+			if not services.get("cd_audio_state") is Callable:
+				out.error = "Shiori line18 requires original CD playback state"; return
+			var status: Variant = services.cd_audio_state.call(state)
+			if not status is int:
+				out.error = "Shiori line18 CD state is not an integer"; return
+			if (status & 4) != 0: state.substep += 1
+		2:
+			services.line_run.call(state,out)
+			if out.error.is_empty(): effect.call(state,"lip_sync",0,out)
 		3:
-			var blink_draw: int = rng.next("prologue_stage13:blink")
-			if (blink_draw & BLINK_MASK_FF) == BLINK_MASK_FF:
-				state.opening["prologue_blink"] = 1
-			services["line_run"].call(state, out)
+			services.actor_read.call(state,0x21,0x801e8000,0xac9a,out)
+			if out.error.is_empty(): state.substep += 1
 		4:
-			services["actor_read"].call(state, 17, ACTOR_DEST_SECONDARY, 0xac9a, out)
-			state.substep += 1
-		5:
-			if _poll_cd_ready(state, services, out, "stage 13 actor"):
-				state.next_stage()
-		_:
-			out.error = "prologue stage 13 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+			if _poll_cd_ready(state,services,out,"stage13 O_15"):
+				effect.call(state,"line18_setup",0,out)
+				if out.error.is_empty(): state.next_stage()
+	if not out.error.is_empty(): return
+	_shiori_frame_tail(state,rng,"blink_line18",services,out)
 
 
 static func _stage_14_shiori_line_19(state: State, rng: Rng, services: Dictionary, out: Session.FrameResult) -> void:
+	# prologue_shiori_line_19_run (prologue.c:2065). Line19 is the two-clip
+	# line: line_run requests clip 2 when clip 1 ends (no voice-start wait).
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 6:
+		out.error = "prologue stage14 is outside source dispatch"; return
+	if not services.get("shiori_effect") is Callable:
+		out.error = "source Shiori actor services are unavailable"; return
+	var effect: Callable = services.shiori_effect
 	match state.substep:
 		0:
 			state.opening["prologue_line"] = 19
-			services["line_start"].call(state, 19, out)
-			state.substep += 1
+			services.line_start.call(state,19,out)
+			if out.error.is_empty(): state.substep += 1
 		1:
-			var blink_draw: int = rng.next("prologue_stage14:blink")
-			if (blink_draw & BLINK_MASK_FF) == BLINK_MASK_FF:
-				state.opening["prologue_blink"] = 1
-			services["line_run"].call(state, out)
+			services.line_run.call(state,out)
+			if out.error.is_empty(): effect.call(state,"lip_sync_line19",0,out)
 		2:
-			services["background_read"].call(state, 0xacec, 0, out)
-			state.substep += 1
+			effect.call(state,"actors_reset",0,out)
+			if out.error.is_empty(): state.substep += 1
 		3:
-			if _decode_bg_and_check(state, 0, 0xacec, services, out, "stage 14 bg"):
-				services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xab7a, out)
+			# actor99's 26-tick O_15 sequence 2 (flags 5) must end first. The
+			# source raises substep before the P_01_06 nowait read.
+			var done: Variant = effect.call(state,"turn_done",0,out)
+			if not out.error.is_empty(): return
+			if not done is bool:
+				out.error = "Shiori line19 requires actual actor99 sequence completion"; return
+			if done:
 				state.substep += 1
+				services.background_read.call(state,0xacec,1,out)
 		4:
-			if _poll_cd_ready(state, services, out, "stage 14 actor 0"):
-				services["actor_read"].call(state, 13, ACTOR_DEST_SECONDARY, 0xacbb, out)
-				state.substep += 1
+			if _poll_cd_ready(state,services,out,"stage14 ACEC"):
+				services.actor_read.call(state,0x31,0x801a4000,0xab7a,out)
+				if out.error.is_empty(): state.substep += 1
 		5:
-			if _poll_cd_ready(state, services, out, "stage 14 actor 1"):
-				state.next_stage()
-		_:
-			out.error = "prologue stage 14 substep outside source dispatch"
+			if _poll_cd_ready(state,services,out,"stage14 CUT_16"):
+				services.actor_read.call(state,0x19,0x801e8000,0xacbb,out)
+				if out.error.is_empty(): state.substep += 1
+		6:
+			if _poll_cd_ready(state,services,out,"stage14 O_16") and _decode_bg_or_reset(state,0xacec,services,out,"stage14 ACEC"):
+				effect.call(state,"line19_setup",0,out)
+				if out.error.is_empty(): state.next_stage()
+	if not out.error.is_empty(): return
+	_shiori_frame_tail(state,rng,"blink_line19",services,out)
+
+
+# Stages 15-17 (prologue.c:2227-2557, wiki/spec/opening-stages-15-17.md).
+# Line starts by substep: prologue_line = N; prologue_line_start(); substep++.
+const STAGE15_LINES := {0:0x14, 2:0x15, 6:0x16, 8:0x17, 10:0x18, 14:0x19, 18:0x1a, 20:0x1b, 22:0x1c, 24:0x1d, 27:0x1e, 29:0x1f}
+const STAGE15_RUNS := [1, 3, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 28, 30]
+const STAGE15_LIP_SYNC := [1, 7, 11, 15, 19, 23]
+const STAGE15_PULSE := [13, 17, 21]
+# Cases 12/16 build the player's answer (sndisp(text,0,0xF), no
+# cd_audio_request_set); the line services hold them as silent lines 100/101.
+const STAGE15_BUILT_ANSWERS := {12:100, 16:101}
+const STAGE16_LINES := {0:0x20, 2:0x21, 4:0x22, 6:0x23, 8:0x24}
+const STAGE16_RUNS := [1, 3, 5, 7, 9]
+const STAGE16_LIP_SYNC := [1, 5, 9]
+const STAGE15_17_EFFECT := "lines20_37_effect"
+
+
+static func _source_line_start(state: State, line: int, services: Dictionary, out: Session.FrameResult) -> void:
+	state.opening["prologue_line"] = line
+	services["line_start"].call(state, line, out)
 	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+		state.substep += 1
+
+
+static func _stages_15_17_effect(services: Dictionary, out: Session.FrameResult) -> Callable:
+	var effect: Variant = services.get(STAGE15_17_EFFECT)
+	if not effect is Callable or not effect.is_valid():
+		out.error = "source stage15-17 actor services are unavailable"
+		return Callable()
+	return effect
+
+
+static func _stages_15_17_frame_end(state: State, effect: Callable, services: Dictionary, out: Session.FrameResult) -> void:
+	# dec_bg_draw(1) ends each body; the outer handler draws the HUD; then
+	# draw_frame's actor_draw_all (search_tpage, sequence steps).
+	if out.error.is_empty(): services["arrival_draw"].call(state, 1, out)
+	if out.error.is_empty(): services["outer_draw"].call(state, 2, out)
+	if out.error.is_empty(): effect.call(state, "actor_draw", 0, out)
+
+
+static func _decode_result(state: State, services: Dictionary, out: Session.FrameResult, label: String) -> Variant:
+	# dec_bg_show_set(1, dec_bg_decode_to_vram(1)); null when not decided.
+	var decoded: Variant = services["background_decode"].call(state, 1, out)
+	if out.error.is_empty() and typeof(decoded) != TYPE_INT:
+		out.error = label + " background decode result is unknown"
+	return decoded if out.error.is_empty() else null
 
 
 static func _stage_15_lines_20_to_31(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var handled: bool = false
-	for index: int in range(6):
-		if _run_line_pair(state, 20 + index, index * 2, services, out):
-			handled = true
-			break
-	if not handled:
-		if state.substep == 12:
-			state.opening["prologue_dynamic_line"] = "shiori_birthday"
-			services["line_start"].call(state, 100, out)
+	# prologue_lines_20_to_31_run: 35 substeps on the O_16 actors of stage14.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 34:
+		out.error = "prologue stage15 is outside source dispatch"; return
+	var effect := _stages_15_17_effect(services, out)
+	if not out.error.is_empty(): return
+	var sub: int = state.substep
+	if sub in [0, 1]:
+		effect.call(state, "slide_in", 0, out)
+	elif sub == 4:
+		effect.call(state, "actor99_set", 0, out)
+		if out.error.is_empty(): state.substep += 1
+	elif sub == 5:
+		var done: Variant = effect.call(state, "actor99_done", 0, out)
+		if out.error.is_empty() and not done is bool:
+			out.error = "stage15 actor99 wait requires an actual sequence state"
+		elif out.error.is_empty() and done:
 			state.substep += 1
-		elif state.substep == 13:
-			services["line_run"].call(state, out)
-		elif _run_line_pair(state, 26, 14, services, out):
-			pass
-		elif state.substep == 16:
-			state.opening["prologue_dynamic_line"] = "shiori_blood"
-			services["line_start"].call(state, 101, out)
+	elif sub == 10:
+		effect.call(state, "actor100_set", 0, out)
+	elif sub == 11:
+		effect.call(state, "actor100_rise", 0, out)
+	elif sub == 26:
+		var moved: Variant = effect.call(state, "slide_out", 0, out)
+		if out.error.is_empty() and not moved is bool:
+			out.error = "stage15 exit slide requires actual actor positions"
+		elif out.error.is_empty() and not moved:
 			state.substep += 1
-		elif state.substep == 17:
-			services["line_run"].call(state, out)
-		elif _run_line_pair(state, 27, 18, services, out):
-			pass
-		elif _run_line_pair(state, 28, 20, services, out):
-			pass
-		elif _run_line_pair(state, 29, 22, services, out):
-			pass
-		elif _run_line_pair(state, 30, 24, services, out):
-			pass
-		elif state.substep == 26:
-			var actor_x: int = int(state.opening.get("prologue_actor_x", 0)) + 2
-			state.opening["prologue_actor_x"] = actor_x
-			if actor_x >= 0x40:
-				state.mode_step_timer = 0
-				state.substep += 1
-		elif state.substep == 27:
-			state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
-			if Math.u32(state.mode_step_timer) >= CLOSING_HOLD_FRAMES:
-				state.substep += 1
-		elif _run_line_pair(state, 31, 28, services, out):
-			pass
-		elif state.substep == 30:
-			state.mode_step_timer = Math.add32(state.mode_step_timer, 1)
-			if Math.u32(state.mode_step_timer) >= CLOSING_HOLD_FRAMES:
-				state.substep += 1
-		elif state.substep == 31:
-			services["background_read"].call(state, 0xacd4, 1, out)
-			state.substep += 1
-		elif state.substep == 32:
-			if _decode_bg_and_check(state, 1, 0xacd4, services, out, "stage 15 bg"):
-				services["actor_read"].call(state, 25, ACTOR_DEST_PRIMARY, 0xaa54, out)
-				state.substep += 1
-		elif state.substep == 33:
-			if _poll_cd_ready(state, services, out, "stage 15 actor 0"):
-				services["actor_read"].call(state, 13, ACTOR_DEST_SECONDARY, 0xabca, out)
-				state.substep += 1
-		elif state.substep == 34:
-			if _poll_cd_ready(state, services, out, "stage 15 actor 1"):
-				state.next_stage()
-		else:
-			out.error = "prologue stage 15 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+	if not out.error.is_empty(): return
+	if STAGE15_LINES.has(sub):
+		_source_line_start(state, STAGE15_LINES[sub], services, out)
+	elif STAGE15_BUILT_ANSWERS.has(sub):
+		# prologue_line keeps 0x18; no clip request and no audio_command.
+		services["line_start"].call(state, STAGE15_BUILT_ANSWERS[sub], out)
+		if out.error.is_empty(): state.substep += 1
+	elif sub in STAGE15_RUNS:
+		services["line_run"].call(state, out)
+		# The effect runs even when line_run just did substep++ (same frame);
+		# it is told the substep this body dispatched from.
+		if out.error.is_empty() and sub in STAGE15_LIP_SYNC: effect.call(state, "lip_sync", sub, out)
+		if out.error.is_empty() and sub in STAGE15_PULSE: effect.call(state, "pulse", sub, out)
+	elif sub == 31:
+		services["background_read"].call(state, 0xacd4, 1, out)
+		if out.error.is_empty(): state.substep += 1
+	elif sub == 32:
+		if _poll_cd_ready(state, services, out, "stage15 P_01_04"):
+			services["actor_read"].call(state, 0x31, 0x801a4000, 0xaa54, out)
+			if out.error.is_empty(): state.substep += 1
+	elif sub == 33:
+		if _poll_cd_ready(state, services, out, "stage15 CUT_07"):
+			services["actor_read"].call(state, 0x19, 0x801e8000, 0xabca, out)
+			if out.error.is_empty(): state.substep += 1
+	elif sub == 34:
+		if _poll_cd_ready(state, services, out, "stage15 O_07"):
+			var decoded: Variant = _decode_result(state, services, out, "stage15 P_01_04")
+			if decoded == -1:
+				# dec_bg_reset, then the cut (not the background) is read again.
+				effect.call(state, "bg_reset", 0, out)
+				if out.error.is_empty(): services["actor_read"].call(state, 0x31, 0x801a4000, 0xaa54, out)
+			elif decoded != null:
+				effect.call(state, "next_scene", 0, out)
+				if out.error.is_empty(): state.next_stage()
+	_stages_15_17_frame_end(state, effect, services, out)
 
 
 static func _stage_16_lines_32_to_36(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	if _run_line_pair(state, 32, 0, services, out):
-		pass
-	elif _run_line_pair(state, 33, 2, services, out):
-		pass
-	elif state.substep == 4:
+	# prologue_lines_32_to_36_run: Yoshio lines on the O_07 actors of 15/34.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 11:
+		out.error = "prologue stage16 is outside source dispatch"; return
+	var effect := _stages_15_17_effect(services, out)
+	if not out.error.is_empty(): return
+	var sub: int = state.substep
+	if sub == 4:
+		# audio_bank_start(0,1): the source ignores its result. The service owns
+		# the pack-word decision (-1 queues nothing) and the native bank0 start
+		# (services/prologue_bank0_audio.gd).
 		services["bank_start"].call(state, 0, 1, out)
-		state.opening["prologue_line"] = 34
-		services["line_start"].call(state, 34, out)
-		state.substep += 1
-	elif state.substep == 5:
+	if not out.error.is_empty(): return
+	if STAGE16_LINES.has(sub):
+		_source_line_start(state, STAGE16_LINES[sub], services, out)
+	elif sub in STAGE16_RUNS:
 		services["line_run"].call(state, out)
-	elif _run_line_pair(state, 35, 6, services, out):
-		pass
-	elif _run_line_pair(state, 36, 8, services, out):
-		pass
-	elif state.substep == 10:
-		services["background_read"].call(state, 0x496a, 0, out)
-		state.substep += 1
-	elif state.substep == 11:
-		if _decode_bg_and_check(state, 0, 0x496a, services, out, "stage 16 bg"):
-			state.next_stage()
-	else:
-		out.error = "prologue stage 16 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+		if out.error.is_empty() and sub in STAGE16_LIP_SYNC: effect.call(state, "lip_sync", sub, out)
+	elif sub == 10:
+		services["background_read"].call(state, 0x496a, 1, out)
+		if out.error.is_empty(): state.substep += 1
+	elif sub == 11:
+		if _poll_cd_ready(state, services, out, "stage16 P_01_10"):
+			var decoded: Variant = _decode_result(state, services, out, "stage16 P_01_10")
+			if decoded == -1:
+				effect.call(state, "bg_reset", 0, out)
+				if out.error.is_empty(): services["background_read"].call(state, 0x496a, 1, out, true)
+			elif decoded != null:
+				effect.call(state, "clear_scene", 0, out)
+				if out.error.is_empty(): state.next_stage()
+	_stages_15_17_frame_end(state, effect, services, out)
 
 
 static func _stage_17_line_37(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	if not _run_line_pair(state, 37, 0, services, out):
-		match state.substep:
-			2:
-				services["background_read"].call(state, 0x4973, 1, out)
-				state.substep += 1
-			3:
-				if _decode_bg_and_check(state, 1, 0x4973, services, out, "stage 17 bg"):
-					services["actor_read"].call(state, 33, ACTOR_DEST_SECONDARY, 0xac50, out)
-					state.substep += 1
-			4:
-				if _poll_cd_ready(state, services, out, "stage 17 actor"):
-					state.next_stage()
-			_:
-				out.error = "prologue stage 17 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+	# prologue_line_37_run: the O_13 read and mode_stage_next share the
+	# frame; nothing waits for that read (stage18 starts line 0x26 at once).
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 3:
+		out.error = "prologue stage17 is outside source dispatch"; return
+	var effect := _stages_15_17_effect(services, out)
+	if not out.error.is_empty(): return
+	match state.substep:
+		0:
+			_source_line_start(state, 0x25, services, out)
+		1:
+			services["line_run"].call(state, out)
+		2:
+			services["background_read"].call(state, 0x4973, 1, out)
+			if out.error.is_empty(): state.substep += 1
+		3:
+			if _poll_cd_ready(state, services, out, "stage17 P_01_12"):
+				var decoded: Variant = _decode_result(state, services, out, "stage17 P_01_12")
+				if decoded == -1:
+					effect.call(state, "bg_reset", 0, out)
+					if out.error.is_empty(): services["background_read"].call(state, 0x4973, 1, out, true)
+				elif decoded != null:
+					services["actor_read"].call(state, 0x41, 0x80180000, 0xac50, out)
+					if out.error.is_empty(): state.next_stage()
+	_stages_15_17_frame_end(state, effect, services, out)
+
+
+static func _closing_effect(services: Dictionary, out: Session.FrameResult) -> Callable:
+	var effect: Variant = services.get("prologue_closing_effect")
+	if not effect is Callable or not effect.is_valid():
+		out.error = "source closing-scene services are unavailable"
+		return Callable()
+	return effect
+
+
+static func _closing_frame_tail(state: State, services: Dictionary, effect: Callable, out: Session.FrameResult) -> void:
+	# The _run's dec_bg_draw(1), the dispatcher tail, then draw_frame's
+	# actor_draw_all after game_mode_dispatch (main_loop.c:50-70). On the
+	# 20->21 switch frame actor96 is hidden, so it neither draws nor steps.
+	services.arrival_draw.call(state, 1, out)
+	if out.error.is_empty(): services.outer_draw.call(state, 2, out)
+	if out.error.is_empty() and state.mode_stage in [18, 19, 20]: effect.call(state, "actor_draw", 0, out)
 
 
 static func _stage_18_lines_38_to_41(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	if _run_line_pair(state, 38, 0, services, out):
-		pass
-	elif _run_line_pair(state, 39, 2, services, out):
-		pass
-	elif _run_line_pair(state, 40, 4, services, out):
-		pass
-	elif state.substep == 6:
-		state.opening["prologue_line"] = 41
-		services["line_start"].call(state, 41, out)
-		state.substep += 1
-	elif state.substep == 7:
-		services["line_run"].call(state, out)
-		if state.substep > 7:
+	# prologue_lines_38_to_41_run (prologue.c:2565-2610): ten source substeps.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 9:
+		out.error = "prologue stage18 is outside source dispatch"; return
+	var effect := _closing_effect(services, out)
+	if not out.error.is_empty(): return
+	match state.substep:
+		0, 3, 5, 7:
+			var line: int = {0: 38, 3: 39, 5: 40, 7: 41}[state.substep]
+			state.opening["prologue_line"] = line
+			services.line_start.call(state, line, out)
+			if out.error.is_empty(): state.substep += 1
+		1:
+			# Waits for XA playback; prologue_line_run is not called.
+			effect.call(state, "wait_voice", 0, out)
+			if not out.error.is_empty(): return
+			if not services.get("cd_audio_state") is Callable:
+				out.error = "line38 requires original CD playback state"; return
+			var status: Variant = services.cd_audio_state.call(state)
+			if not status is int:
+				out.error = "line38 CD state is not an integer"; return
+			if (status & 4) != 0: state.substep += 1
+		2, 4, 6, 8:
+			services.line_run.call(state, out)
+		9:
 			state.opening["prologue_scene_counter"] = 0
 			state.next_stage()
-	else:
-		out.error = "prologue stage 18 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+	if out.error.is_empty(): _closing_frame_tail(state, services, effect, out)
 
 
 static func _stage_19_flash(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
+	# prologue_flash_run (prologue.c:2618-2678): 64 frames per counter ramp
+	# (4 per frame, unclamped, exits at >= 0x100 and < 3), 257 frames total.
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 4:
+		out.error = "prologue stage19 is outside source dispatch"; return
+	var effect := _closing_effect(services, out)
+	if not out.error.is_empty(): return
+	var counter: Variant = state.opening.get("prologue_scene_counter")
+	if not counter is int:
+		out.error = "stage19 requires the scene counter reset by stage18"; return
 	match state.substep:
-		0, 2:
+		0:
+			effect.call(state, "flash", counter, out)
+			if not out.error.is_empty(): return
 			counter += 4
-			if counter >= FLASH_MAX:
-				counter = FLASH_MAX
-				state.substep += 1
 			state.opening["prologue_scene_counter"] = counter
-		1:
+			if counter >= 0x100:
+				effect.call(state, "actor_setup", 0, out)
+				if out.error.is_empty(): state.substep += 1
+		1, 3:
+			if state.substep == 1: effect.call(state, "white", 0, out)
+			if out.error.is_empty(): effect.call(state, "flash", counter, out)
+			if not out.error.is_empty(): return
 			counter -= 4
-			if counter <= 0:
-				counter = 0
-				state.substep += 1
 			state.opening["prologue_scene_counter"] = counter
-		3:
-			counter -= 2
-			if counter <= 0:
-				counter = 0
-				state.opening["prologue_scene_counter"] = 0
-				state.next_stage()
-			else:
-				state.opening["prologue_scene_counter"] = counter
-		_:
-			out.error = "prologue stage 19 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+			if counter < 3: state.substep += 1
+		2:
+			effect.call(state, "white", 0, out)
+			if out.error.is_empty(): effect.call(state, "flash", counter, out)
+			if not out.error.is_empty(): return
+			counter += 4
+			state.opening["prologue_scene_counter"] = counter
+			if counter >= 0x100:
+				state.substep += 1
+				effect.call(state, "actor_hide", 0, out)
+		4:
+			state.next_stage()
+	if out.error.is_empty(): _closing_frame_tail(state, services, effect, out)
 
 
 static func _stage_20_closing(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	var counter: int = int(state.opening.get("prologue_scene_counter", 0))
-	if not _run_line_pair(state, 42, 0, services, out):
-		if state.substep == 2:
-			counter += 1
-			state.opening["prologue_scene_counter"] = counter
+	# prologue_closing_run (prologue.c:2686-2706).
+	if state.mode_step != 0 or state.substep < 0 or state.substep > 2:
+		out.error = "prologue stage20 is outside source dispatch"; return
+	var effect := _closing_effect(services, out)
+	if not out.error.is_empty(): return
+	match state.substep:
+		0:
+			state.opening["prologue_line"] = 42
+			state.opening["prologue_scene_counter"] = 0
+			services.line_start.call(state, 42, out)
+			if out.error.is_empty(): state.substep += 1
+		1:
+			services.line_run.call(state, out)
+		2:
+			# if (prologue_scene_counter++ >= 0x3D): tests the old value.
+			var counter: Variant = state.opening.get("prologue_scene_counter")
+			if not counter is int:
+				out.error = "stage20 requires the scene counter reset by case0"; return
+			state.opening["prologue_scene_counter"] = counter + 1
 			if counter >= CLOSING_HOLD_FRAMES:
-				_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
-				_emit_audio_command(state, AUDIO_CMD_FADE_D1, services, out)
-				state.next_stage()
-		else:
-			out.error = "prologue stage 20 substep outside source dispatch"
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
+				if not services.get("audio_command") is Callable or not services.audio_command.is_valid():
+					out.error = "stage20 BGM fade requires the source audio command owner"; return
+				services.audio_command.call(state, AUDIO_CMD_SYSTEM_FLAG, out)
+				if out.error.is_empty(): services.audio_command.call(state, AUDIO_CMD_FADE_D1, out)
+				if out.error.is_empty(): state.next_stage()
+	if out.error.is_empty(): _closing_frame_tail(state, services, effect, out)
 
 
 static func _stage_21_finish(state: State, services: Dictionary, out: Session.FrameResult) -> void:
-	match state.substep:
-		0:
-			if not _call_required_finish_service("finish_cd_reset", state, services, out):
-				return
-			state.opening["D_800B5BD4"] = 0x0f
-			state.opening["screen_brightness"] = FULL_BRIGHTNESS
-			if not _call_required_finish_service("finish_bank_reset", state, services, out):
-				return
-			_emit_audio_command(state, AUDIO_CMD_SYSTEM_FLAG, services, out)
-			_emit_audio_command(state, AUDIO_CMD_FADE_D1, services, out)
-			if out.error.is_empty():
-				services["bank_load_start"].call(state, "normal_gameplay", out)
-			if out.error.is_empty():
-				state.substep += 1
-		1:
-			state.opening["D_800B3DB0"] = 0
-			state.opening["text_speed"] = 3
-			state.rule_state["menu_mode"] = 1
-			state.reset_game_mode_fields(MODE_COMMAND_SCREEN)
-			state.set_stage(STAGE_COMMAND_RELOAD)
-		_:
-			out.error = "prologue finish substep outside source dispatch"
-
-	if out.error.is_empty():
-		services["outer_draw"].call(state, 2, out)
-
-
-static func _call_required_finish_service(name: String, state: State, services: Dictionary, out: Session.FrameResult) -> bool:
-	var callback: Variant = services.get(name)
-	if not callback is Callable or not callback.is_valid():
-		out.error = "prologue finish needs service: " + name
-		return false
-	callback.call(state, out)
-	return out.error.is_empty()
+	# prologue_mode_stage_finish -> prologue_finish_run (prologue.c:2714-2741).
+	# The body runs only at mode_step 0, which mode_stage_set/next guarantee;
+	# substep only goes 0 -> 1, so any other value is state the source never
+	# produces (its `default:` shares case 1) and is refused, not run.
+	if state.mode_step != 0 or state.substep not in [0, 1]:
+		out.error = FINISH_DISPATCH_ERROR
+		return
+	for key: String in FINISH_SERVICES:
+		if not services.get(key) is Callable or not services[key].is_valid():
+			out.error = "prologue finish needs service: " + key
+			return
+	if state.substep == 0:
+		services.finish_cd_reset.call(state, out) # cd_command_reset
+		if not out.error.is_empty(): return
+		state.opening["D_800B5BD4"] = 0x0f # checker_ot_slot of hud_screen_frame_draw
+		state.opening["screen_brightness"] = FULL_BRIGHTNESS
+		services.finish_bank_reset.call(state, out) # audio_bank_state_reset
+		if out.error.is_empty(): services.audio_command.call(state, AUDIO_CMD_SYSTEM_FLAG, out)
+		if out.error.is_empty(): services.audio_command.call(state, AUDIO_CMD_FADE_D1, out)
+		if out.error.is_empty(): services.finish_bank_load.call(state, FINISH_BANK_ARGS, out)
+		if out.error.is_empty(): state.substep += 1
+	else:
+		state.opening["D_800B3DB0"] = 0
+		state.opening["text_speed"] = TEXT_SPEED_SLOW # k_speed_set(TEXT_SPEED_SLOW)
+		state.rule_state["menu_mode"] = MENU_MODE_A
+		# game_mode_set(0x34): field reset, then game_mode_request_overlay. Mode
+		# 0x34 is resident in main, so the mode changes at once with no loader
+		# frames; talk_voice_wait_frames = 0 and, as ovl_target_game_mode still
+		# holds 0x15, message_window_title_show(0).
+		state.reset_game_mode_fields(MODE_COMMAND_SCREEN)
+		state.rule_state["voice_wait_frames"] = 0
+		state.rule_state["message_title_visible"] = false
+		state.set_stage(STAGE_COMMAND_RELOAD)
+	if not out.error.is_empty(): return
+	# Handler tail: hud_screen_frame_draw(2) on both frames (stage 21, then
+	# stage 0xFF). There is no dec_bg_draw, so the background is not drawn.
+	services.outer_draw.call(state, 2, out)

@@ -25,6 +25,7 @@ const SubgameOverlays = preload("res://overlays/subgame_overlays.gd")
 const EventCgOverlay = preload("res://overlays/event_cg_scenes_overlay.gd")
 const SystemOverlays = preload("res://overlays/system_overlays.gd")
 const RuleFixtures = preload("res://tests/rules/run_rule_tests.gd")
+const ClearSave = preload("res://services/clear_save_transaction.gd")
 
 const MANIFEST_PATH := "/workspace/.asset-cache/port/school-day-tables-v1-final/manifest.json"
 const RECONCILIATION_JSON_PATH := "/workspace/.claude/orchestrator/state/T-29030/reachable-families-live-entry-and-return-gate-v1/g3-reachability-reconciliation.json"
@@ -183,6 +184,77 @@ func _queue_day_event_and_step(ctx: Dictionary, opcode: int, arg1: int = 0, arg2
 	return state.game_mode
 
 
+## T-39006: an event family without a source-backed production handler is
+## refused when saved state is present. Every input must fail the frame, keep
+## the native mode, leave saved state (overlay included) unchanged and carry no
+## deltas. The overlay must already be initialized (a neutral frame or
+## start_overlay).
+func _assert_production_rejection(ctx: Dictionary, native_mode: int, label: String, pads: Array = [PAD_CIRCLE, PAD_CROSS, PAD_DOWN]) -> void:
+	var state: State = ctx["state"]
+	var session: Session = ctx["session"]
+	var controller: Controller = ctx["controller"]
+	var before: Dictionary = state.rule_state.duplicate(true)
+	for pad: int in pads:
+		var res: Session.FrameResult = _step_pad(session, pad)
+		_check(res.error.contains("refused with saved state"),
+			"%s refuses saved-state input 0x%04X in production (%s)" % [label, pad, res.error])
+		_check(state.game_mode == native_mode and state.rule_state == before,
+			"%s refusal keeps mode 0x%02X and leaves saved state unchanged" % [label, native_mode])
+	var direct: Dictionary = controller.overlay_dispatcher.step_overlay(native_mode,
+		state.rule_state.get("overlay_state", {}), PAD_CIRCLE, state.rule_state, session.rng)
+	_check(not bool(direct.get("completed", true)) and (direct.get("deltas", {}) as Dictionary).is_empty()
+		and state.rule_state == before, "%s refusal completes nothing and carries no deltas" % label)
+
+
+## A refused family has no production exit. The gate drops its overlay and puts
+## the harness back on the day screen (0x31) before testing the next family.
+func _leave_refused_family(state: State) -> void:
+	state.rule_state.erase("overlay_state")
+	state.reset_game_mode_fields(0x31)
+
+
+func _preview_rng() -> Rng:
+	var rng := Rng.new()
+	rng.configure(Rng.OPENBIOS_PROFILE, 42)
+	return rng
+
+
+## Preview stepping (no saved state) moves an overlay for rendering checks
+## only. It never writes saved state.
+func _preview(controller: Controller, mode: int, overlay_state: Dictionary, pads: Array) -> Dictionary:
+	var current: Dictionary = overlay_state.duplicate(true)
+	for pad: int in pads:
+		current = controller.overlay_dispatcher.step_overlay(mode, current, pad, {}, _preview_rng())["state"]
+	return current
+
+
+## An entered family refused in production: checks the refusal, then a preview
+## run that populates `key`, renders 320x240 and exits without rewards.
+func _check_refused_family(ctx: Dictionary, native_mode: int, render_mode_id: int, label: String, key: String, key_pads: Array, exit_pads: Array, refused_pads: Array = [PAD_CIRCLE, PAD_CROSS, PAD_DOWN]) -> void:
+	var state: State = ctx["state"]
+	var controller: Controller = ctx["controller"]
+	var entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, native_mode, label, refused_pads)
+	var shown: Dictionary = _preview(controller, native_mode, entry, key_pads)
+	_check(shown.has(key), "%s preview populates %s" % [label, key])
+	var img: Image = controller.overlay_dispatcher.render_mode(render_mode_id, shown).get("image")
+	_check(img != null and img.get_size() == Vector2i(320, 240), "%s renders 320x240" % label)
+	_check_preview_exit_without_rewards(controller, native_mode, shown, exit_pads, label)
+	_leave_refused_family(state)
+
+
+## Steps a preview to its exit and checks no step carries reward deltas.
+func _check_preview_exit_without_rewards(controller: Controller, mode: int, overlay_state: Dictionary, pads: Array, label: String) -> void:
+	var current: Dictionary = overlay_state.duplicate(true)
+	var last: Dictionary = {}
+	var deltas_empty: bool = true
+	for pad: int in pads:
+		last = controller.overlay_dispatcher.step_overlay(mode, current, pad, {}, _preview_rng())
+		deltas_empty = deltas_empty and (last.get("deltas", {}) as Dictionary).is_empty()
+		current = last["state"]
+	_check(bool(last.get("completed", false)) and deltas_empty, "%s preview exits without reward deltas" % label)
+
+
 # ---------------------------------------------------------------------------
 # (a) Telephone / Profile / Invitation (0x3D TEL, 0x3E TEL_ACTION, native 0x43, 0x45, event 0x46)
 # ---------------------------------------------------------------------------
@@ -202,22 +274,18 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 		var res_wait: Session.FrameResult = _step_pad(session, 0)
 		_check(res_wait.error.is_empty() and state.game_mode == 0x45, "TEL_ACTION (0x45) waits on neutral input")
 
-	_step_pad(session, PAD_DOWN)
-	var ovl_prof: Dictionary = state.rule_state.get("overlay_state", {})
-	_check(int(ovl_prof.get("cursor", -1)) == 1 and int(ovl_prof.get("girl_id", -1)) == 1, "TEL_ACTION cursor moved to girl 1")
+	# T-39006: TEL_ACTION has no source-backed production handler; with saved state every input is refused.
+	var ovl_prof_entry: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
+	_assert_production_rejection(ctx, 0x45, "TEL_ACTION (0x45)")
+	var ovl_prof: Dictionary = _preview(controller, 0x45, ovl_prof_entry, [PAD_DOWN])
+	_check(int(ovl_prof.get("cursor", -1)) == 1 and int(ovl_prof.get("girl_id", -1)) == 1, "TEL_ACTION preview cursor moved to girl 1")
 	var ren_prof: Dictionary = controller.overlay_dispatcher.render_mode(0x45, ovl_prof)
 	var img_prof: Image = ren_prof.get("image")
 	_check(ren_prof.get("error", "") == "" and img_prof != null and img_prof.get_size() == Vector2i(320, 240),
 		"TEL_ACTION renders 320x240 notebook profile screen")
 
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x45 and int(state.rule_state["overlay_state"].get("stage", 0)) == 1,
-		"TEL_ACTION stage 0 -> 1 on first PAD_CIRCLE")
-	var aff_before_prof: int = State.high(int(state.rule_state["girls"][1]["affection_word"]))
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "TEL_ACTION returns cleanly to 0x31 after stage 1 confirmation")
-	var aff_after_prof: int = State.high(int(state.rule_state["girls"][1]["affection_word"]))
-	_check(aff_after_prof == aff_before_prof + 1, "TEL_ACTION writes back affection_delta (+1) to inspected heroine")
+	_check_preview_exit_without_rewards(controller, 0x45, ovl_prof, [PAD_CIRCLE, PAD_CIRCLE], "TEL_ACTION")
+	_leave_refused_family(state)
 
 	# 2. Telephone Date Invitation via queue event 0x46 -> native 0x5A -> dispatcher 0x3D (GAME_MODE_TEL)
 	var aff0_before: int = State.high(int(state.rule_state["girls"][0]["affection_word"]))
@@ -231,34 +299,41 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 		var res_wait2: Session.FrameResult = _step_pad(session, 0)
 		_check(res_wait2.error.is_empty() and state.game_mode == 0x5A, "GAME_MODE_TEL waits on neutral input")
 
+	# T-39006: TEL has no source-backed production handler (phone_date_invitation_resolve writes are
+	# not ported). With saved state it is refused: no appointment, no affection or tokimeki write.
+	var ovl_tel: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
+	var appointments_before: Array = (state.rule_state["appointment_words"] as Array).duplicate()
+	_assert_production_rejection(ctx, 0x5A, "GAME_MODE_TEL (0x5A)")
+	_check(state.rule_state["appointment_words"] == appointments_before
+		and State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff0_before
+		and State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok0_before,
+		"GAME_MODE_TEL refusal books no appointment and writes no affection or tokimeki")
+
+	# Preview stepping (no saved state) drives the screens for rendering checks only.
 	# Stage 0: place_select -> move cursor down, render place menu, confirm place
-	_step_pad(session, PAD_DOWN)
-	var ovl_place: Dictionary = state.rule_state.get("overlay_state", {})
+	var ovl_place: Dictionary = _preview(controller, 0x5A, ovl_tel, [PAD_DOWN])
 	_check(String(ovl_place.get("subscreen", "")) == "place_select" and int(ovl_place.get("cursor", -1)) == 1,
-		"TEL stage 0 place_select cursor moved to 1")
+		"TEL preview stage 0 place_select cursor moved to 1")
 	var img_place: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_place).get("image")
 	_check(img_place != null and img_place.get_size() == Vector2i(320, 240), "TEL place_select renders 320x240 image")
 
 	# Confirm place -> Stage 1: day_select
-	_step_pad(session, PAD_CIRCLE)
-	var ovl_day0: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
+	var ovl_day0: Dictionary = _preview(controller, 0x5A, ovl_place, [PAD_CIRCLE])
 	_check(int(ovl_day0.get("stage", -1)) == 1 and String(ovl_day0.get("subscreen", "")) == "day_select",
 		"TEL advanced to stage 1 (day_select)")
 	var img_day0: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_day0).get("image")
 
 	# Move cursor on calendar day slots and verify green calendar highlight + hand cursor shift pixels
-	_step_pad(session, PAD_DOWN)
-	var ovl_day1: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
+	var ovl_day1: Dictionary = _preview(controller, 0x5A, ovl_day0, [PAD_DOWN])
 	var img_day1: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_day1).get("image")
 	_check(_image_diff_pixels(img_day0, img_day1) > 0,
 		"TEL day_select cursor movement shifts green calendar highlight + hand cursor pixels")
 
 	# Confirm day -> Stage 2: call_response
-	_step_pad(session, PAD_CIRCLE)
-	var ovl_call: Dictionary = state.rule_state.get("overlay_state", {}).duplicate(true)
+	# The preview's invitation evaluation is not asserted: its inputs are invented.
+	var ovl_call: Dictionary = _preview(controller, 0x5A, ovl_day1, [PAD_CIRCLE])
 	_check(int(ovl_call.get("stage", -1)) == 2 and String(ovl_call.get("subscreen", "")) == "call_response",
-		"TEL advanced to stage 2 (call_response)")
-	_check(bool(ovl_call.get("invitation_evaluation", {}).get("accepted", false)), "TEL invitation accepted by Shiori")
+		"TEL preview advanced to stage 2 (call_response)")
 
 	# Verify call_response renders 320x240 and actor2/frame1 prompt marker toggles pixels
 	var ovl_marker_off: Dictionary = ovl_call.duplicate(true)
@@ -287,15 +362,8 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 	var img_marker_on: Image = controller.overlay_dispatcher.render_mode(0x3D, ovl_marker_on).get("image")
 	_check(_image_diff_pixels(img_marker_off, img_marker_on) > 0, "TEL call_response actor2/frame1 prompt marker toggles pixels")
 
-	# Complete call -> return to 0x31 and verify appointment_words + affection/tokimeki writeback
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "TEL returns cleanly to 0x31 after call response")
-	_check(int(state.rule_state["appointment_words"][0]) != 0,
-		"TEL writes booked date appointment into rule_state.appointment_words")
-	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff0_before + 2,
-		"TEL writes back affection_delta (+2) on accepted invitation")
-	_check(State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok0_before + 2,
-		"TEL writes back tokimeki_delta (+2) on accepted invitation")
+	_check_preview_exit_without_rewards(controller, 0x5A, ovl_call, [PAD_CIRCLE], "GAME_MODE_TEL")
+	_leave_refused_family(state)
 
 	_family_evidence["telephone_profile_invitation"] = {
 		"native_modes": ["0x3D", "0x3E", "0x43", "0x45", "0x5A"],
@@ -304,8 +372,8 @@ func _test_a_telephone_profile_invitation(tables: Dictionary) -> void:
 		"source_functions": ["telephone_main", "phone_menu_step", "phone_evaluate_invitation", "phone_book_appointment"],
 		"entry_and_caller": "DayEventModes 0x46 -> native 0x5A (or start_overlay 0x43/0x45) -> SchoolDayController._overlay_mode -> OverlayDispatcher",
 		"required_content_services": ["OverlayDispatcher.telephone_presenter", "TelephoneOverlay.GIRL_PROFILES", "TelephoneOverlay.PHONE_INVITATION_BASE_ADJUSTMENTS"],
-		"return_and_state_effects": "Returns to 0x31; writes rule_state.appointment_words, girls[id].affection_word (+2/+1), girls[id].tokimeki_word (+2)",
-		"verified_live": true,
+		"return_and_state_effects": "T-39006: refused with saved state (no appointment, affection or tokimeki write); preview steps render and exit without rewards",
+		"verified_live": false,
 	}
 
 
@@ -333,69 +401,80 @@ func _test_b_date_choice_cg_ride_movie(tables: Dictionary) -> void:
 	var img_arrival: Image = controller.overlay_dispatcher.render_mode(0x50, state.rule_state["overlay_state"]).get("image")
 	_check(img_arrival != null and img_arrival.get_size() == Vector2i(320, 240), "GAME_MODE_DATE stage 0 arrival renders 320x240")
 
-	# Advance to Stage 1 (3-choice prompt) and verify 3 distinct cursor positions (actor0 selection cursor)
-	_step_pad(session, PAD_CIRCLE)
-	_check(int(state.rule_state["overlay_state"].get("stage", -1)) == 1, "GAME_MODE_DATE advances to stage 1 (3-choice prompt)")
-	var img_c0: Image = controller.overlay_dispatcher.render_mode(0x50, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_DOWN)
-	var img_c1: Image = controller.overlay_dispatcher.render_mode(0x50, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_DOWN)
-	var img_c2: Image = controller.overlay_dispatcher.render_mode(0x50, state.rule_state["overlay_state"]).get("image")
+	# T-39006: date spot state comes from DateOverlay.create_default_state, not saved state, so
+	# with saved state the date is refused: no affection, tokimeki or date_count write.
+	var ovl_date: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x50, "GAME_MODE_DATE (0x50)")
+	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before
+		and State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok_before
+		and int(state.rule_state["girls"][0]["counters"][1]) == dc_before,
+		"GAME_MODE_DATE refusal writes no affection, tokimeki or date_count")
+
+	# Preview stepping (no saved state): 3-choice prompt with 3 distinct cursor positions (actor0 selection cursor)
+	var ovl_c0: Dictionary = _preview(controller, 0x50, ovl_date, [PAD_CIRCLE])
+	_check(int(ovl_c0.get("stage", -1)) == 1, "GAME_MODE_DATE preview advances to stage 1 (3-choice prompt)")
+	var ovl_c1: Dictionary = _preview(controller, 0x50, ovl_c0, [PAD_DOWN])
+	var ovl_c2: Dictionary = _preview(controller, 0x50, ovl_c1, [PAD_DOWN])
+	var img_c0: Image = controller.overlay_dispatcher.render_mode(0x50, ovl_c0).get("image")
+	var img_c1: Image = controller.overlay_dispatcher.render_mode(0x50, ovl_c1).get("image")
+	var img_c2: Image = controller.overlay_dispatcher.render_mode(0x50, ovl_c2).get("image")
 	_check(_image_diff_pixels(img_c0, img_c1) > 0 and _image_diff_pixels(img_c1, img_c2) > 0 and _image_diff_pixels(img_c0, img_c2) > 0,
 		"GAME_MODE_DATE 3-choice prompt renders 3 distinct actor0 selection cursor frames")
 
-	# Select choice 0 (best choice) and advance through stage 2 -> return to 0x31
-	_step_pad(session, PAD_DOWN) # wrap 2 -> 0
-	_step_pad(session, PAD_CIRCLE)
-	_check(int(state.rule_state["overlay_state"].get("stage", -1)) == 2, "GAME_MODE_DATE advances to stage 2 (spot reaction)")
-	var img_react: Image = controller.overlay_dispatcher.render_mode(0x50, state.rule_state["overlay_state"]).get("image")
+	# Select choice 0 (wrap 2 -> 0) and advance to stage 2; the preview exit carries no rewards.
+	var ovl_react: Dictionary = _preview(controller, 0x50, ovl_c2, [PAD_DOWN, PAD_CIRCLE])
+	_check(int(ovl_react.get("stage", -1)) == 2, "GAME_MODE_DATE preview advances to stage 2 (spot reaction)")
+	var img_react: Image = controller.overlay_dispatcher.render_mode(0x50, ovl_react).get("image")
 	_check(img_react != null and img_react.get_size() == Vector2i(320, 240), "GAME_MODE_DATE stage 2 reaction renders 320x240")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "GAME_MODE_DATE returns cleanly to 0x31")
-	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) > aff_before, "GAME_MODE_DATE writes back positive affection_delta")
-	_check(State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) > tok_before, "GAME_MODE_DATE writes back positive tokimeki_delta")
-	_check(int(state.rule_state["girls"][0]["counters"][1]) == dc_before + 1, "GAME_MODE_DATE increments heroine date_count counter (+1)")
+	_check_preview_exit_without_rewards(controller, 0x50, ovl_react, [PAD_CIRCLE], "GAME_MODE_DATE")
+	_leave_refused_family(state)
 
 	# 2. Amusement Park / Karaoke Date2 (event 0x49 -> native 0x58 -> GAME_MODE_AMUSEMENT_PARK_DATE)
 	var mode_amuse: int = _queue_day_event_and_step(ctx, 0x49, 3, 0, 0)
 	_check(mode_amuse == 0x58, "Day event 0x49 dispatches live to native mode 0x58 (GAME_MODE_AMUSEMENT_PARK_DATE)")
-	state.rule_state["overlay_state"]["subscene_kind"] = "amusement_coaster"
 	_step_pad(session, 0)
 	_check(state.game_mode == 0x58, "AMUSEMENT_PARK_DATE waits on neutral input")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("coaster_score"), "AMUSEMENT_PARK_DATE evaluates coaster choice score")
-	var img_amuse: Image = controller.overlay_dispatcher.render_mode(0x58, state.rule_state["overlay_state"]).get("image")
+	var ovl_amuse_entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x58, "AMUSEMENT_PARK_DATE (0x58)")
+	ovl_amuse_entry["subscene_kind"] = "amusement_coaster"
+	var ovl_amuse: Dictionary = _preview(controller, 0x58, ovl_amuse_entry, [PAD_CIRCLE])
+	_check(ovl_amuse.has("coaster_score"), "AMUSEMENT_PARK_DATE preview evaluates coaster choice score")
+	var img_amuse: Image = controller.overlay_dispatcher.render_mode(0x58, ovl_amuse).get("image")
 	_check(img_amuse != null and img_amuse.get_size() == Vector2i(320, 240), "AMUSEMENT_PARK_DATE renders 320x240")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "AMUSEMENT_PARK_DATE returns cleanly to 0x31")
+	_check_preview_exit_without_rewards(controller, 0x58, ovl_amuse, [PAD_CIRCLE], "AMUSEMENT_PARK_DATE")
+	_leave_refused_family(state)
 
 	# 3. Special Event CG & Ride Movie (event 0x45 -> native 0x5D / 0x5E -> GAME_MODE_EVENT_CG)
 	var mode_cg: int = _queue_day_event_and_step(ctx, 0x45, 0, 0, 0)
-	_check(mode_cg == 0x5D and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x5E,
+	_check(mode_cg == 0x5D and int(state.rule_state.get("overlay_state", {}).get("dispatcher_mode", -1)) == 0x5E,
 		"Day event 0x45 dispatches live to native mode 0x5D -> dispatcher 0x5E (GAME_MODE_EVENT_CG)")
-	state.rule_state["overlay_state"]["scene_kind"] = "shiori_cg"
-	state.rule_state["overlay_state"]["spot_place"] = EventCgOverlay.SPOT_KIRAMEKI_CENTRAL_PARK
 	_step_pad(session, 0)
 	_check(state.game_mode == 0x5D, "GAME_MODE_EVENT_CG waits on neutral input")
-	_step_pad(session, PAD_CIRCLE)
-	var img_cg0: Image = controller.overlay_dispatcher.render_mode(0x5E, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_DOWN)
-	var img_cg1: Image = controller.overlay_dispatcher.render_mode(0x5E, state.rule_state["overlay_state"]).get("image")
+	var ovl_cg_entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x5D, "GAME_MODE_EVENT_CG (0x5D)")
+	ovl_cg_entry["scene_kind"] = "shiori_cg"
+	ovl_cg_entry["spot_place"] = EventCgOverlay.SPOT_KIRAMEKI_CENTRAL_PARK
+	var ovl_cg0: Dictionary = _preview(controller, 0x5D, ovl_cg_entry, [PAD_CIRCLE])
+	var ovl_cg1: Dictionary = _preview(controller, 0x5D, ovl_cg0, [PAD_DOWN])
+	var img_cg0: Image = controller.overlay_dispatcher.render_mode(0x5E, ovl_cg0).get("image")
+	var img_cg1: Image = controller.overlay_dispatcher.render_mode(0x5E, ovl_cg1).get("image")
 	_check(_image_diff_pixels(img_cg0, img_cg1) > 0, "GAME_MODE_EVENT_CG choice cursor shifts pixels")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("choice_result"), "GAME_MODE_EVENT_CG records special scene choice_result")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "GAME_MODE_EVENT_CG returns cleanly to 0x31")
+	var ovl_cg2: Dictionary = _preview(controller, 0x5D, ovl_cg1, [PAD_CIRCLE])
+	_check(ovl_cg2.has("choice_result"), "GAME_MODE_EVENT_CG preview records special scene choice_result")
+	_check_preview_exit_without_rewards(controller, 0x5D, ovl_cg2, [PAD_CIRCLE], "GAME_MODE_EVENT_CG")
+	_leave_refused_family(state)
 
-	# Ride movie LBA dispatch check on 0x5E
+	# Ride movie LBA dispatch check on 0x5E (refused with saved state; LBA checked in preview)
 	controller.start_overlay(state, 0x5E, {"girl_id": 0, "scene_kind": "ride_movie", "ride_id": 2})
-	_step_pad(session, PAD_CIRCLE)
-	var ride_info: Dictionary = state.rule_state["overlay_state"].get("ride_movie", {})
+	var ovl_ride_entry: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x5E, "GAME_MODE_EVENT_CG ride_movie (0x5E)")
+	var ovl_ride: Dictionary = _preview(controller, 0x5E, ovl_ride_entry, [PAD_CIRCLE])
+	var ride_info: Dictionary = ovl_ride.get("ride_movie", {})
 	_check(int(ride_info.get("lba", 0)) > 0, "GAME_MODE_EVENT_CG ride_movie dispatches valid STR movie LBA")
-	var img_ride: Image = controller.overlay_dispatcher.render_mode(0x5E, state.rule_state["overlay_state"]).get("image")
+	var img_ride: Image = controller.overlay_dispatcher.render_mode(0x5E, ovl_ride).get("image")
 	_check(img_ride != null and img_ride.get_size() == Vector2i(320, 240), "GAME_MODE_EVENT_CG ride_movie renders 320x240")
-	_step_pad(session, PAD_CROSS)
-	_check(state.game_mode == 0x31, "GAME_MODE_EVENT_CG ride_movie returns cleanly to 0x31")
+	_check_preview_exit_without_rewards(controller, 0x5E, ovl_ride, [PAD_CROSS], "GAME_MODE_EVENT_CG ride_movie")
+	_leave_refused_family(state)
 
 	_family_evidence["date_choice_cg_ride_movie"] = {
 		"native_modes": ["0x50", "0x58", "0x5D", "0x5E"],
@@ -404,8 +483,8 @@ func _test_b_date_choice_cg_ride_movie(tables: Dictionary) -> void:
 		"source_functions": ["date_main", "date_setup_spot", "date_arrival_and_looks_check", "date_choice_score", "date2_main", "event_cg_main"],
 		"entry_and_caller": "DayEventModes 0x80/0x49/0x45 -> native 0x50/0x58/0x5D -> SchoolDayController._overlay_mode -> OverlayDispatcher",
 		"required_content_services": ["OverlayDispatcher.date_presenter", "OverlayDispatcher.event_cg_presenter", "DateOverlay", "EventCgOverlay"],
-		"return_and_state_effects": "Returns to 0x31; updates affection_word, tokimeki_word, syoushin_word, counters[1] (date_count), scene_flags, ride_movie LBA",
-		"verified_live": true,
+		"return_and_state_effects": "T-39006: DATE, AMUSEMENT_PARK_DATE and EVENT_CG are refused with saved state (no affection, tokimeki or date_count write); preview steps render and exit without rewards",
+		"verified_live": false,
 	}
 
 
@@ -430,20 +509,26 @@ func _test_c_walk_home_and_encounter(tables: Dictionary) -> void:
 		_step_pad(session, 0)
 		_check(state.game_mode == 0x59, "GAME_MODE_GEKO waits on neutral input")
 
-	var img_g0: Image = controller.overlay_dispatcher.render_mode(0x44, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_DOWN)
-	var img_g1: Image = controller.overlay_dispatcher.render_mode(0x44, state.rule_state["overlay_state"]).get("image")
+	# T-39006: walk-home topic inputs are fixed and the roster is invented, so with saved state
+	# GEKO is refused: no affection, tokimeki or syoushin write.
+	var ovl_geko: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x59, "GAME_MODE_GEKO (0x59)")
+	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before
+		and State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok_before,
+		"GAME_MODE_GEKO refusal writes no affection or tokimeki")
+
+	# Preview stepping (no saved state) for rendering only.
+	var img_g0: Image = controller.overlay_dispatcher.render_mode(0x44, ovl_geko).get("image")
+	var ovl_g1: Dictionary = _preview(controller, 0x59, ovl_geko, [PAD_DOWN])
+	var img_g1: Image = controller.overlay_dispatcher.render_mode(0x44, ovl_g1).get("image")
 	_check(img_g0 != null and img_g0.get_size() == Vector2i(320, 240) and _image_diff_pixels(img_g0, img_g1) > 0,
 		"GAME_MODE_GEKO renders 320x240 and shifts invitation choice cursor pixels")
 
-	_step_pad(session, PAD_UP) # back to cursor 0
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("walk_home_topic") and state.rule_state["overlay_state"].has("walk_home_outcome"),
-		"GAME_MODE_GEKO selects walk-home conversation topic & outcome")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "GAME_MODE_GEKO returns cleanly to 0x31")
-	_check(State.high(int(state.rule_state["girls"][0]["affection_word"])) == aff_before + 2, "GAME_MODE_GEKO writes back affection_delta (+2)")
-	_check(State.high(int(state.rule_state["girls"][0]["tokimeki_word"])) == tok_before + 2, "GAME_MODE_GEKO writes back tokimeki_delta (+2)")
+	var ovl_topic: Dictionary = _preview(controller, 0x59, ovl_g1, [PAD_UP, PAD_CIRCLE])
+	_check(ovl_topic.has("walk_home_topic") and ovl_topic.has("walk_home_outcome"),
+		"GAME_MODE_GEKO preview selects walk-home conversation topic & outcome")
+	_check_preview_exit_without_rewards(controller, 0x59, ovl_topic, [PAD_CIRCLE], "GAME_MODE_GEKO")
+	_leave_refused_family(state)
 
 	_family_evidence["walk_home_encounter"] = {
 		"native_modes": ["0x44", "0x59"],
@@ -452,8 +537,8 @@ func _test_c_walk_home_and_encounter(tables: Dictionary) -> void:
 		"source_functions": ["geko_main", "select_walk_home_topic", "apply_walk_home_choice", "finish_walk_home"],
 		"entry_and_caller": "DayEventModes 0x44 -> native 0x59 -> dispatcher 0x44 -> SchoolDayController._overlay_mode",
 		"required_content_services": ["OverlayDispatcher.encounters_ending_presenter", "EncountersOverlay"],
-		"return_and_state_effects": "Returns to 0x31; updates girls[id].affection_word (+2), tokimeki_word (+2) or syoushin_word (+5)",
-		"verified_live": true,
+		"return_and_state_effects": "T-39006: refused with saved state (no affection, tokimeki or syoushin write); preview steps render and exit without rewards",
+		"verified_live": false,
 	}
 
 
@@ -522,6 +607,9 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 	_step_pad(session, PAD_CIRCLE)
 	_check(state.game_mode == 0x31, "Ceremony notice (0x39) returns cleanly to 0x31")
 
+	# T-39006: the families below have no source-backed production handler yet (fixed inputs,
+	# the invented roster or fixed rewards in step_mode). With saved state each one is refused
+	# and writes nothing. Entry dispatch is checked live; screens are checked in preview only.
 	# 2. Sports Festival (event 0x20 -> native 0x72 -> dispatcher 0x47 TAIIKU)
 	var ath_before: int = State.high(int(state.rule_state["params"][4]))
 	var mode_sports: int = _queue_day_event_and_step(ctx, 0x20, 0, 0, 0)
@@ -529,84 +617,68 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 		"Day event 0x20 dispatches live to native 0x72 -> dispatcher 0x47 (TAIIKU)")
 	_step_pad(session, 0)
 	_check(state.game_mode == 0x72, "TAIIKU (0x72) waits on neutral input")
-	var img_sp1: Image = controller.overlay_dispatcher.render_mode(0x47, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_DOWN)
-	var img_sp2: Image = controller.overlay_dispatcher.render_mode(0x47, state.rule_state["overlay_state"]).get("image")
+	var ovl_sp: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	_assert_production_rejection(ctx, 0x72, "TAIIKU (0x72)")
+	_check(State.high(int(state.rule_state["params"][4])) == ath_before, "TAIIKU refusal writes no athletics delta")
+	var img_sp1: Image = controller.overlay_dispatcher.render_mode(0x47, ovl_sp).get("image")
+	var ovl_sp2: Dictionary = _preview(controller, 0x72, ovl_sp, [PAD_DOWN])
+	var img_sp2: Image = controller.overlay_dispatcher.render_mode(0x47, ovl_sp2).get("image")
 	_check(img_sp1 != null and img_sp1.get_size() == Vector2i(320, 240) and _image_diff_pixels(img_sp1, img_sp2) > 0,
-		"TAIIKU renders 320x240 HUD and updates competition/cursor pixels")
-	_step_pad(session, PAD_CIRCLE)
-	_step_pad(session, PAD_CIRCLE)
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "TAIIKU returns cleanly to 0x31")
-	_check(State.high(int(state.rule_state["params"][4])) == ath_before + 4, "TAIIKU writes back athletics param delta (+4)")
+		"TAIIKU renders 320x240 HUD and preview updates competition/cursor pixels")
+	_check_preview_exit_without_rewards(controller, 0x72, ovl_sp2, [PAD_CIRCLE, PAD_CIRCLE, PAD_CIRCLE], "TAIIKU")
+	_leave_refused_family(state)
 
 	# 3. Culture Festival (event 0x24 -> native 0x70 BUNKASAI for club<6, native 0x71 BUNKAKEN for club>=6, plus 0x80 BUNKA_SD)
+	# This gate's saved state has no clubs[].practice_points, event_log or timer_ticks, so the
+	# source-backed BUNKASAI handler refuses it (its accepted path is covered by
+	# tests/rules/run_route_state_parity_tests.gd).
 	state.rule_state["player_flags"] = (state.rule_state["player_flags"] & ~(0xF << 12)) | (1 << 12) # club 1 (<6)
 	var mode_cult_a: int = _queue_day_event_and_step(ctx, 0x24, 0, 0, 0)
 	_check(mode_cult_a == 0x70 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x48,
 		"Culture event 0x24 (club<6) dispatches to native 0x70 -> dispatcher 0x48 (BUNKASAI)")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("booth_prep"), "BUNKASAI populates booth_prep")
-	var img_cult_a: Image = controller.overlay_dispatcher.render_mode(0x48, state.rule_state["overlay_state"]).get("image")
-	_check(img_cult_a != null and img_cult_a.get_size() == Vector2i(320, 240), "BUNKASAI renders 320x240")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "BUNKASAI returns cleanly to 0x31")
+	# BUNKASAI only acts on CIRCLE; CROSS is "cancel_rejected" with no effect (no source exit).
+	var cult_before: Dictionary = state.rule_state.duplicate(true)
+	var cult_cross: Session.FrameResult = _step_pad(session, PAD_CROSS)
+	var cult_after: Dictionary = state.rule_state.duplicate(true)
+	cult_before.erase("overlay_state")
+	cult_after.erase("overlay_state")
+	_check(cult_cross.error.is_empty() and state.game_mode == 0x70 and cult_after == cult_before
+		and String(state.rule_state["overlay_state"].get("action", "")) == "cancel_rejected",
+		"BUNKASAI CROSS has no source exit: refused without completion or saved-state writes")
+	_check_refused_family(ctx, 0x70, 0x48, "BUNKASAI (0x70)", "booth_prep", [PAD_CIRCLE], [PAD_CIRCLE], [PAD_CIRCLE])
 
 	state.rule_state["player_flags"] = (state.rule_state["player_flags"] & ~(0xF << 12)) | (7 << 12) # club 7 (>=6)
 	var mode_cult_b: int = _queue_day_event_and_step(ctx, 0x24, 0, 0, 0)
 	_check(mode_cult_b == 0x71 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x4A,
 		"Culture event 0x24 (club>=6) dispatches to native 0x71 -> dispatcher 0x4A (BUNKAKEN)")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("visitor_girl"), "BUNKAKEN populates visitor_girl")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "BUNKAKEN returns cleanly to 0x31")
+	_check_refused_family(ctx, 0x71, 0x4A, "BUNKAKEN (0x71)", "visitor_girl", [PAD_CIRCLE], [PAD_CIRCLE])
 
 	# BUNKA_SD (native 0x80 -> dispatcher 0x49)
 	controller.start_overlay(state, 0x80, {"girl_id": 1, "club_id": 1})
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("stage_show"), "BUNKA_SD (0x80 -> 0x49) evaluates stage_show")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "BUNKA_SD returns cleanly to 0x31")
+	_check_refused_family(ctx, 0x80, 0x49, "BUNKA_SD (0x80)", "stage_show", [PAD_CIRCLE], [PAD_CIRCLE])
 
 	# 4. Exam Results (event 0x40 -> native 0x35 / dispatcher 0x35 EXAM)
 	var hum_before: int = State.high(int(state.rule_state["params"][1]))
 	var mode_exam: int = _queue_day_event_and_step(ctx, 0x40, 0, 0, 0)
 	_check(mode_exam == 0x35, "Day event 0x40 dispatches live to native mode 0x35 (EXAM)")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("exam_ranking"), "EXAM computes exam_ranking table")
-	var img_exam: Image = controller.overlay_dispatcher.render_mode(0x35, state.rule_state["overlay_state"]).get("image")
-	_check(img_exam != null and img_exam.get_size() == Vector2i(320, 240), "EXAM renders 320x240 results frame")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "EXAM returns cleanly to 0x31")
-	_check(State.high(int(state.rule_state["params"][1])) == hum_before + 2, "EXAM writes back academic param deltas (+2)")
+	_check_refused_family(ctx, 0x35, 0x35, "EXAM (0x35)", "exam_ranking", [PAD_CIRCLE], [PAD_CIRCLE])
+	_check(State.high(int(state.rule_state["params"][1])) == hum_before, "EXAM refusal writes no academic parameter delta")
 
-	# 5. Summer Club Camp (event 0x42 -> native 0x5F -> dispatcher 0x51 RENSYU, +1 calendar day)
+	# 5. Summer Club Camp (event 0x42 -> native 0x5F -> dispatcher 0x51 RENSYU)
 	var day_count_before_camp: int = int(state.rule_state["day_count"])
 	var mode_camp: int = _queue_day_event_and_step(ctx, 0x42, 0, 0, 0)
 	_check(mode_camp == 0x5F and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x51,
 		"Day event 0x42 dispatches live to native 0x5F -> dispatcher 0x51 (RENSYU camp)")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("practice_evaluation"), "RENSYU (0x5F) evaluates club practice/camp")
-	var img_camp: Image = controller.overlay_dispatcher.render_mode(0x51, state.rule_state["overlay_state"]).get("image")
-	_check(img_camp != null and img_camp.get_size() == Vector2i(320, 240), "RENSYU renders 320x240 camp screen")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "RENSYU returns cleanly to 0x31")
-	_check(int(state.rule_state["day_count"]) == day_count_before_camp + 1, "RENSYU advances calendar by +1 day on completion")
+	_check_refused_family(ctx, 0x5F, 0x51, "RENSYU (0x5F)", "practice_evaluation", [PAD_CIRCLE], [PAD_CIRCLE])
+	_check(int(state.rule_state["day_count"]) == day_count_before_camp, "RENSYU refusal does not advance the calendar")
 
-	# 6. School Trip (event 0x41 -> native 0x51 -> dispatcher 0x4C SHUGAKU, +6 calendar days)
+	# 6. School Trip (event 0x41 -> native 0x51 -> dispatcher 0x4C SHUGAKU)
 	var day_count_before_trip: int = int(state.rule_state["day_count"])
 	var mode_trip: int = _queue_day_event_and_step(ctx, 0x41, 0, 0, 0)
 	_check(mode_trip == 0x51 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x4C,
 		"Day event 0x41 dispatches live to native 0x51 -> dispatcher 0x4C (SHUGAKU school trip)")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("trip_state"), "SHUGAKU stage 0 initializes trip_state")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("corridor_event"), "SHUGAKU stage 1 resolves hotel corridor encounter")
-	var img_trip: Image = controller.overlay_dispatcher.render_mode(0x4C, state.rule_state["overlay_state"]).get("image")
-	_check(img_trip != null and img_trip.get_size() == Vector2i(320, 240), "SHUGAKU renders 320x240 companion screen")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "SHUGAKU returns cleanly to 0x31")
-	_check(int(state.rule_state["day_count"]) == day_count_before_trip + 6, "SHUGAKU advances calendar by +6 days on completion")
+	_check_refused_family(ctx, 0x51, 0x4C, "SHUGAKU (0x51)", "corridor_event", [PAD_CIRCLE, PAD_CIRCLE], [PAD_CIRCLE])
+	_check(int(state.rule_state["day_count"]) == day_count_before_trip, "SHUGAKU refusal does not advance the calendar")
 
 	# 7. Holiday / Seasonal Encounters via queue opcodes:
 	#    0x2C -> 0x41 (KANGEI 0x4D), 0x28 -> 0x42 (SHOUGATU 0x4E), 0x31 -> 0x54 (VALEN 0x4F),
@@ -626,23 +698,13 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 		var ent_m: int = _queue_day_event_and_step(ctx, op_s, 0, 0, 0)
 		_check(ent_m == exp_native and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == exp_disp,
 			"Seasonal event 0x%02X dispatches live to native 0x%02X / dispatcher 0x%02X" % [op_s, exp_native, exp_disp])
-		_step_pad(session, PAD_CIRCLE)
-		_check(state.rule_state["overlay_state"].has(exp_k), "Seasonal mode 0x%02X populates %s" % [exp_native, exp_k])
-		var img_s: Image = controller.overlay_dispatcher.render_mode(exp_disp, state.rule_state["overlay_state"]).get("image")
-		_check(img_s != null and img_s.get_size() == Vector2i(320, 240), "Seasonal mode 0x%02X renders 320x240" % exp_native)
-		_step_pad(session, PAD_CIRCLE)
-		_check(state.game_mode == 0x31, "Seasonal mode 0x%02X returns cleanly to 0x31" % exp_native)
+		_check_refused_family(ctx, exp_native, exp_disp, "Seasonal mode 0x%02X" % exp_native, exp_k, [PAD_CIRCLE], [PAD_CIRCLE])
 
 	# 8. Festival Stall Games (native 0x82 -> dispatcher 0x53 EN_NICHI)
 	controller.start_overlay(state, 0x82, {"girl_id": 0})
 	_check(state.game_mode == 0x82 and int(state.rule_state["overlay_state"].get("dispatcher_mode", -1)) == 0x53,
 		"Entered native 0x82 -> dispatcher 0x53 (EN_NICHI)")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.rule_state["overlay_state"].has("stall_result"), "EN_NICHI populates stall_result")
-	var img_stall: Image = controller.overlay_dispatcher.render_mode(0x53, state.rule_state["overlay_state"]).get("image")
-	_check(img_stall != null and img_stall.get_size() == Vector2i(320, 240), "EN_NICHI renders 320x240")
-	_step_pad(session, PAD_CIRCLE)
-	_check(state.game_mode == 0x31, "EN_NICHI returns cleanly to 0x31")
+	_check_refused_family(ctx, 0x82, 0x53, "EN_NICHI (0x82)", "stall_result", [PAD_CIRCLE], [PAD_CIRCLE])
 
 	_family_evidence["seasonal_and_school_events"] = {
 		"native_modes": ["0x35", "0x39", "0x41", "0x42", "0x47", "0x48", "0x49", "0x4A", "0x4B", "0x4C", "0x4D", "0x4E", "0x4F", "0x51", "0x52", "0x53", "0x54", "0x55", "0x56", "0x57", "0x5F", "0x61", "0x70", "0x71", "0x72", "0x73", "0x74", "0x75", "0x76", "0x80", "0x82"],
@@ -651,8 +713,8 @@ func _test_e_seasonal_and_school_events(tables: Dictionary) -> void:
 		"source_functions": ["taiiku_main", "bunkasai_main", "bunka_sd_main", "bunkaken_main", "exam_main", "rensyu_main", "shugaku_main", "kangei_main", "shougatu_main", "valen_main", "omimai_main", "master_main", "en_nichi_main"],
 		"entry_and_caller": "DayEventModes scheduler opcodes -> SchoolDayController._day_screen -> _overlay_mode -> OverlayDispatcher",
 		"required_content_services": ["OverlayDispatcher.school_events_presenter", "OverlayDispatcher.encounters_ending_presenter", "SchoolEventsOverlay", "EndingOverlay"],
-		"return_and_state_effects": "Returns to 0x31; applies stat/affection/tokimeki deltas; SHUGAKU advances +6 days; RENSYU advances +1 day",
-		"verified_live": true,
+		"return_and_state_effects": "T-39006: the ceremony notice (ETC menu) returns to 0x31; every event family here is refused with saved state (no parameter, affection, tokimeki or calendar write; BUNKASAI also lacks clubs/event_log/timer_ticks in this fixture); preview steps render and exit without rewards",
+		"verified_live": false,
 	}
 
 
@@ -733,18 +795,20 @@ func _test_g_subgames_live_entry_and_return(tables: Dictionary) -> void:
 	for _n in range(3):
 		_step_pad(session, 0)
 		_check(state.game_mode == 0x81, "RPG_BATTLE does not auto-exit on neutral input")
-	var img_rpg0: Image = controller.overlay_dispatcher.render_mode(0x57, state.rule_state["overlay_state"]).get("image")
-	_step_pad(session, PAD_DOWN)
-	var img_rpg1: Image = controller.overlay_dispatcher.render_mode(0x57, state.rule_state["overlay_state"]).get("image")
+	# T-39006: the battle uses a fixed rand_seed instead of native rand(), so with saved state
+	# it is refused and writes no talk_result_code. Screens are checked in preview only.
+	var ovl_rpg: Dictionary = state.rule_state["overlay_state"].duplicate(true)
+	var talk_before: Variant = state.rule_state.get("talk_result_code")
+	_assert_production_rejection(ctx, 0x81, "RPG_BATTLE (0x81)")
+	_check(state.rule_state.get("talk_result_code") == talk_before, "RPG_BATTLE refusal writes no talk_result_code")
+	var img_rpg0: Image = controller.overlay_dispatcher.render_mode(0x57, ovl_rpg).get("image")
+	var img_rpg1: Image = controller.overlay_dispatcher.render_mode(0x57, _preview(controller, 0x81, ovl_rpg, [PAD_DOWN])).get("image")
 	_check(img_rpg0 != null and img_rpg0.get_size() == Vector2i(320, 240) and _image_diff_pixels(img_rpg0, img_rpg1) > 0,
-		"RPG_BATTLE renders 320x240 and command cursor shifts pixels")
-	_step_pad(session, PAD_UP) # Back to Attack (cursor 0)
-	_step_pad(session, PAD_CIRCLE) # Defeats enemy (180 HP) -> victory stage 10
-	_check(state.game_mode == 0x81 and bool(state.rule_state["overlay_state"].get("victory", false)),
-		"RPG_BATTLE reaches victory stage 10 and waits for player confirm")
-	_step_pad(session, PAD_CIRCLE) # Exits victory screen -> 0x31
-	_check(state.game_mode == 0x31 and int(state.rule_state.get("talk_result_code", -1)) == 0,
-		"RPG_BATTLE completes interactively, writes talk_result_code=0, and returns to 0x31")
+		"RPG_BATTLE renders 320x240 and preview command cursor shifts pixels")
+	var ovl_victory: Dictionary = _preview(controller, 0x81, ovl_rpg, [PAD_CIRCLE]) # Attack defeats the 180 HP enemy
+	_check(bool(ovl_victory.get("victory", false)), "RPG_BATTLE preview reaches victory stage 10 and waits for confirm")
+	_check_preview_exit_without_rewards(controller, 0x81, ovl_victory, [PAD_CIRCLE], "RPG_BATTLE")
+	_leave_refused_family(state)
 
 	# 2. TACO Shooter (native 0x90 / 0x59 -> dispatcher 0x59 GAME_MODE_TACO)
 	controller.start_overlay(state, 0x90, {"waves_per_stage": 1, "target_stages": 1})
@@ -800,7 +864,7 @@ func _test_g_subgames_live_entry_and_return(tables: Dictionary) -> void:
 		"source_functions": ["rpg_battle_main", "taco_shooter_main", "tt_twinbee_main"],
 		"entry_and_caller": "SchoolDayController.start_overlay / DayEventModes 0x81/0x90/0xD0 -> _overlay_mode -> OverlayDispatcher",
 		"required_content_services": ["OverlayDispatcher.subgame_presenter", "SubgameOverlays"],
-		"return_and_state_effects": "Returns to 0x31; writes talk_result_code/rpg_result_code/loot_rewards (RPG), high_scores/stages_cleared (TACO), tt_rankings/tt_stages_cleared (TT)",
+		"return_and_state_effects": "T-39006: RPG is refused with saved state (no talk_result_code); TACO and TT return to 0x31 with only their subgame payload fields (high_scores/stages_cleared, tt_rankings/tt_stages_cleared)",
 		"verified_live": true,
 	}
 
@@ -840,6 +904,13 @@ func _test_h_graduation_and_ending_flows(tables: Dictionary) -> void:
 
 	for _step in range(4):
 		_step_pad(session_win, PAD_CIRCLE)
+	# T-39007: the fourth confirm requests the clear save; the host storage
+	# transaction answers with the completion that finishes the ending.
+	var clear_host: ClearSave = ClearSave.new("/tmp/t39007-g3-" + str(Time.get_ticks_usec()))
+	var clear_service: Dictionary = clear_host.service_request(state_win.rule_state["overlay_state"])
+	var clear_tick: int = session_win.clock.logic_iterations
+	session_win.step(InputFrame.new(clear_tick, 0), [Session.ServiceEvent.new(clear_tick, Session.Phase.BEFORE_MODE,
+		Session.ServiceKind.COMPLETION, clear_service.get("service", ""), clear_service.get("payload", {}))])
 	_check(int(state_win.rule_state.get("ending_completed", 0)) == 1, "Heroine confession ending completes after 4 interactive phases")
 	_check(int(state_win.rule_state.get("confessed_girl", -1)) == EndingOverlay.GIRL_SHIORI, "Confession ending selects Shiori (girl 0)")
 	_check(String(state_win.rule_state.get("ending_type", "")) == "confession", "Confession ending records ending_type = 'confession'")
@@ -866,9 +937,12 @@ func _test_h_graduation_and_ending_flows(tables: Dictionary) -> void:
 	_step_pad(session_bad, 0)
 	_step_pad(session_bad, 0)
 	_check(state_bad.game_mode == 0x5C, "Ineligible Graduation Day transitions to mode 0x5C (ENDING)")
-	for _step in range(3):
+	for _step in range(2):
 		_step_pad(session_bad, PAD_CIRCLE)
+	# T-39007: cross answers "no" to the clear-save prompt, so nothing is stored.
+	_step_pad(session_bad, EndingOverlay.PAD_CROSS)
 	_check(int(state_bad.rule_state.get("ending_completed", 0)) == 1, "Bad ending completes after 3 interactive phases")
+	_check(not bool(state_bad.rule_state.get("clear_save_completed", true)), "Declined bad-ending clear save is not marked saved")
 	_check(int(state_bad.rule_state.get("confessed_girl", -1)) == EndingOverlay.GIRL_YOSHIO, "Bad ending selects GIRL_YOSHIO (13)")
 	_check(String(state_bad.rule_state.get("ending_type", "")) == "yoshio_bad_ending", "Bad ending records ending_type = 'yoshio_bad_ending'")
 	_check(state_bad.rule_state.get("ending_phases", []) == ["yoshio_bad_ending", "staff_roll", "clear_save"],
@@ -952,6 +1026,7 @@ func _reconcile_and_emit_g3_lists() -> void:
 		"checks_failed": _fail_count,
 	}
 
+	DirAccess.make_dir_recursive_absolute(RECONCILIATION_JSON_PATH.get_base_dir())
 	var f := FileAccess.open(RECONCILIATION_JSON_PATH, FileAccess.WRITE)
 	_check(f != null, "Write reconciliation JSON to " + RECONCILIATION_JSON_PATH)
 	if f != null:

@@ -12,7 +12,6 @@ extends "res://presentation/command_hud_presenter.gd"
 ## - Authentic PS1 HUD sprites (Frame 62 message window, Frame 113..115 title badge, Frame 156 hand cursor)
 ## Runner and companion helpers include preview drawings; scene fidelity needs separate verification.
 
-const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
 const RUNNER_INPUT_SPEED_DEFAULT := 0x1000
 
 # Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366)

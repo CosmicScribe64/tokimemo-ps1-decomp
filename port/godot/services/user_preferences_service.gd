@@ -34,7 +34,8 @@ static func defaults() -> Dictionary:
 		"accessibility": {"text_speed": "normal", "auto_delay": 0.0, "skip": "read",
 			"font_scale": 1.0, "backdrop": 1.0, "reduce_flashes": false, "reduce_shake": false},
 		"language": {"text": "ja", "text_manifest": "", "text_sha256": "", "voice": "ja",
-			"voice_manifest": "", "voice_sha256": "", "dialogue_manifest": "", "dialogue_sha256": ""}}
+			"voice_manifest": "", "voice_sha256": "", "dialogue_manifest": "", "dialogue_sha256": "",
+			"ui_text_manifest": "", "ui_text_sha256": ""}}
 
 func _init(storage_path: String = "user://desktop-settings.json") -> void:
 	path = storage_path
@@ -55,7 +56,7 @@ static func validate(candidate: Variant) -> Dictionary:
 		if not candidate.get(section) is Dictionary: return {}
 		for key: String in result[section]:
 			if not candidate[section].has(key):
-				if section == "language" and key in ["dialogue_manifest", "dialogue_sha256"]: continue
+				if section == "language" and key in ["dialogue_manifest", "dialogue_sha256", "ui_text_manifest", "ui_text_sha256"]: continue
 				return {}
 			var value: Variant = candidate[section][key]
 			if section == "audio" and key == "buses":

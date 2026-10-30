@@ -6,6 +6,8 @@ const ExternalPath = preload("res://services/external_content_path.gd")
 const Text = preload("res://services/prologue_text_store.gd")
 const MediaStore = preload("res://services/first_arrival_media_store.gd")
 const BoardStore = preload("res://services/first_arrival_board_store.gd")
+const FinishBank = preload("res://services/prologue_finish_bank_store.gd")
+const CommandReload = preload("res://services/command_reload_store.gd")
 const Hud = preload("res://presentation/prologue_hud_source_provider.gd")
 const Painter = preload("res://presentation/prologue_text_presenter.gd")
 const Audio = preload("res://services/audio_service.gd")
@@ -13,6 +15,17 @@ const Lines = preload("res://services/prologue_line_services.gd")
 var text: Text
 var media_store: MediaStore
 var board_store: BoardStore
+## Stage21 COM_MIX/SPRING sector reads (installed first_arrival_finish_bank
+## role); null without that role, which keeps prologue_finish_run case 0 an
+## explicit rejection.
+var finish_bank: FinishBank
+## Mode 0x34 command reload reads (installed first_arrival_command_reload
+## role); null without that role, which keeps the reload's CALROM and room
+## reads explicit rejections.
+var command_reload: CommandReload
+## Inventoried command HUD manifest (with its identity), font root and rule
+## tables (FILE_ROLES hud_manifest / rule_tables); empty without them.
+var hud_manifest: Dictionary = {}
 var hud: Hud
 var painter: Painter
 var audio: Audio
@@ -27,6 +40,8 @@ func prepare(profile: Dictionary) -> String:
 	var next_text := Text.new()
 	var next_media := MediaStore.new()
 	var next_board: BoardStore = null
+	var next_finish: FinishBank = null
+	var next_reload: CommandReload = null
 	var next_hud := Hud.new()
 	var next_painter := Painter.new()
 	var next_audio := Audio.new()
@@ -36,6 +51,23 @@ func prepare(profile: Dictionary) -> String:
 	if error.is_empty() and fresh.paths.has("first_arrival_board"):
 		next_board = BoardStore.new()
 		error = next_board.open_pack(fresh.paths.first_arrival_board,fresh.role_manifests.first_arrival_board.sha256)
+	if error.is_empty() and fresh.paths.has("first_arrival_finish_bank"):
+		# The inventoried finish_bank.json must be the file the store parses.
+		if FileAccess.get_sha256(fresh.role_manifests.first_arrival_finish_bank.path) != fresh.role_manifests.first_arrival_finish_bank.sha256:
+			error = "first_arrival_finish_bank manifest differs from the installed inventory"
+		else:
+			next_finish = FinishBank.new()
+			error = next_finish.open_pack(fresh.paths.first_arrival_finish_bank)
+	if error.is_empty() and fresh.paths.has("first_arrival_command_reload"):
+		if FileAccess.get_sha256(fresh.role_manifests.first_arrival_command_reload.path) != fresh.role_manifests.first_arrival_command_reload.sha256:
+			error = "first_arrival_command_reload manifest differs from the installed inventory"
+		else:
+			next_reload = CommandReload.new()
+			error = next_reload.open_pack(fresh.paths.first_arrival_command_reload)
+	var next_hud_manifest: Dictionary = {}
+	if error.is_empty() and fresh.paths.has("hud_manifest") and fresh.paths.has("font_root") and fresh.paths.has("rule_tables") and fresh.file_identities.has("hud_manifest") and fresh.file_identities.has("rule_tables"):
+		next_hud_manifest = {"manifest":fresh.paths.hud_manifest,"sha256":fresh.file_identities.hud_manifest.sha256,
+			"font_root":fresh.paths.font_root,"rule_tables":fresh.paths.rule_tables,"rule_tables_sha256":fresh.file_identities.rule_tables.sha256}
 	if error.is_empty(): error = next_hud.call("open_installed",fresh.profile_root,fresh.role_manifests.prologue_hud.relative,fresh.role_manifests.prologue_hud.sha256)
 	if error.is_empty(): error = next_hud.snapshot_runtime_assets()
 	if error.is_empty(): error = next_painter.open_font(fresh.paths.font_root)
@@ -49,6 +81,9 @@ func prepare(profile: Dictionary) -> String:
 	text = next_text
 	media_store = next_media
 	board_store = next_board
+	finish_bank = next_finish
+	command_reload = next_reload
+	hud_manifest = next_hud_manifest
 	hud = next_hud
 	painter = next_painter
 	audio = next_audio
@@ -60,7 +95,11 @@ static func _prepare_first_arrival_voiced_lines(next_lines: Lines, next_text: Te
 	var lines: Dictionary = {}
 	var line_levels: Dictionary = {}
 	var clip_levels_by_key: Dictionary = {}
-	for line: int in range(15):
+	# Every prologue line through prologue_finish_run, as Lines.prepare:
+	# 0..42, and the stage15 built answers 100/101 (prologue_line keeps 0x18).
+	var ids: Array = range(43)
+	ids.append_array([100,101])
+	for line: int in ids:
 		var prepared: Dictionary = next_audio.prepare_original_line(line)
 		if not str(prepared.get("error", "")).is_empty():
 			return str(prepared.error)

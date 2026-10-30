@@ -7,15 +7,22 @@ const VERSION: String = "2"
 const MAX_BYTES: int = 8 * 1024 * 1024
 const MAX_NODES: int = 250000
 const MAX_DEPTH: int = 48
+const MAX_SET_ASIDE: int = 8
 var storage_root: String
+## Record kind written into the envelope. The playable session uses FORMAT; the
+## persistent system record (T-39007) uses its own format and validator.
+var record_format: String = FORMAT
+var record_validator: Callable = Callable()
 
-func _init(root: String) -> void:
+func _init(root: String, format_id: String = FORMAT, validator: Callable = Callable()) -> void:
 	storage_root = root
+	record_format = format_id
+	record_validator = validator
 
 func validate_snapshot(snapshot: Dictionary) -> String:
 	var budget: Array[int] = [0]
 	var packed: Dictionary = _pack(snapshot, 0, budget)
-	return packed["error"] if not packed["error"].is_empty() else _snapshot_error(snapshot)
+	return packed["error"] if not packed["error"].is_empty() else _record_error(snapshot)
 
 func save_slot(slot: String, snapshot: Dictionary) -> Dictionary:
 	var paths: Dictionary = _paths(slot)
@@ -25,10 +32,10 @@ func save_slot(slot: String, snapshot: Dictionary) -> Dictionary:
 	var checked: Dictionary = _pack(snapshot, 0, budget)
 	if not checked["error"].is_empty():
 		return checked
-	var validation: String = _snapshot_error(snapshot)
+	var validation: String = _record_error(snapshot)
 	if not validation.is_empty():
 		return _fail(validation)
-	var body: Dictionary = {"format": FORMAT, "version": VERSION, "payload": checked["value"]}
+	var body: Dictionary = {"format": record_format, "version": VERSION, "payload": checked["value"]}
 	var checksum: String = _canonical(body).sha256_text()
 	var encoded: String = _canonical({"body": body, "checksum_sha256": checksum})
 	if encoded.to_utf8_buffer().size() > MAX_BYTES:
@@ -77,6 +84,109 @@ func load_slot(slot: String, backup: bool = false) -> Dictionary:
 		return paths
 	return _read(paths["backup"] if backup else paths["save"])
 
+## T-39007 (review R12): report every file the slot owns without changing any.
+## "missing" means no file; "invalid" carries the read error; staging lists
+## interrupted-save files that block the next save.
+func inspect_slot(slot: String) -> Dictionary:
+	var paths: Dictionary = _paths(slot)
+	if not paths["error"].is_empty():
+		return paths
+	var report: Dictionary = {"error": "", "primary": _file_state(paths["save"]),
+		"backup": _file_state(paths["backup"]), "staging": []}
+	for key: String in ["temp", "backup_temp"]:
+		if FileAccess.file_exists(paths[key]):
+			report["staging"].append(paths[key].get_file())
+	return report
+
+## T-39007 (review R12): explicit player-requested recovery. The backup must
+## validate, the primary must be missing or invalid, and nothing is deleted:
+## an invalid primary is renamed aside before the backup copy is published.
+func recover_from_backup(slot: String) -> Dictionary:
+	var paths: Dictionary = _paths(slot)
+	if not paths["error"].is_empty():
+		return paths
+	for path: String in [paths["temp"], paths["backup_temp"]]:
+		if FileAccess.file_exists(path):
+			return _fail("interrupted save files are present; set them aside first")
+	var backup: Dictionary = _read(paths["backup"])
+	if not backup["error"].is_empty():
+		return _fail("backup is not usable: " + backup["error"])
+	if FileAccess.file_exists(paths["save"]):
+		if _read(paths["save"])["error"].is_empty():
+			return _fail("current save is valid; backup recovery is not needed")
+		var aside: String = _free_aside(paths["save"], "invalid")
+		if aside.is_empty():
+			return _fail("too many set-aside save files; move some out of the save folder")
+		if DirAccess.rename_absolute(paths["save"], aside) != OK:
+			return _fail("invalid save could not be set aside; nothing changed")
+	if not _write(paths["temp"], FileAccess.get_file_as_bytes(paths["backup"])):
+		DirAccess.remove_absolute(paths["temp"])
+		return _fail("recovery copy write failed; backup retained")
+	var staged: Dictionary = _read(paths["temp"])
+	if not staged["error"].is_empty() or staged["checksum_sha256"] != backup["checksum_sha256"]:
+		DirAccess.remove_absolute(paths["temp"])
+		return _fail("recovery copy validation failed; backup retained")
+	if DirAccess.rename_absolute(paths["temp"], paths["save"]) != OK:
+		DirAccess.remove_absolute(paths["temp"])
+		return _fail("recovery publication failed; backup retained")
+	return {"error": "", "checksum_sha256": backup["checksum_sha256"]}
+
+## T-39007 (review R12): staging files left by an interrupted save block every
+## later save. They are renamed aside (bounded), never deleted, so a player or
+## support can still inspect them.
+func set_aside_staging(slot: String) -> Dictionary:
+	var paths: Dictionary = _paths(slot)
+	if not paths["error"].is_empty():
+		return paths
+	var moved: Array[String] = []
+	for key: String in ["temp", "backup_temp"]:
+		var path: String = paths[key]
+		if not FileAccess.file_exists(path):
+			continue
+		var aside: String = _free_aside(path, "interrupted")
+		if aside.is_empty():
+			return _fail("too many set-aside save files; move some out of the save folder")
+		if DirAccess.rename_absolute(path, aside) != OK:
+			return _fail("interrupted save file could not be set aside")
+		moved.append(aside.get_file())
+	if moved.is_empty():
+		return _fail("no interrupted save files are present")
+	return {"error": "", "moved": moved}
+
+## T-39007 (review R12): when no valid backup exists, an invalid primary is
+## renamed aside so later saves can publish again. A valid primary is refused.
+func set_aside_invalid(slot: String) -> Dictionary:
+	var paths: Dictionary = _paths(slot)
+	if not paths["error"].is_empty():
+		return paths
+	if not FileAccess.file_exists(paths["save"]):
+		return _fail("no save file is present")
+	if _read(paths["save"])["error"].is_empty():
+		return _fail("current save is valid; it was not moved")
+	var aside: String = _free_aside(paths["save"], "invalid")
+	if aside.is_empty():
+		return _fail("too many set-aside save files; move some out of the save folder")
+	if DirAccess.rename_absolute(paths["save"], aside) != OK:
+		return _fail("invalid save could not be set aside; nothing changed")
+	return {"error": "", "moved": [aside.get_file()]}
+
+func _file_state(path: String) -> Dictionary:
+	if not FileAccess.file_exists(path):
+		return {"state": "missing"}
+	var read: Dictionary = _read(path)
+	if not read["error"].is_empty():
+		return {"state": "invalid", "error": read["error"]}
+	return {"state": "valid", "checksum_sha256": read["checksum_sha256"]}
+
+func _free_aside(path: String, label: String) -> String:
+	for index: int in range(1, MAX_SET_ASIDE + 1):
+		var candidate: String = "%s.%s-%d" % [path, label, index]
+		if _linked(candidate) or DirAccess.dir_exists_absolute(candidate):
+			return ""
+		if not FileAccess.file_exists(candidate):
+			return candidate
+	return ""
+
 func _read(path: String) -> Dictionary:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -97,7 +207,7 @@ func _read(path: String) -> Dictionary:
 	if not _keys(envelope, ["body", "checksum_sha256"]) or not envelope["body"] is Dictionary or not envelope["checksum_sha256"] is String:
 		return _fail("save envelope schema differs")
 	var body: Dictionary = envelope["body"]
-	if not _keys(body, ["format", "version", "payload"]) or body["format"] != FORMAT or body["version"] != VERSION:
+	if not _keys(body, ["format", "version", "payload"]) or body["format"] != record_format or body["version"] != VERSION:
 		return _fail("unsupported save format/version; explicit migration required")
 	var budget: Array[int] = [0]
 	var decoded: Dictionary = _unpack(body["payload"], 0, budget)
@@ -106,10 +216,13 @@ func _read(path: String) -> Dictionary:
 	if _canonical(body).sha256_text() != envelope["checksum_sha256"]:
 		return _fail("save checksum mismatch")
 	var snapshot: Dictionary = decoded["value"]
-	var validation: String = _snapshot_error(snapshot)
+	var validation: String = _record_error(snapshot)
 	if not validation.is_empty():
 		return _fail(validation)
 	return {"error": "", "snapshot": snapshot, "checksum_sha256": envelope["checksum_sha256"]}
+
+func _record_error(record: Dictionary) -> String:
+	return record_validator.call(record) if record_validator.is_valid() else _snapshot_error(record)
 
 func _snapshot_error(snapshot: Dictionary) -> String:
 	if not _keys(snapshot, ["boundary", "source_version", "content_version", "behavior_version", "gameplay_state", "native_rng", "native_clocks", "queued_service_events"]):

@@ -21,6 +21,7 @@ const EndingOverlay = preload("res://overlays/ending_overlay.gd")
 const OverlayDispatcher = preload("res://app/overlay_dispatcher.gd")
 const DayEventModes = preload("res://rules/day_event_modes.gd")
 const MonthStart = preload("res://scenes/month_start_controller.gd")
+const HudSession = preload("res://presentation/hud_session_context.gd")
 
 const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": [13],
 	"sine_quarter": [1025], "tokimeki_weights": [13], "bonus_param_masks": [13],
@@ -29,12 +30,22 @@ const TABLE_SHAPES: Dictionary = {"command_deltas": [8, 9], "birthday_offsets": 
 	"command0_rank_threshold": [1], "weekday_background_lbas": [8],
 	"weekday_sd_lbas": [25], "sd_select_non_summer": [16], "sd_select_summer": [16]}
 
+const OPTIONAL_RANK_BARS := "command_rank_bars"
+
 var tables: Dictionary = {}
 var error: String = ""
 var command_capabilities: Array[int] = []
 var opening_services: Dictionary = {}
 var month_start: MonthStart = MonthStart.new()
 var overlay_dispatcher: OverlayDispatcher = OverlayDispatcher.new()
+## Mutable command-HUD session handed over by flow/fresh_gameplay_handoff.gd.
+## When set, every 0x34 stage 1 frame runs its source mirrors (see _command).
+var hud_session: HudSession = null
+## T-39007: the ending step built from a successful "ending.clear_save"
+## completion, with the request it answers. It lives only between the
+## BEFORE_MODE delivery and the overlay step of the same frame, never in the
+## serialisable rule state.
+var _clear_save_step: Dictionary = {}
 
 func _init(validated_tables: Dictionary) -> void:
 	# The caller first validates external-pack provenance against original input.
@@ -63,7 +74,17 @@ func _init(validated_tables: Dictionary) -> void:
 		if not _in_range(validated_tables[key], minimum, maximum):
 			error = "original table element exceeds sourced width/index bounds: " + key
 			return
+	# Optional: packs exported before the full rank-bar row lack it; the
+	# scheduler then rejects the commands that need a missing bar.
+	if validated_tables.has(OPTIONAL_RANK_BARS):
+		if not _has_shape(validated_tables[OPTIONAL_RANK_BARS], [5], 0) or not _in_range(validated_tables[OPTIONAL_RANK_BARS], -2147483648, 2147483647):
+			error = "original table malformed: " + OPTIONAL_RANK_BARS
+			return
+		if validated_tables[OPTIONAL_RANK_BARS][0] != validated_tables["command0_rank_threshold"][0]:
+			error = "command_rank_bars[0] differs from command0_rank_threshold at the same address"
+			return
 	tables = validated_tables.duplicate(true)
+	overlay_dispatcher.rule_tables = tables
 
 func _in_range(value: Variant, minimum: int, maximum: int) -> bool:
 	if value is Array:
@@ -124,6 +145,10 @@ func _apply_overlay_deltas(state: State, deltas: Dictionary) -> void:
 	if deltas.is_empty():
 		return
 	var data: Dictionary = state.rule_state
+	if deltas.get("state_writes") is Dictionary:
+		# Whole saved-state values a source-backed resolver computed (T-39006).
+		for key: String in (deltas["state_writes"] as Dictionary).keys():
+			data[key] = deltas["state_writes"][key]
 	var girl_id: int = int(deltas.get("girl_id", 0))
 	if data.get("girls") is Array and girl_id >= 0 and girl_id < (data["girls"] as Array).size():
 		var g_rec: Dictionary = data["girls"][girl_id]
@@ -206,7 +231,29 @@ func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session
 			})
 			return
 
-	var step_out: Dictionary = overlay_dispatcher.step_overlay(mode, ovl_state, input.pressed, data, rng)
+	var step_out: Dictionary = {}
+	var clear_save_step: Dictionary = _clear_save_step
+	_clear_save_step = {}
+	if not clear_save_step.is_empty() and clear_save_step["request"] == ovl_state.get("clear_save_request") \
+			and ovl_state.get("clear_save_status") == "requested":
+		step_out = clear_save_step["step_out"]
+	else:
+		# GameState.timer_ticks (+0x10F4) is one live word, advanced by the timer
+		# interrupt; the port keeps it in the core record. Event rules that read
+		# it (culture_visitor_pick's srand) see that word for this call only, so
+		# rule_state never holds a stale copy.
+		var had_ticks: bool = data.has("timer_ticks")
+		var prior_ticks: Variant = data.get("timer_ticks")
+		data["timer_ticks"] = state.timer_ticks
+		step_out = overlay_dispatcher.step_overlay(mode, ovl_state, input.pressed, data, rng)
+		if had_ticks:
+			data["timer_ticks"] = prior_ticks
+		else:
+			data.erase("timer_ticks")
+	if not String(step_out.get("error", "")).is_empty():
+		# Fail closed: saved state is untouched and the overlay stays where it was.
+		result.error = step_out["error"]
+		return
 	var updated_ovl: Dictionary = step_out.get("state", ovl_state)
 	data["overlay_state"] = updated_ovl
 	var is_completed: bool = bool(step_out.get("completed", false))
@@ -234,7 +281,7 @@ func _overlay_mode(base: CoreState, input: InputFrame, rng: Rng, result: Session
 		data["confessed_girl"] = int(updated_ovl.get("confessed_girl", EndingOverlay.GIRL_YOSHIO))
 		data["ending_type"] = String(updated_ovl.get("ending_type", "yoshio_bad_ending"))
 		data["ending_phases"] = updated_ovl.get("history", []).duplicate()
-		data["clear_save_completed"] = bool(updated_ovl.get("clear_save_completed", true))
+		data["clear_save_completed"] = bool(updated_ovl.get("clear_save_completed", false))
 		state.set_stage(0xff)
 		return
 
@@ -298,12 +345,32 @@ func _command(base: CoreState, input: InputFrame, _rng: Rng, result: Session.Fra
 			result.presentation.append_array(reload_out.presentation)
 			result.transitions.append_array(reload_out.transitions)
 			return
+	var hud_checkpoint: Dictionary = {}
+	if hud_session != null:
+		# boot_frame_begin (main_loop.c:88) clears the cursor guard, then
+		# settings_command_screen_select_frame (home_screens.c:526-535) runs
+		# hud_icon_bar_update(0) and hud_cursor_update before the confirm.
+		hud_checkpoint = hud_session.checkpoint()
+		var message: String = "HUD session state was modified outside the source mirrors" if hud_checkpoint.is_empty() else hud_session.begin_outer_frame()
+		if message.is_empty():
+			message = hud_session.command_screen_frame(input.held, input.pressed)
+		if not message.is_empty():
+			if not hud_checkpoint.is_empty():
+				hud_session.restore(hud_checkpoint)
+			result.error = message
+			return
 	if input.pressed & 0x20:
 		# Reject a reachable unimplemented scheduler branch before confirmation.
 		result.error = Scheduler.initial_branch_error(state)
+	if result.error.is_empty():
+		Command.step(state, input, result, command_capabilities)
+	if hud_session != null:
+		# Command.select_cursor and the HUD menu_cursor_update are the same
+		# source call on two records; they must agree.
+		if result.error.is_empty() and hud_session.menu_cursor() != int(state.rule_state.get("menu_cursor", -1)):
+			result.error = "HUD session menu cursor %d differs from the command cursor %s" % [hud_session.menu_cursor(), str(state.rule_state.get("menu_cursor"))]
 		if not result.error.is_empty():
-			return
-	Command.step(state, input, result, command_capabilities)
+			hud_session.restore(hud_checkpoint)
 
 func _schedule(base: CoreState, _input: InputFrame, rng: Rng, result: Session.FrameResult) -> void:
 	var state: State = _state(base, result)
@@ -390,6 +457,19 @@ const CLUB_SD_SELECT_NON_SUMMER: Array = [
 	[1, 3], [30, 31], [5, 7], [9, 11], [27, 29], [23, 25],
 	[12, 13], [14, 15], [20, 21], [18, 19], [16, 17]
 ]
+# club_sd_set_summer (wiki/spec/m-weekday.md); variant-1 column equals SchoolDay.SUMMER_CLUB_SOLO_SD_SETS.
+const CLUB_SD_SELECT_SUMMER: Array = [
+	[0, 2], [30, 31], [4, 6], [8, 10], [26, 28], [22, 24],
+	[12, 13], [14, 15], [20, 21], [18, 19], [16, 17]
+]
+
+## Companion seen by the club command: the queued record's extra on school
+## days; vacation setup re-runs command_girl_select(4) on saved state instead.
+func club_companion(data: Dictionary, event: Array) -> int:
+	if int(data.get("vacation", 0)) == 0:
+		return int(event[3])
+	var selection: Dictionary = Scheduler.command_girl_select(data, 4, tables)
+	return -1 if not String(selection["error"]).is_empty() else int(selection["companion"])
 
 func _load_descriptor(state: State, request: String) -> Dictionary:
 	var data: Dictionary = state.rule_state
@@ -408,6 +488,15 @@ func _load_descriptor(state: State, request: String) -> Dictionary:
 	var slot: int = resolved.get("sd_set_id", -1)
 	var sd_lba: int = resolved.get("sd_lba", -1)
 	var sectors: int = resolved.get("sectors", 41)
+
+	if command == 4 and club_id >= 0 and club_id <= 10:
+		# club_sd_set_*[club][variant]: variant 0 only for companion 0 (m-weekday,
+		# school_day_sd_set_select). Vacation days ask command_girl_select(4) live.
+		# _school_day rejects a failed lookup (-1) before any descriptor is built.
+		var companion: int = club_companion(data, event)
+		var pairs: Array = CLUB_SD_SELECT_SUMMER if is_summer else CLUB_SD_SELECT_NON_SUMMER
+		slot = int(pairs[club_id][0 if companion == 0 else 1]) if companion >= 0 else -1
+		sd_lba = 27834 + 41 * slot if slot >= 0 else -1
 
 	if vacation_kind == 0 and condition_bucket == 0 and command != 4:
 		var bg_table: Array = tables.get("weekday_background_lbas", [])
@@ -441,11 +530,15 @@ func _school_day(base: CoreState, _input: InputFrame, _rng: Rng, result: Session
 	if event[0] != 0 or event[1] not in [0, 1, 2, 3, 4, 5, 6, 7]:
 		result.error = "unsupported activity queue record"
 		return
-	if event[1] in [1, 2, 3, 4, 5, 6] and event[3] != 15:
-		result.error = "companion variants for command %d are not supported in this tranche" % event[1]
+	# extra is schedule_command_girl_select's result: a heroine 0..10 or 0xF.
+	if int(event[3]) != 15 and (int(event[3]) < 0 or int(event[3]) > 10):
+		result.error = "school-day companion %d is not a command_girl_select result" % int(event[3])
 		return
 	if event[1] == 4:
 		var club_id: int = (data["player_flags"] >> 12) & 15
+		if int(data.get("vacation", 0)) != 0 and club_companion(data, event) < 0:
+			result.error = "vacation club command needs command_girl_select(4) rank inputs"
+			return
 		if club_id >= 11:
 			result.error = "unsupported club command with no active club (club_id 11)"
 			return
@@ -479,6 +572,12 @@ func _setup(state: State, result: Session.FrameResult) -> void:
 		0:
 			match state.substep:
 				0:
+					# dec_bg_cd_read reads bg_lba_cache[0..1] and dec_bg_show[0].
+					for field: String in ["background_cache", "background_show"]:
+						var unsourced: String = State.unsourced_error(data, field)
+						if not unsourced.is_empty():
+							result.error = unsourced
+							return
 					var descriptor: Dictionary = _load_descriptor(state, "background")
 					result.error = OrdinaryWeek.snapshot_parameters(state)
 					if not result.error.is_empty():
@@ -521,11 +620,16 @@ func _setup(state: State, result: Session.FrameResult) -> void:
 					state.substep = 0
 		2:
 			var event: Array = data["day_events"][data["day_event_index"]]
-			if data["scene_work"] in [15, 16]:
+			# Rest ids 15/16 are MAIN_SD ids; club ids 15/16 (soccer, basketball) keep the poor flag.
+			if event[1] != 4 and data["scene_work"] in [15, 16]:
 				event[2] = 0
 			var actors: Array = [_actor(96, event[2], -80, data["sd_anim_fast"])]
 			var kind: int = data["calendar"][0]["day_kind"][data["day"]]
-			if event[1] != 7 and kind not in [1, 2, 3] and event[3] != 15:
+			var companion_actor: bool = event[1] != 7 and kind not in [1, 2, 3] and event[3] != 15
+			if int(data.get("vacation", 0)) != 0:
+				# school_day_vacation_sd_actors_init: actor B only for the club command, live lookup.
+				companion_actor = event[1] == 4 and club_companion(data, event) != 15
+			if companion_actor:
 				actors.append(_actor(97, event[2] + 2, -24, data["sd_anim_fast"]))
 			data["actor_state"] = {}
 			for actor: Dictionary in actors:
@@ -549,6 +653,24 @@ func service_completion(event: Session.ServiceEvent, base: CoreState, _rng: Rng,
 	if state == null:
 		return
 	var data: Dictionary = state.rule_state
+	if event.service == "ending.clear_save":
+		# T-39007: the app host answers a clear-save request after its storage
+		# transaction; only this completion can mark the clear as saved. A
+		# success finishes the ending in this frame's overlay step; a failure
+		# is stored as the failure notice.
+		if not data.get("overlay_state") is Dictionary:
+			result.error = "clear-save completion arrived outside the ending"
+			return
+		var ovl: Dictionary = data["overlay_state"]
+		var step_out: Dictionary = OverlayDispatcher.clear_save_step_out(int(ovl.get("mode", state.game_mode)), ovl, event.payload)
+		if not step_out["error"].is_empty():
+			result.error = step_out["error"]
+			return
+		if step_out["completed"]:
+			_clear_save_step = {"request": (ovl["clear_save_request"] as Dictionary).duplicate(), "step_out": step_out}
+		else:
+			data["overlay_state"] = step_out["state"]
+		return
 	if event.service == "school_day.actor96":
 		if state.game_mode != 0x40 or state.mode_stage != 1:
 			result.error = "actor96 completion arrived outside its native main-stage boundary"

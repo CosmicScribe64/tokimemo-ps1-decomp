@@ -7,6 +7,7 @@ const SaveAdapter = preload("res://services/playable_save_adapter.gd")
 const Session = preload("res://core/game_session.gd")
 const State = preload("res://rules/school_day_state.gd")
 const InputFrame = preload("res://core/input_frame.gd")
+const ExternalPath = preload("res://services/external_content_path.gd")
 const SOURCE_PROFILE: String = "687b5ce789d59f154b527264d23227b741a08bc619e4a1f8c67d617257f4c4f3"
 const BEHAVIOR_PROFILE: String = "rest-week-7a7b095d-f5f9-v2"
 const SLOT: String = "quick"
@@ -29,15 +30,11 @@ func configure(app: Node, user_root: String) -> String:
 	var trusted_root: String = OS.get_user_data_dir().simplify_path().trim_suffix("/")
 	if not user_root.is_absolute_path() or user_root != user_root.simplify_path() or not user_root.begins_with(trusted_root + "/"):
 		return "save directory must be inside the application user-data directory"
-	var media_path: String = OS.get_environment("TOKIMEMO_MEDIA_PACK").path_join("manifest.json")
-	var media_sha: String = FileAccess.get_sha256(media_path)
-	if media_sha.length() != 64 or OS.get_environment("TOKIMEMO_BOUNDARY_SHA").length() != 64 or OS.get_environment("TOKIMEMO_TABLES_SHA").length() != 64:
-		return "save controls require the preflighted content identity"
+	var versions: Dictionary = profile_versions()
+	if not versions["error"].is_empty():
+		return versions["error"]
 	storage = SaveService.new(user_root)
-	adapter = SaveAdapter.new({"source_version": SOURCE_PROFILE,
-		"content_version": JSON.stringify([OS.get_environment("TOKIMEMO_BOUNDARY_SHA"),
-			OS.get_environment("TOKIMEMO_TABLES_SHA"), media_sha]).sha256_text(),
-		"behavior_version": BEHAVIOR_PROFILE})
+	adapter = SaveAdapter.new(versions["versions"])
 	notice = Label.new()
 	notice.position = Vector2(16, 106)
 	notice.size = Vector2(608, 36)
@@ -53,6 +50,61 @@ func configure(app: Node, user_root: String) -> String:
 	notice_timer.process_mode = Node.PROCESS_MODE_ALWAYS
 	notice_timer.timeout.connect(_expire_notice)
 	app.add_child(notice_timer)
+	return ""
+
+## Version identity of saves this build can restore. The title Continue owner
+## compares a save with it before offering Continue (T-39007).
+static func profile_versions() -> Dictionary:
+	var media_path: String = OS.get_environment("TOKIMEMO_MEDIA_PACK").path_join("manifest.json")
+	var media_sha: String = FileAccess.get_sha256(media_path)
+	if media_sha.length() != 64 or OS.get_environment("TOKIMEMO_BOUNDARY_SHA").length() != 64 or OS.get_environment("TOKIMEMO_TABLES_SHA").length() != 64:
+		return {"error": "save controls require the preflighted content identity"}
+	return {"error": "", "versions": {"source_version": SOURCE_PROFILE,
+		"content_version": JSON.stringify([OS.get_environment("TOKIMEMO_BOUNDARY_SHA"),
+			OS.get_environment("TOKIMEMO_TABLES_SHA"), media_sha]).sha256_text(),
+		"behavior_version": BEHAVIOR_PROFILE}}
+
+## External original-content file check shared with playable_boot's preflight.
+static func verified_external(path: String, digest: String) -> bool:
+	return ExternalPath.is_external_file(path) and digest.length() == 64 and FileAccess.get_size(path) < 8 * 1024 * 1024 and FileAccess.get_sha256(path) == digest
+
+## T-39007 (review): the inputs playable_boot._load_inputs requires for a
+## restored (non-new-game) session: the declared boundary and table identities
+## equal the reviewed ones, and both files exist outside the project and hash
+## to them. The title offers Continue only when this passes. No installed
+## launcher sets these variables today, so an installed launch never passes.
+static func continue_content_error(expected_boundary: String, expected_tables: String) -> String:
+	var boundary_sha: String = OS.get_environment("TOKIMEMO_BOUNDARY_SHA")
+	var tables_sha: String = OS.get_environment("TOKIMEMO_TABLES_SHA")
+	if boundary_sha != expected_boundary or tables_sha != expected_tables:
+		return "the captured game data this save needs is not configured for this launch"
+	if not verified_external(OS.get_environment("TOKIMEMO_BOUNDARY"), boundary_sha):
+		return "the captured game state is missing or differs from its declared identity"
+	if not verified_external(OS.get_environment("TOKIMEMO_TABLES"), tables_sha):
+		return "the original rule tables are missing or differ from their declared identity"
+	return ""
+
+## T-39007 (review R10): Continue from the title. Runs once after the app is
+## configured and before its first step, through the same admission, neutral
+## input and restore checks as a quick load. The file must still be the one
+## the player selected.
+func continue_from(app: Node, selection: Dictionary) -> String:
+	if selection.get("slot") != SLOT or not selection.get("checksum_sha256") is String:
+		return "Continue request is malformed."
+	if storage == null:
+		return "Save controls are unavailable."
+	var loaded: Dictionary = storage.load_slot(SLOT)
+	if not loaded["error"].is_empty():
+		return loaded["error"]
+	if loaded["checksum_sha256"] != selection["checksum_sha256"]:
+		return "the save changed after it was selected; choose Continue again"
+	if not request(app, Request.LOAD):
+		return last_error
+	process_queued(app)
+	if not last_error.is_empty():
+		return last_error
+	if storage_calls == 0 or last_action != "load":
+		return "Continue did not load the save."
 	return ""
 
 func handle_input(app: Node, event: InputEvent) -> bool:

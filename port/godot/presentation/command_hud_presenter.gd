@@ -4,8 +4,17 @@ extends RefCounted
 const Glyphs = preload("res://presentation/native_glyphs.gd")
 const NativeCompositor = preload("res://presentation/hud_compositor.gd")
 const HudSeason = preload("res://services/native_hud_season.gd")
+const NativeMath = preload("res://core/native_math.gd")
 const ExternalPath = preload("res://services/external_content_path.gd")
+const NativeLatin = preload("res://presentation/native_latin_layout.gd")
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
 const SCHEMA := "tokimemo.native-command-hud.v1"
+const HUD_SHA := ContentIdentity.HUD_MANIFEST_SHA
+# Main executable load address and header size (tools/assets/text_font.py
+# FONT_PROFILE; tools/assets/text_binary.py maps data labels the same way).
+const EXECUTABLE_LOAD_ADDRESS := 0x80041000
+const EXECUTABLE_HEADER_SIZE := 0x800
+const NARRATION_X := -86
 const PROFILE := "spring_type_a_ordinary.v1"
 # T-39002: exact original track and decoded pixels, regenerated without the
 # historical evidence-packet wrapper. The original proof remains supported.
@@ -32,6 +41,9 @@ const SOURCE_EVIDENCE := ["src/main/home_screens.c", "src/main/hud_panels.c", "s
 	"asm/data/main/home_screens.rodata.s", "asm/data/main/menu_speaker_girl.rodata.s"]
 const RULE_KEYS := ["year", "month", "day", "weekday", "params", "calendar", "menu_cursor", "icon_enabled", "player_flags", "player_flags_upper", "memory_card_busy"]
 const CONTEXT_KEYS := ["game_mode", "mode_stage", "mode_step", "icon_mode", "icon_count", "cursor_style", "hover_ticks", "family_name_hex"]
+# T-39013: a live HUD session also supplies the menu_items hover record and the
+# retained cursor actor position (cursor_x/cursor_y == actor_pool[0].x/y).
+const SESSION_CONTEXT_KEYS := ["hover_index", "cursor_x", "cursor_y"]
 const DEFAULT_CURSOR_STYLE := 0x9C
 const PAD_SQUARE := 0x80
 const SELECTABLE_CURSOR_FRAMES := [0, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173]
@@ -170,6 +182,10 @@ var _specs: Dictionary = {}
 var _last_resources: Dictionary = {}
 var _font = Glyphs.new()
 var _compositor = NativeCompositor.new()
+## T-39016: translated narration run, empty while the original bytes apply.
+var _narration_translation: Dictionary = {}
+## Why the last set_translated_text call kept the original narration.
+var text_rejection := ""
 
 func open_manifest(path: String, expected_sha256: String, font_root: String) -> bool:
 	_reset()
@@ -241,6 +257,37 @@ func set_translated_images(store: RefCounted) -> int:
 			count += 1
 	_compositor.configure(_manifest, _images, _font)
 	return count
+
+## T-39016: bind the English narration from a text layer (services/
+## text_layer_store.gd) at the point the original strings are decoded. Both
+## narration strings must resolve by their executable location, or the
+## original narration stays. Returns the number of strings bound (0 or 2).
+func set_translated_text(layer: RefCounted) -> int:
+	_narration_translation.clear()
+	text_rejection = ""
+	if _manifest.is_empty() or layer == null:
+		return 0
+	var executable_sha: String = _manifest["provenance"]["inputs"]["executable"]["sha256"]
+	var strings: Dictionary = _manifest["content"]["strings"]
+	var codes := PackedByteArray()
+	var original_units := 0
+	for key: String in ["narration_prefix", "ordinary_command"]:
+		var text: Dictionary = strings[key]
+		var raw: PackedByteArray = str(text["raw_hex"]).hex_decode()
+		original_units += raw.size() / 2
+		var offset: int = int(text["address"]) - EXECUTABLE_LOAD_ADDRESS + EXECUTABLE_HEADER_SIZE
+		var found: Dictionary = layer.lookup_source("SLPM_86.053", executable_sha, offset, raw, _font)
+		if found.is_empty() or not found.has("codes"):
+			text_rejection = key + ": " + (layer.last_rejection if found.is_empty() else "record carries control tokens")
+			return 0
+		codes.append_array(found["codes"])
+	# The translated row may not extend past the cells the original row drew.
+	var glyph_x := NativeLatin.offsets(_font, codes, original_units * 14)
+	if glyph_x.is_empty():
+		text_rejection = "translated narration does not fit the original row"
+		return 0
+	_narration_translation = {"hex": codes.hex_encode(), "glyph_x": glyph_x, "position": [NARRATION_X, 50], "attribute": 0}
+	return 2
 
 func create_state(rule: Dictionary, context: Dictionary) -> Dictionary:
 	var state := {"rule": {}, "context": context.duplicate(true), "icon_steps": [], "icon_elapsed": []}
@@ -322,7 +369,9 @@ func advance_icons(state: Dictionary, native_ticks: int) -> String:
 		state["icon_elapsed"] = view["icon_elapsed"].duplicate()
 	return message
 
-func render(state: Dictionary, previous_frame: Image = null) -> Image:
+## command_room false leaves out dec_bg_draw(0): the stage 0xFF reload frames
+## (settings_command_screen_mode_stage_reload) never draw the room.
+func render(state: Dictionary, previous_frame: Image = null, command_room: bool = true) -> Image:
 	last_coverage = null
 	var view := _view(state)
 	if view.is_empty():
@@ -334,10 +383,12 @@ func render(state: Dictionary, previous_frame: Image = null) -> Image:
 	var name_size: int = name.length() / 2
 	var name_x: int = -114 if name_size == 2 else (-121 if name_size == 4 else -128)
 	var strings: Dictionary = _manifest["content"]["strings"]
-	var runs: Array[Dictionary] = [{"hex": name, "position": [name_x, 50], "attribute": 0},
-		{"hex": str(strings["narration_prefix"]["raw_hex"]) + str(strings["ordinary_command"]["raw_hex"]), "position": [-86, 50], "attribute": 0}]
+	var narration := {"hex": str(strings["narration_prefix"]["raw_hex"]) + str(strings["ordinary_command"]["raw_hex"]), "position": [NARRATION_X, 50], "attribute": 0}
+	if not _narration_translation.is_empty():
+		narration = _narration_translation.duplicate(true)
+	var runs: Array[Dictionary] = [{"hex": name, "position": [name_x, 50], "attribute": 0}, narration]
 	_compositor.set_text_runs(runs)
-	var image: Image = _compositor.render(view, previous_frame)
+	var image: Image = _compositor.render(view, previous_frame, [], command_room)
 	error = _compositor.error
 	last_coverage = _compositor.last_coverage if image != null else null
 	return image
@@ -391,22 +442,31 @@ func calendar_source_commands(state: Dictionary) -> Array[Dictionary]:
 			"month_index": int(record["month_index"]), "variant": record["variant"]})
 	return commands
 
+## Legacy contexts carry only the settled phase (32); a live HUD session record
+## may carry any source phase 0..32 of the hover countdown.
+static func _hover_ticks_allowed(ticks: Variant, session_context: bool) -> bool:
+	return int(ticks) == 32 or (session_context and int(ticks) >= 0 and int(ticks) < 32)
+
 func _view(state: Dictionary) -> Dictionary:
 	error = ""
-	if _manifest.is_empty() or not _keys(state, ["rule", "context", "icon_steps", "icon_elapsed"]) or not _keys(state.get("rule"), RULE_KEYS) or not _keys(state.get("context"), CONTEXT_KEYS):
+	var session_context: bool = state.get("context") is Dictionary and _keys(state["context"], CONTEXT_KEYS + SESSION_CONTEXT_KEYS)
+	if _manifest.is_empty() or not _keys(state, ["rule", "context", "icon_steps", "icon_elapsed"]) or not _keys(state.get("rule"), RULE_KEYS) or not (session_context or _keys(state.get("context"), CONTEXT_KEYS)):
 		error = "HUD requires an open capability and live rule/context state"
 		return {}
 	var rule: Dictionary = state["rule"]
 	var context: Dictionary = state["context"]
-	for key: String in CONTEXT_KEYS:
+	for key: String in CONTEXT_KEYS + (SESSION_CONTEXT_KEYS if session_context else []):
 		if key != "family_name_hex" and not _integer(context[key]):
 			error = "HUD context is not an integer: " + key
 			return {}
 	var style: int = context["cursor_style"]
-	var command_screen: bool = (context["game_mode"] == 0x34 and context["mode_stage"] == 1 and context["mode_step"] == 0) or context["game_mode"] == 0x30
+	# T-39002: stage 0xFF step 3 is the reload after settings_command_screen_build
+	# (room read pending), drawn with the same HUD records as command select.
+	var command_screen: bool = (context["game_mode"] == 0x34 and context["mode_stage"] == 1 and context["mode_step"] == 0) or context["game_mode"] == 0x30 \
+		or (session_context and context["game_mode"] == 0x34 and context["mode_stage"] == 0xFF and context["mode_step"] == 3)
 	var activity: bool = (context["game_mode"] == 0x40 and context["mode_stage"] in [0, 1, 2] and context["mode_step"] in [0, 1, 2]) or (context["game_mode"] == 0x31 and context["mode_stage"] == 0 and context["mode_step"] == 0) or (context["game_mode"] == 0x32 and context["mode_stage"] in [0, 1, 0xff] and context["mode_step"] == 0) or (context["game_mode"] == 0x38 and context["mode_stage"] in [0, 1] and context["mode_step"] == 0)
-	if not (command_screen or activity) or context["icon_mode"] != 0 or context["icon_count"] != 14 or context["hover_ticks"] != 32 or not (style == 0 or (style >= 0x9b and style < 0xae)):
-		error = "HUD supports bounded TypeA command/school-day modes and settled hover only"
+	if not (command_screen or activity) or context["icon_mode"] != 0 or context["icon_count"] != 14 or not _hover_ticks_allowed(context["hover_ticks"], session_context) or not (style == 0 or (style >= 0x9b and style < 0xae)):
+		error = "HUD supports bounded TypeA command/school-day modes and settled hover (any phase only from a live HUD session)"
 		return {}
 	var family: Variant = context["family_name_hex"]
 	if not family is String or family.length() not in [4, 8, 12] or not _hex(family) or not _glyphs_supported(family.hex_decode()):
@@ -456,6 +516,23 @@ func _view(state: Dictionary) -> Dictionary:
 		if step >= sequence.size() or int(state["icon_elapsed"][icon]) >= int(sequence[step]["duration"]):
 			error = "live icon phase is outside the source sequence"
 			return {}
+	# hud_icon_bar_update (hud_panels.c:1112-1117): the hovered, enabled icon is
+	# scaled by rsin((32 - countdown) << 6) + 0x1000. Only unit scale is rasterized
+	# here; a scaled quad (func_80098680) phase is withheld, not settled.
+	var selected: int = int(rule["menu_cursor"])
+	var hover_index: int = selected
+	var cursor_position := Vector2i.ZERO
+	if session_context:
+		hover_index = int(context["hover_index"])
+		if hover_index < -1 or hover_index >= 14 or not _range(context["cursor_x"], -0x96, 0x8C) or not _range(context["cursor_y"], -0x64, 0x64):
+			error = "live HUD session hover/cursor record is outside source bounds"
+			return {}
+		cursor_position = Vector2i(int(context["cursor_x"]), int(context["cursor_y"]))
+	if hover_index >= 0 and int(rule["icon_enabled"][hover_index]) == 1:
+		var scale: int = NativeMath.s16(NativeMath.rsin(int(context["hover_ticks"]) << 6) + 0x1000)
+		if scale != 0x1000:
+			error = "hover pulse scale 0x%x needs the scaled sprite path, which this HUD does not rasterize" % scale
+			return {}
 	var parameters: Array[int] = []
 	for word: Variant in rule["params"]:
 		parameters.append(int(word) >> 16)
@@ -471,7 +548,8 @@ func _view(state: Dictionary) -> Dictionary:
 		error = season["error"]
 		return {}
 	return {"year": year, "month": month, "day": day, "weekday": int(rule["weekday"]),
-		"day_kind": int(calendar_bytes[day]), "parameters": parameters, "selected": int(rule["menu_cursor"]),
+		"day_kind": int(calendar_bytes[day]), "parameters": parameters, "selected": selected,
+		"hover_index": hover_index, "cursor_position": cursor_position if session_context else null,
 		"icon_enabled": rule["icon_enabled"].slice(0, 14), "cursor_frame": resolve_cursor_actor_frame(style),
 		"icon_steps": state["icon_steps"].duplicate(), "icon_elapsed": state["icon_elapsed"].duplicate(),
 		"checker_season": season["checker_season"], "checker_fade": season["checker_fade"]}
@@ -590,6 +668,8 @@ func _reset() -> void:
 	_specs.clear()
 	_last_resources.clear()
 	last_coverage = null
+	_narration_translation.clear()
+	text_rejection = ""
 	_font = Glyphs.new()
 	_compositor = NativeCompositor.new()
 

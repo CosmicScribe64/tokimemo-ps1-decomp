@@ -1,0 +1,58 @@
+{
+  "assets": [
+    {
+      "catalog_item": "catalog-147",
+      "crop_sha256": "5de94686d6d700cff5e1a141c67501bf2d99f8fbb33c9e9f79fd801e7b829c79",
+      "decision": "legible-draft",
+      "english_words_sha256": "8f3d22fdef749be3fc952aa04852c301e1354c2cc600d7b60787b2400562a0b8",
+      "id": "bs-c-01-28-final-exams",
+      "observations": [
+        "FINAL / EXAMS reads as two chalk lines in the lettering rectangle; original two-word layout (two vertical words) becomes two horizontal lines.",
+        "Japanese strokes erased with same-row donors; a faint darker smudge remains where the lowest original stroke had a dark blue core.",
+        "Pixels outside the 48x32 edited-macroblock region are bit-identical; ring max error 1 RGB555 step.",
+        "Native font strokes are 1 px; original chalk handwriting is softer and smaller.",
+        "The separate month/day/weekday column on the right edge (x 304-314) is untouched and still Japanese; this draft covers the exam heading only (D-7).",
+        "The spliced file is 566 bytes longer than the original 18732-byte extent (file_extent_grew true); it fits the 10-sector caller read."
+      ],
+      "spliced_bs_sha256": "e010e1b1ab3f80cb22818e94f8ae72b516a678fe9f89f62209836282b58be071"
+    },
+    {
+      "catalog_item": "catalog-127",
+      "crops": [
+        {
+          "png": "all-c.source-page-3.en.edit-region.png",
+          "sha256": "fafb20e889ee53f5602620e7217a284b5851f79f33eed8956ce58fadf744531c"
+        },
+        {
+          "png": "all-c.source-page-4.en.edit-region.png",
+          "sha256": "1675532fb585f12cea3ee4b58f3a2d4fab0ae5844e9b6716f5c9c8dac3268c09"
+        },
+        {
+          "png": "all-c.source-page-5.en.edit-region.png",
+          "sha256": "4287e66a8218a2466c7eb8ad33447ad63676aebc5be12abd926ae5f96fe0f3ef"
+        }
+      ],
+      "decision": "legible-draft",
+      "english_container_sha256": "c201bc72424a9b4bef659fbab886dd64f39ecb59ca74d5adfdaed3ad36d11bf8",
+      "id": "all-c-banner",
+      "observations": [
+        "ALL CLEAR (blue) CONGRATULATIONS (red) ! (purple) keeps the original colour split by reusing the original ink palette indices.",
+        "Unscaled 12-row native glyphs are much thinner and smaller than the original bold banner kana; centred horizontally in the strip and vertically on the original lettering rows 205-222 (text rows 209-217).",
+        "Runtime composition (row-120 background cells) not verified; only raw page bytes inside the strip changed."
+      ]
+    }
+  ],
+  "development_only": true,
+  "draft_manifest_sha256": "63491c07b7c7453fd57f1950abc3ac242776b8e1680879ded5e538749057192f",
+  "human_approval": false,
+  "id": "T39004-bs-v1",
+  "limitations": [
+    "Agent review is not human approval.",
+    "No in-game or emulator verification.",
+    "The port has no MDEC replacement path yet; the BS draft is not runtime-integrated."
+  ],
+  "review_date": "2026-10-29",
+  "reviewer": "bs-backgrounds worker agent (T-39012)",
+  "revision_note": "2026-10-29 re-review after code-review fixes: ALL_C text re-centred, font provenance now covers every drawn glyph; C_01_28 crop unchanged.",
+  "schema": "tokimemo.agent-artwork-review.v1"
+}

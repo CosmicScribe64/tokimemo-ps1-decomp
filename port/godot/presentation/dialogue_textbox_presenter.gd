@@ -29,7 +29,8 @@ const DOUBLE_QUOTE_CLOSE := "8178"    # 』
 
 # Authentic PS1 HUD actor resources (src/main/hud_screens.c:1479-1512, 1740-1768)
 const DEFAULT_HUD_MANIFEST := "/workspace/.asset-cache/port/hud-production-v1/manifest.json"
-const DEFAULT_HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const DEFAULT_HUD_SHA := ContentIdentity.HUD_MANIFEST_SHA
 const DEFAULT_CURSOR_STYLE := 0x9C
 const PROMPT_MARKER_ACTOR_INDEX := 2
 const PROMPT_MARKER_FRAME := 1

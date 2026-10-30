@@ -545,11 +545,149 @@ static func create_graduation_sequence(state_or_girls: Variant, rand_mod_256: in
 		"stage": 0,
 		"choice_cursor": 0,
 		"clear_save_completed": false,
+		"clear_save_status": "none",
+		"clear_save_attempts": 0,
 		"clear_name_slot": not eligible,
-		"album_clear_mask": (1 << current_girl) if eligible else 0,
+		"album_clear_mask": 0,
 		"completed": false,
 		"action": "continue",
 	}
+
+
+# T-39007 (review R11): clear save (mode 0xC4, wiki spec o-etc 6.3).
+# Source src/ovl/misc_scenes/staff_roll_and_clear_save.c clear_save_ask_answer
+# (lines 520-531): PAD_CIRCLE starts the card check (yes), PAD_CROSS goes to
+# mode_stage_set(2) (no); there is no cursor and no other input is read.
+# Yes requests a write from the app host, which answers with an
+# "ending.clear_save" completion. A successful completion finishes the ending
+# directly in apply_clear_save_completion; the serialisable state never holds
+# a trusted "saved" status that a later step would honour.
+#
+# Port difference: in the source a failed write goes to mode_step 0xFF
+# (clear_save_no_card_step, lines 791-822), which waits for 0x860 twice and
+# then retries the card check; it offers no way to decline. The port's failure
+# is a save-folder write error that a retry may never fix, so after one
+# acknowledging press of 0x860 it returns to the yes/no ask, where the player
+# can retry or decline.
+#
+# Presentation: the ending overlay, including this phase's question text
+# (clear_save_ask_init set_kanji_string calls) and the failure message, is not
+# rendered by the port yet; this phase is unpresented.
+const PAD_CIRCLE: int = 0x0020
+const PAD_CROSS: int = 0x0040
+## clear_save_no_card_step substeps 1 and 3: START | CROSS | CIRCLE.
+const PAD_ACKNOWLEDGE: int = 0x0860
+const CLEAR_SAVE_STATUSES: Array[String] = ["none", "prompt", "requested", "failed"]
+const RECEIPT_KEYS: Array[String] = ["service", "girl", "counter", "album_clear_mask", "checksum_sha256"]
+
+static func clear_save_receipt_error(receipt: Variant, girl: int) -> String:
+	if not receipt is Dictionary or receipt.size() != RECEIPT_KEYS.size() or not RECEIPT_KEYS.all(func(key: String) -> bool: return receipt.has(key)):
+		return "clear-save receipt fields differ"
+	if receipt["service"] != "ending.clear_save" or not receipt["girl"] is int or receipt["girl"] != girl & 0xF:
+		return "clear-save receipt belongs to another request"
+	if not receipt["counter"] is int or receipt["counter"] < 1 or receipt["counter"] > 0x63:
+		return "clear-save receipt counter is out of range"
+	if not receipt["album_clear_mask"] is int or receipt["album_clear_mask"] < 0 or receipt["album_clear_mask"] > 0x1FFF:
+		return "clear-save receipt album mask is out of range"
+	if receipt["girl"] < 13 and (receipt["album_clear_mask"] & (1 << receipt["girl"])) == 0:
+		return "clear-save receipt album mask omits the saved girl"
+	var checksum: Variant = receipt["checksum_sha256"]
+	if not checksum is String or checksum.length() != 64 or not checksum.is_valid_hex_number():
+		return "clear-save receipt checksum is malformed"
+	return ""
+
+## Applies the host's clear-save completion to a requested sequence. Success
+## returns the finished ending (completed, clear_save_completed and the album
+## mask from the receipt); failure returns the sequence at the failure notice.
+## The caller delivers the finished state in the same step; a stored copy is
+## never stepped into completion again (see _sanitize_clear_save).
+static func apply_clear_save_completion(seq_state: Dictionary, payload: Dictionary) -> Dictionary:
+	var s: Dictionary = seq_state.duplicate(true)
+	var request: Variant = s.get("clear_save_request")
+	if s.get("phase") != "clear_save" or s.get("clear_save_status") != "requested" or not request is Dictionary:
+		return {"error": "clear-save completion arrived without a pending request", "state": seq_state}
+	if payload.get("girl") != request.get("girl") or payload.get("attempt") != request.get("attempt") or not payload.get("ok") is bool:
+		return {"error": "clear-save completion identity differs from the request", "state": seq_state}
+	s.erase("clear_save_request")
+	if payload["ok"]:
+		var receipt_error: String = clear_save_receipt_error(payload.get("receipt"), int(s.get("current_girl", GIRL_YOSHIO)))
+		if not receipt_error.is_empty():
+			return {"error": receipt_error, "state": seq_state}
+		s["clear_save_status"] = "none"
+		s["clear_save_receipt"] = (payload["receipt"] as Dictionary).duplicate()
+		s["clear_save_completed"] = true
+		s["album_clear_mask"] = payload["receipt"]["album_clear_mask"]
+		s.erase("clear_save_error")
+		s["completed"] = true
+		s["ending_completed"] = 1
+		s["action"] = "ending_complete"
+	else:
+		if not payload.get("error") is String or (payload["error"] as String).is_empty():
+			return {"error": "clear-save failure needs a reason", "state": seq_state}
+		s["clear_save_status"] = "failed"
+		s["clear_save_error"] = payload["error"]
+		s["completed"] = false
+		s["action"] = "clear_save_failed"
+	return {"error": "", "state": s}
+
+# A stored state can only be prompt, requested or failed. Saved/completed
+# fields, receipts and masks in the incoming state are discarded.
+static func _sanitize_clear_save(s: Dictionary) -> void:
+	var status: Variant = s.get("clear_save_status", "none")
+	if not status is String or status not in CLEAR_SAVE_STATUSES:
+		status = "none"
+	if s.get("phase") != "clear_save":
+		status = "none"
+	elif status == "none":
+		status = "prompt"
+	if status == "requested":
+		var request: Variant = s.get("clear_save_request")
+		if not request is Dictionary or request.get("girl") != int(s.get("current_girl", GIRL_YOSHIO)) & 0xF \
+				or request.get("attempt") != s.get("clear_save_attempts"):
+			status = "prompt"
+	if status == "failed" and not (s.get("clear_save_error") is String and not (s["clear_save_error"] as String).is_empty()):
+		status = "prompt"
+	s["clear_save_status"] = status
+	s.erase("clear_save_receipt")
+	if status != "requested":
+		s.erase("clear_save_request")
+	if status != "failed":
+		s.erase("clear_save_error")
+	s["clear_save_completed"] = false
+	s["album_clear_mask"] = 0
+	if not s.get("clear_save_attempts") is int or s["clear_save_attempts"] < 0:
+		s["clear_save_attempts"] = 0
+
+static func _step_clear_save(s: Dictionary, pad_pressed: int) -> Dictionary:
+	s["completed"] = false
+	match s["clear_save_status"]:
+		"requested":
+			s["action"] = "clear_save_pending"
+			return s
+		"failed":
+			# Port difference (see above): one acknowledging press returns to the ask.
+			if (pad_pressed & PAD_ACKNOWLEDGE) != 0:
+				s["clear_save_status"] = "prompt"
+				s.erase("clear_save_error")
+				s["action"] = "clear_save_ask"
+			else:
+				s["action"] = "wait_input"
+			return s
+	# clear_save_ask_answer: circle is tested first, then cross.
+	if (pad_pressed & PAD_CIRCLE) != 0:
+		s["clear_save_attempts"] += 1
+		s["clear_save_status"] = "requested"
+		s["clear_save_request"] = {"girl": int(s.get("current_girl", GIRL_YOSHIO)) & 0xF, "attempt": s["clear_save_attempts"]}
+		s["action"] = "clear_save_requested"
+	elif (pad_pressed & PAD_CROSS) != 0:
+		s["clear_save_status"] = "none"
+		s["clear_save_declined"] = true
+		s["completed"] = true
+		s["ending_completed"] = 1
+		s["action"] = "ending_complete"
+	else:
+		s["action"] = "wait_input"
+	return s
 
 
 static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, rule_state: Dictionary = {}) -> Dictionary:
@@ -559,6 +697,10 @@ static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, ru
 		for k: String in init_seq.keys():
 			if not s.has(k):
 				s[k] = init_seq[k]
+
+	_sanitize_clear_save(s)
+	if s.get("phase") == "clear_save":
+		return _step_clear_save(s, pad_pressed)
 
 	if pad_pressed == 0:
 		s["completed"] = false
@@ -589,11 +731,10 @@ static func step_graduation_sequence(seq_state: Dictionary, pad_pressed: int, ru
 			if next_phase == "staff_roll":
 				s["next_mode"] = GAME_MODE_ETC_C2
 			elif next_phase == "clear_save":
-				s["clear_save_completed"] = true
+				s["clear_save_status"] = "prompt"
 			s["completed"] = false
 			s["action"] = "phase_advance"
 		else:
-			s["clear_save_completed"] = true
 			s["completed"] = true
 			s["ending_completed"] = 1
 			s["action"] = "ending_complete"

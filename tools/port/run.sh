@@ -1,19 +1,36 @@
 #!/bin/sh
 # Build and invoke the pinned Godot toolchain. Run from the repository root.
+#   build          build the Godot 4.7.2 engine/export-template image (tokimemo-port)
+#   build-content  build the Python/media/compiler image (tokimemo-content) used for
+#                  content setup, desktop staging and the native audio build
+#   build-gui-test build the X11/PulseAudio test image (tokimemo-port-gui-test) on top
+#                  of tokimemo-port, for real-input and audio-output checks
 set -eu
 
 IMAGE=${GODOT_PORT_IMAGE:-tokimemo-port}
+CONTENT_IMAGE=${TOKIMEMO_CONTENT_IMAGE:-tokimemo-content}
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 PROJECT="$ROOT/port/godot"
 
-if [ "${1:-test}" != build ] && ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
-  echo "Godot image '$IMAGE' is unavailable. Start Docker, then run: sh tools/port/run.sh build" >&2
+docker info >/dev/null 2>&1 || { echo "Docker is not running. Start Docker Desktop and retry." >&2; exit 1; }
+case "${1:-test}" in build|build-content) ;; *) if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
+  echo "Godot image '$IMAGE' is unavailable. Build it with: sh tools/port/run.sh build" >&2
   exit 1
-fi
+fi ;;
+esac
 
 case "${1:-test}" in
   build)
     docker build --platform linux/arm64 -t "$IMAGE" -f "$ROOT/tools/port/Dockerfile" "$ROOT/tools/port"
+    ;;
+  build-gui-test)
+    docker image inspect "$IMAGE" >/dev/null 2>&1 || {
+      echo "Build the engine image first: sh tools/port/run.sh build" >&2; exit 1; }
+    docker build --platform linux/arm64 -t "${TOKIMEMO_GUI_TEST_IMAGE:-tokimemo-port-gui-test}" \
+      --build-arg BASE="$IMAGE" -f "$ROOT/tools/port/Dockerfile.gui-test" "$ROOT/tools/port"
+    ;;
+  build-content)
+    docker build --platform linux/arm64 -t "$CONTENT_IMAGE" -f "$ROOT/tools/port/Dockerfile.content" "$ROOT/tools/port"
     ;;
   test)
     docker run --rm --cpus=2 -v "$PROJECT:/workspace:ro" "$IMAGE" \
@@ -38,5 +55,5 @@ case "${1:-test}" in
           --audio-driver Dummy --path /workspace --quit-after 4'
     test -s "$ROOT/.asset-cache/port-smoke/render-smoke.png"
     ;;
-  *) echo "usage: $0 [build|test|render-smoke]" >&2; exit 2 ;;
+  *) echo "usage: $0 [build|build-content|build-gui-test|test|render-smoke]" >&2; exit 2 ;;
 esac

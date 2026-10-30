@@ -17,10 +17,14 @@ const EntryImages = preload("res://presentation/name_entry_image_presenter.gd")
 const NamePointer = preload("res://flow/name_entry_pointer.gd")
 const LaunchProfile = preload("res://services/installed_launch_profile.gd")
 const Launch = preload("res://app/installed_launch.gd")
+const TitleFlow = preload("res://flow/title_file_select.gd")
 signal profile_finished(entry: RefCounted, native_rng: RefCounted, launch_profile: Dictionary, live_context: Dictionary)
 # Injected by the installed launch owner after original resource authentication.
 var profile_text_store: TextStore
 var entry_clock_policy: Dictionary = {}
+# Boot-path seam (flow/title_file_select.gd handoff(); no installed producer
+# yet): the clock, BIOS rand object and scene_work at NAME_ENT stage 1.
+var title_handoff: Dictionary = {}
 var _entry_runtime := ContextOwner.new()
 var _entry_model := CoreState.new()
 var _entry_clock := Clock.new()
@@ -113,6 +117,12 @@ func _ready() -> void:
 	_entry_model.system_seed = 0 # sys_init bzero before timer callbacks.
 	_entry_model.timer_ticks = 0
 	_entry_ui_brightness = 128 # draw_brightness_reset; current entry renderer is full-bright.
+	var title_error: String = title_handoff_error(title_handoff) if not title_handoff.is_empty() else ""
+	if not title_handoff.is_empty() and title_error.is_empty():
+		# The modelled boot path reaches NAME_ENT stage 1 with these words.
+		_entry_model.frame_count = int(title_handoff.frame_count)
+		_entry_model.timer_ticks = int(title_handoff.timer_ticks)
+		_entry_model.system_seed = int(title_handoff.system_seed)
 	var context_error: String = _entry_runtime.bind(_entry_model, _entry_clock, _entry_pad, entry_clock_policy)
 	if not context_error.is_empty(): failure = context_error
 	# Native art owns its scale; desktop settings retain window-pixel UI space.
@@ -133,14 +143,23 @@ func _ready() -> void:
 	var tables: Dictionary = Rules.load_tables(rules_path)
 	var content: Dictionary = Entry.load_content(entry_path)
 	var seed: String = OS.get_environment("TOKIMEMO_NEW_GAME_SEED")
-	if not installed_launch_profile.is_empty():
-		# The desktop startup clock supplies the initial BIOS LCG state. Record it
-		# once; the same live RNG object is retained throughout profile entry.
-		seed = str(Time.get_ticks_usec() & 0xffffffff)
+	if not title_handoff.is_empty():
+		# The boot path owns the live BIOS rand object (srand(system_data.seed)
+		# at file_select.c:735, then the iris draws); the entry keeps drawing it.
+		seed = str(title_handoff.rng.state) if title_error.is_empty() else ""
+	elif not installed_launch_profile.is_empty():
+		# file_select_init_settings: srand(system_data.seed) (file_select.c:735).
+		# system_seed was just zeroed by the sys_init reset above and nothing has
+		# ticked since, so this is 0. The same live RNG object is retained
+		# throughout profile entry.
+		seed = str(Entry.file_select_seed(_entry_model))
 	load_diagnostics = {"build":"entry-ui-cleanup-v1","pid":OS.get_process_id(),"executable":OS.get_executable_path(),
 		"rules":Diagnostics.inspect(rules_path,Rules._content_valid(tables)),"entry":Diagnostics.inspect(entry_path,Entry.content_valid(content)),"seed_valid":not seed.is_empty() and seed.is_valid_int(),"failed_gate":""}
 	load_diagnostics["startup_seed"] = int(seed) if seed.is_valid_int() else -1
-	if not Rules._content_valid(tables):
+	load_diagnostics["title_handoff"] = not title_handoff.is_empty()
+	if not title_error.is_empty():
+		failure = "New Game could not start from the title."; load_diagnostics.failed_gate="title_handoff"; load_diagnostics.title_error=title_error
+	elif not Rules._content_valid(tables):
 		failure = "Game data could not be loaded. Check the rule pack."; load_diagnostics.failed_gate="rule_pack"
 	elif not Entry.content_valid(content):
 		failure = "Game data could not be loaded. Check the name-entry pack."; load_diagnostics.failed_gate="entry_pack"
@@ -153,7 +172,10 @@ func _ready() -> void:
 		if not font_error.is_empty():
 			failure="The game font could not be loaded. Check the font pack.";load_diagnostics.failed_gate="font_pack";load_diagnostics.font_error=font_error
 	if failure.is_empty():
-		if not rng.configure(Rng.OPENBIOS_PROFILE,int(seed)):
+		if not title_handoff.is_empty(): rng = title_handoff.rng
+		if not title_handoff.is_empty() and not rng.configuration_error().is_empty():
+			failure="The startup random source could not be configured.";load_diagnostics.failed_gate="rng_profile"
+		elif title_handoff.is_empty() and not rng.configure(Rng.OPENBIOS_PROFILE,int(seed)):
 			failure="The startup random source could not be configured.";load_diagnostics.failed_gate="rng_profile"
 		else:
 			var entry_error: String=controller.begin(tables,content,rng)
@@ -165,6 +187,21 @@ func _ready() -> void:
 	if settings != null:
 		settings.preferences_changed.connect(_preferences_changed)
 	_render()
+
+## Shape check of the boot-path handoff (flow/title_file_select.gd handoff()).
+static func title_handoff_error(handoff: Dictionary) -> String:
+	if handoff.get("schema") != TitleFlow.SCHEMA or not str(handoff.get("error", "x")).is_empty(): return "title handoff is not a completed boot path"
+	for key: String in ["frame_count", "timer_ticks", "system_seed", "scene_work"]:
+		if not handoff.get(key) is int: return "title handoff lacks " + key
+	if handoff.frame_count < 0 or handoff.frame_count > 0xffffffff: return "title handoff frame_count is out of range"
+	if handoff.timer_ticks < -0x80000000 or handoff.timer_ticks > 0xffffffff or handoff.system_seed < -0x80000000 or handoff.system_seed > 0xffffffff: return "title handoff timer words are out of range"
+	if handoff.scene_work < -0x80000000 or handoff.scene_work > 0x7fffffff: return "title handoff scene_work is out of range"
+	var live_rng: Variant = handoff.get("rng")
+	if not live_rng is Rng or not live_rng.configuration_error().is_empty(): return "title handoff has no configured BIOS rand object"
+	return ""
+
+func title_error_free() -> bool:
+	return not title_handoff.is_empty() and title_handoff_error(title_handoff).is_empty()
 
 func _preferences_changed(_settings: Dictionary) -> void:
 	_layout_native_canvas()
@@ -219,7 +256,7 @@ func differential_snapshot() -> Dictionary:
 		"native_canvas":{"scale":[canvas.scale.x,canvas.scale.y],"position":[canvas.position.x,canvas.position.y],"viewport_size":[get_viewport_rect().size.x,get_viewport_rect().size.y]},
 		"name_marker_draw_state":entry_images.markers.snapshot() if entry_images != null else {},
 		"name_pointer":name_pointer.snapshot() if _source_pointer_ready() else {"available":false,"reason":"legacy media lacks source cursor style inventory"},
-		"unavailable":["native_text_state","native_actor_memory","native_draw_order","PS1_boot_clock_origin"]}
+		"unavailable":["native_text_state","native_actor_memory","native_draw_order"] + ([] if title_error_free() else ["PS1_boot_clock_origin"])}
 
 func _physics_process(delta: float) -> void:
 	if not failure.is_empty() or focus_paused or _completion_emitted: return
@@ -261,6 +298,7 @@ func _physics_process(delta: float) -> void:
 		if not str(live.get("error", "")).is_empty():
 			failure = str(live.error)
 			return
+		if not title_handoff.is_empty(): live.context["scene_work"] = int(title_handoff.scene_work)
 		_completion_emitted = true
 		profile_handoff = live
 		profile_handoff["launch_profile"] = installed_launch_profile.duplicate(true)

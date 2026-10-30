@@ -11,14 +11,18 @@ const EXE_SHA := "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843
 const ENTRY_CAP := "new_game.entry"
 const OPENING_RESOURCES_CAP := "new_game.opening_resources"
 const GAMEPLAY_CAP := "new_game.gameplay"
-const FILE_ROLES := ["name_entry_rules", "name_entry_content", "name_entry_media", "rule_tables", "hud_manifest", "hud_context", "holiday_scene", "holiday_text"]
-const DIR_ROLES := ["font_root", "school_day_media", "spring_media", "weekday56_media", "club_media", "date_preview", "opening_pack", "geko_dialogue", "prologue_text", "first_arrival_media", "first_arrival_board", "prologue_hud", "opening_audio", "original_first_arrival_bgm"]
+const FILE_ROLES := ["name_entry_rules", "name_entry_content", "name_entry_media", "rule_tables", "hud_manifest", "hud_context", "holiday_scene", "holiday_text", "holiday_scene_source"]
+## holiday_scene_source (T-39014) is the scene-owned holiday profile only. It is
+## not in GAMEPLAY_ROLES: holiday_scene stays missing until a live session
+## supplies its boundary fields.
+const DIR_ROLES := ["font_root", "school_day_media", "spring_media", "weekday56_media", "club_media", "date_preview", "opening_pack", "geko_dialogue", "prologue_text", "first_arrival_media", "first_arrival_board", "prologue_hud", "opening_audio", "original_first_arrival_bgm", "first_arrival_finish_bank", "first_arrival_command_reload"]
 const ENTRY_ROLES := ["name_entry_rules", "name_entry_content", "font_root"]
 const OPENING_RESOURCE_ROLES := ["prologue_text", "first_arrival_media", "prologue_hud", "opening_pack"]
 const ROLE_MANIFESTS := {"prologue_text":"manifest.json","first_arrival_media":"manifest.json",
 	"first_arrival_board":"manifest.json",
 	"prologue_hud":"manifest.json","opening_audio":"opening-audio.json","opening_pack":"opening.json",
-	"original_first_arrival_bgm":"source.json"}
+	"original_first_arrival_bgm":"source.json","first_arrival_finish_bank":"finish_bank.json",
+	"first_arrival_command_reload":"command_reload.json"}
 const GAMEPLAY_ROLES := ["rule_tables", "school_day_media", "spring_media", "weekday56_media", "club_media", "hud_manifest", "hud_context", "holiday_scene", "holiday_text", "date_preview", "opening_pack"]
 const MAX_FILES := 20000
 const MAX_TOTAL_BYTES := 1024 * 1024 * 1024
@@ -73,6 +77,9 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 		if not ExternalPath.is_external_file(path) or FileAccess.get_size(path) != int(record.size) or FileAccess.get_sha256(path) != record.sha256:
 			return _failure("installed runtime file is missing, linked, or changed: " + relative)
 	var paths: Dictionary = {}
+	# T-39013: authenticated identity of each file role, so readers such as the
+	# fresh HUD take the current manifest hash from this inventory, not a pin.
+	var file_identities: Dictionary = {}
 	for role: Variant in manifest.roles:
 		if not role is String or role not in FILE_ROLES + DIR_ROLES or not manifest.roles[role] is String or not safe_relative(manifest.roles[role]):
 			return _failure("installed runtime has an unsupported role or locator")
@@ -80,6 +87,7 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 		if role in FILE_ROLES:
 			if not files.has(relative):
 				return _failure("installed runtime role lacks a file identity: " + role)
+			file_identities[role] = {"sha256": files[relative].sha256, "size": int(files[relative].size)}
 		else:
 			var found := false
 			for inventory_path: String in files:
@@ -117,7 +125,7 @@ static func read_pack(root: String, manifest: Dictionary) -> Dictionary:
 	# stays unavailable until its readers and live opening are connected.
 	var missing_gameplay := missing_roles(paths, GAMEPLAY_ROLES)
 	return {"valid": true, "paths": paths, "available_capabilities": available,
-		"role_manifests":role_manifests,"missing_opening_resource_roles":missing_opening,
+		"role_manifests":role_manifests,"file_identities":file_identities,"missing_opening_resource_roles":missing_opening,
 		"installation_manifest_sha256":FileAccess.get_sha256(root.path_join("manifest.json")),
 		"unavailable_capabilities": [GAMEPLAY_CAP],
 		"missing_entry_roles": missing_entry, "missing_gameplay_roles": missing_gameplay,

@@ -17,6 +17,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[phase2-naming]] - phase 2 naming decisions, scope table, disc-name map and prefix maps
 - [[phase3]] - Godot 4.7.2 Japanese desktop port plan; readiness repairs and verification remain in progress
 - [[phase4]] - Phase 4 modernization plan (widescreen presentation, modern settings & translation-pack selector, native achievements, player customization)
+- [[phase4-design-2026-10-29]] - judged phase 4 design: widescreen, settings, English play, playtesting work packages
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
 
@@ -28,6 +29,7 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[port-readiness-review]] - independent baseline blockers and actual-route acceptance requirements
 - [[port-adversarial-review]] - fresh-context review of player routes, installation, packaging and contributor experience
 - [[port-testing]] - testing layers, required route coverage and reviewed evidence gate
+- [[port-text-layer]] - generic source-keyed runtime text translation layer, pack builder and screen adoption
 - [[notes/name-entry-visual-checkpoints]] - original NAME entry state addresses and corresponding native/translated visual checkpoints
 - [[archive/port-status-claims-2026-10-26]] - superseded port completion claims and historical checkpoints; not acceptance evidence
 

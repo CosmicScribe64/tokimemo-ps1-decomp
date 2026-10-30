@@ -3,6 +3,8 @@ extends RefCounted
 ## Native name_finish and birthday_finalize are run at their source UI actions.
 const Rules = preload("res://rules/new_game.gd")
 const Rng = preload("res://core/native_rng.gd")
+const CoreState = preload("res://core/game_state.gd")
+const Math = preload("res://core/native_math.gd")
 const CONTENT_SHA: String = "7458e8d0ee2d286c17ffe9b0d4201544ac716325273a97e02e5b12ab9fd660af"
 const EXPANDED_CONTENT_SHA: String = "c54066fcfebc3526abecab420a62c1817bca61e9d570c2fab391be6e8b6f8243"
 const TAB_DONE: int = 4
@@ -23,6 +25,21 @@ var trace: Array[Dictionary] = []
 var _tables: Dictionary = {}
 var _content: Dictionary = {}
 var _rng: Rng
+
+## The BIOS rand seed the entry starts from. On the source New Game path the
+## last srand before NAME_ENT is file_select_init_settings'
+## srand(system_data.seed) (file_select.c:735); nothing reseeds again until the
+## prologue's srand(frame_count) (prologue.c:206). Between that srand and
+## NAME_ENT the source also draws rand() & 0xF in the file-select iris update
+## (file_select.c:584-593), once per frame and edge hit. The port does not run
+## those draws, so the NAME_ENT draws (name_finish, birthday_finalize, the
+## girls[1..4] club draws in name_entry_new_game_setup) are deterministic for a
+## given input but do not match the original sequence. The installed entry
+## reads system_seed right after the sys_init reset (new_game_entry_boot.gd),
+## so the value is 0; the original's system_data.seed already carries the
+## boot/title timer_tick history (main_loop.c:91-98). Never a host clock.
+static func file_select_seed(model: CoreState) -> int:
+	return Math.u32(model.system_seed)
 
 static func _byte_array(value: Variant, count: int = -1) -> bool:
 	if not value is Array or (count >= 0 and value.size() != count): return false

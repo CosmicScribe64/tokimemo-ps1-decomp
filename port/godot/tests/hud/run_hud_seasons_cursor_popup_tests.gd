@@ -11,7 +11,8 @@ const MediaAdapter = preload("res://services/ordinary_command_media_adapter.gd")
 const ActorService = preload("res://presentation/school_day_actor_service.gd")
 
 const HUD_MANIFEST := "/workspace/.asset-cache/port/hud-production-v1/manifest.json"
-const HUD_SHA := "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const HUD_SHA := ContentIdentity.HUD_MANIFEST_SHA
 const FONT_ROOT := "/workspace/.asset-cache/port/fonts/native-font-v2"
 const MEDIA_PACK := "/workspace/.asset-cache/port/school-day-media-v3"
 const SPRING_PACK := "/workspace/.asset-cache/port/t29014-spring-command-1-3-final"

@@ -1,0 +1,2829 @@
+{
+ "catalog_corrections": [
+  {
+   "catalog": "セーブ / 不可, Cannot Save",
+   "catalog_line": 1,
+   "corrected": "セーブ中 (Saving)",
+   "evidence": "decoded part-1 lettering texels (sheet 0xA000 u24 v48) read セーブ中; three independent agent readings agree",
+   "field": "original_japanese/english_translation",
+   "frames": [
+    57,
+    58,
+    59
+   ]
+  },
+  {
+   "catalog": "32x24",
+   "catalog_line": 1,
+   "corrected": "57: 24x17, 58: 24x16, 59: 24x17",
+   "evidence": "original-mainrom-v1 manifest bounds",
+   "field": "pixel_size",
+   "frames": [
+    57,
+    58,
+    59
+   ]
+  },
+  {
+   "catalog": "chunk 4 (0x8000)",
+   "catalog_line": 1,
+   "corrected": "sheet 3 at 0xA000; part 0 card u0 v48 (shared with frame 56) drawn over part 1 lettering u24 v48 (y offset -1/0/+1; renderer draws the last part first, tools/assets/image_packs.py)",
+   "evidence": "decoder (tools/assets/image_packs.py) is the authority",
+   "field": "source_sheet___offset",
+   "frames": [
+    57,
+    58,
+    59
+   ]
+  },
+  {
+   "catalog_lines": [
+    38,
+    39,
+    40,
+    41
+   ],
+   "field": "suggested_graphic",
+   "frames": [
+    151,
+    152,
+    153,
+    154
+   ],
+   "note": "the bottom \"strip\" is outlined lettering on transparent index 0 (frame rows 50-65), not a filled bar; 152-154 share the 好評発売中 strip texels (sheet 10 u112 v0-48)"
+  },
+  {
+   "integration": "sheet_scope in each manifest row and decision: frame-composite-only drafts (61: overlay texels with no sheet source; 82 and 88: edited texels also drawn by undrafted frame 60; 136, 137, 140: tag texels overlap each other and the missing tags 135/138/139/141/142/143) must be integrated as whole-frame replacements, never as MAINROM sheet patches. sheet-patch drafts change only texels no undrafted frame draws (57-59 and 152-154 carry identical edits)."
+  },
+  {
+   "integration": "translation_inventory.py candidate_key needs a pattern for ids mainrom-draft-NNNN.<palette_id> (frame and palette_id are in each ledger entry; palette_ids lists every variant sharing the source PNG), and LEDGERS needs checkpoints/T39004-pass3/ledger.json. Not changed here (shared file)."
+  }
+ ],
+ "decisions": [
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "frames 57-59: pixels read セーブ中; \"Saving\" needs panel7 g (absent) so \"Save\"",
+    "frames 57-59: \"Save\" written into part 1 only, card (part 0, shared with frame 56) untouched and kept on top as in the source; lettering pixels under opaque card texels allowed and counted (3 ink pixels per frame). Revisable: alternative is to withdraw 57-59 to missing, since \"Save\" (20px of ink) cannot fit the 19px card interior",
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      24,
+      16
+     ]
+    ],
+    "hidden_under_card": {
+     "mainrom-draft-0057.base": {
+      "ink": 3,
+      "outline": 14,
+      "source_lettering_pixels_hidden": 74
+     },
+     "mainrom-draft-0057.hud-43": {
+      "ink": 3,
+      "outline": 14,
+      "source_lettering_pixels_hidden": 74
+     },
+     "mainrom-draft-0057.hud-44": {
+      "ink": 3,
+      "outline": 14,
+      "source_lettering_pixels_hidden": 74
+     },
+     "mainrom-draft-0057.icon-51": {
+      "ink": 3,
+      "outline": 14,
+      "source_lettering_pixels_hidden": 74
+     },
+     "mainrom-draft-0057.icon-52": {
+      "ink": 3,
+      "outline": 14,
+      "source_lettering_pixels_hidden": 74
+     },
+     "mainrom-draft-0057.icon-53": {
+      "ink": 3,
+      "outline": 14,
+      "source_lettering_pixels_hidden": 74
+     }
+    },
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0057.base",
+      "output_sha256": "1b91b39fbe15662299a55863d6f4e103a979c5a4c8f047cd371708fd964a0f3f",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "a9292683b12da8e45e871d89355aba16776d4fa675ec6a4520d0b7884cfdeb62"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0057.hud-43",
+      "output_sha256": "7282927f27ed4f76983d25d42808df95c21b847c3cc35670636f49044fe4107c",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "dc76f704aadae2dc06630ac9a70d09f1205a298a17ea37f837a0a480c60e86d9"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0057.hud-44",
+      "output_sha256": "7282927f27ed4f76983d25d42808df95c21b847c3cc35670636f49044fe4107c",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "8ddb3d82ea3646db1889b0a23be5721588b9992b5acdef529875302f049d2487"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0057.icon-51",
+      "output_sha256": "9b282a9bfc11d4b843f6bc1f7dac09b2a21b04b6875dda6deba4313e9e7cace8",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "5d127d4aaf4864215c0c57a6ba39c66df7c7e60b70ef1f352f52782948ece034"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0057.icon-52",
+      "output_sha256": "1d19b274beb8e6eceed428bf57fed02f3da0df927b4dab792ecc18b36cdc60b6",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "febb16693a8dcec4652cb5c1e52cd50de7105361148a3f9aa87e5dcac956184e"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0057.icon-53",
+      "output_sha256": "48c618a2b308b77938c4d7d47de2975eafdc9d58758babd3e5e9b1477f412777",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "eaddb1103a14bd1a028ede0f6f9aed33b9af6da84a72c29c8f23c05242c35ead"
+     }
+    ],
+    "path": "E",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 227,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {
+      "58": 227,
+      "59": 227
+     },
+     "scope": "sheet-patch"
+    },
+    "text": "Save"
+   },
+   "item_id": "mainrom-0057",
+   "reason": "draft candidate \"Save\" in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "frames 57-59: pixels read セーブ中; \"Saving\" needs panel7 g (absent) so \"Save\"",
+    "frames 57-59: \"Save\" written into part 1 only, card (part 0, shared with frame 56) untouched and kept on top as in the source; lettering pixels under opaque card texels allowed and counted (3 ink pixels per frame). Revisable: alternative is to withdraw 57-59 to missing, since \"Save\" (20px of ink) cannot fit the 19px card interior",
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      24,
+      16
+     ]
+    ],
+    "hidden_under_card": {
+     "mainrom-draft-0058.base": {
+      "ink": 3,
+      "outline": 6,
+      "source_lettering_pixels_hidden": 66
+     },
+     "mainrom-draft-0058.hud-43": {
+      "ink": 3,
+      "outline": 6,
+      "source_lettering_pixels_hidden": 66
+     },
+     "mainrom-draft-0058.hud-44": {
+      "ink": 3,
+      "outline": 6,
+      "source_lettering_pixels_hidden": 66
+     },
+     "mainrom-draft-0058.icon-51": {
+      "ink": 3,
+      "outline": 6,
+      "source_lettering_pixels_hidden": 66
+     },
+     "mainrom-draft-0058.icon-52": {
+      "ink": 3,
+      "outline": 6,
+      "source_lettering_pixels_hidden": 66
+     },
+     "mainrom-draft-0058.icon-53": {
+      "ink": 3,
+      "outline": 6,
+      "source_lettering_pixels_hidden": 66
+     }
+    },
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0058.base",
+      "output_sha256": "48d388caed17df5f7b085de90e038d98c72d10da7d32a1aa55453518f77c679b",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "1d4d41ec696aa5cbe9884f71cf917decfb70ab6a3e2cea3d95ff34cd4491e455"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0058.hud-43",
+      "output_sha256": "a0be55edfa0ac91d8f5a902a17cdb07a28e3b82dc46cd76c5e0ced3ba6ec9d0b",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "2935dc848610bc5a0484159338f702a1f50fdb0ea789dcaffcc186d3970797d3"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0058.hud-44",
+      "output_sha256": "a0be55edfa0ac91d8f5a902a17cdb07a28e3b82dc46cd76c5e0ced3ba6ec9d0b",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "203d50b61b71e45d86fc5fe1c3a502c19d94c4325ecae27a0e4aa032b0bebdf3"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0058.icon-51",
+      "output_sha256": "db2b8c0254ddf5bb0337874e199d1cd64999cc52e24dcd29fb6cb8a0d39f8cba",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "03d7bc7d237a0a22d557aca52b221344d5009235bdeb8285da55c134cd162076"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0058.icon-52",
+      "output_sha256": "4855c6e573e3cfef9b520efe3091309c1d3cd985d29e8b46ab9c1e0d15e64859",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "a7d3e1ea73c6b1bb0eb0bc51573d9cae3dd9ce2baaf2f0601bc123e0b504964b"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0058.icon-53",
+      "output_sha256": "f0a92aed87226c0e82a412cefa1b516a58fff8ef9812786ca5be14f937ef91f7",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "af5fc04bf3983138e93d979d7f8614839cadd2c87fca63894dcb015055b5fa3d"
+     }
+    ],
+    "path": "E",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 227,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {
+      "57": 227,
+      "59": 227
+     },
+     "scope": "sheet-patch"
+    },
+    "text": "Save"
+   },
+   "item_id": "mainrom-0058",
+   "reason": "draft candidate \"Save\" in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "frames 57-59: pixels read セーブ中; \"Saving\" needs panel7 g (absent) so \"Save\"",
+    "frames 57-59: \"Save\" written into part 1 only, card (part 0, shared with frame 56) untouched and kept on top as in the source; lettering pixels under opaque card texels allowed and counted (3 ink pixels per frame). Revisable: alternative is to withdraw 57-59 to missing, since \"Save\" (20px of ink) cannot fit the 19px card interior",
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      1,
+      24,
+      16
+     ]
+    ],
+    "hidden_under_card": {
+     "mainrom-draft-0059.base": {
+      "ink": 3,
+      "outline": 21,
+      "source_lettering_pixels_hidden": 54
+     },
+     "mainrom-draft-0059.hud-43": {
+      "ink": 3,
+      "outline": 21,
+      "source_lettering_pixels_hidden": 54
+     },
+     "mainrom-draft-0059.hud-44": {
+      "ink": 3,
+      "outline": 21,
+      "source_lettering_pixels_hidden": 54
+     },
+     "mainrom-draft-0059.icon-51": {
+      "ink": 3,
+      "outline": 21,
+      "source_lettering_pixels_hidden": 54
+     },
+     "mainrom-draft-0059.icon-52": {
+      "ink": 3,
+      "outline": 21,
+      "source_lettering_pixels_hidden": 54
+     },
+     "mainrom-draft-0059.icon-53": {
+      "ink": 3,
+      "outline": 21,
+      "source_lettering_pixels_hidden": 54
+     }
+    },
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0059.base",
+      "output_sha256": "0405bc1ac48a8040190e67dca4c8710b66374a503f63dbfcb9b4670f95fee6f7",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "f829a68fdde7624bf7a3ccefe68eea889359b3d888fc4ef6beab737a84de2fba"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0059.hud-43",
+      "output_sha256": "2716e5ac14f370630bacbdcf1cf3bfc47f23da772213bff27ab49545faf18618",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "3c35ef25a710d3dd978c65e448cfe34cb99004232cc2c8497760ca83dd6f0a40"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0059.hud-44",
+      "output_sha256": "2716e5ac14f370630bacbdcf1cf3bfc47f23da772213bff27ab49545faf18618",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "e9bd1a8a178fc39c413dba36e13e0635af8253d58f2bdda8eb33c54b6c3233bb"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0059.icon-51",
+      "output_sha256": "ecb75c60850d8a5fd465e99428457cd0e47511aaa603f4824942da625ecb8844",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ca016780432b1192a0b3a37b67d63d8477ad4141eba5095808bf9b01048f039f"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0059.icon-52",
+      "output_sha256": "aef72d30f8ae3d04cec15dac5e1fc0ab7a41aebc5ba4b006f6da7126907e1da2",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "5537e44f10bab9815994ea292cd9fbcc3a8ee1c18b136486076a57f4f754e176"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0059.icon-53",
+      "output_sha256": "e80e04a24537dc8dd513771e44c072ce5df38f1a4372b88937e2fecca527a644",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "00bb72d0b9c6de77448060aadc3cc14d7dd4f9c466d6bd01f29357820709cab2"
+     }
+    ],
+    "path": "E",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 227,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {
+      "57": 227,
+      "58": 227
+     },
+     "scope": "sheet-patch"
+    },
+    "text": "Save"
+   },
+   "item_id": "mainrom-0059",
+   "reason": "draft candidate \"Save\" in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0060",
+   "reason": "date suffix panel 年/月/日/(): English date order and suffix form are an open translation/layout decision; 13-part panel overlaps kanji cells. Not drafted.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "frame 61: English pixels where no part exists go to an overlay layer with the label-strip CLUT"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      14,
+      8,
+      37,
+      40
+     ],
+     [
+      108,
+      8,
+      31,
+      40
+     ],
+     [
+      196,
+      8,
+      31,
+      40
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0061.hud-43",
+      "output_sha256": "5e13bef7f6543f3396eb4c1f1471bee0892b074e1e0185decc8f7018def424c6",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ee9f8aa8e56c8a5a2247a82a056c3d6953e596a229cc2d180d3f01cfc6793fba"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0061.hud-44",
+      "output_sha256": "957187d0143c5498a29a2f3b4f2f0fda891d6b5f9142872f5f6a628c258225d0",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "9e38a2dba59d426ff19c8994af1c97bea15996677a8573f8035979fd0acdb0a4"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0061.icon-51",
+      "output_sha256": "685b0aeb050bccdd529f82c03b19ad5ac3d487f257f441627d7c4a7a886e5650",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "f4e31275ae1db9539903506220c13c55a43eb9f5ee1562fab40504f201dc4247"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0061.icon-52",
+      "output_sha256": "c5a0e8ca013780a35c074199549f449ce7cf9d7432a80039feaec4f3196f8c8e",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ccc8ed0462f88d78022bc2e68cb5d862e9d5f7f24ed7c011635fdb81ab6edc5c"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0061.icon-53",
+      "output_sha256": "95dc2bd54e7e06fbb54f0518b970535eed80c2da880990283bf9dac36ac3d972",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "82363a9f3eb046f97c26f1fa008fbeb75bc260c8e2d9d4dde2f26b3ea2851aa2"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1654,
+     "overlay_texels": 116,
+     "reasons": [
+      "116 overlay texels have no sheet source"
+     ],
+     "same_edit_frames": {},
+     "scope": "frame-composite-only"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0061",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0082.hud-43",
+      "output_sha256": "72a49e9bc2f96e4a610063c554d7c9c44cacf72d01895ae75085139b5dec161b",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "8b76894c216035bc13502ea141f5a696a12544e429593afc41876703c8c1ee25"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0082.icon-51",
+      "output_sha256": "a57c90ba7163208520e451fabdfeafa18a34e502f765a482a8dff5f2caf1aee5",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "cc7d053fedf8748a683005f96b295cca6a5b1d801103c324a65e229c39004e9b"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0082.icon-53",
+      "output_sha256": "3ef931bdafbcd90be29929f40b4eb507464be48e4d03d1a24851722e35ccf626",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "0b04d3dc36ae64d80b9170237d1fb757657f1e3b4f731ce90e10a8c892367a4d"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {
+      "60": 118
+     },
+     "edited_sheet_texels": 118,
+     "overlay_texels": 0,
+     "reasons": [
+      "edited texels are also drawn, unedited, by frames [60]"
+     ],
+     "same_edit_frames": {},
+     "scope": "frame-composite-only"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0082",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0083.hud-43",
+      "output_sha256": "d05b4b37858399e67f600a3e366c8ca830fa80fbab27e08eb986ef1f3b65fa4e",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "6df45ac73b147639ebd4f2179c490d14c4fec2c147c102a17a4dd149f8da2175"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0083.icon-51",
+      "output_sha256": "e952ee7e3bb7eaaf8ed4b0f143251cd26cc1b646dacea8495da671b3a685953b",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "45f43927b83dcb9e4ebab5130ab4ff4747ed8e481a2bee917c3a9bc360e3ade0"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0083.icon-53",
+      "output_sha256": "77ad4ae5f6f5529074f5e3a80ecf58356edce4eac5d72516adc4f347edcc3aec",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "1db7eee76e42b648aa638fc6e66470b49ffbcc85760b8f78745834a1b3bb6833"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 98,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0083",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0084.hud-43",
+      "output_sha256": "344a9bd14278912ee79dd55b20ad5590253a097dbcd73e4106f720422b5175c7",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "099677f80961d3ba503b453986133a3fe5c405989038371c1adce60390524550"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0084.icon-51",
+      "output_sha256": "132f9bd6982432e3f75d7c1af6bd62d4dcac7b97a66513dd2a1dd961a8c12f8b",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "e7d39cdedf31f84e307c9b227c8283a235e4d045ce81f01becb7b52eb04376cf"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0084.icon-53",
+      "output_sha256": "17854807ca741469d0d2ea8268c2025400436e4f9d207e45003a9f9f2b846ea7",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "7619652623969de73f7a0676f8d40fe452007f5f6374de91fb254be5d116bbb7"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 115,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0084",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0085.hud-43",
+      "output_sha256": "374875d883ceb091877984f323bb2425d67416feae966efc89f396cb9dc42861",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "8ec363d180a47e6ba6e58eb9bbab299af382c5b9523bae307530bfab0ef70693"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0085.icon-51",
+      "output_sha256": "07e411dd0980aed1daabd92e7d9aa1e51c86f239cd5c95cdc5b687e505f8f5a2",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "52939d360bf909f93bab62c5126fa8c0cbfcebbcd3a910a941c0d30c06b8a7f1"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0085.icon-53",
+      "output_sha256": "6e7f80bd614c48e18bdcbbfff67c974c807a8bf309a41490a356ea873dd212d5",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "909b903c0b3c415aa6adea65ca59608b734c65ead0b0d50d292f48881303b0fc"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 104,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0085",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0086.hud-43",
+      "output_sha256": "faefa70c9763bc5600b00edff01a38a502dab1c0b4677fa16de230a6f81e8b13",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "cb231e16c0b104b1f35ab1a4b8504b528f45e37ebc737cb8833a7533d08d1f4b"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0086.icon-51",
+      "output_sha256": "84d3878196e96aafcc11225d973f283d2a015856cff6e92c7e6240910bdc59a2",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "78d75fb97877b691feeff80312d7a51969f079e535823429c4a5d35a9ab04a54"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0086.icon-53",
+      "output_sha256": "efc3343f7cb2df9fa79b51aee72f146c6dafb83a96f2f986574143a0676f1194",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ec860d886b15fd4a01d0a3aff254cb1a21dd29ee21f79860a147246d73dbf77f"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 84,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0086",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0087.base",
+      "output_sha256": "bba2790e34a26b49c90e4528513d6869ac490df38a23107d225b744147acac5d",
+      "palette_ids": [
+       "base",
+       "icon-52"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "39da956b0c2adcbe7ff48ae97f27851e8f37d63e48038a87749a88f933bd1d40"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0087.icon-51",
+      "output_sha256": "648e96ef5e63f40bcb1805058ffeeef78525c73db033eadb8493b74b86e259da",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "9832e37d1b80f9e742001a45c7433e7720042df5e67ac22270f70dbbec94642f"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0087.icon-53",
+      "output_sha256": "d9929c07c49273cda2d24606caf0899de2a94f7c73dbdaf4bb684e3a1c742a3c",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "16e3e23ad4321cdd55ed5a6cf9ae42640ca6b9e2f4b29085b9ab5088c67a9074"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 91,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0087",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "weekday lift from reviewed batch-002 art (+ pass2 rebind for 82)",
+    "frame 88: all variants rendered (base|icon-52, hud-43, icon-51, icon-53) from the reviewed Sun hud-44 index map"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      16,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0088.base",
+      "output_sha256": "f0c3fd048d4130e577ff6a003e04c4dbd854d1fd5c57aaf515742b6bd3f36098",
+      "palette_ids": [
+       "base",
+       "icon-52"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "a02f956721c745f906cf4e649d9f1b381fd90a3b5793d0398b61096277e07504"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0088.hud-43",
+      "output_sha256": "923d3b9b8ca6e89c9dc0b09568a4247771d5a8f20a2060ec565bb2f9a0ed04f5",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "c388d9b3475494457c90fde6c08ef9423793de1b6bfcc0b623423c39a0911603"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0088.icon-51",
+      "output_sha256": "66a5c6c1c63e39e3616051773761838bb508e58c2b313e0c14fb22f563912b4b",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "b045e5cd48ab8b1259755e890b5646c32138f4676d7a756a6ea954b04839f96e"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0088.icon-53",
+      "output_sha256": "3a5da0141f9d72b6b3b7ec92b2c4bbde77886aa3990d750cc4fad420eba303ec",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "e55f386b0401d9692433cd2c9db5ea71e4aa69d119cbc83b39862dd4c0c89ec7"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {
+      "60": 111
+     },
+     "edited_sheet_texels": 111,
+     "overlay_texels": 0,
+     "reasons": [
+      "edited texels are also drawn, unedited, by frames [60]"
+     ],
+     "same_edit_frames": {},
+     "scope": "frame-composite-only"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0088",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "118 and the 151-154 logos deliberately untranslated; only the 151-154 lettering strips replaced"
+   ],
+   "evidence": {
+    "catalog_line": 11
+   },
+   "item_id": "mainrom-0118",
+   "reason": "Hand-drawn メモリアルスポット masthead kept; its Latin MEMORIAL SPOT subtitle and MOVIE/CONCERT/EVENT headers are already English; no established face can replace the logo without inventing art.",
+   "status": "deliberately-untranslated"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      32,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 8,
+      "id": "mainrom-draft-0121.base",
+      "output_sha256": "26dabab572fc78e81283cf7b0f8a28ad161a35045d16d85ed87616a8ae80321a",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "9fb12726e2ba99cddfc9a5f458cfd344a9621d8a7d33392b534fdc1c02b252d0"
+     },
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0121.hud-43",
+      "output_sha256": "f893aa81c93d7a5c837e25afac3859221e2bbcf72b718051e97877f9662a4727",
+      "palette_ids": [
+       "hud-43",
+       "hud-44",
+       "icon-52",
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "42d3018319b45011c329cade6ede09514775d71c59bd335c91b6b256826899af"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0121.icon-51",
+      "output_sha256": "595947a542064f0323f1d7e77d0065cd1587183c91378d5be31a6caaf436f865",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "86b8cccc17ca49b5975903ef39877d60ea733d3887fd34a10db72b81a2d48b76"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 178,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "No.1"
+   },
+   "item_id": "mainrom-0121",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "badges 122-125: numerals and dots from the original texels, 月号 dropped"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0122.base",
+      "output_sha256": "d87e4b4653783c68c06040e579b7f5b6087d8ec833875696de72a8fd1b2ac6ac",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "0301e727ef52abf0b22e6d095815c4b98975632aeb3adad91c58367302d750fc"
+     },
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0122.hud-43",
+      "output_sha256": "795e599880783906fd6b00b65007c633814834f9710420b2e464589460700dbf",
+      "palette_ids": [
+       "hud-43",
+       "hud-44",
+       "icon-52",
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "6e55d34872a726292b55b86b6439865bad814773253a6fe4df8da3e2e084675f"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0122.icon-51",
+      "output_sha256": "efab8f24c7a74ceebd804fc51091b69d726a31304c984373dc97e24db2538ee7",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "8c38ca9e7a04b2ccae72a5cbf3d6e60e925ea1f72c1b60e1c843502c5278f3d5"
+     }
+    ],
+    "path": "C",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 347,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "3・4・5"
+   },
+   "item_id": "mainrom-0122",
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "badges 122-125: numerals and dots from the original texels, 月号 dropped"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0123.base",
+      "output_sha256": "2be3b0fba2f0045f16270cf64de30dd6c77336bfcfab25038dcced9b10728a35",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "e015339a0261b5c75f7b5d52a1639f597c1e1038811547fbf860519e298b2d95"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0123.hud-43",
+      "output_sha256": "558667a6df91f92737c8f40ba2b6b323cd25c6719893ea4530aae47d642a7244",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "d4ea32b57c1573b229a2741cf1ceb43d8e340375253a3e3aa474ee870a6a78eb"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0123.hud-44",
+      "output_sha256": "e3638554bd69b4ea31c4cb36fa5ec2e7c88faf5bcfb2a8bd0b890027c386db4b",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "684e2bf51cc21e44890bb79207904493f6bede0b547a77ae6362a415949a0f79"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0123.icon-51",
+      "output_sha256": "506f42f80156abba5009d0cd5964d02d56480653c07b312bafc479d1b63a394f",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "06ee035c8d15a309db22bdd00f9d67e5db3eb1f2e866feb4e7e471bb91d83008"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0123.icon-52",
+      "output_sha256": "b76e2e93b8e6ae6175b794a12190aa91835511cd331fd697fec4b94c839d8ef0",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "a0a404215b9a0df165b582bcfa415896d901d76d2346549ac185be997e194157"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0123.icon-53",
+      "output_sha256": "7c1241735d87a9cadbaf2714b41eae32e095792813999725f54c5a07a8c427c2",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "7d991e9f52697e496b08a23ad3f6e529469f31859ff81334d884ca1517f4ef29"
+     }
+    ],
+    "path": "C",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 361,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "6・7・8"
+   },
+   "item_id": "mainrom-0123",
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "badges 122-125: numerals and dots from the original texels, 月号 dropped"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0124.base",
+      "output_sha256": "b27052f3d7aefd8db60d9d16b5e653ad0edfbb594b14b6dbff710173dea248aa",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "b6b459b0b4452a5796e3f3a02225ddd82f07908d0ae92c48bcf507918a6a11e0"
+     },
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0124.hud-43",
+      "output_sha256": "8ebec97c9c81460933e93c72b7eabecf313f4da25cfd20bbd82dd1a8bffbcd40",
+      "palette_ids": [
+       "hud-43",
+       "hud-44",
+       "icon-52",
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "70b61115e85b26ac0aba7e3fd9819209214afebd9446c6da1fcd0a6ba821aef7"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0124.icon-51",
+      "output_sha256": "ad85b5dd1c4e4e8fe4533efd01184b6cd06b057039dcb7e8b3b2dd089fb1884f",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "a1b68493b91a7d7c60d56d15a21ea7c534a47ab292077c992230a3e0f2a2cc0a"
+     }
+    ],
+    "path": "C",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 380,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "9・10・11"
+   },
+   "item_id": "mainrom-0124",
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "badges 122-125: numerals and dots from the original texels, 月号 dropped"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0125.base",
+      "output_sha256": "0ee1b83f1b1320cc23f4bb9f53dbca2a2cba5136332f4ed7f16a082237f9ec81",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "c29a79e652d8f057f3d541afe3ef716aa114c6ea985b7d933fb28b7a823b4eec"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0125.hud-43",
+      "output_sha256": "45a1c0c94de317639c733baac5fc252b117ef32c35027caa2d69bbf2f302cc0d",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "067381ecb6cb6fa7d8ceabfe145adfdd3cec38e15523d751f3d8b6701729d9cf"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0125.hud-44",
+      "output_sha256": "6c8e02db50a5c2bf4f1f1cd736d71b9133c104f2aae71e99ed89e9dd2abdd3a9",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "0628ba8e2d4522f2ae576dd51bb772bfaebdfe2844cbe1b5b9844aebb3d9ebd0"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0125.icon-51",
+      "output_sha256": "d0600561d9c1c098d9bbf58de583f211632a75887296c5207b535d629b4819ef",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "60ac4c6c61bb51565c4a8db9c66946d3e54810475a89b3bbe692ebe452bc163c"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0125.icon-52",
+      "output_sha256": "6bb2df38e2fcbf1614bd3727b55e95024257e94af21a5dfdf690973b30d70d27",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "44fe1fffbf7c5a206b5f123f729f2a8378cf2dc399d93b8b8242aeb090f8a5ab"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0125.icon-53",
+      "output_sha256": "fd0621cb9e7d407533b322c1acf51c66c6058b6c3ffe13615a979b36bd733d24",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "cccaa0a7bbf85da630b35b6a664a3e9e9eaf8d0dd603faef30a952ab9fb8558a"
+     }
+    ],
+    "path": "C",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 312,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "12・1・2"
+   },
+   "item_id": "mainrom-0125",
+   "reason": "draft candidate from original numeral texels; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "frame 126 lift source: T39004-pass2 rebind (CENTRAL PARK GUIDE), the identity bound to the current source"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      136,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0126.hud-43",
+      "output_sha256": "3cdf7e40d23f8229b81161fa7b577a573f473a113634ad574c854badf3b0dad8",
+      "palette_ids": [
+       "hud-43",
+       "hud-44",
+       "icon-52",
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "887ee6f268330b6038a3625bf08ee88b817bad9de88f1abcc37b9f3adb431971"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0126.icon-51",
+      "output_sha256": "6d2dffabbc66688052e2d984ea0b1303c5bedf6ba98cb08fea00d0e26611a6c6",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ff1e238c6c36d500e902287761acaffa5a155c472c0c04fa469c7fe69aefcb8b"
+     }
+    ],
+    "path": "A",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1473,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": null
+   },
+   "item_id": "mainrom-0126",
+   "reason": "missing variants now have draft candidates re-rendered from the existing English index map; existing reviewed variants unchanged; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      120,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0127.base",
+      "output_sha256": "3b7a018fa2caad73206472fdcae2c437a90929de4c9b18c543f740f343ded3e2",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "619e573a68e2312b5087cb4f4e25acb562a5fcc0dc59dc9285623aa22724adc4"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0127.hud-43",
+      "output_sha256": "26fd0f5d2ed962e823dc3bb436b8da7acf18178f9cdfb5f5bbb7e9b7a5f011b4",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "7f8b35106ee6642880a2bb4f4c5b40d6cbac103012f862491a6c48202a998847"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0127.hud-44",
+      "output_sha256": "b0f593490fb6d5df907b7803d6641c563a57f4d836053378ad9b15aefb78a14d",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "d916418e58c45cd3c9d0cce9774d008876d5059216004b972941f684e33427f9"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0127.icon-51",
+      "output_sha256": "615de4cdbf094a93f8f47b4f47c3f959c5917cdad23d7c76043e45514f4d882b",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "e320ebc77cc6f814d05e9e8d10c0afa405cc8c0b12f309107fb27fb3605cfc23"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0127.icon-52",
+      "output_sha256": "0091b4e39177b73d731449fa578b8b1fadc0199a3713bcb3787b533185355038",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "6b07ad95e95ee7a552b15b136b46653e178bfd3836a787287f719ef44b77af55"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0127.icon-53",
+      "output_sha256": "66939c66fd4f42995f481495eb3b2eafffba2e535f26881fd7c12d91bdbad5c6",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "c87f69363fb1100494ecac64c11155add9dd9655a89b7d0de209240808797d2e"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1289,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Museum Opens"
+   },
+   "item_id": "mainrom-0127",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      112,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0128.base",
+      "output_sha256": "6c15c7498139be13a3c1efe807a0ab607387955d8c558967efe9149920da8b59",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "178c1fb91016b1d1d1be7c9d28ab9e1bfd98bd839b87b00db221d49039df9813"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0128.hud-43",
+      "output_sha256": "2ab0888f7c9ffc8ed524bd44b02a67b5fdb535b493b6b63914f0531ea3fb545b",
+      "palette_ids": [
+       "hud-43",
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "a040330e5b0e96d88123acc79f182f0a605e57b457540be9639503e47b71f29d"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0128.icon-51",
+      "output_sha256": "85bdb4b95394e4a254cf96fde955fe2880c3369b0f879fe096425e1dc2114d6f",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "cd31a5de7e87837c44dbb7097194c81ef51f2ee943043918b8e9188a62edb8ca"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0128.icon-52",
+      "output_sha256": "eb7dd70db252571c462fadafc931ad627331873b549fea5a9e4e002149c39f39",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "587a9ba7f4e32407780f32050933bed307a14b1888714bc1d58856fa6eec1d0d"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0128.icon-53",
+      "output_sha256": "c3f3493051af7610a500345104fef1ab2aa8d95824aec7845c68757fc4804d0d",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "915ae9e18ddee35f00cd97c0588aabf4fbcee85a344367d375e4518de0b4aa50"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1182,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Aquarium"
+   },
+   "item_id": "mainrom-0128",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      144,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0129.base",
+      "output_sha256": "96d359dc978a7f4aac443ab1c61488da8b99dee4ab6b554bbb7ab91663079b2f",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "18218cec777ce7a2e638bcf2845ced59e66f38d332375aeb59cb7a87b953c02f"
+     },
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0129.hud-43",
+      "output_sha256": "ff2d4fe7896f7af1efb8ad767340a28ade6424f2ce8bf9f741d95415e0f0afea",
+      "palette_ids": [
+       "hud-43",
+       "hud-44",
+       "icon-52",
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "81cd77559ae9ee74f7c700cff9df03f9e313e0420b40dfb066770d24c1a0ba1c"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0129.icon-51",
+      "output_sha256": "9f60a0525bab9914de2c80ed04bc8044712bbd7df7b4e98d5a7e5086b1eb0129",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "848d116963a5896b71c3bba00a8d4723920104694d9f9b8cc564f6f1adaa5bd5"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1254,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "New Stadium"
+   },
+   "item_id": "mainrom-0129",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      112,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0130.base",
+      "output_sha256": "835044a1eda37229afa3ce68bc4912ba464e361a16ea193ea34f0119ce2ad375",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "0d1d025c6e3687d0a5e3969fa34a6e02ded6e6f9dbdbed50bdfafb306169b423"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0130.hud-43",
+      "output_sha256": "cbb11251acb52b74cad4924146ee13331dbd971bc0cd90c43e7a193dd39e5a92",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "81ca9d9f5f15ff1feae232f1e172550df4f904a13f13278434d18e47531906d6"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0130.hud-44",
+      "output_sha256": "19324eafa3f5fa1a4bbfdae7ef466d343cfd2b95a69566e20b1f6c45a98f3f03",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "8a16df70d923c1314d171b228249c1f2c00ef7e172d84a1215d11567e90bc439"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0130.icon-51",
+      "output_sha256": "a8b1be350c7704f21a1d5a9a127b03029dd7c777cabe8927aaaaf57dbaa533e2",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "aea965efa5a5ba82d52f10b32747002f4abacf11468132c83d856e224baf5620"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0130.icon-52",
+      "output_sha256": "df5eb06ed152f31245b7317024147197533301b5cb18523f9a46c9cc6815e84a",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "f138bc63a7f5c5c85bdad4433eab86731ec32d0cb9dcd0106c1c0a043bbc8cb8"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0130.icon-53",
+      "output_sha256": "b05d1d17363c838902344edef5bfd4a6b71a4741c01d3f13204b745ec1d117ef",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "1123f585b45eae165fab0e5016f10af9d5ec1428efcab5bddc219a9eb6390987"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1368,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Garden Guide"
+   },
+   "item_id": "mainrom-0130",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      144,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 15,
+      "id": "mainrom-draft-0131.base",
+      "output_sha256": "66f7f03e4f1282ae47498025aadd26d4c120710947f2f24fca4fa26b85582ed7",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "2b84e7a8381d53e4b01a1d0ab30fb756f257c2d12649f673209df93da363fcee"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0131.hud-43",
+      "output_sha256": "6350730d0c1a734019fe384e8018a7752ce6fa1b20981c0111877ff668eced41",
+      "palette_ids": [
+       "hud-43",
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "8c9aa82c4ae0a6603893c5809bd4c71f3078b0069071cf8e556b182ba8439df1"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0131.icon-51",
+      "output_sha256": "08b64ddd3c82cfd5f66f712b7f42dd7b481c0593a87b563a1fee2c0eedbfdca7",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ea9160186a224d92e2c700f8c23e3a294504b2d3e318181edf4764d971bcbaf4"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0131.icon-52",
+      "output_sha256": "7060bb95f2aba7407e1d3dbc7502e30a6f184dcf0c034d1be3751471a65aaab2",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "22b7888076dae70ea268d27df81a388cddc520f87297d10657ab6dc78c901b75"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0131.icon-53",
+      "output_sha256": "3592e424b39336b246f847e9986f1207a3e18c879e5cd5daffdfd4b3552a53f4",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "32ffeb5b183c6d93f2e4abb37ade9d41e70c88cffb09ec7ae943f5252dbe93b1"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1156,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Bowling"
+   },
+   "item_id": "mainrom-0131",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      152,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0132.base",
+      "output_sha256": "fe23dc400a5c5cf23fd56acb3a32e5256e9d126d11565947bf33687810a0d8df",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "9cb1e0d6930b6da07dd2c79177758936f0f65b4a34a43d83b327ea63ea8e6b7b"
+     },
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0132.hud-43",
+      "output_sha256": "9faadd3283adeea850fee0c10a6b02fdceee9b51fbe7f7004d543fc775d43d38",
+      "palette_ids": [
+       "hud-43",
+       "hud-44",
+       "icon-52",
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "72184d0fe1ebfdced752e5cd34ee54abdc9ecdfad6d56adfdb5ce767bad9f973"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0132.icon-51",
+      "output_sha256": "11e692b962b584bb8525d23313d07904c2a4d9e79375d08890c2e8b4803e05e5",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "2b8180f207e94f8e408d3a81175c2258faed67b4930b5fba4917139685df27e2"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1410,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Karaoke Opens"
+   },
+   "item_id": "mainrom-0132",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      152,
+      24
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 11,
+      "id": "mainrom-draft-0133.base",
+      "output_sha256": "60326ff60eddf396462edeeb77ea591b642277cf32cc2b3bc8ec9f4b48ccdc92",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "4a7b8e66009b317b1ceb96d3587a570bec23c9d6ad5c497833f0047af8153ffc"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0133.hud-43",
+      "output_sha256": "cafb08b80a38d7540c58e67c20337e143ea15982c993b34e96d2e5053445e2d9",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "7a65ed521bb0164b2ed3a33fee9784b394aa1e1e8c89c8ebed6be4cae2b51b17"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0133.hud-44",
+      "output_sha256": "a804908f5561a6d5c7b4add5d460198963992f4e9914a647471a8c4276c78622",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "188855e7c218258a0d1163b62065e599010e4e36f497fb5c0816517ec0921e1d"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0133.icon-51",
+      "output_sha256": "2e0717af5beb480b8953e1f7a157705a65af5d72aaa342a83d70ccf09da1c94f",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "5ccd5f086d5bbc7fa3c0b3c089ef27f9dc861c13e2ba3831ba3386459238f8aa"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0133.icon-52",
+      "output_sha256": "f03e1f7c917551e160b17a38abe28b33be7d5618a60f258ff309b80ad85dfd04",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "b710f2c95f047176a00ce81ee17cb7425ae3cb5ed934fd0ac575719044b359a8"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0133.icon-53",
+      "output_sha256": "9ad0216e08c271a11a47ff425bfd3e9d96336d9e849de041b0860829aa36b23d",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "6fc08de5ac8c50576acca6600adf5ed21555ebc3866e89d9744e25406e96a8f6"
+     }
+    ],
+    "path": "B",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 1293,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Planetarium"
+   },
+   "item_id": "mainrom-0133",
+   "reason": "draft candidate in the native executable font; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0134",
+   "reason": "Comedy: panel7 lacks m, d, y; the 12-row native font cannot fit the 8-row tag; new glyphs not allowed (Battle Miss precedent).",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0135",
+   "reason": "Romance: panel7 lacks R, m; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      40,
+      8
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0136.base",
+      "output_sha256": "55fb9cabecf8f7e336a37b6417cc519f37084fa2a9f4b330f0acfb78ed5d2d0a",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "e854fb4d0d3844ed52b1c6200faa3d50d9c9831b1368d8743a0ebb267346006c"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0136.hud-43",
+      "output_sha256": "aff39d8ea86f89b0cd45cf25e362f4381485f78c209b39ba46371d5ad4bfc12e",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "005f08df088fd625703326accd2885ecdde29752c86cc89c345e222da844120b"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0136.hud-44",
+      "output_sha256": "836518b5ecd0239f45b715d6c548b87e7f43d3114fc69639285fdfdc06ee38e8",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "b53a28ecb8c8b8a6a32bc87c4a813108eaf5ea979b831488a950114ce116dd73"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0136.icon-51",
+      "output_sha256": "3794042455fc8209d1a077a2f3d3ec9d23e83d1eeb19d2b838de10606913a6d5",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "7caf648b93dc3f984f1c9daaf7e339ab7a377ec0aa558796a5493c5380a6574a"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0136.icon-52",
+      "output_sha256": "b88fd6a681998f34e2ea9bd7e2a48df854f8d010a3cba1a111ba631f7f5eeeac",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "e65c93301b5bcc9a599f8264b004fb983d72d1b7a4ebc133442dbb6023246b9f"
+     }
+    ],
+    "path": "D",
+    "sheet_scope": {
+     "affected_frames": {
+      "135": 11,
+      "137": 5,
+      "139": 18,
+      "140": 28,
+      "141": 18,
+      "142": 22,
+      "143": 22
+     },
+     "edited_sheet_texels": 90,
+     "overlay_texels": 0,
+     "reasons": [
+      "edited texels are also drawn, unedited, by frames [135, 137, 139, 140, 141, 142, 143]"
+     ],
+     "same_edit_frames": {
+      "137": 6,
+      "140": 17
+     },
+     "scope": "frame-composite-only"
+    },
+    "text": "Action"
+   },
+   "item_id": "mainrom-0136",
+   "reason": "draft candidate in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      40,
+      8
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0137.base",
+      "output_sha256": "d4f374d53d40cfb730549bd9b9bc8173b8c9ae81b7196626dab351e37ab3e208",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "777f349cd232393afce050efba40d98c084218628b50f0ccff51e98d4edd7a39"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0137.hud-43",
+      "output_sha256": "e8af89ee17ad55f6b56e0c6a9ccacbe1d429eedbe6126139aa9a311c97e84565",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ffe5bd7e77b5a39304be51d3ef39840cc155488c37f9c5dbc3b89a6be6b172fb"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0137.hud-44",
+      "output_sha256": "f2c1630ceaa7aff9930a91d7137d92472e34a69a6a86fb75c4c3cc079a5fa316",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "c0dc245d00f073320361753825a12cbae7d0be9be74b20569d9abafd97384046"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0137.icon-51",
+      "output_sha256": "5b76d1204df344a330278b79e2d154368be86a628b999106664b74ea597a5ef7",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "b667f18715daa36ca57fe13ae7bd51758bf0863b8e9de2c813713e4de9a48656"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0137.icon-52",
+      "output_sha256": "667e8438d170c5e54c6255d68b1dec80ce5a7d27d1949c100376f04d866563a1",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "acb3c663dc384039572a576acb18fe37fe4ae87b9a07328ae93651ef87ab050c"
+     }
+    ],
+    "path": "D",
+    "sheet_scope": {
+     "affected_frames": {
+      "135": 54,
+      "136": 11
+     },
+     "edited_sheet_texels": 93,
+     "overlay_texels": 0,
+     "reasons": [
+      "edited texels are also drawn, unedited, by frames [135, 136]"
+     ],
+     "same_edit_frames": {
+      "136": 6
+     },
+     "scope": "frame-composite-only"
+    },
+    "text": "Suspense"
+   },
+   "item_id": "mainrom-0137",
+   "reason": "draft candidate in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0138",
+   "reason": "Horror: panel7 has no H-o-r-r-o-r problem glyph-wise but the width (27px) exceeds the 24px tag; no scaling allowed.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0139",
+   "reason": "Anime: panel7 lacks m; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      0,
+      40,
+      8
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0140.base",
+      "output_sha256": "56f765b2035536a24a6e89bcf1a30f80b83151431eefa507e4a1643d74f55423",
+      "palette_ids": [
+       "base",
+       "icon-53"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "cad48066b7accf9c1bab44486bcb42e2ea6111b3165653f8345b4df8aa293b15"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0140.hud-43",
+      "output_sha256": "0e4bbfa0d788029e6d684d146c5501deac335039787cf5cab93380a3a0d8e72f",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "66c236db5b99f059501db59f37d76f3c6763a6633ea99c8d05ddde65a85002c8"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0140.hud-44",
+      "output_sha256": "4257cd64fffdb0205ba70baacdbdf4b888ac5fa1d12116fbbb793ad8f26bcc0a",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "717b127a4b6e6abfaa8755fec42c27b1e7e3aa51436c8e643b53e87c0b6dc3c8"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0140.icon-51",
+      "output_sha256": "25ddeb71528f86bb94b3c8a9d5558f30280f78e30ef1d0053fe43297a5d8348c",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "0f26eac710f1ce31efe8dc3606379090b40b5cb328e6534369b1c9d43e0d6713"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0140.icon-52",
+      "output_sha256": "da35b16f3dabdcbfe90d40c3302c841d179d2501d26036d4c1f665bd99bb1e81",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "b87c3ec41ea2a3da856695191f7f36948197c8d6ef9b9c9199d2ca1ac94a8eb0"
+     }
+    ],
+    "path": "D",
+    "sheet_scope": {
+     "affected_frames": {
+      "135": 25,
+      "136": 23,
+      "138": 25,
+      "142": 40,
+      "143": 20
+     },
+     "edited_sheet_texels": 85,
+     "overlay_texels": 0,
+     "reasons": [
+      "edited texels are also drawn, unedited, by frames [135, 136, 138, 142, 143]"
+     ],
+     "same_edit_frames": {
+      "136": 17
+     },
+     "scope": "frame-composite-only"
+    },
+    "text": "Classic"
+   },
+   "item_id": "mainrom-0140",
+   "reason": "draft candidate in recovered panel7; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0141",
+   "reason": "Idol: panel7 lacks I, d; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0142",
+   "reason": "Rock: panel7 lacks R; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0143",
+   "reason": "New Music: panel7 lacks N, w, M; native font cannot fit 8 rows; new glyphs not allowed.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0144",
+   "reason": "Pro Wrestling: native font (Wrestling 48px) does not fit 32px and cannot set two lines in 16 rows; panel7 lacks P, W, g.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "no new panel7 glyphs"
+   ],
+   "evidence": {
+    "panel7_glyphs": "ACGHLSTacehiklnoprstuv (recovered from frame-61 rebind)"
+   },
+   "item_id": "mainrom-0145",
+   "reason": "Baseball: native font (41px) does not fit 32px; panel7 lacks B, b.",
+   "status": "missing"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)",
+    "118 and the 151-154 logos deliberately untranslated; only the 151-154 lettering strips replaced"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      50,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 36,
+      "id": "mainrom-draft-0151.base",
+      "output_sha256": "95e029636df660b186c65d03e6f94c7cff2b90a0fd0ae2f3cb7fe5e8f610082d",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "9a23f0d74370bb8d94e29633201895169fe42086f0e0a547b4afba5f2aac031d"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0151.hud-43",
+      "output_sha256": "59fec5af49f0c28b8b70487fe8857afd8e87f5a8aeb769b0dfe887030d7847a8",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "870e2554181e4a382dd09f5af31a2a0d4111f6bf4b2276d3b3d28bea2633cf93"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0151.hud-44",
+      "output_sha256": "4d57e85de6ca45050671d787d573d405d862ffe86eff088211362c9564ddfee3",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "82ca38249a388320c9cbf7c5275ca04822113ba6db6eccb7ffe3ca205fc87106"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0151.icon-51",
+      "output_sha256": "179af8b93b1a3248c85cddb060ef7364395e8616bdce9b73185fb136d507a263",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "2e89d64b3a439c094b7a77d88edb633bbb569eb1dc330a420c6370ffd353dd3e"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0151.icon-52",
+      "output_sha256": "03b8186f9bb187f8791e9734f9e8054c14aa6689be695bf969170e9d3443e526",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "76d3c395cd27e17ff56538cc5d4e39472dd08219d1d47b286444c2578e27c036"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0151.icon-53",
+      "output_sha256": "5810d00268d0978314c6607dee80bfe86023013434496ed92dd73830d3088c87",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "ee179883b8d104e261c27274196c5352596d5f657eec7ea1fd5beec1c153eadd"
+     }
+    ],
+    "path": "F",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 546,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {},
+     "scope": "sheet-patch"
+    },
+    "text": "Out in '95"
+   },
+   "item_id": "mainrom-0151",
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)",
+    "118 and the 151-154 logos deliberately untranslated; only the 151-154 lettering strips replaced"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      50,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 38,
+      "id": "mainrom-draft-0152.base",
+      "output_sha256": "29527280e44edad5c55a8965c8f4ce118a7d7bffdce728c10a62576497ac8209",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "c813a58bfbee5428e459e2df19d36e80d92fa9406d8e1f69e364127d1a1885a9"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0152.hud-43",
+      "output_sha256": "6658e4887e99a9dce75095b665845aa1aa2c6a63f802a963eaf16266cff529ec",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "8bdd1aca45fc6624b826812adcae75fe57db90c1a25b9f7fb1115b512431f43c"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0152.hud-44",
+      "output_sha256": "b4a6d34c44d14c7b0fdf11395674086d48c66d60562580d519d23329c9d53390",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "014a982b2d26f8f8e959e82479a1df5dceb4a29db93c7e7a1cde0ffa4f62adb9"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0152.icon-51",
+      "output_sha256": "b285ab08cfebbf814e982aa723e6668b73c177f369303aecea5e89fdd6070347",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "7dd9c51f0fae4ef0bf42bce12033425704bb181326d8eae98788bf9bcba3f8b6"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0152.icon-52",
+      "output_sha256": "768984ad4046ce01892de0a47b1e1184dc5e78743eb2704b5dc8c0d9a85080e1",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "11863abc344c6d23e45fd61946208bf59101d68c6f2051d67e34b8b5692de803"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0152.icon-53",
+      "output_sha256": "b590a71fe618f3e78ed01082ae45aae412f6a63982b8a4328a525fd6a918c957",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "6b0ed60add80a330b7ae42fba849790d692d4c0b41ed88c656f0457487a04144"
+     }
+    ],
+    "path": "F",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 545,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {
+      "153": 545,
+      "154": 545
+     },
+     "scope": "sheet-patch"
+    },
+    "text": "Out Now!"
+   },
+   "item_id": "mainrom-0152",
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)",
+    "118 and the 151-154 logos deliberately untranslated; only the 151-154 lettering strips replaced"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      50,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 42,
+      "id": "mainrom-draft-0153.base",
+      "output_sha256": "d0ea9141f81676dbbbf2fb6ba7269181ed3567729aaa86378d656056910104b6",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "7cababd1588cfbb5d87444b47c186e36a406a0cc6f7970ca9622b0649fe46528"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0153.hud-43",
+      "output_sha256": "8335c8cc92a18e2265ca1fd9267a75ae2774521b0e6625d941e9c844d10a618e",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "a9db23b55a97e487e41288955f718e084034e77a3a53bf67adfc9709f458b3a4"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0153.hud-44",
+      "output_sha256": "316f98538817e7aef9c83ff1f98a2fc6f8d8663eae639aec81cefae609a9368a",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "31ddf4c6e956c841c60568e4321eafe7a0912e793125a365f6e0ccca1a08cfdd"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0153.icon-51",
+      "output_sha256": "5f584a2d6f1fc60c5c0b8db54e9927bb101b68c7cb6c8453e511fd0722bbb9d4",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "016dcd028484a4bc0f1089b9597d0d0cd2da13cdade6d353916e3ea2f28154f4"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0153.icon-52",
+      "output_sha256": "95693052b29f58e644a266eea9d25e4108eb7e38cc0972ca9687a01275a4db62",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "43116cf53a9f3990a047ff3f454d3b887f5763ccc4028cde386ad8cf02a6a489"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0153.icon-53",
+      "output_sha256": "31bedc93aca67b262882bf6f3996fac81eab82850f8198ea3a887923df532652",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "817abe17f969787a7c4ec1b26e00844a3ca0ddbd241b238fa51469c01be90b82"
+     }
+    ],
+    "path": "F",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 545,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {
+      "152": 545,
+      "154": 545
+     },
+     "scope": "sheet-patch"
+    },
+    "text": "Out Now!"
+   },
+   "item_id": "mainrom-0153",
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  },
+  {
+   "defaults_applied": [
+    "strict variant rule: every known source variant re-rendered from the edited indices; variants outside the port draw scope marked not-runtime-applicable with CLUT evidence and kept in the requirement",
+    "agent wording defaults from the catalog suggestions (revisable)",
+    "118 and the 151-154 logos deliberately untranslated; only the 151-154 lettering strips replaced"
+   ],
+   "evidence": {
+    "edit_regions": [
+     [
+      0,
+      50,
+      56,
+      16
+     ]
+    ],
+    "ledger": "translations/en/graphics/artwork/checkpoints/T39004-pass3/ledger.json",
+    "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+    "outputs": [
+     {
+      "clut_opaque_colours": 43,
+      "id": "mainrom-draft-0154.base",
+      "output_sha256": "631486836416eb712ebf4f58e8353f9c3118c4842effa833395568f55cb7a1c2",
+      "palette_ids": [
+       "base"
+      ],
+      "runtime_applicable": true,
+      "source_png_sha256": "2df4c515917671cbeb8c1dd972e71e9756725fb89e9a3494d1c334d31b49b5fb"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0154.hud-43",
+      "output_sha256": "17eace74223b709b729bb69e7530da719317a2045323cd43798df0b2d0708d06",
+      "palette_ids": [
+       "hud-43"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "b94626261d1a6a2acc3c32d91a8d08566d2926df841614cfbce540fe6829bc9c"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0154.hud-44",
+      "output_sha256": "999cda8ab14060d9c670242f4477072d5341ce52b44d47e1bad69bc48c276efb",
+      "palette_ids": [
+       "hud-44"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "65816e24f992de2e6b9b701acd832100576bbf4dbe0927b3d3336777105f9ef5"
+     },
+     {
+      "clut_opaque_colours": 1,
+      "id": "mainrom-draft-0154.icon-51",
+      "output_sha256": "81ff56b2c4603ef578258ddee5632f3c9db32e6e443f098139d37e2c702fea15",
+      "palette_ids": [
+       "icon-51"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "efcc178199d94c3d58120b506dacc142d03fab90a3a8520a571c8b8399c33cc8"
+     },
+     {
+      "clut_opaque_colours": 5,
+      "id": "mainrom-draft-0154.icon-52",
+      "output_sha256": "c0ba2d829cb01e14ada502b5690de2d84a33b3577169e9ba8216aa46d5a17713",
+      "palette_ids": [
+       "icon-52"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "65d4c235986c6172ef1a2dde828c7860fd3faef3a80a7df4a8b613c22252ecd8"
+     },
+     {
+      "clut_opaque_colours": 3,
+      "id": "mainrom-draft-0154.icon-53",
+      "output_sha256": "a2f0740b397e8d0e9d965bd402347d65570cd5131e585c1aba76efb36ae215d8",
+      "palette_ids": [
+       "icon-53"
+      ],
+      "runtime_applicable": false,
+      "source_png_sha256": "f4f4461cd6e4f496d041d40470ecf25291da72cc6902205d879bb1b1d7a154cb"
+     }
+    ],
+    "path": "F",
+    "sheet_scope": {
+     "affected_frames": {},
+     "edited_sheet_texels": 545,
+     "overlay_texels": 0,
+     "reasons": [],
+     "same_edit_frames": {
+      "152": 545,
+      "153": 545
+     },
+     "scope": "sheet-patch"
+    },
+    "text": "Out Now!"
+   },
+   "item_id": "mainrom-0154",
+   "reason": "lettering strip draft; logo kept; unreviewed, human_approved false",
+   "status": "candidate-only"
+  }
+ ],
+ "group": "mainrom",
+ "published_checkpoint": {
+  "agent_review": "translations/en/graphics/artwork/checkpoints/T39004-pass3/agent-review.agent.json",
+  "candidate_assets": 141,
+  "contact_sheet": ".asset-cache/translation-assets/mainrom-drafts-v1-contact-6x.png (local, not committed)",
+  "ledger_sha256": "f07546e6c68e521eacea0642b80279095d8b21b1d8be9a4a5fca7a03e8276c4b",
+  "manifest_sha256": "eefc22ae609088e26666e1787885849065a74a9d59a4c798894edde7bad52970",
+  "path": "translations/en/graphics/artwork/checkpoints/T39004-pass3"
+ },
+ "tests": "docker run --rm -v \"$PWD:/work\" -w /work/tools -e PYTHONPATH=/work/tools tokimemo-recovery-splat python -m unittest test_translation_mainrom_drafts test_translation_legacy_remap test_translation_inventory test_translation_assets -> 55 tests OK (20 synthetic guard tests in test_translation_mainrom_drafts, including one per guard named in review); python translation_inventory.py check -> pass (inputs unchanged)",
+ "ticket": "T-39009"
+}

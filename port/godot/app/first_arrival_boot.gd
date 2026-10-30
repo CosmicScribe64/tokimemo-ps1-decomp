@@ -21,10 +21,20 @@ const Launch = preload("res://app/installed_launch.gd")
 const Bgm = preload("res://services/first_arrival_bgm_bridge.gd")
 const AudioContext = preload("res://services/first_arrival_audio_context.gd")
 const ActorRenderer = preload("res://presentation/first_arrival_actor_renderer.gd")
+const FreshHandoff = preload("res://flow/fresh_gameplay_handoff.gd")
+const HudSession = preload("res://presentation/hud_session_context.gd")
+const ReloadServices = preload("res://services/command_reload_services.gd")
+const ReloadRenderer = preload("res://presentation/command_reload_renderer.gd")
+const SchoolDay = preload("res://scenes/school_day_controller.gd")
+const LiveHud = preload("res://presentation/live_hud_adapter.gd")
+const OpeningHandoff = preload("res://flow/opening_command_handoff.gd")
 const INITIALIZATION_PROFILE := "desktop-fresh-new-game-cold-prefix.v1"
 const HUD_PREFIX_SOURCE_SHA := "440bdf2172fb3dae871aa30b96072f81110825ac8d0f875ebce64d288b48f889"
 var installed_launch_profile: Dictionary = {}
 var initialization_profile := ""
+# Boot-path seam: NAME_ENT stage 1 context from flow/title_file_select.gd
+# handoff(). Empty for the installed launch (no installed producer yet).
+var title_handoff: Dictionary = {}
 var resources := Resources.new()
 var consumer: Consumer
 var media := Media.new()
@@ -50,6 +60,17 @@ var _entry_image: Image
 var _window_focused := true
 var _application_focused := true
 var _active := false
+## T-39002 mode 0x34 reload: the HUD session driven from this app's boot
+## (process_image, game_state_init(1), boot_hud_init's hud_icon_bar_init), the
+## handoff opened and bound at the stage 21 switch, its services and renderer.
+var hud_session: HudSession
+var handoff: FreshHandoff
+var reload_services := ReloadServices.new()
+var reload_renderer := ReloadRenderer.new()
+var reload_frame_provenance: Dictionary = {}
+var _reload_unavailable := ""
+var _icon_positions: Array = []
+var _school_day: SchoolDay
 
 func _ready() -> void:
 	get_window().content_scale_size = Vector2i.ZERO
@@ -86,7 +107,12 @@ func _ready() -> void:
 		_bgm_prepare_error = bgm.prepare(resources.audio,self,installed_launch_profile.paths.original_first_arrival_bgm)
 		if _bgm_prepare_error.is_empty(): resources.audio.original_bgm_service = bgm
 
-	error = media.prepare(resources.media_store,resources.board_store)
+	error = media.prepare(resources.media_store,resources.board_store,resources.finish_bank,resources.command_reload)
+	# native-bank0: the BGM owner takes the stage21 landing and the 0x11 transfer
+	# only with authenticated stage21 reads; otherwise 0x11 stays refused.
+	if error.is_empty() and _bgm_prepare_error.is_empty() and resources.finish_bank != null and bgm.bind_finish_bank(resources.finish_bank).is_empty():
+		media.bank0_owner = bgm.bank0_transfer_owner
+		media.bank0_slot_state = bgm.bank0_slot_state
 	var cold := Scratch.initialize({"source_flow_sha256":Scratch.FLOW_SHA,"cold_boot":true,
 		"direct_new_game":true,"options_visited":false,"retained_game":false,"memory_card_load":false})
 	if error.is_empty(): error = cold.error
@@ -101,6 +127,7 @@ func _ready() -> void:
 	if not error.is_empty():
 		_fail("runtime_buffers",error)
 		return
+	_reload_unavailable = _prepare_reload()
 	_voice_player = AudioStreamPlayer.new()
 	_bgm_player = AudioStreamPlayer.new()
 	_voice_player.bus = "Voice"
@@ -121,6 +148,10 @@ func _ready() -> void:
 	_entry.set("profile_text_store",resources.text)
 	_entry.set("entry_clock_policy",{"clock_origin":"desktop-fresh-entry-local; native boot/title prefix unmeasured",
 		"timer_observation_source":"desktop-one-timer-per-logic-v1","native_clock_parity":false})
+	if not title_handoff.is_empty():
+		_entry.set("title_handoff",title_handoff)
+		_entry.set("entry_clock_policy",{"clock_origin":"title-file-select boot path (flow/title_file_select.gd)",
+			"timer_observation_source":"desktop-one-timer-per-logic-v1","native_clock_parity":false})
 	add_child(_entry)
 	error = consumer.watch_entry(_entry)
 	if not error.is_empty(): _fail("entry_consumer",error)
@@ -176,6 +207,9 @@ func _services() -> Dictionary:
 	var result := media.callbacks()
 	for key: String in Live.Arrival.REQUIRED+Live.Reload.REQUIRED:
 		if not result.has(key): result[key] = _unsupported
+	# The 0x34 reload belongs to the fresh gameplay handoff, bound at the
+	# stage 21 switch (_open_reload); the opening's own 0x34 handler refuses it.
+	result["setup_reset"] = _command_reload_unbound
 	result.merge({"bank_load_start":_bank_load,"bank_poll":_bank_poll,"bank_start":_bank_start,
 		"audio_command":AudioRules.audio_command,
 		"scene_reset":_scene_reset,"arrival_draw":_arrival_draw,"line_start":_line_start,"line_run":resources.lines.line_run,
@@ -221,6 +255,8 @@ func _physics_process(delta: float) -> void:
 	elif failure.is_empty():
 		var pumping := bgm.pump(consumer.opening.state)
 		if not pumping.is_empty(): _fail("bgm_pump",pumping)
+		elif handoff == null and consumer.opening.state.game_mode == 0x34: _open_reload()
+		elif handoff != null and handoff.phase == "command_select" and consumer.opening.command_ready: _connect_gameplay()
 
 func _process(_delta: float) -> void:
 	# Service the wall-clock mixer between rendered/physics frames too. This
@@ -233,11 +269,23 @@ func _bank_load(state: State, role: String, result: Session.FrameResult) -> void
 	AudioRules.begin_bank(state,role,result)
 
 func _bank_poll(state: State, result: Session.FrameResult) -> int:
+	# Mode 0x34 stage 0xFF polls the stage21 COM_MIX/SPRING reads, which the
+	# media queue owns (prologue_finish_run case 0), not an opening audio role.
+	if state.game_mode == 0x34: return media.finish_bank_poll(state,result)
 	var bank: Variant = state.opening.get("audio_bank")
 	if not bank is Dictionary or not bank.get("ready") is bool:
 		result.error = "opening bank has no owned producer completion state"
 		return 0
-	return 1 if bank.ready else 0
+	# Stage11 substep2 polls the three CD reads that overwrite the live Rei
+	# score and header; the BGM owner holds their measured landing schedule.
+	if bank.get("role") == "prologue_shiori":
+		if not _bgm_prepare_error.is_empty():
+			result.error = _bgm_prepare_error
+			return 0
+		return bgm.shiori_poll(state,result)
+	# The arrival and Rei banks also need their CD reads and SPU transfer
+	# frames to have elapsed in logic frames (AudioRules.BANK_READ_SECTORS).
+	return AudioRules.bank_poll(state,result)
 
 func _bank_start(state: State, bank: int, sequence: int, result: Session.FrameResult) -> void:
 	if not _bgm_prepare_error.is_empty(): result.error = _bgm_prepare_error
@@ -282,6 +330,10 @@ func _outer_draw(state: State, argument: int, result: Session.FrameResult) -> vo
 		live.checker_scroll_v = updated.v
 		live.checker_scroll_phase = "after_hud_screen_frame_draw_scroll_update"
 		state.opening.prologue_hud_live = live
+	# Every hud_screen_frame_draw call also steps the checker palette fade
+	# D_800B5BC8 (hud_panels.c:1462-1466): 0xFE -> 0xFF -> 0 after stage 0's
+	# store, on frame_count & 3 == 3 before the post-handler increment.
+	if result.error.is_empty(): FreshHandoff.hud_screen_fade(state.opening,state.frame_count)
 
 func _initial_hud(state: State) -> String:
 	var route: Dictionary = state.rule_state
@@ -316,12 +368,25 @@ func _exit_draw(state: State, result: Session.FrameResult) -> void:
 	result.presentation.append({"kind":"first_arrival_entry_exit_draw","brightness":state.opening.screen_brightness})
 
 func _logical_draw(state: State, _rng, result: Session.FrameResult) -> void:
-	if state.game_mode not in [0x14,2,0x15] or (state.game_mode == 0x15 and state.mode_stage != 0 and resources.hud.source_frame_argument(_hud_projection(state)) != 2):
+	# Reload frames: actor_draw_all advances the sequence of every flagged
+	# icon actor 80 + i (hud_icon_bar_update(0) flags the enabled ones).
+	if ReloadRenderer.reload_frame(state):
+		if handoff == null or handoff.hud == null: result.error = "reload frame has no HUD session"
+		else: result.error = handoff.hud.advance_icon_animation(reload_renderer.icon_sequences(),state.rule_state.icon_enabled)
+		return
+	# The stage21 switch frame (committed 0x34/0xFF/0/0) is still drawn by the
+	# prologue's draw_frame; later 0x34 frames belong to the command reload.
+	var switch_frame: bool = state.game_mode == 0x34 and resources.hud.source_frame_argument(_hud_projection(state)) == 2
+	if (state.game_mode not in [0x14,2,0x15] and not switch_frame) or (state.game_mode == 0x15 and state.mode_stage != 0 and resources.hud.source_frame_argument(_hud_projection(state)) != 2):
 		result.error = "only the original first-arrival route is prepared"
 		return
-	if state.game_mode == 0x15: actor_renderer.logical_draw(state,_rng,result)
+	if state.game_mode == 0x15 or switch_frame: actor_renderer.logical_draw(state,_rng,result)
 
 func _cd_tick(state: State, _rng, result: Session.FrameResult) -> void:
+	# XA cd_state advances on logic frames before the audio phase preflights
+	# the voice intent it may publish.
+	AudioRules.xa_tick(state,result)
+	if not result.error.is_empty(): return
 	result.error = upload.preflight(result,state)
 	if result.error.is_empty():
 		result.error = bgm.pump(state)
@@ -350,7 +415,12 @@ func _publish_frame(result: Session.FrameResult, tick: int) -> String:
 	if loader_enter:
 		var prefix: Variant = state.opening.get(Cold.RECORD)
 		if not prefix is Dictionary or prefix.get("loader_calls") != 2 or prefix.get("handed_off") != false or state.opening.screen_brightness != 0: return "loader-enter framebuffer has no exact completed checker prefix"
-	if state.game_mode in [0x14,2] or loader_enter:
+	if ReloadRenderer.reload_frame(state):
+		var drawn := reload_renderer.render(state,handoff.hud if handoff != null else null,_hud_projection(state),handoff.hud_unsourced if handoff != null else "")
+		if not str(drawn.get("error","")).is_empty(): return str(drawn.error)
+		image = drawn.image
+		reload_frame_provenance = drawn.provenance
+	elif state.game_mode in [0x14,2] or loader_enter:
 		image = _entry_image.duplicate()
 		var brightness: int = state.opening.screen_brightness
 		for y in range(image.get_height()):
@@ -386,6 +456,65 @@ func _draw_front(target: Image, state: State) -> String:
 	var err := resources.hud.draw_front(target,_hud_projection(state))
 	if not err.is_empty(): return err
 	return bgm.pump(state)
+
+## T-39002: the mode 0x34 stage 0xFF reload. The HUD session starts at this
+## app's boot; the handoff opens on the committed switch frame (0x34/0xFF/0/0)
+## and binds its 0x34 handler with the reload services, so every reload frame
+## runs FreshHandoff.mode_handler -> Reload.step inside GameSession.step.
+const COMMAND_RELOAD_UNBOUND := "mode 0x34 reload runs only through the fresh gameplay handoff bound at the stage 21 switch"
+
+func _command_reload_unbound(_state: State, result: Session.FrameResult) -> void:
+	result.error = COMMAND_RELOAD_UNBOUND
+
+## Prepares what the reload needs from the installed pack. An empty result
+## means ready; otherwise the reason is reported at the switch.
+func _prepare_reload() -> String:
+	if resources.command_reload == null: return "installed pack lacks the first_arrival_command_reload role (CALROM and room reads)"
+	if resources.hud_manifest.is_empty(): return "installed pack lacks the command HUD manifest, font root or rule tables"
+	var error := reload_renderer.prepare(resources.hud_manifest,resources.hud)
+	if error.is_empty():
+		error = reload_services.prepare(media,resources.hud,_bank_poll,_bank_start,_hud_projection,
+			func() -> Object: return consumer.opening.session.rng if consumer != null and consumer.opening.session != null else null,
+			reload_renderer.room_original_sha256())
+	if not error.is_empty(): return error
+	var tables: Variant = reload_renderer.presenter._manifest.get("tables",{}).get("icon_positions")
+	if not tables is Array or (tables as Array).size() != 14: return "command HUD manifest lacks the fourteen icon positions"
+	_icon_positions = LiveHud._integers((tables as Array).duplicate(true))
+	if FileAccess.get_sha256(resources.hud_manifest.rule_tables) != resources.hud_manifest.rule_tables_sha256: return "rule tables differ from the installed inventory"
+	var rules: Variant = LiveHud._integers(JSON.parse_string(FileAccess.get_file_as_string(resources.hud_manifest.rule_tables)))
+	if not rules is Dictionary or rules.get("schema") != "tokimemo.port-rule-tables.v1" or not rules.get("tables") is Dictionary: return "installed rule tables are unreadable"
+	_school_day = SchoolDay.new(rules.tables)
+	if not _school_day.error.is_empty(): return "school-day controller: " + _school_day.error
+	# process_image, then the main boot: game_state_init(1) (game_init.c:142)
+	# and boot_hud_init's hud_icon_bar_init (boot_assets.c:136).
+	var session := HudSession.new()
+	error = session.game_state_init(true)
+	if error.is_empty(): error = session.hud_icon_bar_init(_icon_positions)
+	if not error.is_empty(): return "boot HUD session: " + error
+	hud_session = session
+	return ""
+
+## Opens and binds the handoff on the committed stage 21 switch frame.
+func _open_reload() -> void:
+	if not _reload_unavailable.is_empty():
+		_fail("command_reload",_reload_unavailable)
+		return
+	var next := FreshHandoff.new()
+	var error := next.open(consumer.opening.state,hud_session,_icon_positions,_school_day)
+	if error.is_empty(): error = next.bind(consumer.opening.session,reload_services.services())
+	if not error.is_empty():
+		_fail("command_reload",error)
+		return
+	handoff = next
+
+## On the committed first command-select frame (0x34/1/0, command_ready) the
+## opening session is handed, unchanged, to the school-day controller through
+## the handoff (flow/opening_command_handoff.gd); later frames step the same
+## session under the controller's handlers.
+func _connect_gameplay() -> void:
+	var connected := OpeningHandoff.connect_gameplay(consumer.opening,handoff,hud_session)
+	if not str(connected.get("error","")).is_empty():
+		_fail("gameplay_handoff",str(connected.error))
 
 func _unsupported(a = null,b = null,c = null,d = null,e = null,f = null) -> int:
 	for value: Variant in [a,b,c,d,e,f]:

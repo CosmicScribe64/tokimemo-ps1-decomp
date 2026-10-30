@@ -8,15 +8,30 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-39006-production-route-state-parity|T-39006 Restore production event state parity]]
-- [ ] [[tickets/T-39007-player-save-relaunch-recovery|T-39007 Complete Continue and save recovery]]
 
 
-- [ ] [[tickets/T-30001-modern-widescreen|T-30001 Add widescreen presentation]]
 
 - [ ] [[tickets/T-30004-modern-achievements|T-30004 Design achievements for the native port]]
 
 ## In Progress
+
+- [ ] [[tickets/T-30001-modern-widescreen|T-30001 Add widescreen presentation]]
+
+- [ ] [[tickets/T-39018-playtest-differential-harness|T-39018 Build playtest and differential harness]]
+
+- [ ] [[tickets/T-39007-player-save-relaunch-recovery|T-39007 Complete Continue and save recovery]]
+
+- [ ] [[tickets/T-39006-production-route-state-parity|T-39006 Restore production event state parity]]
+
+- [ ] [[tickets/T-39013-fresh-hud-context|T-39013 Implement source-owned fresh HUD context]]
+
+- [ ] [[tickets/T-39014-holiday-scene-producer|T-39014 Implement holiday scene content producer]]
+
+- [ ] [[tickets/T-39015-desktop-packaging|T-39015 Unify reproducible desktop packaging]]
+
+- [ ] [[tickets/T-39016-generic-text-layer|T-39016 Build a generic source-keyed text layer]]
+
+- [ ] [[tickets/T-39017-opening-stage-specs|T-39017 Write source specs for opening stages 12-22]]
 
 - [ ] [[tickets/T-39008-synchronized-differential-captures|T-39008 Restore synchronized differential captures]]
 
@@ -25,6 +40,14 @@ kanban-plugin: board
 - [ ] [[tickets/T-30002-modern-settings|T-30002 Provide comprehensive modern settings]]
 
 - [ ] [[tickets/T-39004-english-asset-completion|T-39004 Complete and test English translation assets]]
+
+- [ ] [[tickets/T-39009-mainrom-indexed-drafts|T-39009 Produce MAINROM indexed English drafts]]
+
+- [ ] [[tickets/T-39010-battle-miss-drafts|T-39010 Produce battle Miss compact lettering drafts]]
+
+- [ ] [[tickets/T-39011-filesel-indexed-drafts|T-39011 Produce FILESEL button and page drafts]]
+
+- [ ] [[tickets/T-39012-bs-background-drafts|T-39012 Produce BS background sign drafts]]
 
 - [ ] [[tickets/T-39003-deslop-repository|T-39003 Deslop repository prose]]
 

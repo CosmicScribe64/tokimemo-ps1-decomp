@@ -3,6 +3,7 @@ extends SceneTree
 ## This test is separate from the actual OS/viewport player-route witness.
 
 const Boot = preload("res://app/playable_boot.gd")
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
 const Harness = preload("res://tests/app/run_command7_app_tests.gd")
 const Session = preload("res://core/game_session.gd")
 const InputFrame = preload("res://core/input_frame.gd")
@@ -27,10 +28,10 @@ const DEFAULT_ENV: Dictionary = {
 	"TOKIMEMO_BOUNDARY": "/workspace/.claude/orchestrator/state/T-29004/evidence/development-boundary.json",
 	"TOKIMEMO_BOUNDARY_SHA": "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5",
 	"TOKIMEMO_TABLES": "/workspace/.asset-cache/port/school-day-tables-v1-final/manifest.json",
-	"TOKIMEMO_TABLES_SHA": "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060",
+	"TOKIMEMO_TABLES_SHA": ContentIdentity.RULE_TABLES_SHA,
 	"TOKIMEMO_MEDIA_PACK": "/workspace/.asset-cache/port/holiday-command0-current-964ce",
 	"TOKIMEMO_HUD_MANIFEST": "/workspace/.asset-cache/port/hud-production-v1/manifest.json",
-	"TOKIMEMO_HUD_SHA": "0a884e91775f48dc7369b206234bc92d0f236df7e9aa4a2d1c47535d8e498b88",
+	"TOKIMEMO_HUD_SHA": ContentIdentity.HUD_MANIFEST_SHA,
 	"TOKIMEMO_FONT_ROOT": "/workspace/.asset-cache/port/fonts/native-font-v2",
 	"TOKIMEMO_HUD_CONTEXT": "/workspace/.claude/orchestrator/state/T-29010/app-integration-v1/proof/development-hud-context.json",
 	"TOKIMEMO_HUD_CONTEXT_SHA": "2ec736f93177c47d7d0dce13444183215cbc65a88b40a065319c73bee9ce0451",

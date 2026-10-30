@@ -70,8 +70,16 @@ func _initialize() -> void:
 	check(board.actor_descriptions().get("49:2149203968:43751",{}).get("id") == Board.CUT_09_ID,"CUT10 original transfer identity missing")
 	check(board.actor_descriptions().get("25:2149056512:44037",{}).get("id") == Board.O_09_ID,"O10 original transfer identity missing")
 	check(pump.execute_cut_vram(board,Board.CUT_09_ID,"rei-entrance-cut".sha256_text(),owned).error.is_empty(),"CUT10 original cut upload rejected")
+	var o10_bytes: PackedByteArray = board.stage_transfer(Board.O_09_ID).bytes
+	check(Board.o10_entrance_tpage_slots(o10_bytes) == {0x82c0:5,0x42c0:6},"O10 frame0 search_tpage allocation differs from source (page1 0x82c0 slot5, page0 0x42c0 slot6)")
+	check(Board.actor_frame_pages(o10_bytes,0x4288,0x4280,9,2,1) == ([0x42c0] as Array[int]),"O10 frame1 does not draw only page0")
+	check(Board.O10_ENTRANCE_TPAGE_SLOTS == {0x82c0:5,0x42c0:6,0x150:7},"O10 entrance slot constant differs")
+	var o10_bad := o10_bytes.duplicate(); o10_bad.encode_u32(0x4288,0x00184150)
+	check(Board.o10_entrance_tpage_slots(o10_bad).is_empty(),"O10 allocation accepted a frame pointer without bit31")
+	const BAD_COMBO := "native GPU stage actor pump received an unsupported resource/slot/offset combination"
+	check(pump.execute_stage_actor_vram(board,Board.O_09_ID,5,0x42c0,"rei-entrance-old5".sha256_text(),owned).error == BAD_COMBO and pump.execute_stage_actor_vram(board,Board.O_09_ID,6,0x82c0,"rei-entrance-old6".sha256_text(),owned).error == BAD_COMBO,"O10 pump accepted the reversed slot mapping")
 	for slot: int in [5,6]:
-		var offset := 0x42c0 if slot == 5 else 0x82c0
+		var offset := 0x82c0 if slot == 5 else 0x42c0
 		check(pump.execute_stage_actor_vram(board,Board.O_09_ID,slot,offset,("rei-entrance-%d" % slot).sha256_text(),owned).error.is_empty(),"O10 original tpage rejected")
 		check(Pump._region(owned.vram_words,Rect2i(slot*64,0,64,128)) == board.stage_transfer(Board.O_09_ID).bytes.slice(offset,offset+0x4000),"O10 original tpage differs")
 	# Receipt ownership checks use original bytes with an explicit synthetic
@@ -118,11 +126,13 @@ func _initialize() -> void:
 	state.mode_stage = 9; state.substep = 0
 	var first_key: String = state.opening.actor96.upload_batch_key
 	var second_key: String = state.opening.actor96.upload_batch_key_2
-	check(Upload._rei_entrance_owner(state,5,0x42c0,first_key) and Upload._rei_entrance_owner(state,6,0x82c0,second_key),"Original actor96 does not own both O10 texture pages")
-	check(not Upload._rei_entrance_owner(state,6,0x82c0,first_key) and not Upload._rei_entrance_owner(state,7,0x82c0,second_key),"O10 accepted another page key or slot")
+	check(Upload._rei_entrance_owner(state,5,0x82c0,first_key) and Upload._rei_entrance_owner(state,6,0x42c0,second_key),"Original actor96 does not own both O10 texture pages")
+	check(not Upload._rei_entrance_owner(state,5,0x42c0,first_key) and not Upload._rei_entrance_owner(state,6,0x82c0,second_key),"O10 accepted the reversed slot mapping")
+	check(not Upload._rei_entrance_owner(state,6,0x42c0,first_key) and not Upload._rei_entrance_owner(state,7,0x42c0,second_key),"O10 accepted another page key or slot")
+	check(transition.presentation[1].slot == 5 and transition.presentation[1].source_offset == 0x82c0 and transition.presentation[2].slot == 6 and transition.presentation[2].source_offset == 0x42c0,"Rei entrance upload intents differ from source slots")
 	var retained_actor: Dictionary = state.opening.actor96.duplicate(true)
 	state.opening.actor97 = state.opening.actor96; state.opening.erase("actor96")
-	check(not Upload._rei_entrance_owner(state,6,0x82c0,second_key),"O10 accepted actor97 instead of source actor96")
+	check(not Upload._rei_entrance_owner(state,6,0x42c0,second_key),"O10 accepted actor97 instead of source actor96")
 	state.opening.actor96 = retained_actor; state.opening.erase("actor97")
 	state.substep = 3
 	var crowd := Session.FrameResult.new()
@@ -130,7 +140,7 @@ func _initialize() -> void:
 	check(crowd.error.is_empty() and crowd.presentation.size() == 1 and state.opening.bg_layer_0.enabled == 1,"Actual Rei page transition did not initialize original crowd/cut")
 	var crowd_key: String = state.opening.actor99.upload_batch_key
 	check(Upload._rei_crowd_owner(state,7,0x150,crowd_key),"Original crowd does not own its exact third texture page")
-	check(not Upload._rei_crowd_owner(state,6,0x150,crowd_key) and not Upload._rei_crowd_owner(state,7,0x42c0,crowd_key),"Crowd accepted another slot or source pointer")
+	check(not Upload._rei_crowd_owner(state,6,0x150,crowd_key) and not Upload._rei_crowd_owner(state,7,0x82c0,crowd_key),"Crowd accepted another slot or source pointer")
 	state.opening.actor100.upload_batch_key = first_key
 	check(not Upload._rei_crowd_owner(state,7,0x150,crowd_key),"Crowd upload accepted mismatched second actor owner")
 	state.opening.actor100.upload_batch_key = crowd_key

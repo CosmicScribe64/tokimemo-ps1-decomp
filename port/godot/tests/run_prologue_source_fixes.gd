@@ -93,7 +93,7 @@ func _test_start_order_and_finish_cleanup() -> void:
 	var finish_log: Array[String] = []
 	var finish_services: Dictionary = _services(true, finish_log)
 	var finish_res: Session.FrameResult = Arrival.step(finish_state, rng, 0, finish_services)
-	check(finish_res.error.is_empty() and finish_log == ["cd", "bank", "audio:5", "audio:209", "load:normal_gameplay"], "finish substep 0 requests CD reset, bank reset, raw command 5/fade, then gameplay bank load in C order")
+	check(finish_res.error.is_empty() and finish_log == ["cd", "bank", "audio:5", "audio:209", "load:" + str(Arrival.FINISH_BANK_ARGS)], "finish substep 0 requests CD reset, bank reset, raw command 5/fade, then the literal source bank load in C order")
 	check(finish_state.opening["D_800B5BD4"] == 0x0f and finish_state.opening["screen_brightness"] == 128 and finish_state.substep == 1, "finish substep 0 applies source state before advancing")
 
 	finish_state.substep = 1
@@ -105,8 +105,9 @@ func _test_start_order_and_finish_cleanup() -> void:
 	edge_state.game_mode = Arrival.MODE_PROLOGUE
 	edge_state.mode_stage = 21
 	edge_state.substep = 1
+	var edge_before: Dictionary = edge_state.projection()
 	var edge_res: Session.FrameResult = Arrival.step(edge_state, rng, PAD_START, finish_services)
-	check(edge_res.error.is_empty() and edge_state.game_mode == Arrival.MODE_COMMAND_SCREEN and edge_state.mode_stage == 21 and edge_state.substep == 0, "post-handler Start check retains C stage-21 mode-change edge semantics")
+	check(edge_res.error == Arrival.FINISH_SWITCH_START_ERROR and edge_state.projection() == edge_before, "post-handler Start on the stage-21 mode-switch frame (source soft-lock) is refused and rolled back")
 
 func _rng() -> Rng:
 	var result: Rng = Rng.new()
@@ -149,6 +150,7 @@ func _services(include_finish: bool = true, log: Array[String] = []) -> Dictiona
 	if include_finish:
 		services["finish_cd_reset"] = func(_s: State, _out: Session.FrameResult) -> void: log.append("cd")
 		services["finish_bank_reset"] = func(_s: State, _out: Session.FrameResult) -> void: log.append("bank")
+		services["finish_bank_load"] = func(_s: State, args: Array, _out: Session.FrameResult) -> void: log.append("load:" + str(args))
 	return services
 
 func check(condition: bool, message: String) -> void:

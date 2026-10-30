@@ -2,12 +2,15 @@ extends RefCounted
 ## Strict reader for the isolated April command 1–3 content pack.
 
 const SCHEMA := "tokimemo.spring-school-day-content.v1"
-const MANIFEST_SHA := "e5d3e8034bb8ece4ba7f0b7da66a8650f189a3aba9b83023eee4d76170d8a874"
+const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
+const MANIFEST_SHA := ContentIdentity.SPRING_MEDIA_SHA
 const LEGACY_MANIFEST_SHA := "b26ef7e5c0301633c45d9a6a898ca4bdb7be68ee30f163825eed827e4f5c0c28"
-const FRESH_TABLES_SHA := "e9b83b8d2ad902430628791146d32daad7aacc66a6ac53ac628c3b70d00bb362"
+const FRESH_TABLES_SHA := ContentIdentity.RULE_TABLES_SHA
 const TRACK_SHA := "28c3c501b0c67b87ca1e30515da73619497d509ff6adc28ff722aa02897dfb72"
 const EXE_SHA := "bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae"
-const TABLES_SHA := "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
+## Rule-table identity that the legacy exact-manifest packs record in their
+## own provenance (tools/port/spring_command_content.py legacy import).
+const LEGACY_TABLES_SHA := "a1f30e57ef4f40ee7f9786043ccc5e007cfe316ba42fbd2c3e6896bf1d5f7060"
 const MEDIA_SHA := "0c85bbc54be82c7b2597528ccbfc915cd1fb5f99405bd18d845452026b56be37"
 const READERS := ["tools/assets/input.py:open_input", "tools/assets/image_packs_sd.py:export_sd_ui",
 	"tools/assets/bs_cohort_profile.py:build_profile_context", "tools/assets/image_mdec.py:export_mdec"]
@@ -53,7 +56,7 @@ func open_pack(root: String, expected_manifest_sha256: String = MANIFEST_SHA) ->
 		return _fail("unsupported spring content schema")
 	var provenance: Variant = parsed.get("provenance")
 	var fresh := expected_manifest_sha256 == MANIFEST_SHA
-	var expected_tables := FRESH_TABLES_SHA if fresh else TABLES_SHA
+	var expected_tables := FRESH_TABLES_SHA if fresh else LEGACY_TABLES_SHA
 	var expected_media: Variant = null if fresh else MEDIA_SHA
 	if not provenance is Dictionary or provenance.get("original_input_sha256") != TRACK_SHA or provenance.get("original_executable_sha256") != EXE_SHA or provenance.get("rule_tables_manifest_sha256") != expected_tables or provenance.get("reviewed_media_publication_sha256") != expected_media or provenance.get("readers") != READERS:
 		return _fail("spring content provenance differs from reviewed inputs")

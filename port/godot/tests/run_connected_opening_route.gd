@@ -442,9 +442,9 @@ func _initialize() -> void:
 			service_calls.append(["calendar_upload", y, m, b]),
 		"mascot_set": func(_s: State, n: int, on: int, _r: Session.FrameResult) -> void:
 			service_calls.append(["mascot_set", n, on]),
-		"command_build": func(s: State, _r: Session.FrameResult) -> void:
+		"command_build": func(s: State, r: Session.FrameResult) -> void:
 			service_calls.append("command_build")
-			Reload.build_command_screen(s),
+			r.error = Reload.build_command_screen(s),
 		"room_finish": func(s: State, _r: Session.FrameResult) -> void:
 			service_calls.append("room_finish")
 			Reload.finish_room_load(s),
