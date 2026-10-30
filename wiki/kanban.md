@@ -4,6 +4,22 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-39220-switch-informed-modern-options|T-39220 Add Switch-informed modern presentation options]]
+
+- [ ] [[tickets/T-39055-d1-one-iteration-lag|T-39055 Remove the D1 one-iteration lag (T-39030) seen in the opening trace]]
+
+- [ ] [[tickets/T-39054-d801220e0-first-values|T-39054 Match the first values of D_801220E0..E2 in the opening trace]]
+
+- [ ] [[tickets/T-39053-prologue-scene-counter|T-39053 Model prologue_scene_counter (port 320 vs native 0 at iteration 1233)]]
+
+- [ ] [[tickets/T-39052-opening-rng-extra-draws|T-39052 Remove the +2 RNG draws by opening iteration 650]]
+
+- [ ] [[tickets/T-39051-opening-phase1-timing|T-39051 Explain the +11/+12 iteration opening phase-1 offset in the seed route]]
+
+- [ ] [[tickets/T-39050-name-pointer-origin|T-39050 Match the name-entry pointer origin to the native start]]
+
+- [ ] [[tickets/T-39045-settings-newer-version-file-loss|T-39045 Keep a newer-version settings file when booting from the backup]]
+
 - [ ] [[tickets/T-30003-player-customization|T-30003 Explore gender-aware player customization]]
 
 ## Ready
@@ -14,6 +30,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-30004-modern-achievements|T-30004 Design achievements for the native port]]
 
 ## In Progress
+
+- [ ] [[tickets/T-39230-parity-mode|T-39230 Add a locked Parity mode and parity test gate]]
+
+- [ ] [[tickets/T-39214-presenter-english-binding|T-39214 English WP-I: presenter English binding (date, phone, subgame, ending)]]
+
+- [ ] [[tickets/T-39212-english-artwork-drafts|T-39212 English WP-L: remaining artwork drafts and provenance]]
 
 - [ ] [[tickets/T-30001-modern-widescreen|T-30001 Add widescreen presentation]]
 
@@ -59,6 +81,28 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-39213-latin-name-entry|T-39213 English WP-D: Latin name typing over the native Symbols page]]
+
+- [ ] [[tickets/T-39211-english-bundle-builder|T-39211 English WP-C: build the installed English bundle]]
+
+- [ ] [[tickets/T-39210-translated-image-store-v2|T-39210 English WP-B: translated image store v2 (page and BS rows)]]
+
+- [ ] [[tickets/T-39207-english-dialogue-hooks|T-39207 English dialogue and choice hooks on talk, textbox and VN presenters (Phase 4 English WP-G)]]
+
+- [ ] [[tickets/T-39201-english-native-text-flow|T-39201 Shared native text flow and English corpus fit runner (Phase 4 English WP-A)]]
+
+- [ ] [[tickets/T-39060-phase4-wave1-root-hooks|T-39060 Integrate phase 4 wave 1 into main and wire the root hooks]]
+
+- [ ] [[tickets/T-39029-wiki-tier-relabel|T-39029 Wiki evidence-tier relabel and overclaim cleanup]]
+
+- [ ] [[tickets/T-39028-original-free-ci|T-39028 Original-free port CI job]]
+
+- [ ] [[tickets/T-39027-frame-pacing-receipt|T-39027 Frame pacing and hitch attribution receipt]]
+
+- [ ] [[tickets/T-39026-contact-sheets-review-queue|T-39026 Contact sheets and human visual review queue]]
+
+- [ ] [[tickets/T-39025-english-legibility-linter|T-39025 English legibility and asset-coverage linter]]
 
 - [ ] [[tickets/T-39001-fresh-checkout-assessment|T-39001 Assess fresh checkout and recovery priorities]]
 

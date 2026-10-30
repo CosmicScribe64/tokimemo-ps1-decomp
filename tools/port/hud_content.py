@@ -205,6 +205,20 @@ def output_directory(repo: Path, output: Path) -> Path:
     return value
 
 
+def base_palette_address(info: int) -> int:
+    """Executable address of a part's base-variant CLUT, from its palette_info word."""
+    return 0x800c6020 + ((info >> 8) & 15) * 512 + (info & 0xf0) * 2
+
+
+def hud_palette(read, address: int) -> tuple[list[int], list[int]]:
+    """The 16 CLUT words at `address`, and the palette the HUD export draws with:
+    the same words with STP set on every non-black colour of a CLUT in
+    0x800c6200-0x800c6220 or 0x800c62c0-0x800c6340."""
+    words = list(struct.unpack('<16H', read(address, 32)))
+    semi = 0x800c6200 <= address < 0x800c6220 or 0x800c62c0 <= address < 0x800c6340
+    return words, [w | 0x8000 if w & 0x7fff and semi else w for w in words]
+
+
 def export_hud(repository: str | Path, executable: str | Path, mainrom: str | Path,
                calendar: str | Path, room_manifest: str | Path, room_manifest_sha256: str,
                output: str | Path, profile: str = PROFILE, fresh_room_track: str | Path | None = None) -> dict:
@@ -256,15 +270,8 @@ def export_hud(repository: str | Path, executable: str | Path, mainrom: str | Pa
                 record = {k: frame[k] for k in ('frame_index', 'bounds', 'origin')}
                 record['variant'], record['parts'] = variant, []
                 for part in frame['parts']:
-                    if variant == 'base':
-                        info = part['palette_info']
-                        address = 0x800c6020 + ((info >> 8) & 15) * 512 + (info & 0xf0) * 2
-                    else:
-                        address = OVERRIDES[variant][0]
-                    words = list(struct.unpack('<16H', read(address, 32)))
-                    palette = [w | 0x8000 if w & 0x7fff and
-                               (0x800c6200 <= address < 0x800c6220 or 0x800c62c0 <= address < 0x800c6340)
-                               else w for w in words]
+                    address = base_palette_address(part['palette_info']) if variant == 'base' else OVERRIDES[variant][0]
+                    words, palette = hud_palette(read, address)
                     rgba, stp = bytearray(), bytearray()
                     for y in range(part['height']):
                         sy = part['height'] - y - 1 if part['flip_flags'] & 1 else y

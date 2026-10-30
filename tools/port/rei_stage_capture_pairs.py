@@ -28,12 +28,25 @@ the binding too, with a flag when the file was modified after the receipt
 recorded at the frame where a stopping receipt (``message`` + ``state``) failed
 is rejected: that frame is the failure frame, not a completed checkpoint.
 Synchronization is always emitted as ``unverified`` pending review.
+
+When the port directory holds ``checkpoint-receipts.json`` (receipt v2 from
+tests/support/checkpoint_observer.gd, T-39019), no post-hoc binding is made:
+each pair points at the v2 receipt itself, whose PNG hash, clocks and observer
+hash were bound when the frame was written. The tool re-checks that binding
+with tools/port/checkpoint_receipt.py (receipt_sha256 recomputed over every
+other field, PNG file hash, decoded RGBA8 hash, size) and that the receipt
+clocks hold the key, and fails if any check breaks. A ``rei-failure.json`` next to it still marks the stop frame.
 """
 import argparse
 import hashlib
 import json
 import os
 from pathlib import Path
+
+try:
+    from tools.port import checkpoint_receipt
+except ModuleNotFoundError:  # run as a script from tools/port
+    import checkpoint_receipt
 
 VSYNC_LO, VSYNC_HI = 0x800AD950, 0x800ADB30
 GAME = 0x800E7374
@@ -60,6 +73,40 @@ NATIVE_MAP = {
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+V2_SET = "tokimemo.checkpoint-receipt.v2-set"
+V2 = "tokimemo.checkpoint-receipt.v2"
+
+
+def load_v2(port_dir):
+    """Observed records from a v2 receipt set, with the binding re-checked; None when absent."""
+    path = port_dir / "checkpoint-receipts.json"
+    if not path.is_file():
+        return None
+    data = json.loads(path.read_bytes())
+    if data.get("schema") != V2_SET or not isinstance(data.get("receipts"), dict):
+        raise SystemExit("checkpoint-receipts.json is not a v2 receipt set")
+    if data.get("errors"):
+        raise SystemExit("v2 observer recorded refusals: %s" % data["errors"])
+    observed = {}
+    for key, receipt in data["receipts"].items():
+        if not key.startswith("stage"):
+            continue  # other checkpoints of the same run (name entry) are not Rei stage keys
+        canvas = receipt.get("native_canvas", {})
+        if receipt.get("schema") != V2 or receipt.get("key") != key:
+            raise SystemExit("receipt %s is not a v2 receipt for its key" % key)
+        broken = checkpoint_receipt.verify(receipt, port_dir)
+        if broken:
+            raise SystemExit("v2 binding broken for %s: %s" % (key, broken))
+        if (canvas.get("width"), canvas.get("height")) != (320, 240):
+            raise SystemExit("v2 receipt %s is not a native 320x240 canvas" % key)
+        clocks = receipt["clocks"]
+        if key != "stage%d-%d" % (clocks["mode_stage"], clocks["substep"]):
+            raise SystemExit("v2 receipt %s clocks hold stage %d substep %d" % (key, clocks["mode_stage"], clocks["substep"]))
+        observed[key] = {"frame": clocks["frame_count"], "counter": receipt["extra"].get("prologue_scene_counter"),
+                         "opening": receipt["extra"].get("opening", {})}
+    return {"path": path, "observed": observed, "data": data}
 
 
 def state(sample):
@@ -153,23 +200,30 @@ def main(argv=None):
     rows = [state(json.loads(line)) for line in samples_path.read_bytes().splitlines()]
     rows = [r for r in rows if r["state_load_phase"] == "restored"]
     shot_index = {s["frame"]: i for i, s in enumerate(result["shots"]) if isinstance(s.get("frame"), int)}
+    v2 = load_v2(args.port_dir)
     receipt_path = args.port_dir / "rei-failure.json"
-    receipt = json.loads(receipt_path.read_bytes())
     rel = lambda p: os.path.relpath(p, args.out)
-    observer = {"path": rel(args.observer), "sha256": sha(args.observer),
-                "modified_after_receipt": args.observer.stat().st_mtime > receipt_path.stat().st_mtime,
-                "note": "hash of the observer file at pairing time; when modified_after_receipt is true it may differ from the revision that wrote the receipt"}
+    if v2 is None:
+        receipt = json.loads(receipt_path.read_bytes())
+        observer = {"path": rel(args.observer), "sha256": sha(args.observer),
+                    "modified_after_receipt": args.observer.stat().st_mtime > receipt_path.stat().st_mtime,
+                    "note": "hash of the observer file at pairing time; when modified_after_receipt is true it may differ from the revision that wrote the receipt"}
+    else:
+        receipt = json.loads(receipt_path.read_bytes()) if receipt_path.is_file() else {}
+        receipt["observed"] = v2["observed"]
+        observer = {"bound_in_receipts": True, "note": "v2 receipts carry the observer and producer script hashes written with each frame"}
     # A receipt with a message is a stop record; its state.frame_count is the frame at which the observer stopped.
     stop_frame = receipt.get("state", {}).get("frame_count") if "message" in receipt else None
     bindings = {"schema": "tokimemo.t39008.port-png-binding.v1",
                 "binding_origin": "post-hoc: PNG hashes computed by tools/port/rei_stage_capture_pairs.py; the port observer did not hash its PNGs",
-                "receipt": {"path": rel(receipt_path), "sha256": sha(receipt_path), "message": receipt.get("message"),
-                            "stop_frame": stop_frame},
+                "receipt": {"path": rel(receipt_path), "sha256": sha(receipt_path) if receipt_path.is_file() else None,
+                            "message": receipt.get("message"), "stop_frame": stop_frame},
                 "observer": observer, "observed": {}}
     windows, pairs = {}, []
     for stage, sub in CHECKPOINTS:
         key = "stage%d-%d" % (stage, sub)
-        port_png = args.port_dir / (key + ".png")
+        port_png = args.port_dir / ((v2["data"]["receipts"][key]["native_canvas"]["png"]
+                                     if v2 is not None and key in v2["observed"] else key + ".png"))
         observed = receipt["observed"].get(key)
         if observed is None or not port_png.is_file():
             windows[key] = {"status": "port_checkpoint_missing"}
@@ -261,6 +315,20 @@ def main(argv=None):
                                 "evidence": {"path": "sync-evidence.json", "sha256": None}},
             "scope": "single Rei opening checkpoint %s; exact RGBA at 320x240; native PCSX-Redux 8288e927+3a24bbcc with OpenBIOS, not hardware" % key,
         }
+        if v2 is not None:
+            pair["port"] = {"record": {"path": rel(v2["path"]), "sha256": sha(v2["path"])},
+                            "selector": ["receipts", key],
+                            "image": {"path": rel(port_png), "sha256": sha(port_png)},
+                            "image_sha_path": ["native_canvas", "png_sha256"],
+                            "clock_paths": {"port_frame": ["clocks", "frame_count"], "port_counter": ["extra", "prologue_scene_counter"],
+                                            "port_rng_draw_count": ["rng", "draw_count"]}}
+            paths = {"stage": ["clocks", "mode_stage"], "substep": ["clocks", "substep"],
+                     "prologue_line": ["extra", "opening", "prologue_line"],
+                     "prologue_scene_counter": ["extra", "prologue_scene_counter"], "D_801220E0": ["extra", "opening", "D_801220E0"]}
+            for mapping in pair["mappings"]:
+                mapping["port_path"] = paths[mapping["name"]]
+            pair["mappings"][0]["meaning"] = "mode_stage (GameState+0x1109); port value bound in the v2 receipt clocks; native value constant over the F..F+latency window (sync evidence)"
+            pair["mappings"][2]["meaning"] = "substep (GameState+0x110D); port value bound in the v2 receipt clocks"
         pairs.append((key, pair))
     # Separate timing diagnostic: iterations (native frame_count) and port frames spent per key. Raw clocks only.
     timing = []
@@ -274,8 +342,9 @@ def main(argv=None):
         timing.append({"key": a, "native_iterations": nb - na if na is not None and nb is not None else None,
                        "port_frames": pb - pa if pa is not None and pb is not None else None})
     bind_path = args.out / "port-png-bindings.json"
-    with bind_path.open("x") as fh:
-        json.dump(bindings, fh, indent=1, sort_keys=True)
+    if v2 is None:
+        with bind_path.open("x") as fh:
+            json.dump(bindings, fh, indent=1, sort_keys=True)
     evidence = {"schema": "tokimemo.t39008.rei-sync-evidence.v1", "latency_vsyncs": args.latency, "latency_basis": args.latency_basis,
                 "native_result": {"path": rel(result_path), "sha256": sha(result_path)},
                 "native_samples": {"path": rel(samples_path), "sha256": sha(samples_path)},
@@ -287,7 +356,8 @@ def main(argv=None):
     with ev_path.open("x") as fh:
         json.dump(evidence, fh, indent=1, sort_keys=True)
     for key, pair in pairs:
-        pair["port"]["record"]["sha256"] = sha(bind_path)
+        if v2 is None:
+            pair["port"]["record"]["sha256"] = sha(bind_path)
         pair["synchronization"]["evidence"]["sha256"] = sha(ev_path)
         with (args.out / ("pair-%s.json" % key)).open("x") as fh:
             json.dump(pair, fh, indent=1, sort_keys=True)

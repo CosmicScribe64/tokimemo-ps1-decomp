@@ -1,5 +1,9 @@
 extends "res://tests/run_installed_next_arrival_boundary.gd"
 ## Actual installed entry progression; no injected source state or fake services.
+## Each stageS-K frame is written through the v2 checkpoint observer (T-39019):
+## /out/checkpoint-receipts.json binds every PNG hash, clock and setting at write time.
+const CheckpointObserver = preload("res://tests/support/checkpoint_observer.gd")
+var checkpoint_observer := CheckpointObserver.new("/out","res://tests/opening/run_installed_rei_banner.gd")
 var rei_frames: Dictionary = {}
 var dialogue := OS.get_environment("REI_DIALOGUE") == "1"
 ## Source substep counts per stage; REI_TARGET_STAGE stops on its first frame.
@@ -12,11 +16,21 @@ func _frame_published(tick: int, app: App) -> void:
 		var key := "stage%d-%d" % [state.mode_stage,state.substep]
 		if not rei_frames.has(key):
 			rei_frames[key] = {"frame":state.frame_count,"counter":state.opening.get("prologue_scene_counter"),"opening":state.opening.duplicate(true)}
-			app.last_rendered_image.save_png("/out/"+key+".png")
+			_record_checkpoint(key,app,state)
 			_status({"phase":key,"frame":state.frame_count})
 	if state.mode_stage == target and not finishing:
 		finishing = true; app.set_physics_process(false)
 		_finish_rei.call_deferred(app)
+func _record_checkpoint(key: String, app: App, state) -> void:
+	var clocks := {"frame_count":int(state.frame_count),"game_mode":int(state.game_mode),"mode_stage":int(state.mode_stage),
+		"mode_step":int(state.mode_step),"substep":int(state.substep)}
+	var rng = app.consumer.opening.session.rng
+	var receipt := checkpoint_observer.record(key,app.last_rendered_image,"cpu_composed_image",clocks,
+		{"draw_count":int(rng.draw_count),"state":int(rng.state)},CheckpointObserver.settings_identity(self),
+		{"pack_manifest_sha256":pack_manifest_sha},{"prologue_scene_counter":state.opening.get("prologue_scene_counter"),"opening":state.opening.duplicate(true)})
+	check(not receipt.is_empty(),"checkpoint observer refused %s: %s" % [key,checkpoint_observer.errors])
+	checkpoint_observer.write()
+
 func _finish_rei(app: App) -> void:
 	for stage: int in range(8,target):
 		for step: int in SUBSTEPS.get(stage,0): check(rei_frames.has("stage%d-%d" % [stage,step]),"missing actual stage%d substep%d" % [stage,step])

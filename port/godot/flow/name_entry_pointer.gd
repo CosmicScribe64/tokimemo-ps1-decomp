@@ -10,6 +10,14 @@ func place(value: Vector2i) -> bool:
 	position = Vector2i(clampi(value.x,10,300),clampi(value.y,20,220))
 	return position != prior
 
+## Phase 4 WP-D: a point inside candidate cell (column,row) of hit(); used to
+## show the native hand on a Symbols cell chosen by English-mode typing.
+static func cell_point(column: int, row: int) -> Vector2i:
+	return Vector2i(48+column*16,80+row*16)
+
+func focus_cell(column: int, row: int) -> bool:
+	return place(cell_point(column,row))
+
 func advance(input: RefCounted, menu_mode: int = 0) -> bool:
 	var prior := position
 	var previous_style := style

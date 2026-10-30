@@ -4,7 +4,7 @@ title: Complete player Continue and save recovery lifecycle
 status: In Progress
 assignee: Codex
 created: 2026-10-29
-updated: 2026-10-29
+updated: 2026-10-30
 links: ["[[port-adversarial-review]]", "[[port-testing]]"]
 ---
 
@@ -50,3 +50,5 @@ Five review findings re-verified against the code and source and fixed; the earl
 ### 2026-10-29 fresh handoff v2 (worktree, uncommitted)
 
 The v1 handoff patch made every New Game boot stop. `playable_boot._load_inputs` refused `TOKIMEMO_BOUNDARY_SHA`, but `save_controls.configure` (`profile_versions`) requires it. The fresh launch check (`FreshHandoff.launch_input_error`) now refuses only the inputs that carry captured state: `TOKIMEMO_BOUNDARY`, `TOKIMEMO_HUD_CONTEXT` and `TOKIMEMO_HUD_CONTEXT_SHA`. `run_fresh_gameplay_handoff.gd` checks that the launch check and `BoundarySaveControls.configure` pass in one environment. A fresh-origin save identity that does not reuse the boundary SHA is still open.
+
+- 2026-10-30 (Lane A): WP-10 `--settings-matrix` reports XFAIL (exit 3) while [[tickets/T-39045-settings-newer-version-file-loss]] is open; every other check passes (`.asset-cache/lane-a-2026-10-30/settings-matrix-2`). The matrix now checks that the window scale stays neutral and that aspect and filter reach NativeFrameLayout, because settings_runtime no longer writes them to the window.

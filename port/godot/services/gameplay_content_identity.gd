@@ -37,3 +37,9 @@ const RULE_TABLES_SHA := "be99ef4acc0eec5216ae93c980ec1ec5876025ddce9101508a59ac
 ## installed `spring_media` pack. Its provenance records RULE_TABLES_SHA, so
 ## this identity follows the tables identity.
 const SPRING_MEDIA_SHA := "f6665949eebb7eda20f6528f632763b6b157b2ee2eefb277b538cdb8d4565ae8"
+
+## tools/port/hud_hover_texels.py: manifest of the `command_hover_texels`
+## pack (.asset-cache/port/hud-hover-texels-v1), the (w + 1) x (h + 1) icon
+## texels of the func_80098680 hover-pulse path. Installed runs take the
+## identity from the bundle inventory; tests pin this export.
+const HOVER_TEXELS_SHA := "c1e5c850577dbb0c7c3c4241add2d2770971ce2ae200eb78a6c7d78afecd166b"

@@ -1,0 +1,45 @@
+{
+  "schema": "tokimemo.native-memory-map.v1",
+  "trace_schema": "tokimemo.opening-trace-projection.v1",
+  "scope": "Opening (game_mode 0x15) per-iteration state/RNG trace, from the first 0/0/0 iteration to the first 12/0/0 iteration. Native: PCSX-Redux memory samples at every vsync (one record per iteration, taken from the first vsync whose post-update frame_count holds it). Port: tests/opening/run_opening_trace_emitter.gd. No parity is implied for unsampled iterations.",
+  "required_dumps": ["800E7374:32", "8014D180:12", "801220D0:20", "80120650:72"],
+  "alignment": {
+    "iteration": "frame_count minus the frame_count of the first iteration observed in 0x15 0/0/0 on the same side",
+    "onset": {"game_mode": 21, "mode_stage": 0, "mode_step": 0, "substep": 0},
+    "end": {"game_mode": 21, "mode_stage": 12, "mode_step": 0, "substep": 0},
+    "native_unobserved": "a native iteration that no vsync sample holds (a 0-vsync catch-up iteration, T-39002 vsync_drops) is listed and dropped from both traces, never interpolated"
+  },
+  "fields": [
+    {"name": "game_mode", "address": "0x800E7388", "type": "u8", "length": 1, "source": "include/game/game_state.h GameState+0x1108", "port_path": ["game_mode"], "compare": "always"},
+    {"name": "mode_stage", "address": "0x800E7389", "type": "u8", "length": 1, "source": "GameState+0x1109", "port_path": ["mode_stage"], "compare": "always"},
+    {"name": "mode_step", "address": "0x800E738A", "type": "u8", "length": 1, "source": "GameState+0x110A", "port_path": ["mode_step"], "compare": "always"},
+    {"name": "substep", "address": "0x800E738D", "type": "u8", "length": 1, "source": "GameState+0x110D", "port_path": ["substep"], "compare": "always"},
+    {"name": "frame_count", "address": "0x800E7378", "type": "u32", "length": 4, "source": "GameState+0x10F8 (wiki/spec/core.md)", "port_path": ["frame_count"], "compare": "alignment_only"},
+    {"name": "prologue_scene_counter", "address": "0x8014D184", "type": "s32", "length": 4, "source": "config/symbols_NAME_ENT.txt prologue_scene_counter", "port_path": ["opening", "prologue_scene_counter"], "compare": "when_port_defined"},
+    {"name": "bg_layers", "address": "0x801220D0", "type": "u32", "length": 4, "source": "config/symbol_addrs_main.txt bg_layers (BgLayer 0 attribute word, include/game/layer.h)", "port_path": ["opening", "bg_layer_0", "enabled"], "compare": "when_port_defined", "derived": "bg_layer0_displayed"},
+    {"name": "D_801220E0", "address": "0x801220E0", "type": "u8", "length": 1, "source": "src/main/gpu_effects.c prim_bg_slot_setup; src/ovl/name_entry/prologue.c", "port_path": ["opening", "D_801220E0"], "compare": "when_port_defined"},
+    {"name": "D_801220E1", "address": "0x801220E1", "type": "u8", "length": 1, "source": "src/ovl/name_entry/prologue.c prologue_rei_banner_run", "port_path": ["opening", "D_801220E1"], "compare": "when_port_defined"},
+    {"name": "D_801220E2", "address": "0x801220E2", "type": "u8", "length": 1, "source": "src/ovl/name_entry/prologue.c prologue_rei_banner_run", "port_path": ["opening", "D_801220E2"], "compare": "when_port_defined"},
+    {"name": "actor96_x", "address": "0x80120676", "type": "s16", "length": 2, "source": "actor_pool_96 (0x80120650) + Actor.x at 0x26 (include/game/display_records.h)", "port_path": ["opening", "actor96", "x"], "compare": "when_port_defined"}
+  ],
+  "derived": [
+    {"name": "bg_layer0_displayed", "from": "bg_layers", "native_rule": "bit 31 clear (libgs attribute bit 31 is display off; prologue.c writes 0x80000000 to hide and 0x41000000 to show)", "port_rule": "bg_layer_0.enabled == 1"}
+  ],
+  "rng": {
+    "name": "rand_calls",
+    "native": "exec hits of rand (0x800AE0D0, config/symbol_addrs_sdk.txt) recorded before the vsync sample that first holds the iteration, minus the count at the onset iteration",
+    "port": ["rng", "draw_count"],
+    "port_rule": "cumulative session rng draws minus the value at the onset iteration; draw_count restarts at 0 on a reseed (srand), so a decrease adds the new count and the iteration is listed as a reseed; draws earlier in a reseed iteration are not visible"
+  },
+  "compare_rules": {
+    "always": "compared on every iteration",
+    "when_port_defined": "compared on the iterations in which the port state defines the field; elsewhere both sides record null, because native RAM keeps stale pool bytes before the source first writes the field and after it clears the actor. The report lists every span where a field the port had defined is absent again (port_undefined_after_first), counts the native non-null, non-zero values the gating leaves out (gated_native_values), and fails on a configured field the port never defines (never_defined)",
+    "derived_note": "a field naming a derived rule is compared through it (bg_layers -> bg_layer0_displayed)",
+    "alignment_only": "used to number iterations; never compared"
+  },
+  "excluded": [
+    {"name": "actor96_lip_sync_frame", "address": "0x80120668", "reason": "Actor.unk_18 of actor96 (lip-sync frame) follows the XA playback level (getCDlevel) and differs between two native replays of the same state on 14-25 vsyncs (T-39008); it is not deterministic emulator state"},
+    {"name": "cpu_cycles", "reason": "PCSX-Redux cycle counts depend on host scheduling of CD/SPU events and have no port counterpart; iterations are aligned by frame_count instead"},
+    {"name": "vsync", "reason": "the port has no vsync clock; vsyncs per iteration are a pacing question (frame pacing receipt), not game state"}
+  ]
+}

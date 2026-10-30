@@ -9,6 +9,7 @@ extends "res://presentation/command_hud_presenter.gd"
 ## The calendar-phone test uses image-error thresholds, not bit-exact equality.
 
 const Rules = preload("res://rules/calendar_phone_screens.gd")
+const TextBinding = preload("res://presentation/presenter_text_binding.gd")
 
 
 # Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366)
@@ -60,6 +61,9 @@ const STR_HEX := {
 }
 
 var _checker_tile: Image
+## Phase 4 WP-I: empty until bind_english; original bytes are drawn.
+var english_text := TextBinding.new()
+var _english_images := false
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
 
@@ -483,7 +487,36 @@ func _blit_simple(target: Image, source: Image, pos: Vector2i) -> void:
 			if c.a > 0.1:
 				target.set_pixelv(Vector2i(px, py), c)
 
+## Phase 4 WP-I: bind English text rows (presenter_text_binding.gd) and, when
+## a store is given, exact-identity HUD frames. Presentation only.
+func bind_english(layer: RefCounted, bindings: Array, image_store: RefCounted = null) -> Dictionary:
+	var text: int = english_text.bind(layer, _font, bindings, 14)
+	var images := 0
+	if image_store != null:
+		images = set_translated_images(image_store)
+		_english_images = true
+	elif _english_images:
+		# A re-bind without a store returns the HUD frames to the originals.
+		set_translated_images(null)
+		_english_images = false
+	return {"text": text, "images": images, "fallbacks": english_text.fallback_log()}
+
+func clear_english() -> void:
+	english_text.clear()
+	if _english_images:
+		set_translated_images(null)
+		_english_images = false
+
 func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, palette_row: int = 0, region: String = "") -> void:
+	var bound: Dictionary = english_text.translate(hex_code)
+	if bound.is_empty():
+		_draw_text_hex_native(target, hex_code, pos, palette_row, region)
+		return
+	# One native glyph draw per translated unit at its trimmed offset.
+	for index: int in bound.glyph_x.size():
+		_draw_text_hex_native(target, bound.hex.substr(index * 4, 4), pos + Vector2i(bound.glyph_x[index], 0), palette_row, region)
+
+func _draw_text_hex_native(target: Image, hex_code: String, pos: Vector2i, palette_row: int = 0, region: String = "") -> void:
 	var codes: PackedByteArray = hex_code.hex_decode()
 	var x_offset: int = 0
 

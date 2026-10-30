@@ -4,6 +4,8 @@ class_name VnScenePresenter
 ## Used by TEL, DATE, DATE2, GEKO, EVENT, OMIMAI, VALEN, SHOUGATU, ENDING,
 ## OPTION, OLH and ETC presenters. Each scene still needs fidelity verification.
 
+const Flow = preload("res://presentation/native_text_flow.gd")
+const Textbox = preload("res://presentation/dialogue_textbox_presenter.gd")
 
 # Authentic PS1 32x32 green checkerboard tile (hud_screen_frame_draw, hud_panels.c:1366, normalized to (0, 0) UV)
 const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA8ElEQVR4nM2WoRHDMAxFX3MBhoWBGaWjFHaEwo6SMQIDO0KgRyg0a1nuco6lnO2TKyrL76EvXSY/fRFqvI48Vi89EWudF6b7Ldnvsn+uVKKAc67o8xBCvoAFPClgBT8UsIRHAtbwnUAL+CbQCg7QtYRDYQ5ocK3vnMvPgRpwyMyBWvBDAUt4JGANB+gHN4hD/uNZ50V8I84/X/jgk/1e2/XaPlcFghfvif++B0pD5kzIJQUs4EkBK/ihgCU8ErCG7wRawDeBVnCAriUcCnNAg5/ZLdk5UAMOmTlQC34oYAmPBKzhAL1f3uKQts+10u6JH97tla2x++MhAAAAAElFTkSuQmCC"
@@ -35,6 +37,14 @@ const STAT_LAYOUT := [
 var _checker_tile: Image
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+## T-39207: English text layer for draw_vn_dialogue bodies, or null.
+var _dialogue_text_layer: RefCounted = null
+## Why the last draw_vn_dialogue kept the original body; empty when English drew.
+var dialogue_text_rejection: String = ""
+## "english" when the last draw_vn_dialogue drew a translated body.
+var last_dialogue_source: String = "native"
+## The NativeTextFlow.runtime_box the last English body was fitted in.
+var last_dialogue_box: Dictionary = {}
 
 func open_font_only(font_root: String) -> bool:
 	# NAME_ENT owns its actors/backgrounds and uses only this native text painter.
@@ -314,9 +324,38 @@ func draw_menu_bar_highlight(target: Image, rect: Rect2i, style_idx: int = 0) ->
 ## - sndisp layout: Y = 170, 186, 202 (is_vn_layout = false)
 ## - talk_render layout: Y = 168, 184, 200 (is_vn_layout = true)
 ## With text_shadow_palette_0/1 shadow suppression and Actor 2 Frame 1 wait marker at (276, 192 + marker_bob_y).
+## T-39207: binds (layer) or clears (null) English for draw_vn_dialogue as
+## well as the inherited command HUD narration. Returns the narration count
+## of CommandHudPresenter.set_translated_text.
+func set_translated_text(layer: RefCounted) -> int:
+	_dialogue_text_layer = layer if layer != null and layer.has_method("lookup_record") else null
+	dialogue_text_rejection = "" if _dialogue_text_layer != null else "no text layer is bound"
+	return super(layer)
+
+## T-30002 WP9: pacing view for a VN line, keyed by the same `translation`
+## dict draw_vn_dialogue takes (see DialogueTextboxPresenter.pacing_view).
+static func pacing_view(translation: Dictionary, pos: int, total: int, native_complete: bool,
+		voice_complete: bool = true, speed: int = 1) -> Dictionary:
+	return Textbox.pacing_view(translation, pos, total, native_complete, voice_complete, speed)
+
+## Glyphs to draw for a VN line; -1 (unproved line) keeps the native pos.
+## See DialogueTextboxPresenter.draw_count.
+static func draw_count(pacing_visible_count: int, native_pos: int) -> int:
+	return Textbox.draw_count(pacing_visible_count, native_pos)
+
+## `translation` (optional): {"record_id": talk:<path>:<section>:gNNNN:lNNNN,
+## "source_sha256": SERIFU source hash, "name_codes": {...}, "variant_index"}.
+## With a bound layer and a record that fits from the body origin to the
+## window's inner edge (x 292) in at most 3 rows, the body rows are drawn in
+## English; the speaker label and any original opening/closing quote glyph
+## stay. Anything else draws the original body.
 func draw_vn_dialogue(target: Image, speaker_hex: String, body_lines_hex: Array[String],
-		is_vn_layout: bool = false, marker_bob_y: int = -1) -> void:
+		is_vn_layout: bool = false, marker_bob_y: int = -1, translation: Dictionary = {}) -> void:
 	var y_slots: Array = [168, 184, 200] if is_vn_layout else [170, 186, 202]
+	last_dialogue_source = "native"
+	var english: Dictionary = {}
+	if _dialogue_text_layer != null and not translation.is_empty():
+		english = _vn_english_body(speaker_hex, body_lines_hex, translation)
 
 	# 1. Render speaker label if provided
 	if not speaker_hex.is_empty():
@@ -329,7 +368,9 @@ func draw_vn_dialogue(target: Image, speaker_hex: String, body_lines_hex: Array[
 		_draw_text_hex_checked(target, speaker_hex, Vector2i(speaker_x, y_slots[0]), 0, "message_window")
 
 	# 2. Render up to 3 body dialogue lines
-	for row_idx in range(mini(3, body_lines_hex.size())):
+	if not english.is_empty():
+		_draw_vn_english_body(target, english, y_slots)
+	for row_idx in range(mini(3, body_lines_hex.size()) if english.is_empty() else 0):
 		var line_hex: String = body_lines_hex[row_idx]
 		if line_hex.is_empty():
 			continue
@@ -346,6 +387,58 @@ func draw_vn_dialogue(target: Image, speaker_hex: String, body_lines_hex: Array[
 			_draw_actor(target, 1, Vector2i(marker_screen.x - 160, marker_screen.y - 120))
 		else:
 			_draw_text_hex_checked(target, "81a5", marker_screen, 0, "message_window")
+
+## English body rows for draw_vn_dialogue, or {} with dialogue_text_rejection.
+func _vn_english_body(speaker_hex: String, body_lines_hex: Array[String], translation: Dictionary) -> Dictionary:
+	var record_id := str(translation.get("record_id", ""))
+	if not record_id.begins_with("talk:") or str(translation.get("source_sha256", "")).is_empty():
+		dialogue_text_rejection = "body has no source-proved talk record id"
+		return {}
+	var found: Dictionary = _dialogue_text_layer.lookup_record(record_id, str(translation.source_sha256), _font)
+	if found.is_empty():
+		dialogue_text_rejection = str(_dialogue_text_layer.get("last_rejection"))
+		return {}
+	var segments: Array = found.segments
+	var variants: Array = Flow.split_variants(segments)
+	if variants.size() > 1:
+		var index: Variant = translation.get("variant_index")
+		if not index is int or index < 0 or index >= variants.size():
+			dialogue_text_rejection = "reply variants need a source-proved variant index"
+			return {}
+		segments = variants[index]
+	# The original body origin and its framing quote glyphs.
+	var first: String = body_lines_hex[0] if not body_lines_hex.is_empty() else ""
+	var last: String = ""
+	for line: String in body_lines_hex:
+		if not line.is_empty():
+			last = line
+	var x_pos: int = 88 if not speaker_hex.is_empty() else (74 if first.begins_with("8175") or first.begins_with("8177") else 40)
+	var open_hex: String = first.left(4) if first.begins_with("8175") or first.begins_with("8177") else ""
+	var close_hex: String = last.right(4) if last.ends_with("8176") or last.ends_with("8178") else ""
+	var body_x: int = x_pos + (14 if not open_hex.is_empty() else 0)
+	var box := Flow.runtime_box(body_x, Flow.WINDOW_INNER_RIGHT, not close_hex.is_empty(), 3)
+	last_dialogue_box = box
+	var names: Dictionary = translation.get("name_codes", {}) if translation.get("name_codes") is Dictionary else {}
+	var result := Flow.classify(segments, box, _font, names)
+	if result.rows.is_empty():
+		dialogue_text_rejection = "%s (%s)" % [result.outcome, result.reason]
+		return {}
+	dialogue_text_rejection = ""
+	return {"rows": result.rows, "open_x": x_pos, "open_hex": open_hex, "close_hex": close_hex, "body_x": body_x}
+
+func _draw_vn_english_body(target: Image, english: Dictionary, y_slots: Array) -> void:
+	if not str(english.open_hex).is_empty():
+		_draw_text_hex_checked(target, english.open_hex, Vector2i(english.open_x, y_slots[0]), 0, "message_window")
+	var end := Vector2i(english.body_x, y_slots[0])
+	for row_index: int in english.rows.size():
+		var row: Dictionary = english.rows[row_index]
+		for glyph_index: int in row.x.size():
+			var code_unit: PackedByteArray = row.codes.slice(glyph_index * 2, glyph_index * 2 + 2)
+			_draw_glyph_checked(target, code_unit, Vector2i(english.body_x + row.x[glyph_index], y_slots[row_index]), 0, "message_window", Rect2i())
+		end = Vector2i(english.body_x + int(row.width), y_slots[row_index])
+	if not str(english.close_hex).is_empty():
+		_draw_text_hex_checked(target, english.close_hex, end, 0, "message_window")
+	last_dialogue_source = "english"
 
 # ==============================================================================
 # Helper Drawing Routines
@@ -373,57 +466,62 @@ func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, pale
 	for i in range(0, codes.size(), 2):
 		if i + 1 >= codes.size():
 			break
-		var code_unit := codes.slice(i, i + 2)
-		var glyph_res: Dictionary = _font.get_glyph_image(code_unit, palette_row & 7, (palette_row >> 3) & 1)
-		var gx_pos: int = pos.x + x_offset
-		var gy_pos: int = pos.y
+		_draw_glyph_checked(target, codes.slice(i, i + 2), Vector2i(pos.x + x_offset, pos.y), palette_row, region, custom_bounds)
+		x_offset += 14
 
-		recorded_glyphs.append({
-			"code": code_unit.hex_encode(),
-			"pos": Vector2i(gx_pos, gy_pos),
-			"region": region,
-		})
+## One original glyph with its shadow at `glyph_pos`, recorded and checked
+## against the region bounds (shared by the native 14 px run and T-39207's
+## English rows).
+func _draw_glyph_checked(target: Image, code_unit: PackedByteArray, glyph_pos: Vector2i, palette_row: int,
+		region: String, custom_bounds: Rect2i) -> void:
+	var glyph_res: Dictionary = _font.get_glyph_image(code_unit, palette_row & 7, (palette_row >> 3) & 1)
+	var gx_pos: int = glyph_pos.x
+	var gy_pos: int = glyph_pos.y
 
-		# Enforce bounding box assertions per Section 12a
-		if region == "message_window":
-			if gx_pos < 27 or gx_pos + 12 > 293 or gy_pos < 166 or gy_pos + 12 > 218:
-				bounding_box_violations.append(
-					"Message window glyph %s at (%d, %d) overflows Rect2i(27, 166, 266, 52)" % [
-						code_unit.hex_encode(), gx_pos, gy_pos
-					]
-				)
-		elif region == "title_badge" and custom_bounds.size.x > 0:
-			if gx_pos < custom_bounds.position.x or gx_pos + 12 > custom_bounds.position.x + custom_bounds.size.x or gy_pos < custom_bounds.position.y or gy_pos + 12 > custom_bounds.position.y + custom_bounds.size.y:
-				bounding_box_violations.append(
-					"Title badge glyph %s at (%d, %d) overflows %s" % [
-						code_unit.hex_encode(), gx_pos, gy_pos, str(custom_bounds)
-					]
-				)
+	recorded_glyphs.append({
+		"code": code_unit.hex_encode(),
+		"pos": Vector2i(gx_pos, gy_pos),
+		"region": region,
+	})
 
-		if glyph_res.get("status") == "glyph":
-			var g_img: Image = glyph_res["image"]
-			# text_shadow_palette_0/1 suppression for attributes 3, 4, 5, 14, 15 (0x0000 transparent)
-			var has_shadow: bool = not (palette_row in [3, 4, 5, 14, 15])
-			if has_shadow:
-				for gy in range(12):
-					var py: int = gy_pos + gy + 1
-					if py < 0 or py >= 240:
-						continue
-					for gx in range(12):
-						var px: int = gx_pos + gx + 1
-						if px < 0 or px >= 320:
-							continue
-						if g_img.get_pixel(gx, gy).a > 0:
-							target.set_pixelv(Vector2i(px, py), Color8(0, 0, 0, 255))
+	# Enforce bounding box assertions per Section 12a
+	if region == "message_window":
+		if gx_pos < 27 or gx_pos + 12 > 293 or gy_pos < 166 or gy_pos + 12 > 218:
+			bounding_box_violations.append(
+				"Message window glyph %s at (%d, %d) overflows Rect2i(27, 166, 266, 52)" % [
+					code_unit.hex_encode(), gx_pos, gy_pos
+				]
+			)
+	elif region == "title_badge" and custom_bounds.size.x > 0:
+		if gx_pos < custom_bounds.position.x or gx_pos + 12 > custom_bounds.position.x + custom_bounds.size.x or gy_pos < custom_bounds.position.y or gy_pos + 12 > custom_bounds.position.y + custom_bounds.size.y:
+			bounding_box_violations.append(
+				"Title badge glyph %s at (%d, %d) overflows %s" % [
+					code_unit.hex_encode(), gx_pos, gy_pos, str(custom_bounds)
+				]
+			)
+
+	if glyph_res.get("status") == "glyph":
+		var g_img: Image = glyph_res["image"]
+		# text_shadow_palette_0/1 suppression for attributes 3, 4, 5, 14, 15 (0x0000 transparent)
+		var has_shadow: bool = not (palette_row in [3, 4, 5, 14, 15])
+		if has_shadow:
 			for gy in range(12):
-				var py: int = gy_pos + gy
+				var py: int = gy_pos + gy + 1
 				if py < 0 or py >= 240:
 					continue
 				for gx in range(12):
-					var px: int = gx_pos + gx
+					var px: int = gx_pos + gx + 1
 					if px < 0 or px >= 320:
 						continue
 					if g_img.get_pixel(gx, gy).a > 0:
-						target.set_pixelv(Vector2i(px, py), g_img.get_pixel(gx, gy))
-
-		x_offset += 14
+						target.set_pixelv(Vector2i(px, py), Color8(0, 0, 0, 255))
+		for gy in range(12):
+			var py: int = gy_pos + gy
+			if py < 0 or py >= 240:
+				continue
+			for gx in range(12):
+				var px: int = gx_pos + gx
+				if px < 0 or px >= 320:
+					continue
+				if g_img.get_pixel(gx, gy).a > 0:
+					target.set_pixelv(Vector2i(px, py), g_img.get_pixel(gx, gy))

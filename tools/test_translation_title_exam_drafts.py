@@ -35,5 +35,22 @@ class TitleExamDraftTests(unittest.TestCase):
                     self.assertEqual(row['style'],'unreviewed')
                     self.assertFalse(row['in_game_verified'])
 
+    def test_title_uses_original_font_masks(self):
+        sources=subject.ROOT/'.asset-cache/translation-assets/original-title-v1'
+        if not sources.exists(): self.skipTest('restore original artwork first')
+        with tempfile.TemporaryDirectory(dir=subject.ROOT/'.asset-cache') as directory:
+            native=Path(directory)/'native';legacy=Path(directory)/'menu9'
+            subject.build(sources,'title',native);subject.build(sources,'title',legacy,'menu9')
+            first=json.loads((native/'manifest.json').read_text());second=json.loads((legacy/'manifest.json').read_text())
+            self.assertEqual((first['font'],second['font']),('native','menu9'))
+            self.assertEqual(first['font_provenance']['source_sha256'],'bae1514fcc4bd8843c69803bf469632b004377b67f3e4408f0641c545fd843ae')
+            self.assertFalse(first['font_provenance']['rescaled'])
+            self.assertTrue(set('GAMESTRTOPIN')<=set(first['font_provenance']['glyphs']))
+            for a,b in zip(first['assets'],second['assets']):
+                self.assertNotEqual(a['output_sha256'],b['output_sha256'])
+                self.assertEqual(a['source_png_sha256'],b['source_png_sha256'])
+            with self.assertRaises(ValueError):
+                subject.build(sources,'title',Path(directory)/'native')
+
 
 if __name__=='__main__': unittest.main()

@@ -285,12 +285,20 @@ static func run_new_game_opening_to_command_ready(
 const BOUNDARY_SHA: String = "cddc10f6e6ff93ff9f667fb2c8ed6d3e1ab42d09ec6c0ee0e7f2317750b03ce5"
 const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
 const TABLES_SHA: String = ContentIdentity.RULE_TABLES_SHA
+const DisplayHost = preload("res://presentation/native_display_host.gd")
+## The playable UI (status labels, save notices) keeps its 640x480 layout,
+## scaled to fit the window; the native picture is framed by the host.
+const UI_SIZE := Vector2(640, 480)
 
 var session: Session
 var controller: Controller
 var state: State
 var pad: Pad
 var canvas: Canvas
+## T-30001 WP6: the canvas draws into this 320x240 SubViewport, whose
+## texture the display host frames in the window (original or wide).
+var native_view: SubViewport
+var display_host: DisplayHost
 var media: MediaStore
 var adapter: MediaAdapter = MediaAdapter.new()
 var actor_service: ActorService = ActorService.new()
@@ -460,15 +468,7 @@ func _ready() -> void:
 	allow_multi_week = allow_multi_week or OS.get_environment("TOKIMEMO_MULTI_WEEK") == "1"
 	_ensure_audio_players()
 	RenderingServer.set_default_clear_color(Color.BLACK)
-	var backdrop := ColorRect.new()
-	backdrop.size = Vector2(640, 480)
-	backdrop.color = Color.BLACK
-	backdrop.z_index = -100
-	add_child(backdrop)
-	canvas = Canvas.new()
-	canvas.scale = Vector2(2, 2)
-	canvas.z_index = -10
-	add_child(canvas)
+	_mount_native_display()
 	pad = Pad.new()
 	add_child(pad)
 	pad.set_process_input(not focus_paused and not _resume_input_pending)
@@ -509,6 +509,39 @@ func _ready() -> void:
 			await RenderingServer.frame_post_draw
 	await _capture("selection")
 	set_physics_process(true)
+
+## Scene audit (T-30001 WP6): only the native picture was placed by the
+## project's 640x480 canvas_items stretch; the labels, the save notice and the
+## stop dialog are UI. The window now runs unscaled (content_scale_size ZERO,
+## as in the entry and opening scenes), the canvas renders 1:1 into a 320x240
+## SubViewport framed by the host on a background CanvasLayer, and this node's
+## own transform fits the 640x480 UI layout into the window.
+func _mount_native_display() -> void:
+	get_window().content_scale_size = Vector2i.ZERO
+	native_view = SubViewport.new()
+	native_view.size = Vector2i(320, 240)
+	native_view.disable_3d = true
+	native_view.transparent_bg = false
+	native_view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	native_view.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
+	add_child(native_view)
+	canvas = Canvas.new()
+	native_view.add_child(canvas)
+	var frame_layer := CanvasLayer.new()
+	frame_layer.layer = -1
+	add_child(frame_layer)
+	display_host = DisplayHost.new()
+	display_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	frame_layer.add_child(display_host)
+	display_host.present_texture(native_view.get_texture(), "playable")
+	get_viewport().size_changed.connect(_fit_ui)
+	_fit_ui()
+
+func _fit_ui() -> void:
+	var area := get_viewport_rect().size
+	var factor := minf(area.x / UI_SIZE.x, area.y / UI_SIZE.y)
+	scale = Vector2.ONE * factor
+	position = ((area - UI_SIZE * factor) * 0.5).floor()
 
 func _label(position_value: Vector2, size: int) -> Label:
 	var label := Label.new()
@@ -808,6 +841,7 @@ func _reset() -> String:
 		if modern_settings != null:
 			hud.presenter.set_translated_images(modern_settings.translated_images)
 			hud.presenter.set_translated_text(modern_settings.translated_text)
+			_apply_language_presenters(modern_settings)
 			if not modern_settings.preferences_changed.is_connected(_refresh_translation_images):
 				modern_settings.preferences_changed.connect(_refresh_translation_images)
 		error = _present_committed()
@@ -818,12 +852,28 @@ func _reset() -> String:
 	detail_label.hide()
 	return ""
 
+## Root hooks 4 and 6: the overlay and holiday presenters follow the active
+## language (English layer and images, or both null for Japanese).
+func _apply_language_presenters(modern_settings: Node) -> void:
+	var layer: RefCounted = modern_settings.translated_text
+	var images: RefCounted = modern_settings.translated_images
+	if overlay_dispatcher != null:
+		overlay_dispatcher.apply_language(layer, images)
+	for presenter: RefCounted in [calendar_phone_presenter, date_appointment_presenter]:
+		if presenter == null:
+			continue
+		if layer == null and images == null:
+			presenter.clear_english()
+		else:
+			presenter.bind_english(layer, [], images)
+
 func _refresh_translation_images(_preferences: Dictionary) -> void:
 	var modern_settings := get_node_or_null("/root/ModernSettings")
 	if hud == null or modern_settings == null:
 		return
 	hud.presenter.set_translated_images(modern_settings.translated_images)
 	hud.presenter.set_translated_text(modern_settings.translated_text)
+	_apply_language_presenters(modern_settings)
 	var presentation_error := _present_committed()
 	if not presentation_error.is_empty():
 		_stop(presentation_error)

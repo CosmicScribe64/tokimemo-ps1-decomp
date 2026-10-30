@@ -197,6 +197,20 @@ class InstalledRuntimeBundleTests(unittest.TestCase):
         self.assertIn("packs/first_arrival_command_reload/command_reload.json", document["files"])
         self.assertIn("packs/first_arrival_command_reload/reads/hud_calendar.bin", document["files"])
 
+    def test_command_hover_texels_role_is_directory(self):
+        # Scaled hover-pulse texels; hover_texels.json is the manifest the
+        # command HUD presenter validates against the HUD manifest.
+        texels = self.bundle / "packs/command_hover_texels"
+        (texels / "assets").mkdir(parents=True)
+        (texels / "hover_texels.json").write_text('{"schema":"tokimemo.hud-hover-texels.v1"}\n')
+        (texels / "assets/f007.p00.hover.png").write_bytes(b"synthetic")
+        document = runtime._manifest(
+            self.bundle, self.exe, None,
+            {"command_hover_texels": "packs/command_hover_texels"}, {})
+        self.assertEqual(runtime.ROLE_KINDS["command_hover_texels"], "dir")
+        self.assertIn("packs/command_hover_texels/hover_texels.json", document["files"])
+        self.assertIn("packs/command_hover_texels/assets/f007.p00.hover.png", document["files"])
+
     def test_command_reload_exporter_parses_the_source_reads(self):
         # The CALROM read and the slot-0 room read come from the C source.
         path = Path(__file__).with_name("command_reload_export.py")

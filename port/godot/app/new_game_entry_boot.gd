@@ -18,6 +18,8 @@ const NamePointer = preload("res://flow/name_entry_pointer.gd")
 const LaunchProfile = preload("res://services/installed_launch_profile.gd")
 const Launch = preload("res://app/installed_launch.gd")
 const TitleFlow = preload("res://flow/title_file_select.gd")
+const DisplayHost = preload("res://presentation/native_display_host.gd")
+const Latin = preload("res://flow/name_entry_latin_page.gd")
 signal profile_finished(entry: RefCounted, native_rng: RefCounted, launch_profile: Dictionary, live_context: Dictionary)
 # Injected by the installed launch owner after original resource authentication.
 var profile_text_store: TextStore
@@ -39,7 +41,15 @@ var glyphs := Glyphs.new()
 var rng := Rng.new()
 var queue: Array[Dictionary] = []
 var panel: VBoxContainer
+## T-30001 WP6: shows last_rendered_image in the window (original or wide).
+var display_host: DisplayHost
+## Hit layer in native coordinates: the pointer buttons and the keyboard
+## outline. It draws no game pixels; it follows the host's aperture.
 var canvas: Canvas
+## Phase 4 WP-D: English-mode Latin typing over the native Symbols page.
+var latin := Latin.new()
+## Window-space toggle for English keyboard typing (null until first shown).
+var typing_toggle: Button
 var presenter: Presenter
 var entry_images: EntryImages
 var name_pointer := NamePointer.new()
@@ -73,10 +83,14 @@ func _notification(what: int) -> void:
 
 func _ensure_native_presenter() -> void:
 	if canvas == null:
+		display_host = DisplayHost.new()
+		display_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		add_child(display_host)
+		move_child(display_host, 0)
 		canvas = Canvas.new()
-		canvas.z_index = -10
 		add_child(canvas)
-		_layout_native_canvas()
+		display_host.layout_changed.connect(_align_hit_layer)
+		_align_hit_layer(display_host.layout)
 	if presenter != null:
 		return
 	var font_path: String = str(installed_launch_profile.get("paths", {}).get("font_root", ""))
@@ -110,6 +124,10 @@ func _ensure_native_presenter() -> void:
 
 func _ready() -> void:
 	_entry_pad = EntryPad.new()
+	# Keys taken by English keyboard typing stay out of the pad sample, so a
+	# typed Q is not also a held Square.
+	_entry_pad.key_capture = func(event: InputEvent) -> bool:
+		return _over_typing_toggle(event) or (_name_input_active() and latin.captures(event, _entry_pad.action_mask(event)))
 	add_child(_entry_pad)
 	# Fresh desktop entry origin; earlier native boot/title duration is unmeasured.
 	# These are source initialization operations, never derived from startup RNG.
@@ -127,7 +145,6 @@ func _ready() -> void:
 	if not context_error.is_empty(): failure = context_error
 	# Native art owns its scale; desktop settings retain window-pixel UI space.
 	get_window().content_scale_size = Vector2i.ZERO
-	get_viewport().size_changed.connect(_layout_native_canvas)
 	_ensure_native_presenter()
 	panel = VBoxContainer.new(); panel.position = Vector2(24,16); panel.size = Vector2(950,660); add_child(panel)
 	debug_visible = OS.get_environment("TOKIMEMO_ENTRY_DEBUG") == "1"
@@ -142,6 +159,8 @@ func _ready() -> void:
 		font_path = str(paths.get("font_root", ""))
 	var tables: Dictionary = Rules.load_tables(rules_path)
 	var content: Dictionary = Entry.load_content(entry_path)
+	latin.configure(content)
+	latin.enabled = _english_selected()
 	var seed: String = OS.get_environment("TOKIMEMO_NEW_GAME_SEED")
 	if not title_handoff.is_empty():
 		# The boot path owns the live BIOS rand object (srand(system_data.seed)
@@ -186,6 +205,9 @@ func _ready() -> void:
 	var settings := get_node_or_null("/root/ModernSettings")
 	if settings != null:
 		settings.preferences_changed.connect(_preferences_changed)
+		# English is read from language/en of the pack this launch authenticated.
+		if settings.has_method("note_installed_root"):
+			settings.note_installed_root(str(installed_launch_profile.get("profile_root", "")))
 	_render()
 
 ## Shape check of the boot-path handoff (flow/title_file_select.gd handoff()).
@@ -203,18 +225,54 @@ static func title_handoff_error(handoff: Dictionary) -> String:
 func title_error_free() -> bool:
 	return not title_handoff.is_empty() and title_handoff_error(title_handoff).is_empty()
 
+## Language changes switch Latin typing and redraw with the active art; the
+## display host re-frames itself.
 func _preferences_changed(_settings: Dictionary) -> void:
-	_layout_native_canvas()
+	var english := _english_selected()
+	if english != latin.enabled:
+		latin.enabled = english
+		latin.clear()
+	_update_typing_toggle()
 	if is_instance_valid(panel) and failure.is_empty(): _render_native_canvas()
 
-func _layout_native_canvas() -> void:
-	if canvas == null: return
-	var area := get_viewport_rect().size
-	var factor := minf(area.x/320.0,area.y/240.0)
+## English keyboard typing is an explicit mode shown by a window-space
+## toggle under the native frame; outside it every key keeps its pad meaning.
+func _update_typing_toggle() -> void:
+	var wanted := latin.enabled and failure.is_empty() and _name_input_active()
+	if not wanted and latin.typing: latin.set_typing(false)
+	if typing_toggle == null:
+		if not wanted: return
+		typing_toggle = Button.new()
+		typing_toggle.focus_mode = Control.FOCUS_NONE
+		typing_toggle.toggle_mode = true
+		typing_toggle.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+		typing_toggle.position = Vector2(8, get_viewport_rect().size.y - 40)
+		typing_toggle.toggled.connect(func(on: bool) -> void:
+			latin.set_typing(on)
+			_update_typing_toggle())
+		add_child(typing_toggle)
+	typing_toggle.visible = wanted
+	typing_toggle.set_pressed_no_signal(latin.typing)
+	var key := OS.get_keycode_string(Latin.TOGGLE_KEY)
+	typing_toggle.text = ("Keyboard typing ON - Enter finishes, Esc stops (%s)" % key) if latin.typing \
+		else ("Type the name with the keyboard (%s)" % key)
+	typing_toggle.reset_size()
+	typing_toggle.position = Vector2(8, get_viewport_rect().size.y - typing_toggle.size.y - 8)
+
+func _over_typing_toggle(event: InputEvent) -> bool:
+	return event is InputEventMouseButton and typing_toggle != null and typing_toggle.is_visible_in_tree() \
+		and typing_toggle.get_global_rect().has_point(event.position)
+
+func _english_selected() -> bool:
 	var settings := get_node_or_null("/root/ModernSettings")
-	if settings != null and settings.preferences.effective_settings().display.filter == "integer" and factor >= 1.0: factor = floorf(factor)
-	canvas.scale = Vector2.ONE*factor
-	canvas.position = ((area-Vector2(320,240)*factor)/2.0).floor()
+	return settings != null and str(settings.preferences.effective_settings().language.get("bundle", "ja")) == "en"
+
+## Keeps the native-coordinate hit layer on the host's 320x240 aperture.
+func _align_hit_layer(layout: Dictionary) -> void:
+	if canvas == null or not layout.get("valid", false): return
+	var aperture: Rect2 = layout.aperture
+	canvas.scale = Vector2.ONE*float(layout.factor)
+	canvas.position = aperture.position
 
 func _send(action: Dictionary) -> void:
 	if not focus_paused: queue.append(action.duplicate(true))
@@ -261,6 +319,7 @@ func differential_snapshot() -> Dictionary:
 func _physics_process(delta: float) -> void:
 	if not failure.is_empty() or focus_paused or _completion_emitted: return
 	tick += 1
+	_update_typing_toggle()
 	# Desktop events are sampled once before dispatch. The native prior-draw pad
 	# latch phase remains a differential-test question, not a parity assumption.
 	var current_pad: InputFrame = _entry_pad.sample(_entry_clock.logic_iterations)
@@ -272,12 +331,17 @@ func _physics_process(delta: float) -> void:
 	var automatic: bool = (controller.stage == 1 and controller.step_id in [0,2,4,6,8]) or (controller.stage == 2 and controller.step_id in [0,2,4])
 	if automatic:
 		failure = controller.act({"kind":"tick"}); _render()
-	elif not queue.is_empty():
-		var action: Dictionary = queue.pop_front()
-		if action.get("kind") == "pointer_confirm": action = name_pointer.confirm(controller)
-		var diagnostic: String = "" if action.is_empty() else controller.act(action)
-		if not diagnostic.is_empty(): failure = diagnostic
-		_render()
+	else:
+		# English-mode Latin typing feeds one native action per idle tick.
+		if queue.is_empty():
+			var typed: Dictionary = latin.next_action(controller)
+			if not typed.is_empty(): queue.append(typed)
+		if not queue.is_empty():
+			var action: Dictionary = queue.pop_front()
+			if action.get("kind") == "pointer_confirm": action = name_pointer.confirm(controller)
+			var diagnostic: String = "" if action.is_empty() else controller.act(action)
+			if not diagnostic.is_empty(): failure = diagnostic
+			_render()
 	if marker_changed: _render_native_canvas()
 	elif pointer_changed: _render_native_canvas()
 	# Record that exact device sample only after completed dispatch/render.
@@ -306,6 +370,12 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if not is_instance_valid(_entry_pad) or focus_paused: return
+	# A click on the typing toggle belongs to the button, not to pointer confirm.
+	if _over_typing_toggle(event): return
+	if _name_input_active() and latin.push_event(event, _entry_pad.action_mask(event)):
+		get_viewport().set_input_as_handled()
+		_update_typing_toggle()
+		return
 	if event is InputEventMouseMotion and _source_pointer_ready():
 		if name_pointer.place(Vector2i(canvas.get_local_mouse_position())): _render_native_canvas()
 		return
@@ -485,13 +555,7 @@ func _render_native_canvas() -> void:
 	if img == null: return
 
 	last_rendered_image = img
-	canvas.set("_textures", {})
-	canvas.present([{
-		"id": "new_game_entry:%d:%d:%d" % [controller.stage, controller.step_id, tick],
-		"image": img,
-		"position": Vector2i.ZERO,
-		"blend_mode": 0,
-	}])
+	display_host.present(img, "name_entry")
 
 func _render() -> void:
 	profile_complete = (controller.stage == 2 and controller.step_id == 5)

@@ -1,0 +1,11 @@
+{
+	"schema": "tokimemo.port-settings.v1",
+	"settings": {
+		"display": {"mode": "borderless", "width": 1280, "height": 960, "monitor": 1, "aspect": "wide", "filter": "nearest", "vsync": false, "fps": 144, "long_confirmation": true},
+		"audio": {"buses": {"Master": {"volume": 0.8, "mute": false}, "Voice": {"volume": 0.5, "mute": true}, "BGM": {"volume": 0.25, "mute": false}, "SFX": {"volume": 1.0, "mute": false}, "Movie": {"volume": 0.0, "mute": false}}, "device": "Default", "mono": true, "mute_unfocused": true},
+		"controls": {"swap_confirm": true, "deadzone": 0.3, "repeat_delay": 0.5, "repeat_interval": 0.1, "bindings": {"left": [{"kind": "key", "code": 72}]}},
+		"accessibility": {"text_speed": "fast", "auto_delay": 1.5, "skip": "all", "font_scale": 1.25, "backdrop": 0.5, "reduce_flashes": true, "reduce_shake": true},
+		"language": {"text": "en", "text_manifest": "/packs/images/manifest.json", "text_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "voice": "en", "voice_manifest": "/packs/voice/manifest.json", "voice_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "dialogue_manifest": "/packs/dialogue.json", "dialogue_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc", "ui_text_manifest": "/packs/ui-text.json", "ui_text_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}
+	},
+	"pending_display_boot_check": {}
+}

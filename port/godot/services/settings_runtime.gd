@@ -11,6 +11,10 @@ const History = preload("res://services/read_history_service.gd")
 const PrologueText = preload("res://services/prologue_text_store.gd")
 const VoicePack = preload("res://services/voice_pack_store.gd")
 const TextPack = preload("res://services/text_translation_store.gd")
+const LanguageBundle = preload("res://services/language_bundle_service.gd")
+const Glyphs = preload("res://services/input_glyph_service.gd")
+const DisplayFrame = preload("res://services/display_frame_info.gd")
+const PackStore = preload("res://services/installed_pack_store.gd")
 var text_pack := TextPack.new()
 var voice_pack := VoicePack.new()
 var read_history := History.new()
@@ -20,6 +24,19 @@ var packs := Packs.new()
 var translated_images: RefCounted = null
 ## T-39016: active source-keyed text layer, or null for original text.
 var translated_text: RefCounted = null
+## T-30002 WP2/WP5: the semantic language choice (ja | en | custom) resolved
+## to packs; the settings pages read its coverage and disclosure.
+var language_bundle := LanguageBundle.new()
+## Controller family for prompts (T-30002 WP6).
+var glyphs := Glyphs.new()
+## Display facts for the settings pages (widescreen_available, drawable_info).
+var display_frame: RefCounted
+## Installed pack root that holds language/en; set by the installed launch
+## (note_installed_root), else read from the default install receipt.
+var installed_root := ""
+## {bundle, allow_drafts, root} of the last language request, so a change of
+## either preference (or of the installed root) requests the bundle again.
+var _language_request: Dictionary = {}
 var mono_effect := AudioEffectStereoEnhance.new()
 var preferences := Preferences.new()
 var remaps := Remaps.new()
@@ -46,6 +63,10 @@ func _ready() -> void:
 		if AudioServer.get_bus_index(bus) < 0:
 			AudioServer.add_bus(); AudioServer.set_bus_name(AudioServer.bus_count - 1, bus)
 			AudioServer.set_bus_send(AudioServer.bus_count - 1, "Master")
+	display_frame = DisplayFrame.new(self)
+	language_bundle.applied.connect(_language_applied)
+	language_bundle.fallback.connect(show_notice)
+	language_bundle.warning.connect(show_notice)
 	preferences.changed.connect(apply_preferences)
 	mono_effect.pan_pullout = 0.0
 	AudioServer.add_bus_effect(0, mono_effect)
@@ -54,21 +75,26 @@ func _ready() -> void:
 	menu = Menu.new(); menu.runtime = self; layer.add_child(menu); menu.hide()
 	if not preferences.error.is_empty(): show_notice(preferences.error)
 	elif preferences.recovered: show_notice("Previous settings restored after an interrupted or damaged update.")
+	elif preferences.migrated: show_notice("Settings were updated to the new format; your choices were kept.")
+	elif not preferences.reset_keys.is_empty(): show_notice("Some settings were invalid and were reset: " + ", ".join(preferences.reset_keys))
 	elif first_launch: show_notice("Settings: press F10 or both controller stick buttons (L3 + R3).")
 
 func apply_preferences(value: Dictionary) -> void:
 	accessibility.configure(value.accessibility)
 	pacing.configure(value.accessibility)
 	if not remaps.configure(value.controls): remaps.configure(Preferences.defaults().controls)
+	glyphs.configure(value.controls)
 	get_tree().call_group("native_input_devices", "clear_devices")
 	var display: Dictionary = value.display
 	Engine.max_fps = display.fps
 	var window := get_window()
-	match display.aspect:
-		"wide": window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP_HEIGHT
-		"auto": window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
-		_: window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
-	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER if display.filter == "integer" else Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+	# T-30001 WP6 scene audit: the native boots frame their picture with
+	# NativeDisplayHost (aspect, wings and integer fit come from there), while
+	# the settings layer, setup, title and shell keep the project's 640x480
+	# canvas_items layout. The window scale is therefore pinned to neutral
+	# values instead of following display.aspect and display.filter.
+	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	window.canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR if display.filter == "linear" else Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_NEAREST
 	if DisplayServer.get_name() != "headless" and display != applied_display:
 		window.mode = Window.MODE_WINDOWED
@@ -82,28 +108,99 @@ func apply_preferences(value: Dictionary) -> void:
 	for effect_index: int in AudioServer.get_bus_effect_count(0):
 		if AudioServer.get_bus_effect(0, effect_index) == mono_effect:
 			AudioServer.set_bus_effect_enabled(0, effect_index, value.audio.mono)
-	if value.language.text_manifest != packs.manifest or value.language.text_sha256 != packs.digest:
+	# The per-pack keys below describe custom packs only; with Japanese or the
+	# English bundle selected, _language_applied owns the presentation stores.
+	# (Loading a v1 file with pack paths migrates it to bundle 'custom'.)
+	var custom_packs: bool = str(value.language.get("bundle", "ja")) == "custom"
+	if custom_packs and (value.language.text_manifest != packs.manifest or value.language.text_sha256 != packs.digest):
 		if not packs.select_images(value.language.text_manifest, value.language.text_sha256): packs.select_images("", "")
 		translated_images = packs.images
 	var active_layer: String = "" if packs.text_layer == null else packs.text_layer.manifest
 	var active_layer_sha: String = "" if packs.text_layer == null else packs.text_layer.digest
-	if value.language.ui_text_manifest != active_layer or value.language.ui_text_sha256 != active_layer_sha:
+	if custom_packs and (value.language.ui_text_manifest != active_layer or value.language.ui_text_sha256 != active_layer_sha):
 		if not packs.select_text_layer(value.language.ui_text_manifest, value.language.ui_text_sha256): packs.select_text_layer("", "")
 		translated_text = packs.text_layer
 	if value.language.voice_manifest != voice_pack.manifest or value.language.voice_sha256 != voice_pack.digest:
 		var candidate := VoicePack.new()
 		if value.language.voice_manifest.is_empty() or candidate.open_pack(value.language.voice_manifest, value.language.voice_sha256): voice_pack = candidate
 		else: voice_pack = VoicePack.new()
-	if value.language.dialogue_manifest != text_pack.manifest or value.language.dialogue_sha256 != text_pack.digest:
+	if custom_packs and (value.language.dialogue_manifest != text_pack.manifest or value.language.dialogue_sha256 != text_pack.digest):
 		var candidate := TextPack.new()
 		if value.language.dialogue_manifest.is_empty() or candidate.open_pack(value.language.dialogue_manifest, value.language.dialogue_sha256): text_pack = candidate
 		else: text_pack = TextPack.new()
+	_request_language(value.language)
 	for bus: String in Preferences.BUSES:
 		var spec: Dictionary = value.audio.buses[bus]
 		var index := AudioServer.get_bus_index(bus)
 		AudioServer.set_bus_volume_db(index, linear_to_db(maxf(spec.volume, 0.00001)))
 		AudioServer.set_bus_mute(index, spec.mute or spec.volume == 0 or (bus == "Master" and value.audio.mute_unfocused and not focused))
 	preferences_changed.emit(value.duplicate(true))
+
+## Starts a language switch ('ja', 'en' or 'custom'): the choice is saved as
+## language.bundle and the bundle opens on a worker (see _request_language).
+## Returns "" or the reason it could not start.
+func select_language(choice: String) -> String:
+	if choice not in LanguageBundle.CHOICES: return "Unknown language."
+	if choice == "en" and _installed_root().is_empty():
+		return "English needs the installed language bundle, which was not found. Japanese is kept."
+	if str(preferences.settings.language.get("bundle", "ja")) == choice:
+		_language_request.clear()
+		_request_language(preferences.settings.language)
+		return ""
+	if not preferences.set_values({"language.bundle": choice}): return preferences.error
+	return ""
+
+## English is offered only when the installed pack carries language/en.
+func language_available(choice: String) -> bool:
+	if choice == "en":
+		var root := _installed_root()
+		return not root.is_empty() and FileAccess.file_exists(LanguageBundle.bundle_path(root))
+	return choice in LanguageBundle.CHOICES
+
+func language_coverage() -> Dictionary:
+	return language_bundle.coverage
+
+## The installed launch passes the pack root it authenticated, so English is
+## found next to the original content it was built from.
+func note_installed_root(root: String) -> void:
+	if root.is_empty() or root == installed_root: return
+	installed_root = root
+	_request_language(preferences.settings.language)
+
+func _installed_root() -> String:
+	if installed_root.is_empty():
+		installed_root = PackStore.new().installed_pack_root()
+	return installed_root
+
+## Root hook 3: requests the bundle whenever language.bundle,
+## language.allow_draft_images or the installed root changed since the last
+## request ('custom' re-reads the custom manifests through the service too).
+func _request_language(language: Dictionary) -> void:
+	var choice := str(language.get("bundle", "ja"))
+	var allow_drafts: bool = language.get("allow_draft_images", false) == true
+	var root := _installed_root() if choice == "en" else ""
+	var request := {"bundle": choice, "allow_drafts": allow_drafts, "root": root}
+	if choice == "custom":
+		for key: String in ["text_manifest", "text_sha256", "ui_text_manifest", "ui_text_sha256", "dialogue_manifest", "dialogue_sha256"]:
+			request[key] = str(language.get(key, ""))
+	if request == _language_request: return
+	if choice == "ja" and _language_request.is_empty() and language_bundle.choice == "ja": _language_request = request; return
+	_language_request = request
+	if choice == "en":
+		language_bundle.request("en", {"bundle_path": LanguageBundle.bundle_path(root), "allow_drafts": allow_drafts})
+	elif choice == "custom":
+		language_bundle.request("custom", {"language": language.duplicate(true), "allow_drafts": allow_drafts})
+	else:
+		language_bundle.request("ja")
+
+## The bundle's stores replace the active presentation packs in one step.
+func _language_applied(choice: String, _coverage: Dictionary) -> void:
+	translated_images = language_bundle.images
+	translated_text = language_bundle.text_layer
+	text_pack = language_bundle.dialogue if language_bundle.dialogue != null else TextPack.new()
+	if choice == "ja":
+		packs.select_images("", ""); packs.select_text_layer("", "")
+	preferences_changed.emit(preferences.effective_settings())
 
 func select_image_pack(path: String) -> String:
 	var digest := "" if path.is_empty() else FileAccess.get_sha256(path)
@@ -113,6 +210,7 @@ func select_image_pack(path: String) -> String:
 	preferences.settings.language.text = candidate.language
 	preferences.settings.language.text_manifest = path
 	preferences.settings.language.text_sha256 = digest
+	if not path.is_empty(): preferences.settings.language.bundle = "custom"
 	if not preferences.save():
 		preferences.settings.language = before
 		return preferences.error
@@ -128,6 +226,7 @@ func select_ui_text_pack(path: String) -> String:
 	var before: Dictionary = preferences.settings.language.duplicate(true)
 	preferences.settings.language.ui_text_manifest = path
 	preferences.settings.language.ui_text_sha256 = digest
+	if not path.is_empty(): preferences.settings.language.bundle = "custom"
 	if not preferences.save(): preferences.settings.language = before; return preferences.error
 	# Reuse the validated layer instead of parsing the pack a second time.
 	packs.text_layer = candidate.text_layer
@@ -151,12 +250,14 @@ func select_text_pack(path: String) -> String:
 	var before: Dictionary = preferences.settings.language.duplicate(true)
 	preferences.settings.language.dialogue_manifest = path
 	preferences.settings.language.dialogue_sha256 = "" if path.is_empty() else digest
+	if not path.is_empty(): preferences.settings.language.bundle = "custom"
 	if not preferences.save(): preferences.settings.language = before; return preferences.error
 	apply_preferences(preferences.effective_settings())
 	if not text_pack.unsupported_entries.is_empty(): show_notice("Some translated lines contain unsupported characters and will use Japanese.")
 	return ""
 
 func _process(delta: float) -> void:
+	language_bundle.poll()
 	preferences.tick(Time.get_ticks_msec() / 1000.0, focused)
 	if not is_instance_valid(menu) or not menu.visible or not focused: repeat_action = ""; return
 	var action := ""
@@ -193,6 +294,7 @@ func _gamepad_connection_changed(device: int, connected: bool) -> void:
 	repeat_action = ""; repeat_elapsed = 0.0
 
 func _input(event: InputEvent) -> void:
+	glyphs.note_input(event)
 	if event is InputEventJoypadButton and event.button_index in [JOY_BUTTON_LEFT_STICK, JOY_BUTTON_RIGHT_STICK]:
 		var held: int = settings_buttons.get(event.device, 0)
 		var bit := 1 if event.button_index == JOY_BUTTON_LEFT_STICK else 2

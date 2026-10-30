@@ -12,6 +12,28 @@ The intended input is the two-track Japanese PlayStation the Best 7z. Other layo
 
 **Setup currently produces a partial developer bundle, not a playable release.** Inspect `coverage.unavailable_roles` and the warnings. Spring media, the HUD image manifest, and finite April school-day command-0/7 media regenerate from the original inputs and source proofs. School-day coverage does not yet establish complete school gameplay. HUD session context and holiday scene setup still lack fresh producers; any additional export failure is reported in the generated coverage record. The setup wrapper exits 3 when coverage is partial, preserving the bundle for diagnosis; the lower-level exporter exits 0 after publication even for a partial bundle. No provenance check should be bypassed to make a role appear available.
 
+## English bundle
+
+After the installed bundle, setup builds the English bundle in the same container from the committed `translations/en`. It writes the bundle into the new installed profile at `language/en/english_bundle.json` (for example `.asset-cache/port/installed-fresh/language/en`), which is where the Language setting looks for it. Choose another new directory with `--english-output .asset-cache/port/NEW_DIRECTORY`, or skip the bundle with `--no-english`. It never writes into the repository or `res://`, or into an existing bundle.
+
+`english_bundle.json` (schema `tokimemo.english-bundle.v1`, read by `port/godot/services/language_bundle_service.gd`) carries the disclosure and lists each member with its relative path, SHA-256, schema, disclosure and coverage counts:
+
+- `ui_text`: the source-keyed text layer pack (`tools/port/build_text_pack.py`);
+- `dialogue`: the prologue dialogue pack (`tokimemo.text-translation-pack.v1`). A line stays Japanese when its source bytes hold a name token or another single-byte control, a protected marker, a character without an original glyph, or text that would not fit the two English rows of the original textbox (`layout_overflow`, listed in `layout_overflow_line_ids`). The `lines` count is the number of lines the player sees in English;
+- `images`: the approved artwork pack (`tokimemo.translated-image-pack.v1` while it holds only frame replacements), approved assets only;
+- `draft_images` (only with `--with-drafts`): a development pack of the approved assets plus unreviewed drafts (`v2` when it holds page or BS drafts), opened only when the player enables draft art.
+
+The disclosure reads: "English text is AI-translated and not yet human-reviewed; voices remain Japanese." Nothing in the bundle is human approval. A missing input (no extracted files, no installed prologue text) omits that member and records it with a reason in `omitted`; an input that is present but differs from its pin fails the build. Setup then exits 4 and leaves the Japanese content as built. Two builds from the same inputs are byte-identical. To build or re-check a bundle by hand:
+
+```sh
+docker run --rm -v "$PWD:/work" -w /work tokimemo-content python3 tools/port/build_english_bundle.py \
+  --files disc/files --installed .asset-cache/port/installed-fresh --output .asset-cache/port/english-NEW
+docker run --rm -v "$PWD:/work" -w /work tokimemo-content python3 tools/port/build_english_bundle.py \
+  --verify --output .asset-cache/port/english-NEW
+```
+
+Draft page/bs directories from `tools/translation_filesel_drafts.py pages` and `tools/translation_mdec_drafts.py` can be added to the draft pack with `--with-drafts --draft-source DIR`.
+
 Build and import the engine separately:
 
 ```sh

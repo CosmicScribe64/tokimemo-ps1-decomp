@@ -3,6 +3,7 @@ extends "res://presentation/command_hud_presenter.gd"
 
 const HolidayAppointmentRules = preload("res://rules/holiday_appointment.gd")
 const Layout = preload("res://ui/native_hud.gd")
+const TextBinding = preload("res://presentation/presenter_text_binding.gd")
 
 const CHECKER_TILE_B64 := "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA5ElEQVR4nMWWsQ3DIBBFzycXlIzgUTIKZUZI6VEYI6XHcHkjpKRLdBRIECQMTvx/aSPeQ0L8m2h1byoij5UkCI1GXkLOb4fWTl78l8BiF7rv4wL7cyPvbofWMoHD5QdjzKkNQwjjAuZieCaAgCcBFDwKIOFRAAnXwzMSrmEkvCrQuhMteOt/uT8j4ZkAAp4EUPAogIRrZku22udaqaPpmSfmWu/39HlVIMjheYIJHP7nI9MtEC6GZwIIeBJAwaMAEh4FkHA9/LDAryYpRsKrAmff9t5uYSQ8E0DAkwAKHgWQcBX4AGcPlHlFD2CfAAAAAElFTkSuQmCC"
 const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
@@ -14,6 +15,37 @@ var _date_bg_images: Dictionary = {}
 var _shiori_portrait_image: Image
 var _checker_tile: Image
 var _opened_date_pack := false
+## Phase 4 WP-I: English binding shared with DATE/DATE2 and TEL subclasses.
+## Empty until bind_english, so every frame draws the original bytes.
+var english_text := TextBinding.new()
+var _english_images := false
+
+
+## Bind English text (presenter_text_binding.gd rows) and, when a store is
+## given, the exact-identity HUD frame replacements. Presentation only.
+func bind_english(layer: RefCounted, bindings: Array, image_store: RefCounted = null) -> Dictionary:
+	var text: int = english_text.bind(layer, _font, bindings, 14)
+	var images := 0
+	if image_store != null:
+		images = set_translated_images(image_store)
+		_english_images = true
+	elif _english_images:
+		# A re-bind without a store returns the HUD frames to the originals.
+		set_translated_images(null)
+		_english_images = false
+	return {"text": text, "images": images, "fallbacks": english_text.fallback_log()}
+
+
+## Return to the original Japanese frames.
+func clear_english() -> void:
+	english_text.clear()
+	if _english_images:
+		set_translated_images(null)
+		_english_images = false
+
+
+func _set_runs(runs: Array[Dictionary]) -> void:
+	_compositor.set_text_runs(english_text.apply_runs(runs))
 
 
 func open_date_preview(hud_manifest_path: String, font_root: String, date_pack_root: String, hud_sha: String = HUD_SHA) -> bool:
@@ -127,7 +159,7 @@ func render_holiday_appointment_notice(state: HolidayAppointmentRules.HolidaySta
 			"position": [int(line["x"]), int(line["y"])],
 			"attribute": 0,
 		})
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	var base := Image.create(320, 240, false, Image.FORMAT_RGBA8)
 	_draw_checkerboard(base, view["checker_uv"])
 	var backgrounds: Array[Dictionary] = [
@@ -151,7 +183,7 @@ func render_appointment_place_choice(state: HolidayAppointmentRules.HolidayState
 			"position": [int(row["x"]), int(row["y"])],
 			"attribute": 0,
 		})
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	var image := _render_holiday_without_command_icons(view, true, selected_row)
 	return {
 		"id": "appointment_place_choice",
@@ -178,7 +210,7 @@ func render_appointment_place_confirm(state: HolidayAppointmentRules.HolidayStat
 			"position": [int(line["x"]), int(line["y"])],
 			"attribute": 0,
 		})
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	var image := _render_holiday_without_command_icons(view, false, 0)
 	return {
 		"id": "appointment_place_confirm",
@@ -301,7 +333,7 @@ func render_date_arrival_scene(state: HolidayAppointmentRules.HolidayState, laun
 	)
 	var runs: Array[Dictionary] = speak_payload["text_runs"]
 	var arrival_lines: Array[Dictionary] = speak_payload["lines"]
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	_compositor._draw_text(image)
 
 	# Blinking/bobbing wait marker actor_pool[2] at (116, 72..78) when line_wait != 0
@@ -345,7 +377,7 @@ func render_date_three_choice_prompt(state: HolidayAppointmentRules.HolidayState
 	var runs: Array[Dictionary] = []
 	for r: Dictionary in prompt.get("text_runs", []):
 		runs.append(r)
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	_compositor._draw_text(image)
 
 	# 3. Cursor actor_pool[0] resolved via hud_cursor_actor_init(0) at (120, 56 + row * 16)
@@ -385,7 +417,7 @@ func render_date_choice_response(state: HolidayAppointmentRules.HolidayState, re
 	var runs: Array[Dictionary] = []
 	for r: Dictionary in response.get("text_runs", []):
 		runs.append(r)
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	_compositor._draw_text(image)
 
 	var marker_spec := {}
@@ -517,6 +549,6 @@ func _draw_place_title_banner(target: Image, place_hex: String) -> void:
 	var banner_runs: Array[Dictionary] = [
 		{"hex": place_hex, "position": [-142, -88], "attribute": 0},
 	]
-	_compositor.set_text_runs(banner_runs)
+	_set_runs(banner_runs)
 	_compositor._draw_text(target)
 	_compositor.set_text_runs(prev_runs)

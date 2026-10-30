@@ -6,6 +6,7 @@ const FlowScript = preload("res://app/first_launch_import_flow.gd")
 const BackendScript = preload("res://services/original_game_import_backend.gd")
 const Router = preload("res://app/boot_router.gd")
 const Launch = preload("res://app/installed_launch.gd")
+const WelcomeStep = preload("res://ui/welcome_step.gd")
 const DEFAULT_CAPABILITIES: Array[String] = Router.DEFAULT_CAPABILITIES
 
 signal gameplay_ready(pack_root: String, manifest_sha256: String)
@@ -27,6 +28,14 @@ var _choose_file_button: Button
 var _choose_folder_button: Button
 var _choose_location_button: Button
 var _play: Button
+## T-30002 WP8: the one-time Welcome step runs before the first entry launch.
+## welcome_enabled is false for headless runs and TOKIMEMO_SKIP_WELCOME=1.
+var welcome_enabled: bool = WelcomeStep.enabled()
+var welcome_marker_path: String = WelcomeStep.DEFAULT_MARKER
+var welcome: Control
+## Setup controls hidden while the modal Welcome step is open, so keyboard and
+## controller focus cannot reach the import buttons behind it.
+var _hidden_for_welcome: Array[Control] = []
 
 func _ready() -> void:
 	_build_ui()
@@ -45,6 +54,38 @@ func _ready() -> void:
 	set_process(false)
 
 func _continue_installed(_pack_root: String, _manifest_sha: String) -> void:
+	if _show_welcome():
+		return
+	_launch_installed()
+
+## Shows the Welcome step once; returns true while it is open.
+func _show_welcome() -> bool:
+	if is_instance_valid(welcome):
+		return true
+	var settings: Node = get_node_or_null("/root/ModernSettings")
+	if not welcome_enabled or settings == null or WelcomeStep.completed(welcome_marker_path):
+		return false
+	welcome = WelcomeStep.new()
+	welcome.runtime = settings
+	welcome.marker_path = welcome_marker_path
+	welcome.finished.connect(_welcome_finished)
+	_hidden_for_welcome.clear()
+	for child: Node in get_children():
+		if child is Control and child.visible:
+			_hidden_for_welcome.append(child); child.hide()
+	add_child(welcome)
+	return true
+
+func _welcome_finished() -> void:
+	if is_instance_valid(welcome):
+		welcome.queue_free()
+	welcome = null
+	for child: Control in _hidden_for_welcome:
+		if is_instance_valid(child): child.show()
+	_hidden_for_welcome.clear()
+	_launch_installed()
+
+func _launch_installed() -> void:
 	# Revalidate the remembered receipt before entering the interactive profile.
 	var checked: Dictionary = _flow.store.check_installed(DEFAULT_CAPABILITIES)
 	if checked.get("state") != "ready":

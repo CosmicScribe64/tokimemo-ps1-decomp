@@ -18,6 +18,8 @@ Read this first. One line per page, grouped by what you need. Tickets are not li
 - [[phase3]] - Godot 4.7.2 Japanese desktop port plan; readiness repairs and verification remain in progress
 - [[phase4]] - Phase 4 modernization plan (widescreen presentation, modern settings & translation-pack selector, native achievements, player customization)
 - [[phase4-design-2026-10-29]] - judged phase 4 design: widescreen, settings, English play, playtesting work packages
+- [[switch-remake-reference]] - how the 2025 Switch release handles widescreen, fonts and modern features, compared with our phase 4 design
+- [[switch-remake-footage]] - frame log from Switch release trailers and gameplay footage
 - [[notes/functions]] - every function named in the matching notes, with links to its sections
 - Repo root: `AGENTS.md` (rules), `CODING_STANDARDS.md` (conventions, review checklist), `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`
 

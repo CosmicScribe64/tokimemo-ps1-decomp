@@ -12,8 +12,10 @@ import unittest
 from PIL import Image
 
 try:
+    from tools.port import checkpoint_receipt
     from tools.port import rei_stage_capture_pairs as tool
 except ModuleNotFoundError:
+    import checkpoint_receipt
     import rei_stage_capture_pairs as tool
 
 VSYNC_PC = 0x800ADABC
@@ -260,6 +262,160 @@ class ReiStagePairsTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 tool.main(["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
                            "--out", str(root / "out"), "--latency", "2", "--latency-basis", "synthetic"])
+
+
+
+def write_v2(port, failure=True, tamper=None, resign=False):
+    """Synthetic v2 receipt set for the fixture's port PNGs (T-39019 shape), bound with real digests.
+
+    ``tamper`` edits the receipts after they were bound (a post-write edit).
+    With ``resign`` the digest is recomputed after the edit, so only the other
+    checks (key, clocks, pixels) can catch it.
+    """
+    receipts = {}
+    for key, frame in (("stage8-0", 40), ("stage8-1", 50), ("stage8-2", 60)):
+        png = port / (key + ".png")
+        stage, sub = (int(x) for x in key[len("stage"):].split("-"))
+        receipts[key] = {
+            "schema": "tokimemo.checkpoint-receipt.v2", "key": key,
+            "native_canvas": {"width": 320, "height": 240, "source": "cpu_composed_image", "png": png.name,
+                              "png_sha256": hashlib.sha256(png.read_bytes()).hexdigest(),
+                              "rgba8_sha256": checkpoint_receipt.rgba8_sha256(png)[0]},
+            "clocks": {"frame_count": frame, "game_mode": 0x15, "mode_stage": stage, "mode_step": 0, "substep": sub},
+            "rng": {"draw_count": 7}, "settings": {"source": "synthetic", "language": "ja", "aspect": "original", "filter": "integer"},
+            "content": {}, "renderer": {"engine": "4.7.2", "rendering_method": "gl_compatibility", "adapter": "", "vendor": "", "api": ""},
+            "observer": {"path": "res://tests/support/checkpoint_observer.gd", "sha256": "1" * 64,
+                         "producer": "res://tests/opening/run_installed_rei_banner.gd", "producer_sha256": "2" * 64},
+            "extra": {"prologue_scene_counter": 0, "opening": {"prologue_line": 3, "D_801220E0": 0, "volume": 0.25}}}
+        receipts[key]["receipt_sha256"] = checkpoint_receipt.receipt_digest(receipts[key])
+    if tamper:
+        tamper(receipts)
+        if resign:
+            for receipt in receipts.values():
+                receipt["receipt_sha256"] = checkpoint_receipt.receipt_digest(receipt)
+    (port / "checkpoint-receipts.json").write_text(json.dumps({"schema": "tokimemo.checkpoint-receipt.v2-set", "receipts": receipts, "errors": []}))
+    if not failure:
+        (port / "rei-failure.json").unlink()
+    return receipts
+
+
+class ReceiptV2Test(unittest.TestCase):
+    def run_v2(self, root, **v2):
+        fx = Fixture(root)
+        write_v2(fx.port, **v2)
+        out = root / "out"
+        tool.main(["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
+                   "--out", str(out), "--latency", "2", "--latency-basis", "synthetic"])
+        return fx, out
+
+    def test_v2_receipts_need_no_post_hoc_binding(self):
+        from tools.port.compare_capture_pair import compare
+        with tempfile.TemporaryDirectory() as tmp:
+            _, out = self.run_v2(Path(tmp), failure=False)
+            self.assertFalse((out / "port-png-bindings.json").exists())
+            pair = json.loads((out / "pair-stage8-1.json").read_text())
+            self.assertEqual(pair["port"]["selector"], ["receipts", "stage8-1"])
+            self.assertEqual(pair["port"]["image_sha_path"], ["native_canvas", "png_sha256"])
+            self.assertEqual(next(m for m in pair["mappings"] if m["name"] == "stage")["port_path"], ["clocks", "mode_stage"])
+            report, code = compare(pair, out)  # the comparator consumes the receipt directly
+            self.assertEqual(code, 1)
+            self.assertEqual(report["semantics"][0]["port"], 8)
+            self.assertEqual(report["clocks"]["port"]["port_rng_draw_count"], 7)
+
+    def test_v2_tampered_receipt_fields_are_rejected(self):
+        def edit(path, value):
+            def tamper(receipts):
+                target = receipts["stage8-1"]
+                for name in path[:-1]:
+                    target = target[name]
+                target[path[-1]] = value
+            return tamper
+
+        def frame_and_draws(receipts):
+            receipts["stage8-1"]["clocks"]["frame_count"] = 51
+            receipts["stage8-1"]["rng"]["draw_count"] = 8
+
+        cases = {"frame_count and draw_count": frame_and_draws,
+                 "frame_count": edit(("clocks", "frame_count"), 49),
+                 "draw_count": edit(("rng", "draw_count"), 6),
+                 "scene counter": edit(("extra", "prologue_scene_counter"), 320),
+                 "D_801220E0": edit(("extra", "opening", "D_801220E0"), 128),
+                 "settings": edit(("settings", "language"), "en"),
+                 "observer hash": edit(("observer", "sha256"), "4" * 64),
+                 "producer hash": edit(("observer", "producer_sha256"), "5" * 64),
+                 "digest": edit(("receipt_sha256",), "3" * 64)}
+        for name, tamper in cases.items():
+            with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
+                with self.assertRaises(SystemExit) as raised:
+                    self.run_v2(Path(tmp), tamper=tamper)
+                self.assertIn("receipt fields changed after binding", str(raised.exception))
+
+    def test_v2_resigned_wrong_clock_or_pixels_are_rejected(self):
+        def wrong_clock(receipts):
+            receipts["stage8-1"]["clocks"]["substep"] = 2
+
+        def wrong_pixels(receipts):
+            receipts["stage8-1"]["native_canvas"]["rgba8_sha256"] = "0" * 64
+
+        for name, tamper, message in (("clock", wrong_clock, "clocks hold stage 8 substep 2"),
+                                      ("rgba8", wrong_pixels, "decoded pixels differ")):
+            with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
+                with self.assertRaises(SystemExit) as raised:
+                    self.run_v2(Path(tmp), tamper=tamper, resign=True)
+                self.assertIn(message, str(raised.exception))
+
+    def test_v2_replaced_png_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fx = Fixture(root)
+            write_v2(fx.port)
+            Image.new("RGBA", (320, 240), (0, 0, 0, 255)).save(fx.port / "stage8-1.png")
+            with self.assertRaises(SystemExit) as raised:
+                tool.main(["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
+                           "--out", str(root / "out"), "--latency", "2", "--latency-basis", "synthetic"])
+            self.assertIn("PNG changed after binding", str(raised.exception))
+
+    def test_receipt_digest_matches_godot_text(self):
+        # Expected text was printed by Godot 4.7.2 JSON.stringify(value, "", true) in Docker tokimemo-port.
+        value = {"b": 1, "a": [True, None, 2], "B": {"z": 1, "é": 2, "_": 3},
+                 "f": [0.5, 3.0, 2.0 / 3.0, 12345678.123456789, 1e-7, 1e20, -0.001, 0.0, -0.0, 1e15 + 0.5]}
+        self.assertEqual(checkpoint_receipt.godot_json(value),
+                         '{"B":{"_":3,"z":1,"é":2},"a":[true,null,2],"b":1,'
+                         '"f":[0.5,3.0,0.666666666666667,12345678.1234568,0.0000001,100000000000000000000.0,'
+                         '-0.001,0.0,0.0,1000000000000000.5]}')
+        self.assertEqual(checkpoint_receipt.godot_json("a\vb\x01c\"\\/\n\t"), '"a\\vb\x01c\\"\\\\/\\n\\t"')
+        receipt = {"schema": "x", "n": 3.0, "receipt_sha256": "ignored"}
+        self.assertEqual(checkpoint_receipt.receipt_digest(receipt), hashlib.sha256(b'{"n":3,"schema":"x"}').hexdigest())
+
+    def test_v2_observer_refusals_block_pairing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fx = Fixture(root)
+            write_v2(fx.port)
+            data = json.loads((fx.port / "checkpoint-receipts.json").read_text())
+            data["errors"] = ["stage8-3: native canvas must be 320x240"]
+            (fx.port / "checkpoint-receipts.json").write_text(json.dumps(data))
+            with self.assertRaises(SystemExit):
+                tool.main(["--native-dir", str(fx.native), "--port-dir", str(fx.port), "--observer", str(fx.observer),
+                           "--out", str(root / "out"), "--latency", "2", "--latency-basis", "synthetic"])
+
+    def test_v2_receipt_schema(self):
+        try:
+            from jsonschema import Draft202012Validator
+        except ModuleNotFoundError:
+            self.fail("jsonschema is required (tools/port/requirements-test.txt)")
+        schema = json.loads((Path(__file__).resolve().parent / "schemas" / "checkpoint-receipt.v2.schema.json").read_text())
+        validator = Draft202012Validator(schema)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fx = Fixture(root)
+            receipt = write_v2(fx.port)["stage8-1"]
+        self.assertEqual(list(validator.iter_errors(receipt)), [])
+        for change in ({"native_canvas": dict(receipt["native_canvas"], width=640)},
+                       {"clocks": {"frame_count": 1.5, "game_mode": 21, "mode_stage": 8, "mode_step": 0, "substep": 1}},
+                       {"rng": {}}, {"observer": dict(receipt["observer"], path="res://other.gd")}):
+            with self.subTest(change=list(change)):
+                self.assertTrue(list(validator.iter_errors(dict(receipt, **change))))
 
 
 if __name__ == "__main__":

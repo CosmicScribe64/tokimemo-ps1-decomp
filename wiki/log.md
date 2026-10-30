@@ -2320,3 +2320,200 @@ Blockers to command-select:
 - Historical HUD/TABLES pins block the gameplay suites.
 
 A round-2 workflow runs these in parallel worktrees from `refs/snapshots/main-core-integrated-2026-10-30`. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39013-fresh-hud-context]].
+
+## [2026-10-30] build | Actual route reaches the first command-select screen
+
+Core round 2 (18 agents: five worktree tracks with review, then a merge and route run in main, then review). Results:
+- **Reload:** the mode 0x34 command reload is wired.
+- **Nondeterminism root cause:** the installed entry seeded the BIOS LCG from `Time.get_ticks_usec()`. It now seeds per source from `file_select_seed` (file_select.c:735). `run_new_game_club_determinism.gd` has 319 checks.
+- **Gameplay pins:** gameplay presenters are re-pinned to the reproducible HUD and tables identities, and the holiday room RGBA pin is corrected.
+- **Stage 15 line 0x16:** the gap traces to short GetlocL results in the emulated CD controller. It is documented as an open decision.
+- **Title/file-select path:** source-modelled, but not drawn or offered in the app (12a gate).
+
+Actual route `.asset-cache/playtest-exit-2026-10-30/r13` (bundle installed-runtime-v18) passes from physical entry through the full opening and reload to the first interactive command-select frame at frame 13,863. The frame-timing route test (pad 2) passes with 0 mismatches, handoff test 514, seams 56, core 6 suites. Review found the playtest observer exited 0 on app failure; fixed (PLAYTEST_EXPECT_STOP).
+
+The first scripted playtests stop at:
+- p01: command content capability unavailable for the selected command.
+- p02: the hover pulse needs the scaled sprite (func_80098680).
+
+Golden mismatches remain: girls[2] club (iris rand draws and boot seed history not run), scene_work, game_mode_timer +66, bg_lba_cache. Safety snapshot `refs/snapshots/main-command-select-2026-10-30`. See [[tickets/T-39002-restore-port-runtime]] and [[tickets/T-39013-fresh-hud-context]].
+
+## [2026-10-30] query | Switch release reference for phase 4
+
+At the user's request, researched how the 2025 Switch release (~Forever With You~ Emotional) modernizes the game. The results are in [[switch-remake-reference]], with every claim cited and its evidence type labelled.
+
+What the release does:
+- Centred 4:3 at nearest-neighbour 3x, with fixed wallpaper side bars in events.
+- Optional command-screen side panels (biorhythm, next 8 days).
+- 16:9 only with newly drawn backgrounds.
+- A high-resolution font in four windows, keeping the original font on command select.
+- Hold-to-fast-forward, 100 save slots with memos, system keyboard name entry and an in-game manual.
+- Japanese only.
+
+Recommendations to fold into phase 4:
+- Original-material side-bar fill.
+- A wide-HUD readout ticket.
+- The modern text box in four windows.
+- No invented wide art.
+- Tick-exact fast-forward.
+- A save manager and a controls page.
+
+A browser footage review is still running and will write a companion page. Fetched official screenshots sit in the session tool cache outside the repo.
+
+## [2026-10-30] query | Switch release footage review
+
+A browser-only review (no downloads) of 8 videos logged about 40 timestamped frames in [[switch-remake-footage]]. It confirms the written reference:
+- Original art stays 4:3 with nearest-neighbour scaling and a fixed green wallpaper in the side bars.
+- The command screen stays 4:3, with optional side panels (biorhythm, week schedule) over the continued seasonal checker.
+- Full 16:9 appears only for newly drawn art and rebuilt menus.
+- The message window keeps its frame, with an optional high-resolution font.
+- Settings live in the original notebook with one-line explanations.
+
+Recommendations are filed as [[tickets/T-39220-switch-informed-modern-options]] (Backlog). A decorative wallpaper needs a user decision.
+
+## [2026-10-30] decision | User approves decorative side-bar art; explore options
+
+The user approved an optional decorative wallpaper wing fill for widescreen ("Art sounds good. Test around and see what is visually nice"). Defaults stay as before: off by default, outside the Original preset, native 320x240 image unchanged. Root constraint: build it from original game assets, with no Konami branding copied from the Switch release. An exploration workflow renders candidate styles as 16:9 mockups around real port captures for visual comparison. See [[tickets/T-39220-switch-informed-modern-options]].
+
+## [2026-10-30] query | Wing art exploration results
+
+Three directions produced 12 variants, all from original assets: patterns from the checker and window, scene palette fields, and frames and motifs. All 70 mockups keep the centre an exact 4x upscale of the native frame, verified independently by the judge. Judge ranking (score out of 30; black is the 28 reference):
+1. v2-framed-checker, 28: the message-window wood-and-brass frame on a quarter-brightness seasonal checker.
+2. C-palette-field, 27: flat dimmed scene colours.
+3. v3-meadow-rail, 27: dim title lawn with a copper frame.
+
+Fallback: winter-large, a neutral charcoal checker. The current full-brightness checker scored 19 and competes with the centre; the judge recommends the shadow-checker instead. Framed styles draw their top and bottom bars in the letterbox, so they need window-space drawing, and frame pieces must be re-cut from the decoded window texture before shipping. Sheets are in `.asset-cache/wing-art-2026-10-30/` and were sent to the user. See [[tickets/T-39220-switch-informed-modern-options]].
+
+## [2026-10-30] decision | User asks to work toward finishing the port; gameplay families fanned out
+
+The user asked to keep working toward a finished port while in and out. Root fanned out the remaining gameplay into six worktree tracks from `refs/snapshots/main-command-select-2026-10-30`, each with a survey, implementation, emulator golden checks, review and a fix round:
+- dates/phone
+- school events
+- seasonal events
+- minigames
+- endings/saves
+- a long-route scripted playtest driver with emulator counterpart
+
+Patches go to `.asset-cache/gameplay-family-patches/`. They run alongside the phase 4 merge plus gameplay lane B, and wing-art round 2. Integration happens after lane B lands. See [[tickets/T-39006-production-route-state-parity]], [[tickets/T-39007-player-save-relaunch-recovery]] and [[tickets/T-39018-playtest-differential-harness]].
+
+## [2026-10-30] query | Wing art round 2
+
+Following user feedback (no doubled checker, nothing as plain as a green bar), round 2 built every wing from original art: no checker, no flat colour, pixel scale matched to the centre. Judge top 4:
+1. C-yozakura, 45/50: the opening's sakura avenue D_10_08 graded to night, with the game's own falling petals from O_01.
+2. B-shiki, 41: one painted backdrop per season, switched by game month. Summer fireworks and winter stars need fixes.
+3. C-sakura-drift, 40: each scene's own location with petals outdoors.
+4. v3-ghost, 41 but ranked 4th: a faded Shiori and tree; calm but opinionated.
+
+Rejected: cluttered album and notes variants, overly bright cameo and calendar variants. The animation feel still needs a real playtest. Sheets and animations are in `.asset-cache/wing-art-r2-2026-10-30/` and were sent to the user. See [[tickets/T-39220-switch-informed-modern-options]].
+
+## [2026-10-30] decision | Wing art: seasonal and dynamic, with options
+
+The user likes the round 2 backgrounds and wants them seasonal or dynamic, settable for certain scenes, with options. Root design:
+- `display.wing_art` with values off (default, Original preset), seasonal (follows the in-game month), scene (data-driven per-scene/location overrides falling back to seasonal) and fixed:<style>.
+- Packs are built from original data with authenticated identities as an optional installed role.
+- Presentation-only animation never touches game state.
+- Summer fireworks get dimmed and contained; winter uses original snow if present, otherwise no particles.
+
+Implementation runs in a worktree on top of the phase 4 wide-core code. See [[tickets/T-39220-switch-informed-modern-options]].
+
+## [2026-10-30] build | Seasonal and scene wing art implemented
+
+The wing-art workflow added:
+- Content producer `tools/port/wing_art_content.py`: deterministic integer maths, original data only, an optional `wing_art` role. Pack is `.asset-cache/wing-art-impl/pack-v2`.
+- Runtime provider with modes off, seasonal, scene and fixed, plus 13 styles: four seasons, spring day, and the school, park, town, seaside and legend-tree locations.
+- Per-scene-type overrides (command, story, other) and an override table per background.
+- A presentation clock, cross-fade, and reduce-motion/flash handling.
+- Settings with one-line notes; default off and off in the Original preset.
+- `wing_art_scene_feed.gd`: a read-only game-state feed for the boot wiring.
+
+Review found 5 issues, all fixed. The most serious were hard seams in the sky fill (now reflected, with a regression test) and Seasonal/Scene doing nothing in real play. No boot creates NativeDisplayHost yet, so the feed is ready but wiring waits for the phase 4 merge.
+
+Tests:
+- Exporter: 19 tests.
+- `run_wing_art_tests`: 3,148 checks against the real pack.
+- Host, composer and layout suites pass.
+- 717 previews with 0 centre mismatches; animation frames verified.
+
+Patches are `.asset-cache/wing-art-impl/wing-art.v2.patch` and `.delta.patch`. The preview sheet and animations were sent to the user. See [[tickets/T-39220-switch-informed-modern-options]].
+
+## [2026-10-30] decision | Parity mode for testing alongside modern features
+
+The user wants a parity ("true") mode so modern additions never break core gameplay. Opened [[tickets/T-39230-parity-mode]]. It covers a locked top-level Parity mode, a feature registry classifying every modern feature, parity-default test gates, and a modern-vs-parity invariance check. It builds on the Original preset and the existing fidelity matrix.
+
+## [2026-10-30] build | Gameplay families wave 1 reviewed; wave 2 started
+
+Six family tracks finished (24 agents, 3-6 review findings each, all fixed). Patches are in `.asset-cache/gameplay-family-patches/*.v2.patch`.
+
+| Family | Delivered |
+|---|---|
+| dates-phone | Source-exact phone-book cursor; three new emulator goldens with measured hand-over frames |
+| school-events | Birthday queue with G1/G2 golden replays |
+| seasonal-events | 165 calendar checks against CALROM |
+| minigames | GEKO/minigame dispatch resolution; G3 gate 490/0 |
+| endings-saves | Graduation rng gate; memory-card image 69 and service 38 checks against goldens |
+| route-driver | Long-route driver and emulator compare; reaches command select with 122/124 fields matching |
+
+None of these is reachable on the actual route yet, because it still stops at the first command choice; lane B fixes that. Wave 2 continues each family on its remaining list:
+- the phone-book pointer and DATE outings;
+- mode 0x56 and GEKO birthday, encounter and invitation scenes;
+- day notice, New Year/Christmas prep and SHOUGATU;
+- RPG_BAT, TACO and TT gameplay;
+- overlay delta flags, the memory-card data screen, Continue and ending scenes.
+
+## [2026-10-30] build | First checkpoint commit on a feature branch
+
+The user authorized commits ("feel free to commit as needed"). Root committed the verified snapshot `refs/snapshots/main-command-select-2026-10-30` as 7603bb7a9 on the new branch `port/opening-to-gameplay` (parent c1c2a7aa5 on main). That snapshot has the actual route to the first command-select, frame-exact opening, translation inventory and draft artwork. The working tree was attached to the branch with its uncommitted changes intact: the in-progress phase 4 merge and join. Before committing, root checked that no original data, extracts or captures were included. The only flagged PNG is a ledger-recorded draft with `original_images_included: false`. Nothing was pushed.
+
+## [2026-10-30] decision | Finish translated artwork, creating new lettering where needed
+
+The user asked to finish asset translation "or creation". Root reading, recorded as a revisable decision: where no usable original glyph or art exists, workers may create new lettering and art in the game's own style. Examples: panel7 capitals, a readable compact M for MISS, sign lettering for BS backgrounds, and movie name pills. All such pieces are marked `port-made` in their ledgers with provenance and stay drafts until human review. Defaults for open wording:
+- Dates in the US style "Apr 4".
+- Save status "Saving".
+- FILESEL buttons Copy, New, Erase and Load.
+
+A finishing workflow covers the 25 missing items and produces a human review sheet of every draft. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-30] decision | Test translated artwork in place with screenshots
+
+The user wants assets tested in place with screenshots for a visual check. Root started an in-place workflow with two methods:
+- **Port:** render each English asset through the real presenter or compositor with real surrounding data, Japanese and English side by side.
+- **Emulator:** a locally patched disc image with the English art written back in native formats and EDC/ECC regenerated, run in PCSX-Redux from save states.
+
+Contact sheets go through independent visual inspection. Patched discs and captures stay under the ignored `.asset-cache/art-in-place-2026-10-30`. The harness reruns on the finishing workflow's new drafts. See [[tickets/T-39004-english-asset-completion]].
+
+## [2026-10-30] decision | Dedicated workflow on the New Game to normal play blocker
+
+The user asked to confirm that the blocker from New Game to playing is being worked. Root found that no active task owned the next stop (mode 0x30 drawing after the first command confirm); the join step only merges and reruns. Root started a dedicated loop workflow in a worktree from `refs/snapshots/main-command-select-2026-10-30` plus lane B v2 and the first-confirm wiring diff. It works only on the main loop, in up to three rounds of actual-route runs. Each stop is fixed from source with a regression test and an emulator golden check. Review and fixes follow. See [[tickets/T-39002-restore-port-runtime]].
+
+## [2026-10-30] decision | Pause non-blocking workflows to free CPU
+
+The Docker VM (10 CPUs, 7.7 GB) was saturated: about 10 containers at 100% CPU and a load average around 17. Memory was fine at about 3 GB. Root paused the gameplay-families wave 2 (`wf_9a9f543e-6ef`) and art in-place (`wf_e95cca7f-896`) workflows and stopped their containers. Both can resume later with resumeFromRunId; completed agents are cached. Still running: the join (playtests and frame-timing check), the dedicated main-loop workflow, art finishing and parity mode. Wave 2 resumes once the main loop advances days. Art in-place reruns once art finishing lands.
+
+## [2026-10-30] decision | Faster-than-real-time route test mode
+
+Main-loop iteration is slow because each actual-route run replays about 13,900 frames at about 15 fps under Xvfb with llvmpipe, roughly 15 minutes before reaching new code. The user asked for faster-than-real-time testing, which frame-locked logic permits. Root started a fast-mode workflow:
+- headless, fixed 60 Hz step with an uncapped frame rate;
+- offline native audio rendering one block per logic frame;
+- input events injected at exact frames.
+
+It must prove equivalence with real-time runs: identical frame tables, game states, native PNG and audio hashes, plus a divergence test. Real-time X11 runs stay as final acceptance. See [[tickets/T-39018-playtest-differential-harness]].
+
+## [2026-10-30] build | Parity mode implemented and reviewed (worktree)
+
+[[tickets/T-39230-parity-mode]] delta `.asset-cache/parity-mode/parity.v2.delta.patch` (47 files) adds:
+- a locked parity/modern mode with launch flags and a badge;
+- a feature registry with pinned digests;
+- parity gates on frame timing, differential, trace, pacing and installed-route runners;
+- an invariance harness.
+
+Review found 6 findings:
+- In Parity, F5/F9 quick save/load and the title Continue (quick slot) are now refused.
+- The forced-session settings leak is fixed.
+- MODERN_INVARIANCE can no longer widen gates.
+- Registry digests are now enforced.
+- Latin typing is classified game-affecting.
+- The stale base was handled with documented merge steps rather than a rebase.
+
+Tests: 14 Godot runs, 52 plus 106 Python tests, and core pass.
+
+Root note for integration: the proposed "Hook 0" (fall back to `Time.get_ticks_usec()` for the new-game seed) contradicts the determinism fix already in main (seed from `file_select_seed`, file_select.c:735). It will NOT be applied; route invariance uses the source seed instead.

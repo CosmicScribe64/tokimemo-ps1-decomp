@@ -1,6 +1,6 @@
 ---
 type: verification
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 
 # Port testing and acceptance
@@ -18,6 +18,26 @@ The Japanese baseline is not yet accepted as a complete game. See [[port-readine
 | Packaged-game playthroughs | Fresh install, normal start, persistence, complete route and ending on that package/platform | Every route or every supported original release |
 
 Keep all five. Reuse `tools/port/run.sh`, `compare_trace.py`, and `verify_tile_diff.py` for their bounded purposes. A screenshot comparison needs the original capture provenance, exact app producer and matching gameplay checkpoint; two similar files alone do not establish game fidelity. Audio needs real output and native command/timing comparisons, not an `audio_verified` assertion or silent test driver.
+
+## Evidence tiers and modes
+
+Every reported result names its mode and its tier ([[phase4-design-2026-10-29]], Playtest). A result without both labels is not evidence for any claim.
+
+| Tier | What it is | Typical producer | Never claims |
+| --- | --- | --- | --- |
+| T0 | Synthetic, original-free checks: unit tests, invented fixtures, schema and lint passes | `tools/port/run_offline_suite.sh`, `.github/workflows/port-offline.yml`, model route suites | Anything about the original game or a playable port |
+| T1 | Headless port runs on the user's `.asset-cache` bundle | Godot `--script` routes in `tokimemo-port` | Equality with the original |
+| T2 | Paired emulator-vs-port differential at a source-proven checkpoint | `compare_trace.py`, `compare_capture_pair.py`, `frame_pacing_report.py` | Unvisited routes; real-hardware timing |
+| T3 | Real-input GUI routes under Xvfb (production `InputEvent`s) | `tokimemo-port-gui-test` routes | Desktop pacing or audio on the player's machine |
+| T4 | Human review and native desktop sessions | the user, `wiki/playtest-pacing-checklist.md`, the visual review queue | Agent review; an agent verdict is never T4 |
+
+| Mode | Settings | Held to |
+| --- | --- | --- |
+| F (fidelity) | Japanese, 4:3, native 320x240 canvas | Exact equality: state/RNG trace, native canvas RGBA (`compare_capture_pair.py`) |
+| E (English) | F plus English text/art packs | State trace identical to F; pixels may differ only inside text/art regions declared from source |
+| M (modern presentation) | F or E plus widescreen, filters, window sizes, frame-rate caps | Inner 320x240 canvas hash and trace identical to the same F/E cell; only pixels outside the canvas may change |
+
+Model route suites (for example `run_multi_route_playtest_suite.gd`, whose harness assigns capabilities and injects resource completions) stay T0/T1 unit evidence and are never reported as playthroughs. The `0 / 6,000` hotspot audit (`run_emulator_vs_godot_audit.py`) is historical bounded T2-style evidence from an MAE threshold gate; it is not the exact RGBA gate, and its frames still need re-binding to synchronized checkpoints under [[tickets/T-39008-synchronized-differential-captures]]. Host pacing numbers from Xvfb are relative-only T3 signals; desktop pacing and macOS native audio need a T4 session ([[playtest-pacing-checklist]]).
 
 ## Differential testing
 
@@ -82,7 +102,7 @@ docker run --rm -e PYTHONDONTWRITEBYTECODE=1 \
   python -m unittest tools.port.test_readiness tools.port.test_differential
 ```
 
-These check the framework, not the game's completeness. The separate real-failure integration check requires the ignored T-29023 capture and is explicitly invoked as `tools.port.test_readiness.ReadinessTests.actual_red_receipts_never_pass`, with `ACTUAL_RED_RECEIPTS` set to that run's container path. Absence of the capture is a failure of that integration invocation, not a skipped success.
+These check the framework, not the game's completeness. The wider T0 set (all original-free `tools/port` and `tools/emu` unittests, schema validation and the translation-asset lint) runs with `sh tools/port/run_offline_suite.sh` in `tokimemo-recovery`; see [[ci]]. The separate real-failure integration check requires the ignored T-29023 capture and is explicitly invoked as `tools.port.test_readiness.ReadinessTests.actual_red_receipts_never_pass`, with `ACTUAL_RED_RECEIPTS` set to that run's container path. Absence of the capture is a failure of that integration invocation, not a skipped success.
 
 Use `python -m tools.port.readiness --help` and `python -m tools.port.differential --help` inside Docker for the evidence commands. Readiness requires the externally approved policy hash and separate receipt/review directories. Its content root must be an isolated input bundle exhaustively listed in the policy, not the entire asset cache. The current policy remains provisional because execution/content/projection pins and raw-check mappings still require the source coverage audit. No acceptance command should promote it automatically.
 

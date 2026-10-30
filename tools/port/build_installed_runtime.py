@@ -38,6 +38,7 @@ ROLE_KINDS = {
     "original_first_arrival_bgm": "dir",
     "first_arrival_finish_bank": "dir",
     "first_arrival_command_reload": "dir",
+    "command_hover_texels": "dir",
 }
 
 
@@ -338,7 +339,7 @@ def build(input_path: Path, executable: Path, output: Path,
                              "date", "holiday", "holiday_scene", "opening", "prologue_text",
                              "first_arrival_media", "first_arrival_board",
                              "prologue_hud", "opening_audio", "name_entry_media", "opening_shiori",
-                             "finish_bank", "command_reload")}
+                             "finish_bank", "command_reload", "hover_texels")}
     # HUD's immutable-directory contract requires an alphanumeric first byte.
     work_dirs["hud"] = cache / ("runtime-" + token + "-hud")
     if any(p.exists() or p.is_symlink() for p in work_dirs.values()):
@@ -552,6 +553,20 @@ def build(input_path: Path, executable: Path, output: Path,
             else:
                 _discard_partial_role(stage, "packs/first_arrival_command_reload")
                 gaps["first_arrival_command_reload"] = reason or "first_arrival_command_reload: command reload sector reads missing"
+
+            # Scaled hover-pulse texels: each icon-sequence part as
+            # (w + 1) x (h + 1) MAINROM texels (func_80098680 path).
+            texel_work = work_dirs["hover_texels"]
+            ok, reason = _run([py, "tools/port/hud_hover_texels.py",
+                               "--executable", str(executable),
+                               "--mainrom", str(original_root / "files/CDROM/FUKUTEST/MAINROM.NBN"),
+                               "--output", str(texel_work)], "command_hover_texels")
+            if ok and (texel_work / "hover_texels.json").is_file():
+                _copy_pack(texel_work, stage / "packs" / "command_hover_texels")
+                roles["command_hover_texels"] = "packs/command_hover_texels"
+            else:
+                _discard_partial_role(stage, "packs/command_hover_texels")
+                gaps["command_hover_texels"] = reason or "command_hover_texels: hover texel export failed"
 
         coverage = _coverage(roles, gaps)
         manifest = _manifest(stage, executable, track, roles, coverage)

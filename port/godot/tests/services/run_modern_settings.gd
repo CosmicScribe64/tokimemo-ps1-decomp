@@ -82,14 +82,16 @@ func run() -> void:
 	check(access.visible_glyphs(4, 10) == 4); check(not access.may_skip("line"))
 	access.mark_read("line"); check(access.may_skip("line"))
 	var accessible: Dictionary = Preferences.defaults().accessibility; accessible.auto_delay = 1.0
+	access.configure(accessible); check(not access.auto_advance("line", true, true, 5)); check(not access.auto_advance("line", true, true, 5))
+	accessible.auto_advance = true
 	access.configure(accessible); check(not access.auto_advance("line", true, false, 5))
 	check(not access.auto_advance("line", true, true, 0.5)); check(access.auto_advance("line", true, true, 0.5))
 	runtime.toggle_menu(); await process_frame; check(runtime.menu.visible); check(paused)
-	runtime.menu._select_page(2)
+	runtime.menu._select_page(runtime.menu.page_titles.find("Controls"))
 	runtime.menu.focus_items["binding:left"].grab_focus()
 	runtime.menu.draft.width = 1184; runtime.menu.draft.height = 888
 	runtime.menu.rebuild(); await process_frame
-	check(runtime.menu.tabs.current_tab == 2)
+	check(runtime.menu.tabs.current_tab == runtime.menu.page_titles.find("Controls"))
 	check(root.gui_get_focus_owner().get_meta("settings_focus_key") == "binding:left")
 	var saved_display: Dictionary = runtime.preferences.settings.display.duplicate(true)
 	runtime.menu.draft.width = 1280
@@ -98,23 +100,23 @@ func run() -> void:
 	runtime.menu.focus_items["Keep display"].pressed.emit(); await process_frame
 	check(runtime.preferences.pending.is_empty() and runtime.applied_display.width == 1280)
 	check(root.gui_get_focus_owner() != null and root.gui_get_focus_owner().is_visible_in_tree())
-	check(runtime.menu.tabs.current_tab == 2)
+	check(runtime.menu.tabs.current_tab == runtime.menu.page_titles.find("Controls"))
 	check(runtime.preferences.begin_display(saved_display,Time.get_ticks_msec()/1000.0))
 	check(runtime.preferences.confirm_display())
 	runtime.menu.draft = saved_display; runtime.menu.rebuild(); await process_frame
-	var resolution: OptionButton = runtime.menu.focus_items["Resolution"]
+	var resolution: OptionButton = runtime.menu.focus_items["Window size"]
 	runtime.menu.draft.width = 1184; runtime.menu.draft.height = 888
 	runtime.menu.focus_items["binding:left"].grab_focus()
 	runtime.menu.rebuild(); await process_frame
-	resolution = runtime.menu.focus_items["Resolution"]
-	check(resolution.get_item_text(resolution.selected) == "1184×888")
+	resolution = runtime.menu.focus_items["Window size"]
+	check(resolution.get_item_text(resolution.selected) == "1184×888 (remembered)")
 	check(runtime.preferences.begin_display(runtime.menu.draft,Time.get_ticks_msec()/1000.0))
 	runtime.menu._process(0)
 	runtime.preferences.tick(runtime.preferences.pending.deadline+1,true)
 	runtime.menu._process(0); await process_frame
-	resolution = runtime.menu.focus_items["Resolution"]
-	check(resolution.get_item_text(resolution.selected) == "%d×%d" % [runtime.applied_display.width,runtime.applied_display.height])
-	check(runtime.menu.tabs.current_tab == 2)
+	resolution = runtime.menu.focus_items["Window size"]
+	check(resolution.get_item_text(resolution.selected).begins_with("%d×%d" % [runtime.applied_display.width,runtime.applied_display.height]))
+	check(runtime.menu.tabs.current_tab == runtime.menu.page_titles.find("Controls"))
 	check(root.gui_get_focus_owner().get_meta("settings_focus_key") == "binding:left")
 	for toast: Node in get_nodes_in_group("settings_notices"): check(not toast.visible)
 	runtime.toggle_menu(); check(not runtime.menu.visible); check(not paused)

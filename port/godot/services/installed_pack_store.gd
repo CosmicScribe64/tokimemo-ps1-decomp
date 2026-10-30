@@ -127,6 +127,18 @@ func check_installed(required_capabilities: Array = []) -> Dictionary:
 	validated["message"] = "Installed content is valid." if validated["launch_ready"] else _missing_message(validated["missing_capabilities"])
 	return validated
 
+## The installed pack root named by the current receipt, without validating
+## the pack (check_installed does that). "" when nothing is installed. Used to
+## find optional members such as language/en.
+func installed_pack_root() -> String:
+	var receipt_path := storage_root.path_join("installed-content.json")
+	if not _safe_absolute(storage_root) or not FileAccess.file_exists(receipt_path):
+		return ""
+	var receipt := _read_receipt(receipt_path)
+	if not str(receipt.get("error", "")).is_empty():
+		return ""
+	return storage_root.path_join("packs").path_join(str(receipt["receipt"]["pack_id"]))
+
 func create_stage_path(operation_id: String) -> String:
 	if not _safe_id(operation_id) or not _ensure_root():
 		error = "staging operation id or per-user storage root is invalid"

@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-25
+updated: 2026-10-30
 ---
 
 # T-30005 widescreen and modern settings feasibility
@@ -24,6 +24,16 @@ The read-only Docker audit is `audit.py` and `geometry.json` under `.claude/orch
 Pixel aspect needs a per-mode contract. The original also selects 256×240 and 512×240 (`model_3d.c:151/183`, staff roll/shooter callers); these framebuffer ratios must not automatically become 1:1-pixel window ratios. Raw 512×240 is not proof of authored widescreen. Analog display timing/overscan and physical CRT pixel shape were not measured here. Retain the accepted normal digital view, and resolve exceptional modes from source display registers/native captures before claiming CRT-correct aspect. Cropping overscan by convention is unsupported.
 
 The current port is an interim composition (`project.godot:10` uses 640×480 with canvas_items; `playable_boot.gd:114` doubles a 320×240 NativeCanvas, whose images use nearest filtering). This outer layer is not evidence of final widescreen, UI scale or physical-pixel integer scaling.
+
+## Checker-wing finding and deferred items (2026-10-30)
+
+Added after the phase4 design review ([[phase4-design-2026-10-29]]); not part of the 2026-10-25 research audit.
+
+- Class A source evidence. `port/godot/presentation/hud_compositor.gd` `render()` fills the whole 320x240 frame with the 32x32 seasonal checker tile (`_draw_checkerboard`, line 199; uv, season and fade set at lines 34-39) and then blits the 320x88 room at `(0,72)` (lines 202-205). The strip therefore occupies `y = 72..159`, not `y = 24..111` as [[phase4]] said before its correction. Because the checker is a whole-frame periodic fill, a wide frame can continue it into native `x < 0` and `x >= 320` at the same uv, season and fade without inventing art. This is the only source-derived wing fill proven so far; it is opt-in (`display.wing_fill=source`) and applies to Class A only (modes 0x34, 0x40, 0x42). The room strip, SD actors (walk targets `x = -16`, `x = 340`) and HUD stay clipped to the native 320 columns.
+- Default wing fill is black for every class. Class B (VN/BUSTUP) and Class C (title, calendar, CG, ending, movies, subgames) stay pillarboxed.
+- Implementation (wide-core wave, pending integration and review): `hud_compositor.checker_tile()` exposes the tile read-only; `checker_wing_provider.gd` fills the wings; `run_checker_wing_tests.gd` checks the seams in all 4 seasons at fades 239 and 255 and that the native checker is byte-identical to the pre-change compositor. If the compositor has no tile, the provider returns an error, so the host records it and shows black wings instead of claiming checker wings beside the compositor's teal fallback fill.
+- Modern text box (wide-core v2, pending review): `modern_dialogue_overlay.gd` reads `text_translation_store.replacement_any()` and `text_layer_store.lookup_record_text()`. Both keep approved lines the native glyph set cannot draw, because the box uses a window font; the pack approval and the container hash still apply. Sizing: the text starts at the band size times `accessibility.font_scale`, the box grows upward to the frame top first, and only then does the font shrink, down to a floor that also scales. Only a line that overflows the whole frame at the floor goes below it (`last_fit.below_floor`). In the approved corpus this happens for one 896-character record at font_scale 1.5.
+- Deferred, each needing a user decision: authored-margin reveal for the 640x160 prologue board and the four 384x160 BS images (only after a draw-crop trace proves those columns are displayed); Tier 2 wide layout that moves or widens native HUD and dialogue primitives; ambient or blurred wings; wide-HUD readouts in the wings.
 
 ## Recommended scene policies
 

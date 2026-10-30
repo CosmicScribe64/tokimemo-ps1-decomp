@@ -2,6 +2,7 @@ extends RefCounted
 ## T-29025: render committed numeric text work using external source glyphs.
 ## Timing belongs to PrologueTextWork. Rendering never advances simulation.
 const Glyphs = preload("res://presentation/native_glyphs.gd")
+const TextWork = preload("res://rules/prologue_text_work.gd")
 const TEXT_BOUNDS := Rect2i(27,166,266,52)
 const ORIGIN := Vector2i(160,120)
 const ADVANCE := 14
@@ -200,7 +201,9 @@ func translation_layout(translated: Dictionary, native_speaker: PackedByteArray)
 	var original_speaker := str(translated.get("speaker", "")).is_empty()
 	var speaker: PackedByteArray = native_speaker if original_speaker else _latin_codes(translated.speaker)
 	var rows: Array = [[]]
-	var cursor := 28 if original_speaker else TRANSLATED_LEFT
+	# The original speaker keeps its native position (gnsx x by length), so it
+	# keeps the original inset from the window's left border.
+	var cursor := ORIGIN.x + TextWork.speaker_x_for(speaker.size()) if original_speaker else TRANSLATED_LEFT
 	for offset: int in range(0,speaker.size(),2):
 		var pair := speaker.slice(offset,offset+2)
 		var metric := Vector2i(0,14) if original_speaker else _latin_metrics(pair)

@@ -124,8 +124,7 @@ func render(state: State, checker: Callable, front: Callable, uploads_ready: Cal
 		for y: int in range(164, 220):
 			for x: int in range(27, 293):
 				image.set_pixel(x, y, before_hud.get_pixel(x, y).lerp(image.get_pixel(x, y), backdrop))
-	var msg_visible: bool = bool(view_state.opening.get("prologue_hud_live",{}).get("message_visible",true)) and not bool(view_state.opening.get("prologue_text_cleared",false))
-	if msg_visible and view_state.opening.get("prologue_text_work") is Dictionary:
+	if message_window_holds_text(view_state.opening):
 		var work: Dictionary = view_state.opening.prologue_text_work.duplicate(true)
 		var line_id: Variant = work.get("line_id")
 		var valid_line1: bool = line_id == 1 and (view_state.mode_stage == 1 or (view_state.mode_stage == 2 and view_state.substep == 0 and view_state.opening.get("names_media",{}).get("active_draw") == "board_scroll_transition"))
@@ -184,6 +183,18 @@ func render(state: State, checker: Callable, front: Callable, uploads_ready: Cal
 				var current := image.get_pixel(x, y)
 				image.set_pixel(x, y, Color(clampf(current.r, previous.r - 0.12, previous.r + 0.12), clampf(current.g, previous.g - 0.12, previous.g + 0.12), clampf(current.b, previous.b - 0.12, previous.b + 0.12), current.a))
 	return {"error":"","image":image}
+
+## True when the native message window draws prologue text this frame: the
+## HUD shows the window, k_sub_reset has not cleared it, and a line is set.
+static func message_window_holds_text(opening: Dictionary) -> bool:
+	var msg_visible: bool = bool(opening.get("prologue_hud_live",{}).get("message_visible",true)) and not bool(opening.get("prologue_text_cleared",false))
+	return msg_visible and opening.get("prologue_text_work") is Dictionary
+
+## The prologue line the native window holds, or -1 when it holds none.
+static func message_line(opening: Dictionary) -> int:
+	if not message_window_holds_text(opening): return -1
+	var line_id: Variant = opening.prologue_text_work.get("line_id")
+	return int(line_id) if line_id is int and line_id >= 0 else -1
 
 static func _draw(callback: Callable, target: Image, state: State, snapshot: Dictionary) -> String:
 	var outcome: Variant = callback.call(target,state)

@@ -9,6 +9,7 @@ extends RefCounted
 
 const Glyphs = preload("res://presentation/native_glyphs.gd")
 const Overlays = preload("res://overlays/subgame_overlays.gd")
+const TextBinding = preload("res://presentation/presenter_text_binding.gd")
 
 # PS1 Bayer 4x4 dither matrix
 const DITHER := [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
@@ -120,6 +121,8 @@ var _tt_vram: PackedInt32Array = PackedInt32Array()
 var _tt_vram_ready: bool = false
 var recorded_glyphs: Array[Dictionary] = []
 var bounding_box_violations: Array[String] = []
+## Phase 4 WP-I: empty until bind_english; original bytes are drawn.
+var english_text := TextBinding.new()
 
 const TACO_EXN_BASE := 0x80132000
 const TACO_MTX_BASE := 0x801E0000
@@ -2361,7 +2364,31 @@ func _make_sprite_or_rect(node_name: String, img: Image, pos: Vector2, sz: Vecto
 # Drawing Helpers & Glyph Bounding-Box Verification
 # ==============================================================================
 
+## Phase 4 WP-I: bind English text rows (presenter_text_binding.gd). Subgame
+## sprites (BATTLE VS_*, TAIIKU, the 16x8 miss variants) are drawn from VRAM
+## or loose PNGs with no container/frame/png identity, so an image store is
+## not applied here and the rows stay original; the result says so.
+func bind_english(layer: RefCounted, bindings: Array, image_store: RefCounted = null) -> Dictionary:
+	var text: int = english_text.bind(layer, _font, bindings, 13)
+	var fallbacks: Array[Dictionary] = english_text.fallback_log()
+	if image_store != null:
+		fallbacks.append({"key": "images", "reason": "subgame sprites have no identity-keyed draw site"})
+	return {"text": text, "images": 0, "fallbacks": fallbacks}
+
+func clear_english() -> void:
+	english_text.clear()
+
 func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i,
+		palette_row: int, region: String, bounds: Rect2i) -> void:
+	var bound: Dictionary = english_text.translate(hex_code)
+	if bound.is_empty():
+		_draw_text_hex_native(target, hex_code, pos, palette_row, region, bounds)
+		return
+	# One native glyph draw per translated unit at its trimmed offset.
+	for index: int in bound.glyph_x.size():
+		_draw_text_hex_native(target, bound.hex.substr(index * 4, 4), pos + Vector2i(bound.glyph_x[index], 0), palette_row, region, bounds)
+
+func _draw_text_hex_native(target: Image, hex_code: String, pos: Vector2i,
 		palette_row: int, region: String, bounds: Rect2i) -> void:
 	var codes: PackedByteArray = hex_code.hex_decode()
 	var x_offset: int = 0

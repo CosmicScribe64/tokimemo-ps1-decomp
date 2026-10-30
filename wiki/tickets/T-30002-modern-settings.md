@@ -4,7 +4,7 @@ title: Provide comprehensive modern settings
 status: In Progress
 assignee: modern_settings
 created: 2026-10-25
-updated: 2026-10-29
+updated: 2026-10-30
 links: ["[[phase4]]", "[[phase3]]", "[[widescreen-settings]]", "[[tickets/T-30000-plan-phase4-modernization]]", "[[tickets/T-30005-widescreen-settings-feasibility]]"]
 ---
 
@@ -84,3 +84,5 @@ Bounded custom voice timing gap tested in `run_voice_pack_playback.gd`: authenti
 Independent reviewer reran menu/guard and settings suites successfully, then requested a held-confirm timing check. New test holds controller A for100ms: menu remains visible/paused and no request exists because Godot Button activates on release. Releasing A closes the overlay; automatic host physics then reaches the checkpoint guard, without a spurious held-input rejection. Synthetic-host test passes. This covers admission/service timing without claiming a successful real-game save.
 
 Entry remapping regression also passes after unplug handling (directional cell selection, controller confirm/cancel, default and remapped Start, mouse remap, automatic-stage guard). No `new_game_entry_boot.gd` edits in this slice; root's new differential observer ownership is preserved.
+
+- 2026-10-30 (Lane A root hooks, [[tickets/T-39060-phase4-wave1-root-hooks]]; agent work, not human approval): WP5 wiring landed in `port/godot/services/settings_runtime.gd`. The runtime owns one LanguageBundleService (`language_bundle`, polled in `_process`), `select_language(choice)` (writes `language.bundle` through `set_values`), `language_available` (English only when `<installed>/language/en/english_bundle.json` exists), `language_coverage()`, `note_installed_root(root)` (called by `new_game_entry_boot`), an InputGlyphService (`glyphs`, `note_input` in `_input`) and `display_frame` (`services/display_frame_info.gd`: widescreen_available, drawable_info). The bundle is requested again whenever `language.bundle`, `language.allow_draft_images` or the installed root changes; applied, fallback and warning reach `show_notice`; `migrated` and `reset_keys` show a notice; the custom pickers write `language.bundle = custom`; the per-pack keys are applied only while `language.bundle` is `custom`. Scene audit: the content_scale_aspect/stretch writes are pinned to KEEP/FRACTIONAL (the native boots frame through NativeDisplayHost). WP9 stays open: no live caller of the textbox or VN presenters, so no frame driver was added. Not done: native_voice_mode(), the minimum reading time ruling and the 'Extra reading time' note.

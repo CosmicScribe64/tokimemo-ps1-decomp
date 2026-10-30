@@ -20,6 +20,9 @@ var _allow_voiced: bool = false
 var _voice_service: Variant = null
 var _voice_cancelled: bool = false
 var _substitution_context: Dictionary = {}
+## Trusted SHA-256 of the loaded SERIFU source; text-layer lookups of the
+## row ids (talk:<path>:<section>:gNNNN:lNNNN) are bound to it.
+var _source_sha256: String = ""
 
 func set_voice_service(service: Variant) -> void:
 	_voice_service = service
@@ -42,6 +45,7 @@ func load_content(content: Dictionary, expected_route: Dictionary, options: Dict
 	if not str(prepared.get("error", "")).is_empty():
 		return str(prepared["error"])
 	_groups = prepared["groups"]
+	_source_sha256 = str(content["source"]["sha256"])
 	_group_position = 0
 	_line_position = 0
 	_pending_choice.clear()
@@ -218,7 +222,8 @@ func present_choice(frame_count: int, choice_context: int = 0) -> Dictionary:
 		presented.append({"option_id": "%s:option:%d" % [row["id"], source_option],
 			"source_index": source_option, "display_position": display_position,
 			"tokens": option_tokens})
-	return {"error": "", "record_id": row["id"], "command": command,
+	return {"error": "", "record_id": row["id"], "source_sha256": _source_sha256,
+		"name_codes": name_codes_for(_substitution_context), "command": command,
 		"options": presented, "order": order.duplicate(), "text_complete_required": true,
 		"voice_required": false}
 
@@ -308,10 +313,12 @@ func present_line(context: Dictionary = {}) -> Dictionary:
 					"variant": variant_index,
 				}
 
-	return {
+	var view := {
 		"error": "",
 		"kind": "line",
 		"record_id": row["id"],
+		"source_sha256": _source_sha256,
+		"name_codes": name_codes_for(effective_context),
 		"tokens": line_tokens,
 		"speaker_id": speaker_id,
 		"wrapper": wrapper,
@@ -320,6 +327,29 @@ func present_line(context: Dictionary = {}) -> Dictionary:
 		"completion": completion,
 		"command": command,
 	}
+	# talk_speak_part case 0x2/0x5 (src/main/scene_library.c) draws only the
+	# 'q'-separated reply variant selected by its `choice` argument, which is
+	# the talk_run caller's value: usually the global talk_choice
+	# (normal_date_speak / normal_date_speak_1line). That global is also
+	# written outside talk menus (e.g. talk_choice = girl_index in the
+	# girl-select menu), so this player's own last choose() does not prove
+	# it. Only a caller that passes its live talk_choice in `context` gets a
+	# variant_index; without one, an English reply stays Japanese.
+	if command in [2, 5]:
+		var talk_choice: Variant = context.get("talk_choice")
+		if talk_choice is int and talk_choice >= 0:
+			view["variant_index"] = talk_choice
+	return view
+
+## Full-width name code units by NativeTextTokens.NAME_CODES letter, for the
+## translated-text flow. Names the context cannot resolve are left out.
+static func name_codes_for(context: Dictionary) -> Dictionary:
+	var result := {}
+	for code: String in Tokens.NAME_CODES:
+		var lookup: Dictionary = Tokens._resolve_substitution_hex(context, str(Tokens.NAME_CODES[code]), code)
+		if str(lookup.get("error", "")).is_empty():
+			result[code] = str(lookup["hex"]).hex_decode()
+	return result
 
 func confirm_line(text_complete: bool, confirm_pressed: bool, voice_complete: bool = true) -> Dictionary:
 	var view: Dictionary = present_line()

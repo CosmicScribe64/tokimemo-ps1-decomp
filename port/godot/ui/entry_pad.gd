@@ -2,6 +2,8 @@ extends "res://ui/native_pad.gd"
 ## Retain this exact device owner across NAME_ENT -> prologue. Enter is START
 ## in the existing entry UI; Space/face-A remain Circle, Escape/face-B Cross.
 var _latest_sample: RefCounted
+## Optional filter: events it returns true for belong to text entry, not the pad.
+var key_capture := Callable()
 func _gamepad_connection_changed(device: int, connected: bool) -> void:
 	super._gamepad_connection_changed(device,connected)
 	if not connected: _devices.erase("entry:joy-start:%d" % device)
@@ -18,6 +20,7 @@ func action_mask(event: InputEvent) -> int:
 		return int(BUTTON_MASKS.get(event.button_index, 0)) if event.pressed else 0
 	return 0
 func _input(event: InputEvent) -> void:
+	if key_capture.is_valid() and key_capture.call(event): return
 	var settings := get_node_or_null("/root/ModernSettings") if is_inside_tree() else null
 	if settings != null and (settings.preferences.settings.controls.bindings.has("confirm") or settings.preferences.settings.controls.bindings.has("start")):
 		super._input(event)

@@ -28,6 +28,9 @@ const ReloadRenderer = preload("res://presentation/command_reload_renderer.gd")
 const SchoolDay = preload("res://scenes/school_day_controller.gd")
 const LiveHud = preload("res://presentation/live_hud_adapter.gd")
 const OpeningHandoff = preload("res://flow/opening_command_handoff.gd")
+const DisplayHost = preload("res://presentation/native_display_host.gd")
+const ProjectionWings = preload("res://presentation/projection_checker_wing_provider.gd")
+const PrologueText = preload("res://services/prologue_text_store.gd")
 const INITIALIZATION_PROFILE := "desktop-fresh-new-game-cold-prefix.v1"
 const HUD_PREFIX_SOURCE_SHA := "440bdf2172fb3dae871aa30b96072f81110825ac8d0f875ebce64d288b48f889"
 var installed_launch_profile: Dictionary = {}
@@ -51,7 +54,12 @@ var failure_audio_diagnostics: Dictionary = {}
 var last_rendered_image: Image
 var entry_frame_provenance: Dictionary = {}
 var _entry: EntryApp
-var _display: TextureRect
+## T-30001 WP6: frames last_rendered_image in the window (original or wide).
+var _host: DisplayHost
+## Prologue line the modern text box shows ("" when cleared).
+var _overlay_line := ""
+## [text_pack, translated_text] the modern text box last resolved against.
+var _overlay_stores: Array = [null, null]
 var _message: Label
 var _voice_player: AudioStreamPlayer
 var _bgm_player: AudioStreamPlayer
@@ -75,15 +83,12 @@ var _school_day: SchoolDay
 func _ready() -> void:
 	get_window().content_scale_size = Vector2i.ZERO
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_display = TextureRect.new()
-	_display.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_display.stretch_mode = TextureRect.STRETCH_SCALE
-	_display.texture_filter = CanvasItem.TEXTURE_FILTER_PARENT_NODE
-	add_child(_display)
-	resized.connect(_layout_display)
+	_host = DisplayHost.new()
+	_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_host)
 	var modern_settings := get_node_or_null("/root/ModernSettings")
-	if modern_settings != null: modern_settings.preferences_changed.connect(_layout_display)
-	_layout_display()
+	if modern_settings != null and modern_settings.has_signal("preferences_changed"):
+		modern_settings.preferences_changed.connect(_on_text_preferences_changed)
 	_message = Label.new()
 	_message.position = Vector2(24,24)
 	_message.size = Vector2(900,120)
@@ -98,6 +103,7 @@ func _ready() -> void:
 		_fail("installed_resources",error)
 		return
 	installed_launch_profile = resources.launch_profile.duplicate(true)
+	_host.set_wing_provider(ProjectionWings.new(resources.hud))
 	var audio_cold := AudioContext.cold_context(initialization_profile,resources.audio.native_audio_context)
 	if not audio_cold.error.is_empty():
 		_fail("audio_context",audio_cold.error)
@@ -193,16 +199,6 @@ func _entry_owned() -> void:
 	if not error.is_empty(): _fail("entry_release",error)
 	else: _active = true
 
-func _layout_display(_settings: Dictionary = {}) -> void:
-	if not is_instance_valid(_display): return
-	var area := get_viewport_rect().size
-	var factor := minf(area.x/320.0,area.y/240.0)
-	var settings := get_node_or_null("/root/ModernSettings")
-	if settings != null and settings.preferences.effective_settings().display.filter == "integer" and factor >= 1.0:
-		factor = floorf(factor)
-	_display.size = Vector2(320,240)*factor
-	_display.position = (area-_display.size)*0.5
-
 func _services() -> Dictionary:
 	var result := media.callbacks()
 	for key: String in Live.Arrival.REQUIRED+Live.Reload.REQUIRED:
@@ -222,7 +218,9 @@ func _physics_process(delta: float) -> void:
 	var settings := get_node_or_null("/root/ModernSettings")
 	if settings != null:
 		audio_bridge.voice.custom_voice_pack = settings.voice_pack
-		presenter.text_translations = settings.text_pack
+		# The modern text box carries the English line in window space, so the
+		# native Image keeps the original glyphs while it is on.
+		presenter.text_translations = null if _modern_text_box(settings) else settings.text_pack
 		var skipping := false
 		if Input.is_action_just_pressed("port_skip"): skipping = settings.request_prologue_skip(consumer.input_owner)
 		var hold: bool = settings.pacing.step(consumer.opening.state.opening, delta)
@@ -233,7 +231,7 @@ func _physics_process(delta: float) -> void:
 			if not refreshed.error.is_empty(): _fail("accessible_presentation", refreshed.error)
 			else:
 				last_rendered_image = refreshed.image
-				if _display.texture is ImageTexture: (_display.texture as ImageTexture).update(last_rendered_image)
+				_present(consumer.opening.state, true)
 			return
 	var pre_pump := bgm.pump(consumer.opening.state)
 	if not pre_pump.is_empty():
@@ -409,6 +407,7 @@ func _publish_frame(result: Session.FrameResult, tick: int) -> String:
 	if not result.committed or consumer.opening.session.clock.logic_iterations-1 != tick: return "frame publication lost its committed Session owner"
 	var state: State = consumer.opening.state
 	var image: Image
+	var prologue_frame := false
 	# ovl_load_enter changes game_mode before its own loader draw. The first
 	# prologue HUD pass occurs on the following actual mode dispatch.
 	var loader_enter := state.game_mode == 0x15 and state.mode_stage == 0 and state.mode_step == 0 and state.substep == 0 and not state.opening.has("prologue_hud_live")
@@ -434,18 +433,78 @@ func _publish_frame(result: Session.FrameResult, tick: int) -> String:
 		var composed := presenter.render(state,_draw_checker,_draw_front,upload.batch_ready,last_rendered_image)
 		if not composed.error.is_empty(): return composed.error
 		image = composed.image
+		prologue_frame = true
 	else:
 		image = last_rendered_image.duplicate()
 		var error := _draw_checker(image,state)
 		if error.is_empty(): error = _draw_front(image,state)
 		if not error.is_empty(): return error
 	last_rendered_image = image
-	if _display.texture is ImageTexture:
-		(_display.texture as ImageTexture).update(image)
-	else:
-		_display.texture = ImageTexture.create_from_image(image)
+	_present(state, prologue_frame)
 	frame_published.emit(tick)
 	return ""
+
+## T-30001 WP6: hands the committed native Image to the display host. The
+## scene id is the game mode (Class A modes get source wings when the player
+## chose them); the projection is what the checker wings repeat.
+## The 0x34/0xFF/0/0 switch frame still shows the opening's last picture
+## (prologue_finish_run), so it is framed as the opening (0x15, black wings);
+## only reload frames show the command checker the wings continue.
+## prologue_frame: the first-arrival presenter drew this Image, so its message
+## window is the prologue's (the modern text box may follow it).
+func _present(state: State, prologue_frame: bool) -> void:
+	var wing_context := {}
+	var scene: int = state.game_mode
+	if state.game_mode == 0x34 and ReloadRenderer.reload_frame(state):
+		wing_context = {"projection": _hud_projection(state)}
+	elif state.game_mode == 0x34:
+		scene = 0x15
+	_host.present(last_rendered_image, scene, wing_context)
+	_update_text_box(state, prologue_frame)
+
+static func _modern_text_box(settings: Node) -> bool:
+	return settings != null and str(settings.preferences.effective_settings().accessibility.get("text_box", "native")) == "modern"
+
+## Root hook 2: the modern text box follows the line the native message
+## window holds. It is window-space only, shows nothing when no approved
+## English line exists, and clears whenever the opening hides or clears the
+## native window (the same test the presenter draws the text with). Frames the
+## first-arrival presenter did not draw (entry, command reload and command
+## select) have no prologue window: the opening's last line stays in its state
+## there, but the window shows the command HUD's own message, so the box clears.
+func _update_text_box(state: State, prologue_frame: bool) -> void:
+	var settings := get_node_or_null("/root/ModernSettings")
+	var key := ""
+	var line := -1
+	if prologue_frame and _modern_text_box(settings) and state.opening.has("arrival_media"):
+		line = Presenter.message_line(state.opening)
+	if line >= 0:
+		key = "%s:%d" % [PrologueText.PAYLOAD_SHA, line]
+	if key.is_empty():
+		if not _overlay_line.is_empty():
+			_overlay_line = ""
+			_host.clear_dialogue_line()
+		return
+	var stores_changed: bool = _overlay_stores[0] != settings.text_pack or _overlay_stores[1] != settings.translated_text
+	if key == _overlay_line and not stores_changed:
+		return
+	_overlay_line = key
+	_bind_text_stores(settings)
+	_host.show_dialogue_line({"payload_sha": PrologueText.PAYLOAD_SHA, "line": line})
+
+func _bind_text_stores(settings: Node) -> void:
+	_overlay_stores = [settings.text_pack, settings.translated_text]
+	_host.overlay.set_stores(settings.text_pack, settings.translated_text)
+
+## A language switch or an asynchronously applied bundle replaces the stores
+## mid-line; the box resolves the same line again instead of waiting for the
+## next one. Paused frames publish nothing, so this cannot wait for _present.
+func _on_text_preferences_changed(_value: Variant = null) -> void:
+	if _overlay_line.is_empty() or _host == null: return
+	var settings := get_node_or_null("/root/ModernSettings")
+	if settings == null: return
+	_bind_text_stores(settings)
+	_host.overlay.refresh_line()
 
 func _draw_checker(target: Image, state: State) -> String:
 	var err := resources.hud.draw_checker(target,_hud_projection(state))
@@ -485,6 +544,8 @@ func _prepare_reload() -> String:
 	if not rules is Dictionary or rules.get("schema") != "tokimemo.port-rule-tables.v1" or not rules.get("tables") is Dictionary: return "installed rule tables are unreadable"
 	_school_day = SchoolDay.new(rules.tables)
 	if not _school_day.error.is_empty(): return "school-day controller: " + _school_day.error
+	# Ordinary weekly commands offered after command select (lane B capability).
+	if resources.school_day_commands != null: resources.school_day_commands.apply(_school_day)
 	# process_image, then the main boot: game_state_init(1) (game_init.c:142)
 	# and boot_hud_init's hud_icon_bar_init (boot_assets.c:136).
 	var session := HudSession.new()

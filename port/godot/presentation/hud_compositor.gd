@@ -24,6 +24,9 @@ var error := ""
 var descriptor: Dictionary = {}
 var last_coverage: Image
 var _images: Dictionary = {}
+## "frame:variant" -> [{image, stp}] per part, (w + 1) x (h + 1) texels for
+## the scaled hover path; set by the presenter from the validated hover pack.
+var hover_texels: Dictionary = {}
 var _font: RefCounted
 var _checker_tile: Image
 var _season_tiles: Dictionary = {}
@@ -146,7 +149,10 @@ func build_actors(state: Dictionary) -> Array[Dictionary]:
 		if step < 0 or step >= sequence.size():
 			error = "icon sequence step is outside the original sequence"
 			return []
-		actors.append(_actor(80 + i, 2 if hovering else 3, sequence[step]["frame_index"], position))
+		var icon := _actor(80 + i, 2 if hovering else 3, sequence[step]["frame_index"], position)
+		if hovering and int(state.get("hover_scale", 0x1000)) != 0x1000:
+			icon["scale"] = int(state["hover_scale"])
+		actors.append(icon)
 	# Menu mode 1 places cursor_x/y at item x + w - 4, y + 8 (icon + (6, -2));
 	# a live HUD session supplies the retained actor_pool[0] position instead.
 	var cursor_position := Vector2i(descriptor["icon_positions"][selected][0] + 6,
@@ -227,6 +233,8 @@ func render(state: Dictionary, previous_frame: Image = null,
 			continue
 		if command.get("kind") == "gradient":
 			_gradient(image, command["rect"])
+		elif command.has("scale"):
+			_draw_scaled_actor(image, command)
 		else:
 			_draw_actor(image, command)
 	_draw_text(image)
@@ -287,6 +295,25 @@ func _draw_checkerboard(target: Image, uv: Vector2i = _checker_uv, season: int =
 	if base_tile == null:
 		target.fill(Color8(40, 200, 160))
 		return
+	var tile_to_draw := _scrolled_checker_tile(base_tile, uv)
+	var w := tile_to_draw.get_width()
+	var h := tile_to_draw.get_height()
+	for ty in range(0, 240, 32):
+		for tx in range(0, 320, 32):
+			target.blit_rect(tile_to_draw, Rect2i(0, 0, w, h), Vector2i(tx, ty))
+
+## T-30001 WP3: read-only copy of the 32x32 tile _draw_checkerboard repeats from
+## (0,0), for the same uv, season and fade. Native checker pixel (x, y), for any
+## x including x < 0 and x >= 320, is tile.get_pixel(x & 31, y & 31). Returns
+## null when the checker tile cannot be decoded (render() then shows its
+## fallback fill instead of a checker).
+func checker_tile(uv: Vector2i, season: int, fade: int) -> Image:
+	var base_tile := _get_season_checker_tile(season, fade)
+	if base_tile == null:
+		return null
+	return _scrolled_checker_tile(base_tile, uv).duplicate()
+
+func _scrolled_checker_tile(base_tile: Image, uv: Vector2i) -> Image:
 	var w := base_tile.get_width()
 	var h := base_tile.get_height()
 	var u0 := int(uv.x) & (w - 1)
@@ -303,9 +330,7 @@ func _draw_checkerboard(target: Image, uv: Vector2i = _checker_uv, season: int =
 			tile_to_draw.blit_rect(base_tile, Rect2i(u0, 0, rw, v0), Vector2i(0, rh))
 		if u0 > 0 and v0 > 0:
 			tile_to_draw.blit_rect(base_tile, Rect2i(0, 0, u0, v0), Vector2i(rw, rh))
-	for ty in range(0, 240, 32):
-		for tx in range(0, 320, 32):
-			target.blit_rect(tile_to_draw, Rect2i(0, 0, w, h), Vector2i(tx, ty))
+	return tile_to_draw
 
 func _draw_actor(target: Image, actor: Dictionary) -> void:
 	var key := "%d:%s" % [actor["frame"], actor["variant"]]
@@ -318,6 +343,64 @@ func _draw_actor(target: Image, actor: Dictionary) -> void:
 	for part: Dictionary in record["parts"]:
 		var position: Vector2i = Vector2i(160, 120) + actor["position"] + Vector2i(part["x"], part["y"]) - Vector2i(record["origin"][0], record["origin"][1])
 		_blit(target, _image(part["png"]), _image(part["stp_png"]), position, actor["semi"])
+
+## func_80098680 (GsSortSprite, asm/libspu.s) for an unrotated actor scaled by
+## `scale` on both axes: hud_icon_bar_update's hover pulse
+## (hud_panels.c:1112-1117). actor_draw_all (actor_sprites.c) widens each part
+## of a scaled actor to w + 1, h + 1 and, with draw_flags bit 2 (icon actors),
+## anchors it at the actor position with mx/my = origin - part offset.
+## ScaleMatrix(identity, scale), TransMatrix(x, y, h) and RotTransPers4 with
+## SZ == h give SX = 160 + x + (scale * vx >> 12) (arithmetic shift), and the
+## same for y. Returns the POLY_FT4's [x0, y0, x1, y1] (right/bottom exclusive).
+static func scaled_part_quad(position: Vector2i, origin: Vector2i, part_offset: Vector2i, texels: Vector2i, scale: int) -> Array[int]:
+	var mx: int = origin.x - part_offset.x
+	var my: int = origin.y - part_offset.y
+	return [160 + position.x + ((scale * -mx) >> 12), 120 + position.y + ((scale * -my) >> 12),
+		160 + position.x + ((scale * (texels.x - mx)) >> 12), 120 + position.y + ((scale * (texels.y - my)) >> 12)]
+
+## Texel index of pixel `step` across a span of `pixels` covering texels
+## 0..last. Measured against the PCSX-Redux golden
+## (.asset-cache/emu/hover-pulse-golden-v1): nearest, not truncated.
+static func scaled_texel(step: int, last: int, pixels: int) -> int:
+	return (step * last + (pixels >> 1)) / pixels
+
+## Draws a scaled actor from its (w + 1) x (h + 1) hover texels. The tint is
+## 0x80 (neutral modulation) for the icon actors; blending is as _blit.
+func _draw_scaled_actor(target: Image, actor: Dictionary) -> void:
+	var key := "%d:%s" % [actor["frame"], actor["variant"]]
+	if not descriptor["frames"].has(key) or not hover_texels.has(key):
+		error = "scaled sprite texels are unavailable: " + key
+		return
+	var record: Dictionary = descriptor["frames"][key]
+	var scale: int = actor["scale"]
+	if scale <= 0 or scale > 0x2000:
+		error = "scaled sprite scale is outside the hover pulse range"
+		return
+	var origin := Vector2i(record["origin"][0], record["origin"][1])
+	for index: int in range(record["parts"].size()):
+		var part: Dictionary = record["parts"][index]
+		var source: Image = hover_texels[key][index]["image"]
+		var stp: Image = hover_texels[key][index]["stp"]
+		var size := source.get_size()
+		var quad := scaled_part_quad(actor["position"], origin, Vector2i(part["x"], part["y"]), size, scale)
+		var width: int = quad[2] - quad[0]
+		var height: int = quad[3] - quad[1]
+		if width <= 0 or height <= 0:
+			continue
+		for y: int in range(maxi(quad[1], 0), mini(quad[3], 240)):
+			var tv := scaled_texel(y - quad[1], size.y - 1, height)
+			for x: int in range(maxi(quad[0], 0), mini(quad[2], 320)):
+				var tu := scaled_texel(x - quad[0], size.x - 1, width)
+				var c := source.get_pixel(tu, tv)
+				if c.a == 0:
+					continue
+				var p := Vector2i(x, y)
+				var rgb := Vector3i(c.r8 >> 3, c.g8 >> 3, c.b8 >> 3)
+				if actor["semi"] and stp.get_pixel(tu, tv).r8 != 0:
+					var back := target.get_pixelv(p)
+					rgb = Vector3i((back.r8 >> 4) + (rgb.x >> 1), (back.g8 >> 4) + (rgb.y >> 1), (back.b8 >> 4) + (rgb.z >> 1))
+				target.set_pixelv(p, Color8(rgb.x << 3, rgb.y << 3, rgb.z << 3))
+				last_coverage.set_pixelv(p, Color.WHITE)
 
 func _draw_text(target: Image) -> void:
 	for run: Dictionary in descriptor["text_runs"]:

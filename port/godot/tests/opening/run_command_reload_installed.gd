@@ -59,6 +59,7 @@ var renderer: Renderer
 var services_owner: Services
 var bank_polls: Array[int] = [0]
 var bank_starts: Array = []
+var hover_texels_open := false
 
 
 func _initialize() -> void:
@@ -109,8 +110,14 @@ func _prepare_owners() -> String:
 	if error.is_empty(): error = provider.open_installed(installed_root, roles.prologue_hud.relative, roles.prologue_hud.sha256)
 	if error.is_empty(): error = provider.snapshot_runtime_assets()
 	renderer = Renderer.new()
-	if error.is_empty(): error = renderer.prepare({"manifest":profile.paths.hud_manifest,
-		"sha256":profile.file_identities.hud_manifest.sha256,"font_root":profile.paths.font_root}, provider)
+	var hud_capability := {"manifest":profile.paths.hud_manifest,
+		"sha256":profile.file_identities.hud_manifest.sha256,"font_root":profile.paths.font_root}
+	# A bundle with the command_hover_texels role draws the reload's hover
+	# pulse through the func_80098680 path instead of the flagged approximation.
+	if profile.paths.has("command_hover_texels"):
+		hud_capability["hover_texels"] = {"path":roles.command_hover_texels.path, "sha256":roles.command_hover_texels.sha256}
+		hover_texels_open = true
+	if error.is_empty(): error = renderer.prepare(hud_capability, provider)
 	services_owner = Services.new()
 	if error.is_empty(): error = services_owner.prepare(media, provider, _bank_poll, _bank_start, _projection,
 		func() -> Object: return null, renderer.room_original_sha256())
@@ -223,6 +230,7 @@ func _reload_route() -> void:
 	var phases: Dictionary = {}
 	var unsourced_frames := 0
 	var cursor_omitted := 0
+	var approximated_pulse := 0
 	var sourced_from := -1
 	var images: Array[Image] = []
 	var frame := 0
@@ -254,12 +262,16 @@ func _reload_route() -> void:
 				unsourced_frames += 1
 			if drawn.provenance.get("omitted") == ["cursor actor 0"]:
 				cursor_omitted += 1
+			if Renderer.SCALED in drawn.provenance.get("unverified", []):
+				approximated_pulse += 1
 		frame += 1
 	timeline.append([state.mode_stage, state.mode_step, state.substep])
 	for index in range(mini(timeline.size(), golden.size())):
 		if timeline[index] != golden[index]:
 			mismatches.append("frame %d: port %s golden %s" % [index, timeline[index], golden[index]])
 	check(mismatches.is_empty(), "every reload frame follows the golden logic.jsonl timeline and renders: %s" % [mismatches.slice(0, 4)])
+	if hover_texels_open:
+		check(approximated_pulse == 0, "with the hover texels no reload frame approximates the hover pulse (%d did)" % approximated_pulse)
 	check(frame == GOLDEN_RELOAD_FRAMES and handoff.phase == "command_select", "command select after the golden 225 frames (got %d, %s)" % [frame, handoff.phase])
 	check(hud_reads == [HUD_READ_FRAME] and room_reads == [ROOM_READ_FRAME], "CALROM read on frame 132, room read on frame 206 (got %s, %s)" % [hud_reads, room_reads])
 	check(calendar_frame == 205, "calendar_month_load after 73 CD syncs, on frame 205 (got %d)" % calendar_frame)

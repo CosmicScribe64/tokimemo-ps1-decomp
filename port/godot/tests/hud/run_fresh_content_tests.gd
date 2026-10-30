@@ -133,7 +133,7 @@ func _fresh_session_checks(root: String, manifest: String, manifest_sha: String,
 
 	_frame(session, sequences, rule)
 	var pulse: Dictionary = live.compose(rule, core, [], [])
-	check(pulse.is_empty() and live.error.contains("scaled sprite path"), "scaled pulse phase is withheld explicitly")
+	check(pulse.is_empty() and live.error.contains("scaled hover texels"), "scaled pulse phase is withheld explicitly without the hover texels")
 	check(live.fresh_session == session and not live.presenter._manifest.is_empty(), "withheld frame keeps the open capability")
 
 	for frame: int in range(31):

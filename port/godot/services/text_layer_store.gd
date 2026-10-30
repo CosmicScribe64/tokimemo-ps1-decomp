@@ -156,6 +156,19 @@ func lookup_record(record_id: String, container_sha256: String, font: RefCounted
 		return _reject("no approved record for this id")
 	return _checked(entry, container_sha256, font)
 
+## Lookup by logical record id for window-space text that does not draw with
+## the original font (the modern text box). The pack approval (checked when
+## it opened) and the container hash still apply; the glyph check does not.
+## Returns {"id", "text", "context_status"} or {} with last_rejection set.
+func lookup_record_text(record_id: String, container_sha256: String) -> Dictionary:
+	var entry: Dictionary = _entries.get(record_id, {})
+	if entry.is_empty():
+		return _reject("no approved record for this id")
+	if not entry.container.is_empty() and _containers.get(entry.container, "") != container_sha256:
+		return _reject("container hash differs from the pack")
+	last_rejection = ""
+	return {"id": entry.id, "text": entry.text, "context_status": entry.context_status}
+
 func _checked(entry: Dictionary, container_sha256: String, font: RefCounted) -> Dictionary:
 	if not entry.container.is_empty() and _containers.get(entry.container, "") != container_sha256:
 		return _reject("container hash differs from the pack")

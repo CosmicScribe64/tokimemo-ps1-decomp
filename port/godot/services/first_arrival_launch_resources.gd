@@ -12,6 +12,7 @@ const Hud = preload("res://presentation/prologue_hud_source_provider.gd")
 const Painter = preload("res://presentation/prologue_text_presenter.gd")
 const Audio = preload("res://services/audio_service.gd")
 const Lines = preload("res://services/prologue_line_services.gd")
+const CommandCapabilities = preload("res://services/school_day_command_capabilities.gd")
 var text: Text
 var media_store: MediaStore
 var board_store: BoardStore
@@ -26,6 +27,11 @@ var command_reload: CommandReload
 ## Inventoried command HUD manifest (with its identity), font root and rule
 ## tables (FILE_ROLES hud_manifest / rule_tables); empty without them.
 var hud_manifest: Dictionary = {}
+## Ordinary weekly command capabilities (school_day_media, spring_media,
+## weekday56_media, club_media roles) for the school-day controller after
+## command select. Opened at launch but not fatal: a closed capability lists
+## no command, and its reason stays in school_day_commands.error.
+var school_day_commands: CommandCapabilities
 var hud: Hud
 var painter: Painter
 var audio: Audio
@@ -68,6 +74,10 @@ func prepare(profile: Dictionary) -> String:
 	if error.is_empty() and fresh.paths.has("hud_manifest") and fresh.paths.has("font_root") and fresh.paths.has("rule_tables") and fresh.file_identities.has("hud_manifest") and fresh.file_identities.has("rule_tables"):
 		next_hud_manifest = {"manifest":fresh.paths.hud_manifest,"sha256":fresh.file_identities.hud_manifest.sha256,
 			"font_root":fresh.paths.font_root,"rule_tables":fresh.paths.rule_tables,"rule_tables_sha256":fresh.file_identities.rule_tables.sha256}
+		# Scaled hover-pulse texels (func_80098680 path); optional role.
+		if fresh.paths.has("command_hover_texels"):
+			next_hud_manifest["hover_texels"] = {"path":fresh.role_manifests.command_hover_texels.path,
+				"sha256":fresh.role_manifests.command_hover_texels.sha256}
 	if error.is_empty(): error = next_hud.call("open_installed",fresh.profile_root,fresh.role_manifests.prologue_hud.relative,fresh.role_manifests.prologue_hud.sha256)
 	if error.is_empty(): error = next_hud.snapshot_runtime_assets()
 	if error.is_empty(): error = next_painter.open_font(fresh.paths.font_root)
@@ -84,6 +94,8 @@ func prepare(profile: Dictionary) -> String:
 	finish_bank = next_finish
 	command_reload = next_reload
 	hud_manifest = next_hud_manifest
+	school_day_commands = CommandCapabilities.new()
+	school_day_commands.open_installed(fresh.paths)
 	hud = next_hud
 	painter = next_painter
 	audio = next_audio

@@ -28,6 +28,9 @@ var status_lines: Array[String] = []
 var last_message: String = ""
 var _list: VBoxContainer
 var _status: Label
+## T-30002 WP8: port-level Settings affordance in this modern layer only.
+var settings_button: Button
+var settings_hint: Label
 
 static func default_root() -> String:
 	return OS.get_user_data_dir().simplify_path().trim_suffix("/").path_join(SAVE_DIRECTORY)
@@ -49,6 +52,7 @@ func _ready() -> void:
 	backdrop.color = Color.BLACK
 	backdrop.size = Vector2(640, 480)
 	add_child(backdrop)
+	_add_settings_affordance()
 	# Starts below the settings hint that the ModernSettings autoload draws.
 	var column := VBoxContainer.new()
 	column.position = Vector2(48, 96)
@@ -63,6 +67,30 @@ func _ready() -> void:
 	_list.add_theme_constant_override("separation", 6)
 	column.add_child(_list)
 	refresh()
+
+## Hint line and mouse button for the port Settings menu. They sit between the
+## autoload's notice and the action column, never on a native canvas.
+func _add_settings_affordance() -> void:
+	var row := HBoxContainer.new()
+	row.position = Vector2(48, 56)
+	row.size = Vector2(544, 32)
+	row.add_theme_constant_override("separation", 12)
+	add_child(row)
+	settings_hint = Label.new()
+	settings_hint.text = "F10 / L3+R3: Settings"
+	settings_hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	settings_hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(settings_hint)
+	settings_button = Button.new()
+	settings_button.text = "Settings"
+	settings_button.focus_mode = Control.FOCUS_ALL
+	settings_button.pressed.connect(open_settings)
+	row.add_child(settings_button)
+
+func open_settings() -> void:
+	var settings: Node = get_node_or_null("/root/ModernSettings")
+	if settings != null and is_instance_valid(settings.menu) and not settings.menu.visible:
+		settings.toggle_menu()
 
 func refresh() -> void:
 	actions = compute_actions()

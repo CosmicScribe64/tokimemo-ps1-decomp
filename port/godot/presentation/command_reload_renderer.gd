@@ -24,8 +24,10 @@ extends RefCounted
 ## between a5 (switch) and a6 (the last reload frame on screen); the k_disp
 ## typewriter reveal after the build is not modeled (the narration is drawn
 ## whole); hud_mascot is not rasterized; the hover pulse of icon 80 + i on
-## reload frames 0..31 (rsin scale, func_80098680) is a nearest-neighbour
-## approximation.
+## reload frames 0..31 (rsin scale, func_80098680) is drawn by the
+## compositor's scaled path when the installed HUD capability carries the
+## hover texels (command_hover_texels role); without them it is a
+## nearest-neighbour approximation, flagged in provenance.
 ##
 ## Unsourced: while the handoff reports hud_unsourced (the HUD session's menu 0
 ## and cursor at the switch are not NAME_ENT's, FreshHandoff.HUD_MENU_UNSOURCED),
@@ -61,6 +63,13 @@ func prepare(hud_manifest: Dictionary, prologue_provider: RefCounted) -> String:
 	var candidate := Presenter.new()
 	if not candidate.open_manifest(hud_manifest.manifest, hud_manifest.sha256, hud_manifest.font_root):
 		return "command HUD manifest: " + candidate.error
+	if hud_manifest.has("hover_texels"):
+		var texels: Variant = hud_manifest.hover_texels
+		if not texels is Dictionary or not texels.get("path") is String or not texels.get("sha256") is String:
+			return "command HUD hover texels need the inventoried path and SHA-256"
+		var texel_error: String = candidate.open_hover_texels(texels.path, texels.sha256)
+		if not texel_error.is_empty():
+			return "command HUD hover texels: " + texel_error
 	presenter = candidate
 	provider = prologue_provider
 	return ""
@@ -126,8 +135,12 @@ func render(state: State, hud: HudSession, projection: Dictionary, hud_unsourced
 	var scale: int = HudSession.hover_scale(hud.hover_countdown)
 	for actor: Dictionary in actors:
 		if actor.get("scale_hover", false) and scale != 0x1000:
-			scaled = true
-			_draw_scaled(image, actor, scale)
+			if compositor.hover_texels.has("%d:%s" % [actor["frame"], actor["variant"]]):
+				actor["scale"] = scale
+				compositor._draw_scaled_actor(image, actor)
+			else:
+				scaled = true
+				_draw_scaled(image, actor, scale)
 		else:
 			compositor._draw_actor(image, actor)
 		if not compositor.error.is_empty():

@@ -29,6 +29,12 @@ func run() -> void:
 	var host := Host.new(); root.add_child(host)
 	_controller(JOY_BUTTON_LEFT_STICK,true); _controller(JOY_BUTTON_RIGHT_STICK,true); await process_frame
 	_controller(JOY_BUTTON_LEFT_STICK,false); _controller(JOY_BUTTON_RIGHT_STICK,false); await process_frame
+	# In a game scene L3+R3 opens the pause menu (WP8); its Settings entry
+	# opens the full menu, and a quick save chosen there resumes the game.
+	var pause: Control = runtime.layer.get_node("PauseMenu")
+	check(pause.visible and not runtime.menu.visible and paused)
+	(pause.focus_items["Settings"] as Button).pressed.emit(); await process_frame
+	check(runtime.menu.visible and not pause.visible)
 	check(runtime.menu.focus_items.has("Quick save"))
 	for page: int in 5:
 		_controller(JOY_BUTTON_RIGHT_SHOULDER,true); await process_frame
@@ -52,7 +58,7 @@ func run() -> void:
 	check(runtime.menu.visible and host.save_controls.pending == Controls.Request.NONE)
 	_controller(JOY_BUTTON_A,false)
 	await create_timer(0.1).timeout
-	check(not runtime.menu.visible and not paused)
+	check(not runtime.menu.visible and not paused and not pause.visible)
 	check(host.save_controls.pending == Controls.Request.NONE)
 	check(host.save_controls.last_error.contains("command selection") and host.save_controls.storage_calls == 0)
 	host.service_on_physics = false

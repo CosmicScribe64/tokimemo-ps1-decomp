@@ -113,7 +113,7 @@ func render_date_arrival_greeting(state: Dictionary) -> Dictionary:
 			"attribute": 0,
 		})
 
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	_compositor._draw_text(image)
 	_draw_vn_wait_marker(image, int(state.get("frame_count", 0)))
 	var bbox_check := verify_text_runs_fit(runs, place_hex)
@@ -158,7 +158,7 @@ func render_overlay_three_choice_prompt(state: Dictionary, selected_row: int = 0
 			"position": [-0x74, 0x32 + i * 0x10],
 			"attribute": 0,
 		})
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	_compositor._draw_text(image)
 
 	# Cursor actor 0 resolved via hud_cursor_actor_init(0) positioned on hovered row
@@ -222,7 +222,7 @@ func render_date_spot_reaction(state: Dictionary, chosen_index: int = 0) -> Dict
 			"attribute": 0,
 		})
 
-	_compositor.set_text_runs(runs)
+	_set_runs(runs)
 	_compositor._draw_text(image)
 	_draw_vn_wait_marker(image, int(state.get("frame_count", 0)))
 	var bbox_check := verify_text_runs_fit(runs, banner_hex)
@@ -274,7 +274,7 @@ func render_amusement_or_karaoke_subscene(
 				"position": [gx[i], gy[i]],
 				"attribute": 0,
 			})
-		_compositor.set_text_runs(runs)
+		_set_runs(runs)
 		_compositor._draw_text(image)
 
 		var cursor_actor: Dictionary = _compositor._actor(

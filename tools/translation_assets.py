@@ -14,6 +14,16 @@ import shutil
 import struct
 
 ROOT = Path(__file__).resolve().parents[1]
+PACK_V1 = 'tokimemo.translated-image-pack.v1'
+# v2 adds a `kind` per row: frame (the v1 row), page and bs. The runtime reader
+# is port/godot/services/translated_image_store.gd.
+PACK_V2 = 'tokimemo.translated-image-pack.v2'
+KINDS = ('frame', 'page', 'bs')
+MAX_REGIONS = 64
+# Pinned MDEC model identity; must equal port/godot/services/mdec_model_identity.gd.
+MDEC_MODEL_ID = 'tokimemo-mdec-fixed-point-v1'
+MDEC_IMPLEMENTATIONS = {'image_mdec.py': '6513b1e6434bdd1c65c804e5d637ae3db1f4fa11f69dd80b495cf05a2f8828ec',
+                        'image_mdec_model.py': '3b8e5611bf6f763171b8bf3d5a22269211048b0ec21dc342088e90ec043d2222'}
 
 
 def digest(data):
@@ -106,7 +116,129 @@ def new_output(output):
     return output
 
 
-def build_pack(snapshot_root, output, include_drafts=False):
+def decoder_identity(model_id, implementations):
+    """SHA-256 of the model id plus one `name=sha` line per implementation file, in name order.
+
+    TranslatedImageStore.decoder_identity() computes the same value at runtime.
+    """
+    text = model_id + ''.join('\n%s=%s' % (name, implementations[name]) for name in sorted(implementations))
+    return digest(text.encode())
+
+
+def pinned_decoder_identity(root=ROOT):
+    """Decoder identity of the pinned model; refuses if the implementation files drifted."""
+    for name, expected in MDEC_IMPLEMENTATIONS.items():
+        if digest((root / 'tools/assets' / name).read_bytes()) != expected:
+            raise ValueError('MDEC implementation differs from the pinned model: ' + name)
+    return decoder_identity(MDEC_MODEL_ID, MDEC_IMPLEMENTATIONS)
+
+
+def rgba_sha256(image):
+    """SHA-256 of 8-bit RGBA bytes, as Godot hashes Image.get_data() after convert(FORMAT_RGBA8)."""
+    return digest(image.convert('RGBA').tobytes())
+
+
+def _hash(value):
+    return isinstance(value, str) and len(value) == 64 and all(c in '0123456789abcdef' for c in value)
+
+
+def _index(value):
+    return isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= 65535
+
+
+def check_regions(regions, dimensions):
+    """Region rects [x, y, w, h], each inside the image; same rule as the runtime reader."""
+    width, height = dimensions
+    if not isinstance(regions, list) or not 0 < len(regions) <= MAX_REGIONS:
+        raise ValueError('replacement needs 1..%d region rects' % MAX_REGIONS)
+    for rect in regions:
+        if not isinstance(rect, list) or len(rect) != 4 or not all(isinstance(v, int) and not isinstance(v, bool) for v in rect):
+            raise ValueError('region rect must be four integers')
+        x, y, w, h = rect
+        if x < 0 or y < 0 or w < 1 or h < 1 or x + w > width or y + h > height:
+            raise ValueError('region rect outside the image')
+    return regions
+
+
+def v2_identity(row):
+    """Source identity key of one v2 row (mirrors the runtime lookup keys)."""
+    kind = row.get('kind', 'frame')
+    if kind == 'frame':
+        return (kind, row['source_container_sha256'], row['frame'], row['palette'], row['source_png_sha256'])
+    if kind == 'page':
+        return (kind, row['source_container_sha256'], row['page'], row['source_png_sha256'])
+    return (kind, row['source_container_sha256'], row['bs_index'], row['decoder_identity_sha256'], row['source_rgba_sha256'])
+
+
+def check_v2_row(row):
+    """Validate one v2 row the way translated_image_store.gd does; raises ValueError."""
+    kind = row.get('kind')
+    if kind not in KINDS:
+        raise ValueError('unsupported translation record kind')
+    if not _hash(row.get('source_container_sha256')) or not _hash(row.get('output_sha256')):
+        raise ValueError('invalid translation source identity')
+    output = row.get('output')
+    if not isinstance(output, str) or not output or '\\' in output or ':' in output or output.startswith('/') \
+            or any(part in ('', '.', '..') for part in output.split('/')):
+        raise ValueError('invalid replacement output path')
+    size = row.get('dimensions')
+    if not isinstance(size, list) or len(size) != 2 or not all(isinstance(v, int) and not isinstance(v, bool) and 1 <= v <= 4096 for v in size):
+        raise ValueError('invalid replacement dimensions')
+    if kind == 'frame':
+        if not _hash(row.get('source_png_sha256')) or not _index(row.get('frame')) or not isinstance(row.get('palette'), str) or not row['palette'] or '|' in row['palette']:
+            raise ValueError('invalid frame source identity')
+    elif kind == 'page':
+        # source_rgba_sha256 binds the row to the source page pixels; the
+        # runtime refuses a source image whose RGBA8 bytes hash differently.
+        if not _hash(row.get('source_png_sha256')) or not _index(row.get('page')) or not _hash(row.get('source_rgba_sha256')):
+            raise ValueError('invalid page source identity')
+        check_regions(row.get('regions'), size)
+    else:
+        if not _index(row.get('bs_index')) or not _hash(row.get('decoder_identity_sha256')) or not _hash(row.get('source_rgba_sha256')):
+            raise ValueError('invalid bs source identity')
+        check_regions(row.get('regions'), size)
+    return row
+
+
+def write_pack(output, rows, sources, *, schema, development_drafts, snapshot_sha256, metadata=None, extra_files=None):
+    """Write a pack directory atomically: copy each PNG, then manifest.json.
+
+    `sources[i]` is the file to copy for `rows[i]` (destination `rows[i]['output']`).
+    On any failure the new directory is removed.
+    """
+    if schema not in (PACK_V1, PACK_V2):
+        raise ValueError('unknown pack schema')
+    keys = set()
+    for row in rows:
+        if schema == PACK_V2:
+            check_v2_row(row)
+        key = v2_identity(row) if schema == PACK_V2 else v2_identity({**row, 'kind': 'frame'})
+        if key in keys:
+            raise ValueError('duplicate source replacement mapping')
+        keys.add(key)
+    output.mkdir(parents=True)
+    try:
+        for row, source in zip(rows, sources):
+            destination = inside(output, row['output'])
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            if not destination.exists():
+                shutil.copyfile(source, destination)
+            if digest(destination.read_bytes()) != row['output_sha256']:
+                raise ValueError('copied replacement bytes differ')
+        for name, data in (extra_files or {}).items():
+            inside(output, name).write_bytes(data)
+        pack = {'schema': schema, 'language': 'en', 'development_drafts': development_drafts,
+                'snapshot_sha256': snapshot_sha256, 'runtime_verified': False, 'assets': rows, **(metadata or {})}
+        (output / 'manifest.json').write_bytes(encoded(pack) + b'\n')
+    except Exception:
+        shutil.rmtree(output)
+        raise
+    return digest((output / 'manifest.json').read_bytes())
+
+
+def build_pack(snapshot_root, output, include_drafts=False, schema_version=1):
+    if schema_version == 2:
+        return build_pack_v2(snapshot_root, output, include_drafts)
     report = audit(snapshot_root)
     output = new_output(output)
     selected = [r for r in report['assets'] if r['mapping_complete'] and (include_drafts or r['style'] == 'approve')]
@@ -118,7 +250,7 @@ def build_pack(snapshot_root, output, include_drafts=False):
         keys.add(key)
         filename = 'images/' + row['output_sha256'] + '.png'
         records.append({**row, 'output': filename})
-    pack = {'schema': 'tokimemo.translated-image-pack.v1', 'language': 'en', 'development_drafts': include_drafts,
+    pack = {'schema': PACK_V1, 'language': 'en', 'development_drafts': include_drafts,
             'snapshot_sha256': report['snapshot_sha256'], 'runtime_verified': False, 'assets': records}
     output.mkdir(parents=True)
     try:
@@ -132,6 +264,17 @@ def build_pack(snapshot_root, output, include_drafts=False):
         shutil.rmtree(output)
         raise
     return {'pack': str(output), 'manifest_sha256': digest((output / 'manifest.json').read_bytes()), 'assets': len(records)}
+
+
+def build_pack_v2(snapshot_root, output, include_drafts=False):
+    """The v1 selection as a v2 pack: every row becomes kind `frame`, nothing else changes."""
+    report = audit(snapshot_root)
+    output = new_output(output)
+    selected = [r for r in report['assets'] if r['mapping_complete'] and (include_drafts or r['style'] == 'approve')]
+    rows = [{**row, 'kind': 'frame', 'output': 'images/' + row['output_sha256'] + '.png'} for row in selected]
+    sha = write_pack(output, rows, [inside(snapshot_root, row['output']) for row in selected], schema=PACK_V2,
+                     development_drafts=include_drafts, snapshot_sha256=report['snapshot_sha256'])
+    return {'pack': str(output), 'manifest_sha256': sha, 'assets': len(rows), 'schema': PACK_V2}
 
 
 def inventory(snapshot_root, catalog_path, option_sources=None):
@@ -196,6 +339,7 @@ def main():
     parser.add_argument('--snapshot', type=Path, default=ROOT / 'translations/en/graphics/artwork')
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--include-drafts', action='store_true')
+    parser.add_argument('--schema-version', type=int, choices=[1, 2], default=1, help='pack schema; 2 writes kind-tagged rows')
     parser.add_argument('--option-sources', type=Path, help='Restored source OPTION export directory')
     args = parser.parse_args()
     if args.operation in ('audit', 'inventory'):
@@ -205,7 +349,7 @@ def main():
         args.output.write_bytes(encoded(report) + b'\n')
         print(json.dumps({k:v for k,v in report.items() if k not in ('assets', 'requirements', 'option_frames')}, sort_keys=True))
     else:
-        print(json.dumps(build_pack(args.snapshot, args.output, args.include_drafts), sort_keys=True))
+        print(json.dumps(build_pack(args.snapshot, args.output, args.include_drafts, args.schema_version), sort_keys=True))
 
 
 if __name__ == '__main__':

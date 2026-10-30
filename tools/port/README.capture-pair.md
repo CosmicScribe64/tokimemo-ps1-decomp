@@ -73,7 +73,14 @@ manifest per port observer key `stageS-K` (from
 - The image is taken from the shot at frame_count F+`--latency`. Every vsync
   in F..F+latency must advance frame_count by exactly 1. Any other window is
   reported `unsynchronized` and gets no manifest.
-- The port receipt has no PNG hashes, so the tool writes
+- If the port directory holds `checkpoint-receipts.json` (receipt v2, written
+  by `tests/support/checkpoint_observer.gd`, T-39019), the pairs point at those
+  receipts directly. Their PNG hashes, clocks and observer hashes were bound when
+  each frame was written. The tool re-checks every binding with
+  `tools/port/checkpoint_receipt.py` (`receipt_sha256` recomputed over all
+  other fields, PNG file hash, decoded RGBA8 hash) and stops if one is broken,
+  and it writes no `port-png-bindings.json`.
+- An older receipt has no PNG hashes, so the tool writes
   `port-png-bindings.json`, which copies each record verbatim and labels the
   hash it adds as post-hoc. It also pins the `--observer` script hash, and
   sets `modified_after_receipt` when that file is newer than the receipt.
@@ -87,3 +94,46 @@ manifest per port observer key `stageS-K` (from
 
 Then run `compare_capture_pair.py` on each manifest. The tests use synthetic
 data only: `python3 -m unittest tools.port.test_rei_stage_capture_pairs`.
+
+## Colour-domain projection report (`rgb555_diagnostic.py`, T-39020)
+
+`compare_capture_pair.py` stays unchanged and is the only exact RGBA gate.
+`rgb555_diagnostic.py` is a diagnostic. It also does the residual bookkeeping
+for the differential suite (`run_differential_suite.py`, T-39021). On its own
+it is never parity acceptance, and every report carries `"acceptance": false`.
+
+```sh
+docker run --rm -v "$PWD:/work:ro" -w /work tokimemo-recovery \
+  python3 tools/port/rgb555_diagnostic.py native.png port.png \
+  --native-encoding zero_extended --port-encoding source_proven_mixed \
+  --basis "T-39008: native low 3 bits zero; port mixes v<<3 and bit replication" \
+  --exclude emulator_x0_column --exclude emulator_y0_row
+```
+
+The caller declares each side's 8-bit expansion from source:
+`zero_extended` (v<<3), `bit_replicated` ((v<<3)|(v>>2)) or
+`source_proven_mixed` (either form, per channel). A channel value outside the
+declared encoding is not rounded. The report is `rejected` (exit 2) with
+per-side counts and the first offending pixels. There is no tolerance, masking
+or phase search.
+
+The report (`tokimemo.rgb555-projection-report.v1`) contains:
+
+- the declared encodings, the basis and the sha256 of each input file and of
+  its decoded RGBA bytes;
+- `exact_rgba8`: the changed-pixel count, bbox and 16×16 tile counts;
+- `rgb555_residual`: the count, bbox, tile counts and a delta histogram of the
+  pixels whose 5-bit codes differ;
+- `domain_exclusions`: one row per named exclusion, with its own pixel,
+  exact-change and residual counts. The only names are `emulator_x0_column` and
+  `emulator_y0_row` (T-39008 C1). Excluded pixels are counted, never dropped
+  silently.
+
+A bbox is inclusive `[x0, y0, x1, y1]`. The report goes to stdout, or with
+`--out` to a new file. Tests: `tools/port/run_playtest_unit_tests.sh
+tools.port.test_rgb555_diagnostic`.
+
+The port mixes colour expansions. Presenters use v<<3 in calendar, date,
+event and ending, and bit replication in `first_arrival_actor_renderer.gd`.
+This is recorded as finding T-39020-F1 in the checkpoint catalog. No presenter
+changes until the user picks a rule.

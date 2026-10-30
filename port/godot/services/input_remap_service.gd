@@ -1,5 +1,6 @@
 extends RefCounted
 ## T-30002: events map to native masks; timing remains in the simulation latch.
+## Prompt text per controller family lives in input_glyph_service.gd (WP3).
 const MASKS := {"up": 0x1000, "right": 0x2000, "down": 0x4000, "left": 0x8000,
 	"confirm": 0x20, "cancel": 0x40, "square": 0x80, "triangle": 0x10,
 	"start": 0x800, "select": 0x100, "l1": 0x4, "r1": 0x8, "l2": 0x1, "r2": 0x2, "skip": 0}
@@ -125,6 +126,33 @@ func rebind(action: String, binding: Dictionary, replace_conflicts: bool = false
 	var original := defaults()
 	for name: String in ACTIONS:
 		if result[name] != original[name]: overrides[name] = result[name]
+	return {"error": "", "bindings": overrides}
+
+## Device category of a binding: "keyboard" (keys and mouse) or "controller"
+## (buttons and axes).
+static func device_of(spec: Dictionary) -> String:
+	return "keyboard" if spec.get("kind") in ["key", "mouse"] else "controller"
+
+## T-30002 WP3: restore one device category to its defaults and keep every
+## binding of the other category. Returns {"error", "bindings"} like rebind,
+## where bindings holds only the actions that still differ from the defaults.
+func reset_device(device: String) -> Dictionary:
+	if device not in ["keyboard", "controller"]: return {"error": "Unknown device category."}
+	var original := defaults()
+	var overrides := {}
+	for action: String in ACTIONS:
+		# Defaults of this category first, in default order, then the other
+		# category as currently bound, so an untouched action compares equal.
+		var merged: Array = original[action].filter(func(spec: Dictionary) -> bool: return device_of(spec) == device)
+		for spec: Dictionary in bindings[action]:
+			if device_of(spec) != device and spec not in merged: merged.append(spec)
+		var ordered: Array = []
+		for spec: Dictionary in original[action]:
+			if spec in merged: ordered.append(spec)
+		for spec: Dictionary in merged:
+			if spec not in ordered: ordered.append(spec)
+		if ordered != original[action]: overrides[action] = ordered
+	if validated_bindings(overrides).is_empty(): return {"error": "Resetting this device would create a conflict."}
 	return {"error": "", "bindings": overrides}
 
 func held_mask() -> int:

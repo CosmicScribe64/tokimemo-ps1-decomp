@@ -183,6 +183,27 @@ func open_resources(font_root: String, hud_manifest_path: String, date_pack_path
 	return ""
 
 
+## Root hooks 4 and 6 (Phase 4 WP-J, WP-I): binds the active English text
+## layer and image store on every live presenter, or clears them (Japanese:
+## both null). No producer writes presenter binding rows yet, so bind_english
+## gets none and binds only the exact-identity image replacements. Callers
+## re-render the current frame afterwards. Presentation only.
+func apply_language(layer: RefCounted, images: RefCounted) -> void:
+	if not _ready:
+		return
+	for presenter: RefCounted in [vn_presenter, telephone_presenter, date_presenter, encounters_ending_presenter,
+			school_events_presenter, subgame_presenter, event_cg_presenter]:
+		if presenter == null:
+			continue
+		if presenter.has_method("bind_english"):
+			if layer == null and images == null:
+				presenter.clear_english()
+			else:
+				presenter.bind_english(layer, [], images)
+		if presenter.has_method("set_translated_text"):
+			presenter.set_translated_text(layer)
+
+
 static func supported_modes() -> Array[int]:
 	var modes: Array[int] = []
 	for k: int in OVERLAY_CATALOG.keys():

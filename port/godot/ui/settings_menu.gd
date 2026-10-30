@@ -1,5 +1,19 @@
 extends Control
-## Always-available desktop settings overlay, including a reserved F10 recovery key.
+## T-30002 WP6: settings shell. It hosts page modules (ui/settings/*_page.gd,
+## each with TITLE, available(ctx) and build(container, ctx)), the preset row,
+## the fidelity badge, Back handling, the pending-display close prompt, the
+## language loading state and the interface-size layer. It holds no
+## page-specific controls. F10 / L3+R3 remain the reserved open/close keys.
+const Widgets = preload("res://ui/settings/settings_widgets.gd")
+const Context = preload("res://ui/settings/settings_context.gd")
+const PAGE_SCRIPTS: Array[Script] = [preload("res://ui/settings/language_page.gd"),
+	preload("res://ui/settings/display_page.gd"), preload("res://ui/settings/audio_page.gd"),
+	preload("res://ui/settings/controls_page.gd"), preload("res://ui/settings/accessibility_page.gd"),
+	preload("res://ui/settings/game_page.gd")]
+const PauseMenu = preload("res://ui/pause_menu.gd")
+const STICK_BITS := {JOY_BUTTON_LEFT_STICK: 1, JOY_BUTTON_RIGHT_STICK: 2}
+const PRESET_NAMES := {"original": "Original (PS1 exact)", "modern": "Modern English", "custom": "Custom"}
+
 var runtime: Node
 var column: VBoxContainer
 var tabs: TabContainer
@@ -13,15 +27,44 @@ var navigation: Array[Button] = []
 var focus_items: Dictionary = {}
 var revert_button: Button
 var had_preview := false
+## Language page: whether the Advanced / custom packs section is expanded.
+var advanced_open := false
+var widgets: RefCounted
+var ctx: RefCounted
+var page_titles: Array[String] = []
+var fidelity_badge: Label
+var language_badge: Label
+var preset_buttons: Dictionary = {}
+var close_prompt: PanelContainer
+var loading_panel: PanelContainer
+var _loading := false
+var _close_after_prompt := false
+var _layout_queued := false
+## L3+R3 state per device, tracked here so a close chord with a pending display
+## preview shows the Keep/Revert prompt before the runtime's toggle sees it.
+var _sticks: Dictionary = {}
+## True while Settings closes for a quick save or load, so a pause menu that
+## opened Settings resumes the game instead of reappearing.
+var closing_for_save := false
+var _sticks_latched: Dictionary = {}
+## Interface factor of the last layout, keyed by request and window area.
+var _factor_key := Vector3(-1, 0, 0)
+var _factor := 1.0
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	theme = _settings_theme()
-	resized.connect(_layout)
+	theme = Widgets.settings_theme()
+	resized.connect(_queue_layout)
+	visibility_changed.connect(_on_visibility_changed)
+	# The settings runtime owns this menu; the pause menu joins the same layer
+	# so F10 and L3+R3 open it in game scenes without a runtime edit.
+	if runtime != null and runtime.get("layer") is CanvasLayer:
+		PauseMenu.install.call_deferred(runtime)
 
 func rebuild() -> void:
 	var previous_tab := tabs.current_tab if is_instance_valid(tabs) else 0
+	var previous_title: String = page_titles[previous_tab] if previous_tab < page_titles.size() else ""
 	var focused := get_viewport().gui_get_focus_owner()
 	var focus_key: String = str(focused.get_meta("settings_focus_key", "")) if focused != null else ""
 	var scroll_positions := {}
@@ -30,223 +73,307 @@ func rebuild() -> void:
 			if child is ScrollContainer: scroll_positions[child.name] = child.scroll_vertical
 	var prior_draft: Dictionary = draft.duplicate(true) if visible and not draft.is_empty() else runtime.preferences.effective_settings().display.duplicate(true)
 	for child: Node in get_children(): remove_child(child); child.queue_free()
-	navigation.clear(); focus_items.clear()
-	var shade := ColorRect.new(); shade.color = Color(0.01,0.025,0.025,0.82); shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); add_child(shade)
-	card = PanelContainer.new(); add_child(card)
-	card.minimum_size_changed.connect(_layout)
-	column = VBoxContainer.new(); column.add_theme_constant_override("separation",12); card.add_child(column)
-	var header := HBoxContainer.new(); column.add_child(header)
-	var title := Label.new(); title.text = "Settings"; title.add_theme_font_size_override("font_size",26); title.size_flags_horizontal = Control.SIZE_EXPAND_FILL; header.add_child(title)
-	var hint := Label.new(); hint.text = "F10  ·  L3 + R3"; hint.add_theme_color_override("font_color",Color("a7bbb2")); header.add_child(hint)
-	column.add_child(HSeparator.new())
-	var body := HBoxContainer.new(); body.add_theme_constant_override("separation",16); body.size_flags_vertical = Control.SIZE_EXPAND_FILL; column.add_child(body)
-	sidebar = VBoxContainer.new(); sidebar.custom_minimum_size.x = 128; sidebar.add_theme_constant_override("separation",6); body.add_child(sidebar)
-	tabs = TabContainer.new(); tabs.tabs_visible = false; tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL; tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL; body.add_child(tabs)
+	navigation.clear(); focus_items.clear(); page_titles.clear(); preset_buttons.clear(); _factor_key = Vector3(-1, 0, 0)
+	widgets = Widgets.new(); widgets.focus_items = focus_items
+	ctx = Context.new(runtime, self, widgets)
 	draft = prior_draft
-	var display := page("Display")
-	option(display, "Window mode", ["windowed", "borderless", "exclusive"], draft.mode, func(v): draft.mode = v)
-	var monitors: Array = []
-	for index: int in maxi(DisplayServer.get_screen_count(), 1): monitors.append(index)
-	option(display, "Monitor", monitors, draft.monitor, func(v): draft.monitor = v)
-	option(display, "Resolution", ["960×720", "1280×720", "1920×1080", "2560×1440"], "%d×%d" % [draft.width, draft.height], func(v): var parts = v.split("×"); draft.width = int(parts[0]); draft.height = int(parts[1]))
-	option(display, "Scaling", ["integer", "nearest", "linear"], draft.filter, func(v): draft.filter = v)
-	option(display, "Aspect layout", ["original", "wide", "auto"], draft.aspect, func(v): draft.aspect = v)
-	option(display, "Frame limit", [60, 120, 144, 0], draft.fps, func(v): draft.fps = v)
-	toggle(display, "Vertical sync", draft.vsync, func(v): draft.vsync = v)
-	toggle(display, "Long display confirmation (60 seconds)", draft.long_confirmation, func(v): draft.long_confirmation = v)
-	button(display, "Apply display changes", _preview_display)
-	confirmation = HBoxContainer.new()
-	button(confirmation, "Keep display", func():
-		if runtime.preferences.confirm_display():
-			runtime.first_launch = false; had_preview = false; draft = runtime.preferences.settings.display.duplicate(true)
-			rebuild(); notice.text = "Display settings saved.")
-	revert_button = button(confirmation, "Revert", func(): runtime.preferences.revert_display(); had_preview = false; draft = runtime.preferences.settings.display.duplicate(true); rebuild(); notice.text = "Display settings restored.")
-	var audio := page("Audio")
-	for bus: String in runtime.Preferences.BUSES:
-		var spec: Dictionary = runtime.preferences.settings.audio.buses[bus]
-		audio_bus(audio, bus, spec)
-	option(audio, "Output device", Array(AudioServer.get_output_device_list()), runtime.preferences.settings.audio.device, func(v): save_value("audio", "device", v))
-	toggle(audio, "Mute in background", runtime.preferences.settings.audio.mute_unfocused, func(v): save_value("audio", "mute_unfocused", v))
-	toggle(audio, "Mono output", runtime.preferences.settings.audio.mono, func(v): save_value("audio", "mono", v))
-	var controls := page("Controls")
-	toggle(controls, "Swap confirm and cancel", runtime.preferences.settings.controls.swap_confirm, func(v): save_value("controls", "swap_confirm", v))
-	slider(controls, "Stick deadzone", runtime.preferences.settings.controls.deadzone, 0.05, 0.9, 0.05, func(v): save_value("controls", "deadzone", v))
-	slider(controls, "Menu repeat delay", runtime.preferences.settings.controls.repeat_delay, 0.15, 1.0, 0.05, func(v): save_value("controls", "repeat_delay", v))
-	slider(controls, "Menu repeat interval", runtime.preferences.settings.controls.repeat_interval, 0.03, 0.3, 0.01, func(v): save_value("controls", "repeat_interval", v))
-	for action: String in runtime.Remaps.ACTIONS:
-		var item := button(controls, action.capitalize() + ": " + runtime.remaps.prompt(action) + " / " + runtime.remaps.prompt(action, true), func(): begin_capture(action))
-		item.name = action
-		_register_focus(item,"binding:"+action)
-	button(controls, "Reset controls", func(): runtime.preferences.restore_category("controls"); rebuild())
-	var accessible := page("Accessibility")
-	var access: Dictionary = runtime.preferences.settings.accessibility
-	option(accessible, "Text reveal speed", ["slow", "normal", "fast", "instant"], access.text_speed, func(v): save_value("accessibility", "text_speed", v))
-	slider(accessible, "Extra reading time after voice (seconds)", access.auto_delay, 0.0, 10.0, 0.5, func(v): save_value("accessibility", "auto_delay", v))
-	option(accessible, "Prologue skip (Ctrl / remappable)", ["read", "all"], access.skip, func(v): save_value("accessibility", "skip", v))
-	var skip_help := Label.new(); skip_help.text = "Read mode skips only after every prologue line has been read."; skip_help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; accessible.add_child(skip_help)
-	slider(accessible, "Dialogue text scale", access.font_scale, 1.0, 1.5, 0.1, func(v): save_value("accessibility", "font_scale", v))
-	slider(accessible, "Dialogue backdrop opacity", access.backdrop, 0.0, 1.0, 0.1, func(v): save_value("accessibility", "backdrop", v))
-	toggle(accessible, "Reduce screen flashes", access.reduce_flashes, func(v): save_value("accessibility", "reduce_flashes", v))
-	var language := page("Language")
-	var active := Label.new(); active.text = "Image language: " + runtime.packs.language; language.add_child(active)
-	button(language, "Japanese images (Original)", func(): runtime.select_image_pack(""); rebuild())
-	button(language, "Choose translated image pack…", choose_images)
-	var text_language := Label.new(); text_language.text = "Dialogue language: " + runtime.text_pack.language; language.add_child(text_language)
-	if not runtime.text_pack.unsupported_entries.is_empty():
-		var fallback := Label.new(); fallback.text = "%d lines contain unsupported characters and will use Japanese." % runtime.text_pack.unsupported_entries.size()
-		fallback.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; language.add_child(fallback)
-	button(language, "Japanese dialogue (Original)", func(): runtime.select_text_pack(""); rebuild())
-	button(language, "Choose dialogue translation…", choose_text)
-	var voice_language := Label.new(); voice_language.text = "Voice language: " + runtime.voice_pack.language; language.add_child(voice_language)
-	button(language, "Japanese voice (Original)", func(): runtime.select_voice_pack(""); rebuild())
-	button(language, "Choose voice pack…", choose_voice)
-	if runtime.save_host() != null:
-		var game := page("Game")
-		var help := Label.new(); help.text = "Quick save is available at command selection or the first result. Load restores the quick slot. Release game controls before using either action."
-		help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; game.add_child(help)
-		button(game,"Quick save",func(): runtime.request_save(false))
-		button(game,"Load quick save",func(): runtime.request_save(true))
+	var shade := ColorRect.new(); shade.color = Color(0.01, 0.025, 0.025, 0.82); shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); add_child(shade)
+	card = PanelContainer.new(); add_child(card)
+	card.minimum_size_changed.connect(_queue_layout)
+	column = VBoxContainer.new(); column.add_theme_constant_override("separation", 10); card.add_child(column)
+	_build_header()
+	_build_preset_row()
+	column.add_child(HSeparator.new())
+	var body := HBoxContainer.new(); body.add_theme_constant_override("separation", 16); body.size_flags_vertical = Control.SIZE_EXPAND_FILL; column.add_child(body)
+	sidebar = VBoxContainer.new(); sidebar.custom_minimum_size.x = 140; sidebar.add_theme_constant_override("separation", 6); body.add_child(sidebar)
+	tabs = TabContainer.new(); tabs.tabs_visible = false; tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL; tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL; body.add_child(tabs)
+	for script: Script in PAGE_SCRIPTS:
+		var module: RefCounted = script.new()
+		if not module.available(ctx): continue
+		var box := page(str(module.TITLE))
+		module.build(box, ctx)
+	confirmation = HBoxContainer.new(); confirmation.add_theme_constant_override("separation", 10)
+	widgets.button(confirmation, "Keep display", _keep_display)
+	revert_button = widgets.button(confirmation, "Revert", _revert_display)
 	column.add_child(HSeparator.new())
 	column.add_child(confirmation); confirmation.visible = not runtime.preferences.pending.is_empty()
-	var footer := HBoxContainer.new(); footer.add_theme_constant_override("separation",16); column.add_child(footer)
-	notice = Label.new(); notice.text = "Display changes need confirmation. Other settings save automatically."; notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; notice.add_theme_font_size_override("font_size",13); notice.size_flags_horizontal = Control.SIZE_EXPAND_FILL; footer.add_child(notice)
-	button(footer, "Return to game", func(): runtime.toggle_menu())
-	_select_page(clampi(previous_tab,0,navigation.size()-1))
-	for child: Node in tabs.get_children():
-		if child is ScrollContainer: child.set_deferred("scroll_vertical",scroll_positions.get(child.name,0))
+	var footer := HBoxContainer.new(); footer.add_theme_constant_override("separation", 16); column.add_child(footer)
+	notice = Label.new(); notice.text = "Display changes need confirmation. Other settings save automatically. Esc, B or right-click goes back."
+	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; notice.add_theme_font_size_override("font_size", 14); notice.size_flags_horizontal = Control.SIZE_EXPAND_FILL; footer.add_child(notice)
+	widgets.button(footer, "Return to game", request_close)
+	_build_close_prompt()
+	_build_loading_panel()
+	var restore_tab := page_titles.find(previous_title)
+	_select_page(clampi(restore_tab if restore_tab >= 0 else previous_tab, 0, navigation.size() - 1))
+	_restore_scroll(tabs, scroll_positions)
+	_update_badges()
 	_layout()
-	call_deferred("_layout")
+	_queue_layout()
 	var restore: Control = focus_items.get(focus_key, navigation[tabs.current_tab])
 	if not restore.is_visible_in_tree(): restore = navigation[tabs.current_tab]
-	restore.call_deferred("grab_focus")
+	_focus_later(restore)
 
-func choose_images() -> void:
-	var dialog := FileDialog.new()
-	dialog.access = FileDialog.ACCESS_FILESYSTEM
-	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-	dialog.filters = PackedStringArray(["*.json ; Translation manifest"])
+## Scroll offsets are restored once the rebuilt pages have a layout.
+func _restore_scroll(host: TabContainer, positions: Dictionary) -> void:
+	if positions.is_empty(): return
+	await get_tree().process_frame
+	if not is_instance_valid(host): return
+	for child: Node in host.get_children():
+		if child is ScrollContainer and positions.has(child.name): child.scroll_vertical = positions[child.name]
+
+## Deferred focus that tolerates a second rebuild in the same frame.
+func _focus_later(control: Control) -> void:
+	(func() -> void:
+		if is_instance_valid(control) and control.is_inside_tree() and control.is_visible_in_tree(): control.grab_focus()).call_deferred()
+
+func _build_header() -> void:
+	var header := HBoxContainer.new(); header.add_theme_constant_override("separation", 12); column.add_child(header)
+	var title := Label.new(); title.text = "Settings"; title.add_theme_font_size_override("font_size", 26); header.add_child(title)
+	var badges := VBoxContainer.new(); badges.size_flags_horizontal = Control.SIZE_EXPAND_FILL; header.add_child(badges)
+	fidelity_badge = Label.new(); fidelity_badge.add_theme_font_size_override("font_size", 15); fidelity_badge.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; badges.add_child(fidelity_badge)
+	language_badge = Label.new(); language_badge.add_theme_font_size_override("font_size", 14); language_badge.add_theme_color_override("font_color", Widgets.NOTE_COLOR); badges.add_child(language_badge)
+	var hint := Label.new(); hint.text = "F10  ·  L3 + R3"; hint.add_theme_color_override("font_color", Widgets.NOTE_COLOR); header.add_child(hint)
+
+func _build_preset_row() -> void:
+	var row := HBoxContainer.new(); row.add_theme_constant_override("separation", 8); column.add_child(row)
+	var label := Label.new(); label.text = "Preset"; label.custom_minimum_size.x = 64; row.add_child(label)
+	for name: String in ["original", "modern", "custom"]:
+		var item: Button = widgets.button(row, PRESET_NAMES[name], select_preset.bind(name), "preset:" + name)
+		item.toggle_mode = true; item.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		preset_buttons[name] = item
+
+func _update_badges() -> void:
+	var changes: Array[String] = ctx.fidelity_changes()
+	var preset: String = ctx.current_preset()
+	for name: String in preset_buttons: preset_buttons[name].set_pressed_no_signal(name == preset)
+	if changes.is_empty():
+		fidelity_badge.text = "Original fidelity: ON"
+		fidelity_badge.add_theme_color_override("font_color", Color("9fd68f"))
+	else:
+		var names: Array[String] = []
+		for dotted: String in changes: names.append(ctx.preset_label(dotted))
+		fidelity_badge.text = "Original fidelity: OFF (changed: " + ", ".join(names) + ")"
+		fidelity_badge.add_theme_color_override("font_color", Widgets.TAG_COLOR)
+	language_badge.text = "Game language: " + ctx.language_label()
+
+func select_preset(name: String) -> void:
+	if name == "custom":
+		set_notice("Custom is chosen automatically when you change an option."); _update_badges(); return
+	var result: Dictionary = ctx.apply_preset(name)
+	if not result.display.is_empty():
+		draft = result.display
+	elif runtime.preferences.pending.is_empty():
+		# Core apply_preset writes its display keys (aspect, filter) live; the
+		# draft must follow, or the next Apply would undo the preset.
+		var saved: Dictionary = runtime.preferences.settings.display
+		for key: String in ["aspect", "filter", "wing_fill", "bars", "ui_scale"]:
+			if saved.has(key) and draft.has(key): draft[key] = saved[key]
+	rebuild()
+	# "Modern English" may start the asynchronous English switch.
+	if ctx.language_loading(): _set_loading(true)
+	if not result.display.is_empty(): preview_display()
+	set_notice(result.error if not str(result.error).is_empty() else "%s preset applied." % PRESET_NAMES[name])
+	_update_badges()
+
+func page(title: String) -> VBoxContainer:
+	var scroll := ScrollContainer.new(); scroll.name = title.replace("&", "and").replace(" ", "_"); tabs.add_child(scroll)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.follow_focus = true
+	var index := navigation.size()
+	var category: Button = widgets.button(sidebar, title, func() -> void: _select_page(index), "page:" + title)
+	category.toggle_mode = true; category.alignment = HORIZONTAL_ALIGNMENT_LEFT; navigation.append(category)
+	page_titles.append(title)
+	var box := VBoxContainer.new(); box.add_theme_constant_override("separation", 10); box.size_flags_horizontal = Control.SIZE_EXPAND_FILL; scroll.add_child(box)
+	widgets.heading(box, title)
+	return box
+
+## Opens a file picker; `select` returns "" or an error to show.
+func choose_file(filter: String, select: Callable) -> void:
+	var dialog := FileDialog.new(); dialog.access = FileDialog.ACCESS_FILESYSTEM
+	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE; dialog.filters = PackedStringArray([filter])
 	add_child(dialog)
-	dialog.file_selected.connect(func(path: String):
-		var error: String = runtime.select_image_pack(path)
+	dialog.file_selected.connect(func(path: String) -> void:
+		var error: String = select.call(path)
 		if error != "": notice.text = error
 		else: rebuild()
 		dialog.queue_free())
 	dialog.canceled.connect(dialog.queue_free)
 	dialog.popup_centered_ratio(0.8)
 
-func choose_voice() -> void:
-	var dialog := FileDialog.new(); dialog.access = FileDialog.ACCESS_FILESYSTEM
-	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE; dialog.filters = PackedStringArray(["*.json ; Voice manifest"])
-	add_child(dialog)
-	dialog.file_selected.connect(func(path: String):
-		var error: String = runtime.select_voice_pack(path)
-		if error != "": notice.text = error
-		else: rebuild()
-		dialog.queue_free())
-	dialog.canceled.connect(dialog.queue_free); dialog.popup_centered_ratio(0.8)
+func set_notice(text: String) -> void:
+	if is_instance_valid(notice): notice.text = text
+	if is_instance_valid(fidelity_badge): _update_badges()
 
-func choose_text() -> void:
-	var dialog := FileDialog.new(); dialog.access = FileDialog.ACCESS_FILESYSTEM
-	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE; dialog.filters = PackedStringArray(["*.json ; Text translation manifest"])
-	add_child(dialog)
-	dialog.file_selected.connect(func(path: String):
-		var error: String = runtime.select_text_pack(path)
-		if error != "": notice.text = error
-		else: rebuild()
-		dialog.queue_free())
-	dialog.canceled.connect(dialog.queue_free); dialog.popup_centered_ratio(0.8)
+## Called after a language choice; the loading state takes over while the
+## bundle service opens packs asynchronously.
+func rebuild_after_language() -> void:
+	if ctx.language_loading(): _set_loading(true)
+	else:
+		var message := notice.text if is_instance_valid(notice) else ""
+		rebuild()
+		if message.begins_with("Loading"): message = "Game language: " + ctx.language_label() + "."
+		set_notice(message)
 
-func page(title: String) -> VBoxContainer:
-	var scroll := ScrollContainer.new(); scroll.name = title; tabs.add_child(scroll)
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.follow_focus = true
-	var index := navigation.size()
-	var category := button(sidebar,title,func(): _select_page(index))
-	category.toggle_mode = true; category.alignment = HORIZONTAL_ALIGNMENT_LEFT; navigation.append(category)
-	var box := VBoxContainer.new(); box.add_theme_constant_override("separation",10); box.size_flags_horizontal = Control.SIZE_EXPAND_FILL; scroll.add_child(box)
-	var heading := Label.new(); heading.text = title; heading.add_theme_font_size_override("font_size",21); heading.add_theme_color_override("font_color",Color("e9c77d")); box.add_child(heading)
-	return box
+func request_relayout() -> void:
+	_layout(); _queue_layout()
 
-func button(parent: Node, title: String, callback: Callable) -> Button:
-	var item := Button.new(); item.text = title; item.custom_minimum_size.y = 34; parent.add_child(item); item.pressed.connect(callback); _register_focus(item,title); return item
+# --- display preview (Keep / Revert) -----------------------------------------
 
-func option(parent: Node, title: String, choices: Array, selected: Variant, callback: Callable) -> void:
-	var row := HBoxContainer.new(); row.add_theme_constant_override("separation",10); parent.add_child(row)
-	var label := Label.new(); label.text = title; label.size_flags_horizontal = Control.SIZE_EXPAND_FILL; label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; row.add_child(label)
-	var item := OptionButton.new(); item.custom_minimum_size = Vector2(170,34); row.add_child(item)
-	var available := choices.duplicate()
-	if selected not in available: available.append(selected)
-	var names := {"original":"Original (4:3)", "wide":"Widescreen", "auto":"Automatic", "windowed":"Windowed", "borderless":"Borderless fullscreen", "exclusive":"Exclusive fullscreen", "integer":"Integer · nearest", "nearest":"Nearest fit", "linear":"Smooth fit", "read":"Read only", "all":"All text"}
-	for choice: Variant in available:
-		var text := str(names.get(choice,str(choice).capitalize()))
-		if title == "Frame limit": text = "Unlimited" if choice == 0 else "%d FPS" % choice
-		if title == "Monitor": text = "Display %d" % (int(choice)+1)
-		item.add_item(text)
-	item.select(available.find(selected)); item.item_selected.connect(func(i): callback.call(available[i])); _register_focus(item,title)
+func preview_display() -> void:
+	# Keys the pages apply live are already saved; never preview a stale copy.
+	var saved: Dictionary = runtime.preferences.settings.display
+	for dotted: String in ctx.LIVE_DISPLAY_KEYS:
+		var key := dotted.get_slice(".", 1)
+		if saved.has(key) and draft.has(key): draft[key] = saved[key]
+	if not runtime.preferences.begin_display(draft, Time.get_ticks_msec() / 1000.0, runtime.first_launch):
+		notice.text = runtime.preferences.error; return
+	had_preview = true
+	confirmation.show(); _focus_later(revert_button)
+	_update_badges()
 
-func toggle(parent: Node, title: String, value: bool, callback: Callable) -> void:
-	var item := CheckButton.new(); item.text = title; item.button_pressed = value; item.custom_minimum_size.y = 34; parent.add_child(item); item.toggled.connect(callback); _register_focus(item,title)
+## Kept for callers and tests written before the shell split.
+func _preview_display() -> void:
+	preview_display()
 
-func slider(parent: Node, title: String, value: float, low: float, high: float, step: float, callback: Callable) -> void:
-	var block := VBoxContainer.new(); block.add_theme_constant_override("separation",3); parent.add_child(block)
-	var row := HBoxContainer.new(); block.add_child(row)
-	var label := Label.new(); label.text = title; label.size_flags_horizontal = Control.SIZE_EXPAND_FILL; label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; row.add_child(label)
-	var number := Label.new(); number.add_theme_color_override("font_color",Color("e9c77d")); number.text = _value_text(title,value); number.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT; number.custom_minimum_size.x = 60; row.add_child(number)
-	var item := HSlider.new(); item.custom_minimum_size.y = 22; item.min_value = low; item.max_value = high; item.step = step; item.value = value; block.add_child(item)
-	item.value_changed.connect(func(v): number.text = _value_text(title,v); callback.call(v)); _register_focus(item,title)
+func _keep_display() -> void:
+	if runtime.preferences.confirm_display():
+		runtime.first_launch = false; had_preview = false; draft = runtime.preferences.settings.display.duplicate(true)
+		rebuild(); notice.text = "Display settings saved."
+	_finish_prompt()
 
-func audio_bus(parent: Node, bus: String, spec: Dictionary) -> void:
-	var row := HBoxContainer.new(); row.add_theme_constant_override("separation",10); parent.add_child(row)
-	var volume := VBoxContainer.new(); volume.size_flags_horizontal = Control.SIZE_EXPAND_FILL; row.add_child(volume)
-	slider(volume,bus,spec.volume,0.0,1.0,0.01,func(v): set_bus(bus,"volume",v))
-	var mute := CheckButton.new(); mute.text = "Mute"; mute.button_pressed = spec.mute; row.add_child(mute)
-	mute.toggled.connect(func(v): set_bus(bus,"mute",v)); _register_focus(mute,bus+" mute")
-	var preview := button(row,"Test",func(): runtime.preview_audio(bus)); _register_focus(preview,bus+" preview")
+func _revert_display() -> void:
+	runtime.preferences.revert_display(); had_preview = false; draft = runtime.preferences.settings.display.duplicate(true)
+	rebuild(); notice.text = "Display settings restored."
+	_finish_prompt()
 
-func _value_text(title: String, value: float) -> String:
-	if title.contains("repeat") or title.contains("reading"): return "%.2f s" % value
-	return "%d%%" % roundi(value * 100.0)
+# --- Back / close --------------------------------------------------------------
 
-func _register_focus(control: Control, key: String) -> void:
-	control.set_meta("settings_focus_key",key); focus_items[key] = control
+## Closes the menu, or shows Keep/Revert first while a display preview is pending.
+func request_close() -> void:
+	if not runtime.preferences.pending.is_empty():
+		_close_after_prompt = true
+		close_prompt.show()
+		_focus_later(focus_items["prompt:keep"])
+		return
+	if visible: runtime.toggle_menu()
+
+## Back leaves the Advanced section or the page content first, then closes.
+func go_back() -> void:
+	if close_prompt.visible:
+		close_prompt.hide(); _close_after_prompt = false
+		navigation[tabs.current_tab].grab_focus(); return
+	var focused := get_viewport().gui_get_focus_owner()
+	if advanced_open and focused != null and tabs.is_ancestor_of(focused):
+		advanced_open = false; rebuild(); _focus_later(focus_items.get("advanced_open", navigation[tabs.current_tab])); return
+	if focused != null and (tabs.is_ancestor_of(focused) or confirmation.is_ancestor_of(focused)):
+		navigation[tabs.current_tab].grab_focus(); return
+	request_close()
+
+func _build_close_prompt() -> void:
+	close_prompt = PanelContainer.new(); close_prompt.hide(); add_child(close_prompt)
+	var box := VBoxContainer.new(); box.add_theme_constant_override("separation", 10); close_prompt.add_child(box)
+	var text := Label.new(); text.text = "Keep the new display settings before closing?"; text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.custom_minimum_size.x = 320; box.add_child(text)
+	var row := HBoxContainer.new(); row.add_theme_constant_override("separation", 10); box.add_child(row)
+	widgets.button(row, "Keep display", _keep_display, "prompt:keep")
+	widgets.button(row, "Revert", _revert_display, "prompt:revert")
+
+func _finish_prompt() -> void:
+	if is_instance_valid(close_prompt): close_prompt.hide()
+	if _close_after_prompt:
+		_close_after_prompt = false
+		if visible: runtime.toggle_menu()
+
+func _build_loading_panel() -> void:
+	loading_panel = PanelContainer.new(); loading_panel.mouse_filter = Control.MOUSE_FILTER_STOP; add_child(loading_panel)
+	var label := Label.new(); label.text = "Loading language packs…"; label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.custom_minimum_size = Vector2(320, 48); loading_panel.add_child(label)
+	loading_panel.visible = _loading
+
+func _set_loading(value: bool) -> void:
+	_loading = value
+	if is_instance_valid(loading_panel): loading_panel.visible = value
+	if value: get_viewport().gui_release_focus()
+
+func is_loading() -> bool:
+	return _loading
+
+func _on_visibility_changed() -> void:
+	if not visible: return
+	# Held input never leaks into the menu or back into the game.
+	for action: String in ["ui_up", "ui_down", "ui_left", "ui_right", "ui_accept", "ui_cancel"]:
+		if InputMap.has_action(action): Input.action_release(action)
+	get_tree().call_group("native_input_devices", "clear_devices")
+	_close_after_prompt = false
+	closing_for_save = false
+	if is_instance_valid(close_prompt): close_prompt.hide()
+
+static func is_back_event(event: InputEvent) -> bool:
+	if event is InputEventKey: return event.pressed and not event.echo and event.physical_keycode == KEY_ESCAPE
+	if event is InputEventMouseButton: return event.pressed and event.button_index == MOUSE_BUTTON_RIGHT
+	if event is InputEventJoypadButton: return event.pressed and event.is_action_pressed("ui_cancel")
+	return false
+
+# --- layout --------------------------------------------------------------------
 
 func _select_page(index: int) -> void:
 	tabs.current_tab = index
 	for position: int in navigation.size(): navigation[position].set_pressed_no_signal(position == index)
 
-func _preview_display() -> void:
-	if not runtime.preferences.begin_display(draft,Time.get_ticks_msec()/1000.0,runtime.first_launch): notice.text = runtime.preferences.error; return
-	had_preview = true
-	confirmation.show(); revert_button.call_deferred("grab_focus")
+## Layout runs at most once per idle step. Wrapped labels change the card's
+## minimum size when its width changes, so a direct connection could loop.
+## Window size the 1x card layout is designed for (the default window).
+const UI_DESIGN_SIZE := Vector2(960, 720)
+
+func _queue_layout() -> void:
+	if _layout_queued: return
+	_layout_queued = true
+	(func() -> void: _layout_queued = false; _layout()).call_deferred()
 
 func _layout() -> void:
 	if not is_instance_valid(card): return
 	var area := get_viewport_rect().size
-	card.size = Vector2(minf(area.x-32,940),minf(area.y-32,700))
-	card.position = (area-card.size)/2.0
+	var factor := ui_factor(area)
+	var logical := area / factor
+	card.size = Vector2(minf(logical.x - 32, 940), minf(logical.y - 32, 700))
+	card.scale = Vector2(factor, factor)
+	card.position = (area - card.size * factor) / 2.0
+	for overlay: Control in [close_prompt, loading_panel]:
+		if not is_instance_valid(overlay): continue
+		overlay.reset_size(); overlay.scale = Vector2(factor, factor)
+		overlay.position = (area - overlay.size * factor) / 2.0
 
-func _settings_theme() -> Theme:
-	var result := Theme.new(); result.default_font_size = 16
-	result.set_color("font_color","Label",Color("e4eee3"))
-	var panel := _style(Color("102b29"),Color("698c6b")); panel.content_margin_left = 18; panel.content_margin_right = 18; panel.content_margin_top = 14; panel.content_margin_bottom = 14
-	result.set_stylebox("panel","PanelContainer",panel)
-	result.set_stylebox("panel","TabContainer",StyleBoxEmpty.new())
-	for type: String in ["Button","OptionButton"]:
-		result.set_stylebox("normal",type,_style(Color("1b3c36"),Color("456452")))
-		result.set_stylebox("hover",type,_style(Color("285348"),Color("8aa478")))
-		result.set_stylebox("pressed",type,_style(Color("315b43"),Color("d7b565")))
-		var focus := _style(Color(0,0,0,0),Color("f2cb75")); result.set_stylebox("focus",type,focus)
-		result.set_color("font_color",type,Color("e4eee3")); result.set_color("font_pressed_color",type,Color("ffe3a0")); result.set_color("font_hover_color",type,Color.WHITE)
-	return result
+## Interface size from preferences, reduced only as far as needed for the
+## settings card to fit the window. Independent of the native picture fit.
+## Game scenes run the window unscaled (content_scale_size ZERO), so a large
+## window would show the card at its 960x720 design size in a corner of the
+## screen; the base factor keeps that proportion (up to 2x) before the
+## preference multiplies it. Scenes on the project's 640x480 stretch have a
+## 640x480 area and a base of 1.
+func ui_factor(area: Vector2) -> float:
+	var base := clampf(minf(area.x / UI_DESIGN_SIZE.x, area.y / UI_DESIGN_SIZE.y), 1.0, 2.0)
+	var requested: float = base * (ctx.ui_scale() if ctx != null else 1.0)
+	if requested <= 1.0 or not is_instance_valid(card): return 1.0
+	var key := Vector3(requested, area.x, area.y)
+	if key.is_equal_approx(_factor_key): return _factor
+	# Measure the card at its widest layout so wrapping cannot feed back.
+	var minimum := card.get_combined_minimum_size() + Vector2(32, 32)
+	var fit := minf(area.x / maxf(minimum.x, 1.0), area.y / maxf(minimum.y, 1.0))
+	_factor_key = key
+	_factor = clampf(minf(requested, fit), 1.0, 2.0)
+	return _factor
 
-func _style(background: Color, border: Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new(); style.bg_color = background; style.border_color = border
-	style.set_border_width_all(1); style.set_corner_radius_all(5)
-	style.content_margin_left = 10; style.content_margin_right = 10; style.content_margin_top = 6; style.content_margin_bottom = 6
-	return style
+# --- values --------------------------------------------------------------------
+
+## Save or load request from a page, through the runtime's guarded save host.
+func request_save(load_game: bool) -> void:
+	closing_for_save = true
+	runtime.request_save(load_game)
+	if visible: closing_for_save = false  # refused: the menu stays open
 
 func save_value(section: String, key: String, value: Variant) -> void:
 	if not runtime.preferences.set_value(section, key, value): notice.text = runtime.preferences.error
+	_update_badges()
 
 func set_bus(bus: String, key: String, value: Variant) -> void:
 	var buses: Dictionary = runtime.preferences.settings.audio.buses.duplicate(true)
@@ -258,15 +385,41 @@ func begin_capture(action: String) -> void:
 func cancel_capture() -> void:
 	capture = ""; notice.text = "Binding cancelled."
 
+# --- input ---------------------------------------------------------------------
+
 func _input(event: InputEvent) -> void:
+	if event is InputEventJoypadButton and STICK_BITS.has(event.button_index):
+		if _close_chord(event): accept_event(); return
 	if not visible: return
-	if capture.is_empty():
-		if event.is_action_pressed("port_l1") or event.is_action_pressed("port_r1"):
-			_select_page(posmod(tabs.current_tab + (-1 if event.is_action_pressed("port_l1") else 1), tabs.get_tab_count()))
-			navigation[tabs.current_tab].grab_focus(); accept_event()
-		return
+	if _loading:
+		accept_event(); return
+	if not capture.is_empty():
+		_capture_input(event); return
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F10 and not runtime.preferences.pending.is_empty():
+		request_close(); accept_event(); return
+	if is_back_event(event):
+		go_back(); accept_event(); return
+	if event.is_action_pressed("port_l1") or event.is_action_pressed("port_r1"):
+		_select_page(posmod(tabs.current_tab + (-1 if event.is_action_pressed("port_l1") else 1), tabs.get_tab_count()))
+		navigation[tabs.current_tab].grab_focus(); accept_event()
+
+## True when this press completes L3+R3 while the menu shows a pending display
+## preview: the close prompt opens instead of the runtime reverting silently.
+func _close_chord(event: InputEventJoypadButton) -> bool:
+	var held: int = _sticks.get(event.device, 0)
+	var bit: int = STICK_BITS[event.button_index]
+	held = (held | bit) if event.pressed else (held & ~bit)
+	_sticks[event.device] = held
+	if held == 0: _sticks_latched[event.device] = false
+	if held != 3 or _sticks_latched.get(event.device, false): return false
+	_sticks_latched[event.device] = true
+	if not visible or _loading or not capture.is_empty() or runtime.preferences.pending.is_empty(): return false
+	request_close()
+	return true
+
+func _capture_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.physical_keycode == KEY_F10:
-		capture = ""; notice.text = "Binding cancelled."; accept_event(); return
+		cancel_capture(); accept_event(); return
 	var spec: Dictionary = runtime.Remaps.encode(event)
 	if spec.is_empty(): return
 	var result: Dictionary = runtime.remaps.rebind(capture, spec)
@@ -277,11 +430,18 @@ func _input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	if not visible or not is_instance_valid(confirmation): return
+	var loading: bool = ctx.language_loading()
+	if loading != _loading:
+		_set_loading(loading)
+		if not loading:
+			rebuild(); set_notice("Game language: " + ctx.language_label() + ".")
 	confirmation.visible = not runtime.preferences.pending.is_empty()
 	if confirmation.visible:
 		had_preview = true
 		notice.text = "Keep this display? Restoring previous settings in %d seconds." % ceili(float(runtime.preferences.pending.deadline) - Time.get_ticks_msec() / 1000.0)
 	elif had_preview:
 		had_preview = false; draft = runtime.preferences.settings.display.duplicate(true)
+		var closing := _close_after_prompt
 		rebuild()
 		notice.text = "Display settings restored."
+		if closing: _close_after_prompt = true; _finish_prompt()

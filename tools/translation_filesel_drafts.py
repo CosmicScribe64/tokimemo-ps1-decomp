@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
-"""T-39004: save-screen panel/badge drafts from source-verified frame identities."""
+"""T-39004: save-screen panel/badge drafts from source-verified frame identities.
+
+`pages` (Phase 4 WP-L) maps the T-39011 index-space information-page drafts
+(tools/translation_filesel_indexed.py) to v2 `page` rows: each row replaces
+only the page rects of the label regions that page actually edited
+(translations/en/graphics/filesel_page_regions.json), and every pixel outside
+those rects must equal the exported source page.
+"""
 import argparse
 import json
 from pathlib import Path
+import shutil
 
+import numpy as np
 from PIL import Image
 
-from translation_assets import ROOT,digest,encoded,inside,new_output
+from translation_assets import ROOT,check_regions,digest,encoded,inside,new_output,rgba_sha256
 from translation_native_font import NativeLatin
 
 SOURCE_SHA='1a0e42ade6320df564cdb1017f73ba05083394c1974d3bc7a4af21618725e2a6'
+INDEXED_SCHEMA='tokimemo.filesel-indexed-drafts.v1'
+PAGE_SCHEMA='tokimemo.filesel-page-drafts.v1'
+REGIONS=ROOT/'translations/en/graphics/filesel_page_regions.json'
 INK=(16,16,16,255)
 PAPER=(231,231,231,255)
 BLUE=(0,57,132,255)
@@ -83,8 +95,68 @@ def build(sources,output):
     return {'output':str(output),'drafts':len(plans)}
 
 
+def pages(indexed,sources,output,regions_path=REGIONS):
+    """v2 page rows for the information pages of one index-space draft build."""
+    regions_bytes=Path(regions_path).read_bytes();regions=json.loads(regions_bytes)
+    manifest=json.loads((indexed/'manifest.json').read_text())
+    if manifest.get('schema')!=INDEXED_SCHEMA or manifest.get('source_container_sha256')!=SOURCE_SHA or regions.get('container_sha256')!=SOURCE_SHA:
+        raise ValueError('FILESEL page draft source differs')
+    if manifest.get('page_regions_sha256')!=digest(regions_bytes):
+        raise ValueError('page drafts were built from another region map')
+    exported=json.loads((sources/'manifest.json').read_text())
+    if exported['metadata']['source_sha256']!=SOURCE_SHA: raise ValueError('FILESEL source differs')
+    by_id={row['id']:row for row in regions['regions']}
+    rows,skipped,copies=[],[],[]
+    for asset in manifest['assets']:
+        variant=asset.get('variant','')
+        if not variant.startswith('source-page-information-'): continue
+        page=int(variant.rsplit('-',1)[1])
+        english=indexed/asset['output']
+        if not english.is_file():
+            skipped.append({'id':asset['id'],'reason':'English page not in this build'});continue
+        if digest(english.read_bytes())!=asset['output_sha256']: raise ValueError('page draft bytes changed: '+asset['id'])
+        source_path=inside(sources,asset['source_png'])
+        if digest(source_path.read_bytes())!=asset['source_png_sha256']: raise ValueError('source page differs: '+asset['id'])
+        rects=[rect['rect'] for name in sorted(asset['edited_regions']) if by_id[name]['status']=='candidate'
+               for rect in by_id[name]['page_rects'] if rect['page']==page]
+        if not rects:
+            skipped.append({'id':asset['id'],'reason':'no candidate region on this page'});continue
+        source=np.asarray(Image.open(source_path).convert('RGBA'));result=np.asarray(Image.open(english).convert('RGBA'))
+        if source.shape!=result.shape: raise ValueError('page draft size differs: '+asset['id'])
+        check_regions(rects,[source.shape[1],source.shape[0]])
+        outside=np.ones(source.shape[:2],bool)
+        for x,y,w,h in rects: outside[y:y+h,x:x+w]=False
+        if ((source!=result).any(-1)&outside).any():
+            raise ValueError('page draft changes pixels outside its label regions: '+asset['id'])
+        rows.append({'id':asset['id'],'kind':'page','source_container':'CDROM/FUKUTEST/FILESEL.NBN',
+            'source_container_sha256':SOURCE_SHA,'page':page,'page_variant':variant,
+            'source_png':asset['source_png'],'source_png_sha256':asset['source_png_sha256'],
+            'source_rgba_sha256':rgba_sha256(Image.open(source_path)),
+            'regions':rects,'region_ids':sorted(asset['edited_regions']),
+            'source_regions_remaining':asset.get('source_regions_remaining',[]),
+            'dimensions':[int(source.shape[1]),int(source.shape[0])],'output':asset['output'],'output_sha256':asset['output_sha256'],
+            'revision':manifest.get('revision'),'style':'unreviewed','human_approved':False,
+            'runtime_integrated':False,'in_game_verified':False})
+        copies.append((english,source_path,asset))
+    output=new_output(output);output.mkdir(parents=True)
+    try:
+        for english,source_path,asset in copies:
+            shutil.copyfile(english,output/asset['output']);shutil.copyfile(source_path,output/asset['source_png'])
+        (output/'manifest.json').write_bytes(encoded({'schema':PAGE_SCHEMA,'source_manifest_sha256':digest((indexed/'manifest.json').read_bytes()),
+            'page_regions_sha256':digest(regions_bytes),'assets':rows,'skipped':skipped,'human_approved':False})+b'\n')
+    except Exception:
+        shutil.rmtree(output);raise
+    return {'output':str(output),'pages':len(rows),'skipped':len(skipped)}
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--sources',type=Path,required=True)
+    parser.add_argument('operation',nargs='?',choices=['frames','pages'],default='frames')
+    parser.add_argument('--sources',type=Path,required=True,help='original-filesel export directory')
+    parser.add_argument('--indexed',type=Path,help='pages: T-39011 filesel-indexed draft directory')
     parser.add_argument('--output',type=Path,required=True)
-    args=parser.parse_args();print(json.dumps(build(args.sources,args.output)))
+    args=parser.parse_args()
+    if args.operation=='pages':
+        if args.indexed is None: parser.error('pages needs --indexed')
+        print(json.dumps(pages(args.indexed,args.sources,args.output)))
+    else: print(json.dumps(build(args.sources,args.output)))

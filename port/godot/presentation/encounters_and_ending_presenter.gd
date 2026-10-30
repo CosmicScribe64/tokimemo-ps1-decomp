@@ -12,6 +12,45 @@ extends "res://presentation/prologue_presenter.gd"
 const MESSAGE_WINDOW_INTERIOR_RECT: Rect2i = Rect2i(27, 166, 266, 52)
 const NOTEBOOK_INTERIOR_RECT: Rect2i = Rect2i(0, 6, 320, 152)
 const DITHER: Array[int] = [-4, 0, -3, 1, 2, -2, 3, -1, -3, 1, -4, 0, 3, -1, 2, -2]
+const TextBinding = preload("res://presentation/presenter_text_binding.gd")
+
+## Phase 4 WP-I: empty until bind_english; original bytes are drawn. The
+## staff roll stays original by policy and draws through no binding.
+var english_text := TextBinding.new()
+var _english_images := false
+
+
+## Bind English text rows (presenter_text_binding.gd) and, when a store is
+## given, exact-identity HUD frames. Presentation only.
+func bind_english(layer: RefCounted, bindings: Array, image_store: RefCounted = null) -> Dictionary:
+	var text: int = english_text.bind(layer, _font, bindings, 14)
+	var images := 0
+	if image_store != null:
+		images = set_translated_images(image_store)
+		_english_images = true
+	elif _english_images:
+		# A re-bind without a store returns the HUD frames to the originals.
+		set_translated_images(null)
+		_english_images = false
+	return {"text": text, "images": images, "fallbacks": english_text.fallback_log()}
+
+
+func clear_english() -> void:
+	english_text.clear()
+	if _english_images:
+		set_translated_images(null)
+		_english_images = false
+
+
+func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, palette_row: int = 0,
+		region: String = "", custom_bounds: Rect2i = Rect2i()) -> void:
+	var bound: Dictionary = english_text.translate(hex_code)
+	if bound.is_empty():
+		super._draw_text_hex_checked(target, hex_code, pos, palette_row, region, custom_bounds)
+		return
+	# One native glyph draw per translated unit at its trimmed offset.
+	for index: int in bound.glyph_x.size():
+		super._draw_text_hex_checked(target, bound.hex.substr(index * 4, 4), pos + Vector2i(bound.glyph_x[index], 0), palette_row, region, custom_bounds)
 
 # Pre-computed CP932 hex constants via Python .encode("cp932").hex() (Section 12a rule)
 const TITLE_GEKO_HEX: String = "89ba8d5a" # 下校 (2 glyphs)

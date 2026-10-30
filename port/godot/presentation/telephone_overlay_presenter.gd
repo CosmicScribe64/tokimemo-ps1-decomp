@@ -851,6 +851,16 @@ func _draw_subtractive_line(target: Image, p0: Vector2i, p1: Vector2i, sub_rgb: 
 			y += sy
 
 func _draw_text_hex_checked(target: Image, hex_code: String, pos: Vector2i, palette_row: int = 0, region: String = "") -> void:
+	var bound: Dictionary = english_text.translate(hex_code)
+	if bound.is_empty():
+		_draw_text_hex_native(target, hex_code, pos, palette_row, region)
+		return
+	# Phase 4 WP-I: each translated unit is one native glyph draw at its
+	# trimmed offset, so shadows, recording and box checks stay native.
+	for index: int in bound.glyph_x.size():
+		_draw_text_hex_native(target, bound.hex.substr(index * 4, 4), pos + Vector2i(bound.glyph_x[index], 0), palette_row, region)
+
+func _draw_text_hex_native(target: Image, hex_code: String, pos: Vector2i, palette_row: int = 0, region: String = "") -> void:
 	var codes: PackedByteArray = hex_code.hex_decode()
 	var x_offset: int = 0
 	var y_offset: int = 0

@@ -1,0 +1,11 @@
+{
+	"schema": "tokimemo.port-settings.v1",
+	"settings": {
+		"display": {"mode": "windowed", "width": 960, "height": 720, "monitor": 0, "aspect": "original", "filter": "integer", "vsync": true, "fps": 60, "long_confirmation": false},
+		"audio": {"buses": {"Master": {"volume": 1.0, "mute": false}, "Voice": {"volume": 1.0, "mute": false}, "BGM": {"volume": 1.0, "mute": false}, "SFX": {"volume": 1.0, "mute": false}, "Movie": {"volume": 1.0, "mute": false}}, "device": "Default", "mono": false, "mute_unfocused": false},
+		"controls": {"swap_confirm": false, "deadzone": 0.25, "repeat_delay": 0.4, "repeat_interval": 0.08, "bindings": {}},
+		"accessibility": {"text_speed": "normal", "auto_delay": 0.0, "skip": "read", "font_scale": 1.0, "backdrop": 1.0, "reduce_flashes": false, "reduce_shake": false},
+		"language": {"text": "ja", "text_manifest": "", "text_sha256": "", "voice": "ja", "voice_manifest": "/packs/voice/manifest.json", "voice_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "dialogue_manifest": "", "dialogue_sha256": "", "ui_text_manifest": "", "ui_text_sha256": ""}
+	},
+	"pending_display_boot_check": {}
+}

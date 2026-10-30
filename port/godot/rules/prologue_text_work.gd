@@ -21,6 +21,16 @@ static func reset(state: State) -> String:
 	return ""
 
 
+## gnsx speaker x (screen-centred) by speaker byte length: one glyph -0x72,
+## two glyphs -0x79, otherwise -0x80.
+static func speaker_x_for(speaker_bytes: int) -> int:
+	if speaker_bytes == 2:
+		return -0x72
+	if speaker_bytes == 4:
+		return -0x79
+	return -0x80
+
+
 static func begin_line(state: State, resolved_view: Dictionary) -> String:
 	if state == null:
 		return "prologue text line needs route state"
@@ -40,11 +50,7 @@ static func begin_line(state: State, resolved_view: Dictionary) -> String:
 		return "prologue text exceeds the native text-entry capacity"
 
 	var speaker_glyphs: int = speaker_raw.size() / 2
-	var speaker_x := -0x80
-	if speaker_raw.size() == 2:
-		speaker_x = -0x72
-	elif speaker_raw.size() == 4:
-		speaker_x = -0x79
+	var speaker_x := speaker_x_for(speaker_raw.size())
 	var entries: Array[Dictionary] = [{
 		"glyph_count": speaker_glyphs,
 		"x": speaker_x,

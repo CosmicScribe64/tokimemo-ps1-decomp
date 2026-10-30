@@ -9,6 +9,7 @@ const ExternalPath = preload("res://services/external_content_path.gd")
 const NativeLatin = preload("res://presentation/native_latin_layout.gd")
 const ContentIdentity = preload("res://services/gameplay_content_identity.gd")
 const SCHEMA := "tokimemo.native-command-hud.v1"
+const HOVER_SCHEMA := "tokimemo.hud-hover-texels.v1"
 const HUD_SHA := ContentIdentity.HUD_MANIFEST_SHA
 # Main executable load address and header size (tools/assets/text_font.py
 # FONT_PROFILE; tools/assets/text_binary.py maps data labels the same way).
@@ -184,6 +185,8 @@ var _font = Glyphs.new()
 var _compositor = NativeCompositor.new()
 ## T-39016: translated narration run, empty while the original bytes apply.
 var _narration_translation: Dictionary = {}
+## Validated scaled hover texels (open_hover_texels); empty = scaled path refused.
+var _hover_texels: Dictionary = {}
 ## Why the last set_translated_text call kept the original narration.
 var text_rejection := ""
 
@@ -222,6 +225,83 @@ func open_manifest(path: String, expected_sha256: String, font_root: String) -> 
 	error = ""
 	return true
 
+## Scaled hover texels (tools/port/hud_hover_texels.py): every frame of the
+## fourteen icon sequences, each part as (w + 1) x (h + 1) MAINROM texels in
+## the base palette. Accepted only when its inputs are this manifest's
+## executable/MAINROM and the inner w x h of every part equals the pinned
+## HUD manifest part (colour and STP); without it the scaled path is refused.
+func open_hover_texels(path: String, expected_sha256: String) -> String:
+	_compositor.hover_texels = {}
+	if _manifest.is_empty():
+		return "hover texels need the HUD manifest first"
+	if not _sha_string(expected_sha256) or not _safe_path(path) or not FileAccess.file_exists(path) or FileAccess.get_size(path) > 1024 * 1024 or FileAccess.get_sha256(path) != expected_sha256:
+		return "hover texel manifest path/hash is not the caller's reviewed capability"
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if not _keys(parsed, ["schema", "version", "provenance", "frames"]) or parsed["schema"] != HOVER_SCHEMA or not _integer(parsed["version"]) or int(parsed["version"]) != 1 or not parsed["frames"] is Dictionary:
+		return "hover texel manifest schema differs"
+	var inputs: Variant = parsed["provenance"].get("inputs") if parsed["provenance"] is Dictionary else null
+	if not inputs is Dictionary or inputs.size() != 2:
+		return "hover texel inputs differ"
+	for name: String in ["executable", "mainrom"]:
+		if not _keys(inputs.get(name), ["path", "size", "sha256"]) or inputs[name]["sha256"] != _manifest["provenance"]["inputs"][name]["sha256"]:
+			return "hover texel inputs are not this HUD manifest's originals"
+	var wanted: Dictionary = {}
+	for sequence: Dictionary in _manifest["tables"]["sequences"].slice(0, 14):
+		for step: Dictionary in sequence["steps"]:
+			wanted["%d:base" % int(step["frame_index"])] = true
+	if parsed["frames"].size() != wanted.size():
+		return "hover texel frame set differs from the icon sequences"
+	var root := path.get_base_dir()
+	var texels: Dictionary = {}
+	for key: String in wanted:
+		var record: Variant = parsed["frames"].get(key)
+		var hud: Dictionary = _manifest["frames"].get(key, {})
+		if not record is Dictionary or not record.get("parts") is Array or hud.is_empty() or record["parts"].size() != hud["parts"].size():
+			return "hover texel frame differs: " + key
+		var parts: Array = []
+		for index: int in range(hud["parts"].size()):
+			var item: Variant = record["parts"][index]
+			var source: Dictionary = hud["parts"][index]
+			if not item is Dictionary or int(item.get("part_index", -1)) != int(source["part_index"]) or int(item.get("x", 0)) != int(source["x"]) or int(item.get("y", 0)) != int(source["y"]):
+				return "hover texel part differs: " + key
+			var size := Vector2i(int(source["width"]) + 1, int(source["height"]) + 1)
+			var color := _hover_image(root, item.get("png"), size)
+			var stp := _hover_image(root, item.get("stp_png"), size)
+			if color == null or stp == null:
+				return "hover texel image path/hash/shape differs: " + key
+			var inner_color: Image = _images[source["png"]["path"]]
+			var inner_stp: Image = _images[source["stp_png"]["path"]]
+			var outer_region: Image = color.get_region(Rect2i(Vector2i.ZERO, size - Vector2i.ONE))
+			var inner_copy: Image = inner_color.duplicate()
+			outer_region.convert(Image.FORMAT_RGBA8)
+			inner_copy.convert(Image.FORMAT_RGBA8)
+			if outer_region.get_data() != inner_copy.get_data():
+				return "hover texel colour differs from the HUD manifest part: " + key
+			for y: int in range(size.y - 1):
+				for x: int in range(size.x - 1):
+					if (stp.get_pixel(x, y).r8 != 0) != (inner_stp.get_pixel(x, y).r8 != 0):
+						return "hover texel STP differs from the HUD manifest part: " + key
+			parts.append({"image": color, "stp": stp})
+		texels[key] = parts
+	_hover_texels = texels
+	_compositor.hover_texels = texels
+	return ""
+
+func _hover_frame(icon: int, state: Dictionary) -> int:
+	var sequence: Array = _manifest["tables"]["sequences"][icon]["steps"]
+	return int(sequence[int(state["icon_steps"][icon])]["frame_index"])
+
+func _hover_image(root: String, spec: Variant, size: Vector2i) -> Image:
+	if not _keys(spec, ["path", "size", "sha256", "width", "height", "kind"]) or not spec["path"] is String or not str(spec["path"]).begins_with("assets/") or str(spec["path"]).contains("..") or str(spec["path"]).count("/") != 1:
+		return null
+	var absolute := root.path_join(spec["path"])
+	if not _safe_path(absolute) or not FileAccess.file_exists(absolute) or FileAccess.get_size(absolute) != int(spec["size"]) or FileAccess.get_sha256(absolute) != spec["sha256"]:
+		return null
+	var image := Image.new()
+	if image.load(absolute) != OK or image.get_size() != size:
+		return null
+	return image
+
 func set_translated_images(store: RefCounted) -> int:
 	# T-39004: bind only exact single-part identities with opaque source semantics.
 	# A translated STP mask is required before supporting semi-transparent frames.
@@ -254,6 +334,9 @@ func set_translated_images(store: RefCounted) -> int:
 			if has_stp:
 				continue
 			_images[part["png"]["path"]] = replacement
+			# The scaled hover texels are the original part; a replaced icon
+			# frame has no scaled counterpart, so its scaled phase is refused.
+			_hover_texels.erase("%d:%s" % [int(frame["frame_index"]), frame["variant"]])
 			count += 1
 	_compositor.configure(_manifest, _images, _font)
 	return count
@@ -517,8 +600,9 @@ func _view(state: Dictionary) -> Dictionary:
 			error = "live icon phase is outside the source sequence"
 			return {}
 	# hud_icon_bar_update (hud_panels.c:1112-1117): the hovered, enabled icon is
-	# scaled by rsin((32 - countdown) << 6) + 0x1000. Only unit scale is rasterized
-	# here; a scaled quad (func_80098680) phase is withheld, not settled.
+	# scaled by rsin((32 - countdown) << 6) + 0x1000. A scaled phase is drawn by
+	# the compositor's func_80098680 path from the validated hover texels
+	# (open_hover_texels); without them it is refused, not approximated.
 	var selected: int = int(rule["menu_cursor"])
 	var hover_index: int = selected
 	var cursor_position := Vector2i.ZERO
@@ -528,10 +612,11 @@ func _view(state: Dictionary) -> Dictionary:
 			error = "live HUD session hover/cursor record is outside source bounds"
 			return {}
 		cursor_position = Vector2i(int(context["cursor_x"]), int(context["cursor_y"]))
+	var hover_scale := 0x1000
 	if hover_index >= 0 and int(rule["icon_enabled"][hover_index]) == 1:
-		var scale: int = NativeMath.s16(NativeMath.rsin(int(context["hover_ticks"]) << 6) + 0x1000)
-		if scale != 0x1000:
-			error = "hover pulse scale 0x%x needs the scaled sprite path, which this HUD does not rasterize" % scale
+		hover_scale = NativeMath.s16(NativeMath.rsin(int(context["hover_ticks"]) << 6) + 0x1000)
+		if hover_scale != 0x1000 and not _hover_texels.has("%d:base" % _hover_frame(hover_index, state)):
+			error = "hover pulse scale 0x%x needs the scaled hover texels, which this HUD has not opened" % hover_scale
 			return {}
 	var parameters: Array[int] = []
 	for word: Variant in rule["params"]:
@@ -549,7 +634,7 @@ func _view(state: Dictionary) -> Dictionary:
 		return {}
 	return {"year": year, "month": month, "day": day, "weekday": int(rule["weekday"]),
 		"day_kind": int(calendar_bytes[day]), "parameters": parameters, "selected": selected,
-		"hover_index": hover_index, "cursor_position": cursor_position if session_context else null,
+		"hover_index": hover_index, "hover_scale": hover_scale, "cursor_position": cursor_position if session_context else null,
 		"icon_enabled": rule["icon_enabled"].slice(0, 14), "cursor_frame": resolve_cursor_actor_frame(style),
 		"icon_steps": state["icon_steps"].duplicate(), "icon_elapsed": state["icon_elapsed"].duplicate(),
 		"checker_season": season["checker_season"], "checker_fade": season["checker_fade"]}
@@ -669,6 +754,7 @@ func _reset() -> void:
 	_last_resources.clear()
 	last_coverage = null
 	_narration_translation.clear()
+	_hover_texels = {}
 	text_rejection = ""
 	_font = Glyphs.new()
 	_compositor = NativeCompositor.new()

@@ -1,0 +1,51 @@
+# T-39028: original-free port checks (T0). Original-free; not fidelity evidence.
+#
+# Runs tools/port/run_offline_suite.sh --inside: Python unittests for the original-free
+# tools/port and tools/emu modules, JSON Schema validation of committed catalogs, input
+# scripts and receipts, and the translation-pack / translated-artwork lint over
+# translations/en. It uses no game data, no secrets and no Godot image; locally the same
+# suite runs in Docker with `sh tools/port/run_offline_suite.sh`.
+#
+# Godot headless parse and the synthetic GDScript suites, Tier-1 private-data CI and an
+# amd64 native-audio build wait for the user's approval (wiki/ci.md).
+name: Port offline (original-free; not fidelity evidence)
+
+on:
+  pull_request:
+    paths:
+      - "tools/port/**"
+      - "tools/emu/**"
+      - "tools/translation_assets.py"
+      - "tools/assets/text_font.py"
+      - "translations/**"
+      - "config/port/**"
+      - ".github/workflows/port-offline.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/port/**"
+      - "tools/emu/**"
+      - "tools/translation_assets.py"
+      - "tools/assets/text_font.py"
+      - "translations/**"
+      - "config/port/**"
+      - ".github/workflows/port-offline.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  port-offline:
+    name: "port-offline: original-free; not fidelity evidence"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pinned test dependencies
+        run: python3 -m pip install --disable-pip-version-check -r tools/port/requirements-test.txt Pillow==11.1.0
+      - name: Original-free suite (not fidelity evidence)
+        run: sh tools/port/run_offline_suite.sh --inside

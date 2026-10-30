@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tokimemo.input-script.v1",
+  "title": "Shared emulator/port input script (T-39023, T-39018 WP-06)",
+  "description": "Pad edges keyed by game iteration. Each segment waits until a predicate on projected state first holds (its anchor iteration A); an event with offset 'at' is visible to the game iteration whose post-update frame_count is A+at, and is held for 'hold' iterations. Players deliver input between iterations only; they never inject capabilities, eligibility or state.",
+  "type": "object",
+  "required": ["schema", "name", "description", "provenance", "segments", "checkpoints", "unsupported"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "tokimemo.input-script.v1"},
+    "name": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "description": {"type": "string", "minLength": 10},
+    "provenance": {
+      "type": "object",
+      "required": ["source", "derivation"],
+      "properties": {
+        "source": {"type": "string", "minLength": 10},
+        "derivation": {"type": "string", "minLength": 10},
+        "uncertainty": {"type": "string"}
+      }
+    },
+    "start": {
+      "type": "object",
+      "properties": {
+        "native": {"type": "string"},
+        "port": {"type": "string"}
+      }
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "wait_until", "events"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "note": {"type": "string"},
+          "wait_until": {"$ref": "#/$defs/predicate"},
+          "timeout_iterations": {"type": "integer", "minimum": 1},
+          "run_for": {"type": "integer", "minimum": 1, "description": "iterations to keep running after the anchor before the next segment may start"},
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["at", "buttons", "hold"],
+              "additionalProperties": false,
+              "properties": {
+                "at": {"type": "integer", "minimum": 0},
+                "buttons": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/button"}},
+                "hold": {"type": "integer", "minimum": 1, "maximum": 600},
+                "note": {"type": "string"}
+              }
+            }
+          },
+          "expect_next": {"$ref": "#/$defs/predicate"},
+          "expect_state": {"$ref": "#/$defs/entry_values"}
+        }
+      }
+    },
+    "checkpoints": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unsupported": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["side", "stop", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "side": {"enum": ["native", "port"]},
+          "stop": {"type": "string"},
+          "reason": {"type": "string", "minLength": 10},
+          "ticket": {"type": "string", "pattern": "^T-[0-9]{4,5}$"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "button": {"enum": ["SELECT", "START", "UP", "RIGHT", "DOWN", "LEFT", "L2", "R2", "L1", "R1", "TRIANGLE", "CIRCLE", "CROSS", "SQUARE"]},
+    "entry_values": {
+      "description": "Values checked on the same state as expect_next: the native name-entry working buffers (name_entry_family_name 0x8014CC74, given 0x8014CC7C, nickname 0x8014CC84) as lower-case hex, and the 0-based birthday selections (name_entry_player_month/day/blood 0x8014CC90.., name_entry_shiori_month/day/blood 0x8014CC9C..), the same encoding as the port entry controller. A run fails when any value differs or cannot be observed.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "names": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "family": {"type": "string", "pattern": "^[0-9a-f]{16}$"},
+            "given": {"type": "string", "pattern": "^[0-9a-f]{16}$"},
+            "nickname": {"type": "string", "pattern": "^[0-9a-f]{24}$"}
+          }
+        },
+        "player": {"$ref": "#/$defs/birthday_selection"},
+        "shiori": {"$ref": "#/$defs/birthday_selection"}
+      }
+    },
+    "birthday_selection": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "month": {"type": "integer", "minimum": 0, "maximum": 11},
+        "day": {"type": "integer", "minimum": 0, "maximum": 30},
+        "blood": {"type": "integer", "minimum": 0, "maximum": 3}
+      }
+    },
+    "predicate": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "game_mode": {"type": "string", "pattern": "^0x[0-9A-F]{2}$"},
+        "mode_stage": {"type": "integer", "minimum": 0, "maximum": 255},
+        "mode_step": {"type": "integer", "minimum": 0, "maximum": 255},
+        "substep": {"type": "integer", "minimum": 0, "maximum": 255}
+      }
+    }
+  }
+}
